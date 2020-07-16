@@ -1,0 +1,141 @@
+*textobj-line.txt*	Text objects for the current line
+
+Version 0.0.2
+Script ID: 3886
+Copyright (C) 2012-2015 Kana Natsuno <http://whileimautomaton.net/>
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+CONTENTS					*textobj-line-contents*
+
+Introduction            |textobj-line-introduction|
+Interface               |textobj-line-interface|
+  Key Mappings            |textobj-line-key-mappings|
+Bugs                    |textobj-line-bugs|
+Changelog               |textobj-line-changelog|
+
+
+
+
+==============================================================================
+INTRODUCTION					*textobj-line-introduction*
+
+*textobj-line* is a Vim plugin to provide text objects to select a portion of
+the current line.  Sometimes you want to select a portion of the current line
+like "^vg_" or "0v$h".  This plugin provides the text objects for such ranges.
+
+For example, if the current line equals to "__foo_bar_baz__" (where "_"
+represents a whitespace character), you can select "foo_bar_baz" (without
+leading and trailing spaces) by |<Plug>(textobj-line-i)| and "__foo_bar_baz__"
+(with leading and trailing spaces) by |<Plug>(textobj-line-a)|.
+
+
+Requirements:
+- Vim 7.2 or later
+- |textobj-user| 0.4.0 or later (vimscript#2100)
+
+Installation:
+- Recommended way: Use vim-flavor <https://github.com/kana/vim-flavor>.
+
+Latest version:
+https://github.com/kana/vim-textobj-line
+
+
+
+
+==============================================================================
+INTERFACE					*textobj-line-interface*
+
+------------------------------------------------------------------------------
+KEY MAPPINGS					*textobj-line-key-mappings*
+
+DEFAULT KEY MAPPINGS				*textobj-line-default-key-mappings*
+
+				    *g:textobj_line_no_default_key_mappings*
+					    *:TextobjLineDefaultKeyMappings*
+This plugin defines the following key mappings by default.  If you don't want
+the default key mappings, define |g:textobj_line_no_default_key_mappings|
+before this plugin is loaded (e.g. in your |vimrc|).  You can also use
+|:TextobjLineDefaultKeyMappings| to redefine these key mappings.  This command
+doesn't override existing {lhs}s unless [!] is given.
+
+Modes	{lhs}		{rhs}
+------------------------------------------------
+vo	al		|<Plug>(textobj-line-a)|
+vo	il		|<Plug>(textobj-line-i)|
+
+
+NAMED KEY MAPPINGS				*textobj-line-named-key-mappings*
+
+<Plug>(textobj-line-a)				*<Plug>(textobj-line-a)*
+			Select all characters in the current line without the
+			end of line character.  You can select the same
+			portion with the following command: 0v$h
+
+			Note that this text object selects nothing if
+
+			* the current line does not contain any character,
+
+			because there is no text to select in the current line.
+
+<Plug>(textobj-line-i)				*<Plug>(textobj-line-i)*
+			Select all characters in the current line without
+			leading spaces, trailing spaces and the end of line
+			character.  You can select the same portion with the
+			following command: ^vg_
+
+			Note that this text object selects nothing if
+
+			* the current line does not contain any character, or
+			* the current line consists only of space characters,
+
+			because there is no text to select in the current line.
+
+
+
+
+==============================================================================
+BUGS						*textobj-line-bugs*
+
+- Currently there is no known issue.
+
+
+
+
+==============================================================================
+CHANGELOG					*textobj-line-changelog*
+
+0.0.2	2015-07-16T20:56:24+09:00		*textobj-line-changelog-0.0.2*
+	- Update for new |textobj-user| conventions.  Now textobj-user 0.4 or
+          later is required to use textobj-line.
+
+0.0.1	2013-01-18T21:08:10+09:00		*textobj-line-changelog-0.0.1*
+	- Support vim-flavor <https://github.com/kana/vim-flavor>.
+	- Update |textobj-line-introduction|.
+
+0.0.0	2012-01-16T18:48:10+09:00		*textobj-line-changelog-0.0.0*
+	- Initial version.
+
+
+
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:fen:fdl=0:fdm=marker:

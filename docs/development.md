@@ -3,7 +3,7 @@ title:  "Development"
 description: "General contributing guidelines and changelog of SpaceVim, including development information about SpaceVim"
 ---
 
-# Development guidelines
+# [Home](../) >> Development
 
 <!-- vim-markdown-toc GFM -->
 
@@ -328,7 +328,7 @@ markdown
             <li>
                <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
                <span class="post-date">{{ post.date | date_to_string }}</span>
-               <p>{{ post.excerpt | truncatewords: 100 }}</p>
+               <p>{{ post.description | truncatewords: 100 }}</p>
             </li>
     {% endfor %}
 </ul>

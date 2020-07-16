@@ -28,6 +28,9 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#markdown"
 ```
 
+The tagbar support is provided via lvht/tagbar-markdown which needs php has been installed. You can also use [mdctags](https://github.com/wsdjeg/mdctags.rs)
+which is written in rust.
+
 ## Formatting
 
 SpaceVim uses remark to format Markdown file by default, but we suggest using [Prettier](https://github.com/prettier/prettier) on Windows.
@@ -74,11 +77,17 @@ Enable/Disable wcwidth for detecting the length of a table cell, default is 0. T
 
 Bullet marker to use for list items (`'-'`, `'*'`, or `'+'`, default: `'-'`).
 
+## Tagbar
+
+To have a table of the headings in the tagbar (toggled by [F2]), make sure php is in your `$PATH` (you can test this in SpaceVim : `:!php --version` should print something about php).
+
+If you don't want to install php, you can use [mdctags](https://github.com/wsdjeg/mdctags.rs) as an alternative.
+
 ## Key bindings
 
 | Key bindings | mode          | Descriptions                                           |
 | ------------ | ------------- | ------------------------------------------------------ |
 | `SPC b f`    | Normal        | Format current buffer                                  |
 | `SPC l k`    | Normal/Visual | Add URL link for word under cursor or slected word     |
-| `SPC l k`    | Normal/Visual | Add picture link for word under cursor or slected word |
+| `SPC l K`    | Normal/Visual | Add picture link for word under cursor or slected word |
 | `SPC l p`    | Normal        | Real-time markdown preview                             |

@@ -1,0 +1,43 @@
+Before:
+  function! g:CmdOutput(cmd)
+    redir => out
+      silent exe a:cmd
+    redir END
+    return out[1:]
+  endfunction
+
+Execute (empty filetype):
+  let &filetype = ''
+  let out = g:CmdOutput('Neoformat')
+  AssertEqual 'Neoformat: formatter not defined for  filetype', out
+
+Execute (filetype without defined formatter):
+  let &filetype = 'not_real_filetype'
+  let out = g:CmdOutput('Neoformat')
+
+  AssertEqual 'Neoformat: formatter not defined for ' . &filetype . ' filetype', out
+
+Execute (formatter defined for other filetype, but is called via user cmd):
+  let &filetype = 'javascript'
+  let out = g:CmdOutput('Neoformat autopep8')
+
+  AssertEqual 'Neoformat: formatter definition for autopep8 not found', out
+
+Execute (user disabled all formatters for current (python) filetype):
+  let g:neoformat_enabled_python= []
+  let &filetype = 'python'
+  let out = g:CmdOutput('Neoformat')
+
+  AssertEqual 'Neoformat: formatter not defined for ' . &filetype . ' filetype', out
+
+Execute (user disabled all formatters for current (python) filetype):
+  let g:neoformat_enabled_python= ['not_real_formatter']
+  let &filetype = 'python'
+  let out = g:CmdOutput('Neoformat')
+
+  AssertEqual 'Neoformat: no change necessary', out
+
+Execute (invalid user cmd: formatter not defined):
+  let out = g:CmdOutput('Neoformat not_a_real_formatter')
+
+  AssertEqual 'Neoformat: formatter definition for not_a_real_formatter not found', out

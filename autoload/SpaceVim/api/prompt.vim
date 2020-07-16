@@ -28,8 +28,6 @@ let s:self.__cmp = SpaceVim#api#import('vim#compatible')
 
 let s:self._keys = {
       \ 'close' : "\<Esc>",
-      \ 'cursor_back' : '<Left>',
-      \ 'cursor_forword' : '<Right>',
       \ }
 let s:self._prompt = {
       \ 'mpt' : '==>',
@@ -66,6 +64,11 @@ endf
 
 function! s:self._getchar(...) abort
   let ret = call('getchar', a:000)
+  " @bug getchar() does not work for <
+  " https://github.com/neovim/neovim/issues/12487
+  if ret ==# "\x80\xfc\<C-b><"
+    return '<'
+  endif
   return (type(ret) == type(0) ? nr2char(ret) : ret)
 endfunction
 
@@ -138,7 +141,8 @@ func! s:self._handle_input(...) abort
     elseif char ==# "\<bs>"
       let self._prompt.begin = substitute(self._prompt.begin,'.$','','g')
       call self._build_prompt()
-    elseif char == self._keys.close
+    elseif (type(self._keys.close) == 1 && char == self._keys.close)
+          \ || (type(self._keys.close) == 3 && index(self._keys.close, char) > -1 )
       call self.close()
       break
     elseif char ==# "\<FocusLost>" || char ==# "\<FocusGained>" || char2nr(char) == 128

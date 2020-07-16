@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#assembly 模块"
 description: "该模块为 SpaceVim 提供了 Assembly 语言开发支持，包括语法高亮。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#assembly

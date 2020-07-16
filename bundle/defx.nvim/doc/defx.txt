@@ -1,0 +1,824 @@
+*defx.txt*	Dark powered file explorer for neovim/Vim8.
+
+Version: 1.0
+Author: Shougo <Shougo.Matsu at gmail.com>
+License: MIT license
+
+CONTENTS						*defx-contents*
+
+Introduction		|defx-introduction|
+Install			|defx-install|
+Interface		|defx-interface|
+  Commands		  |defx-commands|
+  Functions		  |defx-functions|
+  Key mappings		  |defx-key-mappings|
+  Actions		  |defx-actions|
+  Options		  |defx-options|
+  Columns		  |defx-columns|
+    External columns	    |defx-external-columns|
+  Sources		  |defx-sources|
+Examples		|defx-examples|
+FAQ			|defx-faq|
+Compatibility		|defx-compatibility|
+
+==============================================================================
+INTRODUCTION						*defx-introduction*
+
+*defx* is the abbreviation of "dark powered file explorer".
+
+==============================================================================
+INSTALL							*defx-install*
+
+Note: defx requires Neovim 0.3.0+ or Vim8.1+ with Python3.6.1+.
+
+Please install nvim-yarp plugin for Vim8.
+https://github.com/roxma/nvim-yarp
+
+Please install vim-hug-neovim-rpc plugin for Vim8.
+https://github.com/roxma/vim-hug-neovim-rpc
+
+1. Extract the files and put them in your Neovim or .vim directory
+   (usually `$XDG_CONFIG_HOME/nvim/`).
+2. Execute the ":UpdateRemotePlugins" if Neovim.
+
+If ":echo has('python3')" returns `1`, then you're done; otherwise, see below.
+
+You can enable Python3 interface with pip: >
+
+    pip3 install --user pynvim
+
+Note: defx needs pynvim ver.0.1.8+.  You need update pynvim module.
+>
+    pip3 install --user --upgrade pynvim
+<
+If you want to read for pynvim/python3 interface install documentation,
+you should read |provider-python| and the Wiki.
+https://github.com/zchee/deoplete-jedi/wiki/Setting-up-Python-for-Neovim
+
+You can check the Python3 installation by |:checkhealth| command in neovim.
+
+==============================================================================
+INTERFACE						*defx-interface*
+
+------------------------------------------------------------------------------
+COMMANDS 						*defx-commands*
+
+:Defx [{options}] {paths}				*:Defx*
+		Creates a new Defx buffer.
+
+------------------------------------------------------------------------------
+FUNCTIONS 						*defx-functions*
+
+defx#async_action({action}[, {args}])			*defx#async_action()*
+		Fire {action} action with {args} asynchronously.  You can find
+		the actions list in |defx-actions|.
+		{args} behavior depends on {action}.
+		Note: It is only used to define mappings.
+		Note: You cannot fire the next action until the previous
+		action is finished.
+
+							*defx#call_action()*
+defx#call_action({action}[, {args}])
+		Fire {action} action with {args}.  You can find the actions
+		list in |defx-actions|.
+		{args} behavior depends on {action}.
+
+						*defx#call_async_action()*
+defx#call_async_action({action}[, {args}])
+		Fire {action} action with {args} asynchronously.  You can find
+		the actions list in |defx-actions|.
+		{args} behavior depends on {action}.
+		Note: You cannot fire the next action until the previous
+		action is finished.
+
+						*defx#custom#column()*
+defx#custom#column({column-name}, {option-name}, {value})
+defx#custom#column({column-name}, {dict})
+		Set {column-name} column specialized variable {variable-name}
+		to {value}.  You may specify multiple sources with the
+		separator "," in {column-name}. >
+
+	call defx#custom#column('icon', {
+	      \ 'directory_icon': '▸',
+	      \ 'opened_icon': '▾',
+	      \ 'root_icon': ' ',
+	      \ })
+
+	call defx#custom#column('filename', {
+	      \ 'min_width': 40,
+	      \ 'max_width': 40,
+	      \ })
+
+	call defx#custom#column('mark', {
+	      \ 'readonly_icon': '✗',
+	      \ 'selected_icon': '✓',
+	      \ })
+<
+						*defx#custom#option()*
+defx#custom#option({buffer-name}, {option-name}, {value})
+defx#custom#option({buffer-name}, {dict})
+		Set {option-name} option to {value} in {buffer-name}
+		buffer.
+		If {buffer-name} is "_", the options are used for all buffers.
+		If {dict} is available, the key is {option-name} and the value
+		is {value}.
+		Note: The all options are in |defx-options|.  However, "-" is
+		substituted to "_", and "-" prefix is removed. >
+
+	call defx#custom#option('_', {
+	      \ 'columns': 'mark:indent:icon:filename:type:size:time',
+	      \ })
+<
+							*defx#custom#source()*
+defx#custom#source({source-name}, {var-name}, {value})
+defx#custom#source({source-name}, {dict})
+		Set {source-name} source specialized variable {variable-name}
+		to {value}.  You may specify multiple sources with the
+		separator "," in {source-name}.
+>
+	function! Root(path) abort
+	  return fnamemodify(a:path, ':t')
+	endfunction
+	
+	call defx#custom#source('file', {
+	     \ 'root': 'Root',
+	     \})
+<
+defx#do_action({action}[, {args}])			*defx#do_action()*
+		Fire {action} action with {args}.  You can find the actions
+		list in |defx-actions|.
+		{args} behavior depends on {action}.
+		Note: It is only used to define mappings.
+
+defx#get_candidate()					*defx#get_candidate()*
+		Returns the current cursor candidate as |Dictionary|.
+
+defx#get_context()					*defx#get_context()*
+		Returns the current context as |Dictionary|.
+
+defx#is_directory()					*defx#is_directory()*
+		Returns |v:true| if the current cursor candidate is directory.
+
+		Example: >
+
+		nnoremap <silent><buffer><expr> <CR>
+		\ defx#is_directory() ?
+		\ defx#do_action('open_directory') :
+		\ defx#do_action('multi', ['drop', 'quit'])
+
+defx#is_opened_tree()				*defx#is_opened_tree()*
+		Returns |v:true| if the current cursor candidate is opened
+		directory tree.
+
+defx#redraw()						*defx#redraw()*
+		Redraw all defx windows.
+
+------------------------------------------------------------------------------
+KEY MAPPINGS 						*defx-key-mappings*
+
+Defx does not provide any of default key mappings.
+You need to define original key mappings by |defx#do_action()|.
+
+------------------------------------------------------------------------------
+ACTIONS 						*defx-actions*
+
+add_session 					*defx-action-add_session*
+		Add the current directory in current sessions and save to
+		|defx-option-session-file|.
+		Note: You must set to |defx-option-session-file| save current
+		sessions.
+
+		Current session feature saves below states.
+
+		* current path
+		* opened tree state
+
+		Action args:
+			0. session directory path
+
+call 						*defx-action-call*
+		Call the function.
+		You can get the files path as "a:context.targets".
+
+		Action args:
+			0. function name
+			Note: It must be string.  You cannot use |Funcref| or
+			|lambda|.
+
+		Example: >
+
+		function! Test(context) abort
+		  echomsg string(a:context.targets)
+		endfunction
+		nnoremap <silent><buffer><expr> f
+		\ defx#do_action('call', 'Test')
+
+		" or you can use SID hack
+		function! s:Test(context) abort
+		  echomsg string(a:context.targets)
+		endfunction
+		function! s:SID_PREFIX() abort
+		  return matchstr(expand('<sfile>'),
+		  \ '<SNR>\d\+_\zeSID_PREFIX$')
+		endfunction
+		let g:sid = s:SID_PREFIX()
+  		nnoremap <silent><buffer><expr> f
+  		\ defx#do_action('call', g:sid.'Test')
+
+cd 						*defx-action-cd*
+		Change the current directory.
+		Note: If the action args is empty, it means the home
+		directory.
+
+		Action args:
+			0. new current directory path
+
+change_vim_cwd					*change_vim_cwd*
+		Change current working directory to the current directory.
+		Note: It changes global current directory if the window has
+		not local current directory.  If you don't like the behavior,
+		you need to set local current directory.
+
+clear_select_all				*defx-action-clear_select_all*
+		Clear the all candidates select.
+
+close_tree					*defx-action-close_tree*
+		Close the directory tree.
+
+copy 						*defx-action-copy*
+		Copy the selected files to defx clipboard.
+
+drop							*defx-action-drop*
+		Open the file like |:drop| command.
+
+		Action args:
+			0. open command(The default is |:edit|)
+
+execute_command 				*defx-action-execute_command*
+		Execute the command.
+
+		Action args:
+			0. command(The default is your input)
+
+execute_system 					*defx-action-execute_system*
+		Execute the file by system associated command.
+
+move 						*defx-action-move*
+		Move the selected files to defx clipboard.
+
+multi 						*defx-action-multi*
+		Multiple actions.
+
+		Action args:
+			0. action 1
+			1. action 2
+			...
+
+		Example: >
+
+		" auto quit like behavior
+		nnoremap <silent><buffer><expr> <CR>
+		\ defx#do_action('multi', ['drop', 'quit'])
+		nnoremap <silent><buffer><expr> s
+		\ defx#do_action('multi', [['drop', 'split'], 'quit'])
+
+new_directory 					*defx-action-new_directory*
+		Create a new directory.
+
+new_file 						*defx-action-new_file*
+		Create a new file and directory if provided.
+		If the input ends with "/", it means new directory.
+
+ 					*defx-action-new_multiple_files*
+new_multiple_files
+		Create new files and directories if provided.
+		If the input ends with "/", it means new directory.
+
+open							*defx-action-open*
+		Open the selected candidates.
+		Note: If the candidate is directory, it is same with
+		|defx-action-open_directory|.
+
+		Action args:
+			0. open command(The default is |:edit|)
+
+open_directory					*defx-action-open_directory*
+		Open the directory.
+
+		Action args:
+			0. open file path(The default is the selected
+			directory)
+
+open_or_close_tree			*defx-action-open_or_close_tree*
+		It is the same with |defx-action-open_tree| with "toggle"
+		arg.
+		Note: The action is deprecated.
+
+open_tree					*defx-action-open_tree*
+		Open the directory tree.
+
+		Action args:
+			0-n. options.  The supported values are:
+
+			"nested":
+				enable nested directory view if it has one
+				directory only.
+			"recursive":
+				open the directory tree recursively.
+			"recursive[:{level}]":
+				open the directory tree recursively by
+				max recursive {level}.
+			"toggle":
+				close the directory tree if the directory is
+				opened.
+
+
+open_tree_recursive			*defx-action-open_tree_recursive*
+		It is the same with |defx-action-open_tree| with "recursive"
+		arg.
+		Note: The action is deprecated.
+
+paste							*defx-action-paste*
+		Fire the clipboard action in the current directory.
+		Note: It is used after |defx-action-copy| or
+		|defx-action-move|.
+
+print 						*defx-action-print*
+		Print the filename.
+
+quit							*defx-action-quit*
+		Quit the buffer.
+
+redraw						      *defx-action-redraw*
+		Redraw the buffer.
+
+repeat						      *defx-action-repeat*
+		Redraw the previous action.
+
+rename						      *defx-action-rename*
+		Rename the file/directory under cursor or from selected list.
+		Note: If you select multiple files, it will be buffer-rename
+		mode.
+
+remove							*defx-action-remove*
+		Delete the file/directory under cursor or from selected list
+		completely.
+		Note: You cannot undo the action.
+
+		Action args:
+			0. If it is "true", suppress the confirmation.
+
+remove_trash					*defx-action-remove_trash*
+		Delete the file/directory under cursor or from selected list
+		to trashbox.
+
+		Note: Send2Trash module is needed for the action.
+		https://pypi.org/project/Send2Trash/
+
+		Action args:
+			0. If it is "true", suppress the confirmation.
+
+resize						      *defx-action-resize*
+		Vertical resize and redraw the current window.
+
+		Action args:
+			0. Resized window size.
+
+search						      *defx-action-search*
+		Search the path.
+
+		Action args:
+			0. search the path
+
+toggle_columns			*defx-action-toggle_columns*
+		Toggle the current columns.
+
+		Action args:
+			0. ":" separated defx columns.
+
+toggle_sort			*defx-action-toggle_sort*
+		Toggle the sort method.
+
+		Action args:
+			0. sort method.
+
+toggle_ignored_files			*defx-action-toggle_ignored_files*
+		Toggle the enable state of ignored files.
+
+toggle_select					*defx-action-toggle_select*
+		Toggle the cursor candidate select.
+
+toggle_select_all			*defx-action-toggle_select_all*
+		Toggle the all candidates select.
+
+toggle_select_visual
+*defx-action-toggle_select_visual*
+		Toggle the visual mode selected candidates select.
+
+yank_path					*defx-action-yank_path*
+		Yank the all candidates path.
+
+------------------------------------------------------------------------------
+OPTIONS							*defx-options*
+
+							*defx-option-no-*
+-no-{option-name}
+		Disable {option-name} flag.
+		Note: If you use both {option-name} and -no-{option-name} in
+		the same denite buffer, it is undefined.
+
+							*defx-option-auto-cd*
+-auto-cd
+		Change the working directory while navigating with defx.
+		Note: It changes global current directory if the window has
+		not local current directory.  If you don't like the behavior,
+		you need to set local current directory.
+
+		Default: false
+
+					*defx-option-auto-recursive-level*
+-auto-recursive-level={level}
+		The level to expand tree automatically.
+		Default: 0
+
+						*defx-option-buffer-name*
+-buffer-name={buffer-name}
+		Specify defx buffer name.
+		Default: "default"
+
+							*defx-option-columns*
+-columns={columns1:columns2,...}
+		Specify defx columns.
+		Default: "mark:indent:icon:filename:type"
+
+						*defx-option-direction*
+-direction={direction}
+		Specify the window direction as {direction} if
+		|defx-option-split| is set.
+		You can use "topleft" or "botright".
+		Default: ""
+
+						*defx-option-ignored-files*
+-ignored-files={pattern}
+		Specify the ignored files pattern.
+		The pattern is comma separated.
+		Default: ".*"
+
+							*defx-option-listed*
+-listed
+		Enable 'buflisted' option in defx buffer.
+
+		Default: false
+
+							*defx-option-new*
+-new
+		Create new defx buffer.
+
+		Default: false
+
+							*defx-option-profile*
+-profile
+		Enable profile feature.
+		Note: It is for debugging.
+
+		Default: false
+
+							*defx-option-resume*
+-resume
+		Resume existing defx buffer.
+		Note: |defx-option-listed| is needed to resume.
+
+		Default: false
+
+						*defx-option-root-marker*
+-root-marker={marker}
+		Root marker.
+
+		Default: "[in]: "
+
+							*defx-option-search*
+-search={path}
+		Search the {path}.
+		Note: It must be full path.
+
+		Default: ""
+
+						*defx-option-session-file*
+-session-file={path}
+		Session file {path}.
+		Note: It must be full path.
+
+		Default: ""
+
+					*defx-option-show-ignored-files*
+-show-ignored-files
+		Show ignored files by default.
+		Default: false
+
+							*defx-options-sort*
+-sort={method}
+		Sort method.
+		If the method is upper case, the order will be reversed.
+
+		"extension": file extension sort
+		"filename": file name sort
+		"size": file size sort
+		"time": file modified time sort
+
+		Default: "filename"
+
+						*defx-option-split*
+-split={direction}
+		Specify the split direction.
+
+		"vertical": Split buffer vertically
+		"horizontal": Split buffer horizontally
+		"no": No split
+		"tab": Create the new tab
+		"floating": Use neovim floating window feature
+
+		Default: "no"
+
+							*defx-option-toggle*
+-toggle
+		Close defx buffer window if this defx window exists.
+		Default: false
+
+						*defx-option-wincol*
+-wincol={window-column}
+		Set the column position of the Defx window if
+		|defx-option-split| is "floating".
+
+		Default: &columns / 4
+
+						*defx-option-winheight*
+-winheight={window-height}
+		Set the height of the window if |defx-option-split| is
+		"horizontal".
+
+		Default: 30
+
+						*defx-option-winrelative*
+-winrelative={direction}
+		Specify the relative position in floating window.
+		|nvim_open_win()|
+
+		Default: "editor"
+
+						*defx-option-winrow*
+-winrow={window-row}
+		Set the row position of the Defx window if
+		|defx-option-split| is "floating".
+
+		Default: &lines / 3
+
+						*defx-option-winwidth*
+-winwidth={window-width}
+		Set the width of the window if |defx-option-split| is
+		"vertical".
+
+		Default: 90
+
+------------------------------------------------------------------------------
+COLUMNS							*defx-columns*
+
+							*defx-column-filename*
+filename	File name.
+
+		variables:
+		min_width	  the minimum width of a defx buffer
+				  (default: 40)
+		max_width	  the maximum width of a defx buffer
+				  If it is negative value, it means:
+				  "winwidth -max_width / 100".
+				  Example: "-120" max_width means 120 percent
+				  winwidth.
+				  (default: 100)
+		root_marker_highlight
+				the root marker highlight
+				  (default: "Constant")
+
+							*defx-column-icon*
+icon		Basic icon.
+
+		variables:
+		directory_icon	  the closed directory icon
+				  (default: "+")
+		opened_icon	  the opened directory icon
+				  (default: "-")
+		root_icon	  the root directory icon
+				  (default: " ")
+
+							*defx-column-indent*
+indent		Tree indentation.
+		Note: It depends on |defx-column-filename|.
+
+		variables:
+		indent		  the indent marker.
+				  (default: " ")
+
+							*defx-column-mark*
+mark		File selected mark.
+
+		variables:
+		length		  the column length
+				  (default: 1)
+		readonly_icon	  the readonly file icon
+				  (default: "X")
+		selected_icon	  the selected file icon
+				  (default: "*")
+
+							*defx-column-size*
+size		File size.
+
+							*defx-column-space*
+space		One space column for padding.
+
+							*defx-column-time*
+time		File modified time.
+
+		variables:
+		format		  the time format
+				  (default: "%y.%m.%d %H:%M")
+
+							*defx-column-type*
+type		File type.
+
+		variables:
+		types		  the types definition
+				  (default: complicated)
+
+EXTERNAL COLUMNS				*defx-external-columns*
+
+git 		Git status.
+		https://github.com/kristijanhusak/defx-git
+
+icons		Nerd font icons.
+		https://github.com/kristijanhusak/defx-icons
+
+------------------------------------------------------------------------------
+SOURCES 						*defx-sources*
+
+file		File
+
+		variables:
+		root		  root function name
+				  Note: It must be string.  You cannot use
+				  |Funcref| or |lambda|.
+				  (default is v:null)
+
+==============================================================================
+DENITE SOURCES						*defx-denite-sources*
+
+						*denite-source-defx/drive*
+defx/drive	Gather defx drives.
+
+		Note: You can set drives like this:
+>
+	call defx#custom#option('_', 'drives', [
+	\ expand('~/Downloads'), expand('~')
+	\ ])
+<
+						*denite-source-defx/history*
+defx/history	Gather defx histories.
+
+						*denite-source-defx/session*
+defx/session	Gather defx sessions.
+
+==============================================================================
+EXAMPLES						*defx-examples*
+>
+	autocmd FileType defx call s:defx_my_settings()
+	function! s:defx_my_settings() abort
+	  " Define mappings
+	  nnoremap <silent><buffer><expr> <CR>
+	  \ defx#do_action('open')
+	  nnoremap <silent><buffer><expr> c
+	  \ defx#do_action('copy')
+	  nnoremap <silent><buffer><expr> m
+	  \ defx#do_action('move')
+	  nnoremap <silent><buffer><expr> p
+	  \ defx#do_action('paste')
+	  nnoremap <silent><buffer><expr> l
+	  \ defx#do_action('open')
+	  nnoremap <silent><buffer><expr> E
+	  \ defx#do_action('open', 'vsplit')
+	  nnoremap <silent><buffer><expr> P
+	  \ defx#do_action('open', 'pedit')
+	  nnoremap <silent><buffer><expr> o
+	  \ defx#do_action('open_tree', 'toggle')
+	  nnoremap <silent><buffer><expr> K
+	  \ defx#do_action('new_directory')
+	  nnoremap <silent><buffer><expr> N
+	  \ defx#do_action('new_file')
+	  nnoremap <silent><buffer><expr> M
+	  \ defx#do_action('new_multiple_files')
+	  nnoremap <silent><buffer><expr> C
+	  \ defx#do_action('toggle_columns',
+	  \                'mark:indent:icon:filename:type:size:time')
+	  nnoremap <silent><buffer><expr> S
+	  \ defx#do_action('toggle_sort', 'time')
+	  nnoremap <silent><buffer><expr> d
+	  \ defx#do_action('remove')
+	  nnoremap <silent><buffer><expr> r
+	  \ defx#do_action('rename')
+	  nnoremap <silent><buffer><expr> !
+	  \ defx#do_action('execute_command')
+	  nnoremap <silent><buffer><expr> x
+	  \ defx#do_action('execute_system')
+	  nnoremap <silent><buffer><expr> yy
+	  \ defx#do_action('yank_path')
+	  nnoremap <silent><buffer><expr> .
+	  \ defx#do_action('toggle_ignored_files')
+	  nnoremap <silent><buffer><expr> ;
+	  \ defx#do_action('repeat')
+	  nnoremap <silent><buffer><expr> h
+	  \ defx#do_action('cd', ['..'])
+	  nnoremap <silent><buffer><expr> ~
+	  \ defx#do_action('cd')
+	  nnoremap <silent><buffer><expr> q
+	  \ defx#do_action('quit')
+	  nnoremap <silent><buffer><expr> <Space>
+	  \ defx#do_action('toggle_select') . 'j'
+	  nnoremap <silent><buffer><expr> *
+	  \ defx#do_action('toggle_select_all')
+	  nnoremap <silent><buffer><expr> j
+	  \ line('.') == line('$') ? 'gg' : 'j'
+	  nnoremap <silent><buffer><expr> k
+	  \ line('.') == 1 ? 'G' : 'k'
+	  nnoremap <silent><buffer><expr> <C-l>
+	  \ defx#do_action('redraw')
+	  nnoremap <silent><buffer><expr> <C-g>
+	  \ defx#do_action('print')
+	  nnoremap <silent><buffer><expr> cd
+	  \ defx#do_action('change_vim_cwd')
+	endfunction
+<
+==============================================================================
+FREQUENTLY ASKED QUESTIONS (FAQ)			*defx-faq*
+
+Q: I want to explore the folder where the current file is.
+
+A: >
+	Defx `expand('%:p:h')` -search=`expand('%:p')`
+
+Q: I want to open defx window like explorer.
+
+A: >
+	Defx -split=vertical -winwidth=50 -direction=topleft
+
+Q: I want to open file like vimfiler explorer mode.
+
+A: >
+	nnoremap <silent><buffer><expr> <CR> defx#do_action('drop')
+
+Q: I want to disable root marker.
+
+A: >
+	call defx#custom#option('_', {
+	      \ 'root_marker': ':',
+	      \ })
+	call defx#custom#column('filename', {
+	      \ 'root_marker_highlight': 'Ignore',
+	      \ })
+
+Q: I want to resize defx window dynamically.
+
+A: >
+	nnoremap <silent><buffer><expr> > defx#do_action('resize',
+	\ defx#get_context().winwidth + 10)
+	nnoremap <silent><buffer><expr> < defx#do_action('resize',
+	\ defx#get_context().winwidth - 10)
+
+
+Q: I want to update defx status automatically when changing file.
+
+A: >
+	autocmd BufWritePost * call defx#redraw()
+
+Q: I want to open defx when running `:e /some/directory/` like netrw.
+
+A: https://github.com/Shougo/defx.nvim/issues/175
+
+Q: I want to open file by double click.
+
+A: >
+	nnoremap <silent><buffer><expr> <2-LeftMouse> defx#do_action('open')
+
+==============================================================================
+COMPATIBILITY						*defx-compatibility*
+
+2020-05-04
+* "open_tree_recursive" and "open_or_close_tree" actions are deprecated.
+
+2019-03-10
+* Move "directory_icon", "opened_icon" and "root_icon" to filename column.
+
+2019-02-14
+* Change column "highlight" method to "highlight_commands" method.
+
+2019-01-02
+* Remove "fnamewidth" option.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:

@@ -1,0 +1,11 @@
+.project.vim
+neomake.log
+scratch/
+tags
+*.class
+testmaker/
+
+tests/shada.nvim
+tests/vader
+tests/viminfo
+build/

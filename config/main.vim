@@ -21,6 +21,13 @@ if has('vim_starting')
   endif
   if !empty($PYTHON3_HOST_PROG)
     let g:python3_host_prog = $PYTHON3_HOST_PROG
+    if !has('nvim') 
+          \ && (has('win16') || has('win32') || has('win64'))
+          \ && exists('&pythonthreedll')
+          \ && exists('&pythonthreehome')
+      let &pythonthreedll = get(split(globpath(fnamemodify($PYTHON3_HOST_PROG, ':h'), 'python*.dll'), '\n'), -1, '')
+      let &pythonthreehome = fnamemodify($PYTHON3_HOST_PROG, ':h')
+    endif
   endif
 endif
 " Detect root directory of SpaceVim
@@ -41,9 +48,9 @@ else
     return resolve(a:path)
   endfunction
 endif
-let g:_spacevim_root_dir = escape(fnamemodify(s:resolve(fnamemodify(expand('<sfile>'),
+let g:_spacevim_root_dir = fnamemodify(s:resolve(fnamemodify(expand('<sfile>'),
       \ ':p:h:h:gs?\\?'.((has('win16') || has('win32')
-      \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?'), ' ')
+      \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?')
 lockvar g:_spacevim_root_dir
 if has('nvim')
   let s:qtdir = split(&rtp, ',')[-1]

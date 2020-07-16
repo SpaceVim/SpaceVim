@@ -89,8 +89,8 @@ function! SpaceVim#layers#colorscheme#config() abort
     " {"fequecnce" : "dalily", "last" : 000000, 'theme' : 'one'}
     " FIXME: when global config cache is updated, check the cache also should
     " be updated
-    if filereadable(expand('~/.cache/SpaceVim/colorscheme_frequence.json'))
-      let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/colorscheme_frequence.json'), ''), ''))
+    if filereadable(expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequence.json'))
+      let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequence.json'), ''), ''))
       if s:random_frequency !=# '' && !empty(conf)
         let ctime = localtime()
         if ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'fequecnce', ''), 0)
@@ -121,7 +121,7 @@ function! s:update_conf() abort
         \ 'last' : localtime(),
         \ 'theme' : g:spacevim_colorscheme
         \ }
-  call writefile([s:JSON.json_encode(conf)], expand('~/.cache/SpaceVim/colorscheme_frequence.json'))
+  call writefile([s:JSON.json_encode(conf)], expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequence.json'))
 endfunction
 
 

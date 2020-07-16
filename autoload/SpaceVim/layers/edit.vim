@@ -15,28 +15,28 @@ let s:VIM = SpaceVim#api#import('vim')
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
-        \ ['tpope/vim-surround'],
-        \ ['tpope/vim-repeat'],
-        \ ['junegunn/vim-emoji'],
-        \ ['terryma/vim-expand-region', { 'loadconf' : 1}],
-        \ ['kana/vim-textobj-user'],
-        \ ['kana/vim-textobj-indent'],
-        \ ['kana/vim-textobj-line'],
-        \ ['dhruvasagar/vim-table-mode'],
-        \ ['kana/vim-textobj-entire'],
-        \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
-        \ ['easymotion/vim-easymotion'],
-        \ ['haya14busa/vim-easyoperator-line'],
-        \ ['editorconfig/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
-        \ ['osyo-manga/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
-        \ ['godlygeek/tabular',           { 'merged' : 0}],
-        \ ['ntpeters/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-surround'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-repeat'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-emoji'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-expand-region', { 'loadconf' : 1}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-user'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-indent'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-line'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-table-mode'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-entire'],
+        \ [g:_spacevim_root_dir . 'bundle/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-easymotion'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-easyoperator-line'],
+        \ [g:_spacevim_root_dir . 'bundle/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
+        \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
         \ ]
   if executable('fcitx')
-    call add(plugins,['lilydjwg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
   endif
   if g:spacevim_enable_bepo_layout
-    call add(plugins,['michamos/vim-bepo',        { 'merged' : 0}])
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-bepo',        { 'merged' : 0}])
   endif
   return plugins
 endfunction
@@ -73,6 +73,8 @@ function! SpaceVim#layers#edit#config() abort
   nnoremap <silent> <Plug>CountSelectionRegion :call <SID>count_selection_region()<Cr>
   xnoremap <silent> <Plug>CountSelectionRegion :<C-u>call <SID>count_selection_region()<Cr>
   call SpaceVim#mapping#space#def('nmap', ['x', 'c'], '<Plug>CountSelectionRegion', 'count in the selection region', 0, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '#'], 'Tabularize /#', 'align-region-at-#', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '%'], 'Tabularize /%', 'align-region-at-%', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '&'], 'Tabularize /&', 'align-region-at-&', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '('], 'Tabularize /(', 'align-region-at-(', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ')'], 'Tabularize /)', 'align-region-at-)', 1, 1)
@@ -81,19 +83,21 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '{'], 'Tabularize /{', 'align-region-at-{', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '}'], 'Tabularize /}', 'align-region-at-}', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ','], 'Tabularize /,', 'align-region-at-,', 1, 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '.'], 'Tabularize /.', 'align-region-at-.', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '.'], 'Tabularize /\.', 'align-region-at-dot', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ':'], 'Tabularize /:', 'align-region-at-:', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', ';'], 'Tabularize /;', 'align-region-at-;', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /===\|<=>\|\(&&\|||\|<<\|>>\|\/\/\)=\|=\~[#?]\?\|=>\|[:+/*!%^=><&|.?-]\?=[#?]\?/l1r1', 'align-region-at-=', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', 'o'], 'Tabularize /&&\|||\|\.\.\|\*\*\|<<\|>>\|\/\/\|[-+*/.%^><&|?]/l1r1', 'align-region-at-operator, such as +,-,*,/,%,^,etc', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '¦'], 'Tabularize /¦', 'align-region-at-¦', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '<Bar>'], 'Tabularize /|', 'align-region-at-|', 1, 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '[SPC]'], 'Tabularize /\s\ze\S/l0', 'align-region-at-space', 1, 1)
+  call SpaceVim#mapping#space#def('nmap', ['x', 'a', '[SPC]'], 'Tabularize /\s\ze\S/l0', 'align-region-at-space', 1, 1)
+  " @fixme SPC x a SPC make vim flick
+  nmap <Space>xa<Space> [SPC]xa[SPC]
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', 'r'], 'call call('
         \ . string(s:_function('s:align_at_regular_expression')) . ', [])',
         \ 'align-region-at-user-specified-regexp', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', 'w'], 'StripWhitespace', 'delete trailing whitespaces', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', '[SPC]'], 'silent call call('
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', '<Space>'], 'silent call call('
         \ . string(s:_function('s:delete_extra_space')) . ', [])',
         \ 'delete extra space arround cursor', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'c'], 'silent call call('
@@ -110,7 +114,7 @@ function! SpaceVim#layers#edit#config() abort
         \ 'change symbol style to under_score', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'U'], 'silent call call('
         \ . string(s:_function('s:up_case')) . ', [])',
-        \ 'change symbol style to UP_CACE', 1)
+        \ 'change symbol style to UP_CASE', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'k'], 'silent call call('
         \ . string(s:_function('s:kebab_case')) . ', [])',
         \ 'change symbol style to kebab-case', 1)
@@ -135,7 +139,7 @@ function! SpaceVim#layers#edit#config() abort
 
   " word
   let g:_spacevim_mappings_space.x.w = {'name' : '+Word'}
-  call SpaceVim#mapping#space#def('vnoremap', ['x', 'w', 'c'], "normal! " . ":'<,'>s/\\\w\\+//gn" . "\<cr>", 'count the words in the select region', 1)
+  call SpaceVim#mapping#space#def('vnoremap', ['x', 'w', 'c'], 'normal! ' . ":'<,'>s/\\\w\\+//gn" . "\<cr>", 'count the words in the select region', 1)
   let g:_spacevim_mappings_space.x.s = {'name' : '+String'}
   call SpaceVim#mapping#space#def('nnoremap', ['x', 's', 'j'], 'call call('
         \ . string(s:_function('s:join_string_with')) . ', [])',
@@ -160,7 +164,6 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 'n'], 'call call('
         \ . string(s:_function('s:insert_numerical_password')) . ', [])',
         \ 'insert-a-numerical-password', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Unite unicode', 'search-and-insert-unicode', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'U', 'U'], 'call call('
         \ . string(s:_function('s:uuidgen_U')) . ', [])',
         \ 'uuidgen-4', 1)
@@ -304,6 +307,9 @@ endfunction
 
 function! s:lowerCamelCase() abort
   " fooFzz
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+    return
+  endif
   let cword = s:parse_symbol(expand('<cword>'))
   if !empty(cword)
     let rst = [cword[0]]
@@ -321,6 +327,9 @@ endfunction
 
 function! s:UpperCamelCase() abort
   " FooFzz
+  if strcharpart(getline('.')[col('.') - 1:], 0, 1) =~ '\s'
+    return
+  endif
   let cword = s:parse_symbol(expand('<cword>'))
   if !empty(cword)
     let rst = map(cword, "substitute(v:val, '^.', '\\u&', 'g')")
@@ -335,6 +344,9 @@ endfunction
 
 function! s:kebab_case() abort
   " foo-fzz
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+    return
+  endif
   let cword = s:parse_symbol(expand('<cword>'))
   if !empty(cword)
     let save_register = @k
@@ -361,6 +373,9 @@ endfunction
 
 function! s:up_case() abort
   " FOO_FZZ
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+    return
+  endif
   let cword =map(s:parse_symbol(expand('<cword>')), 'toupper(v:val)')
   if !empty(cword)
     let save_register = @k
@@ -549,31 +564,31 @@ endfunction
 
 function! s:insert_simple_password() abort
   let save_register = @k
-  let @k = s:PASSWORD.generate_simple(8)
+  let @k = s:PASSWORD.generate_simple(v:count ? v:count : 8)
   normal! "kPl
   let @k = save_register
 endfunction
 function! s:insert_stronger_password() abort
   let save_register = @k
-  let @k = s:PASSWORD.generate_strong(12)
+  let @k = s:PASSWORD.generate_strong(v:count ? v:count : 12)
   normal! "kPl
   let @k = save_register
 endfunction
 function! s:insert_paranoid_password() abort
   let save_register = @k
-  let @k = s:PASSWORD.generate_paranoid(20)
+  let @k = s:PASSWORD.generate_paranoid(v:count ? v:count : 20)
   normal! "kPl
   let @k = save_register
 endfunction
 function! s:insert_numerical_password() abort
   let save_register = @k
-  let @k = s:PASSWORD.generate_numeric(4)
+  let @k = s:PASSWORD.generate_numeric(v:count ? v:count : 4)
   normal! "kPl
   let @k = save_register
 endfunction
 function! s:insert_phonetically_password() abort
   let save_register = @k
-  let @k = s:PASSWORD.generate_phonetic(8)
+  let @k = s:PASSWORD.generate_phonetic(v:count ? v:count : 8)
   normal! "kPl
   let @k = save_register
 endfunction
@@ -658,7 +673,7 @@ augroup spacevim_layer_edit
 augroup END
 let s:ft_head_tp = {}
 function! s:add_buffer_head() abort
-  if has_key(s:ft_head_tp, &ft) && getline(1) == '' && line('$')  == 1
+  if has_key(s:ft_head_tp, &ft) && getline(1) ==# '' && line('$')  == 1
     let head = s:ft_head_tp[&ft]
     call setline(1, map(head, 's:parse(v:val)'))
     call cursor(len(head), 0)

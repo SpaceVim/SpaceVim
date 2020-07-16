@@ -6,6 +6,15 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#asciidoc, layer-lang-asciidoc
+" @parentsection layers
+" This layer provides syntax highlighting for asciidoc. To enable this
+" layer:
+" >
+"   [layers]
+"     name = "lang#asciidoc"
+" <
 
 func! SpaceVim#layers#lang#asciidoc#plugins() abort
 

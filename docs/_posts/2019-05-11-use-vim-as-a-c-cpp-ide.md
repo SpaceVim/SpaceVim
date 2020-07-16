@@ -2,10 +2,10 @@
 title: "使用 Vim 搭建 C/C++ 开发环境"
 categories: [tutorials_cn, blog_cn]
 image: https://user-images.githubusercontent.com/13142418/58743787-db2bee80-846a-11e9-9b19-17202ac542c9.png
-excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建 C/C++ 的开发环境，简介 lang#c 模块所支持的功能特性以及使用技巧"
+description: "这篇文章主要介绍如何使用 SpaceVim 搭建 C/C++ 的开发环境，简介 lang#c 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
-lang: cn
-type: BlogPosting
+lang: zh
+type: article
 comments: true
 commentsID: "使用 Vim 搭建 C/C++ 开发环境"
 ---
@@ -42,7 +42,7 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 
 ### 代码自动补全
 
-`autocomplete` 模块为 SpaceVim 提供了自动补全功能，目前针对 PHP 而言，比较好的补全方案是配合使用 lsp 模块：
+`autocomplete` 模块为 SpaceVim 提供了自动补全功能，目前针对 C/C++ 而言，比较好的补全方案是配合使用 lsp 模块：
 
 ```toml
 [[layers]]

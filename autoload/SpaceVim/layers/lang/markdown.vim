@@ -25,13 +25,22 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
   call add(plugins, ['joker1007/vim-markdown-quote-syntax',{ 'on_ft' : 'markdown'}])
   call add(plugins, ['mzlogin/vim-markdown-toc',{ 'on_ft' : 'markdown'}])
   call add(plugins, ['iamcco/mathjax-support-for-mkdp',{ 'on_ft' : 'markdown'}])
+  call add(plugins, ['lvht/tagbar-markdown',{'merged' : 0}])
+  " check node package managers to ensure building of 2 plugins below
+  if executable('npm')
+    let s:node_pkgm = 'npm'
+  elseif executable('yarn')
+    let s:node_pkgm = 'yarn'
+  else
+    let s:node_pkgm = ''
+    call SpaceVim#logger#error('npm or yarn is required to build iamcco/markdown-preview and neoclide/vim-node-rpc')
+  endif
   call add(plugins, ['iamcco/markdown-preview.nvim',
         \ { 'on_ft' : 'markdown',
         \ 'depends': 'open-browser.vim',
-        \ 'build' : 'cd app & yarn install' }])
-  call add(plugins, ['lvht/tagbar-markdown',{'merged' : 0}])
+        \ 'build' : 'cd app & ' . s:node_pkgm . ' install' }])
   if !has('nvim')
-    call add(plugins, ['neoclide/vim-node-rpc',  {'merged': 0, 'build' : 'yarn install'}])
+    call add(plugins, ['neoclide/vim-node-rpc',  {'merged': 0, 'build' : s:node_pkgm . ' install'}])
   endif
   return plugins
 endfunction
@@ -124,7 +133,7 @@ function! s:markdown_insert_link(isVisual, isPicture) abort
     if !a:isVisual
       execute "normal! viw\<esc>"
     endif
-    let l:paste = (col("'>") == col("$") - 1 ? 'p' : 'P')
+    let l:paste = (col("'>") == col('$') - 1 ? 'p' : 'P')
     normal! gvx
     let @" = '[' . @" . '](' . @+ . ')'
     if a:isPicture

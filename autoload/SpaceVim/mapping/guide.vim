@@ -15,9 +15,24 @@ scriptencoding utf-8
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:STR = SpaceVim#api#import('data#string')
 let s:KEY = SpaceVim#api#import('vim#key')
+
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
 let s:VIM = SpaceVim#api#import('vim')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+
+if has('nvim')
+  let s:FLOATING = SpaceVim#api#import('neovim#floating')
+else
+  let s:FLOATING = SpaceVim#api#import('vim#floating')
+endif
+let s:SL = SpaceVim#api#import('vim#statusline')
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
+
+" guide specific var
+
+let s:winid = -1
+let s:bufnr = -1
+
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -241,7 +256,6 @@ function! s:escape_keys(inp) abort " {{{
   return substitute(ret, '|', '<Bar>', '')
 endfunction " }}}
 
-
 function! s:calc_layout() abort " {{{
   let ret = {}
   let smap = filter(copy(s:lmap), 'v:key !=# "name"')
@@ -256,8 +270,8 @@ function! s:calc_layout() abort " {{{
     let ret.col_width = maxlength
     let ret.win_dim = ret.n_cols * ret.col_width
   else
-    let ret.n_cols = winwidth(0) >= maxlength ? winwidth(0) / maxlength : 1
-    let ret.col_width = winwidth(0) / ret.n_cols
+    let ret.n_cols = winwidth(s:winid) >= maxlength ? winwidth(s:winid) / maxlength : 1
+    let ret.col_width = winwidth(s:winid) / ret.n_cols
     let ret.n_rows = ret.n_items / ret.n_cols + (fmod(ret.n_items,ret.n_cols) > 0 ? 1 : 0)
     let ret.win_dim = ret.n_rows
   endif
@@ -336,10 +350,7 @@ function! s:create_string(layout) abort " {{{
       let mlen = strdisplaywidth(line)
     endif
   endfor
-  call insert(r, '')
-  let output = join(r, "\n ")
-  cnoremap <nowait> <buffer> <Space> <Space><CR>
-  cnoremap <nowait> <buffer> <silent> <C-h> <LGCMD>paging_help<CR>
+  let output = join(r, "\n")
   return output
 endfunction " }}}
 
@@ -386,7 +397,7 @@ function! s:start_buffer() abort " {{{
   let s:winv = winsaveview()
   let s:winnr = winnr()
   let s:winres = winrestcmd()
-  call s:winopen()
+  let [s:winid, s:bufnr] = s:winopen()
   let layout = s:calc_layout()
   let string = s:create_string(layout)
 
@@ -394,23 +405,16 @@ function! s:start_buffer() abort " {{{
     let layout.win_dim = min([g:leaderGuide_max_size, layout.win_dim])
   endif
 
-  if exists('*nvim_open_win')
-    call s:FLOATING.win_config(win_getid(s:gwin), 
+
+  call setbufvar(s:bufnr, '&modifiable', 1)
+  if s:FLOATING.exists()
+    let rst = s:FLOATING.win_config(s:winid, 
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
           \ 'height'  : layout.win_dim + 2,
           \ 'row'     : &lines - layout.win_dim - 4,
           \ 'col'     : 0
-          \ })
-
-  elseif exists('*popup_create')
-    call popup_setoptions(win_getid(s:gwin), {
-          \ 'line' : &lines - layout.win_dim - 4,
-          \ 'col' : 1,
-          \ 'minwidth' : &columns,
-          \ 'minheight' : layout.win_dim + 2,
-          \ })
   else
     if g:leaderGuide_vertical
       noautocmd execute 'vert res '.layout.win_dim
@@ -418,16 +422,14 @@ function! s:start_buffer() abort " {{{
       noautocmd execute 'res '.layout.win_dim
     endif
   endif
-  if exists('*nvim_open_win')
+  if s:FLOATING.exists()
     " when using floating windows, and the flaating windows do not support
     " statusline, add extra black line at top and button of the content.
-    call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, [''] + split(string, "\n") + [''])
+    call s:BUFFER.buf_set_lines(s:bufnr, 0, -1, 0, [''] + split(string, "\n") + [''])
   else
-    if !exists('g:wsdjeg')
-      let g:wsdjeg = split(string, "\n")
-    endif
-    call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, split(string, "\n"))
+    call s:BUFFER.buf_set_lines(s:bufnr, 0, -1, 0, split(string, "\n"))
   endif
+  call setbufvar(s:bufnr, '&modifiable', 0)
   redraw!
   call s:wait_for_input()
 endfunction " }}}
@@ -451,10 +453,21 @@ function! s:handle_input(input) abort " {{{
   endif
 endfunction " }}}
 
-function! s:getchar(...) abort
-  let ret = call('getchar', a:000)
-  return (type(ret) == type(0) ? nr2char(ret) : ret)
-endfunction
+if has('nvim')
+  function! s:getchar(...) abort
+    let ret = call('getchar', a:000)
+    return (type(ret) == type(0) ? nr2char(ret) : ret)
+  endfunction
+else
+  function! s:getchar(...) abort
+    let ret = call('getchar', a:000)
+    while ret ==# "\x80\xfd\d"
+      let ret = call('getchar', a:000)
+    endwhile
+    return (type(ret) == type(0) ? nr2char(ret) : ret)
+  endfunction
+
+endif
 
 
 " wait for in input sub function should be not block vim
@@ -491,7 +504,12 @@ function! s:wait_for_input() abort " {{{
       doautocmd WinEnter
       let keys = get(s:, 'prefix_key_inp', '')
       let name = SpaceVim#mapping#leader#getName(s:prefix_key)
-      call s:build_mpt(['key bindings is not defined: ', name . '-' . join(s:STR.string2chars(keys), '-') . '-' . inp])
+      let _keys = join(s:STR.string2chars(keys), '-')
+      if empty(_keys)
+        call s:build_mpt(['key bindings is not defined: ', name . '-' . inp])
+      else
+        call s:build_mpt(['key bindings is not defined: ', name . '-' . _keys . '-' . inp])
+      endif
       let s:prefix_key_inp = ''
       let s:guide_help_mode = 0
     endif
@@ -509,17 +527,17 @@ function! s:build_mpt(mpt) abort
   echohl NONE
 endfunction
 
+
+" change this func, do not focus to the new windows, and return winid.
+
 function! s:winopen() abort " {{{
-  if !exists('s:bufnr')
-    let s:bufnr = -1
-  endif
   call s:highlight_cursor()
   let pos = g:leaderGuide_position ==? 'topleft' ? 'topleft' : 'botright'
-  if exists('*nvim_open_win')
+  if s:FLOATING.exists()
     if !bufexists(s:bufnr)
-      let s:bufnr = nvim_create_buf(v:false,v:false)
+      let s:bufnr = s:BUFFER.create_buf(v:false, v:true)
     endif
-    call s:FLOATING.open_win(s:bufnr, v:true,
+    let s:winid = s:FLOATING.open_win(s:bufnr, v:true,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns,
@@ -558,14 +576,31 @@ function! s:winopen() abort " {{{
         autocmd WinLeave <buffer> call s:winclose()
       augroup END
     endif
-    let s:gwin = winnr()
+    let s:winid = winnr()
   endif
   let s:guide_help_mode = 0
+  call setbufvar(s:bufnr, '&filetype', 'leaderGuide')
+  call setbufvar(s:bufnr, '&number', 0)
+  call setbufvar(s:bufnr, '&relativenumber', 0)
+  call setbufvar(s:bufnr, '&list', 0)
+  call setbufvar(s:bufnr, '&modeline', 0)
+  call setbufvar(s:bufnr, '&wrap', 0)
+  call setbufvar(s:bufnr, '&buflisted', 0)
+  call setbufvar(s:bufnr, '&buftype', 'nofile')
+  call setbufvar(s:bufnr, '&bufhidden', 'unload')
+  call setbufvar(s:bufnr, '&swapfile', 0)
+  call setbufvar(s:bufnr, '&cursorline', 0)
+  call setbufvar(s:bufnr, '&cursorcolumn', 0)
+  call setbufvar(s:bufnr, '&colorcolumn', '')
+  call setbufvar(s:bufnr, '&winfixwidth', 1)
+  call setbufvar(s:bufnr, '&winfixheight', 1)
+
   if exists('&winhighlight')
     call s:VIM.setbufvar(s:bufnr, {
           \ '&winhighlight' : 'Normal:Pmenu',
           \ })
   endif
+
   call s:VIM.setbufvar(s:bufnr, {
         \ '&filetype' : 'leaderGuide',
         \ '&number' : 0,
@@ -583,37 +618,68 @@ function! s:winopen() abort " {{{
         \ '&winfixwidth' : 1,
         \ '&winfixheight' : 1,
         \ })
+
   " @fixme not sure if the listchars should be changed!
   " setlocal listchars=
   call s:updateStatusline()
   call s:toggle_hide_cursor()
+  return [s:winid, s:bufnr]
 endfunction " }}}
 
-function! s:updateStatusline() abort
-  call SpaceVim#mapping#guide#theme#hi()
-  let gname = get(s:guide_group, 'name', '')
-  if !empty(gname)
-    let gname = ' - ' . gname[1:]
-    let gname = substitute(gname,' ', '\\ ', 'g')
-  endif
-  let keys = get(s:, 'prefix_key_inp', '')
-  let keys = substitute(keys, '\', '\\\', 'g')
-  exe 'setlocal statusline=%#LeaderGuiderPrompt#\ Guide:\ ' .
-        \ '%#LeaderGuiderSep1#' . s:lsep .
-        \ '%#LeaderGuiderName#\ ' .
-        \ SpaceVim#mapping#leader#getName(s:prefix_key)
-        \ . keys . gname
-        \ . '\ %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
-        \ . s:guide_help_msg()
+if s:SL.support_float()
+  function! s:updateStatusline() abort
+    call SpaceVim#mapping#guide#theme#hi()
+    let gname = get(s:guide_group, 'name', '')
+    if !empty(gname)
+      let gname = ' - ' . gname[1:]
+      " let gname = substitute(gname,' ', '\\ ', 'g')
+    endif
+    let keys = get(s:, 'prefix_key_inp', '')
+    " let keys = substitute(keys, '\', '\\\', 'g')
+    call s:SL.open_float([
+          \ ['Guide: ', 'LeaderGuiderPrompt'],
+          \ [' ', 'LeaderGuiderSep1'],
+          \ [SpaceVim#mapping#leader#getName(s:prefix_key)
+          \ . keys . gname, 'LeaderGuiderName'],
+          \ [' ', 'LeaderGuiderSep2'],
+          \ [s:guide_help_msg(0), 'LeaderGuiderFill'],
+          \ [repeat(' ', 999), 'LeaderGuiderFill'],
+          \ ])
+  endfunction
+  function! s:close_float_statusline() abort
+    call s:SL.close_float()
+  endfunction
+else
+  function! s:updateStatusline() abort
+    call SpaceVim#mapping#guide#theme#hi()
+    let gname = get(s:guide_group, 'name', '')
+    if !empty(gname)
+      let gname = ' - ' . gname[1:]
+      let gname = substitute(gname,' ', '\\ ', 'g')
+    endif
+    let keys = get(s:, 'prefix_key_inp', '')
+    let keys = substitute(keys, '\', '\\\', 'g')
+    call setbufvar(s:bufnr, '&statusline', '%#LeaderGuiderPrompt#\ Guide:\ ' .
+          \ '%#LeaderGuiderSep1#' . s:lsep .
+          \ '%#LeaderGuiderName#\ ' .
+          \ SpaceVim#mapping#leader#getName(s:prefix_key)
+          \ . keys . gname
+          \ . '\ %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
+          \ . s:guide_help_msg(1))
+  endfunction
+endif
+
+function! Test_st() abort
+  call s:updateStatusline()
 endfunction
 
-function! s:guide_help_msg() abort
+function! s:guide_help_msg(escape) abort
   if s:guide_help_mode == 1
     let msg = ' n -> next-page, p -> previous-page, u -> undo-key'
   else
     let msg = ' [C-h paging/help]'
   endif
-  return substitute(msg,' ', '\\ ', 'g')
+  return a:escape ? substitute(msg,' ', '\\ ', 'g') : msg
 endfunction
 
 let s:t_ve = ''
@@ -626,15 +692,18 @@ endfunction
 
 function! s:winclose() abort " {{{
   call s:toggle_hide_cursor()
-  if exists('*popup_create')
-    call popup_clear()
+  if s:FLOATING.exists()
+    call s:FLOATING.win_close(s:winid, 1)
+    if s:SL.support_float()
+      call s:close_float_statusline()
+    endif
   else
-    noautocmd execute s:gwin.'wincmd w'
-    if s:gwin == winnr()
+    noautocmd execute s:winid.'wincmd w'
+    if s:winid == winnr()
       noautocmd close
       redraw!
       exe s:winres
-      let s:gwin = -1
+      let s:winid = -1
       noautocmd execute s:winnr.'wincmd w'
       call winrestview(s:winv)
       if exists('*nvim_open_win')
@@ -740,10 +809,18 @@ endfunction " }}}
 
 if !exists('g:leaderGuide_displayfunc')
   function! s:leaderGuide_display() abort
+    if has_key(s:registered_name, g:leaderGuide#displayname)
+      return s:registered_name[g:leaderGuide#displayname]
+    endif
     let g:leaderGuide#displayname = substitute(g:leaderGuide#displayname, '\c<cr>$', '', '')
   endfunction
   let g:leaderGuide_displayfunc = [function('s:leaderGuide_display')]
 endif
+
+let s:registered_name = {}
+function! SpaceVim#mapping#guide#register_displayname(lhs, name)
+  call extend(s:registered_name, {a:lhs : a:name})
+endfunction
 
 if get(g:, 'mapleader', '\') ==# ' '
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',

@@ -1,8 +1,8 @@
 ---
 title: "Grep on the fly in SpaceVim"
 categories: [feature, blog]
-excerpt: "Run grep asynchronously, show search results in real-time based on user input, support searching the entire project, searching loaded files or only searching current file"
-image: https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif
+description: "Run grep asynchronously, show search results in real-time based on user input, support searching the entire project, searching loaded files or only searching current file"
+image: https://user-images.githubusercontent.com/13142418/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif
 commentsID: "Grep on the fly"
 comments: true
 ---
@@ -31,7 +31,7 @@ In linux os, flygrep use grep by default, if you want a more fast tool, you can 
 
 In SpaceVim, you can use `SPC s p` or `SPC s /` to search in the current project.
 
-![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
+![searching project](https://user-images.githubusercontent.com/13142418/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif)
 
 - **Search in current file**
 

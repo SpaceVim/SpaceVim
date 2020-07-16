@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim tools#dash 模块"
 description: "这一模块为 SpaceVim 提供了 Dash 支持，可快速查找光标位置的单词。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> tools#dash

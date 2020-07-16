@@ -1,12 +1,15 @@
 Execute ( SpaceVim plugin: a.vim ):
   call SpaceVim#plugins#a#set_config_name('.projections.json')
   let root = SpaceVim#plugins#a#get_root()
-  AssertEqual SpaceVim#plugins#a#get_alt('docs/index.md', root), 'docs/cn/index.md'
-  AssertEqual SpaceVim#plugins#a#get_alt('docs/cn/index.md', root), 'docs/index.md'
-  AssertEqual SpaceVim#plugins#a#get_alt('docs/api/job.md', root), 'docs/cn/api/job.md'
-  AssertEqual SpaceVim#plugins#a#get_alt('docs/cn/api/job.md', root), 'docs/api/job.md'
-  AssertEqual SpaceVim#plugins#a#get_alt('wiki/en/Project-layout.md', root), 'wiki/cn/Project-layout.md'
-  AssertEqual SpaceVim#plugins#a#get_alt('wiki/cn/Project-layout.md', root), 'wiki/en/Project-layout.md'
-  AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2018-09-28-use-vim-as-ide.md', root), 'docs/_posts/2018-09-27-use-vim-as-ide.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('docs/index.md', root, 1), 'docs/cn/index.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('docs/cn/index.md', root, 1), 'docs/index.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('docs/api/job.md', root, 1), 'docs/cn/api/job.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('docs/cn/api/job.md', root, 1), 'docs/api/job.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('wiki/en/Project-layout.md', root, 1), 'wiki/cn/Project-layout.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('wiki/cn/Project-layout.md', root, 1), 'wiki/en/Project-layout.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2018-09-28-use-vim-as-ide.md', root, 1), 'docs/_posts/2018-09-27-use-vim-as-ide.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2018-09-27-use-vim-as-ide.md', root, 1), 'docs/_posts/2018-09-28-use-vim-as-ide.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2020-01-28-manage-project-alternate-files.md', root, 1), 'docs/_posts/2020-01-27-manage-project-alternate-files.md'
+  AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2020-01-27-manage-project-alternate-files.md', root, 1), 'docs/_posts/2020-01-28-manage-project-alternate-files.md'
   unlet root
 

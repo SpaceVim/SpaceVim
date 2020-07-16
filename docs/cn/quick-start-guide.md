@@ -1,11 +1,11 @@
 ---
 title: "入门指南"
 description: "SpaceVim 入门教程，包括安装、初始化配置等内容"
-lang: cn
+lang: zh
 ---
 
 
-# 入门指南
+# [主页](../) >> 入门指南
 
 如果你从未使用过 SpaceVim，建议先阅读这篇简短的教程。这篇教程主要讲述：
 如何安装 SpaceVim，SpaceVim 的入门配置以及 SpaceVim 常用学习资源。

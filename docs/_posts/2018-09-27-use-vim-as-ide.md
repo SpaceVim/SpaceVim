@@ -1,10 +1,10 @@
 ---
 title: "使用 Vim 搭建基本开发环境"
 categories: [blog_cn]
-excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建基本的的开发环境，简介 SpaceVim 基本的使用技巧"
+description: "这篇文章主要介绍如何使用 SpaceVim 搭建基本的的开发环境，简介 SpaceVim 基本的使用技巧"
 permalink: /cn/:title/
-lang: cn
-type: BlogPosting
+lang: zh
+type: article
 comments: true
 commentsID: "使用 Vim 搭建基本开发环境"
 ---
@@ -59,7 +59,7 @@ SpaceVim 的配置文件有两种，一种是全局配置文件(`~/.SpaceVim.d/i
 
 ### 文件及窗口操作
 
-SpaceVim 会在状态栏展示各个窗口的编号，可以使用快捷键 `SPC + 数字` 快速跳到对应的窗口，在顶部标签了，会列出当前已经打开的文件或者标签裂变，
+SpaceVim 会在状态栏展示各个窗口的编号，可以使用快捷键 `SPC + 数字` 快速跳到对应的窗口，在顶部标签栏，会列出当前已经打开的文件或者标签裂变，
 可以使用快捷键 `Leader + 数字` 快速跳到对应的文件。在这里默认的 Leader 是 `\` 键。
 
  

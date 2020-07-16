@@ -21,14 +21,22 @@ function! SpaceVim#default#options() abort
     set guioptions-=b " Hide bottom scrollbar
     set showtabline=0 " Hide tabline
     set guioptions-=e " Hide tab
-    if s:SYSTEM.isWindows
-      " please install the font in 'Dotfiles\font'
-      set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
-    elseif s:SYSTEM.isOSX
-      set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
-    else
-      set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
-    endif
+    try
+      if s:SYSTEM.isWindows
+        " please install the font in 'Dotfiles\font'
+        set guifont=DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT
+      elseif s:SYSTEM.isOSX
+        set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
+      else
+        set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
+      endif
+    catch /^Vim\%((\a\+)\)\=:E518/
+      if has('gui_vimr')
+        " VimR has disabled support for guifont
+      else
+        throw v:exception
+      endif
+    endtry
   endif
 
   " indent use backspace delete indent, eol use backspace delete line at
@@ -67,7 +75,7 @@ function! SpaceVim#default#options() abort
   set backup
   set undofile
   set undolevels=1000
-  let g:data_dir = $HOME . '/.cache/SpaceVim/'
+  let g:data_dir = g:spacevim_data_dir.'/SpaceVim/'
   let g:backup_dir = g:data_dir . 'backup'
   let g:swap_dir = g:data_dir . 'swap'
   let g:undo_dir = g:data_dir . 'undofile'
@@ -87,14 +95,14 @@ function! SpaceVim#default#options() abort
   if finddir(g:conf_dir) ==# ''
     silent call mkdir(g:conf_dir, 'p', 0700)
   endif
+  execute 'set undodir='.g:undo_dir
+  execute 'set backupdir='.g:backup_dir
+  execute 'set directory='.g:swap_dir
   unlet g:data_dir
   unlet g:backup_dir
   unlet g:swap_dir
   unlet g:undo_dir
   unlet g:conf_dir
-  set undodir=$HOME/.cache/SpaceVim/undofile
-  set backupdir=$HOME/.cache/SpaceVim/backup
-  set directory=$HOME/.cache/SpaceVim/swap
   " }}}
 
   set nowritebackup
@@ -152,7 +160,6 @@ function! SpaceVim#default#keyBindings() abort
   " yank and paste
   if has('unnamedplus')
     xnoremap <Leader>y "+y
-    xnoremap <Leader>d "+d
     nnoremap <Leader>p "+p
     let g:_spacevim_mappings.p = ['normal! "+p', 'paste after here']
     nnoremap <Leader>P "+P
@@ -161,7 +168,6 @@ function! SpaceVim#default#keyBindings() abort
     xnoremap <Leader>P "+P
   else
     xnoremap <Leader>y "*y
-    xnoremap <Leader>d "*d
     nnoremap <Leader>p "*p
     let g:_spacevim_mappings.p = ['normal! "*p', 'paste after here']
     nnoremap <Leader>P "*P
@@ -170,6 +176,8 @@ function! SpaceVim#default#keyBindings() abort
     xnoremap <Leader>P "*P
   endif
 
+  xnoremap <silent><Leader>Y :call SpaceVim#plugins#pastebin#paste()<CR>
+  " call SpaceVim#mapping#guide#register_displayname(':call SpaceVim#plugins#pastebin#paste()<CR>', 'copy to pastebin')
 
   " quickfix list movement
   let g:_spacevim_mappings.q = {'name' : '+Quickfix movement'}
@@ -200,9 +208,6 @@ function! SpaceVim#default#keyBindings() abort
   nnoremap <silent><C-Up>    :<C-u>wincmd k<CR>
   nnoremap <silent><C-Down>  :<C-u>wincmd j<CR>
 
-
-  "Use jk switch to normal mode
-  inoremap jk <esc>
 
   "]<End> or ]<Home> move current line to the end or the begin of current buffer
   nnoremap <silent>]<End> ddGp``
@@ -259,7 +264,7 @@ function! SpaceVim#default#keyBindings() abort
   " Tabs
   nnoremap <silent>g0 :<C-u>tabfirst<CR>
   nnoremap <silent>g$ :<C-u>tablast<CR>
-  nnoremap <silent>gr :<C-u>tabprevious<CR>
+  nnoremap <silent><expr> gr tabpagenr('#') > 0 ? ':exe "tabnext " . tabpagenr("#")<cr>' : ''
 
   " Remove spaces at the end of lines
   nnoremap <silent> ,<Space> :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
@@ -333,7 +338,7 @@ function! SpaceVim#default#Customfoldtext() abort
   endif
 
   let foldsymbol='+'
-  let repeatsymbol=''
+  let repeatsymbol='-'
   let prefix = foldsymbol . ' '
 
   let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)

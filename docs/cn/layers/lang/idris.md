@@ -2,7 +2,7 @@
 title: "SpaceVim lang#idris 模块"
 description: "这一模块为 idris 开发提供支持，包括交互式编程、一键运行等特性。"
 image: https://user-images.githubusercontent.com/13142418/65492491-9dece000-dee3-11e9-8eda-7d41a6c1ee79.png
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#idris

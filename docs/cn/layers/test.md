@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim test layer"
 description: "这一模块为 SpaceVim 提供了一个测试框架，支持快速运行多种语言的单元测试。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> test

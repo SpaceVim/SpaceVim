@@ -6,6 +6,19 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#sh, layer-lang-sh
+" @parentsection layers
+" This layer is for shell script development, including bash, zsh and fish.
+" This layer provides basic syntax highlighting and code completion , and it
+" is disabled by default, to enable this
+" layer, add following snippet to your @section(options) file.
+" >
+"   [[layers]]
+"     name = 'lang#sh'
+" <
+"
+
 function! SpaceVim#layers#lang#sh#plugins() abort
   let l:plugins = []
   call add(l:plugins, ['chrisbra/vim-zsh', { 'on_ft' : 'zsh' }])

@@ -18,7 +18,7 @@ let g:ctrlp_show_hidden = get(g:, 'ctrlp_show_hidden', 1)
 "for caching
 let g:ctrlp_use_caching = get(g:, 'ctrlp_use_caching', 500)
 let g:ctrlp_clear_cache_on_exit = get(g:, 'ctrlp_clear_cache_on_exit', 1)
-let g:ctrlp_cache_dir = get(g:, 'ctrlp_cache_dir', $HOME.'/.cache/ctrlp')
+let g:ctrlp_cache_dir = get(g:, 'ctrlp_cache_dir', g:spacevim_data_dir.'/ctrlp')
 "let g:ctrlp_map = ',,'
 "let g:ctrlp_open_multiple_files = 'v'
 "if you have install ag, the g:ctrlp_custom_ignore will not work
@@ -28,7 +28,7 @@ let g:ctrlp_custom_ignore = get(g:, 'ctrlp_custom_ignore', {
       \ 'link': 'some_bad_symbolic_links',
       \ })
 if executable('rg') && !exists('g:ctrlp_user_command')
-  let g:ctrlp_user_command = 'rg %s --no-ignore --hidden --files -g "" '
+  let g:ctrlp_user_command = 'rg %s --hidden --files -g "" '
         \ . join(SpaceVim#util#Generate_ignore(get(g:, 'spacevim_wildignore', ''),'rg', SpaceVim#api#import('system').isWindows ? 0 : 1))
 elseif executable('ag') && !exists('g:ctrlp_user_command')
   let g:ctrlp_user_command = 'ag --hidden -i  -g "" ' . join(SpaceVim#util#Generate_ignore(g:spacevim_wildignore,'ag')) . ' %s'

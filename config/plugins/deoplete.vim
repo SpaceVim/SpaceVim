@@ -102,7 +102,7 @@ call deoplete#custom#source('racer', 'mark', '')
 call deoplete#custom#option('ignore_sources', {'vim': ['tag']})
 
 " denite
-call deoplete#custom#option('ignore_sources', {'denite-filter': ['denite', 'buffer', 'around', 'member']})
+call deoplete#custom#option('ignore_sources', {'denite-filter': ['denite', 'buffer', 'around', 'member', 'neosnippet']})
 
 " clojure
 call deoplete#custom#option('keyword_patterns', {
@@ -126,8 +126,13 @@ call deoplete#custom#option('sources', {'cs': ['omnisharp']})
 call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
 call deoplete#custom#source('file/include', 'matchers', ['matcher_head'])
 
-inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
+if g:spacevim_autocomplete_parens && exists('g:loaded_delimitMate')
+  imap <expr><C-h> deoplete#smart_close_popup()."<Plug>delimitMateBS"
+  imap <expr><BS> deoplete#smart_close_popup()."<Plug>delimitMateBS"
+else
+  inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
+endif
 set isfname-==
 
 " vim:set et sw=2:

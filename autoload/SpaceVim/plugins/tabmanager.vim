@@ -79,7 +79,7 @@ function! s:update_context() abort
       call add(ctx,
             \ '▼ ' . (page == tabpagenr() ? '*' : ' ')
             \ . 'Tab ' . page 
-            \ . ' ' . gettabvar(page, '_spacevim_tab_name', '')
+            \ . ' ' . gettabvar(page, '_spacevim_tab_name', bufname(tabpagebuflist(page)[tabpagewinnr(page) - 1]))
             \ )
       let winid = 1
       for _buf in tree[page]
@@ -94,7 +94,7 @@ function! s:update_context() abort
       call add(ctx,
             \ '▷ ' . (page == tabpagenr() ? '*' : ' ')
             \ . 'Tab ' . page 
-            \ . ' ' . gettabvar(page, '_spacevim_tab_name', '')
+            \ . ' ' . gettabvar(page, '_spacevim_tab_name', bufname(tabpagebuflist(page)[tabpagewinnr(page) - 1]))
             \ )
     endif
   endfor
@@ -228,7 +228,7 @@ function! s:copy_tab() abort
   let s:copy_tab_name = gettabvar(cursor_tab, '_spacevim_tab_name', '')
   exe 'tabnext ' . cursor_tab
   let save_sessionopts = &sessionoptions
-  let tabsession = '~/.cache/SpaceVim/tabmanager_session.vim'
+  let tabsession = g:spacevim_data_dir.'/SpaceVim/tabmanager_session.vim'
   let &sessionoptions = 'winsize'
   exe 'mksession! ' . tabsession
   exe 'tabnext ' . current_tab
@@ -251,7 +251,7 @@ function! s:paste_tab() abort
   let current_tab = tabpagenr()
   let tabid = s:get_cursor_tabnr()
   silent! exe tabid . 'tabnew '
-  silent! exe 'so ~/.cache/SpaceVim/tabmanager_session.vim'
+  silent! exe 'so '.g:spacevim_data_dir.'/SpaceVim/tabmanager_session.vim'
   call settabvar(tabpagenr(),
         \ 'spacevim_tabman_expandable',
         \ s:copy_tab_expand_status)

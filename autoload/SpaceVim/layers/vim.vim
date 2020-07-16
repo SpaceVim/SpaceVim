@@ -12,3 +12,11 @@ function! SpaceVim#layers#vim#plugins() abort
             \ ['mattn/vim-terminal',                 { 'on_cmd':['Terminal']}],
             \ ]
 endfunction
+
+function! SpaceVim#layers#vim#config() abort
+  augroup spacevim_vim_layer
+    autocmd!
+    " @todo clear vim comment string highlight
+    " autocmd Syntax vim syntax clear vimCommentString
+  augroup END
+endfunction

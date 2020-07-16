@@ -1,0 +1,31 @@
+# This config is based on lightline.vim <https://github.com/itchyny/lightline.vim/blob/master/.travis.yml>
+
+language: ruby
+rvm:
+    - 2.0.0
+install:
+    - git clone https://github.com/kana/vim-vspec.git
+before_script:
+    - bundle install
+    - bundle show
+    - (if ! test -d $HOME/vim-$VIM_VERSION/bin; then
+         git clone https://github.com/vim/vim $HOME/vim &&
+         cd $HOME/vim &&
+         git checkout v$VIM_VERSION &&
+         ./configure --prefix=$HOME/vim-$VIM_VERSION &&
+         make &&
+         make install;
+       fi)
+
+cache:
+    directories:
+      - $HOME/vim-$VIM_VERSION
+
+env:
+    - VIM_VERSION=8.0.0000
+    - VIM_VERSION=7.4
+
+script:
+    - export PATH=$HOME/vim-$VIM_VERSION/bin:$PATH
+    - cd $TRAVIS_BUILD_DIR
+    - rake ci

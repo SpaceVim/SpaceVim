@@ -9,6 +9,8 @@
 ""
 " @section lang#hack, layer-lang-hack
 " @parentsection layers
+" @subsection Intro
+"
 " This layer is for hack development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
 " >

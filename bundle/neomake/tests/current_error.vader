@@ -1,0 +1,25 @@
+Include: include/setup.vader
+
+Execute (neomake#EchoCurrentError):
+  Save g:neomake_echo_current_error, g:neomake_virtualtext_current_error
+
+  new
+  normal! o
+
+  CallNeomake 1, [g:entry_maker]
+  AssertEqual neomake#GetCurrentErrorMsg(), ''
+  AssertEqual neomake#utils#redir('call neomake#EchoCurrentError(1)'), ''
+
+  normal k
+  let msg = 'entry_maker: error (E)'
+  AssertEqual neomake#GetCurrentErrorMsg(), msg
+  AssertEqual neomake#utils#redir('call neomake#EchoCurrentError(1)'), ''
+
+  let g:neomake_echo_current_error = 1
+  AssertEqual neomake#utils#redir('call neomake#EchoCurrentError(1)'), "\n".msg
+  " Not displayed if unchanged.
+  AssertEqual neomake#utils#redir('call neomake#EchoCurrentError()'), ''
+
+  normal j
+  AssertEqual neomake#utils#redir('call neomake#EchoCurrentError()'), ''
+  bwipe!

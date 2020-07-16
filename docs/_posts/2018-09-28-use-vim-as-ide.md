@@ -1,8 +1,8 @@
 ---
 title: "Use Vim as IDE"
 categories: [blog]
-excerpt: "A general guide for using SpaceVim as general IDE"
-type: BlogPosting
+description: "A general guide for using SpaceVim as general IDE"
+type: article
 comments: true
 commentsID: "Use Vim as IDE"
 ---
@@ -51,4 +51,4 @@ be shown on the tabline. To jump to specific tab, you can use `Leader + number` 
 
 ### Language support
 
-By default, SpaceVim do not load any lanaguge layer, please checkout the [available layers](../layers/) page.
+By default, SpaceVim does not load any language layer, please checkout the [available layers](../layers/) page.

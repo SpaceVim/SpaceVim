@@ -302,6 +302,13 @@ if exists('*getjumplist')
     return getjumplist()
   endfunction
 else
+  "
+  " the following entries:
+  " bufnr		buffer number
+  " col		column number
+  " coladd		column offset for 'virtualedit'
+  " filename	filename if available
+  " lnum		line number
   function! s:self.getjumplist() abort
     let jumpinfo = split(self.execute(':jumps'), "\n")[1:-2]
     let result = []
@@ -312,6 +319,7 @@ else
             \ 'bufnr' : jump,
             \ 'lnum' : line,
             \ 'col' : col,
+            \ 'coladd' : 0,
             \ })
     endfor
     return result

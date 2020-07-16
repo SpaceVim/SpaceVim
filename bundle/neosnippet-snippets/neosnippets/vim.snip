@@ -1,0 +1,224 @@
+snippet     if
+abbr        if endif
+options     head
+    if ${1:#:condition}
+      ${0:TARGET}
+    endif
+
+snippet     elseif
+options     head
+    elseif ${1:#:condition}
+        ${0:TARGET}
+
+snippet     ifelse
+abbr        if else endif
+options     head
+    if ${1:#:condition}
+      ${2:TARGET}
+    else
+      ${3}
+    endif
+
+snippet     for
+abbr        for in endfor
+options     head
+    for ${1:#:var} in ${2:#:list}
+      ${0:TARGET}
+    endfor
+
+snippet     while
+abbr        while endwhile
+options     head
+    while ${1:#:condition}
+      ${0:TARGET}
+    endwhile
+
+snippet     function
+abbr        func endfunc
+alias       func
+options     head
+    function! ${1:#:func_name}(${2}) abort
+      ${0:TARGET}
+    endfunction
+
+snippet     try
+abbr        try endtry
+options     head
+    try
+      ${1:TARGET}
+    catch /${2:#:pattern}/
+      ${3}
+    endtry
+
+snippet     tryfinally
+abbr        try ... finally ... endtry
+alias       tryf
+options     head
+    try
+      ${1:TARGET}
+    finally
+      ${2}
+    endtry
+
+snippet     catch
+abbr        catch /pattern/
+options     head
+    catch ${1:/${2:#:pattern: empty, E484, Vim(cmdname):{errmsg\\}\}/}
+
+snippet     echomsg
+alias       log
+options     head
+    echomsg string(${1:TARGET})
+
+snippet     command
+abbr        command call function
+options     head
+    command! ${1:#:command_name} call ${2:#:func_name}
+
+snippet     customlist
+abbr        customlist complete function
+options     head
+    function! ${1:#:func_name}(arglead, cmdline, cursorpos) abort
+      return filter(${2:#:list}, 'stridx(v:val, a:arglead) == 0')
+    endfunction
+
+snippet     augroup
+abbr        augroup with autocmds
+options     head
+    augroup ${1:#:augroup_name}
+      autocmd!
+      autocmd ${2:#:event}
+    augroup END
+
+snippet     redir
+abbr        redir => var
+options     head
+	redir => ${1:#:var}
+		${2::TARGET}
+	redir END
+
+snippet NeoBundle
+alias   neobundle
+abbr NeoBundle ''
+    NeoBundle '`getreg('+')=='' ? '<\`0\`>' : getreg('+')`'${0}
+
+snippet NeoBundleLazy
+alias   neobundlelazy
+abbr NeoBundleLazy ''
+    NeoBundleLazy '`getreg('+')=='' ? '<\`0\`>' : getreg('+')`', {
+      \ ${0}
+      \ }
+
+snippet bundle_hooks
+abbr neobundle hooks
+    let s:hooks = neobundle#get_hooks('${1}')
+    function! s:hooks.on_source(bundle) abort
+      ${0}
+    endfunction
+    unlet s:hooks
+
+snippet     autoload
+abbr        autoload func endfunc
+alias       afunction afunc
+options     head
+    function! `substitute(matchstr(neosnippet#util#expand('%:p:r'), '/autoload/\zs.*$'), '/', '#', 'g')`#${1:#:func_name}(${2:#:args}) abort
+      ${0}
+    endfunction
+
+snippet g:loaded
+abbr    if exists('g:loaded_{plugin-name}')
+alias   loaded
+options     head
+    if exists('g:loaded_${1}')
+      finish
+    endif
+
+    ${0}
+
+    let g:loaded_$1 = 1
+
+snippet modeline
+abbr    " vim: {modeline}
+    " vim: ${0:foldmethod=marker}
+
+snippet undo_ftplugin
+abbr    if !exists('b:undo_ftplugin')
+alias   b:undo_ftplugin
+    if !exists('b:undo_ftplugin')
+      let b:undo_ftplugin = ''
+    endif
+
+    ${1}
+
+    let b:undo_ftplugin .= '
+    \ | setlocal ${2:#:option_name1< option_name2<...}
+    \'
+
+snippet python
+alias   py
+options head
+abbr    python <<EOF | EOF
+    python << EOF
+    ${0}
+    EOF
+
+snippet python3
+alias   py3
+options head
+abbr    python3 <<EOF | EOF
+    python3 << EOF
+    ${0}
+    EOF
+
+snippet lua
+options head
+abbr    lua <<EOF | EOF
+    lua << EOF
+    ${0}
+    EOF
+
+snippet save_pos
+options head
+abbr    use pos save
+    let pos_save = getpos('.')
+    try
+      ${0}
+    finally
+      call setpos('.', pos_save)
+    endtry
+
+snippet save_register
+options head
+abbr    use register save
+    let save_reg_$1 = getreg('${1}')
+    let save_regtype_$1 = getregtype('$1')
+    try
+      ${0}
+    finally
+      call setreg('$1', save_reg_$1, save_regtype_$1)
+    endtry
+
+snippet save_option
+options head
+abbr    use option save
+    let $1_save = &${1}
+    let &$1 = ${2}
+    try
+      ${0}
+    finally
+      let &$1 = $1_save
+    endtry
+
+snippet     p
+abbr        debug-echomsg
+options     head
+    echomsg string([${0:TARGET}])
+
+snippet     version
+abbr        vim-version-check
+    v:version > ${1} || (v:version == $1 && has('patch${2}'))
+
+snippet     version_new
+abbr        vim-version-check-new
+    has('patch-${1}')
+

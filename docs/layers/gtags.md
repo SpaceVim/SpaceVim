@@ -103,7 +103,7 @@ cp gtags.conf ~/.globalrc
 Additionally you should define GTAGSLABEL in your shell startup file e.g. with sh/ksh:
 
 ```sh
-echo export GTAGSLABEL=pygments >> .profile
+echo export GTAGSLABEL=pygments >> ~/.profile
 ```
 
 ### Layers

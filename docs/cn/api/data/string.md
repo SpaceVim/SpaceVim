@@ -1,7 +1,7 @@
 ---
 title: "data#string 函数库"
 description: "data#string 函数库主要提供一些操作字符串的常用函数。"
-lang: cn
+lang: zh
 ---
 
 # [可用函数库](../../) >> data#string

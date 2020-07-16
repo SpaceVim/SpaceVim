@@ -145,18 +145,20 @@ fu! SpaceVim#util#CopyToClipboard(...) abort
     if executable('git')
       let repo_home = fnamemodify(s:findDirInParent('.git', expand('%:p')), ':p:h:h')
       if repo_home !=# '' || !isdirectory(repo_home)
-        let branch = split(systemlist('git -C '. repo_home. ' branch -a |grep "^*"')[0],' ')[1]
-        let remotes = filter(systemlist('git -C '. repo_home. ' remote -v'),"match(v:val,'^origin') >= 0 && match(v:val,'fetch') > 0")
+        let [remote_name, branch] = split(split(systemlist('git -C '. repo_home. ' branch -vv |grep "^*"')[0],'')[3], '/')
+        let remotes = filter(systemlist('git -C '. repo_home. ' remote -v'),"match(v:val,'^' . remote_name[1:-2]) >= 0 && match(v:val,'fetch') > 0")
         if len(remotes) > 0
           let remote = remotes[0]
           if stridx(remote, '@') > -1
-            let repo_url = 'https://github.com/'. split(split(remote,' ')[0],':')[1]
+            let repo_url = split(split(remote, '@')[1], ':')[0]
+            let repo_url = 'https://'. repo_url. '/'. split(split(remote,' ')[0],':')[1]
             let repo_url = strpart(repo_url, 0, len(repo_url) - 4)
           else
             let repo_url = split(remote,' ')[0]
             let repo_url = strpart(repo_url, stridx(repo_url, 'http'),len(repo_url) - 4 - stridx(repo_url, 'http'))
           endif
-          let f_url =repo_url. '/blob/'. branch. '/'. strpart(expand('%:p'), len(repo_home) + 1, len(expand('%:p')))
+          let head_sha = systemlist('git rev-parse HEAD')[0] 
+          let f_url =repo_url. '/blob/'. head_sha. '/'. strpart(expand('%:p'), len(repo_home) + 1, len(expand('%:p')))
           if s:SYSTEM.isWindows
             let f_url = substitute(f_url, '\', '/', 'g')
           endif
@@ -188,12 +190,16 @@ fu! SpaceVim#util#CopyToClipboard(...) abort
   else
     try
       let @+=expand('%:p')
-      echo 'Copied to clipboard ' . @+
+      if !empty(@+) || filereadable(@+)
+        echo 'Copied to clipboard ' . @+
+      else
+        echo 'buffer name is empty!'
+      endif
     catch /^Vim\%((\a\+)\)\=:E354/
       if has('nvim')
         echohl WarningMsg | echom 'Can not find clipboard, for more info see :h clipboard' | echohl None
       else
-        echohl WarningMsg | echom 'You need to compile you vim with +clipboard feature' | echohl None
+        echohl WarningMsg | echom 'You need to compile your vim with +clipboard feature' | echohl None
       endif
     endtry
   endif

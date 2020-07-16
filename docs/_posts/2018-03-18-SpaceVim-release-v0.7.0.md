@@ -1,9 +1,9 @@
 ---
 title: SpaceVim release v0.7.0
 categories: [changelog, blog]
-excerpt: "Highlight symbol mode and iedit mode come out with v0.7.0"
-type: NewsArticle
-image: https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png
+description: "Highlight symbol mode and iedit mode come out with v0.7.0"
+type: article
+image: https://user-images.githubusercontent.com/13142418/80610138-90946700-8a6b-11ea-8565-04f041e56da5.png
 commentsID: "SpaceVim release v0.7.0"
 comments: true
 ---
@@ -11,7 +11,7 @@ comments: true
 # [Changelogs](../development#changelog) > SpaceVim release v0.7.0
 
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/37595020-273b5bca-2bb2-11e8-8aba-638ed5f1c7ea.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/80610138-90946700-8a6b-11ea-8565-04f041e56da5.png)
 
 The last release is 3 mouths ago, so we want to bring you up-to-date in the SpaceVim world.
 

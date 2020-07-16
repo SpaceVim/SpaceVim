@@ -2,8 +2,8 @@
 title: "Use Vim as a Lua IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png
-excerpt: "A general guide for using SpaceVim as Lua IDE, including layer configuration, requiems installation and usage."
-type: BlogPosting
+description: "A general guide for using SpaceVim as Lua IDE, including layer configuration, requiems installation and usage."
+type: article
 comments: true
 commentsID: "Use Vim as a Lua IDE"
 ---

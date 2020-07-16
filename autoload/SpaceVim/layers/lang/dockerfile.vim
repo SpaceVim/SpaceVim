@@ -6,9 +6,16 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#dockerfile, layer-lang-dockerfile
+" @parentsection layers
+" @subsection Intro
+"
+" The lang#dockerfile layer provides syntax highlighting for dockerfile.
+
 function! SpaceVim#layers#lang#dockerfile#plugins() abort
   let plugins = []
-  call add(plugins, ['ekalinin/Dockerfile.vim', {'merged' : 0}])
+  call add(plugins, ['wsdjeg/vim-dockerfile', {'merged' : 0}])
   return plugins
 endfunction
 
