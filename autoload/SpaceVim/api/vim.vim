@@ -70,6 +70,13 @@ function! s:self.parse_string(line) abort
 endfunction
 
 
+function! s:self.setbufvar(buf, dict) abort
+  for key in keys(a:dict)
+    call setbufvar(a:buf, key, a:dict[key])
+  endfor
+endfunction
+
+
 if exists('*nvim_win_set_cursor')
     function! s:self.win_set_cursor(win, pos) abort
         call nvim_win_set_cursor(a:win, a:pos)
@@ -110,6 +117,12 @@ else
       return len(getbufline(a:buf, 1, '$'))
     endfunction
 endif
+
+function! s:self.setbufvar(buf, dict) abort
+  for key in keys(a:dict)
+    call setbufvar(a:buf, key, a:dict[key])
+  endfor
+endfunction
 
 function! SpaceVim#api#vim#get() abort
     return deepcopy(s:self)
