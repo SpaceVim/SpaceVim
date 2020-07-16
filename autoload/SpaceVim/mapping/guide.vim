@@ -16,7 +16,6 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:STR = SpaceVim#api#import('data#string')
 let s:KEY = SpaceVim#api#import('vim#key')
 
-let s:FLOATING = SpaceVim#api#import('neovim#floating')
 let s:VIM = SpaceVim#api#import('vim')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
@@ -26,7 +25,6 @@ else
   let s:FLOATING = SpaceVim#api#import('vim#floating')
 endif
 let s:SL = SpaceVim#api#import('vim#statusline')
-let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 " guide specific var
 
@@ -567,21 +565,6 @@ function! s:winopen() abort " {{{
     let s:winid = winnr()
   endif
   let s:guide_help_mode = 0
-  call setbufvar(s:bufnr, '&filetype', 'leaderGuide')
-  call setbufvar(s:bufnr, '&number', 0)
-  call setbufvar(s:bufnr, '&relativenumber', 0)
-  call setbufvar(s:bufnr, '&list', 0)
-  call setbufvar(s:bufnr, '&modeline', 0)
-  call setbufvar(s:bufnr, '&wrap', 0)
-  call setbufvar(s:bufnr, '&buflisted', 0)
-  call setbufvar(s:bufnr, '&buftype', 'nofile')
-  call setbufvar(s:bufnr, '&bufhidden', 'unload')
-  call setbufvar(s:bufnr, '&swapfile', 0)
-  call setbufvar(s:bufnr, '&cursorline', 0)
-  call setbufvar(s:bufnr, '&cursorcolumn', 0)
-  call setbufvar(s:bufnr, '&colorcolumn', '')
-  call setbufvar(s:bufnr, '&winfixwidth', 1)
-  call setbufvar(s:bufnr, '&winfixheight', 1)
 
   if exists('&winhighlight')
     call s:VIM.setbufvar(s:bufnr, {
