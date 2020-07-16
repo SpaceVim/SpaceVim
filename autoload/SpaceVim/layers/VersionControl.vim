@@ -441,7 +441,7 @@ function! s:git_transient_state() abort
         \ 'key' : 't',
         \ 'desc' : 'toggle diff signs',
         \ 'func' : '',
-        \ 'cmd' : 'SignifyToggle',
+        \ 'cmd' : SpaceVim#layers#isLoaded('git') ? 'GitGutterToggle' : 'SignifyToggle',
         \ 'exit' : 0,
         \ },
         \ ],
