@@ -128,11 +128,12 @@ else
   function! SpaceVim#lsp#go_to_def() abort
     LspDefinition
   endfunction
-
+  function! SpaceVim#lsp#go_to_declaration() abort
+    LspDeclaration
+  endfunction
   function! SpaceVim#lsp#rename() abort
     LspRename
   endfunction
-
   function! SpaceVim#lsp#references() abort
     LspReferences
   endfunction
