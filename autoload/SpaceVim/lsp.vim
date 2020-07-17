@@ -89,32 +89,14 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
   function! SpaceVim#lsp#references() abort
     call CocAction('jumpReferences')
   endfunction
-elseif has('nvim')
-  " use LanguageClient-neovim
-
-  let s:server_info = {}
-  function! s:reg_servers() abort
-    for ft in keys(s:server_info)
-      call lsp#server#add(ft, s:server_info[ft])
-    endfor
-  endfunction
-  augroup spacevim_lsp_layer
-    autocmd  VimEnter * call s:reg_servers()
-  augroup END
-  function! SpaceVim#lsp#reg_server(ft, cmds) abort
-    let s:server_info[a:ft] = a:cmds
-  endfunction
-
+elseif has('nvim-0.4.3')
   function! SpaceVim#lsp#show_doc() abort
     lua require('lsp.plugin')
           \ .client.request('textDocument/hover',
           \ {}, require('spacevim.lsp').hover_callback)
   endfunction
 
-  function! SpaceVim#lsp#go_to_def() abort
-    call lsp#request_async('textDocument/definition')
-  endfunction
-
+elseif has('nvim')
   function! SpaceVim#lsp#rename() abort
     call LanguageClient_textDocument_rename()
   endfunction
