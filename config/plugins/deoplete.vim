@@ -86,9 +86,11 @@ call deoplete#custom#var('omni', 'input_patterns', {
 call deoplete#custom#option('ignore_sources', {'gitcommit': ['neosnippet']})
 
 " lua
-call deoplete#custom#var('omni', 'input_patterns', {
-      \ 'lua': '.',
-      \})
+if has('nvim')
+  call deoplete#custom#option('ignore_sources', {'lua': ['omni']})
+else
+  let g:deoplete#omni_patterns.lua = get(g:deoplete#omni_patterns, 'lua', '.')
+endif
 
 " c c++
 call deoplete#custom#source('clang2', 'mark', '')

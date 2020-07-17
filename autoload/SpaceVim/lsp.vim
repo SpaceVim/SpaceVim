@@ -29,7 +29,7 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
     " the last part `bin/ccls` is the same, whereas the commands are not
     " actually the same.
     " We need to keep an id to distinguish among conflicting keys.
-    
+
     if stridx(a:cmds[0], '.') >= 0 
       let l:key = split(a:cmds[0], "\\.")[-1]
     else
@@ -91,16 +91,28 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
   endfunction
 elseif has('nvim')
   " use LanguageClient-neovim
+
+  let s:server_info = {}
+  function! s:reg_servers() abort
+    for ft in keys(s:server_info)
+      call lsp#server#add(ft, s:server_info[ft])
+    endfor
+  endfunction
+  augroup spacevim_lsp_layer
+    autocmd  VimEnter * call s:reg_servers()
+  augroup END
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
-    let g:LanguageClient_serverCommands[a:ft] = copy(a:cmds)
+    let s:server_info[a:ft] = a:cmds
   endfunction
 
   function! SpaceVim#lsp#show_doc() abort
-    call LanguageClient_textDocument_hover()
+    lua require('lsp.plugin')
+          \ .client.request('textDocument/hover',
+          \ {}, require('spacevim.lsp').hover_callback)
   endfunction
 
   function! SpaceVim#lsp#go_to_def() abort
-    call LanguageClient_textDocument_definition()
+    call lsp#request_async('textDocument/definition')
   endfunction
 
   function! SpaceVim#lsp#rename() abort
