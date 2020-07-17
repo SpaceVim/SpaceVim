@@ -143,6 +143,9 @@ else
   function! SpaceVim#lsp#refactor() abort
     LspCodeAction refactor
   endfunction
+  function! SpaceVim#lsp#go_to_impl() abort
+    LspImplementation
+  endfunction
 endif
 
 " vi: et sw=2 cc=80
