@@ -136,6 +136,9 @@ else
   function! SpaceVim#lsp#references() abort
     LspReferences
   endfunction
+  function! SpaceVim#lsp#go_to_typedef() abort
+    LspPeekTypeDefinition
+  endfunction
 endif
 
 " vi: et sw=2 cc=80
