@@ -140,6 +140,9 @@ else
   function! SpaceVim#lsp#go_to_typedef() abort
     LspPeekTypeDefinition
   endfunction
+  function! SpaceVim#lsp#refactor() abort
+    LspCodeAction refactor
+  endfunction
 endif
 
 " vi: et sw=2 cc=80
