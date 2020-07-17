@@ -95,6 +95,11 @@ elseif has('nvim-0.4.3')
           \ .client.request('textDocument/hover',
           \ {}, require('spacevim.lsp').hover_callback)
   endfunction
+  function! SpaceVim#lsp#go_to_def() abort
+    lua require('lsp.plugin')
+          \ .client.request('textDocument/hover',
+          \ {}, require('spacevim.lsp').hover_callback)
+  endfunction
 
 elseif has('nvim')
   function! SpaceVim#lsp#rename() abort
