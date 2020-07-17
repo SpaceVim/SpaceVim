@@ -16,6 +16,8 @@ function! SpaceVim#layers#lsp#plugins() abort
 
   if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
     " nop
+  elseif has('nvim-0.4.3')
+    " use neovim build-in lsp
   elseif has('nvim')
     call add(plugins, ['autozimu/LanguageClient-neovim',
           \ { 'merged': 0, 'if': has('python3'), 'build' : 'bash install.sh' }])

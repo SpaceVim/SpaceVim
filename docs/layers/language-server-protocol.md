@@ -19,7 +19,7 @@ description: "This layers provides language server protocol for vim and neovim"
 ## Description
 
 This layers adds extensive support for [language-server-protocol](https://microsoft.github.io/language-server-protocol/),
-This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) (an old fork),
+This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim),
 The upstream is rewritten by rust.
 
 We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is written in pure vim script.
@@ -27,11 +27,7 @@ We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is w
 Note that if `coc` is used as autocomplete method in the `autocomplete` layer,
 it will be used as lsp client.
 
-The neovim team is going to implement the build-in LSP support, the
-PR is [neovim#6856](https://github.com/neovim/neovim/pull/6856). and the author of this PR
-create another plugin [tjdevries/nvim-langserver-shim](https://github.com/tjdevries/nvim-langserver-shim)
-
-SpaceVim should works well in different version of vim/neovim, so in the features, the logic of this layer should be:
+SpaceVim should works well in different version of vim/neovim, the logic of this layer is:
 
 ```vim
 if has('nvim')
