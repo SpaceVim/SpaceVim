@@ -17,6 +17,7 @@ scriptencoding utf-8
 " 2018-12-25 v1.0.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2377
 " 2019-04-08 v1.1.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2726
 " 2019-07-17 v1.2.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2947
+" 2020-04-05 v1.2.0 is released at https://github.com/SpaceVim/SpaceVim/pull/3432
 
 " these options can be changed when going to release new tag
 let s:last_release_number = 3432
