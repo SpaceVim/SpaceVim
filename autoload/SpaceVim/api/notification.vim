@@ -116,8 +116,6 @@ function! s:self.redraw_windows() abort
     return
   endif
   let self.notification_width = max(map(deepcopy(self.message), 'strwidth(v:val)'))
-  call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, self.notification_width, len(self.message)))
-  call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, self.message)
   let self.begin_row = 2
   for hashkey in keys(s:notifications)
     if hashkey !=# self.hashkey
@@ -170,6 +168,8 @@ function! s:self.redraw_windows() abort
           \ })
     let self.win_is_open = v:true
   endif
+  call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, self.notification_width, len(self.message)))
+  call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, self.message)
 endfunction
 
 
