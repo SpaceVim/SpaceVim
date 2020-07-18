@@ -66,7 +66,7 @@ function! s:self.bufadd(name) abort
   elseif has('lua') && empty(a:name)
     let nr = float2nr(luaeval('vim.open().number'))
     call setbufvar(nr, '&buflisted', 0)
-    return 0
+    return nr
   elseif empty(a:name)
     " create an no-named buffer
     noautocmd 1new
