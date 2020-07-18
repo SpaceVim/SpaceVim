@@ -9,6 +9,7 @@
 
 let s:SYS = SpaceVim#api#import('system')
 let s:JOB = SpaceVim#api#import('job')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 
 "autocmds
@@ -16,7 +17,7 @@ function! SpaceVim#autocmds#init() abort
   augroup SpaceVim_core
     au!
     autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
-          \   q :cclose<cr>:lclose<cr>
+          \   q :call <SID>close_quickfix()<cr>
     autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
           \   bd|
           \   q | endif
@@ -195,6 +196,32 @@ function! s:disable_welcome() abort
     au!
   augroup END
 endfunction
+
+function! s:close_quickfix() abort
+  if winnr() == s:get_qf_winnr()
+    cclose
+  else
+    lclose
+  endif
+endfunction
+
+" https://vi.stackexchange.com/questions/16585/how-to-differentiate-quickfix-window-buffers-and-location-list-buffers
+if has('patch-7.4-2215') " && exists('*getwininfo')
+  function! s:get_qf_winnr() abort
+    let wins = filter(getwininfo(), 'v:val.quickfix && !v:val.loclist')
+    " assert(len(wins) <= 1)
+    return empty(wins) ? 0 : wins[0].winnr
+  endfunction
+else
+  let s:k_msg_qflist = '[Quickfix List]'
+  function! s:get_qf_winnr() abort
+    let buffers = s:CMP.execute('ls!')
+    call filter(buffers, 'v:val =~ "\\V".s:k_msg_qflist')
+    " :cclose removes the buffer from the list (in my config only??)
+    " assert(len(buffers) <= 1)
+    return empty(buffers) ? 0 : eval(matchstr(buffers[0], '\v^\s*\zs\d+'))
+  endfunction
+endif
 
 
 " vim:set et sw=2:
