@@ -290,6 +290,8 @@ endfunction
 fu! SpaceVim#mapping#SmartClose() abort
   let ignorewin = get(g:,'spacevim_smartcloseignorewin',[])
   let ignoreft = get(g:, 'spacevim_smartcloseignoreft',[])
+  " @bug vim winnr('$') do not include popup
+  " ref: https://github.com/vim/vim/issues/6474
   let win_count = winnr('$')
   let num = win_count
   for i in range(1,win_count)
