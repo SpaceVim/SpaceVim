@@ -9,6 +9,7 @@
 scriptencoding utf-8
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:WIN = SpaceVim#api#import('vim#window')
 
 
 let g:unite_source_menu_menus =
@@ -297,6 +298,8 @@ fu! SpaceVim#mapping#SmartClose() abort
     elseif getbufvar(winbufnr(i),'&buftype') ==# 'quickfix'
       let num = num - 1
     elseif getwinvar(i, '&previewwindow') == 1 && winnr() !=# i
+      let num = num - 1
+    elseif s:WIN.is_float(i)
       let num = num - 1
     endif
   endfor
