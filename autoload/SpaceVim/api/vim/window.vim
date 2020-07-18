@@ -62,7 +62,7 @@ endif
 if has('nvim')
   function! s:self.is_float(winnr) abort
     let id = win_getid(a:winnr)
-    if id > 0
+    if id > 0 && exists('*nvim_win_get_config')
       return has_key(nvim_win_get_config(id), 'col')
     else
       return 0
@@ -71,7 +71,7 @@ if has('nvim')
 else
   function! s:self.is_float(winnr) abort
     let id = win_getid(a:winnr)
-    if id > 0
+    if id > 0 && exists('*popup_getoptions')
       try
         return has_key(popup_getoptions(id), 'col')
       catch /^Vim\%((\a\+)\)\=:E993/
