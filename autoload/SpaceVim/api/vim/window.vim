@@ -29,7 +29,7 @@ if exists('*nvim_win_get_cursor')
   endfunction
 elseif g:_spacevim_if_lua
   function! s:self.get_cursor(winid) abort
-        lua require("spacevim.api.vim.window").get_cursor(vim.eval("a:winid"))
+    lua require("spacevim.api.vim.window").get_cursor(vim.eval("a:winid"))
   endfunction
 else
   function! s:self.get_cursor(winid) abort
@@ -42,20 +42,44 @@ if exists('*nvim_win_set_cursor')
     return nvim_win_set_cursor(a:winid, a:pos)
   endfunction
 elseif exists('*win_execute')
-    function! s:self.set_cursor(win, pos) abort
-        " @fixme use g` to move to cursor line
-        " this seem to be a bug of vim
-        " https://github.com/vim/vim/issues/5022
-        call win_execute(a:win, ':call cursor(' . a:pos[0] . ', ' . a:pos[1] . ')')
-        " call win_execute(a:win, ':' . a:pos[0])
-        call win_execute(a:win, ':normal! g"')
-    endfunction
+  function! s:self.set_cursor(win, pos) abort
+    " @fixme use g` to move to cursor line
+    " this seem to be a bug of vim
+    " https://github.com/vim/vim/issues/5022
+    call win_execute(a:win, ':call cursor(' . a:pos[0] . ', ' . a:pos[1] . ')')
+    " call win_execute(a:win, ':' . a:pos[0])
+    call win_execute(a:win, ':normal! g"')
+  endfunction
 elseif g:_spacevim_if_lua
   function! s:self.set_cursor(winid, pos) abort
-        lua require("spacevim.api.vim.window").set_cursor(vim.eval("a:winid"), vim.eval("a:pos"))
+    lua require("spacevim.api.vim.window").set_cursor(vim.eval("a:winid"), vim.eval("a:pos"))
   endfunction
 else
   function! s:self.set_cursor(winid, pos) abort
+  endfunction
+endif
+
+if has('nvim')
+  function! s:self.is_float(winnr) abort
+    let id = win_getid(a:winnr)
+    if id > 0
+      return has_key(nvim_win_get_config(id), 'col')
+    else
+      return 0
+    endif
+  endfunction
+else
+  function! s:self.is_float(winnr) abort
+    let id = win_getid(a:winnr)
+    if id > 0
+      try
+        return has_key(popup_getoptions(id), 'col')
+      catch /^Vim\%((\a\+)\)\=:E993/
+        return 0
+      endtry
+    else
+      return 0
+    endif
   endfunction
 endif
 

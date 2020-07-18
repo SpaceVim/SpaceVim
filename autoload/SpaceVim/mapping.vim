@@ -9,6 +9,7 @@
 scriptencoding utf-8
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:WIN = SpaceVim#api#import('vim#window')
 
 
 let g:unite_source_menu_menus =
@@ -289,6 +290,8 @@ endfunction
 fu! SpaceVim#mapping#SmartClose() abort
   let ignorewin = get(g:,'spacevim_smartcloseignorewin',[])
   let ignoreft = get(g:, 'spacevim_smartcloseignoreft',[])
+  " @bug vim winnr('$') do not include popup
+  " ref: https://github.com/vim/vim/issues/6474
   let win_count = winnr('$')
   let num = win_count
   for i in range(1,win_count)
@@ -297,6 +300,8 @@ fu! SpaceVim#mapping#SmartClose() abort
     elseif getbufvar(winbufnr(i),'&buftype') ==# 'quickfix'
       let num = num - 1
     elseif getwinvar(i, '&previewwindow') == 1 && winnr() !=# i
+      let num = num - 1
+    elseif s:WIN.is_float(i)
       let num = num - 1
     endif
   endfor
