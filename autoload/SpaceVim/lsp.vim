@@ -29,7 +29,7 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
     " the last part `bin/ccls` is the same, whereas the commands are not
     " actually the same.
     " We need to keep an id to distinguish among conflicting keys.
-    
+
     if stridx(a:cmds[0], '.') >= 0 
       let l:key = split(a:cmds[0], "\\.")[-1]
     else
@@ -121,6 +121,10 @@ elseif has('nvim')
 
   function! SpaceVim#lsp#go_to_declaration() abort
     call LanguageClient_textDocument_declaration()
+  endfunction
+
+  function! SpaceVim#lsp#documentSymbol()
+    call LanguageClient_textDocument_documentSymbol()
   endfunction
 else
   " use vim-lsp
