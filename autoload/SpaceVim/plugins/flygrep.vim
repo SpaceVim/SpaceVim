@@ -593,7 +593,30 @@ let s:previewd_bufnrs = []
 let s:preview_win_id = -1
 if exists('*nvim_open_win')
   function! s:preview_timer(timer) abort
-
+    for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
+      exe 'silent bd ' . id
+    endfor
+    let br = bufnr('$')
+    let line = getline('.')
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    let bufnr = s:BUFFER.bufadd(filename)
+    let flygrep_win_height = 16
+    call s:FLOATING.open_win(bufnr, v:true,
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : &columns, 
+          \ 'height'  : 8,
+          \ 'row': &lines - flygrep_win_height - 2 - 8,
+          \ 'col': 0
+          \ })
+    wincmd p
+    if bufnr > br
+      call add(s:previewd_bufnrs, bufnr)
+    endif
+    wincmd p
+    resize 18
+    call s:MPT._build_prompt()
   endfunction
 else
   function! s:preview_timer(timer) abort
