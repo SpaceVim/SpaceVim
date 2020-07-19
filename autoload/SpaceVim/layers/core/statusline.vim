@@ -386,9 +386,9 @@ function! SpaceVim#layers#core#statusline#get(...) abort
             \ . '%#SpaceVim_statusline_b#'
             \ . ' Location List %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
             \ . s:lsep
-            \ . ( has('patch-8.0.1384') ? ((getqflist({'title' : 0}).title ==# ':setqflist()') ? '' : 
+            \ . ( has('patch-8.0.1384') ? ((getloclist(winnr(),{'title' : 0}).title ==# ':setloclist()') ? '' : 
             \ '%#SpaceVim_statusline_c#'
-            \ . getqflist({'title' : 0}).title . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
+            \ . getloclist(winnr(),{'title' : 0}).title . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
             \ ) : '')
 
     endif
