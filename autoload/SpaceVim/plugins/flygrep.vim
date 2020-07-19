@@ -17,6 +17,7 @@ let s:HI = SpaceVim#api#import('vim#highlight')
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:SL = SpaceVim#api#import('vim#statusline')
+let s:Window = SpaceVim#api#import('vim#window')
 " }}}
 
 let s:grepid = 0
@@ -591,7 +592,7 @@ let s:previewd_bufnrs = []
 " @vimlint(EVL103, 1, a:timer)
 " use floating windows to preview
 let s:preview_win_id = -1
-if exists('*nvim_open_win')
+if exists('*nvim_open_win') && exists('*nvim_win_set_buf')
   function! s:preview_timer(timer) abort
     for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
       exe 'silent bd ' . id
@@ -599,25 +600,33 @@ if exists('*nvim_open_win')
     let br = bufnr('$')
     let line = getline('.')
     let filename = fnameescape(split(line, ':\d\+:')[0])
-    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    let linenr = str2nr(matchstr(line, ':\d\+:')[1:-2])
     noautocmd let bufnr = s:BUFFER.bufadd(filename)
     call bufload(bufnr)
-    let flygrep_win_height = 16
-    noautocmd let s:preview_win_id = s:FLOATING.open_win(bufnr, v:false,
-          \ {
-          \ 'relative': 'editor',
-          \ 'width'   : &columns, 
-          \ 'height'  : 5,
-          \ 'row': &lines - flygrep_win_height - 2 - 5,
-          \ 'col': 0
-          \ })
+    if s:Window.is_float(win_id2win(s:preview_win_id))
+      call nvim_win_set_buf(s:preview_win_id, bufnr)
+    else
+      let flygrep_win_height = 16
+      noautocmd let s:preview_win_id = s:FLOATING.open_win(bufnr, v:false,
+            \ {
+            \ 'relative': 'editor',
+            \ 'width'   : &columns, 
+            \ 'height'  : 5,
+            \ 'row': &lines - flygrep_win_height - 2 - 5,
+            \ 'col': 0
+            \ })
+
+    endif
+    noautocmd call s:Window.set_cursor(s:preview_win_id, [linenr, 1])
     if bufnr > br
       call add(s:previewd_bufnrs, bufnr)
     endif
     call s:MPT._build_prompt()
   endfunction
   function! s:close_preview_win() abort
-    call s:FLOATING.win_close(s:preview_win_id, 1)
+    if s:preview_win_id > 0
+      call s:FLOATING.win_close(s:preview_win_id, 1)
+    endif
   endfunction
 else
   function! s:preview_timer(timer) abort
