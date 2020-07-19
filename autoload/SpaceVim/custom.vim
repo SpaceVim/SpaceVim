@@ -119,10 +119,10 @@ function! SpaceVim#custom#apply(config, type) abort
       " this the first argv should be get(plugin, 'repo', get(plugin, 'name',
       " ''))
       " BTW, we also need to check if the plugin has name or repo key
-      if has_key(plugin, 'name')
-        call add(g:spacevim_custom_plugins, [plugin.name, plugin])
-      elseif has_key(plugin, 'repo')
+      if has_key(plugin, 'repo')
         call add(g:spacevim_custom_plugins, [plugin.repo, plugin])
+      elseif has_key(plugin, 'name')
+        call add(g:spacevim_custom_plugins, [plugin.name, plugin])
       else
         call SpaceVim#logger#warn('custom_plugins should contains repo key!')
         call SpaceVim#logger#info(string(plugin))
