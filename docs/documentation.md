@@ -326,6 +326,7 @@ The different key bindings between SpaceVim and origin vim are shown as below.
   ```
 
 - The `jk` key has been mapped to `<Esc>` in insert mode. To disable this key binding, set `escape_key_binding` to empty string.
+
   ```toml
   [options]
       escape_key_binding = ''
