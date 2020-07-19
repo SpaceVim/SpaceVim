@@ -603,7 +603,7 @@ if exists('*nvim_open_win')
     let bufnr = s:BUFFER.bufadd(filename)
     call bufload(bufnr)
     let flygrep_win_height = 16
-    call s:FLOATING.open_win(bufnr, v:true,
+    call s:FLOATING.open_win(bufnr, v:false,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
@@ -611,12 +611,9 @@ if exists('*nvim_open_win')
           \ 'row': &lines - flygrep_win_height - 2 - 6,
           \ 'col': 0
           \ })
-    wincmd p
     if bufnr > br
       call add(s:previewd_bufnrs, bufnr)
     endif
-    wincmd p
-    resize 18
     call s:MPT._build_prompt()
   endfunction
 else
