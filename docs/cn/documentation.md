@@ -235,7 +235,7 @@ SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重�
 
 ```toml
 [[custom_plugins]]
-    name = "lilydjwg/colorizer"
+    repo = "lilydjwg/colorizer"
     on_cmd = ["ColorHighlight", "ColorToggle"]
     merged = false
 ```

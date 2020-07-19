@@ -972,7 +972,7 @@ let g:spacevim_disabled_plugins        = []
 " Add custom plugins.
 " >
 "   [[custom_plugins]]
-"     name = 'vimwiki/vimwiki'
+"     repo = 'vimwiki/vimwiki'
 "     merged = false
 " <
 
