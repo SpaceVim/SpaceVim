@@ -50,7 +50,7 @@ function! SpaceVim#layers#ctrlp#config() abort
         \ ],
         \ 1)
   " @fixme SPC h SPC make vim flick
-  nmap <Space>h<Space> [SPC]h[SPC]
+  exe printf('nmap %sh%s [SPC]h[SPC]', g:spacevim_default_custom_leader)
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'CtrlPBuffer',
