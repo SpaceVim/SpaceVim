@@ -5,7 +5,7 @@ local mt = {
         return vim.api.nvim_buf_get_lines(table.bufnr, key - 1, key, 0)[1];
     end
     __newindex = function(table, key, value)
-        vim.api.nvim_buf_set_lines(table.bufnr, key -1, key, {value})
+        vim.api.nvim_buf_set_lines(table.bufnr, key -1, key, {value});
     end
 }
 
