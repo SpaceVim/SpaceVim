@@ -624,7 +624,7 @@ if exists('*nvim_open_win') && exists('*nvim_win_set_buf')
     call s:MPT._build_prompt()
   endfunction
   function! s:close_preview_win() abort
-    if s:preview_win_id > 0
+    if s:Window.is_float(win_id2win(s:preview_win_id))
       call s:FLOATING.win_close(s:preview_win_id, 1)
     endif
   endfunction
