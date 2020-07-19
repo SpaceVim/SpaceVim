@@ -319,7 +319,7 @@ function! s:close_buffer() abort
       catch
       endtry
     endfor
-    noautocmd pclose
+    noautocmd call s:close_preview_win()
     let s:preview_able = 0
   endif
   noautocmd q
@@ -481,7 +481,7 @@ function! s:open_item() abort
     let linenr = matchstr(line, ':\d\+:')[1:-2]
     let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
     if s:preview_able == 1
-      pclose
+      call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
@@ -505,7 +505,7 @@ function! s:open_item_vertically() abort
     let linenr = matchstr(line, ':\d\+:')[1:-2]
     let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
     if s:preview_able == 1
-      pclose
+      call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
@@ -529,7 +529,7 @@ function! s:open_item_horizontally() abort
     let linenr = matchstr(line, ':\d\+:')[1:-2]
     let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
     if s:preview_able == 1
-      pclose
+      call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
@@ -578,7 +578,7 @@ function! s:toggle_preview() abort
     let s:preview_able = 1
     call s:preview()
   else
-    pclose
+    call s:close_preview_win()
     let s:preview_able = 0
   endif
   redraw
@@ -600,21 +600,24 @@ if exists('*nvim_open_win')
     let line = getline('.')
     let filename = fnameescape(split(line, ':\d\+:')[0])
     let linenr = matchstr(line, ':\d\+:')[1:-2]
-    let bufnr = s:BUFFER.bufadd(filename)
+    noautocmd let bufnr = s:BUFFER.bufadd(filename)
     call bufload(bufnr)
     let flygrep_win_height = 16
-    call s:FLOATING.open_win(bufnr, v:false,
+    noautocmd let s:preview_win_id = s:FLOATING.open_win(bufnr, v:false,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
           \ 'height'  : 5,
-          \ 'row': &lines - flygrep_win_height - 2 - 6,
+          \ 'row': &lines - flygrep_win_height - 2 - 5,
           \ 'col': 0
           \ })
     if bufnr > br
       call add(s:previewd_bufnrs, bufnr)
     endif
     call s:MPT._build_prompt()
+  endfunction
+  function! s:close_preview_win() abort
+    call nvim_win_close(s:preview_win_id)
   endfunction
 else
   function! s:preview_timer(timer) abort
@@ -633,6 +636,9 @@ else
     wincmd p
     resize 18
     call s:MPT._build_prompt()
+  endfunction
+  function! s:close_preview_win() abort
+    pclose
   endfunction
 endif
 " @vimlint(EVL103, 0, a:timer)
