@@ -17,6 +17,7 @@ let s:HI = SpaceVim#api#import('vim#highlight')
 let s:FLOATING = SpaceVim#api#import('neovim#floating')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:SL = SpaceVim#api#import('vim#statusline')
+let s:Window = SpaceVim#api#import('vim#window')
 " }}}
 
 let s:grepid = 0
@@ -319,7 +320,7 @@ function! s:close_buffer() abort
       catch
       endtry
     endfor
-    noautocmd pclose
+    noautocmd call s:close_preview_win()
     let s:preview_able = 0
   endif
   noautocmd q
@@ -481,7 +482,7 @@ function! s:open_item() abort
     let linenr = matchstr(line, ':\d\+:')[1:-2]
     let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
     if s:preview_able == 1
-      pclose
+      call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
@@ -505,7 +506,7 @@ function! s:open_item_vertically() abort
     let linenr = matchstr(line, ':\d\+:')[1:-2]
     let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
     if s:preview_able == 1
-      pclose
+      call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
@@ -529,7 +530,7 @@ function! s:open_item_horizontally() abort
     let linenr = matchstr(line, ':\d\+:')[1:-2]
     let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
     if s:preview_able == 1
-      pclose
+      call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
@@ -578,7 +579,7 @@ function! s:toggle_preview() abort
     let s:preview_able = 1
     call s:preview()
   else
-    pclose
+    call s:close_preview_win()
     let s:preview_able = 0
   endif
   redraw
@@ -591,9 +592,41 @@ let s:previewd_bufnrs = []
 " @vimlint(EVL103, 1, a:timer)
 " use floating windows to preview
 let s:preview_win_id = -1
-if exists('*nvim_open_win')
+if exists('*nvim_open_win') && exists('*nvim_win_set_buf')
   function! s:preview_timer(timer) abort
+    for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
+      exe 'silent bd ' . id
+    endfor
+    let br = bufnr('$')
+    let line = getline('.')
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = str2nr(matchstr(line, ':\d\+:')[1:-2])
+    noautocmd let bufnr = s:BUFFER.bufadd(filename)
+    call bufload(bufnr)
+    if s:Window.is_float(win_id2win(s:preview_win_id))
+      call nvim_win_set_buf(s:preview_win_id, bufnr)
+    else
+      let flygrep_win_height = 16
+      noautocmd let s:preview_win_id = s:FLOATING.open_win(bufnr, v:false,
+            \ {
+            \ 'relative': 'editor',
+            \ 'width'   : &columns, 
+            \ 'height'  : 5,
+            \ 'row': &lines - flygrep_win_height - 2 - 5,
+            \ 'col': 0
+            \ })
 
+    endif
+    noautocmd call s:Window.set_cursor(s:preview_win_id, [linenr, 1])
+    if bufnr > br
+      call add(s:previewd_bufnrs, bufnr)
+    endif
+    call s:MPT._build_prompt()
+  endfunction
+  function! s:close_preview_win() abort
+    if s:Window.is_float(win_id2win(s:preview_win_id))
+      call s:FLOATING.win_close(s:preview_win_id, 1)
+    endif
   endfunction
 else
   function! s:preview_timer(timer) abort
@@ -612,6 +645,9 @@ else
     wincmd p
     resize 18
     call s:MPT._build_prompt()
+  endfunction
+  function! s:close_preview_win() abort
+    pclose
   endfunction
 endif
 " @vimlint(EVL103, 0, a:timer)
