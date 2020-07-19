@@ -27,6 +27,7 @@ let s:STATUSLINE = SpaceVim#api#import('vim#statusline')
 let s:VIMCOMP = SpaceVim#api#import('vim#compatible')
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:ICON = SpaceVim#api#import('unicode#icon')
+let s:VIM =  SpaceVim#api#import('vim')
 
 " init
 let s:separators = {
@@ -366,17 +367,31 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_b#'
           \ . ' vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
           \ . s:lsep
-  elseif &filetype ==# 'qf'
-    return '%#SpaceVim_statusline_ia#' 
-          \ . s:winnr(1)
-          \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b#'
-          \ . ' QuickFix %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
-          \ . s:lsep
-          \ . ( has('patch-8.0.1384') ? ((getqflist({'title' : 0}).title ==# ':setqflist()') ? '' : 
-          \ '%#SpaceVim_statusline_c#'
-          \ . getqflist({'title' : 0}).title . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
-          \ ) : '')
+  elseif &filetype ==# 'qf' 
+    if s:VIM.is_qf_win(winnr())
+      return '%#SpaceVim_statusline_ia#' 
+            \ . s:winnr(1)
+            \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+            \ . '%#SpaceVim_statusline_b#'
+            \ . ' QuickFix %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+            \ . s:lsep
+            \ . ( has('patch-8.0.1384') ? ((getqflist({'title' : 0}).title ==# ':setqflist()') ? '' : 
+            \ '%#SpaceVim_statusline_c#'
+            \ . getqflist({'title' : 0}).title . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
+            \ ) : '')
+    else
+      return '%#SpaceVim_statusline_ia#' 
+            \ . s:winnr(1)
+            \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+            \ . '%#SpaceVim_statusline_b#'
+            \ . ' Location List %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+            \ . s:lsep
+            \ . ( has('patch-8.0.1384') ? ((getloclist(winnr(),{'title' : 0}).title ==# ':setloclist()') ? '' : 
+            \ '%#SpaceVim_statusline_c#'
+            \ . getloclist(winnr(),{'title' : 0}).title . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
+            \ ) : '')
+
+    endif
   elseif &filetype ==# 'defx'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# defx %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
