@@ -1,0 +1,1250 @@
+*dein.txt*	Dark powered Vim/Neovim plugin manager
+
+Version: 2.1
+Author:  Shougo <Shougo.Matsu at gmail.com>
+License: MIT license
+
+==============================================================================
+CONTENTS 						*dein-contents*
+
+Introduction		|dein-introduction|
+Usage			|dein-usage|
+Install			|dein-install|
+Interface		|dein-interface|
+  Functions		  |dein-functions|
+  Variables		  |dein-variables|
+  Options		  |dein-options|
+  Toml			  |dein-toml|
+Unite Sources		|dein-unite-sources|
+Denite Sources		|dein-denite-sources|
+Configuration Examples	|dein-examples|
+FAQ			|dein-faq|
+Compatibility		|dein-compatibility|
+
+
+==============================================================================
+INTRODUCTION						*dein-introduction*
+
+*dein* is the dark powered Vim package manager.  It is created from full
+scratch.
+
+Concepts are:
+
+* Faster than NeoBundle
+
+* Simple
+
+* No commands, Functions only to simplify the implementation
+
+* Easy to test and maintain
+
+* No Vundle/NeoBundle compatibility
+
+* neovim/Vim8 asynchronous API installation support
+
+* Local plugin support
+
+* Non github plugins support
+
+* Go like clone directory name ex:"github.com/{user}/{repository}"
+
+* Merge the plugins directories automatically to avoid long 'runtimepath'
+
+
+==============================================================================
+USAGE							*dein-usage*
+
+Refer to the example:
+|dein-examples|
+
+Run this command to update your plugins:
+>
+	:call dein#update()
+<
+Note: The plugins are not updated automatically.
+
+==============================================================================
+INSTALL							*dein-install*
+
+Requirements:
+* Vim 8.0 or above or NeoVim.
+* "git" command in $PATH (if you want to install github or vim.org plugins)
+
+Note: If you use Vim 7.4, please use dein.vim ver.1.5 instead.
+
+First of all, git clone the repository.
+
+Note: You must define the installation directory before to use dein.  It
+depends on your usage.
+For example, "~/.vim/bundles" or "~/.cache/dein" or "~/.local/share/dein".
+dein.vim does not define the default installation directory.
+You must not set the installation directory under "~/.vim/plugin" or
+"~/.config/nvim/plugin".
+
+Note: You need to have git installed.
+>
+	$ mkdir -p ~/.vim/bundle/repos/github.com/Shougo/dein.vim
+	$ git clone https://github.com/Shougo/dein.vim \
+	~/.vim/bundle/repos/github.com/Shougo/dein.vim
+<
+And set up a path to the repository directory.
+>
+	set runtimepath+={path to dein directory}
+<
+Example:
+>
+	set runtimepath+=~/.vim/bundle/repos/github.com/Shougo/dein.vim
+<
+Now configure your bundles. (Refer to |dein-examples|)
+
+Call |dein#update()| function to install your plugins.
+>
+If you need vim-plug like install UI, you can use dein-ui.vim.
+https://github.com/wsdjeg/dein-ui.vim
+
+
+==============================================================================
+INTERFACE						*dein-interface*
+
+
+------------------------------------------------------------------------------
+FUNCTIONS						*dein-functions*
+
+							*dein#add()*
+dein#add({repo}[, {options}])
+		Initialize a plugin.
+		{repo} is the repository URI or local repository directory
+		path.  If {repo} starts with github user name (ex:
+		"Shougo/dein.vim"), dein will install github plugins.
+		See |dein-options| for what to set in {options}.
+		Note: You must call it in |dein#begin()| block.
+
+							*dein#begin()*
+dein#begin({base-path}, [{vimrcs}])
+		Initialize dein.vim and start plugins configuration
+		block.
+		{base-path} is where your downloaded plugins will be placed.
+		For example, "Shougo/dein.vim" will be downloaded in
+		"{base-path}/repos/github.com/Shougo/dein.vim" directory.
+		{vimrcs} is a list of compared .vimrc and/or other
+		configuration(TOML) files. The default is |$MYVIMRC|.
+		The typical {base-path} is "~/.cache/dein" or
+		"~/.local/share/dein".
+
+		Note: You must not call the function inside a
+		"has('vim_starting')" block.
+
+		Note: It executes ":filetype off" automatically.
+
+							*dein#build()*
+dein#build([{plugins}])
+		Build for {plugins}.
+		{plugins} is the plugins name list.
+
+							*dein#call_hook()*
+dein#call_hook({hook-name})
+		Calls the hook {hook-name}.
+		Note: If {hook-name} is "source", dein will call "source"
+		hooks in sourced plugins.
+
+							*dein#check_install()*
+dein#check_install({plugins})
+		Check the plugins installation.
+		If {plugins} are not installed, it will return non-zero.
+		If {plugins} are invalid, it will return -1.
+		{plugins} are the plugins name list or the plugin name to
+		check.
+		If you omit it, dein will check all plugins installation.
+		Note: You can disable the message by |:silent|.
+
+						*dein#check_lazy_plugins()*
+dein#check_lazy_plugins()
+		Check the no meaning lazy plugins.  These plugins don't have
+		"plugin/" directory.
+
+							*dein#check_update()*
+dein#check_update([{plugins}])
+		Check the plugins update asynchronously.
+		{plugins} is the plugins name list to check.
+		If you omit it, dein will check all plugins update.
+		Note: It does not return value instead of
+		|dein#check_install()|.
+
+							*dein#check_clean()*
+dein#check_clean()
+		Returns the non-used plugins directories.  You can write the
+		wrap command to remove them.
+
+							*dein#clear_state()*
+dein#clear_state()
+		Clear the state file manually.
+
+							*dein#config()*
+dein#config({plugin-name}, {options})
+dein#config({options})
+		Change plugin options for {plugin-name}.
+		It you omit {plugin-name}, it uses |g:dein#name| variable.
+		If {plugin-name} is list, you can change the options in the
+		multiple plugins.
+		If {plugin-name} is already loaded or invalid, it will be
+		ignored.
+
+		Note: You must call it within |dein#begin()| / |dein#end()|
+		block.
+>
+	call dein#add('Shougo/deoplete.nvim')
+	call dein#config('deoplete.nvim', {
+	\ 'lazy' : 1, 'on_i' : 1,
+	\ })
+<
+						*dein#direct_install()*
+dein#direct_install({repo}[, {options}])
+		Direct install a plugin without editing the configuration.
+		The arguments are same with |dein#add()|.
+		It installs and sources the plugin.
+		Note: The direct installed plugins configuration is saved in
+		|dein#get_direct_plugins_path()|.  You can load or edit it. >
+
+		" Try deoplete without the configuration.
+		call dein#direct_install('Shougo/deoplete.nvim')
+<
+							*dein#disable()*
+dein#disable({plugins})
+		Disables plugins specified by {plugins}.
+		{plugins} is the plugins name list.
+		Note: This command must be executed before dein loads
+		the plugins.
+
+							*dein#each()*
+dein#each({command}[, {plugins}])
+		Execute {command} for {plugins}.
+		{plugins} is the plugins name list.
+		You can execute "git gc" command for the plugins.
+
+							*dein#end()*
+dein#end()
+		End dein configuration block.
+		You must not use the plugins in |dein#begin()| block.
+		If you enable |g:dein#auto_recache|, it executes
+		|dein#recache_runtimepath()| automatically.
+		Note: 'runtimepath' is changed after |dein#end()|.
+
+							*dein#get()*
+dein#get([{plugin-name}])
+		Get the plugin options dictionary for {plugin-name}.
+		If you omit {plugin-name}, dein will return the plugins
+		dictionary.  The key is the plugin name.  The value is the
+		plugin dictionary.
+
+					*dein#get_direct_plugins_path()*
+dein#get_direct_plugins_path()
+		Get the direct installed plugins script path.
+
+							*dein#get_log()*
+dein#get_log()
+		Get all previous install logs.
+
+							*dein#get_progress()*
+dein#get_progress()
+		Get current update progress message.
+
+						*dein#get_updates_log()*
+dein#get_updates_log()
+		Print previous update logs.
+
+							*dein#install()*
+dein#install([{plugins}])
+		Install the plugins asynchronously.
+		{plugins} is the plugins name list.
+		If you omit it, dein will install all plugins.
+
+							*dein#is_sourced()*
+dein#is_sourced({plugin-name})
+		Return non-zero if {plugin-name} exists and is sourced.
+		See |dein#source()| and |dein#tap()| as well.
+
+							*dein#load_dict()*
+dein#load_dict({dict}, [{options}])
+		Load the plugin configuration from {dict}.  {dict} is the
+		|Dictionary|.   The key is the repository URI and the value is
+		the |dein-options| dictionary. See |dein-options| for keys to
+		set in {options}. >
+
+		call dein#load_dict({
+		\ 'Shougo/denite.nvim': {},
+		\ 'Shougo/deoplete.nvim': {'name': 'deoplete'}
+		\ })
+<
+							*dein#load_rollback()*
+dein#load_rollback({rollbackfile}[, {plugins}])
+		Rollback {plugins} from {rollbackfile}.
+		Note: It is the dangerous command.
+
+							*dein#load_state()*
+dein#load_state({base-path})
+		Load dein's state from the cache script,
+		which is located in `dein#util#_get_runtime_path() . '/state_'
+		.  fnamemodify(v:progname, ':r') . '.vim'`.
+		{base-path} is where your downloaded plugins will be placed.
+		Note: You must call it before |dein#begin()|.  It clears dein
+		all configuration.
+		Note: It overwrites your 'runtimepath' completely, you must
+		not call it after change 'runtimepath' dynamically.
+		Note: The block is skipped if dein's state is loaded.
+
+		It returns 1, if the cache script is old or invalid or not
+		found.
+>
+	if dein#load_state(path)
+	  call dein#begin(path)
+	  " My plugins here:
+	  " ...
+	  call dein#end()
+	  call dein#save_state()
+	endif
+<
+							*dein#load_toml()*
+dein#load_toml({filename}, [{options}])
+		Load TOML plugin configuration from {filename}.  See
+		|dein-options| for keys to set in {options}.
+		Note: TOML parser is slow.  You should use it with
+		|dein#load_state()| and |dein#save_state()|.
+		Note: You need to specify toml files in |dein#begin()|
+		argument.
+
+		For toml file formats: |dein-toml|
+>
+	let s:toml = '~/test_vim/lazy.toml'
+	if dein#load_state('~/test_vim/.cache/dein', [$MYVIMRC, s:toml])
+	  call dein#begin('~/test_vim/.cache/dein')
+
+	  call dein#load_toml(s:toml, {'lazy': 1})
+
+	  call dein#end()
+	  call dein#save_state()
+	endif
+<
+							*dein#local()*
+dein#local({directory}, [{options}, [{names}]])
+		Add the subdirectories in {directory} to 'runtimepath', like
+		"pathogen" does. See |dein-options| for keys to set in
+		{options}.
+		If {names} is given, {names} directories are only loaded.
+		{names} is |wildcards| list.
+>
+		" Load plugin from "~/.vim/bundle".
+		call dein#local("~/.vim/bundle")
+		" Load plugin1 and plugin2 from "~/.vim/bundle".
+		call dein#local("~/.vim/bundle", {},
+		\ ['plugin1', 'plugin2', 'vim-*', '*.vim'])
+<
+							*dein#update()*
+dein#update([{plugins}])
+		Install/Update the plugins.
+		{plugins} is the plugins name list.
+		If you omit it, dein will update all plugins.
+		Note: If you are using neovim or Vim 8.0+, it runs
+		asynchronously.
+
+							*dein#plugins2toml()*
+dein#plugins2toml({plugins})
+		Returns the toml configurations for {plugins}
+		{plugins} is the plugins dictionary from |dein#get()|.
+
+							*dein#reinstall()*
+dein#reinstall({plugins})
+		Reinstall the plugins.
+		{plugins} is the plugins name list.
+
+						*dein#remote_plugins()*
+dein#remote_plugins()
+		Load not loaded neovim |remote-plugin| and execute
+		":UpdateRemotePlugins" command.
+		It is better than ":UpdateRemotePlugins" for dein.
+		Note: It is valid only in neovim.
+
+							*dein#rollback()*
+dein#rollback({date}[, {plugins}])
+		Rollback to the latest matched {date} revisions for {plugins}.
+		If {date} is "", it rollbacks to the latest revisions.
+		{plugins} is the plugins name list.
+		Note: It is the dangerous command.
+
+						*dein#recache_runtimepath()*
+dein#recache_runtimepath()
+		Re-make the dein runtimepath cache and execute |:helptags|.
+		It is called automatically after the installation.
+
+							*dein#save_rollback()*
+dein#save_rollback({rollbackfile}[, {plugins}])
+		Save {plugins} rollback information to {rollbackfile}.
+
+							*dein#save_state()*
+dein#save_state()
+		Save dein's state in the cache script.
+		It must be after |dein#end()|.
+		Note: It is available when loading .vimrc.
+		Note: It saves your 'runtimepath' completely, you must not
+		call it after change 'runtimepath' dynamically.
+
+							*dein#set_hook()*
+dein#set_hook({plugins}, {hook-name}, {hook})
+		{plugins} is the plugins name list.
+		If it is empty list, it means all plugins.
+		Set hook {hook} as {hook-name} in {plugins}.
+		It can be called after |dein#begin()| / |dein#end()| block.
+		Note: If it is |Funcref|, it does not work in
+		|dein#load_state()| / |dein#save_state()| block.
+>
+	call dein#add('Shougo/neosnippet.vim', {'lazy': 1})
+	function! Foo() abort
+	endfunction
+	" Does not work for dein#load_state()/dein#save_state() block
+	call dein#set_hook('neosnippet.vim', 'hook_source', function('Foo'))
+	" Does work for dein#load_state()/dein#save_state() block
+	call dein#set_hook('neosnippet.vim', 'hook_source', 'echomsg "foo"')
+<
+							*dein#source()*
+dein#source([{plugins}])
+		|:source|  the plugins specified by {plugins}.
+		{plugins} is the plugins name list.
+		If you omit it, dein will source all plugins.
+
+							*dein#tap()*
+dein#tap({plugin-name})
+		Return non-zero if {plugin-name} exists and isn't
+		disabled.
+		It initializes |g:dein#name| and |g:dein#plugin| variables.
+
+------------------------------------------------------------------------------
+VARIABLES						*dein-variables*
+
+						*g:dein#auto_recache*
+g:dein#auto_recache
+		If you set it to 1, call |dein#recache_runtimepath()|
+		automatically if necessary when saving the vimrc, toml file.
+		Note: It reloads your $MYVIMRC.
+
+		Default: 0
+
+						*g:dein#cache_directory*
+g:dein#cache_directory
+		The cache directory to use.
+
+		Default: Under the base directory you have already specified
+		by |dein#begin()|.
+
+						*g:dein#download_command*
+g:dein#download_command
+		The default download command.
+
+		Default: "curl --silent --location --output" or "wget -q -O"
+		or use PowerShell.
+
+					*g:dein#enable_name_conversion*
+g:dein#enable_name_conversion
+		If you set it to 1 and omit plugin name,
+		|dein-options-normalized_name| is used as plugin name.
+		It is useful for absorbing difference of repository name.
+
+		Defaults: "0"
+
+						*g:dein#enable_notification*
+g:dein#enable_notification
+		If you set it to 1, dein uses the notification feature.
+		You need the following commands to use it.
+
+		In Windows: "Snarl" and "Snarl_CMD" commands
+http://snarl.fullphat.net/
+https://www.tlhan-ghun.de/projects/snarl-command-line-tools/snarl_cmd-exe/
+
+		In Mac: "terminal-notifier" or "osascript" command
+https://github.com/julienXX/terminal-notifier
+		Note: "reattach-to-user-namespace" command is needed in tmux.
+
+		In Linux: "notify-send" command
+
+		Defaults: "0"
+
+						*g:dein#install_max_processes*
+g:dein#install_max_processes
+		The max number of processes used for dein/install source
+		asynchronous update.
+		If it is less than equal 1, this feature is disabled.
+
+		Defaults: "8"
+
+					*g:dein#install_process_timeout*
+g:dein#install_process_timeout
+		The time of timeout seconds when updating/installing plugins.
+
+		Defaults: "120"
+
+					*g:dein#install_progress_type*
+g:dein#install_progress_type
+		The output type of the progress bar in the installer.
+		Note: If you want to display the progress in the 'statusline',
+		you should use |dein#get_progress()| .
+
+		"none":
+			Disabled.
+		"echo":
+			Displayed in the echo area.
+		"tabline":
+			Displayed in the 'tabline'.
+		"title":
+			Displayed in the 'titlestring'.
+			Note: It is neovim only support
+
+		Defaults: "echo"
+
+						*g:dein#install_message_type*
+g:dein#install_message_type
+		The output type of the messages in the installer.
+
+		"none":
+			Disabled.
+		"echo":
+			Displayed in the echo area.
+
+						*g:dein#install_log_filename*
+g:dein#install_log_filename
+		The log filename. Set it to "" to disable logging.
+
+		Default: ""
+
+                                                                 *g:dein#name*
+g:dein#name
+		Current plugin name.
+		You can only use it in |dein#tap()| block.
+		Note: The variable is deprecated.
+
+						*g:dein#notification_icon*
+g:dein#notification_icon
+		The notification icon path.
+
+		Default: ""
+
+						*g:dein#notification_time*
+g:dein#notification_time
+		This is the time the notification should be displayed in
+		seconds.  For Linux and Windows only.
+
+		Default: 2
+
+							*g:dein#plugin*
+g:dein#plugin
+		Current plugin.
+		You can use it in |dein#tap()| block or |dein-hooks|.
+
+						*g:dein#types#git#clone_depth*
+g:dein#types#git#clone_depth
+		The default history depth for "git clone".
+		If it is 1, dein will use shallow clone feature.
+		See |dein-options-type__depth|.
+
+		Default: 0
+
+					*g:dein#types#git#command_path*
+g:dein#types#git#command_path
+		The "git" command path used for git type.
+
+		Default: "git"
+
+					*g:dein#types#git#default_protocol*
+g:dein#types#git#default_protocol
+		The default protocol used for git (github).
+		Note: It only accepts "https" or "ssh".
+
+		Default: "https"
+
+					*g:dein#types#git#pull_command*
+g:dein#types#git#pull_command
+		The git command used to pull updates.
+
+		Default: "pull --ff --ff-only"
+
+------------------------------------------------------------------------------
+OPTIONS							*dein-options*
+		The {options} accepts the following keys:
+
+							*dein-options-augroup*
+augroup		(String)
+		An augroup name that the plugin uses for |VimEnter| or
+		|GUIEnter| autocmd events.
+
+							*dein-options-build*
+build		(String)
+		Specify the build script.
+		This command is executed by |system()| in the plugin
+		runtimepath.
+		Note: In previous versions of dein, build could also be of
+		type dictionary, but that is now deprecated.
+		dictionary, but that is now deprecated.
+		Please use |dein-options-hook_post_update| instead.
+
+		Example:
+>
+		call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+<
+		Note: The command is executed in plugin top directory.
+		If you need cd command, you must use "sh -c". >
+		call dein#add('wincent/command-t', {
+		\ 'build':
+		\      'sh -c "cd ruby/command-t && ruby extconf.rb && make"'
+		\ })
+							*dein-options-depends*
+depends		(List or String)
+		Specify a list of plugins a plugin depends on.
+		List items are '{plugin-name}'.
+		Those specified in the list are NOT installed automatically.
+		Note: The loading order is not guaranteed in non lazy plugins.
+
+							*dein-options-frozen*
+frozen		(Number)
+		If set to 1, dein doesn't update it automatically. It is
+		useful for outdated plugins that can no longer be updated.
+
+						*dein-options-ftplugin*
+ftplugin	(Dictionary)
+		"_" key is executed after all ftplugin.
+		"{filetype}" key is executed {filetype} ftplugin.
+
+							*dein-options-if*
+if		(Number) or (String)
+		If set to zero, dein doesn't register the plugin, i.e. the
+		plugin will be disabled.
+		If it is String, dein will eval it.
+		If you don't set it, dein will register (enable) the plugin.
+
+							*dein-options-lazy*
+lazy		(Number)
+		If set to non-zero, dein doesn't add the path to 'runtimepath'
+		automatically.
+		If you don't set it, dein will set it automatically when the
+		conditions are met.
+		Note: You should not specify the plugins which have no
+		"plugin/" directory as lazy load plugins.  It is meaningless
+		and just increases the overhead.  You can get the no meaning
+		lazy plugins by |dein#check_lazy_plugins()|.
+
+							*dein-options-merged*
+merged		(Number)
+		If set to 0, dein doesn't merge the plugin directory.  It is
+		useful for the plugin files conflicts.
+
+							*dein-options-name*
+name		(String)
+		Specify the name of the plugin.  This is used for dein
+		management and other functions.  If it is omitted, the tail of
+		the repository name will be used.
+		Note: Must be unique across the all plugin.  If the plugin
+		name conflicts with another plugin, dein will overwrite the
+		previous settings with the new one.  If the repo tail is bound
+		to conflict, you can set the "name" option manually to prevent
+		overwriting an existing plugin setting.
+
+						*dein-options-normalized_name*
+normalized_name	(String)
+		Specify the normalized name of the plugin.  If omitted, dein
+		will normalize the tail of the repository name.
+		Note: Must be unique across all plugins.
+		Normalized name example:
+		name            : normalized name
+>
+		denite.nvim       denite
+		dein.vim          dein
+		vim-quickrun      quickrun
+<
+							*dein-options-on_cmd*
+on_cmd		(List) or (String)
+		If it is matched to the executed command, dein will call
+		|dein#source()|.
+
+						*dein-options-on_event*
+on_event	(String) or (List)
+		dein will call |dein#source()| on the events.
+
+							*dein-options-on_func*
+on_func		(List) or (String)
+		If it is matched to the called function, dein will call
+		|dein#source()|.
+
+							*dein-options-on_ft*
+on_ft		(List) or (String)
+		If it is matched to 'filetype', dein will call
+		|dein#source()|.
+
+							*dein-options-on_i*
+on_i		(Number)
+		If set to non-zero, dein will call |dein#source()| on
+		|InsertEnter| autocmd.
+		Note: This is deprecated option.  You should use
+		|dein-options-on_event| instead.
+
+							*dein-options-on_idle*
+on_idle		(Number)
+		If set to non-zero, dein will call |dein#source()| on
+		|FocusLost| or |CursorHold| autocmd.
+		Note: This is deprecated option.  You should use
+		|dein-options-on_event| instead.
+
+							*dein-options-on_if*
+on_if		(String)
+		If it is evaluated and it is non-zero, dein will call
+		|dein#source()|.
+		The default evaluate timings are "BufRead", "BufNewFile",
+		"VimEnter" and "FileType".
+		If |dein-options-on_event| exists, it is evaluated when
+		|dein-options-on_event|.
+
+		For example: >
+		call dein#add('blueyed/vim-diminactive',
+		\ {'on_event': 'WinEnter', 'on_if': 'winnr("$") > 1'})
+<
+							*dein-options-on_map*
+on_map		(Dictionary) or (List) or (String)
+		If it is the Dictionary, the key is {mode} and the items are
+		{mapping} or [{mapping1}, {mapping2}, ...].
+		If it is the List, the items are {mapping} or [{mode},
+		{mapping1}, [{mapping2}, ...]].
+		If {mode} is omitted, "nx" is used.
+		Note: You can use plugin prefix mappings.
+		For example, you can use "<Plug>(ref-" instead of
+		"<Plug>(ref-back)" and so on.
+		For example: >
+		call dein#add('Shougo/deol.nvim',
+		\ { 'on_map': {'n': '<Plug>'} })
+<
+		Note: You can use "<Plug>" keyword as {mapping}. If
+		{mapping} is "<Plug>", "<Plug>(normalized_name" is
+		used.
+		For example: >
+		" It is same as "'mappings': '<Plug>(anzu'
+		call dein#add('osyo-manga/vim-anzu', {'on_map': '<Plug>'})
+<
+		Note: You cannot use lazy <Plug> mappings twice.
+		For example: >
+		call dein#add('osyo-manga/vim-anzu',
+		\ {'on_map': '<Plug>(anzu-'}
+		" Not working!!
+		nmap n <Plug>(anzu-jump-n)<Plug>(anzu-echo-search-status)zv
+		nmap N <Plug>(anzu-jump-N)<Plug>(anzu-echo-search-status)zv
+<
+							*dein-options-on_path*
+on_path		(List) or (String)
+		If set to ".*", dein will call |dein#source()| on editing all
+		files.  Otherwise, dein will call |dein#source()| if the
+		buffer name is matched to the string pattern.
+		Note: It is useful for explorer behavior plugins.
+
+						*dein-options-on_source*
+on_source	(List) or (String)
+		Load the plugin before the listed plugins are loaded.
+		Note: The plugins must be lazy loaded plugins.
+
+							*dein-options-path*
+path		(String)
+		Specify the plugin downloaded path.
+
+							*dein-options-rev*
+rev		(String)
+		Specify a revision number or branch/tag name.
+		If it is "*" in "git" type, dein will use latest released tag.
+		You can specify the wildcards like "0.*".
+		Note: If the type is "raw", rev must be hash number.
+
+		Example:
+>
+		call dein#add('Shougo/deol.nvim', { 'rev': 'a1b5108fd5' })
+<
+							*dein-options-rtp*
+rtp		(String)
+		Specify the runtime path.
+		You can use it when the repository has the Vim plugin in a
+		subdirectory.
+		For example: https://github.com/rstacruz/sparkup
+		If it is empty string, dein will not add the path to
+		'runtimepath'
+
+		Example:
+>
+		call dein#add('rstacruz/sparkup', {'rtp': 'vim'})
+<
+						*dein-options-script_type*
+script_type	(String)
+		Specify the script type. It is useful for non-official
+		categorized plugins.
+		For example: "indent", "plugin", "ftplugin", ...
+		Note: You must not specify it for categorized plugins.
+		Example:
+>
+		call dein#add(
+		\ 'https://raw.githubusercontent.com/Shougo/'
+		\ . 'shougo-s-github/master/vim/colors/candy.vim',
+		\ {'script_type' : 'colors'})
+		call dein#add(
+		\ 'https://github.com/bronzehedwick/impactjs-colorscheme',
+		\ {'script_type' : 'colors'})
+<
+							*dein-options-timeout*
+timeout		(Number)
+		The time of timeout seconds when updating/installing plugins.
+		If omit it, |g:dein#install_process_timeout| will be used.
+
+							*dein-options-trusted*
+trusted        (Number)
+		If set to non-zero, dein will load the plugin in "sudo" mode.
+		If you don't set it, dein won't load it.
+
+							*dein-options-type*
+type		(String)
+		Specify the repository type. If it is omitted, a guess is made
+		based on {repository}.
+
+		The available types:
+		"none"      : None repository
+		"raw"       : Raw plugin file ("script_type" attribute is
+		              needed)
+		"git"       : Git
+
+						*dein-options-type__depth*
+type__depth		(Number)
+		The history depth for "git clone".
+		If omitted, |g:dein#types#git#clone_depth| is used.
+		If it is than 0, dein clones the repository by shallow
+		clone. Shallow clone feature saves your repository clone time.
+		But it has problems in some repository.
+
+		See below issues:
+		https://github.com/Shougo/neobundle.vim/issues/81
+		https://github.com/Homebrew/homebrew/issues/12024
+
+		Note: This attribute is available in git type only.
+
+------------------------------------------------------------------------------
+HOOKS							*dein-hooks*
+
+		The string will be split by the lines.
+		It is useful for the plugins initialization.
+		Note: The Function hooks cannot be cached.  You must
+		initialize it.
+
+		Note: You can use |g:dein#plugin| in the hooks.
+		Note: The loading order is not guaranteed in non lazy plugins.
+		Note: The string is executed as Ex commands.
+
+						*dein-options-hook_add*
+hook_add	(String) or (Function)
+		It is executed after the line is parsed.
+		Note: You cannot call plugin function in "hook_add".
+		Because the plugin is not sourced when "hook_add".
+>
+		call dein#add('Shougo/defx.nvim', {
+		\ 'hook_add': 'nnoremap <silent>   [Space]v
+		\              :<C-u>Defx<CR>'
+		\ })
+		call dein#add('kana/vim-niceblock', {
+		\ 'hook_add': join(['xmap I  <Plug>(niceblock-I)',
+		                    'xmap A  <Plug>(niceblock-A)'], "\n")
+		\ })
+		call dein#add('godlygeek/csapprox', {
+		\ 'hook_add': "
+		\ let g:CSApprox_konsole = 1\n
+		\ let g:CSApprox_attr_map =
+		\     { 'bold' : 'bold', 'italic' : '', 'sp' : '' }\n
+		\ "})
+<
+					*dein-options-hook_done_update*
+hook_done_update (String) or (Function)
+		It is executed after the all plugins are updated.
+
+					*dein-options-hook_post_source*
+hook_post_source (String) or (Function)
+		It is executed after plugins are sourced.
+
+		Note: In Vim initializing, you must call the
+		"hook_post_source" hooks manually in |VimEnter| if needed.
+>
+	autocmd VimEnter * call dein#call_hook('post_source')
+<
+					*dein-options-hook_post_update*
+hook_post_update (String) or (Function)
+		It is executed after the plugins are updated.
+
+						*dein-options-hook_source*
+hook_source	(String) or (Function)
+		It is executed before plugins are sourced.
+		Note: The "sourced" means after |dein#end()| or when
+		|VimEnter| or autoloaded.
+>
+		call dein#add('artur-shaik/vim-javacomplete2')
+		call dein#config('artur-shaik/vim-javacomplete2', {
+		\ 'hook_source': 'autocmd FileType java
+		\                 setlocal omnifunc=javacomplete#Complete'
+		\ })
+		function! Func() abort
+		  autocmd FileType qf nnoremap <buffer> r :<C-u>Qfreplace<CR>
+		endfunction
+		call dein#source('thinca/vim-qfreplace',
+		\ 'hook_source': function('Func'))
+<
+		Note: non lazy plugins' |dein-options-hook_source| cannot be
+		called.  You must call it by |dein#call_hook()| if needed.
+>
+		call dein#begin()
+		...
+		call dein#end()
+		call dein#call_hook('source')
+<
+------------------------------------------------------------------------------
+TOML							*dein-toml*
+
+		TOML file format specification:
+		https://github.com/toml-lang/toml
+		Note: Original TOML parser is created by kamichidu.
+		https://github.com/kamichidu
+
+							*dein-toml-ftplugin*
+		ftplugin	(Dictionary)
+		"_" key is executed after all ftplugin.
+		"{filetype}" key is executed {filetype} ftplugin.
+		You can define multiple filetypes by "{filetype1}_{filetype2}"
+		key.  "b:undo_ftplugin" is defined automatically.
+
+							*dein-toml-hook_add*
+		hook_add	(String)
+		It is the global |dein-options-hook_add|.
+		It is executed in |dein#end()|.
+
+							*dein-toml-plugins*
+		plugins		(Dictionary)
+		It is converted to |dein#add()|.
+		"repo" key is needed.
+
+							*dein-toml-example*
+
+		TOML file sample is here:
+>
+		# TOML sample
+		hook_add = 'let g:foo = 0'
+
+		[ftplugin]
+		# Execute after ftplugin.
+		_ = '''
+		  setl formatoptions-=ro | setl formatoptions+=mMBl
+		'''
+		html = '''
+		setlocal includeexpr=substitute(v:fname,'^\\/','','')
+		setlocal path+=./;/
+		'''
+
+		[[plugins]]
+		repo = 'Shougo/neosnippet.vim'
+		on_i = 1
+		on_ft = 'snippet'
+
+		[[plugins]]
+		repo = 'rhysd/accelerated-jk'
+		on_map = '<Plug>'
+		hook_add = '''
+		  nmap <silent>j <Plug>(accelerated_jk_gj)
+		  nmap <silent>k <Plug>(accelerated_jk_gk)
+		'''
+		[plugins.ftplugin]
+		python = '''
+		let b:undo_ftplugin .= 'setlocal foldmethod<'
+		setlocal foldmethod=indent
+		'''
+
+==============================================================================
+UNITE SOURCES						*dein-unite-sources*
+
+Here let me explain about a source for |unite| provided in dein.
+
+						*dein-unite-source-dein*
+dein
+		Nominates dein plugins as candidates.
+
+		Note:
+		If argument is bang(!), print plugins status.
+
+						*dein-unite-source-dein_log*
+dein_log
+		Print previous dein install logs.
+		And you can jump the diff URI in github.
+
+		If argument 1 is "!", the updated logs are displayed.
+
+		Source arguments:
+		1. "!"
+
+==============================================================================
+DENITE SOURCES						*dein-denite-sources*
+
+Here let me explain about a source for |denite| provided in dein.
+
+						*dein-denite-source-dein*
+dein
+		Nominates dein plugins as candidates.
+
+						*dein-denite-source-dein-log*
+dein/log
+		Print previous dein install logs.
+		And you can jump the diff URI in github.
+
+		If argument 1 is "!", the updated logs are displayed.
+
+		Source arguments:
+		1. "!"
+
+==============================================================================
+EXAMPLES						*dein-examples*
+>
+	if &compatible
+	  set nocompatible
+	endif
+	set runtimepath+={path to dein.vim directory}
+
+	if dein#load_state({path to plugin base path directory})
+	  call dein#begin({path to plugin base path directory})
+
+	  call dein#add({path to dein.vim directory})
+	  call dein#add('Shougo/deoplete.nvim')
+	  if !has('nvim')
+	    call dein#add('roxma/nvim-yarp')
+	    call dein#add('roxma/vim-hug-neovim-rpc')
+	  endif
+	  ...
+
+	  call dein#end()
+	  call dein#save_state()
+	endif
+
+	filetype plugin indent on
+	syntax enable
+<
+==============================================================================
+FAQ							*dein-faq*
+
+Q: How to donate money to you?
+
+A: I don't get the donation, but if you want to donate, please support neovim
+project.  My plugins depends on neovim development.
+
+https://salt.bountysource.com/teams/neovim
+
+Q: Where is ":NeoBundleFetch" in dein features?
+
+A: You can use |dein-options-rtp|.
+>
+	call dein#add('Shougo/dein.vim', {'rtp': ''})
+<
+	Note: It does not generate |:helptags| file.
+
+Q: vimproc does not work when manually build it.
+https://github.com/Shougo/dein.vim/issues/11
+
+A: You should not build it manually.  Please use |dein-options-build| feature.
+>
+	call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+<
+Q: Where is ":NeoBundleCheck" in dein features?
+
+A: You can use |dein#check_install()|.
+>
+	if dein#check_install()
+	  call dein#install()
+	endif
+<
+Q: I want to disable plugins.
+
+A: Please use |dein-options-if|.
+
+Q: Cannot load colorscheme when reloading .vimrc.
+
+A: You must write |:colorscheme| lines after |dein#end()|.
+>
+	call dein#add('tomasr/molokai', {'merged': 0})
+	...
+
+	call dein#end()
+	colorscheme molokai
+<
+Or you can use |dein#source()| for it.
+>
+	call dein#add('tomasr/molokai', {'merged': 0})
+	call dein#source('molokai')
+	colorscheme molokai
+<
+Q: There is the conflict between "jedi-vim" and "vim-pyenv" "initialize.py"
+file.
+
+A: It is the plugins problem.  The plugins should not create the conflited
+name file.  But you can avoid the problem by |dein-options-merged|.
+
+Q: How to remove the disabled plugins?
+
+A: You can remove them like below.
+Note: You must call |dein#recache_runtimepath()| after the remove.
+>
+	call map(dein#check_clean(), "delete(v:val, 'rf')")
+	call dein#recache_runtimepath()
+<
+Q: How to use the script functions for hooks feature?
+
+A: You can use them like this.
+Note: You cannot use the script functions for cached plugins.
+The SID will be changed in the next run.
+>
+	function s:SID()
+	  return matchstr(expand('<sfile>'), '\zs<SNR>\d\+_\zeSID$')
+	endfun
+	function! s:test()
+	endfunction
+	call dein#add('Shougo/deoplete.nvim',
+	\ {'hook_source': 'call ' . s:SID() . 'test()'})
+<
+Or you can execute the autocmd manually.
+>
+	autocmd User dein#source#deoplete.nvim call s:test()
+	call dein#add('Shougo/deoplete.nvim', {
+	\ 'hook_source':
+	\  'execute "doautocmd <nomodeline> User" "dein#source#".
+	\   g:dein#plugin.name'
+	\ })
+<
+But you must define the autocmd.
+
+Q: I don't want to call |dein#recache_runtimepath()| manually.
+A: Please specify your vimrc path to |dein#begin()| 2nd argument.
+It detects the vimrc changes.
+>
+	call dein#begin(path, [expand('<sfile>')])
+<
+Q: I need the wrapper commands for dein.vim.
+
+A: You can use it.
+https://github.com/haya14busa/dein-command.vim
+
+Q: Why the install script does not use "curl | bash" ?
+https://github.com/Shougo/neobundle.vim/pull/515
+
+A:
+https://www.idontplaydarts.com/2016/04/detecting-curl-pipe-bash-server-side/
+
+Q: I want to use "git" or "http" protocol instead of "https".
+
+A: No, you cannot.
+
+Q: Why dein.vim only accepts "https" or "ssh"?
+
+A: https://glyph.twistedmatrix.com/2015/11/editor-malware.html
+
+Q: YouCompleteMe installation is failed.
+https://github.com/Shougo/dein.vim/issues/144
+
+A: Please check |:messages| result.
+If you have found "Process timeout" error, you should increase
+|g:dein#install_process_timeout| value.
+
+Q: YouCompleteMe does not work.  I have built YouCompleteMe manually.
+
+A: dein.vim has merge feature.  It copys the plugins into the merge directory.
+So dein.vim does not know the manually built binary.  It does not be copied.
+You should disable the merge feature manually. >
+	call dein#add('Valloric/YouCompleteMe', {'merged': 0})
+
+or >
+	call dein#add('Valloric/YouCompleteMe', {'build': './install.py'})
+
+Q: I have got "Invalid range error" when plugin updating.
+
+A: It is Vim/neovim |delete()| implementation bug.
+It uses |glob()| internally.
+If the directory has contains "[]" files, it will be errored.
+For example, vimtex has the file.
+https://github.com/lervag/vimtex/tree/master/test/issues/237/
+
+You can disable the merge feature to prevent the error. >
+	call dein#add('lervag/vimtex', {'merged': 0})
+
+
+Q: I have got prompted for my github username and I have to kill the editor...
+
+A: You have specified wrong/removed repository name.  You should check the
+repository.
+
+Q: Why dein.vim merges the plugins directories automatically?
+
+A: To avoid long 'runtimepath'.  If 'runtimepath' is long, Vim/neovim loading
+performance will be bad.
+
+Q: I want to update from shell.
+
+A: >
+	$ vim -c "try | call dein#update() | finally | qall! | endtry" \
+	-N -u $VIMRC -U NONE -i NONE -V1 -e -s
+
+Q: I want to change the environment variable when build.
+A: >
+	call dein#add('nixprime/cpsm',
+	\ {'build': 'sh -c "PY3=ON ./install.sh"'})
+
+
+Q: dein.vim does not load plugin in sudo session.
+https://github.com/SpaceVim/SpaceVim/issues/1660
+https://github.com/Shougo/dein.vim/issues/274
+
+A:
+It is intended behavior for security reason.
+In sudo session, installed plugin can do anything in root permission.
+It is very dangerous.
+But you can load trusted plugins using |dein-options-trusted|.
+
+Q: I want to uninstall dein.vim.
+
+A: Please remove |dein#begin()|'s argument directory.
+For example, if you use below configuration: >
+	call dein#begin('~/.cache/dein')
+Please remove "~/.cache/dein" directory.
+
+Q: I want to update dein.vim from shell command line.
+
+A: Please execute the command line like this. >
+	vim -N -u ~/.vim/init.vim -c \
+	"try | call dein#update() | finally | qall! | endtry" -V1 -es
+
+Q: I want to set build conditions.
+
+A: Please use |dein-options-hook_post_update|. >
+
+	[[plugins]]
+	repo = 'autozimu/LanguageClient-neovim'
+	hook_post_update = '''
+	if has('win32') || has('win64')
+	    call system(
+	    \ 'powershell -executionpolicy bypass -File install.ps1')
+	else
+	    call system('bash install.sh')
+	endif
+	'''
+
+Q: Why I need to call |dein#recache_runtimepath()| manually after removing
+plugins?
+https://github.com/Shougo/dein.vim/issues/357
+
+A: You can use |g:dein#auto_recache| option instead.
+Dein.vim has merge feature.  It copys the plugins into the merge directory.
+You can disable the feature by |dein-options-merged|.  It is like other plugin
+managers behavior.
+Why dein.vim has the feature?  It is for loading performance.
+Other plugin manager adds 'runtimepath' to load external plugins.
+But if 'runtimepath' is very big, plugin loading is slower.  Because Vim needs
+to search all huge 'runtimepath' to load it.  Dein.vim has not the problem.
+
+==============================================================================
+COMPATIBILITY						*dein-compatibility*
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:

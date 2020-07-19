@@ -1,17 +1,18 @@
 [![SpaceVim](https://spacevim.org/logo.png)](https://spacevim.org)
 
 [Wiki](https://github.com/SpaceVim/SpaceVim/wiki) \|
+[Quick start guide](https://spacevim.org/quick-start-guide/) \|
 [Documentation](https://spacevim.org/documentation/) \|
-[Twitter](https://twitter.com/SpaceVim) \|
 [Community](https://spacevim.org/community/) \|
 [Sponsors](https://spacevim.org/sponsors/) \|
+[Twitter](https://twitter.com/SpaceVim) \|
 [Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim) \|
 [中文官网](https://spacevim.org/cn/)
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-![Version](https://img.shields.io/badge/version-1.2.0--dev-8700FF.svg)
+![Version](https://img.shields.io/badge/version-1.5.0--dev-8700FF.svg)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 
@@ -21,9 +22,9 @@ SpaceVim is a community-driven modular Vim distribution. It manages collections
 of plugins in layers, which help to collect related packages together to provide IDE-like features.
 SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many built-in features.
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/80494420-3925c680-8999-11ea-9652-21e1e5564148.png)
 
-The last release is v1.1.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The last release is v1.4.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## Instructions
 
@@ -34,10 +35,6 @@ The last release is v1.1.0, check out [following-HEAD](https://github.com/SpaceV
 - [Available Layers](https://spacevim.org/layers/)
 
 If you have any questions about SpaceVim, please follow the [Getting Help Guide](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help).
-
-Here is a throughput graph of the repository for the last few weeks:
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
 <!-- vim-markdown-toc GFM -->
 
@@ -75,7 +72,7 @@ Here is an example for using toml as SpaceVim config:
     statusline_inactive_separator = "bar"
     buffer_index_type = 4
     windows_index_type = 3
-    enable_tabline_filetype_icon = false
+    enable_tabline_ft_icon = false
     enable_statusline_mode = false
     statusline_unicode_symbols = false
     # Enable Vim compatible mode, avoid changing origin Vim key bindings
@@ -152,6 +149,7 @@ For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 ├─ docs/                          website(cn/en)
 ├─ wiki/                          wiki(cn/en)
 ├─ bin/                           executable
+├─ bundle/                        forked repos
 └─ test/                          tests
 ```
 

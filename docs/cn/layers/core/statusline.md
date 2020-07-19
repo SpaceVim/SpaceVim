@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim core#statusline 模块"
 description: "这一模块为 SpaceVim 提供了一个高度定制的状态栏。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> core#statusline

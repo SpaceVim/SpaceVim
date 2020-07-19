@@ -41,17 +41,18 @@ Colorscheme list
 
 | Name         | dark | light | term | gui | statusline |
 | ------------ | ---- | ----- | ---- | --- | ---------- |
-| molokai      | yes  | no    | yes  | yes | yes        |
-| srcery       | yes  | no    | yes  | yes | yes        |
-| onedark      | yes  | no    | yes  | yes | yes        |
-| jellybeans   | yes  | no    | yes  | yes | yes        |
-| one          | yes  | yes   | yes  | yes | yes        |
-| nord         | yes  | no    | yes  | yes | yes        |
-| gruvbox      | yes  | yes   | yes  | yes | yes        |
-| NeoSolarized | yes  | yes   | yes  | yes | yes        |
-| hybrid       | yes  | yes   | yes  | yes | yes        |
-| material     | yes  | yes   | yes  | yes | yes        |
-| SpaceVim     | yes  | yes   | yes  | yes | yes        |
+| molokai      | yes  | no    | yes  | yes |    yes     |
+| srcery       | yes  | no    | yes  | yes |    yes     |
+| onedark      | yes  | no    | yes  | yes |    yes     |
+| jellybeans   | yes  | no    | yes  | yes |    yes     |
+| palenight    | yes  | no    | yes  | yes |    yes     |
+| one          | yes  | yes   | yes  | yes |    yes     |
+| nord         | yes  | no    | yes  | yes |    yes     |
+| gruvbox      | yes  | yes   | yes  | yes |    yes     |
+| NeoSolarized | yes  | yes   | yes  | yes |    yes     |
+| hybrid       | yes  | yes   | yes  | yes |    yes     |
+| material     | yes  | yes   | yes  | yes |    yes     |
+| SpaceVim     | yes  | yes   | yes  | yes |    yes     |
 
 By default this layer only include above colorschemes. If you want to use other colorschemes which
 are available on Github, use the `custom_plugins` section in configuration file. For example:

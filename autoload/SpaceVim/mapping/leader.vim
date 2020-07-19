@@ -1,6 +1,6 @@
 "=============================================================================
 " leader.vim --- mapping leader definition file for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -18,7 +18,7 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ :<C-u>split<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.v = ['split',
-          \ 'split window',
+          \ 'split-window',
           \ [
           \ '[WIN v] is to split windows, switch to the new window',
           \ '',
@@ -29,7 +29,7 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ :<C-u>split +bp<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.V = ['split +bp',
-          \ 'split previous buffer',
+          \ 'split-previous-buffer',
           \ [
           \ '[WIN V] is to split previous buffer, switch to the new window',
           \ '',
@@ -40,7 +40,7 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ :<C-u>vsplit<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.g = ['vsplit',
-          \ 'vsplit window',
+          \ 'vsplit-window',
           \ [
           \ '[WIN g] is to split previous buffer vertically, switch to the new window',
           \ '',
@@ -51,7 +51,7 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ :<C-u>vsplit +bp<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.G = ['vsplit +bp',
-          \ 'vsplit previous buffer',
+          \ 'vsplit-previous-buffer',
           \ [
           \ '[WIN G] is to split windows vertically, switch to the new window',
           \ '',
@@ -62,7 +62,7 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ :<C-u>tabnew<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.t = ['tabnew',
-          \ 'create new tab',
+          \ 'create-new-tab',
           \ [
           \ '[WIN t] is to create new tab',
           \ '',
@@ -73,7 +73,7 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ :<C-u>only<Space><Bar><Space>doautocmd WinEnter<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.o = ['only | doautocmd WinEnter',
-          \ 'Close other windows',
+          \ 'close-other-windows',
           \ [
           \ '[WIN o] is to close all other windows',
           \ '',
@@ -81,10 +81,10 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ ]
           \ ]
     nnoremap <silent> [Window]x
-          \ :<C-u>call zvim#util#BufferEmpty()<CR>
+          \ :<C-u>call SpaceVim#mapping#BufferEmpty()<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
-    let g:_spacevim_mappings_windows.x = ['call zvim#util#BufferEmpty()',
-          \ 'Empty current buffer',
+    let g:_spacevim_mappings_windows.x = ['call SpaceVim#mapping#BufferEmpty()',
+          \ 'empty-current-buffer',
           \ [
           \ '[WIN x] is to empty current buffer',
           \ '',
@@ -95,7 +95,7 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ :<C-u>b#<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows['\'] = ['b#',
-          \ 'Switch to the last buffer',
+          \ 'switch-to-the-last-buffer',
           \ [
           \ '[WIN \] is to switch to the last buffer',
           \ '',
@@ -106,7 +106,7 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ :<C-u>close<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.Q = ['close',
-          \ 'Close current windows',
+          \ 'close-current-windows',
           \ [
           \ '[WIN Q] is to close current windows',
           \ '',
@@ -117,7 +117,7 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ :<C-u>call SpaceVim#mapping#close_current_buffer()<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
     let g:_spacevim_mappings_windows.q = ['call SpaceVim#mapping#close_current_buffer()',
-          \ 'delete current windows',
+          \ 'delete-current-windows',
           \ [
           \ '[WIN q] is to delete current windows',
           \ '',
@@ -125,10 +125,10 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
           \ ]
           \ ]
     nnoremap <silent> [Window]c
-          \ :<C-u>call SpaceVim#mapping#clearBuffers()<CR>
+          \ :<C-u>call SpaceVim#mapping#clear_buffers()<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
-    let g:_spacevim_mappings_windows.c = ['call SpaceVim#mapping#clearBuffers()',
-          \ 'Clear all the buffers',
+    let g:_spacevim_mappings_windows.c = ['call SpaceVim#mapping#clear_buffers()',
+          \ 'clear-all-the-buffers',
           \ [
           \ '[WIN c] is to clear all the buffers',
           \ '',

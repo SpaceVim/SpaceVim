@@ -9,12 +9,10 @@ project_repo_url: https://github.com/SpaceVim/SpaceVim
 url: https://spacevim.org
 logo: https://spacevim.org/SpaceVim.png
 permalink: /:title/
+lang: en
 
 plugins:
   - jekyll-redirect-from
-  - jekyll-sitemap
-  - jekyll-seo-tag
-  - jekyll-feed
 
 github: [metadata]
 
@@ -25,21 +23,16 @@ sass:
  sass_dir: _sass
  style: compressed
 
-author:
-      name: Shidong Wang
-      twitter: SpaceVim
-twitter:
-    username: "@SpaceVim"
-
 social:
   name: SpaceVim
   links:
       - https://twitter.com/SpaceVim
       - https://github.com/SpaceVim/SpaceVim
       - https://www.reddit.com/r/SpaceVim/
+      - https://www.facebook.com/SpaceVim
 
 defaults:
   - scope:
       path: ""
     values:
-      image: https://user-images.githubusercontent.com/13142418/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png
+      image: https://user-images.githubusercontent.com/13142418/68079142-904e4280-fe1f-11e9-993e-b834ea3d39ea.png

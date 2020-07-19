@@ -1,6 +1,6 @@
 "=============================================================================
 " http.vim --- SpaceVim http API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -138,7 +138,9 @@ function! s:self.get(url, ...) abort
   endif
   if executable('curl')
     let command = printf('curl -q %s -s -k -i', follow ? '-L' : '')
-    let quote = &shellxquote ==# '"' ?  "'" : '"'
+    " let quote = &shellxquote ==# '"' ?  "'" : '"'
+    " @fixme this line failed on windows
+    let quote = '"'
     for key in keys(headdata)
       if has('win32')
         let command .= ' -H ' . quote . key . ': ' . substitute(headdata[key], '"', '"""', 'g') . quote
@@ -150,7 +152,8 @@ function! s:self.get(url, ...) abort
     let res = s:system(command)
   elseif executable('wget')
     let command = printf('wget -O- --save-headers --server-response -q %s', follow ? '-L' : '')
-    let quote = &shellxquote ==# '"' ?  "'" : '"'
+    " let quote = &shellxquote ==# '"' ?  "'" : '"'
+    let quote = '"'
     for key in keys(headdata)
       if has('win32')
         let command .= ' --header=' . quote . key . ': ' . substitute(headdata[key], '"', '"""', 'g') . quote

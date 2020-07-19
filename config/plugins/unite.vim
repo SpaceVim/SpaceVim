@@ -37,7 +37,7 @@ let g:unite_source_file_rec_max_depth = get(g:,
       \ 'unite_source_file_rec_max_depth', 6)
 let g:unite_enable_ignore_case = get(g:, 'unite_enable_ignore_case', 1)
 let g:unite_enable_smart_case = get(g:, 'unite_enable_smart_case', 1)
-let g:unite_data_directory = get(g:, 'unite_data_directory','~/.cache/unite')
+let g:unite_data_directory = get(g:, 'unite_data_directory',g:spacevim_data_dir.'/unite')
 "let g:unite_enable_start_insert=1
 let g:unite_source_history_yank_enable = get(g:,
       \ 'unite_source_history_yank_enable', 1)
@@ -259,7 +259,9 @@ function! s:view_github_starred_repos() abort
     Unite -silent -ignorecase -winheight=17 -start-insert menu:MyStarredrepos
   endif
 endfunction
-call zvim#util#loadMusics()
+if SpaceVim#layers#isLoaded('tools#mpv')
+  call SpaceVim#layers#tools#mpv#loadMusics()
+endif
 augroup unite_buffer_feature
   autocmd FileType unite call s:unite_my_settings()
 augroup END

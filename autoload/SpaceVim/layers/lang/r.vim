@@ -1,6 +1,6 @@
 "=============================================================================
 " r.vim --- lang#r layer for SpaceVim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -18,14 +18,15 @@ function! SpaceVim#layers#lang#r#set_variable(var) abort
 endfunction
 
 function! SpaceVim#layers#lang#r#config() abort
-  call SpaceVim#plugins#runner#reg_runner('r', 'r %s')
+  call add(g:spacevim_project_rooter_patterns, '.Rprofile')
+  call SpaceVim#plugins#runner#reg_runner('r', 'R <%s')
   call SpaceVim#mapping#space#regesit_lang_mappings('r', function('s:language_specified_mappings'))
   if !empty(s:r_repl_command)
-      call SpaceVim#plugins#repl#reg('r',s:r_repl_command)
+    call SpaceVim#plugins#repl#reg('r',s:r_repl_command)
   else
-      call SpaceVim#plugins#repl#reg('r', 'r')
+    call SpaceVim#plugins#repl#reg('r', 'r')
   endif
-  
+
 endfunction
 
 function! s:language_specified_mappings() abort

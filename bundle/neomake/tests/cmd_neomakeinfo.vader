@@ -1,0 +1,233 @@
+" Tests for the NeomakeInfo command.
+Include: include/setup.vader
+
+Execute (:NeomakeInfo output end to end test):
+  if !(exists('*execute') && has('nvim-0.2.0'))
+    NeomakeTestsSkip 'Only with execute() support'
+  else
+    let info = split(neomake#utils#redir('NeomakeInfo'), '\n')
+    Assert len(filter(copy(info), "v:val =~ '\\v^#+ Settings$'")), 'Settings header exists'
+  endif
+
+Execute (:NeomakeInfo):
+  Save g:neomake_c_enabled_makers, g:neomaker_not_a_setting
+  let g:neomake_c_enabled_makers = ['doesnotexist']
+  let g:neomaker_not_a_setting = 1
+  Save &makeprg
+  let &makeprg = 'mycustom make %'
+
+  let info = neomake#debug#_get_info_lines()
+  Assert len(filter(copy(info), "v:val =~ '\\v^#+ Settings$'")), 'Settings header exists'
+  Assert index(info, "g:neomake_c_enabled_makers = ['doesnotexist']") != -1,
+  \ 'neomake_c_enabled_makers setting gets reported'
+  AssertEqual filter(copy(info), "v:val =~ 'neomaker'"), []
+
+  Assert len(filter(copy(info), 'v:val =~# "^makeprg=mycustom make %, Last set from"')) == 1,
+  \ 'Contains &makeprg: '.string(info)
+
+Execute (:NeomakeInfo with FuncRef):
+  Save g:neomake_c_enabled_makers, g:neomake_c_doesnotexist_maker
+  new
+  set filetype=c
+  function! InitForJob(jobinfo) abort
+  endfunction
+  let g:neomake_c_enabled_makers = ['doesnotexist']
+  let g:neomake_c_doesnotexist_maker = {
+  \ 'InitForJob': function('InitForJob'),
+  \ 'errorformat': 'custom_efm: %m'}
+
+  let info = neomake#debug#_get_info_lines()
+  let idx = -1
+  for line in [
+      \ 'For the current filetype ("c", used with :Neomake):',
+      \ ' - doesnotexist',
+      \ '   - errorformat: ''custom_efm: %m''',
+      \ '   - exe: ''doesnotexist''']
+    let i = index(info, line)
+    Assert i > idx, 'line not found: "'.line.'" (idx: '.idx.')'."\n".join(info, "\n")
+    let idx = i
+  endfor
+  Assert len(map(info, 'v:val =~# "   - InitForJob: function.*"')), 'InitForJob not found'
+  delfunction InitForJob
+  bwipe
+
+Execute (:NeomakeInfo with unusual filetype):
+  new
+  set filetype=ft1.gentoo-package-keywords
+  let info = neomake#debug#_get_info_lines()
+  Assert index(info, 'NOTE: you can define g:neomake_ft1_gentoo_package_keywords_enabled_makers to configure it (or b:neomake_ft1_gentoo_package_keywords_enabled_makers).') != -1, 'Line was found'
+  bwipe
+
+Execute (:NeomakeInfo displays issues):
+  Save g:neomake_enabled_makers, g:neomake_mymaker_maker
+
+  let g:neomake_enabled_makers = ['mymaker']
+  let g:neomake_mymaker_maker = {
+  \ 'exe': 'doesnotexist',
+  \ 'errorformat': 'custom_efm: %m',
+  \ 'mapexpr': '',
+  \ 'postprocess': function('tr'),
+  \ 'process_output': function('tr'),
+  \ }
+
+  let info = neomake#debug#_get_info_lines()
+  let idx = -1
+  for line in [
+      \ '#### Neomake debug information',
+      \ 'For the project (used with :Neomake!):',
+      \ ' - mymaker',
+      \ '   - errorformat: ''custom_efm: %m''',
+      \ '   - exe: ''doesnotexist''',
+      \ '   - ERRORS:',
+      \ "     - maker's exe (doesnotexist) is not executable.",
+      \ '   - WARNINGS:',
+      \ '     - maker has mapexpr, but only process_output will be used.',
+      \ '     - maker has postprocess, but only process_output will be used.',
+      \ '#### :version',
+      \ '#### :messages',
+      \ ]
+    let i = index(info, line)
+    Assert i > idx, 'line not found: "'.line.'" (idx: '.idx.')'."\n".join(info, "\n")
+    let idx = i
+  endfor
+
+Execute (NeomakeInfo! copies to clipboard):
+  try
+    let save_reg = getreg('+')
+  catch
+    NeomakeTestsSkip 'Clipboard is not available: '.v:exception
+    return
+  endtry
+
+  call NeomakeTestsSetVimMessagesMarker()
+  let restore = 1
+  try
+    NeomakeInfo!
+    let info = split(getreg('+'), '\n')
+    if empty(info)
+      let restore = 0
+      AssertNeomakeMessage "Could not set clipboard: Vim(call):E354: Invalid register name: '+'.", 0
+      return
+    endif
+  finally
+    if restore
+      call setreg('+', save_reg, 'l')
+    endif
+  endtry
+  let idx = -1
+  for line in [
+      \ '#### Neomake debug information',
+      \ '#### :version',
+      \ '#### :messages',
+      \ ]
+    let i = index(info, line)
+    Assert i > idx, 'line not found: "'.line.'" (idx: '.idx.')'."\n".join(info, "\n")
+    let idx = i
+  endfor
+
+  AssertEqual NeomakeTestsGetVimMessages(), [
+  \ 'Copied Neomake info to clipboard ("+).']
+
+Execute (NeomakeInfo displays new-style config):
+  Assert !exists('g:neomake')
+  new
+
+  let info = neomake#debug#_get_info_lines()
+  let idx = -1
+  for line in [
+      \ '#### Neomake debug information',
+      \ '##### Settings',
+      \ '###### New-style (dict, overrides old-style)',
+      \ "g:neomake: unset",
+      \ 'b:neomake: unset',
+      \ ]
+    let i = index(info, line)
+    Assert i > idx, 'line not found: "'.line.'" (idx: '.idx.')'."\n".join(info, "\n")
+    let idx = i
+  endfor
+
+  " Using neomake#config#get() should not trigger setting g:neomake.
+  AssertEqual neomake#config#get('doesnotexist'), g:neomake#config#undefined
+  let b:neomake = {}
+  let info = neomake#debug#_get_info_lines()
+  let idx = -1
+  for line in [
+      \ '#### Neomake debug information',
+      \ '##### Settings',
+      \ '###### New-style (dict, overrides old-style)',
+      \ "g:neomake: unset",
+      \ 'b:neomake: {}',
+      \ ]
+    let i = index(info, line)
+    Assert i > idx, 'line not found: "'.line.'" (idx: '.idx.')'."\n".join(info, "\n")
+    let idx = i
+  endfor
+  bwipe
+
+Execute (NeomakeInfo does not display message for filetype with no makers):
+  new
+  noautocmd set filetype=doesnotexist
+
+  call NeomakeTestsSetVimMessagesMarker()
+  let info = neomake#debug#_get_info_lines()
+  let msgs = NeomakeTestsGetVimMessages()
+  bwipe
+
+  AssertEqual msgs, []
+  Assert index(info, 'For the current filetype ("doesnotexist", used with :Neomake):') > 0
+
+Execute (NeomakeInfo with maker name):
+  " NOTE: Vim needs non-empty PATH for executable to be false!
+  " (https://github.com/vim/vim/pull/3283)
+  call g:NeomakeTestsSetPATH('/doesnotexist')
+  Assert !executable('make')
+
+  new
+  noautocmd set filetype=neomake_tests
+  NeomakeInfo foo
+  AssertNeomakeMessage 'Maker not found: foo.', 0
+
+  call NeomakeTestsSetVimMessagesMarker()
+  NeomakeInfo makeprg
+  AssertEqual NeomakeTestsGetVimMessages(), []
+  AssertEqual neomake#debug#get_maker_info('maker_with_nonstring_exe')[-2:], [
+  \ ' - ERRORS:',
+  \ "   - Non-string given for executable of maker maker_with_nonstring_exe: type 2.",
+  \ ]
+
+  call NeomakeTestsSetVimMessagesMarker()
+  NeomakeInfo makeprg
+  AssertEqual NeomakeTestsGetVimMessages(), []
+  AssertEqual neomake#debug#get_maker_info('makeprg')[-2:], [
+  \ ' - ERRORS:',
+  \ "   - maker's exe (make) is not executable.",
+  \ ]
+
+  Save &makeprg
+  set makeprg=custommakeprg
+  NeomakeInfo makeprg
+  AssertEqual NeomakeTestsGetVimMessages(), []
+  AssertEqual neomake#debug#get_maker_info('makeprg')[-2:], [
+  \ ' - ERRORS:',
+  \ "   - maker's exe (custommakeprg) is not executable.",
+  \ ]
+
+  " Uses &shell when checking executable for makeprg with spaces.
+  Save &shell
+  set shell=customshell
+  set makeprg=custom\ make\ prg
+  NeomakeInfo makeprg
+  AssertEqual NeomakeTestsGetVimMessages(), []
+  AssertEqual neomake#debug#get_maker_info('makeprg')[-2:], [
+  \ ' - ERRORS:',
+  \ "   - maker's exe (customshell) is not executable.",
+  \ ]
+
+  let b:neomake_makeprg_exe = 'custom_exe'
+  NeomakeInfo makeprg
+  AssertEqual NeomakeTestsGetVimMessages(), []
+  AssertEqual neomake#debug#get_maker_info('makeprg')[-2:], [
+  \ ' - ERRORS:',
+  \ "   - maker's exe (custom_exe) is not executable.",
+  \ ]
+  bwipe

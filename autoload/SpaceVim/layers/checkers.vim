@@ -1,6 +1,6 @@
 "=============================================================================
 " checkers.vim --- SpaceVim checkers layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -18,9 +18,9 @@ function! SpaceVim#layers#checkers#plugins() abort
   let plugins = []
 
   if g:spacevim_enable_neomake && g:spacevim_enable_ale == 0
-    call add(plugins, ['neomake/neomake', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/neomake', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
   elseif g:spacevim_enable_ale
-    call add(plugins, ['w0rp/ale', {'merged' : 0, 'loadconf_before' : 1}])
+    call add(plugins, ['dense-analysis/ale', {'merged' : 0, 'loadconf_before' : 1}])
   else
     call add(plugins, ['wsdjeg/syntastic', {'on_event': 'WinEnter', 'loadconf' : 1, 'merged' : 0}])
   endif
@@ -66,18 +66,18 @@ function! SpaceVim#layers#checkers#config() abort
 
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'c'], 'call call('
         \ . string(s:_function('s:clear_errors')) . ', [])',
-        \ 'clear all errors', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'h'], '', 'describe a syntax checker', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], '', 'verify syntax checker setup', 1)
+        \ 'clear-all-errors', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'h'], '', 'describe-a-syntax-checker', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], '', 'verify-syntax-checker-setup', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'n'], 'call call('
         \ . string(s:_function('s:jump_to_next_error')) . ', [])',
         \ 'next-error', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'l'], 'call call('
         \ . string(s:_function('s:toggle_show_error')) . ', [0])',
-        \ 'toggle showing the error list', 1)
+        \ 'toggle-showing-the-error-list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'L'], 'call call('
         \ . string(s:_function('s:toggle_show_error')) . ', [1])',
-        \ 'toggle showing the error list', 1)
+        \ 'toggle-showing-the-error-list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'p'], 'call call('
         \ . string(s:_function('s:jump_to_previous_error')) . ', [])',
         \ 'previous-error', 1)
@@ -86,16 +86,16 @@ function! SpaceVim#layers#checkers#config() abort
         \ 'previous-error', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'v'], 'call call('
         \ . string(s:_function('s:verify_syntax_setup')) . ', [])',
-        \ 'verify syntax setup', 1)
+        \ 'verify-syntax-setup', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', '.'], 'call call('
         \ . string(s:_function('s:error_transient_state')) . ', [])',
         \ 'error-transient-state', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 's'], 'call call('
         \ . string(s:_function('s:toggle_syntax_checker')) . ', [])',
-        \ 'toggle syntax checker', 1)
+        \ 'toggle-syntax-checker', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'e'], 'call call('
         \ . string(s:_function('s:explain_the_error')) . ', [])',
-        \ 'explain the error', 1)
+        \ 'explain-the-error', 1)
   augroup SpaceVim_layer_checker
     autocmd!
     if g:spacevim_enable_neomake
@@ -132,20 +132,23 @@ function! s:neomake_cursor_move_delay() abort
 endfunction
 
 function! s:toggle_show_error(...) abort
-  try
+  let llist = getloclist(0, {'size' : 1, 'winid' : 1})
+  let qlist = getqflist({'size' : 1, 'winid' : 1})
+  if llist.size == 0 && qlist.size == 0
+    echohl WarningMsg
+    echon 'There is no errors!'
+    echohl None
+    return
+  endif
+  if llist.winid > 0
+    lclose
+  elseif qlist.winid > 0
+    cclose
+  elseif llist.size > 0
     botright lopen
-  catch
-    try
-      if len(getqflist()) == 0
-        echohl WarningMsg
-        echon 'There is no errors!'
-        echohl None
-      else
-        botright copen
-      endif
-    catch
-    endtry
-  endtry
+  elseif qlist.size > 0
+    botright copen
+  endif
   if a:1 == 1
     wincmd w
   endif

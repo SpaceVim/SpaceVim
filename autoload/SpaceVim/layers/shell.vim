@@ -1,6 +1,6 @@
 "=============================================================================
 " shell.vim --- SpaceVim shell layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -23,6 +23,7 @@
 " <
 
 let s:SYSTEM = SpaceVim#api#import('system')
+let s:FLOAT = SpaceVim#api#import('neovim#floating')
 
 function! SpaceVim#layers#shell#plugins() abort
   let plugins = []
@@ -38,7 +39,7 @@ let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#shell#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ["'"], 'call call('
         \ . string(function('s:open_default_shell')) . ', [0])',
-        \ ['open shell',
+        \ ['open-shell',
         \ [
         \ "[SPC '] is to open or jump to default shell window",
         \ '',
@@ -47,7 +48,7 @@ function! SpaceVim#layers#shell#config() abort
         \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ["\""], 'call call('
         \ . string(function('s:open_default_shell')) . ', [1])',
-        \ ["open shell in current file's path",
+        \ ['open-shell-in-buffer-dir',
         \ [
         \ "[SPC \"] is to open or jump to default shell window with the current file's pwd",
         \ '',
@@ -76,14 +77,14 @@ endfunction
 
 " FIXME: 
 func! SpaceVim#layers#shell#terminal() abort
-  let line = getline('$')
+  let line = getline('.')
   if isdirectory(line[:-2])
     return "exit\<CR>"
   endif
-  return "\<C-d>"
+  return ""
 endf
 func! SpaceVim#layers#shell#ctrl_u() abort
-  let line = getline('$')
+  let line = getline('.')
   let prompt = getcwd() . '>'
   return repeat("\<BS>", len(line) - len(prompt) + 2)
 endfunction
@@ -93,11 +94,13 @@ func! SpaceVim#layers#shell#ctrl_r() abort
   if reg == 43
     return @+
   endif
+  return "\<C-r>"
 endfunction
 
+
 func! SpaceVim#layers#shell#ctrl_w() abort
-  let cursorpos = term_getcursor(s:term_buf_nr)
-  let line = getline(cursorpos[0])[:cursorpos[1]-1]
+  let cursorpos = getcurpos()
+  let line = getline(cursorpos[1])[:cursorpos[2]-1]
   let str = matchstr(line, '[^ ]*\s*$')
   return repeat("\<BS>", len(str))
 endfunction
@@ -120,7 +123,7 @@ endfunction
 
 function! SpaceVim#layers#shell#get_options() abort
 
-  return ['default_shell', 'default_position', 'default_height']
+  return ['default_shell', 'default_position', 'default_height',]
 
 endfunction
 
@@ -160,19 +163,34 @@ function! s:open_default_shell(open_with_file_cwd) abort
     endif
   endfor
 
-  " no terminal window found. Open a new window
-  let cmd = s:default_position ==# 'top' ?
-        \ 'topleft split' :
-        \ s:default_position ==# 'bottom' ?
-        \ 'botright split' :
-        \ s:default_position ==# 'right' ?
-        \ 'rightbelow vsplit' : 'leftabove vsplit'
-  exe cmd
-  let w:shell_layer_win = 1
-  let lines = &lines * s:default_height / 100
-  if lines < winheight(0) && (s:default_position ==# 'top' || s:default_position ==# 'bottom')
-    exe 'resize ' . lines
+  if s:default_position == 'float' && exists('*nvim_open_win')
+    let s:term_win_id =  s:FLOAT.open_win(bufnr('%'), v:true,
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : &columns, 
+          \ 'height'  : &lines * s:default_height / 100,
+          \ 'row': 0,
+          \ 'col': &lines - (&lines * s:default_height / 100) - 2
+          \ })
+
+    exe win_id2win(s:term_win_id) .  'wincmd w'
+  else
+    " no terminal window found. Open a new window
+    let cmd = s:default_position ==# 'float' ?
+          \ 'topleft split' :
+          \ s:default_position ==# 'top' ?
+          \ 'topleft split' :
+          \ s:default_position ==# 'bottom' ?
+          \ 'botright split' :
+          \ s:default_position ==# 'right' ?
+          \ 'rightbelow vsplit' : 'leftabove vsplit'
+    exe cmd
+    let lines = &lines * s:default_height / 100
+    if lines < winheight(0) && (s:default_position ==# 'top' || s:default_position ==# 'bottom')
+      exe 'resize ' . lines
+    endif
   endif
+  let w:shell_layer_win = 1
   for open_terminal in s:open_terminals_buffers
     if bufexists(open_terminal)
       if getbufvar(open_terminal, '_spacevim_shell_cwd') ==# l:path
@@ -234,8 +252,8 @@ function! s:open_default_shell(open_with_file_cwd) abort
 
       " use q to hide terminal buffer in vim, if vimcompatible mode is not
       " enabled, and smart quit is on.
-      if g:spacevim_windows_smartclose == 0 && !g:spacevim_vimcompatible
-        nnoremap <buffer><silent> q :hide<CR>
+      if !empty(g:spacevim_windows_smartclose)  && !g:spacevim_vimcompatible
+        exe 'nnoremap <buffer><silent> ' . g:spacevim_windows_smartclose . ' :hide<CR>'
       endif
       startinsert
     else

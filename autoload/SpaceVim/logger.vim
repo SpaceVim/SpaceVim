@@ -1,6 +1,6 @@
 "=============================================================================
 " logger.vim --- SpaceVim logger
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,7 +9,7 @@
 let s:LOGGER = SpaceVim#api#import('logger')
 
 call s:LOGGER.set_name('SpaceVim')
-call s:LOGGER.set_level(g:spacevim_debug_level)
+call s:LOGGER.set_level(get(g:, 'spacevim_debug_level', 1))
 call s:LOGGER.set_silent(1)
 call s:LOGGER.set_verbose(1)
 

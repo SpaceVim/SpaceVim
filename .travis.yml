@@ -1,6 +1,7 @@
 language: python
 dist: trusty
 sudo: false
+python: 2.7
 
 services:
   - docker
@@ -26,18 +27,67 @@ env:
     - DEPS=$HOME/deps
     - PATH=$DEPS/bin:$HOME/vim/bin:$PATH
 
+addons:
+  apt:
+    packages:
+    - python3-pip
+    - python-pip
+    - libncurses5-dev
+    - libgnome2-dev
+    - libgnomeui-dev
+    - libgtk2.0-dev
+    - libatk1.0-dev
+    - libbonoboui2-dev
+    - libcairo2-dev
+    - libx11-dev
+    - libxpm-dev
+    - libxt-dev
+    - python-dev
+    - python3-dev
+    - ruby-dev
+    - lua5.1
+    - liblua5.1-dev
+    - libperl-dev
+    - ninja-build
+
 jobs:
   include:
     - env: LINT=jekyll
-    - env: LINT=vimlint-errors VIM=nvim VIM_VERSION=v0.2.0
-    - env: LINT=vimlint VIM=nvim VIM_VERSION=v0.2.0
-    - env: LINT=vint-errors VIM=nvim VIM_VERSION=v0.2.0
-    - env: LINT=vint VIM=nvim VIM_VERSION=v0.2.0
-    - env: LINT=vader
-      addons: { apt: { packages: [python2.7-dev] } }
+    - env: LINT=file-encoding
+    - env: LINT=vimlint-errors VIM_BIN=nvim VIM_TAG=v0.2.0
+    - env: LINT=vimlint        VIM_BIN=nvim VIM_TAG=v0.2.0
+    - env: LINT=vint-errors    VIM_BIN=nvim VIM_TAG=v0.2.0
+    - env: LINT=vint           VIM_BIN=nvim VIM_TAG=v0.2.0
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=nightly
+      addons: { apt: { packages: [python2.7-dev, lua5.2] } }
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.4.2
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.4.1
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.4.0
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.8
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.7
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.6
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.5
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.4
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.3
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.2
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.1
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.0
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.2.2
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.2.0
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.1.7
+    - env: LINT=vader          VIM_BIN=vim  VIM_TAG=v7.4.052    #ubuntu 14.04
+      addons: { apt: { packages: [libncurses5-dev, libncursesw5-dev] } }
+    - env: LINT=vader          VIM_BIN=vim  VIM_TAG=v7.4.1689   #ubuntu 16.04
+      addons: { apt: { packages: [libncurses5-dev, libncursesw5-dev] } }
+    - env: LINT=vader          VIM_BIN=vim  VIM_TAG=v8.0.1453   #ubuntu 18.04
+      addons: { apt: { packages: [libncurses5-dev, libncursesw5-dev] } }
+    - env: LINT=vader          VIM_BIN=vim  VIM_TAG=v8.1.0320   #ubuntu 19.04
+      addons: { apt: { packages: [libncurses5-dev, libncursesw5-dev] } }
   allow_failures:
-    - env: LINT=vimlint VIM=nvim VIM_VERSION=v0.2.0
-    - env: LINT=vint VIM=nvim VIM_VERSION=v0.2.0
+    - env: LINT=vimlint        VIM_BIN=nvim VIM_TAG=v0.2.0
+    - env: LINT=vint           VIM_BIN=nvim VIM_TAG=v0.2.0
+    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=nightly
+      addons: { apt: { packages: [python2.7-dev, lua5.2] } }
 
 
 install: .ci/install.sh

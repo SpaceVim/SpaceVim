@@ -1,6 +1,6 @@
 "=============================================================================
 " python.vim --- SpaceVim python checker
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -29,7 +29,7 @@ function! SpaceVim#health#python#check() abort
       call add(result, '      SUCCEED!')
     else
       if !s:SYSTEM.isWindows
-        call add(result, '      Failed : to support +python3, Please install vim-gik, or build from sources.')
+        call add(result, '      Failed : to support +python3, Please install vim-gtk, or build from sources.')
       else
         call add(result, '      Failed : to support +python3, install vim from https://github.com/vim/vim-win32-installer/releases')
         call add(result, '                                    install python3, make sure you have `python` in your path.')
@@ -40,7 +40,7 @@ function! SpaceVim#health#python#check() abort
       call add(result, '      SUCCEED!')
     else
       if !s:SYSTEM.isWindows
-        call add(result, '      Failed : to support +python, Please install vim-gik, or build from sources.')
+        call add(result, '      Failed : to support +python, Please install vim-gtk, or build from sources.')
       else
         call add(result, '      Failed : to support +python3, install vim from https://github.com/vim/vim-win32-installer/releases')
         call add(result, '                                    install python3, make sure you have `python` in your path.')

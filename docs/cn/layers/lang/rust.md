@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#rust 模块"
 description: "这一模块为 Rust 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#rust
@@ -11,9 +11,9 @@ lang: cn
 - [模块简介](#模块简介)
 - [功能特性](#功能特性)
 - [启用模块](#启用模块)
+  - [语言工具](#语言工具)
 - [模块选项](#模块选项)
 - [快捷键](#快捷键)
-  - [运行当前脚本](#运行当前脚本)
 
 <!-- vim-markdown-toc -->
 
@@ -38,20 +38,34 @@ lang: cn
   name = "lang#rust"
 ```
 
+### 语言工具
+
+- [evcxr](https://github.com/google/evcxr): Rust 交互式编程命令行工具。
+
 ## 模块选项
 
-- `recommended-style`: 启用/禁用 rust 推荐的代码规范，该选项默认已禁用。
+- `recommended-style`: 1/0 (启用/禁用) rust 推荐的代码规范，该选项默认已禁用。
+- `format-autosave`: 1/0 (启动/禁用) 保存文件修改后自动格式化，该选项默认已禁用。
+- `racer-cmd`: 可执行文件 `racer` 的路径，该选项默认为 `$HOME/.cargo/bin/racer`。
+- `rustfmt-cmd`: 可执行文件 `rustfmt` 的路径，该选项默认为 `$HOME/.cargo/bin/rustfmt`。
 
 ## 快捷键
 
-| 快捷键          | 功能描述                                |
-| --------------- | --------------------------------------- |
-| `SPC l d` / `K` | 展示光标函数或变量相关文档              |
-| `SPC l e`       | 重命名光标函数或变量（需要 `lsp` 模块） |
-| `g d`           | 跳至函数或变量定义处                    |
-| `SPC l s`       | 跳至函数或变量定义处 (split)            |
-| `SPC l x`       | 跳至函数或变量定义处 (vertical)         |
+| 快捷键          | 功能描述                                       |
+| --------------- | ---------------------------------------------- |
+| `g d`           | 跳至函数或变量定义处                           |
+| `SPC l d` / `K` | 展示光标函数或变量相关文档                     |
+| `SPC l s`       | 跳至函数或变量定义处 (split)                   |
+| `SPC l x`       | 跳至函数或变量定义处 (vertical)                |
+| `SPC l f`       | 格式化当前文件代码                             |
+| `SPC l e`       | 重命名光标函数或变量（需要 `lsp` 模块）        |
+| `SPC l u`       | 显示光标函数或变量的所有引用 (需要 `lsp` 模块) |
+| `SPC l c b`     | 运行 `cargo build`                             |
+| `SPC l c c`     | 运行 `cargo clean`                             |
+| `SPC l c f`     | 运行 `cargo fmt`                               |
+| `SPC l c t`     | 运行 `cargo test`                              |
+| `SPC l c u`     | 运行 `cargo update`                            |
+| `SPC l c B`     | 运行 `cargo bench`                             |
+| `SPC l c D`     | 运行 `cargo doc`                               |
+| `SPC l c r`     | 运行 `cargo run`                               |
 
-### 运行当前脚本
-
-在编辑 Rust 文件时，可通过快捷键 `SPC l r` 快速异步运行当前文件，运行结果会展示在一个独立的执行窗口内。

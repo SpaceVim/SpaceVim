@@ -2,8 +2,8 @@
 title: "Use Vim as a Perl IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png
-excerpt: "A general guide for using SpaceVim as Perl IDE, including layer configuration, requiems installation and usage."
-type: BlogPosting
+description: "A general guide for using SpaceVim as Perl IDE, including layer configuration, requiems installation and usage."
+type: article
 comments: true
 commentsID: "Use Vim as a Perl IDE"
 ---

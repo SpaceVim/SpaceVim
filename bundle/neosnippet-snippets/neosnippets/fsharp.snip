@@ -1,0 +1,58 @@
+snippet     If
+abbr        if..then..else
+options     head
+    if ${1:TARGET}
+    then ${2}
+    else ${0}
+
+snippet     if
+abbr        if..then..else - oneline
+options     head
+    if ${1:TARGET} then ${2} else ${0}
+
+snippet     match
+abbr        match
+    match ${1:TARGET} with
+    | ${2} -> ${0}
+
+snippet     fun
+abbr        (fun x -> ..)
+options     head
+    (fun ${1:x} -> ${2:x})
+
+snippet     arl
+abbr        array literal [| |]
+    [| ${0:TARGET} |]
+
+snippet     att
+abbr        attribute [<..>]
+options     head
+    [<${0:TARGET}>]
+
+snippet     #if
+abbr        #if .. #endif
+options     head
+    #if ${1}
+      ${2:TARGET}
+    #endif
+
+snippet     #ife
+abbr        #if .. else .. #endif
+options     head
+    #if ${1}
+      ${2}
+    else
+      #{3}
+    #endif
+
+snippet     sourced
+abbr        __SOURCE_DIRECTORY__
+    __SOURCE_DIRECTORY__
+
+snippet     line
+abbr        __LINE__
+    __LINE__
+
+snippet     sourcef
+abbr        __FILE__
+    __SOURCE_FILE__

@@ -1,11 +1,20 @@
 "=============================================================================
 " asciidoc.vim --- lang#asciidoc layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#asciidoc, layer-lang-asciidoc
+" @parentsection layers
+" This layer provides syntax highlighting for asciidoc. To enable this
+" layer:
+" >
+"   [layers]
+"     name = "lang#asciidoc"
+" <
 
 func! SpaceVim#layers#lang#asciidoc#plugins() abort
 

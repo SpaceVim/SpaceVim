@@ -1,6 +1,6 @@
 "=============================================================================
 " highlight.vim --- highlight mode for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -13,7 +13,7 @@
 " s: swoop
 " }}}
 
-" Loadding SpaceVim api {{{
+" Loading SpaceVim api {{{
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:CMP = SpaceVim#api#import('vim#compatible')

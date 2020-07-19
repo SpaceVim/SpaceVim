@@ -1,0 +1,64 @@
+" Setup and helpers for all tests.
+
+Before:
+  Save g:neomake
+
+  let g:neomake_test_messages = []
+  let g:neomake_test_errors = []
+  let g:_neomake_test_asserted_messages = []
+  let g:neomake_test_log_all_messages = 1
+  let g:neomake_test_messages_last_idx = -1
+  let g:neomake_test_buffers_before = filter(range(1, bufnr('$')), 'bufexists(v:val)')
+
+  if has('patch-7.4.2200')
+    call setloclist(0, [], ' ', {'title': 'neomake_test_init'})
+    call setqflist([], ' ', {'title': 'neomake_test_init'})
+  else
+    call setloclist(0, [])
+    call setqflist([])
+  endif
+
+  " One-time setup.
+  if exists(':NeomakeTestsWaitForFinishedJobs') != 2
+    if !exists('g:loaded_neomake')
+      " When running a .vader file manually, without Neomake being loaded.
+      let plugin_dir = fnamemodify(g:vader_current_file, ':p:h:h:h')
+      let &runtimepath .= ','.plugin_dir
+      exe 'source' plugin_dir.'/plugin/neomake.vim'
+    endif
+
+    exe 'source' finddir('include', fnamemodify(g:vader_file, ':p:h').';').'/init.vim'
+
+    " Work around https://github.com/vim/vim/issues/1676.
+    if has('patch-7.4.2017') && (!has('patch-8.0.0607') && !has('nvim-0.2.1'))
+      Log 'NOTE: using cache busting to work around Vim issue 1676.'
+      let g:neomake_test_cache_bust = [0, 0]
+    endif
+
+    " Save list of already defined (and whitelisted functions).
+    " This gets used to check that no new global functions are left over
+    " on teardown.
+    let g:neomake_test_funcs_before = map(split(neomake#utils#redir('function /\C^[A-Z]'), '\n'),
+        \ "substitute(v:val, '\\v^function (.*)\\(.*$', '\\1', '')")
+
+    call extend(g:neomake_test_funcs_before, [
+        \ 'GetVimIndent', 'GetVimIndentIntern',
+        \ 'GetPythonIndent',
+        \ 'GetJavascriptIndent',
+        \ 'GetShIndent',
+        \ 'FugitiveReloadCheck',
+        \ ])
+
+    let g:neomake_test_augroups_before = split(substitute(neomake#utils#redir('augroup'), '^[ \n]\+', '', ''), '\s\+')
+  endif
+
+After:
+  NeomakeTestsGlobalAfter
+
+  " Work around https://github.com/vim/vim/issues/1676.
+  if exists('g:neomake_test_cache_bust')
+    let bust_name = 'bust_cache_'.g:neomake_test_cache_bust[1]
+    lgetexpr bust_name.':1676:workaround_vim_issue'
+    exe 'bwipe' bust_name
+    let g:neomake_test_cache_bust = [0, g:neomake_test_cache_bust[1]+1]
+  endif

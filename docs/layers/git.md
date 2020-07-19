@@ -9,6 +9,7 @@ description: "This layers adds extensive support for git"
 
 - [Description](#description)
 - [Install](#install)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -26,6 +27,10 @@ To use this configuration layer, add following snippet to your custom configurat
   name = "git"
 ```
 
+## Layer options
+
+- `git-plugin`: default value is `gina` (or `gita` on older vim versions), available values include: `gina`, `fugitive`, `gita`
+
 ## Key bindings
 
 | Key Binding | Description            |
@@ -35,6 +40,7 @@ To use this configuration layer, add following snippet to your custom configurat
 | `SPC g U`   | unstage current file   |
 | `SPC g c`   | edit git commit        |
 | `SPC g p`   | git push               |
+| `SPC g m`   | git branch manager     |
 | `SPC g d`   | view git diff          |
 | `SPC g A`   | stage all files        |
 | `SPC g b`   | open git blame windows |

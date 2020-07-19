@@ -1,0 +1,104 @@
+Include: include/setup.vader
+
+Execute (Hook execution gets logged):
+  call g:NeomakeSetupAutocmdWrappers()
+
+  au! neomake_tests User NeomakeCountsChanged
+
+  let maker = extend(neomake#utils#MakerFromCommand('echo done'), {
+    \ 'errorformat': '%m'})
+
+  call neomake#Make(0, [maker])
+  let make_id = neomake#GetStatus().last_make_id
+  NeomakeTestsWaitForFinishedJobs
+
+  AssertNeomakeMessage '\mCalling User autocmd NeomakeFinished with context: {''options'': ', 3
+  AssertEqual map(copy(g:neomake_test_finished), 'sort(keys(v:val))'), [
+  \ ['finished_jobs', 'make_id', 'make_info', 'options']]
+
+Execute (NeomakeJobFinished):
+  if NeomakeAsyncTestsSetup()
+    let maker = extend(neomake#utils#MakerFromCommand('echo done; exit 7'), {
+      \ 'errorformat': '%m'})
+    call neomake#Make(0, [maker])
+    let jobinfo = neomake#GetJobs()[-1]
+    NeomakeTestsWaitForFinishedJobs
+    AssertEqual g:neomake_test_jobfinished, [{'jobinfo': jobinfo}]
+    AssertEqual jobinfo.exit_code, 7
+    AssertEqual jobinfo.file_mode, 0
+    AssertEqual jobinfo.bufnr, bufnr('%')
+  endif
+
+Execute (NeomakeJobStarted can renice process):
+  if NeomakeAsyncTestsSetup()
+    let maker = NeomakeTestsCommandMaker('nice-sleep', 'sleep .1')
+
+    function! s:NeomakeTestJobStarted(context) abort
+      AssertEqual keys(a:context), ['jobinfo']
+      let pid = a:context.jobinfo.get_pid()
+      call system(printf('renice 19 %d', pid))
+    endfunction
+    augroup neomake_tests
+      au User NeomakeJobStarted call s:NeomakeTestJobStarted(g:neomake_hook_context)
+    augroup END
+
+    let job = neomake#Make(0, [maker])
+    let pid = neomake#GetJob(job[0]).get_pid()
+
+    " Prefer procfs, since 'ps' in busybox cannot select a single PID.
+    let proc_stat = printf('/proc/%d/stat', pid)
+    if filereadable(proc_stat)
+      let niceness = split(readfile(proc_stat)[0])[18]
+    else
+      let niceness = substitute(system(printf('ps -o nice= %d', pid)), '\v\s+|\n', '', 'g')
+    endif
+    AssertEqual niceness, '19'
+
+    if has('nvim') && !has('nvim-0.2.0')
+      " Really wait for jobs to finish, otherwise it fails when reloading
+      " autoload/neomake.vim with E127 (Cannot redefine function) later.
+      NeomakeTestsWaitForRemovedJobs
+    else
+      NeomakeCancelJobs!
+    endif
+  endif
+
+Execute (NeomakeJobInit can make processes nicer):
+  " Create a maker that writes its niceness to stdout.
+  " Prefer procfs, since 'ps' in busybox cannot select a single PID.
+  let proc_stat = printf('/proc/%d/stat', getpid())
+  if filereadable(proc_stat)
+    let get_niceness_cmd = 'cat /proc/$$/stat | cut -f19 -d\ '
+  else
+    let get_niceness_cmd = printf('ps -o nice= %d | tr -d \ ', pid)
+  endif
+  let maker = NeomakeTestsCommandMaker('nice-sleep', get_niceness_cmd)
+
+  " Hook into NeomakeJobInit.
+  function! s:NeomakeTestJobInit(context) abort
+    AssertEqual keys(a:context), ['jobinfo']
+
+    let jobinfo = a:context.jobinfo
+    AssertEqual jobinfo.maker.name, 'nice-sleep'
+
+    " argv can be a list or string.
+    if type(jobinfo.argv) == type([])
+      let jobinfo.argv = ['nice', '-n18'] + jobinfo.argv
+    else
+      let jobinfo.argv = 'nice -n 18 '.jobinfo.argv
+    endif
+  endfunction
+  augroup neomake_tests
+    au User NeomakeJobInit call s:NeomakeTestJobInit(g:neomake_hook_context)
+  augroup END
+
+  call neomake#Make(0, [maker])
+  NeomakeTestsWaitForFinishedJobs
+  if neomake#has_async_support()
+    AssertNeomakeMessage printf("Starting async job: nice -n18 %s -c 'cat /proc/$$/stat | cut -f19 -d\\ '.", &shell), 2
+  else
+    AssertNeomakeMessage printf("Starting [string]: nice -n 18 %s -c 'cat /proc/$$/stat | cut -f19 -d\\ '.", &shell)
+  endif
+
+  let niceness = getqflist()[0].text
+  AssertEqual niceness, '18'

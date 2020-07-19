@@ -16,11 +16,18 @@ scriptencoding utf-8
 " 2018-09-26 v0.9.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2203
 " 2018-12-25 v1.0.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2377
 " 2019-04-08 v1.1.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2726
+" 2019-07-17 v1.2.0 is released at https://github.com/SpaceVim/SpaceVim/pull/2947
+" 2020-04-05 v1.2.0 is released at https://github.com/SpaceVim/SpaceVim/pull/3432
 
-" This is a list of PRs which has not be merged when v1.0.0 is released:
-let s:unmerged_prs_since_last_release = [1993, 2014, 2016, 2092, 2131, 2150, 2164, 2218, 2232, 2242, 2255, 2307, 2331, 2337, 2368, 2390, 2396, 2407, 2429, 2446, 2447, 2526, 2534, 2541, 2583, 2627, 2652, 2655, 2664]
 " these options can be changed when going to release new tag
-let s:last_release_number = 2726
+let s:last_release_number = 3432
+" 这是所有 ID 小于上一次 release ID，并且还未被合并的 ID，在新的release
+" 之后，需要把已经合并了的删除！
+let s:unmerged_prs_since_last_release = [2014, 2232, 2242, 2307,
+      \ 2396, 2407, 2447, 2627, 2655, 2664, 2792, 2819, 2825, 2861, 2868, 2906, 2910, 2927, 2984, 3004, 3064, 3076,
+      \ 3083, 3092, 3107, 3170, 3195, 3260, 3271, 3290, 3300, 3318, 3340, 3371, 3379
+      \ ]
+" 当要新建一个 release 时，修改为该release 的ID，通常为 -1。
 let s:current_release_number = -1
 " this is a list of pull request number which > last_release_number and <
 " current_release_number
@@ -32,7 +39,7 @@ let s:unmerged_prs_since_current_release = []
 " exclude prs in unmerged_prs_since_current_release
 
 function! SpaceVim#dev#releases#get_unmerged_prs() abort
-  return copy(s:unmerged_prs_since_last_release)
+  return deepcopy(s:unmerged_prs_since_last_release)
 endfunction
 
 function! SpaceVim#dev#releases#last_release_number() abort
@@ -77,7 +84,7 @@ endfunction
 
 function! s:get_list_of_PRs() abort
   let prs = []
-  for i in range(1, 10)
+  for i in range(1, 20)
     let issues = s:list_closed_prs('SpaceVim','SpaceVim', i)
     call extend(prs,
           \ filter(issues,
@@ -85,9 +92,11 @@ function! s:get_list_of_PRs() abort
           \ . s:last_release_number
           \ . " && v:val['number'] < "
           \ . s:current_release_number
-          \ . ' && !empty(get(v:val, "merged_at", ""))'
           \ . " && index(s:unmerged_prs_since_current_release, v:val['number']) == -1 "
           \ ))
+    " remove
+    " !empty(get(v:val, 'merged_at', ''))
+    " @ todo add a way to check if the pr is merged
   endfor
   for i in s:unmerged_prs_since_last_release
     let pr = github#api#issues#Get_issue('SpaceVim', 'SpaceVim', i)

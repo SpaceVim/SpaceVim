@@ -1,0 +1,30 @@
+Include: ../include/setup.vader
+
+Execute (vint: detects stdin support):
+  runtime autoload/neomake/makers/ft/vim.vim
+  function! neomake#compat#systemlist(...)
+    return ''
+  endfunction
+  let maker = neomake#GetMaker('vint', 'vim')
+  AssertEqual maker.supports_stdin({}), 0
+
+  runtime autoload/neomake/makers/ft/vim.vim
+  function! neomake#compat#systemlist(...)
+    return ['0.3.19']
+  endfunction
+  let maker = neomake#GetMaker('vint', 'vim')
+  AssertEqual maker.supports_stdin({}), 0
+  AssertEqual index(maker.args, '--stdin-display-name'), -1
+
+  runtime autoload/neomake/makers/ft/vim.vim
+  function! neomake#compat#systemlist(...)
+    return ['0.4a']
+  endfunction
+  let maker = neomake#GetMaker('vint', 'vim')
+  AssertEqual maker.supports_stdin({}), 1
+  AssertEqual maker.args[-2:], ['--stdin-display-name', '%:.']
+
+  " Restore if not profiling.
+  if !v:profiling
+    runtime autoload/neomake/compat.vim
+  endif

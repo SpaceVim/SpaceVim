@@ -1,0 +1,291 @@
+*jplus.txt*	Join lines inserting characters in between
+
+==============================================================================
+CONTENTS						*jplus-contents*
+
+Introduction				|jplus-introduction|
+Usage					|jplus-usage|
+Interface				|jplus-interface|
+  Mappings				  |jplus-mapping|
+Settings				|jplus-setting|
+  Variables				  |jplus-variables|
+FAQ					|jplus-FAQ|
+
+
+==============================================================================
+INTRODUCTION						*jplus-introduction*
+
+This plugin lets you input characters to insert between lines when joining
+lines.
+
+before: >
+	aaa
+	bbb
+	ccc
+<
+
+↓↓↓ <Plug>(jplus-getchar)+ ↓↓↓
+
+after: >
+	aaa+bbb+ccc
+<
+
+Additionally, it deletes the line continuation character (such as \) when
+joining.
+
+before: >
+	" filetype=vim
+	let = aaa
+	\   + bbb
+	\   + ccc
+<
+
+↓↓↓ <Plug>(jplus) ↓↓↓
+
+after: >
+	let = aaa + bbb + ccc
+<
+
+
+==============================================================================
+USAGE							*jplus-usage*
+
+You can map it to the key of your preference to use it.
+
+>
+	" Let jplus.vim handle default behaviour of J
+	nmap J <Plug>(jplus)
+	vmap J <Plug>(jplus)
+
+	" Input one character getchar() to insert between lines
+	nmap <Leader>J <Plug>(jplus-getchar)
+	vmap <Leader>J <Plug>(jplus-getchar)
+
+	" When you want to add surrounding spaces with <Plug>(jplus-getchar)
+	" %d is replaced with the input character
+	let g:jplus#config = {
+	\	"_" : {
+	\		"delimiter_format" : ' %d '
+	\	}
+	\}
+
+	" When you want to use input() (for more than one character)
+	" nmap <Leader>J <Plug>(jplus-input)
+	" vmap <Leader>J <Plug>(jplus-input)
+<
+
+
+==============================================================================
+INTERFACE						*jplus-interface*
+
+------------------------------------------------------------------------------
+MAPPINGS						*jplus-mapping*
+
+<Plug>(jplus)					*<Plug>(jplus)*
+	Does line concatenation similar to |J|.
+	This will automatically remove the line continuation character (such
+	as a trailing \) when joining lines.
+	Automatic removal is done in the following 'filetype'.
+
+	"bash"
+	"c"
+	"cpp"
+	"ruby"
+	"python"
+	"vim"
+	"zsh"
+
+	The plugin will check the |jplus-config| set in |g:jplus#config|.
+	See |jplus-config-priority| for more details.
+
+<Plug>(jplus-getchar)				*<Plug>(jplus-getchar)*
+	Similar to |<Plug>(jplus)| but prompts for a character that is used as
+	a delimiter for the lines. Character input is done using |getchar()|.
+	The plugin will look settings in |g:jplus#input_config|.
+	See |jplus-config-priority| for more details.
+
+<Plug>(jplus-getchar-with-space)		*<Plug>(jplus-getchar-with-space)*
+	Similar to |<Plug>(jplus-getchar)|, but inserts surrounding spaces
+	around the delimiter character.
+	This has higher priority than the configurations in
+	|g:jplus#input_config|.
+
+<Plug>(jplus-input)				*<Plug>(jplus-input)*
+	Similar to |<Plug>(jplus-getchar)| but uses |input()| for prompting.
+
+<Plug>(jplus-input-with-space)			*<Plug>(jplus-input-with-space)*
+	Similar to |<Plug>(jplus-input)| but inserts surrounding spaces around
+	the delimiter character.
+	This has higher priority than the configurations in
+	|g:jplus#input_config|.
+
+
+==============================================================================
+SETTINGS					*jplus-setting*
+
+------------------------------------------------------------------------------
+VARIABLES					*jplus-variables*
+
+g:jplus#config					*g:jplus#config*
+	States the configurations with 'filetype' being the keys.
+	When "_" is used as the key, it is used as the default configurations.
+	These configurations are used when key mappings such as
+	|<Plug>(jplus)| are used.
+	See |jplus-config| for the format of the configurations per
+	'filetype'.
+
+	NOTE: The delimiter characters entered using |<Plug>(jplus-getchar)|
+	have higher priority than the |jplus-config-delimiter| set in
+	|g:jplus#config|.
+
+|g:jplus#default_config|			*g:jplus#default_config*
+	Same configurations as |g:jplus#config|.
+	This variable is used as the default value, and is normally not
+	modified by the user.
+
+g:jplus#input_config				*g:jplus#input_config*
+	|jplus-config| configurations that are used by |<Plug>(jplus-getchar)|
+	and |<Plug>(jplus-input)|.
+	Dictionary whose keys are the entered delimiter character.
+	This is used when you want to change the format depending on the
+	character entered.
+	"__DEFAULT__" key is used as the default configurations.
+Example: >
+>
+	" Surround the delimiter character with spaces by default
+	" Only add a space to the left when joining with a comma
+	let g:jplus#input_config = {
+	\	"__DEFAULT__" : {
+	\		"delimiter_format" : " %d "
+	\	},
+	\	"," : {
+	\		"delimiter_format" : "%d "
+	\	}
+	\}
+<
+
+
+==============================================================================
+jplus-config						*jplus-config*
+
+Defines the configurations that are used when joining lines.
+This is a dictionary with the key being the name of the configuration.
+Use this format for configurations such as |g:jplus#config|.
+
+Example: >
+	" Don't join comment lines and delete them when filetype=vim
+	let g:jplus#config = {
+	\	"vim" : {
+	\		"ignore_pattern" : '^\s*"'
+	\	}
+	\}
+<
+
+- "delimiter"					*jplus-config-delimiter*
+	Delimiter used when joining.
+
+	Default: " "
+
+- "delimiter_format"				*jplus-config-delimiter_format*
+	The format of the delimiter.
+	"%d" is replaced with the "delimiter".
+
+	Default: "%d"
+
+
+- "ignore_pattern"				*jplus-config-ignore_pattern*
+	Ignore lines that match this pattern. Ignored lines are deleted.
+	No lines are ignored when an empty string is set.
+
+	Default: ""
+
+- "left_matchstr_pattern"		*jplus-config-left_matchstr_pattern*
+	The {pat} value used for |matchstr()| when applying the pattern to the
+	left hand side when joining lines.
+	Used when joining only certain strings.
+	When joining multiple lines, this pattern is used on each line.
+
+	Default: '.*'
+
+- "right_matchstr_pattern"		*jplus-config-right_matchstr_pattern*
+	Similar to |jplus-config-left_matchstr_pattern| but is applied to the
+	right hand side.
+	The default pattern "removes the leading whitespaces."
+
+	Default: '\s*\zs.*'
+
+
+
+------------------------------------------------------------------------------
+PRIORITIES					*jplus-config-priority*
+
+The following list shows the priorities of the |jplus-config| configurations
+used on |<Plug>(jplus)|.
+
+1. '_' key of |g:jplus#default_config|
+2. '_' key of |g:jplus#config|
+3. Current 'filetype' key of |g:jplus#default_config|
+4. Current 'filetype' key of |g:jplus#config|
+
+where 1 is the lowest, and 4 is the highest priority.
+
+
+The priorities of the |jplus-config| used on |<Plug>(jplus-getchar)| and
+|<Plug>(jplus-input)| are the following.
+
+1. '_' key of |g:jplus#default_config|
+2. '_' key of |g:jplus#config|
+3. '__DEFAULT__' key of |g:jplus#input_config|
+4. Current 'filetype' key of |g:jplus#default_config|
+5. Current 'filetype' key of |g:jplus#config|
+6. { "delimiter" : {Entered delimiter} }
+7. Entered delimiter in |g:jplus#input_config|
+
+where 1 is the lowest priority.
+If you want to change the configurations for the entered delimiter, change
+g:jplus#input_config[{Entered delimiter}].delimiter
+
+
+==============================================================================
+FAQ							*jplus-FAQ*
+
+Q. Don't remove the leading spaces when joining
+
+A. Set |jplus-config-right_matchstr_pattern| in |g:jplus#config|.
+>
+	" Apply this right_matchstr_pattern to all strings
+	" "_" is the default configuration for all filetypes
+	let g:jplus#config = {
+	\	"_" : {
+	\		"matchstr_pattern" : '\s*\\\s*\zs.*\|\s*\zs.*'
+	\	}
+	\}
+<
+
+Q. Don't join lines that are commented out
+
+A. Set |jplus-config-ignore_pattern| in |g:jplus#config|
+>
+	" When filetype=vim
+	let g:jplus#config = {
+	\	"vim" : {
+	\		"ignore_pattern" : '^\s*"'
+	\	}
+	\}
+
+
+Q. When joining with "," using |<Plug>(jplus-getchar)|, I want the delimiter
+   to be ", "
+
+A. Add the settings for "," in |g:jplus#input_config|
+>
+	let g:jplus#input_config = {
+	\	"," : {
+	\		"delimiter_format" : " %d "
+	\	}
+	\}
+<
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

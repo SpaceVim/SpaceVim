@@ -1,6 +1,6 @@
 "=============================================================================
 " colorscheme.vim --- SpaceVim colorscheme layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -38,6 +38,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
         \ ['w0ng/vim-hybrid', { 'merged' : 0 }],
         \ ['SpaceVim/vim-material', { 'merged' : 0}],
         \ ['srcery-colors/srcery-vim', { 'merged' : 0}],
+        \ [ 'drewtempelmeyer/palenight.vim', {'merged': 0 }],
         \ ]
   "
   " TODO:
@@ -78,6 +79,7 @@ unlet s:n
 
 let s:random_colorscheme = 0
 let s:random_frequency = ''
+let s:bright_statusline = 0
 
 function! SpaceVim#layers#colorscheme#config() abort
   if s:random_colorscheme
@@ -87,8 +89,8 @@ function! SpaceVim#layers#colorscheme#config() abort
     " {"fequecnce" : "dalily", "last" : 000000, 'theme' : 'one'}
     " FIXME: when global config cache is updated, check the cache also should
     " be updated
-    if filereadable(expand('~/.cache/SpaceVim/colorscheme_frequence.json'))
-      let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/colorscheme_frequence.json'), ''), ''))
+    if filereadable(expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequence.json'))
+      let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequence.json'), ''), ''))
       if s:random_frequency !=# '' && !empty(conf)
         let ctime = localtime()
         if ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'fequecnce', ''), 0)
@@ -119,13 +121,18 @@ function! s:update_conf() abort
         \ 'last' : localtime(),
         \ 'theme' : g:spacevim_colorscheme
         \ }
-  call writefile([s:JSON.json_encode(conf)], expand('~/.cache/SpaceVim/colorscheme_frequence.json'))
+  call writefile([s:JSON.json_encode(conf)], expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequence.json'))
 endfunction
 
 
 function! SpaceVim#layers#colorscheme#set_variable(var) abort
   let s:random_colorscheme = get(a:var, 'random_theme', get(a:var, 'random-theme', 0))
   let s:random_frequency = get(a:var, 'frequency', 'hourly')
+  let s:bright_statusline = get(a:var, 'bright_statusline', 0)
+endfunction
+
+function! SpaceVim#layers#colorscheme#get_variable() abort
+  return s:
 endfunction
 
 function! SpaceVim#layers#colorscheme#get_options() abort

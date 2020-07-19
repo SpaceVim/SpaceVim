@@ -1,10 +1,39 @@
 "=============================================================================
 " html.vim --- SpaceVim lang#html layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section lang#html, layer-lang-html
+" @parentsection layers
+" This layer is for html development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [layers]
+"     name = "lang#html"
+" <
+" 
+" @subsection Options
+"
+" user_emmet_leader_key: change the default leader key for emmet
+"
+" >
+"   [layers]
+"     name = "lang#html"
+"     user_emmet_leader_key = "<C-e>"
+" <
+" 
+" @subsection Key bindings
+"
+" >
+"     Key Binding       description
+"     <C-e>             emmet leader key
+" <
+"
+
 
 function! SpaceVim#layers#lang#html#plugins() abort
   let plugins = [
@@ -23,7 +52,7 @@ function! SpaceVim#layers#lang#html#config() abort
   let g:user_emmet_leader_key=get(g:, 'user_emmet_leader_key', '<C-e>')
   augroup spacevim_lang_html
     autocmd!
-    autocmd FileType html,css,scss,sass,less,javascript,jsp,vue,eex call s:install_emmet()
+    autocmd FileType html,css,scss,sass,less,javascript,jsp,vue,eex,php call s:install_emmet()
     autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   augroup END

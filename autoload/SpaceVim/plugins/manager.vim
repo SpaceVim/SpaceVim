@@ -1,6 +1,6 @@
 "=============================================================================
 " manager.vim --- plugin manager for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2019 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3 license
@@ -81,7 +81,7 @@ function! s:install_manager() abort
           \ 'dein.vim'], s:Fsep)
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
     "auto install vim-plug
-    if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
+    if filereadable(expand(g:spacevim_data_dir.'/vim-plug/autoload/plug.vim'))
       let g:_spacevim_vim_plug_installed = 1
     else
       if s:need_cmd('curl')
@@ -89,14 +89,14 @@ function! s:install_manager() abort
         call s:VIM_CO.system([
               \ 'curl',
               \ '-fLo',
-              \ expand('~/.cache/vim-plug/autoload/plug.vim'),
+              \ expand(g:spacevim_data_dir.'/vim-plug/autoload/plug.vim'),
               \ '--create-dirs',
               \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
               \ ])
         let g:_spacevim_vim_plug_installed = 1
       endif
     endif
-    exec 'set runtimepath+=~/.cache/vim-plug/'
+    exec 'set runtimepath+='.g:spacevim_data_dir.'/vim-plug/'
   endif
 endf
 
@@ -156,7 +156,7 @@ function! SpaceVim#plugins#manager#install(...) abort
   if has('nvim')
     call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     call s:set_buf_line(s:plugin_manager_buffer, 3, '')
-  elseif has('python')
+  elseif s:VIM_CO.has('python')
     call s:append_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
     call s:append_buf_line(s:plugin_manager_buffer, 3, '')
   else
@@ -237,11 +237,13 @@ function! SpaceVim#plugins#manager#update(...) abort
         let reponame = s:LIST.shift(s:plugins)
         let repo = neobundle#get(reponame)
       endif
-      if !empty(repo) && isdirectory(repo.path.'/.git')
+      if !empty(repo) && !get(repo, 'local', 0) && isdirectory(repo.path . '/.git') && !filereadable(repo.path . '/.git/shallow.lock')
         call s:pull(repo)
-      elseif !empty(repo) && !isdirectory(repo.path.'/.git')
+      elseif !empty(repo) && !get(repo, 'local', 0) && isdirectory(repo.path . '/.git') && filereadable(repo.path . '/.git/shallow.lock')
         call delete(repo.path, 'rf')
         call s:install(repo)
+      elseif !empty(repo) && !isdirectory(repo.path . '/.git') && get(repo, 'local', 0)
+        call s:pull(repo)
       elseif reponame ==# 'SpaceVim'
         let repo = {
               \ 'name' : 'SpaceVim',
@@ -361,11 +363,6 @@ function! s:on_install_stdout(id, data, event) abort
 endfunction
 " @vimlint(EVL103, 0, a:event)
 
-function! s:lock_revision(repo) abort
-  let cmd = ['git', '--git-dir', a:repo.path . '/.git', 'checkout', a:repo.rev]
-  call s:VIM_CO.system(cmd)
-endfunction
-
 function! s:on_build_exit(id, data, event) abort
   if a:id == -1
     let id = s:jobpid
@@ -401,9 +398,6 @@ function! s:on_install_exit(id, data, event) abort
     call s:add_to_failed_list(s:pulling_repos[id].name)
     call s:msg_on_install_failed(s:pulling_repos[id].name)
   endif
-  if get(s:pulling_repos[id], 'rev', '') !=# ''
-    call s:lock_revision(s:pulling_repos[id])
-  endif
   if !empty(get(s:pulling_repos[id], 'build', '')) && a:data == 0
     call s:build(s:pulling_repos[id])
   else
@@ -425,55 +419,93 @@ endfunction
 function! s:pull(repo) abort
   let s:pct += 1
   let s:ui_buf[a:repo.name] = s:pct
-  let argv = ['git', 'pull', '--progress']
-  if s:JOB.vim_job || s:JOB.nvim_job
-    let jobid = s:JOB.start(argv,{
-          \ 'on_stderr' : function('s:on_install_stdout'),
-          \ 'cwd' : a:repo.path,
-          \ 'on_exit' : function('s:on_pull_exit')
-          \ })
-    if jobid != 0
-      let s:pulling_repos[jobid] = a:repo
+  if !get(a:repo, 'local', 0)
+    let argv = ['git', 'pull', '--progress']
+    if s:JOB.vim_job || s:JOB.nvim_job
+      let jobid = s:JOB.start(argv,{
+            \ 'on_stderr' : function('s:on_install_stdout'),
+            \ 'cwd' : a:repo.path,
+            \ 'on_exit' : function('s:on_pull_exit')
+            \ })
+      if jobid != 0
+        let s:pulling_repos[jobid] = a:repo
+        call s:msg_on_start(a:repo.name)
+      endif
+    else
+      let s:jobpid += 1
+      let s:pulling_repos[s:jobpid] = a:repo
       call s:msg_on_start(a:repo.name)
+      redraw!
+      call s:JOB.start(argv,{
+            \ 'on_stderr' : function('s:on_install_stdout'),
+            \ 'cwd' : a:repo.path,
+            \ 'on_exit' : function('s:on_pull_exit')
+            \ })
+
     endif
   else
-    let s:jobpid += 1
-    let s:pulling_repos[s:jobpid] = a:repo
-    call s:msg_on_start(a:repo.name)
-    redraw!
-    call s:JOB.start(argv,{
-          \ 'on_stderr' : function('s:on_install_stdout'),
-          \ 'cwd' : a:repo.path,
-          \ 'on_exit' : function('s:on_pull_exit')
-          \ })
+    call s:msg_on_local(a:repo.name)
+    let s:pct_done += 1
+    call s:set_buf_line(s:plugin_manager_buffer, 1, 'Updating plugins (' . s:pct_done . '/' . s:total . ')')
+    call s:set_buf_line(s:plugin_manager_buffer, 2, s:status_bar())
+    if !empty(s:plugins)
+      let name = s:LIST.shift(s:plugins)
+      let repo = {}
+      if name ==# 'SpaceVim'
+        let repo = {
+              \ 'name' : 'SpaceVim',
+              \ 'path' : expand('~/.SpaceVim')
+              \ }
+      elseif g:spacevim_plugin_manager ==# 'dein'
+        let repo = dein#get(name)
+      elseif g:spacevim_plugin_manager ==# 'neobundle'
+        let repo = neobundle#get(name)
+      endif
+      call s:pull(repo)
+    endif
+  endif
+endfunction
 
+function! s:get_uri(repo) abort
+  if a:repo.repo =~# '^[^/]\+/[^/]\+$'
+    let url = 'https://github.com/' . (has_key(a:repo, 'repo') ? a:repo.repo : a:repo.orig_path)
+    return url
+  else
+    return a:repo.repo
   endif
 endfunction
 
 function! s:install(repo) abort
   let s:pct += 1
   let s:ui_buf[a:repo.name] = s:pct
-  let url = 'https://github.com/' . (has_key(a:repo, 'repo') ? a:repo.repo : a:repo.orig_path)
-  let argv = ['git', 'clone', '--recursive', '--progress', url, a:repo.path]
-  if s:JOB.vim_job || s:JOB.nvim_job
-    let jobid = s:JOB.start(argv,{
-          \ 'on_stderr' : function('s:on_install_stdout'),
-          \ 'on_exit' : function('s:on_install_exit')
-          \ })
-    if jobid != 0
-      let s:pulling_repos[jobid] = a:repo
-      call s:msg_on_install_start(a:repo.name)
+  if !get(a:repo, 'local', 0)
+    let url = s:get_uri(a:repo)
+    let argv = ['git', 'clone', '--depth=1', '--recursive', '--progress', url, a:repo.path]
+    if get(a:repo, 'rev', '') !=# ''
+      let argv = argv + ['-b', a:repo.rev]
+    endif
+    if s:JOB.vim_job || s:JOB.nvim_job
+      let jobid = s:JOB.start(argv,{
+            \ 'on_stderr' : function('s:on_install_stdout'),
+            \ 'on_exit' : function('s:on_install_exit')
+            \ })
+      if jobid != 0
+        let s:pulling_repos[jobid] = a:repo
+        call s:msg_on_install_start(a:repo.name)
+      endif
+    else
+      let s:jobpid += 1
+      let s:pulling_repos[s:jobpid] = a:repo
+      call s:msg_on_start(a:repo.name)
+      redraw!
+      call s:JOB.start(argv,{
+            \ 'on_stderr' : function('s:on_install_stdout'),
+            \ 'on_exit' : function('s:on_install_exit')
+            \ })
+
     endif
   else
-    let s:jobpid += 1
-    let s:pulling_repos[s:jobpid] = a:repo
-    call s:msg_on_start(a:repo.name)
-    redraw!
-    call s:JOB.start(argv,{
-          \ 'on_stderr' : function('s:on_install_stdout'),
-          \ 'on_exit' : function('s:on_install_exit')
-          \ })
-
+    call s:msg_on_local(a:repo.name)
   endif
 endfunction
 
@@ -521,6 +553,9 @@ if has('nvim')
   function! s:msg_on_start(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
   endfunction
+  function! s:msg_on_local(name) abort
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Skip local')
+  endfunction
   function! s:msg_on_install_start(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
   endfunction
@@ -528,12 +563,18 @@ elseif s:VIM_CO.has('python')
   function! s:msg_on_start(name) abort
     call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
   endfunction
+  function! s:msg_on_local(name) abort
+    call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Skip local')
+  endfunction
   function! s:msg_on_install_start(name) abort
     call s:append_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
   endfunction
 else
   function! s:msg_on_start(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Updating...')
+  endfunction
+  function! s:msg_on_local(name) abort
+    call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '- ' . a:name . ': Skip local')
   endfunction
   function! s:msg_on_install_start(name) abort
     call s:set_buf_line(s:plugin_manager_buffer, s:ui_buf[a:name] + 3, '+ ' . a:name . ': Installing...')
@@ -631,32 +672,74 @@ function! s:new_window() abort
     setf SpaceVimPlugManager
     nnoremap <silent> <buffer> q :bd<CR>
     nnoremap <silent> <buffer> gf :call <SID>open_plugin_dir()<cr>
+    nnoremap <silent> <buffer> gr :call <SID>fix_install()<cr>
     " process has finished or does not start.
     return 2
   endif
 endfunction
 
 function! s:open_plugin_dir() abort
-  let line = line('.') - 3
-  let plugin = filter(copy(s:ui_buf), 's:ui_buf[v:key] == line')
+  let plugin = get(split(getline('.')), 1, ':')[:-2]
   if !empty(plugin)
-    exe 'topleft split'
-    enew
-    exe 'resize ' . &lines * 30 / 100
     let shell = empty($SHELL) ? SpaceVim#api#import('system').isWindows ? 'cmd.exe' : 'bash' : $SHELL
     let path = ''
     if g:spacevim_plugin_manager ==# 'dein'
-      let path = dein#get(keys(plugin)[0]).path
+      let path = dein#get(plugin).path
     elseif g:spacevim_plugin_manager ==# 'neobundle'
-      let path = neobundle#get(keys(plugin)[0]).path
+      let path = neobundle#get(plugin).path
     elseif g:spacevim_plugin_manager ==# 'vim-plug'
     endif
-    if has('nvim') && exists('*termopen')
-      call termopen(shell, {'cwd' : path})
-    elseif exists('*term_start')
-      call term_start(shell, {'curwin' : 1, 'term_finish' : 'close', 'cwd' : path})
+    if isdirectory(path)
+      topleft new
+      exe 'resize ' . &lines * 30 / 100
+      if has('nvim') && exists('*termopen')
+        call termopen(shell, {'cwd' : path})
+      elseif exists('*term_start')
+        call term_start(shell, {'curwin' : 1, 'term_finish' : 'close', 'cwd' : path})
+      elseif exists(':VimShell')
+        exe 'VimShell ' .  path
+      else
+        close
+        echohl WarningMsg
+        echo 'Do not support terminal!'
+        echohl None
+      endif
     else
-      exe 'VimShell ' .  path
+      echohl WarningMsg
+      echo 'Plugin(' . keys(plugin)[0] . ') has not been installed!'
+      echohl None
+    endif
+  endif
+endfunction
+
+function! s:fix_install() abort
+  let plugin = get(split(getline('.')), 1, ':')[:-2]
+  if !empty(plugin)
+    if g:spacevim_plugin_manager ==# 'dein'
+      let repo = dein#get(plugin)
+    elseif g:spacevim_plugin_manager ==# 'neobundle'
+      let repo = neobundle#get(plugin)
+    else
+      let repo = {}
+    endif
+    if has_key(repo, 'path') && isdirectory(repo.path)
+      if index(s:failed_plugins, plugin) > 0
+        call remove(s:failed_plugins, plugin)
+      endif
+      let argv = 'git checkout . && git pull --progress'
+      let jobid = s:JOB.start(argv,{
+            \ 'on_stderr' : function('s:on_install_stdout'),
+            \ 'cwd' : repo.path,
+            \ 'on_exit' : function('s:on_pull_exit')
+            \ })
+      if jobid != 0
+        let s:pulling_repos[jobid] = repo
+        call s:msg_on_start(repo.name)
+      endif
+    else
+      echohl WarningMsg
+      echo 'Plugin(' . plugin . ') has not been installed!'
+      echohl None
     endif
   endif
 endfunction
@@ -743,7 +826,7 @@ else
     endif
     call setbufvar(a:bufnr,'&ma', 0)
   endfunction
-endi
+endif
 
 " Public API: SpaceVim#plugins#manager#terminal {{{
 function! SpaceVim#plugins#manager#terminal() abort
@@ -754,4 +837,4 @@ function! SpaceVim#plugins#manager#terminal() abort
     call s:JOB.stop(str2nr(id))
   endfor
 endfunction
-" }}}f
+" }}}

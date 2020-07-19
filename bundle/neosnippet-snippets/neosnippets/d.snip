@@ -1,0 +1,40 @@
+include c.snip
+
+# Delete snippet depended on C.
+delete struct
+delete struct_typedef
+delete enum
+delete main
+delete inc
+delete inc2
+delete Inc
+delete Def
+delete def
+delete once
+delete printf
+delete fprintf
+
+snippet     foreach
+abbr        foreach() {}
+    foreach (${1:#:var}; ${2:#:list}) {
+        ${3:TARGET}
+    }
+
+snippet     class
+abbr        class {}
+    class ${1:#:name} {
+        ${2:TARGET}
+    }
+
+snippet     struct
+abbr        struct {}
+    struct ${1:#:name} {
+        ${2:TARGET}
+    }
+
+snippet     enum
+abbr        enum {}
+    enum ${1:#:name} {
+        ${2:TARGET}
+    }
+

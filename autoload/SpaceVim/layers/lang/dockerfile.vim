@@ -1,14 +1,21 @@
 "=============================================================================
 " dockerfile.vim --- layer for editing Dockerfile
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#dockerfile, layer-lang-dockerfile
+" @parentsection layers
+" @subsection Intro
+"
+" The lang#dockerfile layer provides syntax highlighting for dockerfile.
+
 function! SpaceVim#layers#lang#dockerfile#plugins() abort
   let plugins = []
-  call add(plugins, ['ekalinin/Dockerfile.vim', {'merged' : 0}])
+  call add(plugins, ['wsdjeg/vim-dockerfile', {'merged' : 0}])
   return plugins
 endfunction
 

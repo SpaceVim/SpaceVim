@@ -1,6 +1,6 @@
 "=============================================================================
 " custom.vim --- custom API in SpaceVim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -37,8 +37,8 @@ endfunction
 function! SpaceVim#custom#autoconfig(...) abort
   let menu = SpaceVim#api#import('cmdlinemenu')
   let ques = [
-        \ ['dark powered mode', function('s:awesome_mode')],
         \ ['basic mode', function('s:basic_mode')],
+        \ ['dark powered mode', function('s:awesome_mode')],
         \ ]
   call menu.menu(ques)
 endfunction
@@ -65,7 +65,7 @@ function! s:write_to_config(config) abort
   let g:_spacevim_global_config_path = global_dir . 'init.toml'
   let cf = global_dir . 'init.toml'
   if filereadable(cf)
-    call SpaceVim#logger#warn('Failed to generate config file, It is not readable: ' . cf)
+    call SpaceVim#logger#warn('Failed to generate config file, it is not readable: ' . cf)
     return
   endif
   let dir = expand(fnamemodify(cf, ':p:h'))
@@ -94,6 +94,10 @@ function! SpaceVim#custom#apply(config, type) abort
     let options = get(a:config, 'options', {})
     for [name, value] in items(options)
       exe 'let g:spacevim_' . name . ' = value'
+      if name ==# 'project_rooter_patterns'
+        " clear rooter cache
+        call SpaceVim#plugins#projectmanager#current_root()
+      endif
       unlet value
     endfor
     if g:spacevim_debug_level !=# 1
@@ -101,7 +105,8 @@ function! SpaceVim#custom#apply(config, type) abort
     endif
     let layers = get(a:config, 'layers', [])
     for layer in layers
-      if !get(layer, 'enable', 1)
+      let enable = get(layer, 'enable', 1)
+      if (type(enable) == type('') && !eval(enable)) || (type(enable) != type('') && !enable)
         call SpaceVim#layers#disable(layer.name)
       else
         call SpaceVim#layers#load(layer.name, layer)
@@ -131,7 +136,7 @@ function! SpaceVim#custom#write(force) abort
 endfunction
 
 function! s:path_to_fname(path) abort
-  return expand('~/.cache/SpaceVim/conf/') . substitute(a:path, '[\\/:;.]', '_', 'g') . '.json'
+  return expand(g:spacevim_data_dir.'/SpaceVim/conf/') . substitute(a:path, '[\\/:;.]', '_', 'g') . '.json'
 endfunction
 
 function! SpaceVim#custom#load() abort
@@ -143,7 +148,7 @@ function! SpaceVim#custom#load() abort
     call SpaceVim#logger#info('find local conf: ' . local_conf)
     let local_conf_cache = s:path_to_fname(local_conf)
     if getftime(local_conf) < getftime(local_conf_cache)
-      call SpaceVim#logger#info('loadding cached local conf: ' . local_conf_cache)
+      call SpaceVim#logger#info('loading cached local conf: ' . local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
       call SpaceVim#custom#apply(conf, 'local')
     else
@@ -153,7 +158,7 @@ function! SpaceVim#custom#load() abort
       call SpaceVim#custom#apply(conf, 'local')
     endif
     if g:spacevim_force_global_config
-      call SpaceVim#logger#info('force loadding global config >>>')
+      call SpaceVim#logger#info('force loading global config >>>')
       call s:load_glob_conf()
     endif
   elseif filereadable('.SpaceVim.d/init.vim')
@@ -163,11 +168,11 @@ function! SpaceVim#custom#load() abort
     call SpaceVim#logger#info('find local conf: ' . local_conf)
     exe 'source .SpaceVim.d/init.vim'
     if g:spacevim_force_global_config
-      call SpaceVim#logger#info('force loadding global config >>>')
+      call SpaceVim#logger#info('force loading global config >>>')
       call s:load_glob_conf()
     endif
   else
-    call SpaceVim#logger#info('Can not find project local config, start to loadding global config')
+    call SpaceVim#logger#info('Can not find project local config, start loading global config')
     call s:load_glob_conf()
   endif
 
@@ -184,7 +189,7 @@ function! s:load_glob_conf() abort
   if filereadable(global_dir . 'init.toml')
     let g:_spacevim_global_config_path = global_dir . 'init.toml'
     let local_conf = global_dir . 'init.toml'
-    let local_conf_cache = s:FILE.unify_path(expand('~/.cache/SpaceVim/conf/init.json'))
+    let local_conf_cache = s:FILE.unify_path(expand(g:spacevim_data_dir.'/SpaceVim/conf/init.json'))
     let &rtp = global_dir . ',' . &rtp
     if getftime(local_conf) < getftime(local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))

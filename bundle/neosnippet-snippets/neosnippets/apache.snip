@@ -1,0 +1,50 @@
+snippet allow
+    AllowOverride ${1:#:AuthConfig} ${2:#:FileInfo} ${3:#:Indexes} ${4:#:Limit} ${5:#:Options}
+
+
+snippet opt
+    Options ${1:#:All} ${2:#:ExecCGI} ${3:#:FollowSymLinks} ${4:#:Includes} ${5:#:IncludesNOEXEC} ${6:#:Indexes} ${7:#:MultiViews} ${8:#:SymLinksIfOwnerMatch}
+
+
+snippet vhost
+	<VirtualHost ${1:example.org}>
+		ServerAdmin webmaster@${1}
+		DocumentRoot /www/vhosts/${1}
+		ServerName ${1}
+		ErrorLog logs/${1}-error_log
+		CustomLog logs/${1}-access_log common
+	</VirtualHost>
+
+snippet dir
+	<Directory ${1:/Library/WebServer/}>
+		${0}
+	</Directory>
+
+snippet ifmodule
+        <IfModule ${1:module_name}>
+                ${2}
+        </IfModule>
+
+snippet if
+        <If ${1:condition}>
+                ${2}
+        </If>
+
+snippet RemoteIPHeader
+        RemoteIPHeader X-Forwarded-For
+
+snippet location
+        <Location ${1:location}>
+                ${2:config}
+        </Location>
+
+snippet locationmatch
+        <LocationMatch "${1:regex}">
+                ${2:config}
+        </LocationMatch>
+
+snippet directoryindex
+        DirectoryIndex index.php index.html
+
+snippet require
+        Require all granted
