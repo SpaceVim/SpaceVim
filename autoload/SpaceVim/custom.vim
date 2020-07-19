@@ -114,7 +114,19 @@ function! SpaceVim#custom#apply(config, type) abort
     endfor
     let custom_plugins = get(a:config, 'custom_plugins', [])
     for plugin in custom_plugins
-      call add(g:spacevim_custom_plugins, [plugin.name, plugin])
+      " name is an option for dein, we need to use repo instead
+      " but we also need to keep backward compatible!
+      " this the first argv should be get(plugin, 'repo', get(plugin, 'name',
+      " ''))
+      " BTW, we also need to check if the plugin has name or repo key
+      if has_key(plugin, 'name')
+        call add(g:spacevim_custom_plugins, [plugin.name, plugin])
+      elseif has_key(plugin, 'repo')
+        call add(g:spacevim_custom_plugins, [plugin.repo, plugin])
+      else
+        call SpaceVim#logger#warn('custom_plugins should contains repo key!')
+        call SpaceVim#logger#info(string(plugin))
+      endif
     endfor
     let bootstrap_before = get(options, 'bootstrap_before', '')
     let g:_spacevim_bootstrap_after = get(options, 'bootstrap_after', '')
