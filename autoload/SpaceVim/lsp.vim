@@ -103,6 +103,14 @@ elseif has('nvim')
     call LanguageClient_textDocument_definition()
   endfunction
 
+  function! SpaceVim#lsp#go_to_typedef() abort
+    call LanguageClient_textDocument_typeDefinition()
+  endfunction
+
+  function! SpaceVim#lsp#go_to_impl() abort
+    call LanguageClient_textDocument_implementation()
+  endfunction
+
   function! SpaceVim#lsp#rename() abort
     call LanguageClient_textDocument_rename()
   endfunction
