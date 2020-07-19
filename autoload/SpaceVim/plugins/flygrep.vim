@@ -601,13 +601,14 @@ if exists('*nvim_open_win')
     let filename = fnameescape(split(line, ':\d\+:')[0])
     let linenr = matchstr(line, ':\d\+:')[1:-2]
     let bufnr = s:BUFFER.bufadd(filename)
+    call bufload(bufnr)
     let flygrep_win_height = 16
     call s:FLOATING.open_win(bufnr, v:true,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
-          \ 'height'  : 8,
-          \ 'row': &lines - flygrep_win_height - 2 - 8,
+          \ 'height'  : 5,
+          \ 'row': &lines - flygrep_win_height - 2 - 6,
           \ 'col': 0
           \ })
     wincmd p
