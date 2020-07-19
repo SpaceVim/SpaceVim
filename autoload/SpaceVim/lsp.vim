@@ -126,6 +126,10 @@ elseif has('nvim')
   function! SpaceVim#lsp#documentSymbol()
     call LanguageClient_textDocument_documentSymbol()
   endfunction
+
+  function! SpaceVim#lsp#refactor() abort
+    " @todo languageclient do not support refactor
+  endfunction
 else
   " use vim-lsp
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
