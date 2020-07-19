@@ -368,7 +368,7 @@ SpaceVim 的[模块首页](../layers/)。
 
 ```toml
 [[custom_plugins]]
-   name = 'wsdjeg/neomake.vim'
+   repo = 'wsdjeg/neomake.vim'
    # note: you need to disable merged feature
    merged = false
 ```
