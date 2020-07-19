@@ -15,10 +15,12 @@ endif
 let s:self.__buffer = SpaceVim#api#import('vim#buffer')
 let s:self.__cmp = SpaceVim#api#import('vim#compatible')
 
-
 function! s:self.check_width(len, sec, winwidth) abort
   return a:len + self.len(a:sec) < a:winwidth
 endfunction
+
+let s:self.__winid = -1
+let s:self.__bufnr = -1
 
 function! s:self.len(sec) abort
   let str = matchstr(a:sec, '%{.*}')
