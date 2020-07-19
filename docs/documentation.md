@@ -244,9 +244,9 @@ If you want to add plugins from github, just add the repo name to the `custom_pl
 
 ```toml
 [[custom_plugins]]
-name = "lilydjwg/colorizer"
-on_cmd = ["ColorHighlight", "ColorToggle"]
-merged = false
+    repo = "lilydjwg/colorizer"
+    on_cmd = ["ColorHighlight", "ColorToggle"]
+    merged = false
 ```
 
 `on_cmd` option means this plugin will be loaded only when the following commands are called. For more options see `:h dein-options`.
@@ -258,7 +258,7 @@ If you want to disable plugins which are added by SpaceVim, you can use SpaceVim
 ```toml
 [options]
 # NOTE: the value should be a list, and each item is the name of the plugin.
-disabled_plugins = ["clighter", "clighter8"]
+    disabled_plugins = ["clighter", "clighter8"]
 ```
 
 ### Bootstrap Functions
@@ -326,6 +326,7 @@ The different key bindings between SpaceVim and origin vim are shown as below.
   ```
 
 - The `jk` key has been mapped to `<Esc>` in insert mode. To disable this key binding, set `escape_key_binding` to empty string.
+
   ```toml
   [options]
       escape_key_binding = ''
@@ -381,9 +382,9 @@ disabled_plugins = ["neomake.vim"]
 
 ```toml
 [[custom_plugins]]
-name = "wsdjeg/neomake.vim"
-# note: you need to disable merged feature
-merged = false
+    repo = "wsdjeg/neomake.vim"
+    # note: you need to disable merged feature
+    merged = false
 ```
 
 Use the `bootstrap_before` function to add local plugin:

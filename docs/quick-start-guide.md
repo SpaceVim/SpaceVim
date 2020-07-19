@@ -107,7 +107,7 @@ documentation.
 
 # This is an example for adding custom plugins lilydjwg/colorizer
 [[custom_plugins]]
-    name = "lilydjwg/colorizer"
+    repo = "lilydjwg/colorizer"
     merged = false
 ```
 

@@ -3181,7 +3181,7 @@ CUSTOM_PLUGINS                                 *SpaceVim-usage-custom_plugins*
 Add custom plugins.
 >
   [[custom_plugins]]
-    name = 'vimwiki/vimwiki'
+    repo = 'vimwiki/vimwiki'
     merged = false
 <
 
