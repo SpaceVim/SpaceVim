@@ -342,7 +342,7 @@ welcome () {
 
 # download_font {{{
 download_font () {
-  url="https://raw.githubusercontent.com/wsdjeg/DotFiles/master/local/share/fonts/$1"
+  url="https://raw.githubusercontent.com/wsdjeg/DotFiles/7a75a186c6db9ad6f02cafba8d4c7bc78f47304c/local/share/fonts/${1// /%20}"
   path="$HOME/.local/share/fonts/$1"
   if [[ -f "$path" ]]
   then
