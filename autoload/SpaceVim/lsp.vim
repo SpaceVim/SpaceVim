@@ -110,6 +110,10 @@ elseif has('nvim')
   function! SpaceVim#lsp#references() abort
     call LanguageClient_textDocument_references()
   endfunction
+
+  function! SpaceVim#lsp#go_to_declaration() abort
+    call LanguageClient_textDocument_declaration()
+  endfunction
 else
   " use vim-lsp
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
