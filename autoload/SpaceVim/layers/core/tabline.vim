@@ -30,9 +30,12 @@ let s:MESSLETTERS = SpaceVim#api#import('messletters')
 let s:FILE = SpaceVim#api#import('file')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:HI = SpaceVim#api#import('vim#highlight')
+
 let s:LOG = SpaceVim#logger#derive('tabline ')
 " }}}
 
+
+let s:SYS = SpaceVim#api#import('system')
 
 let s:buffers = s:BUFFER.listed_buffers()
 
@@ -228,7 +231,13 @@ function! SpaceVim#layers#core#tabline#get() abort
       endif
       let buflist = tabpagebuflist(i)
       let winnr = tabpagewinnr(i)
-      let name = fnamemodify(bufname(buflist[winnr - 1]), ':t')
+      let bufname = bufname(buflist[winnr - 1])
+      " let bufname = bufname(tabpagebuflist(i)[tabpagewinnr(i) - 1])
+      if s:SYS.isWindows
+        let bufname = substitute(bufname, '\\[', '[', 'g')
+        let bufname = substitute(bufname, '\\]', ']', 'g')
+      endif
+      let name = fnamemodify(bufname, ':t')
       let tabname = gettabvar(i, '_spacevim_tab_name', '')
       if has('tablineat')
         let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'

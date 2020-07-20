@@ -61,7 +61,7 @@ func! Show_Log_for_current_plugin()
         let @a = a_save
     endtry
     call unite#start([['output/shellcmd',
-                \ 'git --no-pager -C ~/.cache/vimfiles/repos/github.com/'
+                \ 'git --no-pager -C '.g:spacevim_data_dir.'/vimfiles/repos/github.com/'
                 \ . plug
                 \ . ' log -n 15 --oneline']], {'log': 1, 'wrap': 1,'start_insert':0})
     exe "nnoremap <buffer><CR> :call <SID>Opencommit('". plug ."', strpart(split(getline('.'),'[33m')[1],0,7))<CR>"

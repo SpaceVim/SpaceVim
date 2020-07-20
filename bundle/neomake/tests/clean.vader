@@ -1,0 +1,66 @@
+Include: include/setup.vader
+
+Execute (NeomakeClean: no-op):
+  NeomakeClean
+  NeomakeClean!
+
+Execute (NeomakeClean: file-mode):
+  Save g:neomake_open_list
+  let g:neomake_open_list = 2
+
+  new
+  let win_count = winnr('$')
+  CallNeomake 1, [g:entry_maker]
+  AssertEqual winnr('$'), win_count + 1, "loclist appeared"
+
+  NeomakeClean
+  AssertEqual winnr('$'), win_count + 1, "loclist was not closed"
+
+  lclose
+  bwipe
+
+Execute (NeomakeClean: file-mode (customqf)):
+  Save g:neomake_open_list
+  let g:neomake_open_list = 2
+
+  try
+    call neomake#quickfix#enable(1)
+
+    new
+    let win_count = winnr('$')
+    CallNeomake 1, [g:entry_maker]
+    AssertEqual winnr('$'), win_count + 1, "loclist appeared"
+
+    NeomakeClean
+    AssertEqual winnr('$'), win_count, "loclist was closed"
+    bwipe
+  finally
+    call neomake#quickfix#disable()
+  endtry
+
+Execute (NeomakeClean: project-mode):
+  Save g:neomake_open_list
+  let g:neomake_open_list = 2
+  new
+  CallNeomake 0, [g:entry_maker]
+  NeomakeClean!
+  cclose
+  bwipe
+
+Execute (NeomakeClean: project-mode (customqf)):
+  Save g:neomake_open_list
+  let g:neomake_open_list = 2
+
+  try
+    call neomake#quickfix#enable(1)
+    new
+    let win_count = winnr('$')
+    CallNeomake 0, [g:entry_maker]
+    AssertEqual winnr('$'), win_count + 1, "qflist appeared"
+
+    NeomakeClean!
+    AssertEqual winnr('$'), win_count, "qflist was closed"
+    bwipe
+  finally
+    call neomake#quickfix#disable()
+  endtry

@@ -6,6 +6,49 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#javascript, layer-lang-javascript
+" @parentsection layers
+" This layer is for JavaScript development, includes syntax lint, code
+" completion etc. To enable this layer:
+" >
+"   [layers]
+"     name = "lang#javascript"
+" <
+" The code linter is eslint, install eslint via:
+" >
+"   npm install -g eslint-cli
+" <
+" @subsection layer option
+"
+" 1. auto_fix: If this option is true, --fix will be added to neomake eslint
+" maker.
+" >
+"   [layers]
+"     name = "lang#javascript"
+"     auto_fix = true
+" <
+" @subsection Key bindings
+" >
+"   Key             Function
+"   -----------------------------
+"   SPC l r         run current file
+"   SPC b f         format current buffer
+" <
+"
+" This layer also provides REPL support for javascript, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
+
+
 function! SpaceVim#layers#lang#javascript#plugins() abort
   let plugins = [
         \ ['Galooshi/vim-import-js', {

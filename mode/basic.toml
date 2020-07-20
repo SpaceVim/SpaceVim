@@ -31,8 +31,8 @@
 # Enable autocomplete layer
 [[layers]]
 name = 'autocomplete'
-auto-completion-return-key-behavior = "complete"
-auto-completion-tab-key-behavior = "cycle"
+auto_completion_return_key_behavior = "complete"
+auto_completion_tab_key_behavior = "cycle"
 
 [[layers]]
 name = 'shell'

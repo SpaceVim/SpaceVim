@@ -1,0 +1,108 @@
+Include: include/setup.vader
+
+Execute (maker.args as list gets escaped):
+  let maker = {
+        \ 'exe': '/usr/bin/printf',
+        \ 'args': ['%s\n', '1', '2', '3a 3b'],
+        \ 'errorformat': '%f: %m',
+        \ 'mapexpr': 'expand("%:p") . ": " . v:val',
+        \ }
+
+  let fname = 'tests/fixtures/a filename with spaces'
+  new
+  edit tests/fixtures/a\ filename\ with\ spaces
+  let fname = bufname('%')
+
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+  AssertEqual map(getloclist(0), 'v:val.text'),
+    \ ['1', '2', '3a 3b', fname]
+  bwipe
+
+Execute (maker.args as string gets not escaped):
+  let maker = {
+        \ 'exe': '/usr/bin/printf',
+        \ 'args': "'%s\\n' 1 2 '3a 3b' 4",
+        \ 'errorformat': '%f: %m',
+        \ 'mapexpr': 'expand("%:p") . ": " . v:val',
+        \ }
+
+  let fname = 'tests/fixtures/a filename with spaces'
+  new
+  edit tests/fixtures/a\ filename\ with\ spaces
+  let fname = expand('%')
+
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+  AssertEqual map(getloclist(0), 'v:val.text'),
+    \ ['1', '2', '3a 3b', '4', fname]
+  bwipe
+
+Execute (fname in args gets not expanded (command maker, args as list)):
+  let maker = {
+        \ 'exe': 'printf',
+        \ 'args': ['%s'],
+        \ 'errorformat': '%m',
+        \ }
+  new
+  lcd tests/fixtures
+  edit ~
+  CallNeomake 1, [maker]
+  AssertEqual map(getloclist(0), 'v:val.text'), ['~']
+  if neomake#has_async_support()
+    AssertNeomakeMessage "Starting async job: printf '%s' '~'."
+  else
+    AssertNeomakeMessage "Starting [string]: printf '%s' '~'."
+  endif
+  bwipe
+
+Execute (fname in args gets not expanded (command maker, args as string)):
+  let maker = {
+        \ 'exe': 'printf',
+        \ 'args': '%s',
+        \ 'errorformat': '%m',
+        \ }
+  new
+  lcd tests/fixtures
+  edit ~
+  CallNeomake 1, [maker]
+  AssertEqual map(getloclist(0), 'v:val.text'), ['~']
+  if neomake#has_async_support()
+    if has('nvim')
+      AssertNeomakeMessage "Starting async job [string]: printf %s '~'."
+    endif
+  else
+    AssertNeomakeMessage "Starting [string]: printf %s '~'."
+  endif
+  bwipe
+
+Execute (fname in args gets not expanded (maker from command string)):
+  let maker = neomake#utils#MakerFromCommand('printf %s')
+  let maker.errorformat = '%m'
+  new
+  lcd tests/fixtures
+  edit ~
+  CallNeomake 1, [maker]
+  AssertEqual map(getloclist(0), 'v:val.text'), ['~']
+  let shell_argv = join(split(&shell) + split(&shellcmdflag))
+  if neomake#has_async_support()
+    AssertNeomakeMessage "Starting async job: ".shell_argv." 'printf %s '\\''~'\\'''."
+  else
+    AssertNeomakeMessage "Starting [string]: ".shell_argv." 'printf %s '\\''~'\\'''."
+  endif
+  bwipe
+
+Execute (fname in args gets not expanded (maker from command list)):
+  let maker = neomake#utils#MakerFromCommand(['printf', '%s'])
+  let maker.errorformat = '%m'
+  new
+  lcd tests/fixtures
+  edit ~
+  CallNeomake 1, [maker]
+  AssertEqual map(getloclist(0), 'v:val.text'), ['~']
+  if neomake#has_async_support()
+    AssertNeomakeMessage "Starting async job: printf '%s' '~'."
+  else
+    AssertNeomakeMessage "Starting [string]: printf '%s' '~'."
+  endif
+  bwipe

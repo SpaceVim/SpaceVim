@@ -1,0 +1,161 @@
+Describe util.regexp
+  Before all
+    let SL = vital#of('vital').import('Vim.ScriptLocal')
+    let U = SL.sfuncs('autoload/incsearch/util.vim')
+  End
+
+  Describe .regexp_join()
+    It returns joined regular expression from patterns
+      let ps = ['incsearch', 'vim']
+      let r = U.regexp_join(ps)
+      Assert Equals('\m\%(incsearch\m\|vim\m\)', r)
+      for p in ps
+        Assert True(p =~# r)
+      endfor
+    End
+
+    It supports regular expressions including various flags
+      let ps = ['\d\+', '\v(neo)?vim']
+      let r = U.regexp_join(ps)
+      Assert Equals('\m\%(\d\+\m\|\v(neo)?vim\m\)', r)
+      for p in ['1', '12310', 'vim', 'neovim']
+        Assert True(p =~# r)
+      endfor
+    End
+
+    It handles unbalanced `[` with \m\v flag
+      let ps = ['\d\+[', '[vim]']
+      let r = U.regexp_join(ps)
+      Assert Equals('\m\%(\d\+\[\m\|[vim]\m\)', r)
+      for p in ['1[', '12310[', 'v', 'i', 'm']
+        Assert True(p =~# r)
+      endfor
+      for p in ['\', '\[']
+        Assert False(p =~# r)
+      endfor
+    End
+  End
+
+  Describe .escape_unbalanced_left_r()
+    It case 0
+      Assert Equals('\[', U.escape_unbalanced_left_r('['))
+    End
+    It case 1
+      Assert Equals('\[', U.escape_unbalanced_left_r('\['))
+    End
+    It case 2
+      Assert Equals('\\\[', U.escape_unbalanced_left_r('\\['))
+    End
+    It case 3
+      Assert Equals('\\\[', U.escape_unbalanced_left_r('\\\['))
+    End
+    It case 4
+      Assert Equals('[]', U.escape_unbalanced_left_r('[]'))
+    End
+    It case 5
+      Assert Equals('\[]', U.escape_unbalanced_left_r('\[]'))
+    End
+    It case 6
+      Assert Equals('\\[]', U.escape_unbalanced_left_r('\\[]'))
+    End
+    It case 7
+      Assert Equals('\\\[]', U.escape_unbalanced_left_r('\\\[]'))
+    End
+    It case 8
+      Assert Equals('[]\[', U.escape_unbalanced_left_r('[]['))
+    End
+    It case 9
+      Assert Equals('\[]\[', U.escape_unbalanced_left_r('\[]['))
+    End
+    It case 10
+      Assert Equals('\\[]\[', U.escape_unbalanced_left_r('\\[]['))
+    End
+    It case 11
+      Assert Equals('\\\[]\[', U.escape_unbalanced_left_r('\\\[]['))
+    End
+    It case 12
+      Assert Equals('[]...\[', U.escape_unbalanced_left_r('[]...['))
+    End
+    It case 13
+      Assert Equals('\[]...\[', U.escape_unbalanced_left_r('\[]...['))
+    End
+    It case 14
+      Assert Equals('\\[]...\[', U.escape_unbalanced_left_r('\\[]...['))
+    End
+    It case 15
+      Assert Equals('\\\[]...\[', U.escape_unbalanced_left_r('\\\[]...['))
+    End
+    It case 16
+      Assert Equals('\m\[', U.escape_unbalanced_left_r('\m['))
+    End
+    It case 17
+      Assert Equals('\m\[', U.escape_unbalanced_left_r('\m\['))
+    End
+    It case 18
+      Assert Equals('\m\\\[', U.escape_unbalanced_left_r('\m\\['))
+    End
+    It case 19
+      Assert Equals('\m\\\[', U.escape_unbalanced_left_r('\m\\\['))
+    End
+    It case 20
+      Assert Equals('\v\[', U.escape_unbalanced_left_r('\v['))
+    End
+    It case 21
+      Assert Equals('\v\[', U.escape_unbalanced_left_r('\v\['))
+    End
+    It case 22
+      Assert Equals('\v\\\[', U.escape_unbalanced_left_r('\v\\['))
+    End
+    It case 23
+      Assert Equals('\v\\\[', U.escape_unbalanced_left_r('\v\\\['))
+    End
+    It case 24
+      Assert Equals('\M[', U.escape_unbalanced_left_r('\M['))
+    End
+    It case 25
+      Assert Equals('\M[', U.escape_unbalanced_left_r('\M\['))
+    End
+    It case 26
+      Assert Equals('\M\\[', U.escape_unbalanced_left_r('\M\\['))
+    End
+    It case 27
+      Assert Equals('\M\\[', U.escape_unbalanced_left_r('\M\\\['))
+    End
+    It case 28
+      Assert Equals('\V[', U.escape_unbalanced_left_r('\V['))
+    End
+    It case 29
+      Assert Equals('\V[', U.escape_unbalanced_left_r('\V\['))
+    End
+    It case 30
+      Assert Equals('\V\\[', U.escape_unbalanced_left_r('\V\\['))
+    End
+    It case 31
+      Assert Equals('\V\\[', U.escape_unbalanced_left_r('\V\\\['))
+    End
+    It case 32
+      Assert Equals('\[\M[\v\[', U.escape_unbalanced_left_r('[\M\[\v['))
+    End
+    It case 33
+      Assert Equals('[\M\[\v[]', U.escape_unbalanced_left_r('[\M\[\v[]'))
+    End
+    It case 34
+      Assert Equals('[[]', U.escape_unbalanced_left_r('[[]'))
+    End
+    It case 35
+      Assert Equals('[\[]', U.escape_unbalanced_left_r('[\[]'))
+    End
+    It case 36
+      Assert Equals('\M\[[]', U.escape_unbalanced_left_r('\M\[[]'))
+    End
+    It case 37
+      let p = '[' . repeat('[', 10000) . ']'
+      Assert Equals(p, U.escape_unbalanced_left_r(p))
+    End
+    It case 38
+      let p = '[' . repeat('\[', 10000) . ']'
+      Assert Equals(p, U.escape_unbalanced_left_r(p))
+    End
+  End
+
+End

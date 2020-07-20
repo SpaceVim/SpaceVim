@@ -84,7 +84,7 @@ On_IWhite='\033[0;107m'   # White
 # }}}
 
 # version
-Version='1.3.0-dev'
+Version='1.5.0-dev'
 #System name
 System="$(uname -s)"
 
@@ -342,7 +342,7 @@ welcome () {
 
 # download_font {{{
 download_font () {
-    url="https://raw.githubusercontent.com/wsdjeg/DotFiles/master/local/share/fonts/${1// /%20}"
+    url="https://raw.githubusercontent.com/wsdjeg/DotFiles/7a75a186c6db9ad6f02cafba8d4c7bc78f47304c/local/share/fonts/${1// /%20}"
     path="$HOME/.local/share/fonts/$1"
     # Clean up after https://github.com/SpaceVim/SpaceVim/issues/2532
     if [[ -f "$path" && ! -s "$path" ]]
@@ -458,4 +458,4 @@ main () {
 
 main $@
 
-# vim:set foldenable foldmethod=marker:
+# vim:set nofoldenable foldmethod=marker:

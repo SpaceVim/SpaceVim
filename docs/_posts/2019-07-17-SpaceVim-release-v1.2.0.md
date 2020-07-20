@@ -1,8 +1,8 @@
 ---
 title: SpaceVim release v1.2.0
 categories: [changelog, blog]
-excerpt: "SpaceVim release v1.2.0 with 12 new programming language layers and ton of bug fixs and new features."
-type: NewsArticle
+description: "SpaceVim release v1.2.0 with 12 new programming language layers and ton of bug fixs and new features."
+type: article
 image: https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png
 commentsID: "SpaceVim release v1.2.0"
 comments: true

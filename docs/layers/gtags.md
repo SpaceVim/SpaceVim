@@ -63,7 +63,7 @@ sudo apt-get install global
 Install on OSX using Homebrew:
 
 ```sh
-brew install global --with-pygments --with-ctags
+brew install global
 ```
 
 **Build from source:**
@@ -103,7 +103,7 @@ cp gtags.conf ~/.globalrc
 Additionally you should define GTAGSLABEL in your shell startup file e.g. with sh/ksh:
 
 ```sh
-echo export GTAGSLABEL=pygments >> .profile
+echo export GTAGSLABEL=pygments >> ~/.profile
 ```
 
 ### Layers

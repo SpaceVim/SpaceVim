@@ -59,15 +59,25 @@ endfunction
 function! s:git_branch() abort
   if exists('g:loaded_fugitive')
     try
-      let l:head = fugitive#head()
-      if empty(l:head)
+      let head = fugitive#head()
+      if empty(head)
         call fugitive#detect(getcwd())
-        let l:head = fugitive#head()
+        let head = fugitive#head()
       endif
       if g:spacevim_statusline_unicode_symbols == 1
-        return empty(l:head) ? '' : '  '.l:head . s:gtm_status()
+        return empty(head) ? '' : '  '.head . ' ' . s:gtm_status()
       else
-        return empty(l:head) ? '' : ' '.l:head . s:gtm_status()
+        return empty(head) ? '' : ' '.head . ' ' . s:gtm_status()
+      endif
+    catch
+    endtry
+  elseif exists('g:loaded_git')
+    try
+      let head = '%{git#branch#current()}'
+      if g:spacevim_statusline_unicode_symbols == 1
+        return empty(head) ? '' : '  '.head . ' ' . s:gtm_status()
+      else
+        return empty(head) ? '' : ' '.head . ' ' . s:gtm_status()
       endif
     catch
     endtry
@@ -431,7 +441,7 @@ function! s:git_transient_state() abort
         \ 'key' : 't',
         \ 'desc' : 'toggle diff signs',
         \ 'func' : '',
-        \ 'cmd' : 'SignifyToggle',
+        \ 'cmd' : SpaceVim#layers#isLoaded('git') ? 'GitGutterToggle' : 'SignifyToggle',
         \ 'exit' : 0,
         \ },
         \ ],

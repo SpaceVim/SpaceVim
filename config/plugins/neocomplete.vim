@@ -1,5 +1,5 @@
 let g:neocomplete#data_directory= get(g:, 'neocomplete#data_directory',
-      \ '~/.cache/neocomplete')
+      \ g:spacevim_data_dir.'/neocomplete')
 let g:acp_enableAtStartup = get(g:, 'acp_enableAtStartup', 0)
 let g:neocomplete#enable_at_startup =
       \ get(g:, 'neocomplete#enable_at_startup', 1)

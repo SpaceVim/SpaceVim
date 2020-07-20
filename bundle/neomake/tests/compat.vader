@@ -1,0 +1,216 @@
+Include: include/setup.vader
+
+Execute (neomake#compat#uniq):
+  AssertEqual neomake#compat#uniq([]), []
+  AssertEqual neomake#compat#uniq([1, 2]), [1, 2]
+  AssertEqual neomake#compat#uniq([1, 2, 1]), [1, 2, 1]
+  AssertEqual neomake#compat#uniq([1, 1, 2]), [1, 2]
+  AssertEqual neomake#compat#uniq([1, 1, 2, 2]), [1, 2]
+  AssertEqual neomake#compat#uniq([1, 1, 2, 2, '2']), [1, 2, '2']
+
+  AssertEqual neomake#compat#uniq([[1], [1]]), [[1]]
+  AssertEqual neomake#compat#uniq([{'a': 1}]), [{'a': 1}]
+
+Execute (neomake#compat#uniq modifies list in place):
+  let l = [5, 5]
+  call neomake#compat#uniq(l)
+  AssertEqual l, [5]
+
+Execute (neomake#compat#reltimefloat):
+  let r = neomake#compat#reltimefloat()
+  AssertEqual type(r), type(0.0)
+  let r2 = neomake#compat#reltimefloat()
+  Assert r2 > r, '2nd result is bigger'
+
+Execute (neomake#compat#systemlist):
+  let r = neomake#compat#systemlist(['echo 1'])
+  if has('nvim')
+    AssertEqual r, ''
+    if has('nvim-0.5.0')
+      AssertNeomakeMessage "systemlist error: Vim(return):E475: Invalid value for argument cmd: 'echo 1' is not executable.", 0
+    endif
+  else
+    AssertEqual r, [&shell.': echo 1: command not found']
+    AssertEqual v:shell_error, 127
+  endif
+
+  AssertEqual neomake#compat#systemlist(['echo', '1']), ['1']
+  AssertEqual v:shell_error, 0
+  AssertEqual neomake#compat#systemlist(['sh', '-c', 'echo 1; echo  2']), ['1', '2']
+  AssertEqual v:shell_error, 0
+  AssertEqual neomake#compat#systemlist(['echo', '1 2']), ['1 2']
+  AssertEqual v:shell_error, 0
+  AssertEqual neomake#compat#systemlist(['printf', '%s\n', '1', '2']), ['1', '2']
+  AssertEqual v:shell_error, 0
+
+Execute (neomake#compat#systemlist with empty args):
+  AssertEqual neomake#compat#systemlist(''), []
+  AssertEqual neomake#compat#systemlist([]), []
+  AssertEqual neomake#compat#systemlist('0'), [&shell.': 0: command not found']
+
+Execute (neomake#compat#json_decode):
+  AssertEqual neomake#compat#json_decode(''), g:neomake#compat#json_none
+  Assert neomake#compat#json_decode('') is g:neomake#compat#json_none
+
+  if has('nvim')
+    let expected_exception = 'Vim(return):E474: Unidentified byte: success'
+  elseif exists('*json_decode')
+    let expected_exception = 'Vim(return):E474: Invalid argument'
+  else
+    let expected_exception = 'Neomake: Failed to parse JSON input: invalid input'
+  endif
+  AssertThrows call neomake#compat#json_decode('success')
+  AssertEqual g:vader_exception, expected_exception
+
+Execute (neomake#compat#json_decode: handles newlines):
+  let json = '{"foo": '."\n".'"bar"}'
+  AssertEqual neomake#compat#json_decode(json), {'foo': 'bar'}
+
+Execute (neomake#compat#json_none):
+  AssertThrows call items(g:neomake#compat#json_none)
+  AssertEqual g:vader_exception, 'Vim(call):E715: Dictionary required'
+  Assert empty(g:neomake#compat#json_none), 'json_none is empty'
+
+Execute (neomake#compat#get_mode):
+  AssertEqual neomake#compat#get_mode(), 'n'
+
+  norm! V
+  AssertEqual neomake#compat#get_mode(), 'V'
+  exe "norm! \<Esc>"
+  AssertEqual neomake#compat#get_mode(), 'n'
+
+  if has('nvim')
+    let nvim_exe = '/proc/'.getpid().'/exe'
+    let nvim_cmd = [nvim_exe, '-u', 'tests/vim/vimrc', '--headless']
+    if has('nvim-0.3.0')
+      " Do not use --embed, which might cause it to hang with hit-enter prompt
+      " due to `echom` (while debugging).  Requires Neovim 0.3.0+.
+      let nvim_cmd += ['--cmd', "call stdioopen({'rpc': v:true})"]
+    else
+      let nvim_cmd += ['--embed']
+    endif
+    let nvim = jobstart(nvim_cmd, {'rpc': v:true})
+    call rpcrequest(nvim, 'nvim_call_function', 'feedkeys', ['d', '!'])
+    call rpcrequest(nvim, 'nvim_eval', 'assert_equal(neomake#compat#get_mode(), "no")')
+    let rpc_errors = rpcrequest(nvim, 'nvim_eval', 'v:errors')
+    AssertEqual rpc_errors, []
+    call jobstop(nvim)
+  elseif exists('*timer_start')
+    let b:mode_in_cb = ''
+    function s:CB(...)
+        let b:mode_in_cb = neomake#compat#get_mode()
+        call feedkeys("\<Esc>")
+    endfunction
+    call timer_start(10, 's:CB')
+    call feedkeys('da', 'x!')
+    AssertEqual b:mode_in_cb, 'no'
+    AssertEqual neomake#compat#get_mode(), 'n'
+  endif
+
+Execute (neomake#compat#get_mode with insert mode completion (feedkeys)):
+  if has('timers')
+    new
+    file file_sleep_efm
+    normal! iword1
+    normal! oword2
+
+    function! s:close_pum(...)
+      let s:mode = neomake#compat#get_mode()
+      let s:in_completion = neomake#compat#in_completion()
+      call feedkeys("\<c-e>\<esc>")
+    endfunction
+
+    call timer_start(10, 's:close_pum')
+    " NOTE: silent for Neovim (https://github.com/neovim/neovim/issues/9372).
+    silent call feedkeys("oword\<C-p>", 'x!')
+
+    if has('patch-8.0.0283')
+      AssertEqual s:mode, 'ic'
+    else
+      AssertEqual s:mode, 'i'
+    endif
+    AssertEqual getline('.'), 'word'
+    AssertEqual s:in_completion, 1
+    bwipe!
+  endif
+
+Execute (neomake#compat#get_mode with insert mode completion (imap)):
+  new
+  file file_sleep_efm
+  normal! iword1
+  normal! oword2
+
+  function s:save_mode()
+    let s:mode = neomake#compat#get_mode()
+    let s:in_completion = neomake#compat#in_completion()
+    return ''
+  endfunction
+
+  " NOTE: silent for Neovim (https://github.com/neovim/neovim/issues/9372).
+  inoremap <silent> <buffer> <F2> <C-r>=s:save_mode()<CR>
+
+  exe "normal oword\<C-p>\<F2>\<C-e>\<Esc>"
+  if has('patch-8.0.0283')
+    AssertEqual s:mode, 'ic'
+  else
+    AssertEqual s:mode, 'i'
+  endif
+  AssertEqual s:in_completion, 1
+  AssertEqual getline('.'), 'word'
+
+  exe "normal oword\<C-p>\<C-e>\<F2>\<Esc>"
+  AssertEqual s:mode, 'i'
+  AssertEqual s:in_completion, 0
+  AssertEqual getline('.'), 'word'
+  bwipe!
+
+Execute (neomake#compat#glob_list):
+  AssertEqual neomake#compat#glob_list('doesnotexist'), []
+  AssertEqual neomake#compat#glob_list(g:vader_file), [g:vader_file]
+
+  Save &wildignore
+  let &wildignore = '*.vader'
+  AssertEqual fnamemodify(g:vader_file, ':e'), 'vader'
+  AssertEqual neomake#compat#glob_list(g:vader_file), [g:vader_file]
+
+Execute (neomake#compat#restore_prev_windows handles removed windows):
+  new
+  new
+  if exists('*win_getid')
+    let expected_msg = printf('Cannot restore previous windows (previous window with ID %d not found).',
+    \ win_getid())
+  else
+    let expected_msg = 'Cannot restore previous windows (3 > 2).'
+  endif
+  call neomake#compat#save_prev_windows()
+  bwipe
+  call neomake#compat#restore_prev_windows()
+  AssertNeomakeMessage expected_msg, 3
+  bwipe
+
+Execute (neomake#compat#restore_prev_windows triggers autocommands):
+  new
+
+  let s:events = []
+  augroup neomake_tests
+    au WinEnter * call add(s:events, ['WinEnter', winnr()])
+    au WinLeave * call add(s:events, ['WinLeave', winnr()])
+  augroup END
+
+  let expected_events = [
+  \ ['WinLeave', 2], ['WinEnter', 3],
+  \ ['WinLeave', 3], ['WinEnter', 2]]
+  new
+  wincmd p
+  AssertEqual s:events, expected_events
+  wincmd p
+  bwipe
+
+  let s:events = []
+  call neomake#compat#save_prev_windows()
+  new
+  call neomake#compat#restore_prev_windows()
+  AssertEqual s:events, expected_events
+  wincmd p
+  bwipe
+  bwipe

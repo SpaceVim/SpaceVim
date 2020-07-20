@@ -1,0 +1,97 @@
+snippet     defn-doc
+abbr        defn function "..." [...] ...
+options     head
+	(defn ${1:name}
+		"${2:doc}"
+		[${3}]
+		${0})
+
+snippet     try
+abbr        (try ... (catch ...
+	(try
+		${1}
+		(catch ${2:Exception} e ${3:nil}))
+
+snippet     ref-set
+abbr        (dosync (ref-set ...
+options     head
+	(dosync
+		(ref-set ${1:ref} ${2:value}))
+
+# http://tnoda-clojure.tumblr.com/post/24969285880/clojure-scripting
+snippet     shebang
+options     head
+	#^:shebang '[
+	exec java -cp \`locate clojure- | grep -P "clojure-[\\d\\.]+\\.jar$" | tail -1\` clojure.main "\$0"
+	]
+	
+
+snippet     warn
+options     head
+  (binding [*out* *err*]
+    (println ${0:TARGET}))
+
+snippet     defrecord
+options     head
+  (defrecord ${1:record} [${2:constructor-args}]
+    ${3:protocol} (${3:method} [${5}] ${6}))
+
+snippet     deftype
+options     head
+  (defrecord ${1:type} [${2:constructor-args}]
+    ${3:protocol} (${3:method} [${5}] ${6}))
+
+snippet     require-core-match
+options     head
+  (ns ${1:example}
+    (:require [clojure.core.match :as m]))
+  ; vim: set lispwords+=m/match :
+
+snippet     deftest
+options     head
+  (deftest ${1:a}-test
+    (testing "${2:hello}"
+      ${0:TARGET:(is (= 0 1))}))
+
+snippet     use-strint-in-ns
+options     head
+  (:require [clojure.core.strint :refer (<<)])
+
+snippet     dir-glob
+options     head
+  [org.clojars.hozumi/clj-glob "0.1.2"]
+  (:require [org.satta.glob :as g])
+  (g/glob "${0:TARGET}")
+
+snippet     sleep
+  (Thread/sleep ${1})
+
+snippet     defproejct
+options     head
+	(defproject ${1:aaa} "0.1-SNAPSHOT"
+	  :description "FIXME: write description"
+	  :url "https://github.com/${2}"
+	  :license {:name "GNU GPL v3+"
+	            :url "http://www.gnu.org/licenses/gpl-3.0.en.html"}
+	  :dependencies [[org.clojure/clojure "1.7.0"]]
+	  :main ^:skip-aot ${3:aaa.core}
+	  :target-path "target/%s"
+	  :min-lein-version "2.3.0")
+
+snippet     ns
+options     head
+  (ns ${1:`substitute(substitute(substitute(expand('%:p:r'), '.*/\(src\|test\)/', '', ''), '/', '.', 'g'), '_', '-', 'g')`}
+    (:require `expand('%:r') =~ '_test$' ? '[clojure.test :refer :all]' : ''`${2:}))
+
+snippet     bench
+  (let [bench-before (System/currentTimeMillis)]
+    ${1:TARGET}
+    (prn 'Took (- (System/currentTimeMillis) bench-before) 'msec))
+
+snippet     private
+options     word
+  @#'
+
+snippet     java-methods
+options     head
+  (:members (clojure.reflect/refrect ${1}))

@@ -7,11 +7,20 @@
 "=============================================================================
 
 let s:self = {}
-
+if has('nvim')
+  let s:self.__floating = SpaceVim#api#import('neovim#floating')
+else
+  let s:self.__floating = SpaceVim#api#import('vim#floating')
+endif
+let s:self.__buffer = SpaceVim#api#import('vim#buffer')
+let s:self.__cmp = SpaceVim#api#import('vim#compatible')
 
 function! s:self.check_width(len, sec, winwidth) abort
   return a:len + self.len(a:sec) < a:winwidth
 endfunction
+
+let s:self.__winid = -1
+let s:self.__bufnr = -1
 
 function! s:self.len(sec) abort
   let str = matchstr(a:sec, '%{.*}')
@@ -87,6 +96,70 @@ function! s:self.build(left_sections, right_sections, lsep, rsep, fname, tag, hi
   return l[:-4]
 endfunction
 
+function! s:self.support_float() abort
+  return self.__floating.exists()
+endfunction
+
+function! s:self.open_float(st) abort
+  if !has_key(self, '__bufnr') || !bufexists(self.__bufnr)
+    let self.__bufnr = self.__buffer.bufadd('')
+  endif
+  if has_key(self, '__winid') && win_id2tabwin(self.__winid)[0] == tabpagenr()
+  else
+    let self.__winid = self.__floating.open_win(self.__bufnr,
+          \ v:false,
+          \ {
+          \ 'relative': 'editor',
+          \ 'width'   : &columns,
+          \ 'height'  : 1,
+          \ 'highlight' : 'SpaceVim_statusline_a_bold',
+          \ 'row': &lines - 2 ,
+          \ 'col': 0
+          \ })
+  endif
+  call setbufvar(self.__bufnr, '&relativenumber', 0)
+  call setbufvar(self.__bufnr, '&number', 0)
+  call setbufvar(self.__bufnr, '&bufhidden', 'wipe')
+  call setbufvar(self.__bufnr, '&cursorline', 0)
+  call setbufvar(self.__bufnr, '&modifiable', 1)
+  if exists('*nvim_buf_set_virtual_text')
+    call setwinvar(win_id2win(self.__winid), '&cursorline', 0)
+    call nvim_buf_set_virtual_text(
+          \ self.__bufnr,
+          \ -1,
+          \ 0,
+          \ a:st,
+          \ {})
+  else
+    let l = ''
+    for [str, hg] in a:st
+      let l .= str
+    endfor
+    call self.__buffer.buf_set_lines(self.__bufnr, 0, -1, 0, [l])
+    let begin = 1
+    let end = 0
+    for [str, hg] in a:st
+      let end = strlen(str)
+      call win_execute(self.__winid, 'call self.__cmp.matchaddpos(hg, [[1, begin, end]])')
+      let begin += end
+    endfor
+  endif
+  call setbufvar(self.__bufnr, '&modifiable', 0)
+  redraw!
+endfunction
+
+if s:self.__floating.exists()
+  function! s:self.close_float() abort
+    call self.__floating.win_close(self.__winid, 1)
+  endfunction
+else
+  function! s:self.close_float() abort
+    if has_key(self, '__winid') && win_id2tabwin(self.__winid)[0] == tabpagenr()
+      noautocmd execute win_id2win(self.__winid).'wincmd w'
+      noautocmd close
+    endif
+  endfunction
+endif
 function! SpaceVim#api#vim#statusline#get() abort
   return deepcopy(s:self)
 endfunction

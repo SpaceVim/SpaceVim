@@ -9,14 +9,41 @@
 ""
 " @section lang#kotlin, layer-lang-kotlin
 " @parentsection layers
-" This layer is for kotlin development. 
+" This layer is for kotlin development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#kotlin'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for kotlin, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 
 " Load SpaceVim APIs:
 let s:SYS = SpaceVim#api#import('system')
 
 " Default Options:
-let s:enable_native_support = 0
+if exists('s:enable_native_support')
+  finish
+else
+  let s:enable_native_support = 0
+endif
 
 
 function! SpaceVim#layers#lang#kotlin#plugins() abort

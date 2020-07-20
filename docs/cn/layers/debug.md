@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim debug 模块"
 description: "这一模块为 SpaceVim 提供了 Debug 的常用功能，采用 vebugger 作为后台框架，支持多种 Debug 工具。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> debug

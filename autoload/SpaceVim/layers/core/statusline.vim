@@ -27,6 +27,7 @@ let s:STATUSLINE = SpaceVim#api#import('vim#statusline')
 let s:VIMCOMP = SpaceVim#api#import('vim#compatible')
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:ICON = SpaceVim#api#import('unicode#icon')
+let s:VIM =  SpaceVim#api#import('vim')
 
 " init
 let s:separators = {
@@ -69,6 +70,11 @@ let s:modes = {
       \ 'icon_asc' : 'S',
       \ 'desc' : 'spell-checking mode',
       \ },
+      \ 'paste-mode' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('p'),
+      \ 'icon_asc' : 'p',
+      \ 'desc' : 'paste mode',
+      \ },
       \ 'whitespace' :{
       \ 'icon' : s:MESSLETTERS.circled_letter('w'),
       \ 'icon_asc' : 'w',
@@ -87,6 +93,9 @@ let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, 
 
 if SpaceVim#layers#isLoaded('checkers')
   call add(s:loaded_modes, 'syntax-checking')
+endif
+if &spell
+  call add(s:loaded_modes, 'spell-checking')
 endif
 if &cc ==# '80'
   call add(s:loaded_modes, 'fill-column-indicator')
@@ -255,6 +264,7 @@ else
 endif
 
 function! s:search_status() abort
+  let save_cursor = getpos('.')
   let ct = 0
   let tt = 0
   let ctl = split(s:VIMCOMP.execute('keeppatterns .,$s/' . @/ . '//gn', 'silent!'), "\n")
@@ -265,9 +275,14 @@ function! s:search_status() abort
   if !empty(ctl)
     let tt = split(ttl[0])[0]
   endif
+  keepjumps call setpos('.', save_cursor)
   return ' ' . (str2nr(tt) - str2nr(ct) + 1) . '/' . tt . ' '
 endfunction
 
+
+function! s:search_count() abort
+  return SpaceVim#plugins#searcher#count()
+endfunction
 
 let s:registed_sections = {
       \ 'winnr' : function('s:winnr'),
@@ -284,6 +299,7 @@ let s:registed_sections = {
       \ 'battery status' : function('s:battery_status'),
       \ 'input method' : function('s:input_method'),
       \ 'search status' : function('s:search_status'),
+      \ 'search count' : function('s:search_count'),
       \ }
 
 
@@ -351,9 +367,39 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_b#'
           \ . ' vimfiler %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
           \ . s:lsep
+  elseif &filetype ==# 'qf' 
+    if s:VIM.is_qf_win(winnr())
+      return '%#SpaceVim_statusline_ia#' 
+            \ . s:winnr(1)
+            \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+            \ . '%#SpaceVim_statusline_b#'
+            \ . ' QuickFix %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+            \ . s:lsep
+            \ . ( has('patch-8.0.1384') ? ((getqflist({'title' : 0}).title ==# ':setqflist()') ? '' : 
+            \ '%#SpaceVim_statusline_c#'
+            \ . getqflist({'title' : 0}).title . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
+            \ ) : '')
+    else
+      return '%#SpaceVim_statusline_ia#' 
+            \ . s:winnr(1)
+            \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+            \ . '%#SpaceVim_statusline_b#'
+            \ . ' Location List %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+            \ . s:lsep
+            \ . ( has('patch-8.0.1384') ? ((getloclist(winnr(),{'title' : 0}).title ==# ':setloclist()') ? '' : 
+            \ '%#SpaceVim_statusline_c#'
+            \ . getloclist(winnr(),{'title' : 0}).title . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
+            \ ) : '')
+
+    endif
   elseif &filetype ==# 'defx'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# defx %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'Fuzzy'
+    return '%#SpaceVim_statusline_a_bold# Fuzzy %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# %{fuzzy#statusline()} %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep 
+  elseif &filetype ==# 'SpaceVimFindArgv'
+    return '%#SpaceVim_statusline_a_bold# Find %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'gista-list'
     return '%#SpaceVim_statusline_ia#'
           \ . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#'
@@ -368,6 +414,24 @@ function! SpaceVim#layers#core#statusline#get(...) abort
       let st .= '%#SpaceVim_statusline_c# %{b:_spacevim_shell} %#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
     endif
     return st
+  elseif &filetype ==# 'git-status'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Git status %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'git-commit'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Git commit %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'git-diff'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Git diff %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'git-blame'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Git blame %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'git-config'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Git config %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'git-log'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Git log %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'gina-status'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Gina status %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
@@ -386,6 +450,9 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   elseif &filetype ==# 'MundoDiff'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# MundoDiff %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'SpaceVimMessageBuffer'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Message %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'startify'
     try
       call fugitive#detect(getcwd())
@@ -406,11 +473,14 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_b# LayerManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
   elseif &filetype ==# 'SpaceVimGitLogPopup'
     return '%#SpaceVim_statusline_a# Git log popup %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+  elseif &filetype ==# 'respones.idris'
+    return '%#SpaceVim_statusline_a# Idris Response %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'SpaceVimWinDiskManager'
     return '%#SpaceVim_statusline_a# WinDisk %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'SpaceVimTodoManager'
     return '%#SpaceVim_statusline_a# TODO manager %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
-
+  elseif &filetype ==# 'SpaceVimGitBranchManager'
+    return '%#SpaceVim_statusline_a# Branch manager %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'SpaceVimPlugManager'
     return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# PlugManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep

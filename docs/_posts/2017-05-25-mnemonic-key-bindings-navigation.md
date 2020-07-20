@@ -1,8 +1,8 @@
 ---
 title: "Mnemonic key bindings navigation"
 categories: [feature, blog]
-excerpt: "Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…"
-image: https://user-images.githubusercontent.com/13142418/31550099-c8173ff8-b062-11e7-967e-6378a9c3b467.gif
+description: "Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…"
+image: https://user-images.githubusercontent.com/13142418/80597412-62f2f200-8a5a-11ea-9dbf-30ec9f82422a.gif
 commentsID: "Mnemonic key bindings navigation"
 comments: true
 ---

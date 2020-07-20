@@ -1,72 +1,65 @@
-本页罗列出自上一版本 v1.1.0 以来，master 分支上所发生的变更记录：
+本页罗列出自上一版本 v1.4.0 以来，master 分支上所发生的变更记录：
 
 ## 下一个版本
 
-下一个版本号为 v1.2.0
+下一个版本号为 v1.5.0
 
 <!-- call SpaceVim#dev#followHEAD#update('cn') -->
 <!-- SpaceVim follow HEAD en start -->
 
 #### 新特性
 
-- Add lang#goby layer [#3055](https://github.com/SpaceVim/SpaceVim/pull/3055)
-- Add ~ keybinding for iedit [#3046](https://github.com/SpaceVim/SpaceVim/pull/3046)
-- add fish script support [#3033](https://github.com/SpaceVim/SpaceVim/pull/3033)
-- Add: add new layer lang#j [#3032](https://github.com/SpaceVim/SpaceVim/pull/3032)
-- Add vertical split support [#2999](https://github.com/SpaceVim/SpaceVim/pull/2999)
-- Add debug support for powershell [#2961](https://github.com/SpaceVim/SpaceVim/pull/2961)
-- Add additional bindings from coc.nvim for c layer [#2967](https://github.com/SpaceVim/SpaceVim/pull/2967)
-- Add Leader f f to fzf layer [#2971](https://github.com/SpaceVim/SpaceVim/pull/2971)
-
-#### 改变
-
-- Change: rename tags layer to gtags layer [#3030](https://github.com/SpaceVim/SpaceVim/pull/3030)
-- Change: fix csharp layer and update doc (#2935). [#3007](https://github.com/SpaceVim/SpaceVim/pull/3007)
+- Add support multiple notification [#3624](https://github.com/SpaceVim/SpaceVim/pull/3624)
+- Add notification API [#3621](https://github.com/SpaceVim/SpaceVim/pull/3621)
+- Add highlight option [#3619](https://github.com/SpaceVim/SpaceVim/pull/3619)
+- Add floating windows support vim [#3612](https://github.com/SpaceVim/SpaceVim/pull/3612)
+- Add option: escape_key_binding [#3599](https://github.com/SpaceVim/SpaceVim/pull/3599)
+- Add clock api [#3595](https://github.com/SpaceVim/SpaceVim/pull/3595)
+- Add jump transtate [#3590](https://github.com/SpaceVim/SpaceVim/pull/3590)
+- Add command SPClean to claer unused plugins [#3589](https://github.com/SpaceVim/SpaceVim/pull/3589)
+- Added space vim [#3584](https://github.com/SpaceVim/SpaceVim/pull/3584)
+- Add spinners support in repl [#2232](https://github.com/SpaceVim/SpaceVim/pull/2232)
+- Add branch manager plugin [#2396](https://github.com/SpaceVim/SpaceVim/pull/2396)
+- Add api to floating_statusline [#2664](https://github.com/SpaceVim/SpaceVim/pull/2664)
+- Add lang#factor layer [#2906](https://github.com/SpaceVim/SpaceVim/pull/2906)
+- Add lang#forth layer [#2927](https://github.com/SpaceVim/SpaceVim/pull/2927)
+- Add setbufvar api [#3083](https://github.com/SpaceVim/SpaceVim/pull/3083)
+- Add lang#supoercollider layer [#3092](https://github.com/SpaceVim/SpaceVim/pull/3092)
+- Add profile plugin [#3290](https://github.com/SpaceVim/SpaceVim/pull/3290)
+- Add help file for tasks [#3371](https://github.com/SpaceVim/SpaceVim/pull/3371)
 
 #### 问题修复
 
-- Fixed typo 'yarked' to 'yanked' [#3059](https://github.com/SpaceVim/SpaceVim/pull/3059)
-- Fix keybindings for GitGutter Hunks [#3049](https://github.com/SpaceVim/SpaceVim/pull/3049)
-- Fix install script [#3048](https://github.com/SpaceVim/SpaceVim/pull/3048)
-- Fixed output error where open file by flyGrep [#3041](https://github.com/SpaceVim/SpaceVim/pull/3041)
-- Fix #2897 [#3021](https://github.com/SpaceVim/SpaceVim/pull/3021)
-- Fix: fugitive blame [#3006](https://github.com/SpaceVim/SpaceVim/pull/3006)
-- fix shortcuts/docs about marking spelling [#3003](https://github.com/SpaceVim/SpaceVim/pull/3003)
-- fix typos [#3000](https://github.com/SpaceVim/SpaceVim/pull/3000)
-- fix a map bug cscope[#2952](https://github.com/SpaceVim/SpaceVim/pull/2952)
-- Fix: Issue #2948 function call update from deoplete#mappings#smart_close_p… [#2954](https://github.com/SpaceVim/SpaceVim/pull/2954)
-- Fix errors in Go layer shortcuts in the documentation [#2955](https://github.com/SpaceVim/SpaceVim/pull/2955)
-- fix a map bug cscope[#2953](https://github.com/SpaceVim/SpaceVim/pull/2953)
-- Fix typo [#2965](https://github.com/SpaceVim/SpaceVim/pull/2965)
-- Fix typo in edit.md [#2970](https://github.com/SpaceVim/SpaceVim/pull/2970)
+- Fix: smart quit should skip floating windows and popup [#3640](https://github.com/SpaceVim/SpaceVim/pull/3640)
+- Fix lua api [#3639](https://github.com/SpaceVim/SpaceVim/pull/3639)
+- Fix VCS Transient State [#3635](https://github.com/SpaceVim/SpaceVim/pull/3635)
+- Fix vim#buffer api [#3630](https://github.com/SpaceVim/SpaceVim/pull/3630)
+- Fix vim popup bug [#3616](https://github.com/SpaceVim/SpaceVim/pull/3616)
+- Fix shell layer [#3608](https://github.com/SpaceVim/SpaceVim/pull/3608)
+- Fix SPC g m key binding [#3607](https://github.com/SpaceVim/SpaceVim/pull/3607)
+- Fix: comment invert yank doesn't work in visual mode [#3606](https://github.com/SpaceVim/SpaceVim/pull/3606)
+- Fix make error for missing lib folder [#3586](https://github.com/SpaceVim/SpaceVim/pull/3586)
+- Fix java format config [#3575](https://github.com/SpaceVim/SpaceVim/pull/3575)
+- Fix c cpp highlight [#3561](https://github.com/SpaceVim/SpaceVim/pull/3561)
+- Fix coc.vim installation [#3560](https://github.com/SpaceVim/SpaceVim/pull/3560)
 
 #### 未知
 
-- Update crystal layer [#3067](https://github.com/SpaceVim/SpaceVim/pull/3067)
-- Denite fix [#3066](https://github.com/SpaceVim/SpaceVim/pull/3066)
-- Refactor lua initialization [#3065](https://github.com/SpaceVim/SpaceVim/pull/3065)
-- deoplete and denite backward compatibility [#3058](https://github.com/SpaceVim/SpaceVim/pull/3058)
-- Update hint desc [#3050](https://github.com/SpaceVim/SpaceVim/pull/3050)
-- detach iedit plugin [#3047](https://github.com/SpaceVim/SpaceVim/pull/3047)
-- urlescape spaces in font names [#3042](https://github.com/SpaceVim/SpaceVim/pull/3042)
-- Googlegroups [#3040](https://github.com/SpaceVim/SpaceVim/pull/3040)
-- Naming rules [#3037](https://github.com/SpaceVim/SpaceVim/pull/3037)
-- Python file head [#3036](https://github.com/SpaceVim/SpaceVim/pull/3036)
-- Improve file head support [#3034](https://github.com/SpaceVim/SpaceVim/pull/3034)
-- Update cscope layer [#3023](https://github.com/SpaceVim/SpaceVim/pull/3023)
-- Ctrlp message [#3022](https://github.com/SpaceVim/SpaceVim/pull/3022)
-- Improve: make ctrlp layer works better [#3015](https://github.com/SpaceVim/SpaceVim/pull/3015)
-- plugin install failed to call \_append_buf_line in WIN10 [#3011](https://github.com/SpaceVim/SpaceVim/pull/3011)
-- Update manager.vim [#3010](https://github.com/SpaceVim/SpaceVim/pull/3010)
-- Website: Add git-plugin documentation to git layer [#3005](https://github.com/SpaceVim/SpaceVim/pull/3005)
-- Version [#2956](https://github.com/SpaceVim/SpaceVim/pull/2956)
-- Update version to v1.2.0-dev [#2732](https://github.com/SpaceVim/SpaceVim/pull/2732)
-- On Windows, send CTRL+r if '+' register is not given [#2950](https://github.com/SpaceVim/SpaceVim/pull/2950)
+- Disable scrollbar in vim [#3625](https://github.com/SpaceVim/SpaceVim/pull/3625)
+- Floating statusline for vim [#3617](https://github.com/SpaceVim/SpaceVim/pull/3617)
+- Improve project root detection [#3609](https://github.com/SpaceVim/SpaceVim/pull/3609)
+- Floating status [#3605](https://github.com/SpaceVim/SpaceVim/pull/3605)
+- Improve plugin manager [#3591](https://github.com/SpaceVim/SpaceVim/pull/3591)
+- Update vimproc.vim bundle to latest version [#3587](https://github.com/SpaceVim/SpaceVim/pull/3587)
+- Update coc.nvim installation [#3564](https://github.com/SpaceVim/SpaceVim/pull/3564)
+- Neovim lsp [#2627](https://github.com/SpaceVim/SpaceVim/pull/2627)
+- Update php.vim [#3004](https://github.com/SpaceVim/SpaceVim/pull/3004)
+- Show buffer name [#3340](https://github.com/SpaceVim/SpaceVim/pull/3340)
 
 <!-- SpaceVim follow HEAD en end -->
 
 ## 上一个版本
 
-SpaceVim 于 2019-04-08 发布 v1.1.0 版本，可查阅版本发布文章：
+SpaceVim 于 2020-04-05 发布 v1.4.0 版本，可查阅版本发布文章：
 
-- [SpaceVim 发布 v1.1.0 版本](https://spacevim.org/SpaceVim-release-v1.1.0/)
+- [SpaceVim 发布 v1.4.0 版本](https://spacevim.org/SpaceVim-release-v1.4.0/)

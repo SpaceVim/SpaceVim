@@ -5,6 +5,16 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section lang#toml, layer-lang-toml
+" @parentsection layers
+" This layer provides basic syntax highlighting for toml. To enable it:
+" >
+"   [layers]
+"     name = "lang#toml"
+" <
+
 function! SpaceVim#layers#lang#toml#plugins() abort
   let plugins = []
   call add(plugins, ['cespare/vim-toml', {'merged' : 0}])

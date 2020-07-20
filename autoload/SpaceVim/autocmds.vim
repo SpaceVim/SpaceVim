@@ -9,6 +9,7 @@
 
 let s:SYS = SpaceVim#api#import('system')
 let s:JOB = SpaceVim#api#import('job')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 
 "autocmds
@@ -16,7 +17,7 @@ function! SpaceVim#autocmds#init() abort
   augroup SpaceVim_core
     au!
     autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
-          \   q :cclose<cr>:lclose<cr>
+          \   q :call <SID>close_quickfix()<cr>
     autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
           \   bd|
           \   q | endif
@@ -62,7 +63,7 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
     autocmd BufWritePost *.vim call s:generate_doc()
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
-    autocmd ColorScheme gruvbox,jellybeans,nord,srcery call s:fix_colorschem_in_SpaceVim()
+    autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized call s:fix_colorschem_in_SpaceVim()
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
@@ -70,6 +71,7 @@ function! SpaceVim#autocmds#init() abort
   augroup END
 endfunction
 
+let g:_spacevim_cursorline_flag = -1
 function! s:enable_cursorline() abort
   if g:_spacevim_cursorline_flag == -1
     setl cursorline
@@ -133,6 +135,10 @@ function! s:fix_colorschem_in_SpaceVim() abort
       hi VertSplit guibg=#1C1B19 guifg=#262626
       hi clear Visual
       hi Visual guibg=#303030
+    elseif g:colors_name ==# 'NeoSolarized'
+      hi VertSplit guibg=#002b36 guifg=#181a1f
+      hi clear Pmenu
+      hi Pmenu guifg=#839496 guibg=#073642
     endif
   else
     if g:colors_name ==# 'gruvbox'
@@ -190,6 +196,32 @@ function! s:disable_welcome() abort
     au!
   augroup END
 endfunction
+
+function! s:close_quickfix() abort
+  if winnr() == s:get_qf_winnr()
+    cclose
+  else
+    lclose
+  endif
+endfunction
+
+" https://vi.stackexchange.com/questions/16585/how-to-differentiate-quickfix-window-buffers-and-location-list-buffers
+if has('patch-7.4-2215') " && exists('*getwininfo')
+  function! s:get_qf_winnr() abort
+    let wins = filter(getwininfo(), 'v:val.quickfix && !v:val.loclist')
+    " assert(len(wins) <= 1)
+    return empty(wins) ? 0 : wins[0].winnr
+  endfunction
+else
+  let s:k_msg_qflist = '[Quickfix List]'
+  function! s:get_qf_winnr() abort
+    let buffers = s:CMP.execute('ls!')
+    call filter(buffers, 'v:val =~ "\\V".s:k_msg_qflist')
+    " :cclose removes the buffer from the list (in my config only??)
+    " assert(len(buffers) <= 1)
+    return empty(buffers) ? 0 : eval(matchstr(buffers[0], '\v^\s*\zs\d+'))
+  endfunction
+endif
 
 
 " vim:set et sw=2:

@@ -1,0 +1,110 @@
+Include: include/setup.vader
+
+Execute (neomake#debug#validate_maker):
+  let maker = {'exe': 'true'}
+  function maker.process_json()
+  endfunction
+  function maker.process_output()
+  endfunction
+
+  AssertEqual neomake#debug#validate_maker(maker), {
+  \ 'errors': [],
+  \ 'warnings': [
+  \   'maker has process_json and process_output, but only process_json will be used.',
+  \ ]}
+
+  let maker.mapexpr = 'v:val'
+  let maker.postprocess = function('tr')
+  let maker.errorformat = '%m'
+  AssertEqual neomake#debug#validate_maker(maker), {
+  \ 'errors': [],
+  \ 'warnings': [
+  \   'maker has process_json and process_output, but only process_json will be used.',
+  \   'maker has mapexpr, but only process_json will be used.',
+  \   'maker has postprocess, but only process_json will be used.',
+  \   'maker has errorformat, but only process_json will be used.',
+  \ ]}
+
+Execute (neomake#debug#validate_maker: validates maker name):
+  let maker = {'exe': 'true'}
+
+  AssertEqual neomake#debug#validate_maker(maker), {
+  \ 'errors': [],
+  \ 'warnings': [],
+  \ }
+
+  let maker.name = 'good'
+  AssertEqual neomake#debug#validate_maker(maker), {
+  \ 'errors': [],
+  \ 'warnings': [],
+  \ }
+
+  let maker.name = 'AlsoGood'
+  AssertEqual neomake#debug#validate_maker(maker), {
+  \ 'errors': [],
+  \ 'warnings': [],
+  \ }
+
+  let maker.name = 'also_good'
+  AssertEqual neomake#debug#validate_maker(maker), {
+  \ 'errors': [],
+  \ 'warnings': [],
+  \ }
+
+  let maker.name = 'invalid name'
+  AssertEqual neomake#debug#validate_maker(maker), {
+  \ 'errors': [printf('Invalid maker name: %s (should match %s)',
+  \            string(maker.name), string(g:neomake#core#valid_maker_name_pattern))],
+  \ 'warnings': [],
+  \ }
+
+Execute (neomake#debug#pprint):
+  AssertEqual neomake#debug#pprint(''), "''"
+  AssertEqual neomake#debug#pprint([1, 2, 3]), "[\n  1,\n  2,\n  3,\n]"
+  AssertEqual neomake#debug#pprint([{}]), "[\n  {},\n]"
+  AssertEqual neomake#debug#pprint([{'foo': ['bar', 'baz']}]),
+  \ "[\n  {\n    'foo': [\n      'bar',\n      'baz',\n    ],\n  },\n]"
+  AssertEqual neomake#debug#pprint([[], []]), "[\n  [],\n  [],\n]"
+
+  " Uses neomake#utils#fix_self_ref for dicts.
+  let d = {'foo': 'bar'}
+  let d.self = d
+  Assert neomake#debug#pprint(d) =~# "\\V'self': '<self-ref-1: self>'"
+
+Execute (neomake#debug#validate_maker with exe as function):
+  let maker = neomake#GetMaker('maker_with_nonstring_exe', 'neomake_tests')
+  AssertEqual neomake#debug#validate_maker(maker), {
+  \ 'errors': ['Non-string given for executable of maker maker_with_nonstring_exe: type 2.'],
+  \ 'warnings': []}
+
+Execute (neomake#debug#get_maker_info: version output):
+  new
+  noautocmd set filetype=neomake_tests
+
+  let exe = g:NeomakeTestsCreateExe('echo_maker', ['#!'.&shell, 'echo line 1', 'echo line 2'])
+  let b:neomake_echo_maker_exe = exe
+
+  let info = neomake#debug#get_maker_info('echo_maker')
+  AssertEqual info[-1], printf(
+  \ " - version information (%s --version): line 1\n     line 2",
+  \ exe)
+
+  let exe = g:NeomakeTestsCreateExe('echo_maker', ['#!'.&shell, 'exit 123'])
+  let info = neomake#debug#get_maker_info('echo_maker')
+  AssertEqual info[-1], printf(
+  \ ' - version information (%s --version): failed to get version information (123)',
+  \ exe)
+  bwipe
+
+Execute (neomake#debug#get_maker_info: error with missing maker):
+  let info = neomake#debug#get_maker_info('doesnotexist')
+  AssertEqual info, []
+  AssertNeomakeMessage 'Maker not found: doesnotexist.', 0
+
+Execute (neomake#debug#get_maker_info: displays maker for another filetype):
+  let info = neomake#debug#get_maker_info('python')
+  AssertEqual info[0], 'python (filetype python)'
+
+Execute (neomake#debug#get_maker_info: displays project maker):
+  let info = neomake#debug#get_maker_info('clippy')
+  AssertEqual info[0], 'clippy (project maker)'

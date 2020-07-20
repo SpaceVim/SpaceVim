@@ -18,9 +18,9 @@ function! SpaceVim#layers#checkers#plugins() abort
   let plugins = []
 
   if g:spacevim_enable_neomake && g:spacevim_enable_ale == 0
-    call add(plugins, ['neomake/neomake', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/neomake', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
   elseif g:spacevim_enable_ale
-    call add(plugins, ['w0rp/ale', {'merged' : 0, 'loadconf_before' : 1}])
+    call add(plugins, ['dense-analysis/ale', {'merged' : 0, 'loadconf_before' : 1}])
   else
     call add(plugins, ['wsdjeg/syntastic', {'on_event': 'WinEnter', 'loadconf' : 1, 'merged' : 0}])
   endif
@@ -132,20 +132,23 @@ function! s:neomake_cursor_move_delay() abort
 endfunction
 
 function! s:toggle_show_error(...) abort
-  try
+  let llist = getloclist(0, {'size' : 1, 'winid' : 1})
+  let qlist = getqflist({'size' : 1, 'winid' : 1})
+  if llist.size == 0 && qlist.size == 0
+    echohl WarningMsg
+    echon 'There is no errors!'
+    echohl None
+    return
+  endif
+  if llist.winid > 0
+    lclose
+  elseif qlist.winid > 0
+    cclose
+  elseif llist.size > 0
     botright lopen
-  catch
-    try
-      if len(getqflist()) == 0
-        echohl WarningMsg
-        echon 'There is no errors!'
-        echohl None
-      else
-        botright copen
-      endif
-    catch
-    endtry
-  endtry
+  elseif qlist.size > 0
+    botright copen
+  endif
   if a:1 == 1
     wincmd w
   endif

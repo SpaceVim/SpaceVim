@@ -1,0 +1,7 @@
+| Item     | Cost |
+|----------+------|
+| Bread    |   20 |
+| Tomatoes |    5 |
+| Pasta    |  100 |
+| Total    |      |
+| Test     |      |

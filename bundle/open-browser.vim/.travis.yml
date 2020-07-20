@@ -1,0 +1,23 @@
+language: python
+python: "3.8"
+install:
+  - pip install vim-vint
+
+env:
+  - VIM_FILES="autoload/openbrowser.vim plugin/openbrowser.vim"
+
+before_script:
+  - git clone https://github.com/syngan/vim-vimlint /tmp/vim-vimlint
+  - git clone https://github.com/ynkdir/vim-vimlparser /tmp/vim-vimlparser
+  - git clone https://github.com/thinca/vim-themis --branch v1.5.4 --single-branch --depth 1 /tmp/vim-themis
+  - git clone https://github.com/Shougo/vimproc.vim /tmp/vimproc
+  - git clone https://github.com/kannokanno/vmock /tmp/vmock
+  - (cd /tmp/vimproc && make)
+
+script:
+  - which -a vim
+  - vim --cmd version --cmd quit
+  - vim --cmd "try | helptags doc/ | catch | cquit | endtry" --cmd quit
+  - sh /tmp/vim-vimlint/bin/vimlint.sh -l /tmp/vim-vimlint -p /tmp/vim-vimlparser $VIM_FILES
+  - vint $VIM_FILES
+  - /tmp/vim-themis/bin/themis --runtimepath /tmp/vimproc --runtimepath /tmp/vmock --reporter dot

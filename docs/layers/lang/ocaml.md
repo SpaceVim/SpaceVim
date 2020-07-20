@@ -34,9 +34,13 @@ To use this configuration layer, update custom configuration file with:
 - auto-completion
 - syntax checking
 - goto definition
+- type hint
+- check `Merlin` version
 
 ## Key bindings
 
-| Key Binding | Description                                               |
-| ----------- | --------------------------------------------------------- |
-| `gd`        | jump at the definition of the identifier under the cursor |
+| Key Binding | Description                                                         |
+| ----------- | ------------------------------------------------------------------- |
+| `gd`        | jump at the definition of the identifier under the cursor           |
+| `SPC l m v` | display `Merlin` version which currently labored                    |
+| `SPC l m t` | display type informations under the cursor or selected code snippet |

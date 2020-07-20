@@ -1,9 +1,9 @@
 ---
 title: SpaceVim release v0.9.0
 categories: [changelog, blog]
-excerpt: "15+ new language layer support in SpaceVim"
-type: NewsArticle
-image: https://user-images.githubusercontent.com/13142418/46079239-277eaa80-c1c9-11e8-845c-8220f6d60af8.png
+description: "15+ new language layer support in SpaceVim"
+type: article
+image: https://user-images.githubusercontent.com/13142418/80614489-17980e00-8a71-11ea-89eb-78b441093b20.png
 commentsID: "SpaceVim release v0.9.0"
 comments: true
 ---
@@ -27,7 +27,7 @@ comments: true
 This project exists thanks to all the people who have contributed. The last release v0.8.0 is targeted
 on june 18, 2018, so let's take a look at what happened in the new release v0.9.0.
 
-![v0.9.0 welcome page](https://user-images.githubusercontent.com/13142418/46079239-277eaa80-c1c9-11e8-845c-8220f6d60af8.png)
+![v0.9.0 welcome page](https://user-images.githubusercontent.com/13142418/80614489-17980e00-8a71-11ea-89eb-78b441093b20.png)
 
 
 ## New features
@@ -65,7 +65,7 @@ update the colorscheme. for example, enable random theme, and update colorscheme
 
 Completion SpaceVim options and layer options when edit SpaceVim configuration file:
 
-![complete spacevim configuration file](https://user-images.githubusercontent.com/13142418/46082785-7c72ee80-c1d2-11e8-9058-12ca1e7f4f63.png)
+![complete spacevim configuration file](https://user-images.githubusercontent.com/13142418/80614627-41e9cb80-8a71-11ea-9b8e-cd69253dd1ee.png)
 
 
 Improve builtin tab manager, support creating named tabs and rename an exist tab:

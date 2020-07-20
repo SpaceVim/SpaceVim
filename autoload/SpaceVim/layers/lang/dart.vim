@@ -10,9 +10,37 @@
 " @section lang#dart, layer-lang-dart
 " @parentsection layers
 " @subsection Intro
+"
 " The lang#dart layer provides code completion, documentation lookup, jump to
 " definition, dart_repl integration for dart. It uses neomake as default
-" syntax checker which is loaded in @section(layer-checkers)
+" syntax checker which is loaded in @section(layer-checkers). To enable this
+" layer:
+" >
+"   [layers]
+"     name = "lang#dart"
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for hack, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+" This layer use deoplete-dart as default completion plugin for dart. If the
+" @section(layer-lsp) is enabled for dart, This plugin will not be loaded.
+"
+"
 
 function! SpaceVim#layers#lang#dart#plugins() abort
   let plugins = []

@@ -9,10 +9,29 @@
 ""
 " @section lang#julia, layer-lang-julia
 " @parentsection layers
-" The layer provides synatax highlight julia. 
-" The completeion only works in nvim with deoplete.
-" However, the julia-vim could not be load on-demanding 
-" due to its LaTeXToUnicode feature.
+" This layer is for julia development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#julia'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for julia, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
 "
 
 function! SpaceVim#layers#lang#julia#plugins() abort

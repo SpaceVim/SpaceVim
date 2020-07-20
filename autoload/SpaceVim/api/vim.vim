@@ -53,10 +53,10 @@ function! s:self.parse_string(line) abort
   while i < strlen(a:line) || i != -1
     let [rst, m, n] = matchstrpos(a:line, expr, i)
     if m == -1
-      call add(line, a:line[i:-1])
+      call add(line, a:line[ i : -1 ])
       break
     else
-      call add(line, a:line[i:m-1])
+      call add(line, a:line[ i : m-1])
       try
         let rst = eval(rst[1:-2])
       catch
@@ -67,6 +67,71 @@ function! s:self.parse_string(line) abort
     let i = n
   endwhile
   return join(line, '')
+endfunction
+
+
+function! s:self.setbufvar(buf, dict) abort
+  for key in keys(a:dict)
+    call setbufvar(a:buf, key, a:dict[key])
+  endfor
+endfunction
+
+
+if exists('*nvim_win_set_cursor')
+  function! s:self.win_set_cursor(win, pos) abort
+    call nvim_win_set_cursor(a:win, a:pos)
+  endfunction
+elseif exists('*win_execute')
+  function! s:self.win_set_cursor(win, pos) abort
+    " @fixme use g` to move to cursor line
+    " this seem to be a bug of vim
+    " https://github.com/vim/vim/issues/5022
+    call win_execute(a:win, ':call cursor(' . a:pos[0] . ', ' . a:pos[1] . ')')
+    " call win_execute(a:win, ':' . a:pos[0])
+    call win_execute(a:win, ':normal! g"')
+  endfunction
+elseif has('lua')
+  function! s:self.win_set_cursor(win, pos) abort
+    lua local winindex = vim.eval("win_id2win(a:win) - 1")
+    lua local w = vim.window(winindex)
+    lua w.line = vim.eval("a:pos[0]")
+    lua w.col = vim.eval("a:pos[1]")
+  endfunction
+else
+  function! s:self.win_set_cursor(win, pos) abort
+
+  endfunction
+endif
+
+if exists('*nvim_buf_line_count')
+  function! s:self.buf_line_count(buf) abort
+    return nvim_buf_line_count(a:buf)
+  endfunction
+elseif has('lua')
+  function! s:self.buf_line_count(buf) abort
+    " lua numbers are floats, so use float2nr
+    return float2nr(luaeval('#vim.buffer(vim.eval("a:buf"))'))
+  endfunction
+else
+  function! s:self.buf_line_count(buf) abort
+    return len(getbufline(a:buf, 1, '$'))
+  endfunction
+endif
+
+function! s:self.setbufvar(buf, dict) abort
+  for key in keys(a:dict)
+    call setbufvar(a:buf, key, a:dict[key])
+  endfor
+endfunction
+
+function! s:self.get_qf_winnr() abort
+  let wins = filter(getwininfo(), 'v:val.quickfix && !v:val.loclist')
+  " assert(len(wins) <= 1)
+  return empty(wins) ? 0 : wins[0].winnr
+endfunction
+
+function! s:self.is_qf_win(winnr) abort
+  return a:winnr ==# self.get_qf_winnr()
 endfunction
 
 function! SpaceVim#api#vim#get() abort

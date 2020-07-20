@@ -6,6 +6,16 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#clojure, layer-lang-clojure
+" @parentsection layers
+" This layer provides syntax highlighting for clojure. To enable this
+" layer:
+" >
+"   [layers]
+"     name = "lang#clojure"
+" <
+
 function! SpaceVim#layers#lang#clojure#plugins() abort
   let plugins = []
   " if has('nvim')

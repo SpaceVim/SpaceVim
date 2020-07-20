@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim tmux 模块"
 description: "这一模块为 SpaceVim 提供了一些在 Vim 内操作 tmux 的功能，使得在 tmux 窗口之间跳转更加便捷。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> tmux

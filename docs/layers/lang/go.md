@@ -62,7 +62,7 @@ go get -u github.com/jstemmer/gotags
 | `SPC l k`    | add tags                  |
 | `SPC l K`    | remove tags               |
 | `SPC l l`    | list declarations in file |
-| `SPC l m`    | format improts            |
+| `SPC l m`    | format imports            |
 | `SPC l M`    | add import                |
 | `SPC l r`    | go run                    |
 | `SPC l s`    | fill struct               |

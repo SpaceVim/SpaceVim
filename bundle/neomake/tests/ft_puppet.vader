@@ -1,0 +1,91 @@
+Include: include/setup.vader
+
+Execute (puppet: syntax error: end of input):
+  new
+  let maker = NeomakeTestsFixtureMaker('neomake#makers#ft#puppet#puppet',
+  \ 'tests/fixtures/input/puppet/syntax-error-eoi.pp')
+  CallNeomake 1, [maker]
+
+  let bufnr = bufnr('%')
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 0,
+  \ 'bufnr': bufnr,
+  \ 'col': 0,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'E',
+  \ 'pattern': '',
+  \ 'text': 'Syntax error at end of input'
+  \ }]
+  bwipe
+
+Execute (puppet: syntax error in specific line):
+  new
+  let maker = NeomakeTestsFixtureMaker('neomake#makers#ft#puppet#puppet',
+  \ 'tests/fixtures/input/puppet/syntax-error.pp')
+  CallNeomake 1, [maker]
+
+  let bufnr = bufnr('%')
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 3,
+  \ 'bufnr': bufnr,
+  \ 'col': 3,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'E',
+  \ 'pattern': '',
+  \ 'text': "Syntax error at 'file'"
+  \ }]
+  bwipe
+
+Execute (puppet-lint):
+  new
+  let maker = NeomakeTestsFixtureMaker('neomake#makers#ft#puppet#puppetlint',
+  \ 'tests/fixtures/input/puppet-lint/err_and_warn.pp')
+  CallNeomake 1, [maker]
+
+  let bufnr = bufnr('%')
+  AssertEqualQf getloclist(0), [ {
+  \ 'lnum': 4,
+  \ 'bufnr': bufnr,
+  \ 'col': 10,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'w',
+  \ 'pattern': '',
+  \ 'text': '[arrow_alignment] indentation of => is not properly aligned (expected in column 12, but found it in column 10)'
+  \ } , {
+  \ 'lnum': 1,
+  \ 'bufnr': bufnr,
+  \ 'col': 7,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'e',
+  \ 'pattern': '',
+  \ 'text': '[autoloader_layout] foo not in autoload module layout'
+  \ } , {
+  \ 'lnum': 2,
+  \ 'bufnr': bufnr,
+  \ 'col': 10,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'w',
+  \ 'pattern': '',
+  \ 'text': '[double_quoted_strings] double quoted string containing no variables'
+  \ } , {
+  \ 'lnum': 1,
+  \ 'bufnr': bufnr,
+  \ 'col': 1,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'w',
+  \ 'pattern': '',
+  \ 'text': '[documentation] class not documented'
+  \ }]
+  bwipe

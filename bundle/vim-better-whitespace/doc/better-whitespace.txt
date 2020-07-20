@@ -1,0 +1,138 @@
+*better-whitespace.txt*      better-whitespace
+
+
+This plugin causes all trailing whitespace characters (spaces and tabs) to be
+highlighted. Whitespace for the current line will not be highlighted while in
+insert mode. It is possible to disable current line highlighting while in other
+modes as well (see options below).
+
+To blacklist certain filetypes, set 'g:better_whitespace_filetypes_blacklist'
+to a list of the desired filetypes.
+
+COMMANDS                                        *better-whitespace-commands*
+
+:ToggleWhitespace                               *better-whitespace-:ToggleWhitespace*
+:EnableWhitespace                               *better-whitespace-:EnableWhitespace*
+:DisableWhitespace                              *better-whitespace-:DisableWhitespace*
+
+Call these functions to toggle whitespace highlighting on/off.
+This will set the highlighting of extraneous whitespace for the entire file.
+
+To disable whitespace highlighting, call :DisableWhitespace. This will disable
+highlighting of extraneous whitespace for the entire file.
+
+:[range]NextTrailingWhitespace                   *better-whitespace-:NextTrailingWhitespace*
+:[range]PrevTrailingWhitespace                   *better-whitespace-:PrevTrailingWhitespace*
+
+These functions will respectively take you to the next and previous trailing whitespace
+in the ranged that they are passed (by default the whole file).
+
+:[range]StripWhitespace[!]                      *better-whitespace-:StripWhitespace*
+
+Removes extra whitespace, by default on the entire file. To restrict the
+portion of the file that it cleans, either give it a range or select a group
+of lines in visual mode and then execute it. With the !, ignores &readonly.
+
+:[range]StripWhitespaceOnChangedLines[!]        *better-whitespace-:StripWhitespaceOnChangedLines*
+
+Like :StripWhitespace, but only on the lines that are modified.
+
+:ToggleStripWhitespaceOnSave                    *better-whitespace-:ToggleStripWhitespaceOnSave*
+:EnableStripWhitespaceOnSave                    *better-whitespace-:EnableStripWhitespaceOnSave*
+:DisableStripWhitespaceOnSave                   *better-whitespace-:DisableStripWhitespaceOnSave*
+
+This enables/disables stripping of extra whitespace on file save.
+If `g:strip_only_modified_lines` is set to 1, only modified lines will be stripped.
+
+
+DEPRECATED:  :CurrentLineWhitespaceOn and :CurrentLineWhitespaceOff with the
+option either 'hard' or 'soft' are now deprecated and replaced by the
+following preferences:
+`g:current_line_whitespace_disabled_hard`
+`g:current_line_whitespace_disabled_soft`
+
+
+
+PREFERENCES                                     *better-whitespace-preferences*
+
+`g:better_whitespace_enabled`                     (defaults to 1)
+Set this to enable whitespace highlighting by default, set to 0 to disable it.
+
+`g:better_whitespace_filetypes_blacklist`         (defaults to ['diff', 'gitcommit',
+                                                'unite', 'qf', 'help', 'markdown'])
+Disables better-whitespace by default on these file types.
+Overrides `g:better_whitespace_enabled`, and can be manually overriden with
+|better-whitespace-:EnableWhitespace| and related commands.
+
+`g:strip_only_modified_lines`                     (defaults to 0)
+When stripping whitespace on save, only perform the stripping on the lines
+that have been modified.
+Uses an external `diff` command set in `g:diff_binary`, which should be
+available on all platforms (see |E810|).
+
+`g:diff_binary`
+The binary to use to check which lines have been modified in a file. Defaults
+to 'diff' on windows and 'command diff' on unix-like platforms (linux, mac OS,
+etc.) to bypass any shell aliases or default options for diff.
+
+`g:strip_max_file_size`                           (defaults to 1000)
+Skip stripping whitespace on files that have more lines than the value in this
+variable. 0 means disabled, thus strip for any file size.  This can be manually
+overriden with |better-whitespace-:EnableStripWhitespaceOnSave| and related commands.
+
+`g:better_whitespace_operator`                    *better-whitespace-operator*
+
+By default, an operator is provided mapped to: <leader>s.
+To modify the key mapping for this operator, set `g:better_whitespace_operator`.
+This operator will strip whitespace over the currently selected region in visual
+mode, or for the following motion in normal mode. Set an empty value to disable.
+
+Note: This operator will not be mapped if an existing, user-defined mapping is
+detected for the provided operator value.
+
+                                                *better-whitespace-colors*
+Set the highlight color for trailing whitespaces:
+`g:better_whitespace_ctermcolor`                  (defaults to 'red')
+`g:better_whitespace_guicolor`                    (defaults to '#FF0000')
+
+                                                *better-whitespace-current_line*
+`g:current_line_whitespace_disabled_hard`         (defaults to 0)
+Set this to disable highlighting on the current line in all modes
+WARNING: This checks for current line on cursor move, which can significantly
+         impact the performance of Vim (especially on large files)
+WARNING: Ignored if g:current_line_whitespace_disabled_soft is set.
+
+`g:current_line_whitespace_disabled_soft`         (defaults to 0)
+Set this to disable highlighting of the current line in all modes
+This setting will not have the performance impact of the above, but
+highlighting throughout the file may be overridden by other highlight
+patterns with higher priority.
+
+
+`g:strip_whitespace_confirm`                      (defaults to 1)
+Set to 0 to deactivate asking for confirmation before whitespace is
+stripped when you save the file.
+
+`g:show_spaces_that_precede_tabs`                 (defaults to 0)
+Set this to match space characters that appear before or in-between tabs
+
+`g:strip_whitespace_on_save`                      (defaults to 0)
+Set this to enable stripping whitespace on file save for files where
+better-whitespace is enabled.
+
+`g:strip_whitelines_at_eof`                       (defaults to 0)
+Set this to enable stripping white lines at the end of the file when we
+strip whitespace from the end of lines.
+
+`g:better_whitespace_skip_empty_lines`            (defaults to 0)
+Skips empty (whitespace-only) lines for highlighting.
+
+
+
+Repository exists at: http://github.com/ntpeters/vim-better-whitespace
+
+Originally inspired by: https://github.com/bronson/vim-trailing-whitespace
+
+Based on:
+http://sartak.org/2011/03/end-of-line-whitespace-in-vim.html
+http://vim.wikia.com/wiki/Highlight_unwanted_spaces

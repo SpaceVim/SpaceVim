@@ -1,10 +1,11 @@
 [![SpaceVim](https://spacevim.org/logo.png)](https://spacevim.org)
 
 [Wiki](https://github.com/SpaceVim/SpaceVim/wiki) \|
+[Quick start guide](https://spacevim.org/quick-start-guide/) \|
 [Documentation](https://spacevim.org/documentation/) \|
-[Twitter](https://twitter.com/SpaceVim) \|
 [Community](https://spacevim.org/community/) \|
 [Sponsors](https://spacevim.org/sponsors/) \|
+[Twitter](https://twitter.com/SpaceVim) \|
 [Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim) \|
 [中文官网](https://spacevim.org/cn/)
 
@@ -12,7 +13,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![Docker Build Status](https://img.shields.io/docker/build/spacevim/spacevim.svg)](https://hub.docker.com/r/spacevim/spacevim/)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-![Version](https://img.shields.io/badge/version-1.3.0--dev-8700FF.svg)
+![Version](https://img.shields.io/badge/version-1.5.0--dev-8700FF.svg)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 
@@ -22,9 +23,9 @@ SpaceVim is a community-driven modular Vim distribution. It manages collections
 of plugins in layers, which help to collect related packages together to provide IDE-like features.
 SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many built-in features.
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/80494420-3925c680-8999-11ea-9652-21e1e5564148.png)
 
-The last release is v1.2.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The last release is v1.4.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## Instructions
 
@@ -149,6 +150,7 @@ For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 ├─ docs/                          website(cn/en)
 ├─ wiki/                          wiki(cn/en)
 ├─ bin/                           executable
+├─ bundle/                        forked repos
 └─ test/                          tests
 ```
 

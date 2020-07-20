@@ -1,0 +1,24 @@
+snippet     helloworld
+options     head
+  print 'Hello world!'
+
+snippet     map
+options     word
+  [${0:TARGET} for ${1:x} in ${2:xs}]
+
+snippet     p
+options     head
+  moon.p ${0}
+
+snippet     defn
+  ${1:f} = (${2:args}) ->
+    ${0:TARGET}
+
+snippet     defm
+options     head
+  ${1:f}: (${2:args}) =>
+    ${0:TARGET}
+
+snippet     require
+options     head
+  ${1:moon} = require '$1'

@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim japanese 模块"
 description: "这一模块为 SpaceVim 的日文用户提供了日文的 Vim 帮助文档，同时提供部分插件的日文帮助文档。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> japanese

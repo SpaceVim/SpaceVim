@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#d 模块"
 description: "这一模块为 d 开发提供支持，包括语法高亮、自动补全、一键运行等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#d

@@ -14,11 +14,24 @@ else
   let s:direction = 'leftabove'
 endif
 
+function! s:setcolum() abort
+  if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_vimfiler_gitstatus
+    return 'indent:icons:filename:type'
+  elseif !g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+    return 'indent:icons:filename:type'
+  elseif g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+    return 'indent:git:icons:filename:type'
+  else
+    return 'mark:indent:icon:filename:type'
+  endif
+endfunction
+
 call defx#custom#option('_', {
+      \ 'columns': s:setcolum(),
       \ 'winwidth': g:spacevim_sidebar_width,
       \ 'split': 'vertical',
       \ 'direction': s:direction,
-      \ 'show_ignored_files': 0,
+      \ 'show_ignored_files': g:_spacevim_filetree_show_hidden_files,
       \ 'buffer_name': '',
       \ 'toggle': 1,
       \ 'resume': 1
@@ -30,10 +43,14 @@ call defx#custom#column('mark', {
       \ })
 
 call defx#custom#column('icon', {
-      \ 'directory_icon': '',
-      \ 'opened_icon': '',
+      \ 'directory_icon': '▶',
+      \ 'opened_icon': '▼',
       \ 'root_icon': ' ',
       \ })
+
+	call defx#custom#column('filename', {
+	      \ 'max_width': -90,
+	      \ })
 
 augroup vfinit
   au!
@@ -119,6 +136,8 @@ function! s:defx_init()
         \ defx#do_action('drop', 'tabedit')
   nnoremap <silent><buffer><expr> p
         \ defx#do_action('open', 'pedit')
+  nnoremap <silent><buffer><expr> K
+        \ defx#do_action('new_directory')
   nnoremap <silent><buffer><expr> N
         \ defx#do_action('new_file')
   nnoremap <silent><buffer><expr> d
@@ -142,6 +161,10 @@ function! s:defx_init()
   nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
   nnoremap <silent><buffer><expr> <C-Home>
         \ defx#do_action('cd', SpaceVim#plugins#projectmanager#current_root())
+	nnoremap <silent><buffer><expr> > defx#do_action('resize',
+	\ defx#get_context().winwidth + 10)
+	nnoremap <silent><buffer><expr> < defx#do_action('resize',
+	\ defx#get_context().winwidth - 10)
 endf
 
 " in this function we should vim-choosewin if possible
