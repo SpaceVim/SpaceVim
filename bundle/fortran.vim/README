@@ -1,0 +1,3 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2299
+
+This script provides additional indentation rules (continued statements; preprocessor instructions; subroutine, function and forall statements) to Ajit J. Thakkar's Vim indent script for Fortran free source form.
