@@ -13,10 +13,17 @@ function! SpaceVim#layers#lang#fortran#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#fortran#config() abort
-  call SpaceVim#plugins#runner#reg_runner('fortran', 'hy %s')
+  call SpaceVim#plugins#runner#reg_runner('fortran', ['gfortran %s -o #TEMP#', '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('fortran', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
+
+
+" ref:
+"
+" fortran wiki org
+"
+" http://fortranwiki.org/fortran/show/Source+code+editors
