@@ -135,7 +135,12 @@ endfunction
 
 function! s:open_terminal(cmd, path) abort
   if has('nvim')
-    return termopen(a:cmd, {'cwd': a:path})
+    " fuck, we need to split and close
+    1split
+    call termopen(a:cmd, {'cwd': a:path})
+    let bufnr = bufnr('%')
+    close
+    return bufnr
   else
     return term_start(a:cmd, {'cwd': a:path, 'hidden': 1})
   endif
@@ -145,6 +150,9 @@ function! s:support_float_terminal() abort
   if has('nvim')
     return s:FLOAT.exists()
   else
+    " the latest version of vim also do not support full feature of float
+    " terminal.
+    " ref: https://github.com/vim/vim/issues/6511
     return has('patch-8.2.1266')
   endif
 endfunction
@@ -180,27 +188,27 @@ endfunction
 function! s:open_default_shell(usebufdir) abort
   let path = s:get_terminal_init_path(a:usebufdir)
   let bufnr = s:get_terminal_bufnr(path)
-  if bufnr ==# 0
-    if s:SYSTEM.isWindows
-      let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
-    else
-      let shell = empty($SHELL) ? 'bash' : $SHELL
-    endif
-    let bufnr = s:open_terminal(shell, path)
-    call add(s:open_terminals_buffers, bufnr)
-  endif
-
   if s:default_position == 'float' && s:support_float_terminal()
+    if bufnr ==# 0
+      if s:SYSTEM.isWindows
+        let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
+      else
+        let shell = empty($SHELL) ? 'bash' : $SHELL
+      endif
+      let bufnr = s:open_terminal(shell, path)
+      call add(s:open_terminals_buffers, bufnr)
+    endif
+
     let s:term_win_id =  s:FLOAT.open_win(bufnr, v:true,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
           \ 'height'  : &lines * s:default_height / 100,
           \ 'row': 0,
-          \ 'col': &lines - (&lines * s:default_height / 100) - 2
+          \ 'col': 0,
           \ })
 
-    exe win_id2win(s:term_win_id) .  'wincmd w'
+    " exe win_id2win(s:term_win_id) .  'wincmd w'
   else
     " no terminal window found. Open a new window
     let cmd = s:default_position ==# 'float' ?
@@ -219,6 +227,7 @@ function! s:open_default_shell(usebufdir) abort
     exe 'b' . bufnr
     startinsert
   endif
+  call setwinvar(win_id2win(s:term_win_id), 'shell_layer_win', 1)
 
 
 
