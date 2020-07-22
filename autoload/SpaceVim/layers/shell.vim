@@ -9,12 +9,14 @@
 ""
 " @section shell, layer-shell
 " @parentsection layers
-" SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for
-" vim. For more info, read |deol| and |vimshell|.
+" The shell layer use |:terminal| command if available.
 "
 " @subsection variable
 "
 " default_shell: config the default shell to be used by shell layer.
+" default_position: config the positione of terminal, by default, it is `top`,
+" you can set it to `float` if you are using nvim-0.4.0 or later version. for
+" vim users, we need `has('patch-8.2.1266')`
 "
 " @subsection key bindings
 " >
@@ -131,6 +133,21 @@ function! SpaceVim#layers#shell#get_options() abort
 
 endfunction
 
+function! s:open_terminal(cmd, path) abort
+  if has('nvim')
+    return termopen(a:cmd, {'cwd': a:path})
+  else
+  endif
+endfunction
+
+function! s:support_float_terminal() abort
+  if has('nvim')
+    return s:FLOAT.exists()
+  else
+    return has('patch-8.2.1266')
+  endif
+endfunction
+
 let s:open_terminals_buffers = []
 " shell windows shoud be toggleable, and can be hide.
 function! s:open_default_shell(open_with_file_cwd) abort
@@ -167,7 +184,7 @@ function! s:open_default_shell(open_with_file_cwd) abort
     endif
   endfor
 
-  if s:default_position == 'float' && exists('*nvim_open_win')
+  if s:default_position == 'float' && (( s:FLOAT.exists() && has('nvim')) || (!has('nvim') && has('patch-8.2.1266')))
     let s:term_win_id =  s:FLOAT.open_win(bufnr('%'), v:true,
           \ {
           \ 'relative': 'editor',
@@ -237,6 +254,7 @@ function! s:open_default_shell(open_with_file_cwd) abort
         endif
         let s:term_buf_nr = bufnr('%')
         call extend(s:shell_cached_br, {getcwd() : s:term_buf_nr})
+      elseif has('patch-8.2.1266')
       else 
         " handle vim terminal
         if s:SYSTEM.isWindows

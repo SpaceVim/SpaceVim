@@ -3108,12 +3108,14 @@ text by highlighting.
 ==============================================================================
 SHELL                                                   *SpaceVim-layer-shell*
 
-SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for vim.
-For more info, read |deol| and |vimshell|.
+The shell layer use |:terminal| command if available.
 
 VARIABLE
 
 default_shell: config the default shell to be used by shell layer.
+default_position: config the positione of terminal, by default, it is `top`,
+you can set it to `float` if you are using nvim-0.4.0 or later version. for
+vim users, we need `has('patch-8.2.1266')`
 
 KEY BINDINGS
 
