@@ -23,7 +23,11 @@
 " <
 
 let s:SYSTEM = SpaceVim#api#import('system')
-let s:FLOAT = SpaceVim#api#import('neovim#floating')
+if has('nvim')
+  let s:FLOAT = SpaceVim#api#import('neovim#floating')
+else
+  let s:FLOAT = SpaceVim#api#import('vim#floating')
+endif
 
 function! SpaceVim#layers#shell#plugins() abort
   let plugins = []
