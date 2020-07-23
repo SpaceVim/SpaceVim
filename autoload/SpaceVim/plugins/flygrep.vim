@@ -14,7 +14,11 @@ let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:HI = SpaceVim#api#import('vim#highlight')
-let s:FLOATING = SpaceVim#api#import('neovim#floating')
+if has('nvim')
+  let s:FLOATING = SpaceVim#api#import('neovim#floating')
+else
+  let s:FLOATING = SpaceVim#api#import('vim#floating')
+endif
 let s:JSON = SpaceVim#api#import('data#json')
 let s:SL = SpaceVim#api#import('vim#statusline')
 let s:Window = SpaceVim#api#import('vim#window')
@@ -768,7 +772,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   if exists('*nvim_open_win')
     let s:buffer_id = s:BUFFER.create_buf(v:false, v:true)
     let flygrep_win_height = 16
-    let s:flygrep_win_id =  s:FLOATING.open_win(s:buffer_id, v:true,
+    noautocmd let s:flygrep_win_id =  s:FLOATING.open_win(s:buffer_id, v:true,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
@@ -846,25 +850,24 @@ endfunction
 " }}}
 
 function! s:update_statusline() abort
-  if !exists('*nvim_open_win')
-    return
+  if s:SL.support_float() && win_id2tabwin(s:flygrep_win_id)[0] ==# tabpagenr() && s:Window.is_float(win_id2win(s:flygrep_win_id))
+    noautocmd call s:SL.open_float([
+          \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
+          \ [' ', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
+          \ [SpaceVim#plugins#flygrep#mode() . ' ', 'SpaceVim_statusline_b'],
+          \ [' ', 'SpaceVim_statusline_b_SpaceVim_statusline_c'],
+          \ [getcwd() . ' ', 'SpaceVim_statusline_c'],
+          \ [' ', 'SpaceVim_statusline_c_SpaceVim_statusline_b'],
+          \ [SpaceVim#plugins#flygrep#lineNr() . ' ', 'SpaceVim_statusline_b'],
+          \ [' ', 'SpaceVim_statusline_b_SpaceVim_statusline_z'],
+          \ [repeat(' ', &columns - 11), 'SpaceVim_statusline_z'],
+          \ ])
   endif
-  call s:SL.open_float([
-        \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
-        \ [' ', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
-        \ [SpaceVim#plugins#flygrep#mode() . ' ', 'SpaceVim_statusline_b'],
-        \ [' ', 'SpaceVim_statusline_b_SpaceVim_statusline_c'],
-        \ [getcwd() . ' ', 'SpaceVim_statusline_c'],
-        \ [' ', 'SpaceVim_statusline_c_SpaceVim_statusline_b'],
-        \ [SpaceVim#plugins#flygrep#lineNr() . ' ', 'SpaceVim_statusline_b'],
-        \ [' ', 'SpaceVim_statusline_b_SpaceVim_statusline_z'],
-        \ [repeat(' ', &columns - 11), 'SpaceVim_statusline_z'],
-        \ ])
 endfunction
 
 
 function! s:close_statusline() abort
-  call s:SL.close_float()
+  noautocmd call s:SL.close_float()
 endfunction
 
 " Plugin API: SpaceVim#plugins#flygrep#lineNr() {{{
