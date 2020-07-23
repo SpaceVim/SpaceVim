@@ -768,7 +768,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   if exists('*nvim_open_win')
     let s:buffer_id = s:BUFFER.create_buf(v:false, v:true)
     let flygrep_win_height = 16
-    let s:flygrep_win_id =  s:FLOATING.open_win(s:buffer_id, v:true,
+    noautocmd let s:flygrep_win_id =  s:FLOATING.open_win(s:buffer_id, v:true,
           \ {
           \ 'relative': 'editor',
           \ 'width'   : &columns, 
@@ -847,7 +847,7 @@ endfunction
 
 function! s:update_statusline() abort
   if s:SL.support_float() && win_id2tabwin(s:flygrep_win_id)[0] ==# tabpagenr()
-    call s:SL.open_float([
+    noautocmd call s:SL.open_float([
           \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
           \ [' ', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
           \ [SpaceVim#plugins#flygrep#mode() . ' ', 'SpaceVim_statusline_b'],
@@ -863,7 +863,7 @@ endfunction
 
 
 function! s:close_statusline() abort
-  call s:SL.close_float()
+  noautocmd call s:SL.close_float()
 endfunction
 
 " Plugin API: SpaceVim#plugins#flygrep#lineNr() {{{
