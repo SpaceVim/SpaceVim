@@ -479,8 +479,6 @@ function! s:wait_for_input() abort " {{{
   elseif s:guide_help_mode ==# 1
     call s:submode_mappings(inp)
     let s:guide_help_mode = 0
-    call s:updateStatusline()
-    redraw!
   elseif inp ==# "\<C-h>"
     let s:guide_help_mode = 1
     call s:updateStatusline()
