@@ -145,7 +145,7 @@ function! s:self.open_float(st) abort
     endfor
   endif
   call setbufvar(self.__bufnr, '&modifiable', 0)
-  redraw!
+  return self.__winid
 endfunction
 
 if s:self.__floating.exists()
