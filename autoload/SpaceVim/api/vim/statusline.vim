@@ -100,11 +100,24 @@ function! s:self.support_float() abort
   return self.__floating.exists()
 endfunction
 
+if has('nvim')
+  function! s:self.opened() abort
+    return win_id2tabwin(self.__winid)[0] == tabpagenr()
+  endfunction
+else
+  function! s:self.opened() abort
+		"tabpage" will be -1 for a global popup, zero for a popup on
+		"the current tabpage and a positive number for a popup on
+		"another tabpage.
+    return index(popup_list(), self.__winid) != -1
+  endfunction
+endif
+
 function! s:self.open_float(st) abort
   if !has_key(self, '__bufnr') || !bufexists(self.__bufnr)
     let self.__bufnr = self.__buffer.bufadd('')
   endif
-  if has_key(self, '__winid') && win_id2tabwin(self.__winid)[0] == tabpagenr()
+  if has_key(self, '__winid') && self.opened()
   else
     let self.__winid = self.__floating.open_win(self.__bufnr,
           \ v:false,
@@ -145,7 +158,7 @@ function! s:self.open_float(st) abort
     endfor
   endif
   call setbufvar(self.__bufnr, '&modifiable', 0)
-  redraw!
+  return self.__winid
 endfunction
 
 if s:self.__floating.exists()

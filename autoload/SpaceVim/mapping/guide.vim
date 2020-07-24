@@ -479,8 +479,6 @@ function! s:wait_for_input() abort " {{{
   elseif s:guide_help_mode ==# 1
     call s:submode_mappings(inp)
     let s:guide_help_mode = 0
-    call s:updateStatusline()
-    redraw!
   elseif inp ==# "\<C-h>"
     let s:guide_help_mode = 1
     call s:updateStatusline()
@@ -607,7 +605,7 @@ if s:SL.support_float()
     endif
     let keys = get(s:, 'prefix_key_inp', '')
     " let keys = substitute(keys, '\', '\\\', 'g')
-    call s:SL.open_float([
+    noautocmd let winid = s:SL.open_float([
           \ ['Guide: ', 'LeaderGuiderPrompt'],
           \ [' ', 'LeaderGuiderSep1'],
           \ [SpaceVim#mapping#leader#getName(s:prefix_key)
@@ -616,8 +614,10 @@ if s:SL.support_float()
           \ [s:guide_help_msg(0), 'LeaderGuiderFill'],
           \ [repeat(' ', 999), 'LeaderGuiderFill'],
           \ ])
+    call SpaceVim#logger#info('key binding guide float statusline winid:' . winid)
   endfunction
   function! s:close_float_statusline() abort
+    call SpaceVim#logger#info('close float statusline winid:' . s:SL.__winid)
     call s:SL.close_float()
   endfunction
 else
