@@ -253,9 +253,13 @@ function! s:start_replace() abort
     call s:JOB.stop(s:grepid)
   endif
   let replace_text = s:current_grep_pattern
+  let g:Iedit_handle_func = function('s:update_statusline')
   if !empty(replace_text)
     let rst = SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
+  else
+    let rst = replace_text
   endif
+  let g:Iedit_handle_func = ''
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(rst), 2)
   redrawstatus
   call s:update_statusline()
