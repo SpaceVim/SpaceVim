@@ -868,7 +868,7 @@ function! s:update_statusline() abort
       let mode = 'FlyGrep'
     endif
     noautocmd call s:SL.open_float([
-          \ [mode, 'SpaceVim_statusline_a_bold'],
+          \ [mode . SpaceVim#layers#core#statusline#mode(mode()), 'SpaceVim_statusline_a_bold'],
           \ [' ', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
           \ [SpaceVim#plugins#flygrep#mode() . ' ', 'SpaceVim_statusline_b'],
           \ [' ', 'SpaceVim_statusline_b_SpaceVim_statusline_c'],
