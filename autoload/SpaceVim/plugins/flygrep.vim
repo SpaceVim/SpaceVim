@@ -702,16 +702,17 @@ function! s:next_match_history() abort
   call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
 endfunction
 
+" @bug can not complete last item in the flygrep history
 function! s:complete_input_history(str,num) abort
   let results = filter(copy(s:grep_history), "v:val =~# '^' . a:str")
-  if a:num[0] - a:num[1] == 0
-    return a:str
-  elseif len(results) > 0
-    let index = ((len(results) - 1) - a:num[0] + a:num[1]) % len(results)
-    return results[index]
+  if !empty(results) && results[-1] ==# a:str && !empty(a:str)
+    let complete_items = results + [a:str]
   else
-    return a:str
+    let complete_items = results
   endif
+  "                   5                    0          6
+  let index = ((len(complete_items) - 1) - a:num[0] + a:num[1]) % len(complete_items) - 1
+  return complete_items[index]
 endfunction
 
 let s:MPT._function_key = {
