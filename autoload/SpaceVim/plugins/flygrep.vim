@@ -698,7 +698,6 @@ function! s:next_match_history() abort
   call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
 endfunction
 
-" @bug can not complete last item in the flygrep history
 function! s:complete_input_history(str,num) abort
   let results = filter(copy(s:grep_history), "v:val =~# '^' . a:str")
   if !empty(results) && results[-1] !=# a:str
@@ -709,9 +708,12 @@ function! s:complete_input_history(str,num) abort
     let complete_items = results
   endif
   "                   5                    0          6
-  " let index = ((len(complete_items) - 1) - a:num[0] + a:num[1]) % len(complete_items)
-  " 初始 index = len(complete_items) - 1
-  let index = len(complete_items) - 1 - (a:num[0] - a:num[1]) % len(complete_items)
+  let patch = (a:num[0] - a:num[1]) % len(complete_items)
+  if patch >= 0
+    let index = len(complete_items) - 1 - patch
+  else
+    let index = abs(patch) - 1
+  endif
   return complete_items[index]
 endfunction
 
