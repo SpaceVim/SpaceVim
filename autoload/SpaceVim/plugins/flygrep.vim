@@ -679,8 +679,6 @@ function! s:previous_match_history() abort
     let s:complete_input_history_base = s:MPT._prompt.begin
     let s:MPT._prompt.cursor = ''
     let s:MPT._prompt.end = ''
-  else
-    let s:MPT._prompt.begin = s:complete_input_history_base
   endif
   let s:complete_input_history_num[0] += 1
   let s:MPT._prompt.begin = s:complete_input_history(s:complete_input_history_base, s:complete_input_history_num)
@@ -693,8 +691,6 @@ function! s:next_match_history() abort
     let s:complete_input_history_base = s:MPT._prompt.begin
     let s:MPT._prompt.cursor = ''
     let s:MPT._prompt.end = ''
-  else
-    let s:MPT._prompt.begin = s:complete_input_history_base
   endif
   let s:complete_input_history_num[1] += 1
   let s:MPT._prompt.begin = s:complete_input_history(s:complete_input_history_base, s:complete_input_history_num)
@@ -705,8 +701,10 @@ endfunction
 " @bug can not complete last item in the flygrep history
 function! s:complete_input_history(str,num) abort
   let results = filter(copy(s:grep_history), "v:val =~# '^' . a:str")
-  if !empty(results) && results[-1] ==# a:str && !empty(a:str)
+  if !empty(results) && results[-1] !=# a:str
     let complete_items = results + [a:str]
+  elseif empty(results)
+    let complete_items = [a:str]
   else
     let complete_items = results
   endif
