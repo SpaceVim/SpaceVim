@@ -711,7 +711,7 @@ function! s:complete_input_history(str,num) abort
     let complete_items = results
   endif
   "                   5                    0          6
-  let index = ((len(complete_items) - 1) - a:num[0] + a:num[1]) % len(complete_items) - 1
+  let index = ((len(complete_items) - 1) - a:num[0] + a:num[1]) % len(complete_items)
   return complete_items[index]
 endfunction
 
