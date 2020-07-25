@@ -258,6 +258,7 @@ function! s:start_replace() abort
   endif
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(rst), 2)
   redrawstatus
+  call s:update_statusline()
   if rst !=# replace_text
     call s:update_files(s:flygrep_result_to_files())
     checktime
