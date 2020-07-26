@@ -117,28 +117,8 @@ function! s:install_manager() abort
   endif
   " auto install plugin manager
   if g:spacevim_plugin_manager ==# 'neobundle'
-    "auto install neobundle
-    if filereadable(expand(g:spacevim_plugin_bundle_dir)
-          \ . 'neobundle.vim'. s:Fsep. 'README.md')
-      let g:_spacevim_neobundle_installed = 1
-    else
-      if executable('git')
-        exec '!git clone '
-              \ .'https://github.com/'
-              \ .'Shougo/neobundle.vim'
-              \ . ' '
-              \ . fnameescape(g:spacevim_plugin_bundle_dir)
-              \ . 'neobundle.vim'
-        let g:_spacevim_neobundle_installed = 1
-      else
-        echohl WarningMsg
-        echom 'You need install git!'
-        echohl None
-      endif
-    endif
-    exec 'set runtimepath+='
-          \ . fnameescape(g:spacevim_plugin_bundle_dir)
-          \ . 'neobundle.vim'
+    let g:_spacevim_neobundle_installed = 1
+    exec 'set runtimepath+=' . g:_spacevim_root_dir . 'bundle/neobundle.vim/'
   elseif g:spacevim_plugin_manager ==# 'dein'
     let g:_spacevim_dein_installed = 1
     exec 'set runtimepath+=' . g:_spacevim_root_dir . 'bundle/dein.vim/'
