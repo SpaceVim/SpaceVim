@@ -93,6 +93,12 @@ function! SpaceVim#custom#apply(config, type) abort
     call SpaceVim#logger#info('start to apply config [' . a:type . ']')
     let options = get(a:config, 'options', {})
     for [name, value] in items(options)
+      if name ==# 'filemanager'
+        if value ==# 'defx' && !has("python3")
+          call SpaceVim#logger#warn('defx requires +python3!')
+          continue
+        endif
+      endif
       exe 'let g:spacevim_' . name . ' = value'
       if name ==# 'project_rooter_patterns'
         " clear rooter cache
