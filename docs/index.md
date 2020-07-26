@@ -77,7 +77,7 @@ With layers feature, this version of Vim distribution try to turn Vim/Neovim int
 
 SpaceVim has been tested in following version of vim/neovim:
 
-1. vim `7.4.1689`
+1. vim `7.4.1689`, `8.1.2120`
 2. neovim ~~`0.2.0`~~,`0.2.2`,`0.3.0`,`0.3.1`,`0.3.2`,`0.3.3`,`0.3.4`,`0.3.5`,`0.3.7`,`0.3.8`,`0.4.2`,`0.4.3`
 
 For more general questions, please read SpaceVim [FAQ](faq/).
