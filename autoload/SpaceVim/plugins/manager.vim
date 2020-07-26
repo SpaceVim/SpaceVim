@@ -393,11 +393,21 @@ function! s:pull(repo) abort
 endfunction
 
 function! s:get_uri(repo) abort
-  if a:repo.repo =~# '^[^/]\+/[^/]\+$'
-    let url = 'https://github.com/' . (has_key(a:repo, 'repo') ? a:repo.repo : a:repo.orig_path)
-    return url
-  else
-    return a:repo.repo
+  if g:spacevim_plugin_manager ==# 'dein'
+    if a:repo.repo =~# '^[^/]\+/[^/]\+$'
+      let url = 'https://github.com/' . (has_key(a:repo, 'repo') ? a:repo.repo : a:repo.orig_path)
+      return url
+    else
+      return a:repo.repo
+    endif
+  elseif g:spacevim_plugin_manager ==# 'neobundle'
+    return a:repo.uri
+    if has_key(a:repo, 'uri')
+      return a:repo.uri
+    else
+      let url = 'https://github.com/' . (has_key(a:repo, 'orig_name') ? a:repo.orig_name : a:repo.orig_path)
+      return url
+    endif
   endif
 endfunction
 
