@@ -4,6 +4,9 @@
 " License: MIT license
 "=============================================================================
 
+let s:CMP = SpaceVim#api#import('vim#compatible')
+
+
 function! dein#autoload#_source(...) abort
   let plugins = empty(a:000) ? values(g:dein#_plugins) :
         \ dein#util#_convert2list(a:1)
@@ -11,7 +14,7 @@ function! dein#autoload#_source(...) abort
     return
   endif
 
-  if type(plugins[0]) != v:t_dict
+  if type(plugins[0]) != 4
     let plugins = map(dein#util#_convert2list(a:1),
         \       'get(g:dein#_plugins, v:val, {})')
   endif
@@ -116,11 +119,11 @@ function! s:source_events(event, plugins) abort
     return
   endif
 
-  let prev_autocmd = execute('autocmd ' . a:event)
+  let prev_autocmd = s:CMP.execute('autocmd ' . a:event)
 
   call dein#autoload#_source(a:plugins)
 
-  let new_autocmd = execute('autocmd ' . a:event)
+  let new_autocmd = s:CMP.execute('autocmd ' . a:event)
 
   if a:event ==# 'InsertCharPre'
     " Queue this key again
@@ -321,7 +324,7 @@ function! s:get_input() abort
 
   while 1
     let char = getchar()
-    let input .= (type(char) == v:t_number) ? nr2char(char) : char
+    let input .= (type(char) == 0) ? nr2char(char) : char
 
     let idx = stridx(input, termstr)
     if idx >= 1

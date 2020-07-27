@@ -1,9 +1,10 @@
-" Based on @kamichidu code
+let s:save_cpo = &cpo
+set cpo&vim
 
 "
 " public api
 "
-function! dein#toml#parse(text) abort
+function! neobundle#TOML#parse(text) abort
   let input = {
   \   'text': a:text,
   \   'p': 0,
@@ -12,14 +13,14 @@ function! dein#toml#parse(text) abort
   return s:_parse(input)
 endfunction
 
-function! dein#toml#parse_file(filename) abort
+function! neobundle#TOML#parse_file(filename) abort
   if !filereadable(a:filename)
-    throw printf("Text.TOML: No such file `%s'.", a:filename)
+    throw printf("vital: Text.TOML: No such file `%s'.", a:filename)
   endif
 
   let text = join(readfile(a:filename), "\n")
   " fileencoding is always utf8
-  return dein#toml#parse(iconv(text, 'utf8', &encoding))
+  return neobundle#TOML#parse(iconv(text, 'utf8', &encoding))
 endfunction
 
 "
@@ -36,16 +37,9 @@ function! s:_skip(input) abort
   endwhile
 endfunction
 
-" XXX: old engine is faster than NFA engine (in this context).
-if exists('+regexpengine')
-  let s:regex_prefix = '\%#=1\C^'
-else
-  let s:regex_prefix = '\C^'
-endif
-
 function! s:_consume(input, pattern) abort
   call s:_skip(a:input)
-  let end = matchend(a:input.text, s:regex_prefix . a:pattern, a:input.p)
+  let end = matchend(a:input.text, '\C^' . a:pattern, a:input.p)
 
   if end == -1
     call s:_error(a:input)
@@ -59,7 +53,7 @@ function! s:_consume(input, pattern) abort
 endfunction
 
 function! s:_match(input, pattern) abort
-  return match(a:input.text, s:regex_prefix . a:pattern, a:input.p) != -1
+  return match(a:input.text, '\C^' . a:pattern, a:input.p) != -1
 endfunction
 
 function! s:_eof(input) abort
@@ -74,9 +68,7 @@ function! s:_error(input) abort
     let offset += 1
   endwhile
 
-  throw printf("Text.TOML: Illegal toml format at L%d:`%s':%d.",
-      \ len(split(a:input.text[: a:input.p], "\n", 1)),
-      \ join(buf, ''), a:input.p)
+  throw printf("vital: Text.TOML: Illegal toml format at `%s'.", join(buf, ''))
 endfunction
 
 function! s:_parse(input) abort
@@ -142,8 +134,6 @@ function! s:_value(input) abort
     return s:_datetime(a:input)
   elseif s:_match(a:input, '[+-]\?\%(\d\+\.\d\|\d\+\%(\.\d\+\)\?[eE]\)')
     return s:_float(a:input)
-  elseif s:_match(a:input, '{')
-    return s:_inline_table(a:input)
   else
     return s:_integer(a:input)
   endif
@@ -262,24 +252,6 @@ function! s:_table(input) abort
 endfunction
 
 "
-" Inline Table
-"
-function! s:_inline_table(input) abort
-  let tbl = {}
-  let _ = s:_consume(a:input, '{')
-  call s:_skip(a:input)
-  while !s:_eof(a:input) && !s:_match(a:input, '}')
-    let key = s:_key(a:input)
-    call s:_equals(a:input)
-    let tbl[key] = s:_value(a:input)
-    call s:_consume(a:input, ',\?')
-    call s:_skip(a:input)
-  endwhile
-  let _ = s:_consume(a:input, '}')
-  return tbl
-endfunction
-
-"
 " Array of tables
 "
 function! s:_array_of_tables(input) abort
@@ -309,7 +281,7 @@ function! s:_unescape(text) abort
   let text = substitute(text, '\\n', "\n", 'g')
   let text = substitute(text, '\\f', "\f", 'g')
   let text = substitute(text, '\\r', "\r", 'g')
-  let text = substitute(text, '\\/', '/', 'g')
+  let text = substitute(text, '\\/', "/", 'g')
   let text = substitute(text, '\\\\', '\', 'g')
   let text = substitute(text, '\C\\u\(\x\{4}\)', '\=s:_nr2char("0x" . submatch(1))', 'g')
   let text = substitute(text, '\C\\U\(\x\{8}\)', '\=s:_nr2char("0x" . submatch(1))', 'g')
@@ -325,9 +297,9 @@ function! s:_put_dict(dict, key, value) abort
 
   let ref = a:dict
   for key in keys[ : -2]
-    if has_key(ref, key) && type(ref[key]) == 4
+    if has_key(ref, key) && type(ref[key]) == type({})
       let ref = ref[key]
-    elseif has_key(ref, key) && type(ref[key]) == 3
+    elseif has_key(ref, key) && type(ref[key]) == type([])
       let ref = ref[key][-1]
     else
       let ref[key] = {}
@@ -345,7 +317,7 @@ function! s:_put_array(dict, key, value) abort
   for key in keys[ : -2]
     let ref[key] = get(ref, key, {})
 
-    if type(ref[key]) == 3
+    if type(ref[key]) == type([])
       let ref = ref[key][-1]
     else
       let ref = ref[key]
@@ -355,4 +327,6 @@ function! s:_put_array(dict, key, value) abort
   let ref[keys[-1]] = get(ref, keys[-1], []) + a:value
 endfunction
 
+let &cpo = s:save_cpo
+unlet s:save_cpo
 " vim:set et ts=2 sts=2 sw=2 tw=0:

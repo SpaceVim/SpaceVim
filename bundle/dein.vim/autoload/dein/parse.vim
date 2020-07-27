@@ -104,7 +104,7 @@ function! dein#parse#_dict(plugin) abort
     let plugin.path .= '/' . plugin.script_type
   endif
 
-  if has_key(plugin, 'depends') && type(plugin.depends) != v:t_list
+  if has_key(plugin, 'depends') && type(plugin.depends) != 3
     let plugin.depends = [plugin.depends]
   endif
 
@@ -137,7 +137,7 @@ function! dein#parse#_dict(plugin) abort
           \ && stridx(plugin.rtp, dein#util#_get_base_path()) == 0
   endif
 
-  if has_key(plugin, 'if') && type(plugin.if) == v:t_string
+  if has_key(plugin, 'if') && type(plugin.if) == 1
     let plugin.if = eval(a:plugin.if)
   endif
 
@@ -145,7 +145,7 @@ function! dein#parse#_dict(plugin) abort
   for hook in filter([
         \ 'hook_add', 'hook_source',
         \ 'hook_post_source', 'hook_post_update',
-        \ ], 'has_key(plugin, v:val) && type(plugin[v:val]) == v:t_string')
+        \ ], 'has_key(plugin, v:val) && type(plugin[v:val]) == 1')
     let plugin[hook] = substitute(plugin[hook],
           \ '\n\s*\\\|\%(^\|\n\)\s*"[^\n]*', '', 'g')
   endfor
@@ -160,7 +160,7 @@ function! dein#parse#_load_toml(filename, default) abort
     call dein#util#_error(v:exception)
     return 1
   endtry
-  if type(toml) != v:t_dict
+  if type(toml) != 4
     call dein#util#_error('Invalid toml file: ' . a:filename)
     return 1
   endif
@@ -236,7 +236,7 @@ function! dein#parse#_plugins2toml(plugins) abort
         call add(toml, "'''")
       else
         call add(toml, key . ' = ' . string(
-              \ (type(val) == v:t_list && len(val) == 1) ? val[0] : val))
+              \ (type(val) == 3 && len(val) == 1) ? val[0] : val))
       endif
       unlet! val
     endfor
@@ -280,8 +280,8 @@ function! s:parse_lazy(plugin) abort
         \ 'on_ft', 'on_path', 'on_cmd', 'on_func', 'on_map',
         \ 'on_source', 'on_event',
         \ ], 'has_key(a:plugin, v:val)
-        \     && type(a:plugin[v:val]) != v:t_list
-        \     && type(a:plugin[v:val]) != v:t_dict
+        \     && type(a:plugin[v:val]) != 3
+        \     && type(a:plugin[v:val]) != 4
         \')
     let a:plugin[key] = [a:plugin[key]]
   endfor
@@ -328,11 +328,11 @@ function! s:generate_dummy_commands(plugin) abort
 endfunction
 function! s:generate_dummy_mappings(plugin) abort
   let a:plugin.dummy_mappings = []
-  let items = type(a:plugin.on_map) == v:t_dict ?
+  let items = type(a:plugin.on_map) == 4 ?
         \ map(items(a:plugin.on_map),
         \   "[split(v:val[0], '\\zs'), dein#util#_convert2list(v:val[1])]") :
         \ map(copy(a:plugin.on_map),
-        \  "type(v:val) == v:t_list ?
+        \  "type(v:val) == 3 ?
         \     [split(v:val[0], '\\zs'), v:val[1:]] :
         \     [['n', 'x'], [v:val]]")
   for [modes, mappings] in items
