@@ -4,6 +4,9 @@
 " License: MIT license
 "=============================================================================
 
+let s:CMP = SpaceVim#api#import('vim#compatible')
+
+
 function! dein#autoload#_source(...) abort
   let plugins = empty(a:000) ? values(g:dein#_plugins) :
         \ dein#util#_convert2list(a:1)
@@ -116,11 +119,11 @@ function! s:source_events(event, plugins) abort
     return
   endif
 
-  let prev_autocmd = execute('autocmd ' . a:event)
+  let prev_autocmd = s:CMP.execute('autocmd ' . a:event)
 
   call dein#autoload#_source(a:plugins)
 
-  let new_autocmd = execute('autocmd ' . a:event)
+  let new_autocmd = s:CMP.execute('autocmd ' . a:event)
 
   if a:event ==# 'InsertCharPre'
     " Queue this key again
