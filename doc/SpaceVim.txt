@@ -149,12 +149,13 @@ CONTENTS                                                   *SpaceVim-contents*
       73. lang#xml...................................|SpaceVim-layer-lang-xml|
       74. lang#xquery.............................|SpaceVim-layer-lang-xquery|
       75. language server protocol........................|SpaceVim-layer-lsp|
-      76. operator...................................|SpaceVim-layer-operator|
-      77. shell.........................................|SpaceVim-layer-shell|
-      78. test...........................................|SpaceVim-layer-test|
-      79. tmux...........................................|SpaceVim-layer-tmux|
-      80. tools#dash...............................|SpaceVim-layer-tools-dash|
-      81. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      76. leaderf.....................................|SpaceVim-layer-leaderf|
+      77. operator...................................|SpaceVim-layer-operator|
+      78. shell.........................................|SpaceVim-layer-shell|
+      79. test...........................................|SpaceVim-layer-test|
+      80. tmux...........................................|SpaceVim-layer-tmux|
+      81. tools#dash...............................|SpaceVim-layer-tools-dash|
+      82. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. Usage....................................................|SpaceVim-usage|
       1. custom_plugins........................|SpaceVim-usage-custom_plugins|
       2. tasks..........................................|SpaceVim-usage-tasks|
@@ -3098,6 +3099,12 @@ disabled by default, to enable this layer, add following snippet to  your
 LANGUAGE SERVER PROTOCOL                                  *SpaceVim-layer-lsp*
 
 This layer provides language client support for SpaceVim.
+
+==============================================================================
+LEADERF                                               *SpaceVim-layer-leaderf*
+
+This layer provides fuzzy finder feature which is based on leaderf, and this
+layer requires vim compiled with `+python` or `+python3`.
 
 ==============================================================================
 OPERATOR                                             *SpaceVim-layer-operator*
