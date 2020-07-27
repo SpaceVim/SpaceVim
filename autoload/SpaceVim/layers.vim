@@ -33,8 +33,15 @@ function! SpaceVim#layers#load(layer, ...) abort
       let loadable = SpaceVim#layers#{a:layer}#loadable()
   catch /^Vim\%((\a\+)\)\=:E117/
   endtry
-  if index(s:enabled_layers, a:layer) == -1 && loadable
-    call add(s:enabled_layers, a:layer)
+  if index(s:enabled_layers, a:layer) == -1
+    if loadable
+      call add(s:enabled_layers, a:layer)
+    else
+      call SpaceVim#logger#warn('Failed to load '
+            \ . a:layer
+            \ . ' layer, read :h SpaceVim-layer-' . a:layer 
+            \ . ' for more info!', 0)
+    endif
   endif
   if a:0 == 1 && type(a:1) == 4
     try

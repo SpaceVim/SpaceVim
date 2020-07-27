@@ -8,6 +8,12 @@
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
+function! SpaceVim#layers#leaderf#loadable()
+
+  return s:CMP.has('python') || s:CMP.has('python3')
+
+endfunction
+
 function! SpaceVim#layers#leaderf#plugins() abort
   let plugins = []
   call add(plugins, 
