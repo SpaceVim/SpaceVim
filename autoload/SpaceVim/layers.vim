@@ -26,8 +26,14 @@ let s:SYS = SpaceVim#api#import('system')
 function! SpaceVim#layers#load(layer, ...) abort
   if a:layer ==# '-l'
     call s:list_layers()
+    return
   endif
-  if index(s:enabled_layers, a:layer) == -1
+  let loadable = 1
+  try
+      let loadable = SpaceVim#layers#{a:layer}#loadable()
+  catch /^Vim\%((\a\+)\)\=:E117/
+  endtry
+  if index(s:enabled_layers, a:layer) == -1 && loadable
     call add(s:enabled_layers, a:layer)
   endif
   if a:0 == 1 && type(a:1) == 4

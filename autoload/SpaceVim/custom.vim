@@ -95,7 +95,7 @@ function! SpaceVim#custom#apply(config, type) abort
     for [name, value] in items(options)
       if name ==# 'filemanager'
         if value ==# 'defx' && !has("python3")
-          call SpaceVim#logger#warn('defx requires +python3!')
+          call SpaceVim#logger#warn('defx requires +python3!', 0)
           continue
         endif
       endif
