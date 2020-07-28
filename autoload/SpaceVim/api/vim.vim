@@ -134,6 +134,30 @@ function! s:self.is_qf_win(winnr) abort
   return a:winnr ==# self.get_qf_winnr()
 endfunction
 
+function! s:self.is_number(var) abort
+  return type(a:var) ==# 0
+endfunction
+
+function! s:self.is_string(var) abort
+  return type(a:var) ==# 1
+endfunction
+
+function! s:self.is_func(var) abort
+  return type(a:var) ==# 2
+endfunction
+
+function! s:self.is_list(var) abort
+  return type(a:var) ==# 3
+endfunction
+
+function! s:self.is_dict(var) abort
+  return type(a:var) ==# 4
+endfunction
+
+function! s:self.is_float(var) abort
+  return type(a:var) ==# 5
+endfunction
+
 function! SpaceVim#api#vim#get() abort
   return deepcopy(s:self)
 endfunction
