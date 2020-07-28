@@ -32,6 +32,16 @@ vim API provides general vim functions.
 - `is_channel(var)`
 - `is_blob(var)`
 
+here is an example for using type checking functions:
+
+```vim
+let s:VIM = SpaceVim#api#import('vim')
+let var = 'hello world'
+if s:VIM.is_string(var)
+  echo 'It is a string'
+endif
+```
+
 **Others:**
 
 - `win_set_cursor(winid, pos)`: change the cursor position of specific window.
