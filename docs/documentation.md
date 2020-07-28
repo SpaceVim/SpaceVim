@@ -1825,7 +1825,7 @@ function! s:make_tasks() abort
         return {}
     endif
 endfunction
-call SpaceVim#plugins#tasks#reg_provider(funcref('s:make_tasks'))
+call SpaceVim#plugins#tasks#reg_provider(function('s:make_tasks'))
 ```
 
 with above configuration, you will see following tasks in SpaceVim repo:
