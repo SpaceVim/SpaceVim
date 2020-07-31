@@ -2787,10 +2787,8 @@ MAPPINGS
 >
   Mode        Key         Function
   -----------------------------------------------
-  normal      gd          rust-definition
+  normal      g d         rust-definition
   normal      SPC l d     rust-doc
-  normal      SPC l s     rust-def-split
-  normal      SPC l x     rust-def-vertical
   normal      SPC l f     rustfmt-format
   normal      SPC l e     rls-rename-symbol
   normal      SPC l u     rls-show-references

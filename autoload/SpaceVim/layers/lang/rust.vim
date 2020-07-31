@@ -42,10 +42,8 @@
 " >
 "   Mode        Key         Function
 "   -----------------------------------------------
-"   normal      gd          rust-definition
+"   normal      g d         rust-definition
 "   normal      SPC l d     rust-doc
-"   normal      SPC l s     rust-def-split
-"   normal      SPC l x     rust-def-vertical
 "   normal      SPC l f     rustfmt-format
 "   normal      SPC l e     rls-rename-symbol
 "   normal      SPC l u     rls-show-references
@@ -58,6 +56,15 @@
 "   normal      SPC l c D   cargo-docs
 "   normal      SPC l c r   cargo-run
 " <
+
+if exists('s:racer_cmd')
+  finish
+else
+  let s:recommended_style = 0
+  let s:format_on_save = 0
+  let s:racer_cmd = $HOME . '/.cargo/bin/racer'
+  let s:rustfmt_cmd = $HOME . '/.cargo/bin/rustfmt'
+endif
 
 function! SpaceVim#layers#lang#rust#plugins() abort
   let plugins = [
@@ -74,15 +81,18 @@ function! SpaceVim#layers#lang#rust#config() abort
         \ 'rustc %s -o #TEMP#',
         \ '#TEMP#'])
   call SpaceVim#plugins#repl#reg('rust', 'evcxr')
-  " let g:racer_experimental_completer = 1
-  let g:racer_cmd = s:racer_cmd ==# ''
-        \ ? get(g:, 'racer_cmd', $HOME . '/.cargo/bin/racer')
-        \ : s:racer_cmd
-  let g:rustfmt_cmd = s:rustfmt_cmd ==# ''
-        \ ? get(g:, 'rustfmt_cmd', $HOME . '/.cargo/bin/rustfmt')
-        \ : s:rustfmt_cmd
+
+  let g:racer_cmd = s:racer_cmd
+  let g:rustfmt_cmd = s:rustfmt_cmd
   let g:rust_recommended_style = s:recommended_style
-  let g:rustfmt_autosave = s:format_autosave
+  " Disable racer format, use Neoformat instead!
+  let g:rustfmt_autosave = 0
+  if s:format_on_save
+    augroup SpaceVim_layer_lang_rust
+      autocmd!
+      autocmd BufWritePre *.rs undojoin | Neoformat
+    augroup end
+  endif
 
   call SpaceVim#mapping#space#regesit_lang_mappings('rust', function('s:language_specified_mappings'))
   call add(g:spacevim_project_rooter_patterns, 'Cargo.toml')
@@ -94,15 +104,20 @@ function! SpaceVim#layers#lang#rust#config() abort
   endif
 endfunction
 
-let s:recommended_style = 0
-let s:format_autosave = 0
-let s:racer_cmd = ''
-let s:rustfmt_cmd = ''
 function! SpaceVim#layers#lang#rust#set_variable(var) abort
-  let s:recommended_style = get(a:var, 'recommended-style', s:recommended_style)
-  let s:format_autosave = get(a:var, 'format-autosave', s:format_autosave)
-  let s:racer_cmd = get(a:var, 'racer-cmd', s:racer_cmd)
-  let s:rustfmt_cmd = get(a:var, 'rustfmt-cmd', s:rustfmt_cmd)
+  " support old option recommended-style and recommended_style
+  let s:recommended_style = get(a:var, 'recommended_style',
+        \ get(a:var, 'recommended-style',
+        \ s:recommended_style))
+  " support old option format-autosave and format_on_save
+  let s:format_on_save = get(a:var, 'format_on_save', 
+        \ get(a:var, 'format-autosave', s:format_autosave))
+  " support old option racer-cmd and racer_cmd
+  let s:racer_cmd = get(a:var, 'racer_cmd', 
+        \ get(a:var, 'racer-cmd', s:racer_cmd))
+  " support old option rustfmt-cmd and rustfmt_cmd
+  let s:rustfmt_cmd = get(a:var, 'rustfmt_cmd',
+        \ get(a:var, 'rustfmt-cmd', s:rustfmt_cmd))
 endfunction
 
 function! s:language_specified_mappings() abort
