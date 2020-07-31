@@ -122,7 +122,7 @@ function! SpaceVim#layers#lang#rust#set_variable(var) abort
         \ s:recommended_style))
   " support old option format-autosave and format_on_save
   let s:format_on_save = get(a:var, 'format_on_save', 
-        \ get(a:var, 'format-autosave', s:format_autosave))
+        \ get(a:var, 'format-autosave', s:format_on_save))
   " support old option racer-cmd and racer_cmd
   let s:racer_cmd = get(a:var, 'racer_cmd', 
         \ get(a:var, 'racer-cmd', s:racer_cmd))
