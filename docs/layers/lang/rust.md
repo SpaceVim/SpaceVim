@@ -79,6 +79,8 @@ To use this configuration layer, update custom configuration file with:
 | `SPC l c D`     | Run `cargo doc`                    |
 | `SPC l c r`     | Run `cargo run`                    |
 
+**Note:** When enable lsp layer for rust, `SPC l g` and `SPC l v` will not exist.
+
 ### Inferior REPL process
 
 Start a `evcxr` inferior REPL process with `SPC l s i`.

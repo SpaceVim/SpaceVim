@@ -134,12 +134,6 @@ endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
-  " change it to SPC l g and SPC l v, just same as s g and s v
-  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g'],
-        \ '<Plug>(rust-def-split)', 'rust-def-split', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'v'],
-        \ '<Plug>(rust-def-vertical)', 'rust-def-vertical', 0)
-
   let g:_spacevim_mappings_space.l.c = {'name' : '+Cargo'}
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'r'], 'call call('
         \ . string(function('s:execCMD')) . ', ["cargo run"])',
@@ -178,6 +172,12 @@ function! s:language_specified_mappings() abort
     nmap <silent><buffer> K <Plug>(rust-doc)
     call SpaceVim#mapping#space#langSPC('nmap', ['l', 'd'],
           \ '<Plug>(rust-doc)', 'show documentation', 1)
+    " change it to SPC l g and SPC l v, just same as s g and s v
+    call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g'],
+          \ '<Plug>(rust-def-split)', 'rust-def-split', 0)
+    call SpaceVim#mapping#space#langSPC('nmap', ['l', 'v'],
+          \ '<Plug>(rust-def-vertical)', 'rust-def-vertical', 0)
+
   endif
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
