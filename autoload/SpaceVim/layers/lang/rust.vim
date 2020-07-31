@@ -107,8 +107,6 @@ endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l', 's'],
-        \ '<Plug>(rust-def-split)', 'rust-def-split', 0)
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'x'],
         \ '<Plug>(rust-def-vertical)', 'rust-def-vertical', 0)
 

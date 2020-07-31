@@ -14,6 +14,8 @@ description: "This layer is for Rust development, provide autocompletion, syntax
   - [language tools](#language-tools)
 - [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
+  - [Inferior REPL process](#inferior-repl-process)
+  - [Running current script](#running-current-script)
 
 <!-- vim-markdown-toc -->
 
@@ -64,9 +66,7 @@ To use this configuration layer, update custom configuration file with:
 | --------------- | ---------------------------------- |
 | `g d`           | Jump to definition                 |
 | `SPC l d` / `K` | Show doc of cursor symbol          |
-| `SPC l s`       | Jump to definition (split)         |
 | `SPC l x`       | Jump to definition (vertical)      |
-| `SPC l f`       | Format current buffer              |
 | `SPC l e`       | Rename symbol (need `lsp` layer)   |
 | `SPC l u`       | Show references (need `lsp` layer) |
 | `SPC l c b`     | Run `cargo build`                  |
@@ -78,3 +78,18 @@ To use this configuration layer, update custom configuration file with:
 | `SPC l c D`     | Run `cargo doc`                    |
 | `SPC l c r`     | Run `cargo run`                    |
 
+### Inferior REPL process
+
+Start a `evcxr` inferior REPL process with `SPC l s i`.
+
+Send code to inferior process commands:
+
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |
+
+### Running current script
+
+To running a rust file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
