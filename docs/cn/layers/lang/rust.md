@@ -70,6 +70,8 @@ lang: zh
 | `SPC l c D`     | 运行 `cargo doc`                               |
 | `SPC l c r`     | 运行 `cargo run`                               |
 
+**注意:** 当为rust启用lsp模块后，`SPC l g`和`SPC l v`这两个快捷键将不可用。
+
 ### 交互式编程
 
 启动 `evcxr` 交互进程，快捷键为： `SPC l s i`。
