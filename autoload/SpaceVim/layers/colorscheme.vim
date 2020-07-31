@@ -95,7 +95,8 @@ function! SpaceVim#layers#colorscheme#config() abort
       let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequence.json'), ''), ''))
       if s:random_frequency !=# '' && !empty(conf)
         let ctime = localtime()
-        if ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'fequecnce', ''), 0)
+        if index(s:random_candidates, get(conf, 'theme', '')) == -1 ||
+              \ ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'fequecnce', ''), 0)
           let id = s:NUMBER.random(0, len(s:random_candidates))
           let g:spacevim_colorscheme = s:random_candidates[id]
           call s:update_conf()
