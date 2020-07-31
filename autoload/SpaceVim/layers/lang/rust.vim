@@ -40,21 +40,20 @@
 "
 " @subsection Mappings
 " >
-"   Mode        Key         Function
+"   Key         Function
 "   -----------------------------------------------
-"   normal      g d         rust-definition
-"   normal      SPC l d     rust-doc
-"   normal      SPC l f     rustfmt-format
-"   normal      SPC l e     rls-rename-symbol
-"   normal      SPC l u     rls-show-references
-"   normal      SPC l c b   cargo-build
-"   normal      SPC l c c   cargo-clean
-"   normal      SPC l c f   cargo-fmt
-"   normal      SPC l c t   cargo-test
-"   normal      SPC l c u   cargo-update
-"   normal      SPC l c B   cargo-bench
-"   normal      SPC l c D   cargo-docs
-"   normal      SPC l c r   cargo-run
+"   g d         rust-definition
+"   SPC l d     rust-doc
+"   SPC l e     rls-rename-symbol
+"   SPC l u     rls-show-references
+"   SPC l c b   cargo-build
+"   SPC l c c   cargo-clean
+"   SPC l c f   cargo-fmt
+"   SPC l c t   cargo-test
+"   SPC l c u   cargo-update
+"   SPC l c B   cargo-bench
+"   SPC l c D   cargo-docs
+"   SPC l c r   cargo-run
 " <
 
 if exists('s:racer_cmd')
@@ -122,7 +121,10 @@ endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'x'],
+  " change it to SPC l g and SPC l v, just same as s g and s v
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'g'],
+        \ '<Plug>(rust-def-split)', 'rust-def-split', 0)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'v'],
         \ '<Plug>(rust-def-vertical)', 'rust-def-vertical', 0)
 
   let g:_spacevim_mappings_space.l.c = {'name' : '+Cargo'}
