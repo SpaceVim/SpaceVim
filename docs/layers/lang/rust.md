@@ -57,8 +57,8 @@ To use this configuration layer, update custom configuration file with:
 
 - `recommended_style`: `true`/`false` (Enable/Disable) recommended code style for rust. This option is disabled by default.
 - `format_on_save`: `true`/`false` (Enable/Disable) format current buffer after saved. This option is disabled by default.
-- `racer_cmd`: the directory of `racer` binary. This option is `$HOME/.cargo/bin/racer` by default.
-- `rustfmt_cmd`: the directory of `rustfmt` binary. This option is `$HOME/.cargo/bin/rustfmt` by default.
+- `racer_cmd`: The path of `racer` binary. This option is `racer` by default.
+- `rustfmt_cmd`: The path of `rustfmt` binary. This option is `rustfmt` by default.
 
 ## Key bindings
 
