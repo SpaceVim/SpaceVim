@@ -17,25 +17,26 @@
 "   1. Racer needs a copy of the rust source. The easiest way to do this is
 "       with rustup. Once rustup is installed, download the source with:
 " >
-"       rustup component add rust-src 
+"   rustup component add rust-src 
 " <
 "   2. Install Rust nightly build
-"       
 " >
-"       rustup install nightly
+"   rustup install nightly
 " <
 "   3. Install racer:
 " >
-"       cargo +nightly install racer
+"   cargo +nightly install racer
 " <
 "   4. Set the RUST_SRC_PATH variable in your .bashrc:
 " >
-"       RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
-"       export RUST_SRC_PATH
+"   RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
+"   export RUST_SRC_PATH
 " <
 "   5. Add racer to your path, or set the path with:
 " >
-"       let g:racer_cmd = "/path/to/racer/bin"
+"   [[layers]]
+"     name = 'lang#rust'
+"     racer_cmd = "/path/to/racer/bin"
 " <
 "
 " @subsection Mappings
@@ -73,8 +74,8 @@ if exists('s:racer_cmd')
 else
   let s:recommended_style = 0
   let s:format_on_save = 0
-  let s:racer_cmd = $HOME . '/.cargo/bin/racer'
-  let s:rustfmt_cmd = $HOME . '/.cargo/bin/rustfmt'
+  let s:racer_cmd = 'racer'
+  let s:rustfmt_cmd = 'rustfmt'
 endif
 
 function! SpaceVim#layers#lang#rust#plugins() abort
