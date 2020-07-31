@@ -44,6 +44,7 @@
 "   -----------------------------------------------
 "   g d         rust-definition
 "   SPC l d     rust-doc
+"   SPC l r     run current file
 "   SPC l e     rls-rename-symbol
 "   SPC l u     rls-show-references
 "   SPC l c b   cargo-build
@@ -55,6 +56,17 @@
 "   SPC l c D   cargo-docs
 "   SPC l c r   cargo-run
 " <
+"
+" This layer also provides REPL support for rust, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 if exists('s:racer_cmd')
   finish
