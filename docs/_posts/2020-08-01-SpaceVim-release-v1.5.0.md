@@ -98,13 +98,13 @@ Four programming language layers have been added since the last release:
 - Fix flygrep statusline [#3657](https://github.com/SpaceVim/SpaceVim/pull/3657)
 - Fix flygrep history completion [#3659](https://github.com/SpaceVim/SpaceVim/pull/3659)
 - Fix dein support [#3647](https://github.com/SpaceVim/SpaceVim/pull/3647)
-- Fix statuline in old split windows (#3644)
-- Fix unknown function popup_list (#3673)
-- Fix support for vim 7.4.1689 (#3663) 
-- Fix key binding guide floating statusline (#3658) 
-- Fix lsp support for lang#c layer (#3652) 
-- Fix fonts downloader (#3648) 
-- Fix key binding q in quickfix windows (#3645)
+- Fix statuline in old split windows [#3644](https://github.com/SpaceVim/SpaceVim/pull/3644)
+- Fix unknown function popup_list [#3673](https://github.com/SpaceVim/SpaceVim/pull/3673)
+- Fix support for vim 7.4.1689 [#3663](https://github.com/SpaceVim/SpaceVim/pull/3663)
+- Fix key binding guide floating statusline [#3658](https://github.com/SpaceVim/SpaceVim/pull/3658)
+- Fix lsp support for lang#c layer [#3652](https://github.com/SpaceVim/SpaceVim/pull/3652)
+- Fix fonts downloader [#3648](https://github.com/SpaceVim/SpaceVim/pull/3648)
+- Fix key binding q in quickfix windows [#3645](https://github.com/SpaceVim/SpaceVim/pull/3645)
 
 ## Doc&&Wiki
 
