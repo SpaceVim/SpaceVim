@@ -57,7 +57,7 @@ Four programming language layers have been added since the last release:
 
 - Add floating statusline for key bindng guide [#3605](https://github.com/SpaceVim/SpaceVim/pull/3605)
 - Add floating windows support vim [#3612](https://github.com/SpaceVim/SpaceVim/pull/3612)
-- Add Flygrep float preview for neovim (#3649)
+- Add Flygrep float preview for neovim [#3649](https://github.com/SpaceVim/SpaceVim/pull/3649)
 - Disable scrollbar in vim [#3625](https://github.com/SpaceVim/SpaceVim/pull/3625)
 - Floating statusline for vim [#3617](https://github.com/SpaceVim/SpaceVim/pull/3617)
 - Add highlight option for floating API [#3619](https://github.com/SpaceVim/SpaceVim/pull/3619)
@@ -111,7 +111,7 @@ Four programming language layers have been added since the last release:
 - Add help file for tasks [#3371](https://github.com/SpaceVim/SpaceVim/pull/3371)
 - Add cn blog for key binding guide [#3675](https://github.com/SpaceVim/SpaceVim/pull/3675)
 - Update gnu global install guide for MacOS [#3651](https://github.com/SpaceVim/SpaceVim/pull/3651)
-- Update following HEAD page (#3642)
+- Update following HEAD page [#3642](https://github.com/SpaceVim/SpaceVim/pull/3642)
 
 ## Others
 
