@@ -68,6 +68,7 @@ Three programming language layers have been added since the last release:
 - Update php.vim [#3004](https://github.com/SpaceVim/SpaceVim/pull/3004)
 - Show buffer name [#3340](https://github.com/SpaceVim/SpaceVim/pull/3340)
 - Neovim lsp [#2627](https://github.com/SpaceVim/SpaceVim/pull/2627)
+- Improve `lang#rust` layer [#3674](https://github.com/SpaceVim/SpaceVim/pull/3674)
 
 ## Changes
 
@@ -93,12 +94,12 @@ Three programming language layers have been added since the last release:
 
 - Add help file for tasks [#3371](https://github.com/SpaceVim/SpaceVim/pull/3371)
 - Add cn blog for key binding guide [#3675](https://github.com/SpaceVim/SpaceVim/pull/3675)
+- Update gnu global install guide for MacOS [#3651](https://github.com/SpaceVim/SpaceVim/pull/3651)
 
 ## Others
 
 - Update vimproc.vim bundle to latest version [#3587](https://github.com/SpaceVim/SpaceVim/pull/3587)
 
-* 280b0b9b - Improve lang#rust layer (#3674) (Wang Shidong 17 hours ago)
 * a0db70b0 - Fix unknown function popup_list (#3673) (Wang Shidong 19 hours ago)
 * c0a652c0 - Fix support for vim 7.4.1689 (#3663) (Wang Shidong 5 days ago)
 * 44b3a99d - Fix flygrep history completion (#3659) (Wang Shidong 7 days ago)
@@ -107,7 +108,6 @@ Three programming language layers have been added since the last release:
 * 9654344c - (wsdjeg/typescript) Add lang#fortran layer (#3654) (Wang Shidong 11 days ago)
 * c0dd1c3f - Fix location list statusline (#3653) (Wang Shidong 13 days ago)
 * bea44f4b - Fix lsp support for lang#c layer (#3652) (Wang Shidong 13 days ago)
-* bfd221d9 - Fix global install guide for macos (#3651) (Wang Shidong 13 days ago)
 * 01fd04a8 - Add Flygrep float preview for neovim (#3649) (Wang Shidong 13 days ago)
 * bc39677a - Fix fonts downloader (#3648) (Wang Shidong 13 days ago)
 * 1085213b - Fix dein support (Shidong Wang 13 days ago)
