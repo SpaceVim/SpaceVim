@@ -28,6 +28,7 @@ The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) de
   - [v1.2.0](#v120)
   - [v1.3.0](#v130)
   - [v1.4.0](#v140)
+  - [v1.5.0](#v150)
 
 <!-- vim-markdown-toc -->
 
@@ -148,5 +149,10 @@ release note: [v1.3.0](http://spacevim.org/SpaceVim-release-v1.3.0/)
 ### [v1.4.0](https://github.com/SpaceVim/SpaceVim/milestone/17)
 
 release note: [v1.4.0](http://spacevim.org/SpaceVim-release-v1.4.0/)
+
+### [v1.5.0](https://github.com/SpaceVim/SpaceVim/milestone/18)
+
+release note: [v1.5.0](http://spacevim.org/SpaceVim-release-v1.5.0/)
+
 
 <!-- SpaceVim roadmap completed items end -->
