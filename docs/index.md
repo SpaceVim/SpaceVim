@@ -59,7 +59,7 @@ Contribute code, report bugs and request features at [GitHub](https://github.com
 
 - What is the project status?
 
-The current stable version is v1.4.0, See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
+The current stable version is v1.5.0, See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
 for development progress and the [Roadmap](roadmap/) for high-level plans.
 
 - Is SpaceVim trying to turn Vim/Neovim into an IDE?
