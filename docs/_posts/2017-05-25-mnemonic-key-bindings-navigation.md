@@ -2,7 +2,7 @@
 title: "Mnemonic key bindings navigation"
 categories: [feature, blog]
 description: "Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…"
-image: https://user-images.githubusercontent.com/13142418/80597412-62f2f200-8a5a-11ea-9dbf-30ec9f82422a.gif
+image: https://user-images.githubusercontent.com/13142418/89091735-5de96a00-d3de-11ea-85e1-b0fc64537836.gif
 commentsID: "Mnemonic key bindings navigation"
 comments: true
 ---
@@ -28,11 +28,11 @@ Otherwise, it will be displayed in split Window.
 
 ## default key binding prefixes
 
-| Prefix name | custom option and default value   | description                         |
-| ----------- | --------------------------------- | ----------------------------------- |
-| `[SPC]`     | NONE / `<Space>`                  | default mapping prefix of SpaceVim  |
-| `[Window]`  | `g:spacevim_windows_leader` / `s` | window mapping prefix of SpaceVim   |
-| `<leader>`  | `mapleader` / `` \ ``             | default leader prefix of vim/neovim |
+| Prefix name | custom option and default value                         | description                        |
+| ----------- | ------------------------------------------------------- | ---------------------------------- |
+| `[SPC]`     | NONE / `<Space>`                                        | default mapping prefix of SpaceVim |
+| `[Window]`  | `g:spacevim_windows_leader` / `s`                       | window mapping prefix of SpaceVim  |
+| `<leader>`  | `mapleader` / `\` | default leader prefix of vim/neovim |
 
 By default the guide buffer will be displayed 1000ms after the key has been pressed. You can change the delay by setting `'timeoutlen'` option to your liking (the value is in milliseconds).
 
