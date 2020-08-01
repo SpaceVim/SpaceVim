@@ -37,15 +37,15 @@ The v1.5.0 has been released. So let's take a look at what happened since last r
 
 Three programming language layers have been added since the last release:
 
-- Add lang#factor layer [#2906](https://github.com/SpaceVim/SpaceVim/pull/2906)
-- Add lang#forth layer [#2927](https://github.com/SpaceVim/SpaceVim/pull/2927)
-- Add lang#supoercollider layer [#3092](https://github.com/SpaceVim/SpaceVim/pull/3092)
+- Add `lang#factor` layer [#2906](https://github.com/SpaceVim/SpaceVim/pull/2906)
+- Add `lang#forth` layer [#2927](https://github.com/SpaceVim/SpaceVim/pull/2927)
+- Add `lang#supoercollider` layer [#3092](https://github.com/SpaceVim/SpaceVim/pull/3092)
 
 ### New APIs
 
-- Add notification API [#3621](https://github.com/SpaceVim/SpaceVim/pull/3621)
-- Add support multiple notification [#3624](https://github.com/SpaceVim/SpaceVim/pull/3624)
-- Add clock api [#3595](https://github.com/SpaceVim/SpaceVim/pull/3595)
+- Add `notification` API [#3621](https://github.com/SpaceVim/SpaceVim/pull/3621)
+- Add multiple notification support [#3624](https://github.com/SpaceVim/SpaceVim/pull/3624)
+- Add `clock` api [#3595](https://github.com/SpaceVim/SpaceVim/pull/3595)
 - Add setbufvar api [#3083](https://github.com/SpaceVim/SpaceVim/pull/3083)
 - Add floating_statusline api [#2664](https://github.com/SpaceVim/SpaceVim/pull/2664)
 - Add type checking function for `vim` api [#3666](https://github.com/SpaceVim/SpaceVim/pull/3666)
@@ -91,6 +91,7 @@ Three programming language layers have been added since the last release:
 - Update coc.nvim installation [#3564](https://github.com/SpaceVim/SpaceVim/pull/3564)
 - Fix flygrep statusline [#3657](https://github.com/SpaceVim/SpaceVim/pull/3657)
 - Fix flygrep history completion [#3659](https://github.com/SpaceVim/SpaceVim/pull/3659)
+- Fix dein support [#3647](https://github.com/SpaceVim/SpaceVim/pull/3647)
 
 ## Doc&&Wiki
 
@@ -110,8 +111,6 @@ Three programming language layers have been added since the last release:
 * bea44f4b - Fix lsp support for lang#c layer (#3652) (Wang Shidong 13 days ago)
 * 01fd04a8 - Add Flygrep float preview for neovim (#3649) (Wang Shidong 13 days ago)
 * bc39677a - Fix fonts downloader (#3648) (Wang Shidong 13 days ago)
-* 1085213b - Fix dein support (Shidong Wang 13 days ago)
-* 8c3d1d82 - Fix dein support (#3647) (Wang Shidong 13 days ago)
 * ca735648 - Fix key binding q in quickfix windows (#3645) (Wang Shidong 2 weeks ago)
 * 9a9e18e3 - Update following HEAD page (#3642) (Wang Shidong 2 weeks ago)
 * 959800e5 - Fix vim#window api (#3643) (Wang Shidong 2 weeks ago)
