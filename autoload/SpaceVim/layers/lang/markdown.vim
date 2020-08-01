@@ -13,10 +13,12 @@ let s:md_listItemIndent = 1
 let s:md_enableWcwidth = 0
 let s:md_listItemChar = '-'
 let g:vmt_list_indent_text = '  '
+let s:md_enabled_formater = ['remark']
 function! SpaceVim#layers#lang#markdown#set_variable(var) abort
   let s:md_listItemIndent = get(a:var, 'listItemIndent', s:md_listItemIndent)
   let s:md_enableWcwidth = get(a:var, 'enableWcwidth', s:md_enableWcwidth)
   let s:md_listItemChar = get(a:var, 'listItemChar', s:md_listItemChar)
+  let s:md_enabled_formater = get(a:var, 'enabled_formater', s:enabled_formater)
 endfunction
 
 function! SpaceVim#layers#lang#markdown#plugins() abort
@@ -64,12 +66,7 @@ function! SpaceVim#layers#lang#markdown#config() abort
         \},
         \}
   let remarkrc = s:generate_remarkrc()
-  if s:SYS.isWindows && 0
-    " @fixme prettier do not support kramdown
-    let g:neoformat_enabled_markdown = ['prettier']
-  else
-    let g:neoformat_enabled_markdown = ['remark']
-  endif
+  let g:neoformat_enabled_markdown = s:md_enabled_formater
   let g:neoformat_markdown_remark = {
         \ 'exe': 'remark',
         \ 'args': ['--no-color', '--silent'] + (empty(remarkrc) ?  [] : ['-r', remarkrc]),
