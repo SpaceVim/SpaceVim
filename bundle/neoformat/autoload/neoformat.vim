@@ -92,7 +92,8 @@ function! s:neoformat(bang, user_input, start_line, end_line) abort
         endif
 
         " read from /tmp file if formatter replaces file on format
-        if cmd.replace || len(stdout) == 0
+        " make sure cmd.tmp_file_path is readable
+        if (cmd.replace || len(stdout) == 0) && filereadable(cmd.tmp_file_path)
             let stdout = readfile(cmd.tmp_file_path)
         endif
 

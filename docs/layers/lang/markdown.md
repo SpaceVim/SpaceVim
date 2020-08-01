@@ -34,8 +34,7 @@ which is written in rust.
 
 ## Formatting
 
-SpaceVim uses remark to format Markdown file by default, but we suggest using [Prettier](https://github.com/prettier/prettier) on Windows.
-
+SpaceVim uses remark to format Markdown file by default.
 You can install remark via [npm](https://www.npmjs.com/get-npm), the commands are shown as below.
 
 ```sh
@@ -45,6 +44,9 @@ npm -g install remark-stringify
 npm -g install remark-frontmatter
 npm -g install wcwidth
 ```
+
+To use [Prettier](https://github.com/prettier/prettier),
+you need to change the layer option: `enabled_formater`.
 
 You can install [Prettier](https://github.com/prettier/prettier) via [yarn](https://yarnpkg.com/lang/zh-hans/docs/install/#windows-stable) or [npm](https://www.npmjs.com/get-npm), the commands are shown as below:
 
@@ -77,6 +79,10 @@ Enable/Disable wcwidth for detecting the length of a table cell, default is 0. T
 **listItemChar**
 
 Bullet marker to use for list items (`'-'`, `'*'`, or `'+'`, default: `'-'`).
+
+**enabled_formater**
+
+Specific the enabled formater for markdown file, default is `['remark']`.
 
 ## Tagbar
 
