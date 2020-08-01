@@ -118,7 +118,7 @@ through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
 You don't need to remember any key bindings, as the mapping guide will show up after the <kbd>SPC</kbd> is pressed.
 The mapping guide is also available for `g`, `z`, and `s`.
 
-![mapping guide](https://user-images.githubusercontent.com/13142418/35568184-9a318082-058d-11e8-9d88-e0eafd1d498d.gif)
+![float_guide](https://user-images.githubusercontent.com/13142418/89091735-5de96a00-d3de-11ea-85e1-b0fc64537836.gif)
 
 [**Help description for key bindings**](https://spacevim.org/help-description-for-key-bindings/)
 

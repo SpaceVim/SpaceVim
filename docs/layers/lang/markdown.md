@@ -11,6 +11,7 @@ description: "Edit markdown within vim, autopreview markdown in the default brow
 - [Install](#install)
 - [Formatting](#formatting)
   - [options](#options)
+- [Tagbar](#tagbar)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
