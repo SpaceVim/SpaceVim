@@ -7,10 +7,10 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-[![Version](https://img.shields.io/badge/version-1.5.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-1.5.0-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/80494420-3925c680-8999-11ea-9652-21e1e5564148.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png)
 
 # SpaceVim - Modern Vim distribution
 
@@ -30,7 +30,7 @@ appreciation while providing us motivation to continue working on this project.
 - [Documentation](documentation/): the primary official document of SpaceVim
 - [Available layers](layers/): a list of available layers which can be used in SpaceVim
 
-The last release is v1.4.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The last release is v1.5.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## New features
 
@@ -59,7 +59,7 @@ Contribute code, report bugs and request features at [GitHub](https://github.com
 
 - What is the project status?
 
-The current stable version is v1.4.0, See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
+The current stable version is v1.5.0, See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
 for development progress and the [Roadmap](roadmap/) for high-level plans.
 
 - Is SpaceVim trying to turn Vim/Neovim into an IDE?
