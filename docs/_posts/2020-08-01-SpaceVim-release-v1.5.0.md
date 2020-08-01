@@ -91,7 +91,28 @@ Three programming language layers have been added since the last release:
 ## Doc&&Wiki
 
 - Add help file for tasks [#3371](https://github.com/SpaceVim/SpaceVim/pull/3371)
+- Add cn blog for key binding guide [#3675](https://github.com/SpaceVim/SpaceVim/pull/3675)
 
 ## Others
 
 - Update vimproc.vim bundle to latest version [#3587](https://github.com/SpaceVim/SpaceVim/pull/3587)
+
+* 280b0b9b - Improve lang#rust layer (#3674) (Wang Shidong 17 hours ago)
+* a0db70b0 - Fix unknown function popup_list (#3673) (Wang Shidong 19 hours ago)
+* 31768c56 - Add type func (#3666) (Wang Shidong 4 days ago)
+* c0a652c0 - Fix support for vim 7.4.1689 (#3663) (Wang Shidong 5 days ago)
+* 44b3a99d - Fix flygrep history completion (#3659) (Wang Shidong 7 days ago)
+* 21bbc714 - Fix key binding guide floating statusline (#3658) (Wang Shidong 8 days ago)
+* 0d408eec - Fix flygrep statusline (#3657) (Wang Shidong 9 days ago)
+* 9654344c - (wsdjeg/typescript) Add lang#fortran layer (#3654) (Wang Shidong 11 days ago)
+* c0dd1c3f - Fix location list statusline (#3653) (Wang Shidong 13 days ago)
+* bea44f4b - Fix lsp support for lang#c layer (#3652) (Wang Shidong 13 days ago)
+* bfd221d9 - Fix global install guide for macos (#3651) (Wang Shidong 13 days ago)
+* 01fd04a8 - Add Flygrep float preview for neovim (#3649) (Wang Shidong 13 days ago)
+* bc39677a - Fix fonts downloader (#3648) (Wang Shidong 13 days ago)
+* 1085213b - Fix dein support (Shidong Wang 13 days ago)
+* 8c3d1d82 - Fix dein support (#3647) (Wang Shidong 13 days ago)
+* ca735648 - Fix key binding q in quickfix windows (#3645) (Wang Shidong 2 weeks ago)
+* 9a9e18e3 - Update following HEAD page (#3642) (Wang Shidong 2 weeks ago)
+* 959800e5 - Fix vim#window api (#3643) (Wang Shidong 2 weeks ago)
+* cf345827 - Fix statuline in old split windows (#3644) (Wang Shidong 2 weeks ago)
