@@ -37,11 +37,12 @@ The v1.5.0 has been released. So let's take a look at what happened since last r
 
 ### New language layers
 
-Three programming language layers have been added since the last release:
+Four programming language layers have been added since the last release:
 
 - Add `lang#factor` layer [#2906](https://github.com/SpaceVim/SpaceVim/pull/2906)
 - Add `lang#forth` layer [#2927](https://github.com/SpaceVim/SpaceVim/pull/2927)
 - Add `lang#supoercollider` layer [#3092](https://github.com/SpaceVim/SpaceVim/pull/3092)
+- Add `lang#fortran` layer [#3654](https://github.com/SpaceVim/SpaceVim/pull/3654)
 
 ### New APIs
 
@@ -56,6 +57,7 @@ Three programming language layers have been added since the last release:
 
 - Add floating statusline for key bindng guide [#3605](https://github.com/SpaceVim/SpaceVim/pull/3605)
 - Add floating windows support vim [#3612](https://github.com/SpaceVim/SpaceVim/pull/3612)
+- Add Flygrep float preview for neovim (#3649)
 - Disable scrollbar in vim [#3625](https://github.com/SpaceVim/SpaceVim/pull/3625)
 - Floating statusline for vim [#3617](https://github.com/SpaceVim/SpaceVim/pull/3617)
 - Add highlight option for floating API [#3619](https://github.com/SpaceVim/SpaceVim/pull/3619)
@@ -71,6 +73,7 @@ Three programming language layers have been added since the last release:
 - Show buffer name [#3340](https://github.com/SpaceVim/SpaceVim/pull/3340)
 - Neovim lsp [#2627](https://github.com/SpaceVim/SpaceVim/pull/2627)
 - Improve `lang#rust` layer [#3674](https://github.com/SpaceVim/SpaceVim/pull/3674)
+- Improve location list statusline [#3653](https://github.com/SpaceVim/SpaceVim/pull/3653)
 
 ## Changes
 
@@ -78,6 +81,7 @@ Three programming language layers have been added since the last release:
 
 ## Bug Fixs
 
+- Fix `vim#window` api [#3643](https://github.com/SpaceVim/SpaceVim/pull/3643)
 - Fix smart quit should skip floating windows and popup [#3640](https://github.com/SpaceVim/SpaceVim/pull/3640)
 - Fix lua api [#3639](https://github.com/SpaceVim/SpaceVim/pull/3639)
 - Fix VCS Transient State [#3635](https://github.com/SpaceVim/SpaceVim/pull/3635)
@@ -94,26 +98,22 @@ Three programming language layers have been added since the last release:
 - Fix flygrep statusline [#3657](https://github.com/SpaceVim/SpaceVim/pull/3657)
 - Fix flygrep history completion [#3659](https://github.com/SpaceVim/SpaceVim/pull/3659)
 - Fix dein support [#3647](https://github.com/SpaceVim/SpaceVim/pull/3647)
+- Fix statuline in old split windows (#3644)
+- Fix unknown function popup_list (#3673)
+- Fix support for vim 7.4.1689 (#3663) 
+- Fix key binding guide floating statusline (#3658) 
+- Fix lsp support for lang#c layer (#3652) 
+- Fix fonts downloader (#3648) 
+- Fix key binding q in quickfix windows (#3645)
 
 ## Doc&&Wiki
 
 - Add help file for tasks [#3371](https://github.com/SpaceVim/SpaceVim/pull/3371)
 - Add cn blog for key binding guide [#3675](https://github.com/SpaceVim/SpaceVim/pull/3675)
 - Update gnu global install guide for MacOS [#3651](https://github.com/SpaceVim/SpaceVim/pull/3651)
+- Update following HEAD page (#3642)
 
 ## Others
 
 - Update vimproc.vim bundle to latest version [#3587](https://github.com/SpaceVim/SpaceVim/pull/3587)
 
-* a0db70b0 - Fix unknown function popup_list (#3673) (Wang Shidong 19 hours ago)
-* c0a652c0 - Fix support for vim 7.4.1689 (#3663) (Wang Shidong 5 days ago)
-* 21bbc714 - Fix key binding guide floating statusline (#3658) (Wang Shidong 8 days ago)
-* 9654344c - (wsdjeg/typescript) Add lang#fortran layer (#3654) (Wang Shidong 11 days ago)
-* c0dd1c3f - Fix location list statusline (#3653) (Wang Shidong 13 days ago)
-* bea44f4b - Fix lsp support for lang#c layer (#3652) (Wang Shidong 13 days ago)
-* 01fd04a8 - Add Flygrep float preview for neovim (#3649) (Wang Shidong 13 days ago)
-* bc39677a - Fix fonts downloader (#3648) (Wang Shidong 13 days ago)
-* ca735648 - Fix key binding q in quickfix windows (#3645) (Wang Shidong 2 weeks ago)
-* 9a9e18e3 - Update following HEAD page (#3642) (Wang Shidong 2 weeks ago)
-* 959800e5 - Fix vim#window api (#3643) (Wang Shidong 2 weeks ago)
-* cf345827 - Fix statuline in old split windows (#3644) (Wang Shidong 2 weeks ago)
