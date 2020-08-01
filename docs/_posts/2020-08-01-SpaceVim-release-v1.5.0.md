@@ -90,6 +90,7 @@ Three programming language layers have been added since the last release:
 - Fix coc.vim installation [#3560](https://github.com/SpaceVim/SpaceVim/pull/3560)
 - Update coc.nvim installation [#3564](https://github.com/SpaceVim/SpaceVim/pull/3564)
 - Fix flygrep statusline [#3657](https://github.com/SpaceVim/SpaceVim/pull/3657)
+- Fix flygrep history completion [#3659](https://github.com/SpaceVim/SpaceVim/pull/3659)
 
 ## Doc&&Wiki
 
@@ -103,7 +104,6 @@ Three programming language layers have been added since the last release:
 
 * a0db70b0 - Fix unknown function popup_list (#3673) (Wang Shidong 19 hours ago)
 * c0a652c0 - Fix support for vim 7.4.1689 (#3663) (Wang Shidong 5 days ago)
-* 44b3a99d - Fix flygrep history completion (#3659) (Wang Shidong 7 days ago)
 * 21bbc714 - Fix key binding guide floating statusline (#3658) (Wang Shidong 8 days ago)
 * 9654344c - (wsdjeg/typescript) Add lang#fortran layer (#3654) (Wang Shidong 11 days ago)
 * c0dd1c3f - Fix location list statusline (#3653) (Wang Shidong 13 days ago)
