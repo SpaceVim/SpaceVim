@@ -48,6 +48,7 @@ Three programming language layers have been added since the last release:
 - Add clock api [#3595](https://github.com/SpaceVim/SpaceVim/pull/3595)
 - Add setbufvar api [#3083](https://github.com/SpaceVim/SpaceVim/pull/3083)
 - Add floating_statusline api [#2664](https://github.com/SpaceVim/SpaceVim/pull/2664)
+- Add type checking function for `vim` api [#3666](https://github.com/SpaceVim/SpaceVim/pull/3666)
 
 ### New features
 
@@ -99,7 +100,6 @@ Three programming language layers have been added since the last release:
 
 * 280b0b9b - Improve lang#rust layer (#3674) (Wang Shidong 17 hours ago)
 * a0db70b0 - Fix unknown function popup_list (#3673) (Wang Shidong 19 hours ago)
-* 31768c56 - Add type func (#3666) (Wang Shidong 4 days ago)
 * c0a652c0 - Fix support for vim 7.4.1689 (#3663) (Wang Shidong 5 days ago)
 * 44b3a99d - Fix flygrep history completion (#3659) (Wang Shidong 7 days ago)
 * 21bbc714 - Fix key binding guide floating statusline (#3658) (Wang Shidong 8 days ago)
