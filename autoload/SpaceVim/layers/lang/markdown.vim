@@ -18,7 +18,7 @@ function! SpaceVim#layers#lang#markdown#set_variable(var) abort
   let s:md_listItemIndent = get(a:var, 'listItemIndent', s:md_listItemIndent)
   let s:md_enableWcwidth = get(a:var, 'enableWcwidth', s:md_enableWcwidth)
   let s:md_listItemChar = get(a:var, 'listItemChar', s:md_listItemChar)
-  let s:md_enabled_formater = get(a:var, 'enabled_formater', s:enabled_formater)
+  let s:md_enabled_formater = get(a:var, 'enabled_formater', s:md_enabled_formater)
 endfunction
 
 function! SpaceVim#layers#lang#markdown#plugins() abort
