@@ -237,8 +237,8 @@ function! SpaceVim#layers#core#tabline#config() abort
   augroup SpaceVim_tabline
     autocmd!
     autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
-    autocmd BufNew * call s:enter_new_buffer(expand("<abuf>")+0)
-    autocmd BufDelete,BufWipeout * call s:delete_buffer(expand("<abuf>")+0)
+    " autocmd BufNew * call s:enter_new_buffer(expand("<abuf>")+0)
+    " autocmd BufDelete,BufWipeout * call s:delete_buffer(expand("<abuf>")+0)
   augroup END
 
   " when load or create new buffer, add buffer nr to shown list, and update
