@@ -208,7 +208,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       endif
       if !matched_len && previous_tabnr > 1
         for i in reverse(range(1, previous_tabnr - 1))
-          call add(shown_items, all_tabline_items[i - 1])
+          call insert(shown_items, all_tabline_items[i - 1])
           if s:check_len(shown_items)
             call remove(shown_items, 0)
             break
@@ -226,7 +226,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       endfor
       if !matched_len && current_tabnr > 1
         for i in reverse(range(1, current_tabnr - 1))
-          call add(shown_items, all_tabline_items[i - 1])
+          call insert(shown_items, all_tabline_items[i - 1])
           if s:check_len(shown_items)
             let matched_len = 1
             call remove(shown_items, 0)
