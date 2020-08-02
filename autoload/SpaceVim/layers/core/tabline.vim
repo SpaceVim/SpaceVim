@@ -255,6 +255,9 @@ function! SpaceVim#layers#core#tabline#get() abort
       let t = '%#SpaceVim_tabline_b# '
     endif
     for item in shown_items
+      if item.tabnr == current_tabnr
+        let t .= ' %#SpaceVim_tabline_a#' 
+      endif
       let t .= item.bufname
       if item.tabnr == current_tabnr - 1
         let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
