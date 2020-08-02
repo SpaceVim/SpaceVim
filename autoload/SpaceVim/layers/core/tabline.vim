@@ -267,7 +267,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         let t .= ' ' . s:ilsep . ' '
       endif
     endfor
-    let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
+    let t .= '%#SpaceVim_tabline_b#%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
     let t .= '%#SpaceVim_tabline_a# Tabs '
     return t
   else
