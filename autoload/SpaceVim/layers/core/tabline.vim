@@ -269,7 +269,7 @@ function! SpaceVim#layers#core#tabline#get() abort
     return t
   else
     let s:buffers = s:BUFFER.listed_buffers()
-    if empty(s:s:buffers)
+    if empty(s:buffers)
       return ''
     endif
     for i in range(len(s:buffers))
