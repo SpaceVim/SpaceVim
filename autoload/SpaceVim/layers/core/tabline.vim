@@ -80,7 +80,7 @@ function! s:buffer_item(bufnr, ...) abort
   let name = s:tabname(a:bufnr)
   let item = {
         \ 'bufnr' : a:bufnr,
-        \ 'len' :  strlen(name),
+        \ 'len' :  strlen(name) + 3,
         \ 'bufname' : name,
         \ 'tabnr' : get(a:000, 0, -1),
         \ }
