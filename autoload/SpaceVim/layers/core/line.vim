@@ -208,6 +208,7 @@ function! SpaceVim#layers#core#line#get() abort
       endif
     endfor
   else
+
   endif
 
 " ======================================

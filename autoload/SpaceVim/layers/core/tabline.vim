@@ -30,16 +30,14 @@ let s:MESSLETTERS = SpaceVim#api#import('messletters')
 let s:FILE = SpaceVim#api#import('file')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:HI = SpaceVim#api#import('vim#highlight')
-
 let s:LOG = SpaceVim#logger#derive('tabline ')
+let s:SYS = SpaceVim#api#import('system')
 " }}}
 
 
-let s:SYS = SpaceVim#api#import('system')
-
+" init
 let s:buffers = s:BUFFER.listed_buffers()
 
-" init
 let s:separators = {
       \ 'arrow' : ["\ue0b0", "\ue0b2"],
       \ 'curve' : ["\ue0b4", "\ue0b6"],
@@ -54,15 +52,6 @@ let s:i_separators = {
       \ 'bar' : ['|', '|'],
       \ 'nil' : ['', ''],
       \ }
-
-
-" each iterm should be :
-" {
-"  'bufnr': '',
-"  'len' : '',
-"  'istab' : '',
-"  'bufname' : ''
-" }
 
 
 function! s:tabname(id) abort
