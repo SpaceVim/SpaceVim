@@ -268,7 +268,92 @@ function! SpaceVim#layers#core#tabline#get() abort
     let t .= '%#SpaceVim_tabline_a# Tabs '
     return t
   else
-    return ''
+    let s:buffers = s:BUFFER.listed_buffers()
+    for i in range(len(s:buffers))
+      call add(all_tabline_items, s:buffer_item(s:buffers[i]))
+    endfor
+    let current_buf_index = index(s:buffers, bufnr())
+    let previous_buf_index =  index(s:buffers, bufnr('#'))
+    let matched_len = 0
+    if previous_buf_index < current_buf_index
+      for i in range(previous_buf_index, current_buf_index)
+        call add(shown_items, all_tabline_items[i])
+        if s:check_len(shown_items)
+          let matched_len = 1
+          call remove(shown_items, 0)
+        endif
+      endfor
+      if !matched_len && current_buf_index < len(s:buffers) - 1
+        for i in range(current_buf_index + 1, len(s:buffers) - 1)
+          call add(shown_items, all_tabline_items[i])
+          if s:check_len(shown_items)
+            let matched_len = 1
+            call remove(shown_items, -1)
+            break
+          endif
+        endfor
+      endif
+      if !matched_len && previous_buf_index > 1
+        for i in reverse(range(0, previous_buf_index - 1))
+          call insert(shown_items, all_tabline_items[i])
+          if s:check_len(shown_items)
+            call remove(shown_items, 0)
+            break
+          endif
+        endfor
+      endif
+    else
+      for i in range(current_buf_index, previous_buf_index)
+        call add(shown_items, all_tabline_items[i])
+        if s:check_len(shown_items)
+          let matched_len = 1
+          call remove(shown_items, -1)
+          break
+        endif
+      endfor
+      if !matched_len && current_buf_index > 0
+        for i in reverse(range(0, current_buf_index - 1))
+          call insert(shown_items, all_tabline_items[i])
+          if s:check_len(shown_items)
+            let matched_len = 1
+            call remove(shown_items, 0)
+            break
+          endif
+        endfor
+      endif
+      if !matched_len && previous_buf_index < len(s:buffers) - 1
+        for i in range(previous_buf_index + 1, len(s:buffers) - 1)
+          call add(shown_items, all_tabline_items[i])
+          if s:check_len(shown_items)
+            call remove(shown_items, -1)
+            break
+          endif
+        endfor
+      endif
+    endif
+    let t = ''
+    if bufnr() == shown_items[0].bufnr
+      if getbufvar(shown_items[0].bufnr, '&modified', 0)
+        let t = '%#SpaceVim_tabline_m# '
+      else
+        let t = '%#SpaceVim_tabline_a# '
+      endif
+    else
+      let t = '%#SpaceVim_tabline_b# '
+    endif
+    for item in shown_items
+      let t .= item.bufname
+      if item.bufnr == bufnr() - 1
+        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
+      elseif item.bufnr == bufnr()
+        let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+      else
+        let t .= ' ' . s:ilsep . ' '
+      endif
+    endfor
+    let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
+    let t .= '%#SpaceVim_tabline_a# Buffers '
+    return t
   endif
 
 endfunction
