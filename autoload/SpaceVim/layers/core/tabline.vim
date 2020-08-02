@@ -184,24 +184,45 @@ function! SpaceVim#layers#core#tabline#get() abort
   if tabpage_counts > 1
     let current_tabnr = tabpagenr()
     let previous_tabnr = tabpagenr('#')
+    let matched_len = 0
     for i in range(1, tabpage_counts)
-      call add(all_tabline_items, s:buffer_item(tabpagebuflist(i)[tabpagewinnr() - 1], i))
+      call add(all_tabline_items, s:buffer_item(tabpagebuflist(i)[tabpagewinnr(i) - 1], i))
     endfor
     if previous_tabnr < current_tabnr
       for i in range(previous_tabnr, current_tabnr)
         call add(shown_items, all_tabline_items[i - 1])
         if s:check_len(shown_items)
+          let matched_len = 1
           call remove(shown_items, 0)
         endif
       endfor
+      if !matched_len 
+        for i in range(current_tabnr, tabpage_counts)
+          call add(shown_items, all_tabline_items[i - 1])
+          if s:check_len(shown_items)
+            call remove(shown_items, -1)
+            break
+          endif
+        endfor
+      endif
     else
       for i in range(current_tabnr, previous_tabnr)
         call add(shown_items, all_tabline_items[i - 1])
         if s:check_len(shown_items)
+          let matched_len = 1
           call remove(shown_items, -1)
           break
         endif
       endfor
+      if !matched_len 
+        for i in reverse(range(1, current_tabnr))
+          call add(shown_items, all_tabline_items[i - 1])
+          if s:check_len(shown_items)
+            call remove(shown_items, 0)
+            break
+          endif
+        endfor
+      endif
     endif
     let t = ''
     if current_tabnr == shown_items[0].tabnr
@@ -215,14 +236,16 @@ function! SpaceVim#layers#core#tabline#get() abort
     endif
     for item in shown_items
       let t .= item.bufname
-      if item.tabnr ==# current_tabnr
+      if item.tabnr == current_tabnr - 1
+        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
+      elseif item.tabnr == current_tabnr
         let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . ' '
       else
-        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
+        let t .= ' ' . s:ilsep . ' '
       endif
     endfor
     let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
-    let t .= '%#SpaceVim_tabline_a# Buffers '
+    let t .= '%#SpaceVim_tabline_a# Tabs '
     return t
   else
     return ''
