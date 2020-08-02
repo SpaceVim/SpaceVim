@@ -149,12 +149,13 @@ CONTENTS                                                   *SpaceVim-contents*
       73. lang#xml...................................|SpaceVim-layer-lang-xml|
       74. lang#xquery.............................|SpaceVim-layer-lang-xquery|
       75. language server protocol........................|SpaceVim-layer-lsp|
-      76. operator...................................|SpaceVim-layer-operator|
-      77. shell.........................................|SpaceVim-layer-shell|
-      78. test...........................................|SpaceVim-layer-test|
-      79. tmux...........................................|SpaceVim-layer-tmux|
-      80. tools#dash...............................|SpaceVim-layer-tools-dash|
-      81. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      76. leaderf.....................................|SpaceVim-layer-leaderf|
+      77. operator...................................|SpaceVim-layer-operator|
+      78. shell.........................................|SpaceVim-layer-shell|
+      79. test...........................................|SpaceVim-layer-test|
+      80. tmux...........................................|SpaceVim-layer-tmux|
+      81. tools#dash...............................|SpaceVim-layer-tools-dash|
+      82. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. Usage....................................................|SpaceVim-usage|
       1. custom_plugins........................|SpaceVim-usage-custom_plugins|
       2. tasks..........................................|SpaceVim-usage-tasks|
@@ -2756,52 +2757,62 @@ Requirements:
     rustup. Once rustup is installed, download the source with:
 
 >
-      rustup component add rust-src
+  rustup component add rust-src
 <
   2. Install Rust nightly build
 
-
 >
-      rustup install nightly
+  rustup install nightly
 <
   3. Install racer:
 
 >
-      cargo +nightly install racer
+  cargo +nightly install racer
 <
   4. Set the RUST_SRC_PATH variable in your .bashrc:
 
 >
-      RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
-      export RUST_SRC_PATH
+  RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
+  export RUST_SRC_PATH
 <
   5. Add racer to your path, or set the path with:
 
 >
-      let g:racer_cmd = "/path/to/racer/bin"
+  [[layers]]
+    name = 'lang#rust'
+    racer_cmd = "/path/to/racer/bin"
 <
 
 MAPPINGS
 
 >
-  Mode        Key         Function
+  Key         Function
   -----------------------------------------------
-  normal      gd          rust-definition
-  normal      SPC l d     rust-doc
-  normal      SPC l s     rust-def-split
-  normal      SPC l x     rust-def-vertical
-  normal      SPC l f     rustfmt-format
-  normal      SPC l e     rls-rename-symbol
-  normal      SPC l u     rls-show-references
-  normal      SPC l c b   cargo-build
-  normal      SPC l c c   cargo-clean
-  normal      SPC l c f   cargo-fmt
-  normal      SPC l c t   cargo-test
-  normal      SPC l c u   cargo-update
-  normal      SPC l c B   cargo-bench
-  normal      SPC l c D   cargo-docs
-  normal      SPC l c r   cargo-run
+  g d         rust-definition
+  SPC l d     rust-doc
+  SPC l r     run current file
+  SPC l e     rls-rename-symbol
+  SPC l u     rls-show-references
+  SPC l c b   cargo-build
+  SPC l c c   cargo-clean
+  SPC l c f   cargo-fmt
+  SPC l c t   cargo-test
+  SPC l c u   cargo-update
+  SPC l c B   cargo-bench
+  SPC l c D   cargo-docs
+  SPC l c r   cargo-run
 <
+
+This layer also provides REPL support for rust, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
 
 ==============================================================================
 LANG#SCALA                                         *SpaceVim-layer-lang-scala*
@@ -3098,6 +3109,12 @@ disabled by default, to enable this layer, add following snippet to  your
 LANGUAGE SERVER PROTOCOL                                  *SpaceVim-layer-lsp*
 
 This layer provides language client support for SpaceVim.
+
+==============================================================================
+LEADERF                                               *SpaceVim-layer-leaderf*
+
+This layer provides fuzzy finder feature which is based on leaderf, and this
+layer requires vim compiled with `+python` or `+python3`.
 
 ==============================================================================
 OPERATOR                                             *SpaceVim-layer-operator*

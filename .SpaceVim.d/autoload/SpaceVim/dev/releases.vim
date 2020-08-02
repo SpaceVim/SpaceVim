@@ -20,12 +20,17 @@ scriptencoding utf-8
 " 2020-04-05 v1.2.0 is released at https://github.com/SpaceVim/SpaceVim/pull/3432
 
 " these options can be changed when going to release new tag
-let s:last_release_number = 3432
+let s:last_release_number = 3678
 " 这是所有 ID 小于上一次 release ID，并且还未被合并的 ID，在新的release
 " 之后，需要把已经合并了的删除！
-let s:unmerged_prs_since_last_release = [2014, 2232, 2242, 2307,
-      \ 2396, 2407, 2447, 2627, 2655, 2664, 2792, 2819, 2825, 2861, 2868, 2906, 2910, 2927, 2984, 3004, 3064, 3076,
-      \ 3083, 3092, 3107, 3170, 3195, 3260, 3271, 3290, 3300, 3318, 3340, 3371, 3379
+let s:unmerged_prs_since_last_release = [
+      \ 3678, 3671, 3665, 3660, 3656, 3650,
+      \ 3638, 3636, 3628, 3556, 3541, 3529,
+      \ 3496, 3493, 3491, 3489, 3488, 3445,
+      \ 3379, 3318, 3271, 3260, 3195, 3170,
+      \ 3107, 3076, 3064, 2984, 2910, 2868,
+      \ 2861, 2825, 2819, 2792, 2655, 2447,
+      \ 2407, 2307, 2242, 2014
       \ ]
 " 当要新建一个 release 时，修改为该release 的ID，通常为 -1。
 let s:current_release_number = -1

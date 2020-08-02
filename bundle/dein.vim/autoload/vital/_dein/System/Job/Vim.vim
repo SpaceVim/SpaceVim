@@ -100,7 +100,7 @@ endfunction
 " Neovim can send \0 by using \n splitted list but in Vim.
 " So replace all \n in \n splitted list to ''
 function! s:_job_send(data) abort dict
-  let data = type(a:data) == v:t_list
+  let data = type(a:data) == 3
         \ ? join(map(a:data, 'substitute(v:val, "\n", '''', ''g'')'), "\n")
         \ : a:data
   return ch_sendraw(self.__job, data)

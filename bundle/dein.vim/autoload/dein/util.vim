@@ -149,8 +149,8 @@ function! dein#util#_is_powershell() abort
   return dein#install#_is_async() && fnamemodify(&shell, ':t:r') =~? 'powershell\|pwsh'
 endfunction
 function! dein#util#_has_job() abort
-  return (has('nvim') && exists('v:t_list'))
-        \ || (has('patch-8.0.0027') && has('job'))
+  return has('nvim')
+        \ || (has('patch-7.4.1689') && has('job'))
 endfunction
 
 function! dein#util#_check_lazy_plugins() abort
@@ -211,7 +211,7 @@ function! dein#util#_save_cache(vimrcs, is_state, is_starting) abort
           \ 'hook_add', 'hook_source',
           \ 'hook_post_source', 'hook_post_update',
           \ ], 'has_key(plugin, v:val)
-          \     && type(plugin[v:val]) == v:t_func')
+          \     && type(plugin[v:val]) == 2')
       call remove(plugin, hook)
     endfor
   endfor
@@ -328,7 +328,7 @@ function! dein#util#_save_state(is_starting) abort
     let lines += s:skipempty(g:dein#_hook_add)
   endif
   for plugin in dein#util#_tsort(values(dein#get()))
-    if has_key(plugin, 'hook_add') && type(plugin.hook_add) == v:t_string
+    if has_key(plugin, 'hook_add') && type(plugin.hook_add) == 1
       let lines += s:skipempty(plugin.hook_add)
     endif
   endfor
@@ -484,9 +484,9 @@ function! dein#util#_end() abort
   endif
 endfunction
 function! dein#util#_config(arg, dict) abort
-  let name = type(a:arg) == v:t_dict ?
+  let name = type(a:arg) == 4 ?
         \   g:dein#name : a:arg
-  let dict = type(a:arg) == v:t_dict ?
+  let dict = type(a:arg) == 4 ?
         \   a:arg : a:dict
   if !has_key(g:dein#_plugins, name)
         \ || g:dein#_plugins[name].sourced
@@ -517,7 +517,7 @@ function! dein#util#_execute_hook(plugin, hook) abort
   try
     let g:dein#plugin = a:plugin
 
-    if type(a:hook) == v:t_string
+    if type(a:hook) == 1
       call s:execute(a:hook)
     else
       call call(a:hook, [])
@@ -539,7 +539,7 @@ function! dein#util#_set_hook(plugins, hook_name, hook) abort
     endif
     let plugin = g:dein#_plugins[name]
     let plugin[a:hook_name] =
-          \ type(a:hook) != v:t_string ? a:hook :
+          \ type(a:hook) != 1 ? a:hook :
           \   substitute(a:hook, '\n\s*\\\|\%(^\|\n\)\s*"[^\n]*', '', 'g')
     if a:hook_name ==# 'hook_add'
       call dein#util#_execute_hook(plugin, plugin[a:hook_name])
@@ -597,13 +597,13 @@ function! dein#util#_globlist(path) abort
 endfunction
 
 function! dein#util#_convert2list(expr) abort
-  return type(a:expr) ==# v:t_list ? copy(a:expr) :
-        \ type(a:expr) ==# v:t_string ?
+  return type(a:expr) ==# 3 ? copy(a:expr) :
+        \ type(a:expr) ==# 1 ?
         \   (a:expr ==# '' ? [] : split(a:expr, '\r\?\n', 1))
         \ : [a:expr]
 endfunction
 function! dein#util#_split(expr) abort
-  return type(a:expr) ==# v:t_list ? copy(a:expr) :
+  return type(a:expr) ==# 3 ? copy(a:expr) :
         \ split(a:expr, '\r\?\n')
 endfunction
 
@@ -630,7 +630,7 @@ function! dein#util#_get_plugins(plugins) abort
   return empty(a:plugins) ?
         \ values(dein#get()) :
         \ filter(map(dein#util#_convert2list(a:plugins),
-        \   'type(v:val) == v:t_dict ? v:val : dein#get(v:val)'),
+        \   'type(v:val) == 4 ? v:val : dein#get(v:val)'),
         \   '!empty(v:val)')
 endfunction
 
@@ -713,7 +713,7 @@ function! dein#util#_check_install(plugins) abort
 endfunction
 
 function! s:msg2list(expr) abort
-  return type(a:expr) ==# v:t_list ? a:expr : split(a:expr, '\n')
+  return type(a:expr) ==# 3 ? a:expr : split(a:expr, '\n')
 endfunction
 function! s:skipempty(string) abort
   return filter(split(a:string, '\n'), "v:val !=# ''")
@@ -725,7 +725,7 @@ function! s:escape(path) abort
 endfunction
 
 function! s:sort(list, expr) abort
-  if type(a:expr) == v:t_func
+  if type(a:expr) == 2
     return sort(a:list, a:expr)
   endif
   let s:expr = a:expr

@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.5.0-dev'
+let g:spacevim_version = '1.6.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -781,7 +781,7 @@ let g:spacevim_sidebar_direction        = ''
 " The default plugin manager of SpaceVim.
 " if has patch 7.4.2071, the default value is dein. Otherwise it is neobundle.
 " Options are dein, neobundle, or vim-plug.
-if has('patch-7.4.2071')
+if has('patch-7.4.1689')
   let g:spacevim_plugin_manager          = 'dein'
 else
   let g:spacevim_plugin_manager          = 'neobundle'
