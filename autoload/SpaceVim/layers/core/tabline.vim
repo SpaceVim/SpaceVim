@@ -349,11 +349,12 @@ function! SpaceVim#layers#core#tabline#jump(id, ...) abort
       endif
     endif
   else
-    if tabpagenr('$') > 1
-      exe 'tabnext' . a:id
-    else
-      if len(s:buffers) >= a:id
-        let bid = s:buffers[a:id - 1]
+    if len(s:shown_items) >= a:id
+      if tabpagenr('$') > 1
+        let item = s:shown_items[a:id - 1]
+        exe 'tabnext' . item.tabnr
+      else
+        let bid = s:shown_items[a:id - 1].bufnr
         exe 'silent b' . bid
       endif
     endif
