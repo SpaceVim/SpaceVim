@@ -232,7 +232,7 @@ function! SpaceVim#layers#core#tabline#get() abort
             endif
           endfor
         endif
-        if !matched_len && previous_buf_index > 1
+        if !matched_len && previous_buf_index > 0
           for i in reverse(range(0, previous_buf_index - 1))
             call insert(shown_items, all_tabline_items[i])
             if s:check_len(shown_items)
