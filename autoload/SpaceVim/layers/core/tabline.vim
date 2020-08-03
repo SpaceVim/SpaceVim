@@ -176,6 +176,8 @@ function! s:is_modified(nr) abort
   return getbufvar(a:nr, '&modified', 0)
 endfunction
 
+" cache shown_items
+let s:shown_items = []
 function! SpaceVim#layers#core#tabline#get() abort
   let tabpage_counts = tabpagenr('$')
   let all_tabline_items = []
@@ -278,67 +280,72 @@ function! SpaceVim#layers#core#tabline#get() abort
     let current_buf_index = index(s:buffers, s:BUFFER.bufnr())
     let previous_buf_index =  index(s:buffers, s:BUFFER.bufnr('#'))
     let matched_len = 0
-    if previous_buf_index < current_buf_index
-      if previous_buf_index == -1
-        let previous_buf_index = 0
-      endif
-      for i in range(previous_buf_index, current_buf_index)
-        call add(shown_items, all_tabline_items[i])
-        if s:check_len(shown_items)
-          let matched_len = 1
-          call remove(shown_items, 0)
-        endif
-      endfor
-      if !matched_len && current_buf_index < len(s:buffers) - 1
-        for i in range(current_buf_index + 1, len(s:buffers) - 1)
-          call add(shown_items, all_tabline_items[i])
-          if s:check_len(shown_items)
-            let matched_len = 1
-            call remove(shown_items, -1)
-            break
-          endif
-        endfor
-      endif
-      if !matched_len && previous_buf_index > 1
-        for i in reverse(range(0, previous_buf_index - 1))
-          call insert(shown_items, all_tabline_items[i])
-          if s:check_len(shown_items)
-            call remove(shown_items, 0)
-            break
-          endif
-        endfor
-      endif
+    if current_buf_index ==# -1
+      let shown_items = s:shown_items
     else
-      if previous_buf_index == -1
-        let previous_buf_index = len(s:s:buffers) - 1
-      endif
-      for i in range(current_buf_index, previous_buf_index)
-        call add(shown_items, all_tabline_items[i])
-        if s:check_len(shown_items)
-          let matched_len = 1
-          call remove(shown_items, -1)
-          break
+      if previous_buf_index < current_buf_index
+        if previous_buf_index == -1
+          let previous_buf_index = 0
         endif
-      endfor
-      if !matched_len && current_buf_index > 0
-        for i in reverse(range(0, current_buf_index - 1))
-          call insert(shown_items, all_tabline_items[i])
+        for i in range(previous_buf_index, current_buf_index)
+          call add(shown_items, all_tabline_items[i])
           if s:check_len(shown_items)
             let matched_len = 1
             call remove(shown_items, 0)
-            break
           endif
         endfor
-      endif
-      if !matched_len && previous_buf_index < len(s:buffers) - 1
-        for i in range(previous_buf_index + 1, len(s:buffers) - 1)
+        if !matched_len && current_buf_index < len(s:buffers) - 1
+          for i in range(current_buf_index + 1, len(s:buffers) - 1)
+            call add(shown_items, all_tabline_items[i])
+            if s:check_len(shown_items)
+              let matched_len = 1
+              call remove(shown_items, -1)
+              break
+            endif
+          endfor
+        endif
+        if !matched_len && previous_buf_index > 1
+          for i in reverse(range(0, previous_buf_index - 1))
+            call insert(shown_items, all_tabline_items[i])
+            if s:check_len(shown_items)
+              call remove(shown_items, 0)
+              break
+            endif
+          endfor
+        endif
+      else
+        if previous_buf_index == -1
+          let previous_buf_index = len(s:s:buffers) - 1
+        endif
+        for i in range(current_buf_index, previous_buf_index)
           call add(shown_items, all_tabline_items[i])
           if s:check_len(shown_items)
+            let matched_len = 1
             call remove(shown_items, -1)
             break
           endif
         endfor
+        if !matched_len && current_buf_index > 0
+          for i in reverse(range(0, current_buf_index - 1))
+            call insert(shown_items, all_tabline_items[i])
+            if s:check_len(shown_items)
+              let matched_len = 1
+              call remove(shown_items, 0)
+              break
+            endif
+          endfor
+        endif
+        if !matched_len && previous_buf_index < len(s:buffers) - 1
+          for i in range(previous_buf_index + 1, len(s:buffers) - 1)
+            call add(shown_items, all_tabline_items[i])
+            if s:check_len(shown_items)
+              call remove(shown_items, -1)
+              break
+            endif
+          endfor
+        endif
       endif
+      let s:shown_items = shown_items
     endif
     let t = ''
     if bufnr() == shown_items[0].bufnr
