@@ -353,7 +353,6 @@ function! SpaceVim#layers#core#tabline#jump(id, ...) abort
       endif
     endif
   endif
-endif
 endfunction
 
 function! SpaceVim#layers#core#tabline#def_colors() abort
