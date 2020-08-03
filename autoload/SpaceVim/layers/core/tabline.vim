@@ -274,6 +274,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         endif
       endif
       let s:shown_items = shown_items
+      let g:_spacevim_list_buffers = map(deepcopy(a:buffers), 'v:val.bufnr')
     endif
     if empty(shown_items)
       return ''
