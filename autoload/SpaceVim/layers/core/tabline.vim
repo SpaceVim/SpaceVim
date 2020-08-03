@@ -279,6 +279,9 @@ function! SpaceVim#layers#core#tabline#get() abort
     let previous_buf_index =  index(s:buffers, s:BUFFER.bufnr('#'))
     let matched_len = 0
     if previous_buf_index < current_buf_index
+      if previous_buf_index == -1
+        let previous_buf_index = 0
+      endif
       for i in range(previous_buf_index, current_buf_index)
         call add(shown_items, all_tabline_items[i])
         if s:check_len(shown_items)
@@ -306,6 +309,9 @@ function! SpaceVim#layers#core#tabline#get() abort
         endfor
       endif
     else
+      if previous_buf_index == -1
+        let previous_buf_index = len(s:s:buffers) - 1
+      endif
       for i in range(current_buf_index, previous_buf_index)
         call add(shown_items, all_tabline_items[i])
         if s:check_len(shown_items)
