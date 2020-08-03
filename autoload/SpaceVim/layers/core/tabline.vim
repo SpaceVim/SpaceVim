@@ -275,6 +275,9 @@ function! SpaceVim#layers#core#tabline#get() abort
       endif
       let s:shown_items = shown_items
     endif
+    if empty(shown_items)
+      return ''
+    endif
     let t = ''
     if s:BUFFER.bufnr() == shown_items[0].bufnr
       if s:is_modified(shown_items[0].bufnr)
