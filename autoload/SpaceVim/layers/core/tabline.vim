@@ -209,7 +209,7 @@ function! SpaceVim#layers#core#tabline#get() abort
     let previous_buf_index =  index(s:buffers, s:BUFFER.bufnr('#'))
     let matched_len = 0
     if current_buf_index ==# -1
-      let shown_items = s:shown_items
+      let shown_items = filter(s:shown_items, 'buflisted(v:val.bufnr)')
     else
       if previous_buf_index < current_buf_index
         if previous_buf_index == -1
