@@ -54,15 +54,8 @@ let s:i_separators = {
       \ }
 
 
-function! s:tabname(id) abort
-  if g:spacevim_buffer_index_type == 3
-    let id = s:MESSLETTERS.index_num(a:id)
-  elseif g:spacevim_buffer_index_type == 4
-    let id = a:id
-  else
-    let id = s:MESSLETTERS.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
-  endif
-  let fn = fnamemodify(bufname(a:id), ':t')
+function! s:tabname(bufnr) abort
+  let fn = fnamemodify(bufname(a:bufnr), ':t')
   if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
     let icon = s:FILE.fticon(fn)
     if !empty(icon)
@@ -72,8 +65,19 @@ function! s:tabname(id) abort
   if empty(fn)
     return 'No Name'
   else
-    return id . fn
+    return fn
   endif
+endfunction
+
+function! s:wrap_id(id) abort
+  if g:spacevim_buffer_index_type == 3
+    let id = s:MESSLETTERS.index_num(a:id)
+  elseif g:spacevim_buffer_index_type == 4
+    let id = a:id
+  else
+    let id = s:MESSLETTERS.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
+  endif
+  return id
 endfunction
 
 function! s:buffer_item(bufnr, ...) abort
@@ -87,71 +91,6 @@ function! s:buffer_item(bufnr, ...) abort
   return item
 endfunction
 
-let s:tabline_items = map(deepcopy(s:buffers), 's:buffer_item(v:val)')
-
-function! s:scroll_left() abort
-  let nr = s:tabline_items[0].bufnr
-  if nr > s:buffers[0]
-    call remove(s:tabline_items, -1)
-    let bufnr = s:buffers[index(s:buffers, nr) - 1]
-    let name = s:tabname(bufnr)
-    let item = [{
-          \ 'bufnr' : bufnr,
-          \ 'len' :  strlen(name),
-          \ 'bufname' : name,
-          \     }]
-    let s:tabline_items = item + s:tabline_items
-  endif
-endfunction
-
-
-function! s:scroll_right() abort
-  let nr = s:tabline_items[-1].bufnr
-  if nr < s:buffers[-1]
-    call remove(s:tabline_items, 0)
-    let bufnr = s:buffers[index(s:buffers, nr) + 1]
-    let name = s:tabname(bufnr)
-    let item = [{
-          \ 'bufnr' : bufnr,
-          \ 'len' :  strlen(name),
-          \ 'bufname' : name,
-          \     }]
-    let s:tabline_items = s:tabline_items + item
-  endif
-endfunction
-
-function! s:switch_index(idx) abort
-  let bufnr = s:tabline_items[a:idx + 1].bufnr 
-  exe 'b' . bufnr
-endfunction
-
-function! s:enter_new_buffer(bufnr) abort
-  let bufnr = a:bufnr
-  call s:LOG.info('enter new buffer: ' . a:bufnr)
-  if getbufvar(a:bufnr, '&buflisted')
-    let name = s:tabname(bufnr)
-    let item = [{
-          \ 'bufnr' : bufnr,
-          \ 'len' :  strlen(name),
-          \ 'bufname' : name,
-          \     }]
-    let s:tabline_items = s:tabline_items + item
-    while s:check_len()
-      call remove(s:tabline_items, 0)
-    endwhile
-  endif
-endfunction
-
-
-function! s:delete_buffer(bufnr) abort
-  let index = index(s:tabline_items, 'v:val.bufnr == a:bufnr')
-  try
-    call remove(s:tabline_items, index)
-  catch
-    call s:LOG.warn('can not remove item from tabline: ' . a:bufnr)
-  endtry
-endfunction
-
 " check if the items len longer than &columns
 function! s:check_len(items) abort
   let len = 0
@@ -159,17 +98,6 @@ function! s:check_len(items) abort
     let len += item.len
   endfor
   return len > &columns
-endfunction
-
-
-
-function! s:need_show_bfname(stack, nr) abort
-  let dupbufs = filter(a:stack, "fnamemodify(bufname(v:val), ':t') ==# fnamemodify(bufname(a:nr), ':t')")
-  if len(dupbufs) >= 2
-    for i in dupbufs
-      call setbufvar(i, '_spacevim_statusline_showbfname', 1)
-    endfor
-  endif
 endfunction
 
 function! s:is_modified(nr) abort
@@ -381,24 +309,13 @@ function! SpaceVim#layers#core#tabline#config() abort
   augroup SpaceVim_tabline
     autocmd!
     autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
-    " autocmd BufNew * call s:enter_new_buffer(expand("<abuf>")+0)
-    " autocmd BufDelete,BufWipeout * call s:delete_buffer(expand("<abuf>")+0)
   augroup END
-
-  " when load or create new buffer, add buffer nr to shown list, and update
-  " tabline
-  "
-  " when switch to a buffer, update the shown list
   for i in range(1, 9)
     exe "call SpaceVim#mapping#def('nmap <silent>', '<leader>" . i
           \ . "', ':call SpaceVim#layers#core#tabline#jump("
           \ . i . ")<cr>', 'Switch to airline tab " . i
           \ . "', '', 'tabline index " . i . "')"
   endfor
-  call SpaceVim#mapping#def('nmap', '<leader>-', ':bprevious<cr>', 'Switch to previous airline tag', '', 'window previous')
-  call SpaceVim#mapping#def('nmap', '<leader>+', ':bnext<cr>', 'Switch to next airline tag', '', 'window next')
-  "call SpaceVim#mapping#space#def('nmap', ['-'], 'bprevious', 'window previous', 1)
-  "call SpaceVim#mapping#space#def('nmap', ['+'], 'bnext', 'window next', 1)
 endfunction
 
 function! SpaceVim#layers#core#tabline#jump(id, ...) abort
