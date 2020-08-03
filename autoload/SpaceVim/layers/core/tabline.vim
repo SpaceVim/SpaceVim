@@ -276,8 +276,8 @@ function! SpaceVim#layers#core#tabline#get() abort
       let s:shown_items = shown_items
     endif
     let t = ''
-    if bufnr() == shown_items[0].bufnr
-      if getbufvar(shown_items[0].bufnr, '&modified', 0)
+    if s:BUFFER.bufnr() == shown_items[0].bufnr
+      if s:is_modified(shown_items[0].bufnr)
         let t = '%#SpaceVim_tabline_m# '
       else
         let t = '%#SpaceVim_tabline_a# '
@@ -285,12 +285,21 @@ function! SpaceVim#layers#core#tabline#get() abort
     else
       let t = '%#SpaceVim_tabline_b# '
     endif
+    let index = 1
     for item in shown_items
-      let t .= item.bufname
-      if item.bufnr == bufnr() - 1
-        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
-      elseif item.bufnr == bufnr()
-        let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+      let t .= s:wrap_id(index) . item.bufname
+      if item.bufnr == s:buffers[index(s:buffers, s:BUFFER.bufnr()) - 1]
+        if s:is_modified(item.bufnr)
+          let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_m#' . s:lsep . '%#SpaceVim_tabline_m# '
+        else
+          let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
+        endif
+      elseif item.bufnr == s:BUFFER.bufnr()
+        if s:is_modified(item.bufnr)
+          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+        else
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+        endif
       else
         let t .= ' ' . s:ilsep . ' '
       endif
@@ -299,7 +308,6 @@ function! SpaceVim#layers#core#tabline#get() abort
     let t .= '%#SpaceVim_tabline_a# Buffers '
     return t
   endif
-
 endfunction
 
 function! SpaceVim#layers#core#tabline#config() abort
