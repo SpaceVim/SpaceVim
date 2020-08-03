@@ -288,13 +288,14 @@ function! SpaceVim#layers#core#tabline#get() abort
     let index = 1
     for item in shown_items
       let t .= s:wrap_id(index) . item.bufname
+      let index += 1
       if item.bufnr == s:BUFFER.bufnr()
         if s:is_modified(item.bufnr)
           let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
         else
           let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
         endif
-      elseif index(s:buffers, s:BUFFER.bufnr()) != -1 && item.bufnr == s:buffers[index(s:buffers, s:BUFFER.bufnr()) - 1]
+      elseif index(s:buffers, s:BUFFER.bufnr()) > 0 && item.bufnr == s:buffers[index(s:buffers, s:BUFFER.bufnr()) - 1]
         if s:is_modified(item.bufnr)
           let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_m#' . s:lsep . '%#SpaceVim_tabline_m# '
         else
