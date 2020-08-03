@@ -97,7 +97,7 @@ function! s:check_len(items) abort
   for item in a:items
     let len += item.len
   endfor
-  return len > &columns
+  return len > &columns - 25
 endfunction
 
 function! s:is_modified(nr) abort
