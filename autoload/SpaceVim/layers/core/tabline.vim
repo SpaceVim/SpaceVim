@@ -287,6 +287,9 @@ function! SpaceVim#layers#core#tabline#get() abort
     endif
     let index = 1
     for item in shown_items
+      if has('tablineat')
+        let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
+      endif
       let t .= s:wrap_id(index) . item.bufname
       let index += 1
       if item.bufnr == s:BUFFER.bufnr()
@@ -328,37 +331,29 @@ function! SpaceVim#layers#core#tabline#config() abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#jump(id, ...) abort
-  if get(a:000, 2, '') ==# 'm'
+  if len(s:shown_items) >= a:id
+    let item = s:shown_items[a:id - 1]
+    let mouse = get(a:000, 2, '')
     if tabpagenr('$') > 1
-      exe 'tabnext' . a:id
-      quit
-    else
-      if len(s:buffers) >= a:id
-        let bid = s:buffers[a:id - 1]
-        exe 'silent b' . bid
-        bd
-      endif
-    endif
-  elseif get(a:000, 2, '') ==# 'l'
-    if tabpagenr('$') > 1
-      exe 'tabnext' . a:id
-    else
-      if len(s:buffers) >= a:id
-        let bid = s:buffers[a:id - 1]
-        exe 'silent b' . bid
-      endif
-    endif
-  else
-    if len(s:shown_items) >= a:id
-      if tabpagenr('$') > 1
-        let item = s:shown_items[a:id - 1]
+      if mouse ==# 'm'
+        exe 'tabnext' . item.tabnr
+        quit
+      elseif mouse ==# 'l'
         exe 'tabnext' . item.tabnr
       else
-        let bid = s:shown_items[a:id - 1].bufnr
-        exe 'silent b' . bid
+        exe 'tabnext' . item.tabnr
+      endif
+    else
+      if mouse ==# 'm'
+        exe 'bd ' . item.bufnr
+      elseif mouse ==# 'l'
+        exe 'silent b ' . item.bufnr
+      else
+        exe 'silent b ' . item.bufnr
       endif
     endif
   endif
+endif
 endfunction
 
 function! SpaceVim#layers#core#tabline#def_colors() abort
