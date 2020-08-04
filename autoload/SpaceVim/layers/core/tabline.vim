@@ -353,7 +353,7 @@ function! SpaceVim#layers#core#tabline#get() abort
     else
       if left_hidden_buffer_number > 0 
         let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
-        let t .= '%#SpaceVim_tabline_a#'  . left_hidden_buffer_number . ' >> '
+        let t .= '%#SpaceVim_tabline_a# '  . left_hidden_buffer_number . ' >> '
         let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
       else
         let t .= ' ' . s:ilsep . ' '
