@@ -326,6 +326,12 @@ function! SpaceVim#layers#core#tabline#get() abort
         let t .= ' ' . s:ilsep . ' '
       endif
     endfor
+    " how many buffers after the last item are hidden?
+    let left_hidden_buffer_number = index(s:buffers, shown_items[0].bufnr)
+    if left_hidden_buffer_number < len(s:buffers) - 1
+      let t .= '%#SpaceVim_tabline_a#'  . left_hidden_buffer_number . ' >> '
+      let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+    endif
     let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
     let t .= '%#SpaceVim_tabline_a# Buffers '
     return t
