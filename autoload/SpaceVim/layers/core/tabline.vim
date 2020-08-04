@@ -282,7 +282,7 @@ function! SpaceVim#layers#core#tabline#get() abort
     let t = ''
     " how many buffers before the first item are hidden.
     let right_hidden_buffer_number = index(s:buffers, shown_items[0].bufnr)
-    let left_hidden_buffer_number = len(s:buffers) - 1 - index(s:buffers, shown_items[0].bufnr)
+    let left_hidden_buffer_number = len(s:buffers) - 1 - index(s:buffers, shown_items[-1].bufnr)
     if right_hidden_buffer_number > 0
       let t .= '%#SpaceVim_tabline_a#'  .  ' << '. right_hidden_buffer_number
     endif
