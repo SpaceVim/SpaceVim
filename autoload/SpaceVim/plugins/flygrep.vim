@@ -13,6 +13,8 @@ let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
+
+let s:LOGGER =SpaceVim#logger#derive('flygrep ')
 let s:HI = SpaceVim#api#import('vim#highlight')
 if has('nvim')
   let s:FLOATING = SpaceVim#api#import('neovim#floating')
@@ -20,11 +22,12 @@ else
   let s:FLOATING = SpaceVim#api#import('vim#floating')
 endif
 let s:JSON = SpaceVim#api#import('data#json')
+
 let s:SL = SpaceVim#api#import('vim#statusline')
 let s:Window = SpaceVim#api#import('vim#window')
-" }}}
 
 let s:grepid = 0
+
 
 " Init local options: {{{
 let s:grep_expr = ''
@@ -76,7 +79,7 @@ function! s:grep_timer(timer) abort
     let s:current_grep_pattern = s:grep_expr
   endif
   let cmd = s:get_search_cmd(s:current_grep_pattern)
-  call SpaceVim#logger#info('grep cmd: ' . string(cmd))
+  call s:LOGGER.info('grep cmd: ' . string(cmd))
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
         \ 'on_stderr' : function('s:grep_stderr'),
@@ -204,7 +207,7 @@ function! s:start_filter() abort
   try
     call writefile(getbufline('%', 1, '$'), s:filter_file, 'b')
   catch
-    call SpaceVim#logger#info('FlyGrep: Failed to write filter content to temp file')
+    call s:LOGGER.info('Failed to write filter content to temp file')
   endtry
   call s:MPT._build_prompt()
 endfunction
@@ -386,7 +389,7 @@ endfunction
 " endif
 
 function! s:grep_stderr(id, data, event) abort
-  call SpaceVim#logger#error(' flygerp stderr: ' . string(a:data))
+  call s:LOGGER.error(' flygerp stderr: ' . string(a:data))
 endfunction
 
 function! s:grep_exit(id, data, event) abort
@@ -766,7 +769,7 @@ let s:MPT._keys.close = ["\<Esc>", "\<C-c>"]
 " dir: specific a directory for grep
 function! SpaceVim#plugins#flygrep#open(argv) abort
   if empty(s:grep_default_exe)
-    call SpaceVim#logger#warn(' [flygrep] make sure you have one search tool in your PATH', 1)
+    call s:LOGGER.warn(' [flygrep] make sure you have one search tool in your PATH', 1)
     return
   endif
   let s:mode = ''
@@ -824,6 +827,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   elseif s:grep_exe ==# 'findstr' && !empty(s:grep_dir)
     let s:grep_dir = '/D:' . s:grep_dir
   endif
+
   let s:grep_opt = get(a:argv, 'opt', s:grep_default_opt)
   let s:grep_ropt = get(a:argv, 'ropt', s:grep_default_ropt)
   let s:grep_ignore_case = get(a:argv, 'ignore_case', s:grep_default_ignore_case)

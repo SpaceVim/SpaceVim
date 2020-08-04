@@ -47,7 +47,7 @@ function! SpaceVim#logger#viewRuntimeLog() abort
   setl nomodifiable
   setl buftype=nofile
   setl filetype=markdown
-
+  call s:syntax_extra()
 endfunction
 
 
@@ -92,6 +92,11 @@ function! SpaceVim#logger#viewLog(...) abort
   endif
 endfunction
 
+function! s:syntax_extra() abort
+  call matchadd('ErrorMsg','.*[\sError\s\].*')
+  call matchadd('WarningMsg','.*[\sWarn\s\].*')
+endfunction
+
 ""
 " @public
 " Set debug level of SpaceVim. Default is 1.
@@ -110,4 +115,34 @@ endfunction
 " Set the log output file of SpaceVim. Default is empty.
 function! SpaceVim#logger#setOutput(file) abort
   call s:LOGGER.set_file(a:file)
+endfunction
+
+
+" derive a logger for built-in plugins
+" [ name ] [11:31:26] [ Info ] log message here
+
+let s:derive = {}
+let s:derive.origin_name = s:LOGGER.get_name()
+
+function! s:derive.info(msg) abort
+  call s:LOGGER.set_name(self.derive_name)
+  call s:LOGGER.info(a:msg)
+  call s:LOGGER.set_name(self.origin_name)
+endfunction
+
+function! s:derive.warn(msg) abort
+  call s:LOGGER.set_name(self.derive_name)
+  call s:LOGGER.warn(a:msg)
+  call s:LOGGER.set_name(self.origin_name)
+endfunction
+
+function! s:derive.error(msg) abort
+  call s:LOGGER.set_name(self.derive_name)
+  call s:LOGGER.error(a:msg)
+  call s:LOGGER.set_name(self.origin_name)
+endfunction
+
+function! SpaceVim#logger#derive(name) abort
+  let s:derive.derive_name = a:name
+  return deepcopy(s:derive)
 endfunction
