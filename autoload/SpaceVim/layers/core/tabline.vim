@@ -336,27 +336,27 @@ function! SpaceVim#layers#core#tabline#get() abort
       if left_hidden_buffer_number > 0 
         if s:is_modified(item.bufnr)
           let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_a#' . s:lsep
-          let t .= '%#SpaceVim_tabline_a#'  . left_hidden_buffer_number . ' >> '
-          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+          let t .= ' %#SpaceVim_tabline_a#'  . left_hidden_buffer_number . ' >>'
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b#'
         else
-          let t .=  s:ilsep 
-          let t .= left_hidden_buffer_number . ' >> '
-          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+          let t .= ' ' . s:ilsep
+          let t .= ' ' . left_hidden_buffer_number . ' >>'
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b#'
         endif
       else
         if s:is_modified(item.bufnr)
-          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b#'
         else
-          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b#'
         endif
       endif
     else
       if left_hidden_buffer_number > 0 
-        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . ' '
-        let t .= '%#SpaceVim_tabline_a# '  . left_hidden_buffer_number . ' >> '
-        let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep
+        let t .= ' %#SpaceVim_tabline_a#'  . left_hidden_buffer_number . ' >>'
+        let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b#'
       else
-        let t .= ' ' . s:ilsep . ' '
+        let t .= ' ' . s:ilsep
       endif
     endif
     " how many buffers after the last item are hidden?
