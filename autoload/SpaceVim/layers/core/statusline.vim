@@ -169,7 +169,7 @@ function! s:percentage() abort
 endfunction
 
 function! s:cursorpos() abort
-  return ' %l:%c '
+  return "%{' ' . join(map(getpos('.')[1:2], \"printf('%3d', v:val)\"), ':') . ' '}"
 endfunction
 
 function! s:time() abort
