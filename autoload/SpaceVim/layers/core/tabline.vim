@@ -280,14 +280,28 @@ function! SpaceVim#layers#core#tabline#get() abort
       return ''
     endif
     let t = ''
+    " how many buffers before the first item are hidden.
+    let hidden_items_numbers = index(s:buffers, shown_items[0].bufnr)
+    if hidden_items_numbers > 0
+      let t .= '%#SpaceVim_tabline_a#'  .  ' << '. hidden_items_numbers
+    endif
     if s:BUFFER.bufnr() == shown_items[0].bufnr
       if s:is_modified(shown_items[0].bufnr)
-        let t = '%#SpaceVim_tabline_m# '
+        if hidden_items_numbers > 0
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_m#' . s:lsep 
+        endif
+        let t .= '%#SpaceVim_tabline_m# '
       else
-        let t = '%#SpaceVim_tabline_a# '
+        if hidden_items_numbers > 0
+          let t .= ' ' . s:ilsep 
+        endif
+        let t .= '%#SpaceVim_tabline_a# '
       endif
     else
-      let t = '%#SpaceVim_tabline_b# '
+      if hidden_items_numbers > 0
+        let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep 
+      endif
+      let t .= '%#SpaceVim_tabline_b# '
     endif
     let index = 1
     for item in shown_items
