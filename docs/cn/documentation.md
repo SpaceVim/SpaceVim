@@ -128,7 +128,7 @@ lang: zh
 - **更快的启动时间：** 得益于 dein.vim, 90% 的插件都是按需载入的。
 - **更少的肌肉损伤：** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。
 - **更易扩展：** 依照一些[约定](http://spacevim.org/cn/development/)，很容易将现有的插件集成到 SpaceVim 中来。
-- **完美支持 Neovim:** 得益于 Neovim 的 romote 插件以及异步 API，运行在 Neovim 下将有更加完美的体验。
+- **完美支持 Neovim:** 得益于 Neovim 的 remote 插件以及异步 API，运行在 Neovim 下将有更加完美的体验。
 
 ## 运行截图
 
