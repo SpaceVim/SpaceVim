@@ -82,6 +82,7 @@ function! s:wrap_id(id) abort
 endfunction
 
 function! s:buffer_item(bufnr, ...) abort
+  call SpaceVim#logger#info('What the fuck? a:000 is :' . string(a:000))
   let name = s:tabname(a:bufnr)
   let item = {
         \ 'bufnr' : a:bufnr,
@@ -176,6 +177,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         endfor
       endif
     endif
+    let s:shown_items = shown_items
     let t = ''
     if current_tabnr == shown_items[0].tabnr
       if getbufvar(shown_items[0].bufnr, '&modified', 0)
