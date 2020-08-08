@@ -32,6 +32,7 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:HI = SpaceVim#api#import('vim#highlight')
 let s:LOG = SpaceVim#logger#derive('tabline ')
 let s:SYS = SpaceVim#api#import('system')
+let s:TAB = SpaceVim#api#import('vim#tab')
 " }}}
 
 
@@ -113,7 +114,7 @@ function! SpaceVim#layers#core#tabline#get() abort
 
   if tabpage_counts > 1
     let current_tabnr = tabpagenr()
-    let previous_tabnr = tabpagenr('#')
+    let previous_tabnr = s:TAB.previous_tabpagenr()
     let matched_len = 0
     for i in range(1, tabpage_counts)
       call add(all_tabline_items, s:buffer_item(tabpagebuflist(i)[tabpagewinnr(i) - 1], i))
