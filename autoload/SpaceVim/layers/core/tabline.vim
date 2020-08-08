@@ -121,7 +121,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       call add(all_tabline_items, s:buffer_item(tabpagebuflist(i)[tabpagewinnr(i) - 1], i))
     endfor
     if previous_tabnr < current_tabnr
-      for i in range(previous_tabnr, current_tabnr)
+      for i in range(previous_tabnr == 0 ? 1 : previous_tabnr, current_tabnr)
         call add(shown_items, all_tabline_items[i - 1])
         if s:check_len(shown_items)
           let matched_len = 1
