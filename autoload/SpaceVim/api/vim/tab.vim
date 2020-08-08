@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:self = {}
+let s:self.__cmp = SpaceVim#api#import('vim#compatible')
 
 let s:self._tree = {}
 
@@ -31,6 +32,18 @@ endfunction
 
 function! s:self.realTabBuffers(id) abort
   return filter(copy(tabpagebuflist(a:id)), 'buflisted(v:val) && getbufvar(v:val, "&buftype") ==# ""')
+endfunction
+
+function! s:self.previous_tabpagenr() abort
+  let tabsinfo = self.__cmp.execute('tabs')
+  let number = 0
+  for line in split(tabsinfo, "\n")
+    if line =~# '^Tab page \d'
+      let number = str2nr(matchstr(line, '\d\+'))
+    elseif line =~# '^#'
+      return number
+    endif
+  endfor
 endfunction
 
 function! SpaceVim#api#vim#tab#get() abort
