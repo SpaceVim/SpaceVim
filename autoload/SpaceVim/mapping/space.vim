@@ -667,8 +667,7 @@ endfunction
 
 let s:scratch_buffer = -1
 function! s:switch_scratch_buffer() abort
-  if bufexists(s:scratch_buffer)
-  else
+  if !bufexists(s:scratch_buffer)
     let s:scratch_buffer = s:BUF.create_buf(1, 1)
   endif
   exe 'buffer' s:scratch_buffer
