@@ -174,6 +174,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         endfor
       endif
     endif
+    let s:shown_items = shown_items
     let t = ''
     if current_tabnr == shown_items[0].tabnr
       if getbufvar(shown_items[0].bufnr, '&modified', 0)
@@ -184,7 +185,13 @@ function! SpaceVim#layers#core#tabline#get() abort
     else
       let t = '%#SpaceVim_tabline_b# '
     endif
+    let index = 1
     for item in shown_items
+      if has('tablineat')
+        let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
+      endif
+      let t .= s:wrap_id(index)
+      let index += 1
       let t .= item.bufname
       if item.tabnr == current_tabnr - 1
         let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
@@ -383,6 +390,8 @@ function! SpaceVim#layers#core#tabline#config() abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#jump(id, ...) abort
+  call SpaceVim#logger#info('id is:' . a:id)
+  call SpaceVim#logger#info('mouse is:' . get(a:000, 2, ''))
   if len(s:shown_items) >= a:id
     let item = s:shown_items[a:id - 1]
     let mouse = get(a:000, 2, '')
