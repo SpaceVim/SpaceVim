@@ -390,15 +390,12 @@ function! SpaceVim#layers#core#tabline#config() abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#jump(id, ...) abort
-  call SpaceVim#logger#info('id is:' . a:id)
-  call SpaceVim#logger#info('mouse is:' . get(a:000, 2, ''))
   if len(s:shown_items) >= a:id
     let item = s:shown_items[a:id - 1]
-    let mouse = get(a:000, 2, '')
+    let mouse = get(a:000, 1, '')
     if tabpagenr('$') > 1
       if mouse ==# 'm'
-        exe 'tabnext' . item.tabnr
-        quit
+        exe 'tabclose ' . item.tabnr
       elseif mouse ==# 'l'
         exe 'tabnext' . item.tabnr
       else
