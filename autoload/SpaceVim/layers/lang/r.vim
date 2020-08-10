@@ -6,6 +6,37 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#ring, layer-lang-r
+" @parentsection layers
+" This layer is for r development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#r'
+" <
+"
+" @subsection Key bindings
+"
+" The command of code runner for R is `"R <%s"`
+" `%s` will be replaced to the path of current R file.
+" >
+"   Key             Function
+"   --------------------------------
+"   SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for r, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
 function! SpaceVim#layers#lang#r#plugins() abort
   let plugins = []
   call add(plugins, ['wsdjeg/Nvim-R', {'merged' : 0}])
