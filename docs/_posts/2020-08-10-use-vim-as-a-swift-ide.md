@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Swift IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/57321608-4a484880-7134-11e9-8e43-5fa05085d7e5.png
+image: https://user-images.githubusercontent.com/13142418/89797871-0d9ca580-db5e-11ea-8d43-c02cd9e49915.png
 description: "A general guide for using SpaceVim as Swift IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
