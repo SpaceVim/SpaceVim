@@ -16,6 +16,7 @@ Each of the following sections will be covered:
 <!-- vim-markdown-toc GFM -->
 
 - [Enable language layer](#enable-language-layer)
+- [code running](#code-running)
 
 <!-- vim-markdown-toc -->
 
@@ -30,4 +31,11 @@ SpaceVim configuration file, and add following configuration:
 ```
 
 for more info, you can read the [lang#swift](../layers/lang/swift/) layer documentation.
+
+### code running
+
+The default code running key binding is `SPC l r`. It will run `swift current_file` asynchronously.
+And the stdout will be shown on a runner buffer.
+
+![swift_runner](https://user-images.githubusercontent.com/13142418/89795928-96fea880-db5b-11ea-81c4-7f3384f419e7.png)
 
