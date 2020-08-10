@@ -17,6 +17,7 @@ Each of the following sections will be covered:
 
 - [Enable language layer](#enable-language-layer)
 - [code running](#code-running)
+- [REPL support](#repl-support)
 
 <!-- vim-markdown-toc -->
 
@@ -38,4 +39,12 @@ The default code running key binding is `SPC l r`. It will run `swift current_fi
 And the stdout will be shown on a runner buffer.
 
 ![swift_runner](https://user-images.githubusercontent.com/13142418/89795928-96fea880-db5b-11ea-81c4-7f3384f419e7.png)
+
+### REPL support
+
+Start a `swift` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
+send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
+send whole buffer.
+
+![swift_repl](https://user-images.githubusercontent.com/13142418/89796468-48054300-db5c-11ea-9ebe-4bb56e31722e.png)
 
