@@ -6,6 +6,22 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#swig, layer-lang-swift
+" @parentsection layers
+" This layer is for swift development, including syntax highlighting and
+" indent. To enable it:
+" >
+"   [layers]
+"     name = "lang#swift"
+" <
+" @subsection Mappings
+" >
+"   Key         Function
+"   -----------------------------------------------
+"   SPC l k     jumping to placeholders
+" <
+
 func! SpaceVim#layers#lang#swift#plugins() abort
   let plugins = []
   call add(plugins, ['keith/swift.vim', {'merged' : 0}])
