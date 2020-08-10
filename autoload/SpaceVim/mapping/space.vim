@@ -6,6 +6,8 @@
 " License: GPLv3
 "=============================================================================
 
+let s:BUF = SpaceVim#api#import('vim#buffer')
+
 let s:file = expand('<sfile>:~')
 let s:funcbeginline =  expand('<slnum>') + 1
 function! SpaceVim#mapping#space#init() abort
@@ -308,6 +310,10 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 's'], 
+        \ 'call call('
+        \ . string(function('s:switch_scratch_buffer'))
+        \ . ', [])', 'switch-to-scratch-buffer', 1)
   let s:lnum = expand('<slnum>') + 3
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'p'], 'bp', ['previous-buffer',
         \ [
@@ -657,6 +663,14 @@ function! s:create_new_named_tab() abort
   else
     tabnew
   endif
+endfunction
+
+let s:scratch_buffer = -1
+function! s:switch_scratch_buffer() abort
+  if !bufexists(s:scratch_buffer) || !empty(getbufvar(s:scratch_buffer, '&filetype', ''))
+    let s:scratch_buffer = s:BUF.create_buf(1, 1)
+  endif
+  exe 'buffer' s:scratch_buffer
 endfunction
 
 function! s:windows_transient_state() abort
