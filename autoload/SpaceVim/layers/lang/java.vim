@@ -60,9 +60,9 @@
 "
 "   Mode      Key           Function
 "   -------------------------------------------------------------
-"   normal    SPC l g b     run gradle clean build
-"   normal    SPC l g B     run gradle build
 "   normal    SPC l g r     run gradle run 
+"   normal    SPC l g b     run gradle build
+"   normal    SPC l g B     run gradle clean build
 "   normal    SPC l g t     run gradle test
 "
 "   Jump key bindings:
@@ -240,10 +240,10 @@ function! s:language_specified_mappings() abort
 
   " Gradle
   let g:_spacevim_mappings_space.l.g = {'name' : '+Gradle'}
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'b'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'B'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle clean build"])',
         \ 'Run gradle clean build', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'B'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'b'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle build"])',
         \ 'Run gradle build', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 't'], 'call call('
