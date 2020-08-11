@@ -33,7 +33,7 @@ pip install --user pynvim
 pip3 install --user pynvim
 ```
 
-following the [quick start guide](../quick-guide-start/) to install SpaceVim,
+following the [quick start guide](../quick-start-guide/) to install SpaceVim,
 
 ### Key binding guide
 
@@ -57,7 +57,7 @@ and the key binding of filetree is `<F3>`. Tagbar's key binding is `<F2>`, it wi
 SpaceVim detect the project root based on the `project_rooter_patterns` option.
 This is a list of patterns of filename or directory.
 the default value is `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`.
-read the [documentation](../documentation/#manager-projects) for more info.
+read the [documentation](../documentation/#managing-projects) for more info.
 
 ### Fuzzy finder
 
