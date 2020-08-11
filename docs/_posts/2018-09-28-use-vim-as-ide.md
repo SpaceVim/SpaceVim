@@ -61,18 +61,20 @@ read the [documentation](../documentation/#manager-projects) for more info.
 
 ### Fuzzy finder
 
-SpaceVim provides 5 fuzzy finder layer, they are unite, denite, fzf, leaderf and ctrlp. To use fuzzy finder feature, you need to enable a
+SpaceVim provides 5 fuzzy finder layer, they are unite, denite, fzf, leaderf and ctrlp.
+To use fuzzy finder feature, you need to enable a
 fuzzy finder layer. for example enable denite layer:
 
 ```toml
 [[layers]]
-name = "denite"
+    name = "denite"
 ```
 
 ### Files and Windows
 
-The windows ID will be shown on the statusline, and users can use `SPC + number` to jump to specific windows, the buffer id or tabpage id will
-be shown on the tabline. To jump to specific tab, you can use `Leader + number` the default leader in SpaceVim is `\`.
+The windows ID will be shown on the statusline, and users can use `SPC + number` to jump to specific windows,
+the buffer index or tabpage index will be shown on the tabline.
+To jump to specific tab, you can use `Leader + number` the default leader in SpaceVim is `\`.
 
 ### Language support
 
