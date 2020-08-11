@@ -60,6 +60,7 @@
 "
 "   Mode      Key           Function
 "   -------------------------------------------------------------
+"   normal    SPC l g r     run gradle run 
 "   normal    SPC l g b     run gradle build
 "   normal    SPC l g B     run gradle clean build
 "   normal    SPC l g t     run gradle test
@@ -248,7 +249,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle test"])',
         \ 'Run gradle test', 1)
-  
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'r'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["gradle run"])',
+        \ 'Run gradle run', 1)
+
   " REPL
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],

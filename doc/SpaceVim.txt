@@ -2269,6 +2269,7 @@ MAPPINGS
 
   Mode      Key           Function
   -------------------------------------------------------------
+  normal    SPC l g r     run gradle run 
   normal    SPC l g b     run gradle build
   normal    SPC l g B     run gradle clean build
   normal    SPC l g t     run gradle test
