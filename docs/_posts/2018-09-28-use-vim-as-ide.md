@@ -16,18 +16,24 @@ This is a general guide for using SpaceVim as IDE. including following sections:
 - [Installation](#installation)
 - [Key binding guide](#key-binding-guide)
 - [Default UI](#default-ui)
+- [project manager](#project-manager)
 - [Fuzzy finder](#fuzzy-finder)
 - [Files and Windows](#files-and-windows)
 - [Language support](#language-support)
-- [project manager](#project-manager)
 
 <!-- vim-markdown-toc -->
 
 ### Installation
 
-SpaceVim is a Vim configuration, so you need to install vim or neovim, here is a guide for installing neovim and vim8 with `+python3` feature.
+SpaceVim is a Vim configuration, so you need to install vim or neovim,
+to enable `+python3` and `+python` support for neovim, you need to install `pynvim`:
 
-after installing Vim, following the [quick start guide](../quick-guide-start/) to install SpaceVim,
+```
+pip install --user pynvim
+pip3 install --user pynvim
+```
+
+following the [quick start guide](../quick-guide-start/) to install SpaceVim,
 
 ### Key binding guide
 
@@ -45,6 +51,13 @@ for more info, please checkout the article about mapping guide: [Mnemonic key bi
 The welcome screen will show the recent files of current project.
 The tabline displays all opened buffers or tabs. The filetree is opened on the left,
 and the key binding of filetree is `<F3>`. Tagbar's key binding is `<F2>`, it will show all tags in current file.
+
+### project manager
+
+SpaceVim detect the project root based on the `project_rooter_patterns` option.
+This is a list of patterns of filename or directory.
+the default value is `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`.
+read the [documentation](../documentation/#manager-projects) for more info.
 
 ### Fuzzy finder
 
@@ -65,6 +78,3 @@ be shown on the tabline. To jump to specific tab, you can use `Leader + number` 
 
 By default, SpaceVim does not load any language layer, please checkout the [available layers](../layers/) page.
 
-### project manager
-
-SpaceVim detect the project root based on the root_partten option. This is a list of partten of filename or directory. the default value is .git .svn etc.
