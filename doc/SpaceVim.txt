@@ -2494,7 +2494,7 @@ KEY BINDINGS
 >
   Key             Function
   -----------------------------
-  SPC l
+  SPC l r         Run current moonscript
 <
 
 

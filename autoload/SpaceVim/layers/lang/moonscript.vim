@@ -20,7 +20,7 @@
 " >
 "   Key             Function
 "   -----------------------------
-"   SPC l          
+"   SPC l r         Run current moonscript
 " <
 "
 
@@ -31,10 +31,10 @@ function! SpaceVim#layers#lang#moonscript#plugins() abort
   return plugins
 endfunction
 
-function! SpaceVim#layers#lang#hy#config() abort
-  call SpaceVim#plugins#repl#reg('moonscript', 'moonscript')
-  call SpaceVim#plugins#runner#reg_runner('moonscript', 'moonscript %s')
-  call SpaceVim#mapping#space#regesit_lang_mappings('moonscript', function('s:language_specified_mappings'))
+function! SpaceVim#layers#lang#moonscript#config() abort
+  call SpaceVim#plugins#repl#reg('moon', 'mooni')
+  call SpaceVim#plugins#runner#reg_runner('moon', 'moon %s')
+  call SpaceVim#mapping#space#regesit_lang_mappings('moon', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort
