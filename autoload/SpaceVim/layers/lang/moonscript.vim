@@ -23,6 +23,16 @@
 "   SPC l r         Run current moonscript
 " <
 "
+" This layer also provides REPL support for moonscript, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 
 function! SpaceVim#layers#lang#moonscript#plugins() abort
