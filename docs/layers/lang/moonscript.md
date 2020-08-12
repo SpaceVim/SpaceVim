@@ -41,7 +41,7 @@ To running a moonscript file, you can press `SPC l r` to run current file withou
 
 ### Inferior REPL process
 
-Start a `moonscript` inferior REPL process with `SPC l s i`.
+Start a `mooni` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
