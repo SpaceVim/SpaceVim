@@ -21,6 +21,7 @@ Each of the following sections will be covered:
 - [Syntax lint](#syntax-lint)
 - [code running](#code-running)
 - [REPL support](#repl-support)
+- [Jump to test file](#jump-to-test-file)
 
 <!-- vim-markdown-toc -->
 
@@ -70,4 +71,16 @@ send whole buffer.
 
 ![swift_repl](https://user-images.githubusercontent.com/13142418/89796468-48054300-db5c-11ea-9ebe-4bb56e31722e.png)
 
+### Jump to test file
 
+SpaceVim use vim-project to manager the files in a project,
+you can add a `.projections.json` to the root of your project with following content:
+
+```json
+{
+  "lib/*.ex": {"alternate": "test/{}.exs"},
+  "test/*.exs": {"alternate": "lib/{}.ex"}
+}
+```
+
+with this configuration, you can jump between the source code and test file via command `:A`
