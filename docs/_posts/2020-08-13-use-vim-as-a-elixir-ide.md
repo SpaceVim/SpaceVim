@@ -45,7 +45,7 @@ The [autocomplete](../layers/autocomplete/) layer is enabled by default.
 ### Code formatting
 
 Code formatting is provided by [format](../layers/format/) layer. The default key binding is `SPC b f`.
-To enable code formatting feature for elixir, you need to load the format layer.
+It will run `mix format current_file`. To enable code formatting feature for elixir, you need to load the format layer.
 
 ```toml
 [[layers]]
