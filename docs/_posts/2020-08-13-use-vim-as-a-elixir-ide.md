@@ -22,6 +22,7 @@ Each of the following sections will be covered:
 - [code running](#code-running)
 - [REPL support](#repl-support)
 - [Jump to test file](#jump-to-test-file)
+- [Task manager](#task-manager)
 
 <!-- vim-markdown-toc -->
 
@@ -84,3 +85,17 @@ you can add a `.projections.json` to the root of your project with following con
 ```
 
 with this configuration, you can jump between the source code and test file via command `:A`
+
+### Task manager
+
+To manage the task of elixir project, you need to create a task configuration file: `.SpaceVim.d/task.toml`.
+
+For example:
+
+```toml
+[elixir-task]
+    command = 'mix'
+    args = ['compile']
+```
+
+For more information about the task manager plugin, checkout the [task documentation](../documentation/#tasks).
