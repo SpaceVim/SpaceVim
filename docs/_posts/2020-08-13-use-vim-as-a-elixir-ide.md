@@ -16,7 +16,9 @@ Each of the following sections will be covered:
 <!-- vim-markdown-toc GFM -->
 
 - [Enable language layer](#enable-language-layer)
+- [Code completion](#code-completion)
 - [Code formatting](#code-formatting)
+- [Syntax lint](#syntax-lint)
 - [code running](#code-running)
 - [REPL support](#repl-support)
 
@@ -34,6 +36,10 @@ SpaceVim configuration file, and add following configuration:
 
 for more info, you can read the [lang#elixir](../layers/lang/elixir/) layer documentation.
 
+### Code completion
+
+The [autocomplete](../layers/autocomplete/) layer is enabled by default.
+
 ### Code formatting
 
 Code formatting is provided by [format](../layers/format/) layer. The default key binding is `SPC b f`.
@@ -43,6 +49,11 @@ To enable code formatting feature for elixir, you need to load the format layer.
 [[layers]]
   name = "format"
 ```
+
+### Syntax lint
+
+Syntax lint is provided by [checkers](../layers/checkers/) layer. Error will be displayed in quickfix window
+after saving current file. This layer is enabled by default.
 
 ### code running
 
