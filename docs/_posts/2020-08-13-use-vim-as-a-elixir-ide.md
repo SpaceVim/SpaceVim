@@ -98,9 +98,12 @@ To manage the task of elixir project, you need to create a task configuration fi
 For example:
 
 ```toml
-[elixir-task]
+[mix-test]
     command = 'mix'
-    args = ['compile']
+    args = ['test']
+[mix-coveralls]
+    command = 'mix'
+    args = ['coveralls']
 ```
 
 For more information about the task manager plugin, checkout the [task documentation](../documentation/#tasks).
