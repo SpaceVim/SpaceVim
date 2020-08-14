@@ -65,9 +65,7 @@ after saving current file. This layer is enabled by default.
 The default code running key binding is `SPC l r`. It will run `elixir current_file` asynchronously.
 And the stdout will be shown on a runner buffer.
 
-
 ![elixir-code-runner](https://user-images.githubusercontent.com/13142418/90252211-accce000-de71-11ea-8a93-3f07e9cc2b69.png)
-
 
 ### REPL support
 
