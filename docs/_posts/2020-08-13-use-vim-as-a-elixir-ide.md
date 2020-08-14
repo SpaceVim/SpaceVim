@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Elixir IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/89797871-0d9ca580-db5e-11ea-8d43-c02cd9e49915.png
+image: https://user-images.githubusercontent.com/13142418/90253911-80669300-de74-11ea-9786-4b97a4091bc6.png
 description: "A general guide for using SpaceVim as Elixir IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -12,6 +12,8 @@ commentsID: "Use Vim as a Elixir IDE"
 
 This is a general guide for using SpaceVim as a Elixir IDE, including layer configuration and usage. 
 Each of the following sections will be covered:
+
+![elixir-ide](https://user-images.githubusercontent.com/13142418/90253911-80669300-de74-11ea-9786-4b97a4091bc6.png)
 
 <!-- vim-markdown-toc GFM -->
 
@@ -25,6 +27,7 @@ Each of the following sections will be covered:
 - [Task manager](#task-manager)
 
 <!-- vim-markdown-toc -->
+
 
 ### Enable language layer
 
@@ -72,7 +75,9 @@ Start a `elixir` inferior REPL process with `SPC l s i`. After the REPL process 
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
-![swift_repl](https://user-images.githubusercontent.com/13142418/89796468-48054300-db5c-11ea-9ebe-4bb56e31722e.png)
+
+![elixir-repl](https://user-images.githubusercontent.com/13142418/90252532-409eac00-de72-11ea-992e-8f0b678bdc51.png)
+
 
 ### Jump to test file
 
