@@ -9,10 +9,11 @@ lang: zh
 如果你想赞助 SpaceVim，或者希望 SpaceVim 开发得更快一点，可以选择以下某种方式进行赞助：
 
 - [通过 BountySource](https://www.bountysource.com/teams/spacevim)
+- [通过 opencollective](https://opencollective.com/spacevim)
 
 或者，也许你可以给我买杯咖啡：
 
-<a href='https://ko-fi.com/A538L6H' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+<a href='https://ko-fi.com/SpaceVim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 | 微信                                                                   | 支付宝                                                                     |
 | ---------------------------------------------------------------------- | -------------------------------------------------------------------------- |
@@ -100,7 +101,7 @@ lang: zh
 | 2019-01-18   | ¥ 6.66   | f\*n                |
 | 2019-04-09   | ¥ 10     | 东海                |
 | 2019-03-17   | ¥ 1000   | falls               |
-| 2019-03-18   | ¥ 10   | \*人               |
+| 2019-03-18   | ¥ 10     | \*人                |
 | 2019-01-24   | ¥ 10     | 重剑                |
 | 2019-04-24   | \$171.78 | LLIP                |
 | 2019-04-24   | \$2.57   | Isaac               |
@@ -124,6 +125,7 @@ lang: zh
 | 2020-01-05   | \$30     | Michael Jackson     |
 | 2020-01-21   | \$50     | Sava Kahn           |
 | 2020-02-21   | ¥ 50     | \*尚                |
+| 2020-03-01   | \$ 25    | Brendan Copp        |
 | 2020-03-06   | ¥ 20     | J\*8                |
 | 2020-03-14   | ¥ 5      | \*童                |
 | 2020-04-06   | \$2.57   | KuropatwinskiMarcin |
@@ -131,7 +133,13 @@ lang: zh
 | 2020-04-10   | ¥ 1      | 付\*#               |
 | 2020-04-16   | ¥ 50     | N\*L                |
 | 2020-04-17   | \$2.57   | 小林大              |
-| 2020-04-18   | ¥ 5      | \*剑                |
+| 2020-04-18   | ¥ 5      | \*流                |
+| 2020-05-24   | \$ 10    | Ryein Goddard       |
+| 2020-05-30   | ¥ 1      | l\*t                |
+| 2020-05-31   | ¥ 30     | \*刚                |
+| 2020-07-24   | ¥ 5      | P\*e                |
+| 2020-07-26   | \$19.78  | GliraPhilipp        |
+| 2020-08-07   | \$5.44   | GillinMitchell      |
 
 ## 历史支出
 
