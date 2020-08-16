@@ -1,4 +1,4 @@
-local spacevim = {}
+local M = {}
 
 
 local options = require('spacevim.opt')
@@ -6,19 +6,19 @@ local layers = require('spacevim.layer')
 
 
 
-function spacevim.bootstrap()
+function M.bootstrap()
 
     options.init()
     layers.init()
     
 end
 
-function spacevim.eval(l)
+function M.eval(l)
     if vim['api'] ~= nil then
-        return require('spacevim.vim').eval(l)
+        return vim.eval(l)
     else
-        return require('spacevim.neovim').eval(l)
+        return vim.api.nvim_eval(l)
     end
 end
 
-return spacevim
+return M
