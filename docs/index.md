@@ -25,7 +25,6 @@ from having to think about what packages to install.
 If you like SpaceVim, please feel free to star the project on [github](https://github.com/SpaceVim/SpaceVim). It is a great way to show your
 appreciation while providing us motivation to continue working on this project.
 
-
 - [Quick start guide](quick-start-guide/): installation, configuration, and resources of learning SpaceVim
 - [Documentation](documentation/): the primary official document of SpaceVim
 - [Available layers](layers/): a list of available layers which can be used in SpaceVim
