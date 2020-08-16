@@ -45,13 +45,22 @@ function! SpaceVim#api#data#dict#get() abort
         \ )
 endfunction
 
-function! s:entrys(dict) abort
-  let entrys = []
-  for key in keys(a:dict)
-    call add(entrys, {key : a:dict[key]})
-  endfor
-  return entrys
-endfunction
+
+if has('lua') || has('nvim')
+  function! s:entrys(dict) abort
+    lua require("spacevim.api.data.dict").entrys(
+          \ vim.eval("a:dict")
+          \ )
+  endfunction
+else
+  function! s:entrys(dict) abort
+    let entrys = []
+    for key in keys(a:dict)
+      call add(entrys, {key : a:dict[key]})
+    endfor
+    return entrys
+  endfunction
+endif
 
 function! s:make(keys, values, ...) abort
   let dict = {}
