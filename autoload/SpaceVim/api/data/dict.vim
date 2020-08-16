@@ -52,6 +52,12 @@ if has('lua') || has('nvim')
           \ require("spacevim").eval("a:dict")
           \ )
   endfunction
+  function! s:pick(dict, keys) abort
+    lua require("spacevim.api.data.dict").pick(
+          \ require("spacevim").eval("a:dict"),
+          \ require("spacevim").eval("a:keys")
+          \ )
+  endfunction
 else
   function! s:entrys(dict) abort
     let entrys = []
@@ -59,6 +65,15 @@ else
       call add(entrys, {key : a:dict[key]})
     endfor
     return entrys
+  endfunction
+  function! s:pick(dict, keys) abort
+    let new_dict = {}
+    for key in a:keys
+      if has_key(a:dict, key)
+        let new_dict[key] = a:dict[key]
+      endif
+    endfor
+    return new_dict
   endfunction
 endif
 
@@ -86,15 +101,6 @@ function! s:make_index(list, ...) abort
   return s:make(a:list, [], value)
 endfunction
 
-function! s:pick(dict, keys) abort
-  let new_dict = {}
-  for key in a:keys
-    if has_key(a:dict, key)
-      let new_dict[key] = a:dict[key]
-    endif
-  endfor
-  return new_dict
-endfunction
 
 function! s:omit(dict, keys) abort
   let new_dict = copy(a:dict)
