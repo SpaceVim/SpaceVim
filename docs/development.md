@@ -26,6 +26,7 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
       - [Language specified key bindings](#language-specified-key-bindings)
     - [Contributing a banner](#contributing-a-banner)
 - [Build with SpaceVim](#build-with-spacevim)
+- [Newsletters](#newsletters)
 - [Changelog](#changelog)
 
 <!-- vim-markdown-toc -->
@@ -320,6 +321,18 @@ markdown
 ```md
 [![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
 ```
+
+## Newsletters
+
+<ul>
+    {% for post in site.categories.newsletter %}
+            <li>
+               <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+               <span class="post-date">{{ post.date | date_to_string }}</span>
+               <p>{{ post.description | truncatewords: 100 }}</p>
+            </li>
+    {% endfor %}
+</ul>
 
 ## Changelog
 
