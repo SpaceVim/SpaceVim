@@ -13,4 +13,12 @@ function spacevim.bootstrap()
     
 end
 
+function spacevim.eval(l)
+    if vim['api'] ~= nil then
+        return require('spacevim.vim').eval(l)
+    else
+        return require('spacevim.neovim').eval(l)
+    end
+end
+
 return spacevim
