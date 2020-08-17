@@ -3,6 +3,7 @@
 | language          | layer doc                                                           |
 | ----------------- | ------------------------------------------------------------------- |
 | Agda              | [lang#agda](https://spacevim.org/layers/lang/agda/)                 |
+| ActionScript      | [lang#actionscript](https://spacevim.org/layers/lang/actionscript/) |
 | Assembly          | lang#assemble                                                       |
 | AspectJ           | [lang#asepctj](https://spacevim.org/layers/lang/aspectj/)           |
 | AutoHotkey        | [lang#autohotkey](https://spacevim.org/layers/lang/autohotkey/)     |
@@ -20,12 +21,15 @@
 | erlang            | [lang#erlang](https://spacevim.org/layers/lang/erlang/)             |
 | F#                | [lang#fsharp](https://spacevim.org/layers/lang/fsharp/)             |
 | FoxPro            | [lang#foxpro](https://spacevim.org/layers/lang/foxpro/)             |
+| Fortran           | [lang#fortran](https://spacevim.org/layers/lang/fortran/)           |
 | Go                | [lang#go](https://spacevim.org/layers/lang/go/)                     |
 | Goby              | [lang#goby](https://spacevim.org/layers/lang/goby/)                 |
 | Gosu              | [lang#gosu](https://spacevim.org/layers/lang/gosu/)                 |
+| graphql           | [lang#graphql](https://spacevim.org/layers/lang/graphql/)           |
 | Groovy            | [lang#groovy](https://spacevim.org/layers/lang/groovy/)             |
 | Hack              | [lang#hack](https://spacevim.org/layers/lang/hack/)                 |
 | Haskell           | [lang#haskell](https://spacevim.org/layers/lang/haskell/)           |
+| Hy                | [lang#hy](https://spacevim.org/layers/lang/hy/)                     |
 | Idris             | [lang#idris](https://spacevim.org/layers/lang/idris/)               |
 | Io                | [lang#io](https://spacevim.org/layers/lang/io/)                     |
 | J                 | [lang#j](https://spacevim.org/layers/lang/j/)                       |
@@ -35,6 +39,7 @@
 | Kotlin            | [lang#kotlin](https://spacevim.org/layers/lang/kotlin/)             |
 | LiveScript        | [lang#livescript](https://spacevim.org/layers/lang/livescript/)     |
 | Lua               | [lang#lua](https://spacevim.org/layers/lang/lua/)                   |
+| MoonScript        | [lang#moonscript](https://spacevim.org/layers/lang/moonscript/)     |
 | MATLAB            | [lang#matlab](https://spacevim.org/layers/lang/matlab/)             |
 | Nim               | [lang#nim](https://spacevim.org/layers/lang/nim/)                   |
 | OCaml             | [lang#ocaml](https://spacevim.org/layers/lang/ocaml/)               |
@@ -65,7 +70,6 @@
 | 4th Dimension     |                                                                     |
 | ABAP              |                                                                     |
 | ABC               |                                                                     |
-| ActionScript      |                                                                     |
 | Ada               |                                                                     |
 | Agilent VEE       |                                                                     |
 | Algol             |                                                                     |
@@ -126,7 +130,6 @@
 | Fantom            |                                                                     |
 | Felix             |                                                                     |
 | Forth             |                                                                     |
-| Fortran           |                                                                     |
 | Fortress          |                                                                     |
 | Gambas            |                                                                     |
 | GAMS              |                                                                     |
