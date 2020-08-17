@@ -13,6 +13,7 @@
 | Clojure           | [lang#clojure](https://spacevim.org/layers/lang/clojure/)           |
 | CoffeeScript      | [lang#coffeescript](https://spacevim.org/layers/lang/coffeescript/) |
 | Crystal           | [lang#crystal](https://spacevim.org/layers/lang/crystal/)           |
+| Chapel            | [lang#chapel](https://spacevim.org/layers/lang/chapel/)             |
 | D                 | [lang#d](https://spacevim.org/layers/lang/d/)                       |
 | Dart              | [lang#dart](https://spacevim.org/layers/lang/dart/)                 |
 | DOS batch         | [lang#batch](https://spacevim.org/layers/lang/batch/)               |
@@ -99,7 +100,6 @@
 | CFML              |                                                                     |
 | cg                |                                                                     |
 | Ch                |                                                                     |
-| Chapel            |                                                                     |
 | CHILL             |                                                                     |
 | CIL               |                                                                     |
 | CL                |                                                                     |
@@ -146,7 +146,6 @@
 | Informix-4GL      |                                                                     |
 | INTERCAL          |                                                                     |
 | Ioke              |                                                                     |
-| J#                |                                                                     |
 | JADE              |                                                                     |
 | JavaFX Script     |                                                                     |
 | JScript           |                                                                     |
@@ -277,7 +276,6 @@
 - skiplang/skip
 - FascinatedBox/lily
 - rakudo/rakudo
-- chapel-lang/chapel
 - lucee/Lucee
 - eclipse/golo-lang
 - HaxeFoundation/haxe
