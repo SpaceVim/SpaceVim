@@ -11,7 +11,7 @@
 " @parentsection api
 " @subsection Intro
 "
-" vim#window API provides some basic functions for setting and getting config
+" `vim#window` API provides some basic functions for setting and getting config
 " of vim window.
 "
 " @subsection Functions
@@ -20,6 +20,10 @@
 " 
 " Gets the cursor position in the window {winid}, to get the ID of a window,
 " checkout |window-ID|.
+"
+" set_cursor({winid}, {pos})
+" 
+" Sets the cursor position to {pos} in the window {winid}.
 
 let s:self = {}
 
