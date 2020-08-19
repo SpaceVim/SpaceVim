@@ -1372,6 +1372,8 @@ The structure of searching tool profile is:
 | `SPC s a D`  | searching in buffer directory cursor word with ag           |
 | `SPC s g d`  | searching in buffer directory with grep                     |
 | `SPC s g D`  | searching in buffer directory cursor word with grep         |
+| `SPC s G d`  | searching in buffer directory with git-grep                     |
+| `SPC s G D`  | searching in buffer directory cursor word with git-grep         |
 | `SPC s k d`  | searching in buffer directory with ack                      |
 | `SPC s k D`  | searching in buffer directory cursor word with ack          |
 | `SPC s r d`  | searching in buffer directory with rg                       |
@@ -1389,6 +1391,8 @@ The structure of searching tool profile is:
 | `SPC s a B`  | ag with default input                               |
 | `SPC s g b`  | grep                                                |
 | `SPC s g B`  | grep with default input                             |
+| `SPC s G b`  | git-grep                                                |
+| `SPC s G B`  | git-grep with default input                             |
 | `SPC s k b`  | ack                                                 |
 | `SPC s k B`  | ack with default input                              |
 | `SPC s r b`  | rg                                                  |
@@ -1406,6 +1410,8 @@ The structure of searching tool profile is:
 | `SPC s a F`  | ag with default text                                |
 | `SPC s g f`  | grep                                                |
 | `SPC s g F`  | grep with default text                              |
+| `SPC s G f`  | git-grep                                                |
+| `SPC s G F`  | git-grep with default text                              |
 | `SPC s k f`  | ack                                                 |
 | `SPC s k F`  | ack with default text                               |
 | `SPC s r f`  | rg                                                  |
