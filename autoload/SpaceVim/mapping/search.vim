@@ -79,7 +79,7 @@ let s:search_tools.g.ignore_case = ['-i']
 
 let s:search_tools.G = {}
 let s:search_tools.G.command = 'git'
-let s:search_tools.G.default_opts = ['grep']
+let s:search_tools.G.default_opts = ['grep', '-n', '--column']
 let s:search_tools.G.expr_opt = ['-E']
 let s:search_tools.G.fixed_string_opt = ['-F']
 let s:search_tools.G.recursive_opt = ['.']
