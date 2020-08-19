@@ -24,6 +24,11 @@
 " set_cursor({winid}, {pos})
 " 
 "   Sets the cursor position to {pos} in the window {winid}.
+"
+" is_float({winnr})
+"
+"   Check if the window is a floating windows, return `v:true` if the window
+"   is a floating window.
 
 let s:self = {}
 
