@@ -1419,7 +1419,8 @@ endfunction
 
 ""
 " @section Usage, usage
-"   the usage guide for SpaceVim
+"   General guide for using SpaceVim. Including layer configuration, bootstrap
+"   function.
 
 ""
 " @section FAQ, faq

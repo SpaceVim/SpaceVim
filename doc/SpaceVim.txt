@@ -3314,7 +3314,8 @@ This layer provides Zeal integration for SpaceVim
 ==============================================================================
 USAGE                                                         *SpaceVim-usage*
 
-  the usage guide for SpaceVim
+  General guide for using SpaceVim. Including layer configuration, bootstrap
+function.
 
 ==============================================================================
 CUSTOM_PLUGINS                                 *SpaceVim-usage-custom_plugins*
