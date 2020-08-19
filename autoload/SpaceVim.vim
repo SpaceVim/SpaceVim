@@ -1009,6 +1009,7 @@ let g:spacevim_enable_powerline_fonts  = 1
 let g:spacevim_lint_on_save            = 1
 ""
 " @section search_tools, options-search_tools
+" @parentsection options
 " Default search tools supported by flygrep. The default order is ['rg', 'ag',
 " 'pt', 'ack', 'grep', 'findstr', 'git']
 " The `git` command means using `git-grep`. If you prefer to use `git-grep` by
