@@ -77,6 +77,16 @@ let s:search_tools.g.default_fopts = []
 let s:search_tools.g.smart_case = []
 let s:search_tools.g.ignore_case = ['-i']
 
+let s:search_tools.g = {}
+let s:search_tools.g.command = 'git'
+let s:search_tools.g.default_opts = ['grep']
+let s:search_tools.g.expr_opt = ['-e']
+let s:search_tools.g.fixed_string_opt = ['-F']
+let s:search_tools.g.recursive_opt = ['.']
+let s:search_tools.g.default_fopts = []
+let s:search_tools.g.smart_case = []
+let s:search_tools.g.ignore_case = ['-i']
+
 let s:search_tools.i = {}
 let s:search_tools.i.command = 'findstr'
 let s:search_tools.i.default_opts = ['/RSN']
