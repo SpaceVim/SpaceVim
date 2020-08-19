@@ -18,12 +18,12 @@
 "
 " get_cursor({winid})
 " 
-" Gets the cursor position in the window {winid}, to get the ID of a window,
+"   Gets the cursor position in the window {winid}, to get the ID of a window,
 " checkout |window-ID|.
 "
 " set_cursor({winid}, {pos})
 " 
-" Sets the cursor position to {pos} in the window {winid}.
+"   Sets the cursor position to {pos} in the window {winid}.
 
 let s:self = {}
 
