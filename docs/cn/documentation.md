@@ -1353,20 +1353,25 @@ endfunction
 
 #### 在所有打开的缓冲区中进行搜索
 
-| 快捷键      | 功能描述                                            |
-| ----------- | --------------------------------------------------- |
-| `SPC s b`   | search with the first found tool                    |
-| `SPC s B`   | search with the first found tool with default input |
-| `SPC s a b` | ag                                                  |
-| `SPC s a B` | ag with default input                               |
-| `SPC s g b` | grep                                                |
-| `SPC s g B` | grep with default input                             |
-| `SPC s k b` | ack                                                 |
-| `SPC s k B` | ack with default input                              |
-| `SPC s r b` | rg                                                  |
-| `SPC s r B` | rg with default input                               |
-| `SPC s t b` | pt                                                  |
-| `SPC s t B` | pt with default input                               |
+以下快捷键为搜索已经打开的文件列表，搜索的目标位置仅限于已经在 Vim 中打开的文件列表。
+在 Vim 中，可以使用命令`:ls`查看已经打开的文件列表。
+
+如若已经载入了模糊搜索的模块，则可以使用快捷键`SPC b b`查看已打开的文件。
+
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
+| `SPC s b`   | 使用默认的搜索工具进行搜索       |
+| `SPC s B`   | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a b` | 使用`ag`进行搜索                 |
+| `SPC s a B` | 使用`ag`搜索光标下的词           |
+| `SPC s g b` | 使用`grep`进行搜索               |
+| `SPC s g B` | 使用`grep`搜索光标下的词         |
+| `SPC s k b` | 使用`ack`进行搜索                |
+| `SPC s k B` | 使用`ack`搜索光标下的词          |
+| `SPC s r b` | 使用`rg`进行搜索                 |
+| `SPC s r B` | 使用`rg`搜索光标下的词           |
+| `SPC s t b` | 使用`pt`进行搜索                 |
+| `SPC s t B` | 使用`pt`搜索光标下的词           |
 
 #### 在任意目录中进行搜索
 
