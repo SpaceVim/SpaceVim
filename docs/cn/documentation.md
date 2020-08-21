@@ -1375,20 +1375,23 @@ endfunction
 
 #### 在任意目录中进行搜索
 
+以下快捷用于指定搜索目录具体文件夹位置，比如需要去搜索非当前项目下的一些文件。
+按下快捷键后，首先提示的是输入搜索词，之后提示输入搜索的目录地址。
+
 | 快捷键      | 功能描述                                            |
 | ----------- | --------------------------------------------------- |
-| `SPC s f`   | search with the first found tool                    |
-| `SPC s F`   | search with the first found tool with default input |
-| `SPC s a f` | ag                                                  |
-| `SPC s a F` | ag with default text                                |
-| `SPC s g f` | grep                                                |
-| `SPC s g F` | grep with default text                              |
-| `SPC s k f` | ack                                                 |
-| `SPC s k F` | ack with default text                               |
-| `SPC s r f` | rg                                                  |
-| `SPC s r F` | rg with default text                                |
-| `SPC s t f` | pt                                                  |
-| `SPC s t F` | pt with default text                                |
+| `SPC s f`   | 使用默认的搜索工具进行搜索       |
+| `SPC s F`   | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a f` | 使用`ag`进行搜索                 |
+| `SPC s a F` | 使用`ag`搜索光标下的词           |
+| `SPC s g f` | 使用`grep`进行搜索               |
+| `SPC s g F` | 使用`grep`搜索光标下的词         |
+| `SPC s k f` | 使用`ack`进行搜索                |
+| `SPC s k F` | 使用`ack`搜索光标下的词          |
+| `SPC s r f` | 使用`rg`进行搜索                 |
+| `SPC s r F` | 使用`rg`搜索光标下的词           |
+| `SPC s t f` | 使用`pt`进行搜索                 |
+| `SPC s t F` | 使用`pt`搜索光标下的词           |
 
 #### 在工程中进行搜索
 
