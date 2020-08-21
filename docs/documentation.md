@@ -1217,7 +1217,7 @@ for example, load the denite layer:
 
 ```toml
 [[layers]]
-name = "denite"
+    name = "denite"
 ```
 
 **Key bindings**
@@ -1255,18 +1255,18 @@ The above key bindings are only part of fuzzy finder layers, please read the lay
 
 **Key bindings within fuzzy finder buffer**
 
-| Key Bindings             | Descriptions                    |
-| ------------------------ | ------------------------------- |
-| `<Tab>` / `Ctrl-j`       | Select next line                |
-| `Shift-<Tab>` / `Ctrl-k` | Select previous line            |
-| `<Esc>`                  | Leave Insert mode               |
-| `Ctrl-w`                 | Delete backward path            |
-| `Ctrl-u`                 | Delete whole line before cursor |
-| `<Enter>`                | Run default action              |
-| `Ctrl-s`                 | Open in a split                 |
-| `Ctrl-v`                 | Open in a vertical split        |
-| `Ctrl-t`                 | Open in a new tab               |
-| `Ctrl-g`                 | Close fuzzy finder              |
+| Key Bindings           | Descriptions                    |
+| ---------------------- | ------------------------------- |
+| `<Tab>` / `Ctrl-j`     | Select next line                |
+| `Shift-Tab` / `Ctrl-k` | Select previous line            |
+| `<Esc>`                | Leave Insert mode               |
+| `Ctrl-w`               | Delete backward path            |
+| `Ctrl-u`               | Delete whole line before cursor |
+| `<Enter>`              | Run default action              |
+| `Ctrl-s`               | Open in a split                 |
+| `Ctrl-v`               | Open in a vertical split        |
+| `Ctrl-t`               | Open in a new tab               |
+| `Ctrl-g`               | Close fuzzy finder              |
 
 #### With an external tool
 
@@ -1286,13 +1286,14 @@ If the tool key is omitted then a default tool will be automatically selected fo
 
 The tool keys are:
 
-| Tool | Key |
-| ---- | --- |
-| ag   | a   |
-| grep | g   |
-| ack  | k   |
-| rg   | r   |
-| pt   | t   |
+| Tool     | Key |
+| -------- | --- |
+| ag       | a   |
+| grep     | g   |
+| git grep | G   |
+| ack      | k   |
+| rg       | r   |
+| pt       | t   |
 
 The available scopes and corresponding keys are:
 
