@@ -1422,21 +1422,20 @@ The structure of searching tool profile is:
 
 #### Searching in a project
 
-
-| Key Bindings        | Descriptions                                        |
-| ------------------- | --------------------------------------------------- |
-| `SPC /` / `SPC s p` | search with the first found tool                    |
-| `SPC *` / `SPC s P` | search with the first found tool with default input |
-| `SPC s a p`         | ag                                                  |
-| `SPC s a P`         | ag with default text                                |
-| `SPC s g p`         | grep                                                |
-| `SPC s g p`         | grep with default text                              |
-| `SPC s k p`         | ack                                                 |
-| `SPC s k P`         | ack with default text                               |
-| `SPC s t p`         | pt                                                  |
-| `SPC s t P`         | pt with default text                                |
-| `SPC s r p`         | rg                                                  |
-| `SPC s r P`         | rg with default text                                |
+| Key Bindings | Descriptions                                        |
+| ------------ | --------------------------------------------------- |
+| `SPC s p`    | search with the first found tool                    |
+| `SPC s P`    | search with the first found tool with default input |
+| `SPC s a p`  | ag                                                  |
+| `SPC s a P`  | ag with default text                                |
+| `SPC s g p`  | grep                                                |
+| `SPC s g p`  | grep with default text                              |
+| `SPC s k p`  | ack                                                 |
+| `SPC s k P`  | ack with default text                               |
+| `SPC s t p`  | pt                                                  |
+| `SPC s t P`  | pt with default text                                |
+| `SPC s r p`  | rg                                                  |
+| `SPC s r P`  | rg with default text                                |
 
 **Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
 
@@ -1473,7 +1472,7 @@ Background search keyword in a project, when searching done, the count will be s
 
 | Key Bindings | Descriptions                                       |
 | ------------ | -------------------------------------------------- |
-| `SPC s g G`  | Searching in project on the fly with default tools |
+| `SPC s /`    | Searching in project on the fly with default tools |
 
 Key bindings in FlyGrep buffer:
 
