@@ -1258,13 +1258,14 @@ SpaceVim 中的搜索命令以 `SPC s` 为前缀，前一个键是使用的工�
 
 下表是全部的工具键：
 
-| 工具 | 键  |
-| ---- | --- |
-| ag   | a   |
-| grep | g   |
-| ack  | k   |
-| rg   | r   |
-| pt   | t   |
+| 工具     | 键  |
+| -------- | --- |
+| ag       | a   |
+| grep     | g   |
+| git grep | G   |
+| ack      | k   |
+| rg       | r   |
+| pt       | t   |
 
 应当避免的范围和对应按键为：
 
@@ -1398,20 +1399,20 @@ endfunction
 以下这些快捷键是用于搜索整个工程目录的，搜索的文件夹位置为当前文件所在的项目根目录。
 项目的根目录默认会自动检测识别，主要是依据`project_rooter_patterns`选项设定。
 
-| 快捷键              | 功能描述                         |
-| ------------------- | -------------------------------- |
-| `SPC /` / `SPC s p` | 使用默认的搜索工具进行搜索       |
-| `SPC *` / `SPC s P` | 使用默认的搜索工具搜索光标下的词 |
-| `SPC s a p`         | 使用`ag`进行搜索                 |
-| `SPC s a P`         | 使用`ag`搜索光标下的词           |
-| `SPC s g p`         | 使用`grep`进行搜索               |
-| `SPC s g P`         | 使用`grep`搜索光标下的词         |
-| `SPC s k p`         | 使用`ack`进行搜索                |
-| `SPC s k P`         | 使用`ack`搜索光标下的词          |
-| `SPC s r p`         | 使用`rg`进行搜索                 |
-| `SPC s r P`         | 使用`rg`搜索光标下的词           |
-| `SPC s t p`         | 使用`pt`进行搜索                 |
-| `SPC s t P`         | 使用`pt`搜索光标下的词           |
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
+| `SPC s p`   | 使用默认的搜索工具进行搜索       |
+| `SPC s P`   | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a p` | 使用`ag`进行搜索                 |
+| `SPC s a P` | 使用`ag`搜索光标下的词           |
+| `SPC s g p` | 使用`grep`进行搜索               |
+| `SPC s g P` | 使用`grep`搜索光标下的词         |
+| `SPC s k p` | 使用`ack`进行搜索                |
+| `SPC s k P` | 使用`ack`搜索光标下的词          |
+| `SPC s r p` | 使用`rg`进行搜索                 |
+| `SPC s r P` | 使用`rg`搜索光标下的词           |
+| `SPC s t p` | 使用`pt`进行搜索                 |
+| `SPC s t P` | 使用`pt`搜索光标下的词           |
 
 **提示**: 在工程中进行搜索的话，无需提前打开文件。在工程保存目录中使用 `SPC p p` 和　`C-s`，就比如 `SPC s p`。(TODO)
 
@@ -1451,24 +1452,24 @@ endfunction
 
 #### 实时代码检索
 
-| 快捷键      | 功能描述                         |
-| ----------- | -------------------------------- |
-| `SPC s g G` | 在工程中使用默认工具实时检索代码 |
+| 快捷键    | 功能描述                         |
+| --------- | -------------------------------- |
+| `SPC s /` | 在工程中使用默认工具实时检索代码 |
 
-FlyGrep 缓冲区的按键绑定：
+Flygrep 搜索窗口结果窗口内的常用快捷键：
 
-| 快捷键              | 功能描述                          |
-| ------------------- | --------------------------------- |
-| `<Esc>`             | close FlyGrep buffer              |
-| `<Enter>`           | open file at the cursor line      |
-| `<Tab>`             | move cursor line down             |
-| `Shift-<Tab>`       | move cursor line up               |
-| `<Backspace>`       | remove last character             |
-| `Ctrl-w`            | remove the Word before the cursor |
-| `Ctrl-u`            | remove the Line before the cursor |
-| `Ctrl-k`            | remove the Line after the cursor  |
-| `Ctrl-a` / `<Home>` | Go to the beginning of the line   |
-| `Ctrl-e` / `<End>`  | Go to the end of the line         |
+| 快捷键              | 功能描述               |
+| ------------------- | ---------------------- |
+| `<Esc>`             | 关闭搜索窗口           |
+| `<Enter>`           | 打开当前选中的文件位置 |
+| `<Tab>`             | 选中下一行文件位置     |
+| `Shift-<Tab>`       | 选中上一行文件位置     |
+| `<Backspace>`       | 删除上一个输入字符     |
+| `Ctrl-w`            | 删除光标前的单词       |
+| `Ctrl-u`            | 删除光标前所有内容     |
+| `Ctrl-k`            | 删除光标后所有内容     |
+| `Ctrl-a` / `<Home>` | 将光标移至行首         |
+| `Ctrl-e` / `<End>`  | 将光标移至行尾         |
 
 #### 保持高亮
 
