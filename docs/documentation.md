@@ -1422,6 +1422,7 @@ The structure of searching tool profile is:
 
 #### Searching in a project
 
+
 | Key Bindings        | Descriptions                                        |
 | ------------------- | --------------------------------------------------- |
 | `SPC /` / `SPC s p` | search with the first found tool                    |

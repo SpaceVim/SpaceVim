@@ -445,7 +445,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 | `SPC t i`   | 切换显示当前对齐(TODO)                    |
 | `SPC t n`   | 显示/隐藏行号                             |
 | `SPC t b`   | 切换背景色                                |
-| `SPC t c`    | 切换 conceal 模式                                           |
+| `SPC t c`   | 切换 conceal 模式                         |
 | `SPC t p`   | 切换 paste 模式                           |
 | `SPC t t`   | 打开 Tab 管理器                           |
 | `SPC T ~`   | 显示/隐藏 Buffer 结尾空行行首的 `~`       |
@@ -1333,20 +1333,23 @@ endfunction
 
 #### 搜索当前文件所在的文件夹
 
-| 快捷键      | 功能描述                                                    |
-| ----------- | ----------------------------------------------------------- |
-| `SPC s d`   | searching in buffer directory with default tool             |
-| `SPC s D`   | searching in buffer directory cursor word with default tool |
-| `SPC s a d` | searching in buffer directory with ag                       |
-| `SPC s a D` | searching in buffer directory cursor word with ag           |
-| `SPC s g d` | searching in buffer directory with grep                     |
-| `SPC s g D` | searching in buffer directory cursor word with grep         |
-| `SPC s k d` | searching in buffer directory with ack                      |
-| `SPC s k D` | searching in buffer directory cursor word with ack          |
-| `SPC s r d` | searching in buffer directory with rg                       |
-| `SPC s r D` | searching in buffer directory cursor word with rg           |
-| `SPC s t d` | searching in buffer directory with pt                       |
-| `SPC s t D` | searching in buffer directory cursor word with pt           |
+以下快捷键为搜索当前文件所在的文件夹，比如，当正在编辑文件`src/util/help.c`时，
+以下这些快捷键搜索的位置为`src/util/`文件夹内的内容。
+
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
+| `SPC s d`   | 使用默认的搜索工具进行搜索       |
+| `SPC s D`   | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a d` | 使用`ag`进行搜索                 |
+| `SPC s a D` | 使用`ag`搜索光标下的词           |
+| `SPC s g d` | 使用`grep`进行搜索               |
+| `SPC s g D` | 使用`grep`搜索光标下的词         |
+| `SPC s k d` | 使用`ack`进行搜索                |
+| `SPC s k D` | 使用`ack`搜索光标下的词          |
+| `SPC s r d` | 使用`rg`进行搜索                 |
+| `SPC s r D` | 使用`rg`搜索光标下的词           |
+| `SPC s t d` | 使用`pt`进行搜索                 |
+| `SPC s t D` | 使用`pt`搜索光标下的词           |
 
 #### 在所有打开的缓冲区中进行搜索
 
