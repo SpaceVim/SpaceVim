@@ -436,8 +436,7 @@ function! SpaceVim#mapping#space#init() abort
         \ 'search in arbitrary directory  with git-grep', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'F'], 'call SpaceVim#mapping#search#grep("G", "F")',
         \ 'search cursor word in arbitrary directory with git-grep', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'j'], 'call SpaceVim#plugins#searcher#find("", "grep")',
-        \ 'Background search cursor words in project with git-grep', 1)
+
   " ack
   let g:_spacevim_mappings_space.s.k = {'name' : '+ack'}
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'b'], 'call SpaceVim#mapping#search#grep("k", "b")', 'search in all buffers with ack', 1)
