@@ -1008,9 +1008,21 @@ let g:spacevim_enable_powerline_fonts  = 1
 " <
 let g:spacevim_lint_on_save            = 1
 ""
+" @section search_tools, options-search_tools
+" @parentsection options
 " Default search tools supported by flygrep. The default order is ['rg', 'ag',
-" 'pt', 'ack', 'grep', 'findstr']
-let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr']
+" 'pt', 'ack', 'grep', 'findstr', 'git']
+" The `git` command means using `git-grep`. If you prefer to use `git-grep` by
+" default. You can change this option to:
+" >
+"   [options]
+"     search_tools = ['git', 'rg', 'ag']
+" <
+
+""
+" Default search tools supported by flygrep. The default order is ['rg', 'ag',
+" 'pt', 'ack', 'grep', 'findstr', 'git']
+let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr', 'git']
 ""
 " Set the project rooter patterns, by default it is
 " `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`
@@ -1407,7 +1419,8 @@ endfunction
 
 ""
 " @section Usage, usage
-"   the usage guide for SpaceVim
+"   General guide for using SpaceVim. Including layer configuration, bootstrap
+"   function.
 
 ""
 " @section FAQ, faq

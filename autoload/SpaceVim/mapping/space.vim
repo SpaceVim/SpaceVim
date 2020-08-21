@@ -420,6 +420,23 @@ function! SpaceVim#mapping#space#init() abort
         \ 'Background search cursor words in project with grep', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "grep")',
         \ 'Background search cursor words in project with grep', 1)
+  " git grep
+  let g:_spacevim_mappings_space.s.G = {'name' : '+git grep'}
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'b'], 'call SpaceVim#mapping#search#grep("G", "b")',
+        \ 'search in all buffers with git-grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'B'], 'call SpaceVim#mapping#search#grep("G", "B")',
+        \ 'search cursor word in all buffers with git-grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'd'], 'call SpaceVim#mapping#search#grep("G", "d")', 'search in buffer directory with grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'D'], 'call SpaceVim#mapping#search#grep("G", "D")',
+        \ 'search cursor word in buffer directory with git-grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'p'], 'call SpaceVim#mapping#search#grep("G", "p")', 'search in project with git-grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'P'], 'call SpaceVim#mapping#search#grep("G", "P")',
+        \ 'search cursor word in project with git-grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'f'], 'call SpaceVim#mapping#search#grep("G", "f")',
+        \ 'search in arbitrary directory  with git-grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'F'], 'call SpaceVim#mapping#search#grep("G", "F")',
+        \ 'search cursor word in arbitrary directory with git-grep', 1)
+
   " ack
   let g:_spacevim_mappings_space.s.k = {'name' : '+ack'}
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'b'], 'call SpaceVim#mapping#search#grep("k", "b")', 'search in all buffers with ack', 1)

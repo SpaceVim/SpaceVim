@@ -58,18 +58,19 @@ CONTENTS                                                   *SpaceVim-contents*
       38. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
       39. relativenumber.....................|SpaceVim-options-relativenumber|
       40. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      41. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      42. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      43. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      44. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
-      45. statusline_separator.........|SpaceVim-options-statusline_separator|
-      46. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      47. vim_help_language...............|SpaceVim-options-vim_help_language|
-      48. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      49. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      50. windows_index_type.............|SpaceVim-options-windows_index_type|
-      51. windows_leader.....................|SpaceVim-options-windows_leader|
-      52. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      41. search_tools.........................|SpaceVim-options-search_tools|
+      42. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      43. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      44. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      45. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
+      46. statusline_separator.........|SpaceVim-options-statusline_separator|
+      47. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      48. vim_help_language...............|SpaceVim-options-vim_help_language|
+      49. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      50. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      51. windows_index_type.............|SpaceVim-options-windows_index_type|
+      52. windows_leader.....................|SpaceVim-options-windows_leader|
+      53. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -536,6 +537,18 @@ Set the number of retries for SpaceVim Update when failed. Default is 3. Set
 to 0 to disable this feature, or you can set to another number.
 >
   update_retry_cnt = 3
+<
+
+==============================================================================
+SEARCH_TOOLS                                   *SpaceVim-options-search_tools*
+
+Default search tools supported by flygrep. The default order is ['rg', 'ag',
+'pt', 'ack', 'grep', 'findstr', 'git'] The `git` command means using
+`git-grep`. If you prefer to use `git-grep` by default. You can change this
+option to:
+>
+  [options]
+    search_tools = ['git', 'rg', 'ag']
 <
 
 ==============================================================================
@@ -1131,7 +1144,7 @@ Enable/Disable lint on save feature of SpaceVim's maker. Default is 1.
 
                                                      *g:spacevim_search_tools*
 Default search tools supported by flygrep. The default order is ['rg', 'ag',
-'pt', 'ack', 'grep', 'findstr']
+'pt', 'ack', 'grep', 'findstr', 'git']
 
                                           *g:spacevim_project_rooter_patterns*
 Set the project rooter patterns, by default it is `['.git/', '_darcs/',
@@ -3301,7 +3314,8 @@ This layer provides Zeal integration for SpaceVim
 ==============================================================================
 USAGE                                                         *SpaceVim-usage*
 
-  the usage guide for SpaceVim
+  General guide for using SpaceVim. Including layer configuration, bootstrap
+function.
 
 ==============================================================================
 CUSTOM_PLUGINS                                 *SpaceVim-usage-custom_plugins*
@@ -3527,15 +3541,24 @@ VIM#BUFFER                                           *SpaceVim-api-vim-window*
 
 INTRO
 
-vim#window API provides some basic functions for setting and getting config of
-vim window.
+`vim#window` API provides some basic functions for setting and getting config
+of vim window.
 
 FUNCTIONS
 
 get_cursor({winid})
 
-Gets the cursor position in the window {winid}, to get the ID of a window,
+  Gets the cursor position in the window {winid}, to get the ID of a window,
 checkout |window-ID|.
+
+set_cursor({winid}, {pos})
+
+  Sets the cursor position to {pos} in the window {winid}.
+
+is_float({winnr})
+
+  Check if the window is a floating windows, return `v:true` if the window
+is a floating window.
 
 ==============================================================================
 VIM#COMMAND                                         *SpaceVim-api-vim-command*

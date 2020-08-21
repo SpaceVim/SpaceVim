@@ -445,7 +445,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 | `SPC t i`   | 切换显示当前对齐(TODO)                    |
 | `SPC t n`   | 显示/隐藏行号                             |
 | `SPC t b`   | 切换背景色                                |
-| `SPC t c`    | 切换 conceal 模式                                           |
+| `SPC t c`   | 切换 conceal 模式                         |
 | `SPC t p`   | 切换 paste 模式                           |
 | `SPC t t`   | 打开 Tab 管理器                           |
 | `SPC T ~`   | 显示/隐藏 Buffer 结尾空行行首的 `~`       |
@@ -1258,13 +1258,14 @@ SpaceVim 中的搜索命令以 `SPC s` 为前缀，前一个键是使用的工�
 
 下表是全部的工具键：
 
-| 工具 | 键  |
-| ---- | --- |
-| ag   | a   |
-| grep | g   |
-| ack  | k   |
-| rg   | r   |
-| pt   | t   |
+| 工具     | 键  |
+| -------- | --- |
+| ag       | a   |
+| grep     | g   |
+| git grep | G   |
+| ack      | k   |
+| rg       | r   |
+| pt       | t   |
 
 应当避免的范围和对应按键为：
 
@@ -1333,71 +1334,85 @@ endfunction
 
 #### 搜索当前文件所在的文件夹
 
-| 快捷键      | 功能描述                                                    |
-| ----------- | ----------------------------------------------------------- |
-| `SPC s d`   | searching in buffer directory with default tool             |
-| `SPC s D`   | searching in buffer directory cursor word with default tool |
-| `SPC s a d` | searching in buffer directory with ag                       |
-| `SPC s a D` | searching in buffer directory cursor word with ag           |
-| `SPC s g d` | searching in buffer directory with grep                     |
-| `SPC s g D` | searching in buffer directory cursor word with grep         |
-| `SPC s k d` | searching in buffer directory with ack                      |
-| `SPC s k D` | searching in buffer directory cursor word with ack          |
-| `SPC s r d` | searching in buffer directory with rg                       |
-| `SPC s r D` | searching in buffer directory cursor word with rg           |
-| `SPC s t d` | searching in buffer directory with pt                       |
-| `SPC s t D` | searching in buffer directory cursor word with pt           |
+以下快捷键为搜索当前文件所在的文件夹，比如，当正在编辑文件`src/util/help.c`时，
+以下这些快捷键搜索的位置为`src/util/`文件夹内的内容。
+
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
+| `SPC s d`   | 使用默认的搜索工具进行搜索       |
+| `SPC s D`   | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a d` | 使用`ag`进行搜索                 |
+| `SPC s a D` | 使用`ag`搜索光标下的词           |
+| `SPC s g d` | 使用`grep`进行搜索               |
+| `SPC s g D` | 使用`grep`搜索光标下的词         |
+| `SPC s k d` | 使用`ack`进行搜索                |
+| `SPC s k D` | 使用`ack`搜索光标下的词          |
+| `SPC s r d` | 使用`rg`进行搜索                 |
+| `SPC s r D` | 使用`rg`搜索光标下的词           |
+| `SPC s t d` | 使用`pt`进行搜索                 |
+| `SPC s t D` | 使用`pt`搜索光标下的词           |
 
 #### 在所有打开的缓冲区中进行搜索
 
-| 快捷键      | 功能描述                                            |
-| ----------- | --------------------------------------------------- |
-| `SPC s b`   | search with the first found tool                    |
-| `SPC s B`   | search with the first found tool with default input |
-| `SPC s a b` | ag                                                  |
-| `SPC s a B` | ag with default input                               |
-| `SPC s g b` | grep                                                |
-| `SPC s g B` | grep with default input                             |
-| `SPC s k b` | ack                                                 |
-| `SPC s k B` | ack with default input                              |
-| `SPC s r b` | rg                                                  |
-| `SPC s r B` | rg with default input                               |
-| `SPC s t b` | pt                                                  |
-| `SPC s t B` | pt with default input                               |
+以下快捷键为搜索已经打开的文件列表，搜索的目标位置仅限于已经在 Vim 中打开的文件列表。
+在 Vim 中，可以使用命令`:ls`查看已经打开的文件列表。
+
+如若已经载入了模糊搜索的模块，则可以使用快捷键`SPC b b`查看已打开的文件。
+
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
+| `SPC s b`   | 使用默认的搜索工具进行搜索       |
+| `SPC s B`   | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a b` | 使用`ag`进行搜索                 |
+| `SPC s a B` | 使用`ag`搜索光标下的词           |
+| `SPC s g b` | 使用`grep`进行搜索               |
+| `SPC s g B` | 使用`grep`搜索光标下的词         |
+| `SPC s k b` | 使用`ack`进行搜索                |
+| `SPC s k B` | 使用`ack`搜索光标下的词          |
+| `SPC s r b` | 使用`rg`进行搜索                 |
+| `SPC s r B` | 使用`rg`搜索光标下的词           |
+| `SPC s t b` | 使用`pt`进行搜索                 |
+| `SPC s t B` | 使用`pt`搜索光标下的词           |
 
 #### 在任意目录中进行搜索
 
-| 快捷键      | 功能描述                                            |
-| ----------- | --------------------------------------------------- |
-| `SPC s f`   | search with the first found tool                    |
-| `SPC s F`   | search with the first found tool with default input |
-| `SPC s a f` | ag                                                  |
-| `SPC s a F` | ag with default text                                |
-| `SPC s g f` | grep                                                |
-| `SPC s g F` | grep with default text                              |
-| `SPC s k f` | ack                                                 |
-| `SPC s k F` | ack with default text                               |
-| `SPC s r f` | rg                                                  |
-| `SPC s r F` | rg with default text                                |
-| `SPC s t f` | pt                                                  |
-| `SPC s t F` | pt with default text                                |
+以下快捷用于指定搜索目录具体文件夹位置，比如需要去搜索非当前项目下的一些文件。
+按下快捷键后，首先提示的是输入搜索词，之后提示输入搜索的目录地址。
+
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
+| `SPC s f`   | 使用默认的搜索工具进行搜索       |
+| `SPC s F`   | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a f` | 使用`ag`进行搜索                 |
+| `SPC s a F` | 使用`ag`搜索光标下的词           |
+| `SPC s g f` | 使用`grep`进行搜索               |
+| `SPC s g F` | 使用`grep`搜索光标下的词         |
+| `SPC s k f` | 使用`ack`进行搜索                |
+| `SPC s k F` | 使用`ack`搜索光标下的词          |
+| `SPC s r f` | 使用`rg`进行搜索                 |
+| `SPC s r F` | 使用`rg`搜索光标下的词           |
+| `SPC s t f` | 使用`pt`进行搜索                 |
+| `SPC s t F` | 使用`pt`搜索光标下的词           |
 
 #### 在工程中进行搜索
 
-| 快捷键              | 功能描述                                            |
-| ------------------- | --------------------------------------------------- |
-| `SPC /` / `SPC s p` | search with the first found tool                    |
-| `SPC *` / `SPC s P` | search with the first found tool with default input |
-| `SPC s a p`         | ag                                                  |
-| `SPC s a P`         | ag with default text                                |
-| `SPC s g p`         | grep                                                |
-| `SPC s g p`         | grep with default text                              |
-| `SPC s k p`         | ack                                                 |
-| `SPC s k P`         | ack with default text                               |
-| `SPC s t p`         | pt                                                  |
-| `SPC s t P`         | pt with default text                                |
-| `SPC s r p`         | rg                                                  |
-| `SPC s r P`         | rg with default text                                |
+以下这些快捷键是用于搜索整个工程目录的，搜索的文件夹位置为当前文件所在的项目根目录。
+项目的根目录默认会自动检测识别，主要是依据`project_rooter_patterns`选项设定。
+
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
+| `SPC s p`   | 使用默认的搜索工具进行搜索       |
+| `SPC s P`   | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a p` | 使用`ag`进行搜索                 |
+| `SPC s a P` | 使用`ag`搜索光标下的词           |
+| `SPC s g p` | 使用`grep`进行搜索               |
+| `SPC s g P` | 使用`grep`搜索光标下的词         |
+| `SPC s k p` | 使用`ack`进行搜索                |
+| `SPC s k P` | 使用`ack`搜索光标下的词          |
+| `SPC s r p` | 使用`rg`进行搜索                 |
+| `SPC s r P` | 使用`rg`搜索光标下的词           |
+| `SPC s t p` | 使用`pt`进行搜索                 |
+| `SPC s t P` | 使用`pt`搜索光标下的词           |
 
 **提示**: 在工程中进行搜索的话，无需提前打开文件。在工程保存目录中使用 `SPC p p` 和　`C-s`，就比如 `SPC s p`。(TODO)
 
@@ -1437,24 +1452,24 @@ endfunction
 
 #### 实时代码检索
 
-| 快捷键      | 功能描述                         |
-| ----------- | -------------------------------- |
-| `SPC s g G` | 在工程中使用默认工具实时检索代码 |
+| 快捷键    | 功能描述                         |
+| --------- | -------------------------------- |
+| `SPC s /` | 在工程中使用默认工具实时检索代码 |
 
-FlyGrep 缓冲区的按键绑定：
+Flygrep 搜索窗口结果窗口内的常用快捷键：
 
-| 快捷键              | 功能描述                          |
-| ------------------- | --------------------------------- |
-| `<Esc>`             | close FlyGrep buffer              |
-| `<Enter>`           | open file at the cursor line      |
-| `<Tab>`             | move cursor line down             |
-| `Shift-<Tab>`       | move cursor line up               |
-| `<Backspace>`       | remove last character             |
-| `Ctrl-w`            | remove the Word before the cursor |
-| `Ctrl-u`            | remove the Line before the cursor |
-| `Ctrl-k`            | remove the Line after the cursor  |
-| `Ctrl-a` / `<Home>` | Go to the beginning of the line   |
-| `Ctrl-e` / `<End>`  | Go to the end of the line         |
+| 快捷键              | 功能描述               |
+| ------------------- | ---------------------- |
+| `<Esc>`             | 关闭搜索窗口           |
+| `<Enter>`           | 打开当前选中的文件位置 |
+| `<Tab>`             | 选中下一行文件位置     |
+| `Shift-<Tab>`       | 选中上一行文件位置     |
+| `<Backspace>`       | 删除上一个输入字符     |
+| `Ctrl-w`            | 删除光标前的单词       |
+| `Ctrl-u`            | 删除光标前所有内容     |
+| `Ctrl-k`            | 删除光标后所有内容     |
+| `Ctrl-a` / `<Home>` | 将光标移至行首         |
+| `Ctrl-e` / `<End>`  | 将光标移至行尾         |
 
 #### 保持高亮
 
