@@ -1378,8 +1378,8 @@ endfunction
 以下快捷用于指定搜索目录具体文件夹位置，比如需要去搜索非当前项目下的一些文件。
 按下快捷键后，首先提示的是输入搜索词，之后提示输入搜索的目录地址。
 
-| 快捷键      | 功能描述                                            |
-| ----------- | --------------------------------------------------- |
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
 | `SPC s f`   | 使用默认的搜索工具进行搜索       |
 | `SPC s F`   | 使用默认的搜索工具搜索光标下的词 |
 | `SPC s a f` | 使用`ag`进行搜索                 |
@@ -1395,20 +1395,23 @@ endfunction
 
 #### 在工程中进行搜索
 
-| 快捷键              | 功能描述                                            |
-| ------------------- | --------------------------------------------------- |
-| `SPC /` / `SPC s p` | search with the first found tool                    |
-| `SPC *` / `SPC s P` | search with the first found tool with default input |
-| `SPC s a p`         | ag                                                  |
-| `SPC s a P`         | ag with default text                                |
-| `SPC s g p`         | grep                                                |
-| `SPC s g p`         | grep with default text                              |
-| `SPC s k p`         | ack                                                 |
-| `SPC s k P`         | ack with default text                               |
-| `SPC s t p`         | pt                                                  |
-| `SPC s t P`         | pt with default text                                |
-| `SPC s r p`         | rg                                                  |
-| `SPC s r P`         | rg with default text                                |
+以下这些快捷键是用于搜索整个工程目录的，搜索的文件夹位置为当前文件所在的项目根目录。
+项目的根目录默认会自动检测识别，主要是依据`project_rooter_patterns`选项设定。
+
+| 快捷键              | 功能描述                         |
+| ------------------- | -------------------------------- |
+| `SPC /` / `SPC s p` | 使用默认的搜索工具进行搜索       |
+| `SPC *` / `SPC s P` | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a p`         | 使用`ag`进行搜索                 |
+| `SPC s a P`         | 使用`ag`搜索光标下的词           |
+| `SPC s g p`         | 使用`grep`进行搜索               |
+| `SPC s g P`         | 使用`grep`搜索光标下的词         |
+| `SPC s k p`         | 使用`ack`进行搜索                |
+| `SPC s k P`         | 使用`ack`搜索光标下的词          |
+| `SPC s r p`         | 使用`rg`进行搜索                 |
+| `SPC s r P`         | 使用`rg`搜索光标下的词           |
+| `SPC s t p`         | 使用`pt`进行搜索                 |
+| `SPC s t P`         | 使用`pt`搜索光标下的词           |
 
 **提示**: 在工程中进行搜索的话，无需提前打开文件。在工程保存目录中使用 `SPC p p` 和　`C-s`，就比如 `SPC s p`。(TODO)
 
