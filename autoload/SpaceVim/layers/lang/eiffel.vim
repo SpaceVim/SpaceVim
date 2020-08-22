@@ -32,5 +32,11 @@ function! SpaceVim#layers#lang#eiffel#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#eiffel#config() abort
-  
+  call SpaceVim#mapping#space#regesit_lang_mappings('eiffel', function('s:language_specified_mappings'))
+endfunction
+
+function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c'],
+        \ 'call SpaceVim#plugins#runner#run_task({"command" : "eclean", "args" : ["."], "isBackground" : 1})',
+        \ 'run-eclean', 1)
 endfunction
