@@ -141,6 +141,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#php](lang/php/)                                 | 这一模块为 SpaceVim 提供了 PHP 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                               |
 | [lang#plantuml](lang/plantuml/)                       | 这一模块为 SpaceVim 提供了 PlantUML 的开发支持，包括语法高亮、实时预览等特性。                                                      |
 | [lang#pony](lang/pony/)                               | 这一模块为 pony 开发提供支持，包括交互式编程、一键运行等特性。                                                                      |
+| [lang#povray](lang/povray/)                           | POV-Ray 语言模块，包括语法高亮、图片生成等特性。                                                                                    |
 | [lang#powershell](lang/powershell/)                   | 这一模块为 powershell 开发提供支持，包括交互式编程、一键运行等特性。                                                                |
 | [lang#prolog](lang/prolog/)                           | 这一模块为 Prolog 开发提供支持，包括交互式编程、一键运行等特性。                                                                    |
 | [lang#puppet](lang/puppet/)                           | 这一模块为 SpaceVim 提供了 Puppet 的开发支持，包括语法高亮、语言服务器支持。                                                        |
