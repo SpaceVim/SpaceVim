@@ -28,8 +28,5 @@ echo l
 
 ## 函数列表
 
-| name        | description                    |
-| ----------- | ------------------------------ |
-| `make(str)` | make list from keys and values |
-
-
+- `pop(list)`: 移除并返回列表的最后一个元素。
+- `push(list, var)`: 向列表最后添加一个元素并返回列表。
