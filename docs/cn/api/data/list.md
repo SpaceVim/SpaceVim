@@ -35,3 +35,11 @@ echo l
 - `uniq(list)`: 去除列表中重复的元素，并返回去重后的列表。
 - `char_range(char1, char2)`: 返回一个字符列表，从字符`char1`到`char2`。
 - `has(list, var)`: 检测列表`list`内是否包含元素`var`，若包含则返回`v:true`，否则返回`v:false`。
+- `replace(list, begin, end, new_list)`: 替换列表`list`中从位置`begin`至`end`为新的列表`new_list`。
+
+  示例代码如下：
+  ```vim
+  let l = ['a', 'b', 'c', 'd', 'e']
+  echo s:LIST.replace(l, 1, 3, [1, 2, 3])
+  " ['a', 1, 2, 3, 'e']
+  ```
