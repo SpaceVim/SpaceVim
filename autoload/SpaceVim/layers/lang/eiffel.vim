@@ -26,6 +26,11 @@
 
 function! SpaceVim#layers#lang#eiffel#plugins() abort
   let plugins = []
-  
+  " the upstream repo eiffelhub/vim-eiffel has not been updated since 2016.
+  call add(plugins, ['wsdjeg/vim-eiffel', { 'merged' : 0}])
   return plugins
+endfunction
+
+function! SpaceVim#layers#lang#eiffel#config() abort
+  
 endfunction
