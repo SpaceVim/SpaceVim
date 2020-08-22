@@ -30,3 +30,8 @@ echo l
 
 - `pop(list)`: 移除并返回列表的最后一个元素。
 - `push(list, var)`: 向列表最后添加一个元素并返回列表。
+- `shift(list)`: 移除并返回列表的第一个元素。
+- `unshift(list, var)`: 向列表最前端添加一个元素，并返回列表。
+- `uniq(list)`: 去除列表中重复的元素，并返回去重后的列表。
+- `char_range(char1, char2)`: 返回一个字符列表，从字符`char1`到`char2`。
+- `has(list, var)`: 检测列表`list`内是否包含元素`var`，若包含则返回`v:true`，否则返回`v:false`。
