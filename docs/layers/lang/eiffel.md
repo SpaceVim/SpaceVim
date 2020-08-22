@@ -9,6 +9,7 @@ description: "This layer is for eiffel development, provides syntax highlighting
 
 - [Description](#description)
 - [Install](#install)
+- [Key bidnings](#key-bidnings)
 
 <!-- vim-markdown-toc -->
 
@@ -24,3 +25,9 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#eiffel"
 ```
+
+## Key bidnings
+
+| Key Binding | Description                           |
+| ----------- | ------------------------------------- |
+| `SPC l c`   | run `eclean .` command asynchronously |
