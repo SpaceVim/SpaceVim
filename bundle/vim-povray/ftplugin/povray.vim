@@ -18,25 +18,25 @@ endif
 
 let s:compilation_failed = 0
 
-function! CleanPreviousImage()
+function! povray#cleanPreviousImage()
     let l:remove = system("rm " . expand("%:r") . ".png")
     redraw!
 endfunction
 
-function! PovrayCompileSilent()
-    call CleanPreviousImage()
+function! povray#CompileSilent()
+    call povray#cleanPreviousImage()
     execute 'w!'
     let g:compile_output = system(g:povray_command . " "
                 \ . expand("%"))
     if empty(glob(expand("%:r") . ".png"))
         let s:compilation_failed = 1
-        call ShowCompilationOutput()
+        call povray#showCompilationOutput()
     else
         let s:compilation_failed = 0
     endif
 endfunction
 
-function! ShowCompilationOutput()
+function! povray#showCompilationOutput()
     execute 'silent pedit [POVRAY]' . expand("%:r") . ".png"
     wincmd P
     setlocal filetype=povray_output
@@ -46,13 +46,12 @@ function! ShowCompilationOutput()
     setlocal modifiable
     call append(0, split(g:compile_output, '\v\n'))
     setlocal nomodifiable
-
     nnoremap <silent> <buffer> q :silent bd!<CR>
 endfunction
 
 " Compile asynchronously if vim-do is installed
-function! PovrayCompileAsync()
-    call CleanPreviousImage()
+function! povray#CompileAsync()
+    call povraycleanPreviousImage()
     execute 'w!'
     execute g:execute_command . " "
                 \ . g:povray_command . " "
@@ -70,9 +69,9 @@ function! povray#showImage() abort
     endif
 endfunction
 
-function! PovrayCompileAndShow()
-    call PovrayCompileSilent()
+function! povray#CompileAndShow()
+    call povray#CompileSilent()
     if !s:compilation_failed
-        call ShowImage()
+        call povray#showImage()
     endif
 endfunction
