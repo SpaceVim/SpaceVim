@@ -1,2 +1,2 @@
-au BufRead,BufNewFile *.pov set filetype=povray
+au BufNewFile,BufRead *.pov	set filetype=povray
 
