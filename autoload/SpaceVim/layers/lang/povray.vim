@@ -8,7 +8,7 @@
 
 function! SpaceVim#layers#lang#povray#plugins() abort
   let plugins = []
-  call add(plugins, ['wsdjeg/vim-povray', { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-povray', { 'merged' : 0}])
   return plugins
 endfunction
 
