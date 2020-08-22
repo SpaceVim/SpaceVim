@@ -14,7 +14,6 @@ endfunction
 
 function! SpaceVim#layers#lang#povray#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('povray', function('s:language_specified_mappings'))
-  au BufNewFile,BufRead *.pov	set filetype=povray
 endfunction
 
 function! s:language_specified_mappings() abort
