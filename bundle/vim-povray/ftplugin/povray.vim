@@ -76,9 +76,3 @@ function! PovrayCompileAndShow()
         call ShowImage()
     endif
 endfunction
-
-nnoremap <F5> :call PovrayCompileAndShow()<cr>
-nnoremap <F8> :call PovrayCompileAsync()<cr>
-inoremap <F5> <Esc> :call PovrayCompileAndShow()<cr>
-inoremap <F8> <Esc> :call PovrayCompileAsync()<cr>
-nnoremap <F9> :call ShowImage()<cr>
