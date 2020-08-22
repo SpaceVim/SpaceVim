@@ -60,7 +60,7 @@ function! PovrayCompileAsync()
     redraw!
 endfunction
 
-function! ShowImage()
+function! povray#showImage() abort
     if exists("g:image_viewer")
         execute "silent ! " . g:image_viewer . " "
                     \ . expand("%:r") . ".png" . "&"
