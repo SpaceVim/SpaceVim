@@ -31,4 +31,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','v'],
         \ 'call povray#view()',
         \ 'view-image', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','c'],
+        \ 'call povray#cleanPreviousImage()',
+        \ 'clean-previous-image', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','b'],
+        \ 'call povray#CompileSilent()',
+        \ 'build-silent', 1)
 endfunction
