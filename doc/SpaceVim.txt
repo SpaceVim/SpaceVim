@@ -1258,6 +1258,9 @@ COMMANDS                                                   *SpaceVim-commands*
 :SPInstall                                                        *:SPInstall*
   Command for install plugins.
 
+:A[!] {type}                                                              *:A*
+  Switch to alternate file based on {type}.
+
 ==============================================================================
 FUNCTIONS                                                 *SpaceVim-functions*
 
