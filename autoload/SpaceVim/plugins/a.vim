@@ -17,6 +17,15 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
 let s:LOGGER =SpaceVim#logger#derive('a.vim')
+
+
+" local value
+"
+" s:alternate_conf define which file should be loaded as alternate
+" file configuration for current project, This is a directory
+let s:alternate_conf = {
+      \ '_' : '.project_alt.json'
+      \ }
 let s:conf = '.project_alt.json'
 let s:cache_path = g:spacevim_data_dir.'/SpaceVim/a.json'
 
@@ -40,9 +49,8 @@ endfunction
 
 " when this function is called, the project_config file name is changed, and
 " the project_config info is cleared.
-function! SpaceVim#plugins#a#set_config_name(name) abort
-  let s:conf = a:name
-  let s:project_config = {}
+function! SpaceVim#plugins#a#set_config_name(path, name) abort
+  let s:alternate_conf[a:path] = a:name
 endfunction
 
 function! s:get_project_config(conf_file) abort
@@ -55,7 +63,7 @@ endfunction
 
 function! SpaceVim#plugins#a#alt(request_paser,...) abort
   let type = get(a:000, 0, 'alternate')
-  let conf_file_path = s:FILE.unify_path(s:conf, ':p')
+  let conf_file_path = s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
   let file = s:FILE.unify_path(bufname('%'), ':.')
   let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, a:request_paser, type)
   if !empty(alt)
