@@ -102,8 +102,9 @@ function! s:get_type_path(a, f, b) abort
 endfunction
 
 function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
-  call s:LOGGER.info('getting alt file for:' . file)
-  call s:LOGGER.info('  > type:' . get(a:000, 0, 'alternate'))
+  call s:LOGGER.info('getting alt file for:' . a:file)
+  call s:LOGGER.info('  >  type: ' . get(a:000, 0, 'alternate'))
+  call s:LOGGER.info('  > paser: ' . a:request_paser)
   if getftime(a:conf_path) < getftime(s:cache_path)
   endif
   if a:request_paser || !has_key(s:project_config, a:conf_path)
