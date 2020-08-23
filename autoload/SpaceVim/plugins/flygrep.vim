@@ -14,7 +14,7 @@ let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
 
-let s:LOGGER =SpaceVim#logger#derive('flygrep ')
+let s:LOGGER =SpaceVim#logger#derive('FlyGrep')
 let s:HI = SpaceVim#api#import('vim#highlight')
 if has('nvim')
   let s:FLOATING = SpaceVim#api#import('neovim#floating')
