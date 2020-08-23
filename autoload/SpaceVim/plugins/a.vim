@@ -121,7 +121,6 @@ function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
     let altconfa = s:get_project_config(a:conf_path)
     let s:project_config[a:conf_path] = {}
     call s:paser(altconfa, a:conf_path)
-    call s:cache()
   endif
   try
     return s:project_config[a:conf_path][a:file][get(a:000, 0, 'alternate')]
