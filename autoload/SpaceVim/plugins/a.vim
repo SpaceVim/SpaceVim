@@ -16,6 +16,7 @@ scriptencoding utf-8
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
+let s:LOGGER =SpaceVim#logger#derive('a.vim')
 let s:conf = '.project_alt.json'
 let s:cache_path = g:spacevim_data_dir.'/SpaceVim/a.json'
 
@@ -101,6 +102,8 @@ function! s:get_type_path(a, f, b) abort
 endfunction
 
 function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
+  call s:LOGGER.info('getting alt file for:' . file)
+  call s:LOGGER.info('  > type:' . get(a:000, 0, 'alternate'))
   if getftime(a:conf_path) < getftime(s:cache_path)
   endif
   if a:request_paser || !has_key(s:project_config, a:conf_path)
