@@ -68,6 +68,8 @@ function! SpaceVim#plugins#a#alt(request_paser,...) abort
   let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, a:request_paser, type)
   if !empty(alt)
     exe 'e ' . alt
+  else
+    echo 'failed to find alternate file!'
   endif
 endfunction
 
