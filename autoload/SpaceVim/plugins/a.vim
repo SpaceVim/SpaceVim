@@ -103,14 +103,25 @@ endfunction
 
 function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
   call s:LOGGER.info('getting alt file for:' . a:file)
-  call s:LOGGER.info('  >  type: ' . get(a:000, 0, 'alternate'))
-  call s:LOGGER.info('  > paser: ' . a:request_paser)
-  if getftime(a:conf_path) < getftime(s:cache_path)
-  endif
-  if a:request_paser || !has_key(s:project_config, a:conf_path)
+  call s:LOGGER.info('  >   type: ' . get(a:000, 0, 'alternate'))
+  call s:LOGGER.info('  >  paser: ' . a:request_paser)
+  call s:LOGGER.info('  > config: ' . a:conf_path)
+  " @question when should the cache be loaded?
+  " if the local value s:project_config do not has the key a:conf_path
+  " and the file a:conf_path has not been updated since last cache
+  " and no request_paser specified
+  if !has_key(s:project_config, a:conf_path)
+        \ && getftime(a:conf_path) < getftime(s:cache_path)
+        \ && !a:request_paser
+    " config file has been cached since last update.
+    " so no need to paser the config for current config file
+    " just load the cache
+    call s:load_cache()
+  else
     let altconfa = s:get_project_config(a:conf_path)
     let s:project_config[a:conf_path] = {}
     call s:paser(altconfa, a:conf_path)
+    call s:cache()
   endif
   try
     return s:project_config[a:conf_path][a:file][get(a:000, 0, 'alternate')]
