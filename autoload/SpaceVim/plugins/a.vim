@@ -26,7 +26,7 @@ let s:LOGGER =SpaceVim#logger#derive('a.vim')
 let s:alternate_conf = {
       \ '_' : '.project_alt.json'
       \ }
-let s:cache_path = s:FILE.unify_path(g:spacevim_data_dir, ':p')) . 'SpaceVim/a.json'
+let s:cache_path = s:FILE.unify_path(g:spacevim_data_dir, ':p') . 'SpaceVim/a.json'
 
 
 " this is for saving the project configuration information. Use the path of
