@@ -54,11 +54,12 @@ function! SpaceVim#plugins#a#set_config_name(path, name) abort
 endfunction
 
 function! s:get_project_config(conf_file) abort
-  let project_config_conf = get(b:, 'project_alt_json', {})
-  if !empty(project_config_conf)
-    return project_config_conf
-  endif
-  return s:JSON.json_decode(join(readfile(a:conf_file), "\n"))
+  let conf = s:JSON.json_decode(join(readfile(a:conf_file), "\n"))
+  let root = s:FILE.unify_path(a:conf_file, ':p:h')
+  return {
+        \ 'root' : root,
+        \ 'config' : conf
+        \ }
 endfunction
 
 function! SpaceVim#plugins#a#alt(request_paser,...) abort
@@ -73,26 +74,35 @@ function! SpaceVim#plugins#a#alt(request_paser,...) abort
   endif
 endfunction
 
-function! s:paser(conf, root) abort
-  for key in keys(a:conf)
+
+" the paser function should only accept one argv
+" the alt_config_json
+function! s:paser(alt_config_json) abort
+  let s:project_config[a:alt_config_json.root] = {}
+  for key in keys(a:alt_config_json.config)
     let searchpath = key
     if match(key, '/\*')
       let searchpath = substitute(key, '*', '**/*', 'g')
     endif
     for file in s:CMP.globpath('.', searchpath)
       let file = s:FILE.unify_path(file, ':.')
-      let s:project_config[a:root][file] = {}
-      if has_key(a:conf, file)
-        for type in keys(a:conf[file])
+      let s:project_config[a:alt_config_json.root][file] = {}
+      if has_key(a:alt_config_json.config, file)
+        for type in keys(a:alt_config_json.config[file])
           if len(begin_end) == 2
             let s:project_config[a:root][file][type] = a:conf[key][type]
           endif
         endfor
       else
-        for type in keys(a:conf[key])
+        for type in keys(a:alt_config_json.config[key])
           let begin_end = split(key, '*')
           if len(begin_end) == 2
-            let s:project_config[a:root][file][type] = s:get_type_path(begin_end, file, a:conf[key][type])
+            let s:project_config[a:alt_config_json.root][file][type] =
+                  \ s:get_type_path(
+                  \ begin_end,
+                  \ file,
+                  \ a:alt_config_json.config[key][type]
+                  \ )
           endif
         endfor
       endif
@@ -129,8 +139,7 @@ function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
     call s:load_cache()
   else
     let alt_config_json = s:get_project_config(a:conf_path)
-    let s:project_config[a:conf_path] = {}
-    call s:paser(alt_config_json, a:conf_path)
+    call s:paser(alt_config_json)
   endif
   try
     return s:project_config[a:conf_path][a:file][get(a:000, 0, 'alternate')]
