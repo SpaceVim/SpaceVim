@@ -377,7 +377,7 @@ function! SpaceVim#layers#core#tabline#get() abort
           let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
         endif
       elseif index(s:buffers, s:BUFFER.bufnr()) > 0 && item.bufnr == s:buffers[index(s:buffers, s:BUFFER.bufnr()) - 1]
-        if s:is_modified(item.bufnr)
+        if s:is_modified(s:BUFFER.bufnr())
           let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_m#' . s:lsep . '%#SpaceVim_tabline_m# '
         else
           let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
