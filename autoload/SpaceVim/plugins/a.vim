@@ -174,7 +174,7 @@ function! s:get_alternate(file) abort
 endfunction
 
 
-function! SpaceVim#plugins#a#get_root() abort
+function! SpaceVim#plugins#a#getConfigPath() abort
   return s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
 endfunction
 
