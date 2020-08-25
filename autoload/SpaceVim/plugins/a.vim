@@ -26,7 +26,6 @@ let s:LOGGER =SpaceVim#logger#derive('a.vim')
 let s:alternate_conf = {
       \ '_' : '.project_alt.json'
       \ }
-let s:conf = '.project_alt.json'
 let s:cache_path = g:spacevim_data_dir.'/SpaceVim/a.json'
 
 
@@ -181,13 +180,9 @@ endfunction
 
 function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
   let file = s:FILE.unify_path(bufname('%'), ':.')
-  let conf = s:FILE.unify_path(s:conf, ':p')
+  let conf_file_path = s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
 
-  if !has_key(s:project_config, conf )
-    let alt_config_json = s:get_project_config(conf)
-    let s:project_config[conf] = {}
-    call s:paser(alt_config_json, conf)
-  endif
+  call SpaceVim#plugins#a#get_alt(file, conf_file_path, 0)
   try
     let a = s:project_config[s:FILE.unify_path(s:conf, ':p')][file]
   catch
