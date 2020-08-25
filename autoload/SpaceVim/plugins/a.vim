@@ -94,10 +94,26 @@ function! s:paser(alt_config_json) abort
       let searchpath = substitute(key, '*', '**/*', 'g')
     endif
     for file in s:CMP.globpath('.', searchpath)
+      if key ==# "docs/_posts/2020-01-28-manage-project-alternate-files.md"
+        call s:LOGGER.info('fuck!!!!!!!!!!!!!!!!')
+        call s:LOGGER.info(file)
+      endif
       let file = s:FILE.unify_path(file, ':.')
+      if key ==# "docs/_posts/2020-01-28-manage-project-alternate-files.md"
+        call s:LOGGER.info(file)
+      endif
       let s:project_config[a:alt_config_json.root][file] = {}
       if has_key(a:alt_config_json.config, file)
+        if key ==# "docs/_posts/2020-01-28-manage-project-alternate-files.md"
+          call s:LOGGER.info('has file:' . file)
+        endif
         for type in keys(a:alt_config_json.config[file])
+          if key ==# "docs/_posts/2020-01-28-manage-project-alternate-files.md"
+            call s:LOGGER.info('fuck key is:' . key)
+            call s:LOGGER.info('fuck key value is:' . a:alt_config_json.config[key][type])
+            call s:LOGGER.info('fuck file is:' . file)
+            call s:LOGGER.info('fuck file value is:' . a:alt_config_json.config[file][type])
+          endif
           let s:project_config[a:alt_config_json.root][file][type] = a:alt_config_json.config[key][type]
         endfor
       else
