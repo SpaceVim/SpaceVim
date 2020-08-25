@@ -1217,7 +1217,7 @@ for example, load the denite layer:
 
 ```toml
 [[layers]]
-name = "denite"
+    name = "denite"
 ```
 
 **Key bindings**
@@ -1255,18 +1255,18 @@ The above key bindings are only part of fuzzy finder layers, please read the lay
 
 **Key bindings within fuzzy finder buffer**
 
-| Key Bindings             | Descriptions                    |
-| ------------------------ | ------------------------------- |
-| `<Tab>` / `Ctrl-j`       | Select next line                |
-| `Shift-<Tab>` / `Ctrl-k` | Select previous line            |
-| `<Esc>`                  | Leave Insert mode               |
-| `Ctrl-w`                 | Delete backward path            |
-| `Ctrl-u`                 | Delete whole line before cursor |
-| `<Enter>`                | Run default action              |
-| `Ctrl-s`                 | Open in a split                 |
-| `Ctrl-v`                 | Open in a vertical split        |
-| `Ctrl-t`                 | Open in a new tab               |
-| `Ctrl-g`                 | Close fuzzy finder              |
+| Key Bindings           | Descriptions                    |
+| ---------------------- | ------------------------------- |
+| `<Tab>` / `Ctrl-j`     | Select next line                |
+| `Shift-Tab` / `Ctrl-k` | Select previous line            |
+| `<Esc>`                | Leave Insert mode               |
+| `Ctrl-w`               | Delete backward path            |
+| `Ctrl-u`               | Delete whole line before cursor |
+| `<Enter>`              | Run default action              |
+| `Ctrl-s`               | Open in a split                 |
+| `Ctrl-v`               | Open in a vertical split        |
+| `Ctrl-t`               | Open in a new tab               |
+| `Ctrl-g`               | Close fuzzy finder              |
 
 #### With an external tool
 
@@ -1286,13 +1286,14 @@ If the tool key is omitted then a default tool will be automatically selected fo
 
 The tool keys are:
 
-| Tool | Key |
-| ---- | --- |
-| ag   | a   |
-| grep | g   |
-| ack  | k   |
-| rg   | r   |
-| pt   | t   |
+| Tool     | Key |
+| -------- | --- |
+| ag       | a   |
+| grep     | g   |
+| git grep | G   |
+| ack      | k   |
+| rg       | r   |
+| pt       | t   |
 
 The available scopes and corresponding keys are:
 
@@ -1319,9 +1320,9 @@ The following example shows how to change the default option of searching tool `
 
 ```vim
 function! myspacevim#before() abort
-let profile = SpaceVim#mapping#search#getprofile('rg')
-let default_opt = profile.default_opts + ['--no-ignore-vcs']
-call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
+    let profile = SpaceVim#mapping#search#getprofile('rg')
+    let default_opt = profile.default_opts + ['--no-ignore-vcs']
+    call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
 endfunction
 ```
 
@@ -1372,6 +1373,8 @@ The structure of searching tool profile is:
 | `SPC s a D`  | searching in buffer directory cursor word with ag           |
 | `SPC s g d`  | searching in buffer directory with grep                     |
 | `SPC s g D`  | searching in buffer directory cursor word with grep         |
+| `SPC s G d`  | searching in buffer directory with git-grep                 |
+| `SPC s G D`  | searching in buffer directory cursor word with git-grep     |
 | `SPC s k d`  | searching in buffer directory with ack                      |
 | `SPC s k D`  | searching in buffer directory cursor word with ack          |
 | `SPC s r d`  | searching in buffer directory with rg                       |
@@ -1389,6 +1392,8 @@ The structure of searching tool profile is:
 | `SPC s a B`  | ag with default input                               |
 | `SPC s g b`  | grep                                                |
 | `SPC s g B`  | grep with default input                             |
+| `SPC s G b`  | git-grep                                            |
+| `SPC s G B`  | git-grep with default input                         |
 | `SPC s k b`  | ack                                                 |
 | `SPC s k B`  | ack with default input                              |
 | `SPC s r b`  | rg                                                  |
@@ -1406,6 +1411,8 @@ The structure of searching tool profile is:
 | `SPC s a F`  | ag with default text                                |
 | `SPC s g f`  | grep                                                |
 | `SPC s g F`  | grep with default text                              |
+| `SPC s G f`  | git-grep                                            |
+| `SPC s G F`  | git-grep with default text                          |
 | `SPC s k f`  | ack                                                 |
 | `SPC s k F`  | ack with default text                               |
 | `SPC s r f`  | rg                                                  |
@@ -1415,20 +1422,20 @@ The structure of searching tool profile is:
 
 #### Searching in a project
 
-| Key Bindings        | Descriptions                                        |
-| ------------------- | --------------------------------------------------- |
-| `SPC /` / `SPC s p` | search with the first found tool                    |
-| `SPC *` / `SPC s P` | search with the first found tool with default input |
-| `SPC s a p`         | ag                                                  |
-| `SPC s a P`         | ag with default text                                |
-| `SPC s g p`         | grep                                                |
-| `SPC s g p`         | grep with default text                              |
-| `SPC s k p`         | ack                                                 |
-| `SPC s k P`         | ack with default text                               |
-| `SPC s t p`         | pt                                                  |
-| `SPC s t P`         | pt with default text                                |
-| `SPC s r p`         | rg                                                  |
-| `SPC s r P`         | rg with default text                                |
+| Key Bindings | Descriptions                                        |
+| ------------ | --------------------------------------------------- |
+| `SPC s p`    | search with the first found tool                    |
+| `SPC s P`    | search with the first found tool with default input |
+| `SPC s a p`  | ag                                                  |
+| `SPC s a P`  | ag with default text                                |
+| `SPC s g p`  | grep                                                |
+| `SPC s g p`  | grep with default text                              |
+| `SPC s k p`  | ack                                                 |
+| `SPC s k P`  | ack with default text                               |
+| `SPC s t p`  | pt                                                  |
+| `SPC s t P`  | pt with default text                                |
+| `SPC s r p`  | rg                                                  |
+| `SPC s r P`  | rg with default text                                |
 
 **Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
 
@@ -1465,7 +1472,7 @@ Background search keyword in a project, when searching done, the count will be s
 
 | Key Bindings | Descriptions                                       |
 | ------------ | -------------------------------------------------- |
-| `SPC s g G`  | Searching in project on the fly with default tools |
+| `SPC s /`    | Searching in project on the fly with default tools |
 
 Key bindings in FlyGrep buffer:
 

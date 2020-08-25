@@ -1,29 +1,29 @@
 "=============================================================================
-" red.vim --- red language layer
+" moonscript.vim --- moonscript support for SpaceVim
 " Copyright (c) 2016-2019 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#racket, layer-lang-red
+" @section lang#moonscript, layer-lang-moonscript
 " @parentsection layers
-" This layer is for red development, disabled by default, to enable this
+" This layer is for moonscript development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
 " >
 "   [[layers]]
-"     name = 'lang#red'
+"     name = 'lang#moonscript'
 " <
 "
 " @subsection Key bindings
 " >
-"   Mode            Key             Function
-"   ---------------------------------------------
-"   normal          SPC l r         run current file
+"   Key             Function
+"   -----------------------------
+"   SPC l r         Run current moonscript
 " <
 "
-" This layer also provides REPL support for red, the key bindings are:
+" This layer also provides REPL support for moonscript, the key bindings are:
 " >
 "   Key             Function
 "   ---------------------------------------------
@@ -34,24 +34,24 @@
 " <
 "
 
-function! SpaceVim#layers#lang#red#plugins() abort
+
+function! SpaceVim#layers#lang#moonscript#plugins() abort
   let plugins = []
-  call add(plugins, ['DavidFeng/vim-red', {'merged' : 0}])
+  call add(plugins, ['leafo/moonscript-vim', {'merged' : 0}])
   return plugins
 endfunction
 
-
-function! SpaceVim#layers#lang#red#config() abort
-  call SpaceVim#plugins#runner#reg_runner('red', 'red --cli %s')
-  call SpaceVim#mapping#space#regesit_lang_mappings('red', function('s:language_specified_mappings'))
-  call SpaceVim#plugins#repl#reg('red', 'red --cli')
+function! SpaceVim#layers#lang#moonscript#config() abort
+  call SpaceVim#plugins#repl#reg('moon', 'mooni')
+  call SpaceVim#plugins#runner#reg_runner('moon', 'moon %s')
+  call SpaceVim#mapping#space#regesit_lang_mappings('moon', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort
-  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
-        \ 'call SpaceVim#plugins#repl#start("red")',
+        \ 'call SpaceVim#plugins#repl#start("moonscript")',
         \ 'start REPL process', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
         \ 'call SpaceVim#plugins#repl#send("line")',
