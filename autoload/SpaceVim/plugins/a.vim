@@ -42,7 +42,7 @@ function! s:cache() abort
 endfunction
 
 function! s:load_cache() abort
-  call s:LOGGER.info('Try to load alt cache from:' . s:cache_path)
+  call s:LOGGER.info('Try to load alt cache from: ' . s:cache_path)
   let cache_context = join(readfile(s:cache_path, ''), '')
   if !empty(cache_context)
     let s:project_config = s:JSON.json_decode(cache_context)
@@ -87,6 +87,7 @@ endfunction
 " we are going to rewrite this function in other language.
 " asynchronous paser should be supported.
 function! s:paser(alt_config_json) abort
+  call s:LOGGER.info('Start to paser alternate files for: ' . a:alt_config_json.root)
   let s:project_config[a:alt_config_json.root] = {}
   for key in keys(a:alt_config_json.config)
     let searchpath = key
@@ -115,6 +116,7 @@ function! s:paser(alt_config_json) abort
       endif
     endfor
   endfor
+  call s:LOGGER.info('Paser done, try to cache alternate info')
   call s:cache()
 endfunction
 
