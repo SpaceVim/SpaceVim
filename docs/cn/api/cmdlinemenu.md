@@ -1,6 +1,6 @@
 ---
 title: "cmdlinemenu 函数"
-description: "cmdlinemenu 函数提供了基础的文件读写相关函数，兼容不同系统平台。"
+description: "cmdlinemenu 函数提供了一套通过命令行进行选择的快捷接口。"
 lang: zh
 ---
 
@@ -15,6 +15,17 @@ lang: zh
 
 ## 简介
 
-文件函数提供了基础的文件读写相关函数，兼容不同系统平台。
+cmdlinemenu 函数提供了一套通过命令行进行选择的快捷接口。
+
+以下是一个使用该函数的示例：
+
+```vim
+let menu = SpaceVim#api#import('cmdlinemenu')
+let ques = [
+    \ ['basic mode', function('s:basic_mode')],
+    \ ['dark powered mode', function('s:awesome_mode')],
+    \ ]
+call menu.menu(ques)
+```
 
 
