@@ -265,7 +265,7 @@ function! SpaceVim#default#keyBindings() abort
   " Tabs
   nnoremap <silent> g0 :<C-u>tabfirst<CR>
   nnoremap <silent> g$ :<C-u>tablast<CR>
-  nnoremap <silent> gr :<C-u><SID>switch_tabs()<Cr>
+  nnoremap <silent> gr :<C-u>call <SID>switch_tabs()<CR>
 
   " Remove spaces at the end of lines
   nnoremap <silent> ,<Space> :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
