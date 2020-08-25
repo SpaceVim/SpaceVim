@@ -128,9 +128,9 @@ function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
     " just load the cache
     call s:load_cache()
   else
-    let altconfa = s:get_project_config(a:conf_path)
+    let alt_config_json = s:get_project_config(a:conf_path)
     let s:project_config[a:conf_path] = {}
-    call s:paser(altconfa, a:conf_path)
+    call s:paser(alt_config_json, a:conf_path)
   endif
   try
     return s:project_config[a:conf_path][a:file][get(a:000, 0, 'alternate')]
@@ -149,9 +149,9 @@ function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
   let conf = s:FILE.unify_path(s:conf, ':p')
 
   if !has_key(s:project_config, conf )
-    let altconfa = s:get_project_config(conf)
+    let alt_config_json = s:get_project_config(conf)
     let s:project_config[conf] = {}
-    call s:paser(altconfa, conf)
+    call s:paser(alt_config_json, conf)
   endif
   try
     let a = s:project_config[s:FILE.unify_path(s:conf, ':p')][file]
