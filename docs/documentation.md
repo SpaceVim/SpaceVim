@@ -738,11 +738,13 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<Up>` / `k`          | select previous file or directory                 |
 | `<Right>` / `l`       | open selected file or expand directory            |
 | `N`                   | Create new file under cursor                      |
+| `r`                   | Rename the file under cursor                      |
+| `d`                   | Delete the file under cursor                      |
 | `K`                   | Create new directory under cursor                 |
 | `y y`                 | Copy file full path to system clipboard           |
 | `y Y`                 | Copy file to system clipboard                     |
 | `P`                   | Paste file to the position under the cursor       |
-| `.`                   | toggle visible ignored files                      |
+| `.`                   | Toggle visible ignored files                      |
 | `s v`                 | Split edit                                        |
 | `s g`                 | Vertical split edit                               |
 | `p`                   | Preview                                           |
