@@ -90,15 +90,15 @@ function! s:paser(alt_config_json) abort
   let s:project_config[a:alt_config_json.root] = {}
   for key in keys(a:alt_config_json.config)
     let searchpath = key
-    if match(key, '/\*')
-      let searchpath = substitute(key, '*', '**/*', 'g')
+    if match(searchpath, '/\*')
+      let searchpath = substitute(searchpath, '*', '**/*', 'g')
     endif
     for file in s:CMP.globpath('.', searchpath)
       let file = s:FILE.unify_path(file, ':.')
       let s:project_config[a:alt_config_json.root][file] = {}
       if has_key(a:alt_config_json.config, file)
         for type in keys(a:alt_config_json.config[file])
-          let s:project_config[a:alt_config_json.root][file][type] = a:alt_config_json.config[key][type]
+          let s:project_config[a:alt_config_json.root][file][type] = a:alt_config_json.config[file][type]
         endfor
       else
         for type in keys(a:alt_config_json.config[key])
