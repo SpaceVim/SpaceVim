@@ -188,12 +188,12 @@ function! SpaceVim#layers#core#tabline#get() abort
     endif
     if current_tabnr == shown_items[0].tabnr
       if getbufvar(shown_items[0].bufnr, '&modified', 0)
-        let t = '%#SpaceVim_tabline_m# '
+        let t .= '%#SpaceVim_tabline_m# '
       else
-        let t = '%#SpaceVim_tabline_a# '
+        let t .= '%#SpaceVim_tabline_a# '
       endif
     else
-      let t = '%#SpaceVim_tabline_b# '
+      let t .= '%#SpaceVim_tabline_b# '
     endif
     let index = 1
     for item in shown_items[:-2]
