@@ -42,6 +42,7 @@ function! s:cache() abort
 endfunction
 
 function! s:load_cache() abort
+  call s:LOGGER.info('Try to load alt cache from:' . s:cache_path)
   let s:project_config = s:JSON.json_decode(join(readfile(s:cache_path, ''), ''))
 endfunction
 
@@ -77,6 +78,11 @@ endfunction
 
 " the paser function should only accept one argv
 " the alt_config_json
+"
+" @todo Rewrite alternate file paser
+" paser function is written in vim script, and it is too slow,
+" we are going to rewrite this function in other language.
+" asynchronous paser should be supported.
 function! s:paser(alt_config_json) abort
   let s:project_config[a:alt_config_json.root] = {}
   for key in keys(a:alt_config_json.config)
@@ -121,6 +127,15 @@ function! s:get_type_path(a, f, b) abort
   return substitute(a:b, '{}', a:f[begin_len : (end_len+1) * -1], 'g')
 endfunction
 
+function! s:is_config_changed(conf_path) abort
+  if getftime(a:conf_path) > getftime(s:cache_path)
+    call s:LOGGER.info('alt config file ('
+          \ . a:conf_path
+          \ . ') has been changed, paser required!')
+    return 1
+  endif
+endfunction
+
 function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
   call s:LOGGER.info('getting alt file for:' . a:file)
   call s:LOGGER.info('  >   type: ' . get(a:000, 0, 'alternate'))
@@ -130,15 +145,19 @@ function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
   " if the local value s:project_config do not has the key a:conf_path
   " and the file a:conf_path has not been updated since last cache
   " and no request_paser specified
-  if !has_key(s:project_config, a:conf_path)
-        \ && getftime(a:conf_path) < getftime(s:cache_path)
+  let alt_config_json = s:get_project_config(a:conf_path)
+  if !has_key(s:project_config, alt_config_json.root)
+        \ && !s:is_config_changed(a:conf_path)
         \ && !a:request_paser
     " config file has been cached since last update.
     " so no need to paser the config for current config file
     " just load the cache
     call s:load_cache()
+    if !has_key(s:project_config, alt_config_json.root)
+          \ || !has_key(s:project_config[alt_config_json.root], a:file)
+      call s:paser(alt_config_json)
+    endif
   else
-    let alt_config_json = s:get_project_config(a:conf_path)
     call s:paser(alt_config_json)
   endif
   try
@@ -146,6 +165,10 @@ function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
   catch
     return ''
   endtry
+endfunction
+
+function! s:get_alternate(file) abort
+
 endfunction
 
 
