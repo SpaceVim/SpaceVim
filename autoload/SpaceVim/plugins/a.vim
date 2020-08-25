@@ -43,7 +43,10 @@ endfunction
 
 function! s:load_cache() abort
   call s:LOGGER.info('Try to load alt cache from:' . s:cache_path)
-  let s:project_config = s:JSON.json_decode(join(readfile(s:cache_path, ''), ''))
+  let cache_context = join(readfile(s:cache_path, ''), '')
+  if !empty(cache_context)
+    let s:project_config = s:JSON.json_decode(cache_context)
+  endif
 endfunction
 
 
