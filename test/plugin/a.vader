@@ -1,6 +1,6 @@
 Execute ( SpaceVim plugin: a.vim ):
   call SpaceVim#plugins#a#set_config_name(getcwd(), '.projections.json')
-  let root = SpaceVim#plugins#a#get_root()
+  let root = SpaceVim#plugins#a#getConfigPath()
   AssertEqual SpaceVim#plugins#a#get_alt('docs/index.md', root, 1), 'docs/cn/index.md'
   AssertEqual SpaceVim#plugins#a#get_alt('docs/cn/index.md', root, 1), 'docs/index.md'
   AssertEqual SpaceVim#plugins#a#get_alt('docs/api/job.md', root, 1), 'docs/cn/api/job.md'
