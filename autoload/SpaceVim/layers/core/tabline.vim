@@ -116,7 +116,6 @@ function! SpaceVim#layers#core#tabline#get() abort
   if tabpage_counts > 1
     let current_tabnr = tabpagenr()
     let previous_tabnr = s:TAB.previous_tabpagenr()
-    call SpaceVim#logger#info('what the fuck!! previous_tabnr is:' . previous_tabnr)
     let matched_len = 0
     for i in range(1, tabpage_counts)
       call add(all_tabline_items, s:buffer_item(tabpagebuflist(i)[tabpagewinnr(i) - 1], i))
