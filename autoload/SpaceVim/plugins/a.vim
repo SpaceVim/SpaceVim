@@ -95,9 +95,7 @@ function! s:paser(alt_config_json) abort
       let s:project_config[a:alt_config_json.root][file] = {}
       if has_key(a:alt_config_json.config, file)
         for type in keys(a:alt_config_json.config[file])
-          if len(begin_end) == 2
-            let s:project_config[a:alt_config_json.root][file][type] = a:alt_config_json.config[key][type]
-          endif
+          let s:project_config[a:alt_config_json.root][file][type] = a:alt_config_json.config[key][type]
         endfor
       else
         for type in keys(a:alt_config_json.config[key])
