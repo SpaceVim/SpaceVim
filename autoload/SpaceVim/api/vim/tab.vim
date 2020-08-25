@@ -34,16 +34,21 @@ function! s:self.realTabBuffers(id) abort
   return filter(copy(tabpagebuflist(a:id)), 'buflisted(v:val) && getbufvar(v:val, "&buftype") ==# ""')
 endfunction
 
+function! s:tab_closed_handle() abort
+  if expand('<afile>') <= g:previous_tabpagenr
+    let g:previous_tabpagenr -= 1
+  endif
+endfunction
+
+" as vim do not support tabpagenr('#')
+augroup spacevim_api_vim_tab
+  autocmd!
+  autocmd TabLeave * let s:previous_tabpagenr = tabpagenr()
+  autocmd TabClosed * call s:tab_closed_handle()
+augroup END
+
 function! s:self.previous_tabpagenr() abort
-  let tabsinfo = self.__cmp.execute('tabs')
-  let number = 0
-  for line in split(tabsinfo, "\n")
-    if line =~# '^Tab page \d'
-      let number = str2nr(matchstr(line, '\d\+'))
-    elseif line =~# '^#'
-      return number
-    endif
-  endfor
+  return get(s:, 'previous_tabpagenr', 0)
 endfunction
 
 function! SpaceVim#api#vim#tab#get() abort
