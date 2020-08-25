@@ -35,8 +35,8 @@ function! s:self.realTabBuffers(id) abort
 endfunction
 
 function! s:tab_closed_handle() abort
-  if expand('<afile>') <= g:previous_tabpagenr
-    let g:previous_tabpagenr -= 1
+  if expand('<afile>') <= get(s:, 'previous_tabpagenr', 0)
+    let s:previous_tabpagenr -= 1
   endif
 endfunction
 
@@ -44,7 +44,7 @@ endfunction
 augroup spacevim_api_vim_tab
   autocmd!
   autocmd TabLeave * let s:previous_tabpagenr = tabpagenr()
-  autocmd TabClosed * call s:tab_closed_handle()
+  autocmd TabClosed * call <SID>tab_closed_handle()
 augroup END
 
 function! s:self.previous_tabpagenr() abort
