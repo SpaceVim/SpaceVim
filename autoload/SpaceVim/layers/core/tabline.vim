@@ -187,12 +187,21 @@ function! SpaceVim#layers#core#tabline#get() abort
       let t .= '%#SpaceVim_tabline_a#'  .  ' << '. right_hidden_tab_number
     endif
     if current_tabnr == shown_items[0].tabnr
-      if getbufvar(shown_items[0].bufnr, '&modified', 0)
+      if s:is_modified(shown_items[0].bufnr)
+        if right_hidden_tab_number > 0
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_m#' . s:lsep 
+        endif
         let t .= '%#SpaceVim_tabline_m# '
       else
+        if right_hidden_tab_number > 0
+          let t .= ' ' . s:ilsep 
+        endif
         let t .= '%#SpaceVim_tabline_a# '
       endif
     else
+      if right_hidden_tab_number > 0
+        let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep 
+      endif
       let t .= '%#SpaceVim_tabline_b# '
     endif
     let index = 1
