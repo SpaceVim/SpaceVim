@@ -161,7 +161,7 @@ function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
     call s:paser(alt_config_json)
   endif
   try
-    return s:project_config[a:conf_path][a:file][get(a:000, 0, 'alternate')]
+    return s:project_config[alt_config_json.root][a:file][get(a:000, 0, 'alternate')]
   catch
     return ''
   endtry
