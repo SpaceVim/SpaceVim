@@ -175,9 +175,7 @@ endfunction
 
 
 function! SpaceVim#plugins#a#get_root() abort
-  let conf_file_path = s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
-  let alt_config_json = s:get_project_config(conf_file_path)
-  return alt_config_json.root
+  return s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
 endfunction
 
 function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
