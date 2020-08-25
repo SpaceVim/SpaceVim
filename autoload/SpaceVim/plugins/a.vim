@@ -181,10 +181,11 @@ endfunction
 function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
   let file = s:FILE.unify_path(bufname('%'), ':.')
   let conf_file_path = s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
+  let alt_config_json = s:get_project_config(conf_file_path)
 
   call SpaceVim#plugins#a#get_alt(file, conf_file_path, 0)
   try
-    let a = s:project_config[s:FILE.unify_path(s:conf, ':p')][file]
+    let a = s:project_config[alt_config_json.root][file]
   catch
     let a = {}
   endtry
