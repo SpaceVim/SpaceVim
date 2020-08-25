@@ -652,18 +652,21 @@ the index, bufname and the filetype icon. If there are more than one tab, all
 tabs will be listed on the tabline. Each item can be quickly accessed by using
 `<Leader> number`. Default `<Leader>` is `\`.
 
-| Key Bindings | Descriptions               |
-| ------------ | -------------------------- |
-| `<Leader> 1` | Jump to index 1 on tabline |
-| `<Leader> 2` | Jump to index 2 on tabline |
-| `<Leader> 3` | Jump to index 3 on tabline |
-| `<Leader> 4` | Jump to index 4 on tabline |
-| `<Leader> 5` | Jump to index 5 on tabline |
-| `<Leader> 6` | Jump to index 6 on tabline |
-| `<Leader> 7` | Jump to index 7 on tabline |
-| `<Leader> 8` | Jump to index 8 on tabline |
-| `<Leader> 9` | Jump to index 9 on tabline |
-| `g r`        | Go to previous tab         |
+| Key Bindings | Descriptions                                    |
+| ------------ | ----------------------------------------------- |
+| `<Leader> 1` | Jump to index 1 on tabline                      |
+| `<Leader> 2` | Jump to index 2 on tabline                      |
+| `<Leader> 3` | Jump to index 3 on tabline                      |
+| `<Leader> 4` | Jump to index 4 on tabline                      |
+| `<Leader> 5` | Jump to index 5 on tabline                      |
+| `<Leader> 6` | Jump to index 6 on tabline                      |
+| `<Leader> 7` | Jump to index 7 on tabline                      |
+| `<Leader> 8` | Jump to index 8 on tabline                      |
+| `<Leader> 9` | Jump to index 9 on tabline                      |
+| `g r`        | Switch to alternate tab (switch back and forth) |
+
+**Note:** `SPC Tab` is the key binding for switching to alternate buffer.
+Read [Buffers and Files](#buffers-and-files) section for more info.
 
 SpaceVim tabline also supports mouse click, left mouse button will switch to buffer,
 while middle button will delete the buffer.
