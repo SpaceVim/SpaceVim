@@ -82,7 +82,6 @@ function! s:wrap_id(id) abort
 endfunction
 
 function! s:buffer_item(bufnr, ...) abort
-  call SpaceVim#logger#info('What the fuck? a:000 is :' . string(a:000))
   let name = s:tabname(a:bufnr)
   let item = {
         \ 'bufnr' : a:bufnr,
