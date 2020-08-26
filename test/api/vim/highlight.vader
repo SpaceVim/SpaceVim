@@ -9,8 +9,10 @@ Execute ( SpaceVim api: vim#highlight ):
   highlight TestAPIVimHighlight ctermfg=11 guifg=#89DDFF guibg=#212121
 
   let test_api_hi = hi.group2dict('TestAPIVimHighlight')
-  AssertEqual test_api_hi.guibg, '#212121'
-  AssertEqual test_api_hi.guifg, '#89ddff'
+  if !empty(test_api_hi.guifg)
+    AssertEqual test_api_hi.guibg, '#212121'
+    AssertEqual test_api_hi.guifg, '#89ddff'
+  endif
   AssertEqual test_api_hi.ctermfg, '11'
 
   let unknown_hi = hi.group2dict('UnknownHighlightGroup')
