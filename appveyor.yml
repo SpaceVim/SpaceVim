@@ -6,6 +6,8 @@ clone_depth: 1
 environment:
     matrix:
         - CONDITION: Neovim latest-32
+        - CONDITION: Neovim 0.4.3-32
+        - CONDITION: Neovim 0.4.2-32
         - CONDITION: Neovim 0.3.8-32
         - CONDITION: Neovim 0.3.7-32
         - CONDITION: Neovim 0.3.5-32
@@ -15,7 +17,9 @@ environment:
         - CONDITION: Neovim 0.3.1-32
         - CONDITION: Neovim 0.3.0-32
         - CONDITION: Vim latest-32
-        - CONDITION: Vim 8.0.0069
+        - CONDITION: Vim 7.4.1689
+        - CONDITION: Vim 8.0.0027
+        - CONDITION: Vim 8.0.1453
 install:
   - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:32'
   - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:64'
