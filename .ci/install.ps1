@@ -63,6 +63,22 @@ function install_nvim($name)
   {
     $url = 'https://github.com/neovim/neovim/releases/download/nightly/nvim-win64.zip'
   }
+  elseif ($ver -eq "0.4.3-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.4.3/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.4.3-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.4.3/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.4.2-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.4.2/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.4.2-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.4.2/nvim-win64.zip'
+  }
   elseif ($ver -eq "0.3.8-32")
   {
     $url = 'https://github.com/neovim/neovim/releases/download/v0.3.8/nvim-win32.zip'
