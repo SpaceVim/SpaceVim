@@ -173,6 +173,7 @@ if g:spacevim_project_rooter_automatically
   augroup END
 endif
 function! s:find_root_directory() abort
+  " @question expand('%:p') return empty when bufname is empty.
   let fd = expand('%:p')
   let dirs = []
   call SpaceVim#logger#info('Start to find root for: ' . s:FILE.unify_path(fd))
