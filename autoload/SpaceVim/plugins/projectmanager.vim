@@ -108,8 +108,9 @@ endfunction
 
 function! SpaceVim#plugins#projectmanager#current_root() abort
   " @todo skip some plugin buffer
-  if bufname('%') =~# '\[denite\]-'
+  if bufname('%') =~# '\[denite\]'
         \ || bufname('%') ==# 'denite-filter'
+        \ || bufname('%') ==# '\[defx\]'
     return
   endif
   if join(g:spacevim_project_rooter_patterns, ':') !=# join(s:spacevim_project_rooter_patterns, ':')
