@@ -112,9 +112,8 @@ function! SpaceVim#plugins#projectmanager#current_root() abort
         \ || bufname('%') ==# 'denite-filter'
     return
   endif
-  " if rooter patterns changed, clear cache.
-  " https://github.com/SpaceVim/SpaceVim/issues/2367
   if join(g:spacevim_project_rooter_patterns, ':') !=# join(s:spacevim_project_rooter_patterns, ':')
+    call s:LOGGER.info('project_rooter_patterns option has been change, clear b:rootDir')
     call setbufvar('%', 'rootDir', '')
     let s:spacevim_project_rooter_patterns = copy(g:spacevim_project_rooter_patterns)
     call s:update_rooter_patterns()
@@ -123,14 +122,12 @@ function! SpaceVim#plugins#projectmanager#current_root() abort
   if empty(rootdir)
     let rootdir = s:find_root_directory()
     if empty(rootdir)
-      let rootdir = getcwd()
+      let rootdir = s:FILE.unify_path(getcwd())
     endif
     call setbufvar('%', 'rootDir', rootdir)
   endif
-  if !empty(rootdir)
-    call s:change_dir(rootdir)
-    call SpaceVim#plugins#projectmanager#RootchandgeCallback()
-  endif
+  call s:change_dir(rootdir)
+  call SpaceVim#plugins#projectmanager#RootchandgeCallback()
   return rootdir
 endfunction
 
@@ -140,7 +137,7 @@ function! s:change_dir(dir) abort
     let bufname = 'No Name'
   endif
   call s:LOGGER.info('buffer name: ' . bufname)
-  if a:dir ==# getcwd()
+  if a:dir ==# s:FILE.unify_path(getcwd())
     call s:LOGGER.info('same as current directory, no need to change.')
   else
     call s:LOGGER.info('change to root: ' . a:dir)
@@ -181,20 +178,20 @@ function! s:find_root_directory() abort
   call SpaceVim#logger#info('Start to find root for: ' . s:FILE.unify_path(fd))
   for pattern in s:project_rooter_patterns
     if stridx(pattern, '/') != -1
-      let dir = SpaceVim#util#findDirInParent(pattern, fd)
+      let find_path = SpaceVim#util#findDirInParent(pattern, fd)
     else
-      let dir = SpaceVim#util#findFileInParent(pattern, fd)
+      let find_path = SpaceVim#util#findFileInParent(pattern, fd)
     endif
-    let ftype = getftype(dir)
-    if ( ftype ==# 'dir' || ftype ==# 'file' ) 
-          \ && dir !=# expand('~/.SpaceVim.d/')
-          \ && dir !=# expand('~/.Rprofile')
-          \ && !s:is_ignored_dir(dir)
-      let dir = s:FILE.unify_path(fnamemodify(dir, ':p'))
-      if ftype ==# 'dir'
-        let dir = fnamemodify(dir, ':h:h')
+    let path_type = getftype(find_path)
+    if ( path_type ==# 'dir' || path_type ==# 'file' ) 
+          \ && find_path !=# expand('~/.SpaceVim.d/')
+          \ && find_path !=# expand('~/.Rprofile')
+          \ && !s:is_ignored_dir(find_path)
+      let find_path = s:FILE.unify_path(find_path, ':p')
+      if path_type ==# 'dir'
+        let dir = s:FILE.unify_path(find_path, ':h:h')
       else
-        let dir = fnamemodify(dir, ':h')
+        let dir = s:FILE.unify_path(find_path, ':h')
       endif
       call SpaceVim#logger#info('        (' . pattern . '):' . dir)
       call add(dirs, dir)
