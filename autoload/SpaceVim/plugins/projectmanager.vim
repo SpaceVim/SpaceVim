@@ -16,7 +16,9 @@
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:FILE = SpaceVim#api#import('file')
-let s:LOGGER =SpaceVim#logger#derive('projectmanager.vim')
+" the name projectmanager is too long
+" use rooter instead
+let s:LOGGER =SpaceVim#logger#derive('rooter')
 
 function! s:update_rooter_patterns() abort
   let s:project_rooter_patterns = filter(copy(g:spacevim_project_rooter_patterns), 'v:val !~# "^!"')
@@ -133,16 +135,21 @@ function! SpaceVim#plugins#projectmanager#current_root() abort
 endfunction
 
 function! s:change_dir(dir) abort
-  call s:LOGGER.info('buffer name: ' . bufname('%'))
-  call s:LOGGER.info('change to root: ' . a:dir)
-  exe 'cd ' . fnameescape(fnamemodify(a:dir, ':p'))
-
-  try
-    " FIXME: change the git dir when the path is changed.
-    let b:git_dir = fugitive#extract_git_dir(expand('%:p'))
-  catch
-  endtry
-  " let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+  let bufname = bufname('%')
+  if empty(bufname)
+    let bufname = 'No Name'
+  endif
+  call s:LOGGER.info('buffer name: ' . bufname)
+  if a:dir ==# getcwd()
+    call s:LOGGER.info('same as current directory, no need to change.')
+  else
+    call s:LOGGER.info('change to root: ' . a:dir)
+    exe 'cd ' . fnameescape(fnamemodify(a:dir, ':p'))
+    try
+      let b:git_dir = fugitive#extract_git_dir(expand('%:p'))
+    catch
+    endtry
+  endif
 endfunction
 
 function! SpaceVim#plugins#projectmanager#kill_project() abort
