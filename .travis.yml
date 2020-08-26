@@ -72,9 +72,6 @@ jobs:
     - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.2
     - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.1
     - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.3.0
-    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.2.2
-    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.2.0
-    - env: LINT=vader          VIM_BIN=nvim VIM_TAG=v0.1.7
     - env: LINT=vader          VIM_BIN=vim  VIM_TAG=v7.4.052    #ubuntu 14.04
       addons: { apt: { packages: [libncurses5-dev, libncursesw5-dev] } }
     - env: LINT=vader          VIM_BIN=vim  VIM_TAG=v7.4.1689   #ubuntu 16.04
