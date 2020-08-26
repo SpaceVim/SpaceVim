@@ -31,6 +31,20 @@ function! s:self.trim(str) abort
   return substitute(str, '^\s*', '', 'g')
 endfunction
 
+" strcharpart is added in v7.4.1761
+"
+
+if exists('*strcharpart')
+  function! s:self.strcharpart(str, start, ...) abort
+    return call('strcharpart', [a:str, a:start] + a:000)
+  endfunction
+else
+  function! s:self.strcharpart(str, start, ...) abort
+    let chars = self.string2chars(a:str) 
+    return join(chars[a:start : get(a:000, 0, -1)])
+  endfunction
+endif
+
 function! s:self.fill(str, length, ...) abort
   if strwidth(a:str) <= a:length
     let l:string = a:str
@@ -176,7 +190,7 @@ function! s:self.strB2Q(str) abort
   endfor
   let &encoding = save_enc
   return join(bchars, '')
-  
+
 endfunction
 
 
