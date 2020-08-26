@@ -328,17 +328,12 @@ endif
 
 if s:SYS.isWindows
   function! s:self.resolve(path) abort
-    call SpaceVim#logger#info('a:path is:' . a:path)
-    let cmd = 'dir /a "' . a:path . '" | findstr SYMLINK'
+    let cmd = 'dir /a ' . shellescape(a:path) . ' | findstr SYMLINK'
     " 2018/12/07 周五  下午 10:23    <SYMLINK>      vimfiles [C:\Users\Administrator\.SpaceVim]
     " ref: https://superuser.com/questions/524669/checking-where-a-symbolic-link-points-at-in-windows-7
-    call SpaceVim#logger#info('cmd is:' . cmd)
     silent let rst = system(cmd)
-    call SpaceVim#logger#info('rst is:' . rst)
-    call SpaceVim#logger#info('v:shell_error is:' . v:shell_error)
     if !v:shell_error
       let dir = split(rst)[-1][1:-2]
-      call SpaceVim#logger#info('dir is:' . dir)
       return dir
     endif
     return a:path
