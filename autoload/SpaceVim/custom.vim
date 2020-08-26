@@ -205,6 +205,7 @@ endfunction
 
 function! s:load_glob_conf() abort
   let global_dir = empty($SPACEVIMDIR) ? s:FILE.unify_path(s:CMP.resolve(expand('~/.SpaceVim.d/'))) : $SPACEVIMDIR
+  call SpaceVim#logger#info('global_dir is: ' . global_dir)
   if filereadable(global_dir . 'init.toml')
     let g:_spacevim_global_config_path = global_dir . 'init.toml'
     let local_conf = global_dir . 'init.toml'
