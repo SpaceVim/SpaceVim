@@ -1,6 +1,8 @@
 Execute ( SpaceVim api: vim#highlight ):
   let hi = SpaceVim#api#import('vim#highlight')
-  set termguicolors
+  if exists('+termguicolors')
+    set termguicolors
+  endif
   highlight TestAPIVimHighlight ctermfg=11 guifg=#89DDFF guibg=#212121
 
   let test_api_hi = hi.group2dict('TestAPIVimHighlight')
