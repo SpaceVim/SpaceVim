@@ -1,8 +1,11 @@
 Execute ( SpaceVim api: vim#highlight ):
   let hi = SpaceVim#api#import('vim#highlight')
-  if exists('+termguicolors')
+  try
+    " Note: some evn do not support 24-bit color
+    " and old version of vim do not support termguicolors
     set termguicolors
-  endif
+  catch
+  endtry
   highlight TestAPIVimHighlight ctermfg=11 guifg=#89DDFF guibg=#212121
 
   let test_api_hi = hi.group2dict('TestAPIVimHighlight')
