@@ -76,9 +76,9 @@ function! s:wrap_id(id) abort
   elseif g:spacevim_buffer_index_type == 4
     let id = a:id
   else
-    let id = s:MESSLETTERS.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
+    let id = s:MESSLETTERS.bubble_num(a:id, g:spacevim_buffer_index_type)
   endif
-  return id
+  return id . ' '
 endfunction
 
 function! s:buffer_item(bufnr, ...) abort
