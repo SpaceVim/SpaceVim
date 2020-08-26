@@ -165,7 +165,7 @@ function! s:self.start(argv, ...) abort dict
       return -1
     endtry
     if job > 0
-      let msg = ['process '. jobpid(job), ' run']
+      let msg = ['process '. jobpid(job), 'run']
       call extend(self.jobs, {job : msg})
     else
       if job == -1
