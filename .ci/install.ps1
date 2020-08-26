@@ -19,7 +19,7 @@ function install_vim($name)
   elseif ($ver -eq "7.4.1689")
   {
     $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v7.4.1689/gvim_7.4.1689_x86.zip'
-    $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim80\vim.exe'
+    $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim74\vim.exe'
   }
   $zip1 = $Env:APPVEYOR_BUILD_FOLDER + '\vim.zip'
   (New-Object Net.WebClient).DownloadFile($url1, $zip1)
