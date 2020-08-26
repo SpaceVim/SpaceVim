@@ -111,7 +111,7 @@ function! SpaceVim#plugins#iedit#start(...) abort
     endif
   endif
   call s:highlight_cursor()
-  redrawstatus!
+  call s:update_statusline()
   while s:mode !=# ''
     redraw!
     let char = getchar()
@@ -158,7 +158,7 @@ function! s:handle_normal(char) abort
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
-    redrawstatus!
+    call s:update_statusline()
   elseif a:char == 73
     " I: move surcor to the begin, and switch to iedit insert mode
     let s:mode = 'i'
@@ -178,7 +178,7 @@ function! s:handle_normal(char) abort
             \ '^.', '', 'g')
       let s:cursor_stack[i].begin = ''
     endfor
-    redrawstatus!
+    call s:update_statusline()
   elseif a:char == 9 " <tab>
     if index(keys(s:toggle_stack), s:index . '') == -1
       call extend(s:toggle_stack, {s:index : [s:stack[s:index], s:cursor_stack[s:index]]})
@@ -202,7 +202,7 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end,
             \ '^.', '', 'g')
     endfor
-    redrawstatus!
+    call s:update_statusline()
   elseif a:char == 65 " A
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
@@ -212,7 +212,7 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
     endfor
-    redrawstatus!
+    call s:update_statusline()
   elseif a:char == 67 " C
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
@@ -299,7 +299,7 @@ function! s:handle_normal(char) abort
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
-    redrawstatus!
+    call s:update_statusline()
     call s:replace_symbol()
   elseif a:char == 71 " G
     exe s:stack[-1][0]
@@ -357,7 +357,7 @@ function! s:handle_insert(char) abort
     let w:spacevim_statusline_mode = 'in'
     silent! call s:highlight_cursor()
     redraw!
-    redrawstatus!
+    call s:update_statusline()
     return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
   elseif a:char ==# 23
     " ctrl-w: delete word before cursor
@@ -535,6 +535,13 @@ function! s:fixstack(idxs) abort
     let change += a:idxs[i][1] - s:stack[a:idxs[i][0]][2]
     let s:stack[a:idxs[i][0]][2] = a:idxs[i][1]
   endfor
+endfunction
+
+function! s:update_statusline() abort
+  redrawstatus!
+  if exists('g:Iedit_handle_func') && type(g:Iedit_handle_func) ==# 2
+    call call(g:Iedit_handle_func, [])
+  endif
 endfunction
 
 function! SpaceVim#plugins#iedit#paser(begin, end, symbol, expr) abort

@@ -256,11 +256,16 @@ function! s:start_replace() abort
     call s:JOB.stop(s:grepid)
   endif
   let replace_text = s:current_grep_pattern
+  let g:Iedit_handle_func = function('s:update_statusline')
   if !empty(replace_text)
     let rst = SpaceVim#plugins#iedit#start({'expr' : replace_text}, line('w0'), line('w$'))
+  else
+    let rst = replace_text
   endif
+  let g:Iedit_handle_func = ''
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(rst), 2)
   redrawstatus
+  call s:update_statusline()
   if rst !=# replace_text
     call s:update_files(s:flygrep_result_to_files())
     checktime
@@ -858,8 +863,16 @@ endfunction
 
 function! s:update_statusline() abort
   if s:SL.support_float() && win_id2tabwin(s:flygrep_win_id)[0] ==# tabpagenr() && s:Window.is_float(win_id2win(s:flygrep_win_id))
+    let iedit_mode = get(w:, 'spacevim_iedit_mode', '')
+    if iedit_mode ==# 'n'
+      let mode = 'IEDIT-NORMAL'
+    elseif iedit_mode ==# 'i'
+      let mode = 'IEDIT-INSERT'
+    else
+      let mode = 'FlyGrep'
+    endif
     noautocmd call s:SL.open_float([
-          \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
+          \ [mode . SpaceVim#layers#core#statusline#mode(mode()), 'SpaceVim_statusline_a_bold'],
           \ [' ', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],
           \ [SpaceVim#plugins#flygrep#mode() . ' ', 'SpaceVim_statusline_b'],
           \ [' ', 'SpaceVim_statusline_b_SpaceVim_statusline_c'],
