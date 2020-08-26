@@ -173,8 +173,16 @@ if g:spacevim_project_rooter_automatically
   augroup END
 endif
 function! s:find_root_directory() abort
-  " @question expand('%:p') return empty when bufname is empty.
+  " @question confused about expand and fnamemodify
+  " ref: https://github.com/vim/vim/issues/6793
+  
+  " get the current path of buffer
+  " If it is a empty buffer, do nothing?
   let fd = expand('%:p')
+  if empty(fd)
+    call s:LOGGER.info('buffer name is empty, skipped!')
+    return ''
+  endif
   let dirs = []
   call SpaceVim#logger#info('Start to find root for: ' . s:FILE.unify_path(fd))
   for pattern in s:project_rooter_patterns
