@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:self = {}
+let s:self.__cmp = SpaceVim#api#import('vim#compatible')
 
 let s:self._tree = {}
 
@@ -31,6 +32,23 @@ endfunction
 
 function! s:self.realTabBuffers(id) abort
   return filter(copy(tabpagebuflist(a:id)), 'buflisted(v:val) && getbufvar(v:val, "&buftype") ==# ""')
+endfunction
+
+function! s:tab_closed_handle() abort
+  if expand('<afile>') <= get(s:, 'previous_tabpagenr', 0)
+    let s:previous_tabpagenr -= 1
+  endif
+endfunction
+
+" as vim do not support tabpagenr('#')
+augroup spacevim_api_vim_tab
+  autocmd!
+  autocmd TabLeave * let s:previous_tabpagenr = tabpagenr()
+  autocmd TabClosed * call <SID>tab_closed_handle()
+augroup END
+
+function! s:self.previous_tabpagenr() abort
+  return get(s:, 'previous_tabpagenr', 0)
 endfunction
 
 function! SpaceVim#api#vim#tab#get() abort

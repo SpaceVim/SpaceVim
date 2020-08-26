@@ -32,6 +32,7 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:HI = SpaceVim#api#import('vim#highlight')
 let s:LOG = SpaceVim#logger#derive('tabline ')
 let s:SYS = SpaceVim#api#import('system')
+let s:TAB = SpaceVim#api#import('vim#tab')
 " }}}
 
 
@@ -75,9 +76,9 @@ function! s:wrap_id(id) abort
   elseif g:spacevim_buffer_index_type == 4
     let id = a:id
   else
-    let id = s:MESSLETTERS.bubble_num(a:id, g:spacevim_buffer_index_type) . ' '
+    let id = s:MESSLETTERS.bubble_num(a:id, g:spacevim_buffer_index_type)
   endif
-  return id
+  return id . ' '
 endfunction
 
 function! s:buffer_item(bufnr, ...) abort
@@ -113,13 +114,13 @@ function! SpaceVim#layers#core#tabline#get() abort
 
   if tabpage_counts > 1
     let current_tabnr = tabpagenr()
-    let previous_tabnr = tabpagenr('#')
+    let previous_tabnr = s:TAB.previous_tabpagenr()
     let matched_len = 0
     for i in range(1, tabpage_counts)
       call add(all_tabline_items, s:buffer_item(tabpagebuflist(i)[tabpagewinnr(i) - 1], i))
     endfor
     if previous_tabnr < current_tabnr
-      for i in range(previous_tabnr, current_tabnr)
+      for i in range(previous_tabnr == 0 ? 1 : previous_tabnr, current_tabnr)
         call add(shown_items, all_tabline_items[i - 1])
         if s:check_len(shown_items)
           let matched_len = 1
@@ -175,18 +176,35 @@ function! SpaceVim#layers#core#tabline#get() abort
       endif
     endif
     let s:shown_items = shown_items
+    if empty(shown_items)
+      return ''
+    endif
     let t = ''
+    let right_hidden_tab_number = shown_items[0].tabnr - 1
+    let left_hidden_tab_number = tabpage_counts - shown_items[-1].tabnr
+    if right_hidden_tab_number > 0
+      let t .= '%#SpaceVim_tabline_a#'  .  ' << '. right_hidden_tab_number
+    endif
     if current_tabnr == shown_items[0].tabnr
-      if getbufvar(shown_items[0].bufnr, '&modified', 0)
-        let t = '%#SpaceVim_tabline_m# '
+      if s:is_modified(shown_items[0].bufnr)
+        if right_hidden_tab_number > 0
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_m#' . s:lsep 
+        endif
+        let t .= '%#SpaceVim_tabline_m# '
       else
-        let t = '%#SpaceVim_tabline_a# '
+        if right_hidden_tab_number > 0
+          let t .= ' ' . s:ilsep 
+        endif
+        let t .= '%#SpaceVim_tabline_a# '
       endif
     else
-      let t = '%#SpaceVim_tabline_b# '
+      if right_hidden_tab_number > 0
+        let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep 
+      endif
+      let t .= '%#SpaceVim_tabline_b# '
     endif
     let index = 1
-    for item in shown_items
+    for item in shown_items[:-2]
       if has('tablineat')
         let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
       endif
@@ -201,6 +219,39 @@ function! SpaceVim#layers#core#tabline#get() abort
         let t .= ' ' . s:ilsep . ' '
       endif
     endfor
+    let item = shown_items[-1]
+    if has('tablineat')
+      let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
+    endif
+    let t .= s:wrap_id(index) . item.bufname
+    if item.bufnr == s:BUFFER.bufnr()
+      if left_hidden_tab_number > 0 
+        if s:is_modified(item.bufnr)
+          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_a#' . s:lsep
+          let t .= ' %#SpaceVim_tabline_a#'  . left_hidden_tab_number . ' >>'
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b#'
+        else
+          let t .= ' ' . s:ilsep
+          let t .= ' ' . left_hidden_tab_number . ' >>'
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b#'
+        endif
+      else
+        if s:is_modified(item.bufnr)
+          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b#'
+        else
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b#'
+        endif
+      endif
+    else
+      if left_hidden_tab_number > 0 
+        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep
+        let t .= ' %#SpaceVim_tabline_a#'  . left_hidden_tab_number . ' >>'
+        let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b#'
+      else
+        let t .= ' ' . s:ilsep
+      endif
+    endif
+    " how many buffers after the last item are hidden?
     let t .= '%=%#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:rsep
     let t .= '%#SpaceVim_tabline_a# Tabs '
     return t
@@ -309,7 +360,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       if right_hidden_buffer_number > 0
         let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep 
       endif
-      let t .= '%#SpaceVim_tabline_b# '
+      let t .= s:is_modified(shown_items[0].bufnr) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
     endif
     let index = 1
     for item in shown_items[:-2]
@@ -320,12 +371,13 @@ function! SpaceVim#layers#core#tabline#get() abort
       let index += 1
       if item.bufnr == s:BUFFER.bufnr()
         if s:is_modified(item.bufnr)
-          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep
         else
-          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep
         endif
+        let t .= s:is_modified(s:buffers[index(s:buffers, item.bufnr) + 1]) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
       elseif index(s:buffers, s:BUFFER.bufnr()) > 0 && item.bufnr == s:buffers[index(s:buffers, s:BUFFER.bufnr()) - 1]
-        if s:is_modified(item.bufnr)
+        if s:is_modified(s:BUFFER.bufnr())
           let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_m#' . s:lsep . '%#SpaceVim_tabline_m# '
         else
           let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '

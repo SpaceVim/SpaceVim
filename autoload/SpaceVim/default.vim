@@ -9,6 +9,7 @@
 scriptencoding utf-8
 
 let s:SYSTEM = SpaceVim#api#import('system')
+let s:TAB = SpaceVim#api#import('vim#tab')
 
 " Default options {{{
 function! SpaceVim#default#options() abort
@@ -262,9 +263,9 @@ function! SpaceVim#default#keyBindings() abort
   cnoremap <C-s> <C-u>w<CR>
 
   " Tabs
-  nnoremap <silent>g0 :<C-u>tabfirst<CR>
-  nnoremap <silent>g$ :<C-u>tablast<CR>
-  nnoremap <silent><expr> gr tabpagenr('#') > 0 ? ':exe "tabnext " . tabpagenr("#")<cr>' : ''
+  nnoremap <silent> g0 :<C-u>tabfirst<CR>
+  nnoremap <silent> g$ :<C-u>tablast<CR>
+  nnoremap <silent> gr :<C-u>call <SID>switch_tabs()<CR>
 
   " Remove spaces at the end of lines
   nnoremap <silent> ,<Space> :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
@@ -349,6 +350,13 @@ function! SpaceVim#default#Customfoldtext() abort
   let foldPercentage = printf('[%.1f', (foldSize*1.0)/lineCount*100) . '%] '
   let expansionString = repeat(repeatsymbol, w - strwidth(prefix.foldSizeStr.line.foldLevelStr.foldPercentage))
   return prefix . line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
+endfunction
+
+function! s:switch_tabs() abort
+  let previous_tab = s:TAB.previous_tabpagenr()
+  if previous_tab > 0
+    exe "tabnext " . previous_tab
+  endif
 endfunction
 
 " vim:set et sw=2:
