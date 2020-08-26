@@ -16,6 +16,7 @@
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:FILE = SpaceVim#api#import('file')
+let s:LOGGER =SpaceVim#logger#derive('projectmanager.vim')
 
 function! s:update_rooter_patterns() abort
   let s:project_rooter_patterns = filter(copy(g:spacevim_project_rooter_patterns), 'v:val !~# "^!"')
@@ -132,8 +133,8 @@ function! SpaceVim#plugins#projectmanager#current_root() abort
 endfunction
 
 function! s:change_dir(dir) abort
-  call SpaceVim#logger#info('buffer name: ' . bufname('%'))
-  call SpaceVim#logger#info('change to root: ' . a:dir)
+  call s:LOGGER.info('buffer name: ' . bufname('%'))
+  call s:LOGGER.info('change to root: ' . a:dir)
   exe 'cd ' . fnameescape(fnamemodify(a:dir, ':p'))
 
   try
