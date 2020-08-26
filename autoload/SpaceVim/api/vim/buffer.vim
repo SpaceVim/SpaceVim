@@ -232,7 +232,7 @@ if end_line < 0:
 lines = vim.eval("a:replacement")
 vim.buffers[bufnr][start_line:end_line] = lines
 EOF
-  elseif has('lua')
+  elseif g:_spacevim_if_lua
     " @todo add lua support
     noautocmd lua require("spacevim.api.vim.buffer").set_lines(
           \ vim.eval("a:buffer"),
