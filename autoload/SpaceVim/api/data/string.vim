@@ -50,10 +50,10 @@ function! s:self.fill(str, length, ...) abort
     let l:string = a:str
   else
     let l:rightmost = 0
-    while strwidth(strcharpart(a:str, 0, l:rightmost)) < a:length
+    while strwidth(self.strcharpart(a:str, 0, l:rightmost)) < a:length
       let l:rightmost += 1
     endwhile
-    let l:string = strcharpart(a:str, 0, l:rightmost)
+    let l:string = self.strcharpart(a:str, 0, l:rightmost)
   endif
   let char = get(a:000, 0, ' ')
   if type(char) !=# 1 || len(char) > 1
@@ -81,7 +81,7 @@ function! s:self.fill_left(str, length, ...) abort
   if strwidth(a:str) <= a:length
     let l:string = a:str
   else
-    let l:string = strcharpart(a:str, strwidth(a:str) - a:length, a:length)
+    let l:string = self.strcharpart(a:str, strwidth(a:str) - a:length, a:length)
   endif
   let char = get(a:000, 0, ' ')
   if type(char) !=# 1 || len(char) > 1
@@ -95,7 +95,7 @@ function! s:self.fill_middle(str, length, ...) abort
   if strwidth(a:str) <= a:length
     let l:string = a:str
   else
-    let l:string = strcharpart(a:str, (a:length/2 < 1 ? 1 : a:length/2), a:length)
+    let l:string = self.strcharpart(a:str, (a:length/2 < 1 ? 1 : a:length/2), a:length)
   endif
   let l:numofspaces = a:length - strwidth(l:string)
   let char = get(a:000, 0, ' ')
@@ -126,7 +126,7 @@ function! s:self.string2chars(str) abort
   let &encoding = 'utf-8'
   let chars = []
   for i in range(strchars(a:str))
-    call add(chars, strcharpart(a:str,  i , 1))
+    call add(chars, self.strcharpart(a:str,  i , 1))
   endfor
   let &encoding = save_enc
   return chars
