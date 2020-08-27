@@ -234,7 +234,7 @@ vim.buffers[bufnr][start_line:end_line] = lines
 EOF
   elseif get(g:, '_spacevim_if_lua', 0) == 1
     " @todo add lua support
-    noautocmd lua require("spacevim.api.vim.buffer").set_lines(
+    silent! noautocmd lua require("spacevim.api.vim.buffer").set_lines(
           \ vim.eval("a:buffer"),
           \ vim.eval("a:start"),
           \ vim.eval("a:end"),
