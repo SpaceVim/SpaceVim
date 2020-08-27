@@ -41,7 +41,7 @@ if exists('*strcharpart')
 else
   function! s:self.strcharpart(str, start, ...) abort
     let chars = self.string2chars(a:str) 
-    return join(chars[a:start : get(a:000, 0, -1)])
+    return join(chars[a:start : get(a:000, 0, -1)], '')
   endfunction
 endif
 
@@ -124,10 +124,7 @@ endfunction
 function! s:self.string2chars(str) abort
   let save_enc = &encoding
   let &encoding = 'utf-8'
-  let chars = []
-  for i in range(strchars(a:str))
-    call add(chars, self.strcharpart(a:str,  i , 1))
-  endfor
+  let chars = split(a:str, '\zs')
   let &encoding = save_enc
   return chars
 endfunction
