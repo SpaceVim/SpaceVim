@@ -103,6 +103,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
   let obj._argv = a:argv
   let obj._opts = a:opts
   " @vimlint(EVL103, 1, a:job_id)
+  " @vimlint(EVL103, 1, a:event)
   function! obj.__on_stdout(id, data, event) abort dict
     if has_key(self._opts, 'on_stdout')
       if a:data[-1] == ''
@@ -133,6 +134,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
     endif
   endfunction
   " @vimlint(EVL103, 0, a:job_id)
+  " @vimlint(EVL103, 0, a:event)
 
   let obj = {
         \ 'argv': a:argv,
