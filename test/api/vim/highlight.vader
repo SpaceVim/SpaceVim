@@ -10,6 +10,7 @@ Execute ( SpaceVim api: vim#highlight ):
 
   let test_api_hi = hi.group2dict('TestAPIVimHighlight')
   if !empty(test_api_hi.guifg)
+    Log execute('hi TestAPIVimHighlight')
     AssertEqual test_api_hi.guibg, '#212121'
     AssertEqual test_api_hi.guifg, '#89ddff'
   endif
