@@ -43,8 +43,8 @@ function! s:self.group2dict(name) abort
                 \ 'italic' : synIDattr(id, 'italic'),
                 \ 'reverse' : synIDattr(id, 'reverse'),
                 \ 'underline' : synIDattr(id, 'underline'),
-                \ 'guibg' : synIDattr(id, 'bg#'),
-                \ 'guifg' : synIDattr(id, 'fg#'),
+                \ 'guibg' : synIDattr(id, 'bg#', 'gui'),
+                \ 'guifg' : synIDattr(id, 'fg#', 'gui'),
                 \ }
     return rst
 endfunction

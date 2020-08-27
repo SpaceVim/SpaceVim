@@ -1,5 +1,6 @@
 Execute ( SpaceVim api: vim#highlight ):
   let hi = SpaceVim#api#import('vim#highlight')
+  let cmp =SpaceVim#api#import('vim#compatible') 
   try
     " Note: some evn do not support 24-bit color
     " and old version of vim do not support termguicolors
@@ -10,7 +11,7 @@ Execute ( SpaceVim api: vim#highlight ):
   let test_api_hi = hi.group2dict('TestAPIVimHighlight')
   if !empty(test_api_hi.guifg)
     Log test_api_hi
-    Log execute('hi TestAPIVimHighlight')
+    Log cmp.execute('hi TestAPIVimHighlight')
     AssertEqual test_api_hi.guibg, '#212121'
     AssertEqual test_api_hi.guifg, '#89ddff'
   endif
@@ -26,3 +27,4 @@ Execute ( SpaceVim api: vim#highlight ):
   AssertEqual unknown_hi.underline, ''
   AssertEqual unknown_hi.guibg, ''
   AssertEqual unknown_hi.guifg, ''
+  unlet hi cmp test_api_hi unknown_hi
