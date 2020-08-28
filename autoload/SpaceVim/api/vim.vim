@@ -100,12 +100,12 @@ elseif has('lua')
     lua w.line = vim.eval("a:pos[0]")
     lua w.col = vim.eval("a:pos[1]")
   endfunction
-" @vimlint(EVL103, 0, a:win)
-" @vimlint(EVL103, 0, a:pos)
 else
   function! s:self.win_set_cursor(win, pos) abort
 
   endfunction
+" @vimlint(EVL103, 0, a:win)
+" @vimlint(EVL103, 0, a:pos)
 endif
 
 if exists('*nvim_buf_line_count')
