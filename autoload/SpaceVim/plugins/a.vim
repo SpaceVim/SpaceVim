@@ -177,15 +177,21 @@ function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
   endtry
 endfunction
 
+" @vimlint(EVL103, 1, a:file)
 function! s:get_alternate(file) abort
 
 endfunction
+" @vimlint(EVL103, 0, a:file)
 
 
 function! SpaceVim#plugins#a#getConfigPath() abort
   return s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
 endfunction
 
+
+" @vimlint(EVL103, 1, a:ArgLead)
+" @vimlint(EVL103, 1, a:CmdLine)
+" @vimlint(EVL103, 1, a:CursorPos)
 function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
   let file = s:FILE.unify_path(bufname('%'), ':.')
   let conf_file_path = s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
@@ -199,6 +205,9 @@ function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
   endtry
   return join(keys(a), "\n")
 endfunction
+" @vimlint(EVL103, 0, a:ArgLead)
+" @vimlint(EVL103, 0, a:CmdLine)
+" @vimlint(EVL103, 0, a:CursorPos)
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
