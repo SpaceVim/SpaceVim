@@ -8,11 +8,12 @@
 
 
 let s:self = {}
-let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:self.__cmp = SpaceVim#api#import('vim#compatible')
+let s:self.__string = SpaceVim#api#import('data#string')
 
 function! s:self.jumps() abort
   let result = []
-  for jump in split(s:CMP.execute('jumps'), '\n')[1:]
+  for jump in split(self.__cmp.execute('jumps'), '\n')[1:]
     let list = split(jump)
     if len(list) < 4
       continue
@@ -51,7 +52,7 @@ function! s:self.parse_string(line) abort
   let i = 0
   let line = []
   while i < strlen(a:line) || i != -1
-    let [rst, m, n] = matchstrpos(a:line, expr, i)
+    let [rst, m, n] = self.__string.matchstrpos(a:line, expr, i)
     if m == -1
       call add(line, a:line[ i : -1 ])
       break

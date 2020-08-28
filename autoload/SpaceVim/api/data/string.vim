@@ -129,13 +129,26 @@ function! s:self.string2chars(str) abort
   return chars
 endfunction
 
+if exists('*strcharpart') && 0
+  function! s:self.matchstrpos(str, need, ...) abort
+    return call('matchstrpos', [a:str, a:need] + a:000)
+  endfunction
+else
+  function! s:self.matchstrpos(str, need, ...) abort
+    let matchedstr = call('matchstr', [a:str, a:need] + a:000)
+    let matchbegin = call('match', [a:str, a:need] + a:000)
+    let matchend = call('matchend', [a:str, a:need] + a:000)
+    return [matchedstr, matchbegin, matchend]
+  endfunction
+endif
+
 function! s:self.strAllIndex(str, need, use_expr) abort
   if a:use_expr
     let rst = []
-    let idx = matchstrpos(a:str, a:need)
+    let idx = self.matchstrpos(a:str, a:need)
     while idx[1] != -1
       call add(rst, [idx[1], idx[2]])
-      let idx = matchstrpos(a:str, a:need, idx[2])
+      let idx = self.matchstrpos(a:str, a:need, idx[2])
     endwhile
     return rst
   else
