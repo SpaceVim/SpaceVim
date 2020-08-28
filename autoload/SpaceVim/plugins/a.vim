@@ -59,6 +59,10 @@ endfunction
 function! s:get_project_config(conf_file) abort
   let conf = s:JSON.json_decode(join(readfile(a:conf_file), "\n"))
   if type(conf) !=# type({})
+    " in Old vim we get E706
+    " Variable type mismatch for conf, so we need to unlet conf first
+    " @question which patch remove E706?
+    unlet conf
     let conf = {}
   endif
   let root = s:FILE.unify_path(a:conf_file, ':p:h')
