@@ -1,4 +1,7 @@
 Execute ( SpaceVim syntax file ):
-  for sfile in globpath(getcwd(), "syntax/*.vim", 0, 1)
+  let cmp = SpaceVim#api#import('vim#compatible')
+  for sfile in cmp.globpath(getcwd(), "syntax/*.vim")
     exe 'so ' . sfile
+    unlet sfile
   endfor
+  unlet cmp
