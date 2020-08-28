@@ -58,6 +58,9 @@ endfunction
 
 function! s:get_project_config(conf_file) abort
   let conf = s:JSON.json_decode(join(readfile(a:conf_file), "\n"))
+  if type(conf) !=# type({})
+    let conf = {}
+  endif
   let root = s:FILE.unify_path(a:conf_file, ':p:h')
   return {
         \ 'root' : root,
