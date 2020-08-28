@@ -150,10 +150,12 @@ if exists('*nvim_buf_line_count')
     return nvim_buf_line_count(a:buf)
   endfunction
 elseif get(g:, '_spacevim_if_lua', 0)
+  " @vimlint(EVL103, 1, a:buf)
   function! s:self.line_count(buf) abort
     " lua numbers are floats, so use float2nr
     return float2nr(luaeval('#vim.buffer(vim.eval("a:buf"))'))
   endfunction
+  " @vimlint(EVL103, 0, a:buf)
 else
   function! s:self.line_count(buf) abort
     return len(getbufline(a:buf, 1, '$'))
