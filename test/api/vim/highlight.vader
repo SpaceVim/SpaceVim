@@ -11,6 +11,9 @@ Execute ( SpaceVim api: vim#highlight ):
   let test_api_hi = hi.group2dict('TestAPIVimHighlight')
   if !empty(test_api_hi.guifg)
     Log test_api_hi
+    let id = hlID('TestAPIVimHighlight')
+    Log 'guifg is: ' . synIDattr(id, 'fg#', 'gui')
+    Log 'guibg is: ' . synIDattr(id, 'bg#', 'gui')
     Log cmp.execute('hi TestAPIVimHighlight')
     AssertEqual test_api_hi.guibg, '#212121'
     AssertEqual test_api_hi.guifg, '#89ddff'
