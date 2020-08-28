@@ -20,6 +20,7 @@ environment:
         - CONDITION: Vim 7.4.1689
         - CONDITION: Vim 8.0.0027
         - CONDITION: Vim 8.0.1453
+        - CONDITION: Vim 8.1.2269
 install:
   - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:32'
   - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:64'
