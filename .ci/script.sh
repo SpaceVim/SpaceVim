@@ -49,9 +49,9 @@ elif [ "$LINT" = "file-encoding" ]; then
         exit 2
     fi
 elif [ "$LINT" = "vint" ]; then
-    vint .
+    vint --enable-neovim .
 elif [ "$LINT" = "vint-errors" ]; then
-    vint --error .
+    vint --enable-neovim --error .
 elif [ "$LINT" = "vader" ]; then
     if [ "$VIM_BIN" = "nvim" ]; then
         export PATH="${DEPS}/_neovim/${VIM_TAG}/bin:${PATH}"
