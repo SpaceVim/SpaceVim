@@ -61,7 +61,8 @@ function! s:get_project_config(conf_file) abort
   if type(conf) !=# type({})
     " in Old vim we get E706
     " Variable type mismatch for conf, so we need to unlet conf first
-    " @question which patch remove E706?
+    " ref: patch-7.4.1546
+    " https://github.com/vim/vim/commit/f6f32c38bf3319144a84a01a154c8c91939e7acf
     unlet conf
     let conf = {}
   endif
