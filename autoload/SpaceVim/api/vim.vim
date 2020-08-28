@@ -92,12 +92,16 @@ elseif exists('*win_execute')
     call win_execute(a:win, ':normal! g"')
   endfunction
 elseif has('lua')
+" @vimlint(EVL103, 1, a:win)
+" @vimlint(EVL103, 1, a:pos)
   function! s:self.win_set_cursor(win, pos) abort
     lua local winindex = vim.eval("win_id2win(a:win) - 1")
     lua local w = vim.window(winindex)
     lua w.line = vim.eval("a:pos[0]")
     lua w.col = vim.eval("a:pos[1]")
   endfunction
+" @vimlint(EVL103, 0, a:win)
+" @vimlint(EVL103, 0, a:pos)
 else
   function! s:self.win_set_cursor(win, pos) abort
 
@@ -109,10 +113,12 @@ if exists('*nvim_buf_line_count')
     return nvim_buf_line_count(a:buf)
   endfunction
 elseif has('lua')
+  " @vimlint(EVL103, 1, a:buf)
   function! s:self.buf_line_count(buf) abort
     " lua numbers are floats, so use float2nr
     return float2nr(luaeval('#vim.buffer(vim.eval("a:buf"))'))
   endfunction
+  " @vimlint(EVL103, 0, a:buf)
 else
   function! s:self.buf_line_count(buf) abort
     return len(getbufline(a:buf, 1, '$'))
