@@ -6,6 +6,11 @@ function install_vim($name)
     $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v8.2.0129/gvim_8.2.0129_x86.zip'
     $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim82\vim.exe'
   }
+  elseif ($ver -eq "8.1.2269")
+  {
+    $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v8.1.2269/gvim_8.1.2269_x86.zip'
+    $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim81\vim.exe'
+  }
   elseif ($ver -eq "8.0.1453")
   {
     $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v8.0.1453/gvim_8.0.1453_x86.zip'
