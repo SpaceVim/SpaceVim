@@ -10,6 +10,17 @@ let s:self = {}
 let s:self._vim = SpaceVim#api#import('vim')
 let s:self._iconv = SpaceVim#api#import('iconv') 
 
+function! s:self._json_null() abort
+  return 0
+endfunction
+
+function! s:self._json_true() abort
+  return 1
+endfunction
+
+function! s:self._json_false() abort
+  return 0
+endfunction
 
 if exists('*json_decode') && 0
   function! s:self.json_decode(json) abort
@@ -21,18 +32,6 @@ if exists('*json_decode') && 0
     return json_decode(a:json)
   endfunction
 else
-  function! s:self._json_null() abort
-    return 0
-  endfunction
-
-  function! s:self._json_true() abort
-    return 1
-  endfunction
-
-  function! s:self._json_false() abort
-    return 0
-  endfunction
-
   " @vimlint(EVL102, 1, l:true)
   " @vimlint(EVL102, 1, l:false)
   " @vimlint(EVL102, 1, l:null)
