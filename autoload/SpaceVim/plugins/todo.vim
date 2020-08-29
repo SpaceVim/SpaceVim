@@ -118,11 +118,13 @@ function! s:stdout(id, data, event) abort
 endfunction
 
 function! s:stderr(id, data, event) abort
-  call SpaceVim#logger#info('todomanager stderr: ' . string(a:data))
+  for date in a:data
+    call s:LOG.info('stderr: ' . string(a:data))
+  endfor
 endfunction
 
 function! s:exit(id, data, event ) abort
-  call SpaceVim#logger#info('todomanager exit: ' . string(a:data))
+  call s:LOG.info('exit code: ' . string(a:data))
   let s:todos = sort(s:todos, function('s:compare_todo'))
   let label_w = max(map(deepcopy(s:todos), 'strlen(v:val.lebal)'))
   let file_w = max(map(deepcopy(s:todos), 'strlen(v:val.file)'))
