@@ -31,15 +31,29 @@ function! s:self.trim(str) abort
   return substitute(str, '^\s*', '', 'g')
 endfunction
 
+" strcharpart is added in v7.4.1761
+"
+
+if exists('*strcharpart')
+  function! s:self.strcharpart(str, start, ...) abort
+    return call('strcharpart', [a:str, a:start] + a:000)
+  endfunction
+else
+  function! s:self.strcharpart(str, start, ...) abort
+    let chars = self.string2chars(a:str) 
+    return join(chars[a:start : get(a:000, 0, -1)], '')
+  endfunction
+endif
+
 function! s:self.fill(str, length, ...) abort
   if strwidth(a:str) <= a:length
     let l:string = a:str
   else
     let l:rightmost = 0
-    while strwidth(strcharpart(a:str, 0, l:rightmost)) < a:length
+    while strwidth(self.strcharpart(a:str, 0, l:rightmost)) < a:length
       let l:rightmost += 1
     endwhile
-    let l:string = strcharpart(a:str, 0, l:rightmost)
+    let l:string = self.strcharpart(a:str, 0, l:rightmost)
   endif
   let char = get(a:000, 0, ' ')
   if type(char) !=# 1 || len(char) > 1
@@ -67,7 +81,7 @@ function! s:self.fill_left(str, length, ...) abort
   if strwidth(a:str) <= a:length
     let l:string = a:str
   else
-    let l:string = strcharpart(a:str, strwidth(a:str) - a:length, a:length)
+    let l:string = self.strcharpart(a:str, strwidth(a:str) - a:length, a:length)
   endif
   let char = get(a:000, 0, ' ')
   if type(char) !=# 1 || len(char) > 1
@@ -81,7 +95,7 @@ function! s:self.fill_middle(str, length, ...) abort
   if strwidth(a:str) <= a:length
     let l:string = a:str
   else
-    let l:string = strcharpart(a:str, (a:length/2 < 1 ? 1 : a:length/2), a:length)
+    let l:string = self.strcharpart(a:str, (a:length/2 < 1 ? 1 : a:length/2), a:length)
   endif
   let l:numofspaces = a:length - strwidth(l:string)
   let char = get(a:000, 0, ' ')
@@ -110,21 +124,31 @@ endfunction
 function! s:self.string2chars(str) abort
   let save_enc = &encoding
   let &encoding = 'utf-8'
-  let chars = []
-  for i in range(strchars(a:str))
-    call add(chars, strcharpart(a:str,  i , 1))
-  endfor
+  let chars = split(a:str, '\zs')
   let &encoding = save_enc
   return chars
 endfunction
 
+if exists('*strcharpart') && 0
+  function! s:self.matchstrpos(str, need, ...) abort
+    return call('matchstrpos', [a:str, a:need] + a:000)
+  endfunction
+else
+  function! s:self.matchstrpos(str, need, ...) abort
+    let matchedstr = call('matchstr', [a:str, a:need] + a:000)
+    let matchbegin = call('match', [a:str, a:need] + a:000)
+    let matchend = call('matchend', [a:str, a:need] + a:000)
+    return [matchedstr, matchbegin, matchend]
+  endfunction
+endif
+
 function! s:self.strAllIndex(str, need, use_expr) abort
   if a:use_expr
     let rst = []
-    let idx = matchstrpos(a:str, a:need)
+    let idx = self.matchstrpos(a:str, a:need)
     while idx[1] != -1
       call add(rst, [idx[1], idx[2]])
-      let idx = matchstrpos(a:str, a:need, idx[2])
+      let idx = self.matchstrpos(a:str, a:need, idx[2])
     endwhile
     return rst
   else
@@ -176,7 +200,7 @@ function! s:self.strB2Q(str) abort
   endfor
   let &encoding = save_enc
   return join(bchars, '')
-  
+
 endfunction
 
 

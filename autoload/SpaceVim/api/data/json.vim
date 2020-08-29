@@ -6,51 +6,69 @@
 " License: GPLv3
 "=============================================================================
 
-let s:json = {}
+let s:self = {}
+let s:self._vim = SpaceVim#api#import('vim')
+let s:self._iconv = SpaceVim#api#import('iconv') 
 
+function! s:self._json_null() abort
+  return 0
+endfunction
+
+function! s:self._json_true() abort
+  return 1
+endfunction
+
+function! s:self._json_false() abort
+  return 0
+endfunction
 
 if exists('*json_decode')
-  let g:_spacevim_api_json_trus = v:true
-  let g:_spacevim_api_json_trus = v:false
-  let g:_spacevim_api_json_trus = v:null
-  function! s:json_decode(json) abort
+  function! s:self.json_decode(json) abort
     if a:json ==# ''
-      return []
+      " instead of throw error, if json is empty string, just return an empty
+      " string
+      return ''
     endif
     return json_decode(a:json)
   endfunction
 else
-  function! s:json_null() abort
-  endfunction
 
-  function! s:json_true() abort
+  function! s:self._fixvar(val) abort
+    if self._vim.is_number(a:val)
+          \ || self._vim.is_string(a:val)
+          \ || empty(a:val)
+      return a:val
+    elseif self._vim.is_list(a:val) && len(a:val) ==# 1
+      if string(a:val[0]) == string(self._json_true)
+        return get(v:, 'true', 1)
+      elseif string(a:val[0]) ==# string(self._json_false)
+        return get(v:, 'false', 0)
+      elseif string(a:val[0]) ==# string(self._json_null)
+        return get(v:, 'null', 0)
+      else
+        return a:val
+      endif
+    elseif self._vim.is_list(a:val) && len(a:val) > 1
+      return map(a:val, 'self._fixvar(v:val)')
+    elseif self._vim.is_dict(a:val)
+      return map(a:val, 'self._fixvar(v:val)')
+    endif
   endfunction
-
-  function! s:json_false() abort
-  endfunction
-
-  let g:_spacevim_api_json_trus = [function('s:json_true')]
-  let g:_spacevim_api_json_falss = [function('s:json_false')]
-  let g:_spacevim_api_json_nuls = [function('s:json_null')]
   " @vimlint(EVL102, 1, l:true)
   " @vimlint(EVL102, 1, l:false)
   " @vimlint(EVL102, 1, l:null)
-  function! s:json_decode(json) abort
-    let true = g:_spacevim_api_json_trus
-    let false = g:_spacevim_api_json_falss
-    let null = g:_spacevim_api_json_nuls
-    if substitute(a:json, '\v\"%(\\.|[^"\\])*\"|true|false|null|[+-]?\d+%(\.\d+%([Ee][+-]?\d+)?)?', '', 'g') !~# "[^,:{}[\\] \t]"
-
-      try
-        let object = eval(a:json)
-      catch
-        " malformed JSON
-        let object = ''
-      endtry
-    else
+  function! s:self.json_decode(json) abort
+    let true = [self._json_true]
+    let false = [self._json_false]
+    let null = [self._json_null]
+    " we need to remove \n, because eval() do not work
+    let json = join(split(a:json, "\n"), '')
+    try
+      let object = eval(json)
+    catch
       let object = ''
-    endif
-
+    endtry
+    call self._fixvar(object)
     return object
   endfunction
   " @vimlint(EVL102, 0, l:true)
@@ -58,18 +76,12 @@ else
   " @vimlint(EVL102, 0, l:null)
 endif
 
-lockvar g:_spacevim_api_json_trus
-lockvar g:_spacevim_api_json_falss
-lockvar g:_spacevim_api_json_nuls
-
-let s:json['json_decode'] = function('s:json_decode')
-
 if exists('*json_encode')
-  function! s:json_encode(val) abort
+  function! s:self.json_encode(val) abort
     return json_encode(a:val)
   endfunction
 else
-  function! s:json_encode(val) abort
+  function! s:self.json_encode(val) abort
     if type(a:val) == type(0)
       return a:val
     elseif type(a:val) == type('')
@@ -78,37 +90,28 @@ else
       let json = substitute(json, "\n", '\\n', 'g')
       let json = substitute(json, "\t", '\\t', 'g')
       let json = substitute(json, '\([[:cntrl:]]\)', '\=printf("\x%02d", char2nr(submatch(1)))', 'g')
-      return iconv(json, &encoding, 'utf-8')
-    elseif type(a:val) == 2
+      return self._iconv.iconv(json, &encoding, 'utf-8')
+    elseif self._vim.is_func(a:val)
       let s = string(a:val)
-      if s == string(g:_spacevim_api_json_nuls)
+      if s ==# string(self._json_null)
         return 'null'
-      elseif s == string(g:_spacevim_api_json_trus)
+      elseif s ==# string(self._json_true)
         return 'true'
-      elseif s == string(g:_spacevim_api_json_falss)
+      elseif s ==# string(self._json_false)
         return 'false'
       endif
-    elseif type(a:val) == type([])
-      if len(a:val) == 1 && a:val[0] == g:_spacevim_api_json_falss[0]
-        return 'false'
-      elseif len(a:val) == 1 && a:val[0] == g:_spacevim_api_json_trus[0]
-        return 'true'
-      elseif len(a:val) == 1 && a:val[0] == g:_spacevim_api_json_nuls[0]
-        return 'null'
-      endif
-      return '[' . join(map(copy(a:val), 's:json_encode(v:val)'), ',') . ']'
-    elseif type(a:val) == 4
-      return '{' . join(map(keys(a:val), "s:json_encode(v:val) . ':' . s:json_encode(a:val[v:val])"), ',') . '}'
+    elseif self._vim.is_list(a:val)
+      return '[' . join(map(copy(a:val), 'self.json_encode(v:val)'), ',') . ']'
+    elseif self._vim.is_dict(a:val)
+      return '{' . join(map(keys(a:val), "self.json_encode(v:val) . ':' . self.json_encode(a:val[v:val])"), ',') . '}'
     else
       return string(a:val)
     endif
   endfunction
 endif
 
-let s:json['json_encode'] = function('s:json_encode')
-
 function! SpaceVim#api#data#json#get() abort
-  return deepcopy(s:json)
+  return deepcopy(s:self)
 endfunction
 
 " vim:set et sw=2:

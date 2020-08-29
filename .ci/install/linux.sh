@@ -5,16 +5,15 @@ install_vim() {
     local tmp="$(mktemp -d)"
     local out="${DEPS}/_vim/$tag"
     mkdir -p $out
-    local ncpu=$(awk '/^processor/{n+=1}END{print n}' /proc/cpuinfo)
     git clone --depth 1 --single-branch $ext $URL $tmp
     cd $tmp
-    ./configure --enable-fail-if-missing \
+    ./configure \
         --with-features=huge \
         --enable-pythoninterp \
         --enable-python3interp \
         --enable-luainterp \
         --prefix=${out}
-    make -j$ncpu
+    make
     make install
 }
 

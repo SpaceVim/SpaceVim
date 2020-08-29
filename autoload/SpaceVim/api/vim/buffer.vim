@@ -63,7 +63,7 @@ endfunction
 function! s:self.bufadd(name) abort
   if exists('*bufadd')
     return bufadd(a:name)
-  elseif has('lua') && empty(a:name)
+  elseif get(g:, '_spacevim_if_lua', 0) && empty(a:name)
     let nr = float2nr(luaeval('vim.open().number'))
     call setbufvar(nr, '&buflisted', 0)
     return nr
@@ -149,11 +149,13 @@ if exists('*nvim_buf_line_count')
   function! s:self.line_count(buf) abort
     return nvim_buf_line_count(a:buf)
   endfunction
-elseif has('lua')
+elseif get(g:, '_spacevim_if_lua', 0)
+  " @vimlint(EVL103, 1, a:buf)
   function! s:self.line_count(buf) abort
     " lua numbers are floats, so use float2nr
     return float2nr(luaeval('#vim.buffer(vim.eval("a:buf"))'))
   endfunction
+  " @vimlint(EVL103, 0, a:buf)
 else
   function! s:self.line_count(buf) abort
     return len(getbufline(a:buf, 1, '$'))
@@ -232,9 +234,9 @@ if end_line < 0:
 lines = vim.eval("a:replacement")
 vim.buffers[bufnr][start_line:end_line] = lines
 EOF
-  elseif has('lua')
+  elseif get(g:, '_spacevim_if_lua', 0) == 1
     " @todo add lua support
-    noautocmd lua require("spacevim.api.vim.buffer").set_lines(
+    silent! noautocmd lua require("spacevim.api.vim.buffer").set_lines(
           \ vim.eval("a:buffer"),
           \ vim.eval("a:start"),
           \ vim.eval("a:end"),

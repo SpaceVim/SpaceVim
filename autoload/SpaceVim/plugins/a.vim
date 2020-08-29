@@ -57,7 +57,20 @@ function! SpaceVim#plugins#a#set_config_name(path, name) abort
 endfunction
 
 function! s:get_project_config(conf_file) abort
-  let conf = s:JSON.json_decode(join(readfile(a:conf_file), "\n"))
+  call s:LOGGER.info('read context from: '. a:conf_file)
+  let context = join(readfile(a:conf_file), "\n")
+  call s:LOGGER.info(context)
+  let g:wsdjson = context
+  let conf = s:JSON.json_decode(context)
+  call s:LOGGER.info('decode result is: '. string(conf))
+  if type(conf) !=# type({})
+    " in Old vim we get E706
+    " Variable type mismatch for conf, so we need to unlet conf first
+    " ref: patch-7.4.1546
+    " https://github.com/vim/vim/commit/f6f32c38bf3319144a84a01a154c8c91939e7acf
+    unlet conf
+    let conf = {}
+  endif
   let root = s:FILE.unify_path(a:conf_file, ':p:h')
   return {
         \ 'root' : root,
@@ -89,10 +102,12 @@ function! s:paser(alt_config_json) abort
   call s:LOGGER.info('Start to paser alternate files for: ' . a:alt_config_json.root)
   let s:project_config[a:alt_config_json.root] = {}
   for key in keys(a:alt_config_json.config)
+    call s:LOGGER.info('start paser key:' . key)
     let searchpath = key
     if match(searchpath, '/\*')
       let searchpath = substitute(searchpath, '*', '**/*', 'g')
     endif
+    call s:LOGGER.info('run globpath for: '. searchpath)
     for file in s:CMP.globpath('.', searchpath)
       let file = s:FILE.unify_path(file, ':.')
       let s:project_config[a:alt_config_json.root][file] = {}
@@ -162,22 +177,37 @@ function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
   else
     call s:paser(alt_config_json)
   endif
-  try
+  " try
+  " This will throw error in vim7.4.629 and 7.4.052
+  " @quection why can not catch the errors?
+  " return s:project_config[alt_config_json.root][a:file][get(a:000, 0, 'alternate')]
+  " catch
+  " return ''
+  " endtry
+  if has_key(s:project_config, alt_config_json.root)
+        \ && has_key(s:project_config[alt_config_json.root], a:file)
+        \ && has_key(s:project_config[alt_config_json.root][a:file], get(a:000, 0, 'alternate'))
     return s:project_config[alt_config_json.root][a:file][get(a:000, 0, 'alternate')]
-  catch
+  else
     return ''
-  endtry
+  endif
 endfunction
 
+" @vimlint(EVL103, 1, a:file)
 function! s:get_alternate(file) abort
 
 endfunction
+" @vimlint(EVL103, 0, a:file)
 
 
 function! SpaceVim#plugins#a#getConfigPath() abort
   return s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
 endfunction
 
+
+" @vimlint(EVL103, 1, a:ArgLead)
+" @vimlint(EVL103, 1, a:CmdLine)
+" @vimlint(EVL103, 1, a:CursorPos)
 function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
   let file = s:FILE.unify_path(bufname('%'), ':.')
   let conf_file_path = s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
@@ -191,6 +221,9 @@ function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
   endtry
   return join(keys(a), "\n")
 endfunction
+" @vimlint(EVL103, 0, a:ArgLead)
+" @vimlint(EVL103, 0, a:CmdLine)
+" @vimlint(EVL103, 0, a:CursorPos)
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

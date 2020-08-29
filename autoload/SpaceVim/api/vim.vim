@@ -8,11 +8,12 @@
 
 
 let s:self = {}
-let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:self.__cmp = SpaceVim#api#import('vim#compatible')
+let s:self.__string = SpaceVim#api#import('data#string')
 
 function! s:self.jumps() abort
   let result = []
-  for jump in split(s:CMP.execute('jumps'), '\n')[1:]
+  for jump in split(self.__cmp.execute('jumps'), '\n')[1:]
     let list = split(jump)
     if len(list) < 4
       continue
@@ -51,7 +52,7 @@ function! s:self.parse_string(line) abort
   let i = 0
   let line = []
   while i < strlen(a:line) || i != -1
-    let [rst, m, n] = matchstrpos(a:line, expr, i)
+    let [rst, m, n] = self.__string.matchstrpos(a:line, expr, i)
     if m == -1
       call add(line, a:line[ i : -1 ])
       break
@@ -91,6 +92,8 @@ elseif exists('*win_execute')
     call win_execute(a:win, ':normal! g"')
   endfunction
 elseif has('lua')
+" @vimlint(EVL103, 1, a:win)
+" @vimlint(EVL103, 1, a:pos)
   function! s:self.win_set_cursor(win, pos) abort
     lua local winindex = vim.eval("win_id2win(a:win) - 1")
     lua local w = vim.window(winindex)
@@ -101,6 +104,8 @@ else
   function! s:self.win_set_cursor(win, pos) abort
 
   endfunction
+" @vimlint(EVL103, 0, a:win)
+" @vimlint(EVL103, 0, a:pos)
 endif
 
 if exists('*nvim_buf_line_count')
@@ -108,10 +113,12 @@ if exists('*nvim_buf_line_count')
     return nvim_buf_line_count(a:buf)
   endfunction
 elseif has('lua')
+  " @vimlint(EVL103, 1, a:buf)
   function! s:self.buf_line_count(buf) abort
     " lua numbers are floats, so use float2nr
     return float2nr(luaeval('#vim.buffer(vim.eval("a:buf"))'))
   endfunction
+  " @vimlint(EVL103, 0, a:buf)
 else
   function! s:self.buf_line_count(buf) abort
     return len(getbufline(a:buf, 1, '$'))

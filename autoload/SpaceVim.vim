@@ -218,6 +218,10 @@ let g:spacevim_data_dir
       \   : expand($HOME. join(['', '.cache', ''],
       \     SpaceVim#api#import('file').separator))
 
+if !isdirectory(g:spacevim_data_dir)
+  call mkdir(g:spacevim_data_dir, 'p')
+endif
+
 ""
 " @section plugin_bundle_dir, options-plugin_bundle_dir
 " @parentsection options

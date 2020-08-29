@@ -103,6 +103,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
   let obj._argv = a:argv
   let obj._opts = a:opts
   " @vimlint(EVL103, 1, a:job_id)
+  " @vimlint(EVL103, 1, a:event)
   function! obj.__on_stdout(id, data, event) abort dict
     if has_key(self._opts, 'on_stdout')
       if a:data[-1] == ''
@@ -133,6 +134,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
     endif
   endfunction
   " @vimlint(EVL103, 0, a:job_id)
+  " @vimlint(EVL103, 0, a:event)
 
   let obj = {
         \ 'argv': a:argv,
@@ -165,7 +167,7 @@ function! s:self.start(argv, ...) abort dict
       return -1
     endtry
     if job > 0
-      let msg = ['process '. jobpid(job), ' run']
+      let msg = ['process '. jobpid(job), 'run']
       call extend(self.jobs, {job : msg})
     else
       if job == -1
