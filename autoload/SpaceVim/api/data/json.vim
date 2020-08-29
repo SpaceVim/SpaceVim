@@ -22,7 +22,7 @@ function! s:self._json_false() abort
   return 0
 endfunction
 
-if exists('*json_decode') && 0
+if exists('*json_decode')
   function! s:self.json_decode(json) abort
     if a:json ==# ''
       " instead of throw error, if json is empty string, just return an empty
@@ -64,7 +64,7 @@ else
     " we need to remove \n, because eval() do not work
     let json = join(split(a:json, "\n"), '')
     try
-      let object = eval(a:json)
+      let object = eval(json)
     catch
       let object = ''
     endtry
@@ -76,7 +76,7 @@ else
   " @vimlint(EVL102, 0, l:null)
 endif
 
-if exists('*json_encode') && 0
+if exists('*json_encode')
   function! s:self.json_encode(val) abort
     return json_encode(a:val)
   endfunction
