@@ -9,6 +9,7 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:SYS = SpaceVim#api#import('system')
+let s:LOG = SpaceVim#logger#derive('todo')
 
 
 let [
