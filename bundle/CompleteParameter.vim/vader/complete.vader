@@ -1,0 +1,14 @@
+Before:
+  inoremap <silent><expr> ( cmp#pre_complete("()")
+
+Given go (func haha):
+  func haha
+
+Do:
+  9|a(
+
+Expect go ():
+  func haha()
+
+Then:
+  AssertEqual 10, col('.')

@@ -108,7 +108,10 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'loadconf_before' : 1,
           \ }])
   endif
-  call add(plugins, ['tenfyzhong/CompleteParameter.vim',  {'merged': 0}])
+  if has('patch-7.4.774')
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/CompleteParameter.vim',
+          \ { 'merged' : 0}])
+  endif
   return plugins
 endfunction
 
