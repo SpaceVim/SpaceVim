@@ -170,11 +170,20 @@ function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
   else
     call s:paser(alt_config_json)
   endif
-  try
+  " try
+  " This will throw error in vim7.4.629 and 7.4.052
+  " @quection why can not catch the errors?
+  " return s:project_config[alt_config_json.root][a:file][get(a:000, 0, 'alternate')]
+  " catch
+  " return ''
+  " endtry
+  if has_key(s:project_config, alt_config_json.root)
+        \ && has_key(s:project_config[alt_config_json.root], a:file)
+        \ && has_key(s:project_config[alt_config_json.root][a:file], get(a:000, 0, 'alternate'))
     return s:project_config[alt_config_json.root][a:file][get(a:000, 0, 'alternate')]
-  catch
+  else
     return ''
-  endtry
+  endif
 endfunction
 
 " @vimlint(EVL103, 1, a:file)
