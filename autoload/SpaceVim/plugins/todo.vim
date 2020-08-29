@@ -9,6 +9,7 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:SYS = SpaceVim#api#import('system')
+let s:LOG = SpaceVim#logger#derive('todo')
 
 
 let [
@@ -69,11 +70,11 @@ function! s:update_todo_content() abort
   " @fixme expr for defferent tools
   " when using rg, [join(s:labels, '|')]
   " when using grep, [join(s:labels, '\|')]
-  if s:grep_default_exe == 'rg'
+  if s:grep_default_exe ==# 'rg'
     let argv += [join(s:labels, '|')]
-  elseif s:grep_default_exe == 'grep'
+  elseif s:grep_default_exe ==# 'grep'
     let argv += [join(s:labels, '\|')]
-  elseif s:grep_default_exe == 'findstr'
+  elseif s:grep_default_exe ==# 'findstr'
     let argv += [join(s:labels, ' ')]
   else
     let argv += [join(s:labels, '|')]
@@ -84,24 +85,24 @@ function! s:update_todo_content() abort
     let argv += ['*.*']
   endif
   let argv += s:grep_default_ropt
-  call SpaceVim#logger#info('todo cmd:' . string(argv))
+  call s:LOG.info('cmd: ' . string(argv))
   let jobid = s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
         \ 'on_stderr' : function('s:stderr'),
         \ 'on_exit' : function('s:exit'),
         \ })
-  call SpaceVim#logger#info('todo jobid:' . string(jobid))
+  call s:LOG.info('jobid: ' . string(jobid))
 endfunction
 
 function! s:stdout(id, data, event) abort
-  call SpaceVim#logger#info('todomanager stdout: ' . string(a:data))
   for data in a:data
+    call s:LOG.info('stdout: ' . data)
     if !empty(data)
       let file = fnameescape(split(data, ':\d\+:')[0])
       let line = matchstr(data, ':\d\+:')[1:-2]
       let column = matchstr(data, '\(:\d\+\)\@<=:\d\+:')[1:-2]
       let lebal = matchstr(data, join(s:labels, '\|'))
-      let title = split(data, lebal)[1]
+      let title = get(split(data, lebal), 1, '')
       " @todo add time tag
       call add(s:todos, 
             \ {
@@ -117,11 +118,13 @@ function! s:stdout(id, data, event) abort
 endfunction
 
 function! s:stderr(id, data, event) abort
-  call SpaceVim#logger#info('todomanager stderr: ' . string(a:data))
+  for date in a:data
+    call s:LOG.info('stderr: ' . string(a:data))
+  endfor
 endfunction
 
 function! s:exit(id, data, event ) abort
-  call SpaceVim#logger#info('todomanager exit: ' . string(a:data))
+  call s:LOG.info('exit code: ' . string(a:data))
   let s:todos = sort(s:todos, function('s:compare_todo'))
   let label_w = max(map(deepcopy(s:todos), 'strlen(v:val.lebal)'))
   let file_w = max(map(deepcopy(s:todos), 'strlen(v:val.file)'))
