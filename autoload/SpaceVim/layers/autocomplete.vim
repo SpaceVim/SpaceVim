@@ -102,13 +102,14 @@ function! SpaceVim#layers#autocomplete#plugins() abort
     endif
   endif
   if has('patch-7.4.774')
+    " both echodoc and CompleteParameter requires
+    " vim patch-7.4.744
+    " v:completed_item
     call add(plugins, ['Shougo/echodoc.vim', {
           \ 'on_cmd' : ['EchoDocEnable', 'EchoDocDisable'],
           \ 'on_event' : 'CompleteDone',
           \ 'loadconf_before' : 1,
           \ }])
-  endif
-  if has('patch-7.4.774')
     call add(plugins, [g:_spacevim_root_dir . 'bundle/CompleteParameter.vim',
           \ { 'merged' : 0}])
   endif
@@ -120,7 +121,8 @@ function! SpaceVim#layers#autocomplete#config() abort
   if g:spacevim_autocomplete_parens
     imap <expr>(
           \ pumvisible() ?
-          \ complete_parameter#pre_complete("()") :
+          \ has('patch-7.4.744') ?
+          \ complete_parameter#pre_complete("()") : '(' :
           \ (len(maparg('<Plug>delimitMate(', 'i')) == 0) ?
           \ "\<Plug>delimitMate(" :
           \ '('

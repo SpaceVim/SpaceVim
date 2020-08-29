@@ -21,7 +21,7 @@ if g:spacevim_snippet_engine ==# 'neosnippet'
       return "\<plug>(neosnippet_expand_or_jump)"
     elseif pumvisible()
       return "\<C-n>"
-    elseif complete_parameter#jumpable(1) && getline('.')[col('.')-2] !=# ')'
+    elseif has('patch-7.4.774') && complete_parameter#jumpable(1) && getline('.')[col('.')-2] !=# ')'
       return "\<plug>(complete_parameter#goto_next_parameter)"
     else
       return "\<tab>"
