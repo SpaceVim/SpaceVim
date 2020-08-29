@@ -57,7 +57,8 @@ function! SpaceVim#plugins#a#set_config_name(path, name) abort
 endfunction
 
 function! s:get_project_config(conf_file) abort
-  let conf = s:JSON.json_decode(join(readfile(a:conf_file), "\n"))
+  let context = join(readfile(a:conf_file), "\n")
+  let conf = s:JSON.json_decode(context)
   if type(conf) !=# type({})
     " in Old vim we get E706
     " Variable type mismatch for conf, so we need to unlet conf first
@@ -97,10 +98,12 @@ function! s:paser(alt_config_json) abort
   call s:LOGGER.info('Start to paser alternate files for: ' . a:alt_config_json.root)
   let s:project_config[a:alt_config_json.root] = {}
   for key in keys(a:alt_config_json.config)
+    call s:LOGGER.info('start paser key:' . key)
     let searchpath = key
     if match(searchpath, '/\*')
       let searchpath = substitute(searchpath, '*', '**/*', 'g')
     endif
+    call s:LOGGER.info('run globpath for: '. searchpath)
     for file in s:CMP.globpath('.', searchpath)
       let file = s:FILE.unify_path(file, ':.')
       let s:project_config[a:alt_config_json.root][file] = {}
