@@ -32,25 +32,41 @@ if exists('*json_decode') && 0
     return json_decode(a:json)
   endfunction
 else
+
+  function! s:self._fixvar(val) abort
+    if self._vim.is_number(a:val)
+          \ || self._vim.is_string(a:val)
+          \ || empty(a:val)
+      return a:val
+    elseif self._vim.is_list(a:val) && len(a:val) ==# 1
+      if a:val[0] == self._json_true
+        return [get(v:, 'true', 1)]
+      else
+        return a:val
+      endif
+    elseif self._vim.is_list(a:val) && len(a:val) > 1
+      return map(a:val, 'self._fixvar(v:val)')
+    elseif self._vim.is_dict(a:val)
+      return map(a:val, 'self._fixvar(v:val)')
+    endif
+  endfunction
   " @vimlint(EVL102, 1, l:true)
   " @vimlint(EVL102, 1, l:false)
   " @vimlint(EVL102, 1, l:null)
   function! s:self.json_decode(json) abort
-    let true = self._json_true
-    let false = self._json_false
-    let null = self._json_null
+    let true = [self._json_true]
+    let false = [self._json_false]
+    let null = [self._json_null]
     if substitute(a:json, '\v\"%(\\.|[^"\\])*\"|true|false|null|[+-]?\d+%(\.\d+%([Ee][+-]?\d+)?)?', '', 'g') !~# "[^,:{}[\\] \t]"
-
       try
         let object = eval(a:json)
       catch
-        " malformed JSON
         let object = ''
       endtry
     else
       let object = ''
     endif
-
+    call self._fixvar(object)
     return object
   endfunction
   " @vimlint(EVL102, 0, l:true)
