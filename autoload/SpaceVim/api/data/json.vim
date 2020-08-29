@@ -61,15 +61,13 @@ else
     let true = [self._json_true]
     let false = [self._json_false]
     let null = [self._json_null]
-    if substitute(a:json, '\v\"%(\\.|[^"\\])*\"|true|false|null|[+-]?\d+%(\.\d+%([Ee][+-]?\d+)?)?', '', 'g') !~# "[^,:{}[\\] \t]"
-      try
-        let object = eval(a:json)
-      catch
-        let object = ''
-      endtry
-    else
+    " we need to remove \n, because eval() do not work
+    let json = join(split(a:json, "\n"), '')
+    try
+      let object = eval(a:json)
+    catch
       let object = ''
-    endif
+    endtry
     call self._fixvar(object)
     return object
   endfunction
