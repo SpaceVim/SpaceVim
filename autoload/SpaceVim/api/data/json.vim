@@ -39,11 +39,11 @@ else
           \ || empty(a:val)
       return a:val
     elseif self._vim.is_list(a:val) && len(a:val) ==# 1
-      if a:val[0] == self._json_true
+      if string(a:val[0]) == string(self._json_true)
         return [get(v:, 'true', 1)]
-      elseif a:val[0] ==# self._json_false
+      elseif string(a:val[0]) ==# string(self._json_false)
         return [get(v:, 'false', 0)]
-      elseif a:val[0] ==# self._json_null
+      elseif string(a:val[0]) ==# string(self._json_null)
         return [get(v:, 'null', 0)]
       else
         return a:val
