@@ -56,7 +56,12 @@ let s:i_separators = {
 
 
 function! s:tabname(bufnr) abort
-  let fn = fnamemodify(bufname(a:bufnr), ':t')
+  let name = bufname(a:bufnr)
+  if name ==# '\[Vader\]'
+    let fn = '[Vader]'
+  else
+    let fn = fnamemodify(name, ':t')
+  endif
   if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
     let icon = s:FILE.fticon(fn)
     if !empty(icon)
