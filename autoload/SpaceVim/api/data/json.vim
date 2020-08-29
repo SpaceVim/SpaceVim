@@ -22,7 +22,7 @@ function! s:self._json_false() abort
   return 0
 endfunction
 
-if exists('*json_decode') && 0
+if exists('*json_decode')
   function! s:self.json_decode(json) abort
     if a:json ==# ''
       " instead of throw error, if json is empty string, just return an empty
@@ -40,11 +40,11 @@ else
       return a:val
     elseif self._vim.is_list(a:val) && len(a:val) ==# 1
       if string(a:val[0]) == string(self._json_true)
-        return [get(v:, 'true', 1)]
+        return get(v:, 'true', 1)
       elseif string(a:val[0]) ==# string(self._json_false)
-        return [get(v:, 'false', 0)]
+        return get(v:, 'false', 0)
       elseif string(a:val[0]) ==# string(self._json_null)
-        return [get(v:, 'null', 0)]
+        return get(v:, 'null', 0)
       else
         return a:val
       endif
@@ -78,7 +78,7 @@ else
   " @vimlint(EVL102, 0, l:null)
 endif
 
-if exists('*json_encode') && 0
+if exists('*json_encode')
   function! s:self.json_encode(val) abort
     return json_encode(a:val)
   endfunction
