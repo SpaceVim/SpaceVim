@@ -225,6 +225,8 @@ function! SpaceVim#default#keyBindings() abort
   vnoremap <silent><C-S-Down> :m '>+1<CR>gv=gv
   vnoremap <silent><C-S-Up> :m '<-2<CR>gv=gv
 
+  nnoremap <silent><C-`> :<C-u>call <SID>toggleReplRunner()<Cr>
+
   " Start new line
   inoremap <S-Return> <C-o>o
 
@@ -355,8 +357,11 @@ endfunction
 function! s:switch_tabs() abort
   let previous_tab = s:TAB.previous_tabpagenr()
   if previous_tab > 0
-    exe "tabnext " . previous_tab
+    exe 'tabnext ' . previous_tab
   endif
+endfunction
+
+function! s:closeReplRunner() abort
 endfunction
 
 " vim:set et sw=2:

@@ -92,6 +92,10 @@ else
   endfunction
 endif
 
+function! s:self.is_opened(winid) abort
+  
+endfunction
+
 
 function! SpaceVim#api#vim#window#get() abort
   return deepcopy(s:self)
