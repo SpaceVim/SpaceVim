@@ -106,24 +106,32 @@ function! s:self.warp_nvim(argv, opts) abort dict
   " @vimlint(EVL103, 1, a:event)
   function! obj.__on_stdout(id, data, event) abort dict
     if has_key(self._opts, 'on_stdout')
-      if a:data[-1] == ''
-        call self._opts.on_stdout(a:id, [self._eof . a:data[0]] + a:data[1:], 'stdout')
+      if a:data[-1] ==# '' && len(a:data) > 1
+        call self._opts.on_stdout(a:id, [self._eof . a:data[0]] + a:data[1:-2], 'stdout')
         let self._eof = ''
-      else
+      elseif len(a:data) > 1
         call self._opts.on_stdout(a:id, [self._eof . a:data[0]] + a:data[1:-2], 'stdout')
         let self._eof = a:data[-1]
+      elseif len(a:data) ==# 1 && a:data[-1] ==# '' && !empty(self._eof)
+        call self._opts.on_stdout(a:id, [self._eof], 'stdout')
+      elseif len(a:data) ==# 1 && a:data[-1] !=# ''
+        let self._eof .= a:data[-1]
       endif
     endif
   endfunction
 
   function! obj.__on_stderr(id, data, event) abort dict
     if has_key(self._opts, 'on_stderr')
-      if a:data[-1] == ''
-        call self._opts.on_stderr(a:id, [self._eof . a:data[0]] + a:data[1:], 'stderr')
+      if a:data[-1] ==# '' && len(a:data) > 1
+        call self._opts.on_stderr(a:id, [self._eof . a:data[0]] + a:data[1:-2], 'stderr')
         let self._eof = ''
-      else
+      elseif len(a:data) > 1
         call self._opts.on_stderr(a:id, [self._eof . a:data[0]] + a:data[1:-2], 'stderr')
         let self._eof = a:data[-1]
+      elseif len(a:data) ==# 1 && a:data[-1] ==# '' && !empty(self._eof)
+        call self._opts.on_stderr(a:id, [self._eof], 'stderr')
+      elseif len(a:data) ==# 1 && a:data[-1] !=# ''
+        let self._eof .= a:data[-1]
       endif
     endif
   endfunction
