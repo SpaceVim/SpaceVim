@@ -107,13 +107,13 @@ function! s:self.warp_nvim(argv, opts) abort dict
   function! obj.__on_stdout(id, data, event) abort dict
     if has_key(self._opts, 'on_stdout')
       if a:data[-1] ==# '' && len(a:data) > 1
-        call self._opts.on_stderr(a:id, [self._eof . a:data[0]] + a:data[1:-2], 'stdout')
+        call self._opts.on_stdout(a:id, [self._eof . a:data[0]] + a:data[1:-2], 'stdout')
         let self._eof = ''
       elseif len(a:data) > 1
-        call self._opts.on_stderr(a:id, [self._eof . a:data[0]] + a:data[1:-2], 'stdout')
+        call self._opts.on_stdout(a:id, [self._eof . a:data[0]] + a:data[1:-2], 'stdout')
         let self._eof = a:data[-1]
       elseif len(a:data) ==# 1 && a:data[-1] ==# '' && !empty(self._eof)
-        call self._opts.on_stderr(a:id, [self._eof], 'stdout')
+        call self._opts.on_stdout(a:id, [self._eof], 'stdout')
       elseif len(a:data) ==# 1 && a:data[-1] !=# ''
         let self._eof .= a:data[-1]
       endif
