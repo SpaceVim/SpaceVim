@@ -13,8 +13,8 @@ lang: zh
 - [模块配置](#模块配置)
   - [自动补全方式](#自动补全方式)
   - [代码块引擎](#代码块引擎)
-  - [快捷键设置](#快捷键设置)
   - [自动补全括号](#自动补全括号)
+  - [模块选项](#模块选项)
 - [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
@@ -28,9 +28,12 @@ lang: zh
 - [neocomplete](https://github.com/Shougo/neocomplete.vim) - 需要 Vim 具备 `+lua` 特性
 - [neocomplcache](https://github.com/Shougo/neocomplcache.vim) - 当都不具备以上特性时
 - [YouCompleteMe](https://github.com/Valloric/YouCompleteMe) - 默认 Ycm 是不会自动启用的，可通过 SpaceVim 选项 `enable_ycm` 来启用
+- [coc](https://github.com/neoclide/coc.nvim)
+- [Completor](https://github.com/maralla/completor.vim) - vim8 且具备 `+python` 或者 `+python3` 特性
+- [asyncomplete](https://github.com/prabirshrestha/asyncomplete.vim) - Vim8 或者 Neovim ，具备 `timers` 特性
 
-代码块自动完成框架默认为[neosnippet](https://github.com/Shougo/neosnippet.vim)，可通过
-SpaceVim 选项 `snippet_engine` 设置为 ultisnips
+代码块引擎默认为[neosnippet](https://github.com/Shougo/neosnippet.vim)，可通过
+SpaceVim 选项 `snippet_engine` 设置为 `ultisnips`，将使用 [UltiSnips](https://github.com/sirver/UltiSnips) 作为代码块引擎。
 
 ## 启用模块
 
@@ -107,7 +110,17 @@ SpaceVim 选项 `snippet_engine` 设置为 ultisnips
   auto_completion_enable_snippets_in_popup = false
 ```
 
-### 快捷键设置
+### 自动补全括号
+
+默认情况下，会自动补全成对的括号，如果需要禁用该功能，可以添加如下配置：
+
+```toml
+[options]
+    autocomplete_parens = false
+```
+
+
+### 模块选项
 
 为了提升用户体验，可以通过使用如下的模块选项来定制自动补全：
 
@@ -141,15 +154,6 @@ SpaceVim 选项 `snippet_engine` 设置为 ultisnips
 通常会建议将 `auto_completion_complete_with_key_sequence` 的值设为 `jk`，如果你不用
 这一组按键的话。
 
-
-### 自动补全括号
-
-默认情况下，会自动补全成对的括号，如果需要禁用该功能，可以添加如下配置：
-
-```toml
-[options]
-    autocomplete_parens = false
-```
 
 ## 快捷键
 
