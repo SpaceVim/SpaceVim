@@ -23,26 +23,16 @@ elif [ "$LINT" = "file-encoding" ]; then
     if [[ -f encoding_log ]]; then
         rm encoding_log
     fi
-    for file in $(git diff --name-only HEAD master | grep .);
+    for file in $(git diff --name-only HEAD master);
     do
-        encoding=`file -bi $file | cut -f 2 -d";" | cut -f 2 -d=`
-        case $encoding in
-            utf-8)
-                exit 0
-                ;;
-            us-ascii)
-                exit 0
-                ;;
-            cp936)
-                echo $file >> encoding_log
-                exit 2
-                ;;
-            cp835)
-                echo $file >> encoding_log
-                exit 2
-        esac
-        echo $file >> encoding_log
-        exit 2
+        # get the encoding of a file, based on:
+        # https://superuser.com/a/351658/618193
+        # It should be -b instead of -bi
+        encoding=`file -b --mime-encoding $file`
+        if [ $encoding != "utf-8" ] && [ $encoding != "us-ascii" ];
+        then
+            echo $file " " $encoding >> encoding_log
+        fi
     done
     if [[ -s encoding_log ]]; then
         cat encoding_log

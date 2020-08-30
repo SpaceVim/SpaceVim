@@ -36,6 +36,7 @@ test_script:
   - 'echo %THEMIS_HOME%'
   - 'echo %THEMIS_VIM%'
   - 'echo %THEMIS_ARGS%'
+  - 'cat --version'
   - '%THEMIS_VIM% --version'
   - '%THEMIS_VIM% -Nu test/vimrc -c "Vader! test/**"'
 build: off
