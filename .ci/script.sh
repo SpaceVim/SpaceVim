@@ -29,7 +29,8 @@ elif [ "$LINT" = "file-encoding" ]; then
         # https://superuser.com/a/351658/618193
         # It should be -b instead of -bi
         encoding=`file -b --mime-encoding $file`
-        if [ $encoding != "utf-8" ]; then
+        if [ $encoding != "utf-8" ] && [ $encoding != "us-ascii" ];
+        then
             echo $file " " $encoding >> encoding_log
         fi
     done
