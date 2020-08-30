@@ -25,7 +25,9 @@ elif [ "$LINT" = "file-encoding" ]; then
     fi
     for file in $(git diff --name-only HEAD master | grep .);
     do
-        encoding=`file -bi $file | cut -f 2 -d";" | cut -f 2 -d=`
+        # get the encoding of a file, based on:
+        # https://superuser.com/a/351658/618193
+        encoding=`file -bi --mime-encoding $file`
         case $encoding in
             utf-8)
                 exit 0
