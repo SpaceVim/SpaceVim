@@ -30,7 +30,7 @@ lang: zh
 - [YouCompleteMe](https://github.com/Valloric/YouCompleteMe) - 默认 Ycm 是不会自动启用的，可通过 SpaceVim 选项 `enable_ycm` 来启用
 
 代码块自动完成框架默认为[neosnippet](https://github.com/Shougo/neosnippet.vim)，可通过
-SpaceVim 选项 `snippet_engien` 设置为 ultisnips
+SpaceVim 选项 `snippet_engine` 设置为 ultisnips
 
 ## 启用模块
 
@@ -69,10 +69,21 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
 
 ### 代码块引擎
 
-默认情况下，会自动载入以下代码块仓库和文件夹的代码块模板：
+默认的代码块引擎插件使用的是 `neosnippet`，可以通过 SpaceVim 选项 `snippet_engine` 来修改为 `ultisnips`。
+
+```toml
+[options]
+    snippet_engine = "ultisnips"
+```
+
+默认情况下，会自动载入以下代码块仓库的代码块模板：
 
 - [Shougo/neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)：neosnippet 的默认代码块模板
 - [honza/vim-snippets](https://github.com/honza/vim-snippets)：额外的代码块模板
+
+
+如果 `snippet_engine` 是 `neosnippet`，以下文件夹内的代码块模板会被载入：
+
 - `~/.SpaceVim/snippets/`：SpaceVim 内置代码块模板
 - `~/.SpaceVim.d/snippets/`：用户全局代码块模板
 - `./.SpaceVim.d/snippets/`：当前项目本地代码块模板
