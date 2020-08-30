@@ -109,6 +109,7 @@ endfunction
 let s:enabled_fts = []
 
 let s:lsp_servers = {
+      \ 'ada' : ['ada_language_server'],
       \ 'c' : ['clangd'],
       \ 'cpp' : ['clangd'],
       \ 'css' : ['css-languageserver', '--stdio'],
