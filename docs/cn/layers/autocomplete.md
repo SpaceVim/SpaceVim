@@ -88,8 +88,15 @@ SpaceVim 选项 `snippet_engine` 设置为 ultisnips
 - `~/.SpaceVim.d/snippets/`：用户全局代码块模板
 - `./.SpaceVim.d/snippets/`：当前项目本地代码块模板
 
-同时，可以通过修改 bootstrap 方法来设置 `g` 的值，进而设置自定义的代码块模板路径，该值
-可以是一个 string，表示单个目录，也可以是一个 list，每一个元素表示一个路径。
+你也可以在启动函数内通过变量 `g:neosnippet#snippets_directory`  添加额外的文件夹，
+该变量的值可以是一个 `string`，指定文件夹路径，也可是一个 `list`，
+其内，每一个元素指定一个文件夹路径。
+
+如果 `snippet_engine` 是 `ultisnips`，以下文件夹内的代码块模板会被载入：
+
+- `~/.SpaceVim/UltiSnips/`：SpaceVim 内置代码块模板
+- `~/.SpaceVim.d/UltiSnips/`：用户全局代码块模板
+- `./.SpaceVim.d/UltiSnips/`：当前项目本地代码块模板
 
 默认情况下，代码块模板缩写词会在补全列表里面显示，以提示当前输入的内容为一个代码块模板的缩写，
 如果需要禁用这一特性，可以设置 `auto_completion_enable_snippets_in_popup` 为 false。
