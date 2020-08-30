@@ -912,7 +912,7 @@ Text related commands (start with `x`):
 | `SPC x c`     | count the number of chars/words/lines in the selection region      |
 | `SPC x d w`   | delete trailing whitespaces                                        |
 | `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space         |
-| `SPC x g l`   | set lanuages used by translate commands (TODO)                     |
+| `SPC x g l`   | set languages used by translate commands (TODO)                    |
 | `SPC x g t`   | translate current word using Google Translate                      |
 | `SPC x g T`   | reverse source and target languages (TODO)                         |
 | `SPC x i c`   | change symbol style to `lowerCamelCase`                            |
