@@ -182,13 +182,25 @@ function install_nvim($name)
   $Env:THEMIS_ARGS = '-e -s --headless'
 }
 
+function download_coreutils() {
+  $url = 'https://nchc.dl.sourceforge.net/project/gnuwin32/coreutils/5.3.0/coreutils-5.3.0-bin.zip'
+  $zip = $Env:APPVEYOR_BUILD_FOLDER + '\coreutils.zip'
+  (New-Object Net.WebClient).DownloadFile($url, $zip)
+  [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem') > $null
+  [System.IO.Compression.ZipFile]::ExtractToDirectory($zip, $Env:APPVEYOR_BUILD_FOLDER + '\coreutils')
+  $Env:PATH = $Env:PATH + ';' + $Env:APPVEYOR_BUILD_FOLDER + '\coreutils\bin'
+}
+
+
 if ($Env:CONDITION.StartsWith("Neovim"))
 {
   install_nvim $Env:CONDITION
+  download_coreutils
 }
 elseif ($Env:CONDITION.StartsWith("Vim"))
 {
   install_vim $Env:CONDITION
+  download_coreutils
 }
 else
 {
