@@ -11,8 +11,9 @@ lang: zh
 - [模块描述](#模块描述)
 - [启用模块](#启用模块)
 - [模块配置](#模块配置)
+  - [自动补全方式](#自动补全方式)
+  - [代码块引擎](#代码块引擎)
   - [快捷键设置](#快捷键设置)
-  - [代码块的设置](#代码块的设置)
   - [自动补全括号](#自动补全括号)
 - [快捷键](#快捷键)
 
@@ -44,6 +45,49 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
 
 自动补全模块的配置，主要包括两个部分，自动补全快捷键的设置、代码块模板以及
 使用体验的优化
+
+
+### 自动补全方式
+
+默认情况下，SpaceVim 将会根据当前 Vim、Neovim 的版本，自动选择合适的补全插件，
+但是用户也可以手动设定所要使用的补全插件，目前支持的补全插件包括：
+
+- `autocomplete_method`: 可以用的值包括：
+  - `ycm`: 使用 `YouCompleteMe`
+  - `neocomplcache`
+  - `coc`: 使用 `coc.nvim`，需要同时启用 `lsp` 模块。
+  - `deoplete`
+  - `asyncomplete`
+  - `completor`
+
+设置示例：
+
+```toml
+[options]
+    autocomplete_method = "deoplete"
+```
+
+### 代码块引擎
+
+默认情况下，会自动载入以下代码块仓库和文件夹的代码块模板：
+
+- [Shougo/neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)：neosnippet 的默认代码块模板
+- [honza/vim-snippets](https://github.com/honza/vim-snippets)：额外的代码块模板
+- `~/.SpaceVim/snippets/`：SpaceVim 内置代码块模板
+- `~/.SpaceVim.d/snippets/`：用户全局代码块模板
+- `./.SpaceVim.d/snippets/`：当前项目本地代码块模板
+
+同时，可以通过修改 bootstrap 方法来设置 `g` 的值，进而设置自定义的代码块模板路径，该值
+可以是一个 string，表示单个目录，也可以是一个 list，每一个元素表示一个路径。
+
+默认情况下，代码块模板缩写词会在补全列表里面显示，以提示当前输入的内容为一个代码块模板的缩写，
+如果需要禁用这一特性，可以设置 `auto_completion_enable_snippets_in_popup` 为 false。
+
+```toml
+[[layers]]
+  name = "autocomplete"
+  auto_completion_enable_snippets_in_popup = false
+```
 
 ### 快捷键设置
 
@@ -79,27 +123,6 @@ SpaceVim 选项 `snippet_engien` 设置为 ultisnips
 通常会建议将 `auto_completion_complete_with_key_sequence` 的值设为 `jk`，如果你不用
 这一组按键的话。
 
-### 代码块的设置
-
-默认情况下，会自动载入以下代码块仓库和文件夹的代码块模板：
-
-- [Shougo/neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)：neosnippet 的默认代码块模板
-- [honza/vim-snippets](https://github.com/honza/vim-snippets)：额外的代码块模板
-- `~/.SpaceVim/snippets/`：SpaceVim 内置代码块模板
-- `~/.SpaceVim.d/snippets/`：用户全局代码块模板
-- `./.SpaceVim.d/snippets/`：当前项目本地代码块模板
-
-同时，可以通过修改 bootstrap 方法来设置 `g` 的值，进而设置自定义的代码块模板路径，该值
-可以是一个 string，表示单个目录，也可以是一个 list，每一个元素表示一个路径。
-
-默认情况下，代码块模板缩写词会在补全列表里面显示，以提示当前输入的内容为一个代码块模板的缩写，
-如果需要禁用这一特性，可以设置 `auto_completion_enable_snippets_in_popup` 为 false。
-
-```toml
-[[layers]]
-  name = "autocomplete"
-  auto_completion_enable_snippets_in_popup = false
-```
 
 ### 自动补全括号
 
