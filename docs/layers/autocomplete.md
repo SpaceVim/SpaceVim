@@ -71,7 +71,7 @@ here is an example:
 
 ### Snippets engine
 
-The default snippets engine is `neosnippet`, the also can be changed to `UltiSnips`:
+The default snippets engine is `neosnippet`, the also can be changed to `ultisnips`:
 
 ```toml
 [options]
@@ -96,9 +96,9 @@ in case of a single path or a list of paths.
 
 If the `snippet_engine` is `ultisnips`, the following directories will be used:
 
+- `~/.SpaceVim/UltiSnips/`: SpaceVim runtime snippets.
 - `~/.SpaceVim.d/UltiSnips/`: custom global snippets.
-
-
+- `./.SpaceVim.d/UltiSnips/`: custom local snippets (project's snippets)
 
 ### Complete parens
 
