@@ -1,20 +1,12 @@
 Execute ( SpaceVim api: job ):
   let job = SpaceVim#api#import('job')
-  let os = SpaceVim#api#import('system')
-  if os.isWindows
-    finish
-  endif
   let argv = ['cat']
   let g:stdout = ''
   let stderr = ''
   let exit_data = 1
   function! s:on_stdout(id, data, event) abort
     if a:event ==# 'stdout'
-      for a in a:data
-        if !empty(a)
-          let g:stdout = a
-        endif
-      endfor
+      let g:stdout = join(a:data, "\n")
     elseif a:event ==# 'exit'
       let g:exit_data = a:data
     else
@@ -26,8 +18,8 @@ Execute ( SpaceVim api: job ):
     \ 'on_stderr' : function('s:on_stdout'),
     \ 'on_exit' : function('s:on_stdout'),
     \ }
-  let jobid = job.start(argv,opt)
-  if jobid >= 0
+  if job.vim_job || job.nvim_job
+    let jobid = job.start(argv,opt)
     call job.send(jobid, 'foo')
     sleep 10m
     AssertEqual stdout, 'foo'
