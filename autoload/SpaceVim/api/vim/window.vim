@@ -45,6 +45,15 @@ else
 
   endfunction
 endif
+if exists('*nvim_win_set_buf')
+  function! s:self.set_buf(winid, bufnr) abort
+    return nvim_win_set_buf(a:winid, a:bufnr)
+  endfunction
+else
+  function! s:self.set_buf(winid, bufnr) abort
+    " @todo implement win_set_buf for old vim
+  endfunction
+endif
 
 if exists('*nvim_win_set_cursor')
   function! s:self.set_cursor(winid, pos) abort
@@ -91,6 +100,10 @@ else
     endif
   endfunction
 endif
+
+function! s:self.is_opened(winid) abort
+  
+endfunction
 
 
 function! SpaceVim#api#vim#window#get() abort
