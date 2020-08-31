@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:JOB = SpaceVim#api#import('job')
+let s:VIM = SpaceVim#api#import('vim')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:WINDOW = SpaceVim#api#import('vim#window')
 let s:STRING = SpaceVim#api#import('data#string')
@@ -72,7 +73,7 @@ function! s:start(exe) abort
         \ 'exit_code' : 0
         \ }
   let s:start_time = reltime()
-  call s:open_windows()
+  call s:open_repl_window()
   call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[REPL executable] ' . string(a:exe), '', repeat('-', 20)])
   call s:WINDOW.set_cursor(s:winid, [s:BUFFER.line_count(s:bufnr), 0])
   let s:lines += 3
@@ -185,19 +186,42 @@ function! SpaceVim#plugins#repl#status() abort
   endif
 endfunction
 
+
+
+" ====================================
+" REPL buffer manager
+" ====================================
+function! s:clear_buffer() abort
+  if s:bufnr != 0 && bufexists(s:bufnr)
+    call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, [])
+  endif
+endfunction
+function! s:init_buffer() abort
+  let s:bufnr = s:BUFFER.bufadd('__REPL__')
+  call s:VIM.setbufvar(s:bufnr,{
+        \ 'filetype' : 'SpaceVimREPL',
+        \ 'buftype' : 'nofile',
+        \ 'buflisted' : 0,
+        \ 'list' : 0,
+        \ 'swapfile' : 0,
+        \ 'cursorline' : 0,
+        \ 'spell' : 0,
+        \ 'number' : 0,
+        \ 'relativenumber' : 0,
+        \ 'winfixheight' : 1,
+        \ 'modifiable' : 0,
+        \ })
+endfunction
+
+
 let s:bufnr = 0
 let s:winid = -1
-function! s:open_windows() abort
-  if s:bufnr != 0 && bufexists(s:bufnr)
-    exe 'bd ' . s:bufnr
-  endif
+function! s:open_repl_window() abort
+  call s:init_buffer()
   botright split __REPL__
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
-  setlocal buftype=nofile nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
-  set filetype=SpaceVimREPL
   nnoremap <silent><buffer> q :call <SID>close()<cr>
-  let s:bufnr = bufnr('%')
   let s:winid = win_getid(winnr())
   wincmd p
 endfunction
