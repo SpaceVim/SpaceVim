@@ -222,6 +222,7 @@ function! s:open_repl_window() abort
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
   nnoremap <silent><buffer> q :call <SID>close()<cr>
+  " win_getid is 7.4.1557
   let s:winid = win_getid(winnr())
   wincmd p
 endfunction
