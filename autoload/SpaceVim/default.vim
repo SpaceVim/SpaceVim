@@ -361,7 +361,13 @@ function! s:switch_tabs() abort
   endif
 endfunction
 
-function! s:closeReplRunner() abort
+function! s:toggleReplRunner() abort
+  if SpaceVim#plugins#repl#isopen()
+        \ || SpaceVim#plugins#runner#isopen()
+    " hidden repl or runner buffer
+  else
+    " open repl
+  endif
 endfunction
 
 " vim:set et sw=2:

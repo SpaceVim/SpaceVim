@@ -388,7 +388,7 @@ function! SpaceVim#plugins#runner#set_language(lang) abort
 endfunction
 
 
-function! SpaceVim#plugins#runner#run_task(task)
+function! SpaceVim#plugins#runner#run_task(task) abort
   let isBackground = get(a:task, 'isBackground', 0)
   if !empty(a:task)
     let cmd = get(a:task, 'command', '') 
@@ -415,10 +415,13 @@ function! s:on_backgroud_exit(job_id, data, event) abort
 endfunction
 
 function! s:run_backgroud(cmd, ...) abort
-  echo "task running"
+  echo 'task running'
   let opts = get(a:000, 0, {})
   let s:start_time = reltime()
   call s:JOB.start(a:cmd,extend({
         \ 'on_exit' : function('s:on_backgroud_exit'),
         \ }, opts))
+endfunction
+
+function! SpaceVim#plugins#runner#isopen() abort
 endfunction
