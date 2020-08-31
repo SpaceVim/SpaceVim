@@ -50,6 +50,9 @@ if exists('*nvim_win_set_buf')
     return nvim_win_set_buf(a:winid, a:bufnr)
   endfunction
 else
+  function! s:self.set_buf(winid, bufnr) abort
+    " @todo implement win_set_buf for old vim
+  endfunction
 endif
 
 if exists('*nvim_win_set_cursor')
