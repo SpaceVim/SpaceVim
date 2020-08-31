@@ -100,7 +100,7 @@ main () {
             cat <<EOT > autoload/plugin/iedit.vim
 "=============================================================================
 " iedit.vim --- multiple cursor support for neovim and vim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://github.com/wsdjeg/iedit.vim
 " License: MIT license

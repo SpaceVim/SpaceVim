@@ -1,6 +1,6 @@
 "=============================================================================
 " lsp.vim --- language server protocol wallpaper
-" Copyright (c) 2016-2019 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Seong Yong-ju < @sei40kr >
 " URL: https://spacevim.org
 " License: GPLv3
