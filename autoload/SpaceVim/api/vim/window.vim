@@ -45,6 +45,12 @@ else
 
   endfunction
 endif
+if exists('*nvim_win_set_buf')
+  function! s:self.set_buf(winid, bufnr) abort
+    return nvim_win_set_buf(a:winid, a:bufnr)
+  endfunction
+else
+endif
 
 if exists('*nvim_win_set_cursor')
   function! s:self.set_cursor(winid, pos) abort
