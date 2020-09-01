@@ -5,7 +5,6 @@ description: "Code formatting support for SpaceVim"
 
 # [Available Layers](../) >> format
 
-
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
@@ -36,7 +35,7 @@ This layer is enabled by default. If you want to disable this layer, add followi
 ### Layer options
 
 - `format_on_save`: This layer option is to enable/disable code formatting when save current buffer,
-and it is disabled by default. To enable it:
+  and it is disabled by default. To enable it:
   ```toml
   [[layers]]
     name = "format"
@@ -58,4 +57,3 @@ let g:neoformat_java_googlefmt = {
     \ 'stdin': 1,
     \ }
 ```
-
