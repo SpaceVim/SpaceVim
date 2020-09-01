@@ -20,16 +20,23 @@ if exists('s:format_on_save')
   finish
 else
   let s:format_on_save = 0
+  let s:format_ft = []
 endif
 
 function! SpaceVim#layers#format#plugins() abort
-    return [
-                \ [g:_spacevim_root_dir . 'bundle/neoformat', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
-                \ ]
+  return [
+        \ [g:_spacevim_root_dir . 'bundle/neoformat', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
+        \ ]
 endfunction
 
 function! SpaceVim#layers#format#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Neoformat', 'format-code', 1)
+  if s:format_on_save
+    augroup spacevim_layer_format
+      autocmd!
+      autocmd BufWritePre * undojoin | call s:format()
+    augroup END
+  endif
 endfunction
 
 function! SpaceVim#layers#format#set_variable(var) abort
@@ -40,4 +47,22 @@ function! SpaceVim#layers#format#get_options() abort
 
   return ['format_on_save']
 
+endfunction
+
+function! SpaceVim#layers#format#add_filetype(ft) abort
+  if get(a:ft, 'enable', 0)
+    if index(s:format_ft, a:ft.filetype) ==# -1
+      call add(s:format_ft, a:ft.filetype)
+    endif
+  else
+    if index(s:format_ft, a:ft.filetype) !=# -1
+      call remove(s:format_ft, a:ft.filetype)
+    endif
+  endif
+endfunction
+
+function! s:format() abort
+  if !empty(&ft) && index(s:format_ft, &ft) !=# -1
+    Neoformat
+  endif
 endfunction
