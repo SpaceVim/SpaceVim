@@ -268,7 +268,7 @@ function! SpaceVim#mapping#clear_saved_buffers() abort
         \ 'index(tabpagebuflist(), v:val) == -1',
         \ 'getbufvar(v:val, "&mod") == 0',
         \ ],
-        \ 'do' : 'bd %d'
+        \ 'do' : 'noautocmd bd %d'
         \ }
         \ )
 endfunction
