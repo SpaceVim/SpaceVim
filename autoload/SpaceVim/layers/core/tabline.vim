@@ -229,7 +229,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
     endif
     let t .= s:wrap_id(index) . item.bufname
-    if item.bufnr == s:BUFFER.bufnr()
+    if item.tabnr == current_tabnr
       if left_hidden_tab_number > 0 
         if s:is_modified(item.bufnr)
           let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_a#' . s:lsep
