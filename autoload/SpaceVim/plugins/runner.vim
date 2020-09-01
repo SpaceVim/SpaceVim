@@ -6,6 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
+" Load APIs {{{
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:STRING = SpaceVim#api#import('data#string')
@@ -13,6 +14,8 @@ let s:FILE = SpaceVim#api#import('file')
 let s:VIM = SpaceVim#api#import('vim')
 let s:SYS = SpaceVim#api#import('system')
 let s:ICONV = SpaceVim#api#import('iconv')
+let s:WINDOW = SpaceVim#api#import('vim#window')
+" }}}
 
 
 let s:runners = {}
@@ -424,6 +427,7 @@ function! s:run_backgroud(cmd, ...) abort
 endfunction
 
 function! SpaceVim#plugins#runner#isopen() abort
+  return s:WINDOW.is_opened(s:winid)
 endfunction
 function! SpaceVim#plugins#runner#winid() abort
   return s:winid

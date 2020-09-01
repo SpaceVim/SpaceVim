@@ -1,7 +1,7 @@
 "=============================================================================
-" repl.vim --- REPL process support for SpaceVim
-" Copyright (c) 2016-2019 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" repl.vim --- REPL plugin for SpaceVim
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -116,7 +116,7 @@ if has('nvim') && exists('*chanclose')
     call extend(s:_out_data, a:data[1:])
     if s:_out_data[-1] ==# '' && len(s:_out_data) > 1
       if bufexists(s:bufnr)
-        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, map(s:_out_data[:-2], "substitute(v:val, '$', '', 'g')"))
+        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, map(s:_out_data[:-2], "substitute(v:val,  nr2char(13) . \"$\"', '', 'g')"))
         let s:lines += len(s:_out_data) - 1
         if s:WINDOW.get_cursor(s:winid)[0] == s:BUFFER.line_count(s:bufnr) - len(s:_out_data) + 1
           call s:WINDOW.set_cursor(s:winid, [s:BUFFER.line_count(s:bufnr), 0])
