@@ -2853,6 +2853,21 @@ OPTIONS
       ''
     ]
 <
+  2. ruby_repl_command: the REPL command for ruby
+
+>
+  [[layers]]
+    name = 'lang#ruby'
+    ruby_repl_command = '~/download/bin/ruby_repl'
+<
+  3. format_on_save: enable/disable code formation when save ruby file. This
+options is disabled by default, to enable it:
+>
+  [[layers]]
+    name = 'lang#ruby'
+    ruby_repl_command = '~/download/bin/ruby_repl'
+    format_on_save = true
+<
 KEY BINDINGS
 
 
