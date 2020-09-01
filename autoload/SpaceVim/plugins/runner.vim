@@ -23,7 +23,7 @@ let s:runners = {}
 let s:bufnr = 0
 let s:winid = -1
 
-function! s:open_win() abort
+function! s:open_runner_window(isopen) abort
   if s:bufnr != 0 && bufexists(s:bufnr)
     exe 'bd ' . s:bufnr
   endif
@@ -228,7 +228,7 @@ function! SpaceVim#plugins#runner#open(...) abort
   let runner = get(a:000, 0, get(s:runners, &filetype, ''))
   let opts = get(a:000, 1, {})
   if !empty(runner)
-    call s:open_win()
+    call s:open_runner_window()
     call s:async_run(runner, opts)
     call s:update_statusline()
   else
@@ -363,7 +363,7 @@ function! SpaceVim#plugins#runner#select_file() abort
   if !empty(runner)
     call SpaceVim#logger#info('Code runner startting:')
     call SpaceVim#logger#info('selected file :' . s:selected_file)
-    call s:open_win()
+    call s:open_runner_window()
     call s:async_run(runner)
     call s:update_statusline()
   endif
