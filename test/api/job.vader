@@ -1,6 +1,19 @@
 Execute ( SpaceVim api: job ):
   let job = SpaceVim#api#import('job')
-  let argv = ['cat']
+  let sys = SpaceVim#api#import('system')
+  let cmp = SpaceVim#api#import('vim#compatible')
+  if sys.isWindows
+    let cat = fnamemodify(v:progpath, ':h') . '\cat.exe'
+  else
+    let cat = 'cat'
+  endif
+  if !executable(cat)
+    finish
+  endif
+  for line in cmp.systemlist(shellescape(cat) . ' --version')
+    Log line
+  endfor
+  let argv = [cat]
   let g:stdout = ''
   let stderr = ''
   let exit_data = 1
