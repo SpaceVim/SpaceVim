@@ -34,7 +34,7 @@ Execute ( SpaceVim api: job ):
   if job.vim_job || job.nvim_job
     let jobid = job.start(argv,opt)
     call job.send(jobid, 'foo')
-    sleep 10m
+    sleep 2000m
     AssertEqual stdout, 'foo'
     AssertEqual job.status(jobid), 'run'
     call job.stop(jobid)
