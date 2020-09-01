@@ -31,12 +31,10 @@ endfunction
 
 function! SpaceVim#layers#format#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Neoformat', 'format-code', 1)
-  if s:format_on_save
-    augroup spacevim_layer_format
-      autocmd!
-      autocmd BufWritePre * undojoin | call s:format()
-    augroup END
-  endif
+  augroup spacevim_layer_format
+    autocmd!
+    autocmd BufWritePre * undojoin | call s:format()
+  augroup END
 endfunction
 
 function! SpaceVim#layers#format#set_variable(var) abort
@@ -62,7 +60,8 @@ function! SpaceVim#layers#format#add_filetype(ft) abort
 endfunction
 
 function! s:format() abort
-  if !empty(&ft) && index(s:format_ft, &ft) !=# -1
+  if !empty(&ft) &&
+        \ ( index(s:format_ft, &ft) !=# -1 || s:format_on_save ==# 1)
     Neoformat
   endif
 endfunction
