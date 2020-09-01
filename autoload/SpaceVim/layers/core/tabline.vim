@@ -389,7 +389,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         endif
       else
         let t .= s:is_modified(s:buffers[index(s:buffers, item.bufnr) + 1]) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
-        let t .= ' ' . s:ilsep . ' '
+        let t .= s:ilsep . ' '
       endif
     endfor
     let item = shown_items[-1]
