@@ -1388,15 +1388,12 @@ Mappings:
 ==============================================================================
 FORMAT                                                 *SpaceVim-layer-format*
 
-SpaceVim uses neoformat as the default code format tools. Neoformat uses a
-variety of formatters for many filetypes. for more info see |neoformat| if you
-want to run a formatter on save, just put this config into bootstrap function.
->
-  augroup fmt
-  autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
-  augroup END
-<
+format layer provides code formation for SpaceVim, the default formatting
+plugin is |neoformat|.
+OPTIONS
+format_on_save: disabled by default.
+
+
 
 ==============================================================================
 GITHUB                                                 *SpaceVim-layer-github*

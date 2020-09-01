@@ -9,16 +9,18 @@
 ""
 " @section format, layer-format
 " @parentsection layers
-" SpaceVim uses neoformat as the default code format tools. Neoformat uses a
-" variety of formatters for many filetypes. for more info see |neoformat|
-" if you want to run a formatter on save, just put this config into bootstrap
-" function.
-" >
-"   augroup fmt
-"   autocmd!
-"   autocmd BufWritePre * undojoin | Neoformat
-"   augroup END
-" <
+" format layer provides code formation for SpaceVim, the default formatting
+" plugin is |neoformat|.
+" @subsection options
+" format_on_save: disabled by default.
+"
+" 
+
+if exists('s:format_on_save')
+  finish
+else
+  let s:format_on_save = 0
+endif
 
 function! SpaceVim#layers#format#plugins() abort
     return [
@@ -28,4 +30,14 @@ endfunction
 
 function! SpaceVim#layers#format#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Neoformat', 'format-code', 1)
+endfunction
+
+function! SpaceVim#layers#format#set_variable(var) abort
+  let s:format_on_save = get(a:var, 'format_on_save', s:format_on_save)
+endfunction
+
+function! SpaceVim#layers#format#get_options() abort
+
+  return ['format_on_save']
+
 endfunction
