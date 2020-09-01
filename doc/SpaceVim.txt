@@ -1388,15 +1388,12 @@ Mappings:
 ==============================================================================
 FORMAT                                                 *SpaceVim-layer-format*
 
-SpaceVim uses neoformat as the default code format tools. Neoformat uses a
-variety of formatters for many filetypes. for more info see |neoformat| if you
-want to run a formatter on save, just put this config into bootstrap function.
->
-  augroup fmt
-  autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
-  augroup END
-<
+format layer provides code formation for SpaceVim, the default formatting
+plugin is |neoformat|.
+OPTIONS
+format_on_save: disabled by default.
+
+
 
 ==============================================================================
 GITHUB                                                 *SpaceVim-layer-github*
@@ -1468,7 +1465,7 @@ LANG#ACTIONSCRIPT                           *SpaceVim-layer-lang-actionscript*
 This layer provides syntax highlighting for actionscript. To enable this
 layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#actionscript"
 <
 
@@ -2855,6 +2852,21 @@ OPTIONS
       '# -*- coding : utf-8 -*-'
       ''
     ]
+<
+  2. ruby_repl_command: the REPL command for ruby
+
+>
+  [[layers]]
+    name = 'lang#ruby'
+    ruby_repl_command = '~/download/bin/ruby_repl'
+<
+  3. format_on_save: enable/disable code formation when save ruby file. This
+options is disabled by default, to enable it:
+>
+  [[layers]]
+    name = 'lang#ruby'
+    ruby_repl_command = '~/download/bin/ruby_repl'
+    format_on_save = true
 <
 KEY BINDINGS
 

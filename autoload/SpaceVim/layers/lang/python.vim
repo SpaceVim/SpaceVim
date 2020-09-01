@@ -138,10 +138,10 @@ function! s:language_specified_mappings() abort
 
   " Format on save
   if s:format_on_save
-    augroup SpaceVim_layer_lang_python
-      autocmd!
-      autocmd BufWritePre *.py undojoin | Neoformat
-    augroup end
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'python',
+          \ 'enable' : 1,
+          \ })
   endif
 
 endfunction

@@ -100,11 +100,12 @@ function! SpaceVim#layers#lang#rust#config() abort
   " Disable racer format, use Neoformat instead!
   let g:rustfmt_autosave = 0
   if s:format_on_save
-    augroup SpaceVim_layer_lang_rust
-      autocmd!
-      autocmd BufWritePre *.rs undojoin | Neoformat
-    augroup end
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'rust',
+          \ 'enable' : 1,
+          \ })
   endif
+
 
   call SpaceVim#mapping#space#regesit_lang_mappings('rust', function('s:language_specified_mappings'))
   call add(g:spacevim_project_rooter_patterns, 'Cargo.toml')
@@ -207,11 +208,11 @@ function! s:execCMD(cmd) abort
 endfunction
 
 "
-"#用于更新 toolchain
+" toolchain
 "
 " set RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 "
-" #用于更新 rustup
+"  rustup
 "
 " set RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 "

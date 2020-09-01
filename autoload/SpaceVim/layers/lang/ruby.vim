@@ -28,6 +28,20 @@
 "       ''
 "     ]
 " <
+" 2. ruby_repl_command: the REPL command for ruby
+" >
+"   [[layers]]
+"     name = 'lang#ruby'
+"     ruby_repl_command = '~/download/bin/ruby_repl'
+" <
+" 3. format_on_save: enable/disable code formation when save ruby file. This
+" options is disabled by default, to enable it:
+" >
+"   [[layers]]
+"     name = 'lang#ruby'
+"     ruby_repl_command = '~/download/bin/ruby_repl'
+"     format_on_save = true
+" <
 " @subsection Key bindings
 "
 " >
@@ -47,13 +61,26 @@
 " <
 "
 
+
+if exists('s:ruby_file_head')
+  finish
+else
+  let s:ruby_repl_command = ''
+  let s:ruby_file_head = [
+        \ '#!/usr/bin/ruby -w',
+        \ '# -*- coding : utf-8 -*-',
+        \ ''
+        \ ]
+  let s:format_on_save = 0
+
+endif
+
 function! SpaceVim#layers#lang#ruby#plugins() abort
   return [
         \ ['vim-ruby/vim-ruby', { 'on_ft' : 'ruby' }]
         \ ]
 endfunction
 
-let s:ruby_repl_command = ''
 
 function! SpaceVim#layers#lang#ruby#config() abort
   call SpaceVim#plugins#runner#reg_runner('ruby', {
@@ -70,15 +97,10 @@ function! SpaceVim#layers#lang#ruby#config() abort
   endif
 endfunction
 
-let s:ruby_file_head = [
-      \ '#!/usr/bin/ruby -w',
-      \ '# -*- coding : utf-8 -*-',
-      \ ''
-      \ ]
-
 function! SpaceVim#layers#lang#ruby#set_variable(var) abort
   let s:ruby_repl_command = get(a:var, 'repl_command', '') 
   let s:ruby_file_head = get(a:var, 'ruby-file-head', s:ruby_file_head)
+  let s:format_on_save = get(a:var, 'format_on_save', s:format_on_save)
 endfunction
 
 function! s:language_specified_mappings() abort
