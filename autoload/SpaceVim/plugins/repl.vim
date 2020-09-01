@@ -89,7 +89,8 @@ function! s:start(exe) abort
         \ 'exit_code' : 0
         \ }
   let s:start_time = reltime()
-  call s:open_repl_window()
+  call s:open_repl_window(SpaceVim#plugins#repl#isopen()
+        \ && SpaceVim#plugins#runner#isopen())
   call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[REPL executable] ' . string(a:exe), '', repeat('-', 20)])
   call s:WINDOW.set_cursor(s:winid, [s:BUFFER.line_count(s:bufnr), 0])
   let s:lines += 3
@@ -230,16 +231,21 @@ function! s:init_buffer() abort
 endfunction
 
 
-function! s:open_repl_window() abort
+function! s:open_repl_window(isopen) abort
   call s:init_buffer()
-  exe s:direction '__REPL__'
-  if !s:vertical
-    let lines = &lines * 30 / 100
-    exe 'resize ' . lines
+  if !a:isopen
+    exe s:direction '__REPL__'
+    if !s:vertical
+      let lines = &lines * 30 / 100
+      exe 'resize ' . lines
+    endif
+    nnoremap <silent><buffer> q :call <SID>close()<cr>
+    " win_getid is 7.4.1557
+    let s:winid = s:WINDOW.getid(bufwinnr(s:bufnr))
+  else
+    let s:winid = max([SpaceVim#plugins#repl#winid(), SpaceVim#plugins#runner#winid()])
+    call s:WINDOW.set_buf(s:winid, s:bufnr)
   endif
-  nnoremap <silent><buffer> q :call <SID>close()<cr>
-  " win_getid is 7.4.1557
-  let s:winid = s:WINDOW.getid(winnr())
   wincmd p
 endfunction
 
@@ -249,4 +255,8 @@ endfunction
 
 function! SpaceVim#plugins#repl#isopen() abort
   return s:WINDOW.is_opened(s:winid)
+endfunction
+
+function! SpaceVim#plugins#repl#winid() abort
+  return s:winid
 endfunction

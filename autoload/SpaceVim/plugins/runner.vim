@@ -425,3 +425,6 @@ endfunction
 
 function! SpaceVim#plugins#runner#isopen() abort
 endfunction
+function! SpaceVim#plugins#runner#winid() abort
+  return s:winid
+endfunction
