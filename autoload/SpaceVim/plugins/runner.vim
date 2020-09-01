@@ -17,7 +17,11 @@ let s:ICONV = SpaceVim#api#import('iconv')
 let s:WINDOW = SpaceVim#api#import('vim#window')
 " }}}
 
-
+" This is the valuable to store all default runners for different filetypes.
+" to register runner for a filetype. You can use
+" SpaceVim#plugins#runner#reg_runner()
+" for example:
+" call SpaceVim#plugins#runner#reg_runner('python', 'python %s')
 let s:runners = {}
 
 let s:bufnr = 0
