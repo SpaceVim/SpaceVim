@@ -13,6 +13,22 @@ let s:WINDOW = SpaceVim#api#import('vim#window')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:SPI = SpaceVim#api#import('unicode#spinners') 
 
+" @todo direction configurable
+" g:repl_direction
+" g:repl_vertical
+let s:direction = get(g:, 'repl_direction', 'botright split')
+let s:vertical = get(g:, 'repl_vertical', 0)
+
+
+" ======================================
+" Init valuables
+" ======================================
+" s:bufnr: the buffer number of repl buffer
+" s:winid: the window-ID of repl window. This value is for get/set cursor
+" positions, and only works in new vim.
+let s:bufnr = 0
+let s:winid = -1
+
 augroup spacevim_repl
   autocmd!
   autocmd VimLeavePre * call s:close()
@@ -214,16 +230,16 @@ function! s:init_buffer() abort
 endfunction
 
 
-let s:bufnr = 0
-let s:winid = -1
 function! s:open_repl_window() abort
   call s:init_buffer()
-  botright split __REPL__
-  let lines = &lines * 30 / 100
-  exe 'resize ' . lines
+  exe s:direction '__REPL__'
+  if !s:vertical
+    let lines = &lines * 30 / 100
+    exe 'resize ' . lines
+  endif
   nnoremap <silent><buffer> q :call <SID>close()<cr>
   " win_getid is 7.4.1557
-  let s:winid = win_getid(winnr())
+  let s:winid = s:WINDOW.getid(winnr())
   wincmd p
 endfunction
 

@@ -55,6 +55,17 @@ else
   endfunction
 endif
 
+if exists('*win_getid')
+  function! s:self.getid(winnr) abort
+    return win_getid(a:winnr)
+  endfunction
+else
+  function! s:self.getid() abort
+    " @todo get winid for old windows
+    return -1
+  endfunction
+endif
+
 if exists('*nvim_win_set_cursor')
   function! s:self.set_cursor(winid, pos) abort
     return nvim_win_set_cursor(a:winid, a:pos)
