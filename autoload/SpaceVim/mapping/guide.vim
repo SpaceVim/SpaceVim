@@ -691,7 +691,6 @@ function! s:page_down() abort " {{{
 endfunction " }}}
 function! s:page_undo() abort " {{{
   call s:winclose()
-  let s:guide_group = {}
   if len(s:prefix_key_inp) > 0
     call remove(s:prefix_key_inp, -1)
   endif
