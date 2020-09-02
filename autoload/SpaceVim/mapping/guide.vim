@@ -30,6 +30,7 @@ let s:SL = SpaceVim#api#import('vim#statusline')
 
 let s:winid = -1
 let s:bufnr = -1
+let s:prefix_key_inp = []
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -499,7 +500,7 @@ function! s:wait_for_input() abort " {{{
       doautocmd WinEnter
       let keys = get(s:, 'prefix_key_inp', [])
       let name = SpaceVim#mapping#leader#getName(s:prefix_key)
-      let _keys = join(keys, '-')
+      let _keys = join(keys, '')
       if empty(_keys)
         call s:build_mpt(['key bindings is not defined: ', name . '-' . inp])
       else
@@ -609,7 +610,7 @@ if s:SL.support_float()
           \ ['Guide: ', 'LeaderGuiderPrompt'],
           \ [' ', 'LeaderGuiderSep1'],
           \ [SpaceVim#mapping#leader#getName(s:prefix_key)
-          \ . join(keys, '-') . gname, 'LeaderGuiderName'],
+          \ . join(keys, '') . gname, 'LeaderGuiderName'],
           \ [' ', 'LeaderGuiderSep2'],
           \ [s:guide_help_msg(0), 'LeaderGuiderFill'],
           \ [repeat(' ', 999), 'LeaderGuiderFill'],
@@ -632,7 +633,7 @@ else
           \ '%#LeaderGuiderSep1#' . s:lsep .
           \ '%#LeaderGuiderName# ' .
           \ SpaceVim#mapping#leader#getName(s:prefix_key)
-          \ . join(keys, '-') . gname
+          \ . join(keys, '') . gname
           \ . ' %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
           \ . s:guide_help_msg(0))
   endfunction
