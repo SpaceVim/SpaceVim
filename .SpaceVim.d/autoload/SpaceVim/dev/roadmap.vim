@@ -5,6 +5,7 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
 
 let s:AUTODOC = SpaceVim#api#import('dev#autodoc')
 
@@ -68,7 +69,7 @@ endfunction
 function! SpaceVim#dev#roadmap#updateCompletedItems(lang) abort
   let s:AUTODOC.begin = '^<!-- SpaceVim roadmap completed items start -->$'
   let s:AUTODOC.end = '^<!-- SpaceVim roadmap completed items end -->$'
-  if a:lang == 'cn'
+  if a:lang ==# 'cn'
     let s:AUTODOC.content_func = function('s:generate_content_cn')
   else
     let s:AUTODOC.content_func = function('s:generate_content')

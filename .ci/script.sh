@@ -3,10 +3,16 @@
 set -ex
 export TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST}
 if [ "$LINT" = "vimlint" ]; then
+    if [[ -f build_log ]]; then
+        rm build_log
+    fi
     for file in $(git ls-files | grep SpaceVim.*.vim);
     do
-        sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser $file;
+        /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser $file >> build_log 2>&1;
     done
+    if [[ -s build_log ]]; then
+        exit 2
+    fi
 elif [ "$LINT" = "vimlint-errors" ]; then
     if [[ -f build_log ]]; then
         rm build_log
@@ -16,13 +22,11 @@ elif [ "$LINT" = "vimlint-errors" ]; then
         /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file >> build_log 2>&1;
     done
     if [[ -s build_log ]]; then
-        VIMLINT_LOG=`cat build_log`
-        echo "$VIMLINT_LOG"
         exit 2
     fi
 elif [ "$LINT" = "file-encoding" ]; then
-    if [[ -f encoding_log ]]; then
-        rm encoding_log
+    if [[ -f build_log ]]; then
+        rm build_log
     fi
     for file in $(git diff --name-only HEAD master);
     do
@@ -32,12 +36,10 @@ elif [ "$LINT" = "file-encoding" ]; then
         encoding=`file -b --mime-encoding $file`
         if [ $encoding != "utf-8" ] && [ $encoding != "us-ascii" ];
         then
-            echo $file " " $encoding >> encoding_log
+            echo $file " " $encoding >> build_log
         fi
     done
-    if [[ -s encoding_log ]]; then
-        VIMLINT_LOG=`cat encoding_log`
-        echo "$VIMLINT_LOG"
+    if [[ -s build_log ]]; then
         exit 2
     fi
 elif [ "$LINT" = "vint" ]; then
@@ -49,8 +51,6 @@ elif [ "$LINT" = "vint" ]; then
         vint --enable-neovim $file >> build_log 2>&1;
     done
     if [[ -s build_log ]]; then
-        VIMLINT_LOG=`cat build_log`
-        echo "$VIMLINT_LOG"
         exit 2
     fi
 elif [ "$LINT" = "vint-errors" ]; then
@@ -62,8 +62,6 @@ elif [ "$LINT" = "vint-errors" ]; then
         vint --enable-neovim --error $file >> build_log 2>&1;
     done
     if [[ -s build_log ]]; then
-        VIMLINT_LOG=`cat build_log`
-        echo "$VIMLINT_LOG"
         exit 2
     fi
 elif [ "$LINT" = "vader" ]; then

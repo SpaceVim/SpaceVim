@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:KEY = SpaceVim#api#import('vim#key')
+let s:VIM = SpaceVim#api#import('vim')
 let s:TABs = SpaceVim#api#import('vim#tab')
 let s:key_describ = {}
 
@@ -27,8 +28,8 @@ function! SpaceVim#plugins#help#describe_key() abort
   let prompt = 'Describe key:'
   let keys = []
   call s:build_mpt(prompt)
-  let key = getchar()
-  let char = s:KEY.nr2name(key)
+  let key = s:VIM.getchar()
+  let char = s:KEY.nr2name(char2nr(key))
   if index(keys(g:_spacevim_mappings_prefixs), char) != -1
     let name = SpaceVim#mapping#leader#getName(nr2char(key))
   else
@@ -56,8 +57,8 @@ function! SpaceVim#plugins#help#describe_key() abort
     let defined = 0
   endif
   while defined
-    let key = getchar()
-    let name = s:KEY.nr2name(key)
+    let key = s:VIM.getchar()
+    let name = s:KEY.nr2name(char2nr(key))
     call add(keys, name)
     if has_key(root, name)
       let root = root[name]
