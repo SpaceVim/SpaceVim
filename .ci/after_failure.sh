@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
-    export TRAVIS_PULL_REQUEST=3752
     if [ "$LINT" = "vimlint-errors" ] ; then
         if [[ -f build_log ]]; then
             if [[ -d build/GitHub.vim ]]; then
@@ -12,6 +11,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
             git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
             docker run \
                 -it --rm \
+                -e TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST} \
                 -v $PWD/.ci:/.ci \
                 -v $PWD/autoload/SpaceVim/api:/API/autoload/SpaceVim/api \
                 -v $PWD/autoload/SpaceVim/api.vim:/API/autoload/SpaceVim/api.vim \
@@ -28,6 +28,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
             echo "$VIMLINT_LOG"
             git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
             docker run -it --rm \
+                -e TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST} \
                 -v $PWD/.ci:/.ci \
                 -v $PWD/autoload/SpaceVim/api:/API/autoload/SpaceVim/api \
                 -v $PWD/autoload/SpaceVim/api.vim:/API/autoload/SpaceVim/api.vim \
