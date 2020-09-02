@@ -1,5 +1,5 @@
 Execute ( SpaceVim plugin: tabmanager.vim ):
   call SpaceVim#plugins#tabmanager#open()
-  normal [SPC]
+  LeaderGuide " "
   AssertEqual &ft, 'SpaceVimTabsManager'
 
