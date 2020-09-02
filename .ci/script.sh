@@ -39,9 +39,29 @@ elif [ "$LINT" = "file-encoding" ]; then
         exit 2
     fi
 elif [ "$LINT" = "vint" ]; then
-    vint --enable-neovim .
+    if [[ -f build_log ]]; then
+        rm build_log
+    fi
+    for file in $(git diff --name-only HEAD master | grep .vim$);
+    do
+        vint --enable-neovim $file >> build_log 2>&1;
+    done
+    if [[ -s build_log ]]; then
+        cat build_log
+        exit 2
+    fi
 elif [ "$LINT" = "vint-errors" ]; then
-    vint --enable-neovim --error .
+    if [[ -f build_log ]]; then
+        rm build_log
+    fi
+    for file in $(git diff --name-only HEAD master | grep .vim$);
+    do
+        vint --enable-neovim --error $file >> build_log 2>&1;
+    done
+    if [[ -s build_log ]]; then
+        cat build_log
+        exit 2
+    fi
 elif [ "$LINT" = "vader" ]; then
     if [ "$VIM_BIN" = "nvim" ]; then
         export PATH="${DEPS}/_neovim/${VIM_TAG}/bin:${PATH}"
