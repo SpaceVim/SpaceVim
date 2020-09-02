@@ -3,7 +3,7 @@
 set -ex
 export TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST}
 if [ "$LINT" = "vimlint" ]; then
-    for file in $(git diff --name-only HEAD dev | grep .vim$);
+    for file in $(git ls-files | grep SpaceVim.*.vim);
     do
         sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser $file;
     done
@@ -11,7 +11,7 @@ elif [ "$LINT" = "vimlint-errors" ]; then
     if [[ -f build_log ]]; then
         rm build_log
     fi
-    for file in $(git diff --name-only HEAD master | grep .vim$);
+    for file in $(git ls-files | grep SpaceVim.*.vim);
     do
         /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file >> build_log 2>&1;
     done
@@ -42,7 +42,7 @@ elif [ "$LINT" = "vint" ]; then
     if [[ -f build_log ]]; then
         rm build_log
     fi
-    for file in $(git diff --name-only HEAD master | grep .vim$);
+    for file in $(git ls-files | grep SpaceVim.*.vim);
     do
         vint --enable-neovim $file >> build_log 2>&1;
     done
@@ -54,7 +54,7 @@ elif [ "$LINT" = "vint-errors" ]; then
     if [[ -f build_log ]]; then
         rm build_log
     fi
-    for file in $(git diff --name-only HEAD master | grep .vim$);
+    for file in $(git ls-files | grep SpaceVim.*.vim);
     do
         vint --enable-neovim --error $file >> build_log 2>&1;
     done
