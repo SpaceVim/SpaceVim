@@ -1,0 +1,5 @@
+Execute ( SpaceVim key binding guide ):
+  let g:_spacevim_input_list = ['h', 'd', 'k', ' ', 'b', 'n']
+  normal [SPC]
+  AssertEqual &ft, 'HelpDescribe'
+
