@@ -453,27 +453,10 @@ function! s:handle_input(input) abort " {{{
   endif
 endfunction " }}}
 
-if has('nvim')
-  function! s:getchar(...) abort
-    let ret = call('getchar', a:000)
-    return (type(ret) == type(0) ? nr2char(ret) : ret)
-  endfunction
-else
-  function! s:getchar(...) abort
-    let ret = call('getchar', a:000)
-    while ret ==# "\x80\xfd\d"
-      let ret = call('getchar', a:000)
-    endwhile
-    return (type(ret) == type(0) ? nr2char(ret) : ret)
-  endfunction
-
-endif
-
-
 " wait for in input sub function should be not block vim
 function! s:wait_for_input() abort " {{{
   redraw!
-  let inp = s:getchar()
+  let inp = s:VIM.getchar()
   if inp ==# "\<Esc>"
     let s:prefix_key_inp = []
     let s:undo_history = []
