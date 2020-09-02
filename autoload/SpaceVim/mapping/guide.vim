@@ -439,9 +439,8 @@ endfunction " }}}
 function! s:handle_input(input) abort " {{{
   call s:winclose()
   if type(a:input) ==? type({})
-    let s:lmap_undo = s:lmap
     let s:lmap = a:input
-    let s:guide_group = a:input
+    call add(s:undo_history, a:input)
     call s:start_buffer()
   else
     let s:prefix_key_inp = []
@@ -698,7 +697,9 @@ function! s:page_undo() abort " {{{
   if len(s:prefix_key_inp) > 0
     call remove(s:prefix_key_inp, -1)
   endif
-  let s:lmap = s:lmap_undo
+  if len(s:undo_history) > 0
+    let s:lmap = remove(s:undo_history, -1)
+  endif
   call s:start_buffer()
 endfunction " }}}
 function! s:page_up() abort " {{{
@@ -772,7 +773,6 @@ function! SpaceVim#mapping#guide#start_by_prefix(vis, key) abort " {{{
   else
     let rundict = s:cached_dicts[a:key]
   endif
-  let s:lmap_undo = s:lmap
   let s:lmap = rundict
   call s:start_buffer()
 endfunction " }}}
