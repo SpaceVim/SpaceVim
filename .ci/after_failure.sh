@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
+    export TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST}
     if [ "$LINT" = "vimlint-errors" ] ; then
         if [[ -f build_log ]]; then
             if [[ -d build/GitHub.vim ]]; then
