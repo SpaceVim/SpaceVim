@@ -80,7 +80,7 @@ endfunction
 
 function! SpaceVim#plugins#a#alt(request_paser,...) abort
   let type = get(a:000, 0, 'alternate')
-  let conf_file_path = s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
+  let conf_file_path = SpaceVim#plugins#a#getConfigPath()
   let file = s:FILE.unify_path(bufname('%'), ':.')
   let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, a:request_paser, type)
   if !empty(alt)
@@ -201,7 +201,7 @@ endfunction
 
 
 function! SpaceVim#plugins#a#getConfigPath() abort
-  return s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
+  return s:FILE.unify_path(get(s:alternate_conf, getcwd(), s:alternate_conf['_']), ':p')
 endfunction
 
 
@@ -210,7 +210,7 @@ endfunction
 " @vimlint(EVL103, 1, a:CursorPos)
 function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
   let file = s:FILE.unify_path(bufname('%'), ':.')
-  let conf_file_path = s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
+  let conf_file_path = SpaceVim#plugins#a#getConfigPath()
   let alt_config_json = s:get_project_config(conf_file_path)
 
   call SpaceVim#plugins#a#get_alt(file, conf_file_path, 0)
