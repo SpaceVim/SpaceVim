@@ -440,7 +440,6 @@ function! s:handle_input(input) abort " {{{
   call s:winclose()
   if type(a:input) ==? type({})
     let s:lmap = a:input
-    call add(s:undo_history, a:input)
     call s:start_buffer()
   else
     let s:prefix_key_inp = []
@@ -477,6 +476,7 @@ function! s:wait_for_input() abort " {{{
   let inp = s:getchar()
   if inp ==# "\<Esc>"
     let s:prefix_key_inp = []
+    let s:undo_history = []
     let s:guide_help_mode = 0
     call s:winclose()
     doautocmd WinEnter
@@ -497,6 +497,7 @@ function! s:wait_for_input() abort " {{{
     let fsel = get(s:lmap, inp)
     if !empty(fsel)
       call add(s:prefix_key_inp, inp)
+      call add(s:undo_history, s:lmap)
       call s:handle_input(fsel)
     else
       call s:winclose()
