@@ -16,7 +16,8 @@ elif [ "$LINT" = "vimlint-errors" ]; then
         /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file >> build_log 2>&1;
     done
     if [[ -s build_log ]]; then
-        cat build_log
+        VIMLINT_LOG=`cat build_log`
+        echo "$VIMLINT_LOG"
         exit 2
     fi
 elif [ "$LINT" = "file-encoding" ]; then
@@ -35,7 +36,8 @@ elif [ "$LINT" = "file-encoding" ]; then
         fi
     done
     if [[ -s encoding_log ]]; then
-        cat encoding_log
+        VIMLINT_LOG=`cat encoding_log`
+        echo "$VIMLINT_LOG"
         exit 2
     fi
 elif [ "$LINT" = "vint" ]; then
@@ -47,7 +49,8 @@ elif [ "$LINT" = "vint" ]; then
         vint --enable-neovim $file >> build_log 2>&1;
     done
     if [[ -s build_log ]]; then
-        cat build_log
+        VIMLINT_LOG=`cat build_log`
+        echo "$VIMLINT_LOG"
         exit 2
     fi
 elif [ "$LINT" = "vint-errors" ]; then
@@ -59,7 +62,8 @@ elif [ "$LINT" = "vint-errors" ]; then
         vint --enable-neovim --error $file >> build_log 2>&1;
     done
     if [[ -s build_log ]]; then
-        cat build_log
+        VIMLINT_LOG=`cat build_log`
+        echo "$VIMLINT_LOG"
         exit 2
     fi
 elif [ "$LINT" = "vader" ]; then
