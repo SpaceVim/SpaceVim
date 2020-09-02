@@ -55,6 +55,14 @@ let s:i_separators = {
       \ }
 
 
+function! s:get_no_empty(a, b) abort
+  if empty(a:a)
+    return a:b
+  else
+    return a:a
+  endif
+endfunction
+
 function! s:tabname(bufnr) abort
   let name = bufname(a:bufnr)
   if name ==# '\[Vader\]'
@@ -215,7 +223,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       endif
       let t .= s:wrap_id(index)
       let index += 1
-      let t .= item.bufname
+      let t .= s:get_no_empty(gettabvar(item.tabnr, '_spacevim_tab_name'), item.bufname)
       if item.tabnr == current_tabnr - 1
         let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
       elseif item.tabnr == current_tabnr
@@ -228,7 +236,7 @@ function! SpaceVim#layers#core#tabline#get() abort
     if has('tablineat')
       let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
     endif
-    let t .= s:wrap_id(index) . item.bufname
+    let t .= s:wrap_id(index) . s:get_no_empty(gettabvar(item.tabnr, '_spacevim_tab_name'), item.bufname)
     if item.tabnr == current_tabnr
       if left_hidden_tab_number > 0 
         if s:is_modified(item.bufnr)
