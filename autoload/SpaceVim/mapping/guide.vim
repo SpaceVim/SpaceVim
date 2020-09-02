@@ -31,6 +31,9 @@ let s:SL = SpaceVim#api#import('vim#statusline')
 let s:winid = -1
 let s:bufnr = -1
 let s:prefix_key_inp = []
+let s:lmap = {}
+" this should be the history of s:lmap and s:guide_group
+let s:undo_history = []
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -436,6 +439,7 @@ endfunction " }}}
 function! s:handle_input(input) abort " {{{
   call s:winclose()
   if type(a:input) ==? type({})
+    let s:lmap_undo = s:lmap
     let s:lmap = a:input
     let s:guide_group = a:input
     call s:start_buffer()
@@ -768,8 +772,8 @@ function! SpaceVim#mapping#guide#start_by_prefix(vis, key) abort " {{{
   else
     let rundict = s:cached_dicts[a:key]
   endif
+  let s:lmap_undo = s:lmap
   let s:lmap = rundict
-  let s:lmap_undo = rundict
   call s:start_buffer()
 endfunction " }}}
 function! SpaceVim#mapping#guide#start(vis, dict) abort " {{{
