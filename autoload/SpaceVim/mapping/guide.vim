@@ -439,7 +439,7 @@ function! s:handle_input(input) abort " {{{
     let s:guide_group = a:input
     call s:start_buffer()
   else
-    let s:prefix_key_inp = ''
+    let s:prefix_key_inp = []
     call feedkeys(s:vis.s:reg.s:count, 'ti')
     redraw!
     try
@@ -472,7 +472,7 @@ function! s:wait_for_input() abort " {{{
   redraw!
   let inp = s:getchar()
   if inp ==# "\<Esc>"
-    let s:prefix_key_inp = ''
+    let s:prefix_key_inp = []
     let s:guide_help_mode = 0
     call s:winclose()
     doautocmd WinEnter
@@ -492,20 +492,20 @@ function! s:wait_for_input() abort " {{{
     endif
     let fsel = get(s:lmap, inp)
     if !empty(fsel)
-      let s:prefix_key_inp = inp
+      call add(s:prefix_key_inp, inp)
       call s:handle_input(fsel)
     else
       call s:winclose()
       doautocmd WinEnter
-      let keys = get(s:, 'prefix_key_inp', '')
+      let keys = get(s:, 'prefix_key_inp', [])
       let name = SpaceVim#mapping#leader#getName(s:prefix_key)
-      let _keys = join(s:STR.string2chars(keys), '-')
+      let _keys = join(keys, '-')
       if empty(_keys)
         call s:build_mpt(['key bindings is not defined: ', name . '-' . inp])
       else
         call s:build_mpt(['key bindings is not defined: ', name . '-' . _keys . '-' . inp])
       endif
-      let s:prefix_key_inp = ''
+      let s:prefix_key_inp = []
       let s:guide_help_mode = 0
     endif
   endif
@@ -603,13 +603,13 @@ if s:SL.support_float()
       let gname = ' - ' . gname[1:]
       " let gname = substitute(gname,' ', '\\ ', 'g')
     endif
-    let keys = get(s:, 'prefix_key_inp', '')
+    let keys = get(s:, 'prefix_key_inp', [])
     " let keys = substitute(keys, '\', '\\\', 'g')
     noautocmd let winid = s:SL.open_float([
           \ ['Guide: ', 'LeaderGuiderPrompt'],
           \ [' ', 'LeaderGuiderSep1'],
           \ [SpaceVim#mapping#leader#getName(s:prefix_key)
-          \ . keys . gname, 'LeaderGuiderName'],
+          \ . join(keys, '-') . gname, 'LeaderGuiderName'],
           \ [' ', 'LeaderGuiderSep2'],
           \ [s:guide_help_msg(0), 'LeaderGuiderFill'],
           \ [repeat(' ', 999), 'LeaderGuiderFill'],
@@ -627,12 +627,12 @@ else
     if !empty(gname)
       let gname = ' - ' . gname[1:]
     endif
-    let keys = get(s:, 'prefix_key_inp', '')
+    let keys = get(s:, 'prefix_key_inp', [])
     call setbufvar(s:bufnr, '&statusline', '%#LeaderGuiderPrompt# Guide: ' .
           \ '%#LeaderGuiderSep1#' . s:lsep .
           \ '%#LeaderGuiderName# ' .
           \ SpaceVim#mapping#leader#getName(s:prefix_key)
-          \ . keys . gname
+          \ . join(keys, '-') . gname
           \ . ' %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
           \ . s:guide_help_msg(0))
   endfunction
@@ -691,7 +691,9 @@ endfunction " }}}
 function! s:page_undo() abort " {{{
   call s:winclose()
   let s:guide_group = {}
-  let s:prefix_key_inp = ''
+  if len(s:prefix_key_inp) > 0
+    call remove(s:prefix_key_inp, -1)
+  endif
   let s:lmap = s:lmap_undo
   call s:start_buffer()
 endfunction " }}}
@@ -787,7 +789,7 @@ if !exists('g:leaderGuide_displayfunc')
 endif
 
 let s:registered_name = {}
-function! SpaceVim#mapping#guide#register_displayname(lhs, name)
+function! SpaceVim#mapping#guide#register_displayname(lhs, name) abort
   call extend(s:registered_name, {a:lhs : a:name})
 endfunction
 
