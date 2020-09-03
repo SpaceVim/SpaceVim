@@ -10,5 +10,7 @@ Execute ( SpaceVim api: file ):
   AssertEqual file.unify_path(file.findfile('README.md', fnamemodify(path, ':p'), -1), ':.'), 'README.md'
   AssertEqual file.unify_path(file.findfile('README.md', fnamemodify(path, ':p'), -2), ':.'), '.SpaceVim.d/README.md'
   let path = fnamemodify('bundle/dein.vim/autoload/dein.vim', ':p')
-  AssertEqual file.unify_path(file.finddir('plugin/', fnamemodify(path, ':p')), ':.'), 'bundle/dein.vim/'
+  AssertEqual file.unify_path(file.finddir('doc/', fnamemodify(path, ':p')), ':.'), 'bundle/dein.vim/doc/'
+  AssertEqual map(file.finddir('doc/', fnamemodify(path, ':p'), 0), 'file.unify_path(v:val, ":.")'), ['bundle/dein.vim/doc/', 'doc/']
+  AssertEqual file.unify_path(file.finddir('doc/', fnamemodify(path, ':p'), -1), ':.'), 'doc/'
   unlet file path
