@@ -254,13 +254,15 @@ let s:file['path_to_fname'] = function('s:path_to_fname')
 function! s:findfile(what, where, ...) abort
   let old_suffixesadd = &suffixesadd
   let &suffixesadd = ''
-  let count = get(a:000, 0, 0)
-  if count > 0
-    let file = findfile(a:what, escape(a:where, ' ') . ';', count)
+  let l:count = get(a:000, 0, 0)
+  if l:count > 0
+    let file = findfile(a:what, escape(a:where, ' ') . ';', l:count)
   elseif a:0 ==# 0
     let file = findfile(a:what, escape(a:where, ' ') . ';')
+  elseif l:count ==# 0
+    let file = findfile(a:what, escape(a:where, ' ') . ';', -1)
   else
-    let file = get(findfile(a:what, escape(a:where, ' ') . ';', -1), count, '')
+    let file = get(findfile(a:what, escape(a:where, ' ') . ';', -1), l:count, '')
   endif
   let &suffixesadd = old_suffixesadd
   return file
