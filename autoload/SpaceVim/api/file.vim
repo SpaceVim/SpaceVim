@@ -251,23 +251,22 @@ endfunction
 
 let s:file['path_to_fname'] = function('s:path_to_fname')
 
-function! s:find_file(what, where, outmost) abort
+function! s:findfile(what, where, ...) abort
   let old_suffixesadd = &suffixesadd
   let &suffixesadd = ''
-  let file = findfile(a:what, escape(a:where, ' ') . ';')
-  if a:outmost
-    let previous = file
-    while !empty(file)
-      let previous = file
-      let file = findfile(fnamemodify(file, ':h'), a:where . ';')
-    endwhile
-    let file = previous
+  let count = get(a:000, 0, 0)
+  if count > 0
+    let file = findfile(a:what, escape(a:where, ' ') . ';', count)
+  elseif a:0 ==# 0
+    let file = findfile(a:what, escape(a:where, ' ') . ';')
+  else
+    let file = get(findfile(a:what, escape(a:where, ' ') . ';', -1), count, '')
   endif
   let &suffixesadd = old_suffixesadd
   return file
 endfunction
 
-let s:file['find_file_in_parent'] = function('s:find_file')
+let s:file['findfile'] = function('s:findfile')
 
 function! SpaceVim#api#file#get() abort
   return deepcopy(s:file)
