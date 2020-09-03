@@ -270,6 +270,24 @@ endfunction
 
 let s:file['findfile'] = function('s:findfile')
 
+function! s:finddir(what, where, ...) abort
+  let old_suffixesadd = &suffixesadd
+  let &suffixesadd = ''
+  let l:count = get(a:000, 0, 0)
+  if l:count > 0
+    let file = finddir(a:what, escape(a:where, ' ') . ';', l:count)
+  elseif a:0 ==# 0
+    let file = finddir(a:what, escape(a:where, ' ') . ';')
+  elseif l:count ==# 0
+    let file = finddir(a:what, escape(a:where, ' ') . ';', -1)
+  else
+    let file = get(finddir(a:what, escape(a:where, ' ') . ';', -1), l:count, '')
+  endif
+  let &suffixesadd = old_suffixesadd
+  return file
+endfunction
+
+let s:file['finddir'] = function('s:finddir')
 function! SpaceVim#api#file#get() abort
   return deepcopy(s:file)
 endfunction
