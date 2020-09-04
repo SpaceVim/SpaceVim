@@ -8,6 +8,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
                 rm -rf build/GitHub.vim
             fi
             VIMLINT_LOG=`cat build_log`
+            echo $VIMLINT_LOG
             git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
             docker run \
                 -it --rm \
@@ -19,12 +20,25 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ] ; then
                 spacevim/vims vim8 -u /.ci/common/github_commenter.vim
             rm build_log
         fi
+    elif [ "$LINT" = "vimlint" ] ; then
+        if [[ -f build_log ]]; then
+            VIMLINT_LOG=`cat build_log`
+            echo $VIMLINT_LOG
+            rm build_log
+        fi
+    elif [ "$LINT" = "vint" ] ; then
+        if [[ -f build_log ]]; then
+            VIMLINT_LOG=`cat build_log`
+            echo $VIMLINT_LOG
+            rm build_log
+        fi
     elif [ "$LINT" = "vint-errors" ] ; then
         if [[ -f build_log ]]; then
             if [[ -d build/GitHub.vim ]]; then
                 rm -rf build/GitHub.vim
             fi
             VIMLINT_LOG=`cat build_log`
+            echo $VIMLINT_LOG
             git clone https://github.com/wsdjeg/GitHub.vim.git build/GitHub.vim
             docker run -it --rm \
                 -e TRAVIS_PULL_REQUEST=${TRAVIS_PULL_REQUEST} \

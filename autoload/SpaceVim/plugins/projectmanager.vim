@@ -188,9 +188,17 @@ function! s:find_root_directory() abort
   call SpaceVim#logger#info('Start to find root for: ' . s:FILE.unify_path(fd))
   for pattern in s:project_rooter_patterns
     if stridx(pattern, '/') != -1
-      let find_path = SpaceVim#util#findDirInParent(pattern, fd)
+      if g:spacevim_project_rooter_outermost
+        let find_path = s:FILE.finddir(pattern, fd, -1)
+      else
+        let find_path = s:FILE.finddir(pattern, fd)
+      endif
     else
-      let find_path = SpaceVim#util#findFileInParent(pattern, fd)
+      if g:spacevim_project_rooter_outermost
+        let find_path = s:FILE.findfile(pattern, fd, -1)
+      else
+        let find_path = s:FILE.findfile(pattern, fd)
+      endif
     endif
     let path_type = getftype(find_path)
     if ( path_type ==# 'dir' || path_type ==# 'file' ) 
@@ -222,7 +230,7 @@ function! s:sort_dirs(dirs) abort
 endfunction
 
 function! s:compare(d1, d2) abort
-  if g:spacevim_project_rooter_outermost
+  if !g:spacevim_project_rooter_outermost
     return len(split(a:d2, '/')) - len(split(a:d1, '/'))
   else
     return len(split(a:d1, '/')) - len(split(a:d2, '/'))

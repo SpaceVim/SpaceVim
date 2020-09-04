@@ -185,6 +185,29 @@ function! s:self.is_blob(var) abort
   return type(a:var) ==# 10
 endfunction
 
+if has('nvim')
+  function! s:self.getchar(...) abort
+    if !empty(get(g:, '_spacevim_input_list', []))
+      sleep 1000m
+      return remove(g:_spacevim_input_list, 0)
+    endif
+    let ret = call('getchar', a:000)
+    return (type(ret) == type(0) ? nr2char(ret) : ret)
+  endfunction
+else
+  function! s:self.getchar(...) abort
+    if !empty(get(g:, '_spacevim_input_list', []))
+      sleep 1000m
+      return remove(g:_spacevim_input_list, 0)
+    endif
+    let ret = call('getchar', a:000)
+    while ret ==# "\x80\xfd\d"
+      let ret = call('getchar', a:000)
+    endwhile
+    return (type(ret) == type(0) ? nr2char(ret) : ret)
+  endfunction
+endif
+
 function! SpaceVim#api#vim#get() abort
   return deepcopy(s:self)
 endfunction

@@ -78,11 +78,11 @@ function! s:get_project_config(conf_file) abort
         \ }
 endfunction
 
-function! SpaceVim#plugins#a#alt(request_paser,...) abort
+function! SpaceVim#plugins#a#alt(request_parse,...) abort
   let type = get(a:000, 0, 'alternate')
-  let conf_file_path = s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
+  let conf_file_path = SpaceVim#plugins#a#getConfigPath()
   let file = s:FILE.unify_path(bufname('%'), ':.')
-  let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, a:request_paser, type)
+  let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, a:request_parse, type)
   if !empty(alt)
     exe 'e ' . alt
   else
@@ -91,18 +91,18 @@ function! SpaceVim#plugins#a#alt(request_paser,...) abort
 endfunction
 
 
-" the paser function should only accept one argv
+" the parse function should only accept one argv
 " the alt_config_json
 "
-" @todo Rewrite alternate file paser
-" paser function is written in vim script, and it is too slow,
+" @todo Rewrite alternate file parse
+" parse function is written in vim script, and it is too slow,
 " we are going to rewrite this function in other language.
-" asynchronous paser should be supported.
-function! s:paser(alt_config_json) abort
-  call s:LOGGER.info('Start to paser alternate files for: ' . a:alt_config_json.root)
+" asynchronous parse should be supported.
+function! s:parse(alt_config_json) abort
+  call s:LOGGER.info('Start to parse alternate files for: ' . a:alt_config_json.root)
   let s:project_config[a:alt_config_json.root] = {}
   for key in keys(a:alt_config_json.config)
-    call s:LOGGER.info('start paser key:' . key)
+    call s:LOGGER.info('start parse key:' . key)
     let searchpath = key
     if match(searchpath, '/\*')
       let searchpath = substitute(searchpath, '*', '**/*', 'g')
@@ -148,34 +148,34 @@ function! s:is_config_changed(conf_path) abort
   if getftime(a:conf_path) > getftime(s:cache_path)
     call s:LOGGER.info('alt config file ('
           \ . a:conf_path
-          \ . ') has been changed, paser required!')
+          \ . ') has been changed, parse required!')
     return 1
   endif
 endfunction
 
-function! SpaceVim#plugins#a#get_alt(file, conf_path, request_paser,...) abort
+function! SpaceVim#plugins#a#get_alt(file, conf_path, request_parse,...) abort
   call s:LOGGER.info('getting alt file for:' . a:file)
   call s:LOGGER.info('  >   type: ' . get(a:000, 0, 'alternate'))
-  call s:LOGGER.info('  >  paser: ' . a:request_paser)
+  call s:LOGGER.info('  >  parse: ' . a:request_parse)
   call s:LOGGER.info('  > config: ' . a:conf_path)
   " @question when should the cache be loaded?
   " if the local value s:project_config do not has the key a:conf_path
   " and the file a:conf_path has not been updated since last cache
-  " and no request_paser specified
+  " and no request_parse specified
   let alt_config_json = s:get_project_config(a:conf_path)
   if !has_key(s:project_config, alt_config_json.root)
         \ && !s:is_config_changed(a:conf_path)
-        \ && !a:request_paser
+        \ && !a:request_parse
     " config file has been cached since last update.
-    " so no need to paser the config for current config file
+    " so no need to parse the config for current config file
     " just load the cache
     call s:load_cache()
     if !has_key(s:project_config, alt_config_json.root)
           \ || !has_key(s:project_config[alt_config_json.root], a:file)
-      call s:paser(alt_config_json)
+      call s:parse(alt_config_json)
     endif
   else
-    call s:paser(alt_config_json)
+    call s:parse(alt_config_json)
   endif
   " try
   " This will throw error in vim7.4.629 and 7.4.052
@@ -201,7 +201,7 @@ endfunction
 
 
 function! SpaceVim#plugins#a#getConfigPath() abort
-  return s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
+  return s:FILE.unify_path(get(s:alternate_conf, getcwd(), s:alternate_conf['_']), ':p')
 endfunction
 
 
@@ -210,7 +210,7 @@ endfunction
 " @vimlint(EVL103, 1, a:CursorPos)
 function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
   let file = s:FILE.unify_path(bufname('%'), ':.')
-  let conf_file_path = s:FILE.unify_path(get(s:alternate_conf, getcwd(), '_'), ':p')
+  let conf_file_path = SpaceVim#plugins#a#getConfigPath()
   let alt_config_json = s:get_project_config(conf_file_path)
 
   call SpaceVim#plugins#a#get_alt(file, conf_file_path, 0)
