@@ -249,7 +249,13 @@ If you want to add plugins from github, just add the repo name to the `custom_pl
     merged = false
 ```
 
-`on_cmd` option means this plugin will be loaded only when the following commands are called. For more options see `:h dein-options`.
+`on_cmd` option means this plugin will be loaded only when the following commands are called.
+
+`merged` option is used for merging plugins directory. When `merged` is `trye`, all files in
+this custom plugin will be merged into `~/.cache/vimfiles/.cache/init.vim/` for neovim or 
+`~/.cache/vimfiles/.cache/vimrc/` for vim.
+
+For more options see `:h dein-options`.
 
 **disable existing plugins**
 
