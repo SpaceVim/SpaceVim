@@ -1691,7 +1691,9 @@ which will tell you the functional of all mappings starting with `z`.
 
 ### Managing projects
 
-SpaceVim will detect the root directory of the project based on `project_rooter_patterns` option, default is:
+When open a file, SpaceVim will change current directory to the project
+root directory which contains this file. The project root directory detection
+is based on on `project_rooter_patterns` option,  and the default value is:
 
 ```toml
 [options]
@@ -1707,8 +1709,9 @@ you need to change `project_rooter_outermost` to `false`.
     project_rooter_outermost = false
 ```
 
-when using nearest directory, something we want to ignore some directory,
-for example ignore `node_packages/` directory.
+Sometimes we want to ignore some directorys when detect the project root directory.
+add a `!` prefix before the pattern.
+For example, ignore `node_packages/` directory:
 
 ```toml
 [options]
@@ -1729,7 +1732,6 @@ Project manager commands start with `p`:
 | `SPC p f`    | find files in current project            |
 | `SPC p /`    | fuzzy search for text in current project |
 | `SPC p k`    | kill all buffers of current project      |
-| `SPC p t`    | find project root                        |
 | `SPC p p`    | list all projects                        |
 
 #### Custom alternate file

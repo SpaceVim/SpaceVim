@@ -1686,7 +1686,6 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当
 | `SPC p f` | 在当前工程中查找文件     |
 | `SPC p /` | 在当前工程中搜索文本内容 |
 | `SPC p k` | 关闭当前工程的所有缓冲区 |
-| `SPC p t` | 自动查找工程根目录       |
 | `SPC p p` | 显示所有工程             |
 
 #### 自定义跳转文件
