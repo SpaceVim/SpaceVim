@@ -1670,7 +1670,17 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 ### 工程管理
 
+
+当打开一个文件时，SpaceVim 会自动切换当前目录至包含该文件的项目根目录，
+项目根目录的检测依据 `project_rooter_patterns` 这一选项，其默认值为：
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+```
+
 SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当发现一个 `.git` 目录或
+
 在文件树中发现 `.project_alt.json` 文件后 vim-rooter 会自动找到项目的根目录。
 
 工程管理的命令以 `p` 开头：
