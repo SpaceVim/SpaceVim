@@ -69,11 +69,13 @@ endfunction
 
 function! s:std_out(id, data, event) abort
   for line in filter(a:data, '!empty(v:val)')
+    call s:LOGGER.info(line)
     call add(s:matched_lines, str2nr(matchstr(line, '^\d\+')))
   endfor
 endfunction
 
 function! s:exit(id, data, event) abort
+  call s:LOGGER.info('foldsearch job exit with: '. a:data)
   let preview = 0
   for nr in s:matched_lines
     if nr - preview >= 3 " first matched line is 3
