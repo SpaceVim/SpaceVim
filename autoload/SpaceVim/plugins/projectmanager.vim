@@ -185,7 +185,7 @@ function! s:find_root_directory() abort
     return ''
   endif
   let dirs = []
-  call SpaceVim#logger#info('Start to find root for: ' . s:FILE.unify_path(fd))
+  call s:LOGGER.info('Start to find root for: ' . s:FILE.unify_path(fd))
   for pattern in s:project_rooter_patterns
     if stridx(pattern, '/') != -1
       if g:spacevim_project_rooter_outermost
@@ -211,7 +211,7 @@ function! s:find_root_directory() abort
       else
         let dir = s:FILE.unify_path(find_path, ':h')
       endif
-      call SpaceVim#logger#info('        (' . pattern . '):' . dir)
+      call s:LOGGER.info('        (' . pattern . '):' . dir)
       call add(dirs, dir)
     endif
   endfor

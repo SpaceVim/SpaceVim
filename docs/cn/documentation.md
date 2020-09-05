@@ -1670,8 +1670,32 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 ### 工程管理
 
-SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当发现一个 `.git` 目录或
-在文件树中发现 `.project_alt.json` 文件后 vim-rooter 会自动找到项目的根目录。
+
+当打开一个文件时，SpaceVim 会自动切换当前目录至包含该文件的项目根目录，
+项目根目录的检测依据 `project_rooter_patterns` 这一选项，其默认值为：
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+```
+
+项目管理器默认自动检测最外层的项目根目录，如果需要自动检测最内层的项目根目录，
+可将选项 `project_rooter_outermost` 选项改为 `false`。
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+    project_rooter_outermost = false
+```
+
+在自动检测项目根目录时，有时候我们需要忽略掉一些目录，可以表达式前面添加 `!`，
+比如，忽略掉 `node_packages/` 文件夹：
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/', '!node_packages/']
+    project_rooter_outermost = false
+```
 
 工程管理的命令以 `p` 开头：
 
@@ -1686,7 +1710,6 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当
 | `SPC p f` | 在当前工程中查找文件     |
 | `SPC p /` | 在当前工程中搜索文本内容 |
 | `SPC p k` | 关闭当前工程的所有缓冲区 |
-| `SPC p t` | 自动查找工程根目录       |
 | `SPC p p` | 显示所有工程             |
 
 #### 自定义跳转文件
