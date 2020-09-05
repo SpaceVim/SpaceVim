@@ -290,30 +290,34 @@ To enable them you need to add following into
     bootstrap_after = 'myspacevim#after'
 ```
 
-The difference is that these two options is that will be called before or after the loading of SpaceVim's main scripts as they named.
+The difference is that these two functions will be called before
+or after loading SpaceVim core as they named.
 
-The bootstrap functions should be placed to the `autoload` directory in `runtimepath`, please refer to `:h autoload-functions` for further instructions. In our case, create file `.SpaceVim.d/autoload/myspacevim.vim` with contents for example
+The bootstrap functions should be placed to the `autoload` directory
+in `~/.SpaceVim.d/`. In our case, create file `~/.SpaceVim.d/autoload/myspacevim.vim`
+with contents for example
 
 ```vim
 function! myspacevim#before() abort
-let g:neomake_enabled_c_makers = ['clang']
-nnoremap jk <Esc>
+    let g:neomake_enabled_c_makers = ['clang']
+    nnoremap jk <Esc>
 endfunction
 
 function! myspacevim#after() abort
-iunmap jk
+    iunmap jk
 endfunction
 ```
 
 The `bootstrap_before` will be called after custom configuration file is loaded.
 And the `bootstrap_after` will be called after Vim Enter autocmd.
 
-If you want to add custom `SPC` prefix key bindings, you can add them to bootstrap function, **be sure** the key bindings are not used in SpaceVim.
+If you want to add custom `SPC` prefix key bindings, you can add them to
+bootstrap function, **be sure** the key bindings are not used in SpaceVim.
 
 ```vim
 function! myspacevim#before() abort
-call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
-call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+    call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
+    call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 endfunction
 ```
 
