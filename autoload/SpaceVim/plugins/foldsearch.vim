@@ -69,8 +69,7 @@ endfunction
 
 function! s:std_out(id, data, event) abort
   for line in filter(a:data, '!empty(v:val)')
-    call s:LOGGER.info(line)
-    call add(s:matched_lines, str2nr(matchstr(line, '^\d\+')))
+    call add(s:matched_lines, str2nr(matchstr(line, ':\d\+:')[1:-2]))
   endfor
 endfunction
 
