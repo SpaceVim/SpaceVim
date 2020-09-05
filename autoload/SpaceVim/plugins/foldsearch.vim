@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:JOB = SpaceVim#api#import('job')
+let s:SYS = SpaceVim#api#import('system')
 let s:LOGGER =SpaceVim#logger#derive('fsearch')
 
 let s:matched_lines = []
@@ -32,7 +33,16 @@ function! SpaceVim#plugins#foldsearch#end() abort
 endfunction
 
 function! SpaceVim#plugins#foldsearch#word(word) abort
-  let argv = ['rg', '--line-number', '--fixed-strings', a:word]
+  let argv = [s:grep_default_exe] + 
+        \ s:grep_default_opt +
+        \ s:grep_default_fix_string_opt +
+        \ [a:word]
+  if s:SYS.isWindows && (s:grep_default_exe ==# 'rg' || s:grep_default_exe ==# 'ag' || s:grep_default_exe ==# 'pt' )
+    let argv += ['.']
+  elseif s:SYS.isWindows && s:grep_default_exe ==# 'findstr'
+    let argv += ['*.*']
+  endif
+  let argv += s:grep_default_ropt
   call s:LOGGER.info('cmd: ' . string(argv))
   try
     call matchdelete(s:foldsearch_highlight_id)
