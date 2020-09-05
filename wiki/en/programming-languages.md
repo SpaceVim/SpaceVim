@@ -85,220 +85,228 @@ This is a list of programming languages supported in SpaceVim:
 | Visual Basic .NET | [lang#vbnet](https://spacevim.org/layers/lang/vbnet/)               |                                                                                                               |
 | zig               | [lang#zig](https://spacevim.org/layers/lang/zig/)                   |                                                                                                               |
 
-
 ### Todos
 
-| language          | layer doc                                                           | Issues                                                                                                        |
-| ----------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| 4th Dimension     |                                                                     |                                                                                                               |
-| ABAP              |                                                                     |                                                                                                               |
-| ABC               |                                                                     |                                                                                                               |
-| Ada               |                                                                     |                                                                                                               |
-| Agilent VEE       |                                                                     |                                                                                                               |
-| Algol             |                                                                     |                                                                                                               |
-| Alice             |                                                                     |                                                                                                               |
-| Angelscript       |                                                                     |                                                                                                               |
-| Apex              |                                                                     |                                                                                                               |
-| APL               |                                                                     |                                                                                                               |
-| Applescript       |                                                                     |                                                                                                               |
-| Arc               |                                                                     |                                                                                                               |
-| ATLAS             |                                                                     |                                                                                                               |
-| AutoIt            |                                                                     |                                                                                                               |
-| AutoLISP          |                                                                     |                                                                                                               |
-| Automator         |                                                                     |                                                                                                               |
-| Avenue            |                                                                     |                                                                                                               |
-| Awk               |                                                                     |                                                                                                               |
-| Basic             |                                                                     |                                                                                                               |
-| BBC BASIC         |                                                                     |                                                                                                               |
-| bc                |                                                                     |                                                                                                               |
-| BCPL              |                                                                     |                                                                                                               |
-| BETA              |                                                                     |                                                                                                               |
-| BlitzMax          |                                                                     |                                                                                                               |
-| Boo               |                                                                     |                                                                                                               |
-| Bourne shell      |                                                                     |                                                                                                               |
-| C shell           |                                                                     |                                                                                                               |
-| C-Omega           |                                                                     |                                                                                                               |
-| Ceylon            |                                                                     |                                                                                                               |
-| CFML              |                                                                     |                                                                                                               |
-| cg                |                                                                     |                                                                                                               |
-| Ch                |                                                                     |                                                                                                               |
-| CHILL             |                                                                     |                                                                                                               |
-| CIL               |                                                                     |                                                                                                               |
-| CL                |                                                                     |                                                                                                               |
-| Clarion           |                                                                     |                                                                                                               |
-| Clean             |                                                                     |                                                                                                               |
-| Clipper           |                                                                     |                                                                                                               |
-| CLU               |                                                                     |                                                                                                               |
-| COBOL             |                                                                     |                                                                                                               |
-| Cobra             |                                                                     |                                                                                                               |
-| COMAL             |                                                                     |                                                                                                               |
-| Common Lisp       |                                                                     |                                                                                                               |
-| cT                |                                                                     |                                                                                                               |
-| Curl              |                                                                     |                                                                                                               |
-| DCL               |                                                                     |                                                                                                               |
-| Delphi            |                                                                     |                                                                                                               |
-| DiBOL             |                                                                     |                                                                                                               |
-| Dylan             |                                                                     |                                                                                                               |
-| E                 |                                                                     |                                                                                                               |
-| ECMAScript        |                                                                     |                                                                                                               |
-| EGL               |                                                                     |                                                                                                               |
-| Eiffel            |                                                                     |                                                                                                               |
-| Emacs Lisp        |                                                                     |                                                                                                               |
-| Etoys             |                                                                     |                                                                                                               |
-| Euphoria          |                                                                     |                                                                                                               |
-| EXEC              |                                                                     |                                                                                                               |
-| Factor            |                                                                     |                                                                                                               |
-| Falcon            |                                                                     |                                                                                                               |
-| Fantom            |                                                                     |                                                                                                               |
-| Felix             |                                                                     |                                                                                                               |
-| Forth             |                                                                     |                                                                                                               |
-| Fortress          |                                                                     |                                                                                                               |
-| Gambas            |                                                                     |                                                                                                               |
-| GAMS              |                                                                     |                                                                                                               |
-| GLSL              |                                                                     |                                                                                                               |
-| GML               |                                                                     |                                                                                                               |
-| GNU Octave        |                                                                     |                                                                                                               |
-| Haxe              |                                                                     |                                                                                                               |
-| Heron             |                                                                     |                                                                                                               |
-| HPL               |                                                                     |                                                                                                               |
-| HyperTalk         |                                                                     |                                                                                                               |
-| Icon              |                                                                     |                                                                                                               |
-| IDL               |                                                                     |                                                                                                               |
-| Inform            |                                                                     |                                                                                                               |
-| Informix-4GL      |                                                                     |                                                                                                               |
-| INTERCAL          |                                                                     |                                                                                                               |
-| Ioke              |                                                                     |                                                                                                               |
-| JADE              |                                                                     |                                                                                                               |
-| JavaFX Script     |                                                                     |                                                                                                               |
-| JScript           |                                                                     |                                                                                                               |
-| JScript.NET       |                                                                     |                                                                                                               |
-| Korn shell        |                                                                     |                                                                                                               |
-| LabVIEW           |                                                                     |                                                                                                               |
-| Ladder Logic      |                                                                     |                                                                                                               |
-| Lasso             |                                                                     |                                                                                                               |
-| Limbo             |                                                                     |                                                                                                               |
-| Lingo             |                                                                     |                                                                                                               |
-| Lisp              |                                                                     |                                                                                                               |
-| LiveCode          |                                                                     |                                                                                                               |
-| Logo              |                                                                     |                                                                                                               |
-| LotusScript       |                                                                     |                                                                                                               |
-| LPC               |                                                                     |                                                                                                               |
-| Lustre            |                                                                     |                                                                                                               |
-| M4                |                                                                     |                                                                                                               |
-| MAD               |                                                                     |                                                                                                               |
-| Magic             |                                                                     |                                                                                                               |
-| Magik             |                                                                     |                                                                                                               |
-| Malbolge          |                                                                     |                                                                                                               |
-| MANTIS            |                                                                     |                                                                                                               |
-| Maple             |                                                                     |                                                                                                               |
-| Max/MSP           |                                                                     |                                                                                                               |
-| MAXScript         |                                                                     |                                                                                                               |
-| MDX               |                                                                     |                                                                                                               |
-| MEL               |                                                                     |                                                                                                               |
-| Mercury           |                                                                     |                                                                                                               |
-| Miva              |                                                                     |                                                                                                               |
-| ML                |                                                                     |                                                                                                               |
-| Modula-2          |                                                                     |                                                                                                               |
-| Modula-3          |                                                                     |                                                                                                               |
-| Monkey            |                                                                     |                                                                                                               |
-| MOO               |                                                                     |                                                                                                               |
-| Moto              |                                                                     |                                                                                                               |
-| MQL4              |                                                                     |                                                                                                               |
-| MUMPS             |                                                                     |                                                                                                               |
-| NATURAL           |                                                                     |                                                                                                               |
-| Nemerle           |                                                                     |                                                                                                               |
-| NetLogo           |                                                                     |                                                                                                               |
-| NQC               |                                                                     |                                                                                                               |
-| NSIS              |                                                                     |                                                                                                               |
-| NXT-G             |                                                                     |                                                                                                               |
-| Oberon            |                                                                     |                                                                                                               |
-| Object Rexx       |                                                                     |                                                                                                               |
-| Objective-C       |                                                                     |                                                                                                               |
-| Occam             |                                                                     |                                                                                                               |
-| OpenCL            |                                                                     |                                                                                                               |
-| OpenEdge ABL      |                                                                     |                                                                                                               |
-| OPL               |                                                                     |                                                                                                               |
-| Oxygene           |                                                                     |                                                                                                               |
-| Oz                |                                                                     |                                                                                                               |
-| Paradox           |                                                                     |                                                                                                               |
-| Pike              |                                                                     |                                                                                                               |
-| PILOT             |                                                                     |                                                                                                               |
-| PL/I              |                                                                     |                                                                                                               |
-| PL/SQL            |                                                                     |                                                                                                               |
-| Pliant            |                                                                     |                                                                                                               |
-| PostScript        |                                                                     |                                                                                                               |
-| POV-Ray           |                                                                     |                                                                                                               |
-| PowerBasic        |                                                                     |                                                                                                               |
-| PowerScript       |                                                                     |                                                                                                               |
-| PWCT              |                                                                     |                                                                                                               |
-| Pure Data         |                                                                     |                                                                                                               |
-| PureBasic         |                                                                     |                                                                                                               |
-| Q                 |                                                                     |                                                                                                               |
-| REBOL             |                                                                     |                                                                                                               |
-| REXX              |                                                                     |                                                                                                               |
-| RPG               |                                                                     |                                                                                                               |
-| S-PLUS            |                                                                     |                                                                                                               |
-| S                 |                                                                     |                                                                                                               |
-| SAS               |                                                                     |                                                                                                               |
-| Sather            |                                                                     |                                                                                                               |
-| Scratch           |                                                                     |                                                                                                               |
-| sed               |                                                                     |                                                                                                               |
-| Seed7             |                                                                     |                                                                                                               |
-| SIGNAL            |                                                                     |                                                                                                               |
-| Simula            |                                                                     |                                                                                                               |
-| Simulink          |                                                                     |                                                                                                               |
-| Slate             |                                                                     |                                                                                                               |
-| Smalltalk         |                                                                     |                                                                                                               |
-| Smarty            |                                                                     |                                                                                                               |
-| Snap!             |                                                                     |                                                                                                               |
-| SNOBOL            |                                                                     |                                                                                                               |
-| SPARK             |                                                                     |                                                                                                               |
-| SPSS              |                                                                     |                                                                                                               |
-| SQR               |                                                                     |                                                                                                               |
-| Squeak            |                                                                     |                                                                                                               |
-| Squirrel          |                                                                     |                                                                                                               |
-| Standard ML       |                                                                     |                                                                                                               |
-| Stata             |                                                                     |                                                                                                               |
-| Suneido           |                                                                     |                                                                                                               |
-| SuperCollider     |                                                                     |                                                                                                               |
-| TACL              |                                                                     |                                                                                                               |
-| tcsh              |                                                                     |                                                                                                               |
-| Tex               |                                                                     |                                                                                                               |
-| thinBasic         |                                                                     |                                                                                                               |
-| TOM               |                                                                     |                                                                                                               |
-| Transact-SQL      |                                                                     |                                                                                                               |
-| Vala/Genie        |                                                                     |                                                                                                               |
-| VBScript          |                                                                     |                                                                                                               |
-| Verilog           |                                                                     |                                                                                                               |
-| VHDL              |                                                                     |                                                                                                               |
-| Visual Basic      |                                                                     |                                                                                                               |
-| WebAssembly       |                                                                     |                                                                                                               |
-| WebDNA            |                                                                     |                                                                                                               |
-| Whitespace        |                                                                     |                                                                                                               |
-| Wolfram           |                                                                     |                                                                                                               |
-| X10               |                                                                     |                                                                                                               |
-| xBase             |                                                                     |                                                                                                               |
-| XBase++           |                                                                     |                                                                                                               |
-| Xen               |                                                                     |                                                                                                               |
-| Xojo              |                                                                     |                                                                                                               |
-| XPL               |                                                                     |                                                                                                               |
-| XQuery            |                                                                     |                                                                                                               |
-| XSLT              |                                                                     |                                                                                                               |
-| Xtend             |                                                                     |                                                                                                               |
-| yacc              |                                                                     |                                                                                                               |
-| Yorick            |                                                                     |                                                                                                               |
+Before adding these languages, we need to know:
 
-- dotnet/roslyn
-- micropython/micropython
-- AssemblyScript/assemblyscript
-- Frege/frege
-- typelead/eta
-- programming-nu/nu
-- zdevito/terra
-- skiplang/skip
-- FascinatedBox/lily
-- rakudo/rakudo
-- lucee/Lucee
-- eclipse/golo-lang
-- HaxeFoundation/haxe
-- livecode/livecode
+1. What is the `filetype` of the language?
+
+2. What is the file extaintion of this language?
+
+3. syntax highlighting file.
+
+4. indent file.
+
+| language                      | layer doc | Issues |
+| ----------------------------- | --------- | ------ |
+| 4th Dimension                 |           |        |
+| ABAP                          |           |        |
+| ABC                           |           |        |
+| Ada                           |           |        |
+| Agilent VEE                   |           |        |
+| Algol                         |           |        |
+| Alice                         |           |        |
+| Angelscript                   |           |        |
+| Apex                          |           |        |
+| APL                           |           |        |
+| Applescript                   |           |        |
+| Arc                           |           |        |
+| ATLAS                         |           |        |
+| AutoIt                        |           |        |
+| AutoLISP                      |           |        |
+| Automator                     |           |        |
+| Avenue                        |           |        |
+| Awk                           |           |        |
+| Basic                         |           |        |
+| BBC BASIC                     |           |        |
+| bc                            |           |        |
+| BCPL                          |           |        |
+| BETA                          |           |        |
+| BlitzMax                      |           |        |
+| Boo                           |           |        |
+| Bourne shell                  |           |        |
+| C shell                       |           |        |
+| C-Omega                       |           |        |
+| Ceylon                        |           |        |
+| CFML                          |           |        |
+| cg                            |           |        |
+| Ch                            |           |        |
+| CHILL                         |           |        |
+| CIL                           |           |        |
+| CL                            |           |        |
+| Clarion                       |           |        |
+| Clean                         |           |        |
+| Clipper                       |           |        |
+| CLU                           |           |        |
+| COBOL                         |           |        |
+| Cobra                         |           |        |
+| COMAL                         |           |        |
+| Common Lisp                   |           |        |
+| cT                            |           |        |
+| Curl                          |           |        |
+| DCL                           |           |        |
+| Delphi                        |           |        |
+| DiBOL                         |           |        |
+| Dylan                         |           |        |
+| E                             |           |        |
+| ECMAScript                    |           |        |
+| EGL                           |           |        |
+| Eiffel                        |           |        |
+| Emacs Lisp                    |           |        |
+| Etoys                         |           |        |
+| Euphoria                      |           |        |
+| EXEC                          |           |        |
+| Factor                        |           |        |
+| Falcon                        |           |        |
+| Fantom                        |           |        |
+| Felix                         |           |        |
+| Forth                         |           |        |
+| Fortress                      |           |        |
+| Gambas                        |           |        |
+| GAMS                          |           |        |
+| GLSL                          |           |        |
+| GML                           |           |        |
+| GNU Octave                    |           |        |
+| Haxe                          |           |        |
+| Heron                         |           |        |
+| HPL                           |           |        |
+| HyperTalk                     |           |        |
+| Icon                          |           |        |
+| IDL                           |           |        |
+| Inform                        |           |        |
+| Informix-4GL                  |           |        |
+| INTERCAL                      |           |        |
+| Ioke                          |           |        |
+| JADE                          |           |        |
+| JavaFX Script                 |           |        |
+| JScript                       |           |        |
+| JScript.NET                   |           |        |
+| Korn shell                    |           |        |
+| LabVIEW                       |           |        |
+| Ladder Logic                  |           |        |
+| Lasso                         |           |        |
+| Limbo                         |           |        |
+| Lingo                         |           |        |
+| Lisp                          |           |        |
+| LiveCode                      |           |        |
+| Logo                          |           |        |
+| LotusScript                   |           |        |
+| LPC                           |           |        |
+| Lustre                        |           |        |
+| M4                            |           |        |
+| MAD                           |           |        |
+| Magic                         |           |        |
+| Magik                         |           |        |
+| Malbolge                      |           |        |
+| MANTIS                        |           |        |
+| Maple                         |           |        |
+| Max/MSP                       |           |        |
+| MAXScript                     |           |        |
+| MDX                           |           |        |
+| MEL                           |           |        |
+| Mercury                       |           |        |
+| Miva                          |           |        |
+| ML                            |           |        |
+| Modula-2                      |           |        |
+| Modula-3                      |           |        |
+| Monkey                        |           |        |
+| MOO                           |           |        |
+| Moto                          |           |        |
+| MQL4                          |           |        |
+| MUMPS                         |           |        |
+| NATURAL                       |           |        |
+| Nemerle                       |           |        |
+| NetLogo                       |           |        |
+| NQC                           |           |        |
+| NSIS                          |           |        |
+| NXT-G                         |           |        |
+| Oberon                        |           |        |
+| Object Rexx                   |           |        |
+| Objective-C                   |           |        |
+| Occam                         |           |        |
+| OpenCL                        |           |        |
+| OpenEdge ABL                  |           |        |
+| OPL                           |           |        |
+| Oxygene                       |           |        |
+| Oz                            |           |        |
+| Paradox                       |           |        |
+| Pike                          |           |        |
+| PILOT                         |           |        |
+| PL/I                          |           |        |
+| PL/SQL                        |           |        |
+| Pliant                        |           |        |
+| PostScript                    |           |        |
+| POV-Ray                       |           |        |
+| PowerBasic                    |           |        |
+| PowerScript                   |           |        |
+| PWCT                          |           |        |
+| Pure Data                     |           |        |
+| PureBasic                     |           |        |
+| Q                             |           |        |
+| REBOL                         |           |        |
+| REXX                          |           |        |
+| RPG                           |           |        |
+| S-PLUS                        |           |        |
+| S                             |           |        |
+| SAS                           |           |        |
+| Sather                        |           |        |
+| Scratch                       |           |        |
+| sed                           |           |        |
+| Seed7                         |           |        |
+| SIGNAL                        |           |        |
+| Simula                        |           |        |
+| Simulink                      |           |        |
+| Slate                         |           |        |
+| Smalltalk                     |           |        |
+| Smarty                        |           |        |
+| Snap!                         |           |        |
+| SNOBOL                        |           |        |
+| SPARK                         |           |        |
+| SPSS                          |           |        |
+| SQR                           |           |        |
+| Squeak                        |           |        |
+| Squirrel                      |           |        |
+| Standard ML                   |           |        |
+| Stata                         |           |        |
+| Suneido                       |           |        |
+| SuperCollider                 |           |        |
+| TACL                          |           |        |
+| tcsh                          |           |        |
+| Tex                           |           |        |
+| thinBasic                     |           |        |
+| TOM                           |           |        |
+| Transact-SQL                  |           |        |
+| Vala/Genie                    |           |        |
+| VBScript                      |           |        |
+| Verilog                       |           |        |
+| VHDL                          |           |        |
+| Visual Basic                  |           |        |
+| WebAssembly                   |           |        |
+| WebDNA                        |           |        |
+| Whitespace                    |           |        |
+| Wolfram                       |           |        |
+| X10                           |           |        |
+| xBase                         |           |        |
+| XBase++                       |           |        |
+| Xen                           |           |        |
+| Xojo                          |           |        |
+| XPL                           |           |        |
+| XQuery                        |           |        |
+| XSLT                          |           |        |
+| Xtend                         |           |        |
+| yacc                          |           |        |
+| Yorick                        |           |        |
+| dotnet/roslyn                 |           |        |
+| micropython/micropython       |           |        |
+| AssemblyScript/assemblyscript |           |        |
+| Frege/frege                   |           |        |
+| typelead/eta                  |           |        |
+| programming-nu/nu             |           |        |
+| zdevito/terra                 |           |        |
+| skiplang/skip                 |           |        |
+| FascinatedBox/lily            |           |        |
+| rakudo/rakudo                 |           |        |
+| lucee/Lucee                   |           |        |
+| eclipse/golo-lang             |           |        |
+| HaxeFoundation/haxe           |           |        |
+| livecode/livecode             |           |        |
