@@ -222,25 +222,32 @@ issue template.
 
 ## Custom Configuration
 
-The very first time SpaceVim starts up, it will ask you to choose a mode, then it will create a `SpaceVim.d/init.toml` in your `HOME` directory. All User configurations can be stored in your `~/.SpaceVim.d` directory.
+The very first time SpaceVim starts up, it will ask you to
+choose a mode, `basic mode` or `dark powered mode`.
+then it will create a `SpaceVim.d/init.toml` in your
+`HOME` directory. All the configuration files can be stored in
+`~/.SpaceVim.d/` directory.
 
-`~/.SpaceVim.d/` will be added to `&runtimepath` of Vim.
+`~/.SpaceVim.d/` will be added to `&runtimepath`.
 
-It is also possible to override the location of `~/.SpaceVim.d/` using the environment
-variable `SPACEVIMDIR`. Of course you can also use symlinks to change the location of
-this directory.
+It is also possible to override the location of `~/.SpaceVim.d/`
+using the environment variable `SPACEVIMDIR`. Of course you can
+also use symlinks to change the location of this directory.
 
-SpaceVim also support local config file for project, the init file is `.SpaceVim.d/init.toml`
-in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
+SpaceVim also support local config file for project, the init
+file is `.SpaceVim.d/init.toml` in the root of your project.
+`.SpaceVim.d/` also will be added into `&runtimepath`.
 
-All SpaceVim options can be found in `:h SpaceVim-config`, the key is same as
-the option name with the prefix `g:spacevim_` being removed.
+All SpaceVim options can be found in `:h SpaceVim-options`,
+the key is same as the option name with the prefix `g:spacevim_`
+being removed.
 
-Comprehensive documentation is available for each layer by `:h SpaceVim`.
+Comprehensive documentation is available in `:h SpaceVim`.
 
 **Add custom plugins**
 
-If you want to add plugins from github, just add the repo name to the `custom_plugins` section:
+If you want to add plugins from github, just add the repo name
+to the `custom_plugins` section:
 
 ```toml
 [[custom_plugins]]
@@ -259,7 +266,8 @@ For more options see `:h dein-options`.
 
 **disable existing plugins**
 
-If you want to disable plugins which are added by SpaceVim, you can use SpaceVim `disabled_plugins` options:
+If you want to disable plugins which are added by SpaceVim,
+you can use SpaceVim `disabled_plugins` options:
 
 ```toml
 [options]
@@ -272,7 +280,17 @@ If you want to disable plugins which are added by SpaceVim, you can use SpaceVim
 SpaceVim provides two kinds of bootstrap functions
 for custom configurations and key bindings,
 namely `bootstrap_before` and `bootstrap_after`.
-To enable them you need to add `bootstrap_before = "myspacevim#before"` and/or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
+
+To enable them you need to add following into
+`~/.SpaceVim.d/init.toml`.
+
+```toml
+[options]
+    bootstrap_before = 'myspacevim#before'
+    bootstrap_after = 'myspacevim#after'
+```
+
+The difference is that these two options is that will be called before or after the loading of SpaceVim's main scripts as they named.
 
 The bootstrap functions should be placed to the `autoload` directory in `runtimepath`, please refer to `:h autoload-functions` for further instructions. In our case, create file `.SpaceVim.d/autoload/myspacevim.vim` with contents for example
 
