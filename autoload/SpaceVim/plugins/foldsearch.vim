@@ -47,7 +47,11 @@ function! SpaceVim#plugins#foldsearch#word(word) abort
 endfunction
 
 function! SpaceVim#plugins#foldsearch#expr(expr) abort
-  let argv = ['rg', '--line-number', a:expr]
+  let argv = [s:grep_default_exe] + 
+        \ s:grep_default_opt +
+        \ s:grep_default_expr_opt +
+        \ [a:expr]
+  call s:LOGGER.info('cmd: ' . string(argv))
   try
     call matchdelete(s:foldsearch_highlight_id)
   catch
