@@ -1,4 +1,15 @@
-### programming languages support
+## programming languages support
+
+<!-- vim-markdown-toc GFM -->
+
+- [Supported languages](#supported-languages)
+- [Todos](#todos)
+
+<!-- vim-markdown-toc -->
+
+### Supported languages
+
+This is a list of programming languages supported in SpaceVim:
 
 | language          | layer doc                                                           | Issues                                                                                                        |
 | ----------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
@@ -73,6 +84,12 @@
 | TypeScript        | [lang#typescript](https://spacevim.org/layers/lang/typescript/)     | [opened issues](https://github.com/SpaceVim/SpaceVim/issues?q=is%3Aissue+is%3Aopen+label%3Alang%3ATypeScript) |
 | Visual Basic .NET | [lang#vbnet](https://spacevim.org/layers/lang/vbnet/)               |                                                                                                               |
 | zig               | [lang#zig](https://spacevim.org/layers/lang/zig/)                   |                                                                                                               |
+
+
+### Todos
+
+| language          | layer doc                                                           | Issues                                                                                                        |
+| ----------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | 4th Dimension     |                                                                     |                                                                                                               |
 | ABAP              |                                                                     |                                                                                                               |
 | ABC               |                                                                     |                                                                                                               |
