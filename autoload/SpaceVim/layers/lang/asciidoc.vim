@@ -39,7 +39,7 @@ function! SpaceVim#layers#lang#asciidoc#config() abort
         \ 'i:images:1',
         \ 'I:inline images:1'
         \ ],
-        \ 'deffile': '',
+        \ 'deffile': g:_spacevim_root_dir . 'bundle/vim-asciidoc/ctags/asciidoc.conf' ,
         \ 'sort' : 0
         \ }
 endfunction
