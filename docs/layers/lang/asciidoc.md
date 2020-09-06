@@ -9,6 +9,7 @@ description: "Edit AsciiDoc within vim, autopreview AsciiDoc in the default brow
 
 - [Description](#description)
 - [Install](#install)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -24,3 +25,9 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#asciidoc"
 ```
+
+## Key bindings
+
+| Key bindings | Description                           |
+| ------------ | ------------------------------------- |
+| `F2`         | Open outline of current asciidoc file |
