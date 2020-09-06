@@ -19,15 +19,31 @@
 func! SpaceVim#layers#lang#asciidoc#plugins() abort
 
   return [
-        \ ['wsdjeg/vim-asciidoc', {'merged' : 0}],
-        \ ['Raimondi/VimRegStyle', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-asciidoc', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/VimRegStyle', {'merged' : 0}],
         \ ]
 
 endf
 
 
 function! SpaceVim#layers#lang#asciidoc#config() abort
+  " tagbar configuration
+  "
+  let g:tagbar_type_asciidoc = {
+        \ 'ctagstype' : 'asciidoc',
+        \ 'kinds' : [
+        \ 'h:table of contents',
+        \ 'a:anchors:1',
+        \ 't:titles:1',
+        \ 'n:includes:1',
+        \ 'i:images:1',
+        \ 'I:inline images:1'
+        \ ],
+        \ 'deffile': '',
+        \ 'sort' : 0
+        \ }
 endfunction
 
-
 " https://asciidoctor.org/docs/editing-asciidoc-with-live-preview/
+" VimRegStyle based on https://github.com/Raimondi/VimRegStyle/commit/771e32e659b345cf29993d517e08b6b3f741f9c6
+" vim-asciidoc is based on https://github.com/wsdjeg/vim-asciidoc/

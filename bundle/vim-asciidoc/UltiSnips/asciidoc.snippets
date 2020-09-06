@@ -1,0 +1,129 @@
+priority -50
+
+snippet version "Document header version string"
+v1.0, `!v strftime('%Y-%m-%d', localtime())`:${1: Revision remark}
+endsnippet
+
+snippet author "Document header author string"
+`!v g:username` <`!v g:email`>
+endsnippet
+
+snippet header "Document  Blockheader"
+${1:`!v expand('%:t:r')`}
+`!p snip.rv="=" * len(t[1])`
+`!v g:username` <`!v g:email`>
+v1.0, `!v strftime('%Y-%m-%d', localtime())`:${2: Revision remark}
+endsnippet
+
+snippet quote "Quote Block" b
+[quote,${1:author},${2:source}]
+____
+$0
+____
+endsnippet
+
+snippet verse "Verse Block" b
+[verse,${1:author},${2:source}]
+____
+$0
+____
+endsnippet
+
+snippet comment "Comment Block" b
+////
+$0
+////
+endsnippet
+
+snippet passthrough "Passthrough Block" b
+++++
+$0
+++++
+endsnippet
+
+snippet listing "Listing Block" b
+----
+$0
+----
+endsnippet
+
+snippet literal "Literal Block" b
+....
+$0
+....
+endsnippet
+
+snippet sidebar "Sidebar Block" b
+****
+$0
+****
+endsnippet
+
+snippet quote "Quote Block" b
+____
+$0
+____
+endsnippet
+
+snippet example "Example Block" b
+====
+$0
+====
+endsnippet
+
+snippet note "Note admonition" b
+[NOTE]
+.${1:Title}
+====
+$0
+====
+endsnippet
+
+snippet footnote "Footnote"
+footnote:[${1:text}]
+endsnippet
+
+snippet anchor "Hypertext link target"
+anchor:${1:id}[${2:label}]
+endsnippet
+
+snippet xref "Link to hypertext anchor"
+xref:${1:id}[${2:caption}]
+endsnippet
+
+snippet image "Image"
+image:${1:target}[${2:alt="$3"}]
+endsnippet
+
+snippet table "Table" b
+.${1:Title}
+[${2:width="50%",cols=">s,^m,e",frame="topbot",options="header,footer"}]
+|====
+|$0
+|====
+endsnippet
+
+# Two line headers
+snippet l1 "Level 1 Section" b
+${1:Level 1 Section}
+`!p snip.rv="-" * len(t[1])`
+$0
+endsnippet
+
+snippet l2 "Level 2 Section" b
+${1:Level 2 Section}
+`!p snip.rv="~" * len(t[1])`
+$0
+endsnippet
+
+snippet l3 "Level 3 Section" b
+${1:Level 3 Section}
+`!p snip.rv="^" * len(t[1])`
+$0
+endsnippet
+
+snippet l4 "Level 4 Section" b
+${1:Level 4 Section}
+`!p snip.rv="+" * len(t[1])`
+$0
+endsnippet
