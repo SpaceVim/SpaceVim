@@ -248,6 +248,9 @@ the key is same as the option name with the prefix `g:spacevim_`
 being removed.
 
 Comprehensive documentation is available in `:h SpaceVim`.
+Users can also use `SPC h SPC` to fuzzy find the documentation
+of SpaceVim options. This key binding requires one fuzzy finder
+layer to be loaded.
 
 **Add custom plugins**
 
