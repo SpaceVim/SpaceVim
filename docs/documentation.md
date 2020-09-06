@@ -180,7 +180,8 @@ Move Text Transient State:
 
 ### Update SpaceVim itself
 
-There are several methods of updating the core files of SpaceVim. It is recommended to update the packages first; see the next section.
+There are several methods of updating the core files of SpaceVim.
+It is recommended to update the packages first; see the next section.
 
 **Automatic Updates**
 
@@ -199,13 +200,17 @@ every startup. You have to restart Vim after updating.
 
 **Updating from the SpaceVim Buffer**
 
-Use `:SPUpdate SpaceVim` in SpaceVim buffer. This command will open a new buffer to show the process of updating.
+Users can use command `:SPUpdate SpaceVim` to update SpaceVim.
+This command will open a new buffer to show the process of updating.
 
 **Updating Manually with git**
 
-You can close Vim/Neovim and update the git repository to update manually:
+For users who prefer to use command line, they can use following command
+in terminal to update SpaceVim manually:
 
-`git -C ~/.SpaceVim pull`.
+```
+git -C ~/.SpaceVim pull
+```
 
 ### Update plugins
 
@@ -375,11 +380,15 @@ For example, in order to disable language specific leader, you may add the follo
     enable_language_specific_leader = false
 ```
 
-[Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
+[Send a PR](./development/) to add the differences you
+found in this section.
 
 ### Private Layers
 
-This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!).
+This section is an overview of layers. A more extensive
+introduction to writing configuration layers can be found in
+[SpaceVim's layers page](http://spacevim.org/layers/)
+(recommended reading!).
 
 **Purpose**
 
@@ -419,7 +428,7 @@ Use the `bootstrap_before` function to add local plugin:
 
 ```vim
 function! myspacevim#before() abort
-set rtp+=~/path/to/your/localplugin
+    set rtp+=~/path/to/your/localplugin
 endfunction
 ```
 
@@ -441,8 +450,8 @@ the variable colorschemes. For instance, to specify `desert`:
 
 ```toml
 [options]
-colorscheme = "desert"
-colorscheme_bg = "dark"
+    colorscheme = "desert"
+    colorscheme_bg = "dark"
 ```
 
 | Mappings  | Descriptions                                                   |
