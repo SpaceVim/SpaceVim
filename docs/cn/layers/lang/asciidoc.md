@@ -27,6 +27,8 @@ lang: zh
   name = "lang#asciidoc"
 ```
 
+若需要查看 asciidoc 侧栏标题目录，则需要安装 `ctags`。
+
 ## 快捷键
 
 | 快捷键 | 功能描述       |

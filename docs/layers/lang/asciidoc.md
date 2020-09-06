@@ -5,6 +5,8 @@ description: "Edit AsciiDoc within vim, autopreview AsciiDoc in the default brow
 
 # [Available Layers](../../) >> lang#asciidoc
 
+![asciidoc](https://user-images.githubusercontent.com/13142418/92319337-7554ec00-f049-11ea-90fb-ad663dceea12.png)
+
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
@@ -25,6 +27,8 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#asciidoc"
 ```
+
+`ctags` is required, if users want to view the syntax outline.
 
 ## Key bindings
 
