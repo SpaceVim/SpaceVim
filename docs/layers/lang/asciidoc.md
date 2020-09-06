@@ -14,10 +14,7 @@ description: "Edit AsciiDoc within vim, autopreview AsciiDoc in the default brow
 
 ## Description
 
-This layer is for editing AsciiDoc file. Following plugins are included in this layer:
-
-- `wsdjeg/vim-asciidoc`
-- `Raimondi/VimRegStyle`
+This layer is for editing AsciiDoc file. Including syntax highlighting, indent and syntax lint.
 
 ## Install
 
