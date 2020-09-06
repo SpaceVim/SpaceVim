@@ -14,7 +14,7 @@
 " :help vrs
 
 " Quit when a (custom) syntax file was already loaded
-if exists("b:current_syntax")
+if exists('b:current_syntax')
   finish
 endif
 
@@ -49,7 +49,7 @@ hi def link vrsError     Error
 hi def link vrsFlavorErr Error
 hi def link vrsNameErr   Error
 
-let b:current_syntax = "vrs"
+let b:current_syntax = 'vrs'
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
