@@ -1,11 +1,11 @@
 " Asciidoc compiler settings for Vim
 
-if exists("b:current_compiler")
+if exists('b:current_compiler')
   finish
 endif
-let b:current_compiler = "asciidoc"
+let b:current_compiler = 'asciidoc'
 
-if exists(":CompilerSet") != 2
+if exists(':CompilerSet') != 2
   command! -nargs=* CompilerSet setlocal <args>
 endif
 
@@ -48,7 +48,7 @@ function! s:available_themes_completer(ArgLead, CmdLine, CursorPos)
 endfunction
 
 function! s:update_theme(theme)
-  if a:theme == 'default'
+  if a:theme ==# 'default'
     let b:asciidoc_theme = ''
   else
     let b:asciidoc_theme = '-a theme=' . a:theme
