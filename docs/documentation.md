@@ -180,7 +180,8 @@ Move Text Transient State:
 
 ### Update SpaceVim itself
 
-There are several methods of updating the core files of SpaceVim. It is recommended to update the packages first; see the next section.
+There are several methods of updating the core files of SpaceVim.
+It is recommended to update the packages first; see the next section.
 
 **Automatic Updates**
 
@@ -199,13 +200,17 @@ every startup. You have to restart Vim after updating.
 
 **Updating from the SpaceVim Buffer**
 
-Use `:SPUpdate SpaceVim` in SpaceVim buffer. This command will open a new buffer to show the process of updating.
+Users can use command `:SPUpdate SpaceVim` to update SpaceVim.
+This command will open a new buffer to show the process of updating.
 
 **Updating Manually with git**
 
-You can close Vim/Neovim and update the git repository to update manually:
+For users who prefer to use command line, they can use following command
+in terminal to update SpaceVim manually:
 
-`git -C ~/.SpaceVim pull`.
+```
+git -C ~/.SpaceVim pull
+```
 
 ### Update plugins
 
@@ -222,25 +227,35 @@ issue template.
 
 ## Custom Configuration
 
-The very first time SpaceVim starts up, it will ask you to choose a mode, then it will create a `SpaceVim.d/init.toml` in your `HOME` directory. All User configurations can be stored in your `~/.SpaceVim.d` directory.
+The very first time SpaceVim starts up, it will ask you to
+choose a mode, `basic mode` or `dark powered mode`.
+then it will create a `SpaceVim.d/init.toml` in your
+`HOME` directory. All the configuration files can be stored in
+`~/.SpaceVim.d/` directory.
 
-`~/.SpaceVim.d/` will be added to `&runtimepath` of Vim.
+`~/.SpaceVim.d/` will be added to `&runtimepath`.
 
-It is also possible to override the location of `~/.SpaceVim.d/` using the environment
-variable `SPACEVIMDIR`. Of course you can also use symlinks to change the location of
-this directory.
+It is also possible to override the location of `~/.SpaceVim.d/`
+using the environment variable `SPACEVIMDIR`. Of course you can
+also use symlinks to change the location of this directory.
 
-SpaceVim also support local config file for project, the init file is `.SpaceVim.d/init.toml`
-in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
+SpaceVim also support local config file for project, the init
+file is `.SpaceVim.d/init.toml` in the root of your project.
+`.SpaceVim.d/` also will be added into `&runtimepath`.
 
-All SpaceVim options can be found in `:h SpaceVim-config`, the key is same as
-the option name with the prefix `g:spacevim_` being removed.
+All SpaceVim options can be found in `:h SpaceVim-options`,
+the key is same as the option name with the prefix `g:spacevim_`
+being removed.
 
-Comprehensive documentation is available for each layer by `:h SpaceVim`.
+Comprehensive documentation is available in `:h SpaceVim`.
+Users can also use `SPC h SPC` to fuzzy find the documentation
+of SpaceVim options. This key binding requires one fuzzy finder
+layer to be loaded.
 
 **Add custom plugins**
 
-If you want to add plugins from github, just add the repo name to the `custom_plugins` section:
+If you want to add plugins from github, just add the repo name
+to the `custom_plugins` section:
 
 ```toml
 [[custom_plugins]]
@@ -249,11 +264,18 @@ If you want to add plugins from github, just add the repo name to the `custom_pl
     merged = false
 ```
 
-`on_cmd` option means this plugin will be loaded only when the following commands are called. For more options see `:h dein-options`.
+`on_cmd` option means this plugin will be loaded only when the following commands are called.
+
+`merged` option is used for merging plugins directory. When `merged` is `trye`, all files in
+this custom plugin will be merged into `~/.cache/vimfiles/.cache/init.vim/` for neovim or 
+`~/.cache/vimfiles/.cache/vimrc/` for vim.
+
+For more options see `:h dein-options`.
 
 **disable existing plugins**
 
-If you want to disable plugins which are added by SpaceVim, you can use SpaceVim `disabled_plugins` options:
+If you want to disable plugins which are added by SpaceVim,
+you can use SpaceVim `disabled_plugins` options:
 
 ```toml
 [options]
@@ -266,30 +288,44 @@ If you want to disable plugins which are added by SpaceVim, you can use SpaceVim
 SpaceVim provides two kinds of bootstrap functions
 for custom configurations and key bindings,
 namely `bootstrap_before` and `bootstrap_after`.
-To enable them you need to add `bootstrap_before = "myspacevim#before"` and/or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
 
-The bootstrap functions should be placed to the `autoload` directory in `runtimepath`, please refer to `:h autoload-functions` for further instructions. In our case, create file `.SpaceVim.d/autoload/myspacevim.vim` with contents for example
+To enable them you need to add following into
+`~/.SpaceVim.d/init.toml`.
+
+```toml
+[options]
+    bootstrap_before = 'myspacevim#before'
+    bootstrap_after = 'myspacevim#after'
+```
+
+The difference is that these two functions will be called before
+or after loading SpaceVim core as they named.
+
+The bootstrap functions should be placed to the `autoload` directory
+in `~/.SpaceVim.d/`. In our case, create file `~/.SpaceVim.d/autoload/myspacevim.vim`
+with contents for example
 
 ```vim
 function! myspacevim#before() abort
-let g:neomake_enabled_c_makers = ['clang']
-nnoremap jk <Esc>
+    let g:neomake_enabled_c_makers = ['clang']
+    nnoremap jk <Esc>
 endfunction
 
 function! myspacevim#after() abort
-iunmap jk
+    iunmap jk
 endfunction
 ```
 
 The `bootstrap_before` will be called after custom configuration file is loaded.
 And the `bootstrap_after` will be called after Vim Enter autocmd.
 
-If you want to add custom `SPC` prefix key bindings, you can add them to bootstrap function, **be sure** the key bindings are not used in SpaceVim.
+If you want to add custom `SPC` prefix key bindings, you can add them to
+bootstrap function, **be sure** the key bindings are not used in SpaceVim.
 
 ```vim
 function! myspacevim#before() abort
-call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
-call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+    call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
+    call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 endfunction
 ```
 
@@ -347,11 +383,15 @@ For example, in order to disable language specific leader, you may add the follo
     enable_language_specific_leader = false
 ```
 
-[Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
+[Send a PR](./development/) to add the differences you
+found in this section.
 
 ### Private Layers
 
-This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!).
+This section is an overview of layers. A more extensive
+introduction to writing configuration layers can be found in
+[SpaceVim's layers page](http://spacevim.org/layers/)
+(recommended reading!).
 
 **Purpose**
 
@@ -391,7 +431,7 @@ Use the `bootstrap_before` function to add local plugin:
 
 ```vim
 function! myspacevim#before() abort
-set rtp+=~/path/to/your/localplugin
+    set rtp+=~/path/to/your/localplugin
 endfunction
 ```
 
@@ -413,8 +453,8 @@ the variable colorschemes. For instance, to specify `desert`:
 
 ```toml
 [options]
-colorscheme = "desert"
-colorscheme_bg = "dark"
+    colorscheme = "desert"
+    colorscheme_bg = "dark"
 ```
 
 | Mappings  | Descriptions                                                   |

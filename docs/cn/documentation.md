@@ -214,24 +214,33 @@ SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重�
 
 ## 用户配置
 
-初次启动时，他将提供选择目录，用户需要选择合适自己的配置模板。
+初次启动时，SpaceVim 弹出一个选择目录（`basic` 模式、
+`dark_powerd` 模式），用户需要选择合适自己的配置模板。
 此时，SpaceVim 将自动在 `$HOME` 目录生成 `~/.SpaceVim.d/init.toml`。
-所有用户脚本可以存储在 `~/.SpaceVim.d/`，这一文件夹将被加入 Vim 的运行时路径 `&runtimepath`。
-详情清阅读 `:h rtp`。
+所有用户配置文件都可以存储在 `~/.SpaceVim.d/`。
 
-也可以通过 `SPACEVIMDIR` 这一环境变量，指定用户配置目录。
-也可以通过软链接来改变目录位置，以便配置备份。
+这一文件夹将被加入 Vim 的运行时路径 `&runtimepath`。
 
-同时，还支持项目本地配置，配置初始文件为，项目根目录下的 `.SpaceVim.d/init.toml` 文件。
-同时根目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
+也可以通过 `SPACEVIMDIR` 这一环境变量，
+指定用户配置目录的具体位置。也可以通过软链接来改变目录位置，
+以便配置备份。
 
-所有的 SpaceVim 选项可以使用 `:h SpaceVim-options` 来查看。选项名称为原先 Vim 脚本中使用的变量名称去除 `g:spacevim_` 前缀。
+同时，还支持项目本地配置，配置初始文件为，项目根目录下的
+`.SpaceVim.d/init.toml` 文件。同时根目录下的 `.SpaceVim.d/`
+也将被加入到 Vim 运行时路径。
 
-完整的内置文档可以通过 `:h SpaceVim` 进行查阅。也可以通过按键 `SPC h SPC` 模糊搜索，该快捷键需要载入一个模糊搜索模块。
+所有的 SpaceVim 选项可以使用 `:h SpaceVim-options` 来查看。
+选项名称为原先 Vim 脚本中使用的变量名称去除 `g:spacevim_`
+前缀。
+
+完整的内置文档可以通过 `:h SpaceVim` 进行查阅。
+也可以通过按键 `SPC h SPC` 模糊搜索，
+该快捷键需要载入一个模糊搜索模块。
 
 **添加自定义插件**
 
-如果你需要添加 github 上的插件，只需要在 SpaceVim 配置文件中添加 `[[custom_plugins]]` 片段：
+如果你需要添加 github 上的插件，只需要在 SpaceVim
+配置文件中添加 `[[custom_plugins]]` 片段：
 
 ```toml
 [[custom_plugins]]
@@ -240,9 +249,19 @@ SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重�
     merged = false
 ```
 
-以上这段配置，添加了插件 `lilydjwg/colorizer`，并且，通过 `on_cmd` 这一选项使得这个插件延迟加载。
-该插件会在第一次执行 `ColorHighlight` 或者 `ColorToggle` 命令时被加载。除了 `on_cmd` 以外，还有一些其它的选项，
-可以通过 `:h dein-options` 查阅。
+`one_cmd` 选项使得这个插件延迟加载。
+该插件会在第一次执行 `ColorHighlight` 或者 `ColorToggle`
+命令时被加载。
+
+`merged` 选项用于设定是否合并该插件的文件夹，如果 `merged`
+是 `true`，那么，这一插件内的文件将被合并到：
+`~/.cache/vimfiles/.cache/init.vim/`
+或者 `~/.cache/vimfiles/.cache/vimrc/`，
+这依据当前使用的是 Neovim 还是 Vim。
+
+
+除了 `on_cmd` 以外，还有一些其它的选项，可以通过
+`:h dein-options` 查阅。
 
 **禁用插件**
 
