@@ -10,7 +10,7 @@ scriptencoding utf-8
 function! SpaceVim#plugins#load() abort
   if SpaceVim#plugins#enable_plug()
     call SpaceVim#plugins#begin(g:spacevim_plugin_bundle_dir)
-    call SpaceVim#plugins#fetch()
+    " call SpaceVim#plugins#fetch()
     call s:load_plugins()
     call s:disable_plugins(g:spacevim_disabled_plugins)
     call SpaceVim#plugins#end()
@@ -206,11 +206,12 @@ function! SpaceVim#plugins#defind_hooks(bundle) abort
   endif
 endfunction
 
+
 function! SpaceVim#plugins#fetch() abort
   if g:spacevim_plugin_manager ==# 'neobundle'
     NeoBundleFetch 'Shougo/neobundle.vim'
   elseif g:spacevim_plugin_manager ==# 'dein'
-    call dein#add('Shougo/dein.vim')
+    call dein#add(g:_spacevim_root_dir . 'bundle/dein.vim', { 'merged' : 0})
   endif
 endfunction
 
