@@ -206,11 +206,12 @@ function! SpaceVim#plugins#defind_hooks(bundle) abort
   endif
 endfunction
 
+
 function! SpaceVim#plugins#fetch() abort
   if g:spacevim_plugin_manager ==# 'neobundle'
-    NeoBundleFetch 'Shougo/neobundle.vim'
+    NeoBundleFetch g:_spacevim_root_dir . 'bundle/neobundle.vim'
   elseif g:spacevim_plugin_manager ==# 'dein'
-    call dein#add('Shougo/dein.vim')
+    call dein#add(g:_spacevim_root_dir . 'bundle/dein.vim', { 'merged' : 0})
   endif
 endfunction
 
