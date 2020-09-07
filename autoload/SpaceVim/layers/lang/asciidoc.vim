@@ -29,19 +29,23 @@ endf
 function! SpaceVim#layers#lang#asciidoc#config() abort
   " tagbar configuration
   "
-  let g:tagbar_type_asciidoc = {
-        \ 'ctagstype' : 'asciidoc',
-        \ 'kinds' : [
-        \ 'h:table of contents',
-        \ 'a:anchors:1',
-        \ 't:titles:1',
-        \ 'n:includes:1',
-        \ 'i:images:1',
-        \ 'I:inline images:1'
-        \ ],
-        \ 'deffile': g:_spacevim_root_dir . 'bundle/vim-asciidoc/ctags/asciidoc.conf' ,
-        \ 'sort' : 0
-        \ }
+  let ctags_version = system('ctags --version')
+  if !v:shell_error && ctags_version =~# 'Universal Ctags'
+  else
+    let g:tagbar_type_asciidoc = {
+          \ 'ctagstype' : 'asciidoc',
+          \ 'kinds' : [
+          \ 'h:table of contents',
+          \ 'a:anchors:1',
+          \ 't:titles:1',
+          \ 'n:includes:1',
+          \ 'i:images:1',
+          \ 'I:inline images:1'
+          \ ],
+          \ 'deffile': g:_spacevim_root_dir . 'bundle/vim-asciidoc/ctags/asciidoc.conf' ,
+          \ 'sort' : 0
+          \ }
+  endif
 endfunction
 
 " https://asciidoctor.org/docs/editing-asciidoc-with-live-preview/
