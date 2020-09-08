@@ -35,7 +35,7 @@ else
   let g:_spacevim_key_sequence = 'nil'
   let s:key_sequence_delay = 1
   let g:_spacevim_autocomplete_delay = 50
-  let s:timeoutlen = 1000
+  let s:timeoutlen = &timeoutlen
 endif
 
 function! SpaceVim#layers#autocomplete#plugins() abort
