@@ -187,8 +187,8 @@ endfunction
 
 let s:return_key_behavior = 'smart'
 let s:tab_key_behavior = 'smart'
-let s:key_sequence = 'nil'
-let s:key_sequence_delay = 0.1
+let g:_spacevim_key_sequence = 'nil'
+let g:_spacevim_key_sequence_delay = 0.1
 let g:_spacevim_autocomplete_delay = 50
 
 function! SpaceVim#layers#autocomplete#set_variable(var) abort
@@ -203,16 +203,16 @@ function! SpaceVim#layers#autocomplete#set_variable(var) abort
         \ get(a:var,
         \ 'auto-completion-tab-key-behavior',
         \ s:tab_key_behavior))
-  let s:key_sequence = get(a:var,
+  let g:_spacevim_key_sequence = get(a:var,
         \ 'auto_completion_complete_with_key_sequence',
         \ get(a:var,
         \ 'auto-completion-complete-with-key-sequence',
-        \ s:key_sequence))
-  let s:key_sequence_delay = get(a:var,
+        \ g:_spacevim_key_sequence))
+  let g:_spacevim_key_sequence_delay = get(a:var,
         \ 'auto_completion_complete_with_key_sequence_delay',
         \ get(a:var,
         \ 'auto-completion-complete-with-key-sequence-delay',
-        \ s:key_sequence_delay))
+        \ g:_spacevim_key_sequence_delay))
   let g:_spacevim_autocomplete_delay = get(a:var,
         \ 'auto_completion_delay', 
         \ get(a:var, 'auto-completion-delay', 
