@@ -195,12 +195,16 @@ function! SpaceVim#layers#autocomplete#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite ultisnips', 'insert snippets', 1)
   endif
   if !empty(s:key_sequence)
-    imap jk <Plug>reflash_completion
-    augroup spacevim_layer_autocomplete
-      autocmd!
-      autocmd InsertEnter * call s:apply_sequence_delay()
-      autocmd InsertLeave * call s:restore_sequence_delay()
-    augroup END
+    if g:spacevim_escape_key_binding !=# s:key_sequence
+      exe printf('imap %s <Plug>reflash_completion', s:key_sequence)
+      augroup spacevim_layer_autocomplete
+        autocmd!
+        autocmd InsertEnter * call s:apply_sequence_delay()
+        autocmd InsertLeave * call s:restore_sequence_delay()
+      augroup END
+    else
+      call SpaceVim#logger#warn('Can not use same value for escape_key_binding and auto_completion_complete_with_key_sequence')
+    endif
   endif
 endfunction
 
