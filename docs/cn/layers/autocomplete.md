@@ -136,8 +136,10 @@ SpaceVim 选项 `snippet_engine` 设置为 `ultisnips`，将使用 [UltiSnips](h
    - `cycle` 循环模式，自动再补全列表之间循环
    - `nil` 当设为 nil 时，该行为和 `Tab` 的默认行为一致
 3. `auto_completion_delay` 设置自动补全延迟时间，默认 50 毫秒
-4. `auto_completion_complete_with_key_sequence` 设置一个手动补全的由两个字符构成的按键序列，如果你按下这个序列足够快，将会启动补全；如果这一选项的值是 `nil` ，这一特性将被禁用。
-5. `auto_completion_complete_with_key_sequence_delay` 设置手动补全按键序列延迟时间，默认是 0.1
+4. `auto_completion_complete_with_key_sequence` 设置一个手动补全的由两个字符构成的按键序列，
+   如果你按下这个序列足够快，将会启动补全；如果这一选项的值是 `nil` ，这一特性将被禁用。
+   **NOTE:** 该选项不可以与全局选项 `escape_key_binding` 使用同一个值。
+5. `auto_completion_complete_with_key_sequence_delay` 设置手动补全按键序列延迟时间，默认是 1 秒。
 
 自动补全模块默认载入状态如下：
 
