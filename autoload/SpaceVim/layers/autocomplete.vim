@@ -26,6 +26,18 @@
 " directory is `~/.SpaceVim/snippets/`. If `g:spacevim_force_global_config = 1`,
 " SpaceVim will not append `./.SpaceVim/snippets` as default snippets directory.
 
+
+if exists('s:return_key_behavior')
+  finish
+else
+  let s:return_key_behavior = 'smart'
+  let s:tab_key_behavior = 'smart'
+  let g:_spacevim_key_sequence = 'nil'
+  let s:key_sequence_delay = 1
+  let g:_spacevim_autocomplete_delay = 50
+  let s:timeoutlen = &timeoutlen
+endif
+
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
         \ [g:_spacevim_root_dir . 'bundle/vim-snippets',          { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}],
@@ -116,7 +128,6 @@ function! SpaceVim#layers#autocomplete#plugins() abort
   return plugins
 endfunction
 
-
 function! SpaceVim#layers#autocomplete#config() abort
   if g:spacevim_autocomplete_parens
     imap <expr>(
@@ -183,13 +194,18 @@ function! SpaceVim#layers#autocomplete#config() abort
   elseif g:spacevim_snippet_engine ==# 'ultisnips'
     call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite ultisnips', 'insert snippets', 1)
   endif
+  if !empty(g:_spacevim_key_sequence)
+    if g:spacevim_escape_key_binding !=# g:_spacevim_key_sequence
+      augroup spacevim_layer_autocomplete
+        autocmd!
+        autocmd InsertEnter * call s:apply_sequence_delay()
+        autocmd InsertLeave * call s:restore_sequence_delay()
+      augroup END
+    else
+      call SpaceVim#logger#warn('Can not use same value for escape_key_binding and auto_completion_complete_with_key_sequence')
+    endif
+  endif
 endfunction
-
-let s:return_key_behavior = 'smart'
-let s:tab_key_behavior = 'smart'
-let s:key_sequence = 'nil'
-let s:key_sequence_delay = 0.1
-let g:_spacevim_autocomplete_delay = 50
 
 function! SpaceVim#layers#autocomplete#set_variable(var) abort
 
@@ -203,12 +219,12 @@ function! SpaceVim#layers#autocomplete#set_variable(var) abort
         \ get(a:var,
         \ 'auto-completion-tab-key-behavior',
         \ s:tab_key_behavior))
-  let s:key_sequence = get(a:var,
+  let g:_spacevim_key_sequence = get(a:var,
         \ 'auto_completion_complete_with_key_sequence',
         \ get(a:var,
         \ 'auto-completion-complete-with-key-sequence',
-        \ s:key_sequence))
-  let s:key_sequence_delay = get(a:var,
+        \ g:_spacevim_key_sequence))
+  let g:_spacevim_key_sequence_delay = get(a:var,
         \ 'auto_completion_complete_with_key_sequence_delay',
         \ get(a:var,
         \ 'auto-completion-complete-with-key-sequence-delay',
@@ -233,6 +249,14 @@ function! SpaceVim#layers#autocomplete#getprfile() abort
 
 
 
+endfunction
+
+function! s:apply_sequence_delay() abort
+  let &timeoutlen =  s:key_sequence_delay * 1000
+endfunction
+
+function! s:restore_sequence_delay() abort
+  let &timeoutlen = s:timeoutlen
 endfunction
 
 " vim:set et sw=2 cc=80:
