@@ -134,6 +134,7 @@ You can customize the user experience of autocompletion with the following layer
 5. `auto_completion_complete_with_key_sequence_delay` is the number of seconds to wait for
    the autocompletion key sequence to be entered. The default value is 0.1 seconds.
    This option is used for vim's `timeoutlen` option in insert mode.
+   **NOTE:** This option should not has same value as `escape_key_binding`
 
 The default configuration of the layer is:
 

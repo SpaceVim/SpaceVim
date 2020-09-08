@@ -32,7 +32,7 @@ if exists('s:return_key_behavior')
 else
   let s:return_key_behavior = 'smart'
   let s:tab_key_behavior = 'smart'
-  let s:key_sequence = 'nil'
+  let g:_spacevim_key_sequence = 'nil'
   let s:key_sequence_delay = 1
   let g:_spacevim_autocomplete_delay = 50
   let s:timeoutlen = 1000
@@ -194,9 +194,8 @@ function! SpaceVim#layers#autocomplete#config() abort
   elseif g:spacevim_snippet_engine ==# 'ultisnips'
     call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite ultisnips', 'insert snippets', 1)
   endif
-  if !empty(s:key_sequence)
-    if g:spacevim_escape_key_binding !=# s:key_sequence
-      exe printf('imap %s <Plug>reflash_completion', s:key_sequence)
+  if !empty(g:_spacevim_key_sequence)
+    if g:spacevim_escape_key_binding !=# g:_spacevim_key_sequence
       augroup spacevim_layer_autocomplete
         autocmd!
         autocmd InsertEnter * call s:apply_sequence_delay()
@@ -220,11 +219,11 @@ function! SpaceVim#layers#autocomplete#set_variable(var) abort
         \ get(a:var,
         \ 'auto-completion-tab-key-behavior',
         \ s:tab_key_behavior))
-  let s:key_sequence = get(a:var,
+  let g:_spacevim_key_sequence = get(a:var,
         \ 'auto_completion_complete_with_key_sequence',
         \ get(a:var,
         \ 'auto-completion-complete-with-key-sequence',
-        \ s:key_sequence))
+        \ g:_spacevim_key_sequence))
   let g:_spacevim_key_sequence_delay = get(a:var,
         \ 'auto_completion_complete_with_key_sequence_delay',
         \ get(a:var,
