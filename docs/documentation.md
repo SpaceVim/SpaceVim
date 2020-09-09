@@ -850,7 +850,6 @@ The following key bindings are the general key bindings for moving cursor.
 | `<Tab>`           | Indent to right and re-select            |
 | `Shift-<Tab>`     | Indent to left and re-select             |
 | `Ctrl-q`          | `Ctrl-w`                                 |
-| `Ctrl-x`          | Switch buffer and placement              |
 | `Ctrl-Shift-Up`   | move lines up                            |
 | `Ctrl-Shift-Down` | move lines down                          |
 
@@ -1159,6 +1158,7 @@ Windows manipulation commands (start with `w`):
 | `SPC w V`             | vertical split and focus new window                                                                           |
 | `SPC w w`             | cycle and focus between windows                                                                               |
 | `SPC w W`             | select window using vim-choosewin                                                                             |
+| `SPC w x`             | exchange current window with next one                                                                                    |
 
 ### Buffers and Files
 

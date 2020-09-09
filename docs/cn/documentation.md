@@ -259,7 +259,6 @@ SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重�
 或者 `~/.cache/vimfiles/.cache/vimrc/`，
 这依据当前使用的是 Neovim 还是 Vim。
 
-
 除了 `on_cmd` 以外，还有一些其它的选项，可以通过
 `:h dein-options` 查阅。
 
@@ -666,7 +665,7 @@ endfunction
 
 标签栏上也支持鼠标操作，左键可以快速切换至该标签，中键删除该标签。该特性只支持 Neovim，并且需要 `has('tablineat')` 特性。
 
-**注意:** 这一特性仅限于Neovim并且 `has('tablineat')` 返回 `true`。
+**注意:** 这一特性仅限于 Neovim 并且 `has('tablineat')` 返回 `true`。
 
 | 快捷键           | 功能描述     |
 | ---------------- | ------------ |
@@ -777,7 +776,6 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `Ctrl-b`          | 向上翻页 (`C-b` / `C-u`)       |
 | `Ctrl-e`          | 向下滚屏 (`3 Ctrl-e/j`)        |
 | `Ctrl-y`          | 向上滚屏 (`3Ctrl-y/k`)         |
-| `Ctrl-x`          | 切换窗口文件                   |
 | `Ctrl-Shift-Up`   | 向上移动当前行                 |
 | `Ctrl-Shift-Down` | 向下移动当前行                 |
 
@@ -1099,6 +1097,7 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 | `SPC w V`     | 垂直分离窗口，并切换至新窗口                       |
 | `SPC w w`     | 切换至前一窗口                                     |
 | `SPC w W`     | 选择一个窗口                                       |
+| `SPC w x`     | 切换窗口文件                                       |
 
 ### 缓冲区管理
 
@@ -1687,7 +1686,6 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 ## 进阶使用
 
 ### 工程管理
-
 
 当打开一个文件时，SpaceVim 会自动切换当前目录至包含该文件的项目根目录，
 项目根目录的检测依据 `project_rooter_patterns` 这一选项，其默认值为：
