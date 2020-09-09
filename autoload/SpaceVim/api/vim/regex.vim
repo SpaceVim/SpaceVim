@@ -11,7 +11,7 @@ function! s:self.parser(regex, is_perl) abort
   let vim_regex = a:regex
 
   " matchadd function needs \ before [%@&]
-  let vim_regex = substitute(vim_regex, '[%@&]', '\\\1', 'g')
+  let vim_regex = substitute(vim_regex, '\([%@&]\)', '\\\1', 'g')
 
   " non-greedy pattern
   " replace from what to what?
