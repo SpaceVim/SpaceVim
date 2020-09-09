@@ -44,7 +44,7 @@ function! s:self.parser(regex, is_perl) abort
 
   " word boundary
   " \bword\b => <word>
-  " let vim_regex = substitute(vim_regex, '\\b', '(<|>)', 'g')
+  let vim_regex = substitute(vim_regex, '\\b\(\w\+\)\\b', '\<\1\>', 'g')
 
   " case-insensitive
   " (?i)abc => \cabc
