@@ -36,6 +36,7 @@ main () {
             _detect autoload/SpaceVim/api.vim
             _detect autoload/SpaceVim/api/logger.vim
             _detect autoload/SpaceVim/api/vim/buffer.vim
+            _detect autoload/SpaceVim/api/vim/regex.vim
             _detect autoload/SpaceVim/api/vim/compatible.vim
             _detect autoload/SpaceVim/api/neovim/floating.vim
             _detect autoload/SpaceVim/api/data/list.vim
