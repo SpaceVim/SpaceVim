@@ -144,7 +144,7 @@ endfunction
 function! s:expr_to_pattern(expr) abort
   if s:grep_mode ==# 'expr'
     let items = split(a:expr)
-    let pattern = join(items, '\|')
+    let pattern = join(items, '.*')
     let pattern = s:REGEX.parser(pattern, 0)
     return pattern
   else
