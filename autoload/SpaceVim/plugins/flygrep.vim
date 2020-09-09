@@ -13,6 +13,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:REGEX = SpaceVim#api#import('vim#regex')
 
 let s:LOGGER =SpaceVim#logger#derive('FlyGrep')
 let s:HI = SpaceVim#api#import('vim#highlight')
@@ -143,7 +144,9 @@ endfunction
 function! s:expr_to_pattern(expr) abort
   if s:grep_mode ==# 'expr'
     let items = split(a:expr)
-    return join(items, '\|')
+    let pattern = join(items, '\|')
+    let pattern = s:REGEX.parser(pattern, 0)
+    return pattern
   else
     return a:expr
   endif
