@@ -146,6 +146,7 @@ function! s:expr_to_pattern(expr) abort
     let items = split(a:expr)
     let pattern = join(items, '.*')
     let pattern = s:REGEX.parser(pattern, 0)
+    call s:LOGGER.info('matchadd pattern: ' . pattern)
     return pattern
   else
     return a:expr
