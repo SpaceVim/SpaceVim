@@ -7,4 +7,5 @@ Execute ( SpaceVim api: vim#key ):
   AssertEqual regex.parser('[:word:]', 0), '\v[0-9A-Za-z_]'
   AssertEqual regex.parser('\bspace\b', 0), '\v\<space\>'
   AssertEqual regex.parser('if%@&ab', 0), '\vif\%\@\&ab'
+  AssertEqual regex.parser('(?P<name>exp)', 0), '\v(exp)'
 

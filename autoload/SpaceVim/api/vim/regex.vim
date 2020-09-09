@@ -53,7 +53,7 @@ function! s:self.parser(regex, is_perl) abort
   let vim_regex = substitute(vim_regex, '(?-i)', '\\C', 'g')
 
   " (?P<name>exp) => (exp)
-  " let vim_regex = substitute(vim_regex, '(?<=\()\?P<\w+>', '', 'g')
+  let vim_regex = substitute(vim_regex, '(?P<\w\+>\([^)]\+\))', '(\1)', 'g')
 
   " (?:exp) => %(exp)
   let vim_regex =  substitute(vim_regex, '(?:\([^)]\+\))', '%(\1)', 'g')
