@@ -13,6 +13,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:REGEX = SpaceVim#api#import('vim#regex')
 
 let s:LOGGER =SpaceVim#logger#derive('FlyGrep')
 let s:HI = SpaceVim#api#import('vim#highlight')
@@ -28,6 +29,7 @@ let s:Window = SpaceVim#api#import('vim#window')
 
 let s:grepid = 0
 
+let s:filename_pattern = '[^:]*:\d\+:\d\+:'
 
 " Init local options: {{{
 let s:grep_expr = ''
@@ -143,7 +145,10 @@ endfunction
 function! s:expr_to_pattern(expr) abort
   if s:grep_mode ==# 'expr'
     let items = split(a:expr)
-    return join(items, '\|')
+    let pattern = join(items, '.*')
+    let pattern = s:filename_pattern . '.*\zs' . s:REGEX.parser(pattern, 0)
+    call s:LOGGER.info('matchadd pattern: ' . pattern)
+    return pattern
   else
     return a:expr
   endif
@@ -805,7 +810,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
   call s:update_statusline()
-  call s:matchadd('FileName', '[^:]*:\d\+:\d\+:', 3)
+  call s:matchadd('FileName', s:filename_pattern, 3)
   let s:MPT._prompt.begin = get(a:argv, 'input', '')
   let fs = get(a:argv, 'files', '')
   if fs ==# '@buffers'
