@@ -777,7 +777,6 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `Ctrl-b`          | 向上翻页 (`C-b` / `C-u`)       |
 | `Ctrl-e`          | 向下滚屏 (`3 Ctrl-e/j`)        |
 | `Ctrl-y`          | 向上滚屏 (`3Ctrl-y/k`)         |
-| `Ctrl-c`          | 复制当前文件绝对路径           |
 | `Ctrl-x`          | 切换窗口文件                   |
 | `Ctrl-Shift-Up`   | 向上移动当前行                 |
 | `Ctrl-Shift-Down` | 向下移动当前行                 |

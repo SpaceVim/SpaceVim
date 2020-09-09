@@ -829,7 +829,6 @@ The following key bindings are the general key bindings for moving cursor.
 | `Ctrl-b`         | Smart page backward (`C-b` / `C-u`)               |
 | `Ctrl-e`         | Smart scroll down (`3 Ctrl-e/j`)                  |
 | `Ctrl-y`         | Smart scroll up (`3Ctrl-y/k`)                     |
-| `Ctrl-c`         | Copy full path of current buffer to X11 clipboard |
 
 ### Native functions
 
