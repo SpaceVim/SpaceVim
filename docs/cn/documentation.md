@@ -152,7 +152,10 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 **临时快捷键菜单**
 
-SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重复某些操作时过多按下 `SPC` 前缀键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些额外的辅助信息也将会显示出来。
+SpaceVim 根据需要定义了很多临时快捷键，
+这可以避免需要重复某些操作时过多按下 `SPC` 前缀键。
+当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，
+提示每一临时快捷键的功能。此外一些额外的辅助信息也将会显示出来。
 
 文本移动临时快捷键：
 
@@ -258,7 +261,6 @@ SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重�
 `~/.cache/vimfiles/.cache/init.vim/`
 或者 `~/.cache/vimfiles/.cache/vimrc/`，
 这依据当前使用的是 Neovim 还是 Vim。
-
 
 除了 `on_cmd` 以外，还有一些其它的选项，可以通过
 `:h dein-options` 查阅。
@@ -666,7 +668,7 @@ endfunction
 
 标签栏上也支持鼠标操作，左键可以快速切换至该标签，中键删除该标签。该特性只支持 Neovim，并且需要 `has('tablineat')` 特性。
 
-**注意:** 这一特性仅限于Neovim并且 `has('tablineat')` 返回 `true`。
+**注意:** 这一特性仅限于 Neovim 并且 `has('tablineat')` 返回 `true`。
 
 | 快捷键           | 功能描述     |
 | ---------------- | ------------ |
@@ -777,8 +779,6 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `Ctrl-b`          | 向上翻页 (`C-b` / `C-u`)       |
 | `Ctrl-e`          | 向下滚屏 (`3 Ctrl-e/j`)        |
 | `Ctrl-y`          | 向上滚屏 (`3Ctrl-y/k`)         |
-| `Ctrl-c`          | 复制当前文件绝对路径           |
-| `Ctrl-x`          | 切换窗口文件                   |
 | `Ctrl-Shift-Up`   | 向上移动当前行                 |
 | `Ctrl-Shift-Down` | 向下移动当前行                 |
 
@@ -824,7 +824,10 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 ### 快捷键导航
 
-当 Normal 模式下按下前缀键后出现输入延迟，则会在屏幕下方打开一个快捷键导航窗口，提示当前可用的快捷键及其功能描述，目前支持的前缀键有：`[SPC]`、`[Window]`、`<Leader>`、`g`、`z`。
+当 Normal 模式下按下前缀键后出现输入延迟，
+则会在屏幕下方打开一个快捷键导航窗口，
+提示当前可用的快捷键及其功能描述，
+目前支持的前缀键有：`[SPC]`、`[Window]`、`<Leader>`、`g`、`z`。
 
 这些前缀的按键为：
 
@@ -833,6 +836,21 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `[SPC]`    | 空格键                 | SpaceVim 默认前缀键     |
 | `[Window]` | `windows_leader` / `s` | SpaceVim 默认窗口前缀键 |
 | `<leader>` | 默认的 Vim leader 键   | Vim/Neovim 默认前缀键   |
+
+
+默认的 `<Leader>` 键是 `\`, 如果需要修改 `<Leader>`
+键则需要使用启动函数修改 `g:mapleader` 的值，
+比如使用逗号 `,` 作为 `<Leader>` 按键。
+
+```vim
+function! myspacevim#before() abort
+    let g:mapleader = ','
+endfunction
+```
+
+**注意：** 在函数中修改 `g:mapleader` 的值，不可以省略前缀 `g:`，
+因为函数中的变量默认作用域是 `l:`，这与 Vim 的帮助 `:h mapleader`
+有些许不一样。
 
 默认情况下，快捷键导航将在输入延迟超过 1000ms 后打开，你可以通过修改 Vim 的 `'timeoutlen'` 选项来修改成适合自己的延迟时间长度。
 
@@ -1100,6 +1118,7 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 | `SPC w V`     | 垂直分离窗口，并切换至新窗口                       |
 | `SPC w w`     | 切换至前一窗口                                     |
 | `SPC w W`     | 选择一个窗口                                       |
+| `SPC w x`     | 切换窗口文件                                       |
 
 ### 缓冲区管理
 
@@ -1688,7 +1707,6 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 ## 进阶使用
 
 ### 工程管理
-
 
 当打开一个文件时，SpaceVim 会自动切换当前目录至包含该文件的项目根目录，
 项目根目录的检测依据 `project_rooter_patterns` 这一选项，其默认值为：

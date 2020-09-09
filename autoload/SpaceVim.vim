@@ -1226,7 +1226,6 @@ function! SpaceVim#end() abort
   endif
 
   if !g:spacevim_vimcompatible
-    nnoremap <silent><C-x> <C-w>x
     cnoremap <C-f> <Right>
     " Navigation in command line
     cnoremap <C-a> <Home>
@@ -1386,7 +1385,6 @@ function! SpaceVim#begin() abort
   endif
   call SpaceVim#default#options()
   call SpaceVim#default#layers()
-  call SpaceVim#default#keyBindings()
   call SpaceVim#commands#load()
 endfunction
 

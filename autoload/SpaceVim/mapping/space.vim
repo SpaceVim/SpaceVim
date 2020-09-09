@@ -129,6 +129,16 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'x'], 'wincmd x',
+        \ ['window-switch-placement',
+        \ [
+        \ '[SPC w x] is to jump to exchange current window with next one.',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'k'], 'wincmd k',
         \ ['window-up',
         \ [
