@@ -5,20 +5,30 @@ description: "A list of questions and answers relating to SpaceVim, especially t
 
 # [Home](../) >> FAQ
 
-This is a list of the frequently asked questions about SpaceVim.
+This is a list of the frequently asked questions about SpaceVim. Including questions about installation, configuration
+and usage.
 
 <!-- vim-markdown-toc GFM -->
 
-- [Can I try SpaceVim without overwriting my vimrc?](#can-i-try-spacevim-without-overwriting-my-vimrc)
-- [Why use toml as the default configuration file format?](#why-use-toml-as-the-default-configuration-file-format)
-- [Where should I put my configuration?](#where-should-i-put-my-configuration)
-- [E492: Not an editor command: ^M](#e492-not-an-editor-command-m)
-- [Why SpaceVim can not display default colorscheme?](#why-spacevim-can-not-display-default-colorscheme)
-- [Why can't I update plugins?](#why-cant-i-update-plugins)
-- [How to enable +py and +py3 in Neovim?](#how-to-enable-py-and-py3-in-neovim)
-- [Why does Vim freeze after pressing Ctrl-s?](#why-does-vim-freeze-after-pressing-ctrl-s)
+- [Installation](#installation)
+  - [Where is my old vim configuration?](#where-is-my-old-vim-configuration)
+- [Configuration](#configuration)
+  - [Can I try SpaceVim without overwriting my vimrc?](#can-i-try-spacevim-without-overwriting-my-vimrc)
+  - [Why use toml as the default configuration file format?](#why-use-toml-as-the-default-configuration-file-format)
+  - [Where should I put my configuration?](#where-should-i-put-my-configuration)
+  - [E492: Not an editor command: ^M](#e492-not-an-editor-command-m)
+  - [Why SpaceVim can not display default colorscheme?](#why-spacevim-can-not-display-default-colorscheme)
+  - [Why can't I update plugins?](#why-cant-i-update-plugins)
+  - [How to enable +py and +py3 in Neovim?](#how-to-enable-py-and-py3-in-neovim)
+  - [Why does Vim freeze after pressing Ctrl-s?](#why-does-vim-freeze-after-pressing-ctrl-s)
 
 <!-- vim-markdown-toc -->
+
+## Installation
+
+### Where is my old vim configuration?
+
+## Configuration
 
 ### Can I try SpaceVim without overwriting my vimrc?
 
