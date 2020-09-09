@@ -1,0 +1,4 @@
+Execute ( SpaceVim api: vim#key ):
+  let regex = SpaceVim#api#import('vim#regex')
+  AssertEqual regex.parser('[a-z]'), '[a-z]'
+
