@@ -1,10 +1,10 @@
 ---
 title: SpaceVim release v1.4.0
 categories: [changelog, blog]
-description: "SpaceVim release v1.4.0"
+description: "SpaceVim released V1.4.0 with eight language layers and an asynchronous task management plugin"
 type: article
 image: https://user-images.githubusercontent.com/13142418/80494420-3925c680-8999-11ea-9652-21e1e5564148.png
-commentsID: "SpaceVim release v1.4.0"
+commentsID: "SpaceVim release v1.4.0 with eight"
 comments: true
 ---
 
