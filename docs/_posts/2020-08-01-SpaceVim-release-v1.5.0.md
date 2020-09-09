@@ -1,7 +1,7 @@
 ---
 title: SpaceVim release v1.5.0
 categories: [changelog, blog]
-description: "SpaceVim release v1.5.0"
+description: "SpaceVim release v1.5.0 with four new language layers and floating window support."
 type: article
 image: https://user-images.githubusercontent.com/13142418/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png
 commentsID: "SpaceVim release v1.5.0"
