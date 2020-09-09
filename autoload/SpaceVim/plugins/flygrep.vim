@@ -29,6 +29,7 @@ let s:Window = SpaceVim#api#import('vim#window')
 
 let s:grepid = 0
 
+let s:filename_pattern = '[^:]*:\d\+:\d\+:'
 
 " Init local options: {{{
 let s:grep_expr = ''
@@ -145,7 +146,7 @@ function! s:expr_to_pattern(expr) abort
   if s:grep_mode ==# 'expr'
     let items = split(a:expr)
     let pattern = join(items, '.*')
-    let pattern = s:REGEX.parser(pattern, 0)
+    let pattern = s:filename_pattern . '\zs' . s:REGEX.parser(pattern, 0)
     call s:LOGGER.info('matchadd pattern: ' . pattern)
     return pattern
   else
@@ -809,7 +810,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
   call s:update_statusline()
-  call s:matchadd('FileName', '[^:]*:\d\+:\d\+:', 3)
+  call s:matchadd('FileName', s:filename_pattern, 3)
   let s:MPT._prompt.begin = get(a:argv, 'input', '')
   let fs = get(a:argv, 'files', '')
   if fs ==# '@buffers'
