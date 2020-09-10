@@ -36,6 +36,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Mappings guide](#mappings-guide)
   - [Editing](#editing)
     - [Moving text](#moving-text)
+    - [Code indentation](#code-indentation)
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
     - [Increase/Decrease numbers](#increasedecrease-numbers)
@@ -931,6 +932,27 @@ Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` t
 | `<` / `Shift-Tab` | Indent to left and re-select  |
 | `Ctrl-Shift-Up`   | move lines up                 |
 | `Ctrl-Shift-Down` | move lines down               |
+
+#### Code indentation
+
+The default indentation of code is 2, which is controlled by option `default_indent`.
+If you prefer to use 4 as code indentation. Just add following snippet into SpaceVim
+configuration file:
+
+```toml
+[options]
+    default_indent = 4
+```
+
+The `default_indent` option will be applied to vim's `&tabstop`, `&softtabstop` and
+`&shiftwidth` options. By default, when user insert a `<Tab>`, it will be expanded
+to spaces. This feature can be disabled by `expand_tab` option.
+
+```toml
+[options]
+    default_indent = 4
+    expand_tab = true
+```
 
 #### Text manipulation commands
 
