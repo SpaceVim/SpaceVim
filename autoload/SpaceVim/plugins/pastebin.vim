@@ -49,7 +49,8 @@ function! s:on_exit(job_id, data, event) abort
     let @+ = s:url . '.txt'
     echo 'Pastbin: ' . s:url . '.txt'
   else
-    call s:LOGGER.warn('exit code:' . string(a:data))
+    call s:LOGGER.warn('exit code: ' . string(a:data))
+    call s:LOGGER.warn('url: ' . s:url)
   endif
 endfunction
 
