@@ -34,8 +34,8 @@ function! SpaceVim#plugins#pastebin#paste() abort
   call s:JOB.chanclose(s:job_id, 'stdin')
 endfunction
 function! s:on_stdout(job_id, data, event) abort
-  call s:LOGGER.info('stdout: '. string(a:data))
   for url in filter(a:data, '!empty(v:val)')
+    call s:LOGGER.info('stdout: '. url)
     let s:url = url
   endfor
 endfunction
