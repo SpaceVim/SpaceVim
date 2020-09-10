@@ -1039,11 +1039,14 @@ In transient state:
 
 #### Copy and paste
 
+If `has('unnamedplus')`, the register used by `<Leader> y` is `+`, otherwise it is `*`.
+Read `:h registers` for more info about other registers.
+
 | Key          | Action                           |
 | ------------ | -------------------------------- |
 | `<Leader> y` | Copy text to system clipboard    |
-| `<Leader> Y` | Copy text to pastebin            |
 | `<Leader> p` | Paste text from system clipboard |
+| `<Leader> Y` | Copy text to pastebin            |
 
 #### Commenting
 
