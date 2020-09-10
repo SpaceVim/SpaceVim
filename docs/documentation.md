@@ -32,10 +32,10 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Open file with file tree.](#open-file-with-file-tree)
 - [General usage](#general-usage)
   - [Native functions](#native-functions)
-  - [Editing](#editing)
-    - [Moving text](#moving-text)
   - [Command line mode key bindings](#command-line-mode-key-bindings)
   - [Mappings guide](#mappings-guide)
+  - [Editing](#editing)
+    - [Moving text](#moving-text)
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
     - [Increase/Decrease numbers](#increasedecrease-numbers)
@@ -844,17 +844,6 @@ alternate key bindings:
 | `<Leader> q r ?` | Normal | Same as native `q ?`, open cmdwin |
 | `<Leader> q r :` | Normal | Same as native `q :`, open cmdwin |
 
-### Editing
-
-#### Moving text
-
-| Key               | Action                        |
-| ----------------- | ----------------------------- |
-| `>` / `Tab`       | Indent to right and re-select |
-| `<` / `Shift-Tab` | Indent to left and re-select  |
-| `Ctrl-Shift-Up`   | move lines up                 |
-| `Ctrl-Shift-Down` | move lines down               |
-
 ### Command line mode key bindings
 
 After pressing `:`, you can switch to command line mode, here is a list of key bindings
@@ -931,6 +920,17 @@ To narrow the list, just insert the mapping keys or descriptions of what mapping
 ![unite-mapping](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
 
 Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` to execute that command.
+
+### Editing
+
+#### Moving text
+
+| Key               | Action                        |
+| ----------------- | ----------------------------- |
+| `>` / `Tab`       | Indent to right and re-select |
+| `<` / `Shift-Tab` | Indent to left and re-select  |
+| `Ctrl-Shift-Up`   | move lines up                 |
+| `Ctrl-Shift-Down` | move lines down               |
 
 #### Text manipulation commands
 
