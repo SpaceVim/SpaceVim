@@ -32,10 +32,10 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Open file with file tree.](#open-file-with-file-tree)
 - [General usage](#general-usage)
   - [Native functions](#native-functions)
-  - [Visual mode key bindings](#visual-mode-key-bindings)
+  - [Editing](#editing)
+    - [Code indentation](#code-indentation)
   - [Command line mode key bindings](#command-line-mode-key-bindings)
   - [Mappings guide](#mappings-guide)
-  - [Editing](#editing)
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
     - [Increase/Decrease numbers](#increasedecrease-numbers)
@@ -840,7 +840,9 @@ The following key bindings are the general key bindings for moving cursor.
 | `<Leader> q r ?` | Normal | Same as native `q ?`, open cmdwin |
 | `<Leader> q r :` | Normal | Same as native `q :`, open cmdwin |
 
-### Visual mode key bindings
+### Editing
+
+#### Code indentation
 
 | Key               | Action                                   |
 | ----------------- | ---------------------------------------- |
@@ -929,7 +931,6 @@ To narrow the list, just insert the mapping keys or descriptions of what mapping
 
 Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` to execute that command.
 
-### Editing
 
 #### Text manipulation commands
 
