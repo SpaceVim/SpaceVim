@@ -177,7 +177,7 @@ function! SpaceVim#default#keyBindings() abort
     xnoremap <Leader>P "*P
   endif
 
-  xnoremap <silent><Leader>Y :call SpaceVim#plugins#pastebin#paste()<CR>
+  xnoremap <silent><Leader>Y :<C-u>call SpaceVim#plugins#pastebin#paste()<CR>
   " call SpaceVim#mapping#guide#register_displayname(':call SpaceVim#plugins#pastebin#paste()<CR>', 'copy to pastebin')
 
   " quickfix list movement
