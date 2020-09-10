@@ -1058,7 +1058,7 @@ curl -s -F "content=<-" http://dpaste.com/api/v2/
 This command will read stdin and copy the stdin to dpaste server. It is same as:
 
 ```
-echo "hello pastbin" | curl -s -F "content=<-" http://dpaste.com/api/v2/
+echo "selected text" | curl -s -F "content=<-" http://dpaste.com/api/v2/
 ```
 
 #### Commenting
