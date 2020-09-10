@@ -252,11 +252,6 @@ function! SpaceVim#default#keyBindings() abort
   nnoremap <silent><Down> gj
   nnoremap <silent><Up> gk
 
-  " Navigate window
-  nnoremap <silent><C-q> <C-w>
-
-
-
   " Fast saving
   nnoremap <C-s> :<C-u>w<CR>
   vnoremap <C-s> :<C-u>w<CR>
@@ -353,7 +348,7 @@ endfunction
 function! s:switch_tabs() abort
   let previous_tab = s:TAB.previous_tabpagenr()
   if previous_tab > 0
-    exe "tabnext " . previous_tab
+    exe 'tabnext ' . previous_tab
   endif
 endfunction
 

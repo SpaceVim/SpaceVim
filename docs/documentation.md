@@ -33,7 +33,7 @@ description: "General documentation about how to using SpaceVim, including the q
 - [General usage](#general-usage)
   - [Native functions](#native-functions)
   - [Editing](#editing)
-    - [Code indentation](#code-indentation)
+    - [Moving text](#moving-text)
   - [Command line mode key bindings](#command-line-mode-key-bindings)
   - [Mappings guide](#mappings-guide)
     - [Text manipulation commands](#text-manipulation-commands)
@@ -833,6 +833,10 @@ The following key bindings are the general key bindings for moving cursor.
 
 ### Native functions
 
+When vimcompatible is not enabled, some native key bindings of vim
+has been overrided. To use these key bindings, SpaceVim provides
+alternate key bindings:
+
 | Key bindings     | Mode   | Action                            |
 | ---------------- | ------ | --------------------------------- |
 | `<Leader> q r`   | Normal | Same as native `q`                |
@@ -842,17 +846,14 @@ The following key bindings are the general key bindings for moving cursor.
 
 ### Editing
 
-#### Code indentation
+#### Moving text
 
-| Key               | Action                                   |
-| ----------------- | ---------------------------------------- |
-| `<`               | Indent to left and re-select             |
-| `>`               | Indent to right and re-select            |
-| `<Tab>`           | Indent to right and re-select            |
-| `Shift-<Tab>`     | Indent to left and re-select             |
-| `Ctrl-q`          | `Ctrl-w`                                 |
-| `Ctrl-Shift-Up`   | move lines up                            |
-| `Ctrl-Shift-Down` | move lines down                          |
+| Key               | Action                        |
+| ----------------- | ----------------------------- |
+| `>` / `Tab`       | Indent to right and re-select |
+| `<` / `Shift-Tab` | Indent to left and re-select  |
+| `Ctrl-Shift-Up`   | move lines up                 |
+| `Ctrl-Shift-Down` | move lines down               |
 
 ### Command line mode key bindings
 
@@ -930,7 +931,6 @@ To narrow the list, just insert the mapping keys or descriptions of what mapping
 ![unite-mapping](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
 
 Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` to execute that command.
-
 
 #### Text manipulation commands
 
@@ -1039,10 +1039,10 @@ In transient state:
 
 #### Copy and paste
 
-| Key               | Action                                   |
-| ----------------- | ---------------------------------------- |
-| `<Leader> y`      | Copy selection to X11 clipboard ("+y)    |
-| `<Leader> p`      | Paste selection from X11 clipboard ("+p) |
+| Key          | Action                                   |
+| ------------ | ---------------------------------------- |
+| `<Leader> y` | Copy selection to X11 clipboard ("+y)    |
+| `<Leader> p` | Paste selection from X11 clipboard ("+p) |
 
 #### Commenting
 
