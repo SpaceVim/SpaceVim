@@ -1039,10 +1039,11 @@ In transient state:
 
 #### Copy and paste
 
-| Key          | Action                                   |
-| ------------ | ---------------------------------------- |
-| `<Leader> y` | Copy selection to X11 clipboard ("+y)    |
-| `<Leader> p` | Paste selection from X11 clipboard ("+p) |
+| Key          | Action                           |
+| ------------ | -------------------------------- |
+| `<Leader> y` | Copy text to system clipboard    |
+| `<Leader> Y` | Copy text to pastebin            |
+| `<Leader> p` | Paste text from system clipboard |
 
 #### Commenting
 
