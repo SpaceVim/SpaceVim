@@ -21,7 +21,7 @@ function! SpaceVim#plugins#pastebin#paste() abort
   " let ft = &filetype
   if s:job_id != -1
     call s:LOGGER.info('previous job has not been finished, killed!')
-    call s:JOB.close(s:job_id)
+    call s:JOB.stop(s:job_id)
   endif
   let cmd = 'curl -s -F "content=<-" http://dpaste.com/api/v2/'
   let s:job_id =  s:JOB.start(cmd,{
