@@ -14,13 +14,22 @@ let s:job_id = -1
 function! SpaceVim#plugins#pastebin#paste() abort
   let s:url = ''
   let context = s:get_visual_selection()
+  if empty(context)
+    call s:LOGGER.info('no selection text, skipped.')
+    return
+  endif
   " let ft = &filetype
+  if s:job_id != -1
+    call s:LOGGER.info('previous job has not been finished, killed!')
+    call s:JOB.close(s:job_id)
+  endif
   let cmd = 'curl -s -F "content=<-" http://dpaste.com/api/v2/'
   let s:job_id =  s:JOB.start(cmd,{
         \ 'on_stdout' : function('s:on_stdout'),
         \ 'on_stderr' : function('s:on_stderr'),
         \ 'on_exit' : function('s:on_exit'),
         \ })
+  call s:LOGGER.info('job id: '. s:job_id)
   call s:JOB.send(s:job_id, context)
   call s:JOB.chanclose(s:job_id, 'stdin')
 endfunction
@@ -35,6 +44,7 @@ function! s:on_stderr(job_id, data, event) abort
 endfunction
 
 function! s:on_exit(job_id, data, event) abort
+  let s:job_id = -1
   if a:data ==# 0 && !empty(s:url)
     let @+ = s:url . '.txt'
     echo 'Pastbin: ' . s:url . '.txt'
