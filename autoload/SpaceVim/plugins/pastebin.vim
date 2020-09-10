@@ -8,6 +8,7 @@
 
 
 let s:JOB = SpaceVim#api#import('job')
+let s:LOGGER =SpaceVim#logger#derive('pastebin')
 let s:job_id = -1
 
 function! SpaceVim#plugins#pastebin#paste() abort
@@ -24,33 +25,34 @@ function! SpaceVim#plugins#pastebin#paste() abort
   call s:JOB.chanclose(s:job_id, 'stdin')
 endfunction
 function! s:on_stdout(job_id, data, event) abort
-  " echom 'stdout:' . string(a:data)
   for url in filter(a:data, '!empty(v:val)')
     let s:url = url
   endfor
 endfunction
 
 function! s:on_stderr(job_id, data, event) abort
-  " echom 'stderr:' . string(a:data)
+  call s:LOGGER.warn('stderr:' . string(a:data))
 endfunction
 
 function! s:on_exit(job_id, data, event) abort
   if a:data ==# 0 && !empty(s:url)
     let @+ = s:url . '.txt'
     echo 'Pastbin: ' . s:url . '.txt'
+  else
+    call s:LOGGER.warn('exit code:' . string(a:data))
   endif
 endfunction
 
 " ref: https://stackoverflow.com/a/6271254
 function! s:get_visual_selection() abort
-    " Why is this not a built-in Vim script function?!
-    let [line_start, column_start] = getpos("'<")[1:2]
-    let [line_end, column_end] = getpos("'>")[1:2]
-    let lines = getline(line_start, line_end)
-    if len(lines) == 0
-        return ''
-    endif
-    let lines[-1] = lines[-1][: column_end - (&selection ==# 'inclusive' ? 1 : 2)]
-    let lines[0] = lines[0][column_start - 1:]
-    return join(lines, "\n")
+  " Why is this not a built-in Vim script function?!
+  let [line_start, column_start] = getpos("'<")[1:2]
+  let [line_end, column_end] = getpos("'>")[1:2]
+  let lines = getline(line_start, line_end)
+  if len(lines) == 0
+    return ''
+  endif
+  let lines[-1] = lines[-1][: column_end - (&selection ==# 'inclusive' ? 1 : 2)]
+  let lines[0] = lines[0][column_start - 1:]
+  return join(lines, "\n")
 endfunction
