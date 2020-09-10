@@ -10,7 +10,7 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:job_id = -1
 
-function! SpaceVim#plugins#pastebin#paste()
+function! SpaceVim#plugins#pastebin#paste() abort
   let s:url = ''
   let context = s:get_visual_selection()
   " let ft = &filetype
@@ -20,7 +20,7 @@ function! SpaceVim#plugins#pastebin#paste()
         \ 'on_stderr' : function('s:on_stderr'),
         \ 'on_exit' : function('s:on_exit'),
         \ })
-  call s:JOB.send(s:job_id, split(context, "\n"))
+  call s:JOB.send(s:job_id, context)
   call s:JOB.chanclose(s:job_id, 'stdin')
 endfunction
 function! s:on_stdout(job_id, data, event) abort
@@ -42,7 +42,7 @@ function! s:on_exit(job_id, data, event) abort
 endfunction
 
 " ref: https://stackoverflow.com/a/6271254
-function! s:get_visual_selection()
+function! s:get_visual_selection() abort
     " Why is this not a built-in Vim script function?!
     let [line_start, column_start] = getpos("'<")[1:2]
     let [line_end, column_end] = getpos("'>")[1:2]
@@ -50,7 +50,7 @@ function! s:get_visual_selection()
     if len(lines) == 0
         return ''
     endif
-    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[-1] = lines[-1][: column_end - (&selection ==# 'inclusive' ? 1 : 2)]
     let lines[0] = lines[0][column_start - 1:]
     return join(lines, "\n")
 endfunction
