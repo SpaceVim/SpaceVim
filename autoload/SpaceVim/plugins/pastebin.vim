@@ -30,7 +30,7 @@ function! SpaceVim#plugins#pastebin#paste() abort
         \ 'on_exit' : function('s:on_exit'),
         \ })
   call s:LOGGER.info('job id: '. s:job_id)
-  call s:JOB.send(s:job_id, context)
+  call s:JOB.send(s:job_id, split(context, "\n"))
   call s:JOB.chanclose(s:job_id, 'stdin')
 endfunction
 function! s:on_stdout(job_id, data, event) abort
