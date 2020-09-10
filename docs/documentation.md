@@ -32,13 +32,14 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Open file with file tree.](#open-file-with-file-tree)
 - [General usage](#general-usage)
   - [Native functions](#native-functions)
-  - [Visual mode key bindings](#visual-mode-key-bindings)
   - [Command line mode key bindings](#command-line-mode-key-bindings)
   - [Mappings guide](#mappings-guide)
   - [Editing](#editing)
+    - [Moving text](#moving-text)
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
     - [Increase/Decrease numbers](#increasedecrease-numbers)
+    - [Copy and paste](#copy-and-paste)
     - [Commenting](#commenting)
     - [Multi-Encodings](#multi-encodings)
   - [Window manager](#window-manager)
@@ -832,26 +833,16 @@ The following key bindings are the general key bindings for moving cursor.
 
 ### Native functions
 
+When vimcompatible is not enabled, some native key bindings of vim
+has been overrided. To use these key bindings, SpaceVim provides
+alternate key bindings:
+
 | Key bindings     | Mode   | Action                            |
 | ---------------- | ------ | --------------------------------- |
 | `<Leader> q r`   | Normal | Same as native `q`                |
 | `<Leader> q r /` | Normal | Same as native `q /`, open cmdwin |
 | `<Leader> q r ?` | Normal | Same as native `q ?`, open cmdwin |
 | `<Leader> q r :` | Normal | Same as native `q :`, open cmdwin |
-
-### Visual mode key bindings
-
-| Key               | Action                                   |
-| ----------------- | ---------------------------------------- |
-| `<Leader> y`      | Copy selection to X11 clipboard ("+y)    |
-| `<Leader> p`      | Paste selection from X11 clipboard ("+p) |
-| `<`               | Indent to left and re-select             |
-| `>`               | Indent to right and re-select            |
-| `<Tab>`           | Indent to right and re-select            |
-| `Shift-<Tab>`     | Indent to left and re-select             |
-| `Ctrl-q`          | `Ctrl-w`                                 |
-| `Ctrl-Shift-Up`   | move lines up                            |
-| `Ctrl-Shift-Down` | move lines down                          |
 
 ### Command line mode key bindings
 
@@ -931,6 +922,15 @@ To narrow the list, just insert the mapping keys or descriptions of what mapping
 Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` to execute that command.
 
 ### Editing
+
+#### Moving text
+
+| Key               | Action                        |
+| ----------------- | ----------------------------- |
+| `>` / `Tab`       | Indent to right and re-select |
+| `<` / `Shift-Tab` | Indent to left and re-select  |
+| `Ctrl-Shift-Up`   | move lines up                 |
+| `Ctrl-Shift-Down` | move lines down               |
 
 #### Text manipulation commands
 
@@ -1036,6 +1036,30 @@ In transient state:
 | Any other key | leave the transient state              |
 
 **Tips:** You can increase or decrease a number by more than once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under cursor).
+
+#### Copy and paste
+
+If `has('unnamedplus')`, the register used by `<Leader> y` is `+`, otherwise it is `*`.
+Read `:h registers` for more info about other registers.
+
+| Key          | Action                           |
+| ------------ | -------------------------------- |
+| `<Leader> y` | Copy text to system clipboard    |
+| `<Leader> p` | Paste text from system clipboard |
+| `<Leader> Y` | Copy text to pastebin            |
+
+The `<Leader< Y` key binding will copy selected text to a pastebin server. It requires `curl` in your `$PATH`.
+And the default command is:
+
+```
+curl -s -F "content=<-" http://dpaste.com/api/v2/
+```
+
+This command will read stdin and copy the stdin to dpaste server. It is same as:
+
+```
+echo "selected text" | curl -s -F "content=<-" http://dpaste.com/api/v2/
+```
 
 #### Commenting
 

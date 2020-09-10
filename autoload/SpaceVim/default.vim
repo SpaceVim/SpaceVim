@@ -177,7 +177,7 @@ function! SpaceVim#default#keyBindings() abort
     xnoremap <Leader>P "*P
   endif
 
-  xnoremap <silent><Leader>Y :call SpaceVim#plugins#pastebin#paste()<CR>
+  xnoremap <silent><Leader>Y :<C-u>call SpaceVim#plugins#pastebin#paste()<CR>
   " call SpaceVim#mapping#guide#register_displayname(':call SpaceVim#plugins#pastebin#paste()<CR>', 'copy to pastebin')
 
   " quickfix list movement
@@ -251,11 +251,6 @@ function! SpaceVim#default#keyBindings() abort
   " smart up and down
   nnoremap <silent><Down> gj
   nnoremap <silent><Up> gk
-
-  " Navigate window
-  nnoremap <silent><C-q> <C-w>
-
-
 
   " Fast saving
   nnoremap <C-s> :<C-u>w<CR>
@@ -353,7 +348,7 @@ endfunction
 function! s:switch_tabs() abort
   let previous_tab = s:TAB.previous_tabpagenr()
   if previous_tab > 0
-    exe "tabnext " . previous_tab
+    exe 'tabnext ' . previous_tab
   endif
 endfunction
 
