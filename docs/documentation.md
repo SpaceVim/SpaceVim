@@ -39,6 +39,7 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
     - [Increase/Decrease numbers](#increasedecrease-numbers)
+    - [Copy and paste](#copy-and-paste)
     - [Commenting](#commenting)
     - [Multi-Encodings](#multi-encodings)
   - [Window manager](#window-manager)
@@ -843,8 +844,6 @@ The following key bindings are the general key bindings for moving cursor.
 
 | Key               | Action                                   |
 | ----------------- | ---------------------------------------- |
-| `<Leader> y`      | Copy selection to X11 clipboard ("+y)    |
-| `<Leader> p`      | Paste selection from X11 clipboard ("+p) |
 | `<`               | Indent to left and re-select             |
 | `>`               | Indent to right and re-select            |
 | `<Tab>`           | Indent to right and re-select            |
@@ -1036,6 +1035,13 @@ In transient state:
 | Any other key | leave the transient state              |
 
 **Tips:** You can increase or decrease a number by more than once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under cursor).
+
+#### Copy and paste
+
+| Key               | Action                                   |
+| ----------------- | ---------------------------------------- |
+| `<Leader> y`      | Copy selection to X11 clipboard ("+y)    |
+| `<Leader> p`      | Paste selection from X11 clipboard ("+p) |
 
 #### Commenting
 
