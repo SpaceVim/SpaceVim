@@ -38,6 +38,7 @@ lang: zh
   - [快捷键导航](#快捷键导航)
   - [基本编辑操作](#基本编辑操作)
     - [移动文本块](#移动文本块)
+    - [代码缩进](#代码缩进)
     - [文本操作命令](#文本操作命令)
     - [文本插入命令](#文本插入命令)
     - [增加或减小数字](#增加或减小数字)
@@ -876,6 +877,26 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 | `>` / `Tab`       | 向右移动文本   |
 | `Ctrl-Shift-Up`   | 向上移动选中行 |
 | `Ctrl-Shift-Down` | 向下移动选中行 |
+
+#### 代码缩进
+
+默认的代码缩进值是 2，缩进的大小由选项 `default_indent` 设置，
+如果希望使用 4 个空格作为缩进，只需要在 SpaceVim 配置文件中加入如下内容：
+
+```toml
+[options]
+    default_indent = 4
+```
+
+`default_indent` 这一选项的值，将被赋值到 Vim 的选项：`&tabstop`、`&softtabstop` 和
+`&shiftwidth`。默认情况下，输入的 `<Tab>` 会被自动展开成对应缩进数量的空格，
+可通过设置选项 `expand_tab` 的值为 `false` 来禁用这一特性：
+
+```toml
+[options]
+    default_indent = 4
+    expand_tab = true
+```
 
 #### 文本操作命令
 
