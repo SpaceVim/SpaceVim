@@ -1048,6 +1048,19 @@ Read `:h registers` for more info about other registers.
 | `<Leader> p` | Paste text from system clipboard |
 | `<Leader> Y` | Copy text to pastebin            |
 
+The `<Leader< Y` key binding will copy selected text to a pastebin server. It requires `curl` in your `$PATH`.
+And the default command is:
+
+```
+curl -s -F "content=<-" http://dpaste.com/api/v2/
+```
+
+This command will read stdin and copy the stdin to dpaste server. It is same as:
+
+```
+echo "hello pastbin" | curl -s -F "content=<-" http://dpaste.com/api/v2/
+```
+
 #### Commenting
 
 Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommenter), it’s bound to the following keys.
