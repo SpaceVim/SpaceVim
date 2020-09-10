@@ -133,20 +133,30 @@ function! SpaceVim#layers#lang#c#config() abort
   augroup SpaceVim_lang_c
     autocmd!
     if s:enable_clang_syntax
-      if has('nvim')
-        if s:CPT.has('python3') && SpaceVim#util#haspy3lib('clang')
-          auto FileType c,cpp  ChromaticaStart
-        else
-          auto FileType c,cpp  ClampStart
-        endif
-      elseif has('job')
-        auto FileType c,cpp  ClStart
-      else
-        auto FileType c,cpp  ClighterEnable
-      endif
+      auto FileType c,cpp  call s:highlight()
     endif
   augroup END
   call add(g:spacevim_project_rooter_patterns, '.clang')
+  if has('nvim')
+    if s:CPT.has('python3') && SpaceVim#util#haspy3lib('clang')
+      let s:highlight_cmd = 'ChromaticaStart'
+    else
+      let s:highlight_cmd = 'ClampStart'
+    endif
+  elseif has('job')
+    let s:highlight_cmd = 'ClStart'
+  else
+    let s:highlight_cmd = 'ClighterEnable'
+  endif
+endfunction
+
+let s:highlight_cmd = ''
+
+function! s:highlight() abort
+  try
+    exe s:highlight_cmd
+  catch
+  endtry
 endfunction
 
 let s:enable_clang_syntax = 0
