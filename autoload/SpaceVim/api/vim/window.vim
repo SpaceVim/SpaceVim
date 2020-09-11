@@ -79,6 +79,11 @@ if has('nvim')
   endfunction
 else
   function! s:self.is_float(winnr) abort
+    " vim without win_getid() is old, which do not support floating window.
+    " so if_float always return 0
+    if !exists('*win_getid')
+      return 0
+    endif
     let id = win_getid(a:winnr)
     if id > 0 && exists('*popup_getoptions')
       try
