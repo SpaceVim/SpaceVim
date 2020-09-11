@@ -196,7 +196,6 @@ if has('nvim')
 else
   function! s:self.getchar(...) abort
     if !empty(get(g:, '_spacevim_input_list', []))
-      sleep 1000m
       return remove(g:_spacevim_input_list, 0)
     endif
     let ret = call('getchar', a:000)
