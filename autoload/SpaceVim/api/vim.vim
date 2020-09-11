@@ -140,7 +140,7 @@ if has('patch-7.4-2215') " && exists('*getwininfo')
   endfunction
 else
   function! s:self.get_qf_winnr() abort
-    let buffers = self.__cmp.execute('ls!')
+    let buffers = split(self.__cmp.execute('ls!'), "\n")
     call filter(buffers, 'v:val =~# "\\V[Quickfix List]"')
     " :cclose removes the buffer from the list (in my config only??)
     " assert(len(buffers) <= 1)
