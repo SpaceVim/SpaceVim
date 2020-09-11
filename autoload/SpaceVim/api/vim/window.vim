@@ -79,6 +79,9 @@ if has('nvim')
   endfunction
 else
   function! s:self.is_float(winnr) abort
+    if !exists('*win_getid')
+      return 0
+    endif
     let id = win_getid(a:winnr)
     if id > 0 && exists('*popup_getoptions')
       try
