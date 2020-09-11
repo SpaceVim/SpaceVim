@@ -131,11 +131,22 @@ function! s:self.setbufvar(buf, dict) abort
   endfor
 endfunction
 
-function! s:self.get_qf_winnr() abort
-  let wins = filter(getwininfo(), 'v:val.quickfix && !v:val.loclist')
-  " assert(len(wins) <= 1)
-  return empty(wins) ? 0 : wins[0].winnr
-endfunction
+" https://vi.stackexchange.com/questions/16585/how-to-differentiate-quickfix-window-buffers-and-location-list-buffers
+if has('patch-7.4-2215') " && exists('*getwininfo')
+  function! s:self.get_qf_winnr() abort
+    let wins = filter(getwininfo(), 'v:val.quickfix && !v:val.loclist')
+    " assert(len(wins) <= 1)
+    return empty(wins) ? 0 : wins[0].winnr
+  endfunction
+else
+  function! s:self.get_qf_winnr() abort
+    let buffers = self.__cmp.execute('ls!')
+    call filter(buffers, 'v:val =~# "\\V[Quickfix List]"')
+    " :cclose removes the buffer from the list (in my config only??)
+    " assert(len(buffers) <= 1)
+    return empty(buffers) ? 0 : eval(matchstr(buffers[0], '\v^\s*\zs\d+'))
+  endfunction
+endif
 
 function! s:self.is_qf_win(winnr) abort
   return a:winnr ==# self.get_qf_winnr()
