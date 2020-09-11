@@ -79,7 +79,7 @@ function! s:async_run(runner, ...) abort
     " the first item is compile cmd, and the second one is running cmd.
     let s:target = s:FILE.unify_path(tempname(), ':p')
     let dir = fnamemodify(s:target, ':h')
-    if isdirectory(dir)
+    if !isdirectory(dir)
       call mkdir(dir, 'p')
     endif
     if type(a:runner[0]) == type({})
@@ -388,7 +388,7 @@ function! SpaceVim#plugins#runner#set_language(lang) abort
 endfunction
 
 
-function! SpaceVim#plugins#runner#run_task(task)
+function! SpaceVim#plugins#runner#run_task(task) abort
   let isBackground = get(a:task, 'isBackground', 0)
   if !empty(a:task)
     let cmd = get(a:task, 'command', '') 
@@ -415,7 +415,7 @@ function! s:on_backgroud_exit(job_id, data, event) abort
 endfunction
 
 function! s:run_backgroud(cmd, ...) abort
-  echo "task running"
+  echo 'task running'
   let opts = get(a:000, 0, {})
   let s:start_time = reltime()
   call s:JOB.start(a:cmd,extend({
