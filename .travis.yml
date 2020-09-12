@@ -84,6 +84,7 @@ jobs:
       addons: { apt: { packages: [libncurses5-dev, libncursesw5-dev] } }
   allow_failures:
     - env: LINT=vimlint        VIM_BIN=nvim VIM_TAG=v0.4.3
+    - env: LINT=vimlint-errors VIM_BIN=nvim VIM_TAG=v0.4.3
     - env: LINT=vint           VIM_BIN=nvim VIM_TAG=v0.4.3
     - env: LINT=vader          VIM_BIN=nvim VIM_TAG=nightly
       addons: { apt: { packages: [python2.7-dev, lua5.2] } }
