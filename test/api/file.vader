@@ -6,7 +6,7 @@ Execute ( SpaceVim api: file.fticon ):
 
 Execute ( SpaceVim api: file.unify_path ):
   let path = fnamemodify('.SpaceVim.d/init.vim', ':p')
-  AssertEqual file.unify_path(path, ':p'), g:_spacevim_root_dir . '.SpaceVim.d/init.vim'
+  AssertEqual file.unify_path(path, ':p'), fnamemodify('~/.SpaceVim/.SpaceVim.d/init.vim', ':p:gs?[\\/]?/?')
   AssertEqual file.unify_path(path, ':~'),  '~/.SpaceVim/.SpaceVim.d/init.vim'
 
 Execute ( SpaceVim api: file.findfile ):
