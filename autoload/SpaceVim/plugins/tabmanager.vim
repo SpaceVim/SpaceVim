@@ -74,6 +74,7 @@ function! s:update_context() abort
   silent! normal! gg"_dG
   let tree = s:TABs.get_tree()
   let ctx = []
+  " @bug unknown function N in vim 7.4.052
   for page in sort(keys(tree), 'N')
     if gettabvar(page, 'spacevim_tabman_expandable', 1) == -1
       call add(ctx,
