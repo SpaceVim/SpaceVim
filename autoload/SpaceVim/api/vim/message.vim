@@ -9,6 +9,12 @@
 ""
 " @section vim#message, api-vim-message
 " @parentsection api
+" `vim#message` API provide functions for generating colored message in vim's
+" command line.
+"
+" echo({hi}, {msg})
+"
+"   print message with {hi} highlight group.
 
 
 let s:self = {}
