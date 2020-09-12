@@ -37,7 +37,9 @@ function! SpaceVim#plugins#help#describe_key() abort
   endif
   call add(keys, name)
   if has_key(root, name)
-    let root = root[name]
+    let rootswap = root
+    unlet root
+    let root = rootswap[name]
     if type(root) == 3
       if len(root) == 3
         normal! :
@@ -61,7 +63,9 @@ function! SpaceVim#plugins#help#describe_key() abort
     let name = s:KEY.nr2name(char2nr(key))
     call add(keys, name)
     if has_key(root, name)
-      let root = root[name]
+      let rootswap = root
+      unlet root
+      let root = rootswap[name]
       if type(root) == 3
         if len(root) == 3
           normal! :
