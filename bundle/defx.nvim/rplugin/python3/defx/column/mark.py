@@ -4,9 +4,9 @@
 # License: MIT license
 # ============================================================================
 
-from defx.base.column import Base
+from defx.base.column import Base, Highlights
 from defx.context import Context
-from defx.util import Nvim
+from defx.util import Nvim, Candidate, len_bytes
 
 import os
 import typing
@@ -29,15 +29,25 @@ class Column(Base):
             'readonly',
             'selected',
         ]
+        self.has_get_with_highlights = True
 
-    def get(self, context: Context,
-            candidate: typing.Dict[str, typing.Any]) -> str:
-        icon: str = ' ' * self.vars['length']
+        self._icons = {
+            'readonly': 'Comment',
+            'selected': 'Statement',
+        }
+
+    def get_with_highlights(
+        self, context: Context, candidate: Candidate
+    ) -> typing.Tuple[str, Highlights]:
         if candidate['is_selected']:
-            icon = self.vars['selected_icon']
+            return (str(self.vars['selected_icon']),
+                    [(f'{self.highlight_name}_selected',
+                      self.start, len_bytes(self.vars['selected_icon']))])
         elif not os.access(str(candidate['action__path']), os.W_OK):
-            icon = self.vars['readonly_icon']
-        return icon
+            return (str(self.vars['readonly_icon']),
+                    [(f'{self.highlight_name}_readonly',
+                      self.start, len_bytes(self.vars['readonly_icon']))])
+        return (' ' * self.vars['length'], [])
 
     def length(self, context: Context) -> int:
         return typing.cast(int, self.vars['length'])
@@ -47,15 +57,8 @@ class Column(Base):
 
     def highlight_commands(self) -> typing.List[str]:
         commands: typing.List[str] = []
-        for icon, highlight in {
-                'readonly': 'Comment',
-                'selected': 'Statement',
-        }.items():
-            commands.append(
-                ('syntax match {0}_{1} /[{2}]/ ' +
-                 'contained containedin={0}').format(
-                    self.syntax_name, icon, self.vars[icon + '_icon']))
+        for icon, highlight in self._icons.items():
             commands.append(
                 'highlight default link {}_{} {}'.format(
-                    self.syntax_name, icon, highlight))
+                    self.highlight_name, icon, highlight))
         return commands

@@ -6,7 +6,9 @@
 
 import typing
 
-from defx.source.file import Source as File
+from defx.base.source import Base as Source
+from defx.source.file.list import Source as SourceList
+from defx.source.file import Source as SourceFile
 from defx.context import Context
 from defx.sort import sort
 from defx.util import Nvim
@@ -20,20 +22,25 @@ Candidate = typing.Dict[str, typing.Any]
 class Defx(object):
 
     def __init__(self, vim: Nvim, context: Context,
-                 cwd: str, index: int) -> None:
+                 source_name: str, cwd: str, index: int) -> None:
         self._vim = vim
         self._context = context
         self._cwd = self._vim.call('getcwd')
         self.cd(cwd)
-        self._source: File = File(self._vim)
+
+        self._source: Source = (SourceList(self._vim)
+                                if source_name == 'file/list'
+                                else SourceFile(self._vim))
         self._index = index
         self._enabled_ignored_files = not context.show_ignored_files
+        self._filtered_files = context.filtered_files.split(',')
         self._ignored_files = context.ignored_files.split(',')
         self._cursor_history: typing.Dict[str, Path] = {}
         self._sort_method: str = self._context.sort
         self._mtime: int = -1
         self._opened_candidates: typing.Set[str] = set()
         self._selected_candidates: typing.Set[str] = set()
+        self._nested_candidates: typing.Set[str] = set()
 
         self._init_source()
 
@@ -49,19 +56,24 @@ class Defx(object):
     def cd(self, path: str) -> None:
         self._cwd = str(Path(self._cwd).joinpath(path))
 
-        if self._context.auto_cd:
+        if self._context.auto_cd and Path(path).is_dir():
             cd(self._vim, path)
 
     def get_root_candidate(self) -> Candidate:
         """
         Returns root candidate
         """
+        if not self._source:
+            return {}
+
         root = self._source.get_root_candidate(self._context, Path(self._cwd))
         root['is_root'] = True
         root['is_opened_tree'] = False
         root['is_selected'] = False
         root['level'] = 0
-        root['word'] = self._context.root_marker + root['word']
+        root['root_marker'] = self._context.root_marker + (
+            self._source.name + ':' if self._source.name != 'file' else '')
+        root['word'] = root['root_marker'] + root['word']
 
         return root
 
@@ -71,21 +83,26 @@ class Defx(object):
         gathered_candidates = self.gather_candidates_recursive(
             path, base_level, max_level)
 
-        if self._opened_candidates:
-            candidates = []
-            for candidate in gathered_candidates:
-                candidates.append(candidate)
-                candidate['level'] = base_level
-                candidate_path = str(candidate['action__path'])
+        if not self._opened_candidates and not self._nested_candidates:
+            return gathered_candidates
 
-                if (candidate_path in self._opened_candidates and
-                        not candidate['is_opened_tree']):
-                    candidate['is_opened_tree'] = True
-                    candidates += self.tree_candidates(
-                        candidate_path, base_level + 1, max_level)
-        else:
-            candidates = gathered_candidates
+        candidates = []
+        for candidate in gathered_candidates:
+            candidates.append(candidate)
+            candidate['level'] = base_level
+            candidate_path = str(candidate['action__path'])
 
+            if not candidate['is_directory']:
+                continue
+            if (candidate_path not in self._opened_candidates and
+                    candidate_path not in self._nested_candidates):
+                continue
+
+            children = self.tree_candidates(
+                candidate_path, base_level + 1, max_level)
+
+            candidate['is_opened_tree'] = True
+            candidates += children
         return candidates
 
     def gather_candidates_recursive(
@@ -110,8 +127,23 @@ class Defx(object):
         """
         Returns file candidates
         """
+        if not self._source:
+            return []
+
         candidates = self._source.gather_candidates(
             self._context, Path(path))
+
+        if self._filtered_files != ['']:
+            new_candidates = []
+            for candidate in candidates:
+                matched = False
+                for glob in self._filtered_files:
+                    if candidate['action__path'].match(glob):
+                        matched = True
+                        break
+                if matched:
+                    new_candidates.append(candidate)
+            candidates = new_candidates
 
         if self._enabled_ignored_files:
             for glob in self._ignored_files:

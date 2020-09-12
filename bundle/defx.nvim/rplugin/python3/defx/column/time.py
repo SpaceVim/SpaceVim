@@ -4,9 +4,9 @@
 # License: MIT license
 # ============================================================================
 
-from defx.base.column import Base
+from defx.base.column import Base, Highlights
 from defx.context import Context
-from defx.util import Nvim, readable
+from defx.util import Nvim, readable, Candidate
 from defx.view import View
 
 import time
@@ -19,22 +19,26 @@ class Column(Base):
         super().__init__(vim)
 
         self.name = 'time'
-        self._length = 0
         self.vars = {
             'format': '%y.%m.%d %H:%M',
         }
+        self.has_get_with_highlights = True
+
+        self._length = 0
 
     def on_init(self, view: View, context: Context) -> None:
         self._length = self.vim.call('strwidth',
                                      time.strftime(self.vars['format']))
 
-    def get(self, context: Context,
-            candidate: typing.Dict[str, typing.Any]) -> str:
+    def get_with_highlights(
+        self, context: Context, candidate: Candidate
+    ) -> typing.Tuple[str, Highlights]:
         path = candidate['action__path']
         if not readable(path):
-            return str(' ' * self._length)
-        return time.strftime(self.vars['format'],
+            return (str(' ' * self._length), [])
+        text = time.strftime(self.vars['format'],
                              time.localtime(path.stat().st_mtime))
+        return (text, [(self.highlight_name, self.start, self._length)])
 
     def length(self, context: Context) -> int:
         return self._length
@@ -42,5 +46,5 @@ class Column(Base):
     def highlight_commands(self) -> typing.List[str]:
         commands: typing.List[str] = []
         commands.append(
-            f'highlight default link {self.syntax_name} Identifier')
+            f'highlight default link {self.highlight_name} Identifier')
         return commands

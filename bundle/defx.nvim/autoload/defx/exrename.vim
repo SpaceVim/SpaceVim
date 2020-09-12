@@ -54,7 +54,7 @@ function! defx#exrename#create_buffer(candidates, ...) abort
   silent! syntax clear defxExrenameOriginal
 
   " validate candidates and register
-  let unique_filenames = []
+  let unique_filenames = {}
   let b:exrename.candidates = []
   let b:exrename.filenames = []
   let cnt = 1
@@ -67,13 +67,15 @@ function! defx#exrename#create_buffer(candidates, ...) abort
     if !filewritable(candidate.action__path)
           \ && !isdirectory(candidate.action__path)
       redraw
-      echo candidate.action__path 'does not exist. Skip.'
+      call defx#util#print_error(
+            \ candidate.action__path . ' does not exist. Skip.')
       continue
     endif
     " make sure that the 'action__path' is unique
-    if index(unique_filenames, candidate.action__path) != -1
+    if has_key(unique_filenames, candidate.action__path)
       redraw
-      echo candidate.action__path 'is duplicated. Skip.'
+      call defx#util#print_error(
+            \ candidate.action__path . ' is duplicated. Skip.')
       continue
     endif
     " create filename
@@ -90,11 +92,14 @@ function! defx#exrename#create_buffer(candidates, ...) abort
           \ '/'.printf('^\%%%dl%s$', cnt,
           \ escape(s:escape_pattern(filename), '/')).'/'
     " register
-    call add(unique_filenames, candidate.action__path)
+    let unique_filenames[candidate.action__path] = 1
     call add(b:exrename.candidates, candidate)
     call add(b:exrename.filenames, filename)
     let cnt += 1
   endfor
+
+  let b:exrename.unique_filenames = unique_filenames
+
   " write filenames
   let [undolevels, &undolevels] = [&undolevels, -1]
   try
@@ -115,7 +120,7 @@ endfunction
 
 function! s:do_rename() abort
   if line('$') != len(b:exrename.filenames)
-    echohl Error | echo 'Invalid rename buffer!' | echohl None
+    call defx#util#print_error('Invalid rename buffer!')
     return
   endif
 
@@ -129,22 +134,44 @@ function! s:do_rename() abort
     echo printf('(%'.len(max).'d/%d): %s -> %s',
           \ linenr, max, filename, getline(linenr))
 
-    if filename !=# getline(linenr)
-      let old_file = b:exrename.candidates[linenr - 1].action__path
-      let new_file = expand(getline(linenr))
-      if new_file !~# '^\%(\a\a\+:\)\|^\%(\a:\|/\)'
-        let new_file = b:exrename.cwd . new_file
-      endif
-
-      if rename(old_file, new_file)
-        " Rename error
-        continue
-      endif
-
-      " update b:exrename
-      let b:exrename.filenames[linenr - 1] = getline(linenr)
-      let b:exrename.candidates[linenr - 1].action__path = new_file
+    if filename ==# getline(linenr)
+      let linenr += 1
+      continue
     endif
+
+    let old_file = b:exrename.candidates[linenr - 1].action__path
+    let new_file = expand(getline(linenr))
+    if !s:is_absolute(new_file)
+      " Convert to absolute path
+      let new_file = b:exrename.cwd . new_file
+    endif
+
+    if filereadable(new_file) || isdirectory(new_file)
+      " new_file is already exists.
+      redraw
+      call defx#util#print_error(
+            \ new_file . ' is already exists. Skip.')
+
+      let linenr += 1
+      continue
+    endif
+
+    if rename(old_file, new_file)
+      " Rename error
+      redraw
+      call defx#util#print_error(
+            \ new_file . ' is rename error. Skip.')
+
+      let linenr += 1
+      continue
+    endif
+
+    call defx#util#buffer_rename(bufnr(old_file), new_file)
+
+    " update b:exrename
+    let b:exrename.filenames[linenr - 1] = getline(linenr)
+    let b:exrename.candidates[linenr - 1].action__path = new_file
+
     let linenr += 1
   endwhile
 
@@ -178,7 +205,7 @@ function! s:check_lines() abort
   endif
 
   if line('$') != len(b:exrename.filenames)
-    echohl Error | echo 'Invalid rename buffer!' | echohl None
+    call defx#util#print_error('Invalid rename buffer!')
     return
   endif
 endfunction

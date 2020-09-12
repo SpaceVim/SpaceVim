@@ -5,9 +5,9 @@
 # License: MIT license
 # ============================================================================
 
-from defx.base.column import Base
+from defx.base.column import Base, Highlights
 from defx.context import Context
-from defx.util import Nvim
+from defx.util import Nvim, Candidate, len_bytes
 
 import typing
 
@@ -24,23 +24,36 @@ class Column(Base):
             'opened_icon': '-',
             'root_icon': ' ',
         }
+        self.has_get_with_highlights = True
+
         self._syntaxes = [
             'directory_icon',
             'opened_icon',
             'root_icon',
         ]
+        self._highlights = {
+            'directory': 'Special',
+            'opened': 'Special',
+            'root': 'Identifier',
+        }
 
-    def get(self, context: Context,
-            candidate: typing.Dict[str, typing.Any]) -> str:
-        icon: str = ' '
+    def get_with_highlights(
+        self, context: Context, candidate: Candidate
+    ) -> typing.Tuple[str, Highlights]:
         if candidate['is_opened_tree']:
-            icon = self.vars['opened_icon']
+            return (self.vars['opened_icon'],
+                    [(f'{self.highlight_name}_opened_icon',
+                      self.start, len_bytes(self.vars['opened_icon']))])
         elif candidate['is_root']:
-            icon = self.vars['root_icon']
+            return (self.vars['root_icon'],
+                    [(f'{self.highlight_name}_root_icon',
+                      self.start, len_bytes(self.vars['root_icon']))])
         elif candidate['is_directory']:
-            icon = self.vars['directory_icon']
+            return (self.vars['directory_icon'],
+                    [(f'{self.highlight_name}_directory_icon',
+                      self.start, len_bytes(self.vars['directory_icon']))])
 
-        return icon
+        return (' ', [])
 
     def length(self, context: Context) -> int:
         return typing.cast(int, self.vars['length'])
@@ -50,19 +63,9 @@ class Column(Base):
 
     def highlight_commands(self) -> typing.List[str]:
         commands: typing.List[str] = []
-        for icon, highlight in {
-                'directory': 'Special',
-                'opened': 'Special',
-                'root': 'Identifier',
-        }.items():
-            commands.append(
-                ('syntax match {0}_{1}_icon /[{2}]{3}/ ' +
-                 'contained containedin={0}').format(
-                     self.syntax_name, icon, self.vars[icon + '_icon'],
-                     ' ' if self.is_within_variable else ''
-                 ))
+        for icon, highlight in self._highlights.items():
             commands.append(
                 'highlight default link {}_{}_icon {}'.format(
-                    self.syntax_name, icon, highlight))
+                    self.highlight_name, icon, highlight))
 
         return commands

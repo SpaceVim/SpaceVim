@@ -31,6 +31,9 @@ def do_action(view: View, defx: Defx,
     """
     Do "action_name" action.
     """
+    if not defx._source:
+        return True
+
     actions: typing.Dict[str, ActionTable] = defx._source.kind.get_actions()
 
     if action_name not in actions:

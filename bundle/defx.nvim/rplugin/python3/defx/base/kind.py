@@ -88,6 +88,24 @@ def _call(view: View, defx: Defx, context: Context) -> None:
     view._vim.call(function, dict_context)
 
 
+@action(name='change_filtered_files', attr=ActionAttr.REDRAW)
+def _change_filtered_files(view: View, defx: Defx, context: Context) -> None:
+    filtered_files = context.args[0] if context.args else view._vim.call(
+        'defx#util#input',
+        f'{".".join(defx._filtered_files)} -> ',
+        '.'.join(defx._filtered_files))
+    defx._filtered_files = filtered_files.split(',')
+
+
+@action(name='change_ignored_files', attr=ActionAttr.REDRAW)
+def _change_ignored_files(view: View, defx: Defx, context: Context) -> None:
+    ignored_files = context.args[0] if context.args else view._vim.call(
+        'defx#util#input',
+        f'{".".join(defx._ignored_files)} -> ',
+        '.'.join(defx._ignored_files))
+    defx._ignored_files = ignored_files.split(',')
+
+
 @action(name='clear_select_all', attr=ActionAttr.MARK | ActionAttr.NO_TAGETS)
 def _clear_select_all(view: View, defx: Defx, context: Context) -> None:
     for candidate in [x for x in view._candidates
@@ -217,7 +235,7 @@ def _resize(view: View, defx: Defx, context: Context) -> None:
         return
 
     view._context = view._context._replace(winwidth=int(context.args[0]))
-    view._resize_window()
+    view._init_window()
     view.redraw(True)
 
 
@@ -243,19 +261,7 @@ def _search(view: View, defx: Defx, context: Context) -> None:
         return
 
     search_path = context.args[0]
-    path = Path(search_path)
-    parents: typing.List[Path] = []
-    while view.get_candidate_pos(
-            path, defx._index) < 0 and path.parent != path:
-        path = path.parent
-        parents.append(path)
-
-    for parent in reversed(parents):
-        view.open_tree(parent, defx._index, False, 0)
-
-    view.update_candidates()
-    view.redraw()
-    view.search_file(Path(search_path), defx._index)
+    view.search_recursive(Path(search_path), defx._index)
 
 
 @action(name='toggle_columns', attr=ActionAttr.REDRAW)
@@ -324,7 +330,11 @@ def _toggle_sort(view: View, defx: Defx, context: Context) -> None:
 
 @action(name='yank_path')
 def _yank_path(view: View, defx: Defx, context: Context) -> None:
-    yank = '\n'.join([str(x['action__path']) for x in context.targets])
+    mods = context.args[0] if context.args else ''
+    paths = [str(x['action__path']) for x in context.targets]
+    if mods:
+        paths = [view._vim.call('fnamemodify', x, mods) for x in paths]
+    yank = '\n'.join(paths)
     view._vim.call('setreg', '"', yank)
     if (view._vim.call('has', 'clipboard') or
             view._vim.call('has', 'xterm_clipboard')):

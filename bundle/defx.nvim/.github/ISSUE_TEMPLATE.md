@@ -8,7 +8,7 @@
 
 ## Environment Information
 
- * defx version(SHA1):
+ * plugin version(SHA1):
 
  * OS:
 
@@ -20,7 +20,7 @@
 
 ```vim
 " Your minimal init.vim/vimrc
-set runtimepath+=~/path/to/defx.nvim/
+set runtimepath+=~/path/to/plugin/
 ```
 
 

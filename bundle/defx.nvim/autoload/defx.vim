@@ -9,11 +9,32 @@ function! defx#initialize() abort
 endfunction
 
 function! defx#start(paths, user_context) abort
+  let prev_winid = win_getid()
+
   call defx#initialize()
   let context = defx#init#_context(a:user_context)
-  let paths = a:paths
-  let paths = map(paths, "fnamemodify(v:val, ':p')")
-  call defx#util#rpcrequest('_defx_start', [paths, context], v:false)
+  let paths = map(a:paths, "[v:val[0], fnamemodify(v:val[1], ':p')]")
+
+  call defx#util#rpcrequest('_defx_start',
+        \ [paths, context], v:false)
+
+  if context['search'] !=# ''
+    call defx#call_action('search', [context['search']])
+  endif
+
+  if !context['focus']
+    " Restore the window
+    call win_gotoid(prev_winid)
+  endif
+endfunction
+function! defx#start_candidates(candidates, user_context) abort
+  call defx#initialize()
+  let context = defx#init#_context(a:user_context)
+  let listfile = tempname()
+  call writefile(a:candidates, listfile)
+  let paths = [['file/list', listfile]]
+  call defx#util#rpcrequest('_defx_start',
+        \ [paths, context], v:false)
   if context['search'] !=# ''
     call defx#call_action('search', [context['search']])
   endif

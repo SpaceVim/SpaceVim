@@ -1,5 +1,5 @@
 # ============================================================================
-# FILE: file.py
+# FILE: file/list.py
 # AUTHOR: Shougo Matsushita <Shougo.Matsu at gmail.com>
 # License: MIT license
 # ============================================================================
@@ -8,6 +8,7 @@ from pathlib import Path
 import typing
 
 from defx.base.source import Base
+from defx.source.file import Source as File
 from defx.context import Context
 from defx.util import error, readable, safe_call, Nvim
 
@@ -17,7 +18,7 @@ class Source(Base):
     def __init__(self, vim: Nvim) -> None:
         super().__init__(vim)
 
-        self.name = 'file'
+        self.name = 'file/list'
 
         from defx.kind.file import Kind
         self.kind: Kind = Kind(self.vim)
@@ -40,22 +41,31 @@ class Source(Base):
 
         return {
             'word': word,
-            'is_directory': True,
+            'is_directory': False,
             'action__path': path,
         }
 
     def gather_candidates(
             self, context: Context, path: Path
     ) -> typing.List[typing.Dict[str, typing.Any]]:
-        candidates = []
-        if not readable(path) or not path.is_dir():
-            error(self.vim, f'"{path}" is not readable directory.')
+        if not readable(path):
+            error(self.vim, f'"{path}" is not readable file.')
             return []
-        for entry in path.iterdir():
-            candidates.append({
-                'word': entry.name.replace('\n', '\\n') + (
-                    '/' if safe_call(entry.is_dir, False) else ''),
-                'is_directory': safe_call(entry.is_dir, False),
-                'action__path': entry,
-            })
+
+        if path.is_dir():
+            # Fallback to file source
+            return File(self.vim).gather_candidates(context, path)
+
+        candidates = []
+        with path.open() as f:
+            for line in f:
+                entry = Path(line.rstrip('\n'))
+                if not entry.exists():
+                    continue
+                candidates.append({
+                    'word': str(entry) + (
+                        '/' if safe_call(entry.is_dir, False) else ''),
+                    'is_directory': safe_call(entry.is_dir, False),
+                    'action__path': entry,
+                })
         return candidates
