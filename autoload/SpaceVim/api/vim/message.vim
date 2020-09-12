@@ -28,6 +28,17 @@ function! s:self.echo(hl, msg) abort
   endtry
 endfunction
 
+function! s:self.echon(msglist) abort
+  for msg in a:msglist
+    execute 'echohl' msg[0]
+    try
+      echo msg[1]
+    finally
+      echohl None
+    endtry
+  endfor
+endfunction
+
 function! s:self.echomsg(hl, msg) abort
   execute 'echohl' a:hl
   try
@@ -48,20 +59,20 @@ function! s:self.warn(msg) abort
 endfunction
 
 function! s:self.confirm(msg) abort
-    echohl WarningMsg
-    echon a:msg . '? (y or n) '
-    echohl NONE
-    let rst = nr2char(getchar())
-    " clear the cmdline
-    redraw!
-    if rst =~? 'y' || rst == nr2char(13)
-        return 1
-    else
-        return 0
-    endif
+  echohl WarningMsg
+  echon a:msg . '? (y or n) '
+  echohl NONE
+  let rst = nr2char(getchar())
+  " clear the cmdline
+  redraw!
+  if rst =~? 'y' || rst == nr2char(13)
+    return 1
+  else
+    return 0
+  endif
 endfunction
 
 
 function! SpaceVim#api#vim#message#get() abort
-    return deepcopy(s:self)
+  return deepcopy(s:self)
 endfunction
