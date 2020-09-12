@@ -37,7 +37,13 @@ function! SpaceVim#plugins#help#describe_key() abort
   endif
   call add(keys, name)
   if has_key(root, name)
-    let root = root[name]
+    " in Old vim we get E706
+    " Variable type mismatch for conf, so we need to unlet conf first
+    " ref: patch-7.4.1546
+    " https://github.com/vim/vim/commit/f6f32c38bf3319144a84a01a154c8c91939e7acf
+    let rootswap = root
+    unlet root
+    let root = rootswap[name]
     if type(root) == 3
       if len(root) == 3
         normal! :
@@ -61,7 +67,13 @@ function! SpaceVim#plugins#help#describe_key() abort
     let name = s:KEY.nr2name(char2nr(key))
     call add(keys, name)
     if has_key(root, name)
-      let root = root[name]
+    " in Old vim we get E706
+    " Variable type mismatch for conf, so we need to unlet conf first
+    " ref: patch-7.4.1546
+    " https://github.com/vim/vim/commit/f6f32c38bf3319144a84a01a154c8c91939e7acf
+      let rootswap = root
+      unlet root
+      let root = rootswap[name]
       if type(root) == 3
         if len(root) == 3
           normal! :

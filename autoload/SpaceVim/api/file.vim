@@ -251,18 +251,30 @@ endfunction
 
 let s:file['path_to_fname'] = function('s:path_to_fname')
 
+
+" Both findfile() and finddir() do not has same logic between latest
+" version of vim and vim7.4.629. I do not know which pathch cause this
+" issue. But I have change the logic of these functions.
+" Now it should works same as in vim8 and old vim.
+
 function! s:findfile(what, where, ...) abort
   let old_suffixesadd = &suffixesadd
   let &suffixesadd = ''
   let l:count = get(a:000, 0, 0)
-  if l:count > 0
-    let file = findfile(a:what, escape(a:where, ' ') . ';', l:count)
-  elseif a:0 ==# 0
-    let file = findfile(a:what, escape(a:where, ' ') . ';')
-  elseif l:count ==# 0
-    let file = findfile(a:what, escape(a:where, ' ') . ';', -1)
+  
+  if filereadable(a:where) && !isdirectory(a:where)
+    let path = fnamemodify(a:where, ':h')
   else
-    let file = get(findfile(a:what, escape(a:where, ' ') . ';', -1), l:count, '')
+    let path = a:where
+  endif
+  if l:count > 0
+    let file = findfile(a:what, escape(path, ' ') . ';', l:count)
+  elseif a:0 ==# 0
+    let file = findfile(a:what, escape(path, ' ') . ';')
+  elseif l:count ==# 0
+    let file = findfile(a:what, escape(path, ' ') . ';', -1)
+  else
+    let file = get(findfile(a:what, escape(path, ' ') . ';', -1), l:count, '')
   endif
   let &suffixesadd = old_suffixesadd
   return file
@@ -274,14 +286,19 @@ function! s:finddir(what, where, ...) abort
   let old_suffixesadd = &suffixesadd
   let &suffixesadd = ''
   let l:count = get(a:000, 0, 0)
-  if l:count > 0
-    let file = finddir(a:what, escape(a:where, ' ') . ';', l:count)
-  elseif a:0 ==# 0
-    let file = finddir(a:what, escape(a:where, ' ') . ';')
-  elseif l:count ==# 0
-    let file = finddir(a:what, escape(a:where, ' ') . ';', -1)
+  if filereadable(a:where) && !isdirectory(a:where)
+    let path = fnamemodify(a:where, ':h')
   else
-    let file = get(finddir(a:what, escape(a:where, ' ') . ';', -1), l:count, '')
+    let path = a:where
+  endif
+  if l:count > 0
+    let file = finddir(a:what, escape(path, ' ') . ';', l:count)
+  elseif a:0 ==# 0
+    let file = finddir(a:what, escape(path, ' ') . ';')
+  elseif l:count ==# 0
+    let file = finddir(a:what, escape(path, ' ') . ';', -1)
+  else
+    let file = get(finddir(a:what, escape(path, ' ') . ';', -1), l:count, '')
   endif
   let &suffixesadd = old_suffixesadd
   return file
