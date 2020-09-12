@@ -11,7 +11,6 @@ Execute ( SpaceVim api: file.unify_path ):
 
 Execute ( SpaceVim api: file.findfile ):
   let path = fnamemodify('.SpaceVim.d/init.vim', ':p')
-  let path2 = fnamemodify('ginit.vim', ':p')
   AssertEqual file.unify_path(file.findfile('README.md', fnamemodify(path, ':p')), ':.'), '.SpaceVim.d/README.md'
   AssertEqual map(file.findfile('README.md', fnamemodify(path, ':p'), 0), 'file.unify_path(v:val, ":.")'), ['.SpaceVim.d/README.md', 'README.md']
   AssertEqual file.unify_path(file.findfile('README.md', fnamemodify(path, ':p'), 1), ':.'), '.SpaceVim.d/README.md'
@@ -21,4 +20,7 @@ Execute ( SpaceVim api: file.findfile ):
   AssertEqual file.unify_path(file.finddir('doc/', fnamemodify(path, ':p')), ':.'), 'bundle/dein.vim/doc/'
   AssertEqual map(file.finddir('doc/', fnamemodify(path, ':p'), 0), 'file.unify_path(v:val, ":.")'), ['bundle/dein.vim/doc/', 'doc/']
   AssertEqual file.unify_path(file.finddir('doc/', fnamemodify(path, ':p'), -1), ':.'), 'doc/'
+  let path2 = fnamemodify('ginit.vim', ':p')
+  " find the file in same directory
+  AssertEqual file.unify_path(file.findfile('vimrc', fnamemodify(path, ':p'), -1), ':.'), 'vimrc'
   unlet file path
