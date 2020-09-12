@@ -11,6 +11,7 @@ Execute ( SpaceVim api: file.unify_path ):
 
 Execute ( SpaceVim api: file.findfile ):
   let path = fnamemodify('.SpaceVim.d/init.vim', ':p')
+  " @bug know bug, echo findfile('READ.md', 'vimrc') return empty string
   AssertEqual file.unify_path(file.findfile('README.md', fnamemodify(path, ':p')), ':.'), '.SpaceVim.d/README.md'
   AssertEqual map(file.findfile('README.md', fnamemodify(path, ':p'), 0), 'file.unify_path(v:val, ":.")'), ['.SpaceVim.d/README.md', 'README.md']
   AssertEqual file.unify_path(file.findfile('README.md', fnamemodify(path, ':p'), 1), ':.'), '.SpaceVim.d/README.md'
