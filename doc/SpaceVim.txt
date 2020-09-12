@@ -169,18 +169,19 @@ CONTENTS                                                   *SpaceVim-contents*
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
       3. data#list....................................|SpaceVim-api-data-list|
-      4. data#string................................|SpaceVim-api-data-string|
-      5. job................................................|SpaceVim-api-job|
-      6. logger..........................................|SpaceVim-api-logger|
-      7. password......................................|SpaceVim-api-password|
-      8. prompt..........................................|SpaceVim-api-prompt|
-      9. sid............................................|SpaceVim-api-vim-sid|
-      10. system.........................................|SpaceVim-api-system|
-      11. vim#buffer.................................|SpaceVim-api-vim-buffer|
-      12. vim#buffer.................................|SpaceVim-api-vim-window|
-      13. vim#command...............................|SpaceVim-api-vim-command|
-      14. vim#compatible.........................|SpaceVim-api-vim-compatible|
-      15. vim#message...............................|SpaceVim-api-vim-message|
+      4. data#number................................|SpaceVim-api-data-number|
+      5. data#string................................|SpaceVim-api-data-string|
+      6. job................................................|SpaceVim-api-job|
+      7. logger..........................................|SpaceVim-api-logger|
+      8. password......................................|SpaceVim-api-password|
+      9. prompt..........................................|SpaceVim-api-prompt|
+      10. sid...........................................|SpaceVim-api-vim-sid|
+      11. system.........................................|SpaceVim-api-system|
+      12. vim#buffer.................................|SpaceVim-api-vim-buffer|
+      13. vim#buffer.................................|SpaceVim-api-vim-window|
+      14. vim#command...............................|SpaceVim-api-vim-command|
+      15. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      16. vim#message...............................|SpaceVim-api-vim-message|
   9. FAQ........................................................|SpaceVim-faq|
   10. Changelog...........................................|SpaceVim-changelog|
 
@@ -3452,6 +3453,18 @@ clear({list})
 char_range({from}, {to})
 
  return a characters list based on the ascii number range.
+
+==============================================================================
+DATA#NUMBER                                         *SpaceVim-api-data-number*
+
+data#number API provides some basic functions to generate number.
+
+random([{a}[, {b}]])
+>
+  random()     : an unbounded random integer number.
+  random(a)    : an unbounded random number larger than a.
+  random(a, b) : a random number from [a, a + b - 1].
+<
 
 ==============================================================================
 DATA#STRING                                         *SpaceVim-api-data-string*
