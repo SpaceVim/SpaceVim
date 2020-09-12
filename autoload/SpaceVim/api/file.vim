@@ -255,6 +255,7 @@ function! s:findfile(what, where, ...) abort
   let old_suffixesadd = &suffixesadd
   let &suffixesadd = ''
   let l:count = get(a:000, 0, 0)
+  
   if l:count > 0
     let file = findfile(a:what, escape(a:where, ' ') . ';', l:count)
   elseif a:0 ==# 0
