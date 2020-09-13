@@ -4,7 +4,7 @@ description: "unicode#spinners API 可启用一个定时器，根据指定的名
 lang: zh
 ---
 
-# [公共 API](../../) >> unicode#spinners
+# [可用接口](../../) >> unicode#spinners
 
 <!-- vim-markdown-toc GFM -->
 

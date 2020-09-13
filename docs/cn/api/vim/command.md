@@ -4,7 +4,7 @@ description: "vim#command API 提供一些设置和获取 Vim 命令的基础函
 lang: zh
 ---
 
-# [可用 APIs](../../) >> vim#command
+# [可用接口](../../) >> vim#command
 
 <!-- vim-markdown-toc GFM -->
 

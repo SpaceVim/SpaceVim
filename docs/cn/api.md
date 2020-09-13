@@ -1,10 +1,10 @@
 ---
-title: "公共 API"
-description: "SpaceVim 公共 API 提供了一套开发插件的公共函数，以及 Neovim 和 Vim 的兼容组件。"
+title: "可用接口"
+description: "SpaceVim 接口函数库提供了一套开发插件的公共接口，以及 Neovim 和 Vim 的兼容组件。"
 lang: zh
 ---
 
-# [主页](../) >> 公共 API
+# [主页](../) >> 可用接口
 
 <!-- vim-markdown-toc GFM -->
 

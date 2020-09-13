@@ -4,7 +4,7 @@ description: "vim#signatures API 提供一些设置和获取 Vim 提示消息的
 lang: zh
 ---
 
-# [可用 APIs](../../) >> vim#signatures
+# [可用接口](../../) >> vim#signatures
 
 <!-- vim-markdown-toc GFM -->
 
