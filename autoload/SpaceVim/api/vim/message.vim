@@ -28,15 +28,13 @@ function! s:self.echo(hl, msg) abort
   endtry
 endfunction
 
-function! s:self.echon(msglist) abort
-  for msg in a:msglist
-    execute 'echohl' msg[0]
-    try
-      echo msg[1]
-    finally
-      echohl None
-    endtry
-  endfor
+function! s:self.echon(hl, msg) abort
+  execute 'echohl' a:hl
+  try
+    echo a:msg
+  finally
+    echohl None
+  endtry
 endfunction
 
 function! s:self.echomsg(hl, msg) abort
