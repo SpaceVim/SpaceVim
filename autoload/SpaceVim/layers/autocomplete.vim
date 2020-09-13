@@ -194,7 +194,7 @@ function! SpaceVim#layers#autocomplete#config() abort
   elseif g:spacevim_snippet_engine ==# 'ultisnips'
     call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite ultisnips', 'insert snippets', 1)
   endif
-  if !empty(g:_spacevim_key_sequence)
+  if !empty(g:_spacevim_key_sequence) && g:_spacevim_key_sequence !=# 'nil'
     if g:spacevim_escape_key_binding !=# g:_spacevim_key_sequence
       augroup spacevim_layer_autocomplete
         autocmd!

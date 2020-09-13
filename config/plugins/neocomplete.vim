@@ -69,6 +69,8 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 
-if !empty(g:_spacevim_key_sequence) && g:spacevim_escape_key_binding !=# g:_spacevim_key_sequence
+if !empty(g:_spacevim_key_sequence)
+      \ && g:_spacevim_key_sequence !=# 'nil'
+      \ && g:spacevim_escape_key_binding !=# g:_spacevim_key_sequence
   exe printf('imap <silent>%s <Plug>(neocomplete_auto_refresh)', g:_spacevim_key_sequence)
 endif
