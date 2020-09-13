@@ -31,7 +31,7 @@ endfunction
 function! s:self.echon(hl, msg) abort
   execute 'echohl' a:hl
   try
-    echo a:msg
+    echon a:msg
   finally
     echohl None
   endtry
