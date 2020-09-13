@@ -1,5 +1,5 @@
 ---
-title: "vim#signatures api"
+title: "vim#signatures 接口"
 description: "vim#signatures API 提供一些设置和获取 Vim 提示消息的函数。"
 lang: zh
 ---

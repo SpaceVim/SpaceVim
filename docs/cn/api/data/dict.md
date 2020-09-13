@@ -1,5 +1,5 @@
 ---
-title: "data#dict api"
+title: "data#dict 接口"
 description: "data#dict API 提供了一些处理字典变量的常用方法，包括基础的增删改查。"
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "vim#highlight api"
+title: "vim#highlight 接口"
 description: "vim#highlight API 提供一些设置和获取 Vim 高亮信息的基础函数。"
 lang: zh
 ---

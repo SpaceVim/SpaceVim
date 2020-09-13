@@ -1,5 +1,5 @@
 ---
-title: "transient state api"
+title: "transient state API"
 description: "transient state API provides some basic functions and values for current os."
 ---
 

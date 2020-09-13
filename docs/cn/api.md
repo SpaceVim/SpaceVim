@@ -56,6 +56,7 @@ echom s:file.pathSeparator
 | [unicode#spinners](unicode/spinners/) | unicode#spinners API 可启用一个定时器，根据指定的名称定时更新进度条符号 |
 | [vim#command](vim/command/)           | vim#command API 提供一些设置和获取 Vim 命令的基础函数。                 |
 | [vim#highlight](vim/highlight/)       | vim#highlight API 提供一些设置和获取 Vim 高亮信息的基础函数。           |
+| [vim#message](vim/message/)           | vim#message API 提供一些设置和获取 Vim 提示消息的函数。                 |
 | [vim#signatures](vim/signatures/)     | vim#signatures API 提供一些设置和获取 Vim 提示消息的函数。              |
 
 <!-- SpaceVim api cn list end -->

@@ -1,5 +1,5 @@
 ---
-title: "vim#buffer api"
+title: "vim#buffer API"
 description: "vim#buffer API provides some basic functions for setting and getting config of vim buffer."
 ---
 

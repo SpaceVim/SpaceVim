@@ -1,5 +1,5 @@
 ---
-title: "vim#command api"
+title: "vim#command 接口"
 description: "vim#command API 提供一些设置和获取 Vim 命令的基础函数。"
 lang: zh
 ---

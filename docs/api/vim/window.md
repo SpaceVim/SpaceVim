@@ -1,5 +1,5 @@
 ---
-title: "vim#window api"
+title: "vim#window API"
 description: "vim#window API provides some basic functions for setting and getting config of vim window."
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "异步协同 API"
+title: "job API"
 description: "兼容 neovim 和 vim 的异步协同 API，对于旧版 vim 采用非异步机制"
 lang: zh
 ---

@@ -1,5 +1,5 @@
 ---
-title: "vim#message api"
+title: "vim#message API"
 description: "vim#message API provides some basic functions to generate colored messages."
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "vim#message api"
+title: "vim#message 接口"
 description: "vim#message API 提供一些设置和获取 Vim 提示消息的函数。"
 lang: zh
 ---
