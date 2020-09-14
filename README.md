@@ -173,7 +173,7 @@ Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
 ### Credits & Thanks
 
-This project exists to thank all the people who have [contributed](CONTRIBUTING.md):
+This project exists thanks to all the people who [contributed](CONTRIBUTING.md):
 
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 
