@@ -177,6 +177,7 @@ def _drop(view: View, defx: Defx, context: Context) -> None:
             view._vim.call('defx#util#execute_path', command, str(path))
 
         view.restore_previous_buffer()
+    view.close_preview()
 
 
 @action(name='execute_command', attr=ActionAttr.NO_TAGETS)
@@ -341,6 +342,7 @@ def _open(view: View, defx: Defx, context: Context) -> None:
     """
     cwd = view._vim.call('getcwd', -1)
     command = context.args[0] if context.args else 'edit'
+    previewed_buffers = view._vim.vars['defx#_previewed_buffers']
     for target in context.targets:
         path = target['action__path']
 
@@ -356,7 +358,13 @@ def _open(view: View, defx: Defx, context: Context) -> None:
 
         view._vim.call('defx#util#execute_path', command, str(path))
 
+        bufnr = str(view._vim.call('bufnr', str(path)))
+        if bufnr in previewed_buffers:
+            previewed_buffers.pop(bufnr)
+            view._vim.vars['defx#_previewed_buffers'] = previewed_buffers
+
         view.restore_previous_buffer()
+    view.close_preview()
 
 
 @action(name='open_directory')
@@ -443,16 +451,11 @@ def _preview(view: View, defx: Defx, context: Context) -> None:
 
 def _preview_file(view: View, defx: Defx,
                   context: Context, candidate: Candidate) -> None:
-    previewed_buffers = view._vim.vars['defx#_previewed_buffers']
     filepath = str(candidate['action__path'])
 
     has_preview = bool(view._vim.call('defx#util#_get_preview_window'))
     if (has_preview and view._previewed_target and
             view._previewed_target == candidate):
-        bufnr = str(view._vim.call('bufnr', filepath))
-        if bufnr in previewed_buffers:
-            previewed_buffers.pop(bufnr)
-            view._vim.vars['defx#_previewed_buffers'] = previewed_buffers
         view._vim.command('pclose!')
         return
 
@@ -467,6 +470,7 @@ def _preview_file(view: View, defx: Defx,
 
     if not listed:
         bufnr = str(view._vim.call('bufnr', filepath))
+        previewed_buffers = view._vim.vars['defx#_previewed_buffers']
         previewed_buffers[bufnr] = 1
         view._vim.vars['defx#_previewed_buffers'] = previewed_buffers
 

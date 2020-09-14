@@ -141,7 +141,7 @@ class Defx(object):
                     if candidate['action__path'].match(glob):
                         matched = True
                         break
-                if matched:
+                if matched or candidate['is_directory']:
                     new_candidates.append(candidate)
             candidates = new_candidates
 

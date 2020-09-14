@@ -147,6 +147,8 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
   nnoremap <silent><buffer><expr> .
         \ defx#do_action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> <C-f>
+        \ defx#do_action('change_filtered_files')
   nnoremap <silent><buffer><expr> ~
         \ defx#do_action('cd')
   nnoremap <silent><buffer><expr> j

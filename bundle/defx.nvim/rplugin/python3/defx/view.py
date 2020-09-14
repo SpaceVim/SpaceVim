@@ -135,8 +135,7 @@ class View(object):
     def print_msg(self, expr: typing.Any) -> None:
         self._vim.call('defx#util#print_message', expr)
 
-    def quit(self) -> None:
-        # Close preview window
+    def close_preview(self) -> None:
         if not self._has_preview_window:
             self._vim.command('pclose!')
         # Clear previewed buffers
@@ -144,6 +143,10 @@ class View(object):
             if not self._vim.call('win_findbuf', bufnr):
                 self._vim.command('silent bdelete ' + str(bufnr))
         self._vim.vars['defx#_previewed_buffers'] = {}
+
+    def quit(self) -> None:
+        # Close preview window
+        self.close_preview()
 
         winnr = self._vim.call('bufwinnr', self._bufnr)
         if winnr < 0:
