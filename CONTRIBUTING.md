@@ -5,30 +5,9 @@
 
 # Contributing to SpaceVim
 
-SpaceVim is an volunteer effort; we encourage you to pitch in. The community makes SpaceVim what it is.
-We have a few guidelines, which we ask all contributors to follow.
-
-You need only consider reading the sections relevant to what you are going to do:
-
-- [Asking for help](#asking-for-help) if you are about to ask an usage question.
-- [Reporting issues](#reporting-issues) if you are about to open a new issue.
-- [Contributing code](#contributing-code) if you are about to send a Pull Request (PR).
-
-### Asking for help
-
-If you want to ask an usage question, be sure to look first into some places as it may hold the answers:
-- [FAQ](https://spacevim.org/faq/): Some of the most frequently asked questions are answered there.
-- [documentation](https://spacevim.org/documentation/): It is the general documentation of SpaceVim.
-- [gitter room](https://gitter.im/SpaceVim/SpaceVim): The official channel of SpaceVim.
-
-### Reporting issues
-
-Issues have to be reported on [issues tracker](https://github.com/SpaceVim/SpaceVim/issues), Please:
-
-- Search existing issues (including closed!)
-- Update SpaceVim to the latest version to see if your problem persists.
-- Use a clear title and follow the issue template.
-- Include step by step details on how to reproduce it.
+SpaceVim is a project exist thanks to all the people who contribute, we are thankful
+for all the contributions from community. We have a few guidelines, which we ask all
+contributors to follow.
 
 ### Contributing code
 
