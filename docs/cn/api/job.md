@@ -4,7 +4,7 @@ description: "兼容 neovim 和 vim 的异步协同接口，对于旧版 vim 采
 lang: zh
 ---
 
-# [公共 API](../) >> job
+# [可用接口](../) >> job
 
 <!-- vim-markdown-toc GFM -->
 
