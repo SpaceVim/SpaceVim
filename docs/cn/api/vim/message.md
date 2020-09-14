@@ -15,12 +15,12 @@ lang: zh
 
 ## 模块简介
 
-vim#message API 提供一些设置和获取 Vim 提示消息的函数。
+`vim#message` API 提供一些设置和获取 Vim 提示消息的函数。
 
 ## 函数及变量
 
-| 函数名称         | 功能描述                                |
-| ---------------- | --------------------------------------- |
-| `echo(hl, msg)`  | print message with `hl` highlight group |
-| `echom(hl, msg)` | run `echom` with `hl` highlight group   |
-| `echon(hl, msg)` | run `echon` with `hl` highlight group   |
+| 函数名称         | 功能描述                  |
+| ---------------- | ------------------------- |
+| `echo(hl, msg)`  | 使用 `hl` 高亮打印消息    |
+| `echom(hl, msg)` | 使用`hl` 高亮运行 `echom` |
+| `echon(hl, msg)` | 使用`hl` 高亮运行 `echon` |
