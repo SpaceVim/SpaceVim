@@ -4,7 +4,7 @@ description: "vim#message API 提供一些设置和获取 Vim 提示消息的函
 lang: zh
 ---
 
-# [可用 APIs](../../) >> vim#message
+# [可用接口](../../) >> vim#message
 
 <!-- vim-markdown-toc GFM -->
 
