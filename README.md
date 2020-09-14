@@ -17,17 +17,29 @@
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 
-## About SpaceVim
+![welcome page](https://user-images.githubusercontent.com/13142418/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png)
+
+## Table of context
+
+<!-- vim-markdown-toc GFM -->
+
+- [Instructions](#instructions)
+- [Features](#features)
+- [Project layout](#project-layout)
+- [Contributing](#contributing)
+- [Backers](#backers)
+- [License](#license)
+- [Credits & Thanks](#credits--thanks)
+
+<!-- vim-markdown-toc -->
+
+## Instructions
 
 SpaceVim is a community-driven modular Vim distribution. It manages collections
 of plugins in layers, which help to collect related packages together to provide IDE-like features.
 SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many built-in features.
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png)
-
 The last release is v1.5.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
-
-## Instructions
 
 **See the followings below for more information:**
 
@@ -37,16 +49,7 @@ The last release is v1.5.0, check out [following-HEAD](https://github.com/SpaceV
 
 If you have any questions about SpaceVim, please follow the [Getting Help Guide](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help).
 
-<!-- vim-markdown-toc GFM -->
-
-- [New Features](#new-features)
-- [Project layout](#project-layout)
-- [Support SpaceVim](#support-spacevim)
-- [Credits & Thanks](#credits--thanks)
-
-<!-- vim-markdown-toc -->
-
-### New Features
+## Features
 
 This is a list of latest features implemented in SpaceVim:
 
@@ -135,7 +138,7 @@ Create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asyn
 
 For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 
-### Project layout
+## Project layout
 
 ```txt
 ├─ .ci/                           build automation
@@ -154,7 +157,12 @@ For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 └─ test/                          tests
 ```
 
-### Support SpaceVim
+
+## Contributing
+
+This project exists thanks to all the people who contribute, We are thankful for any contributions from the community.
+
+## Backers
 
 The best way to support SpaceVim is to contribute to it either by reporting bugs.
 Helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim) or sending pull requests.
@@ -171,7 +179,10 @@ If you want to show your support financially you can buy a drink for the maintai
 
 Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
-### Credits & Thanks
+
+## License
+
+## Credits & Thanks
 
 This project exists thanks to all the people who [contributed](CONTRIBUTING.md):
 
