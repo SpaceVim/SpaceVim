@@ -19,14 +19,15 @@
 
 ![welcome page](https://user-images.githubusercontent.com/13142418/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png)
 
-## Table of context
+**Table of context**
 
 <!-- vim-markdown-toc GFM -->
 
 - [Instructions](#instructions)
-- [Features](#features)
-- [Project layout](#project-layout)
+  - [Features](#features)
+- [Getting help](#getting-help)
 - [Contributing](#contributing)
+  - [Project layout](#project-layout)
 - [Backers](#backers)
 - [License](#license)
 - [Credits & Thanks](#credits--thanks)
@@ -35,21 +36,18 @@
 
 ## Instructions
 
-SpaceVim is a community-driven modular Vim distribution. It manages collections
+[SpaceVim](https://spacevim.org/) is a community-driven modular Vim distribution. It manages collections
 of plugins in layers, which help to collect related packages together to provide IDE-like features.
-SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many built-in features.
 
-The last release is v1.5.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The last release is [v1.5.0](https://spacevim.org/SpaceVim-release-v1.5.0/), check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 **See the followings below for more information:**
 
-- [Quick Start Guide](https://spacevim.org/quick-start-guide/)
-- [Documentation](https://spacevim.org/documentation/)
-- [Available Layers](https://spacevim.org/layers/)
+- [Quick Start Guide](https://spacevim.org/quick-start-guide/): a simple guide for Beginners.
+- [Documentation](https://spacevim.org/documentation/): The full documentation about using SpaceVim.
+- [Available Layers](https://spacevim.org/layers/): A list of all available layers included in SpaceVim.
 
-If you have any questions about SpaceVim, please follow the [Getting Help Guide](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help).
-
-## Features
+### Features
 
 This is a list of latest features implemented in SpaceVim:
 
@@ -138,7 +136,20 @@ Create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asyn
 
 For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 
-## Project layout
+
+## Getting help
+
+If you run into some problems installing, configuring, or using SpaceVim,
+checkout the [Getting help guidelines](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help) in the wiki.
+
+
+## Contributing
+
+This project exists thanks to all the people who [contributed](CONTRIBUTING.md), We are thankful for any contributions from the community.
+
+<a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
+
+### Project layout
 
 ```txt
 ├─ .ci/                           build automation
@@ -156,11 +167,6 @@ For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 ├─ bundle/                        forked repos
 └─ test/                          tests
 ```
-
-
-## Contributing
-
-This project exists thanks to all the people who contribute, We are thankful for any contributions from the community.
 
 ## Backers
 
@@ -182,11 +188,13 @@ Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
 ## License
 
+The license is GPLv3 for all the parts of SpaceVim. This includes:
+
+- The initialization and core files.
+- All the layer files.
+- The documentation
+
 ## Credits & Thanks
-
-This project exists thanks to all the people who [contributed](CONTRIBUTING.md):
-
-<a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 
 - [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
 - [@everettjf](https://github.com/everettjf) and his [SpaceVimTutorial](https://everettjf.gitbooks.io/spacevimtutorial/content/)
