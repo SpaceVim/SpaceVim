@@ -1,5 +1,5 @@
 ---
-title: "vim api"
+title: "vim API"
 description: "vim API provides general vim functions."
 ---
 

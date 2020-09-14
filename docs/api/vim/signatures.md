@@ -1,5 +1,5 @@
 ---
-title: "vim#signatures api"
+title: "vim#signatures API"
 description: "vim#signatures API provides some basic functions for showing signatures info."
 ---
 
