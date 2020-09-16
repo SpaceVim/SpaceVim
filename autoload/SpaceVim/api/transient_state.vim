@@ -181,7 +181,7 @@ function! s:self._key_obj_to_hl_line(left, right, line) abort
   let line = ''
   let hls = []
   let i = a:line
-  if type(a:left.key) == 1
+  if !empty(a:left) && type(a:left.key) == 1
     if a:left.key ==# "\<tab>"
       let line .= '[Tab] ' . repeat(' ', self._left_max_key_len - len(a:left.key)) . a:left.desc 
       call add(hls, [a:left.exit, i + 2, 1 + self._log_width, 1 + self._log_width + 3])
@@ -200,7 +200,7 @@ function! s:self._key_obj_to_hl_line(left, right, line) abort
         call extend(self._handle_quit, {a:left.key : a:left.exit_cmd})
       endif
     endif
-  elseif type(a:left.key) == 3
+  elseif !empty(a:left) && type(a:left.key) == 3
     let line .= '[' . join(a:left.key, '/') . '] '
     let line .= repeat(' ', self._left_max_key_len - len(join(a:left.key, '/')))
     let line .= a:left.desc 
@@ -225,7 +225,7 @@ function! s:self._key_obj_to_hl_line(left, right, line) abort
       "   call extend(self._handle_quit, {left.key : left.exit_cmd})
       " endif
     endif
-  elseif type(a:left.key) == 4
+  elseif !empty(a:left) && type(a:left.key) == 4
     let line .= '[' . a:left.key.name . '] '
     let line .= repeat(' ', self._left_max_key_len - len(a:left.key.name))
     let line .= a:left.desc 
@@ -243,7 +243,7 @@ function! s:self._key_obj_to_hl_line(left, right, line) abort
       " endif
     endif
   endif
-  if type(a:right.key) == 1
+  if !empty(a:right) && type(a:right.key) == 1
     let line .= '[' . a:right.key . '] ' . repeat(' ', self._right_max_key_len - len(a:right.key)) . a:right.desc 
     call add(hls, [a:right.exit, i + 2, 41 + self._log_width, 41 + self._log_width + len(a:right.key)])
     if !empty(a:right.cmd)
@@ -257,7 +257,7 @@ function! s:self._key_obj_to_hl_line(left, right, line) abort
         call extend(self._handle_quit, {a:right.key : a:right.exit_cmd})
       endif
     endif
-  elseif type(a:right.key) == 3
+  elseif !empty(a:right) && type(a:right.key) == 3
     let line .= '[' . join(a:right.key, '/') . '] '
     let line .= repeat(' ', self._right_max_key_len - len(join(a:right.key, '/')))
     let line .= a:right.desc 
@@ -282,7 +282,7 @@ function! s:self._key_obj_to_hl_line(left, right, line) abort
       "   call extend(self._handle_quit, {right.key : right.exit_cmd})
       " endif
     endif
-  elseif type(a:right.key) == 4
+  elseif !empty(a:right) && type(a:right.key) == 4
     let line .= '[' . a:right.key.name . '] '
     let line .= repeat(' ', self._right_max_key_len - len(a:right.key.name))
     let line .= a:right.desc 
