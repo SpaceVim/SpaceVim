@@ -22,7 +22,7 @@ let s:self.__vim = SpaceVim#api#import('vim')
 function! s:self.open() abort
   noautocmd botright split __transient_state__
   let self._bufid = self.__buffer.bufnr()
-  call self.__vim.setbufvar(self.__bufid,
+  call self.__vim.setbufvar(self._bufid,
         \ {
         \ 'buftype' : 'nofile',
         \ 'bufhidden' : 'wipe',
