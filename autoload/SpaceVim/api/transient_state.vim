@@ -301,6 +301,7 @@ function! s:self._key_obj_to_hl_line(left, right, line) abort
       " endif
     endif
   endif
+  return [line, hls]
 endfunction
 
 function! s:self._update_content() abort
@@ -318,7 +319,7 @@ function! s:self._update_content() abort
       let [line, hls] = self._key_obj_to_hl_line(left, right, i)
       call append(line('$'), line)
       for hl in hls
-        call call('self.highlight_keys', hl)
+        call call(self.highlight_keys, hl)
       endfor
     endfor
   endif
