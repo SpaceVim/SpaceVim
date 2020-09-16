@@ -243,6 +243,7 @@ function! s:self._key_obj_to_hl_line(left, right, line) abort
       " endif
     endif
   endif
+  let line .= repeat(' ', 40 + self._log_width - len(line))
   if !empty(a:right) && type(a:right.key) == 1
     let line .= '[' . a:right.key . '] ' . repeat(' ', self._right_max_key_len - len(a:right.key)) . a:right.desc 
     call add(hls, [a:right.exit, i + 2, 41 + self._log_width, 41 + self._log_width + len(a:right.key)])
