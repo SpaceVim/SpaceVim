@@ -118,6 +118,8 @@ endfunction
 
 if has('nvim')
   function! s:self.highlight_keys(exit, line, begin, end) abort
+    call SpaceVim#logger#info(getline(a:line))
+    call SpaceVim#logger#info(printf('%s %s %s %s ', a:exit, a:line, a:begin, a:end))
     if a:exit
       call nvim_buf_add_highlight(self._bufid, 0, 'SpaceVim_Transient_State_Exit', a:line, a:begin, a:end)
     else
