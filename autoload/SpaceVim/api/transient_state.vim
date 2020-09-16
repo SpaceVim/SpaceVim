@@ -16,17 +16,25 @@ let s:self._is_quit = []
 let s:self._handle_quit = {}
 let s:self._clear_cmdline = 1
 let s:self._cmp = SpaceVim#api#import('vim#compatible')
+let s:self.__buffer = SpaceVim#api#import('vim#buffer')
+let s:self.__vim = SpaceVim#api#import('vim')
 
 function! s:self.open() abort
   noautocmd botright split __transient_state__
-  let self._bufid = bufnr('%')
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
-  set filetype=TransientState
-  " let save_tve = &t_ve
-  " setlocal t_ve=
-  " setlocal nomodifiable
-  " setf SpaceVimFlyGrep
-  " let &t_ve = save_tve
+  let self._bufid = self.__buffer.bufnr()
+  call self.__vim.setbufvar(self._bufid,
+        \ {
+        \ '&buftype' : 'nofile',
+        \ '&bufhidden' : 'wipe',
+        \ '&buflisted' : 0,
+        \ '&list' : 0,
+        \ '&swapfile' : 0,
+        \ '&spell' : 0,
+        \ '&number' : 0,
+        \ '&relativenumber' : 0,
+        \ '&filetype' : 'TransientState',
+        \ }
+        \ )
   if !empty(self._on_syntax) && type(self._on_syntax) ==# 2
     call call(self._on_syntax, [])
   else
@@ -118,6 +126,7 @@ endfunction
 
 if has('nvim')
   function! s:self.highlight_keys(exit, line, begin, end) abort
+    " @bug nvim_buf_add_highlight do not warning for index out of range
     if a:exit
       call nvim_buf_add_highlight(self._bufid, 0, 'SpaceVim_Transient_State_Exit', a:line, a:begin, a:end)
     else
@@ -144,165 +153,175 @@ else
   endfunction
 endif
 
+function! s:self._check_max_key_len() abort
+  let self._linenum = max([len(self._keys.right), len(self._keys.left)])
+  let self._left_max_key_len = 0
+  for key in self._keys.left
+    if type(key.key) == 1   " is a string
+      let self._left_max_key_len = max([len(key.key), self._left_max_key_len])
+    elseif type(key.key) == 3  " is a list
+      let self._left_max_key_len = max([len(join(key.key, '/')), self._left_max_key_len])
+    elseif type(key.key) == 4  " is a dict
+      let self._left_max_key_len = max([len(key.key.name), self._left_max_key_len])
+    endif
+  endfor
+  let self._right_max_key_len = 0
+  for key in self._keys.right
+    if type(key.key) == 1   " is a string
+      let self._right_max_key_len = max([len(key.key), self._right_max_key_len])
+    elseif type(key.key) == 3  " is a list
+      let self._right_max_key_len = max([len(join(key.key, '/')), self._right_max_key_len])
+    elseif type(key.key) == 4  " is a dict
+      let self._right_max_key_len = max([len(key.key.name), self._right_max_key_len])
+    endif
+  endfor
+endfunction
+
+function! s:self._key_obj_to_hl_line(left, right, line) abort
+  let line = ''
+  let hls = []
+  let i = a:line
+  if !empty(a:left) && type(a:left.key) == 1
+    if a:left.key ==# "\<tab>"
+      let line .= '[Tab] ' . repeat(' ', self._left_max_key_len - len(a:left.key)) . a:left.desc 
+      call add(hls, [a:left.exit, i + 2, 1 + self._log_width, 1 + self._log_width + 3])
+    else
+      let line .= '[' . a:left.key . '] ' . repeat(' ', self._left_max_key_len - len(a:left.key)) . a:left.desc 
+      call add(hls, [a:left.exit, i + 2, 1 + self._log_width, 1 + self._log_width + len(a:left.key)])
+    endif
+    if !empty(a:left.cmd)
+      call extend(self._handle_inputs, {a:left.key : a:left.cmd})
+    elseif !empty(a:left.func)
+      call extend(self._handle_inputs, {a:left.key : a:left.func})
+    endif
+    if a:left.exit
+      call add(self._is_quit, a:left.key)
+      if has_key(a:left, 'exit_cmd') && !empty(a:left.exit_cmd)
+        call extend(self._handle_quit, {a:left.key : a:left.exit_cmd})
+      endif
+    endif
+  elseif !empty(a:left) && type(a:left.key) == 3
+    let line .= '[' . join(a:left.key, '/') . '] '
+    let line .= repeat(' ', self._left_max_key_len - len(join(a:left.key, '/')))
+    let line .= a:left.desc 
+    let begin = 1 + self._log_width
+    for key in a:left.key
+      call add(hls, [a:left.exit, i + 2, begin, begin + len(key)])
+      let begin = begin + len(key) + 1
+    endfor
+    if !empty(a:left.cmd)
+      for key in a:left.key
+        call extend(self._handle_inputs, {key : a:left.cmd})
+      endfor
+    elseif !empty(a:left.func)
+      for key in a:left.key
+        call extend(self._handle_inputs, {key : a:left.func})
+      endfor
+    endif
+    if a:left.exit
+      call extend(self._is_quit, a:left.key)
+      " TODO: need fix
+      " if has_key(left, 'exit_cmd') && !empty(left.exit_cmd)
+      "   call extend(self._handle_quit, {left.key : left.exit_cmd})
+      " endif
+    endif
+  elseif !empty(a:left) && type(a:left.key) == 4
+    let line .= '[' . a:left.key.name . '] '
+    let line .= repeat(' ', self._left_max_key_len - len(a:left.key.name))
+    let line .= a:left.desc 
+    for pos in a:left.key.pos
+      call add(hls, [a:left.exit, i + 2, pos[0], pos[1]])
+    endfor
+    for handles in a:left.key.handles
+      call extend(self._handle_inputs, {handles[0] : handles[1]})
+    endfor
+    if a:left.exit
+      call extend(self._is_quit, keys(a:left.key))
+      " TODO: need to fixed
+      " if has_key(left, 'exit_cmd') && !empty(left.exit_cmd)
+      "   call extend(self._handle_quit, {left.key : left.exit_cmd})
+      " endif
+    endif
+  endif
+  let line .= repeat(' ', 40 + self._log_width - len(line))
+  if !empty(a:right) && type(a:right.key) == 1
+    let line .= '[' . a:right.key . '] ' . repeat(' ', self._right_max_key_len - len(a:right.key)) . a:right.desc 
+    call add(hls, [a:right.exit, i + 2, 41 + self._log_width, 41 + self._log_width + len(a:right.key)])
+    if !empty(a:right.cmd)
+      call extend(self._handle_inputs, {a:right.key : a:right.cmd})
+    elseif !empty(a:right.func)
+      call extend(self._handle_inputs, {a:right.key : a:right.func})
+    endif
+    if a:right.exit
+      call add(self._is_quit, a:right.key)
+      if has_key(a:right, 'exit_cmd') && !empty(a:right.exit_cmd)
+        call extend(self._handle_quit, {a:right.key : a:right.exit_cmd})
+      endif
+    endif
+  elseif !empty(a:right) && type(a:right.key) == 3
+    let line .= '[' . join(a:right.key, '/') . '] '
+    let line .= repeat(' ', self._right_max_key_len - len(join(a:right.key, '/')))
+    let line .= a:right.desc 
+    let begin = 41 + self._log_width
+    for key in a:right.key
+      call add(hls, [a:right.exit, i + 2, begin, begin + len(key)])
+      let begin = begin + len(key) + 1
+    endfor
+    if !empty(a:right.cmd)
+      for key in a:right.key
+        call extend(self._handle_inputs, {key : a:right.cmd})
+      endfor
+    elseif !empty(a:right.func)
+      for key in a:right.key
+        call extend(self._handle_inputs, {key : a:right.func})
+      endfor
+    endif
+    if a:right.exit
+      call extend(self._is_quit, a:right.key)
+      " TODO: need fix
+      " if has_key(right, 'exit_cmd') && !empty(right.exit_cmd)
+      "   call extend(self._handle_quit, {right.key : right.exit_cmd})
+      " endif
+    endif
+  elseif !empty(a:right) && type(a:right.key) == 4
+    let line .= '[' . a:right.key.name . '] '
+    let line .= repeat(' ', self._right_max_key_len - len(a:right.key.name))
+    let line .= a:right.desc 
+    let begin = 41 + self._log_width
+    for pos in a:right.key.pos
+      call add(hls, [a:right.exit, i + 2, begin + pos[0], begin + pos[1]])
+    endfor
+    for handles in a:right.key.handles
+      call extend(self._handle_inputs, {handles[0] : handles[1]})
+    endfor
+    if a:right.exit
+      call extend(self._is_quit, keys(a:right.key))
+      " TODO: need fix
+      " if has_key(right, 'exit_cmd') && !empty(right.exit_cmd)
+      "   call extend(self._handle_quit, {right.key : right.exit_cmd})
+      " endif
+    endif
+  endif
+  return [line, hls]
+endfunction
+
 function! s:self._update_content() abort
   if get(self._keys, 'layout', '') ==# 'vertical split'
-    let linenum = max([len(self._keys.right), len(self._keys.left)])
-    let left_max_key_len = 0
-    for key in self._keys.left
-      if type(key.key) == 1   " is a string
-        let left_max_key_len = max([len(key.key), left_max_key_len])
-      elseif type(key.key) == 3  " is a list
-        let left_max_key_len = max([len(join(key.key, '/')), left_max_key_len])
-      elseif type(key.key) == 4  " is a dict
-        let left_max_key_len = max([len(key.key.name), left_max_key_len])
-      endif
-    endfor
-    let right_max_key_len = 0
-    for key in self._keys.right
-      if type(key.key) == 1   " is a string
-        let right_max_key_len = max([len(key.key), right_max_key_len])
-      elseif type(key.key) == 3  " is a list
-        let right_max_key_len = max([len(join(key.key, '/')), right_max_key_len])
-      elseif type(key.key) == 4  " is a dict
-        let right_max_key_len = max([len(key.key.name), right_max_key_len])
-      endif
-    endfor
-
-    if has_key(self._keys, 'logo') && has_key(self._keys, 'logo_width')
-      let logo_width = self._keys.logo_width
+    call self._check_max_key_len()
+    if has_key(self._keys, 'logo') && has_key(self._keys, 'self._log_width')
+      let self._log_width = self._keys.self._log_width
     else
-      let logo_width = 0
+      let self._log_width = 0
     endif
-    for i in range(linenum)
-      let left = get(self._keys.left, i)
-      let right = get(self._keys.right, i)
-      let line = repeat(' ', logo_width)
-      if !empty(left)
-        if type(left.key) == 1
-          if left.key ==# "\<tab>"
-            let line .= '[Tab] ' . repeat(' ', left_max_key_len - len(left.key)) . left.desc 
-            call self.highlight_keys(left.exit, i + 2, 1 + logo_width, 1 + logo_width + 3)
-          else
-            let line .= '[' . left.key . '] ' . repeat(' ', left_max_key_len - len(left.key)) . left.desc 
-            call self.highlight_keys(left.exit, i + 2, 1 + logo_width, 1 + logo_width + len(left.key))
-          endif
-          if !empty(left.cmd)
-            call extend(self._handle_inputs, {left.key : left.cmd})
-          elseif !empty(left.func)
-            call extend(self._handle_inputs, {left.key : left.func})
-          endif
-          if left.exit
-            call add(self._is_quit, left.key)
-            if has_key(left, 'exit_cmd') && !empty(left.exit_cmd)
-              call extend(self._handle_quit, {left.key : left.exit_cmd})
-            endif
-          endif
-        elseif type(left.key) == 3
-          let line .= '[' . join(left.key, '/') . '] '
-          let line .= repeat(' ', left_max_key_len - len(join(left.key, '/')))
-          let line .= left.desc 
-          let begin = 1 + logo_width
-          for key in left.key
-            call self.highlight_keys(left.exit, i + 2, begin, begin + len(key))
-            let begin = begin + len(key) + 1
-          endfor
-          if !empty(left.cmd)
-            for key in left.key
-              call extend(self._handle_inputs, {key : left.cmd})
-            endfor
-          elseif !empty(left.func)
-            for key in left.key
-              call extend(self._handle_inputs, {key : left.func})
-            endfor
-          endif
-          if left.exit
-            call extend(self._is_quit, left.key)
-            " TODO: need fix
-            " if has_key(left, 'exit_cmd') && !empty(left.exit_cmd)
-            "   call extend(self._handle_quit, {left.key : left.exit_cmd})
-            " endif
-          endif
-        elseif type(left.key) == 4
-          let line .= '[' . left.key.name . '] '
-          let line .= repeat(' ', left_max_key_len - len(left.key.name))
-          let line .= left.desc 
-          for pos in left.key.pos
-            call self.highlight_keys(left.exit, i + 2, pos[0], pos[1])
-          endfor
-          for handles in left.key.handles
-            call extend(self._handle_inputs, {handles[0] : handles[1]})
-          endfor
-          if left.exit
-            call extend(self._is_quit, keys(left.key))
-            " TODO: need to fixed
-            " if has_key(left, 'exit_cmd') && !empty(left.exit_cmd)
-            "   call extend(self._handle_quit, {left.key : left.exit_cmd})
-            " endif
-          endif
-        endif
-      endif
-      let line .= repeat(' ', 40 + logo_width - len(line))
-      if !empty(right)
-        if type(right.key) == 1
-          let line .= '[' . right.key . '] ' . repeat(' ', right_max_key_len - len(right.key)) . right.desc 
-          call self.highlight_keys(right.exit, i + 2, 41 + logo_width, 41 + logo_width + len(right.key))
-          if !empty(right.cmd)
-            call extend(self._handle_inputs, {right.key : right.cmd})
-          elseif !empty(right.func)
-            call extend(self._handle_inputs, {right.key : right.func})
-          endif
-          if right.exit
-            call add(self._is_quit, right.key)
-            if has_key(right, 'exit_cmd') && !empty(right.exit_cmd)
-              call extend(self._handle_quit, {right.key : right.exit_cmd})
-            endif
-          endif
-        elseif type(right.key) == 3
-          let line .= '[' . join(right.key, '/') . '] '
-          let line .= repeat(' ', right_max_key_len - len(join(right.key, '/')))
-          let line .= right.desc 
-          let begin = 41 + logo_width
-          for key in right.key
-            call self.highlight_keys(right.exit, i + 2, begin, begin + len(key))
-            let begin = begin + len(key) + 1
-          endfor
-          if !empty(right.cmd)
-            for key in right.key
-              call extend(self._handle_inputs, {key : right.cmd})
-            endfor
-          elseif !empty(right.func)
-            for key in right.key
-              call extend(self._handle_inputs, {key : right.func})
-            endfor
-          endif
-          if right.exit
-            call extend(self._is_quit, right.key)
-            " TODO: need fix
-            " if has_key(right, 'exit_cmd') && !empty(right.exit_cmd)
-            "   call extend(self._handle_quit, {right.key : right.exit_cmd})
-            " endif
-          endif
-        elseif type(right.key) == 4
-          let line .= '[' . right.key.name . '] '
-          let line .= repeat(' ', right_max_key_len - len(right.key.name))
-          let line .= right.desc 
-          let begin = 41 + logo_width
-          for pos in right.key.pos
-            call self.highlight_keys(right.exit, i + 2, begin + pos[0], begin + pos[1])
-          endfor
-          for handles in right.key.handles
-            call extend(self._handle_inputs, {handles[0] : handles[1]})
-          endfor
-          if right.exit
-            call extend(self._is_quit, keys(right.key))
-            " TODO: need fix
-            " if has_key(right, 'exit_cmd') && !empty(right.exit_cmd)
-            "   call extend(self._handle_quit, {right.key : right.exit_cmd})
-            " endif
-          endif
-        endif
-      endif
+    for i in range(self._linenum)
+      let left = get(self._keys.left, i, {})
+      let right = get(self._keys.right, i, {})
+      let line = repeat(' ', self._log_width)
+      let [line, hls] = self._key_obj_to_hl_line(left, right, i)
       call append(line('$'), line)
+      for hl in hls
+        call call(self.highlight_keys, hl)
+      endfor
     endfor
   endif
 endfunction
