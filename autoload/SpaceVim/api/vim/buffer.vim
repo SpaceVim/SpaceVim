@@ -276,6 +276,10 @@ function! s:self.displayArea() abort
         \ ]
 endfunction
 
+function! s:self.add_highlight(bufnr, hl, line, col, long) abort
+  
+endfunction
+
 
 fu! SpaceVim#api#vim#buffer#get() abort
   return deepcopy(s:self)

@@ -1,7 +1,6 @@
 language: python
 dist: trusty
 sudo: false
-python: 2.7
 
 services:
   - docker

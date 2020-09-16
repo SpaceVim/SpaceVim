@@ -23,3 +23,10 @@ Execute ( SpaceVim api: vim#buffer buf_set_lines):
   exe 'bd!' nr
   unlet nr
   unlet buffer
+
+Execute ( SpaceVim api: vim#buffer add_highlight):
+  let buffer = SpaceVim#api#import('vim#buffer')
+  let highlit = SpaceVim#api#import('vim#highlight')
+  let nr = buffer.bufnr()
+  call buffer.add_highlight(nr,'String', 1, 1, 1)
+  AssertEqual highlit.syntax_at(1, 1), 'String'

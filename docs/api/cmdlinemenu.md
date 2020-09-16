@@ -1,5 +1,5 @@
 ---
-title: "cmdlinemenu api"
+title: "cmdlinemenu API"
 description: "cmdlinemenu API provides interface for making choices in a command line."
 ---
 

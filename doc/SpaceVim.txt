@@ -3670,6 +3670,13 @@ getjumplist()
 ==============================================================================
 VIM#MESSAGE                                         *SpaceVim-api-vim-message*
 
+`vim#message` API provide functions for generating colored message in vim's
+command line.
+
+echo({hi}, {msg})
+
+  print message with {hi} highlight group.
+
 ==============================================================================
 FAQ                                                             *SpaceVim-faq*
 
