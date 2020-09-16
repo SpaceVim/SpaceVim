@@ -16,17 +16,25 @@ let s:self._is_quit = []
 let s:self._handle_quit = {}
 let s:self._clear_cmdline = 1
 let s:self._cmp = SpaceVim#api#import('vim#compatible')
+let s:self.__buffer = SpaceVim#api#import('vim#buffer')
+let s:self.__vim = SpaceVim#api#import('vim')
 
 function! s:self.open() abort
   noautocmd botright split __transient_state__
-  let self._bufid = bufnr('%')
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber
-  set filetype=TransientState
-  " let save_tve = &t_ve
-  " setlocal t_ve=
-  " setlocal nomodifiable
-  " setf SpaceVimFlyGrep
-  " let &t_ve = save_tve
+  let self._bufid = self.__buffer.bufnr()
+  call self.__vim.setbufvar(self.__bufid,
+        \ {
+        \ 'buftype' : 'nofile',
+        \ 'bufhidden' : 'wipe',
+        \ 'buflisted' : 0,
+        \ 'list' : 0,
+        \ 'swapfile' : 0,
+        \ 'spell' : 0,
+        \ 'number' : 0,
+        \ 'relativenumber' : 0,
+        \ 'filetype' : 'TransientState',
+        \ }
+        \ )
   if !empty(self._on_syntax) && type(self._on_syntax) ==# 2
     call call(self._on_syntax, [])
   else
