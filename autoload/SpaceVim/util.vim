@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:SYSTEM = SpaceVim#api#import('system')
+let s:FILE = SpaceVim#api#import('file')
 
 
 function! SpaceVim#util#globpath(path, expr) abort
@@ -142,10 +143,11 @@ fu! s:findDirInParent(what, where) abort " {{{2
 endf " }}}2
 fu! SpaceVim#util#CopyToClipboard(...) abort
   if a:0
-    if executable('git')
-      let repo_home = fnamemodify(s:findDirInParent('.git', expand('%:p')), ':p:h:h')
-      if repo_home !=# '' || !isdirectory(repo_home)
-        let [remote_name, branch] = split(split(systemlist('git -C '. repo_home. ' branch -vv |grep "^*"')[0],'')[3], '/')
+    if executable('git') && executable('grep')
+      let find_path = s:FILE.finddir('.git/', expand('%:p'), -1)
+      let repo_home = s:FILE.unify_path(find_path, ':h:h')
+      if repo_home !=# '' && isdirectory(repo_home)
+        let [remote_name, branch] = split(split(systemlist('git -C '. repo_home. ' branch -vv | grep "^*"')[0],'')[3], '/')
         let remotes = filter(systemlist('git -C '. repo_home. ' remote -v'),"match(v:val,'^' . remote_name[1:-2]) >= 0 && match(v:val,'fetch') > 0")
         if len(remotes) > 0
           let remote = remotes[0]
@@ -158,10 +160,7 @@ fu! SpaceVim#util#CopyToClipboard(...) abort
             let repo_url = strpart(repo_url, stridx(repo_url, 'http'),len(repo_url) - 4 - stridx(repo_url, 'http'))
           endif
           let head_sha = systemlist('git rev-parse HEAD')[0] 
-          let f_url =repo_url. '/blob/'. head_sha. '/'. strpart(expand('%:p'), len(repo_home) + 1, len(expand('%:p')))
-          if s:SYSTEM.isWindows
-            let f_url = substitute(f_url, '\', '/', 'g')
-          endif
+          let f_url =repo_url. '/blob/'. head_sha. '/'. s:FILE.unify_path(expand('%'), ':.')
           if a:1 == 2
             let current_line = line('.')
             let f_url .= '#L' . current_line
@@ -185,7 +184,7 @@ fu! SpaceVim#util#CopyToClipboard(...) abort
         echohl WarningMsg | echom 'This file is not in a git repo' | echohl None
       endif
     else
-      echohl WarningMsg | echom 'You need to install git!' | echohl None
+      echohl WarningMsg | echom 'You need to install git and grep!' | echohl None
     endif
   else
     try
@@ -232,7 +231,7 @@ function! SpaceVim#util#UpdateHosts(...) abort
     let url = a:1
   endif
   let hosts = systemlist('curl -s ' . url)
-    if s:SYSTEM.isWindows
+  if s:SYSTEM.isWindows
     let local_hosts = $SystemRoot . expand('\System32\drivers\etc\hosts')
   else
     let local_hosts = '/etc/hosts'
