@@ -28,7 +28,7 @@
 - [Getting help](#getting-help)
 - [Contributing](#contributing)
   - [Project layout](#project-layout)
-- [Backers](#backers)
+- [Support SpaceVim](#support-spacevim)
 - [License](#license)
 - [Credits & Thanks](#credits--thanks)
 
@@ -168,7 +168,7 @@ This project exists thanks to all the people who [contributed](CONTRIBUTING.md),
 └─ test/                          tests
 ```
 
-## Backers
+## Support SpaceVim
 
 The best way to support SpaceVim is to contribute to it either by reporting bugs.
 Helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim) or sending pull requests.
@@ -178,13 +178,6 @@ For more information please check our [development guidelines](https://spacevim.
 If you want to show your support financially you can buy a drink for the maintainer by clicking following icon.
 
 <a href='https://ko-fi.com/spacevim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
-
-| wechat                                                                                                     | alipay                                                                                                       |
-| ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| <a href='#support-spacevim'><img src="https://spacevim.org/img/weixin.png" height="150" width="150" /></a> | <a href='#support-spacevim'><img src="https://spacevim.org/img/zhifubao.png" height="150" width="150" /></a> |
-
-Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
-
 
 ## License
 
