@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:SYSTEM = SpaceVim#api#import('system')
+let s:FILE = SpaceVim#api#import('file')
 
 
 function! SpaceVim#util#globpath(path, expr) abort
@@ -143,8 +144,9 @@ endf " }}}2
 fu! SpaceVim#util#CopyToClipboard(...) abort
   if a:0
     if executable('git')
-      let repo_home = fnamemodify(s:findDirInParent('.git', expand('%:p')), ':p:h:h')
-      if repo_home !=# '' || !isdirectory(repo_home)
+      let find_path = s:FILE.finddir('.git/', expand('%:p'), -1)
+      let repo_home = s:FILE.unify_path(find_path, ':h:h')
+      if repo_home !=# '' && isdirectory(repo_home)
         let [remote_name, branch] = split(split(systemlist('git -C '. repo_home. ' branch -vv |grep "^*"')[0],'')[3], '/')
         let remotes = filter(systemlist('git -C '. repo_home. ' remote -v'),"match(v:val,'^' . remote_name[1:-2]) >= 0 && match(v:val,'fetch') > 0")
         if len(remotes) > 0
@@ -232,7 +234,7 @@ function! SpaceVim#util#UpdateHosts(...) abort
     let url = a:1
   endif
   let hosts = systemlist('curl -s ' . url)
-    if s:SYSTEM.isWindows
+  if s:SYSTEM.isWindows
     let local_hosts = $SystemRoot . expand('\System32\drivers\etc\hosts')
   else
     let local_hosts = '/etc/hosts'
