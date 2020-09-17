@@ -160,10 +160,7 @@ fu! SpaceVim#util#CopyToClipboard(...) abort
             let repo_url = strpart(repo_url, stridx(repo_url, 'http'),len(repo_url) - 4 - stridx(repo_url, 'http'))
           endif
           let head_sha = systemlist('git rev-parse HEAD')[0] 
-          let f_url =repo_url. '/blob/'. head_sha. '/'. strpart(expand('%:p'), len(repo_home) + 1, len(expand('%:p')))
-          if s:SYSTEM.isWindows
-            let f_url = substitute(f_url, '\', '/', 'g')
-          endif
+          let f_url =repo_url. '/blob/'. head_sha. '/'. s:FILE.unify_path(expand('%'), ':.')
           if a:1 == 2
             let current_line = line('.')
             let f_url .= '#L' . current_line
