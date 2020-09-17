@@ -187,7 +187,7 @@ fu! SpaceVim#util#CopyToClipboard(...) abort
         echohl WarningMsg | echom 'This file is not in a git repo' | echohl None
       endif
     else
-      echohl WarningMsg | echom 'You need to install git!' | echohl None
+      echohl WarningMsg | echom 'You need to install git and grep!' | echohl None
     endif
   else
     try
