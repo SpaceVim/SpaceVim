@@ -1216,10 +1216,6 @@ command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <a
 command -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
 function! SpaceVim#end() abort
-  if !g:spacevim_vimcompatible
-    call SpaceVim#mapping#def('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
-    call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
-  endif
   if g:spacevim_vimcompatible
     let g:spacevim_windows_leader = ''
     let g:spacevim_windows_smartclose = ''
