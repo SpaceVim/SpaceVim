@@ -177,11 +177,12 @@ CONTENTS                                                   *SpaceVim-contents*
       9. prompt..........................................|SpaceVim-api-prompt|
       10. sid...........................................|SpaceVim-api-vim-sid|
       11. system.........................................|SpaceVim-api-system|
-      12. vim#buffer.................................|SpaceVim-api-vim-buffer|
-      13. vim#buffer.................................|SpaceVim-api-vim-window|
-      14. vim#command...............................|SpaceVim-api-vim-command|
-      15. vim#compatible.........................|SpaceVim-api-vim-compatible|
-      16. vim#message...............................|SpaceVim-api-vim-message|
+      12. unicode#box...............................|SpaceVim-api-unicode-box|
+      13. vim#buffer.................................|SpaceVim-api-vim-buffer|
+      14. vim#buffer.................................|SpaceVim-api-vim-window|
+      15. vim#command...............................|SpaceVim-api-vim-command|
+      16. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      17. vim#message...............................|SpaceVim-api-vim-message|
   9. FAQ........................................................|SpaceVim-faq|
   10. Changelog...........................................|SpaceVim-changelog|
 
@@ -3564,6 +3565,16 @@ name()
 
 Return the name of current os, availibel value is: linux, cygwin, windows and
 mac.
+
+==============================================================================
+UNICODE#BOX                                         *SpaceVim-api-unicode-box*
+
+provides some functions to draw box and table.
+
+drawing_table({json}[, {keys}])
+
+  drawing table with json data.
+
 
 ==============================================================================
 VIM#BUFFER                                           *SpaceVim-api-vim-buffer*
