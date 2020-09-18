@@ -149,6 +149,8 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'u'], 'call call('
         \ . string(s:_function('s:jump_to_url')) . ', [])',
         \ 'jump-to-url', 1)
+  call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
+  call SpaceVim#mapping#space#def('nnoremap', ['<Tab>'], 'try | b# | catch | endtry', 'last-buffer', 1)
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', '.'], 'call call('
         \ . string(s:_function('s:buffer_transient_state')) . ', [])',
