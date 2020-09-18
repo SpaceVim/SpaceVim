@@ -1133,20 +1133,19 @@ can change it via `windows_leader` option:
 windows_leader = "s"
 ```
 
-| Key Bindings | Descriptions                          |
-| ------------ | ------------------------------------- |
-| `q`          | Smart buffer close                    |
-| `WIN v`      | :split                                |
-| `WIN V`      | Split with previous buffer            |
-| `WIN g`      | :vsplit                               |
-| `WIN G`      | Vertically split with previous buffer |
-| `WIN t`      | Open new tab (:tabnew)                |
-| `WIN o`      | Close other windows (:only)           |
-| `WIN x`      | Remove buffer, leave blank window     |
-| `WIN q`      | Remove current buffer                 |
-| `WIN Q`      | Close current buffer (:close)         |
-| `<Tab>`      | Next window or tab                    |
-| `Shift-Tab`  | Previous window or tab                |
+| Key Bindings | Descriptions                                       |
+| ------------ | -------------------------------------------------- |
+| `q`          | Smart buffer close                                 |
+| `WIN v`      | :split                                             |
+| `WIN V`      | Split with previous buffer                         |
+| `WIN g`      | :vsplit                                            |
+| `WIN G`      | Vertically split with previous buffer              |
+| `WIN t`      | Open new tab (:tabnew)                             |
+| `WIN o`      | Close other windows (:only)                        |
+| `WIN x`      | Remove buffer, leave blank window                  |
+| `WIN q`      | Remove current buffer                              |
+| `WIN Q`      | Close current buffer (:close)                      |
+| `Shift-Tab`  | Switch to alternate window (switch back and forth) |
 
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
 can be get by `<Leader> q r`, if you want to disable this feature, you can use `vimcompatible` mode.
