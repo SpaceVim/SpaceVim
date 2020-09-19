@@ -40,6 +40,7 @@ function! s:self.drawing_tree(tree, ...) abort
     for key in keys(a:tree)
       call add(tree, prefix . extra . key)
       call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix  . ( i < len(a:tree) ? self.side : ' '), ' '))
+      let i += 1
     endfor
   endif
   return tree
