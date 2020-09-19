@@ -1813,17 +1813,20 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 例如：
 
 ```vim
-autocmd BufNewFile,BufEnter *.c let b:alternate_file_config = {
-    \ "src/*.c" : {
-        \ "doc" : "docs/{}.md",
-        \ "alternate" : "include/{}.h",
+augroup myspacevim
+    autocmd!
+    autocmd BufNewFile,BufEnter *.c let b:alternate_file_config = {
+        \ "src/*.c" : {
+            \ "doc" : "docs/{}.md",
+            \ "alternate" : "include/{}.h",
+            \ }
         \ }
-    \ }
-autocmd BufNewFile,BufEnter *.h let b:alternate_file_config = {
-    \ "include/*.h" : {
-        \ "alternate" : "scr/{}.c",
+    autocmd BufNewFile,BufEnter *.h let b:alternate_file_config = {
+        \ "include/*.h" : {
+            \ "alternate" : "scr/{}.c",
+            \ }
         \ }
-    \ }
+augroup END
 ```
 
 ### 标签管理
