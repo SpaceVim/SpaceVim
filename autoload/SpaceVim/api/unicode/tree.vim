@@ -37,9 +37,8 @@ function! s:self.drawing_tree(tree, ...) abort
     endfor
   elseif self._vim.is_dict(a:tree)
     let i = 1
-    let prefix = prefix . extra
     for key in keys(a:tree)
-      call add(tree, prefix . key)
+      call add(tree, prefix . extra . key)
       call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix  . ( i < len(a:tree) ? self.side : ' '), ' '))
     endfor
   endif
