@@ -257,9 +257,6 @@ function! SpaceVim#default#keyBindings() abort
   vnoremap <C-s> :<C-u>w<CR>
   cnoremap <C-s> <C-u>w<CR>
 
-  " Tabs
-  nnoremap <silent> g0 :<C-u>tabfirst<CR>
-  nnoremap <silent> g$ :<C-u>tablast<CR>
   nnoremap <silent> gr :<C-u>call <SID>switch_tabs()<CR>
 
   " Remove spaces at the end of lines
