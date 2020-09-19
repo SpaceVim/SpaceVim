@@ -10,17 +10,24 @@ let s:self.left_middle = '├'
 
 function! s:self.drawing_tree(tree, ...) abort
   let tree = []
-  let indent = get(a:000, 0, 0)
+  let prefix = get(a:000, 0, '')
   if self._vim.is_string(a:tree)
-    call add(tree, repeat(' ', indent) . a:tree)
+    call add(tree, prefix. a:tree)
   elseif self._vim.is_list(a:tree)
+    let i = 1
     for item in a:tree
-      call extend(tree, self.drawing_tree(item, indent + 1))
+      if i < len(a:tree)
+        let prefix .= self.left_middle
+      else
+        let prefix .= self.bottom_left_corner
+      endif
+      let i += 1
+      call extend(tree, self.drawing_tree(item, prefix ))
     endfor
   elseif self._vim.is_dict(a:tree)
     for key in keys(a:tree)
-      call add(tree, repeat(' ', indent) . key)
-      call extend(tree, self.drawing_tree(get(a:tree, key, []), indent + 1))
+      call add(tree, repeat(' ', prefix) . key)
+      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix + 1))
     endfor
   endif
   return tree
