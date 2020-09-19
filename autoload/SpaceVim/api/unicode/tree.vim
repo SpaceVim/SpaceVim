@@ -25,15 +25,20 @@ function! s:self.drawing_tree(tree, ...) abort
     call add(tree, prefix . extra . a:tree)
   elseif self._vim.is_list(a:tree)
     let i = 1
-    let prefix = prefix . extra
     for item in a:tree
       if i < len(a:tree)
+        let sidebar = self.side
         let extra = self.left_middle
       else
         let extra = self.bottom_left_corner
+        if i ==# 1
+          let sidebar = self.side
+        else
+          let sidebar = ' '
+        endif
       endif
-      let i += 1
       call extend(tree, self.drawing_tree(item, prefix, extra))
+      let i += 1
     endfor
   elseif self._vim.is_dict(a:tree)
     let i = 1
