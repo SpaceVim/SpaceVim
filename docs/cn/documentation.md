@@ -648,6 +648,24 @@ endfunction
     ]
 ```
 
+**自定义板块**
+
+可以使用启动函数添加自定板块，比如：
+
+```vim
+function! s:test_section() abort
+  return 'ok'
+endfunction
+call SpaceVim#layers#core#statusline#register_sections('test', function('s:test_section'))
+```
+
+之后就可以在配置文件中添加 `test` 板块，比如，在状态栏右侧最后添加：
+
+```toml
+[options]
+    statusline_right_sections = ['cursorpos', 'percentage', 'test']
+```
+
 ### 标签栏
 
 如果只有一个 Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Buffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
