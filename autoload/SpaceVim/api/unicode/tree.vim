@@ -28,9 +28,9 @@ function! s:self.drawing_tree(tree, ...) abort
     let prefix = prefix . extra
     for item in a:tree
       if i < len(a:tree)
-        let extra = 'x'
+        let extra = self.left_middle
       else
-        let extra = 'f'
+        let extra = self.bottom_left_corner
       endif
       let i += 1
       call extend(tree, self.drawing_tree(item, prefix, extra))
