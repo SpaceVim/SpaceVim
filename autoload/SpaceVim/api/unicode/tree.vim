@@ -20,9 +20,8 @@ let s:self.left_middle = '├'
 function! s:self.drawing_tree(tree, ...) abort
   let tree = []
   let prefix = get(a:000, 0, '')
-  let extra = get(a:000, 1, ' ')
   if self._vim.is_string(a:tree)
-    call add(tree, prefix . extra . a:tree)
+    call add(tree, prefix . a:tree)
   elseif self._vim.is_list(a:tree)
     let i = 1
     for item in a:tree
@@ -32,7 +31,7 @@ function! s:self.drawing_tree(tree, ...) abort
         let extra = self.bottom_left_corner
       endif
       let i += 1
-      call extend(tree, self.drawing_tree(item, prefix,  extra ))
+      call extend(tree, self.drawing_tree(item, prefix . extra ))
     endfor
   elseif self._vim.is_dict(a:tree)
     let i = 1
@@ -43,14 +42,10 @@ function! s:self.drawing_tree(tree, ...) abort
         let extra = self.bottom_left_corner
       endif
       call add(tree, prefix . extra . key)
-      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix, extra))
+      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix . ' '))
     endfor
   endif
   return tree
-endfunction
-
-function! s:self._draw_tree(tree, ident) abort
-
 endfunction
 
 function! SpaceVim#api#unicode#tree#get() abort
