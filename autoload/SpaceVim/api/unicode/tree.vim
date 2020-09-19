@@ -43,7 +43,11 @@ function! s:self.drawing_tree(tree, ...) abort
         let extra = self.left_middle
       else
         let extra = self.bottom_left_corner
-        let sidebar = 'a'
+        if i ==# 1
+          let sidebar = self.side
+        else
+          let sidebar = ' '
+        endif
       endif
       call add(tree, prefix . extra . key)
       call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix  .  sidebar , ' '))
