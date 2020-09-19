@@ -40,11 +40,13 @@ function! s:self.drawing_tree(tree, ...) abort
     for key in keys(a:tree)
       if i < len(a:tree)
         let extra = self.bottom_left_corner
+        let sidebar = self.side
       else
         let extra = self.left_middle
+        let sidebar = 'a'
       endif
       call add(tree, prefix . extra . key)
-      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix  .  self.side , ' '))
+      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix  .  sidebar , ' '))
       let i += 1
     endfor
   endif
