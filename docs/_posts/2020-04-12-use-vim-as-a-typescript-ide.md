@@ -2,8 +2,8 @@
 title: "Use Vim as a TypeScript IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/79134364-2bd8db80-7de0-11ea-848e-71d3f07cb79d.png
-excerpt: "A general guide for using SpaceVim as TypeScript IDE, including layer configuration, requiems installation and usage."
-type: BlogPosting
+description: "A general guide for using SpaceVim as TypeScript IDE, including layer configuration, requiems installation and usage."
+type: article
 comments: true
 commentsID: "Use Vim as a TypeScript IDE"
 ---

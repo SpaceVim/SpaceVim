@@ -1,0 +1,185 @@
+snippet script
+	script ${1:#:new_object}
+		on run
+			${2:TARGET}
+		end run
+	end script
+
+
+snippet on
+	on ${1:#:functionName}(${2:#:arguments})
+		${3:TARGET}
+	end ${1}
+
+
+snippet tell
+	tell ${1:#:app}
+		${0:TARGET}
+	end tell
+
+snippet terms
+	using terms from ${1:#:app}
+		${0:TARGET}
+	end using terms from
+
+
+snippet if
+	if ${1:true} then
+		${0:TARGET}
+	end if
+
+
+snippet rept
+abbr rep
+	repeat ${1} times}
+		${0:TARGET}
+	end repeat
+
+
+snippet repwh
+abbr rep
+	repeat while ${1:#:condition}
+		${0:TARGET}
+	end repeat
+
+
+snippet repwi
+abbr rep
+	repeat with ${1} in ${2}
+		${0:TARGET}
+	end repeat
+
+
+snippet try
+	try
+		${0:TARGET}
+	on error
+		-- error handling
+	end try
+
+snippet timeout
+	with timeout ${1:#:number} seconds
+		${0:TARGET}
+	end timeout
+
+snippet con
+	considering ${1:#:case}
+		${0:TARGET}
+	end considering
+
+
+snippet ign
+	ignoring ${1:#:application responses}
+		${0:TARGET}
+	end ignoring
+
+snippet shell
+	${1:#:set shell_stdout to }do shell script ${3:"${2:#script}"}
+		without altering line endings
+	${0}
+
+snippet delim
+	set oldDelims to AppleScript's text item delimiters
+	set AppleScript's text item delimiters to {"${1:,}"}
+	${0:#:TARGET}
+	set AppleScript's text item delimiters to oldDelims
+
+
+snippet parent
+    prop parent : app "${1}"
+
+
+snippet alert
+	display alert "${1:#:alert text}"
+		${2:#:message} "${3:#:message text}"
+		${4:#:as warning}
+
+snippet dialog_OK
+abbr dialog
+	display dialog "${1:#:text}"
+		${2:#:with icon} ${3:1}
+		buttons {"${4:OK}"} default button 1
+
+
+snippet dialog_OK/Cancel
+abbr dialog
+	display dialog "${1:#:text}"
+		${2:#:with icon}
+		buttons {"${3:Cancel}", "${4:OK}"}
+		default button "${4}"
+	set button_pressed to button returned of result
+	if button_pressed is "${4}" then
+		${5:#:TARGET}
+	else
+		-- action for cancel button goes here
+	end if
+
+snippet dialog_OK/Cancel/Other
+abbr dialog
+	display dialog "${1:#:text}"
+		${2:#:with icon}
+		buttons {"${3:Cancel}", "${4:Other Choice}", "${5:OK}"}
+		default button "${5}"
+	set button_pressed to button returned of result
+	if button_pressed is "${5}" then
+		${6:TARGET}
+	else if button_pressed is "${3}" then
+		-- action for cancel button goes here
+	else
+		-- action for other button goes here
+	end if
+
+snippet dialog_TextFierld
+abbr dialog
+	set the_result to display dialog "${1:#:text}"
+		default answer "${2:#:type here}"
+		${3:#:with icon}
+		buttons {"${4:Cancel}", "${5:OK}"}
+		default button "${5}"
+	set button_pressed to button returned of the_result
+	set text_typed to text returned of the_result
+	if button_pressed is "${5}" then
+		${6:#:TARGET}
+	else
+		-- action for cancel button goes here
+	end if
+
+snippet choose_Applications
+abbr choose
+	${1:#:set the_application to }choose application with prompt "${2:#:Choose an application:}"${3:#:with multiple selections allowed}
+
+snippet choose_Files
+abbr choose
+	${1:#:set the_file to }choose file with prompt "${2:#:Pick a file:}"
+	${3:#:default location path to home folder}
+	${4:#:with invisibles}
+	${5:#:with multiple selections allowed}
+	${6:#:with showing package contents}
+
+
+snippet choose_Folders
+abbr choose
+	${1:#:set the_folder to }choose folder with prompt "${2:#:Pick a folder:}"
+	${3:#:default location path to home folder}
+	${4:#:with invisibles}
+	${5:#:with multiple selections allowed}
+	${6:#:with showing package contents}
+	${0}
+
+snippet choose_NewFile
+abbr choose
+	${1:#:set the_filename to }choose file name with prompt "${2:#:Name this file:}"
+		default name "${3:untitled}" default location ${4:#:path to home folder}
+
+snippet choose_URL
+abbr choose
+	${1:#:set the_url to }choose URL showing ${2:Web} servers with editable URL
+
+snippet choose_Color
+abbr choose
+	${1:#:set the_color to }choose color default color ${2:{65536, 65536, 65536\}}
+
+snippet choose_ItemFromList
+abbr choose
+	set the_choice to choose from list ${1}"\}}
+

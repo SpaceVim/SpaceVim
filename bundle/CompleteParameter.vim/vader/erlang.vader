@@ -1,0 +1,15 @@
+Execute (func() -> undefined):
+  let completed_item = {'info': 'func() -> undefined'}
+  let result = cm_parser#erlang#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (func(foo) -> ran()):
+  let completed_item = {'info': 'func(foo) -> ran()'}
+  let result = cm_parser#erlang#parameters(completed_item)
+  AssertEqual ['(foo)'], result
+
+Execute (func(foo, bar) -> undefined | ran()):
+  let completed_item = {'info': 'func(foo, bar) -> undefined | ran()'}
+  let result = cm_parser#erlang#parameters(completed_item)
+  AssertEqual ['(foo, bar)'], result
+

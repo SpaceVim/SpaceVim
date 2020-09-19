@@ -1,0 +1,27 @@
+language: generic
+
+env:
+  - PPA=yes
+  - PPA=no
+
+install:
+  - if [ x"$PPA" == "xyes" ] ; then sudo add-apt-repository ppa:pi-rho/dev -y; fi
+  - sudo apt-get update -q
+  - sudo apt-get install vim-nox
+  - sudo pip install vim-vint
+  - git clone https://github.com/thinca/vim-themis --branch v1.5 --single-branch --depth 1 /tmp/vim-themis
+  - git clone https://github.com/syngan/vim-vimlint --depth 1 /tmp/vim-vimlint
+  - git clone https://github.com/ynkdir/vim-vimlparser --depth 1 /tmp/vim-vimlparser
+  - git clone https://github.com/vim-jp/vital.vim --depth 1 /tmp/vital.vim
+  - git clone https://github.com/haya14busa/vital-power-assert --depth 1 /tmp/vital-power-assert
+
+before_script:
+  - vim --version
+  - vint --version
+
+script:
+  - /tmp/vim-themis/bin/themis --runtimepath /tmp/vital.vim --runtimepath /tmp/vital-vimlcompiler --runtimepath /tmp/vital-safe-string --runtimepath /tmp/vital-power-assert --reporter spec
+  - vim --cmd "try | helptags doc/ | catch | cquit | endtry" --cmd quit
+  - sh /tmp/vim-vimlint/bin/vimlint.sh -l /tmp/vim-vimlint -p /tmp/vim-vimlparser -e EVL102.l:_=1 -c func_abort=1 autoload/incsearch.vim
+  - sh /tmp/vim-vimlint/bin/vimlint.sh -l /tmp/vim-vimlint -p /tmp/vim-vimlparser -e EVL102.l:_=1 -c func_abort=1 autoload/incsearch
+  - vint autoload/incsearch autoload/incsearch.vim plugin

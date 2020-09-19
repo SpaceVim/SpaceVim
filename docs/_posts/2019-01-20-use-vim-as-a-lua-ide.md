@@ -2,10 +2,10 @@
 title: "使用 Vim 搭建 Lua 开发环境"
 categories: [tutorials_cn, blog_cn]
 image: https://user-images.githubusercontent.com/13142418/51436347-3502f780-1cc6-11e9-9ae1-02e1dfa1e165.png
-excerpt: "这篇文章主要介绍如何使用 SpaceVim 搭建 Lua 的开发环境，简介 lang#lua 模块所支持的功能特性以及使用技巧"
+description: "这篇文章主要介绍如何使用 SpaceVim 搭建 Lua 的开发环境，简介 lang#lua 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
-type: BlogPosting
+type: article
 comments: true
 commentsID: "使用 Vim 搭建 Lua 开发环境"
 ---

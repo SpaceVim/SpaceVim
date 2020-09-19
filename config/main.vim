@@ -1,6 +1,6 @@
 "=============================================================================
 " main.vim --- Main file of SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -21,6 +21,13 @@ if has('vim_starting')
   endif
   if !empty($PYTHON3_HOST_PROG)
     let g:python3_host_prog = $PYTHON3_HOST_PROG
+    if !has('nvim') 
+          \ && (has('win16') || has('win32') || has('win64'))
+          \ && exists('&pythonthreedll')
+          \ && exists('&pythonthreehome')
+      let &pythonthreedll = get(split(globpath(fnamemodify($PYTHON3_HOST_PROG, ':h'), 'python*.dll'), '\n'), -1, '')
+      let &pythonthreehome = fnamemodify($PYTHON3_HOST_PROG, ':h')
+    endif
   endif
 endif
 " Detect root directory of SpaceVim
@@ -59,6 +66,8 @@ endif
 call SpaceVim#begin()
 
 call SpaceVim#custom#load()
+
+call SpaceVim#default#keyBindings()
 
 call SpaceVim#end()
 " vim:set et sw=2 cc=80:

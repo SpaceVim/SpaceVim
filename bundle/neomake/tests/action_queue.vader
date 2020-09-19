@@ -1,0 +1,239 @@
+Include: include/setup.vader
+
+Execute (action queue: order on WinEnter):
+  function! F1(...)
+    return neomake#action_queue#add(['Timer', 'WinEnter'], [function('F1'),
+                \ a:000])
+  endfunction
+  function! F2(...)
+    return neomake#action_queue#add(['WinEnter'], [function('F2'),
+                \ a:000])
+  endfunction
+  let jobinfo = NeomakeTestsFakeJobinfo()
+
+  call neomake#action_queue#add(['Timer', 'WinEnter'], [function('F1'), [jobinfo]])
+  call neomake#action_queue#add(['WinEnter'], [function('F2'), [jobinfo]])
+
+  doautocmd WinEnter
+
+  AssertNeomakeMessage 'action queue: processing for WinEnter (2 items).', 3, {'winnr': 1}
+  AssertNeomakeMessage 'action queue: calling F1.', 3
+
+  call neomake#action_queue#clean(jobinfo)
+  delfunction F1
+  delfunction F2
+
+Execute (action queue: order on WinEnter with Timer):
+  let s:calls = [0, 0]
+  function! F1(...)
+    let s:calls[0] += 1
+    " NOTE: copies a:000 to work around https://github.com/neovim/neovim/issues/9169.
+    return neomake#action_queue#add(['Timer', 'WinEnter'], [function('F1'),
+                \ copy(a:000)])
+  endfunction
+  function! F2(...)
+    let s:calls[1] += 1
+    " NOTE: copies a:000 to work around https://github.com/neovim/neovim/issues/9169.
+    return neomake#action_queue#add(['WinEnter'], [function('F2'),
+                \ copy(a:000)])
+  endfunction
+  let jobinfo = NeomakeTestsFakeJobinfo()
+
+  call neomake#action_queue#add(['Timer', 'WinEnter'], [function('F1'), [jobinfo]])
+  call neomake#action_queue#add(['WinEnter'], [function('F2'), [jobinfo]])
+
+  if has('timers')
+    AssertNeomakeMessage '\V\^Retrying Timer event in 10ms'
+    NeomakeTestsWaitForMessage 'action queue: processing for Timer (1 items).', 3, {'winnr': 1}
+  else
+    doautocmd CursorHold
+    AssertNeomakeMessage 'action queue: processing for Timer (1 items).', 3, {'winnr': 1}
+  endif
+  AssertNeomakeMessage 'Queuing action F1 for Timer, WinEnter.'
+  AssertNeomakeMessage 'action queue: re-queuing F2 for not processed make_id.', 3
+
+  doautocmd WinEnter
+
+  AssertNeomakeMessage 'action queue: processing for WinEnter (2 items).', 3, {'winnr': 1}
+  AssertNeomakeMessage 'action queue: calling F1.', 3
+  AssertNeomakeMessage 'action queue: re-queuing F2 for not processed make_id.', 3
+
+  call neomake#action_queue#clean(jobinfo)
+
+  delfunction F1
+  delfunction F2
+  AssertEqual s:calls, [2, 0]
+
+Execute (action queue: re-queued with different events):
+  let s:calls = [0, 0]
+  function! F1(...)
+    let s:calls[0] += 1
+    if s:calls[0] == 2
+        return g:neomake#action_queue#processed
+    endif
+    " NOTE: copies a:000 to work around https://github.com/neovim/neovim/issues/9169.
+    return neomake#action_queue#add(['BufEnter', 'WinEnter'], [function('F1'),
+                \ copy(a:000)])
+  endfunction
+  function! F2(...)
+    let s:calls[1] += 1
+    if s:calls[1] == 2
+        return g:neomake#action_queue#processed
+    endif
+    " NOTE: copies a:000 to work around https://github.com/neovim/neovim/issues/9169.
+    return neomake#action_queue#add(['WinEnter'], [function('F2'),
+                \ copy(a:000)])
+  endfunction
+
+  let jobinfo = NeomakeTestsFakeJobinfo()
+  call neomake#action_queue#add(['Timer', 'WinEnter'], [function('F1'), [jobinfo]])
+  call neomake#action_queue#add(['WinEnter'], [function('F2'), [jobinfo]])
+
+  if has('timers')
+    AssertNeomakeMessage '\V\^Retrying Timer event in 10ms'
+  else
+    doautocmd CursorHold
+  endif
+  NeomakeTestsWaitForMessage 'action queue: processing for Timer (1 items).', 3, {'winnr': 1}
+  AssertNeomakeMessage 'Queuing action F1 for BufEnter, WinEnter.'
+  AssertNeomakeMessage 'action queue: re-queuing F2 for not processed make_id.', 3
+
+  AssertEqual s:calls, [1, 0]
+  doautocmd WinEnter
+  AssertEqual s:calls, [2, 1]
+
+  AssertNeomakeMessage 'action queue: processing for WinEnter (2 items).', 3, {'winnr': 1}
+  AssertNeomakeMessage 'action queue: calling F1.', 3
+  AssertNeomakeMessage 'action queue: calling F2.', 3
+  AssertNeomakeMessage 'Queuing action F2 for WinEnter.', 3
+
+  AssertEqual s:calls, [2, 1]
+  AssertEqual len(g:neomake#action_queue#_s.action_queue), 1
+
+  doautocmd WinEnter
+  AssertEqual len(g:neomake#action_queue#_s.action_queue), 0
+
+  delfunction F1
+  delfunction F2
+  AssertEqual s:calls, [2, 2]
+
+Execute (action queue: logs errors (get_list_entries, WinEnter)):
+  function! F1(jobinfo,...)
+    if a:0
+      return g:neomake#action_queue#processed
+    endif
+    throw 'error_in_F1'
+  endfunction
+  let jobinfo = NeomakeTestsFakeJobinfo()
+
+  call neomake#action_queue#add(['Timer', 'WinEnter'], [function('F1'), [jobinfo]])
+
+  doautocmd WinEnter
+
+  AssertNeomakeMessage 'action queue: processing for WinEnter (1 items).', 3, {'winnr': 1}
+  AssertNeomakeMessage 'action queue: calling F1.', 3
+  AssertNeomakeMessage 'Error during action queue processing: error_in_F1.', 0
+  AssertNeomakeMessage '\v^CancelJob: job not found: \d+.', 0
+
+  call neomake#action_queue#clean(jobinfo)
+  delfunction F1
+
+Execute (action queue: logs errors (get_list_entries, Timer)):
+  function! F1(jobinfo,...)
+    if a:0
+      return g:neomake#action_queue#processed
+    endif
+    throw 'error_in_F1'
+  endfunction
+  let jobinfo = NeomakeTestsFakeJobinfo()
+
+  call neomake#action_queue#add(['Timer', 'WinEnter'], [function('F1'), [jobinfo]])
+
+  if has('timers')
+    NeomakeTestsWaitForMessage 'action queue: processing for Timer (1 items).', 3, {'winnr': 1}
+  else
+    doautocmd CursorHold
+  endif
+  AssertNeomakeMessage 'action queue: calling F1.', 3
+  AssertNeomakeMessage 'Error during action queue processing: error_in_F1.', 0
+  AssertNeomakeMessage '\v^CancelJob: job not found: \d+.', 0
+
+  call neomake#action_queue#clean(jobinfo)
+  delfunction F1
+
+Execute (action queue: logs errors (E48, WinEnter)):
+  function! F1(jobinfo,...)
+    if a:0
+      return g:neomake#action_queue#processed
+    endif
+    sandbox bprevious
+  endfunction
+  let jobinfo = NeomakeTestsFakeJobinfo()
+
+  call neomake#action_queue#add(['Timer', 'WinEnter'], [function('F1'), [jobinfo]])
+
+  doautocmd WinEnter
+
+  AssertNeomakeMessage 'action queue: processing for WinEnter (1 items).', 3, {'winnr': 1}
+  AssertNeomakeMessage 'action queue: calling F1.', 3
+  AssertNeomakeMessage '\vError during action queue processing: .*E48'
+  AssertNeomakeMessage '\v^CancelJob: job not found: \d+.', 0
+
+  call neomake#action_queue#clean(jobinfo)
+  delfunction F1
+
+Execute (action queue: handles make_info in clean_make_info queue check):
+  if !neomake#has_async_support() || !has('patch-v8.1.0342')
+    NeomakeTestsSkip 'no async support.'
+  else
+    new
+    call neomake#Make({'enabled_makers': [g:true_maker]})
+    let make_info = values(neomake#GetStatus().make_info)[0]
+    function F(...)
+      return g:neomake#action_queue#processed
+    endfunction
+    call neomake#action_queue#add(['InsertLeave'], [function('F'), [make_info]])
+    NeomakeTestsWaitForFinishedJobs
+    AssertNeomakeMessage '\VQueuing clean_make_info for already queued actions: [''make \d\+'']', 3
+    AssertNeomakeMessage 'Queuing action clean_make_info for any event.', 3
+    AssertNeomakeMessage 'Skipping cleaning of make info for queued actions.', 3
+
+    doautocmd InsertLeave
+
+    AssertNeomakeMessage 'action queue: calling F.'
+    AssertNeomakeMessage 'action queue: calling clean_make_info.'
+    bwipe
+    delfunction F
+  endif
+
+Execute (action queue: skips processing during internal autocommands):
+  if NeomakeAsyncTestsSetup()
+    Save g:neomake_open_list
+    let g:neomake_open_list = 2
+
+    new
+
+    let s:calls = []
+    function! F(...)
+      call add(s:calls, a:000)
+      return g:neomake#action_queue#processed
+    endfunction
+    let jobinfo = NeomakeTestsFakeJobinfo()
+    call neomake#action_queue#add(['WinEnter'], [function('F'), [jobinfo]])
+
+    call neomake#Make(1, [g:error_maker])
+    let job = neomake#GetJobs()[-1]
+    NeomakeTestsWaitForFinishedJobs
+
+    AssertNeomakeMessage 'Handling location list: executing lwindow.', 3, job
+    AssertNeomakeMessage 'action queue: skip processing for WinEnter (ignore_autocommands=1).', 3
+    AssertNeomakeMessage 'list window has been opened (old count: 2, new count: 3, height: 1).', 3
+    AssertNeomakeMessage 'action queue: skip processing for WinEnter (ignore_autocommands=1).', 3
+    AssertNeomakeMessage 'action queue: skip processing for WinEnter (ignore_autocommands=1).', 3
+    lclose
+    wincmd p
+    AssertNeomakeMessage '\vaction queue: processing for WinEnter'
+    wincmd p
+    bwipe
+    delfunction F
+  endif

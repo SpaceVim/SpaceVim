@@ -1,0 +1,20 @@
+Before:
+  enew!
+  Startify
+
+Do (Open new buffer in insert "foo"):
+  ifoo
+Expect (Buffer contains only "foo"):
+  foo
+
+Do (Open new buffer in normal mode and insert "bar"):
+  eibar
+Expect (Buffer contains only "bar"):
+  bar
+
+Given (Buffer that contains only "quux"):
+  quux
+Do (Quit Startify buffer via 'q'):
+  q
+Expect (Buffer before :Startify was called):
+  quux

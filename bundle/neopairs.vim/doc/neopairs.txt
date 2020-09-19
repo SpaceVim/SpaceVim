@@ -1,0 +1,57 @@
+*neopairs.txt*	Auto insert pairs when complete done
+
+Version: 0.1
+Author: Shougo <Shougo.Matsu at gmail.com>
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+CONTENTS					*neopairs-contents*
+
+Install			|neopairs-install|
+Interface		|neopairs-interface|
+  Variables		  |neopairs-variables|
+FAQ			|neopairs-faq|
+
+==============================================================================
+INSTALL						*neopairs-install*
+
+Note: |neopairs| requires Vim 7.4.774 or neovim (|v:completed_item| feature).
+
+==============================================================================
+INTERFACE					*neopairs-interface*
+
+------------------------------------------------------------------------------
+VARIABLES 					*neopairs-variables*
+
+				*g:neopairs#enable*
+g:neopairs#enable
+		If it is enabled, close the parenthesis automatically.
+
+				*g:neopairs#pairs*
+g:neopairs#pairs
+		Pairs user definition.
+
+		Default value: g:neopairs#_pairs
+
+==============================================================================
+FAQ						*neopairs-faq*
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:

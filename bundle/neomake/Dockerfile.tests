@@ -1,0 +1,63 @@
+# From https://github.com/tweekmonster/vim-testbed.
+FROM testbed/vim:18@sha256:2b1872c68b6e9dfbfd8f804ad9727516ee971150142a80df354c244dcafa59c4
+
+# Currently tested versions:
+#  - v7.3.429 (Ubuntu Precise, 12.04LTS)
+#  - v7.4.052 (Ubuntu Trusty, 14.04LTS)
+#  - v7.4.1689 (Ubuntu Xenial, 16.04LTS)
+#  - v8.0.586 (Updated Vim 8, https://vim.sourceforge.io/download.php)
+# TODO: clean up names to make them usable as-is in CircleCI config.
+# Uses fixed-profiling patch with vim81 (https://github.com/vim/vim/pull/2499).
+RUN install_vim -tag v7.3.429 -name vim73 --with-features=huge -build \
+                -tag v7.4.052 -name vim74-trusty --with-features=huge -build \
+                -tag v7.4.1689 -name vim74-xenial --with-features=huge -build \
+                -tag v8.0.0586 -name vim80 -py2 -build \
+                -tag neovim:v0.1.7 -build \
+  && rm -rf /vim-build/**/runtime/tutor
+RUN install_vim -tag v8.1.0622 -name vim81 -build \
+                -tag neovim:v0.3.8 -py3 -build \
+  && rm -rf /vim-build/**/runtime/tutor
+
+ENV NEOMAKE_DOCKERFILE_UPDATE=2020-01-27
+
+# Git master in a separate layer, since the above is meant to be stable.
+RUN install_vim -tag master -build \
+                -tag neovim:master -build \
+  && rm -rf /vim-build/**/runtime/tutor
+
+# Install tools for running tests (busybox's grep does not have --line-number).
+# openssh for CircleCI to improve Git checkout.
+RUN apk --no-cache add bash curl grep make openssh-client
+
+# Codeclimate reporter.
+RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /usr/local/bin/cc-test-reporter \
+  && chmod +x /usr/local/bin/cc-test-reporter
+
+# Install dep plugins (test runner and those used during tests).
+# Keeps git and installs ssh for CircleCI's checkout (and diffing for changed
+# files).  grep for checks.
+ENV NEOMAKE_TESTS_DEP_PLUGINS_DIR=/neomake-deps
+ENV VIMHELPLINT_DIR=$NEOMAKE_TESTS_DEP_PLUGINS_DIR/vim-vimhelplint
+RUN mkdir $NEOMAKE_TESTS_DEP_PLUGINS_DIR
+RUN apk --no-cache add git \
+  && git clone -q --depth=1 -b display-source-with-exceptions https://github.com/blueyed/vader.vim $NEOMAKE_TESTS_DEP_PLUGINS_DIR/vader \
+  && git clone -q --depth=1 https://github.com/tpope/vim-fugitive $NEOMAKE_TESTS_DEP_PLUGINS_DIR/vim-fugitive \
+  && git clone -q --depth=1 https://github.com/machakann/vim-vimhelplint $NEOMAKE_TESTS_DEP_PLUGINS_DIR/vim-vimhelplint \
+  && git clone -q --depth=1 https://github.com/syngan/vim-vimlint /tools/vim-vimlint \
+  && git clone -q --depth=1 https://github.com/ynkdir/vim-vimlparser /tools/vim-vimlparser
+RUN test -f /vim-build/bin/vim81 && ln -s /vim-build/bin/vim81 /usr/local/bin/vim
+RUN printf '#!/bin/sh -x\n/tools/vim-vimlint/bin/vimlint.sh -l /tools/vim-vimlint -p /tools/vim-vimlparser "$@"\n' > /usr/local/bin/vimlint
+RUN chmod +x /usr/local/bin/vimlint
+
+# Install covimerage and vint.
+RUN apk --no-cache add python3 \
+  && pip3 install -U pip \
+  && pip3 install --no-cache-dir 'coverage<5' python-coveralls covimerage==0.2.1 vim-vint==0.3.21 \
+  && rm -rf /usr/include /usr/lib/python*/turtle* /usr/lib/python*/tkinter \
+  && pip3 uninstall --yes pip \
+  && curl https://codecov.io/bash -o /usr/bin/codecov \
+  && chmod +x /usr/bin/codecov \
+  && cd /usr/bin && ln -s python3 python
+
+RUN adduser -D -s /bin/bash neomake
+USER neomake

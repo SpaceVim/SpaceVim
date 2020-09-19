@@ -1,0 +1,128 @@
+0.8.2: 2018-11-17
+Python, support echo signature
+
+0.8.0: 2018-08-06
+Add option g:complete_parameter_py_remove_default. 
+Suppoert remove python default parameter. 
+
+0.7.2:2018-06-12
+Modify c and ts parameters. 
+
+0.7.1: 2017-10-21
+Format log.
+Disable log by default. 
+
+0.7.0: 2017-10-03
+Support c/c++ macro. 
+Fix '<' or '>' selected.
+Fix python parser. 
+
+0.6.4: 2017-09-29
+Fix can't goto_previous_parameter when selection is exclusive. 
+
+0.6.3: 2017-09-28
+Select one more char when selection is exclusive.
+
+0.6.2: 2017-09-10
+Fix helptags error. 
+
+0.6.1: 2017-09-10
+Python support keep default value and select the value only. 
+Add option g:complete_parameter_py_keep_value. 
+Support jeci. 
+
+0.6.0: 2017-08-19
+Rename file. 
+Insert parameter if there are some content after the cursor. 
+Fix bug. 
+
+0.5.0: 2017-08-09
+show signature. 
+
+0.4.0: 2017-08-07
+Hidden message. 
+
+0.3.0: 2017-07-28
+Refactor normal mapping to <Plug> mapping. 
+    Remove mapping options:
+       g:complete_parameter_goto_next_mode,
+       g:complete_parameter_mapping_goto_next,
+       g:complete_parameter_goto_previous_mode,
+       g:complete_parameter_mapping_goto_previous,
+       g:complete_parameter_mapping_overload_up_mode,
+       g:complete_parameter_mapping_overload_up,
+       g:complete_parameter_mapping_overload_down_mode,
+       g:complete_parameter_mapping_overload_down,
+       g:complete_parameter_mapping_complete,
+       g:complete_parameter_failed_insert,
+       g:complete_parameter_mapping_complete_for_ft
+	Add mapping.
+       <Plug>(complete_parameter#goto_next_parameter),
+       <Plug>(complete_parameter#goto_previous_parameter),
+       <Plug>(complete_parameter#overload_up),
+       <Plug>(complete_parameter#overload_down)
+    Add options: g:complete_parameter_use_ultisnips_mappings
+
+Fix parser bug.
+
+0.2.3: 2017-07-22
+Change `<m-n>`/`<m-p>` to `<c-j>`/`<c-k>` and compatible with ultisnips. 
+Disable normal mapping. 
+Fix parser bug.
+
+0.2.2: 2017-07-07
+Only jump between in the scope.
+Check the value of the parser returned. 
+
+0.2.1: 2017-06-30
+Fix bug. 
+
+0.2.0: 2017-06-30
+Support neocomplete. 
+Support clang_complete. 
+
+0.1.6: 2017-06-29
+Support deoplete.nvim
+
+0.1.5: 2017-06-25
+Compate with neosnippet.  
+
+0.1.4: 2017-06-23
+Toggle an event CompleteParameterFailed if complete failed. 
+Add a variable `g:complete_parameter_last_failed_insert` to set the failed_insert. 
+Fixed bug, delete select text when call the jump mapping. 
+
+0.1.3: 2017-06-20
+Fix the info for python function has multi lines.
+
+0.1.2: 2017-06-17
+Support typescript. 
+Support nvim.
+Support vim7.4.774.
+Parallel test. 
+Add g:complete_parameter_goto_next_mode option. 
+Add g:complete_parameter_goto_previous_mode option. 
+Add g:complete_parameter_mapping_overload_down_mode option.
+Add g:complete_parameter_mapping_overload_up_mode option. 
+
+0.1.1: 2017-06-15
+Fix travis-ci test. 
+
+0.1.0: 2017-06-15
+Support `(` select the first completion item if inserted word is equal to the first popup item.
+
+0.0.3: 2017-06-15
+Support multi called for a file. 
+Support cpp class template. 
+Fix python parser.
+Add github templates.
+
+0.0.2: 2017-06-14
+Support c, cpp, rust, javascript, python.
+Support overload functions.
+Update screenshot.
+Add shields. 
+
+0.0.1: 2017-06-12
+Init version. Support golang, erlang paramater.
+

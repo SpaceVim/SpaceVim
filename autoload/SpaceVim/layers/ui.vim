@@ -1,6 +1,6 @@
 "=============================================================================
 " ui.vim --- SpaceVim ui layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,17 +9,17 @@
 scriptencoding utf-8
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
-        \ ['Yggdroot/indentLine', {'merged' : 0}],
-        \ ['wsdjeg/tagbar', {'loadconf' : 1, 'merged' : 0}],
-        \ ['tenfyzhong/tagbar-makefile.vim', {'merged': 0}],
-        \ ['tenfyzhong/tagbar-proto.vim', {'merged': 0}],
-        \ ['t9md/vim-choosewin', {'merged' : 0}],
-        \ ['mhinz/vim-startify', {'loadconf' : 1, 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/indentLine', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/tagbar', {'loadconf' : 1, 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/tagbar-makefile.vim', {'merged': 0}],
+        \ [g:_spacevim_root_dir . 'bundle/tagbar-proto.vim', {'merged': 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-choosewin', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-startify', {'loadconf' : 1, 'merged' : 0}],
         \ ]
   if !SpaceVim#layers#isLoaded('core#statusline')
-    call add(plugins, ['vim-airline/vim-airline',                { 'merged' : 0, 
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline',                { 'merged' : 0, 
           \ 'loadconf' : 1}])
-    call add(plugins, ['vim-airline/vim-airline-themes',         { 'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline-themes',         { 'merged' : 0}])
   endif
 
   return plugins
@@ -110,6 +110,9 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
         \ . string(s:_function('s:toggle_spell_check')) . ', [])',
         \ 'toggle-spell-checker', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'p'], 'call call('
+        \ . string(s:_function('s:toggle_paste')) . ', [])',
+        \ 'toggle-paste-mode', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'l'], 'setlocal list!',
         \ 'toggle-hidden-listchars', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'W'], 'setlocal wrap!',
@@ -256,7 +259,6 @@ function! s:toggle_win_fringe() abort
   endif
 endfunction
 
-let g:_spacevim_cursorline_flag = -1
 function! s:toggle_cursorline() abort
   setl cursorline!
   let g:_spacevim_cursorline_flag = g:_spacevim_cursorline_flag * -1
@@ -274,6 +276,21 @@ function! s:toggle_spell_check() abort
   else
     echo 'spell-checking disabled.'
   endif
+endfunction
+
+function! s:toggle_paste() abort
+  if &l:paste
+    let &l:paste = 0
+  else
+    let &l:paste = 1
+  endif
+  call SpaceVim#layers#core#statusline#toggle_mode('paste-mode')
+  if &l:paste == 1
+    echo 'paste-mode enabled.'
+  else
+    echo 'paste-mode disabled.'
+  endif
+  
 endfunction
 
 let s:whitespace_enable = 0

@@ -1,0 +1,46 @@
+task classpath << {
+
+  String finalFileContents = ""
+  HashSet<String> classpathFiles = new HashSet<String>()
+  for (proj in allprojects) {
+
+    def exploded = proj.getBuildDir().absolutePath + File.separator + "intermediates" + File.separator + "exploded-aar"
+    def listFiles = new File(exploded)
+    if (listFiles.exists()) {
+      listFiles.eachFileRecurse(){ file ->
+        if (file.name.endsWith(".jar")){
+          classpathFiles += file
+        }
+      }
+    }
+
+    def rjava = proj.getBuildDir().absolutePath + File.separator + "intermediates" + File.separator + "classes" + File.separator + "debug"
+    def rFiles = new File(rjava)
+    if (rFiles.exists()) {
+      classpathFiles += rFiles
+    }
+
+    for (conf in proj.configurations) {
+        for (dependency in conf) {
+            if (dependency.name.endsWith("aar")){
+            } else {
+              classpathFiles += dependency
+            }
+        }
+    }
+    if (proj.hasProperty("android")){
+      classpathFiles += proj.android.bootClasspath
+    }
+
+    if (proj.hasProperty("sourceSets")) {
+
+      for (srcSet in proj.sourceSets) {
+          for (dir in srcSet.java.srcDirs) {
+              classpathFiles += dir.absolutePath
+          }
+      }
+    }
+  }
+  def paths = classpathFiles.join(File.pathSeparator)
+  println "CLASSPATH:" + paths
+}

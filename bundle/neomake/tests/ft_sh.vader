@@ -1,0 +1,116 @@
+Include: include/setup.vader
+
+Execute (sh: shellcheck):
+  new
+  " Unless -s is specified, shellcheck checks shebangs on its own and issues a
+  " warning for unsupported dialects.
+  call setline(1, '#!/bin/sh')
+  let default_args = ['-fgcc', '-x']
+  AssertEqual default_args, neomake#makers#ft#sh#shellcheck().args
+  call setline(1, '#!/bin/dash')
+  AssertEqual default_args, neomake#makers#ft#sh#shellcheck().args
+  call setline(1, '#!/bin/bash')
+  AssertEqual default_args, neomake#makers#ft#sh#shellcheck().args
+  call setline(1, '#!/bin/ksh')
+  AssertEqual default_args, neomake#makers#ft#sh#shellcheck().args
+
+  " Shellcheck also checks for a directive denoting the appropriate shell
+  call setline(1, '#shellcheck shell=sh')
+  AssertEqual default_args, neomake#makers#ft#sh#shellcheck().args
+  call setline(1, '') " reset shebang for next tests
+
+  " If extension is .ksh, force 'ksh'.
+  silent file test.ksh
+  AssertEqual default_args + ['-s', 'ksh'], neomake#makers#ft#sh#shellcheck().args
+
+  " If extension is .sh, use variables to detect the dialect. (:h ft-sh-syntax)
+  silent file test.sh
+  let g:is_sh = 1
+  AssertEqual default_args + ['-s', 'sh'], neomake#makers#ft#sh#shellcheck().args
+  unlet g:is_sh
+  let g:is_kornshell = 1
+  AssertEqual default_args + ['-s', 'ksh'], neomake#makers#ft#sh#shellcheck().args
+  unlet g:is_kornshell
+  let g:is_posix = 1
+  AssertEqual default_args + ['-s', 'ksh'], neomake#makers#ft#sh#shellcheck().args
+  unlet g:is_posix
+  AssertEqual default_args + ['-s', 'bash'], neomake#makers#ft#sh#shellcheck().args
+
+  " Use 'bash' for everything else.
+  call setline(1, '#!/usr/bin/env foo')
+  silent file foo
+  AssertEqual default_args + ['-s', 'bash'], neomake#makers#ft#sh#shellcheck().args
+  silent file foo.bash
+  AssertEqual default_args + ['-s', 'bash'], neomake#makers#ft#sh#shellcheck().args
+  silent file foo.xxx
+  AssertEqual default_args + ['-s', 'bash'], neomake#makers#ft#sh#shellcheck().args
+  let g:is_sh = 1
+  AssertEqual default_args + ['-s', 'bash'], neomake#makers#ft#sh#shellcheck().args
+  unlet g:is_sh
+  let g:is_kornshell = 1
+  AssertEqual default_args + ['-s', 'bash'], neomake#makers#ft#sh#shellcheck().args
+  unlet g:is_kornshell
+
+  " The following should never happen in practice.
+  set ft=
+  AssertEqual default_args + ['-s', 'bash'], neomake#makers#ft#sh#shellcheck().args
+  set ft=nadda
+  AssertEqual default_args + ['-s', 'bash'], neomake#makers#ft#sh#shellcheck().args
+  bwipe!
+  bwipe test.sh test.ksh foo foo.bash
+
+Execute (Test Neomake on errors.sh with shellcheck):
+  call g:NeomakeSetupAutocmdWrappers()
+
+  " From shellcheck 0.4.6.
+  let shellcheck_output = [
+        \ "errors.sh:3:1: warning: a appears unused. Verify it or export it. [SC2034]",
+        \ "errors.sh:3:3: note: Expressions don't expand in single quotes, use double quotes for that. [SC2016]",
+        \ "errors.sh:5:4: error: '(' is invalid here. Did you forget to escape it? [SC1036]",
+        \ "errors.sh:5:4: error: Parsing stopped here. Invalid use of parentheses? [SC1088]",
+        \ "errors.sh:5:4: error: Trying to declare parameters? Don't. Use () and refer to params as $1, $2.. [SC1065]",
+        \ ]
+
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#sh#shellcheck(), shellcheck_output)
+  let maker.name = 'shellcheck'
+
+  new
+  edit tests/fixtures/errors.sh
+  let bufnr = bufnr('%')
+  CallNeomake 1, [maker]
+  AssertEqual len(g:neomake_test_finished), 1
+  AssertNeomakeMessage 'Running makers: shellcheck.'
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 3, 'bufnr': bufnr, 'col': 1, 'valid': 1, 'vcol': 0, 'nr': 2034,
+  \ 'type': 'w', 'pattern': '', 'text': 'a appears unused. Verify it or export it.',
+  \ }, {
+  \ 'lnum': 3, 'bufnr': bufnr, 'col': 3, 'valid': 1, 'vcol': 0, 'nr': 2016,
+  \ 'type': 'I', 'pattern': '', 'text': 'Expressions don''t expand in single quotes, use double quotes for that.',
+  \ }, {
+  \ 'lnum': 5, 'bufnr': bufnr, 'col': 4, 'valid': 1, 'vcol': 0, 'nr': 1036,
+  \ 'type': 'e', 'pattern': '', 'text': '''('' is invalid here. Did you forget to escape it?',
+  \ }, {
+  \ 'lnum': 5, 'bufnr': bufnr, 'col': 4, 'valid': 1, 'vcol': 0, 'nr': 1088,
+  \ 'type': 'e', 'pattern': '', 'text': 'Parsing stopped here. Invalid use of parentheses?',
+  \ }, {
+  \ 'lnum': 5, 'bufnr': bufnr, 'col': 4, 'valid': 1, 'vcol': 0, 'nr': 1065,
+  \ 'type': 'e', 'pattern': '', 'text': 'Trying to declare parameters? Don''t. Use () and refer to params as $1, $2..',
+  \ }]
+
+  " Compare real output with expected one."
+  " if executable('shellcheck')
+  "   let real_output = neomake#compat#systemlist('cd tests/fixtures && shellcheck -fgcc -x errors.sh')
+  "   if real_output != shellcheck_output
+  "     call neomake#log#error('expected output changed:')
+  "     AssertEqual real_output, shellcheck_output
+  " endif
+  bwipe
+
+Execute (shellcheck copies base maker):
+  let maker = neomake#makers#ft#sh#shellcheck()
+  AssertEqual maker.args, ['-fgcc', '-x', '-s', 'bash']
+
+  let maker.args = ['changed']
+
+  let maker = neomake#makers#ft#sh#shellcheck()
+  AssertEqual maker.args, ['-fgcc', '-x', '-s', 'bash']

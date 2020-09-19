@@ -2,8 +2,8 @@
 title: "Use Vim as a C/C++ IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/58743787-db2bee80-846a-11e9-9b19-17202ac542c9.png
-excerpt: "A general guide for using SpaceVim as C/C++ IDE, including layer configuration, requiems installation and usage."
-type: BlogPosting
+description: "A general guide for using SpaceVim as C/C++ IDE, including layer configuration, requiems installation and usage."
+type: article
 comments: true
 commentsID: "Use Vim as a C/C++ IDE"
 ---

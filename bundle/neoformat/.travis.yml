@@ -1,0 +1,23 @@
+language: python
+
+sudo: required
+
+cache:
+    - pip
+    - npm
+
+env:
+    - PATH="$PATH:/home/travis/build/sbdchd/neoformat/test/bin"
+
+python:
+    - "3.6"
+
+before_install:
+    - nvm install $NODE_VERSION
+
+install:
+    - ./test/install.sh
+    - pip install -r test/requirements.txt
+
+script:
+    - cd test && pytest -v test.py

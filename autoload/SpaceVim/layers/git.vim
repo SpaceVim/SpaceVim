@@ -1,6 +1,6 @@
 "=============================================================================
 " git.vim --- SpaceVim git layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -84,13 +84,14 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Git blame', 'view-git-blame', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'Git log %', 'git-log-of-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'Git log', 'git-log-of-current-repo', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'm'], 'Git branch', 'branch-manager', 1)
   endif
   augroup spacevim_layer_git
     autocmd!
     autocmd FileType diff nnoremap <buffer><silent> q :call SpaceVim#mapping#close_current_buffer()<CR>
     autocmd FileType gitcommit setl omnifunc=SpaceVim#plugins#gitcommit#complete
     if SpaceVim#layers#isLoaded('core#statusline')
-        autocmd User GitGutter let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+      autocmd User GitGutter let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     endif
     " Instead of reverting the cursor to the last position in the buffer, we
     " set it to the first line when editing a git commit message

@@ -1,6 +1,6 @@
 "=============================================================================
 " autocmd.vim --- main autocmd group for spacevim
-" Copyright (c) 2016-2019 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,6 +9,8 @@
 
 let s:SYS = SpaceVim#api#import('system')
 let s:JOB = SpaceVim#api#import('job')
+let s:VIM = SpaceVim#api#import('vim')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 
 "autocmds
@@ -16,7 +18,7 @@ function! SpaceVim#autocmds#init() abort
   augroup SpaceVim_core
     au!
     autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
-          \   q :cclose<cr>:lclose<cr>
+          \   q :call <SID>close_quickfix()<cr>
     autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
           \   bd|
           \   q | endif
@@ -70,6 +72,7 @@ function! SpaceVim#autocmds#init() abort
   augroup END
 endfunction
 
+let g:_spacevim_cursorline_flag = -1
 function! s:enable_cursorline() abort
   if g:_spacevim_cursorline_flag == -1
     setl cursorline
@@ -195,5 +198,12 @@ function! s:disable_welcome() abort
   augroup END
 endfunction
 
+function! s:close_quickfix() abort
+  if winnr() == s:VIM.get_qf_winnr()
+    cclose
+  else
+    lclose
+  endif
+endfunction
 
 " vim:set et sw=2:

@@ -1,0 +1,14 @@
+set nocompatible
+
+let &rtp  = '~/.vim/bundle/vim-matchup,' . &rtp
+let &rtp .= ',~/.vim/bundle/vim-matchup/after'
+
+let g:matchup_delim_start_plaintext = !!$TEST_PLAIN
+" let g:matchup_matchparen_enabled = 0
+
+filetype plugin indent on
+syntax enable
+
+autocmd VimEnter * put!=execute('MatchupShowTimes')|set nomodified
+nnoremap q :<c-u>quit<cr>
+

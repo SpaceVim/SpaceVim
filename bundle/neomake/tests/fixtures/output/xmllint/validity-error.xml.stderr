@@ -1,0 +1,2 @@
+validity error : no DTD found!
+Document tests/fixtures/input/xmllint/validity-error.xml does not validate

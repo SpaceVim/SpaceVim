@@ -59,22 +59,22 @@ in percents with the variable `default_height`. Default value is 30.
 
 ## Key bindings
 
-| Key Binding | Description                              |
-| ----------- | ---------------------------------------- |
-| `SPC '`     | Open or switch to the terminal windows   |
-| `Ctrl-d`    | Close terminal windows in terminal mode  |
-| `q`         | Hide terminal windows in Normal mode    |
-| `<Esc>`     | Switch to Normal mode from terminal mode |
-| `Ctrl-h`    | Switch to the windows on the left        |
-| `Ctrl-j`    | Switch to the windows below              |
-| `Ctrl-k`    | Switch to the windows on the top         |
-| `Ctrl-l`    | Switch to the windows on the right       |
+| Key Binding  | Description                              |
+| ------------ | ---------------------------------------- |
+| `SPC '`      | Open or switch to the terminal windows   |
+| `Ctrl-d`     | Close terminal windows in terminal mode  |
+| `q`          | Hide terminal windows in Normal mode     |
+| `<Esc>`      | Switch to Normal mode from terminal mode |
+| `Ctrl-Left`  | Switch to the windows on the left        |
+| `Ctrl-Down`  | Switch to the windows below              |
+| `Ctrl-Up`    | Switch to the windows on the top         |
+| `Ctrl-Right` | Switch to the windows on the right       |
 
 ### Additional key bindings on Windows
 
-| Key Binding | Description                              |
-| ----------- | ---------------------------------------- |
-| `Ctrl-d`    | Sends `exit <CR>` if at a prompt         |
-| `Ctrl-u`    | Clears the line before the cursor        |
-| `Ctrl-r`    | Pastes from clipboard if given `+`       |
-| `Ctrl-w`    | Deletes the word before the cursor       |
+| Key Binding | Description                        |
+| ----------- | ---------------------------------- |
+| `Ctrl-d`    | Sends `exit <CR>` if at a prompt   |
+| `Ctrl-u`    | Clears the line before the cursor  |
+| `Ctrl-r`    | Pastes from clipboard if given `+` |
+| `Ctrl-w`    | Deletes the word before the cursor |

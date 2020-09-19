@@ -34,13 +34,15 @@ lang: zh
     - [文件树中打开文件](#文件树中打开文件)
 - [基本操作](#基本操作)
   - [原生功能](#原生功能)
-  - [可视模式快捷键](#可视模式快捷键)
   - [命令行模式快捷键](#命令行模式快捷键)
   - [快捷键导航](#快捷键导航)
   - [基本编辑操作](#基本编辑操作)
+    - [移动文本块](#移动文本块)
+    - [代码缩进](#代码缩进)
     - [文本操作命令](#文本操作命令)
     - [文本插入命令](#文本插入命令)
     - [增加或减小数字](#增加或减小数字)
+    - [复制粘贴](#复制粘贴)
     - [增删注释](#增删注释)
     - [文本编码格式](#文本编码格式)
   - [窗口管理](#窗口管理)
@@ -128,7 +130,7 @@ lang: zh
 - **更快的启动时间：** 得益于 dein.vim, 90% 的插件都是按需载入的。
 - **更少的肌肉损伤：** 频繁使用空格键，取代 `ctrl`，`shift` 等按键，大大减少了手指的肌肉损伤。
 - **更易扩展：** 依照一些[约定](http://spacevim.org/cn/development/)，很容易将现有的插件集成到 SpaceVim 中来。
-- **完美支持 Neovim:** 得益于 Neovim 的 romote 插件以及异步 API，运行在 Neovim 下将有更加完美的体验。
+- **完美支持 Neovim:** 得益于 Neovim 的 remote 插件以及异步 API，运行在 Neovim 下将有更加完美的体验。
 
 ## 运行截图
 
@@ -152,7 +154,10 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 **临时快捷键菜单**
 
-SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重复某些操作时过多按下 `SPC` 前缀键。当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，提示每一临时快捷键的功能。此外一些额外的辅助信息也将会显示出来。
+SpaceVim 根据需要定义了很多临时快捷键，
+这可以避免需要重复某些操作时过多按下 `SPC` 前缀键。
+当临时快捷键启用时，会在窗口下方打开一个快捷键介绍窗口，
+提示每一临时快捷键的功能。此外一些额外的辅助信息也将会显示出来。
 
 文本移动临时快捷键：
 
@@ -214,35 +219,53 @@ SpaceVim 根据需要定义了很多临时快捷键，这可以避免需要重�
 
 ## 用户配置
 
-初次启动时，他将提供选择目录，用户需要选择合适自己的配置模板。
+初次启动时，SpaceVim 弹出一个选择目录（`basic` 模式、
+`dark_powerd` 模式），用户需要选择合适自己的配置模板。
 此时，SpaceVim 将自动在 `$HOME` 目录生成 `~/.SpaceVim.d/init.toml`。
-所有用户脚本可以存储在 `~/.SpaceVim.d/`，这一文件夹将被加入 Vim 的运行时路径 `&runtimepath`。
-详情清阅读 `:h rtp`。
+所有用户配置文件都可以存储在 `~/.SpaceVim.d/`。
 
-也可以通过 `SPACEVIMDIR` 这一环境变量，指定用户配置目录。
-也可以通过软链接来改变目录位置，以便配置备份。
+这一文件夹将被加入 Vim 的运行时路径 `&runtimepath`。
 
-同时，还支持项目本地配置，配置初始文件为，项目根目录下的 `.SpaceVim.d/init.toml` 文件。
-同时根目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
+也可以通过 `SPACEVIMDIR` 这一环境变量，
+指定用户配置目录的具体位置。也可以通过软链接来改变目录位置，
+以便配置备份。
 
-所有的 SpaceVim 选项可以使用 `:h SpaceVim-options` 来查看。选项名称为原先 Vim 脚本中使用的变量名称去除 `g:spacevim_` 前缀。
+同时，还支持项目本地配置，配置初始文件为，项目根目录下的
+`.SpaceVim.d/init.toml` 文件。同时根目录下的 `.SpaceVim.d/`
+也将被加入到 Vim 运行时路径。
 
-完整的内置文档可以通过 `:h SpaceVim` 进行查阅。也可以通过按键 `SPC h SPC` 模糊搜索，该快捷键需要载入一个模糊搜索模块。
+所有的 SpaceVim 选项可以使用 `:h SpaceVim-options` 来查看。
+选项名称为原先 Vim 脚本中使用的变量名称去除 `g:spacevim_`
+前缀。
+
+完整的内置文档可以通过 `:h SpaceVim` 进行查阅。
+也可以通过按键 `SPC h SPC` 模糊搜索，
+该快捷键需要载入一个模糊搜索模块。
 
 **添加自定义插件**
 
-如果你需要添加 github 上的插件，只需要在 SpaceVim 配置文件中添加 `[[custom_plugins]]` 片段：
+如果你需要添加 github 上的插件，只需要在 SpaceVim
+配置文件中添加 `[[custom_plugins]]` 片段：
 
 ```toml
 [[custom_plugins]]
-    name = "lilydjwg/colorizer"
+    repo = "lilydjwg/colorizer"
     on_cmd = ["ColorHighlight", "ColorToggle"]
     merged = false
 ```
 
-以上这段配置，添加了插件 `lilydjwg/colorizer`，并且，通过 `on_cmd` 这一选项使得这个插件延迟加载。
-该插件会在第一次执行 `ColorHighlight` 或者 `ColorToggle` 命令时被加载。除了 `on_cmd` 以外，还有一些其它的选项，
-可以通过 `:h dein-options` 查阅。
+`one_cmd` 选项使得这个插件延迟加载。
+该插件会在第一次执行 `ColorHighlight` 或者 `ColorToggle`
+命令时被加载。
+
+`merged` 选项用于设定是否合并该插件的文件夹，如果 `merged`
+是 `true`，那么，这一插件内的文件将被合并到：
+`~/.cache/vimfiles/.cache/init.vim/`
+或者 `~/.cache/vimfiles/.cache/vimrc/`，
+这依据当前使用的是 Neovim 还是 Vim。
+
+除了 `on_cmd` 以外，还有一些其它的选项，可以通过
+`:h dein-options` 查阅。
 
 **禁用插件**
 
@@ -368,7 +391,7 @@ SpaceVim 的[模块首页](../layers/)。
 
 ```toml
 [[custom_plugins]]
-   name = 'wsdjeg/neomake.vim'
+   repo = 'wsdjeg/neomake.vim'
    # note: you need to disable merged feature
    merged = false
 ```
@@ -445,6 +468,8 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 | `SPC t i`   | 切换显示当前对齐(TODO)                    |
 | `SPC t n`   | 显示/隐藏行号                             |
 | `SPC t b`   | 切换背景色                                |
+| `SPC t c`   | 切换 conceal 模式                         |
+| `SPC t p`   | 切换 paste 模式                           |
 | `SPC t t`   | 打开 Tab 管理器                           |
 | `SPC T ~`   | 显示/隐藏 Buffer 结尾空行行首的 `~`       |
 | `SPC T F`   | 切换全屏(TODO)                            |
@@ -623,24 +648,47 @@ endfunction
     ]
 ```
 
+**自定义板块**
+
+可以使用启动函数添加自定板块，比如：
+
+```vim
+function! s:test_section() abort
+  return 'ok'
+endfunction
+call SpaceVim#layers#core#statusline#register_sections('test', function('s:test_section'))
+```
+
+之后就可以在配置文件中添加 `test` 板块，比如，在状态栏右侧最后添加：
+
+```toml
+[options]
+    statusline_right_sections = ['cursorpos', 'percentage', 'test']
+```
+
 ### 标签栏
 
 如果只有一个 Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Buffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
 
-| 快捷键       | 功能描述           |
-| ------------ | ------------------ |
-| `<Leader> 1` | 跳至标签栏序号 1   |
-| `<Leader> 2` | 跳至标签栏序号 2   |
-| `<Leader> 3` | 跳至标签栏序号 3   |
-| `<Leader> 4` | 跳至标签栏序号 4   |
-| `<Leader> 5` | 跳至标签栏序号 5   |
-| `<Leader> 6` | 跳至标签栏序号 6   |
-| `<Leader> 7` | 跳至标签栏序号 7   |
-| `<Leader> 8` | 跳至标签栏序号 8   |
-| `<Leader> 9` | 跳至标签栏序号 9   |
-| `g r`        | 跳至前一个标签序号 |
+| 快捷键       | 功能描述                                |
+| ------------ | --------------------------------------- |
+| `<Leader> 1` | 跳至标签栏序号 1                        |
+| `<Leader> 2` | 跳至标签栏序号 2                        |
+| `<Leader> 3` | 跳至标签栏序号 3                        |
+| `<Leader> 4` | 跳至标签栏序号 4                        |
+| `<Leader> 5` | 跳至标签栏序号 5                        |
+| `<Leader> 6` | 跳至标签栏序号 6                        |
+| `<Leader> 7` | 跳至标签栏序号 7                        |
+| `<Leader> 8` | 跳至标签栏序号 8                        |
+| `<Leader> 9` | 跳至标签栏序号 9                        |
+| `g r`        | 跳至前一个 Tab，常用于两个 Tab 来回切换 |
+
+**注意:** 两个缓冲区来回切换的快捷键是 `SPC Tab`，
+可阅读[缓冲区管理](#缓冲区管理)部分内容，了解更多缓冲区相关的快捷键。
 
 标签栏上也支持鼠标操作，左键可以快速切换至该标签，中键删除该标签。该特性只支持 Neovim，并且需要 `has('tablineat')` 特性。
+
+**注意:** 这一特性仅限于 Neovim 并且 `has('tablineat')` 返回 `true`。
 
 | 快捷键           | 功能描述     |
 | ---------------- | ------------ |
@@ -680,7 +728,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 会使得文件树插件比较慢，因此默认没有打开，如果需要使用这一特性，
 可向配置文件中加入 `enable_vimfiler_gitstatus = true`，启用后的截图如下：
 
-![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
+![file-tree](https://user-images.githubusercontent.com/13142418/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
 
 默认情况下文件树是在窗口的右边打开，如果需要设置文件树默认在左边，需要修改 `filetree_direction` 选项。
 需要注意的是，当设置文件树在左边时，函数列表 tagbar 将会在右边。
@@ -751,8 +799,6 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `Ctrl-b`          | 向上翻页 (`C-b` / `C-u`)       |
 | `Ctrl-e`          | 向下滚屏 (`3 Ctrl-e/j`)        |
 | `Ctrl-y`          | 向上滚屏 (`3Ctrl-y/k`)         |
-| `Ctrl-c`          | 复制当前文件绝对路径           |
-| `Ctrl-x`          | 切换窗口文件                   |
 | `Ctrl-Shift-Up`   | 向上移动当前行                 |
 | `Ctrl-Shift-Down` | 向下移动当前行                 |
 
@@ -764,20 +810,6 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `<leader> q r/` | 原生 `q /` 快捷键，打开命令行窗口 |
 | `<leader> q r?` | 原生 `q ?` 快捷键，打开命令行窗口 |
 | `<leader> q r:` | 原生 `q :` 快捷键，打开命令行窗口 |
-
-### 可视模式快捷键
-
-| 快捷键            | 功能描述                     |
-| ----------------- | ---------------------------- |
-| `<Leader> y`      | 复制选中文本至系统剪切板     |
-| `<Leader> p`      | 粘贴系统剪切板内容至当前位置 |
-| `<`               | 向左移动文本                 |
-| `>`               | 向右移动文本                 |
-| `<Tab>`           | 向左移动文本                 |
-| `Shift-<Tab>`     | 向右移动文本                 |
-| `Ctrl-Shift-Up`   | 向上移动选中行               |
-| `Ctrl-Shift-Down` | 向下移动选中行               |
-| `Ctrl-q`          | `Ctrl-w`                     |
 
 ### 命令行模式快捷键
 
@@ -798,7 +830,10 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 ### 快捷键导航
 
-当 Normal 模式下按下前缀键后出现输入延迟，则会在屏幕下方打开一个快捷键导航窗口，提示当前可用的快捷键及其功能描述，目前支持的前缀键有：`[SPC]`、`[Window]`、`<Leader>`、`g`、`z`。
+当 Normal 模式下按下前缀键后出现输入延迟，
+则会在屏幕下方打开一个快捷键导航窗口，
+提示当前可用的快捷键及其功能描述，
+目前支持的前缀键有：`[SPC]`、`[Window]`、`<Leader>`、`g`、`z`。
 
 这些前缀的按键为：
 
@@ -807,6 +842,20 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `[SPC]`    | 空格键                 | SpaceVim 默认前缀键     |
 | `[Window]` | `windows_leader` / `s` | SpaceVim 默认窗口前缀键 |
 | `<leader>` | 默认的 Vim leader 键   | Vim/Neovim 默认前缀键   |
+
+默认的 `<Leader>` 键是 `\`, 如果需要修改 `<Leader>`
+键则需要使用启动函数修改 `g:mapleader` 的值，
+比如使用逗号 `,` 作为 `<Leader>` 按键。
+
+```vim
+function! myspacevim#before() abort
+    let g:mapleader = ','
+endfunction
+```
+
+**注意：** 在函数中修改 `g:mapleader` 的值，不可以省略前缀 `g:`，
+因为函数中的变量默认作用域是 `l:`，这与 Vim 的帮助 `:h mapleader`
+有些许不一样。
 
 默认情况下，快捷键导航将在输入延迟超过 1000ms 后打开，你可以通过修改 Vim 的 `'timeoutlen'` 选项来修改成适合自己的延迟时间长度。
 
@@ -837,6 +886,35 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 使用 `<Tab>` 键或者上下方向键选择你需要的快捷键，回车将执行这一快捷键。
 
 ### 基本编辑操作
+
+#### 移动文本块
+
+| 快捷键            | 功能描述       |
+| ----------------- | -------------- |
+| `<` / `Shift-Tab` | 向左移动文本   |
+| `>` / `Tab`       | 向右移动文本   |
+| `Ctrl-Shift-Up`   | 向上移动选中行 |
+| `Ctrl-Shift-Down` | 向下移动选中行 |
+
+#### 代码缩进
+
+默认的代码缩进值是 2，缩进的大小由选项 `default_indent` 设置，
+如果希望使用 4 个空格作为缩进，只需要在 SpaceVim 配置文件中加入如下内容：
+
+```toml
+[options]
+    default_indent = 4
+```
+
+`default_indent` 这一选项的值，将被赋值到 Vim 的选项：`&tabstop`、`&softtabstop` 和
+`&shiftwidth`。默认情况下，输入的 `<Tab>` 会被自动展开成对应缩进数量的空格，
+可通过设置选项 `expand_tab` 的值为 `false` 来禁用这一特性：
+
+```toml
+[options]
+    default_indent = 4
+    expand_tab = true
+```
 
 #### 文本操作命令
 
@@ -943,6 +1021,33 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 
 **提示：** 如果你想为光标下的数字所增加的值大于 `1`，你可以使用前缀参数。例如：`10 SPC n +` 将为光标下的数字加 `10`。
 
+#### 复制粘贴
+
+如果 `has('unnamedplus')` 返回 `1`，那么快捷键 `<Leader> y` 使用的寄存器是 `+`，
+否则，这个快捷键使用的寄存器是 `*`，
+可以阅读 `:h registers` 获取更多关于寄存器相关的内容。
+
+| 快捷键       | 功能描述                     |
+| ------------ | ---------------------------- |
+| `<Leader> y` | 复制文本至系统剪切板         |
+| `<Leader> p` | 粘贴系统剪切板文字至当前位置 |
+| `<Leader> Y` | 复制文本至 pastebin          |
+
+快捷键 `<Leader< Y` 将把选中的文本复制到 pastebin 服务器，并且将返回的链接复制到系统剪切板。
+使用该功能，需要系统里有 `curl` 可执行程序（Windows 系统下，Neovim 自带 `curl`）。
+
+按下快捷键 `<Leader> Y` 后，实际执行的命令为：
+
+```
+curl -s -F "content=<-" http://dpaste.com/api/v2/
+```
+
+该命令将读取标准输入（`stdin`），并且把输入的内容复制到 dpaste 服务器，等同于：
+
+```
+echo "selected text" | curl -s -F "content=<-" http://dpaste.com/api/v2/
+```
+
 #### 增删注释
 
 注释的增删是通过插件 [nerdcommenter](https://github.com/preservim/nerdcommenter) 来实现的，
@@ -1007,8 +1112,7 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 | `[Window] x`  | 关闭当前缓冲区，并保留新的空白缓冲区 |
 | `[Window] q`  | 关闭当前缓冲区                       |
 | `[Window] Q`  | 关闭当前窗口                         |
-| `<Tab>`       | 跳至下一个窗口                       |
-| `Shift-<Tab>` | 跳至上一个窗口                       |
+| `Shift-<Tab>` | 切换至前一窗口                       |
 
 常规模式下的按键 `q` 被用来快速关闭窗口，其原生的功能可以使用 `<Leader> q r` 来代替。
 
@@ -1074,6 +1178,7 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 | `SPC w V`     | 垂直分离窗口，并切换至新窗口                       |
 | `SPC w w`     | 切换至前一窗口                                     |
 | `SPC w W`     | 选择一个窗口                                       |
+| `SPC w x`     | 切换窗口文件                                       |
 
 ### 缓冲区管理
 
@@ -1256,13 +1361,14 @@ SpaceVim 中的搜索命令以 `SPC s` 为前缀，前一个键是使用的工�
 
 下表是全部的工具键：
 
-| 工具 | 键  |
-| ---- | --- |
-| ag   | a   |
-| grep | g   |
-| ack  | k   |
-| rg   | r   |
-| pt   | t   |
+| 工具     | 键  |
+| -------- | --- |
+| ag       | a   |
+| grep     | g   |
+| git grep | G   |
+| ack      | k   |
+| rg       | r   |
+| pt       | t   |
 
 应当避免的范围和对应按键为：
 
@@ -1331,71 +1437,85 @@ endfunction
 
 #### 搜索当前文件所在的文件夹
 
-| 快捷键      | 功能描述                                                    |
-| ----------- | ----------------------------------------------------------- |
-| `SPC s d`   | searching in buffer directory with default tool             |
-| `SPC s D`   | searching in buffer directory cursor word with default tool |
-| `SPC s a d` | searching in buffer directory with ag                       |
-| `SPC s a D` | searching in buffer directory cursor word with ag           |
-| `SPC s g d` | searching in buffer directory with grep                     |
-| `SPC s g D` | searching in buffer directory cursor word with grep         |
-| `SPC s k d` | searching in buffer directory with ack                      |
-| `SPC s k D` | searching in buffer directory cursor word with ack          |
-| `SPC s r d` | searching in buffer directory with rg                       |
-| `SPC s r D` | searching in buffer directory cursor word with rg           |
-| `SPC s t d` | searching in buffer directory with pt                       |
-| `SPC s t D` | searching in buffer directory cursor word with pt           |
+以下快捷键为搜索当前文件所在的文件夹，比如，当正在编辑文件`src/util/help.c`时，
+以下这些快捷键搜索的位置为`src/util/`文件夹内的内容。
+
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
+| `SPC s d`   | 使用默认的搜索工具进行搜索       |
+| `SPC s D`   | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a d` | 使用`ag`进行搜索                 |
+| `SPC s a D` | 使用`ag`搜索光标下的词           |
+| `SPC s g d` | 使用`grep`进行搜索               |
+| `SPC s g D` | 使用`grep`搜索光标下的词         |
+| `SPC s k d` | 使用`ack`进行搜索                |
+| `SPC s k D` | 使用`ack`搜索光标下的词          |
+| `SPC s r d` | 使用`rg`进行搜索                 |
+| `SPC s r D` | 使用`rg`搜索光标下的词           |
+| `SPC s t d` | 使用`pt`进行搜索                 |
+| `SPC s t D` | 使用`pt`搜索光标下的词           |
 
 #### 在所有打开的缓冲区中进行搜索
 
-| 快捷键      | 功能描述                                            |
-| ----------- | --------------------------------------------------- |
-| `SPC s b`   | search with the first found tool                    |
-| `SPC s B`   | search with the first found tool with default input |
-| `SPC s a b` | ag                                                  |
-| `SPC s a B` | ag with default input                               |
-| `SPC s g b` | grep                                                |
-| `SPC s g B` | grep with default input                             |
-| `SPC s k b` | ack                                                 |
-| `SPC s k B` | ack with default input                              |
-| `SPC s r b` | rg                                                  |
-| `SPC s r B` | rg with default input                               |
-| `SPC s t b` | pt                                                  |
-| `SPC s t B` | pt with default input                               |
+以下快捷键为搜索已经打开的文件列表，搜索的目标位置仅限于已经在 Vim 中打开的文件列表。
+在 Vim 中，可以使用命令`:ls`查看已经打开的文件列表。
+
+如若已经载入了模糊搜索的模块，则可以使用快捷键`SPC b b`查看已打开的文件。
+
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
+| `SPC s b`   | 使用默认的搜索工具进行搜索       |
+| `SPC s B`   | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a b` | 使用`ag`进行搜索                 |
+| `SPC s a B` | 使用`ag`搜索光标下的词           |
+| `SPC s g b` | 使用`grep`进行搜索               |
+| `SPC s g B` | 使用`grep`搜索光标下的词         |
+| `SPC s k b` | 使用`ack`进行搜索                |
+| `SPC s k B` | 使用`ack`搜索光标下的词          |
+| `SPC s r b` | 使用`rg`进行搜索                 |
+| `SPC s r B` | 使用`rg`搜索光标下的词           |
+| `SPC s t b` | 使用`pt`进行搜索                 |
+| `SPC s t B` | 使用`pt`搜索光标下的词           |
 
 #### 在任意目录中进行搜索
 
-| 快捷键      | 功能描述                                            |
-| ----------- | --------------------------------------------------- |
-| `SPC s f`   | search with the first found tool                    |
-| `SPC s F`   | search with the first found tool with default input |
-| `SPC s a f` | ag                                                  |
-| `SPC s a F` | ag with default text                                |
-| `SPC s g f` | grep                                                |
-| `SPC s g F` | grep with default text                              |
-| `SPC s k f` | ack                                                 |
-| `SPC s k F` | ack with default text                               |
-| `SPC s r f` | rg                                                  |
-| `SPC s r F` | rg with default text                                |
-| `SPC s t f` | pt                                                  |
-| `SPC s t F` | pt with default text                                |
+以下快捷用于指定搜索目录具体文件夹位置，比如需要去搜索非当前项目下的一些文件。
+按下快捷键后，首先提示的是输入搜索词，之后提示输入搜索的目录地址。
+
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
+| `SPC s f`   | 使用默认的搜索工具进行搜索       |
+| `SPC s F`   | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a f` | 使用`ag`进行搜索                 |
+| `SPC s a F` | 使用`ag`搜索光标下的词           |
+| `SPC s g f` | 使用`grep`进行搜索               |
+| `SPC s g F` | 使用`grep`搜索光标下的词         |
+| `SPC s k f` | 使用`ack`进行搜索                |
+| `SPC s k F` | 使用`ack`搜索光标下的词          |
+| `SPC s r f` | 使用`rg`进行搜索                 |
+| `SPC s r F` | 使用`rg`搜索光标下的词           |
+| `SPC s t f` | 使用`pt`进行搜索                 |
+| `SPC s t F` | 使用`pt`搜索光标下的词           |
 
 #### 在工程中进行搜索
 
-| 快捷键              | 功能描述                                            |
-| ------------------- | --------------------------------------------------- |
-| `SPC /` / `SPC s p` | search with the first found tool                    |
-| `SPC *` / `SPC s P` | search with the first found tool with default input |
-| `SPC s a p`         | ag                                                  |
-| `SPC s a P`         | ag with default text                                |
-| `SPC s g p`         | grep                                                |
-| `SPC s g p`         | grep with default text                              |
-| `SPC s k p`         | ack                                                 |
-| `SPC s k P`         | ack with default text                               |
-| `SPC s t p`         | pt                                                  |
-| `SPC s t P`         | pt with default text                                |
-| `SPC s r p`         | rg                                                  |
-| `SPC s r P`         | rg with default text                                |
+以下这些快捷键是用于搜索整个工程目录的，搜索的文件夹位置为当前文件所在的项目根目录。
+项目的根目录默认会自动检测识别，主要是依据`project_rooter_patterns`选项设定。
+
+| 快捷键      | 功能描述                         |
+| ----------- | -------------------------------- |
+| `SPC s p`   | 使用默认的搜索工具进行搜索       |
+| `SPC s P`   | 使用默认的搜索工具搜索光标下的词 |
+| `SPC s a p` | 使用`ag`进行搜索                 |
+| `SPC s a P` | 使用`ag`搜索光标下的词           |
+| `SPC s g p` | 使用`grep`进行搜索               |
+| `SPC s g P` | 使用`grep`搜索光标下的词         |
+| `SPC s k p` | 使用`ack`进行搜索                |
+| `SPC s k P` | 使用`ack`搜索光标下的词          |
+| `SPC s r p` | 使用`rg`进行搜索                 |
+| `SPC s r P` | 使用`rg`搜索光标下的词           |
+| `SPC s t p` | 使用`pt`进行搜索                 |
+| `SPC s t P` | 使用`pt`搜索光标下的词           |
 
 **提示**: 在工程中进行搜索的话，无需提前打开文件。在工程保存目录中使用 `SPC p p` 和　`C-s`，就比如 `SPC s p`。(TODO)
 
@@ -1435,24 +1555,24 @@ endfunction
 
 #### 实时代码检索
 
-| 快捷键      | 功能描述                         |
-| ----------- | -------------------------------- |
-| `SPC s g G` | 在工程中使用默认工具实时检索代码 |
+| 快捷键    | 功能描述                         |
+| --------- | -------------------------------- |
+| `SPC s /` | 在工程中使用默认工具实时检索代码 |
 
-FlyGrep 缓冲区的按键绑定：
+Flygrep 搜索窗口结果窗口内的常用快捷键：
 
-| 快捷键              | 功能描述                          |
-| ------------------- | --------------------------------- |
-| `<Esc>`             | close FlyGrep buffer              |
-| `<Enter>`           | open file at the cursor line      |
-| `<Tab>`             | move cursor line down             |
-| `Shift-<Tab>`       | move cursor line up               |
-| `<Backspace>`       | remove last character             |
-| `Ctrl-w`            | remove the Word before the cursor |
-| `Ctrl-u`            | remove the Line before the cursor |
-| `Ctrl-k`            | remove the Line after the cursor  |
-| `Ctrl-a` / `<Home>` | Go to the beginning of the line   |
-| `Ctrl-e` / `<End>`  | Go to the end of the line         |
+| 快捷键              | 功能描述               |
+| ------------------- | ---------------------- |
+| `<Esc>`             | 关闭搜索窗口           |
+| `<Enter>`           | 打开当前选中的文件位置 |
+| `<Tab>`             | 选中下一行文件位置     |
+| `Shift-<Tab>`       | 选中上一行文件位置     |
+| `<Backspace>`       | 删除上一个输入字符     |
+| `Ctrl-w`            | 删除光标前的单词       |
+| `Ctrl-u`            | 删除光标前所有内容     |
+| `Ctrl-k`            | 删除光标后所有内容     |
+| `Ctrl-a` / `<Home>` | 将光标移至行首         |
+| `Ctrl-e` / `<End>`  | 将光标移至行尾         |
 
 #### 保持高亮
 
@@ -1648,8 +1768,31 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 ### 工程管理
 
-SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当发现一个 `.git` 目录或
-在文件树中发现 `.project_alt.json` 文件后 vim-rooter 会自动找到项目的根目录。
+当打开一个文件时，SpaceVim 会自动切换当前目录至包含该文件的项目根目录，
+项目根目录的检测依据 `project_rooter_patterns` 这一选项，其默认值为：
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+```
+
+项目管理器默认自动检测最外层的项目根目录，如果需要自动检测最内层的项目根目录，
+可将选项 `project_rooter_outermost` 选项改为 `false`。
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+    project_rooter_outermost = false
+```
+
+在自动检测项目根目录时，有时候我们需要忽略掉一些目录，可以表达式前面添加 `!`，
+比如，忽略掉 `node_packages/` 文件夹：
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/', '!node_packages/']
+    project_rooter_outermost = false
+```
 
 工程管理的命令以 `p` 开头：
 
@@ -1664,7 +1807,6 @@ SpaceVim 中的工程通过 vim-projectionisst 和 vim-rooter 进行管理。当
 | `SPC p f` | 在当前工程中查找文件     |
 | `SPC p /` | 在当前工程中搜索文本内容 |
 | `SPC p k` | 关闭当前工程的所有缓冲区 |
-| `SPC p t` | 自动查找工程根目录       |
 | `SPC p p` | 显示所有工程             |
 
 #### 自定义跳转文件
@@ -1717,11 +1859,10 @@ endfunction
 通过内置的任务管理系统，可以快速集成外部命令工具，类似于 vscode 的任务管理系统，
 支持项目局部配置文件(`.SpaceVim.d/tasks.toml`)和全局配置文件(`~/.SpaceVim.d/tasks.toml`)，项目局部配置文件具有更高的优先权：
 
-| 快捷键 | 功能描述             |
-| ------------ | ----------------------------- |
-| `SPC p t e`  | 编辑任务配置文件 |
-| `SPC p t r`  | 选定任务并执行            |
-
+| 快捷键      | 功能描述         |
+| ----------- | ---------------- |
+| `SPC p t e` | 编辑任务配置文件 |
+| `SPC p t r` | 选定任务并执行   |
 
 #### 任务自动识别
 
@@ -1737,11 +1878,9 @@ SpaceVim 目前支持自动识别以下构建系统的任务：npm。
 任务提供源可以自动检测并新建任务。例如，一个任务提供源可以自动检测是否存在项目构建文件，比如：`package.json`，
 如果存在则根据其内容创建 npm 的构建任务。
 
-
 在 SpaceVim 里，如果需要新建任务提供源，需要使用启动函数，任务提供源是一个 Vim 函数，该函数返回一系列任务对象。
 
 以下为一个简单的示例：
-
 
 ```vim
 function! s:make_tasks() abort
@@ -1774,7 +1913,6 @@ call SpaceVim#plugins#tasks#reg_provider(funcref('s:make_tasks'))
 将以上内容加入启动函数，在 SpceVim 仓库内按下 `SPC p t r` 快捷键，将会展示如下任务：
 
 ![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
-
 
 #### 自定义任务
 
@@ -2007,6 +2145,5 @@ export PATH=$PATH:$HOME/.SpaceVim/bin
 使用命令 `svc` 在一个已存在的 Vim 服务器上打开文件，使用命令 `nsvc` 在一个已存在的 Neovim 服务器上打开文件。
 
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
-
 
 <!-- vim:set nowrap cole=0: -->

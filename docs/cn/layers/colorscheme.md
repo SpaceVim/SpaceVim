@@ -64,7 +64,7 @@ colorscheme 模块为 SpaceVim 提供了一系列常用的颜色主题，默认�
 
 # 添加自定义主题：https://github.com/mhartington/oceanic-next
 [[custom_plugins]]
-  name = "mhartington/oceanic-next"
+  repo = "mhartington/oceanic-next"
   merged = 0
 ```
 

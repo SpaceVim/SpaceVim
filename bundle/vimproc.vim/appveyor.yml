@@ -1,0 +1,45 @@
+---
+version: '{build}'
+shallow_clone: true
+environment:
+  global:
+    AUTH_TOKEN:
+      secure: rKd6JLXUIl3vcA8d0S9w14bl+uvUlZLt0d1M8bmlOh+owQqr5c40+/4ITCNBpHG3
+  matrix:
+  - COMPILER: msvc
+    CPU: i386
+    ENV: /x86
+    BIT: 32
+  - COMPILER: msvc
+    CPU: AMD64
+    ENV: /x64
+    BIT: 64
+  - COMPILER: cygwin
+    BIT: 32
+  - COMPILER: cygwin
+    BIT: 64
+  - COMPILER: msys2
+    MSYS2_ARCH: i686
+    MSYS2_DIR: msys64
+    MSYSTEM: MINGW32
+    BIT: 32
+  - COMPILER: msys2
+    MSYS2_ARCH: x86_64
+    MSYS2_DIR: msys64
+    MSYSTEM: MINGW64
+    BIT: 64
+build_script:
+  - '%APPVEYOR_BUILD_FOLDER%\tools\appveyor.bat'
+test_script:
+  - '%APPVEYOR_BUILD_FOLDER%\tools\appveyor.bat test'
+artifacts:
+  - path: lib/vimproc_*.dll
+    name: vimproc.dll
+deploy:
+  provider: GitHub
+  description: vimproc
+  auth_token:
+    secure: rKd6JLXUIl3vcA8d0S9w14bl+uvUlZLt0d1M8bmlOh+owQqr5c40+/4ITCNBpHG3
+  on:
+    appveyor_repo_tag: true
+    COMPILER: msvc

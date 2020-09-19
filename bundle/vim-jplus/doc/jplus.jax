@@ -1,0 +1,295 @@
+*jplus.txt*	特定の文字を挿入して行の結合を行います。
+
+==============================================================================
+目次						*jplus-contents*
+
+概要				|jplus-introduction|
+使い方				|jplus-usage|
+インターフェース		|jplus-interface|
+  マッピング			  |jplus-mapping|
+設定				|jplus-setting|
+  変数				  |jplus-variables|
+FAQ				|jplus-FAQ|
+
+
+==============================================================================
+概要						*jplus-introduction*
+
+*jplus* は行を結合する際に挿入する文字を入力して行の結合を行う。
+
+before: >
+	aaa
+	bbb
+	ccc
+<
+
+↓↓↓ <Plug>(jplus-getchar)+ ↓↓↓
+
+after: >
+	aaa+bbb+ccc
+<
+
+また、行継続のワード（\ など）を削除して行結合を行います。
+
+before: >
+	" filetype=vim
+	let = aaa
+	\   + bbb
+	\   + ccc
+<
+
+↓↓↓ <Plug>(jplus) ↓↓↓
+
+after: >
+	let = aaa + bbb + ccc
+<
+
+
+==============================================================================
+使い方						*jplus-usage*
+
+任意のキーにマッピングして使用します。
+
+>
+	" J の挙動を jplus.vim で行う
+	nmap J <Plug>(jplus)
+	vmap J <Plug>(jplus)
+
+	" getchar() を使用して挿入文字を入力します
+	nmap <Leader>J <Plug>(jplus-getchar)
+	vmap <Leader>J <Plug>(jplus-getchar)
+
+	" <Plug>(jplus-getchar) 時に左右に空白文字を入れたい場合
+	" %d は入力した結合文字に置き換えられる
+	let g:jplus#config = {
+	\	"_" : {
+	\		"delimiter_format" : ' %d '
+	\	}
+	\}
+
+	" input() を使用したい場合はこちらを使用して下さい
+	" nmap <Leader>J <Plug>(jplus-input)
+	" vmap <Leader>J <Plug>(jplus-input)
+<
+
+
+==============================================================================
+インターフェース				*jplus-interface*
+
+------------------------------------------------------------------------------
+マッピング					*jplus-mapping*
+
+<Plug>(jplus)					*<Plug>(jplus)*
+	|J| と同様に行の結合を行います。
+	また、行継続が行われている場合はそのキーワード（行末の \ 文字など）を
+	自動的に削除して結合します。
+	この削除機能は下記の 'filetype' が対応しています。
+
+	"bash"
+	"c"
+	"cpp"
+	"ruby"
+	"python"
+	"vim"
+	"zsh"
+
+	この時に |g:jplus#config| などに設定された |jplus-config| を参照します。
+	詳しくは |jplus-config-priority| を参照してください。
+
+<Plug>(jplus-getchar)				*<Plug>(jplus-getchar)*
+	|<Plug>(jplus)| と同等の設定ですが、呼び出し時に挿入文字を入力して行の
+	結合を行います。
+	挿入文字の入力には |getchar()| が使用されます。
+	また、この時に |g:jplus#input_config| などの設定を参照します。
+	詳しくは ||jplus-config-priority|| を参照してください。
+
+<Plug>(jplus-getchar-with-space)		*<Plug>(jplus-getchar-with-space)*
+	|<Plug>(jplus-getchar)| と同様の動作ですが、挿入文字の左右にスペー
+	スを挿入します。
+	これは ||g:jplus#input_config|| の設定よりも優先します。
+
+<Plug>(jplus-input)				*<Plug>(jplus-input)*
+	|<Plug>(jplus-getchar)| と同等の動作ですが、|input()|
+	を使用して入力を行います.
+
+<Plug>(jplus-input-with-space)			*<Plug>(jplus-input-with-space)*
+	|<Plug>(jplus-input)| と同様の動作ですが、挿入文字の左右にスペー
+	スを挿入します。
+	これは ||g:jplus#input_config|| の設定よりも優先します。
+
+
+==============================================================================
+設定						*jplus-setting*
+
+------------------------------------------------------------------------------
+変数						*jplus-variables*
+
+g:jplus#config					*g:jplus#config*
+	'filetype' をキーとした設定を記述します。
+	"_" をキーとした場合はデフォルトの設定として使用します。
+	この設定は |<Plug>(jplus)| などのキーマッピングを使用した場合に参照さ
+	れます。
+	各 'filetype' ごとに設定するフォーマットは |jplus-config| を参照して
+	ください。
+
+	NOTE: |<Plug>(jplus-getchar)| などで入力した区切り文字は |g:jplus#config|
+	で設定した |jplus-config-delimiter| よりも優先されます。
+
+|g:jplus#default_config|			*g:jplus#default_config*
+	|g:jplus#config| と同等の設定です。
+	この変数はプラグイン内のデフォルト値として使用され、通常はユーザが
+	書き換えることはありません。
+
+g:jplus#input_config				*g:jplus#input_config*
+	|<Plug>(jplus-getchar)| や |<Plug>(jplus-input)| で参照される
+	|jplus-config| の設定です。
+	入力された区切り文字をキーとした辞書を設定します.
+	入力された区切り文字によって設定を変えたい場合に使用します。
+	また、キーにはいくつか特別な意味を持つ単語を設定する事ができます。
+
+	"__DEFAULT__"  : デフォルトの設定として使用
+	"__EMPTY__"    : 区切り文字の入力がなかった場合に使用
+
+Example: >
+	" デフォルトでは結合文字の左右に " " をつける
+	" 入力がなかった場合はスペースを挿入しないで結合する
+	" , で結合する場合は ", " で結合する
+	let g:jplus#input_config = {
+\		"__DEFAULT__" : {
+\			"delimiter_format" : " %d "
+\		},
+\		"__EMPTY__" : {
+\			"delimiter_format" : "%d"
+\		},
+\		"," : {
+\			"delimiter_format" : "%d "
+\		}
+\	}
+<
+
+
+==============================================================================
+jplus-config					*jplus-config*
+
+行結合時に使用される設定のフォーマットです。
+設定名をキーとして辞書形式で設定を行います。
+|g:jplus#config| などに設定して使用します。
+
+Example: >
+	" filetype=vim でコメント行は結合しない（削除される）
+	let g:jplus#config = {
+	\	"vim" : {
+	\		"ignore_pattern" : '^\s*"'
+	\	}
+	\}
+<
+
+- "delimiter"					*jplus-config-delimiter*
+	結合時に使用する区切り文字です。
+
+	Default: " "
+
+- "delimiter_format"				*jplus-config-delimiter_format*
+	区切り文字のフォーマットです。
+	文字列内の "%d" が "delimiter" 文字に置き換えられます。
+
+	Default: "%d"
+
+
+- "ignore_pattern"				*jplus-config-ignore_pattern*
+	結合を行わない行のパターンです。
+	このパターンにマッチした行は結合される削除されます。
+	また、空の文字列が設定されている場合はすべての行にマッチします。
+
+	Default: ""
+
+- "left_matchstr_pattern"		*jplus-config-left_matchstr_pattern*
+	行結合する際に左辺に適用される |matchstr()| の {pat} の値です。
+	任意の文字列のみを結合する場合に使用します。
+	また、複数行を結合する場合は、1行結合する毎に |matchstr()| が
+	適用されます。
+
+	Default: '.*'
+
+- "right_matchstr_pattern"		*jplus-config-right_matchstr_pattern*
+	|jplus-config-left_matchstr_pattern| と同等の機能ですが、行結合時の
+	右辺に適用されるパターンになります。
+	デフォルトでは "行頭のスペースを削除する" パターンが設定されていま
+	す。
+
+	Default: '\s*\zs.*'
+
+
+
+------------------------------------------------------------------------------
+設定の優先順位					*jplus-config-priority*
+
+|<Plug>(jplus)| 時に使用される |jplus-config| の優先順位は以下になります。
+
+1. |g:jplus#default_config| の '_'
+2. |g:jplus#config| の '_'
+3. |g:jplus#default_config| の現在の 'filetype'
+4. |g:jplus#config| の現在の 'filetype'
+
+1. の優先順位が一番低く、4. に優先順位の高い設定を行います。
+
+
+|<Plug>(jplus-getchar)| と |<Plug>(jplus-input)| 時に使用される |jplus-config|
+の優先順位は以下になります。
+
+1. |g:jplus#default_config| の '_'
+2. |g:jplus#config| の '_'
+3. |g:jplus#input_config| の '__DEFAULT__'
+4. |g:jplus#default_config| の現在の 'filetype'
+5. |g:jplus#config| の現在の 'filetype'
+6. { "delimiter" : {入力された区切り文字} }
+7. |g:jplus#input_config| の入力された区切り文字
+
+1. の優先順位が一番低くなります。
+入力された区切り文字を設定で変更した場合は
+g:jplus#input_config[{入力された文字列}].delimiter
+に対して設定します。
+
+
+==============================================================================
+FAQ						*jplus-FAQ*
+
+Q. 行結合時に先頭のスペースを削除したくない
+
+A. |g:jplus#config| に |jplus-config-right_matchstr_pattern|  を設定します。
+>
+	" right_matchstr_pattern にすべての文字列を適用するようなパターンを設定する
+	" "_" はすべての filetype で使用される設定
+	let g:jplus#config = {
+	\	"_" : {
+	\		"matchstr_pattern" : '\s*\\\s*\zs.*\|\s*\zs.*'
+	\	}
+	\}
+<
+
+Q. コメントアウトされている行を結合しない
+
+A. |g:jplus#config| に |jplus-config-ignore_pattern|  を設定します。
+>
+	" filetype=vim 時の設定
+	let g:jplus#config = {
+	\	"vim" : {
+	\		"ignore_pattern" : '^\s*"'
+	\	}
+	\}
+
+
+Q.  |<Plug>(jplus-getchar)| 等で "," を入力した場合に ", " で結合したい。
+
+A. |g:jplus#input_config| に "," 時の設定を追加します。
+>
+	let g:jplus#input_config = {
+	\	"," : {
+	\		"delimiter_format" : " %d "
+	\	}
+	\}
+<
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

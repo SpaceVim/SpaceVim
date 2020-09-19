@@ -9,10 +9,11 @@ export LC_ALL=C
 git fetch origin master:master
 
 if [ "${LINT#vimlint}" != "$LINT" ]; then
-    git clone --depth=1 https://github.com/syngan/vim-vimlint /tmp/vimlint
+    git clone --depth=1 https://github.com/wsdjeg/vim-vimlint /tmp/vimlint
     git clone --depth=1 https://github.com/ynkdir/vim-vimlparser /tmp/vimlparser
 elif [ "${LINT#vint}" != "$LINT" ]; then
-    pip install vim-vint pathlib enum34 typing
+    pip install --pre vim-vint pathlib enum34 typing
+    vint --version
 elif [ "${LINT#vader}" != "$LINT" ]; then
     if [[ ! -d "$HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim" ]]; then
         git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim

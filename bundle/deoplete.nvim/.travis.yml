@@ -1,0 +1,22 @@
+dist: xenial
+
+language: python
+
+python:
+  - 3.6
+  - 3.7
+
+install:
+  - eval "$(curl -Ss https://raw.githubusercontent.com/neovim/bot-ci/master/scripts/travis-setup.sh) nightly-x64"
+  - make install
+
+env:
+  global:
+    - PATH=$HOME/neovim/bin:$PATH
+    - PYTEST_ADDOPTS=--cov rplugin/python3/deoplete
+
+script:
+  - make --keep-going test lint
+  - coverage report -m --skip-covered
+  - coverage xml
+  - bash <(curl -s https://codecov.io/bash) -X gcov -X coveragepy -X fix -X search -X xcode -f coverage.xml

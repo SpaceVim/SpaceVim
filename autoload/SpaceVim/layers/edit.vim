@@ -1,6 +1,6 @@
 "=============================================================================
 " edit.vim --- SpaceVim edit layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -15,28 +15,28 @@ let s:VIM = SpaceVim#api#import('vim')
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
-        \ ['tpope/vim-surround'],
-        \ ['tpope/vim-repeat'],
-        \ ['junegunn/vim-emoji'],
-        \ ['terryma/vim-expand-region', { 'loadconf' : 1}],
-        \ ['kana/vim-textobj-user'],
-        \ ['kana/vim-textobj-indent'],
-        \ ['kana/vim-textobj-line'],
-        \ ['dhruvasagar/vim-table-mode'],
-        \ ['kana/vim-textobj-entire'],
-        \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
-        \ ['easymotion/vim-easymotion'],
-        \ ['haya14busa/vim-easyoperator-line'],
-        \ ['editorconfig/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
-        \ ['osyo-manga/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
-        \ ['godlygeek/tabular',           { 'merged' : 0}],
-        \ ['ntpeters/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-surround'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-repeat'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-emoji'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-expand-region', { 'loadconf' : 1}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-user'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-indent'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-line'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-table-mode'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-entire'],
+        \ [g:_spacevim_root_dir . 'bundle/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-easymotion'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-easyoperator-line'],
+        \ [g:_spacevim_root_dir . 'bundle/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
+        \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
         \ ]
   if executable('fcitx')
-    call add(plugins,['lilydjwg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
   endif
   if g:spacevim_enable_bepo_layout
-    call add(plugins,['michamos/vim-bepo',        { 'merged' : 0}])
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-bepo',        { 'merged' : 0}])
   endif
   return plugins
 endfunction
@@ -114,7 +114,7 @@ function! SpaceVim#layers#edit#config() abort
         \ 'change symbol style to under_score', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'U'], 'silent call call('
         \ . string(s:_function('s:up_case')) . ', [])',
-        \ 'change symbol style to UP_CACE', 1)
+        \ 'change symbol style to UP_CASE', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'k'], 'silent call call('
         \ . string(s:_function('s:kebab_case')) . ', [])',
         \ 'change symbol style to kebab-case', 1)
@@ -307,6 +307,9 @@ endfunction
 
 function! s:lowerCamelCase() abort
   " fooFzz
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+    return
+  endif
   let cword = s:parse_symbol(expand('<cword>'))
   if !empty(cword)
     let rst = [cword[0]]
@@ -324,6 +327,9 @@ endfunction
 
 function! s:UpperCamelCase() abort
   " FooFzz
+  if strcharpart(getline('.')[col('.') - 1:], 0, 1) =~ '\s'
+    return
+  endif
   let cword = s:parse_symbol(expand('<cword>'))
   if !empty(cword)
     let rst = map(cword, "substitute(v:val, '^.', '\\u&', 'g')")
@@ -338,6 +344,9 @@ endfunction
 
 function! s:kebab_case() abort
   " foo-fzz
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+    return
+  endif
   let cword = s:parse_symbol(expand('<cword>'))
   if !empty(cword)
     let save_register = @k
@@ -364,6 +373,9 @@ endfunction
 
 function! s:up_case() abort
   " FOO_FZZ
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+    return
+  endif
   let cword =map(s:parse_symbol(expand('<cword>')), 'toupper(v:val)')
   if !empty(cword)
     let save_register = @k

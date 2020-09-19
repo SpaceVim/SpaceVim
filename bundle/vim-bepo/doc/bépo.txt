@@ -1,0 +1,175 @@
+*bépo.txt*  Plugin pour la disposition de clavier bépo
+
+Auteur: Micha Moskovic
+Licence: licence MIT
+
+Ce plugin n’est disponible que si 'compatible' n’est pas activé
+
+
+INTRODUCTION                                    *bépo*
+
+Ce plugin redéfinit les touches pour adapter Vim à la disposition de clavier
+bépo (voir http://www.bepo.fr pour plus d’informations). Le nombre de touches
+redéfinies est volontairement minimal: au lieu de redéfinir tout le clavier
+pour que chaque touche envoie la touche QWERTY correspondante, seules sont
+redéfinies les touches de directions, quelques touches difficiles d’accès et
+leurs conséquences.
+
+
+MAPPINGS                                        *bépo-mappings*
+
+Cette section reprend chacune des touches du clavier bépo ayant une
+définition différente grâce à ce plugin et leur fonction correspondante.
+
+Touche                  Fonction~
+                                                *bépo-c*
+c                       Voir |h|.
+                                                *bépo-t*
+t                       Voir |j|.
+                                                *bépo-s*
+s                       Voir |k|.
+                                                *bépo-r*
+r                       Voir |l|.
+                                                *bépo-C*
+C                       Voir |H|.
+                                                *bépo-T*
+T                       Voir |J|.
+                                                *bépo-S*
+S                       Voir |K|.
+                                                *bépo-R*
+R                       Voir |L|.
+                                                *bépo-gt*
+gt                      Voir |gj|.
+                                                *bépo-gs*
+gs                      Voir |gk|.
+                                                *bépo-zt*
+zt                      Voir |zj|.
+                                                *bépo-zs*
+zs                      Voir |zk|.
+                                                *bépo-h*
+h                       Voir |t|.
+                                                *bépo-H*
+H                       Voir |T|.
+                                                *bépo-l*
+l                       Voir |c|.
+                                                *bépo-L*
+L                       Voir |C|.
+                                                *bépo-j*
+j                       Voir |r|.
+                                                *bépo-J*
+J                       Voir |R|.
+                                                *bépo-k*
+k                       Voir |s|.
+                                                *bépo-K*
+K                       Voir |S|.
+                                                *bépo-gb*
+gb                      Voir |gT|.
+                                                *bépo-gé*
+gé                      Voir |gt|.
+                                                *bépo-gB*
+gB                      Va à la première |tabpage|.
+                                                *bépo-gÉ*
+gÉ                      Va à la dernière |tabpage|.
+                                                *bépo-gT*
+gT                      Voir |ctrl-]|.
+                                                *bépo-«*
+«                       Voir |<|.
+                                                *bépo-»*
+»                       Voir |>|.
+                                                *bépo-;*
+;                       Voir |,|.
+                                                *bépo-,*
+,                       Voir |;|.
+                                                *bépo-g;*
+g;                      Voir |g,|.
+                                                *bépo-g,*
+g,                      Voir |g;|.
+                                                *bépo-é*
+é                       Voir |w|.
+                                                *bépo-É*
+É                       Voir |W|.
+                                                *bépo-aé*
+aé                      Voir |aw|.
+                                                *bépo-aÉ*
+aÉ                      Voir |aW|.
+                                                *bépo-ié*
+ié                      Voir |iw|.
+                                                *bépo-iÉ*
+iÉ                      Voir |iW|.
+                                                *bépo-w*
+w                       Voir |CTRL-W|.
+                                                *bépo-W*
+W                       Voir |CTRL-W_w|.
+                                                *bépo-wc*
+wc                      Voir |CTRL-W_h|.
+                                                *bépo-wt*
+wt                      Voir |CTRL-W_j|.
+                                                *bépo-ws*
+ws                      Voir |CTRL-W_k|.
+                                                *bépo-wr*
+wr                      Voir |CTRL-W_l|.
+                                                *bépo-wC*
+wC                      Voir |CTRL-W_H|.
+                                                *bépo-wT*
+wT                      Voir |CTRL-W_J|.
+                                                *bépo-wS*
+wS                      Voir |CTRL-W_K|.
+                                                *bépo-wR*
+wR                      Voir |CTRL-W_L|.
+                                                *bépo-wh*
+wh                      Voir |CTRL-W_s|.
+                                                *bépo-wé*
+wé                      Voir |CTRL-W_t|.
+                                                *bépo-wÉ*
+wÉ                      Voir |CTRL-W_T|.
+
+Si le plugin |surround| est présent,
+                                                *bépo-ls*
+ls                      Voir |cs|.
+                                                *bépo-lS*
+Ls                      Voir |cS|.
+
+Dans un buffer |netrw|, les touches de direction verticales fonctionnent
+normalement et de plus,
+                                                *bépo-netrw-k*
+k                       Voir |netrw-s|.
+
+
+Dans un buffer |:Gstatus| du plugin |fugitive|, les touches de direction
+fonctionnent normalement, et:
+                                                *bépo-fugitive-k*
+k                      Voir |fugitive_s|
+
+PLUGINS                                         *bépo-plugins*
+
+De nombreux plugins redéfinissent les touches de navigation mais offrent des
+possibilités de configuration pour y remédier. La liste suivante reprend pour
+différents plugins ce qu’il faut ajouter au fichier |vimrc| pour avoir une bon
+fonctionnement avec la diposition bépo.
+
+- |gundo| >
+    let g:gundo_map_move_older="t"
+    let g:gundo_map_move_newer="s"
+<
+- |tagbar| >
+    let g:tagbar_map_togglesort="k"
+<
+- |UltiSnips| >
+    let g:UltiSnipsJumpForwardTrigger="<C-t>"
+    let g:UltiSnipsJumpBackwardTrigger="<C-s>"
+
+- vim-|exchange| >
+    nmap lx <Plug>(Exchange)
+    xmap X <Plug>(Exchange)
+    nmap lxc <Plug>(ExchangeClear)
+    nmap lxx <Plug>(ExchangeLine)
+<
+- vim-|commentary| >
+    xmap gc  <Plug>Commentary
+    nmap gc  <Plug>Commentary
+    omap gc  <Plug>Commentary
+    nmap gcc <Plug>Commentary_
+    nmap gcu <Plug>Commentary<Plug>Commentary
+<
+
+vim:tw=78:ts=8:ft=help:norl:

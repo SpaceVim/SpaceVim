@@ -1,5 +1,5 @@
 ---
-title: "web#http api"
+title: "web#http API"
 description: "web#http API provides some basic functions and values for http request"
 ---
 

@@ -1,0 +1,117 @@
+snippet     mot
+abbr        module signature
+options     head
+    module type ${1} = sig
+      ${2:TARGET}
+    end
+
+snippet     mod
+abbr        module struct
+options     head
+    module ${1} = struct
+      ${2:TARGET}
+    end
+
+snippet     mos
+abbr        module signature
+options     head
+    module ${1} : sig
+      ${2:TARGET}
+    end
+
+snippet     cc
+abbr        comment
+    (* ${0:TARGET} *)
+
+snippet     Cc
+abbr        multi line comment
+    (*
+       ${0:TARGET}
+    *)
+
+snippet     oo
+abbr        ocamldoc comment (** .. *)
+    (** ${0:TARGET} *)
+
+snippet     if
+abbr        if..then..else
+    if ${1:TARGET}
+    then ${2}
+    else ${3}
+
+snippet     let
+abbr        let..in
+    let ${1:TARGET} in ${0}
+
+snippet     letr
+abbr        let rec .. in
+options     head
+    let rec ${1:TARGET}
+    in ${0}
+
+snippet     match
+abbr        match
+    match ${1:TARGET} with
+    | ${2} -> ${0}
+
+snippet     obj
+abbr        object
+    object
+      ${0:TARGET}
+    end
+
+snippet     try
+abbr        try..with
+    try ${1:TARGET}
+    with ${0}
+
+snippet     lopen
+abbr        let open .. in
+options     head
+    let open ${1} in
+    ${2:TARGET}
+
+snippet     for
+abbr        for i=x..y do; ... done
+options     head
+    for ${1:i} = ${2:0} to ${3:10} do
+      ${0:TARGET}
+    done
+
+snippet     while
+abbr        while ... do; ... done
+options     head
+    while ${1:true} do
+      ${2:TARGET}
+    done
+
+snippet     fun
+abbr        (fun x -> ...)
+    (fun ${1:x} -> ${2:TARGET})
+
+snippet     arl
+abbr        array literal [| |]
+    [| ${0:TARGET} |]
+
+snippet     fail
+abbr        failwith "..."
+    failwith "${0:TARGET}"
+
+snippet     beg
+abbr        begin ... end
+    begin ${0:TARGET} end
+
+snippet     exn
+abbr        exception
+options     head
+    exception ${0:TARGET} of ${1:string}
+
+snippet     lit
+abbr        string literals {xxx| ... |xxx}
+options     head
+    {${0:}|${1:TARGET}|$0}
+
+snippet     @@
+abbr        [@@deriving ...]
+options     head
+    [@@deriving ${0:TARGET}]
