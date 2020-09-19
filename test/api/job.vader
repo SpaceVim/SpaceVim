@@ -1,20 +1,25 @@
 Execute ( SpaceVim api: job ):
   let job = SpaceVim#api#import('job')
-  let os = SpaceVim#api#import('system')
-  if os.isWindows
+  let sys = SpaceVim#api#import('system')
+  let cmp = SpaceVim#api#import('vim#compatible')
+  if sys.isWindows
+    let cat = fnamemodify(v:progpath, ':h') . '\cat.exe'
+  else
+    let cat = 'cat'
+  endif
+  if !executable(cat)
     finish
   endif
-  let argv = ['cat']
+  for line in cmp.systemlist(shellescape(cat) . ' --version')
+    Log line
+  endfor
+  let argv = [cat]
   let g:stdout = ''
   let stderr = ''
   let exit_data = 1
   function! s:on_stdout(id, data, event) abort
     if a:event ==# 'stdout'
-      for a in a:data
-        if !empty(a)
-          let g:stdout = a
-        endif
-      endfor
+      let g:stdout = join(a:data, "\n")
     elseif a:event ==# 'exit'
       let g:exit_data = a:data
     else
@@ -26,12 +31,12 @@ Execute ( SpaceVim api: job ):
     \ 'on_stderr' : function('s:on_stdout'),
     \ 'on_exit' : function('s:on_stdout'),
     \ }
-  let jobid = job.start(argv,opt)
-  if jobid >= 0
+  if job.vim_job || job.nvim_job
+    let jobid = job.start(argv,opt)
     call job.send(jobid, 'foo')
-    sleep 10m
+    sleep 2000m
     AssertEqual stdout, 'foo'
-    AssertEqual job.status(jobid), ' run'
+    AssertEqual job.status(jobid), 'run'
     call job.stop(jobid)
     AssertEqual exit_data, 1
   else

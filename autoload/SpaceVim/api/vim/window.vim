@@ -1,6 +1,6 @@
 "=============================================================================
 " window.vim --- window api for vim and neovim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -11,15 +11,24 @@
 " @parentsection api
 " @subsection Intro
 "
-" vim#window API provides some basic functions for setting and getting config
+" `vim#window` API provides some basic functions for setting and getting config
 " of vim window.
 "
 " @subsection Functions
 "
 " get_cursor({winid})
 " 
-" Gets the cursor position in the window {winid}, to get the ID of a window,
+"   Gets the cursor position in the window {winid}, to get the ID of a window,
 " checkout |window-ID|.
+"
+" set_cursor({winid}, {pos})
+" 
+"   Sets the cursor position to {pos} in the window {winid}.
+"
+" is_float({winnr})
+"
+"   Check if the window is a floating windows, return `v:true` if the window
+"   is a floating window.
 
 let s:self = {}
 
@@ -70,6 +79,11 @@ if has('nvim')
   endfunction
 else
   function! s:self.is_float(winnr) abort
+    " vim without win_getid() is old, which do not support floating window.
+    " so if_float always return 0
+    if !exists('*win_getid')
+      return 0
+    endif
     let id = win_getid(a:winnr)
     if id > 0 && exists('*popup_getoptions')
       try

@@ -1,6 +1,6 @@
 "=============================================================================
 " ctrlspace.vim --- SpaceVim CtrlSpace layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Jethro Cao < jethrocao at gmail dot com >
 " URL: https://spacevim.org
 " License: GPLv3

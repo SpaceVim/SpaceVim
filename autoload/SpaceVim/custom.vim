@@ -1,6 +1,6 @@
 "=============================================================================
 " custom.vim --- custom API in SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,6 +9,7 @@
 let s:TOML = SpaceVim#api#import('data#toml')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:FILE = SpaceVim#api#import('file')
+let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#custom#profile(dict) abort
@@ -204,12 +205,13 @@ endfunction
 
 function! s:load_glob_conf() abort
   let global_dir = empty($SPACEVIMDIR) ? s:FILE.unify_path(s:CMP.resolve(expand('~/.SpaceVim.d/'))) : $SPACEVIMDIR
+  call SpaceVim#logger#info('global_dir is: ' . global_dir)
   if filereadable(global_dir . 'init.toml')
     let g:_spacevim_global_config_path = global_dir . 'init.toml'
     let local_conf = global_dir . 'init.toml'
-    let local_conf_cache = s:FILE.unify_path(expand(g:spacevim_data_dir.'/SpaceVim/conf/init.json'))
+    let local_conf_cache = s:FILE.unify_path(expand(g:spacevim_data_dir.'/SpaceVim/conf/' . fnamemodify(resolve(local_conf), ':t:r') . '.json'))
     let &rtp = global_dir . ',' . &rtp
-    if getftime(local_conf) < getftime(local_conf_cache)
+    if getftime(resolve(local_conf)) < getftime(resolve(local_conf_cache))
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
       call SpaceVim#custom#apply(conf, 'glob')
     else
@@ -241,13 +243,13 @@ function! s:opt_type(opt) abort
   " @bugupstream viml-parser seem do not think this is used argument
   let opt = a:opt
   let var = get(g:, 'spacevim_' . opt, '')
-  if type(var) == type('')
+  if s:VIM.is_string(var)
     return '[string]'
-  elseif type(var) == 5
+  elseif s:VIM.is_bool(var)
     return '[boolean]'
-  elseif type(var) == 0
+  elseif s:VIM.is_number(var)
     return '[number]'
-  elseif type(var) == 3
+  elseif s:VIM.is_list(var)
     return '[list]'
   endif
 endfunction

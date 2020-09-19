@@ -1,6 +1,6 @@
 "=============================================================================
 " highlight.vim --- SpaceVim highlight API
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -43,8 +43,8 @@ function! s:self.group2dict(name) abort
                 \ 'italic' : synIDattr(id, 'italic'),
                 \ 'reverse' : synIDattr(id, 'reverse'),
                 \ 'underline' : synIDattr(id, 'underline'),
-                \ 'guibg' : synIDattr(id, 'bg#'),
-                \ 'guifg' : synIDattr(id, 'fg#'),
+                \ 'guibg' : tolower(synIDattr(id, 'bg#', 'gui')),
+                \ 'guifg' : tolower(synIDattr(id, 'fg#', 'gui')),
                 \ }
     return rst
 endfunction

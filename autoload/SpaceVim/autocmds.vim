@@ -1,6 +1,6 @@
 "=============================================================================
 " autocmd.vim --- main autocmd group for spacevim
-" Copyright (c) 2016-2019 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,6 +9,7 @@
 
 let s:SYS = SpaceVim#api#import('system')
 let s:JOB = SpaceVim#api#import('job')
+let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
 
@@ -198,30 +199,11 @@ function! s:disable_welcome() abort
 endfunction
 
 function! s:close_quickfix() abort
-  if winnr() == s:get_qf_winnr()
+  if winnr() == s:VIM.get_qf_winnr()
     cclose
   else
     lclose
   endif
 endfunction
-
-" https://vi.stackexchange.com/questions/16585/how-to-differentiate-quickfix-window-buffers-and-location-list-buffers
-if has('patch-7.4-2215') " && exists('*getwininfo')
-  function! s:get_qf_winnr() abort
-    let wins = filter(getwininfo(), 'v:val.quickfix && !v:val.loclist')
-    " assert(len(wins) <= 1)
-    return empty(wins) ? 0 : wins[0].winnr
-  endfunction
-else
-  let s:k_msg_qflist = '[Quickfix List]'
-  function! s:get_qf_winnr() abort
-    let buffers = s:CMP.execute('ls!')
-    call filter(buffers, 'v:val =~ "\\V".s:k_msg_qflist')
-    " :cclose removes the buffer from the list (in my config only??)
-    " assert(len(buffers) <= 1)
-    return empty(buffers) ? 0 : eval(matchstr(buffers[0], '\v^\s*\zs\d+'))
-  endfunction
-endif
-
 
 " vim:set et sw=2:

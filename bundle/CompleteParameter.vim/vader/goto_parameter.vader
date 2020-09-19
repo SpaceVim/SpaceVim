@@ -1,0 +1,153 @@
+Before:
+    smap <m-n> <Plug>(complete_parameter#goto_next_parameter)
+    imap <m-n> <Plug>(complete_parameter#goto_next_parameter)
+    nmap <m-n> <Plug>(complete_parameter#goto_next_parameter)
+    smap <m-p> <Plug>(complete_parameter#goto_previous_parameter)
+    imap <m-p> <Plug>(complete_parameter#goto_previous_parameter)
+    nmap <m-p> <Plug>(complete_parameter#goto_previous_parameter)
+
+"{{{ forward
+Given go(no jump):
+  fmt.Printf
+
+Do:
+  1gg5|\<m-n>
+
+Then:
+  AssertEqual 'n', mode()
+  let col = col('.')
+  AssertEqual 5, col
+
+Given go(goto end):
+  fmt.Printf()
+
+Do:
+  1gg5|\<m-n>
+
+Then:
+  AssertEqual 'n', mode()
+  let col = col('.')
+  AssertEqual 5, col
+
+Given go(fmt.Printf(format, a), 10, goto format):
+  fmt.Printf(format, a)
+
+Do:
+  1gg10|\<m-n>
+
+Then:
+  AssertEqual 'n', mode()
+  let start = col('.')
+  AssertEqual 10, start
+
+Given go(fmt.Printf(format, a), 11, goto format):
+  fmt.Printf(format, a)
+
+Do:
+  1gg11|\<m-n>
+
+Then:
+  AssertEqual 's', mode()
+  let start = col('v')
+  AssertEqual 12, start
+  let end = col('.')
+  AssertEqual 17, end
+
+Given go(fmt.Printf(format, a), 12, goto a):
+  fmt.Printf(format, a)
+
+Do:
+  1gg12|\<m-n>
+
+Then:
+  AssertEqual 's', mode()
+  let start = col('v')
+  AssertEqual 20, start
+  let end = col('.')
+  AssertEqual 20, end
+
+Given go(fmt.Printf(format, a), 20, goto end):
+  fmt.Printf(format, a)
+
+Do:
+  1gg20|\<m-n>
+
+Then:
+  AssertEqual 'n', mode()
+  let end = col('.')
+  AssertEqual 21, end
+"}}}
+
+"{{{ backward
+Given go(no jump):
+  fmt.Printf
+
+Do:
+  1gg5|\<m-p>
+
+Then:
+  AssertEqual 'n', mode()
+  let col = col('.')
+  AssertEqual 5, col
+
+Given go(goto end):
+  fmt.Printf()
+
+Do:
+  1gg12|\<m-p>
+
+Then:
+  AssertEqual 'n', mode()
+  let col = col('.')
+  AssertEqual 12, col
+
+Given go(fmt.Printf(format, a), 21, goto a):
+  fmt.Printf(format, a)
+
+Do:
+  1gg21|\<m-p>
+
+Then:
+  AssertEqual 's', mode()
+  let start = col('v')
+  AssertEqual 20, start
+  let end = col('.')
+  AssertEqual 20, end
+
+Given go(fmt.Printf(format, a), 20, goto format):
+  fmt.Printf(format, a)
+
+Do:
+  1gg20|\<m-p>
+
+Then:
+  AssertEqual 's', mode()
+  let start = col('v')
+  AssertEqual 12, start
+  let end = col('.')
+  AssertEqual 17, end
+
+Given go(fmt.Printf(format, a), 12, no jump):
+  fmt.Printf(format, a)
+
+Do:
+  1gg12|\<m-p>
+
+Then:
+  AssertEqual 'n', mode()
+  let end = col('.')
+  AssertEqual 12, end
+
+Given javascript(a.fun({format, a}), select {}, jump to format):
+  a.fun({format, a})
+
+Do:
+  1gg7|v10l\<c-g>\<m-n>
+
+Then:
+  AssertEqual 's', mode()
+  let start = col('v')
+  AssertEqual 8, start
+  let end = col('.')
+  AssertEqual 13, end
+"}}}

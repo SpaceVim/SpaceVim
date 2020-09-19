@@ -1,6 +1,6 @@
 "=============================================================================
 " guide.vim --- key binding guide for SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -30,6 +30,10 @@ let s:SL = SpaceVim#api#import('vim#statusline')
 
 let s:winid = -1
 let s:bufnr = -1
+let s:prefix_key_inp = []
+let s:lmap = {}
+" this should be the history of s:lmap and s:guide_group
+let s:undo_history = []
 
 function! SpaceVim#mapping#guide#has_configuration() abort "{{{
   return exists('s:desc_lookup')
@@ -436,10 +440,9 @@ function! s:handle_input(input) abort " {{{
   call s:winclose()
   if type(a:input) ==? type({})
     let s:lmap = a:input
-    let s:guide_group = a:input
     call s:start_buffer()
   else
-    let s:prefix_key_inp = ''
+    let s:prefix_key_inp = []
     call feedkeys(s:vis.s:reg.s:count, 'ti')
     redraw!
     try
@@ -450,29 +453,13 @@ function! s:handle_input(input) abort " {{{
   endif
 endfunction " }}}
 
-if has('nvim')
-  function! s:getchar(...) abort
-    let ret = call('getchar', a:000)
-    return (type(ret) == type(0) ? nr2char(ret) : ret)
-  endfunction
-else
-  function! s:getchar(...) abort
-    let ret = call('getchar', a:000)
-    while ret ==# "\x80\xfd\d"
-      let ret = call('getchar', a:000)
-    endwhile
-    return (type(ret) == type(0) ? nr2char(ret) : ret)
-  endfunction
-
-endif
-
-
 " wait for in input sub function should be not block vim
 function! s:wait_for_input() abort " {{{
   redraw!
-  let inp = s:getchar()
+  let inp = s:VIM.getchar()
   if inp ==# "\<Esc>"
-    let s:prefix_key_inp = ''
+    let s:prefix_key_inp = []
+    let s:undo_history = []
     let s:guide_help_mode = 0
     call s:winclose()
     doautocmd WinEnter
@@ -492,20 +479,21 @@ function! s:wait_for_input() abort " {{{
     endif
     let fsel = get(s:lmap, inp)
     if !empty(fsel)
-      let s:prefix_key_inp = inp
+      call add(s:prefix_key_inp, inp)
+      call add(s:undo_history, s:lmap)
       call s:handle_input(fsel)
     else
       call s:winclose()
       doautocmd WinEnter
-      let keys = get(s:, 'prefix_key_inp', '')
+      let keys = get(s:, 'prefix_key_inp', [])
       let name = SpaceVim#mapping#leader#getName(s:prefix_key)
-      let _keys = join(s:STR.string2chars(keys), '-')
+      let _keys = join(keys, '')
       if empty(_keys)
         call s:build_mpt(['key bindings is not defined: ', name . '-' . inp])
       else
         call s:build_mpt(['key bindings is not defined: ', name . '-' . _keys . '-' . inp])
       endif
-      let s:prefix_key_inp = ''
+      let s:prefix_key_inp = []
       let s:guide_help_mode = 0
     endif
   endif
@@ -603,13 +591,13 @@ if s:SL.support_float()
       let gname = ' - ' . gname[1:]
       " let gname = substitute(gname,' ', '\\ ', 'g')
     endif
-    let keys = get(s:, 'prefix_key_inp', '')
+    let keys = get(s:, 'prefix_key_inp', [])
     " let keys = substitute(keys, '\', '\\\', 'g')
     noautocmd let winid = s:SL.open_float([
           \ ['Guide: ', 'LeaderGuiderPrompt'],
           \ [' ', 'LeaderGuiderSep1'],
           \ [SpaceVim#mapping#leader#getName(s:prefix_key)
-          \ . keys . gname, 'LeaderGuiderName'],
+          \ . join(keys, '') . gname, 'LeaderGuiderName'],
           \ [' ', 'LeaderGuiderSep2'],
           \ [s:guide_help_msg(0), 'LeaderGuiderFill'],
           \ [repeat(' ', 999), 'LeaderGuiderFill'],
@@ -627,12 +615,12 @@ else
     if !empty(gname)
       let gname = ' - ' . gname[1:]
     endif
-    let keys = get(s:, 'prefix_key_inp', '')
+    let keys = get(s:, 'prefix_key_inp', [])
     call setbufvar(s:bufnr, '&statusline', '%#LeaderGuiderPrompt# Guide: ' .
           \ '%#LeaderGuiderSep1#' . s:lsep .
           \ '%#LeaderGuiderName# ' .
           \ SpaceVim#mapping#leader#getName(s:prefix_key)
-          \ . keys . gname
+          \ . join(keys, '') . gname
           \ . ' %#LeaderGuiderSep2#' . s:lsep . '%#LeaderGuiderFill#'
           \ . s:guide_help_msg(0))
   endfunction
@@ -690,9 +678,12 @@ function! s:page_down() abort " {{{
 endfunction " }}}
 function! s:page_undo() abort " {{{
   call s:winclose()
-  let s:guide_group = {}
-  let s:prefix_key_inp = ''
-  let s:lmap = s:lmap_undo
+  if len(s:prefix_key_inp) > 0
+    call remove(s:prefix_key_inp, -1)
+  endif
+  if len(s:undo_history) > 0
+    let s:lmap = remove(s:undo_history, -1)
+  endif
   call s:start_buffer()
 endfunction " }}}
 function! s:page_up() abort " {{{
@@ -767,7 +758,6 @@ function! SpaceVim#mapping#guide#start_by_prefix(vis, key) abort " {{{
     let rundict = s:cached_dicts[a:key]
   endif
   let s:lmap = rundict
-  let s:lmap_undo = rundict
   call s:start_buffer()
 endfunction " }}}
 function! SpaceVim#mapping#guide#start(vis, dict) abort " {{{
@@ -787,7 +777,7 @@ if !exists('g:leaderGuide_displayfunc')
 endif
 
 let s:registered_name = {}
-function! SpaceVim#mapping#guide#register_displayname(lhs, name)
+function! SpaceVim#mapping#guide#register_displayname(lhs, name) abort
   call extend(s:registered_name, {a:lhs : a:name})
 endfunction
 

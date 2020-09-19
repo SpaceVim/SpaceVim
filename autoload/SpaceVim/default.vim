@@ -1,6 +1,6 @@
 "=============================================================================
 " default.vim --- default options in SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,6 +9,7 @@
 scriptencoding utf-8
 
 let s:SYSTEM = SpaceVim#api#import('system')
+let s:TAB = SpaceVim#api#import('vim#tab')
 
 " Default options {{{
 function! SpaceVim#default#options() abort
@@ -176,7 +177,7 @@ function! SpaceVim#default#keyBindings() abort
     xnoremap <Leader>P "*P
   endif
 
-  xnoremap <silent><Leader>Y :call SpaceVim#plugins#pastebin#paste()<CR>
+  xnoremap <silent><Leader>Y :<C-u>call SpaceVim#plugins#pastebin#paste()<CR>
   " call SpaceVim#mapping#guide#register_displayname(':call SpaceVim#plugins#pastebin#paste()<CR>', 'copy to pastebin')
 
   " quickfix list movement
@@ -251,20 +252,15 @@ function! SpaceVim#default#keyBindings() abort
   nnoremap <silent><Down> gj
   nnoremap <silent><Up> gk
 
-  " Navigate window
-  nnoremap <silent><C-q> <C-w>
-
-
-
   " Fast saving
   nnoremap <C-s> :<C-u>w<CR>
   vnoremap <C-s> :<C-u>w<CR>
   cnoremap <C-s> <C-u>w<CR>
 
   " Tabs
-  nnoremap <silent>g0 :<C-u>tabfirst<CR>
-  nnoremap <silent>g$ :<C-u>tablast<CR>
-  nnoremap <silent><expr> gr tabpagenr('#') > 0 ? ':exe "tabnext " . tabpagenr("#")<cr>' : ''
+  nnoremap <silent> g0 :<C-u>tabfirst<CR>
+  nnoremap <silent> g$ :<C-u>tablast<CR>
+  nnoremap <silent> gr :<C-u>call <SID>switch_tabs()<CR>
 
   " Remove spaces at the end of lines
   nnoremap <silent> ,<Space> :<C-u>silent! keeppatterns %substitute/\s\+$//e<CR>
@@ -289,8 +285,6 @@ function! SpaceVim#default#keyBindings() abort
 
   call SpaceVim#mapping#def('nnoremap <silent>','g=',':call SpaceVim#mapping#format()<cr>','format current buffer','call SpaceVim#mapping#format()')
 
-  call SpaceVim#mapping#def('nnoremap <silent>', '<C-c>', ':<c-u>call SpaceVim#util#CopyToClipboard()<cr>',
-        \ 'Copy buffer absolute path to X11 clipboard','call SpaceVim#util#CopyToClipboard()')
 endfunction
 
 fu! s:tobur(num) abort
@@ -349,6 +343,13 @@ function! SpaceVim#default#Customfoldtext() abort
   let foldPercentage = printf('[%.1f', (foldSize*1.0)/lineCount*100) . '%] '
   let expansionString = repeat(repeatsymbol, w - strwidth(prefix.foldSizeStr.line.foldLevelStr.foldPercentage))
   return prefix . line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
+endfunction
+
+function! s:switch_tabs() abort
+  let previous_tab = s:TAB.previous_tabpagenr()
+  if previous_tab > 0
+    exe 'tabnext ' . previous_tab
+  endif
 endfunction
 
 " vim:set et sw=2:

@@ -1,6 +1,6 @@
 "=============================================================================
 " job.vim --- job api
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -103,26 +103,35 @@ function! s:self.warp_nvim(argv, opts) abort dict
   let obj._argv = a:argv
   let obj._opts = a:opts
   " @vimlint(EVL103, 1, a:job_id)
+  " @vimlint(EVL103, 1, a:event)
   function! obj.__on_stdout(id, data, event) abort dict
     if has_key(self._opts, 'on_stdout')
-      if a:data[-1] == ''
-        call self._opts.on_stdout(a:id, [self._eof . a:data[0]] + a:data[1:], 'stdout')
+      if a:data[-1] ==# '' && len(a:data) > 1
+        call self._opts.on_stdout(a:id, [self._eof . a:data[0]] + a:data[1:-2], 'stdout')
         let self._eof = ''
-      else
+      elseif len(a:data) > 1
         call self._opts.on_stdout(a:id, [self._eof . a:data[0]] + a:data[1:-2], 'stdout')
         let self._eof = a:data[-1]
+      elseif len(a:data) ==# 1 && a:data[-1] ==# '' && !empty(self._eof)
+        call self._opts.on_stdout(a:id, [self._eof], 'stdout')
+      elseif len(a:data) ==# 1 && a:data[-1] !=# ''
+        let self._eof .= a:data[-1]
       endif
     endif
   endfunction
 
   function! obj.__on_stderr(id, data, event) abort dict
     if has_key(self._opts, 'on_stderr')
-      if a:data[-1] == ''
-        call self._opts.on_stderr(a:id, [self._eof . a:data[0]] + a:data[1:], 'stderr')
+      if a:data[-1] ==# '' && len(a:data) > 1
+        call self._opts.on_stderr(a:id, [self._eof . a:data[0]] + a:data[1:-2], 'stderr')
         let self._eof = ''
-      else
+      elseif len(a:data) > 1
         call self._opts.on_stderr(a:id, [self._eof . a:data[0]] + a:data[1:-2], 'stderr')
         let self._eof = a:data[-1]
+      elseif len(a:data) ==# 1 && a:data[-1] ==# '' && !empty(self._eof)
+        call self._opts.on_stderr(a:id, [self._eof], 'stderr')
+      elseif len(a:data) ==# 1 && a:data[-1] !=# ''
+        let self._eof .= a:data[-1]
       endif
     endif
   endfunction
@@ -133,6 +142,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
     endif
   endfunction
   " @vimlint(EVL103, 0, a:job_id)
+  " @vimlint(EVL103, 0, a:event)
 
   let obj = {
         \ 'argv': a:argv,
@@ -165,7 +175,7 @@ function! s:self.start(argv, ...) abort dict
       return -1
     endtry
     if job > 0
-      let msg = ['process '. jobpid(job), ' run']
+      let msg = ['process '. jobpid(job), 'run']
       call extend(self.jobs, {job : msg})
     else
       if job == -1

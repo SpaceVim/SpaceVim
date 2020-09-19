@@ -1,6 +1,6 @@
 "=============================================================================
 " SpaceVim.vim --- Initialization and core files for SpaceVim
-" Copyright (c) 2016-2019 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.5.0-dev'
+let g:spacevim_version = '1.6.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -217,6 +217,10 @@ let g:spacevim_data_dir
       \   ? $XDG_CACHE_HOME . SpaceVim#api#import('file').separator
       \   : expand($HOME. join(['', '.cache', ''],
       \     SpaceVim#api#import('file').separator))
+
+if !isdirectory(g:spacevim_data_dir)
+  call mkdir(g:spacevim_data_dir, 'p')
+endif
 
 ""
 " @section plugin_bundle_dir, options-plugin_bundle_dir
@@ -1008,9 +1012,21 @@ let g:spacevim_enable_powerline_fonts  = 1
 " <
 let g:spacevim_lint_on_save            = 1
 ""
+" @section search_tools, options-search_tools
+" @parentsection options
 " Default search tools supported by flygrep. The default order is ['rg', 'ag',
-" 'pt', 'ack', 'grep', 'findstr']
-let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr']
+" 'pt', 'ack', 'grep', 'findstr', 'git']
+" The `git` command means using `git-grep`. If you prefer to use `git-grep` by
+" default. You can change this option to:
+" >
+"   [options]
+"     search_tools = ['git', 'rg', 'ag']
+" <
+
+""
+" Default search tools supported by flygrep. The default order is ['rg', 'ag',
+" 'pt', 'ack', 'grep', 'findstr', 'git']
+let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr', 'git']
 ""
 " Set the project rooter patterns, by default it is
 " `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`
@@ -1200,17 +1216,12 @@ command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <a
 command -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
 function! SpaceVim#end() abort
-  if !g:spacevim_vimcompatible
-    call SpaceVim#mapping#def('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
-    call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
-  endif
   if g:spacevim_vimcompatible
     let g:spacevim_windows_leader = ''
     let g:spacevim_windows_smartclose = ''
   endif
 
   if !g:spacevim_vimcompatible
-    nnoremap <silent><C-x> <C-w>x
     cnoremap <C-f> <Right>
     " Navigation in command line
     cnoremap <C-a> <Home>
@@ -1370,7 +1381,6 @@ function! SpaceVim#begin() abort
   endif
   call SpaceVim#default#options()
   call SpaceVim#default#layers()
-  call SpaceVim#default#keyBindings()
   call SpaceVim#commands#load()
 endfunction
 
@@ -1407,7 +1417,8 @@ endfunction
 
 ""
 " @section Usage, usage
-"   the usage guide for SpaceVim
+"   General guide for using SpaceVim. Including layer configuration, bootstrap
+"   function.
 
 ""
 " @section FAQ, faq

@@ -1,10 +1,12 @@
 "=============================================================================
 " space.vim --- Space key bindings
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+let s:BUF = SpaceVim#api#import('vim#buffer')
 
 let s:file = expand('<sfile>:~')
 let s:funcbeginline =  expand('<slnum>') + 1
@@ -121,6 +123,16 @@ function! SpaceVim#mapping#space#init() abort
         \ ['window-down',
         \ [
         \ '[SPC w j] is to jump to the window below current windows',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'x'], 'wincmd x',
+        \ ['window-switch-placement',
+        \ [
+        \ '[SPC w x] is to jump to exchange current window with next one.',
         \ '',
         \ 'Definition: ' . s:file . ':' . s:lnum,
         \ ]
@@ -308,6 +320,10 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 's'], 
+        \ 'call call('
+        \ . string(function('s:switch_scratch_buffer'))
+        \ . ', [])', 'switch-to-scratch-buffer', 1)
   let s:lnum = expand('<slnum>') + 3
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'p'], 'bp', ['previous-buffer',
         \ [
@@ -414,6 +430,23 @@ function! SpaceVim#mapping#space#init() abort
         \ 'Background search cursor words in project with grep', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'g', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "grep")',
         \ 'Background search cursor words in project with grep', 1)
+  " git grep
+  let g:_spacevim_mappings_space.s.G = {'name' : '+git grep'}
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'b'], 'call SpaceVim#mapping#search#grep("G", "b")',
+        \ 'search in all buffers with git-grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'B'], 'call SpaceVim#mapping#search#grep("G", "B")',
+        \ 'search cursor word in all buffers with git-grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'd'], 'call SpaceVim#mapping#search#grep("G", "d")', 'search in buffer directory with grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'D'], 'call SpaceVim#mapping#search#grep("G", "D")',
+        \ 'search cursor word in buffer directory with git-grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'p'], 'call SpaceVim#mapping#search#grep("G", "p")', 'search in project with git-grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'P'], 'call SpaceVim#mapping#search#grep("G", "P")',
+        \ 'search cursor word in project with git-grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'f'], 'call SpaceVim#mapping#search#grep("G", "f")',
+        \ 'search in arbitrary directory  with git-grep', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'F'], 'call SpaceVim#mapping#search#grep("G", "F")',
+        \ 'search cursor word in arbitrary directory with git-grep', 1)
+
   " ack
   let g:_spacevim_mappings_space.s.k = {'name' : '+ack'}
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'k', 'b'], 'call SpaceVim#mapping#search#grep("k", "b")', 'search in all buffers with ack', 1)
@@ -657,6 +690,14 @@ function! s:create_new_named_tab() abort
   else
     tabnew
   endif
+endfunction
+
+let s:scratch_buffer = -1
+function! s:switch_scratch_buffer() abort
+  if !bufexists(s:scratch_buffer) || !empty(getbufvar(s:scratch_buffer, '&filetype', ''))
+    let s:scratch_buffer = s:BUF.create_buf(1, 1)
+  endif
+  exe 'buffer' s:scratch_buffer
 endfunction
 
 function! s:windows_transient_state() abort

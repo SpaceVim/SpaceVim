@@ -8,6 +8,8 @@
   <head>
     <title>{{ page.title }} | SpaceVim</title>
     <meta name="baidu-site-verification" content="AN14j6xQVd" />
+    <!-- This is for google search console -->
+    <meta name="google-site-verification" content="2QrXyd7Wz5_ahXqefiYC_4-HvynQrefWDWORb7EjLCU" />
     <meta name="yandex-verification" content="8de09d07572b8dcc" />
     <meta name="author" content="Shidong Wang" />
     <meta name="description" content="{{ page.description }}" />
@@ -89,10 +91,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     {% endif %}
     <script src="{{ '/assets/js/respond.js' | relative_url }}"></script>
-    <meta
-      property="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
       (function() {
         var bp = document.createElement("script");
@@ -249,14 +248,13 @@
     {% if page.lang == "zh" %}
     <p align="center">
       <span class="credits right"
-        >网站源码位于 Github,
+        >由Jekyll强力驱动,
         <a
           href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}"
           >帮助改进本页面</a
         >
-        &mdash; 网站主题:
-        <a href="https://twitter.com/michigangraham">mattgraham</a>,
       </span>
+      <br>
       <input
         id="textbox"
         type="text"
@@ -267,14 +265,13 @@
     {% else %}
     <p align="center">
       <span class="credits right"
-        >Hosted on GitHub,
+        >Powered by Jekyll,
         <a
           href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}"
           >Help improve this page</a
         >
-        &mdash; Theme by
-        <a href="https://twitter.com/michigangraham">mattgraham</a>,
       </span>
+      <br>
       <input
         id="textbox"
         type="text"

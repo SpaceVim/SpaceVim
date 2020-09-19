@@ -1,6 +1,6 @@
 "=============================================================================
 " actionscript.vim --- actionscript support
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -12,7 +12,7 @@
 " This layer provides syntax highlighting for actionscript. To enable this
 " layer:
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#actionscript"
 " <
 

@@ -1,6 +1,6 @@
 "=============================================================================
 " statusline.vim --- SpaceVim statusline API
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -106,10 +106,14 @@ if has('nvim')
   endfunction
 else
   function! s:self.opened() abort
-		"tabpage" will be -1 for a global popup, zero for a popup on
-		"the current tabpage and a positive number for a popup on
-		"another tabpage.
-    return index(popup_list(), self.__winid) != -1
+    "tabpage" will be -1 for a global popup, zero for a popup on
+    "the current tabpage and a positive number for a popup on
+    "another tabpage.
+    if exists('*popup_list')
+      return index(popup_list(), self.__winid) != -1
+    else
+      return index([-1, 0], get(popup_getoptions(self.__winid), 'tabpage', -2)) != -1
+    endif
   endfunction
 endif
 

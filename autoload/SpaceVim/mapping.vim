@@ -1,6 +1,6 @@
 "=============================================================================
 " mapping.vim --- mapping functions in SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -268,7 +268,7 @@ function! SpaceVim#mapping#clear_saved_buffers() abort
         \ 'index(tabpagebuflist(), v:val) == -1',
         \ 'getbufvar(v:val, "&mod") == 0',
         \ ],
-        \ 'do' : 'bd %d'
+        \ 'do' : 'noautocmd bd %d'
         \ }
         \ )
 endfunction

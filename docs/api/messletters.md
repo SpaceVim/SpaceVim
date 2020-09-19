@@ -1,5 +1,5 @@
 ---
-title: "messletters api"
+title: "messletters API"
 description: "messletters API provides some basic functions for generating messletters"
 ---
 

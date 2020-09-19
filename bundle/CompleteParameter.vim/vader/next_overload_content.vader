@@ -1,0 +1,60 @@
+Execute (items empty):
+  let result = cmp#next_overload_content([], 0, '', [0, 1, 2, 0], 1)
+  AssertEqual [0], result
+
+Execute (1 item):
+  let items = ['()']
+  let current_index = 0
+  let current_line = 'hello()'
+  let complete_pos = [1, 6]
+  let result = cmp#next_overload_content(items, current_index, current_line, complete_pos, 1)
+  AssertEqual [0], result
+
+Execute (0->1):
+  let items = ['()', '(a)', '(b)']
+  let current_index = 0
+  let current_line = 'hello()'
+  let complete_pos = [1, 6]
+  let result = cmp#next_overload_content(items, current_index, current_line, complete_pos, 1)
+  AssertEqual [1, '(a)', 1, 2], result
+
+Execute (1->2):
+  let items = ['()', '(a)', '(b)']
+  let current_index = 1
+  let current_line = 'hello(a)'
+  let complete_pos = [1, 6]
+  let result = cmp#next_overload_content(items, current_index, current_line, complete_pos, 1)
+  AssertEqual [1, '(b)', 2, 3], result
+
+Execute (2->0):
+  let items = ['()', '(a)', '(b)']
+  let current_index = 2
+  let current_line = 'hello(b)'
+  let complete_pos = [1, 6]
+  let result = cmp#next_overload_content(items, current_index, current_line, complete_pos, 1)
+  AssertEqual [1, '()', 0, 3], result
+
+Execute (0->2):
+  let items = ['()', '(a)', '(b)']
+  let current_index = 0
+  let current_line = 'hello()'
+  let complete_pos = [1, 6]
+  let result = cmp#next_overload_content(items, current_index, current_line, complete_pos, 0)
+  AssertEqual [1, '(b)', 2, 2], result
+
+Execute (2->1):
+  let items = ['()', '(a)', '(b)']
+  let current_index = 2
+  let current_line = 'hello(b)'
+  let complete_pos = [1, 6]
+  let result = cmp#next_overload_content(items, current_index, current_line, complete_pos, 0)
+  AssertEqual [1, '(a)', 1, 3], result
+
+Execute (1->0):
+  let items = ['()', '(a)', '(b)']
+  let current_index = 1
+  let current_line = 'hello(a)'
+  let complete_pos = [1, 6]
+  let result = cmp#next_overload_content(items, current_index, current_line, complete_pos, 0)
+  AssertEqual [1, '()', 0, 3], result
+

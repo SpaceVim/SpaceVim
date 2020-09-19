@@ -47,6 +47,37 @@ function! tagbar#types#uctags#init(supported_types) abort
         \ {'short' : 't', 'long' : 'targets',    'fold' : 0, 'stl' : 1}
     \ ]
     let types.ant = type_ant
+    " Asciidoc {{{1
+    let type_asciidoc = tagbar#prototypes#typeinfo#new()
+    let type_asciidoc.ctagstype = 'asciidoc'
+    let type_asciidoc.kinds     = [
+        \ {'short' : 'c', 'long' : 'chapter',       'fold' : 0, 'stl' : 1},
+        \ {'short' : 's', 'long' : 'section',       'fold' : 0, 'stl' : 1},
+        \ {'short' : 'S', 'long' : 'subsection',    'fold' : 0, 'stl' : 1},
+        \ {'short' : 't', 'long' : 'subsubsection', 'fold' : 0, 'stl' : 1},
+        \ {'short' : 'T', 'long' : 'paragraph',     'fold' : 0, 'stl' : 1},
+        \ {'short' : 'u', 'long' : 'subparagraph',  'fold' : 0, 'stl' : 1},
+        \ {'short' : 'a', 'long' : 'anchor',        'fold' : 0, 'stl' : 0}
+    \ ]
+    let type_asciidoc.sro        = '""'
+    let type_asciidoc.kind2scope = {
+        \ 'c' : 'chapter',
+        \ 's' : 'section',
+        \ 'S' : 'subsection',
+        \ 't' : 'subsubsection',
+        \ 'T' : 'l4subsection',
+        \ 'u' : 'l5subsection'
+    \ }
+    let type_asciidoc.scope2kind = {
+        \ 'chapter' : 'c',
+        \ 'section' : 's',
+        \ 'subsection' : 'S',
+        \ 'subsubsection' : 't',
+        \ 'l4subsection' : 'T',
+        \ 'l5subsection' : 'u'
+    \ }
+    let type_asciidoc.sort = 0
+    let types.asciidoc = type_asciidoc
     " Asm {{{1
     let type_asm = tagbar#prototypes#typeinfo#new()
     let type_asm.ctagstype = 'asm'
