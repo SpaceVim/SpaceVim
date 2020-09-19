@@ -42,7 +42,7 @@ function! s:self.drawing_tree(tree, ...) abort
         let extra = self.bottom_left_corner
       endif
       call add(tree, prefix . extra . key)
-      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix . ' '))
+      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix . ( i < len(a:tree) ? self.side : ' ')))
     endfor
   endif
   return tree
