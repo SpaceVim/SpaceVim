@@ -39,9 +39,9 @@ function! s:self.drawing_tree(tree, ...) abort
     let i = 1
     for key in keys(a:tree)
       if i < len(a:tree)
-        let extra = self.left_middle
-      else
         let extra = self.bottom_left_corner
+      else
+        let extra = self.left_middle
       endif
       call add(tree, prefix . extra . key)
       call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix  .  self.side , ' '))
