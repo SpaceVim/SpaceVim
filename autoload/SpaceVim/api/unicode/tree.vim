@@ -17,12 +17,12 @@ function! s:self.drawing_tree(tree, ...) abort
     let i = 1
     for item in a:tree
       if i < len(a:tree)
-        let prefix .= self.left_middle
+        let extra = self.left_middle
       else
-        let prefix .= self.bottom_left_corner
+        let extra = self.bottom_left_corner
       endif
       let i += 1
-      call extend(tree, self.drawing_tree(item, prefix ))
+      call extend(tree, self.drawing_tree(item, prefix . extra ))
     endfor
   elseif self._vim.is_dict(a:tree)
     let i = 1
