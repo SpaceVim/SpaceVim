@@ -1,0 +1,26 @@
+set nocompatible
+
+" load match-up
+let s:path = simplify(expand('<sfile>:h').'/../../..')
+let &rtp  = s:path.',' . &rtp
+let &rtp .= ','.s:path.'/after'
+
+autocmd FileType * echo &ft | sleep 1
+
+call plug#begin('~/.vim/plugged')
+Plug 'mxw/vim-jsx'
+Plug 'othree/yajs.vim'
+Plug 'othree/es.next.syntax.vim'
+call plug#end()
+
+filetype plugin indent on
+syntax enable
+
+" match-up options go here
+function! JsxHotfix()
+    echo 'JsxHotfix'
+    setlocal matchpairs=(:),{:},[:],<:>
+    let b:match_words = '<\@<=\([^/][^ \t>]*\)\g{hlend}[^>]*\%(/\@<!>\|$\):<\@<=/\1>'
+endfunction
+autocmd FileType javascript.jsx let b:matchup_hotfix = 'JsxHotfix'
+

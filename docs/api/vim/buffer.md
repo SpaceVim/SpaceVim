@@ -1,5 +1,5 @@
 ---
-title: "vim#buffer api"
+title: "vim#buffer API"
 description: "vim#buffer API provides some basic functions for setting and getting config of vim buffer."
 ---
 
@@ -14,10 +14,13 @@ description: "vim#buffer API provides some basic functions for setting and getti
 
 ## Intro
 
-vim#buffer API provides some basic functions for setting and getting config of vim buffer.
+`vim#buffer` API provides some basic functions for setting and getting config of vim buffer.
+Here is an example for using this API:
 
 ```vim
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let br = s:BUFFER.bufadd('')
+call s:BUFFER.buf_set_lines(br, 1, -1, 0,['line 1', 'line 2', 'line 3'])
 ```
 
 ## Functions

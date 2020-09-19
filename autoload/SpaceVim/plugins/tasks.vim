@@ -1,6 +1,6 @@
 "=============================================================================
 " tasks.vim --- tasks support
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,6 +9,10 @@
 " this plugin is based on vscode task Scheme
 " https://code.visualstudio.com/docs/editor/tasks-appendix
 
+""
+" @section tasks, usage-tasks
+" @parentsection usage
+" general guide for tasks manager in SpaceVim.
 
 let s:TOML = SpaceVim#api#import('data#toml')
 let s:JSON = SpaceVim#api#import('data#json')

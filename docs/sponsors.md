@@ -15,12 +15,12 @@ description: "The companies or individuals contributing a monthly amount to help
 
 SpaceVim is an open source project. Please consider supporting SpaceVim by:
 
-- [Become a backer on BountySource](https://salt.bountysource.com/teams/spacevim)
-- [Become a backer or sponsor on Open Collective](https://opencollective.com/spacevim)
+- [Become a backer on BountySource](https://www.bountysource.com/teams/spacevim)
+- [Become a backer on opencollective](https://opencollective.com/spacevim)
 
 Also, you can buy us a coffee:
 
-<a href='https://ko-fi.com/A538L6H' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+<a href='https://ko-fi.com/SpaceVim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 | wechat                                                                   | alipay                                                                     |
 | ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
@@ -30,9 +30,10 @@ Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
 ## Backers
 
-| Name       | Description                 |
-| ---------- | --------------------------- |
-| Song Zheng | \$20/month since 2019-08-09 |
+| Name           | Description                 |
+| -------------- | --------------------------- |
+| Song Zheng     | \$20/month since 2019-08-09 |
+| michael-wojcik | \$5/month since 2020-05-19  |
 
 ## Donation
 
@@ -113,7 +114,7 @@ See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for
 | 2019-01-18   | ¥ 6.66   | f\*n                |
 | 2019-04-09   | ¥ 10     | 东海                |
 | 2019-03-17   | ¥ 1000   | falls               |
-| 2019-03-18   | ¥ 10   | \*人               |
+| 2019-03-18   | ¥ 10     | \*人                |
 | 2019-01-24   | ¥ 10     | 重剑                |
 | 2019-04-24   | \$171.78 | LLIP                |
 | 2019-04-24   | \$2.57   | Isaac               |
@@ -137,6 +138,7 @@ See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for
 | 2020-01-05   | \$30     | Michael Jackson     |
 | 2020-01-21   | \$50     | Sava Kahn           |
 | 2020-02-21   | ¥ 50     | \*尚                |
+| 2020-03-01   | \$ 25    | Brendan Copp        |
 | 2020-03-06   | ¥ 20     | J\*8                |
 | 2020-03-14   | ¥ 5      | \*童                |
 | 2020-04-06   | \$2.57   | KuropatwinskiMarcin |
@@ -144,7 +146,13 @@ See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for
 | 2020-04-10   | ¥ 1      | 付\*#               |
 | 2020-04-16   | ¥ 50     | N\*L                |
 | 2020-04-17   | \$2.57   | 小林大              |
-| 2020-04-18   | ¥ 5      | \*剑                |
+| 2020-04-18   | ¥ 5      | \*流                |
+| 2020-05-24   | \$ 10    | Ryein Goddard       |
+| 2020-05-30   | ¥ 1      | l\*t                |
+| 2020-05-31   | ¥ 30     | \*刚                |
+| 2020-07-24   | ¥ 5      | P\*e                |
+| 2020-07-26   | \$19.78  | GliraPhilipp        |
+| 2020-08-07   | \$5.44   | GillinMitchell      |
 
 ## Historical Spending
 

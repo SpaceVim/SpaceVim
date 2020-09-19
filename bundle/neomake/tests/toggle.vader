@@ -1,0 +1,165 @@
+Include: include/setup.vader
+
+Execute (Toggle commands):
+  Save &verbose
+
+  tabnew
+  call NeomakeTestsSetVimMessagesMarker()
+
+  NeomakeToggle
+  AssertEqual g:neomake.disabled, 1
+  AssertEqual neomake#config#get_with_source('disabled'), [1, 'global']
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (global).']
+
+  NeomakeToggleTab
+  AssertEqual g:neomake.disabled, 1
+  AssertEqual t:neomake.disabled, 1
+  AssertEqual neomake#config#get_with_source('disabled'), [1, 'tab']
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (tab) [global: disabled].']
+
+  NeomakeToggleBuffer
+  AssertEqual g:neomake.disabled, 1
+  AssertEqual t:neomake.disabled, 1
+  AssertEqual b:neomake.disabled, 1
+  AssertEqual neomake#config#get_with_source('disabled'), [1, 'buffer']
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (buffer) [tab: disabled] [global: disabled].']
+
+  NeomakeEnableBuffer
+  AssertEqual g:neomake.disabled, 1
+  AssertEqual t:neomake.disabled, 1
+  AssertEqual b:neomake.disabled, 0
+  AssertEqual neomake#config#get_with_source('disabled'), [0, 'buffer']
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is enabled (buffer) [tab: disabled] [global: disabled].']
+
+  NeomakeToggleBuffer
+  AssertEqual g:neomake.disabled, 1
+  AssertEqual t:neomake.disabled, 1
+  AssertEqual b:neomake.disabled, 1
+  AssertEqual neomake#config#get_with_source('disabled'), [1, 'buffer']
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (buffer) [tab: disabled] [global: disabled].']
+
+  NeomakeToggleBuffer
+  AssertEqual g:neomake.disabled, 1
+  AssertEqual t:neomake.disabled, 1
+  AssertEqual b:neomake, {}
+  AssertEqual neomake#config#get_with_source('disabled'), [1, 'tab']
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (tab) [global: disabled].']
+
+  NeomakeEnableTab
+  AssertEqual g:neomake.disabled, 1
+  AssertEqual t:neomake.disabled, 0
+  AssertEqual b:neomake, {}
+  AssertEqual neomake#config#get_with_source('disabled'), [0, 'tab']
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is enabled (tab) [global: disabled].']
+
+  NeomakeToggleTab
+  AssertEqual g:neomake.disabled, 1
+  AssertEqual t:neomake.disabled, 1
+  AssertEqual b:neomake, {}
+  AssertEqual neomake#config#get_with_source('disabled'), [1, 'tab']
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (tab) [global: disabled].']
+
+  NeomakeToggleTab
+  AssertEqual g:neomake.disabled, 1
+  AssertEqual t:neomake, {}
+  AssertEqual b:neomake, {}
+  AssertEqual neomake#config#get_with_source('disabled'), [1, 'global']
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (global).']
+
+  NeomakeEnable
+  AssertEqual g:neomake.disabled, 0
+  AssertEqual t:neomake, {}
+  AssertEqual b:neomake, {}
+  AssertEqual neomake#config#get_with_source('disabled'), [0, 'global']
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is enabled (global).']
+
+  NeomakeToggle
+  AssertEqual g:neomake.disabled, 1
+  AssertEqual t:neomake, {}
+  AssertEqual b:neomake, {}
+  AssertEqual neomake#config#get_with_source('disabled'), [1, 'global']
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (global).']
+
+  NeomakeDisable
+  AssertEqual g:neomake.disabled, 1
+  AssertEqual t:neomake, {}
+  AssertEqual b:neomake, {}
+  AssertEqual neomake#config#get_with_source('disabled'), [1, 'global']
+  " No message since it was not changed.
+  AssertEqual NeomakeTestsGetVimMessages(), []
+
+  NeomakeToggle
+  Assert !has_key(g:neomake, 'disabled')
+  AssertEqual t:neomake, {}
+  AssertEqual b:neomake, {}
+  AssertEqual neomake#config#get_with_source('disabled'),
+  \ [g:neomake#config#undefined, 'default']
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is enabled.']
+  bwipe
+
+Execute (NeomakeStatus with disabling commands):
+  tabnew
+  call NeomakeTestsSetVimMessagesMarker()
+
+  NeomakeStatus
+  Assert exists('#neomake'), 'neomake augroup exists'
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is enabled.']
+
+  NeomakeDisable
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (global).']
+  Assert !exists('#neomake'), 'neomake augroup has been removed'
+  " Can be disabled again (no error when trying to delete augroup).
+  NeomakeDisable
+  AssertEqual NeomakeTestsGetVimMessages(), []
+  NeomakeStatus
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (global).']
+
+  NeomakeDisableTab
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (tab) [global: disabled].']
+  NeomakeStatus
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (tab) [global: disabled].']
+
+  silent NeomakeDisableBuffer
+  AssertEqual NeomakeTestsGetVimMessages(), []
+  NeomakeStatus
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (buffer) [tab: disabled] [global: disabled].']
+
+  NeomakeEnable
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (buffer) [tab: disabled] [global: enabled].']
+  Assert exists('#neomake'), 'neomake augroup exists'
+  NeomakeStatus
+  AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (buffer) [tab: disabled] [global: enabled].']
+  bwipe
+
+Execute (Neomake via autocommand uses 'disabled' setting):
+  new
+  NeomakeDisableBuffer
+
+  augroup neomake_tests
+    autocmd BufWritePost * Neomake
+  augroup END
+  doautocmd BufWritePost
+  AssertNeomakeMessage 'Make through autocommand disabled via buffer.', 3
+  bwipe
+
+Execute (NeomakeBufferEnable after NeomakeDisable):
+  Save g:neomake
+
+  new
+  call NeomakeTestsSetVimMessagesMarker()
+
+  NeomakeDisable
+  try
+    AssertEqual g:neomake.disabled, 1
+    AssertEqual neomake#config#get_with_source('disabled'), [1, 'global']
+    AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is disabled (global).']
+
+    NeomakeEnableBuffer
+    AssertEqual g:neomake.disabled, 1
+    AssertEqual b:neomake.disabled, 0
+    AssertEqual neomake#config#get_with_source('disabled'), [0, 'buffer']
+    AssertEqual NeomakeTestsGetVimMessages(), ['Neomake is enabled (buffer) [global: disabled].']
+  finally
+    NeomakeEnable
+    bwipe
+  endtry

@@ -1,0 +1,63 @@
+snippet     CREATE_TABLE
+abbr        CREATE TABLE { ... }
+options     head
+  CREATE TABLE ${1:cities} (
+    ${0:name varchar(80), country_name text}
+  );
+
+snippet     CREATE_INDEX
+abbr        CREATE INDEX ... ON ... ( ... )
+options     head
+  CREATE INDEX ${1:_name} ON ${2:cities} (${3:name});
+
+snippet     DROP_TABLE
+abbr        DROP TABLE IF EXISTS ...
+  DROP TABLE IF EXISTS ${1:table};
+
+snippet     ALTER_TABLE
+abbr        ALTER TABLE ... MODIFY ...
+  ALTER TABLE ${1:table}
+  MODIFY ${2:column} ${3:new_column_desc};
+
+snippet     TRUNCATE_TABLE
+abbr        TRUNCATE TABLE ...
+  TRUNCATE TABLE ${1:table};
+
+snippet     INSERT_DATA
+abbr        INSERT INTO ... VALUES ( ... )
+options     head
+  INSERT INTO ${1:cities}
+  VALUES (${0:'Vancouver', 'Canada'});
+
+snippet     UPDATE_DATA
+abbr        UPDATE ... SET ... WHERE ...
+  UPDATE ${1:table}
+  SET ${2:column} = ${3:value}
+  WHERE ${4:condition};
+
+snippet     SELECT_DATA
+abbr        SELECT * from ... ORDER BY ... LIMIT ...
+options     head
+  SELECT ${1:*}
+  FROM ${2:cities} ${3:WHERE area = 'Asia'}
+  ${4: ORDER BY distance}
+  ${5: LIMIT 30};
+
+snippet     SELECT_JOIN_DATA
+abbr        SELECT * FROM T1 JOIN T2 ... ON
+  SELECT ${1:*}
+  FROM ${2:table1} ${3:T1}
+  JOIN ${4:table2} ${5:T2}
+  ON T1.${6:column1} = T2.${7:column2}
+
+snippet     DELETE_DATA
+abbr        DELETE FROM ... WHERE ...
+  DELETE FROM ${1:table}
+  WHERE ${2:condition};
+
+snippet     TRANSACTION
+alias       BEGIN TRANSACTION
+options     head
+  BEGIN TRANSACTION;
+  ${0:TARGET}
+  COMMIT;

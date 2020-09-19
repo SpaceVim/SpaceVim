@@ -1,0 +1,13 @@
+include vim.snip
+
+snippet     suite
+options     head
+  function! s:suite.${1}()
+    ${2:TARGET}
+    call s:assert.equal(${3:expected}, ${4:actual})
+  endfunction
+
+snippet     themis#log (This is an undocumented function)
+abbr        p
+options     head
+  call themis#log(${TARGET})

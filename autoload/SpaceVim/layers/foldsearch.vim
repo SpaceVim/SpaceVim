@@ -1,6 +1,6 @@
 "=============================================================================
 " foldsearch.vim --- Fold search support in SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -43,11 +43,22 @@ function! SpaceVim#layers#foldsearch#config()
         \ ],
         \ 1)
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['F', 'e'], 'call call('
+  call SpaceVim#mapping#space#def('nnoremap', ['F', 'p'], 'call call('
         \ . string(s:_function('s:foldsearch_expr')) . ', [])',
         \ ['foldsearch-regexp',
         \ [
-        \ 'SPC F e is to foldsearch regular expression',
+        \ 'SPC F p is to foldsearch regexp',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['F', 'e'],
+        \ 'call SpaceVim#plugins#foldsearch#end()',
+        \ ['end foldsearch',
+        \ [
+        \ 'SPC F e is to end foldsearch',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]

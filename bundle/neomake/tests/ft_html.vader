@@ -1,0 +1,17 @@
+Include: include/setup.vader
+
+Execute (html: htmlhint):
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#html#htmlhint(), [
+    \ 'test.html:1:1: Doctype must be declared first. [error/doctype-first]',
+    \ 'test.html:11:1: Tag must be paired, missing: [ </p></p> ], open tag match failed [ <p> ] on line 8. [error/tag-pair]',
+    \ '',
+    \ '99 problems',
+    \ ])
+  new
+  file test.html
+  CallNeomake 1, [maker]
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 1, 'bufnr': bufnr('%'), 'col': 1, 'valid': 1, 'vcol': 0, 'nr': -1, 'type': 'W', 'pattern': '', 'text': 'Doctype must be declared first. [error/doctype-first]'},
+  \ {'lnum': 11, 'bufnr': bufnr('%'), 'col': 1, 'valid': 1, 'vcol': 0, 'nr': -1, 'type': 'W', 'pattern': '', 'text': 'Tag must be paired, missing: [ </p></p> ], open tag match failed [ <p> ] on line 8. [error/tag-pair]'}
+  \ ]
+  bwipe

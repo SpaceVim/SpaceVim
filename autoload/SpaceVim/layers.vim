@@ -1,6 +1,6 @@
 "=============================================================================
 " layers.vim --- layers public API
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -26,9 +26,22 @@ let s:SYS = SpaceVim#api#import('system')
 function! SpaceVim#layers#load(layer, ...) abort
   if a:layer ==# '-l'
     call s:list_layers()
+    return
   endif
+  let loadable = 1
+  try
+      let loadable = SpaceVim#layers#{a:layer}#loadable()
+  catch /^Vim\%((\a\+)\)\=:E117/
+  endtry
   if index(s:enabled_layers, a:layer) == -1
-    call add(s:enabled_layers, a:layer)
+    if loadable
+      call add(s:enabled_layers, a:layer)
+    else
+      call SpaceVim#logger#warn('Failed to load '
+            \ . a:layer
+            \ . ' layer, read :h SpaceVim-layer-' . a:layer 
+            \ . ' for more info!', 0)
+    endif
   endif
   if a:0 == 1 && type(a:1) == 4
     try

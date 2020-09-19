@@ -1,8 +1,8 @@
 ---
 title: "SpaceVim MeetUp in HangZhou"
 categories: [meetup, blog]
-excerpt: "Our first meetup in hangzhou, general discussion about features of SpaceVim."
-image: https://user-images.githubusercontent.com/13142418/42164326-48994830-7e38-11e8-8bf5-44adc65b514a.jpg
+description: "Our first meetup in hangzhou, general discussion about features of SpaceVim."
+image: https://user-images.githubusercontent.com/13142418/80610943-8de64180-8a6c-11ea-9e0b-bdc3c9d8dbd3.jpg
 commentsID: "SpaceVim MeetUp in HangZhou"
 comments: true
 ---
@@ -31,13 +31,13 @@ We just make a general discussion about how to use SpaceVim, and what feature ne
 These new features have been added to tab manager in [#1887](https://github.com/SpaceVim/SpaceVim/pull/1887)
 
 - Display tab name on tabline and tab manager, you can also rename the tab via key binding `r` in tab manager buffer.
-![rename](https://user-images.githubusercontent.com/13142418/42123061-26d938aa-7c11-11e8-8e98-b089fbc53f30.gif)
+![rename](https://user-images.githubusercontent.com/13142418/80611134-ce45bf80-8a6c-11ea-8c1a-1a50ffea3880.gif)
 - Move cursor tab forward and backword, default key binding is `<C-S-Up>/<C-S-Down>`
-![movetab](https://user-images.githubusercontent.com/13142418/42123107-de3d10c0-7c11-11e8-8ddd-ed20b8925dee.gif)
+![movetab](https://user-images.githubusercontent.com/13142418/80611339-0d741080-8a6d-11ea-890c-f8b389cee866.gif)
 - Create new tab after the tab under the cursor, key bindings: (`n`: create named tab / `N` : create anonymous tab)
-![newtab](https://user-images.githubusercontent.com/13142418/42123504-d1c9e80c-7c18-11e8-8a51-a37fa55abb9b.gif)
+![newtab](https://user-images.githubusercontent.com/13142418/80611475-398f9180-8a6d-11ea-9aa5-a975d61ebab9.gif)
 - copy / paste tab, include tab layout and tab name
-![copytab](https://user-images.githubusercontent.com/13142418/42134628-311b9648-7d72-11e8-9277-e63bbf42502c.gif)
+![copytab](https://user-images.githubusercontent.com/13142418/80611654-78bde280-8a6d-11ea-9cc0-ac41851882bd.gif)
 - Display windows id of each item.
 
 ### Improve flygrep

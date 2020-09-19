@@ -1,0 +1,37 @@
+snippet      import
+abbr         import qualified ... as ...
+  import qualified ${1} as ${2}
+
+snippet      importOnly
+abbr         import ... (...)
+  import ${1} (${2})
+
+snippet      language
+abbr         {-# LANGUAGE ... #-}
+  {-# LANGUAGE ${1} #-}
+
+# hard-tab is necessary
+snippet      case
+abbr         case ... of
+	case ${1} of
+		${2} -> ${0}
+
+snippet      main
+abbr         main = do
+  main = do
+    ${0}
+
+snippet     class
+options     head
+  class ${1:Class} ${2:a} where
+    ${3:function} :: ${4:Type}
+
+snippet     instance
+options     head
+  instance ${1:Class} ${2:Type} where
+    ${3:function} ${4:self} = ${0:TARGET}
+
+snippet     lambda
+abbr        λ
+  \ ${1:x} -> ${0}
+

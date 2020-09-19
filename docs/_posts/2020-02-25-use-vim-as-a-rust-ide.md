@@ -2,8 +2,8 @@
 title: "Use Vim as a Rust IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png
-excerpt: "A general guide for using SpaceVim as Rust IDE, including layer configuration, requiems installation and usage."
-type: BlogPosting
+description: "A general guide for using SpaceVim as Rust IDE, including layer configuration, requiems installation and usage."
+type: article
 comments: true
 commentsID: "Use Vim as a Rust IDE"
 ---
@@ -12,7 +12,6 @@ commentsID: "Use Vim as a Rust IDE"
 
 This is a general guide for using SpaceVim as a Rust IDE, including layer configuration and usage.
 Each of the following sections will be covered:
-
 
 <!-- vim-markdown-toc GFM -->
 
@@ -41,13 +40,41 @@ For more info, you can read the [lang#rust](../layers/lang/rust/) layer document
 
 ### Code completion
 
-`lang#rust` layer will load the rust plugin automatically, unless it's overriden in your `init.toml`.
-The completion menu will be opened as you type.
+Code completion is provided by `autocomplete` layer, the rust language completion is provided by `lang#rust` layer.
+We also recommended to use `lsp` layer for rust.
+
+```toml
+[[layers]]
+  name = "lsp"
+```
+
+The lsp layer uses [rls](https://github.com/rust-lang/rls) as the language server for rust, to install rls:
+
+```sh
+rustup component add rls rust-analysis rust-src
+```
+
+Add following snippet to SpaceVim config file:
+
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "rust"
+  ]
+  [layers.override_cmd]
+    rust = ["rls"]
+```
 
 ### Syntax linting
 
-The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
-It will run rustc asynchronously.
+The `checkers` layer is enabled by default. This layer provides asynchronous syntax linting via
+[neomake](https://github.com/neomake/neomake). The default lint is cargo. To use rustc as default
+lint, add following config to bootstrap function:
+
+```viml
+let g:neomake_rust_enabled_makers = ['rustc']
+```
 
 ### Jump to test file
 
@@ -56,8 +83,8 @@ you can add a `.project_alt.json` to the root of your project with the following
 
 ```json
 {
-  "src/*.rs": {"alternate": "test/test_{}.rs"},
-  "test/test_*.rs": {"alternate": "src/{}.rs"}
+  "src/*.rs": { "alternate": "test/test_{}.rs" },
+  "test/test_*.rs": { "alternate": "src/{}.rs" }
 }
 ```
 
@@ -71,6 +98,7 @@ Before using this feature, please install rustfmt:
 ```sh
 rustup component add rustfmt
 ```
+
 ### running code
 
 To run current script, you can press `SPC l r`, and a split window
@@ -78,7 +106,6 @@ will be openen, the output of the script will be shown in this window.
 It is running asynchronously, and will not block your Vim.
 
 ![rustide](https://user-images.githubusercontent.com/13142418/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png)
-
 
 ### REPL support
 

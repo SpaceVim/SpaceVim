@@ -1,8 +1,8 @@
 ---
 title: SpaceVim release v1.0.0
 categories: [changelog, blog]
-excerpt: "V1.0.0 is the first stable version of SpaceVim, which is mainly about experience and user documentation."
-type: NewsArticle
+description: "V1.0.0 is the first stable version of SpaceVim, which is mainly about experience and user documentation."
+type: article
 image: https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png
 commentsID: "SpaceVim release v1.0.0"
 comments: true

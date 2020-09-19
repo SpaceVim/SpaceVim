@@ -1,0 +1,9 @@
+|-------------------+---------------------------|
+| The \| works as   | It can be escaped by a \. |
+| a separator.      |                           |
+|                   |                           |
+| Escaping \ with   | This feature would        |
+| a \ doesn't work. | be unnecessary, because   |
+|                   | a separator must be       |
+|                   | preceded by a space.      |
+|-------------------+---------------------------|

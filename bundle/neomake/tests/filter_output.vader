@@ -1,0 +1,64 @@
+Include: include/setup.vader
+
+Execute (filter_output can filter messages on stderr):
+  let maker = NeomakeTestsCommandMaker('stderr_and_stdout',
+  \ 'echo stderr >&2; echo stdout; echo stderr2 >&2')
+
+  CallNeomake 0, [maker]
+  AssertEqual sort(map(getqflist(), 'v:val.text')), ['stderr', 'stderr2', 'stdout']
+
+  function maker.filter_output(lines, context)
+    if a:context.source ==# 'stderr'
+      call filter(a:lines, "v:val !=# 'stderr'")
+    endif
+  endfunction
+
+  CallNeomake 0, [maker]
+  AssertEqual map(getqflist(), 'v:val.text'), ['stdout', 'stderr2']
+
+Execute (filter_output can be set for a buffer):
+  let maker = NeomakeTestsCommandMaker('stderr_and_stdout',
+  \ 'echo stderr >&2; echo stdout; echo stderr2 >&2')
+  function! maker.filter_output(lines, context)
+    Assert 0, 'should not get called'
+  endfunction
+
+  new
+  set ft=neomake_tests
+
+  let s:override_called = 0
+  let s:maker = maker
+  function NeomakeTestF(lines, context) dict
+    let s:override_called = 1
+    AssertEqual self.name, 'stderr_and_stdout'
+  endfunction
+  let b:neomake_neomake_tests_stderr_and_stdout_filter_output = function('NeomakeTestF')
+
+  CallNeomake 0, [maker]
+  AssertEqual sort(map(getqflist(), 'v:val.text')), ['stderr', 'stderr2', 'stdout']
+  AssertEqual s:override_called, 1, 's:override was called'
+  delfunction NeomakeTestF
+  bwipe
+
+Execute (filter_output can be used to filter unexpected output):
+  let maker = NeomakeTestsCommandMaker('stderr_and_stdout',
+  \ 'echo stderr >&2; echo stdout; echo stderr2 >&2')
+  let maker.output_stream = 'stdout'
+
+  CallNeomake 0, [maker]
+  AssertNeomakeMessage 'stderr_and_stdout: unexpected output on stderr: stderr\nstderr2.', 3
+  if neomake#has_async_support()
+    AssertNeomakeMessage 'stderr_and_stdout: unexpected output. See :messages for more information.', 0
+  else
+    AssertNeomakeMessage 'stderr_and_stdout: unexpected output.', 0
+  endif
+        '
+  AssertEqual sort(map(getqflist(), 'v:val.text')), ['stdout']
+
+  function! maker.filter_output(lines, context)
+    if a:context.source ==# 'stderr'
+      call filter(a:lines, 'v:val !~# "^stderr"')
+    endif
+  endfunction
+  CallNeomake 0, [maker]
+  AssertEqual sort(map(getqflist(), 'v:val.text')), ['stdout']

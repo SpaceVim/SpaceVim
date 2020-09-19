@@ -1,0 +1,487 @@
+Before:
+  let g:complete_parameter_log_level = 5
+  call cmp#init()
+
+" {{{ parameter checker
+Execute (empty content):
+  let result = cmp#parameter_position('', 0, ',', '(', ')', 1)
+  AssertEqual [0, 0], result
+
+Execute (zero current_col):
+  let result = cmp#parameter_position('hello', 0, ',', '(', ')', 1)
+  AssertEqual [0, 0], result
+
+Execute (empty delim):
+  let result = cmp#parameter_position('hello', 1, '', '(', ')', 1)
+  AssertEqual [0, 0], result
+
+Execute (empty border_begin):
+  let result = cmp#parameter_position('hello', 1, ',', '', ')', 1)
+  AssertEqual [0, 0], result
+
+Execute (empty border_end):
+  let result = cmp#parameter_position('hello', 1, ',', '(', '', 1)
+  AssertEqual [0, 0], result
+
+Execute (empty border_end):
+  let result = cmp#parameter_position('hello', 1, ',', '(', ')', 0)
+  AssertEqual [0, 0], result
+
+Execute (error cul):
+  let result = cmp#parameter_position('hello', 6, ',', '(', ')', 1)
+  AssertEqual [0, 0], result
+"}}}
+
+" no parameter {{{
+Execute (has no paramameter):
+  let result = cmp#parameter_position('hello', 1, ',', '(', ')', 1)
+  AssertEqual [0, 0], result
+
+Execute (has no paramameter backword):
+  let result = cmp#parameter_position('hello', 2, ',', ')', '(', -1)
+  AssertEqual [0, 0], result
+" }}}
+
+" zero parameter {{{
+Execute (hello(), 1):
+  let result = cmp#parameter_position('hello()', 1, ',', '(', ')', 1)
+  AssertEqual [0, 0], result
+
+Execute (hello(), 1, -1):
+  let result = cmp#parameter_position('hello()', 5, ',', ')', '(', -1)
+  AssertEqual [0, 0], result
+
+Execute (hello(), 6):
+  let result = cmp#parameter_position('hello()', 6, ',', '(', ')', 1)
+  AssertEqual [7, 7], result
+
+Execute (hello(), 6, -1):
+  let result = cmp#parameter_position('hello()', 6, ',', ')', '(', -1)
+  AssertEqual [6, 6], result
+
+Execute (hello(), 7):
+  let result = cmp#parameter_position('hello()', 7, ',', '(', ')', 1)
+  AssertEqual [7, 7], result
+
+Execute (hello(), 7, -1):
+  let result = cmp#parameter_position('hello()', 7, ',', ')', '(', -1)
+  AssertEqual [6, 6], result
+
+Execute (hello( ), 5):
+  let result = cmp#parameter_position('hello( )', 5, ',', '(', ')', 1)
+  AssertEqual [0, 0], result
+
+Execute (hello() , 8, -1):
+  let result = cmp#parameter_position('hello() ', 8, ',', ')', '(', -1)
+  AssertEqual [0, 0], result
+
+Execute (hello( ), 6):
+  let result = cmp#parameter_position('hello( )', 6, ',', '(', ')', 1)
+  AssertEqual [8, 8], result
+
+Execute (hello( ), 7):
+  let result = cmp#parameter_position('hello( )', 7, ',', '(', ')', 1)
+  AssertEqual [8, 8], result
+
+Execute (hello( ), 8):
+  let result = cmp#parameter_position('hello( )', 8, ',', '(', ')', 1)
+  AssertEqual [8, 8], result
+" }}}
+
+" one parameter {{{
+Execute (hello(a), 5):
+  let result = cmp#parameter_position('hello(a)', 5, ',', '(', ')', 1)
+  AssertEqual [0, 0], result
+  
+Execute (hello(a), 8, -1):
+  let result = cmp#parameter_position('hello(a)', 8, ',', ')', '(', -1)
+  AssertEqual [7, 8], result
+
+Execute (hello(a), 6):
+  let result = cmp#parameter_position('hello(a)', 6, ',', '(', ')', 1)
+  AssertEqual [7, 8], result
+
+Execute (hello(a) , 9, -1):
+  let result = cmp#parameter_position('hello(a) ', 9, ',', ')', '(', -1)
+  AssertEqual [0, 0], result
+
+Execute (hello(a), 7):
+  let result = cmp#parameter_position('hello(a)', 7, ',', '(', ')', 1)
+  AssertEqual [8, 8], result
+
+Execute (hello( a), 5):
+  let result = cmp#parameter_position('hello( a)', 5, ',', '(', ')', 1)
+  AssertEqual [0, 0], result
+
+Execute (hello( a) , 9, -1):
+  let result = cmp#parameter_position('hello( a) ', 9, ',', ')', '(', -1)
+  AssertEqual [8, 9], result
+
+Execute (hello( a), 6):
+  let result = cmp#parameter_position('hello( a)', 6, ',', '(', ')', 1)
+  AssertEqual [8, 9], result
+
+Execute (hello( a), 7):
+  let result = cmp#parameter_position('hello( a)', 7, ',', '(', ')', 1)
+  AssertEqual [9, 9], result
+
+Execute (hello( a), 8):
+  let result = cmp#parameter_position('hello( a)', 8, ',', '(', ')', 1)
+  AssertEqual [9, 9], result
+
+Execute (hello( a), 9):
+  let result = cmp#parameter_position('hello( a)', 9, ',', '(', ')', 1)
+  AssertEqual [9, 9], result
+
+Execute (hello( a ), 5):
+  let result = cmp#parameter_position('hello( a )', 5, ',', '(', ')', 1)
+  AssertEqual [0, 0], result
+
+Execute (hello( a ) , 10, -1):
+  let result = cmp#parameter_position('hello( a ) ', 10, ',', ')', '(', -1)
+  AssertEqual [8, 9], result
+
+Execute (hello( a ), 6):
+  let result = cmp#parameter_position('hello( a )', 6, ',', '(', ')', 1)
+  AssertEqual [8, 9], result
+
+Execute (hello( a ) , 9, -1):
+  let result = cmp#parameter_position('hello( a ) ', 9, ',', ')', '(', -1)
+  AssertEqual [6, 6], result
+
+Execute (hello( a ), 7):
+  let result = cmp#parameter_position('hello( a )', 7, ',', '(', ')', 1)
+  AssertEqual [10, 10], result
+
+Execute (hello(aa), 5):
+  let result = cmp#parameter_position('hello(aa)', 5, ',', '(', ')', 1)
+  let g:complete_parameter_jump_in_scope = 0
+  AssertEqual [0, 0], result
+
+Execute (hello(aa) , 9, -1):
+  let result = cmp#parameter_position('hello(aa) ', 9, ',', ')', '(', -1)
+  AssertEqual [7, 9], result
+
+Execute (hello(aa), 6):
+  let result = cmp#parameter_position('hello(aa)', 6, ',', '(', ')', 1)
+  AssertEqual [7, 9], result
+
+Execute (hello(aa), 7):
+  let result = cmp#parameter_position('hello(aa)', 7, ',', '(', ')', 1)
+  AssertEqual [9, 9], result
+" }}}
+
+" 2 parameter {{{
+Execute (hello(aa, bb), 5):
+  let result = cmp#parameter_position('hello(aa, bb)', 5, ',', '(', ')', 1)
+  AssertEqual [0, 0], result
+
+Execute (hello(aa, bb), 13, -1):
+  let result = cmp#parameter_position('hello(aa, bb)', 13, ',', ')', '(', -1)
+  AssertEqual [11, 13], result
+
+Execute (hello(aa, bb), 6):
+  let result = cmp#parameter_position('hello(aa, bb)', 6, ',', '(', ')', 1)
+  AssertEqual [7, 9], result
+
+Execute (hello(aa, bb), 11, -1):
+  let result = cmp#parameter_position('hello(aa, bb)', 11, ',', ')', '(', -1)
+  AssertEqual [7, 9], result
+
+Execute (hello(aa, bb), 7):
+  let result = cmp#parameter_position('hello(aa, bb)', 7, ',', '(', ')', 1)
+  AssertEqual [11, 13], result
+
+Execute (hello(aa, bb), 9):
+  let result = cmp#parameter_position('hello(aa, bb)', 9, ',', '(', ')', 1)
+  AssertEqual [11, 13], result
+
+Execute (hello(aa, bb), 10):
+  let result = cmp#parameter_position('hello(aa, bb)', 10, ',', '(', ')', 1)
+  AssertEqual [13, 13], result
+" }}}
+
+" 3 parameter {{{
+Execute (hello(aa, bb, cccc), 7):
+  let result = cmp#parameter_position('hello(aa, bb, cccc)', 7, ',', '(', ')', 1)
+  AssertEqual [11, 13], result
+
+Execute (hello(aa, bb, cccc), 19, -1):
+  let result = cmp#parameter_position('hello(aa, bb, cccc)', 19, ',', ')', '(', -1)
+  AssertEqual [15, 19], result
+
+Execute (hello(aa, bb, cccc), 11):
+  let result = cmp#parameter_position('hello(aa, bb, cccc)', 11, ',', '(', ')', 1)
+  AssertEqual [15, 19], result
+
+Execute (hello(aa, bb, cccc), 15, -1):
+  let result = cmp#parameter_position('hello(aa, bb, cccc)', 15, ',', ')', '(', -1)
+  AssertEqual [11, 13], result
+
+Execute (hello(aa, bb, cccc), 15):
+  let result = cmp#parameter_position('hello(aa, bb, cccc)', 15, ',', '(', ')', 1)
+  AssertEqual [19, 19], result
+" }}}
+
+" param with () {{{
+Execute (hello(foo()), 1):
+  let result = cmp#parameter_position('hello(foo())', 1, ',', '(', ')', 1)
+  AssertEqual [0, 0], result
+
+Execute (hello(foo()), 12, -1):
+  let result = cmp#parameter_position('hello(foo())', 12, ',', ')', '(', -1)
+  AssertEqual [7, 12], result
+
+Execute (hello(foo()), 6):
+  let result = cmp#parameter_position('hello(foo())', 6, ',', '(', ')', 1)
+  AssertEqual [7, 12], result
+
+Execute (hello(foo()), 11, -1):
+  let result = cmp#parameter_position('hello(foo())', 11, ',', ')', '(', -1)
+  AssertEqual [10, 10], result
+
+Execute (hello(foo()), 7):
+  let result = cmp#parameter_position('hello(foo())', 7, ',', '(', ')', 1)
+  AssertEqual [11, 11], result
+
+Execute (hello(foo()), 10, -1):
+  let result = cmp#parameter_position('hello(foo())', 10, ',', ')', '(', -1)
+  AssertEqual [6, 6], result
+
+Execute (hello(foo()), 11):
+  let result = cmp#parameter_position('hello(foo())', 11, ',', '(', ')', 1)
+  AssertEqual [12, 12], result
+
+Execute (hello(foo(bar)), 6):
+  let result = cmp#parameter_position('hello(foo(bar))', 6, ',', '(', ')', 1)
+  AssertEqual [7, 15], result
+
+Execute (hello(foo(bar)), 15, -1):
+  let result = cmp#parameter_position('hello(foo(bar))', 15, ',', ')', '(', -1)
+  AssertEqual [7, 15], result
+
+Execute (hello(foo(bar)), 7):
+  let result = cmp#parameter_position('hello(foo(bar))', 7, ',', '(', ')', 1)
+  AssertEqual [11, 14], result
+
+Execute (hello(foo(bar)), 13, -1):
+  let result = cmp#parameter_position('hello(foo(bar))', 13, ',', ')', '(', -1)
+  AssertEqual [6, 6], result
+
+Execute (hello(foo(bar)), 11):
+  let result = cmp#parameter_position('hello(foo(bar))', 11, ',', '(', ')', 1)
+  AssertEqual [15, 15], result
+
+Execute (hello(a, foo(bar)), 7):
+  let result = cmp#parameter_position('hello(a, foo(bar))', 7, ',', '(', ')', 1)
+  AssertEqual [10, 18], result
+
+Execute (hello(a, foo(bar)), 13, -1):
+  let result = cmp#parameter_position('hello(a, foo(bar))', 13, ',', ')', '(', -1)
+  AssertEqual [7, 8], result
+
+Execute (hello(a, foo(bar)), 8):
+  let result = cmp#parameter_position('hello(a, foo(bar))', 8, ',', '(', ')', 1)
+  AssertEqual [10, 18], result
+
+Execute (hello(a, foo(bar)), 9):
+  let result = cmp#parameter_position('hello(a, foo(bar))', 9, ',', '(', ')', 1)
+  AssertEqual [14, 17], result
+
+Execute (hello(a, foo(bar), b), 14):
+  let result = cmp#parameter_position('hello(a, foo(bar), b)', 14, ',', '(', ')', 1)
+  AssertEqual [20, 21], result
+
+Execute (hello(a, foo(bar), b), 7):
+  let result = cmp#parameter_position('hello(a, foo(bar), b)', 7, ',', '(', ')', 1)
+  AssertEqual [10, 18], result
+
+Execute (hello(a, foo(bar, world), b), 7):
+  let result = cmp#parameter_position('hello(a, foo(bar, world), b)', 7, ',', '(', ')', 1)
+  AssertEqual [10, 25], result
+
+Execute (hello(a, foo(bar, world)(g, h), b), 7):
+  let result = cmp#parameter_position('hello(a, foo(bar, world)(g, h), b)', 7, ',', '(', ')', 1)
+  AssertEqual [10, 31], result
+
+Execute (hello(a, foo(bar, world)(g, h)(i, j), b), 7):
+  let result = cmp#parameter_position('hello(a, foo(bar, world)(g, h)(i, j), b)', 7, ',', '(', ')', 1)
+  AssertEqual [10, 37], result
+" }}}
+
+" param has quote {{{
+Execute (hello(aa, "(", ccc), 7):
+  let result = cmp#parameter_position('hello(aa, "(", ccc)', 7, ',', '(', ')', 1)
+  AssertEqual [11, 14], result
+
+Execute (hello(aa, "(", ccc), 16, -1):
+  let result = cmp#parameter_position('hello(aa, "(", ccc)', 16, ',', ')', '(', -1)
+  AssertEqual [11, 14], result
+
+Execute (hello(aa, "(", ccc), 10):
+  let result = cmp#parameter_position('hello(aa, "(", ccc)', 10, ',', '(', ')', 1)
+  AssertEqual [16, 19], result
+
+Execute (hello(aa, "(", ccc), 10, -1):
+  let result = cmp#parameter_position('hello(aa, "(", ccc)', 10, ',', ')', '(', -1)
+  AssertEqual [7, 9], result
+
+Execute (hello(aa, "(", ccc), 11):
+  let result = cmp#parameter_position('hello(aa, "(", ccc)', 11, ',', '(', ')', 1)
+  AssertEqual [16, 19], result
+
+Execute (hello(aa, "(", ccc), 12):
+  let result = cmp#parameter_position('hello(aa, "(", ccc)', 12, ',', '(', ')', 1)
+  AssertEqual [16, 19], result
+
+Execute (hello(aa, "(", ccc), 13):
+  let result = cmp#parameter_position('hello(aa, "(", ccc)', 13, ',', '(', ')', 1)
+  AssertEqual [16, 19], result
+
+Execute (hello(aa, "(\"", ccc)):
+  let result = cmp#parameter_position('hello(aa, "(\"", ccc)', 7, ',', '(', ')', 1)
+  AssertEqual [11, 16], result
+
+Execute (hello(aa, "(\"", ccc), 18, -1):
+  let result = cmp#parameter_position('hello(aa, "(\"", ccc)', 18, ',', ')', '(', -1)
+  AssertEqual [11, 16], result
+
+Execute (hello(`a""a`, "(\"", "ccc", d), 24):
+  let result = cmp#parameter_position('hello(`a""a`, "(\"", "ccc", d)', 24, ',', '(', ')', 1)
+  AssertEqual [29, 30], result
+
+Execute (hello(`a"'a`, "(\"", "ccc", d), 24):
+  let result = cmp#parameter_position('hello(`a"''a`, "(\"", "ccc", d)', 24, ',', '(', ')', 1)
+  AssertEqual [29, 30], result
+
+Execute (fmt.Fscanf("%s %s", "hello", "world"), jump to hello):
+  let i = 12
+  while i <= 19
+      let result = cmp#parameter_position('fmt.Fscanf("%s %s", "hello", "world")', i, ',', '(', ')', 1)
+      AssertEqual [21, 28], result
+      let i += 1
+  endwhile
+
+Execute (fmt.Fscanf("%s %s", "hello", "world"), jump to world):
+  let i = 21
+  while i <= 28
+      let result = cmp#parameter_position('fmt.Fscanf("%s %s", "hello", "world")', i, ',', '(', ')', 1)
+      AssertEqual [30, 37], result
+      let i += 1
+  endwhile
+
+Execute (fmt.Fscanf("%s %s", "hello", "world"), jump to end):
+  let i = 30
+  while i <= 36
+      let result = cmp#parameter_position('fmt.Fscanf("%s %s", "hello", "world")', i, ',', '(', ')', 1)
+      AssertEqual [37, 37], result
+      let i += 1
+  endwhile
+
+Execute (fmt.Fscanf("%s %s", "hello", "world"), jump to world, -1):
+  let result = cmp#parameter_position('fmt.Fscanf("%s %s", "hello", "world")', 37, ',', ')', '(', -1)
+  AssertEqual [30, 37], result
+
+Execute (fmt.Fscanf("%s %s", "hello", "world"), jump to hello, -1):
+  let i = 30
+  while i < 37
+      let result = cmp#parameter_position('fmt.Fscanf("%s %s", "hello", "world")', i, ',', ')', '(', -1)
+      AssertEqual [21, 28], result
+      let i += 1
+  endwhile
+
+Execute (fmt.Fscanf("%s %s", "hello", "world"), jump to "%s %s", -1):
+  let i = 21
+  while i < 28
+      let result = cmp#parameter_position('fmt.Fscanf("%s %s", "hello", "world")', i, ',', ')', '(', -1)
+      AssertEqual [12, 19], result
+      let i += 1
+  endwhile
+"}}}
+
+" {{{param has <>
+Execute (hello<a, b>, 1):
+  let result = cmp#parameter_position('hello<a, b>', 1, ',', "(<", ")>", 1)
+  AssertEqual [0, 0], result
+
+Execute (hello<a, b>, 7):
+  let result = cmp#parameter_position('hello<a, b>', 7, ',', "(<", ")>", 1)
+  AssertEqual [10, 11], result
+
+Execute (hello<a, b>, 7):
+  let result = cmp#parameter_position('hello<a, b>', 7, ',', "(<", ")>", 1)
+  AssertEqual [10, 11], result
+
+Execute (hello<a, b>(c, d), 10):
+  let result = cmp#parameter_position('hello<a, b>(c, d)', 10, ',', "(<", ")>", 1)
+  AssertEqual [13, 14], result
+
+Execute (hello<a, b>(c, d, func<e, f>(g, h, i))), 16):
+  let result = cmp#parameter_position('hello<a, b>(c, d, func<e, f>(g, h, i)))', 16, ',', "(<", ")>", 1)
+  AssertEqual [19, 38], result
+"}}}
+
+"{{{ border check
+Execute(border left):
+  let result = cmp#parameter_position('hello(a, b)', 5, ',', '(<', ')>', 1)
+  AssertEqual [0, 0], result
+
+Execute(border ():
+  let result = cmp#parameter_position('hello(a, b)', 6, ',', '(<', ')>', 1)
+  AssertEqual [7, 8], result
+
+Execute(border )):
+  let result = cmp#parameter_position('hello(a, b)', 11, ',', '(<', ')>', 1)
+  AssertEqual [11, 11], result
+
+Execute(border ), -1):
+  let result = cmp#parameter_position('hello(a, b)', 11, ',', ')>', '(<', -1)
+  AssertEqual [10, 11], result
+
+Execute(border ) , -1):
+  let result = cmp#parameter_position('hello(a, b) ', 12, ',', ')>', '(<', -1)
+  AssertEqual [0, 0], result
+" }}}
+
+"{{{ has =
+Execute(=, 1, test0):
+  let result = cmp#parameter_position('hello(a=1, b=2)', 7, ',', '(', ')', 1)
+  AssertEqual [9, 10], result
+
+Execute(=, 1, test1):
+  let result = cmp#parameter_position('hello(a=1, b=2)', 8, ',', '(', ')', 1)
+  AssertEqual [9, 10], result
+
+Execute(=, 1, test2):
+  let result = cmp#parameter_position('hello(a=1, b=2)', 9, ',', '(', ')', 1)
+  AssertEqual [14, 15], result
+
+Execute(=, 1, test3):
+  let result = cmp#parameter_position('hello(a=1, b=(c=1, d=2))', 9, ',', '(', ')', 1)
+  AssertEqual [14, 24], result
+
+Execute(=, -1, test0):
+  let result = cmp#parameter_position('hello(a=1, b=2)', 14, ',', ')', '(', -1)
+  AssertEqual [9, 10], result
+
+Execute(=, -1, test1):
+  let result = cmp#parameter_position('hello(a=1, b=2)', 11, ',', ')', '(', -1)
+  AssertEqual [9, 10], result
+
+Execute(=, -1, test2):
+  let result = cmp#parameter_position('hello(a=1, b=2)', 10, ',', ')', '(', -1)
+  AssertEqual [9, 10], result
+
+Execute(=, -1, test3):
+  let result = cmp#parameter_position('hello(a=1, b=(c=1, d=2))', 24, ',', ')', '(', -1)
+  AssertEqual [14, 24], result
+"}}}
+
+" < > match
+Execute(>):
+  let result = cmp#parameter_position('a->hello(a)', 10, ',', ')>', '(<', -1)
+  AssertEqual [9, 9], result
+
+Execute(<):
+  let result = cmp#parameter_position('hello(a) < hello(b)', 9, ',', '(<', ')>', 1)
+  AssertEqual [0, 0], result

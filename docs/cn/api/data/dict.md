@@ -1,9 +1,9 @@
 ---
-title: "data#dict api"
-description: "data#dict API 提供了一些处理字典变量的常用方法，包括基础的增删改查。"
+title: "data#dict 接口"
+description: "data#dict 接口提供了一些处理字典变量的常用方法，包括基础的增删改查。"
 ---
 
-# [Available APIs](../../) >> data#dict
+# [可用接口](../../) >> data#dict
 
 <!-- vim-markdown-toc GFM -->
 
@@ -14,7 +14,7 @@ description: "data#dict API 提供了一些处理字典变量的常用方法，�
 
 ## 简介
 
-`data#dict` API 提供了一些处理字典类型变量的方法，包括基础的增删改查。
+`data#dict` 接口提供了一些处理字典类型变量的方法，包括基础的增删改查。
 
 ```vim
 let s:DICT = SpaceVim#api#import('data#dict')
