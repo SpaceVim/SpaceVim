@@ -8,12 +8,21 @@ let s:self.side = '│'
 let s:self.top_bottom_side = '─'
 let s:self.left_middle = '├'
 
+
+" ╰test
+"   ├hello
+"   │ ├one
+"   │ ╰two
+"   ╰world
+"
+" echo line should be prefix . extra . value
+
 function! s:self.drawing_tree(tree, ...) abort
   let tree = []
   let prefix = get(a:000, 0, '')
-  let has_next = get(a:000, 1, 0)
+  let extra = get(a:000, 1, ' ')
   if self._vim.is_string(a:tree)
-    call add(tree, prefix. a:tree)
+    call add(tree, prefix . extra . a:tree)
   elseif self._vim.is_list(a:tree)
     let i = 1
     for item in a:tree
@@ -23,7 +32,7 @@ function! s:self.drawing_tree(tree, ...) abort
         let extra = self.bottom_left_corner
       endif
       let i += 1
-      call extend(tree, self.drawing_tree(item, prefix . extra , i < len(a:tree)))
+      call extend(tree, self.drawing_tree(item, prefix,  extra ))
     endfor
   elseif self._vim.is_dict(a:tree)
     let i = 1
@@ -33,8 +42,8 @@ function! s:self.drawing_tree(tree, ...) abort
       else
         let extra = self.bottom_left_corner
       endif
-      call add(tree, prefix . key)
-      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix . (has_next ? self.side : self.bottom_left_corner)))
+      call add(tree, prefix . extra . key)
+      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix, extra))
     endfor
   endif
   return tree
