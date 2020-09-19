@@ -33,18 +33,18 @@ function! s:self.drawing_tree(tree, ...) abort
         let extra = self.bottom_left_corner
       endif
       let i += 1
-      call extend(tree, self.drawing_tree(item, prefix  . ( i < len(a:tree) ? self.side : ' '), extra))
+      call extend(tree, self.drawing_tree(item, prefix, extra))
     endfor
   elseif self._vim.is_dict(a:tree)
     let i = 1
     for key in keys(a:tree)
       if i < len(a:tree)
-        let extra = self.left_middle
-      else
         let extra = self.bottom_left_corner
+      else
+        let extra = self.left_middle
       endif
       call add(tree, prefix . extra . key)
-      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix  . ( i < len(a:tree) ? self.side : ' '), ' '))
+      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix  .  self.side , ' '))
       let i += 1
     endfor
   endif
