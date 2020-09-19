@@ -77,9 +77,12 @@ endfunction
 
 function! SpaceVim#plugins#a#alt(request_parse,...) abort
   let type = get(a:000, 0, 'alternate')
-  let conf_file_path = SpaceVim#plugins#a#getConfigPath()
-  let file = s:FILE.unify_path(bufname('%'), ':.')
-  let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, a:request_parse, type)
+  if !exists('b:alternate_file_config')
+    let conf_file_path = SpaceVim#plugins#a#getConfigPath()
+    let file = s:FILE.unify_path(bufname('%'), ':.')
+    let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, a:request_parse, type)
+  else
+  endif
   if !empty(alt)
     exe 'e ' . alt
   else
