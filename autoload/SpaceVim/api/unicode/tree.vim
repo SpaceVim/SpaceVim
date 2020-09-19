@@ -19,6 +19,7 @@ function! s:self.drawing_tree(tree, ...) abort
     endfor
   elseif self._vim.is_dict(a:tree)
     for key in keys(a:tree)
+      call add(tree, repeat(' ', indent) . key)
       call extend(tree, self.drawing_tree(get(a:tree, key, []), indent + 1))
     endfor
   endif
