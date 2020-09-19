@@ -1,5 +1,5 @@
 ---
-title: "vim#command api"
+title: "vim#command API"
 description: "vim#command API provides some basic functions and values for creatting vim custom command."
 ---
 

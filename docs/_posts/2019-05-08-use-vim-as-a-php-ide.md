@@ -2,8 +2,8 @@
 title: "Use Vim as a PHP IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/57497567-c6948480-730a-11e9-95ec-e44bf6e79984.png
-excerpt: "A general guide for using SpaceVim as PHP IDE, including layer configuration, requiems installation and usage."
-type: BlogPosting
+description: "A general guide for using SpaceVim as PHP IDE, including layer configuration, requiems installation and usage."
+type: article
 comments: true
 commentsID: "Use Vim as a PHP IDE"
 ---

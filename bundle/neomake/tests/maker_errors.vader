@@ -1,0 +1,35 @@
+Include: include/setup.vader
+
+Execute (Handles unexpected output on stderr from maker):
+  Save g:neomake_logfile
+  let g:neomake_logfile = tempname()
+
+  let maker = NeomakeTestsCommandMaker('stderr_maker', 'echo failed to run >&2; echo because something bad happened >&2')
+  let maker.output_stream = 'stdout'
+
+  call NeomakeTestsSetVimMessagesMarker()
+  CallNeomake 1, [maker]
+  if neomake#has_async_support()
+    AssertNeomakeMessage 'stderr_maker: unexpected output. See :messages for more information.', 0
+  else
+    AssertNeomakeMessage 'stderr_maker: unexpected output.', 0
+  endif
+
+  let messages_lines = NeomakeTestsGetVimMessages()
+  AssertEqual messages_lines[-2:-1], [
+  \ 'Neomake: stderr_maker: unexpected output on stderr: failed to run',
+  \ 'because something bad happened']
+
+  if !has('patch-7.4.503')
+    NeomakeTestsSkip 'Cannot check logfile contents.'
+  else
+    let log_lines = readfile(g:neomake_logfile)
+    let found = 0
+    for line in log_lines
+      if line =~# '\v^\d+:\d+:\d+ \d+ \[D .*\] stderr_maker: unexpected output on stderr: failed to run\\nbecause something bad happened.$'
+        let found = 1
+        break
+      endif
+    endfor
+    AssertEqual found, 1, 'Found unexpected-output msg'
+  endif

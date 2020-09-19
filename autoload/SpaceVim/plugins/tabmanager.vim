@@ -1,6 +1,6 @@
 "=============================================================================
 " tabmanager.vim --- tab manager for SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -74,7 +74,7 @@ function! s:update_context() abort
   silent! normal! gg"_dG
   let tree = s:TABs.get_tree()
   let ctx = []
-  for page in sort(keys(tree), 'N')
+  for page in sort(keys(tree),  s:Nsort)
     if gettabvar(page, 'spacevim_tabman_expandable', 1) == -1
       call add(ctx,
             \ '▼ ' . (page == tabpagenr() ? '*' : ' ')
@@ -313,6 +313,14 @@ function! s:focus_update_context() abort
     exe winnr . 'wincmd w'
   endif
 endfunction
+
+function! s:Nsort_func(a, b) abort
+  let l:a = type(a:a) == type('') ? str2nr(a:a) : a:a
+  let l:b = type(a:b) == type('') ? str2nr(a:b) : a:b
+  return l:a == l:b ? 0 : l:a > l:b ? 1 : -1
+endfunction
+" in case the 'N' sort flag is not available (compatibility for 7.4.898)
+let s:Nsort = has('patch-7.4.951') ? 'N' : 's:Nsort_func'
 
 augroup spacevim_plugin_tabman
   autocmd!

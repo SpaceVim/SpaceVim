@@ -9,6 +9,7 @@ description: "This layer provides functions that fold away lines that don't matc
 
 - [Intro](#intro)
 - [Install](#install)
+- [Options](#options)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -23,11 +24,23 @@ The search pattern can be a word or a regular expression.
 To use this layer, add it to your configuration file.
 
 ```toml
-[layers]
+[[layers]]
     name = "foldsearch"
 ```
 
-This layer requires [ripgrep](https://github.com/BurntSushi/ripgrep).
+This layer requires at least one search tools: `ag`, `rg`, `ack`, `pt` and `grep`,
+Choose your favorite one.
+
+## Options
+
+- foldsearch_highlight: a boolean option for enable/disabled highlight. Enabled by default. To disable
+  the highlight:
+
+```toml
+[[layers]]
+    name = "foldsearch"
+    foldsearch_highlight = false
+```
 
 ## Key bindings
 
@@ -35,4 +48,5 @@ This layer requires [ripgrep](https://github.com/BurntSushi/ripgrep).
 | ------------ | ----------------------------- |
 | `SPC F w`    | foldsearch input word         |
 | `SPC F W`    | foldsearch cursor word        |
-| `SPC F e`    | foldsearch regular expression |
+| `SPC F p`    | foldsearch regular expression |
+| `SPC F e`    | end foldsearch                |

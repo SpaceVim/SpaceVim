@@ -1,6 +1,6 @@
 "=============================================================================
 " c.vim --- SpaceVim lang#c layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -49,7 +49,11 @@
 
 
 
-let s:clang_executable = 'clang'
+if exists('s:clang_executable')
+  finish
+else
+  let s:clang_executable = 'clang'
+endif
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:CPT = SpaceVim#api#import('vim#compatible')
 
@@ -129,16 +133,30 @@ function! SpaceVim#layers#lang#c#config() abort
   augroup SpaceVim_lang_c
     autocmd!
     if s:enable_clang_syntax
-      if has('nvim') && SpaceVim#util#haspy3lib('clang')
-        auto FileType c,cpp  ChromaticaStart
-        " else Clamp will start when detect c, cpp file
-      elseif !has('job')
-        " Clighter8 will start when detect c, cpp file
-        auto FileType c,cpp  ClighterEnable
-      endif
+      auto FileType c,cpp  call s:highlight()
     endif
   augroup END
   call add(g:spacevim_project_rooter_patterns, '.clang')
+  if has('nvim')
+    if s:CPT.has('python3') && SpaceVim#util#haspy3lib('clang')
+      let s:highlight_cmd = 'ChromaticaStart'
+    else
+      let s:highlight_cmd = 'ClampStart'
+    endif
+  elseif has('job')
+    let s:highlight_cmd = 'ClStart'
+  else
+    let s:highlight_cmd = 'ClighterEnable'
+  endif
+endfunction
+
+let s:highlight_cmd = ''
+
+function! s:highlight() abort
+  try
+    exe s:highlight_cmd
+  catch
+  endtry
 endfunction
 
 let s:enable_clang_syntax = 0

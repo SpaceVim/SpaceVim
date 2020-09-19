@@ -1,0 +1,20 @@
+snippet     cond
+  (cond
+    ((${1}) ${2})
+    (${0:else}))
+
+snippet     case
+  (case ${1}
+    ((${2}) ${3})
+    (${0:else}))
+
+# gauche specific
+snippet     gauche-testsuite
+abbr        (use gauche.test)(test-start ...
+options     head
+  (use gauche.test)
+  (test-start "${1}.scm")
+
+  (load "$1.scm")
+
+  (test* "${2}" ${3:expected} ${4:actual})

@@ -1,0 +1,1 @@
+Error: Could not parse for environment production: Syntax error at end of input (file: /tmp/neomake-tests/tests/fixtures/input/puppet/syntax-error-eoi.pp)

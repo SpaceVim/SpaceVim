@@ -1,0 +1,5 @@
+abc vim \w\+\%{abc,3,.} # a comment here
+ [a-z]\%\# # more comments
+# a whole line of comments
+abc¡ vi&m \w\+\%{abc,3,.} # some errors
+<wrong line start jdh # with a comment

@@ -1,0 +1,14 @@
+
+
+
+def main():
+
+
+  pass
+
+
+.body{color:red;}
+
+
+.textleft{
+text-align:left;}

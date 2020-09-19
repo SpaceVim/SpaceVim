@@ -1,0 +1,332 @@
+snippet function
+abbr public function () {}
+	${1:public }function ${2:#:FunctionName}(${3})
+	{
+		${4:TARGET}
+	}
+
+snippet function_literal
+options word
+abbr function () {}
+	function (${1})${2: use } {
+		${3:TARGET}
+	}
+
+snippet php
+	<?php
+	${1:TARGET}
+    /* End of file ${2:filename}.php */
+
+snippet pecho
+	<?php echo ${1} ?>${0}
+
+snippet echoh
+	<?php echo htmlentities(${1}, ENT_QUOTES, 'utf-8') ?>${0}
+
+snippet pforeach
+	<?$php foreach ($${1:#:variable} as $${2:#:key}${3: =>}): ?>
+	${0:TARGET}
+	<?php endforeach; ?>
+
+snippet pifelse
+	<?php if (${1:#:condition}): ?>
+	${2:TARGET}
+	<?php else: ?>
+	${0}
+	<?php endif; ?>
+
+snippet pif
+	<?php if (${1:#:condition}): ?>
+	${0:TARGET}
+	<?php endif; ?>
+
+snippet pelse
+	<?php else: ?>
+
+snippet pthis
+	<?php $this->${0} ?>
+
+snippet pethis
+	<?php echo $this->${0} ?>
+
+snippet doc_class_var
+	/**
+	 * ${3:#:undocumented class variable}
+	 *
+	 * @var ${4:#:string}
+	 **/
+	${1:#:var} $${2};${0}
+
+snippet doc_constant
+	/**
+	 * ${3:#:undocumented constant}
+	 **/
+	define(${1} ${2});${0}
+
+snippet doc_interface_function
+	/**
+	 * ${4:#:undocumented function}
+	 *
+	 * @return ${5:void}
+	 * @author ${6}
+	 **/
+	${1}function ${2}(${3});${0}
+
+snippet doc_function
+	/**
+	 * ${4:#:undocumented function}
+	 *
+	 * @return ${5:void}
+	 * @author ${6}
+	 **/
+	${1}function ${2}(${3})
+	{
+		${0:TARGET}
+	}
+
+
+snippet doch
+	/**
+	 * ${1}
+	 *
+	 * @author ${2}
+	 * @version ${3}
+	 * @copyright ${4}
+	 * @package ${5:default}
+	 **/
+
+	/**
+	 * Define DocBlock
+	 **/
+
+snippet doci
+	/**
+	 * ${2:#:undocumented class}
+	 *
+	 * @package ${3:default}
+	 * @author ${4}
+	 **/
+	interface ${1}
+	{
+		${0:TARGET}
+	} // END interface $1
+
+snippet doc
+	/**
+	 * ${0}
+	 */
+
+snippet class_with_constructor
+	/**
+	 * ${1}
+	 */
+	class ${2:#:ClassName}${3:#:extends}
+	{
+		$5
+		function ${4:__construct}(${5:#:argument})
+		{
+			${0:# code...}
+		}
+	}
+
+snippet class
+options head
+	class ${2:#:ClassName} {
+		${0:TARGET}
+	}
+
+snippet def
+	${1}defined('${2}')${0}
+
+
+snippet dowhile
+options head
+	do {
+		${0:TARGET}
+	} while (${1:#:condition});
+
+snippet if?
+options head
+	$${1:#:retVal} = (${2:#:condition}) ? ${3:#:a} : ${4:#:b};
+
+snippet ifelse
+options head
+	if (${1:#:condition}) {
+		${2:TARGET}
+	} else {
+		${3:#:code...}
+	}
+	${0}
+
+snippet if
+options head
+	if (${1:#:condition}) {
+		${0:TARGET}
+	}
+
+snippet var_dump
+options head
+  var_dump(${0:TARGET});
+
+snippet p
+options head
+  print_r(${1});
+
+snippet echo
+options head
+	echo "${1:#:string}";
+
+snippet println
+options head
+	printf("${1:#:string}\n"${2:, });
+
+snippet else
+	else {
+		${0:TARGET}
+	}
+
+snippet elseif
+	elseif (${1:#:condition}) {
+		${0:TARGET}
+	}
+
+snippet for
+options head
+	for ($${1:i}=${2:0}; $$1 < ${3}; $$1++) {
+		${0:TARGET}
+	}
+
+snippet foreach-hashmap
+	foreach ($${1:#:variable} as $${2:#:key}${3: =>} $${4:#:value}) {
+		${0:TARGET}
+	}
+
+snippet foreach-list
+alias foreach
+options head
+	foreach ($${1:#:variable} as $${2:#:x}) {
+		${0:TARGET}
+	}
+
+snippet construct
+options head
+	function __construct(${1})
+	{
+		${0:TARGET}
+	}
+
+snippet here
+	<<<${1:HTML}
+	${2:TARGET:#:content here}
+	$1;
+
+snippet inc
+options head
+	include '${1:#:file}';${0}
+
+snippet inco
+options head
+	include_once '${1:#:file}';${0}
+
+snippet array
+	$${1:#:arrayName} = array('${2}' => ${3} ${0});
+
+snippet req
+options head
+	require '${1:#:file}';${0}
+
+snippet reqo
+options head
+	require_once '${1:#:file}';${0}
+
+snippet ret
+options head
+	return${1};${0}
+
+snippet retf
+options head
+	return false;
+
+snippet rett
+options head
+	return true;
+
+snippet case
+options head
+	case '${1:#:variable}':
+		${0:#:code...}
+		break;
+
+snippet switch
+abbr sw
+options head
+	switch (${1:#:variable}) {
+	case '${2:#:value}':
+		${3:#:code...}
+		break;
+	${0}
+	default:
+		${4:#:code...}
+		break;
+	}
+
+snippet try
+options head
+	try {
+		${1:TARGET}
+	} catch (${2:#:Exception} $e) {
+		${3:#:code}
+	}
+
+snippet tryf
+options head
+	try {
+		${1:TARGET}
+	} catch (${2:#:Exception} $e) {
+		${3:#:code}
+	} finally {
+		${4:#:code}
+	}
+
+snippet throw
+options head
+	throw new ${1}Exception(${2:"${3:#:Error Processing Request}"}${4:});
+	${0}
+
+snippet while
+abbr wh
+options head
+	while (${1}) {
+		${0:TARGET}
+	}
+
+snippet gloabals
+	\$GLOBALS['${1:#:variable}']${2: = }${3:#:something}${4:;}${0}
+
+snippet cookie
+	\$_COOKIE['${1:#:variable}']
+
+snippet env
+	\$_ENV['${1:#:variable}']
+
+snippet files
+	\$_FILES['${1:#:variable}']
+
+snippet get
+	\$_GET['${1:#:variable}']
+
+snippet post
+	\$_POST['${1:#:variable}']
+
+snippet request
+	\$_REQUEST['${1:#:variable}']
+
+snippet server
+	\$_SERVER['${1:#:variable}']
+
+snippet session
+	\$_SESSION['${1:#:variable}']
+
+snippet var_export
+alias inspect
+  var_export(${1}, true)

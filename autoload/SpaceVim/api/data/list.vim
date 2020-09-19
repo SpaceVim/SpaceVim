@@ -1,6 +1,6 @@
 "=============================================================================
 " list.vim --- SpaceVim list API
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -55,6 +55,14 @@ endfunction
 " unshift({list})
 "
 "  insert an item to the begin of the {list} 
+"
+" clear({list})
+"
+"  clear items in the {list}
+"
+" char_range({from}, {to})
+"
+"  return a characters list based on the ascii number range.
 
 function! s:pop(list) abort
     return remove(a:list, -1)

@@ -9,6 +9,7 @@ Execute ( SpaceVim api: vim#buffer buf_set_lines):
   let nr = buffer.bufadd('')
   call setbufvar(nr, '&buftype', 'nofile')
   call setbufvar(nr, '&buflisted', 0)
+  Log 'The value of g:_spacevim_if_lua is ' . get(g:, '_spacevim_if_lua', 0)
   call buffer.buf_set_lines(nr, 0, 1, 0, ['line 1', 'line 2', 'line 3', 'line 4'])
   AssertEqual getbufline(nr, 1, '$'), ['line 1', 'line 2', 'line 3', 'line 4']
   call buffer.buf_set_lines(nr, 1, 3, 0, ['replace 1', 'replace 2', 'replace 3'])
@@ -17,6 +18,15 @@ Execute ( SpaceVim api: vim#buffer buf_set_lines):
   AssertEqual getbufline(nr, 1, '$'), ['line 1', 'replace 1', 'replace 2', 'replace 1', 'replace 2', 'replace 3']
   call buffer.buf_set_lines(nr, 2, -2, 0, ['replace 1', 'replace 2', 'replace 3'])
   AssertEqual getbufline(nr, 1, '$'), ['line 1', 'replace 1', 'replace 1', 'replace 2', 'replace 3', 'replace 3']
+  call buffer.buf_set_lines(nr, 0, -1, 0, ['xx 1'])
+  AssertEqual getbufline(nr, 1, '$'), ['xx 1']
   exe 'bd!' nr
   unlet nr
   unlet buffer
+
+Execute ( SpaceVim api: vim#buffer add_highlight):
+  let buffer = SpaceVim#api#import('vim#buffer')
+  let highlit = SpaceVim#api#import('vim#highlight')
+  let nr = buffer.bufnr()
+  call buffer.add_highlight(nr,'String', 1, 1, 1)
+  AssertEqual highlit.syntax_at(1, 1), 'String'

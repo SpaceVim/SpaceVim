@@ -1,0 +1,32 @@
+snippet     open
+abbr        open account
+options     head
+	${1:YYYY}-${2:MM}-${3:DD} open ${4:Account} ${8:#:Commodity}
+
+snippet     close
+abbr        close account
+options     head
+	${1:YYYY}-${2:MM}-${3:DD} close ${4:#:Account}
+
+snippet     commodity
+alias       currency
+abbr        declare commodity
+options     head
+	${1:YYYY}-${2:MM}-${3:DD} commodity ${4:Commodity}
+
+snippet     transaction
+abbr        transaction
+options     head
+	${1:YYYY}-${2:MM}-${3:DD} * "${5:Payee}" "${6:Narration}"
+		${9:Account} ${10:Amount} ${11:Commodity}
+		${14:Account} ${15:#:Amount} ${16:#:Commodity}
+
+snippet     balance
+abbr        balance
+options     head
+	${1:YYYY}-${2:MM}-${3:DD} balance ${4:Account} ${5:Amount} ${6:#:Commodity}
+
+snippet     pad
+abbr        pad
+options     head
+	${1:YYYY}-${2:MM}-${3:DD} pad ${4:BalanceAccount} ${5:PadAccount}

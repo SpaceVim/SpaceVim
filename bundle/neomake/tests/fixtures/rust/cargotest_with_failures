@@ -1,0 +1,20 @@
+error[E0433]: failed to resolve. Maybe a missing `extern crate non;`?
+ --> src/lib.rs:5:13
+  |
+5 |         use non::existent::module;
+  |             ^^^ Maybe a missing `extern crate non;`?
+
+warning: unused import: `non::existent::module`
+ --> src/lib.rs:5:13
+  |
+5 |         use non::existent::module;
+  |             ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: #[warn(unused_imports)] on by default
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0433`.
+
+To learn more, run the command again with --verbose.
+

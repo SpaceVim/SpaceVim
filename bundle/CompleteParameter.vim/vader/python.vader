@@ -1,0 +1,281 @@
+Before:
+  let g:complete_parameter_py_keep_value = 0
+  let g:complete_parameter_py_remove_default = 0
+
+" {{{ ycm
+Execute (error menu):
+  let completed_item = {'menu': 'module:func', 'info': 'func()'}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (error info):
+  let completed_item = {'menu': 'function:func', 'info': ''}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (foo()):
+  let completed_item = {'menu': 'function:foo', 'info': "foo()\nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (foo() -> int):
+  let completed_item = {'menu': 'function:foo', 'info': "foo() -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (foo(a) -> int):
+  let completed_item = {'menu': 'function:foo', 'info': "foo(a) -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a)'], result
+
+Execute (foo(a, b) -> int):
+  let completed_item = {'menu': 'function:foo', 'info': "foo(a, b) -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (foo(a, b = 1) -> int):
+  let completed_item = {'menu': 'function:foo', 'info': "foo(a, b = 1) -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (foo(a, b = []) -> int):
+  let completed_item = {'menu': 'function:foo', 'info': "foo(a, b = []) -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (foo(a, b = []) -> (int, True):
+  let completed_item = {'menu': 'function:foo', 'info': "foo(a, b = []) -> (int, True) \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (add(a, b), omni):
+  let completed_item = {'word': '(', 'menu': '', 'info': ' ', 'kind': '', 'abbr': 'add(a,b)'}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (remove `[]`):
+  let g:complete_parameter_py_keep_value = 1
+  let completed_item = {'word': 'mkdir', 'menu': 'def mkdir', 'info': 'mkdir(path [, mode=0777])^@^@Create a directory.', 'kind': '', 'abbr': ''}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(path, mode=0777)'], result
+
+Execute (remove default 1):
+  let g:complete_parameter_py_keep_value = 0
+  let g:complete_parameter_py_remove_default = 1
+  let completed_item = {'word': 'mkdir', 'menu': 'def mkdir', 'info': 'mkdir(path , mode=0777)^@^@Create a directory.', 'kind': '', 'abbr': ''}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(path)'], result
+  let g:complete_parameter_py_remove_default = 0
+
+" interact(self, escape_character=chr(29),             input_filter=None,
+" output_filter=None)
+Execute (interact(self, excape_character=ch(29)):
+  let completed_item = {'menu': 'function:interact', 'info': "interact(self, escape_character=chr(29),             input_filter=None,\noutput_filter=None)"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(escape_character, input_filter, output_filter)'], result
+
+Execute (interact(self, excape_character=ch(29) -> int):
+  let completed_item = {'menu': 'function:interact', 'info': "interact(self, escape_character=chr(29),             input_filter=None,\noutput_filter=None) -> int"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(escape_character, input_filter, output_filter)'], result
+
+Execute (interact(self, excape_character=ch(29) -> (int, int)):
+  let completed_item = {'menu': 'function:interact', 'info': "interact(self, escape_character=chr(29),             input_filter=None,\noutput_filter=None) -> (int, int)"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(escape_character, input_filter, output_filter)'], result
+
+Execute (interact(self, excape_character=ch(29) -> (int, int)):
+  let g:complete_parameter_py_keep_value = 1
+  let completed_item = {'menu': 'function:interact', 'info': "interact(self, escape_character=chr(29),             input_filter=None,\noutput_filter=None) -> (int, int)"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(escape_character=chr(29), input_filter=None, output_filter=None)'], result
+
+Execute (no parameter):
+  let completed_item =  {'word': 'mkdir', 'menu': 'def mkdir', 'info': 'Create a directory.\n\nif dir_fd is not None, it should be a file descriptor open to a directory,\n and path should be relative; path will then be relative to that directory.\ndir_fd may not be implemented on your platform.\n If it is unavailable, using it will raise a NotImplementedError.\n\nthe mode argument is ignored on Windows.', 'kind': '', 'abbr': ''}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['()'], result
+"}}}
+
+" {{{ def
+Execute (error menu):
+  let completed_item = {'menu': 'module:func', 'info': 'func()'}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (error info):
+  let completed_item = {'menu': 'def func', 'info': ''}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (foo()):
+  let completed_item = {'menu': 'def foo', 'info': "foo()\nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (foo() -> int):
+  let completed_item = {'menu': 'def foo', 'info': "foo() -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (foo(a) -> int):
+  let completed_item = {'menu': 'def foo', 'info': "foo(a) -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a)'], result
+
+Execute (foo(a, b) -> int):
+  let completed_item = {'menu': 'def foo', 'info': "foo(a, b) -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (foo(a, b = 1) -> int):
+  let completed_item = {'menu': 'def foo', 'info': "foo(a, b = 1) -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (foo(a, b = []) -> int):
+  let completed_item = {'menu': 'def foo', 'info': "foo(a, b = []) -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (foo(a, b = []) -> (int, True):
+  let completed_item = {'menu': 'def foo', 'info': "foo(a, b = []) -> (int, True) \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (multi line, with self, ', )'):
+  let completed_item = {'menu': 'def exec_command', 'info': "exec_command(         self,         command,         bufsize=-1,\ntimeout=None,         get_pty=False,         environment=None,     )"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(command, bufsize, timeout, get_pty, environment)'], result
+
+Execute (multi line, with cls, ', )'):
+  let completed_item = {'menu': 'def exec_command', 'info': "exec_command(         cls,         command,         bufsize=-1,\ntimeout=None,         get_pty=False,         environment=None,     )"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(command, bufsize, timeout, get_pty, environment)'], result
+
+Execute (multi line, ', )'):
+  let completed_item = {'menu': 'def exec_command', 'info': "exec_command(         command,         bufsize=-1,\ntimeout=None,         get_pty=False,         environment=None,     )"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(command, bufsize, timeout, get_pty, environment)'], result
+
+Execute (multi line):
+  let completed_item = {'menu': 'def exec_command', 'info': "exec_command(         command,         bufsize=-1,\ntimeout=None,         get_pty=False,         environment=None)"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(command, bufsize, timeout, get_pty, environment)'], result
+
+" interact(self, escape_character=chr(29),             input_filter=None,
+" output_filter=None)
+Execute (interact(self, excape_character=ch(29)):
+  let completed_item = {'menu': 'def interact', 'info': "interact(self, escape_character=chr(29),             input_filter=None,\noutput_filter=None)"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(escape_character, input_filter, output_filter)'], result
+
+Execute (interact(self, excape_character=ch(29) -> int):
+  let completed_item = {'menu': 'def interact', 'info': "interact(self, escape_character=chr(29),             input_filter=None,\noutput_filter=None) -> int"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(escape_character, input_filter, output_filter)'], result
+
+Execute (interact(self, excape_character=ch(29) -> (int, int)):
+  let completed_item = {'menu': 'def interact', 'info': "interact(self, escape_character=chr(29),             input_filter=None,\noutput_filter=None) -> (int, int)"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(escape_character, input_filter, output_filter)'], result
+"}}}
+
+" {{{ deoplete
+Execute (foo()):
+  let completed_item = {'word': 'foo(', 'info': "foo()\nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (foo() -> int):
+  let completed_item = {'word': 'foo(', 'info': "foo() -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (foo(a) -> int):
+  let completed_item = {'word': 'foo(', 'info': "foo(a) -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a)'], result
+
+Execute (foo(a, b) -> int):
+  let completed_item = {'word': 'foo(', 'info': "foo(a, b) -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (foo(a, b = 1) -> int):
+  let completed_item = {'word': 'foo(', 'info': "foo(a, b = 1) -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (foo(a, b = []) -> int):
+  let completed_item = {'word': 'foo(', 'info': "foo(a, b = []) -> int \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (foo(a, b = []) -> (int, True):
+  let completed_item = {'word': 'foo(', 'info': "foo(a, b = []) -> (int, True) \nfoo function"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (multi line, with self, ', )'):
+  let completed_item = {'word': 'exec_command(', 'info': "exec_command(         self,         command,         bufsize=-1,\ntimeout=None,         get_pty=False,         environment=None,     )"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(command, bufsize, timeout, get_pty, environment)'], result
+
+Execute (multi line, with cls, ', )'):
+  let completed_item = {'word': 'exec_command(', 'info': "exec_command(         cls,         command,         bufsize=-1,\ntimeout=None,         get_pty=False,         environment=None,     )"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(command, bufsize, timeout, get_pty, environment)'], result
+
+Execute (multi line, ', )'):
+  let completed_item = {'word': 'exec_command(', 'info': "exec_command(         command,         bufsize=-1,\ntimeout=None,         get_pty=False,         environment=None,     )"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(command, bufsize, timeout, get_pty, environment)'], result
+
+Execute (multi line):
+  let completed_item = {'word': 'exec_command(', 'info': "exec_command(         command,         bufsize=-1,\ntimeout=None,         get_pty=False,         environment=None)"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(command, bufsize, timeout, get_pty, environment)'], result
+
+" interact(self, escape_character=chr(29),             input_filter=None,
+" output_filter=None)
+Execute (interact(self, excape_character=ch(29)):
+  let completed_item = {'word': 'interact(', 'menu': 'def interact', 'info': "interact(self, escape_character=chr(29),             input_filter=None,\noutput_filter=None)"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(escape_character, input_filter, output_filter)'], result
+
+Execute (interact(self, excape_character=ch(29) -> int):
+  let completed_item = {'word': 'interact(', 'menu': 'def interact', 'info': "interact(self, escape_character=chr(29),             input_filter=None,\noutput_filter=None) -> int"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(escape_character, input_filter, output_filter)'], result
+
+Execute (interact(self, excape_character=ch(29) -> (int, int)):
+  let completed_item = {'word': 'interact(', 'menu': 'def interact', 'info': "interact(self, escape_character=chr(29),             input_filter=None,\noutput_filter=None) -> (int, int)"}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(escape_character, input_filter, output_filter)'], result
+"}}}
+
+Execute (jedi):
+  let completed_item = {'word': 'test_func', 'menu': '[jedi] ', 'info': 'test_func(arg1, arg2)', 'kind': 'function', 'abbr': 'test_func(arg1, arg2)'} 
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(arg1, arg2)'], result
+
+Execute (coc.nvim + coc-pyhon[MPLS]):
+  let completed_item = {'word': 'fun', 'menu': '[LS]', 'user_data': '{"cid":1578967439,"source":"python","index":8}', 'info': '```\nfun(x, y)\n```', 'kind': 'v', 'abbr': 'fun'}
+  let result = cm_parser#python#parameters(completed_item)
+  AssertEqual ['(x, y)'], result
+
+" echos
+Execute (echos, foo):
+  let completed_item = {'menu': 'function:foo', 'info': "foo()\nfoo function"}
+  let result = cm_parser#python#echos(completed_item)
+  AssertEqual ['foo()'], result
+
+Execute (echos, foo(a) -> int):
+  let completed_item = {'menu': 'function:foo', 'info': "foo(a) -> int \nfoo function"}
+  let result = cm_parser#python#echos(completed_item)
+  AssertEqual ['foo(a)'], result
+
+Execute (echos, foo(a, b = []) -> int):
+  let completed_item = {'menu': 'function:foo', 'info': "foo(a, b = []) -> int \nfoo function"}
+  let result = cm_parser#python#echos(completed_item)
+  AssertEqual ['foo(a, b = [])'], result

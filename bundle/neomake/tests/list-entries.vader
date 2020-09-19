@@ -1,0 +1,12 @@
+Include: include/setup.vader
+
+Execute (default_entry_type is only used for valid/recognized entries):
+  let maker = {'exe': 'printf', 'args': ['%s\n', 'errorfile:msg', 'info']}
+  let maker.remove_invalid_entries = 0
+  let maker.errorformat = '%f:%m'
+
+  CallNeomake 0, [maker]
+  AssertEqual map(getqflist(), '[v:val.text, v:val.type]'), [
+  \ ['msg', 'W'],
+  \ ['info', '']]
+  bwipe errorfile

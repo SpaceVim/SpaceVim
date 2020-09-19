@@ -14,7 +14,7 @@ SpaceVim 中文博客主要公布最新版本发布、新特性预览以及一�
             <li>
                <h5><a href="{{ post.url }}">{{ post.title }}</a></h5>
                <span class="post-date">{{ post.date | date_to_string }}</span>
-               <p>{{ post.excerpt | truncatewords: 100 }}</p>
+               <p>{{ post.description | truncatewords: 100 }}</p>
             </li>
     {% endfor %}
 </ul>

@@ -5,16 +5,15 @@ install_vim() {
     local tmp="$(mktemp -d)"
     local out="${DEPS}/_vim/$tag"
     mkdir -p $out
-    local ncpu=$(awk '/^processor/{n+=1}END{print n}' /proc/cpuinfo)
     git clone --depth 1 --single-branch $ext $URL $tmp
     cd $tmp
-    ./configure --enable-fail-if-missing \
+    ./configure \
         --with-features=huge \
         --enable-pythoninterp \
         --enable-python3interp \
         --enable-luainterp \
         --prefix=${out}
-    make -j$ncpu
+    make
     make install
 }
 
@@ -33,8 +32,8 @@ install_nvim() {
         CMAKE_BUILD_TYPE=Release \
         CMAKE_EXTRA_FLAGS="-DTRAVIS_CI_BUILD=ON -DCMAKE_INSTALL_PREFIX:PATH=$out"
     make install
-    pip install --user pynvim
-    pip3 install --user pynvim
+    pip install pynvim
+    pip3 install pynvim
 }
 
 install() {
