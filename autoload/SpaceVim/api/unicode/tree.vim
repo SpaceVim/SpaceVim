@@ -22,6 +22,8 @@ function! s:self.drawing_tree(tree, ...) abort
   let prefix = get(a:000, 0, '')
   let extra = get(a:000, 1, '')
   if self._vim.is_string(a:tree)
+    let prefix = prefix . extra
+    let extra = self.bottom_left_corner
     call add(tree, prefix . extra . a:tree)
   elseif self._vim.is_list(a:tree)
     let i = 1
