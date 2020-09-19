@@ -28,12 +28,12 @@ function! s:self.drawing_tree(tree, ...) abort
     let i = 1
     for key in keys(a:tree)
       if i < len(a:tree)
-        let prefix .= self.left_middle
+        let extra = self.side
       else
-        let prefix .= self.bottom_left_corner
+        let extra = self.bottom_left_corner
       endif
       call add(tree, prefix . key)
-      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix))
+      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix . extra))
     endfor
   endif
   return tree
