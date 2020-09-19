@@ -37,7 +37,7 @@ function! s:self.drawing_tree(tree, ...) abort
           let sidebar = ' '
         endif
       endif
-      call extend(tree, self.drawing_tree(item, prefix, extra))
+      call extend(tree, self.drawing_tree(item, prefix . extra, ' '))
       let i += 1
     endfor
   elseif self._vim.is_dict(a:tree)
