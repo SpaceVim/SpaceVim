@@ -687,6 +687,24 @@ custom_color_palette = [
 ]
 ```
 
+**Custion section**
+
+You can use bootstrap function to add custom section to statusline, for example:
+
+```vim
+function! s:test_section() abort
+  return 'ok'
+endfunction
+call SpaceVim#layers#core#statusline#register_sections('test', function('s:test_section'))
+```
+
+Then, add `test` section to `statusline_right_sections` option:
+
+```toml
+[options]
+    statusline_right_sections = ['cursorpos', 'percentage', 'test']
+```
+
 ### Tabline
 
 Buffers will be listed on the tabline if there is only one tab, each item contains
