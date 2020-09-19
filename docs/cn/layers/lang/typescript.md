@@ -53,7 +53,6 @@ npm install -g typescript
 
 | 快捷键      | 功能描述           |
 | ----------- | ------------------ |
-| `SPC l c`   | type definition    |
 | `SPC l d`   | show documentation |
 | `SPC l e`   | rename symbol      |
 | `SPC l f`   | code fix           |
@@ -63,3 +62,4 @@ npm install -g typescript
 | `SPC l t`   | type               |
 | `SPC l g d` | generate doc       |
 | `g d`       | defintion preview  |
+| `g D`       | type definition    |

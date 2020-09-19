@@ -1,0 +1,22 @@
+Include: include/setup.vader
+
+Execute (sqlint):
+  let sqlint_output =
+  \"sql/V1__BaseSchema.sql:1:1:ERROR syntax error at or near #\n
+  \sql/V1__BaseSchema.sql:22:13:WARNING syntax warning at or near alterUser"
+
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#sql#sqlint().errorformat
+  lgetexpr sqlint_output
+
+  let loclist = getloclist(0)
+  AssertEqual len(loclist), 2
+  AssertEqual loclist[0].lnum, 1
+  AssertEqual loclist[0].col, 1
+  AssertEqual loclist[0].text, 'syntax error at or near #'
+  AssertEqual loclist[0].type, 'E'
+  AssertEqual loclist[1].lnum, 22
+  AssertEqual loclist[1].col, 13
+  AssertEqual loclist[1].text, 'syntax warning at or near alterUser'
+  AssertEqual loclist[1].type, 'W'
+  bwipe sql/V1__BaseSchema.sql

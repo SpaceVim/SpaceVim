@@ -34,5 +34,6 @@ else
     .ci/detach_plugin.sh dein-ui
     .ci/detach_plugin.sh vim-todo
     .ci/detach_plugin.sh iedit
+    .ci/push_baidu.sh
   fi
 fi

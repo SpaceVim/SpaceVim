@@ -1,5 +1,5 @@
 ---
-title: "unicode#spinners api"
+title: "unicode#spinners API"
 description: "unicode#spinners API provides some basic functions for starting spinners timer"
 ---
 

@@ -3,6 +3,7 @@
 | language          | layer doc                                                           |
 | ----------------- | ------------------------------------------------------------------- |
 | Agda              | [lang#agda](https://spacevim.org/layers/lang/agda/)                 |
+| ActionScript      | [lang#actionscript](https://spacevim.org/layers/lang/actionscript/) |
 | Assembly          | lang#assemble                                                       |
 | AspectJ           | [lang#asepctj](https://spacevim.org/layers/lang/aspectj/)           |
 | AutoHotkey        | [lang#autohotkey](https://spacevim.org/layers/lang/autohotkey/)     |
@@ -12,6 +13,7 @@
 | Clojure           | [lang#clojure](https://spacevim.org/layers/lang/clojure/)           |
 | CoffeeScript      | [lang#coffeescript](https://spacevim.org/layers/lang/coffeescript/) |
 | Crystal           | [lang#crystal](https://spacevim.org/layers/lang/crystal/)           |
+| Chapel            | [lang#chapel](https://spacevim.org/layers/lang/chapel/)             |
 | D                 | [lang#d](https://spacevim.org/layers/lang/d/)                       |
 | Dart              | [lang#dart](https://spacevim.org/layers/lang/dart/)                 |
 | DOS batch         | [lang#batch](https://spacevim.org/layers/lang/batch/)               |
@@ -20,21 +22,30 @@
 | erlang            | [lang#erlang](https://spacevim.org/layers/lang/erlang/)             |
 | F#                | [lang#fsharp](https://spacevim.org/layers/lang/fsharp/)             |
 | FoxPro            | [lang#foxpro](https://spacevim.org/layers/lang/foxpro/)             |
+| Fortran           | [lang#fortran](https://spacevim.org/layers/lang/fortran/)           |
 | Go                | [lang#go](https://spacevim.org/layers/lang/go/)                     |
 | Goby              | [lang#goby](https://spacevim.org/layers/lang/goby/)                 |
 | Gosu              | [lang#gosu](https://spacevim.org/layers/lang/gosu/)                 |
+| graphql           | [lang#graphql](https://spacevim.org/layers/lang/graphql/)           |
 | Groovy            | [lang#groovy](https://spacevim.org/layers/lang/groovy/)             |
 | Hack              | [lang#hack](https://spacevim.org/layers/lang/hack/)                 |
 | Haskell           | [lang#haskell](https://spacevim.org/layers/lang/haskell/)           |
+| html              | [lang#html](https://spacevim.org/layers/lang/html/)                 |
+| Hy                | [lang#hy](https://spacevim.org/layers/lang/hy/)                     |
 | Idris             | [lang#idris](https://spacevim.org/layers/lang/idris/)               |
 | Io                | [lang#io](https://spacevim.org/layers/lang/io/)                     |
+| ipynb             | [lang#ipynb](https://spacevim.org/layers/lang/ipynb/)               |
 | J                 | [lang#j](https://spacevim.org/layers/lang/j/)                       |
+| janet             | [lang#janet](https://spacevim.org/layers/lang/janet/)               |
 | Java              | [lang#java](https://spacevim.org/layers/lang/java/)                 |
 | JavaScript        | [lang#javascript](https://spacevim.org/layers/lang/javascript/)     |
 | Julia             | [lang#julia](https://spacevim.org/layers/lang/julia/)               |
 | Kotlin            | [lang#kotlin](https://spacevim.org/layers/lang/kotlin/)             |
+| lasso             | [lang#lasso](https://spacevim.org/layers/lang/lasso/)               |
+| latex             | [lang#latex](https://spacevim.org/layers/lang/latex/)               |
 | LiveScript        | [lang#livescript](https://spacevim.org/layers/lang/livescript/)     |
 | Lua               | [lang#lua](https://spacevim.org/layers/lang/lua/)                   |
+| MoonScript        | [lang#moonscript](https://spacevim.org/layers/lang/moonscript/)     |
 | MATLAB            | [lang#matlab](https://spacevim.org/layers/lang/matlab/)             |
 | Nim               | [lang#nim](https://spacevim.org/layers/lang/nim/)                   |
 | OCaml             | [lang#ocaml](https://spacevim.org/layers/lang/ocaml/)               |
@@ -65,7 +76,6 @@
 | 4th Dimension     |                                                                     |
 | ABAP              |                                                                     |
 | ABC               |                                                                     |
-| ActionScript      |                                                                     |
 | Ada               |                                                                     |
 | Agilent VEE       |                                                                     |
 | Algol             |                                                                     |
@@ -95,7 +105,6 @@
 | CFML              |                                                                     |
 | cg                |                                                                     |
 | Ch                |                                                                     |
-| Chapel            |                                                                     |
 | CHILL             |                                                                     |
 | CIL               |                                                                     |
 | CL                |                                                                     |
@@ -126,7 +135,6 @@
 | Fantom            |                                                                     |
 | Felix             |                                                                     |
 | Forth             |                                                                     |
-| Fortran           |                                                                     |
 | Fortress          |                                                                     |
 | Gambas            |                                                                     |
 | GAMS              |                                                                     |
@@ -143,7 +151,6 @@
 | Informix-4GL      |                                                                     |
 | INTERCAL          |                                                                     |
 | Ioke              |                                                                     |
-| J#                |                                                                     |
 | JADE              |                                                                     |
 | JavaFX Script     |                                                                     |
 | JScript           |                                                                     |
@@ -274,7 +281,6 @@
 - skiplang/skip
 - FascinatedBox/lily
 - rakudo/rakudo
-- chapel-lang/chapel
 - lucee/Lucee
 - eclipse/golo-lang
 - HaxeFoundation/haxe

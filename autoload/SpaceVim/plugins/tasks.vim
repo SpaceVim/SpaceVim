@@ -1,6 +1,6 @@
 "=============================================================================
 " tasks.vim --- tasks support
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,6 +9,10 @@
 " this plugin is based on vscode task Scheme
 " https://code.visualstudio.com/docs/editor/tasks-appendix
 
+""
+" @section tasks, usage-tasks
+" @parentsection usage
+" general guide for tasks manager in SpaceVim.
 
 let s:TOML = SpaceVim#api#import('data#toml')
 let s:JSON = SpaceVim#api#import('data#json')
@@ -102,6 +106,11 @@ function! SpaceVim#plugins#tasks#get()
   if has_key(task, 'command') && type(task.command) ==# 1
     let task.command = s:replace_variables(task.command)
   endif
+  if has_key(task, 'options') && type(task.options) ==# 4
+    if has_key(task.options, 'cwd') && type(task.options.cwd) ==# 1
+      let task.options.cwd = s:replace_variables(task.options.cwd)
+    endif
+  endif
   return task
 endfunction
 
@@ -158,7 +167,7 @@ function! s:detect_npm_tasks() abort
   let detect_task = {}
   let conf = {}
   if filereadable('package.json')
-      let conf = s:JSON.json_decode(join(readfile('package.json', ''), ''))
+    let conf = s:JSON.json_decode(join(readfile('package.json', ''), ''))
   endif
   if has_key(conf, 'scripts')
     for task_name in keys(conf.scripts)

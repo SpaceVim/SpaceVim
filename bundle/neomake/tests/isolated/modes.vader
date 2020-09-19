@@ -1,0 +1,36 @@
+Include: ../include/setup.vader
+
+Execute (Output is not processed in operator-pending mode (Vim)):
+  if NeomakeAsyncTestsSetup()
+    new
+    file file_sleep_efm
+
+    " Simulate operator-pending mode ('no').
+    function! neomake#compat#get_mode()
+      return 'no'
+    endfunction
+
+    call neomake#Make(0, [g:sleep_efm_maker])[0]
+    let jobinfo = neomake#GetJobs()[-1]
+    NeomakeTestsWaitForFinishedJobs
+    AssertNeomakeMessage 'Not processing output for mode "no".', 3
+    AssertNeomakeMessage 'sleep_efm_maker: completed with exit code 0.'
+    AssertEqual getqflist(), [], 'Quickfix list has not been updated'
+
+    runtime autoload/neomake/compat.vim
+    AssertEqual neomake#compat#get_mode(), 'n'
+
+    doautocmd CursorHold
+    AssertNeomakeMessage 'Processing 3 lines of output.', 3, jobinfo
+    AssertNeomakeMessage 'Processed 1 pending outputs.', 3, jobinfo
+    AssertEqual map(getqflist(), 'v:val.text'), ['error message', 'warning', 'error2']
+    NeomakeTestsWaitForRemovedJobs
+    call neomake#signs#ResetProject()
+    call neomake#signs#CleanAllOldSigns('project')
+    bwipe
+
+    " Restore if not profiling.
+    if !v:profiling
+      runtime autoload/neomake/compat.vim
+    endif
+  endif

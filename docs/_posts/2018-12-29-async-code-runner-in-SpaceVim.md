@@ -1,10 +1,10 @@
 ---
 title: "SpaceVim 中一键异步运行"
 categories: [blog_cn, feature_cn]
-excerpt: "异步执行当前文件，并将结果展示在下方窗口"
+description: "异步执行当前文件，并将结果展示在下方窗口"
 permalink: /cn/:title/
 lang: zh
-type: BlogPosting
+type: article
 comments: true
 commentsID: "VIM 异步代码执行"
 ---

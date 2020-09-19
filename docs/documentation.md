@@ -32,13 +32,15 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Open file with file tree.](#open-file-with-file-tree)
 - [General usage](#general-usage)
   - [Native functions](#native-functions)
-  - [Visual mode key bindings](#visual-mode-key-bindings)
-  - [Command line mode key bidnings](#command-line-mode-key-bidnings)
+  - [Command line mode key bindings](#command-line-mode-key-bindings)
   - [Mappings guide](#mappings-guide)
   - [Editing](#editing)
+    - [Moving text](#moving-text)
+    - [Code indentation](#code-indentation)
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
     - [Increase/Decrease numbers](#increasedecrease-numbers)
+    - [Copy and paste](#copy-and-paste)
     - [Commenting](#commenting)
     - [Multi-Encodings](#multi-encodings)
   - [Window manager](#window-manager)
@@ -180,7 +182,8 @@ Move Text Transient State:
 
 ### Update SpaceVim itself
 
-There are several methods of updating the core files of SpaceVim. It is recommended to update the packages first; see the next section.
+There are several methods of updating the core files of SpaceVim.
+It is recommended to update the packages first; see the next section.
 
 **Automatic Updates**
 
@@ -195,17 +198,21 @@ add following to your custom configuration file.
 ```
 
 SpaceVim will automatically check for a new version
-every startup. You have restart Vim after updating.
+every startup. You have to restart Vim after updating.
 
 **Updating from the SpaceVim Buffer**
 
-Use `:SPUpdate SpaceVim` in SpaceVim buffer. This command will open a new buffer to show the process of updating.
+Users can use command `:SPUpdate SpaceVim` to update SpaceVim.
+This command will open a new buffer to show the process of updating.
 
 **Updating Manually with git**
 
-You can close Vim/Neovim and update the git repository to update manually:
+For users who prefer to use command line, they can use following command
+in terminal to update SpaceVim manually:
 
-`git -C ~/.SpaceVim pull`.
+```
+git -C ~/.SpaceVim pull
+```
 
 ### Update plugins
 
@@ -222,43 +229,60 @@ issue template.
 
 ## Custom Configuration
 
-The very first time SpaceVim starts up, it will ask you to choose a mode, then it will create a `SpaceVim.d/init.toml` in your `HOME` directory. All User configurations can be stored in your `~/.SpaceVim.d` directory.
+The very first time SpaceVim starts up, it will ask you to
+choose a mode, `basic mode` or `dark powered mode`.
+then it will create a `SpaceVim.d/init.toml` in your
+`HOME` directory. All the configuration files can be stored in
+`~/.SpaceVim.d/` directory.
 
-`~/.SpaceVim.d/` will be added to `&runtimepath` of Vim.
+`~/.SpaceVim.d/` will be added to `&runtimepath`.
 
-It is also possible to override the location of `~/.SpaceVim.d/` using the environment
-variable `SPACEVIMDIR`. Of course you can also use symlinks to change the location of
-this directory.
+It is also possible to override the location of `~/.SpaceVim.d/`
+using the environment variable `SPACEVIMDIR`. Of course you can
+also use symlinks to change the location of this directory.
 
-SpaceVim also support local config file for project, the init file is `.SpaceVim.d/init.toml`
-in the root of your project. `.SpaceVim.d/` will also be added into runtimepath.
+SpaceVim also support local config file for project, the init
+file is `.SpaceVim.d/init.toml` in the root of your project.
+`.SpaceVim.d/` also will be added into `&runtimepath`.
 
-All SpaceVim options can be found in `:h SpaceVim-config`, the key is same as
-the option name with the prefix `g:spacevim_` being removed.
+All SpaceVim options can be found in `:h SpaceVim-options`,
+the key is same as the option name with the prefix `g:spacevim_`
+being removed.
 
-Comprehensive documentation is available for each layer by `:h SpaceVim`.
+Comprehensive documentation is available in `:h SpaceVim`.
+Users can also use `SPC h SPC` to fuzzy find the documentation
+of SpaceVim options. This key binding requires one fuzzy finder
+layer to be loaded.
 
 **Add custom plugins**
 
-If you want to add plugins from github, just add the repo name to the `custom_plugins` section:
+If you want to add plugins from github, just add the repo name
+to the `custom_plugins` section:
 
 ```toml
 [[custom_plugins]]
-name = "lilydjwg/colorizer"
-on_cmd = ["ColorHighlight", "ColorToggle"]
-merged = false
+    repo = "lilydjwg/colorizer"
+    on_cmd = ["ColorHighlight", "ColorToggle"]
+    merged = false
 ```
 
-`on_cmd` option means this plugin will be loaded only when the following commands are called. For more options see `:h dein-options`.
+`on_cmd` option means this plugin will be loaded only when the following commands are called.
+
+`merged` option is used for merging plugins directory. When `merged` is `trye`, all files in
+this custom plugin will be merged into `~/.cache/vimfiles/.cache/init.vim/` for neovim or
+`~/.cache/vimfiles/.cache/vimrc/` for vim.
+
+For more options see `:h dein-options`.
 
 **disable existing plugins**
 
-If you want to disable plugins which are added by SpaceVim, you can use SpaceVim `disabled_plugins` options:
+If you want to disable plugins which are added by SpaceVim,
+you can use SpaceVim `disabled_plugins` options:
 
 ```toml
 [options]
 # NOTE: the value should be a list, and each item is the name of the plugin.
-disabled_plugins = ["clighter", "clighter8"]
+    disabled_plugins = ["clighter", "clighter8"]
 ```
 
 ### Bootstrap Functions
@@ -266,30 +290,44 @@ disabled_plugins = ["clighter", "clighter8"]
 SpaceVim provides two kinds of bootstrap functions
 for custom configurations and key bindings,
 namely `bootstrap_before` and `bootstrap_after`.
-To enable them you need to add `bootstrap_before = "myspacevim#before"` and/or `bootstrap_after = "myspacevim#after"` to `[options]` section in file `.SpaceVim.d/init.toml`. The difference is that these two functions will be called before or after the loading of SpaceVim's main scripts as they named.
 
-The bootstrap functions should be placed to the `autoload` directory in `runtimepath`, please refer to `:h autoload-functions` for further instructions. In our case, create file `.SpaceVim.d/autoload/myspacevim.vim` with contents for example
+To enable them you need to add following into
+`~/.SpaceVim.d/init.toml`.
+
+```toml
+[options]
+    bootstrap_before = 'myspacevim#before'
+    bootstrap_after = 'myspacevim#after'
+```
+
+The difference is that these two functions will be called before
+or after loading SpaceVim core as they named.
+
+The bootstrap functions should be placed to the `autoload` directory
+in `~/.SpaceVim.d/`. In our case, create file `~/.SpaceVim.d/autoload/myspacevim.vim`
+with contents for example
 
 ```vim
 function! myspacevim#before() abort
-let g:neomake_enabled_c_makers = ['clang']
-nnoremap jk <Esc>
+    let g:neomake_enabled_c_makers = ['clang']
+    nnoremap jk <Esc>
 endfunction
 
 function! myspacevim#after() abort
-iunmap jk
+    iunmap jk
 endfunction
 ```
 
 The `bootstrap_before` will be called after custom configuration file is loaded.
 And the `bootstrap_after` will be called after Vim Enter autocmd.
 
-If you want to add custom `SPC` prefix key bindings, you can add them to bootstrap function, **be sure** the key bindings are not used in SpaceVim.
+If you want to add custom `SPC` prefix key bindings, you can add them to
+bootstrap function, **be sure** the key bindings are not used in SpaceVim.
 
 ```vim
 function! myspacevim#before() abort
-call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
-call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+    call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
+    call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 endfunction
 ```
 
@@ -297,21 +335,44 @@ endfunction
 
 The different key bindings between SpaceVim and origin vim are shown as below.
 
-- The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
+- The `s` key does replace cursor char, but in SpaceVim it is the `Window` key
+  bindings specific leader in **Normal** mode. This leader change be changed via
+  `windows_leader` option which use `s` as default variable. If you still prefer the origin function of `s`,
+  you can use an empty string to disable this feature.
 
-The option is `windows_leader`, default value is `s`.
+  ```toml
+  [options]
+      windows_leader = ''
+  ```
 
 - The `,` key does repeat last `f`, `F`, `t` and `T` in vim, but in SpaceVim it is the language specified Leader key.
+  To disable this feature, set the option `enable_language_specific_leader` to `false`.
 
-The option is `enable_language_specific_leader`, default value is `1`.
+  ```toml
+  [options]
+      enable_language_specific_leader = false
+  ```
 
-- The `q` key does recording, but in SpaceVim it is used for closing window smart. If you still prefer the origin function of `q`, you can use an empty string to disable this feature.
+- The `q` key does recording, but in SpaceVim it is used to close current window.
+  The option for setting key binding to close current window is `windows_smartclose`,
+  and the default valuable is `q`.
+  If you prefer to use the origin function of `q`, you can use an empty string to disable this feature.
 
-The option is `windows_smartclose`, default value is `q`.
+  ```toml
+  [options]
+      windows_smartclose = ''
+  ```
+
+- The `jk` key has been mapped to `<Esc>` in insert mode. To disable this key binding, set `escape_key_binding` to empty string.
+
+  ```toml
+  [options]
+      escape_key_binding = ''
+  ```
 
 - The `Ctrl-a` binding on the command line can auto-complete variable names, but in SpaceVim it moves to the cursor to the beginning of the command line.
-- `Ctrl-b` in command line mode is mapped to `<Left>`, which will move cursor to the left.
-- `Ctrl-f` in command line mode is mapped to `<Right>`, which will move cursor to the right.
+- The `Ctrl-b` binding on the command line is mapped to `<Left>`, which will move cursor to the left.
+- The `Ctrl-f` binding on the command line is mapped to `<Right>`, which will move cursor to the right.
 
 SpaceVim provides a vimcompatible mode, in vimcompatible mode, all the differences above will disappear.
 You can enable the vimcompatible mode via adding `vimcompatible = true` to `[options]` section.
@@ -321,14 +382,18 @@ For example, in order to disable language specific leader, you may add the follo
 
 ```toml
 [options]
-enable_language_specific_leader = false
+    enable_language_specific_leader = false
 ```
 
-[Send a PR](http://spacevim.org/development/) to add the differences you found in this section.
+[Send a PR](./development/) to add the differences you
+found in this section.
 
 ### Private Layers
 
-This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!).
+This section is an overview of layers. A more extensive
+introduction to writing configuration layers can be found in
+[SpaceVim's layers page](http://spacevim.org/layers/)
+(recommended reading!).
 
 **Purpose**
 
@@ -359,16 +424,16 @@ disabled_plugins = ["neomake.vim"]
 
 ```toml
 [[custom_plugins]]
-name = "wsdjeg/neomake.vim"
-# note: you need to disable merged feature
-merged = false
+    repo = "wsdjeg/neomake.vim"
+    # note: you need to disable merged feature
+    merged = false
 ```
 
 Use the `bootstrap_before` function to add local plugin:
 
 ```vim
 function! myspacevim#before() abort
-set rtp+=~/path/to/your/localplugin
+    set rtp+=~/path/to/your/localplugin
 endfunction
 ```
 
@@ -390,8 +455,8 @@ the variable colorschemes. For instance, to specify `desert`:
 
 ```toml
 [options]
-colorscheme = "desert"
-colorscheme_bg = "dark"
+    colorscheme = "desert"
+    colorscheme_bg = "dark"
 ```
 
 | Mappings  | Descriptions                                                   |
@@ -413,13 +478,13 @@ enable_guicolors = false
 
 ### Font
 
-The default font used by SpaceVim is [SauceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/SourceCodePro.zip).
+The default font used by SpaceVim is [SourceCodePro Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/SourceCodePro.zip).
 It is recommended to install it on your system if you wish to use it.
 
 To change the default font set the variable `guifont` in your `~/.SpaceVim.d/init.toml` file. By default its value is:
 
 ```toml
-guifont = "SauceCodePro Nerd Font Mono:h11"
+guifont = "SourceCodePro Nerd Font Mono:h11"
 ```
 
 If the specified font is not found, the fallback one will be used (depends on your system).
@@ -441,6 +506,7 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | `SPC t n`    | toggle line numbers                                      |
 | `SPC t b`    | toggle background                                        |
 | `SPC t c`    | toggle conceal                                           |
+| `SPC t p`    | toggle paste mode                                        |
 | `SPC t t`    | open tabs manager                                        |
 | `SPC T ~`    | display ~ in the fringe on empty lines                   |
 | `SPC T F`    | toggle frame fullscreen                                  |
@@ -505,6 +571,13 @@ When syntax checking minor mode is enabled, a new element appears showing the nu
 Search index shows the number of occurrence when performing a search via `/` or `?`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 20/22 segment on the screenshot below.
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
+
+Search index is provided by `incsearch` layer, to enable this layer:
+
+```toml
+[layers]
+    name = "incsearch"
+```
 
 **Battery status integration:**
 
@@ -601,17 +674,36 @@ switching between different colorschemes, you may need to set
 `custom_color_palette` in your custom configuration file. For example:
 
 ```toml
-custom_color_palette = [
-["#282828", "#a89984", 246, 235],
-["#a89984", "#504945", 239, 246],
-["#a89984", "#3c3836", 237, 246],
-["#665c54", 241],
-["#282828", "#83a598", 235, 109],
-["#282828", "#fe8019", 235, 208],
-["#282828", "#8ec07c", 235, 108],
-["#282828", "#689d6a", 235, 72],
-["#282828", "#8f3f71", 235, 132],
-]
+[options]
+    custom_color_palette = [
+        ["#282828", "#a89984", 246, 235],
+        ["#a89984", "#504945", 239, 246],
+        ["#a89984", "#3c3836", 237, 246],
+        ["#665c54", 241],
+        ["#282828", "#83a598", 235, 109],
+        ["#282828", "#fe8019", 235, 208],
+        ["#282828", "#8ec07c", 235, 108],
+        ["#282828", "#689d6a", 235, 72],
+        ["#282828", "#8f3f71", 235, 132],
+    ]
+```
+
+**Custion section**
+
+You can use bootstrap function to add custom section to statusline, for example:
+
+```vim
+function! s:test_section() abort
+  return 'ok'
+endfunction
+call SpaceVim#layers#core#statusline#register_sections('test', function('s:test_section'))
+```
+
+Then, add `test` section to `statusline_right_sections` option:
+
+```toml
+[options]
+    statusline_right_sections = ['cursorpos', 'percentage', 'test']
 ```
 
 ### Tabline
@@ -621,18 +713,21 @@ the index, bufname and the filetype icon. If there are more than one tab, all
 tabs will be listed on the tabline. Each item can be quickly accessed by using
 `<Leader> number`. Default `<Leader>` is `\`.
 
-| Key Bindings | Descriptions               |
-| ------------ | -------------------------- |
-| `<Leader> 1` | Jump to index 1 on tabline |
-| `<Leader> 2` | Jump to index 2 on tabline |
-| `<Leader> 3` | Jump to index 3 on tabline |
-| `<Leader> 4` | Jump to index 4 on tabline |
-| `<Leader> 5` | Jump to index 5 on tabline |
-| `<Leader> 6` | Jump to index 6 on tabline |
-| `<Leader> 7` | Jump to index 7 on tabline |
-| `<Leader> 8` | Jump to index 8 on tabline |
-| `<Leader> 9` | Jump to index 9 on tabline |
-| `g r`        | Go to previous tab         |
+| Key Bindings | Descriptions                                    |
+| ------------ | ----------------------------------------------- |
+| `<Leader> 1` | Jump to index 1 on tabline                      |
+| `<Leader> 2` | Jump to index 2 on tabline                      |
+| `<Leader> 3` | Jump to index 3 on tabline                      |
+| `<Leader> 4` | Jump to index 4 on tabline                      |
+| `<Leader> 5` | Jump to index 5 on tabline                      |
+| `<Leader> 6` | Jump to index 6 on tabline                      |
+| `<Leader> 7` | Jump to index 7 on tabline                      |
+| `<Leader> 8` | Jump to index 8 on tabline                      |
+| `<Leader> 9` | Jump to index 9 on tabline                      |
+| `g r`        | Switch to alternate tab (switch back and forth) |
+
+**Note:** `SPC Tab` is the key binding for switching to alternate buffer.
+Read [Buffers and Files](#buffers-and-files) section for more info.
 
 SpaceVim tabline also supports mouse click, left mouse button will switch to buffer,
 while middle button will delete the buffer.
@@ -681,7 +776,7 @@ VCS integration is supported, there will be a column status, this feature may ma
 To enable this feature, add `enable_vimfiler_gitstatus = true` to your custom configure.
 Here is a picture for this feature:
 
-![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
+![file-tree](https://user-images.githubusercontent.com/13142418/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
 
 There is also an option to config the direction of file tree, by default it is right. To move the file tree to the left,
 you can use `filetree_direction` option:
@@ -704,6 +799,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<Up>` / `k`          | select previous file or directory                 |
 | `<Right>` / `l`       | open selected file or expand directory            |
 | `N`                   | Create new file under cursor                      |
+| `K`                   | Create new directory under cursor                 |
 | `y y`                 | Copy file full path to system clipboard           |
 | `y Y`                 | Copy file to system clipboard                     |
 | `P`                   | Paste file to the position under the cursor       |
@@ -737,26 +833,29 @@ If only one file buffer is opened, a file is opened in the active window, otherw
 
 The following key bindings are the general key bindings for moving cursor.
 
-| Key Bindings     | Descriptions                                      |
-| ---------------- | ------------------------------------------------- |
-| `h`              | move cursor left                                  |
-| `j`              | move cursor down                                  |
-| `k`              | move cursor up                                    |
-| `l`              | move cursor right                                 |
-| `<Up>`, `<Down>` | Smart up and down                                 |
-| `H`              | move cursor to the top of the screen              |
-| `L`              | move cursor to the bottom of the screen           |
-| `<`              | Indent to left and re-select                      |
-| `>`              | Indent to right and re-select                     |
-| `}`              | paragraphs forward                                |
-| `{`              | paragraphs backward                               |
-| `Ctrl-f`         | Smart page forward (`Ctrl-f` / `Ctrl-d`)          |
-| `Ctrl-b`         | Smart page backward (`C-b` / `C-u`)               |
-| `Ctrl-e`         | Smart scroll down (`3 Ctrl-e/j`)                  |
-| `Ctrl-y`         | Smart scroll up (`3Ctrl-y/k`)                     |
-| `Ctrl-c`         | Copy full path of current buffer to X11 clipboard |
+| Key Bindings     | Descriptions                             |
+| ---------------- | ---------------------------------------- |
+| `h`              | move cursor left                         |
+| `j`              | move cursor down                         |
+| `k`              | move cursor up                           |
+| `l`              | move cursor right                        |
+| `<Up>`, `<Down>` | Smart up and down                        |
+| `H`              | move cursor to the top of the screen     |
+| `L`              | move cursor to the bottom of the screen  |
+| `<`              | Indent to left and re-select             |
+| `>`              | Indent to right and re-select            |
+| `}`              | paragraphs forward                       |
+| `{`              | paragraphs backward                      |
+| `Ctrl-f`         | Smart page forward (`Ctrl-f` / `Ctrl-d`) |
+| `Ctrl-b`         | Smart page backward (`C-b` / `C-u`)      |
+| `Ctrl-e`         | Smart scroll down (`3 Ctrl-e/j`)         |
+| `Ctrl-y`         | Smart scroll up (`3Ctrl-y/k`)            |
 
 ### Native functions
+
+When vimcompatible is not enabled, some native key bindings of vim
+has been overrided. To use these key bindings, SpaceVim provides
+alternate key bindings:
 
 | Key bindings     | Mode   | Action                            |
 | ---------------- | ------ | --------------------------------- |
@@ -765,24 +864,9 @@ The following key bindings are the general key bindings for moving cursor.
 | `<Leader> q r ?` | Normal | Same as native `q ?`, open cmdwin |
 | `<Leader> q r :` | Normal | Same as native `q :`, open cmdwin |
 
-### Visual mode key bindings
+### Command line mode key bindings
 
-| Key               | Action                                   |
-| ----------------- | ---------------------------------------- |
-| `<Leader> y`      | Copy selection to X11 clipboard ("+y)    |
-| `<Leader> p`      | Paste selection from X11 clipboard ("+p) |
-| `<`               | Indent to left and re-select             |
-| `>`               | Indent to right and re-select            |
-| `<Tab>`           | Indent to right and re-select            |
-| `Shift-<Tab>`     | Indent to left and re-select             |
-| `Ctrl-q`          | `Ctrl-w`                                 |
-| `Ctrl-x`          | Switch buffer and placement              |
-| `Ctrl-Shift-Up`   | move lines up                            |
-| `Ctrl-Shift-Down` | move lines down                          |
-
-### Command line mode key bidnings
-
-After pressing `:`, you can switch to comamnd line mode, here is a list of key bindings
+After pressing `:`, you can switch to command line mode, here is a list of key bindings
 can be used in command line mode:
 
 | Key bindings   | Descriptions                         |
@@ -809,6 +893,20 @@ The default keys of these prefixs are:
 | `[SPC]`     | NONE / `<Space>`                  | default mapping prefix of SpaceVim  |
 | `[WIN]`     | `windows_leader` / `s`            | window mapping prefix of SpaceVim   |
 | `<Leader>`  | default vim leader                | default leader prefix of vim/Neovim |
+
+The default value of `<Leader>` is `\`, if you want to change this key,
+you need to use bootstrap function. For example, use `,` as the `<Leader>` key:
+
+```vim
+function! myspacevim#before() abort
+    let g:mapleader = ','
+endfunction
+```
+
+**NOTE:** When changing valuable `g:mapleader` in a function.
+you can not omit the valuable scope. Because the default scope
+of a valuable in function is `l:`. It seems different from what you
+seee in vim help `:h mapleader`.
 
 By default the guide buffer will be displayed 1000ms after the keys being pressed.
 You can change the delay by adding vim option `'timeoutlen'` to your bootstrap function.
@@ -845,6 +943,36 @@ Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` t
 
 ### Editing
 
+#### Moving text
+
+| Key               | Action                        |
+| ----------------- | ----------------------------- |
+| `>` / `Tab`       | Indent to right and re-select |
+| `<` / `Shift-Tab` | Indent to left and re-select  |
+| `Ctrl-Shift-Up`   | move lines up                 |
+| `Ctrl-Shift-Down` | move lines down               |
+
+#### Code indentation
+
+The default indentation of code is 2, which is controlled by option `default_indent`.
+If you prefer to use 4 as code indentation. Just add following snippet into SpaceVim
+configuration file:
+
+```toml
+[options]
+    default_indent = 4
+```
+
+The `default_indent` option will be applied to vim's `&tabstop`, `&softtabstop` and
+`&shiftwidth` options. By default, when user insert a `<Tab>`, it will be expanded
+to spaces. This feature can be disabled by `expand_tab` option.
+
+```toml
+[options]
+    default_indent = 4
+    expand_tab = true
+```
+
 #### Text manipulation commands
 
 Text related commands (start with `x`):
@@ -877,7 +1005,7 @@ Text related commands (start with `x`):
 | `SPC x c`     | count the number of chars/words/lines in the selection region      |
 | `SPC x d w`   | delete trailing whitespaces                                        |
 | `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space         |
-| `SPC x g l`   | set lanuages used by translate commands (TODO)                     |
+| `SPC x g l`   | set languages used by translate commands (TODO)                    |
 | `SPC x g t`   | translate current word using Google Translate                      |
 | `SPC x g T`   | reverse source and target languages (TODO)                         |
 | `SPC x i c`   | change symbol style to `lowerCamelCase`                            |
@@ -931,6 +1059,8 @@ Text insertion commands (start with `i`):
 | `SPC i U 4`  | insert UUIDv4 (use universal argument to insert with CID format)      |
 | `SPC i U U`  | insert UUIDv4 (use universal argument to insert with CID format)      |
 
+**Tips:** You can specify number of password characters using prefix argument, (i.e. `10 SPC i p 1` will generate 10 characters of simple password)
+
 #### Increase/Decrease numbers
 
 | Key Bindings | Descriptions                                                        |
@@ -948,6 +1078,30 @@ In transient state:
 
 **Tips:** You can increase or decrease a number by more than once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under cursor).
 
+#### Copy and paste
+
+If `has('unnamedplus')`, the register used by `<Leader> y` is `+`, otherwise it is `*`.
+Read `:h registers` for more info about other registers.
+
+| Key          | Action                           |
+| ------------ | -------------------------------- |
+| `<Leader> y` | Copy text to system clipboard    |
+| `<Leader> p` | Paste text from system clipboard |
+| `<Leader> Y` | Copy text to pastebin            |
+
+The `<Leader< Y` key binding will copy selected text to a pastebin server. It requires `curl` in your `$PATH`.
+And the default command is:
+
+```
+curl -s -F "content=<-" http://dpaste.com/api/v2/
+```
+
+This command will read stdin and copy the stdin to dpaste server. It is same as:
+
+```
+echo "selected text" | curl -s -F "content=<-" http://dpaste.com/api/v2/
+```
+
 #### Commenting
 
 Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommenter), it’s bound to the following keys.
@@ -955,6 +1109,7 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | Key Bindings | Descriptions                                            |
 | ------------ | ------------------------------------------------------- |
 | `SPC ;`      | comment operator                                        |
+| `SPC c a`    | switch to the alternative set of delimiters             |
 | `SPC c h`    | hide/show comments                                      |
 | `SPC c l`    | toggle comment lines                                    |
 | `SPC c L`    | comment lines                                           |
@@ -997,20 +1152,19 @@ can change it via `windows_leader` option:
 windows_leader = "s"
 ```
 
-| Key Bindings | Descriptions                          |
-| ------------ | ------------------------------------- |
-| `q`          | Smart buffer close                    |
-| `WIN v`      | :split                                |
-| `WIN V`      | Split with previous buffer            |
-| `WIN g`      | :vsplit                               |
-| `WIN G`      | Vertically split with previous buffer |
-| `WIN t`      | Open new tab (:tabnew)                |
-| `WIN o`      | Close other windows (:only)           |
-| `WIN x`      | Remove buffer, leave blank window     |
-| `WIN q`      | Remove current buffer                 |
-| `WIN Q`      | Close current buffer (:close)         |
-| `<Tab>`      | Next window or tab                    |
-| `Shift-Tab`  | Previous window or tab                |
+| Key Bindings | Descriptions                                       |
+| ------------ | -------------------------------------------------- |
+| `q`          | Smart buffer close                                 |
+| `WIN v`      | :split                                             |
+| `WIN V`      | Split with previous buffer                         |
+| `WIN g`      | :vsplit                                            |
+| `WIN G`      | Vertically split with previous buffer              |
+| `WIN t`      | Open new tab (:tabnew)                             |
+| `WIN o`      | Close other windows (:only)                        |
+| `WIN x`      | Remove buffer, leave blank window                  |
+| `WIN q`      | Remove current buffer                              |
+| `WIN Q`      | Close current buffer (:close)                      |
+| `Shift-Tab`  | Switch to alternate window (switch back and forth) |
 
 SpaceVim has mapped normal `q` as smart buffer close, the normal func of `q`
 can be get by `<Leader> q r`, if you want to disable this feature, you can use `vimcompatible` mode.
@@ -1082,6 +1236,7 @@ Windows manipulation commands (start with `w`):
 | `SPC w V`             | vertical split and focus new window                                                                           |
 | `SPC w w`             | cycle and focus between windows                                                                               |
 | `SPC w W`             | select window using vim-choosewin                                                                             |
+| `SPC w x`             | exchange current window with next one                                                                         |
 
 ### Buffers and Files
 
@@ -1182,7 +1337,7 @@ for example, load the denite layer:
 
 ```toml
 [[layers]]
-name = "denite"
+    name = "denite"
 ```
 
 **Key bindings**
@@ -1220,18 +1375,18 @@ The above key bindings are only part of fuzzy finder layers, please read the lay
 
 **Key bindings within fuzzy finder buffer**
 
-| Key Bindings             | Descriptions                    |
-| ------------------------ | ------------------------------- |
-| `<Tab>` / `Ctrl-j`       | Select next line                |
-| `Shift-<Tab>` / `Ctrl-k` | Select previous line            |
-| `<Esc>`                  | Leave Insert mode               |
-| `Ctrl-w`                 | Delete backward path            |
-| `Ctrl-u`                 | Delete whole line before cursor |
-| `<Enter>`                | Run default action              |
-| `Ctrl-s`                 | Open in a split                 |
-| `Ctrl-v`                 | Open in a vertical split        |
-| `Ctrl-t`                 | Open in a new tab               |
-| `Ctrl-g`                 | Close fuzzy finder              |
+| Key Bindings           | Descriptions                    |
+| ---------------------- | ------------------------------- |
+| `<Tab>` / `Ctrl-j`     | Select next line                |
+| `Shift-Tab` / `Ctrl-k` | Select previous line            |
+| `<Esc>`                | Leave Insert mode               |
+| `Ctrl-w`               | Delete backward path            |
+| `Ctrl-u`               | Delete whole line before cursor |
+| `<Enter>`              | Run default action              |
+| `Ctrl-s`               | Open in a split                 |
+| `Ctrl-v`               | Open in a vertical split        |
+| `Ctrl-t`               | Open in a new tab               |
+| `Ctrl-g`               | Close fuzzy finder              |
 
 #### With an external tool
 
@@ -1251,13 +1406,14 @@ If the tool key is omitted then a default tool will be automatically selected fo
 
 The tool keys are:
 
-| Tool | Key |
-| ---- | --- |
-| ag   | a   |
-| grep | g   |
-| ack  | k   |
-| rg   | r   |
-| pt   | t   |
+| Tool     | Key |
+| -------- | --- |
+| ag       | a   |
+| grep     | g   |
+| git grep | G   |
+| ack      | k   |
+| rg       | r   |
+| pt       | t   |
 
 The available scopes and corresponding keys are:
 
@@ -1284,9 +1440,9 @@ The following example shows how to change the default option of searching tool `
 
 ```vim
 function! myspacevim#before() abort
-let profile = SpaceVim#mapping#search#getprofile('rg')
-let default_opt = profile.default_opts + ['--no-ignore-vcs']
-call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
+    let profile = SpaceVim#mapping#search#getprofile('rg')
+    let default_opt = profile.default_opts + ['--no-ignore-vcs']
+    call SpaceVim#mapping#search#profile({'rg' : {'default_opts' : default_opt}})
 endfunction
 ```
 
@@ -1337,6 +1493,8 @@ The structure of searching tool profile is:
 | `SPC s a D`  | searching in buffer directory cursor word with ag           |
 | `SPC s g d`  | searching in buffer directory with grep                     |
 | `SPC s g D`  | searching in buffer directory cursor word with grep         |
+| `SPC s G d`  | searching in buffer directory with git-grep                 |
+| `SPC s G D`  | searching in buffer directory cursor word with git-grep     |
 | `SPC s k d`  | searching in buffer directory with ack                      |
 | `SPC s k D`  | searching in buffer directory cursor word with ack          |
 | `SPC s r d`  | searching in buffer directory with rg                       |
@@ -1354,6 +1512,8 @@ The structure of searching tool profile is:
 | `SPC s a B`  | ag with default input                               |
 | `SPC s g b`  | grep                                                |
 | `SPC s g B`  | grep with default input                             |
+| `SPC s G b`  | git-grep                                            |
+| `SPC s G B`  | git-grep with default input                         |
 | `SPC s k b`  | ack                                                 |
 | `SPC s k B`  | ack with default input                              |
 | `SPC s r b`  | rg                                                  |
@@ -1371,6 +1531,8 @@ The structure of searching tool profile is:
 | `SPC s a F`  | ag with default text                                |
 | `SPC s g f`  | grep                                                |
 | `SPC s g F`  | grep with default text                              |
+| `SPC s G f`  | git-grep                                            |
+| `SPC s G F`  | git-grep with default text                          |
 | `SPC s k f`  | ack                                                 |
 | `SPC s k F`  | ack with default text                               |
 | `SPC s r f`  | rg                                                  |
@@ -1380,20 +1542,20 @@ The structure of searching tool profile is:
 
 #### Searching in a project
 
-| Key Bindings        | Descriptions                                        |
-| ------------------- | --------------------------------------------------- |
-| `SPC /` / `SPC s p` | search with the first found tool                    |
-| `SPC *` / `SPC s P` | search with the first found tool with default input |
-| `SPC s a p`         | ag                                                  |
-| `SPC s a P`         | ag with default text                                |
-| `SPC s g p`         | grep                                                |
-| `SPC s g p`         | grep with default text                              |
-| `SPC s k p`         | ack                                                 |
-| `SPC s k P`         | ack with default text                               |
-| `SPC s t p`         | pt                                                  |
-| `SPC s t P`         | pt with default text                                |
-| `SPC s r p`         | rg                                                  |
-| `SPC s r P`         | rg with default text                                |
+| Key Bindings | Descriptions                                        |
+| ------------ | --------------------------------------------------- |
+| `SPC s p`    | search with the first found tool                    |
+| `SPC s P`    | search with the first found tool with default input |
+| `SPC s a p`  | ag                                                  |
+| `SPC s a P`  | ag with default text                                |
+| `SPC s g p`  | grep                                                |
+| `SPC s g p`  | grep with default text                              |
+| `SPC s k p`  | ack                                                 |
+| `SPC s k P`  | ack with default text                               |
+| `SPC s t p`  | pt                                                  |
+| `SPC s t P`  | pt with default text                                |
+| `SPC s r p`  | rg                                                  |
+| `SPC s r P`  | rg with default text                                |
 
 **Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
 
@@ -1430,7 +1592,7 @@ Background search keyword in a project, when searching done, the count will be s
 
 | Key Bindings | Descriptions                                       |
 | ------------ | -------------------------------------------------- |
-| `SPC s g G`  | Searching in project on the fly with default tools |
+| `SPC s /`    | Searching in project on the fly with default tools |
 
 Key bindings in FlyGrep buffer:
 
@@ -1646,7 +1808,33 @@ which will tell you the functional of all mappings starting with `z`.
 
 ### Managing projects
 
-SpaceVim will find the root of the project when a `.git` directory or a `.project_alt.json` file is encountered in the file tree.
+When open a file, SpaceVim will change current directory to the project
+root directory which contains this file. The project root directory detection
+is based on on `project_rooter_patterns` option, and the default value is:
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+```
+
+The project manager will find outermost directory by default, to find nearest directory,
+you need to change `project_rooter_outermost` to `false`.
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+    project_rooter_outermost = false
+```
+
+Sometimes we want to ignore some directorys when detect the project root directory.
+add a `!` prefix before the pattern.
+For example, ignore `node_packages/` directory:
+
+```toml
+[options]
+    project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/', '!node_packages/']
+    project_rooter_outermost = false
+```
 
 Project manager commands start with `p`:
 
@@ -1661,7 +1849,6 @@ Project manager commands start with `p`:
 | `SPC p f`    | find files in current project            |
 | `SPC p /`    | fuzzy search for text in current project |
 | `SPC p k`    | kill all buffers of current project      |
-| `SPC p t`    | find project root                        |
 | `SPC p p`    | list all projects                        |
 
 #### Custom alternate file
@@ -1669,7 +1856,7 @@ Project manager commands start with `p`:
 To manager the alternate file of the project, you need to create a `.project_alt.json` file
 in the root of your project. Then you can use command `:A` to jump to the alternate file of
 current file. You can also specific the type of alternate file, for example `:A doc`.
-With a bang `:A!`, SpaceVim will paser the configuration file additionally. If no type specificed,
+With a bang `:A!`, SpaceVim will parse the configuration file additionally. If no type specified,
 the default type `alternate` will be used.
 
 here is an example of `.project_alt.json`:
@@ -1682,6 +1869,7 @@ here is an example of `.project_alt.json`:
   }
 }
 ```
+
 ### Bookmarks management
 
 Bookmarks manager is included in `tools` layer, to use following key bindings, you need to enable
@@ -1730,15 +1918,14 @@ then pressing `SPC p t r` shows the following list:
 
 ![task-auto-detection](https://user-images.githubusercontent.com/13142418/75089003-471d2c80-558f-11ea-8aea-cbf7417191d9.png)
 
-
 #### Task provider
 
 Some tasks can be automatically detected by task provider. For example,
 a Task Provider could check if there is a specific build file, such as `package.json`,
-and create npm tasks. 
+and create npm tasks.
 
 To build a task provider, you need to use Bootstrap function. The task provider should be a vim function.
-and return a task object. 
+and return a task object.
 
 here is an example for building task provider.
 
@@ -1767,7 +1954,7 @@ function! s:make_tasks() abort
         return {}
     endif
 endfunction
-call SpaceVim#plugins#tasks#reg_provider(funcref('s:make_tasks'))
+call SpaceVim#plugins#tasks#reg_provider(function('s:make_tasks'))
 ```
 
 with above configuration, you will see following tasks in SpaceVim repo:
@@ -1894,7 +2081,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 ### Code runner and REPL
 
 SpaceVim provides an asynchronously code runner plugin. In most language layer,
-we have defined a key bidning `SPC l r` for running current buffer.
+we have defined a key binding `SPC l r` for running current buffer.
 If you need to add new commands, you can use the bootstrap function. For example:
 Use `F5` to build project asynchronously.
 
@@ -1987,7 +2174,6 @@ Custom sign symbol:
 | `<Leader> q n` | jump to next item in quickfix list     |
 | `<Leader> q p` | jump to previous item in quickfix list |
 
-
 ### EditorConfig
 
 SpaceVim has supported [EditorConfig](http://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
@@ -2010,8 +2196,6 @@ Use `svc` to open a file in the existing Vim server, or use `nsvc` to open a fil
 
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
 
-
-
 <!-- SpaceVim Achievements start -->
 
 ## Achievements
@@ -2023,22 +2207,24 @@ Use `svc` to open a file in the existing Vim server, or use `nsvc` to open a fil
 | [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)         |
 | [1000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/1000)  | [sei40kr](https://github.com/sei40kr)               |
 | [2000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/2000)  | [nikolaussucher](https://github.com/nikolaussucher) |
+| [3000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/3000)  | [nahuef](https://github.com/nahuef)                 |
 
 ### Stars, forks and watchers
 
-| Achievements      | Account                                             |
-| ----------------- | --------------------------------------------------- |
-| First stargazers  | [monkeydterry](https://github.com/monkeydterry)     |
-| 100th stargazers  | [robertofarrell](https://github.com/robertofarrell) |
-| 1000th stargazers | [linsongze](https://github.com/linsongze)           |
-| 2000th stargazers | [fated](https://github.com/fated)                   |
-| 3000th stargazers | [urso](https://github.com/urso)                     |
-| 4000th stargazers | [wanghe4096](https://github.com/wanghe4096)         |
-| 5000th stargazers | [xxxxha](https://github.com/xxxxha)                 |
-| 6000th stargazers | [corenel](https://github.com/corenel)               |
-| 7000th stargazers | [mohab1989](https://github.com/mohab1989)           |
-| 8000th stargazers | [chocopowwwa](https://github.com/chocopowwwa)       |
-| 9000th stargazers | [mffathurr](https://github.com/mffathurr)           |
+| Achievements       | Account                                             |
+| ------------------ | --------------------------------------------------- |
+| First stargazers   | [monkeydterry](https://github.com/monkeydterry)     |
+| 100th stargazers   | [robertofarrell](https://github.com/robertofarrell) |
+| 1000th stargazers  | [mohebifar](https://github.com/mohebifar)           |
+| 2000th stargazers  | [myakove](https://github.com/myakove)               |
+| 3000th stargazers  | [adrian-spataru](https://github.com/adrian-spataru) |
+| 4000th stargazers  | [seungdols](https://github.com/seungdols)           |
+| 5000th stargazers  | [shiningdracon](https://github.com/shiningdracon)   |
+| 6000th stargazers  | [SummerMagic](https://github.com/SummerMagic)       |
+| 7000th stargazers  | [Murderlon](https://github.com/Murderlon)           |
+| 8000th stargazers  | [dbdr](https://github.com/dbdr)                     |
+| 9000th stargazers  | [Ruyka](https://github.com/Ruyka)                   |
+| 10000th stargazers | [royge](https://github.com/royge)                   |
 
 <!-- SpaceVim Achievements end -->
 

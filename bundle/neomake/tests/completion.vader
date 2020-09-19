@@ -1,0 +1,146 @@
+Include: include/setup.vader
+
+Execute (neomake#cmd#complete_makers: completes makers for b:):
+  new
+  let b:neomake_c_lint_maker = {
+    \ 'exe': 'lint',
+    \ 'args': ['--option', 'x'],
+    \ 'errorformat': '%f:%l:%c: %m',
+    \ }
+  set filetype=c
+  call g:NeomakeTestsCreateExe('lint', [])
+  AssertEqual neomake#GetMaker('checkpatch').name, 'checkpatch'
+  Assert index(neomake#cmd#complete_makers('', 'Neomake '), 'lint') != -1, 'lint maker gets completed'
+  bwipe
+
+Execute (neomake#cmd#complete_makers: handles invalid ArgLead):
+  AssertEqual neomake#cmd#complete_makers('~', 'Neomake '), []
+
+Execute (neomake#cmd#complete_makers: completes makers for g:):
+  Save g:neomake_c_lint_maker
+  new
+  let g:neomake_c_lint_maker = {
+    \ 'exe': 'lint',
+    \ 'args': ['--option', 'x'],
+    \ 'errorformat': '%f:%l:%c: %m',
+    \ }
+  set filetype=c
+  call g:NeomakeTestsCreateExe('lint', [])
+  Assert index(neomake#cmd#complete_makers('', 'Neomake '), 'lint') != -1, 'lint maker gets completed'
+  bwipe
+
+Execute (neomake#cmd#complete_makers: completes space after Neomake!):
+  AssertEqual neomake#cmd#complete_makers('', 'Neomake!'), [' ']
+
+Execute (neomake#cmd#complete_makers: completes all (executable) makers, preferring filetype):
+  call g:NeomakeTestsSetPATH('')
+  new
+  noautocmd set ft=rust
+
+  for m in ['cargo', 'cargotest', 'rustc', 'cabal', 'clippy', 'gradle']
+    call g:NeomakeTestsCreateExe(m, [])
+  endfor
+
+  " Neomake! completes ft makers (first), and project makers.
+  AssertEqual neomake#cmd#complete_makers('', 'Neomake! '), [
+  \ 'cargo', 'cargotest', 'rustc', 'cabal', 'clippy', 'gradle']
+
+  call g:NeomakeTestsCreateExe('mvn', [])
+  AssertEqual neomake#cmd#complete_makers('', 'Neomake! '), [
+  \ 'cargo', 'cargotest', 'rustc', 'cabal', 'clippy', 'gradle', 'mvn']
+
+  " Neomake completes ft makers.
+  AssertEqual neomake#cmd#complete_makers('', 'Neomake '), [
+  \ 'cargo', 'cargotest', 'rustc']
+
+  " Neomake completes ft makers with project makers when called again.
+  AssertEqual neomake#cmd#complete_makers('', 'Neomake '), [
+  \ 'cargo', 'cargotest', 'rustc', 'cabal', 'clippy', 'gradle', 'mvn']
+
+  " Neomake with ArgLead completes ft makers.
+  AssertEqual neomake#cmd#complete_makers('c', 'Neomake c'), [
+  \ 'cargo', 'cargotest']
+
+  " Neomake with ArgLead completes ft makers with project makers when called again.
+  AssertEqual neomake#cmd#complete_makers('c', 'Neomake c'), [
+  \ 'cargo', 'cargotest', 'cabal', 'clippy']
+
+  " Neomake completes global makers when no filetype makers match.
+  AssertEqual neomake#cmd#complete_makers('g', 'Neomake g'), [
+  \ 'gradle']
+
+  " Neomake with ArgLead completes ft makers only again afterwards.
+  AssertEqual neomake#cmd#complete_makers('c', 'Neomake c'), [
+  \ 'cargo', 'cargotest']
+  bwipe
+
+Execute (neomake#cmd#complete_makers: filter by maker.name):
+  new
+  noautocmd set filetype=neomake_tests
+
+  let b:neomake_neomake_tests_custom_maker = {
+  \ 'name': 'some_custom_name',
+  \ 'exe': 'true',
+  \ }
+
+  let all = neomake#cmd#complete_makers('', 'Neomake ')
+  Assert index(all, 'some_custom_name') == -1
+  " Includes maker.name (appended with non-breaking-space).
+  Assert index(all, 'custom (some_custom_name)') != -1
+
+  let filtered = neomake#cmd#complete_makers('some_', 'Neomake some_')
+  AssertEqual filtered, []
+
+  let filtered = neomake#cmd#complete_makers('cust', 'Neomake cust')
+  " Does not include description for single match.
+  AssertEqual filtered, ['custom']
+
+  " Does not append maker.name if it matches completely.
+  let filtered = neomake#cmd#complete_makers('custom', 'Neomake custom')
+  AssertEqual filtered, ['custom']
+
+  " Completes with partial annotation.
+  let filtered = neomake#cmd#complete_makers('custom (some_custom_', 'Neomake custom (some_custom_')
+  AssertEqual filtered, ['custom (some_custom_name)']
+  " A second time (for s:last_completion adding project makers).
+  let filtered = neomake#cmd#complete_makers('custom (some_custom_', 'Neomake custom (some_custom_')
+  AssertEqual filtered, ['custom (some_custom_name)']
+
+  " Completes with full annotation.
+  let filtered = neomake#cmd#complete_makers('custom (some_custom_name)', 'Neomake custom (some_custom_name)')
+  AssertEqual filtered, ['custom (some_custom_name)']
+
+
+  " Includes description with multiple matches.
+  let b:neomake_neomake_tests_custom2_maker = {
+  \ 'name': 'another_custom_name',
+  \ 'exe': 'true',
+  \ }
+  let filtered = neomake#cmd#complete_makers('', 'Neomake ')
+  AssertEqual filtered[:1], [
+  \ 'custom (some_custom_name)',
+  \ 'custom2 (another_custom_name)',
+  \ ]
+  let filtered = neomake#cmd#complete_makers('cust', 'Neomake cust')
+  AssertEqual filtered, [
+  \ 'custom',
+  \ 'custom2',
+  \ ]
+  let filtered = neomake#cmd#complete_makers('custom', 'Neomake custom')
+  AssertEqual filtered, [
+  \ 'custom',
+  \ 'custom2',
+  \ ]
+  bwipe
+
+Execute (neomake#cmd#complete_jobs):
+  if NeomakeAsyncTestsSetup()
+    AssertEqual neomake#cmd#complete_jobs(), ''
+    let job_ids = [neomake#Sh('sleep 0.1')]
+    AssertEqual neomake#cmd#complete_jobs(), job_ids[0].': sh: sleep 0.1'
+    let job_ids += [neomake#Sh('sleep 0.11')]
+    AssertEqual neomake#cmd#complete_jobs(), printf(
+      \ "%d: sh: sleep 0.1\n%d: sh: sleep 0.11", job_ids[0], job_ids[1])
+    NeomakeCancelJobs
+    NeomakeTestsWaitForFinishedJobs
+  endif

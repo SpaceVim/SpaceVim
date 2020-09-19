@@ -1,6 +1,6 @@
 "=============================================================================
 " SpaceVim.vim --- Initialization and core files for SpaceVim
-" Copyright (c) 2016-2019 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -10,7 +10,7 @@
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro options config layers api faq changelog
+" @order intro options config layers usage api faq changelog
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "
@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.4.0-dev'
+let g:spacevim_version = '1.6.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -137,6 +137,25 @@ let g:spacevim_home_files_number        = 6
 let g:spacevim_enable_guicolors = 0
 
 ""
+" @section escape_key_binding, options-escape_key_binding
+" @parentsection options
+" Set the key binding for switch to normal mode in insert mode.
+" Default is `jk`, to disable this key binding, set this option to empty
+" string.
+" >
+"   escape_key_binding = 'jk'
+" <
+
+""
+" Set the key binding for switch to normal mode in insert mode.
+" Default is `jk`, to disable this key binding, set this option to empty
+" string.
+" >
+"   let g:spacevim_escape_key_binding = 'jk'
+" <
+let g:spacevim_escape_key_binding = 'jk'
+
+""
 " @section enable_googlesuggest, options-enable_googlesuggest
 " @parentsection options
 " Enable/Disable Google suggestions for neocomplete. Default is false.
@@ -179,20 +198,45 @@ let g:spacevim_windows_leader          = 's'
 let g:spacevim_enable_insert_leader    = 1
 
 ""
+" @section data_dir, options-data_dir
+" @parentsection options
+" Set the cache directory of SpaceVim. Default is `$XDG_CACHE_HOME` 
+" or if not set `~/.cache¸.
+" >
+"   data_dir = "~/.cache"
+" <
+
+""
+" Set the cache directory of SpaceVim. Default is `$XDG_CACHE_HOME` 
+" or if not set `~/.cache¸.
+" >
+"   let g:spacevim_data_dir = '~/.cache'
+" <
+let g:spacevim_data_dir
+      \ = $XDG_CACHE_HOME != ''
+      \   ? $XDG_CACHE_HOME . SpaceVim#api#import('file').separator
+      \   : expand($HOME. join(['', '.cache', ''],
+      \     SpaceVim#api#import('file').separator))
+
+if !isdirectory(g:spacevim_data_dir)
+  call mkdir(g:spacevim_data_dir, 'p')
+endif
+
+""
 " @section plugin_bundle_dir, options-plugin_bundle_dir
 " @parentsection options
-" Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
+" Set the cache directory of plugins. Default is `$data_dir/vimfiles`.
 " >
 "   plugin_bundle_dir = "~/.cache/vimplugs"
 " <
 
 ""
-" Set the cache directory of plugins. Default is `~/.cache/vimfiles`.
+" Set the cache directory of plugins. Default is `$data_dir/vimfiles`.
 " >
-"   let g:spacevim_plugin_bundle_dir = '~/.cache/vimplugs'
+"   let g:spacevim_plugin_bundle_dir = g:spacevim_data_dir.'/vimplugs'
 " <
 let g:spacevim_plugin_bundle_dir
-      \ = $HOME. join(['', '.cache', 'vimfiles', ''],
+      \ = g:spacevim_data_dir . join(['vimfiles', ''],
       \ SpaceVim#api#import('file').separator)
 
 ""
@@ -741,7 +785,7 @@ let g:spacevim_sidebar_direction        = ''
 " The default plugin manager of SpaceVim.
 " if has patch 7.4.2071, the default value is dein. Otherwise it is neobundle.
 " Options are dein, neobundle, or vim-plug.
-if has('patch-7.4.2071')
+if has('patch-7.4.1689')
   let g:spacevim_plugin_manager          = 'dein'
 else
   let g:spacevim_plugin_manager          = 'neobundle'
@@ -784,6 +828,10 @@ let g:spacevim_checkinstall            = 1
 " >
 "   q       smart quit windows
 "   s       windows key bindings leader
+"   ,       language specific leader
+"   <C-a>   move cursor to beginning in command line mode
+"   <C-b>   move cursor to left in command line mode
+"   <C-f>   move cursor to right in command line mode
 "   <C-x>   switch buffer
 " <
 
@@ -799,6 +847,10 @@ let g:spacevim_checkinstall            = 1
 " >
 "   q       smart quit windows
 "   s       windows key bindings leader
+"   ,       language specific leader
+"   <C-a>   move cursor to beginning in command line mode
+"   <C-b>   move cursor to left in command line mode
+"   <C-f>   move cursor to right in command line mode
 "   <C-x>   switch buffer
 " <
 let g:spacevim_vimcompatible           = 0
@@ -919,6 +971,16 @@ let g:spacevim_windows_smartclose      = 'q'
 " <
 let g:spacevim_disabled_plugins        = []
 ""
+" @section custom_plugins, usage-custom_plugins
+" @parentsection usage
+" Add custom plugins.
+" >
+"   [[custom_plugins]]
+"     repo = 'vimwiki/vimwiki'
+"     merged = false
+" <
+
+""
 " Add custom plugins.
 " >
 "   let g:spacevim_custom_plugins = [
@@ -950,9 +1012,21 @@ let g:spacevim_enable_powerline_fonts  = 1
 " <
 let g:spacevim_lint_on_save            = 1
 ""
+" @section search_tools, options-search_tools
+" @parentsection options
 " Default search tools supported by flygrep. The default order is ['rg', 'ag',
-" 'pt', 'ack', 'grep', 'findstr']
-let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr']
+" 'pt', 'ack', 'grep', 'findstr', 'git']
+" The `git` command means using `git-grep`. If you prefer to use `git-grep` by
+" default. You can change this option to:
+" >
+"   [options]
+"     search_tools = ['git', 'rg', 'ag']
+" <
+
+""
+" Default search tools supported by flygrep. The default order is ['rg', 'ag',
+" 'pt', 'ack', 'grep', 'findstr', 'git']
+let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr', 'git']
 ""
 " Set the project rooter patterns, by default it is
 " `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`
@@ -960,6 +1034,9 @@ let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '
 ""
 " Enable/Disable changing directory automatically. Enabled by default.
 let g:spacevim_project_rooter_automatically = 1
+""
+" Enable/Disable finding outermost directory for project root detection.
+let g:spacevim_project_rooter_outermost = 1
 
 ""
 " Config the command line prompt for flygrep and denite etc.
@@ -1139,23 +1216,23 @@ command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <a
 command -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
 function! SpaceVim#end() abort
-  if !g:spacevim_vimcompatible
-    call SpaceVim#mapping#def('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
-    call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
-  endif
   if g:spacevim_vimcompatible
     let g:spacevim_windows_leader = ''
     let g:spacevim_windows_smartclose = ''
   endif
 
   if !g:spacevim_vimcompatible
-    nnoremap <silent><C-x> <C-w>x
     cnoremap <C-f> <Right>
     " Navigation in command line
     cnoremap <C-a> <Home>
     cnoremap <C-b> <Left>
     " @bug_vim with <silent> command line can not be cleared
     cnoremap <expr> <C-k> repeat('<Delete>', strchars(getcmdline()) - getcmdpos() + 1)
+
+    "Use escape_key_binding switch to normal mode
+    if !empty(g:spacevim_escape_key_binding)
+      exe printf('inoremap %s <esc>', g:spacevim_escape_key_binding)
+    endif
   endif
   call SpaceVim#server#connect()
 
@@ -1304,7 +1381,6 @@ function! SpaceVim#begin() abort
   endif
   call SpaceVim#default#options()
   call SpaceVim#default#layers()
-  call SpaceVim#default#keyBindings()
   call SpaceVim#commands#load()
 endfunction
 
@@ -1332,20 +1408,26 @@ function! SpaceVim#welcome() abort
     elseif exists(':Defx') == 2
       Defx
       wincmd p
+    elseif exists(':NERDTree') == 2
+      NERDTree
+      wincmd p
     endif
   endif
 endfunction
 
 ""
+" @section Usage, usage
+"   General guide for using SpaceVim. Including layer configuration, bootstrap
+"   function.
+
+""
 " @section FAQ, faq
-"1. How do I enable YouCompleteMe?
-" >
-"   I do not recommend using YouCompleteMe.
-"   It is too big as a vim plugin. Also, I do not like using submodules in a vim
-"   plugin. It is hard to manage with a plugin manager.
+" This is a list of the frequently asked questions about SpaceVim.
 "
-"   Step 1: Add `let g:spacevim_enable_ycm = 1` to custom_config. By default
-"   it should be `~/.SpaceVim.d/init.vim`.
+" 1. How do I enable YouCompleteMe?
+"
+"   Step 1: Add `enable_ycm = true` to custom_config. By default it should be
+"   `~/.SpaceVim.d/init.toml`.
 "
 "   Step 2: Get into the directory of YouCompleteMe's author. By default it
 "   should be `~/.cache/vimfiles/repos/github.com/Valloric/`. If you find the
@@ -1356,39 +1438,64 @@ endfunction
 "
 "   Step 3: Compile YouCompleteMe with the features you want. If you just want
 "   C family support, run `./install.py --clang-completer`.
-" <
+" 
 "
 " 2. How to add custom snippet?
-" >
-"   SpaceVim uses neosnippet as the default snippet engine. If you want to add
-"   a snippet for a vim filetype, open a vim file and run `:NeoSnippetEdit`
-"   command. A buffer will be opened and you can add your custom snippet.
-"   By default this buffer will be save in `~/.SpaceVim/snippets`.
-"   If you want to use another directory:
+" 
+"  SpaceVim uses neosnippet as the default snippet engine. This can be changed
+" by @section(options-snippet_engine) option.
 "
-"   let g:neosnippet#snippets_directory = '~/path/to/snip_dir'
+"  If you want to add a snippet for a current filetype, run |:NeoSnippetEdit|
+" command. A buffer will be opened and you can add your custom snippet.
+" By default this buffer will be save in `~/.SpaceVim.d/snippets`.
 "
-"   For more info about how to write snippet, please
-"   read |neosnippet-snippet-syntax|.
-" <
+"  For more info about how to write snippet, please
+" read |neosnippet-snippet-syntax|.
+"
 "
 " 3. Where is `<c-f>` in cmdline-mode?
-" >
+" 
 "   `<c-f>` is the default value of |cedit| option, but in SpaceVim we use that
-"   binding as `<Right>`, so maybe you can change the `cedit` option or use
+" binding as `<Right>`, so maybe you can change the `cedit` option or use
 "   `<leader>+<c-f>`.
-" <
 "
 " 4. How to use `<Space>` as `<Leader>`?
+" 
+"   Add `let g:mapleader = "\<Space>"` to bootstrap function.
+" 
+" 5. Why does Vim freeze after pressing Ctrl-s?
+"
+"   This is a feature of terminal emulators. You can use `Ctrl-q` to unfreeze Vim. To disable
+" this feature you need the following in either `~/.bash_profile` or `~/.bashrc`:
+">
+"   stty -ixon
+"<
+"
+" 6. How to enable `+py` and `+py3` in Neovim?
+"
+"   In Neovim we can use `g:python_host_prog` and `g:python3_host_prog`
+"   to config python prog. But in SpaceVim the custom configuration file is
+"   loaded after SpaceVim core code. So in SpaceVim itself, if we using `:py`
+"   command, it may cause errors.
+"   
+"   So we introduce two new environment variables: `PYTHON_HOST_PROG` and
+"   `PYTHON3_HOST_PROG`.
+"
+"   For example:
 " >
-"   Add `let mapleader = "\<Space>"` to `~/.SpaceVim.d/init.vim`
+"   export PYTHON_HOST_PROG='/home/q/envs/neovim2/bin/python'
+"   export PYTHON3_HOST_PROG='/home/q/envs/neovim3/bin/python'
 " <
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v1.3.0
+" Following HEAD: changes in master branch since last release v1.4.0
 "
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+"
+" 2020-04-05: v1.4.0
+"
+" https://spacevim.org/SpaceVim-release-v1.4.0/
 "
 " 2019-11-04: v1.3.0
 "

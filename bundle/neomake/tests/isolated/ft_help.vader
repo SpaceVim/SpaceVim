@@ -1,0 +1,6 @@
+Include: ../include/setup.vader
+
+Execute (neomake#makers#ft#help#EnabledMakers):
+  call g:NeomakeTestsCreateExe('vimhelplint', [])
+  runtime autoload/neomake/makers/ft/help.vim
+  AssertEqual ['writegood', 'vimhelplint'], neomake#makers#ft#help#EnabledMakers()

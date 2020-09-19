@@ -1,12 +1,24 @@
 "=============================================================================
 " leaderf.vim --- leaderf layer for SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+""
+" @section leaderf, layer-leaderf
+" @parentsection layers
+" This layer provides fuzzy finder feature which is based on leaderf, and this
+" layer requires vim compiled with `+python` or `+python3`.
+
 let s:CMP = SpaceVim#api#import('vim#compatible')
+
+function! SpaceVim#layers#leaderf#loadable()
+
+  return s:CMP.has('python') || s:CMP.has('python3')
+
+endfunction
 
 function! SpaceVim#layers#leaderf#plugins() abort
   let plugins = []

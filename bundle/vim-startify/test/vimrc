@@ -1,0 +1,13 @@
+filetype off
+
+set runtimepath+=vader.vim
+set runtimepath+=..
+
+filetype plugin on
+syntax enable
+
+set hidden
+
+let g:startify_session_dir = 'session'
+let g:startify_relative_path = 1
+let g:startify_custom_header = []

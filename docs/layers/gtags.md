@@ -63,7 +63,7 @@ sudo apt-get install global
 Install on OSX using Homebrew:
 
 ```sh
-brew install global --with-pygments --with-ctags
+brew install global
 ```
 
 **Build from source:**

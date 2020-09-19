@@ -1,0 +1,147 @@
+*textobj-entire.txt*	Text objects for entire buffer
+
+Version 0.0.4
+Script ID: 2610
+Copyright (C) 2009-2018 Kana Natsuno <http://whileimautomaton.net/>
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+CONTENTS					*textobj-entire-contents*
+
+Introduction		|textobj-entire-introduction|
+Interface		|textobj-entire-interface|
+  Commands		  |textobj-entire-commands|
+  Functions		  |textobj-entire-functions|
+  Mappings		  |textobj-entire-mappings|
+Examples		|textobj-entire-examples|
+Bugs			|textobj-entire-bugs|
+Changelog		|textobj-entire-changelog|
+
+
+
+
+==============================================================================
+INTRODUCTION					*textobj-entire-introduction*
+
+*textobj-entire* is a Vim plugin to provide text objects (|ae| and |ie| by
+default) to select the entire content of a buffer.  Though these are trivial
+operations (e.g. `ggVG`), text object versions are more handy, because you do
+not have to be conscious of the cursor position (e.g. `vae`).
+
+
+Requirements:
+- Vim 7.2 or later
+- |textobj-user| 0.3.7 or later (vimscript#2100)
+
+Latest version:
+https://github.com/kana/vim-textobj-entire
+
+
+
+
+==============================================================================
+INTERFACE					*textobj-entire-interface*
+
+------------------------------------------------------------------------------
+MAPPINGS					*textobj-entire-mappings*
+
+These key mappings are defined in Visual mode and Operator-pending mode.
+
+<Plug>(textobj-entire-a)			*<Plug>(textobj-entire-a)*
+			Select the entire content of the current buffer.
+			This is like `ggVG`, but you do not have to be
+			conscious of the cursor position.
+
+<Plug>(textobj-entire-i)			*<Plug>(textobj-entire-i)*
+			Like |<Plug>(textobj-entire-a)|, but leading and
+			trailing empty lines are excluded.  This is handy for
+			some situations that you do not want to include such
+			empty lines.  For example:
+
+			1. Paste some text into a new buffer (`<C-w>n"*P`)
+			   -- note that the initial empty line is left
+			      as the last line.
+			2. Edit the text (`:%s/foo/bar/g` etc)
+			3. Copy the text to another application (`"*yie`)
+
+
+
+
+==============================================================================
+CUSTOMIZING					*textobj-entire-customizing*
+
+				    *g:textobj_entire_no_default_key_mappings*
+					    *:TextobjEntireDefaultKeyMappings*
+This plugin will define the following key mappings in Visual mode and
+Operator-pending mode automatically.  If you don't want these key mappings,
+define |g:textobj_entire_no_default_key_mappings| before this plugin is loaded
+(e.g. in your |vimrc|).  You can also use |:TextobjEntireDefaultKeyMappings|
+to redefine these key mappings.  This command doesn't override existing {lhs}s
+unless [!] is given.
+
+	{lhs}	{rhs}			~
+	-----	----------------------	~
+	ae	<Plug>(textobj-entire-a)
+	ie	<Plug>(textobj-entire-i)
+
+
+
+
+==============================================================================
+BUGS						*textobj-entire-bugs*
+
+- [count] is just ignored.
+
+- See |textobj-user-bugs| for further information.
+
+
+
+
+==============================================================================
+CHANGELOG					*textobj-entire-changelog*
+
+0.0.4	2018-01-19T19:06:11+09:00	      *textobj-entire-changelog-0.0.4*
+        - Fix the bug that the cursor is not restored to the correct column
+          when using <C-o> or `` after `ae` or `ie`.  For example, `yae<C-o>`
+          moved the cursor to the correct line, but incorrect column (that is
+          the first non-blank character in the line).
+
+0.0.3	2014-02-26T22:28:27+09:00	      *textobj-entire-changelog-0.0.3*
+	- Fix to maintain the |jumplist| for usability.  For example, yae<C-o>
+	  backs the cursor to the position before the yanking.  Old versions
+	  do not maintain the jumplist properly, so that <C-o> moves the
+	  cursor to an unpredictable position.
+
+0.0.2	2013-01-18T19:38:03+09:00	      *textobj-entire-changelog-0.0.2*
+	- Support vim-flavor <https://github.com/kana/vim-flavor>.
+	- Update |textobj-entire-introduction|.
+
+0.0.1	2009-08-13T21:21:01+09:00
+	- Fix a typo on the name of a variable.
+
+0.0.0	2009-04-15T14:41:17+09:00
+	- Initial version.
+
+
+
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:fen:fdl=0:fdm=marker:

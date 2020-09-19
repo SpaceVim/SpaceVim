@@ -1,6 +1,6 @@
 "=============================================================================
 " plugins.vim --- plugin wrapper
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -117,59 +117,19 @@ function! s:install_manager() abort
   endif
   " auto install plugin manager
   if g:spacevim_plugin_manager ==# 'neobundle'
-    "auto install neobundle
-    if filereadable(expand(g:spacevim_plugin_bundle_dir)
-          \ . 'neobundle.vim'. s:Fsep. 'README.md')
-      let g:_spacevim_neobundle_installed = 1
-    else
-      if executable('git')
-        exec '!git clone '
-              \ .'https://github.com/'
-              \ .'Shougo/neobundle.vim'
-              \ . ' '
-              \ . fnameescape(g:spacevim_plugin_bundle_dir)
-              \ . 'neobundle.vim'
-        let g:_spacevim_neobundle_installed = 1
-      else
-        echohl WarningMsg
-        echom 'You need install git!'
-        echohl None
-      endif
-    endif
-    exec 'set runtimepath+='
-          \ . fnameescape(g:spacevim_plugin_bundle_dir)
-          \ . 'neobundle.vim'
+    let g:_spacevim_neobundle_installed = 1
+    exec 'set runtimepath+=' . g:_spacevim_root_dir . 'bundle/neobundle.vim/'
   elseif g:spacevim_plugin_manager ==# 'dein'
-    "auto install dein
-    if filereadable(expand(g:spacevim_plugin_bundle_dir)
-          \ . join(['repos', 'github.com',
-          \ 'Shougo', 'dein.vim', 'README.md'],
-          \ s:Fsep))
-      let g:_spacevim_dein_installed = 1
-    else
-      if executable('git')
-        exec '!git clone https://github.com/Shougo/dein.vim "'
-              \ . expand(g:spacevim_plugin_bundle_dir)
-              \ . join(['repos', 'github.com',
-              \ 'Shougo', 'dein.vim"'], s:Fsep)
-        let g:_spacevim_dein_installed = 1
-      else
-        echohl WarningMsg
-        echom 'You need install git!'
-        echohl None
-      endif
-    endif
-    exec 'set runtimepath+='. fnameescape(g:spacevim_plugin_bundle_dir)
-          \ . join(['repos', 'github.com', 'Shougo',
-          \ 'dein.vim'], s:Fsep)
+    let g:_spacevim_dein_installed = 1
+    exec 'set runtimepath+=' . g:_spacevim_root_dir . 'bundle/dein.vim/'
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
     "auto install vim-plug
-    if filereadable(expand('~/.cache/vim-plug/autoload/plug.vim'))
+    if filereadable(expand(g:spacevim_data_dir.'/vim-plug/autoload/plug.vim'))
       let g:_spacevim_vim_plug_installed = 1
     else
       if executable('curl')
         exec '!curl -fLo '
-              \ . '~/.cache/vim-plug/autoload/plug.vim'
+              \ . g:spacevim_data_dir.'/vim-plug/autoload/plug.vim'
               \ . ' --create-dirs '
               \ . 'https://raw.githubusercontent.com/'
               \ . 'junegunn/vim-plug/master/plug.vim'
@@ -180,13 +140,12 @@ function! s:install_manager() abort
         echohl None
       endif
     endif
-    exec 'set runtimepath+=~/.cache/vim-plug/'
+    exec 'set runtimepath+='g:spacevim_data_dir.'/vim-plug/'
   endif
 endf
 
-if get(g:,'spacevim_enable_plugins', 1)
-  call s:install_manager()
-endif
+call s:install_manager()
+
 
 function! SpaceVim#plugins#begin(path) abort
   let g:unite_source_menu_menus.AddedPlugins =
@@ -217,6 +176,8 @@ function! SpaceVim#plugins#end() abort
     endif
   elseif g:spacevim_plugin_manager ==# 'dein'
     call dein#end()
+    " dein do not include the after dir of SpaceVim by default
+    let &rtp .= ',' . g:_spacevim_root_dir . 'after'
     if g:spacevim_checkinstall == 1
       silent! let g:_spacevim_checking_flag = dein#check_install()
       if g:_spacevim_checking_flag
@@ -245,11 +206,12 @@ function! SpaceVim#plugins#defind_hooks(bundle) abort
   endif
 endfunction
 
+
 function! SpaceVim#plugins#fetch() abort
   if g:spacevim_plugin_manager ==# 'neobundle'
-    NeoBundleFetch 'Shougo/neobundle.vim'
+    NeoBundleFetch g:_spacevim_root_dir . 'bundle/neobundle.vim'
   elseif g:spacevim_plugin_manager ==# 'dein'
-    call dein#add('Shougo/dein.vim')
+    call dein#add(g:_spacevim_root_dir . 'bundle/dein.vim', { 'merged' : 0})
   endif
 endfunction
 

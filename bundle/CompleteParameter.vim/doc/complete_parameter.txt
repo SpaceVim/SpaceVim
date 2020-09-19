@@ -1,0 +1,258 @@
+*complete_parameter* *CompleteParameter* *completeparameter* author: tenfyzhong
+
+This help file explains the CompleteParameter Vim Plugin. 
+
+================================================================================
+Contents:
+0. Introduction -------------------------------- |complete-parameter-introduction|
+1. Install ------------------------------------- |complete-parameter-install|
+2. Usage --------------------------------------- |complete-parameter-usage|
+3. Mapping ------------------------------------- |complete-parameter-mapping|
+4. Options ------------------------------------- |complete-parameter-options|
+5. Functions ----------------------------------- |complete-parameter-functions|
+6. Writing Extensions -------------------------- |complete-parameter-extensions|
+7. FAQ ----------------------------------------- |complete-parameter-faq|
+8. Contributions ------------------------------- |complete-parameter-contributes|
+9. Thanks -------------------------------------- |complete-parameter-thanks|
+10. LICENSE ------------------------------------ |complete-parameter-license|
+
+
+================================================================================
+0. Introduction                                  *complete-parameter-introduction*
+
+CompletEparameter is a plugin for complete function's parameters after complete
+a function.  
+
+- Complete parameters after select a complete item from the completion popup menu. 
+- After complete the parameters, jump to the first parameter and the select it. 
+- Jump to next parameter. 
+- Jump to previous parameter. 
+- Select next overload function. 
+- Select previous overload function. 
+- Select the first item in the completion popup menu. 
+- Echo signature when select an item. (need to `set noshowmode` or `set cmdheight=2`) 
+
+
+================================================================================
+1. Install                                            *complete-parameter-install*
+I suggest you to use a plugin manager, such vim-plug or other.
+- [vim-plug](https://github.com/junegunn/vim-plug) >
+  Plug 'tenfyzhong/CompleteParameter.vim' 
+<
+
+- Manual >
+  git clone https://github.com/tenfyzhong/CompleteParameter.vim.git ~/.vim/bundle/CompleteParameter.vim
+  echo 'set rtp+=~/.vim/bundle/CompleteParameter.vim' >> ~/.vimrc
+  vim -c 'helptag ~/.vim/bundle/CompleteParameter.vim/doc' -c qa!
+<
+================================================================================
+2. Usage                                                *complete-parameter-usage*
+Install a complete engine have supported. Goto the completion item of the
+completion popup menu you want to select, and then type `(`(minimal setting), 
+the parameters will be inserted and select the the first parameter. 
+`<c-j>`/`<c-k>`(minimal setting) will jump to the next/previous parameter 
+and select it. 
+
+## Minimal setting >
+  inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+  smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+  imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+  smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+  imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+<
+
+================================================================================
+3. Mapping                                            *complete-parameter-mapping*
+                                  *<Plug>(complete_parameter#goto_next_parameter)*
+`<Plug>(complete_parameter#goto_next_parameter)`
+Goto next parameter and select it.  
+eg: >
+  nmap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+  imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+  smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+<
+                              *<Plug>(complete_parameter#goto_previous_parameter)*
+`<Plug>(complete_parameter#goto_previous_parameter)`
+Goto previous parameter and select it.  
+eg:  >
+  nmap <c-k> <plug>(complete_parameter#goto_previous_parameter)
+  imap <c-k> <plug>(complete_parameter#goto_previous_parameter)
+  smap <c-k> <plug>(complete_parameter#goto_previous_parameter)
+<
+                                        *<Plug>(complete_parameter#overload_down)*
+`<Plug>(complete_parameter#overload_down)`
+Select next overload function.  
+eg:  >
+  nmap <m-d> <Plug>(complete_parameter#overload_down)
+  imap <m-d> <Plug>(complete_parameter#overload_down)
+  smap <m-d> <Plug>(complete_parameter#overload_down)
+<
+                                          *<Plug>(complete_parameter#overload_up)*
+`<Plug>(complete_parameter#overload_up)`
+Select previous overload function.  
+eg: >
+  nmap <m-u> <Plug>(complete_parameter#overload_up)
+  imap <m-u> <Plug>(complete_parameter#overload_up)
+  smap <m-u> <Plug>(complete_parameter#overload_up)
+<
+
+================================================================================
+4. Options                                            *complete-parameter-options*
+                                                  *g:complete_parameter_log_level*
+* g:complete_parameter_log_level
+This option set the log level.  
+5: disable log. 
+4: only print **error** log. 
+2: print **error** and **debug** log.
+1: print **error**, **debug**, **trace**
+Default: 5 >
+  let g:complete_parameter_log_level = 5
+<
+                                     *g:complete_parameter_use_ultisnips_mappings*
+* g:complete_parameter_use_ultisnips_mappings
+If this option is 1 and you use ultisnips together, it will use ultisnips mapping 
+to goto next or previous parameter.  
+default: 0  >
+  let g:complete_parameter_use_ultisnips_mapping = 0
+<
+                                             *g:complete_parameter_echo_signature*
+* g:complete_parameter_echo_signature
+It will echo signature if this option is 1. (need to `set noshowmode` or `set cmdheight=2`) 
+default: 1 >
+  let g:complete_parameter_echo_signature = 1
+<
+                                             *g:complete_parameter_py_keep_value*
+* g:complete_parameter_py_keep_value 
+It will keep default value if it this option is 1 for python.   
+For example, if the definition is `def foo(a=1, b=2)`, it will complete 
+`(a=1, b=2)` if its value is 1. Otherwise, it will complete `(a, b)`. 
+If there are `=` in the completion, the jump to action only select the value,
+but not parameter name. It will select `1` and then `2` in the previous
+example. 
+default: 1  >
+  let g:complete_parameter_py_keep_value = 1
+<
+
+                                             *g:complete_parameter_py_remove_default*
+* g:complete_parameter_py_remove_default
+It will remove default parametrs if this option is 1 for python.  
+For example, if the definition is `def foo(a, b=1)`, it will complete 
+`(a)` if its value is 1. Otherwise, it will complete `(a, b)`. 
+default: 1 >
+let g:complete_parameter_py_remove_default = 1
+<
+
+================================================================================
+5. Functions                                        *complete-parameter-functions*
+                                                                *cmp#pre_complete*
+                                                 *complete_parameter#pre_complete*
+`cmp#pre_complete(failed_insert)`
+`complete_parameter#pre_complete(failed_insert)` deprecated
+call parameter completion. If failed, the parameter `failed_insert` will be
+inserted. 
+
+                                                                    *cmp#jumpable*
+                                                     *complete_parameter#jumpable*
+`cmp#jumpable(forward)`
+`complete_parameter#jumpable(forward)` deprecated
+can jump to next parameter or not. 
+
+                                                         *CompleteParameterFailed*
+`CompleteParameterFailed(failed_insert)`
+You can define this function and process the failed event. The return will be 
+inserted. 
+
+================================================================================
+6. Writing Extensions                              *complete-parameter-extensions*
+It's easy to writing extensions for languages. 
+Follow the next steps. All commands below was work in this plugin directory. 
+1) Create a file named `filetype.vim` in path `cm_parser`. For example,
+   write extension for golang. >
+   touch cm_parser/go.vim
+<
+2) Create function: `cm_parser#filetype#parameters(completed_item)`
+   This is the most important function.
+   The parameter `completed_item` is a copy of |v:completed_item|.
+   This function will parse the complete info from the `completed_item` and
+   return the parameters you need to completed.  
+   The return must be a list of strings. So the overwrite functions can be returned.
+
+   For example, a go function like 
+   `func Dial(network string, address string) (net.Conn, error)`
+   The function message was stored in the `menu` field of `completed_item`
+   The go no support overwrite. So the result is `['(network, address)']`
+
+   For another example, the std::vector::erase functor of c++, there are two
+   overwrite functions. The message was stored in the `info` field of
+   `completed_item`
+   `iterator erase( const_iterator __position )`
+   `iterator erase( const_iterator __first, const_iterator __last )`
+   This function will return: `['(__position)', '(__first, __last)']`
+
+3) Create function `cm_parser#filetype#parameter_delim()`
+   This function return the delim of parameters. For example, the go and c++
+   will return ','
+
+4) Create function `cm_parser#filetype#parameter_begin()`
+   This function return the border begin of the parameters. For example, the go 
+   will return '('. C++ will return '(<', the '<' is the beginning of 
+   template parameters.
+
+5) Create function `cm_parser#filetype#parameter_end()`
+   This function return the border end of the parameters. For example, the go 
+   will return ')'. C++ will return ')>', the '>' is ending of 
+   template parameters.
+   The length of `cm_parser#filetype#parameter_begin()` and 
+   `cm_parser#filetype#parameter_end()` must be equal. Each char of them must 
+   be match. For example, the the first char of begin is '(', the first of end
+   must be ')'. 
+
+6) Create function `cm_parser#filetype#echos(completed_item)`
+   This function return the signatures. When the parameter completed, the
+   signature will echo to cmd window. It's optional. 
+   
+7) Please write unittest for your function `cm_parser#filetype#parameters` 
+   use [vader](https://github.com/junegunn/vader.vim) test framework. And put 
+   the unittest in the `vader` directory. This is optional. But if you would
+   send a pull request, this is required. 
+
+Finally, please send a pull request for me if you would like to share you
+extension.
+
+================================================================================
+7. FAQ                                                    *complete-parameter-faq*
+1) Can't work with plugin auto-pairs use the default mapping `(`
+Because the auto-pairs use `inoremap` to mapping the keys. It can't call this
+plugin after the auto-pairs process. You can add the following setting to you
+.vimrc, and it'll work well.  >
+  let g:AutoPairs = {'[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+  inoremap <buffer><silent> ) <C-R>=AutoPairsInsert(')')<CR>
+<
+
+2) How to accept the selected function but not parameters
+You can type `<c-y>` key to accept the selected function and stop completion.
+When the popup menu is disappeared, the parameters will not be insert. 
+
+
+3) The mapping `<c-j>` doesn't jump to the next parameter, but delete the
+   selected words. 
+If you use neosnippet, Please set `g:neosnippet#disable_select_mode_mappings`
+to 0. It will remove all select mappings. 
+If you don't use neosnippet, please send me a issue, and give me the plugins
+you are using. 
+
+
+
+================================================================================
+8. Contributions                                  *complete-parameter-contributes*
+Contributions and pull requests are welcome.
+
+================================================================================
+9. Thanks                                              *complete-parameter-thanks*
+- [johnzeng](https://github.com/johnzeng), support erlang
+
+================================================================================
+10. LICENSE                                           *complete-parameter-license*
+MIT License Copyright (c) 2017 tenfyzhong
+
+" vim:ft=help:iskeyword+=-:iskeyword+=58:iskeyword+=#

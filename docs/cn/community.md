@@ -15,6 +15,7 @@ lang: zh
 - [经验分享](#经验分享)
 - [邮件列表](#邮件列表)
 - [即时聊天](#即时聊天)
+- [其他组群](#其他组群)
 
 <!-- vim-markdown-toc -->
 
@@ -74,7 +75,37 @@ spacevim-cn+unsubscribe@googlegroups.com
 - <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)
 - <i class="fab fa-whatsapp"></i> [`SpaceVim` WhatsApp 聊天室](https://chat.whatsapp.com/GQ40y0oiPhDHA9tMvDZteo)
 
-以下为 SpaceVim 的 QQ 交流群，主要讨论 SpaceVim、Vim 以及 Neovim 相关的问题，消息与以上频道不互通。
+### 其他组群
 
-- <i class="fab fa-qq"></i> [`718087282` SpaceVim 用户](https://jq.qq.com/?_wv=1027&k=5Z6H2so)
+针对不同编程语言，有独立的Telegram交流群，以便于讨论更加集中的话题，部分群聊同步着 gitter。
 
+- [C# 中文](https://t.me/joinchat/EazwPxRKe5Mzc6GFKGsPWw)
+- [C++ 中文](https://t.me/joinchat/EazwPxTwwfO_dXpTteyXOA)
+- [C 中文](https://t.me/joinchat/EazwPxOFtl9_dpkQdor1gw)
+- [Clojure 中文](https://t.me/joinchat/EazwPxNoCKTJ5rz_BrEtiw)
+- [CoffeeScript 中文](https://t.me/joinchat/EazwPxVvES3qIV15t3vNtg)
+- [Elixir 中文](https://t.me/joinchat/EazwPxu4Kv6r-sRkSAjNWA)
+- [F# 中文](https://t.me/joinchat/EazwPxXwge6h5H4Pm4noJQ)
+- [Go 中文](https://t.me/joinchat/EazwPxZ-6SjxeEtr9M9jAg): ([gitter](https://gitter.im/SpaceVim/golang-cn))
+- [Haskell 中文](https://t.me/joinchat/EazwPw9N4rVq-IVfTik9kA)
+- [Hy 中文](https://t.me/joinchat/EazwPxUbRjUp_9u2_O4YjA)
+- [JavaScript 中文](https://t.me/joinchat/EazwPxulQGmwGIRTOmgOfw): ([gitter](https://gitter.im/SpaceVim/JavaScript-cn))
+- [Java 中文](https://t.me/joinchat/EazwPxdwgArMZi1S-rlavA)
+- [Kotlin 中文](https://t.me/joinchat/EazwPxevphBevqj14rNl-w)
+- [LiveScript 中文](https://t.me/joinchat/EazwPxQNQ7D7u6po7d1z9w)
+- [Lua 中文](https://t.me/joinchat/EazwP0YHwMnI6cGGfMErUg): ([gitter](https://gitter.im/SpaceVim/Lua-cn))
+- [Racket 中文](https://t.me/joinchat/EazwPxWtSvlBL_OfKOhv4g)
+- [Nim 中文](https://t.me/joinchat/EazwPxNNj_nCRlgMSQCNFA)
+- [PHP 中文](https://t.me/joinchat/EazwPxt-m76BYpJYCYkf-Q)
+- [Perl 中文](https://t.me/joinchat/EazwPxyC0GF2ah8326d9-w): ([gitter](https://gitter.im/SpaceVim/perl-cn))
+- [Python 中文](https://t.me/joinchat/EazwPxs7z65GrkYGPJFtyA): ([gitter](https://gitter.im/SpaceVim/Python-cn))
+- [R 中文](https://t.me/joinchat/EazwPxMxLainsmFhw9vNHQ)
+- [Ruby 中文](https://t.me/joinchat/EazwPxrim7Lw2ZlLoMdrEg)
+- [Rust 中文](https://t.me/joinchat/EazwPxlQXAG_QRgZ8tpJAg): ([gitter](https://gitter.im/rust-china/community), IRC: #rust-china)
+- [Scala 中文](https://t.me/joinchat/EazwPxXDisTT4nzTJAIO6g)
+- [Scheme 中文](https://t.me/joinchat/EazwPxX86flKkpaX-j6SXg): ([gitter](https://gitter.im/SpaceVim/Scheme-cn))
+- [TypeScript 中文](https://t.me/joinchat/EazwPxoll2H6vWNS8TM1Bg)
+- [elm 中文](https://t.me/joinchat/EazwPxeoHnV9OLJ1HDjxjQ)
+- [groovy 中文](https://t.me/joinchat/EazwPxWczVDLjYzjLNc1Hw)
+- [julia 中文](https://t.me/joinchat/EazwPw_DyObgvlef3B0l-w)
+- [pony 中文](https://t.me/joinchat/EazwPxYdRVxCamcSBG_Mtg)

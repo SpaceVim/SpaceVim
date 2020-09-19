@@ -1,0 +1,534 @@
+*vimproc.txt*	Asynchronous execution plugin for Vim
+
+Version: 9.3
+Author : Shougo <Shougo.Matsu at gmail.com>
+Original Author : Yukihiro Nakadaira <yukihiro.nakadaira at gmail.com>
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+CONTENTS					*vimproc-contents*
+
+Introduction		|vimproc-introduction|
+Install			|vimproc-install|
+Interface		|vimproc-interface|
+  Commands		  |vimproc-commands|
+  Functions		  |vimproc-functions|
+  Variables		  |vimproc-variables|
+  Objects		  |vimproc-objects|
+Tips			|vimproc-tips|
+Examples		|vimproc-examples|
+FAQ			|vimproc-faq|
+
+==============================================================================
+INTRODUCTION					*vimproc-introduction*
+
+*vimproc* is a great asynchronous execution library for Vim.  It is a fork of
+proc.vim by Yukihiro Nakadaira.  I added some features and fixed some bugs and
+I'm maintaining it now.  Instead of an external shell (example: 'shell'),
+|vimproc| uses an external DLL file.
+
+
+==============================================================================
+INSTALL						*vimproc-install*
+
+First, download vimproc by cloning the Git repository:
+
+http://github.com/Shougo/vimproc.vim
+
+Next, you have to compile the external DLL "vimproc_xxx.so" (or
+"vimproc_win32.dll" for Windows, "vimproc_cygwin.dll" for Windows/Cygwin).
+Because vimproc depends on the functions of the DLL, vimproc will show an
+error message if the compiled DLL doesn't exist.
+
+You can install the DLL using |VimProcInstall|. If you are having any trouble
+or want to build manually then read on.
+
+Supported platforms:
+* Windows 32/64bit (Compiled by MinGW or Visual Studio)
+* macOS (10.5 or later)
+* Linux
+* Cygwin
+* Solaris
+* BSD (but cannot check)
+* Android (experimental)
+
+Unsupported platforms:
+* Other UNIX platforms
+
+Build Steps:
+
+Note: You must use GNU make to build vimproc.
+Note: You must execute the command from the root of the vimproc repository
+
+Linux						*vimproc-linux*
+>
+	$ make
+<
+macOS					*vimproc-macos* *vimproc-macosx*
+>
+	$ make
+<
+Note: If you want to build for multiple architectures, you can use $ARCHS and
+$CC variables.
+
+Build for i386 and x86-64:			*vimproc-multiarch*
+>
+	$ make ARCHS='i386 x86_64'
+<
+FreeBSD						*vimproc-freebsd*
+>
+	$ gmake
+
+If you want to use BSD make, use the platform specific makefile: >
+
+	$ make -f make_bsd.mak
+
+Solaris						*vimproc-solaris*
+>
+	$ gmake
+<
+Note: If you want to use Sun Compiler, you can use $SUNCC variable.
+>
+	$ gmake SUNCC=cc
+<
+Windows						*vimproc-windows*
+
+Note: In Windows, using MinGW is recommended.
+Note: If you do not have the "gcc" or "x86_64-w64-mingw32-gcc" binary in your
+%PATH, you must change CC variable accordingly.
+
+Windows using MinGW (32bit Vim):
+>
+	$ mingw32-make -f make_mingw32.mak
+<
+Windows using MinGW (If you want to use MinGW compiler in Cygwin):
+>
+	$ mingw32-make -f make_mingw32.mak CC=mingw32-gcc
+<
+Windows using MinGW (64bit Vim):
+>
+	$ mingw32-make -f make_mingw64.mak
+<
+Windows using Visual Studio (32bit/64bit Vim):
+>
+	$ nmake -f make_msvc.mak
+<
+You should run this from VS command prompt.
+The architecture will be automatically detected, but you can also specify the
+architecture explicitly. E.g.:
+>
+	32bit: nmake -f make_msvc.mak CPU=i386
+	64bit: nmake -f make_msvc.mak CPU=AMD64
+<
+* Cygwin:					*vimproc-cygwin*
+>
+	$ make
+<
+Note: The `vimproc_cygwin.dll` compiled in Cygwin won't work with Windows Vim.
+
+If you use |dein.vim| or |neobundle.vim|, you can update and build vimproc
+automatically.
+http://github.com/Shougo/dein.vim
+http://github.com/Shougo/neobundle.vim
+
+Example for dein.vim:
+>
+	call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+<
+Example for neobundle.vim:
+>
+	NeoBundle 'Shougo/vimproc.vim', {
+	      \   'build' : {
+	      \     'windows' : 'tools\\update-dll-mingw',
+	      \     'cygwin' : 'make -f make_cygwin.mak',
+	      \     'mac' : 'make -f make_mac.mak',
+	      \     'linux' : 'make',
+	      \     'unix' : 'gmake',
+	      \   }
+	      \ }
+<
+Windows Binaries:
+* Kaoriya Vim (http://www.kaoriya.net/software/vim/) comes bundled with a
+  precompiled version for vimproc in Windows environment
+* https://github.com/Shougo/vimproc.vim/releases
+
+==============================================================================
+INTERFACE					*vimproc-interface*
+
+------------------------------------------------------------------------------
+COMMANDS 					*vimproc-commands*
+
+:VimProcBang {path}					*:VimProcBang*
+			Executes {path} command and echo result.  This
+			command replaces |:!|.
+			Note: It is not asynchronous.
+
+:VimProcRead {path}					*:VimProcRead*
+			Executes {path} command and paste result in current
+			buffer.  This command replaces |:read|.
+
+:VimProcInstall {args}				        *:VimProcInstall*
+			Tries to build the necessary DLL using `gmake`/`make`.
+			You can supply extra arguments to `make`, for example
+			to compile using clang `:VimProcInstall CC=clang`.
+
+------------------------------------------------------------------------------
+FUNCTIONS 					*vimproc-functions*
+
+vimproc#version()				*vimproc#version()*
+		Returns vimproc version number.  Version 5.0 is 500.  Version
+		5.1 (5.01) is 501.  It has the same format as |v:version|.
+
+vimproc#dll_version()				*vimproc#dll_version()*
+		Same to |vimproc#version()|, but it returns vimproc DLL
+		version.
+
+vimproc#open({filename})			*vimproc#open()*
+		Opens {filename} with a system associated command.
+
+						*vimproc#get_command_name()*
+vimproc#get_command_name({command} [, {path} [, {count}]])
+		Searches {command} from {path} and returns command name.  If
+		you omit {path}, uses $PATH instead.  If you set {count},
+		returns {count}th candidate.  If you set {count} to a negative
+		number, it returns a list which contains all candidates.  If
+		{count} is omitted, then 1 is used.
+
+vimproc#system({expr} [, {input} [, {timeout}]])	*vimproc#system()*
+		It replaces |system()|.  If you call |system()| in Windows
+		environment, DOS window will appear.  But, |vimproc#system()|
+		is not.
+		Note: It does not execute a shell.  So a shell internal
+		command is invalid.  Ex: pwd, cd, ...
+		
+		The {expr} is same to |vimproc#plineopen3()|.  The type is
+		String or arguments list.  If {expr} is a String, it is parsed
+		automatically.
+		If the end of {expr} is "&", executes a command in the
+		background.
+>
+		call vimproc#system('ls &')
+<
+		If you set {timeout}, vimproc will kill the process after
+		{timeout} and throw "vimproc: vimproc#system(): Timeout."
+		exception.
+		The unit is millisecond.
+		Note: |+reltime| and Vim 7.2 is required.
+		If you set {input}, inputs the string to the command.
+
+vimproc#system2({expr} [, {input} [, {timeout}]])	*vimproc#system2()*
+		Same as |vimproc#system()|.  But it converts the encoding of
+		inputs and outputs automatically.
+
+						*vimproc#system_passwd()*
+vimproc#system_passwd({expr} [, {input} [, {timeout}]])
+		Same as |vimproc#system()|.  But it supports password input.
+
+vimproc#system_bg({expr})			*vimproc#system_bg()*
+		Same as |vimproc#system()|.  But it executes a command in the
+		background.
+		Note: It disables user input.
+		Note: This function does not support the following statements:
+		      ";", "&&" and "||".
+
+vimproc#system_gui({expr})			*vimproc#system_gui()*
+		Same as |vimproc#system_bg()|.
+		Note: It is obsolete API.
+
+vimproc#cmd#system({expr})			*vimproc#cmd#system()*
+		Same as |vimproc#system()| on non-Windows platforms.
+		On Windows, it is similar to |vimproc#system()| but faster.
+		It executes a "cmd.exe" process in the background when it is
+		called first time. After the next call, it reuses the
+		"cmd.exe" process. The process will be automatically closed
+		when Vim exits.
+
+vimproc#get_last_status()			*vimproc#get_last_status()*
+		Gets the last |vimproc#system()| status value.
+
+vimproc#get_last_errmsg()			*vimproc#get_last_errmsg()*
+		Gets the last |vimproc#system()| error messages.
+
+vimproc#shellescape({string})			*vimproc#shellescape()*
+		Escapes {string} for vimproc function arguments.
+
+vimproc#fopen({path} [, {flags} [, {mode}]])	*vimproc#fopen()*
+		Opens {path} file and returns a |vimproc-file-object|.
+		The optional {flags} is only either one of fopen() mode
+		string (e.g. "r", "wb+") or open() flag values as string
+		(e.g. "O_RDONLY | O_BINARY").  If {flags} is omitted,
+		"r" (read-only) is used.
+		The optional {mode} number specifies the permissions in case
+		a new file is created.  If {mode} is omitted, 0644 (octal)
+		is used.
+
+vimproc#socket_open({host}, {port})		*vimproc#socket_open()*
+		Opens the {host}:{port} socket and returns a
+		|vimproc-socket-object|.
+		The {host} is a String.  The {port} is a Number.
+
+vimproc#host_exists({host})			*vimproc#host_exists()*
+		Checks to see if {host} exists.
+		Note: Protocol name and path are ignored.
+
+vimproc#popen2({args} [, {is-pty}])			*vimproc#popen2()*
+		Executes {args} command and returns a |vimproc-process-object|.
+		If {args} is a String, {args} is parsed automatically.
+		Otherwise the {args} is a list of a command and its arguments.
+		If {is-pty} is 1, vimproc will use pty.
+
+vimproc#popen3({args} [, {is-pty}])			*vimproc#popen3()*
+		Same as |vimproc#popen2()|, but this function splits
+		stderr output.
+
+vimproc#plineopen2({commands} [, {is-pty}])	*vimproc#plineopen2()*
+		Executes {commands} command and returns a
+		|vimproc-process-object|.
+		If {commands} is a String, {commands} is parsed automatically.
+		Note: You can use pipes.
+		
+		Otherwise the {commands} is a list of dictionaries.
+		The keys are follows:
+		args		The arguments list.
+		fd		The output filename.  If it is empty, the
+				output is sent to the next process.
+
+		If {is-pty} is 1, vimproc will use pty.
+
+vimproc#plineopen3({commands} [, {is-pty}])	*vimproc#plineopen3()*
+		Same as |vimproc#plineopen2()|, but this function splits
+		stderr output.
+
+vimproc#pgroup_open({statements} [, {is-pty}])	*vimproc#pgroup_open()*
+		Executes {statements} command and returns a
+		|vimproc-process-object|.
+		If {statements} is a String, {statements} is parsed
+		automatically.
+		Note: You can use pipes, ";", "&&" and "||".
+		
+		Otherwise the {statements} is a dictionary list split by
+		commands.
+		The keys are follows:
+		statement	The execute pipeline information same as
+				|vimproc#plineopen2()|'s {commands} argument.
+		condition	The condition which executes next command.
+				"always" : execute always. (";")
+				"true"   : execute if previous command is
+					   succeeded. ("&&")
+				"false"  : execute if previous command is
+					   failed. ("||")
+		If {is-pty} is 1, vimproc will use pty.
+
+vimproc#ptyopen({args} [, {npipe}])		*vimproc#ptyopen()*
+		Executes {args} command and returns a |vimproc-process-object|.
+		If {args} is a String, {args} is parsed automatically.
+		The {npipe} is 2 or 3.  If it is 2, combines stdout and
+		stderr.
+		Note: You can use pipes.
+		
+		Otherwise the {args} is a list of a command and its arguments.
+
+vimproc#kill({pid}, {sig})			*vimproc#kill()*
+		Sends {sig} signal to {pid} process.
+		If an error is occurred, it returns 1 for error and sets
+		|vimproc#get_last_errmsg()|.
+		If {sig} is 0, it checks whether {pid} exists.
+
+vimproc#write({filename}, {string} [, {mode}])		*vimproc#write()*
+		Writes {string} to {filename} file.
+		The {mode} is a write mode. "w", "b" or "a" is valid.
+				"w" : normal mode.
+				"b" : binary mode.
+				"a" : append mode.
+		If you omit {mode}, use "w".
+		But {filename} head is ">", "a" is used.
+
+vimproc#readdir({dirname})				*vimproc#readdir()*
+		Returns files in {dirname}.  If {dirname} is not found,
+		returns an empty list.
+		Note: Filename encoding is converted to 'termencoding'.
+
+vimproc#delete_trash({filename})			*vimproc#delete_trash()*
+		Moves a file {filename} to a trashbox directory.
+		Note: Windows environment only.
+		Note: Filename encoding is converted to 'termencoding'.
+
+------------------------------------------------------------------------------
+VARIABLES 					*vimproc-variables*
+
+						*g:vimproc#dll_path*
+g:vimproc#dll_path	(default
+			Win32: "$VIMRUNTIME/lib/vimproc_win32.dll"
+			Win64: "$VIMRUNTIME/lib/vimproc_win64.dll"
+			Cygwin: "$VIMRUNTIME/lib/vimproc_cygwin.dll"
+			Mac: "$VIMRUNTIME/lib/vimproc_mac.so"
+			Linux32: "$VIMRUNTIME/lib/vimproc_linux32.so"
+			Linux64: "$VIMRUNTIME/lib/vimproc_linux64.so"
+			Others: "$VIMRUNTIME/lib/vimproc_unix.so")
+		This variable stores a DLL name used by vimproc.  You must
+		compile this DLL file.  If this DLL does not exist, vimproc
+		will echo error.
+						*g:vimproc_dll_path*
+		Note: |g:vimproc_dll_path| is obsolete name.
+
+						*g:vimproc#disable*
+g:vimproc#disable	(default : not defined)
+		If it is defined, you cannot call vimproc functions.
+		You can use it to disable vimproc before loading it.
+
+					*g:vimproc#download_windows_dll*
+g:vimproc#download_windows_dll	(default : 0)
+		If this is non-zero, vimproc tries downloading MS Windows DLL
+		file from GitHub Releases page(*).
+		Vimproc also tries updating DLL file if it is outdated.
+		Vimproc does nothing if you don't use MS Windows.
+
+		(*) https://github.com/Shougo/vimproc.vim/releases
+
+						*g:vimproc#popen2_commands*
+g:vimproc#popen2_commands	(default : refer to autoload/vimproc.vim)
+		This variable is that vimproc use popen2 commands instead of
+		popen3 as dictionary.  The key is command name and the value
+		is 1 or 0.  If the command does not work in popen3, you can
+		set this variable.
+						*g:vimproc_popen2_commands*
+		Note: |g:vimproc_popen2_commands| is obsolete name.
+
+						*g:vimproc#password_pattern*
+g:vimproc#password_pattern	(default : refer to autoload/vimproc.vim)
+		The default password pattern.
+		Note: This variable is used for vimshell.
+						*g:vimproc_password_pattern*
+		Note: |g:vimproc_password_pattern| is obsolete name.
+
+						*g:stdinencoding*
+g:stdinencoding			(default : "char")
+		The default vimproc stdin encoding.
+
+						*g:stdoutencoding*
+g:stdoutencoding		(default : "char")
+		The default vimproc stdout encoding.
+
+						*g:stderrencoding*
+g:stderrencoding		(default : "char")
+		The default vimproc stderr encoding.
+
+------------------------------------------------------------------------------
+OBJECTS 					*vimproc-objects*
+
+						*vimproc-file-object*
+File object
+		The file object provides some operations for file io.
+		It has functions and attributes follows:
+		eof		If reaches end of file, it is 1.
+				Otherwise, 0.
+		is_valid	Todo
+		read([{number}[, {timeout}[, {oneline}]]])
+				Read this file content up to the {number}
+				characters.
+		read_line([{number}[, {timeout}[, {oneline}]]])
+				Read next line from this file up to the
+				{number} characters.
+		read_lines([{number}[, {timeout}[, {oneline}]]])
+				Read all lines from this file up to the
+				{number} characters.
+		write({str}[, {timeout}])
+				Write given {str} to this file.
+		close()		Close this file.
+
+						*vimproc-socket-object*
+Socket object
+		The socket object provides some operations for socket io.
+		It functions and attributes same to |vimproc-file-object|.
+
+						*vimproc-process-object*
+Process object
+		The process object provides some operations for piped io.
+		It has functions and attributes follows:
+		pid		The pid of a child process was started.
+		pid_list	Todo
+		stderr		The |vimproc-file-object|.
+		stdout		The |vimproc-file-object|.
+		stdin		The |vimproc-file-object|.
+		is_pty		Todo
+		is_valid	Todo
+		checkpid()	Todo
+		kill({signal})	It is similar to kill command. It can send
+				{signal} to a child process.
+		waitpid()	Wait for a child process to stop or terminate.
+		get_winsize()	Todo
+		set_winsize({width}, {height})
+				Todo
+
+==============================================================================
+TIPS						*vimproc-tips*
+
+Pseudo devices					*vimproc-tips-pseudo-devices*
+		vimproc supports pseudo devices:
+		
+		/dev/null
+		Remove all output.
+		
+		/dev/clip
+		Print to clipboard.
+		
+		/dev/quickfix
+		Print to |quickfix|.
+
+==============================================================================
+EXAMPLES					*vimproc-examples*
+>
+	" File open test.
+	let file = vimproc#fopen("./test1.vim", "O_RDONLY", 0)
+	let res = file.read()
+	call file.close()
+	new
+	call append(0, split(res, '\r\n\|\r\|\n'))
+	
+	" Pipe open test.
+	let sub = vimproc#popen2('ls')
+	let res = ''
+	while !sub.stdout.eof
+	  let res .= sub.stdout.read()
+	endwhile
+	let [cond, status] = sub.waitpid()
+	new
+	call append(0, split(res, '\r\n\|\r\|\n') + [string([cond, status])])
+	
+	" Socket open test.
+	let sock = vimproc#socket_open('www.yahoo.com', 80)
+	call sock.write("GET / HTTP/1.0\r\n\r\n")
+	let res = ''
+	while !sock.eof
+	  let res .= sock.read()
+	endwhile
+	call sock.close()
+	new
+	call append(0, split(res, '\r\n\|\r\|\n'))
+<
+==============================================================================
+FAQ						*vimproc-faq*
+
+Q: I want to check a process is a zombie process.
+
+A: You can use vimproc#kill({pid}, 0) or {process}.kill(0).
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:

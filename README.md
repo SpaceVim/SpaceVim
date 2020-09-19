@@ -11,41 +11,43 @@
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
+[![Docker Build Status](https://img.shields.io/docker/build/spacevim/spacevim.svg)](https://hub.docker.com/r/spacevim/spacevim/)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-![Version](https://img.shields.io/badge/version-1.4.0--dev-8700FF.svg)
+![Version](https://img.shields.io/badge/version-1.6.0--dev-8700FF.svg)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 
-## About SpaceVim
+![welcome page](https://user-images.githubusercontent.com/13142418/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png)
 
-SpaceVim is a community-driven modular Vim distribution. It manages collections
-of plugins in layers, which help to collect related packages together to provide IDE-like features.
-SpaceVim is not just a vimrc but an ultimate Vim configuration, It contains many built-in features.
-
-![welcome-page](https://user-images.githubusercontent.com/13142418/68079142-904e4280-fe1f-11e9-993e-b834ea3d39ea.png)
-
-The last release is v1.3.0, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
-
-## Instructions
-
-**See the followings below for more information:**
-
-- [Quick Start Guide](https://spacevim.org/quick-start-guide/)
-- [Documentation](https://spacevim.org/documentation/)
-- [Available Layers](https://spacevim.org/layers/)
-
-If you have any questions about SpaceVim, please follow the [Getting Help Guide](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help).
+**Table of context**
 
 <!-- vim-markdown-toc GFM -->
 
-- [New Features](#new-features)
-- [Project layout](#project-layout)
+- [Instructions](#instructions)
+  - [Features](#features)
+- [Getting help](#getting-help)
+- [Contributing](#contributing)
+  - [Project layout](#project-layout)
 - [Support SpaceVim](#support-spacevim)
+- [License](#license)
 - [Credits & Thanks](#credits--thanks)
 
 <!-- vim-markdown-toc -->
 
-### New Features
+## Instructions
+
+[SpaceVim](https://spacevim.org/) is a community-driven modular Vim distribution. It manages collections
+of plugins in layers, which help to collect related packages together to provide IDE-like features.
+
+The last release is [v1.5.0](https://spacevim.org/SpaceVim-release-v1.5.0/), check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+
+**See the followings below for more information:**
+
+- [Quick Start Guide](https://spacevim.org/quick-start-guide/): a simple guide for Beginners.
+- [Documentation](https://spacevim.org/documentation/): The full documentation about using SpaceVim.
+- [Available Layers](https://spacevim.org/layers/): A list of all available layers included in SpaceVim.
+
+### Features
 
 This is a list of latest features implemented in SpaceVim:
 
@@ -118,7 +120,7 @@ through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
 You don't need to remember any key bindings, as the mapping guide will show up after the <kbd>SPC</kbd> is pressed.
 The mapping guide is also available for `g`, `z`, and `s`.
 
-![mapping guide](https://user-images.githubusercontent.com/13142418/35568184-9a318082-058d-11e8-9d88-e0eafd1d498d.gif)
+![float_guide](https://user-images.githubusercontent.com/13142418/89091735-5de96a00-d3de-11ea-85e1-b0fc64537836.gif)
 
 [**Help description for key bindings**](https://spacevim.org/help-description-for-key-bindings/)
 
@@ -133,6 +135,19 @@ Create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asyn
 ![UI for dein](https://user-images.githubusercontent.com/13142418/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif)
 
 For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
+
+
+## Getting help
+
+If you run into some problems installing, configuring, or using SpaceVim,
+checkout the [Getting help guidelines](https://github.com/SpaceVim/SpaceVim/wiki/Getting-help) in the wiki.
+
+
+## Contributing
+
+This project exists thanks to all the people who [contributed](CONTRIBUTING.md), We are thankful for any contributions from the community.
+
+<a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 
 ### Project layout
 
@@ -149,10 +164,11 @@ For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 ├─ docs/                          website(cn/en)
 ├─ wiki/                          wiki(cn/en)
 ├─ bin/                           executable
+├─ bundle/                        forked repos
 └─ test/                          tests
 ```
 
-### Support SpaceVim
+## Support SpaceVim
 
 The best way to support SpaceVim is to contribute to it either by reporting bugs.
 Helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim) or sending pull requests.
@@ -163,17 +179,15 @@ If you want to show your support financially you can buy a drink for the maintai
 
 <a href='https://ko-fi.com/spacevim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
-| wechat                                                                                                     | alipay                                                                                                       |
-| ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| <a href='#support-spacevim'><img src="https://spacevim.org/img/weixin.png" height="150" width="150" /></a> | <a href='#support-spacevim'><img src="https://spacevim.org/img/zhifubao.png" height="150" width="150" /></a> |
+## License
 
-Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
+The license is GPLv3 for all the parts of SpaceVim. This includes:
 
-### Credits & Thanks
+- The initialization and core files.
+- All the layer files.
+- The documentation
 
-This project exists to thank all the people who have [contributed](CONTRIBUTING.md):
-
-<a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
+## Credits & Thanks
 
 - [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
 - [@everettjf](https://github.com/everettjf) and his [SpaceVimTutorial](https://everettjf.gitbooks.io/spacevimtutorial/content/)

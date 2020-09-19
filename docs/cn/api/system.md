@@ -4,7 +4,7 @@ description: "system 函数提供了系统相关函数，包括判断当前系�
 lang: zh
 ---
 
-# [公共 API](../) >> system
+# [可用接口](../) >> system
 
 <!-- vim-markdown-toc GFM -->
 

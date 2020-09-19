@@ -1,0 +1,1 @@
+ {"message":{"children":[],"code":null,"level":"error","message":"aborting due to 18 previous errors","rendered":null,"spans":[]},"package_id":"derive_more 0.4.0 (path+file:///home/jelte/fun/derive_more)","reason":"compiler-message","target":{"kind":["proc-macro"],"name":"derive_more","src_path":"/home/jelte/fun/derive_more/lib.rs"}}

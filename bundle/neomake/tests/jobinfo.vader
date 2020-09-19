@@ -1,0 +1,73 @@
+Include: include/setup.vader
+
+Execute (jobinfo.get_pid):
+  if NeomakeAsyncTestsSetup()
+    let maker = NeomakeTestsCommandMaker('echo-pid-and-sleep', 'echo $$; sleep 10')
+    let maker.buffer_output = 0
+    let jobinfo = neomake#Make({'enabled_makers': [maker]})[0]
+    NeomakeTestsWaitForMessage '\v^output on stdout: \[''(\d+)'', ''''\].'
+    let pid = +g:neomake_test_matchlist[1]
+    AssertEqual jobinfo.get_pid(), pid
+
+    call neomake#CancelJob(jobinfo.id)
+    if has('nvim-0.4.0')
+      let expected_status = 143
+    elseif has('nvim')
+      let expected_status = 0
+    else
+      let expected_status = -1
+    endif
+    NeomakeTestsWaitForMessage '\Vexit: echo-pid-and-sleep: '.expected_status.' (job was canceled).'
+    NeomakeTestsWaitForFinishedJobs
+    AssertEqual jobinfo.get_pid(), -1
+  endif
+
+Execute (jobinfo.cd: handles/keeps trailing slash with root dir):
+  new
+  let jobinfo = neomake#jobinfo#new()
+  let tmpdir = fnamemodify(tempname(), ':h')
+  exe 'lcd '.tmpdir
+  Assert haslocaldir()
+
+  let root = fnamemodify('/', ':p')
+
+  call jobinfo.cd('/')
+  AssertEqual jobinfo.cwd, root
+
+  " Should not :lcd again (verified manually).
+  call jobinfo.cd('/')
+  AssertEqual jobinfo.cwd, root
+
+  AssertEqual getcwd(), root
+
+  " Empty dir defaults to current cwd.
+  call jobinfo.cd('')
+  AssertEqual getcwd(), root
+  AssertEqual jobinfo.cwd, root
+
+  call jobinfo.cd(tmpdir)
+  AssertEqual getcwd(), tmpdir
+  AssertEqual jobinfo.cwd, tmpdir
+  bwipe
+
+Execute (jobinfo.cd: empty dir defaults to $HOME):
+  new
+  let root = fnamemodify('/', ':p')
+  exe 'lcd '.root
+
+  let jobinfo = neomake#jobinfo#new()
+  Assert !has_key(jobinfo, 'cwd')
+
+  Save $HOME
+  let $HOME = '/doesnotexist'
+
+  let r = jobinfo.cd('')
+  Assert r =~# '\VVim(lcd):E344:'
+  Assert !has_key(jobinfo, 'cwd')
+
+  let $HOME = fnamemodify(tempname(), ':h')
+  AssertEqual jobinfo.cd(''), ''
+
+  AssertEqual getcwd(), $HOME
+  AssertEqual jobinfo.cwd, $HOME
+  bwipe

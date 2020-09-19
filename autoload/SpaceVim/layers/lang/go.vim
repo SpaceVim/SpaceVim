@@ -1,6 +1,6 @@
 "=============================================================================
 " go.vim --- SpaceVim lang#go layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -60,6 +60,7 @@ function! SpaceVim#layers#lang#go#config() abort
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
   let g:neomake_go_gometalinter_args = ['--disable-all']
   let g:go_snippet_engine = 'neosnippet'
+  let g:go_rename_command = 'gopls'
 
   if SpaceVim#layers#lsp#check_filetype('go')
     call SpaceVim#mapping#gd#add('go',

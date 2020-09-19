@@ -1,6 +1,6 @@
 "=============================================================================
 " python.vim --- SpaceVim lang#python layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -138,10 +138,10 @@ function! s:language_specified_mappings() abort
 
   " Format on save
   if s:format_on_save
-    augroup SpaceVim_layer_lang_python
-      autocmd!
-      autocmd BufWritePost *.py Neoformat yapf
-    augroup end
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'python',
+          \ 'enable' : 1,
+          \ })
   endif
 
 endfunction

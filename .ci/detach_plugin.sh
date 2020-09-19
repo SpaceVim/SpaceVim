@@ -36,6 +36,7 @@ main () {
             _detect autoload/SpaceVim/api.vim
             _detect autoload/SpaceVim/api/logger.vim
             _detect autoload/SpaceVim/api/vim/buffer.vim
+            _detect autoload/SpaceVim/api/vim/regex.vim
             _detect autoload/SpaceVim/api/vim/compatible.vim
             _detect autoload/SpaceVim/api/neovim/floating.vim
             _detect autoload/SpaceVim/api/data/list.vim
@@ -100,7 +101,7 @@ main () {
             cat <<EOT > autoload/plugin/iedit.vim
 "=============================================================================
 " iedit.vim --- multiple cursor support for neovim and vim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://github.com/wsdjeg/iedit.vim
 " License: MIT license
@@ -137,6 +138,7 @@ EOT
             _checkdir autoload/SpaceVim/api/vim
             _checkdir autoload/SpaceVim/api/data
             _checkdir autoload/SpaceVim/plugins
+            _checkdir autoload/SpaceVim/mapping
             _detect autoload/SpaceVim/api.vim
             _detect autoload/SpaceVim/api/logger.vim
             _detect autoload/SpaceVim/api/job.vim
@@ -146,6 +148,7 @@ EOT
             _detect autoload/SpaceVim/api/vim/buffer.vim
             _detect autoload/SpaceVim/api/vim/compatible.vim
             _detect autoload/SpaceVim/logger.vim
+            _detect autoload/SpaceVim/mapping/search.vim
             _detect autoload/SpaceVim/plugins/todo.vim
             _detect LICENSE
             git add .

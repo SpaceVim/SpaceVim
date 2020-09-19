@@ -1,0 +1,114 @@
+snippet module
+options head
+	module ${1:`substitute(substitute(expand('%:r'), '[/\\]','.','g'),'^\%(\l*\.\)\?','','')} exposing (${2:...})
+	${0}
+
+
+snippet import
+options head
+abbr    import
+alias   imp
+	import ${1:String}
+	${0}
+
+
+snippet importAs
+options head
+abbr    import ... as ...
+alias   impa
+	import ${1} as ${2}
+	${0}
+
+
+snippet importExposing
+options head
+abbr    import ... exposing (..)
+alias   impe
+	import ${1:Html} exposing (${2:..})
+	${0}
+
+
+snippet importAsExposing
+options head
+abbr    import ... as ... exposing (..)
+alias   impae
+	import ${1:Html} as ${2} exposing (${2:..})
+	${0}
+
+
+snippet main
+abbr    main : Program
+alias   prog
+options head
+	main : Program Never ${2:Model} ${3:Msg}
+	main =
+		${4:Html.}program
+			{ init: ${6:( model, Cmd.none )}
+			, update: ${7:update}
+			, subscriptions: ${8:subscriptions}
+			${9:, view: ${10:view\}}
+			}
+	
+	${0}
+
+
+snippet programWithFlags
+abbr    main : Program
+alias   progf mainf
+options head
+	main : Program ${1:Flags} ${2:Model} ${3:Msg}
+	main =
+		${4:Html.}programWithFlags
+			{ init: ${6:initWithFlags}
+			, update: ${7:update}
+			, subscriptions: ${8:subscriptions}
+			${9:, view: ${10:view\}}
+			}
+	
+	${0}
+
+
+snippet basicProgram
+abbr    main : Program
+alias   progb mainb
+options head
+	main : Program Never ${2:Model} ${3:Msg}
+	main =
+		${4:Html.}beginnerProgram
+			{ init: ${6:init}
+			, update: ${7:update}
+			, subscriptions: ${8:subscriptions}
+			${9:, view: ${10:view\}}
+			}
+	
+	${0}
+
+
+snippet case
+abbr    case ... of
+	case ${1:#:expression} of
+		${2:#:value} ->
+			${3:TARGET}
+
+
+snippet if
+abbr    if ... then ... else ...
+	if ${1:#:condition} then
+		${2}
+	else
+		${3}
+
+
+snippet     let
+abbr        let ... in ...
+options     head
+	let
+		${1} =
+			${2}
+	in
+		${0}
+
+
+snippet     lambda
+abbr        λ
+	\\${1:x} -> ${0}

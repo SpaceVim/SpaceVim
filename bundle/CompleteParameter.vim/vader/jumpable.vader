@@ -1,0 +1,35 @@
+Given go(1):
+  a
+
+Execute:
+  call cursor(1, 1)
+  AssertEqual 0, cmp#jumpable(1)
+  AssertEqual 0, cmp#jumpable(0)
+
+Given go(2):
+  func a()
+
+Execute:
+  call cursor(1, 6)
+  AssertEqual 0, cmp#jumpable(1)
+  AssertEqual 1, cmp#jumpable(0)
+  call cursor(1, 7)
+  AssertEqual 1, cmp#jumpable(1)
+  AssertEqual 1, cmp#jumpable(0)
+
+Given go(3):
+  func a(a)
+
+Execute:
+  call cursor(1, 8)
+  AssertEqual 1, cmp#jumpable(1)
+  AssertEqual 1, cmp#jumpable(0)
+
+Given go(3):
+  func a(a, b)
+
+Execute:
+  call cursor(1, 8)
+  AssertEqual 1, cmp#jumpable(1)
+  AssertEqual 1, cmp#jumpable(0)
+

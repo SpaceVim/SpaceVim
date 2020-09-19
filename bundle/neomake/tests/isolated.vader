@@ -1,0 +1,15 @@
+~ Isolated tests (run separately with coverage)
+Include: isolated/compat-get_argv-on-emulated-windows.vader
+Include: isolated/configure.vader
+Include: isolated/ft_help.vader
+Include: isolated/ft_vim.vader
+Include: isolated/highlights.vader
+Include: isolated/logging.vader
+Include: isolated/modes.vader
+Include: isolated/tempfiles-cleanup.vader
+Include: isolated/resets-ignore_automake_events.vader
+Include: isolated/completion-handles-throw.vader
+Include: isolated/statusline-highlights.vader
+Include: isolated/sign-highlights.vader
+Include: isolated/customqf.vader
+Include: isolated/signs.vader

@@ -1,0 +1,48 @@
+Execute (neomake#utils#get_project_root):
+  new
+  let bufnr = bufnr('%')
+  AssertEqual neomake#utils#get_project_root(bufnr), fnamemodify(g:vader_file, ':h:h')
+
+  " Gets cached.
+  AssertEqual b:neomake.project_root, fnamemodify(g:vader_file, ':h:h')
+
+  let slash = neomake#utils#Slash()
+  let tmpbase = tempname()
+  let tmpdir = tmpbase . slash . 'python-project'
+  call mkdir(tmpdir, 'p')
+
+  setfiletype python
+  Assert !exists('b:neomake.project_root'), 'cache cleared on FileType'
+  exe 'lcd '.tmpdir
+
+  let project_root = neomake#utils#get_project_root(bufnr)
+  if project_root ==# fnamemodify(tmpbase, ':h:h')
+    call vader#log('NOTE: got project root already for tmpbase: '.project_root)
+  else
+    AssertEqual project_root, ''
+  endif
+
+  call writefile([], tmpdir . slash . 'setup.cfg')
+  unlet b:neomake.project_root
+  AssertEqual neomake#utils#get_project_root(bufnr), tmpdir
+
+  let tmpdir_sub = tmpdir . slash . 'sub'
+  call mkdir(tmpdir_sub)
+  call writefile([], tmpdir_sub . slash . 'setup.cfg')
+  exe 'lcd '.tmpdir_sub
+  unlet b:neomake.project_root
+  AssertEqual neomake#utils#get_project_root(bufnr), tmpdir_sub
+
+  setfiletype c
+  AssertEqual neomake#utils#get_project_root(bufnr), ''
+  call writefile([], tmpdir. slash . 'CMakeLists.txt')
+  unlet b:neomake.project_root
+  AssertEqual neomake#utils#get_project_root(bufnr), tmpdir
+
+  setfiletype unknown
+  AssertEqual neomake#utils#get_project_root(bufnr), ''
+  call writefile([], tmpdir. slash . 'Makefile')
+  AssertEqual neomake#utils#get_project_root(bufnr), ''
+  unlet b:neomake.project_root
+  AssertEqual neomake#utils#get_project_root(bufnr), tmpdir
+  bwipe

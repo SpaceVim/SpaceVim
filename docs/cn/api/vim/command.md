@@ -1,10 +1,10 @@
 ---
-title: "vim#command api"
-description: "vim#command API 提供一些设置和获取 Vim 命令的基础函数。"
+title: "vim#command 接口"
+description: "vim#command 接口提供一些设置和获取 Vim 命令的基础函数。"
 lang: zh
 ---
 
-# [可用 APIs](../../) >> vim#command
+# [可用接口](../../) >> vim#command
 
 <!-- vim-markdown-toc GFM -->
 
@@ -15,7 +15,7 @@ lang: zh
 
 ## 简介
 
-vim#command API 提供一些设置和获取 Vim 命令的基础函数。
+`vim#command` 接口提供一些设置和获取 Vim 命令的基础函数。
 
 ```vim
 let s:CMD = SpaceVim#api#import('vim#command')

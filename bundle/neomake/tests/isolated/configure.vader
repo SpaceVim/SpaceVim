@@ -1,0 +1,6 @@
+Include: ../include/setup.vader
+
+Execute (Loading autoload/neomake/configure.vim sets up default settings):
+  Assert !exists('g:neomake')
+  runtime! autoload/neomake/configure.vim
+  AssertEqual g:neomake, {'automake': {'ignore_filetypes': ['startify']}}

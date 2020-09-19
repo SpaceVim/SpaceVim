@@ -1,6 +1,6 @@
 "=============================================================================
 " init.vim --- local config for SpaceVim development
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -28,9 +28,9 @@ function! s:language_specified_mappings() abort
         \ 'execute current file', 1)
 endfunction
 call SpaceVim#mapping#space#regesit_lang_mappings('vader', function('s:language_specified_mappings'))
-call SpaceVim#plugins#a#set_config_name('.projections.json')
+call SpaceVim#plugins#a#set_config_name(getcwd(), '.projections.json')
 command! -nargs=1 IssueEdit call SpaceVim#dev#issuemanager#edit(<f-args>)
 command! -nargs=1 PullCreate call SpaceVim#dev#pull#create(<f-args>)
 command! -nargs=1 PullMerge call SpaceVim#dev#pull#merge(<f-args>)
 command! ReleaseSpaceVim call SpaceVim#dev#releases#open()
-
+command! -nargs=* -complete=file Profile call SpaceVim#dev#profile#run(<f-args>)
