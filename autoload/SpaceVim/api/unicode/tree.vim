@@ -25,9 +25,15 @@ function! s:self.drawing_tree(tree, ...) abort
       call extend(tree, self.drawing_tree(item, prefix ))
     endfor
   elseif self._vim.is_dict(a:tree)
+    let i = 1
     for key in keys(a:tree)
-      call add(tree, repeat(' ', prefix) . key)
-      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix + 1))
+      if i < len(a:tree)
+        let prefix .= self.left_middle
+      else
+        let prefix .= self.bottom_left_corner
+      endif
+      call add(tree, prefix . key)
+      call extend(tree, self.drawing_tree(get(a:tree, key, []), prefix))
     endfor
   endif
   return tree
