@@ -70,7 +70,7 @@ Vim 脚本中，变量的作用域支持如下类型：
 
 循环语句是由循环体及循环的终止条件两部分组成的。
 
-``` plantuml
+```plantuml
 Bob -> Alice : hello
 ```
 
