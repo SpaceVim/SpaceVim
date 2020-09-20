@@ -142,7 +142,9 @@ endfunction
 function! s:find_on_exit(id, data, event) abort
   let files = map(filter(deepcopy(s:finded_files), '!empty(v:val)'), "{'filename' : v:val}")
   if !empty(files)
-    call setqflist(files, 'r', {'title' : 'SPC f /'})
+    call setqflist([], 'r', {'title' : ' SPC f /',
+          \ 'items' : files,
+          \ })
     copen
   else
     echo 'Can not find anything'
