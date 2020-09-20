@@ -144,7 +144,7 @@ endfunction
 function! s:find_on_exit(id, data, event) abort
   let files = map(filter(deepcopy(s:finded_files), '!empty(v:val)'), "{'filename' : v:val}")
   if !empty(files)
-    call setqflist(files)
+    call setqflist(files, 'r', {'title' : 'SPC f /'})
     copen
   else
     echo 'Can not find anything'
@@ -154,6 +154,7 @@ endfunction
 function! s:close_buffer() abort
   noautocmd pclose
   noautocmd q
+  noautocmd normal! :
 endfunction
 let s:MPT._onclose = function('s:close_buffer')
 
