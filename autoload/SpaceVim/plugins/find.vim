@@ -125,9 +125,6 @@ function! s:start_find() abort
   endif
   call s:MPT._clear_prompt()
   let s:MPT._quit = 1
-  let line = getline('.')
-  noautocmd q
-  redraw!
   let s:finded_files = []
   call s:JOB.start(cmd,
         \ {
@@ -152,8 +149,7 @@ function! s:find_on_exit(id, data, event) abort
 endfunction
 
 function! s:close_buffer() abort
-  noautocmd pclose
-  noautocmd q
+  exe 'bwipeout' s:find_argvs_buffer_id
   noautocmd normal! :
 endfunction
 let s:MPT._onclose = function('s:close_buffer')
