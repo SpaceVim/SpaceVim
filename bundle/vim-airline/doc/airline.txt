@@ -1,0 +1,1864 @@
+*airline.txt*  Lean and mean status/tabline that's light as air
+*airline* *vim-airline*
+                  _                       _      _ _                        ~
+           __   _(_)_ __ ___         __ _(_)_ __| (_)_ __   ___             ~
+           \ \ / / | '_ ` _ \ _____ / _` | | '__| | | '_ \ / _ \            ~
+            \ V /| | | | | | |_____| (_| | | |  | | | | | |  __/            ~
+             \_/ |_|_| |_| |_|      \__,_|_|_|  |_|_|_| |_|\___|            ~
+                                                                           ~
+Version: 0.11
+=============================================================================
+CONTENTS                                                  *airline-contents*
+
+   01. Intro ............................................... |airline-intro|
+   02. Features ......................................... |airline-features|
+   03. Name ................................................. |airline-name|
+   04. Configuration ............................... |airline-configuration|
+   05. Commands ......................................... |airline-commands|
+   06. Autocommands ................................. |airline-autocommands|
+   07. Customization ............................... |airline-customization|
+   08. Extensions ..................................... |airline-extensions|
+   09. Advanced Customization ............. |airline-advanced-customization|
+   10. Funcrefs ......................................... |airline-funcrefs|
+   11. Pipeline ......................................... |airline-pipeline|
+   12. Writing Extensions ..................... |airline-writing-extensions|
+   13. Writing Themes ..................................... |airline-themes|
+   14. Troubleshooting ........................... |airline-troubleshooting|
+   15. Contributions ............................... |airline-contributions|
+   16. License ........................................... |airline-license|
+
+=============================================================================
+INTRODUCTION                                                 *airline-intro*
+
+vim-airline is a fast and lightweight alternative to powerline, written
+in 100% vimscript with no outside dependencies.
+
+When the plugin is correctly loaded, Vim will draw a nice statusline at the
+bottom of each window.
+
+That line consists of several sections, each one displaying some piece of
+information. By default (without configuration) this line will look like
+this: >
+
++---------------------------------------------------------------------------+
+|~                                                                          |
+|~                                                                          |
+|~                     VIM - Vi IMproved                                    |
+|~                                                                          |
+|~                       version 8.0                                        |
+|~                    by Bram Moolenaar et al.                              |
+|~           Vim is open source and freely distributable                    |
+|~                                                                          |
+|~           type :h :q<Enter>          to exit                             |
+|~           type :help<Enter> or <F1>  for on-line help                    |
+|~           type :help version8<Enter> for version info                    |
+|~                                                                          |
+|~                                                                          |
++---------------------------------------------------------------------------+
+| A | B |                     C                          X | Y | Z |  [...] |
++---------------------------------------------------------------------------+
+
+The statusline is the colored line at the bottom, which contains the sections
+(possibly in different colors):
+
+section  meaning (example)~
+--------------------------
+  A      displays mode + additional flags like crypt/spell/paste (`INSERT`)
+  B      VCS information (branch, hunk summary) (`master`)
+  C      filename + read-only flag (`~/.vim/vimrc RO`)
+  X      filetype  (`vim`)
+  Y      file encoding[fileformat] (`utf-8[unix]`)
+  Z      current position in the file
+           percentage % ☰ current line/number of lines ln : column
+           So this: 10% ☰ 10/100 ln : 20   means: >
+              10%     - 10 percent
+              ☰ 10    - current line 10
+              /100 ln - of 100 lines
+              : 20    - current column 20
+<
+  [...]  additional sections (warning/errors/statistics)
+         from external plugins (e.g. YCM/syntastic/...)
+
+For a better look, those sections can be colored differently, depending on
+the mode and whether the current file is 'modified'
+
+Additionally, several extensions exists, that can provide additional feature
+(for example the tabline extension provides an extra statusline on the top of
+the Vim window and can display loaded buffers and tabs in the current Vim
+session).
+
+Most of this is customizable and the default sections can be configured using
+the vim variables g:airline_section_<name> (see |airline-default-sections|)
+
+=============================================================================
+FEATURES                                                  *airline-features*
+
+*  tiny core written with extensibility in mind.
+*  integrates with many popular plugins.
+*  looks good with regular fonts, and provides configuration points so you
+   can use unicode or powerline symbols.
+*  optimized for speed; it loads in under a millisecond.
+*  fully customizable; if you know a little 'statusline' syntax you can
+   tweak it to your needs.
+*  extremely easy to write themes.
+
+=============================================================================
+NAME                                                          *airline-name*
+
+Where did the name come from?
+
+I wrote this on an airplane, and since it's light as air it turned out to be
+a good name :-)
+
+=============================================================================
+CONFIGURATION                                        *airline-configuration*
+
+There are a couple configuration values available (shown with their default
+values):
+
+* the separator used on the left side >
+  let g:airline_left_sep='>'
+<
+* the separator used on the right side >
+  let g:airline_right_sep='<'
+<
+* enable modified detection >
+  let g:airline_detect_modified=1
+
+* enable paste detection >
+  let g:airline_detect_paste=1
+<
+* enable crypt detection >
+  let g:airline_detect_crypt=1
+
+* enable spell detection >
+  let g:airline_detect_spell=1
+
+* display spelling language when spell detection is enabled
+  (if enough space is available) >
+  let g:airline_detect_spelllang=1
+<
+* enable iminsert detection >
+  let g:airline_detect_iminsert=0
+<
+* determine whether inactive windows should have the left section collapsed
+  to only the filename of that buffer.  >
+  let g:airline_inactive_collapse=1
+<
+* Use alternative seperators for the statusline of inactive windows >
+  let g:airline_inactive_alt_sep=1
+<
+* themes are automatically selected based on the matching colorscheme. this
+  can be overridden by defining a value. >
+  let g:airline_theme='dark'
+<
+  Note: Only the dark theme is distributed with vim-airline. For more themes,
+  checkout the vim-airline-themes repository
+  (github.com/vim-airline/vim-airline-themes)
+
+* if you want to patch the airline theme before it gets applied, you can
+  supply the name of a function where you can modify the palette. >
+  let g:airline_theme_patch_func = 'AirlineThemePatch'
+  function! AirlineThemePatch(palette)
+    if g:airline_theme == 'badwolf'
+      for colors in values(a:palette.inactive)
+        let colors[3] = 245
+      endfor
+    endif
+  endfunction
+<
+* if you want to update your highlights without effecting the airline theme,
+  you can do so using the AirlineAfterTheme autocmd. >
+  function! s:update_highlights()
+    hi CursorLine ctermbg=none guibg=none
+    hi VertSplit ctermbg=none guibg=none
+  endfunction
+  autocmd User AirlineAfterTheme call s:update_highlights()
+<
+* By default, airline will use unicode symbols if your encoding matches
+  utf-8. If you want the powerline symbols set this variable: >
+  let g:airline_powerline_fonts = 1
+<
+  If you want to use plain ascii symbols, set this variable: >
+  let g:airline_symbols_ascii = 1
+<
+* define the set of text to display for each mode.  >
+  let g:airline_mode_map = {} " see source for the defaults
+
+  " or copy paste the following into your vimrc for shortform text
+  let g:airline_mode_map = {
+      \ '__'     : '-',
+      \ 'c'      : 'C',
+      \ 'i'      : 'I',
+      \ 'ic'     : 'I',
+      \ 'ix'     : 'I',
+      \ 'n'      : 'N',
+      \ 'multi'  : 'M',
+      \ 'ni'     : 'N',
+      \ 'no'     : 'N',
+      \ 'R'      : 'R',
+      \ 'Rv'     : 'R',
+      \ 's'      : 'S',
+      \ 'S'      : 'S',
+      \ ''     : 'S',
+      \ 't'      : 'T',
+      \ 'v'      : 'V',
+      \ 'V'      : 'V',
+      \ ''     : 'V',
+      \ }
+   Note: 'multi' is for displaying the multiple cursor mode
+<
+* define the set of filename match queries which excludes a window from
+  having its statusline modified >
+  let g:airline_exclude_filenames = [] " see source for current list
+<
+* define the set of filetypes which are excluded from having its window
+  statusline modified >
+  let g:airline_exclude_filetypes = [] " see source for current list
+<
+* define the set of names to be displayed instead of a specific filetypes
+  (for section a and b): >
+
+  let g:airline_filetype_overrides = {
+      \ 'defx':  ['defx', '%{b:defx.paths[0]}'],
+      \ 'gundo': [ 'Gundo', '' ],
+      \ 'help':  [ 'Help', '%f' ],
+      \ 'minibufexpl': [ 'MiniBufExplorer', '' ],
+      \ 'nerdtree': [ get(g:, 'NERDTreeStatusline', 'NERD'), '' ],
+      \ 'startify': [ 'startify', '' ],
+      \ 'vim-plug': [ 'Plugins', '' ],
+      \ 'vimfiler': [ 'vimfiler', '%{vimfiler#get_status_string()}' ],
+      \ 'vimshell': ['vimshell','%{vimshell#get_status_string()}'],
+      \ }
+<
+* defines whether the preview window should be excluded from have its window
+  statusline modified (may help with plugins which use the preview window
+  heavily) >
+  let g:airline_exclude_preview = 0
+<
+* disable the Airline statusline customization for selected windows (this is a
+  window-local variable so you can disable it per-window) >
+  let w:airline_disable_statusline = 1
+<
+  Old deprecated name: `w:airline_disabled`
+
+  See also the following options, for disabling setting the statusline
+  globally or per-buffer
+* Disable setting the statusline option: >
+  " disable globally
+  let g:airline_disable_statusline = 1
+
+  " disable per-buffer
+  let b:airline_disable_statusline = 1
+
+< This setting disables setting the 'statusline' option. This allows to use
+ e.g. the tabline extension (|airline-tabline|) but keep the 'statusline'
+ option totally configurable by a custom configuration.
+* Do not draw separators for empty sections (only for the active window) >
+  let g:airline_skip_empty_sections = 1
+<
+  This variable can be overriden by setting a window-local variable with
+  the same name (in the correct window): >
+  let w:airline_skip_empty_sections = 0
+<
+* Caches the changes to the highlighting groups, should therefore be faster.
+  Set this to one, if you experience a sluggish Vim: >
+  let g:airline_highlighting_cache = 0
+<
+* disable airline on FocusLost autocommand (e.g. when Vim loses focus): >
+  let g:airline_focuslost_inactive = 1
+<
+* configure the fileformat output
+  By default, it will display something like 'utf-8[unix]', however, you can
+  skip displaying it, if the output matches a configured string. To do so,
+  set: >
+  let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+<
+* Display the statusline in the tabline (first top line): >
+  let g:airline_statusline_ontop = 1
+<
+  Setting this option, allows to use the statusline option to be used by
+  a custom function or another plugin, since airline won't change it.
+
+  Note: This setting is experimental and works on a best effort approach.
+  Updating the statusline might not always happen as fast as needed, but that
+  is a limitation, that comes from Vim. airline tries to force an update if
+  needed, but it might not always work as expected.
+  To force updating the tabline on mode changes, call `airline#check_mode()`
+  in your custom statusline setting: `:set stl=%!airline#check_mode(winnr())`
+  will correctly update the tabline on mode changes.
+=============================================================================
+COMMANDS                                                  *airline-commands*
+
+:AirlineTheme {theme-name}                                   *:AirlineTheme*
+  Displays or changes the current theme.
+  Note: `random` will switch to a random theme.
+
+:AirlineToggleWhitespace                          *:AirlineToggleWhitespace*
+  Toggles whitespace detection.
+
+:AirlineToggle                                              *:AirlineToggle*
+  Toggles between the standard 'statusline' and airline.
+
+:AirlineRefresh[!]                                         *:AirlineRefresh*
+  Refreshes all highlight groups and redraws the statusline. With the '!'
+  attribute, skips refreshing the highlighting groups.
+
+:AirlineExtensions                                      *:AirlineExtensions*
+  Shows the status of all available airline extensions.
+  Extern means, the extensions does not come bundled with Airline.
+
+=============================================================================
+AUTOCOMMANDS                                          *airline-autocommands*
+
+Airline comes with some user-defined autocommands.
+
+|AirlineAfterInit|    after plugin is initialized, but before the statusline
+                    is replaced
+|AirlineAfterTheme|   after theme of the statusline has been changed
+|AirlineToggledOn|    after airline is activated and replaced the statusline
+|AirlineToggledOff|   after airline is deactivated and the statusline is
+                    restored to the original
+|AirlineModeChanged|  The mode in Vim changed.
+
+=============================================================================
+CUSTOMIZATION                                        *airline-customization*
+
+The following are some unicode symbols for customizing the left/right
+separators, as well as the powerline font glyphs.
+
+Note: You must define the dictionary first before setting values. Also, it's
+a good idea to check whether it exists as to avoid accidentally overwriting
+its contents. >
+  if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+  endif
+
+  " unicode symbols
+  let g:airline_left_sep = '»'
+  let g:airline_left_sep = '▶'
+  let g:airline_right_sep = '«'
+  let g:airline_right_sep = '◀'
+  let g:airline_symbols.crypt = '🔒'
+  let g:airline_symbols.linenr = '☰'
+  let g:airline_symbols.linenr = '␊'
+  let g:airline_symbols.linenr = '␤'
+  let g:airline_symbols.linenr = '¶'
+  let g:airline_symbols.maxlinenr = ''
+  let g:airline_symbols.maxlinenr = '㏑'
+  let g:airline_symbols.branch = '⎇'
+  let g:airline_symbols.paste = 'ρ'
+  let g:airline_symbols.paste = 'Þ'
+  let g:airline_symbols.paste = '∥'
+  let g:airline_symbols.spell = 'Ꞩ'
+  let g:airline_symbols.notexists = 'Ɇ'
+  let g:airline_symbols.whitespace = 'Ξ'
+
+  " powerline symbols
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  let g:airline_symbols.readonly = ''
+  let g:airline_symbols.linenr = '☰'
+  let g:airline_symbols.maxlinenr = ''
+  let g:airline_symbols.dirty='⚡'
+
+  " old vim-powerline symbols
+  let g:airline_left_sep = '⮀'
+  let g:airline_left_alt_sep = '⮁'
+  let g:airline_right_sep = '⮂'
+  let g:airline_right_alt_sep = '⮃'
+  let g:airline_symbols.branch = '⭠'
+  let g:airline_symbols.readonly = '⭤'
+  let g:airline_symbols.linenr = '⭡'
+<
+
+For more intricate customizations, you can replace the predefined sections
+with the usual statusline syntax.
+
+Note: If you define any section variables it will replace the default values
+entirely.  If you want to disable only certain parts of a section you can
+try using variables defined in the |airline-configuration| or
+|airline-extensions| section.
+                                                   |airline-default-sections|
+The following table describes what sections are available by default, and
+which extensions/functions make use of it. Note: using `g:` (global) variable
+prefix means, those variables are defined for all windows. You can use `w:`
+(window local variables) instead to make this apply only to a particular
+window.
+>
+  variable names                default contents
+  ---------------------------------------------------------------------------
+  let g:airline_section_a       (mode, crypt, paste, spell, iminsert)
+  let g:airline_section_b       (hunks, branch)[*]
+  let g:airline_section_c       (bufferline or filename, readonly)
+  let g:airline_section_gutter  (csv)
+  let g:airline_section_x       (tagbar, filetype, virtualenv)
+  let g:airline_section_y       (fileencoding, fileformat)
+  let g:airline_section_z       (percentage, line number, column number)
+  let g:airline_section_error   (ycm_error_count, syntastic-err, eclim,
+                                 languageclient_error_count)
+  let g:airline_section_warning (ycm_warning_count, syntastic-warn,
+                                 languageclient_warning_count, whitespace)
+
+  " [*] This section needs at least the fugitive extension or else
+  "     it will remain empty
+  "
+  " here is an example of how you could replace the branch indicator with
+  " the current working directory (limited to 10 characters),
+  " followed by the filename.
+  let g:airline_section_b = '%-0.10{getcwd()}'
+  let g:airline_section_c = '%t'
+<
+                                                *airline#ignore_bufadd_pat*
+Determines a pattern to ignore a buffer name for various things (e.g. the
+tabline extension) or the read-only check. Default is
+`g:airline#extensions#tabline#ignore_bufadd_pat` (see below) or
+`'!|defx|gundo|nerd_tree|startify|tagbar|term://|undotree|vimfiler'`
+if it is unset.
+The "!" prevents terminal buffers to appear in the tabline.
+
+                                *airline#extensions#tabline#exclude_buffers*
+Buffer numbers to be excluded from showing in the tabline (similar to
+|airline#ignore_bufadd_pat|).
+
+=============================================================================
+EXTENSIONS                                              *airline-extensions*
+
+Most extensions are enabled by default and lazily loaded when the
+corresponding plugin (if any) is detected.
+
+By default, airline will attempt to load any extension it can find in the
+'runtimepath'.  On some systems this can result in an undesirable startup
+cost.  You can disable the check with the following flag. >
+  let g:airline#extensions#disable_rtp_load = 1
+<
+  Note: Third party plugins that rely on this behavior will be affected. You
+  will need to manually load them.
+
+Alternatively, if you want a minimalistic setup and would rather opt-in which
+extensions get loaded instead of disabling each individually, you can declare
+the following list variable: >
+  " an empty list disables all extensions
+  let g:airline_extensions = []
+
+  " or only load what you want
+  let g:airline_extensions = ['branch', 'tabline']
+<
+In addition, each extension can be configured individually.  Following are
+the options for each extension (in alphabetical order, after the default
+extension)
+
+Usually, each extension will only be loaded if the required Vim plugin is
+installed as well, otherwise it will remain disabled. See the output of the
+|:AirlineExtensions| command.
+
+-------------------------------------                    *airline-ale*
+ale <https://github.com/dense-analysis/ale>
+
+* enable/disable ale integration >
+  let g:airline#extensions#ale#enabled = 1
+
+* ale error_symbol >
+  let airline#extensions#ale#error_symbol = 'E:'
+<
+* ale warning >
+  let airline#extensions#ale#warning_symbol = 'W:'
+
+* ale show_line_numbers >
+  let airline#extensions#ale#show_line_numbers = 1
+<
+* ale open_lnum_symbol >
+  let airline#extensions#ale#open_lnum_symbol = '(L'
+<
+* ale close_lnum_symbol >
+  let airline#extensions#ale#close_lnum_symbol = ')'
+
+-------------------------------------                      *airline-bookmark*
+vim-bookmark <https://github.com/MattesGroeger/vim-bookmarks>
+
+* enable/disable bookmark integration >
+  let g:airline#extensions#bookmark#enabled = 1
+
+-------------------------------------                      *airline-branch*
+vim-airline will display the branch-indicator together with the branch name
+in the statusline, if one of the following plugins is installed:
+
+fugitive.vim <https://github.com/tpope/vim-fugitive>
+gina.vim     <https://github.com/lambdalisue/gina.vim>
+lawrencium   <https://bitbucket.org/ludovicchabant/vim-lawrencium>
+vcscommand   <http://www.vim.org/scripts/script.php?script_id=90>
+
+If a file is edited, that is not yet in the repository, the
+notexists symbol will be displayed after the branch name. If the repository
+is not clean, the dirty symbol will be displayed after the branch name.
+
+* notexists symbol means you are editing a file, that has not been commited yet
+  default: '?'
+
+* the dirty symbol basically means your working directory is dirty
+  default: '!'
+
+Note: the branch extension will be disabled for windows smaller than 80
+characters.
+
+* enable/disable fugitive/lawrencium integration >
+  let g:airline#extensions#branch#enabled = 1
+<
+* change the text for when no branch is detected >
+  let g:airline#extensions#branch#empty_message = ''
+<
+* define the order in which the branches of different vcs systems will be
+  displayed on the statusline (currently only for fugitive and lawrencium) >
+  let g:airline#extensions#branch#vcs_priority = ["git", "mercurial"]
+<
+* use vcscommand.vim if available >
+  let g:airline#extensions#branch#use_vcscommand = 0
+<
+* truncate long branch names to a fixed length >
+  let g:airline#extensions#branch#displayed_head_limit = 10
+<
+* customize formatting of branch name >
+  " default value leaves the name unmodifed
+  let g:airline#extensions#branch#format = 0
+
+  " to only show the tail, e.g. a branch 'feature/foo' becomes 'foo', use
+  let g:airline#extensions#branch#format = 1
+
+  " to truncate all path sections but the last one, e.g. a branch
+  " 'foo/bar/baz' becomes 'f/b/baz', use
+  let g:airline#extensions#branch#format = 2
+
+  " if a string is provided, it should be the name of a function that
+  " takes a string and returns the desired value
+  let g:airline#extensions#branch#format = 'CustomBranchName'
+  function! CustomBranchName(name)
+    return '[' . a:name . ']'
+  endfunction
+<
+* truncate sha1 commits at this number of characters  >
+  let g:airline#extensions#branch#sha1_len = 10
+
+* customize branch name retrieval for any version control system >
+  let g:airline#extensions#branch#custom_head = 'GetScmBranch'
+  function! GetScmBranch()
+    if !exists('b:perforce_client')
+      let b:perforce_client = system('p4 client -o | grep Client')
+      " Invalidate cache to prevent stale data when switching clients. Use a
+      " buffer-unique group name to prevent clearing autocmds for other
+      " buffers.
+      exec 'augroup perforce_client-'. bufnr("%")
+          au!
+          autocmd BufWinLeave <buffer> silent! unlet! b:perforce_client
+      augroup END
+    endif
+    return b:perforce_client
+  endfunction
+>
+* configure additional vcs checks to run
+  By default, vim-airline will check if the current edited file is untracked
+  in the repository. If so, it will append the `g:airline_symbols.notexists`
+  symbol to the branch name.
+  In addition, it will check if the repository is clean, else it will append
+  the `g:airline_symbols.dirty` symbol to the branch name (if the current
+  file is not untracked). Configure, by setting the following variable: >
+
+  let g:airline#extensions#branch#vcs_checks = ['untracked', 'dirty']
+<
+-------------------------------------                   *airline-bufferline*
+vim-bufferline <https://github.com/bling/vim-bufferline>
+
+* enable/disable bufferline integration >
+  let g:airline#extensions#bufferline#enabled = 1
+<
+* determine whether bufferline will overwrite customization variables >
+  let g:airline#extensions#bufferline#overwrite_variables = 1
+<
+-------------------------------------                     *airline-capslock*
+vim-capslock <https://github.com/tpope/vim-capslock>
+
+* enable/disable vim-capslock integration >
+  let g:airline#extensions#capslock#enabled = 1
+
+* change vim-capslock symbol >
+  let g:airline#extensions#capslock#symbol = 'CAPS' (default)
+
+-------------------------------------                    *airline-coc*
+coc <https://github.com/neoclide/coc.nvim>
+
+* enable/disable coc integration >
+  let g:airline#extensions#coc#enabled = 1
+<
+* change error symbol: >
+  let airline#extensions#coc#error_symbol = 'E:'
+<
+* change warning symbol: >
+  let airline#extensions#coc#warning_symbol = 'W:'
+<
+* change error format: >
+  let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
+<
+* change warning format: >
+  let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+
+-------------------------------------                    *airline-commandt*
+command-t <https://github.com/wincent/command-t>
+
+No configuration available.
+
+-------------------------------------                          *airline-csv*
+csv.vim <https://github.com/chrisbra/csv.vim>
+
+* enable/disable csv integration for displaying the current column. >
+  let g:airline#extensions#csv#enabled = 1
+<
+* change how columns are displayed. >
+  let g:airline#extensions#csv#column_display = 'Number' (default)
+  let g:airline#extensions#csv#column_display = 'Name'
+<
+-------------------------------------                        *airline-ctrlp*
+ctrlp <https://github.com/ctrlpvim/ctrlp.vim>
+
+* configure which mode colors should ctrlp window use (takes effect
+  only if the active airline theme doesn't define ctrlp colors) >
+  let g:airline#extensions#ctrlp#color_template = 'insert' (default)
+  let g:airline#extensions#ctrlp#color_template = 'normal'
+  let g:airline#extensions#ctrlp#color_template = 'visual'
+  let g:airline#extensions#ctrlp#color_template = 'replace'
+<
+* configure whether to show the previous and next modes (mru, buffer, etc...)
+>
+ let g:airline#extensions#ctrlp#show_adjacent_modes = 1
+<
+-------------------------------------                    *airline-ctrlspace*
+vim-ctrlspace <https://github.com/szw/vim-ctrlspace>
+
+* enable/disable vim-ctrlspace integration >
+  let g:airline#extensions#ctrlspace#enabled = 1
+<
+  To make the vim-ctrlspace integration work you will need to make the
+  ctrlspace statusline function call the correct airline function. Therefore
+  add the following line into your .vimrc: >
+
+  let g:CtrlSpaceStatuslineFunction =
+   \  "airline#extensions#ctrlspace#statusline()"
+<
+-------------------------------------                    *airline-cursormode*
+cursormode <https://github.com/vheon/vim-cursormode>
+
+Built-in extension to displays cursor in different colors depending on the
+current mode (only works in terminals iTerm, AppleTerm and xterm)
+
+* enable cursormode integration >
+  let g:airline#extensions#cursormode#enabled = 1
+
+* mode function. Return value is used as key for the color mapping. Default
+  is |mode()|
+  `let g:cursormode_mode_func = 'mode'`
+  color mapping. Keys come from `g:cursormode_mode_func`
+  (a background value can be appended)
+  `let g:cursormode_color_map = {`
+`\ "nlight": '#000000',`
+`\ "ndark": '#BBBBBB',`
+`\ "i": g:airline#themes#{g:airline_theme}#palette.insert.airline_a[1],`
+`\ "R": g:airline#themes#{g:airline_theme}#palette.replace.airline_a[1],`
+`\ "v": g:airline#themes#{g:airline_theme}#palette.visual.airline_a[1],`
+`\ "V": g:airline#themes#{g:airline_theme}#palette.visual.airline_a[1],`
+`\ "\<C-V>": g:airline#themes#{g:airline_theme}#palette.visual.airline_a[1],`
+`\ }`
+
+-------------------------------------                      *airline-default*
+The default extensions is an internal extension that is needed for handling
+all other extensions, takes care of how all sections will be combined into a
+'statusline' specific item and when to truncate each section.
+
+It understands all of the `g:` variables in the |airline-configuration|
+section, however it also has some more fine-tuned configuration values that
+you can use.
+
+* control which sections get truncated and at what width. >
+  let g:airline#extensions#default#section_truncate_width = {
+      \ 'b': 79,
+      \ 'x': 60,
+      \ 'y': 88,
+      \ 'z': 45,
+      \ 'warning': 80,
+      \ 'error': 80,
+      \ }
+
+  " Note: set to an empty dictionary to disable truncation.
+  let g:airline#extensions#default#section_truncate_width = {}
+<
+* configure the layout of the sections by specifying an array of two arrays
+  (first array is the left side, second array is the right side). >
+  let g:airline#extensions#default#layout = [
+      \ [ 'a', 'b', 'c' ],
+      \ [ 'x', 'y', 'z', 'error', 'warning' ]
+      \ ]
+<
+* configure the layout to not use %(%) grouping items in the statusline.
+  Try setting this to zero, if you notice bleeding color artifacts >
+  let airline#extensions#default#section_use_groupitems = 1
+<
+-------------------------------------                      *airline-denite*
+Denite <https://github.com/Shougo/denite.nvim>
+
+* enable/disable denite integration >
+  let g:airline#extensions#denite#enabled = 1
+
+-------------------------------------                      *airline-dirvish*
+vim-dirvish <https://github.com/justinmk/vim-dirvish>
+
+* enable/disable vim-dirvish integration >
+  let g:airline#extensions#dirvish#enabled = 1
+<  default: 1
+
+-------------------------------------                        *airline-eclim*
+eclim <https://eclim.org>
+
+* enable/disable eclim integration, which works well with the
+  |airline-syntastic| extension. >
+  let g:airline#extensions#eclim#enabled = 1
+
+-------------------------------------                  *airline-fugitiveline*
+This extension hides the fugitive://**// part of the buffer names, to only
+show the file name as if it were in the current working tree.
+It is deactivated by default if |airline-bufferline| is activated.
+
+* enable/disable bufferline integration >
+  let g:airline#extensions#fugitiveline#enabled = 1
+<
+If enabled, the buffer that comes from fugitive, will have added a trailing
+"[git]" to be able do distinguish between fugitive and non-fugitive buffers.
+
+-------------------------------------                     *airline-gina*
+gina.vim <https://github.com/lambdalisue/gina.vim>
+
+Airline displays the gina.vim specific statusline.
+(for details, see the help of gina.vim)
+
+* enable/disable bufferline integration >
+  let g:airline#extensions#gina#enabled = 1
+<  default: 1
+
+-------------------------------------                     *airline-grepper*
+vim-grepper <https://github.com/mhinz/vim-grepper>
+
+* enable/disable vim-grepper integration >
+  let g:airline#extensions#grepper#enabled = 1
+
+-------------------------------------                     *airline-gutentags*
+vim-gutentags <https://github.com/ludovicchabant/vim-gutentags>
+
+* enable/disable vim-gutentags integration >
+  let g:airline#extensions#gutentags#enabled = 1
+
+-------------------------------------                        *airline-hunks*
+vim-gitgutter <https://github.com/airblade/vim-gitgutter>
+vim-signify <https://github.com/mhinz/vim-signify>
+changesPlugin <https://github.com/chrisbra/changesPlugin>
+quickfixsigns <https://github.com/tomtom/quickfixsigns_vim>
+coc-git <https://github.com/neoclide/coc-git>
+
+You can use `airline#extensions#hunks#get_raw_hunks()` to get the full hunks,
+without shortening. This allows for advanced customization, or a quick way of
+querying how many changes you got. It will return something like '+4 ~2 -1'.
+
+* enable/disable showing a summary of changed hunks under source control. >
+  let g:airline#extensions#hunks#enabled = 1
+<
+* enable/disable showing only non-zero hunks. >
+  let g:airline#extensions#hunks#non_zero_only = 0
+<
+* set hunk count symbols. >
+  let g:airline#extensions#hunks#hunk_symbols = ['+', '~', '-']
+
+* enable coc-git extension.
+  If not set to 1, vim-airline will not consider to use coc-git for the hunks
+  extension. Make sure to have the coc-git extension enabled. >
+  let g:airline#extensions#hunks#coc_git = 1
+<
+-------------------------------------                     *airline-keymap*
+vim-keymap
+
+This extension displays the current 'keymap' in use.
+
+* enable/disable vim-keymap extension >
+  let g:airline#extensions#keymap#enabled = 1
+
+-------------------------------------                *airline-languageclient*
+LanguageClient <https://github.com/autozimu/LanguageClient-neovim>
+(despite its name, it can be used for Vim and Neovim).
+
+* enable/disable LanguageClient integration >
+  let g:airline#extensions#languageclient#enabled = 1
+
+* languageclient error_symbol >
+  let airline#extensions#languageclient#error_symbol = 'E:'
+<
+* languageclient warning_symbol >
+  let airline#extensions#languageclient#warning_symbol = 'W:'
+
+* languageclient show_line_numbers >
+  let airline#extensions#languageclient#show_line_numbers = 1
+<
+* languageclient open_lnum_symbol >
+  let airline#extensions#languageclient#open_lnum_symbol = '(L'
+<
+* languageclient close_lnum_symbol >
+  let airline#extensions#languageclient#close_lnum_symbol = ')'
+
+-------------------------------------                   *airline-localsearch*
+localsearch <https://github.com/mox-mox/localsearch>
+
+* enable/disable localsearch indicator integration >
+  let g:airline#extensions#localsearch#enabled = 1
+
+-------------------------------------                    *airline-lsp*
+lsp <https://github.com/prabirshrestha/vim-lsp>
+
+* enable/disable lsp integration >
+  let g:airline#extensions#lsp#enabled = 1
+
+* lsp error_symbol >
+  let airline#extensions#lsp#error_symbol = 'E:'
+<
+* lsp warning >
+  let airline#extensions#lsp#warning_symbol = 'W:'
+
+* lsp show_line_numbers >
+  let airline#extensions#lsp#show_line_numbers = 1
+<
+* lsp open_lnum_symbol >
+  let airline#extensions#lsp#open_lnum_symbol = '(L'
+<
+* lsp close_lnum_symbol >
+  let airline#extensions#lsp#close_lnum_symbol = ')'
+
+-------------------------------------                    *airline-neomake*
+neomake <https://github.com/neomake/neomake>
+
+* enable/disable neomake integration >
+  let g:airline#extensions#neomake#enabled = 1
+
+* neomake error_symbol >
+  let airline#extensions#neomake#error_symbol = 'E:'
+<
+* neomake warning >
+  let airline#extensions#neomake#warning_symbol = 'W:'
+<
+-------------------------------------                   *airline-nerdtree*
+NerdTree <https://github.com/preservim/nerdtree.git>
+
+Airline displays the Nerdtree specific statusline (which can be configured
+using the |'NerdTreeStatusline'| variable (for details, see the help of
+NerdTree)
+
+* enable/disable nerdtree's statusline integration >
+  let g:airline#extensions#nerdtree_status = 1
+<  default: 1
+
+-------------------------------------                      *airline-nrrwrgn*
+NrrwRgn <https://github.com/chrisbra/NrrwRgn>
+
+* enable/disable NrrwRgn integration >
+  let g:airline#extensions#nrrwrgn#enabled = 1
+
+-------------------------------------                    *airline-obsession*
+vim-obsession <https://github.com/tpope/vim-obsession>
+
+* enable/disable vim-obsession integration >
+  let g:airline#extensions#obsession#enabled = 1
+
+* set marked window indicator string >
+  let g:airline#extensions#obsession#indicator_text = '$'
+<
+-------------------------------------                          *airline-po*
+This extension will display the currently translated, untranslated and fuzzy
+messages when editing translations (po files). Related plugin (not necessary
+for this extension is po.vim from
+<http://www.vim.org/scripts/script.php?script_id=2530>
+
+It will be enabled if the `msgfmt` executable is available and one is editing
+files with the 'filetype' "po".
+
+* enable/disable po integration >
+  let g:airline#extensions#po#enabled = 1
+<
+* truncate width names to a fixed length >
+  let g:airline#extensions#po#displayed_limit = 0
+
+-------------------------------------                   *airline-poetv*
+poetv <https://github.com/petobens/poet-v>
+
+* enable/disable poetv integration >
+  let g:airline#extensions#poetv#enabled = 1
+<
+-------------------------------------                   *airline-promptline*
+promptline <https://github.com/edkolev/promptline.vim>
+
+* configure the path to the snapshot .sh file. Mandatory option. The created
+  file should be sourced by the shell on login >
+  " in .vimrc
+  airline#extensions#promptline#snapshot_file = "~/.shell_prompt.sh"
+
+  " in .bashrc/.zshrc
+  [ -f ~/.shell_prompt.sh ] && source ~/.shell_prompt.sh
+<
+* enable/disable promptline integration >
+  let g:airline#extensions#promptline#enabled = 0
+<
+* configure which mode colors should be used in prompt >
+  let airline#extensions#promptline#color_template = 'normal' (default)
+  let airline#extensions#promptline#color_template = 'insert'
+  let airline#extensions#promptline#color_template = 'visual'
+  let airline#extensions#promptline#color_template = 'replace'
+<
+-------------------------------------                     *airline-quickfix*
+The quickfix extension is a simple built-in extension which determines
+whether the buffer is a quickfix or location list buffer, and adjusts the
+title accordingly.
+
+* configure the title text for quickfix buffers >
+  let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
+<
+* configure the title text for location list buffers >
+  let g:airline#extensions#quickfix#location_text = 'Location'
+<
+-------------------------------------                    *airline-syntastic*
+syntastic <https://github.com/vim-syntastic/syntastic>
+
+* enable/disable syntastic integration >
+  let g:airline#extensions#syntastic#enabled = 1
+
+  Note: The recommendation from syntastic to modify the statusline directly
+  does not apply, if you use vim-airline, since it will take care for you of
+  adjusting the statusline.
+
+* syntastic error_symbol >
+  let airline#extensions#syntastic#error_symbol = 'E:'
+<
+* syntastic statusline error format (see |syntastic_stl_format|) >
+  let airline#extensions#syntastic#stl_format_err = '%E{[%fe(#%e)]}'
+
+* syntastic warning >
+  let airline#extensions#syntastic#warning_symbol = 'W:'
+<
+* syntastic statusline warning format (see |syntastic_stl_format|) >
+  let airline#extensions#syntastic#stl_format_warn = '%W{[%fw(#%w)]}'
+<
+-------------------------------------                      *airline-tabline*
+Note: If you're using the ctrlspace tabline only the option marked with (c)
+are supported!
+
+* enable/disable enhanced tabline. (c) >
+  let g:airline#extensions#tabline#enabled = 0
+
+* enable/disable displaying open splits per tab (only when tabs are opened) >
+  let g:airline#extensions#tabline#show_splits = 1
+
+* switch position of buffers and tabs on splited tabline (c)
+  (only supported for ctrlspace plugin). >
+  let g:airline#extensions#tabline#switch_buffers_and_tabs = 0
+<
+* enable/disable displaying buffers with a single tab. (c) >
+  let g:airline#extensions#tabline#show_buffers = 1
+
+Note: If you are using neovim (has('tablineat') = 1), then you can click
+on the tabline with the left mouse button to switch to that buffer, and
+with the middle mouse button to delete that buffer.
+
+* if you want to show the current active buffer like this:
+  ----------------------
+  buffer <buffer> buffer `
+>
+ let g:airline#extensions#tabline#alt_sep = 1
+< Only makes sense, if g:airline_right_sep is not empty.
+ default: 0
+
+* enable/disable displaying tabs, regardless of number. (c) >
+  let g:airline#extensions#tabline#show_tabs = 1
+
+* enable/disable displaying number of tabs in the right side (c) >
+  let g:airline#extensions#tabline#show_tab_count = 1
+
+Note: Not displayed if the number of tabs is less than 1
+
+* always displaying number of tabs in the right side (c) >
+  let g:airline#extensions#tabline#show_tab_count = 2
+<
+* configure filename match rules to exclude from the tabline. >
+  let g:airline#extensions#tabline#excludes = []
+
+* enable/disable display preview window buffer in the tabline. >
+  let g:airline#extensions#tabline#exclude_preview = 1
+
+* configure how numbers are displayed in tab mode. >
+  let g:airline#extensions#tabline#tab_nr_type = 0 " # of splits (default)
+  let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+  let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number
+  let g:airline#extensions#tabline#tabnr_formatter = 'tabnr'
+
+  Note: last option can be used to specify a different formatter for
+  displaying the numbers. By default tabline/formatter/tabnr.vim is used
+  The argument of that setting should either be a filename that exists
+  autoload/airline/extensions/tabline/formatter/ (without .vim extension)
+  and needs to provide a format() function. Alternatively you can use a
+  custom function name, that is defined e.g. in your .vimrc file. In any
+  case, the function needs to take 2 arguments, tab_nr_type and tabpage
+  number.
+  For an example, have a look at the default tabline/formatter/tabnr.vim
+<
+* enable/disable displaying tab number in tabs mode. >
+  let g:airline#extensions#tabline#show_tab_nr = 1
+
+* enable/disable displaying tab number in tabs mode for ctrlspace. (c) >
+  let g:airline#extensions#tabline#ctrlspace_show_tab_nr = 0
+
+* enable/disable displaying tab type (e.g. [buffers]/[tabs]) >
+  let g:airline#extensions#tabline#show_tab_type = 1
+
+* show buffer label at first position: >
+  let g:airline#extensions#tabline#buf_label_first = 1
+
+* rename label for buffers (default: 'buffers') (c) >
+  let g:airline#extensions#tabline#buffers_label = 'b'
+
+* rename label for tabs (default: 'tabs') (c) >
+  let g:airline#extensions#tabline#tabs_label = 't'
+
+* change the symbol for skipped tabs/buffers (default '...') >
+  let g:airline#extensions#tabline#overflow_marker = '…'
+
+* always show current tabpage/buffer first >
+  let airline#extensions#tabline#current_first = 1
+<  default: 0
+
+* enable/disable displaying index of the buffer.
+
+  `buffer_idx_mode` allows 3 different modes to access buffers from the
+  tabline. When enabled, numbers will be displayed in the tabline and
+  mappings will be exposed to allow you to select a buffer directly.
+  In default mode, when the variable is 1 Up to 11 mappings will be
+  exposed: >
+
+  let g:airline#extensions#tabline#buffer_idx_mode = 1
+  nmap <leader>1 <Plug>AirlineSelectTab1
+  nmap <leader>2 <Plug>AirlineSelectTab2
+  nmap <leader>3 <Plug>AirlineSelectTab3
+  nmap <leader>4 <Plug>AirlineSelectTab4
+  nmap <leader>5 <Plug>AirlineSelectTab5
+  nmap <leader>6 <Plug>AirlineSelectTab6
+  nmap <leader>7 <Plug>AirlineSelectTab7
+  nmap <leader>8 <Plug>AirlineSelectTab8
+  nmap <leader>9 <Plug>AirlineSelectTab9
+  nmap <leader>- <Plug>AirlineSelectPrevTab
+  nmap <leader>+ <Plug>AirlineSelectNextTab
+<
+  In mode 2, (when the variable is 2) 89 mappings will be exposed: >
+
+  let g:airline#extensions#tabline#buffer_idx_mode = 2
+  nmap <Leader>10 <Plug>AirlineSelectTab10
+  nmap <Leader>11 <Plug>AirlineSelectTab11
+  nmap <Leader>12 <Plug>AirlineSelectTab12
+  nmap <Leader>13 <Plug>AirlineSelectTab13
+  ...
+  nmap <Leader>99 <Plug>AirlineSelectTab99
+<
+  The <Plug>AirlineSelect<Prev/Next>Tab mapping handles counts as well,
+  so one can handle arbirtrarily number of buffers/tabs.
+
+  Mode 3 is exactly the same as mode 2, except the indexing start at 01,
+  exposing 99 mappings: >
+
+  let g:airline#extensions#tabline#buffer_idx_mode = 3
+  nmap <Leader>01 <Plug>AirlineSelectTab01
+  nmap <Leader>02 <Plug>AirlineSelectTab02
+  nmap <Leader>03 <Plug>AirlineSelectTab03
+  ...
+  nmap <Leader>99 <Plug>AirlineSelectTab99
+<
+  This matches that of the numbering scheme of |:buffers|, letting
+  `<Plug>AirlineSelectTab67` to reference buffer 67.
+
+  Note: To avoid ambiguity, there won't be <Plug>AirlineSelectTab1
+  - <Plug>AirlineSelectTab9 maps in mode 2 and 3.
+
+  Note: Mappings will be ignored for filetypes that match
+  `g:airline#extensions#tabline#keymap_ignored_filetypes`.
+
+  Note: In buffer_idx_mode these mappings won't change the
+  current tab, but switch to the buffer `visible` in the current tab.
+  If you want to switch to a buffer, that is not visible use the
+  `AirlineSelectPrev/NextTab` mapping (it supports using a count).
+  Use |gt| for switching tabs.
+  In tabmode, those mappings will be exposed as well and will switch
+  to the specified tab.
+
+* define the set of filetypes which are ignored for the selectTab
+  keymappings: >
+  let g:airline#extensions#tabline#keymap_ignored_filetypes =
+        \ ['vimfiler', 'nerdtree']
+
+* change the display format of the buffer index >
+  let g:airline#extensions#tabline#buffer_idx_format = {
+        \ '0': '0 ',
+        \ '1': '1 ',
+        \ '2': '2 ',
+        \ '3': '3 ',
+        \ '4': '4 ',
+        \ '5': '5 ',
+        \ '6': '6 ',
+        \ '7': '7 ',
+        \ '8': '8 ',
+        \ '9': '9 '
+        \}
+<
+* defines the name of a formatter for how buffer names are displayed. (c) >
+  let g:airline#extensions#tabline#formatter = 'default'
+
+  " here is how you can define a 'foo' formatter:
+  " create a file in the dir autoload/airline/extensions/tabline/formatters/
+  " called foo.vim >
+  function! airline#extensions#tabline#formatters#foo#format(bufnr, buffers)
+    return fnamemodify(bufname(a:bufnr), ':t')
+  endfunction
+  let g:airline#extensions#tabline#formatter = 'foo'
+<
+  Note: the following variables are used by the 'default' formatter.
+  When no disambiguation is needed, both 'unique_tail_improved' and
+  'unique_tail' delegate formatting to 'default', so these variables also
+  control rendering of unique filenames when using these formatters.
+
+    * configure whether buffer numbers should be shown. >
+      let g:airline#extensions#tabline#buffer_nr_show = 0
+<
+    * configure how buffer numbers should be formatted with |printf()|. >
+      let g:airline#extensions#tabline#buffer_nr_format = '%s: '
+<
+    * configure the formatting of filenames (see |filename-modifiers|). >
+      let g:airline#extensions#tabline#fnamemod = ':p:.'
+<
+    * configure collapsing parent directories in buffer name. >
+      let g:airline#extensions#tabline#fnamecollapse = 1
+<
+    * configure truncating non-active buffer names to specified length. >
+      let g:airline#extensions#tabline#fnametruncate = 0
+
+  " The `unique_tail` algorithm will display the tail of the filename, unless
+  " there is another file of the same name, in which it will display it along
+  " with the containing parent directory.
+  let g:airline#extensions#tabline#formatter = 'unique_tail'
+
+      " The following variables are also used by `unique_tail` formatter.
+      " the meanings are the same as the ones in default formatter.
+
+      let g:airline#extensions#tabline#fnamemod = ':p:.'
+      let g:airline#extensions#tabline#fnamecollapse = 1
+
+  " The `unique_tail_improved` - another algorithm, that will smartly
+  "  uniquify buffers names with similar filename, suppressing common
+  "  parts of paths.
+  let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+  " The `short_path` - is a simple formatter, that will show the
+  filename, with its extension, and the first parent directory only.
+
+  e.g.
+     /home/user/project/subdir/file.ext -> subdir/file.ext
+
+  let g:airline#extensions#tabline#formatter = 'short_path'
+
+* configure the minimum number of buffers needed to show the tabline. >
+  let g:airline#extensions#tabline#buffer_min_count = 0
+<
+  Note: this setting only applies to a single tab and when `show_buffers` is
+  true.
+
+* configure the minimum number of tabs needed to show the tabline. >
+  let g:airline#extensions#tabline#tab_min_count = 0
+<
+  Note: this setting only applies when `show_buffers` is false.
+
+* configure separators for the tabline only. >
+  let g:airline#extensions#tabline#left_sep = ''
+  let g:airline#extensions#tabline#left_alt_sep = ''
+  let g:airline#extensions#tabline#right_sep = ''
+  let g:airline#extensions#tabline#right_alt_sep = ''
+
+* configure whether close button should be shown: >
+  let g:airline#extensions#tabline#show_close_button = 1
+
+* configure symbol used to represent close button >
+  let g:airline#extensions#tabline#close_symbol = 'X'
+
+* configure pattern to be ignored on BufAdd autocommand >
+  " fixes unnecessary redraw, when e.g. opening Gundo window
+  let airline#extensions#tabline#ignore_bufadd_pat =
+            \ '\c\vgundo|undotree|vimfiler|tagbar|nerd_tree'
+
+Note: Enabling this extension will modify 'showtabline' and 'guioptions'.
+
+* enable Refresh of tabline buffers on |BufAdd| autocommands
+  (set this to one, if you note 'AirlineTablineRefresh', however, this
+   won't update airline on |:badd| commands) >
+  let airline#extensions#tabline#disable_refresh = 0
+
+* preserve windows when closing a buffer from the bufferline
+  (neovim specific, only works with buffers and not real tabs, default: 0) >
+  let airline#extensions#tabline#middle_click_preserves_windows = 1
+<
+-------------------------------------                        *airline-taboo*
+taboo.vim <https://github.com/gcmt/taboo.vim>
+
+* enable/disable taboo.vim integration >
+  let g:airline#extensions#taboo#enabled = 1
+<
+-------------------------------------                        *airline-term*
+Vim-Airline comes with a small extension for the styling the builtin
+|terminal|. This requires Nvim or a Vim compiled with terminal support.
+
+* enable/disable terminal integration >
+  let g:airline#extensions#term#enabled = 1
+  default: 1
+
+-------------------------------------                        *airline-tabws*
+vim-tabws <https://github.com/s1341/vim-tabws>
+
+* enable/disable tabws integration >
+  let g:airline#extensions#tabws#enabled = 1
+<
+-------------------------------------                       *airline-tagbar*
+tagbar <https://github.com/majutsushi/tagbar>
+
+* enable/disable tagbar integration >
+  let g:airline#extensions#tagbar#enabled = 1
+<
+* change how tags are displayed (:help tagbar-statusline) >
+  let g:airline#extensions#tagbar#flags = ''  (default)
+  let g:airline#extensions#tagbar#flags = 'f'
+  let g:airline#extensions#tagbar#flags = 's'
+  let g:airline#extensions#tagbar#flags = 'p'
+<
+-------------------------------------                     *airline-tmuxline*
+tmuxline <https://github.com/edkolev/tmuxline.vim>
+
+* enable/disable tmuxline integration >
+  let g:airline#extensions#tmuxline#enabled = 0
+<
+* configure which mode colors should be used in tmux statusline >
+  let airline#extensions#tmuxline#color_template = 'normal' (default)
+  let airline#extensions#tmuxline#color_template = 'insert'
+  let airline#extensions#tmuxline#color_template = 'visual'
+  let airline#extensions#tmuxline#color_template = 'replace'
+<
+* if specified, setting this option will trigger writing to the file whenever the
+  airline theme is applied, i.e. when :AirlineTheme is executed and on vim
+  startup >
+  airline#extensions#tmuxline#snapshot_file =
+   \  "~/.tmux-statusline-colors.conf"
+<
+-------------------------------------                     *airline-undotree*
+Undotree <https://github.com/mbbill/undotree>
+
+No configuration available.
+
+-------------------------------------                     *airline-unicode*
+Unicode <https://github.com/chrisbra/unicode.vim>
+
+No configuration available.
+
+-------------------------------------                     *airline-unite*
+Unite <https://github.com/Shougo/unite.vim>
+
+* enable/disable unite integration >
+  let g:airline#extensions#unite#enabled = 1
+
+-------------------------------------                     *airline-vimagit*
+vimagit <https://github.com/jreybert/vimagit>
+
+* enable/disable vimagit integration >
+  let g:airline#extensions#vimagit#enabled = 1
+<
+-------------------------------------                      *airline-vimtex*
+vimtex <https://github.com/lervag/vimtex>
+
+Shows the current file's vimtex related info.
+
+* enable/disable vimtex integration >
+  let g:airline#extensions#vimtex#enabled = 1
+<
+* left and right delimiters (shown only when status string is not empty) >
+  let g:airline#extensions#vimtex#left = "{"
+  let g:airline#extensions#vimtex#right = "}"
+
+State indicators:
+
+* the current tex file is the main project file
+  (nothing is shown by default) >
+  let g:airline#extensions#vimtex#main = ""
+
+* the current tex file is a subfile of the project
+  and the compilation is set for the main file >
+  let g:airline#extensions#vimtex#sub_main = "m"
+
+* the current tex file is a subfile of the project
+  and the compilation is set for this subfile >
+  let g:airline#extensions#vimtex#sub_local = "l"
+
+* single compilation is running >
+  let g:airline#extensions#vimtex#compiled = "c₁"
+
+* continuous compilation is running >
+  let g:airline#extensions#vimtex#continuous = "c"
+
+* viewer is opened >
+  let g:airline#extensions#vimtex#viewer = "v"
+
+-------------------------------------                   *airline-virtualenv*
+virtualenv <https://github.com/jmcantrell/vim-virtualenv>
+
+* enable/disable virtualenv integration >
+  let g:airline#extensions#virtualenv#enabled = 1
+<
+-------------------------------------                   *airline-vista*
+vista.vim <https://github.com/liuchengxu/vista.vim>
+
+* enable/disable vista integration >
+  let g:airline#extensions#vista#enabled = 1
+
+-------------------------------------                   *airline-whitespace*
+* enable/disable detection of whitespace errors. >
+  let g:airline#extensions#whitespace#enabled = 1
+<
+* disable detection of whitespace errors. >
+  " useful to call for particular file types (e.g., in "ftplugin/*")
+  silent! call airline#extensions#whitespace#disable()
+<
+* customize the type of mixed indent checking to perform. >
+  " must be all spaces or all tabs before the first non-whitespace character
+  let g:airline#extensions#whitespace#mixed_indent_algo = 0 (default)
+
+  " certain number of spaces are allowed after tabs, but not in between
+  " this algorithm works well for /* */ style comments in a tab-indented file
+  let g:airline#extensions#whitespace#mixed_indent_algo = 1
+
+  " spaces are allowed after tabs, but not in between
+  " this algorithm works well with programming styles that use tabs for
+  " indentation and spaces for alignment
+  let g:airline#extensions#whitespace#mixed_indent_algo = 2
+<
+* customize the whitespace symbol. >
+  let g:airline#extensions#whitespace#symbol = '!'
+<
+* configure which whitespace checks to enable. >
+  " indent: mixed indent within a line
+  " long:   overlong lines
+  " trailing: trailing whitespace
+  " mixed-indent-file: different indentation in different lines
+  " conflicts: checks for conflict markers
+  let g:airline#extensions#whitespace#checks =
+    \  [ 'indent', 'trailing', 'long', 'mixed-indent-file', 'conflicts' ]
+
+  " this can also be configured for an individual buffer
+  let b:airline_whitespace_checks =
+    \  [ 'indent', 'trailing', 'long', 'mixed-indent-file', 'conflicts ]
+<
+* configure the max number of lines where whitespace checking is enabled. >
+  let g:airline#extensions#whitespace#max_lines = 20000
+<
+* configure whether a message should be displayed. >
+  let g:airline#extensions#whitespace#show_message = 1
+<
+* configure the formatting of the warning messages. >
+  let g:airline#extensions#whitespace#trailing_format = 'trailing[%s]'
+  let g:airline#extensions#whitespace#mixed_indent_format =
+     \ 'mixed-indent[%s]'
+  let g:airline#extensions#whitespace#long_format = 'long[%s]'
+  let g:airline#extensions#whitespace#mixed_indent_file_format =
+     \ 'mix-indent-file[%s]'
+  let g:airline#extensions#whitespace#conflicts_format = 'conflicts[%s]'
+
+* configure custom trailing whitespace regexp rule >
+  let g:airline#extensions#whitespace#trailing_regexp = '\s$'
+
+* configure, which filetypes have special treatment of /* */ comments,
+  matters for mix-indent-file algorithm: >
+  let airline#extensions#c_like_langs =
+     \ ['arduino', 'c', 'cpp', 'cuda', 'go', 'javascript', 'ld', 'php']
+<
+* disable whitespace checking for an individual buffer >
+  " Checking is enabled by default because b:airline_whitespace_disabled
+  " is by default not defined:
+  unlet b:airline_whitespace_disabled
+
+  " If b:airline_whitespace_disabled is defined and is non-zero for a buffer,
+  " then whitespace checking will be disabled for that buffer; for example:
+  " let b:airline_whitespace_disabled = 1
+<
+* disable specific whitespace checks for individual filetypes >
+  " The global variable g:airline#extensions#whitespace#skip_indent_check_ft
+  " defines what whitespaces checks to skip per filetype.
+  " the list can contain any of the available checks,
+  " (see above at g:airline#extensions#whitespace#checks)
+  " To disable mixed-indent-file for go files use:
+  let g:airline#extensions#whitespace#skip_indent_check_ft =
+   \  {'go': ['mixed-indent-file']}
+<
+-------------------------------------                   *airline-windowswap*
+vim-windowswap <https://github.com/wesQ3/vim-windowswap>
+
+* enable/disable vim-windowswap integration >
+  let g:airline#extensions#windowswap#enabled = 1
+
+* set marked window indicator string >
+  let g:airline#extensions#windowswap#indicator_text = 'WS'
+<
+-------------------------------------                    *airline-wordcount*
+* enable/disable word counting of the document/visual selection >
+  let g:airline#extensions#wordcount#enabled = 1
+<
+* set list of filetypes for which word counting is enabled: >
+  " The default value matches filetypes typically used for documentation
+  " such as markdown and help files. Default is:
+  let g:airline#extensions#wordcount#filetypes =
+    \ ['asciidoc', 'help', 'mail', 'markdown', 'org', 'plaintex', 'rst', 'tex', 'text'])
+  " Use ['all'] to enable for all filetypes.
+
+* defines the name of a formatter for word count will be displayed: >
+  " The default will try to guess LC_NUMERIC and format number accordingly
+  " e.g. 1,042 in English and 1.042 in German locale
+  let g:airline#extensions#wordcount#formatter = 'default'
+
+  " here is how you can define a 'foo' formatter:
+  " create a file in autoload/airline/extensions/wordcount/formatters/
+  " called foo.vim, which defines the following function signature:
+  function! airline#extensions#wordcount#formatters#foo#to_string(wordcount)
+    return a:wordcount == 0 ? 'NONE' :
+        \ a:wordcount > 100 ? 'okay' : 'not enough')
+  endfunction
+  let g:airline#extensions#wordline#formatter = 'foo'
+  " The function is passed the word count of the document or visual selection
+
+* defines how to display the wordcount statistics for the default formatter >
+  " Defaults are below.  If fmt_short isn't defined, fmt is used.
+  " '%s' will be substituted by the word count
+  " fmt_short is displayed when window width is less than 80
+  let g:airline#extensions#wordcount#formatter#default#fmt = '%s words'
+  let g:airline#extensions#wordcount#formatter#default#fmt_short = '%sW'
+<
+-------------------------------------                     *airline-xkblayout*
+
+The vim-xkblayout extension will only be enabled, if the global variable
+`g:XkbSwitchLib` is set. It should be set to a C library that will be called
+using |libcall()| with the function name `Xkb_Switch_getXkbLayout`. For
+details on how to use it, see e.g. <https://github.com/ierton/xkb-switch>
+
+* enable/disable vim-xkblayout extension >
+  let g:airline#extensions#xkblayout#enabled = 1
+
+* redefine keyboard layout short codes to shown in status >
+  let g:airline#extensions#xkblayout#short_codes =
+    \  {'Russian-Phonetic': 'RU', 'ABC': 'EN'}
+<
+  'RU' instead of system 'Russian-Phonetic',
+  'EN' instead of system 'ABC'.
+
+  Default: >
+  let g:airline#extensions#xkblayout#short_codes =
+    \ {'2SetKorean': 'KR', 'Chinese': 'CN', 'Japanese': 'JP'}
+
+* define path to the backend switcher library
+  Linux (Install https://github.com/ierton/xkb-switch): >
+   let g:XkbSwitchLib = '/usr/local/lib/libxkbswitch.so'
+<
+  macOS (Install https://github.com/vovkasm/input-source-switcher): >
+   let g:XkbSwitchLib = '/usr/local/lib/libInputSourceSwitcher.dylib'
+
+-------------------------------------                     *airline-xtabline*
+xtabline <https://github.com/mg979/vim-xtabline>
+
+This is a simplified and stand-alone version of the original extension.
+The bigger version adds fzf commands, session management, tab bookmarks, and
+features that you may not need. They both require |vim-airline| anyway.
+
+Main features and default mappings of this extension are:
+
+* tab cwd persistance, also across sessions if vim-obsession is being used.
+
+* buffer filtering in the tabline: only buffers whose path is within the tab
+  cwd will be shown in the tabline.
+
+* toggle tabs/buffer view on the tabline, toggle buffer filtering:
+>
+  nmap <F5>          <Plug>XTablineToggleTabs
+  nmap <leader><F5>  <Plug>XTablineToggleFiltering
+
+* reopen last closed tab, restoring its cwd and buffers:
+>
+  nmap <leader>tr    <Plug>XTablineReopen <SID>ReopenLastTab
+
+* switch among filtered buffers (accepts count):
+>
+  nmap ]l            <Plug>XTablineNextBuffer
+  nmap [l            <Plug>XTablinePrevBuffer
+
+* go to N buffer (a count must be provided):
+>
+  nmap <BS>          <Plug>XTablineSelectBuffer
+
+* alternative command if count is not provided:
+>
+  let g:xtabline_alt_action = "buffer #"
+
+Note: Make sure to also enable >
+  :let g:airline_extensions#tabline#show_buffers = 1
+otherwise the tabline might not actually be displayed correctly (see
+|airline-tabline|)
+
+* exclude fugitive logs and files that share part of the real buffer path:
+>
+  let g:xtabline_include_previews = 0           (default 1)
+
+* activate fast cwd selection mappings:
+>
+  let g:xtabline_cd_commands = 1                (default 0)
+
+* default mappings for them are:
+>
+  map <leader>cdc       <Plug>XTablineCdCurrent
+  map <leader>cdd       <Plug>XTablineCdDown1
+  map <leader>cd2       <Plug>XTablineCdDown2
+  map <leader>cd3       <Plug>XTablineCdDown3
+  map <leader>cdh       <Plug>XTablineCdHome
+
+Note: if you don't use these mappings and change the cwd, the tabline won't
+be updated automatically. Either re-enter the tab or press <F5> two times.
+
+* here are some easier mappings to change tab buffer:
+>
+  nnoremap <silent> <expr> <Right> v:count ?
+   \ airline#extensions#tabline#xtabline#next_buffer(v:count) : "\<Right>"
+  nnoremap <silent> <expr> <Left>  v:count ?
+   \ airline#extensions#tabline#xtabline#prev_buffer(v:count) : "\<Left>"
+
+-------------------------------------                    *airline-ycm*
+YouCompleteMe <https://github.com/ycm-core/YouCompleteMe>
+
+Shows number of errors and warnings in the current file detected by YCM.
+
+* enable/disable YCM integration >
+  let g:airline#extensions#ycm#enabled = 1
+
+* set error count prefix >
+  let g:airline#extensions#ycm#error_symbol = 'E:'
+
+* set warning count prefix >
+  let g:airline#extensions#ycm#warning_symbol = 'W:'
+<
+
+-------------------------------------                    *airline-zoomwintab*
+zoomwintab <https://github.com/troydm/zoomwintab.vim>
+
+* enable/disable zoomwintab integration >
+  let g:airline#extensions#zoomwintab#enabled = 1
+
+* zoomwintab's zoomin symbol >
+  let g:airline#extensions#zoomwintab#status_zoomed_in = 'Currently Zoomed In'
+
+default: '> Zoomed'
+
+* zoomwintab's zoomout symbol >
+  let g:airline#extensions#zoomwintab#status_zoomed_out ='Currently Zoomed Out'
+
+default: ''
+
+=============================================================================
+ADVANCED CUSTOMIZATION                      *airline-advanced-customization*
+
+The defaults will accommodate the mass majority of users with minimal
+configuration. However, if you want to reposition sections or contents you
+can do so with built-in helper functions, which makes it possible to create
+sections in a more declarative style.
+
+-------------------------------------                        *airline-parts*
+A part is something that contains metadata that eventually gets rendered into
+the statusline. You can define parts that contain constant strings or
+functions. Defining parts is needed if you want to use features like automatic
+insertion of separators or hiding based on window width.
+
+For example, this is how you would define a part function: >
+  call airline#parts#define_function('foo', 'GetFooText')
+<
+Here is how you would define a part that is visible only if the window width
+greater than a minimum width. >
+  call airline#parts#define_minwidth('foo', 50)
+<
+Parts can be configured to be visible conditionally. >
+  call airline#parts#define_condition('foo', 'getcwd() =~ "work_dir"')
+<
+Now add part "foo" to section section airline_section_y: >
+  let g:airline_section_y = airline#section#create_right(['ffenc','foo'])
+<
+Note: Part definitions are combinative; e.g. the two examples above modify
+the same `foo` part.
+
+Note: Look at the source code and tests for the full API.
+
+-------------------------------------             *airline-predefined-parts*
+The following list of parts are predefined by vim-airline.
+
+* `mode`         displays the current mode
+* `iminsert`     displays the current insert method
+* `paste`        displays the paste indicator
+* `crypt`        displays the crypted indicator
+* `spell`        displays the spell indicator
+* `filetype`     displays the file type
+* `readonly`     displays the read only indicator
+* `file`         displays the filename and modified indicator
+* `path`         displays the filename (absolute path) and modifier indicator
+* `linenr`       displays the current line number
+* `maxlinenr`    displays the number of lines in the buffer
+* `ffenc`        displays the file format and encoding
+
+And the following are defined for their respective extensions:
+
+`ale_error_count` `ale_warning_count` `branch` `eclim` `hunks`
+`languageclient_error_count` `languageclient_warning_count` `lsp_error_count`
+`lsp_warning_count` `neomake_error_count` `neomake_warning_count` `obsession`
+`syntastic-warn` `syntastic-err` `tagbar` `whitespace` `windowswap`
+`ycm_error_count` `ycm_warning_count`
+
+-------------------------------------                      *airline-accents*
+Accents can be defined on any part, like so: >
+  call airline#parts#define_accent('foo', 'red')
+<
+This will override the colors of that part by using what is defined in that
+particular accent. In the above example, the `red` accent is used, which
+means regardless of which section the part is used in, it will have red
+foreground colors instead of the section's default foreground color.
+
+The following accents are defined by default. Themes can define their
+variants of the colors, but defaults will be provided if missing. >
+  bold, italic, red, green, blue, yellow, orange, purple, none
+<
+The defaults configure the mode and line number parts to be bold, and the
+readonly part to be red.
+
+"none" is special. This can be used, to remove a bold accent from an existing
+theme. For example, usually the mode part of the statusline is usually
+defined to be bold. However, it can be hard to remove an existing bold
+accent from the default configuration. Therefore, you can use the none
+accent to remove existing accents, so if you put >
+    call airline#parts#define_accent('mode', 'none')
+the mode section will be set to non-bold font style.
+
+-------------------------------------                     *airline-sections*
+Once a part is defined, you can use helper functions to generate the
+statuslines for each section. For example, to use the part above, we could
+define a section like this: >
+  function! AirlineInit()
+    let g:airline_section_a = airline#section#create(['mode', ' ', 'foo'])
+    let g:airline_section_b = airline#section#create_left(['ffenc','file'])
+    let g:airline_section_c = airline#section#create(['%{getcwd()}'])
+  endfunction
+  autocmd User AirlineAfterInit call AirlineInit()
+<
+This will create a section with the `mode`, followed by a space, and our
+`foo` part in section `a`. Section `b` will have two parts with a left-side
+separator. And section `c` will contain the current path. You may notice that
+the space and cwd are not defined parts. For convenience, if a part of that
+key does not exist, it will be inserted as is. The unit tests will be a good
+resource for possibilities.
+
+Note: The use of |User| is important, because most extensions are lazily
+loaded, so we must give them a chance to define their parts before we can use
+them. Also this autocommand is only triggered, after the airline functions
+are actually available on startup.
+
+Note: The `airline#section#create` function and friends will do its best to
+create a section with the appropriate separators, but it only works for
+function and text parts. Special 'statusline' items like %f or raw/undefined
+parts will not work as it is not possible to inspect their widths/contents
+before rendering to the statusline.
+
+=============================================================================
+FUNCREFS                                                  *airline-funcrefs*
+
+vim-airline internally uses funcrefs to integrate with third party plugins,
+and you can tap into this functionality to extend it for you needs. This is
+the most powerful way to customize the statusline, and sometimes it may be
+easier to go this route than the above methods.
+
+Every section can have two values. The default value is the global `g:`
+variable which is used in the absence of a `w:` value. This makes it very
+easy to override only certain parts of the statusline by only defining
+window-local variables for a subset of all sections.
+
+-------------------------------------                  *add_statusline_func*
+                                              *add_inactive_statusline_func*
+The following is an example of how you can extend vim-airline to support a
+new plugin. >
+  function! MyPlugin(...)
+    if &filetype == 'MyPluginFileType'
+      let w:airline_section_a = 'MyPlugin'
+      let w:airline_section_b = '%f'
+      let w:airline_section_c = '%{MyPlugin#function()}'
+      let g:airline_variable_referenced_in_statusline = 'foo'
+    endif
+  endfunction
+  call airline#add_statusline_func('MyPlugin')
+<
+Notice that only the left side of the statusline is overwritten. This means
+the right side (the line/column numbers, etc) will be intact.
+
+To have the function act only on statuslines of inactive functions, use
+`airline#add_inactive_statusline_func('MyPlugin')`
+
+-------------------------------------               *remove_statusline_func*
+You can also remove a function as well, which is useful for when you want a
+temporary override. >
+  call airline#remove_statusline_func('MyPlugin')
+<
+=============================================================================
+PIPELINE                                                  *airline-pipeline*
+
+Sometimes you want to do more than just use overrides. The statusline funcref
+is invoked and passed two arguments.  The first of these arguments is the
+statusline builder.  You can use this to build completely custom statuslines
+to your liking.  Here is an example: >
+>
+  function! MyPlugin(...)
+    " first variable is the statusline builder
+    let builder = a:1
+
+    " WARNING: the API for the builder is not finalized and may change
+    call builder.add_section('Normal', '%f')
+    call builder.add_section('WarningMsg', '%{getcwd()}')
+    call builder.split()
+    call builder.add_section('airline_z', '%p%%')
+
+    " tell the core to use the contents of the builder
+    return 1
+  endfunction
+<
+The above example uses various example highlight groups to demonstrate
+that you can use any combination from the loaded colorscheme. However, if
+you want colors to change between modes, you should use one of the section
+highlight groups, e.g. `airline_a` and `airline_b`.
+
+The second variable is the context, which is a dictionary containing various
+values such as whether the statusline is active or not, and the window
+number.
+>
+  context = {
+    'winnr': 'the window number for the statusline',
+    'active': 'whether the window is active or not',
+    'bufnr': 'the current buffer for this window',
+  }
+<
+-------------------------------------        *airline-pipeline-return-codes*
+The pipeline accepts various return codes and can be used to determine the
+next action.  The following are the supported codes: >
+   0   the default, continue on with the next funcref
+  -1   do not modify the statusline
+   1   modify the statusline with the current contents of the builder
+<
+Note: Any value other than 0 will halt the pipeline and prevent the next
+funcref from executing.
+
+=============================================================================
+WRITING EXTENSIONS                              *airline-writing-extensions*
+
+For contributions into the plugin, here are the following guidelines:
+
+1.  For simple 'filetype' checks, they can be added directly into the
+`extensions.vim` file.
+
+2.  Pretty much everything else should live as a separate file under the
+`extensions/` directory.
+
+  a.  Inside `extensions.vim`, add a check for some variable or command that
+      is always available (these must be defined in `plugin/`, and _not_
+      `autoload/` of the other plugin).  If it exists, then initialize the
+      extension. This ensures that the extension is loaded if and only if the
+      user has the other plugin installed.  Also, a check to
+      `airline#extensions#foo_plugin#enabled` should be performed to allow
+      the user to disable it.
+
+  b.  Configuration variables for the extension should reside in the
+      extension, e.g. `g:airline#extensions#foo_plugin#bar_variable`.
+
+See the source of |example.vim| for documented code of how to write one.
+Looking at the other extensions is also a good resource.
+
+=============================================================================
+WRITING THEMES                                              *airline-themes*
+
+Themes are written "close to the metal" -- you will need to know some basic
+VimL syntax to write a theme, but if you've written in any programming
+language before it will be easy to pick up.
+
+The |dark.vim| theme fully documents this procedure and will guide you
+through the process.
+
+For other examples, you can visit the official themes repository at
+<https://github.com/vim-airline/vim-airline-themes>.  It also includes
+examples such as |jellybeans.vim| which define colors by extracting highlight
+groups from the underlying colorscheme.
+
+=============================================================================
+TROUBLESHOOTING                                    *airline-troubleshooting*
+
+Q. There are no colors.
+A. You need to set up your terminal correctly.  For more details, see
+   <http://vim.wikia.com/wiki/256_colors_in_vim>.  Alternatively, if you want
+   to bypass the automatic detection of terminal colors, you can force Vim
+   into 256 color mode with this: >
+  set t_Co=256
+<
+  Also if you enable true color mode in your terminal, make sure it will work
+  correctly with your terminal. Check if it makes a difference without it: >
+  set notermguicolors
+
+Q. Powerline symbols are not showing up.
+A. First, you must install patched powerline fonts. Second, you must enable
+   unicode in vim.  >
+  set encoding=utf-8
+<
+Q. There is a pause when leaving insert mode.
+A. Add the following to your vimrc.  >
+  set ttimeoutlen=50
+<
+Q. The colors look a little off for some themes.
+A. Certain themes are derived from the active colorscheme by extracting
+   colors from predefined highlight groups.  These airline themes will look
+   good for their intended matching colorschemes, but will be hit or miss
+   when loaded with other colorschemes.
+
+Q. Themes are missing
+A. Themes have been extracted into the vim-airlines-themes repository. Simply
+   clone https://github.com/vim-airline/vim-airline-themes and everything
+   should work again.
+
+Q. Performance is bad
+A. Check the question at the wiki:
+   https://github.com/vim-airline/vim-airline/wiki/FAQ#i-have-a-performance-problem
+
+Solutions to other common problems can be found in the Wiki:
+<https://github.com/vim-airline/vim-airline/wiki/FAQ>
+
+=============================================================================
+CONTRIBUTIONS                                        *airline-contributions*
+
+Contributions and pull requests are welcome.
+
+=============================================================================
+LICENSE                                                    *airline-license*
+
+MIT License. Copyright © 2013-2020 Bailey Ling, Christian Brabandt, Mike
+Hartington et al.
+
+ vim:tw=78:ts=8:ft=help:norl:

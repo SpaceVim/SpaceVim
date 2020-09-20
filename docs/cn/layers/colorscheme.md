@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim colorscheme 模块"
 description: "这一模块为 SpaceVim 提供了一系列的常用颜色主题，默认情况下使用深色 gruvbox 作为默认主题。该模块提供了快速切换主题、随机主题等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> colorscheme
@@ -45,6 +45,7 @@ colorscheme 模块为 SpaceVim 提供了一系列常用的颜色主题，默认�
 | srcery       | yes      | no       | yes      | yes      | yes        |
 | onedark      | yes      | no       | yes      | yes      | yes        |
 | jellybeans   | yes      | no       | yes      | yes      | yes        |
+| palenight    | yes      | no       | yes      | yes      | yes        |
 | one          | yes      | yes      | yes      | yes      | yes        |
 | nord         | yes      | no       | yes      | yes      | yes        |
 | gruvbox      | yes      | yes      | yes      | yes      | yes        |
@@ -63,7 +64,7 @@ colorscheme 模块为 SpaceVim 提供了一系列常用的颜色主题，默认�
 
 # 添加自定义主题：https://github.com/mhartington/oceanic-next
 [[custom_plugins]]
-  name = "mhartington/oceanic-next"
+  repo = "mhartington/oceanic-next"
   merged = 0
 ```
 

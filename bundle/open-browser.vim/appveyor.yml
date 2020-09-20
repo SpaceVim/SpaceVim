@@ -1,0 +1,35 @@
+version: '{build}'
+clone_depth: 10
+environment:
+  matrix:
+    - VIM_URL: http://vim-jp.org/redirects/koron/vim-kaoriya/vim74/oldest/win64/
+    - VIM_URL: http://vim-jp.org/redirects/koron/vim-kaoriya/vim80/oldest/win64/
+    - VIM_URL: http://vim-jp.org/redirects/koron/vim-kaoriya/latest/win64/
+    # To test with latest official Vim binary, uncomment below line.
+    #- VIM_URL: http://vim-jp.org/redirects/vim/vim-win32-installer/latest/x64/
+install:
+  # Fetch vim
+  - ps: |
+      $zip = $Env:APPVEYOR_BUILD_FOLDER + '\vim.zip'
+      $vim = $Env:APPVEYOR_BUILD_FOLDER + '\vim\'
+      $redirect = Invoke-WebRequest -URI $Env:VIM_URL
+      (New-Object Net.WebClient).DownloadFile($redirect.Links[0].href, $zip)
+      [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem') > $null
+      [System.IO.Compression.ZipFile]::ExtractToDirectory($zip, $vim)
+      $Env:THEMIS_VIM = $vim + (Get-ChildItem $vim).Name + '\vim.exe'
+  # vimproc
+  - 'git -c advice.detachedHead=false clone https://github.com/Shougo/vimproc.vim --quiet --branch ver.9.2 --single-branch --depth 1 %TEMP%\vimproc'
+  - 'appveyor DownloadFile https://github.com/Shougo/vimproc.vim/releases/download/ver.9.2/vimproc_win64.dll -FileName %TEMP%\vimproc\lib\vimproc_win64.dll'
+  # themis
+  - 'git -c advice.detachedHead=false clone https://github.com/thinca/vim-themis --quiet --branch v1.5.1 --single-branch --depth 1 %TEMP%\vim-themis'
+  # vmock
+  - 'git -c advice.detachedHead=false clone https://github.com/kannokanno/vmock --quiet --single-branch --depth 1 %TEMP%\vmock'
+  # https://groups.google.com/forum/#!msg/vim_dev/3AkHqiD1NLE/vFw52yh_AAAJ
+  - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:32'
+  - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:64'
+build: off
+test_script:
+  - ps: |
+      & $Env:THEMIS_VIM --version
+      & $Env:TEMP\vim-themis\bin\themis.bat -r --runtimepath %TEMP%\vimproc --runtimepath %TEMP%\vmock --reporter dot
+deploy: off

@@ -1,0 +1,154 @@
+Include: include/setup.vader
+
+Execute (hook handling gets queued for global g:neomake_hook_context):
+  call g:NeomakeSetupAutocmdWrappers()
+  let maker = copy(g:success_maker)
+
+  " Change to initial window to trigger processing there.
+  let s:finished_called = []
+  function! s:OnFinished(...)
+    wincmd p
+    let s:finished_called += [a:000]
+  endfunction
+  augroup neomake_tests
+    au User NeomakeFinished nested call s:OnFinished()
+  augroup END
+
+  new
+  let s:win1 = winnr()
+  call neomake#Make({'enabled_makers': [maker]})
+  norm! V
+  NeomakeTestsWaitForFinishedJobs
+  new
+  call neomake#Make({'enabled_makers': [maker]})
+  NeomakeTestsWaitForFinishedJobs
+  wincmd p
+
+  bwipe
+  exe s:win1 . 'wincmd w'
+  bwipe
+
+  Assert !exists('g:neomake_hook_context'), 'Hook context was cleaned.'
+  AssertEqual len(g:neomake_test_jobfinished), 2
+  AssertEqual len(s:finished_called), 2
+
+  " Timer events do not cause it to finish, but get reset, so that no error is
+  " reported.
+  if neomake#has_async_support()
+    AssertNeomakeMessage 's:process_action_queue: decrementing timer tries for non-Timer event.', 3
+    AssertNeomakeMessage 'action queue: skipping clean_make_info for not processed make_id.', 3
+  endif
+
+Execute (hook handling gets queued for global g:neomake_hook_context (with postprocessing)):
+  call g:NeomakeSetupAutocmdWrappers()
+  let maker = copy(g:success_maker)
+  let maker.postprocess = ['neomake#postprocess#compress_whitespace']
+
+  " Change to initial window to trigger processing there.
+  let s:finished_called = []
+  function! s:OnFinished(...)
+    wincmd p
+    let s:finished_called += [a:000]
+  endfunction
+  augroup neomake_tests
+    au User NeomakeFinished nested call s:OnFinished()
+  augroup END
+
+  new
+  let s:win1 = winnr()
+  call neomake#Make({'enabled_makers': [maker]})
+  norm! V
+  NeomakeTestsWaitForFinishedJobs
+  new
+  call neomake#Make({'enabled_makers': [maker]})
+  NeomakeTestsWaitForFinishedJobs
+  wincmd p
+
+  bwipe
+  exe s:win1 . 'wincmd w'
+  bwipe
+
+  Assert !exists('g:neomake_hook_context'), 'Hook context was cleaned.'
+  AssertEqual len(g:neomake_test_jobfinished), 2
+  AssertEqual len(s:finished_called), 2
+
+  if neomake#has_async_support()
+    AssertNeomakeMessage 'action queue: skipping clean_make_info for not processed make_id.', 3
+  endif
+
+Execute (Nested neomake#utils#hook must not be nested (directly)):
+  function! s:nested_hook_cb(c)
+      AssertEqual g:neomake_hook_context, {'context': a:c}
+      let next = a:c + 1
+      call neomake#utils#hook('Event'.next, {'context': next})
+  endfunction
+
+  augroup neomake_tests
+    au User Event1 call s:nested_hook_cb(1)
+    au User Event2 call s:nested_hook_cb(2)
+    au User Event3 call s:nested_hook_cb(3)
+  augroup END
+  call neomake#utils#hook('Event1', {'context': 1})
+  AssertNeomakeMessage "Calling User autocmd Event1 with context: {'context': 1}.", 3
+  AssertNeomakeMessage 'Queuing action handle_hook for Timer, BufEnter, WinEnter, InsertLeave, CursorHold, CursorHoldI.', 3
+  doautocmd InsertLeave
+  AssertNeomakeMessage "Calling User autocmd Event2 with context: {'context': 2}.", 3
+  AssertNeomakeMessage 'Queuing action handle_hook for Timer, BufEnter, WinEnter, InsertLeave, CursorHold, CursorHoldI.', 3
+  doautocmd InsertLeave
+  AssertNeomakeMessage "Calling User autocmd Event3 with context: {'context': 3}.", 3
+
+Execute (neomake#utils#hook: reports exception):
+  augroup neomake_tests
+    au User Event1 throw 'Exception'
+  augroup END
+  call neomake#utils#hook('Event1', {'context': 1})
+  AssertNeomakeMessage "Calling User autocmd Event1 with context: {'context': 1}.", 3
+  AssertNeomakeMessage 'Error during User autocmd for Event1: Exception.', 0
+  Assert !exists('g:neomake_hook_context'), 'g:neomake_hook_context was cleared'
+
+Execute (neomake#utils#hook: context is locked):
+  augroup neomake_tests
+    au User Event1 let g:neomake_hook_context = 'changed'
+  augroup END
+
+  call neomake#utils#hook('Event1', {'context': 'fake'})
+  AssertNeomakeMessage 'Error during User autocmd for Event1: Vim(let):E741: Value is locked: g:neomake_hook_context.', 0
+  Assert !exists('g:neomake_hook_context'), 'g:neomake_hook_context was cleared'
+
+Execute (Does not nest hooks / User autocommands):
+  if NeomakeAsyncTestsSetup()
+    new
+
+    augroup neomake_tests
+      autocmd User NeomakeJobFinished nested call s:OnNeomakeJobFinished()
+    augroup END
+
+    function! s:OnNeomakeJobFinished() abort
+      let jobinfo = g:neomake_hook_context.jobinfo
+      if jobinfo.maker.name == 'maker1'
+        NeomakeTestsWaitForMessage '\v^Queuing User autocmd NeomakeCountsChanged for nested invocation ', 3
+        AssertNeomakeMessage 'Queuing action handle_hook for Timer, BufEnter, WinEnter, InsertLeave, CursorHold, CursorHoldI.', 3
+        AssertNeomakeMessage '\V\^Retrying Timer event in 10ms', 3
+      endif
+      " call neomake#log#debug('OnNeomakeJobFinished finished.')
+    endfunction
+
+    let maker1 = NeomakeTestsCommandMaker('maker1', 'echo error1; exit 1')
+    let maker1.errorformat = '%E%m'
+    let maker2 = NeomakeTestsCommandMaker('maker2', 'sleep .1; echo error2; exit 2')
+    let maker2.errorformat = '%E%m'
+
+    CallNeomake 1, [maker1, maker2]
+
+    AssertEqual map(getloclist(0), 'v:val.text'), ['error1', 'error2']
+
+    doautocmd WinEnter
+    AssertNeomakeMessage 'action queue: calling handle_hook.'
+    AssertNeomakeMessage '\VCalling User autocmd NeomakeCountsChanged with context: ', 3
+    AssertNeomakeMessage 'action queue: calling CleanJobinfo.', 3
+    AssertNeomakeMessage 'Cleaning jobinfo.', 3
+    AssertNeomakeMessage '\VCalling User autocmd NeomakeJobFinished with context: ', 3
+    AssertNeomakeMessage '\VCalling User autocmd NeomakeFinished with context: ', 3
+    AssertNeomakeMessage 'Cleaning make info.'
+    bwipe
+  endif

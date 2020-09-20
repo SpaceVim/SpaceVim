@@ -1,0 +1,18 @@
+filetype off
+set runtimepath+=$HOME/.vim/plugged/vader.vim
+set runtimepath+=../
+filetype plugin indent on
+syntax enable
+autocmd! filetype css set shiftwidth=2
+autocmd! filetype python set shiftwidth=4
+autocmd! filetype javascript set shiftwidth=4
+autocmd! BufRead *.ts set filetype=typescript
+autocmd! BufRead *.cp set filetype=copy
+set nocompatible
+set noswapfile
+
+" seems like cp doesn't have standard exit codes
+let g:neoformat_copy_cp = {
+      \ 'exe': 'exit64',
+      \ 'valid_exit_codes': [1, 64],
+      \ }

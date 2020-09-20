@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# Change to directory of this script.
+cd "${0%/*}"
+
+# Look for existing vader installation.
+vader=( ${HOME}/.vim/*bundle*/vader*/plugin/vader.vim )
+if [ -f ${vader[0]} ]; then
+    # Remove "plugin/vader.vim" suffix.
+    vader=${vader[0]%/*/*}
+fi
+
+if [ -d $vader ]; then
+    [[ ! -L vader.vim ]] && ln -s $vader vader.vim
+else
+    git clone https://github.com/junegunn/vader.vim.git
+fi
+
+# Provide viminfo during tests, remove it on exit.
+cp viminfo viminfo.tmp
+trap "{ rm viminfo.tmp; }" EXIT
+
+TERM=ansi HOME=/dev/null vim -XNu vimrc -i viminfo.tmp -c 'Vader! feature/*.vader'

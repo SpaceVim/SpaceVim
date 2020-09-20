@@ -1,10 +1,15 @@
 "=============================================================================
 " lsp.vim --- SpaceVim lsp layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section language server protocol, layer-lsp
+" @parentsection layers
+" This layer provides language client support for SpaceVim.
 
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
@@ -104,6 +109,7 @@ endfunction
 let s:enabled_fts = []
 
 let s:lsp_servers = {
+      \ 'ada' : ['ada_language_server'],
       \ 'c' : ['clangd'],
       \ 'cpp' : ['clangd'],
       \ 'css' : ['css-languageserver', '--stdio'],
@@ -119,10 +125,12 @@ let s:lsp_servers = {
       \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php'],
       \ 'purescript' : ['purescript-language-server', '--stdio'],
       \ 'python' : ['pyls'],
+      \ 'crystal' : ['scry'],
       \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
+      \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
-      \ 'ruby' : ['solargraph.BAT',  'stdio'],
+      \ 'ruby' : ['solargraph',  'stdio'],
       \ 'vue' : ['vls']
       \ }
 

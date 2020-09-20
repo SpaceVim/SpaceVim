@@ -1,6 +1,6 @@
 "=============================================================================
 " projectmanager.vim --- project manager for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -14,9 +14,25 @@
 " }
 "
 
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:FILE = SpaceVim#api#import('file')
+" the name projectmanager is too long
+" use rooter instead
+let s:LOGGER =SpaceVim#logger#derive('rooter')
+
+function! s:update_rooter_patterns() abort
+  let s:project_rooter_patterns = filter(copy(g:spacevim_project_rooter_patterns), 'v:val !~# "^!"')
+  let s:project_rooter_ignores = map(filter(copy(g:spacevim_project_rooter_patterns), 'v:val =~# "^!"'), 'v:val[1:]')
+endfunction
+
+function! s:is_ignored_dir(dir) abort
+  return len(filter(copy(s:project_rooter_ignores), 'a:dir =~# v:val')) > 0
+endfunction
+
 
 call add(g:spacevim_project_rooter_patterns, '.SpaceVim.d/')
 let s:spacevim_project_rooter_patterns = copy(g:spacevim_project_rooter_patterns)
+call s:update_rooter_patterns()
 
 let s:project_paths = {}
 
@@ -91,40 +107,48 @@ function! SpaceVim#plugins#projectmanager#reg_callback(func) abort
 endfunction
 
 function! SpaceVim#plugins#projectmanager#current_root() abort
-  " if rooter patterns changed, clear cache.
-  " https://github.com/SpaceVim/SpaceVim/issues/2367
+  " @todo skip some plugin buffer
+  if bufname('%') =~# '\[denite\]'
+        \ || bufname('%') ==# 'denite-filter'
+        \ || bufname('%') ==# '\[defx\]'
+    return
+  endif
   if join(g:spacevim_project_rooter_patterns, ':') !=# join(s:spacevim_project_rooter_patterns, ':')
+    call s:LOGGER.info('project_rooter_patterns option has been change, clear b:rootDir')
     call setbufvar('%', 'rootDir', '')
     let s:spacevim_project_rooter_patterns = copy(g:spacevim_project_rooter_patterns)
+    call s:update_rooter_patterns()
   endif
   let rootdir = getbufvar('%', 'rootDir', '')
   if empty(rootdir)
     let rootdir = s:find_root_directory()
     if empty(rootdir)
-      let rootdir = getcwd()
+      let rootdir = s:FILE.unify_path(getcwd())
     endif
     call setbufvar('%', 'rootDir', rootdir)
   endif
-  if !empty(rootdir)
-    call s:change_dir(rootdir)
-    call SpaceVim#plugins#projectmanager#RootchandgeCallback()
-  endif
+  call s:change_dir(rootdir)
+  call SpaceVim#plugins#projectmanager#RootchandgeCallback()
   return rootdir
 endfunction
 
 function! s:change_dir(dir) abort
-  call SpaceVim#logger#info('change to root:' . a:dir)
-  exe 'cd ' . fnameescape(fnamemodify(a:dir, ':p'))
-
-  try
-    " FIXME: change the git dir when the path is changed.
-    let b:git_dir = fugitive#extract_git_dir(expand('%:p'))
-  catch
-  endtry
-  " let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+  let bufname = bufname('%')
+  if empty(bufname)
+    let bufname = 'No Name'
+  endif
+  call s:LOGGER.info('buffer name: ' . bufname)
+  if a:dir ==# s:FILE.unify_path(getcwd())
+    call s:LOGGER.info('same as current directory, no need to change.')
+  else
+    call s:LOGGER.info('change to root: ' . a:dir)
+    exe 'cd ' . fnameescape(fnamemodify(a:dir, ':p'))
+    try
+      let b:git_dir = fugitive#extract_git_dir(expand('%:p'))
+    catch
+    endtry
+  endif
 endfunction
-
-let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 function! SpaceVim#plugins#projectmanager#kill_project() abort
   let name = get(b:, '_spacevim_project_name', '')
@@ -150,22 +174,45 @@ if g:spacevim_project_rooter_automatically
   augroup END
 endif
 function! s:find_root_directory() abort
+  " @question confused about expand and fnamemodify
+  " ref: https://github.com/vim/vim/issues/6793
+  
+  " get the current path of buffer
+  " If it is a empty buffer, do nothing?
   let fd = expand('%:p')
+  if empty(fd)
+    call s:LOGGER.info('buffer name is empty, skipped!')
+    return ''
+  endif
   let dirs = []
-  call SpaceVim#logger#info('Start to find root for: ' . fd)
-  for pattern in g:spacevim_project_rooter_patterns
+  call s:LOGGER.info('Start to find root for: ' . s:FILE.unify_path(fd))
+  for pattern in s:project_rooter_patterns
     if stridx(pattern, '/') != -1
-      let dir = SpaceVim#util#findDirInParent(pattern, fd)
-    else
-      let dir = SpaceVim#util#findFileInParent(pattern, fd)
-    endif
-    let ftype = getftype(dir)
-    if ftype ==# 'dir' || ftype ==# 'file'
-      let dir = fnamemodify(dir, ':p')
-      if dir !=# expand('~/.SpaceVim.d/')
-        call SpaceVim#logger#info('        (' . pattern . '):' . dir)
-        call add(dirs, dir)
+      if g:spacevim_project_rooter_outermost
+        let find_path = s:FILE.finddir(pattern, fd, -1)
+      else
+        let find_path = s:FILE.finddir(pattern, fd)
       endif
+    else
+      if g:spacevim_project_rooter_outermost
+        let find_path = s:FILE.findfile(pattern, fd, -1)
+      else
+        let find_path = s:FILE.findfile(pattern, fd)
+      endif
+    endif
+    let path_type = getftype(find_path)
+    if ( path_type ==# 'dir' || path_type ==# 'file' ) 
+          \ && find_path !=# expand('~/.SpaceVim.d/')
+          \ && find_path !=# expand('~/.Rprofile')
+          \ && !s:is_ignored_dir(find_path)
+      let find_path = s:FILE.unify_path(find_path, ':p')
+      if path_type ==# 'dir'
+        let dir = s:FILE.unify_path(find_path, ':h:h')
+      else
+        let dir = s:FILE.unify_path(find_path, ':h')
+      endif
+      call s:LOGGER.info('        (' . pattern . '):' . dir)
+      call add(dirs, dir)
     endif
   endfor
   return s:sort_dirs(deepcopy(dirs))
@@ -178,17 +225,37 @@ function! s:sort_dirs(dirs) abort
   if bufdir ==# dir
     return ''
   else
-    if isdirectory(dir)
-      let dir = fnamemodify(dir, ':p:h:h')
-    else
-      let dir = fnamemodify(dir, ':p:h')
-    endif
     return dir
   endif
 endfunction
 
 function! s:compare(d1, d2) abort
-  return len(split(a:d2, '/')) - len(split(a:d1, '/'))
+  if !g:spacevim_project_rooter_outermost
+    return len(split(a:d2, '/')) - len(split(a:d1, '/'))
+  else
+    return len(split(a:d1, '/')) - len(split(a:d2, '/'))
+  endif
+endfunction
+
+let s:FILE = SpaceVim#api#import('file')
+
+function! SpaceVim#plugins#projectmanager#complete_project(ArgLead, CmdLine, CursorPos) abort
+  call SpaceVim#commands#debug#completion_debug(a:ArgLead, a:CmdLine, a:CursorPos)
+  let dir = get(g:,'spacevim_src_root', '~')
+  "return globpath(dir, '*')
+  let result = split(globpath(dir, '*'), "\n")
+  let ps = []
+  for p in result
+    if isdirectory(p) && isdirectory(p . s:FILE.separator . '.git')
+      call add(ps, fnamemodify(p, ':t'))
+    endif
+  endfor
+  return join(ps, "\n")
+endfunction
+
+function! SpaceVim#plugins#projectmanager#OpenProject(p) abort
+  let dir = get(g:, 'spacevim_src_root', '~') . a:p
+  exe 'CtrlP '. dir
 endfunction
 
 

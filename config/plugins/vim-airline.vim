@@ -1,16 +1,16 @@
 scriptencoding utf-8
-let g:airline_powerline_fonts = g:spacevim_enable_powerline_fonts
+let g:airline_powerline_fonts = get(g:, 'spacevim_enable_powerline_fonts', 1)
 let g:airline_skip_empty_sections = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 1
 let g:Powerline_sybols = 'unicode'
-if g:spacevim_buffer_index_type < 3
+if get(g:, 'spacevim_buffer_index_type', 1) < 3
   let g:airline#extensions#tabline#buffer_idx_mode = 1
   let g:airline#extensions#tabline#buffer_idx_format = {}
   for s:i in range(9)
     call extend(g:airline#extensions#tabline#buffer_idx_format,
           \ {s:i : SpaceVim#api#import('messletters').bubble_num(s:i,
-          \ g:spacevim_buffer_index_type). ' '})
+          \ get(g:, 'spacevim_buffer_index_type', 1)). ' '})
   endfor
   unlet s:i
 elseif g:spacevim_buffer_index_type == 3
@@ -90,7 +90,7 @@ let g:airline#extensions#tabline#tab_nr_type= 2
 let g:airline#extensions#tabline#show_tab_type = 1
 let g:airline#extensions#tabline#buffers_label = 'BUFFERS'
 let g:airline#extensions#tabline#tabs_label = 'TABS'
-if g:spacevim_enable_os_fileformat_icon
+if get(g:, 'spacevim_enable_os_fileformat_icon', 0)
   let s:sys = SpaceVim#api#import('system')
   let g:airline_section_y = " %{&fenc . ' ' . SpaceVim#api#import('system').fileformat()} "
 endif

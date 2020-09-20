@@ -1,10 +1,10 @@
 [![SpaceVim](docs/logo.png)](https://spacevim.org/cn/)
 
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/cn)
-[![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
-[![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
+[![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
+[![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-[![Version](https://img.shields.io/badge/version-1.1.0-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-1.6.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
 SpaceVim 是一个社区驱动的模块化 Vim/Neovim 配置集合，以模块的方式组织管理插件以
@@ -18,17 +18,13 @@ Github: <https://github.com/SpaceVim/SpaceVim>
 
 码云：<https://gitee.com/SpaceVim/SpaceVim>
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png)
+![welcome-page](https://user-images.githubusercontent.com/13142418/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png)
 
 推荐阅读：
 
 - [入门指南](https://spacevim.org/cn/quick-start-guide)
 - [用户文档](https://spacevim.org/cn/documentation)
 - [可用模块](https://spacevim.org/cn/layers)
-
-以下是近几周的开发汇总：
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://github.com/SpaceVim/SpaceVim/pulse)
 
 <!-- vim-markdown-toc GFM -->
 

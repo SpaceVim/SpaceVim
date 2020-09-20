@@ -1,0 +1,40 @@
+Given (Parentheses):
+   (  
+
+
+
+     )
+
+  ( hello
+
+
+       
+      )
+
+  (vibd)
+  (dvib)
+  (dib)
+  ()
+
+Do (Delete inner %):
+  16gg0
+  di%
+  kdi%
+  kdvi%
+  kvi%d
+  3kdi%
+  4kdi%
+
+Expect (Verify):
+   (
+     )
+
+  (
+       
+      )
+
+  ()
+  (b)
+  ()
+  ()
+

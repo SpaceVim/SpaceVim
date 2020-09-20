@@ -1,10 +1,10 @@
 ---
-title: "unicode#spinners api"
+title: "unicode#spinners 接口"
 description: "unicode#spinners API 可启用一个定时器，根据指定的名称定时更新进度条符号"
-lang: cn
+lang: zh
 ---
 
-# [公共 API](../../) >> unicode#spinners
+# [可用接口](../../) >> unicode#spinners
 
 <!-- vim-markdown-toc GFM -->
 

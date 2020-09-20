@@ -1,6 +1,6 @@
 "=============================================================================
 " main.vim --- Main file of SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -21,6 +21,13 @@ if has('vim_starting')
   endif
   if !empty($PYTHON3_HOST_PROG)
     let g:python3_host_prog = $PYTHON3_HOST_PROG
+    if !has('nvim') 
+          \ && (has('win16') || has('win32') || has('win64'))
+          \ && exists('&pythonthreedll')
+          \ && exists('&pythonthreehome')
+      let &pythonthreedll = get(split(globpath(fnamemodify($PYTHON3_HOST_PROG, ':h'), 'python*.dll'), '\n'), -1, '')
+      let &pythonthreehome = fnamemodify($PYTHON3_HOST_PROG, ':h')
+    endif
   endif
 endif
 " Detect root directory of SpaceVim
@@ -55,15 +62,12 @@ if has('nvim')
 else
   let &rtp = g:_spacevim_root_dir . ',' . $VIMRUNTIME
 endif
-try
-  call SpaceVim#begin()
-catch
-  " Update the rtp only when SpaceVim is not contained in runtimepath.
-  let &runtimepath .= ',' . fnamemodify(g:_spacevim_root_dir, ':p:h')
-  call SpaceVim#begin()
-endtry
+
+call SpaceVim#begin()
 
 call SpaceVim#custom#load()
+
+call SpaceVim#default#keyBindings()
 
 call SpaceVim#end()
 " vim:set et sw=2 cc=80:

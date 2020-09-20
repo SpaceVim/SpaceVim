@@ -11,7 +11,7 @@ echo "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ 
 echo "               | ##                                                           "
 echo "               | ##                                                           "
 echo "               |__/                                                           "
-echo "                    版本 : 1.2.0-dev  中文官网 : https://spacevim.org/cn/     "
+echo "                    版本: 1.6.0-dev    中文官网: https://spacevim.org/cn/     "
 
 Push-Location ~
 
@@ -51,15 +51,27 @@ if (Get-Command "git" -ErrorAction SilentlyContinue) {
 
 echo ""
 
-echo "==> 测试 gvim 命令"
-if (Get-Command "gvim" -ErrorAction SilentlyContinue) {
+echo "==> 测试 vim 命令"
+if (Get-Command "vim" -ErrorAction SilentlyContinue) {
   echo ($(vim --version) -split '\n')[0]
   echo "[OK] 测试成功. 开始下一个测试..."
   sleep 1
 } else {
-  echo "[WARNING] 无法在你的 PATH 中发现 'gvim.exe' 命令. 但仍可继续安装..."
+  echo "[WARNING] 无法在你的 PATH 中发现 'vim' 命令. 但仍可继续安装..."
   echo ""
-  echo "[WARNING] 请后续安装 gvim 或者正确设置你的 PATH! "
+  echo "[WARNING] 请后续安装 vim 或者正确设置你的 PATH! "
+  Pause
+}
+
+echo "==> 测试 nvim 命令"
+if (Get-Command "nvim" -ErrorAction SilentlyContinue) {
+  echo ($(nvim --version) -split '\n')[0]
+  echo "[OK] 测试成功. 开始下一个测试..."
+  sleep 1
+} else {
+  echo "[WARNING] 无法在你的 PATH 中发现 'nvim' 命令. 但仍可继续安装..."
+  echo ""
+  echo "[WARNING] 请后续安装 Neovim 或者正确设置你的 PATH! "
   Pause
 }
 
@@ -108,4 +120,4 @@ echo ""
 
 Pause
 
-# vim:set ft=ps1 nowrap: 
+# vim:set ft=powershell nowrap: 

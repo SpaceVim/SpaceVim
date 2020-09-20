@@ -1,0 +1,23 @@
+Include: include/setup.vader
+
+Execute (Credo: postprocess: type):
+  function! s:F(entry)
+    call neomake#makers#ft#elixir#PostprocessCredo(a:entry)
+    return a:entry
+  endfunction
+  AssertEqual s:F({'type': 'C'}).type, 'W'
+  AssertEqual s:F({'type': 'F'}).type, 'W'
+
+  let g:neomake_elixir_credo_config_typemap = {'F': 'Z'}
+  AssertEqual s:F({'type': 'F'}).type, 'Z'
+
+Execute (Mix: postprocess: line is never higher than buffer size):
+  function! s:F(entry)
+    call neomake#makers#ft#elixir#PostprocessEnforceMaxBufferLine(a:entry)
+    return a:entry
+  endfunction
+  norm! ggdG
+  norm! iline1
+  norm! oline2
+  AssertEqual s:F({'lnum': 3}).lnum, 2
+  AssertEqual s:F({'lnum': 1}).lnum, 1

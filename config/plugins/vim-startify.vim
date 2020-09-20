@@ -62,7 +62,9 @@ if !exists('g:startify_custom_header')
 endif
 call SpaceVim#mapping#space#def('nnoremap', ['a','s'], 'Startify | doautocmd WinEnter', 'fancy start screen',1)
 
-if g:spacevim_enable_tabline_filetype_icon
+if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
+  " the old option g:spacevim_enable_tabline_filetype_icon should also works
+  " well
 
   function! FileIcon(path)
     let icon = s:FILE.fticon(a:path)

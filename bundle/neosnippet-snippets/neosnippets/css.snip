@@ -1,0 +1,272 @@
+snippet	background
+alias	bg
+    background: ${1};${2}
+
+snippet	backattachment
+alias	ba
+    background-attachment: ${1};${2}
+
+snippet	backcolor
+alias	bc
+    background-color: ${1};${2}
+
+snippet	backimage
+alias	bi
+    background-image: ${1};${2}
+
+snippet	backposition
+alias	bp
+    background-position: ${1};${2}
+
+snippet	backrepeat
+alias	br
+    background-repeat: ${1};${2}
+
+snippet	border
+alias	b
+    border: ${1};${2}
+
+snippet	border-style
+alias	bs
+    border-style: ${1};${2}
+
+snippet	border-color
+alias	bc
+    border-color: ${1};${2}
+
+snippet	border-width
+alias	bw
+    border-width: ${1};${2}
+
+snippet	border-bottom-width
+alias	bbw
+    border-bottom-width: ${1};${2}
+
+snippet	border-top-width
+alias	btw
+    border-top-width: ${1};${2}
+
+snippet	border-left-width
+alias	blw
+    border-left-width: ${1};${2}
+snippet	border-right-width
+alias	brw
+    border-right-width: ${1};${2}
+
+
+snippet	border-bottom-style
+alias	bbs
+    border-bottom-style: ${1};${2}
+
+snippet	border-top-style
+alias	bts
+    border-top-style: ${1};${2}
+
+snippet	border-left-style
+alias	bls
+    border-left-style: ${1};${2}
+snippet	border-right-style
+alias	brs
+    border-right-style: ${1};${2}
+
+
+snippet	border-bottom-color
+alias	bbc
+    border-bottom-color: ${1};${2}
+
+snippet	border-top-color
+alias	btc
+    border-top-color: ${1};${2}
+
+snippet	border-left-color
+alias	blc
+    border-left-color: ${1};${2}
+snippet	border-right-color
+alias	brc
+    border-right-color: ${1};${2}
+
+snippet	outline
+alias	ol
+    outline: ${1};${2}
+
+snippet	outline-color
+alias	oc
+    outline-color: ${1};${2}
+
+snippet	outline-style
+alias	os
+    outline-style: ${1};${2}
+
+snippet	outline-width
+alias	ow
+    outline-width: ${1};${2}
+
+snippet	color
+alias	c
+    color: ${1};${2}
+
+snippet	direction
+alias	d
+    direction: ${1};${2}
+
+snippet	letter-spacing
+alias	ls
+    letter-spacing: ${1};${2}
+
+snippet	line-height
+alias	lh
+    line-height: ${1};${2}
+
+snippet	text-align
+alias	ta
+    text-align: ${1};${2}
+
+snippet	text-decoration
+alias	td
+    text-decoration: ${1};${2}
+
+snippet	text-indent
+alias	ti
+    text-indent: ${1};${2}
+
+snippet	text-transform
+alias	tt
+    text-transform: ${1};${2}
+
+snippet	unicode-bidi
+alias	ub
+    unicode-bidi: ${1};${2}
+
+snippet	white-space
+alias	ws
+    white-space: ${1};${2}
+
+snippet	word-spacing
+alias	ws
+    word-spacing: ${1};${2}
+
+snippet	font
+alias	f
+    font: ${1};${2}
+
+snippet	font-family
+alias	ff
+    font-family: ${1:"Times New Roman",Georgia,Serif};${2}
+
+snippet	font-size
+alias	fs
+    font-size: ${1};${2}
+
+snippet	font-style
+alias	fs
+    font-style: ${1};${2}
+
+snippet	font-weight
+alias	fw
+    font-weight: ${1};${2}
+
+snippet	margin
+alias	m
+    margin: ${1};${2}
+
+snippet	margin-bottom
+alias	mb
+    margin-bottom: ${1};${2}
+
+snippet	margin-top
+alias	mt
+    margin-top: ${1};${2}
+
+snippet	margin-left
+alias	ml
+    margin-left: ${1};${2}
+
+snippet	margin-right
+alias	mr
+    margin-right: ${1};${2}
+
+snippet	padding
+alias	p
+    padding: ${1};${2}
+
+snippet	padding-bottom
+alias	pb
+    padding-bottom: ${1};${2}
+
+snippet	padding-top
+alias	pt
+    padding-top: ${1};${2}
+
+snippet	padding-left
+alias	pl
+    padding-left: ${1};${2}
+
+snippet	padding-right
+alias	pr
+    padding-right: ${1};${2}
+
+snippet	list-style
+alias	ls
+    list-style: ${1};${2}
+
+snippet	list-style-image
+alias	lsi
+    list-style-image: ${1};${2}
+
+snippet	list-style-position
+alias	lsp
+    list-style-position: ${1};${2}
+
+snippet	list-style-type
+alias	lst
+    list-style-type: ${1};${2}
+
+snippet	content
+alias	c
+    content: ${1};${2}
+
+snippet	height
+alias	h
+    height: ${1};${2}
+
+snippet	max-height
+alias	mah
+    max-height: ${1};${2}
+
+snippet	max-width
+alias	maw
+    max-width: ${1};${2}
+
+snippet	min-height
+alias	mih
+    min-height: ${1};${2}
+
+snippet	min-width
+alias	miw
+    min-width: ${1};${2}
+
+snippet	width
+alias	w
+    width: ${1};${2}
+
+# For media query
+snippet     media
+abbr        @media ...
+options     head
+  @media ${1:condition} {
+    ${0:TARGET}
+  }
+
+snippet     media-min-width
+abbr        @media all and (min-width) {...}
+options     head
+  @media ${1:all} and (min-width: ${2:SIZE}) {
+    ${0:TARGET}
+  }
+
+snippet     media-max-width
+abbr        @media all and (max-width) {...}
+options     head
+  @media ${1:all} and (max-width: ${2:SIZE}) {
+    ${0:TARGET}
+  }

@@ -1,0 +1,47 @@
+natural         vim   +\?\d\+
+integer         vim   [-+]\?\d\+
+hundredths      vim   \<\%(\d\|[1-9]\d\)\>
+z_hundredths    vim   \<\d\{2}\>
+thousandths     vim   \<\%(\%{hundredths}\|[1-9]\d\d\)\>
+z_thousandths   vim   \<\d\{3}\>
+z_thousandths   pcre  \b[0-9]{3}\b
+_ip4_segment    vim   \%(25[0-5]\|2[0-4]\d\|[01]\?\d\d\?\)
+_ip4_segment    pcre  (25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)
+ip4             vim   \<\%{_ip4_segment,4,.}\>
+ip4             pcre  \b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b
+floating        pcre  /[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?/
+floating        vim   [-+]\?[0-9]*\.\?[0-9]\+\([eE][-+]\?[0-9]\+\)\?
+phone_number    vim   # multiline
+      ^
+      \%(
+        \(\d\)           # prefix_digit
+        [\ \-\.]\?       # optional_separator
+      \)\?
+      \%(
+        (\?\(\d\{3}\))\? # area_code
+      [\ \-\.]           # separator
+      \)\?
+      \(\d\{3}\)         # trunk
+      [\ \-\.]           # separator
+      \(\d\{4}\)         # line
+      \%(:\ \?x\?        # optional_space_or_x
+        \(\d\+\)         # extension
+      \)\?
+      $
+phone_number    pcre  # multiline
+      /^
+        (?:
+          (?<prefix>\d)             # prefix digit
+          [ \-\.]?                  # optional separator
+        )?
+        (?:
+          \(?(?<areacode>\d{3})\)?  # area code
+          [ \-\.]                   # separator
+        )?
+        (?<trunk>\d{3})             # trunk
+        [ \-\.]                     # separator
+        (?<line>\d{4})              # line
+        (?:\ ?x?                    # optional space or 'x'
+          (?<extension>\d+)         # extension
+        )?
+      $/x

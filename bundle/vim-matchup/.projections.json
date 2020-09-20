@@ -1,0 +1,8 @@
+{
+  "plugin/*.vim": {"type": "plugin"},
+  "autoload/*.vim": {"type": "autoload"},
+  "after/*.vim": {"type": "after"},
+  "doc/*.txt": {"type": "doc"},
+  "README.md": {"type": "readme"},
+  "test/*": {"type": "test"}
+}

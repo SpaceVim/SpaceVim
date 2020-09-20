@@ -2,7 +2,7 @@
 
 #=============================================================================
 # install.sh --- bootstrap script for SpaceVim
-# Copyright (c) 2016-2017 Shidong Wang & Contributors
+# Copyright (c) 2016-2020 Shidong Wang & Contributors
 # Author: Shidong Wang < wsdjeg at 163.com >
 # URL: https://spacevim.org
 # License: GPLv3
@@ -84,7 +84,7 @@ On_IWhite='\033[0;107m'   # White
 # }}}
 
 # version
-Version='1.2.0-dev'
+Version='1.6.0-dev'
 #System name
 System="$(uname -s)"
 
@@ -342,7 +342,7 @@ welcome () {
 
 # download_font {{{
 download_font () {
-  url="https://raw.githubusercontent.com/wsdjeg/DotFiles/master/local/share/fonts/$1"
+  url="https://raw.githubusercontent.com/wsdjeg/DotFiles/7a75a186c6db9ad6f02cafba8d4c7bc78f47304c/local/share/fonts/${1// /%20}"
   path="$HOME/.local/share/fonts/$1"
   if [[ -f "$path" ]]
   then
@@ -453,4 +453,4 @@ main () {
 
 main $@
 
-# vim:set foldenable foldmethod=marker:
+# vim:set nofoldenable foldmethod=marker:

@@ -1,6 +1,6 @@
 "=============================================================================
 " denite.vim --- SpaceVim denite layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -18,6 +18,8 @@ function! SpaceVim#layers#denite#plugins() abort
   call add(plugins, ['ozelentok/denite-gtags', {'merged' : 0}])
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
+  call add(plugins, ['SpaceVim/Denite-sources', {'merged' : 0}])
+
   return plugins
 endfunction
 
@@ -25,10 +27,14 @@ let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#denite#config() abort
 
+  let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
+  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Denite unicode', 'search-and-insert-unicode', 1)
+
+
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["Denite menu:CustomKeyMaps -input=[SPC]"])',
-        \ ['show mappings',
+        \ ['show-mappings',
         \ [
         \ 'SPC ? is to show mappings',
         \ '',
@@ -48,13 +54,15 @@ function! SpaceVim#layers#denite#config() abort
         \ ]
         \ ],
         \ 1)
+  " @fixme SPC h SPC make vim flick
+  nmap <Space>h<Space> [SPC]h[SPC]
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["Denite buffer"])',
         \ ['buffer-list',
         \ [
-        \ 'SPC b b is to open buffer list via denite',
+        \ 'SPC b b is to open buffer list',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
@@ -141,6 +149,19 @@ function! SpaceVim#layers#denite#config() abort
         \ ['get help with the symbol at point',
         \ [
         \ '[SPC h i] is to get help with the symbol at point',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite unicode"])',
+        \ ['search-and-insert-unicode',
+        \ [
+        \ '[SPC i u] is to search and insert Unicode charater',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]

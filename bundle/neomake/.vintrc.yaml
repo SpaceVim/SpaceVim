@@ -1,0 +1,6 @@
+policies:
+  ProhibitImplicitScopeVariable:
+    enabled: false
+
+  ProhibitUnnecessaryDoubleQuote:
+    enabled: True

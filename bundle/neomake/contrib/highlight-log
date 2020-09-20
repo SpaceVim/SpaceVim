@@ -1,0 +1,144 @@
+#!/usr/bin/env bash
+
+# This script adds color highlighting to the output from Neomake's Vader tests
+# (when called with "vader"), or to the file that gets written into according
+# to `neomake_logfile`.
+#
+# You can use the following to watch colored logs in a terminal window, after
+# having used `let g:neomake_logfile = '/tmp/neomake.log'` in Neovim/Vim:
+#
+#     tail -f /tmp/neomake.log | /path/to/neomake/contrib/highlight-log
+
+bold="[1m"  # $(tput bold)
+bold_off="[22m"
+debug_color="[2m"  # $(tput dim), does not work in urxvt (although in infocmp/terminfo).
+debug_color_off="[22m"
+color_off="[39m"
+log_color="[33;1m"
+log_color_off="$bold_off$color_off"
+error_color="[31;1m"
+error_color_off="$bold_off$color_off"
+
+# compact: display test headers, but not inner output for successful ones.
+compact=0
+
+while [ $# -ne 0 ]; do
+    case $1 in
+    --compact) compact=1; shift ;;
+    --)  shift; break ;;
+    -?*) echo "Unknown option: $1" 1>&2; exit 64 ;;
+    *) break ;;
+    esac
+done
+
+if [ "$1" = vader ]; then
+  # Match non-log lines (i.e. keep output from :Log, which should cause
+  # all messages from a case to be visible).
+  # This should also ignore empty lines and lines starting with a character
+  # (e.g. via NVIM_LOG_FILE:=/dev/stderr, and from :echom).
+  re_log_line='^(.*(  )?    )(> .*)$'
+  re_ignore_log_line='^.*(  )?    > \[(debug  |verbose|warning|error  )|((D|V|W|E) +\+[.0-9]+)\]'
+
+  colorize() {
+    # Only colorize if stdout is connected to a tty (not with :!make).
+    if ! [ -t 1 ]; then
+      cat -
+      return
+    fi
+
+    # sed: add coloring to Vader's output:
+    # 1. failures (includes pending) in red "(X)"
+    # 2. test case header in bold "(2/2)"
+    # 3. Neomake's error log messages
+    # 4. Neomake's debug log messages
+    # 5. non-Neomake log lines (e.g. from :Log)
+    sed -E -e 's/^(([^ ].*)? +)\([ [:digit:]]+\/[[:digit:]]+\) \[[ [:alpha:]]+\] \(X\).*/'"$error_color"'\0'"$error_color_off"'/' \
+      -e 's/^(([^ ].*)? +)(\([ [:digit:]]+\/[[:digit:]]+\))/\1'"$bold"'\3'"$bold_off"'/' \
+      -e 's/^ +> \[(error  |E \+[.[:digit:]]+)\]: .*/'"$bold"'\0'"$bold_off"'/' \
+      -e 's/^ +> \[(debug  |D \+[.[:digit:]]+)\]: .*/'"$debug_color"'\0'"$debug_color_off"'/' \
+      -e '/'"$re_ignore_log_line"'/! s/'"$re_log_line"'/\1'"$log_color"'\3'"$log_color_off"'/'
+  }
+
+  if ((compact)); then
+    # Do not display output for successful tests (i.e. the log statements).
+    last_start_match=
+    # Match Vader header ("( 1/33) [EXECUTE] …"), but also if there is output
+    # from Vim, e.g. with ":colder".
+    re_vader_header='^([^ ].*)?\ +(\(\ *[0-9]+/[0-9]+\))'
+    filtering=0
+    finished_reading=0
+    stopped_filtering=0
+    while [ "$finished_reading" = 0 ]; do
+      if ! read -r; then
+        if [ -z "$REPLY" ]; then
+          break
+          finished_reading=1
+        fi
+      fi
+      if [[ "$REPLY" == *'Vader error:'* ]] || [[ "$REPLY" == 'Error'* ]] || [[ "$REPLY" == 'Traceback'* ]]; then
+        printf "\r" >&2
+        printf "[31m[1m%s[0m\n" "$REPLY"
+        continue
+      fi
+      if (( stopped_filtering )); then
+        echo "$REPLY"
+        continue
+      fi
+      if [[ "$REPLY" == *'Starting Vader:'* ]]; then
+        echo "$REPLY"
+      elif [[ "$REPLY" == '      Duration: '* ]]; then
+        echo "$REPLY"
+      elif [[ "$REPLY" == *'(X)'* ]]; then
+        # Should also match "(1/1) [EXECUTE] (X) Error: Vim(function):E126: Missing :endfunction" already.
+        if [[ -n "$filtered" ]]; then
+          echo "$filtered"
+        fi
+        echo "$REPLY"
+        filtered=
+        filtering=0
+      elif [[ "$REPLY" =~ $re_vader_header  ]]; then
+        filtering=1
+        if [[ ${BASH_REMATCH[2]} == "$last_start_match" ]]; then
+          filtered="$filtered"$'\n'"$REPLY"
+        else
+          echo "$REPLY"
+          filtered=
+        fi
+        last_start_match="${BASH_REMATCH[2]}"
+      elif [[ "$REPLY" == *'Success/Total: '* || "$REPLY" == '  Slowest tests:' ]]; then
+        echo "$REPLY"
+        filtering=0
+        filtered=
+        stopped_filtering=1
+      elif ! ((filtering)); then
+        echo "$REPLY"
+      elif [[ "$REPLY" =~ $re_log_line && ! "$REPLY" =~ $re_ignore_log_line ]]; then
+        if [[ "$REPLY" =~ '> SKIP:' ]]; then
+          echo "$REPLY"
+          continue
+        fi
+        if [[ -n "$filtered" ]]; then
+          echo "$filtered"
+        fi
+        echo "$REPLY"
+        filtered=
+        filtering=0
+      elif [[ -n "$filtered" ]]; then
+        filtered="$filtered"$'\n'"$REPLY"
+      else
+        filtered="$REPLY"
+      fi
+    done
+  else
+    cat -
+  fi | colorize
+
+else
+  # Output from neomake_logfile.
+  error='^[:[:digit:]]\+ [[:digit:]]\+ \[E .*'
+  warn='^[:[:digit:]]\+ [[:digit:]]\+ \[W .*'
+  debug='^[:[:digit:]]\+ [[:digit:]]\+ \[D .*'
+  sed -e "s/$error/[31m[1m\0[0m/" \
+      -e "s/$warn/w:[33m\0[0m/" \
+      -e "s/$debug/$debug_color\\0$debug_color_off/"
+fi

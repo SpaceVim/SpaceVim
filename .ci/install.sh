@@ -6,28 +6,31 @@ set -ue -o pipefail
 # Prevent commands misbehaving due to locale differences
 export LC_ALL=C
 
-docker pull spacevim/vims
 git fetch origin master:master
 
 if [ "${LINT#vimlint}" != "$LINT" ]; then
-    git clone --depth=1 https://github.com/syngan/vim-vimlint /tmp/vimlint
+    git clone --depth=1 https://github.com/wsdjeg/vim-vimlint /tmp/vimlint
     git clone --depth=1 https://github.com/ynkdir/vim-vimlparser /tmp/vimlparser
 elif [ "${LINT#vint}" != "$LINT" ]; then
-    pip install vim-vint pathlib enum34 typing
+    pip install --pre vim-vint pathlib enum34 typing
+    vint --version
 elif [ "${LINT#vader}" != "$LINT" ]; then
-    git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
-    if [[ ! -d "${DEPS}/_neovim" ]]; then
-        mkdir -p "${DEPS}/_neovim"
-        wget -q -O - https://github.com/neovim/neovim/releases/download/nightly/nvim-${TRAVIS_OS_NAME}64.tar.gz \
-            | tar xzf - --strip-components=1 -C "${DEPS}/_neovim"
-
+    if [[ ! -d "$HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim" ]]; then
+        git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
     fi
-    export PATH="${DEPS}/_neovim/bin:${PATH}"
-    echo "\$PATH: \"${PATH}\""
+    .ci/install/linux.sh $VIM_BIN $VIM_TAG
+    if [ "$VIM_BIN" = "nvim" ]; then
+        export PATH="${DEPS}/_neovim/${VIM_TAG}/bin:${PATH}"
+        export VIM="${DEPS}/_neovim/${VIM_TAG}/share/nvim/runtime"
+    else
+        export PATH="${DEPS}/_vim/${VIM_TAG}/bin:${PATH}"
+        export VIM="${DEPS}/_vim/${VIM_TAG}/share/vim"
+    fi
 
-    export VIM="${DEPS}/_neovim/share/nvim/runtime"
+    echo "\$PATH: \"${PATH}\""
     echo "\$VIM: \"${VIM}\""
-    nvim --version
+    echo "=================  nvim version ======================"
+    $VIM_BIN --version
 elif [ "$LINT" = "jekyll" ]; then
     .ci/bootstrap
 fi

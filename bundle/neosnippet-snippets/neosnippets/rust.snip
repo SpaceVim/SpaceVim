@@ -1,0 +1,173 @@
+# functions
+
+snippet     fn
+abbr        fn () {}
+options     head
+    fn ${1:#:func_name}(${2:#:args}) {
+        ${0:TARGET}
+    }
+
+snippet     fn-
+abbr        fn () {}
+options     head
+    fn ${1:#:func_name}(${2:#:args}) -> ${3:#:()} {
+        ${0:TARGET}
+    }
+
+snippet     pubfn
+abbr        pubfn () {}
+options     head
+    pub fn ${1:#:func_name}(${2:#:args}) -> ${3:#:()} {
+        ${0:TARGET}
+    }
+
+snippet     test
+options     head
+    #[test]
+    fn ${1:#:test_function_name}() {
+        ${0:TARGET}
+    }
+
+snippet     pubnew
+abbr        pub fn new() {}
+options     head
+    pub fn new(${1}) -> ${2:#:Name} {
+        ${0:TARGET}
+    }
+
+snippet     impl
+options     head
+    impl ${1} {
+        ${0:TARGET}
+    }
+
+snippet     implfor
+options     head
+    impl ${1} for ${2} {
+        ${0:TARGET}
+    }
+
+snippet     trait
+options     head
+    trait ${1} {
+        ${0:TARGET}
+    }
+
+# macros
+
+snippet     macro
+    ${1:#:macro_name}!(${2})${3}
+
+snippet     bfl
+abbr        bitflags!
+    bitflags! {
+        ${0:TARGET}
+    }
+
+snippet     pln
+abbr        println!
+    println!(${1:"\{\}"}, ${0:TARGET});
+
+snippet     fm
+abbr        format!
+    format!("${1:\{\}}", ${0:TARGET});
+
+# attributes
+
+snippet     ec
+abbr        extern crate
+options     head
+    extern crate ${0:TARGET};
+    
+snippet     ecl
+abbr        extern crate log
+options     head
+    #![feature(phase)]
+    #[phase(plugin, link)] extern crate log;
+
+snippet     crate
+options     head
+    #![crate_name=${1:#:crate_name}]
+
+snippet     derive
+options     head
+    #[derive(${1:TARGET})]${2}
+
+# statements
+
+snippet     mod
+options     head
+    mod ${1:#:mod_name} {
+        ${0:TARGET}
+    }
+
+snippet     let
+    let ${1:TARGET} = ${2};${3}
+
+snippet     if
+abbr        if {}
+    if ${1:#:condition} {
+        ${0:TARGET}
+    }
+
+snippet else
+    else {
+        ${0:TARGET}
+    }
+
+snippet elseif
+    } else if (${1:#:condition}) {
+        ${0:TARGET}
+    }
+
+snippet     ifelse
+abbr        if () {} else {}
+    if ${1:#:condition} {
+        ${2:TARGET}
+    } else {
+        ${3}
+    }
+
+snippet     forin
+abbr        forin  {}
+    for ${1} in ${2} {
+        ${0:TARGET}
+    }
+
+snippet     match
+    match ${1:TARGET} {
+        ${2:#:pattern} => ${3:#expr},${4}
+    }
+
+snippet     mcase
+alias       case
+    ${1:TARGET} => ${2:#expr},${3}
+
+# data
+
+snippet     struct
+options     head
+    struct ${1} {
+        ${0:TARGET}
+    }
+
+snippet     pubstruct
+abbr        pub struct
+options     head
+    pub struct ${1} {
+        ${0:TARGET}
+    }
+
+snippet     enum
+options     head
+    enum ${1} {
+        ${0:TARGET}
+    }
+
+snippet     opt
+abbr        Option<A>
+    Option<${1:()}>${2}
+
+snippet     res
+abbr        Result<A, B>
+    Result<${1:#:~str}, ${2:#:()}>${3}

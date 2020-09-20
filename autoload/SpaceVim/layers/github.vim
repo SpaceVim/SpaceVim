@@ -1,7 +1,7 @@
 "=============================================================================
-" github.vim --- github layer file for SpaceVim
-" Copyright (c) 2018 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" github.vim --- SpaceVim github layer
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -43,8 +43,14 @@ function! SpaceVim#layers#github#config() abort
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {
         \ 'name' : '+VersionControl/git',
         \ })
-  let g:_spacevim_mappings_space.g.h = { 'name': '+GitHub' }
-  let g:_spacevim_mappings_space.g.g = { 'name': '+Gist' }
+
+	if !exists('g:_spacevim_mappings_space.g.h')
+		let g:_spacevim_mappings_space.g.h = {'name' : ''}
+	endif
+	let l:h_submenu_name = SpaceVim#layers#isLoaded('git') ? '+GitHub/Hunks' : '+GitHub'
+	let g:_spacevim_mappings_space.g.h['name'] = l:h_submenu_name
+
+	let g:_spacevim_mappings_space.g.g = { 'name': '+Gist' }
 
   " @todo remove the username
   " autoload to set default username
