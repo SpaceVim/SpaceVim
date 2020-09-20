@@ -10,6 +10,7 @@
 scriptencoding utf-8
 let s:MPT = SpaceVim#api#import('prompt')
 let s:JOB = SpaceVim#api#import('job')
+let s:FILE = SpaceVim#api#import('file')
 " let s:SYS = SpaceVim#api#import('system')
 " let s:BUFFER = SpaceVim#api#import('vim#buffer')
 " let s:LIST = SpaceVim#api#import('data#list')
@@ -140,7 +141,7 @@ function! s:find_on_stdout(id, data, event) abort
 endfunction
 
 function! s:find_on_exit(id, data, event) abort
-  let files = map(filter(deepcopy(s:finded_files), '!empty(v:val)'), "{'filename' : v:val}")
+  let files = map(filter(deepcopy(s:finded_files), '!empty(v:val)'), "{'filename' : v:val, 'module' : s:FILE.unify_path(v:val, ':.')}")
   if !empty(files)
     call setqflist([], 'r', {'title' : ' SPC f /',
           \ 'items' : files,
