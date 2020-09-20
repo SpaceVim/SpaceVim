@@ -123,8 +123,8 @@ function! s:start_find() abort
   elseif s:current_tool ==# 'fd'
     let cmd = s:default_cmd[s:current_tool] . ' ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
   endif
-  call s:MPT._clear_prompt()
   let s:MPT._quit = 1
+  call s:MPT._clear_prompt()
   let s:finded_files = []
   call s:JOB.start(cmd,
         \ {
