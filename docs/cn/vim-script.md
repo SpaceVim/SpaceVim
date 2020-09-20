@@ -19,6 +19,7 @@ lang: zh
     - [1.4.2 字符串（string）](#142-字符串string)
 - [2、循环](#2循环)
 - [3、流程控制](#3流程控制)
+  - [3.1、if-else 语句](#31if-else-语句)
 - [4、函数](#4函数)
   - [4.1、函数的定义](#41函数的定义)
   - [4.2、函数的作用域](#42函数的作用域)
@@ -71,11 +72,26 @@ Vim 脚本中，变量的作用域支持如下类型：
 循环语句是由循环体及循环的终止条件两部分组成的。
 
 ```plantuml
-Bob -> Alice : hello
+start
+while (终止条件)
+ endwhile (否)
+:结束;
+end
 ```
 
 ## 3、流程控制
 
+### 3.1、if-else 语句
+
+```plantuml
+!pragma useVerticalIf on
+start
+if (condition A) then (yes)
+  :Text 1;
+else (nothing)
+  :Text else;
+endif
+```
 ## 4、函数
 
 在 Vim 脚本中，函数是对语句和表达式进行抽象的主要方法。既可以用来处理一些特殊的工作，也可以用来计算一些值。
