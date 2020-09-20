@@ -17,8 +17,12 @@ let s:JOB = SpaceVim#api#import('job')
 
 
 let s:support_tools = ['find', 'fd']
+let s:default_cmd = {
+      \ 'find' : 'find -not -iwholename "*.git*" ',
+      \ 'fd' : 'fd',
+      \ }
 let s:current_tool = 'find'
-let s:MPT._prompt.mpt = ' ' . s:current_tool . ' '
+  let s:MPT._prompt.mpt = ' ' . s:default_cmd[s:current_tool] . ' '
 let s:options = {}
 let s:second_option = {}
 let s:options.find = {
@@ -115,9 +119,9 @@ let s:second_option.fd = {
 
 function! s:start_find() abort
   if s:current_tool ==# 'find'
-    let cmd = 'find -not -iwholename "*.git*" ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
+    let cmd = s:default_cmd[s:current_tool] . ' ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
   elseif s:current_tool ==# 'fd'
-    let cmd = 'fd ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
+    let cmd = s:default_cmd[s:current_tool] . ' ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
   endif
   call s:MPT._clear_prompt()
   let s:MPT._quit = 1
@@ -204,7 +208,7 @@ function! s:switch_tool() abort
   let s:MPT._prompt.begin = ''
   let s:MPT._prompt.cursor = ''
   let s:MPT._prompt.end = ''
-  let s:MPT._prompt.mpt = ' ' . s:current_tool . ' '
+  let s:MPT._prompt.mpt = ' ' . s:default_cmd[s:current_tool] . ' '
   redraw
   call s:MPT._build_prompt()
 endfunction
@@ -214,7 +218,7 @@ function! s:enter() abort
 endfunction
 
 function! s:handle_command_line(cmd) abort
-  normal! "_dG
+  noautocmd silent normal! "_dG
   if empty(s:MPT._prompt.begin)
     redraw
     call s:MPT._build_prompt()
