@@ -67,7 +67,6 @@ The next release is v1.6.0:
 - Update codecov [#3751](https://github.com/SpaceVim/SpaceVim/pull/3751)
 - Update quick-start-guide [#3748](https://github.com/SpaceVim/SpaceVim/pull/3748)
 - Update copyright [#3744](https://github.com/SpaceVim/SpaceVim/pull/3744)
-- Release 1.5.0 [#3678](https://github.com/SpaceVim/SpaceVim/pull/3678)
 - Update doc for statusline [#3665](https://github.com/SpaceVim/SpaceVim/pull/3665)
 - Update g map [#3496](https://github.com/SpaceVim/SpaceVim/pull/3496)
 - Update file head [#3379](https://github.com/SpaceVim/SpaceVim/pull/3379)
