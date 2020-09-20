@@ -150,7 +150,7 @@ function! s:find_on_exit(id, data, event) abort
 endfunction
 
 function! s:close_buffer() abort
-  exe 'bwipeout' s:find_argvs_buffer_id
+  exe 'noautocmd bwipeout' s:find_argvs_buffer_id
   noautocmd normal! :
 endfunction
 let s:MPT._onclose = function('s:close_buffer')
