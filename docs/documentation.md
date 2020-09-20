@@ -1289,6 +1289,10 @@ Files manipulation commands (start with f):
 | `SPC f d`    | toggle disk manager in Windows OS                         |
 | `SPC f y`    | show and copy current file absolute path in the cmdline   |
 
+**NOTE:** If you are using window, you need to install [findutils](https://www.gnu.org/software/findutils/) or [fd](https://github.com/sharkdp/fd).
+If you are using `scoop` to install packages, the commands in `C:\WINDOWS\system32` will override User path.
+so you need to put the scoop binary PATH before all the windows `C:\WINDOWS\system32` PATH.
+
 #### Vim and SpaceVim files
 
 Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
