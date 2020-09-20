@@ -125,6 +125,7 @@ function! s:start_find() abort
   endif
   let s:MPT._quit = 1
   call s:MPT._clear_prompt()
+  call s:close_buffer()
   let s:finded_files = []
   call s:JOB.start(cmd,
         \ {
