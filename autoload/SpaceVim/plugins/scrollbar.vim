@@ -15,7 +15,7 @@ let s:default = {
       \    'min_size' : 3,
       \    'width' : 1,
       \    'right_offset' : 1,
-      \    'excluded_filetypes' : {},
+      \    'excluded_filetypes' : [],
       \    'shape' : {
       \        'head' : '▲',
       \        'body' : '█',
@@ -58,7 +58,7 @@ endfunction
 
 
 function! s:fix_size(size) abort
-  return max(s:get('min_size'), min(s:get('max_size'), a:size))
+  return max([s:get('min_size'), min([s:get('max_size'), a:size])])
 endfunction
 
 
