@@ -76,10 +76,16 @@ function! s:add_highlight(bufnr, size) abort
   call nvim_buf_add_highlight(a:bufnr, s:ns_id, highlight.tail, a:size - 1, 0, -1)
 endfunction
 
+let s:next_index = 0
+function! s:next_buf_index() abort
+  let s:next_index += 1
+  return s:next_index - 1
+endfunction
+
 function! s:create_buf(size, lines) abort
   let bufnr = nvim_create_buf(0, 1)
   call nvim_buf_set_option(bufnr, 'filetype', 'scrollbar')
-  call nvim_buf_set_name(bufnr, 'scrollbar_' .. next_buf_index())
+  call nvim_buf_set_name(bufnr, 'scrollbar_' . s:next_buf_index())
   call nvim_buf_set_lines(bufnr, 0, a:size, 0, a:lines)
 
   call s:add_highlight(bufnr, a:size)
