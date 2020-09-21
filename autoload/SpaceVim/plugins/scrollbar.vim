@@ -58,7 +58,7 @@ endfunction
 
 
 function! s:fix_size(size) abort
-    return max(s:get('min_size'), min(s:get('max_size'), a:size))
+  return max(s:get('min_size'), min(s:get('max_size'), a:size))
 endfunction
 
 
@@ -86,10 +86,86 @@ function! s:create_buf(size, lines) abort
   return bufnr
 endfunction
 
-function! SpaceVim#plugins#scrollbar#clear() abort
+function! SpaceVim#plugins#scrollbar#show(...) abort
+  let winnr = get(a:000, 0, 0)
+  let bufnr = get(a:000, 1, 0)
+  let win_config = nvim_win_get_config(winnr)
 
-  let bufnr = 0
-  let state = getbufver(bufnr, 'scrollbar_state')
+  " ignore other floating windows
+  if win_config.relative !=# ''
+    return
+  endif
+
+  let excluded_filetypes = s:get('excluded_filetypes')
+  let filetype = nvim_buf_get_option(bufnr, 'filetype')
+
+  if filetype == '' || index(excluded_filetypes, filetype) !=# -1
+    return
+  endif
+
+  let total = line('$')
+  let height = nvim_win_get_height(winnr)
+  if total <= height
+    call SpaceVim#plugins#scrollbar#clear()
+    return
+  endif
+
+  let cursor = nvim_win_get_cursor(winnr)
+  let curr_line = cursor[0]
+  let bar_size = height * height / total
+  let bar_size = s:fix_size(bar_size)
+
+  let width = nvim_win_get_width(winnr)
+  let col = width - s:get('width') - s:get('right_offset')
+  let row = (height - bar_size) * (curr_line / total)
+
+  let opts = {
+        \  'style' : 'minimal',
+        \  'relative' : 'win',
+        \  'win' : winnr,
+        \  'width' : s:get('width'),
+        \  'height' : bar_size,
+        \  'row' : row,
+        \  'col' : col,
+        \  'focusable' : 0,
+        \ }
+  let [bar_winnr, bar_bufnr] = [0, 0]
+  let state = s:buf_get_var(bufnr, 'scrollbar_state')
+  if !empty(state)
+    let bar_bufnr = state.bufnr
+    let bar_winnr = get(state, 'winnr', nvim_open_win(bar_bufnr, 0, opts))
+    if state.size !=# bar_size
+      call nvim_buf_set_lines(bar_bufnr, 0, -1, 0, [])
+      let bar_lines = s:gen_bar_lines(bar_size)
+      call nvim_buf_set_lines(bar_bufnr, 0, bar_size, 0, bar_lines)
+      call s:add_highlight(bar_bufnr, bar_size)
+    endif
+    call nvim_win_set_config(bar_winnr, opts)
+  else
+    let bar_lines = s:gen_bar_lines(bar_size)
+    let bar_bufnr = s:create_buf(bar_size, bar_lines)
+    let bar_winnr = nvim_open_win(bar_bufnr, 0, opts)
+    call nvim_win_set_option(bar_winnr, 'winhl', 'Normal:ScrollbarWinHighlight')
+  endif
+  call nvim_buf_set_var(bufnr, 'scrollbar_state', {
+        \ 'winnr' : bar_winnr,
+        \ 'bufnr' : bar_bufnr,
+        \ 'size'  : bar_size,
+        \ })
+  return [bar_winnr, bar_bufnr]
+
+endfunction
+
+function! SpaceVim#plugins#scrollbar#clear(...) abort
+  let bufnr = get(a:000, 1, 0)
+  let state = s:buf_get_var(bufnr, 'scrollbar_state')
+  if !empty(state) && has_key(state, 'winnr')
+    call nvim_win_close(state.winnr, 1)
+    call nvim_buf_set_var(bufnr, 'scrollbar_state', {
+          \ 'size' : state.size,
+          \ 'bufnr' : state.bufnr,
+          \ })
+  endif
 
 endfunction
 
