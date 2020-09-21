@@ -63,8 +63,12 @@ endfunction
 
 
 function! s:buf_get_var(bufnr, name) abort
-  let var = getbufvar(a:bufnr, a:name)
-  return var
+  try
+    let var = nvim_buf_get_var(a:bufnr, a:name)
+    return var
+  catch
+    
+  endtry
 endfunction
 
 function! s:add_highlight(bufnr, size) abort
