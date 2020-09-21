@@ -6,6 +6,8 @@
 " License: GPLv3
 "=============================================================================
 
+let s:VIM = SpaceVim#api#import('vim')
+
 scriptencoding utf-8
 
 let s:default = {
@@ -30,14 +32,34 @@ let s:default = {
 " vim script do not support metatable function
 
 function! s:get(key) abort
-  if !exists('g:scrollbar_' . a:key)
+  let val = get(g:, 'scrollbar_' . a:key, v:null)
+  if val ==# v:null
     return s:default[a:key]
   endif
+  if s:VIM.is_dict(val)
+    let val = extend(val, s:default[a:key], 'keep')
+  endif
+  return val
 endfunction
 
 
 let s:ns_id = nvim_create_namespace('scrollbar')
 
+
+function! s:gen_bar_lines(size) abort
+  let shape = s:get('shape')
+  let lines = [shape.head]
+  for _ in range(2, a:size - 1)
+    call add(lines, shape.body)
+  endfor
+  call add(lines, shape.tail)
+  return lines
+endfunction
+
+
+function! s:fix_size(size) abort
+    return max(s:get('min_size'), min(s:get('max_size'), a:size))
+endfunction
 
 function! s:add_highlight(bufnr, size) abort
   let highlight = s:get('highlight')
