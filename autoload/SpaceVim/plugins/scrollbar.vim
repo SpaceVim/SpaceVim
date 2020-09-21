@@ -61,6 +61,12 @@ function! s:fix_size(size) abort
     return max(s:get('min_size'), min(s:get('max_size'), a:size))
 endfunction
 
+
+function! s:buf_get_var(bufnr, name) abort
+  let var = getbufvar(a:bufnr, a:name)
+  return var
+endfunction
+
 function! s:add_highlight(bufnr, size) abort
   let highlight = s:get('highlight')
   call nvim_buf_add_highlight(a:bufnr, s:ns_id, highlight.head, 0, 0, -1)
