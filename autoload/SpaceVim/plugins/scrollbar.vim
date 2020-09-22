@@ -127,7 +127,7 @@ function! SpaceVim#plugins#scrollbar#show(...) abort
 
   let width = nvim_win_get_width(winnr)
   let col = width - s:get('width') - s:get('right_offset')
-  let row = (height - bar_size) * (curr_line / total)
+  let row = (height - bar_size) * (curr_line * 1.0  / total)
 
   let opts = {
         \  'style' : 'minimal',
