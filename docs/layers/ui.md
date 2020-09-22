@@ -9,6 +9,7 @@ description: "Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and 
 
 - [Description](#description)
 - [Install](#install)
+- [Layer Options](#layer-options)
 - [Plugins](#plugins)
 - [Tips](#tips)
 
@@ -26,6 +27,14 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "ui"
 ```
+
+## Layer Options
+
+- `enable_scrollbar`: Enable/disable floating scrollbar of current buffer. Disabled by default.
+  This feature requires neovim's floating window or vim8's popup window.
+
+
+
 
 ## Plugins
 
