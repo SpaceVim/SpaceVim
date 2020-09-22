@@ -161,6 +161,24 @@ EOT
             rm -rf detach/$1
             exit 0
             ;;
+        scrollbar.vim)
+            git clone https://github.com/wsdjeg/scrollbar.vim.git detach/$1
+            cd detach/$1
+            _checkdir autoload/SpaceVim/api/
+            _detect autoload/SpaceVim/api.vim
+            _detect autoload/SpaceVim/api/vim.vim
+            _detect autoload/SpaceVim/plugins/scrollbar.vim
+            _detect LICENSE
+            git add .
+            git config user.email "wsdjeg@qq.com"
+            git config user.name  "SpaceVimBot"
+            git commit -m "Auto Update"
+            git remote add wsdjeg_scrollbar https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/scrollbar.vim.git
+            git push wsdjeg_scrollbar master 
+            cd -
+            rm -rf detach/$1
+            exit 0
+            ;;
         spacevim-theme)
             exit 0
     esac
