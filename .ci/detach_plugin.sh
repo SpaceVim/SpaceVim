@@ -169,6 +169,7 @@ EOT
             _detect autoload/SpaceVim/api/vim.vim
             _detect autoload/SpaceVim/plugins/scrollbar.vim
             _detect LICENSE
+            _default_readme "scrollbar.vim" "floating scrollbar support for neovim/vim[wip]"
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
