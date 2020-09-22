@@ -31,7 +31,7 @@ To use this configuration layer, update custom configuration file with:
 ## Layer Options
 
 - `enable_scrollbar`: Enable/disable floating scrollbar of current buffer. Disabled by default.
-  This feature requires neovim's floating window or vim8's popup window.
+  This feature requires neovim's floating window.
 
 
 
