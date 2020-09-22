@@ -7,6 +7,14 @@
 "=============================================================================
 
 scriptencoding utf-8
+
+if exists('s:enable_sidebar')
+  finish
+else
+  let s:enable_sidebar = 0
+  let s:enable_scrollbar = 0
+endif
+
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
         \ [g:_spacevim_root_dir . 'bundle/indentLine', {'merged' : 0}],
@@ -48,6 +56,14 @@ function! SpaceVim#layers#ui#config() abort
     noremap <silent> <F2> :call SpaceVim#plugins#sidebar#toggle()<CR>
   else
     noremap <silent> <F2> :TagbarToggle<CR>
+  endif
+
+  if s:enable_scrollbar
+    augroup spacevim_layer_ui
+        autocmd!
+        autocmd BufEnter,CursorMoved,VimResized,FocusGained    * call SpaceVim#plugins#scrollbar#show()
+        autocmd BufLeave,FocusLost    * call SpaceVim#plugins#scrollbar#clear()
+    augroup end
   endif
 
   if !empty(g:spacevim_windows_smartclose)
@@ -397,12 +413,13 @@ function! s:win_resize_transient_state() abort
 endfunction
 
 
-let s:enable_sidebar = 0
-
 function! SpaceVim#layers#ui#set_variable(var) abort
 
   let s:enable_sidebar = get(a:var,
         \ 'enable_sidebar',
+        \ 0)
+  let s:enable_scrollbar = get(a:var,
+        \ 'enable_scrollbar',
         \ 0)
 
 endfunction
