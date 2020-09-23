@@ -50,6 +50,9 @@ the following options are SpaceVim option, you need to config them in `[options]
 | `enable_ale`      | `false`       | Use ale as default checking tools                        |
 | `lint_on_the_fly` | `false`       | Syntax checking on the fly feature, disabled by default. |
 
+If you want to config neomake, you can use bootstrap functions. Within bootstrap functions,
+you can use vim script. For all the info about neomake configuration, please checkout `:h neomake`.
+
 **NOTE:** if you want to use  ale, you need:
 
 ```toml
