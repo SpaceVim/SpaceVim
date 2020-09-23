@@ -169,6 +169,10 @@ function! s:open_windows() abort
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
   set filetype=SpaceVimREPL
   nnoremap <silent><buffer> q :call <SID>close()<cr>
+  augroup spacevim_repl
+    autocmd!
+    autocmd BufWipeout <buffer> call <SID>close()
+  augroup END
   let s:bufnr = bufnr('%')
   let s:winid = win_getid(winnr())
   wincmd p
