@@ -46,7 +46,7 @@ the following options are SpaceVim option, you need to config them in `[options]
 
 | Name              | default value | description                                              |
 | ----------------- | ------------- | -------------------------------------------------------- |
-| `enable_neomake`  | `true`        | Use neomake as default checking tools                    |
+| `enable_neomake`  | `true`        | Use [neomake](https://github.com/neomake/neomake) as default checking tools                    |
 | `enable_ale`      | `false`       | Use ale as default checking tools                        |
 | `lint_on_the_fly` | `false`       | Syntax checking on the fly feature, disabled by default. |
 
