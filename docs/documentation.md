@@ -309,7 +309,7 @@ with contents for example
 
 ```vim
 function! myspacevim#before() abort
-    let g:neomake_enabled_c_makers = ['clang']
+    let g:neomake_c_enabled_makers = ['clang']
     nnoremap jk <Esc>
 endfunction
 
