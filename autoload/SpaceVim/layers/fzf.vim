@@ -284,7 +284,6 @@ function! s:file_mru() abort
   call fzf#run(s:wrap('mru', {
         \ 'source':  reverse(<sid>mru_files()),
         \ 'sink':    function('s:open_file'),
-        \ 'options': '--reverse',
         \ 'down' : '40%',
         \ }))
 endfunction
