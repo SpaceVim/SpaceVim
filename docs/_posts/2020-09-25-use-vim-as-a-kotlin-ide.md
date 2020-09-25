@@ -87,7 +87,7 @@ npm install --save-dev --save-exact prettier
 
 ### REPL support
 
-Start a `irb` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
+Start a `kotlinc-jvm` inferior REPL process with `SPC l s i`. After the REPL process being started, you can
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
