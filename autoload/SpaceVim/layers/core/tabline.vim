@@ -47,9 +47,9 @@ let s:separators = {
       \ 'fire' : ["\ue0c0", "\ue0c2"],
       \ 'nil' : ['', ''],
       \ }
-
 let s:i_separators = {
       \ 'arrow' : ["\ue0b1", "\ue0b3"],
+      \ 'slant' : ["\ue0b9", "\ue0bb"],
       \ 'bar' : ['|', '|'],
       \ 'nil' : ['', ''],
       \ }
