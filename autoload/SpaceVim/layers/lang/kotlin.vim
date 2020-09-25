@@ -69,7 +69,7 @@ function! SpaceVim#layers#lang#kotlin#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('kotlin', function('s:language_specified_mappings'))
   if s:enable_native_support
     let runner = {
-          \ 'exe' : 'kotlinc-native'. (s:SYS.isWindows ? '.BAT' : ''),
+          \ 'exe' : 'kotlinc-native'. (s:SYS.isWindows ? '.CMD' : ''),
           \ 'targetopt' : '-o',
           \ 'opt' : [],
           \ 'usestdin' : 0,
@@ -77,13 +77,13 @@ function! SpaceVim#layers#lang#kotlin#config() abort
     call SpaceVim#plugins#runner#reg_runner('kotlin', [runner, '#TEMP#'])
   else
     let runner = {
-          \ 'exe' : 'kotlinc-jvm'. (s:SYS.isWindows ? '.BAT' : ''),
-          \ 'opt' : ['-script'],
+          \ 'exe' : 'kotlinc-jvm'. (s:SYS.isWindows ? '.CMD' : ''),
+          \ 'opt' : [],
           \ 'usestdin' : 0,
           \ }
     call SpaceVim#plugins#runner#reg_runner('kotlin', runner)
   endif
-  call SpaceVim#plugins#repl#reg('kotlin', ['kotlinc-jvm'. (s:SYS.isWindows ? '.BAT' : '')])
+  call SpaceVim#plugins#repl#reg('kotlin', ['kotlinc-jvm'. (s:SYS.isWindows ? '.CMD' : '')])
 endfunction
 
 function! s:language_specified_mappings() abort
