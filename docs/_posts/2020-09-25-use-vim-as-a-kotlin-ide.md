@@ -91,6 +91,7 @@ Start a `kotlinc-jvm` inferior REPL process with `SPC l s i`. After the REPL pro
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
-![rubyrepl](https://user-images.githubusercontent.com/13142418/53347455-1098db80-3954-11e9-87c3-13a027ec88f6.gif)
+![kotlin-repl](https://user-images.githubusercontent.com/13142418/94289606-84192980-ff8b-11ea-84c8-1547741f377c.png)
+
 
 
