@@ -14,6 +14,7 @@ description: "This layer adds Kotlin language support to SpaceVim, including syn
 - [Key bindings](#key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current file](#running-current-file)
+- [Language Server Protocol](#language-server-protocol)
 
 <!-- vim-markdown-toc -->
 
@@ -64,3 +65,15 @@ Send code to inferior process commands:
 ### Running current file
 
 To running current file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+
+## Language Server Protocol
+
+To enable lsp support for kotlin, you need to load the `lsp` layer, and include `kotlin` filetype:
+
+```toml
+[[layers]]
+  name = 'lsp'
+  filetypes = [
+    'kotlin',
+  ]
+```
