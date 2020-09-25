@@ -69,11 +69,11 @@ With this configuration, you can jump between the source code and test file via 
 
 ### running code
 
-To run current script, you can press `SPC l r`, and a split window
+To run current kotlin script, you can press `SPC l r`, and a split window
 will be openen, the output of the script will be shown in this window.
 It is running asynchronously, and will not block your Vim.
 
-![rubyrunner](https://user-images.githubusercontent.com/13142418/53300165-6b600380-387e-11e9-852f-f8766300ece1.gif)
+![kotlin-runner](https://user-images.githubusercontent.com/13142418/94288524-14566f00-ff8a-11ea-8440-ee9ca8ba8843.png)
 
 ### Code formatting
 
