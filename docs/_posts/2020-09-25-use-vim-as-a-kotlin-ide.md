@@ -23,6 +23,7 @@ Each of the following sections will be covered:
 - [running code](#running-code)
 - [Code formatting](#code-formatting)
 - [REPL support](#repl-support)
+- [Tasks manager](#tasks-manager)
 
 <!-- vim-markdown-toc -->
 
@@ -93,5 +94,8 @@ send whole buffer.
 
 ![kotlin-repl](https://user-images.githubusercontent.com/13142418/94289606-84192980-ff8b-11ea-84c8-1547741f377c.png)
 
+### Tasks manager
 
+The tasks manager provides a function to register task provider. Adding following vim script
+into bootstrap function, then SpaceVim can detect the cargo tasks.
 
