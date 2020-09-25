@@ -68,7 +68,7 @@ To running current file, you can press `SPC l r` to run current file without los
 
 ## Language Server Protocol
 
-To enable lsp support for kotlin, you need to load the `lsp` layer, and include `kotlin` filetype:
+To enable lsp support for kotlin, you need to load the [lsp](../language-server-protocol/) layer, and include `kotlin` filetype:
 
 ```toml
 [[layers]]
@@ -76,4 +76,18 @@ To enable lsp support for kotlin, you need to load the `lsp` layer, and include 
   filetypes = [
     'kotlin',
   ]
+```
+
+The default language server command for kotlin is `kotlin-language-server`.
+If the language server command is not in your `$PATH`, you can override the
+kotlin language server command via:
+
+```toml
+[[layers]]
+  name = 'lsp'
+  filetypes = [
+    'kotlin',
+  ]
+  [layers.override_cmd]
+    kotlin = 'path/to/kotlin-language-server'
 ```
