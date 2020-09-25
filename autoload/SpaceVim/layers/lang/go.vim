@@ -40,6 +40,10 @@
 " <
 
 
+let s:go_fmt_command = 'gofmt'
+let s:go_imports_autosave = 0
+let s:go_imports_mode = 'goimports'
+
 function! SpaceVim#layers#lang#go#plugins() abort
   let plugins = [['fatih/vim-go', { 'on_ft' : 'go', 'loadconf_before' : 1}]]
   if has('nvim') && g:spacevim_autocomplete_method ==# 'deoplete'
@@ -55,7 +59,9 @@ function! SpaceVim#layers#lang#go#config() abort
   let g:go_highlight_structs = 1
   let g:go_highlight_operators = 1
   let g:go_highlight_build_constraints = 1
-  let g:go_fmt_command = 'goimports'
+  let g:go_imports_mode = s:go_imports_mode
+  let g:go_fmt_command = s:go_fmt_command
+  let g:go_imports_autosave = s:go_imports_autosave
   let g:syntastic_go_checkers = ['golint', 'govet']
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
   let g:neomake_go_gometalinter_args = ['--disable-all']
@@ -70,6 +76,12 @@ function! SpaceVim#layers#lang#go#config() abort
   endif
   call SpaceVim#mapping#space#regesit_lang_mappings('go', function('s:language_specified_mappings'))
   call SpaceVim#plugins#runner#reg_runner('go', 'go run %s')
+endfunction
+
+function! SpaceVim#layers#lang#go#set_variable(var) abort
+  let s:go_fmt_command = get(a:var, 'go_fmt_command', s:go_fmt_command)
+  let s:go_imports_autosave = get(a:var, 'go_imports_autosave', s:go_imports_autosave)
+  let s:go_imports_mode = get(a:var, 'go_imports_mode', s:go_imports_mode)
 endfunction
 
 function! s:go_to_def() abort
