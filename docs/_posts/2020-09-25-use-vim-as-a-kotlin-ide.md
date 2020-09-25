@@ -77,14 +77,13 @@ It is running asynchronously, and will not block your Vim.
 
 ### Code formatting
 
-The format layer is also enabled by default. With this layer you can use key binding `SPC b f` to format current buffer.
-Before using this feature, please install rufo:
+The [format](../format/) layer is also enabled by default.
+With this layer you can use key binding `SPC b f` to format current buffer.
+Before using this feature, please install [prettier](https://prettier.io/):
 
-```sh
-gem install rufo
 ```
-
-![formatruby](https://user-images.githubusercontent.com/13142418/53301042-3c02c400-3889-11e9-9918-430ad6a7f08f.gif)
+npm install --save-dev --save-exact prettier
+```
 
 ### REPL support
 
