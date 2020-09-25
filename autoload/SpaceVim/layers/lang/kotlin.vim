@@ -78,7 +78,7 @@ function! SpaceVim#layers#lang#kotlin#config() abort
   else
     let runner = {
           \ 'exe' : 'kotlinc-jvm'. (s:SYS.isWindows ? '.CMD' : ''),
-          \ 'opt' : [],
+          \ 'opt' : ['-script'],
           \ 'usestdin' : 0,
           \ }
     call SpaceVim#plugins#runner#reg_runner('kotlin', runner)

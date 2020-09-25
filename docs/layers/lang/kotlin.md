@@ -64,7 +64,8 @@ Send code to inferior process commands:
 
 ### Running current file
 
-To running current file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To running current file, you can press `SPC l r` to run current file without loss focus,
+and the result will be shown in a runner buffer.
 
 ## Language Server Protocol
 
