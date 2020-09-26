@@ -97,5 +97,5 @@ send whole buffer.
 ### Tasks manager
 
 The tasks manager provides a function to register task provider. Adding following vim script
-into bootstrap function, then SpaceVim can detect the cargo tasks.
+into bootstrap function, then SpaceVim can detect the kotlin tasks.
 
