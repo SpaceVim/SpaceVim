@@ -30,6 +30,10 @@ let s:ICON = SpaceVim#api#import('unicode#icon')
 let s:VIM =  SpaceVim#api#import('vim')
 
 " init
+" " the separators icons:
+"
+" arrow :
+"   active: 
 let s:separators = {
       \ 'arrow' : ["\ue0b0", "\ue0b2"],
       \ 'curve' : ["\ue0b4", "\ue0b6"],
@@ -40,6 +44,7 @@ let s:separators = {
       \ }
 let s:i_separators = {
       \ 'arrow' : ["\ue0b1", "\ue0b3"],
+      \ 'slant' : ["\ue0b9", "\ue0bb"],
       \ 'bar' : ['|', '|'],
       \ 'nil' : ['', ''],
       \ }

@@ -64,13 +64,15 @@ CONTENTS                                                   *SpaceVim-contents*
       44. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
       45. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
       46. statusline_separator.........|SpaceVim-options-statusline_separator|
-      47. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      48. vim_help_language...............|SpaceVim-options-vim_help_language|
-      49. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      50. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      51. windows_index_type.............|SpaceVim-options-windows_index_type|
-      52. windows_leader.....................|SpaceVim-options-windows_leader|
-      53. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      47. statusline_unicode_symbols
+.................................|SpaceVim-options-statusline_unicode_symbols|
+      48. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      49. vim_help_language...............|SpaceVim-options-vim_help_language|
+      50. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      51. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      52. windows_index_type.............|SpaceVim-options-windows_index_type|
+      53. windows_leader.....................|SpaceVim-options-windows_leader|
+      54. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -616,6 +618,15 @@ See more details in: http://spacevim.org/documentation/#statusline
 
 
 ==============================================================================
+STATUSLINE_UNICODE_SYMBOLS       *SpaceVim-options-statusline_unicode_symbols*
+
+Enable/Disable unicode symbols in statusline, includes the mode icons and
+fileformat icons. This option is enabled by default, to disable it:
+>
+  statusline_unicode_symbols = false
+<
+
+==============================================================================
 TERMINAL_CURSOR_SHAPE                 *SpaceVim-options-terminal_cursor_shape*
 
 Set the SpaceVim cursor shape in the terminal.
@@ -918,7 +929,11 @@ Define the right section of statusline in active windows. By default:
 <
 
                                        *g:spacevim_statusline_unicode_symbols*
-Enable/Disable unicode symbols in statusline
+Enable/Disable unicode symbols in statusline, includes the mode icons and
+fileformat icons. This option is enabled by default, to disable it:
+>
+  let g:spacevim_statusline_unicode_symbols = 0
+<
 
                                   *g:spacevim_enable_language_specific_leader*
 Enable/Disable language specific leader, by default you can use `,` ket
