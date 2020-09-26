@@ -105,3 +105,7 @@ Create `.SpaceVim.d/task.toml` file in the root of your project. and add all the
 ```
 
 For more info about task configuration, please checkout the [task documentation](../documentation/#task)
+
+
+This article is not finished yet and new content will be updated in the future.
+If you want to help improve this article, please join the SpaceVim [gitter room](https://gitter.im/SpaceVim/SpaceVim).
