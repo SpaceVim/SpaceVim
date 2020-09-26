@@ -96,6 +96,12 @@ send whole buffer.
 
 ### Tasks manager
 
-The tasks manager provides a function to register task provider. Adding following vim script
-into bootstrap function, then SpaceVim can detect the kotlin tasks.
+Create `.SpaceVim.d/task.toml` file in the root of your project. and add all the task command into it.
 
+```toml
+[gradle-build]
+    command = 'gradlew'
+    args = ['build']
+```
+
+For more info about task configuration, please checkout the [task documentation](../documentation/#task)
