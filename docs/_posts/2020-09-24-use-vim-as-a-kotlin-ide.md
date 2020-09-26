@@ -26,6 +26,7 @@ commentsID: "使用 Vim 搭建 Kotlin 开发环境"
 - [快速运行](#快速运行)
 - [代码格式化](#代码格式化)
 - [交互式编程](#交互式编程)
+- [任务管理](#任务管理)
 
 <!-- vim-markdown-toc -->
 
@@ -113,3 +114,19 @@ npm install --save-dev --save-exact prettier
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
 ![kotlin-repl](https://user-images.githubusercontent.com/13142418/94289606-84192980-ff8b-11ea-84c8-1547741f377c.png)
+
+### 任务管理
+
+在项目根目录新建 `.SpaceVim.d/task.toml` 文件，将常用的任务命令加入其中，示例如下：
+
+```toml
+[gradle-build]
+    command = 'gradlew'
+    args = ['build']
+```
+
+更多关于任务管理的配置教程，可以阅读 [task 文档](../documentation/#任务管理)
+
+
+这篇文章还未完结，新的内容后续会继续更新，如果想要帮助改善这篇文章，
+可以加入 [SpaceVim 中文聊天室](https://gitter.im/SpaceVim/SpaceVim) 一起交流。
