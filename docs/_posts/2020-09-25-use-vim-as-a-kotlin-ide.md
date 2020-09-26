@@ -44,8 +44,6 @@ For more info, you can read the [lang#kotlin](../layers/lang/kotlin/) layer docu
 `lang#kotlin` layer will load the Kotlin plugin automatically, unless it's overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
-![rubycomplete](https://user-images.githubusercontent.com/13142418/53355518-20202080-3964-11e9-92f3-476060f2761e.png)
-
 ### Syntax linting
 
 The [checkers](../checkers/) layer is enabled by default.
