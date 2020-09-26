@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 Kotlin 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/53355518-20202080-3964-11e9-92f3-476060f2761e.png
+image: https://user-images.githubusercontent.com/13142418/94328509-cbcc9f00-ffe5-11ea-8f0d-9ea7b5b81352.png
 description: "使用 SpaceVim 搭建 Kotlin 的开发环境，简介 lang#kotlin 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
