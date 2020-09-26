@@ -129,4 +129,4 @@ npm install --save-dev --save-exact prettier
 
 
 这篇文章还未完结，新的内容后续会继续更新，如果想要帮助改善这篇文章，
-可以加入 [SpaceVim 中文聊天室](https://gitter.im/SpaceVim/SpaceVim) 一起交流。
+可以加入 [SpaceVim 中文聊天室](https://gitter.im/SpaceVim/cn) 一起交流。
