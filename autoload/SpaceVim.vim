@@ -1045,12 +1045,16 @@ let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'find
 " @parentsection options
 " Set the project root patterns, SpaceVim determines the root directory of the
 " project based on this option. By default it is:
-" `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`
+" >
+"   ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+" <
 
 ""
 " Set the project root patterns, SpaceVim determines the root directory of the
 " project based on this option. By default it is:
-" `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`
+" >
+"   ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+" <
 let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
 ""
 " @section project_rooter_automatically, options-project_rooter_automatically
@@ -1067,7 +1071,25 @@ let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '
 " Enable/Disable changing directory automatically. Enabled by default.
 let g:spacevim_project_rooter_automatically = 1
 ""
+" @section project_rooter_outermost, options-project_rooter_outermost
+" @parentsection options
 " Enable/Disable finding outermost directory for project root detection.
+" By default SpaceVim will find the outermost directory based on
+" `project_rooter_patterns`. To find nearest directory, you need to disable
+" this option:
+" >
+"   [options]
+"     project_rooter_outermost = false
+" <
+
+""
+" Enable/Disable finding outermost directory for project root detection.
+" By default SpaceVim will find the outermost directory based on
+" `project_rooter_patterns`. To find nearest directory, you need to disable
+" this option:
+" >
+"   let g:spacevim_project_rooter_outermost = 0
+" <
 let g:spacevim_project_rooter_outermost = 1
 
 ""
