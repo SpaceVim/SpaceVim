@@ -55,24 +55,28 @@ CONTENTS                                                   *SpaceVim-contents*
       35. max_column.............................|SpaceVim-options-max_column|
       36. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
       37. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      38. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      39. relativenumber.....................|SpaceVim-options-relativenumber|
-      40. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      41. search_tools.........................|SpaceVim-options-search_tools|
-      42. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      43. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      44. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      45. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
-      46. statusline_separator.........|SpaceVim-options-statusline_separator|
-      47. statusline_unicode_symbols
+      38. project_rooter_automatically
+...............................|SpaceVim-options-project_rooter_automatically|
+      39. project_rooter_outermost.|SpaceVim-options-project_rooter_outermost|
+      40. project_rooter_patterns...|SpaceVim-options-project_rooter_patterns|
+      41. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      42. relativenumber.....................|SpaceVim-options-relativenumber|
+      43. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      44. search_tools.........................|SpaceVim-options-search_tools|
+      45. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      46. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      47. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      48. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
+      49. statusline_separator.........|SpaceVim-options-statusline_separator|
+      50. statusline_unicode_symbols
 .................................|SpaceVim-options-statusline_unicode_symbols|
-      48. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      49. vim_help_language...............|SpaceVim-options-vim_help_language|
-      50. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      51. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      52. windows_index_type.............|SpaceVim-options-windows_index_type|
-      53. windows_leader.....................|SpaceVim-options-windows_leader|
-      54. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      51. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      52. vim_help_language...............|SpaceVim-options-vim_help_language|
+      53. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      54. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      55. windows_index_type.............|SpaceVim-options-windows_index_type|
+      56. windows_leader.....................|SpaceVim-options-windows_leader|
+      57. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -517,6 +521,38 @@ Set the cache directory of plugins. Default is `$data_dir/vimfiles`.
 PLUGIN_MANAGER_PROCESSES           *SpaceVim-options-plugin_manager_processes*
 
 Set the max process of SpaceVim plugin manager
+
+==============================================================================
+PROJECT_ROOTER_AUTOMATICALLY   *SpaceVim-options-project_rooter_automatically*
+
+Enable/Disable project root detection. By default, SpaceVim will change the
+directory to the project root directory based on `project_rooter_patterns`
+option. To disable this feature:
+>
+  [options]
+    project_rooter_automatically = false
+<
+
+==============================================================================
+PROJECT_ROOTER_OUTERMOST           *SpaceVim-options-project_rooter_outermost*
+
+Enable/Disable finding outermost directory for project root detection. By
+default SpaceVim will find the outermost directory based on
+`project_rooter_patterns`. To find nearest directory, you need to disable this
+option:
+>
+  [options]
+    project_rooter_outermost = false
+<
+
+==============================================================================
+PROJECT_ROOTER_PATTERNS             *SpaceVim-options-project_rooter_patterns*
+
+Set the project root patterns, SpaceVim determines the root directory of the
+project based on this option. By default it is:
+>
+  ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+<
 
 ==============================================================================
 REALTIME_LEADER_GUIDE                 *SpaceVim-options-realtime_leader_guide*
@@ -1164,14 +1200,23 @@ Default search tools supported by flygrep. The default order is ['rg', 'ag',
 'pt', 'ack', 'grep', 'findstr', 'git']
 
                                           *g:spacevim_project_rooter_patterns*
-Set the project rooter patterns, by default it is `['.git/', '_darcs/',
-'.hg/', '.bzr/', '.svn/']`
+Set the project root patterns, SpaceVim determines the root directory of the
+project based on this option. By default it is:
+>
+  ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+<
 
                                      *g:spacevim_project_rooter_automatically*
 Enable/Disable changing directory automatically. Enabled by default.
 
                                          *g:spacevim_project_rooter_outermost*
-Enable/Disable finding outermost directory for project root detection.
+Enable/Disable finding outermost directory for project root detection. By
+default SpaceVim will find the outermost directory based on
+`project_rooter_patterns`. To find nearest directory, you need to disable this
+option:
+>
+  let g:spacevim_project_rooter_outermost = 0
+<
 
                                                *g:spacevim_commandline_prompt*
 Config the command line prompt for flygrep and denite etc.

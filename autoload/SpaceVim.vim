@@ -1041,14 +1041,55 @@ let g:spacevim_lint_on_save            = 1
 " 'pt', 'ack', 'grep', 'findstr', 'git']
 let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr', 'git']
 ""
-" Set the project rooter patterns, by default it is
-" `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`
+" @section project_rooter_patterns, options-project_rooter_patterns
+" @parentsection options
+" Set the project root patterns, SpaceVim determines the root directory of the
+" project based on this option. By default it is:
+" >
+"   ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+" <
+
+""
+" Set the project root patterns, SpaceVim determines the root directory of the
+" project based on this option. By default it is:
+" >
+"   ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+" <
 let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+""
+" @section project_rooter_automatically, options-project_rooter_automatically
+" @parentsection options
+" Enable/Disable project root detection. By default, SpaceVim will change the
+" directory to the project root directory based on `project_rooter_patterns`
+" option. To disable this feature:
+" >
+"   [options]
+"     project_rooter_automatically = false
+" <
+
 ""
 " Enable/Disable changing directory automatically. Enabled by default.
 let g:spacevim_project_rooter_automatically = 1
 ""
+" @section project_rooter_outermost, options-project_rooter_outermost
+" @parentsection options
 " Enable/Disable finding outermost directory for project root detection.
+" By default SpaceVim will find the outermost directory based on
+" `project_rooter_patterns`. To find nearest directory, you need to disable
+" this option:
+" >
+"   [options]
+"     project_rooter_outermost = false
+" <
+
+""
+" Enable/Disable finding outermost directory for project root detection.
+" By default SpaceVim will find the outermost directory based on
+" `project_rooter_patterns`. To find nearest directory, you need to disable
+" this option:
+" >
+"   let g:spacevim_project_rooter_outermost = 0
+" <
 let g:spacevim_project_rooter_outermost = 1
 
 ""

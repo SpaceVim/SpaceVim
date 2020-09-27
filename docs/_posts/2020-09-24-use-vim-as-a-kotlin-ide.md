@@ -70,7 +70,15 @@ lsp 模块默认使用 `kotlin-language-server` 作为 Kotlin 的语言服务器
 ### 语法检查
 
 `checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
-这一异步语法检查工具。对于 Kotlin 的支持，是通过异步调用 `kotlinc` 命令来完成的。
+这一异步语法检查工具。对于 Kotlin 的支持，是通过异步调用 [ktlint](https://github.com/pinterest/ktlint) 命令来完成的。
+
+在 Window 系统下，可以使用 [scoop](https://github.com/lukesampson/scoop) 安装 ktlint：
+
+```
+scoop install ktlint
+```
+
+![kotlin-lint](https://user-images.githubusercontent.com/13142418/94366839-3e846a00-010d-11eb-9e6c-200931646479.png)
 
 ### 工程文件跳转
 
