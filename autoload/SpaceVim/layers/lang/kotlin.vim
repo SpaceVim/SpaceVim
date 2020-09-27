@@ -64,8 +64,12 @@ function! SpaceVim#layers#lang#kotlin#config() abort
           \ '%Wwarning: %m,' .
           \ '%Iinfo: %m,'
           \ }
-    let g:neomake_kotlin_enabled_makers = ['kotlinc']
+    let g:neomake_kotlin_ktlint_maker = {
+          \ 'errorformat': '%E%f:%l:%c: %m',
+          \ }
+    let g:neomake_kotlin_enabled_makers = ['ktlint']
     let g:neomake_kotlin_kotlinc_remove_invalid_entries = 1
+    let g:neomake_kotlin_ktlint_remove_invalid_entries = 1
   endif
   call SpaceVim#mapping#space#regesit_lang_mappings('kotlin', function('s:language_specified_mappings'))
   if s:enable_native_support

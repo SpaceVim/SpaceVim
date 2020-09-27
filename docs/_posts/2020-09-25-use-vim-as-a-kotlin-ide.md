@@ -47,8 +47,17 @@ The completion menu will be opened as you type.
 ### Syntax linting
 
 The [checkers](../checkers/) layer is enabled by default.
-This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
-It will run `kotlinc` asynchronously.
+This layer provides asynchronous syntax linting for kotlin.
+The default plugin is [neomake](https://github.com/neomake/neomake),
+and the default lint command is [ktlint](https://github.com/pinterest/ktlint).
+
+In the Windows system, `ktlint` can be installed using [scoop](https://github.com/lukesampson/scoop):
+
+```
+scoop install ktlint
+```
+
+![kotlin-lint](https://user-images.githubusercontent.com/13142418/94366839-3e846a00-010d-11eb-9e6c-200931646479.png)
 
 ### Jump to test file
 
