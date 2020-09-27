@@ -96,5 +96,11 @@
   },
   "docs/_posts/2019-07-16-Asynchronous-todo-manager.md": {
     "alternate": "docs/_posts/2019-07-17-Asynchronous-todo-manager.md"
+  },
+  "docs/_posts/2020-09-25-use-vim-as-a-kotlin-ide.md" : {
+      "alternate": "docs/_posts/2020-09-24-use-vim-as-a-kotlin-ide.md"
+  },
+  "docs/_posts/2020-09-24-use-vim-as-a-kotlin-ide.md" : {
+      "alternate": "docs/_posts/2020-09-25-use-vim-as-a-kotlin-ide.md"
   }
 }
