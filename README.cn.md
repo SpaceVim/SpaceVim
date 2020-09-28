@@ -27,9 +27,9 @@ master 分支最新的更新以及变动。
 
 **推荐阅读:**
 
-- [入门指南](https://spacevim.org/cn/quick-start-guide)
-- [用户文档](https://spacevim.org/cn/documentation)
-- [可用模块](https://spacevim.org/cn/layers)
+- [入门指南](https://spacevim.org/cn/quick-start-guide/)
+- [用户文档](https://spacevim.org/cn/documentation/)
+- [可用模块](https://spacevim.org/cn/layers/)
 
 ## 最新特性
 
