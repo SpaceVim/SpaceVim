@@ -7,40 +7,21 @@
 [![Version](https://img.shields.io/badge/version-1.6.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
-SpaceVim 是一个社区驱动的模块化 Vim/Neovim 配置集合，以模块的方式组织管理插件以
+![welcome page](https://user-images.githubusercontent.com/13142418/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png)
+
+[SpaceVim](https://spacevim.org/cn/) 是一个社区驱动的模块化 Vim/Neovim 配置集合，以模块的方式组织管理插件以
 及相关配置，为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，
 语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱
 即用的 Vim-IDE。
 
-官网：<https://spacevim.org/cn/>
+当前最新的稳定版为[v1.5.0](https://spacevim.org/SpaceVim-release-v1.5.0/)，[following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) 页面罗列了
+master 分支最新的更新以及变动。
 
-Github: <https://github.com/SpaceVim/SpaceVim>
-
-码云：<https://gitee.com/SpaceVim/SpaceVim>
-
-![welcome-page](https://user-images.githubusercontent.com/13142418/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png)
-
-推荐阅读：
+**推荐阅读:**
 
 - [入门指南](https://spacevim.org/cn/quick-start-guide)
 - [用户文档](https://spacevim.org/cn/documentation)
 - [可用模块](https://spacevim.org/cn/layers)
-
-<!-- vim-markdown-toc GFM -->
-
-- [最新特性](#最新特性)
-  - [多光标 Iedit 模式](#多光标-iedit-模式)
-  - [高亮光标下的函数](#高亮光标下的函数)
-  - [实时代码检索](#实时代码检索)
-  - [快捷键辅助导航](#快捷键辅助导航)
-  - [快捷键描述系统](#快捷键描述系统)
-  - [异步插件管理器](#异步插件管理器)
-- [安装](#安装)
-  - [Linux 或 macOS](#linux-或-macos)
-  - [Windows](#windows)
-- [捐助 SpaceVim](#捐助-spacevim)
-
-<!-- vim-markdown-toc -->
 
 ## 最新特性
 
@@ -91,26 +72,6 @@ SpaceVim 利用了 Vim 8 和 Neovim 最新的异步机制，实现了异步插�
 ![UI for dein](https://user-images.githubusercontent.com/13142418/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif)
 
 想要获取更多关于 SpaceVim 的最新特性，请关注 [SpaceVim 官方博客](https://spacevim.org/blog/)
-
-## 安装
-
-### Linux 或 macOS
-
-```bash
-curl -sLf https://spacevim.org/cn/install.sh | bash
-```
-
-安装结束后，初次打开 `Vim` 或者 `gVim` 时，SpaceVim 会**自动**下载并安装插件。
-
-如果需要获取安装脚本的帮助信息，可以执行如下命令，包括定制安装、更新和卸载等。
-
-```bash
-curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
-```
-
-### Windows
-
-Windows 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
 
 ## 捐助 SpaceVim
 

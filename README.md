@@ -26,11 +26,11 @@ The last release is [v1.5.0](https://spacevim.org/SpaceVim-release-v1.5.0/), che
 
 **See the followings below for more information:**
 
-- [Quick Start Guide](https://spacevim.org/quick-start-guide/): a simple guide for Beginners.
+- [Quick Start Guide](https://spacevim.org/quick-start-guide/): A simple guide for Beginners.
 - [Documentation](https://spacevim.org/documentation/): The full documentation about using SpaceVim.
 - [Available Layers](https://spacevim.org/layers/): A list of all available layers included in SpaceVim.
 
-### Features
+## Features
 
 This is a list of latest features implemented in SpaceVim:
 
