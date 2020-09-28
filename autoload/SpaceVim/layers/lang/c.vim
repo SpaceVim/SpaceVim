@@ -31,7 +31,6 @@
 " `clang_std`: This is a dictionary for setting std for c/cpp. The default
 " valuable is :
 " >
-"
 "   'c'     : 'c11',
 "   'cpp'   : 'c++1z',
 "   'objc'  : 'c11',
@@ -40,6 +39,19 @@
 "
 " `clang_flag`: You should be able to just paste most of your compile
 " flags in there.
+"
+" Here is an example how to use above options:
+" >
+"   [[layers]]
+"     name = "lang#c"
+"     clang_executable = "/usr/bin/clang"
+"     clang_flag = ['-I/user/include']
+"     [layer.clang_std]
+"       c = "c11"
+"       cpp = "c++1z"
+"       objc = "c11"
+"       objcpp = "c++1z"
+" <
 "
 " Instead of using `clang_flag` options, You can also create a `.clang` file
 " in the root directory of your project. SpaceVim will load the options
