@@ -73,7 +73,7 @@ SpaceVim 自带的 FlyGrep 这个插件可以根据输入实时搜索项目代�
 
 ![describe key bindings](https://user-images.githubusercontent.com/13142418/35568829-e3c8e74c-058f-11e8-8fa8-c0e046d8add3.gif)
 
-**异步插件管理器:**
+[**异步插件管理器:**](https://spacevim.org/cn/asynchronous-plugin-manager/)
 
 SpaceVim 利用了 Vim 8 和 Neovim 最新的异步机制，实现了异步插件下载及更新，而插件运行管理采用的是 [dein.vim](https://github.com/Shougo/dein.vim/)。
 

@@ -70,7 +70,7 @@ Use <kbd>SPC h d k</kbd> to get the help description of a key binding, and `gd` 
 
 ![describe key bindings](https://user-images.githubusercontent.com/13142418/35568829-e3c8e74c-058f-11e8-8fa8-c0e046d8add3.gif)
 
-[**Asynchronous plugin manager**](https://spacevim.org/Asynchronous-plugin-manager/)
+[**Asynchronous plugin manager**](https://spacevim.org/asynchronous-plugin-manager/)
 
 Create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asynchronous vim plugin manager
 
