@@ -279,7 +279,17 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['q', 'R'], '', 'restart-vim(TODO)', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'r'], '', 'restart-vim-resume-layouts(TODO)', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['q', 't'], 'tabclose!', 'kill-current-tab', 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['q', 't'], 'call call('
+        \ . string(s:_function('s:close_current_tab')) . ', [])',
+        \ ['close-current-tab',
+        \ [
+        \ '[SPC q t] is to close the current tab, if it is the last tab, do nothing.',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#gd#add('HelpDescribe', function('s:gotodef'))
 
   let g:_spacevim_mappings_space.c = {'name' : '+Comments'}
@@ -884,4 +894,10 @@ function! SpaceVim#layers#core#set_variable(var) abort
         \ 'filetree_show_hidden',
         \ g:_spacevim_filetree_show_hidden_files)
 
+endfunction
+
+function! s:close_current_tab() abort
+  if tabpagenr('$') > 1
+    tabclose!
+  endif
 endfunction
