@@ -41,6 +41,16 @@
 " `clang_flag`: You should be able to just paste most of your compile
 " flags in there.
 "
+" Instead of using `clang_flag` options, You can also create a `.clang` file
+" in the root directory of your project. SpaceVim will load the options
+" defined in `.clang` file. For example:
+" >
+"   -std=c11
+"   -I/home/test
+" <
+" Note: If `.clang` file contains std configuration, it will override
+" `clang_std` layer option.
+"
 " @subsection Key bindings
 " >
 "   Mode            Key             Function
