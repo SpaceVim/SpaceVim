@@ -123,7 +123,7 @@ function! SpaceVim#layers#lang#c#config() abort
   let runner1 = {
         \ 'exe' : 'gcc',
         \ 'targetopt' : '-o',
-        \ 'opt' : ['-sdt=' . s:clang_std.c] + s:clang_flag + ['-xc', '-'],
+        \ 'opt' : ['-std=' . s:clang_std.c] + s:clang_flag + ['-xc', '-'],
         \ 'usestdin' : 1,
         \ }
   call SpaceVim#plugins#runner#reg_runner('c', [runner1, '#TEMP#'])
@@ -131,7 +131,7 @@ function! SpaceVim#layers#lang#c#config() abort
   let runner2 = {
         \ 'exe' : 'g++',
         \ 'targetopt' : '-o',
-        \ 'opt' : ['-sdt=' . s:clang_std.cpp] + s:clang_flag + ['-xc', '-'],
+        \ 'opt' : ['-std=' . s:clang_std.cpp] + s:clang_flag + ['-xc', '-'],
         \ 'usestdin' : 1,
         \ }
   call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])
@@ -312,7 +312,7 @@ function! s:update_runner(argv, fts) abort
     let runner1 = {
           \ 'exe' : 'gcc',
           \ 'targetopt' : '-o',
-          \ 'opt' : a:argv + ['-sdt=' . s:clang_std.c] + s:clang_flag + ['-xc', '-'],
+          \ 'opt' : a:argv + ['-std=' . s:clang_std.c] + s:clang_flag + ['-xc', '-'],
           \ 'usestdin' : 1,
           \ }
     call SpaceVim#plugins#runner#reg_runner('c', [runner1, '#TEMP#'])
@@ -321,7 +321,7 @@ function! s:update_runner(argv, fts) abort
     let runner2 = {
           \ 'exe' : 'g++',
           \ 'targetopt' : '-o',
-          \ 'opt' : a:argv + ['-sdt=' . s:clang_std.cpp] + s:clang_flag + ['-xc', '-'],
+          \ 'opt' : a:argv + ['-std=' . s:clang_std.cpp] + s:clang_flag + ['-xc', '-'],
           \ 'usestdin' : 1,
           \ }
     call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])
