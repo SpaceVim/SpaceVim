@@ -63,7 +63,9 @@ A dict containing the standards you want to use. The default is:
 
 - `clang_flag`
 
-Create a `.clang` file at your project root. You should be able to just paste most of your compile flags in there. You can also use a list ['-Iwhatever', ...] when loading this layer.
+Create a `.clang` file at your project root.
+You should be able to just paste most of your compile flags in there.
+You can also use a list ['-Iwhatever', ...] when loading this layer.
 
 Here is an example how to use above options:
 

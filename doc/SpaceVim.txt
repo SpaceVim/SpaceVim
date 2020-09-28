@@ -1598,7 +1598,27 @@ layer, add following snippet to your SpaceVim configuration file.
 
 LAYER OPTIONS
 
-`clang_executable`: Set the path to the clang executable
+`clang_executable`: Set the path to the clang executable, by default, it is
+`clang`.
+
+`enable_clang_syntax_highlight`: Enable/Disable clang based syntax
+highlighting. By default it is disabled.
+
+`libclang_path`: The libclang shared object (dynamic library) file path. By
+default it is empty
+
+`clang_std`: This is a dictionary for setting std for c/cpp. The default
+valuable is :
+>
+
+  'c'     : 'c11',
+  'cpp'   : 'c++1z',
+  'objc'  : 'c11',
+  'objcpp': 'c++1z',
+<
+
+`clang_flag`: You should be able to just paste most of your compile flags in
+there.
 
 KEY BINDINGS
 
