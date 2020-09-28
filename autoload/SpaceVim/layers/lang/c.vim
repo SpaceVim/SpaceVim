@@ -318,7 +318,11 @@ function! s:update_autocomplete_argv(argv, fts) abort
 endfunction
 
 function! s:has_std(argv) abort
-  
+  for line in a:argv
+    if line =~# '^-std='
+      return 1
+    endif
+  endfor
 endfunction
 
 function! s:update_runner(argv, fts) abort
@@ -331,7 +335,7 @@ function! s:update_runner(argv, fts) abort
     let runner1 = {
           \ 'exe' : 'gcc',
           \ 'targetopt' : '-o',
-          \ 'opt' : a:argv + (default_std ? ['-std=' . s:clang_std.c] : []) + s:clang_flag + ['-xc', '-'],
+          \ 'opt' : a:argv + (default_std ? [] : ['-std=' . s:clang_std.c]) + s:clang_flag + ['-xc', '-'],
           \ 'usestdin' : 1,
           \ }
     call SpaceVim#plugins#runner#reg_runner('c', [runner1, '#TEMP#'])
@@ -340,7 +344,7 @@ function! s:update_runner(argv, fts) abort
     let runner2 = {
           \ 'exe' : 'g++',
           \ 'targetopt' : '-o',
-          \ 'opt' : a:argv + (default_std ? ['-std=' . s:clang_std.cpp] : []) + s:clang_flag + ['-xc++', '-'],
+          \ 'opt' : a:argv + (default_std ? [] : ['-std=' . s:clang_std.cpp]) + s:clang_flag + ['-xc++', '-'],
           \ 'usestdin' : 1,
           \ }
     call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])
