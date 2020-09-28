@@ -246,6 +246,7 @@ function! s:update_clang_flag() abort
     call s:update_checkers_argv(argvs, ['c', 'cpp'])
     call s:update_autocomplete_argv(argvs, ['c', 'cpp'])
     call s:update_neoinclude(argvs, ['c', 'cpp'])
+    call s:update_runner(argvs, ['c', 'cpp'])
   endif
 endfunction
 
@@ -284,6 +285,27 @@ endif
 
 function! s:update_autocomplete_argv(argv, fts) abort
 
+endfunction
+
+function! s:update_runner(argv, fts) abort
+  if index(a:fts, 'c') !=# -1
+    let runner1 = {
+          \ 'exe' : 'gcc',
+          \ 'targetopt' : '-o',
+          \ 'opt' : a:argv + ['-xc', '-'],
+          \ 'usestdin' : 1,
+          \ }
+    call SpaceVim#plugins#runner#reg_runner('c', [runner1, '#TEMP#'])
+  endif
+  if index(a:fts, 'cpp') !=# -1
+    let runner2 = {
+          \ 'exe' : 'g++',
+          \ 'targetopt' : '-o',
+          \ 'opt' : a:argv + ['-xc++', '-'],
+          \ 'usestdin' : 1,
+          \ }
+    call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])
+  endif
 endfunction
 
 function! s:update_neoinclude(argv, fts) abort
