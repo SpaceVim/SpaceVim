@@ -86,3 +86,12 @@ SpaceVim 利用了 Vim 8 和 Neovim 最新的异步机制，实现了异步插�
 | 微信                                                     | 支付宝                                                     |
 | -------------------------------------------------------- | ---------------------------------------------------------- |
 | <img src="docs/img/weixin.png" height="150" width="150"> | <img src="docs/img/zhifubao.png" height="150" width="150"> |
+
+## 鸣谢
+
+- [@Gabirel](https://github.com/Gabirel) 的 [《Hack-SpaceVim》](https://github.com/Gabirel/Hack-SpaceVim)
+- [@everettjf](https://github.com/everettjf) 的 [《SpaceVimTutorial》](https://everettjf.gitbooks.io/spacevimtutorial/content/)
+- [vimdoc](https://github.com/google/vimdoc)：自动生成帮助文件
+- SpaceVim 中所使用所有插件的作者
+
+<!-- vim:set nowrap: -->

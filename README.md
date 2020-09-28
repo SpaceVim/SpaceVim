@@ -98,8 +98,6 @@ If you want to show your support financially you can buy a drink for the maintai
 - [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
 - [@everettjf](https://github.com/everettjf) and his [SpaceVimTutorial](https://everettjf.gitbooks.io/spacevimtutorial/content/)
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
-- [Rafael Bodill](https://github.com/rafi) and his vim-config
-- [Bailey Ling](https://github.com/bling) and his dotvim
 - Authors of all the plugins used in SpaceVim.
 
 <!-- vim:set nowrap: -->
