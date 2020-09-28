@@ -64,6 +64,13 @@ if exists('s:clang_executable')
   finish
 else
   let s:clang_executable = 'clang'
+  let s:clang_flag = []
+  let s:clang_std = {
+        \ 'c' : 'c11',
+        \ 'cpp': 'c++1z',
+        \ 'objc': 'c11',
+        \ 'objcpp': 'c++1z',
+        \ }
 endif
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:CPT = SpaceVim#api#import('vim#compatible')
@@ -116,7 +123,7 @@ function! SpaceVim#layers#lang#c#config() abort
   let runner1 = {
         \ 'exe' : 'gcc',
         \ 'targetopt' : '-o',
-        \ 'opt' : ['-xc', '-'],
+        \ 'opt' : ['-sdt=' . s:clang_std.c] + s:clang_flag + ['-xc', '-'],
         \ 'usestdin' : 1,
         \ }
   call SpaceVim#plugins#runner#reg_runner('c', [runner1, '#TEMP#'])
@@ -124,7 +131,7 @@ function! SpaceVim#layers#lang#c#config() abort
   let runner2 = {
         \ 'exe' : 'g++',
         \ 'targetopt' : '-o',
-        \ 'opt' : ['-xc++', '-'],
+        \ 'opt' : ['-sdt=' . s:clang_std.cpp] + s:clang_flag + ['-xc', '-'],
         \ 'usestdin' : 1,
         \ }
   call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])
@@ -203,6 +210,8 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
       endif
     endif
   endif
+
+  let s:clang_flag = get(a:var, 'clang_flag', s:clang_flag)
 
   let s:enable_clang_syntax = get(a:var, 'enable_clang_syntax_highlight', s:enable_clang_syntax)
 endfunction
@@ -303,7 +312,7 @@ function! s:update_runner(argv, fts) abort
     let runner1 = {
           \ 'exe' : 'gcc',
           \ 'targetopt' : '-o',
-          \ 'opt' : a:argv + ['-xc', '-'],
+          \ 'opt' : a:argv + ['-sdt=' . s:clang_std.c] + s:clang_flag + ['-xc', '-'],
           \ 'usestdin' : 1,
           \ }
     call SpaceVim#plugins#runner#reg_runner('c', [runner1, '#TEMP#'])
@@ -312,7 +321,7 @@ function! s:update_runner(argv, fts) abort
     let runner2 = {
           \ 'exe' : 'g++',
           \ 'targetopt' : '-o',
-          \ 'opt' : a:argv + ['-xc++', '-'],
+          \ 'opt' : a:argv + ['-sdt=' . s:clang_std.cpp] + s:clang_flag + ['-xc', '-'],
           \ 'usestdin' : 1,
           \ }
     call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])

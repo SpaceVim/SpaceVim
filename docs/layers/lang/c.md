@@ -61,7 +61,7 @@ A dict containing the standards you want to use. The default is:
 }
 ```
 
-- `clang_flag`
+- `clang_flag` (list)
 
 Create a `.clang` file at your project root.
 You should be able to just paste most of your compile flags in there.
