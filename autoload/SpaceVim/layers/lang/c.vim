@@ -153,7 +153,7 @@ function! SpaceVim#layers#lang#c#config() abort
   let runner2 = {
         \ 'exe' : 'g++',
         \ 'targetopt' : '-o',
-        \ 'opt' : ['-std=' . s:clang_std.cpp] + s:clang_flag + ['-xc', '-'],
+        \ 'opt' : ['-std=' . s:clang_std.cpp] + s:clang_flag + ['-xc++', '-'],
         \ 'usestdin' : 1,
         \ }
   call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])
