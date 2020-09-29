@@ -102,5 +102,11 @@
   },
   "docs/_posts/2020-09-24-use-vim-as-a-kotlin-ide.md" : {
       "alternate": "docs/_posts/2020-09-25-use-vim-as-a-kotlin-ide.md"
+  },
+  "README.md" : {
+      "alternate" : "README.cn.md"
+  },
+  "README.cn.md" : {
+      "alternate" : "README.md"
   }
 }
