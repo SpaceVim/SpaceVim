@@ -85,7 +85,8 @@ The available scopes and corresponding keys are:
 | Key Bindings      | Descriptions                      |
 | ----------------- | --------------------------------- |
 | `<Esc>`           | close FlyGrep buffer              |
-| `<Enter>`         | open file at the cursor line      |
+| `<Enter>`         | open item in current window       |
+| `Ctrl-t`          | open item in new tab              |
 | `<Tab>`           | move cursor line down             |
 | `Ctrl-j`          | move cursor line down             |
 | `Shift-<Tab>`     | move cursor line up               |

@@ -64,7 +64,7 @@ lang: zh
 
 - `clang_flag`
 
-通常，在项目根目录新建一个 `.clang` 文件，可以将编译参数逐行写入。也可以使用一 List 值来初始化该选项。
+可以使用一 List 值来初始化该选项。
 例如：`clang_flag = ["-Iwhatever"]`
 
 以下为一个完整的 `lang#c` 模块载入示例：
@@ -79,6 +79,20 @@ lang: zh
     objc = "c11"
     objcpp = "c++1z"
 ```
+
+除此之外，也在项目根目录新建一个 `.clang` 文件，可以将编译参数逐行写入。
+SpaceVim 将会自动读取 `.clang` 文件内的参数。
+
+例如：
+
+```
+-std=c11
+-I/home/test
+```
+
+需要注意的是，若 `.clang` 文件中包含了`std`选项，将会覆盖掉模块选项
+`clang_std` 的值。
+
 
 ## 快捷键
 

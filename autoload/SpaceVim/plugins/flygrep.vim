@@ -146,7 +146,8 @@ function! s:expr_to_pattern(expr) abort
   if s:grep_mode ==# 'expr'
     let items = split(a:expr)
     let pattern = join(items, '.*')
-    let pattern = s:filename_pattern . '.*\zs' . s:REGEX.parser(pattern, 0)
+    let ignorecase = &ignorecase ? '\c' : '\C'
+    let pattern = s:filename_pattern . '.*\zs' . ignorecase . s:REGEX.parser(pattern, 0)
     call s:LOGGER.info('matchadd pattern: ' . pattern)
     return pattern
   else
@@ -505,6 +506,30 @@ function! s:open_item() abort
   endif
 endfunction
 
+function! s:open_item_in_tab() abort
+  let s:MPT._handle_fly = function('s:flygrep')
+  if getline('.') !=# ''
+    if s:grepid != 0
+      call s:JOB.stop(s:grepid)
+    endif
+    call s:MPT._clear_prompt()
+    let s:MPT._quit = 1
+    let line = getline('.')
+    let filename = fnameescape(split(line, ':\d\+:')[0])
+    let linenr = matchstr(line, ':\d\+:')[1:-2]
+    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    if s:preview_able == 1
+      call s:close_preview_win()
+    endif
+    let s:preview_able = 0
+    noautocmd q
+    exe 'silent tabedit ' . filename
+    call s:update_history()
+    call cursor(linenr, colum)
+    noautocmd normal! :
+  endif
+endfunction
+
 function! s:open_item_vertically() abort
   let s:MPT._handle_fly = function('s:flygrep')
   if getline('.') !=# ''
@@ -733,6 +758,7 @@ let s:MPT._function_key = {
       \ "\<C-k>" : function('s:previous_item'),
       \ "\<ScrollWheelUp>" : function('s:previous_item'),
       \ "\<Return>" : function('s:open_item'),
+      \ "\<C-t>" : function('s:open_item_in_tab'),
       \ "\<LeftMouse>" : function('s:move_cursor'),
       \ "\<2-LeftMouse>" : function('s:double_click'),
       \ "\<C-f>" : function('s:start_filter'),

@@ -1604,6 +1604,7 @@ Key bindings in FlyGrep buffer:
 | ------------------- | --------------------------------- |
 | `<Esc>`             | close FlyGrep buffer              |
 | `<Enter>`           | open file at the cursor line      |
+| `Ctrl-t`            | open item in new tab              |
 | `<Tab>`             | move cursor line down             |
 | `Shift-<Tab>`       | move cursor line up               |
 | `<BackSpace>`       | remove last character             |
