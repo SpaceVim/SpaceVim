@@ -80,7 +80,8 @@ For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
 
 ## Support SpaceVim
 
-This project exists thanks to all the people who [contributed](CONTRIBUTING.md), We are thankful for any contributions from the community.
+This project exists thanks to all the people who [contributed](CONTRIBUTING.md),
+We are thankful for any contributions from the community.
 
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 
