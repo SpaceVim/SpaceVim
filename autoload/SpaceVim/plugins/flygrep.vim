@@ -146,7 +146,8 @@ function! s:expr_to_pattern(expr) abort
   if s:grep_mode ==# 'expr'
     let items = split(a:expr)
     let pattern = join(items, '.*')
-    let pattern = s:filename_pattern . '.*\zs' . s:REGEX.parser(pattern, 0)
+    let ignorecase = &ignorecase ? '\c' : '\C'
+    let pattern = s:filename_pattern . '.*\zs' . ignorecase . s:REGEX.parser(pattern, 0)
     call s:LOGGER.info('matchadd pattern: ' . pattern)
     return pattern
   else
