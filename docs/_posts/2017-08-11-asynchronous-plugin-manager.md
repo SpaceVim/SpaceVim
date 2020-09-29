@@ -3,6 +3,7 @@ title: "Asynchronous plugin manager"
 categories: [feature, blog]
 description: "Use dein as default plugin manager, Provides a UI for dein, Install and update plugin asynchronously, Show process status on the fly"
 image: https://user-images.githubusercontent.com/13142418/80597767-e1e82a80-8a5a-11ea-85ad-031a6f3240f0.gif
+redirect_from: "/Asynchronous-plugin-manager/"
 commentsID: "Asynchronous plugin manager"
 comments: true
 ---

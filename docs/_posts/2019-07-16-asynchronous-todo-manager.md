@@ -4,6 +4,7 @@ categories: [feature_cn, blog_cn]
 description: "异步TODO列表管理器，查询当前项目所有的TODO项目，展示TODO标签和标题。"
 image: https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png
 permalink: /cn/:title/
+redirect_from: "/cn/Asynchronous-todo-manager/"
 lang: zh
 type: article
 comments: true
