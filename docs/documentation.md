@@ -1943,7 +1943,7 @@ To run task in the background, you need to set `isBackground` to `true`:
 The task's properties have the following semantic:
 
 - **command**: the actual command to execute.
-- **args**: the arguments passed to the command. can be omitted.
+- **args**: the arguments passed to the command, it shoud be an array a string list and can be omitted.
 - **options**: override the defaults for `cwd`,`env` or `shell`.
 - **isBackground**: `true` or `false`, specifies whether background running is required,
   by default, it is `false`.
