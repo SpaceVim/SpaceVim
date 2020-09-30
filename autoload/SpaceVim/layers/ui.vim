@@ -62,7 +62,7 @@ function! SpaceVim#layers#ui#config() abort
     augroup spacevim_layer_ui
         autocmd!
         autocmd BufEnter,CursorMoved,VimResized,FocusGained    * call SpaceVim#plugins#scrollbar#show()
-        autocmd BufLeave,FocusLost    * call SpaceVim#plugins#scrollbar#clear()
+        autocmd BufLeave,FocusLost,QuitPre    * call SpaceVim#plugins#scrollbar#clear()
     augroup end
   endif
 
