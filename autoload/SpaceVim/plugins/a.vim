@@ -132,14 +132,9 @@ function! s:parse(alt_config_json) abort
 endfunction
 
 function! s:get_type_path(a, f, b) abort
-  call s:LOGGER.info('begin_end:' . string(a:a))
-  call s:LOGGER.info('file:' . a:f)
-  call s:LOGGER.info('alt:' . a:b)
   let begin_len = strlen(a:a[0])
   let end_len = strlen(a:a[1])
-  let rst = substitute(a:b, '{}', a:f[begin_len : (end_len+1) * -1], 'g')
-  call s:LOGGER.info('result:' . rst)
-  return rst
+  return substitute(a:b, '{}', a:f[begin_len : (end_len+1) * -1], 'g')
 endfunction
 
 function! s:is_config_changed(conf_path) abort
