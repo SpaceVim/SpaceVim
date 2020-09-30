@@ -80,9 +80,9 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Custom alternate file](#custom-alternate-file)
   - [Bookmarks management](#bookmarks-management)
   - [Tasks](#tasks)
+    - [Custom tasks](#custom-tasks)
     - [Task auto-detection](#task-auto-detection)
     - [Task provider](#task-provider)
-    - [Custom tasks](#custom-tasks)
   - [Replace text with iedit](#replace-text-with-iedit)
     - [iedit states key bindings](#iedit-states-key-bindings)
   - [Code runner and REPL](#code-runner-and-repl)
@@ -1907,16 +1907,84 @@ endfunction
 
 To integrate with external tools, SpaceVim introduce a task manager system,
 which is similar to vscode tasks-manager. There are two kinds of task configuration
-file: global tasks configuration(`~/.SpaceVim.d/tasks.toml`) and local configuration(`.SpaceVim.d/tasks.toml`).
+file: 
+
+- `~/.SpaceVim.d/tasks.toml`: global tasks configuration
+- `.SpaceVim.d/tasks.toml`: project local tasks configuration
+
+The task defined in global tasks configuration can be overrided by project local
+tasks configuration.
 
 | Key Bindings | Descriptions                  |
 | ------------ | ----------------------------- |
 | `SPC p t e`  | edit tasks configuration file |
 | `SPC p t r`  | select task to run            |
 
+
+#### Custom tasks
+
+This is basic task configuration for running `echo hello world`,
+and print results to runner windows.
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+```
+
+![task hello world](https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
+
+To run task in the background, you need to set `isBackground` to `true`:
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+    isBackground = true
+```
+
+The task's properties have the following semantic:
+
+- **command**: the actual command to execute.
+- **args**: the arguments passed to the command, it shoud be an array a string list and can be omitted.
+- **options**: override the defaults for `cwd`,`env` or `shell`.
+- **isBackground**: `true` or `false`, specifies whether background running is required,
+  by default, it is `false`.
+
+SpaceVim supports variable substitution in task, The following predefined variables are supported:
+
+- **\${workspaceFolder}**: - the project root directory
+- **\${workspaceFolderBasename}**: - the parent directory name of current project root
+- **\${file}**: - the path of current file
+- **\${relativeFile}**: - the current file relative to project root
+- **\${relativeFileDirname}**: - the current file's dirname relative to workspaceFolder
+- **\${fileBasename}**: - the current file's basename
+- **\${fileBasenameNoExtension}**: - the current file's basename without file extension
+- **\${fileDirname}**: - the current file's dirname
+- **\${fileExtname}**: - the current file's extension
+- **\${cwd}**: - the task runner's current working directory on startup
+- **\${lineNumber}**: - the current selected line number in the active file
+
+for example: Supposing that you have the following requirements:
+
+A file located at `/home/your-username/your-project/folder/file.ext` opened in your editor;
+The directory `/home/your-username/your-project` opened as your root workspace.
+So you will have the following values for each variable:
+
+- **\${workspaceFolder}**: - `/home/your-username/your-project/`
+- **\${workspaceFolderBasename}**: - `your-project`
+- **\${file}**: - `/home/your-username/your-project/folder/file.ext`
+- **\${relativeFile}**: - `folder/file.ext`
+- **\${relativeFileDirname}**: - `folder/`
+- **\${fileBasename}**: - `file.ext`
+- **\${fileBasenameNoExtension}**: - `file`
+- **\${fileDirname}**: - `/home/your-username/your-project/folder/`
+- **\${fileExtname}**: - `.ext`
+- **\${lineNumber}**: - line number of the cursor
+
 #### Task auto-detection
 
-SpaceVim currently auto-detects tasks for npm.
+Currently, SpaceVim  can auto-detect tasks for npm.
 the tasks manager will paser the `package.json` file for npm systems.
 If you have cloned the [eslint-starter](https://github.com/spicydonuts/eslint-starter) example,
 then pressing `SPC p t r` shows the following list:
@@ -1965,64 +2033,6 @@ call SpaceVim#plugins#tasks#reg_provider(function('s:make_tasks'))
 with above configuration, you will see following tasks in SpaceVim repo:
 
 ![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
-
-#### Custom tasks
-
-this is basic task configuration for running `echo hello world`, and print results to runner windows.
-
-```toml
-[my-task]
-    command = 'echo'
-    args = ['hello world']
-```
-
-![task hello world](https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
-
-To run task in the background, you need to set `isBackground` to `true`:
-
-```toml
-[my-task]
-    command = 'echo'
-    args = ['hello world']
-    isBackground = true
-```
-
-The task's properties have the following semantic:
-
-- **command**: the actual command to execute.
-- **args**: the arguments passed to the command. can be omitted.
-- **options**: override the defaults for `cwd`,`env` or `shell`.
-
-SpaceVim supports variable substitution in task, The following predefined variables are supported:
-
-- **\${workspaceFolder}**: - the project root directory
-- **\${workspaceFolderBasename}**: - the parent directory name of current project root
-- **\${file}**: - the path of current file
-- **\${relativeFile}**: - the current file relative to project root
-- **\${relativeFileDirname}**: - the current file's dirname relative to workspaceFolder
-- **\${fileBasename}**: - the current file's basename
-- **\${fileBasenameNoExtension}**: - the current file's basename without file extension
-- **\${fileDirname}**: - the current file's dirname
-- **\${fileExtname}**: - the current file's extension
-- **\${cwd}**: - the task runner's current working directory on startup
-- **\${lineNumber}**: - the current selected line number in the active file
-
-for example: Supposing that you have the following requirements:
-
-A file located at `/home/your-username/your-project/folder/file.ext` opened in your editor;
-The directory `/home/your-username/your-project` opened as your root workspace.
-So you will have the following values for each variable:
-
-- **\${workspaceFolder}**: - `/home/your-username/your-project/`
-- **\${workspaceFolderBasename}**: - `your-project`
-- **\${file}**: - `/home/your-username/your-project/folder/file.ext`
-- **\${relativeFile}**: - `folder/file.ext`
-- **\${relativeFileDirname}**: - `folder/`
-- **\${fileBasename}**: - `file.ext`
-- **\${fileBasenameNoExtension}**: - `file`
-- **\${fileDirname}**: - `/home/your-username/your-project/folder/`
-- **\${fileExtname}**: - `.ext`
-- **\${lineNumber}**: - line number of the cursor
 
 ### Replace text with iedit
 

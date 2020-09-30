@@ -1,7 +1,7 @@
 {
   "autoload/SpaceVim/api/*.vim": {
-      "alternate": "test/api/{}.vader",
-      "doc" : "docs/api/{}.md"
+    "alternate": "test/api/{}.vader",
+    "doc": "docs/api/{}.md"
   },
   "autoload/SpaceVim/plugins/a.vim": { "alternate": "test/plugin/a.vader" },
   "test/plugin/a.vader": { "alternate": "autoload/SpaceVim/plugins/a.vim" },
@@ -97,16 +97,16 @@
   "docs/_posts/2019-07-16-Asynchronous-todo-manager.md": {
     "alternate": "docs/_posts/2019-07-17-Asynchronous-todo-manager.md"
   },
-  "docs/_posts/2020-09-25-use-vim-as-a-kotlin-ide.md" : {
-      "alternate": "docs/_posts/2020-09-24-use-vim-as-a-kotlin-ide.md"
+  "docs/_posts/2020-09-25-use-vim-as-a-kotlin-ide.md": {
+    "alternate": "docs/_posts/2020-09-24-use-vim-as-a-kotlin-ide.md"
   },
-  "docs/_posts/2020-09-24-use-vim-as-a-kotlin-ide.md" : {
-      "alternate": "docs/_posts/2020-09-25-use-vim-as-a-kotlin-ide.md"
+  "docs/_posts/2020-09-24-use-vim-as-a-kotlin-ide.md": {
+    "alternate": "docs/_posts/2020-09-25-use-vim-as-a-kotlin-ide.md"
   },
-  "README.md" : {
-      "alternate" : "README.cn.md"
+  "README.md": {
+    "alternate": "README.cn.md"
   },
-  "README.cn.md" : {
-      "alternate" : "README.md"
+  "README.cn.md": {
+    "alternate": "README.md"
   }
 }

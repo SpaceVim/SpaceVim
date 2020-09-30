@@ -20,6 +20,7 @@ let s:FILE = SpaceVim#api#import('file')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:SYS = SpaceVim#api#import('system')
 let s:MENU = SpaceVim#api#import('cmdlinemenu')
+let s:VIM = SpaceVim#api#import('vim')
 
 " task object
 
@@ -105,6 +106,9 @@ function! SpaceVim#plugins#tasks#get()
   endif
   if has_key(task, 'command') && type(task.command) ==# 1
     let task.command = s:replace_variables(task.command)
+  endif
+  if has_key(task, 'args') && s:VIM.is_list(task.args)
+    let task.args = map(task.args, 's:replace_variables(v:val)')
   endif
   if has_key(task, 'options') && type(task.options) ==# 4
     if has_key(task.options, 'cwd') && type(task.options.cwd) ==# 1
