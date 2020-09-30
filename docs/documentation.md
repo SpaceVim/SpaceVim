@@ -1912,6 +1912,9 @@ file:
 - `~/.SpaceVim.d/tasks.toml`: global tasks configuration
 - `.SpaceVim.d/tasks.toml`: project local tasks configuration
 
+The task defined in global tasks configuration can be overrided by project local
+tasks configuration.
+
 | Key Bindings | Descriptions                  |
 | ------------ | ----------------------------- |
 | `SPC p t e`  | edit tasks configuration file |
