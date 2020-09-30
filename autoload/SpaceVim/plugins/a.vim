@@ -98,6 +98,16 @@ endfunction
 function! s:parse(alt_config_json) abort
   call s:LOGGER.info('Start to parse alternate files for: ' . a:alt_config_json.root)
   let s:project_config[a:alt_config_json.root] = {}
+  " @question why need sory()
+  " if we have two key docs/*.md and docs/cn/*.md
+  " with the first key, we can also find files in 
+  " docs/cn/ directory, for example docs/cn/index.md
+  " and the alt file will be
+  " docs/cn/cn/index.md. this should be overrided by login in
+  " docs/cn/*.md
+  "
+  " so we need to use sort, and make sure `docs/cn/*.md` is parsed after
+  " docs/*.md
   for key in sort(keys(a:alt_config_json.config))
     call s:LOGGER.info('start parse key:' . key)
     let searchpath = key
