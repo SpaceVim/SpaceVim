@@ -397,13 +397,17 @@ function! SpaceVim#plugins#runner#run_task(task) abort
     if !empty(args) && !empty(cmd)
       let cmd = cmd . ' ' . join(args, ' ')
     endif
+    let opt = {}
     if !empty(opts) && has_key(opts, 'cwd') && !empty(opts.cwd)
-      let opts = {'cwd' : opts.cwd}
+      call extend(opt, {'cwd' : opts.cwd})
+    endif
+    if !empty(opts) && has_key(opts, 'env') && !empty(opts.env)
+      call extend(opt, {'env' : opts.env})
     endif
     if isBackground
-      call s:run_backgroud(cmd, opts)
+      call s:run_backgroud(cmd, opt)
     else
-      call SpaceVim#plugins#runner#open(cmd, opts) 
+      call SpaceVim#plugins#runner#open(cmd, opt) 
     endif
   endif
 endfunction
