@@ -101,7 +101,7 @@ endfunction
 function! s:parse(alt_config_json) abort
   call s:LOGGER.info('Start to parse alternate files for: ' . a:alt_config_json.root)
   let s:project_config[a:alt_config_json.root] = {}
-  for key in keys(a:alt_config_json.config)
+  for key in sort(keys(a:alt_config_json.config))
     call s:LOGGER.info('start parse key:' . key)
     let searchpath = key
     if match(searchpath, '/\*')
