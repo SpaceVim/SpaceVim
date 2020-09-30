@@ -59,10 +59,7 @@ endfunction
 function! s:get_project_config(conf_file) abort
   call s:LOGGER.info('read context from: '. a:conf_file)
   let context = join(readfile(a:conf_file), "\n")
-  call s:LOGGER.info(context)
-  let g:wsdjson = context
   let conf = s:JSON.json_decode(context)
-  call s:LOGGER.info('decode result is: '. string(conf))
   if type(conf) !=# type({})
     " in Old vim we get E706
     " Variable type mismatch for conf, so we need to unlet conf first
