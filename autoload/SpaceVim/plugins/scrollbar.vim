@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:VIM = SpaceVim#api#import('vim')
+let s:BUF = SpaceVim#api#import('vim#buffer')
 
 scriptencoding utf-8
 
@@ -87,7 +88,7 @@ function! s:next_buf_index() abort
 endfunction
 
 function! s:create_buf(size, lines) abort
-  noautocmd let bufnr = nvim_create_buf(0, 1)
+  noautocmd let bufnr = s:BUF.create_buf(0, 1)
   noautocmd call nvim_buf_set_option(bufnr, 'filetype', 'scrollbar')
   noautocmd call nvim_buf_set_name(bufnr, 'scrollbar_' . s:next_buf_index())
   noautocmd call nvim_buf_set_lines(bufnr, 0, a:size, 0, a:lines)
