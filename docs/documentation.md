@@ -1907,7 +1907,7 @@ endfunction
 
 To integrate with external tools, SpaceVim introduce a task manager system,
 which is similar to vscode tasks-manager. There are two kinds of task configuration
-file: 
+file:
 
 - `~/.SpaceVim.d/tasks.toml`: global tasks configuration
 - `.SpaceVim.d/tasks.toml`: project local tasks configuration
@@ -1919,7 +1919,7 @@ tasks configuration.
 | ------------ | ----------------------------- |
 | `SPC p t e`  | edit tasks configuration file |
 | `SPC p t r`  | select task to run            |
-
+| `SPC p t l`  | list all available tasks      |
 
 #### Custom tasks
 
@@ -1985,7 +1985,7 @@ So you will have the following values for each variable:
 
 #### Task auto-detection
 
-Currently, SpaceVim  can auto-detect tasks for npm.
+Currently, SpaceVim can auto-detect tasks for npm.
 the tasks manager will paser the `package.json` file for npm systems.
 If you have cloned the [eslint-starter](https://github.com/spicydonuts/eslint-starter) example,
 then pressing `SPC p t r` shows the following list:

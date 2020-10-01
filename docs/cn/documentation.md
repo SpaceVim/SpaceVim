@@ -1874,6 +1874,7 @@ endfunction
 | ----------- | ---------------- |
 | `SPC p t e` | 编辑任务配置文件 |
 | `SPC p t r` | 选定任务并执行   |
+| `SPC p t l` | 列出所有任务     |
 
 #### 自定义任务
 
@@ -1931,7 +1932,6 @@ endfunction
 - **\${fileDirname}**: - `/home/your-username/your-project/folder/`
 - **\${fileExtname}**: - `.ext`
 - **\${lineNumber}**: - `10`
-
 
 #### 任务自动识别
 
