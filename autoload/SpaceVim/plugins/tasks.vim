@@ -21,6 +21,7 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:SYS = SpaceVim#api#import('system')
 let s:MENU = SpaceVim#api#import('cmdlinemenu')
 let s:VIM = SpaceVim#api#import('vim')
+let s:BUF = SpaceVim#api#import('vim#buffer')
 
 " task object
 
@@ -159,7 +160,10 @@ function! s:open_tasks_list_win() abort
 endfunction
 
 function! s:update_tasks_win_context() abort
-  
+  let lines = []
+  for task in s:conf
+  endfor
+  call s:BUF.buf_set_lines(s:bufnr, 0, -1, 0, lines)
 endfunction
 
 function! SpaceVim#plugins#tasks#edit(...) abort
