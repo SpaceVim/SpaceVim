@@ -343,7 +343,9 @@ function! SpaceVim#plugins#runner#close() abort
   if s:status.is_exit == 0 && s:job_id > 0
     call s:JOB.stop(s:job_id)
   endif
-  exe 'bd ' s:bufnr
+  if s:bufnr != 0 && bufexists(s:bufnr)
+    exe 'bd ' s:bufnr
+  endif
 endfunction
 
 function! SpaceVim#plugins#runner#select_file() abort
