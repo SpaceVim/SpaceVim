@@ -14,8 +14,8 @@ syn match TaskName /^\[.*\]/
 " syn match TaskType  /^\[.*\]\s*\zs[a-z]*/
 " syn match TaskDescription  /^\[.*\]\s*[a-z]*\s\+\zs.*/
 
-syn match TaskType  /\(^\[.*\]\s*\)\@<=[a-z]*/
-syn match TaskDescription  /\(^\[.*\]\s*[a-z]*\s\+\)\@<=.*/
+syn match TaskType  /\(^\[.\+\]\s\+\)\@<=[a-z]*/
+syn match TaskDescription  /\(^\[.*\]\s\+[a-z]\+\s\+\)\@<=.*/
 hi def link TaskName Title
 hi def link TaskType Todo
 hi def link TaskDescription Comment
