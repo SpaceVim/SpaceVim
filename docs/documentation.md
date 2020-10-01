@@ -1950,6 +1950,7 @@ The task's properties have the following semantic:
 - **options**: override the defaults for `cwd`,`env` or `shell`.
 - **isBackground**: `true` or `false`, specifies whether background running is required,
   by default, it is `false`.
+- **description**: short description of the task
 
 SpaceVim supports variable substitution in task, The following predefined variables are supported:
 

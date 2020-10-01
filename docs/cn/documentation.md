@@ -1903,6 +1903,7 @@ endfunction
 - **options**: 设置命令运行的一些选项，比如 `cwd`,`env` 或者 `shell`。
 - **isBackground**: 可设定的值为 `true` 或者 `false`， 默认是 `false`，
   设置是否需要后台运行任务
+- **description**: 关于该任务的一段简短介绍
 
 在编辑任务配置文件时，可以使用一些预设定的变量，以下列出目前已经支持的预设定变量：
 
