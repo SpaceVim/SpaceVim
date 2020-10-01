@@ -86,7 +86,7 @@ function! s:language_specified_mappings() abort
         \ 'OmniSharpFindImplementations',
         \ 'find implementations', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','g', 't'],
-        \ 'OmniSharpFindType',
+        \ 'OmniSharpTypeLookup',
         \ 'find type', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','g', 's'],
         \ 'OmniSharpFindSymbol',
