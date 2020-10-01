@@ -184,7 +184,7 @@ function! s:open_task() abort
 endfunction
 
 function! s:update_tasks_win_context() abort
-  let lines = ['Task                    Type          Command']
+  let lines = ['Task                    Type          Description']
   for task in keys(s:conf)
     if has_key(s:conf[task], 'isGlobal') && s:conf[task].isGlobal ==# 1
       let line = '[' . task . ']' . repeat(' ', 22 - strlen(task))
