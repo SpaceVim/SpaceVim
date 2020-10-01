@@ -19,6 +19,13 @@ let s:runners = {}
 
 let s:bufnr = 0
 let s:winid = -1
+let s:job_id = 0
+let s:status = {
+      \ 'is_running' : 0,
+      \ 'is_exit' : 0,
+      \ 'has_errors' : 0,
+      \ 'exit_code' : 0
+      \ }
 
 function! s:open_win() abort
   if s:bufnr != 0 && bufexists(s:bufnr)
@@ -53,6 +60,7 @@ endfunction
 let s:target = ''
 
 function! s:async_run(runner, ...) abort
+  call s:stop_runner()
   if type(a:runner) == type('')
     " the runner is a string, the %s will be replaced as a file name.
     try
