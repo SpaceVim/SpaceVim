@@ -5,6 +5,7 @@ let b:current_syntax = 'SpaceVimTasksInfo'
 syntax case ignore
 
 syn match TaskName /^\[.*\]/
+syn match TaskTitle /^Task\s\+Type\s\+Command/
 
 " @question Why \zs does not work in syntax file?
 " ref:
@@ -16,7 +17,8 @@ syn match TaskName /^\[.*\]/
 
 syn match TaskType  /\(^\[.\+\]\s\+\)\@<=[a-z]*/
 syn match TaskDescription  /\(^\[.*\]\s\+[a-z]\+\s\+\)\@<=.*/
-hi def link TaskName Title
+hi def link TaskTitle Title
+hi def link TaskName String
 hi def link TaskType Todo
 hi def link TaskDescription Comment
 
