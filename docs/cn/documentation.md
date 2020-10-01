@@ -1876,6 +1876,8 @@ endfunction
 | `SPC p t r` | 选定任务并执行   |
 | `SPC p t l` | 列出所有任务     |
 
+![task_manager](https://user-images.githubusercontent.com/13142418/94822603-69d0c700-0435-11eb-95a7-b0b4fef91be5.png)
+
 #### 自定义任务
 
 以下为一个简单的任务配置示例，异步运行 `echo hello world`，并将结果打印至输出窗口。

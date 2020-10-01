@@ -1921,6 +1921,8 @@ tasks configuration.
 | `SPC p t r`  | select task to run            |
 | `SPC p t l`  | list all available tasks      |
 
+![task_manager](https://user-images.githubusercontent.com/13142418/94822603-69d0c700-0435-11eb-95a7-b0b4fef91be5.png)
+
 #### Custom tasks
 
 This is basic task configuration for running `echo hello world`,
