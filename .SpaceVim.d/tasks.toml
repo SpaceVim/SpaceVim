@@ -3,4 +3,6 @@
     isBackground = false
 [file-run.options]
     cwd = '${workspaceFolder}bin/'
-
+[kill-thunder]
+    command = 'taskkill'
+    args = ['/f', '/t', '/im', 'Thunder.exe']
