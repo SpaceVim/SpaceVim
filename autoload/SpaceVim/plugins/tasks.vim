@@ -91,13 +91,8 @@ function! s:replace_variables(str) abort
   return str
 endfunction
 
-function! SpaceVim#plugins#tasks#get() abort
-  call s:load()
-  for Provider in s:providers
-    call extend(s:conf, call(Provider, []))
-  endfor
-  call s:init_variables()
-  let task = s:pick()
+function! s:expand_task(task) abort
+  let task = a:task
   if has_key(task, 'windows') && s:SYS.isWindows
     let task = task.windows
   elseif has_key(task, 'osx') && s:SYS.isOSX
@@ -116,6 +111,16 @@ function! SpaceVim#plugins#tasks#get() abort
       let task.options.cwd = s:replace_variables(task.options.cwd)
     endif
   endif
+  return task
+endfunction
+
+function! SpaceVim#plugins#tasks#get() abort
+  call s:load()
+  for Provider in s:providers
+    call extend(s:conf, call(Provider, []))
+  endfor
+  call s:init_variables()
+  let task = s:expand_task(s:pick())
   return task
 endfunction
 
@@ -160,6 +165,22 @@ function! s:open_tasks_list_win() abort
         \ nomodifiable
   set filetype=SpaceVimTasksInfo
   let s:bufnr = bufnr('%')
+  nnoremap <buffer><silent> <Enter> :call <SID>open_task()<cr>
+endfunction
+
+function! s:open_task() abort
+  let line = getline('.')
+  if line =~# '^\[.*\]'
+    let task = matchstr(line, '^\[.*\]')[1:-2]
+    if line =~# '^\[.*\]\s\+detected'
+      let task = split(task, ':')[1]
+    endif
+    let task = s:expand_task(s:conf[task])
+    call SpaceVim#mapping#SmartClose()
+    call SpaceVim#plugins#runner#run_task(task)
+  else
+    " not on a task
+  endif
 endfunction
 
 function! s:update_tasks_win_context() abort
