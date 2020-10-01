@@ -33,7 +33,7 @@ function! s:open_win() abort
   nnoremap <silent><buffer> i :call <SID>insert()<cr>
   augroup spacevim_runner
     autocmd!
-    autocmd BufWipeout <buffer> call <SID>close()
+    autocmd BufWipeout <buffer> call <SID>stop_runner()
   augroup END
   let s:bufnr = bufnr('%')
   let s:winid = win_getid(winnr())
@@ -311,9 +311,9 @@ function! s:on_exit(job_id, data, event) abort
   let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
   if bufexists(s:bufnr)
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
+    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+    call s:update_statusline()
   endif
-  call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
-  call s:update_statusline()
 endfunction
 
 " @vimlint(EVL103, 0, a:job_id)
@@ -342,6 +342,13 @@ function! s:close() abort
   endif
   if s:bufnr != 0 && bufexists(s:bufnr)
     exe 'bd ' s:bufnr
+  endif
+endfunction
+
+function! s:stop_runner() abort
+  if s:status.is_exit == 0 && s:job_id > 0
+    call s:JOB.stop(s:job_id)
+    let s:job_id = 0
   endif
 endfunction
 
