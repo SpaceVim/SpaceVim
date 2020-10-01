@@ -168,6 +168,8 @@ function! s:update_tasks_win_context() abort
     let line = '[' . task . ']' . repeat(' ', 22 - strlen(task))
     if has_key(s:conf[task], 'isGlobal') && s:conf[task].isGlobal ==# 1
       let line .= 'global        '
+    elseif has_key(s:conf[task], 'isDetected') && s:conf[task].isDetected ==# 1
+      let line .= 'detected      '
     else
       let line .= 'local         '
     endif
