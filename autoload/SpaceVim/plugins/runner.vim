@@ -240,77 +240,34 @@ endfunction
 " @vimlint(EVL103, 1, a:job_id)
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:event)
-if has('nvim') && exists('*chanclose')
-  " remoet  at the end of each 
-  let s:_out_data = ['']
-  function! s:on_stdout(job_id, data, event) abort
-    let s:_out_data[-1] .= a:data[0]
-    call extend(s:_out_data, a:data[1:])
-    if s:_out_data[-1] ==# ''
-      call remove(s:_out_data, -1)
-      let lines = s:_out_data
-    else
-      let lines = s:_out_data
-    endif
-    " if s:SYS.isWindows
-    " let lines = map(lines, 's:ICONV.iconv(v:val, "cp936", "utf-8")')
-    " endif
-    if !empty(lines)
-      let lines = map(lines, "substitute(v:val, '$', '', 'g')")
-      if bufexists(s:bufnr)
-        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
-      endif
-      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
-    endif
-    let s:lines += len(lines)
-    let s:_out_data = ['']
-    call s:update_statusline()
-  endfunction
+function! s:on_stdout(job_id, data, event) abort
+  if a:job_id !=# s:job_id
+    " that means, a new runner has been opennd
+    " this is previous runner exit_callback
+    return
+  endif
+  if bufexists(s:bufnr)
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+  endif
+  let s:lines += len(a:data)
+  call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+  call s:update_statusline()
+endfunction
 
-  let s:_err_data = ['']
-  function! s:on_stderr(job_id, data, event) abort
-    let s:_out_data[-1] .= a:data[0]
-    call extend(s:_out_data, a:data[1:])
-    if s:_out_data[-1] ==# ''
-      call remove(s:_out_data, -1)
-      let lines = s:_out_data
-    else
-      let lines = s:_out_data
-    endif
-    if s:SYS.isWindows
-      let lines = map(lines, 's:ICONV.iconv(v:val, "cp936", "utf-8")')
-    endif
-    if !empty(lines)
-      let lines = map(lines, "substitute(v:val, '$', '', 'g')")
-      if bufexists(s:bufnr)
-        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
-      endif
-      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
-    endif
-    let s:lines += len(lines)
-    let s:_out_data = ['']
-    call s:update_statusline()
-  endfunction
-else
-  function! s:on_stdout(job_id, data, event) abort
-    if bufexists(s:bufnr)
-      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
-    endif
-    let s:lines += len(a:data)
-    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
-    call s:update_statusline()
-  endfunction
-
-  function! s:on_stderr(job_id, data, event) abort
-    let s:status.has_errors = 1
-    if bufexists(s:bufnr)
-      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
-    endif
-    let s:lines += len(a:data)
-    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
-    call s:update_statusline()
-  endfunction
-endif
+function! s:on_stderr(job_id, data, event) abort
+  if a:job_id !=# s:job_id
+    " that means, a new runner has been opennd
+    " this is previous runner exit_callback
+    return
+  endif
+  let s:status.has_errors = 1
+  if bufexists(s:bufnr)
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+  endif
+  let s:lines += len(a:data)
+  call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+  call s:update_statusline()
+endfunction
 
 function! s:on_exit(job_id, data, event) abort
   if a:job_id !=# s:job_id
@@ -328,7 +285,6 @@ function! s:on_exit(job_id, data, event) abort
     call s:update_statusline()
   endif
 endfunction
-
 " @vimlint(EVL103, 0, a:job_id)
 " @vimlint(EVL103, 0, a:data)
 " @vimlint(EVL103, 0, a:event)
