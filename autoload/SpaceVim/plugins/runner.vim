@@ -27,18 +27,14 @@ function! s:open_win() abort
   botright split __runner__
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist nomodifiable
-        \ noswapfile
-        \ nowrap
-        \ cursorline
-        \ nospell
-        \ nonu
-        \ norelativenumber
-        \ winfixheight
-        \ nomodifiable
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
   set filetype=SpaceVimRunner
-  nnoremap <silent><buffer> q :call SpaceVim#plugins#runner#close()<cr>
+  nnoremap <silent><buffer> q :call <SID>close()<cr>
   nnoremap <silent><buffer> i :call <SID>insert()<cr>
+  augroup spacevim_runner
+    autocmd!
+    autocmd BufWipeout <buffer> call <SID>close()
+  augroup END
   let s:bufnr = bufnr('%')
   let s:winid = win_getid(winnr())
   wincmd p
@@ -318,8 +314,8 @@ function! s:on_exit(job_id, data, event) abort
   endif
   call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
   call s:update_statusline()
-
 endfunction
+
 " @vimlint(EVL103, 0, a:job_id)
 " @vimlint(EVL103, 0, a:data)
 " @vimlint(EVL103, 0, a:event)
@@ -339,9 +335,10 @@ function! SpaceVim#plugins#runner#status() abort
   return ''
 endfunction
 
-function! SpaceVim#plugins#runner#close() abort
+function! s:close() abort
   if s:status.is_exit == 0 && s:job_id > 0
     call s:JOB.stop(s:job_id)
+    let s:job_id = 0
   endif
   if s:bufnr != 0 && bufexists(s:bufnr)
     exe 'bd ' s:bufnr
