@@ -90,7 +90,7 @@ function! s:replace_variables(str) abort
   return str
 endfunction
 
-function! SpaceVim#plugins#tasks#get()
+function! SpaceVim#plugins#tasks#get() abort
   call s:load()
   for Provider in s:providers
     call extend(s:conf, call(Provider, []))
@@ -127,12 +127,10 @@ function! SpaceVim#plugins#tasks#list()
   call s:load()
   call s:init_variables()
   call s:open_tasks_list_win()
-
-
 endfunction
 
 
-function! SpaceVim#plugins#tasks#complete(...)
+function! SpaceVim#plugins#tasks#complete(...) abort
 
 
 
@@ -159,7 +157,7 @@ function! s:open_tasks_list_win() abort
   let s:bufnr = bufnr('%')
 endfunction
 
-function! SpaceVim#plugins#tasks#edit(...)
+function! SpaceVim#plugins#tasks#edit(...) abort
   if get(a:000, 0, 0)
     exe 'e ~/.SpaceVim.d/tasks.toml'
   else
@@ -183,7 +181,7 @@ function! s:detect_npm_tasks() abort
   return detect_task
 endfunction
 
-function! SpaceVim#plugins#tasks#reg_provider(provider)
+function! SpaceVim#plugins#tasks#reg_provider(provider) abort
   call add(s:providers, a:provider)
 endfunction
 
