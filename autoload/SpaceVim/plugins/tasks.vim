@@ -160,8 +160,16 @@ function! s:open_tasks_list_win() abort
 endfunction
 
 function! s:update_tasks_win_context() abort
-  let lines = []
-  for task in s:conf
+  let lines = ['Task          Type          Command']
+  for task in keys(s:conf)
+    let line = '[' . task . ']' . repeat(' ', 14 - strlen(task))
+    if has_key(s:conf[task], 'isGlobal') && s:conf[task].isGlobal ==# 1
+      let line .= 'global        '
+    else
+      let line .= 'local         '
+    endif
+    let line .= get(s:conf[task], 'description', 'no description')
+    call add(lines, line)
   endfor
   call s:BUF.buf_set_lines(s:bufnr, 0, -1, 0, lines)
 endfunction
