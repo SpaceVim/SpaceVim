@@ -126,6 +126,9 @@ endfunction
 
 function! SpaceVim#plugins#tasks#list() abort
   call s:load()
+  for Provider in s:providers
+    call extend(s:conf, call(Provider, []))
+  endfor
   call s:init_variables()
   call s:open_tasks_list_win()
   call s:update_tasks_win_context()
