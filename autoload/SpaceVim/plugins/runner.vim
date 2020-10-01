@@ -313,6 +313,11 @@ else
 endif
 
 function! s:on_exit(job_id, data, event) abort
+  if a:job_id !=# s:job_id
+    " that means, a new runner has been opennd
+    " this is previous runner exit_callback
+    return
+  endif
   let s:end_time = reltime(s:start_time)
   let s:status.is_exit = 1
   let s:status.exit_code = a:data
