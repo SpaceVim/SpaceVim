@@ -140,6 +140,14 @@ function! s:close() abort
   endif
 endfunction
 
+function! s:close_repl() abort
+  " stop the job if it is running.
+  if exists('s:job_id') && s:job_id > 0
+    call s:JOB.stop(s:job_id)
+    let s:job_id = 0
+  endif
+endfunction
+
 let s:exes = {}
 
 function! SpaceVim#plugins#repl#reg(ft, execute) abort
@@ -171,7 +179,7 @@ function! s:open_windows() abort
   nnoremap <silent><buffer> q :call <SID>close()<cr>
   augroup spacevim_repl
     autocmd!
-    autocmd BufWipeout <buffer> call <SID>close()
+    autocmd BufWipeout <buffer> call <SID>close_repl()
   augroup END
   let s:bufnr = bufnr('%')
   let s:winid = win_getid(winnr())

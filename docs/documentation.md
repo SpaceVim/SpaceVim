@@ -1907,7 +1907,7 @@ endfunction
 
 To integrate with external tools, SpaceVim introduce a task manager system,
 which is similar to vscode tasks-manager. There are two kinds of task configuration
-file: 
+file:
 
 - `~/.SpaceVim.d/tasks.toml`: global tasks configuration
 - `.SpaceVim.d/tasks.toml`: project local tasks configuration
@@ -1919,7 +1919,9 @@ tasks configuration.
 | ------------ | ----------------------------- |
 | `SPC p t e`  | edit tasks configuration file |
 | `SPC p t r`  | select task to run            |
+| `SPC p t l`  | list all available tasks      |
 
+![task_manager](https://user-images.githubusercontent.com/13142418/94822603-69d0c700-0435-11eb-95a7-b0b4fef91be5.png)
 
 #### Custom tasks
 
@@ -1950,6 +1952,10 @@ The task's properties have the following semantic:
 - **options**: override the defaults for `cwd`,`env` or `shell`.
 - **isBackground**: `true` or `false`, specifies whether background running is required,
   by default, it is `false`.
+- **description**: short description of the task
+
+When start a new task, it will kill the previous task. If you want to keep the task
+run in background, set `isBackground` to `true`.
 
 SpaceVim supports variable substitution in task, The following predefined variables are supported:
 
@@ -1984,7 +1990,7 @@ So you will have the following values for each variable:
 
 #### Task auto-detection
 
-Currently, SpaceVim  can auto-detect tasks for npm.
+Currently, SpaceVim can auto-detect tasks for npm.
 the tasks manager will paser the `package.json` file for npm systems.
 If you have cloned the [eslint-starter](https://github.com/spicydonuts/eslint-starter) example,
 then pressing `SPC p t r` shows the following list:

@@ -1874,6 +1874,9 @@ endfunction
 | ----------- | ---------------- |
 | `SPC p t e` | 编辑任务配置文件 |
 | `SPC p t r` | 选定任务并执行   |
+| `SPC p t l` | 列出所有任务     |
+
+![task_manager](https://user-images.githubusercontent.com/13142418/94822603-69d0c700-0435-11eb-95a7-b0b4fef91be5.png)
 
 #### 自定义任务
 
@@ -1903,6 +1906,10 @@ endfunction
 - **options**: 设置命令运行的一些选项，比如 `cwd`,`env` 或者 `shell`。
 - **isBackground**: 可设定的值为 `true` 或者 `false`， 默认是 `false`，
   设置是否需要后台运行任务
+- **description**: 关于该任务的一段简短介绍
+
+当启动一个任务时，默认会关闭前一个任务，如果需要让任务一直保持后台运行，
+可以将 `isBackground` 设为 `true`。
 
 在编辑任务配置文件时，可以使用一些预设定的变量，以下列出目前已经支持的预设定变量：
 
@@ -1930,7 +1937,6 @@ endfunction
 - **\${fileDirname}**: - `/home/your-username/your-project/folder/`
 - **\${fileExtname}**: - `.ext`
 - **\${lineNumber}**: - `10`
-
 
 #### 任务自动识别
 

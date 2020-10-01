@@ -19,6 +19,13 @@ let s:runners = {}
 
 let s:bufnr = 0
 let s:winid = -1
+let s:job_id = 0
+let s:status = {
+      \ 'is_running' : 0,
+      \ 'is_exit' : 0,
+      \ 'has_errors' : 0,
+      \ 'exit_code' : 0
+      \ }
 
 function! s:open_win() abort
   if s:bufnr != 0 && bufexists(s:bufnr)
@@ -27,18 +34,14 @@ function! s:open_win() abort
   botright split __runner__
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
-  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist nomodifiable
-        \ noswapfile
-        \ nowrap
-        \ cursorline
-        \ nospell
-        \ nonu
-        \ norelativenumber
-        \ winfixheight
-        \ nomodifiable
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
   set filetype=SpaceVimRunner
-  nnoremap <silent><buffer> q :call SpaceVim#plugins#runner#close()<cr>
+  nnoremap <silent><buffer> q :call <SID>close()<cr>
   nnoremap <silent><buffer> i :call <SID>insert()<cr>
+  augroup spacevim_runner
+    autocmd!
+    autocmd BufWipeout <buffer> call <SID>stop_runner()
+  augroup END
   let s:bufnr = bufnr('%')
   let s:winid = win_getid(winnr())
   wincmd p
@@ -57,6 +60,7 @@ endfunction
 let s:target = ''
 
 function! s:async_run(runner, ...) abort
+  call s:stop_runner()
   if type(a:runner) == type('')
     " the runner is a string, the %s will be replaced as a file name.
     try
@@ -236,89 +240,50 @@ endfunction
 " @vimlint(EVL103, 1, a:job_id)
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:event)
-if has('nvim') && exists('*chanclose')
-  " remoet  at the end of each 
-  let s:_out_data = ['']
-  function! s:on_stdout(job_id, data, event) abort
-    let s:_out_data[-1] .= a:data[0]
-    call extend(s:_out_data, a:data[1:])
-    if s:_out_data[-1] ==# ''
-      call remove(s:_out_data, -1)
-      let lines = s:_out_data
-    else
-      let lines = s:_out_data
-    endif
-    " if s:SYS.isWindows
-    " let lines = map(lines, 's:ICONV.iconv(v:val, "cp936", "utf-8")')
-    " endif
-    if !empty(lines)
-      let lines = map(lines, "substitute(v:val, '$', '', 'g')")
-      if bufexists(s:bufnr)
-        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
-      endif
-      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
-    endif
-    let s:lines += len(lines)
-    let s:_out_data = ['']
-    call s:update_statusline()
-  endfunction
+function! s:on_stdout(job_id, data, event) abort
+  if a:job_id !=# s:job_id
+    " that means, a new runner has been opennd
+    " this is previous runner exit_callback
+    return
+  endif
+  if bufexists(s:bufnr)
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+  endif
+  let s:lines += len(a:data)
+  call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+  call s:update_statusline()
+endfunction
 
-  let s:_err_data = ['']
-  function! s:on_stderr(job_id, data, event) abort
-    let s:_out_data[-1] .= a:data[0]
-    call extend(s:_out_data, a:data[1:])
-    if s:_out_data[-1] ==# ''
-      call remove(s:_out_data, -1)
-      let lines = s:_out_data
-    else
-      let lines = s:_out_data
-    endif
-    if s:SYS.isWindows
-      let lines = map(lines, 's:ICONV.iconv(v:val, "cp936", "utf-8")')
-    endif
-    if !empty(lines)
-      let lines = map(lines, "substitute(v:val, '$', '', 'g')")
-      if bufexists(s:bufnr)
-        call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, lines)
-      endif
-      call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
-    endif
-    let s:lines += len(lines)
-    let s:_out_data = ['']
-    call s:update_statusline()
-  endfunction
-else
-  function! s:on_stdout(job_id, data, event) abort
-    if bufexists(s:bufnr)
-      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
-    endif
-    let s:lines += len(a:data)
-    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
-    call s:update_statusline()
-  endfunction
-
-  function! s:on_stderr(job_id, data, event) abort
-    let s:status.has_errors = 1
-    if bufexists(s:bufnr)
-      call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
-    endif
-    let s:lines += len(a:data)
-    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
-    call s:update_statusline()
-  endfunction
-endif
+function! s:on_stderr(job_id, data, event) abort
+  if a:job_id !=# s:job_id
+    " that means, a new runner has been opennd
+    " this is previous runner exit_callback
+    return
+  endif
+  let s:status.has_errors = 1
+  if bufexists(s:bufnr)
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+  endif
+  let s:lines += len(a:data)
+  call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+  call s:update_statusline()
+endfunction
 
 function! s:on_exit(job_id, data, event) abort
+  if a:job_id !=# s:job_id
+    " that means, a new runner has been opennd
+    " this is previous runner exit_callback
+    return
+  endif
   let s:end_time = reltime(s:start_time)
   let s:status.is_exit = 1
   let s:status.exit_code = a:data
   let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
   if bufexists(s:bufnr)
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
+    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+    call s:update_statusline()
   endif
-  call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
-  call s:update_statusline()
-
 endfunction
 " @vimlint(EVL103, 0, a:job_id)
 " @vimlint(EVL103, 0, a:data)
@@ -339,11 +304,21 @@ function! SpaceVim#plugins#runner#status() abort
   return ''
 endfunction
 
-function! SpaceVim#plugins#runner#close() abort
+function! s:close() abort
   if s:status.is_exit == 0 && s:job_id > 0
     call s:JOB.stop(s:job_id)
+    let s:job_id = 0
   endif
-  exe 'bd ' s:bufnr
+  if s:bufnr != 0 && bufexists(s:bufnr)
+    exe 'bd ' s:bufnr
+  endif
+endfunction
+
+function! s:stop_runner() abort
+  if s:status.is_exit == 0 && s:job_id > 0
+    call s:JOB.stop(s:job_id)
+    let s:job_id = 0
+  endif
 endfunction
 
 function! SpaceVim#plugins#runner#select_file() abort

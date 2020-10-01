@@ -21,6 +21,7 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:SYS = SpaceVim#api#import('system')
 let s:MENU = SpaceVim#api#import('cmdlinemenu')
 let s:VIM = SpaceVim#api#import('vim')
+let s:BUF = SpaceVim#api#import('vim#buffer')
 
 " task object
 
@@ -90,13 +91,8 @@ function! s:replace_variables(str) abort
   return str
 endfunction
 
-function! SpaceVim#plugins#tasks#get()
-  call s:load()
-  for Provider in s:providers
-    call extend(s:conf, call(Provider, []))
-  endfor
-  call s:init_variables()
-  let task = s:pick()
+function! s:expand_task(task) abort
+  let task = a:task
   if has_key(task, 'windows') && s:SYS.isWindows
     let task = task.windows
   elseif has_key(task, 'osx') && s:SYS.isOSX
@@ -118,21 +114,33 @@ function! SpaceVim#plugins#tasks#get()
   return task
 endfunction
 
+function! SpaceVim#plugins#tasks#get() abort
+  call s:load()
+  for Provider in s:providers
+    call extend(s:conf, call(Provider, []))
+  endfor
+  call s:init_variables()
+  let task = s:expand_task(s:pick())
+  return task
+endfunction
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " list all the tasks
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! SpaceVim#plugins#tasks#list()
+function! SpaceVim#plugins#tasks#list() abort
   call s:load()
+  for Provider in s:providers
+    call extend(s:conf, call(Provider, []))
+  endfor
   call s:init_variables()
   call s:open_tasks_list_win()
-
-
+  call s:update_tasks_win_context()
 endfunction
 
 
-function! SpaceVim#plugins#tasks#complete(...)
+function! SpaceVim#plugins#tasks#complete(...) abort
 
 
 
@@ -157,9 +165,44 @@ function! s:open_tasks_list_win() abort
         \ nomodifiable
   set filetype=SpaceVimTasksInfo
   let s:bufnr = bufnr('%')
+  nnoremap <buffer><silent> <Enter> :call <SID>open_task()<cr>
 endfunction
 
-function! SpaceVim#plugins#tasks#edit(...)
+function! s:open_task() abort
+  let line = getline('.')
+  if line =~# '^\[.*\]'
+    let task = matchstr(line, '^\[.*\]')[1:-2]
+    if line =~# '^\[.*\]\s\+detected'
+      let task = split(task, ':')[1]
+    endif
+    let task = s:expand_task(s:conf[task])
+    call SpaceVim#mapping#SmartClose()
+    call SpaceVim#plugins#runner#run_task(task)
+  else
+    " not on a task
+  endif
+endfunction
+
+function! s:update_tasks_win_context() abort
+  let lines = ['Task                    Type          Description']
+  for task in keys(s:conf)
+    if has_key(s:conf[task], 'isGlobal') && s:conf[task].isGlobal ==# 1
+      let line = '[' . task . ']' . repeat(' ', 22 - strlen(task))
+      let line .= 'global        '
+    elseif has_key(s:conf[task], 'isDetected') && s:conf[task].isDetected ==# 1
+      let line = '[' . s:conf[task].detectedName . task . ']' . repeat(' ', 22 - strlen(task . s:conf[task].detectedName))
+      let line .= 'detected      '
+    else
+      let line = '[' . task . ']' . repeat(' ', 22 - strlen(task))
+      let line .= 'local         '
+    endif
+    let line .= get(s:conf[task], 'description', s:conf[task].command . ' ' .  join(get(s:conf[task], 'args', []), ' '))
+    call add(lines, line)
+  endfor
+  call s:BUF.buf_set_lines(s:bufnr, 0, -1, 0, sort(lines))
+endfunction
+
+function! SpaceVim#plugins#tasks#edit(...) abort
   if get(a:000, 0, 0)
     exe 'e ~/.SpaceVim.d/tasks.toml'
   else
@@ -183,7 +226,7 @@ function! s:detect_npm_tasks() abort
   return detect_task
 endfunction
 
-function! SpaceVim#plugins#tasks#reg_provider(provider)
+function! SpaceVim#plugins#tasks#reg_provider(provider) abort
   call add(s:providers, a:provider)
 endfunction
 
