@@ -1952,6 +1952,9 @@ The task's properties have the following semantic:
   by default, it is `false`.
 - **description**: short description of the task
 
+When start a new task, it will kill the previous task. If you want to keep the task
+run in background, set `isBackground` to `true`.
+
 SpaceVim supports variable substitution in task, The following predefined variables are supported:
 
 - **\${workspaceFolder}**: - the project root directory
