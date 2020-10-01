@@ -165,18 +165,20 @@ endfunction
 function! s:update_tasks_win_context() abort
   let lines = ['Task                    Type          Command']
   for task in keys(s:conf)
-    let line = '[' . task . ']' . repeat(' ', 22 - strlen(task))
     if has_key(s:conf[task], 'isGlobal') && s:conf[task].isGlobal ==# 1
+      let line = '[' . task . ']' . repeat(' ', 22 - strlen(task))
       let line .= 'global        '
     elseif has_key(s:conf[task], 'isDetected') && s:conf[task].isDetected ==# 1
+      let line = '[' . s:conf[task].detectedName . task . ']' . repeat(' ', 22 - strlen(task . s:conf[task].detectedName))
       let line .= 'detected      '
     else
+      let line = '[' . task . ']' . repeat(' ', 22 - strlen(task))
       let line .= 'local         '
     endif
     let line .= get(s:conf[task], 'description', 'no description')
     call add(lines, line)
   endfor
-  call s:BUF.buf_set_lines(s:bufnr, 0, -1, 0, lines)
+  call s:BUF.buf_set_lines(s:bufnr, 0, -1, 0, sort(lines))
 endfunction
 
 function! SpaceVim#plugins#tasks#edit(...) abort
