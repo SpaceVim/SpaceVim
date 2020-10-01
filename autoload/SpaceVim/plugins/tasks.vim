@@ -123,10 +123,11 @@ endfunction
 " list all the tasks
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! SpaceVim#plugins#tasks#list()
+function! SpaceVim#plugins#tasks#list() abort
   call s:load()
   call s:init_variables()
   call s:open_tasks_list_win()
+  call s:update_tasks_win_context()
 endfunction
 
 
@@ -155,6 +156,10 @@ function! s:open_tasks_list_win() abort
         \ nomodifiable
   set filetype=SpaceVimTasksInfo
   let s:bufnr = bufnr('%')
+endfunction
+
+function! s:update_tasks_win_context() abort
+  
 endfunction
 
 function! SpaceVim#plugins#tasks#edit(...) abort
