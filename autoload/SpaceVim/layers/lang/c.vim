@@ -46,7 +46,7 @@
 "     name = "lang#c"
 "     clang_executable = "/usr/bin/clang"
 "     clang_flag = ['-I/user/include']
-"     [layer.clang_std]
+"     [layers.clang_std]
 "       c = "c11"
 "       cpp = "c++1z"
 "       objc = "c11"
@@ -236,6 +236,8 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
   let s:clang_flag = get(a:var, 'clang_flag', s:clang_flag)
 
   let s:enable_clang_syntax = get(a:var, 'enable_clang_syntax_highlight', s:enable_clang_syntax)
+
+  call extend(s:clang_std, get(a:var, 'clang_std', {}))
 endfunction
 
 function! s:language_specified_mappings() abort
