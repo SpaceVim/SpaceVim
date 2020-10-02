@@ -177,13 +177,12 @@ function! s:find_root_directory() abort
   " @question confused about expand and fnamemodify
   " ref: https://github.com/vim/vim/issues/6793
   
-  " get the current path of buffer
-  " If it is a empty buffer, do nothing?
+  " get the current path of buffer or working dir
   let fd = expand('%:p')
   if empty(fd)
-    call s:LOGGER.info('buffer name is empty, skipped!')
-    return ''
+    let fd = getcwd()
   endif
+
   let dirs = []
   call s:LOGGER.info('Start to find root for: ' . s:FILE.unify_path(fd))
   for pattern in s:project_rooter_patterns
