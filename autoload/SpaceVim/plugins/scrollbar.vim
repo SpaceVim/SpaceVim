@@ -7,6 +7,8 @@
 "=============================================================================
 
 let s:VIM = SpaceVim#api#import('vim')
+let s:BUF = SpaceVim#api#import('vim#buffer')
+let s:WIN = SpaceVim#api#import('vim#window')
 
 scriptencoding utf-8
 
@@ -27,6 +29,10 @@ let s:default = {
       \        'tail' : 'Normal',
       \    }
       \ }
+
+augroup spacevim_scrollbar
+  autocmd!
+augroup END
 
 
 " vim script do not support metatable function
@@ -87,12 +93,13 @@ function! s:next_buf_index() abort
 endfunction
 
 function! s:create_buf(size, lines) abort
-  noautocmd let bufnr = nvim_create_buf(0, 1)
+  noautocmd let bufnr = s:BUF.create_buf(0, 1)
   noautocmd call nvim_buf_set_option(bufnr, 'filetype', 'scrollbar')
+  " noautocmd call nvim_buf_set_option(bufnr, 'bufhidden', 'wipe')
   noautocmd call nvim_buf_set_name(bufnr, 'scrollbar_' . s:next_buf_index())
   noautocmd call nvim_buf_set_lines(bufnr, 0, a:size, 0, a:lines)
-
   call s:add_highlight(bufnr, a:size)
+  " exe printf('au spacevim_scrollbar BufDelete <buffer=%s>  call SpaceVim#plugins#scrollbar#clear()', bufnr)
   return bufnr
 endfunction
 
@@ -143,10 +150,10 @@ function! SpaceVim#plugins#scrollbar#show(...) abort
   let state = s:buf_get_var(bufnr, 'scrollbar_state')
   if !empty(state)
     let bar_bufnr = state.bufnr
-    if !has_key(state, 'winnr')
-      noautocmd let bar_winnr = nvim_open_win(bar_bufnr, 0, opts)
-    else
+    if has_key(state, 'winnr') && win_id2win(state.winnr) > 0
       let bar_winnr = state.winnr
+    else
+      noautocmd let bar_winnr = nvim_open_win(bar_bufnr, 0, opts)
     endif
     if state.size !=# bar_size
       noautocmd call nvim_buf_set_lines(bar_bufnr, 0, -1, 0, [])
