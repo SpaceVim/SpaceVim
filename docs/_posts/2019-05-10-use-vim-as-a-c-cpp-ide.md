@@ -19,6 +19,7 @@ Each of the following sections will be covered:
 - [code completion](#code-completion)
 - [alternate file jumping](#alternate-file-jumping)
 - [code running](#code-running)
+- [Syntax lint](#syntax-lint)
 - [code format](#code-format)
 - [REPL support](#repl-support)
 
@@ -66,6 +67,29 @@ And the stdout will be shown on a runner buffer.
 
 ![c-cpp-runner](https://user-images.githubusercontent.com/13142418/58743787-db2bee80-846a-11e9-9b19-17202ac542c9.png)
 
+The default runner compile option is defineded in `clang_std` and `clang_flag` option.
+If you want to use `c++11`, you can change `clang_std` option to:
+
+```toml
+[[layers]]
+  name = "lang#c"
+  [layer.clang_std]
+    cpp = "c11"
+```
+
+You can also create a `.clang` file in the root directory of you project. Within this
+file, all compile option should be defineded in it. for example:
+
+```
+-I/home/test
+-I/user/std/include
+```
+
+### Syntax lint
+
+The [checker](../layers/checkers/) layer provides syntax checking for many programming languages.
+Including C/C++, and the default plugin is [neomake](https://github.com/neomake/neomake). The default
+lint for C/C++ is `gcc`/`g++`. These commands also read configuration in `.clang` file.
 
 ### code format
 
