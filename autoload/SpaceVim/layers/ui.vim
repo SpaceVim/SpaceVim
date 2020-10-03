@@ -58,7 +58,8 @@ function! SpaceVim#layers#ui#config() abort
     noremap <silent> <F2> :TagbarToggle<CR>
   endif
 
-  if s:enable_scrollbar
+  " this options only support neovim now.
+  if s:enable_scrollbar && has('nvim')
     augroup spacevim_layer_ui
         autocmd!
         autocmd BufEnter,CursorMoved,VimResized,FocusGained    * call SpaceVim#plugins#scrollbar#show()
