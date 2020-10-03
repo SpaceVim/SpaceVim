@@ -29,6 +29,10 @@ let s:default = {
       \    }
       \ }
 
+augroup spacevim_scrollbar
+  autocmd!
+augroup END
+
 
 " vim script do not support metatable function
 
@@ -90,10 +94,11 @@ endfunction
 function! s:create_buf(size, lines) abort
   noautocmd let bufnr = s:BUF.create_buf(0, 1)
   noautocmd call nvim_buf_set_option(bufnr, 'filetype', 'scrollbar')
+  noautocmd call nvim_buf_set_option(bufnr, 'bufhidden', 'wipe')
   noautocmd call nvim_buf_set_name(bufnr, 'scrollbar_' . s:next_buf_index())
   noautocmd call nvim_buf_set_lines(bufnr, 0, a:size, 0, a:lines)
-
   call s:add_highlight(bufnr, a:size)
+  exe printf('au spacevim_scrollbar BufWipeout <buffer=%s>  call SpaceVim#plugins#scrollbar#clear(%s)', bufnr, bufnr)
   return bufnr
 endfunction
 
