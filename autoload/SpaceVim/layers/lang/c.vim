@@ -6,6 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
+" Layer doc {{{
 
 ""
 " @section lang#c, layer-lang-c
@@ -80,8 +81,9 @@
 "   SPC l s s       send selection text
 " <
 "
+" }}}
 
-
+" Init layer options {{{
 if exists('s:clang_executable')
   finish
 else
@@ -93,11 +95,18 @@ else
         \ 'objc': 'c11',
         \ 'objcpp': 'c++1z',
         \ }
+  let s:highlight_cmd = ''
+  let s:enable_clang_syntax = 0
+  let s:c_repl_command = ''
 endif
+" }}}
+
+" Load the APIs{{{
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:CPT = SpaceVim#api#import('vim#compatible')
+" }}}
 
-
+" plugins {{{
 function! SpaceVim#layers#lang#c#plugins() abort
   let plugins = []
   if !SpaceVim#layers#lsp#check_filetype('c') && !SpaceVim#layers#lsp#check_filetype('cpp')
@@ -135,7 +144,9 @@ function! SpaceVim#layers#lang#c#plugins() abort
   endif
   return plugins
 endfunction
+" }}}
 
+" config {{{
 function! SpaceVim#layers#lang#c#config() abort
   call SpaceVim#mapping#gd#add('c',
         \ function('s:go_to_def'))
@@ -190,20 +201,18 @@ function! SpaceVim#layers#lang#c#config() abort
     let s:highlight_cmd = 'ClighterEnable'
   endif
 endfunction
+" }}}
 
-let s:highlight_cmd = ''
-
+" local function: highlight {{{
 function! s:highlight() abort
   try
     exe s:highlight_cmd
   catch
   endtry
 endfunction
+" }}}
 
-let s:enable_clang_syntax = 0
-
-let s:c_repl_command = ''
-
+" set_variable {{{
 function! SpaceVim#layers#lang#c#set_variable(var) abort
   if has_key(a:var, 'clang_executable')
     let g:completor_clang_binary = a:var.clang_executable
@@ -239,7 +248,9 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
 
   call extend(s:clang_std, get(a:var, 'clang_std', {}))
 endfunction
+" }}}
 
+" local function: language_specified_mappings {{{
 function! s:language_specified_mappings() abort
 
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
@@ -282,8 +293,9 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
 endfunction
+" }}}
 
-
+" local function: update_clang_flag {{{
 function! s:update_clang_flag() abort
   if filereadable('.clang')
     let argvs = readfile('.clang')
@@ -293,7 +305,9 @@ function! s:update_clang_flag() abort
     call s:update_runner(argvs, ['c', 'cpp'])
   endif
 endfunction
+" }}}
 
+" local function: update_checkers_argv {{{
 if g:spacevim_enable_neomake && g:spacevim_enable_ale == 0
   function! s:update_checkers_argv(argv, fts) abort
     for ft in a:fts
@@ -326,11 +340,15 @@ else
 
   endfunction
 endif
+" }}}
 
+" local function: update_autocomplete_argv {{{
 function! s:update_autocomplete_argv(argv, fts) abort
 
 endfunction
+" }}}
 
+" local function: has_std {{{
 function! s:has_std(argv) abort
   for line in a:argv
     if line =~# '^-std='
@@ -338,7 +356,9 @@ function! s:has_std(argv) abort
     endif
   endfor
 endfunction
+" }}}
 
+" local function: update_runner {{{
 function! s:update_runner(argv, fts) abort
   if s:has_std(a:argv)
     let default_std = 1
@@ -364,7 +384,9 @@ function! s:update_runner(argv, fts) abort
     call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])
   endif
 endfunction
+" }}}
 
+" local function: update_neoinclude {{{
 function! s:update_neoinclude(argv, fts) abort
   if s:SYSTEM.isLinux
     let path = '.,/usr/include,,' 
@@ -378,7 +400,9 @@ function! s:update_neoinclude(argv, fts) abort
   endfor
   let b:neoinclude_paths = path
 endfunction
+" }}}
 
+" local function: go_to_def {{{
 function! s:go_to_def() abort
   if !SpaceVim#layers#lsp#check_filetype(&ft)
     execute "norm! g\<c-]>"
@@ -386,3 +410,4 @@ function! s:go_to_def() abort
     call SpaceVim#lsp#go_to_def()
   endif
 endfunction
+" }}}
