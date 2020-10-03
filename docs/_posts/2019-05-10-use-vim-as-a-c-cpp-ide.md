@@ -16,6 +16,7 @@ Each of the following sections will be covered:
 <!-- vim-markdown-toc GFM -->
 
 - [Enable language layer](#enable-language-layer)
+- [Syntax highlighting](#syntax-highlighting)
 - [code completion](#code-completion)
 - [alternate file jumping](#alternate-file-jumping)
 - [code running](#code-running)
@@ -36,6 +37,19 @@ SpaceVim configuration file, and add following configuration:
 ```
 
 for more info, you can read the [lang#c](../layers/lang/c/) layer documentation.
+
+### Syntax highlighting
+
+The basic syntax highlighting is based on regular expression, If you want `clang` based
+syntax highlighting. Enable `enable_clang_syntax_highlight` layer option:
+
+```toml
+[[layers]]
+    name = 'lang#c'
+    enable_clang_syntax_highlight = true
+```
+
+This option requires `+python` or `+python3` enabled and `libclang` has been installed.
 
 ### code completion
 
