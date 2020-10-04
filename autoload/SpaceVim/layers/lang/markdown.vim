@@ -54,6 +54,10 @@ function! SpaceVim#layers#lang#markdown#config() abort
   let g:markdown_fenced_languages = []
   let g:markdown_nested_languages = map(filter(SpaceVim#layers#get(),
         \ 'v:val =~# "^lang#" && v:val !=# "lang#markdown" && v:val !=# "lang#ipynb" && v:val !=# "lang#vim"'), 'v:val[5:]')
+  if index(g:markdown_nested_languages, 'latex') !=# -1
+    call remove(g:markdown_nested_languages, 'latex')
+    call add(g:markdown_nested_languages, 'tex')
+  endif
   let g:vmt_list_item_char = s:md_listItemChar
   let g:markdown_minlines = 100
   let g:markdown_syntax_conceal = 0
