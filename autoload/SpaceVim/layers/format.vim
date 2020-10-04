@@ -36,7 +36,7 @@ function! SpaceVim#layers#format#plugins() abort
 endfunction
 
 function! SpaceVim#layers#format#config() abort
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Neoformat', 'format-code', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], ":Neoformat\<Enter>", 'format-code', 0, 1)
   augroup spacevim_layer_format
     autocmd!
     autocmd BufWritePre * call s:format()
