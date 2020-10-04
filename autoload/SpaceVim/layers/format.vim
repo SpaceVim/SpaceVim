@@ -19,18 +19,31 @@
 if exists('s:format_on_save')
   finish
 else
+  let s:format_method = 'neoformat'
   let s:format_on_save = 0
   let s:format_ft = []
 endif
 
 function! SpaceVim#layers#format#plugins() abort
-  return [
-        \ [g:_spacevim_root_dir . 'bundle/neoformat', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
-        \ ]
+  if s:format_method ==# 'neoformat'
+    return [
+          \ [g:_spacevim_root_dir . 'bundle/neoformat', {'merged' : 0, 'loadconf' : 1, 'loadconf_before' : 1}],
+          \ ]
+  elseif s:format_method ==# 'codefmt'
+    return [
+          \ ['google/vim-maktaba', {'merged' : 0}],
+          \ ['google/vim-glaive', {'merged' : 0, 'loadconf' : 1}],
+          \ ['google/vim-codefmt', {'merged' : 0}],
+          \ ]
+  endif
 endfunction
 
 function! SpaceVim#layers#format#config() abort
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Neoformat', 'format-code', 1)
+  if s:format_method ==# 'neoformat'
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Neoformat', 'format-code', 1)
+  elseif s:format_method ==# 'codefmt'
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'FormatCode', 'format-code', 1)
+  endif
   augroup spacevim_layer_format
     autocmd!
     autocmd BufWritePre * call s:format()
@@ -38,13 +51,12 @@ function! SpaceVim#layers#format#config() abort
 endfunction
 
 function! SpaceVim#layers#format#set_variable(var) abort
+  let s:format_method = get(a:var, 'format_method', s:format_method)
   let s:format_on_save = get(a:var, 'format_on_save', s:format_on_save)
 endfunction
 
 function! SpaceVim#layers#format#get_options() abort
-
-  return ['format_on_save']
-
+  return ['format_method', 'format_on_save']
 endfunction
 
 function! SpaceVim#layers#format#add_filetype(ft) abort
@@ -62,6 +74,10 @@ endfunction
 function! s:format() abort
   if !empty(&ft) &&
         \ ( index(s:format_ft, &ft) !=# -1 || s:format_on_save ==# 1)
-    undojoin | Neoformat
+    if s:format_method ==# 'neoformat'
+      undojoin | Neoformat
+    elseif s:format_method ==# 'codefmt'
+      undojoin | FormatCode
+    endif
   endif
 endfunction
