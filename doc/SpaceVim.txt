@@ -1452,8 +1452,15 @@ FORMAT                                                 *SpaceVim-layer-format*
 format layer provides code formation for SpaceVim, the default formatting
 plugin is |neoformat|.
 OPTIONS
-format_on_save: disabled by default.
 
+`format_on_save`: disabled by default.
+
+KEY BINDINGS
+
+>
+  Key binding     Description
+  SPC b f         format current buffer or selection lines
+<
 
 
 ==============================================================================
