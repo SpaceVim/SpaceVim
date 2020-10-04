@@ -230,7 +230,7 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '/'], 'belowright vsplit | wincmd w',
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '/'], 'vsplit | wincmd w',
         \ ['split-windows-right',
         \ [
         \ '[SPC w /] is to split windows on the right',
@@ -240,7 +240,7 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'], 'belowright vsplit | wincmd w',
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'], 'vsplit | wincmd w',
         \ ['split-windows-right',
         \ [
         \ '[SPC w v] is to split windows on the right',
@@ -250,7 +250,7 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '-'], 'bel split | wincmd w',
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '-'], 'split | wincmd w',
         \ ['split-windows-below',
         \ [
         \ '[SPC w -] is to split windows below',
@@ -260,7 +260,7 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 's'], 'bel split | wincmd w',
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 's'], 'split | wincmd w',
         \ ['split-windows-below',
         \ [
         \ '[SPC w s] is to split windows below',
@@ -270,7 +270,7 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'S'], 'bel split',
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'S'], 'split',
         \ ['split-focus-windows-below',
         \ [
         \ '[SPC w S] is to split windows below and focus on new windows',
@@ -280,7 +280,7 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '2'], 'silent only | vs | wincmd w',
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '2'], 'silent only | vsplit | wincmd w',
         \ ['layout-double-columns',
         \ [
         \ '[SPC w 2] is to change current windows layout to double columns',
@@ -290,7 +290,7 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '3'], 'silent only | vs | vs | wincmd H',
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '3'], 'silent only | vsplit | vsplit | wincmd H',
         \ ['layout-three-columns',
         \ [
         \ '[SPC w 3] is to change current windows layout to three columns',
@@ -300,7 +300,7 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'V'],
-        \ 'bel vs', 'split-window-right-focus', 1)
+        \ 'vsplit', 'split-window-right-focus', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', '='],
         \ 'wincmd =', 'balance-windows', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'w'],
