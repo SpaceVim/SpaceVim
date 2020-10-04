@@ -1625,7 +1625,7 @@ Here is an example how to use above options:
     name = "lang#c"
     clang_executable = "/usr/bin/clang"
     clang_flag = ['-I/user/include']
-    [layer.clang_std]
+    [layers.clang_std]
       c = "c11"
       cpp = "c++1z"
       objc = "c11"
@@ -1660,6 +1660,7 @@ This layer also provides REPL support for c, the key bindings are:
   SPC l s s       send selection text
 <
 
+}}}
 
 ==============================================================================
 LANG#CHAPEL                                       *SpaceVim-layer-lang-chapel*
