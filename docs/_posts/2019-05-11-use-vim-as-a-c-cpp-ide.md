@@ -19,6 +19,7 @@ SpaceVim 是一个模块化的 Vim IDE，针对 C/C++ 语言的支持主要依�
 <!-- vim-markdown-toc GFM -->
 
 - [安装模块](#安装模块)
+- [语法高亮](#语法高亮)
 - [代码自动补全](#代码自动补全)
 - [语法检查](#语法检查)
 - [工程文件跳转](#工程文件跳转)
@@ -39,6 +40,19 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 ```
 
 启用 `lang#c` 模块后，在打开 C/C++ 文件时，就可以使用语言专属快捷键，这些快捷键都是以 `SPC l` 为前缀的。
+
+### 语法高亮
+
+基础的语法高亮是基于正则表达式的，如果需要基于 `clang` 解析的语法高亮，
+可以启用 `enable_clang_syntax_highlight` 这一模块选项：
+
+```toml
+[[layers]]
+    name = 'lang#c'
+    enable_clang_syntax_highlight = true
+```
+
+这一功能需要 Vim/Neovim 支持 `+python` 或者 `+python3`，并且安装了 `libclang`。
 
 ### 代码自动补全
 
