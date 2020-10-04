@@ -82,7 +82,7 @@ And the stdout will be shown on a runner buffer.
 ![c-cpp-runner](https://user-images.githubusercontent.com/13142418/58743787-db2bee80-846a-11e9-9b19-17202ac542c9.png)
 
 The default runner compile option is defineded in `clang_std` and `clang_flag` option.
-If you want to use `c++11`, you can change `clang_std` option to:
+If you want to use `c11`, you can change `clang_std` option to:
 
 ```toml
 [[layers]]

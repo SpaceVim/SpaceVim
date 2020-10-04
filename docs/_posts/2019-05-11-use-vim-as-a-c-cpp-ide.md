@@ -113,6 +113,24 @@ C/C++ 代码格式化，主要依赖 `format` 模块，快捷键为 `SPC b f`，
 
 ![c-cpp-runner](https://user-images.githubusercontent.com/13142418/58743787-db2bee80-846a-11e9-9b19-17202ac542c9.png)
 
+默认的代码快速运行命令会读取模块选项 `clang_std` 和 `clang_flag`。
+例如，如果需要使用 `c11`，可以设置 `clang_std` 选项如下：
+
+```toml
+[[layers]]
+  name = "lang#c"
+  [layer.clang_std]
+    cpp = "c11"
+```
+
+与此同时，你也可以在项目根目录新建一个 `.clang` 文件，在其内逐行写入 C/C++ 编译的参数，
+比如：
+
+```
+-I/home/test
+-I/user/std/include
+```
+
 ### 交互式编程
 
 在编辑 C/C++ 文件时，可通过快捷键 `SPC l s i` 启动 `php -a` 交互窗口，
