@@ -6,6 +6,8 @@
 " License: GPLv3
 "=============================================================================
 
+scriptencoding utf-8
+
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:SYS = SpaceVim#api#import('system')
@@ -385,9 +387,21 @@ endfunction
 
 function! s:outline(...) abort
   let s:source = 'outline'
+  " Error detected while processing function <SNR>55_outline[5]..<SNR>55_outline_source:
+  " line   11:
+  " E605: Exception not caught: 系统找不到指定的路径。
+  " This error is because `2>/dev/null` is not supported in window
+  " let tag_cmds = [
+        " \ printf('ctags -f - --sort=no --excmd=number --language-force=%s %s 2>/dev/null', &filetype, expand('%:S')),
+        " \ printf('ctags -f - --sort=no --excmd=number %s 2>/dev/null', expand('%:S'))]
+  if s:SYS.isWindows
+    let redirect = ''
+  else
+    let redirect = '2>/dev/null'
+  endif
   let tag_cmds = [
-        \ printf('ctags -f - --sort=no --excmd=number --language-force=%s %s 2>/dev/null', &filetype, expand('%:S')),
-        \ printf('ctags -f - --sort=no --excmd=number %s 2>/dev/null', expand('%:S'))]
+        \ printf('ctags -f - --sort=no --excmd=number --language-force=%s %s %s', &filetype, expand('%:S'), redirect),
+        \ printf('ctags -f - --sort=no --excmd=number %s %s', expand('%:S'), redirect)]
   return {
         \ 'source':  s:outline_source(tag_cmds),
         \ 'sink*':   function('s:outline_sink'),
