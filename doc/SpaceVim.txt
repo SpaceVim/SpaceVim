@@ -3720,6 +3720,10 @@ is_float({winnr})
   Check if the window is a floating windows, return `v:true` if the window
 is a floating window.
 
+winexists({winid})
+
+  Check if the window with {winid} exists in current tabpage.
+
 ==============================================================================
 VIM#COMMAND                                         *SpaceVim-api-vim-command*
 
