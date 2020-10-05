@@ -13,7 +13,7 @@ let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#fzf#plugins() abort
   let plugins = []
-  call add(plugins, ['junegunn/fzf',                { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/fzf',{'merged' : 0}])
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
   call add(plugins, ['SpaceVim/fzf-neoyank',                { 'merged' : 0}])
@@ -551,11 +551,11 @@ function! s:tags() abort
   endif
 
   call fzf#run({
-  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
-  \            '| grep -v -a ^!',
-  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index --reverse',
-  \ 'down':    '40%',
-  \ 'sink':    function('s:tags_sink')})
+        \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+        \            '| grep -v -a ^!',
+        \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index --reverse',
+        \ 'down':    '40%',
+        \ 'sink':    function('s:tags_sink')})
 endfunction
 
 command! FzfTags call s:tags()
