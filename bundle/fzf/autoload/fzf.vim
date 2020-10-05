@@ -28,15 +28,16 @@ let g:loaded_fzf = 1
 
 let s:is_win = has('win32') || has('win64')
 if s:is_win && &shellslash
+  let s:saved_shellslash = &shellslash
   set noshellslash
   let s:base_dir = expand('<sfile>:h:h')
-  set shellslash
+  let &shellslash = s:saved_shellslash
+  unlet s:saved_shellslash
 else
   let s:base_dir = expand('<sfile>:h:h')
 endif
 if s:is_win
   let s:term_marker = '&::FZF'
-
   function! s:fzf_call(fn, ...)
     let shellslash = &shellslash
     try
