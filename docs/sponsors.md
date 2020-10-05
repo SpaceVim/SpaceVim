@@ -15,7 +15,7 @@ description: "The companies or individuals contributing a monthly amount to help
 
 SpaceVim is an open source project. Please consider supporting SpaceVim by:
 
-- [Become a backer on BountySource](https://www.bountysource.com/teams/spacevim)
+- [Become a backer on BountySource](https://salt.bountysource.com/teams/spacevim)
 - [Become a backer on opencollective](https://opencollective.com/spacevim)
 
 Also, you can buy us a coffee:
