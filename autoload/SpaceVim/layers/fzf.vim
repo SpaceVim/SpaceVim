@@ -249,10 +249,10 @@ function! s:jumps() abort
     return split(s:CMP.execute('jumps'), '\n')[1:]
   endfunction
   call fzf#run(fzf#wrap('jumps', {
-        \   'source':  reverse(<sid>jumplist()),
+        \   'source':  <sid>jumplist(),
         \   'sink':    function('s:bufopen'),
-        \   'options': '+m',
-        \   'down':    len(<sid>jumplist()) + 2
+        \   'options': '--reverse',
+        \   'down':  '40%',
         \ }))
 endfunction
 
@@ -269,10 +269,10 @@ function! s:message() abort
     return split(s:CMP.execute('message'), '\n')
   endfunction
   call fzf#run(fzf#wrap('messages', {
-        \   'source':  reverse(<sid>messagelist()),
+        \   'source':  <sid>messagelist(),
         \   'sink':    function('s:yankmessage'),
-        \   'options': '+m',
-        \   'down':    len(<sid>messagelist()) + 2
+        \   'options': '--reverse',
+        \   'down':    '40%'
         \ }))
 endfunction
 
