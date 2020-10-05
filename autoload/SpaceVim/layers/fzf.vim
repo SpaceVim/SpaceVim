@@ -356,10 +356,6 @@ function! s:outline_format(lists) abort
 endfunction
 
 function! s:outline_source(tag_cmds) abort
-  if !filereadable(expand('%'))
-    throw 'Save the file first'
-  endif
-
   let lines = []
   for cmd in a:tag_cmds
     let lines = split(system(cmd), "\n")
@@ -368,7 +364,12 @@ function! s:outline_source(tag_cmds) abort
     endif
   endfor
   if v:shell_error
-    throw get(lines, 0, 'Failed to extract tags')
+    if s:SYS.isWindows
+      let codepage = libcallnr('kernel32.dll', 'GetACP', 0)
+      throw iconv(get(lines, 0, 'Failed to extract tags'), 'cp'. codepage, 'utf-8')
+    else
+      throw get(lines, 0, 'Failed to extract tags')
+    endif
   elseif empty(lines)
     throw 'No tags found'
   endif
