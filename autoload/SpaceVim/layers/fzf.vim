@@ -395,7 +395,7 @@ function! s:outline(...) abort
         " \ printf('ctags -f - --sort=no --excmd=number --language-force=%s %s 2>/dev/null', &filetype, expand('%:S')),
         " \ printf('ctags -f - --sort=no --excmd=number %s 2>/dev/null', expand('%:S'))]
   if s:SYS.isWindows
-    let redirect = ''
+    let redirect = '2>nul'
   else
     let redirect = '2>/dev/null'
   endif
