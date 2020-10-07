@@ -82,25 +82,14 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 a
 
 ### 代码格式化
 
-Clojure 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 [prettier](https://prettier.io/)，默认快捷键为 `SPC b f` ：
-
-```toml
-[[layers]]
-  name = "format"
-```
-
-使用 npm 安装 prettier：
-
-```
-npm install --save-dev --save-exact prettier
-```
+Clojure 代码格式化，主要依赖 `format` 模块，同时需要安装相关的后台命令 `cljfmt`，默认快捷键为 `SPC b f` ：
 
 ### 交互式编程
 
-在编辑 Clojure 文件时，可通过快捷键 `SPC l s i` 启动 `kotlinc-jvm` 交互窗口，
+在编辑 Clojure 文件时，可通过快捷键 `SPC l s i` 启动 `clojure` 交互窗口，
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
-![clojure-repl](https://user-images.githubusercontent.com/13142418/94289606-84192980-ff8b-11ea-84c8-1547741f377c.png)
+![clojure-repl](https://user-images.githubusercontent.com/13142418/95341519-f1f91580-08e8-11eb-9280-04f89875dc78.png)
 
 ### 任务管理
 
@@ -108,13 +97,11 @@ npm install --save-dev --save-exact prettier
 
 ```toml
 [gradle-build]
-    command = 'gradlew'
-    args = ['build']
+    command = 'lein'
+    args = ['run']
 ```
 
 更多关于任务管理的配置教程，可以阅读 [task 文档](../documentation/#任务管理)
 
-
 这篇文章还未完结，新的内容后续会继续更新，如果想要帮助改善这篇文章，
 可以加入 [SpaceVim 中文聊天室](https://gitter.im/SpaceVim/cn) 一起交流。
-
