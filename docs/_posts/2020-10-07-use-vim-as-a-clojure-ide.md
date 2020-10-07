@@ -13,6 +13,8 @@ commentsID: "Use Vim as a Clojure IDE"
 This is a general guide for using SpaceVim as a Clojure IDE, including layer configuration and usage. 
 Each of the following sections will be covered:
 
+![clojure-ide](https://user-images.githubusercontent.com/13142418/95338841-f07a1e00-08e5-11eb-9e1b-6dbc5c4ad7de.png)
+
 <!-- vim-markdown-toc GFM -->
 
 - [Enable language layer](#enable-language-layer)
@@ -78,13 +80,10 @@ And the default key binding is `SPC b f`.
 
 ### Tasks manage
 
-SpaceVim will detect `lein` project tasks automatically. If there is `project.clj` file in the root directory
+SpaceVim will detect [`lein`](https://leiningen.org/) project tasks automatically. If there is `project.clj` file in the root directory
 of your project. following tasks will be detected:
 
-```
-lein:run
-lein:test
-```
+![taskmanager](https://user-images.githubusercontent.com/13142418/95338987-1a334500-08e6-11eb-80c4-ad811095d8c8.png)
 
 To select a tast to run, use key binding `SPC p t r`, you can also use `SPC p t l` to list all the tasks
 in the tasks manager window.
