@@ -78,4 +78,13 @@ And the default key binding is `SPC b f`.
 
 ### Tasks manage
 
-For `lein` project, 
+SpaceVim will detect `lein` project tasks automatically. If there is `project.clj` file in the root directory
+of your project. following tasks will be detected:
+
+```
+lein:run
+lein:test
+```
+
+To select a tast to run, use key binding `SPC p t r`, you can also use `SPC p t l` to list all the tasks
+in the tasks manager window.
