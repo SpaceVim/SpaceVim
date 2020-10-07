@@ -38,7 +38,10 @@ endfunction
 
 function! SpaceVim#layers#lang#clojure#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('clojure', function('s:language_specified_mappings'))
-  call SpaceVim#plugins#runner#reg_runner('clojure', 'cmd-clj %s')
+  " in Window, if install clojure via scoop install clojure, the command is
+  " cmd-clj
+  let clojure = get(filter(['cmd-clj'], 'executable(v:val)'), 0, 'clojure')
+  call SpaceVim#plugins#runner#reg_runner('clojure', clojure . ' -M %s')
   call SpaceVim#plugins#repl#reg('clojure', 'cmd-clj')
 endfunction
 
