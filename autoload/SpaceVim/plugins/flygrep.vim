@@ -578,6 +578,11 @@ function! s:open_item_horizontally() abort
   endif
 endfunction
 
+function! s:apply_to_quickfix() abort
+  " let searching_result =
+  
+endfunction
+
 function! s:double_click() abort
   if line('.') !=# ''
     if s:grepid != 0
