@@ -579,10 +579,25 @@ function! s:open_item_horizontally() abort
 endfunction
 
 function! s:apply_to_quickfix() abort
-  let searching_result = s:BUFFER.buf_get_lines(s:buffer_id, 0, -1, 0)
-  if !empty(searching_result)
-    cexpr! join(searching_result, "\n")
-    copen
+  let s:MPT._handle_fly = function('s:flygrep')
+  if getline('.') !=# ''
+    if s:grepid != 0
+      call s:JOB.stop(s:grepid)
+    endif
+    call s:MPT._clear_prompt()
+    let s:MPT._quit = 1
+    if s:preview_able == 1
+      call s:close_preview_win()
+    endif
+    let s:preview_able = 0
+    let searching_result = s:BUFFER.buf_get_lines(s:buffer_id, 0, -1, 0)
+    noautocmd q
+    call s:update_history()
+    if !empty(searching_result)
+      cexpr! join(searching_result, "\n")
+      copen
+    endif
+    noautocmd normal! :
   endif
 endfunction
 
