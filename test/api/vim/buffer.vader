@@ -30,3 +30,11 @@ Execute ( SpaceVim api: vim#buffer add_highlight):
   let nr = buffer.bufnr()
   call buffer.add_highlight(nr,'String', 1, 1, 1)
   AssertEqual highlit.syntax_at(1, 1), 'String'
+
+Execute ( SpaceVim api: vim#buffer buf_get_lines):
+  let buffer = SpaceVim#api#import('vim#buffer')
+  let nr = buffer.bufadd('')
+  call setbufvar(nr, '&buftype', 'nofile')
+  call setbufvar(nr, '&buflisted', 0)
+  call buffer.buf_set_lines(nr, 0, 1, 0, ['line 1', 'line 2', 'line 3', 'line 4'])
+  AssertEqual buffer.buf_get_lines(nr, 1, 2, 0), ['line 2']
