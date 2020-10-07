@@ -43,6 +43,7 @@ function! SpaceVim#layers#lang#clojure#config() abort
   let clojure = get(filter(['cmd-clj'], 'executable(v:val)'), 0, 'clojure')
   call SpaceVim#plugins#runner#reg_runner('clojure', clojure . ' -M %s')
   call SpaceVim#plugins#repl#reg('clojure', 'cmd-clj')
+  call SpaceVim#plugins#tasks#reg_provider(funcref('s:lein_tasks'))
 endfunction
 
 " Add language specific mappings
@@ -61,4 +62,16 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+endfunction
+
+function! s:lein_tasks() abort
+  let detect_task = {}
+  if filereadable('project.clj')
+    for task_name in ['run', 'test']
+      call extend(detect_task, {
+            \ task_name : {'command' : 'lein', 'args' : [task_name], 'isDetected' : 1, 'detectedName' : 'lein:'}
+            \ })
+    endfor
+  endif
+  return detect_task
 endfunction

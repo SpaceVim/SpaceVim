@@ -11,6 +11,7 @@ description: "This layer is for Clojure development, provide autocompletion, syn
 - [Features](#features)
 - [Install](#install)
   - [Layer](#layer)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -36,3 +37,7 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#clojure"
 ```
+
+## Key bindings
+
+
