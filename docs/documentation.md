@@ -1600,19 +1600,22 @@ Background search keyword in a project, when searching done, the count will be s
 
 Key bindings in FlyGrep buffer:
 
-| Key Bindings        | Descriptions                      |
-| ------------------- | --------------------------------- |
-| `<Esc>`             | close FlyGrep buffer              |
-| `<Enter>`           | open file at the cursor line      |
-| `Ctrl-t`            | open item in new tab              |
-| `<Tab>`             | move cursor line down             |
-| `Shift-<Tab>`       | move cursor line up               |
-| `<BackSpace>`       | remove last character             |
-| `Ctrl-w`            | remove the Word before the cursor |
-| `Ctrl-u`            | remove the Line before the cursor |
-| `Ctrl-k`            | remove the Line after the cursor  |
-| `Ctrl-a` / `<Home>` | Go to the beginning of the line   |
-| `Ctrl-e` / `<End>`  | Go to the end of the line         |
+| Key Bindings        | Descriptions                       |
+| ------------------- | ---------------------------------- |
+| `<Esc>`             | close FlyGrep buffer               |
+| `<Enter>`           | open file at the cursor line       |
+| `Ctrl-t`            | open item in new tab               |
+| `Ctrl-s`            | open item in split window          |
+| `Ctrl-v`            | open item in vertical split window |
+| `Ctrl-q`            | apply all items into quickfix      |
+| `<Tab>`             | move cursor line down              |
+| `Shift-<Tab>`       | move cursor line up                |
+| `<BackSpace>`       | remove last character              |
+| `Ctrl-w`            | remove the Word before the cursor  |
+| `Ctrl-u`            | remove the Line before the cursor  |
+| `Ctrl-k`            | remove the Line after the cursor   |
+| `Ctrl-a` / `<Home>` | Go to the beginning of the line    |
+| `Ctrl-e` / `<End>`  | Go to the end of the line          |
 
 #### Persistent highlighting
 
