@@ -579,8 +579,11 @@ function! s:open_item_horizontally() abort
 endfunction
 
 function! s:apply_to_quickfix() abort
-  " let searching_result =
-  
+  let searching_result = s:BUFFER.buf_get_lines(s:buffer_id, 0, -1, 0)
+  if !empty(searching_result)
+    cexpr! join(searching_result, "\n")
+    copen
+  endif
 endfunction
 
 function! s:double_click() abort
@@ -769,6 +772,7 @@ let s:MPT._function_key = {
       \ "\<C-f>" : function('s:start_filter'),
       \ "\<C-v>" : function('s:open_item_vertically'),
       \ "\<C-s>" : function('s:open_item_horizontally'),
+      \ "\<C-q>" : function('s:apply_to_quickfix'),
       \ "\<M-r>" : function('s:start_replace'),
       \ "\<C-p>" : function('s:toggle_preview'),
       \ "\<C-e>" : function('s:toggle_expr_mode'),
