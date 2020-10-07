@@ -21,6 +21,7 @@ Each of the following sections will be covered:
 - [code completion](#code-completion)
 - [alternate file jumping](#alternate-file-jumping)
 - [code running](#code-running)
+- [REPL support](#repl-support)
 - [code format](#code-format)
 - [Tasks manage](#tasks-manage)
 
@@ -69,6 +70,18 @@ The default code running key binding is `SPC l r`. It will run `clojure -M curre
 And the stdout will be shown on a runner buffer.
 
 ![clojure-runner](https://user-images.githubusercontent.com/13142418/95334765-1a7d1180-08e1-11eb-8c78-9a87d61d3d63.png)
+
+### REPL support
+
+`lang#clojure` layer provides key bindings for REPL support of clojure language.
+You can Start a `clojure` inferior REPL process with `SPC l s i`. After REPL process started,
+you can send code to `clojure` process via key bindings:
+
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |
 
 ### code format
 
