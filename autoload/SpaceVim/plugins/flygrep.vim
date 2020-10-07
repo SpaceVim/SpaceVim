@@ -594,7 +594,7 @@ function! s:apply_to_quickfix() abort
     noautocmd q
     call s:update_history()
     if !empty(searching_result)
-      cexpr! join(searching_result, "\n")
+      cgetexpr join(searching_result, "\n")
       copen
     endif
     noautocmd normal! :
