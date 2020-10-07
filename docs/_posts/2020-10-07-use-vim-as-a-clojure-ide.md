@@ -28,7 +28,9 @@ Each of the following sections will be covered:
 
 ### Enable language layer
 
-To add clojure language support in SpaceVim, you need to enable the `lang#clojure` layer.
+`lang#clojure` layer provides clojure language specific features for SpaceVim.
+This layer is not enabled by default. To write clojure language,
+you need to enable the `lang#clojure` layer.
 Press `SPC f v d` to open SpaceVim configuration file, and add following configuration:
 
 ```toml
