@@ -584,7 +584,6 @@ function! s:apply_to_quickfix() abort
     if s:grepid != 0
       call s:JOB.stop(s:grepid)
     endif
-    call s:MPT._clear_prompt()
     let s:MPT._quit = 1
     if s:preview_able == 1
       call s:close_preview_win()
@@ -595,6 +594,8 @@ function! s:apply_to_quickfix() abort
     call s:update_history()
     if !empty(searching_result)
       cgetexpr join(searching_result, "\n")
+      call setqflist([], 'a', {'title' : 'FlyGrep partten:' . s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end})
+      call s:MPT._clear_prompt()
       copen
     endif
     noautocmd normal! :
