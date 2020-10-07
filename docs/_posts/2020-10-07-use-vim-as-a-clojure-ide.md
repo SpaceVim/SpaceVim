@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Clojure IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/57321608-4a484880-7134-11e9-8e43-5fa05085d7e5.png
+image: https://user-images.githubusercontent.com/13142418/95338841-f07a1e00-08e5-11eb-9e1b-6dbc5c4ad7de.png
 description: "A general guide for using SpaceVim as Clojure IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
