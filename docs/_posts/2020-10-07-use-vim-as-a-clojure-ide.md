@@ -73,6 +73,8 @@ And the stdout will be shown on a runner buffer.
 
 ### REPL support
 
+![clojure-repl](https://user-images.githubusercontent.com/13142418/95341519-f1f91580-08e8-11eb-9280-04f89875dc78.png)
+
 `lang#clojure` layer provides key bindings for REPL support of clojure language.
 You can Start a `clojure` inferior REPL process with `SPC l s i`. After REPL process started,
 you can send code to `clojure` process via key bindings:
@@ -82,6 +84,7 @@ you can send code to `clojure` process via key bindings:
 | `SPC l s b`  | send buffer and keep code buffer focused         |
 | `SPC l s l`  | send line and keep code buffer focused           |
 | `SPC l s s`  | send selection text and keep code buffer focused |
+
 
 ### code format
 
