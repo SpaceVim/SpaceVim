@@ -20,7 +20,7 @@ function! SpaceVim#layers#lang#clojure#plugins() abort
   let plugins = []
   " if has('nvim')
   " call add(plugins, ['clojure-vim/acid.nvim', {'merged' : 0}])
-  call add(plugins, ['clojure-vim/async-clj-highlight', {'merged' : 0}])
+  " call add(plugins, ['clojure-vim/async-clj-highlight', {'merged' : 0}])
   call add(plugins, ['clojure-vim/async-clj-omni', {'merged' : 0}])
   " else
   " for vim, use guns's clojure plugin guide
