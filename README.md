@@ -30,54 +30,6 @@ The last release is [v1.5.0](https://spacevim.org/SpaceVim-release-v1.5.0/), che
 - [Documentation](https://spacevim.org/documentation/): The full documentation about using SpaceVim.
 - [Available Layers](https://spacevim.org/layers/): A list of all available layers included in SpaceVim.
 
-## Features
-
-This is a list of latest features implemented in SpaceVim:
-
-**Iedit mode**
-
-SpaceVim uses a powerful iedit mode to quick edit multiple occurrences of a symbol or selection. Two new modes:`iedit-Normal`/`iedit-Insert`.
-
-The default color for iedit is `red`/`green` which is based on the current colorscheme.
-
-![iedit mode](https://user-images.githubusercontent.com/13142418/44941560-be2a9800-add2-11e8-8fa5-e6118ff9ddcb.gif)
-
-**Highlight cursor symbol**
-
-SpaceVim supports highlighting of the current symbol on demand and adds
-a transient state to easily navigate and rename this symbol.
-
-![highlight cursor symbol](https://user-images.githubusercontent.com/13142418/36210381-e6dffde6-1163-11e8-9b35-0bf262e6f22b.gif)
-
-[**Fly Grep in Vim**](https://spacevim.org/grep-on-the-fly-in-spacevim/)
-
-With this feature, Vim will display the searching result as you type. Of course, it is running
-asynchronously. Before using this feature, you need to install a searching tool. FlyGrep works
-through search tools: `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
-
-![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
-
-[**Mnemonic key bindings navigation**](https://spacevim.org/mnemonic-key-bindings-navigation/)
-
-You don't need to remember any key bindings, as the mapping guide will show up after the <kbd>SPC</kbd> is pressed.
-The mapping guide is also available for `g`, `z`, and `s`.
-
-![float_guide](https://user-images.githubusercontent.com/13142418/89091735-5de96a00-d3de-11ea-85e1-b0fc64537836.gif)
-
-[**Help description for key bindings**](https://spacevim.org/help-description-for-key-bindings/)
-
-Use <kbd>SPC h d k</kbd> to get the help description of a key binding, and `gd` to find definition of key bindings.
-
-![describe key bindings](https://user-images.githubusercontent.com/13142418/35568829-e3c8e74c-058f-11e8-8fa8-c0e046d8add3.gif)
-
-[**Asynchronous plugin manager**](https://spacevim.org/asynchronous-plugin-manager/)
-
-Create an UI for [dein.vim](https://github.com/Shougo/dein.vim/) - the best asynchronous vim plugin manager
-
-![UI for dein](https://user-images.githubusercontent.com/13142418/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif)
-
-For more features, please read [SpaceVim's Blog](https://spacevim.org/blog/)
-
 ## Support SpaceVim
 
 This project exists thanks to all the people who [contributed](CONTRIBUTING.md),
@@ -90,7 +42,8 @@ Helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim) 
 
 For more information please check our [development guidelines](https://spacevim.org/development/).
 
-If you want to show your support financially you can buy a drink for the maintainer by clicking following icon.
+If you use SpaceVim in your daily work and feel that it has made your life easier,
+please consider buying me a coffee once in a while!
 
 <a href='https://ko-fi.com/spacevim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
