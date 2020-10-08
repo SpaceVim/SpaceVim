@@ -97,6 +97,8 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'r'], 'call call('
         \ . string(s:_function('s:flutter_run')) . ', [])',
         \ 'flutter-run', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'd'], 'call SpaceVim#plugins#runner#open("flutter doctor")',
+        \ 'flutter-doctor', 1)
 endfunction
 
 function! s:flutter_run() abort
