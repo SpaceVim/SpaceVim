@@ -1561,7 +1561,8 @@ The structure of searching tool profile is:
 | `SPC s r p`  | rg                                                  |
 | `SPC s r P`  | rg with default text                                |
 
-**Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
+**Hint**: It is also possible to search in a project without needing to open a file beforehand.
+To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
 
 #### Background searching in a project
 
@@ -1858,6 +1859,18 @@ Project manager commands start with `p`:
 | `SPC p /`    | fuzzy search for text in current project |
 | `SPC p k`    | kill all buffers of current project      |
 | `SPC p p`    | list all projects                        |
+
+`SPC p p` will list all the projects history cross vim sessions. By default
+only 20 projects will be listed. To increase it, you can change the value
+of `projects_cache_num`.
+
+To disable the cross session cacche, change `enable_projects_cache` to `false`.
+
+```toml
+[options]
+    enable_projects_cache = true
+    projects_cache_num = 20
+```
 
 #### Custom alternate file
 
