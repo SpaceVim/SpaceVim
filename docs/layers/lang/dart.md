@@ -17,7 +17,6 @@ description: "This layer is for Dart development, provide autocompletion, syntax
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
   - [Code formatting](#code-formatting)
-- [Screenshots](#screenshots)
 
 <!-- vim-markdown-toc -->
 
@@ -77,20 +76,8 @@ To running a ruby script, you can press `SPC l r` to run current file without lo
 
 ### Code formatting
 
+The code formatting is provided by `format` layer, and it will run `dartfmt` asynchronously.
+
 | Key Bindings | Descriptions          |
 | ------------ | --------------------- |
 | `SPC b f`    | format current buffer |
-
-## Screenshots
-
-**code formatting:**
-
-![format-dart-file-in-spacevim](https://user-images.githubusercontent.com/13142418/34455939-b094db54-ed4f-11e7-9df0-80cf5de1128d.gif)
-
-**auto completion:**
-
-![complete-dart-in-spacevim](https://user-images.githubusercontent.com/13142418/34455816-ee77182c-ed4c-11e7-8f63-402849f60405.png)
-
-**code runner:**
-
-![dart-runner-in-spacevim](https://user-images.githubusercontent.com/13142418/34455403-1f6d4c3e-ed44-11e7-893f-09a6e64e27ed.png)
