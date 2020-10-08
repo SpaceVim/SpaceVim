@@ -77,6 +77,8 @@ function! SpaceVim#plugins#projectmanager#open(project) abort
     Startify | VimFiler
   elseif g:spacevim_filemanager ==# 'nerdtree'
     Startify | NERDTree
+  elseif g:spacevim_filemanager ==# 'defx'
+    Startify | Defx
   endif
 endfunction
 
