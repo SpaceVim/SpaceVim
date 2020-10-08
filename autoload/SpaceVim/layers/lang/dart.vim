@@ -101,12 +101,17 @@ function! s:language_specified_mappings() abort
         \ 'flutter-doctor', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'd'], 'call SpaceVim#plugins#runner#open("flutter devices")',
         \ 'flutter-devices', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'e'], 'call SpaceVim#plugins#runner#open("flutter emulators")',
+        \ 'flutter-emulators', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'l'], 'call call('
         \ . string(s:_function('s:flutter_send')) . ', ["r"])',
         \ 'flutter-reload', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 's'], 'call call('
         \ . string(s:_function('s:flutter_send')) . ', ["R"])',
         \ 'flutter-restart', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'E'], 'call call('
+        \ . string(s:_function('s:flutter_emulators_launch')) . ', [])',
+        \ 'flutter-emulators-launch', 1)
 endfunction
 
 function! s:flutter_run() abort
@@ -144,6 +149,20 @@ endfunction
 
 function! s:on_exit(...) abort
   let s:flutter_job_id = 0
+endfunction
+
+function! s:flutter_emulators_launch() abort
+    call inputsave()
+    let emulators = input('emulators id:')
+    call inputrestore()
+    if !empty(emulators)
+      call s:JOB.start(['flutter', 'emulators', '--launch', emulators],
+          \ {
+          \ 'on_stdout' : function('s:on_stdout'),
+          \ 'on_stderr' : function('s:on_stderr'),
+          \ }
+          \ )
+    endif
 endfunction
 
 
