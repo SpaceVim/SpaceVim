@@ -17,6 +17,7 @@ description: "This layer is for Dart development, provide autocompletion, syntax
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
   - [Code formatting](#code-formatting)
+  - [Flutter integration](#flutter-integration)
 
 <!-- vim-markdown-toc -->
 
@@ -31,6 +32,7 @@ This layer is for Dart development.
 - code formatting
 - REPL
 - code runner
+- flutter integration
 
 ## Install
 
@@ -81,3 +83,15 @@ The code formatting is provided by `format` layer, and it will run `dartfmt` asy
 | Key Bindings | Descriptions          |
 | ------------ | --------------------- |
 | `SPC b f`    | format current buffer |
+
+### Flutter integration
+
+When edit dart file, the following key bindings are available for running flutter commands.
+
+| Key bindings | Descriptions                     |
+| ------------ | -------------------------------- |
+| `SPC l f r`  | Run `flutter run` command        |
+| `SPC l f l`  | Reload flutter app               |
+| `SPC l f s`  | Restart flutter app              |
+| `SPC l f e`  | Display flutter emulators list   |
+| `SPC l f E`  | Launch to a flutter emulators id |
