@@ -1818,6 +1818,18 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 | `SPC p k` | 关闭当前工程的所有缓冲区 |
 | `SPC p p` | 显示所有工程             |
 
+`SPC p p` 将会列出最近使用的项目清单，默认会显示最多20个，
+这一数量可以使用 `projects_cache_num` 来修改。
+
+为了可以夸 Vim 进程读取历史打开的项目信息，这一功能使用了缓存机制。
+如果需要禁用这一缓存功能，可以将 `enable_projects_cache` 设为 `false`。
+
+```toml
+[options]
+    enable_projects_cache = true
+    projects_cache_num = 20
+```
+
 #### 自定义跳转文件
 
 若要实现自定义文件跳转功能，需要在项目根目录新建一个 `.project_alt.json` 文件，
