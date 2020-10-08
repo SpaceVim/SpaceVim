@@ -1056,6 +1056,8 @@ let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'find
 "   ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
 " <
 let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+let g:spacevim_enable_projects_cache = 1
+let g:spacevim_projects_cache_num = 20
 ""
 " @section project_rooter_automatically, options-project_rooter_automatically
 " @parentsection options

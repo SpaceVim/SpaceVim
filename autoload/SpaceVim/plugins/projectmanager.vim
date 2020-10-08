@@ -55,7 +55,9 @@ function! s:load_cache() abort
   endif
 endfunction
 
-call s:load_cache()
+if g:spacevim_enable_projects_cache
+  call s:load_cache()
+endif
 
 let g:unite_source_menu_menus =
       \ get(g:,'unite_source_menu_menus',{})
@@ -72,7 +74,9 @@ function! s:cache_project(prj) abort
     let cmd = "call SpaceVim#plugins#projectmanager#open('" . s:project_paths[key].path . "')"
     call add(g:unite_source_menu_menus.Projects.command_candidates, [desc,cmd])
   endfor
-  call s:cache()
+  if g:spacevim_enable_projects_cache
+    call s:cache()
+  endif
 endfunction
 
 function! s:sort_by_opened_time() abort
