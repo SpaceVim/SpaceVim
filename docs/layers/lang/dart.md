@@ -90,8 +90,10 @@ When edit dart file, the following key bindings are available for running flutte
 
 | Key bindings | Descriptions                     |
 | ------------ | -------------------------------- |
-| `SPC l f r`  | Run `flutter run` command        |
-| `SPC l f l`  | Reload flutter app               |
-| `SPC l f s`  | Restart flutter app              |
-| `SPC l f e`  | Display flutter emulators list   |
+| `SPC l f D`  | Display flutter doctor result    |
 | `SPC l f E`  | Launch to a flutter emulators id |
+| `SPC l f d`  | Display flutter devices result   |
+| `SPC l f e`  | Display flutter emulators list   |
+| `SPC l f l`  | Reload flutter app               |
+| `SPC l f r`  | Run `flutter run` command        |
+| `SPC l f s`  | Restart flutter app              |
