@@ -19,6 +19,8 @@ let s:FILE = SpaceVim#api#import('file')
 " the name projectmanager is too long
 " use rooter instead
 let s:LOGGER =SpaceVim#logger#derive('rooter')
+let s:TIME = SpaceVim#api#import('time')
+let s:JSON = SpaceVim#api#import('data#json')
 
 function! s:update_rooter_patterns() abort
   let s:project_rooter_patterns = filter(copy(g:spacevim_project_rooter_patterns), 'v:val !~# "^!"')
@@ -35,15 +37,25 @@ let s:spacevim_project_rooter_patterns = copy(g:spacevim_project_rooter_patterns
 call s:update_rooter_patterns()
 
 let s:project_paths = {}
+let s:project_cache_path = s:FILE.unify_path(g:spacevim_data_dir, ':p') . 'SpaceVim/projects.json'
 
-function! s:cache_project(prj) abort
-  if !has_key(s:project_paths, a:prj.path)
-    let s:project_paths[a:prj.path] = a:prj
-    let desc = '[' . a:prj.name . '] ' . a:prj.path
-    let cmd = "call SpaceVim#plugins#projectmanager#open('" . a:prj.path . "')"
-    call add(g:unite_source_menu_menus.Projects.command_candidates, [desc,cmd])
+function! s:cache() abort
+  call writefile([s:JSON.json_encode(s:project_paths)], s:FILE.unify_path(s:project_cache_path, ':p'))
+endfunction
+
+function! s:load_cache() abort
+  if filereadable(s:project_cache_path)
+    call s:LOGGER.info('Load projects cache from: ' . s:project_cache_path)
+    let cache_context = join(readfile(s:project_cache_path, ''), '')
+    if !empty(cache_context)
+      let s:project_paths = s:JSON.json_decode(cache_context)
+    endif
+  else
+    call s:LOGGER.info('projects cache file does not exists!')
   endif
 endfunction
+
+call s:load_cache()
 
 let g:unite_source_menu_menus =
       \ get(g:,'unite_source_menu_menus',{})
@@ -51,6 +63,27 @@ let g:unite_source_menu_menus.Projects = {'description':
       \ 'Custom mapped keyboard shortcuts                   [SPC] p p'}
 let g:unite_source_menu_menus.Projects.command_candidates =
       \ get(g:unite_source_menu_menus.Projects,'command_candidates', [])
+
+function! s:cache_project(prj) abort
+  let s:project_paths[a:prj.path] = a:prj
+  let g:unite_source_menu_menus.Projects.command_candidates = []
+  for key in s:sort_by_opened_time()
+    let desc = '[' . s:project_paths[key].name . '] ' . s:project_paths[key].path . ' <' . strftime('%Y-%m-%d %T', s:project_paths[key].opened_time) . '>'
+    let cmd = "call SpaceVim#plugins#projectmanager#open('" . s:project_paths[key].path . "')"
+    call add(g:unite_source_menu_menus.Projects.command_candidates, [desc,cmd])
+  endfor
+  call s:cache()
+endfunction
+
+function! s:sort_by_opened_time() abort
+  let paths = keys(s:project_paths)
+  return sort(paths, function('s:compare_time'))
+endfunction
+
+function! s:compare_time(d1, d2) abort
+  return s:project_paths[a:d2].opened_time - s:project_paths[a:d1].opened_time
+endfunction
+
 
 " this function will use fuzzy find layer, now only denite and unite are
 " supported.
@@ -86,12 +119,15 @@ function! SpaceVim#plugins#projectmanager#current_name() abort
   return get(b:, '_spacevim_project_name', '')
 endfunction
 
-" this func is called when vim-rooter change the dir, That means the project
-" is changed, so will call call the registered function.
+" This function is called when projectmanager change the directory.
+"
+" What should be cached?
+" only the directory and project name.
 function! SpaceVim#plugins#projectmanager#RootchandgeCallback() abort
   let project = {
         \ 'path' : getcwd(),
-        \ 'name' : fnamemodify(getcwd(), ':t')
+        \ 'name' : fnamemodify(getcwd(), ':t'),
+        \ 'opened_time' : localtime()
         \ }
   call s:cache_project(project)
   let g:_spacevim_project_name = project.name
@@ -180,7 +216,7 @@ endif
 function! s:find_root_directory() abort
   " @question confused about expand and fnamemodify
   " ref: https://github.com/vim/vim/issues/6793
-  
+
   " get the current path of buffer
   " If it is a empty buffer, do nothing?
   let fd = expand('%:p')
