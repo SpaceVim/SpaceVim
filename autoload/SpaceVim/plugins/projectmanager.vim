@@ -21,6 +21,7 @@ let s:FILE = SpaceVim#api#import('file')
 let s:LOGGER =SpaceVim#logger#derive('rooter')
 let s:TIME = SpaceVim#api#import('time')
 let s:JSON = SpaceVim#api#import('data#json')
+let s:LIST = SpaceVim#api#import('data#list')
 
 function! s:update_rooter_patterns() abort
   let s:project_rooter_patterns = filter(copy(g:spacevim_project_rooter_patterns), 'v:val !~# "^!"')
@@ -79,9 +80,18 @@ function! s:cache_project(prj) abort
   endif
 endfunction
 
+" sort projects based on opened_time, and remove extra projects based on
+" projects_cache_num
 function! s:sort_by_opened_time() abort
   let paths = keys(s:project_paths)
-  return sort(paths, function('s:compare_time'))
+  let paths = sort(paths, function('s:compare_time'))
+  if g:spacevim_projects_cache_num > 0 && s:LIST.has_index(paths, g:spacevim_projects_cache_num)
+    for path in paths[g:spacevim_projects_cache_num :]
+      call remove(s:project_paths, path)
+    endfor
+    let paths = paths[:g:spacevim_projects_cache_num - 1]
+  endif
+  return paths
 endfunction
 
 function! s:compare_time(d1, d2) abort
