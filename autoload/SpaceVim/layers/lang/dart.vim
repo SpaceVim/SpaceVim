@@ -42,6 +42,15 @@
 "
 "
 
+if exists('s:flutter_job_id')
+  finish
+else
+  let s:flutter_job_id = 0
+endif
+
+let s:JOB = SpaceVim#api#import('job')
+let s:NOTI =SpaceVim#api#import('notification')
+
 function! SpaceVim#layers#lang#dart#plugins() abort
   let plugins = []
   call add(plugins, ['dart-lang/dart-vim-plugin', {'merged' : 0}])
@@ -91,9 +100,36 @@ function! s:language_specified_mappings() abort
 endfunction
 
 function! s:flutter_run() abort
-  
+  if s:flutter_job_id ==# 0
+    " call s:NOTI.notification(line, 'Normal')
+    let s:flutter_job_id = s:JOB.start('flutter run',
+                \ {
+                \ 'on_stdout' : function('s:on_stdout'),
+                \ 'on_stderr' : function('s:on_stderr'),
+                \ 'on_exit' : function('s:on_exit'),
+                \ }
+                \ )
+  endif
 endfunction
 
+function! s:on_stdout(id, data, event) abort
+    for line in filter(a:data, '!empty(v:val)')
+        call s:NOTI.notification(line, 'Normal')
+    endfor
+endfunction
+
+function! s:on_stderr(id, data, event) abort
+    for line in filter(a:data, '!empty(v:val)')
+        call s:NOTI.notification(line, 'WarningMsg')
+    endfor
+endfunction
+
+function! s:on_exit(...) abort
+    let data = get(a:000, 2)
+    if data != 0
+    else
+    endif
+endfunction
 
 
 " function() wrapper
