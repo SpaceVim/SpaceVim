@@ -83,4 +83,29 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   endif
+  let g:_spacevim_mappings_space.l.f = {'name' : '+Flutter'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'r'], 'call call('
+        \ . string(s:_function('s:flutter_run')) . ', [])',
+        \ 'flutter-run', 1)
 endfunction
+
+function! s:flutter_run() abort
+  
+endfunction
+
+
+
+" function() wrapper
+if v:version > 703 || v:version == 703 && has('patch1170')
+  function! s:_function(fstr) abort
+    return function(a:fstr)
+  endfunction
+else
+  function! s:_SID() abort
+    return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
+  endfunction
+  let s:_s = '<SNR>' . s:_SID() . '_'
+  function! s:_function(fstr) abort
+    return function(substitute(a:fstr, 's:', s:_s, 'g'))
+  endfunction
+endif
