@@ -62,6 +62,8 @@ function! SpaceVim#plugins#projectmanager#list() abort
     Denite menu:Projects
   elseif SpaceVim#layers#isLoaded('fzf')
     FzfMenu Projects
+  elseif SpaceVim#layers#isLoaded('leaderf')
+    Leaderf menu --name Projects
   else
     call SpaceVim#logger#warn('fuzzy find layer is needed to find project!')
   endif
