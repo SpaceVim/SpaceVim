@@ -109,6 +109,9 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 's'], 'call call('
         \ . string(s:_function('s:flutter_send')) . ', ["R"])',
         \ 'flutter-restart', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'q'], 'call call('
+        \ . string(s:_function('s:flutter_send')) . ', ["q"])',
+        \ 'flutter-quit', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'E'], 'call call('
         \ . string(s:_function('s:flutter_emulators_launch')) . ', [])',
         \ 'flutter-emulators-launch', 1)

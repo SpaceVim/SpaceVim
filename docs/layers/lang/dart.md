@@ -97,3 +97,4 @@ When edit dart file, the following key bindings are available for running flutte
 | `SPC l f l`  | Reload flutter app               |
 | `SPC l f r`  | Run `flutter run` command        |
 | `SPC l f s`  | Restart flutter app              |
+| `SPC l f q`  | Quit current flutter process     |
