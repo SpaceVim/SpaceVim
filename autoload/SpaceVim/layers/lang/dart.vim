@@ -97,40 +97,53 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'r'], 'call call('
         \ . string(s:_function('s:flutter_run')) . ', [])',
         \ 'flutter-run', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'd'], 'call SpaceVim#plugins#runner#open("flutter doctor")',
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'D'], 'call SpaceVim#plugins#runner#open("flutter doctor")',
         \ 'flutter-doctor', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'd'], 'call SpaceVim#plugins#runner#open("flutter devices")',
+        \ 'flutter-devices', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 'l'], 'call call('
+        \ . string(s:_function('s:flutter_send')) . ', ["r"])',
+        \ 'flutter-reload', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f', 's'], 'call call('
+        \ . string(s:_function('s:flutter_send')) . ', ["R"])',
+        \ 'flutter-restart', 1)
 endfunction
 
 function! s:flutter_run() abort
   if s:flutter_job_id ==# 0
     " call s:NOTI.notification(line, 'Normal')
     let s:flutter_job_id = s:JOB.start('flutter run',
-                \ {
-                \ 'on_stdout' : function('s:on_stdout'),
-                \ 'on_stderr' : function('s:on_stderr'),
-                \ 'on_exit' : function('s:on_exit'),
-                \ }
-                \ )
+          \ {
+          \ 'on_stdout' : function('s:on_stdout'),
+          \ 'on_stderr' : function('s:on_stderr'),
+          \ 'on_exit' : function('s:on_exit'),
+          \ }
+          \ )
+  endif
+endfunction
+
+function! s:flutter_send(msg) abort
+  if s:flutter_job_id ==# 0
+    call s:NOTI.notification('Flutter is not running.', 'WarningMsg')
+  else
+    call s:JOB.send(s:flutter_job_id, a:msg)
   endif
 endfunction
 
 function! s:on_stdout(id, data, event) abort
-    for line in filter(a:data, '!empty(v:val)')
-        call s:NOTI.notification(line, 'Normal')
-    endfor
+  for line in filter(a:data, '!empty(v:val)')
+    call s:NOTI.notification(line, 'Normal')
+  endfor
 endfunction
 
 function! s:on_stderr(id, data, event) abort
-    for line in filter(a:data, '!empty(v:val)')
-        call s:NOTI.notification(line, 'WarningMsg')
-    endfor
+  for line in filter(a:data, '!empty(v:val)')
+    call s:NOTI.notification(line, 'WarningMsg')
+  endfor
 endfunction
 
 function! s:on_exit(...) abort
-    let data = get(a:000, 2)
-    if data != 0
-    else
-    endif
+  let s:flutter_job_id = 0
 endfunction
 
 
