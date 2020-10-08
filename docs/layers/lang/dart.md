@@ -46,7 +46,8 @@ To use this configuration layer, update custom configuration file with:
 
 ### Syntax checking && Code formatting
 
-To enable syntax checking and code formatting in spacevim, you need to install [dart sdk](https://github.com/dart-lang/sdk).
+To enable syntax checking and code formatting in spacevim,
+you need to install [dart sdk](https://github.com/dart-lang/sdk).
 
 ### Install dart-repl
 
