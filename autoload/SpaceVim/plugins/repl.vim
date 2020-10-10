@@ -10,7 +10,7 @@
 " @section repl, usage-repl
 " @parentsection usage
 " In language layer, REPL key bindings has been added. To start a REPL
-" process, the default key binding is `SPC l s i`. Key bindings for sending
+" process, the default key binding is `SPC l s i` . Key bindings for sending
 " code to REPL process only support following types: line, selection and
 " buffer. All of the key binding is mapped to function
 " `SpaceVim#plugins#repl#send`. The first argument is {type}. To send raw
