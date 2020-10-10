@@ -6,7 +6,21 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section repl, usage-repl
+" @parentsection usage
+" In language layer, REPL key bindings has been added. To start a REPL
+" process, the default key binding is `SPC l s i` . Key bindings for sending
+" code to REPL process only support following types: `line`, `selection` and
+" `buffer` . All of the key binding is mapped to function
+" `SpaceVim#plugins#repl#send`. The first argument is {type}. To send raw
+" string, use `raw` as type, for example:
+" >
+"   call SpaceVim#plugins#repl#send('raw', 'print("hello world!")')
+" >
+
 let s:JOB = SpaceVim#api#import('job')
+let s:VIM = SpaceVim#api#import('vim')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:WINDOW = SpaceVim#api#import('vim#window')
 let s:STRING = SpaceVim#api#import('data#string')
@@ -36,8 +50,9 @@ endfunction
 " buffer: send current buffer to REPL process
 " line: send line under cursor to REPL process
 " selection: send selection text to REPL process
+" raw: send raw string to REPL process
 
-function! SpaceVim#plugins#repl#send(type) abort
+function! SpaceVim#plugins#repl#send(type, ...) abort
   if !exists('s:job_id')
     echom('Please start REPL via the key binding "SPC l s i" first.')
   elseif s:job_id == 0
@@ -45,6 +60,11 @@ function! SpaceVim#plugins#repl#send(type) abort
   else
     if a:type ==# 'line'
       call s:JOB.send(s:job_id, [getline('.'), ''])
+    elseif a:type ==# 'raw'
+      let context = get(a:000, 0, '')
+      if !empty(context) && s:VIM.is_string(context)
+        call s:JOB.send(s:job_id, [context] + [''])
+      endif
     elseif a:type ==# 'buffer'
       call s:JOB.send(s:job_id, getline(1, '$') + [''])
     elseif a:type ==# 'selection'
@@ -60,7 +80,6 @@ function! SpaceVim#plugins#repl#send(type) abort
     endif
   endif
 endfunction
-
 
 
 function! s:start(exe) abort
