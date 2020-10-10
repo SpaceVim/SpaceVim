@@ -172,7 +172,8 @@ CONTENTS                                                   *SpaceVim-contents*
       87. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. Usage....................................................|SpaceVim-usage|
       1. custom_plugins........................|SpaceVim-usage-custom_plugins|
-      2. tasks..........................................|SpaceVim-usage-tasks|
+      2. repl............................................|SpaceVim-usage-repl|
+      3. tasks..........................................|SpaceVim-usage-tasks|
   8. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -3483,6 +3484,23 @@ Add custom plugins.
   [[custom_plugins]]
     repo = 'vimwiki/vimwiki'
     merged = false
+<
+
+==============================================================================
+REPL                                                     *SpaceVim-usage-repl*
+
+In language layer, REPL key bindings has been added. To start a REPL process,
+the default key binding is `SPC l s i`. Key bindings for sending code to REPL
+process only support following types: line, selection and buffer. All of the
+key binding is mapped to function `SpaceVim#plugins#repl#send`. The first
+argument is {type}. To send raw string, use `raw` as type, for example:
+
+
+>
+  call SpaceVim#plugins#repl#send('raw', 'print("hello world!")')
+<
+
+>
 <
 
 ==============================================================================

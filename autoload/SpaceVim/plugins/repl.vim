@@ -6,6 +6,20 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section repl, usage-repl
+" @parentsection usage
+" In language layer, REPL key bindings has been added. To start a REPL
+" process, the default key binding is `SPC l s i`. Key bindings for sending
+" code to REPL process only support following types: line, selection and
+" buffer. All of the key binding is mapped to function
+" `SpaceVim#plugins#repl#send`. The first argument is {type}. To send raw
+" string, use `raw` as type, for example:
+"
+" >
+"   call SpaceVim#plugins#repl#send('raw', 'print("hello world!")')
+" >
+
 let s:JOB = SpaceVim#api#import('job')
 let s:VIM = SpaceVim#api#import('vim')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
