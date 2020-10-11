@@ -17,7 +17,7 @@ let s:default = {
       \    'min_size' : 3,
       \    'width' : 1,
       \    'right_offset' : 1,
-      \    'excluded_filetypes' : [],
+      \    'excluded_filetypes' : ['startify'],
       \    'shape' : {
       \        'head' : '▲',
       \        'body' : '█',
@@ -177,8 +177,10 @@ function! SpaceVim#plugins#scrollbar#show(...) abort
 
 endfunction
 
+" the first argument is buffer number
+
 function! SpaceVim#plugins#scrollbar#clear(...) abort
-  let bufnr = get(a:000, 1, 0)
+  let bufnr = get(a:000, 0, 0)
   let state = s:buf_get_var(bufnr, 'scrollbar_state')
   if !empty(state) && has_key(state, 'winnr')
     noautocmd call nvim_win_close(state.winnr, 1)
