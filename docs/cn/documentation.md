@@ -44,6 +44,7 @@ lang: zh
     - [增加或减小数字](#增加或减小数字)
     - [复制粘贴](#复制粘贴)
     - [增删注释](#增删注释)
+    - [编辑历史](#编辑历史)
     - [文本编码格式](#文本编码格式)
   - [窗口管理](#窗口管理)
     - [常用编辑器窗口](#常用编辑器窗口)
@@ -1074,6 +1075,38 @@ echo "selected text" | curl -s -F "content=<-" http://dpaste.com/api/v2/
 用 `SPC ;` 可以启动一个注释操作符模式，在该模式下，可以使用移动命令确认注释的范围，
 比如 `SPC ; 4 j`，这个组合键会注释当前行以及下方的 4 行。这个数字即为相对行号，可在左侧看到。
 
+#### 编辑历史
+
+当前文件的编辑历史，可以使用快捷键 `F7` 查看，默认会在左侧打开一个编辑历史可视化窗口。
+若当前编辑器支持 `+python` 或者 `+python3`，则会使用 mundo 作为默认插件，否则则使用
+undotree。
+
+在编辑历史窗口内的快捷键如下：
+
+| 快捷键          | 功能描述            |
+| --------------- | ------------------- |
+| `G`             | move_bottom         |
+| `J`             | move_older_write    |
+| `K`             | move_newer_write    |
+| `N`             | previous_match      |
+| `P`             | play_to             |
+| `<2-LeftMouse>` | mouse_click         |
+| `/`             | search              |
+| `<CR>`          | preview             |
+| `d`             | diff                |
+| `<down>`        | move_older          |
+| `<up>`          | move_newer          |
+| `i`             | toggle_inline       |
+| `j`             | move_older          |
+| `k`             | move_newer          |
+| `n`             | next_match          |
+| `o`             | preview             |
+| `p`             | diff_current_buffer |
+| `q`             | quit                |
+| `r`             | diff                |
+| `gg`            | move_top            |
+| `?`             | toggle_help         |
+
 #### 文本编码格式
 
 SpaceVim 默认使用 `utf-8` 码进行编码。下面是 `utf-8` 编码的四个设置：
@@ -1818,7 +1851,7 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 | `SPC p k` | 关闭当前工程的所有缓冲区 |
 | `SPC p p` | 显示所有工程             |
 
-`SPC p p` 将会列出最近使用的项目清单，默认会显示最多20个，
+`SPC p p` 将会列出最近使用的项目清单，默认会显示最多 20 个，
 这一数量可以使用 `projects_cache_num` 来修改。
 
 为了可以夸 Vim 进程读取历史打开的项目信息，这一功能使用了缓存机制。
