@@ -43,6 +43,7 @@ main () {
             _detect autoload/SpaceVim/api/data/json.vim
             _detect autoload/SpaceVim/api/prompt.vim
             _detect autoload/SpaceVim/api/job.vim
+            _detect autoload/SpaceVim/api/file.vim
             _detect autoload/SpaceVim/api/system.vim
             _detect autoload/SpaceVim/mapping/search.vim
             _detect autoload/SpaceVim/logger.vim
@@ -137,6 +138,12 @@ let g:FlyGrep_input_delay = 500
 ""
 " A list of searching tools will be userd.
 let g:FlyGrep_search_tools = ['ag', 'rg', 'grep', 'pt', 'ack']
+
+let g:spacevim_data_dir
+      \ = $XDG_CACHE_HOME != ''
+      \   ? $XDG_CACHE_HOME . SpaceVim#api#import('file').separator
+      \   : expand($HOME. join(['', '.cache', ''],
+      \     SpaceVim#api#import('file').separator))
 
 ""
 " Enable FlyGrep statusline
