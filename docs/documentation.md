@@ -42,6 +42,7 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Increase/Decrease numbers](#increasedecrease-numbers)
     - [Copy and paste](#copy-and-paste)
     - [Commenting](#commenting)
+    - [Undo tree](#undo-tree)
     - [Multi-Encodings](#multi-encodings)
   - [Window manager](#window-manager)
     - [General Editor windows](#general-editor-windows)
@@ -1125,6 +1126,11 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 
 **Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
 For example, `SPC ; 4 j` will comment current line and the following 4 lines.
+
+#### Undo tree
+
+Undo tree visualizes undo history and makes it easier to browse and switch between different undo branches.
+The default key binding is `F7`.
 
 #### Multi-Encodings
 
