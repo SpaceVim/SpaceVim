@@ -63,7 +63,7 @@ function! SpaceVim#plugins#repl#send(type, ...) abort
     elseif a:type ==# 'raw'
       let context = get(a:000, 0, '')
       if !empty(context) && s:VIM.is_string(context)
-        call s:JOB.send(s:job_id, [context] + [''])
+        call s:JOB.send(s:job_id, context)
       endif
     elseif a:type ==# 'buffer'
       call s:JOB.send(s:job_id, getline(1, '$') + [''])
