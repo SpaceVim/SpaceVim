@@ -162,11 +162,19 @@ function! s:jump_to_next_error() abort
     lnext
   catch
     try
-      cnext
+      ll
     catch
-      echohl WarningMsg
-      echon 'There is no errors!'
-      echohl None
+      try
+        cnext
+      catch
+        try
+          cc
+        catch
+          echohl WarningMsg
+          echon 'There is no errors!'
+          echohl None
+        endtry
+      endtry
     endtry
   endtry
 endfunction
@@ -176,11 +184,19 @@ function! s:jump_to_previous_error() abort
     lprevious
   catch
     try
-      cprevious
+      ll
     catch
-      echohl WarningMsg
-      echon 'There is no errors!'
-      echohl None
+      try
+        cprevious
+      catch
+        try
+          cc
+        catch
+          echohl WarningMsg
+          echon 'There is no errors!'
+          echohl None
+        endtry
+      endtry
     endtry
   endtry
 endfunction
