@@ -1,0 +1,419 @@
+*mundo.txt*   Graph your undo tree so you can actually USE it.
+
+Making Vim's undo tree usable by humans.
+
+==============================================================================
+CONTENTS                                                      *Mundo-contents*
+
+    1. Intro ........................... |MundoIntro|
+    2. Usage ........................... |MundoUsage|
+    3. Configuration ................... |MundoConfig|
+        3.1  mundo_width ............... |mundo_width|
+        3.2  mundo_preview_height ...... |mundo_preview_height|
+        3.3  mundo_preview_bottom ...... |mundo_preview_bottom|
+        3.4  mundo_right ............... |mundo_right|
+        3.5  mundo_help ................ |mundo_help|
+        3.6  mundo_disable ............. |mundo_disable|
+        3.7  mundo_mappings ............ |mundo_mappings|
+        3.8  mundo_close_on_revert ..... |mundo_close_on_revert|
+        3.9  mundo_preview_statusline .. |mundo_preview_statusline|
+             mundo_tree_statusline ..... |mundo_tree_statusline|
+        3.10 mundo_auto_preview ........ |mundo_auto_preview|
+        3.11 mundo_auto_preview_delay .. |mundo_auto_preview_delay|
+        3.12 mundo_verbose_graph ....... |mundo_verbose_graph|
+        3.13 mundo_playback_delay ...... |mundo_playback_delay|
+        3.14 mundo_mirror_graph ........ |mundo_mirror_graph|
+        3.15 mundo_inline_undo ......... |mundo_inline_undo|
+        3.16 mundo_return_on_revert .... |mundo_return_on_revert|
+        3.17 mundo_header .............. |mundo_header|
+    4. License ......................... |MundoLicense|
+    5. Bugs ............................ |MundoBugs|
+    6. Contributing .................... |MundoContributing|
+    7. Changelog ....................... |MundoChangelog|
+    8. Credits ......................... |MundoCredits|
+
+==============================================================================
+1. Intro                                                          *MundoIntro*
+
+You know that Vim lets you undo changes like any text editor. What you might
+not know is that it doesn't just keep a list of your changes -- it keeps
+a goddamed |:undo-tree| of them.
+
+Say you make a change (call it X), undo that change, and then make another
+change (call it Y). With most editors, change X is now gone forever. With Vim
+you can get it back.
+
+The problem is that trying to do this in the real world is painful. Vim gives
+you an |:undolist| command that shows you the leaves of the tree. Good luck
+finding the change you want in that list.
+
+Mundo is a plugin to make browsing this ridiculously powerful undo tree less
+painful.
+
+==============================================================================
+2. Usage                                                          *MundoUsage*
+
+We'll get to the technical details later, but if you're a human the first
+thing you need to do is add a mapping to your |:vimrc| to toggle the undo
+graph: >
+
+    nnoremap <F5> :MundoToggle<CR>
+
+Change the mapped key to suit your taste. We'll stick with F5 because that's
+what the author uses.
+
+Now you can press F5 to toggle the undo graph and preview pane, which will
+look something like this: >
+
+      Undo graph                          File
+    +-----------------------------------+------------------------------------+
+    | " Mundo for something.txt [1]     |one                                 |
+    | " j/k  - move between undo states |two                                 |
+    | " <cr> - revert to that state     |three                               |
+    |                                   |five                                |
+    | @  [5] 3 hours ago                |                                    |
+    | |                                 |                                    |
+    | | o  [4] 4 hours ago              |                                    |
+    | | |                               |                                    |
+    | o |  [3] 4 hours ago              |                                    |
+    | | |                               |                                    |
+    | w |  [2] 4 hours ago              |                                    |
+    | |/                                |                                    |
+    | o  [1] 4 hours ago                |                                    |
+    | |                                 |                                    |
+    | o  [0] Original                   |                                    |
+    +-----------------------------------+                                    |
+    | --- 3 2010-10-12 06:27:35 PM      |                                    |
+    | +++ 5 2010-10-12 07:38:37 PM      |                                    |
+    | @@ -1,3 +1,4                      |                                    |
+    |  one                              |                                    |
+    |  two                              |                                    |
+    |  three                            |                                    |
+    | +five                             |                                    |
+    +-----------------------------------+------------------------------------+
+      Preview pane
+
+Your current position in the undo tree is marked with an '@' character. Undo
+positions that were saved to disk are marked with a 'w'. Other nodes are marked
+with an 'o' character.
+
+When you toggle open the graph Mundo will put your cursor on your current
+position in the tree. You can move up and down the graph with the j and
+k keys.
+
+You can move to the top of the graph (the newest state) with gg and to the
+bottom of the graph (the oldest state) with G.
+
+As you move between undo states the preview pane will show you a unified diff
+of the change that state made.
+
+Pressing enter on a state (or double clicking on it) will revert the contents
+of the file to match that state.
+
+You can use p on a state to make the preview window show the diff between
+your current state and the selected state, instead of a preview of what the
+selected state changed.
+
+Pressing P while on a state will initiate "play to" mode targeted at that
+state. This will replay all the changes between your current state and the
+target, with a slight pause after each change. It's mostly useless, but can be
+fun to watch and see where your editing lags -- that might be a good place to
+define a new mapping to speed up your editing.
+
+Pressing q while in the undo graph will close it.  You can also just press your
+toggle mapping key.
+
+==============================================================================
+3. Configuration                                                 *MundoConfig*
+
+You can tweak the behavior of Mundo by setting a few variables in your :vimrc
+file. For example: >
+
+    let g:mundo_width = 60
+    let g:mundo_preview_height = 40
+    let g:mundo_right = 1
+
+------------------------------------------------------------------------------
+3.1 g:mundo_width                                                *mundo_width*
+
+Set the horizontal width of the Mundo graph (and preview).
+
+Default: 45
+
+------------------------------------------------------------------------------
+3.2 g:mundo_preview_height                              *mundo_preview_height*
+
+Set the vertical height of the Mundo preview.
+
+Default: 15
+
+------------------------------------------------------------------------------
+3.3 g:mundo_preview_bottom                              *mundo_preview_bottom*
+
+Force the preview window below current windows instead of below the graph.
+This gives the preview window more space to show the unified diff.
+
+Example:
+
+   +--------+            +--------+
+   !g!      !            !      !g!
+   !g!      !     or     !      !g!
+   !g!______!            !______!g!
+   !g!pppppp!            !pppppp!g!
+   +--------+            +--------+
+
+Default: 0
+
+------------------------------------------------------------------------------
+3.4 g:mundo_right                                                *mundo_right*
+
+Set this to 1 to make the Mundo graph (and preview) open on the right side
+instead of the left.
+
+Default: 0 (off, open on the left side)
+
+------------------------------------------------------------------------------
+3.5 g:mundo_help                                                  *mundo_help*
+
+Set this to 1 to make help text expanded by default.
+
+Default: 0 (non-expanded help)
+
+------------------------------------------------------------------------------
+3.6 g:mundo_disable                                            *mundo_disable*
+
+Set this to 1 to disable Mundo entirely.
+
+Useful if you use the same ~/.vim folder on multiple machines, and some of
+them may not have Python support.
+
+Default: 0 (Mundo is enabled as usual)
+
+------------------------------------------------------------------------------
+3.7 g:mundo_mappings                                    *mundo_mappings*
+                                                        *mundo_map_move_older*
+                                                        *mundo_map_move_newer*
+                                                        *mundo_map_up_down*
+
+To override any mappings within mundo set the value of the normal mode keys you
+would like to use instead (copy the defaults below and adjust as preferred)
+
+Note: mundo_map_move_older, mundo_map_move_newer, mundo_map_up_down options have
+been deprecated in favor of settings here.  Although they continue to work, they
+will eventually be removed!
+
+Defaults:
+
+let g:mundo_mappings = {
+          \ '<CR>': 'preview',
+          \ 'o': 'preview',
+          \ 'j': 'move_older',
+          \ 'k': 'move_newer',
+          \ '<down>': 'move_older',
+          \ '<up>': 'move_newer',
+          \ 'J': 'move_older_write',
+          \ 'K': 'move_newer_write',
+          \ 'gg': 'move_top',
+          \ 'G': 'move_bottom',
+          \ 'P': 'play_to',
+          \ 'd': 'diff',
+          \ 'i': 'toggle_inline',
+          \ '/': 'search',
+          \ 'n': 'next_match',
+          \ 'N': 'previous_match',
+          \ 'p': 'diff_current_buffer',
+          \ 'r': 'diff',
+          \ '?': 'toggle_help',
+          \ 'q': 'quit',
+          \ '<2-LeftMouse>': 'mouse_click' }
+
+------------------------------------------------------------------------------
+3.8 g:mundo_close_on_revert                            *mundo_close_on_revert*
+
+Set this to 1 to automatically close the Mundo windows when reverting.
+
+Default: 0 (windows do not automatically close)
+
+------------------------------------------------------------------------------
+3.9 g:mundo_preview_statusline                      *mundo_preview_statusline*
+    g:mundo_tree_statusline                            *mundo_tree_statusline*
+
+Set these to a string to display it as the status line for each Mundo window.
+
+Default: unset (windows use the default statusline)
+
+------------------------------------------------------------------------------
+3.10 g:mundo_auto_preview                                 *mundo_auto_preview*
+
+Set this to 0 to disable automatically rendering preview diffs as you move
+through the undo tree (you can still render a specific diff with r).  This can
+be useful on large files and undo trees to speed up Mundo.
+
+Default: 1 (automatically preview diffs)
+
+------------------------------------------------------------------------------
+
+3.11 g:mundo_auto_preview_delay                     *mundo_auto_preview_delay*
+
+This is the delay in milliseconds before a preview diff is automatically
+rendered. The delay is reset whenever the cursor moves. Use this to speed up
+undo tree traversal when automatic previews are enabled. Set this to 0 to
+disable the feature.
+
+Default: 250
+
+------------------------------------------------------------------------------
+3.12 g:mundo_verbose_graph                               *mundo_verbose_graph*
+
+Set this to 0 to create shorter graphs: the 'o' characters will only be used
+when multiple branches exist, and extra lines of '|' are suppressed making for
+a graph half as long.
+
+Default: 1 (verbose graphs)
+
+------------------------------------------------------------------------------
+3.13 g:mundo_playback_delay                             *mundo_playback_delay*
+
+This is the delay in milliseconds between each change when running 'play to'
+mode. Set this to a higher number for a slower playback or to a lower number
+for a faster playback.
+
+Default: 60
+
+------------------------------------------------------------------------------
+3.14 g:mundo_mirror_graph                                 *mundo_mirror_graph*
+
+Set this to 0 to align the graph to the left; set to 1 to align to the right.
+
+Default: 1 (mirror graph)
+
+------------------------------------------------------------------------------
+3.15 g:mundo_inline_undo                                   *mundo_inline_undo*
+
+When enabled, a small one line diff is displayed to the right of the graph
+undo. Although not as detailed as a full diff provided in the preview window,
+it provides a quick summary of the diff w/o having to navigate.
+
+Default: 0 (no inline graph)
+
+------------------------------------------------------------------------------
+3.16 g:mundo_return_on_revert                         *mundo_return_on_revert*
+
+Set this to 0 to keep focus in the Mundo window after a revert.
+
+Default: 1
+
+------------------------------------------------------------------------------
+3.17 g:mundo_header                                             *mundo_header*
+
+Set this to 0 to hide the mundo header.
+
+Default: 1 (display mundo header)
+
+==============================================================================
+4. License                                                      *MundoLicense*
+
+GPLv2+. Look it up.
+
+==============================================================================
+5. Bugs                                                            *MundoBugs*
+
+If you find a bug please post it on the issue tracker:
+
+https://github.com/simnalamburt/vim-mundo/issues
+
+==============================================================================
+6. Contributing                                            *MundoContributing*
+
+Think you can make this plugin better? Awesome. Fork it on BitBucket or GitHub
+and send a pull request.
+
+Version numbers should roughly follow Semantic Versioning.
+
+GitHub: https://github.com/simnalamburt/vim-mundo
+
+==============================================================================
+7. Changelog                                                  *MundoChangelog*
+
+
+v3.2.0
+    * Adds g:mundo_mappings setting.
+    * Deprecates g:mundo_map_move_older, g:mundo_map_move_newer, g:mundo_map_up_down
+v3.1.0
+    * Adds g:mundo_map_up_down setting.
+    * Adds g:mundo_auto_preview_delay setting.
+    * Adds validation for target buffers.
+    * Adds 'G' mapping to graph.
+    * Fix a runtime error when entering embedded terminal windows in neovim.
+    * Fix multiple issues associated with Mundo windows in different tabs.
+    * Fix default option values overriding user-set values in certain cases.
+    * Fix cursor initially being positioned above the graph.
+    * Fix some mappings not working correctly when preceded with a count.
+    * Fix some graph mappings moving the cursor to the target buffer.
+    * Fix airline plugin ignoring custom status lines.
+    * Fix Escape and Ctrl+c not being handled correctly in the search prompt.
+    * Fix MundoGetTargetState returning invalid results with some inline diffs.
+    * Reduced delay associated with animated playback for neovim.
+    * Code cleanup and refactoring.
+v3.0.1
+    * Made inline diff mode much faster(e.g. 300x)
+    * Fix inline diffs not updating after scroll.
+    * Fix help toggle mode.
+v3.0.0
+    * Rename plugin
+    * Add one line diff in __Mundo__ window.
+    * Adds g:mundo_mirror_graph setting.
+    * Adds g:mundo_return_on_revert setting.
+    * Adds ability to toggle help on/off in __Mundo__ window.
+    * Adds J and K commands (navigate between written undos)
+    * Adds /, n and N commands (search undos)
+    * Adds g:mundo_verbose_graph setting.
+    * Adds g:mundo_mirror_graph setting.
+    * Show written undos in the Mundo graph.
+    * Adds live reload of Mundo as you edit.
+v2.5.0
+    * Fix the help window to take custom mappings into account.
+    * Add g:mundo_playback_delay option.
+v2.4.0
+    * Add auto preview option.
+    * Add 'r' mapping to preview current state.
+    * Add public mundo#MundoShow() and mundo#MundoHide() functions.
+v2.3.0
+    * Add statusline configuration.
+v2.2.2
+    * More performance improvements.
+v2.2.1
+    * Refactoring and performance improvements.
+v2.2.0
+    * Add the g:mundo_close_on_revert setting.
+    * Fix a bug with the splitbelow setting.
+v2.1.1
+    * Fix a bug with the movement key mappings.
+    * Warnings about having an incompatible Vim and/or Python installation
+v2.1.0
+      are now deferred until the first time you try to use Mundo, instead
+      of being displayed on launch.
+    * The <j> and <k> mappings are now configurable with
+      g:mundo_map_move_older and g:mundo_map_move_newer.
+    * The o, <Up> and <Down> keys are now mapped in the Mundo pane.
+    * Improve and add several unit tests for Mundo.
+v2.0.0
+    * Make MundoToggle close the Mundo windows if they're visible but not the
+      current window, instead of moving to them.
+    * Add the g:mundo_help setting.
+    * Add the g:mundo_disable setting.
+    * Add the 'p' mapping to preview the result of reverting to the selected
+      state.
+    * Fix movement commands with counts in the graph.
+v1.0.0
+    * Initial stable release.
+
+==============================================================================
+8. Credits                                                      *MundoCredits*
+
+The graphing code was all taken from Mercurial, hence the GPLv2+ license.
+
+The plugin was heavily inspired by histwin.vim, and the code for scratch.vim
+helped the author get started.
+
+==============================================================================
