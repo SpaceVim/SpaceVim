@@ -159,14 +159,18 @@ function! s:jump_to_next_error() abort
     lnext
   catch
     try
-      cnext
+      ll
     catch
       try
-        cc
+        cnext
       catch
-        echohl WarningMsg
-        echon 'There is no errors!'
-        echohl None
+        try
+          cc
+        catch
+          echohl WarningMsg
+          echon 'There is no errors!'
+          echohl None
+        endtry
       endtry
     endtry
   endtry
