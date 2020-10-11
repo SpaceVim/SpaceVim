@@ -42,7 +42,7 @@ function! SpaceVim#layers#edit#plugins() abort
   if s:CMP.has('python') || s:CMP.has('python3')
     call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-mundo',        { 'on_cmd' : 'MundoToggle'}])
   else
-    call add(plugins,[g:_spacevim_root_dir . 'bundle/undotree',        { 'on_cmd' : 'MundoToggle'}])
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/undotree',        { 'on_cmd' : 'UndotreeToggle'}])
   endif
   return plugins
 endfunction
@@ -72,8 +72,12 @@ function! SpaceVim#layers#edit#config() abort
   vmap <silent> J <Plug>(jplus)
   " }}}
 
-  nnoremap <silent> <F7> :MundoToggle<CR>
 
+  if s:CMP.has('python') || s:CMP.has('python3')
+    nnoremap <silent> <F7> :MundoToggle<CR>
+  else
+    nnoremap <silent> <F7> :UndotreeToggle<CR>
+  endif
   let g:_spacevim_mappings_space.x = {'name' : '+Text'}
   let g:_spacevim_mappings_space.x.a = {'name' : '+align'}
   let g:_spacevim_mappings_space.x.d = {'name' : '+delete'}
