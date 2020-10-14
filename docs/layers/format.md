@@ -12,6 +12,7 @@ description: "Code formatting layer for SpaceVim, includes a variety of formatte
 - [Configuration](#configuration)
   - [Layer options](#layer-options)
   - [Global options](#global-options)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -72,3 +73,9 @@ let g:neoformat_java_googlefmt = {
     \ 'stdin': 1,
     \ }
 ```
+
+## Key bindings
+
+| Key binding | Description                           |
+| ----------- | ------------------------------------- |
+| `SPC b f`   | format whole buffer or selected lines |

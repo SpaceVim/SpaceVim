@@ -799,11 +799,13 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<Up>` / `k`          | select previous file or directory                 |
 | `<Right>` / `l`       | open selected file or expand directory            |
 | `N`                   | Create new file under cursor                      |
+| `r`                   | Rename the file under cursor                      |
+| `d`                   | Delete the file under cursor                      |
 | `K`                   | Create new directory under cursor                 |
 | `y y`                 | Copy file full path to system clipboard           |
 | `y Y`                 | Copy file to system clipboard                     |
 | `P`                   | Paste file to the position under the cursor       |
-| `.`                   | toggle visible ignored files                      |
+| `.`                   | Toggle visible ignored files                      |
 | `s v`                 | Split edit                                        |
 | `s g`                 | Vertical split edit                               |
 | `p`                   | Preview                                           |
@@ -1561,7 +1563,8 @@ The structure of searching tool profile is:
 | `SPC s r p`  | rg                                                  |
 | `SPC s r P`  | rg with default text                                |
 
-**Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
+**Hint**: It is also possible to search in a project without needing to open a file beforehand.
+To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
 
 #### Background searching in a project
 
@@ -1600,19 +1603,22 @@ Background search keyword in a project, when searching done, the count will be s
 
 Key bindings in FlyGrep buffer:
 
-| Key Bindings        | Descriptions                      |
-| ------------------- | --------------------------------- |
-| `<Esc>`             | close FlyGrep buffer              |
-| `<Enter>`           | open file at the cursor line      |
-| `Ctrl-t`            | open item in new tab              |
-| `<Tab>`             | move cursor line down             |
-| `Shift-<Tab>`       | move cursor line up               |
-| `<BackSpace>`       | remove last character             |
-| `Ctrl-w`            | remove the Word before the cursor |
-| `Ctrl-u`            | remove the Line before the cursor |
-| `Ctrl-k`            | remove the Line after the cursor  |
-| `Ctrl-a` / `<Home>` | Go to the beginning of the line   |
-| `Ctrl-e` / `<End>`  | Go to the end of the line         |
+| Key Bindings        | Descriptions                       |
+| ------------------- | ---------------------------------- |
+| `<Esc>`             | close FlyGrep buffer               |
+| `<Enter>`           | open file at the cursor line       |
+| `Ctrl-t`            | open item in new tab               |
+| `Ctrl-s`            | open item in split window          |
+| `Ctrl-v`            | open item in vertical split window |
+| `Ctrl-q`            | apply all items into quickfix      |
+| `<Tab>`             | move cursor line down              |
+| `Shift-<Tab>`       | move cursor line up                |
+| `<BackSpace>`       | remove last character              |
+| `Ctrl-w`            | remove the Word before the cursor  |
+| `Ctrl-u`            | remove the Line before the cursor  |
+| `Ctrl-k`            | remove the Line after the cursor   |
+| `Ctrl-a` / `<Home>` | Go to the beginning of the line    |
+| `Ctrl-e` / `<End>`  | Go to the end of the line          |
 
 #### Persistent highlighting
 
@@ -1855,6 +1861,18 @@ Project manager commands start with `p`:
 | `SPC p /`    | fuzzy search for text in current project |
 | `SPC p k`    | kill all buffers of current project      |
 | `SPC p p`    | list all projects                        |
+
+`SPC p p` will list all the projects history cross vim sessions. By default
+only 20 projects will be listed. To increase it, you can change the value
+of `projects_cache_num`.
+
+To disable the cross session cacche, change `enable_projects_cache` to `false`.
+
+```toml
+[options]
+    enable_projects_cache = true
+    projects_cache_num = 20
+```
 
 #### Custom alternate file
 

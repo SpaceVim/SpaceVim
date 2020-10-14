@@ -61,9 +61,13 @@ function! SpaceVim#layers#ui#config() abort
   " this options only support neovim now.
   if s:enable_scrollbar && has('nvim')
     augroup spacevim_layer_ui
-        autocmd!
-        autocmd BufEnter,CursorMoved,VimResized,FocusGained    * call SpaceVim#plugins#scrollbar#show()
-        autocmd BufLeave,FocusLost,QuitPre    * call SpaceVim#plugins#scrollbar#clear()
+      autocmd!
+      autocmd BufEnter,CursorMoved,VimResized,FocusGained    * call SpaceVim#plugins#scrollbar#show()
+      autocmd BufLeave,FocusLost,QuitPre    * call SpaceVim#plugins#scrollbar#clear()
+      " why this autocmd is needed?
+      "
+      " because the startify use noautocmd enew
+      autocmd User Startified call s:clear_previous_scrollbar()
     augroup end
   endif
 
@@ -307,7 +311,7 @@ function! s:toggle_paste() abort
   else
     echo 'paste-mode disabled.'
   endif
-  
+
 endfunction
 
 let s:whitespace_enable = 0
@@ -324,21 +328,21 @@ function! s:toggle_whitespace() abort
 endfunction
 
 function! s:toggle_conceallevel() abort
-    if &conceallevel == 0 
-        setlocal conceallevel=2
-    else
-        setlocal conceallevel=0
-    endif
+  if &conceallevel == 0 
+    setlocal conceallevel=2
+  else
+    setlocal conceallevel=0
+  endif
 endfunction
 
 function! s:toggle_background() abort
-    let s:tbg = &background
-    " Inversion
-    if s:tbg ==# 'dark'
-        set background=light
-    else
-        set background=dark
-    endif
+  let s:tbg = &background
+  " Inversion
+  if s:tbg ==# 'dark'
+    set background=light
+  else
+    set background=dark
+  endif
 endfunction
 
 
@@ -423,4 +427,9 @@ function! SpaceVim#layers#ui#set_variable(var) abort
         \ 'enable_scrollbar',
         \ 0)
 
+endfunction
+
+function! s:clear_previous_scrollbar() abort
+  let bufnr = bufnr('#')
+  call SpaceVim#plugins#scrollbar#clear(bufnr)
 endfunction

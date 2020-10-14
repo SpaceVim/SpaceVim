@@ -43,11 +43,58 @@ main () {
             _detect autoload/SpaceVim/api/data/json.vim
             _detect autoload/SpaceVim/api/prompt.vim
             _detect autoload/SpaceVim/api/job.vim
+            _detect autoload/SpaceVim/api/file.vim
             _detect autoload/SpaceVim/api/system.vim
             _detect autoload/SpaceVim/mapping/search.vim
             _detect autoload/SpaceVim/logger.vim
             _detect syntax/SpaceVimFlyGrep.vim
+            _default_readme "FlyGrep.vim" "Grep on the fly in Vim/Neovim"
             _detect LICENSE
+            _checkdir plugin
+            cat <<EOT > plugin/FlyGrep.vim
+"=============================================================================
+" FlyGrep.vim --- Fly grep in vim
+" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Author: Shidong Wang < wsdjeg at 163.com >
+" URL: https://github.com/wsdjeg/FlyGrep.vim
+" License: MIT license
+"=============================================================================
+
+""
+" @section Introduction, intro
+" @stylized FlyGrep
+" @library
+" @order intro version dicts functions exceptions layers api faq
+" Fly grep in vim, written in pure vim script for MacVim, gvim and vim version
+" 8.0+.
+"
+
+""
+" @section CONFIGURATION, config
+" FlyGrep has strong default options, but you can also change the option
+" yourself.
+
+""
+" FlyGrep will start to searching code after a delay, the default value is
+" 500ms.
+let g:FlyGrep_input_delay = 500
+
+""
+" A list of searching tools will be userd.
+let g:FlyGrep_search_tools = ['ag', 'rg', 'grep', 'pt', 'ack']
+
+let g:spacevim_data_dir = '~/.cache'
+
+""
+" Enable FlyGrep statusline
+let g:FlyGrep_enable_statusline = 1
+
+""
+" Set FlyGrep default command prompt
+let g:spacevim_commandline_prompt = '➭'
+
+command! -nargs=0 FlyGrep call FlyGrep#open({})
+EOT
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"

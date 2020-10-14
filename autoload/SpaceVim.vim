@@ -1057,6 +1057,22 @@ let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'find
 " <
 let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
 ""
+" @section enable_projects_cache, options-enable_projects_cache
+" @parentsection options
+" Enable/Disable cross session projects cache. Enabled by default.
+
+""
+" Enable/Disable cross session projects cache. Enabled by default.
+let g:spacevim_enable_projects_cache = 1
+""
+" @section projects_cache_num, options-projects_cache_num
+" @parentsection options
+" Setting the numbers of cached projects, by default it is 20.
+
+""
+" Setting the numbers of cached projects, by default it is 20.
+let g:spacevim_projects_cache_num = 20
+""
 " @section project_rooter_automatically, options-project_rooter_automatically
 " @parentsection options
 " Enable/Disable project root detection. By default, SpaceVim will change the
