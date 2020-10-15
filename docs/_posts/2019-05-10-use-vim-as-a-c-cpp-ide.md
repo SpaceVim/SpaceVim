@@ -58,6 +58,9 @@ for C/C++ language should works well.
 
 If the `autocomplete_method` is `deoplete`, then `Shougo/deoplete-clangx` will be loaded in `lang#c` layer.
 
+If the `autocomplete_method` is `asyncomplete`, then `wsdjeg/asyncomplete-clang.vim` will be loaded.
+
+You can check the value of `autocomplete_method` via `:SPSet autocomplete_method`.
 
 ### alternate file jumping
 
