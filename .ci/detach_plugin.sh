@@ -200,11 +200,11 @@ EOT
             _checkdir plugin
             cat <<EOT > plugin/todo.vim
 "=============================================================================
-" vim-todo --- todo plugins for neovim and vim
-" Copyright (c) 2016-2020 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
-" URL: https://github.com/wsdjeg/iedit.vim
-" License: MIT license
+" todo.vim --- todo manager for SpaceVim
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
 "=============================================================================
 
 command! OpenTodo call todo#open()
