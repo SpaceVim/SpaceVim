@@ -67,18 +67,7 @@ function! s:update_todo_content() abort
   let argv = [s:grep_default_exe] + 
         \ s:grep_default_opt +
         \ s:grep_default_expr_opt
-  " @fixme expr for defferent tools
-  " when using rg, [join(s:labels, '|')]
-  " when using grep, [join(s:labels, '\|')]
-  if s:grep_default_exe ==# 'rg'
-    let argv += [join(s:labels, '|')]
-  elseif s:grep_default_exe ==# 'grep'
-    let argv += [join(s:labels, '\|')]
-  elseif s:grep_default_exe ==# 'findstr'
-    let argv += [join(s:labels, ' ')]
-  else
-    let argv += [join(s:labels, '|')]
-  endif
+  let argv += [s:join_labels()]
   if s:SYS.isWindows && (s:grep_default_exe ==# 'rg' || s:grep_default_exe ==# 'ag' || s:grep_default_exe ==# 'pt' )
     let argv += ['.']
   elseif s:SYS.isWindows && s:grep_default_exe ==# 'findstr'
@@ -101,8 +90,9 @@ function! s:stdout(id, data, event) abort
       let file = fnameescape(split(data, ':\d\+:')[0])
       let line = matchstr(data, ':\d\+:')[1:-2]
       let column = matchstr(data, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-      let lebal = matchstr(data, join(s:labels, '\|'))
-      let title = get(split(data, lebal), 1, '')
+      let full_label = matchstr(data, s:join_labels_pattern())
+      let trimmed_label = substitute(full_label, '\W', '', 'g')
+      let title = get(split(data, full_label), 1, '')
       " @todo add time tag
       call add(s:todos, 
             \ {
@@ -110,7 +100,7 @@ function! s:stdout(id, data, event) abort
             \ 'line' : line,
             \ 'column' : column,
             \ 'title' : title,
-            \ 'lebal' : lebal,
+            \ 'label' : trimmed_label,
             \ }
             \ )
     endif
@@ -126,9 +116,9 @@ endfunction
 function! s:exit(id, data, event ) abort
   call s:LOG.info('exit code: ' . string(a:data))
   let s:todos = sort(s:todos, function('s:compare_todo'))
-  let label_w = max(map(deepcopy(s:todos), 'strlen(v:val.lebal)'))
+  let label_w = max(map(deepcopy(s:todos), 'strlen(v:val.label)'))
   let file_w = max(map(deepcopy(s:todos), 'strlen(v:val.file)'))
-  let expr = "v:val.lebal . repeat(' ', label_w - strlen(v:val.lebal)) . ' ' ."
+  let expr = "tolower(v:val.label) . repeat(' ', label_w - strlen(v:val.label)) . ' ' ."
         \ .  "SpaceVim#api#import('file').unify_path(v:val.file, ':.') . repeat(' ', file_w - strlen(v:val.file)) . ' ' ."
         \ .  'v:val.title'
   let lines = map(deepcopy(s:todos),expr)
@@ -136,8 +126,8 @@ function! s:exit(id, data, event ) abort
 endfunction
 
 function! s:compare_todo(a, b) abort
-  let a = index(s:labels, a:a.lebal)
-  let b = index(s:labels, a:b.lebal)
+  let a = index(s:labels, a:a.label)
+  let b = index(s:labels, a:b.label)
   return a == b ? 0 : a > b ? 1 : -1
 endfunction
 
@@ -153,6 +143,29 @@ function! s:open_todo() abort
   call cursor(todo.line, todo.column)
   noautocmd normal! :
 endfunction
+
+" @fixme expr for different tools
+" when using rg,   [join(s:labels, '|')]
+" when using grep, [join(s:labels, '\|')]
+function! s:join_labels()
+  if s:grep_default_exe ==# 'rg'
+    return join(s:labels, '|')
+  elseif s:grep_default_exe ==# 'grep'
+    return join(s:labels, '\|')
+  elseif s:grep_default_exe ==# 'findstr'
+    return join(s:labels, ' ')
+  else
+    return join(s:labels, '|')
+  endif
+endfunc
+
+function! s:join_labels_pattern ()
+  if exists('g:spacevim_todo_labels_pattern')
+    return g:spacevim_todo_labels_pattern
+  end
+  return join(s:labels, '\|')
+endfunc
+
 
 " @todo fuzzy find todo list
 " after open todo manager buffer, we should be able to fuzzy find the item we
