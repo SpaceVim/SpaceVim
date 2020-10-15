@@ -299,7 +299,7 @@ function! s:self.buf_get_lines(bufnr, start, end, strict_indexing) abort
       if !bufloaded(a:bufnr)
         call bufload(a:bufnr)
       endif
-      return getbufline(a:bufnr, a:start + 1, a:end + 1)
+      return getbufline(a:bufnr, a:start + 1, a:end)
     elseif a:start >= 0 && a:end < 0 && lct + a:end >= a:start
       return self.buf_get_lines(a:bufnr, a:start, lct + a:end + 1, a:strict_indexing)
     elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
