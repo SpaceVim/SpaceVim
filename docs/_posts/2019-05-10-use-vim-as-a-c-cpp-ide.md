@@ -56,6 +56,13 @@ This option requires `+python` or `+python3` enabled and `libclang` has been ins
 By default the autocomplete layer has been enabled, so after loading `lang#c` layer, the code completion
 for C/C++ language should works well.
 
+If the `autocomplete_method` is `deoplete`, then `Shougo/deoplete-clangx` will be loaded in `lang#c` layer.
+
+If the `autocomplete_method` is `asyncomplete`, then `wsdjeg/asyncomplete-clang.vim` will be loaded.
+
+If the `autocomplete_method` is `neocomplete`, Then `Rip-Rip/clang_complete` will be loaded.
+
+You can check the value of `autocomplete_method` via `:SPSet autocomplete_method`.
 
 ### alternate file jumping
 
