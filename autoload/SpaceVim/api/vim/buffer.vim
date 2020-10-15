@@ -277,7 +277,11 @@ function! s:self.displayArea() abort
 endfunction
 
 function! s:self.add_highlight(bufnr, hl, line, col, long) abort
-  
+  if exists('*nvim_buf_add_highlight')
+    call nvim_buf_add_highlight(a:bufnr, 0, a:hl, a:line, a:col, a:col + a:long)
+  else
+    call SpaceVim#logger#warn('vim#buffer.add_highlight api only support neovim', 0)
+  endif
 endfunction
 
 function! s:self.buf_get_lines(bufnr, start, end, strict_indexing) abort
@@ -295,7 +299,7 @@ function! s:self.buf_get_lines(bufnr, start, end, strict_indexing) abort
       if !bufloaded(a:bufnr)
         call bufload(a:bufnr)
       endif
-      return getbufline(a:bufnr, a:start + 1, a:end + 1)
+      return getbufline(a:bufnr, a:start + 1, a:end)
     elseif a:start >= 0 && a:end < 0 && lct + a:end >= a:start
       return self.buf_get_lines(a:bufnr, a:start, lct + a:end + 1, a:strict_indexing)
     elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
