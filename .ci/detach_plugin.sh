@@ -197,6 +197,18 @@ EOT
             _detect autoload/SpaceVim/logger.vim
             _detect autoload/SpaceVim/mapping/search.vim
             _detect autoload/SpaceVim/plugins/todo.vim
+            _checkdir plugin
+            cat <<EOT > plugin/todo.vim
+"=============================================================================
+" todo.vim --- todo manager for SpaceVim
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+command! OpenTodo call todo#open()
+EOT
             _detect LICENSE
             git add .
             git config user.email "wsdjeg@qq.com"
