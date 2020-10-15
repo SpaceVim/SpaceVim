@@ -119,7 +119,7 @@ function! SpaceVim#layers#lang#c#plugins() abort
     elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
       call add(plugins, ['wsdjeg/asyncomplete-clang.vim', {'merged' : 0, 'loadconf' : 1}])
     else
-      call add(plugins, ['Rip-Rip/clang_complete'])
+      call add(plugins, ['Rip-Rip/clang_complete', {'if' : s:CPT.has('python') || s:CPT.has('python3')}])
     endif
   endif
 

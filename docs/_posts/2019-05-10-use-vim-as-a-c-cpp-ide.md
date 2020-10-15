@@ -56,6 +56,8 @@ This option requires `+python` or `+python3` enabled and `libclang` has been ins
 By default the autocomplete layer has been enabled, so after loading `lang#c` layer, the code completion
 for C/C++ language should works well.
 
+If the `autocomplete_method` is `deoplete`, then `Shougo/deoplete-clangx` will be loaded in `lang#c` layer.
+
 
 ### alternate file jumping
 
