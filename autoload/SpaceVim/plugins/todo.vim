@@ -75,6 +75,7 @@ function! s:update_todo_content() abort
     let argv += ['*.*']
   endif
   let argv += s:grep_default_ropt
+  echom string(argv)
   call s:LOG.info('cmd: ' . string(argv))
   let jobid = s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
@@ -165,7 +166,7 @@ function! s:get_labels_regex()
 endfunc
 
 function! s:get_labels_pattern ()
-  return join(map(copy(s:labels), "(v:val[0] =~ '\w' ? '\\<' : '') . v:val . '\\>:\\?'"), '\|')
+  return '\C' . join(map(copy(s:labels), "(v:val[0] =~ '\w' ? '\\<' : '') . v:val . '\\>:\\?'"), '\|')
 endfunc
 
 
