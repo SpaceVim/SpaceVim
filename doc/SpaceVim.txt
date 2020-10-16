@@ -1244,20 +1244,14 @@ Config the command line prompt for flygrep and denite etc.
 Option for setting todo labels in current project.
 By default, it matches "@todo", "@question", "@fixme" and "@idea".
 
-                                              *g:spacevim_todo_labels_pattern*
-This option is used in conjunction with `g:spacevim_todo_labels` to configure
-custom todo patterns.
-
 The following configuration will match todos in the form "TODO", "FIXME" and
 "XXX".
 >
   let g:spacevim_todo_labels = [
-    \ '\bFIXME\b',
-    \ '\bTODO\b',
-    \ '\bXXX\b',
+    \ 'FIXME',
+    \ 'TODO',
+    \ 'XXX',
     \ ]
-
-  let g:spacevim_todo_labels_pattern = '\v\CTODO:?|FIXME:?|XXX:?'
 <
                                                   *g:spacevim_lint_on_the_fly*
 Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.

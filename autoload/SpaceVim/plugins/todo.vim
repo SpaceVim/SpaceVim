@@ -62,12 +62,13 @@ function! s:update_todo_content() abort
   else
     let s:labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
   endif
+
   let s:todos = []
   let s:todo = {}
   let argv = [s:grep_default_exe] + 
         \ s:grep_default_opt +
         \ s:grep_default_expr_opt
-  let argv += [s:join_labels()]
+  let argv += [s:get_labels_regex()]
   if s:SYS.isWindows && (s:grep_default_exe ==# 'rg' || s:grep_default_exe ==# 'ag' || s:grep_default_exe ==# 'pt' )
     let argv += ['.']
   elseif s:SYS.isWindows && s:grep_default_exe ==# 'findstr'
@@ -90,9 +91,10 @@ function! s:stdout(id, data, event) abort
       let file = fnameescape(split(data, ':\d\+:')[0])
       let line = matchstr(data, ':\d\+:')[1:-2]
       let column = matchstr(data, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-      let full_label = matchstr(data, s:join_labels_pattern())
+      let full_label = matchstr(data, s:get_labels_pattern())
       let trimmed_label = substitute(full_label, '\W', '', 'g')
       let title = get(split(data, full_label), 1, '')
+      call add(g:data, data)
       " @todo add time tag
       call add(s:todos, 
             \ {
@@ -147,23 +149,24 @@ endfunction
 " @fixme expr for different tools
 " when using rg,   [join(s:labels, '|')]
 " when using grep, [join(s:labels, '\|')]
-function! s:join_labels()
+function! s:get_labels_regex()
   if s:grep_default_exe ==# 'rg'
-    return join(s:labels, '|')
+    let separator = '|'
   elseif s:grep_default_exe ==# 'grep'
-    return join(s:labels, '\|')
+    let separator = '\|'
   elseif s:grep_default_exe ==# 'findstr'
-    return join(s:labels, ' ')
+    let separator = ' '
   else
-    return join(s:labels, '|')
+    let separator = '|'
   endif
+
+  return join(map(copy(s:labels),
+  \ "(v:val[0] =~ '\w' ? '\\b' : '') . v:val . '\\b:?'"),
+  \ separator)
 endfunc
 
-function! s:join_labels_pattern ()
-  if exists('g:spacevim_todo_labels_pattern')
-    return g:spacevim_todo_labels_pattern
-  end
-  return join(s:labels, '\|')
+function! s:get_labels_pattern ()
+  return join(map(copy(s:labels), "(v:val[0] =~ '\w' ? '\\<' : '') . v:val . '\\>:\\?'"), '\|')
 endfunc
 
 
