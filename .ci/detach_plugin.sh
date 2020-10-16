@@ -82,21 +82,21 @@ main () {
 ""
 " FlyGrep will start to searching code after a delay, the default value is
 " 500ms.
-let g:FlyGrep_input_delay = 500
+let g:FlyGrep_input_delay = get(g:, 'FlyGrep_input_delay', 500)
 
 ""
 " A list of searching tools will be userd.
-let g:FlyGrep_search_tools = ['ag', 'rg', 'grep', 'pt', 'ack']
+let g:FlyGrep_search_tools = get(g:, 'FlyGrep_search_tools', ['ag', 'rg', 'grep', 'pt', 'ack'])
 
-let g:spacevim_data_dir = '~/.cache'
+let g:spacevim_data_dir = get(g:, 'spacevim_data_dir', '~/.cache')
 
 ""
 " Enable FlyGrep statusline
-let g:FlyGrep_enable_statusline = 1
+let g:FlyGrep_enable_statusline = get(g:, 'FlyGrep_enable_statusline', 1)
 
 ""
 " Set FlyGrep default command prompt
-let g:spacevim_commandline_prompt = '➭'
+let g:spacevim_commandline_prompt = get(g:, 'spacevim_commandline_prompt', '➭')
 
 command! -nargs=0 FlyGrep call FlyGrep#open({})
 EOT
