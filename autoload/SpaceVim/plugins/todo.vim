@@ -94,7 +94,6 @@ function! s:stdout(id, data, event) abort
       let full_label = matchstr(data, s:get_labels_pattern())
       let trimmed_label = substitute(full_label, '\W', '', 'g')
       let title = get(split(data, full_label), 1, '')
-      call add(g:data, data)
       " @todo add time tag
       call add(s:todos, 
             \ {
