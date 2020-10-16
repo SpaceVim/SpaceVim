@@ -38,7 +38,12 @@ main () {
             _detect autoload/SpaceVim/api/vim/buffer.vim
             _detect autoload/SpaceVim/api/vim/regex.vim
             _detect autoload/SpaceVim/api/vim/compatible.vim
+            _detect autoload/SpaceVim/api/vim/floating.vim
+            _detect autoload/SpaceVim/api/vim/highlight.vim
+            _detect autoload/SpaceVim/api/vim/statusline.vim
+            _detect autoload/SpaceVim/api/vim/window.vim
             _detect autoload/SpaceVim/api/neovim/floating.vim
+            _detect autoload/SpaceVim/api/data/dict.vim
             _detect autoload/SpaceVim/api/data/list.vim
             _detect autoload/SpaceVim/api/data/json.vim
             _detect autoload/SpaceVim/api/prompt.vim
