@@ -13,6 +13,7 @@ if exists('s:enable_sidebar')
 else
   let s:enable_sidebar = 0
   let s:enable_scrollbar = 0
+  let s:enable_indentline = 1
 endif
 
 function! SpaceVim#layers#ui#plugins() abort
@@ -44,6 +45,7 @@ function! SpaceVim#layers#ui#config() abort
   let g:indentLine_char = get(g:, 'indentLine_char', '┊')
   let g:indentLine_concealcursor = 'niv'
   let g:indentLine_conceallevel = 2
+  let g:indentLine_enabled = s:enable_indentline
   let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler', 'json']
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
         \ 'qf', 'help', 'markdown', 'leaderGuide',
@@ -426,6 +428,9 @@ function! SpaceVim#layers#ui#set_variable(var) abort
   let s:enable_scrollbar = get(a:var,
         \ 'enable_scrollbar',
         \ 0)
+  let s:enable_indentline = get(a:var,
+        \ 'enable_indentline',
+        \ 1)
 
 endfunction
 
