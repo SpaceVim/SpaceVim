@@ -91,7 +91,7 @@ endfunction
 
 function! s:self.win_close(id, focuce) abort
   return nvim_win_close(a:id, a:focuce)
-  " @fixme: nvim_win_close only support one argv in old version
+  " @fixme nvim_win_close only support one argv in old version
   try
     return nvim_win_close(a:id, a:focuce)
   catch /^Vim\%((\a\+)\)\=:E118/

@@ -913,7 +913,7 @@ endfunction
 " }}}
 
 function! s:update_statusline() abort
-  if !g:FlyGrep_enable_statusline
+  if !get(g:, 'FlyGrep_enable_statusline', 1)
     return
   endif
 

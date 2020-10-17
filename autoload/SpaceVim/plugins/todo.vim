@@ -10,6 +10,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:SYS = SpaceVim#api#import('system')
 let s:LOG = SpaceVim#logger#derive('todo')
+let s:REG = SpaceVim#api#import('vim#regex')
 
 
 let [
@@ -65,10 +66,12 @@ function! s:update_todo_content() abort
 
   let s:todos = []
   let s:todo = {}
+  let s:labels_regex = s:get_labels_regex()
+  let s:labels_partten = s:get_labels_pattern()
   let argv = [s:grep_default_exe] + 
         \ s:grep_default_opt +
         \ s:grep_default_expr_opt
-  let argv += [s:get_labels_regex()]
+  let argv += [s:labels_regex]
   if s:SYS.isWindows && (s:grep_default_exe ==# 'rg' || s:grep_default_exe ==# 'ag' || s:grep_default_exe ==# 'pt' )
     let argv += ['.']
   elseif s:SYS.isWindows && s:grep_default_exe ==# 'findstr'
@@ -76,24 +79,27 @@ function! s:update_todo_content() abort
   endif
   let argv += s:grep_default_ropt
   call s:LOG.info('cmd: ' . string(argv))
-  let jobid = s:JOB.start(argv, {
+  call s:LOG.info('   labels_partten: ' . s:labels_partten)
+  let s:todo_jobid = s:JOB.start(argv, {
         \ 'on_stdout' : function('s:stdout'),
         \ 'on_stderr' : function('s:stderr'),
         \ 'on_exit' : function('s:exit'),
         \ })
-  call s:LOG.info('jobid: ' . string(jobid))
+  call s:LOG.info('jobid: ' . string(s:todo_jobid))
 endfunction
 
 function! s:stdout(id, data, event) abort
+  if a:id !=# s:todo_jobid
+    return
+  endif
   for data in a:data
     call s:LOG.info('stdout: ' . data)
     if !empty(data)
       let file = fnameescape(split(data, ':\d\+:')[0])
       let line = matchstr(data, ':\d\+:')[1:-2]
       let column = matchstr(data, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-      let full_label = matchstr(data, s:get_labels_pattern())
-      let trimmed_label = substitute(full_label, '\W', '', 'g')
-      let title = get(split(data, full_label), 1, '')
+      let label = matchstr(data, s:labels_partten)
+      let title = get(split(data, label), 1, '')
       " @todo add time tag
       call add(s:todos, 
             \ {
@@ -101,7 +107,7 @@ function! s:stdout(id, data, event) abort
             \ 'line' : line,
             \ 'column' : column,
             \ 'title' : title,
-            \ 'label' : trimmed_label,
+            \ 'label' : label,
             \ }
             \ )
     endif
@@ -109,21 +115,28 @@ function! s:stdout(id, data, event) abort
 endfunction
 
 function! s:stderr(id, data, event) abort
+  if a:id !=# s:todo_jobid
+    return
+  endif
   for date in a:data
     call s:LOG.info('stderr: ' . string(a:data))
   endfor
 endfunction
 
 function! s:exit(id, data, event ) abort
-  call s:LOG.info('exit code: ' . string(a:data))
+  if a:id !=# s:todo_jobid
+    return
+  endif
+  call s:LOG.info('todomanager exit: ' . string(a:data))
   let s:todos = sort(s:todos, function('s:compare_todo'))
   let label_w = max(map(deepcopy(s:todos), 'strlen(v:val.label)'))
   let file_w = max(map(deepcopy(s:todos), 'strlen(v:val.file)'))
-  let expr = "tolower(v:val.label) . repeat(' ', label_w - strlen(v:val.label)) . ' ' ."
+  let expr = "v:val.label . repeat(' ', label_w - strlen(v:val.label)) . ' ' ."
         \ .  "SpaceVim#api#import('file').unify_path(v:val.file, ':.') . repeat(' ', file_w - strlen(v:val.file)) . ' ' ."
-        \ .  'v:val.title'
+        \ .  "v:val.title"
   let lines = map(deepcopy(s:todos),expr)
   call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, lines)
+  let g:wsd = s:todos
 endfunction
 
 function! s:compare_todo(a, b) abort
@@ -159,13 +172,12 @@ function! s:get_labels_regex()
     let separator = '|'
   endif
 
-  return join(map(copy(s:labels),
-  \ "(v:val[0] =~ '\w' ? '\\b' : '') . v:val . '\\b:?'"),
+  return join(map(copy(s:labels), "v:val . '\\b'"),
   \ separator)
 endfunc
 
-function! s:get_labels_pattern ()
-  return '\C' . join(map(copy(s:labels), "(v:val[0] =~ '\w' ? '\\<' : '') . v:val . '\\>:\\?'"), '\|')
+function! s:get_labels_pattern()
+  return s:REG.parser(s:get_labels_regex(), 0)
 endfunc
 
 

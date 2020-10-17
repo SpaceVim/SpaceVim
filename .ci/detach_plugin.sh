@@ -198,6 +198,7 @@ EOT
             _detect autoload/SpaceVim/api/data/string.vim
             _detect autoload/SpaceVim/api/file.vim
             _detect autoload/SpaceVim/api/vim/buffer.vim
+            _detect autoload/SpaceVim/api/vim/regex.vim
             _detect autoload/SpaceVim/api/vim/compatible.vim
             _detect autoload/SpaceVim/logger.vim
             _detect autoload/SpaceVim/mapping/search.vim
