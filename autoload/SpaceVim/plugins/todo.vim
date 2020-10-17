@@ -10,6 +10,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:SYS = SpaceVim#api#import('system')
 let s:LOG = SpaceVim#logger#derive('todo')
+let s:REG = SpaceVim#api#import('vim#regex')
 
 
 let [
@@ -164,8 +165,8 @@ function! s:get_labels_regex()
   \ separator)
 endfunc
 
-function! s:get_labels_pattern ()
-  return '\C' . join(map(copy(s:labels), "(v:val[0] =~ '\w' ? '\\<' : '') . v:val . '\\>:\\?'"), '\|')
+function! s:get_labels_pattern()
+  return s:REG.parser(s:get_labels_regex(), 0)
 endfunc
 
 
