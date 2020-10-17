@@ -4,12 +4,10 @@ endif
 let b:current_syntax = 'SpaceVimTodoManager'
 syntax case ignore
 
-syn match FileName /\(^\S\+\s\+\)\@<=[^ ]*/
+syn match FileName /\(@[a-zA-Z]*\s\+\)\@<=[^ ]*/
 syn match TODOTAG  /^\s*@[a-zA-Z]*/
-syn match TODOTAG  /^\s*@\?todo*/
 syn match TODOQUESTION  /^\s*@ques[a-z]*/
-syn match TODOFIXME  /^\s*@\?fixm[a-z]*/
-syn match TODOFIXME  /^\s*@\?xxx*/
+syn match TODOFIXME  /^\s*@fixm[a-z]*/
 " syn match TODOCHECKBOX /[\d\+/\d\+\]/
 syn match TODOINDEX /^\s\+\d\+\.\s/
 syn match TODOCHECKBOXPANDING /\s\+√\s\+/
@@ -20,4 +18,3 @@ hi def link FileName Comment
 hi def link TODOTAG Todo
 hi def link TODOQUESTION Question
 hi def link TODOFIXME ErrorMsg
-
