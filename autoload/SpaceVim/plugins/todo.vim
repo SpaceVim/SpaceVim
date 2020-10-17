@@ -172,7 +172,7 @@ function! s:get_labels_regex()
     let separator = '|'
   endif
 
-  return join(map(copy(s:labels), "'\\s' . v:val . '\\b'"),
+  return join(map(copy(s:labels), "v:val . '\\b'"),
   \ separator)
 endfunc
 
