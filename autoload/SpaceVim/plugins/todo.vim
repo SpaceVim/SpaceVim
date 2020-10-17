@@ -92,9 +92,8 @@ function! s:stdout(id, data, event) abort
       let file = fnameescape(split(data, ':\d\+:')[0])
       let line = matchstr(data, ':\d\+:')[1:-2]
       let column = matchstr(data, '\(:\d\+\)\@<=:\d\+:')[1:-2]
-      let full_label = matchstr(data, s:get_labels_pattern())
-      let trimmed_label = substitute(full_label, '\W', '', 'g')
-      let title = get(split(data, full_label), 1, '')
+      let label = matchstr(data, s:get_labels_pattern())
+      let title = get(split(data, label), 1, '')
       " @todo add time tag
       call add(s:todos, 
             \ {
@@ -102,7 +101,7 @@ function! s:stdout(id, data, event) abort
             \ 'line' : line,
             \ 'column' : column,
             \ 'title' : title,
-            \ 'label' : trimmed_label,
+            \ 'label' : label,
             \ }
             \ )
     endif
@@ -116,15 +115,16 @@ function! s:stderr(id, data, event) abort
 endfunction
 
 function! s:exit(id, data, event ) abort
-  call s:LOG.info('exit code: ' . string(a:data))
+  call s:LOG.info('todomanager exit: ' . string(a:data))
   let s:todos = sort(s:todos, function('s:compare_todo'))
   let label_w = max(map(deepcopy(s:todos), 'strlen(v:val.label)'))
   let file_w = max(map(deepcopy(s:todos), 'strlen(v:val.file)'))
-  let expr = "tolower(v:val.label) . repeat(' ', label_w - strlen(v:val.label)) . ' ' ."
+  let expr = "v:val.label . repeat(' ', label_w - strlen(v:val.label)) . ' ' ."
         \ .  "SpaceVim#api#import('file').unify_path(v:val.file, ':.') . repeat(' ', file_w - strlen(v:val.file)) . ' ' ."
-        \ .  'v:val.title'
+        \ .  "v:val.title"
   let lines = map(deepcopy(s:todos),expr)
   call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, lines)
+  let g:wsd = s:todos
 endfunction
 
 function! s:compare_todo(a, b) abort
@@ -160,8 +160,7 @@ function! s:get_labels_regex()
     let separator = '|'
   endif
 
-  return join(map(copy(s:labels),
-  \ "(v:val[0] =~ '\w' ? '\\b' : '') . v:val . '\\b:?'"),
+  return join(s:labels,
   \ separator)
 endfunc
 
