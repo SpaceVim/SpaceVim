@@ -1367,17 +1367,17 @@ The above key bindings are only part of fuzzy finder layers, please read the lay
 
 | Feature            | denite | unite | leaderf | ctrlp | fzf |
 | ------------------ | :----: | :---: | :-----: | :---: | --- |
-| CustomKeyMaps menu |  yes   |  yes  |   no    |  no   | no  |
-| AddedPlugins menu  |  yes   |  yes  |   no    |  no   | no  |
-| register           |  yes   |  yes  |   no    |  yes  | yes |
+| CustomKeyMaps menu |  yes   |  yes  |   yes    |  no   | no  |
+| AddedPlugins menu  |  yes   |  yes  |   yes    |  no   | no  |
+| register           |  yes   |  yes  |   yes    |  yes  | yes |
 | file               |  yes   |  yes  |   yes   |  yes  | yes |
-| yank history       |  yes   |  yes  |   no    |  no   | yes |
-| jump               |  yes   |  yes  |   no    |  yes  | yes |
-| location list      |  yes   |  yes  |   no    |  no   | yes |
+| yank history       |  yes   |  yes  |   yes    |  no   | yes |
+| jump               |  yes   |  yes  |   yes    |  yes  | yes |
+| location list      |  yes   |  yes  |   yes    |  no   | yes |
 | outline            |  yes   |  yes  |   yes   |  yes  | yes |
-| message            |  yes   |  yes  |   no    |  no   | yes |
-| quickfix list      |  yes   |  yes  |   no    |  yes  | yes |
-| resume windows     |  yes   |  yes  |   no    |  no   | no  |
+| message            |  yes   |  yes  |   yes    |  no   | yes |
+| quickfix list      |  yes   |  yes  |   yes    |  yes  | yes |
+| resume windows     |  yes   |  yes  |   yes    |  no   | no  |
 
 **Key bindings within fuzzy finder buffer**
 
