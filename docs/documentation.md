@@ -1404,11 +1404,18 @@ SpaceVim can be interfaced with different searching tools like:
 - [ack](https://beyondgrep.com/)
 - grep
 
-The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance, `SPC s a b` will search in all opened buffers using `ag`.
+The search commands in SpaceVim are organized under the `SPC s`
+prefix with the next key is the tool to use and the last key is the scope.
+For instance, `SPC s a b` will search in all opened buffers using `ag`.
 
-If the last key (determining the scope) is uppercase then the current word under the cursor is used as default input for the search. For instance, `SPC s a B` will search the word under cursor.
+If the last key (determining the scope) is uppercase then the
+current word under the cursor is used as default input for the search.
+For instance, `SPC s a B` will search the word under cursor.
 
-If the tool key is omitted then a default tool will be automatically selected for the search. This tool corresponds to the first tool found on the system of the list `search_tools`, the default order is `rg`, `ag`, `pt`, `ack` then `grep`. For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
+If the tool key is omitted then a default tool will be automatically selected for the search.
+This tool corresponds to the first tool found on the system of the list `search_tools`,
+the default order is `['rg', 'ag', 'pt', 'ack', 'grep', 'findstr', 'git']`.
+For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
 
 The tool keys are:
 
