@@ -416,7 +416,7 @@ If you found one of the built-in plugins has bugs, and you want to debug that pl
 
 ```toml
 [options]
-disabled_plugins = ["neomake.vim"]
+    disabled_plugins = ["neomake.vim"]
 ```
 
 2. Add a forked plugin or add a local plugin
@@ -765,11 +765,11 @@ To change the filemanager plugin:
 
 ```toml
 [options]
-# file manager plugins supported in SpaceVim:
-# - vimfiler (default)
-# - nerdtree
-# - defx
-filemanager = "defx"
+    # file manager plugins supported in SpaceVim:
+    # - vimfiler (default)
+    # - nerdtree
+    # - defx
+    filemanager = "defx"
 ```
 
 VCS integration is supported, there will be a column status, this feature may make vimfiler slow, so it is not enabled by default.
@@ -783,7 +783,7 @@ you can use `filetree_direction` option:
 
 ```toml
 [options]
-filetree_direction = "left"
+    filetree_direction = "left"
 ```
 
 #### File tree navigation
@@ -1151,7 +1151,7 @@ can change it via `windows_leader` option:
 
 ```toml
 [options]
-windows_leader = "s"
+    windows_leader = "s"
 ```
 
 | Key Bindings | Descriptions                                       |
