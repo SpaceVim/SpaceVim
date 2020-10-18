@@ -310,7 +310,9 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'u'], 'call SpaceVim#plugins#windowsmanager#UndoQuitWin()', 'undo quieted window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'U'], 'call SpaceVim#plugins#windowsmanager#RedoQuitWin()', 'redo quieted window', 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'n'], 'bnext', ['next-buffer',
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'n'], 'call call('
+        \ . string(function('s:next_buffer'))
+        \ . ', [])', ['next-buffer',
         \ [
         \ '[SPC b n] is running :bnext, jump to next buffer',
         \ 'which is a vim build in command',
@@ -325,7 +327,9 @@ function! SpaceVim#mapping#space#init() abort
         \ . string(function('s:switch_scratch_buffer'))
         \ . ', [])', 'switch-to-scratch-buffer', 1)
   let s:lnum = expand('<slnum>') + 3
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'p'], 'bp', ['previous-buffer',
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'p'], 'call call('
+        \ . string(function('s:previous_buffer'))
+        \ . ', [])', ['previous-buffer',
         \ [
         \ 'SPC b p is running :bp, jump to previous buffer',
         \ 'which is a vim build in command',
@@ -721,6 +725,26 @@ function! s:windows_transient_state() abort
         \ }
         \ )
   call state.open()
+endfunction
+
+function! s:next_buffer() abort
+  try
+    bnext
+  catch
+    echohl WarningMsg
+    echo 'no listed buffer'
+    echohl None
+  endtry
+endfunction
+
+function! s:previous_buffer() abort
+  try
+    bp
+  catch
+    echohl WarningMsg
+    echo 'no listed buffer'
+    echohl None
+  endtry
 endfunction
 
 " function() wrapper
