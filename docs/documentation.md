@@ -268,7 +268,7 @@ to the `custom_plugins` section:
 
 `on_cmd` option means this plugin will be loaded only when the following commands are called.
 
-`merged` option is used for merging plugins directory. When `merged` is `trye`, all files in
+`merged` option is used for merging plugins directory. When `merged` is `true`, all files in
 this custom plugin will be merged into `~/.cache/vimfiles/.cache/init.vim/` for neovim or
 `~/.cache/vimfiles/.cache/vimrc/` for vim.
 
