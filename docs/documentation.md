@@ -1085,13 +1085,14 @@ In transient state:
 If `has('unnamedplus')`, the register used by `<Leader> y` is `+`, otherwise it is `*`.
 Read `:h registers` for more info about other registers.
 
-| Key          | Action                           |
-| ------------ | -------------------------------- |
-| `<Leader> y` | Copy text to system clipboard    |
-| `<Leader> p` | Paste text from system clipboard |
-| `<Leader> Y` | Copy text to pastebin            |
+| Key          | Descriptions                                 |
+| ------------ | -------------------------------------------- |
+| `<Leader> y` | Copy text to system clipboard                |
+| `<Leader> p` | Paste text from system clipboard after here  |
+| `<Leader> P` | Paste text from system clipboard before here |
+| `<Leader> Y` | Copy text to pastebin                        |
 
-The `<Leader< Y` key binding will copy selected text to a pastebin server. It requires `curl` in your `$PATH`.
+The `<Leader> Y` key binding will copy selected text to a pastebin server. It requires `curl` in your `$PATH`.
 And the default command is:
 
 ```
