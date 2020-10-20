@@ -22,7 +22,6 @@ let s:winid = -1
 let s:job_id = 0
 let s:status = {
       \ 'is_running' : 0,
-      \ 'is_exit' : 0,
       \ 'has_errors' : 0,
       \ 'exit_code' : 0
       \ }
@@ -163,7 +162,6 @@ function! s:async_run(runner, ...) abort
   if s:job_id > 0
     let s:status = {
           \ 'is_running' : 1,
-          \ 'is_exit' : 0,
           \ 'has_errors' : 0,
           \ 'exit_code' : 0
           \ }
@@ -183,14 +181,12 @@ function! s:on_compile_exit(id, data, event) abort
     if s:job_id > 0
       let s:status = {
             \ 'is_running' : 1,
-            \ 'is_exit' : 0,
             \ 'has_errors' : 0,
             \ 'exit_code' : 0
             \ }
     endif
   else
     let s:end_time = reltime(s:start_time)
-    let s:status.is_exit = 1
     let s:status.exit_code = a:data
     let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
@@ -222,7 +218,6 @@ function! SpaceVim#plugins#runner#open(...) abort
   let s:lines = 0
   let s:status = {
         \ 'is_running' : 0,
-        \ 'is_exit' : 0,
         \ 'has_errors' : 0,
         \ 'exit_code' : 0
         \ }
@@ -276,7 +271,6 @@ function! s:on_exit(job_id, data, event) abort
     return
   endif
   let s:end_time = reltime(s:start_time)
-  let s:status.is_exit = 1
   let s:status.exit_code = a:data
   let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
   if bufexists(s:bufnr)
@@ -295,8 +289,7 @@ endfunction
 
 
 function! SpaceVim#plugins#runner#status() abort
-  if s:status.is_running == 1
-  elseif s:status.is_exit == 1
+  if s:status.is_running == 0
     return 'exit code : ' . s:status.exit_code 
           \ . '    time: ' . s:STRING.trim(reltimestr(s:end_time))
           \ . '    language: ' . get(s:, 'selected_language', &ft)
@@ -305,7 +298,7 @@ function! SpaceVim#plugins#runner#status() abort
 endfunction
 
 function! s:close() abort
-  if s:status.is_exit == 0 && s:job_id > 0
+  if s:status.is_running == 1 && s:job_id > 0
     call s:JOB.stop(s:job_id)
     let s:job_id = 0
   endif
@@ -315,9 +308,8 @@ function! s:close() abort
 endfunction
 
 function! s:stop_runner() abort
-  if s:status.is_exit == 0 && s:job_id > 0
+  if s:status.is_running == 1
     call s:JOB.stop(s:job_id)
-    let s:job_id = 0
   endif
 endfunction
 
