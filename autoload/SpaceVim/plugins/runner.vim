@@ -6,12 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
-if exists('s:runners')
-  finish
-else
-  let s:runners = {}
-endif
-
+let s:runners = {}
 
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
