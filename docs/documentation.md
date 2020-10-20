@@ -1330,7 +1330,7 @@ All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
 
 **Available plugins in SpaceVim**
 
-All plugins can be easily discovered via `<leader> l p`.
+All plugins can be easily discovered via `<Leader> f p`.
 
 ### Fuzzy finder
 
