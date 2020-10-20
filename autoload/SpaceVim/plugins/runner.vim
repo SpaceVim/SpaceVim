@@ -21,6 +21,8 @@ let s:bufnr = 0
 let s:winid = -1
 
 function! s:init_job_value() abort
+  call s:stop_runner()
+  let s:lines = 0
   let s:job_id = 0
   let s:status = {
         \ 'is_running' : 0,
@@ -63,7 +65,6 @@ endfunction
 let s:target = ''
 
 function! s:async_run(runner, ...) abort
-  call s:stop_runner()
   if type(a:runner) == type('')
     " the runner is a string, the %s will be replaced as a file name.
     try
@@ -118,12 +119,12 @@ function! s:async_run(runner, ...) abort
           \ repeat('-', 20)])
     let s:lines += 4
     let s:start_time = reltime()
-    let s:job_id =  s:JOB.start(compile_cmd,{
+    let s:compile_jobid =  s:JOB.start(compile_cmd,{
           \ 'on_stdout' : function('s:on_stdout'),
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_compile_exit'),
           \ })
-    if usestdin && s:job_id > 0
+    if usestdin && s:compile_jobid > 0
       let range = get(a:runner[0], 'range', [1, '$'])
       call s:JOB.send(s:job_id, call('getline', range))
       call s:JOB.chanclose(s:job_id, 'stdin')
@@ -219,7 +220,6 @@ endfunction
 " this func should support specific a runner
 " the runner can be a string
 function! SpaceVim#plugins#runner#open(...) abort
-  let s:lines = 0
   call s:init_job_value()
   let runner = get(a:000, 0, get(s:runners, &filetype, ''))
   let opts = get(a:000, 1, {})
