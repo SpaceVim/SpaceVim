@@ -21,6 +21,7 @@ let s:VIM = SpaceVim#api#import('vim')
 let s:SYS = SpaceVim#api#import('system')
 let s:ICONV = SpaceVim#api#import('iconv')
 
+let s:LOGGER =SpaceVim#logger#derive('runner')
 
 " use code runner buffer for tab
 "
