@@ -151,7 +151,7 @@ function! SpaceVim#plugins#begin(path) abort
   let g:unite_source_menu_menus.AddedPlugins =
         \ {'description':
         \ 'All the Added plugins'
-        \ . '                    <leader>lp'}
+        \ . '                    <Leader>fp'}
   let g:unite_source_menu_menus.AddedPlugins.command_candidates = []
   if g:spacevim_plugin_manager ==# 'neobundle'
     call neobundle#begin(a:path)
