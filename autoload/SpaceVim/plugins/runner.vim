@@ -6,6 +6,13 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:runners')
+  finish
+else
+  let s:runners = {}
+endif
+
+
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:STRING = SpaceVim#api#import('data#string')
@@ -18,8 +25,6 @@ let s:ICONV = SpaceVim#api#import('iconv')
 " use code runner buffer for tab
 "
 "
-
-let s:runners = {}
 
 let s:bufnr = 0
 let s:winid = -1
@@ -34,6 +39,8 @@ function! s:init_job_value() abort
         \ 'exit_code' : 0
         \ }
 endfunction
+
+call s:init_job_value()
 
 
 function! s:open_win() abort
@@ -287,11 +294,6 @@ endfunction
 " @vimlint(EVL103, 0, a:job_id)
 " @vimlint(EVL103, 0, a:data)
 " @vimlint(EVL103, 0, a:event)
-
-function! s:debug_info() abort
-  return []
-endfunction
-
 
 function! SpaceVim#plugins#runner#status() abort
   if s:status.is_running == 0
