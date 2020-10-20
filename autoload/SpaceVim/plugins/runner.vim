@@ -23,7 +23,7 @@ let s:winid = -1
 function! s:init_job_value() abort
   call s:stop_runner()
   let s:lines = 0
-  let s:job_id = 0
+  let s:runner_jobid = 0
   let s:status = {
         \ 'is_running' : 0,
         \ 'has_errors' : 0,
@@ -56,7 +56,7 @@ function! s:insert() abort
   call inputsave()
   let input = input('input >')
   if !empty(input) && s:status.is_running == 1
-    call s:JOB.send(s:job_id, input)
+    call s:JOB.send(s:runner_jobid, input)
   endif
   normal! :
   call inputrestore()
@@ -77,7 +77,7 @@ function! s:async_run(runner, ...) abort
     let s:lines += 3
     let s:start_time = reltime()
     let opts = get(a:000, 0, {})
-    let s:job_id =  s:JOB.start(cmd,extend({
+    let s:runner_jobid =  s:JOB.start(cmd,extend({
           \ 'on_stdout' : function('s:on_stdout'),
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
@@ -126,8 +126,8 @@ function! s:async_run(runner, ...) abort
           \ })
     if usestdin && s:compile_jobid > 0
       let range = get(a:runner[0], 'range', [1, '$'])
-      call s:JOB.send(s:job_id, call('getline', range))
-      call s:JOB.chanclose(s:job_id, 'stdin')
+      call s:JOB.send(s:runner_jobid, call('getline', range))
+      call s:JOB.chanclose(s:runner_jobid, 'stdin')
     endif
   elseif type(a:runner) == type({})
     " the runner is a dict
@@ -153,18 +153,18 @@ function! s:async_run(runner, ...) abort
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
-    let s:job_id =  s:JOB.start(cmd,{
+    let s:runner_jobid =  s:JOB.start(cmd,{
           \ 'on_stdout' : function('s:on_stdout'),
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
-    if usestdin && s:job_id > 0
+    if usestdin && s:runner_jobid > 0
       let range = get(a:runner, 'range', [1, '$'])
-      call s:JOB.send(s:job_id, call('getline', range))
-      call s:JOB.chanclose(s:job_id, 'stdin')
+      call s:JOB.send(s:runner_jobid, call('getline', range))
+      call s:JOB.chanclose(s:runner_jobid, 'stdin')
     endif
   endif
-  if s:job_id > 0
+  if s:runner_jobid > 0
     let s:status = {
           \ 'is_running' : 1,
           \ 'has_errors' : 0,
@@ -177,13 +177,17 @@ endfunction
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:event)
 function! s:on_compile_exit(id, data, event) abort
+  if a:id !=# s:compile_jobid
+    " make sure the compile exit callback is for current compile command.
+    return
+  endif
   if a:data == 0
-    let s:job_id =  s:JOB.start(s:target,{
+    let s:runner_jobid =  s:JOB.start(s:target,{
           \ 'on_stdout' : function('s:on_stdout'),
           \ 'on_stderr' : function('s:on_stderr'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
-    if s:job_id > 0
+    if s:runner_jobid > 0
       let s:status = {
             \ 'is_running' : 1,
             \ 'has_errors' : 0,
@@ -236,7 +240,7 @@ endfunction
 " @vimlint(EVL103, 1, a:data)
 " @vimlint(EVL103, 1, a:event)
 function! s:on_stdout(job_id, data, event) abort
-  if a:job_id !=# s:job_id
+  if a:job_id !=# s:runner_jobid
     " that means, a new runner has been opennd
     " this is previous runner exit_callback
     return
@@ -250,7 +254,7 @@ function! s:on_stdout(job_id, data, event) abort
 endfunction
 
 function! s:on_stderr(job_id, data, event) abort
-  if a:job_id !=# s:job_id
+  if a:job_id !=# s:runner_jobid
     " that means, a new runner has been opennd
     " this is previous runner exit_callback
     return
@@ -265,7 +269,7 @@ function! s:on_stderr(job_id, data, event) abort
 endfunction
 
 function! s:on_exit(job_id, data, event) abort
-  if a:job_id !=# s:job_id
+  if a:job_id !=# s:runner_jobid
     " that means, a new runner has been opennd
     " this is previous runner exit_callback
     return
@@ -298,9 +302,9 @@ function! SpaceVim#plugins#runner#status() abort
 endfunction
 
 function! s:close() abort
-  if s:status.is_running == 1 && s:job_id > 0
-    call s:JOB.stop(s:job_id)
-    let s:job_id = 0
+  if s:status.is_running == 1 && s:runner_jobid > 0
+    call s:JOB.stop(s:runner_jobid)
+    let s:runner_jobid = 0
   endif
   if s:bufnr != 0 && bufexists(s:bufnr)
     exe 'bd ' s:bufnr
@@ -309,7 +313,7 @@ endfunction
 
 function! s:stop_runner() abort
   if s:status.is_running == 1
-    call s:JOB.stop(s:job_id)
+    call s:JOB.stop(s:runner_jobid)
   endif
 endfunction
 
