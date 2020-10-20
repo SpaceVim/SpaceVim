@@ -78,9 +78,10 @@ elif [ "$LINT" = "vader" ]; then
     echo "=================  ${VIM_BIN} version ======================"
     $VIM_BIN --version
     pip install covimerage
+    pip install codecov
+    python -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); fcntl.fcntl(sys.stdout, fcntl.F_SETFL, flags&~os.O_NONBLOCK);'
     make test_coverage
     covimerage -vv xml --omit 'build/*'
-    pip install codecov
     codecov -X search gcov pycov -f coverage.xml
 elif [ "$LINT" = "jekyll" ]; then
     .ci/build-production
