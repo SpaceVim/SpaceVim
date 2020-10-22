@@ -21,7 +21,7 @@ function! SpaceVim#layers#lang#php#plugins() abort
   call add(plugins, ['2072/PHP-Indenting-for-VIm', { 'on_ft' : 'php'}])
   call add(plugins, ['rafi/vim-phpspec', { 'on_ft' : 'php'}])
   if SpaceVim#layers#lsp#check_filetype('php')
-    call add(plugins, ['felixfbecker/php-language-server', {'on_ft' : 'php', 'build' : 'composer install && composer run-script parse-stubs'}])
+    call add(plugins, ['phpactor/phpactor', {'on_ft' : 'php', 'build' : 'composer install --no-dev -o'}])
   else
     call add(plugins, ['shawncplus/phpcomplete.vim', { 'on_ft' : 'php'}])
   endif
@@ -57,18 +57,6 @@ function! SpaceVim#layers#lang#php#config() abort
       autocmd Filetype php call <SID>preferLocalPHPMD()
     augroup END
   endif
-
-  " let g:neomake_php_php_maker =  {
-        " \ 'args': ['-l', '-d', 'error_reporting=E_ALL', '-d', 'display_errors=1', '-d', 'log_errors=0'],
-        " \ 'errorformat':
-        " \ '%-GNo syntax errors detected in%.%#,'.
-        " \ '%EParse error: syntax error\, %m in %f on line %l,'.
-        " \ '%EParse error: %m in %f on line %l,'.
-        " \ '%EFatal error: %m in %f on line %l,'.
-        " \ '%-G\s%#,'.
-        " \ '%-GErrors parsing %.%#',
-        " \ 'output_stream': 'stderr',
-        " \ }
 endfunction
 
 function! s:on_ft() abort
