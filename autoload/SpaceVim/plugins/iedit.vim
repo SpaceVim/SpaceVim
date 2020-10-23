@@ -151,11 +151,13 @@ endfunction
 
 function! s:handle_f_char(char) abort
   silent! call s:remove_cursor_highlight()
-  if a:char ==# 108
+  if a:char >= 97 && a:char <= 122
+    let s:Operator = ''
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      let matchedstr = matchstr(s:cursor_stack[i].end, printf('[^%s]*', nr2char(a:char)))
+      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor . matchedstr
+      let s:cursor_stack[i].end = matchstr(s:cursor_stack[i].end, printf('[%s]\zs.*', nr2char(a:char)))
+      let s:cursor_stack[i].cursor = nr2char(a:char)
     endfor
   endif
   silent! call s:highlight_cursor()
