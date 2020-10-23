@@ -244,7 +244,7 @@ function! s:handle_normal(char) abort
     endfor
     call s:replace_symbol()
   elseif a:char == 102 " f
-    let s:Operator = 'g'
+    let s:Operator = 'f'
     call s:timeout()
   elseif a:char == 115 " s
     let s:mode = 'i'
