@@ -140,13 +140,27 @@ endfunction
 
 
 function! s:handle(mode, char) abort
-  if a:mode ==# 'n'
+  if a:mode ==# 'n' && s:Operator ==# 'f'
+    return s:handle_f_char(a:char)
+  elseif a:mode ==# 'n'
     return s:handle_normal(a:char)
   elseif a:mode ==# 'i'
     return s:handle_insert(a:char)
   endif
 endfunction
 
+function! s:handle_f_char(char) abort
+  silent! call s:remove_cursor_highlight()
+  if a:char ==# 108
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+    endfor
+  endif
+  silent! call s:highlight_cursor()
+  return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
+endfunction
 
 let s:toggle_stack = {}
 
@@ -228,11 +242,8 @@ function! s:handle_normal(char) abort
     endfor
     call s:replace_symbol()
   elseif a:char == 102 " f
-    if s:Operator ==# 'f'
-    else
-      let s:Operator = 'g'
-      call s:timeout()
-    endif
+    let s:Operator = 'g'
+    call s:timeout()
   elseif a:char == 115 " s
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
