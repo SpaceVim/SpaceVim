@@ -2098,6 +2098,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `X`           | delete the character before cursor in all the occurrences, same as `X` in `Normal` model                                           |
 | `gg`          | go to first occurrence, same as `gg` in `Normal` model                                                                             |
 | `G`           | go to last occurrence, same as `G` in `Normal` model                                                                               |
+| `f{char}`     | Move the cursor to the right where the `{char}` first appears in all the occurrences                                               |
 | `n`           | go to next occurrence                                                                                                              |
 | `N`           | go to previous occurrence                                                                                                          |
 | `p`           | replace occurrences with last yanked (copied) text                                                                                 |

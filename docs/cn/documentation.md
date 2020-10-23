@@ -1819,7 +1819,7 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 | `SPC p k` | 关闭当前工程的所有缓冲区 |
 | `SPC p p` | 显示所有工程             |
 
-`SPC p p` 将会列出最近使用的项目清单，默认会显示最多20个，
+`SPC p p` 将会列出最近使用的项目清单，默认会显示最多 20 个，
 这一数量可以使用 `projects_cache_num` 来修改。
 
 为了可以夸 Vim 进程读取历史打开的项目信息，这一功能使用了缓存机制。
@@ -2044,6 +2044,7 @@ SpaceVim 内置了 iedit 多光标模式，可快速进行多光标编辑。这�
 | `X`             | 删除所有 occurrences 中光标前的字符，类似于一般模式下的 `X`                            |
 | `gg`            | 跳至第一个 occurrence，类似于一般模式下的 `gg`                                         |
 | `G`             | 跳至最后一个 occurrence，类似于一般模式下的 `G`                                        |
+| `f{char}`       | 向右移动光标至字符 `{char}` 首次出现的位置                                             |
 | `n`             | 跳至下一个 occurrence                                                                  |
 | `N`             | 跳至上一个 occurrence                                                                  |
 | `p`             | 替换所有 occurrences 为最后复制的文本                                                  |
