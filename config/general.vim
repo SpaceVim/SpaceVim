@@ -35,3 +35,8 @@ if has('gui_running') && !empty(g:spacevim_guifont)
     let &guifont = g:spacevim_guifont
   endif
 endif
+if g:spacevim_enable_word_wrap == 1
+    set wrap
+   else
+    set nowrap
+endif
