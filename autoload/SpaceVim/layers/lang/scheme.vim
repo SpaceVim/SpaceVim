@@ -7,8 +7,6 @@
 "=============================================================================
 
 if exists('s:scheme_interpreter')
-  " @bug s:scheme_interpreter always return 'scheme'
-  "
   " because this script will be loaded twice. This is the feature of vim,
   " when call an autoload func, vim will try to load the script again
   finish
