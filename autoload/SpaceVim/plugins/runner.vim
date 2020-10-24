@@ -195,6 +195,7 @@ function! s:on_compile_exit(id, data, event) abort
     endif
   else
     let s:end_time = reltime(s:start_time)
+    let s:status.is_running = 0
     let s:status.exit_code = a:data
     let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
@@ -281,6 +282,7 @@ function! s:on_exit(job_id, data, event) abort
     return
   endif
   let s:end_time = reltime(s:start_time)
+  let s:status.is_running = 0
   let s:status.exit_code = a:data
   let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
   if bufexists(s:bufnr)
@@ -303,10 +305,7 @@ function! SpaceVim#plugins#runner#status() abort
 endfunction
 
 function! s:close() abort
-  if s:status.is_running == 1 && s:runner_jobid > 0
-    call s:JOB.stop(s:runner_jobid)
-    let s:runner_jobid = 0
-  endif
+  call s:stop_runner()
   if s:bufnr != 0 && bufexists(s:bufnr)
     exe 'bd ' s:bufnr
   endif
