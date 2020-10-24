@@ -69,7 +69,7 @@ function! s:async_run(runner, ...) abort
       let cmd = a:runner
     endtry
     call SpaceVim#logger#info('   cmd:' . string(cmd))
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . cmd, '', repeat('-', 20)])
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , -1, 0, ['[Running] ' . cmd, '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
     let opts = get(a:000, 0, {})
@@ -108,7 +108,7 @@ function! s:async_run(runner, ...) abort
     else
       let compile_cmd_info = compile_cmd . (usestdin ? ' STDIN' : '') 
     endif
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, [
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , -1, 0, [
           \ '[Compile] ' . compile_cmd_info,
           \ '[Running] ' . s:target,
           \ '',
@@ -146,7 +146,7 @@ function! s:async_run(runner, ...) abort
       let cmd = exe + a:runner.opt + [get(s:, 'selected_file', bufname('%'))]
     endif
     call SpaceVim#logger#info('   cmd:' . string(cmd))
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
+    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , -1, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
     let s:runner_jobid =  s:JOB.start(cmd,{
@@ -222,6 +222,7 @@ endfunction
 function! SpaceVim#plugins#runner#open(...) abort
   call s:stop_runner()
   let s:runner_jobid = 0
+  let s:lines = 0
   let s:status = {
         \ 'is_running' : 0,
         \ 'has_errors' : 0,
