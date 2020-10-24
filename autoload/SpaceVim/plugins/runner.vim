@@ -34,6 +34,9 @@ let s:status = {
       \ }
 
 function! s:open_win() abort
+  if s:bufnr !=# 0 && bufexists(s:bufnr) && index(tabpagebuflist(), s:bufnr) !=# -1
+    return
+  endif
   botright split __runner__
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
