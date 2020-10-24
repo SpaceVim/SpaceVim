@@ -231,7 +231,7 @@ function! s:find_root_directory() abort
   " @question confused about expand and fnamemodify
   " ref: https://github.com/vim/vim/issues/6793
 
-  
+
   " get the current path of buffer or working dir
 
   let fd = expand('%:p')
@@ -257,8 +257,6 @@ function! s:find_root_directory() abort
     endif
     let path_type = getftype(find_path)
     if ( path_type ==# 'dir' || path_type ==# 'file' ) 
-          \ && find_path !=# expand('~/.SpaceVim.d/')
-          \ && find_path !=# expand('~/.Rprofile')
           \ && !s:is_ignored_dir(find_path)
       let find_path = s:FILE.unify_path(find_path, ':p')
       if path_type ==# 'dir'
@@ -266,8 +264,10 @@ function! s:find_root_directory() abort
       else
         let dir = s:FILE.unify_path(find_path, ':h')
       endif
-      call s:LOGGER.info('        (' . pattern . '):' . dir)
-      call add(dirs, dir)
+      if dir !=# s:FILE.unify_path(expand('$HOME'))
+        call s:LOGGER.info('        (' . pattern . '):' . dir)
+        call add(dirs, dir)
+      endif
     endif
   endfor
   return s:sort_dirs(deepcopy(dirs))
