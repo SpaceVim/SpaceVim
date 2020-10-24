@@ -416,7 +416,7 @@ If you found one of the built-in plugins has bugs, and you want to debug that pl
 
 ```toml
 [options]
-disabled_plugins = ["neomake.vim"]
+    disabled_plugins = ["neomake.vim"]
 ```
 
 2. Add a forked plugin or add a local plugin
@@ -655,17 +655,17 @@ If you want to contribute theme please check the template of a statusline theme.
 " group_ii: window id in iedit-insert mode
 " group_in: windows id in iedit-normal mode
 function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
-return [
-\ ['#282828', '#a89984', 246, 235],
-\ ['#a89984', '#504945', 239, 246],
-\ ['#a89984', '#3c3836', 237, 246],
-\ ['#665c54', 241],
-\ ['#282828', '#83a598', 235, 109],
-\ ['#282828', '#fe8019', 235, 208],
-\ ['#282828', '#8ec07c', 235, 108],
-\ ['#282828', '#689d6a', 235, 72],
-\ ['#282828', '#8f3f71', 235, 132],
-\ ]
+    return [
+    \ ['#282828', '#a89984', 246, 235],
+    \ ['#a89984', '#504945', 239, 246],
+    \ ['#a89984', '#3c3836', 237, 246],
+    \ ['#665c54', 241],
+    \ ['#282828', '#83a598', 235, 109],
+    \ ['#282828', '#fe8019', 235, 208],
+    \ ['#282828', '#8ec07c', 235, 108],
+    \ ['#282828', '#689d6a', 235, 72],
+    \ ['#282828', '#8f3f71', 235, 132],
+    \ ]
 endfunction
 ```
 
@@ -765,11 +765,11 @@ To change the filemanager plugin:
 
 ```toml
 [options]
-# file manager plugins supported in SpaceVim:
-# - vimfiler (default)
-# - nerdtree
-# - defx
-filemanager = "defx"
+    # file manager plugins supported in SpaceVim:
+    # - vimfiler (default)
+    # - nerdtree
+    # - defx
+    filemanager = "defx"
 ```
 
 VCS integration is supported, there will be a column status, this feature may make vimfiler slow, so it is not enabled by default.
@@ -783,7 +783,7 @@ you can use `filetree_direction` option:
 
 ```toml
 [options]
-filetree_direction = "left"
+    filetree_direction = "left"
 ```
 
 #### File tree navigation
@@ -828,8 +828,8 @@ If only one file buffer is opened, a file is opened in the active window, otherw
 | Key Bindings    | Descriptions                              |
 | --------------- | ----------------------------------------- |
 | `l` / `<Enter>` | open file in one window                   |
-| `sg`            | open file in an vertically split window   |
-| `sv`            | open file in an horizontally split window |
+| `s g`            | open file in an vertically split window   |
+| `s v`            | open file in an horizontally split window |
 
 ## General usage
 
@@ -1152,7 +1152,7 @@ can change it via `windows_leader` option:
 
 ```toml
 [options]
-windows_leader = "s"
+    windows_leader = "s"
 ```
 
 | Key Bindings | Descriptions                                       |
@@ -1368,17 +1368,17 @@ The above key bindings are only part of fuzzy finder layers, please read the lay
 
 | Feature            | denite | unite | leaderf | ctrlp | fzf |
 | ------------------ | :----: | :---: | :-----: | :---: | --- |
-| CustomKeyMaps menu |  yes   |  yes  |   no    |  no   | no  |
-| AddedPlugins menu  |  yes   |  yes  |   no    |  no   | no  |
-| register           |  yes   |  yes  |   no    |  yes  | yes |
+| CustomKeyMaps menu |  yes   |  yes  |   yes    |  no   | no  |
+| AddedPlugins menu  |  yes   |  yes  |   yes    |  no   | no  |
+| register           |  yes   |  yes  |   yes    |  yes  | yes |
 | file               |  yes   |  yes  |   yes   |  yes  | yes |
-| yank history       |  yes   |  yes  |   no    |  no   | yes |
-| jump               |  yes   |  yes  |   no    |  yes  | yes |
-| location list      |  yes   |  yes  |   no    |  no   | yes |
+| yank history       |  yes   |  yes  |   yes    |  no   | yes |
+| jump               |  yes   |  yes  |   yes    |  yes  | yes |
+| location list      |  yes   |  yes  |   yes    |  no   | yes |
 | outline            |  yes   |  yes  |   yes   |  yes  | yes |
-| message            |  yes   |  yes  |   no    |  no   | yes |
-| quickfix list      |  yes   |  yes  |   no    |  yes  | yes |
-| resume windows     |  yes   |  yes  |   no    |  no   | no  |
+| message            |  yes   |  yes  |   yes    |  no   | yes |
+| quickfix list      |  yes   |  yes  |   yes    |  yes  | yes |
+| resume windows     |  yes   |  yes  |   yes    |  no   | no  |
 
 **Key bindings within fuzzy finder buffer**
 
@@ -1405,11 +1405,18 @@ SpaceVim can be interfaced with different searching tools like:
 - [ack](https://beyondgrep.com/)
 - grep
 
-The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance, `SPC s a b` will search in all opened buffers using `ag`.
+The search commands in SpaceVim are organized under the `SPC s`
+prefix with the next key is the tool to use and the last key is the scope.
+For instance, `SPC s a b` will search in all opened buffers using `ag`.
 
-If the last key (determining the scope) is uppercase then the current word under the cursor is used as default input for the search. For instance, `SPC s a B` will search the word under cursor.
+If the last key (determining the scope) is uppercase then the
+current word under the cursor is used as default input for the search.
+For instance, `SPC s a B` will search the word under cursor.
 
-If the tool key is omitted then a default tool will be automatically selected for the search. This tool corresponds to the first tool found on the system of the list `search_tools`, the default order is `rg`, `ag`, `pt`, `ack` then `grep`. For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
+If the tool key is omitted then a default tool will be automatically selected for the search.
+This tool corresponds to the first tool found on the system of the list `search_tools`,
+the default order is `['rg', 'ag', 'pt', 'ack', 'grep', 'findstr', 'git']`.
+For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
 
 The tool keys are:
 
