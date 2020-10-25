@@ -212,7 +212,7 @@ endfunction
 
 function! SpaceVim#plugins#runner#reg_runner(ft, runner) abort
   let s:runners[a:ft] = a:runner
-  let desc = '[' . a:ft . '] ' . string(a:runner)
+  let desc = printf('%-10S', a:ft) . string(a:runner)
   let cmd = "call SpaceVim#plugins#runner#set_language('" . a:ft . "')"
   call add(g:unite_source_menu_menus.RunnerLanguage.command_candidates, [desc,cmd])
 endfunction
@@ -349,7 +349,11 @@ function! SpaceVim#plugins#runner#select_language() abort
   " @todo use denite or unite to select language
   " and set the s:selected_language
   " the all language is keys(s:runners)
-  Denite menu:RunnerLanguage
+  if SpaceVim#layers#isLoaded('denite')
+    Denite menu:RunnerLanguage
+  elseif SpaceVim#layers#isLoaded('leaderf')
+    Leaderf menu --name RunnerLanguage
+  endif
 endfunction
 
 function! SpaceVim#plugins#runner#set_language(lang) abort
