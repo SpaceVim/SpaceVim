@@ -232,7 +232,8 @@ function! SpaceVim#plugins#runner#open(...) abort
         \ 'has_errors' : 0,
         \ 'exit_code' : 0
         \ }
-  let runner = get(a:000, 0, get(s:runners, &filetype, ''))
+  let s:selected_language = &filetype
+  let runner = get(a:000, 0, get(s:runners, s:selected_language, ''))
   let opts = get(a:000, 1, {})
   if !empty(runner)
     call s:open_win()
