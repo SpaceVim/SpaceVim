@@ -67,6 +67,47 @@ function! s:on_ft() abort
           \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+
+    if SpaceVim#plugins#tap('phpactor') 
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i'],
+            \ 'PhpactorImportClass', 'import the name under the cusor', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'I'],
+            \ 'PhpactorImportMissingClasses', 'attempt to import all non-resolvable classes', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'm'],
+            \ 'PhpactorContextMenu', 'show the context menu for the current cursor position', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'R'],
+            \ 'PhpactorFindReferences', 'attempt to find all references', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'N'],
+            \ 'PhpactorNavigate', 'navigate', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'v'],
+            \ 'PhpactorChangeVisibility', 'rotate visiblity', 1)
+
+      let g:_spacevim_mappings_space.l.x = {'name' : '+Extract'}
+      call SpaceVim#mapping#space#langSPC('noremap', ['l', 'x', 'm'],
+            \ 'PhpactorExtractMethod', 'extract a new method', 1)
+      call SpaceVim#mapping#space#langSPC('noremap', ['l', 'x', 'v'],
+            \ 'PhpactorExtractExpression', 'extract to a variable', 1)
+      call SpaceVim#mapping#space#langSPC('noremap', ['l',  'x', 'c'],
+            \ 'PhpactorExtractConstant', 'extract a constant from a literal', 1)
+
+      let g:_spacevim_mappings_space.l.f = {'name' : '+File'}
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f', 'c'],
+            \ 'PhpactorCopyFile', 'copy the current file', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f', 'm'],
+            \ 'PhpactorMoveFile', 'move the current file', 1)
+
+      let g:_spacevim_mappings_space.l.c = {'name' : '+Class'}
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'c', 'i'],
+            \ 'PhpactorClassInflect', 'inflect a new class from the current class', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'c', 'a'],
+            \ 'PhpactorGenerateAccessors', 'generate accessors', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'c', 't'],
+            \ 'PhpactorTransform', 'show transform context menu', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'c', 'e'],
+            \ 'PhpactorClassExpand', 'expand the class name', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'c', 'n'],
+            \ 'PhpactorClassNew', 'create a new class', 1)
+    endif
   endif
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
