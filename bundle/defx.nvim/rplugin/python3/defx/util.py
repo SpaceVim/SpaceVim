@@ -4,11 +4,13 @@
 # License: MIT license
 # ============================================================================
 
-import importlib.util
-import os
-import typing
 from pathlib import Path
 from pynvim import Nvim
+from sys import executable, base_exec_prefix
+import importlib.util
+import os
+import shutil
+import typing
 
 UserContext = typing.Dict[str, typing.Any]
 Candidate = typing.Dict[str, typing.Any]
@@ -39,7 +41,9 @@ def error(vim: Nvim, expr: typing.Any) -> None:
     """
     Prints the error messages to Vim/Nvim's :messages buffer.
     """
-    vim.call('defx#util#print_error', expr)
+    if isinstance(expr, set):
+        expr = [str(x) for x in expr]
+    vim.call('defx#util#print_error', str(expr))
 
 
 def confirm(vim: Nvim, question: str) -> bool:
@@ -88,3 +92,34 @@ def safe_call(fn: typing.Callable[..., typing.Any],
         return fn()
     except OSError:
         return fallback
+
+
+def get_python_exe() -> str:
+    if 'py' in str(Path(executable).name):
+        return executable
+
+    for exe in ['python3', 'python']:
+        which = shutil.which(exe)
+        if which is not None:
+            return which
+
+    for name in (Path(base_exec_prefix).joinpath(v) for v in [
+            'python3', 'python',
+            str(Path('bin').joinpath('python3')),
+            str(Path('bin').joinpath('python')),
+    ]):
+        if name.exists():
+            return str(name)
+
+    # return sys.executable anyway. This may not work on windows
+    return executable
+
+
+def strwidth(vim: Nvim, word: str) -> int:
+    return (int(vim.call('strwidth', word))
+            if len(word) != len(bytes(word, 'utf-8',
+                                      'surrogatepass')) else len(word))
+
+
+def len_bytes(word: str) -> int:
+    return len(bytes(word, 'utf-8', 'surrogatepass'))
