@@ -42,6 +42,7 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Increase/Decrease numbers](#increasedecrease-numbers)
     - [Copy and paste](#copy-and-paste)
     - [Commenting](#commenting)
+    - [Undo tree](#undo-tree)
     - [Multi-Encodings](#multi-encodings)
   - [Window manager](#window-manager)
     - [General Editor windows](#general-editor-windows)
@@ -1128,6 +1129,38 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 
 **Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
 For example, `SPC ; 4 j` will comment current line and the following 4 lines.
+
+#### Undo tree
+
+Undo tree visualizes undo history and makes it easier to browse and switch between different undo branches.
+The default key binding is `F7`. If `+python` or `+python3` is enabled, mundo will be loaded,
+otherwise undotree will be loaded.
+
+Key bindings within undo tree windows:
+
+| key bindings    | description         |
+| --------------- | ------------------- |
+| `G`             | move_bottom         |
+| `J`             | move_older_write    |
+| `K`             | move_newer_write    |
+| `N`             | previous_match      |
+| `P`             | play_to             |
+| `<2-LeftMouse>` | mouse_click         |
+| `/`             | search              |
+| `<CR>`          | preview             |
+| `d`             | diff                |
+| `<down>`        | move_older          |
+| `<up>`          | move_newer          |
+| `i`             | toggle_inline       |
+| `j`             | move_older          |
+| `k`             | move_newer          |
+| `n`             | next_match          |
+| `o`             | preview             |
+| `p`             | diff_current_buffer |
+| `q`             | quit                |
+| `r`             | diff                |
+| `gg`            | move_top            |
+| `?`             | toggle_help         |
 
 #### Multi-Encodings
 

@@ -12,6 +12,7 @@ let s:PASSWORD = SpaceVim#api#import('password')
 let s:NUMBER = SpaceVim#api#import('data#number')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:VIM = SpaceVim#api#import('vim')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
@@ -37,6 +38,11 @@ function! SpaceVim#layers#edit#plugins() abort
   endif
   if g:spacevim_enable_bepo_layout
     call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-bepo',        { 'merged' : 0}])
+  endif
+  if s:CMP.has('python') || s:CMP.has('python3')
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-mundo',        { 'on_cmd' : 'MundoToggle'}])
+  else
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/undotree',        { 'on_cmd' : 'UndotreeToggle'}])
   endif
   return plugins
 endfunction
@@ -66,6 +72,12 @@ function! SpaceVim#layers#edit#config() abort
   vmap <silent> J <Plug>(jplus)
   " }}}
 
+
+  if s:CMP.has('python') || s:CMP.has('python3')
+    nnoremap <silent> <F7> :MundoToggle<CR>
+  else
+    nnoremap <silent> <F7> :UndotreeToggle<CR>
+  endif
   let g:_spacevim_mappings_space.x = {'name' : '+Text'}
   let g:_spacevim_mappings_space.x.a = {'name' : '+align'}
   let g:_spacevim_mappings_space.x.d = {'name' : '+delete'}
@@ -307,7 +319,7 @@ endfunction
 
 function! s:lowerCamelCase() abort
   " fooFzz
-  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~# '\s'
     return
   endif
   let cword = s:parse_symbol(expand('<cword>'))
@@ -327,7 +339,7 @@ endfunction
 
 function! s:UpperCamelCase() abort
   " FooFzz
-  if strcharpart(getline('.')[col('.') - 1:], 0, 1) =~ '\s'
+  if strcharpart(getline('.')[col('.') - 1:], 0, 1) =~# '\s'
     return
   endif
   let cword = s:parse_symbol(expand('<cword>'))
@@ -344,7 +356,7 @@ endfunction
 
 function! s:kebab_case() abort
   " foo-fzz
-  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~# '\s'
     return
   endif
   let cword = s:parse_symbol(expand('<cword>'))
@@ -373,7 +385,7 @@ endfunction
 
 function! s:up_case() abort
   " FOO_FZZ
-  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~# '\s'
     return
   endif
   let cword =map(s:parse_symbol(expand('<cword>')), 'toupper(v:val)')
