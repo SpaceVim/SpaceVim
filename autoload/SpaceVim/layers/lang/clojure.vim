@@ -42,7 +42,7 @@ function! SpaceVim#layers#lang#clojure#config() abort
   " cmd-clj
   let clojure = get(filter(['cmd-clj'], 'executable(v:val)'), 0, 'clojure')
   call SpaceVim#plugins#runner#reg_runner('clojure', clojure . ' -M %s')
-  call SpaceVim#plugins#repl#reg('clojure', 'cmd-clj')
+  call SpaceVim#plugins#repl#reg('clojure', clojure)
   call SpaceVim#plugins#tasks#reg_provider(funcref('s:lein_tasks'))
   call add(g:spacevim_project_rooter_patterns, 'project.clj')
 endfunction
