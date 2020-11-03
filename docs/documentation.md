@@ -829,8 +829,8 @@ If only one file buffer is opened, a file is opened in the active window, otherw
 | Key Bindings    | Descriptions                              |
 | --------------- | ----------------------------------------- |
 | `l` / `<Enter>` | open file in one window                   |
-| `s g`            | open file in an vertically split window   |
-| `s v`            | open file in an horizontally split window |
+| `s g`           | open file in an vertically split window   |
+| `s v`           | open file in an horizontally split window |
 
 ## General usage
 
@@ -1322,27 +1322,27 @@ In SpaceVim, there are many special buffers, these buffers are created by plugin
 
 Files manipulation commands (start with f):
 
-| Key Bindings | Descriptions                                              |
-| ------------ | --------------------------------------------------------- |
-| `SPC f /`    | Find files with `find` command                            |
-| `SPC f b`    | go to file bookmarks                                      |
-| `SPC f c`    | copy current file to a different location(TODO)           |
-| `SPC f C d`  | convert file from unix to dos encoding                    |
-| `SPC f C u`  | convert file from dos to unix encoding                    |
-| `SPC f D`    | delete a file and the associated buffer with confirmation |
-| `SPC f E`    | open a file with elevated privileges (sudo layer) (TODO)  |
-| `SPC f W`    | save a file with elevated privileges (sudo layer)         |
-| `SPC f f`    | open file                                                 |
-| `SPC f F`    | try to open the file under point                          |
-| `SPC f o`    | Find current file in file tree                            |
-| `SPC f R`    | rename the current file(TODO)                             |
-| `SPC f s`    | save a file                                               |
-| `SPC f S`    | save all files                                            |
-| `SPC f r`    | open a recent file                                        |
-| `SPC f t`    | toggle file tree side bar                                 |
-| `SPC f T`    | show file tree side bar                                   |
-| `SPC f d`    | toggle disk manager in Windows OS                         |
-| `SPC f y`    | show and copy current file absolute path in the cmdline   |
+| Key Bindings | Descriptions                                                            |
+| ------------ | ----------------------------------------------------------------------- |
+| `SPC f /`    | Find files with `find` or [`fd`](https://github.com/sharkdp/fd) command |
+| `SPC f b`    | go to file bookmarks                                                    |
+| `SPC f c`    | copy current file to a different location(TODO)                         |
+| `SPC f C d`  | convert file from unix to dos encoding                                  |
+| `SPC f C u`  | convert file from dos to unix encoding                                  |
+| `SPC f D`    | delete a file and the associated buffer with confirmation               |
+| `SPC f E`    | open a file with elevated privileges (sudo layer) (TODO)                |
+| `SPC f W`    | save a file with elevated privileges (sudo layer)                       |
+| `SPC f f`    | open file                                                               |
+| `SPC f F`    | try to open the file under point                                        |
+| `SPC f o`    | Find current file in file tree                                          |
+| `SPC f R`    | rename the current file(TODO)                                           |
+| `SPC f s`    | save a file                                                             |
+| `SPC f S`    | save all files                                                          |
+| `SPC f r`    | open a recent file                                                      |
+| `SPC f t`    | toggle file tree side bar                                               |
+| `SPC f T`    | show file tree side bar                                                 |
+| `SPC f d`    | toggle disk manager in Windows OS                                       |
+| `SPC f y`    | show and copy current file absolute path in the cmdline                 |
 
 **NOTE:** If you are using window, you need to install [findutils](https://www.gnu.org/software/findutils/) or [fd](https://github.com/sharkdp/fd).
 If you are using [scoop](https://github.com/lukesampson/scoop) to install packages, the commands in `C:\WINDOWS\system32` will override User path.
@@ -1401,17 +1401,17 @@ The above key bindings are only part of fuzzy finder layers, please read the lay
 
 | Feature            | denite | unite | leaderf | ctrlp | fzf |
 | ------------------ | :----: | :---: | :-----: | :---: | --- |
-| CustomKeyMaps menu |  yes   |  yes  |   yes    |  no   | no  |
-| AddedPlugins menu  |  yes   |  yes  |   yes    |  no   | no  |
-| register           |  yes   |  yes  |   yes    |  yes  | yes |
+| CustomKeyMaps menu |  yes   |  yes  |   yes   |  no   | no  |
+| AddedPlugins menu  |  yes   |  yes  |   yes   |  no   | no  |
+| register           |  yes   |  yes  |   yes   |  yes  | yes |
 | file               |  yes   |  yes  |   yes   |  yes  | yes |
-| yank history       |  yes   |  yes  |   yes    |  no   | yes |
-| jump               |  yes   |  yes  |   yes    |  yes  | yes |
-| location list      |  yes   |  yes  |   yes    |  no   | yes |
+| yank history       |  yes   |  yes  |   yes   |  no   | yes |
+| jump               |  yes   |  yes  |   yes   |  yes  | yes |
+| location list      |  yes   |  yes  |   yes   |  no   | yes |
 | outline            |  yes   |  yes  |   yes   |  yes  | yes |
-| message            |  yes   |  yes  |   yes    |  no   | yes |
-| quickfix list      |  yes   |  yes  |   yes    |  yes  | yes |
-| resume windows     |  yes   |  yes  |   yes    |  no   | no  |
+| message            |  yes   |  yes  |   yes   |  no   | yes |
+| quickfix list      |  yes   |  yes  |   yes   |  yes  | yes |
+| resume windows     |  yes   |  yes  |   yes   |  no   | no  |
 
 **Key bindings within fuzzy finder buffer**
 
