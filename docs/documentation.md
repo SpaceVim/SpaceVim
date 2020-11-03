@@ -1316,7 +1316,9 @@ Buffer manipulation commands (start with `b`):
 
 #### Special Buffers
 
-In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim itself. And these buffers are not listed.
+In SpaceVim, there are many special buffers,
+these buffers are created by plugins or SpaceVim itself.
+And these buffers are not listed.
 
 #### Files manipulations key bindings
 
@@ -1347,6 +1349,11 @@ Files manipulation commands (start with f):
 **NOTE:** If you are using window, you need to install [findutils](https://www.gnu.org/software/findutils/) or [fd](https://github.com/sharkdp/fd).
 If you are using [scoop](https://github.com/lukesampson/scoop) to install packages, the commands in `C:\WINDOWS\system32` will override User path.
 so you need to put the scoop binary PATH before all the windows `C:\WINDOWS\system32` PATH.
+
+After pressing `SPC f /`, the find window will be opened. It is going to run `find` or `fd` command asynchronously.
+By default, `find` is the default tool, you can use `ctrl-e` to switch tools.
+
+![find](https://user-images.githubusercontent.com/13142418/97999590-79717000-1e26-11eb-91b1-458ab30d6254.gif)
 
 #### Vim and SpaceVim files
 
