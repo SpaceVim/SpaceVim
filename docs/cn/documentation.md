@@ -1266,7 +1266,7 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 
 | 快捷键               | 功能描述                                               |
 | -------------------- | ------------------------------------------------------ |
-| `SPC f /`            | 使用 `find` 命令查找文件，支持参数提示                 |
+| `SPC f /`            | 使用 `find` 或者 `fd` 命令查找文件，支持参数提示                 |
 | `SPC f b`            | 跳至文件书签                                           |
 | `SPC f c`            | copy current file to a different location(TODO)        |
 | `SPC f C d`          | 修改文件编码 unix -> dos                               |
@@ -1290,6 +1290,12 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 或者 [fd](https://github.com/sharkdp/fd)。
 如果是使用 [scoop](https://github.com/lukesampson/scoop) 安装的这些工具，系统默认的 `C:\WINDOWS\system32` 中的命令会覆盖掉用户定义的 `$PATH`，
 解决方案是将 scoop 默认的可执行文件所在的文件夹放置在系统环境变量 `$PATH` 内 `C:\WINDOWS\system32` 的前方。
+
+
+按下 `SPC f /` 快捷键之后，会弹出搜索输入窗口，输入内容后回车，异步执行 `find` 或者 `fd` 命令，
+默认使用的是 `find` 命令，可以使用快捷键 `ctrl-e` 在不同工具之间切换。
+
+![find](https://user-images.githubusercontent.com/13142418/97999590-79717000-1e26-11eb-91b1-458ab30d6254.gif)
 
 #### Vim 和 SpaceVim 相关文件
 
