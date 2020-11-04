@@ -23,13 +23,8 @@ class Rplugin:
 
     def start(self, args: typing.List[typing.Any]) -> None:
         [paths, context] = args
-        views = [x for x in self._views
-                 if context['buffer_name'] == x._context.buffer_name]
-        if not views or context['new']:
-            view = View(self._vim, len(self._views))
-            views = [view]
-            self._views.append(view)
-        views[0].init(paths, context, self._clipboard)
+        self.get_view(context).init_paths(
+            paths, context, self._clipboard)
 
     def do_action(self, args: typing.List[typing.Any]) -> None:
         views = [x for x in self._views
@@ -66,6 +61,15 @@ class Rplugin:
                      if x._bufnr == self._vim.current.buffer.number]:
             return view._context._asdict()
         return {}
+
+    def get_view(self, context: typing.Dict[str, typing.Any]) -> View:
+        views = [x for x in self._views
+                 if context['buffer_name'] == x._context.buffer_name]
+        if not views or context['new']:
+            view = View(self._vim, len(self._views))
+            views = [view]
+            self._views.append(view)
+        return views[0]
 
     def redraw(self, views: typing.List[View]) -> None:
         call = self._vim.call

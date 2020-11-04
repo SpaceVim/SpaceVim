@@ -42,6 +42,7 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Increase/Decrease numbers](#increasedecrease-numbers)
     - [Copy and paste](#copy-and-paste)
     - [Commenting](#commenting)
+    - [Undo tree](#undo-tree)
     - [Multi-Encodings](#multi-encodings)
   - [Window manager](#window-manager)
     - [General Editor windows](#general-editor-windows)
@@ -828,8 +829,8 @@ If only one file buffer is opened, a file is opened in the active window, otherw
 | Key Bindings    | Descriptions                              |
 | --------------- | ----------------------------------------- |
 | `l` / `<Enter>` | open file in one window                   |
-| `s g`            | open file in an vertically split window   |
-| `s v`            | open file in an horizontally split window |
+| `s g`           | open file in an vertically split window   |
+| `s v`           | open file in an horizontally split window |
 
 ## General usage
 
@@ -1129,6 +1130,38 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 **Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
 For example, `SPC ; 4 j` will comment current line and the following 4 lines.
 
+#### Undo tree
+
+Undo tree visualizes undo history and makes it easier to browse and switch between different undo branches.
+The default key binding is `F7`. If `+python` or `+python3` is enabled, mundo will be loaded,
+otherwise undotree will be loaded.
+
+Key bindings within undo tree windows:
+
+| key bindings    | description         |
+| --------------- | ------------------- |
+| `G`             | move_bottom         |
+| `J`             | move_older_write    |
+| `K`             | move_newer_write    |
+| `N`             | previous_match      |
+| `P`             | play_to             |
+| `<2-LeftMouse>` | mouse_click         |
+| `/`             | search              |
+| `<CR>`          | preview             |
+| `d`             | diff                |
+| `<down>`        | move_older          |
+| `<up>`          | move_newer          |
+| `i`             | toggle_inline       |
+| `j`             | move_older          |
+| `k`             | move_newer          |
+| `n`             | next_match          |
+| `o`             | preview             |
+| `p`             | diff_current_buffer |
+| `q`             | quit                |
+| `r`             | diff                |
+| `gg`            | move_top            |
+| `?`             | toggle_help         |
+
 #### Multi-Encodings
 
 SpaceVim uses utf-8 as default encoding. There are four options for these case:
@@ -1283,37 +1316,44 @@ Buffer manipulation commands (start with `b`):
 
 #### Special Buffers
 
-In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim itself. And these buffers are not listed.
+In SpaceVim, there are many special buffers,
+these buffers are created by plugins or SpaceVim itself.
+And these buffers are not listed.
 
 #### Files manipulations key bindings
 
 Files manipulation commands (start with f):
 
-| Key Bindings | Descriptions                                              |
-| ------------ | --------------------------------------------------------- |
-| `SPC f /`    | Find files with `find` command                            |
-| `SPC f b`    | go to file bookmarks                                      |
-| `SPC f c`    | copy current file to a different location(TODO)           |
-| `SPC f C d`  | convert file from unix to dos encoding                    |
-| `SPC f C u`  | convert file from dos to unix encoding                    |
-| `SPC f D`    | delete a file and the associated buffer with confirmation |
-| `SPC f E`    | open a file with elevated privileges (sudo layer) (TODO)  |
-| `SPC f W`    | save a file with elevated privileges (sudo layer)         |
-| `SPC f f`    | open file                                                 |
-| `SPC f F`    | try to open the file under point                          |
-| `SPC f o`    | Find current file in file tree                            |
-| `SPC f R`    | rename the current file(TODO)                             |
-| `SPC f s`    | save a file                                               |
-| `SPC f S`    | save all files                                            |
-| `SPC f r`    | open a recent file                                        |
-| `SPC f t`    | toggle file tree side bar                                 |
-| `SPC f T`    | show file tree side bar                                   |
-| `SPC f d`    | toggle disk manager in Windows OS                         |
-| `SPC f y`    | show and copy current file absolute path in the cmdline   |
+| Key Bindings | Descriptions                                                            |
+| ------------ | ----------------------------------------------------------------------- |
+| `SPC f /`    | Find files with `find` or [`fd`](https://github.com/sharkdp/fd) command |
+| `SPC f b`    | go to file bookmarks                                                    |
+| `SPC f c`    | copy current file to a different location(TODO)                         |
+| `SPC f C d`  | convert file from unix to dos encoding                                  |
+| `SPC f C u`  | convert file from dos to unix encoding                                  |
+| `SPC f D`    | delete a file and the associated buffer with confirmation               |
+| `SPC f E`    | open a file with elevated privileges (sudo layer) (TODO)                |
+| `SPC f W`    | save a file with elevated privileges (sudo layer)                       |
+| `SPC f f`    | open file                                                               |
+| `SPC f F`    | try to open the file under point                                        |
+| `SPC f o`    | Find current file in file tree                                          |
+| `SPC f R`    | rename the current file(TODO)                                           |
+| `SPC f s`    | save a file                                                             |
+| `SPC f S`    | save all files                                                          |
+| `SPC f r`    | open a recent file                                                      |
+| `SPC f t`    | toggle file tree side bar                                               |
+| `SPC f T`    | show file tree side bar                                                 |
+| `SPC f d`    | toggle disk manager in Windows OS                                       |
+| `SPC f y`    | show and copy current file absolute path in the cmdline                 |
 
 **NOTE:** If you are using window, you need to install [findutils](https://www.gnu.org/software/findutils/) or [fd](https://github.com/sharkdp/fd).
 If you are using [scoop](https://github.com/lukesampson/scoop) to install packages, the commands in `C:\WINDOWS\system32` will override User path.
 so you need to put the scoop binary PATH before all the windows `C:\WINDOWS\system32` PATH.
+
+After pressing `SPC f /`, the find window will be opened. It is going to run `find` or `fd` command asynchronously.
+By default, `find` is the default tool, you can use `ctrl-e` to switch tools.
+
+![find](https://user-images.githubusercontent.com/13142418/97999590-79717000-1e26-11eb-91b1-458ab30d6254.gif)
 
 #### Vim and SpaceVim files
 
@@ -1368,17 +1408,17 @@ The above key bindings are only part of fuzzy finder layers, please read the lay
 
 | Feature            | denite | unite | leaderf | ctrlp | fzf |
 | ------------------ | :----: | :---: | :-----: | :---: | --- |
-| CustomKeyMaps menu |  yes   |  yes  |   yes    |  no   | no  |
-| AddedPlugins menu  |  yes   |  yes  |   yes    |  no   | no  |
-| register           |  yes   |  yes  |   yes    |  yes  | yes |
+| CustomKeyMaps menu |  yes   |  yes  |   yes   |  no   | no  |
+| AddedPlugins menu  |  yes   |  yes  |   yes   |  no   | no  |
+| register           |  yes   |  yes  |   yes   |  yes  | yes |
 | file               |  yes   |  yes  |   yes   |  yes  | yes |
-| yank history       |  yes   |  yes  |   yes    |  no   | yes |
-| jump               |  yes   |  yes  |   yes    |  yes  | yes |
-| location list      |  yes   |  yes  |   yes    |  no   | yes |
+| yank history       |  yes   |  yes  |   yes   |  no   | yes |
+| jump               |  yes   |  yes  |   yes   |  yes  | yes |
+| location list      |  yes   |  yes  |   yes   |  no   | yes |
 | outline            |  yes   |  yes  |   yes   |  yes  | yes |
-| message            |  yes   |  yes  |   yes    |  no   | yes |
-| quickfix list      |  yes   |  yes  |   yes    |  yes  | yes |
-| resume windows     |  yes   |  yes  |   yes    |  no   | no  |
+| message            |  yes   |  yes  |   yes   |  no   | yes |
+| quickfix list      |  yes   |  yes  |   yes   |  yes  | yes |
+| resume windows     |  yes   |  yes  |   yes   |  no   | no  |
 
 **Key bindings within fuzzy finder buffer**
 

@@ -447,8 +447,29 @@ function! SpaceVim#layers#core#tabline#config() abort
     autocmd!
     autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
   augroup END
-  for i in range(1, 9)
-    exe "call SpaceVim#mapping#def('nmap <silent>', '<leader>" . i
+  
+  
+  let shift_keys = {
+   \  '1': '!',
+   \  '2': '@',
+   \  '3': '#',
+   \  '4': '$',
+   \  '5': '%',
+   \  '6': '^',
+   \  '7': '&',
+   \  '8': '*',
+   \  '9': '(',
+   \  '0': ')'
+   \}
+
+  for i in range(1, 20)
+    let key = i % 10
+
+    if i > 10
+      let key = shift_keys[string(key)]
+    endif
+
+    exe "call SpaceVim#mapping#def('nmap <silent>', '<leader>" . key
           \ . "', ':call SpaceVim#layers#core#tabline#jump("
           \ . i . ")<cr>', 'Switch to airline tab " . i
           \ . "', '', 'tabline index " . i . "')"

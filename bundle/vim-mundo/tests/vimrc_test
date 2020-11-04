@@ -1,0 +1,10 @@
+set nocompatible
+let mundo_root = simplify(expand("<sfile>:h:h"))
+let mundo_test_bundle = mundo_root .'/tests/bundled'
+let &runtimepath  =      mundo_root
+let &runtimepath .= ','. mundo_root .'/tests/vim_test'
+let &runtimepath .= ','. mundo_test_bundle .'/lh-vim-lib'
+let &runtimepath .= ','. mundo_test_bundle .'/ut'
+filetype plugin on
+nnoremap q :qa!<cr>
+color desert

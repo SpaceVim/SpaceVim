@@ -44,6 +44,7 @@ lang: zh
     - [增加或减小数字](#增加或减小数字)
     - [复制粘贴](#复制粘贴)
     - [增删注释](#增删注释)
+    - [编辑历史](#编辑历史)
     - [文本编码格式](#文本编码格式)
   - [窗口管理](#窗口管理)
     - [常用编辑器窗口](#常用编辑器窗口)
@@ -1075,6 +1076,38 @@ echo "selected text" | curl -s -F "content=<-" http://dpaste.com/api/v2/
 用 `SPC ;` 可以启动一个注释操作符模式，在该模式下，可以使用移动命令确认注释的范围，
 比如 `SPC ; 4 j`，这个组合键会注释当前行以及下方的 4 行。这个数字即为相对行号，可在左侧看到。
 
+#### 编辑历史
+
+当前文件的编辑历史，可以使用快捷键 `F7` 查看，默认会在左侧打开一个编辑历史可视化窗口。
+若当前编辑器支持 `+python` 或者 `+python3`，则会使用 mundo 作为默认插件，否则则使用
+undotree。
+
+在编辑历史窗口内的快捷键如下：
+
+| 快捷键          | 功能描述            |
+| --------------- | ------------------- |
+| `G`             | move_bottom         |
+| `J`             | move_older_write    |
+| `K`             | move_newer_write    |
+| `N`             | previous_match      |
+| `P`             | play_to             |
+| `<2-LeftMouse>` | mouse_click         |
+| `/`             | search              |
+| `<CR>`          | preview             |
+| `d`             | diff                |
+| `<down>`        | move_older          |
+| `<up>`          | move_newer          |
+| `i`             | toggle_inline       |
+| `j`             | move_older          |
+| `k`             | move_newer          |
+| `n`             | next_match          |
+| `o`             | preview             |
+| `p`             | diff_current_buffer |
+| `q`             | quit                |
+| `r`             | diff                |
+| `gg`            | move_top            |
+| `?`             | toggle_help         |
+
 #### 文本编码格式
 
 SpaceVim 默认使用 `utf-8` 码进行编码。下面是 `utf-8` 编码的四个设置：
@@ -1233,7 +1266,7 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 
 | 快捷键               | 功能描述                                               |
 | -------------------- | ------------------------------------------------------ |
-| `SPC f /`            | 使用 `find` 命令查找文件，支持参数提示                 |
+| `SPC f /`            | 使用 `find` 或者 `fd` 命令查找文件，支持参数提示                 |
 | `SPC f b`            | 跳至文件书签                                           |
 | `SPC f c`            | copy current file to a different location(TODO)        |
 | `SPC f C d`          | 修改文件编码 unix -> dos                               |
@@ -1257,6 +1290,12 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 或者 [fd](https://github.com/sharkdp/fd)。
 如果是使用 [scoop](https://github.com/lukesampson/scoop) 安装的这些工具，系统默认的 `C:\WINDOWS\system32` 中的命令会覆盖掉用户定义的 `$PATH`，
 解决方案是将 scoop 默认的可执行文件所在的文件夹放置在系统环境变量 `$PATH` 内 `C:\WINDOWS\system32` 的前方。
+
+
+按下 `SPC f /` 快捷键之后，会弹出搜索输入窗口，输入内容后回车，异步执行 `find` 或者 `fd` 命令，
+默认使用的是 `find` 命令，可以使用快捷键 `ctrl-e` 在不同工具之间切换。
+
+![find](https://user-images.githubusercontent.com/13142418/97999590-79717000-1e26-11eb-91b1-458ab30d6254.gif)
 
 #### Vim 和 SpaceVim 相关文件
 
