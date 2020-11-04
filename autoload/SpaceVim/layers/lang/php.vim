@@ -67,6 +67,8 @@ function! s:on_ft() abort
           \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+    call SpaceVim#mapping#space#langSPC('noremap', ['l', 'a'],
+          \ 'call SpaceVim#lsp#show_actions()', 'show available code actions', 1)
   endif
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',

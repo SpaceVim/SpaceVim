@@ -89,6 +89,10 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
   function! SpaceVim#lsp#references() abort
     call CocAction('jumpReferences')
   endfunction
+
+  function! SpaceVim#lsp#show_actions() abort
+    CocAction
+  endfunction
 elseif has('nvim')
   " use LanguageClient-neovim
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
@@ -125,6 +129,10 @@ elseif has('nvim')
 
   function! SpaceVim#lsp#documentSymbol()
     call LanguageClient_textDocument_documentSymbol()
+  endfunction
+
+  function! SpaceVim#lsp#show_actions()
+    call LanguageClient_textDocument_codeAction()
   endfunction
 
   function! SpaceVim#lsp#refactor() abort
