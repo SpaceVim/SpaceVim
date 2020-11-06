@@ -57,7 +57,7 @@ if (Get-Command "gvim" -ErrorAction SilentlyContinue) {
     echo "[OK] Test successfully. Moving to next..."
     sleep 1
 } else {
-    echo "[WARNING] Unable to find 'gvim.exe' in your PATH. But intallation still can continue..."
+    echo "[WARNING] Unable to find 'gvim.exe' in your PATH. But installation still can continue..."
     echo ""
     echo "[WARNING] Please install gvim later or  make your PATH correctly set! "
     Pause
