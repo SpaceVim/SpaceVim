@@ -30,37 +30,36 @@ This layer is enabled by default.
 
 ## Configuration
 
+The checkers layer has been loaded by default, there are two kinds options for this layer:
+global options and layer option.
+
+**Global options:**
+
+All of the SpaceVim global options should be put into `[options]` section.
+
+| Name          | default value | description                                                                            |
+| ------------- | ------------- | -------------------------------------------------------------------------------------- |
+| `lint_engine` | `neomake`     | Set the lint engine, by default it is `neomake`, you can also use `ale` or `syntastic` |
+
+If you want to config neomake, you can use bootstrap functions. Within bootstrap functions,
+you can use vim script. For all the info about neomake configuration, please checkout `:h neomake`.
+
 **Layer options:**
 
 By default, the error will be display below current line, if you want to disabled this
 feature, you may need to load this layer with `show_cursor_error` to `false`.
+
+| Name                | default value | description                                              |
+| ------------------- | ------------- | -------------------------------------------------------- |
+| `lint_on_the_fly`   | `false`       | Syntax checking on the fly feature, disabled by default. |
+| `lint_on_save`      | `true`        | Run syntax checking when saving a file.                  |
+| `show_cursor_error` | `true`        | Enable/Disable displaying error below current line.      |
 
 ```toml
 [[layers]]
   name = "checkers"
   show_cursor_error = false
 ```
-
-**Global options:**
-
-the following options are SpaceVim option, you need to config them in `[options]` section.
-
-| Name              | default value | description                                                                 |
-| ----------------- | ------------- | --------------------------------------------------------------------------- |
-| `lint_engine`     | `neomake`     | Use [neomake](https://github.com/neomake/neomake) as default checking tools |
-| `lint_on_the_fly` | `false`       | Syntax checking on the fly feature, disabled by default.                    |
-| `lint_on_save`    | `true`        | Run syntax checking when saving a file                                      |
-
-If you want to config neomake, you can use bootstrap functions. Within bootstrap functions,
-you can use vim script. For all the info about neomake configuration, please checkout `:h neomake`.
-
-**NOTE:** if you want to use ale, you need:
-
-```toml
-[options]
-    lint_engine = 'ale'
-```
-and if you want to use syntastic, set this option to `syntastic`.
 
 ## Key bindings
 
