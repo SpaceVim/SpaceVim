@@ -6,12 +6,8 @@ lang: zh
 
 # [主页](../) >> 赞助
 
-如果你想赞助 SpaceVim，或者希望 SpaceVim 开发得更快一点，可以选择以下某种方式进行赞助：
 
-- [通过 BountySource](https://salt.bountysource.com/teams/spacevim)
-- [通过 opencollective](https://opencollective.com/spacevim)
-
-或者，也许你可以给我买杯咖啡：
+如果你想赞助 SpaceVim，或者觉得 SpaceVim 对你有所帮助，也许你可以给我买杯咖啡：
 
 <a href='https://ko-fi.com/SpaceVim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
