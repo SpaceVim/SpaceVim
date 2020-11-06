@@ -47,8 +47,7 @@ the following options are SpaceVim option, you need to config them in `[options]
 
 | Name              | default value | description                                                                 |
 | ----------------- | ------------- | --------------------------------------------------------------------------- |
-| `enable_neomake`  | `true`        | Use [neomake](https://github.com/neomake/neomake) as default checking tools |
-| `enable_ale`      | `false`       | Use ale as default checking tools                                           |
+| `lint_engine`     | `neomake`     | Use [neomake](https://github.com/neomake/neomake) as default checking tools |
 | `lint_on_the_fly` | `false`       | Syntax checking on the fly feature, disabled by default.                    |
 | `lint_on_save`    | `true`        | Run syntax checking when saving a file                                      |
 
@@ -59,11 +58,9 @@ you can use vim script. For all the info about neomake configuration, please che
 
 ```toml
 [options]
-    enable_neomake = false
-    enable_ale = true
+    lint_engine = 'ale'
 ```
-
-and if you want to use syntastic, set this two options to `false`.
+and if you want to use syntastic, set this option to `syntastic`.
 
 ## Key bindings
 
