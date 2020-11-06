@@ -22,7 +22,6 @@ please consider supporting SpaceVim:
 ## Donation
 
 These are the companies or individuals contributing a monthly amount to help sustain SpaceVim's development.
-See the [Bountysource campaign](https://www.bountysource.com/teams/spacevim) for more details.
 
 | Date         | Amount   | Description         |
 | ------------ | -------- | ------------------- |
