@@ -21,6 +21,7 @@ This layer provides syntax checking feature.
 ## Install
 
 To use this configuration layer, add following snippet to your custom configuration file.
+This layer is enabled by default.
 
 ```toml
 [[layers]]
@@ -44,16 +45,17 @@ feature, you may need to load this layer with `show_cursor_error` to `false`.
 
 the following options are SpaceVim option, you need to config them in `[options]` section.
 
-| Name              | default value | description                                              |
-| ----------------- | ------------- | -------------------------------------------------------- |
-| `enable_neomake`  | `true`        | Use [neomake](https://github.com/neomake/neomake) as default checking tools                    |
-| `enable_ale`      | `false`       | Use ale as default checking tools                        |
-| `lint_on_the_fly` | `false`       | Syntax checking on the fly feature, disabled by default. |
+| Name              | default value | description                                                                 |
+| ----------------- | ------------- | --------------------------------------------------------------------------- |
+| `enable_neomake`  | `true`        | Use [neomake](https://github.com/neomake/neomake) as default checking tools |
+| `enable_ale`      | `false`       | Use ale as default checking tools                                           |
+| `lint_on_the_fly` | `false`       | Syntax checking on the fly feature, disabled by default.                    |
+| `lint_on_save`    | `true`        | Run syntax checking when saving a file                                      |
 
 If you want to config neomake, you can use bootstrap functions. Within bootstrap functions,
 you can use vim script. For all the info about neomake configuration, please checkout `:h neomake`.
 
-**NOTE:** if you want to use  ale, you need:
+**NOTE:** if you want to use ale, you need:
 
 ```toml
 [options]
