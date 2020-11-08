@@ -73,6 +73,7 @@ function! SpaceVim#layers#lang#python#config() abort
   elseif executable('python')
     call SpaceVim#plugins#repl#reg('python', ['python', '-i'])
   endif
+  let g:neomake_python_enabled_makers = ['flake8']
 endfunction
 
 function! s:language_specified_mappings() abort
