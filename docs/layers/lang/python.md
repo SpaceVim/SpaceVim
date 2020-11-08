@@ -12,7 +12,7 @@ description: "This layer is for Python development, provide autocompletion, synt
 - [Install](#install)
   - [enable layer](#enable-layer)
   - [language tools](#language-tools)
-- [Configuration](#configuration)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Jump to definition](#jump-to-definition)
   - [Code generation](#code-generation)
@@ -106,7 +106,9 @@ To be able to show code coverage, install coverage.py
 pip install --user coverage
 ```
 
-## Configuration
+## Layer options
+
+- `python_file_head`: Default file head when create new python file.
 
 By default, when create a new python file, SpaceVim will insert file head automatically.
 to change the file head, use `python_file_head` option:
@@ -130,6 +132,14 @@ is disabled, because it is too slow. To enable type info:
   name = "lang#python"
   enable_typeinfo = true
 ```
+
+- `format_on_save`: Enable/disabled file formatting when saving current python file. By default,
+  it is disabled, to enable it:
+  ```toml
+  [[layers]]
+      name = "lang#python"
+      enable_typeinfo = true
+  ```
 
 By default, the python layer utilizes `neomake` for syntax checking, and the default python executable
 is simply `python`. Note that the python version is up to your system configuration. If the system
