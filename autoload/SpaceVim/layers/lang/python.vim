@@ -90,6 +90,7 @@ function! SpaceVim#layers#lang#python#config() abort
     call SpaceVim#plugins#repl#reg('python', ['python', '-i'])
   endif
   let g:neomake_python_enabled_makers = ['python']
+  let g:neomake_python_python_exe = s:python_interpreter
 endfunction
 
 function! s:language_specified_mappings() abort

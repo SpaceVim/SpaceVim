@@ -137,18 +137,18 @@ is disabled, because it is too slow. To enable type info:
   it is disabled, to enable it:
   ```toml
   [[layers]]
-      name = "lang#python"
-      enable_typeinfo = true
+      name = 'lang#python'
+      format_on_save = true
   ```
 
-By default, the python layer utilizes `neomake` for syntax checking, and the default python executable
-is simply `python`. Note that the python version is up to your system configuration. If the system
-(or environment) python version is 2, one can have the following configuration in the bootstrap function
-for syntax checking on python3:
 
-```vim
-let g:neomake_python_python_exe = 'python3'
-```
+- `python_interpreter`: Set the python interpreter, by default, it is `python3`. The value of this option will
+  be apply to `g:neomake_python_python_exe` and code runner.
+  ```toml
+  [[layers]]
+      name = 'lang#python'
+      python_interpreter = 'D:\scoop\shims\python.exe'
+  ```
 
 ## Key bindings
 
