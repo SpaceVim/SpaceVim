@@ -29,6 +29,7 @@ let s:python_file_head = [
       \ ''
       \ ]
 let s:enable_typeinfo = 0
+let s:python_interpreter = 'python3'
 
 function! SpaceVim#layers#lang#python#plugins() abort
   let plugins = []
@@ -203,5 +204,9 @@ function! SpaceVim#layers#lang#python#set_variable(var) abort
   let s:enabled_linters = get(a:var,
         \ 'enabled_linters',
         \ s:enabled_linters
+        \ )
+  let s:python_interpreter = get(a:var,
+        \ 'python_interpreter',
+        \ s:python_interpreter
         \ )
 endfunction
