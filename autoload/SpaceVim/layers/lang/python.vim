@@ -176,7 +176,7 @@ func! s:getexe() abort
   if line =~# '^#!'
     return s:Shebang_to_cmd(line)
   endif
-  return ['python']
+  return [s:python_interpreter]
 endf
 
 function! s:go_to_def() abort
