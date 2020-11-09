@@ -48,7 +48,7 @@ The completion menu will be opened as you type.
 ### Syntax linting
 
 The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
-It will run [tslint](https://www.npmjs.com/package/tslint) asynchronously.
+It will run [eslint](https://eslint.org/) asynchronously.
 
 To install eslint, just run following command in terminal.
 
