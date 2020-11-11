@@ -105,10 +105,10 @@ endif
 let s:java_fomatter_jar = ''
 let s:format_on_save = 0
 let s:java_file_head = [
-      \ '#!/usr/bin/env python',
-      \ '# -*- coding: utf-8 -*-',
-      \ '',
-      \ ''
+      \ '/**',
+      \ ' * @author : ${USER}',
+      \ ' * @created : ${DATE}, ${DAY_NAME_FULL}',
+      \ '**/'
       \ ]
 let s:enable_typeinfo = 0
 let s:java_interpreter = 'java'
