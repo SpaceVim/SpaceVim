@@ -39,6 +39,7 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Code indentation](#code-indentation)
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
+    - [Expand regions of text](#expand-regions-of-text)
     - [Increase/Decrease numbers](#increasedecrease-numbers)
     - [Copy and paste](#copy-and-paste)
     - [Commenting](#commenting)
@@ -1063,6 +1064,15 @@ Text insertion commands (start with `i`):
 | `SPC i U U`  | insert UUIDv4 (use universal argument to insert with CID format)      |
 
 **Tips:** You can specify number of password characters using prefix argument, (i.e. `10 SPC i p 1` will generate 10 characters of simple password)
+
+#### Expand regions of text
+
+Key bindings available in visual mode:
+
+| Key bindings | Descriptions                                                          |
+| ------------ | --------------------------------------------------------------------- |
+| `v`          | expand visual selection of text to larger region                      |
+| `V`          | shrink visual selection of text to smaller region                     |
 
 #### Increase/Decrease numbers
 
