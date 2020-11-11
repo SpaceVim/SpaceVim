@@ -170,12 +170,12 @@ endfunction
 function! s:language_specified_mappings() abort
 
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
-  if g:spacevim_enable_insert_leader
-    inoremap <silent> <buffer> <leader>UU <esc>bgUwea
-    inoremap <silent> <buffer> <leader>uu <esc>bguwea
-    inoremap <silent> <buffer> <leader>ua <esc>bgulea
-    inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
-  endif
+  " if g:spacevim_enable_insert_leader
+    " inoremap <silent> <buffer> <leader>UU <esc>bgUwea
+    " inoremap <silent> <buffer> <leader>uu <esc>bguwea
+    " inoremap <silent> <buffer> <leader>ua <esc>bgulea
+    " inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
+  " endif
   imap <silent><buffer> <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
   imap <silent><buffer> <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
   imap <silent><buffer> <C-j>i <Plug>(JavaComplete-Imports-AddSmart)

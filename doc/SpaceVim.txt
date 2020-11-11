@@ -826,7 +826,8 @@ this feature, or you can set to another char.
 <
 
                                              *g:spacevim_enable_insert_leader*
-Enable/Disable spacevim's insert mode leader, default is enable
+Enable/Disable spacevim's insert mode leader, default is enable This options
+has been deprecated.
 
                                                          *g:spacevim_data_dir*
 Set the cache directory of SpaceVim. Default is `$XDG_CACHE_HOME`  or if not
