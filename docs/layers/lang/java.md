@@ -17,7 +17,7 @@ description: "This layer is for Java development. All the features such as code 
   - [Code formatting](#code-formatting)
   - [Maven support](#maven-support)
   - [Gradle support](#gradle-support)
-  - [Jump](#jump)
+  - [Jump to alternate file](#jump-to-alternate-file)
   - [Code runner](#code-runner)
   - [Inferior REPL process](#inferior-repl-process)
 
@@ -30,10 +30,11 @@ This layer is for Java development.
 ## Feature
 
 - code completion: `autocomplete` layer
-- code formatting
+- code formatting: `format` layer
 - refactoring
 - syntax checking: `checkers` layer
-- REPL(need java8's jshell)
+- REPL(requires `jshell`)
+- code runner
 - debug: check out the `debug` layer
 
 ## Install
@@ -113,11 +114,14 @@ You can also use `g=` to indent current buffer.
 
 ### Gradle support
 
-| Key Bindings | Descriptions                   |
-| ------------ | ------------------------------ |
-| `SPC l g B`  | Run gradle clean build        |
+| Key Bindings | Descriptions       |
+| ------------ | ------------------ |
+| `SPC l g b`  | gradle build       |
+| `SPC l g B`  | gradle clean build |
+| `SPC l g r`  | gradle run         |
+| `SPC l g t`  | gradle test        |
 
-### Jump
+### Jump to alternate file
 
 | Key Bindings | Descriptions           |
 | ------------ | ---------------------- |
@@ -128,6 +132,8 @@ You can also use `g=` to indent current buffer.
 | Key bindings | Descriptions                    |
 | ------------ | ------------------------------- |
 | `SPC l r m`  | run main method of current file |
+| `SPC l r m`  | run current method              |
+| `SPC l r t`  | run all test methods            |
 
 ### Inferior REPL process
 
