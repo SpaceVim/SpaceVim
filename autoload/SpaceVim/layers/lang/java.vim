@@ -108,9 +108,10 @@ let s:java_file_head = [
       \ '/**',
       \ ' * @author : `fnamemodify(expand("~"), ":t")`',
       \ ' * @created : `strftime("%Y-%m-%d")`',
-      \ '**/'
+      \ '**/',
+      \ ''
       \ ]
-let s:enable_typeinfo = 0
+let s:enabled_linters = []
 let s:java_interpreter = 'java'
 
 function! SpaceVim#layers#lang#java#plugins() abort
