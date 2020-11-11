@@ -61,6 +61,18 @@ To use this configuration layer, update custom configuration file with:
     name = 'lang#java'
     java_fomatter_jar = 'path/to/google-java-format.jar'
   ```
+- `java_file_head`: The default file header for new java file. by default it is:
+  ```toml
+  [[layers]]
+    name = 'lang#java'
+    java_file_head = [
+      '/**',
+      ' * @author : `fnamemodify(expand("~"), ":t")`',
+      ' * @created : `strftime("%Y-%m-%d")`',
+      '**/',
+      ''
+    ]
+  ```
 
 ## Key bindings
 
