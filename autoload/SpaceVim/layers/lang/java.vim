@@ -15,6 +15,11 @@
 "   [[layers]]
 "     name = 'lang#java'
 " <
+" @subsection Layer options
+"
+" 1. format_on_save: Enable/disabled code formatting when saving current file.
+" Disabled by default.
+" 2. java_fomatter_jar: Set the full path of google's java formatter jar.
 "
 " @subsection Mappings
 " >

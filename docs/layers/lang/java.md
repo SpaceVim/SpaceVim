@@ -10,6 +10,7 @@ description: "This layer is for Java development. All the features such as code 
 - [Description](#description)
 - [Feature](#feature)
 - [Install](#install)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Import key bindings](#import-key-bindings)
   - [Generate key bindings](#generate-key-bindings)
@@ -41,6 +42,13 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#java"
 ```
+
+
+## Layer options
+
+- `format_on_save`: Enable/disabled code formatting when saving current file.
+  Disabled by default.
+- `java_fomatter_jar`: Set the full path of google's java formatter jar.
 
 ## Key bindings
 
