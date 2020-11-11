@@ -160,6 +160,7 @@ function! SpaceVim#layers#lang#java#config() abort
           \ 'enable' : 1,
           \ })
   endif
+  call SpaceVim#layers#edit#add_ft_head_tamplate('java', s:java_file_head)
 endfunction
 
 function! s:JspFileTypeInit() abort
@@ -318,14 +319,10 @@ endfunction
 function! SpaceVim#layers#lang#java#set_variable(var) abort
   let s:format_on_save = get(a:var,
         \ 'format_on_save',
-        \ get(a:var,
-        \ 'format-on-save',
-        \ s:format_on_save))
+        \ s:format_on_save)
   let s:java_file_head = get(a:var,
         \ 'java_file_head',
-        \ get(a:var,
-        \ 'python-file-head',
-        \ s:java_file_head))
+        \ s:java_file_head)
   let s:enabled_linters = get(a:var,
         \ 'enabled_linters',
         \ s:enabled_linters
