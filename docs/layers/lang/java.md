@@ -15,8 +15,10 @@ description: "This layer is for Java development. All the features such as code 
   - [Import key bindings](#import-key-bindings)
   - [Generate key bindings](#generate-key-bindings)
   - [Code formatting](#code-formatting)
-  - [Maven](#maven)
+  - [Maven support](#maven-support)
+  - [Gradle support](#gradle-support)
   - [Jump](#jump)
+  - [Code runner](#code-runner)
   - [Inferior REPL process](#inferior-repl-process)
 
 <!-- vim-markdown-toc -->
@@ -43,26 +45,34 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#java"
 ```
 
-
 ## Layer options
 
 - `format_on_save`: Enable/disabled code formatting when saving current file.
-  Disabled by default.
-- `java_fomatter_jar`: Set the full path of google's java formatter jar.
+  The default value is `false`. To enable this feature:
+  ```toml
+  [[layers]]
+    name = 'lang#java'
+    format_on_save = true
+  ```
+- `java_fomatter_jar`: Set the full path of [google's formater jar](https://github.com/google/google-java-format).
+  ```toml
+  [[layers]]
+    name = 'lang#java'
+    java_fomatter_jar = 'path/to/google-java-format.jar'
+  ```
 
 ## Key bindings
 
 ### Import key bindings
 
-| Key Bindings         | Descriptions                    |
-| -------------------- | ------------------------------- |
-| `<F4>` (Insert/Normal) | Import class under cursor       |
-| `SPC l I`            | Import missing classes          |
-| `SPC l R`            | Remove unused classes           |
-| `SPC l i`            | smart import class under cursor |
-| `Ctrl-j I` (Insert)  | Import missing classes          |
-| `Ctrl-j R` (Insert)  | Remove unused classes           |
-| `Ctrl-j i` (Insert)  | smart import class under cursor |
+| Key Bindings        | Descriptions                    |
+| ------------------- | ------------------------------- |
+| `SPC l I`           | Import missing classes          |
+| `SPC l R`           | Remove unused classes           |
+| `SPC l i`           | smart import class under cursor |
+| `Ctrl-j I` (Insert) | Import missing classes          |
+| `Ctrl-j R` (Insert) | Remove unused classes           |
+| `Ctrl-j i` (Insert) | smart import class under cursor |
 
 ### Generate key bindings
 
@@ -73,9 +83,9 @@ To use this configuration layer, update custom configuration file with:
 | normal/visual | `SPC l g g`  | generate getter accessor              |
 | normal/visual | `SPC l g a`  | generate setter and getter accessor   |
 | normal        | `SPC l g M`  | generate abstract methods             |
-| insert        | `Ctrl-j s`     | generate setter accessor              |
-| insert        | `Ctrl-j g`     | generate getter accessor              |
-| insert        | `Ctrl-j a`     | generate getter and setter accessor   |
+| insert        | `Ctrl-j s`   | generate setter accessor              |
+| insert        | `Ctrl-j g`   | generate getter accessor              |
+| insert        | `Ctrl-j a`   | generate getter and setter accessor   |
 | normal        | `SPC l g t`  | generate toString function            |
 | normal        | `SPC l g e`  | generate equals and hashcode function |
 | normal        | `SPC l g c`  | generate constructor                  |
@@ -83,14 +93,14 @@ To use this configuration layer, update custom configuration file with:
 
 ### Code formatting
 
-The default key bindings for format current buffer is `SPC b f`. And this key binding is defined in [format layer](<>). You can also use `g=` to indent current buffer.
+The default formater of java language is [google's formater jar](https://github.com/google/google-java-format).
+You need to download the jar and set the `java_fomatter_jar` layer option.
 
-To make neoformat support Java file, you should install uncrustify.
-Or download [google's formater jar](https://github.com/google/google-java-format)
-and add `let g:spacevim_layer_lang_java_formatter = 'path/to/google-java-format.jar'`
-to SpaceVim custom configuration file.
+The default key bindings for format current buffer is `SPC b f`.
+And this key binding is defined in [`format`](../layers/format/) layer.
+You can also use `g=` to indent current buffer.
 
-### Maven
+### Maven support
 
 | Key Bindings | Descriptions                   |
 | ------------ | ------------------------------ |
@@ -101,11 +111,23 @@ to SpaceVim custom configuration file.
 | `SPC l m R`  | Run one maven goal             |
 | `SPC l m t`  | Run maven test                 |
 
+### Gradle support
+
+| Key Bindings | Descriptions                   |
+| ------------ | ------------------------------ |
+| `SPC l g B`  | Run gradle clean build        |
+
 ### Jump
 
 | Key Bindings | Descriptions           |
 | ------------ | ---------------------- |
 | `SPC l j a`  | jump to alternate file |
+
+### Code runner
+
+| Key bindings | Descriptions                    |
+| ------------ | ------------------------------- |
+| `SPC l r m`  | run main method of current file |
 
 ### Inferior REPL process
 
