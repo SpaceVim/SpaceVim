@@ -91,6 +91,23 @@
 " and set 'g:spacevim_layer_lang_java_formatter' to the path of the jar.
 
 
+
+if exists('s:java_fomatter_jar')
+  finish
+endif
+
+
+let s:java_fomatter_jar = ''
+let s:format_on_save = 0
+let s:java_file_head = [
+      \ '#!/usr/bin/env python',
+      \ '# -*- coding: utf-8 -*-',
+      \ '',
+      \ ''
+      \ ]
+let s:enable_typeinfo = 0
+let s:java_interpreter = 'java'
+
 function! SpaceVim#layers#lang#java#plugins() abort
   let plugins = [
         \ ['wsdjeg/vim-dict',               { 'on_ft' : 'java'}],
@@ -123,13 +140,21 @@ function! SpaceVim#layers#lang#java#config() abort
   let g:neoformat_enabled_java = get(g:, 'neoformat_enabled_java', ['googlefmt'])
   let g:neoformat_java_googlefmt = {
         \ 'exe': 'java',
-        \ 'args': ['-jar', get(g:,'spacevim_layer_lang_java_formatter', ''), '-'],
+        \ 'args': ['-jar', s:java_fomatter_jar, '-'],
         \ 'stdin': 1,
         \ }
   try
     let g:neoformat_enabled_java += neoformat#formatters#java#enabled()
   catch
   endtry
+
+  " Format on save
+  if s:format_on_save
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'java',
+          \ 'enable' : 1,
+          \ })
+  endif
 endfunction
 
 function! s:JspFileTypeInit() abort
@@ -289,6 +314,27 @@ function! s:jump_to_alternate() abort
   catch /^Vim\%((\a\+)\)\=:E464/
     echom 'no alternate file'
   endtry
+endfunction
+
+function! SpaceVim#layers#lang#java#set_variable(var) abort
+  let s:format_on_save = get(a:var,
+        \ 'format_on_save',
+        \ get(a:var,
+        \ 'format-on-save',
+        \ s:format_on_save))
+  let s:java_file_head = get(a:var,
+        \ 'java_file_head',
+        \ get(a:var,
+        \ 'python-file-head',
+        \ s:java_file_head))
+  let s:enabled_linters = get(a:var,
+        \ 'enabled_linters',
+        \ s:enabled_linters
+        \ )
+  let s:java_interpreter = get(a:var,
+        \ 'java_interpreter',
+        \ s:java_interpreter
+        \ )
 endfunction
 
 " vim:set et sw=2 cc=80:
