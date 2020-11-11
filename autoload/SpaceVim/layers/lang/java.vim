@@ -170,6 +170,9 @@ endfunction
 function! s:language_specified_mappings() abort
 
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
+  " we have removed all insert key bindings which use leader as prefix.
+  " because when use leader in insert mode key bindings. vim will wait for
+  " next key after insert \ in insert mode.
   " if g:spacevim_enable_insert_leader
     " inoremap <silent> <buffer> <leader>UU <esc>bgUwea
     " inoremap <silent> <buffer> <leader>uu <esc>bguwea
