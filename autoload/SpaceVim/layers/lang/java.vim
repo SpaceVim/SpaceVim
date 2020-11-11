@@ -9,7 +9,12 @@
 ""
 " @section lang#java, layer-lang-java
 " @parentsection layers
-" This layer is for Java development.
+" This layer is for java development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#java'
+" <
 "
 " @subsection Mappings
 " >
@@ -17,8 +22,6 @@
 "
 "   Mode      Key           Function
 "   -------------------------------------------------------------
-"   normal    <F4>          import class under cursor
-"   insert    <F4>          import class under cursor
 "   normal    SPC l I       import missing classes
 "   normal    SPC l R       remove unused imports
 "   normal    SPC l i       smart import class under cursor
@@ -132,8 +135,6 @@ endfunction
 function! s:JspFileTypeInit() abort
   setlocal omnifunc=javacomplete#Complete
   inoremap . <c-r>=OnmiConfigForJsp()<cr>
-  nnoremap <F4> :JCimportAdd<cr>
-  inoremap <F4> <esc>:JCimportAddI<cr>
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -145,9 +146,6 @@ function! s:language_specified_mappings() abort
     inoremap <silent> <buffer> <leader>ua <esc>bgulea
     inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
   endif
-  nmap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
-  imap <silent><buffer> <F4> <Plug>(JavaComplete-Imports-Add)
-
   imap <silent><buffer> <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
   imap <silent><buffer> <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
   imap <silent><buffer> <C-j>i <Plug>(JavaComplete-Imports-AddSmart)

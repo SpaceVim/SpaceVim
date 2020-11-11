@@ -2375,7 +2375,12 @@ This layer also provides REPL support for janet, the key bindings are:
 ==============================================================================
 LANG#JAVA                                           *SpaceVim-layer-lang-java*
 
-This layer is for Java development.
+This layer is for java development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#java'
+<
 
 MAPPINGS
 
@@ -2384,8 +2389,6 @@ MAPPINGS
 
   Mode      Key           Function
   -------------------------------------------------------------
-  normal    <F4>          import class under cursor
-  insert    <F4>          import class under cursor
   normal    SPC l I       import missing classes
   normal    SPC l R       remove unused imports
   normal    SPC l i       smart import class under cursor
