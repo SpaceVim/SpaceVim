@@ -106,8 +106,8 @@ let s:java_fomatter_jar = ''
 let s:format_on_save = 0
 let s:java_file_head = [
       \ '/**',
-      \ ' * @author : ${USER}',
-      \ ' * @created : ${DATE}, ${DAY_NAME_FULL}',
+      \ ' * @author : `fnamemodify(expand("~"), ":t")`',
+      \ ' * @created : `strftime("%Y-%m-%d")`',
       \ '**/'
       \ ]
 let s:enable_typeinfo = 0
