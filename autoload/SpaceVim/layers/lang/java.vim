@@ -232,8 +232,7 @@ function! s:language_specified_mappings() abort
 
   " Jump
   let g:_spacevim_mappings_space.l.j = {'name' : '+Jump'}
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','j', 'a'], 'call call('
-        \ . string(function('s:jump_to_alternate')) . ', [])',
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','j', 'a'], 'A',
         \ 'jump to alternate file', 1)
 
   " execute
@@ -314,14 +313,6 @@ endfunction
 
 function! s:execCMD(cmd) abort
   call javaunit#util#ExecCMD(a:cmd)
-endfunction
-
-function! s:jump_to_alternate() abort
-  try
-    A
-  catch /^Vim\%((\a\+)\)\=:E464/
-    echom 'no alternate file'
-  endtry
 endfunction
 
 function! SpaceVim#layers#lang#java#set_variable(var) abort
