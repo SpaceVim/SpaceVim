@@ -35,9 +35,12 @@ elseif executable('ag') && !exists('g:ctrlp_user_command')
 elseif s:SYS.isWindows
   let g:ctrlp_user_command =
     \ 'dir %s /-n /b /s /a-d | findstr /v /l ".jpg \\tmp\\"' " Windows
+elseif s:SYS.isOSX
+  let g:ctrlp_user_command =
+    \ 'find %s -type f | grep --invert-match --extended-regexp "\.jpg$|/tmp/"' " MacOSX
 else
   let g:ctrlp_user_command =
-    \ 'find %s -type f | grep -v -P "\.jpg$|/tmp/"'          " MacOSX/Linux
+    \ 'find %s -type f | grep -v -P "\.jpg$|/tmp/"'          " Linux
 endif
 if !exists('g:ctrlp_match_func') && (has('python') || has('python3'))
   let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }
