@@ -212,11 +212,6 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'c'], 'JavaUnitExec', 'Run current method', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'a'], 'JavaUnitTestAll', 'Run all test methods', 1)
 
-  " debug
-  let g:_spacevim_mappings_space.l.d = {'name' : '+Debug'}
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','d', 's'], ':VBGstartJDB', 'start jdb', 0)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','d', 't'], 'VBGtoggleBreakpointThisLine', 'toggle breakpoint at this line', 1)
-
   " maven
   let g:_spacevim_mappings_space.l.m = {'name' : '+Maven'}
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','m', 'i'], 'call call('
