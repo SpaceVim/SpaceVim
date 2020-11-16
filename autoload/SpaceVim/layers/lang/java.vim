@@ -123,7 +123,6 @@ let s:java_file_head = [
       \ '**/',
       \ ''
       \ ]
-let s:enabled_linters = []
 let s:java_interpreter = 'java'
 
 function! SpaceVim#layers#lang#java#plugins() abort
@@ -331,10 +330,6 @@ function! SpaceVim#layers#lang#java#set_variable(var) abort
   let s:java_file_head = get(a:var,
         \ 'java_file_head',
         \ s:java_file_head)
-  let s:enabled_linters = get(a:var,
-        \ 'enabled_linters',
-        \ s:enabled_linters
-        \ )
   let s:java_interpreter = get(a:var,
         \ 'java_interpreter',
         \ s:java_interpreter
