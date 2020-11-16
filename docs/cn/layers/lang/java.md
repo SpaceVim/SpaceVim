@@ -77,7 +77,6 @@ lang: zh
 
 | 模式          | 快捷键     | 按键描述           |
 | ------------- | ---------  | ------------------ |
-| Insert/Normal | `<F4>`     | 导入光标下的类     |
 | Normal        | `SPC l I`  | 导入所有缺失的类   |
 | Normal        | `SPC l R`  | 删除多余的导包     |
 | Normal        | `SPC l i`  | 智能导入光标下的类 |
@@ -106,12 +105,13 @@ lang: zh
 
 默认的代码格式化快捷键是 `SPC b f`，该快捷键由 `format` 模块定义，同时也可以通过 `g =` 来对齐整个文档。
 
-为了使 format 模块支持 Java 文件，需要安装 uncrustify 或者下载 [google's formater jar](https://github.com/google/google-java-format)。
-同时，需要设置 SpaceVim 选项`layer_lang_java_formatter`：
+为了使 format 模块支持 Java 文件，需要安装  [google's formater jar](https://github.com/google/google-java-format)。
+同时，需要设置模块选项`java_fomatter_jar`：
 
 ```toml
-[options]
-  layer_lang_java_formatter = "path/to/google-java-format.jar"
+[[layers]]
+  name = 'lang#java'
+  java_fomatter_jar = 'path/to/google-java-format.jar'
 ```
 
 ### Maven
