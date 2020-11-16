@@ -11,12 +11,12 @@ lang: zh
 - [模块描述](#模块描述)
 - [功能特性](#功能特性)
 - [启用模块](#启用模块)
+- [模块选项](#模块选项)
 - [快捷键](#快捷键)
   - [导包相关快捷键](#导包相关快捷键)
   - [代码生成相关快捷键](#代码生成相关快捷键)
   - [代码格式化](#代码格式化)
   - [Maven](#maven)
-  - [Jump](#jump)
   - [交互式编程](#交互式编程)
 
 <!-- vim-markdown-toc -->
@@ -42,6 +42,34 @@ lang: zh
 [[layers]]
   name = "lang#java"
 ```
+
+## 模块选项
+
+- `format_on_save`: 启用/禁用保存文件时自动格式化，默认的值为 `false`，
+  可以使用如下配置启用该功能：
+  ```toml
+  [[layers]]
+    name = 'lang#java'
+    format_on_save = true
+  ```
+- `java_fomatter_jar`: 设置 [谷歌格式化工具](https://github.com/google/google-java-format) 的具体路径。
+  ```toml
+  [[layers]]
+    name = 'lang#java'
+    java_fomatter_jar = 'path/to/google-java-format.jar'
+  ```
+- `java_file_head`: 默认的文件头，当新建 Java 文件时自动加入。
+  ```toml
+  [[layers]]
+    name = 'lang#java'
+    java_file_head = [
+      '/**',
+      ' * @author : `fnamemodify(expand("~"), ":t")`',
+      ' * @created : `strftime("%Y-%m-%d")`',
+      '**/',
+      ''
+    ]
+  ```
 
 ## 快捷键
 
@@ -96,12 +124,6 @@ lang: zh
 | `SPC l m r` | Run maven goals                |
 | `SPC l m R` | Run one maven goal             |
 | `SPC l m t` | Run maven test                 |
-
-### Jump
-
-| 快捷键      | 描述                   |
-| ----------- | ---------------------- |
-| `SPC l j a` | jump to alternate file |
 
 ### 交互式编程
 
