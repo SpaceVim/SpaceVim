@@ -2385,10 +2385,22 @@ add following snippet to your SpaceVim configuration file.
 LAYER OPTIONS
 
   1. `format_on_save`: Enable/disabled code formatting when saving current
-    file.
-Disabled by default.
+    file. Disabled by default.
   2. `java_fomatter_jar`: Set the full path of google's java formatter jar.
+  3. `java_file_head`: The default file header for new java file. by default
+    it is:
 
+>
+  [[layers]]
+    name = 'lang#java'
+    java_file_head = [
+      '/**',
+      ' * @author : `fnamemodify(expand("~"), ":t")`',
+      ' * @created : `strftime("%Y-%m-%d")`',
+      '**/',
+      ''
+    ]
+<
 MAPPINGS
 
 >

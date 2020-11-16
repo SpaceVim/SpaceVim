@@ -18,9 +18,21 @@
 " @subsection Layer options
 "
 " 1. `format_on_save`: Enable/disabled code formatting when saving current file.
-" Disabled by default.
+"   Disabled by default.
 " 2. `java_fomatter_jar`: Set the full path of google's java formatter jar.
-"
+" 3. `java_file_head`: The default file header for new java file.
+"   by default it is: 
+" >
+"   [[layers]]
+"     name = 'lang#java'
+"     java_file_head = [
+"       '/**',
+"       ' * @author : `fnamemodify(expand("~"), ":t")`',
+"       ' * @created : `strftime("%Y-%m-%d")`',
+"       '**/',
+"       ''
+"     ]
+" <
 " @subsection Mappings
 " >
 "   Import key bindings:
