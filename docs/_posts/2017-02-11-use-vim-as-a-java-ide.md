@@ -109,7 +109,8 @@ then press `Leader f o`:
 
 ### Rename symbol
 
-After enable lsp layer for java, you can use `SPC l e` to rename symbol under the cursor:
+To rename java symbol, you need to enable `lsp` layer for java. The default key binding
+for rename symbol under the cursor is `SPC l e`.
 
 ![rename java symblo](https://user-images.githubusercontent.com/13142418/53250190-da115580-36f4-11e9-9590-bf945fa8dcc0.gif)
 
