@@ -17,7 +17,6 @@ description: "This layer is for Java development. All the features such as code 
   - [Code formatting](#code-formatting)
   - [Maven support](#maven-support)
   - [Gradle support](#gradle-support)
-  - [Jump to alternate file](#jump-to-alternate-file)
   - [Code runner](#code-runner)
   - [Inferior REPL process](#inferior-repl-process)
 
@@ -132,12 +131,6 @@ You can also use `g=` to indent current buffer.
 | `SPC l g B`  | gradle clean build |
 | `SPC l g r`  | gradle run         |
 | `SPC l g t`  | gradle test        |
-
-### Jump to alternate file
-
-| Key Bindings | Descriptions           |
-| ------------ | ---------------------- |
-| `SPC l j a`  | jump to alternate file |
 
 ### Code runner
 

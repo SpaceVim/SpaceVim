@@ -232,11 +232,6 @@ function! s:language_specified_mappings() abort
         \ '<Plug>(JavaComplete-Generate-NewClass)',
         \ 'Generate NewClass in current Package', 0)
 
-  " Jump
-  let g:_spacevim_mappings_space.l.j = {'name' : '+Jump'}
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','j', 'a'], 'A',
-        \ 'jump to alternate file', 1)
-
   " execute
   let g:_spacevim_mappings_space.l.r = {'name' : '+Run'}
   " run main method
