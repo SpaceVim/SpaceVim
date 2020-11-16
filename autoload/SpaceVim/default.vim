@@ -155,7 +155,7 @@ endfunction
 
 function! SpaceVim#default#keyBindings() abort
   if g:spacevim_enable_insert_leader
-    inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
+    " inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
   endif
 
   " yank and paste
