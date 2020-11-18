@@ -38,7 +38,7 @@ if has('win16') || has('win32') || has('win64')
     " ref: https://superuser.com/questions/524669/checking-where-a-symbolic-link-points-at-in-windows-7
     silent let rst = system(cmd)
     if !v:shell_error
-      let dir = split(rst)[-1][1:-2]
+      let dir = split(rst, '\[\|\]')[-2]
       return dir
     endif
     return a:path
