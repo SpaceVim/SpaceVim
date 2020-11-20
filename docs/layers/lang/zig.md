@@ -34,6 +34,16 @@ To use this configuration layer, update custom configuration file with:
 
 ## Key bindings
 
-### Running current script
+### Run current file
 
-To running a zig file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+| Mode   | Key Bindings | Description                    |
+| ------ | ------------ | ------------------------------ |
+| normal | `SPC l r`    | build and run the current file |
+
+### Test current file
+
+| Mode   | Key Bindings | Description                    |
+| ------ | ------------ | ------------------------------ |
+| normal | `SPC l t`    | run all tests in current file  |
+
+
