@@ -18,7 +18,7 @@ function! s:setcolum() abort
   if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_vimfiler_gitstatus
     return 'indent:icons:filename:type'
   elseif !g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
-    return 'indent:icons:filename:type'
+    return 'indent:git:filename:type'
   elseif g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
     return 'indent:git:icons:filename:type'
   else
