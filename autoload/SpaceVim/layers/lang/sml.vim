@@ -6,6 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
+scriptencoding utf-8
 ""
 " @section lang#sml, layer-lang-sml
 " @parentsection layers
@@ -54,10 +55,21 @@
 "     smlnj_path = "/usr/local/smlnj/bin/sml"
 "     mlton_path = "/usr/local/bin/mlton"
 "     repl_options = ''
-"     conceal = 1
-"     conceal_show_tick = 1
+"     enable_conceal = 1
+"     enable_conceal_show_tick = 1
 "     auto_create_def_use = 'always'
 " <
+
+if exists('s:sml_file_head')
+  finish
+else
+  let s:sml_file_head = ['']
+  let s:sml_repl_options = ''
+  let s:sml_enable_conceal = 0
+endif
+
+
+
 
 function! SpaceVim#layers#lang#sml#plugins() abort
   let l:plugins = []
@@ -96,10 +108,10 @@ function! s:language_specified_mappings() abort
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ "call SpaceVim#plugins#repl#start('sml')",
-        \ "start REPL process", 1)
+        \ 'start REPL process', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
         \ "call SpaceVim#plugins#repl#send('raw', getline('.') . ';')",
-        \ "send line and keep code buffer focused", 1)
+        \ 'send line and keep code buffer focused', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
         \ 'call SpaceVim#plugins#repl#send("raw", join(getline(1, "$"), "\n") . ";")',
         \ 'send buffer and keep code buffer focused', 1)
@@ -107,10 +119,6 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#repl#send("raw", join(getline("''<", "''>"), "\n") . ";")',
         \ 'send selection and keep code buffer focused', 1)
 endfunction
-
-let s:sml_file_head = ['']
-let s:sml_repl_options = ''
-let s:sml_enable_conceal = 0
 
 function! SpaceVim#layers#lang#sml#set_variable(var) abort
   let g:sml_smlnj_executable = get(a:var, 'smlnj_path', 'sml')
