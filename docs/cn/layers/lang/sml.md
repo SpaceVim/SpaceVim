@@ -37,14 +37,13 @@ lang: zh
 - `repl_options`: 设置交互式命令启动选项，默认为 `''`
 - `auto_create_def_use`: 设置保存文件时，是否自动生成 `def-use` 文件，默认的值为 `mlb`。
   可以使用的值包括：
-  - `mlb`: Auto build def-use if there's a `*.mlb` file
-  - `always`: Always build def-use file
-  - `never`: Never build def-use file
-- `enable_conceal`: `true`/`false`. Whether to enable concealing for SML files. `false` by defaults.
-  `'a` becomes `α` (or `'α`). `fn` becomes `λ.`
-- `enable_conceal_show_tick`: `true`/`false`. When conceal is enabled, show `'α` for `'a` instead of `α`.
-  Helps for alignment. `false` by default.
-- `sml_file_head`: Template for new sml file.
+  - `mlb`: 仅当有 `*.mlb` 文件时，自动生成 `def-use` 文件
+  - `always`: 总是生成 `def-use` 文件
+  - `never`: 从不生成 `def-use` 文件
+- `enable_conceal`: `true`/`false`. 设置是否为SML 文件启用 concealing 特性，默认为禁用。
+  `'a` 显示为 `α` (或者 `'α`). `fn` 显示为 `λ.`
+- `enable_conceal_show_tick`: `true`/`false`，当启用 conceal 时，将 `'a` 显示为 `'α` 而非 `α`，默认为 `false`
+- `sml_file_head`: 设置新建 sml 文件时的默认文件头模板
 
 ## 快捷键
 
