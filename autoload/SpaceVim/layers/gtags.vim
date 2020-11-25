@@ -6,6 +6,12 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:gtagslabel')
+  finish
+endif
+
+let s:gtagslabel = ''
+
 function! SpaceVim#layers#gtags#plugins() abort
   return [
         \ ['SpaceVim/gtags.vim', {'merged' : 0}],
@@ -23,31 +29,7 @@ function! SpaceVim#layers#gtags#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'g'], 'exe "Gtags -g " . expand("<cword>")', 'find-cursor-string', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'f'], 'Gtags -f %', 'list of objects', 1)
   let g:gtags_gtagslabel = s:gtagslabel
-  augroup spacevim_layer_tags
-    autocmd!
-    autocmd BufEnter *
-          \   if empty(&buftype) && &filetype != 'help'
-          \|      nnoremap <silent><buffer> <Leader>] :call MyTagfunc()<CR>
-          \|      nnoremap <silent><buffer> <Leader>[ :call MyTagfuncBack()<CR>
-          \|  endif
-  augroup END
 endfunction
-
-function! MyTagfunc() abort
-  mark H
-  let s:MyTagfunc_flag = 1
-  UniteWithCursorWord -force-immediately tag
-endfunction
-
-function! MyTagfuncBack() abort
-  if exists('s:MyTagfunc_flag')&&s:MyTagfunc_flag
-    exe 'normal! `H'
-    let s:MyTagfunc_flag =0
-  endif
-endfunction
-
-
-let s:gtagslabel = ''
 
 function! SpaceVim#layers#gtags#set_variable(var) abort
 
