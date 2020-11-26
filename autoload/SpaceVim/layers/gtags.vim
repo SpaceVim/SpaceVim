@@ -54,7 +54,7 @@ endfunction
 
 function! s:update_ctags_option() abort
   let project_root = getcwd()
-  let dir = s:FILE.unify_path(g:gtags_cache_dir) 
+  let dir = s:FILE.unify_path(g:tags_cache_dir) 
         \ . s:FILE.path_to_fname(project_root)
   let tags = filter(split(&tags, ','), 'v:val !~# ".cache/SpaceVim/tags"')
   call add(tags, dir . '/tags')
