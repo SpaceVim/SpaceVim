@@ -35,7 +35,7 @@ let s:apis = {}
 "@public
 "Import API base the given {name}, and return the API object. for all
 "available APIs please check |spacevim-api|
-function! SpaceVim#api#import(name) abort
+function! SpacVim#api#import(name) abort
   if has_key(s:apis, a:name)
     return deepcopy(s:apis[a:name])
   endif
