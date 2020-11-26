@@ -115,6 +115,7 @@ gtags layer provides following options:
   ```
 
 - `auto_update`: Update gtags/ctags database automatically when save a file. Default is `true`.
+- `tags_cache_dir`: Setting the cache directory of tags. The default value is `~/.cache/SpaceVim/tags/`
 
 ## Language Support
 
