@@ -23,12 +23,12 @@ redirect_from: "/layers/tags/"
 
 ## Description
 
-`gtags` layer provides tags management for SpaceVim, this layer is not loaded by default.
+`gtags` layer provides tags manager for SpaceVim,
+this layer can be used to generate and update tags database automatically.
 
 ## Features
 
 - Select any tag in a project retrieved by gtags
-- Resume previous gtags session
 - Jump to a location based on context
 - Find definitions
 - Find references
@@ -45,11 +45,9 @@ redirect_from: "/layers/tags/"
 
 To use gtags layer, you first have to install [GNU Global](https://www.gnu.org/software/global/download.html).
 
-You can install global from the software repository of your OS; however, many OS distributions
-are out of date, and you will probably be missing support for pygments and exuberant ctags, and
-thus support for many languages. We recommend installing from source.
+You can install global from the software repository of your OS or built from source.
 
-If not for example to install on Ubuntu:
+install on Ubuntu:
 
 ```sh
 sudo apt-get install global
@@ -64,17 +62,7 @@ brew install global
 **Build from source:**
 
 To take full advantage of global you should install 2 extra packages in addition to global:
-pygments and ctags (exuberant). You can do this using your normal OS package manager, e.g., on Ubuntu
-
-```sh
-sudo apt-get install exuberant-ctags python-pygments
-```
-
-or e.g., Archlinux:
-
-```sh
-sudo pacman -S ctags python-pygments
-```
+pygments and ctags (exuberant). 
 
 Download the latest tar.gz archive, then run these commands:
 
@@ -84,21 +72,6 @@ cd global-6.5.3
 ./configure --with-exuberant-ctags=/usr/bin/ctags
 make
 sudo make install
-```
-
-Configure your environment to use pygments and ctags:
-
-To be able to use pygments and ctags, you need to copy the sample gtags.conf either
-to /etc/gtags.conf or \$HOME/.globalrc. For example:
-
-```sh
-cp gtags.conf ~/.globalrc
-```
-
-Additionally you should define GTAGSLABEL in your shell startup file e.g. with sh/ksh:
-
-```sh
-echo export GTAGSLABEL=pygments >> ~/.profile
 ```
 
 ## Configuration
