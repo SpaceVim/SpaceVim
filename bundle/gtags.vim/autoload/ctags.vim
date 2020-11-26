@@ -22,22 +22,10 @@ let s:JOB = SpaceVim#api#import('job')
 let s:FILE = SpaceVim#api#import('file')
 
 let g:loaded_ctags = 1
-let g:tags_cache_dir = '~/.cache/SpaceVim/tags/'
-
-function! s:update_ctags_option() abort
-  let project_root = getcwd()
-  let dir = s:FILE.unify_path(g:gtags_cache_dir) 
-        \ . s:FILE.path_to_fname(project_root)
-  let tags = filter(split(&tags, ','), 'v:val !~# ".cache/SpaceVim/tags"')
-  call add(tags, dir . '/tags')
-  let &tags = join(tags, ',')
-endfunction
-
-call SpaceVim#plugins#projectmanager#reg_callback(funcref('s:update_ctags_option'))
 
 function! ctags#update() abort
   let project_root = SpaceVim#plugins#projectmanager#current_root()
-  let dir = s:FILE.unify_path(g:gtags_cache_dir) 
+  let dir = s:FILE.unify_path(g:tags_cache_dir) 
         \ . s:FILE.path_to_fname(project_root)
   let cmd = ['ctags']
   if !isdirectory(dir)
