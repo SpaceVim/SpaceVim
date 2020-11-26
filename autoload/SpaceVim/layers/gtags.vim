@@ -14,6 +14,7 @@ let s:FILE = SpaceVim#api#import('file')
 
 let s:gtagslabel = ''
 let s:auto_update = 1
+let g:tags_cache_dir = '~/.cache/SpaceVim/tags/'
 
 function! SpaceVim#layers#gtags#plugins() abort
   return [
@@ -49,7 +50,7 @@ function! SpaceVim#layers#gtags#set_variable(var) abort
         \ '')
   let g:tags_cache_dir = get(a:var,
         \ 'tags_cache_dir',
-        \ '')
+        \ g:tags_cache_dir)
 
   let s:auto_update = get(a:var,
         \ 'auto_update',
