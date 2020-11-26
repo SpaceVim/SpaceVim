@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim gtags layer"
-description: "This layer provide gtags manager for project"
+description: "This layer provides gtags manager for project"
 redirect_from: "/layers/tags/"
 ---
 
@@ -26,7 +26,7 @@ redirect_from: "/layers/tags/"
 
 ## Description
 
-This layer provide tags manager for project. This layer need `core` layer's project manager feature.
+This layer provides tags manager for project.
 
 ## Features
 
