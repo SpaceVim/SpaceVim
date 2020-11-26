@@ -14,7 +14,7 @@ let s:gtagslabel = ''
 
 function! SpaceVim#layers#gtags#plugins() abort
   return [
-        \ ['SpaceVim/gtags.vim', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/gtags.vim', { 'merged' : 0}]
         \ ]
 endfunction
 
