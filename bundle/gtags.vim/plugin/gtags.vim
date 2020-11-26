@@ -5,9 +5,6 @@
 
 scriptencoding utf-8
 
-let g:gtags_cache_dir = '~/.cache/SpaceVim/tags/'
-
-
 let g:gtags_gtagslabel = ''
 
 if !exists('g:gtags_auto_update')
