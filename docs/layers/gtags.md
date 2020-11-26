@@ -43,20 +43,25 @@ this layer can be used to generate and update tags database automatically.
 
 ## Installation
 
-To use gtags layer, you first have to install [GNU Global](https://www.gnu.org/software/global/download.html).
-
+To use `gtags` layer, you first have to install [GNU Global](https://www.gnu.org/software/global/download.html).
 You can install global from the software repository of your OS or built from source.
 
-install on Ubuntu:
+**Install on Ubuntu:**
 
-```sh
+```
 sudo apt-get install global
 ```
 
-Install on OSX using Homebrew:
+**Install on OSX using Homebrew:**
 
-```sh
+```
 brew install global
+```
+
+**Install on windows using [scoop](https://scoop.sh/):**
+
+```
+scoop install global
 ```
 
 **Build from source:**
@@ -64,7 +69,7 @@ brew install global
 To take full advantage of global you should install 2 extra packages in addition to global:
 pygments and ctags (exuberant). 
 
-Download the latest tar.gz archive, then run these commands:
+Download the latest [tar.gz](http://tamacom.com/global/global-6.6.5.tar.gz) archive, then run these commands:
 
 ```sh
 tar xvf global-6.5.3.tar.gz
