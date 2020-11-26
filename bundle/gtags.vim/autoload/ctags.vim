@@ -24,7 +24,7 @@ let s:FILE = SpaceVim#api#import('file')
 let g:loaded_ctags = 1
 
 function! ctags#update() abort
-  let project_root = SpaceVim#plugins#projectmanager#current_root()
+  let project_root = getcwd()
   let dir = s:FILE.unify_path(g:tags_cache_dir) 
         \ . s:FILE.path_to_fname(project_root)
   let cmd = ['ctags']
@@ -38,7 +38,7 @@ function! ctags#update() abort
 endfunction
 
 function! s:on_update_exit(...) abort
-  if str2nr(a:2) > 0 && !g:gtags_silent
+  if str2nr(a:2) > 0
     call s:LOGGER.warn('failed to update gtags, exit data: ' . a:2)
   endif
 endfunction

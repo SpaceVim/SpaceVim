@@ -448,7 +448,7 @@ endfunction
 
 
 function! gtags#update(single_update) abort
-  let dir = s:FILE.unify_path(g:gtags_cache_dir) 
+  let dir = s:FILE.unify_path(g:tags_cache_dir) 
         \ . s:FILE.path_to_fname(SpaceVim#plugins#projectmanager#current_root())
   let cmd = ['gtags']
   if !empty(g:gtags_gtagslabel)
