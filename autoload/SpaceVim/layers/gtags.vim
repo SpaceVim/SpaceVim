@@ -13,11 +13,11 @@ endif
 let s:FILE = SpaceVim#api#import('file')
 
 let s:gtagslabel = ''
+let s:auto_update = 1
 
 function! SpaceVim#layers#gtags#plugins() abort
   return [
-        \ [g:_spacevim_root_dir . 'bundle/gtags.vim', { 'merged' : 0}],
-        \ [g:_spacevim_root_dir . 'bundle/ctags.vim', { 'merged' : 0}]
+        \ [g:_spacevim_root_dir . 'bundle/gtags.vim', { 'merged' : 0}]
         \ ]
 endfunction
 
@@ -33,6 +33,13 @@ function! SpaceVim#layers#gtags#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'f'], 'Gtags -f %', 'list of objects', 1)
   let g:gtags_gtagslabel = s:gtagslabel
   call SpaceVim#plugins#projectmanager#reg_callback(funcref('s:update_ctags_option'))
+  if s:auto_update
+    augroup spacevim_layer_gtags
+      autocmd!
+      au BufWritePost * call ctags#update()
+      au BufWritePost * call gtags#update(1)
+    augroup END
+  endif
 endfunction
 
 function! SpaceVim#layers#gtags#set_variable(var) abort
@@ -43,6 +50,10 @@ function! SpaceVim#layers#gtags#set_variable(var) abort
   let g:tags_cache_dir = get(a:var,
         \ 'tags_cache_dir',
         \ '')
+
+  let s:auto_update = get(a:var,
+        \ 'auto_update',
+        \ s:auto_update)
 endfunction
 
 

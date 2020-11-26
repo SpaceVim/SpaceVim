@@ -11,22 +11,19 @@ redirect_from: "/layers/tags/"
 - [Description](#description)
 - [Features](#features)
 - [Installation](#installation)
-  - [GNU Global](#gnu-global)
-  - [Layers](#layers)
 - [Configuration](#configuration)
-- [Usage](#usage)
-  - [Language Support](#language-support)
-    - [Built-in languages](#built-in-languages)
-    - [Exuberant ctags languages](#exuberant-ctags-languages)
-    - [Universal ctags languages](#universal-ctags-languages)
-    - [Pygments languages](#pygments-languages)
+- [Language Support](#language-support)
+  - [Built-in languages](#built-in-languages)
+  - [Exuberant ctags languages](#exuberant-ctags-languages)
+  - [Universal ctags languages](#universal-ctags-languages)
+  - [Pygments languages](#pygments-languages)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
 ## Description
 
-This layer provides tags manager for project.
+`gtags` layer provides tags management for SpaceVim, this layer is not loaded by default.
 
 ## Features
 
@@ -45,8 +42,6 @@ This layer provides tags manager for project.
 - Jump to a file in tag database
 
 ## Installation
-
-### GNU Global
 
 To use gtags layer, you first have to install [GNU Global](https://www.gnu.org/software/global/download.html).
 
@@ -94,7 +89,7 @@ sudo make install
 Configure your environment to use pygments and ctags:
 
 To be able to use pygments and ctags, you need to copy the sample gtags.conf either
-to /etc/gtags.conf or $HOME/.globalrc. For example:
+to /etc/gtags.conf or \$HOME/.globalrc. For example:
 
 ```sh
 cp gtags.conf ~/.globalrc
@@ -106,38 +101,24 @@ Additionally you should define GTAGSLABEL in your shell startup file e.g. with s
 echo export GTAGSLABEL=pygments >> ~/.profile
 ```
 
-### Layers
-
-To use this configuration layer, update custom configuration file with:
-
-```toml
-[[layers]]
-  name = "gtags"
-```
-
 ## Configuration
 
 gtags layer provides following options:
 
 - `gtagslabel`: the backend of gtags command, you can use `ctags` or `pygments`. It is empty string by default.
+  for example, to use pygments as backend:
 
-for example, to use pygments as backend:
+  ```toml
+  [[layers]]
+    name = "gtags"
+    gtagslabel = "pygments"
+  ```
 
-```toml
-[[layers]]
-  name = "gtags"
-  gtagslabel = "pygments"
-```
+- `auto_update`: Update gtags/ctags database automatically when save a file. Default is `true`.
 
+## Language Support
 
-## Usage
-
-Before using the gtags, remember to create a GTAGS database by `SPC m g c`.
-The database will also be updated automatically when saving files.
-
-### Language Support
-
-#### Built-in languages
+### Built-in languages
 
 If you do not have `ctags` or `pygments` enabled gtags will only produce tags for the following languages:
 
@@ -147,7 +128,7 @@ If you do not have `ctags` or `pygments` enabled gtags will only produce tags fo
 - php
 - yacc
 
-#### Exuberant ctags languages
+### Exuberant ctags languages
 
 If you have enabled `exuberant ctags` and use that as the backend
 the following additional languages will have tags created for them:
@@ -165,7 +146,7 @@ the following additional languages will have tags created for them:
 - vimscript
 - windows-scripts (.bat .cmd files)
 
-#### Universal ctags languages
+### Universal ctags languages
 
 Instead, If you have installed the newer/beta [universal ctags](https://github.com/universal-ctags/ctags)
 and use that as the backend the following additional languages will have tags created for them:
@@ -175,7 +156,7 @@ and use that as the backend the following additional languages will have tags cr
 - go
 - rust
 
-#### Pygments languages
+### Pygments languages
 
 In order to look up symbol references for any language not in the built in parser you must use the pygments backend.
 When this backend is used global actually uses both ctags and pygments to find the definitions
@@ -195,10 +176,10 @@ the following additional languages will have tags created for them:
 
 ## Key bindings
 
-| Key Binding | Description                                               |
-| ----------- | --------------------------------------------------------- |
-| `SPC m g c` | create a tag database                                     |
-| `SPC m g u` | manually update tag database                              |
-| `SPC m g f` | jump to a file in tag database                            |
-| `SPC m g d` | find definitions                                          |
-| `SPC m g r` | find references                                           |
+| Key Binding | Description                    |
+| ----------- | ------------------------------ |
+| `SPC m g c` | create a tag database          |
+| `SPC m g u` | manually update tag database   |
+| `SPC m g f` | jump to a file in tag database |
+| `SPC m g d` | find definitions               |
+| `SPC m g r` | find references                |

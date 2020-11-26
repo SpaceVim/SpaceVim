@@ -150,13 +150,3 @@ command! -nargs=0 GtagsRemind call gtags#remind()
 " Update gtags for current file, with a {bang}, will update the project's
 " gtags database.
 command! -nargs=0 -bang GtagsGenerate call gtags#update(<bang>1)
-
-if g:gtags_auto_update == 1
-    augroup gtags_core
-        autocmd!
-        au BufWritePost * call gtags#update(1)
-    augroup END
-endif
-
-
-
