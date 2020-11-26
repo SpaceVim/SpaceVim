@@ -12,7 +12,6 @@ endif
 
 let s:FILE = SpaceVim#api#import('file')
 
-
 let s:gtagslabel = ''
 
 function! SpaceVim#layers#gtags#plugins() abort
