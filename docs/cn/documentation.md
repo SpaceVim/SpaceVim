@@ -1285,6 +1285,7 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 | `SPC f T`            | 打开文件树侧栏                                         |
 | `SPC f d`            | Windows 下显示/隐藏磁盘管理器                          |
 | `SPC f y`            | 复制并显示当前文件的绝对路径                           |
+| `SPC f Y`            | 复制并显示当前文件的远程路径                           |
 
 **注意：** 如果你使用的是 Window 系统，那么你需要额外 [findutils](https://www.gnu.org/software/findutils/)
 或者 [fd](https://github.com/sharkdp/fd)。
