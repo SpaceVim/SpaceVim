@@ -28,6 +28,9 @@ and usage.
 
 ### Where is my old vim configuration?
 
+In Linux/MacOS, the old vim configuration file `~/.vimrc` will be renamed to `~/.vimrc_back`,
+and the directory `~/.vim` also will be renamed to `~/.vim_back`.
+
 ## Configuration
 
 ### Can I try SpaceVim without overwriting my vimrc?
