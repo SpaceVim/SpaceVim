@@ -1069,10 +1069,10 @@ Text insertion commands (start with `i`):
 
 Key bindings available in visual mode:
 
-| Key bindings | Descriptions                                                          |
-| ------------ | --------------------------------------------------------------------- |
-| `v`          | expand visual selection of text to larger region                      |
-| `V`          | shrink visual selection of text to smaller region                     |
+| Key bindings | Descriptions                                      |
+| ------------ | ------------------------------------------------- |
+| `v`          | expand visual selection of text to larger region  |
+| `V`          | shrink visual selection of text to smaller region |
 
 #### Increase/Decrease numbers
 
@@ -1355,6 +1355,7 @@ Files manipulation commands (start with f):
 | `SPC f T`    | show file tree side bar                                                 |
 | `SPC f d`    | toggle disk manager in Windows OS                                       |
 | `SPC f y`    | show and copy current file absolute path in the cmdline                 |
+| `SPC f Y`    | show and copy remote url of current file                                |
 
 **NOTE:** If you are using window, you need to install [findutils](https://www.gnu.org/software/findutils/) or [fd](https://github.com/sharkdp/fd).
 If you are using [scoop](https://github.com/lukesampson/scoop) to install packages, the commands in `C:\WINDOWS\system32` will override User path.
