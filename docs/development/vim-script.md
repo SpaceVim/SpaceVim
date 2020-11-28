@@ -15,6 +15,7 @@
   - [for loop](#for-loop)
   - [while loop](#while-loop)
 - [Functions](#functions)
+  - [return statement](#return-statement)
 
 <!-- vim-markdown-toc -->
 
@@ -88,3 +89,26 @@ endfunction
 ```
 
 use `:call TestHello()` to run a function.
+
+### return statement
+
+Within a function, we can use return statement to return a variable.
+if the return statement is prepended. `0` is returned.
+
+```vim
+function! Test() abort
+    return 'hello'
+endfunction
+
+echo Test()
+
+" hello
+
+function! Test() abort
+    
+endfunction
+
+echo Test()
+
+" 0
+```
