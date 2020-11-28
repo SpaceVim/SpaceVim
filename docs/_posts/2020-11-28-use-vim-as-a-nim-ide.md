@@ -75,9 +75,8 @@ And the stdout will be shown on a runner buffer.
 
 ![nim-repl](https://user-images.githubusercontent.com/13142418/95341519-f1f91580-08e8-11eb-9280-04f89875dc78.png)
 
-`lang#nim` layer provides key bindings for REPL support of nim language.
-You can Start a `nim` inferior REPL process with `SPC l s i`. After REPL process started,
-you can send code to `nim` process via key bindings:
+You can Start a `inim` inferior REPL process with `SPC l s i`. After REPL process started,
+you can send code to `inim` process via key bindings:
 
 | Key Bindings | Descriptions                                     |
 | ------------ | ------------------------------------------------ |
