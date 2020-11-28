@@ -8,7 +8,7 @@
   - [Basic syntax](#basic-syntax)
   - [Comments](#comments)
 - [Variables](#variables)
-  - [Variables Scope](#variables-scope)
+  - [Variable Scope](#variable-scope)
 - [Data Types](#data-types)
 - [Operators](#operators)
 
@@ -26,7 +26,23 @@ Vim script is the built-in language used in Vim/Neovim editors.
 
 ## Variables
 
-### Variables Scope
+Variables are "containers" for storing information. In vim script, a variable starts with the scoop,
+followed by the name of this variable.
+
+```
+let g:foo = 'hello world'
+```
+
+### Variable Scope
+
+In vim script, there are 6 kinds of variable scopes:
+
+1. `g:` global variable scope
+2. `s:` local to script
+3. `l:` local to function, it can be prepended.
+4. `w:` local to window
+5. `t:` local to tab
+6. `b:` local to buffer
 
 ## Data Types
 
