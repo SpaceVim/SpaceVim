@@ -66,7 +66,7 @@ with this configuration, you can jump between the source code and test file via 
 
 ### code running
 
-The default code running key binding is `SPC l r`. It will run `nim -M current_file` asynchronously.
+The key binding for running current file is `SPC l r `, it will run `nim c -r current_file` asynchronously.
 And the stdout will be shown on a runner buffer.
 
 ![nim-runner](https://user-images.githubusercontent.com/13142418/95334765-1a7d1180-08e1-11eb-8c78-9a87d61d3d63.png)
