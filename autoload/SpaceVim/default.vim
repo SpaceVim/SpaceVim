@@ -96,9 +96,9 @@ function! SpaceVim#default#options() abort
   if finddir(g:conf_dir) ==# ''
     silent call mkdir(g:conf_dir, 'p', 0700)
   endif
-  execute 'set undodir='.g:undo_dir
-  execute 'set backupdir='.g:backup_dir
-  execute 'set directory='.g:swap_dir
+  let &undodir = g:undo_dir
+  let &backupdir = g:backup_dir
+  let &directory = g:swap_dir
   unlet g:data_dir
   unlet g:backup_dir
   unlet g:swap_dir
@@ -155,7 +155,7 @@ endfunction
 
 function! SpaceVim#default#keyBindings() abort
   if g:spacevim_enable_insert_leader
-    inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
+    " inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
   endif
 
   " yank and paste

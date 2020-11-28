@@ -44,6 +44,7 @@ lang: zh
     - [增加或减小数字](#增加或减小数字)
     - [复制粘贴](#复制粘贴)
     - [增删注释](#增删注释)
+    - [编辑历史](#编辑历史)
     - [文本编码格式](#文本编码格式)
   - [窗口管理](#窗口管理)
     - [常用编辑器窗口](#常用编辑器窗口)
@@ -81,9 +82,9 @@ lang: zh
     - [自定义跳转文件](#自定义跳转文件)
   - [标签管理](#标签管理)
   - [任务管理](#任务管理)
+    - [自定义任务](#自定义任务)
     - [任务自动识别](#任务自动识别)
     - [任务提供源](#任务提供源)
-    - [自定义任务](#自定义任务)
   - [Iedit 多光标编辑](#iedit-多光标编辑)
     - [Iedit 快捷键](#iedit-快捷键)
   - [高亮光标下变量](#高亮光标下变量)
@@ -294,7 +295,7 @@ SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以�
 
 ```vim
 function! myspacevim#before() abort
-    let g:neomake_enabled_c_makers = ['clang']
+    let g:neomake_c_enabled_makers = ['clang']
     nnoremap jk <esc>
 endfunction
 
@@ -1027,13 +1028,14 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 否则，这个快捷键使用的寄存器是 `*`，
 可以阅读 `:h registers` 获取更多关于寄存器相关的内容。
 
-| 快捷键       | 功能描述                     |
-| ------------ | ---------------------------- |
-| `<Leader> y` | 复制文本至系统剪切板         |
-| `<Leader> p` | 粘贴系统剪切板文字至当前位置 |
-| `<Leader> Y` | 复制文本至 pastebin          |
+| 快捷键       | 功能描述                         |
+| ------------ | -------------------------------- |
+| `<Leader> y` | 复制文本至系统剪切板             |
+| `<Leader> p` | 粘贴系统剪切板文字至当前位置之后 |
+| `<Leader> P` | 粘贴系统剪切板文字至当前位置之前 |
+| `<Leader> Y` | 复制文本至 pastebin              |
 
-快捷键 `<Leader< Y` 将把选中的文本复制到 pastebin 服务器，并且将返回的链接复制到系统剪切板。
+快捷键 `<Leader> Y` 将把选中的文本复制到 pastebin 服务器，并且将返回的链接复制到系统剪切板。
 使用该功能，需要系统里有 `curl` 可执行程序（Windows 系统下，Neovim 自带 `curl`）。
 
 按下快捷键 `<Leader> Y` 后，实际执行的命令为：
@@ -1073,6 +1075,38 @@ echo "selected text" | curl -s -F "content=<-" http://dpaste.com/api/v2/
 
 用 `SPC ;` 可以启动一个注释操作符模式，在该模式下，可以使用移动命令确认注释的范围，
 比如 `SPC ; 4 j`，这个组合键会注释当前行以及下方的 4 行。这个数字即为相对行号，可在左侧看到。
+
+#### 编辑历史
+
+当前文件的编辑历史，可以使用快捷键 `F7` 查看，默认会在左侧打开一个编辑历史可视化窗口。
+若当前编辑器支持 `+python` 或者 `+python3`，则会使用 mundo 作为默认插件，否则则使用
+undotree。
+
+在编辑历史窗口内的快捷键如下：
+
+| 快捷键          | 功能描述            |
+| --------------- | ------------------- |
+| `G`             | move_bottom         |
+| `J`             | move_older_write    |
+| `K`             | move_newer_write    |
+| `N`             | previous_match      |
+| `P`             | play_to             |
+| `<2-LeftMouse>` | mouse_click         |
+| `/`             | search              |
+| `<CR>`          | preview             |
+| `d`             | diff                |
+| `<down>`        | move_older          |
+| `<up>`          | move_newer          |
+| `i`             | toggle_inline       |
+| `j`             | move_older          |
+| `k`             | move_newer          |
+| `n`             | next_match          |
+| `o`             | preview             |
+| `p`             | diff_current_buffer |
+| `q`             | quit                |
+| `r`             | diff                |
+| `gg`            | move_top            |
+| `?`             | toggle_help         |
 
 #### 文本编码格式
 
@@ -1232,7 +1266,7 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 
 | 快捷键               | 功能描述                                               |
 | -------------------- | ------------------------------------------------------ |
-| `SPC f /`            | 使用 `find` 命令查找文件，支持参数提示                 |
+| `SPC f /`            | 使用 `find` 或者 `fd` 命令查找文件，支持参数提示                 |
 | `SPC f b`            | 跳至文件书签                                           |
 | `SPC f c`            | copy current file to a different location(TODO)        |
 | `SPC f C d`          | 修改文件编码 unix -> dos                               |
@@ -1251,11 +1285,18 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 | `SPC f T`            | 打开文件树侧栏                                         |
 | `SPC f d`            | Windows 下显示/隐藏磁盘管理器                          |
 | `SPC f y`            | 复制并显示当前文件的绝对路径                           |
+| `SPC f Y`            | 复制并显示当前文件的远程路径                           |
 
 **注意：** 如果你使用的是 Window 系统，那么你需要额外 [findutils](https://www.gnu.org/software/findutils/)
 或者 [fd](https://github.com/sharkdp/fd)。
 如果是使用 [scoop](https://github.com/lukesampson/scoop) 安装的这些工具，系统默认的 `C:\WINDOWS\system32` 中的命令会覆盖掉用户定义的 `$PATH`，
 解决方案是将 scoop 默认的可执行文件所在的文件夹放置在系统环境变量 `$PATH` 内 `C:\WINDOWS\system32` 的前方。
+
+
+按下 `SPC f /` 快捷键之后，会弹出搜索输入窗口，输入内容后回车，异步执行 `find` 或者 `fd` 命令，
+默认使用的是 `find` 命令，可以使用快捷键 `ctrl-e` 在不同工具之间切换。
+
+![find](https://user-images.githubusercontent.com/13142418/97999590-79717000-1e26-11eb-91b1-458ab30d6254.gif)
 
 #### Vim 和 SpaceVim 相关文件
 
@@ -1272,7 +1313,7 @@ SpaceVim 相关的快捷键均以 `SPC f v` 为前缀，这便于快速访问 Sp
 
 **可用的插件**
 
-可通过快捷键 `<leader> l p` 列出所有已安装的插件，支持模糊搜索，回车将使用浏览器打开该插件的官网。
+可通过快捷键 `<Leader> f p` 列出所有已安装的插件，支持模糊搜索，回车将使用浏览器打开该插件的官网。
 
 ### 模糊搜索
 
@@ -1566,18 +1607,22 @@ endfunction
 
 Flygrep 搜索窗口结果窗口内的常用快捷键：
 
-| 快捷键              | 功能描述               |
-| ------------------- | ---------------------- |
-| `<Esc>`             | 关闭搜索窗口           |
-| `<Enter>`           | 打开当前选中的文件位置 |
-| `<Tab>`             | 选中下一行文件位置     |
-| `Shift-<Tab>`       | 选中上一行文件位置     |
-| `<Backspace>`       | 删除上一个输入字符     |
-| `Ctrl-w`            | 删除光标前的单词       |
-| `Ctrl-u`            | 删除光标前所有内容     |
-| `Ctrl-k`            | 删除光标后所有内容     |
-| `Ctrl-a` / `<Home>` | 将光标移至行首         |
-| `Ctrl-e` / `<End>`  | 将光标移至行尾         |
+| 快捷键              | 功能描述                  |
+| ------------------- | ------------------------- |
+| `<Esc>`             | 关闭搜索窗口              |
+| `<Enter>`           | 打开当前选中的文件位置    |
+| `Ctrl-t`            | 在新标签栏打开选中项      |
+| `Ctrl-s`            | 在分屏打开选中项          |
+| `Ctrl-v`            | 在垂直分屏打开选中项      |
+| `Ctrl-q`            | 将搜索结果转移至 quickfix |
+| `<Tab>`             | 选中下一行文件位置        |
+| `Shift-<Tab>`       | 选中上一行文件位置        |
+| `<Backspace>`       | 删除上一个输入字符        |
+| `Ctrl-w`            | 删除光标前的单词          |
+| `Ctrl-u`            | 删除光标前所有内容        |
+| `Ctrl-k`            | 删除光标后所有内容        |
+| `Ctrl-a` / `<Home>` | 将光标移至行首            |
+| `Ctrl-e` / `<End>`  | 将光标移至行尾            |
 
 #### 保持高亮
 
@@ -1814,6 +1859,18 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 | `SPC p k` | 关闭当前工程的所有缓冲区 |
 | `SPC p p` | 显示所有工程             |
 
+`SPC p p` 将会列出最近使用的项目清单，默认会显示最多 20 个，
+这一数量可以使用 `projects_cache_num` 来修改。
+
+为了可以夸 Vim 进程读取历史打开的项目信息，这一功能使用了缓存机制。
+如果需要禁用这一缓存功能，可以将 `enable_projects_cache` 设为 `false`。
+
+```toml
+[options]
+    enable_projects_cache = true
+    projects_cache_num = 20
+```
+
 #### 自定义跳转文件
 
 若要实现自定义文件跳转功能，需要在项目根目录新建一个 `.project_alt.json` 文件，
@@ -1862,12 +1919,80 @@ endfunction
 ### 任务管理
 
 通过内置的任务管理系统，可以快速集成外部命令工具，类似于 vscode 的任务管理系统，
-支持项目局部配置文件(`.SpaceVim.d/tasks.toml`)和全局配置文件(`~/.SpaceVim.d/tasks.toml`)，项目局部配置文件具有更高的优先权：
+在 SpaceVim 中，目前支持的任务配置文件包括两种：
+
+- `~/.SpaceVim.d/tasks.toml`：全局配置文件
+- `.SpaceVim.d/tasks.toml`：项目局部配置文件
+
+全局配置中定义的任务，默认会被项目局部配置文件中定义的任务覆盖掉。
 
 | 快捷键      | 功能描述         |
 | ----------- | ---------------- |
 | `SPC p t e` | 编辑任务配置文件 |
 | `SPC p t r` | 选定任务并执行   |
+| `SPC p t l` | 列出所有任务     |
+
+![task_manager](https://user-images.githubusercontent.com/13142418/94822603-69d0c700-0435-11eb-95a7-b0b4fef91be5.png)
+
+#### 自定义任务
+
+以下为一个简单的任务配置示例，异步运行 `echo hello world`，并将结果打印至输出窗口。
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+```
+
+![task hello world](https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
+
+对于不需要打印输出结果，后台运行的任务，可以设置 `isBackground` 为 `true`:
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+    isBackground = true
+```
+
+任务的配置，可以设置如下关键字：
+
+- **command**: 需要运行的命令。
+- **args**: 传递给命令的参数，值为字符串数组
+- **options**: 设置命令运行的一些选项，比如 `cwd`,`env` 或者 `shell`。
+- **isBackground**: 可设定的值为 `true` 或者 `false`， 默认是 `false`，
+  设置是否需要后台运行任务
+- **description**: 关于该任务的一段简短介绍
+
+当启动一个任务时，默认会关闭前一个任务，如果需要让任务一直保持后台运行，
+可以将 `isBackground` 设为 `true`。
+
+在编辑任务配置文件时，可以使用一些预设定的变量，以下列出目前已经支持的预设定变量：
+
+- **\${workspaceFolder}**: - 当前项目的根目录；
+- **\${workspaceFolderBasename}**: - 当前项目根目录所在父目录的文件夹名称；
+- **\${file}**: - 当前文件的绝对路径；
+- **\${relativeFile}**: - 当前文件相对项目根目录的相对路径；
+- **\${relativeFileDirname}**: - 当前文件所在的文件夹相对项目根目录的相对路径；
+- **\${fileBasename}**: - 当前文件的文件名
+- **\${fileBasenameNoExtension}**: - 当前文件的文件名，不包括后缀名
+- **\${fileDirname}**: - 当前文件所在的目录的绝对路径
+- **\${fileExtname}**: - 当前文件的后缀名
+- **\${lineNumber}**: - 光标所在行号
+
+例如：假定目前正在编辑文件 `/home/your-username/your-project/folder/file.ext` ，光标位于第十行；
+该文件所在的项目根目录为 `/home/your-username/your-project`，那么任务系统的预设定变量的值为：
+
+- **\${workspaceFolder}**: - `/home/your-username/your-project/`
+- **\${workspaceFolderBasename}**: - `your-project`
+- **\${file}**: - `/home/your-username/your-project/folder/file.ext`
+- **\${relativeFile}**: - `folder/file.ext`
+- **\${relativeFileDirname}**: - `folder/`
+- **\${fileBasename}**: - `file.ext`
+- **\${fileBasenameNoExtension}**: - `file`
+- **\${fileDirname}**: - `/home/your-username/your-project/folder/`
+- **\${fileExtname}**: - `.ext`
+- **\${lineNumber}**: - `10`
 
 #### 任务自动识别
 
@@ -1919,60 +2044,6 @@ call SpaceVim#plugins#tasks#reg_provider(funcref('s:make_tasks'))
 
 ![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
 
-#### 自定义任务
-
-以下为一个简单的任务配置示例，异步运行 `echo hello world`，并将结果打印至输出窗口。
-
-```toml
-[my-task]
-    command = 'echo'
-    args = ['hello world']
-```
-
-![task hello world](https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
-
-对于不需要打印输出结果，后台运行的任务，可以设置 `isBackground` 为 `true`:
-
-```toml
-[my-task]
-    command = 'echo'
-    args = ['hello world']
-    isBackground = true
-```
-
-任务的配置，可以设置如下关键字：
-
-- **command**: 需要运行的命令。
-- **args**: 传递给命令的参数，可以省略。
-- **options**: 设置命令运行的一些选项，比如 `cwd`,`env` 或者 `shell`。
-
-在编辑任务配置文件时，可以使用一些预设定的变量，以下列出目前已经支持的预设定变量：
-
-- **\${workspaceFolder}**: - 当前项目的根目录；
-- **\${workspaceFolderBasename}**: - 当前项目根目录所在父目录的文件夹名称；
-- **\${file}**: - 当前文件的绝对路径；
-- **\${relativeFile}**: - 当前文件相对项目根目录的相对路径；
-- **\${relativeFileDirname}**: - 当前文件所在的文件夹相对项目根目录的相对路径；
-- **\${fileBasename}**: - 当前文件的文件名
-- **\${fileBasenameNoExtension}**: - 当前文件的文件名，不包括后缀名
-- **\${fileDirname}**: - 当前文件所在的目录的绝对路径
-- **\${fileExtname}**: - 当前文件的后缀名
-- **\${lineNumber}**: - 光标所在行号
-
-例如：假定目前正在编辑文件 `/home/your-username/your-project/folder/file.ext` ，光标位于第十行；
-该文件所在的项目根目录为 `/home/your-username/your-project`，那么任务系统的预设定变量的值为：
-
-- **\${workspaceFolder}**: - `/home/your-username/your-project/`
-- **\${workspaceFolderBasename}**: - `your-project`
-- **\${file}**: - `/home/your-username/your-project/folder/file.ext`
-- **\${relativeFile}**: - `folder/file.ext`
-- **\${relativeFileDirname}**: - `folder/`
-- **\${fileBasename}**: - `file.ext`
-- **\${fileBasenameNoExtension}**: - `file`
-- **\${fileDirname}**: - `/home/your-username/your-project/folder/`
-- **\${fileExtname}**: - `.ext`
-- **\${lineNumber}**: - `10`
-
 ### Iedit 多光标编辑
 
 SpaceVim 内置了 iedit 多光标模式，可快速进行多光标编辑。这一功能引入了两个新的模式：`iedit-Normal` 模式和 `iedit-Insert`。
@@ -2013,6 +2084,7 @@ SpaceVim 内置了 iedit 多光标模式，可快速进行多光标编辑。这�
 | `X`             | 删除所有 occurrences 中光标前的字符，类似于一般模式下的 `X`                            |
 | `gg`            | 跳至第一个 occurrence，类似于一般模式下的 `gg`                                         |
 | `G`             | 跳至最后一个 occurrence，类似于一般模式下的 `G`                                        |
+| `f{char}`       | 向右移动光标至字符 `{char}` 首次出现的位置                                             |
 | `n`             | 跳至下一个 occurrence                                                                  |
 | `N`             | 跳至上一个 occurrence                                                                  |
 | `p`             | 替换所有 occurrences 为最后复制的文本                                                  |

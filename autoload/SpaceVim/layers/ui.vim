@@ -7,6 +7,15 @@
 "=============================================================================
 
 scriptencoding utf-8
+
+if exists('s:enable_sidebar')
+  finish
+else
+  let s:enable_sidebar = 0
+  let s:enable_scrollbar = 0
+  let s:enable_indentline = 1
+endif
+
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
         \ [g:_spacevim_root_dir . 'bundle/indentLine', {'merged' : 0}],
@@ -36,7 +45,9 @@ function! SpaceVim#layers#ui#config() abort
   let g:indentLine_char = get(g:, 'indentLine_char', '┊')
   let g:indentLine_concealcursor = 'niv'
   let g:indentLine_conceallevel = 2
-  let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler', 'json']
+  let g:indentLine_enabled = s:enable_indentline
+  let g:indentLine_fileTypeExclude = get(g:, 'indentLine_fileTypeExclude', [])
+  let g:indentLine_fileTypeExclude += ['help', 'man', 'startify', 'vimfiler', 'json']
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
         \ 'qf', 'help', 'markdown', 'leaderGuide',
         \ 'startify'
@@ -48,6 +59,19 @@ function! SpaceVim#layers#ui#config() abort
     noremap <silent> <F2> :call SpaceVim#plugins#sidebar#toggle()<CR>
   else
     noremap <silent> <F2> :TagbarToggle<CR>
+  endif
+
+  " this options only support neovim now.
+  if s:enable_scrollbar && has('nvim')
+    augroup spacevim_layer_ui
+      autocmd!
+      autocmd BufEnter,CursorMoved,VimResized,FocusGained    * call SpaceVim#plugins#scrollbar#show()
+      autocmd BufLeave,FocusLost,QuitPre    * call SpaceVim#plugins#scrollbar#clear()
+      " why this autocmd is needed?
+      "
+      " because the startify use noautocmd enew
+      autocmd User Startified call s:clear_previous_scrollbar()
+    augroup end
   endif
 
   if !empty(g:spacevim_windows_smartclose)
@@ -290,7 +314,7 @@ function! s:toggle_paste() abort
   else
     echo 'paste-mode disabled.'
   endif
-  
+
 endfunction
 
 let s:whitespace_enable = 0
@@ -307,21 +331,21 @@ function! s:toggle_whitespace() abort
 endfunction
 
 function! s:toggle_conceallevel() abort
-    if &conceallevel == 0 
-        setlocal conceallevel=2
-    else
-        setlocal conceallevel=0
-    endif
+  if &conceallevel == 0 
+    setlocal conceallevel=2
+  else
+    setlocal conceallevel=0
+  endif
 endfunction
 
 function! s:toggle_background() abort
-    let s:tbg = &background
-    " Inversion
-    if s:tbg ==# 'dark'
-        set background=light
-    else
-        set background=dark
-    endif
+  let s:tbg = &background
+  " Inversion
+  if s:tbg ==# 'dark'
+    set background=light
+  else
+    set background=dark
+  endif
 endfunction
 
 
@@ -397,12 +421,21 @@ function! s:win_resize_transient_state() abort
 endfunction
 
 
-let s:enable_sidebar = 0
-
 function! SpaceVim#layers#ui#set_variable(var) abort
 
   let s:enable_sidebar = get(a:var,
         \ 'enable_sidebar',
         \ 0)
+  let s:enable_scrollbar = get(a:var,
+        \ 'enable_scrollbar',
+        \ 0)
+  let s:enable_indentline = get(a:var,
+        \ 'enable_indentline',
+        \ 1)
 
+endfunction
+
+function! s:clear_previous_scrollbar() abort
+  let bufnr = bufnr('#')
+  call SpaceVim#plugins#scrollbar#clear(bufnr)
 endfunction

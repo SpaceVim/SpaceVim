@@ -75,9 +75,9 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ }])
   elseif g:spacevim_autocomplete_method ==# 'coc'
     if executable('yarn')
-      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': 'yarn install --frozen-lockfile'}])
+      call add(plugins, ['neoclide/coc.nvim',  {'loadconf': 1, 'merged': 0, 'build': 'yarn install --frozen-lockfile'}])
     else
-      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'rev': 'release'}])
+      call add(plugins, ['neoclide/coc.nvim',  {'loadconf': 1, 'merged': 0, 'rev': 'release'}])
     endif
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete.nvim', {

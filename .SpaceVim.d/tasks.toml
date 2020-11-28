@@ -3,4 +3,3 @@
     isBackground = false
 [file-run.options]
     cwd = '${workspaceFolder}bin/'
-

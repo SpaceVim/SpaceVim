@@ -275,7 +275,7 @@ function! s:self.send(id, data) abort dict
   if self.nvim_job
     if has_key(self.jobs, a:id)
       if type(a:data) == type('')
-        call jobsend(a:id, [a:data, ''])
+        call jobsend(a:id, a:data . "\n")
       else
         call jobsend(a:id, a:data)
       endif

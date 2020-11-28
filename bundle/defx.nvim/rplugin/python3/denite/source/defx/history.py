@@ -29,7 +29,8 @@ class Source(Base):
     def gather_candidates(self, context: UserContext) -> Candidates:
         return [{
             'word': x,
-            'abbr': x + '/',
-            'action__command': f"call defx#call_action('cd', ['{x}'])",
+            'abbr': f'{source_name}:{x}/',
+            'action__command': ('call defx#call_action' +
+                                f"('cd', ['{source_name}', '{x}'])"),
             'action__path': x,
-        } for x in self._histories]
+        } for [source_name, x] in self._histories]

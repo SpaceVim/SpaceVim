@@ -48,7 +48,7 @@ lang: zh
     # 设置活动窗口状态栏上的分割符号形状
     statusline_separator = "arrow"
     # 设置非活动窗口状态栏上的分割符号形状
-    statusline_inactive_separator = "bar"
+    statusline_iseparator = "bar"
 
     # 设置顶部标签列表序号类型，有以下五种类型，分别是 0 - 4
     buffer_index_type = 4

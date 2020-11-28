@@ -282,9 +282,8 @@ function! s:file_mru() abort
     return neomru#_gather_file_candidates()
   endfunction
   call fzf#run(s:wrap('mru', {
-        \ 'source':  reverse(<sid>mru_files()),
+        \ 'source':  <sid>mru_files(),
         \ 'sink':    function('s:open_file'),
-        \ 'options': '--reverse',
         \ 'down' : '40%',
         \ }))
 endfunction

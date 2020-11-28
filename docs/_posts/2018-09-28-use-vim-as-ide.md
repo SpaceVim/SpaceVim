@@ -59,6 +59,15 @@ This is a list of patterns of filename or directory.
 the default value is `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`.
 read the [documentation](../documentation/#managing-projects) for more info.
 
+SpaceVim will change switch to project root automatically based on `project_rooter_patterns` option.
+By default it will find outermost directory by default, to find nearest directory,
+you need to change `project_rooter_outermost` to `false`.
+
+```toml
+[options]
+    project_rooter_outermost = false
+```
+
 ### Fuzzy finder
 
 SpaceVim provides 5 fuzzy finder layer, they are unite, denite, fzf, leaderf and ctrlp.

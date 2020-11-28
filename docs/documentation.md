@@ -39,9 +39,11 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Code indentation](#code-indentation)
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
+    - [Expand regions of text](#expand-regions-of-text)
     - [Increase/Decrease numbers](#increasedecrease-numbers)
     - [Copy and paste](#copy-and-paste)
     - [Commenting](#commenting)
+    - [Undo tree](#undo-tree)
     - [Multi-Encodings](#multi-encodings)
   - [Window manager](#window-manager)
     - [General Editor windows](#general-editor-windows)
@@ -80,9 +82,9 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Custom alternate file](#custom-alternate-file)
   - [Bookmarks management](#bookmarks-management)
   - [Tasks](#tasks)
+    - [Custom tasks](#custom-tasks)
     - [Task auto-detection](#task-auto-detection)
     - [Task provider](#task-provider)
-    - [Custom tasks](#custom-tasks)
   - [Replace text with iedit](#replace-text-with-iedit)
     - [iedit states key bindings](#iedit-states-key-bindings)
   - [Code runner and REPL](#code-runner-and-repl)
@@ -268,7 +270,7 @@ to the `custom_plugins` section:
 
 `on_cmd` option means this plugin will be loaded only when the following commands are called.
 
-`merged` option is used for merging plugins directory. When `merged` is `trye`, all files in
+`merged` option is used for merging plugins directory. When `merged` is `true`, all files in
 this custom plugin will be merged into `~/.cache/vimfiles/.cache/init.vim/` for neovim or
 `~/.cache/vimfiles/.cache/vimrc/` for vim.
 
@@ -309,7 +311,7 @@ with contents for example
 
 ```vim
 function! myspacevim#before() abort
-    let g:neomake_enabled_c_makers = ['clang']
+    let g:neomake_c_enabled_makers = ['clang']
     nnoremap jk <Esc>
 endfunction
 
@@ -416,7 +418,7 @@ If you found one of the built-in plugins has bugs, and you want to debug that pl
 
 ```toml
 [options]
-disabled_plugins = ["neomake.vim"]
+    disabled_plugins = ["neomake.vim"]
 ```
 
 2. Add a forked plugin or add a local plugin
@@ -655,17 +657,17 @@ If you want to contribute theme please check the template of a statusline theme.
 " group_ii: window id in iedit-insert mode
 " group_in: windows id in iedit-normal mode
 function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
-return [
-\ ['#282828', '#a89984', 246, 235],
-\ ['#a89984', '#504945', 239, 246],
-\ ['#a89984', '#3c3836', 237, 246],
-\ ['#665c54', 241],
-\ ['#282828', '#83a598', 235, 109],
-\ ['#282828', '#fe8019', 235, 208],
-\ ['#282828', '#8ec07c', 235, 108],
-\ ['#282828', '#689d6a', 235, 72],
-\ ['#282828', '#8f3f71', 235, 132],
-\ ]
+    return [
+    \ ['#282828', '#a89984', 246, 235],
+    \ ['#a89984', '#504945', 239, 246],
+    \ ['#a89984', '#3c3836', 237, 246],
+    \ ['#665c54', 241],
+    \ ['#282828', '#83a598', 235, 109],
+    \ ['#282828', '#fe8019', 235, 208],
+    \ ['#282828', '#8ec07c', 235, 108],
+    \ ['#282828', '#689d6a', 235, 72],
+    \ ['#282828', '#8f3f71', 235, 132],
+    \ ]
 endfunction
 ```
 
@@ -765,11 +767,11 @@ To change the filemanager plugin:
 
 ```toml
 [options]
-# file manager plugins supported in SpaceVim:
-# - vimfiler (default)
-# - nerdtree
-# - defx
-filemanager = "defx"
+    # file manager plugins supported in SpaceVim:
+    # - vimfiler (default)
+    # - nerdtree
+    # - defx
+    filemanager = "defx"
 ```
 
 VCS integration is supported, there will be a column status, this feature may make vimfiler slow, so it is not enabled by default.
@@ -783,7 +785,7 @@ you can use `filetree_direction` option:
 
 ```toml
 [options]
-filetree_direction = "left"
+    filetree_direction = "left"
 ```
 
 #### File tree navigation
@@ -799,11 +801,13 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<Up>` / `k`          | select previous file or directory                 |
 | `<Right>` / `l`       | open selected file or expand directory            |
 | `N`                   | Create new file under cursor                      |
+| `r`                   | Rename the file under cursor                      |
+| `d`                   | Delete the file under cursor                      |
 | `K`                   | Create new directory under cursor                 |
 | `y y`                 | Copy file full path to system clipboard           |
 | `y Y`                 | Copy file to system clipboard                     |
 | `P`                   | Paste file to the position under the cursor       |
-| `.`                   | toggle visible ignored files                      |
+| `.`                   | Toggle visible ignored files                      |
 | `s v`                 | Split edit                                        |
 | `s g`                 | Vertical split edit                               |
 | `p`                   | Preview                                           |
@@ -826,8 +830,8 @@ If only one file buffer is opened, a file is opened in the active window, otherw
 | Key Bindings    | Descriptions                              |
 | --------------- | ----------------------------------------- |
 | `l` / `<Enter>` | open file in one window                   |
-| `sg`            | open file in an vertically split window   |
-| `sv`            | open file in an horizontally split window |
+| `s g`           | open file in an vertically split window   |
+| `s v`           | open file in an horizontally split window |
 
 ## General usage
 
@@ -1061,6 +1065,15 @@ Text insertion commands (start with `i`):
 
 **Tips:** You can specify number of password characters using prefix argument, (i.e. `10 SPC i p 1` will generate 10 characters of simple password)
 
+#### Expand regions of text
+
+Key bindings available in visual mode:
+
+| Key bindings | Descriptions                                      |
+| ------------ | ------------------------------------------------- |
+| `v`          | expand visual selection of text to larger region  |
+| `V`          | shrink visual selection of text to smaller region |
+
 #### Increase/Decrease numbers
 
 | Key Bindings | Descriptions                                                        |
@@ -1083,13 +1096,14 @@ In transient state:
 If `has('unnamedplus')`, the register used by `<Leader> y` is `+`, otherwise it is `*`.
 Read `:h registers` for more info about other registers.
 
-| Key          | Action                           |
-| ------------ | -------------------------------- |
-| `<Leader> y` | Copy text to system clipboard    |
-| `<Leader> p` | Paste text from system clipboard |
-| `<Leader> Y` | Copy text to pastebin            |
+| Key          | Descriptions                                 |
+| ------------ | -------------------------------------------- |
+| `<Leader> y` | Copy text to system clipboard                |
+| `<Leader> p` | Paste text from system clipboard after here  |
+| `<Leader> P` | Paste text from system clipboard before here |
+| `<Leader> Y` | Copy text to pastebin                        |
 
-The `<Leader< Y` key binding will copy selected text to a pastebin server. It requires `curl` in your `$PATH`.
+The `<Leader> Y` key binding will copy selected text to a pastebin server. It requires `curl` in your `$PATH`.
 And the default command is:
 
 ```
@@ -1126,6 +1140,38 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 **Tips:** `SPC ;` will start operator mode, in this mode, you can use motion command to comment lines.
 For example, `SPC ; 4 j` will comment current line and the following 4 lines.
 
+#### Undo tree
+
+Undo tree visualizes undo history and makes it easier to browse and switch between different undo branches.
+The default key binding is `F7`. If `+python` or `+python3` is enabled, mundo will be loaded,
+otherwise undotree will be loaded.
+
+Key bindings within undo tree windows:
+
+| key bindings    | description         |
+| --------------- | ------------------- |
+| `G`             | move_bottom         |
+| `J`             | move_older_write    |
+| `K`             | move_newer_write    |
+| `N`             | previous_match      |
+| `P`             | play_to             |
+| `<2-LeftMouse>` | mouse_click         |
+| `/`             | search              |
+| `<CR>`          | preview             |
+| `d`             | diff                |
+| `<down>`        | move_older          |
+| `<up>`          | move_newer          |
+| `i`             | toggle_inline       |
+| `j`             | move_older          |
+| `k`             | move_newer          |
+| `n`             | next_match          |
+| `o`             | preview             |
+| `p`             | diff_current_buffer |
+| `q`             | quit                |
+| `r`             | diff                |
+| `gg`            | move_top            |
+| `?`             | toggle_help         |
+
 #### Multi-Encodings
 
 SpaceVim uses utf-8 as default encoding. There are four options for these case:
@@ -1149,7 +1195,7 @@ can change it via `windows_leader` option:
 
 ```toml
 [options]
-windows_leader = "s"
+    windows_leader = "s"
 ```
 
 | Key Bindings | Descriptions                                       |
@@ -1280,37 +1326,45 @@ Buffer manipulation commands (start with `b`):
 
 #### Special Buffers
 
-In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim itself. And these buffers are not listed.
+In SpaceVim, there are many special buffers,
+these buffers are created by plugins or SpaceVim itself.
+And these buffers are not listed.
 
 #### Files manipulations key bindings
 
 Files manipulation commands (start with f):
 
-| Key Bindings | Descriptions                                              |
-| ------------ | --------------------------------------------------------- |
-| `SPC f /`    | Find files with `find` command                            |
-| `SPC f b`    | go to file bookmarks                                      |
-| `SPC f c`    | copy current file to a different location(TODO)           |
-| `SPC f C d`  | convert file from unix to dos encoding                    |
-| `SPC f C u`  | convert file from dos to unix encoding                    |
-| `SPC f D`    | delete a file and the associated buffer with confirmation |
-| `SPC f E`    | open a file with elevated privileges (sudo layer) (TODO)  |
-| `SPC f W`    | save a file with elevated privileges (sudo layer)         |
-| `SPC f f`    | open file                                                 |
-| `SPC f F`    | try to open the file under point                          |
-| `SPC f o`    | Find current file in file tree                            |
-| `SPC f R`    | rename the current file(TODO)                             |
-| `SPC f s`    | save a file                                               |
-| `SPC f S`    | save all files                                            |
-| `SPC f r`    | open a recent file                                        |
-| `SPC f t`    | toggle file tree side bar                                 |
-| `SPC f T`    | show file tree side bar                                   |
-| `SPC f d`    | toggle disk manager in Windows OS                         |
-| `SPC f y`    | show and copy current file absolute path in the cmdline   |
+| Key Bindings | Descriptions                                                            |
+| ------------ | ----------------------------------------------------------------------- |
+| `SPC f /`    | Find files with `find` or [`fd`](https://github.com/sharkdp/fd) command |
+| `SPC f b`    | go to file bookmarks                                                    |
+| `SPC f c`    | copy current file to a different location(TODO)                         |
+| `SPC f C d`  | convert file from unix to dos encoding                                  |
+| `SPC f C u`  | convert file from dos to unix encoding                                  |
+| `SPC f D`    | delete a file and the associated buffer with confirmation               |
+| `SPC f E`    | open a file with elevated privileges (sudo layer) (TODO)                |
+| `SPC f W`    | save a file with elevated privileges (sudo layer)                       |
+| `SPC f f`    | open file                                                               |
+| `SPC f F`    | try to open the file under point                                        |
+| `SPC f o`    | Find current file in file tree                                          |
+| `SPC f R`    | rename the current file(TODO)                                           |
+| `SPC f s`    | save a file                                                             |
+| `SPC f S`    | save all files                                                          |
+| `SPC f r`    | open a recent file                                                      |
+| `SPC f t`    | toggle file tree side bar                                               |
+| `SPC f T`    | show file tree side bar                                                 |
+| `SPC f d`    | toggle disk manager in Windows OS                                       |
+| `SPC f y`    | show and copy current file absolute path in the cmdline                 |
+| `SPC f Y`    | show and copy remote url of current file                                |
 
 **NOTE:** If you are using window, you need to install [findutils](https://www.gnu.org/software/findutils/) or [fd](https://github.com/sharkdp/fd).
 If you are using [scoop](https://github.com/lukesampson/scoop) to install packages, the commands in `C:\WINDOWS\system32` will override User path.
 so you need to put the scoop binary PATH before all the windows `C:\WINDOWS\system32` PATH.
+
+After pressing `SPC f /`, the find window will be opened. It is going to run `find` or `fd` command asynchronously.
+By default, `find` is the default tool, you can use `ctrl-e` to switch tools.
+
+![find](https://user-images.githubusercontent.com/13142418/97999590-79717000-1e26-11eb-91b1-458ab30d6254.gif)
 
 #### Vim and SpaceVim files
 
@@ -1327,7 +1381,7 @@ All layers can be easily discovered via `:SPLayer -l` accessible with `SPC h l`.
 
 **Available plugins in SpaceVim**
 
-All plugins can be easily discovered via `<leader> l p`.
+All plugins can be easily discovered via `<Leader> f p`.
 
 ### Fuzzy finder
 
@@ -1365,17 +1419,17 @@ The above key bindings are only part of fuzzy finder layers, please read the lay
 
 | Feature            | denite | unite | leaderf | ctrlp | fzf |
 | ------------------ | :----: | :---: | :-----: | :---: | --- |
-| CustomKeyMaps menu |  yes   |  yes  |   no    |  no   | no  |
-| AddedPlugins menu  |  yes   |  yes  |   no    |  no   | no  |
-| register           |  yes   |  yes  |   no    |  yes  | yes |
+| CustomKeyMaps menu |  yes   |  yes  |   yes   |  no   | no  |
+| AddedPlugins menu  |  yes   |  yes  |   yes   |  no   | no  |
+| register           |  yes   |  yes  |   yes   |  yes  | yes |
 | file               |  yes   |  yes  |   yes   |  yes  | yes |
-| yank history       |  yes   |  yes  |   no    |  no   | yes |
-| jump               |  yes   |  yes  |   no    |  yes  | yes |
-| location list      |  yes   |  yes  |   no    |  no   | yes |
+| yank history       |  yes   |  yes  |   yes   |  no   | yes |
+| jump               |  yes   |  yes  |   yes   |  yes  | yes |
+| location list      |  yes   |  yes  |   yes   |  no   | yes |
 | outline            |  yes   |  yes  |   yes   |  yes  | yes |
-| message            |  yes   |  yes  |   no    |  no   | yes |
-| quickfix list      |  yes   |  yes  |   no    |  yes  | yes |
-| resume windows     |  yes   |  yes  |   no    |  no   | no  |
+| message            |  yes   |  yes  |   yes   |  no   | yes |
+| quickfix list      |  yes   |  yes  |   yes   |  yes  | yes |
+| resume windows     |  yes   |  yes  |   yes   |  no   | no  |
 
 **Key bindings within fuzzy finder buffer**
 
@@ -1402,11 +1456,18 @@ SpaceVim can be interfaced with different searching tools like:
 - [ack](https://beyondgrep.com/)
 - grep
 
-The search commands in SpaceVim are organized under the `SPC s` prefix with the next key is the tool to use and the last key is the scope. For instance, `SPC s a b` will search in all opened buffers using `ag`.
+The search commands in SpaceVim are organized under the `SPC s`
+prefix with the next key is the tool to use and the last key is the scope.
+For instance, `SPC s a b` will search in all opened buffers using `ag`.
 
-If the last key (determining the scope) is uppercase then the current word under the cursor is used as default input for the search. For instance, `SPC s a B` will search the word under cursor.
+If the last key (determining the scope) is uppercase then the
+current word under the cursor is used as default input for the search.
+For instance, `SPC s a B` will search the word under cursor.
 
-If the tool key is omitted then a default tool will be automatically selected for the search. This tool corresponds to the first tool found on the system of the list `search_tools`, the default order is `rg`, `ag`, `pt`, `ack` then `grep`. For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
+If the tool key is omitted then a default tool will be automatically selected for the search.
+This tool corresponds to the first tool found on the system of the list `search_tools`,
+the default order is `['rg', 'ag', 'pt', 'ack', 'grep', 'findstr', 'git']`.
+For instance `SPC s b` will search in the opened buffers using `pt` if `rg` and `ag` have not been found on the system.
 
 The tool keys are:
 
@@ -1561,7 +1622,8 @@ The structure of searching tool profile is:
 | `SPC s r p`  | rg                                                  |
 | `SPC s r P`  | rg with default text                                |
 
-**Hint**: It is also possible to search in a project without needing to open a file beforehand. To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
+**Hint**: It is also possible to search in a project without needing to open a file beforehand.
+To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
 
 #### Background searching in a project
 
@@ -1600,18 +1662,22 @@ Background search keyword in a project, when searching done, the count will be s
 
 Key bindings in FlyGrep buffer:
 
-| Key Bindings        | Descriptions                      |
-| ------------------- | --------------------------------- |
-| `<Esc>`             | close FlyGrep buffer              |
-| `<Enter>`           | open file at the cursor line      |
-| `<Tab>`             | move cursor line down             |
-| `Shift-<Tab>`       | move cursor line up               |
-| `<BackSpace>`       | remove last character             |
-| `Ctrl-w`            | remove the Word before the cursor |
-| `Ctrl-u`            | remove the Line before the cursor |
-| `Ctrl-k`            | remove the Line after the cursor  |
-| `Ctrl-a` / `<Home>` | Go to the beginning of the line   |
-| `Ctrl-e` / `<End>`  | Go to the end of the line         |
+| Key Bindings        | Descriptions                       |
+| ------------------- | ---------------------------------- |
+| `<Esc>`             | close FlyGrep buffer               |
+| `<Enter>`           | open file at the cursor line       |
+| `Ctrl-t`            | open item in new tab               |
+| `Ctrl-s`            | open item in split window          |
+| `Ctrl-v`            | open item in vertical split window |
+| `Ctrl-q`            | apply all items into quickfix      |
+| `<Tab>`             | move cursor line down              |
+| `Shift-<Tab>`       | move cursor line up                |
+| `<BackSpace>`       | remove last character              |
+| `Ctrl-w`            | remove the Word before the cursor  |
+| `Ctrl-u`            | remove the Line before the cursor  |
+| `Ctrl-k`            | remove the Line after the cursor   |
+| `Ctrl-a` / `<Home>` | Go to the beginning of the line    |
+| `Ctrl-e` / `<End>`  | Go to the end of the line          |
 
 #### Persistent highlighting
 
@@ -1855,6 +1921,18 @@ Project manager commands start with `p`:
 | `SPC p k`    | kill all buffers of current project      |
 | `SPC p p`    | list all projects                        |
 
+`SPC p p` will list all the projects history cross vim sessions. By default
+only 20 projects will be listed. To increase it, you can change the value
+of `projects_cache_num`.
+
+To disable the cross session cacche, change `enable_projects_cache` to `false`.
+
+```toml
+[options]
+    enable_projects_cache = true
+    projects_cache_num = 20
+```
+
 #### Custom alternate file
 
 To manager the alternate file of the project, you need to create a `.project_alt.json` file
@@ -1906,16 +1984,90 @@ endfunction
 
 To integrate with external tools, SpaceVim introduce a task manager system,
 which is similar to vscode tasks-manager. There are two kinds of task configuration
-file: global tasks configuration(`~/.SpaceVim.d/tasks.toml`) and local configuration(`.SpaceVim.d/tasks.toml`).
+file:
+
+- `~/.SpaceVim.d/tasks.toml`: global tasks configuration
+- `.SpaceVim.d/tasks.toml`: project local tasks configuration
+
+The task defined in global tasks configuration can be overrided by project local
+tasks configuration.
 
 | Key Bindings | Descriptions                  |
 | ------------ | ----------------------------- |
 | `SPC p t e`  | edit tasks configuration file |
 | `SPC p t r`  | select task to run            |
+| `SPC p t l`  | list all available tasks      |
+
+![task_manager](https://user-images.githubusercontent.com/13142418/94822603-69d0c700-0435-11eb-95a7-b0b4fef91be5.png)
+
+#### Custom tasks
+
+This is basic task configuration for running `echo hello world`,
+and print results to runner windows.
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+```
+
+![task hello world](https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
+
+To run task in the background, you need to set `isBackground` to `true`:
+
+```toml
+[my-task]
+    command = 'echo'
+    args = ['hello world']
+    isBackground = true
+```
+
+The task's properties have the following semantic:
+
+- **command**: the actual command to execute.
+- **args**: the arguments passed to the command, it shoud be an array a string list and can be omitted.
+- **options**: override the defaults for `cwd`,`env` or `shell`.
+- **isBackground**: `true` or `false`, specifies whether background running is required,
+  by default, it is `false`.
+- **description**: short description of the task
+
+When start a new task, it will kill the previous task. If you want to keep the task
+run in background, set `isBackground` to `true`.
+
+SpaceVim supports variable substitution in task, The following predefined variables are supported:
+
+- **\${workspaceFolder}**: - the project root directory
+- **\${workspaceFolderBasename}**: - the parent directory name of current project root
+- **\${file}**: - the path of current file
+- **\${relativeFile}**: - the current file relative to project root
+- **\${relativeFileDirname}**: - the current file's dirname relative to workspaceFolder
+- **\${fileBasename}**: - the current file's basename
+- **\${fileBasenameNoExtension}**: - the current file's basename without file extension
+- **\${fileDirname}**: - the current file's dirname
+- **\${fileExtname}**: - the current file's extension
+- **\${cwd}**: - the task runner's current working directory on startup
+- **\${lineNumber}**: - the current selected line number in the active file
+
+for example: Supposing that you have the following requirements:
+
+A file located at `/home/your-username/your-project/folder/file.ext` opened in your editor;
+The directory `/home/your-username/your-project` opened as your root workspace.
+So you will have the following values for each variable:
+
+- **\${workspaceFolder}**: - `/home/your-username/your-project/`
+- **\${workspaceFolderBasename}**: - `your-project`
+- **\${file}**: - `/home/your-username/your-project/folder/file.ext`
+- **\${relativeFile}**: - `folder/file.ext`
+- **\${relativeFileDirname}**: - `folder/`
+- **\${fileBasename}**: - `file.ext`
+- **\${fileBasenameNoExtension}**: - `file`
+- **\${fileDirname}**: - `/home/your-username/your-project/folder/`
+- **\${fileExtname}**: - `.ext`
+- **\${lineNumber}**: - line number of the cursor
 
 #### Task auto-detection
 
-SpaceVim currently auto-detects tasks for npm.
+Currently, SpaceVim can auto-detect tasks for npm.
 the tasks manager will paser the `package.json` file for npm systems.
 If you have cloned the [eslint-starter](https://github.com/spicydonuts/eslint-starter) example,
 then pressing `SPC p t r` shows the following list:
@@ -1965,64 +2117,6 @@ with above configuration, you will see following tasks in SpaceVim repo:
 
 ![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
 
-#### Custom tasks
-
-this is basic task configuration for running `echo hello world`, and print results to runner windows.
-
-```toml
-[my-task]
-    command = 'echo'
-    args = ['hello world']
-```
-
-![task hello world](https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
-
-To run task in the background, you need to set `isBackground` to `true`:
-
-```toml
-[my-task]
-    command = 'echo'
-    args = ['hello world']
-    isBackground = true
-```
-
-The task's properties have the following semantic:
-
-- **command**: the actual command to execute.
-- **args**: the arguments passed to the command. can be omitted.
-- **options**: override the defaults for `cwd`,`env` or `shell`.
-
-SpaceVim supports variable substitution in task, The following predefined variables are supported:
-
-- **\${workspaceFolder}**: - the project root directory
-- **\${workspaceFolderBasename}**: - the parent directory name of current project root
-- **\${file}**: - the path of current file
-- **\${relativeFile}**: - the current file relative to project root
-- **\${relativeFileDirname}**: - the current file's dirname relative to workspaceFolder
-- **\${fileBasename}**: - the current file's basename
-- **\${fileBasenameNoExtension}**: - the current file's basename without file extension
-- **\${fileDirname}**: - the current file's dirname
-- **\${fileExtname}**: - the current file's extension
-- **\${cwd}**: - the task runner's current working directory on startup
-- **\${lineNumber}**: - the current selected line number in the active file
-
-for example: Supposing that you have the following requirements:
-
-A file located at `/home/your-username/your-project/folder/file.ext` opened in your editor;
-The directory `/home/your-username/your-project` opened as your root workspace.
-So you will have the following values for each variable:
-
-- **\${workspaceFolder}**: - `/home/your-username/your-project/`
-- **\${workspaceFolderBasename}**: - `your-project`
-- **\${file}**: - `/home/your-username/your-project/folder/file.ext`
-- **\${relativeFile}**: - `folder/file.ext`
-- **\${relativeFileDirname}**: - `folder/`
-- **\${fileBasename}**: - `file.ext`
-- **\${fileBasenameNoExtension}**: - `file`
-- **\${fileDirname}**: - `/home/your-username/your-project/folder/`
-- **\${fileExtname}**: - `.ext`
-- **\${lineNumber}**: - line number of the cursor
-
 ### Replace text with iedit
 
 SpaceVim uses a powerful iedit mode to quick edit multiple occurrences of a symbol or selection.
@@ -2062,6 +2156,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 | `X`           | delete the character before cursor in all the occurrences, same as `X` in `Normal` model                                           |
 | `gg`          | go to first occurrence, same as `gg` in `Normal` model                                                                             |
 | `G`           | go to last occurrence, same as `G` in `Normal` model                                                                               |
+| `f{char}`     | Move the cursor to the right where the `{char}` first appears in all the occurrences                                               |
 | `n`           | go to next occurrence                                                                                                              |
 | `N`           | go to previous occurrence                                                                                                          |
 | `p`           | replace occurrences with last yanked (copied) text                                                                                 |

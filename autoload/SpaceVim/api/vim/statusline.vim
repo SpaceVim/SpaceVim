@@ -167,11 +167,13 @@ endfunction
 
 if s:self.__floating.exists()
   function! s:self.close_float() abort
-    call self.__floating.win_close(self.__winid, 1)
+    if get(self, '__winid', -1) != -1
+      call self.__floating.win_close(self.__winid, 1)
+    endif
   endfunction
 else
   function! s:self.close_float() abort
-    if has_key(self, '__winid') && win_id2tabwin(self.__winid)[0] == tabpagenr()
+    if get(self, '__winid', -1) != -1 && win_id2tabwin(self.__winid)[0] == tabpagenr()
       noautocmd execute win_id2win(self.__winid).'wincmd w'
       noautocmd close
     endif
