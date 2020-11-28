@@ -87,4 +87,4 @@ function! TestHello() abort
 endfunction
 ```
 
-use `:call` to run a function.
+use `:call TestHello()` to run a function.
