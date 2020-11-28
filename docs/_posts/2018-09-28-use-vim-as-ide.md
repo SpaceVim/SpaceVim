@@ -18,6 +18,7 @@ This is a general guide for using SpaceVim as IDE. including following sections:
 - [Default UI](#default-ui)
 - [project manager](#project-manager)
 - [Fuzzy finder](#fuzzy-finder)
+- [Version control integration](#version-control-integration)
 - [Files and Windows](#files-and-windows)
 - [Language support](#language-support)
 
@@ -77,6 +78,19 @@ fuzzy finder layer. for example enable denite layer:
 ```toml
 [[layers]]
     name = "denite"
+```
+
+### Version control integration
+
+The `git` layer and `VersionControl` layer provide Version control integration for SpaceVim.
+These layers are not loaded by default. To use these features, you need to enable these layers
+in your configuration file.
+
+```toml
+[[layers]]
+    name = 'git'
+[[layers]]
+    name = 'VersionControl'
 ```
 
 ### Files and Windows
