@@ -231,7 +231,10 @@ command to reinstall this plugin.
 
 ### Get SpaceVim log
 
-Use `:SPDebugInfo!` command to display the log of SpaceVim.
+The runtime log of SpaceVim can be got via key binding `SPC h L`.
+To get the debug information about current SpaceVim environment,
+Use the command `:SPDebugInfo!`. This command will open a new buffer,
+the default information will be shown in this new buffer.
 You also can use `SPC h I` to open a buffer with the
 issue template.
 
