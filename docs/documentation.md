@@ -15,6 +15,7 @@ description: "General documentation about how to using SpaceVim, including the q
 - [Update and Rollback](#update-and-rollback)
   - [Update SpaceVim itself](#update-spacevim-itself)
   - [Update plugins](#update-plugins)
+  - [Reinstall plugins](#reinstall-plugins)
   - [Get SpaceVim log](#get-spacevim-log)
 - [Custom Configuration](#custom-configuration)
   - [Bootstrap Functions](#bootstrap-functions)
@@ -222,6 +223,11 @@ Use `:SPUpdate` command to update all the plugins and
 SpaceVim itself. After `:SPUpdate`, you can assign
 plugins need to be updated. Use `Tab` to complete
 plugin names after `:SPUpdate`.
+
+### Reinstall plugins
+
+When a plugin is failed to update or is broken, Use `:SPReinstall`
+command to reinstall this plugin.
 
 ### Get SpaceVim log
 
