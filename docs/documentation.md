@@ -241,7 +241,9 @@ issue template.
 ## Custom Configuration
 
 The very first time SpaceVim starts up, it will ask you to
-choose a mode, `basic mode` or `dark powered mode`.
+choose a mode,
+[`basic mode`](https://github.com/SpaceVim/SpaceVim/blob/master/mode/basic.toml)
+or [`dark powered mode`](https://github.com/SpaceVim/SpaceVim/blob/master/mode/dark_powered.toml).
 then it will create a `SpaceVim.d/init.toml` in your
 `HOME` directory. All the configuration files can be stored in
 `~/.SpaceVim.d/` directory.
@@ -414,9 +416,10 @@ Layers help collect related packages together to provide features. For example, 
 
 In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` layer, the file is `autoload/SpaceVim/layers/autocomplete.vim`, and there are three public functions:
 
-- `SpaceVim#layers#autocomplete#plugins()`: return a list of plugins used in this plugins.
-- `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds.
-- `SpaceVim#layers#autocomplete#set_variable()`: function for setting layer options.
+- `SpaceVim#layers#autocomplete#plugins()`: return a list of plugins used in this plugins
+- `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds
+- `SpaceVim#layers#autocomplete#set_variable()`: function for setting layer options
+- `SpaceVim#layers#autocomplete#get_options()`: return a list of all available layer options
 
 ### Debug upstream plugins
 
