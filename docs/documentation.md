@@ -294,7 +294,7 @@ you can use SpaceVim `disabled_plugins` options:
 
 ```toml
 [options]
-# NOTE: the value should be a list, and each item is the name of the plugin.
+    # NOTE: the value should be a list, and each item is the name of the plugin.
     disabled_plugins = ["clighter", "clighter8"]
 ```
 
@@ -313,8 +313,8 @@ To enable them you need to add following into
     bootstrap_after = 'myspacevim#after'
 ```
 
-The difference is that these two functions will be called before
-or after loading SpaceVim core as they named.
+The difference is that the bootstrap_before function will be called before SpaceVim core,
+and the bootstrap_after function is called on autocmd `VimEnter`.
 
 The bootstrap functions should be placed to the `autoload` directory
 in `~/.SpaceVim.d/`. In our case, create file `~/.SpaceVim.d/autoload/myspacevim.vim`
@@ -612,7 +612,8 @@ All the colors are based on the current colorscheme.
 It is possible to easily customize the statusline separator by setting the `statusline_separator` variable in your custom configuration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
 
 ```toml
-statusline_separator = 'arrow'
+[options]
+    statusline_separator = 'arrow'
 ```
 
 Here is an exhaustive set of screenshots for all the available separator:
