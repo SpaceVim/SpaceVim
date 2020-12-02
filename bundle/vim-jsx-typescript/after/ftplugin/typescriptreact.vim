@@ -13,3 +13,4 @@ if exists("loaded_matchit")
 endif
 
 setlocal suffixesadd+=.tsx
+setlocal commentstring={/*\ %s\ */}

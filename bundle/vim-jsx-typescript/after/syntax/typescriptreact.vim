@@ -20,6 +20,7 @@ if exists('b:current_syntax')
 endif
 
 syn include @HTMLSyntax syntax/html.vim
+set syntax=typescript 
 if exists('s:current_syntax')
   let b:current_syntax = s:current_syntax
 endif
