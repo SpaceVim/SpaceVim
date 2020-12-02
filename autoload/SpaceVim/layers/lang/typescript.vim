@@ -25,8 +25,8 @@
 
 function! SpaceVim#layers#lang#typescript#plugins() abort
   let plugins = []
-  call add(plugins, ['leafgarland/typescript-vim'])
-  call add(plugins, ['peitalin/vim-jsx-typescript'])
+  call add(plugins, ['leafgarland/typescript-vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-jsx-typescript', {'merged' : 0}])
   call add(plugins, ['heavenshell/vim-jsdoc', { 'on_cmd': 'JsDoc' }])
   if !SpaceVim#layers#lsp#check_filetype('typescript')
     if has('nvim')
