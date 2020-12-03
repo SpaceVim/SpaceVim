@@ -9,12 +9,14 @@
 ""
 " @section shell, layer-shell
 " @parentsection layers
-" SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for
-" vim. For more info, read |deol| and |vimshell|.
+" The shell layer use |:terminal| command if available.
 "
 " @subsection variable
 "
 " default_shell: config the default shell to be used by shell layer.
+" default_position: config the positione of terminal, by default, it is `top`,
+" you can set it to `float` if you are using nvim-0.4.0 or later version. for
+" vim users, we need `has('patch-8.2.1266')`
 "
 " @subsection key bindings
 " >
@@ -23,7 +25,11 @@
 " <
 
 let s:SYSTEM = SpaceVim#api#import('system')
-let s:FLOAT = SpaceVim#api#import('neovim#floating')
+if has('nvim')
+  let s:FLOAT = SpaceVim#api#import('neovim#floating')
+else
+  let s:FLOAT = SpaceVim#api#import('vim#floating')
+endif
 
 function! SpaceVim#layers#shell#plugins() abort
   let plugins = []
@@ -127,10 +133,32 @@ function! SpaceVim#layers#shell#get_options() abort
 
 endfunction
 
+function! s:open_terminal(cmd, path) abort
+  if has('nvim')
+    return termopen(a:cmd, {'cwd': a:path})
+  else
+    return term_start(a:cmd, {'cwd': a:path, 'hidden': 1})
+  endif
+endfunction
+
+function! s:support_float_terminal() abort
+  if has('nvim')
+    return s:FLOAT.exists()
+  else
+    " the latest version of vim also do not support full feature of float
+    " terminal.
+    " ref: https://github.com/vim/vim/issues/6511
+    return has('patch-8.2.1266')
+  endif
+endfunction
+
 let s:open_terminals_buffers = []
 " shell windows shoud be toggleable, and can be hide.
-function! s:open_default_shell(open_with_file_cwd) abort
-  if a:open_with_file_cwd
+
+
+" 1. get the init path
+function! s:get_terminal_init_path(usebufdir) abort
+  if a:usebufdir
     if getwinvar(winnr(), '&buftype') ==# 'terminal'
       let path = getbufvar(winbufnr(winnr()), '_spacevim_shell_cwd', SpaceVim#plugins#projectmanager#current_root())
     else
@@ -139,41 +167,62 @@ function! s:open_default_shell(open_with_file_cwd) abort
   else
     let path = SpaceVim#plugins#projectmanager#current_root()
   endif
+  return path
+endfunction
 
-  " look for already opened terminal windows
-  let windows = [] 
-  windo call add(windows, winnr()) 
-  for window in windows
-    if getwinvar(window, '&buftype') ==# 'terminal'
-      exe window .  'wincmd w'
-      if getbufvar(winbufnr(window), '_spacevim_shell_cwd') ==# l:path
-        " fuck gvim bug, startinsert do not work in gvim
-        if has('nvim')
-          startinsert
-        else
-          normal! a
-        endif
-        return
-      else
-        " the opened terminal window is not the one we want.
-        " close it, we're gonna open a new terminal window with the given l:path
-        exe 'wincmd c'
-        break
-      endif
+
+" get the terminal bufnr, which has same path
+function! s:get_terminal_bufnr(path) abort
+  for open_terminal in s:open_terminals_buffers
+    if bufexists(open_terminal) && getbufvar(open_terminal, '_spacevim_shell_cwd') ==# a:path
+      return open_terminal
     endif
   endfor
+endfunction
 
-  if s:default_position == 'float' && exists('*nvim_open_win')
-    let s:term_win_id =  s:FLOAT.open_win(bufnr('%'), v:true,
-          \ {
-          \ 'relative': 'editor',
-          \ 'width'   : &columns, 
-          \ 'height'  : &lines * s:default_height / 100,
-          \ 'row': 0,
-          \ 'col': &lines - (&lines * s:default_height / 100) - 2
-          \ })
-
-    exe win_id2win(s:term_win_id) .  'wincmd w'
+function! s:open_default_shell(usebufdir) abort
+  let path = s:get_terminal_init_path(a:usebufdir)
+  let bufnr = s:get_terminal_bufnr(path)
+  if s:default_position == 'float' && s:support_float_terminal()
+    if bufnr ==# 0
+      if s:SYSTEM.isWindows
+        let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
+      else
+        let shell = empty($SHELL) ? 'bash' : $SHELL
+      endif
+      if has('nvim')
+        let s:term_win_id =  s:FLOAT.open_win(bufnr(), v:true,
+              \ {
+              \ 'relative': 'editor',
+              \ 'width'   : &columns, 
+              \ 'height'  : &lines * s:default_height / 100,
+              \ 'row': 0,
+              \ 'col': 0,
+              \ })
+        call s:open_terminal(shell, path)
+        let bufnr = bufnr('%')
+      else
+        let bufnr = s:open_terminal(shell, path)
+        let s:term_win_id =  s:FLOAT.open_win(bufnr, v:true,
+              \ {
+              \ 'relative': 'editor',
+              \ 'width'   : &columns, 
+              \ 'height'  : &lines * s:default_height / 100,
+              \ 'row': 0,
+              \ 'col': 0,
+              \ })
+      endif
+      call add(s:open_terminals_buffers, bufnr)
+    else
+      let s:term_win_id =  s:FLOAT.open_win(bufnr, v:true,
+            \ {
+            \ 'relative': 'editor',
+            \ 'width'   : &columns, 
+            \ 'height'  : &lines * s:default_height / 100,
+            \ 'row': 0,
+            \ 'col': 0,
+            \ })
+    endif
   else
     " no terminal window found. Open a new window
     let cmd = s:default_position ==# 'float' ?
@@ -189,80 +238,68 @@ function! s:open_default_shell(open_with_file_cwd) abort
     if lines < winheight(0) && (s:default_position ==# 'top' || s:default_position ==# 'bottom')
       exe 'resize ' . lines
     endif
+    exe 'b' . bufnr
+    startinsert
   endif
-  let w:shell_layer_win = 1
-  for open_terminal in s:open_terminals_buffers
-    if bufexists(open_terminal)
-      if getbufvar(open_terminal, '_spacevim_shell_cwd') ==# l:path
-        exe 'silent b' . open_terminal
-        " clear the message 
-        if has('nvim')
-          startinsert
-        else
-          normal! a
-        endif
-        return
-      endif
-    else
-      " remove closed buffer from list
-      call remove(s:open_terminals_buffers, 0)
-    endif
-  endfor
+  call setwinvar(win_id2win(s:term_win_id), 'shell_layer_win', 1)
 
-  " no terminal window with l:path as cwd has been found, let's open one
-  if s:default_shell ==# 'terminal'
-    if exists(':terminal')
-      if has('nvim')
-        if s:SYSTEM.isWindows
-          let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
-        else
-          let shell = empty($SHELL) ? 'bash' : $SHELL
-        endif
-        enew
-        call termopen(shell, {'cwd': l:path})
-        " @bug cursor is not cleared when open terminal windows.
-        " in neovim-qt when using :terminal to open a shell windows, the orgin
-        " cursor position will be highlighted. switch to normal mode and back
-        " is to clear the highlight.
-        " This seem a bug of neovim-qt in windows.
-        "
-        " cc @equalsraf
-        if s:SYSTEM.isWindows && has('nvim')
-          stopinsert
-          startinsert
-        endif
-        let s:term_buf_nr = bufnr('%')
-        call extend(s:shell_cached_br, {getcwd() : s:term_buf_nr})
-      else 
-        " handle vim terminal
-        if s:SYSTEM.isWindows
-          let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
-        else
-          let shell = empty($SHELL) ? 'bash' : $SHELL
-        endif
-        let s:term_buf_nr = term_start(shell, {'cwd': l:path, 'curwin' : 1, 'term_finish' : 'close'})
-      endif
-      call add(s:open_terminals_buffers, s:term_buf_nr)
-      let b:_spacevim_shell = shell
-      let b:_spacevim_shell_cwd = l:path
 
-      " use WinEnter autocmd to update statusline
-      doautocmd WinEnter
-      setlocal nobuflisted nonumber norelativenumber
 
-      " use q to hide terminal buffer in vim, if vimcompatible mode is not
-      " enabled, and smart quit is on.
-      if !empty(g:spacevim_windows_smartclose)  && !g:spacevim_vimcompatible
-        exe 'nnoremap <buffer><silent> ' . g:spacevim_windows_smartclose . ' :hide<CR>'
-      endif
-      startinsert
-    else
-      echo ':terminal is not supported in this version'
-    endif
-  elseif s:default_shell ==# 'VimShell'
-    VimShell
-    imap <buffer> <C-d> exit<esc><Plug>(vimshell_enter)
-  endif
+  " " no terminal window with l:path as cwd has been found, let's open one
+  " if s:default_shell ==# 'terminal'
+  "   if exists(':terminal')
+  "     if has('nvim')
+  "       if s:SYSTEM.isWindows
+  "         let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
+  "       else
+  "         let shell = empty($SHELL) ? 'bash' : $SHELL
+  "       endif
+  "       enew
+  "       call termopen(shell, {'cwd': l:path})
+  "       " @bug cursor is not cleared when open terminal windows.
+  "       " in neovim-qt when using :terminal to open a shell windows, the orgin
+  "       " cursor position will be highlighted. switch to normal mode and back
+  "       " is to clear the highlight.
+  "       " This seem a bug of neovim-qt in windows.
+  "       "
+  "       " cc @equalsraf
+  "       if s:SYSTEM.isWindows && has('nvim')
+  "         stopinsert
+  "         startinsert
+  "       endif
+  "       let s:term_buf_nr = bufnr('%')
+  "       call extend(s:shell_cached_br, {getcwd() : s:term_buf_nr})
+  "     elseif has('patch-8.2.1266')
+  "     else
+  "       " handle vim terminal
+  "       if s:SYSTEM.isWindows
+  "         let shell = empty($SHELL) ? 'cmd.exe' : $SHELL
+  "       else
+  "         let shell = empty($SHELL) ? 'bash' : $SHELL
+  "       endif
+  "       let s:term_buf_nr = term_start(shell, {'cwd': l:path, 'curwin' : 1, 'term_finish' : 'close'})
+  "     endif
+  "     call add(s:open_terminals_buffers, s:term_buf_nr)
+  "     let b:_spacevim_shell = shell
+  "     let b:_spacevim_shell_cwd = l:path
+  "
+  "     " use WinEnter autocmd to update statusline
+  "     doautocmd WinEnter
+  "     setlocal nobuflisted nonumber norelativenumber
+  "
+  "     " use q to hide terminal buffer in vim, if vimcompatible mode is not
+  "     " enabled, and smart quit is on.
+  "     if !empty(g:spacevim_windows_smartclose)  && !g:spacevim_vimcompatible
+  "       exe 'nnoremap <buffer><silent> ' . g:spacevim_windows_smartclose . ' :hide<CR>'
+  "     endif
+  "     startinsert
+  "   else
+  "     echo ':terminal is not supported in this version'
+  "   endif
+  " elseif s:default_shell ==# 'VimShell'
+  "   VimShell
+  "   imap <buffer> <C-d> exit<esc><Plug>(vimshell_enter)
+  " endif
 endfunction
 
 function! SpaceVim#layers#shell#close_terminal() abort
