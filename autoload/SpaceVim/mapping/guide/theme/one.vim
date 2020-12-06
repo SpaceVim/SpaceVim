@@ -7,7 +7,7 @@
 "=============================================================================
 
 function! SpaceVim#mapping#guide#theme#one#palette() abort
-  if &background == 'dark'
+  if &background ==# 'dark'
     return [
           \ ['#2c323c', '#98c379', 114, 16],
           \ ['#abb2bf', '#3b4048', 16, 145],
