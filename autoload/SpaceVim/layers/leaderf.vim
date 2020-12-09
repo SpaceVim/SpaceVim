@@ -50,13 +50,13 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
   let g:Lf_Extensions = {
-  \ 'neomru': {
-  \       'source': string(s:_function('s:neomru', 1))[10:-3],
-  \       'accept': string(s:_function('s:neomru_acp', 1))[10:-3],
-  \       'supports_name_only': 1,
-  \       'supports_multi': 0,
-  \ },
-  \}
+        \ 'neomru': {
+        \       'source': string(s:_function('s:neomru', 1))[10:-3],
+        \       'accept': string(s:_function('s:neomru_acp', 1))[10:-3],
+        \       'supports_name_only': 1,
+        \       'supports_multi': 0,
+        \ },
+        \}
 
   let g:Lf_Extensions.menu =
         \ {
@@ -318,7 +318,7 @@ function! s:register_acp(line, args) abort
 endfunction
 
 function! s:neomru(...) abort
-    return neomru#_gather_file_candidates()
+  return neomru#_gather_file_candidates()
 endfunction
 
 function! s:neomru_acp(line, args) abort
@@ -378,9 +378,15 @@ function! s:neoyank_acp(line, args) abort
   call append(0, split(line, '\\n'))
 endfunction
 
+
+let s:menu_high = {}
+
 function! s:menu(name) abort
+  let menu_name = a:name['--name'][0]
   let s:menu_action = {}
-  let menu = get(g:unite_source_menu_menus, a:name['--name'][0], {})
+  let menu = get(g:unite_source_menu_menus, menu_name, {})
+  let g:Lf_Extensions.menu.highlights_def = get(get(s:menu_high, menu_name, {}), 'highlights_def', {})
+  let g:Lf_Extensions.menu.highlights_cmd = get(get(s:menu_high, menu_name, {}), 'highlights_cmd', {})
   if has_key(menu, 'command_candidates')
     let rt = []
     for item in menu.command_candidates
