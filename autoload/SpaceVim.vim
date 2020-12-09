@@ -1384,8 +1384,6 @@ function! SpaceVim#end() abort
   let g:leaderGuide_max_size = 15
   call SpaceVim#plugins#load()
 
-  call SpaceVim#plugins#projectmanager#RootchandgeCallback()
-
   call SpaceVim#util#loadConfig('general.vim')
 
 
