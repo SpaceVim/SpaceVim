@@ -151,6 +151,9 @@ function! SpaceVim#plugins#projectmanager#RootchandgeCallback() abort
         \ 'name' : fnamemodify(getcwd(), ':t'),
         \ 'opened_time' : localtime()
         \ }
+  if empty(project.path)
+    return
+  endif
   call s:cache_project(project)
   let g:_spacevim_project_name = project.name
   let b:_spacevim_project_name = g:_spacevim_project_name
