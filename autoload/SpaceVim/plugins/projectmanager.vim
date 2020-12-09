@@ -95,6 +95,13 @@ function! s:sort_by_opened_time() abort
 endfunction
 
 function! s:compare_time(d1, d2) abort
+  " Error detected while processing function SpaceVim#end[98]..SpaceVim#plugin
+  " s#projectmanager#RootchandgeCallback[6]..<SNR>87_cache_project[3]..<SNR>87
+  " _sort_by_opened_time[2]..<SNR>87_compare_time:
+  " line    1:
+  " E730: using List as a String
+  " E15: Invalid expression: s:project_paths[a:d2].opened_time - s:project_pat
+  " hs[a:d1].opened_time
   return s:project_paths[a:d2].opened_time - s:project_paths[a:d1].opened_time
 endfunction
 
