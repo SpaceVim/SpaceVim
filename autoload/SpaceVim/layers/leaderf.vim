@@ -380,6 +380,16 @@ endfunction
 
 
 let s:menu_high = {}
+call extend(s:menu_high, {'Projects' :
+      \ {
+      \     'highlights_def' : {
+      \                           'Lf_menu_projects_time' : '<\d\+-\d\+-\d\+\s\d\+:\d\+:\d\+>'
+      \                        },
+      \     'highlights_cmd' : [
+      \                           'hi def link Lf_menu_projects_time Comment'
+      \                        ],
+      \ }
+      \ })
 
 function! s:menu(name) abort
   let menu_name = a:name['--name'][0]
