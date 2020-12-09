@@ -395,8 +395,6 @@ function! s:menu(name) abort
   let menu_name = a:name['--name'][0]
   let s:menu_action = {}
   let menu = get(g:unite_source_menu_menus, menu_name, {})
-  let g:Lf_Extensions.menu.highlights_def = get(get(s:menu_high, menu_name, {}), 'highlights_def', {})
-  let g:Lf_Extensions.menu.highlights_cmd = get(get(s:menu_high, menu_name, {}), 'highlights_cmd', {})
   if has_key(menu, 'command_candidates')
     let rt = []
     for item in menu.command_candidates
@@ -407,6 +405,16 @@ function! s:menu(name) abort
   else
     return []
   endif
+endfunction
+
+function! SpaceVim#layers#leaderf#run_menu(name) abort
+  call s:run_menu(a:name)
+endfunction
+
+function! s:run_menu(name) abort
+  let g:Lf_Extensions.menu.highlights_def = get(get(s:menu_high, a:name, {}), 'highlights_def', {})
+  let g:Lf_Extensions.menu.highlights_cmd = get(get(s:menu_high, a:name, {}), 'highlights_cmd', {})
+  exe printf('Leaderf menu --name %s', a:name)
 endfunction
 
 function! s:accept(line, args) abort
@@ -574,7 +582,7 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>f<Space> :<C-u>Leaderf menu --name CustomKeyMaps<CR>
+  nnoremap <silent> <Leader>f<Space> :<C-u>call <SID>run_menu('CustomKeyMaps')<CR>
   let g:_spacevim_mappings.f['[SPC]'] = ['Leaderf menu --name CustomKeyMaps',
         \ 'fuzzy find custom key bindings',
         \ [
@@ -583,7 +591,7 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>fp  :<C-u>Leaderf menu --name AddedPlugins<CR>
+  nnoremap <silent> <Leader>fp  :<C-u>call <SID>run_menu('AddedPlugins')<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.p = ['Leaderf menu --name AddedPlugins',
         \ 'fuzzy find vim packages',
