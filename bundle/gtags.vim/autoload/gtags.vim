@@ -250,7 +250,7 @@ function! s:ExecLoad(option, long_option, pattern) abort
 
   let l:restore_gtagsdbpath = 0
   if empty($GTAGSDBPATH)
-    let $GTAGSDBPATH = s:FILE.unify_path(g:gtags_cache_dir) . s:FILE.path_to_fname($GTAGSROOT)
+    let $GTAGSDBPATH = s:FILE.unify_path(g:tags_cache_dir) . s:FILE.path_to_fname($GTAGSROOT)
     let l:restore_gtagsdbpath = 1
   endif
 
