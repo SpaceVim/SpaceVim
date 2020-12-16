@@ -87,13 +87,8 @@ you can send code to `inim` process via key bindings:
 
 ### code format
 
-The `format` layer use neoformat as default tool to format code, it will run `cljfmt` on current file.
-And the default key binding is `SPC b f`.
-
-```toml
-[[layers]]
-  name = "format"
-```
+The code formation feature is provided by `format` layer, and this layer is enabled by default.
+The default format engine is `neoformat`, it will run `nimpretty` asynchronously on current file.
 
 ### Tasks manage
 
