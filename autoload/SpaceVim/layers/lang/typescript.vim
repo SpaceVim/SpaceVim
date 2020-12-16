@@ -56,6 +56,7 @@ function! SpaceVim#layers#lang#typescript#config() abort
         \ 'usestdin' : 1,
         \ 'opt': [],
         \ })
+  let g:neomake_typescript_enabled_makers = ['eslint']
 endfunction
 
 function! SpaceVim#layers#lang#typescript#set_variable(var) abort
