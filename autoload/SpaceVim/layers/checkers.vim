@@ -33,13 +33,12 @@ function! SpaceVim#layers#checkers#plugins() abort
     call SpaceVim#logger#warn('please read :h spacevim-options-lint_engine for more info!', 0)
   endif
 
-
   if g:spacevim_lint_engine ==# 'neomake'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/neomake', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
   elseif g:spacevim_lint_engine ==# 'ale'
-    call add(plugins, ['dense-analysis/ale', {'merged' : 0, 'loadconf_before' : 1}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/ale', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
   elseif g:spacevim_lint_engine ==# 'syntastic'
-    call add(plugins, ['wsdjeg/syntastic', {'on_event': 'WinEnter', 'loadconf' : 1, 'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/syntastic', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
   endif
 
   return plugins
