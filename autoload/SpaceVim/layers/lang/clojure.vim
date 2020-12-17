@@ -27,7 +27,7 @@ function! SpaceVim#layers#lang#clojure#plugins() abort
   call add(plugins, ['guns/vim-clojure-static', {'merged' : 0}])
   call add(plugins, ['guns/vim-clojure-highlight', {'merged' : 0}])
   " endif
-  if !g:spacevim_enable_neomake && !g:spacevim_enable_ale
+  if g:spacevim_lint_engine ==# 'syntastic'
     call add(plugins, ['venantius/vim-eastwood', {'merged' : 0}])
   endif
   call add(plugins, ['tpope/vim-fireplace', {'merged' : 0}])

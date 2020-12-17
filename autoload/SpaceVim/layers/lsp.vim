@@ -48,7 +48,7 @@ function! SpaceVim#layers#lsp#config() abort
         \ },
         \ }
 
-  if g:spacevim_enable_neomake
+  if g:spacevim_lint_engine ==# 'neomake'
     let g:LanguageClient_diagnosticsDisplay[1].texthl = 'NeomakeError'
     let g:LanguageClient_diagnosticsDisplay[1].signTexthl = 'NeomakeErrorSign'
 
@@ -62,7 +62,7 @@ function! SpaceVim#layers#lsp#config() abort
     let g:LanguageClient_diagnosticsDisplay[4].texthl = 'NeomakeMessage'
     let g:LanguageClient_diagnosticsDisplay[4].signTexthl = 
           \ 'NeomakeMessageSign'
-  elseif g:spacevim_enable_ale
+  elseif g:spacevim_lint_engine ==# 'ale'
     let g:LanguageClient_diagnosticsDisplay[1].texthl = 'ALEError'
     let g:LanguageClient_diagnosticsDisplay[1].signTexthl = 'ALEErrorSign'
 

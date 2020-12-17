@@ -34,7 +34,7 @@ function! SpaceVim#layers#lang#pony#config() abort
   " @todo pony neomake support
   " in github, there is a plugin https://github.com/killerswan/pony-currycomb.vim which provides syntastic suppotr
   " checker layer configuration
-  if SpaceVim#layers#isLoaded('checkers') && g:spacevim_enable_neomake
+  if SpaceVim#layers#isLoaded('checkers') && g:spacevim_lint_engine ==# 'neomake'
     let g:neomake_pony_enabled_makers = ['ponyc']
     let g:neomake_pony_ponyc_maker =  {
           \ 'args': ['--pass=expr', '.'],
