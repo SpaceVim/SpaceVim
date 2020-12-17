@@ -337,6 +337,8 @@ endif
 " <
 let g:spacevim_enable_neomake          = 1
 
+let g:spacevim_lint_engine = 'neomake'
+
 ""
 " @section enable_ale, options-enable_ale
 " @parentsection options
