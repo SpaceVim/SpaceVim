@@ -322,9 +322,6 @@ else
   let g:spacevim_autocomplete_method = 'neocomplcache'
 endif
 
-let g:spacevim_enable_neomake          = 1
-let g:spacevim_enable_ale          = 0
-
 ""
 " @section lint_engine, options-lint_engine
 " @parentsection options
