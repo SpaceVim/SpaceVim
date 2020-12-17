@@ -15,6 +15,7 @@ description: "General documentation about how to using SpaceVim, including the q
 - [Update and Rollback](#update-and-rollback)
   - [Update SpaceVim itself](#update-spacevim-itself)
   - [Update plugins](#update-plugins)
+  - [Reinstall plugins](#reinstall-plugins)
   - [Get SpaceVim log](#get-spacevim-log)
 - [Custom Configuration](#custom-configuration)
   - [Bootstrap Functions](#bootstrap-functions)
@@ -39,6 +40,7 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Code indentation](#code-indentation)
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
+    - [Expand regions of text](#expand-regions-of-text)
     - [Increase/Decrease numbers](#increasedecrease-numbers)
     - [Copy and paste](#copy-and-paste)
     - [Commenting](#commenting)
@@ -222,16 +224,26 @@ SpaceVim itself. After `:SPUpdate`, you can assign
 plugins need to be updated. Use `Tab` to complete
 plugin names after `:SPUpdate`.
 
+### Reinstall plugins
+
+When a plugin is failed to update or is broken, Use `:SPReinstall`
+command to reinstall this plugin.
+
 ### Get SpaceVim log
 
-Use `:SPDebugInfo!` command to display the log of SpaceVim.
+The runtime log of SpaceVim can be got via key binding `SPC h L`.
+To get the debug information about current SpaceVim environment,
+Use the command `:SPDebugInfo!`. This command will open a new buffer,
+the default information will be shown in this new buffer.
 You also can use `SPC h I` to open a buffer with the
 issue template.
 
 ## Custom Configuration
 
 The very first time SpaceVim starts up, it will ask you to
-choose a mode, `basic mode` or `dark powered mode`.
+choose a mode,
+[`basic mode`](https://github.com/SpaceVim/SpaceVim/blob/master/mode/basic.toml)
+or [`dark powered mode`](https://github.com/SpaceVim/SpaceVim/blob/master/mode/dark_powered.toml).
 then it will create a `SpaceVim.d/init.toml` in your
 `HOME` directory. All the configuration files can be stored in
 `~/.SpaceVim.d/` directory.
@@ -282,7 +294,7 @@ you can use SpaceVim `disabled_plugins` options:
 
 ```toml
 [options]
-# NOTE: the value should be a list, and each item is the name of the plugin.
+    # NOTE: the value should be a list, and each item is the name of the plugin.
     disabled_plugins = ["clighter", "clighter8"]
 ```
 
@@ -301,8 +313,8 @@ To enable them you need to add following into
     bootstrap_after = 'myspacevim#after'
 ```
 
-The difference is that these two functions will be called before
-or after loading SpaceVim core as they named.
+The difference is that the bootstrap_before function will be called before SpaceVim core,
+and the bootstrap_after function is called on autocmd `VimEnter`.
 
 The bootstrap functions should be placed to the `autoload` directory
 in `~/.SpaceVim.d/`. In our case, create file `~/.SpaceVim.d/autoload/myspacevim.vim`
@@ -404,9 +416,10 @@ Layers help collect related packages together to provide features. For example, 
 
 In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` layer, the file is `autoload/SpaceVim/layers/autocomplete.vim`, and there are three public functions:
 
-- `SpaceVim#layers#autocomplete#plugins()`: return a list of plugins used in this plugins.
-- `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds.
-- `SpaceVim#layers#autocomplete#set_variable()`: function for setting layer options.
+- `SpaceVim#layers#autocomplete#plugins()`: return a list of plugins used in this plugins
+- `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds
+- `SpaceVim#layers#autocomplete#set_variable()`: function for setting layer options
+- `SpaceVim#layers#autocomplete#get_options()`: return a list of all available layer options
 
 ### Debug upstream plugins
 
@@ -599,7 +612,8 @@ All the colors are based on the current colorscheme.
 It is possible to easily customize the statusline separator by setting the `statusline_separator` variable in your custom configuration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
 
 ```toml
-statusline_separator = 'arrow'
+[options]
+    statusline_separator = 'arrow'
 ```
 
 Here is an exhaustive set of screenshots for all the available separator:
@@ -1064,6 +1078,15 @@ Text insertion commands (start with `i`):
 
 **Tips:** You can specify number of password characters using prefix argument, (i.e. `10 SPC i p 1` will generate 10 characters of simple password)
 
+#### Expand regions of text
+
+Key bindings available in visual mode:
+
+| Key bindings | Descriptions                                      |
+| ------------ | ------------------------------------------------- |
+| `v`          | expand visual selection of text to larger region  |
+| `V`          | shrink visual selection of text to smaller region |
+
 #### Increase/Decrease numbers
 
 | Key Bindings | Descriptions                                                        |
@@ -1345,6 +1368,7 @@ Files manipulation commands (start with f):
 | `SPC f T`    | show file tree side bar                                                 |
 | `SPC f d`    | toggle disk manager in Windows OS                                       |
 | `SPC f y`    | show and copy current file absolute path in the cmdline                 |
+| `SPC f Y`    | show and copy remote url of current file                                |
 
 **NOTE:** If you are using window, you need to install [findutils](https://www.gnu.org/software/findutils/) or [fd](https://github.com/sharkdp/fd).
 If you are using [scoop](https://github.com/lukesampson/scoop) to install packages, the commands in `C:\WINDOWS\system32` will override User path.

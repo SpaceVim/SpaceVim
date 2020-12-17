@@ -6,6 +6,10 @@ comments: true
 commentsID: "A New Hope"
 ---
 
-# [newsletter](https://spacevim.org/development#newsletter) > A New Hope
+# [Newsletter](../development#newsletter) > A New Hope
 
 Welcome to the first newsletter for SpaceVim, a project that hopes to turn vim to be an IDE for most languages.
+
+## General news
+
+## Development news

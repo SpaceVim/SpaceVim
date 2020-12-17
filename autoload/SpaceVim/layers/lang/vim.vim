@@ -36,6 +36,7 @@ function! SpaceVim#layers#lang#vim#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#vim#config() abort
+  let g:scriptease_iskeyword = 0
   call SpaceVim#mapping#gd#add('vim','lookup#lookup')
   call SpaceVim#mapping#space#regesit_lang_mappings('vim', function('s:language_specified_mappings'))
   call SpaceVim#plugins#highlight#reg_expr('vim', '\s*\<fu\%[nction]\>!\?\s*', '\s*\<endf\%[unction]\>\s*')

@@ -80,7 +80,7 @@ SpaceVim has been tested in [travis-ci](https://travis-ci.org/SpaceVim/SpaceVim)
 versions of neovim and vim:
 
 1. vim: ~~`7.4.052`~~, `7.4.629`, `7.4.1689`,`8.0.0027`,`8.0.1453`, `8.1.2269`
-2. neovim: `0.3.0`,`0.3.1`,`0.3.2`,`0.3.3`,`0.3.4`,`0.3.5`,`0.3.7`,`0.3.8`,`0.4.2`,`0.4.3`
+2. neovim: `0.3.0`, `0.3.1`, `0.3.2`, `0.3.3`, `0.3.4`, `0.3.5`, `0.3.7`, `0.3.8`, `0.4.2`, `0.4.3`
 
 For more general questions, please read SpaceVim [FAQ](faq/).
 

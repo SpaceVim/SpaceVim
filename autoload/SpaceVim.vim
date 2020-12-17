@@ -195,6 +195,7 @@ let g:spacevim_windows_leader          = 's'
 
 ""
 " Enable/Disable spacevim's insert mode leader, default is enable
+" This options has been deprecated.
 let g:spacevim_enable_insert_leader    = 1
 
 ""
@@ -1382,8 +1383,6 @@ function! SpaceVim#end() abort
   endif
   let g:leaderGuide_max_size = 15
   call SpaceVim#plugins#load()
-
-  call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 
   call SpaceVim#util#loadConfig('general.vim')
 

@@ -153,23 +153,24 @@ CONTENTS                                                   *SpaceVim-contents*
       68. lang#scala...............................|SpaceVim-layer-lang-scala|
       69. lang#scheme.............................|SpaceVim-layer-lang-scheme|
       70. lang#sh.....................................|SpaceVim-layer-lang-sh|
-      71. lang#swig................................|SpaceVim-layer-lang-swift|
-      72. lang#swig.................................|SpaceVim-layer-lang-swig|
-      73. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      74. lang#toml.................................|SpaceVim-layer-lang-toml|
-      75. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      76. lang#v.......................................|SpaceVim-layer-lang-v|
-      77. lang#vbnet...............................|SpaceVim-layer-lang-vbnet|
-      78. lang#xml...................................|SpaceVim-layer-lang-xml|
-      79. lang#xquery.............................|SpaceVim-layer-lang-xquery|
-      80. language server protocol........................|SpaceVim-layer-lsp|
-      81. leaderf.....................................|SpaceVim-layer-leaderf|
-      82. operator...................................|SpaceVim-layer-operator|
-      83. shell.........................................|SpaceVim-layer-shell|
-      84. test...........................................|SpaceVim-layer-test|
-      85. tmux...........................................|SpaceVim-layer-tmux|
-      86. tools#dash...............................|SpaceVim-layer-tools-dash|
-      87. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      71. lang#sml...................................|SpaceVim-layer-lang-sml|
+      72. lang#swig................................|SpaceVim-layer-lang-swift|
+      73. lang#swig.................................|SpaceVim-layer-lang-swig|
+      74. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      75. lang#toml.................................|SpaceVim-layer-lang-toml|
+      76. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      77. lang#v.......................................|SpaceVim-layer-lang-v|
+      78. lang#vbnet...............................|SpaceVim-layer-lang-vbnet|
+      79. lang#xml...................................|SpaceVim-layer-lang-xml|
+      80. lang#xquery.............................|SpaceVim-layer-lang-xquery|
+      81. language server protocol........................|SpaceVim-layer-lsp|
+      82. leaderf.....................................|SpaceVim-layer-leaderf|
+      83. operator...................................|SpaceVim-layer-operator|
+      84. shell.........................................|SpaceVim-layer-shell|
+      85. test...........................................|SpaceVim-layer-test|
+      86. tmux...........................................|SpaceVim-layer-tmux|
+      87. tools#dash...............................|SpaceVim-layer-tools-dash|
+      88. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. Usage....................................................|SpaceVim-usage|
       1. custom_plugins........................|SpaceVim-usage-custom_plugins|
       2. repl............................................|SpaceVim-usage-repl|
@@ -826,7 +827,8 @@ this feature, or you can set to another char.
 <
 
                                              *g:spacevim_enable_insert_leader*
-Enable/Disable spacevim's insert mode leader, default is enable
+Enable/Disable spacevim's insert mode leader, default is enable This options
+has been deprecated.
 
                                                          *g:spacevim_data_dir*
 Set the cache directory of SpaceVim. Default is `$XDG_CACHE_HOME`  or if not
@@ -2375,8 +2377,31 @@ This layer also provides REPL support for janet, the key bindings are:
 ==============================================================================
 LANG#JAVA                                           *SpaceVim-layer-lang-java*
 
-This layer is for Java development.
+This layer is for java development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#java'
+<
+LAYER OPTIONS
 
+  1. `format_on_save`: Enable/disabled code formatting when saving current
+    file. Disabled by default.
+  2. `java_fomatter_jar`: Set the full path of google's java formatter jar.
+  3. `java_file_head`: The default file header for new java file. by default
+    it is:
+
+>
+  [[layers]]
+    name = 'lang#java'
+    java_file_head = [
+      '/**',
+      ' * @author : `fnamemodify(expand("~"), ":t")`',
+      ' * @created : `strftime("%Y-%m-%d")`',
+      '**/',
+      ''
+    ]
+<
 MAPPINGS
 
 >
@@ -2384,8 +2409,6 @@ MAPPINGS
 
   Mode      Key           Function
   -------------------------------------------------------------
-  normal    <F4>          import class under cursor
-  insert    <F4>          import class under cursor
   normal    SPC l I       import missing classes
   normal    SPC l R       remove unused imports
   normal    SPC l i       smart import class under cursor
@@ -3239,6 +3262,55 @@ disabled by default, to enable this layer, add following snippet to your
     name = 'lang#sh'
 <
 
+
+==============================================================================
+LANG#SML                                             *SpaceVim-layer-lang-sml*
+
+This layer is for Standard ML development. This layer provides basic syntax
+highlighting and code completion , and it is disabled by default, to enable
+this layer, add following snippet to your |SpaceVim-options| file.
+>
+  [[layers]]
+    name = 'lang#sml'
+<
+
+You can run `:SMLCheckHealth` to check whether the environment if OK.
+
+LAYER OPTIONS
+
+`smlnj_path`: Set the path to the smlnj executable, by default, it is `sml`.
+
+`mlton_path`: Set the path to the mlton executable, by default, it is `mlton`.
+
+`repl_options`: Options used for REPL, by default, it is ''.
+
+`auto_create_def_use`: Whether to build def-use files on save automatically.
+By default, it is `mlb`. Valid values is:
+>
+   'mlb': Auto build def-use if there's a *.mlb file
+   'always': Always build def-use file
+   'never': Never build def-use file
+<
+
+`enable_conceal`: `0`/`1`. Whether to enable concealing for SML files. `0` by
+defaults.    `'a` becomes `α` (or `'α`).    `fn` becomes `λ.`
+
+`enable_conceal_show_tick`: `0`/`1`. When conceal is enabled, show `'α` for
+`'a` instead of `α`.    Helps for alignment. `0` by default.
+
+`sml_file_head`: Template for new sml file.
+
+Here is an example how to use above options:
+>
+  [[layers]]
+    name = "lang#sml"
+    smlnj_path = "/usr/local/smlnj/bin/sml"
+    mlton_path = "/usr/local/bin/mlton"
+    repl_options = ''
+    enable_conceal = 1
+    enable_conceal_show_tick = 1
+    auto_create_def_use = 'always'
+<
 
 ==============================================================================
 LANG#SWIG                                          *SpaceVim-layer-lang-swift*
