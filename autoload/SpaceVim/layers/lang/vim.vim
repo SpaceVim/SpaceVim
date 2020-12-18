@@ -16,6 +16,8 @@ let s:auto_generate_doc = 0
 " Load SpaceVim API
 
 let s:SID = SpaceVim#api#import('vim#sid')
+let s:JOB = SpaceVim#api#import('job')
+let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#lang#vim#plugins() abort
   let plugins = [
