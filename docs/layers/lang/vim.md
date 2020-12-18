@@ -30,6 +30,7 @@ To use this configuration layer, update custom configuration file with:
 ## Layer options
 
 - `auto_generate_doc`: generate help documentation automatically.
+  To generate help documentation, you need to install [vimdoc](https://github.com/google/vimdoc)
 
 ## Key bindings
 
