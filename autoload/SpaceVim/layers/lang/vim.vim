@@ -62,14 +62,12 @@ function! s:generate_doc() abort
   " neovim in windows executable function is broken
   " https://github.com/neovim/neovim/issues/9391
   let fd = expand('%:p')
-  let addon_info = s:FILE.findfile('./addon-info.json', fd)
-  echom addon_info
+  let addon_info = s:FILE.findfile('addon-info.json', fd)
   if !empty(addon_info)
     let dir = s:FILE.unify_path(addon_info, ':h')
-    echom dir
-    if filereadable('./addon-info.json') && executable('vimdoc') && !s:SYS.isWindows
+    if executable('vimdoc') && !s:SYS.isWindows
       call s:JOB.start(['vimdoc', dir])
-    elseif filereadable('./addon-info.json') && executable('python')
+    elseif executable('python')
       call s:JOB.start(['python', '-m', 'vimdoc', dir])
     endif
   endif
