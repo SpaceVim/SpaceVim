@@ -9,6 +9,7 @@ description: "This layer is for writting Vimscript, including code completion, s
 
 - [Description](#description)
 - [Install](#install)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -25,6 +26,10 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#vim"
 ```
+
+## Layer options
+
+- `auto_generate_doc`: generate help documentation automatically.
 
 ## Key bindings
 
