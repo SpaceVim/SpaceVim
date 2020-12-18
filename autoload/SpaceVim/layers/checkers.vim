@@ -47,6 +47,7 @@ endfunction
 function! SpaceVim#layers#checkers#set_variable(var) abort
 
   let s:show_cursor_error = get(a:var, 'show_cursor_error', 1)
+  let s:lint_on_the_fly =  get(a:var, 'lint_on_the_fly', 1)
 
   if s:show_cursor_error && !has('timers')
     call SpaceVim#logger#warn('show_cursor_error in checkers layer needs timers feature')
@@ -250,7 +251,11 @@ endfunction
 function! s:toggle_syntax_checker() abort
   call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
   call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
-  verbose NeomakeToggle
+  if g:spacevim_lint_engine ==# 'neomake'
+    verbose NeomakeToggle
+  elseif g:spacevim_lint_engine ==# 'ale'
+    ALEToggle
+  endif
 endfunction
 
 

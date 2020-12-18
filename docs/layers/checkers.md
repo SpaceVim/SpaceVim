@@ -37,9 +37,11 @@ global options and layer option.
 
 All of the SpaceVim global options should be put into `[options]` section.
 
-| Name          | default value | description                                                                            |
-| ------------- | ------------- | -------------------------------------------------------------------------------------- |
-| `lint_engine` | `neomake`     | Set the lint engine, by default it is `neomake`, you can also use `ale` or `syntastic` |
+| Name          | default value | description         |
+| ------------- | ------------- | ------------------- |
+| `lint_engine` | `neomake`     | Set the lint engine |
+
+The default lint engine is `neomake`, you can also use `ale` or `syntastic`.
 
 If you want to config neomake, you can use bootstrap functions. Within bootstrap functions,
 you can use vim script. For all the info about neomake configuration, please checkout `:h neomake`.
