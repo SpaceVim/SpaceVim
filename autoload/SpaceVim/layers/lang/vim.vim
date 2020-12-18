@@ -63,8 +63,10 @@ function! s:generate_doc() abort
   " https://github.com/neovim/neovim/issues/9391
   let fd = expand('%:p')
   let addon_info = s:FILE.findfile('./addon-info.json', fd)
+  echom addon_info
   if !empty(addon_info)
     let dir = s:FILE.unify_path(addon_info, ':h')
+    echom dir
     if filereadable('./addon-info.json') && executable('vimdoc') && !s:SYS.isWindows
       call s:JOB.start(['vimdoc', dir])
     elseif filereadable('./addon-info.json') && executable('python')
@@ -73,7 +75,7 @@ function! s:generate_doc() abort
   endif
 endfunction
 
-function! SpaceVim#layers#checkers#set_variable(var) abort
+function! SpaceVim#layers#lang#vim#set_variable(var) abort
 
   let s:auto_generate_doc = get(a:var, 'auto_generate_doc', s:auto_generate_doc)
 
