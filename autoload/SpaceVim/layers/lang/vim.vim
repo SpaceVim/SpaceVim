@@ -18,6 +18,7 @@ let s:auto_generate_doc = 0
 let s:SID = SpaceVim#api#import('vim#sid')
 let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
+let s:FILE = SpaceVim#api#import('file')
 
 function! SpaceVim#layers#lang#vim#plugins() abort
   let plugins = [
@@ -60,10 +61,15 @@ endfunction
 function! s:generate_doc() abort
   " neovim in windows executable function is broken
   " https://github.com/neovim/neovim/issues/9391
-  if filereadable('./addon-info.json') && executable('vimdoc') && !s:SYS.isWindows
-    call s:JOB.start(['vimdoc', '.'])
-  elseif filereadable('./addon-info.json') && executable('python')
-    call s:JOB.start(['python', '-m', 'vimdoc', '.'])
+  let fd = expand('%:p')
+  let addon_info = s:FILE.findfile('./addon-info.json', fd)
+  if !empty(addon_info)
+    let dir = s:FILE.unify_path(addon_info, ':h')
+    if filereadable('./addon-info.json') && executable('vimdoc') && !s:SYS.isWindows
+      call s:JOB.start(['vimdoc', dir])
+    elseif filereadable('./addon-info.json') && executable('python')
+      call s:JOB.start(['python', '-m', 'vimdoc', dir])
+    endif
   endif
 endfunction
 
