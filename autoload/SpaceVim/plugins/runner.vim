@@ -23,6 +23,7 @@ let s:LOGGER =SpaceVim#logger#derive('runner')
 "
 
 let s:bufnr = 0
+" @fixme win_getid requires vim 7.4.1557
 let s:winid = -1
 let s:target = ''
 let s:lines = 0
@@ -49,7 +50,9 @@ function! s:open_win() abort
     autocmd BufWipeout <buffer> call <SID>stop_runner()
   augroup END
   let s:bufnr = bufnr('%')
-  let s:winid = win_getid(winnr())
+  if exists('*win_getid')
+    let s:winid = win_getid(winnr())
+  endif
   wincmd p
 endfunction
 
@@ -94,13 +97,13 @@ function! s:async_run(runner, ...) abort
       call mkdir(dir, 'p')
     endif
     if type(a:runner[0]) == type({})
-      if type(a:runner[0].exe) == type(function("tr"))
+      if type(a:runner[0].exe) == type(function('tr'))
         let exe = call(a:runner[0].exe, [])
       elseif type(a:runner[0].exe) ==# type('')
         let exe = [a:runner[0].exe]
       endif
       let usestdin = get(a:runner[0], 'usestdin', 0)
-      let compile_cmd = exe + [get(a:runner[0], 'targetopt', '')] + [target]
+      let compile_cmd = exe + [get(a:runner[0], 'targetopt', '')] + [s:target]
       if usestdin
         let compile_cmd = compile_cmd + a:runner[0].opt
       else
@@ -141,7 +144,7 @@ function! s:async_run(runner, ...) abort
     "             false, use file name
     "   range: empty, whole buffer
     "          getline(a, b)
-    if type(a:runner.exe) == type(function("tr"))
+    if type(a:runner.exe) == type(function('tr'))
       let exe = call(a:runner.exe, [])
     elseif type(a:runner.exe) ==# type('')
       let exe = [a:runner.exe]
@@ -261,7 +264,9 @@ function! s:on_stdout(job_id, data, event) abort
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
   endif
   let s:lines += len(a:data)
-  call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+  if s:winid >= 0
+    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+  endif
   call s:update_statusline()
 endfunction
 
@@ -276,7 +281,9 @@ function! s:on_stderr(job_id, data, event) abort
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
   endif
   let s:lines += len(a:data)
-  call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+  if s:winid >= 0
+    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+  endif
   call s:update_statusline()
 endfunction
 
