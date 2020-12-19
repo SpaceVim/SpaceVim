@@ -1773,6 +1773,8 @@ The `SPC j` prefix is for jumping, joining and splitting.
 | Key Bindings | Descriptions                                                                  |
 | ------------ | ----------------------------------------------------------------------------- |
 | `J`          | join the current line with the next line                                      |
+| `SPC j o`    | join a code block into a single-line statement                                |
+| `SPC j m`    | split a one-liner into multiple lines                                         |
 | `SPC j k`    | go to next line and indent it using auto-indent rules                         |
 | `SPC j n`    | split the current line at point, insert a new line and auto-indent            |
 | `SPC j o`    | split the current line at point but let point on current line                 |
