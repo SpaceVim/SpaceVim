@@ -1,6 +1,6 @@
 /* =============================================================================
  *  _variables.scss --- configuration file for website
- *  Copyright (c) 2016-2017 Shidong Wang & Contributors
+ *  Copyright (c) 2016-2020 Shidong Wang & Contributors
  *  Author: Shidong Wang < wsdjeg at 163.com >
  *  URL: https://spacevim.org
  *  License: GPLv3
@@ -13,7 +13,7 @@ $h3-font-size: 1.6em;
 $h4-font-size: 1.4em;
 $h5-font-size: 1.2em;
 $h6-font-size: 1em;
-
+$max-width: 850px;
 // colorshemes
 
 $background-color: #252525;
@@ -23,3 +23,4 @@ $gitment-comment-color: #a89984;
 // wsdjeg commented on Tue Oct 02 2018
 $gitment-comment-header-color: #a89984;
 $gitment-comment-header-background: #252525;
+$code-default-color: #f4bf75

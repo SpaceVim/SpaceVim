@@ -1,0 +1,746 @@
+*openbrowser.txt*
+
+Author:
+  tyru <tyru.exe@gmail.com>
+Version: 0.1.2
+License: See LICENSE file in this repository
+
+==============================================================================
+CONTENTS						*openbrowser-contents*
+
+Introduction		|openbrowser-introduction|
+Interface			|openbrowser-interface|
+  Keymappings		|openbrowser-keymappings|
+  Variables			|openbrowser-variables|
+  Menus				|openbrowser-menus|
+  Commands			|openbrowser-commands|
+  Functions			|openbrowser-functions|
+  Vital Modules			|openbrowser-vital-modules|
+Available Syntax in Options		|openbrowser-option-syntax|
+FAQ					|openbrowser-faq|
+Changelog			|openbrowser-changelog|
+Thanks			|openbrowser-thanks|
+
+
+==============================================================================
+INTRODUCTION						*openbrowser-introduction* {{{
+
+
+Recommended Setting:
+>
+	" My setting.
+	let g:netrw_nogx = 1 " disable netrw's gx mapping.
+	nmap gx <Plug>(openbrowser-smart-search)
+	vmap gx <Plug>(openbrowser-smart-search)
+
+
+Usage:
+
+>
+	" Open URI under cursor.
+	nmap map-you-like <Plug>(openbrowser-open)
+	" Open selected URI.
+	vmap map-you-like <Plug>(openbrowser-open)
+
+	" Search word under cursor.
+	nmap map-you-like <Plug>(openbrowser-search)
+	" Search selected word. vmap map-you-like <Plug>(openbrowser-search)
+
+	" If it looks like URI, open an URI under cursor.
+	" Otherwise, search a word under cursor.
+	nmap map-you-like <Plug>(openbrowser-smart-search)
+	" If it looks like URI, open selected URI.
+	" Otherwise, search selected word.
+	vmap map-you-like <Plug>(openbrowser-smart-search)
+
+	" Open http://google.com/ in a web browser.
+	:OpenBrowser http://google.com/
+	" Search the word "vim". (Default search engine is google)
+	:OpenBrowserSearch vim
+	" Search the word "openbrowser" in www.vim.org .
+	:OpenBrowserSearch -vim openbrowser
+	" If it looks like URL, open the URL in a web browser.
+	:OpenBrowserSmartSearch http://www.vim.org/
+	" If it does not look like URL, open the word
+	" in the default search engine.
+	:OpenBrowserSmartSearch emacs download
+	" Also you can specify another search engine.
+	:OpenBrowserSmartSearch -github tyru
+
+
+}}}
+==============================================================================
+INTERFACE							*openbrowser-interface* {{{
+------------------------------------------------------------------------------
+KEYMAPPINGS					*openbrowser-keymappings* {{{
+
+n <Plug>(openbrowser-open)				*<Plug>(openbrowser-open)*
+	1. If openbrowser finds a URL around cursor,
+	   open the URL with |openbrowser#open()|.
+	2. If openbrowser finds a filepath around cursor,
+	   open the filepath with |openbrowser#open()|.
+
+	See |openbrowser-url-detection| and
+	|openbrowser-filepath-detection| for
+	more URL and filepath detection details.
+
+v <Plug>(openbrowser-open)
+	If openbrowser finds a URL(s) from selected text,
+	open the all URLs with |openbrowser#open()|.
+
+n <Plug>(openbrowser-open-incognito)	*<Plug>(openbrowser-open-incognito)*
+v <Plug>(openbrowser-open-incognito)
+	Same as |<Plug>(openbrowser-open)|, but with "--incognito" command
+	line option.
+
+	NOTE: This is an experimental mapping. It may be deleted in future.
+
+n <Plug>(openbrowser-search)				*<Plug>(openbrowser-search)*
+	Open current <cword> text with |:OpenBrowserSearch|.
+
+v <Plug>(openbrowser-search)
+	Open selected text with |:OpenBrowserSearch|.
+
+n <Plug>(openbrowser-smart-search)		*<Plug>(openbrowser-smart-search)*
+	Call |<Plug>(openbrowser-open)| and if it fails,
+	call |openbrowser#search()| with `expand('<cword>')`.
+
+v <Plug>(openbrowser-smart-search)
+	Call |<Plug>(openbrowser-open)| and if it fails,
+	call |openbrowser#search()| with selected text.
+
+}}}
+------------------------------------------------------------------------------
+VARIABLES					*openbrowser-variables* {{{
+
+All variables can be specified by buffer-local (`b:`), window-local (`w:`),
+tabpage-local (`t:`), global (`g:`) scopes in that order. See
+|openbrowser-faq-3| for example.
+
+g:openbrowser_browser_commands		*g:openbrowser_browser_commands*
+								(default: Platform dependent)
+	Default value is platform dependant.
+	Cygwin:
+		[
+		\ {"name": "cygstart",
+		\  "args": ["{browser}", "{uri}"]}
+		\]
+	Mac OS X:
+		[
+		\ {"name": "open",
+		\  "args": ["{browser}", "{uri}"]}
+		\]
+	MS Windows:
+		[
+		\ {"name": "rundll32",
+		\  "args": "rundll32 url.dll,FileProtocolHandler {use_vimproc ? uri : uri_noesc}"}
+		\]
+	Unix like environment:
+		[
+		\ {"name": "xdg-open",
+		\  "args": ["{browser}", "{uri}"]},
+		\ {"name": "x-www-browser",
+		\  "args": ["{browser}", "{uri}"]},
+		\ {"name": "firefox",
+		\  "args": ["{browser}", "{uri}"]},
+		\ {"name": "w3m",
+		\  "args": ["{browser}", "{uri}"]},
+		\]
+
+	Within "args" value, available variables (see |openbrowser-option-syntax| for notation)
+		{browser}			(String) Browser executable command
+									with shell quotes
+		{browser_noesc}		(String) Browser executable command
+		{uri}				(String) URI to open with shell quotes
+		{uri_noesc}			(String) URI to open
+		{use_vimproc}		(Boolean) Use |vimproc| or not.
+
+	Some variables with "_noesc" postfix are raw string.
+	And the variables without "_noesc" postfix are surrounded by shell quotes.
+	But "args" value is |List|, no shell quotes are surrounded.
+
+	Using {use_vimproc}, you can branch like the followings.
+	This is to keep "args" value from vimproc's special parser treatment.
+	See |vimproc#system()| for the details.
+	This is the default value on MS Windows. >
+		let g:openbrowser_browser_commands = [
+		\   {'name': 'rundll32',
+		\    'args': 'rundll32 url.dll,FileProtocolHandler {use_vimproc ? uri : uri_noesc}'}
+		\]
+<
+	More example:
+	1. Use Google Chrome instead of default browser: >
+	let g:openbrowser_browser_commands = [
+	\   {'name': 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',
+	\    'args': ['start', '{browser}', '{uri}']}
+	\]
+<
+g:openbrowser_open_commands			*g:openbrowser_open_commands*
+g:openbrowser_open_rules			*g:openbrowser_open_rules*
+	NOTE: Deprecated.
+	(if you have existing setting openbrowser.vim converts them
+	into |g:openbrowser_browser_commands|.
+	but these variable might be going to be removed for the next release)
+	Use |g:openbrowser_browser_commands| instead.
+
+g:openbrowser_fix_schemes			*g:openbrowser_fix_schemes*
+								(default: {"ttp": "http"})
+	If this value is default,
+	If you execute |<Plug>(openbrowser-open)| on URI like: >
+		ttp://google.com/
+<	It is fixed to: >
+		http://google.com/
+<
+	I think |g:openbrowser_fix_hosts| and
+	|g:openbrowser_fix_paths| are not so helpful.
+	But |g:openbrowser_fix_schemes| might be helpful particularly on Japan.
+	Because "ttp" is used as like "http" on particular net community.
+	(I know it's desecration of standard
+	but I'm particular member and this is my plugin :) )
+
+	It is not interesting for almost people
+	and default value of |g:openbrowser_fix_schemes| would not
+	bother you.
+
+g:openbrowser_fix_hosts				*g:openbrowser_fix_hosts*
+								(default: {})
+	If this value is: >
+	{'google.com': 'yahoo.com'}
+<
+	If you execute |<Plug>(openbrowser-open)| on URI like: >
+		http://google.com/
+<	It is fixed to: >
+		http://yahoo.com/
+<
+g:openbrowser_fix_paths				*g:openbrowser_fix_paths*
+								(default: {})
+	If this value is: >
+	{'/google': '/tyru'}
+<
+	If you execute |<Plug>(openbrowser-open)| on URI like: >
+		http://twitter.com/google
+<	It is fixed to: >
+		http://twitter.com/tyru
+<
+	Note that this works on the URI like: >
+		http://yahoo.com/google
+<	It is fixed to: >
+		http://yahoo.com/tyru
+<
+g:openbrowser_default_search		*g:openbrowser_default_search*
+								(default: "google")
+	Key of Dictionary |g:openbrowser_search_engines|.
+	See |g:openbrowser_search_engines| , |:OpenBrowserSearch|,
+	|OpenBrowserSearch()|.
+
+g:openbrowser_search_engines		*g:openbrowser_search_engines*
+								(default: See below)
+	You can add favorite search engines like: >
+    let g:openbrowser_search_engines = {
+    \   'favorite': 'http://example.com/search?q={query}',
+    \}
+<	NOTE: The default values are added if |Dictionary| keys are absent.
+	So you don't have to concern about missing default values.
+
+	Available variables (see |openbrowser-option-syntax| for notation)
+		{query}		(String) Query specified by openbrowser Ex commands.
+
+	Here is the default values.
+	(You can e-mail me to add more search engines :) >
+		let g:openbrowser_search_engines = {
+		\       'alc': 'https://eow.alc.co.jp/search?q={query}',
+		\       'askubuntu': 'https://askubuntu.com/search?q={query}',
+		\       'baidu': 'https://www.baidu.com/s?wd={query}&rsv_bp=0&rsv_spt=3&inputT=2478',
+		\       'cpan': 'http://search.cpan.org/search?query={query}',
+		\       'devdocs': 'https://devdocs.io/#q={query}',
+		\       'duckduckgo': 'https://duckduckgo.com/?q={query}',
+		\       'go': 'https://pkg.go.dev/search?q={query}',
+		\       'fileformat': 'https://www.fileformat.info/info/unicode/char/{query}/',
+		\       'github': 'https://github.com/search?q={query}',
+		\       'google': 'https://google.com/search?q={query}',
+		\       'php': 'https://php.net/{query}',
+		\       'python': 'https://docs.python.org/dev/search.html?q={query}&check_keywords=yes&area=default',
+		\       'twitter-search': 'https://twitter.com/search/{query}',
+		\       'twitter-user': 'https://twitter.com/{query}',
+		\       'vim': 'https://www.google.com/cse?cx=partner-pub-3005259998294962%3Abvyni59kjr1&ie=ISO-8859-1&q={query}&sa=Search&siteurl=www.vim.org%2F#gsc.tab=0&gsc.q={query}&gsc.page=1',
+		\       'wikipedia': 'https://en.wikipedia.org/wiki/{query}',
+		\       'wikipedia-ja': 'https://ja.wikipedia.org/wiki/{query}',
+		\       'yahoo': 'https://search.yahoo.com/search?p={query}',
+		\}
+<
+					*g:openbrowser_open_filepath_in_vim*
+g:openbrowser_open_filepath_in_vim
+								(default: 1)
+	If this value is true,
+	open looks-like-a-path string in vim.
+	|g:openbrowser_open_vim_command| is used
+	for opening the path.
+
+					*g:openbrowser_open_vim_command*
+g:openbrowser_open_vim_command
+								(default: "vsplit")
+	This value is used for opening looks-like-a-path string.
+	See |g:openbrowser_open_filepath_in_vim| for the details.
+
+					*g:openbrowser_format_message*
+g:openbrowser_format_message
+								(default: See below)
+
+	Default value is:
+>
+	let g:openbrowser_format_message = {
+	\   'msg': "opening '{uri}' ... {done ? 'done! ({command})' : ''}",
+	\   'truncate': 1,
+	\   'min_uri_len': 15,
+	\}
+<
+	In the "msg" key's value, you can use some existing variables:
+
+	uri: URI to open
+	done: zero before opening URI, non-zero afterward
+
+	If the value is empty string,
+	openbrowser does not output any message when opening URL.
+	If the value is not empty string,
+	convert by its format and output to command-line.
+	See |openbrowser-option-syntax| about detailed syntax description
+	for the format.
+
+	If "truncate" key's value is non-zero,
+	openbrowser outputs a truncated message
+	when the message is enough long to show |hit-enter-prompt|.
+	If the value is zero, openbrowser does not truncate
+	the output message.
+	Here is the truncating algorithm:
+
+	1. Remove "http" or "https" protocol in URI(URL).
+	2. After 1, if URI is longer than command-line, then
+		2.1. Truncate URI as possible as
+		     |g:openbrowser_format_message|.min_uri_len is allowed.
+		2.2. After 2.1, if URI is longer than command-line, then
+			2.2.1. Truncate whole string.
+
+					*g:openbrowser_message_verbosity*
+g:openbrowser_message_verbosity
+								(default: 2)
+	value meaning ~
+	0     no messages / no error messages
+	1     no messages / show error messages
+	2     show messages / show error messages
+
+	NOTE: Even if this value is 2, no messages are echoed when
+	|g:openbrowser_format_message|.msg is empty value.
+
+					*g:openbrowser_use_vimproc*
+g:openbrowser_use_vimproc
+								(default: 1)
+	If this value is non-zero and vimproc is installed,
+	use vimproc to open a URL.
+
+					*g:openbrowser_no_default_menus*
+g:openbrowser_no_default_menus
+								(default: &guioptions =~# 'M')
+	If this value is defined and non-zero,
+	do not define default menus.
+	Default value is non-zero if 'guioptions' includes "M".
+	Otherwise the value is zero.
+	See |openbrowser-menus| for the default menus.
+
+g:openbrowser_menu_lang		*g:openbrowser_menu_lang*
+					(default: 'langmenu' or |v:lang|)
+	If the value is specified and not empty string, the value is used.
+	Or, the following values are used by the following order.
+	The first non empty string is used.
+	(This is what $VIMRUNTIME/menu.vim does)
+
+	1. 'langmenu'
+	2. |v:lang|
+
+	Value	Meaning
+	-----	-------
+	"ja"	Japanese
+	"en"	English
+
+	If the value is not any of above values,
+	fallback to English menu.
+
+					*g:openbrowser_force_foreground_after_open*
+g:openbrowser_force_foreground_after_open
+								(default: 0)
+	If this value is non-zero,
+	make Vim foreground after opening URL or searching word(s).
+
+}}}
+------------------------------------------------------------------------------
+MENUS					*openbrowser-menus* {{{
+
+						*openbrowser-menu-open*
+PopUp.Open URL	(modes: n, v)
+	This is same as |<Plug>(openbrowser-open)|.
+
+						*openbrowser-menu-search*
+PopUp.Open Word(s)	(modes: n, v)
+	This is same as |<Plug>(openbrowser-search)|.
+
+						*openbrowser-menu-smart-search*
+PopUp.Open URL or Word(s)	(modes: n, v)
+	This is same as |<Plug>(openbrowser-smart-search)|.
+
+}}}
+------------------------------------------------------------------------------
+COMMANDS					*openbrowser-commands* {{{
+
+:OpenBrowser {uri}				*:OpenBrowser*
+	Opens URI with your favorite browser.
+
+:OpenBrowserSearch [-{search-engine}] {query}		*:OpenBrowserSearch*
+	{query}: Query string
+	{search-engine}: >
+		:OpenBrowserSearch -yahoo word
+<	This opens http://search.yahoo.com/search?p=word as default.
+	You can change this URI with |g:openbrowser_search_engines|.
+
+:OpenBrowserSmartSearch [-{search-engine}] {uri-or-query}	*:OpenBrowserSmartSearch*
+	This is wrapper for two above Ex commands.
+	If {uri-or-query} _seems_ like URI, open the URI.
+	If {uri-or-query} _seems_ like query, search the query.
+
+}}}
+------------------------------------------------------------------------------
+FUNCTIONS						*openbrowser-functions* {{{
+
+openbrowser#load()				*openbrowser#load()*
+	This function do nothing.
+	(this is dummy function to load autoload/openbrowser.vim)
+
+OpenBrowser({uri})				*OpenBrowser()*
+	For backward compatibility.
+	Now it's same as |openbrowser#open()|.
+	Use |openbrowser#open()| instead.
+
+openbrowser#open({uri})			*openbrowser#open()*
+	Function version of |:OpenBrowser|.
+
+OpenBrowserSearch({query} [, {search-engine}])		*OpenBrowserSearch()*
+	For backward compatibility.
+	Now it's same as |openbrowser#search()|.
+	Use |openbrowser#search()| instead.
+
+openbrowser#search({query} [, {search-engine}])			*openbrowser#search()*
+	Function version of |:OpenBrowserSearch|.
+	If {search-engine} is omitted,
+	|g:openbrowser_default_search| is used instead.
+
+openbrowser#smart_search({query} [, {search-engine}])			*openbrowser#smart_search()*
+	Function version of |:OpenBrowserSmartSearch|.
+	If {search-engine} is omitted,
+	|g:openbrowser_default_search| is used instead.
+
+}}}
+------------------------------------------------------------------------------
+VITAL MODULES						*openbrowser-vital-modules* {{{
+
+open-browser.vim is now implemented in vital modules.
+Each module are freely, and easily usable as library.
+https://github.com/vim-jp/vital.vim/
+vim-jp is embeddable library and mechanism.
+It is `node_modules` directory for Node.js, vendor directory for Go.
+And set of functional modules, as listed in README.md in above repository.
+
+OpenBrowser				*OpenBrowser-module*
+	Methods for Ex commands, mappings.
+
+	new({config}) (return: |OpenBrowser-object|)				*OpenBrowser.new-module*
+	See |OpenBrowser.Config-object| for {config}.
+	open-browser plugin is initialized like this:
+>
+	  let s:OpenBrowser = s:V.import('OpenBrowser').new(
+	  \ s:V.import('OpenBrowser.Config').new_user_var_source('openbrowser_')
+	  \)
+<
+	*OpenBrowser-object* is a Dictionary which have:
+
+							*OpenBrowser-object.open()*
+	OpenBrowser.open({uri})
+		{uri} is a String of URI ("http://example.com/").
+		It opens a browser for URI.
+
+							*OpenBrowser-object.search()*
+	OpenBrowser.search({query} [, {search_engine}])
+		Opens a search page of search engine.
+		If {search_engine} was not given, default search engine
+		(|g:openbrowser_search_engines|) is used.
+
+							*OpenBrowser-object.smart_search()*
+	OpenBrowser.smart_search({query} [, {search_engine}])
+		If {query} is a URI, it opens a browser for URI.
+		Otherwise, it opens a search page of search engine.
+		If {search_engine} was not given, default search engine
+		(|g:openbrowser_search_engines|) is used.
+
+OpenBrowser.UriExtractor			*OpenBrowser.UriExtractor-module*
+
+							*OpenBrowser.extract_from_text()*
+	extract_from_text({text} [, {options}]) (return: List of URI)
+		Extracts URIs from given {text}.
+		{options} is Dictionary like this (all properties are optional):
+			"uri_pattern_set" (Default: Web.URI.new_default_pattern_set())
+				|Vital.Web.URI-PatternSet| object.
+			"head_pattern" (Default: 'https\?\|file\|' . uri_pattern_set.host())
+				The start of URI regexp pattern.
+
+OpenBrowser.Opener					*OpenBrowser.Opener-module*
+
+							*OpenBrowser.Opener.new_from_shellcmd()*
+	new_from_shellcmd({uri}) (return: |OpenBrowser.Opener-object|)
+		Returns opener which opens {uri} by a command in PATH.
+
+							*OpenBrowser.Opener.new_from_excmd()*
+	new_from_excmd({excmd}) (return: |OpenBrowser.Opener-object|)
+		Returns opener which executes Vim Ex command {excmd}.
+
+	*OpenBrowser.Opener-object* is a Dictionary which have:
+
+							*OpenBrowser.Opener-object.type*
+	Opener.type
+		If this opener is opened by |OpenBrowser.Opener.new_from_shellcmd()|,
+		it is "shellcmd".
+		If this opener is opened by |OpenBrowser.Opener.new_from_excmd()|,
+		it is "excmd".
+
+							*OpenBrowser.Opener-object.open()*
+	Opener.open() (return: Bool)
+		See the following constructors for what this method does:
+		* |OpenBrowser.Opener.new_from_shellcmd()|
+		* |OpenBrowser.Opener.new_from_excmd()|
+		If it succeeded, returns non-zero. Otherwise zero.
+
+OpenBrowser.Config			*OpenBrowser.Config-module*
+
+							*OpenBrowser.Config.new_user_var_source()*
+	new_user_var_source({prefix}) (return: |OpenBrowser.Config-object|)
+		{prefix} is a String: prefix of variable name.
+		`config.get(key)` tries to get value from scopes in the following order:
+		* `b:[prefix . key]`
+		* `w:[prefix . key]`
+		* `t:[prefix . key]`
+		* `g:[prefix . key]`
+		If the defined variable is found, return it.
+		If all scopes does not have the variable, |:throw| an exception.
+
+							*OpenBrowser.Config.new_default_source()*
+	new_default_source() (return: |OpenBrowser.Config-object|)
+		All values are constants: default values of open-browser global variables.
+		Other plugins can use this as a library to open a browser because this
+		config is not unaffected by global variable.
+
+	*OpenBrowser.Config-object* is a Dictionary which have:
+
+							*OpenBrowser.Config-object.get()*
+	Config.get({key})
+		See:
+		* |OpenBrowser.Config.new_user_var_source()|
+		* |OpenBrowser.Config.new_default_source()|
+
+}}}
+}}}
+==============================================================================
+URL DETECTION		*openbrowser-url-detection* {{{
+
+1. If the character under cursor is a WORD and is a URL, return it.
+	1.1. if `expand('<cWORD>')` is an URL, return it.
+2. If the character under cursor is not a WORD,
+	2.1. Go to left WORD, and if `expand('<cWORD>')` is an URL, return it.
+	2.2. Go to right WORD, and if `expand('<cWORD>')` is an URL, return it.
+
+}}}
+==============================================================================
+FILEPATH DETECTION		*openbrowser-filepath-detection* {{{
+
+1. If the character under cursor is a WORD and is a filepath, return it.
+	1.1. if `expand('<cWORD>')` is an filepath, return it.
+2. If the character under cursor is not a WORD,
+	2.1. Go to left WORD, and if `expand('<cWORD>')`
+	     is an filepath, return it.
+	2.2. Go to right WORD, and if `expand('<cWORD>')`
+	     is an filepath, return it.
+
+}}}
+==============================================================================
+AVAILABLE SYNTAX IN OPTIONS		*openbrowser-option-syntax* {{{
+
+This syntax was ported by |quickrun|.
+But some feature was disabled intentionally for open-browser.vim.
+
+open-browser.vim only recognizes these strings:
+- {vim expression}
+- escape character (\).
+
+If query is "var_dump".
+
+	`http://php.net/{query}` => `http://php.net/var_dump`
+
+If you would like "{" to stop the behavior,
+you can prepend escape character to "{".
+
+	`http://php.net/\{query}` => `http://php.net/{query}`
+
+See |g:openbrowser_open_rules| and |g:openbrowser_search_engines|
+for available variables.
+
+In addition, |quickrun| syntax can recognizes these strings:
+- $ENV_NAME
+- &option_name
+- @register
+See :help |quickrun-syntax-option| for details.
+
+}}}
+==============================================================================
+FAQ							*openbrowser-faq* {{{
+
+							*openbrowser-faq-1*
+Q. How to open a current file in browser?
+A. Define the following command.
+>
+	command! OpenBrowserCurrent execute "OpenBrowser" "file:///" . expand('%:p:gs?\\?/?')
+<
+							*openbrowser-faq-2*
+Q. How do I add a search engine?
+A. See |g:openbrowser_search_engines|.
+
+							*openbrowser-faq-3*
+Q. How do I specify the default search engine only in current buffer?
+   I want to open http://php.net/<word> only in php source code.
+A. You can define buffer-local |openbrowser_search_engines| variable. >
+
+	autocmd FileType php let b:openbrowser_default_search = 'php'
+<
+  All variables can be specified by buffer-local (`b:`), window-local (`w:`),
+  tabpage-local (`t:`), global (`g:`) scopes in that order.
+
+}}}
+==============================================================================
+CHANGELOG							*openbrowser-changelog* {{{
+
+0.0.0:
+- Initial upload
+
+0.0.1:
+- Support opening file path.
+- Fix minor bugs.
+
+0.0.2:
+- Rename |g:openbrowser_isfname| to |g:openbrowser_iskeyword|.
+variable |g:openbrowser_isfname| is still available for
+backward compatibility.
+- Specialize |g:openbrowser_iskeyword| value to get URI in <cword>.
+- More readable messages.
+
+0.0.3:
+- Implement g:openbrowser_default_search.
+- Implement g:openbrowser_search_engines.
+- Implement g:openbrowser_open_filepath_in_vim.
+- Implement g:openbrowser_open_vim_command.
+- Separate plugin/openbrowser.vim to autoload/openbrowser.vim to save the memory.
+- Bundle urilib.vim (autoload/urilib.vim)
+- Fix bug: openbrowser should open URI which has no scheme
+  (e.g.: example.com)
+
+0.0.4:
+- Improve |:OpenBrowserSearch| completion
+- Add <Plug>(openbrowser-search)
+- Add <Plug>(openbrowser-smart-search)
+- Merge Daniel Hahler's branch. thanks!
+- Spawn a browser in background
+  - This fixes freezing when spawning a browser
+- Change |g:openbrowser_fix_schemes| default value
+  - Add pair: "ttps" => "https"
+- etc.
+
+0.0.5:
+(NOTE: Next release will break some backward compatibility, maybe)
+- Document fix/improvement
+- Add :command-completion to :OpenBrowserSmartSearch.
+- :OpenBrowserSmartSearch: allow {search-engine} option
+  like :OpenBrowserSearch
+- Minor bug fixes
+
+0.0.6:
+- Allow b:option, w:option, t:option not only g:option.
+- Fix Mac OS X environment detection.
+- Fix the problem that open-browser.vim does not work on cygwin.
+
+0.0.6a:
+- Sorry, I forgot to note that
+  cygwin problem was fixed by toooooooby's patch.
+  Thanks toooooooby.
+- Sorry, I forgot to note that
+  Mac OS X environment detection problem was reported by Chomo.
+  Thanks Chomo.
+
+0.0.7:
+- Support some search engines (alphabetically)
+  Most search engines were suggested by stardiviner, thanks!
+  - Ask Ubuntu
+  - Baidu
+  - Blekko
+  - CPAN (search.cpan.org)
+  - DuckDuckGo
+  - GitHub
+  - Google Code (en)
+  - PHP (www.php.net)
+  - Python (docs.python.org)
+  - SPACE ALC
+  - Twitter Search
+  - Twitter (user)
+  - VeryCD
+  - Wikipedia (en)
+  - vim.org
+- Fix bug: command-line completion did not return all matched search engines,
+  it returned only first matched search engine.
+- Fix bug: if the key contains "-" in g:openbrowser_search_engines,
+  it does not work.
+- Change s:expand_keyword() syntax. It recognizes only {vim expression}.
+  (see :help openbrowser-option-syntax for details)
+  - Change default value of g:openbrowser_open_rules
+  - Change default value of g:openbrowser_search_engines
+
+0.1.1:
+- Avoid hit-enter-prompt when opening URL
+- Add English/Japanese menus
+- Allow to disable the default search engines
+- Add g:openbrowser_short_message
+- Improve URI/URL handling
+- Improve vimproc.vim integration
+- Improve open-browser-github.vim integration
+- Improve ghq command integration
+- Change structure of g:openbrowser_browser_commands
+- Remove g:openbrowser_{isfname,iskeyword}
+- ...and fixed many many problems...
+
+}}}
+==============================================================================
+THANKS                                                     *openbrowser-thanks* {{{
+
+The below list is the people who gave patch, advice, etc.
+Great thanks for the peoples. (alphabetical order)
+
+* Daniel Hahler (@blueyed)
+* Ingo Karkat (@inkarkat)
+* Kazuhiro YOSHIKAWA (@yoshikaw)
+* Milly (@Milly)
+* Yasuhiro MATSUMOTO (@mattn)
+* Yukihiro Nakadaira (@ynkdir)
+* basyura (@basyura)
+* chikatoike (@chikatoike)
+* crazymaster (@crazymaster)
+* itchyny (@itchyny)
+* stardiviner (@stardiviner)
+* toooooooby (@toooooooby)
+
+And more people listed in:
+https://github.com/tyru/open-browser.vim/graphs/contributors
+
+}}}
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=4:ft=help:norl:noet:fdm=marker:fen

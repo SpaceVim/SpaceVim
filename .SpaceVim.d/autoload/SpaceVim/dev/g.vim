@@ -1,8 +1,8 @@
-function! SpaceVim#dev#g#updatedoc()
+function! SpaceVim#dev#g#updatedoc() abort
  let keys = keys(g:_spacevim_mappings_g)
  let lines = []
  for key in keys
-     if key == '`'
+     if key ==# '`'
          let line = '`` g' . key . ' `` | ' . g:_spacevim_mappings_g[key][1]
      else
          let line = '`g' . key . '` | ' . g:_spacevim_mappings_g[key][1]

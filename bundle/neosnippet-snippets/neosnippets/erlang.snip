@@ -1,0 +1,32 @@
+snippet     helloworld
+options     head
+
+
+  main(_) -> io:format("Hello, world!\n").
+
+snippet     -module
+options     head
+  -module(${0:module}).
+
+snippet     -export
+options     head
+  -export([${0:f/1}]).
+
+snippet     ioformat
+options     word
+  io:format("${1:~w~n}"${2:, []})
+
+snippet     main
+options     head
+  main(_) -> ${0}.
+
+snippet     case
+abbr        case
+options     head
+    case ${0:TARGET} of
+        ${1}
+    end
+
+snippet     bs
+abbr        <<"...">>
+    <<"${0:TARGET}">>

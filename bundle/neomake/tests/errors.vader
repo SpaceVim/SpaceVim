@@ -1,0 +1,202 @@
+Include: include/setup.vader
+
+Execute (Error with no filename):
+  new
+  set ft=neomake_tests
+  let b:neomake_neomake_tests_enabled_makers = ['true']
+  let b:neomake_neomake_tests_true_tempfile_enabled = 0
+
+  Neomake
+  let make_id = neomake#GetStatus().last_make_id
+  AssertNeomakeMessage 'no file name.', 0
+  bwipe
+
+Execute (Error with no filename (serialized)):
+  new
+  set ft=neomake_tests
+  let b:neomake_neomake_tests_enabled_makers = ['true', g:entry_maker]
+  let b:neomake_neomake_tests_true_tempfile_enabled = 0
+  let b:neomake_neomake_tests_true_serialize = 1
+  let b:neomake_neomake_tests_true_serialize_abort_on_error = 1
+
+  Neomake
+  let make_id = neomake#GetStatus().last_make_id
+  AssertNeomakeMessage 'no file name.', 0
+  AssertNeomakeMessage 'Aborting next makers: entry_maker.'
+  bwipe
+
+Execute (Error with non-existing filename):
+  new
+  file doesnotexist
+  set ft=neomake_tests
+  let b:neomake_neomake_tests_enabled_makers = ['true']
+  let b:neomake_neomake_tests_true_tempfile_enabled = 0
+
+  let fname = fnamemodify(bufname('%'), ':p')
+  Neomake
+  bwipe!
+  let make_id = neomake#GetStatus().last_make_id
+  AssertNeomakeMessage 'file is not readable ('.fname.')', 0
+
+Execute (Error with non-existing filename for 2nd maker):
+  call g:NeomakeSetupAutocmdWrappers()
+
+  new
+  file doesnotexist
+  set ft=neomake_tests
+  let b:neomake_neomake_tests_enabled_makers = ['true']
+  let b:neomake_neomake_tests_true_tempfile_enabled = 0
+
+  let maker1 = {
+      \ 'exe': 'true',
+      \ 'name': 'true_maker',
+      \ 'errorformat': '%m',
+      \ 'append_file': 0,
+      \ }
+  let maker2 = copy(maker1)
+  let maker2.append_file = 1
+  let maker2.tempfile_enabled = 0
+  let maker3 = copy(maker1)
+
+  let fname = fnamemodify(bufname('%'), ':p')
+  call neomake#Make(1, [maker1, maker2, maker3])
+  let make_id = neomake#GetStatus().last_make_id
+  NeomakeTestsWaitForFinishedJobs
+  AssertNeomakeMessage 'file is not readable ('.fname.')', 0
+  AssertEqual len(g:neomake_test_finished), 1
+  AssertEqual len(g:neomake_test_jobfinished), 2
+  bwipe!
+
+Execute (maker.exe gets checked):
+  call NeomakeTestsSetVimMessagesMarker()
+
+  let maker = {'exe': 'doesnotexist'}
+  let maker_non_string_exe = {}
+  function maker_non_string_exe.exe()
+    return 'true'
+  endfunction
+  CallNeomake 1, [maker, maker_non_string_exe]
+
+  let log_context = {'make_id': neomake#GetStatus().last_make_id, 'bufnr': bufnr('%')}
+  AssertNeomakeMessage 'Exe (doesnotexist) of maker unnamed_maker is not executable.', 0, log_context
+  AssertNeomakeMessage 'Non-string given for executable of maker unnamed_maker: type 2.', 0, log_context
+  AssertNeomakeMessage 'Nothing to make: no valid makers.'
+  AssertEqual len(g:neomake_test_messages), 4
+
+  " Is still an error on second invocation (not autoconfigured).
+  CallNeomake 1, [maker, maker_non_string_exe]
+  let make_id = neomake#GetStatus().last_make_id
+  let log_context = {'make_id': neomake#GetStatus().last_make_id, 'bufnr': bufnr('%')}
+  AssertNeomakeMessage 'Exe (doesnotexist) of maker unnamed_maker is not executable.', 0, log_context
+  AssertNeomakeMessage 'Non-string given for executable of maker unnamed_maker: type 2.', 0, log_context
+  AssertNeomakeMessage 'Nothing to make: no valid makers.', 3, log_context
+  AssertEqual len(g:neomake_test_messages), 8
+
+  " Error gets logged as debug message if auto-enabled.
+  let maker.auto_enabled = 1
+  let maker_non_string_exe.auto_enabled = 1
+  CallNeomake 1, [maker, maker_non_string_exe]
+  let make_id = neomake#GetStatus().last_make_id
+  let log_context = {'make_id': neomake#GetStatus().last_make_id, 'bufnr': bufnr('%')}
+  AssertNeomakeMessage 'Exe (doesnotexist) of auto-configured maker unnamed_maker is not executable, skipping.', 3, log_context
+  AssertNeomakeMessage 'Non-string given for executable of maker unnamed_maker: type 2.', 3, log_context
+  AssertNeomakeMessage 'Nothing to make: no valid makers.', 3, log_context
+  AssertEqual len(g:neomake_test_messages), 12
+
+  AssertEqual NeomakeTestsGetVimMessages(), []
+
+Execute (maker.exe gets checked (auto-enabled)):
+  new
+  set ft=neomake_tests
+  let b:neomake_test_enabledmakers = ['nonexisting', 'maker_without_exe', 'maker_with_nonstring_exe']
+  CallNeomake 1
+  let make_id = neomake#GetStatus().last_make_id
+
+  let log_context = {'make_id': make_id, 'bufnr': bufnr('%')}
+  AssertNeomakeMessage 'Maker not found (for filetype neomake_tests): nonexisting.', 3, log_context
+  AssertNeomakeMessage 'Exe (maker_without_exe) of auto-configured maker maker_without_exe is not executable, skipping.', 3, log_context
+  AssertNeomakeMessage 'Non-string given for executable of maker maker_with_nonstring_exe: type 2.', 3, log_context
+  AssertNeomakeMessage 'Nothing to make: no valid makers.', 3, log_context
+  Assert len(g:neomake_test_messages), 3
+  bwipe
+
+Execute (neomake#GetMaker with non-existent maker throws errors):
+  AssertThrows call neomake#GetMaker('non-existent')
+  AssertEqual g:vader_exception, 'Neomake: Invalid maker name: "non-existent"'
+  AssertThrows call neomake#GetMaker('nonexistent')
+  AssertEqual g:vader_exception, 'Neomake: Maker not found (without filetype): nonexistent'
+  AssertThrows call neomake#GetMaker('nonexistent', '')
+  AssertEqual g:vader_exception, 'Neomake: Maker not found (for empty filetype): nonexistent'
+  AssertThrows call neomake#GetMaker('nonexistent', 'c')
+  AssertEqual g:vader_exception, 'Neomake: Maker not found (for filetype c): nonexistent'
+  AssertEqual len(g:neomake_test_messages), 0
+
+Execute (Errors from neomake#GetMaker get handled by neomake#Make):
+  CallNeomake 1, ['g:invalid-name']
+  AssertNeomakeMessage 'Invalid maker name: "g:invalid-name".', 0
+  CallNeomake 0, ['nonexistent']
+  AssertNeomakeMessage 'Maker not found (without filetype): nonexistent.', 0
+
+Execute (Error from neomake#GetMaker for non-dict maker):
+  new
+  let b:neomake_mymaker_maker = 0
+  AssertThrows call neomake#GetMaker('mymaker')
+  AssertEqual g:vader_exception, 'Neomake: Got non-dict for maker mymaker: 0'
+
+  CallNeomake 0, ['mymaker']
+  let make_id = neomake#GetStatus().last_make_id
+  AssertNeomakeMessage 'Got non-dict for maker mymaker: 0.', 0, {'make_id': make_id, 'bufnr': bufnr('%')}
+  AssertNeomakeMessage 'Nothing to make: no valid makers.', 3
+  AssertNeomakeMessage 'Cleaning make info.', 3
+  bwipe
+
+Execute (Empty maker gets handled in s:Make):
+  CallNeomake {'enabled_makers': []}
+  " TODO: level: more visible in this case?!
+  AssertNeomakeMessage 'Nothing to make: no valid makers.', 3
+
+  CallNeomake {'enabled_makers': [{}]}
+  AssertNeomakeMessage 'Exe (unnamed_maker) of maker unnamed_maker is not executable.', 0
+  AssertNeomakeMessage 'Nothing to make: no valid makers.', 3
+
+Execute (NeomakeSh handles invalid shell):
+  if neomake#has_async_support()
+    NeomakeTestsSkip 'Only for non-async'
+  else
+    Save &shell
+    call g:NeomakeTestsCreateExe('cmd.exe', [])
+    let &shell = 'cmd.exe'
+    call neomake#Sh('dir ..')
+    AssertNeomakeMessage '\v^Could not run cmd.exe -c "dir .." 2>.*: Vim\(let\):E484: .*\.$', 0
+  endif
+
+Execute (neomake#Make with non-existing bufnr/winid/winnr):
+  AssertThrows call neomake#Make({'bufnr': 1234, 'file_mode': 1})
+  AssertEqual g:vader_exception, 'Neomake: winid or winnr are required for non-current buffer.'
+
+  AssertThrows call neomake#Make({'bufnr': 1234, 'file_mode': 1, 'winid': 1234, 'enabled_makers': []})
+  AssertEqual g:vader_exception, 'Neomake: buffer 1234 does not exist.'
+
+  AssertThrows call neomake#Make({'bufnr': bufnr('%'), 'file_mode': 1, 'winid': 1234, 'enabled_makers': []})
+  if exists('*win_getid')
+    AssertEqual g:vader_exception, 'Neomake: window id 1234 does not exist.'
+  else
+    AssertEqual g:vader_exception, 'Vim(if):E117: Unknown function: win_id2tabwin'
+  endif
+
+  AssertThrows call neomake#Make({'bufnr': bufnr('%'), 'file_mode': 1, 'winnr': 1234, 'enabled_makers': []})
+  AssertEqual g:vader_exception, 'Neomake: window 1234 does not exist.'
+
+  " winid/winnr with file_mode=0.
+  AssertThrows call neomake#Make({'bufnr': bufnr('%'), 'file_mode': 0, 'winnr': 1234, 'enabled_makers': []})
+  AssertEqual g:vader_exception, 'Neomake: do not use winnr with file_mode=0.'
+
+  AssertThrows call neomake#Make({'bufnr': bufnr('%'), 'file_mode': 0, 'winid': 1234, 'enabled_makers': []})
+  AssertEqual g:vader_exception, 'Neomake: do not use winid with file_mode=0.'
+
+  " Valid.
+  if exists('*win_getid')
+    call neomake#Make({'bufnr': bufnr('%'), 'file_mode': 1, 'winid': win_getid(), 'enabled_makers': []})
+  endif
+  call neomake#Make({'bufnr': bufnr('%'), 'file_mode': 1, 'winnr': winnr(), 'enabled_makers': []})
+  NeomakeCancelJobs!

@@ -11,7 +11,7 @@ echo "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ 
 echo "               | ##                                                           "
 echo "               | ##                                                           "
 echo "               |__/                                                           "
-echo "                      version : 1.1.0-dev       by : spacevim.org             "
+echo "                      version : 1.6.0-dev       by : spacevim.org             "
 
 Push-Location ~
 
@@ -57,7 +57,7 @@ if (Get-Command "gvim" -ErrorAction SilentlyContinue) {
     echo "[OK] Test successfully. Moving to next..."
     sleep 1
 } else {
-    echo "[WARNING] Unable to find 'gvim.exe' in your PATH. But intallation still can continue..."
+    echo "[WARNING] Unable to find 'gvim.exe' in your PATH. But installation still can continue..."
     echo ""
     echo "[WARNING] Please install gvim later or  make your PATH correctly set! "
     Pause
@@ -105,4 +105,4 @@ echo ""
 
 Pause
 
-# vim:set ft=ps1:
+# vim:set ft=powershell nowrap: 

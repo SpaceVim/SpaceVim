@@ -1,0 +1,55 @@
+Execute:
+  let parser_str = globpath(&rtp, 'cm_parser/*.vim')
+  let parsers = split(parser_str, '\n')
+  for parser in parsers
+      let ft = fnamemodify(parser, ':t:r')
+      try
+          let ftfunc = cmp#new_ftfunc(ft)
+          Assert cmp#filetype_func_check(ftfunc)
+      catch
+          Assert 0
+      endtry
+  endfor
+
+Execute (check parameter return,(),(,)):
+  let parameter = '()'
+  let begin = '('
+  let end = ')'
+  Assert cmp#check_parameter_return(parameter, begin, end)
+
+Execute (check parameter return,(a),(,)):
+  let parameter = '(a)'
+  let begin = '('
+  let end = ')'
+
+Execute (check parameter return,(a),(<,)>):
+  Assert cmp#check_parameter_return(parameter, begin, end)
+  let parameter = '(a)'
+  let begin = '(<'
+  let end = ')>'
+  Assert cmp#check_parameter_return(parameter, begin, end)
+
+Execute (check parameter return,,(,)):
+  let parameter = ''
+  let begin = '('
+  let end = ')'
+  Assert !cmp#check_parameter_return(parameter, begin, end)
+
+Execute (check parameter return,(,(,)):
+  let parameter = '('
+  let begin = '('
+  let end = ')'
+  Assert !cmp#check_parameter_return(parameter, begin, end)
+
+Execute (check parameter return,(a,(,)):
+  let parameter = '(a'
+  let begin = '('
+  let end = ')'
+  Assert !cmp#check_parameter_return(parameter, begin, end)
+
+Execute (check parameter return,a),(,)):
+  let parameter = '(a'
+  let begin = '('
+  let end = ')'
+  Assert !cmp#check_parameter_return(parameter, begin, end)
+

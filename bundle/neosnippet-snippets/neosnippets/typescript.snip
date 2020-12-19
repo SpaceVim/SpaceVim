@@ -1,0 +1,79 @@
+include javascript.snip
+
+snippet     var-with-type
+abbr        var NAME: TYPE = expr;
+options     head
+  var ${1:#:NAME}: ${2:#:TYPE} = ${0:#:TARGET};
+
+snippet     class
+abbr        class NAME {...}
+options     word
+  class ${1:#:NAME} {
+    constructor(${2:#:Args}) {
+      ${3:#:TARGET}
+    }
+
+    ${0:#:TARGET}
+  }
+
+snippet     method
+options     head
+  ${1:#:NAME}(${2:#:Args}): ${3:#:TYPE} {
+    ${0:#:TARGET}
+  }
+
+snippet     accessor
+options     head
+  get ${1:#:NAME}(): ${2:#:TYPE} {
+    ${3:#:TARGET}
+  }
+
+  set $1(${4:value}: $2) {
+    ${0:#:TARGET}
+  }
+
+snippet     static
+abbr        static f(){}
+options     head
+  static ${1:#:NAME}(${2:#:Args}) {
+    ${0:#:TARGET}
+  }
+
+snippet     interface
+abbr        interface NAME {...}
+options     word
+  interface ${1:#:NAME} {
+    ${0:#:TARGET}
+  }
+
+snippet     enum
+abbr        enum NAME {...}
+options     head
+  enum ${1:#:NAME} {
+    ${0:#:TARGET}
+  }
+
+snippet     module
+abbr        module NAME {...}
+options     head
+  module ${1:#:NAME} {
+    ${0:#:TARGET}
+  }
+
+snippet     namespace
+abbr        namespace NAME {...}
+options     head
+  namespace ${1:#:NAME} {
+    ${0:#:TARGET}
+  }
+
+snippet     reference
+abbr        /// <reference path="..." />
+options     head
+  /// <reference path="${0:#:TARGET}" />
+
+snippet     function-arrow
+alias       arrow-function
+abbr        () => {}
+options     word
+  (${1:#:Args}) => { ${0:#:TARGET} }

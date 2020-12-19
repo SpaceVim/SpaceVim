@@ -3,3 +3,6 @@ Execute ( SpaceVim mode ):
   let basic = toml.parse_file('mode/basic.toml')
   let dark = toml.parse_file('mode/dark_powered.toml')
   AssertEqual basic.options.statusline_separator, 'nil'
+  unlet toml
+  unlet basic
+  unlet dark

@@ -1,0 +1,341 @@
+snippet doctypetransitional
+    <!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+snippet doctypeframeset
+    <!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+
+snippet doctypestrict
+    <!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+snippet html5
+    <!doctype html>
+    <html lang="${1:en}">
+        <head>
+            <meta charset="${2:utf-8}">
+            <meta name="viewport" content="${3:width=device-width, initial-scale=1}">
+            <title>${4}</title>
+        </head>
+        <body>
+            ${5}
+        </body>
+    </html>
+
+snippet head
+    <head>
+        <meta charset="${1:utf-8}">
+        <title>${2}</title>
+    <style>
+        ${3}
+    </style>
+        ${4}
+    </head>${5}
+
+snippet metaauthor
+    <meta name="author" content="${1}">${2}
+snippet keywords
+    <meta name="keywords" content="${1}">${2}
+snippet metaothers
+    <meta name="others" content="${1}">${2}
+snippet metagenerator
+    <meta name="generator" content="${1}">${2}
+snippet metadescription
+    <meta name="description" content="${1}">${2}
+snippet metaviewport
+    <meta name="viewport" content="${1:width=device-width, initial-scale=1}">
+snippet metatheme
+    <meta name="theme-color" content="#${1}">
+
+snippet scriptcharset
+    <script charset="${1:UTF-8}">
+    ${2:TARGET}
+    </script>${3}
+snippet script
+    <script>
+    ${1:TARGET}
+    </script>${2}
+snippet scriptsrc
+abbr    js
+    <script src="${1}"${2: defer}></script>${3}
+
+snippet body
+    <body>
+       ${1:TARGET}
+    </body>
+
+snippet h
+options word
+    <h${1:1}>${2}</h$1>${3}
+
+snippet p
+options word
+    <p>${1}</p>${2}
+
+snippet br
+options word
+    <br>
+
+snippet hr
+options word
+    <hr>
+
+snippet comment
+options word
+    <!--${1:TARGET}-->${2}
+
+snippet b
+options word
+    <b>${1:TARGET}</b>${2}
+snippet small
+options word
+    <small>${1:TARGET}</small>${2}
+snippet strong
+options word
+    <strong>${1:TARGET}</strong>${2}
+snippet sub
+options word
+    <sub>${1:TARGET}</sub>${2}
+snippet sup
+options word
+    <sup>${1:TARGET}</sup>${2}
+snippet ins
+options word
+    <ins>${1:TARGET}</ins>${2}
+snippet del
+options word
+    <del>${1:TARGET}</del>${2}
+snippet em
+options word
+    <em>${1:TARGET}</em>${2}
+snippet bdo
+options word
+    <bdo dir="${1:rtl}">${2:TARGET}</bdo>${3}
+snippet pre
+    <pre>
+    ${1:TARGET}
+    </pre>${2}
+snippet blockquote
+    <blockquote>
+    ${1}
+    </blockquote>
+    ${2}
+
+snippet link
+abbr    link stylesheet css
+    <link rel="${1:stylesheet}" href="${2}.css"${3}>${4}
+snippet manifest
+    <link rel="manifest" href="${1:manifest.json}">${2}
+
+snippet alignl
+    text-align="left"
+snippet alignr
+    text-align="right"
+snippet alignc
+    text-align="center"
+
+snippet bgcolor
+    bgcolor="${1}"${2}
+
+snippet ahref
+options word
+    <a href="${1}">${2:TARGET}</a>${3}
+snippet ahref_blank
+options word
+    <a href="${1}" target="_blank" rel="noopener">${2:TARGET}</a>${3}
+snippet ahref_parent
+options word
+    <a href="${1}" target="_parent">${2:TARGET}</a>${3}
+snippet ahref_top
+options word
+    <a href="${1}" target="_top">${2:TARGET}</a>${3}
+snippet aname
+options word
+    <a name="${1}">${2:TARGET}</a>${3}
+
+snippet framesetcols
+    <frameset cols="${1}">
+    ${2:TARGET}
+    </frameset>${3}
+snippet framesetrows
+    <frameset rows="${1}"
+    ${2:TARGET}
+    </frameset>${3}
+
+snippet iframe
+options word
+    <iframe src="${1}"></iframe>${2}
+snippet table
+    <table border="${1}">
+    ${2:TARGET}
+    </table>${3}
+
+snippet th
+options word
+    <th>${1:TARGET}</th>${2}
+
+snippet ulsquare
+options word
+    <ul type="square">${1:TARGET}</ul>${2}
+snippet ulcircle
+options word
+    <ul type="circle">${1:TARGET}</ul>${2}
+snippet uldisc
+options word
+    <ul type="disc">${1:TARGET}</ul>${2}
+
+snippet ol
+options word
+    <ol>${1:TARGET}</ol>${2}
+snippet olA
+options word
+    <ol type="A">${1:TARGET}</ol>${2}
+snippet ola
+options word
+    <ol type="a">${1:TARGET}</ol>${2}
+snippet olI
+options word
+    <ol type="I">${1:TARGET}</ol>${2}
+snippet oli
+options word
+    <ol type="i">${1:TARGET}</ol>${2}
+
+snippet li
+options word
+    <li>${1:TARGET}</li>${2}
+
+snippet dl
+options word
+    <dl>${1:TARGET}</dl>${2}
+snippet dt
+options word
+    <dt>${1:TARGET}</dt>${2}
+snippet dd
+options word
+    <dd>${1:TARGET}</dd>${2}
+
+snippet form
+    <form>
+    ${1:TARGET}
+    </form>${2}
+
+snippet inputtext
+options word
+    <input type="text" name="${1:user}">${2}
+snippet inputpassword
+options word
+    <input type="password" name="${1:password}">${2}
+snippet inputradio
+options word
+    <input type="radio" name="${1}" value="value">${2}
+snippet inputcheckbox
+options word
+    <input type="checkbox" name="${1}">${2}
+
+snippet textarea
+    <textarea rows="${1}" cols="${2}">
+    ${3:TARGET}
+    </textarea>
+    ${4}
+
+snippet button
+options word
+    <button>${1:TARGET}</button>${2}
+
+snippet buttonsubmit
+options word
+    <button type="submit">${1:TARGET}</button>${2}
+
+snippet select
+options word
+    <select>${1:TARGET}</select>${2}
+
+snippet optgroup
+    <optgroup label="${1}">
+    ${2:TARGET}
+    <optgroup>${3}
+snippet option
+options word
+    <option value="${1}">${2:TARGET}</option>${3}
+
+snippet label
+options word
+    <label>${1}: <input type="${2:TARGET}" /></label>${3}
+
+snippet labelfor
+options word
+    <label for="${1}:id">${2:TARGET}</label>${3}
+
+snippet fieldset
+options word
+    <fieldset>${1:TARGET}</fieldset>${2}
+
+snippet legend
+options word
+    <legend>${1:TARGET}</legend>${2}
+
+snippet id
+options word
+    id="${1}"${2}
+
+snippet class
+options word
+    class="${1}"${2}
+
+snippet pclass
+options word
+    <p class="${1}">${2:TARGET}</p>${3}
+
+snippet pid
+options word
+    <p id="${1}">${2:TARGET}</p>${3}
+
+snippet divid
+options word
+    <div id="${1}">${2:TARGET}</div>${3}
+
+snippet divclass
+options word
+    <div class="${1}">${2:TARGET}</div>${3}
+
+snippet img
+options word
+    <img src="${1}" alt="${2}">${3}
+
+snippet div
+options word
+    <div ${1:id="${2:someid\}"}>${3:TARGET}</div>${4}
+
+snippet header
+options word
+    <header>
+        ${1}
+    </header>
+
+snippet nav
+options word
+    <nav>
+        ${1}
+    </nav>
+
+snippet main
+options word
+    <main>
+        ${1}
+    </main>
+
+snippet footer
+options word
+    <footer>
+        ${1}
+    </footer>
+
+snippet details
+    <details${2}>
+        <summary>${1}</summary>
+        ${3}
+    </details>

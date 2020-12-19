@@ -1,0 +1,23 @@
+include css.snip
+
+snippet     mixin
+abbr        @mixin(...){...}
+options     head
+  @mixin ${1:NAME}(${2:#:ARGS}) {
+    ${0:TARGET}
+  }
+
+snippet     include
+abbr        @include ...
+  @include ${1:NAME}(${2:#:ARGS});
+
+snippet     import
+abbr        @import '...';
+options     head
+  @import '${0:TARGET}';
+
+
+snippet     extend
+abbr        @extend ...;
+options     head
+  @extend ${0:TARGET};

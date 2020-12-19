@@ -5,10 +5,10 @@ let s:port = '9995'
 let s:JSON = SpaceVim#api#import('data#json')
 let s:JOB = SpaceVim#api#import('job')
 
-func! SpaceVim#dev#send_to_channel#setport(port)
+func! SpaceVim#dev#send_to_channel#setport(port) abort
 	let s:port = a:port
 endf
-func! SpaceVim#dev#send_to_channel#send(t)
+func! SpaceVim#dev#send_to_channel#send(t) abort
 
 	if a:t ==# 'line'
 		call s:sendline()
@@ -16,7 +16,7 @@ func! SpaceVim#dev#send_to_channel#send(t)
 
 endf
 
-func! s:send(msg)
+func! s:send(msg) abort
 	let msg = {
 				\   'text' : a:msg,
 				\   'username' : s:username,

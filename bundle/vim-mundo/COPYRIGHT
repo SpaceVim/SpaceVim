@@ -1,0 +1,32 @@
+Short version for non-laywers:
+  The vim-mundo project is licensed under GPLv2 terms or any later version.
+
+Longer version:
+  vim-mundo
+  Copyright (C) 2013-2017  Dane Summers
+  Copyright (C) 2014-2017  Hyeon Kim
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+The vim-mundo project includes packages written by third parties. The
+following third party packages are included, and carry their own copyright
+notices and license terms:
+
+* This project is forked from gundo.vim <https://bitbucket.org/sjl/gundo.vim>
+  which is licensed under GPLv2 or any later version.
+
+* The initial version of graphing codes was all taken from
+  Mercurial <https://www.mercurial-scm.org/> which is licensed under GPLv2 or
+  any later version.

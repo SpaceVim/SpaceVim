@@ -1,10 +1,10 @@
 ---
-title: "unicode#spinners api"
+title: "unicode#spinners 接口"
 description: "unicode#spinners API 可启用一个定时器，根据指定的名称定时更新进度条符号"
-lang: cn
+lang: zh
 ---
 
-# [公共 API](../../) >> unicode#spinners
+# [可用接口](../../) >> unicode#spinners
 
 <!-- vim-markdown-toc GFM -->
 
@@ -18,8 +18,8 @@ lang: cn
 unicode#spinners API 主要提供一个 apply 函数，可根据名称定时更新某个变量的值，实现进度条效果：
 
 ```vim
-let s:SPI = SpaceVim#api#import('unicode#spinners') 
-call s:SPI.apply('dot1',  'g:dotstr')
+let s:SPI = SpaceVim#api#import('unicode#spinners')
+call s:SPI.apply('dot1', 'g:dotstr')
 set statusline+=%{g:dotstr}
 ```
 

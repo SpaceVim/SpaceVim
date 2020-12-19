@@ -1,0 +1,141 @@
+*wildfire.txt* *wildfire.vim*
+
+
+                                  Wildfire
+
+                                     ~
+
+                              Reference Manual
+
+
+==============================================================================
+CONTENTS                                                   *wildfire-contents*
+
+        1. Intro ................................. |wildfire-intro|
+        2. Usage ................................. |wildfire-usage|
+        3. Advanced Usage ........................ |wildfire-advanced-usage|
+        4. Quick Selection ....................... |wildfire-quick-selection|
+        4. About ................................. |wildfire-about|
+        5. License ............................... |wildfire-license|
+
+
+==============================================================================
+1. Intro                                                      *wildfire-intro*
+
+With Wildfire you can quickly select the closest text object among a group of
+candidates. By default candidates are `i'`, `i"`, `i)`, `i]`, `i}`, `ip` and `it`.
+
+Learn more about text objects with `:help text-objects`.
+
+
+==============================================================================
+2. Usage                                                      *wildfire-usage*
+
+Press `<ENTER>` in normal mode to select the closest text object. Keep pressing
+`<ENTER>` for selecting the **next** closest text object. To go the other way
+round, that is, to select the **previously** selected text object, press `<BS>`.
+
+To speed things up, if you want to select the `n`th closest text object you can
+press a number followed by `<ENTER>` (e.g. pressing `2<ENTER>` will select the
+second closest text
+object).
+
+You can change default mappings with:
+>
+    " This selects the next closest text object.
+    map <SPACE> <Plug>(wildfire-fuel)
+
+    " This selects the previous closest text object.
+    vmap <C-SPACE> <Plug>(wildfire-water)
+<
+By default, Wildfire selects any of the text objects `i'`, `i"`, `i)`, `i]`,
+`i}`, `ip` and `it`. You can decide the ones to consider with the following
+option:
+>
+    let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
+<
+
+==============================================================================
+3. Advanced Usage                                    *wildfire-advanced-usage*
+
+Sometimes considering certain kinds of text objects can be quite annoying. This
+is the case of Html, where, for example, you may want to select just tag objects.
+
+Wildfire allows you to be selective about which text objects are considered with
+different filetypes:
+>
+    let g:wildfire_objects = {
+        \ "*" : ["i'", 'i"', "i)", "i]", "i}"],  " use '*' to mean 'all other filetypes'
+        \ "html,xml" : ["at"],  " html and xml share the same text objects
+        \}
+<
+However, one problem with the solution above is that with `html` and `xml`
+files we loose the ability to select the text objects `i'`, `i"`, `i)`, `i]`
+and `i}`.  To solve this problem, Wildfire allows you to use different mappings
+for different text object candidates:
+>
+    map <SPACE> <Plug>(wildfire-fuel)
+    let g:wildfire_objects = {
+	\ "*" : ["i'", 'i"', "i)", "i]", "i}"]
+    \ }
+
+    cal wildfire#triggers#Add("<ENTER>", {
+	\ "html,xml" : ["at", "it"],
+    \ })
+<
+
+==============================================================================
+4. Quick Selection                                  *wildfire-quick-selection*
+
+This feature allows you to quickly select text object by setting special marks
+(not vim marks) in the current buffer that represent growing selections
+(similarly to vim-easymotion).
+
+Wildfire does not set a default mapping for *quick selection*. Be sure to put
+something like the following line in your `.vimrc`:
+>
+    nmap <leader>s <Plug>(wildfire-quick-select)
+<
+
+By default, *quick selection* use text objects in `g:wildfire_objects` to set
+"selection marks". Have a look at the example below if you want to use different
+text object without having to change `g:wildfire_objects`.
+>
+    cal wildfire#triggers#AddQs("<leader>s", {
+	\ "*" : ["i)", "i]"],
+    \ })
+<
+
+
+==============================================================================
+5. About                                                      *wildfire-about*
+
+Author: Giacomo Comitti
+Contributors: https://github.com/gcmt/wildfire.vim/contributors
+Git repository: https://github.com/gcmt/wildfire.vim
+
+
+==============================================================================
+6. License                                                  *wildfire-license*
+
+Copyright (c) 2014 Giacomo Comitti
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+vim:tw=78:sw=4:ts=8:ft=help:norl:noet:

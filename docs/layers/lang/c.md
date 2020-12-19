@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#c layer"
-description: "c/c++/object-c language support for SpaceVim, include code completion, jump to definition, quick runner."
+description: "C/C++/Object-C language support for SpaceVim, include code completion, jump to definition, quick runner."
 ---
 
 # [Available Layers](../../) >> lang#c
@@ -21,7 +21,7 @@ description: "c/c++/object-c language support for SpaceVim, include code complet
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update the custom configuration file with:
 
 ```toml
 [[layers]]
@@ -36,13 +36,17 @@ To use this configuration layer, update custom configuration file with:
 
 ## Configuration
 
+- `enable_clang_syntax_highlight` (boolean)
+
+Enable/Disable clang based syntax highlighting.
+
 - `clang_executable` (string)
 
 Set the path to the clang executable
 
 - `libclang_path` (string)
 
-The libclang shared object (dynamic library) file path. by default it is empty.
+The libclang shared object (dynamic library) file path. By default it is empty.
 
 - `clang_std` (dict)
 
@@ -57,17 +61,18 @@ A dict containing the standards you want to use. The default is:
 }
 ```
 
-- `clang_flag`
+- `clang_flag` (list)
 
-Create a `.clang` file at your project root. You should be able to just paste most of your compile flags in there. You can also use a list ['-Iwhatever', ...] when loadding this layer.
+You should be able to just paste most of your compile flags in there.
+You can also use a list ['-Iwhatever', ...] when loading this layer.
 
-
-here is an example how to use above options:
+Here is an example how to use above options:
 
 ```toml
 [[layers]]
   name = "lang#c"
   clang_executable = "/usr/bin/clang"
+  clang_flag = ['-I/user/include']
   [layer.clang_std]
     c = "c11"
     cpp = "c++1z"
@@ -75,13 +80,24 @@ here is an example how to use above options:
     objcpp = "c++1z"
 ```
 
+Instead of using `clang_flag` options, You can also create a `.clang` file
+in the root directory of your project. SpaceVim will load the options
+defined in `.clang` file. For example:
+
+```
+-std=c11
+-I/home/test
+```
+
+Note: If `.clang` file contains std configuration, it will override
+`clang_std` layer option.
 
 ## Key bindings
 
-| key binding | description                  |
-| ----------- | ---------------------------- |
-| `SPC l d`   | show documentation           |
-| `SPC l e`   | rename symbol                |
-| `SPC l f`   | references                   |
-| `SPC l r`   | compile and run current file |
-| `g d`       | defintion preview            |
+| key bindings | Descriptions                 |
+| ------------ | ---------------------------- |
+| `SPC l d`    | show documentation           |
+| `SPC l e`    | rename symbol                |
+| `SPC l f`    | references                   |
+| `SPC l r`    | compile and run current file |
+| `g d`        | defintion preview            |

@@ -1,0 +1,163 @@
+snippet     struct
+options     word
+    struct ${1:name} {
+        ${0:TARGET}
+    }
+
+snippet     class
+options     word
+    class ${1:name} {
+        ${0:TARGET}
+    }
+
+snippet     enum
+options     word
+    enum ${1:name} {
+        ${0:TARGET}
+    }
+
+snippet     case
+options     head
+    case ${1:pattern}${0}
+
+snippet     protocol
+options     word
+    protocol ${1:name} {
+        ${0:TARGET}
+    }
+
+snippet     var
+options     word
+    var ${1:name}: ${2:Int}${0}
+
+snippet     let
+options     word
+    let ${1:name}: ${2:Int}${0}
+
+snippet     extension
+    extension ${1:Int} {
+        ${0:TARGET}
+    }
+
+snippet     func
+abbr        func name(...) -> Type { ... }
+options     word
+    func ${1:name}(${2:#:arguments}) -> ${3:Int}${0}
+
+snippet     void
+abbr        func name(...) { ... }
+options     word
+    func ${1:name}(${2:#:arguments})${0}
+
+snippet     for
+options     head
+    for var ${1:i = 0}; ${2:i < j}; ${3:i++} {
+        ${0:TARGET}
+    }
+
+snippet     iter
+options     head
+    for ${1:item} in ${2:collection} {
+        ${0:TARGET}
+    }
+
+snippet     while
+options     head
+    while ${1:false} {
+        ${0:TARGET}
+    }
+
+snippet     repeat
+options     head
+    repeat {
+        ${0:TARGET}
+    } while ${1:false}
+
+snippet     if
+options     word
+    if ${1:false} {
+        ${0:TARGET}
+    }${9}
+
+snippet     elif
+options     word
+    else if ${1:false} {
+        ${0:TARGET}
+    }${9}
+
+snippet     else
+options     word
+    else {
+        ${0:TARGET}
+    }${9}
+
+snippet     optional
+abbr        if let/case ... { ... }
+options     head
+    if ${1:let} ${2:name} = ${3:expression} else {
+        ${0:TARGET}
+    }${9}
+
+snippet     guard
+abbr        guard let ... else { ... }
+options     head
+    guard let ${1} = ${2} else {
+        ${0:TARGET}
+    }
+    ${9}
+
+snippet     switch
+options     head
+    switch ${1:expression} {
+        ${0:TARGET}
+    }
+
+snippet     do
+options     head
+    do {
+        ${0:TARGET}
+    }${9}
+
+snippet     catch
+options     word
+    catch${1:#:pattern} {
+        ${0:TARGET}
+    }${9}
+
+snippet     defer
+options     head
+    defer {
+        ${0:TARGET}
+    }
+
+snippet     import
+    import ${1:module}
+    ${0}
+
+snippet     subscript
+options     word
+    subscript(${1:index: Int}) -> ${2:Int} {
+        ${0:TARGET}
+    }
+    ${9}
+
+snippet     init
+options     word
+    init${1:#:?}(${2:#:arguments}) {
+        ${0:TARGET}
+    }
+    ${9}
+
+snippet     deinit
+options     head
+    deinit {
+        ${0:TARGET}
+    }
+
+snippet     closure
+options     word
+abbr        { (...) -> Type in ... }
+    { ${1:#capture}(${2:#:arguments}) -> ${3:Void} in
+        ${0:TARGET}
+    }
+    ${9}

@@ -1,0 +1,2 @@
+tests/fixtures/vim/func-with-errors.vim:2:6:Error: EVL101: undefined variable `l:something`
+tests/fixtures/vim/func-with-errors.vim:5:9:Error: EVL104: variable may not be initialized on some execution path: `l:foo`

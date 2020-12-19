@@ -1,0 +1,146 @@
+source go.vim
+
+snippet     helloworld
+abbr        package main\nimport fmt...
+options     head
+  package main
+
+  import (
+    "fmt"
+  )
+
+  func main() {
+    fmt.Printf("Hello, world\n")
+  }
+
+snippet     func
+abbr        func ...() { ... }
+alias fn
+options     head
+  func ${1:fname}(${2}) ${3:int }{
+    ${0:TARGET:return }
+  }
+
+snippet     import
+alias im
+options     head
+  import (
+    "${1:fmt}"
+  )
+  ${0:TARGET}
+
+snippet     package
+alias pk
+options     head
+  package ${1:main}
+  ${0:TARGET}
+
+snippet     printf
+alias pf
+options     head
+  fmt.Printf("${1}\n"${2:})
+
+snippet     println
+alias pl
+options     head
+  fmt.Println(${0:TARGET})
+
+snippet     struct
+alias ts
+options     head
+  type ${1} struct {
+    ${0:TARGET}
+  }
+
+snippet     interface
+alias ti
+options     head
+  type ${1} interface {
+    ${0:TARGET}
+  }
+
+snippet     for
+options     head
+  for ${1} {
+    ${0:TARGET}
+  }
+
+snippet     range
+abbr        for range
+options     head
+  for ${1:v} := range ${2:#:iterator} {
+    ${0:TARGET}
+  }
+
+snippet     if
+options     head
+    if ${1:#:condition} {
+      ${0:TARGET}
+    }
+
+snippet     iferr
+alias       ife
+options     head
+    if err != nil {
+      return `g:NeosnippetSnippets_Goiferr()`
+    }
+    ${2}
+
+snippet     switch
+abbr        switch {}
+options     head
+  switch ${1:#:v} {
+  case ${2:#:condition}:
+    ${0:TARGET}
+  }
+
+snippet     select
+abbr        select {}
+options     head
+  select {
+  case ${1:#:condition}:
+    ${0:TARGET}
+  }
+
+snippet     case
+options     head
+  case ${1:#:condition}:
+    ${2:TARGET}
+
+snippet     funcTest
+abbr        func Test... (t *testing.T) { ... }
+options     head
+  func Test${1} (${2:t *testing.T}) {
+    for i := 0; i < ${3:t.N}; i++ {
+      ${4}
+    }
+  }
+
+snippet     funcbench
+abbr        func Benchmark... (b *testing.B) { ... }
+options     head
+  func Benchmark${1} (${2:b *testing.B}) {
+    for i := 0; i < ${3:b.N}; i++ {
+      ${4}
+    }
+  }
+
+snippet     testtable
+abbr        var test = {...}{...} for {t.Run(){...}}
+options     head
+  var tests = []struct {
+      name string
+      expected string
+      given string
+  }{
+      {"${2}", "${3}", "${4}",},
+  }
+  for _, tt := range tests {
+      tt := tt
+      t.Run(tt.name, func(t *testing.T){
+          actual := ${1:Function}(tt.given)
+          if actual != tt.expected {
+              t.Errorf("given(%s): expected %s, actual %s", tt.given, tt.expected, actual)
+          }
+      })
+  }

@@ -1,10 +1,10 @@
 ---
 title: "系统函数"
 description: "system 函数提供了系统相关函数，包括判断当前系统平台，文件格式等函数。"
-lang: cn
+lang: zh
 ---
 
-# [公共 API](../) >> system
+# [可用接口](../) >> system
 
 <!-- vim-markdown-toc GFM -->
 
@@ -20,8 +20,8 @@ system 函数提供了系统相关函数，包括判断当前系统平台，文�
 
 ## values
 
-| name      | values | description                |
-| --------- | :----: | -------------------------- |
+| names     | values | descriptions               |
+| --------- | ------ | -------------------------- |
 | isWindows | 0 or 1 | check if the os is windows |
 | isLinux   | 0 or 1 | check if the os is linux   |
 | isOSX     | 0 or 1 | check if the os is OSX     |
@@ -29,6 +29,6 @@ system 函数提供了系统相关函数，包括判断当前系统平台，文�
 
 ## functions
 
-| name       | description                            |
+| names      | descriptions                           |
 | ---------- | -------------------------------------- |
 | fileformat | return the icon of current file format |

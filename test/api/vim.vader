@@ -1,0 +1,5 @@
+Execute ( SpaceVim api: vim ):
+  let &encoding = 'utf-8'
+  let vimapi = SpaceVim#api#import('vim')
+  AssertEqual vimapi.parse_string('sss `strftime("%Y-%m-%d")` sss'), 'sss ' .  strftime("%Y-%m-%d") . ' sss'
+  unlet vimapi

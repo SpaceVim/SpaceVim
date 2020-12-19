@@ -6,7 +6,7 @@ syntax case ignore
 syn match SpaceVimREPLLabel /\[REPL executable\]/
 syn match SpaceVimREPLRunnerCmd /\(\[REPL executable\]\ \)\@<=.*/
 hi def link SpaceVimREPLLabel String
-hi def link RunnerCmd Comment
+hi def link SpaceVimREPLRunnerCmd Comment
 let s:shellcmd_colors =
       \ [
       \ '#6c6c6c', '#ff6666', '#66ff66', '#ffd30a',

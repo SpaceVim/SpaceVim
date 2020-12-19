@@ -1,6 +1,6 @@
 "=============================================================================
 " VersionControl.vim --- SpaceVim version control layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -10,10 +10,13 @@ scriptencoding utf-8
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
+let s:enable_gtm_status = 0
+
 function! SpaceVim#layers#VersionControl#plugins() abort
   let plugins = []
-  call add(plugins, ['mhinz/vim-signify', {'merged' : 0}])
-  call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
+  if !SpaceVim#layers#isLoaded('git')
+    call add(plugins, ['mhinz/vim-signify', {'merged' : 0, 'loadconf' : 1}])
+  endif
   return plugins
 endfunction
 
@@ -31,33 +34,102 @@ function! SpaceVim#layers#VersionControl#config() abort
         \ 'version control info', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'h'], 'call SpaceVim#layers#core#statusline#toggle_section("hunks")',
         \ 'toggle the hunks summary', 1)
+  let g:gtm_plugin_status_enabled = s:enable_gtm_status
+  if s:enable_gtm_status
+    augroup gtm_plugin
+      autocmd!
+      autocmd BufReadPost,BufWritePost,CursorMoved,CursorMovedI * silent call s:record()
+    augroup END
+  endif
+  nnoremap <silent> [n :call <SID>Context(1)<CR>
+  nnoremap <silent> ]n :call <SID>Context(0)<CR>
+endfunction
+
+function! s:Context(reverse) abort
+  call search('^\(@@ .* @@\|[<=>|]\{7}[<=>|]\@!\)', a:reverse ? 'bW' : 'W')
+endfunction
+
+function! SpaceVim#layers#VersionControl#set_variable(var) abort
+  let s:enable_gtm_status = get(a:var,
+        \ 'enable_gtm_status',
+        \ s:enable_gtm_status)
 endfunction
 
 "  master
 function! s:git_branch() abort
   if exists('g:loaded_fugitive')
     try
-    let l:head = fugitive#head()
-    if empty(l:head)
-      call fugitive#detect(getcwd())
-      let l:head = fugitive#head()
-    endif
-  if g:spacevim_statusline_unicode_symbols == 1
-    return empty(l:head) ? '' : '  '.l:head . ' '
-  else
-    return empty(l:head) ? '' : ' '.l:head . ' '
-  endif
+      let head = fugitive#head()
+      if empty(head)
+        call fugitive#detect(getcwd())
+        let head = fugitive#head()
+      endif
+      if g:spacevim_statusline_unicode_symbols == 1
+        return empty(head) ? '' : '  '.head . ' ' . s:gtm_status()
+      else
+        return empty(head) ? '' : ' '.head . ' ' . s:gtm_status()
+      endif
+    catch
+    endtry
+  elseif exists('g:loaded_git')
+    try
+      let head = '%{git#branch#current()}'
+      if g:spacevim_statusline_unicode_symbols == 1
+        return empty(head) ? '' : '  '.head . ' ' . s:gtm_status()
+      else
+        return empty(head) ? '' : ' '.head . ' ' . s:gtm_status()
+      endif
     catch
     endtry
   endif
   return ''
 endfunction
 
+
+function! s:gtm_status() abort
+  if s:enable_gtm_status
+    let status = s:gtm_statusline()
+    return empty(status) ? '' : ' (' . status . ') '
+  else
+    return ''
+  endif
+endfunction
+
+let s:last_update = 0
+let s:last_file = ''
+let s:update_interval = 30
+let s:gtm_plugin_status = ''
+
+function! s:record() abort
+  let fpath = expand('%:p')
+  " record if file path has changed or last update is greater than update_interval
+  if (s:last_file != fpath || localtime() - s:last_update > s:update_interval) && filereadable(fpath)
+    let s:cmd = (s:enable_gtm_status == 1 ? 'gtm record --status' : 'gtm record')
+    let output=system(s:cmd . ' ' . shellescape(fpath))
+    if v:shell_error
+      echoerr 'failed to run ' . s:cmd . ' ' . shellescape(fpath)
+    else
+      let s:gtm_plugin_status = (s:enable_gtm_status ? substitute(output, '\n\+$', '', '') : '')
+    endif
+    let s:last_update = localtime()
+    let s:last_file = fpath
+  endif
+endfunction
+
+function! s:gtm_statusline() abort
+  return s:gtm_plugin_status
+endfunction
+
 " +0 ~0 -0 
+" if git layer is loaded, use vim-gitgutter instead.
 function! s:hunks() abort
   let hunks = [0,0,0]
   try
-    let hunks = sy#repo#get_stats()
+    if SpaceVim#layers#isLoaded('git')
+      let hunks = GitGutterGetHunkSummary()
+    else
+      let hunks = sy#repo#get_stats()
+    endif
   catch
   endtry
   let rst = ''
@@ -72,7 +144,6 @@ function! s:hunks() abort
   endif
   return empty(rst) ? '' : ' ' . rst
 endfunction
-
 " vcs transient state functions:
 
 " first we need to open a buffer contains:
@@ -370,7 +441,7 @@ function! s:git_transient_state() abort
         \ 'key' : 't',
         \ 'desc' : 'toggle diff signs',
         \ 'func' : '',
-        \ 'cmd' : 'SignifyToggle',
+        \ 'cmd' : SpaceVim#layers#isLoaded('git') ? 'GitGutterToggle' : 'SignifyToggle',
         \ 'exit' : 0,
         \ },
         \ ],

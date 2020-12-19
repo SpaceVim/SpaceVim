@@ -1,6 +1,6 @@
 "=============================================================================
 " lsp.vim --- language server protocol wallpaper
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Seong Yong-ju < @sei40kr >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,7 +9,7 @@
 scriptencoding utf-8
 
 
-if SpaceVim#layers#isLoaded("autocomplete") && get(g:, "spacevim_autocomplete_method") ==# 'coc'
+if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
   " use coc.nvim
   let s:coc_language_servers = {}
   let s:coc_language_servers_key_id_map = {}
@@ -29,8 +29,8 @@ if SpaceVim#layers#isLoaded("autocomplete") && get(g:, "spacevim_autocomplete_me
     " the last part `bin/ccls` is the same, whereas the commands are not
     " actually the same.
     " We need to keep an id to distinguish among conflicting keys.
-    
-    if stridx(a:cmds[0], ".") >= 0 
+
+    if stridx(a:cmds[0], '.') >= 0 
       let l:key = split(a:cmds[0], "\\.")[-1]
     else
       let l:key = a:cmds[0]
@@ -52,23 +52,42 @@ if SpaceVim#layers#isLoaded("autocomplete") && get(g:, "spacevim_autocomplete_me
 
     let s:coc_language_servers_key_id_map[l:key] = s:coc_language_servers_key_id_map[l:key] + 1
 
-    autocmd! User CocNvimInit :call coc#config("languageserver", s:coc_language_servers)
+    augroup spacevim_lsp_layer
+      autocmd!
+      autocmd! User CocNvimInit :call coc#config("languageserver", s:coc_language_servers)
+    augroup END
   endfunction
 
   function! SpaceVim#lsp#show_doc() abort
-    call CocActionAsync("doHover")
+    call CocActionAsync('doHover')
   endfunction
 
   function! SpaceVim#lsp#go_to_def() abort
-    call CocActionAsync("jumpDefinition")
+    call CocAction('jumpDefinition')
+  endfunction
+
+  function! SpaceVim#lsp#go_to_declaration() abort
+    call CocAction('jumpDeclaration')
+  endfunction
+
+  function! SpaceVim#lsp#go_to_typedef() abort
+    call CocAction('jumpTypeDefinition')
+  endfunction
+
+  function! SpaceVim#lsp#go_to_impl() abort
+    call CocAction('jumpImplementation')
+  endfunction
+
+  function! SpaceVim#lsp#refactor() abort
+    call CocActionAsync('refactor')
   endfunction
 
   function! SpaceVim#lsp#rename() abort
-    call CocActionAsync("rename")
+    call CocActionAsync('rename')
   endfunction
 
   function! SpaceVim#lsp#references() abort
-    call CocActionAsync("jumpReferences")
+    call CocAction('jumpReferences')
   endfunction
 elseif has('nvim')
   " use LanguageClient-neovim
@@ -84,6 +103,14 @@ elseif has('nvim')
     call LanguageClient_textDocument_definition()
   endfunction
 
+  function! SpaceVim#lsp#go_to_typedef() abort
+    call LanguageClient_textDocument_typeDefinition()
+  endfunction
+
+  function! SpaceVim#lsp#go_to_impl() abort
+    call LanguageClient_textDocument_implementation()
+  endfunction
+
   function! SpaceVim#lsp#rename() abort
     call LanguageClient_textDocument_rename()
   endfunction
@@ -91,14 +118,26 @@ elseif has('nvim')
   function! SpaceVim#lsp#references() abort
     call LanguageClient_textDocument_references()
   endfunction
+
+  function! SpaceVim#lsp#go_to_declaration() abort
+    call LanguageClient_textDocument_declaration()
+  endfunction
+
+  function! SpaceVim#lsp#documentSymbol()
+    call LanguageClient_textDocument_documentSymbol()
+  endfunction
+
+  function! SpaceVim#lsp#refactor() abort
+    " @todo languageclient do not support refactor
+  endfunction
 else
   " use vim-lsp
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
-    exe "au User lsp_setup call lsp#register_server({"
-          \ . "'name': 'LSP',"
-          \ . "'cmd': {server_info -> " . string(a:cmds) . "},"
+    exe 'au User lsp_setup call lsp#register_server({'
+          \ . "'name': '" . a:ft . "-lsp',"
+          \ . "'cmd': {server_info -> " . string(a:cmds) . '},'
           \ . "'whitelist': ['" .  a:ft . "' ],"
-          \ . "})"
+          \ . '})'
     exe 'autocmd FileType ' . a:ft . ' setlocal omnifunc=lsp#complete'
   endfunction
 

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#lisp 模块"
-description: "这一模块为 lisp 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
+description: "这一模块为 Lisp 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
 ---
 
 # [可用模块](../../) >> lang#lisp
@@ -16,7 +16,7 @@ description: "这一模块为 lisp 开发提供支持，包括代码补全、语
 
 ## 模块简介
 
-这一模块为 SpaceVim 提供了 lisp 开发支持，包括代码补全、语法检查、以及代码格式化等特性。
+这一模块为 SpaceVim 提供了 Lisp 开发支持，包括代码补全、语法检查以及代码格式化等特性。
 
 ## 启用模块
 
@@ -36,4 +36,4 @@ description: "这一模块为 lisp 开发提供支持，包括代码补全、语
 
 ## 快捷键
 
-all the language special mappings is begin with `[SPC] l`, please checkout it in mapping guide.
+All the language special mappings begin with `[SPC] l`, please checkout them in mapping guide.

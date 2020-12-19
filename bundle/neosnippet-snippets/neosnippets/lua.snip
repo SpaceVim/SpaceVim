@@ -1,0 +1,93 @@
+# lua's indent plugin doesn't work well partly with markers. Use hard-tab for some of this snippet.
+snippet func
+abbr    function name(args)...end
+options word
+	function ${1:#:function_name}(${2:#:argument})
+		${0:TARGET}
+	end
+
+snippet if
+options head
+  if ${1:#:condition} then
+    ${0:TARGET}
+  end
+
+snippet for
+options head
+  for ${2:i} = 0, ${1:#:Things} do
+    ${0:TARGET}
+  end
+
+snippet forin
+options head
+  for ${2:k}, ${3:v} in ${1:ipairs(xs)} do
+    ${0:TARGET}
+  end
+
+snippet print_table
+options head
+abbr    for k, v in ipairs(table) do
+  for k, v in ipairs(${1:table}) do
+    print(k, v)
+  end
+
+snippet     print
+alias       p
+options     head
+  print(${0:TARGET})
+
+snippet     comment
+options     head
+  [[${0:TARGET}]]
+
+# For busted snippets
+# http://olivinelabs.com/busted/
+snippet describe
+options head
+abbr    describe(message, func)
+  describe(${1:#:message}, function()
+    ${0:TARGET}
+  end)
+
+snippet it
+options head
+abbr    it(message, func)
+  it(${1:#:message}, function()
+    ${0:TARGET}
+  end)
+
+snippet before_each
+options head
+abbr    before_each(func)
+  before_each(function()
+    ${0:TARGET}
+  end)
+
+snippet after_each
+options head
+abbr    after_each(func)
+  after_each(function()
+    ${0:TARGET}
+  end)
+
+snippet setup
+options head
+abbr    setup(func)
+  setup(function()
+    ${0:TARGET}
+  end)
+
+snippet tear_down
+options head
+abbr    tear_down(func)
+  tear_down(function()
+    ${0:TARGET}
+  end)
+
+snippet finally
+options head
+abbr    finally(func)
+  finally(function()
+    ${0:TARGET}
+  end)
+

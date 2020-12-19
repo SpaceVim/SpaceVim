@@ -19,10 +19,11 @@ This layer provides Dash integration for SpaceVim.
 
 ## Layer Installation
 
-To use this configuration layer, add it to your `~/.SpaceVim.d/init.vim`.
+To use this configuration layer, add it to your `~/.SpaceVim.d/init.toml`.
 
 ```vim
-call SpaceVim#layers#load('tools#dash')
+[[layers]]
+name = "tools#dash"
 ```
 
 ## Key bindings

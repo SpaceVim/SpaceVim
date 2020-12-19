@@ -9,8 +9,9 @@ description: "Edit markdown within vim, autopreview markdown in the default brow
 
 - [Description](#description)
 - [Install](#install)
-- [formatting](#formatting)
+- [Formatting](#formatting)
   - [options](#options)
+- [Tagbar](#tagbar)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -28,14 +29,37 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#markdown"
 ```
 
-## formatting
+The tagbar support is provided via lvht/tagbar-markdown which needs php has been installed. You can also use [mdctags](https://github.com/wsdjeg/mdctags.rs)
+which is written in rust.
 
-SpaceVim use remark to formatting markdown file, so you need to install this program. you can install it via npm:
+## Formatting
+
+SpaceVim uses remark to format Markdown file by default.
+You can install remark via [npm](https://www.npmjs.com/get-npm), the commands are shown as below.
 
 ```sh
 npm -g install remark
 npm -g install remark-cli
 npm -g install remark-stringify
+npm -g install remark-frontmatter
+npm -g install wcwidth
+```
+
+To use [Prettier](https://github.com/prettier/prettier),
+you need to change the layer option: `enabled_formater`.
+
+You can install [Prettier](https://github.com/prettier/prettier) via [yarn](https://yarnpkg.com/lang/zh-hans/docs/install/#windows-stable) or [npm](https://www.npmjs.com/get-npm), the commands are shown as below:
+
+1. Via `yarn`
+
+```sh
+yarn global add prettier
+```
+
+2. Via `npm`
+
+```sh
+npm install --global prettier
 ```
 
 ### options
@@ -56,10 +80,21 @@ Enable/Disable wcwidth for detecting the length of a table cell, default is 0. T
 
 Bullet marker to use for list items (`'-'`, `'*'`, or `'+'`, default: `'-'`).
 
+**enabled_formater**
+
+Specific the enabled formater for markdown file, default is `['remark']`.
+
+## Tagbar
+
+To have a table of the headings in the tagbar (toggled by [F2]), make sure php is in your `$PATH` (you can test this in SpaceVim : `:!php --version` should print something about php).
+
+If you don't want to install php, you can use [mdctags](https://github.com/wsdjeg/mdctags.rs) as an alternative.
+
 ## Key bindings
 
-| Key        | mode   | description                |
-| ---------- | ------ | -------------------------- |
-| `SPC b f`  | Normal | Format current buffer      |
-| `SPC l ft` | Normal | Format table under cursor  |
-| `SPC l p`  | Normal | Real-time markdown preview |
+| Key bindings | mode          | Descriptions                                           |
+| ------------ | ------------- | ------------------------------------------------------ |
+| `SPC b f`    | Normal        | Format current buffer                                  |
+| `SPC l k`    | Normal/Visual | Add URL link for word under cursor or slected word     |
+| `SPC l K`    | Normal/Visual | Add picture link for word under cursor or slected word |
+| `SPC l p`    | Normal        | Real-time markdown preview                             |

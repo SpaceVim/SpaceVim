@@ -1,0 +1,4 @@
+Execute ( Plugin config: vim-ref.vim ):
+  so config/plugins/vim-ref.vim
+  AssertEqual g:ref_source_webdict_sites.default, 'cn'
+

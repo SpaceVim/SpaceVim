@@ -1,0 +1,265 @@
+snippet ec
+    #endinitclip
+
+
+snippet inc
+    #include "${1}"
+
+
+snippet br
+    break;
+
+
+snippet ca
+    call(${1:#:frame});
+
+
+snippet case
+abbr ce
+	case ${1:#:expression} :
+		${1:TARGET}
+
+
+snippet catch
+abbr ch
+	catch ($1) {
+		$2
+	}
+
+snippet class
+	class ${1:#:ClassName} {
+		var _${2};
+		function ${1}(${2}){
+			_${2} = ${2};${0}
+		}
+	}
+
+snippet co
+    continue;
+
+
+snippet dt
+	default :
+		${1:TARGET}
+
+
+snippet de
+    delete ${1};
+
+
+snippet do
+	do {
+		${1:TARGET}
+	} while (${2:#:condition});
+
+
+snippet dm
+    duplicateMovieClip(${1:#:target}, ${2:#:newName}, ${3:#:depth});
+
+
+snippet ei
+	else if (${1}) {
+		${2:TARGET}
+	}
+
+
+snippet fori
+abbr fi
+	for (var ${1} in ${2}){
+		${3:TARGET}
+	};
+
+
+snippet for
+abbr fr
+	for (var ${1} = 0; $1 < ${2}.length; $1++) {
+		${0:TARGET}
+	};
+
+
+snippet fs
+    fscommand(${1:#:command}, ${2:#:paramaters});
+
+
+snippet fn
+	function ${1}(${2}):${3}{
+		${0:TARGET}
+	};
+
+snippet gu
+    getURL(${1});
+
+
+snippet gp
+    gotoAndPlay(${1});
+
+
+snippet gs
+	gotoAndStop(${1});
+
+snippet if
+	if (${1}) {
+		${0:TARGET}
+	}
+
+snippet il
+	ifFrameLoaded (${1}) {
+		${0:TARGET}
+	}
+
+snippet ip
+    import ${1};
+
+
+snippet it
+    interface ${1}{
+    	${0:TARGET}
+    }
+
+
+snippet lm
+    loadMovie(${1:url}, ${2:target}, ${3:method});
+
+
+snippet ln
+    loadMovieNum(${1:url}, ${2:level}, ${3:method});
+
+
+snippet lv
+    loadVariables(${1:url}, ${2:target}, ${3:method});
+
+
+snippet vn
+    loadVariables(${1:url}, ${2:level}, ${3:method});
+
+
+snippet mc
+    MovieClip
+
+
+snippet nf
+    nextFrame();
+
+
+snippet ns
+    nextScene();
+
+
+snippet on
+    on (${1}) {
+    	${2}
+    };
+
+
+snippet  oc
+	onClipEvent (${1}) {
+		${0:TARGET}
+	};
+
+snippet pl
+    play();
+
+
+snippet pf
+    pravFrame();
+
+
+snippet ps
+    prevScene();
+
+
+snippet pr
+    print(${1:#:target}, ${2:#:type});
+
+
+snippet bn
+    printAsBitmapNum(${1:#:level}, ${2:#:type});
+
+
+snippet pn
+    printNum(${1:#:level}, ${2:#:type});
+
+
+snippet rm
+    removeMovieClip(${1:#:target});
+
+
+snippet rt
+    return ${1};
+
+
+snippet sp
+    setProperty(${1:#:target}, ${2:#:property}, ${3:#:value});
+
+
+snippet sv
+    set(${1:#:name}, ${2:#:value});
+
+
+snippet dr
+    startDrag(${1:#:target}, ${2:#:lockcenter}, ${3:#:l}, ${4:#:t}, ${5:#:r}, ${6:#:b} );
+
+
+snippet st
+    stop();
+
+
+snippet ss
+    stopAllSounds();
+
+
+snippet sd
+    stopDrag();
+
+
+snippet sw
+	switch ( ${1:#:condition} ) {
+		${0:TARGET}
+	}
+
+
+snippet tt
+	tellTarget( ${1:#:target} ) {
+		${0:TARGET}
+	}
+
+snippet th
+    throw ${1};
+
+
+snippet tq
+    toggleHighQuality();
+
+
+snippet tr
+    trace(${1:"$0"});
+
+
+snippet ty
+	try {
+		${0:TARGET}
+	};
+
+snippet um
+    unloadMovie(${1:#:target});
+
+
+snippet un
+    unloadMovieNum(${1:#:level});
+
+
+snippet vr
+    var ${1}:${2};
+
+
+snippet wh
+	while (${1:#:condition}) {
+		${0:TARGET}
+	};
+
+
+snippet wt
+	with (${1:#:target});
+		${0:TARGET}
+	};
+

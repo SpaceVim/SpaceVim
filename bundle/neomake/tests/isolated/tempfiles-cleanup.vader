@@ -1,0 +1,40 @@
+Include: ../include/setup.vader
+
+Execute (Ensure that temporary files are not being left around):
+  new
+  let maker = {'exe': 'true'}
+  call neomake#Make(1, [maker])
+  AssertNeomakeMessage '\vUsing tempfile for unnamed buffer: "([^"]+)".'
+  let tmpfile = g:neomake_test_matchlist[1]
+
+  if neomake#has_async_support()
+    Assert filereadable(tmpfile)
+  else
+    AssertNeomakeMessage printf('Removing temporary file: "%s".', tmpfile)
+  endif
+  new
+
+  if !has('nvim') || has('nvim-0.2.0')
+    " Neovim fails to reload it: Error: Vim(function):E127: Cannot redefine function <SNR>22_nvim_output_handler: It is in use
+    runtime autoload/neomake.vim
+  endif
+
+  if neomake#has_async_support()
+    NeomakeTestsWaitForFinishedJobs
+    AssertNeomakeMessage 'Postponing final location list handling (in another window).', 3
+    Assert filereadable(tmpfile)
+  endif
+
+  doautocmd neomake VimLeave
+  AssertNeomakeMessage 'Calling VimLeave.', 3
+  if neomake#has_async_support()
+    AssertNeomakeMessage printf('Removing temporary file: "%s".', tmpfile)
+  endif
+  Assert !filereadable(tmpfile)
+  bwipe
+  bwipe
+
+  " Restore if not profiling.
+  if !v:profiling
+    runtime autoload/neomake.vim
+  endif

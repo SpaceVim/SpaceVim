@@ -1,0 +1,35 @@
+snippet     vital_new_without_let
+abbr        vital#...#new()
+  vital#${1:#:plugin_name}#new()
+
+snippet     vital_new
+abbr        let s:V = vital#...#new()
+options     head
+  let ${1:s:V} = vital#${2:#:plugin_name}#new()
+
+snippet     vital_import_without_let
+abbr        s:V.import('...')
+  ${1:s:V}.import('${2:#:module_name}')
+
+snippet     vital_import
+abbr        let s:M = s:V.import('...')
+options     head
+  let ${1:s:M} = ${2:s:V}.import('${3:#:module_name}')
+
+snippet     vital_load_without_call
+abbr        s:V.load('...')
+  ${1:s:V}.load('${2:#:module_name}')
+
+snippet     vital_load
+abbr        call s:V.load('...')
+options     head
+  call ${1:s:V}.load('${2:#:module_name}')
+
+# FAQ
+# Q. Why does this snip file has verbose prefix "vital_" for everything?
+# A. Because it's vital.vim specific but this snip is available in any vim
+# filetype buffers.
+#
+# Q. Why didn't provide X/X_with_Y instead of X_without_Y/X?
+# A. To show what is encouraged. Programmers usually assume that they should
+# always use shorter name of functions, so this snip followed the convention.

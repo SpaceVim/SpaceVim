@@ -1,0 +1,1 @@
+Error: Could not parse for environment production: Syntax error at 'file' (file: /tmp/neomake-tests/tests/fixtures/input/puppet/syntax-error.pp, line: 3, column: 3)

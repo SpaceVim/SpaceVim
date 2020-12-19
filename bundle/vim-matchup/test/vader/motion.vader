@@ -1,0 +1,23 @@
+Given vim (Nesting):
+
+  if
+    if
+      if
+
+      endif
+    endif
+  endif
+
+Before (Cursor):
+  normal! 5gg
+
+Do (Move [%):
+  [%
+Then (Verify line):
+  Assert line('.') == 4
+
+Do (Move [% twice):
+  [%[%
+Then (Verify line):
+  Assert line('.') == 3
+

@@ -3,11 +3,7 @@ title:  "Quick start guide"
 description: "A quick start guide which will tell you how to install and config SpaceVim, also provides a list of resources for learning SpaceVim."
 ---
 
-# Quick start guide
-
-If you haven’t seen SpaceVim at all yet, the first thing you should read is this guide.
-It will give you a good idea of what SpaceVim is like,
-show you how to install it, how to config it, and explain its features.
+# [Home](../) >> Quick start guide
 
 <!-- vim-markdown-toc GFM -->
 
@@ -21,12 +17,18 @@ show you how to install it, how to config it, and explain its features.
 
 <!-- vim-markdown-toc -->
 
+This is a quick start guide for SpaceVim, which will tell you how to install and config SpaceVim.
+And also provides a list of resources for learning SpaceVim.
+
+If you haven’t seen SpaceVim at all yet, the first thing you should read is this guide.
+It will give you a good idea of what SpaceVim is like,
+
 ## Install
 
-At a minimum, SpaceVim requires `git` and `curl` to be installed. These tools
+At a minimum, SpaceVim requires `git` and `curl` to be installed. Both tools
 are needed for downloading plugins and fonts.
 
-If you are using vim/neovim in terminal, you also need to set the font of your terminal.
+If you are using Vim/Neovim in terminal, you also need to set the font of your terminal.
 
 ### Linux and macOS
 
@@ -34,13 +36,22 @@ If you are using vim/neovim in terminal, you also need to set the font of your t
 curl -sLf https://spacevim.org/install.sh | bash
 ```
 
-After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
+After SpaceVim being installed, launch `vim` and SpaceVim will **automatically** install plugins.
 
 For more info about the install script, please check:
 
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
+
+If you got a vimproc error like:
+
+```
+[vimproc] vimproc's DLL: "~/.SpaceVim/bundle/vimproc.vim/lib/vimproc_linux64.so" is not found.
+````
+
+Please read `:help vimproc` and make it, you may need to install make (from `build-essential`)
+and a C compilator (like `gcc`) to build the dll (see issue [#435](https://github.com/SpaceVim/SpaceVim/issues/435) and [#544](https://github.com/SpaceVim/SpaceVim/issues/544)).
 
 ### Windows
 
@@ -53,7 +64,7 @@ docker pull spacevim/spacevim
 docker run -it --rm spacevim/spacevim nvim
 ```
 
-you can also load local config:
+You can also load local config:
 
 ```sh
 docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevim nvim
@@ -62,13 +73,12 @@ docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevi
 ## Configuration
 
 The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`. This is
-an example for basic usage of SpaceVim. For more info, please checkout SpaceVim
-documentation.
+an example for basic usage of SpaceVim. For more info, please checkout [documentation](../documentation/) and [available layers](../layers/).
 
 ```toml
-# This is basic configuration example for SpaceVim
+# This is a basic configuration example for SpaceVim
 
-# All SpaceVim option below [option] section
+# All SpaceVim options are below [options] snippet
 [options]
     # set spacevim theme. by default colorscheme layer is not loaded,
     # if you want to use more colorscheme, please load the colorscheme
@@ -81,30 +91,30 @@ documentation.
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "nil"
-    statusline_separator = "bar"
+    statusline_iseparator = "bar"
     buffer_index_type = 4
     # Display file type icon on the tabline, If you do not have nerd fonts
     # installed, please change the value to false
     enable_tabline_filetype_icon = true
     # Display current mode text on statusline, by default It is disabled,
     # only color will be changed when switch modes.
-    enable_statusline_display_mode = false
+    enable_statusline_mode = false
 
 # Enable autocomplete layer
 [[layers]]
-name = "autocomplete"
-auto-completion-return-key-behavior = "complete"
-auto-completion-tab-key-behavior = "cycle"
+    name = "autocomplete"
+    auto-completion-return-key-behavior = "complete"
+    auto-completion-tab-key-behavior = "cycle"
 
 [[layers]]
-name = "shell"
-default_position = "top"
-default_height = 30
+    name = "shell"
+    default_position = "top"
+    default_height = 30
 
 # This is an example for adding custom plugins lilydjwg/colorizer
 [[custom_plugins]]
-name = "lilydjwg/colorizer"
-merged = 0
+    repo = "lilydjwg/colorizer"
+    merged = false
 ```
 
 ## Online tutor
@@ -113,7 +123,7 @@ This is a list of online tutor for using SpaceVim as general IDE and programming
 
 - [use vim as general IDE](../use-vim-as-ide/): a general guide for using SpaceVim as IDE
 
-a list of guide for programming language support:
+A list of guide for programming language support:
 
 
 <ul>

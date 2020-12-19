@@ -1,6 +1,6 @@
 "=============================================================================
 " logger.vim --- SpaceVim logger API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -140,4 +140,8 @@ function! s:self._comp(msg, l) abort
       return 1
     endif
   endif
+endfunction
+
+function! s:self.clear(level) abort
+  let self.temp = filter(deepcopy(self.temp), '!self._comp(v:val, a:level)')
 endfunction

@@ -1,16 +1,16 @@
 "=============================================================================
 " ginit.vim --- Entry file for neovim-qt
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 if exists('g:GuiLoaded')
-  if empty(g:spacevim_guifont)
-    exe 'Guifont! SauceCodePro Nerd Font Mono:h11:cANSI:qDRAFT'
-  else
+  if exists('g:spacevim_guifont') && !empty(g:spacevim_guifont)
     exe 'Guifont! ' . g:spacevim_guifont
+  else
+    exe 'Guifont! SauceCodePro Nerd Font Mono:h11:cANSI:qDRAFT'
   endif
   " As using neovim-qt by default
 
@@ -22,16 +22,6 @@ if exists('g:GuiLoaded')
   " Disbale gui tabline
   if exists(':GuiTabline') == 2
     GuiTabline 0
-  endif
-  if g:spacevim_colorscheme !=# '' "{{{
-    try
-      exec 'set background=' . g:spacevim_colorscheme_bg
-      exec 'colorscheme ' . g:spacevim_colorscheme
-    catch
-      exec 'colorscheme '. g:spacevim_colorscheme_default
-    endtry
-  else
-    exec 'colorscheme '. g:spacevim_colorscheme_default
   endif
 endif
 

@@ -1,6 +1,6 @@
 "=============================================================================
 " followHEAD.vim --- generate follow HEAD page
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -58,5 +58,5 @@ function! s:follow_head_content() abort
     let s:prs =s:get_list_of_PRs() 
   endif
   let md = md + SpaceVim#dev#releases#parser_prs(s:prs, s:lang)
-  return join(md, "\n")
+  return md
 endfunction

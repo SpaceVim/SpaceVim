@@ -1,0 +1,5 @@
+[file-run]
+    command = "dir"
+    isBackground = false
+[file-run.options]
+    cwd = '${workspaceFolder}bin/'

@@ -1,0 +1,1297 @@
+set encoding=utf-8
+set termencoding=utf-8
+set fileencoding=utf-8
+
+scriptencoding utf-8
+
+function! AddLine(str)
+    put! =a:str
+endfunction
+
+function! CursorPos()
+    return [line('.'), col('.'), getline('.')[col('.')-1]]
+endfunction
+
+Describe default config
+    It should load plugin
+        Assert g:loaded_clever_f
+    End
+
+    It should override original mappings by default
+        for m in ['f', 'F', 't', 'T']
+            let mapped = mapcheck(m, 'nxo')
+            Assert True(stridx(mapped, 'clever-f') >= 0, m . ' -> ' . mapped)
+        endfor
+    End
+
+    It should provide variables to customize behavior
+        call clever_f#reset()
+        Assert Equals(g:clever_f_across_no_line, 0)
+        Assert Equals(g:clever_f_ignore_case, 0)
+        Assert Equals(g:clever_f_use_migemo, 0)
+        Assert Equals(g:clever_f_fix_key_direction, 0)
+        Assert Equals(g:clever_f_show_prompt, 0)
+        Assert Equals(g:clever_f_smart_case, 0)
+        Assert Equals(g:clever_f_chars_match_any_signs, '')
+        Assert Equals(g:clever_f_mark_cursor, 1)
+        Assert Equals(g:clever_f_hide_cursor_on_cmdline, 1)
+        Assert Equals(g:clever_f_timeout_ms, 0)
+        Assert Equals(g:clever_f_mark_char, 1)
+        Assert Equals(g:clever_f_repeat_last_char_inputs, ["\<CR>"])
+        Assert Equals(g:clever_f_clean_labels_eagerly, 1)
+        Assert Equals(g:clever_f_mark_direct, 0)
+    End
+End
+
+Describe f, F, t and T mappings
+    Before
+        new
+        call clever_f#reset()
+        call AddLine('poge huga hiyo poyo')
+    End
+
+    After
+        close!
+    End
+
+    It should provide improved forward search like builtin f
+        normal! 0
+        let l = line('.')
+        Assert Equals(CursorPos(), [l,1,'p'])
+
+        normal fh
+        Assert Equals(CursorPos(), [l,6,'h'])
+
+        normal f
+        Assert Equals(CursorPos(), [l,11,'h'])
+
+        normal! e
+        Assert Equals(CursorPos(), [l,14,'o'])
+
+        normal fo
+        Assert Equals(CursorPos(), [l,17,'o'])
+
+        normal f
+        Assert Equals(CursorPos(), [l,19,'o'])
+    End
+
+    It should provide improved backward search like builtin F
+        normal! $
+        let l = line('.')
+        Assert Equals(CursorPos(), [l,19,'o'])
+
+        normal Fo
+        Assert Equals(CursorPos(), [l,17,'o'])
+
+        normal f
+        Assert Equals(CursorPos(), [l,14,'o'])
+
+        normal! h
+
+        normal Fh
+        Assert Equals(CursorPos(), [l,11,'h'])
+
+        normal f
+        Assert Equals(CursorPos(), [l,6,'h'])
+    End
+
+    It should provide t mapping like builtin t
+        normal! 0
+        let l = line('.')
+        Assert Equals(CursorPos(), [l,1,'p'])
+
+        normal th
+        Assert Equals(CursorPos(), [l,5,' '])
+
+        normal t
+        Assert Equals(CursorPos(), [l,10,' '])
+
+        normal! e
+        Assert Equals(CursorPos(), [l,14,'o'])
+
+        normal to
+        Assert Equals(CursorPos(), [l,16,'p'])
+
+        normal t
+        Assert Equals(CursorPos(), [l,18,'y'])
+
+        call AddLine('ab hbge huga')
+        normal! gg0
+        normal tb
+        Assert Equals(CursorPos(), [l,1,'a'])
+        normal t
+        Assert Equals(CursorPos(), [l,4,'h'])
+    End
+
+    It should provide T mapping like builtin T
+        normal! 0
+        let l = line('.')
+        Assert Equals(CursorPos(), [l,1,'p'])
+
+        normal th
+        Assert Equals(CursorPos(), [l,5,' '])
+
+        normal t
+        Assert Equals(CursorPos(), [l,10,' '])
+
+        normal! e
+        Assert Equals(CursorPos(), [l,14,'o'])
+
+        normal to
+        Assert Equals(CursorPos(), [l,16,'p'])
+
+        normal t
+        Assert Equals(CursorPos(), [l,18,'y'])
+
+        call AddLine('ab hbge huga')
+        normal! gg0
+        normal tb
+        Assert Equals(CursorPos(), [l,1,'a'])
+        normal t
+        Assert Equals(CursorPos(), [l,4,'h'])
+    End
+
+    It should provide improved forward search like builtin f in visual mode
+        normal! 0
+        let l = line('.')
+        Assert Equals(CursorPos(), [l,1,'p'])
+
+        normal! v
+        normal fh
+        Assert Equals(CursorPos(), [l,6,'h'])
+
+        normal f
+        Assert Equals(CursorPos(), [l,11,'h'])
+
+        normal! e
+        Assert Equals(CursorPos(), [l,14,'o'])
+
+        normal fo
+        Assert Equals(CursorPos(), [l,17,'o'])
+
+        normal f
+        Assert Equals(CursorPos(), [l,19,'o'])
+    End
+
+    It should provide improved backward search like builtin F
+        normal! $v
+        let l = line('.')
+        Assert Equals(CursorPos(), [l,19,'o'])
+
+        normal Fo
+        Assert Equals(CursorPos(), [l,17,'o'])
+
+        normal f
+        Assert Equals(CursorPos(), [l,14,'o'])
+
+        normal! h
+
+        normal Fh
+        Assert Equals(CursorPos(), [l,11,'h'])
+
+        normal f
+        Assert Equals(CursorPos(), [l,6,'h'])
+    End
+
+    It should provide t mapping like builtin t
+        normal! 0v
+        let l = line('.')
+        Assert Equals(CursorPos(), [l,1,'p'])
+
+        normal th
+        Assert Equals(CursorPos(), [l,5,' '])
+
+        normal t
+        Assert Equals(CursorPos(), [l,10,' '])
+
+        normal! e
+        Assert Equals(CursorPos(), [l,14,'o'])
+
+        normal to
+        Assert Equals(CursorPos(), [l,16,'p'])
+
+        normal t
+        Assert Equals(CursorPos(), [l,18,'y'])
+
+        call AddLine('ab hbge huga')
+        normal! gg0
+        normal tb
+        Assert Equals(CursorPos(), [l,1,'a'])
+        normal t
+        Assert Equals(CursorPos(), [l,4,'h'])
+    End
+
+    It should provide T mapping like builtin T
+        normal! $v
+        let l = line('.')
+        Assert Equals(CursorPos(), [l,19,'o'])
+
+        normal To
+        Assert Equals(CursorPos(), [l,18,'y'])
+
+        normal t
+        Assert Equals(CursorPos(), [l,15,' '])
+
+        normal! h
+
+        normal Th
+        Assert Equals(CursorPos(), [l,12,'i'])
+
+        normal t
+        Assert Equals(CursorPos(), [l,7,'u'])
+
+        call AddLine('ab hbge huga')
+        normal! gg$
+        normal Tg
+        Assert Equals(CursorPos(), [l,12,'a'])
+        normal t
+        Assert Equals(CursorPos(), [l,7,'e'])
+    End
+
+    It should work with Vim 8.1.0648
+        normal! 0
+        let l = line('.')
+        Assert Equals(CursorPos(), [l,1,'p'])
+
+        normal dth
+        Assert Equals(CursorPos(), [l,1,'h'])
+    End
+
+    It should have different context in normal mode and visual mode
+        let l = line('.')
+        Assert Equals(CursorPos(), [l, 1, 'p'])
+
+        normal fo
+        Assert Equals(CursorPos(), [l, 2, 'o'])
+
+        normal vfh
+        Assert Equals(CursorPos(), [l, 6, 'h'])
+
+        normal f
+        Assert Equals(CursorPos(), [l, 11, 'h'])
+
+        normal! d
+        Assert Equals(getline('.'), "piyo poyo")
+        Assert Equals(CursorPos(), [l, 2, 'i'])
+
+        normal! dfp
+        Assert Equals(getline('.'), "poyo")
+        Assert Equals(CursorPos(), [l, 2, 'o'])
+    End
+
+    It should open folding automatically
+        let l = getline(1)
+        call setline(1, ['{{{', l, '}}}'])
+        setl foldmethod=marker
+
+        " Move to closed folding
+        normal! ggjzM
+
+        normal fh
+        Assert Equals(foldclosed('.'), -1)
+        Assert Equals(CursorPos(), [2,6,'h'])
+    End
+
+    It does not reproduce #54
+        normal! 0
+        let l = line('.')
+
+        normal fh
+        Assert Equals(CursorPos(), [l,6,'h'])
+
+        " Back to the position after reset
+        normal! 0
+        " XXX: Hack! While running test, InsertEnter is not fired
+        " automatically. To test the event, we need to cause it manually.
+        doautocmd CursorMoved
+
+        normal! 5l
+        Assert Equals(CursorPos(), [l,6,'h'])
+
+        normal fo
+        Assert Equals(CursorPos(), [l,14,'o'])
+    End
+End
+
+Describe f and F mappings' contexts
+    Before
+        new
+        call clever_f#reset()
+        call AddLine('poge huga hiyo poyo')
+    End
+
+    After
+        close!
+    End
+
+    It should be shared
+        normal! 0
+        let l = line('.')
+
+        normal fh
+        Assert Equals(CursorPos(), [l,6,'h'])
+        normal f
+        Assert Equals(CursorPos(), [l,11,'h'])
+        normal F
+        Assert Equals(CursorPos(), [l,6,'h'])
+        normal f
+        Assert Equals(CursorPos(), [l,11,'h'])
+    End
+End
+
+Describe g:clever_f_across_no_line
+    Before
+        new
+        let g:clever_f_across_no_line = 1
+        call clever_f#reset()
+        call AddLine('poge huga hiyo poyo')
+        call AddLine('poge huga hiyo poyo')
+    End
+
+    After
+        let g:clever_f_across_no_line = 0
+        close!
+    End
+
+    It should not move cursor to next line
+        normal! gg0
+        let l = line('.')
+
+        normal fhf
+        Assert Equals(CursorPos(), [l,11,'h'])
+        normal f
+        Assert Equals(CursorPos(), [l,11,'h'])
+
+        normal! gg0
+        normal tht
+        Assert Equals(CursorPos(), [l,10,' '])
+        normal t
+        Assert Equals(CursorPos(), [l,10,' '])
+    End
+
+    It should not move cursor to previous line
+        normal! ggj$
+        let l = line('.')
+
+        normal Fpf
+        Assert Equals(CursorPos(), [l,1,'p'])
+        normal f
+        Assert Equals(CursorPos(), [l,1,'p'])
+
+        normal! ggj$
+        normal Tpt
+        Assert Equals(CursorPos(), [l,2,'o'])
+        normal t
+        Assert Equals(CursorPos(), [l,2,'o'])
+    End
+End
+
+Describe a non-existent char
+    Before
+        new
+        call clever_f#reset()
+        call AddLine('poge huga hiyo poyo')
+    End
+
+    After
+        close!
+    End
+
+    It should do nothing
+        normal! 0
+        let origin = CursorPos()
+
+        normal fd
+        Assert Equals(CursorPos(), origin)
+        normal f1
+        Assert Equals(CursorPos(), origin)
+        normal f)
+        Assert Equals(CursorPos(), origin)
+        normal f^
+        Assert Equals(CursorPos(), origin)
+        normal fm
+        Assert Equals(CursorPos(), origin)
+    End
+End
+
+Context target is in other line
+    Before
+        new
+        call AddLine('foo bar baz')
+        call AddLine('poge huga hiyo poyo')
+        call clever_f#reset()
+        normal! gg
+    End
+
+    After
+        close!
+    End
+
+    It should move cursor forward across lines
+        normal! 0
+        let l = line('.')
+        Assert Equals(col('.'), 1)
+
+        normal fa
+        Assert Equals(CursorPos(), [l, 9, 'a'])
+
+        normal f
+        Assert Equals(CursorPos(), [l+1, 6, 'a'])
+
+        normal f
+        Assert Equals(CursorPos(), [l+1, 10, 'a'])
+
+        normal F
+        Assert Equals(CursorPos(), [l+1, 6, 'a'])
+
+        normal F
+        Assert Equals(CursorPos(), [l, 9, 'a'])
+    End
+
+    It should move cursor backward across lines
+        normal! Gk$
+        let l = line('.')
+        Assert Equals(col('.'), 11)
+
+        normal Fa
+        Assert Equals(CursorPos(), [l, 10, 'a'])
+
+        normal f
+        Assert Equals(CursorPos(), [l, 6, 'a'])
+
+        normal f
+        Assert Equals(CursorPos(), [l-1, 9, 'a'])
+
+        normal F
+        Assert Equals(CursorPos(), [l, 6, 'a'])
+
+        normal F
+        Assert Equals(CursorPos(), [l, 10, 'a'])
+    End
+End
+
+Context Multibyte characters
+    Before
+        new
+        call AddLine('ビムかわいいよzビムx')
+        call AddLine('foo bar baz')
+        call clever_f#reset()
+        normal! gg
+    End
+
+    After
+        close!
+    End
+
+    It should be supported
+        normal! gg0
+        let l = line('.')
+
+        normal fz
+        Assert Equals(CursorPos(), [l, 11, 'z'])
+
+        normal f
+        Assert Equals(CursorPos(), [l+1, 22, 'z'])
+
+        normal! h
+        normal fx
+        Assert Equals(CursorPos(), [l+1, 29, 'x'])
+    End
+End
+
+describe g:clever_f_ignore_case
+    Before
+        new
+        let g:clever_f_ignore_case = 1
+        call clever_f#reset()
+        call AddLine('poge Guga hiyo Go;yo;')
+    End
+
+    After
+        let g:clever_f_ignore_case = 0
+        close!
+    End
+
+    It should make f case insensitive
+        normal! gg0
+        let l = line('.')
+
+        normal fg
+        Assert Equals(CursorPos(), [l, 3, 'g'])
+
+        normal f
+        Assert Equals(CursorPos(), [l, 6, 'G'])
+
+        normal f
+        Assert Equals(CursorPos(), [l, 8, 'g'])
+
+        normal F
+        Assert Equals(CursorPos(), [l, 6, 'G'])
+    End
+
+    It should make no effect on searching signs
+        normal! 0
+        normal f;
+        Assert Equals(col('.'), 18)
+        normal f
+        Assert Equals(col('.'), 21)
+        let pos = getpos('.')
+        normal f
+        Assert Equals(pos, getpos('.'))
+    End
+End
+
+Describe clever_f#compat#strchars
+    It should return different value from strlen() when multibyte character strings given
+        for str in ['あいうえお', 'aiueoあ', '１２3ABC４5']
+            Assert NotEquals(clever_f#compat#strchars(str), strlen(str))
+        endfor
+    End
+
+    It should return the same value as strlen() when given string contains no multibyte character
+        for str in ['aiueo', 'this_is_a_pen', "!#$%&'()'", '']
+            Assert Equals(clever_f#compat#strchars(str), strlen(str))
+        endfor
+    End
+End
+
+Describe clever_f#find_with()
+    It should raise an error when invalid map is given
+        Throws /Error: Invalid mapping/ clever_f#find_with('x')
+    End
+End
+
+Describe migemo support
+    Before
+        new
+        let g:clever_f_use_migemo = 1
+        let g:clever_f_across_no_line = 1
+        call AddLine('はー，ビムかわいいよビム')
+        call clever_f#reset()
+        normal! gg0
+    End
+
+    After
+        close!
+        let g:clever_f_across_no_line = 0
+        let g:clever_f_use_migemo = 0
+    End
+
+    It should make f and F mapping match multibyte characters
+        normal fb
+        Assert Equals(col('.'), 10)
+        normal f
+        Assert Equals(col('.'), 31)
+        normal F
+        Assert Equals(col('.'), 10)
+        normal $
+        normal Fb
+        Assert Equals(col('.'), 31)
+        normal f
+        Assert Equals(col('.'), 10)
+        normal F
+        Assert Equals(col('.'), 31)
+    End
+
+    It should make t and T mapping match multibyte characters
+        normal tb
+        Assert Equals(col('.'), 7)
+        normal t
+        Assert Equals(col('.'), 28)
+        normal T
+        Assert Equals(col('.'), 13)
+        normal $
+        normal Tb
+        Assert Equals(col('.'), 34)
+        normal t
+        Assert Equals(col('.'), 13)
+        normal T
+        Assert Equals(col('.'), 28)
+        normal t
+        Assert Equals(col('.'), 13)
+    End
+
+    It doesn't degrade issue #24
+        let save = g:clever_f_across_no_line
+        let g:clever_f_across_no_line = 0
+        call AddLine('              sOS')
+        call AddLine('              sOS')
+        call AddLine('              sOS')
+        normal! gg^
+        normal fS
+        Assert Equals(CursorPos(), [1, 17, 'S'])
+        normal f
+        Assert Equals(CursorPos(), [2, 17, 'S'])
+        normal f
+        Assert Equals(CursorPos(), [3, 17, 'S'])
+        let g:clever_f_across_no_line = save
+    End
+End
+
+Describe g:clever_f_fix_key_direction
+    Before
+        new
+        let g:clever_f_fix_key_direction = 1
+        call clever_f#reset()
+        call AddLine('poge huga hiyo poyo')
+        normal! gg0
+    End
+
+    After
+        close!
+        let g:clever_f_fix_key_direction = 0
+    End
+
+    It should fix the direction of search for f and F
+        normal fofff
+        Assert Equals(col('.'), 19)
+        normal F
+        Assert Equals(col('.'), 17)
+        normal F
+        Assert Equals(col('.'), 14)
+        normal F
+        Assert Equals(col('.'), 2)
+        normal $
+        normal Fo
+        Assert Equals(col('.'), 17)
+        normal F
+        Assert Equals(col('.'), 14)
+        normal F
+        Assert Equals(col('.'), 2)
+    End
+
+    It should fix the direction of search for t and T
+        normal tottt
+        Assert Equals(col('.'), 18)
+        normal T
+        Assert Equals(col('.'), 15)
+        normal T
+        Assert Equals(col('.'), 3)
+        normal $
+        normal To
+        Assert Equals(col('.'), 18)
+        normal T
+        Assert Equals(col('.'), 15)
+        normal T
+        Assert Equals(col('.'), 3)
+    End
+End
+
+Describe Special characters
+    Before
+        new
+        call clever_f#reset()
+        call AddLine('poge huga hiyo poyo')
+        normal! gg0
+    End
+
+    After
+        close!
+    End
+
+    It should not break clever-f.vim
+        let pos = getpos('.')
+        execute 'normal' "f\<F1>"
+        execute 'normal' "f\<Left>"
+        execute 'normal' "f\<BS>"
+        Assert Equals(pos, getpos('.'))
+    End
+End
+
+Describe <Esc>
+    Before
+        new
+        call clever_f#reset()
+        call AddLine("poge huga \<Esc> poyo")
+        normal! gg0
+    End
+
+    After
+        close!
+    End
+
+    It should reset the state on f
+        let pos = getpos('.')
+        execute 'normal' "f\<Esc>"
+        Assert Equals(getpos('.'), pos)
+
+        " Check that the state is reset
+        normal fe
+        Assert Equals(col('.'), 4)
+    End
+
+    It should reset the state on T
+        normal! $
+        let pos = getpos('.')
+        execute 'normal' "T\<Esc>"
+        Assert Equals(getpos('.'), pos)
+
+        " Check that the state is reset
+        normal Th
+        Assert Equals(col('.'), 7)
+    End
+
+    Context with g:clever_f_mark_direct
+        Before
+            let g:clever_f_mark_direct = 1
+            highlight link CleverFDirect CleverFDefaultLabel
+        End
+
+        After
+            let g:clever_f_mark_direct = 0
+        End
+
+        It should remove target highlights
+            normal! gg0
+            execute 'normal' "f\<Esc>"
+            Assert Equals(len(filter(getmatches(), 'v:val.group==#"CleverFDirect"')), 0)
+        End
+    End
+End
+
+Describe g:clever_f_smart_case
+    Before
+        new
+        call clever_f#reset()
+        call AddLine('poHe huga Hiyo hoyo: poyo();')
+        normal! gg0
+        let g:clever_f_smart_case = 1
+    End
+
+    After
+        close!
+        let g:clever_f_smart_case = 0
+    End
+
+    It should make f smart case
+        normal fh
+        Assert Equals(col('.'), 3)
+        normal f
+        Assert Equals(col('.'), 6)
+        normal f
+        Assert Equals(col('.'), 11)
+        normal f
+        Assert Equals(col('.'), 16)
+        normal F
+        Assert Equals(col('.'), 11)
+
+        normal 0
+        normal fH
+        Assert Equals(col('.'), 3)
+        normal f
+        Assert Equals(col('.'), 11)
+        normal f
+        Assert Equals(col('.'), 11)
+        normal F
+        Assert Equals(col('.'), 3)
+    End
+
+    It should make t smart case
+        normal! $
+        normal Th
+        Assert Equals(col('.'), 17)
+        normal t
+        Assert Equals(col('.'), 12)
+        normal t
+        Assert Equals(col('.'), 7)
+        normal t
+        Assert Equals(col('.'), 4)
+        normal T
+        Assert Equals(col('.'), 5)
+
+        normal! $
+        normal TH
+        Assert Equals(col('.'), 12)
+        normal t
+        Assert Equals(col('.'), 4)
+        normal T
+        Assert Equals(col('.'), 10)
+    End
+
+    It should not affect searching signs
+        normal! 0
+        normal f;
+        Assert Equals(col('.'), 28)
+        normal! 0
+        let pos = getpos('.')
+        normal f
+        Assert Equals(pos, getpos('.'))
+    End
+End
+
+Describe g:clever_f_chars_match_any_signs
+    Before
+        new
+        call AddLine(' !"#$%&''()=~|\-^\@`[]{};:+*<>,.?_/')
+        let g:clever_f_chars_match_any_signs = ';'
+        normal! gg0
+    End
+
+    After
+        close!
+        let g:clever_f_chars_match_any_signs = ''
+    End
+
+    It should specify characters which match to any signs
+        normal f;
+        Assert Equals(col('.'), 2)
+        for i in range(3, 34)
+            normal f
+            Assert Equals(col('.'), i)
+        endfor
+
+        let pos = getpos('.')
+        normal f
+        Assert Equals(pos, getpos('.'))
+
+        for i in reverse(range(2, 33))
+            normal F
+            Assert Equals(col('.'), i)
+        endfor
+
+        let pos = getpos('.')
+        normal F
+        Assert Equals(pos, getpos('.'))
+    End
+End
+
+Describe Cursor mark on user input
+    Before
+        new
+        let g:clever_f_mark_cursor = 1
+        call clever_f#reset()
+        call AddLine('poge huga hiyo poyo')
+    End
+
+    After
+        close!
+    End
+
+    It 'ensures to remove highlight of cursor properly'
+        normal fh
+        Assert Equals(filter(getmatches(), 'v:val.group=="CleverFCursor"'), [])
+        normal fq
+        Assert Equals(filter(getmatches(), 'v:val.group=="CleverFCursor"'), [])
+    End
+End
+
+Describe Hiding cursor on command line
+    Before
+        new
+        let g:clever_f_mark_cursor = 1
+        let g:clever_f_hide_cursor_on_cmdline = 1
+        call clever_f#reset()
+        call AddLine('poge huga hiyo poyo')
+    End
+
+    After
+        close!
+    End
+
+    it should ensure to restore highlight properly
+        let guicursor = &guicursor
+        let t_ve = &t_ve
+        normal fh
+        Assert Equals(guicursor, &guicursor)
+        Assert Equals(t_ve, &t_ve)
+        normal fq
+        Assert Equals(guicursor, &guicursor)
+        Assert Equals(t_ve, &t_ve)
+    End
+End
+
+Describe g:clever_f_timeout_ms
+    Before
+        new
+        let g:clever_f_timeout_ms = 100
+        call clever_f#reset()
+        call AddLine('poge huga hiyo poyo')
+        normal! gg0
+    End
+
+    After
+        close!
+        let g:clever_f_timeout_ms = 0
+    End
+
+    It should reset the state if timed out
+        normal fhf
+        Assert Equals(col('.'), 11)
+        sleep 150m
+        normal fo
+        Assert Equals(col('.'), 14)
+        normal f
+        Assert Equals(col('.'), 17)
+        sleep 150m
+        normal Fo
+        Assert Equals(col('.'), 14)
+    End
+End
+
+Describe g:clever_f_mark_char
+    Before
+        new
+        let g:clever_f_mark_char = 1
+        call clever_f#reset()
+        call AddLine('poge huga hiyo poyo')
+        let old_across_no_line = g:clever_f_across_no_line
+        let g:clever_f_across_no_line = 0
+    End
+
+    After
+        close!
+        let g:clever_f_across_no_line = old_across_no_line
+    End
+
+    It should highlight the target characters automatically
+        normal! gg0
+        normal fh
+        Assert NotEquals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+        normal f
+        Assert NotEquals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+    End
+
+    It should update the highlight if the cursor moves to another line
+        call AddLine('oh huh')
+        normal! gg0
+        let l = line('.')
+        normal fhff
+        Assert NotEquals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+        Assert NotEquals(stridx(getmatches()[0].pattern, l), -1)
+        Assert Equals(len(getmatches()), 1)
+        normal f
+        Assert NotEquals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+        Assert NotEquals(stridx(getmatches()[0].pattern, l+1), -1)
+        Assert Equals(len(getmatches()), 1)
+        normal f
+        Assert NotEquals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+        Assert NotEquals(stridx(getmatches()[0].pattern, l+1), -1)
+        Assert Equals(len(getmatches()), 1)
+    End
+
+    It should remove highlights when moving cursor to another place
+        call AddLine('oh huh')
+        call AddLine('oh huh')
+        normal! gg0
+        normal fhff
+        normal! j
+        " XXX: Hack! While running test, CursorMoved is not fired
+        " automatically. To test the event, we need to cause it manually.
+        doautocmd CursorMoved
+        Assert Equals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+    End
+
+    It should remove highlights when entering insert mode
+        call AddLine('oh huh')
+        call AddLine('oh huh')
+        normal! gg0
+        normal fhff
+        " XXX: Hack! While running test, InsertEnter is not fired
+        " automatically. To test the event, we need to cause it manually.
+        doautocmd InsertEnter
+        Assert Equals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+    End
+
+    Describe clever_f#reset()
+        It should remove target highlights
+            call AddLine('oh huh')
+            normal! gg0
+            let l = line('.')
+            normal fhff
+            Assert NotEquals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+            call clever_f#reset()
+            Assert Equals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+        End
+    End
+End
+
+Describe g:clever_f_repeat_last_char_inputs
+    Before
+        new
+        call clever_f#reset()
+        call AddLine('hoge huga hiyo hoyo')
+        normal! gg0
+    End
+
+    After
+        close!
+    End
+
+    It should repeat previous input again
+        normal fhl
+        Assert Equals(col('.'), 7)
+        execute 'normal' "f\<CR>"
+        Assert Equals(col('.'), 11)
+        normal lfyl
+        Assert Equals(col('.'), 14)
+        execute 'normal' "f\<CR>"
+        Assert Equals(col('.'), 18)
+        normal! $
+        execute 'normal' "F\<CR>"
+        Assert Equals(col('.'), 18)
+    End
+
+    It should do nothing when the specified characters are input at first
+        call clever_f#_reset_all()
+        let p = getpos('.')
+        execute 'normal' "f\<CR>"
+        Assert Equals(getpos('.'), p)
+        execute 'normal' "F\<CR>"
+        Assert Equals(getpos('.'), p)
+        execute 'normal' "t\<CR>"
+        Assert Equals(getpos('.'), p)
+        execute 'normal' "T\<CR>"
+        Assert Equals(getpos('.'), p)
+    End
+End
+
+Describe Backslash
+    Before
+        new
+        call clever_f#reset()
+        call AddLine('poge\huga\hiyo\poyo')
+        normal! gg0
+    End
+
+    After
+        close!
+    End
+
+    It should not cause any search errors (#35)
+        normal f\
+        Assert Equals(col('.'), 5)
+        normal! $
+        normal F\
+        Assert Equals(col('.'), 15)
+        normal! gg0
+        normal t\
+        Assert Equals(col('.'), 4)
+        normal! $
+        normal T\
+        Assert Equals(col('.'), 16)
+    End
+End
+
+Describe selection=exclusive
+    Before
+        new
+        call AddLine('poge huga hiyo poyo')
+        let s:selection = &selection
+        set selection=exclusive
+        call clever_f#reset()
+        normal! gg0
+    End
+
+    After
+        close!
+        let &selection = s:selection
+    End
+
+    It should not change `f` behavior when not in visual mode
+        normal fh
+        Assert Equals(col('.'), 6)
+        normal f
+        Assert Equals(col('.'), 11)
+
+        normal! 0
+
+        normal th
+        Assert Equals(col('.'), 5)
+        normal t
+        Assert Equals(col('.'), 10)
+    End
+
+    It should change selection of `f` or `t` in visual mode
+        normal vfh
+        Assert Equals(col('.'), 7)
+        normal f
+        Assert Equals(col('.'), 12)
+
+        execute 'normal!' "\<Esc>0"
+        normal vth
+        Assert Equals(col('.'), 6)
+        normal t
+        Assert Equals(col('.'), 11)
+    End
+
+    It should not change `T` and `F` behavior
+        normal! $
+        normal vFh
+        Assert Equals(col('.'), 11)
+        normal f
+        Assert Equals(col('.'), 6)
+
+        execute 'normal!' "\<Esc>$"
+        normal vTh
+        Assert Equals(col('.'), 12)
+        normal t
+        Assert Equals(col('.'), 7)
+    End
+End
+
+Describe clever_f#_mark_direct()
+    function! GetHighlightedPositions()
+        let cols = sort(map(getmatches(), 'v:val.pos1[1]'), 'n')
+        let chars = []
+        for c in range(1, 19)
+            if len(cols) > 0 && cols[0] == c
+                let ch = '_'
+                call remove(cols, 0)
+            else
+                let ch = ' '
+            endif
+            call add(chars, ch)
+        endfor
+        return join(chars, '')
+    endfunction
+
+    Before
+        new
+        call clever_f#reset()
+        highlight link CleverFDirect CleverFDefaultLabel
+        call AddLine('ビムかわいいよzビムx')
+        call AddLine('pOge huga Hiyo pOyo')
+        let old_across_no_line = g:clever_f_across_no_line
+        let g:clever_f_across_no_line = 0
+    End
+
+    After
+        close!
+        let g:clever_f_mark_direct = 0
+        let g:clever_f_across_no_line = old_across_no_line
+    End
+
+    It should highlight characters to which the cursor can be moved directly
+        normal! gg0
+        " #: cursor position, _: highlighted char
+        "
+        "        #Oge huga Hiyo pOyo
+        let s = ' ______ _ ____ _   '
+        call clever_f#_mark_direct(1, 1)
+        Assert Equals(GetHighlightedPositions(), s)
+    End
+
+    It should highlight backward characters
+        normal! gg$
+        "        pOge huga Hiyo pOy#
+        let s = '   _ ____ __ _____ '
+        call clever_f#_mark_direct(0, 1)
+        Assert Equals(GetHighlightedPositions(), s)
+    End
+
+    It should highlight characters to which the cursor can be moved by one hop
+        normal! gg0
+        "        #Oge huga Hiyo pOyo
+        let s = '       _ _      ___'
+        call clever_f#_mark_direct(1, 2)
+        Assert Equals(GetHighlightedPositions(), s)
+    End
+
+    It should not highlight multibyte characters
+        normal! 2gg0
+        " ＃ムかわいいよzビムx
+        "               _    _
+        call clever_f#_mark_direct(1, 1)
+        let cols = [22, 29]
+        Assert Equals(sort(map(getmatches(), 'v:val.pos1[1]'), 'n'), cols)
+    End
+
+    Context with g:clever_f_smart_case
+        Before
+            let g:clever_f_smart_case = 1
+        End
+
+        After
+            let g:clever_f_smart_case = 0
+        End
+
+        It should highlight characters to which the cursor can be moved directly
+            normal! gg0
+            "        #Oge huga Hiyo pOyo
+            let s = ' ______ _ ___  _   '
+            call clever_f#_mark_direct(1, 1)
+            Assert Equals(GetHighlightedPositions(), s)
+        End
+
+        It should highlight backward characters
+            normal! gg$
+            "        pOge huga Hiyo pOy#
+            let s = '   _  ___ __  ____ '
+            call clever_f#_mark_direct(0, 1)
+            Assert Equals(GetHighlightedPositions(), s)
+        End
+
+        It should highlight characters to which the cursor can be moved by one hop
+            normal! gg0
+            "        #Oge huga Hiyo pOyo
+            let s = '       _ __  _  __ '
+            call clever_f#_mark_direct(1, 2)
+            Assert Equals(GetHighlightedPositions(), s)
+        End
+    End
+
+    Context with g:clever_f_ignore_case
+        Before
+            let g:clever_f_ignore_case = 1
+        End
+
+        After
+            let g:clever_f_ignore_case = 0
+        End
+
+        It should highlight characters to which the cursor can be moved directly
+            normal! gg0
+            "        #Oge huga Hiyo pOyo
+            let s = ' ______ _  __  _   '
+            call clever_f#_mark_direct(1, 1)
+            Assert Equals(GetHighlightedPositions(), s)
+        End
+
+        It should highlight backward characters
+            normal! gg$
+            "        pOge huga Hiyo pOy#
+            let s = '   _  ___ __  ____ '
+            call clever_f#_mark_direct(0, 1)
+            Assert Equals(GetHighlightedPositions(), s)
+        End
+
+        It should highlight characters to which the cursor can be moved by one hop
+            normal! gg0
+            "        #Oge huga Hiyo pOyo
+            let s = '       _ __  _   _ '
+            call clever_f#_mark_direct(1, 2)
+            Assert Equals(GetHighlightedPositions(), s)
+        End
+    End
+End
+
+Describe g:clever_f_mark_direct
+    Before
+        new
+        let g:clever_f_mark_direct = 1
+        call clever_f#reset()
+        highlight link CleverFDirect CleverFDefaultLabel
+        call AddLine('pOge huga Hiyo poyo')
+        let old_across_no_line = g:clever_f_across_no_line
+        let g:clever_f_across_no_line = 0
+    End
+
+    After
+        close!
+        let g:clever_f_mark_direct = 0
+        let g:clever_f_across_no_line = old_across_no_line
+    End
+
+    It should remove target highlights
+        normal! gg0
+        normal fh
+        Assert Equals(len(filter(getmatches(), 'v:val.group ==# "CleverFDirect"')), 0)
+    End
+
+    It should finish with no error
+        normal! gg$
+        normal fp
+        Assert Equals(len(filter(getmatches(), 'v:val.group ==# "CleverFDirect"')), 0)
+    End
+End
+" vim:foldmethod=marker

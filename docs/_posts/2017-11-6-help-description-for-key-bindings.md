@@ -1,7 +1,7 @@
 ---
 title: "Help description for key bindings"
 categories: [feature, blog]
-excerpt: "Key bindings are defined with help description, this feature is for getting Help description and jump to the position where the key bindings is defined."
+description: "Key bindings are defined with help description, this feature is for getting Help description and jump to the position where the key bindings is defined."
 image: https://user-images.githubusercontent.com/13142418/34907415-c2cf7e88-f843-11e7-92d3-ef0f9b1b72ae.gif
 commentsID: "Help description for key bindings"
 comments: true
