@@ -138,6 +138,10 @@ function! SpaceVim#default#options() abort
 
   set foldtext=SpaceVim#default#Customfoldtext()
 
+  " Split windows below and right by default. Set this here rather than
+  " forcing it in keybindings, so that the user can override the policy.
+  set splitbelow splitright
+
 endfunction
 "}}}
 
