@@ -49,6 +49,7 @@ function! s:open_win() abort
     autocmd BufWipeout <buffer> call <SID>stop_runner()
   augroup END
   let s:bufnr = bufnr('%')
+  " @bug win_getid requires vim 7.4.1557
   let s:winid = win_getid(winnr())
   wincmd p
 endfunction
@@ -94,13 +95,13 @@ function! s:async_run(runner, ...) abort
       call mkdir(dir, 'p')
     endif
     if type(a:runner[0]) == type({})
-      if type(a:runner[0].exe) == type(function("tr"))
+      if type(a:runner[0].exe) == type(function('tr'))
         let exe = call(a:runner[0].exe, [])
       elseif type(a:runner[0].exe) ==# type('')
         let exe = [a:runner[0].exe]
       endif
       let usestdin = get(a:runner[0], 'usestdin', 0)
-      let compile_cmd = exe + [get(a:runner[0], 'targetopt', '')] + [target]
+      let compile_cmd = exe + [get(a:runner[0], 'targetopt', '')] + [s:target]
       if usestdin
         let compile_cmd = compile_cmd + a:runner[0].opt
       else
@@ -141,7 +142,7 @@ function! s:async_run(runner, ...) abort
     "             false, use file name
     "   range: empty, whole buffer
     "          getline(a, b)
-    if type(a:runner.exe) == type(function("tr"))
+    if type(a:runner.exe) == type(function('tr'))
       let exe = call(a:runner.exe, [])
     elseif type(a:runner.exe) ==# type('')
       let exe = [a:runner.exe]
