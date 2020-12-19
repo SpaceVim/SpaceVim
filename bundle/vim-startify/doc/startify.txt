@@ -1,0 +1,1182 @@
+*startify.txt*  The fancy start screen.
+*startify*
+                __                    __           ___
+               /\ \__                /\ \__  __  /'___\
+           ____\ \ ,_\    __     _ __\ \ ,_\/\_\/\ \__/  __  __
+          /',__\\ \ \/  /'__`\  /\`'__\ \ \/\/\ \ \ ,__\/\ \/\ \
+         /\__, `\\ \ \_/\ \L\.\_\ \ \/ \ \ \_\ \ \ \ \_/\ \ \_\ \
+         \/\____/ \ \__\ \__/.\_\\ \_\  \ \__\\ \_\ \_\  \/`____ \
+          \/___/   \/__/\/__/\/_/ \/_/   \/__/ \/_/\/_/   `/___/> \
+                                                             /\___/
+                                                             \/__/
+  by Marco Hinz~
+>
+  If you use any of my plugins, please star them on GitHub. It's a great way
+  of getting feedback and gives me the kick to put more time into their
+  development.
+
+  If you encounter any bugs or have feature requests, just open an issue on
+  GitHub.
+
+  Thank you for flying mhi^ airlines. Get the Vim on!
+<
+==============================================================================
+CONTENTS                                                     *startify-contents*
+
+    INTRO .......................................... |startify-intro|
+    USAGE .......................................... |startify-usage|
+    OPTIONS ........................................ |startify-options|
+    AUTOCMD ........................................ |startify-autocmd|
+    COMMANDS ....................................... |startify-commands|
+    MAPPINGS ....................................... |startify-mappings|
+    COLORS ......................................... |startify-colors|
+    MISC ........................................... |startify-misc|
+    FAQ ............................................ |startify-faq|
+    EXAMPLE ........................................ |startify-example|
+
+==============================================================================
+INTRO                                                           *startify-intro*
+
+Startify is a plugin that shows recently used files, bookmarks, commands and
+sessions that were saved to a certain directory.
+
+==============================================================================
+USAGE                                                           *startify-usage*
+
+Startify basically provides two things:
+
+1) If you start Vim without giving any filenames to it (or pipe stuff to it so
+   it reads from STDIN), startify will show a pretty start screen that shows
+   recently used files (using viminfo/shada) and sessions by default.
+
+   Additionally, you can define bookmarks (thus entries for files) and
+   commands that always should be available on the start screen.
+
+   You can either navigate to a certain menu entry and hit `<cr>` or just
+   enter the index (the index is whatever is written between the square
+   brackets on that line). You can even double-click anywhere on the line.
+
+   In addition, `e` creates an empty buffer, `i` creates an empty buffer and
+   jumps into insert mode, `q` quits either the buffer or, if there is no
+   other listed buffer left, Vim itself.
+
+   Moreover, you can open multiple buffers at once. Navigate to an entry and
+   hit either `b` (open in same window), `s` (open in split), `v` (open in
+   vertical split) or `t` (open in tab). You can do that for multiple entries.
+   You can also mix them. The order of the selections will be remembered.
+   Afterwards execute these actions via `<cr>`.
+
+   The uppercase variants of b/s/v/t enable the batchmode which lets you
+   select any entries without navigating there first. Every following index
+   will be opened in the currently active mode. E.g. to open the buffers with
+   the indices 0, 2, and 4, use `B024` instead of `bjjbjjb`. To disable
+   batchmode, just use the same uppercase key again, or any of the lowercase
+   variants.
+
+   When the selection is finished, Startify will close automatically. You can
+   reopen the screen via :Startify.
+
+   And you can define your own custom ascii art header!
+
+2) The plugin eases the handling of loading and saving sessions by putting
+   sessions in a central directory.
+
+      :SLoad       load a session    |startify-:SLoad|
+      :SSave[!]    save a session    |startify-:SSave|
+      :SDelete[!]  delete a session  |startify-:SDelete|
+      :SClose      close a session   |startify-:SClose|
+
+   If ! is given, you won't get prompted.
+
+   It also supports session persistence, so once a session is loaded, it gets
+   saved automatically when Vim is quit: |g:startify_session_persistence|
+
+==============================================================================
+OPTIONS                                                       *startify-options*
+
+Put these variables into your vimrc. The shown assignments are also the
+default values.
+
+    Most used options:~
+    |g:startify_bookmarks|
+    |g:startify_change_to_dir|
+    |g:startify_change_to_vcs_root|
+    |g:startify_custom_header|
+    |g:startify_enable_special|
+    |g:startify_list_order|
+    |g:startify_lists|
+    |g:startify_skiplist|
+    |g:startify_update_oldfiles|
+
+    Misc options:~
+    |g:startify_commands|
+    |g:startify_custom_footer|
+    |g:startify_custom_header_quotes|
+    |g:startify_custom_indices|
+    |g:startify_disable_at_vimenter|
+    |g:startify_enable_unsafe|
+    |g:startify_files_number|
+    |g:startify_fortune_use_unicode|
+    |g:startify_padding_left|
+    |g:startify_relative_path|
+    |g:startify_skiplist_server|
+    |g:startify_use_env|
+
+    Sessions:~
+    |g:startify_session_autoload|
+    |g:startify_session_before_save|
+    |g:startify_session_delete_buffers|
+    |g:startify_session_dir|
+    |g:startify_session_number|
+    |g:startify_session_persistence|
+    |g:startify_session_remove_lines|
+    |g:startify_session_savecmds|
+    |g:startify_session_savevars|
+    |g:startify_session_sort|
+
+------------------------------------------------------------------------------
+                                                        *g:startify_session_dir*
+>
+    let g:startify_session_dir = '~/.vim/session'
+<
+The directory to save/load sessions to/from.
+
+Defaults:~
+
+  Nvim:          `$XDG_DATA_HOME/nvim/session` (`:echo stdpath('data')`)
+  Vim (Unix):    `$HOME/.vim/session`
+  Vim (Windows): `$HOME/vimfiles/session`
+
+------------------------------------------------------------------------------
+                                                         *g:startify_list_order*
+
+This option is DEPRECATED in favor of |g:startify_lists|.
+
+------------------------------------------------------------------------------
+                                                              *g:startify_lists*
+>
+    let g:startify_lists = [
+          \ { 'type': 'files',     'header': ['   MRU']            },
+          \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+          \ { 'type': 'sessions',  'header': ['   Sessions']       },
+          \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+          \ { 'type': 'commands',  'header': ['   Commands']       },
+          \ ]
+<
+Startify displays lists. Each list consists of a `type` and optionally a `header`
+and custom `indices`.
+
+The 'type' is either a string of a built-in type or a |Funcref|.
+
+The 'header' is a list of strings, whereas each string will be put on its own
+line in the header.
+
+The 'indices' is a list of strings, which act as indices for the current list.
+Opposed to the global |g:startify_custom_indices|, this is limited to the
+current list.
+
+Built-in types:~
+
+'files'
+
+    This lists the most recently used files using viminfo. The number of files
+    is limited by |g:startify_files_number|.
+
+'dir'
+
+    This lists the files from the current directory sorted by modification
+    time. The number of files is limited by |g:startify_files_number|.
+
+'bookmarks'
+
+    This lists bookmarks, thus hardcoded files or directories that will always
+    be shown. Have a look at |g:startify_bookmarks|.
+
+'sessions'
+
+    This lists all the sessions saved in the directory |g:startify_session_dir|.
+
+'commands'
+
+    This lists commands defined in |g:startify_commands|.
+
+Funcref type:~
+
+The referenced function must return a list of dictionaries. Each dictionary
+is an entry that consists of these keys:
+
+    'line'  The text to display for this entry. (required)
+
+    'cmd'   The Vim command to execute when the entry gets chosen.
+            (required unless 'path' is given)
+
+    'path'  Points to a file. This way you can even use the standard markers
+            like `s` or `v` etc. to open multiple entries at once.
+            (required unless 'cmd' is given)
+
+Example #1:~
+>
+  function s:foobar()
+    return [
+          \ { 'line': 'foo', 'cmd': 'echo "FOO!"' },
+          \ { 'line': 'bar', 'cmd': 'echo "BAR!"' },
+          \ ]
+  endfunction
+
+  let g:startify_lists = [
+        \ { 'type': 'files', 'header': ['   MRU:'] },
+        \ { 'type': function('s:foobar'), 'header': ['foo', ' and', '  bar'] },
+        \ ]
+<
+Example #2:~
+
+This more practical example assumes a git repo at ~/repo and vim-fugitive
+installed (for `:Git`).
+>
+  function! s:list_commits()
+    let git = 'git -C ~/repo'
+    let commits = systemlist(git .' log --oneline | head -n10')
+    let git = 'G'. git[1:]
+    return map(commits, '{"line": matchstr(v:val, "\\s\\zs.*"), "cmd": "'. git .' show ". matchstr(v:val, "^\\x\\+") }')
+  endfunction
+
+  let g:startify_lists = [
+        \ { 'header': ['   MRU'],            'type': 'files' },
+        \ { 'header': ['   MRU '. getcwd()], 'type': 'dir' },
+        \ { 'header': ['   Sessions'],       'type': 'sessions' },
+        \ { 'header': ['   Commits'],        'type': function('s:list_commits') },
+        \ ]
+<
+NOTE: Headers are context-senstive: If the list for a type is empty, the
+header won't be shown.
+
+NOTE: Headers use the StartifySection highlight group. See |startify-colors|.
+
+------------------------------------------------------------------------------
+                                                          *g:startify_bookmarks*
+>
+    let g:startify_bookmarks = []
+<
+A list of files or directories to bookmark. The list can contain two kinds of
+types. Either a path or a dictionary whereas the key is the custom index and
+the value the path.
+
+Example:
+>
+    let g:startify_bookmarks = [ {'c': '~/.vimrc'}, '~/.zshrc' ]
+<
+NOTE: Avoid using keys from |startify-mappings| if providing custom indices.
+
+------------------------------------------------------------------------------
+                                                           *g:startify_commands*
+>
+    let g:startify_commands = []
+<
+A list of commands to execute on selection. Leading colons are optional. It
+supports optional custom indices and/or command descriptions.
+
+Example:
+>
+    let g:startify_commands = [
+        \ ':help reference',
+        \ ['Vim Reference', 'h ref'],
+        \ {'h': 'h ref'},
+        \ {'m': ['My magical function', 'call Magic()']},
+        \ ]
+<
+NOTE: Avoid using keys from |startify-mappings| if providing custom indices.
+
+------------------------------------------------------------------------------
+                                                       *g:startify_files_number*
+>
+    let g:startify_files_number = 10
+<
+The number of files to list.
+
+------------------------------------------------------------------------------
+                                                    *g:startify_update_oldfiles*
+>
+    let g:startify_update_oldfiles = 0
+<
+Usually |v:oldfiles| only gets updated when Vim exits. Using this option updates
+it on-the-fly, so that :Startify is always up-to-date.
+
+------------------------------------------------------------------------------
+                                                   *g:startify_session_autoload*
+>
+    let g:startify_session_autoload = 0
+<
+If this option is enabled and you start Vim in a directory that contains a
+`Session.vim`, that session will be loaded automatically. Otherwise it will be
+shown as the top entry in the Startify buffer.
+
+The same happens when you |:cd| to a directory that contains a `Session.vim`
+and execute |:Startify|.
+
+It also works if you open a bookmarked directory. See |g:startify_bookmarks|.
+
+This is great way to create a portable project folder!
+
+NOTE: This option is affected by |g:startify_session_delete_buffers|.
+
+------------------------------------------------------------------------------
+                                                *g:startify_session_before_save*
+>
+    let g:startify_session_before_save = []
+<
+This is a list of commands to be executed before saving a session.
+
+Example:
+>
+    let g:startify_session_before_save = [
+        \ 'echo "Cleaning up before saving.."',
+        \ 'silent! NERDTreeTabsClose'
+        \ ]
+<
+------------------------------------------------------------------------------
+                                                *g:startify_session_persistence*
+>
+    let g:startify_session_persistence = 0
+<
+Automatically update sessions in two cases:
+
+    - Before leaving Vim
+    - Before loading a new session via :SLoad
+
+This also works for sessions started with:
+>
+    vim -S mysession.vim
+<
+------------------------------------------------------------------------------
+                                             *g:startify_session_delete_buffers*
+>
+    let g:startify_session_delete_buffers = 1
+<
+Delete all buffers when loading or closing a session:
+
+    - When using |startify-:SLoad|.
+    - When using |startify-:SClose|.
+    - When using |g:startify_session_autoload|.
+    - When choosing a session from the Startify buffer.
+
+NOTE: Buffers with unsaved changes are silently ignored.
+
+------------------------------------------------------------------------------
+                                                      *g:startify_change_to_dir*
+>
+    let g:startify_change_to_dir = 1
+<
+When opening a file or bookmark, change to its directory.
+
+------------------------------------------------------------------------------
+                                                 *g:startify_change_to_vcs_root*
+>
+    let g:startify_change_to_vcs_root = 0
+<
+When opening a file or bookmark, seek and change to the root directory of the
+VCS (if there is one).
+
+At the moment only git, hg, bzr and svn are supported.
+
+------------------------------------------------------------------------------
+                                                           *g:startify_skiplist*
+>
+    let g:startify_skiplist = [
+        \ 'COMMIT_EDITMSG',
+        \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
+        \ 'bundle/.*/doc',
+        \ ]
+<
+A list of Vim regular expressions that is used to filter recently used files.
+See |pattern.txt| for what patterns can be used.
+
+NOTE: Due to the nature of patterns, you can't just use "~/mysecret" but have
+to use "$HOME .'/mysecret.txt'". The former would do something entirely
+different: |/\~|. When using backslashes as path separators, escape them.
+Otherwise using "C:\this\vim\path\is\problematic" would not match what you
+expect, since |/\v| is a pattern, too.
+
+Example:
+>
+    let g:startify_skiplist = [
+           \ '\.vimgolf',
+           \ '^/tmp',
+           \ '/project/.*/documentation',
+           \ escape(fnamemodify($HOME, ':p'), '\') .'mysecret.txt',
+           \ ]
+<
+------------------------------------------------------------------------------
+                                                *g:startify_fortune_use_unicode*
+>
+    let g:startify_fortune_use_unicode = 0
+<
+By default, the fortune header uses ASCII characters, because they work for
+everyone. If you set this option to 1 and your 'encoding' is "utf-8", Unicode
+box-drawing characters will be used instead.
+
+This is not the default, because users of East Asian languages often set
+'ambiwidth' to "double" or make their terminal emulator treat characters of
+ambiguous width as double width. Both would make the drawed box look funny.
+
+For more information: http://unicode.org/reports/tr11
+
+------------------------------------------------------------------------------
+                                                       *g:startify_padding_left*
+>
+    let g:startify_padding_left = 3
+<
+The number of spaces used for left padding.
+
+------------------------------------------------------------------------------
+                                                    *g:startify_skiplist_server*
+>
+    let g:startify_skiplist_server = []
+<
+Do not create the startify buffer, if this is a Vim server instance with a
+name contained in this list.
+
+Example:
+>
+    let g:startify_skiplist_server = [ 'GVIM' ]
+<
+------------------------------------------------------------------------------
+                                                     *g:startify_enable_special*
+>
+    let g:startify_enable_special = 1
+<
+Show <empty buffer> and <quit>.
+------------------------------------------------------------------------------
+                                                      *g:startify_enable_unsafe*
+>
+    let g:startify_enable_unsafe = 0
+<
+Enable the option only in case you think Vim starts too slowly (because of
+:Startify) or if you often edit files on remote filesystems.
+
+It's called unsafe because it improves the time :Startify needs to execute by
+reducing the amount of syscalls to the underlying operating system, but
+sacrifices the precision of shown entries.
+
+This could lead to inconsistences in the shown :Startify entries (e.g. the
+same file could be shown twice, because one time file was opened via absolute
+path and another time via symlink).
+
+Currently this option does this:
+
+    - don't resolves symlinks (readlink(2))
+    - don't check every file if it's readable (stat(2))
+    - don't filter through the bookmark list
+
+------------------------------------------------------------------------------
+                                               *g:startify_session_remove_lines*
+>
+    let g:startify_session_remove_lines = []
+<
+Lines matching any of the patterns in this list, will be removed from the
+session file.
+
+Example:
+>
+    let g:startify_session_remove_lines = ['setlocal', 'winheight']
+<
+Internally this simply does:
+>
+    :global/setlocal/delete
+    :global/winheight/delete
+<
+So you can use any |pattern|.
+
+NOTE: Take care not to mess up any expressions within the session file,
+otherwise you'll probably get problems when trying to load it.
+
+------------------------------------------------------------------------------
+                                                   *g:startify_session_savevars*
+>
+    let g:startify_session_savevars = []
+<
+Include a list of variables in here which you would like Startify to save into
+the session file in addition to what Vim normally saves into the session file.
+For example, Vim will not normally save all-lowercase global variables, which
+are common for plugin settings.  It may be advisable to include
+|g:startify_session_savevars| and |g:startify_session_savecmds| into this list
+so they are saved every time the session saves.
+
+Example:
+>
+    let g:startify_session_savevars = [
+           \ 'g:startify_session_savevars',
+           \ 'g:startify_session_savecmds',
+           \ 'g:random_plugin_use_feature'
+           \ ]
+<
+------------------------------------------------------------------------------
+                                                   *g:startify_session_savecmds*
+>
+    let g:startify_session_savecmds = []
+<
+Include a list of cmdline commands which Vim will run upon loading the
+session.  This can be useful to set various things (other than variables,
+|g:startify_session_savevars| above) which Vim may not normally save into the
+session file, as well as run external commands upon loading a session.
+
+Example:
+>
+    let g:startify_session_savecmds = [
+           \ 'silent !pdfreader ~/latexproject/main.pdf &'
+           \ ]
+<
+------------------------------------------------------------------------------
+                                                     *g:startify_session_number*
+>
+    let g:startify_session_number = 999
+<
+The maximum number of sessions to display. Makes the most sense together with
+|g:startify_session_sort|.
+
+------------------------------------------------------------------------------
+                                                       *g:startify_session_sort*
+>
+    let g:startify_session_sort = 0
+<
+Sort sessions by modification time (when the session files were written)
+rather than alphabetically.
+
+------------------------------------------------------------------------------
+                                                     *g:startify_custom_indices*
+>
+    let g:startify_custom_indices = []
+<
+Use any list of strings as indices instead of increasing numbers. If there are
+more startify entries than actual items in the custom list, the remaining
+entries will be filled using the default numbering scheme starting from 0.
+
+Thus you can create your own indexing scheme that fits your keyboard layout.
+You don't want to leave the home row, do you?!
+
+Example:
+>
+    let g:startify_custom_indices = ['f', 'g', 'h']
+<
+This would result in:
+
+    [f]  /most/recently/used/file1
+    [g]  /most/recently/used/file2
+    [h]  /most/recently/used/file3
+    [0]  /most/recently/used/file4
+    [1]  /most/recently/used/file5
+    [2]  /most/recently/used/file6
+    etc.
+
+If you want numbers to start at 1 instead of 0, you could use this:
+>
+    let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
+<
+NOTE: There is no sanitizing going on, so you should know what you're doing!
+      Avoid using keys from |startify-mappings|.
+
+------------------------------------------------------------------------------
+                                                      *g:startify_custom_header*
+>
+    let g:startify_custom_header = 'startify#pad(startify#fortune#cowsay())'
+<
+Define your own header.
+
+This option takes a `list of strings`, whereas each string will be put on its
+own line. If it is a simple `string`, it should evaluate to a list of strings.
+
+Helper functions:~
+
+    startify#fortune#quote()       random quote
+    startify#fortune#boxed(...)    random quote in a box
+    startify#fortune#cowsay(...)   random quote in a box + cow
+
+The last two functions optionally take a quote in the list of strings format.
+They also return a list of strings, suitable for this option.
+
+    startify#pad([strings])        pad strings in list according to
+                                   |g:startify_padding_left| or the default of 3
+    startify#center([strings])     center list of strings without removing
+                                   its strings indentations
+
+Example #1:~
+>
+    let g:startify_custom_header = [
+            \ '                                 ________  __ __        ',
+            \ '            __                  /\_____  \/\ \\ \       ',
+            \ '    __  __ /\_\    ___ ___      \/___//''/''\ \ \\ \    ',
+            \ '   /\ \/\ \\/\ \ /'' __` __`\        /'' /''  \ \ \\ \_ ',
+            \ '   \ \ \_/ |\ \ \/\ \/\ \/\ \      /'' /''__  \ \__ ,__\',
+            \ '    \ \___/  \ \_\ \_\ \_\ \_\    /\_/ /\_\  \/_/\_\_/  ',
+            \ '     \/__/    \/_/\/_/\/_/\/_/    \//  \/_/     \/_/    ',
+            \ ]
+<
+Example #2:~
+>
+    let g:startify_custom_header =
+            \ startify#pad(split(system('fortune | cowsay'), '\n'))
+<
+Example #3:~
+
+Let's assume you like the default boxed random quote, but not the ASCII art
+cow. You'd rather have another small ASCII art come before the quote. No
+problem!
+>
+    let g:ascii = [
+          \ '        __',
+          \ '.--.--.|__|.--------.',
+          \ '|  |  ||  ||        |',
+          \ ' \___/ |__||__|__|__|',
+          \ ''
+          \]
+    let g:startify_custom_header = g:ascii + startify#fortune#boxed()
+<
+Looks great! But it's not on the same column as the indices below which makes
+it look awkward. Let's indent the header by 3 spaces:
+>
+    let g:startify_custom_header =
+          \ startify#pad(g:ascii + startify#fortune#boxed())
+<
+Ah, much better! There's only one issue left. If you set
+g:startify_custom_header this way, it will only be done once. Hence spamming
+:Startify will always show the same quote.
+
+If you provide a string to it instead, Startify will evaluate it every time
+:Startify is run:
+>
+    let g:startify_custom_header =
+          \ 'startify#pad(g:ascii + startify#fortune#boxed())'
+<
+Happy customizing!
+
+Also have a look at |startify-faq-08|.
+
+------------------------------------------------------------------------------
+                                               *g:startify_custom_header_quotes*
+
+If you don't set |g:startify_custom_header|, the internal cowsay implementation
+with predefined random quotes will be used.
+
+To use your own quotes, set this option to a list of quotes. Each quote is
+either another list or a |Funcref| (see |expr-lambda|) that returns a list.
+
+Each element of the inner lists is put on an own line in the custom header.
+>
+    let g:startify_custom_header_quotes = [
+        \ ['quote #1'],
+        \ ['quote #2', 'using', 'three lines'],
+        \ {-> systemlist('echo quote #3')}
+        \ ]
+<
+If you want the predefined quotes as well, use this:
+>
+  let g:startify_custom_header_quotes =
+      \ startify#fortune#predefined_quotes() + [['quote 1', 'quote 2']]
+<
+------------------------------------------------------------------------------
+                                                      *g:startify_custom_footer*
+>
+    let g:startify_custom_footer = ''
+<
+Same as the custom header, but shown at the bottom of the startify buffer.
+
+------------------------------------------------------------------------------
+                                                *g:startify_disable_at_vimenter*
+>
+    let g:startify_disable_at_vimenter = 0
+<
+Don't run Startify at Vim startup. You can still call it anytime via
+:Startify.
+
+-----------------------------------------------------------------------------
+                                                     *g:startify_relative_path*
+>
+    let g:startify_relative_path = 0
+<
+If the file is in or below the current working directory, use a relative path.
+Otherwise an absolute path is used. The latter prevents hard to grasp entries
+like `../../../../../foo`.
+
+NOTE: This only applies to the "files" list, since the "dir" list is
+relative by nature.
+
+-----------------------------------------------------------------------------
+                                                           *g:startify_use_env*
+>
+    let g:startify_use_env = 0
+<
+Show environment variables in path, if their name is shorter than their value.
+See |startify-colors| for highlighting them.
+
+$PWD and $OLDPWD are ignored.
+
+==============================================================================
+AUTOCMD                                                       *startify-autocmd*
+
+In certain situations Startify emits events which can be hooked into via
+|autocmd|s. Those can be used for further customization.
+
+StartifyReady~
+
+  When the Startify buffer is ready.
+
+StartifyBufferOpened~
+
+  For each buffer that got opened by Startify. When you open multiple files at
+  once (see |startify-usage|), this event fires multiple times as well.
+
+StartifyAllBuffersOpened~
+
+  No matter how many buffers you open, this event fires only once after the
+  last buffer was opened.
+
+Example:
+>
+    autocmd User StartifyReady let &l:stl = ' This statusline rocks!'
+<
+Or use it to disable single mappings: |startify-faq-16|.
+
+NOTE: Autocmds don't nest by default. If you use any command that triggers new
+events, be sure to add "nested": |autocmd-nested|.
+
+==============================================================================
+COMMANDS                                                     *startify-commands*
+                                                            *startify-:Startify*
+>
+    :Startify
+<
+Open the startify buffer.
+                                                               *startify-:SSave*
+                                                             *startify-:SDelete*
+>
+    :SSave[!] [session]
+    :SDelete[!] [session]
+<
+Save or delete a session. If you don't specify a session name, it will prompt
+you for one.
+
+Use `:SSave!` or `:SDelete!` to always overwrite or delete an existing session.
+
+                                                               *startify-:SLoad*
+>
+    :SLoad[!] [session]
+<
+Load a session. If you don't specify a session name, it will prompt you for
+one.
+
+If the `!` is given, it tries to source the last used session (only Unix).
+
+Providing only a part of the session name works too, if you complete the
+argument with either <c-d> or <tab> afterwards.
+
+NOTE: This command is affected by |g:startify_session_delete_buffers|.
+
+                                                              *startify-:SClose*
+>
+    :SClose
+<
+Save and close the current session, close all listed buffers, and open the
+Startify buffer.
+
+NOTE: This command is affected by |g:startify_session_delete_buffers|.
+
+==============================================================================
+MAPPINGS                                                     *startify-mappings*
+
+Some things are remapped in the startify buffer..
+>
+    q
+<
+Close startify. Also quit Vim if it is the only buffer.
+>
+    e
+<
+Close startify and create a blank buffer.
+>
+    i
+    <insert>
+<
+Close startify, create a blank buffer and jump into insert mode right away.
+>
+    <2-LeftMouse>
+<
+Use a simple mouse click to open the targeted entry.
+>
+    [any number that is shown between square brackets]
+<
+Open the entry with the given number.
+>
+    b
+    s
+    v
+    t
+<
+Mark current entry to be opened in either the same window, in a split window,
+in a vertical split window or in a new tab.
+>
+    <cr>
+<
+Open all marked entries. If nothing was marked beforehand, just open the
+current entry.
+
+If you want to use another key instead of <cr>, put this in your vimrc:
+>
+    autocmd User Startified nmap <buffer> o <plug>(startify-open-buffers)
+<
+==============================================================================
+COLORS                                                         *startify-colors*
+
+You can overwrite the highlight groups used by startify. The plugin defines
+these groups:
+
+    Highlight group  |  Description             |  Default
+    ------------------------------------------------------------------
+                     |                          |
+    StartifyBracket  |  [,]                     |  linked to Delimiter
+    StartifyFile     |  the actual file         |  linked to Identifier
+    StartifyFooter   |  the custom footer       |  linked to Title
+    StartifyHeader   |  the custom header       |  linked to Title
+    StartifyNumber   |  the numbers between []  |  linked to Number
+    StartifyPath     |  the path to a file      |  linked to Directory
+    StartifySection  |  section headers         |  linked to Statement
+    StartifySelect   |  selected entries        |  linked to Title
+    StartifySlash    |  slashes in paths        |  linked to Delimiter
+    StartifySpecial  |  <empty buffer>,<quit>   |  linked to Comment
+    StartifyVar      |  environment variables   |  linked to StartifyPath
+
+Example: (my terminal emulator supports 256 colors)
+>
+    highlight StartifyBracket ctermfg=240
+    highlight StartifyFooter  ctermfg=240
+    highlight StartifyHeader  ctermfg=114
+    highlight StartifyNumber  ctermfg=215
+    highlight StartifyPath    ctermfg=245
+    highlight StartifySlash   ctermfg=240
+    highlight StartifySpecial ctermfg=240
+<
+==============================================================================
+MISC                                                             *startify-misc*
+
+Changing the entry format:~
+
+You can create a function `StartifyEntryFormat()` which returns a string that
+gets evaluated in Startify. In that string, `entry_path` and `absolute_path`
+will be replaced by their respective values.
+
+`absolute_path` is self-explaining and `entry_path` is the same path but
+potentially shortened, depending on options like |g:startify_relative_path|.
+
+Let us assume you have vim-devicons installed. That plugin has a function
+`WebDevIconsGetFileTypeSymbol()` which returns an icon depending on the given
+file. Prepend the logo to each Startify entry by putting this in your vimrc:
+>
+    function! StartifyEntryFormat()
+        return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
+    endfunction
+<
+==============================================================================
+FAQ                                                               *startify-faq*
+
+    |startify-faq-01|  I don't want the start screen to use cursorline!
+    |startify-faq-02|  Recent files aren't shown!
+    |startify-faq-03|  I have broken colors when using sessions!
+    |startify-faq-04|  How to disable common but unimportant files?
+    |startify-faq-05|  Why is the Startify buffer not using buftype=nofile?
+    |startify-faq-06|  How do I get both NERDTree and Startify working at
+                     startup?
+    |startify-faq-07|  The session autoload feature is not working!
+    |startify-faq-08|  How do I center my header/footer?
+    |startify-faq-09|  tmux-resurrect?
+    |startify-faq-10|  Temporarily skip Startify at start?
+    |startify-faq-11|  How to use the output of a command as header?
+    |startify-faq-12|  There is an empty window with vim-plug!
+    |startify-faq-13|  How to disable random quotes header?
+    |startify-faq-14|  NERDTree with NERDTreeTabs does not work in gvim!
+    |startify-faq-15|  Startify is cluttered with help files!
+    |startify-faq-16|  How to disable single mappings?
+    |startify-faq-17|  Run Startify for each new tab!
+    |startify-faq-18|  Files from remote file system slow down startup!
+
+------------------------------------------------------------------------------
+                                                               *startify-faq-01*
+I want to use cursorline!~
+
+Startify issues a User event when it's finished. It can be used to set
+buffer-local options etc.
+>
+    autocmd User Startified setlocal cursorline
+<
+------------------------------------------------------------------------------
+                                                               *startify-faq-02*
+Recent files aren't shown!~
+
+Perhaps the problem is that the viminfo file..
+
+    - doesn't exist
+    - is invalid
+    - is empty
+    - can't be read (check permissions)
+
+I suggest the following steps:
+
+    1) Create a new directory:
+>
+        $ mkdir -p ~/.vim/files/info
+<
+    2) Put this into your vimrc:
+>
+        set viminfo='100,n$HOME/.vim/files/info/viminfo
+<
+See |'viminfo'| for information about the second step and what it does
+exactly.
+
+------------------------------------------------------------------------------
+                                                               *startify-faq-03*
+I have broken colors when using sessions!~
+
+Nothing this plugin could do about. Try playing around with 'sessionoptions'.
+
+NOTE: Startify removes 'options' from the session options automatically,
+because it's the source of many problems.
+
+Some people swear it works for them with these settings:
+>
+    set sessionoptions=blank,curdir,folds,help,tabpages,winpos
+<
+------------------------------------------------------------------------------
+                                                               *startify-faq-04*
+How to disable common but unimportant files?~
+
+Use |g:startify_skiplist|.
+
+------------------------------------------------------------------------------
+                                                               *startify-faq-05*
+Why is the Startify buffer not using buftype=nofile?~
+
+Did you accidentally use |:write| in the Startify buffer and it was saved to
+an actual file on disk? It's because buftype=nofile is not used.
+
+This is done to improve compatibility with other plugins. When buftype=nofile
+was set, plugins like CtrlP or NERDTree would open splits instead of reusing
+the window showing the Startify buffer.
+
+If you understand this but want it anyway, put this in your vimrc:
+>
+    autocmd User Startified setlocal buftype=nofile
+<
+------------------------------------------------------------------------------
+                                                               *startify-faq-06*
+How do I get both NERDTree and Startify working at startup?~
+
+Put this in your vimrc:
+>
+    autocmd VimEnter *
+                \   if !argc()
+                \ |   Startify
+                \ |   NERDTree
+                \ |   wincmd w
+                \ | endif
+<
+------------------------------------------------------------------------------
+                                                               *startify-faq-07*
+The session autoload feature is not working!~
+
+Do you have NERDTree installed by any chance? If so, try this:
+>
+    let NERDTreeHijackNetrw = 0
+<
+------------------------------------------------------------------------------
+                                                               *startify-faq-08*
+How do I center my header/footer?~
+>
+    let g:startify_custom_header =
+          \ 'startify#center(startify#fortune#cowsay())'
+<
+------------------------------------------------------------------------------
+                                                               *startify-faq-09*
+tmux-resurrect?~
+
+If you use tmux-resurrect to restore your tmux environment, you can use :SLoad
+to load your last used session right away:
+>
+    set -g @resurrect-processes '"vim->vim +SLoad"'
+<
+------------------------------------------------------------------------------
+                                                               *startify-faq-10*
+Temporarily skip Startify at start?~
+
+In some cases you might need to skip Startify at start. E.g.
+>
+    vim +VimwikiMakeDiaryNote
+<
+Startify would interfere in this case. A simple way to avoid that would be:
+>
+    vim --cmd 'let g:startify_disable_at_vimenter = 1' +VimwikiMakeDiaryNote
+<
+------------------------------------------------------------------------------
+                                                               *startify-faq-11*
+How to use the output of a command as header?~
+>
+    redir => test
+      silent echo 'one'
+      silent echo 'two'
+      silent echo 'three'
+    redir END
+
+    let g:startify_custom_header =
+        \ map(split(test), 'repeat(" ", 10) . v:val')
+<
+|:redir| puts a string into 'test'. Then we turn it into a list of strings.
+Then we shift each string to the right by 10 spaces. Afterwards we add an
+empty string to the list, which results in an empty line in the header.
+
+------------------------------------------------------------------------------
+                                                               *startify-faq-12*
+There is an empty window with vim-plug!~
+
+After start there might be only the Startify buffer which is marked as
+|unlisted-buffer|. The problem arises if you use :PlugUpdate followed by 'D'
+to see the changes. An empty window!
+
+The actual problem is that Vim won't close the last listed buffer. Try this:
+>
+    $ vim -u NONE -N
+    :set nobuflisted
+    :new
+    :bd
+<
+It won't close the buffer and therefore the window. This also happens in
+vim-plug. Note that this is no bug in neither plugin, it's a Vim weirdness.
+
+Workaround #1:~
+>
+    autocmd User Startified setlocal buflisted
+<
+In some cases this could break other plugins at start (I look at you
+NERDTree), but works well most of the time.
+
+Workaround #2:~
+>
+    let g:plug_window = 'enew'  " or maybe 'tabnew'
+<
+This will open the plug buffer in the current window instead of creating a new
+window on the left side. Mind that this will also close the Startify buffer
+since it will be hidden.
+
+------------------------------------------------------------------------------
+                                                               *startify-faq-13*
+How to disable random quotes header?~
+>
+    let g:startify_custom_header = []
+<
+See |g:startify_custom_header|.
+
+------------------------------------------------------------------------------
+                                                               *startify-faq-14*
+NERDTree with NERDTreeTabs does not work in gvim!~
+
+Mind that `https://github.com/jistr/vim-nerdtree-tabs` is no longer maintained
+and has quite some issues.
+
+Anyway, this particular issue can be resolved in different ways. See:
+
+    https://github.com/mhinz/vim-startify/issues/24
+
+------------------------------------------------------------------------------
+                                                               *startify-faq-15*
+Startify is cluttered with help files!~
+
+Everytime you use |:h|, you open a file from the Vim runtime directory or of
+an installed plugin. By default, Startify detects these files and skips them.
+
+This works for most use cases, but not for all.
+
+If the default fails for you and the Startify buffer is cluttered with help
+files, add that path to the skiplist yourself: |g:startify_skiplist|.
+
+------------------------------------------------------------------------------
+                                                               *startify-faq-16*
+How to disable single mappings?~
+
+Use |startify-autocmd|:
+>
+    autocmd User Startified for key in ['b','s','t','v'] |
+          \ execute 'nunmap <buffer>' key | endfor
+<
+------------------------------------------------------------------------------
+                                                               *startify-faq-17*
+Run Startify for each new tab!~
+>
+    if has('nvim')
+      autocmd TabNewEntered * Startify
+    else
+      autocmd BufWinEnter *
+            \ if !exists('t:startify_new_tab')
+            \     && empty(expand('%'))
+            \     && empty(&l:buftype)
+            \     && &l:modifiable |
+            \   let t:startify_new_tab = 1 |
+            \   Startify |
+            \ endif
+    endif
+<
+NOTE: I do not recommend this. It can lead to all kinds of issues, so you
+should know exactly what the above code does. E.g. any plugin using |:tabnew|
+is probably expecting an empty buffer afterwards, but it won't be empty, it
+will be filled with the Startify buffer and fail. I suggest mapping
+`:Startify` to something convenient instead.
+
+------------------------------------------------------------------------------
+                                                               *startify-faq-18*
+Files from remote file system slow down startup!~
+
+I/O actions like resolving symbolic links or checking if a file is readable
+can be very slow on some remote file systems (Samba, NFS, FUSE, etc.) Even
+more so when done for many files.
+
+In that case it is often better to add the mount point of the remote file
+system to |g:startify_skiplist|:
+>
+    let g:startify_skiplist = ['^/mnt/nfs']
+<
+==============================================================================
+EXAMPLE                                                       *startify-example*
+>
+    autocmd User Startified setlocal cursorline
+
+    let g:startify_enable_special      = 0
+    let g:startify_files_number        = 8
+    let g:startify_relative_path       = 1
+    let g:startify_change_to_dir       = 1
+    let g:startify_update_oldfiles     = 1
+    let g:startify_session_autoload    = 1
+    let g:startify_session_persistence = 1
+
+    let g:startify_skiplist = [
+            \ 'COMMIT_EDITMSG',
+            \ 'bundle/.*/doc',
+            \ '/data/repo/neovim/runtime/doc',
+            \ '/Users/mhi/local/vim/share/vim/vim74/doc',
+            \ ]
+
+    let g:startify_bookmarks = [
+            \ { 'c': '~/.vim/vimrc' },
+            \ '~/golfing',
+            \ ]
+
+    let g:startify_custom_header =
+            \ startify#fortune#cowsay('', '═','║','╔','╗','╝','╚')
+
+    let g:startify_custom_footer =
+           \ ['', "   Vim is charityware. Please read ':help uganda'.", '']
+
+    hi StartifyBracket ctermfg=240
+    hi StartifyFile    ctermfg=147
+    hi StartifyFooter  ctermfg=240
+    hi StartifyHeader  ctermfg=114
+    hi StartifyNumber  ctermfg=215
+    hi StartifyPath    ctermfg=245
+    hi StartifySlash   ctermfg=240
+    hi StartifySpecial ctermfg=240
+<
+==============================================================================
+vim: tw=78

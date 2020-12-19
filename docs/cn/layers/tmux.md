@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim tmux 模块"
 description: "这一模块为 SpaceVim 提供了一些在 Vim 内操作 tmux 的功能，使得在 tmux 窗口之间跳转更加便捷。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> tmux
@@ -38,7 +38,7 @@ lang: cn
 ## 模块选项
 
 - `tmuxline_separators`: 设置 tmux 的主要分隔符，默认等同于 SpaceVim 的 `statusline_separator`, 可选值包括：`arrow`, `curve`, `slant`, `barce`, `fire`, `nil`
-- `tmuxline_separators_alt`: 设置 tmux 的分隔符，默认等同于 SpaceVim 的 `statusline_inactive_separator`，可选值包括：`arrow`, `bar`, `nil`
+- `tmuxline_separators_alt`: 设置 tmux 的分隔符，默认等同于 SpaceVim 的 `statusline_iseparator`，可选值包括：`arrow`, `bar`, `nil`
 - `tmux_navigator_modifier`: 设置 tmux 的移动快捷键，默认是 `ctrl`，可选值包括：`alt`, `ctrl`
 
 ## 快捷键

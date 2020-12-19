@@ -1,0 +1,66 @@
+Include: include/setup.vader
+
+Execute (markdown: vale):
+  new
+  file README.md
+  let mock = [
+      \   '{',
+      \   '  "README.md": [',
+      \   '    {',
+      \   '      "Check": "vale.Hedging",',
+      \   '      "Description": "",',
+      \   '      "Line": 22,',
+      \   '      "Link": "",',
+      \   "      \"Message\": \"Consider removing 'probably'\",",
+      \   '      "Severity": "warning",',
+      \   '      "Span": [',
+      \   '        45,',
+      \   '        52',
+      \   '      ],',
+      \   '      "Hide": false,',
+      \   '      "Match": ""',
+      \   '    }',
+      \   '  ]',
+      \   '}',
+      \   '',
+      \ ]
+  let vale_maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#markdown#vale(), mock)
+  CallNeomake 1, [vale_maker]
+  AssertEqualQf getloclist(0), [
+      \   {
+      \     'lnum': 22,
+      \     'bufnr': bufnr('%'),
+      \     'col': 45,
+      \     'valid': 1,
+      \     'vcol': 0,
+      \     'nr': -1,
+      \     'type': 'W',
+      \     'pattern': '',
+      \     'text': "Consider removing 'probably'"
+      \   }
+      \ ]
+  bwipe
+
+
+Execute (markdown: mdl):
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#markdown#mdl(), [
+    \ 'README.md:1: MD033 Inline HTML',
+    \ '',
+    \ 'A detailed description of the rules is available at https://github.com/markdownlint/markdownlint/blob/master/docs/RULES.md',
+    \ ])
+
+  new
+  noautocmd file README.md
+  CallNeomake 1, [maker]
+  AssertEqualQf getloclist(0), [{
+    \ 'lnum': 1,
+    \ 'bufnr': bufnr('%'),
+    \ 'col': 0,
+    \ 'valid': 1,
+    \ 'vcol': 0,
+    \ 'nr': 33,
+    \ 'type': 'W',
+    \ 'pattern': '',
+    \ 'text': 'Inline HTML (MD033)',
+    \ }]
+  bwipe

@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim chinese 模块"
 description: "这一模块为 SpaceVim 的中文用户提供了中文的 Vim 帮助文档，同时提供部分插件的中文帮助文档。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> chinese

@@ -1,0 +1,100 @@
+*easyoperator_line.txt*
+
+Version: 0.1
+Author : haya14busa <hayabusa1419@gmail.com>
+Last change:31 Jan 2014.
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+CONTENTS                                           *easyoperator_line_contents*
+
+    Introduction ....................... |easyoperator-line-introduction|
+    Requirements ....................... |easyoperator-line-requirements|
+    Default mappings ................... |easyoperator-line-default-mappings|
+    Custom mappings .................... |easyoperator-line-custom-mappings|
+
+==============================================================================
+INTRODUCTION                                   *easyoperator-line-introduction*
+
+vim-easyoperator-line provides a much simpler way to use some operator for
+line in Vim.
+
+    Select, yank, paste, delete, or other operation of lines.
+
+The idea of this plugin is based on supasorn's work on vim-easymotion
+
+    https://github.com/supasorn
+
+Note: to promote good Vim habits, you should learn standard movement
+commands like `}}, vi(, va(, %, ][, ]], [(, etc.` before resorting to
+this function.
+
+==============================================================================
+REQUIREMENTS                                   *easyoperator-line-requirements*
+
+vim-easyoperator-line depends on vim-easymotion plugin, version 2.0
+
+https://github.com/Lokaltog/vim-easymotion
+
+Vi-compatible mode must be disabled.
+
+==============================================================================
+DEFAULT MAPPINGS                           *easyoperator-line-default-mappings*
+
+    Select, yank, paste, delete, or other operation of lines.
+
+Default mappings:
+
+        {operator}<Plug>(easymotion-prefix)l
+
+    NOTE: Default <Plug>(easymotion-prefix) is <Leader><Leader>
+
+The default configuration defines the following mappings in visual and
+operator-pending mode. If you want to map by yourself, set following to 0.
+>
+    let g:EasyOperator_line_do_mapping = 0
+<
+Default: 1
+
+==============================================================================
+CUSTOM MAPPINGS                             *easyoperator-line-custom-mappings*
+
+<Plug>(easyoperator-line-select)             *<Plug>(easyoperator-line-select)*
+        xmap: Select lines by two consecutive call of EasyMotion.
+        omap: Operate on selected lines
+
+<Plug>(easyoperator-line-delete)             *<Plug>(easyoperator-line-delete)*
+        Delete lines by two consecutive call of EasyMotion, and jump back to
+        original cursor position.
+>
+<<Plug>(easyoperator-line-yank)                 *<Plug>(easyoperator-line-yank)*
+        Yank lines by two consecutive call of EasyMotion, and jump back to
+        original cursor position.
+
+Example:
+>
+    omap <Leader>L  <Plug>(easyoperator-line-select)
+    xmap <Leader>L  <Plug>(easyoperator-line-select)
+    nmap d<Leader>L <Plug>(easyoperator-line-delete)
+    nmap p<Leader>L <Plug>(easyoperator-line-yank)
+
+==============================================================================
+vim:tw=78:sw=4:ts=8:ft=help:norl:

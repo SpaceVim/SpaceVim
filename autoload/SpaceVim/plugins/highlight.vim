@@ -1,6 +1,6 @@
 "=============================================================================
 " highlight.vim --- highlight mode for SpaceVim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -13,7 +13,7 @@
 " s: swoop
 " }}}
 
-" Loadding SpaceVim api {{{
+" Loading SpaceVim api {{{
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:CMP = SpaceVim#api#import('vim#compatible')
@@ -110,14 +110,23 @@ function! s:init() abort
 endfunction
 " }}}
 
+" use SPC s H to highlight all symbol on default range.
+" use SPC s h to highlight current symbol on default range.
+
 " public API func: start Highlight mode {{{
-function! SpaceVim#plugins#highlight#start() abort
+function! SpaceVim#plugins#highlight#start(current) abort
   let curpos = getcurpos()
   let save_reg_k = @k
   normal! viw"ky
   let s:current_match = @k
   let @k = save_reg_k
   call setpos('.', curpos)
+  if s:current_match =~# '^\s*$' || empty(s:current_match) || s:current_match ==# "\n"
+    echohl WarningMsg
+    echo 'cursor is not on symbol'
+    echohl None
+    return
+  endif
   let s:state = SpaceVim#api#import('transient_state') 
   call s:state.set_title('Highlight Transient State')
   call s:state.defind_keys(

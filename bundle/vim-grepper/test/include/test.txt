@@ -1,0 +1,5 @@
+Foo: This is just a random
+plain text file that is used
+for, well, testing purposes.
+
+foo bar quux

@@ -1,0 +1,304 @@
+snippet     with
+abbr        with ...;...
+options     head
+	with ${1};${2}
+
+snippet     package
+abbr        package {NAME} is {...} end
+options     head
+	package ${1} is
+                ${0}
+        end $1;
+
+
+snippet     package_body
+abbr        package body {NAME} is {...} end
+options     head
+	package body ${1} is
+                ${0}
+	end $1;
+
+snippet     entry
+abbr        entry {...} when
+options     head
+	entry ${1}(${2}) when ${3} is
+	begin
+		${0}
+	end $1;
+
+snippet     task
+options     head
+	task ${1} is
+		entry ${0}
+	end $1;
+
+snippet     task_body
+abbr        task body
+options     head
+	task body ${1} is
+		${2}
+	begin
+		${0}
+	end $1;
+
+snippet     accept
+options     head
+	accept ${1}(${2}) do
+		${0}
+	end $1;
+
+snippet     protected_type
+abbr        protected type
+options     head
+	protected type ${1}(${2}) is
+		${0}
+	end $1;
+
+snippet     protected_body
+abbr        protected body
+options     head
+	protected body ${1} is
+		${2}
+	begin
+		${0}
+	end $1;
+
+snippet     generic
+abbr        generic type
+options     head
+	generic
+		type ${1} is ${2};${0}
+
+snippet     type
+options     head
+	type ${1} is ${2};${0}
+
+snippet     type_default
+abbr        type with default value
+options     head
+	type ${1} is ${2}
+		with Default_Value => ${3};${0}
+
+snippet     subtype
+options     head
+	subtype ${1} is ${2};${0}
+
+snippet     declare
+abbr        declare block
+options     head
+	declare
+		${1}
+	begin
+		${0}
+	end;
+
+snippet     declare_named
+abbr        declare named block
+options     head
+	${1}:
+	declare
+		${2}
+	begin
+		${0}
+	end $1;
+
+snippet     ife
+abbr        if expression
+options     head
+	if ${1} then ${2} else ${0}
+
+snippet     case_expression
+abbr        case expression
+options     head
+	case ${1} is
+		when ${2} => ${3},${0}
+
+snippet     for_all
+abbr        for all
+options     head
+	for all ${1} ${2:in} ${3} => ${0}
+
+snippet     for_some
+abbr        for some
+options     head
+	for some ${1} ${2:in} ${3} => ${0}
+
+snippet     if
+options     head
+	if ${1} then
+		${0}
+	end if;
+
+snippet     ifelse
+abbr        if ... else
+options     head
+	if ${1} then
+		${2}
+	else
+		${0}
+	end if;
+
+snippet     else
+options     head
+	else
+		${0}
+
+snippet     elseif
+alias       ei
+options     head
+	elsif ${1} then
+		${0}
+
+snippet     while
+alias       w
+options     head
+	while ${1} loop
+		${0}
+	end loop;
+
+snippet     named_while
+abbr        named while
+options     head
+	${1}:
+	while ${2} loop
+		${0}
+	end loop $1;
+
+snippet     for
+options     head
+	for ${1:I} in ${2} loop
+		${0}
+	end loop;
+
+snippet     for_each
+abbr        for each
+options     head
+	for ${1} of ${2} loop
+		${0}
+	end loop;
+
+snippet     named_for
+abbr        named for
+options     head
+	${1}:
+	for ${2:I} in ${3} loop
+		${0}
+	end loop $1;
+
+snippet     named_for_each
+abbr        named for each
+options     head
+	${1}:
+	for ${2} of ${3} loop
+		${0}
+	end loop $1;
+
+snippet     procedure
+options     head
+	procedure ${1}(${2}) is
+		${3}
+	begin
+		${0}
+	end $1;
+
+snippet     procedure_declare
+abbr        procedure declaration
+options     head
+	procedure ${1};${0}
+
+snippet     function
+options     head
+	function ${1}(${2}) return ${3} is
+		${4}
+	begin
+		${0}
+	end $1;
+
+snippet     function_expr
+abbr        expression function
+options     head
+	function ${1} return ${2} is
+		(${3});${0}
+
+snippet     function_declare
+abbr        function declaration
+options     head
+	function ${1} return ${2};${0}
+
+snippet     return
+abbr        extended return
+options     head
+	return ${1} do
+		${0}
+	end return;
+
+snippet     record
+options     head
+	record
+		${0}
+	end record;
+
+snippet     case
+options     head
+	case ${1} is
+		when ${2} => ${3};${0}
+	end case;
+
+snippet     when
+options     head
+	when ${1} => ${2};${0}
+
+snippet     when_others
+abbr        when others
+options     head
+	when others => ${1};${0}
+
+snippet     loop
+options     head
+	loop
+		${0}
+	end loop;
+
+snippet     named_loop
+abbr        named loop
+options     head
+	${1}:
+	loop
+		${0}
+	end loop $1;
+
+snippet     exit_when
+abbr        exit when
+options     head
+	exit when ${1};
+        ${0}
+
+snippet     put
+abbr        Ada.Text_IO.Put
+options     head
+	Ada.Text_IO.Put(${1});
+        ${0}
+
+snippet     put_line
+abbr        Ada.Text_IO.Put_Line
+options     head
+	Ada.Text_IO.Put_Line(${1});
+        ${0}
+
+snippet     get
+abbr        Ada.Text_IO.Get
+options     head
+	Ada.Text_IO.Get(${1});
+        ${0}
+
+snippet     get_line
+abbr        Ada.Text_IO.Get_Line
+options     head
+	Ada.Text_IO.Get_Line(${1});
+        ${0}
+
+snippet     newline
+abbr        Ada.Text_IO.New_Line
+options     head
+	Ada.Text_IO.New_Line(${1:1});
+        ${0}

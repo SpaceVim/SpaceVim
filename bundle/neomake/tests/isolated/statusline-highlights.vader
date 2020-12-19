@@ -1,0 +1,48 @@
+Include: ../include/setup.vader
+
+Execute (statusline highlights for quickfix items):
+  call neomake#statusline#ResetCountsForProject()
+
+  new
+  let bufnr = bufnr('%')
+
+  let item = {'type': 'E'}
+  call neomake#statusline#AddQflistCount(item)
+
+  AssertEqual neomake#statusline#get_status(bufnr, {}),
+  \ '? %#NeomakeStatColorQuickfixTypeE# QE:1 %#NeomakeStatReset#'
+
+  let item = {'type': 'I'}
+  call neomake#statusline#AddQflistCount(item)
+  AssertEqual neomake#statusline#get_status(bufnr, {}),
+  \ '? %#NeomakeStatColorQuickfixTypeE# QE:1 %#NeomakeStatColorQuickfixDefault# QI:1 %#NeomakeStatReset#'
+
+  " Cleared highlight is still used (since it exists).
+  " Could use neomake#utils#highlight_is_defined maybe.
+  highlight clear NeomakeStatColorDefault
+  AssertEqual neomake#statusline#get_status(bufnr, {}),
+  \ '? %#NeomakeStatColorQuickfixTypeE# QE:1 %#NeomakeStatColorQuickfixDefault# QI:1 %#NeomakeStatReset#'
+
+  AssertEqual neomake#statusline#get_status(bufnr, {
+  \ 'format_quickfix_type_E': 'errors:{{count}} ',
+  \ }),
+  \ '? errors:1 %#NeomakeStatColorQuickfixDefault# QI:1 %#NeomakeStatReset#'
+
+  AssertEqual neomake#statusline#get_status(bufnr, {
+  \ 'format_quickfix_type_E': 'errors:{{count}} ',
+  \ 'format_quickfix_type_default': '{{type}}:{{count}} ',
+  \ }),
+  \ '? errors:1 I:1 %#NeomakeStatReset#'
+
+  AssertEqual neomake#statusline#get_status(bufnr, {
+  \ 'format_quickfix_issues': '%s',
+  \ 'format_quickfix_type_E': 'errors:{{count}} ',
+  \ 'format_quickfix_type_default': '{{type}}:{{count}} ',
+  \ }),
+  \ '? errors:1 I:1 '
+  bwipe
+
+  " Restore if not profiling.
+  if !v:profiling
+    runtime autoload/neomake/statusline.vim
+  endif

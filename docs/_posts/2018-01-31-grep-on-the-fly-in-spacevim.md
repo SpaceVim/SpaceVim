@@ -1,12 +1,12 @@
 ---
 title: "Vim 异步实时代码检索"
 categories: [blog_cn, feature_cn]
-excerpt: "异步执行 grep，根据输入内容实时展示搜索结果，支持全工程检索、检索当前文件、检索已打开的文件等"
-image: https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif
+description: "异步执行 grep，根据输入内容实时展示搜索结果，支持全工程检索、检索当前文件、检索已打开的文件等"
+image: https://user-images.githubusercontent.com/13142418/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif
 commentsID: "Vim 异步实时代码检索"
 comments: true
 permalink: /cn/:title/
-lang: cn
+lang: zh
 ---
 
 # [Blogs](../blog/) >> Vim 异步实时代码检索
@@ -33,7 +33,7 @@ FlyGrep 指的是 **grep on the fly**，将根据用户输入实时展示搜索�
 
 在 SpaceVim 中，可以使用快捷键 `SPC s p` 或者 `SPC s /` 进行全工程检索。
 
-![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
+![searching project](https://user-images.githubusercontent.com/13142418/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif)
 
 - 仅搜索当前文件
 
@@ -96,17 +96,19 @@ SpaceVim 中的搜索命令以 `SPC s` 为前缀，前一个键是使用的工�
 
 在 FlyGrep 内的快捷键如下：
 
-| 快捷键              | 功能描述           |
-| ----------------    | ------------------ |
-| `<Esc>`             | 关闭 FlyGrep 窗口  |
-| `<Enter>`           | 打开光标下文件位置 |
-| `<Tab>`             | 移动至下一行       |
-| `Ctrl-j`            | 移动至下一行       |
-| `<S-Tab>`           | 移动至上一行       |
-| `Ctrl-k`            | 移动至上一行       |
-| `<Backspace>`              | 删除光标前一个字符 |
-| `Ctrl-w`            | 删除光标后的单词   |
-| `Ctrl-u`            | 删除光标前所有字符 |
-| `Ctrl-k`            | 删除光标后所有字符 |
-| `Ctrl-a` / `<Home>` | 将光标定位到行首   |
-| `Ctrl-e` / `<End>`  | 将光标定位到行尾   |
+| 快捷键              | 功能描述                  |
+| ------------------- | ------------------------- |
+| `<Esc>`             | 关闭搜索窗口              |
+| `<Enter>`           | 打开当前选中的文件位置    |
+| `Ctrl-t`            | 在新标签栏打开选中项      |
+| `Ctrl-s`            | 在分屏打开选中项          |
+| `Ctrl-v`            | 在垂直分屏打开选中项      |
+| `Ctrl-q`            | 将搜索结果转移至 quickfix |
+| `<Tab>`             | 选中下一行文件位置        |
+| `Shift-<Tab>`       | 选中上一行文件位置        |
+| `<Backspace>`       | 删除上一个输入字符        |
+| `Ctrl-w`            | 删除光标前的单词          |
+| `Ctrl-u`            | 删除光标前所有内容        |
+| `Ctrl-k`            | 删除光标后所有内容        |
+| `Ctrl-a` / `<Home>` | 将光标移至行首            |
+| `Ctrl-e` / `<End>`  | 将光标移至行尾            |

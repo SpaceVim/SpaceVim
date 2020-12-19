@@ -1,5 +1,4 @@
 Execute ( SpaceVim api: logger ):
-  new
   let log = SpaceVim#api#import('logger')
   call log.set_name('TestLog')
   AssertEqual log.name, 'TestLog'

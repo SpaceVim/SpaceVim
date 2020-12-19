@@ -1,7 +1,7 @@
 ---
 title: "Install vim/neovim with python support"
 categories: blog
-excerpt: "How to build vim or neovim from source with python enabled?"
+description: "How to build vim or neovim from source with python enabled?"
 comments: true
 commentsID: "Install neovim or vim"
 ---

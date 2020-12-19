@@ -2,6 +2,8 @@ Execute ( SpaceVim api: data#string ):
   let str = SpaceVim#api#import('data#string')
   Log 'test trim()'
   AssertEqual str.trim(' s b '), 's b'
+  Log 'test strcharpart()'
+  AssertEqual str.strcharpart('abcd', 1, 2), 'bc'
   Log 'test fill()'
   AssertEqual str.fill('s b', 10), 's b       '
   Log 'test fill() len < strlen'
@@ -40,4 +42,6 @@ Execute ( SpaceVim api: data#string ):
   AssertEqual str.strAllIndex('hello spacevim hello', 'he.*', 1), [[0, 20]]
   AssertEqual str.strAllIndex('hello spacevim hello', 'he[^ ]*', 1), [[0, 5], [15, 20]]
   AssertEqual str.strAllIndex('let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end', 's.cursor[^_]*', 1), [[4, 12], [28, 36], [55, 63]]
+  Log 'test toggle_case()'
+  AssertEqual str.toggle_case(' A b 123'), ' a B 123'
   unlet str

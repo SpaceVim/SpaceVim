@@ -1,10 +1,41 @@
 "=============================================================================
 " r.vim --- lang#r layer for SpaceVim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section lang#ring, layer-lang-r
+" @parentsection layers
+" This layer is for r development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#r'
+" <
+"
+" @subsection Key bindings
+"
+" The command of code runner for R is `"R <%s"`
+" `%s` will be replaced to the path of current R file.
+" >
+"   Key             Function
+"   --------------------------------
+"   SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for r, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 function! SpaceVim#layers#lang#r#plugins() abort
   let plugins = []
@@ -18,14 +49,15 @@ function! SpaceVim#layers#lang#r#set_variable(var) abort
 endfunction
 
 function! SpaceVim#layers#lang#r#config() abort
-  call SpaceVim#plugins#runner#reg_runner('r', 'r %s')
+  call add(g:spacevim_project_rooter_patterns, '.Rprofile')
+  call SpaceVim#plugins#runner#reg_runner('r', 'R <%s')
   call SpaceVim#mapping#space#regesit_lang_mappings('r', function('s:language_specified_mappings'))
   if !empty(s:r_repl_command)
-      call SpaceVim#plugins#repl#reg('r',s:r_repl_command)
+    call SpaceVim#plugins#repl#reg('r',s:r_repl_command)
   else
-      call SpaceVim#plugins#repl#reg('r', 'r')
+    call SpaceVim#plugins#repl#reg('r', 'r')
   endif
-  
+
 endfunction
 
 function! s:language_specified_mappings() abort

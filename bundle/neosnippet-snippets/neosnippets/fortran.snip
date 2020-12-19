@@ -1,0 +1,188 @@
+# inspired/derived from
+# https://github.com/hellolife/Vim/blob/b4b84f5e0685bdccf58474d5311c094e7eab5eb4/vimfiles/autoload/neosnippet/snippets/fortran.snip
+
+snippet pr
+abbr program
+options head
+	program ${1:main}
+		${2}
+	end program $1
+
+snippet sua
+abbr subroutine
+options head
+	subroutine ${1:`expand('%:r')`}(${2})
+		use ${3:comvar}
+		implicit none
+		${4}
+	end subroutine $1
+
+snippet su
+abbr subroutine
+options head
+	subroutine ${1:`expand('%:r')`}
+		use ${2:comvar}
+		implicit none
+		${3}
+	end subroutine $1
+
+snippet mo
+abbr module
+options head
+	module ${1:`expand('%:r')`}
+		implicit none
+		save
+		${2}
+	end module $1
+
+snippet fu
+abbr function
+options head
+	function ${1:}(${2})
+		${3}
+	end function $1
+
+snippet inp
+abbr integer parameter
+options head
+	integer, parameter :: 
+
+snippet in
+abbr integer
+options head
+	integer :: 
+
+snippet ini
+abbr integer intent(in)
+options head
+	integer, intent(in)  :: 
+
+snippet ino
+abbr integer intent(out)
+options head
+	integer, intent(out) :: 
+
+snippet rep
+abbr real parameter
+options head
+	real, parameter :: 
+
+snippet re
+abbr real
+options head
+	real :: 
+
+snippet rei
+abbr real intent(in)
+options head
+	real, intent(in)  :: 
+
+snippet reo
+abbr real intent(out)
+options head
+	real, intent(out) :: 
+
+snippet ind
+abbr integer dimension
+options head
+	integer, dimension(${1::})${2:#:, allocatable} :: ${3}
+
+snippet indi
+abbr integer dimension intent(in)
+options head
+	integer, dimension(${1}), intent(in)  :: ${2}
+
+snippet indo
+abbr integer dimension intent(out)
+options head
+	integer, dimension(${1}), intent(out) :: ${2}
+
+snippet red
+abbr real dimension
+options head
+	real, dimension(${1::})${2:#:, allocatable} :: ${3}
+
+snippet redi
+abbr real dimension intent(in)
+options head
+	real, dimension(${1}), intent(in)  :: ${2}
+
+snippet redo
+abbr real dimension intent(out)
+options head
+	real, dimension(${1}), intent(out) :: ${2}
+
+snippet ch
+abbr character
+options head
+	character(${1}) :: ${2}
+
+snippet chd
+abbr character dimension
+options head
+	character(${1}), dimension(${2}) :: ${3}
+
+snippet lo
+abbr logical
+options head
+	logical :: ${1:fileExsit}
+
+snippet if
+abbr if
+options head
+	if (${1}) ${2}
+
+snippet ift
+abbr if then
+options head
+	if (${1}) then
+		${2}
+	end if
+
+snippet read
+abbr read
+options head
+	read(${1:*},${2:*}) ${3}
+
+snippet wr
+abbr write
+options head
+	write(${1:*},${2:*}) ${3}
+
+snippet op
+abbr open
+options head
+	open(${1:11},file=${2},status=${3:#:old}${4:#:,position='append'})
+	${5}
+	close($1)
+
+snippet se
+abbr select case
+options head
+	select case (${1})
+	${2}
+	end select
+
+snippet case
+abbr case
+options head
+	case(${1})
+		${2}
+
+snippet do
+abbr do
+options head
+	do ${1}
+	end do
+
+snippet ty
+abbr type
+options head
+	type ${1:}
+		${2}
+	end type $1
+
+snippet tyd
+abbr type dimension
+options head
+	type(${1}), dimension(${2::}), allcatable :: ${3}

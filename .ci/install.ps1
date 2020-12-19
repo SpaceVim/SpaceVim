@@ -1,23 +1,35 @@
 function install_vim($name)
 {
-  $ver = $name -replace "^Official\s*", ""
+  $ver = $name -replace "^Vim\s*", ""
   if ($ver -eq "latest-32")
   {
-    $url1 = 'ftp://ftp.vim.org/pub/vim/pc/vim80w32.zip'
+    $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v8.2.0129/gvim_8.2.0129_x86.zip'
+    $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim82\vim.exe'
   }
-  elseif ($ver -eq "8.0.0069-32")
+  elseif ($ver -eq "8.1.2269")
   {
-    $url1 = 'ftp://ftp.vim.org/pub/vim/pc/vim80-069w32.zip'
+    $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v8.1.2269/gvim_8.1.2269_x86.zip'
+    $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim81\vim.exe'
   }
-  $url2 = 'ftp://ftp.vim.org/pub/vim/pc/vim80rt.zip'
+  elseif ($ver -eq "8.0.1453")
+  {
+    $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v8.0.1453/gvim_8.0.1453_x86.zip'
+    $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim80\vim.exe'
+  }
+  elseif ($ver -eq "8.0.0027")
+  {
+    $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v8.0.0027/gvim_8.0.0027_x86.zip'
+    $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim80\vim.exe'
+  }
+  elseif ($ver -eq "7.4.1689")
+  {
+    $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v7.4.1689/gvim_7.4.1689_x86.zip'
+    $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim74\vim.exe'
+  }
   $zip1 = $Env:APPVEYOR_BUILD_FOLDER + '\vim.zip'
-  $zip2 = $Env:APPVEYOR_BUILD_FOLDER + '\vim-rt.zip'
   (New-Object Net.WebClient).DownloadFile($url1, $zip1)
-  (New-Object Net.WebClient).DownloadFile($url2, $zip2)
   [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem') > $null
   [System.IO.Compression.ZipFile]::ExtractToDirectory($zip1, $Env:APPVEYOR_BUILD_FOLDER)
-  [System.IO.Compression.ZipFile]::ExtractToDirectory($zip2, $Env:APPVEYOR_BUILD_FOLDER)
-  $Env:THEMIS_VIM = $Env:APPVEYOR_BUILD_FOLDER + '\vim\vim80\vim.exe'
 }
 
 function install_kaoriya_vim($name)
@@ -60,11 +72,99 @@ function install_nvim($name)
   $ver = $name -replace "^Neovim\s*", ""
   if ($ver -eq "latest-32")
   {
-    $url = 'https://ci.appveyor.com/api/projects/neovim/neovim/artifacts/build/Neovim.zip?branch=master&job=Configuration%3A%20MINGW_32'
+    $url = 'https://github.com/neovim/neovim/releases/download/nightly/nvim-win32.zip'
   }
   elseif ($ver -eq "latest-64")
   {
-    $url = 'https://ci.appveyor.com/api/projects/neovim/neovim/artifacts/build/Neovim.zip?branch=master&job=Configuration%3A%20MINGW_64'
+    $url = 'https://github.com/neovim/neovim/releases/download/nightly/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.4.3-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.4.3/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.4.3-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.4.3/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.4.2-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.4.2/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.4.2-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.4.2/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.8-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.8/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.8-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.8/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.7-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.7/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.7-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.7/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.5-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.5/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.5-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.5/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.4-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.4/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.4-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.4/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.3-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.3/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.3-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.3/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.2-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.2/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.2-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.2/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.1-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.1/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.1-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.1/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.3.0-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.0/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.3.0-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.3.0/nvim-win64.zip'
+  }
+  elseif ($ver -eq "0.2.2-32")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.2.2/nvim-win32.zip'
+  }
+  elseif ($ver -eq "0.2.2-64")
+  {
+    $url = 'https://github.com/neovim/neovim/releases/download/v0.2.2/nvim-win64.zip'
   }
   elseif ($ver -eq "0.2.0-32")
   {
@@ -82,13 +182,25 @@ function install_nvim($name)
   $Env:THEMIS_ARGS = '-e -s --headless'
 }
 
+function download_coreutils() {
+  $url = 'https://nchc.dl.sourceforge.net/project/gnuwin32/coreutils/5.3.0/coreutils-5.3.0-bin.zip'
+  $zip = $Env:APPVEYOR_BUILD_FOLDER + '\coreutils.zip'
+  (New-Object Net.WebClient).DownloadFile($url, $zip)
+  [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem') > $null
+  [System.IO.Compression.ZipFile]::ExtractToDirectory($zip, $Env:APPVEYOR_BUILD_FOLDER + '\coreutils')
+  $Env:PATH = $Env:PATH + ';' + $Env:APPVEYOR_BUILD_FOLDER + '\coreutils\bin'
+}
+
+
 if ($Env:CONDITION.StartsWith("Neovim"))
 {
   install_nvim $Env:CONDITION
+  download_coreutils
 }
-elseif ($Env:CONDITION.StartsWith("Official"))
+elseif ($Env:CONDITION.StartsWith("Vim"))
 {
   install_vim $Env:CONDITION
+  download_coreutils
 }
 else
 {

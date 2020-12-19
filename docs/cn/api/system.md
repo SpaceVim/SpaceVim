@@ -1,10 +1,10 @@
 ---
 title: "系统函数"
 description: "system 函数提供了系统相关函数，包括判断当前系统平台，文件格式等函数。"
-lang: cn
+lang: zh
 ---
 
-# [公共 API](../) >> system
+# [可用接口](../) >> system
 
 <!-- vim-markdown-toc GFM -->
 

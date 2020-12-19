@@ -1,6 +1,6 @@
 "=============================================================================
 " VersionControl.vim --- SpaceVim version control layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -14,8 +14,9 @@ let s:enable_gtm_status = 0
 
 function! SpaceVim#layers#VersionControl#plugins() abort
   let plugins = []
-  call add(plugins, ['mhinz/vim-signify', {'merged' : 0, 'loadconf' : 1}])
-  call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
+  if !SpaceVim#layers#isLoaded('git')
+    call add(plugins, ['mhinz/vim-signify', {'merged' : 0, 'loadconf' : 1}])
+  endif
   return plugins
 endfunction
 
@@ -40,6 +41,12 @@ function! SpaceVim#layers#VersionControl#config() abort
       autocmd BufReadPost,BufWritePost,CursorMoved,CursorMovedI * silent call s:record()
     augroup END
   endif
+  nnoremap <silent> [n :call <SID>Context(1)<CR>
+  nnoremap <silent> ]n :call <SID>Context(0)<CR>
+endfunction
+
+function! s:Context(reverse) abort
+  call search('^\(@@ .* @@\|[<=>|]\{7}[<=>|]\@!\)', a:reverse ? 'bW' : 'W')
 endfunction
 
 function! SpaceVim#layers#VersionControl#set_variable(var) abort
@@ -52,15 +59,25 @@ endfunction
 function! s:git_branch() abort
   if exists('g:loaded_fugitive')
     try
-      let l:head = fugitive#head()
-      if empty(l:head)
+      let head = fugitive#head()
+      if empty(head)
         call fugitive#detect(getcwd())
-        let l:head = fugitive#head()
+        let head = fugitive#head()
       endif
       if g:spacevim_statusline_unicode_symbols == 1
-        return empty(l:head) ? '' : '  '.l:head . s:gtm_status()
+        return empty(head) ? '' : '  '.head . ' ' . s:gtm_status()
       else
-        return empty(l:head) ? '' : ' '.l:head . s:gtm_status()
+        return empty(head) ? '' : ' '.head . ' ' . s:gtm_status()
+      endif
+    catch
+    endtry
+  elseif exists('g:loaded_git')
+    try
+      let head = '%{git#branch#current()}'
+      if g:spacevim_statusline_unicode_symbols == 1
+        return empty(head) ? '' : '  '.head . ' ' . s:gtm_status()
+      else
+        return empty(head) ? '' : ' '.head . ' ' . s:gtm_status()
       endif
     catch
     endtry
@@ -104,10 +121,15 @@ function! s:gtm_statusline() abort
 endfunction
 
 " +0 ~0 -0 
+" if git layer is loaded, use vim-gitgutter instead.
 function! s:hunks() abort
   let hunks = [0,0,0]
   try
-    let hunks = sy#repo#get_stats()
+    if SpaceVim#layers#isLoaded('git')
+      let hunks = GitGutterGetHunkSummary()
+    else
+      let hunks = sy#repo#get_stats()
+    endif
   catch
   endtry
   let rst = ''
@@ -419,7 +441,7 @@ function! s:git_transient_state() abort
         \ 'key' : 't',
         \ 'desc' : 'toggle diff signs',
         \ 'func' : '',
-        \ 'cmd' : 'SignifyToggle',
+        \ 'cmd' : SpaceVim#layers#isLoaded('git') ? 'GitGutterToggle' : 'SignifyToggle',
         \ 'exit' : 0,
         \ },
         \ ],

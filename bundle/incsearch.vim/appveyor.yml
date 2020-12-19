@@ -1,0 +1,35 @@
+version: 1.0.{build}
+build: off
+test_script:
+- ps: >-
+    git clone --quiet --depth 1 https://github.com/thinca/vim-themis.git themis
+
+    git clone --quiet --depth 1 https://github.com/vim-jp/vital.vim.git vital
+
+    git clone --quiet --depth 1 https://github.com/haya14busa/vital-vimlcompiler vital-vimlcompiler
+
+    git clone --quiet --depth 1 https://github.com/haya14busa/vital-safe-string vital-safe-string
+
+    git clone --quiet --depth 1 https://github.com/haya14busa/vital-power-assert vital-power-assert
+
+
+
+    $zip = $Env:APPVEYOR_BUILD_FOLDER + '\vim.zip'
+
+    $vim = $Env:APPVEYOR_BUILD_FOLDER + '\vim'
+
+
+    (New-Object Net.WebClient).DownloadFile('http://files.kaoriya.net/vim/vim74-kaoriya-win64.zip', $zip)
+
+
+    [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem') > $null
+
+    [System.IO.Compression.ZipFile]::ExtractToDirectory($zip, $vim)
+
+
+    $Env:THEMIS_VIM = $vim + '\vim74-kaoriya-win64\vim.exe'
+
+
+    & $Env:THEMIS_VIM --version
+
+    .\themis\bin\themis.bat -r --runtimepath vital --runtimepath vital-vimlcompiler --runtimepath vital-safe-string --runtimepath vital-power-assert --reporter spec

@@ -1,6 +1,6 @@
 "=============================================================================
 " compatible.vim --- SpaceVim compatible API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -222,6 +222,12 @@ else
 endif
 
 
+" patch 7.4.330  add function matchaddpos()
+
+" patch 7.4.792 add dict argv to matchaddpos() (only conceal)
+" patch 7.4.1740  syn-cchar defined with matchadd() does not appear
+" patch 8.1.0218 update dict argv (add window)
+
 
 
 " - A number.  This whole line will be highlighted.  The first
@@ -240,37 +246,45 @@ if exists('*matchaddpos')
   function! s:self.matchaddpos(group, pos, ...) abort
     let priority = get(a:000, 0, 10)
     let id = get(a:000, 1, -1)
-    let dict = get(a:000, 2, {})
-    return matchaddpos(a:group, a:pos, priority, id, dict)
+    let argv = [priority, id]
+    if has('patch-7.4.792')
+      let dict = get(a:000, 2, {})
+      call add(argv, dict)
+    endif
+    return call('matchaddpos', [a:group, a:pos] + argv)
   endfunction
 else
   function! s:self.matchaddpos(group, pos, ...) abort
     let priority = get(a:000, 0, 10)
     let id = get(a:000, 1, -1)
-    let dict = get(a:000, 2, {})
+    let argv = [priority, id]
+    if has('patch-7.4.792')
+      let dict = get(a:000, 2, {})
+      call add(argv, dict)
+    endif
     let pos1 = a:pos[0]
     if type(pos1) == 0
-      let id = matchadd(a:group, '\%' . pos1 . 'l', priority, id, dict)
+      let id = call('matchadd', [a:group, '\%' . pos1 . 'l'] + argv)
     elseif type(pos1) == 3
       if len(pos1) == 1
-        let id = matchadd(a:group, '\%' . pos1[0] . 'l', priority, id, dict)
+        let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l'] + argv)
       elseif len(pos1) == 2
-        let id = matchadd(a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c', priority, id, dict)
+        let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c'] + argv)
       elseif len(pos1) == 3
-        let id = matchadd(a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c', priority, id, dict)
+        let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c'] + argv)
       endif
     endif
     if len(a:pos) > 1
       for pos1 in a:pos[1:]
         if type(pos1) == 0
-          call matchadd(a:group, '\%' . pos1 . 'l', priority, id, dict)
+          let id = call('matchadd', [a:group, '\%' . pos1 . 'l'] + argv)
         elseif type(pos1) == 3
           if len(pos1) == 1
-            call matchadd(a:group, '\%' . pos1[0] . 'l', priority, id, dict)
+            let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l'] + argv)
           elseif len(pos1) == 2
-            call matchadd(a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c', priority, id, dict)
+            let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%' . pos1[1] . 'c'] + argv)
           elseif len(pos1) == 3
-            call matchadd(a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c', priority, id, dict)
+            let id = call('matchadd', [a:group, '\%' . pos1[0] . 'l\%>' . pos1[1] . 'c\%<' . pos1[2] . 'c'] + argv)
           endif
         endif
       endfor
@@ -288,6 +302,13 @@ if exists('*getjumplist')
     return getjumplist()
   endfunction
 else
+  "
+  " the following entries:
+  " bufnr		buffer number
+  " col		column number
+  " coladd		column offset for 'virtualedit'
+  " filename	filename if available
+  " lnum		line number
   function! s:self.getjumplist() abort
     let jumpinfo = split(self.execute(':jumps'), "\n")[1:-2]
     let result = []
@@ -298,6 +319,7 @@ else
             \ 'bufnr' : jump,
             \ 'lnum' : line,
             \ 'col' : col,
+            \ 'coladd' : 0,
             \ })
     endfor
     return result
@@ -306,7 +328,7 @@ endif
 
 if s:SYS.isWindows
   function! s:self.resolve(path) abort
-    let cmd = 'dir /a "' . a:path . '" | findstr SYMLINK'
+    let cmd = 'dir /a ' . shellescape(a:path) . ' | findstr SYMLINK'
     " 2018/12/07 周五  下午 10:23    <SYMLINK>      vimfiles [C:\Users\Administrator\.SpaceVim]
     " ref: https://superuser.com/questions/524669/checking-where-a-symbolic-link-points-at-in-windows-7
     silent let rst = system(cmd)

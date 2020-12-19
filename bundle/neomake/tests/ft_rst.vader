@@ -1,0 +1,150 @@
+Include: include/setup.vader
+
+Execute (rst: rstlint: errorformat):
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#rst#rstlint().errorformat
+  new
+  file file.rst
+  let output = [
+  \ 'ERROR file.rst:40 Error in "code-block" directive:',
+  \ 'unknown option: "linenos".',
+  \ ]
+  lgetexpr output
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 40, 'bufnr': bufnr('%'), 'col': 0, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'E', 'pattern': '',
+  \  'text': 'Error in "code-block" directive:'."\n".'unknown option: "linenos".',
+  \ }]
+
+  " Newline gets trimmed when going through postprocess.
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#rst#rstlint(), output)
+  CallNeomake 1, [maker]
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 40, 'bufnr': bufnr('%'), 'col': 0, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'E', 'pattern': '',
+  \  'text': 'Error in "code-block" directive: unknown option: "linenos".',
+  \ }]
+  bwipe
+
+Execute (rst: sphinx: enabled based on conf.py):
+  call g:NeomakeTestsSetPATH('')
+
+  AssertEqual neomake#makers#ft#rst#EnabledMakers(), ['rstlint', 'rstcheck']
+
+  new
+  call g:NeomakeTestsCreateExe('sphinx-build', [])
+  AssertEqual neomake#makers#ft#rst#EnabledMakers(), ['rstlint', 'rstcheck']
+  AssertNeomakeMessage 'sphinx: skipping setting of source_dir for empty bufname.', 3
+
+  let bufnr = bufnr('%')
+  noautocmd set filetype=rst
+  CallNeomake 1, ['sphinx']
+  AssertNeomakeMessage 'sphinx: skipping setting of source_dir for empty bufname.', 3
+  AssertNeomakeMessage '\Vsphinx: could not find conf.py', 0
+  Assert !exists('b:neomake.sphinx')
+
+  let tempdir = tempname()
+  let slash = neomake#utils#Slash()
+  call mkdir(tempdir.slash.'doc', 'p')
+
+  exe 'lcd '.fnameescape(tempdir)
+  file doc/test.rst
+
+  " Uses conf.py from project root also.
+  call writefile([], 'conf.py')
+  " To please neomake#utils#get_project_root().
+  call writefile([], 'Makefile')
+  call neomake#makers#ft#rst#EnabledMakers()
+  AssertNeomakeMessage printf("sphinx: setting b:neomake.sphinx.source_dir='%s'.", getcwd()), 3, {'bufnr': bufnr}
+
+  call writefile([], 'doc'.slash.'conf.py')
+  unlet b:neomake.sphinx
+  let expected_srcdir = getcwd() . slash . 'doc'
+  let maker = neomake#GetMaker('sphinx', 'rst')
+  AssertEqual maker.args[-2], expected_srcdir
+  AssertNeomakeMessage printf("sphinx: setting b:neomake.sphinx.source_dir='%s'.", expected_srcdir), 3, {'bufnr': bufnr}
+  AssertEqual neomake#makers#ft#rst#EnabledMakers(), ['sphinx']
+  bwipe
+
+Execute (rst: sphinx: handles docutils warnings and adds first additional line):
+  new
+  file build/some.rst
+  let b:neomake = {'sphinx': {'source_dir': 'sphinx_source_dir'}}
+
+  let output = [
+  \ 'WARNING: /some/path/inline.rst:8: (ERROR/3) Malformed table.',
+  \ 'No bottom table border found.',
+  \ '',
+  \ '======================= ====================================================================',
+  \ '/some/path/inline.rst:9: WARNING: Block quote ends without a blank line; unexpected unindent.',
+  \ 'WARNING: /some/path/inline.rst:40: (ERROR/3) Error in "code-block" directive:',
+  \ 'unknown option: "linenoss".',
+  \ '',
+  \ '.. code-block:: lua',
+  \ '   :linenoss:',
+  \ '',
+  \ '   -- luacheck: globals g1 g2, ignore foo',
+  \ '   local foo = g1(g2) -- No warnings emitted.',
+  \ '',
+  \ '   -- The following unused function is not reported.',
+  \ '   local function f() -- luacheck: ignore',
+  \ '      -- luacheck: globals g3',
+  \ '      g3() -- No warning.',
+  \ '   end',
+  \ '',
+  \ '   g3() -- Warning is emitted as the inline option defining g3 only affected function f.',
+  \ ' WARNING: /some/path/inline.rst:2: (WARNING/2) Title underline too short.',
+  \ '',
+  \ 'Command line interface',
+  \ '=====================',
+  \ '',
+  \ 'build/some.rst:70: WARNING: numfig is disabled. :numref: is ignored.',
+  \ 'build/some.rst:71: WARNING: numfig is disabled. :numref: is ignored.',
+  \ ]
+
+  let maker = neomake#makers#ft#rst#sphinx()
+  call extend(maker, {
+  \ 'exe': 'printf', 'args': ['%s\n'] + output,
+  \ 'append_file': 0, 'output_stream': 'stdout'})
+  CallNeomake 1, [maker]
+
+  let unlisted_bufnr = bufnr('/some/path/inline.rst')
+  let bufnr = bufnr('%')
+
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 8, 'bufnr': unlisted_bufnr, 'col': 0, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'E', 'pattern': '',
+  \  'text': 'Malformed table. No bottom table border found.'},
+  \ {'lnum': 9, 'bufnr': unlisted_bufnr, 'col': 0, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'W', 'pattern': '',
+  \  'text': 'Block quote ends without a blank line; unexpected unindent.'},
+  \ {'lnum': 40, 'bufnr': unlisted_bufnr, 'col': 0, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'E', 'pattern': '',
+  \  'text': 'Error in "code-block" directive: unknown option: "linenoss".'},
+  \ {'lnum': 70, 'bufnr': bufnr, 'col': 0, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'W', 'pattern': '',
+  \  'text': 'numfig is disabled. :numref: is ignored.'},
+  \ {'lnum': 71, 'bufnr': bufnr, 'col': 0, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'W', 'pattern': '',
+  \  'text': 'numfig is disabled. :numref: is ignored.'}
+  \ ]
+  exe 'bwipe' unlisted_bufnr
+  bwipe
+
+Execute (rst: sphinx: errorformat):
+  new
+  file foo.rst
+  let b:neomake = {'sphinx': {'source_dir': 'sphinx_source_dir'}}
+
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#rst#sphinx(), [], [
+    \ 'foo.rst:20: WARNING: Problems with "include" directive path:',
+    \ "InputError: [Errno 2] No such file or directory: '_include.rst'.",
+    \ ])
+  CallNeomake 1, [maker]
+
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 20, 'bufnr': bufnr('%'), 'col': 0, 'pattern': '', 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'W',
+  \  'text': 'Problems with "include" directive path: InputError: [Errno 2] No such file or directory: ''_include.rst''.'},
+  \ ]
+  bwipe

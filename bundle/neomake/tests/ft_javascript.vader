@@ -1,0 +1,101 @@
+Include: include/setup.vader
+
+Execute (javascript: eslint: errorformat):
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#javascript#eslint().errorformat
+  new
+  file errors.js
+  let bufnr = bufnr('%')
+
+  let output = [
+  \ "errors.js: line 2, col 10, Error - 'some_unused_var' is defined but never used. (no-unused-vars)",
+  \ '',
+  \ '1 problem',
+  \ ]
+
+  lgetexpr output
+  AssertEqualQf getloclist(0), [{
+    \ 'lnum': 2,
+    \ 'bufnr': bufnr,
+    \ 'col': 10,
+    \ 'valid': 1,
+    \ 'vcol': 0,
+    \ 'nr': -1,
+    \ 'type': 'E',
+    \ 'pattern': '',
+    \ 'text': "'some_unused_var' is defined but never used. (no-unused-vars)"}]
+
+  let output = [
+  \ "errors.js: line 2, col 10, Error - 'some_unused_var' is defined but never used. (no-unused-vars)",
+  \ "errors.js: line 3, col 20, Warning - Missing semicolon. (semi)",
+  \ '',
+  \ '2 problems',
+  \ ]
+
+  lgetexpr output
+  AssertEqualQf getloclist(0), [{
+    \ 'lnum': 2,
+    \ 'bufnr': bufnr,
+    \ 'col': 10,
+    \ 'valid': 1,
+    \ 'vcol': 0,
+    \ 'nr': -1,
+    \ 'type': 'E',
+    \ 'pattern': '',
+    \ 'text': "'some_unused_var' is defined but never used. (no-unused-vars)",
+    \ }, {
+    \ 'lnum': 3,
+    \ 'bufnr': bufnr,
+    \ 'col': 20,
+    \ 'valid': 1,
+    \ 'vcol': 0,
+    \ 'nr': -1,
+    \ 'type': 'W',
+    \ 'pattern': '',
+    \ 'text': 'Missing semicolon. (semi)'}]
+  bwipe
+
+Execute (javascript: standard: errorformat):
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#javascript#standard().errorformat
+
+  new
+  file /path/to/file.js
+  let output = [
+  \ 'standard: Use JavaScript Standard Style (https://standardjs.com)',
+  \ 'standard: Run `standard --fix` to automatically fix some problems.',
+  \ '  /path/to/file.js:1:1: Expected an assignment or function call and instead saw an expression. (no-unused-expressions)',
+  \ ]
+  lgetexpr output
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 1, 'bufnr': bufnr('%'), 'col': 1, 'valid': 1, 'vcol': 0,
+  \ 'nr': -1, 'type': 'W', 'pattern': '',
+  \ 'text': 'Expected an assignment or function call and instead saw an expression. (no-unused-expressions)'}]
+  bwipe
+
+Execute (javascript: flow: no errors):
+  new
+  let flow_maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#javascript#flow(), [
+    \ 'No errors!',
+    \ ])
+  CallNeomake 1, [flow_maker]
+  AssertEqual getloclist(0), []
+  bwipe
+
+Execute (javascript: flow: no trailing newline):
+  new
+  file index.js
+  let flow_maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#javascript#flow(), [
+    \ 'File "index.js", line 9, characters 10-11',
+    \ 'Error: Cannot call `list` because a callable signature is missing in exports [1].',
+    \ '',
+    \ ])
+  CallNeomake 1, [flow_maker]
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 9, 'bufnr': bufnr('%'), 'col': 10, 'valid': 1, 'vcol': 0, 'nr': -1,
+  \  'type': 'E', 'pattern': '',
+  \  'text': 'Error: Cannot call `list` because a callable signature is missing in exports [1].'},
+  \ ]
+  " Replaced newline in log message.
+  AssertNeomakeMessage "\\VModified list entry 1 (postprocess): {'changed': {'text': ['11\\\\nError: Cannot call `list` because a callable signature is missing in exports [1].', 'Error: Cannot call `list` because a callable signature is missing in exports [1].']}, 'added': {'length': 2}}."
+  bwipe

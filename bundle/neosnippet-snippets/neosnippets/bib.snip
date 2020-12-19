@@ -1,0 +1,232 @@
+snippet article
+alias   @article
+    @article{${1:LABEL},
+        author = {${2}},
+        title = {${3}},
+        journal = {${4}},
+        year = {${5}},
+        memo = {volume, number, pages, month, note}
+    }
+
+snippet book
+alias   @book
+    @book{${1:LABEL},
+        author/editor = {${2}},
+        title = {${3}},
+        publisher = {${4}},
+        year = {${5}},
+        memo = {volume, series, address, edition, month, note},
+    }
+
+snippet booklet
+alias   @booklet
+    @booklet{${1:LABEL},
+        title = {${2}},
+        memo = {author, howpublished, address, month, year, note},
+    }
+
+snippet inbook
+alias   @inbook
+    @inbook{${1:LABEL},
+        author/editor = {${2}},
+        title = {${3}},
+        chapter/pages = {${4}},
+        publisher = {${5}},
+        year = {${6}},
+        memo = {volume, series, address, edition, month, note},
+    }
+
+snippet incollection
+alias   @incollection
+    @incollection{${1:LABEL},
+        author = {${2}},
+        title = {${3}},
+        booktitle = {${4}},
+        year = {${5}},
+        memo = {editor, pages, organization, publisher, address, month, note},
+    }
+
+snippet inproceedings
+alias   @inproceedings @conference conference
+    @inproceedings{${1:LABEL},
+        author = {${2}},
+        title = {${3}},
+        booktitle = {${4}},
+        year = {${5}},
+        memo = {editor, volume, number, series, pages, address, month,
+            organization, publisher, note}
+    }
+
+snippet manual
+alias   @manual
+    @manual{${1:LABEL},
+        title = {${2}},
+        memo = {author, organization, address, edition, month, year, note},
+    }
+
+snippet mastersthesis
+alias   @mastersthesis
+    @mastersthesis{${1:LABEL},
+        author = {${2}},
+        title = {${3}},
+        school = {${4}},
+        year = {${5}},
+        memo = {address, month, note},
+    }
+
+snippet misc
+alias   @misc
+    @misc{${1:LABEL},
+        memo = {author, title, howpublished, month, year, note},
+    }
+
+snippet online
+alias   @online
+    @online{${1:LABEL},
+        author = {${2}},
+        title = {${3}},
+        url = {${4}},
+        note = {year/date},
+    }
+
+snippet phdthesis
+alias   @phdthesis
+    @phdthesis{${1:LABEL},
+        author = {${2}},
+        title = {${3}},
+        school = {${4}},
+        year = {${5}},
+        memo = {address, month, note},
+    }
+
+snippet proceedings
+alias   @proceedings
+    @proceedings{${1:LABEL},
+        title = {${2}},
+        year = {${3}},
+        memo = {editor, publisher, organization, address, month, note},
+    }
+
+snippet techreport
+alias   @techreport
+    @techreport{${1:LABEL},
+        author = {${2}},
+        title = {${3}},
+        institution = {${4}},
+        year = {${5}},
+        memo = {type, number, address, month, note},
+    }
+
+snippet unpublished
+alias   @unpublished
+    @unpublished{${1:LABEL},
+        author = {${2}},
+        title = {${3}},
+        note = {${4}},
+        memo = {month, year},
+    }
+
+
+snippet address
+    address = {${1}},
+    ${0}
+
+snippet annote
+    annote = {${1}},
+    ${0}
+
+snippet author
+    author = {${1}},
+    ${0}
+
+snippet booktitle
+    booktitle = {${1}},
+    ${0}
+
+snippet crossref
+    crossref = {${1}},
+    ${0}
+
+snippet chapter
+    chapter = {${1}},
+    ${0}
+
+snippet edition
+    edition = {${1}},
+    ${0}
+
+snippet editor
+    editor = {${1}},
+    ${0}
+
+snippet eprint
+    eprint = {${1}},
+    ${0}
+
+snippet howpublished
+    howpublished = {${1}},
+    ${0}
+
+snippet institution
+    institution = {${1}},
+    ${0}
+
+snippet journal
+    journal = {${1}},
+    ${0}
+
+snippet key
+    key = {${1}},
+    ${0}
+
+snippet month
+    month = {${1}},
+    ${0}
+
+snippet note
+    note = {${1}},
+    ${0}
+
+snippet number
+    number = {${1}},
+    ${0}
+
+snippet organization
+    organization = {${1}},
+    ${0}
+
+snippet pages
+    pages = {${1}},
+    ${0}
+
+snippet publisher
+    publisher = {${1}},
+    ${0}
+
+snippet school
+    school = {${1}},
+    ${0}
+
+snippet series
+    series = {${1}},
+    ${0}
+
+snippet title
+    title = {${1}},
+    ${0}
+
+snippet type
+    type = {${1}},
+    ${0}
+
+snippet url
+    url = {${1}},
+    ${0}
+
+snippet volume
+    volume = {${1}},
+    ${0}
+
+snippet year
+    year = {${1}},
+    ${0}

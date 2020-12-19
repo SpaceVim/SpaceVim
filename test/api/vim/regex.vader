@@ -1,0 +1,13 @@
+Execute ( SpaceVim api: vim#key ):
+  let regex = SpaceVim#api#import('vim#regex')
+  AssertEqual regex.parser('(?i)abc', 0), '\v\cabc'
+  AssertEqual regex.parser('(?-i)abc', 0), '\v\Cabc'
+  AssertEqual regex.parser('(?:exp)', 0), '\v%(exp)'
+  AssertEqual regex.parser('\a\f\v', 0), '\v%x07%x0C%x0B'
+  AssertEqual regex.parser('[:word:]', 0), '\v[0-9A-Za-z_]'
+  AssertEqual regex.parser('\bspace\b', 0), '\v<space>'
+  AssertEqual regex.parser('\bspace', 0), '\v<space'
+  AssertEqual regex.parser('space\b', 0), '\vspace>'
+  AssertEqual regex.parser('if%@&ab', 0), '\vif\%\@\&ab'
+  AssertEqual regex.parser('(?P<name>exp)', 0), '\v(exp)'
+

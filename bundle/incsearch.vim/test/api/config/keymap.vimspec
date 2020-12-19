@@ -1,0 +1,50 @@
+Describe api.config.keymap
+
+  It 'should set injected keymapping'
+    let map = {'a': 'b'}
+    let config = {'keymap': map}
+    let default = incsearch#make().keymapping()
+    let injected = incsearch#make(config).keymapping()
+    Assert Equals(injected, extend(copy(default), map))
+  End
+
+  It 'should return copied keymapping dictionary'
+    let map = {'a': 'b'}
+    let cli = incsearch#make()
+    let d = copy(cli.keymapping())
+    call extend(cli.keymapping(), map)
+    Assert Equals(cli.keymapping(), d)
+  End
+
+  It 'can override default keymapping'
+    let map = {"\<Tab>": "\t"}
+    let config = {'keymap': map}
+    let default = incsearch#make().keymapping()
+    let injected = incsearch#make(config).keymapping()
+    Assert Equals(injected, extend(copy(default), map))
+  End
+
+  It 'should support rich keymapping configuration'
+    let map = {
+    \   'a': {
+    \     'key': 'b',
+    \     'noremap': 0
+    \   },
+    \   'c': 'd'
+    \ }
+    let config = {'keymap': map}
+    let default = incsearch#make().keymapping()
+    let injected = incsearch#make(config).keymapping()
+    Assert Equals(injected, extend(copy(default), map))
+  End
+
+  It 'should not affect other object'
+    let map = {'a': 'b'}
+    let config = {'keymap': map}
+    let cli = incsearch#make(config)
+    let d = copy(cli.keymapping())
+    Assert NotEquals(incsearch#make().keymapping(), d)
+  End
+
+End
+

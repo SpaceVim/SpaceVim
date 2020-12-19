@@ -1,0 +1,27 @@
+Include: include/setup.vader
+
+Execute (perl: errorformat):
+  let perl_output =
+  \"Global symbol \"$value\" requires explicit package name at /home/test/test.pl line 3.\n
+  \/home/test/test.pl had compilation errors."
+
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#perl#perl().errorformat
+  lgetexpr perl_output
+  AssertEqual len(getloclist(0)), 1
+  AssertEqual getloclist(0)[0].text, 'Global symbol "$value" requires explicit package name'
+
+  let syntax_ok = "/home/test/test.pl syntax OK"
+  lgetexpr syntax_ok
+  AssertEqual getloclist(0), []
+  bwipe /home/test/test.pl
+
+Execute (perl: postprocess):
+  let entry = {'text': 'text', 'pattern': ''}
+
+  call neomake#makers#ft#perl#PerlEntryProcess(entry)
+  AssertEqual entry.text, 'text'
+
+  let entry.pattern = 'pattern'
+  call neomake#makers#ft#perl#PerlEntryProcess(entry)
+  AssertEqual entry.text, 'text pattern'

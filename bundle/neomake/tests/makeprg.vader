@@ -1,0 +1,27 @@
+Include: include/setup.vader
+
+Execute (makeprg: exe):
+  Save &makeprg
+  let &makeprg = 'my-make'
+
+  let makers = neomake#GetEnabledMakers()
+  AssertEqual len(makers), 1
+  let maker = makers[0]
+  AssertEqual maker.exe, 'my-make'
+  AssertEqual maker.args, []
+
+  let jobinfo = NeomakeTestsFakeJobinfo()
+  let jobinfo.file_mode = 0
+  AssertEqual maker.args, []
+  AssertEqual maker.append_file, 0
+
+Execute (makeprg: exe and args):
+  Save &makeprg
+  let &makeprg = 'my-make with-arg'
+
+  let makers = neomake#GetEnabledMakers()
+  AssertEqual len(makers), 1
+  let maker = makers[0]
+  AssertEqual maker.exe, &shell
+  AssertEqual maker.args, [&shellcmdflag, 'my-make with-arg']
+  AssertEqual maker.append_file, 0

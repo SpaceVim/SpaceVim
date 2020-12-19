@@ -147,7 +147,7 @@ Group your functionality as a plugin, unified in one directory (or code reposito
 
 **In the autoload/ directory, defined with [!] and [abort].**
 
-Autoloading allows functions to be loaded on demand, which makes startuptime faster and enforces function namespacing.
+Autoloading allows functions to be loaded on demand, which makes startup time faster and enforces function namespacing.
 
 Script-local functions are welcome, but should also live in autoload/ and be called by autoloaded functions.
 
@@ -288,7 +288,7 @@ autocommand BufEnter <buffer>
 - Use capital case and angle brackets for keyboard buttons: `<Down>`, `<Up>`.
 - Use uppercase for custom leader: `SPC`, `WIN`, `UNITE`, `DENITE`.
 - Use space as delimiter for key sequences: `SPC t w`, `<Leader> f o`.
-- Use `/` for alternative sequences: `<Tab>` / `<C-n>`.
+- Use `/` for alternative sequences: `<Tab>` / `Ctrl-n`.
 - Use `Ctrl-e` rather than `<C-e>` in documentation.
 
 ## Vimscript Style

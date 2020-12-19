@@ -1,30 +1,31 @@
 ---
 title: "开发者文档"
 description: "本文档是 SpaceVim 开发者文档，描述了：1. 如何提交问题 2. 如何贡献代码 3. 代码格式规则 4. 版本迭代信息"
-lang: cn
+lang: zh
 ---
 
-# SpaceVim 开发者文档
+# [主页](../) >> 开发者文档
 
 <!-- vim-markdown-toc GFM -->
 
 - [寻求帮助](#寻求帮助)
 - [反馈问题](#反馈问题)
 - [贡献代码](#贡献代码)
+  - [项目代码结构](#项目代码结构)
   - [证书](#证书)
   - [公约](#公约)
   - [拉取请求](#拉取请求)
-    - [PR 标题前缀](#pr-标题前缀)
-    - [在上游的主分支顶部压缩你的 PR 分支](#在上游的主分支顶部压缩你的-pr-分支)
+    - [标题前缀](#标题前缀)
+    - [新建拉取请求步骤](#新建拉取请求步骤)
     - [抽象化的简单 PRs（绝大多数 PRs 都是这样的）：](#抽象化的简单-prs绝大多数-prs-都是这样的)
     - [复杂的 PRs (大的重构，等)：](#复杂的-prs-大的重构等)
   - [贡献一个模块](#贡献一个模块)
     - [文件头](#文件头)
     - [新 layer 的作者](#新-layer-的作者)
-    - [对现有的 layer 进行贡献](#对现有的-layer-进行贡献)
+    - [改进现有的模块](#改进现有的模块)
     - [贡献按键绑定](#贡献按键绑定)
       - [特定语言的按键绑定](#特定语言的按键绑定)
-    - [Contributing a banner](#contributing-a-banner)
+    - [欢迎界面LOGO](#欢迎界面logo)
 - [基于 SpaceVim 开发](#基于-spacevim-开发)
 - [更新日志](#更新日志)
 
@@ -32,10 +33,6 @@ lang: cn
 
 SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，SpaceVim 是由社区驱动的。
 下面是关于每个贡献者都应当遵守的简单规则的引导。
-
-在 GitHub 仓库上进行开发。下面是最近几周的仓库快照：
-
-[![Throughput Graph](https://graphs.waffle.io/SpaceVim/SpaceVim/throughput.svg)](https://waffle.io/SpaceVim/SpaceVim/metrics/throughput)
 
 你可以只阅读下面内容中的，你需要用到的部分：
 
@@ -66,6 +63,25 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 我们非常期待您的贡献。在此之前，请您认真阅读下面的内容。在任何情况下，都可以轻松的加入我们[gitter chat](https://gitter.im/SpaceVim/SpaceVim)进行提问和贡献代码。
 
+### 项目代码结构
+
+
+```txt
+├─ .ci/                           自动构建脚本
+├─ .github/                       issue/PR templates
+├─ .SpaceVim.d/                   开发者配置
+├─ autoload/SpaceVim.vim          核心逻辑文件
+├─ autoload/SpaceVim/api/         公共函数（API）
+├─ autoload/SpaceVim/layers/      可用模块
+├─ autoload/SpaceVim/plugins/     内置插件
+├─ autoload/SpaceVim/mapping/     快捷键
+├─ doc/                           帮助文档
+├─ docs/                          网站源码
+├─ wiki/                          维基源码
+├─ bin/                           可执行命令
+└─ test/                          测试文件
+```
+
 ### 证书
 
 SpaceVim 所有部分采用 GPLv3 许可。
@@ -77,13 +93,15 @@ SpaceVim 所有部分采用 GPLv3 许可。
 
 ### 公约
 
-SpaceVim 建立在下面的公约上：该公约主要包括了函数的命名，按键绑定的定义以及文档的写法。请阅读下面的公约：[conventions](https://spacevim.org/cn/conventions/) 在您进行贡献前，请确认您已经了解了以上公约的内容。
+提交代码时，需要遵循一些约定，主要包括函数的命名格式、文档的写法、
+快捷键定义的规范等，具体内容可以查阅[《格式规范》](../conventions/),
+在您进行贡献前，请确认您已经了解了以上公约的内容。
 
 ### 拉取请求
 
-#### PR 标题前缀
+#### 标题前缀
 
-新开 pull request 时，应当标记该 PR 属于以下哪种前缀：
+新开拉取请求时，应当通过标题前缀来标记该拉取请求的性质：
 
 - `Add:` 添加新的特性
 - `Change:` 修改已有特性的行为
@@ -91,12 +109,13 @@ SpaceVim 建立在下面的公约上：该公约主要包括了函数的命名�
 - `Remove:` 移除原先支持的某些特性
 - `Doc:` 更新帮助文档
 - `Website:` 更新网站内容
+- `Type:` 更新错别字
 
 示例如下：
 
 `Website: update the lang#c layer page.`
 
-#### 在上游的主分支顶部压缩你的 PR 分支
+#### 新建拉取请求步骤
 
 - fork SpaceVim 仓库
 - 克隆你自己的仓库
@@ -111,7 +130,6 @@ git clone ${YOUR_OWN_REPOSITORY_URL}
 git remote add upstream https://github.com/SpaceVim/SpaceVim.git
 ```
 
-- fetch upstream and rebase on top of upstream master
 - 在上游的主分支中取回并且重新定位上游
 
 ```sh
@@ -129,11 +147,9 @@ git rebase upstream/master
 #### 复杂的 PRs (大的重构，等)：
 
 只打包一些枯燥的提交，比如修改错别字，语法修复，等等。把重要和独立的步骤分别放在不同的提交中。
-Those PRs are merged and explicitly not fast-forwarded.
 这些 PRs 被合并并且明示非快速转发。
 提交信息
 根据编写的内容提交信息 [Tim Pope’s guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)：
-
 
 - 用现在时和祈使句：例如："Fix bug"，而不是"fixed bug" 或者"fixes bug"。
 - 以大写字母开头，短摘要开头（72 个字符或者更少），以空行结尾。
@@ -173,7 +189,6 @@ Further paragraphs come after blank lines.
 
 首先需要阅读模块文档，了解什么是模块，以及模块应包括那些内容。
 
-Layers with no associated configuration will be rejected. For instance a layer with just a package and a hook can be easily replaced by the usage of the variable `g:spacevim_custom_plugins`.
 未关联配置的模块将会被拒绝。举个例子一个只有包和钩子的模块，就能被很简单地替换为变量 `g:spacevim_custom_plugins`。
 
 #### 文件头
@@ -190,7 +205,6 @@ Vim 脚本的文件头，应该采用下面的格式：
 "=============================================================================
 ```
 
-You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by the name of the layer you are creating, don’t forget to replace **YOUR NAME** and **YOUR EMAIL** also.
 你应该用文件（比如：foo.vim）来替换掉 FILENAME，把 NAME 用你编写的 layer 的名字来代替，同时不要忘了替换 **YOUR NAME** 和 **YOUR EMAIL**。
 
 #### 新 layer 的作者
@@ -202,6 +216,7 @@ You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by t
 1. fork SpaceVim repo
 2. add a layer file `autoload/SpaceVim/layers/foo.vim` for `foo` layer.
 3. edit layer file, check out the example below:
+
 ```vim
 "=============================================================================
 " foo.vim --- foo Layer file for SpaceVim
@@ -253,22 +268,24 @@ function! SpaceVim#layers#foo#config() abort
   " ...
 endfunction
 ```
+
 4. Add layer document `docs/layers/foo.md` for `foo` layer.
 5. Open `docs/layers/index.md`, run `:call SpaceVim#dev#layers#update()` to update layer list.
 6. send PR to SpaceVim.
 
-#### 对现有的 layer 进行贡献
+#### 改进现有的模块
 
-If you contribute to an already existing layer, you should not modify any header file.
-如果你想对一个已经存在的模块做贡献，你不能修改文件头的任意地方。
+现有的模块头文件中包含了作者等信息，这些信息通常不可修改。
+对现有的模块进行改进时，需要尽量保持原先的默认行为。
 
 #### 贡献按键绑定
 
 按键映射是 SpaceVim 中非常重要的一部分。
 
-如果你只想要拥有自己的按键映射的话，你可以在 `bootstrap function` 文件中进行修改。
+如果你只想要拥有自己的按键映射的话，你可以在启动函数文件中进行新增。
 
-如果你认为贡献一个新的按键映射有必要，那么请首先阅读文档，把自己的按键映射调整为最佳状态，然后用你更改后的按键映射进行提交 PR。
+如果你认为贡献一个新的按键映射有必要，那么请首先阅读文档，
+把自己的按键映射调整为最佳状态，然后用你更改后的按键映射进行提交 PR。
 
 始终牢记，在相关文档中记录新的按键映射或者是按键映射更改。它应该是 `layername.md` 和 [documentation.md](https://spacevim.org/cn/documentation)。
 
@@ -292,13 +309,10 @@ If you contribute to an already existing layer, you should not modify any header
 上面所有的按键绑定都是默认的建议，但是它同样是基于自身的语言层的。
 
 
-#### Contributing a banner
+#### 欢迎界面LOGO
 
-The startup banner is by default the SpaceVim logo but there are also ASCII banners available in the `core/banner` layer.
-
-If you have some ASCII skills you can submit your artwork!
-
-You are free to choose a reasonable height size but the width size should be around 75 characters.
+启动界面的LOGO默认是SpaceVim内置的一些ASCII码绘制的图形，存储于 `core/banner` 模块，
+LOGO需要选择合适的高度，宽度限定90个字符宽度以内，高度限定在10以内。
 
 ## 基于 SpaceVim 开发
 
@@ -319,7 +333,7 @@ markdown 语法如下：
             <li>
                <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
                <span class="post-date">{{ post.date | date_to_string }}</span>
-               <p>{{ post.excerpt | truncatewords: 100 }}</p>
+               <p>{{ post.description | truncatewords: 100 }}</p>
             </li>
     {% endfor %}
 </ul>

@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lsp 模块"
 description: "这一模块为 SpaceVim 提供了 language server protocol 的支持，提供更多语言相关服务。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> lsp
@@ -129,8 +129,10 @@ gem install solargraph
 
 | 语言         | 命令                                                                                                                                                                                             |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ada`        | `['ada_language_server']`                                                                                                                                                                                     |
 | `c`          | `['clangd']`                                                                                                                                                                                     |
 | `cpp`        | `['clangd']`                                                                                                                                                                                     |
+| `crystal`    | `['scry']`                                                                                                                                                                                       |
 | `css`        | `['css-languageserver', '--stdio']`                                                                                                                                                              |
 | `dart`       | `['dart_language_server']`                                                                                                                                                                       |
 | `go`         | `['go-langserver', '-mode', 'stdio']`                                                                                                                                                            |
@@ -168,3 +170,14 @@ gem install solargraph
 | --------------- | ------------- |
 | `K` / `SPC l d` | 显示文档      |
 | `SPC l e`       | 重命名 symbol |
+
+如果 `checkers` 模块未载入，则以下快捷键将被引入：
+
+| 快捷键    | 功能描述                        |
+| --------- | ------------------------------- |
+| `SPC e c` | 清除错误列表                    |
+| `SPC e n` | 跳至下一个语法错误位置          |
+| `SPC e N` | 跳至上一个语法错误位置          |
+| `SPC e p` | 跳至上一个语法错误位置          |
+| `SPC e l` | 列出错误列表窗口                |
+| `SPC e L` | 列出错误列表窗口并跳至该窗口    |

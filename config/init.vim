@@ -1,6 +1,6 @@
 "=============================================================================
 " init.vim --- Language && encoding in SpaceVim
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -41,17 +41,21 @@ if s:SYSTEM.isWindows
   if has('multi_byte')
     " Windows cmd.exe still uses cp850. If Windows ever moved to
     " Powershell as the primary terminal, this would be utf-8
-    set termencoding=cp850
+    if exists('&termencoding') && !has('nvim')
+      set termencoding=cp850
+    endif
     setglobal fileencoding=utf-8
     " Windows has traditionally used cp1252, so it's probably wise to
     " fallback into cp1252 instead of eg. iso-8859-15.
     " Newer Windows files might contain utf-8 or utf-16 LE so we might
     " want to try them first.
-    set fileencodings=ucs-bom,utf-8,gbk,utf-16le,cp1252,iso-8859-15
+    set fileencodings=ucs-bom,utf-8,gbk,utf-16le,cp1252,iso-8859-15,cp936
   endif
 
 else
-  set termencoding=utf-8
+  if exists('&termencoding') && !has('nvim')
+    set termencoding=utf-8
+  endif
   set fileencoding=utf-8
   set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 endif

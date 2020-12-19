@@ -1,0 +1,162 @@
+Include: include/setup.vader
+
+Execute (erlc: common settings):
+  new
+  file src/myapp.erl
+
+  let args = neomake#makers#ft#erlang#GlobPaths()
+  AssertEqual args[:-2], ['-pa', 'ebin', '-I', 'include', '-I', 'src', '-o']
+  let output_dir = args[-1]
+  Assert isdirectory(output_dir)
+  bwipe
+
+Execute (erlc: output to _build/neomake if _build is present):
+  let old_cwd = getcwd()
+  try
+    let root = tempname()
+    call mkdir(root, 'p')
+    execute 'cd ' . root
+
+    call mkdir('_build', 'p')
+    new
+    file src/myapp.erl
+
+    let args = neomake#makers#ft#erlang#GlobPaths()
+    let output_dir = args[-1]
+    Assert output_dir =~# '/_build/neomake$'
+    Assert isdirectory(output_dir)
+    bwipe
+  finally
+    execute 'cd ' . old_cwd
+  endtry
+
+Execute (erlc: rebar3 default profile - no rebar.config):
+  let old_cwd = getcwd()
+  try
+    let root = tempname()
+    call mkdir(root, 'p')
+    execute 'cd ' . root
+
+    call mkdir('_build/default/lib/dep1/ebin', 'p')
+    new
+    file src/myapp.erl
+
+    let args = neomake#makers#ft#erlang#GlobPaths()
+    let dep1_ebin_opt = args[6:7]
+    let dep1_include_opt = args[8:9]
+    AssertEqual ['-pa', root . '/_build/default/lib/dep1/ebin'], dep1_ebin_opt
+    AssertEqual ['-I', root . '/_build/default/lib/dep1/include'], dep1_include_opt
+    bwipe
+  finally
+    execute 'cd ' . old_cwd
+  endtry
+
+
+Execute (erlc: rebar3 default profile):
+  let old_cwd = getcwd()
+  try
+    let root = tempname()
+    call mkdir(root, 'p')
+    execute 'cd ' . root
+
+    call mkdir('_build/default/lib/dep1/ebin', 'p')
+    write rebar.config
+    bwipe rebar.config
+    new
+    file src/myapp.erl
+
+    let args = neomake#makers#ft#erlang#GlobPaths()
+    let dep1_ebin_opt = args[6:7]
+    let dep1_include_opt = args[8:9]
+    AssertEqual ['-pa', root . '/_build/default/lib/dep1/ebin'], dep1_ebin_opt
+    AssertEqual ['-I', root . '/_build/default/lib/dep1/include'], dep1_include_opt
+    bwipe
+  finally
+    execute 'cd ' . old_cwd
+  endtry
+
+Execute (erlc: rebar3 test profile):
+  let old_cwd = getcwd()
+  try
+    let root = tempname()
+    call mkdir(root, 'p')
+    execute 'cd ' . root
+
+    call mkdir('_build/test/lib/dep1/ebin', 'p')
+    new
+    file test/myapp_SUITE.erl
+
+    let args = neomake#makers#ft#erlang#GlobPaths()
+    let dep1_ebin_opt = args[6:7]
+    let dep1_include_opt = args[8:9]
+    AssertEqual ['-pa', root . '/_build/test/lib/dep1/ebin'], dep1_ebin_opt
+    AssertEqual ['-I', root . '/_build/test/lib/dep1/include'], dep1_include_opt
+    bwipe
+  finally
+    execute 'cd ' . old_cwd
+  endtry
+
+Execute (erlc: rebar2/erlang.mk deps/ present):
+  let old_cwd = getcwd()
+  try
+    let root = tempname()
+    call mkdir(root, 'p')
+    execute 'cd ' . root
+
+    call mkdir('deps/dep1/ebin', 'p')
+    new
+    file src/myapp.erl
+
+    let args = neomake#makers#ft#erlang#GlobPaths()
+    let dep1_ebin_opt = args[6:7]
+    let dep1_include_opt = args[8:9]
+    AssertEqual ['-pa', root . '/deps/dep1/ebin'], dep1_ebin_opt
+    AssertEqual ['-I', root . '/deps/dep1/include'], dep1_include_opt
+    bwipe
+  finally
+    execute 'cd ' . old_cwd
+  endtry
+
+Execute (erlc: buffer local extra deps):
+  let old_cwd = getcwd()
+  try
+    let root = tempname()
+    call mkdir(root, 'p')
+    execute 'cd ' . root
+
+    call mkdir('deps.local/dep1/ebin', 'p')
+    new
+    file src/myapp.erl
+    let b:neomake_erlang_erlc_extra_deps = ['deps.local']
+
+    let args = neomake#makers#ft#erlang#GlobPaths()
+    let dep1_ebin_opt = args[6:7]
+    let dep1_include_opt = args[8:9]
+    AssertEqual ['-pa', 'deps.local/dep1/ebin'], dep1_ebin_opt
+    AssertEqual ['-I', 'deps.local/dep1/include'], dep1_include_opt
+    bwipe
+  finally
+    execute 'cd ' . old_cwd
+  endtry
+
+Execute (erlc: buffer local profile override):
+  let old_cwd = getcwd()
+  try
+    let root = tempname()
+    call mkdir(root, 'p')
+    execute 'cd ' . root
+
+    call mkdir('_build/test/lib/dep1/ebin', 'p')
+    new
+    file config/not_a_SUITE_file.erl
+    let b:neomake_erlang_erlc_rebar3_profile = 'test'
+
+    let args = neomake#makers#ft#erlang#GlobPaths()
+    let dep1_ebin_opt = args[6:7]
+    let dep1_include_opt = args[8:9]
+    AssertEqual ['-pa', root . '/_build/test/lib/dep1/ebin'], dep1_ebin_opt
+    AssertEqual ['-I', root . '/_build/test/lib/dep1/include'], dep1_include_opt
+    bwipe
+  finally
+    execute 'cd ' . old_cwd
+  endtry

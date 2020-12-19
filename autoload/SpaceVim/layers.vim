@@ -1,6 +1,6 @@
 "=============================================================================
 " layers.vim --- layers public API
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,6 +9,10 @@
 ""
 " @section Layers, layers
 "   SpaceVim support such layers:
+"
+" languages:
+"   
+" https://www.scriptol.com/programming/list-programming-languages.php#query-language
 
 let s:enabled_layers = []
 let s:layers_vars = {}
@@ -22,9 +26,22 @@ let s:SYS = SpaceVim#api#import('system')
 function! SpaceVim#layers#load(layer, ...) abort
   if a:layer ==# '-l'
     call s:list_layers()
+    return
   endif
+  let loadable = 1
+  try
+      let loadable = SpaceVim#layers#{a:layer}#loadable()
+  catch /^Vim\%((\a\+)\)\=:E117/
+  endtry
   if index(s:enabled_layers, a:layer) == -1
-    call add(s:enabled_layers, a:layer)
+    if loadable
+      call add(s:enabled_layers, a:layer)
+    else
+      call SpaceVim#logger#warn('Failed to load '
+            \ . a:layer
+            \ . ' layer, read :h SpaceVim-layer-' . a:layer 
+            \ . ' for more info!', 0)
+    endif
   endif
   if a:0 == 1 && type(a:1) == 4
     try
@@ -73,8 +90,13 @@ function! s:find_layers() abort
         let name = layer[matchend(layer, pattern):-5]
       endif
       let status = (index(s:enabled_layers, substitute(name, '/', '#','g')) != -1) ? 'loaded' : 'not loaded'
-      if filereadable(expand('~/.SpaceVim/docs/layers/' . name . '.md'))
-        let website = 'https://spacevim.org/layers/' . name . '/'
+      if name ==# 'lsp'
+        let url = 'language-server-protocol'
+      else
+        let url = name
+      endif
+      if filereadable(expand('~/.SpaceVim/docs/layers/' . url . '.md'))
+        let website = 'https://spacevim.org/layers/' . url . '/'
       else
         let website = 'no exists'
       endif

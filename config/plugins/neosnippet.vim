@@ -20,15 +20,10 @@ if g:spacevim_force_global_config == 0
 endif
 let g:neosnippet#enable_snipmate_compatibility =
       \ get(g:, 'neosnippet#enable_snipmate_compatibility', 1)
-let g:neosnippet#enable_complete_done =
-      \ get(g:, 'neosnippet#enable_complete_done', 1)
 
 if !exists('g:neosnippet#completed_pairs')
   let g:neosnippet#completed_pairs = {}
 endif
 let g:neosnippet#completed_pairs.java = {'(' : ')'}
-if g:neosnippet#enable_complete_done
-  let g:neopairs#enable = 0
-endif
 
 " vim:set et sw=2 cc=80:

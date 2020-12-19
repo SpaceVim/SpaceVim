@@ -1,0 +1,4 @@
+Execute ( Plugin config: LeaderF.vim ):
+  so config/plugins/LeaderF.vim
+
+

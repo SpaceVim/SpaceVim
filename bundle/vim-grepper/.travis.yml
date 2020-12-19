@@ -1,0 +1,11 @@
+addons:
+  apt:
+    packages:
+      - vim-gtk
+      - silversearcher-ag
+
+script: test/run
+
+notifcations:
+  email:
+    on_success: never

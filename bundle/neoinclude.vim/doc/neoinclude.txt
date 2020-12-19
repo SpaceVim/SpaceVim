@@ -1,0 +1,207 @@
+*neoinclude.txt*	Include completion framework for neocomplete/deoplete/ncm.
+
+Version: 0.1
+Author: Shougo <Shougo.Matsu at gmail.com>
+License: MIT license
+
+CONTENTS					*neoinclude-contents*
+
+Introduction		|neoinclude-introduction|
+Install			|neoinclude-install|
+Interface		|neoinclude-interface|
+  Commands		  |neoinclude-commands|
+  Variables		  |neoinclude-variables|
+  Functions		  |neoinclude-functions|
+Examples		|neoinclude-examples|
+FAQ			|neoinclude-faq|
+
+==============================================================================
+INTRODUCTION					*neoinclude-introduction*
+
+*neoinclude* is the framework for |neocomplete|/|deoplete|/|ncm|.
+
+It has "file/include" source and extends tag sources in neocomplete/deoplete/ncm.
+
+==============================================================================
+INSTALL						*neoinclude-install*
+
+Requirements: neocomplete.vim, deoplete.nvim or ncm
+
+https://github.com/Shougo/neocomplete.vim
+
+https://github.com/Shougo/deoplete.nvim
+
+https://github.com/roxma/nvim-completion-manager
+
+==============================================================================
+INTERFACE					*neoinclude-interface*
+
+------------------------------------------------------------------------------
+COMMANDS 					*neoinclude-commands*
+
+:NeoIncludeMakeCache [bufname]			*:NeoIncludeMakeCache*
+		Make a cache based on the buffer with the name [bufname].
+		The command selects the current buffer when you omit
+		[bufname].
+
+------------------------------------------------------------------------------
+VARIABLES 					*neoinclude-variables*
+
+g:neoinclude#max_processes			*g:neoinclude#max_processes*
+		This variable appoints the max number of include processes.
+		When this variable is 0, include process will be disabled.
+
+		Default value is 20.
+
+g:neoinclude#ctags_commands			*g:neoinclude#ctags_commands*
+		It is the dictionary of the path to the ctags command.  The
+		dictionary's key is filetype.  If the key is "_", it will be
+		used for default.
+		Note: If this command is not installed, "include" source is
+		disabled.
+
+		Default value is in "g:neoinclude#_ctags_commands".
+
+						*b:neoinclude_ctags_commands*
+b:neoinclude_ctags_commands
+		Buffer local variable of |g:neoinclude#_ctags_commands|.
+
+g:neoinclude#ctags_arguments			*g:neoinclude#ctags_arguments*
+		It is the dictionary of the character string to set a value
+		to give as an argument of the commands when buffer
+		and include use a ctags command.  The dictionary's
+		key is filetype.  If the key is "_", it will be used for
+		default.
+
+		Default value is in "g:neoinclude#_ctags_arguments".
+
+						*b:neoinclude_ctags_arguments*
+b:neoinclude_ctags_arguments
+		Buffer local variable of |g:neoinclude#_ctags_arguments|.
+
+g:neoinclude#paths				*g:neoinclude#paths*
+		It is the variable to enumerate path of the include file
+		every file type.  When there is not it, 'path' is used.
+		Refer to 'path' for the description form.  It is the
+		dictionary of the character string that assumed file type a
+		key.
+
+		Default value is in "g:neoinclude#_paths".
+
+						*b:neoinclude_paths*
+b:neoinclude_paths
+		Buffer local variable of |g:neoinclude#_paths|.
+
+g:neoinclude#patterns				*g:neoinclude#patterns*
+		This variable appoints the pattern of the include command.
+		When there is not it, 'include' is used.  Refer to 'include'
+		for the description form.  It is the dictionary of the
+		character string that assumed file type a key.
+
+		Default value is in "g:neoinclude#_patterns".
+
+						*b:neoinclude_patterns*
+b:neoinclude_patterns
+		Buffer local variable of |g:neoinclude#_patterns|.
+
+g:neoinclude#exprs				*g:neoinclude#exprs*
+		It is the expression string of the line analysis to perform
+		to acquire an include file name.  When there is not it,
+		'includeexpr' is used.  Refer to 'includeexpr' for the
+		description form.  It is the dictionary of the character
+		string that assumed file type a key.
+
+		Default value is in "g:neoinclude#_exprs".
+
+						*b:neoinclude_exprs*
+b:neoinclude_exprs
+		Buffer local variable of |g:neoinclude#_exprs|.
+
+g:neoinclude#reverse_exprs			*g:neoinclude#reverse_exprs*
+		It is the expression string of the line analysis to perform
+		to substitute an include file name.  When there is not it,
+		ignored.  Refer to 'includeexpr' for the
+		description form.  It is the dictionary of the character
+		string that assumed file type a key.
+
+		Example: Perl
+>
+		if !exists('g:neoinclude#reverse_exprs')
+		  let g:neoinclude#reverse_exprs = {}
+		endif
+		let g:neoinclude#reverse_exprs.perl =
+		\ 'fnamemodify(substitute(v:fname, "/", "::", "g"), ":r")'
+<
+		Default value is in "g:neoinclude#_reverse_exprs".
+
+						*b:neoinclude_reverse_exprs*
+b:neoinclude_reverse_exprs
+		Buffer local variable of |g:neoinclude#_reverse_exprs|.
+
+g:neoinclude#exts				*g:neoinclude#exts*
+		It is the list of include file name extensions.  When there
+		is not it, all file name is used.  It is the dictionary of
+		the list that assumed file type a key.  In order to use this
+		feature you have to initialize 'g:neoinclude#exts' as shown in
+		the following example.
+
+		Example: C++
+>
+		if !exists('g:neoinclude#exts')
+		  let g:neoinclude#exts = {}
+		endif
+		let g:neoinclude#exts.cpp = ['', 'h', 'hpp', 'hxx']
+<
+		Default value is in "g:neoinclude#_exts".
+
+						*b:neoinclude_exts*
+b:neoinclude_exts
+		Buffer local variable of |g:neoinclude#_exts|.
+
+g:neoinclude#delimiters				*g:neoinclude#delimiters*
+		It is the delimiter character of include path.  When there is
+		not it, "." is used.  It is the dictionary of the string that
+		assumed file type a key.
+
+		Default value is in "g:neoinclude#_delimiters".
+
+						*b:neoinclude_delimiters*
+b:neoinclude_delimiters
+		Buffer local variable of |g:neoinclude#_delimiters|.
+
+g:neoinclude#functions				*g:neoinclude#functions*
+		This variable appoints the function name of the include
+		command.  When there is not it, ignored.  It is the dictionary
+		of the function name string that assumed file type a key.
+
+		The function args are {lines} and {path}.
+		{lines} is the list of buffer lines.
+		{path} is the include path.
+		The return value is the list of include files.
+
+		Default value is in "g:neoinclude#_functions".
+
+						*b:neoinclude_functions*
+b:neoinclude_functions
+		Buffer local variable of |g:neoinclude#_functions|.
+
+------------------------------------------------------------------------------
+FUNCTIONS 					*neoinclude-functions*
+
+==============================================================================
+EXAMPLES					*neoinclude-examples*
+>
+	
+<
+==============================================================================
+FAQ						*neoinclude-faq*
+
+Q: The ctags cache takes too much time.
+https://github.com/Shougo/neoinclude.vim/issues/9
+
+A: You can disable it by |g:neoinclude#ctags_command| to empty string.
+But you cannot use "include" source.  You can use "file/include" source
+though.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:

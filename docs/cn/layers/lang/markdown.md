@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#markdown 模块"
 description: "这一模块为 Markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#markdown
@@ -29,6 +29,8 @@ lang: cn
   name = "lang#markdown"
 ```
 
+语法树的支持由插件`lvht/tagbar-markdown`提供，但是该插件依赖 php，如果不希望安装 php，可以直接下载 [mdctags](https://github.com/wsdjeg/mdctags.rs) 命令。
+
 ## 代码格式化
 
 SpaceVim 默认使用 remark 来格式化 Markdown 文件，Windows 下建议使用 [Prettier](https://github.com/prettier/prettier) 来格式化 Markdown 文件。
@@ -38,6 +40,8 @@ remark 可通过 [npm](https://www.npmjs.com/get-npm) 命令来安装：
 npm -g install remark
 npm -g install remark-cli
 npm -g install remark-stringify
+npm -g install remark-frontmatter
+npm -g install wcwidth
 ```
 
 [Prettier](https://github.com/prettier/prettier) 可通过 [yarn](https://yarnpkg.com/lang/zh-hans/docs/install/#windows-stable) 或 [npm](https://www.npmjs.com/get-npm) 命令来安装：

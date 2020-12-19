@@ -1,0 +1,21 @@
+snippet     token_desc
+options     head
+	<token_desc> token{
+		${0:TARGET}
+	}
+
+snippet     left
+options     head
+	<left>{
+		${0:TARGET}
+	}
+
+snippet     grammar
+options     head
+	<grammar> grammar{
+		E<${1}>
+			: [${2}] ${3}
+			;
+	}
+
+# vim: noexpandtab :

@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim tools 模块"
 description: "这一模块为 SpaceVim 提供了多种常用工具，包括日历、计算器等多种工具类插件，并针对 Vim8 以及 Neovim 提供了更好的插件选择。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> tools

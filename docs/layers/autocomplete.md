@@ -3,20 +3,20 @@ title: "SpaceVim autocomplete layer"
 description: "Autocomplete code within SpaceVim, fuzzy find the candidates from multiple completion sources, expand snippet before cursor automatically"
 ---
 
-# [Available Layers](../) >> autocomplete
+# [Home](../../) >> [Layers](../) >> autocomplete
 
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
 - [Install](#install)
 - [Configuration](#configuration)
-  - [Choose which completion engine to be used](#choose-which-completion-engine-to-be-used)
-  - [Key bindings](#key-bindings)
-  - [Snippets directories](#snippets-directories)
+  - [Completion engine](#completion-engine)
+  - [Snippets engine](#snippets-engine)
+  - [Complete parens](#complete-parens)
+  - [Layer options](#layer-options)
   - [Show snippets in auto-completion popup](#show-snippets-in-auto-completion-popup)
-- [LSP supported](#lsp-supported)
-- [Key bindings](#key-bindings-1)
-  - [auto-complete](#auto-complete)
+- [Key bindings](#key-bindings)
+  - [Completion](#completion)
   - [Neosnippet](#neosnippet)
 
 <!-- vim-markdown-toc -->
@@ -48,90 +48,130 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ## Configuration
 
-### Choose which completion engine to be used
+### Completion engine
 
-You can choose the completion engine (among the supported ones) to be used
+By default, SpaceVim will choose the completion engine automatically base on your vim version.
+But you can choose the completion engine to be used
 with the following variable:
 
-- `g:spacevim_autocomplete_method`: the possible values are:
-    - `ycm`: for YouCompleteMe
-    - `neocomplcache`
-    - `coc`: **Note** that coc.nvim is also a language server protocol client. 
-See [lsp layer](language-server-protocol.md) for more information.
-    - `deoplete`
-    - `asyncomplete`
-    - `completor`
+- `autocomplete_method`: the possible values are:
+  - `ycm`: for YouCompleteMe
+  - `neocomplcache`
+  - `coc`: coc.nvim which also provides language server protocol feature
+  - `deoplete`
+  - `asyncomplete`
+  - `completor`
 
-### Key bindings
+here is an example:
 
-You can customize the user experience of auto-completion with the following layer variables:
+```toml
+[options]
+    autocomplete_method = "deoplete"
+```
 
-1. `auto-completion-return-key-behavior` set the action to perform
-when the `Return`/`Enter` key is pressed, the possible values are:
+### Snippets engine
+
+The default snippets engine is `neosnippet`, the also can be changed to `ultisnips`:
+
+```toml
+[options]
+    snippet_engine = "ultisnips"
+```
+
+The following snippets repos have been added by default:
+
+- [Shougo/neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets) : neosnippet's default snippets.
+- [honza/vim-snippets](https://github.com/honza/vim-snippets) : extra snippets
+
+
+If the `snippet_engine` is `neosnippet`, the following directories will be used:
+
+- `~/.SpaceVim/snippets/`: SpaceVim runtime snippets.
+- `~/.SpaceVim.d/snippets/`: custom global snippets.
+- `./.SpaceVim.d/snippets/`: custom local snippets (project's snippets)
+
+You can provide additional directories by setting the
+variable `g:neosnippet#snippets_directory` which can take a string
+in case of a single path or a list of paths.
+
+If the `snippet_engine` is `ultisnips`, the following directories will be used:
+
+- `~/.SpaceVim/UltiSnips/`: SpaceVim runtime snippets.
+- `~/.SpaceVim.d/UltiSnips/`: custom global snippets.
+- `./.SpaceVim.d/UltiSnips/`: custom local snippets (project's snippets)
+
+### Complete parens
+
+By default, the parens will be completed automatically, to disabled this feature:
+
+```toml
+[options]
+    autocomplete_parens = false
+```
+
+### Layer options
+
+You can customize the user experience of autocompletion with the following layer variables:
+
+1. `auto_completion_return_key_behavior` set the action to perform
+   when the `Return`/`Enter` key is pressed, the possible values are:
    - `complete` completes with the current selection
    - `smart` completes with current selection and expand snippet or argvs
    - `nil`
-By default it is `complete`.
-2. `auto-completion-tab-key-behavior` set the action to
-perform when the `TAB` key is pressed, the possible values are:
+   By default it is `complete`.
+2. `auto_completion_tab_key_behavior` set the action to
+   perform when the `TAB` key is pressed, the possible values are:
    - `smart` cycle candidates, expand snippets, jump parameters
    - `complete` completes with the current selection
    - `cycle` completes the common prefix and cycle between candidates
    - `nil` insert a carriage return
-By default it is `complete`.
-3. `auto-completion-delay` is a number to delay the completion after input in milliseconds, by default it is 50 ms.
-4. `auto-completion-complete-with-key-sequence` is a string of two characters denoting a key sequence that will perform a `complete` action if the sequence as been entered quickly enough. If its value is `nil` then the feature is disabled.
-5. `auto-completion-complete-with-key-sequence-delay` is the number of seconds to wait for the auto-completion key sequence to be entered. The default value is 0.1 seconds.
+   By default it is `complete`.
+3. `auto_completion_delay` is a number to delay the completion after input in milliseconds,
+   by default it is 50 ms.
+4. `auto_completion_complete_with_key_sequence` is a string of two characters denoting
+   a key sequence that will perform a `complete` action if the sequence as been entered
+   quickly enough. If its value is `nil` then the feature is disabled.
+   **NOTE:** This option should not has same value as `escape_key_binding`
+5. `auto_completion_complete_with_key_sequence_delay` is the number of seconds to wait for
+   the autocompletion key sequence to be entered. The default value is 1 seconds.
+   This option is used for vim's `timeoutlen` option in insert mode.
 
 The default configuration of the layer is:
 
 ```toml
 [[layers]]
   name = "autocomplete"
-  auto-completion-return-key-behavior = "nil"
-  auto-completion-tab-key-behavior = "smart"
-  auto-completion-delay = 200
-  auto-completion-complete-with-key-sequence = "nil"
-  auto-completion-complete-with-key-sequence-delay = 0.1
+  auto_completion_return_key_behavior = "nil"
+  auto_completion_tab_key_behavior = "smart"
+  auto_completion_delay = 200
+  auto_completion_complete_with_key_sequence = "nil"
+  auto_completion_complete_with_key_sequence_delay = 0.1
 ```
 
-`jk` is a good candidate for `auto-completion-complete-with-key-sequence` if you don’t use it already.
-
-### Snippets directories
-
-The following snippets or directories are added by default:
-
-- [Shougo/neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets) : neosnippet's default snippets.
-- [honza/vim-snippets](https://github.com/honza/vim-snippets) : extra snippets
-- `~/.SpaceVim/snippets/` : SpaceVim runtime snippets.
-- `~/.SpaceVim.d/snippets/` : custom global snippets.
-- `./.SpaceVim.d/snippets/` : custom local snippets (project's snippets)
-
-You can provide additional directories by setting the variable `g:neosnippet#snippets_directory` which can take a string in case of a single path or a list of paths.
+`jk` is a good candidate for `auto_completion_complete_with_key_sequence` if you don’t use it already.
 
 ### Show snippets in auto-completion popup
 
-By default, snippets are shown in the auto-completion popup. To disable this feature, set the variable `auto-completion-enable-snippets-in-popup` to 0.
+By default, snippets are shown in the auto-completion popup.
+To disable this feature, set the variable `auto_completion_enable_snippets_in_popup` to false.
 
-```vim
-call SpaceVim#layers#load('autocomplete', {
-        \ 'auto-completion-enable-snippets-in-popup' : 0
-        \ })
+```toml
+[[layers]]
+  name = "autocomplete"
+  auto_completion_enable_snippets_in_popup = false
 ```
-
-## LSP supported
 
 ## Key bindings
 
-### auto-complete
+### Completion
 
 | Key bindings | Description                                   |
 | ------------ | --------------------------------------------- |
-| `Ctrl-n`      | select next candidate                         |
-| `Ctrl-p`      | select previous candidate                     |
-| `<Tab>`      | base on `auto-completion-tab-key-behavior`    |
-| `Shift-Tab`    | select previous candidate                     |
-| `<Return>`   | base on `auto-completion-return-key-behavior` |
+| `Ctrl-n`     | select next candidate                         |
+| `Ctrl-p`     | select previous candidate                     |
+| `<Tab>`      | base on `auto_completion_tab_key_behavior`    |
+| `Shift-Tab`  | select previous candidate                     |
+| `<Return>`   | base on `auto_completion_return_key_behavior` |
 
 ### Neosnippet
 

@@ -1,0 +1,47 @@
+Include: include/setup.vader
+
+Execute (xml: xmllint: uses stdin and handles generic validity error):
+  new
+  let b:neomake_tests_massage_buffer = 0
+  file example.xml
+  let fname = expand('%:p')
+  let maker = NeomakeTestsFixtureMaker('neomake#makers#ft#xml#xmllint',
+  \ 'tests/fixtures/input/xmllint/validity-error.xml')
+  CallNeomake 1, [maker]
+  AssertNeomakeMessage 'Using stdin for unreadable buffer (-).', 3
+  AssertNeomakeMessage 'exit: xmllint-fixture: 3.', 3
+  AssertEqual getloclist(0), []
+  bwipe
+
+Execute (xml: xmllint: missing dtd):
+  new
+  let b:neomake_tests_massage_buffer = 0
+  let maker = NeomakeTestsFixtureMaker('neomake#makers#ft#xml#xmllint',
+  \ 'tests/fixtures/input/xmllint/missingdtd.xml')
+  CallNeomake 1, [maker]
+  AssertNeomakeMessage 'Using stdin for unnamed buffer (-).', 3
+  AssertNeomakeMessage 'exit: xmllint-fixture: 3.', 3
+  AssertNeomakeMessage '\vUsed bufnr from stdin buffer \d+ \(tests/fixtures/input/xmllint/missingdtd.xml\) for 2 entries: 1, 2.'
+
+  let bufnr = bufnr('%')
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 2,
+  \ 'bufnr': bufnr,
+  \ 'col': 36,
+  \ 'valid': 1,
+  \ 'vcol': 1,
+  \ 'nr': -1,
+  \ 'type': 'E',
+  \ 'pattern': '',
+  \ 'text': 'warning: failed to load external entity "tests/fixtures/input/xmllint/missingdtdref"'
+  \ }, {
+  \ 'lnum': 5,
+  \ 'bufnr': bufnr,
+  \ 'col': 37,
+  \ 'valid': 1,
+  \ 'vcol': 1,
+  \ 'nr': -1,
+  \ 'type': 'E',
+  \ 'pattern': '',
+  \ 'text': 'namespace error : Namespace prefix xlink for href on b is not defined'}]
+  bwipe

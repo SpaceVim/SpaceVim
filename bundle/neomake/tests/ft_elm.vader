@@ -1,0 +1,34 @@
+Include: include/setup.vader
+
+Execute (elmMake parses success message):
+  let json = 'Successfully generated /dev/null'
+
+  let result = neomake#makers#ft#elm#elmMake().process_output({'output': [json]})
+
+  AssertEqual [], result
+
+Execute (elmMake parses error message):
+  let json = '[{"tag":"BAD MAIN TYPE","overview":"The `main` value has an unsupported type.","subregion":null,"details":"I need Html, Svg, or a Program so I have something to render on screen, but you\ngave me:\n\n    String","region":{"start":{"line":6,"column":1},"end":{"line":6,"column":5}},"type":"error","file":"Bingo.elm"}]'
+
+  let result = neomake#makers#ft#elm#elmMake().process_output({'output': [json]})
+
+  AssertEqual [{
+    \ 'type': 'E',
+    \ 'lnum': 6,
+    \ 'col': 1,
+    \ 'length': 4,
+    \ 'filename': 'Bingo.elm',
+    \ 'text': 'BAD MAIN TYPE : The `main` value has an unsupported type.'}], result
+
+Execute (elmMake parses warning message):
+  let json = '[{"tag":"unused import","overview":"Module `Html` is unused.","details":"Best to remove it. Don''t save code quality for later!","region":{"start":{"line":3,"column":1},"end":{"line":3,"column":12}},"type":"warning","file":"Bingo.elm"}]'
+
+  let result = neomake#makers#ft#elm#elmMake().process_output({'output': [json]})
+
+  AssertEqual [{
+    \ 'type': 'W',
+    \ 'lnum': 3,
+    \ 'col': 1,
+    \ 'length': 11,
+    \ 'filename': 'Bingo.elm',
+    \ 'text': 'unused import : Module `Html` is unused.'}], result

@@ -1,5 +1,5 @@
 ---
-title: "file api"
+title: "file API"
 description: "file API provides some basic functions and values for current os."
 ---
 

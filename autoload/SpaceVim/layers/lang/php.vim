@@ -1,6 +1,6 @@
 "=============================================================================
 " php.vim --- lang#php layer
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -12,15 +12,6 @@
 " @parentsection layers
 " This layer is for PHP development. It proides code completion, syntax
 " checking, and jump to definition.
-"      
-" Requirements:
-" >
-"   PHP 5.3+
-"   PCNTL Extension
-"   Msgpack 0.5.7+(for NeoVim)Extension: https://github.com/msgpack/msgpack-php
-"   JSON(for Vim 7.4+)Extension
-"   Composer Project
-" <
 
 
 
@@ -30,11 +21,10 @@ function! SpaceVim#layers#lang#php#plugins() abort
   call add(plugins, ['2072/PHP-Indenting-for-VIm', { 'on_ft' : 'php'}])
   call add(plugins, ['rafi/vim-phpspec', { 'on_ft' : 'php'}])
   if SpaceVim#layers#lsp#check_filetype('php')
-    call add(plugins, ['felixfbecker/php-language-server', {'on_ft' : 'php', 'build' : 'composer install && composer run-script parse-stubs'}])
+    call add(plugins, ['phpactor/phpactor', {'on_ft' : 'php', 'build' : 'composer install --no-dev -o'}])
   else
-    call add(plugins, ['php-vim/phpcd.vim', { 'on_ft' : 'php', 'build' : ['composer', 'install']}])
+    call add(plugins, ['shawncplus/phpcomplete.vim', { 'on_ft' : 'php'}])
   endif
-  call add(plugins, ['lvht/phpfold.vim', { 'on_ft' : 'php', 'build' : ['composer', 'install']}])
   return plugins
 endfunction
 
@@ -46,6 +36,7 @@ endfunction
 
 function! SpaceVim#layers#lang#php#config() abort
   call SpaceVim#plugins#runner#reg_runner('php', 'php %s')
+  call SpaceVim#plugins#repl#reg('php', ['php', '-a'])
   call SpaceVim#mapping#space#regesit_lang_mappings('php',
         \ function('s:on_ft'))
   if SpaceVim#layers#lsp#check_filetype('php')
@@ -66,7 +57,6 @@ function! SpaceVim#layers#lang#php#config() abort
       autocmd Filetype php call <SID>preferLocalPHPMD()
     augroup END
   endif
-
 endfunction
 
 function! s:on_ft() abort
@@ -81,6 +71,20 @@ function! s:on_ft() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'execute current file', 1)
+
+  let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
+        \ 'call SpaceVim#plugins#repl#start("php")',
+        \ 'start REPL process', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'l'],
+        \ 'call SpaceVim#plugins#repl#send("line")',
+        \ 'send line and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'b'],
+        \ 'call SpaceVim#plugins#repl#send("buffer")',
+        \ 'send buffer and keep code buffer focused', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
+        \ 'call SpaceVim#plugins#repl#send("selection")',
+        \ 'send selection and keep code buffer focused', 1)
 endfunction
 
 function! s:phpBeautify() abort

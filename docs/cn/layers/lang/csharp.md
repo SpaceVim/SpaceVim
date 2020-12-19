@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#csharp 模块"
 description: "这一模块为 SpaceVim 提供了 CSharp 的开发支持，包括代码高亮、对齐、补全等特性。"
-lang: cn
+lang: zh
 ---
 
 # [Available Layers](../../) >> lang#csharp

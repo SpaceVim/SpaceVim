@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#java 模块"
 description: "这一模块为 Java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#java
@@ -11,12 +11,12 @@ lang: cn
 - [模块描述](#模块描述)
 - [功能特性](#功能特性)
 - [启用模块](#启用模块)
+- [模块选项](#模块选项)
 - [快捷键](#快捷键)
   - [导包相关快捷键](#导包相关快捷键)
   - [代码生成相关快捷键](#代码生成相关快捷键)
   - [代码格式化](#代码格式化)
   - [Maven](#maven)
-  - [Jump](#jump)
   - [交互式编程](#交互式编程)
 
 <!-- vim-markdown-toc -->
@@ -43,13 +43,40 @@ lang: cn
   name = "lang#java"
 ```
 
+## 模块选项
+
+- `format_on_save`: 启用/禁用保存文件时自动格式化，默认的值为 `false`，
+  可以使用如下配置启用该功能：
+  ```toml
+  [[layers]]
+    name = 'lang#java'
+    format_on_save = true
+  ```
+- `java_fomatter_jar`: 设置 [谷歌格式化工具](https://github.com/google/google-java-format) 的具体路径。
+  ```toml
+  [[layers]]
+    name = 'lang#java'
+    java_fomatter_jar = 'path/to/google-java-format.jar'
+  ```
+- `java_file_head`: 默认的文件头，当新建 Java 文件时自动加入。
+  ```toml
+  [[layers]]
+    name = 'lang#java'
+    java_file_head = [
+      '/**',
+      ' * @author : `fnamemodify(expand("~"), ":t")`',
+      ' * @created : `strftime("%Y-%m-%d")`',
+      '**/',
+      ''
+    ]
+  ```
+
 ## 快捷键
 
 ### 导包相关快捷键
 
 | 模式          | 快捷键     | 按键描述           |
 | ------------- | ---------  | ------------------ |
-| Insert/Normal | `<F4>`     | 导入光标下的类     |
 | Normal        | `SPC l I`  | 导入所有缺失的类   |
 | Normal        | `SPC l R`  | 删除多余的导包     |
 | Normal        | `SPC l i`  | 智能导入光标下的类 |
@@ -78,12 +105,13 @@ lang: cn
 
 默认的代码格式化快捷键是 `SPC b f`，该快捷键由 `format` 模块定义，同时也可以通过 `g =` 来对齐整个文档。
 
-为了使 format 模块支持 Java 文件，需要安装 uncrustify 或者下载 [google's formater jar](https://github.com/google/google-java-format)。
-同时，需要设置 SpaceVim 选项`layer_lang_java_formatter`：
+为了使 format 模块支持 Java 文件，需要安装  [google's formater jar](https://github.com/google/google-java-format)。
+同时，需要设置模块选项`java_fomatter_jar`：
 
 ```toml
-[options]
-  layer_lang_java_formatter = "path/to/google-java-format.jar"
+[[layers]]
+  name = 'lang#java'
+  java_fomatter_jar = 'path/to/google-java-format.jar'
 ```
 
 ### Maven
@@ -96,12 +124,6 @@ lang: cn
 | `SPC l m r` | Run maven goals                |
 | `SPC l m R` | Run one maven goal             |
 | `SPC l m t` | Run maven test                 |
-
-### Jump
-
-| 快捷键      | 描述                   |
-| ----------- | ---------------------- |
-| `SPC l j a` | jump to alternate file |
 
 ### 交互式编程
 
