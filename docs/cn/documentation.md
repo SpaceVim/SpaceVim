@@ -306,7 +306,8 @@ endfunction
 
 函数 `bootstrap_before` 将在读取用户配置后执行，而函数 `bootstrap_after` 将在 VimEnter autocmd 之后执行。
 
-如果你需要添加自定义以 `SPC` 为前缀的快捷键，你需要使用 bootstrap function，在其中加入：
+如果你需要添加自定义以 `SPC` 为前缀的快捷键，你需要使用 bootstrap function，
+在其中加入以下代码（注意你定义的按键必须是 SpaceVim 没有使用的）：
 
 ```vim
 function! myspacevim#before() abort
@@ -314,6 +315,18 @@ function! myspacevim#before() abort
     call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 endfunction
 ```
+
+同样地，如果你需要定义语言相关的功能，可以使用以下函数定义：
+
+```vim
+function! myspacevim#before() abort
+    call SpaceVim#custom#LangSPCGroupName('python', ['G'], '+TestGroup')
+    call SpaceVim#custom#LangSPC('python', 'nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+endfunction
+```
+
+这些按键绑定以语言相关的前缀键开头，默认的前缀键是 `,` 。
+同样，你为特定语言定义的按键必须是 SpaceVim 没有使用的。
 
 ### Vim 兼容模式
 
