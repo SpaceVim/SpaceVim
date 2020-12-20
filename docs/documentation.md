@@ -344,6 +344,17 @@ function! myspacevim#before() abort
 endfunction
 ```
 
+Similarly, if you want to add custom key bindings prefixed by language leader key,
+which is typically `,`, you can add them to the boostrap function. **Be sure** that the
+key bindings are not used by SpaceVim.
+
+```vim
+function! myspacevim#before() abort
+    call SpaceVim#custom#LangSPCGroupName('python', ['G'], '+TestGroup')
+    call SpaceVim#custom#LangSPC('python', 'nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+endfunction
+```
+
 ### Vim compatible mode
 
 The different key bindings between SpaceVim and origin vim are shown as below.
