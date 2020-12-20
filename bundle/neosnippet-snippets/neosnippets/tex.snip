@@ -1,0 +1,576 @@
+snippet \documentclass
+alias   documentclass
+	\documentclass[${1}]{${2:article}}${0}
+
+snippet mathexpression
+alias   $
+abbr	$ expression $
+	$${1:#:expression}$${2}
+
+snippet mathenva
+alias   $$
+abbr    $$ expression $$
+        $$${1:#:expression}$$${2}
+
+snippet mathenvb
+alias   \[
+abbr    \[ expression \]
+        \[${1:#:expression}\]${2}
+
+# ========== ENVIRONMENT ==========
+
+snippet begin
+alias   \begin
+	\begin{${1:#:type}}
+		${2:TARGET}
+	\end{$1}
+
+snippet list
+alias   \begin{list} \list
+	\begin{list}
+		${1:TARGET}
+	\end{list}
+
+snippet quotation
+alias   \begin{quotation} \quotation
+	\begin{quotation}
+		${1:TARGET}
+	\end{quotation}
+
+snippet description
+alias   \begin{description} \description desc
+	\begin{description}
+		\item[${1}] ${0}
+	\end{description}
+
+snippet itd
+alias   item[ \item[
+	\item[${1}] ${0}
+
+snippet it
+alias   item \item
+	\item ${0}
+
+snippet sloppypar
+alias   \begin{sloppypar} \sloppypar
+	\begin{sloppypar}
+		${1:TARGET}
+	\end{sloppypar}
+
+snippet enumerate
+alias   \begin{enumerate} \enumerate enum
+	\begin{enumerate}
+		\item ${1:TARGET}
+	\end{enumerate}
+
+snippet theindex
+alias   \begin{theindex} \theindex
+	\begin{theindex}
+		${1:TARGET}
+	\end{theindex}
+
+snippet itemize
+alias   \begin{itemize} \itemize
+	\begin{itemize}
+		\item ${1:TARGET}
+	\end{itemize}
+
+snippet titlepage
+alias   \begin{titlepage} \titlepage
+	\begin{titlepage}
+		${1:TARGET}
+	\end{titlepage}
+
+snippet verbatim
+alias   \begin{verbatim} verb \verbatim
+	\begin{verbatim}
+		${1:TARGET}
+	\end{verbatim}
+
+snippet verbatimtab
+alias   \begin{verbatimtab} \verbatimtab
+	\begin{verbatimtab}[${1:8}]
+		${2:TARGET}
+	\end{verbatim}
+
+snippet trivlist
+alias   \begin{trivlist} \trivlist
+	\begin{trivlist}
+		${1:TARGET}
+	\end{trivlist}
+
+snippet verse
+alias   \begin{verse} \verse
+	\begin{verse}
+		${1:TARGET}
+	\end{verse}
+
+snippet table
+alias   \begin{table} \table
+	\begin{table}[${1}]
+		\centering
+		\caption{${2}}
+		\label{${3}}
+		\begin{tabular}{${4}}
+			${5}
+		\end{tabular}
+	\end{table}
+
+snippet thebibliography
+alias   \begin{thebibliography} \thebibliography
+	\begin{thebibliography}
+		${1:TARGET}
+	\end{thebibliography}
+
+snippet tabbing
+alias   \begin{tabbing} \tabbing
+	\begin{tabbing}
+		${1:TARGET}
+	\end{tabbing}
+
+snippet note
+alias   \begin{note} \note
+	\begin{note}
+		${1:TARGET}
+	\end{note}
+
+snippet tabular
+alias   \begin{tabular} \tabular
+	\begin{tabular}{${1}}
+		${2:TARGET}
+	\end{tabular}
+
+snippet overlay
+alias   \begin{overlay} \overlay
+	\begin{overlay}
+		${1:TARGET}
+	\end{overlay}
+
+snippet array
+alias   \begin{array} \array
+	\begin{array}{${1}}
+		${2:TARGET}
+	\end{array}
+
+snippet cases
+alias   \begin{cases} \cases
+	\begin{cases}{${1}}
+		${2:TARGET}
+	\end{cases}
+
+snippet slide
+alias   \begin{slide} \slide
+	\begin{slide}
+		${1:TARGET}
+	\end{slide}
+
+snippet displaymath
+alias   \begin{displaymath} \displaymath
+	\begin{displaymath}
+		${1:TARGET}
+	\end{displaymath}
+
+snippet abstract
+alias   \begin{abstract} \abstract
+	\begin{abstract}
+		${1:TARGET}
+	\end{abstract}
+
+snippet align
+alias   \begin{align} \align
+	\begin{align}
+		${1:TARGET}
+	\end{align}
+
+snippet align*
+alias   \begin{align*} \align*
+	\begin{align*}
+		${1:TARGET}
+	\end{align*}
+
+snippet aligned
+alias   \begin{aligned} \aligned
+       \begin{aligned}
+               ${1:TARGET}
+       \end{aligned}
+
+snippet eqnarray
+alias   \begin{eqnarray} \eqnarray
+	\begin{eqnarray}
+		${1:TARGET}
+	\end{eqnarray}
+
+snippet eqnarray*
+alias   \begin{eqnarray*} \eqnarray*
+	\begin{eqnarray*}
+		${1:TARGET}
+	\end{eqnarray*}
+
+snippet equation
+alias   \begin{equation} \equation
+	\begin{equation}
+		${1:TARGET}
+	\end{equation}
+
+snippet equation*
+alias   \begin{equation*} \equation*
+	\begin{equation*}
+		${1:TARGET}
+	\end{equation*}
+
+snippet center
+alias   \begin{center} \center
+	\begin{center}
+		${1:TARGET}
+	\end{center}
+
+snippet document
+alias   \begin{document} \document
+	\begin{document}
+		${1:TARGET}
+	\end{document}
+
+snippet figure
+alias   \begin{figure} \figure
+	\begin{figure}[${1}]
+		\centering
+		\includegraphics[${2:width=${3\}}]{${4}}
+		\caption{${5}}
+		\label{${6}}
+	\end{figure}
+
+snippet filecontents
+alias   \begin{filecontents} \filecontents
+	\begin{filecontents}
+		${1:TARGET}
+	\end{filecontents}
+
+snippet lrbox
+alias   \begin{lrbox} \lrbox
+	\begin{lrbox}
+		${1:TARGET}
+	\end{lrbox}
+
+snippet flushleft
+alias   \begin{flushleft} \flushleft
+	\begin{flushleft}
+		${1:TARGET}
+	\end{flushleft}
+
+snippet flushright
+alias   \begin{flushright} \flushright
+	\begin{flushright}
+		${1:TARGET}
+	\end{flushright}
+
+snippet minipage
+alias   \begin{minipage} \minipage
+	\begin{minipage}
+		${1:TARGET}
+	\end{minipage}
+
+snippet picture
+alias   \begin{picture} \picture
+	\begin{picture}
+		${1:TARGET}
+	\end{picture}
+
+snippet math
+alias   \begin{math} \math
+	\begin{math}
+		${1:TARGET}
+	\end{math}
+
+snippet quote
+alias   \begin{quote} \quote
+	\begin{quote}
+		${1:TARGET}
+	\end{quote}
+
+snippet matrix
+alias   \begin{matrix} \matrix
+	\begin{matrix}
+		${1:TARGET}
+	\end{matrix}
+
+snippet bmatrix
+alias   \begin{bmatrix} \bmatrix
+	\begin{bmatrix}
+		${1:TARGET}
+	\end{bmatrix}
+
+snippet pmatrix
+alias   \pegin{bmatrix} \pmatrix
+	\begin{pmatrix}
+		${1:TARGET}
+	\end{pmatrix}
+
+snippet vmatrix
+alias   \begin{vmatrix} \vmatrix
+	\begin{vmatrix}
+		${1:TARGET}
+	\end{vmatrix}
+
+snippet Bmatrix
+alias   \begin{Bmatrix} \Bmatrix
+	\begin{Bmatrix}
+		${1:TARGET}
+	\end{Bmatrix}
+
+snippet Vmatrix
+alias   \begin{Vmatrix} \Vmatrix
+	\begin{Vmatrix}
+		${1:TARGET}
+	\end{Vmatrix}
+
+# ========== SECTION ==========
+
+snippet \part
+alias   part \part{
+	\part{${1}}
+	${0:TARGET}
+
+snippet \chapter
+alias   chapter \chapter{
+	\chapter{${1}}
+	${0:TARGET}
+
+snippet \section
+alias   section \section{
+	\section{${1}}
+	${0:TARGET}
+
+snippet \subsection
+alias   subsection \subsection{
+	\subsection{${1}}
+	${0:TARGET}
+
+snippet \subsubsection
+alias   subsubsection \subsubsection{
+	\subsubsection{${1}}
+	${0:TARGET}
+
+snippet \paragraph
+alias   paragraph \paragraph{
+	\paragraph{${1}}
+	${0:TARGET}
+
+snippet \subparagraph
+alias   subparagraph \subparagraph{
+	\subparagraph{${1}}
+	${0:TARGET}
+
+# ========== MATH ==========
+
+snippet \frac
+alias   frac \frac{
+	\frac{${1}}{${2}}${0}
+
+snippet \left
+alias   left
+abbr	\left \right
+	\left${1:(} ${3:#:body} \right${2:)}${0}
+
+# ========== FONT ==========
+
+snippet bfseries
+alias   \begin{bfseries} \bfseries
+	\begin{bfseries}
+		${1:TARGET}
+	\end{bfseries}
+
+snippet mdseries
+alias   \begin{mdseries} \mdseries
+	\begin{mdseries}
+		${1:TARGET}
+	\end{mdseries}
+
+snippet ttfamily
+alias   \begin{ttfamily} \ttfamily
+	\begin{ttfamily}
+		${1:TARGET}
+	\end{ttfamily}
+
+snippet sffamily
+alias   \begin{sffamily} \sffamily
+	\begin{sffamily}
+		${1:TARGET}
+	\end{sffamily}
+
+snippet rmfamily
+alias   \begin{rmfamily} \rmfamily
+	\begin{rmfamily}
+		${1:TARGET}
+	\end{rmfamily}
+
+snippet upshape
+alias   \begin{upshape} \upshape
+	\begin{upshape}
+		${1:TARGET}
+	\end{upshape}
+
+snippet slshape
+alias   \begin{slshape} \slshape
+	\begin{slshape}
+		${1:TARGET}
+	\end{slshape}
+
+snippet scshape
+alias   \begin{scshape} \scshape
+	\begin{scshape}
+		${1:TARGET}
+	\end{scshape}
+
+snippet itshape
+alias   \begin{itshape} \itshape
+	\begin{itshape}
+		${1:TARGET}
+	\end{itshape}
+
+snippet \textbf
+alias   textbf \textbf{
+	\textbf{${1:TARGET}}${0}
+
+snippet \textmd
+alias   textmd \textmd{
+	\textmd{${1:TARGET}}${0}
+
+snippet \texttt
+alias   texttt \texttt{
+	\texttt{${1:TARGET}}${0}
+
+snippet \textsf
+alias   textsf \textsf{
+	\textsf{${1:TARGET}}${0}
+
+snippet \textrm
+alias   textrm \textrm{
+	\textrm{${1:TARGET}}${0}
+
+snippet \textup
+alias   textup \textup{
+	\textup{${1:TARGET}}${0}
+
+snippet \textsl
+alias   textsl \textsl{
+	\textsl{${1:TARGET}}${0}
+
+snippet \textsc
+alias   textsc \textsc{
+	\textsc{${1:TARGET}}${0}
+
+snippet \textit
+alias   textit \textit{
+	\textit{${1:TARGET}}${0}
+
+# ==== BEAMER ====
+snippet frame
+alias   \begin{frame} \frame
+	\begin{frame}{${1:#:frametitle}}
+		${2:TARGET}
+	\end{frame}
+
+snippet block
+alias   \begin{block}
+	\begin{block}{${1:#:title}}
+		${2:TARGET}
+	\end{block}
+
+snippet exampleblock
+alias   \begin{exampleblock}
+	\begin{exampleblock}{${1:#:title}}
+		${2:TARGET}
+	\end{exampleblock}
+
+snippet alertblock
+alias   \begin{alertblock}
+	\begin{alertblock}{${1:#:title}}
+		${2:TARGET}
+	\end{alertblock}
+
+snippet columns
+alias   \begin{columns} \columns
+	\begin{columns}
+		\begin{column}{${1:#:width}${2:\\\textwidth}}
+			${0:#:body}
+		\end{column}
+	\end{columns}
+
+snippet column
+alias   \begin{column} \column
+	\begin{column}{${1:#:width}${2:\\\textwidth}}
+		${0:#:body}
+	\end{column}
+
+# ========== TikZ ==========
+snippet tikzpicture
+alias   \begin{tikzpicture}
+	\begin{tikzpicture}[${1}]
+		${2:TARGET}
+	\end{tikzpicture}
+
+snippet path
+alias   \path
+	\path[${1}] ${2};${0}
+
+snippet draw
+alias   \draw
+	\draw[${1}] ${2};${0}
+
+snippet fill
+alias   \fill
+	\fill[${1}] ${2};${0}
+
+snippet filldraw
+alias   \filldraw
+	\filldraw[${1}] ${2};${0}
+
+snippet shade
+alias   \shade
+	\shade[${1}] ${2};${0}
+
+snippet coordinate
+alias   \coordinate
+	\coordinate[${1}](${2:name}) ${3};${0}
+
+snippet node
+alias   \node
+	\node[${1}](${2:name}) ${3};${0}
+
+# ========== BibLaTeX ==========
+snippet addbibresource
+alias   \addbibresource
+	\addbibresource{${1:resource}}${0}
+
+snippet cite
+alias   \cite
+	\cite{${1}}${0}
+
+snippet nocite
+alias   \nocite
+	\nocite{${1}}${0}
+
+snippet supercite
+alias   \supercite
+	\supercite{${1}}${0}
+
+snippet autocite
+alias   \autocite
+	\autocite{${1}}${0}
+
+snippet fullcite
+alias   \fullcite
+	\fullcite{${1}}${0}
+
+# ========== OTHERS ==========
+snippet usepackage
+alias   \usepackage
+	\usepackage${1:[${2\}]}{${3}}
+
+snippet ref
+alias   \ref
+	\ref{${1}}${0}
+
+snippet label
+alias   \label
+	\label{${1}}${0}

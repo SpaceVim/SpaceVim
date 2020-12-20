@@ -1,0 +1,8 @@
+" Main file to run all Vader tests.
+"
+" This is split into main and isolated tests, because isolated tests need to be
+" run seperately (since they are allowed to monkeypatch and re-source functions
+" etc).
+
+Include (Main tests): main.vader
+Include (Isolated tests): isolated.vader

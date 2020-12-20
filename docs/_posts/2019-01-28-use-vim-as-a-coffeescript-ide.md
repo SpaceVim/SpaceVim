@@ -2,8 +2,8 @@
 title: "Use Vim as a CoffeeScript IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png
-excerpt: "A general guide for using SpaceVim as CoffeeScript IDE, including layer configuration, requiems installation and usage."
-type: BlogPosting
+description: "A general guide for using SpaceVim as CoffeeScript IDE, including layer configuration, requiems installation and usage."
+type: article
 comments: true
 commentsID: "Use Vim as a CoffeeScript IDE"
 ---

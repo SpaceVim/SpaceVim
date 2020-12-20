@@ -1,11 +1,20 @@
 "=============================================================================
 " agda.vim --- lang#agda layer for SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#agda, layer-lang-agda
+" @parentsection layers
+" This layer provides syntax highlighting for agda. To enable this
+" layer:
+" >
+"   [layers]
+"     name = "lang#agda"
+" <
 
 function! SpaceVim#layers#lang#agda#plugins() abort
   let plugins = []

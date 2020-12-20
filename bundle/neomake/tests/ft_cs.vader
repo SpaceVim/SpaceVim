@@ -1,0 +1,32 @@
+Include: include/setup.vader
+
+Execute (cs: msbuild: errorformat):
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#cs#msbuild().errorformat
+  new
+  file FooBar.cs
+
+  lgetexpr "FooBar.cs(21,63): error CS1002: ; expected [Foo\Foobar.csproj]"
+  AssertEqualQf getloclist(0), [{
+    \ 'lnum': 21,
+    \ 'bufnr': bufnr('%'),
+    \ 'col': 63,
+    \ 'valid': 1,
+    \ 'vcol': 0,
+    \ 'nr': 1002,
+    \ 'type': 'E',
+    \ 'pattern': '',
+    \ 'text': "; expected"}]
+
+  lgetexpr "FooBar.cs(25,29): warning CS0168: The variable 'ex' is declared but never used [Foo\Foobar.csproj]"
+  AssertEqualQf getloclist(0), [{
+    \ 'lnum': 25,
+    \ 'bufnr': bufnr('%'),
+    \ 'col': 29,
+    \ 'valid': 1,
+    \ 'vcol': 0,
+    \ 'nr': 168,
+    \ 'type': 'W',
+    \ 'pattern': '',
+    \ 'text': "The variable 'ex' is declared but never used"}]
+  bwipe

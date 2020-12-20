@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim floobits 模块"
 description: "这一模块为 SpaceVim 提供了 floobits 协作工具的支持，实现多人协作编辑等功能。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> floobits

@@ -1,6 +1,6 @@
 "=============================================================================
 " searcher.vim --- project searcher for SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -26,7 +26,7 @@ function! SpaceVim#plugins#searcher#find(expr, exe) abort
         \ })
   if id > 0
     echohl Comment
-    echo 'seraching: ' . expr
+    echo 'searching: ' . expr
     echohl None
   endif
 endfunction
@@ -55,7 +55,7 @@ function! s:get_search_cmd(exe, expr) abort
   if a:exe ==# 'grep'
     return ['grep', '-inHR', '--exclude-dir', '.git', a:expr, '.']
   elseif a:exe ==# 'rg'
-    return ['rg', '--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', a:expr, '.']
+    return ['rg', '-g!.git', '--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', a:expr, '.']
   else
     return [a:exe, a:expr]
   endif
@@ -89,7 +89,8 @@ function! SpaceVim#plugins#searcher#count() abort
   endif
 endfunction
 nnoremap <silent> <Plug>(nohlsearch) :nohlsearch<Cr>
-function! SpaceVim#plugins#searcher#clear()
+
+function! SpaceVim#plugins#searcher#clear() abort
   call feedkeys("\<Plug>(nohlsearch)")
   let s:rst = []
   call setqflist([])

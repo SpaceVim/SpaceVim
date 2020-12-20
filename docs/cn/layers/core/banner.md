@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim core#banner 模块"
 description: "这一模块为 SpaceVim 提供了许多显示在启动界面的 Logo。"
-lang: cn
+lang: zh
 ---
 
 # [Available Layers](../) >> core#banner

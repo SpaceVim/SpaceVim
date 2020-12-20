@@ -1,0 +1,37 @@
+call themis#option('recursive', 1)
+" For development
+call themis#option('runtimepath', expand('~/.vim/bundle/vital.vim'))
+call themis#option('runtimepath', expand('~/.vim/bundle/vital-vimlcompiler'))
+call themis#option('runtimepath', expand('~/.vim/bundle/vital-safe-string'))
+call themis#option('runtimepath', expand('~/.vim/bundle/vital-power-assert'))
+
+let g:Expect = themis#helper('expect')
+call themis#helper('command').with(themis#helper('assert')).with({'Expect': g:Expect})
+
+let g:__vital_power_assert_config = {
+\   '__debug__': 1,
+\   '__pseudo_throw__': 0,
+\   '__max_length__': -1
+\ }
+
+" mock
+function! incsearch#over#modules#bulk_input_char#make() abort
+  return {}
+endfunction
+
+language C
+
+" Helper Functions:
+
+function! AddLine(str)
+    put! =a:str
+endfunction
+function! AddLines(lines)
+    for line in reverse(deepcopy(a:lines))
+        put! =line
+    endfor
+endfunction
+function! GetPosChar()
+    return getline('.')[col('.')-1]
+endfunction
+

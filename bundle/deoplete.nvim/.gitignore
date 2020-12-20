@@ -1,0 +1,7 @@
+*.py[cod]
+doc/tags
+vim-themis
+.cache
+.mypy_cache
+.pytest_cache
+tags

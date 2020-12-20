@@ -1,0 +1,10 @@
+
+foobar
+
+barfoo
+
+endfoobar
+
+" \<\(\(foo\)\(bar\)\):\3\2:end\1
+
+" vim: set ft=matchuptest :

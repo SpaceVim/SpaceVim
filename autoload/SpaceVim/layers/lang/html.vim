@@ -1,10 +1,39 @@
 "=============================================================================
 " html.vim --- SpaceVim lang#html layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section lang#html, layer-lang-html
+" @parentsection layers
+" This layer is for html development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [layers]
+"     name = "lang#html"
+" <
+" 
+" @subsection Options
+"
+" user_emmet_leader_key: change the default leader key for emmet
+"
+" >
+"   [layers]
+"     name = "lang#html"
+"     user_emmet_leader_key = "<C-e>"
+" <
+" 
+" @subsection Key bindings
+"
+" >
+"     Key Binding       description
+"     <C-e>             emmet leader key
+" <
+"
+
 
 function! SpaceVim#layers#lang#html#plugins() abort
   let plugins = [

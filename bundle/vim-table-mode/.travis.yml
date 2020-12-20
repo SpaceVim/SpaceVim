@@ -1,0 +1,4 @@
+language: ruby
+rvm:
+  - 2.5.3
+script: rake ci

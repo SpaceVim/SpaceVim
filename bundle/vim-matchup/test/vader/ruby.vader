@@ -1,0 +1,40 @@
+Given ruby (Ruby for if):
+  for i in 0..5
+     if i < 2 then
+        next
+     end
+     puts "Value of local variable is #{i}"
+  end
+
+Do (Motion %):
+  go
+  %
+
+Then (Verify):
+  AssertEqual 'next', expand('<cword>')
+
+Given ruby (Ruby do end):
+  context 'webhooks' do
+    before { allow_any_instance_of(described_class).to receive(:webhook_endpoint_active?).and_return(true) }
+
+    it 'runs webhooks' do
+      expect(Webhook::Runner).to receive(:deliver)
+      subject
+    end
+  end
+
+Do (Motion %):
+  go2W
+  %
+
+Then (Verify):
+  AssertEqual 'end', getline('.')
+
+Do (Motion %):
+  2ggee
+  %
+  %
+
+Then (Verify):
+  AssertEqual '{', getline('.')[col('.')-1]
+

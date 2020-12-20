@@ -1,0 +1,50 @@
+Describe question_pattern
+  function! s:add_line(str)
+    put! =a:str
+  endfunction
+  function! s:add_lines(lines)
+    for line in reverse(deepcopy(a:lines))
+      put! =line
+    endfor
+  endfunction
+  function! s:get_pos_char()
+    return getline('.')[col('.')-1]
+  endfunction
+
+  function! s:reset_buffer()
+    :1,$ delete
+    let s:lines = ['1pattern_?', '2pattern_??', '3?pattern_c']
+    call s:add_lines(s:lines)
+    normal! Gddgg0zt
+  endfunction
+
+  Before all
+    let PowerAssert = powerassert#import()
+    execute PowerAssert.define('PowerAssert')
+    let s:assert = PowerAssert.assert
+
+    map /  <Plug>(incsearch-forward)
+    map ?  <Plug>(incsearch-backward)
+    map g/ <Plug>(incsearch-stay)
+    call s:reset_buffer()
+  End
+
+  Before each
+    :1
+    normal! zt
+  End
+
+  Describe search register @/
+    It @/ should be ? with `?\?`
+      :$
+      exec "normal" "?\\?\<CR>"
+      PowerAssert @/ is# '?'
+    End
+
+    It @/ should be \/ with `/\/`
+      exec "normal" "/\\/\<CR>"
+      PowerAssert @/ is# '\/'
+    End
+  End
+
+End

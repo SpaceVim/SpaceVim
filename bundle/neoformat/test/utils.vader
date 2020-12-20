@@ -1,0 +1,56 @@
+Before:
+  function! g:CmdOutput(cmd)
+    redir => out
+      silent exe 'call ' . a:cmd
+    redir END
+    return out[1:]
+  endfunction
+
+Execute (test log util):
+  let g:neoformat_verbose = 1
+  let out = g:CmdOutput('neoformat#utils#log("test")')
+
+  let g:neoformat_verbose = 0
+  AssertEqual 'Neoformat: test', out
+
+Execute (test msg util):
+  let g:neoformat_verbose = 0
+  " vader persists g: variables between tests so we need to make sure it is zero
+  let g:neoformat_only_msg_on_error = 0
+  let out = g:CmdOutput('neoformat#utils#msg("test")')
+
+  AssertEqual 'Neoformat: test', out
+
+Execute (test warn util):
+  let g:neoformat_verbose = 0
+  let out = g:CmdOutput('neoformat#utils#warn("test")')
+
+  AssertEqual 'Neoformat: test', out
+
+Execute (msg when g:neoformat_only_msg_on_error is false):
+  let g:neoformat_only_msg_on_error = 0
+
+  let out = g:CmdOutput('neoformat#utils#msg("test")')
+
+  AssertEqual 'Neoformat: test', out
+
+Execute (msg when g:neoformat_only_msg_on_error is true):
+  let g:neoformat_only_msg_on_error = 1
+
+  let out = g:CmdOutput('neoformat#utils#msg("test")')
+
+  AssertEqual '', out
+
+Execute (msg when g:neoformat_only_msg_on_error is false):
+  let g:neoformat_only_msg_on_error = 0
+
+  let out = g:CmdOutput('neoformat#utils#warn("test")')
+
+  AssertEqual 'Neoformat: test', out
+
+Execute (warn when g:neoformat_only_msg_on_error is true):
+  let g:neoformat_only_msg_on_error = 1
+
+  let out = g:CmdOutput('neoformat#utils#warn("test")')
+
+  AssertEqual 'Neoformat: test', out

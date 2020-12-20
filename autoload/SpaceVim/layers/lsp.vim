@@ -1,10 +1,15 @@
 "=============================================================================
 " lsp.vim --- SpaceVim lsp layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section language server protocol, layer-lsp
+" @parentsection layers
+" This layer provides language client support for SpaceVim.
 
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
@@ -104,6 +109,7 @@ endfunction
 let s:enabled_fts = []
 
 let s:lsp_servers = {
+      \ 'ada' : ['ada_language_server'],
       \ 'c' : ['clangd'],
       \ 'cpp' : ['clangd'],
       \ 'css' : ['css-languageserver', '--stdio'],
@@ -116,14 +122,15 @@ let s:lsp_servers = {
       \ 'julia' : ['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);'],
       \ 'objc' : ['clangd'],
       \ 'objcpp' : ['clangd'],
-      \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php'],
+      \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/phpactor/phpactor/bin/phpactor', 'language-server'],
       \ 'purescript' : ['purescript-language-server', '--stdio'],
       \ 'python' : ['pyls'],
+      \ 'crystal' : ['scry'],
       \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
       \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
-      \ 'ruby' : ['solargraph.BAT',  'stdio'],
+      \ 'ruby' : ['solargraph',  'stdio'],
       \ 'vue' : ['vls']
       \ }
 
@@ -155,11 +162,19 @@ function! s:jump_to_next_error() abort
     lnext
   catch
     try
-      cnext
+      ll
     catch
-      echohl WarningMsg
-      echon 'There is no errors!'
-      echohl None
+      try
+        cnext
+      catch
+        try
+          cc
+        catch
+          echohl WarningMsg
+          echon 'There is no errors!'
+          echohl None
+        endtry
+      endtry
     endtry
   endtry
 endfunction
@@ -169,11 +184,19 @@ function! s:jump_to_previous_error() abort
     lprevious
   catch
     try
-      cprevious
+      ll
     catch
-      echohl WarningMsg
-      echon 'There is no errors!'
-      echohl None
+      try
+        cprevious
+      catch
+        try
+          cc
+        catch
+          echohl WarningMsg
+          echon 'There is no errors!'
+          echohl None
+        endtry
+      endtry
     endtry
   endtry
 endfunction

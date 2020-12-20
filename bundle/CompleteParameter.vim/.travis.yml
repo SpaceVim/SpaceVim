@@ -1,0 +1,22 @@
+language: vim
+
+sudo: required
+dist: trusty
+
+os: 
+  - linux
+  - osx
+
+env:
+  - VIM_NAME=vim
+  - VIM_NAME=nvim
+
+install:
+  - bash ./ci/travis_install.sh
+  - export PATH="$HOME/vim/bin:$PATH"
+  - if [[ "$TRAVIS_OS_NAME" == 'osx' ]] && [[ "$VIM_NAME" == 'nvim' ]]; then export PATH="./nvim-osx64/bin:$PATH"; fi
+
+before_script: |
+  git clone --depth 1  https://github.com/junegunn/vader.vim.git
+
+script: bash ./ci/travis_script.sh $VIM_NAME

@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#perl 模块"
 description: "这一模块为 Perl 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#perl

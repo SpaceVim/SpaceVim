@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#python 模块"
 description: "这一模块为 Python 开发提供支持，包括代码补全、语法检查、代码格式化等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#python
@@ -71,6 +71,17 @@ pip install --user flake8
 
 ```sh
 pip install --user yapf
+```
+
+如果需要使用其他命令作为格式化工具，比如`black`命令，可以在启动函数中进行配置：
+
+```viml
+let g:neoformat_python_black = {
+    \ 'exe': 'black',
+    \ 'stdin': 1,
+    \ 'args': ['-q', '-'],
+    \ }
+let g:neoformat_enabled_python = ['black']
 ```
 
 **格式化导包：**

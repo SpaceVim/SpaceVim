@@ -1,10 +1,12 @@
 "=============================================================================
 " denite.vim --- SpaceVim denite layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#layers#denite#plugins() abort
   let plugins = [
@@ -18,12 +20,18 @@ function! SpaceVim#layers#denite#plugins() abort
   call add(plugins, ['ozelentok/denite-gtags', {'merged' : 0}])
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
+  call add(plugins, ['SpaceVim/Denite-sources', {'merged' : 0}])
+
   return plugins
 endfunction
 
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#denite#config() abort
+
+  let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
+  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Denite unicode', 'search-and-insert-unicode', 1)
+
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
@@ -149,6 +157,19 @@ function! SpaceVim#layers#denite#config() abort
         \ ],
         \ 1)
 
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'call call('
+        \ . string(s:_function('s:warp_denite')) . ', ["Denite unicode"])',
+        \ ['search-and-insert-unicode',
+        \ [
+        \ '[SPC i u] is to search and insert Unicode charater',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
   call s:defind_fuzzy_finder()
 endfunction
@@ -267,6 +288,17 @@ endfunction
 function! s:warp_denite(cmd) abort
   exe a:cmd
   doautocmd WinEnter
+endfunction
+
+function! SpaceVim#layers#denite#loadable()
+  if s:CMP.has('python3')
+    return 1
+  else
+    call SpaceVim#logger#warn('denite layer requires +python3 enabled!', 0)
+    if has('nvim')
+      call SpaceVim#logger#info('   use `pip3 install pynvim` to enabled +python3 for neovim.')
+    endif
+  endif
 endfunction
 
 " function() wrapper

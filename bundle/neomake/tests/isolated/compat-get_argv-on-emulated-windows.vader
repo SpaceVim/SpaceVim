@@ -1,0 +1,39 @@
+Include: ../include/setup.vader
+
+Execute (neomake#compat#get_argv on (emulated) Windows):
+  Save &shell, &shellcmdflag
+  set shell=cmd.exe
+  set shellcmdflag=/c
+  function! neomake#utils#IsRunningWindows()
+    return 1
+  endfunction
+  runtime autoload/neomake/compat.vim
+
+  let out = neomake#compat#get_argv('sh', ['-c', 'echo 1'], 1)
+  AssertEqual out, 'cmd.exe /c sh -c "echo 1"'
+
+  " Does not get wrapped in shell twice.
+  let out = neomake#compat#get_argv('cmd.exe', ['/c', 'echo 1'], 1)
+  AssertEqual out, 'cmd.exe /c echo 1'
+  let out = neomake#compat#get_argv('cmd.exe', ['/c', 'echo', '1'], 1)
+  AssertEqual out, 'cmd.exe /c echo 1'
+  let out = neomake#compat#get_argv('cmd.exe', ['/c', 'echo "1 1"'], 1)
+  AssertEqual out, 'cmd.exe /c echo "1 1"'
+  let out = neomake#compat#get_argv('cmd.exe', ['/c', 'echo', '"1 1"'], 1)
+  AssertEqual out, 'cmd.exe /c echo "1 1"'
+
+  " Handled correctly with MakerFromCommand/NeomakeSh.
+  let maker = neomake#utils#MakerFromCommand('echo "1 2"')
+  let maker = neomake#GetMaker(maker)
+  let jobinfo = NeomakeTestsFakeJobinfo()
+  let jobinfo.file_mode = 0
+  AssertEqual maker._get_argv(jobinfo), 'cmd.exe /c echo "1 2"'
+
+Execute (neomake#compat#dev_null on (emulated) Windows):
+  AssertEqual g:neomake#compat#dev_null, 'NUL'
+
+  " Restore if not profiling.
+  if !v:profiling
+    runtime autoload/neomake/utils.vim
+    runtime autoload/neomake/compat.vim
+  endif

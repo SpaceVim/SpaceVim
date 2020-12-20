@@ -7,11 +7,8 @@ description: "SpaceVim core#tabline layer provides a better tabline for SpaceVim
 
 ## Intro
 
-Different from airline, this layer provode a simple tabline for SpaceVim, which is more fast and compitable with SpaceVim's core feature.
+Different from airline, this layer provides a simple tabline for SpaceVim, which is faster and more compitable with SpaceVim's core feature.
 
 ## Key bindings
 
 All tabline key bindings can be find on [SpaceVim documentation](../../../documentation/#tabline)
-
-
-

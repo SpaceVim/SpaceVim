@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim edit 模块"
 description: "这一模块为 SpaceVim 提供了更好的文本编辑体验，提供更多种文本对象。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> edit

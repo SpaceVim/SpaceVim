@@ -1,0 +1,159 @@
+snippet     autoescape
+abbr        {% autoescape ... %} ... {% endautoescape %}
+options     head
+	{% autoescape ${1:#:strategy} %}
+		${0:TARGET}
+	{% autoescape %}
+
+snippet     block
+abbr        {% block ... %} ... {% endblock %}
+alias       bl
+options     head
+	{% block ${1:#:name} %}
+		${0:TARGET}
+	{% endblock %}
+
+snippet     dump
+abbr        <pre> {{ dump(...) }} </pre>
+options     head
+    <pre>
+ 		{{ dump(${0:TARGET}) }}
+    </pre>
+
+snippet     embed
+abbr        {% embed ... %} ... {% endembed %}
+options     head
+	{% embed '${1:template}' %}
+		{% block ${2} %}
+			${0:TARGET}
+		{% endblock %}
+	{% endembed %}
+
+snippet     extends
+abbr        {% extends ... %}
+alias       ext
+options     head
+	{% extends '${1:#:template}' %}
+
+snippet     filter
+abbr        {% filter ... %} ... {% endfilter %}
+options     head
+	{% filter ${1} %}
+		${0:TARGET}
+	{% endfilter %}
+
+snippet     flush
+abbr        {% flush %}
+options     head
+	{% flush %}
+
+snippet     for
+abbr        {% for ... in ... %} ... {% endfor %}
+options     head
+	{% for ${1:#:value} in ${2:#:list} %}
+		${0:TARGET}
+	{% endfor %}
+
+snippet     from
+abbr        {% from '...' import ... %}
+options     head
+	{% from '${1:#:module}' import ${2:#:macro} %}
+
+snippet     if
+abbr        {% if ... %} ... {% endif %}
+options     head
+	{% if ${1} %}
+		${0:TARGET}
+	{% endif %}
+
+snippet     elseif
+abbr        {% elseif ... %} ...
+alias       elif
+options     head
+	{% elseif ${1} %}
+		${0:TARGET}
+
+snippet     else
+abbr        {% else %} ...
+options     head
+	{% else %}
+		${0:TARGET}
+
+snippet     import
+abbr        {% import '...' as ... %}
+options     head
+	{% import '${1:#:module}' as ${2:#:namespace} %}
+
+snippet     include
+abbr        {% include '...' %}
+options     head
+	{% include '${1:#:template}' %}
+
+snippet     includewith
+abbr        {% include '...' %}
+options     head
+	{% include '${1:#:template}' with {${2:#:'key'}: ${2:#:'value'}} %}
+
+snippet     macro
+abbr        {% macro ...(...) %} ... {% endmacro %}
+options     head
+	{% macro ${1:#:name}(${2:#:args}) %}
+		${0:TARGET}
+	{% endmacro %}
+
+snippet     sandbox
+abbr        {% sandbox %} ... {% endsandbox %}
+options     head
+	{% sandbox %}
+		${0:TARGET}
+	{% endsandbox %}
+
+snippet     set
+abbr        {% set ... = ... %}
+options     head
+	{% set ${1:#:var} = ${2:#:value} %}
+
+snippet     setblock
+abbr        {% set ... %} ... {% endset %}
+options     head
+	{% set ${1:#:var} %}
+		${0:TARGET}
+	{% endset %}
+
+snippet     spaceless
+abbr        {% spaceless %} ... {% endspaceless %}
+options     head
+	{% spaceless %}
+		${0:TARGET}
+	{% endspaceless %}
+
+snippet     use
+abbr        {% use '...' %}
+options     head
+	{% use '${1:#:template}' %}
+
+snippet     verbatim
+abbr        {% verbatim %} ... {% endverbatim %}
+options     head
+	{% verbatim %}
+		${0:TARGET}
+	{% endverbatim %}
+
+snippet     comment
+abbr        {# ... #}
+alias       #
+options     head
+	{# ${1:comment} #}
+
+snippet     tag
+abbr        {% ... %}
+alias       %
+options     head
+	{% ${1:#:tag} %}
+
+snippet     tagblock
+abbr        {% ... %} ... {% end... %}
+options     head
+	{% ${1:#:tag} ${2:#:name} %}
+		${0:TARGET}
+	{% end$1 %}

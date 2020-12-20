@@ -1,0 +1,59 @@
+
+snippet     bold
+abbr        *text*
+options     head
+    *${1}*${2}
+
+snippet     scratch
+abbr        ~~scratch~~
+options     head
+    ~~${1}~~${2}
+
+snippet     italic
+abbr        _italic_
+options     head
+    _${1}_${2}
+
+snippet     sub
+abbr        ,,sub,,
+options     head
+    ,,${1},,${2}
+
+snippet     upper
+abbr        ^upper^
+options     head
+    ^${1}^${2}
+
+snippet     image_local
+abbr        {{<image path>}}
+options     head
+    {{local:${1:image_path}}}${2}
+
+snippet     image
+abbr        {{<image url>}}
+options     head
+    {{http://${1:image_url}}}${2}
+
+snippet     table
+abbr        table template
+options     head
+  |${1:title}|${2:title}|
+  |---|---|
+  |${3:value}|${4:value}${5:TARGET}|
+
+snippet     definintion
+abbr        definition
+options     head
+  term:: ${1:definintion}
+
+snippet     tag
+abbr        :tag1:tag2:
+options     head
+  :${1:tag}:${3}
+
+snippet     code
+abbr        {{{<code>}}}
+options     head
+  {{{
+  ${0:TARGET}
+  }}}

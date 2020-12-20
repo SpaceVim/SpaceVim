@@ -1,0 +1,46 @@
+#!/bin/sh
+# A wrapper around vim-vimhelp (https://github.com/machakann/vim-vimhelplint).
+#
+# This file is automatically used by autoload/neomake/makers/ft/help.vim, if
+# vimhelplint is installed in Neomake's build dir (and `vimhelplint` is not
+# found as an executable).
+#
+# You can run `make build/vimhelplint` (from Neomake's root) to
+# download/install it into Neomake's build dir, and Neomake will use this for
+# help files then.
+
+if [ -z "$VIMHELPLINT_DIR" ]; then
+  # Change to parent dir (not POSIXly, but resolving symlinks).
+  CDPATH='' cd -P -- "$(dirname -- "$(readlink -f -- "$0" 2>/dev/null || echo "$0")")/.." || exit
+  VIMHELPLINT_DIR=$PWD/build/vimhelplint
+  cd - >/dev/null || exit
+fi
+vimhelplint=${VIMHELPLINT_DIR}/ftplugin/help_lint.vim
+
+if ! [ -f "$vimhelplint" ]; then
+  echo "$vimhelplint not found." >&2
+  echo "Run 'make build/vimhelplint' Neomake's root directory to install it." >&2
+  exit 64
+fi
+
+file="$1"
+if [ -z "$file" ]; then
+  echo 'No input file specified.' >&2
+  exit 64
+fi
+if ! [ -e "$file" ]; then
+  echo "File $file is not readable." >&2
+  exit 1
+fi
+
+out=$(${VIMHELPLINT_VIM:-vim} -esN -u NONE -i NONE \
+  -c "silent edit $1" \
+  -c 'set ft=help' \
+  -c "source $vimhelplint" \
+  -c 'verb VimhelpLintEcho' \
+  -c 'qall!' 2>&1)
+if [ -z "$out" ]; then
+  exit 0
+fi
+echo "$out"
+exit 1

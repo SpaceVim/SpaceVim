@@ -16,7 +16,7 @@ description: "This layer provides some tools for vim"
 ## Description
 
 This layer provides some extra vim tools for SpaceVim. All tools can be
-called via command. no key bindings will be definded in this layer.
+called via command.
 
 ## Install
 

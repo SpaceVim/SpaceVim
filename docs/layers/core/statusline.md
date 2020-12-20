@@ -45,7 +45,7 @@ Here is a list of SpaceVim options for statusline, these are different from laye
     # Set the statusline separators of statusline, default is "arrow"
     statusline_separator = "arrow"
     # Set the statusline separators of inactive statusline
-    statusline_inactive_separator = "bar"
+    statusline_iseparator = "bar"
 
     # Set SpaceVim buffer index type
     buffer_index_type = 4

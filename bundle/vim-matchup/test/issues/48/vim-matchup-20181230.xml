@@ -1,0 +1,28 @@
+<window title="App" icon-name="app" resizable="false" window-position="1">
+  <vbox>
+    <text justify="0">
+      <label>"     App not found TODO     "</label>
+    </text>
+
+    <checkbox use-underline="true">
+      <label>"_Show this message at next start"</label>
+      <default>$CHECK_FZF</default>
+      <variable>CHECK_FZF</variable>
+      <action>awk $0~"^"N"="{$0=N"="V;f=1}{a[++n]=$0}END{if(!f)a[++n]=N"="V;++n;for(i=1;i!=n;i++)print a[i]>ARGV[ARGC-1]} N=CHECK_FZF V=\$CHECK_FZF /root/.apprc</action>
+    </checkbox>
+
+    <text><label>""</label></text>
+    <hbox>
+      <text space-fill="true" space-expand="true"><label>""</label></text>
+      <button yes>
+        <action>yad --text="INSTALL FZF TODO"</action>
+      </button>
+      <button no>
+        <action>closewindow:CHECK_FZF_WINDOW</action>
+      </button>
+      <text space-fill="true" space-expand="true"><label>""</label></text>
+    </hbox>
+  </vbox>
+  <variable>CHECK_FZF_WINDOW</variable>
+  <action signal="key-press-event" condition="command_is_true([ $KEY_SYM = Escape ] && echo true )">closewindow:CHECK_FZF_WINDOW</action>
+</window>

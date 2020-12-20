@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#WebAssembly 模块"
 description: "这一模块为 SpaceVim 提供了 WebAssembly 的开发支持。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#lua

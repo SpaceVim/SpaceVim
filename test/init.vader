@@ -5,5 +5,3 @@ Execute ( SpaceVim api: SpaceVim main code ):
   else
     source vimrc
   endif
-  SPInstall
-  AssertEqual fnamemodify(g:_spacevim_root_dir, ':.'), ''

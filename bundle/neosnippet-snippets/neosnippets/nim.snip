@@ -1,0 +1,107 @@
+# 2 space
+snippet  proc
+options  head
+  proc ${1:#:name}(${2}) =
+    ${0:pass}
+
+snippet  procd
+options  head
+  proc ${1:#:name}(${2}):
+  discard """${3:#:function documentation}"""
+    ${0:pass}
+
+snippet  proct
+options  head
+  proc ${1:#:name}(${2}):${3:#:type} =
+    ${0:pass}
+
+snippet  procg
+options  head
+  proc ${1:#:name}(${2}) =
+    ${0:pass}
+
+snippet  procgt
+options  head
+  proc ${1:#:name}(${2}):${3:#:type} =
+    ${0:pass}
+
+snippet  template
+options  head
+  template ${1:#:name}(${2}):${3:type} =
+    ${0:pass}
+
+snippet  macro
+options  head
+  macro ${1:#:name}(${2}):${3:type} =
+    ${0:pass}
+
+snippet  elif
+abbr     elif ...: ...
+options  head
+  elif ${1:#:condition}:
+    ${0:pass}
+
+snippet  else
+abbr     else: ...
+options  head
+  else:
+    ${0:pass}
+
+snippet  for
+abbr     for ... in ...: ...
+options  head
+  for ${1:#:value} in ${2:#:list}:
+    ${0:pass}
+
+snippet  if
+abbr     if ...: ...
+options  head
+  if ${1:#:condition}:
+    ${0:pass}
+
+snippet  when
+abbr     when ...: ...
+options  head
+  when ${1:#:condition}:
+    ${0:pass}
+
+snippet  ifmain
+abbr     if isMainModule: ...
+alias   main
+options  head
+  if isMainModule:
+    ${0:pass}
+
+snippet  tryexcept
+abbr     try: ... except ...: ...
+options  head
+  try:
+    ${1:pass}
+  except ${2:#:ExceptionClass}:
+    ${3:pass}
+
+snippet  tryfinally
+abbr     try: ... finally: ...
+options  head
+  try:
+    ${1:pass}
+  finally:
+    ${2:pass}
+
+snippet  trydefer
+options  head
+  try: ${1:pass}
+  defer: ${2:pass}
+
+snippet  while
+options  head
+  while ${1:#:condition}:
+    ${0:pass}
+
+snippet  echo
+options  word
+  echo(${0:#:TARGET})
+
+snippet  fmt
+options  word
+  fmt"${0:#:TARGET}"

@@ -40,6 +40,7 @@ To use this configuration layer, add following snippet to your custom configurat
 | `SPC g U`   | unstage current file   |
 | `SPC g c`   | edit git commit        |
 | `SPC g p`   | git push               |
+| `SPC g m`   | git branch manager     |
 | `SPC g d`   | view git diff          |
 | `SPC g A`   | stage all files        |
 | `SPC g b`   | open git blame windows |

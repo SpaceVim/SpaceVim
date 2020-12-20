@@ -72,6 +72,12 @@ To use this configuration layer, update custom configuration file with:
 
 ### Install language server
 
+Ada
+
+After installing AdaCore's GNAT Studio, add the directory containing ada_language_server to your PATH variable.
+For instance, if the GNAT Studio 2020 was installed, ada_language_server is present by default in
+`/opt/GNAT/2020/libexec/gnatstudio/als`.
+
 **Bash**
 
 ```sh
@@ -125,9 +131,16 @@ npm install -g vscode-css-languageserver-bin
 gem install solargraph
 ```
 
+**Elm:**
+
+```sh
+npm install -g @elm-tooling/elm-language-server
+npm install -g elm elm-test elm-format
+```
+
 ## Configuration
 
-To enable lsp support for a specified filetype, you may need to load this layer with `filtypes` option, for example:
+To enable lsp support for a specified filetype, you may need to load this layer with `filetypes` option, for example:
 
 ```toml
 [[layers]]
@@ -142,10 +155,13 @@ default language server commands:
 
 | language     | server command                                                                                                                                                                                   |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ada`        | `['ada_language_server']`                                                                                                                                                                                     |
 | `c`          | `['clangd']`                                                                                                                                                                                     |
 | `cpp`        | `['clangd']`                                                                                                                                                                                     |
+| `crystal`    | `['scry']`                                                                                                                                                                                       |
 | `css`        | `['css-languageserver', '--stdio']`                                                                                                                                                              |
 | `dart`       | `['dart_language_server']`                                                                                                                                                                       |
+| `elm`        | `['elm-language-server']`                                                                                                                                                                        |
 | `go`         | `['go-langserver', '-mode', 'stdio']`                                                                                                                                                            |
 | `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
 | `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |

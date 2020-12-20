@@ -1,10 +1,17 @@
 "=============================================================================
 " foxpro.vim --- Visual FoxPro language support
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section lang#foxpro, layer-lang-foxpro
+" @parentsection layers
+" @subsection Intro
+"
+" The lang#foxpro layer provides syntax highlighting for foxpro.
 
 function! SpaceVim#layers#lang#foxpro#plugins() abort
   let plugins = []

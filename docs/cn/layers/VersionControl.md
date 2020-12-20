@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim VersionControl 模块"
 description: "这一模块为 SpaceVim 提供了通用的代码版本控制支持，该模块支持 Git、Mercurial、Bazaar、SVN 等等多种后台工具。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> VersionControl

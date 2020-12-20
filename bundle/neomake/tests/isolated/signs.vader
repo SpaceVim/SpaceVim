@@ -1,0 +1,19 @@
+Include: ../include/setup.vader
+
+Execute (Signs are not wiped when buffer gets wiped with removed augroup):
+  new
+  au! neomake_signs
+  let buf = bufnr('%')
+  call neomake#signs#PlaceSigns(bufnr('%'),
+  \ [{'type': 'E', 'bufnr': buf, 'lnum': 1}], 'file')
+  AssertEqual neomake#signs#by_lnum(bufnr('%')), {'1': [[5000, 'neomake_file_err']]}
+  bwipe
+
+  AssertEqual neomake#signs#by_lnum(buf), {}
+  call neomake#signs#ResetFile(buf)
+  AssertNeomakeMessage 'Skipped cleaning of old signs in non-existing buffer '.buf.': {5000: neomake_file_err}.', 3
+
+  " Restore if not profiling.
+  if !v:profiling
+    runtime autoload/neomake/signs.vim
+  endif

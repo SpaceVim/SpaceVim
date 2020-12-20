@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#foxpro 模块"
 description: "这一模块为 Visual FoxPro 开发提供支持，提供 foxpro 语法高亮。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#foxpro

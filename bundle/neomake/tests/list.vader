@@ -1,0 +1,576 @@
+Include: include/setup.vader
+
+Execute (list: default for debug):
+  Save g:neomake_test_messages, g:neomake_debug_list, g:neomake_verbose
+
+  unlet! g:neomake_test_messages
+  unlet! g:neomake_debug_list
+  unlet! g:neomake_verbose
+
+  AssertEqual neomake#list#List('loclist').debug, 0
+  let g:neomake_debug_list = 1
+  AssertEqual neomake#list#List('loclist').debug, 1
+
+  let g:neomake_test_messages = []
+  let g:neomake_debug_list = 0
+  AssertEqual neomake#list#List('loclist').debug, 0
+
+  unlet g:neomake_debug_list
+  AssertEqual neomake#list#List('loclist').debug, 1
+
+  unlet g:neomake_test_messages
+  let g:neomake_verbose = 3
+  AssertEqual neomake#list#List('loclist').debug, 1
+
+  Restore
+
+Execute (List: basic: loclist):
+  new
+  normal! oline2
+  normal! gg0
+  let maker = {}
+  function! maker.get_list_entries(...)
+    let b = bufnr('%')
+    return [
+    \ {'text': '1', 'lnum': 1, 'bufnr': b},
+    \ {'text': '2', 'lnum': 2, 'col': 3, 'bufnr': b},
+    \ ]
+  endfunction
+  CallNeomake 1, [maker]
+  AssertNeomakeMessage 'Adding 2 list entries.', 3
+
+  let list1 = neomake#list#get()
+
+  " Location list window can be found after make run has finished.
+  " (via last_make_id without patch-7.4.1895).
+  if has('patch-7.4.1895')
+    AssertEqual list1._get_loclist_win(), win_getid()
+  else
+    AssertEqual list1._get_loclist_win(), winnr()
+  endif
+
+  AssertEqual getpos('.'), [0, 1, 1, 0]
+  NeomakeNextLoclist
+  AssertEqual getpos('.'), [0, 2, 3, 0]
+  NeomakePrevLoclist
+  AssertEqual getpos('.'), [0, 1, 1, 0]
+  AssertNeomakeMessageAbsent 'Creating new List object.'
+
+  " Knows about loclist in new window for the same buffer.
+  split
+  AssertNeomakeMessageAbsent 'Creating new List object.'
+  AssertEqual neomake#list#get(), list1
+
+  bwipe!
+
+Execute (List: basic: quickfix):
+  new
+  normal! oline2
+  normal! gg0
+  let maker = {}
+  function! maker.get_list_entries(...)
+    let b = bufnr('%')
+    return [
+    \ {'text': '1', 'lnum': 1, 'bufnr': b},
+    \ {'text': '2', 'lnum': 2, 'col': 3, 'bufnr': b},
+    \ ]
+  endfunction
+  CallNeomake 0, [maker]
+
+  AssertEqual getpos('.'), [0, 1, 1, 0]
+  NeomakeNextQuickfix
+  AssertEqual getpos('.'), [0, 2, 3, 0]
+  NeomakePrevQuickfix
+  AssertEqual getpos('.'), [0, 1, 1, 0]
+  AssertNeomakeMessageAbsent 'Creating new List object.'
+  bwipe!
+
+Execute (Sorting by location):
+  let list = neomake#list#List('loclist')
+  AssertEqual list.sort_by_location(), []
+
+  let input = [
+  \ {'lnum': 1, 'col': 2, 'bufnr': 1, 'type': ''},
+  \ {'lnum': 1, 'col': 5, 'bufnr': 2, 'type': ''},
+  \ {'lnum': 2, 'col': 1, 'bufnr': 1, 'type': ''},
+  \ {'lnum': 3, 'col': 5, 'bufnr': 1, 'type': ''},
+  \ {'lnum': 1, 'col': 2, 'bufnr': 1, 'type': 'E'},
+  \ ]
+  call list.add_entries(input)
+
+  AssertEqual list.sort_by_location(), [
+  \ {'lnum': 1, 'col': 2, 'bufnr': 1, 'type': 'E'},
+  \ {'lnum': 1, 'col': 2, 'bufnr': 1, 'type': ''},
+  \ {'lnum': 2, 'col': 1, 'bufnr': 1, 'type': ''},
+  \ {'lnum': 3, 'col': 5, 'bufnr': 1, 'type': ''},
+  \ {'lnum': 1, 'col': 5, 'bufnr': 2, 'type': ''},
+  \ ]
+  AssertEqual input[-1].lnum, 1, 'does not sort list in-place'
+
+  " Sorts newly added entries.
+  call list.add_entries([
+  \ {'lnum': 1, 'col': 1, 'bufnr': 1, 'type': 'W'},
+  \ ])
+  AssertEqual list._sorted_entries_by_location, [
+  \ {'lnum': 1, 'col': 1, 'bufnr': 1, 'type': 'W'},
+  \ {'lnum': 1, 'col': 2, 'bufnr': 1, 'type': 'E'},
+  \ {'lnum': 1, 'col': 2, 'bufnr': 1, 'type': ''},
+  \ {'lnum': 2, 'col': 1, 'bufnr': 1, 'type': ''},
+  \ {'lnum': 3, 'col': 5, 'bufnr': 1, 'type': ''},
+  \ {'lnum': 1, 'col': 5, 'bufnr': 2, 'type': ''},
+  \ ]
+
+Execute (list: error with duplicate nmqfidx (debug=1)):
+  let list = neomake#list#List('loclist')
+  AssertEqual list.debug, 1
+  call list.add_entries([
+  \ {'lnum': 1, 'col': 1, 'bufnr': 1, 'type': 'W'},
+  \ ])
+  let list.entries[0].nmqfidx = 2
+  call list.add_entries([
+  \ {'lnum': 1, 'col': 1, 'bufnr': 1, 'type': 'W'},
+  \ ])
+  AssertNeomakeMessage 'Duplicate qf indexes in list entries: [2, 2].', 0
+
+Execute (list: no error with duplicate nmqfidx (debug=0)):
+  let list = neomake#list#List('loclist')
+  let list.debug = 0
+  call list.add_entries([
+  \ {'lnum': 1, 'col': 1, 'bufnr': 1, 'type': 'W'},
+  \ ])
+  let list.entries[0].nmqfidx = 2
+  call list.add_entries([
+  \ {'lnum': 1, 'col': 1, 'bufnr': 1, 'type': 'W'},
+  \ ])
+
+Execute (quickfix list: gets local and sorts):
+  Save g:_neomake_info
+  unlet g:_neomake_info
+
+  let list = neomake#list#List('quickfix')
+  AssertEqual list.sort_by_location(), []
+
+  call setqflist([
+  \ {'lnum': 1, 'col': 2, 'bufnr': 1},
+  \ {'lnum': 1, 'col': 5, 'bufnr': 1},
+  \ {'lnum': 2, 'col': 1, 'bufnr': 1},
+  \ {'lnum': 3, 'col': 5, 'bufnr': 1},
+  \ {'lnum': 1, 'col': 1, 'bufnr': 1},
+  \ ])
+
+  let list = neomake#list#get_qflist()
+  AssertEqual map(list.sort_by_location(), '[v:val.lnum, v:val.col, v:val.bufnr]'), [
+  \ [1, 1, 1],
+  \ [1, 2, 1],
+  \ [1, 5, 1],
+  \ [2, 1, 1],
+  \ [3, 5, 1],
+  \ ]
+
+Execute (neomake#list#next):
+  new
+  let bufnr = bufnr('%')
+  normal! iline1
+  normal! oline2
+  normal! oline3
+  normal! gg^
+
+  call setloclist(0, [
+  \ {'lnum': 1, 'col': 1, 'bufnr': bufnr, 'text': 'idx1'},
+  \ {'lnum': 1, 'col': 5, 'bufnr': bufnr, 'text': 'idx2'},
+  \ {'lnum': 2, 'col': 1, 'bufnr': bufnr, 'text': 'idx3'},
+  \ {'lnum': 3, 'col': 5, 'bufnr': bufnr, 'text': 'idx4'},
+  \ {'lnum': 1, 'col': 2, 'bufnr': bufnr, 'text': 'idx5'},
+  \ ])
+  AssertEqual map(getloclist(0), '[v:val.lnum, v:val.text]'),
+  \ [[1, 'idx1'], [1, 'idx2'], [2, 'idx3'], [3, 'idx4'], [1, 'idx5']],
+  \ 'Sane lnums'
+
+  Assert !exists('b:_neomake_info.loclist')
+  Assert !exists('w:_neomake_info.loclist')
+
+  AssertEqual getpos('.'), [0, 1, 1, 0]
+  NeomakeNextLoclist
+  AssertEqual getpos('.'), [0, 1, 2, 0]
+
+  NeomakePrevLoclist
+  AssertEqual getpos('.'), [0, 1, 1, 0]
+  NeomakePrevLoclist
+  AssertNeomakeMessage 'No more previous items.'
+
+  3NeomakeNextLoclist
+  AssertEqual getpos('.'), [0, 2, 1, 0]
+
+  " Goes to last entry, without error message (like with :lnext).
+  99NeomakeNextLoclist
+  AssertEqual getpos('.'), [0, 3, 5, 0]
+
+  " Error message when at last entry already (like with :lnext).
+  99NeomakeNextLoclist
+  AssertEqual getpos('.'), [0, 3, 5, 0]
+  AssertNeomakeMessage 'No more next items.'
+
+  " count=0 gets handles as 1.
+  0NeomakePrevLoclist
+  AssertEqual getpos('.'), [0, 2, 1, 0]
+  0NeomakeNextLoclist
+  AssertEqual getpos('.'), [0, 3, 5, 0]
+  bwipe!
+
+Execute (neomake#list#_diff_new_entries):
+  AssertEqual neomake#list#_diff_new_entries([], []), {}
+  AssertEqual neomake#list#_diff_new_entries([{}], [{'valid': 0}]), {'0': {'changed': {'valid': [1, 0]}}}
+  AssertEqual neomake#list#_diff_new_entries([{}, {}], [{}, {'valid': 0}]), {'1': {'changed': {'valid': [1, 0]}}}
+
+  " Handles different lengths.
+  AssertEqual neomake#list#_diff_new_entries([{}], []), {}
+  AssertEqual neomake#list#_diff_new_entries([], [{}]), {}
+
+  AssertEqual neomake#list#_diff_new_entries([{'length': 1}], [{}]), {}
+
+  AssertEqual neomake#list#_diff_new_entries([{'text': 'error'}], [{'text': 'error', 'valid': 1, 'pattern': ''}]),
+  \ {}
+
+Execute (Does not create list unnecessarily):
+  if !has('patch-8.0.1040')  " 'efm' in setqflist/getqflist
+    NeomakeTestsSkip 'only with efm parsing'
+  else
+    new
+    lgetexpr 'init'
+    let list = neomake#list#ListForMake({'options': {'file_mode': 1}})
+    let jobinfo = NeomakeTestsFakeJobinfo()
+    let jobinfo.maker.errorformat = '%m'
+    call list.add_lines_with_efm([], jobinfo)
+    AssertEqual map(getloclist(0), 'v:val.text'), ['init']
+    bwipe
+  endif
+
+Execute (list: error handling):
+  new
+  let orig_bufnr = bufnr('%')
+  let list = neomake#list#List('loclist')
+
+  let threw = 0
+  try
+    call list._get_loclist_win()
+  catch
+    AssertEqual v:exception, 'cannot handle type=loclist without make_info'
+    let threw = 1
+  endtry
+  AssertEqual threw, 1
+
+  " Invalid location list qfid (loclist).
+  let jobinfo = NeomakeTestsFakeJobinfo()
+  let list.make_info = neomake#GetStatus().make_info[-42]
+
+  let threw = 0
+  try
+    call list._get_fn_args('get')
+  catch
+    let threw = 1
+    AssertEqual v:exception, 'Neomake: could not find location list for make_id -42.'
+  endtry
+  AssertEqual threw, 1
+
+  " Uses winid from make_info.
+  let list.make_info.options.winid = 1234
+  if has('patch-7.4.1895')
+    AssertEqual list._get_fn_args('get'), [['getloclist', [1234]]]
+  else
+    let g:list = list
+    AssertThrows call g:list._get_fn_args('get')
+    AssertEqual g:vader_exception, 'Neomake: could not find location list for make_id -42.'
+    unlet g:list
+  endif
+  unlet list.make_info.options.winid
+
+  AssertEqual list._get_loclist_win(1), -1
+
+  " location list from another tab
+  tabnew
+  let w:neomake_make_ids = [-42]
+  tabprev
+  let threw = 0
+  try
+    call list._get_fn_args('get')
+  catch
+    let threw = 1
+    AssertEqual v:exception, 'Neomake: trying to use location list from another tab (current=3 != target=4).'
+  endtry
+  AssertEqual threw, 1
+  AssertEqual list._get_loclist_win(1), -1
+  tabnext
+  bwipe
+
+  new
+  let w:neomake_make_ids = [-42]
+  AssertEqual list._get_fn_args('get'), [['getloclist', [0]]]
+  AssertEqual list.need_init, 1
+
+  let fns_args = list._get_fn_args('set', ['item'], ' ')
+  let title = 'Neomake[file]: buf:'.orig_bufnr.' (fake_jobinfo_name?)'
+  if has('patch-7.4.2200') && has('patch-8.0.0657')
+    let context = remove(fns_args[0][1][3], 'context')
+    AssertEqual keys(context), ['neomake']
+    AssertEqual keys(context.neomake), ['make_info']
+    AssertEqual fns_args,
+    \ [['setloclist', [0, [], ' ', {'title': title, 'items': ['item']}]]]
+  elseif has('patch-7.4.2200')
+    AssertEqual fns_args,
+    \ [['setloclist', [0, ['item'], ' ']], ['setloclist', [0, [], 'a', {'title': title}]]]
+  else
+    AssertEqual fns_args,
+    \ [['setloclist', [0, ['item'], ' ']]]
+  endif
+
+  wincmd p
+
+  Assert !has_key(list, 'qfid')
+  call list._call_qf_fn('set', [], ' ')
+
+  if has('patch-8.0.1023')
+    let list.qfid = list.qfid + 1
+    let list.make_info.options.winid = 1234
+
+    Assert !list._has_valid_qf()
+
+    let threw = 0
+    try
+      call list._get_fn_args('get')
+    catch
+      let threw = 1
+      AssertEqual v:exception, printf('Neomake: qfid %d for location list (1234) has become invalid.', list.qfid)
+    endtry
+    AssertEqual threw, 1
+
+    " Invalid location list qfid (qflist).
+    let list.type = 'quickfix'
+
+    let threw = 0
+    try
+      call list._get_fn_args('get')
+    catch
+      let threw = 1
+      AssertEqual v:exception, printf('Neomake: qfid %d for quickfix list has become invalid.', list.qfid)
+    endtry
+    AssertEqual threw, 1
+  endif
+  wincmd p
+  bwipe
+  bwipe
+
+Execute (list: add_lines_with_efm uses own list):
+  new
+
+  let jobinfo = NeomakeTestsFakeJobinfo()
+  let jobinfo.maker.errorformat = '%m'
+  let make_info = neomake#GetStatus().make_info[-42]
+  let w:neomake_make_ids = [-42]
+
+  let list = neomake#list#ListForMake(make_info)
+  call list.add_lines_with_efm(['error1'], jobinfo)
+
+  AssertEqual map(getloclist(0), 'v:val.text'), ['error1']
+
+  " Create new location list.
+  lgetexpr 'new_list'
+
+  call list.add_lines_with_efm(['error2'], jobinfo)
+
+  if has('patch-8.0.1040')
+    AssertEqual map(getloclist(0), 'v:val.text'), ['new_list']
+    lolder
+    AssertEqual map(getloclist(0), 'v:val.text'), ['error1', 'error2']
+  else
+    " TODO: check/fix this via nmcfg marker."
+    AssertEqual map(getloclist(0), 'v:val.text'), ['new_list', 'error2']
+    lolder
+    AssertEqual map(getloclist(0), 'v:val.text'), ['error1']
+  endif
+  bwipe
+
+Execute (list: title):
+  new
+  let job1 = NeomakeTestsFakeJobinfo()
+  let job1.maker.name = 'job1'
+
+  let make_info = neomake#GetStatus().make_info[-42]
+  let w:neomake_make_ids = [-42]
+
+  let list = neomake#list#ListForMake(make_info)
+
+  let prefix = 'Neomake[file]: buf:'.bufnr('%')
+  AssertEqual list._get_title(), prefix.' (job1?)'
+
+  let job2 = NeomakeTestsFakeJobinfo()
+  let job2.maker.name = 'job2'
+  let list.make_info.active_jobs = [job2]
+  AssertEqual list._get_title(), prefix.' (job2..., job1?)'
+
+  " Finished jobs with no entries are not displayed."
+  let job3 = NeomakeTestsFakeJobinfo()
+  let job3.maker.name = 'job3'
+  let list.make_info.finished_jobs = [job3]
+  AssertEqual list._get_title(), prefix.' (job3✓, job2..., job1?)'
+
+  call list.add_entries_for_job([{'text': 'e2', 'bufnr': bufnr('%')}], job2)
+  AssertEqual list._get_title(), prefix.' (job3✓, job2...(1), job1?)'
+
+  call list.add_entries_for_job([{'text': 'e3', 'bufnr': bufnr('%')}], job3)
+  AssertEqual list._get_title(), prefix.' (job3(1), job2...(1), job1?)'
+
+  AssertEqual neomake#list#get_title('', 0, 'maker_info'), 'Neomake: maker_info'
+  AssertEqual neomake#list#get_title('prefix', 0, 'maker_info'), 'Neomake[prefix]: maker_info'
+  AssertEqual neomake#list#get_title('', 0, ''), 'Neomake'
+  AssertEqual neomake#list#get_title('prefix', 0, ''), 'Neomake[prefix]'
+  bwipe
+
+Execute (list: handles nmcfg marker):
+  call neomake#quickfix#enable(1)
+  try
+    new
+    let job1 = NeomakeTestsFakeJobinfo()
+    let job1.maker.name = 'job1'
+    let job2 = NeomakeTestsFakeJobinfo()
+    let job2.maker.name = 'job2'
+
+    let make_info = neomake#GetStatus().make_info[-42]
+    let w:neomake_make_ids = [-42]
+
+    let list = neomake#list#ListForMake(make_info)
+
+    call list.add_entries_for_job([{'text': 'e1', 'bufnr': bufnr('%')}], job1)
+    AssertEqual map(getloclist(0), 'v:val.text'), ["e1 nmcfg:{'short': 'job1', 'name': 'job1'}"]
+
+    call list.add_entries_for_job([{'text': 'e2', 'bufnr': bufnr('%')}], job1)
+    " NOTE: could be optimized to not add nmcfg in this case, but difficult
+    " when list needs to be replaced.
+    AssertEqual map(getloclist(0), 'v:val.text'), [
+    \ "e1 nmcfg:{'short': 'job1', 'name': 'job1'}",
+    \ "e2 nmcfg:{'short': 'job1', 'name': 'job1'}",
+    \ ]
+    call list.add_entries_for_job([{'text': 'e3', 'bufnr': bufnr('%')}], job2)
+    AssertEqual map(getloclist(0), 'v:val.text'), [
+    \ "e1 nmcfg:{'short': 'job1', 'name': 'job1'}",
+    \ "e2 nmcfg:{'short': 'job1', 'name': 'job1'}",
+    \ "e3 nmcfg:{'short': 'job2', 'name': 'job2'}",
+    \ ]
+
+    " Setting entries directly manages nmcfg.
+    let before = getloclist(0)
+    call list._replace_qflist_entries(list.entries)
+    AssertEqual map(getloclist(0), 'v:val.text'), [
+    \ "e1 nmcfg:{'short': 'job1', 'name': 'job1'}",
+    \ 'e2',
+    \ "e3 nmcfg:{'short': 'job2', 'name': 'job2'}",
+    \ ]
+    bwipe
+  finally
+    call neomake#quickfix#disable()
+  endtry
+
+Execute (list: handles invalid errorformat):
+  Save &errorformat
+  new
+
+  " NOTE: needs to be global for lgetexpr.
+  set errorformat=foo:%m:%l
+
+  let jobinfo = NeomakeTestsFakeJobinfo()
+  let make_info = neomake#GetStatus().make_info[-42]
+  let w:neomake_make_ids = [-42]
+
+  let list = neomake#list#ListForMake(make_info)
+
+  let jobinfo.maker.errorformat = ['invalid']
+  call list.add_lines_with_efm(['foo:msg:42'], jobinfo)
+  if has('patch-8.0.1040')
+    AssertNeomakeMessage "Failed to get items via efm-parsing. Invalid errorformat? (['invalid'])", 0, jobinfo
+  else
+    AssertNeomakeMessage "\\VFailed to set errorformat (['invalid']): \\.\\*", 0, jobinfo
+  endif
+
+  " Falls back to default errorformat.
+  AssertEqual map(getloclist(0), '[v:val.text, v:val.lnum]'), [['msg', 42]]
+  bwipe
+
+Execute (list: can reuse location list):
+  " Not really used (automake uses location lists), but can be covered.
+  let jobinfo = NeomakeTestsFakeJobinfo()
+  let make_info = neomake#GetStatus().make_info[-42]
+  let make_info.options.file_mode = 1
+  let list = neomake#list#ListForMake(make_info)
+
+  new
+  let w:neomake_make_ids = [-42]
+
+  call list._call_qf_fn('set', [{'text': 'e1', 'lnum': 1, 'bufnr': bufnr('%')}], ' ')
+  AssertEqual map(getloclist(0), 'v:val.text'), ['e1']
+
+  let list = neomake#list#ListForMake(make_info)
+  " let list.need_init = 1
+  let list.reset_existing_qflist = 1
+  call list._call_qf_fn('set', [{'text': 'e2', 'lnum': 1, 'bufnr': bufnr('%')}], ' ')
+  AssertEqual map(getloclist(0), 'v:val.text'), ['e2']
+
+  AssertNeomakeMessage 'Reusing location list for entries.'
+  AssertNeomakeMessage '\V\^list: call: set: [0, [\.\*], ''r'''
+  bwipe
+
+Execute (list: can reuse quickfix list):
+  " Not really used (automake uses location lists), but can be covered.
+  let jobinfo = NeomakeTestsFakeJobinfo()
+  let make_info = neomake#GetStatus().make_info[-42]
+  let make_info.options.file_mode = 0
+  let list = neomake#list#ListForMake(make_info)
+  AssertEqual list.type, 'quickfix'
+
+  call list._call_qf_fn('set', [{'text': 'e1', 'lnum': 1, 'bufnr': bufnr('%')}], ' ')
+  AssertEqual map(getqflist(), 'v:val.text'), ['e1']
+
+  let list.need_init = 1
+  let list.reset_existing_qflist = 1
+  call list._call_qf_fn('set', [{'text': 'e2', 'lnum': 1, 'bufnr': bufnr('%')}], ' ')
+  AssertEqual map(getqflist(), 'v:val.text'), ['e2']
+
+  AssertNeomakeMessage 'Reusing quickfix list for entries.'
+  AssertNeomakeMessage '\V\^list: call: set: [[\.\*], ''r'''
+
+Execute (list: reused with automake (qflist)):
+  if !has('patch-7.4.2200')
+    NeomakeTestsSkip 'only with title support.'
+  else
+    Save g:neomake_enabled_makers
+    let g:neomake_enabled_makers = [g:true_maker]
+
+    " Simulate previous automake run.
+    " (file_mode=0 should look at quickfix title only)
+    call setloclist(0, [], ' ', {'title': 'Neomake[auto]'})
+
+    augroup neomake_tests
+      au CursorHold * Neomake!
+    augroup END
+    doautocmd CursorHold
+    NeomakeTestsWaitForFinishedJobs
+    copen
+    " Does not use "auto" by default, even though triggered through autocommand.
+    " (apparently since `expand('<abuf>')` is empty in tests).
+    AssertEqual w:quickfix_title, 'Neomake[project]: true-maker✓'
+
+    " Uses "auto" with options.automake.
+    wincmd p
+    call neomake#Make({'file_mode': 0, 'enabled_makers': [g:true_maker], 'automake': 1})
+    NeomakeTestsWaitForFinishedJobs
+    copen
+    AssertEqual w:quickfix_title, 'Neomake[auto]: true-maker✓'
+
+    " Re-uses list with "auto" in qf title.
+    wincmd p
+    call neomake#Make({'file_mode': 0, 'enabled_makers': [g:true_maker], 'automake': 1})
+    NeomakeTestsWaitForFinishedJobs
+    copen
+    Assert w:quickfix_title =~# '\V:\?Neomake[auto]', 'unexpected title: '.w:quickfix_title
+    AssertNeomakeMessage 'Reusing quickfix list for entries.', 3
+
+    cclose
+  endif

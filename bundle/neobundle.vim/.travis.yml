@@ -1,0 +1,13 @@
+language: viml
+
+sudo: false
+
+before_script:
+    - vim --version
+    - git clone https://github.com/syngan/vim-vimlint /tmp/vim-vimlint
+    - git clone https://github.com/ynkdir/vim-vimlparser /tmp/vim-vimlparser
+    - git clone https://github.com/thinca/vim-themis
+
+script:
+    - sh /tmp/vim-vimlint/bin/vimlint.sh -l /tmp/vim-vimlint -p /tmp/vim-vimlparser -e EVL103=1 -e EVL102.l:_=1 autoload
+    - make test

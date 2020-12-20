@@ -3,7 +3,7 @@ title:  "Development"
 description: "General contributing guidelines and changelog of SpaceVim, including development information about SpaceVim"
 ---
 
-# Development guidelines
+# [Home](../) >> Development
 
 <!-- vim-markdown-toc GFM -->
 
@@ -26,6 +26,7 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
       - [Language specified key bindings](#language-specified-key-bindings)
     - [Contributing a banner](#contributing-a-banner)
 - [Build with SpaceVim](#build-with-spacevim)
+- [Newsletters](#newsletters)
 - [Changelog](#changelog)
 
 <!-- vim-markdown-toc -->
@@ -179,7 +180,7 @@ The file header for Vim script should look like the following template:
 ```vim
 "=============================================================================
 " FILENAME --- NAME layer file for SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -321,6 +322,18 @@ markdown
 [![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
 ```
 
+## Newsletters
+
+<ul>
+    {% for post in site.categories.newsletter %}
+            <li>
+               <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+               <span class="post-date">{{ post.date | date_to_string }}</span>
+               <p>{{ post.description | truncatewords: 100 }}</p>
+            </li>
+    {% endfor %}
+</ul>
+
 ## Changelog
 
 <ul>
@@ -328,7 +341,7 @@ markdown
             <li>
                <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
                <span class="post-date">{{ post.date | date_to_string }}</span>
-               <p>{{ post.excerpt | truncatewords: 100 }}</p>
+               <p>{{ post.description | truncatewords: 100 }}</p>
             </li>
     {% endfor %}
 </ul>

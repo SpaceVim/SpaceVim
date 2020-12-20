@@ -1,0 +1,29 @@
+snippet     helloworld
+options     head
+  package ${1:com.github.ujihisa}
+
+  class ${2:TARGET} {
+    public static void main(String[] args) {
+      println("Hello world!")
+    }
+  }
+
+snippet     gradle
+options     head
+  apply plugin: 'groovy'
+  apply plugin: 'maven'
+
+  repositories {
+      mavenCentral()
+      ${2:mavenLocal()}
+  }
+
+  dependencies {
+      compile 'org.codehaus.groovy:groovy-all:2.1.1'
+      //testCompile group: 'junit', name: 'junit', version: '4.+'
+  }
+
+  jar {
+      from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+  manifest.mainAttributes("Main-Class": "${1:com.github.`$USER`.}")

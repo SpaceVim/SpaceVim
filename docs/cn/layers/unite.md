@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim unite 模块"
 description: "这一模块为 SpaceVim 提供以 Unite 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> unite

@@ -8,11 +8,10 @@ description: "This layer is for Python development, provide autocompletion, synt
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Features](#features)
-- [Install](#install)
-  - [enable layer](#enable-layer)
-  - [language tools](#language-tools)
-- [Configuration](#configuration)
+- [Installation](#installation)
+  - [Enable language layer](#enable-language-layer)
+  - [Language tools](#language-tools)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Jump to definition](#jump-to-definition)
   - [Code generation](#code-generation)
@@ -29,95 +28,119 @@ description: "This layer is for Python development, provide autocompletion, synt
 
 This layer is for Python development.
 
-## Features
+## Installation
 
-- Auto-completion using [deoplete-jedi](https://github.com/zchee/deoplete-jedi) or [jedi-vim](https://github.com/davidhalter/jedi-vim)
-- Documentation Lookup using [jedi-vim](https://github.com/davidhalter/jedi-vim)
+### Enable language layer
 
-## Install
-
-### enable layer
-
-To use this configuration layer, add following snippet to your custom configuration file.
+The `lang#python` layer is not loaded by default, to use this layer,
+you need to add following snippet into your spacevim configuration file.
 
 ```toml
 [[layers]]
   name = "lang#python"
 ```
 
-### language tools
+### Language tools
 
-**syntax checking:**
+- **syntax checking:**
 
-`checker` layer provide syntax checking feature, and for Python it uses `flake8` package:
+  `checker` layer provide syntax checking feature, and for Python it uses `pylint` package:
 
-```sh
-pip install --user flake8
-```
+  ```sh
+  pip install --user pylint
+  ```
 
-**code formatting:**
+- **code formatting:**
 
-The default key binding for formatting buffer is `SPC b f`,
-and you need to install `yapf`.
-To enable automatic buffer formatting on save,
-load this layer with setting `format_on_save` to `1`.
+  The default key binding for formatting buffer is `SPC b f`,
+  and you need to install `yapf`.
 
-```toml
-[[layers]]
-  name = "lang#python"
-  format_on_save = 1
-```
+  ```sh
+  pip install --user yapf
+  ```
 
-```sh
-pip install --user yapf
-```
+  To use other tool as the format command, for example `black`,
+  change the neoformat option in bootstrap function.
 
-**format imports:**
+  ```viml
+  let g:neoformat_python_black = {
+      \ 'exe': 'black',
+      \ 'stdin': 1,
+      \ 'args': ['-q', '-'],
+      \ }
+  let g:neoformat_enabled_python = ['black']
+  ```
 
-To be able to suppress unused imports easily, install [autoflake](https://github.com/myint/autoflake):
+- **code formatting:**
 
-```sh
-pip install --user autoflake
-```
+  The default formatter for python is [yapf](https://github.com/google/yapf).
 
-To be able to sort your imports, install [isort](https://github.com/timothycrosley/isort)
+  ```
+  pip install --user yapf
+  ```
 
-```sh
-pip install --user isort
-```
+  To be able to suppress unused imports easily, install [autoflake](https://github.com/myint/autoflake):
 
-**code coverage:**
+  ```
+  pip install --user autoflake
+  ```
 
-To be able to show code coverage, install coverage.py
+  To be able to sort your imports, install [isort](https://github.com/timothycrosley/isort)
 
-```sh
-pip install --user coverage
-```
+  ```
+  pip install --user isort
+  ```
 
-## Configuration
+- **code coverage:**
 
-By default, when create a new python file, SpaceVim will insert file head automatically.
-to change the file head, use `python_file_head` option:
+  To be able to show code coverage, install coverage.py
 
-```toml
-[[layers]]
-  name = "lang#python"
-  python_file_head = [
-      '#!/usr/bin/env python',
-      '# -*- coding: utf-8 -*-',
-      '',
-      ''
-  ]
-```
+  ```
+  pip install --user coverage
+  ```
 
-When enable autocomplete layer, the symbol will be complete automatically. By default the type info
-is disabled, because it is too slow. To enable type info:
+## Layer options
 
-```toml
-[[layers]]
-  name = "lang#python"
-  enable_typeinfo = true
-```
+- `python_file_head`: Default file head when create new python file.
+
+  By default, when create a new python file, SpaceVim will insert file head automatically.
+  to change the file head, use `python_file_head` option:
+
+  ```toml
+  [[layers]]
+    name = "lang#python"
+    python_file_head = [
+        '#!/usr/bin/env python',
+        '# -*- coding: utf-8 -*-',
+        '',
+        ''
+    ]
+  ```
+
+  When enable autocomplete layer, the symbol will be complete automatically. By default the type info
+  is disabled, because it is too slow. To enable type info:
+
+  ```toml
+  [[layers]]
+    name = "lang#python"
+    enable_typeinfo = true
+  ```
+
+- `format_on_save`: Enable/disabled file formatting when saving current python file. By default,
+  it is disabled, to enable it:
+  ```toml
+  [[layers]]
+      name = 'lang#python'
+      format_on_save = true
+  ```
+
+* `python_interpreter`: Set the python interpreter, by default, it is `python3`. The value of this option will
+  be apply to `g:neomake_python_python_exe` and code runner.
+  ```toml
+  [[layers]]
+      name = 'lang#python'
+      python_interpreter = 'D:\scoop\shims\python.exe'
+  ```
 
 ## Key bindings
 
@@ -144,11 +167,17 @@ is disabled, because it is too slow. To enable type info:
 
 ### Text objects and motions
 
-This layer contains vim-pythonsense which provides text objects and motions for Python classes, methods, functions, and doc strings.
+This layer contains [vim-pythonsense](https://github.com/jeetsukumaran/vim-pythonsense)
+which provides text objects and motions for Python classes, methods, functions, and doc strings.
 
-| Text Objects | Descriptions             |
-| ------------ | ------------------------ |
-| `ac`         | Outer class text object. |
+| Text Objects | Descriptions                |
+| ------------ | --------------------------- |
+| `ac`         | Outer class text object     |
+| `ic`         | Inner class text object     |
+| `af`         | Inner function text object  |
+| `if`         | Inner function text object  |
+| `ad`         | Inner docstring text object |
+| `id`         | Inner docstring text object |
 
 ### Inferior REPL process
 

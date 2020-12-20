@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim ctrlp 模块"
 description: "这一模块为 SpaceVim 提供以 ctrlp 为核心的模糊查找机制，支持模糊搜索文件、历史记录、函数列表等。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> ctrlp

@@ -1,0 +1,106 @@
+include c.snip
+
+# #include <...>
+snippet inc
+options     head
+alias   #inc, #include
+    #include <${1:iostream}>${0}
+# #include "..."
+snippet inc2
+options     head
+alias   #inc2, #include2
+    #include "${1}"${0}
+
+snippet     template
+abbr        template <T>
+    template<typename ${1:T}> ${0}
+
+snippet     class
+options     head
+abbr        class {}
+    class ${1:#:name} {
+        ${2}
+    public:
+        $1(${3});
+    };
+    $1::$1($3) {
+        ${0:TARGET}
+    }
+
+snippet     class-without-constructor
+options     head
+abbr        class {}
+    class ${1:#:name} {
+        ${2}
+    };
+
+snippet     try
+options     head
+abbr        try catch
+    try {
+        ${1:#:TARGET}
+    } catch (${2:...}) {
+        ${3}
+    }
+
+# range based for ( C++11 feature )
+snippet     for_CPP11
+options     head
+abbr        for (:) {}
+    for (${1:auto&& }${2:var} : ${3:container}) {
+        ${0:TARGET}
+    }
+
+# lambda expression ( C++11 feature )
+snippet     lambda
+abbr        [](){}
+    [${1}](${2})${3}{ ${4:TARGET} }${0:;}
+
+# scoped enumeration ( C++11 feature )
+snippet     enum_scoped
+options     head
+abbr        enum struct {};
+    enum struct ${1:#:name} { ${2:#:TARGET} };
+
+# static assert ( C++11 feature )
+snippet     static_assert
+abbr        static_assert(,"")
+    static_assert( ${1}, "${2}" );${0}
+
+delete      namespace
+options     head
+snippet     namespace
+abbr        namespace {}
+    namespace ${1:#:name} {
+        ${0:TARGET}
+    } // namespace $1
+
+snippet     static_cast
+abbr        static_cast<>()
+    static_cast<${1}>(${2})${0}
+
+snippet     reinterpret_cast
+abbr        reinterpret_cast<>()
+    reinterpret_cast<${1}>(${2})${0}
+
+snippet     const_cast
+abbr        const_cast<>()
+    const_cast<${1}>(${2})${0}
+
+snippet     dynamic_cast
+abbr        dynamic_cast<>()
+    dynamic_cast<${1}>(${2})${0}
+
+snippet     helloworld
+abbr        #include<iostream> int main...
+    #include <iostream>
+
+    int main(int argc, char const* argv[])
+    {
+        std::cout << "hello, world!" << std::endl;
+        return 0;
+    }
+
+snippet     p
+options     head
+  std::cout << ${0:TARGET} << std::endl;

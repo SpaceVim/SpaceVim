@@ -1,6 +1,6 @@
 "=============================================================================
 " defx.vim --- defx configuration
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -14,7 +14,20 @@ else
   let s:direction = 'leftabove'
 endif
 
+function! s:setcolum() abort
+  if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_vimfiler_gitstatus
+    return 'indent:icons:filename:type'
+  elseif !g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+    return 'indent:git:filename:type'
+  elseif g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+    return 'indent:git:icons:filename:type'
+  else
+    return 'mark:indent:icon:filename:type'
+  endif
+endfunction
+
 call defx#custom#option('_', {
+      \ 'columns': s:setcolum(),
       \ 'winwidth': g:spacevim_sidebar_width,
       \ 'split': 'vertical',
       \ 'direction': s:direction,
@@ -30,8 +43,8 @@ call defx#custom#column('mark', {
       \ })
 
 call defx#custom#column('icon', {
-      \ 'directory_icon': '',
-      \ 'opened_icon': '',
+      \ 'directory_icon': '▶',
+      \ 'opened_icon': '▼',
       \ 'root_icon': ' ',
       \ })
 
@@ -123,6 +136,8 @@ function! s:defx_init()
         \ defx#do_action('drop', 'tabedit')
   nnoremap <silent><buffer><expr> p
         \ defx#do_action('open', 'pedit')
+  nnoremap <silent><buffer><expr> K
+        \ defx#do_action('new_directory')
   nnoremap <silent><buffer><expr> N
         \ defx#do_action('new_file')
   nnoremap <silent><buffer><expr> d
@@ -132,6 +147,8 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
   nnoremap <silent><buffer><expr> .
         \ defx#do_action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> <C-f>
+        \ defx#do_action('change_filtered_files')
   nnoremap <silent><buffer><expr> ~
         \ defx#do_action('cd')
   nnoremap <silent><buffer><expr> j
