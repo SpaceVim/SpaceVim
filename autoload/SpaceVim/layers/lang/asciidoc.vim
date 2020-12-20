@@ -27,6 +27,9 @@ endf
 
 
 function! SpaceVim#layers#lang#asciidoc#config() abort
+
+  call SpaceVim#mapping#space#regesit_lang_mappings('asciidoc', function('s:language_specified_mappings'))
+
   " tagbar configuration
   "
   let ctags_version = system('ctags --version')
@@ -46,7 +49,17 @@ function! SpaceVim#layers#lang#asciidoc#config() abort
           \ 'sort' : 0
           \ }
   endif
+
 endfunction
+function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','h'],
+        \ 'call call('
+        \ . string(function('s:compile_to_html')) . ', [])',
+        \ 'compile-to-html', 1)
+endfunction
+
+
+" https://asciidoctor.org/docs/editing-asciidoc-with-live-preview/
 
 " https://asciidoctor.org/docs/editing-asciidoc-with-live-preview/
 " VimRegStyle based on https://github.com/Raimondi/VimRegStyle/commit/771e32e659b345cf29993d517e08b6b3f741f9c6
