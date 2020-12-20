@@ -112,7 +112,7 @@ function! s:start_parser(key, dict) abort " {{{
   if a:key ==# '[KEYs]'
     return
   endif
-  let key = a:key ==? g:spacevim_default_custom_leader ? ' ' : a:key
+  let key = a:key ==? ' ' ? '<Space>' : a:key
 
   0verbose let readmap = s:CMP.execute('map ' . key, 'silent')
 

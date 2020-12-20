@@ -34,8 +34,10 @@ function! SpaceVim#mapping#space#init() abort
   if s:has_map_to_spc()
     return
   endif
-  nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide g:spacevim_default_custom_leader<CR>
-  vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual g:spacevim_default_custom_leader<CR>
+  if g:spacevim_default_custom_leader ==# '<Space>'
+    nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide ' '<CR>
+    vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual ' '<CR>
+  endif
   exe printf('nmap %s [SPC]', g:spacevim_default_custom_leader)
   exe printf('vmap %s [SPC]', g:spacevim_default_custom_leader)
   if !g:spacevim_vimcompatible && g:spacevim_enable_language_specific_leader
