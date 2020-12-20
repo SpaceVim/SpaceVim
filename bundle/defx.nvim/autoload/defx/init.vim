@@ -16,6 +16,7 @@ function! defx#init#_initialize() abort
   augroup END
 
   let g:defx#_histories = []
+  let g:defx#_previewed_buffers = {}
 endfunction
 function! defx#init#_channel() abort
   if !has('python3')
@@ -23,12 +24,12 @@ function! defx#init#_channel() abort
           \ 'defx requires Python3 support("+python3").')
     return v:true
   endif
-  if has('nvim') && !has('nvim-0.3.0')
-    call defx#util#print_error('defx requires nvim 0.3.0+.')
+  if has('nvim') && !has('nvim-0.4.0')
+    call defx#util#print_error('defx requires nvim 0.4.0+.')
     return v:true
   endif
-  if !has('nvim') && v:version < 801
-    call defx#util#print_error('defx requires Vim 8.1+.')
+  if !has('nvim') && !defx#util#has_textprop()
+    call defx#util#print_error('defx requires Vim 8.2+ with textprop.')
     return v:true
   endif
 
@@ -95,25 +96,32 @@ function! defx#init#_user_options() abort
         \ 'auto_cd': v:false,
         \ 'auto_recursive_level': 0,
         \ 'buffer_name': 'default',
+        \ 'close': v:false,
         \ 'columns': 'mark:indent:icon:filename:type',
         \ 'direction': '',
+        \ 'filtered_files': '',
+        \ 'floating_preview': v:false,
+        \ 'focus': v:true,
         \ 'ignored_files': '.*',
         \ 'listed': v:false,
         \ 'new': v:false,
+        \ 'preview_height': &previewheight,
+        \ 'preview_width': 40,
         \ 'profile': v:false,
         \ 'resume': v:false,
-        \ 'root_marker': '[in]: ',
+        \ 'root_marker': '[in] ',
         \ 'search': '',
         \ 'session_file': '',
         \ 'show_ignored_files': v:false,
-        \ 'split': 'no',
         \ 'sort': 'filename',
+        \ 'split': 'no',
         \ 'toggle': v:false,
         \ 'wincol': &columns / 4,
         \ 'winheight': 30,
         \ 'winrelative': 'editor',
         \ 'winrow': &lines / 3,
         \ 'winwidth': 90,
+        \ 'vertical_preview': v:false,
         \ }
 endfunction
 function! s:internal_options() abort

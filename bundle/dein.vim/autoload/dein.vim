@@ -189,7 +189,7 @@ function! dein#disable(names) abort
   return dein#util#_disable(a:names)
 endfunction
 function! dein#config(arg, ...) abort
-  return type(a:arg) != v:t_list ?
+  return type(a:arg) != 3 ?
         \ dein#util#_config(a:arg, get(a:000, 0, {})) :
         \ map(copy(a:arg), 'dein#util#_config(v:val, a:1)')
 endfunction

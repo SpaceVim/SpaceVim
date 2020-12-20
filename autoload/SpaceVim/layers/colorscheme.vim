@@ -1,6 +1,6 @@
 "=============================================================================
 " colorscheme.vim --- SpaceVim colorscheme layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -66,6 +66,7 @@ let s:cs = [
 let s:NUMBER = SpaceVim#api#import('data#number')
 
 let s:time = {
+      \ 'everytime' : 1,
       \ 'daily' : 1 * 24 * 60 * 60 * 1000,
       \ 'hourly' : 1 * 60 * 60 * 1000,
       \ 'weekly' : 7 * 24 * 60 * 60 * 1000,
@@ -78,6 +79,7 @@ endfor
 unlet s:n
 
 let s:random_colorscheme = 0
+let s:random_candidates = s:cs
 let s:random_frequency = ''
 let s:bright_statusline = 0
 
@@ -93,16 +95,17 @@ function! SpaceVim#layers#colorscheme#config() abort
       let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequence.json'), ''), ''))
       if s:random_frequency !=# '' && !empty(conf)
         let ctime = localtime()
-        if ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'fequecnce', ''), 0)
-          let id = s:NUMBER.random(0, len(s:cs))
-          let g:spacevim_colorscheme = s:cs[id]
+        if index(s:random_candidates, get(conf, 'theme', '')) == -1 ||
+              \ ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'fequecnce', ''), 0)
+          let id = s:NUMBER.random(0, len(s:random_candidates))
+          let g:spacevim_colorscheme = s:random_candidates[id]
           call s:update_conf()
         else
           let g:spacevim_colorscheme = conf.theme
         endif
       else
-        let id = s:NUMBER.random(0, len(s:cs))
-        let g:spacevim_colorscheme = s:cs[id]
+        let id = s:NUMBER.random(0, len(s:random_candidates))
+        let g:spacevim_colorscheme = s:random_candidates[id]
       endif
     else
       if s:random_frequency !=# ''
@@ -127,6 +130,7 @@ endfunction
 
 function! SpaceVim#layers#colorscheme#set_variable(var) abort
   let s:random_colorscheme = get(a:var, 'random_theme', get(a:var, 'random-theme', 0))
+  let s:random_candidates = get(a:var, 'random_candidates', get(a:var, 'random-candidates', s:cs))
   let s:random_frequency = get(a:var, 'frequency', 'hourly')
   let s:bright_statusline = get(a:var, 'bright_statusline', 0)
 endfunction

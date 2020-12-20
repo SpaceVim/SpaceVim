@@ -1,6 +1,6 @@
 "=============================================================================
 " fzf.vim --- fzf layer for SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -282,9 +282,8 @@ function! s:file_mru() abort
     return neomru#_gather_file_candidates()
   endfunction
   call fzf#run(s:wrap('mru', {
-        \ 'source':  reverse(<sid>mru_files()),
+        \ 'source':  <sid>mru_files(),
         \ 'sink':    function('s:open_file'),
-        \ 'options': '--reverse',
         \ 'down' : '40%',
         \ }))
 endfunction

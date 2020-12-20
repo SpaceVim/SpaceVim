@@ -325,9 +325,9 @@ function! s:_put_dict(dict, key, value) abort
 
   let ref = a:dict
   for key in keys[ : -2]
-    if has_key(ref, key) && type(ref[key]) == v:t_dict
+    if has_key(ref, key) && type(ref[key]) == 4
       let ref = ref[key]
-    elseif has_key(ref, key) && type(ref[key]) == v:t_list
+    elseif has_key(ref, key) && type(ref[key]) == 3
       let ref = ref[key][-1]
     else
       let ref[key] = {}
@@ -345,7 +345,7 @@ function! s:_put_array(dict, key, value) abort
   for key in keys[ : -2]
     let ref[key] = get(ref, key, {})
 
-    if type(ref[key]) == v:t_list
+    if type(ref[key]) == 3
       let ref = ref[key][-1]
     else
       let ref = ref[key]

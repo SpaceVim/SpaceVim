@@ -1,5 +1,5 @@
 ---
-title: "job api"
+title: "job API"
 description: "job API provides some basic functions for running a job"
 ---
 

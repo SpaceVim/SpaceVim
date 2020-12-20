@@ -4,7 +4,7 @@ description: "文件函数提供了基础的文件读写相关函数，兼容不
 lang: zh
 ---
 
-# [公共 API](../) >> file
+# [可用接口](../) >> file
 
 
 <!-- vim-markdown-toc GFM -->

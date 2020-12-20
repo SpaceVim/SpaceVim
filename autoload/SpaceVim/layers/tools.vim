@@ -1,10 +1,12 @@
 "=============================================================================
 " tools.vim --- SpaceVim tools layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#layers#tools#plugins() abort
   let plugins = []
@@ -13,7 +15,6 @@ function! SpaceVim#layers#tools#plugins() abort
   call add(plugins, ['lymslive/vnote',                   { 'depends' : 'vimloo', 'on_cmd' : ['NoteBook','NoteNew','NoteEdit', 'NoteList', 'NoteConfig', 'NoteIndex', 'NoteImport']}])
   call add(plugins, ['junegunn/rainbow_parentheses.vim', { 'merged' : 0}])
   call add(plugins, ['mbbill/fencview',                  { 'on_cmd' : 'FencAutoDetect'}])
-  call add(plugins, ['simnalamburt/vim-mundo',           { 'on_cmd' : 'MundoToggle'}])
   call add(plugins, ['wsdjeg/vim-cheat',                 { 'on_cmd' : 'Cheat'}])
   call add(plugins, ['wsdjeg/Mysql.vim',                 { 'on_cmd' : 'SQLGetConnection'}])
   call add(plugins, ['wsdjeg/SourceCounter.vim',         { 'on_cmd' : 'SourceCounter'}])
@@ -29,7 +30,6 @@ function! SpaceVim#layers#tools#plugins() abort
         \ 'BookmarkPrev',
         \ ],
         \ 'loadconf_before' : 1}])
-  let s:CMP = SpaceVim#api#import('vim#compatible')
   if s:CMP.has('python')
     call add(plugins, ['gregsexton/VimCalc', {'on_cmd' : 'Calc'}])
   elseif s:CMP.has('python3')
@@ -56,7 +56,6 @@ function! SpaceVim#layers#tools#config() abort
   nnoremap <silent> ma :<C-u>BookmarkShowAll<Cr>
   nnoremap <silent> mn :<C-u>BookmarkNext<Cr>
   nnoremap <silent> mp :<C-u>BookmarkPrev<Cr>
-  nnoremap <silent> <F7> :MundoToggle<CR>
   augroup rainbow_lisp
     autocmd!
     autocmd FileType lisp,clojure,scheme,racket,java RainbowParentheses

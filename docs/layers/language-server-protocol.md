@@ -72,6 +72,12 @@ To use this configuration layer, update custom configuration file with:
 
 ### Install language server
 
+Ada
+
+After installing AdaCore's GNAT Studio, add the directory containing ada_language_server to your PATH variable.
+For instance, if the GNAT Studio 2020 was installed, ada_language_server is present by default in
+`/opt/GNAT/2020/libexec/gnatstudio/als`.
+
 **Bash**
 
 ```sh
@@ -149,6 +155,7 @@ default language server commands:
 
 | language     | server command                                                                                                                                                                                   |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ada`        | `['ada_language_server']`                                                                                                                                                                                     |
 | `c`          | `['clangd']`                                                                                                                                                                                     |
 | `cpp`        | `['clangd']`                                                                                                                                                                                     |
 | `crystal`    | `['scry']`                                                                                                                                                                                       |

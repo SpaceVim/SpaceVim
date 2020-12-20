@@ -1,6 +1,6 @@
 "=============================================================================
 " csharp.vim --- SpaceVim lang#csharp layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: VyronLee < lwz_jz # hotmail.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -86,7 +86,7 @@ function! s:language_specified_mappings() abort
         \ 'OmniSharpFindImplementations',
         \ 'find implementations', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','g', 't'],
-        \ 'OmniSharpFindType',
+        \ 'OmniSharpTypeLookup',
         \ 'find type', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','g', 's'],
         \ 'OmniSharpFindSymbol',

@@ -2,6 +2,8 @@ Execute ( SpaceVim api: data#string ):
   let str = SpaceVim#api#import('data#string')
   Log 'test trim()'
   AssertEqual str.trim(' s b '), 's b'
+  Log 'test strcharpart()'
+  AssertEqual str.strcharpart('abcd', 1, 2), 'bc'
   Log 'test fill()'
   AssertEqual str.fill('s b', 10), 's b       '
   Log 'test fill() len < strlen'

@@ -1,6 +1,6 @@
 "=============================================================================
 " tab.vim --- tab key binding
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -21,7 +21,7 @@ if g:spacevim_snippet_engine ==# 'neosnippet'
       return "\<plug>(neosnippet_expand_or_jump)"
     elseif pumvisible()
       return "\<C-n>"
-    elseif complete_parameter#jumpable(1) && getline('.')[col('.')-2] !=# ')'
+    elseif has('patch-7.4.774') && complete_parameter#jumpable(1) && getline('.')[col('.')-2] !=# ')'
       return "\<plug>(complete_parameter#goto_next_parameter)"
     else
       return "\<tab>"

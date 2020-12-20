@@ -18,7 +18,6 @@ lang: zh
   - [交互式编程](#交互式编程)
   - [运行当前脚本](#运行当前脚本)
   - [代码格式化](#代码格式化)
-- [相关截图](#相关截图)
 
 <!-- vim-markdown-toc -->
 
@@ -80,17 +79,3 @@ pub global activate dart_repl
 | 快捷键      | 功能描述       |
 | ----------- | -------------- |
 | `SPC b f`   | 格式化当前文件 |
-
-## 相关截图
-
-**代码格式化：**
-
-![format-dart-file-in-spacevim](https://user-images.githubusercontent.com/13142418/34455939-b094db54-ed4f-11e7-9df0-80cf5de1128d.gif)
-
-**代码补全：**
-
-![complete-dart-in-spacevim](https://user-images.githubusercontent.com/13142418/34455816-ee77182c-ed4c-11e7-8f63-402849f60405.png)
-
-**异步执行：**
-
-![dart-runner-in-spacevim](https://user-images.githubusercontent.com/13142418/34455403-1f6d4c3e-ed44-11e7-893f-09a6e64e27ed.png)

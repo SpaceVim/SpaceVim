@@ -1,6 +1,6 @@
 *defx.txt*	Dark powered file explorer for neovim/Vim8.
 
-Version: 1.0
+Version: 2.0
 Author: Shougo <Shougo.Matsu at gmail.com>
 License: MIT license
 
@@ -29,7 +29,9 @@ INTRODUCTION						*defx-introduction*
 ==============================================================================
 INSTALL							*defx-install*
 
-Note: defx requires Neovim 0.3.0+ or Vim8.1+ with Python3.6.1+.
+Note: defx requires Neovim 0.4.0+ or Vim8.2+ with Python3.6.1+.
+
+Note: The latest Neovim is recommended, because it is faster.
 
 Please install nvim-yarp plugin for Vim8.
 https://github.com/roxma/nvim-yarp
@@ -233,6 +235,18 @@ cd 						*defx-action-cd*
 		Action args:
 			0. new current directory path
 
+change_filtered_files			*defx-action-change_filtered_files*
+		Change |defx-option-filtered-files| dynamically.
+
+		Action args:
+			0. filtered files pattern
+
+change_ignored_files			*defx-action-change_ignored_files*
+		Change |defx-option-ignored-files| dynamically.
+
+		Action args:
+			0. ignored files pattern
+
 change_vim_cwd					*change_vim_cwd*
 		Change current working directory to the current directory.
 		Note: It changes global current directory if the window has
@@ -343,6 +357,14 @@ paste							*defx-action-paste*
 		Note: It is used after |defx-action-copy| or
 		|defx-action-move|.
 
+preview							*defx-action-preview*
+		Preview the file.  Close the preview window if it is already
+		exists.
+		Note: "ueberzug" and "bash" commands are needed to preview
+		image files.
+		https://pypi.org/project/ueberzug/
+		Note: The image preview is for X11 only.
+
 print 						*defx-action-print*
 		Print the filename.
 
@@ -418,6 +440,9 @@ toggle_select_visual
 yank_path					*defx-action-yank_path*
 		Yank the all candidates path.
 
+		Action args:
+			0. |fnamemodify()| modifier(The default is "")
+
 ------------------------------------------------------------------------------
 OPTIONS							*defx-options*
 
@@ -425,7 +450,7 @@ OPTIONS							*defx-options*
 -no-{option-name}
 		Disable {option-name} flag.
 		Note: If you use both {option-name} and -no-{option-name} in
-		the same denite buffer, it is undefined.
+		the same defx buffer, it is undefined.
 
 							*defx-option-auto-cd*
 -auto-cd
@@ -446,6 +471,11 @@ OPTIONS							*defx-options*
 		Specify defx buffer name.
 		Default: "default"
 
+							*defx-option-close*
+-close
+		Close defx buffer window.
+		Default: false
+
 							*defx-option-columns*
 -columns={columns1:columns2,...}
 		Specify defx columns.
@@ -457,6 +487,29 @@ OPTIONS							*defx-options*
 		|defx-option-split| is set.
 		You can use "topleft" or "botright".
 		Default: ""
+
+						*defx-option-focus*
+-focus
+		Focus on the defx buffer after opening a defx buffer.
+
+		Default: true
+
+						*defx-option-filtered-files*
+-filtered-files={pattern}
+		Specify the filtered files pattern.
+		The pattern is comma separated.
+		Default: ""
+
+					*defx-option-floating-preview*
+-floating-preview
+		Open the preview window in floating window when
+		|defx-option-vertical-preview|.
+		Note: To use it, you need to use neovim
+		0.4.0+(|nvim_open_win()|).
+		Note: If you need the feature in Vim8, you should use
+		'previewpopup' instead.
+
+		Default: false
 
 						*defx-option-ignored-files*
 -ignored-files={pattern}
@@ -476,6 +529,19 @@ OPTIONS							*defx-options*
 
 		Default: false
 
+						*defx-option-preview-height*
+-preview-height={preview-height}
+		Specify the preview window height.
+
+		Default: 'previewheight'
+
+						*defx-option-preview-width*
+-preview-width={preview-width}
+		Specify the preview width when
+		|defx-option-vertical-preview|.
+
+		Default: 40
+
 							*defx-option-profile*
 -profile
 		Enable profile feature.
@@ -494,7 +560,7 @@ OPTIONS							*defx-options*
 -root-marker={marker}
 		Root marker.
 
-		Default: "[in]: "
+		Default: "[in] "
 
 							*defx-option-search*
 -search={path}
@@ -542,6 +608,11 @@ OPTIONS							*defx-options*
 							*defx-option-toggle*
 -toggle
 		Close defx buffer window if this defx window exists.
+		Default: false
+
+					*defx-option-vertical-preview*
+-vertical-preview
+		Open the preview window vertically.
 		Default: false
 
 						*defx-option-wincol*
@@ -704,7 +775,7 @@ EXAMPLES						*defx-examples*
 	  nnoremap <silent><buffer><expr> E
 	  \ defx#do_action('open', 'vsplit')
 	  nnoremap <silent><buffer><expr> P
-	  \ defx#do_action('open', 'pedit')
+	  \ defx#do_action('preview')
 	  nnoremap <silent><buffer><expr> o
 	  \ defx#do_action('open_tree', 'toggle')
 	  nnoremap <silent><buffer><expr> K
@@ -804,6 +875,12 @@ Q: I want to open file by double click.
 
 A: >
 	nnoremap <silent><buffer><expr> <2-LeftMouse> defx#do_action('open')
+
+
+Q: I want to separate defx state by tabs.
+
+A: >
+	Defx -buffer-name=`'defx' . tabpagenr()`
 
 ==============================================================================
 COMPATIBILITY						*defx-compatibility*

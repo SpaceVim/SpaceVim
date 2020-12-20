@@ -1,11 +1,17 @@
 Execute ( SpaceVim api: vim#highlight ):
   let hi = SpaceVim#api#import('vim#highlight')
-  set termguicolors
+  let cmp =SpaceVim#api#import('vim#compatible') 
   highlight TestAPIVimHighlight ctermfg=11 guifg=#89DDFF guibg=#212121
-
   let test_api_hi = hi.group2dict('TestAPIVimHighlight')
-  AssertEqual test_api_hi.guibg, '#212121'
-  AssertEqual test_api_hi.guifg, '#89ddff'
+  if !empty(test_api_hi.guifg)
+    Log test_api_hi
+    let id = hlID('TestAPIVimHighlight')
+    Log 'guifg is: ' . synIDattr(id, 'fg#', 'gui')
+    Log 'guibg is: ' . synIDattr(id, 'bg#', 'gui')
+    Log cmp.execute('hi TestAPIVimHighlight')
+    AssertEqual test_api_hi.guibg, '#212121'
+    AssertEqual test_api_hi.guifg, '#89ddff'
+  endif
   AssertEqual test_api_hi.ctermfg, '11'
 
   let unknown_hi = hi.group2dict('UnknownHighlightGroup')
@@ -18,3 +24,4 @@ Execute ( SpaceVim api: vim#highlight ):
   AssertEqual unknown_hi.underline, ''
   AssertEqual unknown_hi.guibg, ''
   AssertEqual unknown_hi.guifg, ''
+  unlet hi cmp test_api_hi unknown_hi

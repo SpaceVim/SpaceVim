@@ -1,7 +1,7 @@
 ---
 title: "Grep on the fly in SpaceVim"
 categories: [feature, blog]
-description: "Run grep asynchronously, show search results in real-time based on user input, support searching the entire project, searching loaded files or only searching current file"
+description: "Grep and replace asynchronously, display searching results on the fly based on user input"
 image: https://user-images.githubusercontent.com/13142418/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif
 commentsID: "Grep on the fly"
 comments: true
@@ -82,17 +82,19 @@ The available scopes and corresponding keys are:
 
 **Within FlyGrep buffer:**
 
-| Key Bindings      | Descriptions                      |
-| ----------------- | --------------------------------- |
-| `<Esc>`           | close FlyGrep buffer              |
-| `<Enter>`         | open file at the cursor line      |
-| `<Tab>`           | move cursor line down             |
-| `Ctrl-j`          | move cursor line down             |
-| `Shift-<Tab>`     | move cursor line up               |
-| `Ctrl-k`          | move cursor line up               |
-| `<Backspace>`     | remove last character             |
-| `Ctrl-w`          | remove the word before the cursor |
-| `Ctrl-u`          | remove the line before the cursor |
-| `Ctrl-k`          | remove the line after the cursor  |
-| `Ctrl-a`/`<Home>` | Go to the beginning of the line   |
-| `Ctrl-e`/`<End>`  | Go to the end of the line         |
+| Key Bindings        | Descriptions                       |
+| ------------------- | ---------------------------------- |
+| `<Esc>`             | close FlyGrep buffer               |
+| `<Enter>`           | open file at the cursor line       |
+| `Ctrl-t`            | open item in new tab               |
+| `Ctrl-s`            | open item in split window          |
+| `Ctrl-v`            | open item in vertical split window |
+| `Ctrl-q`            | apply all items into quickfix      |
+| `<Tab>`             | move cursor line down              |
+| `Shift-<Tab>`       | move cursor line up                |
+| `<BackSpace>`       | remove last character              |
+| `Ctrl-w`            | remove the Word before the cursor  |
+| `Ctrl-u`            | remove the Line before the cursor  |
+| `Ctrl-k`            | remove the Line after the cursor   |
+| `Ctrl-a` / `<Home>` | Go to the beginning of the line    |
+| `Ctrl-e` / `<End>`  | Go to the end of the line          |

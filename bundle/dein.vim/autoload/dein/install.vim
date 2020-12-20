@@ -597,7 +597,7 @@ function! s:lock_revision(process, context) abort
   if empty(cmd) || plugin.new_rev ==# get(plugin, 'rev', '')
     " Skipped.
     return 0
-  elseif type(cmd) == v:t_string && cmd =~# '^E: '
+  elseif type(cmd) == 1 && cmd =~# '^E: '
     " Errored.
     call s:error(plugin.path)
     call s:error(cmd[3:])
@@ -671,7 +671,7 @@ function! dein#install#_system(command) abort
   " let job = s:Job.start()
   " let exitval = job.wait()
 
-  if !has('nvim') && type(a:command) == v:t_list
+  if !has('nvim') && type(a:command) == 3
     " system() does not support List arguments in Vim.
     let command = s:args2string(a:command)
   else
@@ -936,7 +936,7 @@ function! s:init_variables(context) abort
 endfunction
 function! s:convert_args(args) abort
   let args = s:iconv(a:args, &encoding, 'char')
-  if type(args) != v:t_list
+  if type(args) != 3
     let args = split(&shell) + split(&shellcmdflag) + [args]
   endif
   return args
@@ -997,7 +997,7 @@ function! s:sync(plugin, context) abort
     return
   endif
 
-  if type(cmd) == v:t_string && cmd =~# '^E: '
+  if type(cmd) == 1 && cmd =~# '^E: '
     " Errored.
 
     call s:print_progress_message(s:get_plugin_message(
@@ -1239,7 +1239,7 @@ function! s:iconv(expr, from, to) abort
     return a:expr
   endif
 
-  if type(a:expr) == v:t_list
+  if type(a:expr) == 3
     return map(copy(a:expr), 'iconv(v:val, a:from, a:to)')
   else
     let result = iconv(a:expr, a:from, a:to)
@@ -1413,7 +1413,7 @@ function! s:strwidthpart_reverse(str, width) abort
 endfunction
 
 function! s:args2string(args) abort
-  return type(a:args) == v:t_string ? a:args :
+  return type(a:args) == 1 ? a:args :
         \ dein#util#_is_windows() ?
         \   dein#install#_args2string_windows(a:args) :
         \   dein#install#_args2string_unix(a:args)

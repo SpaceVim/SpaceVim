@@ -1,6 +1,6 @@
 "=============================================================================
 " statusline.vim --- SpaceVim statusline API
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -15,10 +15,12 @@ endif
 let s:self.__buffer = SpaceVim#api#import('vim#buffer')
 let s:self.__cmp = SpaceVim#api#import('vim#compatible')
 
-
 function! s:self.check_width(len, sec, winwidth) abort
   return a:len + self.len(a:sec) < a:winwidth
 endfunction
+
+let s:self.__winid = -1
+let s:self.__bufnr = -1
 
 function! s:self.len(sec) abort
   let str = matchstr(a:sec, '%{.*}')
@@ -98,11 +100,28 @@ function! s:self.support_float() abort
   return self.__floating.exists()
 endfunction
 
+if has('nvim')
+  function! s:self.opened() abort
+    return win_id2tabwin(self.__winid)[0] == tabpagenr()
+  endfunction
+else
+  function! s:self.opened() abort
+    "tabpage" will be -1 for a global popup, zero for a popup on
+    "the current tabpage and a positive number for a popup on
+    "another tabpage.
+    if exists('*popup_list')
+      return index(popup_list(), self.__winid) != -1
+    else
+      return index([-1, 0], get(popup_getoptions(self.__winid), 'tabpage', -2)) != -1
+    endif
+  endfunction
+endif
+
 function! s:self.open_float(st) abort
   if !has_key(self, '__bufnr') || !bufexists(self.__bufnr)
     let self.__bufnr = self.__buffer.bufadd('')
   endif
-  if has_key(self, '__winid') && win_id2tabwin(self.__winid)[0] == tabpagenr()
+  if has_key(self, '__winid') && self.opened()
   else
     let self.__winid = self.__floating.open_win(self.__bufnr,
           \ v:false,
@@ -143,16 +162,18 @@ function! s:self.open_float(st) abort
     endfor
   endif
   call setbufvar(self.__bufnr, '&modifiable', 0)
-  redraw!
+  return self.__winid
 endfunction
 
 if s:self.__floating.exists()
   function! s:self.close_float() abort
-    call self.__floating.win_close(self.__winid, 1)
+    if get(self, '__winid', -1) != -1
+      call self.__floating.win_close(self.__winid, 1)
+    endif
   endfunction
 else
   function! s:self.close_float() abort
-    if has_key(self, '__winid') && win_id2tabwin(self.__winid)[0] == tabpagenr()
+    if get(self, '__winid', -1) != -1 && win_id2tabwin(self.__winid)[0] == tabpagenr()
       noautocmd execute win_id2win(self.__winid).'wincmd w'
       noautocmd close
     endif

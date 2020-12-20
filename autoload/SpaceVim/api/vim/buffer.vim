@@ -1,6 +1,6 @@
 "=============================================================================
 " buffer.vim --- SpaceVim buffer API
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -63,7 +63,7 @@ endfunction
 function! s:self.bufadd(name) abort
   if exists('*bufadd')
     return bufadd(a:name)
-  elseif has('lua') && empty(a:name)
+  elseif get(g:, '_spacevim_if_lua', 0) && empty(a:name)
     let nr = float2nr(luaeval('vim.open().number'))
     call setbufvar(nr, '&buflisted', 0)
     return nr
@@ -149,11 +149,13 @@ if exists('*nvim_buf_line_count')
   function! s:self.line_count(buf) abort
     return nvim_buf_line_count(a:buf)
   endfunction
-elseif has('lua')
+elseif get(g:, '_spacevim_if_lua', 0)
+  " @vimlint(EVL103, 1, a:buf)
   function! s:self.line_count(buf) abort
     " lua numbers are floats, so use float2nr
     return float2nr(luaeval('#vim.buffer(vim.eval("a:buf"))'))
   endfunction
+  " @vimlint(EVL103, 0, a:buf)
 else
   function! s:self.line_count(buf) abort
     return len(getbufline(a:buf, 1, '$'))
@@ -232,9 +234,9 @@ if end_line < 0:
 lines = vim.eval("a:replacement")
 vim.buffers[bufnr][start_line:end_line] = lines
 EOF
-  elseif has('lua')
+  elseif get(g:, '_spacevim_if_lua', 0) == 1
     " @todo add lua support
-    noautocmd lua require("spacevim.api.vim.buffer").set_lines(
+    silent! noautocmd lua require("spacevim.api.vim.buffer").set_lines(
           \ vim.eval("a:buffer"),
           \ vim.eval("a:start"),
           \ vim.eval("a:end"),
@@ -272,6 +274,38 @@ function! s:self.displayArea() abort
   return [
         \ line('w0'), line('w$')
         \ ]
+endfunction
+
+function! s:self.add_highlight(bufnr, hl, line, col, long) abort
+  if exists('*nvim_buf_add_highlight')
+    call nvim_buf_add_highlight(a:bufnr, 0, a:hl, a:line, a:col, a:col + a:long)
+  else
+    call SpaceVim#logger#warn('vim#buffer.add_highlight api only support neovim', 0)
+  endif
+endfunction
+
+function! s:self.buf_get_lines(bufnr, start, end, strict_indexing) abort
+  if exists('*nvim_buf_get_lines')
+    return nvim_buf_get_lines(a:bufnr, a:start, a:end, a:strict_indexing)
+  elseif exists('*getbufline') && exists('*bufload') && exists('*bufloaded')
+    let lct = self.line_count(a:bufnr)
+    if a:start > lct
+      return
+    elseif a:start >= 0 && a:end > a:start
+      " in vim, getbufline will not load buffer automatically
+      " but in neovim, nvim_buf_set_lines will do it.
+      " @fixme vim issue #5044
+      " https://github.com/vim/vim/issues/5044
+      if !bufloaded(a:bufnr)
+        call bufload(a:bufnr)
+      endif
+      return getbufline(a:bufnr, a:start + 1, a:end)
+    elseif a:start >= 0 && a:end < 0 && lct + a:end >= a:start
+      return self.buf_get_lines(a:bufnr, a:start, lct + a:end + 1, a:strict_indexing)
+    elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
+      return self.buf_get_lines(a:bufnr, lct + a:start + 1, lct + a:end + 2, a:strict_indexing)
+    endif
+  endif
 endfunction
 
 

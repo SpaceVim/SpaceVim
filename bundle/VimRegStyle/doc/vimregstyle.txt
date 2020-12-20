@@ -1,0 +1,129 @@
+*vimregstyle.txt*	Extended regular expressions & pattern library
+
+
+			VIM REFERENCE MANUAL	by Barry Arthur
+
+
+Help on using vimregstyle                                        *vimregstyle*
+
+1. Introduction				|vimregstyle-intro|
+2. Functions				|vimregstyle-functions|
+3. Patterns				|vimregstyle-patterns|
+4. External Resources			|vimregstyle-resources|
+
+==============================================================================
+ 1. INTRODUCTION                                           *vimregstyle-intro*
+
+VimRegStyle is a Regular Expression Pattern Library and suite of
+utilities for operating on matches within text.
+
+==============================================================================
+ 2. FUNCTIONS                                          *vimregstyle-functions*
+
+VimRegStyle maintains an internal library of named patterns. This section
+details the public interface for that library.
+
+                                                             *vimregstyle-set*
+vrs#set({name}, {flavour}, {pattern})
+
+Used to add new patterns to the library. {flavour} should be either 'vim' or
+'pcre'. There is a single namespace per {flavour} for all VimRegStyle patterns
+and attempting to add a pattern with a name that already exists in the library
+will generate an error message like:
+
+	*Error*	VRS: A pattern of that flavour (vim) already exists under "ip4".
+
+NOTE: Casual users will almost never use the |vrs#set()| function. The better
+way to add patterns is through additions to the |vrs-files|. See
+|vimregstyle-contribute| for contributing patterns back to the library.
+
+                                                             *vimregstyle-get*
+vrs#get({name}[, {flavour}='vim')
+
+Get the pattern for the given {name} and {flavour} (defaulting to 'vim').
+
+
+                                                           *vimregstyle-match*
+vrs#match({string}, {named-pattern} [, {start}[, {count}]])
+
+Replica of builtin |match()| function.
+
+                                                        *vimregstyle-matchend*
+vrs#matchend({string}, {named-pattern} [, {start}[, {count}]])
+
+Replica of builtin |matchend()| function.
+
+                                                         *vimregstyle-matches*
+vrs#matches({string}, {named-pattern} [, {start}[, {count}]])
+
+Predicate returning true if {string} contains {named-pattern} anywhere within
+it. Anchoring to the start and end of the {string} will only occur if the
+{named-pattern} specifically includes the associated anchors. Use
+|vrs#exactly()| to force an anchored match.
+
+                                                         *vimregstyle-exactly*
+vrs#exactly({string}, {named-pattern} [, {start}[, {count}]])
+
+Predicate returning true if {string} exactly matches {named-pattern}. Use
+|vrs#matches()| to check if the {string} contains the {named-pattern} anywhere
+within the {string}.
+
+
+==============================================================================
+                                                                   *vrs-files*
+ 3. PATTERNS                                            *vimregstyle-patterns*
+
+The patterns are stored in {*.vrs} files within the plugin's
+{/patterns/} directory. The {.vrs} files have the following format:
+
+	name   flavour   pattern ~
+
+Where:~
+
+* {name} contains no whitespace and must not be preceded by whitespace
+* {flavour} can be {vim} or {pcre}
+* {pattern} is not delimited — use a bare regex
+
+The patterns are further enhanced in that they:
+
+* Accept PCRE style multiline, whitespace insensitive syntax. All multiline
+  patterns must commence on the line below the named entry and must be
+  indented with whitespace.
+
+* Accept a new regex atom: \%{name,count,separator} providing pattern
+  composition by inline-expanding the {name}d pattern at the current point in
+  the regex optionally {count} times, each one separated by {separator} (which
+  is a multicharacter string literal, not using regular syntax).
+
+Example:~
+
+Assuming the VRS library had a pattern called <_ip4_segment>
+that represented a single 0-255 chunk, an <ip4> regex could then be written
+using this composition atom as:
+>
+  ip4 vim \<\%{_ip4_segment,4,.}>
+<
+Which would concatenate four copies of the <_ip4_segment> partial pattern,
+each separated by the literal string '.'.
+
+------------------------------------------------------------------------------
+                                                      *vimregstyle-contribute*
+Pattern contributors can submit additional patterns to VimRegStyle through
+pull requests on the main Github repository:
+https://github.com/Raimondi/VimRegStyle
+
+Please ensure that all patterns are accompanied with tests. VimRegStyle uses
+the runVimTests (https://github.com/vim-scripts/runVimTests) unit testing
+framework.
+
+        *TODO*	Allow user-crafted patterns in a nominal directory (defaulting
+                to ~/.vim/patterns/ ?)
+
+==============================================================================
+ 4. EXTERNAL RESOURCES                                 *vimregstyle-resources*
+
+* http://www.regexlib.com/
+* http://www.programmersheaven.com/2/Regex
+* http://www.asiteaboutnothing.net/regex/
+
+ vim:tw=78:ts=8:ft=help:norl:
