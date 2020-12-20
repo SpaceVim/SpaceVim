@@ -1,6 +1,6 @@
 "=============================================================================
 " python.vim --- SpaceVim lang#python layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -14,6 +14,22 @@
 " >
 "   mode            key             function
 " <
+
+
+if exists('s:enabled_linters')
+  finish
+endif
+
+let s:enabled_linters = ['python', 'flake8']
+let s:format_on_save = 0
+let s:python_file_head = [
+      \ '#!/usr/bin/env python',
+      \ '# -*- coding: utf-8 -*-',
+      \ '',
+      \ ''
+      \ ]
+let s:enable_typeinfo = 0
+let s:python_interpreter = 'python3'
 
 function! SpaceVim#layers#lang#python#plugins() abort
   let plugins = []
@@ -73,6 +89,8 @@ function! SpaceVim#layers#lang#python#config() abort
   elseif executable('python')
     call SpaceVim#plugins#repl#reg('python', ['python', '-i'])
   endif
+  let g:neomake_python_enabled_makers = ['python']
+  let g:neomake_python_python_exe = s:python_interpreter
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -138,10 +156,10 @@ function! s:language_specified_mappings() abort
 
   " Format on save
   if s:format_on_save
-    augroup SpaceVim_layer_lang_python
-      autocmd!
-      autocmd BufWritePre *.py undojoin | Neoformat
-    augroup end
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'python',
+          \ 'enable' : 1,
+          \ })
   endif
 
 endfunction
@@ -158,7 +176,7 @@ func! s:getexe() abort
   if line =~# '^#!'
     return s:Shebang_to_cmd(line)
   endif
-  return ['python']
+  return [s:python_interpreter]
 endf
 
 function! s:go_to_def() abort
@@ -169,16 +187,7 @@ function! s:go_to_def() abort
   endif
 endfunction
 
-let s:format_on_save = 0
-let s:python_file_head = [
-      \ '#!/usr/bin/env python',
-      \ '# -*- coding: utf-8 -*-',
-      \ '',
-      \ ''
-      \ ]
-let s:enable_typeinfo = 0
 function! SpaceVim#layers#lang#python#set_variable(var) abort
-
   let s:format_on_save = get(a:var,
         \ 'format_on_save',
         \ get(a:var,
@@ -192,5 +201,13 @@ function! SpaceVim#layers#lang#python#set_variable(var) abort
   let s:enable_typeinfo = get(a:var,
         \ 'enable_typeinfo',
         \ s:enable_typeinfo
+        \ )
+  let s:enabled_linters = get(a:var,
+        \ 'enabled_linters',
+        \ s:enabled_linters
+        \ )
+  let s:python_interpreter = get(a:var,
+        \ 'python_interpreter',
+        \ s:python_interpreter
         \ )
 endfunction

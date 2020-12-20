@@ -1,0 +1,307 @@
+Include: include/setup.vader
+
+Execute (neomake#config#get: basic):
+  new
+
+  let maker = {'foo': 'maker'}
+  let jobinfo = {'maker': maker, 'bufnr': bufnr('%')}
+
+  AssertEqual neomake#config#get('foo', 'default'), 'default'
+  let g:neomake = {}
+  AssertEqual neomake#config#get('foo', 'default'), 'default'
+  let g:neomake = {'foo': 'global'}
+  AssertEqual neomake#config#get('foo', 'default'), 'global'
+  AssertEqual neomake#config#get('b:foo', 'default'), 'default'
+  let b:neomake = {}
+  AssertEqual neomake#config#get('foo', 'default'), 'global'
+  AssertEqual neomake#config#get('b:foo', 'default'), 'default'
+  AssertEqual neomake#config#get('b:foo', 'default', jobinfo), 'maker'
+  let b:neomake = {'foo': 'buffer'}
+  AssertEqual neomake#config#get('foo', 'default'), 'buffer'
+  AssertEqual neomake#config#get('b:foo', 'default'), 'buffer'
+  AssertEqual neomake#config#get('b:foo', 'default', jobinfo), 'buffer'
+
+  AssertEqual neomake#config#get('foo', 'default', jobinfo), 'buffer'
+  new
+  AssertEqual neomake#config#get('foo', 'default', jobinfo), 'buffer'
+  wincmd p
+  unlet b:neomake
+  AssertEqual neomake#config#get('foo', 'default', jobinfo), 'global'
+  wincmd p
+  AssertEqual neomake#config#get('foo', 'default', jobinfo), 'global'
+  unlet g:neomake
+  AssertEqual neomake#config#get('foo', 'default', jobinfo), 'maker'
+  let jobinfo.maker = {}
+  AssertEqual neomake#config#get('foo', 'default', jobinfo), 'default'
+  bwipe
+  bwipe
+
+Execute (neomake#config#get/set support list for name):
+  new
+  call neomake#config#set_buffer(bufnr('%'), ['ft', 'javascript.jsx', 'eslint', 'exe'], 'my_eslint')
+  AssertEqual b:neomake, {'ft': {'javascript.jsx': {'eslint': {'exe': 'my_eslint'}}}}
+
+  noautocmd set filetype=javascript.jsx
+  AssertEqual neomake#config#get('eslint.exe', 'default'), 'my_eslint'
+  AssertEqual neomake#config#get('eslint.exe', 'default', {}), 'default'
+  AssertNeomakeMessage "Using setting eslint.exe='my_eslint' from 'buffer' (prefix: ['ft', 'javascript.jsx'])."
+
+  AssertEqual neomake#config#get(['eslint', 'exe'], 'default'), 'my_eslint'
+  AssertNeomakeMessage "Using setting eslint.exe='my_eslint' from 'buffer' (prefix: ['ft', 'javascript.jsx'])."
+  AssertEqual neomake#config#get(['ft', 'javascript.jsx', 'eslint', 'exe'], 'default', {'bufnr': bufnr('%')}), 'my_eslint'
+  AssertNeomakeMessage "Using setting ft.javascript|jsx.eslint.exe='my_eslint' from 'buffer'."
+  bwipe
+
+Execute (neomake#config#get with filetypes):
+  new
+  set filetype=myft
+
+  AssertEqual neomake#config#get('foo', []), []
+  let g:neomake = {'foo': ['maker1']}
+  AssertEqual neomake#config#get('foo', 'default'), ['maker1']
+
+  let g:neomake = {'ft': {'myft': {'foo': ['foo_setting']}}}
+  AssertEqual neomake#config#get('foo', 'default'), ['foo_setting']
+  AssertEqual neomake#config#get('foo', 'default', {'ft': ''}), 'default'
+  AssertEqual neomake#config#get('foo', 'default', {'ft': 'myft'}), ['foo_setting']
+  bwipe
+
+Execute (neomake#config#get with filetype and maker name):
+  new
+  set filetype=myft
+
+  let maker = {'name': 'maker_name', 'exe': 'maker_exe'}
+  let g:neomake = {'ft': {'myft': {'maker_name': {'exe': 'custom_exe'}}}}
+
+  AssertEqual neomake#config#get('exe', 'default', {'maker': maker}), 'maker_exe'
+  AssertEqual neomake#config#get('exe', 'default', {'ft': 'myft', 'maker': maker}), 'custom_exe'
+  bwipe
+
+Execute (neomake#config#get with filetype prefix in maker):
+  new
+  let maker = {
+  \ 'name': 'maker_name',
+  \ 'exe': 'maker_exe',
+  \ 'ft': {'myft': {'exe': 'maker_myft_exe'}}}
+  AssertEqual neomake#config#get('exe', 'default', {'maker': maker}), 'maker_exe'
+  AssertEqual neomake#config#get('exe', 'default', {'maker': maker, 'ft': 'myft'}), 'maker_myft_exe'
+
+  let b:neomake = {'ft': {'myft': {'maker_name': {'exe': 'buffer_exe'}}}}
+  AssertEqual neomake#config#get('exe', 'default', {'maker': maker, 'ft': 'myft'}), 'maker_myft_exe'
+  AssertEqual neomake#config#get('exe', 'default', {'maker': maker, 'ft': 'myft', 'bufnr': bufnr('%')}), 'buffer_exe'
+
+  AssertEqual neomake#config#get('exe', 'default', {'maker': maker, 'ft': 'myft', 'maker_only': 1}), 'maker_myft_exe'
+  AssertEqual neomake#config#get('exe', 'default', {'maker': maker, 'ft': 'myft', 'maker_only': 1, 'bufnr': bufnr('%')}), 'buffer_exe'
+
+  AssertEqual neomake#config#get('maker_name.exe', 'default', {'maker': maker, 'ft': 'myft', 'maker_only': 1}), 'maker_myft_exe'
+  AssertEqual neomake#config#get('maker_name.exe', 'default', {'maker': maker, 'ft': 'myft', 'maker_only': 1, 'bufnr': bufnr('%')}), 'buffer_exe'
+  bwipe
+
+Execute (neomake#config#get with b: prefix, no default and bufnr context):
+  new
+  let b:neomake = {'foo': 'bar'}
+  AssertEqual neomake#config#get('b:foo'), 'bar'
+  unlet b:neomake
+
+  let b:neomake = {'automake': {'ignore_filetypes': ['startify']}}
+  AssertEqual neomake#config#get('b:automake.ignore_filetypes'), ['startify']
+
+  let bufnr = bufnr('%')
+  new
+  AssertEqual neomake#config#get('b:automake.ignore_filetypes', [],
+  \ {'bufnr': bufnr}), ['startify']
+  bwipe
+  bwipe
+
+Execute (neomake#config#set):
+  Save g:neomake
+  let config = neomake#config#set('foo', 'bar')
+  AssertEqual config, {'foo': 'bar'}
+  AssertEqual g:neomake, {'foo': 'bar'}
+  unlet g:neomake
+
+  call neomake#config#set('automake.ignore_filetypes', ['startify'])
+  AssertEqual g:neomake, {'automake': {'ignore_filetypes': ['startify']}}
+
+Execute (neomake#config#set: warn about unused "neomake" key):
+  Save g:neomake
+  AssertThrows call neomake#config#set('b:neomake.foo.bar', ['1'])
+  AssertEqual g:vader_exception, 'Neomake: config: "neomake" is not necessary with new-style config settings ([''neomake'', ''foo'', ''bar'']).'
+
+  AssertThrows call neomake#config#set('neomake.foo.bar', ['2'])
+  AssertEqual g:vader_exception, 'Neomake: config: "neomake" is not necessary with new-style config settings ([''neomake'', ''foo'', ''bar'']).'
+
+  AssertEqual b:neomake, {}
+  AssertEqual g:neomake, {}
+
+Execute (neomake#config#set_buffer):
+  new
+  let bufnr = bufnr('%')
+  call neomake#config#set_buffer(bufnr, 'foo', 'bar')
+  AssertEqual b:neomake, {'foo': 'bar'}
+  unlet b:neomake
+
+  call neomake#config#set_buffer(bufnr, 'automake.ignore_filetypes', ['startify'])
+  let expected = {'automake': {'ignore_filetypes': ['startify']}}
+  AssertEqual b:neomake, expected
+  b#
+
+  AssertEqual getbufvar(bufnr, 'neomake'), expected
+  b#
+  bwipe!
+
+Execute (neomake#config#set with b: prefix):
+  new
+  call neomake#config#set('b:foo', 'bar')
+  AssertEqual b:neomake, {'foo': 'bar'}
+  call neomake#config#set('b:foo2', 'baz')
+  AssertEqual b:neomake, {'foo': 'bar', 'foo2': 'baz'}
+  unlet b:neomake
+
+  call neomake#config#set('b:automake.ignore_filetypes', ['startify'])
+  AssertEqual b:neomake, {'automake': {'ignore_filetypes': ['startify']}}
+  bwipe!
+
+Execute (neomake#config#get handles Funcref variables):
+  new
+  let s:funcref = function('tr')
+
+  call neomake#config#set('b:function', s:funcref)
+  AssertEqual neomake#config#get('b:function'), s:funcref
+  AssertEqual neomake#config#get_with_source('b:function'), [s:funcref, 'buffer']
+
+  " Handles bufnr context.
+  let bufnr = bufnr('%')
+  new
+  AssertEqual neomake#config#get('b:function', 'default', {}), 'default'
+  AssertEqual neomake#config#get('b:function', 'default', {'bufnr': bufnr}), s:funcref
+  bwipe
+  bwipe
+
+Execute (neomake#config#get does not return a partial for funcs):
+  new
+  let b:neomake = {}
+  function b:neomake.func()
+  endfunction
+  AssertEqual neomake#config#get('b:func'), get(b:neomake, 'func')
+  bwipe
+
+Execute (neomake#config#{un,}set_dict):
+  let foo = {}
+  call neomake#config#set_dict(foo, 'bar.baz', 42)
+  AssertEqual foo, {'bar': {'baz': 42}}
+
+  call neomake#config#unset_dict(foo, 'bar.baz')
+  AssertEqual foo, {'bar': {}}
+  call neomake#config#unset_dict(foo, 'bar')
+  AssertEqual foo, {}
+
+Execute (neomake#config#get does not create empty dicts during lookup):
+  new
+  let b:neomake = {'foo': 'bar'}
+  AssertEqual neomake#config#get('automake.setting', 'default'), 'default'
+  AssertEqual b:neomake, {'foo': 'bar'}
+  bwipe
+
+Execute (neomake#config#get handles non-dicts on the way):
+  new
+  let b:neomake = {'foo': {'bar': 'baz'}}
+  AssertEqual neomake#config#get('foo.bar', 'default'), 'baz'
+  AssertEqual neomake#config#get('foo.bar.baz', 'default'), 'default'
+  bwipe
+
+Execute (old-style config is used for maker defaults):
+  let maker = {'name': 'mymaker', 'args': ['default']}
+
+  new
+  let b:neomake = {'some': 'config'}
+  AssertEqual neomake#GetMaker(maker).args, ['default']
+  let b:neomake_mymaker_args = ['args1']
+  AssertEqual neomake#GetMaker(maker).args, ['args1']
+
+  noautocmd set filetype=myft
+  AssertEqual neomake#GetMaker(maker).args, ['args1']
+  let b:neomake_myft_mymaker_args = ['args2']
+  AssertEqual neomake#GetMaker(maker).args, ['args2']
+
+  " New-style config overrides it.
+  call neomake#config#set('b:mymaker.args', ['new-style'])
+  AssertEqual neomake#GetMaker(maker).args, ['new-style']
+  bwipe
+
+Execute (Maker's cwd can be configured via config):
+  let maker = {'name': 'mymaker'}
+
+  new
+  Assert !has_key(neomake#GetMaker(maker), 'cwd')
+
+  let b:neomake_mymaker_cwd = 'custom_cwd1'
+  AssertEqual neomake#GetMaker(maker).cwd, 'custom_cwd1'
+
+  call neomake#config#set('b:mymaker.cwd', 'custom_cwd2')
+  AssertEqual neomake#GetMaker(maker).cwd, 'custom_cwd2'
+  bwipe
+
+Execute (neomake#config#get does not allow to extend undefined default return value):
+  let d = neomake#config#get('undefined')
+  AssertEqual d, g:neomake#config#undefined
+  AssertThrows call extend(neomake#config#get('undefined'), {'foo': 'bar'})
+  AssertEqual g:vader_exception, 'Vim(call):E741: Value is locked: extend() argument'
+
+Execute (neomake#config#get should not set g:neomake):
+  call neomake#config#get('foo')
+  Assert !exists('g:neomake')
+
+Execute (neomake#config#get has default for "maker_defaults"):
+  let maker_defaults = neomake#config#get('maker_defaults')
+  AssertEqual sort(keys(maker_defaults)), [
+  \ 'buffer_output', 'output_stream', 'remove_invalid_entries']
+
+  call extend(maker_defaults, {'additional': 'value'})
+  let maker_defaults = neomake#config#get('maker_defaults')
+  AssertEqual sort(keys(maker_defaults)), [
+  \ 'buffer_output', 'output_stream', 'remove_invalid_entries']
+
+Execute (neomake#config#get returns a reference):
+  new
+  let d = neomake#config#get('b:foo', {})
+  let d.foo = 'bar'
+  Assert !exists('b:neomake')
+
+  call neomake#config#set('b:foo', {'k': 'orig'})
+  let d = neomake#config#get('b:foo')
+  AssertEqual d, {'k': 'orig'}
+  let d.k = 'changed'
+  AssertEqual neomake#config#get('b:foo'), {'k': 'changed'}
+  bwipe
+
+Execute (neomake#config#get returns a copy for defaults):
+  new
+  let d = neomake#config#get('b:foo', {})
+  let d.foo = 'bar'
+  Assert !exists('b:neomake')
+
+  call neomake#config#set('b:foo', {'k': 'orig'})
+  let d = neomake#config#get('b:foo')
+  AssertEqual d, {'k': 'orig'}
+  let d.k = 'changed'
+  AssertEqual neomake#config#get('b:foo'), {'k': 'changed'}
+  bwipe
+
+Execute (neomake#config#get can ignore buffer):
+  new
+  call neomake#config#set('b:foo', 42)
+
+  AssertEqual neomake#config#get('foo'), 42
+  AssertEqual neomake#config#get('b:foo'), 42
+
+  new
+  " 0 refers to the alternate buffer for the current window.
+  AssertEqual neomake#config#get('foo', 'default', {'bufnr': 0}), 42
+  AssertEqual neomake#config#get('b:foo', 'default', {'bufnr': 0}), 42
+
+  " '' ignores buffer.
+  AssertEqual neomake#config#get('foo', 'default', {'bufnr': ''}), 'default'
+  AssertEqual neomake#config#get('b:foo', 'default', {'bufnr': ''}), 'default'
+  bwipe
+  bwipe

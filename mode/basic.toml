@@ -1,6 +1,6 @@
 #=============================================================================
 # basic.toml --- basic configuration example for SpaceVim
-# Copyright (c) 2016-2017 Wang Shidong & Contributors
+# Copyright (c) 2016-2020 Wang Shidong & Contributors
 # Author: Wang Shidong < wsdjeg at 163.com >
 # URL: https://spacevim.org
 # License: GPLv3
@@ -19,7 +19,7 @@
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "nil"
-    statusline_inactive_separator = "bar"
+    statusline_iseparator = "bar"
     buffer_index_type = 4
     windows_index_type = 3
     enable_tabline_filetype_icon = false

@@ -1,0 +1,12 @@
+*.sw?
+*.un?
+*.vba
+*.vmb
+*.zip
+*.gz
+vimball.txt
+*.orig
+tags
+test/build
+test/*.tap
+test/*.msgout

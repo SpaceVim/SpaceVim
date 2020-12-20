@@ -1,0 +1,178 @@
+snippet #!
+abbr    #!/usr/bin/env ruby
+alias   shebang
+options head
+  #!/usr/bin/env ruby
+  ${0}
+
+snippet     if
+abbr        if ... end
+  if ${1:#:condition}
+    ${0:TARGET}
+  end
+
+snippet     unless
+abbr        unless ... end
+  unless ${1:#:condition}
+    ${0:TARGET}
+  end
+
+snippet     def
+abbr        def ... end
+  def ${1:#:method_name}
+    ${0:TARGET}
+  end
+
+snippet     defrescue
+alias       defr
+abbr        def ... rescue ... end
+  def ${1:#:method_name}
+    ${2:TARGET}
+  rescue ${3:#:StandardError} => ${4:error}
+    ${0}
+  end
+
+snippet     do
+abbr        do ... end
+  do
+    ${0:TARGET}
+  end
+
+snippet     dovar
+abbr        do |var| ... end
+  do |${1:#:var}|
+    ${0:TARGET}
+  end
+
+snippet     block
+abbr        { ... }
+  {
+    ${0:TARGET}
+  }
+
+snippet     blockvar
+abbr        {|var| ... }
+  {|${1:#:var}|
+    ${0:TARGET}
+  }
+
+snippet     fileopen
+alias       open
+abbr        File.open(filename) do ... end
+  File.open(${1:#:filename}, '${2:#:mode}') do |${3:io}|
+    ${0:TARGET}
+  end
+
+snippet     edn
+abbr        => end?
+  end
+
+snippet     urlencode
+  # coding: utf-8
+  require 'erb'
+  puts ERB::Util.url_encode '${1}'
+
+snippet encoding
+alias   enc
+  # coding: utf-8
+  ${0}
+
+snippet each
+options word
+  each do |${1:#:variable}|
+    ${0}
+  end
+
+snippet each_byte
+options word
+  each_byte {|${1:#:variable}| ${0} }
+
+snippet each_char
+options word
+  each_char {|${1:#:variable}| ${0} }
+
+snippet each_index
+options word
+  each_index {|${1:#:variable}| ${0} }
+
+snippet each_key
+options word
+  each_key {|${1:#:variable}| ${0} }
+
+snippet each_line
+options word
+  each_line {|${1:#:variable}| ${0} }
+
+snippet each_with_index
+options word
+  each_with_index {|${1:#:variable}| ${0} }
+
+snippet each_pair
+options word
+  each_pair {|${1:#:key}, ${2:value}| ${0} }
+
+snippet each_pair_do
+options word
+  each_pair do |${1:key}, ${2:value}|
+    ${0}
+  end
+
+snippet map
+options word
+  map {|${1:#:variable}| ${0} }
+
+snippet sort
+options word
+  sort {|${1:x}, ${2:y}| ${0} }
+
+snippet sort_by
+options word
+  sort_by {|${1:#:variable}| ${0} }
+
+snippet lambda
+options word
+  -> (${1:#:args}) { ${0} }
+
+snippet lambda-keyword
+options word
+  lambda {|${1:#:args}| ${0} }
+
+snippet     main
+options     head
+  if __FILE__ == \$0
+    ${0:TARGET}
+  end
+
+# This idiom is only for legacy ruby such as 1.9.3
+snippet filedir-legacy-compatibility
+alias __dir__
+abbr File.dirname(...)
+  File.dirname(File.expand_path(__FILE__))
+
+snippet     glob
+options     head
+  Dir.glob(${1:'**/*'}) do |fname|
+    ${0:TARGET}
+  end
+
+snippet     case
+abbr        case ... when ... else ... end
+options     head
+  case ${1}
+  when ${2}
+    ${3}
+  else
+    ${0}
+  end
+
+snippet     class
+  class ${1:`substitute(expand('%:t:r:r:r'), '\v%(^(.)|_(.))', '\u\1\u\2', 'g')`}
+    ${0}
+  end
+
+snippet     module
+  module ${1:`substitute(expand('%:t:r:r:r'), '\v%(^(.)|_(.))', '\u\1\u\2', 'g')`}
+    ${0}
+  end
+
+# vim:set et ts=2 sts=2 sw=2 tw=0:

@@ -1,0 +1,4 @@
+tests/fixtures/input/puppet-lint/err_and_warn.pp:4:10:warning:[arrow_alignment] indentation of => is not properly aligned (expected in column 12, but found it in column 10)
+tests/fixtures/input/puppet-lint/err_and_warn.pp:1:7:error:[autoloader_layout] foo not in autoload module layout
+tests/fixtures/input/puppet-lint/err_and_warn.pp:2:10:warning:[double_quoted_strings] double quoted string containing no variables
+tests/fixtures/input/puppet-lint/err_and_warn.pp:1:1:warning:[documentation] class not documented

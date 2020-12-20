@@ -11,9 +11,9 @@ description: "Autocomplete code within SpaceVim, fuzzy find the candidates from 
 - [Install](#install)
 - [Configuration](#configuration)
   - [Completion engine](#completion-engine)
+  - [Snippets engine](#snippets-engine)
   - [Complete parens](#complete-parens)
   - [Layer options](#layer-options)
-  - [Snippets directories](#snippets-directories)
   - [Show snippets in auto-completion popup](#show-snippets-in-auto-completion-popup)
 - [Key bindings](#key-bindings)
   - [Completion](#completion)
@@ -69,6 +69,37 @@ here is an example:
     autocomplete_method = "deoplete"
 ```
 
+### Snippets engine
+
+The default snippets engine is `neosnippet`, the also can be changed to `ultisnips`:
+
+```toml
+[options]
+    snippet_engine = "ultisnips"
+```
+
+The following snippets repos have been added by default:
+
+- [Shougo/neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets) : neosnippet's default snippets.
+- [honza/vim-snippets](https://github.com/honza/vim-snippets) : extra snippets
+
+
+If the `snippet_engine` is `neosnippet`, the following directories will be used:
+
+- `~/.SpaceVim/snippets/`: SpaceVim runtime snippets.
+- `~/.SpaceVim.d/snippets/`: custom global snippets.
+- `./.SpaceVim.d/snippets/`: custom local snippets (project's snippets)
+
+You can provide additional directories by setting the
+variable `g:neosnippet#snippets_directory` which can take a string
+in case of a single path or a list of paths.
+
+If the `snippet_engine` is `ultisnips`, the following directories will be used:
+
+- `~/.SpaceVim/UltiSnips/`: SpaceVim runtime snippets.
+- `~/.SpaceVim.d/UltiSnips/`: custom global snippets.
+- `./.SpaceVim.d/UltiSnips/`: custom local snippets (project's snippets)
+
 ### Complete parens
 
 By default, the parens will be completed automatically, to disabled this feature:
@@ -87,21 +118,23 @@ You can customize the user experience of autocompletion with the following layer
    - `complete` completes with the current selection
    - `smart` completes with current selection and expand snippet or argvs
    - `nil`
-     By default it is `complete`.
+   By default it is `complete`.
 2. `auto_completion_tab_key_behavior` set the action to
    perform when the `TAB` key is pressed, the possible values are:
    - `smart` cycle candidates, expand snippets, jump parameters
    - `complete` completes with the current selection
    - `cycle` completes the common prefix and cycle between candidates
    - `nil` insert a carriage return
-     By default it is `complete`.
+   By default it is `complete`.
 3. `auto_completion_delay` is a number to delay the completion after input in milliseconds,
    by default it is 50 ms.
 4. `auto_completion_complete_with_key_sequence` is a string of two characters denoting
    a key sequence that will perform a `complete` action if the sequence as been entered
    quickly enough. If its value is `nil` then the feature is disabled.
+   **NOTE:** This option should not has same value as `escape_key_binding`
 5. `auto_completion_complete_with_key_sequence_delay` is the number of seconds to wait for
-the autocompletion key sequence to be entered. The default value is 0.1 seconds.
+   the autocompletion key sequence to be entered. The default value is 1 seconds.
+   This option is used for vim's `timeoutlen` option in insert mode.
 
 The default configuration of the layer is:
 
@@ -116,20 +149,6 @@ The default configuration of the layer is:
 ```
 
 `jk` is a good candidate for `auto_completion_complete_with_key_sequence` if you don’t use it already.
-
-### Snippets directories
-
-The following snippets or directories are added by default:
-
-- [Shougo/neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets) : neosnippet's default snippets.
-- [honza/vim-snippets](https://github.com/honza/vim-snippets) : extra snippets
-- `~/.SpaceVim/snippets/` : SpaceVim runtime snippets.
-- `~/.SpaceVim.d/snippets/` : custom global snippets.
-- `./.SpaceVim.d/snippets/` : custom local snippets (project's snippets)
-
-You can provide additional directories by setting the
-variable `g:neosnippet#snippets_directory` which can take a string
-in case of a single path or a list of paths.
 
 ### Show snippets in auto-completion popup
 

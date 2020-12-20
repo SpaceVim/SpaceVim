@@ -1,0 +1,103 @@
+snippet     match
+abbr        match {\n  case .. => ..
+	match {
+		case ${1} => ${0}
+	}
+
+snippet     case
+abbr        case .. => ..
+	case ${1} => ${0}
+
+snippet     try
+abbr        try {} catch { case ... }
+options     head
+	try {
+		${1:TARGET}
+	} catch {
+		case e${2:: Exception} => ${0}
+	}
+
+snippet     for
+	for {
+		${1}
+	} yield ${2}
+
+snippet     if
+	if (${1}) {
+		${2}
+	}${3: else}
+
+snippet     p
+abbr        println()
+	println(${1})
+
+snippet     pn
+abbr        println('name, name)
+	println('${1:#:name}, $1)
+
+snippet     pf
+abbr        p in for
+	_ = println(${1})
+
+snippet     main
+abbr        def main(args: Array[String]) {
+options     head
+	object ${1:`expand('%:t:r') ==# '' ? 'HelloWorld' : expand('%:t:r')`} {
+		def main(args: Array[String]) {
+			${0:TARGET}
+		}
+	}
+
+snippet     hello
+abbr        object HelloWorld { def main(...) }
+options     head
+	object ${1:`expand('%:t:r') ==# '' ? 'HelloWorld' : expand('%:t:r')`} {
+		def main(args: Array[String]) {
+			println("Hello, world!")
+		}
+	}
+
+snippet     object
+options     head
+	object ${1:X} {
+		${0:TARGET}
+	}
+
+snippet     class
+options     head
+	class ${1:X()} {
+		${0:TARGET}
+	}
+
+snippet     should-scalatest
+options     word
+	should "${1}" in {
+		${0:TARGET}
+	}
+
+snippet     akka-actor
+options     head
+	import akka.actor.{ActorSystem, Actor, ActorLogging, Props}
+
+	object ${1:X} {
+		def props(${2}) = Props(new X($2))
+	}
+
+	class $1($2) extends Actor with ActorLogging {
+		def receive = {
+			case e =>
+				${0:TARGET:println(e)}
+		}
+	}
+
+snippet     package
+options     head
+	package `substitute(substitute(expand('%:h'), '.*\<src/\(main\|test\)/scala/', '', ''), '/', '.', 'g')`
+
+snippet     cclass
+options     head
+abbr        case class ..(..: ..)
+	case class ${1}(${2}: ${0})
+
+# scala's indent plugin doesn't work well. use hard-tab for this snippet.
+# vim: set noexpandtab :

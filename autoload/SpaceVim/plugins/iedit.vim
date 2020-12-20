@@ -1,6 +1,6 @@
 "=============================================================================
 " iedit.vim --- iedit mode for SpaceVim
-" Copyright (c) 2016-2019 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -140,13 +140,31 @@ endfunction
 
 
 function! s:handle(mode, char) abort
-  if a:mode ==# 'n'
+  if a:mode ==# 'n' && s:Operator ==# 'f'
+    return s:handle_f_char(a:char)
+  elseif a:mode ==# 'n'
     return s:handle_normal(a:char)
   elseif a:mode ==# 'i'
     return s:handle_insert(a:char)
   endif
 endfunction
 
+function! s:handle_f_char(char) abort
+  silent! call s:remove_cursor_highlight()
+  " map(rang(32,126), 'nr2char(v:val)')
+  " [' ', '!', '"', '#', '$', '%', '&', '''', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~']
+  if a:char >= 32 && a:char <= 126
+    let s:Operator = ''
+    for i in range(len(s:cursor_stack))
+      let matchedstr = matchstr(s:cursor_stack[i].end, printf('[^%s]*', nr2char(a:char)))
+      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor . matchedstr
+      let s:cursor_stack[i].end = matchstr(s:cursor_stack[i].end, printf('[%s]\zs.*', nr2char(a:char)))
+      let s:cursor_stack[i].cursor = nr2char(a:char)
+    endfor
+  endif
+  silent! call s:highlight_cursor()
+  return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
+endfunction
 
 let s:toggle_stack = {}
 
@@ -227,6 +245,9 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].cursor = s:STRING.toggle_case(s:cursor_stack[i].cursor)
     endfor
     call s:replace_symbol()
+  elseif a:char == 102 " f
+    let s:Operator = 'f'
+    call s:timeout()
   elseif a:char == 115 " s
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode

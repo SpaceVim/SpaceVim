@@ -1,0 +1,79 @@
+Include: include/setup.vader
+
+Execute (csslint: errorformat):
+  new
+  file file1
+  let output = [
+  \ "file1: line 315, col 1, Warning - Don't use IDs in selectors. (ids)",
+  \ "file1: Warning - You have 2 h1s, 3 h2s defined in this stylesheet. (unique-headings)'",
+  \ ]
+
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#css#csslint().errorformat
+  lgetexpr output
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 315, 'bufnr': bufnr('%'), 'col': 1, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'W', 'pattern': '',
+  \  'text': 'Don''t use IDs in selectors. (ids)'},
+  \ {'lnum': 0, 'bufnr': bufnr('%'), 'col': 0, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'W', 'pattern': '',
+  \  'text': 'You have 2 h1s, 3 h2s defined in this stylesheet. (unique-headings)'''}]
+  bwipe
+
+Execute (stylelint):
+  let bufname1 = tempname()
+  let bufname2 = tempname()
+  call writefile([], bufname1)
+  call writefile([], bufname2)
+
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#css#stylelint(), [
+    \ bufname1,
+    \ '  6:5   ✖  Expected indentation of 1 tab     indentation           ',
+    \ '  7:9   ✖  Expected indentation of 2 tabs    indentation           ',
+    \ '',
+    \ bufname2,
+    \ ' 45:2   ✖  Expected empty line before rule   rule-empty-line-before',
+    \ '',
+    \ '/doesnotexist',
+    \ ' 26:36  ✖  Unexpected unit "px"              unit-whitelist        ',
+    \])
+
+  new
+  CallNeomake 1, [maker]
+  let buf1 = bufnr(bufname1)
+  let buf2 = bufnr(bufname2)
+
+  " Without this patch entries are invalid always after setqflist/setloclist.
+  let valid_after_setlist = has('patch-8.0.0580')
+
+  " Keeps non-existing filenames and entries (without bufnr).
+  " https://github.com/vim/vim/issues/2334
+  AssertEqual map(getloclist(0), '[v:val.valid, v:val.bufnr, v:val.text]'), [
+  \ [1, buf1, 'Expected indentation of 1 tab [indentation]'],
+  \ [1, buf1, 'Expected indentation of 2 tabs [indentation]'],
+  \ [1, buf2, 'Expected empty line before rule [rule-empty-line-before]'],
+  \ [0, 0, '/doesnotexist'],
+  \ [valid_after_setlist, 0, 'Unexpected unit "px" [unit-whitelist]']
+  \ ]
+  bwipe
+  exe buf1 'bwipe'
+  exe buf2 'bwipe'
+
+Execute (stylelint: error with no config):
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#css#stylelint(), [
+    \ 'Error: No configuration provided for /path/to/foo.css',
+    \ '    at module.exports (/usr/lib/node_modules/stylelint/lib/utils/configurationError.js:8:28)',
+    \ '    at stylelint._fullExplorer.load.then.then.config (/usr/lib/node_modules/stylelint/lib/getConfigForFile.js:46:15)',
+    \ '    at <anonymous>',
+    \])
+
+  new
+  CallNeomake 1, [maker]
+
+  let bufnr = bufnr('/path/to/foo.css')
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 0, 'bufnr': bufnr, 'col': 0, 'valid': 1, 'vcol': 0,
+  \ 'nr': -1, 'type': 'E', 'pattern': '',
+  \ 'text': 'Error: No configuration provided for /path/to/foo.css'}]
+  bwipe
+  exe bufnr.'bwipe'

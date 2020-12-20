@@ -1,6 +1,6 @@
 "=============================================================================
 " shell.vim --- SpaceVim shell layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -163,14 +163,7 @@ function! s:open_default_shell(open_with_file_cwd) abort
     endif
   endfor
 
-  " no terminal window found. Open a new window
-  let cmd = s:default_position ==# 'top' ?
-        \ 'topleft split' :
-        \ s:default_position ==# 'bottom' ?
-        \ 'botright split' :
-        \ s:default_position ==# 'right' ?
-        \ 'rightbelow vsplit' : 'leftabove vsplit'
-  if s:default_position == 'float'
+  if s:default_position == 'float' && exists('*nvim_open_win')
     let s:term_win_id =  s:FLOAT.open_win(bufnr('%'), v:true,
           \ {
           \ 'relative': 'editor',
@@ -182,6 +175,15 @@ function! s:open_default_shell(open_with_file_cwd) abort
 
     exe win_id2win(s:term_win_id) .  'wincmd w'
   else
+    " no terminal window found. Open a new window
+    let cmd = s:default_position ==# 'float' ?
+          \ 'topleft split' :
+          \ s:default_position ==# 'top' ?
+          \ 'topleft split' :
+          \ s:default_position ==# 'bottom' ?
+          \ 'botright split' :
+          \ s:default_position ==# 'right' ?
+          \ 'rightbelow vsplit' : 'leftabove vsplit'
     exe cmd
     let lines = &lines * s:default_height / 100
     if lines < winheight(0) && (s:default_position ==# 'top' || s:default_position ==# 'bottom')

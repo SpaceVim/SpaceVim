@@ -1,0 +1,7 @@
+VimRegStyle
+-----------
+
+__Ohhh, Sexy Regex!__
+
+VimRegStyle is a Regular Expression Pattern Library and suite of utilities for
+operating on matches within text.

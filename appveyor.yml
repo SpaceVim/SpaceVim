@@ -1,4 +1,4 @@
-version: 1.4.0.{build}
+version: 1.5.0.{build}
 pull_requests:
     do_not_increment_build_number: true
 skip_tags: true
@@ -6,6 +6,8 @@ clone_depth: 1
 environment:
     matrix:
         - CONDITION: Neovim latest-32
+        - CONDITION: Neovim 0.4.3-32
+        - CONDITION: Neovim 0.4.2-32
         - CONDITION: Neovim 0.3.8-32
         - CONDITION: Neovim 0.3.7-32
         - CONDITION: Neovim 0.3.5-32
@@ -15,7 +17,10 @@ environment:
         - CONDITION: Neovim 0.3.1-32
         - CONDITION: Neovim 0.3.0-32
         - CONDITION: Vim latest-32
-        - CONDITION: Vim 8.0.0069
+        - CONDITION: Vim 7.4.1689
+        - CONDITION: Vim 8.0.0027
+        - CONDITION: Vim 8.0.1453
+        - CONDITION: Vim 8.1.2269
 install:
   - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:32'
   - 'reg copy HKLM\SOFTWARE\Python\PythonCore\2.7 HKLM\SOFTWARE\Python\PythonCore\2.7-32 /s /reg:64'
@@ -31,6 +36,7 @@ test_script:
   - 'echo %THEMIS_HOME%'
   - 'echo %THEMIS_VIM%'
   - 'echo %THEMIS_ARGS%'
+  - 'cat --version'
   - '%THEMIS_VIM% --version'
   - '%THEMIS_VIM% -Nu test/vimrc -c "Vader! test/**"'
 build: off

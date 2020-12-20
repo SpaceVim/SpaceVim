@@ -1,6 +1,6 @@
 "=============================================================================
 " VersionControl.vim --- SpaceVim version control layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -441,7 +441,7 @@ function! s:git_transient_state() abort
         \ 'key' : 't',
         \ 'desc' : 'toggle diff signs',
         \ 'func' : '',
-        \ 'cmd' : 'SignifyToggle',
+        \ 'cmd' : SpaceVim#layers#isLoaded('git') ? 'GitGutterToggle' : 'SignifyToggle',
         \ 'exit' : 0,
         \ },
         \ ],

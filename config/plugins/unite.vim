@@ -259,9 +259,9 @@ function! s:view_github_starred_repos() abort
     Unite -silent -ignorecase -winheight=17 -start-insert menu:MyStarredrepos
   endif
 endfunction
-if SpaceVim#layers#isLoaded('tools#mpv')
-  call SpaceVim#layers#tools#mpv#loadMusics()
-endif
+" if SpaceVim#layers#isLoaded('tools#mpv')
+  " call SpaceVim#layers#tools#mpv#loadMusics()
+" endif
 augroup unite_buffer_feature
   autocmd FileType unite call s:unite_my_settings()
 augroup END

@@ -1,0 +1,333 @@
+snippet sel
+    @selector(${1:#:method}:)
+
+
+snippet imp
+    #import <${1:Cocoa/Cocoa.h}>
+
+
+snippet Imp
+    #import "${1}}"
+
+
+snippet log
+abbr NSLog(...)
+    NSLog(@"${1}")
+
+
+snippet cl
+abbr Class
+	@interface ${1} : ${2:NSObject}
+	{
+	}
+	@end
+	
+	@implementation ${1}
+	- (id)init
+	{
+		if((self = [super init]))
+		{${0}
+		}
+		return self;
+	}
+	@end
+
+snippet cli
+abbr ClassInterface
+	@interface ${1} : ${2:NSObject}
+	{${3}
+	}
+	${0}
+	@end
+
+snippet clm
+abbr ClassImplementation
+	@implementation ${1:object}
+	- (id)init
+	{
+		if((self = [super init]))
+		{${0}
+		}
+		return self;
+	}
+	@end
+
+snippet cat
+abbr Category
+	@interface ${1:NSObject} (${2:Category})
+	@end
+	
+	@implementation ${1} (${2})
+	${0}
+	@end
+
+snippet cati
+abbr CategoryInterface
+	@interface ${1:NSObject)} (${2:Category)})
+	${0}
+	@end
+
+snippet array
+    NSMutableArray *${1:#:array} = [NSMutableArray array];
+
+
+snippet dict
+    NSMutableDictionary *${1:#:dict} = [NSMutableDictionary dictionary];
+
+
+snippet bez
+    NSBezierPath *${1:#:path} = [NSBezierPath bezierPath];
+
+snippet m
+abbr Method
+	- (${1:#:id})${2:#:method}${3:(#:id)}${4:#:anArgument}
+	{
+	${0}
+		return nil;
+	}
+
+snippet M
+abbr Method
+    - (${1:#:id})${2:#:method}${3:(#:id)}${4:#:anArgument};
+
+
+snippet cm
+abbr ClassMethod
+	+ (${1:#:id})${2:#:method}${3:(#:id)}${4:#:anArgument}
+	{
+	${0}
+		return nil;
+	}
+
+
+snippet icm
+abbr InterfaceClassMethod
+    + (${1:#:id})${0:#:method};
+
+
+snippet sm
+abbr SubMethod
+	- (${1:#:id})${2:#:method}${3:(#:id)}${4:#:anArgument}
+	{
+		${1} res = [super ${2:#:method}]
+		return res;
+	}
+
+
+snippet mi
+abbr MethodInitialize
+	+ (void)initialize
+	{
+		[[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:
+			${0}@"value", @"key",
+			nil]];
+	}
+
+snippet obj
+	- (${1:#:id})${2:#:thing}
+	{
+		return ${2};
+	}
+	
+	- (void)set${2}:(${1})aValue
+	{
+		${0}${1}old${2} = ${2};
+		${2} = [aValue retain];
+		[old${2} release];
+	}
+
+
+snippet iobj
+	- (${1:#:id})${2:#:thing};
+	- (void)set${2}:(${1})aValue;
+
+snippet str
+	- (NSString${$1: *)})${1:#:thing}
+	{
+		return ${2};
+	}
+	
+	- (void)set${1}:(NSString${2: *})${3}
+	{
+		${3} = [${3} copy];
+		[${2} release];
+		${2} = ${3};
+	}
+
+snippet istr
+	- (NSString${1: *)}${1:#:thing};
+	- (void)set${1}:(NSString${2: *})${2};
+
+snippet cd
+abbr CoreData
+	- (${1:#:id})${2:#:attribute}
+	{
+		[self willAccessValueForKey:@"$2"];
+		$1 value = [self primitiveValueForKey:@"$2"];
+		[self didAccessValueForKey:@"$2"];
+		return value;
+	}
+	
+	- (void)set$2:($1)aValue
+	{
+		[self willChangeValueForKey:@"$2"];
+		[self setPrimitiveValue:aValue forKey:@"$2"];
+		[self didChangeValueForKey:@"$2"];
+	}
+
+snippet karray
+abbr KVCArry
+	- (void)addObjectTo${1:#:Things}:(${2:#:id})anObject
+	{
+		[${3}} addObject:anObject];
+	}
+	
+	- (void)insertObject:($2)anObject in$1AtIndex:(unsigned int)i
+	{
+		[${3} insertObject:anObject atIndex:i];
+	}
+	
+	- (${2})objectIn${1}AtIndex:(unsigned int)i
+	{
+		return [${3} objectAtIndex:i];
+	}
+	
+	- (unsigned int)indexOfObjectIn${1}:(${2})anObject
+	{
+		return [${3} indexOfObject:anObject];
+	}
+	
+	- (void)removeObjectFrom${1}AtIndex:(unsigned int)i
+	{
+		 [${3} removeObjectAtIndex:i];
+	}
+	
+	- (unsigned int)countOf${1}
+	{
+		return [${3} count];
+	}
+	
+	- (NSArray${4: *}${1}
+	{
+		return ${3}
+	}
+	
+	- (void)set${1}:(NSArray${4: *})new${1}
+	{
+		[${3} setArray:new${1}];
+	}
+    
+
+snippet iarray
+abbr InterfaceAccessorsForKVCArray
+	- (void)addObjectTo${1:#:Things}:(${2:#:id})anObject;
+	- (void)insertObject:(${2})anObject in${1}AtIndex:(unsigned int)i;
+	- (${2})objectIn${1}AtIndex:(unsigned int)i;
+	- (unsigned int)indexOfObjectIn${1}:(${2})anObject;
+	- (void)removeObjectFrom${1}AtIndex:(unsigned int)i;
+	- (unsigned int)countOf${1};
+	- (NSArray${3: *})${1};
+	- (void)set${1}:(NSArray${3: *})new${1};
+
+
+snippet acc
+abbr PrimitiveType
+	- (${1:unsigned int})${2:#:thing}
+	{
+		return ${3};
+	}
+	
+	- (void)set${2}:(${1:unsigned int})new${2}
+	{
+		${3} = new${2};
+	}
+
+
+snippet iacc
+abbr Interface:AccessorsForPrimitiveType
+	- (${1:unsigned int})${2:thing};
+	- (void)set${2}:($1)new${2};
+
+snippet rdef
+abbr ReadDefaultsValue
+    [[NSUserDefaults standardUserDefaults] objectForKey:${1:key}];
+
+
+snippet wdef
+abbr WriteDefaultsValue
+    [[NSUserDefaults standardUserDefaults] setObject:${1:object} forKey:${2:key}];
+
+
+snippet ibo
+abbr IBOutlet
+    IBOutlet ${1}${2: *}${3};
+
+
+snippet syn
+    @synthesize ${1:#:property};
+
+
+snippet bind
+    bind:@"${2:#:binding}" toObject:${3:observableController} withKeyPath:@"${4:keyPath}" options:${5:nil}
+
+
+snippet reg
+    [[NSNotificationCenter defaultCenter] addObserver:${1:self} selector:@selector(${3}) name:${2:NSWindowDidBecomeMainNotification} object:${4:nil}];
+
+
+snippet focus
+	[self lockFocus];
+	${0}
+	[self unlockFocus];
+
+snippet forarray
+	unsigned int	${1:object}Count = [${2:array} count];
+	
+	for(unsigned int index = 0; index < ${1}Count; index += 1)
+	{
+		${3:id}	${1} = [${2} objectAtIndex:index];
+		${0}
+	}
+
+snippet alert
+	int choice = NSRunAlertPanel(@"${1:Something important!}", @"${2:Something important just happend, and now I need to ask you, do you want to continue?}", @"${3:Continue}", @"${4:Cancel}", nil);
+	if(choice == NSAlertDefaultReturn) // "${3:Continue}"
+	{
+		${0};
+	}
+	else if(choice == NSAlertAlternateReturn) // "${4:Cancel}"
+	{
+		
+	}
+
+snippet res
+	${1} Send ${2} to ${1}, if ${1} supports it}${3}
+	if ([${1:self} respondsToSelector:@selector(${2:someSelector:})])
+	{
+	    [${1} ${3}];
+	}
+
+snippet del
+	if([${1:[self delegate]} respondsToSelector:@selector(${2:selfDidSomething:})])
+		[${1} ${3}];
+
+
+snippet format
+   [NSString stringWithFormat:@"${1}", ${2}]${0}
+
+
+snippet save
+	[NSGraphicsContext saveGraphicsState];
+	${0}
+	[NSGraphicsContext restoreGraphicsState];
+
+
+snippet thread
+    [NSThread detachNewThreadSelector:@selector(${1:#:method}:) toTarget:${2:#:aTarget} withObject:${3:#:anArgument}]
+
+
+snippet pool
+	NSAutoreleasePool${TM_C_POINTER: *}pool = [NSAutoreleasePool new];
+	${0}
+	[pool drain];
+

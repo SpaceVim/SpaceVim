@@ -1,12 +1,24 @@
 "=============================================================================
 " leaderf.vim --- leaderf layer for SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+""
+" @section leaderf, layer-leaderf
+" @parentsection layers
+" This layer provides fuzzy finder feature which is based on leaderf, and this
+" layer requires vim compiled with `+python` or `+python3`.
+
 let s:CMP = SpaceVim#api#import('vim#compatible')
+
+function! SpaceVim#layers#leaderf#loadable() abort
+
+  return s:CMP.has('python') || s:CMP.has('python3')
+
+endfunction
 
 function! SpaceVim#layers#leaderf#plugins() abort
   let plugins = []
@@ -38,127 +50,127 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
   let g:Lf_Extensions = {
-  \ "neomru": {
-  \       "source": string(s:_function('s:neomru', 1))[10:-3],
-  \       "accept": string(s:_function('s:neomru_acp', 1))[10:-3],
-  \       "supports_name_only": 1,
-  \       "supports_multi": 0,
-  \ },
-  \}
+        \ 'neomru': {
+        \       'source': string(s:_function('s:neomru', 1))[10:-3],
+        \       'accept': string(s:_function('s:neomru_acp', 1))[10:-3],
+        \       'supports_name_only': 1,
+        \       'supports_multi': 0,
+        \ },
+        \}
 
   let g:Lf_Extensions.menu =
         \ {
-        \       "source": string(s:_function('s:menu', 1))[10:-3],
-        \       "arguments": [
-        \           { "name": ["--name"], "nargs": 1, "help": "Use leaderf show unite menu"},
+        \       'source': string(s:_function('s:menu', 1))[10:-3],
+        \       'arguments': [
+        \           { 'name': ['--name'], 'nargs': 1, 'help': 'Use leaderf show unite menu'},
         \       ],
-        \       "accept": string(s:_function('s:accept', 1))[10:-3],
+        \       'accept': string(s:_function('s:accept', 1))[10:-3],
         \ }
 
   let g:Lf_Extensions.register =
         \ {
-        \       "source": string(s:_function('s:register', 1))[10:-3],
-        \       "accept": string(s:_function('s:register_acp', 1))[10:-3],
-        \       "highlights_def": {
-        \               "Lf_register_name": '^".',
-        \               "Lf_register_content": '\s\+.*',
+        \       'source': string(s:_function('s:register', 1))[10:-3],
+        \       'accept': string(s:_function('s:register_acp', 1))[10:-3],
+        \       'highlights_def': {
+        \               'Lf_register_name': '^".',
+        \               'Lf_register_content': '\s\+.*',
         \       },
-        \       "highlights_cmd": [
-        \               "hi def link Lf_register_name ModeMsg",
-        \               "hi def link Lf_register_content Normal",
+        \       'highlights_cmd': [
+        \               'hi def link Lf_register_name ModeMsg',
+        \               'hi def link Lf_register_content Normal',
         \       ],
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
 
   let g:Lf_Extensions.jumplist =
         \ {
-        \       "source": string(s:_function('s:jumplist', 1))[10:-3],
-        \       "accept": string(s:_function('s:jumplist_acp', 1))[10:-3],
-        \       "highlights_def": {
-        \               "Lf_register_name": '^".',
-        \               "Lf_register_content": '\s\+.*',
+        \       'source': string(s:_function('s:jumplist', 1))[10:-3],
+        \       'accept': string(s:_function('s:jumplist_acp', 1))[10:-3],
+        \       'highlights_def': {
+        \               'Lf_register_name': '^".',
+        \               'Lf_register_content': '\s\+.*',
         \       },
-        \       "highlights_cmd": [
-        \               "hi def link Lf_register_name ModeMsg",
-        \               "hi def link Lf_register_content Normal",
+        \       'highlights_cmd': [
+        \               'hi def link Lf_register_name ModeMsg',
+        \               'hi def link Lf_register_content Normal',
         \       ],
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
 
   let g:Lf_Extensions.message =
         \ {
-        \       "source": string(s:_function('s:message', 1))[10:-3],
-        \       "accept": string(s:_function('s:message_acp', 1))[10:-3],
-        \       "highlights_def": {
-        \               "Lf_register_name": '^".',
-        \               "Lf_register_content": '\s\+.*',
+        \       'source': string(s:_function('s:message', 1))[10:-3],
+        \       'accept': string(s:_function('s:message_acp', 1))[10:-3],
+        \       'highlights_def': {
+        \               'Lf_register_name': '^".',
+        \               'Lf_register_content': '\s\+.*',
         \       },
-        \       "highlights_cmd": [
-        \               "hi def link Lf_register_name ModeMsg",
-        \               "hi def link Lf_register_content Normal",
+        \       'highlights_cmd': [
+        \               'hi def link Lf_register_name ModeMsg',
+        \               'hi def link Lf_register_content Normal',
         \       ],
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
 
   let g:Lf_Extensions.neoyank =
         \ {
-        \       "source": string(s:_function('s:neoyank', 1))[10:-3],
-        \       "accept": string(s:_function('s:neoyank_acp', 1))[10:-3],
-        \       "highlights_def": {
-        \               "Lf_register_name": '^".',
-        \               "Lf_register_content": '\s\+.*',
+        \       'source': string(s:_function('s:neoyank', 1))[10:-3],
+        \       'accept': string(s:_function('s:neoyank_acp', 1))[10:-3],
+        \       'highlights_def': {
+        \               'Lf_register_name': '^".',
+        \               'Lf_register_content': '\s\+.*',
         \       },
-        \       "highlights_cmd": [
-        \               "hi def link Lf_register_name ModeMsg",
-        \               "hi def link Lf_register_content Normal",
+        \       'highlights_cmd': [
+        \               'hi def link Lf_register_name ModeMsg',
+        \               'hi def link Lf_register_content Normal',
         \       ],
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
 
   let g:Lf_Extensions.quickfix =
         \ {
-        \       "source": string(s:_function('s:quickfix', 1))[10:-3],
-        \       "accept": string(s:_function('s:quickfix_acp', 1))[10:-3],
-        \       "highlights_def": {
-        \               "Lf_register_name": '^".',
-        \               "Lf_register_content": '\s\+.*',
+        \       'source': string(s:_function('s:quickfix', 1))[10:-3],
+        \       'accept': string(s:_function('s:quickfix_acp', 1))[10:-3],
+        \       'highlights_def': {
+        \               'Lf_register_name': '^".',
+        \               'Lf_register_content': '\s\+.*',
         \       },
-        \       "highlights_cmd": [
-        \               "hi def link Lf_register_name ModeMsg",
-        \               "hi def link Lf_register_content Normal",
+        \       'highlights_cmd': [
+        \               'hi def link Lf_register_name ModeMsg',
+        \               'hi def link Lf_register_content Normal',
         \       ],
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
 
   let g:Lf_Extensions.locationlist =
         \ {
-        \       "source": string(s:_function('s:locationlist', 1))[10:-3],
-        \       "accept": string(s:_function('s:locationlist_acp', 1))[10:-3],
-        \       "highlights_def": {
-        \               "Lf_register_name": '^".',
-        \               "Lf_register_content": '\s\+.*',
+        \       'source': string(s:_function('s:locationlist', 1))[10:-3],
+        \       'accept': string(s:_function('s:locationlist_acp', 1))[10:-3],
+        \       'highlights_def': {
+        \               'Lf_register_name': '^".',
+        \               'Lf_register_content': '\s\+.*',
         \       },
-        \       "highlights_cmd": [
-        \               "hi def link Lf_register_name ModeMsg",
-        \               "hi def link Lf_register_content Normal",
+        \       'highlights_cmd': [
+        \               'hi def link Lf_register_name ModeMsg',
+        \               'hi def link Lf_register_content Normal',
         \       ],
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
 
   let g:Lf_Extensions.unicode =
         \ {
-        \       "source": string(s:_function('s:unicode', 1))[10:-3],
-        \       "accept": string(s:_function('s:unicode_acp', 1))[10:-3],
-        \       "arguments": [
-        \           { "name": ["--name"], "nargs": '*', "help": "Use leaderf show unite menu"},
+        \       'source': string(s:_function('s:unicode', 1))[10:-3],
+        \       'accept': string(s:_function('s:unicode_acp', 1))[10:-3],
+        \       'arguments': [
+        \           { 'name': ['--name'], 'nargs': '*', 'help': 'Use leaderf show unite menu'},
         \       ],
-        \       "highlights_def": {
-        \               "Lf_register_name": '^".',
-        \               "Lf_register_content": '\s\+.*',
+        \       'highlights_def': {
+        \               'Lf_register_name': '^".',
+        \               'Lf_register_content': '\s\+.*',
         \       },
-        \       "highlights_cmd": [
-        \               "hi def link Lf_register_name ModeMsg",
-        \               "hi def link Lf_register_content Normal",
+        \       'highlights_cmd': [
+        \               'hi def link Lf_register_name ModeMsg',
+        \               'hi def link Lf_register_content Normal',
         \       ],
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
@@ -289,16 +301,16 @@ function! SpaceVim#layers#leaderf#config() abort
   call s:defind_fuzzy_finder()
 endfunction
 
-function! s:init_leaderf_win(...)
+function! s:init_leaderf_win(...) abort
   setlocal nonumber
   setlocal nowrap
 endfunction
 
-function! s:register(...)
+function! s:register(...) abort
   return split(s:CMP.execute('registers'), '\n')[1:]
 endfunction
 
-function! s:register_acp(line, args)
+function! s:register_acp(line, args) abort
   let @" = a:line
   echohl ModeMsg
   echon 'Yanked!'
@@ -306,7 +318,7 @@ function! s:register_acp(line, args)
 endfunction
 
 function! s:neomru(...) abort
-    return neomru#_gather_file_candidates()
+  return neomru#_gather_file_candidates()
 endfunction
 
 function! s:neomru_acp(line, args) abort
@@ -353,7 +365,7 @@ function! s:message_acp(line, args) abort
   echohl None
 endfunction
 
-func! s:neoyank(...)
+func! s:neoyank(...) abort
   let yank = []
   for text in neoyank#_get_yank_histories()['"']
     call add(yank, '": ' . join(split(text[0], "\n"), '\n'))
@@ -366,9 +378,23 @@ function! s:neoyank_acp(line, args) abort
   call append(0, split(line, '\\n'))
 endfunction
 
-function! s:menu(name)
+
+let s:menu_high = {}
+call extend(s:menu_high, {'Projects' :
+      \ {
+      \     'highlights_def' : {
+      \                           'Lf_menu_projects_time' : '<\d\+-\d\+-\d\+\s\d\+:\d\+:\d\+>'
+      \                        },
+      \     'highlights_cmd' : [
+      \                           'hi def link Lf_menu_projects_time Comment'
+      \                        ],
+      \ }
+      \ })
+
+function! s:menu(name) abort
+  let menu_name = a:name['--name'][0]
   let s:menu_action = {}
-  let menu = get(g:unite_source_menu_menus, a:name['--name'][0], {})
+  let menu = get(g:unite_source_menu_menus, menu_name, {})
   if has_key(menu, 'command_candidates')
     let rt = []
     for item in menu.command_candidates
@@ -381,7 +407,17 @@ function! s:menu(name)
   endif
 endfunction
 
-function! s:accept(line, args)
+function! SpaceVim#layers#leaderf#run_menu(name) abort
+  call s:run_menu(a:name)
+endfunction
+
+function! s:run_menu(name) abort
+  let g:Lf_Extensions.menu.highlights_def = get(get(s:menu_high, a:name, {}), 'highlights_def', {})
+  let g:Lf_Extensions.menu.highlights_cmd = get(get(s:menu_high, a:name, {}), 'highlights_cmd', {})
+  exe printf('Leaderf menu --name %s', a:name)
+endfunction
+
+function! s:accept(line, args) abort
   let action = get(s:menu_action, a:line, '')
   exe action
 endfunction
@@ -439,7 +475,7 @@ function! s:unicode_acp(line, args) abort
     let glyph = matchstr(a:line, ';\x\{4,5}')
     let writable = nr2char(str2nr(glyph[1:], 16))
 
-    exe "norm! a" . eval("\"" . writable . "\"")
+    exe 'norm! a' . eval("\"" . writable . "\"")
     " echo printf("%s%s", writable, glyph)
   else
     exe 'Leaderf unicode --name ' . a:line
@@ -536,7 +572,17 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>f<Space> :<C-u>Leaderf menu --name CustomKeyMaps<CR>
+  nnoremap <silent> <Leader>ft :<C-u>Leaderf tag<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.t = ['Leaderf tag',
+        \ 'fuzzy find tags',
+        \ [
+        \ '[Leader f t] is to fuzzy find tags',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>f<Space> :<C-u>call <SID>run_menu('CustomKeyMaps')<CR>
   let g:_spacevim_mappings.f['[SPC]'] = ['Leaderf menu --name CustomKeyMaps',
         \ 'fuzzy find custom key bindings',
         \ [
@@ -545,7 +591,7 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>fp  :<C-u>Leaderf menu --name AddedPlugins<CR>
+  nnoremap <silent> <Leader>fp  :<C-u>call <SID>run_menu('AddedPlugins')<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.p = ['Leaderf menu --name AddedPlugins',
         \ 'fuzzy find vim packages',
@@ -558,7 +604,7 @@ function! s:defind_fuzzy_finder() abort
 endfunction
 
 function! s:accept_mru(line) abort
-  exe 'e ' . line
+  exe 'e ' . a:line
 endfunction
 
 function! s:warp_denite(cmd) abort

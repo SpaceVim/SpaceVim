@@ -1,6 +1,6 @@
 "=============================================================================
 " edit.vim --- SpaceVim edit layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -12,31 +12,38 @@ let s:PASSWORD = SpaceVim#api#import('password')
 let s:NUMBER = SpaceVim#api#import('data#number')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:VIM = SpaceVim#api#import('vim')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
-        \ ['tpope/vim-surround'],
-        \ ['tpope/vim-repeat'],
-        \ ['junegunn/vim-emoji'],
-        \ ['terryma/vim-expand-region', { 'loadconf' : 1}],
-        \ ['kana/vim-textobj-user'],
-        \ ['kana/vim-textobj-indent'],
-        \ ['kana/vim-textobj-line'],
-        \ ['dhruvasagar/vim-table-mode'],
-        \ ['kana/vim-textobj-entire'],
-        \ ['gcmt/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
-        \ ['easymotion/vim-easymotion'],
-        \ ['haya14busa/vim-easyoperator-line'],
-        \ ['editorconfig/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
-        \ ['osyo-manga/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
-        \ ['godlygeek/tabular',           { 'merged' : 0}],
-        \ ['ntpeters/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-surround'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-repeat'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-emoji'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-expand-region', { 'loadconf' : 1}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-user'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-indent'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-line'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-table-mode'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-textobj-entire'],
+        \ [g:_spacevim_root_dir . 'bundle/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-easymotion'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-easyoperator-line'],
+        \ [g:_spacevim_root_dir . 'bundle/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
+        \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
+        \ ['andrewradev/splitjoin.vim',{ 'merged' : 0, 'loadconf' : 1}],
         \ ]
   if executable('fcitx')
-    call add(plugins,['lilydjwg/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
   endif
   if g:spacevim_enable_bepo_layout
-    call add(plugins,['michamos/vim-bepo',        { 'merged' : 0}])
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-bepo',        { 'merged' : 0}])
+  endif
+  if s:CMP.has('python') || s:CMP.has('python3')
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-mundo',        { 'on_cmd' : 'MundoToggle'}])
+  else
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/undotree',        { 'on_cmd' : 'UndotreeToggle'}])
   endif
   return plugins
 endfunction
@@ -66,6 +73,12 @@ function! SpaceVim#layers#edit#config() abort
   vmap <silent> J <Plug>(jplus)
   " }}}
 
+
+  if s:CMP.has('python') || s:CMP.has('python3')
+    nnoremap <silent> <F7> :MundoToggle<CR>
+  else
+    nnoremap <silent> <F7> :UndotreeToggle<CR>
+  endif
   let g:_spacevim_mappings_space.x = {'name' : '+Text'}
   let g:_spacevim_mappings_space.x.a = {'name' : '+align'}
   let g:_spacevim_mappings_space.x.d = {'name' : '+delete'}
@@ -205,6 +218,11 @@ function! SpaceVim#layers#edit#config() abort
         \ . string(s:_function('s:transpose_with_next')) . ', ["line"])',
         \ 'swap-current-line-with-next-one', 1)
 
+  " splitjoin
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'o'],
+        \ 'SplitjoinJoin', 'join into a single-line statement', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'm'],
+        \ 'SplitjoinSplit', 'split a one-liner into multiple lines', 1)
 endfunction
 
 function! s:transpose_with_previous(type) abort
@@ -307,7 +325,7 @@ endfunction
 
 function! s:lowerCamelCase() abort
   " fooFzz
-  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~# '\s'
     return
   endif
   let cword = s:parse_symbol(expand('<cword>'))
@@ -327,7 +345,7 @@ endfunction
 
 function! s:UpperCamelCase() abort
   " FooFzz
-  if strcharpart(getline('.')[col('.') - 1:], 0, 1) =~ '\s'
+  if strcharpart(getline('.')[col('.') - 1:], 0, 1) =~# '\s'
     return
   endif
   let cword = s:parse_symbol(expand('<cword>'))
@@ -344,7 +362,7 @@ endfunction
 
 function! s:kebab_case() abort
   " foo-fzz
-  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~# '\s'
     return
   endif
   let cword = s:parse_symbol(expand('<cword>'))
@@ -373,7 +391,7 @@ endfunction
 
 function! s:up_case() abort
   " FOO_FZZ
-  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~ '\s'
+  if matchstr(getline('.'), '\%' . col('.') . 'c.') =~# '\s'
     return
   endif
   let cword =map(s:parse_symbol(expand('<cword>')), 'toupper(v:val)')

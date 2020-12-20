@@ -1,0 +1,47 @@
+language: vim
+
+cache:
+  directories:
+    - $HOME/.vvm
+matrix:
+  include:
+    - os: linux
+      env:
+        - VIM_VERSION=8.0.0000
+    - os: linux
+      env:
+        - VIM_VERSION=8.1.0000
+    - os: linux
+      env:
+        - VIM_VERSION=8.2.0000
+    - os: osx
+      env:
+        - VIM_VERSION=8.0.0000
+    - os: osx
+      env:
+        - VIM_VERSION=8.1.0000
+    - os: osx
+      env:
+        - VIM_VERSION=8.2.0000
+
+before_install:
+  - curl https://raw.githubusercontent.com/kana/vim-version-manager/master/bin/vvm | python - setup; true
+  - source ~/.vvm/etc/login
+  - vvm update_itself
+  - vvm use vimorg--v$VIM_VERSION --install --with-features=huge
+
+before_script: |
+  git clone https://github.com/junegunn/vader.vim.git
+  git clone https://github.com/vim-airline/vim-airline
+  find $PWD/autoload/airline/themes -name "*.vim" > themes.txt
+
+script: |
+  vim --not-a-term -Nu <(cat << VIMRC
+  filetype off
+  set rtp+=vader.vim
+  set rtp+=vim-airline
+  set rtp+=.
+  set rtp+=after
+  filetype plugin indent on
+  syntax enable
+  VIMRC) -c 'Vader! test/*' > /dev/null

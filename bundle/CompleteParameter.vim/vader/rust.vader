@@ -1,0 +1,105 @@
+" {{{ycm
+Execute (error param):
+  let completed_item = {}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (fn hello()):
+  let completed_item = {'word': 'hello', 'menu': 'fn hello()', 'kind': 'f'}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (fn hello() -> Self):
+  let completed_item = {'word': 'hello', 'menu': 'fn hello()', 'kind': 'f'}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (fn hello(capacity: usize) -> Vec<T>):
+  let completed_item = {'word': 'hello', 'menu': 'fn hello(capacity: usize) -> Vec<T>', 'kind': 'f'}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['(capacity)'], result
+
+Execute (fn hello(s: Cow<'a, [T]>) -> Vec<T>):
+  let completed_item = {'word': 'hello', 'menu': 'fn hello(s: Cow<''a, [T]>) -> Vec<T>', 'kind': 'f'}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['(s)'], result
+"}}}
+
+" {{{ deoplete
+Execute (error param):
+  let completed_item = {}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (fn hello()):
+  let completed_item = {'word': 'hello', 'info': 'fn hello()', 'kind': 'Function'}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (fn hello() -> Self):
+  let completed_item = {'word': 'hello', 'info': 'fn hello()', 'kind': 'Function'}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (fn hello(capacity: usize) -> Vec<T>):
+  let completed_item = {'word': 'hello', 'info': 'fn hello(capacity: usize) -> Vec<T>', 'kind': 'Function'}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['(capacity)'], result
+
+Execute (fn hello(s: Cow<'a, [T]>) -> Vec<T>):
+  let completed_item = {'word': 'hello', 'info': 'fn hello(s: Cow<''a, [T]>) -> Vec<T>', 'kind': 'Function'}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['(s)'], result
+"}}}
+
+" {{{ycm
+Execute (error param):
+  let completed_item = {}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (fn hello()):
+  let completed_item = {'word': 'hello(', 'info': 'fn hello()', 'kind': 'f', 'abbr': 'hello'}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (fn hello() -> Self):
+  let completed_item = {'word': 'hello(', 'info': 'fn hello()', 'kind': 'f', 'abbr': 'hello'}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (fn hello(capacity: usize) -> Vec<T>):
+  let completed_item = {'word': 'hello(', 'info': 'fn hello(capacity: usize) -> Vec<T>', 'kind': 'f', 'abbr': 'hello'}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['(capacity)'], result
+
+Execute (fn hello(s: Cow<'a, [T]>) -> Vec<T>):
+  let completed_item = {'word': 'hello(', 'info': 'fn hello(s: Cow<''a, [T]>) -> Vec<T>', 'kind': 'f', 'abbr': 'hello'}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['(s)'], result
+
+Execute (gen_range):
+  let completed_item = {'word': 'gen_range', 'menu': 'fn gen_range<T: PartialOrd + SampleRange>(&mut self, low: T, high: T) -> T where Self: Sized', 'info': '', 'kind': 'f', 'abbr': ''}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['(low, high)'], result
+
+Execute (has self):
+  let completed_item = {'word': 'gen_range', 'menu': 'fn gen_range(mut self, low: T, high: T) -> T where Self: Sized', 'info': '', 'kind': 'f', 'abbr': ''}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['(low, high)'], result
+
+Execute (trim):
+  let completed_item = {'word': 'trim', 'menu': 'pub fn trim(&self) -> &str', 'info': '', 'kind': 'f', 'abbr': ''}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (ends_with):
+  let completed_item = {'word': 'ends_with', 'menu': 'pub fn ends_with(&''a self, pat) -> &str', 'info': '', 'kind': 'f', 'abbr': ''}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['(pat)'], result
+
+Execute (mut ends_with):
+  let completed_item = {'word': 'ends_with', 'menu': 'pub fn ends_with(&''a mut self, pat) -> &str', 'info': '', 'kind': 'f', 'abbr': ''}
+  let result = cm_parser#rust#parameters(completed_item)
+  AssertEqual ['(pat)'], result
+"}}}

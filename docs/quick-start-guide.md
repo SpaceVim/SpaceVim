@@ -44,7 +44,14 @@ For more info about the install script, please check:
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 
-If you got a vimproc error like `[vimproc] vimproc's DLL: "~/.cache/vimfiles/vimproc.vim/lib/vimproc_linux64.so" is not found.  Please read :help vimproc and make it`, you may need to install make (from `build-essential)` and a C compilator (like `gcc`) to build the dll (see issue [#435](https://github.com/SpaceVim/SpaceVim/issues/435) and [#544](https://github.com/SpaceVim/SpaceVim/issues/544)).
+If you got a vimproc error like:
+
+```
+[vimproc] vimproc's DLL: "~/.SpaceVim/bundle/vimproc.vim/lib/vimproc_linux64.so" is not found.
+````
+
+Please read `:help vimproc` and make it, you may need to install make (from `build-essential`)
+and a C compilator (like `gcc`) to build the dll (see issue [#435](https://github.com/SpaceVim/SpaceVim/issues/435) and [#544](https://github.com/SpaceVim/SpaceVim/issues/544)).
 
 ### Windows
 
@@ -66,8 +73,7 @@ docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevi
 ## Configuration
 
 The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`. This is
-an example for basic usage of SpaceVim. For more info, please checkout SpaceVim
-documentation.
+an example for basic usage of SpaceVim. For more info, please checkout [documentation](../documentation/) and [available layers](../layers/).
 
 ```toml
 # This is a basic configuration example for SpaceVim
@@ -85,7 +91,7 @@ documentation.
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "nil"
-    statusline_separator = "bar"
+    statusline_iseparator = "bar"
     buffer_index_type = 4
     # Display file type icon on the tabline, If you do not have nerd fonts
     # installed, please change the value to false
@@ -107,7 +113,7 @@ documentation.
 
 # This is an example for adding custom plugins lilydjwg/colorizer
 [[custom_plugins]]
-    name = "lilydjwg/colorizer"
+    repo = "lilydjwg/colorizer"
     merged = false
 ```
 

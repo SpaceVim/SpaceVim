@@ -1,0 +1,27 @@
+vim_function vim ^[\ 	:]*fu\%[nction]!\?\s*\(.\{-}\)(
+
+
+function
+function!
+:function
+:function!
+
+ function
+ function!
+ :function
+ :function!
+
+: function
+: function!
+: :function
+: :function!
+
+::function
+::function!
+:::function
+:::function!
+
+:	function
+:	function!
+:	:function
+:	:function!

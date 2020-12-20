@@ -17,6 +17,7 @@ description: "This layers provide a heavily customized Denite centric work-flow"
 ## Description
 
 This layer is a heavily customized wrapper for denite and it's sources.
+To enable this layer, make sure your vim/neovim has `+python3` enabled.
 
 ## Install
 

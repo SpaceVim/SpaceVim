@@ -1,0 +1,102 @@
+Include: include/setup.vader
+
+Execute (Vint: generic postprocessing for highlights):
+  new
+  file file1.vim
+  norm! iecho l:undefined_var
+  norm! oecho unused_var
+  norm! osome unexpected_token
+
+  let vint_maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#vim#vint(), [
+  \ "file1.vim:1:6:warning:Undefined variable: l:undefined_var (ProhibitUsingUndeclaredVariable)",
+  \ "file1.vim:2:6:warning:Unused variable: unused_var (ProhibitUnusedVariable)",
+  \ "file1.vim:3:6:error:unexpected token: unexpected_token (SyntaxError)",
+  \ ])
+  let vint_maker.append_file = 0
+
+  call neomake#highlights#ResetFile(bufnr('%'))
+  AssertEqual neomake#highlights#_get(), {'file': {}, 'project': {}}
+
+  call neomake#Make(1, [vint_maker])
+  NeomakeTestsWaitForFinishedJobs
+  let bufnr = bufnr('%')
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 1,
+  \ 'bufnr': bufnr,
+  \ 'col': 6,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'w',
+  \ 'pattern': '',
+  \ 'text': 'Undefined variable: l:undefined_var (ProhibitUsingUndeclaredVariable)'
+  \ }, {
+  \ 'lnum': 2,
+  \ 'bufnr': bufnr,
+  \ 'col': 6,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'w',
+  \ 'pattern': '',
+  \ 'text': 'Unused variable: unused_var (ProhibitUnusedVariable)'
+  \ }, {
+  \ 'lnum': 3,
+  \ 'bufnr': bufnr,
+  \ 'col': 6,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'e',
+  \ 'pattern': '',
+  \ 'text': 'unexpected token: unexpected_token (SyntaxError)'
+  \ }]
+
+  " Test that length has been used with the highlight.
+  let highlights = neomake#highlights#_get()
+  if has('nvim')
+    AssertEqual has_key(highlights['file'], bufnr), 1, "highlight for file"
+  else
+    AssertEqual highlights.file[bufnr], {
+    \ 'NeomakeWarning': [[1, 6, 15], [2, 6, 10]],
+    \ 'NeomakeError': [[3, 6, 16]],
+    \ 'NeomakeInfo': [],
+    \ 'NeomakeMessage': [],
+    \ }
+  endif
+  bwipe!
+
+Execute (vimlint: errorformat):
+  Save &efm
+  let &efm = neomake#makers#ft#vim#vimlint().errorformat
+
+  new
+  file testfile.vim
+  lgetexpr 'testfile.vim:33:12:Error: EVP_0: unexpected EOL'
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 33, 'bufnr': bufnr('%'), 'col': 12, 'valid': 1, 'vcol': 0,
+  \ 'nr': 0, 'type': 'E', 'pattern': '', 'text': 'unexpected EOL'}]
+
+  lgetexpr 'testfile.vim:2:0:Error: EVP_E171: Missing :endif:    TOPLEVEL'
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 2, 'bufnr': bufnr('%'), 'col': 0, 'valid': 1, 'vcol': 0,
+  \ 'nr': 171, 'type': 'E', 'pattern': '', 'text': 'Missing :endif:    TOPLEVEL'}]
+
+  lgetexpr 'testfile.vim:1:1:Error: EVL204: constant in conditional context'
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 1, 'bufnr': bufnr('%'), 'col': 1, 'valid': 1, 'vcol': 0,
+  \ 'nr': 204, 'type': 'E', 'pattern': '', 'text': 'constant in conditional context'}]
+
+  lgetexpr 'testfile.vim:2:1:Warning: EVL204: constant in conditional context'
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 2, 'bufnr': bufnr('%'), 'col': 1, 'valid': 1, 'vcol': 0,
+  \ 'nr': 204, 'type': 'W', 'pattern': '', 'text': 'constant in conditional context'}]
+  bwipe
+
+Execute (vint: handles error with version check):
+  let exe = g:NeomakeTestsCreateExe('vint', [
+  \ '#!/bin/sh', 'echo "Traceback (most recent call last):" >&2'])
+
+  let maker = neomake#makers#ft#vim#vint()
+  let maker.exe = exe
+  AssertEqual maker.supports_stdin({}), 0

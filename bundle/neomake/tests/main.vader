@@ -1,0 +1,77 @@
+" Main entry point to run main Vader tests (without isolated ones).
+" Use all.vader to run all tests.
+"
+" You can run the included files by themselves (since they also source
+" include/setup.vader).
+
+~ Features
+Include (:NeomakeInfo): cmd_neomakeinfo.vader
+Include (Automaking): automake.vader
+Include (Action queue): action_queue.vader
+Include (Cancellation): cancellation.vader
+Include (Compat): compat.vader
+Include (Completion): completion.vader
+Include (Config): config.vader
+Include (Clean command): clean.vader
+Include (Current working dir): cwd.vader
+Include (Current error): current_error.vader
+Include (Custom Quickfix): customqf.vader
+Include (Debug/Checks/Feedback): debug.vader
+Include (Environment variables): env.vader
+Include (Error handling): errors.vader
+Include (Filetype handling): filetypes.vader
+Include (Filter output): filter_output.vader
+Include (Highlights): highlights.vader
+Include (Hooks): hooks.vader
+Include (Hooks get queued): hooks-queue.vader
+Include (Integration tests): integration.vader
+Include (Jobinfo): jobinfo.vader
+Include (JSON): json.vader
+Include (List): list.vader
+Include (Lists): lists.vader
+Include (List entries): list-entries.vader
+Include (Logging): log.vader
+Include (Makeprg): makeprg.vader
+Include (Maker args): args.vader
+Include (Maker errors): maker_errors.vader
+Include (Makers): makers.vader
+Include (Mapexpr): mapexpr.vader
+Include (Postprocess): postprocess.vader
+Include (Processing): processing.vader
+Include (Serialize): serialize.vader
+Include (Signs): signs.vader
+Include (Statusline): statusline.vader
+Include (Stdin): stdin.vader
+Include (Temporary files): tempfiles.vader
+Include (Toggling): toggle.vader
+Include (Utils: project root): utils_projectroot.vader
+Include (Utils): utils.vader
+Include (Verbosity): verbosity.vader
+Include (Vim/Neovim behavior): vim_and_neovim_behavior.vader
+
+~ Filetype specific
+Include (Asciidoc): ft_asciidoc.vader
+Include (Cs): ft_cs.vader
+Include (Css): ft_css.vader
+Include (Elixir): ft_elixir.vader
+Include (Elm): ft_elm.vader
+Include (Erlang): ft_erlang.vader
+Include (Go): ft_go.vader
+Include (HTML): ft_html.vader
+Include (Haskell): ft_haskell.vader
+Include (Idris): ft_idris.vader
+Include (JavaScript): ft_javascript.vader
+Include (Markdown): ft_markdown.vader
+Include (Perl): ft_perl.vader
+Include (PHP): ft_php.vader
+Include (Puppet): ft_puppet.vader
+Include (PureScript): ft_purescript.vader
+Include (Python): ft_python.vader
+Include (ReStructuredText): ft_rst.vader
+Include (Rust): ft_rust.vader
+Include (Shell): ft_sh.vader
+Include (SQL): ft_sql.vader
+Include (Text): ft_text.vader
+Include (TypeScript): ft_typescript.vader
+Include (Vim): ft_vim.vader
+Include (XML): ft_xml.vader

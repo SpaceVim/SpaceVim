@@ -1,0 +1,520 @@
+Include: include/setup.vader
+
+Execute (neomake#Make handles invalid cwd):
+  let maker = {
+      \ 'name': 'custom_maker',
+      \ 'exe': 'true',
+      \ 'cwd': '/doesnotexist',
+      \ }
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+  AssertNeomakeMessage "custom_maker: could not change to maker's cwd (/doesnotexist): Vim(cd):E344: Can't find directory \"/doesnotexist\" in cdpath.", 0
+
+Execute (neomake#Make handles invalid cwd (serialized)):
+  let maker = {
+      \ 'name': 'custom_maker',
+      \ 'exe': 'true',
+      \ 'cwd': '/doesnotexist',
+      \ 'serialize': 1,
+      \ }
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+  AssertNeomakeMessage "custom_maker: could not change to maker's cwd (/doesnotexist): Vim(cd):E344: Can't find directory \"/doesnotexist\" in cdpath.", 0
+
+Execute (cwd gets compared with trailing slash removed):
+  let cwd = getcwd()
+  let maker1 = {'name': 'maker1', 'exe': 'true', 'cwd': cwd.'/', 'append_file': 0}
+  let maker2 = {'name': 'maker2', 'exe': 'true', 'cwd': cwd, 'append_file': 0}
+
+  new
+  call neomake#Make(1, [maker1])
+  lcd build
+  call neomake#Make(1, [maker2])
+  NeomakeTestsWaitForFinishedJobs
+  AssertNeomakeMessage 'cwd: '.cwd.'.'
+  AssertNeomakeMessage 'cwd: '.cwd.' (changed).'
+  bwipe
+
+Execute (tcd is handled properly):
+  if exists(':tcd') != 2
+    NeomakeTestsSkip 'no :tcd'
+  else
+    let maker = NeomakeTestsCommandMaker('sleep-maker', 'sleep .01')
+    for d in ['build/path1', 'build/path2']
+      if !isdirectory(d)
+        call mkdir(d, 'p')
+      endif
+    endfor
+    try
+      tabnew
+      let tab1 = tabpagenr()
+      let tab1_bufnr = bufnr('%')
+      tcd build/path1
+      let dir1 = getcwd()
+
+      tabnew
+      tcd ../../build/path2
+      let tab2 = tabpagenr()
+      let dir2 = getcwd()
+
+      call neomake#Make(1, [maker])
+
+      exe 'tabnext' tab1
+      AssertEqual dir1, getcwd()
+      call neomake#Make(1, [maker])
+
+      exe 'tabnext' tab2
+      AssertEqual dir2, getcwd()
+
+      NeomakeTestsWaitForFinishedJobs
+      AssertNeomakeMessage 'Postponing final location list handling (in another window).'
+      AssertNeomakeMessage 'Queuing action handle_locqf_list_for_finished_jobs for WinEnter.', 3
+
+      exe 'tabnext' tab1
+      AssertNeomakeMessage 'Cleaning make info.', 3
+      AssertNeomakeMessage 'action queue: processed 1 items.', 3, {'bufnr': tab1_bufnr}
+      NeomakeTestsWaitForRemovedJobs
+    finally
+      if exists('tab2')
+        bwipe
+      endif
+      if exists('tab1')
+        bwipe
+      endif
+    endtry
+  endif
+
+Execute (tempfile with pwd):
+  let maker = NeomakeTestsCommandMaker('pwd', 'pwd; printf')
+  let maker.cwd = '%:p:h'
+  let maker.errorformat = '%m'
+  let maker.append_file = 1
+  new
+  let b:neomake_tempfile_enabled = 1
+
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+
+  AssertNeomakeMessage 'Processing 2 lines of output.', 3
+  AssertNeomakeMessage '\v^Removing temporary file: "(.*)".$'
+  let tempfile_name = g:neomake_test_matchlist[1]
+
+  " NOTE: getcwd() resolves symlinks.
+  AssertEqual map(getloclist(0), 'resolve(v:val.text)'), [getcwd(), tempfile_name]
+  bwipe
+
+Execute (cwd handles fugitive buffer):
+  NeomakeTestsLoadPlugin 'vim-fugitive'
+  let maker = NeomakeTestsCommandMaker('pwd', 'pwd; ls')
+  let maker.cwd = '%:p:h'
+  let maker.errorformat = '%m'
+  let maker.append_file = 1
+  new
+  edit autoload/neomake/debug.vim
+  let expected_cwd = fnamemodify(bufname('%'), ':p:h')
+  let orig_abs_bufname = expand('%:p')
+  Gedit
+  Assert bufname('%') =~# '^fugitive://', 'Unexpected bufname: '.bufname('%')
+
+  let b:neomake_tempfile_enabled = 1
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+
+  AssertNeomakeMessage '\v^Using tempfile for unreadable buffer: "(.*)"', 3
+  let tempfile_name = g:neomake_test_matchlist[1]
+  " Temporary file gets created in maker's cwd, and displays full name.
+  AssertEqual fnamemodify(tempfile_name, ':h'), fnamemodify(orig_abs_bufname, ':h')
+
+  AssertNeomakeMessage printf('cwd: %s/autoload/neomake (changed).', getcwd()), 3
+  AssertNeomakeMessage printf('Removing temporary file: "%s".', fnamemodify(tempfile_name, ':p'))
+
+  AssertEqual map(getloclist(0), 'v:val.text'), [
+  \ expected_cwd, fnamemodify(tempfile_name, ':t')]
+  bwipe
+  bwipe autoload/neomake/debug.vim
+  if exists('*VimFtpluginUndo')
+    delfunction VimFtpluginUndo
+  endif
+
+Execute (cwd gets expanded correctly: relative and in another buffer):
+  if NeomakeAsyncTestsSetup()
+    let maker = NeomakeTestsCommandMaker('pwd', 'pwd; ls')
+    let maker.cwd = '%:.:h'
+    let maker.errorformat = '%m'
+    let maker.append_file = 1
+    new
+    edit tests/fixtures/errors.py
+    let b:neomake_serialize = 1
+    let expected_cwd = expand('%:p:h')
+
+    let jobinfo = neomake#Make(1, [g:sleep_maker, maker])[0]
+    new
+    let current_bufnr = bufnr('%')
+
+    lcd build
+    NeomakeTestsWaitForFinishedJobs
+    bwipe
+
+    AssertEqual map(getloclist(0), 'v:val.text'), [
+    \ 'slept', expected_cwd, 'errors.py']
+    bwipe
+    AssertNeomakeMessage 'Skipped pending job output for another buffer (current='.current_bufnr.').', 3
+  endif
+
+Execute (cwd per maker and serialize via dict):
+  let maker1 = {'name': 'maker1', 'exe': 'pwd', 'cwd': tempname()}
+  let maker2 = {'name': 'maker2', 'exe': 'pwd', 'cwd': tempname()}
+  call mkdir(maker1.cwd)
+  call mkdir(maker2.cwd)
+
+  call neomake#Make({
+  \ 'file_mode': 0,
+  \ 'enabled_makers': [maker1, maker2],
+  \ 'serialize': 1})
+  NeomakeTestsWaitForFinishedJobs
+  AssertEqual map(getqflist(), 'v:val.text'), [maker1.cwd, maker2.cwd]
+
+Execute (get_list_entries: filename with cwd (non-existing file)):
+  let tempdir = tempname()
+  let slash = neomake#utils#Slash()
+  let subdir = tempdir . slash . 'project' . slash . 'sub'
+  call mkdir(subdir, 'p', 0700)
+
+  new
+  file project/sub/file_in_subdir_1
+  let bufnr = bufnr('%')
+
+  let maker = {'cwd': '%:p:h'}
+  function! maker.get_list_entries(...) abort dict
+    return [{
+      \ 'filename': 'file_in_subdir_1',
+      \ 'lnum': 23,
+      \ 'col': 42,
+      \ 'text': 'error message',
+      \ 'type': 'E',
+      \ }]
+  endfunction
+
+  " uses unlisted buffer if file does not exist
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 23,
+  \ 'bufnr': bufnr + 1,
+  \ 'col': 42,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'E',
+  \ 'pattern': '',
+  \ 'text': 'error message'}]
+  let unlisted_bufnr = bufnr+1
+  let bwipe_buffers = [unlisted_bufnr]
+  AssertEqual bufname(unlisted_bufnr), 'file_in_subdir_1'
+  Assert !buflisted(unlisted_bufnr), 'buffer is unlisted (1)'
+
+  " uses unlisted buffer if file does not exist (cwd matches)
+  let orig_cwd = getcwd()
+  exe 'lcd' tempdir
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+
+  if has('patch-7.4.2017')
+    let expected_bufnr = unlisted_bufnr
+  else
+    let expected_bufnr = unlisted_bufnr + 1
+    let bwipe_buffers += [expected_bufnr]
+  endif
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 23,
+  \ 'bufnr': expected_bufnr,
+  \ 'col': 42,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'E',
+  \ 'pattern': '',
+  \ 'text': 'error message'}]
+  AssertEqual bufname(unlisted_bufnr), orig_cwd.'/file_in_subdir_1'
+  Assert !buflisted(unlisted_bufnr), 'buffer is unlisted (2)'
+
+  for b in bwipe_buffers
+    exe 'bwipe' b
+  endfor
+  bwipe
+
+Execute (get_list_entries: filename with cwd):
+  let tempdir = tempname()
+  let slash = neomake#utils#Slash()
+  let subdir = tempdir . slash . 'project' . slash . 'sub'
+  call mkdir(subdir, 'p', 0700)
+
+  let maker = {'cwd': '%:p:h'}
+  function! maker.get_list_entries(...) abort dict
+    return [{
+      \ 'filename': 'file_in_subdir_2',
+      \ 'lnum': 23,
+      \ 'col': 42,
+      \ 'text': 'error message',
+      \ 'type': 'E',
+      \ }]
+  endfunction
+
+  new
+  let bufnr = bufnr('%')
+  exe 'lcd' tempdir
+  write project/sub/file_in_subdir_2
+  AssertEqual expand('%:p'), tempdir.'/project/sub/file_in_subdir_2'
+  Assert filereadable('project/sub/file_in_subdir_2'), 'file is readable'
+
+  CallNeomake 1, [maker]
+  AssertNeomakeMessage 'Updating entry bufnr: 0 => '.bufnr.'.'
+
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 23,
+  \ 'bufnr': bufnr('%'),
+  \ 'col': 42,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'E',
+  \ 'pattern': '',
+  \ 'text': 'error message'}]
+  bwipe
+
+Execute (process_output: filename with cwd):
+  let tempdir = tempname()
+  let slash = neomake#utils#Slash()
+  let subdir = tempdir . slash . 'project' . slash . 'sub'
+  call mkdir(subdir, 'p', 0700)
+
+  let maker = {'exe': 'printf', 'args': '1', 'cwd': '%:p:h'}
+  function! maker.process_output(...) abort dict
+    return [{
+      \ 'filename': 'file_in_subdir_3',
+      \ 'lnum': 23,
+      \ 'col': 42,
+      \ 'text': 'error message',
+      \ 'type': 'E',
+      \ }]
+  endfunction
+
+  new
+  let bufnr = bufnr('%')
+  exe 'lcd' tempdir
+  write project/sub/file_in_subdir_3
+  AssertEqual expand('%:p'), tempdir.'/project/sub/file_in_subdir_3'
+  Assert filereadable('project/sub/file_in_subdir_3'), 'file is readable'
+
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+
+  AssertNeomakeMessage 'Updating entry bufnr: 0 => '.bufnr.'.'
+
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 23,
+  \ 'bufnr': bufnr('%'),
+  \ 'col': 42,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'E',
+  \ 'pattern': '',
+  \ 'text': 'error message'}]
+  bwipe
+
+Execute (process_output: gets executed in maker cwd):
+  let s:called = 0
+  let s:cwd = tempname()
+  call mkdir(s:cwd)
+
+  let maker = copy(g:error_maker)
+  let maker.cwd = s:cwd
+  function! maker.process_output(context)
+    let s:called = 1
+    AssertEqual getcwd(), s:cwd
+    return []
+  endfunction
+
+  CallNeomake 0, [maker]
+  AssertEqual s:called, 1
+
+Execute (legacy errorformat maker: filename with cwd):
+  let tempdir = tempname()
+  let slash = neomake#utils#Slash()
+  let subdir = tempdir . slash . 'project' . slash . 'sub'
+  call mkdir(subdir, 'p', 0700)
+
+  let maker = {
+  \ 'exe': 'printf',
+  \ 'args': '"file_in_subdir_4:23:42:E:error message"',
+  \ 'errorformat': '%f:%l:%c:%t:%m',
+  \ 'cwd': '%:p:h'}
+
+  new
+  let bufnr = bufnr('%')
+  exe 'lcd' tempdir
+  write project/sub/file_in_subdir_4
+  AssertEqual expand('%:p'), tempdir.'/project/sub/file_in_subdir_4'
+  Assert filereadable('project/sub/file_in_subdir_4'), 'file is readable'
+
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+
+  AssertEqualQf getloclist(0), [{
+  \ 'lnum': 23,
+  \ 'bufnr': bufnr('%'),
+  \ 'col': 42,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'E',
+  \ 'pattern': '',
+  \ 'text': 'error message'}]
+  bwipe
+
+Execute (legacy errorformat maker: filename with cwd (error: removed)):
+  if v:version < 705 && !(v:version == 704 && has('patch1107'))
+    NeomakeTestsSkip 'cannot delete direcories easily'
+    return
+  endif
+  let tempdir = tempname()
+  let slash = neomake#utils#Slash()
+  let subdir = tempdir . slash . 'project' . slash . 'sub'
+  call mkdir(subdir, 'p', 0700)
+
+  let maker = NeomakeTestsCommandMaker('print_error',
+  \ 'printf "file_in_subdir_5:23:42:E:error message"')
+  call extend(maker, {
+  \ 'errorformat': '%f:%l:%c:%t:%m',
+  \ 'cwd': '%:p:h'})
+
+  new
+  exe 'lcd' tempdir
+  write project/sub/file_in_subdir_5
+  let tempfile = expand('%:p')
+  let bufnr = bufnr('%')
+  AssertEqual tempfile, tempdir.'/project/sub/file_in_subdir_5'
+  Assert filereadable('project/sub/file_in_subdir_5'), 'file is readable'
+
+  call neomake#Make(1, [maker])
+
+  if neomake#has_async_support()
+    " Delete the file and dir to trigger the cd error.
+    let tempfile_dir = fnamemodify(tempfile, ':h')
+    AssertEqual 0, delete(tempfile)
+    AssertEqual 0, delete(tempfile_dir, 'd')
+    NeomakeTestsWaitForFinishedJobs
+
+    AssertNeomakeMessage printf("Could not change to job's cwd (%%:p:h): %s",
+    \ printf("Vim(lcd):E344: Can't find directory \"%s\" in cdpath.", tempfile_dir))
+
+    " A new unlisted buffer should have been created.
+    try
+      " try/catch for 'throw' in 'msg' setting.
+      let loclist_bufnr = bufnr('^file_in_subdir_5$')
+    catch
+      Assert 0, printf('could not find file_in_subdir_5 unlisted buffer: %s: %s',
+        \ v:exception, neomake#utils#redir('ls!'))
+    endtry
+    Assert !buflisted(loclist_bufnr), 'buffer is unlisted'
+    AssertNotEqual bufnr('%'), loclist_bufnr
+
+    let expected_bufnr = loclist_bufnr
+  else
+    let expected_bufnr = bufnr('%')
+  endif
+
+  " Filtering out 'shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory'
+  AssertEqualQf filter(getloclist(0), "v:val.text !~# '^shell-init'"), [{
+  \ 'lnum': 23,
+  \ 'bufnr': expected_bufnr,
+  \ 'col': 42,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'E',
+  \ 'pattern': '',
+  \ 'text': 'error message'}]
+  if exists('loclist_bufnr')
+    exe 'bwipe' loclist_bufnr
+  endif
+  bwipe
+
+  AssertNeomakeMessage 'Placing sign: sign place 5000 line=23 name=neomake_file_err buffer='.expected_bufnr.'.'
+
+Execute (legacy errorformat maker: filename with cwd (error: maker rmdir)):
+  let tempdir = tempname()
+  call mkdir(tempdir, 'p', 0700)
+
+  let maker = NeomakeTestsCommandMaker('remove_dir_and_print_error',
+  \ printf('rmdir %s && printf "file_in_subdir_6:23:42:E:error message"', tempdir))
+  call extend(maker, {
+  \ 'errorformat': '%f:%l:%c:%t:%m',
+  \ 'cwd': tempdir})
+
+  new
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+
+  AssertNeomakeMessage printf("Could not change to job's cwd (%s): %s",
+  \ tempdir,
+  \ printf("Vim(cd):E344: Can't find directory \"%s\" in cdpath.", tempdir))
+
+  " A new unlisted buffer should have been created.
+  let unlisted_bufnr = bufnr('^file_in_subdir_6$')
+  Assert !buflisted(unlisted_bufnr), 'buffer is unlisted'
+  AssertNotEqual bufnr('%'), unlisted_bufnr
+
+  " Filtering out 'shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory'
+  AssertEqualQf filter(getloclist(0), "v:val.text !~# '^shell-init'"), [{
+  \ 'lnum': 23,
+  \ 'bufnr': unlisted_bufnr,
+  \ 'col': 42,
+  \ 'valid': 1,
+  \ 'vcol': 0,
+  \ 'nr': -1,
+  \ 'type': 'E',
+  \ 'pattern': '',
+  \ 'text': 'error message'}]
+  bwipe
+  exe 'bwipe' unlisted_bufnr
+
+Execute (cwd):
+  new
+  file tests/fixtures/a\ filename\ with\ spaces
+  let maker = {
+      \ 'name': 'custom_maker',
+      \ 'exe': 'ls',
+      \ 'cwd': '%:p:h',
+      \ }
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+  AssertNeomakeMessage printf('cwd: %s/tests/fixtures (changed).', getcwd()), 3
+  AssertEqual map(getloclist(0), 'v:val.text'), ['a filename with spaces']
+  bwipe
+
+Execute (cwd (tempfile)):
+  new
+  file tests/fixtures/doesnotexist
+  let bufname = bufname('%')
+  let maker = {
+      \ 'name': 'custom_maker',
+      \ 'exe': 'ls',
+      \ 'cwd': '%:p:h',
+      \ }
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+  AssertNeomakeMessage '\v^Using tempfile for unreadable buffer: "(.*)"', 3
+  let tempfile_name = g:neomake_test_matchlist[1]
+
+  " Temporary file gets created in maker's cwd, and displays full name.
+  let tempfile_abs = fnamemodify(bufname, ':p')
+  AssertEqual fnamemodify(tempfile_name, ':h'), fnamemodify(tempfile_abs, ':h')
+  AssertNeomakeMessage printf('cwd: %s/tests/fixtures (changed).', getcwd()), 3
+  AssertEqual map(getloclist(0), 'v:val.text'), [fnamemodify(tempfile_name, ':t')]
+
+  AssertNeomakeMessage printf('Removing temporary file: "%s/tests/fixtures/%s".',
+  \ getcwd(), fnamemodify(tempfile_name, ':t'))
+  Assert !filereadable(printf('tests/fixtures/%s', tempfile_name))
+  bwipe

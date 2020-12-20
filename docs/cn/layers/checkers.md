@@ -44,9 +44,13 @@ SpaceVim 选项：
 
 | 选项名称          | 默认值 | 描述                                |
 | ----------------- | ------ | ----------------------------------- |
-| `enable_neomake`  | true   | 使用 Neomake 作为默认的语法检查插件 |
+| `enable_neomake`  | true   | 使用 [neomake](https://github.com/neomake/neomake) 作为默认的语法检查插件 |
 | `enable_ale`      | false  | 使用 Ale 作为默认语法检查插件       |
 | `lint_on_the_fly` | false  | 启用实时语法检查                    |
+
+Neomake 的设置需要使用启动函数，在启动函数里，可以使用 Vim 脚本，
+关于 neomake 所有的配置相关信息，可以查阅 `:h neomake`。
+
 
 **NOTE:** 如果你需要使用 Ale 作为默认检查工具，SpaceVim 选项需要加入：
 

@@ -1,6 +1,6 @@
 "=============================================================================
 " mapping.vim --- mapping functions in SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,6 +9,7 @@
 scriptencoding utf-8
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:WIN = SpaceVim#api#import('vim#window')
 
 
 let g:unite_source_menu_menus =
@@ -210,7 +211,9 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
   let abuf = str2nr(g:_spacevim_termclose_abuf)
   let index = index(buffers, abuf)
   if get(w:, 'shell_layer_win', 0) == 1
-    exe 'bd!' . abuf
+    if bufexists(abuf)
+      exe 'bd!' . abuf
+    endif
     " fuck the terminal windows
     if get(w:, 'shell_layer_win', 0) == 1
       close
@@ -267,7 +270,7 @@ function! SpaceVim#mapping#clear_saved_buffers() abort
         \ 'index(tabpagebuflist(), v:val) == -1',
         \ 'getbufvar(v:val, "&mod") == 0',
         \ ],
-        \ 'do' : 'bd %d'
+        \ 'do' : 'noautocmd bd %d'
         \ }
         \ )
 endfunction
@@ -289,6 +292,8 @@ endfunction
 fu! SpaceVim#mapping#SmartClose() abort
   let ignorewin = get(g:,'spacevim_smartcloseignorewin',[])
   let ignoreft = get(g:, 'spacevim_smartcloseignoreft',[])
+  " @bug vim winnr('$') do not include popup
+  " ref: https://github.com/vim/vim/issues/6474
   let win_count = winnr('$')
   let num = win_count
   for i in range(1,win_count)
@@ -297,6 +302,8 @@ fu! SpaceVim#mapping#SmartClose() abort
     elseif getbufvar(winbufnr(i),'&buftype') ==# 'quickfix'
       let num = num - 1
     elseif getwinvar(i, '&previewwindow') == 1 && winnr() !=# i
+      let num = num - 1
+    elseif s:WIN.is_float(i)
       let num = num - 1
     endif
   endfor

@@ -1,6 +1,6 @@
 "=============================================================================
 " lsp.vim --- language server protocol wallpaper
-" Copyright (c) 2016-2019 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Seong Yong-ju < @sei40kr >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -29,7 +29,7 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
     " the last part `bin/ccls` is the same, whereas the commands are not
     " actually the same.
     " We need to keep an id to distinguish among conflicting keys.
-    
+
     if stridx(a:cmds[0], '.') >= 0 
       let l:key = split(a:cmds[0], "\\.")[-1]
     else
@@ -103,12 +103,32 @@ elseif has('nvim')
     call LanguageClient_textDocument_definition()
   endfunction
 
+  function! SpaceVim#lsp#go_to_typedef() abort
+    call LanguageClient_textDocument_typeDefinition()
+  endfunction
+
+  function! SpaceVim#lsp#go_to_impl() abort
+    call LanguageClient_textDocument_implementation()
+  endfunction
+
   function! SpaceVim#lsp#rename() abort
     call LanguageClient_textDocument_rename()
   endfunction
 
   function! SpaceVim#lsp#references() abort
     call LanguageClient_textDocument_references()
+  endfunction
+
+  function! SpaceVim#lsp#go_to_declaration() abort
+    call LanguageClient_textDocument_declaration()
+  endfunction
+
+  function! SpaceVim#lsp#documentSymbol()
+    call LanguageClient_textDocument_documentSymbol()
+  endfunction
+
+  function! SpaceVim#lsp#refactor() abort
+    " @todo languageclient do not support refactor
   endfunction
 else
   " use vim-lsp

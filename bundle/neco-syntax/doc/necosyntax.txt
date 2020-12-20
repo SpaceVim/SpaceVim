@@ -1,0 +1,59 @@
+*necosyntax.txt*	Syntax source for neocomplete/deoplete/ncm.
+
+Version: 0.1
+Author: Shougo <Shougo.Matsu at gmail.com>
+License: MIT license
+
+CONTENTS					*necosyntax-contents*
+
+Introduction		|necosyntax-introduction|
+Install			|necosyntax-install|
+Interface		|necosyntax-interface|
+  Commands		  |necosyntax-commands|
+  Variables		  |necosyntax-variables|
+FAQ			|necosyntax-faq|
+
+==============================================================================
+INTRODUCTION					*necosyntax-introduction*
+
+*neco-syntax* is the syntax source for neocomplete/deoplete/ncm.
+
+This source analyzes a syntax file like autoload/syntaxcomplete.vim offered by
+default, and to add to candidate completion.  The plugin can recognize
+candidates a lot more than autoload/syntaxcomplete.vim.
+
+Note: neco-syntax does not support Vim syntax.  Because, neco-vim is better.
+
+https://github.com/Shougo/neco-vim
+
+==============================================================================
+INSTALL						*necosyntax-install*
+
+
+==============================================================================
+INTERFACE					*necosyntax-interface*
+
+------------------------------------------------------------------------------
+COMMANDS 					*necosyntax-commands*
+
+------------------------------------------------------------------------------
+VARIABLES 					*necosyntax-variables*
+
+				*g:necosyntax#min_keyword_length*
+g:necosyntax#min_keyword_length
+		In syntax files, this variable controls length of keyword
+		becoming the object of the completion at the minimum.
+
+		Default value is 4.
+
+				*g:necosyntax#max_syntax_lines*
+g:necosyntax#max_syntax_lines
+		Disable neco-syntax if |:syn-list| lines are than it.
+
+		Default value is 300.
+
+==============================================================================
+FAQ						*necosyntax-faq*
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:

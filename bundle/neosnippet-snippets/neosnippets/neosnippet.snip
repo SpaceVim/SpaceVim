@@ -1,0 +1,161 @@
+snippet     snippet
+abbr        snippet abbr options <snippet code>
+alias       snip
+options     head
+    snippet     ${1:#:trigger}
+    abbr        ${2:#:abbr}
+    options     head
+        ${3:#:TARGET}
+
+snippet     include
+abbr        include *.snip
+alias       inc
+options     head
+    include ${0:filetype}.snip
+
+snippet     $
+abbr        ${..}
+options     word
+    ${${0:0}}
+
+snippet     0
+abbr        ${0}
+options     word
+    \${0}${0}
+
+snippet     1
+abbr        ${1}
+options     word
+    \${1}${0}
+
+snippet     2
+abbr        ${2}
+options     word
+    \${2}${0}
+
+snippet     3
+abbr        ${3}
+options     word
+    \${3}${0}
+
+snippet     4
+abbr        ${4}
+options     word
+    \${4}${0}
+
+snippet     5
+abbr        ${5}
+options     word
+    \${5}${0}
+
+snippet     $:
+abbr        ${X:default}
+options     word
+    ${${1:0}:${0:default}}
+
+snippet     0:
+abbr        ${0:default}
+options     word
+    \${0:${0:default}}
+
+snippet     1:
+abbr        ${1:default}
+options     word
+    \${1:${0:default}}
+
+snippet     2:
+abbr        ${2:default}
+options     word
+    \${2:${0:default}}
+
+snippet     3:
+abbr        ${3:default}
+options     word
+    \${3:${0:default}}
+
+snippet     4:
+abbr        ${4:default}
+options     word
+    \${4:${0:default}}
+
+snippet     5:
+abbr        ${5:default}
+options     word
+    \${5:${0:default}}
+
+snippet     $#
+abbr        ${X#optional}
+options     word
+    ${${1:0}#${0:optional}}
+
+snippet     0#
+abbr        ${0:#optional}
+options     word
+    \${0:#${0:optional}}
+
+snippet     1#
+abbr        ${1:#optional}
+options     word
+    \${1:#${0:optional}}
+
+snippet     2#
+abbr        ${2:#optional}
+options     word
+    \${2:#${0:optional}}
+
+snippet     3#
+abbr        ${3:#optional}
+options     word
+    \${3:#${0:optional}}
+
+snippet     4#
+abbr        ${4:#optional}
+options     word
+    \${4:#${0:optional}}
+
+snippet     5#
+abbr        ${5:#optional}
+options     word
+    \${5:#${0:optional}}
+
+snippet     TARGET
+abbr        ${*:TARGET}
+alias       T
+options     word
+    ${${0:0}:TARGET}
+
+snippet     0T
+abbr        ${0:TARGET}
+alias       0t
+options     word
+    \${0:TARGET}${0}
+
+snippet     1T
+abbr        ${1:TARGET}
+alias       1t
+options     word
+    \${1:TARGET}${0}
+
+snippet     2T
+abbr        ${2:TARGET}
+alias       2t
+options     word
+    \${2:TARGET}${0}
+
+snippet     3T
+abbr        ${3:TARGET}
+alias       3t
+options     word
+    \${3:TARGET}${0}
+
+snippet     4T
+abbr        ${4:TARGET}
+alias       4t
+options     word
+    \${4:TARGET}${0}
+
+snippet     5T
+abbr        ${5:TARGET}
+alias       5t
+options     word
+    \${5:TARGET}${0}

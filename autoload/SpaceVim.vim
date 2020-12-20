@@ -1,6 +1,6 @@
 "=============================================================================
 " SpaceVim.vim --- Initialization and core files for SpaceVim
-" Copyright (c) 2016-2019 Shidong Wang & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -43,7 +43,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.5.0-dev'
+let g:spacevim_version = '1.6.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -137,6 +137,25 @@ let g:spacevim_home_files_number        = 6
 let g:spacevim_enable_guicolors = 0
 
 ""
+" @section escape_key_binding, options-escape_key_binding
+" @parentsection options
+" Set the key binding for switch to normal mode in insert mode.
+" Default is `jk`, to disable this key binding, set this option to empty
+" string.
+" >
+"   escape_key_binding = 'jk'
+" <
+
+""
+" Set the key binding for switch to normal mode in insert mode.
+" Default is `jk`, to disable this key binding, set this option to empty
+" string.
+" >
+"   let g:spacevim_escape_key_binding = 'jk'
+" <
+let g:spacevim_escape_key_binding = 'jk'
+
+""
 " @section enable_googlesuggest, options-enable_googlesuggest
 " @parentsection options
 " Enable/Disable Google suggestions for neocomplete. Default is false.
@@ -176,6 +195,7 @@ let g:spacevim_windows_leader          = 's'
 
 ""
 " Enable/Disable spacevim's insert mode leader, default is enable
+" This options has been deprecated.
 let g:spacevim_enable_insert_leader    = 1
 
 ""
@@ -198,6 +218,10 @@ let g:spacevim_data_dir
       \   ? $XDG_CACHE_HOME . SpaceVim#api#import('file').separator
       \   : expand($HOME. join(['', '.cache', ''],
       \     SpaceVim#api#import('file').separator))
+
+if !isdirectory(g:spacevim_data_dir)
+  call mkdir(g:spacevim_data_dir, 'p')
+endif
 
 ""
 " @section plugin_bundle_dir, options-plugin_bundle_dir
@@ -537,7 +561,20 @@ let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
 let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos', 'percentage']
 
 ""
-" Enable/Disable unicode symbols in statusline
+" @section statusline_unicode_symbols, options-statusline_unicode_symbols
+" @parentsection options
+" Enable/Disable unicode symbols in statusline, includes the mode icons and
+" fileformat icons. This option is enabled by default, to disable it:
+" >
+"   statusline_unicode_symbols = false
+" <
+
+""
+" Enable/Disable unicode symbols in statusline, includes the mode icons and
+" fileformat icons. This option is enabled by default, to disable it:
+" >
+"   let g:spacevim_statusline_unicode_symbols = 0
+" <
 let g:spacevim_statusline_unicode_symbols = 1
 ""
 " Enable/Disable language specific leader, by default you can use `,` ket
@@ -746,13 +783,13 @@ let g:spacevim_filemanager             = 'vimfiler'
 " @section filetree_direction, options-filetree_direction
 " @parentsection options
 " Config the direction of file tree. Default is 'right'. you can also set to
-" 'left'. 
+" 'left'.
 "
 " NOTE: if it is 'left', the tagbar will be move to right.
 
 ""
 " Config the direction of file tree. Default is 'right'. you can also set to
-" 'left'. 
+" 'left'.
 "
 " NOTE: if it is 'left', the tagbar will be move to right.
 let g:spacevim_filetree_direction             = 'right'
@@ -762,7 +799,7 @@ let g:spacevim_sidebar_direction        = ''
 " The default plugin manager of SpaceVim.
 " if has patch 7.4.2071, the default value is dein. Otherwise it is neobundle.
 " Options are dein, neobundle, or vim-plug.
-if has('patch-7.4.2071')
+if has('patch-7.4.1689')
   let g:spacevim_plugin_manager          = 'dein'
 else
   let g:spacevim_plugin_manager          = 'neobundle'
@@ -794,7 +831,7 @@ let g:spacevim_checkinstall            = 1
 ""
 " @section vimcompatible, options-vimcompatible
 " @parentsection options
-" Enable/Disable vimcompatible mode, by default it is false. 
+" Enable/Disable vimcompatible mode, by default it is false.
 " to enable vimcompatible mode, just add:
 " >
 "   vimcompatible = true
@@ -813,7 +850,7 @@ let g:spacevim_checkinstall            = 1
 " <
 
 ""
-" Enable/Disable vimcompatible mode, by default it is false. 
+" Enable/Disable vimcompatible mode, by default it is false.
 " to enable vimcompatible mode, just add:
 " >
 "   let g:spacevim_vimcompatible = 1
@@ -953,7 +990,7 @@ let g:spacevim_disabled_plugins        = []
 " Add custom plugins.
 " >
 "   [[custom_plugins]]
-"     name = 'vimwiki/vimwiki'
+"     repo = 'vimwiki/vimwiki'
 "     merged = false
 " <
 
@@ -989,16 +1026,88 @@ let g:spacevim_enable_powerline_fonts  = 1
 " <
 let g:spacevim_lint_on_save            = 1
 ""
+" @section search_tools, options-search_tools
+" @parentsection options
 " Default search tools supported by flygrep. The default order is ['rg', 'ag',
-" 'pt', 'ack', 'grep', 'findstr']
-let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr']
+" 'pt', 'ack', 'grep', 'findstr', 'git']
+" The `git` command means using `git-grep`. If you prefer to use `git-grep` by
+" default. You can change this option to:
+" >
+"   [options]
+"     search_tools = ['git', 'rg', 'ag']
+" <
+
 ""
-" Set the project rooter patterns, by default it is
-" `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`
+" Default search tools supported by flygrep. The default order is ['rg', 'ag',
+" 'pt', 'ack', 'grep', 'findstr', 'git']
+let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr', 'git']
+""
+" @section project_rooter_patterns, options-project_rooter_patterns
+" @parentsection options
+" Set the project root patterns, SpaceVim determines the root directory of the
+" project based on this option. By default it is:
+" >
+"   ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+" <
+
+""
+" Set the project root patterns, SpaceVim determines the root directory of the
+" project based on this option. By default it is:
+" >
+"   ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+" <
 let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+""
+" @section enable_projects_cache, options-enable_projects_cache
+" @parentsection options
+" Enable/Disable cross session projects cache. Enabled by default.
+
+""
+" Enable/Disable cross session projects cache. Enabled by default.
+let g:spacevim_enable_projects_cache = 1
+""
+" @section projects_cache_num, options-projects_cache_num
+" @parentsection options
+" Setting the numbers of cached projects, by default it is 20.
+
+""
+" Setting the numbers of cached projects, by default it is 20.
+let g:spacevim_projects_cache_num = 20
+""
+" @section project_rooter_automatically, options-project_rooter_automatically
+" @parentsection options
+" Enable/Disable project root detection. By default, SpaceVim will change the
+" directory to the project root directory based on `project_rooter_patterns`
+" option. To disable this feature:
+" >
+"   [options]
+"     project_rooter_automatically = false
+" <
+
 ""
 " Enable/Disable changing directory automatically. Enabled by default.
 let g:spacevim_project_rooter_automatically = 1
+""
+" @section project_rooter_outermost, options-project_rooter_outermost
+" @parentsection options
+" Enable/Disable finding outermost directory for project root detection.
+" By default SpaceVim will find the outermost directory based on
+" `project_rooter_patterns`. To find nearest directory, you need to disable
+" this option:
+" >
+"   [options]
+"     project_rooter_outermost = false
+" <
+
+""
+" Enable/Disable finding outermost directory for project root detection.
+" By default SpaceVim will find the outermost directory based on
+" `project_rooter_patterns`. To find nearest directory, you need to disable
+" this option:
+" >
+"   let g:spacevim_project_rooter_outermost = 0
+" <
+let g:spacevim_project_rooter_outermost = 1
 
 ""
 " Config the command line prompt for flygrep and denite etc.
@@ -1108,6 +1217,8 @@ let g:spacevim_wildignore
 let g:_spacevim_mappings = {}
 let g:_spacevim_mappings_space_custom = []
 let g:_spacevim_mappings_space_custom_group_name = []
+let g:_spacevim_mappings_language_specified_space_custom = {}
+let g:_spacevim_mappings_language_specified_space_custom_group_name = {}
 let g:_spacevim_neobundle_installed     = 0
 let g:_spacevim_dein_installed          = 0
 let g:_spacevim_vim_plug_installed      = 0
@@ -1178,23 +1289,23 @@ command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <a
 command -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
 function! SpaceVim#end() abort
-  if !g:spacevim_vimcompatible
-    call SpaceVim#mapping#def('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
-    call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
-  endif
   if g:spacevim_vimcompatible
     let g:spacevim_windows_leader = ''
     let g:spacevim_windows_smartclose = ''
   endif
 
   if !g:spacevim_vimcompatible
-    nnoremap <silent><C-x> <C-w>x
     cnoremap <C-f> <Right>
     " Navigation in command line
     cnoremap <C-a> <Home>
     cnoremap <C-b> <Left>
     " @bug_vim with <silent> command line can not be cleared
     cnoremap <expr> <C-k> repeat('<Delete>', strchars(getcmdline()) - getcmdpos() + 1)
+
+    "Use escape_key_binding switch to normal mode
+    if !empty(g:spacevim_escape_key_binding)
+      exe printf('inoremap %s <esc>', g:spacevim_escape_key_binding)
+    endif
   endif
   call SpaceVim#server#connect()
 
@@ -1275,8 +1386,6 @@ function! SpaceVim#end() abort
   let g:leaderGuide_max_size = 15
   call SpaceVim#plugins#load()
 
-  call SpaceVim#plugins#projectmanager#RootchandgeCallback()
-
   call SpaceVim#util#loadConfig('general.vim')
 
 
@@ -1343,7 +1452,6 @@ function! SpaceVim#begin() abort
   endif
   call SpaceVim#default#options()
   call SpaceVim#default#layers()
-  call SpaceVim#default#keyBindings()
   call SpaceVim#commands#load()
 endfunction
 
@@ -1371,13 +1479,17 @@ function! SpaceVim#welcome() abort
     elseif exists(':Defx') == 2
       Defx
       wincmd p
+    elseif exists(':NERDTree') == 2
+      NERDTree
+      wincmd p
     endif
   endif
 endfunction
 
 ""
 " @section Usage, usage
-"   the usage guide for SpaceVim
+"   General guide for using SpaceVim. Including layer configuration, bootstrap
+"   function.
 
 ""
 " @section FAQ, faq

@@ -1,0 +1,17 @@
+name: Lint and test
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: Lint and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install
+        run: |
+          sudo apt install python3-setuptools python3-wheel
+
+      - name: Lint
+        run: make --keep-going install-user test lint

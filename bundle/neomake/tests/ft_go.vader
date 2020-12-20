@@ -1,0 +1,57 @@
+Include: include/setup.vader
+
+Execute (go: go):
+  new
+  file build/proxier.go
+
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#go#go(), [
+  \ 'proxier.go:24:2: cannot find package "bytes" in any of:',
+  \ '	/home/user/bin/go1.x/src/bytes (from $GOROOT)',
+  \ '	/home/user/go/src/bytes (from $GOPATH)',
+  \ ])
+  CallNeomake 1, [maker]
+
+  AssertNeomakeMessage printf('cwd: %s/build (changed).', getcwd())
+  AssertNeomakeMessage 'Processing 3 lines of output.'
+  AssertNeomakeMessage 'Processing 1 entries.'
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 24, 'bufnr': bufnr('%'), 'col': 2, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'E', 'pattern': '',
+  \  'text': 'cannot find package "bytes" in any of: '
+  \  .'/home/user/bin/go1.x/src/bytes (from $GOROOT) '
+  \  .'/home/user/go/src/bytes (from $GOPATH)'}]
+  bwipe
+
+Execute (go: go: filters "[no test files]"):
+  new
+  file rain.go
+
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#go#go(), [
+  \ '?   	github.com/cenkalti/rain/rainrpc	[no test files]',
+  \ ])
+  CallNeomake 1, [maker]
+
+  AssertEqual getloclist(0), []
+  bwipe
+
+Execute (go: gometalinter):
+  new
+  file git.go
+
+  let &efm = neomake#makers#ft#go#gometalinter().errorformat
+  lgetexpr 'git.go:17::warning: Subprocess launching with variable.,HIGH,HIGH (gas)'
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 17, 'bufnr': bufnr('%'), 'col': 0, 'valid': 1, 'vcol': 0, 'nr': -1, 'type': 'w', 'pattern': '', 'text': 'Subprocess launching with variable.,HIGH,HIGH (gas)'},
+  \ ]
+  bwipe
+
+Execute (go: golangci_lint):
+  new
+  file main.go
+
+  let &efm = neomake#makers#ft#go#golangci_lint().errorformat
+  lgetexpr 'main.go:288:7: no new variables on left side of := (typecheck)'
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 288, 'bufnr': bufnr('%'), 'col': 7, 'valid': 1, 'vcol': 0, 'nr': -1, 'type': '', 'pattern': '', 'text': 'no new variables on left side of := (typecheck)'},
+  \ ]
+  bwipe

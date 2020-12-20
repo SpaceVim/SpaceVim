@@ -1,0 +1,165 @@
+*UT.txt*                Unit Testing Framework for Vim (v0.0.3)
+                        For Vim version 7+.    Last change: $Date: 2010-05-17 19:10:03 -0400 (Mon, 17 May 2010) $
+
+                        By Luc Hermitte
+                        hermitte {at} free {dot} fr
+
+
+------------------------------------------------------------------------------
+CONTENTS                                            *UT-contents*      {{{1
+    |UT-presentation| Presentation
+    |UT-usage|        Usage
+    |UT-API|          UT API
+    |UT-examples|     Examples
+    |UT-todo|         Bugs to fix and futur enhancements to come
+    |UT-design|       Design choices
+    |UT-others|       Other tests related plugins for vim
+    |add-local-help|  Instructions on installing this file
+
+
+------------------------------------------------------------------------------
+PRESENTATION                                        *UT-presentation*  {{{1
+UT is another Test Unit Framework for Vim, which main particularity is to fill
+the |quickfix| window with the assertion failures.
+
+Features~
+- Assertion failures are reported in the |quickfix| window
+- Assertion syntax is simple, check Tom Link's suite, it's the same
+- Supports banged ":Assert!" to stop processing a given test on failed
+  assertions
+- All the |s:Test()| functions of a suite are executed (almost)
+  independently (i.e., a critical ":Assert!" failure will stop the Test of
+  the function, and |lh#UT| will proceed to the next |s:Test()| function
+- Lightweight and simple to use: there is only one command defined, all the
+  other definitions are kept in an autoload plugin.
+- A suite == a file
+- Several |s:Test()| functions per suite
+- +optional |s:Setup()|, |s:Teardown()|
+- Supports |:Comments|
+- |local-function|s, |script-variable|s, and |local-variable|s are supported
+- Takes advantage of |BuildToolsWrapper|'s |:Copen| command if installed
+- Counts successful tests and not successful assertions
+- Short-cuts to run the Unit Tests associated to a given vim script; Relies
+  on: |Let-Modeline|, |local_vimrc|/|project.vim| to set |g:UTfiles| (space
+  separated list of glob-able paths), and on |lhvl#path|.
+- Command to exclude, or specify the tests to play => |:UTPlay|, |UTIgnore|
+
+Requirements~
+This suite requires Vim 7.1 and |lh-vim-lib| v2.2.0+.
+
+
+------------------------------------------------------------------------------
+USAGE                                               *UT-usage*         {{{1
+First, create a new vim script, it will be a Unit Testing Suite.
+
+                                                    *:UTSuite*
+One of the first lines must contain >
+  UTSuite Some intelligible name for the suite
+<
+                                                    *:Assert*
+Then you are free to directly assert anything you wish as long as it is a
+valid vim |expression|, e.g. >
+    Assert 1 > 2
+    Assert 1 > 0
+    Assert s:foo > s:Bar(g:var + 28) / strlen("foobar")
+or to define as many independent tests as you wish.
+
+                                                    *:Comment*
+Comments may be added to the |quickfix| report thanks to the |:Comment|
+fake command.
+                                                    *s:Test()*
+A test is a function with a name starting with |s:Test|. Even if a test
+critically fails, the next test will be executed, e.g. >
+    function s:Test1()
+      let var = SomeFucntion()
+      Assert! type(var) == type(0)
+      Assert var < 42
+      Assert! var > 0 
+
+      " Some other code that won't be executed if the previous assertion failed
+      let i = var / 42.0
+      Comment This comment may never be displayed if {var} is negative or not a number
+    endfunction
+
+    function s:Test2()
+      Assert s:what != Ever()
+    endfunction
+<
+                                                    *s:Setup()* *s:Teardown()*
+If you wish to see a set-up function executed before each test, define the
+|s:Setup()| function.
+
+If you wish to see a clean-up function executed after each test, define the
+|s:Teardown()| function.
+
+                                                    *:UTRun*
+Finally run |:UTRun| on your test script (filename), and ... debug your failed
+assertions from the |quickfix| window.
+
+
+------------------------------------------------------------------------------
+UT API                                               *UT-API*          {{{1
+
+*should#be#dict()*    returns whether the parameter is a |Dictionary|
+*should#be#float()*   returns whether the parameter is a |float|
+*should#be#funcref()* returns whether the parameter is a |Funcref|
+*should#be#list()*    returns whether the parameter is a |List|
+*should#be#number()*  returns whether the parameter is a |expr-number|
+*should#be#string()*  returns whether the parameter is a |expr-string|
+
+
+------------------------------------------------------------------------------
+EXAMPLES                                             *UT-examples*     {{{1
+See:
+- {rtp}/tests/lh/UT.vim tests/lh/UT.vim for a classical test,
+- {rtp}/tests/lh/UT-fixtures.vim tests/lh/UT-fixtures.vim for a test with
+  fixtures.
+
+
+------------------------------------------------------------------------------
+TO DO                                                *UT-todo*         {{{1
+- Add |'efm'| for VimL errors like the one produced by >
+    :Assert 0 + [0]
+- Check UT works fine under windows (where paths have spaces, etc), and on
+  UTF-8 files
+- Simplify "s:errors" functions
+- Merge with Tom Link's tAssert plugin? (the UI is quite different)
+- |:AssertEquals| that shows the name of both expressions and their values as
+  well -- a correct distinction of both parameters will be tricky with regexes
+  ; using functions will loose either the name, or the value in case of
+  local/script variables use ; we need macros /à la C/...
+- Support Embedded comments like for instance: >
+    Assert 1 == 1 " 1 must value 1
+- Ways to test buffers produced
+- Always execute |s:Teardown()| -- move its call to a |:finally| bloc
+- Find a way to prevent the potential script scope pollution
+
+
+------------------------------------------------------------------------------
+DESIGN CHOICES                                       *UT-design*       {{{1
+The assertions supported by this plugin are expected to be made in a Unit
+Testing file, they are not to be used in regular VimL scripts as a /Design by
+Contract/ tool. Check Thomas Link's plugin, it is much more suited for that
+kind of assertions.
+
+In order to be able to produce the |quickfix| entries, the plugin first parses
+the Unit Test file to complete all |:Assert| occurrences with extra
+information about the line number where the assertion is made.
+
+
+------------------------------------------------------------------------------
+OTHER TESTS RELATED PLUGINS FOR VIM                  *UT-others*       {{{1
+You may also want to have a look at:
+- Tom Link's |tAssert| plugin
+  http://www.vim.org/scripts/script.php?script_id=1730 
+- Staale Flock's |vimUnit| plugin
+  http://www.vim.org/scripts/script.php?script_id=1125 
+- Meikel Brandmeyer's |vimTAP| plugin
+  http://www.vim.org/scripts/script.php?script_id=2213 
+
+
+------------------------------------------------------------------------------
+ © Luc Hermitte, 2010, http://code.google.com/p/lh-vim/
+ $Id: UT.txt 193 2010-05-17 23:10:03Z luc.hermitte $
+ VIM: let b:VS_language = 'american' 
+ vim:ts=8:sw=4:tw=80:fo=tcq2:isk=!-~,^*,^\|,^\":ft=help:fdm=marker:

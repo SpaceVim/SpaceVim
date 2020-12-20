@@ -19,6 +19,7 @@ SpaceVim 是一个模块化的 Vim IDE，针对 C/C++ 语言的支持主要依�
 <!-- vim-markdown-toc GFM -->
 
 - [安装模块](#安装模块)
+- [语法高亮](#语法高亮)
 - [代码自动补全](#代码自动补全)
 - [语法检查](#语法检查)
 - [工程文件跳转](#工程文件跳转)
@@ -39,6 +40,19 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 ```
 
 启用 `lang#c` 模块后，在打开 C/C++ 文件时，就可以使用语言专属快捷键，这些快捷键都是以 `SPC l` 为前缀的。
+
+### 语法高亮
+
+基础的语法高亮是基于正则表达式的，如果需要基于 `clang` 解析的语法高亮，
+可以启用 `enable_clang_syntax_highlight` 这一模块选项：
+
+```toml
+[[layers]]
+    name = 'lang#c'
+    enable_clang_syntax_highlight = true
+```
+
+这一功能需要 Vim/Neovim 支持 `+python` 或者 `+python3`，并且安装了 `libclang`。
 
 ### 代码自动补全
 
@@ -98,6 +112,24 @@ C/C++ 代码格式化，主要依赖 `format` 模块，快捷键为 `SPC b f`，
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 
 ![c-cpp-runner](https://user-images.githubusercontent.com/13142418/58743787-db2bee80-846a-11e9-9b19-17202ac542c9.png)
+
+默认的代码快速运行命令会读取模块选项 `clang_std` 和 `clang_flag`。
+例如，如果需要使用 `c11`，可以设置 `clang_std` 选项如下：
+
+```toml
+[[layers]]
+  name = "lang#c"
+  [layer.clang_std]
+    cpp = "c11"
+```
+
+与此同时，你也可以在项目根目录新建一个 `.clang` 文件，在其内逐行写入 C/C++ 编译的参数，
+比如：
+
+```
+-I/home/test
+-I/user/std/include
+```
 
 ### 交互式编程
 

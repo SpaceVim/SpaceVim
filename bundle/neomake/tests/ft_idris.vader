@@ -1,0 +1,30 @@
+Include: include/setup.vader
+
+Execute (idris: makers):
+  AssertEqual neomake#GetMakers('idris'), ['idris']
+
+Execute (idris: errorformat):
+  " Test errorformat itself.
+  let idris_output =
+  \"t.idr:6:1-4:When checking left hand side of xor:\n
+  \When checking an application of Main.xor:\n
+  \        Type mismatch between\n
+  \                Integer (Type of 5)\n
+  \        and\n
+  \                Bool (Expected type)"
+
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#idris#idris().errorformat
+  lgetexpr idris_output
+  AssertEqual len(getloclist(0)), 1
+  AssertEqual getloclist(0)[0].text, "4:When checking left hand side of xor:\n
+    \Type mismatch between\n
+    \Integer (Type of 5)\n
+    \and\n
+    \Bool (Expected type)"
+
+  let entry = getloclist(0)[0]
+  call call(neomake#makers#ft#idris#idris().postprocess, [entry])
+  AssertEqual entry.text, 'Type mismatch between Integer (Type of 5) and Bool (Expected type)'
+  AssertEqual entry.length, 3
+  bwipe t.idr

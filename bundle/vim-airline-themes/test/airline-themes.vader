@@ -1,0 +1,38 @@
+# Make sure that theme and 5 basic modes don't throw an error
+# Get list of all included themes
+Execute (validate themes):
+  let themes = readfile('themes.txt')
+  call sort(themes)
+
+  let err_proc = v:false
+  try
+
+    for themePath in themes
+
+      " Check all the basic modes and their modified counterparts
+      " This test only fails on exceptional cases
+      let theme = fnamemodify(themePath, ':t:r')
+      Log theme
+      execute('AirlineTheme ' . theme)
+      execute('source ' . themePath)
+      normal i
+      normal :
+      normal R
+      normal v
+      setlocal mod
+      normal i
+      normal :
+      normal R
+      normal v
+      setlocal nomod
+
+    endfor
+
+  catch
+    let err_proc = v:true
+    Log "Failed validation testing with exception:"
+    Log string(v:exception)
+  endtry
+  AirlineRefresh
+
+  Assert !err_proc

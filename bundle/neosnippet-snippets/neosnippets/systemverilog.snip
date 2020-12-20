@@ -1,0 +1,55 @@
+include verilog.snip
+
+snippet alc
+abbr always_comb
+    always_comb begin
+        ${1:TARGET}
+    end
+
+snippet alf
+abbr always_ff @()
+    always @(posedge ${1:clk} iff !${2:rst} or posedge $2) begin
+        if (${2}) begin
+            ${3:TARGET}
+        end else begin
+        end
+    end
+
+snippet all
+abbr always_latch
+    always_latch begin
+        if (${1:enable}) begin
+            ${2:TARGET}
+        end
+    end
+
+snippet rw
+abbr logic [] _r, _w;
+    logic${1:#: nbit} ${2:reg}_r, $2_w;${3:TARGET}
+
+snippet struct
+    typedef struct packed {
+        ${2:TARGET}
+    } ${1:name} ;
+
+snippet enum
+    typedef enum {${2:TARGET}} ${1:name};
+
+snippet for
+    for (int ${1:i} = ${2}; $1 < ${3}; ${4:do what}) begin
+        ${5:TARGET}
+    end
+
+snippet case_parallel
+    unique case (${1}) begin
+        ${2:'b0}: begin
+            ${3}
+        end
+    end
+
+snippet case_full
+    priority case (${1}) begin
+        ${2:'b0}: begin
+            ${3}
+        end
+    end

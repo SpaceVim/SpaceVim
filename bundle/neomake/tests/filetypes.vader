@@ -1,0 +1,106 @@
+Include: include/setup.vader
+
+Execute (GetEnabledMakers for javascript.jsx):
+  AssertEqual map(neomake#GetEnabledMakers('javascript.jsx'), 'v:val.name'),
+  \ ['jshint', 'jscs', executable('eslint_d') ? 'eslint_d' : 'eslint']
+
+Execute (GetEnabledMakers for jsx.javascript):
+  AssertEqual map(neomake#GetEnabledMakers('jsx.javascript'), 'v:val.name'),
+  \ ['jshint', executable('eslint_d') ? 'eslint_d' : 'eslint']
+
+Execute (GetEnabledMakers for javascript):
+  AssertEqual map(neomake#GetEnabledMakers('javascript'), 'v:val.name'),
+  \ ['jshint', 'jscs', executable('eslint_d') ? 'eslint_d' : 'eslint']
+
+Execute (GetEnabledMakers for jsx):
+  AssertEqual map(neomake#GetEnabledMakers('jsx'), 'v:val.name'),
+  \ ['jshint', executable('eslint_d') ? 'eslint_d' : 'eslint']
+
+
+Execute (GetMakers for javascript.jsx):
+  AssertEqual neomake#GetMakers('javascript.jsx'),
+  \ ['eslint', 'eslint_d', 'flow', 'gjslint', 'jscs', 'jshint', 'rjsx', 'semistandard', 'standard', 'stylelint', 'tsc', 'xo', 'jsxhint']
+
+Execute (GetMakers for jsx.javascript):
+  " jsxhint comes first, since it is defined in jsx.vim.
+  let expected = ['jsxhint', 'stylelint', 'eslint', 'eslint_d', 'flow', 'gjslint', 'jscs', 'jshint', 'rjsx', 'semistandard', 'standard', 'tsc', 'xo']
+  AssertEqual neomake#GetMakers('jsx.javascript'), expected
+
+  new
+  let b:neomake_jsx_javascript_foo_maker = {'name': 'foo'}
+  AssertEqual neomake#GetMakers('jsx.javascript'), ['foo'] + expected
+
+  " NOTE: Shortcoming with old-style config: makes "javascript_foo" a possible
+  " maker for ft=jsx.
+  AssertEqual neomake#GetMaker('javascript_foo', 'jsx').name, 'foo'
+  bwipe
+
+Execute (GetMakers for javascript):
+  AssertEqual neomake#GetMakers('javascript'),
+  \ ['eslint', 'eslint_d', 'flow', 'gjslint', 'jscs', 'jshint', 'rjsx', 'semistandard', 'standard', 'stylelint', 'tsc', 'xo']
+
+Execute (GetMakers for jsx):
+  AssertEqual neomake#GetMakers('jsx'), ['jsxhint', 'stylelint'] + filter(neomake#GetMakers('javascript'), "v:val != 'stylelint'")
+
+Execute (standard maker in javascript.jsx):
+  new
+  set filetype=javascript.jsx
+  AssertEqual map(neomake#GetEnabledMakers('jsx'), 'v:val.name'), [
+  \ 'jshint', executable('eslint_d') ? 'eslint_d' : 'eslint']
+  let b:neomake_javascript_enabled_makers = ['standard']
+  let b:neomake_javascript_standard_exe = 'custom-javascript'
+  let b:neomake_jsx_jshint_exe = 'true'
+  let b:neomake_jsx_eslint_exe = 'true'
+  AssertEqual map(neomake#GetEnabledMakers('javascript'), 'v:val.name'), ['standard']
+  AssertEqual map(neomake#GetEnabledMakers('jsx'), 'v:val.name'), ['standard']
+  AssertEqual map(neomake#GetEnabledMakers('jsx.javascript'), 'v:val.name'), ['standard']
+  Neomake
+  NeomakeTestsWaitForFinishedJobs
+  AssertNeomakeMessage 'Exe (custom-javascript) of maker standard is not executable.', 0
+
+  function! s:F() abort
+    return map(copy(neomake#GetEnabledMakers('jsx.javascript')),
+    \ '[v:val.name, v:val.exe]')
+  endfunction
+  AssertEqual s:F(), [['standard', 'custom-javascript']]
+  let b:neomake_jsx_enabled_makers = ['standard']
+  AssertEqual s:F(), [['standard', 'custom-javascript']]
+
+  let b:neomake_jsx_standard_exe = 'exe1'
+  AssertEqual s:F(), [['standard', 'exe1']]
+
+  let b:neomake_jsx_javascript_standard_exe = 'exe2'
+  AssertEqual s:F(), [['standard', 'exe2']]
+
+  Neomake
+  NeomakeTestsWaitForFinishedJobs
+  AssertNeomakeMessage 'Exe (custom-javascript) of maker standard is not executable.', 0
+  bwipe
+
+Execute (standard maker in javascript.jsx):
+  new
+  let b:neomake_jsx_javascript_enabled_makers = ['standard']
+  AssertEqual map(neomake#GetEnabledMakers('jsx.javascript'), 'v:val.name'), ['standard']
+  let b:neomake_javascript_jsx_enabled_makers = ['standard']
+  AssertEqual map(neomake#GetEnabledMakers('javascript.jsx'), 'v:val.name'), ['standard']
+  bwipe
+
+Execute (makers are picked up via SupersetOf for jsx):
+  new
+  let b:neomake_javascript_enabled_makers = ['eslint']
+  let b:neomake_jsx_enabled_makers = ['flow']
+
+  let maker = neomake#GetMaker('flow', 'jsx.javascript')
+  AssertEqual maker.name, 'flow'
+
+  let maker = neomake#GetMaker('jsxhint', 'jsx')
+  AssertEqual maker.name, 'jsxhint'
+  AssertEqual maker.exe, 'jsxhint'
+
+  let b:neomake_javascript_jshint_exe = 'customexe'
+  AssertEqual neomake#GetMaker('jshint', 'javascript').exe, 'customexe'
+  AssertThrows call neomake#GetMaker('jsxhint', 'javascript')
+  AssertEqual g:vader_exception, 'Neomake: Maker not found (for filetype javascript): jsxhint'
+  " Should not use jshint_exe config.
+  AssertEqual neomake#GetMaker('jsxhint', 'jsx').exe, 'jsxhint'
+  bwipe

@@ -61,9 +61,10 @@ A dict containing the standards you want to use. The default is:
 }
 ```
 
-- `clang_flag`
+- `clang_flag` (list)
 
-Create a `.clang` file at your project root. You should be able to just paste most of your compile flags in there. You can also use a list ['-Iwhatever', ...] when loading this layer.
+You should be able to just paste most of your compile flags in there.
+You can also use a list ['-Iwhatever', ...] when loading this layer.
 
 Here is an example how to use above options:
 
@@ -71,6 +72,7 @@ Here is an example how to use above options:
 [[layers]]
   name = "lang#c"
   clang_executable = "/usr/bin/clang"
+  clang_flag = ['-I/user/include']
   [layer.clang_std]
     c = "c11"
     cpp = "c++1z"
@@ -78,6 +80,17 @@ Here is an example how to use above options:
     objcpp = "c++1z"
 ```
 
+Instead of using `clang_flag` options, You can also create a `.clang` file
+in the root directory of your project. SpaceVim will load the options
+defined in `.clang` file. For example:
+
+```
+-std=c11
+-I/home/test
+```
+
+Note: If `.clang` file contains std configuration, it will override
+`clang_std` layer option.
 
 ## Key bindings
 

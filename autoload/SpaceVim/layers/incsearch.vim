@@ -1,6 +1,6 @@
 "=============================================================================
 " incsearch.vim --- SpaceVim incsearch layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -34,7 +34,7 @@ let s:filename = expand('<sfile>:~')
 
 function! SpaceVim#layers#incsearch#plugins() abort
   let plugins = []
-  call add(plugins, ['haya14busa/incsearch.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/incsearch.vim', {'merged' : 0}])
   call add(plugins, ['haya14busa/incsearch-fuzzy.vim', {'merged' : 0}])
   call add(plugins, ['haya14busa/vim-asterisk', {'merged' : 0}])
   call add(plugins, ['osyo-manga/vim-over', {'merged' : 0}])

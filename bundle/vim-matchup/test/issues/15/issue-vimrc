@@ -1,0 +1,19 @@
+set nocompatible
+
+" load match-up (and commentary)
+for s:loc in ['bundle', 'plugged']
+    let &rtp  = '~/.vim/'.s:loc.'/vim-matchup,' . &rtp
+    let &rtp .= ',~/.vim/'.s:loc.'/vim-matchup/after'
+    let &rtp  = '~/.vim/'.s:loc.'/vim-commentary,' . &rtp
+    let &rtp .= ',~/.vim/'.s:loc.'/vim-commentary/after'
+endfor
+
+" load other plugins, if necessary
+" let &rtp = '~/path/to/other/plugin,' . &rtp
+
+filetype plugin indent on
+syntax enable
+
+" match-up options go here
+let g:matchup_text_obj_linewise_operators = ['d', 'y', 'g@', ':']
+

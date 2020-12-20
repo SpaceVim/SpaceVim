@@ -1,0 +1,11 @@
+os:
+  - linux
+  - osx
+
+addons:
+  apt:
+    packages:
+      - vim-gtk
+
+script:
+  - test/run

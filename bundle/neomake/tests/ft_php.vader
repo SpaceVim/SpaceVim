@@ -1,0 +1,91 @@
+Include: include/setup.vader
+
+Execute (php):
+  let php_output =
+  \"Fatal error: Call to undefined function hello() in /app/src/hello.php on line 1"
+
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#php#php().errorformat
+  lgetexpr php_output
+
+  let loclist = getloclist(0)
+  AssertEqual len(loclist), 1
+  AssertEqual loclist[0].lnum, 1
+  AssertEqual loclist[0].type, 'E'
+  AssertEqual loclist[0].text, 'Call to undefined function hello()'
+  bwipe /app/src/hello.php
+
+Execute (phpcs):
+  let phpcs_output =
+  \"\"/app/src/TaskService.php\",28,6,error,\"Missing @return tag in functioncomment\",PEAR.Commenting.FunctionComment.MissingReturn,5,0\n
+  \\"/app/src/TaskService.php\",36,5,error,\"Missing short description in doc comment\",Generic.Commenting.DocComment.MissingShort,5,0"
+
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#php#phpcs().errorformat
+  lgetexpr phpcs_output
+
+  let loclist = getloclist(0)
+  AssertEqual len(loclist), 2
+  AssertEqual loclist[0].lnum, 28
+  AssertEqual loclist[0].col, 6
+  AssertEqual loclist[0].text, 'Missing @return tag in functioncomment'
+  AssertEqual loclist[0].type, 'e'
+  AssertEqual loclist[1].lnum, 36
+  AssertEqual loclist[1].col, 5
+  AssertEqual loclist[1].text, 'Missing short description in doc comment'
+  AssertEqual loclist[1].type, 'e'
+  bwipe /app/src/TaskService.php
+
+Execute (phpmd):
+  let phpmd_output =
+  \"/app/src/AppBundle/Controller/DefaultController.php:16     Avoid unused parameters such as '$request'.\n
+  \/app/src/AppBundle/Controller/DefaultController.php:48     Avoid variables with short names like $id. Configured minimumlength is 3."
+
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#php#phpmd().errorformat
+  lgetexpr phpmd_output
+
+  let loclist = getloclist(0)
+  AssertEqual len(loclist), 2
+  AssertEqual loclist[0].lnum, 16
+  AssertEqual loclist[0].text, "Avoid unused parameters such as '$request'."
+  AssertEqual loclist[0].type, 'W'
+  AssertEqual loclist[1].lnum, 48
+  AssertEqual loclist[1].text, "Avoid variables with short names like $id. Configured minimumlength is 3."
+  AssertEqual loclist[1].type, 'W'
+  bwipe /app/src/AppBundle/Controller/DefaultController.php
+
+Execute (phpstan):
+  let phpstan_output =
+  \"/app/src/hello.php:6:Function dsdsd not found"
+
+  Save &errorformat
+  let &errorformat = neomake#makers#ft#php#phpstan().errorformat
+  lgetexpr phpstan_output
+
+  let loclist = getloclist(0)
+  AssertEqual len(loclist), 1
+  AssertEqual loclist[0].lnum, 6
+  AssertEqual loclist[0].text, "Function dsdsd not found"
+  AssertEqual loclist[0].type, 'E'
+  bwipe /app/src/hello.php
+
+Execute (php: psalm):
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#php#psalm(), [
+    \ 'test.php:85: [E0001] MismatchingDocblockParamType: Parameter $questionnaire has wrong type ''App\Services\Service'', should be ''App\Service'' (column 15)',
+    \ 'test.php:179: [W0001] RedundantCondition: Found a redundant condition when evaluating $existingQuestion and trying to reconcile it with a non-falsy assertion (column 44)',
+    \])
+  new
+  noautocmd file test.php
+  let bufnr = bufnr('%')
+  CallNeomake 1, [maker]
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 85, 'bufnr': bufnr, 'col': 0, 'valid': 1, 'vcol': 0,
+  \  'nr': 1, 'type': 'E', 'pattern': '',
+  \  'text': 'MismatchingDocblockParamType: Parameter $questionnaire has wrong type ''App\Services\Service'', should be ''App\Service'' (column 15)'
+  \ }, {
+  \  'lnum': 179, 'bufnr': bufnr, 'col': 0, 'valid': 1, 'vcol': 0,
+  \  'nr': 1, 'type': 'W', 'pattern': '',
+  \  'text': 'RedundantCondition: Found a redundant condition when evaluating $existingQuestion and trying to reconcile it with a non-falsy assertion (column 44)',
+  \ }]
+  bwipe

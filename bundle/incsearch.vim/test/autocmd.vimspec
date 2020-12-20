@@ -1,0 +1,146 @@
+Describe autocmd
+
+  function! s:add_line(str)
+    put! =a:str
+  endfunction
+  function! s:add_lines(lines)
+    for line in reverse(deepcopy(a:lines))
+      put! =line
+    endfor
+  endfunction
+  function! s:get_pos_char()
+    return getline('.')[col('.')-1]
+  endfunction
+
+  function! s:reset_buffer()
+    :1,$ delete
+    let s:lines = ['1pattern_a', '2pattern_b', '3pattern_c', '4pattern_d', '5pattern_e']
+    call s:add_lines(s:lines)
+    normal! Gddgg0zt
+  endfunction
+
+  Before all
+    map /  <Plug>(incsearch-forward)
+    map ?  <Plug>(incsearch-backward)
+    map g/ <Plug>(incsearch-stay)
+    call s:reset_buffer()
+    augroup incsearch-test
+      autocmd!
+    augroup END
+    let g:i = 0
+    let g:line = ''
+  End
+
+  Before each
+    :1
+    normal! zt
+    silent! autocmd! incsearch-test
+    " Return to normal mode
+    exec "normal! \<Esc>"
+    let g:i = 0
+    let g:line = ''
+  End
+
+  After all
+    :1,$ delete
+    let @/ = ''
+    unlet g:i
+    unlet g:line
+    silent! autocmd! incsearch-test
+  End
+
+  Context IncSearchEnter
+    It should be called
+      autocmd incsearch-test User IncSearchEnter :let g:i += 1
+      exec "normal" "/vimvim\<Esc>"
+      Assert Equals(g:i, 1)
+    End
+  End
+
+  Context IncSearchLeave
+    It should be called
+      autocmd incsearch-test User IncSearchLeave :let g:i += 1
+      silent! exec "normal" "/vimvim\<CR>"
+      Assert Equals(g:i, 1)
+    End
+    It should be called with <Esc>
+      autocmd incsearch-test User IncSearchLeave :let g:i += 1
+      exec "normal" "/vimvim\<Esc>"
+      Assert Equals(g:i, 1)
+    End
+    It should be called with <C-c>
+      autocmd incsearch-test User IncSearchLeave :let g:i += 1
+      exec "normal" "/vimvim\<C-c>"
+      Assert Equals(g:i, 1)
+    End
+  End
+
+  Context IncSearchExecutePre
+    It should be called
+      autocmd incsearch-test User IncSearchExecutePre :let g:i += 1
+      silent! exec "normal" "/vimvim\<CR>"
+      Assert Equals(g:i, 1)
+    End
+    It should not be called with <Esc>
+      autocmd incsearch-test User IncSearchExecutePre :let g:i += 1
+      exec "normal" "/vimvim\<Esc>"
+      Assert Equals(g:i, 0)
+    End
+    It should not be called with <C-c>
+      autocmd incsearch-test User IncSearchExecutePre :let g:i += 1
+      exec "normal" "/vimvim\<C-c>"
+      Assert Equals(g:i, 0)
+    End
+    It should be called before move
+      autocmd incsearch-test User IncSearchExecutePre :let g:line = getline('.')
+      silent! exec "normal" "/2pattern_b\<CR>"
+      let expect = s:lines[0]
+      Assert Equals(g:line, expect)
+      let expect2 = s:lines[1]
+      Assert Equals(getline('.'), expect2)
+    End
+  End
+
+  Context IncSearchExecute
+    It should be called
+      autocmd incsearch-test User IncSearchExecute :let g:i += 1
+      silent! exec "normal" "/vimvim\<CR>"
+      Assert Equals(g:i, 1)
+    End
+    It should not be called with <Esc>
+      autocmd incsearch-test User IncSearchExecute :let g:i += 1
+      exec "normal" "/vimvim\<Esc>"
+      Assert Equals(g:i, 0)
+    End
+    It should not be called with <C-c>
+      autocmd incsearch-test User IncSearchExecute :let g:i += 1
+      exec "normal" "/vimvim\<C-c>"
+      Assert Equals(g:i, 0)
+    End
+    It should be called after move
+      autocmd incsearch-test User IncSearchExecute :let g:line = getline('.')
+      silent! exec "normal" "/2pattern_b\<CR>"
+      let expect = s:lines[1]
+      Assert Equals(g:line, expect)
+      let expect2 = s:lines[1]
+      Assert Equals(getline('.'), expect2)
+    End
+  End
+
+  Context IncSearchCharPre
+    It should be called
+      autocmd incsearch-test User IncSearchCharPre :let g:i += 1
+      silent! exec "normal" "/vimvim\<CR>"
+      Assert Equals(g:i, 7)
+    End
+  End
+
+  Context IncSearchChar
+    It should be called
+      autocmd incsearch-test User IncSearchChar :let g:i += 1
+      silent! exec "normal" "/vimvim\<CR>"
+      Assert Equals(g:i, 7)
+    End
+  End
+
+End

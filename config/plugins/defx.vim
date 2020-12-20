@@ -1,6 +1,6 @@
 "=============================================================================
 " defx.vim --- defx configuration
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -18,7 +18,7 @@ function! s:setcolum() abort
   if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_vimfiler_gitstatus
     return 'indent:icons:filename:type'
   elseif !g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
-    return 'indent:icons:filename:type'
+    return 'indent:git:filename:type'
   elseif g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
     return 'indent:git:icons:filename:type'
   else
@@ -147,6 +147,8 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
   nnoremap <silent><buffer><expr> .
         \ defx#do_action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> <C-f>
+        \ defx#do_action('change_filtered_files')
   nnoremap <silent><buffer><expr> ~
         \ defx#do_action('cd')
   nnoremap <silent><buffer><expr> j

@@ -1,10 +1,10 @@
 ---
-title: "公共 API"
-description: "SpaceVim 公共 API 提供了一套开发插件的公共函数，以及 Neovim 和 Vim 的兼容组件。"
+title: "可用接口"
+description: "SpaceVim 接口函数库提供了一套开发插件的公共接口，以及 Neovim 和 Vim 的兼容组件。"
 lang: zh
 ---
 
-# [主页](../) >> 公共 API
+# [主页](../) >> 可用接口
 
 <!-- vim-markdown-toc GFM -->
 
@@ -45,7 +45,10 @@ echom s:file.pathSeparator
 
 | 名称                                  | 描述                                                                    |
 | ------------------------------------- | ----------------------------------------------------------------------- |
+| [cmdlinemenu](cmdlinemenu/)           | cmdlinemenu 函数提供了一套通过命令行进行选择的快捷接口。                |
 | [data#dict](data/dict/)               | data#dict API 提供了一些处理字典变量的常用方法，包括基础的增删改查。    |
+| [data#list](data/list/)               | data#list 函数库主要提供一些操作列表的常用函数。                        |
+| [data#number](data/number/)           | data#number 函数库主要提供一些操作数字的常用函数。                      |
 | [data#string](data/string/)           | data#string 函数库主要提供一些操作字符串的常用函数。                    |
 | [file](file/)                         | 文件函数提供了基础的文件读写相关函数，兼容不同系统平台。                |
 | [job](job/)                           | 兼容 neovim 和 vim 的异步协同 API，对于旧版 vim 采用非异步机制          |
@@ -53,5 +56,7 @@ echom s:file.pathSeparator
 | [unicode#spinners](unicode/spinners/) | unicode#spinners API 可启用一个定时器，根据指定的名称定时更新进度条符号 |
 | [vim#command](vim/command/)           | vim#command API 提供一些设置和获取 Vim 命令的基础函数。                 |
 | [vim#highlight](vim/highlight/)       | vim#highlight API 提供一些设置和获取 Vim 高亮信息的基础函数。           |
+| [vim#message](vim/message/)           | vim#message API 提供一些设置和获取 Vim 提示消息的函数。                 |
+| [vim#signatures](vim/signatures/)     | vim#signatures API 提供一些设置和获取 Vim 提示消息的函数。              |
 
 <!-- SpaceVim api cn list end -->
