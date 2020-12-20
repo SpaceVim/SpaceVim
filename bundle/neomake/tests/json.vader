@@ -1,0 +1,28 @@
+Include: include/setup.vader
+
+Execute (neomake#compat#json_decode):
+  AssertEqual neomake#compat#json_decode('{}'), {}
+
+  let json = '{"dict":{"children":[],"null":null,"true":true,"false":false}}'
+
+  AssertEqual neomake#compat#json_decode(json), {
+  \ 'dict': {
+  \   'false': g:neomake#compat#json_false,
+  \   'true': g:neomake#compat#json_true,
+  \   'children': [],
+  \   'null': g:neomake#compat#json_null}}
+
+  if exists('v:null')
+    AssertEqual g:neomake#compat#json_null, v:null
+    AssertEqual g:neomake#compat#json_true, v:true
+    AssertEqual g:neomake#compat#json_false, v:false
+  else
+    AssertEqual type(g:neomake#compat#json_null), type([])
+    AssertEqual type(g:neomake#compat#json_null[0]), type(function('tr'))
+    AssertEqual g:neomake#compat#json_true, 1
+    AssertEqual g:neomake#compat#json_false, 0
+  endif
+
+Execute (neomake#compat#json_null cannot be changed):
+  AssertThrows let g:neomake#compat#json_null = 'changed'
+  AssertEqual g:vader_exception, 'Vim(let):E741: Value is locked: g:neomake#compat#json_null'

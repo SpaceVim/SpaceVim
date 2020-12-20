@@ -1,0 +1,34 @@
+
+stages:
+  - test
+
+before_script:
+  - apk update; apk add git bash neovim
+  - git clone --depth=1 https://github.com/junegunn/vader.vim.git test/vader/vader.vim
+
+test-latest:
+  stage: test
+  image:
+    name: thinca/vim:latest-full
+    entrypoint: [""]
+  script: bash test/vader/run
+
+test-8.0.1575:
+  stage: test
+  image:
+    name: thinca/vim:v8.0.1575-full
+    entrypoint: [""]
+  script: bash test/vader/run
+
+test-7.4.2273:
+  stage: test
+  image:
+    name: thinca/vim:v7.4.2273-full
+    entrypoint: [""]
+  script: bash test/vader/run
+
+test-neovim:
+  stage: test
+  image: alpine:latest
+  script: bash -c 'VIMCMD=nvim test/vader/run'
+

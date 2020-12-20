@@ -1,0 +1,1094 @@
+Include: include/setup.vader
+
+Execute (neomake#GetMakers):
+  AssertEqual neomake#GetMakers('non-existent'), []
+  AssertEqual neomake#GetMakers('pug'), ['puglint']
+
+  let sh_makers = ['checkbashisms', 'dash', 'sh', 'shellcheck']
+  AssertEqual sort(neomake#GetMakers('sh')), sh_makers
+
+  Save g:neomake_sh_enabled_makers
+  let g:neomake_sh_enabled_makers = ['sh']
+  AssertEqual sort(neomake#GetMakers('sh')), sh_makers
+
+Execute (neomake#GetMakers uses makers from buffer vars):
+  new
+  let b:neomake_ft1_my_custom_maker = {}
+  let b:neomake_ft1_my_custom2_maker = {}
+  let b:neomake_ft2_my_custom2_maker = {}
+
+  AssertEqual neomake#GetMakers('ft1'), ['my_custom', 'my_custom2']
+  AssertEqual neomake#GetMakers('ft2'), ['my_custom2']
+  AssertEqual neomake#GetMakers('ft1.ft2'), ['my_custom', 'my_custom2']
+  bwipe
+
+Execute (neomake#GetMakers uses makers from new-style config):
+  new
+  noautocmd set filetype=myft
+  let maker1 = {'name': 'maker1'}
+  let maker2 = {'name': 'maker2'}
+  call neomake#config#set('b:ft.myft.my_custom.maker', maker1)
+  call neomake#config#set('b:ft.myft.my_custom2.maker', maker2)
+
+  AssertEqual neomake#GetMaker('my_custom').name, 'maker1'
+  AssertNeomakeMessage "Using setting maker={'name': 'maker1'} from 'buffer' (prefix: ['ft', 'myft', 'my_custom']).", 3
+
+  AssertEqual neomake#GetMaker('my_custom2').name, 'maker2'
+  AssertNeomakeMessage "Using setting maker={'name': 'maker2'} from 'buffer' (prefix: ['ft', 'myft', 'my_custom2']).", 3
+
+  AssertEqual neomake#GetMakers('myft'), ['my_custom', 'my_custom2']
+  AssertNeomakeMessage "Using setting ft.myft={'my_custom': {'maker': {'name': 'maker1'}}, 'my_custom2': {'maker': {'name': 'maker2'}}} from 'buffer'.", 3
+  bwipe
+
+Execute (neomake#GetMakers new-style config with old-style):
+  new
+  noautocmd set filetype=myft
+
+  let maker1 = {'name': 'maker1'}
+  call neomake#config#set('b:ft.myft.my_custom.maker', maker1)
+
+  let maker2 = {'name': 'maker2'}
+  let b:neomake_myft_my_custom_maker = maker2
+
+  " Maker name is not duplicated.
+  AssertEqual neomake#GetMakers('myft'), ['my_custom']
+
+  " GetMaker prefers new-style config.
+  AssertEqual neomake#GetMaker('my_custom').name, 'maker1'
+  bwipe
+
+Execute (neomake#GetMaker uses defined errorformat with makeprg):
+  Save &errorformat
+  let &errorformat = '%Gcustom'
+  AssertEqual neomake#GetMaker('makeprg', '').errorformat, '%Gcustom'
+
+Execute (neomake#GetMaker defaults to current filetype):
+"   Save &errorformat
+"   let &errorformat = '%Gcustom'
+"   AssertEqual neomake#GetMaker('makeprg', '').errorformat, '%Gcustom'
+
+Execute (neomake#GetMaker uses defaults from b:/g:):
+  Save g:neomake_test_remove_invalid_entries
+  Save b:neomake_test_remove_invalid_entries
+
+  let maker = {'name': 'test'}
+
+  " Default.
+  AssertEqual neomake#GetMaker(maker).remove_invalid_entries, 0,
+  \ "default is ok"
+
+  let maker.remove_invalid_entries = 1
+  AssertEqual neomake#GetMaker(maker).remove_invalid_entries, 1
+  let g:neomake_test_remove_invalid_entries = 2
+  AssertEqual neomake#GetMaker(maker).remove_invalid_entries, 2
+  let b:neomake_test_remove_invalid_entries = 3
+  AssertEqual neomake#GetMaker(maker).remove_invalid_entries, 3
+
+Execute (neomake#GetMaker uses defaults from b:/g: based on maker):
+  Save g:neomake_test_remove_invalid_entries
+
+  let maker = {'name': 'test'}
+  AssertEqual neomake#GetMaker(maker).remove_invalid_entries, 0
+  let maker.remove_invalid_entries = 1
+  AssertEqual neomake#GetMaker(maker).remove_invalid_entries, 1
+  let g:neomake_test_remove_invalid_entries = 2
+  AssertEqual neomake#GetMaker(maker).remove_invalid_entries, 2
+  let b:neomake_test_remove_invalid_entries = 3
+  AssertEqual neomake#GetMaker(maker).remove_invalid_entries, 3
+
+Execute (neomake#GetMaker uses maker_defaults):
+  let maker = {'name': 'test'}
+  AssertEqual neomake#GetMaker(maker).remove_invalid_entries, 0
+
+  call neomake#config#set('maker_defaults.remove_invalid_entries', 1)
+  AssertEqual neomake#GetMaker(maker).remove_invalid_entries, 1
+
+  " maker_defaults uses hard-coded defaults when only set partially/loaded.
+  AssertEqual neomake#GetMaker(maker).buffer_output, 1
+
+  " maker_defaults uses hard-coded defaults always.
+  call neomake#config#set('maker_defaults', {})
+  AssertEqual neomake#GetMaker(maker).remove_invalid_entries, 0
+
+Execute (neomake#GetMaker from g:neomake_foo_maker):
+  let g:neomake_custom_maker = {
+    \ 'exe': 'my-exe'
+    \ }
+  let maker = neomake#GetMaker('custom')
+  AssertEqual maker.exe, 'my-exe'
+  AssertEqual maker.name, 'custom'
+
+Execute (neomake#GetMaker without name):
+  let maker = neomake#GetMaker({})
+  AssertEqual maker.exe, 'unnamed_maker'
+  AssertEqual maker.name, 'unnamed_maker'
+
+Execute (Instantiate all default makers):
+  " This is meant to catch issues like https://github.com/neomake/neomake/pull/555.
+  let glob_args = [fnamemodify(g:vader_file, ':p:h')
+                 \ .'/../autoload/neomake/makers/ft/*.vim', 1, 1]
+  " NOTE: not using a list to support older Vim (on Travis).
+  let ft_makers = split(call('glob', glob_args[0:-2]), '\n')
+
+  " For vim makers' EnabledMakers to use neomake_checks.
+  new
+  noautocmd edit autoload/neomake/makers/ft/vim.vim
+
+  let errors_by_file = {}
+  let file_errors = []
+  for maker_file in ft_makers
+    let ft = fnamemodify(maker_file, ':t:r')
+    if ft ==# 'haskell'
+      NeomakeTestsSkip 'Skipping haskell - expensive setup'
+      continue
+    endif
+
+    let f = 'neomake#makers#ft#'.ft.'#EnabledMakers'
+    try
+      let enabled_makers = call(f, [])
+    catch /^Vim(let):E119:/
+      try
+        let enabled_makers = call(f, [{'file_mode': 1, 'bufnr': bufnr('%')}])
+      catch
+        call add(file_errors, 'Error when calling '.f.'(options): '.v:exception)
+      endtry
+    catch
+      call add(file_errors, 'Error when calling '.f.': '.v:exception)
+    endtry
+
+    let makers = neomake#GetMakers(ft)
+
+    " Check that all enabled makers are actually available.
+    " Skip neomake_tests, which has "nonexisting" there.
+    if ft !=# 'neomake_tests'
+        for m in enabled_makers
+            if index(makers, m) == -1
+                call add(file_errors, printf(
+                \ 'Enabled maker %s missing in available makers: %s',
+                \ string(m), string(makers)))
+            endif
+        endfor
+    endif
+
+    if ft ==# 'rst'
+      " Skip sphinx, would throw an error; it is tested separately.
+      " TODO: align with clippy maker, which only uses neomake#log#error
+      "       (https://github.com/neomake/neomake/issues/1453).
+      call filter(makers, "v:val !=# 'sphinx'")
+    endif
+    for m in makers
+      try
+        let maker = neomake#GetMaker(m, ft)
+      catch
+        call add(file_errors, 'Could not load maker '.string(m).' for filetype '.ft.': '.v:exception)
+        continue
+      endtry
+
+      " Validate maker.
+      let error_with_validate_maker = 1
+      try
+        let issues = neomake#debug#validate_maker(extend(maker, {'exe': 'true'}))
+        let error_with_validate_maker = 0
+      finally
+        if error_with_validate_maker
+          call vader#log(printf('Error with: %s!', m))
+        endif
+      endtry
+      if !empty(issues.errors)
+        call add(file_errors, 'Maker '.string(m).' for filetype '.ft.' has errors: '.join(issues.errors))
+      endif
+      if !empty(issues.warnings)
+        call add(file_errors, 'Maker '.string(m).' for filetype '.ft.' has warnings: '.join(issues.warnings))
+      endif
+    endfor
+
+    if !empty(file_errors)
+        let errors_by_file[maker_file] = copy(file_errors)
+        let file_errors = []
+    endif
+  endfor
+  Assert empty(file_errors)
+
+  let errors = []
+  for m in neomake#GetProjectMakers()
+    try
+      let maker = neomake#GetMaker(m)
+    catch
+      call add(errors, 'Could not load project maker '.string(m).': '.v:exception)
+      continue
+    endtry
+
+    " Validate maker.
+    let issues = neomake#debug#validate_maker(extend(maker, {'exe': 'true'}))
+    if !empty(issues.errors)
+      call add(errors, 'Project maker '.string(m).' has errors: '.join(issues.errors))
+    endif
+    if !empty(issues.warnings)
+      call add(errors, 'Project maker '.string(m).' has warnings: '.join(issues.warnings))
+    endif
+  endfor
+
+  Assert empty(errors), "Errors when loading makers:\n - ".join(errors, "\n - ")
+  if !empty(errors_by_file)
+    let msg = ''
+    for [fname, errors] in items(errors_by_file)
+      let msg .= "\n - ".fnamemodify(fname, ':p:.').":\n"
+      let msg .= '   - '.join(errors, "\n   - ")
+    endfor
+    Assert 0, "Errors when loading makers (per file):".msg
+  endif
+  AssertEqual exists('*neomake#makers#ft#neomake_tests#EnabledMakers'), 1
+  bwipe
+
+Execute (neomake#GetEnabledMakers without make_id):
+  Save g:neomake_myft_enabled_makers
+  let g:neomake_myft_enabled_makers = ['nonexisting_custom']
+  let makers = neomake#GetEnabledMakers('myft')
+  AssertNeomakeMessage 'Maker not found (for filetype myft): nonexisting_custom.', 0, {}
+
+Execute (Neomake with non-existing maker (configured)):
+  Save g:neomake_verbose, g:neomake_myft_enabled_makers
+  let g:neomake_verbose = 3
+  let g:neomake_myft_enabled_makers = ['nonexisting_custom']
+
+  new
+  noautocmd set filetype=myft
+  let make_id_before = neomake#GetStatus().last_make_id
+  RunNeomake
+  let make_id = neomake#GetStatus().last_make_id
+  let log_context = {'make_id': make_id, 'bufnr': bufnr('%')}
+  if exists('*win_getid')
+    AssertNeomakeMessage "Calling Make with options {'ft': 'myft', 'file_mode': 1, 'winid': ".win_getid()."}.", 3, log_context
+  else
+    AssertNeomakeMessage "Calling Make with options {'ft': 'myft', 'file_mode': 1}.", 3, log_context
+  endif
+  AssertNeomakeMessage 'Maker not found (for filetype myft): nonexisting_custom.', 0, log_context
+  AssertNeomakeMessage 'Nothing to make: no enabled file mode makers (filetype=myft).', 1, log_context
+  AssertEqual len(g:neomake_test_messages), 3
+  AssertEqual make_id_before + 1, neomake#GetStatus().last_make_id
+  bwipe
+
+Execute (Neomake with non-existing default makers):
+  call g:NeomakeSetupAutocmdWrappers()
+  new
+  set filetype=neomake_tests
+  Save g:neomake_test_enabledmakers
+  let g:neomake_test_enabledmakers = ['maker_without_exe', 'nonexisting']
+  RunNeomake
+  AssertNeomakeMessage 'Maker not found (for filetype neomake_tests): nonexisting.', 3
+  AssertNeomakeMessage "Exe (maker_without_exe) of auto-configured maker maker_without_exe is not executable, skipping.", 3
+  AssertNeomakeMessage 'Nothing to make: no valid makers.', 3
+  AssertEqual 0, len(g:neomake_test_jobfinished)
+  AssertEqual 0, len(g:neomake_test_finished)
+  bwipe
+
+Execute (Neomake with non-existing default maker handles following makers):
+  call g:NeomakeSetupAutocmdWrappers()
+  new
+  set filetype=neomake_tests
+  Save g:neomake_test_enabledmakers
+  let g:neomake_test_enabledmakers = ['maker_without_exe', 'echo_maker']
+  RunNeomake
+  AssertNeomakeMessage "Exe (maker_without_exe) of auto-configured maker maker_without_exe is not executable, skipping.", 3
+  AssertNeomakeMessage 'Running makers: echo_maker (auto).'
+  AssertEqual 1, len(g:neomake_test_jobfinished), 'echo_maker should have run'
+  AssertEqual 1, len(g:neomake_test_finished)
+
+  RunNeomake
+  AssertNeomakeMessage "Exe (maker_without_exe) of auto-configured maker maker_without_exe is not executable, skipping.", 3
+  bwipe
+
+Execute (Neomake with non-existing default makers, explicitly called):
+  Save &filetype
+  set filetype=neomake_tests
+
+  RunNeomake maker_without_exe
+  AssertNeomakeMessage "Exe (maker_without_exe) of maker maker_without_exe is not executable.", 0
+
+  RunNeomake maker_without_exe
+  AssertNeomakeMessage "Exe (maker_without_exe) of maker maker_without_exe is not executable.", 0
+
+Execute (neomake#GetEnabledMakers with defaults):
+  new
+  set filetype=neomake_tests
+  let makers = neomake#GetEnabledMakers(&ft)
+  AssertEqual map(copy(makers), 'v:val.auto_enabled'), [1]
+  AssertNeomakeMessage 'Maker not found (for filetype neomake_tests): nonexisting.', 3
+  AssertEqual len(g:neomake_test_messages), 1
+  bwipe
+
+Execute (neomake#GetEnabledMakers with configuration):
+  Save &filetype
+  set filetype=neomake_tests
+
+  Save b:neomake_neomake_tests_enabled_makers
+  let b:neomake_neomake_tests_enabled_makers = ['maker_without_exe']
+
+  let makers = neomake#GetEnabledMakers(&ft)
+  AssertEqual map(copy(makers), 'v:val.auto_enabled'), [0]
+  AssertEqual len(g:neomake_test_messages), 0
+
+Execute (neomake#GetEnabledMakers without filetype):
+  Save g:neomake_enabled_makers
+  unlet! g:neomake_enabled_makers
+
+  AssertEqual map(neomake#GetEnabledMakers(''), 'v:val.name'), []
+
+  AssertEqual map(neomake#GetEnabledMakers(), 'v:val.name'), ['makeprg']
+
+  Save &makeprg
+  set makeprg=
+  AssertEqual map(neomake#GetEnabledMakers(), 'v:val.name'), []
+
+  Save g:neomake_mymaker_maker
+  let g:neomake_mymaker_maker = {}
+  let g:neomake_enabled_makers = ['mymaker']
+  let makers = neomake#GetEnabledMakers()
+  AssertEqual map(copy(makers), '[v:val.name, v:val.auto_enabled]'),
+  \ [['mymaker', 0]]
+
+  " Should use a more specific maker based on &filetype.
+  set filetype=myft
+  let g:neomake_myft_mymaker_maker = {}
+  let makers = neomake#GetEnabledMakers()
+  AssertEqual map(copy(makers), '[v:val.name, v:val.auto_enabled]'),
+  \ [['mymaker', 0]]
+
+  " Should fallback to global maker if not found through filetype.
+  unlet g:neomake_myft_mymaker_maker
+  let makers = neomake#GetEnabledMakers()
+  AssertEqual map(copy(makers), '[v:val.name, v:val.auto_enabled]'),
+  \ [['mymaker', 0]]
+
+  AssertEqual len(g:neomake_test_messages), 0
+
+Execute (neomake#GetMaker errors):
+  AssertThrows call neomake#GetMaker('cargo', 'foo')
+  AssertEqual g:vader_exception, 'Neomake: Maker not found (for filetype foo): cargo'
+
+Execute (neomake#GetMaker for project maker):
+  Save g:neomake_enabled_makers
+  let g:neomake_enabled_makers = ['cargo']
+  set ft=myft
+
+  AssertThrows call neomake#GetMaker('cargo', 'foo')
+  AssertEqual g:vader_exception, 'Neomake: Maker not found (for filetype foo): cargo'
+
+Execute (maker.InitForJob can set env var):
+  let maker = {
+  \ 'exe': 'sh',
+  \ 'args': ['-c', 'echo MYENV:$MYENV'],
+  \ 'append_file': 0,
+  \ 'errorformat': '%m',
+  \ 'name': 'echo_env_maker',
+  \ }
+  function! maker.InitForJob(jobinfo)
+    let self.args = ['MYENV=custom', self.exe] + self.args
+    let self.exe = 'env'
+    let self.errorformat = '%m'
+    return self
+  endfunction
+
+  let prev_maker = deepcopy(maker)
+  call neomake#Make(1, [maker])
+  AssertEqual maker, prev_maker
+  NeomakeTestsWaitForFinishedJobs
+  AssertEqual map(getloclist(0), 'v:val.text'), ['MYENV:custom']
+
+Execute (maker.InitForJob can be a buffer setting (old-style)):
+  new
+  let maker = {'name': 'mymaker'}
+
+  let s:called = 0
+  function! MyInit(jobinfo) dict
+    let s:called = 1
+    let self.exe = 'doesnotexist'
+  endfunction
+
+  let b:neomake_mymaker_InitForJob = function('MyInit')
+
+  CallNeomake 1, [maker]
+  AssertEqual s:called, 1
+  AssertNeomakeMessage 'Exe (doesnotexist) of maker mymaker is not executable.', 0
+  delfunction MyInit
+  bwipe
+
+Execute (maker.InitForJob can be a buffer setting (new-style)):
+  new
+  noautocmd set filetype=neomake_tests
+  let maker = {'name': 'mymaker'}
+
+  let s:called = 0
+  function! MyInit(jobinfo) dict
+    let s:called = 1
+    let self.exe = 'doesnotexist'
+  endfunction
+
+  call neomake#config#set('b:ft.neomake_tests.InitForJob', function('MyInit'))
+
+  CallNeomake 1, [maker]
+  AssertEqual s:called, 1
+  AssertNeomakeMessage 'Exe (doesnotexist) of maker mymaker is not executable.', 0
+  delfunction MyInit
+  bwipe
+
+Execute (Using maker.fn results in deprecation warning):
+  let maker = {}
+  function! maker.fn(jobinfo) abort
+    let self.exe = 'doesnotexist'
+  endfunction
+
+  call NeomakeTestsSetVimMessagesMarker()
+  CallNeomake 1, [maker]
+
+  AssertNeomakeWarning "Please use 'InitForJob' instead of 'fn' for maker unnamed_maker."
+  AssertNeomakeMessage 'Exe (doesnotexist) of maker unnamed_maker is not executable.', 0
+
+Execute (Using maker.args as function results in deprecation warning):
+  let maker = {}
+  let maker.args = function('getcwd')
+
+  call NeomakeTestsSetVimMessagesMarker()
+  CallNeomake 1, [maker]
+
+  AssertNeomakeWarning "Please use 'InitForJob' instead of 'args' for maker unnamed_maker."
+  AssertNeomakeMessage 'Exe (unnamed_maker) of maker unnamed_maker is not executable.', 0
+
+Execute (Using maker.args.fn as function results in deprecation warning):
+  let maker = {}
+  let maker.args = {}
+  function! maker.args.fn() abort
+    return ['deprecated']
+  endfunction
+
+  call NeomakeTestsSetVimMessagesMarker()
+  CallNeomake 1, [maker]
+
+  AssertNeomakeWarning "Please use 'InitForJob' instead of 'args.fn' for maker unnamed_maker."
+  AssertNeomakeMessage 'Exe (unnamed_maker) of maker unnamed_maker is not executable.', 0
+
+Execute (Set env from maker config):
+  Save g:neomake_rust_cargo_maker
+
+  let maker = neomake#GetMaker('cargo', 'rust')
+  let maker.args = ['-c', 'env MYENV:$MYENV'] + [maker.exe] + maker.args
+  let maker.exe = 'sh'
+
+  let g:neomake_rust_cargo_maker = maker
+
+  let makers = neomake#GetEnabledMakers('rust')
+  AssertEqual makers[0].name, 'cargo'
+  AssertEqual makers[0], extend(maker, {'auto_enabled': 1})
+
+Execute (Correct function binding from base maker):
+  let maker = neomake#GetMaker({'name': 'maker1'})
+  AssertEqual maker.exe, 'maker1'
+  " Not sure about this one, but it asserts that there is no dict in the string
+  " representation of the object's function, when dumping the object.  This was
+  " different before, when assigning the function from the base maker dict.
+  Assert string(maker) =~# '\v''_get_argv'': function\(''\d+''\),', 'Simple _get_argv'
+
+Execute (Makers: process_output):
+  new
+  call neomake#statusline#ResetCounts()
+  call g:NeomakeSetupAutocmdWrappers()
+
+  Save g:neomake_test_entries
+  let g:neomake_test_entries = [{
+    \ 'bufnr': bufnr('%'),
+    \ 'filename': 'not_used_with_valid_bufnr',
+    \ 'lnum': 23,
+    \ 'pattern': '',
+    \ 'col': 42,
+    \ 'vcol': 0,
+    \ 'nr': 4711,
+    \ 'text': 'error message',
+    \ 'type': 'E',
+    \ }]
+
+  let maker = {
+  \ 'name': 'mymaker',
+  \ 'exe': 'printf',
+  \ 'args': ['maker_output'],
+  \ 'append_file': 0}
+  function! maker.process_output(context) abort
+    AssertEqual ['maker_output'], a:context.output
+    AssertEqual 'stdout', a:context.source
+    return deepcopy(g:neomake_test_entries)
+  endfunction
+
+  call neomake#Make(1, [maker])
+  NeomakeTestsWaitForFinishedJobs
+
+  let expected = copy(g:neomake_test_entries)[0]
+  " valid=1 gets added
+  let expected.valid = 1
+  " filename is removed
+  unlet expected.filename
+  AssertEqualQf getloclist(0), [expected]
+
+  AssertEqual len(g:neomake_test_countschanged), 1
+  AssertEqual len(g:neomake_test_jobfinished), 1
+  AssertEqual len(g:neomake_test_finished), 1
+  bwipe
+
+Execute (Makers: get_list_entries):
+  new
+  call neomake#statusline#ResetCounts()
+  call g:NeomakeSetupAutocmdWrappers()
+
+  Save g:neomake_test_entries
+  let g:neomake_test_entries = [{
+    \ 'bufnr': bufnr('%'),
+    \ 'filename': 'not_used_with_valid_bufnr',
+    \ 'lnum': 23,
+    \ 'pattern': '',
+    \ 'col': 42,
+    \ 'vcol': 0,
+    \ 'nr': 4711,
+    \ 'text': 'error message',
+    \ 'type': 'E',
+    \ }]
+
+  let maker = {}
+  function! maker.get_list_entries(...) abort dict
+    let jobinfo = a:1
+    AssertEqual sort(keys(jobinfo.maker)), ['auto_enabled', 'get_list_entries', 'name']
+    Assert !has_key(self, 'errorformat'), 'errorformat is not required'
+    AssertEqual jobinfo.maker.auto_enabled, 0
+    return deepcopy(g:neomake_test_entries)
+  endfunction
+
+  let maker = neomake#GetMaker(maker)
+  let jobinfos = neomake#Make(1, [maker])
+  Assert len(jobinfos), 1
+
+  " valid=1 gets added
+  let expected = map(copy(g:neomake_test_entries), "extend(v:val, {'valid': 1})")
+  " filename and maker_name is removed
+  let expected = map(expected, "filter(v:val, 'v:key != \"filename\"')")
+  AssertEqualQf getloclist(0), g:neomake_test_entries
+
+  AssertEqual len(g:neomake_test_countschanged), 1
+  AssertEqual len(g:neomake_test_jobfinished), 1
+  AssertEqual len(g:neomake_test_finished), 1
+  bwipe
+
+Execute (Makers: auto_enabled is kept if provided):
+  new
+  set filetype=neomake_tests
+  let b:neomake_neomake_tests_enabled_makers = [
+  \ {'name': 'custom', 'auto_enabled': 1},
+  \ ]
+  AssertEqual map(neomake#GetEnabledMakers('neomake_tests'), '[v:val.name, v:val.auto_enabled]'),
+  \ [['custom', 1]]
+  bwipe
+
+Execute (Makers: get_list_entries with non-list return value):
+  call neomake#statusline#ResetCounts()
+  call g:NeomakeSetupAutocmdWrappers()
+
+  let maker = {}
+  function! maker.get_list_entries(...) abort dict
+  endfunction
+
+  CallNeomake 1, [maker]
+  AssertNeomakeMessage 'unnamed_maker: getting entries via get_list_entries.'
+  AssertNeomakeMessage 'The get_list_entries method for maker unnamed_maker did not return a list, but: 0.', 0
+
+  AssertEqual len(g:neomake_test_countschanged), 0
+  AssertEqual len(g:neomake_test_jobfinished), 1
+  AssertEqual len(g:neomake_test_finished), 1
+
+Execute (Makers: get_list_entries with exception):
+  call neomake#statusline#ResetCounts()
+  call g:NeomakeSetupAutocmdWrappers()
+
+  let maker = {}
+  function! maker.get_list_entries(...) abort dict
+    throw "TEST_ERROR"
+    return [1]
+  endfunction
+
+  CallNeomake 1, [maker]
+  AssertNeomakeMessage 'Error during get_list_entries for unnamed_maker: TEST_ERROR.'
+  AssertNeomakeMessage '\m^(in function .*)$', 3
+
+  AssertEqual len(g:neomake_test_countschanged), 0
+  AssertEqual len(g:neomake_test_jobfinished), 1
+  AssertEqual len(g:neomake_test_finished), 1
+
+Execute (Makers: process_output with non-list return value):
+  call neomake#statusline#ResetCounts()
+  call g:NeomakeSetupAutocmdWrappers()
+
+  let maker = copy(g:success_maker)
+  function! maker.process_output(...) abort dict
+  endfunction
+
+  CallNeomake 1, [maker]
+  AssertNeomakeMessage "Calling maker's process_output method with 1 lines of output on stdout.", 3
+  AssertNeomakeMessage 'The process_output method for maker success-maker did not return a list, but: 0.', 0
+
+  AssertEqual len(g:neomake_test_countschanged), 0
+  AssertEqual len(g:neomake_test_jobfinished), 1
+  AssertEqual len(g:neomake_test_finished), 1
+
+Execute (Makers: process_json with invalid JSON):
+  call neomake#statusline#ResetCounts()
+  call g:NeomakeSetupAutocmdWrappers()
+
+  let maker = copy(g:success_maker)
+  function! maker.process_json(...) abort dict
+  endfunction
+
+  CallNeomake 1, [maker]
+  if has('nvim')
+    AssertNeomakeMessage "Failed to decode JSON: Vim(return):E474: Unidentified byte: success (output: 'success').", 0
+  elseif exists('*json_decode')
+    AssertNeomakeMessage "Failed to decode JSON: Vim(return):E474: Invalid argument (output: 'success').", 0
+  else
+    AssertNeomakeMessage "Failed to decode JSON: Failed to parse JSON input: invalid input (output: 'success').", 0
+  endif
+
+Execute (Makers: process_json with non-list return value):
+  call neomake#statusline#ResetCounts()
+  call g:NeomakeSetupAutocmdWrappers()
+
+  let maker = NeomakeTestsCommandMaker('json-maker', 'echo ''{"foo": 1, "bar": 2}''')
+  function! maker.process_json(...) abort dict
+  endfunction
+
+  CallNeomake 1, [maker]
+
+  AssertNeomakeMessage "Calling maker's process_json method with 2 JSON entries.", 3
+  AssertNeomakeMessage 'The process_json method for maker json-maker did not return a list, but: 0.', 0
+
+  function! maker.process_json(...) abort dict
+    return [0]
+  endfunction
+  CallNeomake 1, [maker]
+  AssertNeomakeMessage 'The process_json method for maker json-maker did not return a list of dicts, but: [0].', 0
+
+  AssertEqual len(g:neomake_test_countschanged), 0
+  AssertEqual len(g:neomake_test_jobfinished), 2
+  AssertEqual len(g:neomake_test_finished), 2
+
+Execute (Makers: get_list_entries with sandbox exception):
+  call neomake#statusline#ResetCounts()
+  call g:NeomakeSetupAutocmdWrappers()
+
+  let maker = {}
+  let maker.should_throw = 1
+  function! maker.get_list_entries(...) abort dict
+    if self.should_throw
+      " causes E48
+      sandbox bprevious
+    endif
+    return [1]
+  endfunction
+
+  let jobinfo = neomake#Make({'enabled_makers': [maker]})[0]
+  AssertNeomakeMessage '\mError during pcall: Vim(bprevious):E48: Not allowed in sandbox:'
+  AssertNeomakeMessage '\m^(in function .*)$', 3
+  AssertEqual len(g:neomake_test_countschanged), 0
+  AssertEqual len(g:neomake_test_jobfinished), 0
+  AssertEqual len(g:neomake_test_finished), 0
+
+  let jobinfo.maker.should_throw = 0
+  if has('timers')
+    AssertNeomakeMessage '\V\^Retrying Timer event in 10ms', 3
+  else
+    AssertNeomakeMessage 'Retrying Timer event on CursorHold(I).'
+    doautocmd CursorHold
+  endif
+  NeomakeTestsWaitForMessage 'The get_list_entries method for maker unnamed_maker did not return a list of dicts, but: [1].', 0
+
+  AssertEqual len(g:neomake_test_countschanged), 0
+  AssertEqual len(g:neomake_test_jobfinished), 1
+  AssertEqual len(g:neomake_test_finished), 1
+
+Execute (pcall aborts after 3 attempts per job):
+  new
+  call g:NeomakeSetupAutocmdWrappers()
+
+  let maker = {'name': 'maker1'}
+  function! maker.get_list_entries(...) abort dict
+    " causes E48
+    sandbox bprevious
+  endfunction
+
+  let maker2 = {'_tries': 0, 'name': 'maker2'}
+  function! maker2.get_list_entries(...) abort dict
+    let self._tries += 1
+    if self._tries <= 3
+      " causes E48
+      sandbox bprevious
+    endif
+    return [{'bufnr': bufnr('%'), 'text': 'error', 'lnum': 1, 'type': 'E'}]
+  endfunction
+
+  call NeomakeTestsSetVimMessagesMarker()
+  let jobs = neomake#Make({'enabled_makers': [maker, maker2]})
+
+  " Calls both makers initially.
+  AssertNeomakeMessage 'maker1: getting entries via get_list_entries.'
+  AssertNeomakeMessage '\mError during pcall: Vim(bprevious):E48: Not allowed in sandbox:', 3, jobs[0]
+  AssertNeomakeMessage '\m^(in function .*)$', 3
+  if has('timers')
+    AssertNeomakeMessage '\V\^Retrying Timer event in 10ms', 3, jobs[0]
+  else
+    AssertNeomakeMessage 'Retrying Timer event on CursorHold(I).', 3, jobs[0]
+  endif
+  AssertNeomakeMessage '\mError during pcall: Vim(bprevious):E48: Not allowed in sandbox:', 3, jobs[1]
+  if has('timers')
+    AssertNeomakeMessage '\V\^Retrying Timer event in 10ms', 3, jobs[1]
+  else
+    AssertNeomakeMessage 'Retrying Timer event on CursorHold(I).', 3, jobs[1]
+    doautocmd CursorHold
+  endif
+
+  " Then the first maker is called only.
+  NeomakeTestsWaitForMessage '\mError during pcall: Vim(bprevious):E48: Not allowed in sandbox:', 3, jobs[0]
+  if has('timers')
+    NeomakeTestsWaitForMessage '\V\^Retrying Timer event in 20ms', 3, jobs[0]
+  else
+    AssertNeomakeMessage 'Retrying Timer event on CursorHold(I).'
+    doautocmd CursorHoldI
+  endif
+  AssertNeomakeMessage 'action queue: skipping handle_get_list_entries for not processed make_id.', 3, jobs[1]
+
+  " Then the second one first (skipped, not re-queued).
+  NeomakeTestsWaitForMessage '\mError during pcall: Vim(bprevious):E48: Not allowed in sandbox:', 3, jobs[1]
+  if has('timers')
+"     NeomakeTestsWaitForMessage '\V\^Retrying Timer event in 30ms', 3, jobs[0]
+    NeomakeTestsWaitForMessage 'action queue: skipping handle_get_list_entries for not processed make_id.', 3, jobs[0]
+  else
+    AssertNeomakeMessage 'Retrying Timer event on CursorHold(I).'
+    doautocmd CursorHold
+    doautocmd CursorHold
+    doautocmd CursorHold
+  endif
+
+  NeomakeTestsWaitForMessage 'Giving up handling Timer callbacks after 3 attempts. Please report this. See :messages for more information.', 0, jobs[0]
+  AssertNeomakeMessage '\m^(in function .*neomake#action_queue#add,.*)$', 3
+
+  " Now maker2 gets processed (after giving up on maker1).
+  if has('timers')
+    NeomakeTestsWaitForMessage 'Processing 1 entries.', 3, jobs[1]
+  else
+    AssertNeomakeMessage 'Processing 1 entries.', 3, jobs[1]
+  endif
+
+  AssertEqual len(g:neomake_test_finished), 1
+  AssertEqual map(copy(g:neomake_test_jobfinished), 'v:val.jobinfo.maker.name'), ['maker2']
+  AssertEqual len(g:neomake_test_countschanged), 1
+  AssertEqual map(getloclist(0), 'v:val.text'), ['error']
+
+  let vim_msgs = NeomakeTestsGetVimMessages()
+  Assert vim_msgs[-1] =~# '\vNeomake error in: function .*neomake#action_queue#add, line \d+'
+  AssertEqual len(vim_msgs), 1
+  bwipe
+
+Execute (Makers: get_list_entries via config):
+  call g:NeomakeSetupAutocmdWrappers()
+  let maker = {'name': 'mymaker', 'exe': 'doesnotexist'}
+
+  Save g:neomake_test_entries
+  let g:neomake_test_entries = [{
+    \ 'filename': 'unloaded_filename_without_bufnr',
+    \ 'lnum': 23,
+    \ 'pattern': '',
+    \ 'col': 42,
+    \ 'vcol': 0,
+    \ 'nr': 4711,
+    \ 'text': 'error message',
+    \ 'type': 'E',
+    \ }]
+
+  function! NeomakeTestGetEntries(...) abort dict
+    let a = a:000
+    Assert !has_key(self, 'errorformat'), 'errorformat is not required'
+    return deepcopy(g:neomake_test_entries)
+  endfunction
+
+  new
+  let bufnr = bufnr('%')
+  set filetype=neomake_tests
+  let b:neomake_neomake_tests_enabled_makers = [maker]
+  let b:neomake_neomake_tests_mymaker_get_list_entries = function('NeomakeTestGetEntries')
+  RunNeomake
+
+  " valid=1 gets added
+  let expected = map(copy(g:neomake_test_entries), "extend(v:val, {'valid': 1})")
+  " filename is removed
+  let expected = map(expected, "filter(v:val, 'v:key != \"filename\"')")
+  " Unlisted buffer gets added for filename.
+  let unlisted_bufnr = bufnr('unloaded_filename_without_bufnr')
+  Assert !empty(unlisted_bufnr), 'unlisted_bufnr is not empty'
+  let expected[0].bufnr = unlisted_bufnr
+
+  AssertEqualQf getloclist(0), expected
+
+  AssertEqual len(g:neomake_test_countschanged), 1
+  AssertEqual len(g:neomake_test_jobfinished), 1
+  AssertEqual len(g:neomake_test_finished), 1
+  bwipe
+  bwipe unloaded_filename_without_bufnr
+  delfunction NeomakeTestGetEntries
+
+Execute (neomake#Make can be called with dict):
+  call neomake#Make({})
+  AssertNeomakeMessage 'Nothing to make: no enabled file mode makers (filetype=).', 1
+
+Execute (neomake#Make uses current filetype by default):
+  new
+  set ft=neomake_tests
+  let b:neomake_neomake_tests_true_append_file = 0
+  let s:au_called = []
+  augroup neomake_tests
+    autocmd User NeomakeJobFinished AssertEqual g:neomake_hook_context.jobinfo.ft, 'neomake_tests'
+    autocmd User NeomakeJobFinished call add(s:au_called, 1)
+  augroup END
+  call neomake#Make({'enabled_makers': ['true']})
+  NeomakeTestsWaitForFinishedJobs
+  AssertEqual s:au_called, [1]
+  bwipe
+
+Execute (Neomake/Neomake! run ft maker in project mode):
+  call g:NeomakeSetupAutocmdWrappers()
+  new
+  edit tests/fixtures/a\ filename\ with\ spaces
+  set ft=neomake_tests
+  let fname = bufname('%')
+
+  Neomake echo_args
+  NeomakeTestsWaitForFinishedJobs
+  AssertNeomakeMessage 'Running makers: echo_args.'
+  AssertEqual map(getloclist(0), 'v:val.text'), [fname]
+
+  Neomake! echo_args
+  NeomakeTestsWaitForFinishedJobs
+  AssertNeomakeMessage 'Running makers: echo_args.'
+  AssertEqual map(getqflist(), 'v:val.text'), ['']
+
+  call neomake#config#set('b:append_file', 1)
+  CallNeomake 0, ['echo_args']
+  AssertNeomakeMessage 'Running makers: echo_args.'
+  AssertNeomakeMessage "Using setting append_file=1 from 'buffer'.", 3
+  AssertEqual map(getqflist(), 'v:val.text'), [fname]
+
+  AssertEqual map(getloclist(0), 'v:val.text'), [fname]
+
+  AssertEqual map(copy(g:neomake_test_jobfinished), 'v:val.jobinfo.file_mode'), [1, 0, 0]
+  bwipe
+
+Execute (Maker can pass opts for jobstart/job_start):
+  if NeomakeAsyncTestsSetup()
+    if !has('nvim') && !(has('patch-8.0.0902') && has('patch-8.0.1832'))
+      NeomakeTestsSkip 'Requires patch 8.0.0902/8.0.1832 for Vim.'
+    else
+      let maker = {'exe': 'sh', 'args': ['-c', 'echo $TERM']}
+      if has('nvim')
+        let maker.nvim_job_opts = {
+        \ 'pty': 1,
+        \ 'TERM': 'custom-term',
+        \ }
+      else
+        let maker.vim_job_opts = {
+        \ 'pty': 1,
+        \ 'env': {'TERM': 'custom-term'},
+        \ }
+      endif
+
+      CallNeomake 0, [maker]
+      AssertEqualQf getqflist(), [
+      \ {'lnum': 0, 'bufnr': 0, 'col': 0, 'valid': 0, 'vcol': 0, 'nr': -1,
+      \  'type': '', 'pattern': '', 'text': 'custom-term'}]
+    endif
+  endif
+
+Execute (Maker can override output handler via opts for jobstart/job_start):
+  if NeomakeAsyncTestsSetup()
+    let s:output = []
+    function s:on_stdout(job_or_channel, output, ...)
+      let lines = has('nvim') ? a:output[:-2] : split(a:output, '\n')
+      let s:output += lines
+    endfunction
+
+    let maker = {'exe': 'printf', 'args': ['%s\n', 'line1', 'line2']}
+
+    if has('nvim')
+      let maker.nvim_job_opts = {
+      \ 'on_stdout': function('s:on_stdout'),
+      \ }
+    else
+      let maker.vim_job_opts = {
+      \ 'out_cb': function('s:on_stdout'),
+      \ }
+    endif
+
+    CallNeomake 0, [maker]
+    AssertEqual getqflist(), []
+    AssertEqual s:output, ['line1', 'line2']
+  endif
+
+Execute (Job can be skipped via InitForJob):
+  call g:NeomakeSetupAutocmdWrappers()
+  new
+  let maker = {}
+  function! maker.InitForJob(...) abort
+    throw 'Neomake: skip_job: some reason'
+  endfunction
+  CallNeomake 1, [maker]
+  AssertEqual len(g:neomake_test_finished), 0
+  AssertEqual len(g:neomake_test_jobfinished), 0
+  AssertNeomakeMessage 'unnamed_maker: skipping job: some reason.', 3
+
+  " Next job gets executed after skipping through InitForJob.
+  let maker2 = {}
+  CallNeomake 1, [maker, g:entry_maker]
+
+  AssertNeomakeMessage 'unnamed_maker: skipping job: some reason.', 3
+  AssertNeomakeMessage 'entry_maker: getting entries via get_list_entries.', 2
+  AssertEqual len(g:neomake_test_finished), 1
+  AssertEqual len(g:neomake_test_jobfinished), 1
+  bwipe!
+
+Execute (Makers: compare list entry defaults):
+  " setloclist: => nr=0
+  new
+  call setloclist(0, [{}])
+  let list1 = getloclist(0)
+  AssertEqualQf list1, [
+  \ {'lnum': 0, 'bufnr': 0, 'col': 0, 'pattern': '', 'valid': 0,
+  \  'vcol': 0, 'nr': 0, 'type': '', 'text': ''}]
+  bwipe
+
+  " lgetexpr: => nr=-1 (needs text implicitly)
+  new
+  let &l:efm = '%m'
+  lgetexpr 'hastext'
+  let list2 = getloclist(0)
+  AssertEqualQf list2, [
+  \ {'lnum': 0, 'bufnr': 0, 'col': 0, 'pattern': '', 'valid': 0,
+  \  'vcol': 0, 'nr': -1, 'type': '', 'text': 'hastext'}]
+  bwipe
+
+  " get_list_entries, without text: => nr=0, type=W (default)
+  new
+  let maker = {}
+  function! maker.get_list_entries(...)
+    return [{}]
+  endfunction
+  CallNeomake 1, [maker]
+  let list3 = getloclist(0)
+  " AssertEqualQf list3, list1
+  AssertEqualQf list3, [
+  \ {'lnum': 0, 'bufnr': 0, 'col': 0, 'pattern': '', 'valid': 0,
+  \  'vcol': 0, 'nr': 0, 'type': 'W', 'text': ''}]
+  bwipe
+
+  " get_list_entries, with text: => nr=-1, type=W (default)
+  new
+  let maker = {}
+  function! maker.get_list_entries(...)
+    return [{'text': 'hastext'}]
+  endfunction
+  CallNeomake 1, [maker]
+  let list4 = getloclist(0)
+  " AssertEqualQf list4, list2
+  AssertEqualQf list4, [
+  \ {'lnum': 0, 'bufnr': 0, 'col': 0, 'pattern': '', 'valid': 0,
+  \  'vcol': 0, 'nr': -1, 'type': 'W', 'text': 'hastext'}]
+  bwipe
+
+  " cmd maker, without text: => nr=-1
+  " This is not consistent - due to appending?!
+  new
+  let cmd_maker = NeomakeTestsGetMakerWithOutput({}, [''])
+  CallNeomake 1, [cmd_maker]
+  let list5 = getloclist(0)
+  AssertEqualQf list5, [
+  \ {'lnum': 0, 'bufnr': 0, 'col': 0, 'pattern': '', 'valid': 0,
+  \  'vcol': 0, 'nr': -1, 'type': '', 'text': ''}]
+  bwipe
+
+  " cmd maker, with text: => nr=-1
+  new
+  let cmd_maker = NeomakeTestsGetMakerWithOutput({}, ['hastext'])
+  CallNeomake 1, [cmd_maker]
+  let list6 = getloclist(0)
+  AssertEqualQf list6, list2
+  bwipe
+
+Execute (neomake#core#instantiate_maker: does not use copy for self):
+  let maker = {
+  \ 'args': [],
+  \ 'init_call_count': 0,
+  \ }
+  function! maker.InitForJob(...) abort
+    let self.init_call_count += 1
+    let self.args += ['arg_for_job']
+  endfunction
+
+  let bound_maker = neomake#core#instantiate_maker(maker, {}, 0)
+  AssertEqual bound_maker.args, ['arg_for_job']
+  let bound_maker = neomake#core#instantiate_maker(maker, {}, 0)
+  AssertEqual bound_maker.args, ['arg_for_job', 'arg_for_job']
+  AssertEqual maker.init_call_count, 2
+  AssertEqual bound_maker.init_call_count, 2
+
+  " deepcopy in InitForJob.
+  let maker = {
+  \ 'args': [],
+  \ 'init_call_count': 0,
+  \ }
+  function! maker.InitForJob(...) abort
+    let self.init_call_count += 1
+    let maker = deepcopy(self)
+    let maker.args += ['arg_for_job']
+    return maker
+  endfunction
+  let bound_maker = neomake#core#instantiate_maker(maker, {}, 0)
+  AssertEqual bound_maker.args, ['arg_for_job']
+  let bound_maker = neomake#core#instantiate_maker(maker, {}, 0)
+  AssertEqual bound_maker.args, ['arg_for_job']
+  AssertEqual maker.init_call_count, 2
+  AssertEqual bound_maker.init_call_count, 2
+
+  " copy in InitForJob (mutates args).
+  let maker = {
+  \ 'args': [],
+  \ 'init_call_count': 0,
+  \ }
+  function! maker.InitForJob(...) abort
+    let self.init_call_count += 1
+    let maker = copy(self)
+    let maker.args += ['arg_for_job']
+    return maker
+  endfunction
+  let bound_maker = neomake#core#instantiate_maker(maker, {}, 0)
+  AssertEqual bound_maker.args, ['arg_for_job']
+  let bound_maker = neomake#core#instantiate_maker(maker, {}, 0)
+  AssertEqual bound_maker.args, ['arg_for_job', 'arg_for_job']
+  AssertEqual maker.init_call_count, 2
+  AssertEqual bound_maker.init_call_count, 2
+
+  " copy in InitForJob (copied args).
+  let maker = {
+  \ 'args': [],
+  \ 'init_call_count': 0,
+  \ }
+  function! maker.InitForJob(...) abort
+    let self.init_call_count += 1
+    let maker = copy(self)
+    let maker.args = maker.args + ['arg_for_job']
+    return maker
+  endfunction
+  let bound_maker = neomake#core#instantiate_maker(maker, {}, 0)
+  AssertEqual bound_maker.args, ['arg_for_job']
+  let bound_maker = neomake#core#instantiate_maker(maker, {}, 0)
+  AssertEqual bound_maker.args, ['arg_for_job']
+  AssertEqual maker.init_call_count, 2
+  AssertEqual bound_maker.init_call_count, 2

@@ -64,7 +64,7 @@ are available on Github, use the `custom_plugins` section in configuration file.
 
 # add custom_plugins: https://github.com/mhartington/oceanic-next
 [[custom_plugins]]
-  name = "mhartington/oceanic-next"
+  repo = "mhartington/oceanic-next"
   merged = 0
 ```
 

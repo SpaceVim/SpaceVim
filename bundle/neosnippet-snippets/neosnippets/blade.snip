@@ -1,0 +1,120 @@
+snippet yl
+abbr @yield
+        @yield('${1}')
+
+snippet ext
+abbr @extends
+        @extends('${1}')
+
+snippet sec
+abbr @section
+        @section('${1}', '${2}')
+
+snippet section
+abbr @section ... @endsection
+        @section('${1:section name}')
+            ${2}
+        @endsection
+
+
+snippet section-parent
+abbr @section @parent ... @endsection
+        @section('${1:section name}')
+            @parent
+
+            ${2}
+        @endsection
+
+snippet compo
+abbr @component ... @endcomponent
+        @component('${1}')
+            ${2}
+        @endcomponent
+
+snippet slot
+abbr @slot ... @endslot
+        @slot('${1}')
+            ${2}
+        @endslot
+
+snippet if
+abbr if ... endif
+        @if(${1:condition})
+           ${2}
+        @endif
+
+snippet ifelse
+abbr if elseif else endif
+        @if (${1:condition})
+           ${2}
+        @elseif (${3:condition})
+           ${4}
+        @else
+           ${5}
+        @endif
+
+snippet unless
+abbr @unless ... @endunless
+        @unless (${1:condition})
+            ${2}
+        @endunless
+
+snippet isset
+abbr @isset ... @endisset
+        @isset(${1})
+            ${2}
+        @endisset
+
+snippet empty
+abbr @empty ... @endempty
+        @empty(${1})
+            ${2}
+        @endempty
+
+snippet for
+abbr @for ... @endfor
+        @for ($i = 0; $i < ${1}; $i++)
+            ${2}
+        @endfor
+
+snippet foreach
+abbr @foreach ... @endforeach
+        @foreach (${1} as ${2})
+            ${3}
+        @endforeach
+
+snippet forelse
+abbr @forelse ... @empty ... @endforeach
+        @forelse (${1} as ${2})
+            ${3}
+        @empty
+            ${4}
+        @endforelse
+
+snippet while
+abbr @while ... @endwhile
+        @while (${1})
+            ${2}
+        @endwhile
+
+snippet comment
+abbr {{-- comments --}}
+        {{-- ${1} --}}
+
+snippet php
+abbr @php ... @endphp
+        @php
+            ${1}
+        @endphp
+
+snippet include
+abbr @include
+        @include('${1}')
+
+
+
+
+
+
+
+

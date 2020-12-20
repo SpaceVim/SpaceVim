@@ -2,8 +2,8 @@
 title: "Use Vim as a Go IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/57321608-4a484880-7134-11e9-8e43-5fa05085d7e5.png
-excerpt: "A general guide for using SpaceVim as Go IDE, including layer configuration, requiems installation and usage."
-type: BlogPosting
+description: "A general guide for using SpaceVim as Go IDE, including layer configuration, requiems installation and usage."
+type: article
 comments: true
 commentsID: "Use Vim as a Go IDE"
 ---
@@ -49,7 +49,7 @@ for go language should work well.
 To manage the alternate file for a project, you may need to create a `.project_alt.json` file in the root of your
 project.
 
-for exmaple, add following content into the `.project_alt.json` file:
+for example, add following content into the `.project_alt.json` file:
 
 ```json
 {

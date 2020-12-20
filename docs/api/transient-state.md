@@ -1,6 +1,6 @@
 ---
-title: "transient state api"
-description: "transient state API provides some besic functions and values for current os."
+title: "transient state API"
+description: "transient state API provides some basic functions and values for current os."
 ---
 
 # [Available APIs](../) >> transient state

@@ -1,0 +1,56 @@
+# Test cases for vim-emoji
+
+Execute (emoji#for(NAME)):
+  AssertEqual '🐶', emoji#for('dog')
+
+Execute (emoji#for(NAME) - case-insensitivity):
+  AssertEqual '🐶', emoji#for('DOG')
+  AssertEqual '🐶', emoji#for('Dog')
+
+Execute (emoji#for(NAME, DEFAULT = '')):
+  AssertEqual '',   emoji#for('snoop dogg')
+  AssertEqual '💩 ', emoji#for('snoop dogg', '💩 ')
+
+Execute (emoji#for(NAME, DEFAULT, PAD = 1)):
+  AssertEqual '🐱', emoji#for('cat', '🐶 ')
+  AssertEqual '🐱', emoji#for('cat', '🐶 ', 1)
+  AssertEqual '🐱',  emoji#for('cat', '🐶 ', 0)
+
+Execute (emoji#list()):
+  AssertEqual 3, type(emoji#list())
+  Assert index(emoji#list(), 'dog') >= 0
+  AssertEqual -1, index(emoji#list(), 'snoop dogg')
+
+Do (Insert emoji using <C-R>=):
+  iHi, \<C-R>=emoji#for('dog')\<Enter>!\<Esc>
+  yy2p
+
+Expect (3 dogs):
+  Hi, 🐶!
+  Hi, 🐶!
+  Hi, 🐶!
+
+Given (Text with emoji names):
+  :cat:s and :dog:s
+  :frog:s and :leprechaun:s
+
+Execute (Substitute emoji names):
+  %s/:\([^:]\+\):/\=emoji#for(submatch(1), submatch(0))/g
+
+Expect:
+  🐱s and 🐶s
+  🐸s and :leprechaun:s
+
+Given (Nothing):
+
+Execute (Set completefunc):
+  setlocal completefunc=emoji#complete
+  setlocal completeopt=menu
+
+Do (Complete!):
+  iapp\<C-X>\<C-U>\<CR>
+  :app\<C-X>\<C-U>
+
+Expect (Completed):
+  app:+1:
+  :apple:

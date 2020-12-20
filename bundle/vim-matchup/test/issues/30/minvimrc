@@ -1,0 +1,16 @@
+set nocompatible
+
+" load match-up
+let s:path = simplify(expand('<sfile>:h').'/../../..')
+let &rtp  = s:path.',' . &rtp
+let &rtp .= ','.s:path.'/after'
+
+filetype plugin indent on
+syntax enable
+
+" match-up options go here
+let g:matchup_matchpref = {
+    \ 'html': { 'tagnameonly': 1, },
+    \ 'vue':  { 'tagnameonly': 1, },
+    \}
+

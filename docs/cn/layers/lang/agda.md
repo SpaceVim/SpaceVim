@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#agda 模块"
 description: "这一模块为 SpaceVim 提供了 Agda 的开发支持，主要包括语法高亮及一键运行。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#agda

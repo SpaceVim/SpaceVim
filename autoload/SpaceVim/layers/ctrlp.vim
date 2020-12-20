@@ -1,6 +1,6 @@
 "=============================================================================
 " ctrlp.vim --- SpaceVim ctrlp layer
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -50,7 +50,7 @@ function! SpaceVim#layers#ctrlp#config() abort
         \ ],
         \ 1)
   " @fixme SPC h SPC make vim flick
-  nmap <Space>h<Space> [SPC]h[SPC]
+  exe printf('nmap %sh%s [SPC]h[SPC]', g:spacevim_default_custom_leader)
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'CtrlPBuffer',

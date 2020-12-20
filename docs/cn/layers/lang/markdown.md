@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#markdown 模块"
 description: "这一模块为 Markdown 编辑提供支持，包括格式化、自动生成文章目录、代码块等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#markdown
@@ -28,6 +28,8 @@ lang: cn
 [[layers]]
   name = "lang#markdown"
 ```
+
+语法树的支持由插件`lvht/tagbar-markdown`提供，但是该插件依赖 php，如果不希望安装 php，可以直接下载 [mdctags](https://github.com/wsdjeg/mdctags.rs) 命令。
 
 ## 代码格式化
 

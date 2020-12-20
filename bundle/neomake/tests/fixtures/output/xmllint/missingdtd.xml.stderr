@@ -1,0 +1,9 @@
+tests/fixtures/input/xmllint/missingdtd.xml:2: warning: failed to load external entity "tests/fixtures/input/xmllint/missingdtdref"
+<!DOCTYPE a SYSTEM "missingdtdref">
+                                   ^
+tests/fixtures/input/xmllint/missingdtd.xml:5: namespace error : Namespace prefix xlink for href on b is not defined
+  <b xlink:href="http://fakeurl.net">b text</b>
+                                    ^
+warning: failed to load external entity "tests/fixtures/input/xmllint/missingdtdref"
+validity error : Could not load the external subset "missingdtdref"
+Document tests/fixtures/input/xmllint/missingdtd.xml does not validate

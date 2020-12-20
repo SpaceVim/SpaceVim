@@ -1,6 +1,6 @@
 "=============================================================================
 " toml.vim --- toml api for SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2020 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -233,14 +233,14 @@ endfunction
 "
 function! s:self._array(input) abort
   let ary = []
-  let _ = self._consume(a:input, '\[')
+  call self._consume(a:input, '\[')
   call self._skip(a:input)
   while !self._eof(a:input) && !self._match(a:input, '\]')
     let ary += [self._value(a:input)]
     call self._consume(a:input, ',\?')
     call self._skip(a:input)
   endwhile
-  let _ = self._consume(a:input, '\]')
+  call self._consume(a:input, '\]')
   return ary
 endfunction
 

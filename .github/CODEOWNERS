@@ -14,3 +14,9 @@ docs/cn/layers/lang/julia.md                 @jingpengw
 autoload/SpaceVim/layers/lang/javascript.vim @zhujinxuan @S1ngS1ng @chemzqm
 docs/layers/lang/javascript.md               @zhujinxuan @S1ngS1ng @chemzqm
 docs/cn/layers/lang/javascript.md            @zhujinxuan @S1ngS1ng @chemzqm
+
+
+# lang#erlang layer
+autoload/SpaceVim/layers/lang/erlang.vim      @suzuiyuegjy
+docs/layers/lang/erlang.md                    @suzuiyuegjy
+docs/cn/layers/lang/erlang.md                 @suzuiyuegjy

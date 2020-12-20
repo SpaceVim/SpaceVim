@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#crystal 模块"
 description: "这一模块为 crystal 开发提供支持，包括交互式编程、一键运行等特性。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../../) >> lang#crystal

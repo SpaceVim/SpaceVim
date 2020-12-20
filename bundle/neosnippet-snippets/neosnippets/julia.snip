@@ -1,0 +1,79 @@
+snippet    function
+abbr       function ... end
+options    head
+    function ${1}(${2})
+        ${0}
+    end
+
+snippet    macro
+abbr       macro ... end
+options    head
+    macro ${1}(${2})
+        ${0}
+    end
+
+snippet    struct
+abbr       struct ... end
+options    head
+    struct ${1}
+        ${0}
+    end
+
+snippet    module
+abbr       module ... end
+options    head
+    module ${1}
+    ${0}
+    end#module
+
+snippet     let
+abbr        let ... end
+options     head
+    let ${1}
+        ${0}
+    end
+
+snippet     quote
+abbr        quote ... end
+options     head
+    quote
+        ${0}
+    end
+
+
+snippet     begin
+abbr        begin ... end
+options     head
+    begin
+        ${0}
+    end
+
+snippet     for
+abbr        for ... end
+options     head
+    for ${1}
+        ${0}
+    end
+
+snippet     if
+abbr        if ... end
+options     head
+    if ${1}
+        ${0}
+    end
+
+snippet     try
+abbr        try ... end
+options     head
+    try
+        ${1}
+    ${2:catch}
+        ${0}
+    end
+
+snippet     while
+abbr        while ... end
+options     head
+    while ${1:true}
+        ${0}
+    end

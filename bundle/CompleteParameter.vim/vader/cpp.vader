@@ -1,0 +1,118 @@
+"{{{ycm
+Execute (error completed_item):
+  let completed_item = {}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (error completed_item, kind: t):
+  let completed_item = {'kind': 't'}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (error completed_item, word empty):
+  let completed_item = {'kind': 'f', 'word': ''}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (error completed_item, word info):
+  let completed_item = {'kind': 'f', 'word': 'empty'}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (vector::empty()):
+  let completed_item = {'kind': 'f', 'word': 'empty', 'info': "bool empty() const\n"}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (vector::operator=):
+  let completed_item = {'kind': 'f', 'word': 'operator=', 'info': "std::vector<int, std::allocator<int> > & operator=( const std::vector<int, std::allocator<int> > &__x )"}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['(__x)'], result
+
+Execute (vector::vector):
+  let completed_item = {'kind': 'f', 'word': 'vector', 'info': "void vector( _InputIterator __first, typename enable_if<__is_input_iterator<_InputIterator>::value && !__is_forward_iterator<_InputIterator>::value && is_constructible<value_type, typename iterator_traits<_InputIterator>::reference>::value, _InputIterator>::type __last )\nvoid vector( _InputIterator __first, _InputIterator __last, const allocator_type &__a, typename enable_if<__is_input_iterator<_InputIterator>::value && !__is_forward_iterator<_InputIterator>::value && is_constructible<value_type, typename iterator_traits<_InputIterator>::reference>::value>::type * )"}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['(__first, __last)', '(__first, __last, __a, *)'], result
+
+Execute (ctime::time):
+  let completed_item = {'kind':'f', 'word': 'time', 'info': 'time_t time( time_t * )'}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['(*)'], result
+
+Execute (vector<class _Tp, class _Alloc>, kind: c):
+  let completed_item = {'kind': 'c', 'word': 'vector', 'info': "vector<class _Tp, class _Alloc>\n"}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['<_Tp, _Alloc>'], result
+
+Execute (std::error_code, kind: c):
+  let completed_item = {'kind': 'c', 'word': 'error_code', 'info': "error_code"}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (std:: error_code, kind: c):
+  let completed_item = {'kind': 'c', 'word': 'error_code', 'info': " error_code"}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (CMP, kind: m):
+  let completed_item = {'word': 'CMP', 'menu': '', 'info': ' CMP( a, b )^@', 'kind': 'm', 'abbr': 'CMP( a, b )'}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (include default func value):
+  let completed_item = {'word': 'test', 'menu': 'void', 'info': 'void test(int a, int b = func() )', 'kind': 'f', 'abbr': 'test( int a, int b = func() )'}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+
+Execute (include default value):
+  let completed_item = {'word': 'test1', 'menu': 'void', 'info': 'void test1( int a, int b = 1 )', 'kind': 'f', 'abbr': 'test1( int a, int b = 1 )'}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['(a, b)'], result
+"}}}
+
+"{{{deoplete
+Execute (error completed_item, word empty):
+  let completed_item = {'kind': 'f void', 'word': ''}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (error completed_item, word info):
+  let completed_item = {'kind': 'f void', 'word': 'empty'}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (vector::empty()):
+  let completed_item = {'kind': 'f bool', 'word': 'empty', 'info': "bool empty() const", 'menu': '[clang] '}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['()'], result
+
+Execute (vector::operator=):
+  let completed_item = {'kind': 'f std::vector<int, std::allocator<ing> > &', 'word': 'operator=', 'info': "std::vector<int, std::allocator<int> > & operator=( const std::vector<int, std::allocator<int> > &__x )", 'menu': '[clang] '}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['(__x)'], result
+
+Execute (vector::vector):
+  let completed_item = {'kind': 'f', 'word': 'vector', 'info': "void vector( _InputIterator __first, typename enable_if<__is_input_iterator<_InputIterator>::value && !__is_forward_iterator<_InputIterator>::value && is_constructible<value_type, typename iterator_traits<_InputIterator>::reference>::value, _InputIterator>::type __last )\nvoid vector( _InputIterator __first, _InputIterator __last, const allocator_type &__a, typename enable_if<__is_input_iterator<_InputIterator>::value && !__is_forward_iterator<_InputIterator>::value && is_constructible<value_type, typename iterator_traits<_InputIterator>::reference>::value>::type * )", 'menu': '[clang] '}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['(__first, __last)', '(__first, __last, __a, *)'], result
+
+Execute (ctime::time):
+  let completed_item = {'kind':'f time_t', 'word': 'time', 'info': 'time_t time( time_t * )', 'menu': '[clang] '}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['(*)'], result
+
+Execute (vector<class _Tp, class _Alloc>, kind: p):
+  let completed_item = {'kind': 'p ', 'word': 'vector', 'info': "vector<class _Tp, class _Alloc>\n", 'menu': '[clang] '}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual ['<_Tp, _Alloc>'], result
+
+Execute (std::error_code, kind: p):
+  let completed_item = {'kind': 'p ', 'word': 'error_code', 'info': "error_code", 'menu': '[clang] '}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual [], result
+
+Execute (std:: error_code, kind: p):
+  let completed_item = {'kind': 'p ', 'word': 'error_code', 'info': " error_code", 'menu': '[clang] '}
+  let result = cm_parser#cpp#parameters(completed_item)
+  AssertEqual [], result
+"}}}

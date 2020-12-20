@@ -1,0 +1,39 @@
+Include: include/setup.vader
+
+Execute (neomake#makers#ft#haskell#HlintEntryProcess):
+  function! s:F(text)
+    let entry = {'text': a:text}
+    call neomake#makers#ft#haskell#HlintEntryProcess(entry)
+    return entry.text
+  endfunction
+
+  let simple =
+  \"Use fmap\n
+  \ Found:\n
+  \   liftM\n
+  \ Why not:\n
+  \   fmap"
+
+  let extra_whitespace =
+  \"Use fmap\n
+  \   Found:\n
+  \       liftM\n
+  \    Why not:\n
+  \       fmap"
+
+  AssertEqual s:F(simple), 'Use fmap | Found: liftM | Why not: fmap'
+  AssertEqual s:F(extra_whitespace), 'Use fmap | Found: liftM | Why not: fmap'
+
+  let multiline_code =
+  \"Use fromMaybe\n
+  \ Found:\n
+  \   case findIndex (not . null) xs of\n
+  \       Just ix -> ix\n
+  \       Nothing -> -1\n
+  \ Why not:\n
+  \   fromMaybe (-1) (findIndex (not . null) xs)"
+
+  AssertEqual s:F(multiline_code),
+    \ 'Use fromMaybe | ' .
+    \ 'Found: case findIndex (not . null) xs of Just ix -> ix Nothing -> -1 | ' .
+    \ 'Why not: fromMaybe (-1) (findIndex (not . null) xs)'

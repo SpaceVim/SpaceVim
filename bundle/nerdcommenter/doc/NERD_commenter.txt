@@ -1,0 +1,1004 @@
+*NERD_commenter.txt*         Plugin for commenting code
+
+
+                        NERD COMMENTER REFERENCE MANUAL~
+
+
+
+
+
+==============================================================================
+CONTENTS                                               *NERDCommenterContents*
+
+    1.Intro...................................|NERDCommenter|
+        1.1 Leader............................|NERDCommenterLeader|
+    2.Installation............................|NERDCommenterInstallation|
+    3.Functionality provided..................|NERDCommenterFunctionality|
+        3.1 Functionality Summary.............|NERDCommenterFunctionalitySummary|
+        3.2 Functionality Details.............|NERDCommenterFunctionalityDetails|
+            3.2.1 Comment map.................|NERDCommenterComment|
+            3.2.2 Nested comment map..........|NERDCommenterNested|
+            3.2.3 Toggle comment map..........|NERDCommenterToggle|
+            3.2.4 Minimal comment map.........|NERDCommenterMinimal|
+            3.2.5 Invert comment map..........|NERDCommenterInvert|
+            3.2.6 Sexy comment map............|NERDCommenterSexy|
+            3.2.7 Yank comment map............|NERDCommenterYank|
+            3.2.8 Comment to EOL map..........|NERDCommenterToEOL|
+            3.2.9 Append com to line map......|NERDCommenterAppend|
+            3.2.10 Insert comment map.........|NERDCommenterInsert|
+            3.2.11 Use alternate delims map...|NERDCommenterAltDelims|
+            3.2.12 Comment aligned maps.......|NERDCommenterAlignLeft|
+                                              |NERDCommenterAlignBoth|
+            3.2.13 Uncomment line map.........|NERDCommenterUncomment|
+        3.3 Sexy Comments.....................|NERDCommenterSexyComments|
+        3.4 The NERDComment function..........|NERDCommenterNERDComment|
+        3.5 The Hooks.........................|NERDCommenterHooks|
+    4.Options.................................|NERDCommenterOptions|
+        4.1 Options summary...................|NERDCommenterOptionsSummary|
+        4.2 Options details...................|NERDCommenterOptionsDetails|
+        4.3 Default delimiter Options.........|NERDCommenterDefaultDelims|
+    5. Customising key mappings...............|NERDCommenterMappings|
+    6. Interfaces.............................|NERDCommenterInterfaces|
+    7. Issues with the script.................|NERDCommenterIssues|
+        7.1 Delimiter detection heuristics....|NERDCommenterHeuristics|
+        7.2 Nesting issues....................|NERDCommenterNesting|
+    8.About..     ............................|NERDCommenterAbout|
+    9.Changelog...............................|NERDCommenterChangelog|
+    10.Credits................................|NERDCommenterCredits|
+    11.License................................|NERDCommenterLicense|
+
+==============================================================================
+1. Intro                                                       *NERDCommenter*
+
+The NERD commenter provides many different commenting operations and styles
+which are invoked via key mappings and a menu. These operations are available
+for most filetypes.
+
+There are also options that allow to tweak the commenting engine to your
+taste.
+
+------------------------------------------------------------------------------
+1.1 Leader key                                           *NERDCommenterLeader*
+
+Most NERD commenter commands are executed using the |<Leader>| key. In Vim
+this is a key dedicated for user-specific customizations. It effectively
+creates a namespace so that custom commands don't interfere with Vim's
+built-in shortcuts.
+
+The leader key can be mapped to whatever the user likes (see :help mapleader).
+In the definition of custom commands |<Leader>| is the placeholder for the 
+leader key. To see the current mapping for |<Leader>| type :echo mapleader.
+If it reports an undefined variable it means the leader key is set to the
+default of '\'.
+
+==============================================================================
+2. Installation                                    *NERDCommenterInstallation*
+
+The NERD Commenter requires Vim 7 or higher.
+
+Extract the plugin files in your ~/.vim (*nix) or ~/vimfiles (Windows). You
+should have 2 files: >
+    plugin/NERD_commenter.vim
+    doc/NERD_commenter.txt
+<
+Next, to finish installing the help file run: >
+    :helptags ~/.vim/doc
+<
+See |add-local-help| for more details.
+
+Make sure that you have filetype plugins enabled, as the script makes use of
+|'commentstring'| where possible (which is usually set in a filetype plugin).
+See |filetype-plugin-on| for details, but basically, stick this in your vimrc >
+    filetype plugin on
+<
+
+==============================================================================
+3. Functionality provided                         *NERDCommenterFunctionality*
+
+------------------------------------------------------------------------------
+3.1 Functionality summary                  *NERDCommenterFunctionalitySummary*
+
+The following key mappings are provided by default (there is also a menu
+with items corresponding to all the mappings below):
+
+[count]|<Leader>|cc |NERDCommenterComment|
+Comment out the current line or text selected in visual mode.
+
+
+[count]|<Leader>|cn |NERDCommenterNested|
+Same as |<Leader>|cc but forces nesting.
+
+
+[count]|<Leader>|c<space> |NERDCommenterToggle|
+Toggles the comment state of the selected line(s). If the topmost selected
+line is commented, all selected lines are uncommented and vice versa.
+
+
+[count]|<Leader>|cm |NERDCommenterMinimal|
+Comments the given lines using only one set of multipart delimiters.
+
+
+[count]|<Leader>|ci |NERDCommenterInvert|
+Toggles the comment state of the selected line(s) individually.
+
+
+[count]|<Leader>|cs |NERDCommenterSexy|
+Comments out the selected lines ``sexily''
+
+
+[count]|<Leader>|cy |NERDCommenterYank|
+Same as |<Leader>|cc except that the commented line(s) are yanked first.
+
+
+|<Leader>|c$ |NERDCommenterToEOL|
+Comments the current line from the cursor to the end of line.
+
+
+|<Leader>|cA |NERDCommenterAppend|
+Adds comment delimiters to the end of line and goes into insert mode between
+them.
+
+
+|NERDCommenterInsert|
+Adds comment delimiters at the current cursor position and inserts between.
+Disabled by default.
+
+
+|<Leader>|ca |NERDCommenterAltDelims|
+Switches to the alternative set of delimiters.
+
+
+[count]|<Leader>|cl    |NERDCommenterAlignLeft|
+[count]|<Leader>|cb    |NERDCommenterAlignBoth|
+Same as |NERDCommenterComment| except that the delimiters are aligned down the
+left side (|<Leader>|cl) or both sides (|<Leader>|cb).
+
+
+[count]|<Leader>|cu |NERDCommenterUncomment|
+Uncomments the selected line(s).
+
+
+With the optional repeat.vim plugin (vimscript #2136), the mappings can also
+be repeated via |.|
+
+------------------------------------------------------------------------------
+3.2 Functionality details                  *NERDCommenterFunctionalityDetails*
+
+------------------------------------------------------------------------------
+3.2.1 Comment map                                       *NERDCommenterComment*
+
+Default mapping: [count]|<Leader>|cc
+Mapped to: <plug>NERDCommenterComment
+Applicable modes: normal visual visual-line visual-block.
+
+
+Comments out the current line. If multiple lines are selected in visual-line
+mode, they are all commented out.  If some text is selected in visual or
+visual-block mode then the script will try to comment out the exact text that
+is selected using multi-part delimiters if they are available.
+
+If a [count] is given in normal mode, the mapping works as though that many
+lines were selected in visual-line mode.
+
+------------------------------------------------------------------------------
+3.2.2 Nested comment map                                 *NERDCommenterNested*
+
+Default mapping: [count]|<Leader>|cn
+Mapped to: <plug>NERDCommenterNested
+Applicable modes: normal visual visual-line visual-block.
+
+Performs nested commenting.  Works the same as |<Leader>|cc except that if a line
+is already commented then it will be commented again.
+
+If |'NERDUsePlaceHolders'| is set then the previous comment delimiters will
+be replaced by place-holder delimiters if needed.  Otherwise the nested
+comment will only be added if the current commenting delimiters have no right
+delimiter (to avoid syntax errors)
+
+If a [count] is given in normal mode, the mapping works as though that many
+lines were selected in visual-line mode.
+
+Related options:
+|'NERDDefaultNesting'|
+
+------------------------------------------------------------------------------
+3.2.3 Toggle comment map                                 *NERDCommenterToggle*
+
+Default mapping: [count]|<Leader>|c<space>
+Mapped to: <plug>NERDCommenterToggle
+Applicable modes: normal visual-line.
+
+Toggles commenting of the lines selected. The behaviour of this mapping
+depends on whether the first line selected is commented or not.  If so, all
+selected lines are uncommented and vice versa.
+
+With this mapping, a line is only considered to be commented if it starts with
+a left delimiter.
+
+If a [count] is given in normal mode, the mapping works as though that many
+lines were selected in visual-line mode.
+
+------------------------------------------------------------------------------
+3.2.4 Minimal comment map                               *NERDCommenterMinimal*
+
+Default mapping: [count]|<Leader>|cm
+Mapped to: <plug>NERDCommenterMinimal
+Applicable modes: normal visual-line.
+
+Comments the selected lines using one set of multipart delimiters if possible.
+
+For example: if you are programming in c and you select 5 lines and press
+|<Leader>|cm then a '/*' will be placed at the start of the top line and a '*/'
+will be placed at the end of the last line.
+
+Sets of multipart comment delimiters that are between the top and bottom
+selected lines are replaced with place holders (see |'NERDLPlace'|) if
+|'NERDUsePlaceHolders'| is set for the current filetype. If it is not, then
+the comment will be aborted if place holders are required to prevent illegal
+syntax.
+
+If a [count] is given in normal mode, the mapping works as though that many
+lines were selected in visual-line mode.
+
+------------------------------------------------------------------------------
+3.2.5 Invert comment map                                 *NERDCommenterInvert*
+
+Default mapping: |<Leader>|ci
+Mapped to: <plug>NERDCommenterInvert
+Applicable modes: normal visual-line.
+
+Inverts the commented state of each selected line. If the selected line is
+commented then it is uncommented and vice versa. Each line is examined and
+commented/uncommented individually.
+
+With this mapping, a line is only considered to be commented if it starts with
+a left delimiter.
+
+If a [count] is given in normal mode, the mapping works as though that many
+lines were selected in visual-line mode.
+
+------------------------------------------------------------------------------
+3.2.6 Sexy comment map                                     *NERDCommenterSexy*
+
+Default mapping: [count]|<Leader>|cs
+Mapped to: <plug>NERDCommenterSexy
+Applicable modes: normal, visual-line.
+
+Comments the selected line(s) ``sexily''. See |NERDCommenterSexyComments| for
+a description of what sexy comments are. Can only be done on filetypes for
+which there is at least one set of multipart comment delimiters specified.
+
+Sexy comments cannot be nested and lines inside a sexy comment cannot be
+commented again.
+
+If a [count] is given in normal mode, the mapping works as though that many
+lines were selected in visual-line mode.
+
+Related options:
+|'NERDCompactSexyComs'|
+
+------------------------------------------------------------------------------
+3.2.7 Yank comment map                                     *NERDCommenterYank*
+
+Default mapping: [count]|<Leader>|cy
+Mapped to: <plug>NERDCommenterYank
+Applicable modes: normal visual visual-line visual-block.
+
+Same as |<Leader>|cc except that it yanks the line(s) that are commented first.
+
+------------------------------------------------------------------------------
+3.2.8 Comment to EOL map                                  *NERDCommenterToEOL*
+
+Default mapping: |<Leader>|c$
+Mapped to: <plug>NERDCommenterToEOL
+Applicable modes: normal.
+
+Comments the current line from the current cursor position up to the end of
+the line.
+
+------------------------------------------------------------------------------
+3.2.9 Append com to line map                             *NERDCommenterAppend*
+
+Default mapping: |<Leader>|cA
+Mapped to: <plug>NERDCommenterAppend
+Applicable modes: normal.
+
+Appends comment delimiters to the end of the current line and goes
+to insert mode between the new delimiters.
+
+------------------------------------------------------------------------------
+3.2.10 Insert comment map                                *NERDCommenterInsert*
+
+Default mapping: disabled by default.
+Map it to: <plug>NERDCommenterInsert
+Applicable modes: insert.
+
+Adds comment delimiters at the current cursor position and inserts
+between them.
+
+NOTE: prior to version 2.1.17 this was mapped to <C-c>. To restore this
+mapping add >
+    imap <C-c> <plug>NERDCommenterInsert
+<
+to your vimrc.
+
+------------------------------------------------------------------------------
+3.2.11 Use alternate delims map                       *NERDCommenterAltDelims*
+
+Default mapping: |<Leader>|ca
+Mapped to: <plug>NERDCommenterAltDelims
+Applicable modes: normal.
+
+Changes to the alternative commenting style if one is available. For example,
+if the user is editing a c++ file using // comments and they hit |<Leader>|ca
+then they will be switched over to /**/ comments.
+
+See also |NERDCommenterDefaultDelims|
+
+------------------------------------------------------------------------------
+3.2.12 Comment aligned maps                           *NERDCommenterAlignLeft*
+                                                      *NERDCommenterAlignBoth*
+
+Default mappings: [count]|<Leader>|cl   [count]|<Leader>|cb
+Mapped to: <plug>NERDCommenterAlignLeft
+           <plug>NERDCommenterAlignBoth
+Applicable modes: normal visual-line.
+
+Same as |<Leader>|cc except that the comment delimiters are aligned on the left
+side or both sides respectively. These comments are always nested if the
+line(s) are already commented.
+
+If a [count] is given in normal mode, the mapping works as though that many
+lines were selected in visual-line mode.
+
+------------------------------------------------------------------------------
+3.2.13 Uncomment line map                             *NERDCommenterUncomment*
+
+Default mapping: [count]|<Leader>|cu
+Mapped to: <plug>NERDCommenterUncomment
+Applicable modes: normal visual visual-line visual-block.
+
+Uncomments the current line. If multiple lines are selected in
+visual mode then they are all uncommented.
+
+When uncommenting, if the line contains multiple sets of delimiters then the
+``outermost'' pair of delimiters will be removed.
+
+The script uses a set of heuristics to distinguish ``real'' delimiters from
+``fake'' ones when uncommenting. See |NERDCommenterIssues| for details.
+
+If a [count] is given in normal mode, the mapping works as though that many
+lines were selected in visual-line mode.
+
+Related  options:
+|'NERDRemoveAltComs'|
+|'NERDRemoveExtraSpaces'|
+
+------------------------------------------------------------------------------
+3.3 Sexy Comments                                  *NERDCommenterSexyComments*
+These are comments that use one set of multipart comment delimiters as well as
+one other marker symbol. For example: >
+    /*
+     * This is a c style sexy comment
+     * So there!
+     */
+
+    /* This is a c style sexy comment
+     * So there!
+     * But this one is ``compact'' style */
+<
+Here the multipart delimiters are /* and */ and the marker is *.
+
+------------------------------------------------------------------------------
+3.4 The NERDComment function                        *NERDCommenterNERDComment*
+
+All of the NERD commenter mappings and menu items invoke a single function
+which delegates the commenting work to other functions. This function is
+public and has the prototype: >
+    function! NERDComment(mode, type)
+<
+The arguments to this function are simple:
+    - mode: a character indicating the mode in which the comment is requested:
+     'n' for Normal mode, 'x' for Visual mode
+    - type: is used to specify what type of commenting operation is to be
+      performed, and it can be one of the following: "sexy", "invert",
+      "minimal", "toggle", "alignLeft", "alignBoth", "comment", "nested",
+      "toEOL", "append", "insert", "uncomment", "yank"
+
+For example, if you typed >
+    :call NERDComment(1, 'sexy')
+<
+then the script would do a sexy comment on the last visual selection.
+
+------------------------------------------------------------------------------
+3.5 The hooks                                             *NERDCommenterHooks*
+|fu! NERDCommenter_before()|  Before NERDComment/SwitchToAlternativeDelimiters
+|fu! NERDCommenter_after()|    After NERDComment/SwitchToAlternativeDelimiters
+
+For example, in order to handle different language blocks embedded in the same
+file such as |vim-vue|, you can change the filetype, comment something and
+change the filetype back: >
+    let g:ft = ''
+    fu! NERDCommenter_before()
+        if &ft == 'vue'
+            let g:ft = 'vue'
+            let stack = synstack(line('.'), col('.'))
+            if len(stack) > 0
+                let syn = synIDattr((stack)[0], 'name')
+                if len(syn) > 0
+                    let syn = tolower(syn)
+                    exe 'setf '.syn
+                endif
+            endif
+        endif
+    endfu
+    fu! NERDCommenter_after()
+        if g:ft == 'vue'
+            setf vue
+            let g:ft = ''
+        endif
+    endfu
+<
+
+==============================================================================
+4. Options                                              *NERDCommenterOptions*
+
+------------------------------------------------------------------------------
+4.1 Options summary                              *NERDCommenterOptionsSummary*
+
+|'loaded_nerd_comments'|              Turns off the script.
+
+|'NERDAllowAnyVisualDelims'|          Allows multipart alternative delimiters
+                                      to be used when commenting in
+                                      visual/visual-block mode.
+
+|'NERDBlockComIgnoreEmpty'|           Forces right delimiters to be placed
+                                      when doing visual-block comments.
+
+|'NERDCommentEmptyLines'|             Specifies if empty lines should be
+                                      commented (useful with regions).
+
+|'NERDCommentWholeLinesInVMode'|      Changes behaviour of visual comments.
+
+|'NERDCreateDefaultMappings'|         Turn the default mappings on/off.
+
+|'NERDCustomDelimiters'|              Add or override delimiters for any
+                                      filetypes.
+                                      
+|'NERDDefaultNesting'|                Tells the script to use nested comments
+                                      by default.
+                                      
+|'NERDMenuMode'|                      Specifies how the NERD commenter menu
+                                      will appear (if at all).
+                                      
+|'NERDLPlace'|                        Specifies what to use as the left
+                                      delimiter placeholder when nesting
+                                      comments.
+                                      
+|'NERDUsePlaceHolders'|               Specifies which filetypes may use
+                                      placeholders when nesting comments.
+                                      
+|'NERDRemoveAltComs'|                 Tells the script whether to remove
+                                      alternative comment delimiters when
+                                      uncommenting.
+                                      
+|'NERDRemoveExtraSpaces'|             Tells the script to always remove the
+                                      extra spaces when uncommenting
+                                      (regardless of whether NERDSpaceDelims
+                                      is set).
+                                      
+|'NERDRPlace'|                        Specifies what to use as the right
+                                      delimiter placeholder when nesting
+                                      comments.
+                                      
+|'NERDSpaceDelims'|                   Specifies whether to add extra spaces
+                                      around delimiters when commenting, and
+                                      whether to remove them when
+                                      uncommenting.
+                                      
+|'NERDTrimTrailingWhitespace'|        Specifies if trailing whitespace
+                                      should be deleted when uncommenting.
+
+|'NERDCompactSexyComs'|               Specifies whether to use the compact
+                                      style sexy comments.
+
+|'NERDDefaultAlign'|                  Specifies the default alignment to use,
+                                      one of 'none', 'left', 'start', or
+                                      'both'.
+
+|'NERDToggleCheckAllLines'|           Enable NERDCommenterToggle to check 
+                                      all selected lines is commented or not.
+
+------------------------------------------------------------------------------
+4.3 Options details                              *NERDCommenterOptionsDetails*
+
+To enable any of the below options you should put the given line in your
+~/.vimrc
+
+                                                       *'loaded_nerd_comments'*
+If this script is driving you insane you can turn it off by setting this
+option >
+    let loaded_nerd_comments=1
+<
+------------------------------------------------------------------------------
+                                                    *'NERDAllowAnyVisualDelims'*
+Values: 0 or 1.
+Default: 1.
+
+If set to 1 then, when doing a visual or visual-block comment (but not a
+visual-line comment), the script will choose the right delimiters to use for
+the comment. This means either using the current delimiters if they are
+multipart or using the alternative delimiters if THEY are multipart.  For
+example if we are editing the following java code: >
+    float foo = 1221;
+    float bar = 324;
+    System.out.println(foo * bar);
+<
+If we are using // comments and select the "foo" and "bar" in visual-block
+mode, as shown left below (where '|'s are used to represent the visual-block
+boundary), and comment it then the script will use the alternative delimiters
+as shown on the right: >
+
+    float |foo| = 1221;                   float /*foo*/ = 1221;
+    float |bar| = 324;                    float /*bar*/ = 324;
+    System.out.println(foo * bar);        System.out.println(foo * bar);
+<
+------------------------------------------------------------------------------
+                                                     *'NERDBlockComIgnoreEmpty'*
+Values: 0 or 1.
+Default: 1.
+
+This option  affects visual-block mode commenting. If this option is turned
+on, lines that begin outside the right boundary of the selection block will be
+ignored.
+
+For example, if you are commenting this chunk of c code in visual-block mode
+(where the '|'s are used to represent the visual-block boundary) >
+    #include <sys/types.h>
+    #include <unistd.h>
+    #include <stdio.h>
+   |int| main(){
+   |   | printf("SUCK THIS\n");
+   |   | while(1){
+   |   |     fork();
+   |   | }
+   |}  |
+<
+If NERDBlockComIgnoreEmpty=0 then this code will become: >
+    #include <sys/types.h>
+    #include <unistd.h>
+    #include <stdio.h>
+    /*int*/ main(){
+    /*   */ printf("SUCK THIS\n");
+    /*   */ while(1){
+    /*   */     fork();
+    /*   */ }
+    /*}  */
+<
+Otherwise, the code block would become: >
+    #include <sys/types.h>
+    #include <unistd.h>
+    #include <stdio.h>
+    /*int*/ main(){
+    printf("SUCK THIS\n");
+    while(1){
+        fork();
+    }
+    /*}  */
+<
+------------------------------------------------------------------------------
+                                                     *'NERDCommentEmptyLines'*
+Values: 0 or 1.
+Default: 0.
+
+This option affects commenting of empty lines. If this option is turned on,
+then empty lines will be commented as well. Useful when commenting regions of
+code.
+
+------------------------------------------------------------------------------
+                                                *'NERDCommentWholeLinesInVMode'*
+Values: 0, 1 or 2.
+Default: 0.
+
+By default the script tries to comment out exactly what is selected in visual
+mode (v). For example if you select and comment the following c code (using |
+to represent the visual boundary): >
+    in|t foo = 3;
+    int bar =| 9;
+    int baz = foo + bar;
+<
+This will result in: >
+    in/*t foo = 3;*/
+    /*int bar =*/ 9;
+    int baz = foo + bar;
+<
+But some people prefer it if the whole lines are commented like: >
+    /*int foo = 3;*/
+    /*int bar = 9;*/
+    int baz = foo + bar;
+<
+If you prefer the second option then stick this line in your vimrc: >
+    let NERDCommentWholeLinesInVMode=1
+<
+
+If the filetype you are editing only has no multipart delimiters (for example
+a shell script) and you hadn't set this option then the above would become >
+    in#t foo = 3;
+    #int bar = 9;
+<
+(where # is the comment delimiter) as this is the closest the script can
+come to commenting out exactly what was selected. If you prefer for whole
+lines to be commented out when there is no multipart delimiters but the EXACT
+text that was selected to be commented out if there IS multipart delimiters
+then stick the following line in your vimrc: >
+    let NERDCommentWholeLinesInVMode=2
+<
+
+Note that this option does not affect the behaviour of commenting in
+|visual-block| mode.
+
+------------------------------------------------------------------------------
+                                                 *'NERDCreateDefaultMappings'*
+Values: 0 or 1.
+Default: 1.
+
+If set to 0, none of the default mappings will be created.
+
+See also |NERDCommenterMappings|.
+
+------------------------------------------------------------------------------
+                                                      *'NERDCustomDelimiters'*
+Values: A map (format specified below).
+Default: {}
+
+Use this option if you have new filetypes you want the script to handle, or if
+you want to override the default delimiters of a filetype.
+
+Example: >
+    let g:NERDCustomDelimiters = {
+        \ 'ruby': { 'left': '#', 'leftAlt': 'FOO', 'rightAlt': 'BAR' },
+        \ 'grondle': { 'left': '{{', 'right': '}}' }
+    \ }
+<
+
+Here we override the delimiter settings for ruby and add FOO/BAR as alternative
+delimiters. We also add {{ and }} as delimiters for a new filetype called
+'grondle'.
+
+------------------------------------------------------------------------------
+                                                           *'NERDRemoveAltComs'*
+Values: 0 or 1.
+Default: 1.
+
+When uncommenting a line (for a filetype with an alternative commenting style)
+this option tells the script whether to look for, and remove, comment
+delimiters of the alternative style.
+
+For example, if you are editing a c++ file using // style comments and you go
+|<Leader>|cu on this line: >
+    /* This is a c++ comment baby! */
+<
+It will not be uncommented if the NERDRemoveAltComs is set to 0.
+
+------------------------------------------------------------------------------
+                                                       *'NERDRemoveExtraSpaces'*
+Values: 0 or 1.
+Default: 0.
+
+By default, the NERD commenter will remove spaces around comment delimiters if
+either:
+1. |'NERDSpaceDelims'| is set to 1.
+2. NERDRemoveExtraSpaces is set to 1.
+
+This means that if we have the following lines in a c code file: >
+    /* int foo = 5; */
+    /* int bar = 10; */
+    int baz = foo + bar
+<
+If either of the above conditions hold then if these lines are uncommented
+they will become: >
+    int foo = 5;
+    int bar = 10;
+    int baz = foo + bar
+<
+Otherwise they would become: >
+     int foo = 5;
+     int bar = 10;
+    int baz = foo + bar
+<
+
+Note: When using 'start' as the default alignment, the enabling of
+NERDRemoveExtraSpaces will still result in the removal of a space after the
+delimiter.  This can be undesirable since aligning the delimiters at the very
+start of the line (index 0) will usually result in spaces between the comment
+delimiters and the text which probably shouldn't be removed.  So when using
+'start' as the default alignment, take care to also disable
+NERDRemoveExtraSpaces.
+
+------------------------------------------------------------------------------
+                                                                  *'NERDLPlace'*
+                                                                  *'NERDRPlace'*
+Values: arbitrary string.
+Default:
+    NERDLPlace: "[>"
+    NERDRPlace: "<]"
+
+These options are used to control the strings used as place-holder delimiters.
+Place holder delimiters are used when performing nested commenting when the
+filetype supports commenting styles with both left and right delimiters.
+To set these options use lines like: >
+    let NERDLPlace="FOO"
+    let NERDRPlace="BAR"
+<
+Following the above example, if we have line of c code: >
+    /* int horse */
+<
+and we comment it with |<Leader>|cn it will be changed to: >
+    /*FOO int horse BAR*/
+<
+When we uncomment this line it will go back to what it was.
+
+------------------------------------------------------------------------------
+                                                                *'NERDMenuMode'*
+Values: 0, 1, 2, 3.
+Default: 3
+
+This option can take 4 values:
+    "0": Turns the menu off.
+    "1": Turns the 'comment' menu on with no menu shortcut.
+    "2": Turns the 'comment' menu on with <alt>-c as the shortcut.
+    "3": Turns the 'Plugin -> comment' menu on with <alt>-c as the shortcut.
+
+------------------------------------------------------------------------------
+                                                         *'NERDUsePlaceHolders'*
+Values: 0 or 1.
+Default 1.
+
+This option is used to specify whether place-holder delimiters should be used
+when creating a nested comment.
+
+------------------------------------------------------------------------------
+                                                             *'NERDSpaceDelims'*
+Values: 0 or 1.
+Default 0.
+
+Some people prefer a space after the left delimiter and before the right
+delimiter like this: >
+    /* int foo=2; */
+<
+as opposed to this: >
+    /*int foo=2;*/
+<
+If you want spaces to be added then set NERDSpaceDelims to 1 in your vimrc.
+
+See also |'NERDRemoveExtraSpaces'|.
+
+------------------------------------------------------------------------------
+                                                  *'NERDTrimTrailingWhitespace'*
+Values: 0 or 1.
+Default 0.
+
+When uncommenting an empty line some whitespace may be left as a result of
+alignment padding. With this option enabled any trailing whitespace will be
+deleted when uncommenting a line.
+
+------------------------------------------------------------------------------
+                                                             *'NERDDefaultAlign'*
+Values: 'none', 'left', 'start', 'both'
+Default 'none'.
+
+Specifies the default alignment to use when inserting comments.
+
+Note: When using 'start' as the default alignment be sure to disable
+NERDRemoveExtraSpaces.  See the note at the bottom of |NERDRemoveExtraSpaces|
+for more details.
+
+------------------------------------------------------------------------------
+                                                         *'NERDCompactSexyComs'*
+Values: 0 or 1.
+Default 0.
+
+Some people may want their sexy comments to be like this: >
+    /* Hi There!
+     * This is a sexy comment
+     * in c */
+<
+As opposed to like this: >
+    /*
+     * Hi There!
+     * This is a sexy comment
+     * in c
+     */
+<
+If this option is set to 1 then the top style will be used.
+
+------------------------------------------------------------------------------
+                                                          *'NERDDefaultNesting'*
+Values: 0 or 1.
+Default 1.
+
+When this option is set to 1, comments are nested automatically. That is, if
+you hit |<Leader>|cc on a line that is already commented it will be commented
+again.
+
+------------------------------------------------------------------------------
+                                                   *'NERDToggleCheckAllLines'*
+Values: 0 or 1.
+Default 0.
+
+When this option is set to 1, NERDCommenterToggle will check all selected line, 
+if there have oneline not be commented, then comment all lines.
+
+------------------------------------------------------------------------------
+                                                *'NERDDisableTabsInBlockComm'*
+Values: 0 or 1.
+Default 0.
+
+When this option is set to 1, NERDDisableTabsInBlockComm will not add
+whitespaces align the start location of the ending comment symbol with the
+end location of the starting comment symbol. For example, in Fortran, the new
+style will be as the following: >
+    close (inpt,iostat=ierr,iomsg=error_message)
+    call io_error(pname,input_fname,2,__LINE__,__FILE__,ierr,error_message)
+<
+to >
+    !===BEGIN===!
+    ! close (inpt,iostat=ierr,iomsg=error_message)
+    ! call io_error(pname,input_fname,2,__LINE__,__FILE__,ierr,error_message)
+    !===END===!
+<
+for the block comment style if customized comment symbols are set up in vimrc
+file by the following line >
+    let g:NERDCustomDelimiters = {
+    \ 'fortran':{'left':'!','leftAlt':'!===BEGIN===!','rightAlt':'!===END===!'}
+    \ }
+<
+
+------------------------------------------------------------------------------
+3.3 Default delimiter customisation               *NERDCommenterDefaultDelims*
+
+If you want the NERD commenter to use the alternative delimiters for a
+specific filetype by default then put a line of this form into your vimrc: >
+    let g:NERDAltDelims_<filetype> = 1
+<
+Example: java uses // style comments by default, but you want it to default to
+/* */ style comments instead. You would put this line in your vimrc: >
+    let g:NERDAltDelims_java = 1
+<
+
+See |NERDCommenterAltDelims| for switching commenting styles at runtime.
+
+==============================================================================
+5. Key mapping customisation                           *NERDCommenterMappings*
+
+To change a mapping just map another key combo to the internal <plug> mapping.
+For example, to remap the |NERDCommenterComment| mapping to ",omg" you would put
+this line in your vimrc: >
+    map ,omg <plug>NERDCommenterComment
+<
+This will stop the corresponding default mappings from being created.
+
+See the help for the mapping in question to see which <plug> mapping to
+map to.
+
+See also |'NERDCreateDefaultMappings'|.
+
+==============================================================================
+6. Interfaces                                        *NERDCommenterInterfaces*
+
+NERDCommentIsLineCommented({lineNo})            *NERDCommentIsLineCommented()*
+            Check if the line is a comment
+            Note this function checks if the line is **completely** a comment
+            Args:
+              {lineNo}:     the line number of the line to check
+            Return: Number, 1 if the line is a comment, 0 else
+
+
+NERDComment({mode}, {type})                                    *NERDComment()*
+            This function is a Wrapper for the main commenting functions
+
+            Args:
+              {mode}:       character indicating the mode in which the comment
+                            is requested:
+                            'n' for Normal mode, 'x' for Visual mode
+              {type}:       the type of commenting requested. Can be 'Sexy', 
+                            'Invert', 'Minimal', 'Toggle', 'AlignLeft', 
+                            'AlignBoth', 'Comment', 'Nested', 'ToEOL', 'Append',
+                            'Insert', 'Uncomment', 'Yank'
+
+
+NERDCommentIsCharCommented({line}, {col})       *NERDCommentIsCharCommented()*
+            Check if the character at [{line}, {col}] is inside a comment
+            Note the Comment delimeter it self is considered as part of the 
+            comment
+
+            Args:
+              {line}       the line number of the character
+              {col}        the column number of the character
+            Return: Number, 1 if the character is inside a comment, 0 else
+
+
+==============================================================================
+7. Issues with the script                                *NERDCommenterIssues*
+
+
+------------------------------------------------------------------------------
+7.1 Delimiter detection heuristics                   *NERDCommenterHeuristics*
+
+Heuristics are used to distinguish the real comment delimiters
+
+Because we have comment mappings that place delimiters in the middle of lines,
+removing comment delimiters is a bit tricky. This is because if comment
+delimiters appear in a line doesn't mean they really ARE delimiters. For
+example, Java uses // comments but the line >
+    System.out.println("//");
+<
+clearly contains no real comment delimiters.
+
+To distinguish between ``real'' comment delimiters and ``fake'' ones we use a
+set of heuristics. For example, one such heuristic states that any comment
+delimiter that has an odd number of non-escaped " characters both preceding
+and following it on the line is not a comment because it is probably part of a
+string. These heuristics, while usually pretty accurate, will not work for all
+cases.
+
+------------------------------------------------------------------------------
+7.2 Nesting issues                                      *NERDCommenterNesting*
+
+If we have some line of code like this: >
+    /*int foo */ = /*5 + 9;*/
+<
+This will not be uncommented legally. The NERD commenter will remove the
+"outer most" delimiters so the line will become: >
+    int foo */ = /*5 + 9;
+<
+which almost certainly will not be what you want. Nested sets of comments will
+uncomment fine though. E.g.: >
+    /*int/* foo =*/ 5 + 9;*/
+<
+will become: >
+    int/* foo =*/ 5 + 9;
+<
+(Note that in the above examples I have deliberately not used place holders
+for simplicity)
+
+==============================================================================
+8. About                                                  *NERDCommenterAbout*
+
+This plugin was originally written in 2007 by Martin Grenfell, aka @scrooloose
+on Github: https://github.com/scrooloose
+
+Since 2016 it has been maintained primarily by Caleb Maclennan, aka @alerque
+on Github: https://github.com/alerque
+
+Lots of features and many of the supported filetypes have come from the
+community, see |NERDCommenterCredits|.
+
+Additional file type support, bug fixes, and new feature contributons are all
+welcome, please send them as Pull Requests on Github. If you can't contribute
+yourself please also feel free to open issues to report problems or request
+features: https://github.com/preservim/nerdcommenter
+
+==============================================================================
+9. Changelog                                          *NERDCommenterChangelog*
+
+See the included CHANGELOG.md file or the Github Releases page for the latest
+info on tagged releases. https://github.com/preservim/nerdcommenter/releases
+
+The `master` branch is considered stable and will have the latest filetype
+support and bugfixes.
+
+==============================================================================
+10. Credits                                              *NERDCommenterCredits*
+
+Well over 100 people have contributed towards this plugin, it's functions, and
+specific filetype support. Please check out the up do date list of all
+contributors on Github:
+
+https://github.com/preservim/nerdcommenter/graphs/contributors
+
+==============================================================================
+11. License                                             *NERDCommenterLicense*
+
+NERD Commenter is released under the Creative-Commons CCO 1.0 Universal
+license. See the included LICENE file for details.

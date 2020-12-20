@@ -1,0 +1,115 @@
+Include: ../include/setup.vader
+
+Execute (neomake#signs#DefineHighlights: SignColumn bg=NONE):
+  hi clear Error
+  hi clear Normal
+  hi clear LineNr
+  highlight LineNr ctermfg=250 guifg=#c2c2c3
+  highlight! link SignColumn LineNr
+  AssertEqual neomake#utils#GetHighlight('SignColumn', 'bg'), 'NONE'
+  AssertEqual neomake#utils#GetHighlight('SignColumn', 'bg', 'Normal'), 'NONE'
+
+  " Normal and Error are not defined.
+  call neomake#signs#DefineHighlights()
+  let highlights = sort(filter(split(neomake#utils#redir('hi'), '\n'),
+  \ 'v:val =~# ''^NeomakeErrorSignDefault'''))
+  AssertEqual highlights, [
+  \ 'NeomakeErrorSignDefault xxx cleared',
+  \ ]
+
+  " Normal is not defined, only fg for Error.
+  highlight Error ctermfg=166 guifg=#e45649
+
+  call neomake#signs#DefineHighlights()
+  let highlights = sort(filter(split(neomake#utils#redir('hi'), '\n'),
+  \ 'v:val =~# ''^NeomakeErrorSignDefault'''))
+  AssertEqual highlights, [
+  \ 'NeomakeErrorSignDefault xxx cleared',
+  \ ]
+
+  highlight Normal ctermfg=23 ctermbg=255 guifg=#494b53 guibg=#fafafa
+  AssertEqual neomake#utils#GetHighlight('SignColumn', 'bg', 'Normal'), '255'
+
+  call neomake#signs#DefineHighlights()
+  let highlights = sort(filter(split(neomake#utils#redir('hi'), '\n'),
+  \ 'v:val =~# ''^NeomakeError'''))
+
+  AssertEqual highlights, [
+  \ 'NeomakeError   xxx links to SpellBad',
+  \ 'NeomakeErrorSign xxx links to NeomakeErrorSignDefault',
+  \ 'NeomakeErrorSignDefault xxx ctermfg=166 ctermbg=255 guifg=#e45649 guibg=#fafafa',
+  \ ]
+
+Execute (neomake#signs#DefineHighlights with "NONE" SignColumn, no Normal):
+  hi clear Normal
+  hi clear SignColumn
+  highlight SignColumn ctermfg=250 guifg=#c2c2c3
+  highlight Error cterm=bold ctermfg=166 ctermbg=255 gui=bold guifg=#e45649 guibg=#fafafa
+
+  call neomake#signs#DefineHighlights()
+  let highlights = sort(filter(split(neomake#utils#redir('hi'), '\n'),
+  \ 'v:val =~# ''^NeomakeErrorSignDefault'''))
+
+  AssertEqual highlights, [
+  \ 'NeomakeErrorSignDefault xxx ctermfg=255 guifg=#fafafa',
+  \ ]
+
+Execute (neomake#signs#DefineHighlights: checks same gui bg/fg separately):
+  hi clear Normal
+  highlight Normal ctermbg=1 guibg=#aaaaaa
+  if substitute(neomake#utils#redir('hi Normal'), '^\s+', '', '') !=# 'Normal         xxx ctermbg=1 guibg=#aaaaaa'
+    NeomakeTestsSkip 'Setting ctermbg on Normal is buggy'  " nvim 0.1.7
+  else
+    hi clear Error
+    hi clear SignColumn
+
+    call neomake#signs#DefineHighlights()
+    let highlights = sort(filter(split(neomake#utils#redir('hi'), '\n'),
+    \ 'v:val =~# ''^NeomakeErrorSignDefault'''))
+    AssertEqual highlights, [
+    \ 'NeomakeErrorSignDefault xxx ctermbg=1 guibg=#aaaaaa',
+    \ ]
+
+    highlight Error      ctermbg=1 guibg=#bbbbbb
+    call neomake#signs#DefineHighlights()
+    let highlights = sort(filter(split(neomake#utils#redir('hi'), '\n'),
+    \ 'v:val =~# ''^NeomakeErrorSignDefault'''))
+    AssertEqual highlights, [
+    \ 'NeomakeErrorSignDefault xxx ctermbg=1 guifg=#bbbbbb guibg=#aaaaaa',
+    \ ]
+
+    highlight SignColumn ctermbg=166 guifg=#bbbbbb
+    call neomake#signs#DefineHighlights()
+    let highlights = sort(filter(split(neomake#utils#redir('hi'), '\n'),
+    \ 'v:val =~# ''^NeomakeErrorSignDefault'''))
+    AssertEqual highlights, [
+    \ 'NeomakeErrorSignDefault xxx ctermfg=1 ctermbg=166 guifg=#bbbbbb guibg=#aaaaaa',
+    \ ]
+  endif
+
+Execute (neomake#signs#DefineHighlights: all NONE):
+  hi clear Error
+  hi clear Normal
+  hi clear SignColumn
+
+  call neomake#signs#DefineHighlights()
+  let highlights = sort(filter(split(neomake#utils#redir('hi'), '\n'),
+  \ 'v:val =~# ''^NeomakeErrorSignDefault'''))
+
+  AssertEqual highlights, [
+  \ 'NeomakeErrorSignDefault xxx cleared',
+  \ ]
+
+Execute (neomake#utils#GetHighlight: correct mode with reverse):
+  highlight clear NeomakeTest
+  highlight NeomakeTest ctermfg=0 guifg=black ctermbg=7 guibg=white
+  AssertEqual neomake#utils#GetHighlight('NeomakeTest', 'fg'), '0'
+  AssertEqual neomake#utils#GetHighlight('NeomakeTest', 'fg#'), 'black'
+
+  highlight NeomakeTest cterm=reverse
+  AssertEqual neomake#utils#GetHighlight('NeomakeTest', 'fg'), '7'
+  AssertEqual neomake#utils#GetHighlight('NeomakeTest', 'fg#'), 'black'
+
+  highlight NeomakeTest cterm=NONE gui=reverse
+  AssertEqual neomake#utils#GetHighlight('NeomakeTest', 'fg'), '0'
+  AssertEqual neomake#utils#GetHighlight('NeomakeTest', 'fg#'), 'white'

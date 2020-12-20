@@ -18,4 +18,3 @@ hi def link FileName Comment
 hi def link TODOTAG Todo
 hi def link TODOQUESTION Question
 hi def link TODOFIXME ErrorMsg
-

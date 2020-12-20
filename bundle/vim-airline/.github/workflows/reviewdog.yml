@@ -1,0 +1,22 @@
+name: reviewdog
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  vint:
+    name: runner / vint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: vint
+        uses: reviewdog/action-vint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          level: error
+          reporter: github-pr-check

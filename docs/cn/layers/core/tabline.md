@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim core#tabline 模块"
 description: "这一模块为 SpaceVim 提供了更好的标签栏。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> core#tabline

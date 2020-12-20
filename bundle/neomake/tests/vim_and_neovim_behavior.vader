@@ -1,0 +1,72 @@
+" Tests for generic behavior in Vim/Neovim.
+Include: include/setup.vader
+
+Execute (Test Vim's b:changedtick behavior):
+  " https://github.com/vim/vim/issues/2764
+  new
+  let before = b:changedtick
+  exe 'w' tempname()
+
+  if has('patch-8.1.1498') || has('nvim-0.4')
+    let inc_for_unchanged = 0
+  else
+    let inc_for_unchanged = 1
+  endif
+
+  AssertEqual before + inc_for_unchanged, b:changedtick
+
+  let before = b:changedtick
+  w
+  AssertEqual before + inc_for_unchanged, b:changedtick
+
+  let before = b:changedtick
+  update
+  AssertEqual before, b:changedtick
+
+  setlocal modified
+  let before = b:changedtick
+  update
+  AssertEqual before + 1, b:changedtick
+
+  let before = b:changedtick
+  normal! ochanged
+  AssertEqual before + 2, b:changedtick
+  update
+  AssertEqual before + 3, b:changedtick
+  bwipe
+
+
+  " Via BufWriteCmd / autocommands.
+  augroup neomake_tests
+    autocmd BufWritePost <buffer>
+  augroup END
+  function! s:BufWriteCmd() abort
+    exe "doautocmd BufWritePre expand('<amatch>')"
+    setlocal nomodified
+    exe "doautocmd BufWritePost expand('<amatch>')"
+  endfunction
+  new
+  augroup neomake_tests
+    au BufWriteCmd * call s:BufWriteCmd()
+  augroup END
+  let before = b:changedtick
+  exe 'w' tempname()
+  AssertEqual before, b:changedtick
+
+  w
+  AssertEqual before, b:changedtick
+
+  update
+  AssertEqual before, b:changedtick
+
+  setlocal modified
+  let before = b:changedtick
+  update
+  AssertEqual before, b:changedtick
+
+  let before = b:changedtick
+  normal! ochanged
+  AssertEqual before + 2, b:changedtick
+  update
+  AssertEqual before + 2, b:changedtick
+  bwipe

@@ -1,0 +1,17 @@
+Execute (opts):
+  let matchup_matchparen_offscreen = {}
+  let matchup_delim_noskips = 2
+
+Given scheme (Syntax):
+  (define procname ; ) in comment isn't matched as expected
+    ") in string is however matched"
+    body)
+
+Before ():
+  2normal! f)
+
+Do (%):
+  %
+Then (Verify line):
+  Assert line('.') == 2
+

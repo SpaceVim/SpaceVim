@@ -1,0 +1,119 @@
+snippet     do
+abbr        do...end
+options     head
+    do
+      ${1:TARGET}
+    end
+
+snippet     if
+abbr        if .. do .. end
+options     head
+    if ${1:true} do
+      ${2:TARGET}
+    end
+
+snippet     ife
+abbr        if .. do .. else .. end
+options     head
+    if ${1:true} do
+      ${2:ok}
+    else
+      ${3:ok}
+    end
+
+snippet     case
+abbr        case .. end
+options     head
+    case ${1} do
+      ${2} -> ${3}
+    end
+
+snippet     def
+abbr        def .. do .. end
+options     head
+    def ${1:name} do
+      ${2:TARGET}
+    end
+
+snippet     defm
+abbr        def module
+options     head
+    defmodule ${1:module_name} do
+      ${2:TARGET}
+    end
+
+snippet     defp
+abbr        defp .. end
+options     head
+    defp ${1:name} do
+      ${2:TARGET}
+    end
+
+snippet     doc
+abbr        @doc """..."""
+options     head
+    @doc """${0:TARGET}"""
+
+snippet     mdoc
+abbr        @moduledoc """..."""
+options     head
+    @moduledoc """${0:TARGET}"""
+
+snippet     fn
+abbr        fn(..) -> .. end
+options     head
+    fn(${1:args}) -> ${2:TARGET} end
+
+snippet     rec
+abbr        receive .. do .. end
+options     head
+    receive do
+    ${1} -> ${2}
+    end
+
+snippet     test
+abbr        test .. do .. end
+options     head
+    test "${1:test_name}" do
+      ${2:TARGET}
+    end
+
+snippet     try
+abbr        try .. rescue .. end
+options     head
+    try do
+      ${1:TARGET}
+    rescue
+      ${2} -> ${3}
+
+snippet     with
+abbr        with .. do .. end
+options     head
+    with ${1}
+    do
+      ${2:TARGET}
+    end
+
+snippet     describe
+abbr        describe .. do .. end
+options     head
+    describe "${1:describe_name}" do
+      ${2:TARGET}
+    end
+
+snippet     puts
+    IO.puts(${1})
+
+snippet     p
+abbr        IO.inspect()
+    IO.inspect(${1})
+
+snippet     main
+options     head
+    defmodule Main do
+      def main do
+        ${1:TARGET}
+      end
+    end
+
+    Main.main

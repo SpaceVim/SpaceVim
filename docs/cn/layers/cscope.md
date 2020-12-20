@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim cscope 模块"
 description: "这一模块为 SpaceVim 提供了一个智能的 cscope 和 pycscope 辅助工具，可以快速调用 cscope 常用命令。"
-lang: cn
+lang: zh
 ---
 
 # [可用模块](../) >> cscope

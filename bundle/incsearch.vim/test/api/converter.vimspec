@@ -1,0 +1,45 @@
+Describe api.converter
+
+  Before all
+    function! g:ReturnU(...) abort
+      return 'U'
+    endfunction
+  End
+
+  After all
+    delfunction g:ReturnU
+  End
+
+  Describe converter with case handling
+    It should not break smartcase detection
+      let ignorecase_save = &ignorecase
+      let &ignorecase = 1
+      let smartcase_save = &smartcase
+      let &smartcase = 1
+      try
+        let config = {'converters': [function('g:ReturnU')]}
+        let cli = incsearch#make(config)
+        Assert Match('PatTern', cli._convert('pattern'))
+      finally
+        let &ignorecase = ignorecase_save
+        let &smartcase = smartcase_save
+      endtry
+    End
+
+    It should care smartcase
+      let ignorecase_save = &ignorecase
+      let &ignorecase = 1
+      let smartcase_save = &smartcase
+      let &smartcase = 1
+      try
+        let config = {'converters': [function('g:ReturnU')]}
+        let cli = incsearch#make(config)
+        Assert NotMatch('PatTern', cli._convert('Pattern'))
+      finally
+        let &ignorecase = ignorecase_save
+        let &smartcase = smartcase_save
+      endtry
+    End
+
+  End
+End

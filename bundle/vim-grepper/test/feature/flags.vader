@@ -1,0 +1,31 @@
+Before:
+  enew!
+  only!
+  let w:testing = 1
+
+Execute (:Grepper -noprompt -tool ag -grepprg ag --column --nogroup -s Foo include):
+  Grepper -noprompt -tool ag -grepprg ag --column --nogroup -s Foo include
+  AssertEqual len(getqflist()), 1
+  AssertEqual winnr('$'), 2
+  AssertEqual w:quickfix_title, 'ag --column --nogroup -s Foo include '
+  AssertEqual getline('.')[:6], 'include'
+
+Execute (:Grepper -noprompt -noswitch -tool ag -grepprg ag --column --nogroup -s Foo include):
+  Grepper -noprompt -noswitch -tool ag -grepprg ag --column --nogroup -s Foo include
+  AssertEqual winnr('$'), 2
+  AssertEqual len(getqflist()), 1
+  " Doesn't work on Travis:
+  " Log getline('.')
+  " Assert line2byte('$') == -1
+
+Execute (:Grepper -noprompt -noopen -tool ag -grepprg ag --column --nogroup -s Foo include):
+  Grepper -noprompt -noopen -tool ag -grepprg ag --column --nogroup -s Foo include
+  AssertEqual len(getqflist()), 1
+  AssertEqual winnr('$'), 1
+  AssertEqual line2byte('$'), -1
+
+Execute (:Grepper -noprompt -noopen -jump -tool ag -grepprg ag --column --nogroup -s Foo include):
+  Grepper -noprompt -noopen -jump -tool ag -grepprg ag --column --nogroup -s Foo include
+  AssertEqual len(getqflist()), 1
+  AssertEqual winnr('$'), 1
+  AssertEqual getline('.'), 'Foo: This is just a random'

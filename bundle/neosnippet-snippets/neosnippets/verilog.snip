@@ -1,0 +1,158 @@
+snippet al
+abbr always @()
+    always @(${1:*})${2:TARGET}
+
+snippet alclk
+abbr always @(posedge clk)
+    always @(posedge clk${1})${2:TARGET}
+
+snippet beginend
+alias be
+abbr begin ... end
+    begin
+        ${1:TARGET}
+    end
+
+snippet module
+alias mod
+abbr module () ... endmodule
+    module ${1:`expand("%:r")`}(
+        ${2:TARGET}
+    );
+    endmodule
+
+snippet rw
+abbr reg [] _r, _w;
+    reg${1:#: nbit} ${2:reg}_r, $2_w;${3:TARGET}
+
+snippet I
+abbr input [] i_,
+    input${1:#: nbit} i_${2:name},
+
+snippet O
+abbr output [] o_,
+    output${1:#: nbit} o_${2:name},
+
+snippet IO
+abbr inout [] io_,
+    inout${1:#: nbit} io_${2:name},
+
+snippet regmemory
+alias regm
+abbr reg [] name []
+    reg [${1}:${2:0}] ${3:name} [${4:0}:${5}];${6:TARGET}
+
+snippet regseq
+abbr _r <= _w;
+    ${1:reg}_r <= $1_w;${2:TARGET}
+
+snippet regkeep
+abbr _w = _r
+    ${1:reg}_w = $1_r;${2:TARGET}
+
+snippet assign
+alias as
+abbr assign ... = ...
+    assign ${1:#:name} = ${2:#:val};${3:TARGET}
+
+snippet parameter
+alias pa
+abbr parameter ... = ...
+    parameter ${1:#:name} = ${2:#:val};${3:TARGET}
+
+snippet localparam
+alias lpa
+abbr localparam ... = ...
+    localparam ${1:#:name} = ${2:#:val};${3:TARGET}
+
+snippet if
+abbr if()
+    if (${1:#:condition})${0:TARGET}
+
+snippet else
+alias el
+abbr else
+    else${0:TARGET}
+
+snippet elseif
+abbr else if ()
+    else if (${1:#:condition})${0:TARGET}
+
+snippet initial
+alias init
+abbr initial begin ... end
+    initial begin
+        ${0:TARGET}
+    end
+
+snippet for
+abbr for () begin ... end
+    for (${1:i} = ${2}; $1 < ${3}; ${4:$1 = $1 + 1})${0:TARGET}
+
+snippet while
+abbr while () begin ... end
+    while (${1:#:condition})${0:TARGET}
+
+snippet case
+abbr case () ... endcase
+    case (${1})
+        ${2:'b0}: begin
+            ${3}
+        end
+        default : begin
+            ${4}
+        end
+    endcase
+
+snippet function
+alias func
+abbr function ... endfunction
+    function${1:# nbit} ${1:func_name};
+        ${2:portlist};
+        begin
+            ${0:TARGET};
+        end
+    endfunction
+
+snippet inc
+alias `inc, `include
+abbr `include "..."
+    \`include "${1}"${0}
+
+snippet def
+alias `def, `define
+abbr `define ... ...
+    \`define ${1} ${2}
+
+snippet default_nettype
+alias dn, defn
+    \`default_nettype ${1:none}${0}
+
+snippet timescale
+alias ts, `time, `timescale
+abbr `timescale 1ns/100ps
+    \`timescale ${1:1ns}/${2:100ps}${0}
+
+snippet ternary
+alias ter
+abbr () ? a : b
+    (${1:#:condition}) ? ${2:#:a} : ${3:#:b}
+
+snippet dumpfile
+alias df
+abbr $dumpfile("....vcd");
+    $dumpfile("${1:`expand("%:r")`}.vcd");${0}
+
+snippet dumpvars
+alias dv
+abbr $dumpvars(0, ...);
+    $dumpvars(${1:0}, ${2:`expand("%:r")`});${0}
+
+snippet display
+abbr $display("...", ...);
+  $display("${1}", ${2});
+
+snippet strobe
+abbr $strobe("...", ...);
+  $strobe("${1}", ${2});
+

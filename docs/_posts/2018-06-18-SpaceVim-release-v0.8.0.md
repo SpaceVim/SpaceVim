@@ -1,9 +1,9 @@
 ---
 title: SpaceVim release v0.8.0
 categories: [changelog, blog]
-excerpt: "Use toml as default configuration file for SpaceVim"
-type: NewsArticle
-image: https://user-images.githubusercontent.com/13142418/41507987-b7fb4760-7202-11e8-8896-01650480e798.png
+description: "Use toml as default configuration file for SpaceVim"
+type: article
+image: https://user-images.githubusercontent.com/13142418/80610442-f41e9480-8a6b-11ea-8e0e-16ef35460253.png
 commentsID: "SpaceVim release v0.8.0"
 comments: true
 ---
@@ -14,7 +14,7 @@ comments: true
 This project exists thanks to all the people who have contributed. The last release v0.7.0 is targeted
 on March 18, 2018, so let's take a look at what happened in the new release v0.8.0.
 
-![v0.8.0 welcome page](https://user-images.githubusercontent.com/13142418/41507987-b7fb4760-7202-11e8-8896-01650480e798.png)
+![v0.8.0 welcome page](https://user-images.githubusercontent.com/13142418/80610442-f41e9480-8a6b-11ea-8e0e-16ef35460253.png)
 
 
 <!-- vim-markdown-toc GFM -->

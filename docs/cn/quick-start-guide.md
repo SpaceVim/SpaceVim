@@ -1,11 +1,11 @@
 ---
 title: "入门指南"
 description: "SpaceVim 入门教程，包括安装、初始化配置等内容"
-lang: cn
+lang: zh
 ---
 
 
-# 入门指南
+# [主页](../) >> 入门指南
 
 如果你从未使用过 SpaceVim，建议先阅读这篇简短的教程。这篇教程主要讲述：
 如何安装 SpaceVim，SpaceVim 的入门配置以及 SpaceVim 常用学习资源。
@@ -89,7 +89,7 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
     # 设置状态栏上分割符号形状，如果字体安装失败，可以将值设为 "nil" 以
     # 禁用分割符号，默认为箭头 "arrow"
     statusline_separator = "nil"
-    statusline_inactive_separator = "bar"
+    statusline_iseparator = "bar"
     # 设置顶部标签列表序号类型，有以下五种类型，分别是 0 - 4
     # 0: 1 ➛ ➊
     # 1: 1 ➛ ➀
@@ -120,7 +120,7 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
 
 # 添加自定义插件
 [[custom_plugins]]
-    name = "lilydjwg/colorizer"
+    repo = "lilydjwg/colorizer"
     merged = false
 ```
 

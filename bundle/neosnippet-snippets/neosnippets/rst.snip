@@ -1,0 +1,244 @@
+snippet quickstart
+options head
+  ===========================
+  ${1:#:content_name}
+  ===========================
+
+  .. contents:: contents_name
+
+  title1
+  ====================================
+
+  subtitle1
+  -----------------------------------
+
+  subtitle2
+  -----------------------------------
+
+  subtitle3
+  -----------------------------------
+
+  title2
+  ====================================
+
+  subtitle1
+  -----------------------------------
+
+  subtitle2
+  -----------------------------------
+
+  subtitle3
+  -----------------------------------
+
+  title3
+  ====================================
+
+  subtitle1
+  -----------------------------------
+
+  subtitle2
+  -----------------------------------
+
+  subtitle3
+  -----------------------------------
+
+
+snippet contnents
+options head
+  .. contents:: ${1:#:contents_name}
+
+snippet title
+options head
+  ${1:#:title}
+  ====================================
+
+snippet subtitle
+options head
+  ${1:#:subtitle}
+  -----------------------------------
+
+snippet code_block
+abbr code
+options head
+  .. code-block:: ${1:#:filetype}
+
+		${2:#:content}
+
+snippet link_raw
+abbr link_as_raw
+options head
+  \`${1:#:link}\`_
+
+snippet link_label
+abbr link_and_label
+options head
+  \`${1:#:title} <${2:#:link}>\`_
+
+snippet table_grid
+abbr grid_table
+options head
+  +------------------+------------+-----------------------+------------+
+  |${1:#:cel} | | | |
+  +==================+============+=======================+============+
+  | | | | |
+  +------------------+------------+-----------------------+------------+
+  | | | | |
+  +------------------+------------+-----------------------+------------+
+
+snippet table_simple
+abbr simple_table
+options head
+  :${1:#:text}:
+  : :
+  : :
+  : :
+
+snippet list
+options head
+  -
+  -
+  -
+  -
+
+snippet nested_list
+options head
+
+  - ${1:#:text}
+  -
+  -
+  -
+
+snippet caption
+options head
+  [#]
+
+snippet image
+options head
+  .. image:: ${1:#:path}
+
+snippet strong
+options head
+  **${1:#:text}**
+
+
+snippet     toctree
+abbr        directive_toctree
+options     head
+	.. toctree::
+		:maxdepth: ${1:2}
+
+		${2:#:FILES}
+
+
+snippet     link_doc
+abbr        link_to_doc
+options     head
+	:doc:\`${1:#:PageName}\` ${0:#:CURSOR}
+
+
+snippet     syntax
+abbr        syntax
+options     indent
+	.. code-block:: ${1:python}
+
+		${1:#:TERGET}
+
+
+snippet     label
+abbr        label
+options     head
+	.. _${1:#:NAME}:
+	${2:#:CURSOR}
+
+
+snippet     ref
+abbr        role_ref
+	:ref:\`${1:#:NAME}\`
+	${2:#:CURSOR}
+
+
+snippet     content
+abbr        directive_content
+options     head
+	.. contents::
+		:depth: ${1:2}
+		${2::local:}
+
+
+snippet     guilabel
+abbr        role_guilabel
+	:guilabel:\`${1:#:NAME}\` ${0:#:CURSOR}
+
+
+snippet     menuselection
+abbr        role_menuselection
+	:menuselection:\`${1:#:NAME} --> ${2:#:NAME}\` ${0:#:CURSOR}
+
+
+snippet     table
+abbr        directive_table
+options     head
+	.. table:: ${1:#:TITLE}
+		${0:#:CURSOR}
+
+snippet     csvtable
+abbr        directive_csvtable
+options     head
+	.. csv-table:: ${1:#:TITLE}
+		:header: "${2:#:Header1}", "${3:#:Header2}"${4:#:Headers}
+
+		"${5:#:Column1}", "${6:#:Column2}"${0:#:CURSOR}
+
+
+snippet     directive
+abbr        directive
+	.. ${1:#:NAME}:: ${0:#:CURSOR}
+
+
+snippet     note
+abbr        note
+	.. note:: ${0:#:CURSOR}
+
+
+snippet     tip
+abbr        tip
+	.. tip:: ${0:#:CURSOR}
+
+
+snippet     warning
+abbr        warning
+	.. warning:: ${0:#:CURSOR}
+
+
+snippet     attention
+abbr        attention
+	.. attention:: ${0:#:CURSOR}
+
+snippet     caution
+abbr        caution
+	.. caution:: ${0:#:CURSOR}
+
+
+snippet     danger
+abbr        danger
+	.. danger:: ${0:#:CURSOR}
+
+
+snippet     error
+abbr        error
+	.. error:: ${0:#:CURSOR}
+
+
+snippet     hint
+abbr        hint
+	.. hint:: ${0:#:CURSOR}
+
+
+snippet     important
+abbr        important
+	.. important:: ${0:#:CURSOR}
+
+
+snippet     seealso
+abbr        seealso
+	.. seealso:: ${0:#:CURSOR}
