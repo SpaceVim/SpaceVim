@@ -51,6 +51,7 @@ function! SpaceVim#layers#lang#nim#config() abort
   call SpaceVim#mapping#gd#add('nim', function('s:go_to_def'))
   call SpaceVim#plugins#runner#reg_runner('nim', 'nim c -r --hints:off --verbosity:0 %s')
   call SpaceVim#plugins#repl#reg('nim', 'nim secret')
+  call SpaceVim#plugins#tasks#reg_provider(funcref('s:nimble_tesks'))
   let g:neomake_nim_nim_remove_invalid_entries = 1
 endfunction
 
@@ -84,4 +85,16 @@ endfunction
 
 function! s:go_to_def() abort
   NimDefinition
+endfunction
+
+function! s:nimble_tesks() abort
+  let detect_task = {}
+  if !empty(glob('*.nimble'))
+    for task_name in ['run', 'build']
+      call extend(detect_task, {
+            \ task_name : {'command' : 'nimble', 'args' : [task_name], 'isDetected' : 1, 'detectedName' : 'nimble:'}
+            \ })
+    endfor
+  endif
+  return detect_task
 endfunction
