@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Nim IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/95338841-f07a1e00-08e5-11eb-9e1b-6dbc5c4ad7de.png
+image: https://user-images.githubusercontent.com/13142418/102889616-f075cd00-4495-11eb-819f-1ff4721cbd69.png
 description: "A general guide for using SpaceVim as Nim IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -13,7 +13,7 @@ commentsID: "Use Vim as a Nim IDE"
 This is a general guide for using SpaceVim as a Nim IDE, including layer configuration and usage. 
 Each of the following sections will be covered:
 
-![nim-ide](https://user-images.githubusercontent.com/13142418/95338841-f07a1e00-08e5-11eb-9e1b-6dbc5c4ad7de.png)
+![nim-ide](https://user-images.githubusercontent.com/13142418/102889616-f075cd00-4495-11eb-819f-1ff4721cbd69.png)
 
 <!-- vim-markdown-toc GFM -->
 
@@ -69,7 +69,8 @@ with this configuration, you can jump between the source code and test file via 
 The key binding for running current file is `SPC l r `, it will run `nim c -r current_file` asynchronously.
 And the stdout will be shown on a runner buffer.
 
-![nim-runner](https://user-images.githubusercontent.com/13142418/95334765-1a7d1180-08e1-11eb-8c78-9a87d61d3d63.png)
+![nim-code-runner](https://user-images.githubusercontent.com/13142418/102889265-472ed700-4495-11eb-8b43-78bf42000ca9.png)
+
 
 ### REPL support
 
