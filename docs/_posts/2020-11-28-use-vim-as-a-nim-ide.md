@@ -74,9 +74,11 @@ And the stdout will be shown on a runner buffer.
 
 ### REPL support
 
+The REPL support is based on [`inim`](https://github.com/inim-repl/INim), you can download `inim` via `nimble install inim`
+
 ![nim-repl](https://user-images.githubusercontent.com/13142418/95341519-f1f91580-08e8-11eb-9280-04f89875dc78.png)
 
-You can Start a `inim` inferior REPL process with `SPC l s i`. After REPL process started,
+Start a `inim` inferior REPL process with `SPC l s i`. After REPL process started,
 you can send code to `inim` process via key bindings:
 
 | Key Bindings | Descriptions                                     |
@@ -93,11 +95,10 @@ The default format engine is `neoformat`, it will run `nimpretty` asynchronously
 
 ### Tasks manage
 
-SpaceVim will detect [`lein`](https://leiningen.org/) project tasks automatically. If there is `project.clj` file in the root directory
+SpaceVim will detect `nimble` project tasks automatically. If there is `*.nimble` file in the root directory
 of your project. following tasks will be detected:
 
 ![taskmanager](https://user-images.githubusercontent.com/13142418/95338987-1a334500-08e6-11eb-80c4-ad811095d8c8.png)
 
 To select a tast to run, use key binding `SPC p t r`, you can also use `SPC p t l` to list all the tasks
 in the tasks manager window.
-
