@@ -115,7 +115,7 @@ let s:lsp_servers = {
       \ 'css' : ['css-languageserver', '--stdio'],
       \ 'dart' : ['dart_language_server'],
       \ 'dockerfile' : ['docker-langserver', '--stdio'],
-      \ 'go' : ['go-langserver', '-mode', 'stdio'],
+      \ 'go' : ['gopls'],
       \ 'haskell' : ['hie-wrapper', '--lsp'],
       \ 'html' : ['html-languageserver', '--stdio'],
       \ 'javascript' : ['javascript-typescript-stdio'],
@@ -129,9 +129,11 @@ let s:lsp_servers = {
       \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
       \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],
+      \ 'terraform' : ['terraform-lsp'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
       \ 'ruby' : ['solargraph',  'stdio'],
-      \ 'vue' : ['vls']
+      \ 'vue' : ['vls'],
+      \ 'yaml': ['yaml-language-server', '--stdio']
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort
