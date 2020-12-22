@@ -15,6 +15,7 @@ description: "General documentation about how to using SpaceVim, including the q
 - [Update and Rollback](#update-and-rollback)
   - [Update SpaceVim itself](#update-spacevim-itself)
   - [Update plugins](#update-plugins)
+  - [Reinstall plugins](#reinstall-plugins)
   - [Get SpaceVim log](#get-spacevim-log)
 - [Custom Configuration](#custom-configuration)
   - [Bootstrap Functions](#bootstrap-functions)
@@ -223,16 +224,26 @@ SpaceVim itself. After `:SPUpdate`, you can assign
 plugins need to be updated. Use `Tab` to complete
 plugin names after `:SPUpdate`.
 
+### Reinstall plugins
+
+When a plugin is failed to update or is broken, Use `:SPReinstall`
+command to reinstall this plugin.
+
 ### Get SpaceVim log
 
-Use `:SPDebugInfo!` command to display the log of SpaceVim.
+The runtime log of SpaceVim can be got via key binding `SPC h L`.
+To get the debug information about current SpaceVim environment,
+Use the command `:SPDebugInfo!`. This command will open a new buffer,
+the default information will be shown in this new buffer.
 You also can use `SPC h I` to open a buffer with the
 issue template.
 
 ## Custom Configuration
 
 The very first time SpaceVim starts up, it will ask you to
-choose a mode, `basic mode` or `dark powered mode`.
+choose a mode,
+[`basic mode`](https://github.com/SpaceVim/SpaceVim/blob/master/mode/basic.toml)
+or [`dark powered mode`](https://github.com/SpaceVim/SpaceVim/blob/master/mode/dark_powered.toml).
 then it will create a `SpaceVim.d/init.toml` in your
 `HOME` directory. All the configuration files can be stored in
 `~/.SpaceVim.d/` directory.
@@ -283,7 +294,7 @@ you can use SpaceVim `disabled_plugins` options:
 
 ```toml
 [options]
-# NOTE: the value should be a list, and each item is the name of the plugin.
+    # NOTE: the value should be a list, and each item is the name of the plugin.
     disabled_plugins = ["clighter", "clighter8"]
 ```
 
@@ -302,8 +313,8 @@ To enable them you need to add following into
     bootstrap_after = 'myspacevim#after'
 ```
 
-The difference is that these two functions will be called before
-or after loading SpaceVim core as they named.
+The difference is that the bootstrap_before function will be called before SpaceVim core,
+and the bootstrap_after function is called on autocmd `VimEnter`.
 
 The bootstrap functions should be placed to the `autoload` directory
 in `~/.SpaceVim.d/`. In our case, create file `~/.SpaceVim.d/autoload/myspacevim.vim`
@@ -405,9 +416,10 @@ Layers help collect related packages together to provide features. For example, 
 
 In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` layer, the file is `autoload/SpaceVim/layers/autocomplete.vim`, and there are three public functions:
 
-- `SpaceVim#layers#autocomplete#plugins()`: return a list of plugins used in this plugins.
-- `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds.
-- `SpaceVim#layers#autocomplete#set_variable()`: function for setting layer options.
+- `SpaceVim#layers#autocomplete#plugins()`: return a list of plugins used in this plugins
+- `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds
+- `SpaceVim#layers#autocomplete#set_variable()`: function for setting layer options
+- `SpaceVim#layers#autocomplete#get_options()`: return a list of all available layer options
 
 ### Debug upstream plugins
 
@@ -600,7 +612,8 @@ All the colors are based on the current colorscheme.
 It is possible to easily customize the statusline separator by setting the `statusline_separator` variable in your custom configuration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
 
 ```toml
-statusline_separator = 'arrow'
+[options]
+    statusline_separator = 'arrow'
 ```
 
 Here is an exhaustive set of screenshots for all the available separator:
@@ -1760,6 +1773,8 @@ The `SPC j` prefix is for jumping, joining and splitting.
 | Key Bindings | Descriptions                                                                  |
 | ------------ | ----------------------------------------------------------------------------- |
 | `J`          | join the current line with the next line                                      |
+| `SPC j o`    | join a code block into a single-line statement                                |
+| `SPC j m`    | split a one-liner into multiple lines                                         |
 | `SPC j k`    | go to next line and indent it using auto-indent rules                         |
 | `SPC j n`    | split the current line at point, insert a new line and auto-indent            |
 | `SPC j o`    | split the current line at point but let point on current line                 |

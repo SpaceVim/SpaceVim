@@ -105,6 +105,22 @@ let g:spacevim_enable_bepo_layout  = 0
 " <
 let g:spacevim_max_column              = 120
 
+
+""
+" @section default_custom_leader, options-default_custom_leader
+" @parentsection options
+" Change the default custom leader of SpaceVim. Default is <Space>.
+" >
+"   default_custom_leader = "<Space>"
+" <
+
+""
+" Change the default custom leader of SpaceVim. Default is <Space>.
+" >
+"   let g:spacevim_default_custom_leader = '<Space>'
+" <
+let g:spacevim_default_custom_leader = '<Space>'
+
 ""
 " @section home_files_number, options-home_files_number
 " @parentsection options
@@ -783,13 +799,13 @@ let g:spacevim_filemanager             = 'vimfiler'
 " @section filetree_direction, options-filetree_direction
 " @parentsection options
 " Config the direction of file tree. Default is 'right'. you can also set to
-" 'left'. 
+" 'left'.
 "
 " NOTE: if it is 'left', the tagbar will be move to right.
 
 ""
 " Config the direction of file tree. Default is 'right'. you can also set to
-" 'left'. 
+" 'left'.
 "
 " NOTE: if it is 'left', the tagbar will be move to right.
 let g:spacevim_filetree_direction             = 'right'
@@ -831,7 +847,7 @@ let g:spacevim_checkinstall            = 1
 ""
 " @section vimcompatible, options-vimcompatible
 " @parentsection options
-" Enable/Disable vimcompatible mode, by default it is false. 
+" Enable/Disable vimcompatible mode, by default it is false.
 " to enable vimcompatible mode, just add:
 " >
 "   vimcompatible = true
@@ -850,7 +866,7 @@ let g:spacevim_checkinstall            = 1
 " <
 
 ""
-" Enable/Disable vimcompatible mode, by default it is false. 
+" Enable/Disable vimcompatible mode, by default it is false.
 " to enable vimcompatible mode, just add:
 " >
 "   let g:spacevim_vimcompatible = 1
@@ -1217,6 +1233,8 @@ let g:spacevim_wildignore
 let g:_spacevim_mappings = {}
 let g:_spacevim_mappings_space_custom = []
 let g:_spacevim_mappings_space_custom_group_name = []
+let g:_spacevim_mappings_language_specified_space_custom = {}
+let g:_spacevim_mappings_language_specified_space_custom_group_name = {}
 let g:_spacevim_neobundle_installed     = 0
 let g:_spacevim_dein_installed          = 0
 let g:_spacevim_vim_plug_installed      = 0
@@ -1383,8 +1401,6 @@ function! SpaceVim#end() abort
   endif
   let g:leaderGuide_max_size = 15
   call SpaceVim#plugins#load()
-
-  call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 
   call SpaceVim#util#loadConfig('general.vim')
 

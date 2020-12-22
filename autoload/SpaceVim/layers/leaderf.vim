@@ -50,13 +50,13 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
   let g:Lf_Extensions = {
-  \ 'neomru': {
-  \       'source': string(s:_function('s:neomru', 1))[10:-3],
-  \       'accept': string(s:_function('s:neomru_acp', 1))[10:-3],
-  \       'supports_name_only': 1,
-  \       'supports_multi': 0,
-  \ },
-  \}
+        \ 'neomru': {
+        \       'source': string(s:_function('s:neomru', 1))[10:-3],
+        \       'accept': string(s:_function('s:neomru_acp', 1))[10:-3],
+        \       'supports_name_only': 1,
+        \       'supports_multi': 0,
+        \ },
+        \}
 
   let g:Lf_Extensions.menu =
         \ {
@@ -318,7 +318,7 @@ function! s:register_acp(line, args) abort
 endfunction
 
 function! s:neomru(...) abort
-    return neomru#_gather_file_candidates()
+  return neomru#_gather_file_candidates()
 endfunction
 
 function! s:neomru_acp(line, args) abort
@@ -378,9 +378,23 @@ function! s:neoyank_acp(line, args) abort
   call append(0, split(line, '\\n'))
 endfunction
 
+
+let s:menu_high = {}
+call extend(s:menu_high, {'Projects' :
+      \ {
+      \     'highlights_def' : {
+      \                           'Lf_menu_projects_time' : '<\d\+-\d\+-\d\+\s\d\+:\d\+:\d\+>'
+      \                        },
+      \     'highlights_cmd' : [
+      \                           'hi def link Lf_menu_projects_time Comment'
+      \                        ],
+      \ }
+      \ })
+
 function! s:menu(name) abort
+  let menu_name = a:name['--name'][0]
   let s:menu_action = {}
-  let menu = get(g:unite_source_menu_menus, a:name['--name'][0], {})
+  let menu = get(g:unite_source_menu_menus, menu_name, {})
   if has_key(menu, 'command_candidates')
     let rt = []
     for item in menu.command_candidates
@@ -391,6 +405,16 @@ function! s:menu(name) abort
   else
     return []
   endif
+endfunction
+
+function! SpaceVim#layers#leaderf#run_menu(name) abort
+  call s:run_menu(a:name)
+endfunction
+
+function! s:run_menu(name) abort
+  let g:Lf_Extensions.menu.highlights_def = get(get(s:menu_high, a:name, {}), 'highlights_def', {})
+  let g:Lf_Extensions.menu.highlights_cmd = get(get(s:menu_high, a:name, {}), 'highlights_cmd', {})
+  exe printf('Leaderf menu --name %s', a:name)
 endfunction
 
 function! s:accept(line, args) abort
@@ -558,7 +582,7 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>f<Space> :<C-u>Leaderf menu --name CustomKeyMaps<CR>
+  nnoremap <silent> <Leader>f<Space> :<C-u>call <SID>run_menu('CustomKeyMaps')<CR>
   let g:_spacevim_mappings.f['[SPC]'] = ['Leaderf menu --name CustomKeyMaps',
         \ 'fuzzy find custom key bindings',
         \ [
@@ -567,7 +591,7 @@ function! s:defind_fuzzy_finder() abort
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>fp  :<C-u>Leaderf menu --name AddedPlugins<CR>
+  nnoremap <silent> <Leader>fp  :<C-u>call <SID>run_menu('AddedPlugins')<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.p = ['Leaderf menu --name AddedPlugins',
         \ 'fuzzy find vim packages',

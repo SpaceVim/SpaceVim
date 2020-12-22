@@ -25,60 +25,61 @@ CONTENTS                                                   *SpaceVim-contents*
       5. colorscheme............................|SpaceVim-options-colorscheme|
       6. colorscheme_bg......................|SpaceVim-options-colorscheme_bg|
       7. data_dir..................................|SpaceVim-options-data_dir|
-      8. default_indent......................|SpaceVim-options-default_indent|
-      9. enable_ale..............................|SpaceVim-options-enable_ale|
-      10. enable_bepo_layout.............|SpaceVim-options-enable_bepo_layout|
-      11. enable_cursorcolumn...........|SpaceVim-options-enable_cursorcolumn|
-      12. enable_cursorline...............|SpaceVim-options-enable_cursorline|
-      13. enable_debug.........................|SpaceVim-options-enable_debug|
-      14. enable_googlesuggest.........|SpaceVim-options-enable_googlesuggest|
-      15. enable_guicolors.................|SpaceVim-options-enable_guicolors|
-      16. enable_insert_leader.........|SpaceVim-options-enable_insert_leader|
-      17. enable_key_frequency.........|SpaceVim-options-enable_key_frequency|
-      18. enable_neomake.....................|SpaceVim-options-enable_neomake|
-      19. enable_projects_cache.......|SpaceVim-options-enable_projects_cache|
-      20. enable_statusline_bfpath.|SpaceVim-options-enable_statusline_bfpath|
-      21. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
-      22. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
-      23. enable_tabline_ft_icon.....|SpaceVim-options-enable_tabline_ft_icon|
-      24. enable_vimfiler_welcome...|SpaceVim-options-enable_vimfiler_welcome|
-      25. enable_ycm.............................|SpaceVim-options-enable_ycm|
-      26. error_symbol.........................|SpaceVim-options-error_symbol|
-      27. escape_key_binding.............|SpaceVim-options-escape_key_binding|
-      28. filemanager...........................|SpaceVim-options-filemanager|
-      29. filetree_direction.............|SpaceVim-options-filetree_direction|
-      30. guifont...................................|SpaceVim-options-guifont|
-      31. home_files_number...............|SpaceVim-options-home_files_number|
-      32. info_symbol...........................|SpaceVim-options-info_symbol|
-      33. keep_server_alive...............|SpaceVim-options-keep_server_alive|
-      34. language.................................|SpaceVim-options-language|
-      35. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      36. max_column.............................|SpaceVim-options-max_column|
-      37. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      38. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      39. project_rooter_automatically
+      8. default_custom_leader........|SpaceVim-options-default_custom_leader|
+      9. default_indent......................|SpaceVim-options-default_indent|
+      10. enable_ale.............................|SpaceVim-options-enable_ale|
+      11. enable_bepo_layout.............|SpaceVim-options-enable_bepo_layout|
+      12. enable_cursorcolumn...........|SpaceVim-options-enable_cursorcolumn|
+      13. enable_cursorline...............|SpaceVim-options-enable_cursorline|
+      14. enable_debug.........................|SpaceVim-options-enable_debug|
+      15. enable_googlesuggest.........|SpaceVim-options-enable_googlesuggest|
+      16. enable_guicolors.................|SpaceVim-options-enable_guicolors|
+      17. enable_insert_leader.........|SpaceVim-options-enable_insert_leader|
+      18. enable_key_frequency.........|SpaceVim-options-enable_key_frequency|
+      19. enable_neomake.....................|SpaceVim-options-enable_neomake|
+      20. enable_projects_cache.......|SpaceVim-options-enable_projects_cache|
+      21. enable_statusline_bfpath.|SpaceVim-options-enable_statusline_bfpath|
+      22. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
+      23. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
+      24. enable_tabline_ft_icon.....|SpaceVim-options-enable_tabline_ft_icon|
+      25. enable_vimfiler_welcome...|SpaceVim-options-enable_vimfiler_welcome|
+      26. enable_ycm.............................|SpaceVim-options-enable_ycm|
+      27. error_symbol.........................|SpaceVim-options-error_symbol|
+      28. escape_key_binding.............|SpaceVim-options-escape_key_binding|
+      29. filemanager...........................|SpaceVim-options-filemanager|
+      30. filetree_direction.............|SpaceVim-options-filetree_direction|
+      31. guifont...................................|SpaceVim-options-guifont|
+      32. home_files_number...............|SpaceVim-options-home_files_number|
+      33. info_symbol...........................|SpaceVim-options-info_symbol|
+      34. keep_server_alive...............|SpaceVim-options-keep_server_alive|
+      35. language.................................|SpaceVim-options-language|
+      36. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      37. max_column.............................|SpaceVim-options-max_column|
+      38. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      39. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      40. project_rooter_automatically
 ...............................|SpaceVim-options-project_rooter_automatically|
-      40. project_rooter_outermost.|SpaceVim-options-project_rooter_outermost|
-      41. project_rooter_patterns...|SpaceVim-options-project_rooter_patterns|
-      42. projects_cache_num.............|SpaceVim-options-projects_cache_num|
-      43. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      44. relativenumber.....................|SpaceVim-options-relativenumber|
-      45. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      46. search_tools.........................|SpaceVim-options-search_tools|
-      47. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      48. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      49. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      50. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
-      51. statusline_separator.........|SpaceVim-options-statusline_separator|
-      52. statusline_unicode_symbols
+      41. project_rooter_outermost.|SpaceVim-options-project_rooter_outermost|
+      42. project_rooter_patterns...|SpaceVim-options-project_rooter_patterns|
+      43. projects_cache_num.............|SpaceVim-options-projects_cache_num|
+      44. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      45. relativenumber.....................|SpaceVim-options-relativenumber|
+      46. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      47. search_tools.........................|SpaceVim-options-search_tools|
+      48. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      49. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      50. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      51. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
+      52. statusline_separator.........|SpaceVim-options-statusline_separator|
+      53. statusline_unicode_symbols
 .................................|SpaceVim-options-statusline_unicode_symbols|
-      53. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      54. vim_help_language...............|SpaceVim-options-vim_help_language|
-      55. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      56. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      57. windows_index_type.............|SpaceVim-options-windows_index_type|
-      58. windows_leader.....................|SpaceVim-options-windows_leader|
-      59. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      54. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      55. vim_help_language...............|SpaceVim-options-vim_help_language|
+      56. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      57. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      58. windows_index_type.............|SpaceVim-options-windows_index_type|
+      59. windows_leader.....................|SpaceVim-options-windows_leader|
+      60. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -131,46 +132,47 @@ CONTENTS                                                   *SpaceVim-contents*
       46. lang#json.................................|SpaceVim-layer-lang-json|
       47. lang#julia...............................|SpaceVim-layer-lang-julia|
       48. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      49. lang#livescript.....................|SpaceVim-layer-lang-livescript|
-      50. lang#lua...................................|SpaceVim-layer-lang-lua|
-      51. lang#moonscript.....................|SpaceVim-layer-lang-moonscript|
-      52. lang#nim...................................|SpaceVim-layer-lang-nim|
-      53. lang#nix...................................|SpaceVim-layer-lang-nix|
-      54. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      55. lang#pact.................................|SpaceVim-layer-lang-pact|
-      56. lang#php...................................|SpaceVim-layer-lang-php|
-      57. lang#pony.................................|SpaceVim-layer-lang-pony|
-      58. lang#processing.....................|SpaceVim-layer-lang-processing|
-      59. lang#prolog.............................|SpaceVim-layer-lang-prolog|
-      60. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      61. lang#python.............................|SpaceVim-layer-lang-python|
-      62. lang#racket.............................|SpaceVim-layer-lang-racket|
-      63. lang#racket................................|SpaceVim-layer-lang-red|
-      64. lang#ring....................................|SpaceVim-layer-lang-r|
-      65. lang#ring.................................|SpaceVim-layer-lang-ring|
-      66. lang#ruby.................................|SpaceVim-layer-lang-ruby|
-      67. lang#rust.................................|SpaceVim-layer-lang-rust|
-      68. lang#scala...............................|SpaceVim-layer-lang-scala|
-      69. lang#scheme.............................|SpaceVim-layer-lang-scheme|
-      70. lang#sh.....................................|SpaceVim-layer-lang-sh|
-      71. lang#sml...................................|SpaceVim-layer-lang-sml|
-      72. lang#swig................................|SpaceVim-layer-lang-swift|
-      73. lang#swig.................................|SpaceVim-layer-lang-swig|
-      74. lang#tcl...................................|SpaceVim-layer-lang-tcl|
-      75. lang#toml.................................|SpaceVim-layer-lang-toml|
-      76. lang#typescript.....................|SpaceVim-layer-lang-typescript|
-      77. lang#v.......................................|SpaceVim-layer-lang-v|
-      78. lang#vbnet...............................|SpaceVim-layer-lang-vbnet|
-      79. lang#xml...................................|SpaceVim-layer-lang-xml|
-      80. lang#xquery.............................|SpaceVim-layer-lang-xquery|
-      81. language server protocol........................|SpaceVim-layer-lsp|
-      82. leaderf.....................................|SpaceVim-layer-leaderf|
-      83. operator...................................|SpaceVim-layer-operator|
-      84. shell.........................................|SpaceVim-layer-shell|
-      85. test...........................................|SpaceVim-layer-test|
-      86. tmux...........................................|SpaceVim-layer-tmux|
-      87. tools#dash...............................|SpaceVim-layer-tools-dash|
-      88. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      49. lang#lisp.................................|SpaceVim-layer-lang-lisp|
+      50. lang#livescript.....................|SpaceVim-layer-lang-livescript|
+      51. lang#lua...................................|SpaceVim-layer-lang-lua|
+      52. lang#moonscript.....................|SpaceVim-layer-lang-moonscript|
+      53. lang#nim...................................|SpaceVim-layer-lang-nim|
+      54. lang#nix...................................|SpaceVim-layer-lang-nix|
+      55. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      56. lang#pact.................................|SpaceVim-layer-lang-pact|
+      57. lang#php...................................|SpaceVim-layer-lang-php|
+      58. lang#pony.................................|SpaceVim-layer-lang-pony|
+      59. lang#processing.....................|SpaceVim-layer-lang-processing|
+      60. lang#prolog.............................|SpaceVim-layer-lang-prolog|
+      61. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      62. lang#python.............................|SpaceVim-layer-lang-python|
+      63. lang#racket.............................|SpaceVim-layer-lang-racket|
+      64. lang#racket................................|SpaceVim-layer-lang-red|
+      65. lang#ring....................................|SpaceVim-layer-lang-r|
+      66. lang#ring.................................|SpaceVim-layer-lang-ring|
+      67. lang#ruby.................................|SpaceVim-layer-lang-ruby|
+      68. lang#rust.................................|SpaceVim-layer-lang-rust|
+      69. lang#scala...............................|SpaceVim-layer-lang-scala|
+      70. lang#scheme.............................|SpaceVim-layer-lang-scheme|
+      71. lang#sh.....................................|SpaceVim-layer-lang-sh|
+      72. lang#sml...................................|SpaceVim-layer-lang-sml|
+      73. lang#swig................................|SpaceVim-layer-lang-swift|
+      74. lang#swig.................................|SpaceVim-layer-lang-swig|
+      75. lang#tcl...................................|SpaceVim-layer-lang-tcl|
+      76. lang#toml.................................|SpaceVim-layer-lang-toml|
+      77. lang#typescript.....................|SpaceVim-layer-lang-typescript|
+      78. lang#v.......................................|SpaceVim-layer-lang-v|
+      79. lang#vbnet...............................|SpaceVim-layer-lang-vbnet|
+      80. lang#xml...................................|SpaceVim-layer-lang-xml|
+      81. lang#xquery.............................|SpaceVim-layer-lang-xquery|
+      82. language server protocol........................|SpaceVim-layer-lsp|
+      83. leaderf.....................................|SpaceVim-layer-leaderf|
+      84. operator...................................|SpaceVim-layer-operator|
+      85. shell.........................................|SpaceVim-layer-shell|
+      86. test...........................................|SpaceVim-layer-test|
+      87. tmux...........................................|SpaceVim-layer-tmux|
+      88. tools#dash...............................|SpaceVim-layer-tools-dash|
+      89. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. Usage....................................................|SpaceVim-usage|
       1. custom_plugins........................|SpaceVim-usage-custom_plugins|
       2. repl............................................|SpaceVim-usage-repl|
@@ -187,11 +189,12 @@ CONTENTS                                                   *SpaceVim-contents*
       9. prompt..........................................|SpaceVim-api-prompt|
       10. sid...........................................|SpaceVim-api-vim-sid|
       11. system.........................................|SpaceVim-api-system|
-      12. vim#buffer.................................|SpaceVim-api-vim-buffer|
-      13. vim#buffer.................................|SpaceVim-api-vim-window|
-      14. vim#command...............................|SpaceVim-api-vim-command|
-      15. vim#compatible.........................|SpaceVim-api-vim-compatible|
-      16. vim#message...............................|SpaceVim-api-vim-message|
+      12. unicode#box...............................|SpaceVim-api-unicode-box|
+      13. vim#buffer.................................|SpaceVim-api-vim-buffer|
+      14. vim#buffer.................................|SpaceVim-api-vim-window|
+      15. vim#command...............................|SpaceVim-api-vim-command|
+      16. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      17. vim#message...............................|SpaceVim-api-vim-message|
   9. FAQ........................................................|SpaceVim-faq|
   10. Changelog...........................................|SpaceVim-changelog|
 
@@ -286,6 +289,14 @@ Set the cache directory of SpaceVim. Default is `$XDG_CACHE_HOME`  or if not
 set `~/.cache¸.
 >
   data_dir = "~/.cache"
+<
+
+==============================================================================
+DEFAULT_CUSTOM_LEADER                 *SpaceVim-options-default_custom_leader*
+
+Change the default custom leader of SpaceVim. Default is <Space>.
+>
+  default_custom_leader = "<Space>"
 <
 
 ==============================================================================
@@ -706,7 +717,7 @@ Set the help language of vim. Default is 'en'. You can change it to Chinese.
 ==============================================================================
 VIMCOMPATIBLE                                 *SpaceVim-options-vimcompatible*
 
-Enable/Disable vimcompatible mode, by default it is false.  to enable
+Enable/Disable vimcompatible mode, by default it is false. to enable
 vimcompatible mode, just add:
 >
   vimcompatible = true
@@ -792,6 +803,12 @@ Enable/Disable bepo layout, by default it is disabled.
 Change the max number of columns for SpaceVim. Default is 120.
 >
   let g:spacevim_max_column = 120
+<
+
+                                            *g:spacevim_default_custom_leader*
+Change the default custom leader of SpaceVim. Default is <Space>.
+>
+  let g:spacevim_default_custom_leader = '<Space>'
 <
 
                                                 *g:spacevim_home_files_number*
@@ -1106,7 +1123,7 @@ Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 <
 
                                                     *g:spacevim_vimcompatible*
-Enable/Disable vimcompatible mode, by default it is false.  to enable
+Enable/Disable vimcompatible mode, by default it is false. to enable
 vimcompatible mode, just add:
 >
   let g:spacevim_vimcompatible = 1
@@ -2601,6 +2618,35 @@ This layer also provides REPL support for kotlin, the key bindings are:
 
 
 ==============================================================================
+LANG#LISP                                           *SpaceVim-layer-lang-lisp*
+
+This layer is for Common Lisp development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#lisp'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for lisp, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
 LANG#LIVESCRIPT                               *SpaceVim-layer-lang-livescript*
 
 This layer is for livescript development, disabled by default, to enable this
@@ -3776,6 +3822,16 @@ Return the name of current os, availibel value is: linux, cygwin, windows and
 mac.
 
 ==============================================================================
+UNICODE#BOX                                         *SpaceVim-api-unicode-box*
+
+provides some functions to draw box and table.
+
+drawing_table({json}[, {keys}])
+
+  drawing table with json data.
+
+
+==============================================================================
 VIM#BUFFER                                           *SpaceVim-api-vim-buffer*
 
 INTRO
@@ -3833,7 +3889,7 @@ winexists({winid})
 ==============================================================================
 VIM#COMMAND                                         *SpaceVim-api-vim-command*
 
-This api is for create complete function for custom vim command. This is
+This api is for creating complete function for custom vim command. This is
 example for create complete function for command TEST
 >
   let s:CMD = SpaceVim#api#import('vim#command')

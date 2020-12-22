@@ -55,7 +55,7 @@ function! s:get_search_cmd(exe, expr) abort
   if a:exe ==# 'grep'
     return ['grep', '-inHR', '--exclude-dir', '.git', a:expr, '.']
   elseif a:exe ==# 'rg'
-    return ['rg', '--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', a:expr, '.']
+    return ['rg', '-g!.git', '--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', a:expr, '.']
   else
     return [a:exe, a:expr]
   endif

@@ -73,8 +73,7 @@ docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevi
 ## Configuration
 
 The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`. This is
-an example for basic usage of SpaceVim. For more info, please checkout SpaceVim
-documentation.
+an example for basic usage of SpaceVim. For more info, please checkout [documentation](../documentation/) and [available layers](../layers/).
 
 ```toml
 # This is a basic configuration example for SpaceVim

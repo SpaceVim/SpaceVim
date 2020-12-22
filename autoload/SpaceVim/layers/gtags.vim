@@ -37,8 +37,13 @@ function! SpaceVim#layers#gtags#config() abort
   if s:auto_update
     augroup spacevim_layer_gtags
       autocmd!
-      au BufWritePost * call ctags#update()
-      au BufWritePost * call gtags#update(1)
+      " gtags#update() function only exist when gtags is available
+      if executable('gtags')
+        au BufWritePost * call gtags#update(1)
+      endif
+      if executable('ctags')
+        au BufWritePost * call ctags#update()
+      endif
     augroup END
   endif
 endfunction

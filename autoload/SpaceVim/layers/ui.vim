@@ -131,12 +131,20 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['T', '~'], 'call call('
         \ . string(s:_function('s:toggle_end_of_buffer')) . ', [])',
         \ 'display ~ in the fringe on empty lines', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
-        \ . string(s:_function('s:toggle_spell_check')) . ', [])',
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call SpaceVim#layers#core#statusline#toggle_mode("spell-checking")',
         \ 'toggle-spell-checker', 1)
+
+  call SpaceVim#layers#core#statusline#register_mode(
+        \ {
+        \ 'key' : 'spell-checking',
+        \ 'func' : string(s:_function('s:toggle_spell_check')),
+        \ }
+        \ )
+
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'p'], 'call call('
         \ . string(s:_function('s:toggle_paste')) . ', [])',
         \ 'toggle-paste-mode', 1)
+
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'l'], 'setlocal list!',
         \ 'toggle-hidden-listchars', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'W'], 'setlocal wrap!',
@@ -294,7 +302,6 @@ function! s:toggle_spell_check() abort
   else
     let &l:spell = 1
   endif
-  call SpaceVim#layers#core#statusline#toggle_mode('spell-checking')
   if &l:spell == 1
     echo 'spell-checking enabled.'
   else

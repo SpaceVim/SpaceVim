@@ -22,6 +22,7 @@ let s:LOGGER =SpaceVim#logger#derive('rooter')
 let s:TIME = SpaceVim#api#import('time')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:VIM = SpaceVim#api#import('vim')
 
 function! s:update_rooter_patterns() abort
   let s:project_rooter_patterns = filter(copy(g:spacevim_project_rooter_patterns), 'v:val !~# "^!"')
@@ -49,7 +50,10 @@ function! s:load_cache() abort
     call s:LOGGER.info('Load projects cache from: ' . s:project_cache_path)
     let cache_context = join(readfile(s:project_cache_path, ''), '')
     if !empty(cache_context)
-      let s:project_paths = s:JSON.json_decode(cache_context)
+      let cache_object = s:JSON.json_decode(cache_context)
+      if s:VIM.is_dict(cache_object)
+        let s:project_paths = filter(cache_object, '!empty(v:key)')
+      endif
     endif
   else
     call s:LOGGER.info('projects cache file does not exists!')
@@ -95,7 +99,11 @@ function! s:sort_by_opened_time() abort
 endfunction
 
 function! s:compare_time(d1, d2) abort
-  return s:project_paths[a:d2].opened_time - s:project_paths[a:d1].opened_time
+  let proj1 = get(s:project_paths, a:d1, {})
+  let proj1time = get(proj1, 'opened_time', 0)
+  let proj2 = get(s:project_paths, a:d2, {})
+  let proj2time = get(proj2, 'opened_time', 0)
+  return proj2time - proj1time
 endfunction
 
 
@@ -110,7 +118,7 @@ function! SpaceVim#plugins#projectmanager#list() abort
   elseif SpaceVim#layers#isLoaded('fzf')
     FzfMenu Projects
   elseif SpaceVim#layers#isLoaded('leaderf')
-    Leaderf menu --name Projects
+    call SpaceVim#layers#leaderf#run_menu('Projects')
   else
     call SpaceVim#logger#warn('fuzzy find layer is needed to find project!')
   endif
@@ -143,6 +151,9 @@ function! SpaceVim#plugins#projectmanager#RootchandgeCallback() abort
         \ 'name' : fnamemodify(getcwd(), ':t'),
         \ 'opened_time' : localtime()
         \ }
+  if empty(project.path)
+    return
+  endif
   call s:cache_project(project)
   let g:_spacevim_project_name = project.name
   let b:_spacevim_project_name = g:_spacevim_project_name
