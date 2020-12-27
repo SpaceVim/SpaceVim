@@ -84,7 +84,7 @@ scriptencoding utf-8
 "   normal    SPC l u       find Usages of cursor symbol
 "
 " <
-" SpaceVim uses [`ensime-vim`](http://ensime.github.io/editors/vim/install/)
+" SpaceVim uses [`ensime-vim`](https://ensime.github.io/editors/vim/install/)
 " to provide code completion, format, sort imports etc, if has python support.
 " Also you can enable lsp layer to has a better experience.
 "
@@ -100,7 +100,7 @@ scriptencoding utf-8
 " @subsection Ensime-vim setup steps
 "
 " The following is quick install steps, if you want to see complete details,
-" please see: [`ensime-vim`](http://ensime.github.io/editors/vim/install/)
+" please see: [`ensime-vim`](https://ensime.github.io/editors/vim/install/)
 "
 " 1. Install vim`s plugin and its dependencies as following.
 "

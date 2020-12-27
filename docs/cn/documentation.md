@@ -2215,7 +2215,7 @@ SpaceVim 通过默认通过 [checkers](../layers/checkers/) 模块来进行文�
 
 ### 格式规范
 
-SpaceVim 添加了 [EditorConfig](http://editorconfig.org/) 支持，通过一个配置文件来为不同的文件格式设置对应的代码格式规范，
+SpaceVim 添加了 [EditorConfig](https://editorconfig.org/) 支持，通过一个配置文件来为不同的文件格式设置对应的代码格式规范，
 这一工具兼容多种文本编辑器和集成开发环境。
 
 更多配置方式，可以阅读其官方文档：[editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).
