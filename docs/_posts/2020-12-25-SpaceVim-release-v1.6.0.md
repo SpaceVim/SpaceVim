@@ -18,6 +18,7 @@ comments: true
     - [Feature Changes](#feature-changes)
     - [Bug Fixs](#bug-fixs)
     - [Unmarked PRs](#unmarked-prs)
+- [Doc&&Wiki](#docwiki)
 
 <!-- vim-markdown-toc -->
 
@@ -48,7 +49,7 @@ The v1.6.0 has been released. So let's take a look at what happened since last r
 - Add: Support auto_completion_complete_with_key_sequence for coc completion [#3939](https://github.com/SpaceVim/SpaceVim/pull/3939)
 - Add: Introduce LSP CodeActions for php and javascript [#3937](https://github.com/SpaceVim/SpaceVim/pull/3937)
 - Add: random-candidates for colorscheme layer [#3671](https://github.com/SpaceVim/SpaceVim/pull/3671)
-- Add: Spacevim#custom#LangSPC and SpaceVim#custom#LangSPCGroupName [#3260](https://github.com/SpaceVim/SpaceVim/pull/3260)
+- Add language SPC key binding function [#3260](https://github.com/SpaceVim/SpaceVim/pull/3260)
 - Add: custom register language specific mapping function [#2868](https://github.com/SpaceVim/SpaceVim/pull/2868)
 
 #### Feature Changes
@@ -72,15 +73,14 @@ The v1.6.0 has been released. So let's take a look at what happened since last r
 - fix Leaderf neoyank. [#3541](https://github.com/SpaceVim/SpaceVim/pull/3541)
 - Fix projectmanager from finding ~/SpaceVim.d in home directory on windows [#3489](https://github.com/SpaceVim/SpaceVim/pull/3489)
 - Fix load config [#3064](https://github.com/SpaceVim/SpaceVim/pull/3064)
+- Fix dein-ui detach script [#4018](https://github.com/SpaceVim/SpaceVim/pull/4018)
 
 #### Unmarked PRs
 
-- Update detach_plugin.sh [#4018](https://github.com/SpaceVim/SpaceVim/pull/4018)
 - Ignore .git for rg searches [#3996](https://github.com/SpaceVim/SpaceVim/pull/3996)
 - Improve tsx support [#3993](https://github.com/SpaceVim/SpaceVim/pull/3993)
 - Doc for reinstalling plugins [#3992](https://github.com/SpaceVim/SpaceVim/pull/3992)
 - Update language guide [#3986](https://github.com/SpaceVim/SpaceVim/pull/3986)
-- Update faq [#3984](https://github.com/SpaceVim/SpaceVim/pull/3984)
 - Update doc for key binding SPC f Y [#3983](https://github.com/SpaceVim/SpaceVim/pull/3983)
 - Improve ctags database manager [#3981](https://github.com/SpaceVim/SpaceVim/pull/3981)
 - Remove useless php plugin [#3979](https://github.com/SpaceVim/SpaceVim/pull/3979)
@@ -90,7 +90,6 @@ The v1.6.0 has been released. So let's take a look at what happened since last r
 - Doc: add documentation for expand-region key bindings [#3952](https://github.com/SpaceVim/SpaceVim/pull/3952)
 - Improve typescript support [#3948](https://github.com/SpaceVim/SpaceVim/pull/3948)
 - Improve python support [#3947](https://github.com/SpaceVim/SpaceVim/pull/3947)
-- Update doc [#3942](https://github.com/SpaceVim/SpaceVim/pull/3942)
 - Update doc for SPC f / [#3935](https://github.com/SpaceVim/SpaceVim/pull/3935)
 - Update doc for statusline [#3665](https://github.com/SpaceVim/SpaceVim/pull/3665)
 - Update lang#asciidoc layer [#3556](https://github.com/SpaceVim/SpaceVim/pull/3556)
@@ -103,5 +102,8 @@ The v1.6.0 has been released. So let's take a look at what happened since last r
 - Update Common Lisp support [#3107](https://github.com/SpaceVim/SpaceVim/pull/3107)
 - Cache major mode [#3076](https://github.com/SpaceVim/SpaceVim/pull/3076)
 
+## Doc&&Wiki
 
+- Update faq page [#3984](https://github.com/SpaceVim/SpaceVim/pull/3984)
+- Update sponsors page [#3942](https://github.com/SpaceVim/SpaceVim/pull/3942)
 
