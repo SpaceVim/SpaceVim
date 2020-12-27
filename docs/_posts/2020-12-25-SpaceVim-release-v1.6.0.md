@@ -57,6 +57,7 @@ The v1.6.0 has been released. So let's take a look at what happened since last r
 
 #### Bug Fixs
 
+- Fix grep command option in ctrlp [#3955](https://github.com/SpaceVim/SpaceVim/pull/3955)
 - fix(ctrlp): invocation of printf() had the wrong number of arguments [#4014](https://github.com/SpaceVim/SpaceVim/pull/4014)
 - Fix code runner [#4011](https://github.com/SpaceVim/SpaceVim/pull/4011)
 - Fix unknown function gtags#update [#4009](https://github.com/SpaceVim/SpaceVim/pull/4009)
@@ -67,8 +68,6 @@ The v1.6.0 has been released. So let's take a look at what happened since last r
 - Fix vim iskeyword option [#3990](https://github.com/SpaceVim/SpaceVim/pull/3990)
 - Fix: ctrlp default root patterns [#3978](https://github.com/SpaceVim/SpaceVim/pull/3978)
 - Fix gitstatus not shown in defx [#3973](https://github.com/SpaceVim/SpaceVim/pull/3973)
-- fixed tagbar from finding and using bash.exe under windows [#3964](https://github.com/SpaceVim/SpaceVim/pull/3964)
-- Fix CtrlP that uses grep for OSX [#3955](https://github.com/SpaceVim/SpaceVim/pull/3955)
 - Fix OmniSharpFindType to OmniSharpTypeLookup [#3628](https://github.com/SpaceVim/SpaceVim/pull/3628)
 - fix Leaderf neoyank. [#3541](https://github.com/SpaceVim/SpaceVim/pull/3541)
 - Fix projectmanager from finding ~/SpaceVim.d in home directory on windows [#3489](https://github.com/SpaceVim/SpaceVim/pull/3489)
