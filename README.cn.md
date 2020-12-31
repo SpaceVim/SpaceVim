@@ -12,7 +12,7 @@
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
-[![Version](https://img.shields.io/badge/version-1.6.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-1.6.0-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
 ![welcome page](https://user-images.githubusercontent.com/13142418/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png)
