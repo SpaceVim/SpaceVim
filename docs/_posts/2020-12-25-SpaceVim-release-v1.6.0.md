@@ -15,10 +15,9 @@ comments: true
 - [What's New](#whats-new)
   - [New language layers](#new-language-layers)
   - [New Features](#new-features)
-  - [Improvement](#improvement)
+  - [Improvements](#improvements)
 - [Feature Changes](#feature-changes)
 - [Bug Fixs](#bug-fixs)
-    - [Unmarked PRs](#unmarked-prs)
 - [Doc&&Wiki](#docwiki)
 
 <!-- vim-markdown-toc -->
@@ -49,8 +48,9 @@ The v1.6.0 has been released. So let's take a look at what happened since last r
 - Add random-candidates for colorscheme layer [#3671](https://github.com/SpaceVim/SpaceVim/pull/3671)
 - Add language SPC key binding function [#3260](https://github.com/SpaceVim/SpaceVim/pull/3260)
 - Add custom register language specific mapping function [#2868](https://github.com/SpaceVim/SpaceVim/pull/2868)
+- Add cache major mode [#3076](https://github.com/SpaceVim/SpaceVim/pull/3076)
 
-### Improvement
+### Improvements
 
 - Improve terminal support [#3318](https://github.com/SpaceVim/SpaceVim/pull/3318)
 - Improve projectmanager [#3489](https://github.com/SpaceVim/SpaceVim/pull/3489)
@@ -60,6 +60,9 @@ The v1.6.0 has been released. So let's take a look at what happened since last r
 - Improve `lang#python` layer [#3947](https://github.com/SpaceVim/SpaceVim/pull/3947)
 - Improve `lang#asciidoc` layer [#3556](https://github.com/SpaceVim/SpaceVim/pull/3556)
 - Improve tag database manager [#3981](https://github.com/SpaceVim/SpaceVim/pull/3981)
+- Improve key binding guide for `g` [#3496](https://github.com/SpaceVim/SpaceVim/pull/3496)
+- Ignore `.git` directory for `rg` command [#3996](https://github.com/SpaceVim/SpaceVim/pull/3996)
+- Improve tsx support [#3993](https://github.com/SpaceVim/SpaceVim/pull/3993)
 
 ## Feature Changes
 
@@ -81,20 +84,7 @@ The v1.6.0 has been released. So let's take a look at what happened since last r
 - Fix gitstatus not shown in defx [#3973](https://github.com/SpaceVim/SpaceVim/pull/3973)
 - Rename OmniSharpFindType to OmniSharpTypeLookup [#3628](https://github.com/SpaceVim/SpaceVim/pull/3628)
 - Fix dein-ui detach script [#4018](https://github.com/SpaceVim/SpaceVim/pull/4018)
-
-#### Unmarked PRs
-
-- Ignore .git for rg searches [#3996](https://github.com/SpaceVim/SpaceVim/pull/3996)
-- Improve tsx support [#3993](https://github.com/SpaceVim/SpaceVim/pull/3993)
-- Update language guide [#3986](https://github.com/SpaceVim/SpaceVim/pull/3986)
-- Update doc for lang#sml layer [#3977](https://github.com/SpaceVim/SpaceVim/pull/3977)
-- preserve g:indentLine_fileTypeExclude setting in layers/ui.vim [#3961](https://github.com/SpaceVim/SpaceVim/pull/3961)
-- Update g map [#3496](https://github.com/SpaceVim/SpaceVim/pull/3496)
-- Doc: type in doc [#3488](https://github.com/SpaceVim/SpaceVim/pull/3488)
-- Update file head [#3379](https://github.com/SpaceVim/SpaceVim/pull/3379)
-- feat: optional support of vim-devicons [#3271](https://github.com/SpaceVim/SpaceVim/pull/3271)
-- Create mirror [#3195](https://github.com/SpaceVim/SpaceVim/pull/3195)
-- Cache major mode [#3076](https://github.com/SpaceVim/SpaceVim/pull/3076)
+- Fix g:indentLine_fileTypeExclude option [#3961](https://github.com/SpaceVim/SpaceVim/pull/3961)
 
 ## Doc&&Wiki
 
@@ -103,8 +93,11 @@ The v1.6.0 has been released. So let's take a look at what happened since last r
 - Update doc for `SPC f Y` [#3983](https://github.com/SpaceVim/SpaceVim/pull/3983)
 - Update doc for statusline [#3665](https://github.com/SpaceVim/SpaceVim/pull/3665)
 - Update faq page [#3984](https://github.com/SpaceVim/SpaceVim/pull/3984)
+- Update file head [#3379](https://github.com/SpaceVim/SpaceVim/pull/3379)
 - Update sponsors page [#3942](https://github.com/SpaceVim/SpaceVim/pull/3942)
+- Update language guide [#3986](https://github.com/SpaceVim/SpaceVim/pull/3986)
 - Update doc for reinstalling plugins [#3992](https://github.com/SpaceVim/SpaceVim/pull/3992)
+- Update doc for `lang#sml` layer [#3977](https://github.com/SpaceVim/SpaceVim/pull/3977)
 - Update doc for expand-region key bindings [#3952](https://github.com/SpaceVim/SpaceVim/pull/3952)
-- Type [#4000](https://github.com/SpaceVim/SpaceVim/pull/4000)
+- Types [#4000](https://github.com/SpaceVim/SpaceVim/pull/4000), [#3488](https://github.com/SpaceVim/SpaceVim/pull/3488)
 
