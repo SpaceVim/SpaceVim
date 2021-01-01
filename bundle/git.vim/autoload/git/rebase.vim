@@ -6,7 +6,7 @@ function! git#rebase#run(...)
     let s:lines = []
     if !empty(a:1)
         let cmd = ['git', '--no-pager', '-c',
-                    \ 'core.editor=cat', '-c',
+                    \ 'core.editor=echo', '-c',
                     \ 'color.status=always',
                     \ '-C', 
                     \ expand(getcwd(), ':p'),
