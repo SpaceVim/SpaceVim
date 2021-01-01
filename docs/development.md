@@ -124,6 +124,10 @@ rather than what it did. For example, use change; not changed or changes.
 
 #### body
 
+Not all commits are complex enough to warrant a body body,
+therefore it is optional and only used when a commit requires a bit of explanation and context. 
+
+
 #### footer
 
 The footer is optional and is used to reference issue tracker IDs.
