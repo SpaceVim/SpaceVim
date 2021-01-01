@@ -1436,29 +1436,7 @@ function! SpaceVim#end() abort
   call SpaceVim#autocmds#init()
 
   if has('nvim')
-    function! s:GetVisual()
-      let [lnum1, col1] = getpos("'<")[1:2]
-      let [lnum2, col2] = getpos("'>")[1:2]
-      let lines = getline(lnum1, lnum2)
-      let lines[-1] = lines[-1][:col2 - 2]
-      let lines[0] = lines[0][col1 - 1:]
-      return lines
-    endfunction
-
-    function! REPLSend(lines)
-      call jobsend(g:last_terminal_job_id, add(a:lines, ''))
-    endfunction
-    " }}}
-    " Commands {{{
-    " REPL integration {{{
-    command! -range=% REPLSendSelection call REPLSend(s:GetVisual())
-    command! REPLSendLine call REPLSend([getline('.')])
-    " }}}
-    " https://github.com/syngan/vim-vimlint/issues/102
-    function! s:has(version) abort
-      return has(a:version)
-    endfunction
-    if !s:has('nvim-0.2.0')
+    if !has('nvim-0.2.0')
       let $NVIM_TUI_ENABLE_CURSOR_SHAPE = g:spacevim_terminal_cursor_shape
     else
       if g:spacevim_terminal_cursor_shape == 0
@@ -1510,8 +1488,7 @@ function! SpaceVim#end() abort
 
     augroup Terminal
       au!
-      au TermOpen * let g:last_terminal_job_id = b:terminal_job_id | IndentLinesDisable
-      au WinEnter,BufWinEnter term://* startinsert | IndentLinesDisable
+      au WinEnter,BufWinEnter term://* startinsert
       if has('timers')
         au TermClose * let g:_spacevim_termclose_abuf = expand('<abuf>') | call timer_start(5, 'SpaceVim#mapping#close_term_buffer')
       else
