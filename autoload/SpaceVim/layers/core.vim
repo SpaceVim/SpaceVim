@@ -865,6 +865,9 @@ function! s:save_current_file() abort
   let v:errmsg = ''
   silent! write
   if v:errmsg !=# ''
+    echohl ErrorMsg
+    echo  v:errmsg
+    echohl None
   else
     echohl Delimiter
     echo  bufname() . ' written'
