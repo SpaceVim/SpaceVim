@@ -16,6 +16,8 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
     - [types](#types)
     - [scopes](#scopes)
     - [subject](#subject)
+    - [body](#body)
+    - [footer](#footer)
   - [Pull Request](#pull-request)
     - [Title prefix of pull request](#title-prefix-of-pull-request)
     - [Rebase on top of upstream master](#rebase-on-top-of-upstream-master)
@@ -114,7 +116,18 @@ footer
 
 #### subject
 
-Use present tense and write in the imperative
+Subjects should be no greater than 50 characters,
+should begin with a capital letter and do not end with a period.
+
+Use an imperative tone to describe what a commit does,
+rather than what it did. For example, use change; not changed or changes.
+
+#### body
+
+#### footer
+
+The footer is optional and is used to reference issue tracker IDs.
+
 
 ### Pull Request
 
