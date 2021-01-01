@@ -272,17 +272,17 @@ function! s:language_specified_mappings() abort
         \ 'Run maven package', 1)
 
   " Gradle
-  let g:_spacevim_mappings_space.l.g = {'name' : '+Gradle'}
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'B'], 'call call('
+  let g:_spacevim_mappings_space.l.a = {'name' : '+Gradle'}
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a', 'B'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle clean build"])',
         \ 'Run gradle clean build', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'b'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a', 'b'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle build"])',
         \ 'Run gradle build', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 't'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle test"])',
         \ 'Run gradle test', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'r'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a', 'r'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle run"])',
         \ 'Run gradle run', 1)
 
