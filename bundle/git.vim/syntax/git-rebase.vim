@@ -4,7 +4,7 @@ endif
 let b:current_syntax = 'git-rebase'
 syntax case ignore
 syn match GitRebaseIgnore /^\s*#.*/
-syn keyword GitRebaseKeyword pick edit squash
+syn match GitRebaseKeyword /^pick\s/
 
 hi def link GitRebaseIgnore Comment
 hi def link GitRebaseKeyword	Statement
