@@ -1498,8 +1498,6 @@ function! SpaceVim#begin() abort
     set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
   endif
 
-  call SpaceVim#util#loadConfig('functions.vim')
-
   " Before loading SpaceVim, We need to parser argvs.
   let s:status = s:parser_argv()
   " If do not start Vim with filename, Define autocmd for opening welcome page
