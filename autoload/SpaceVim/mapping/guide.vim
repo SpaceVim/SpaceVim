@@ -787,7 +787,7 @@ if get(g:, 'mapleader', '\') ==# ' '
 else
   call SpaceVim#mapping#guide#register_prefix_descriptions(get(g:, 'mapleader', '\'),
         \ 'g:_spacevim_mappings')
-  call SpaceVim#plugins#help#regist_root({'<leader>' : g:_spacevim_mappings})
+  call SpaceVim#plugins#help#regist_root({'<Leader>' : g:_spacevim_mappings})
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
         \ 'g:_spacevim_mappings_space')
   call SpaceVim#plugins#help#regist_root({'SPC' : g:_spacevim_mappings_space})
