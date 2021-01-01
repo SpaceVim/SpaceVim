@@ -12,9 +12,11 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
 - [Contributing code](#contributing-code)
   - [License](#license)
   - [Conventions](#conventions)
+  - [Git commit style guide](#git-commit-style-guide)
+    - [types](#types)
+    - [scopes](#scopes)
+    - [subject](#subject)
   - [Pull Request](#pull-request)
-    - [Git commit style guide](#git-commit-style-guide)
-    - [Git commit Type](#git-commit-type)
     - [Title prefix of pull request](#title-prefix-of-pull-request)
     - [Rebase on top of upstream master](#rebase-on-top-of-upstream-master)
     - [Ideally for simple PRs](#ideally-for-simple-prs)
@@ -79,9 +81,8 @@ SpaceVim is based on conventions, mainly for naming functions,
 keybindings definition and writing documentation.
 Please read the [conventions](https://spacevim.org/conventions/) before your first contribution to get to know them.
 
-### Pull Request
 
-#### Git commit style guide
+### Git commit style guide
 
 A git commit message consists a three distinct parts separated by black line.
 
@@ -93,7 +94,7 @@ body
 footer
 ```
 
-#### Git commit Type
+#### types
 
 - `feat`: A new feature
 - `fix`: A bug fix
@@ -103,6 +104,19 @@ footer
 - `test`: Adding tests, refactoring test; no production code change
 - `chore`: Updating build tasks, package manager configs, etc; no production code change
 
+
+#### scopes
+
+- `layer`
+- `api`
+- `plugin`
+
+
+#### subject
+
+Use present tense and write in the imperative
+
+### Pull Request
 
 #### Title prefix of pull request
 
