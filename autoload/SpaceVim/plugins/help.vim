@@ -11,9 +11,6 @@ let s:VIM = SpaceVim#api#import('vim')
 let s:TABs = SpaceVim#api#import('vim#tab')
 let s:key_describ = {}
 
-function! SpaceVim#plugins#help#describe_bindings() abort
-endfunction
-
 function! SpaceVim#plugins#help#regist_root(dict) abort
   let keys = keys(a:dict)
   if type(a:dict) == 4 && len(keys) == 1
