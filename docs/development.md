@@ -14,6 +14,8 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
   - [Bootstrap](#bootstrap)
   - [Conventions](#conventions)
   - [Pull Request](#pull-request)
+    - [Git commit style guide](#git-commit-style-guide)
+    - [Git commit Type](#git-commit-type)
     - [Title prefix of pull request](#title-prefix-of-pull-request)
     - [Rebase on top of upstream master](#rebase-on-top-of-upstream-master)
     - [Ideally for simple PRs](#ideally-for-simple-prs)
@@ -81,6 +83,29 @@ Before contributing to SpaceVim, you should know how does SpaceVim bootstrap, he
 SpaceVim is based on conventions, mainly for naming functions, keybindings definition and writing documentation. Please read the [conventions](https://spacevim.org/conventions/) before your first contribution to get to know them.
 
 ### Pull Request
+
+#### Git commit style guide
+
+A git commit message consists a three distinct parts separated by black line.
+
+```
+Type (scope): Subject
+
+body
+
+footer
+```
+
+#### Git commit Type
+
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Changes to documentation
+- `style`: Formatting, missing semi colons, etc; no code change
+- `refactor`: Refactoring production code
+- `test`: Adding tests, refactoring test; no production code change
+- `chore`: Updating build tasks, package manager configs, etc; no production code change
+
 
 #### Title prefix of pull request
 
