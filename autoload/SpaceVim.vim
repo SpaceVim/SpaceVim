@@ -207,16 +207,6 @@ let g:spacevim_enable_googlesuggest    = 0
 let g:spacevim_windows_leader          = 's'
 
 ""
-" @section enable_insert_leader, options-enable_insert_leader
-" @parentsection options
-" Enable/Disable spacevim's insert mode leader, default is enable
-
-""
-" Enable/Disable spacevim's insert mode leader, default is enable
-" This options has been deprecated.
-let g:spacevim_enable_insert_leader    = 1
-
-""
 " @section data_dir, options-data_dir
 " @parentsection options
 " Set the cache directory of SpaceVim. Default is `$XDG_CACHE_HOME` 
