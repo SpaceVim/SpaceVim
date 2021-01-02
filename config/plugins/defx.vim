@@ -253,7 +253,7 @@ function! s:DefxCopyFile(_) abort
 endfunction
 
 function! s:DefxPasteFile(_) abort
-  if !executable('xclip-copyfile') && !s:SYS.isWindows
+  if !executable('xclip-pastefile') && !s:SYS.isWindows
     echohl WarningMsg
     echo 'you need to have xclip-copyfile in your PATH'
     echohl NONE
@@ -279,13 +279,13 @@ function! s:DefxPasteFile(_) abort
     let destination = path . s:FILE.separator . fnamemodify(s:copyed_file_path, ':t')
     let cmd = 'cmd /c copy ' . shellescape(s:copyed_file_path) . ' ' . shellescape(destination)
     call s:VCOP.systemlist(cmd)
-    if v:shell_error
-      echohl WarningMsg
-      echo 'failed to paste file!'
-      echohl NONE
-    else
-      echo 'Pasted:' . destination
-    endif
+  endif
+  if v:shell_error
+    echohl WarningMsg
+    echo 'failed to paste file!'
+    echohl NONE
+  else
+    echo 'Pasted:' . destination
   endif
 endfunction
 
