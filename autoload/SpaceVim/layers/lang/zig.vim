@@ -53,6 +53,7 @@ endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','t'], 'call SpaceVim#plugins#runner#open("zig run %s")', 'test current file', 1)
 endfunction
 
 function! SpaceVim#layers#lang#zig#set_variable(opt) abort
