@@ -71,7 +71,18 @@ function! SpaceVim#layers#shell#config() abort
       exe 'tnoremap <expr><silent><C-r>  SpaceVim#layers#shell#ctrl_r()'
     endif
   endif
-  " in window gvim, use <C-d> to close terminal buffer
+
+  if has('nvim')
+    augroup spacevim_layer_shell
+      au!
+      au WinEnter,BufWinEnter term://* startinsert
+      if has('timers')
+        au TermClose * let g:_spacevim_termclose_abuf = expand('<abuf>') | call timer_start(5, 'SpaceVim#mapping#close_term_buffer')
+      else
+        au TermClose * let g:_spacevim_termclose_abuf = expand('<abuf>') | call SpaceVim#mapping#close_term_buffer()
+      endif
+    augroup END
+  endif
 
 endfunction
 
@@ -81,7 +92,7 @@ func! SpaceVim#layers#shell#terminal() abort
   if isdirectory(line[:-2])
     return "exit\<CR>"
   endif
-  return ""
+  return ''
 endf
 func! SpaceVim#layers#shell#ctrl_u() abort
   let line = getline('.')
@@ -163,7 +174,7 @@ function! s:open_default_shell(open_with_file_cwd) abort
     endif
   endfor
 
-  if s:default_position == 'float' && exists('*nvim_open_win')
+  if s:default_position ==# 'float' && exists('*nvim_open_win')
     let s:term_win_id =  s:FLOAT.open_win(bufnr('%'), v:true,
           \ {
           \ 'relative': 'editor',

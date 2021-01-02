@@ -3226,7 +3226,7 @@ MAPPINGS
   normal    SPC l u       find Usages of cursor symbol
 
 <
-SpaceVim uses [`ensime-vim`](http://ensime.github.io/editors/vim/install/) to
+SpaceVim uses [`ensime-vim`](https://ensime.github.io/editors/vim/install/) to
 provide code completion, format, sort imports etc, if has python support. Also
 you can enable lsp layer to has a better experience.
 
@@ -3242,7 +3242,7 @@ than other servers(LanguageClient-neovim or vim-lsp). Please make sure that
 ENSIME-VIM SETUP STEPS
 
 The following is quick install steps, if you want to see complete details,
-please see: [`ensime-vim`](http://ensime.github.io/editors/vim/install/)
+please see: [`ensime-vim`](https://ensime.github.io/editors/vim/install/)
 
   1. Install vim`s plugin and its dependencies as following.
 

@@ -127,10 +127,10 @@ You can also use `g=` to indent current buffer.
 
 | Key Bindings | Descriptions       |
 | ------------ | ------------------ |
-| `SPC l g b`  | gradle build       |
-| `SPC l g B`  | gradle clean build |
-| `SPC l g r`  | gradle run         |
-| `SPC l g t`  | gradle test        |
+| `SPC l a b`  | gradle build       |
+| `SPC l a B`  | gradle clean build |
+| `SPC l a r`  | gradle run         |
+| `SPC l a t`  | gradle test        |
 
 ### Code runner
 

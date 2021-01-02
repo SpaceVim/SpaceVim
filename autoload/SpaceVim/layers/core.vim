@@ -94,7 +94,9 @@ function! SpaceVim#layers#core#config() abort
   " Select last paste
   nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save-current-file', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'call call('
+        \ . string(s:_function('s:save_current_file')) . ', [])',
+        \ 'save-current-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save-all-files', 1)
   " help mappings
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'I'], 'call SpaceVim#issue#report()', 'report-issue-or-bug', 1)
@@ -857,6 +859,20 @@ function! s:jump_transient_state() abort
         \ }
         \ )
   call state.open()
+endfunction
+
+function! s:save_current_file() abort
+  let v:errmsg = ''
+  silent! write
+  if v:errmsg !=# ''
+    echohl ErrorMsg
+    echo  v:errmsg
+    echohl None
+  else
+    echohl Delimiter
+    echo  bufname() . ' written'
+    echohl None
+  endif
 endfunction
 
 let g:_spacevim_autoclose_filetree = 1

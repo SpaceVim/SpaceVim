@@ -183,15 +183,6 @@ endfunction
 function! s:language_specified_mappings() abort
 
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
-  " we have removed all insert key bindings which use leader as prefix.
-  " because when use leader in insert mode key bindings. vim will wait for
-  " next key after insert \ in insert mode.
-  " if g:spacevim_enable_insert_leader
-    " inoremap <silent> <buffer> <leader>UU <esc>bgUwea
-    " inoremap <silent> <buffer> <leader>uu <esc>bguwea
-    " inoremap <silent> <buffer> <leader>ua <esc>bgulea
-    " inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
-  " endif
   imap <silent><buffer> <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
   imap <silent><buffer> <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
   imap <silent><buffer> <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
@@ -272,17 +263,17 @@ function! s:language_specified_mappings() abort
         \ 'Run maven package', 1)
 
   " Gradle
-  let g:_spacevim_mappings_space.l.g = {'name' : '+Gradle'}
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'B'], 'call call('
+  let g:_spacevim_mappings_space.l.a = {'name' : '+Gradle'}
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a', 'B'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle clean build"])',
         \ 'Run gradle clean build', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'b'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a', 'b'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle build"])',
         \ 'Run gradle build', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 't'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle test"])',
         \ 'Run gradle test', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'r'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a', 'r'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle run"])',
         \ 'Run gradle run', 1)
 

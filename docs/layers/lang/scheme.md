@@ -23,7 +23,7 @@ image: https://user-images.githubusercontent.com/13142418/46590501-4e50b100-cae6
 This layer adds [Scheme](http://www.scheme-reports.org) support to SpaceVim.
 The following scheme dialect support has been added:
 
-- [MIT Scheme](http://www.gnu.org/software/mit-scheme/)
+- [MIT Scheme](https://www.gnu.org/software/mit-scheme/)
 - [Chez Scheme](https://cisco.github.io/ChezScheme/)
 - [guile](https://www.gnu.org/software/guile/)
 

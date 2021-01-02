@@ -5,6 +5,7 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
 
 ""
 " @section Introduction, intro
@@ -38,8 +39,9 @@
 " please take a look at the following options.
 "
 
+let s:SYSTEM = SpaceVim#api#import('system')
+
 " Public SpaceVim Options {{{
-scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
@@ -203,16 +205,6 @@ let g:spacevim_enable_googlesuggest    = 0
 "   let g:spacevim_windows_leader = ''
 " <
 let g:spacevim_windows_leader          = 's'
-
-""
-" @section enable_insert_leader, options-enable_insert_leader
-" @parentsection options
-" Enable/Disable spacevim's insert mode leader, default is enable
-
-""
-" Enable/Disable spacevim's insert mode leader, default is enable
-" This options has been deprecated.
-let g:spacevim_enable_insert_leader    = 1
 
 ""
 " @section data_dir, options-data_dir
@@ -1323,6 +1315,7 @@ function! SpaceVim#end() abort
       exe printf('inoremap %s <esc>', g:spacevim_escape_key_binding)
     endif
   endif
+
   call SpaceVim#server#connect()
 
   if g:spacevim_enable_neocomplcache
@@ -1402,17 +1395,72 @@ function! SpaceVim#end() abort
   let g:leaderGuide_max_size = 15
   call SpaceVim#plugins#load()
 
-  call SpaceVim#util#loadConfig('general.vim')
+  exe 'set wildignore+=' . g:spacevim_wildignore
+  " shell
+  if has('filterpipe')
+    set noshelltemp
+  endif
+  if g:spacevim_enable_guicolors == 1
+    if !has('nvim') && has('patch-7.4.1770')
+      let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+      let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    endif
+    if exists('+termguicolors')
+      set termguicolors
+    elseif exists('+guicolors')
+      set guicolors
+    endif
+  endif
+  if g:spacevim_colorscheme !=# '' "{{{
+    try
+      exec 'set background=' . g:spacevim_colorscheme_bg
+      exec 'colorscheme ' . g:spacevim_colorscheme
+    catch
+      exec 'colorscheme '. g:spacevim_colorscheme_default
+    endtry
+  else
+    exec 'colorscheme '. g:spacevim_colorscheme_default
+  endif
+  if g:spacevim_hiddenfileinfo == 1 && has('patch-7.4.1570')
+    set shortmess+=F
+  endif
+  if has('gui_running') && !empty(g:spacevim_guifont)
+    if has('gui_vimr')
+      " VimR has removed support for guifont
+    else
+      let &guifont = g:spacevim_guifont
+    endif
+  endif
 
 
 
   call SpaceVim#autocmds#init()
 
   if has('nvim')
-    call SpaceVim#util#loadConfig('neovim.vim')
-  endif
+    if !has('nvim-0.2.0')
+      let $NVIM_TUI_ENABLE_CURSOR_SHAPE = g:spacevim_terminal_cursor_shape
+    else
+      if g:spacevim_terminal_cursor_shape == 0
+        " prevent nvim from changing the cursor shape
+        set guicursor=
+      elseif g:spacevim_terminal_cursor_shape == 1
+        " enable non-blinking mode-sensitive cursor
+        set guicursor=n-v-c:block-blinkon0,i-ci-ve:ver25-blinkon0,r-cr:hor20,o:hor50
+      elseif g:spacevim_terminal_cursor_shape == 2
+        " enable blinking mode-sensitive cursor
+        set guicursor=n-v-c:block-blinkon10,i-ci-ve:ver25-blinkon10,r-cr:hor20,o:hor50
+      endif
+    endif
 
-  call SpaceVim#util#loadConfig('commands.vim')
+    "silent! let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    "silent! let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+    "silent! let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+    augroup nvimrc_aucmd
+      autocmd!
+      autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
+    augroup END
+  endif
   filetype plugin indent on
   syntax on
 endfunction
@@ -1443,8 +1491,58 @@ endfunction
 
 function! SpaceVim#begin() abort
 
-  call SpaceVim#util#loadConfig('functions.vim')
-  call SpaceVim#util#loadConfig('init.vim')
+
+  "Use English for anything in vim
+  try
+    if s:SYSTEM.isWindows
+      silent exec 'lan mes en_US.UTF-8'
+    elseif s:SYSTEM.isOSX
+      silent exec 'language en_US.UTF-8'
+    else
+      let s:uname = system('uname -s')
+      if s:uname ==# "Darwin\n"
+        " in mac-terminal
+        silent exec 'language en_US.UTF-8'
+      elseif s:uname ==# "SunOS\n"
+        " in Sun-OS terminal
+        silent exec 'lan en_US.UTF-8'
+      elseif s:uname ==# "FreeBSD\n"
+        " in FreeBSD terminal
+        silent exec 'lan en_US.UTF-8'
+      else
+        " in linux-terminal
+        silent exec 'lan en_US.UTF-8'
+      endif
+    endif
+  catch /^Vim\%((\a\+)\)\=:E197/
+    call SpaceVim#logger#error('Can not set language to en_US.utf8')
+  endtry
+
+  " try to set encoding to utf-8
+  if s:SYSTEM.isWindows
+    " Be nice and check for multi_byte even if the config requires
+    " multi_byte support most of the time
+    if has('multi_byte')
+      " Windows cmd.exe still uses cp850. If Windows ever moved to
+      " Powershell as the primary terminal, this would be utf-8
+      if exists('&termencoding') && !has('nvim')
+        set termencoding=cp850
+      endif
+      setglobal fileencoding=utf-8
+      " Windows has traditionally used cp1252, so it's probably wise to
+      " fallback into cp1252 instead of eg. iso-8859-15.
+      " Newer Windows files might contain utf-8 or utf-16 LE so we might
+      " want to try them first.
+      set fileencodings=ucs-bom,utf-8,gbk,utf-16le,cp1252,iso-8859-15,cp936
+    endif
+
+  else
+    if exists('&termencoding') && !has('nvim')
+      set termencoding=utf-8
+    endif
+    set fileencoding=utf-8
+    set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+  endif
 
   " Before loading SpaceVim, We need to parser argvs.
   let s:status = s:parser_argv()
