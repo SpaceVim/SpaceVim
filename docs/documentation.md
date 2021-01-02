@@ -2301,7 +2301,7 @@ Custom sign symbol:
 
 ### EditorConfig
 
-SpaceVim has supported [EditorConfig](http://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
+SpaceVim has supported [EditorConfig](https://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
 
 To customize your editorconfig experience, read the [editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).
 

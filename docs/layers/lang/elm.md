@@ -37,7 +37,7 @@ SpaceVim also provides REPL support for Elm.
 
 ### Requirements
 
-First, make sure you have the [Elm Platform](http://elm-lang.org/install) installed. The simplest method to get started is to use the official [npm](https://www.npmjs.com/package/elm) package.
+First, make sure you have the [Elm Platform](https://elm-lang.org/install) installed. The simplest method to get started is to use the official [npm](https://www.npmjs.com/package/elm) package.
 
 ```sh
 npm install -g elm
