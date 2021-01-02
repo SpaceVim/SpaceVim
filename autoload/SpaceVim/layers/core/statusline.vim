@@ -432,6 +432,9 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   elseif &filetype ==# 'git-commit'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Git commit %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'git-rebase'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Git rebase %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'git-diff'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Git diff %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
