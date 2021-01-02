@@ -276,7 +276,9 @@ function! DefxPasteFile(_) abort
     endif
   elseif executable('clip.exe')
     let destination = path . s:FILE.separator . fnamemodify(s:copyed_file_path, ':t')
-    call s:VCOP.systemlist(['clip.exe'] + [s:copyed_file_path, destination])
+    let cmd = ['clip.exe'] + [s:copyed_file_path, destination]
+    call SpaceVim#logger#info(join(cmd))
+    call s:VCOP.systemlist(cmd)
   endif
 endfunction
 
