@@ -301,10 +301,27 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'V'],
-        \ 'bel vs', 'split-window-right-focus', 1)
+        \ 'bel vs',
+        \ ['split-window-right-focus',
+        \ [
+        \ '[SPC w V] is to split window on the right',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', '='],
-        \ 'wincmd =', 'balance-windows', 1)
+        \ 'wincmd =',
+        \ ['balance-windows',
+        \ [
+        \ '[SPC w =] is to balance all the windows in current tab',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'w'],
         \ 'wincmd w', 'cycle and focus between windows', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'W'],
