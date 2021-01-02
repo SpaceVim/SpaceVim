@@ -253,7 +253,7 @@ function! DefxCopyFile(_) abort
 endfunction
 
 function! DefxPasteFile(_) abort
-  if !executable('xclip-copyfile') && !executable('clip.exe')
+  if !executable('xclip-copyfile') && !s:SYS.isWindows
     echohl WarningMsg
     echo 'you need to have xclip-copyfile in your PATH'
     echohl NONE
