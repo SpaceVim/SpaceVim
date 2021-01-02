@@ -116,11 +116,11 @@ function! s:defx_init()
         \ defx#do_action('move')
   nnoremap <silent><buffer><expr> P
         \ defx#do_action('paste')
-  nnoremap <silent><buffer><expr> h defx#do_action('call', 'DefxSmartH')
-  nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
-  nnoremap <silent><buffer><expr> l defx#do_action('call', 'DefxSmartL')
-  nnoremap <silent><buffer><expr> <Right> defx#do_action('call', 'DefxSmartL')
-  nnoremap <silent><buffer><expr> o defx#do_action('call', 'DefxSmartL')
+  nnoremap <silent><buffer><expr> h defx#do_action('call', g:defx_config_sid . 'DefxSmartH')
+  nnoremap <silent><buffer><expr> <Left> defx#do_action('call', g:defx_config_sid . 'DefxSmartH')
+  nnoremap <silent><buffer><expr> l defx#do_action('call', g:defx_config_sid . 'DefxSmartL')
+  nnoremap <silent><buffer><expr> <Right> defx#do_action('call', g:defx_config_sid . 'DefxSmartL')
+  nnoremap <silent><buffer><expr> o defx#do_action('call', g:defx_config_sid . 'DefxSmartL')
   nnoremap <silent><buffer><expr> <Cr>
         \ defx#is_directory() ?
         \ defx#do_action('open_directory') : defx#do_action('drop')
@@ -148,9 +148,9 @@ function! s:defx_init()
         \ defx#do_action('remove')
   nnoremap <silent><buffer><expr> r
         \ defx#do_action('rename')
-  nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
-  nnoremap <silent><buffer><expr> yY defx#do_action('call', 'DefxCopyFile')
-  nnoremap <silent><buffer><expr> P defx#do_action('call', 'DefxPasteFile')
+  nnoremap <silent><buffer><expr> yy defx#do_action('call', g:defx_config_sid . 'DefxYarkPath')
+  nnoremap <silent><buffer><expr> yY defx#do_action('call', g:defx_config_sid . 'DefxCopyFile')
+  nnoremap <silent><buffer><expr> P defx#do_action('call', g:defx_config_sid . 'DefxPasteFile')
   nnoremap <silent><buffer><expr> .
         \ defx#do_action('toggle_ignored_files')
   nnoremap <silent><buffer><expr> <C-f>
@@ -176,7 +176,7 @@ function! s:defx_init()
 endf
 
 " in this function we should vim-choosewin if possible
-function! DefxSmartL(_)
+function! s:DefxSmartL(_)
   if defx#is_directory()
     call defx#call_action('open_tree')
     normal! j
@@ -199,7 +199,7 @@ function! DefxSmartL(_)
   endif
 endfunction
 
-function! DefxSmartH(_)
+function! s:DefxSmartH(_)
   " if cursor line is first line, or in empty dir
   if line('.') ==# 1 || line('$') ==# 1
     return defx#call_action('cd', ['..'])
@@ -225,7 +225,7 @@ function! DefxSmartH(_)
   call defx#call_action('close_tree')
 endfunction
 
-function! DefxYarkPath(_) abort
+function! s:DefxYarkPath(_) abort
   let candidate = defx#get_candidate()
   let @+ = candidate['action__path']
   echo 'yanked path: ' . @+
@@ -234,7 +234,7 @@ endfunction
 
 let s:copyed_file_path = ''
 
-function! DefxCopyFile(_) abort
+function! s:DefxCopyFile(_) abort
   if !executable('xclip-copyfile') &&  !s:SYS.isWindows
     echohl WarningMsg
     echo 'you need to have xclip-copyfile in your PATH'
@@ -252,7 +252,7 @@ function! DefxCopyFile(_) abort
   echo 'Yanked:' . filename
 endfunction
 
-function! DefxPasteFile(_) abort
+function! s:DefxPasteFile(_) abort
   if !executable('xclip-copyfile') && !s:SYS.isWindows
     echohl WarningMsg
     echo 'you need to have xclip-copyfile in your PATH'
@@ -292,3 +292,9 @@ endfunction
 function! s:trim_right(str, trim)
   return substitute(a:str, printf('%s$', a:trim), '', 'g')
 endfunction
+
+function! s:SID_PREFIX() abort
+  return matchstr(expand('<sfile>'),
+        \ '<SNR>\d\+_\zeSID_PREFIX$')
+endfunction
+let g:defx_config_sid = s:SID_PREFIX()
