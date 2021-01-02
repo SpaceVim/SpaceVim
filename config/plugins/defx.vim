@@ -246,10 +246,17 @@ function! s:DefxCopyFile(_) abort
 
   if executable('xclip-copyfile')
     call s:VCOP.systemlist(['xclip-copyfile', filename])
+    if v:shell_error
+      echohl WarningMsg
+      echo 'failed to copy file!'
+      echohl NONE
+    else
+      echo 'Yanked:' . filename
+    endif
   elseif s:SYS.isWindows
     let s:copyed_file_path = filename
+    echo 'Yanked:' . filename
   endif
-  echo 'Yanked:' . filename
 endfunction
 
 function! s:DefxPasteFile(_) abort
