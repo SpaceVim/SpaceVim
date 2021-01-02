@@ -9,6 +9,7 @@ scriptencoding utf-8
 
 
 let s:SYS = SpaceVim#api#import('system')
+let s:FILE = SpaceVim#api#import('file')
 let s:VCOP = SpaceVim#api#import('vim#compatible')
 
 if g:spacevim_filetree_direction ==# 'right'
@@ -149,6 +150,7 @@ function! s:defx_init()
         \ defx#do_action('rename')
   nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
   nnoremap <silent><buffer><expr> yY defx#do_action('call', 'DefxCopyFile')
+  nnoremap <silent><buffer><expr> P defx#do_action('call', 'DefxPasteFile')
   nnoremap <silent><buffer><expr> .
         \ defx#do_action('toggle_ignored_files')
   nnoremap <silent><buffer><expr> <C-f>
@@ -226,11 +228,14 @@ endfunction
 function! DefxYarkPath(_) abort
   let candidate = defx#get_candidate()
   let @+ = candidate['action__path']
-  echo 'yanked: ' . @+
+  echo 'yanked path: ' . @+
 endfunction
 
+
+let s:copyed_file_path = ''
+
 function! DefxCopyFile(_) abort
-  if !executable('xclip-copyfile')
+  if !executable('xclip-copyfile') && !executable('clip.exe')
     echohl WarningMsg
     echo 'you need to have xclip-copyfile in your PATH'
     echohl NONE
@@ -239,14 +244,40 @@ function! DefxCopyFile(_) abort
   let candidate = defx#get_candidate()
   let filename = candidate['action__path']
 
-  if empty(filename)
-    let candidate = defx#get_candidate()
-    let filename = candidate['action__path']
+  if executable('xclip-copyfile')
     call s:VCOP.systemlist(['xclip-copyfile', filename])
-  else
-    " call s:VCOP.systemlist(['xclip-copyfile'] + filename)
+  elseif executable('clip.exe')
+    let s:copyed_file_path = filename
   endif
-  echo 'Yanked:' . (type(filename) == 3 ? len(filename) : 1 ) . ' files'
+  echo 'Yanked:' . filename
+endfunction
+
+function! DefxPasteFile(_) abort
+  if !executable('xclip-copyfile') && !executable('clip.exe')
+    echohl WarningMsg
+    echo 'you need to have xclip-copyfile in your PATH'
+    echohl NONE
+    return
+  endif
+  let candidate = defx#get_candidate()
+  let path = candidate['action__path']
+  if !isdirectory(path)
+    let path = fnamemodify(path, ':p:h')
+  endif
+
+  if executable('xclip-pastefile')
+    let old_wd = getcwd()
+    if old_wd == path
+      call s:VCOP.systemlist(['xclip-pastefile'])
+    else
+      noautocmd exe 'cd' fnameescape(path)
+      call s:VCOP.systemlist(['xclip-pastefile'])
+      noautocmd exe 'cd' fnameescape(old_wd)
+    endif
+  elseif executable('clip.exe')
+    let destination = path . s:FILE.separator . fnamemodify(s:copyed_file_path, ':t')
+    call s:VCOP.systemlist(['clip.exe'] + [s:copyed_file_path, destination])
+  endif
 endfunction
 
 function! s:trim_right(str, trim)
