@@ -285,6 +285,9 @@ function! s:search_status() abort
     let tt = split(ttl[0])[0]
   endif
   keepjumps call setpos('.', save_cursor)
+  " errmsg in this function should be ignored, otherwise SPC f s will always
+  " print errmsg.
+  let v:errmsg = ''
   return ' ' . (str2nr(tt) - str2nr(ct) + 1) . '/' . tt . ' '
 endfunction
 
