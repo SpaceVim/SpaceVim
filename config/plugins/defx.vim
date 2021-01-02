@@ -274,9 +274,9 @@ function! DefxPasteFile(_) abort
       call s:VCOP.systemlist(['xclip-pastefile'])
       noautocmd exe 'cd' fnameescape(old_wd)
     endif
-  elseif executable('clip.exe')
+  elseif s:SYS.isWindows
     let destination = path . s:FILE.separator . fnamemodify(s:copyed_file_path, ':t')
-    let cmd = ['clip.exe'] + [s:copyed_file_path, destination]
+    let cmd = ['copy'] + [s:copyed_file_path, destination]
     call SpaceVim#logger#info(join(cmd))
     call s:VCOP.systemlist(cmd)
   endif
