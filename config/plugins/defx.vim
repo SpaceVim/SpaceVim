@@ -5,8 +5,11 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
+
 
 let s:SYS = SpaceVim#api#import('system')
+let s:VCOP = SpaceVim#api#import('vim#compatible')
 
 if g:spacevim_filetree_direction ==# 'right'
   let s:direction = 'rightbelow'
@@ -48,9 +51,9 @@ call defx#custom#column('icon', {
       \ 'root_icon': ' ',
       \ })
 
-	call defx#custom#column('filename', {
-	      \ 'max_width': -90,
-	      \ })
+call defx#custom#column('filename', {
+      \ 'max_width': -90,
+      \ })
 
 augroup vfinit
   au!
@@ -145,6 +148,7 @@ function! s:defx_init()
   nnoremap <silent><buffer><expr> r
         \ defx#do_action('rename')
   nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
+  nnoremap <silent><buffer><expr> yY defx#do_action('call', 'DefxCopyFile')
   nnoremap <silent><buffer><expr> .
         \ defx#do_action('toggle_ignored_files')
   nnoremap <silent><buffer><expr> <C-f>
@@ -163,10 +167,10 @@ function! s:defx_init()
   nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
   nnoremap <silent><buffer><expr> <C-Home>
         \ defx#do_action('cd', SpaceVim#plugins#projectmanager#current_root())
-	nnoremap <silent><buffer><expr> > defx#do_action('resize',
-	\ defx#get_context().winwidth + 10)
-	nnoremap <silent><buffer><expr> < defx#do_action('resize',
-	\ defx#get_context().winwidth - 10)
+  nnoremap <silent><buffer><expr> > defx#do_action('resize',
+        \ defx#get_context().winwidth + 10)
+  nnoremap <silent><buffer><expr> < defx#do_action('resize',
+        \ defx#get_context().winwidth - 10)
 endf
 
 " in this function we should vim-choosewin if possible
@@ -223,6 +227,26 @@ function! DefxYarkPath(_) abort
   let candidate = defx#get_candidate()
   let @+ = candidate['action__path']
   echo 'yanked: ' . @+
+endfunction
+
+function! DefxCopyFile(_) abort
+  if !executable('xclip-copyfile')
+    echohl WarningMsg
+    echo 'you need to have xclip-copyfile in your PATH'
+    echohl NONE
+    return
+  endif
+  let candidate = defx#get_candidate()
+  let filename = candidate['action__path']
+
+  if empty(filename)
+    let candidate = defx#get_candidate()
+    let filename = candidate['action__path']
+    call s:VCOP.systemlist(['xclip-copyfile', filename])
+  else
+    " call s:VCOP.systemlist(['xclip-copyfile'] + filename)
+  endif
+  echo 'Yanked:' . (type(filename) == 3 ? len(filename) : 1 ) . ' files'
 endfunction
 
 function! s:trim_right(str, trim)
