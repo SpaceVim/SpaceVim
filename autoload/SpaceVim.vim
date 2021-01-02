@@ -1315,6 +1315,7 @@ function! SpaceVim#end() abort
       exe printf('inoremap %s <esc>', g:spacevim_escape_key_binding)
     endif
   endif
+
   call SpaceVim#server#connect()
 
   if g:spacevim_enable_neocomplcache
