@@ -235,7 +235,7 @@ endfunction
 let s:copyed_file_path = ''
 
 function! DefxCopyFile(_) abort
-  if !executable('xclip-copyfile') && !executable('clip.exe')
+  if !executable('xclip-copyfile') &&  !s:SYS.isWindows
     echohl WarningMsg
     echo 'you need to have xclip-copyfile in your PATH'
     echohl NONE
@@ -246,7 +246,7 @@ function! DefxCopyFile(_) abort
 
   if executable('xclip-copyfile')
     call s:VCOP.systemlist(['xclip-copyfile', filename])
-  elseif executable('clip.exe')
+  elseif s:SYS.isWindows
     let s:copyed_file_path = filename
   endif
   echo 'Yanked:' . filename
@@ -274,7 +274,8 @@ function! DefxPasteFile(_) abort
       call s:VCOP.systemlist(['xclip-pastefile'])
       noautocmd exe 'cd' fnameescape(old_wd)
     endif
-  elseif s:SYS.isWindows
+  elseif s:SYS.isWindows && !empty(s:copyed_file_path)
+    " in windows, use copy command for paste file.
     let destination = path . s:FILE.separator . fnamemodify(s:copyed_file_path, ':t')
     let cmd = 'cmd /c copy ' . shellescape(s:copyed_file_path) . ' ' . shellescape(destination)
     call s:VCOP.systemlist(cmd)
