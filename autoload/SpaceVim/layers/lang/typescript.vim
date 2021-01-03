@@ -82,6 +82,7 @@ function! SpaceVim#layers#lang#typescript#set_variable(var) abort
       let g:tsuquyomi_tsserver_path = tsserver_path
     endif
   endif
+  let g:jsdoc_lehre_path = get(a:var, 'lehre_path', 'lehre')
 endfunction
 
 function! s:on_typescript_ft() abort
