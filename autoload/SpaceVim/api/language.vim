@@ -11,6 +11,9 @@ let s:self = {}
 
 let s:self.__aliases = {
       \ 'typescript' : 'TypeScript',
+      \ 'typescriptreact' : 'TypeScript React',
+      \ 'python' : 'Python',
+      \ 'java' : 'Java',
       \ }
 
 
