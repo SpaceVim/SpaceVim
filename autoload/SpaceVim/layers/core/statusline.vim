@@ -154,7 +154,8 @@ function! s:fileformat() abort
 endfunction
 
 function! s:major_mode() abort
-  return s:LANG.get_alias(&filetype)
+  let alias = s:LANG.get_alias(&filetype)
+  return empty(alias) ? '' : ' ' . alias . ' '
 endfunction
 
 function! s:modes() abort
