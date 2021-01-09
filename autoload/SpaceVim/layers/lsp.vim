@@ -32,19 +32,31 @@ function! SpaceVim#layers#lsp#config() abort
   let g:LanguageClient_diagnosticsDisplay = {
         \ 1: {
         \ 'name': 'Error',
+        \ 'texthl': 'LanguageClientError',
         \ 'signText': g:spacevim_error_symbol,
+        \ 'signTexthl': 'LanguageClientError', 
+        \ 'virtualTexthl': 'Error',
         \ },
         \ 2: {
         \ 'name': 'Warning',
+        \ 'texthl': 'LanguageClientWarning',
         \ 'signText': g:spacevim_warning_symbol,
+        \ 'signTexthl': 'LanguageClientWarningSign',
+        \ 'virtualTexthl': 'Todo',
         \ },
         \ 3: {
         \ 'name': 'Information',
+        \ 'texthl': 'LanguageClientInfo',
         \ 'signText': g:spacevim_info_symbol,
+        \ 'signTexthl': 'LanguageClientInfoSign',
+        \ 'virtualTexthl': 'Todo',
         \ },
         \ 4: {
         \ 'name': 'Hint',
+        \ 'texthl': 'LanguageClientInfo',
         \ 'signText': g:spacevim_info_symbol,
+        \ 'signTexthl': 'LanguageClientInfoSign',
+        \ 'virtualTexthl': 'Todo',
         \ },
         \ }
 
