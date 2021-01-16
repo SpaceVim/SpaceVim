@@ -27,6 +27,7 @@ let s:STATUSLINE = SpaceVim#api#import('vim#statusline')
 let s:VIMCOMP = SpaceVim#api#import('vim#compatible')
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:ICON = SpaceVim#api#import('unicode#icon')
+let s:LANG = SpaceVim#api#import('language')
 
 let s:JSON = SpaceVim#api#import('data#json')
 
@@ -153,7 +154,8 @@ function! s:fileformat() abort
 endfunction
 
 function! s:major_mode() abort
-  return '%{empty(&ft)? "" : " " . &ft . " "}'
+  let alias = s:LANG.get_alias(&filetype)
+  return empty(alias) ? '' : ' ' . alias . ' '
 endfunction
 
 function! s:modes() abort
