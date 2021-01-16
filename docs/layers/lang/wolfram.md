@@ -1,9 +1,9 @@
 ---
-title: "SpaceVim lang#walfram layer"
-description: "This layer is for walfram development, provide syntax checking, code runner and repl support for walfram file."
+title: "SpaceVim lang#wolfram layer"
+description: "This layer is for wolfram development, provide syntax checking, code runner and repl support for wolfram file."
 ---
 
-# [Available Layers](../../) >> lang#walfram
+# [Available Layers](../../) >> lang#wolfram
 
 <!-- vim-markdown-toc GFM -->
 
@@ -28,7 +28,7 @@ To use this configuration layer, update custom configuration file with:
 
 ```toml
 [[layers]]
-  name = "lang#walfram"
+  name = "lang#wolfram"
 ```
 ## Features
 
@@ -39,11 +39,11 @@ To use this configuration layer, update custom configuration file with:
 
 ### Running current script
 
-To running a walfram file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To running a wolfram file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
 
 ### Inferior REPL process
 
-Start a `walframscript` inferior REPL process with `SPC l s i`.
+Start a `wolframscript` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 

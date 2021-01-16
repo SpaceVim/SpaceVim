@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#vim layer"
-description: "This layer is for writting Vimscript, including code completion, syntax checking and buffer formatting"
+description: "This layer is for writing Vimscript, including code completion, syntax checking and buffer formatting"
 ---
 
 # [Available Layers](../../) >> lang#vim
@@ -16,7 +16,7 @@ description: "This layer is for writting Vimscript, including code completion, s
 
 ## Description
 
-This layer is for writting vim script, including code completion, syntax checking and buffer formatting
+This layer is for writing vim script, including code completion, syntax checking and buffer formatting
 
 ## Install
 
