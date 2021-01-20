@@ -1,19 +1,23 @@
+"=============================================================================
+" manager.vim --- Git branch manager
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+scriptencoding utf-8
+
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 let s:need_update = 0
-
-function! git#branch#manager#open()
-  call s:open_win()   
-endfunction
-
 let s:bufnr = 0
-function! s:open_win() abort
+
+function! git#branch#manager#open() abort
   if s:bufnr != 0 && bufexists(s:bufnr)
     exe 'bd ' . s:bufnr
   endif
   topleft vsplit __git_branch_manager__
-  " @todo add win_getid api
   let s:winid = win_getid(winnr('#'))
   let lines = &columns * 30 / 100
   exe 'vertical resize ' . lines
