@@ -4,11 +4,11 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:status_bufnr = -1
 
 function! git#status#run(...) abort
-  if !bufexists(s:status_bufnr)
-    let s:status_bufnr = s:openStatusBuffer()
-  elseif  index(tabpagebuflist(), s:status_bufnr) !=# -1
+  if bufexists(s:status_bufnr) && index(tabpagebuflist(), s:status_bufnr) !=# -1
     let winnr = bufwinnr(s:status_bufnr)
     exe winnr . 'wincmd w'
+  else
+    let s:status_bufnr = s:openStatusBuffer()
   endif
   let cmd = ['git', 'status', '.']
   let s:lines = []
