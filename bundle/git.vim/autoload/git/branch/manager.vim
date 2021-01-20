@@ -24,6 +24,7 @@ function! s:open_win() abort
         autocmd WinEnter <buffer> call s:WinEnter()
     augroup END
     nnoremap <buffer><silent> <Enter> :call <SID>checkout_branch()<cr>
+    nnoremap <buffer><silent> dd :call <SID>delete_branch()<cr>
 endfunction
 function! s:WinEnter() abort
     let s:winid = win_getid(winnr('#'))
@@ -33,6 +34,14 @@ function! s:checkout_branch() abort
     if line =~# '^\s\+\S\+'
         let branch = split(line)[0]
         exe 'Git checkout ' . branch
+    endif
+endfunction
+
+function! s:delete_branch() abort
+    let line = getline('.')
+    if line =~# '^\s\+\S\+'
+        let branch = split(line)[0]
+        exe 'Git branch -d ' . branch
     endif
 endfunction
 
