@@ -10,12 +10,11 @@ scriptencoding utf-8
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
-let s:need_update = 0
-let s:bufnr = 0
+let s:branch_manager_bufnr = 0
 
 function! git#branch#manager#open() abort
-  if s:bufnr != 0 && bufexists(s:bufnr)
-    exe 'bd ' . s:bufnr
+  if s:branch_manager_bufnr != 0 && bufexists(s:branch_manager_bufnr)
+    exe 'bd ' . s:branch_manager_bufnr
   endif
   topleft vsplit __git_branch_manager__
   let s:winid = win_getid(winnr('#'))
@@ -23,7 +22,7 @@ function! git#branch#manager#open() abort
   exe 'vertical resize ' . lines
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
   set filetype=SpaceVimGitBranchManager
-  let s:bufnr = bufnr('%')
+  let s:branch_manager_bufnr = bufnr('%')
   call s:update()
   augroup git_branch_manager
     autocmd! * <buffer>
@@ -43,11 +42,14 @@ function! s:checkout_branch() abort
   endif
 endfunction
 
+function! git#branch#manager#update() abort
+  call s:update()
+endfunction
+
 function! s:delete_branch() abort
   let line = getline('.')
   if line =~# '^\s\+\S\+'
     let branch = split(line)[0]
-    let s:need_update = 1
     exe 'Git branch -d ' . branch
   endif
 endfunction
@@ -77,7 +79,7 @@ function! s:update_buffer_context() abort
     call add(lines, '  ' . branch.name)
   endfor
 
-  call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, lines)
+  call s:BUFFER.buf_set_lines(s:branch_manager_bufnr, 0 , -1, 0, lines)
 endfunction
 
 function! s:on_stdout(id, data, event) abort
@@ -108,10 +110,6 @@ endfunction
 function! s:on_exit(id, data, event) abort
   call git#logger#info('git-branch exit data:' . string(a:data))
   if a:data ==# 0
-    if s:need_update
-      let s:need_update = 0
-      call s:update()
-    endif
     call s:update_buffer_context()
   endif
 endfunction
