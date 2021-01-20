@@ -1,9 +1,9 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
-let g:git_log_pretty = "tformat:%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset"
+let g:git_log_pretty = 'tformat:%Cred%h%Creset - %s %Cgreen(%an %ad)%Creset'
 
-function! git#log#run(...)
+function! git#log#run(...) abort
     if len(a:1) == 1 && a:1[0] ==# '%'
         let cmd = ['git', 'log', '--graph', '--date=relative', '--pretty=' . g:git_log_pretty, expand('%')] 
     else
@@ -53,7 +53,7 @@ function! s:openLogBuffer() abort
     return bufnr('%')
 endfunction
 
-function! git#log#complete(ArgLead, CmdLine, CursorPos)
+function! git#log#complete(ArgLead, CmdLine, CursorPos) abort
 
     return "%\n" . join(getcompletion(a:ArgLead, 'file'), "\n")
 
