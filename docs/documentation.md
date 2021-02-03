@@ -409,7 +409,7 @@ For example, in order to disable language specific leader, you may add the follo
     enable_language_specific_leader = false
 ```
 
-[Send a PR](./development/) to add the differences you
+[Send a PR](../development/) to add the differences you
 found in this section.
 
 ### Private Layers
