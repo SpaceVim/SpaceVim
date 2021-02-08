@@ -25,7 +25,8 @@ let s:self.__bufnr = -1
 function! s:self.len(sec) abort
   let str = matchstr(a:sec, '%{.*}')
   if !empty(str)
-    return len(a:sec) - len(str) + len(eval(str[2:-2])) + 4
+    let pos = match(str, '}')
+    return len(a:sec) - len(str) + len(eval(str[2:pos-1])) + 4
   else
     return len(a:sec) + 4
   endif
