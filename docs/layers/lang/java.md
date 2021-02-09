@@ -54,11 +54,11 @@ To use this configuration layer, update custom configuration file with:
     name = 'lang#java'
     format_on_save = true
   ```
-- `java_fomatter_jar`: Set the full path of [google's formater jar](https://github.com/google/google-java-format).
+- `java_formatter_jar`: Set the full path of [google's formater jar](https://github.com/google/google-java-format).
   ```toml
   [[layers]]
     name = 'lang#java'
-    java_fomatter_jar = 'path/to/google-java-format.jar'
+    java_formatter_jar = 'path/to/google-java-format.jar'
   ```
 - `java_file_head`: The default file header for new java file. by default it is:
   ```toml
@@ -106,7 +106,7 @@ To use this configuration layer, update custom configuration file with:
 ### Code formatting
 
 The default formater of java language is [google's formater jar](https://github.com/google/google-java-format).
-You need to download the jar and set the `java_fomatter_jar` layer option.
+You need to download the jar and set the `java_formatter_jar` layer option.
 
 The default key bindings for format current buffer is `SPC b f`.
 And this key binding is defined in [`format`](../layers/format/) layer.

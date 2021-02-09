@@ -19,7 +19,7 @@
 "
 " 1. `format_on_save`: Enable/disabled code formatting when saving current file.
 "   Disabled by default.
-" 2. `java_fomatter_jar`: Set the full path of google's java formatter jar.
+" 2. `java_formatter_jar`: Set the full path of google's java formatter jar.
 " 3. `java_file_head`: The default file header for new java file.
 "   by default it is: 
 " >
@@ -109,12 +109,12 @@
 
 
 
-if exists('s:java_fomatter_jar')
+if exists('s:java_formatter_jar')
   finish
 endif
 
 
-let s:java_fomatter_jar = ''
+let s:java_formatter_jar = ''
 let s:format_on_save = 0
 let s:java_file_head = [
       \ '/**',
@@ -157,7 +157,7 @@ function! SpaceVim#layers#lang#java#config() abort
   let g:neoformat_enabled_java = get(g:, 'neoformat_enabled_java', ['googlefmt'])
   let g:neoformat_java_googlefmt = {
         \ 'exe': 'java',
-        \ 'args': ['-jar', s:java_fomatter_jar, '-'],
+        \ 'args': ['-jar', s:java_formatter_jar, '-'],
         \ 'stdin': 1,
         \ }
   try
@@ -325,6 +325,9 @@ function! SpaceVim#layers#lang#java#set_variable(var) abort
         \ 'java_interpreter',
         \ s:java_interpreter
         \ )
+  let s:java_formatter_jar = get(a:var,
+        \ 'java_formatter_jar',
+        \ s:java_formatter_jar)
 endfunction
 
 " vim:set et sw=2 cc=80:
