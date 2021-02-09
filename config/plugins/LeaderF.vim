@@ -35,6 +35,7 @@ let g:Lf_CommandMap = {
       \ '<C-]>' : ['<C-V>'],
       \ '<C-F>' : ['<C-D>'],
       \ '<Tab>' : ['<Esc>'],
+      \ '<Esc>' : ['<C-G>'],
       \ }
 let g:Lf_HideHelp = 1
 let g:indentLine_bufTypeExclude = ['help', 'terminal']
