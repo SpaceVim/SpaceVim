@@ -11,8 +11,13 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
 - [Reporting issues](#reporting-issues)
 - [Contributing code](#contributing-code)
   - [License](#license)
-  - [Bootstrap](#bootstrap)
   - [Conventions](#conventions)
+  - [Git commit style guide](#git-commit-style-guide)
+    - [types](#types)
+    - [scopes](#scopes)
+    - [subject](#subject)
+    - [body](#body)
+    - [footer](#footer)
   - [Pull Request](#pull-request)
     - [Title prefix of pull request](#title-prefix-of-pull-request)
     - [Rebase on top of upstream master](#rebase-on-top-of-upstream-master)
@@ -58,7 +63,8 @@ Issues have to be reported on [issues tracker](https://github.com/SpaceVim/Space
 
 ## Contributing code
 
-Code contributions are welcome. Please read the following sections carefully. In any case, feel free to join us on the [gitter chat](https://gitter.im/SpaceVim/SpaceVim) to ask questions about contributing!
+Code contributions are welcome. Please read the following sections carefully.
+In any case, feel free to join us on the [gitter chat](https://gitter.im/SpaceVim/SpaceVim) to ask questions about contributing!
 
 ### License
 
@@ -68,17 +74,64 @@ The license is GPLv3 for all the parts of SpaceVim. This includes:
 - All the layer files.
 - The documentation
 
-For files not belonging to SpaceVim like local packages and libraries, refer to the header file. Those files should not have an empty header, we may not accept code without a proper header file.
-
-### Bootstrap
-
-Before contributing to SpaceVim, you should know how does SpaceVim bootstrap, here is the logic of the bootstrap when SpaceVim startup.
-
-<!-- TODO -->
+For files not belonging to SpaceVim like local packages and libraries,
+refer to the header file. Those files should not have an empty header, we may not accept code without a proper header file.
 
 ### Conventions
 
-SpaceVim is based on conventions, mainly for naming functions, keybindings definition and writing documentation. Please read the [conventions](https://spacevim.org/conventions/) before your first contribution to get to know them.
+SpaceVim is based on conventions, mainly for naming functions,
+keybindings definition and writing documentation.
+Please read the [conventions](https://spacevim.org/conventions/) before your first contribution to get to know them.
+
+
+### Git commit style guide
+
+A git commit message consists a three distinct parts separated by black line.
+
+```
+Type (scope): Subject
+
+body
+
+footer
+```
+
+#### types
+
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Changes to documentation
+- `style`: Formatting, missing semi colons, etc; no code change
+- `refactor`: Refactoring production code
+- `test`: Adding tests, refactoring test; no production code change
+- `chore`: Updating build tasks, package manager configs, etc; no production code change
+
+
+#### scopes
+
+- `layer`
+- `api`
+- `plugin`
+
+
+#### subject
+
+Subjects should be no greater than 50 characters,
+should begin with a capital letter and do not end with a period.
+
+Use an imperative tone to describe what a commit does,
+rather than what it did. For example, use change; not changed or changes.
+
+#### body
+
+Not all commits are complex enough to warrant a body body,
+therefore it is optional and only used when a commit requires a bit of explanation and context. 
+
+
+#### footer
+
+The footer is optional and is used to reference issue tracker IDs.
+
 
 ### Pull Request
 
@@ -126,46 +179,10 @@ git rebase upstream/master
 
 #### For complex PRs
 
-Squash only the commits with uninteresting changes like typos, syntax fixes, etc. And keep the important and isolated steps in different commits.
+Squash only the commits with uninteresting changes like typos, syntax fixes, etc.
+And keep the important and isolated steps in different commits.
 
 Those PRs are merged and explicitly not fast-forwarded.
-
-Commit messages
-
-Write commit messages according to adapted [Tim Pope’s guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html):
-
-- Use present tense and write in the imperative: “Fix bug”, not “fixed bug” or “fixes bug”.
-- Start with a capitalized, short (72 characters or less) summary, followed by a blank line.
-- If necessary, add one or more paragraphs with details, wrapped at 72 characters.
-- Separate paragraphs by blank lines.
-
-This is a model commit message:
-
-```gitcommit
-Capitalized, short (72 chars or less) summary
-
-More detailed explanatory text, if necessary.  Wrap it to about 72
-characters or so.  In some contexts, the first line is treated as the
-subject of an email and the rest of the text as the body.  The blank
-line separating the summary from the body is critical (unless you omit
-the body entirely); tools like rebase can get confused if you run the
-two together.
-
-Write your commit message in the imperative: "Fix bug" and not "Fixed bug"
-or "Fixes bug."  This convention matches up with commit messages generated
-by commands like git merge and git revert.
-
-Further paragraphs come after blank lines.
-
-- Bullet points are okay, too
-
-    - Typically a hyphen or asterisk is used for the bullet, followed by a
-      single space, with blank lines in between, but conventions vary here
-
-    - Use a hanging indent
-```
-
-[Gita] provide Vim mode for Git commit messages, which helps you to comply to these guidelines.
 
 ### Contributing a layer
 

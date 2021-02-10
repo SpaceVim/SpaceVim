@@ -27,7 +27,12 @@ let s:STATUSLINE = SpaceVim#api#import('vim#statusline')
 let s:VIMCOMP = SpaceVim#api#import('vim#compatible')
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:ICON = SpaceVim#api#import('unicode#icon')
+let s:LANG = SpaceVim#api#import('language')
+
+let s:JSON = SpaceVim#api#import('data#json')
+
 let s:VIM =  SpaceVim#api#import('vim')
+
 
 " init
 " " the separators icons:
@@ -149,7 +154,8 @@ function! s:fileformat() abort
 endfunction
 
 function! s:major_mode() abort
-  return '%{empty(&ft)? "" : " " . &ft . " "}'
+  let alias = s:LANG.get_alias(&filetype)
+  return empty(alias) ? '' : ' ' . alias . ' '
 endfunction
 
 function! s:modes() abort
@@ -281,6 +287,9 @@ function! s:search_status() abort
     let tt = split(ttl[0])[0]
   endif
   keepjumps call setpos('.', save_cursor)
+  " errmsg in this function should be ignored, otherwise SPC f s will always
+  " print errmsg.
+  let v:errmsg = ''
   return ' ' . (str2nr(tt) - str2nr(ct) + 1) . '/' . tt . ' '
 endfunction
 
@@ -425,6 +434,9 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   elseif &filetype ==# 'git-commit'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Git commit %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'git-rebase'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Git rebase %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'git-diff'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Git diff %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
@@ -632,13 +644,42 @@ function! SpaceVim#layers#core#statusline#def_colors() abort
   call s:HI.hi_separator('SpaceVim_statusline_c', 'SpaceVim_statusline_z')
 endfunction
 
+
+" the mode should be a dict
+" {
+"  name : key
+"  func : a function to called
+" }
+"
+" \ 'center-cursor': {
+" \ 'icon' : '⊝',
+" \ 'icon_asc' : '-',
+" \ 'desc' : 'centered-cursor mode',
+" \ },
+function! SpaceVim#layers#core#statusline#register_mode(mode) abort
+  if has_key(s:modes, a:mode.key)
+    let s:modes[a:mode.key]['func'] = a:mode.func
+    call SpaceVim#logger#info('the func has been added to mode:' . a:mode.key)
+  else
+    let s:modes[a:mode.key] = a:mode
+  endif
+endfunction
+
 function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
   if index(s:loaded_modes, a:name) != -1
     call remove(s:loaded_modes, index(s:loaded_modes, a:name))
   else
     call add(s:loaded_modes, a:name)
   endif
+  let mode = s:modes[a:name]
+  call SpaceVim#logger#info('try to call func of mode:' . a:name)
+  if has_key(mode, 'func')
+    call call(mode.func, [])
+  else
+    call SpaceVim#logger#info('no func found for mode:' . a:name)
+  endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+  call s:update_conf()
 endfunction
 
 let s:section_old_pos = {
@@ -701,6 +742,22 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'main': 'SpaceVim#layers#core#statusline#ctrlp',
         \ 'prog': 'SpaceVim#layers#core#statusline#ctrlp_status',
         \ }
+  if filereadable(expand('~/.cache/SpaceVim/major_mode.json'))
+    let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/major_mode.json'), ''), ''))
+    for key in keys(conf)
+      if conf[key]
+        call SpaceVim#layers#core#statusline#toggle_mode(key)
+      endif
+    endfor
+  endif
+endfunction
+
+function! s:update_conf() abort
+  let conf = {}
+  for key in keys(s:modes)
+    call extend(conf, {key : (index(s:loaded_modes, key) > -1 ? 1 : 0)})
+  endfor
+  call writefile([s:JSON.json_encode(conf)], expand('~/.cache/SpaceVim/major_mode.json'))
 endfunction
 
 " Arguments:

@@ -8,9 +8,8 @@ description: "This layer is for TypeScript development, includding code completi
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Install](#install)
-- [Features](#features)
-- [Layer configuration](#layer-configuration)
+- [Installation](#installation)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Code runner](#code-runner)
   - [Inferior REPL process](#inferior-repl-process)
@@ -19,9 +18,9 @@ description: "This layer is for TypeScript development, includding code completi
 
 ## Description
 
-This layer is for TypeScript development, includding code completion, Syntax lint and doc generation.
+This layer is for TypeScript development, includding code completion, syntax lint and doc generation.
 
-## Install
+## Installation
 
 To use this configuration layer, update custom configuration file with:
 
@@ -30,25 +29,16 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#typescript"
 ```
 
-BTW, you need to install TypeScript via:
+To generate doc of typescript file, you need to install [lehre](https://www.npmjs.com/package/lehre)
 
-```sh
-npm install -g typescript
+```
+yarn add -D lehre
 ```
 
-## Features
+## Layer options
 
-- auto-completion
-- syntax checking
-- viewing documentation
-- type-signature
-- goto definition
-- refernce finder
-- lsp support
-
-## Layer configuration
-
-`typescript_server_path`: set the path of the tsserver.
+- `typescript_server_path`: set the path of the tsserver.
+- `lehre_path`: set the path of lehre
 
 ## Key bindings
 

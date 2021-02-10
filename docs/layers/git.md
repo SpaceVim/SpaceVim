@@ -16,7 +16,7 @@ description: "This layers adds extensive support for git"
 
 ## Description
 
-This layers adds extensive support for [git](http://git-scm.com/).
+This layers adds extensive support for [git](https://git-scm.com/).
 
 ## Install
 

@@ -52,11 +52,11 @@ lang: zh
     name = 'lang#java'
     format_on_save = true
   ```
-- `java_fomatter_jar`: 设置 [谷歌格式化工具](https://github.com/google/google-java-format) 的具体路径。
+- `java_formatter_jar`: 设置 [谷歌格式化工具](https://github.com/google/google-java-format) 的具体路径。
   ```toml
   [[layers]]
     name = 'lang#java'
-    java_fomatter_jar = 'path/to/google-java-format.jar'
+    java_formatter_jar = 'path/to/google-java-format.jar'
   ```
 - `java_file_head`: 默认的文件头，当新建 Java 文件时自动加入。
   ```toml
@@ -106,12 +106,12 @@ lang: zh
 默认的代码格式化快捷键是 `SPC b f`，该快捷键由 `format` 模块定义，同时也可以通过 `g =` 来对齐整个文档。
 
 为了使 format 模块支持 Java 文件，需要安装  [google's formater jar](https://github.com/google/google-java-format)。
-同时，需要设置模块选项`java_fomatter_jar`：
+同时，需要设置模块选项`java_formatter_jar`：
 
 ```toml
 [[layers]]
   name = 'lang#java'
-  java_fomatter_jar = 'path/to/google-java-format.jar'
+  java_formatter_jar = 'path/to/google-java-format.jar'
 ```
 
 ### Maven

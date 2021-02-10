@@ -177,7 +177,7 @@ path of this jar file in layer option.
 ```toml
 [[layers]]
   name = 'lang#java'
-  java_fomatter_jar = 'path/to/google-java-format.jar'
+  java_formatter_jar = 'path/to/google-java-format.jar'
 ```
 
 ![format-java](https://user-images.githubusercontent.com/13142418/46323426-ccadde80-c620-11e8-9726-d99025f3bf76.gif)

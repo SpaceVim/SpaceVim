@@ -344,6 +344,17 @@ function! myspacevim#before() abort
 endfunction
 ```
 
+Similarly, if you want to add custom key bindings prefixed by language leader key,
+which is typically `,`, you can add them to the boostrap function. **Be sure** that the
+key bindings are not used by SpaceVim.
+
+```vim
+function! myspacevim#before() abort
+    call SpaceVim#custom#LangSPCGroupName('python', ['G'], '+TestGroup')
+    call SpaceVim#custom#LangSPC('python', 'nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+endfunction
+```
+
 ### Vim compatible mode
 
 The different key bindings between SpaceVim and origin vim are shown as below.
@@ -398,7 +409,7 @@ For example, in order to disable language specific leader, you may add the follo
     enable_language_specific_leader = false
 ```
 
-[Send a PR](./development/) to add the differences you
+[Send a PR](../development/) to add the differences you
 found in this section.
 
 ### Private Layers
@@ -1773,6 +1784,8 @@ The `SPC j` prefix is for jumping, joining and splitting.
 | Key Bindings | Descriptions                                                                  |
 | ------------ | ----------------------------------------------------------------------------- |
 | `J`          | join the current line with the next line                                      |
+| `SPC j o`    | join a code block into a single-line statement                                |
+| `SPC j m`    | split a one-liner into multiple lines                                         |
 | `SPC j k`    | go to next line and indent it using auto-indent rules                         |
 | `SPC j n`    | split the current line at point, insert a new line and auto-indent            |
 | `SPC j o`    | split the current line at point but let point on current line                 |
@@ -2288,7 +2301,7 @@ Custom sign symbol:
 
 ### EditorConfig
 
-SpaceVim has supported [EditorConfig](http://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
+SpaceVim has supported [EditorConfig](https://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
 
 To customize your editorconfig experience, read the [editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).
 

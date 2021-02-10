@@ -19,7 +19,6 @@ endfunction
 
 function! SpaceVim#layers#lang#zig#config() abort
   call SpaceVim#plugins#runner#reg_runner('zig', 'zig run %s')
-  call SpaceVim#plugins#runner#reg_runner('zig', 'zig test %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('zig', function('s:language_specified_mappings'))
   if executable(s:ztagsbin) && !exists('g:tagbar_type_zig')
     let g:tagbar_type_zig = {
@@ -54,7 +53,7 @@ endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','t'], 'call SpaceVim#plugins#runner#open()', 'test current file', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','t'], 'call SpaceVim#plugins#runner#open("zig test %s")', 'test current file', 1)
 endfunction
 
 function! SpaceVim#layers#lang#zig#set_variable(opt) abort

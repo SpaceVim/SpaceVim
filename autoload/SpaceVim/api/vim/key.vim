@@ -22,6 +22,8 @@ function! s:self.nr2name(nr) abort
             return '<C-d>'
         elseif a:nr == 9
             return '<Tab>'
+        elseif a:nr == 92
+            return '<Leader>'
         elseif a:nr == 27
             return '<Esc>'
         else
