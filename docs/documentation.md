@@ -279,6 +279,15 @@ to the `custom_plugins` section:
     merged = false
 ```
 
+You can also use the url of the repository, for example:
+
+```toml
+[[custom_plugins]]
+    repo = "https://gitlab.com/code-stats/code-stats-vim.git"
+    merged = false
+```
+
+
 `on_cmd` option means this plugin will be loaded only when the following commands are called.
 
 `merged` option is used for merging plugins directory. When `merged` is `true`, all files in

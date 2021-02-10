@@ -255,6 +255,14 @@ SpaceVim 根据需要定义了很多临时快捷键，
     merged = false
 ```
 
+也可以使用仓库克隆的地址，比如：
+
+```toml
+[[custom_plugins]]
+    repo = "https://gitlab.com/code-stats/code-stats-vim.git"
+    merged = false
+```
+
 `one_cmd` 选项使得这个插件延迟加载。
 该插件会在第一次执行 `ColorHighlight` 或者 `ColorToggle`
 命令时被加载。
