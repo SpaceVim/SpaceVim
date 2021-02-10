@@ -66,12 +66,10 @@ function! s:get_visual_selection() abort
   endif
   " check v-block mode
   if visualmode() ==# "\<C-v>"
-    let lines[-1] = lines[-1][: column_end - (&selection ==# 'inclusive' ? 1 : 2)]
-    for i in range(1, len(lines) - 2)
+    for i in range(len(lines))
       let lines[i] = lines[i][: column_end - (&selection ==# 'inclusive' ? 1 : 2)]
       let lines[i] = lines[i][column_start - 1:]
     endfor
-    let lines[0] = lines[0][column_start - 1:]
   else
     let lines[-1] = lines[-1][: column_end - (&selection ==# 'inclusive' ? 1 : 2)]
     let lines[0] = lines[0][column_start - 1:]
