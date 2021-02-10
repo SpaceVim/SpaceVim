@@ -53,7 +53,7 @@ function! SpaceVim#layers#lang#kotlin#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#kotlin#config() abort
-  if g:spacevim_enable_neomake
+  if g:spacevim_lint_engine ==# 'neomake'
     " neomake support:
     let g:neomake_kotlin_kotlinc_maker = {
           \ 'args': ['-cp', s:classpath(), '-d', s:outputdir()],

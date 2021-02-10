@@ -331,34 +331,24 @@ else
 endif
 
 ""
-" @section enable_neomake, options-enable_neomake
+" @section lint_engine, options-lint_engine
 " @parentsection options
-" SpaceVim default checker is neomake. If you want to use syntastic, use:
+" Set the lint engine used in checkers layer, the default engine is neomake,
+" if you want to use ale, use:
 " >
-"   enable_neomake = false
+"   lint_engine = 'ale'
 " <
+" NOTE: the `enable_neomake` and `enable_ale` option has been deprecated.
+" *spacevim-options-enable_naomake*
+" *spacevim-options-enable_ale*
 
 ""
-" SpaceVim default checker is neomake. If you want to use syntastic, use:
+" Set the lint engine used in checkers layer, the default engine is neomake,
+" if you want to use ale, use:
 " >
-"   let g:spacevim_enable_neomake = 0
+"   let g:spacevim_lint_engine = 'ale'
 " <
-let g:spacevim_enable_neomake          = 1
-
-""
-" @section enable_ale, options-enable_ale
-" @parentsection options
-" Use ale for syntax checking, disabled by default.
-" >
-"   enable_ale = true
-" <
-
-""
-" Use ale for syntax checking, disabled by default.
-" >
-"   let g:spacevim_enable_ale = 1
-" <
-let g:spacevim_enable_ale          = 0
+let g:spacevim_lint_engine = 'neomake'
 
 ""
 " @section guifont, options-guifont

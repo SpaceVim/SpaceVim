@@ -236,7 +236,7 @@ function! s:input_method() abort
 endfunction
 
 
-if g:spacevim_enable_neomake
+if g:spacevim_lint_engine ==# 'neomake'
   function! s:syntax_checking() abort
     if !exists('g:loaded_neomake')
       return ''
@@ -248,7 +248,7 @@ if g:spacevim_enable_neomake
     let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#● ' . errors  . ' ' : ''
     return l
   endfunction
-elseif g:spacevim_enable_ale
+elseif g:spacevim_lint_engine ==# 'ale'
   function! s:syntax_checking() abort
     if !exists('g:ale_enabled')
       return ''
