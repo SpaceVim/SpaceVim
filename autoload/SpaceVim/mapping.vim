@@ -292,9 +292,22 @@ endfunction
 fu! SpaceVim#mapping#SmartClose() abort
   let ignorewin = get(g:,'spacevim_smartcloseignorewin',[])
   let ignoreft = get(g:, 'spacevim_smartcloseignoreft',[])
-  " @bug vim winnr('$') do not include popup
+  " in vim winnr('$') do not include popup.
+  " so we need to check the popuplist
   " ref: https://github.com/vim/vim/issues/6474
-  let win_count = winnr('$')
+  if !has('nvim') 
+        \ && exists('*popup_list')
+        \ && exists('*popup_getoptions')
+        \ && exists('*popup_getpos')
+    let popup_count =  len(
+          \ filter(
+          \ map(
+          \ filter(popup_list(), 'popup_getpos(v:val).visible'),
+          \ 'popup_getoptions(v:val).tabpage'),
+          \ 'v:val == -1 || v:val ==0'))
+  else
+    let win_count = winnr('$')
+  endif
   let num = win_count
   for i in range(1,win_count)
     if index(ignorewin , bufname(winbufnr(i))) != -1 || index(ignoreft, getbufvar(bufname(winbufnr(i)),'&filetype')) != -1
