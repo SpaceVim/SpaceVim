@@ -86,7 +86,7 @@ spacevim-cn+unsubscribe@googlegroups.com
 - [CoffeeScript 中文](https://t.me/joinchat/EazwPxVvES3qIV15t3vNtg)
 - [Elixir 中文](https://t.me/joinchat/EazwPxu4Kv6r-sRkSAjNWA)
 - [F# 中文](https://t.me/joinchat/EazwPxXwge6h5H4Pm4noJQ)
-- [Go 中文](https://t.me/joinchat/EazwPxZ-6SjxeEtr9M9jAg): ([gitter](https://gitter.im/SpaceVim/golang-cn))
+- [Go 中文](https://t.me/joinchat/H4y573NGgf5RulEZ): ([gitter](https://gitter.im/SpaceVim/golang-cn))
 - [Haskell 中文](https://t.me/joinchat/EazwPw9N4rVq-IVfTik9kA)
 - [Hy 中文](https://t.me/joinchat/EazwPxUbRjUp_9u2_O4YjA)
 - [JavaScript 中文](https://t.me/joinchat/EazwPxulQGmwGIRTOmgOfw): ([gitter](https://gitter.im/SpaceVim/JavaScript-cn))
