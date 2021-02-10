@@ -2,13 +2,14 @@
 
 [![Join the chat at https://gitter.im/Shougo/dein.vim](https://badges.gitter.im/Shougo/dein.vim.svg)](https://gitter.im/Shougo/dein.vim?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://travis-ci.org/Shougo/dein.vim.svg?branch=master)](https://travis-ci.org/Shougo/dein.vim)
 
+Please read [help](doc/dein.txt) for details.
+
 Dein.vim is a dark powered Vim/Neovim plugin manager.
 
 <!-- vim-markdown-toc GFM -->
 
 - [Requirements](#requirements)
 - [Quick start](#quick-start)
-  - [Unix/Linux or Mac OS X](#unixlinux-or-mac-os-x)
 - [Features](#features)
 - [Future works (TODO)](#future-works-todo)
   - [Options](#options)
@@ -124,15 +125,4 @@ syntax enable
 
 ### Options
 
-Some common options. For a more detailed list, run `:h dein-options`
-
-| Option   | Type                 | Description                                                                           |
-| -------- | -------------------- | ------------------------------------------------------------------------------------- |
-| `name`   | `string`             | The name for a plugin. If it is omitted, the tail of the repository name will be used |
-| `rev`    | `string`             | The revision number or branch/tag name for the repo                                   |
-| `build`  | `string`             | Command to run after the plugin is installed                                          |
-| `on_ft`  | `string` or `list`   | Load a plugin for the current filetype                                                |
-| `on_cmd` | `string` or `list`   | Load the plugin for these commands                                                    |
-| `rtp`    | `string`             | You can use this option when the repository has the Vim plugin in a subdirectory      |
-| `if`     | `string` or `number` | If it is String, dein will eval it.                                                   |
-| `merged` | `number`             | If set to 0, dein doesn't merge the plugin directory.                                 |
+Please read `:help dein-options`

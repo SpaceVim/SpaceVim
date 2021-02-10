@@ -4,9 +4,6 @@
 " License: MIT license
 "=============================================================================
 
-let s:CMP = SpaceVim#api#import('vim#compatible')
-
-
 function! dein#autoload#_source(...) abort
   let plugins = empty(a:000) ? values(g:dein#_plugins) :
         \ dein#util#_convert2list(a:1)
@@ -14,7 +11,7 @@ function! dein#autoload#_source(...) abort
     return
   endif
 
-  if type(plugins[0]) != 4
+  if type(plugins[0]) != v:t_dict
     let plugins = map(dein#util#_convert2list(a:1),
         \       'get(g:dein#_plugins, v:val, {})')
   endif
@@ -119,11 +116,11 @@ function! s:source_events(event, plugins) abort
     return
   endif
 
-  let prev_autocmd = s:CMP.execute('autocmd ' . a:event)
+  let prev_autocmd = execute('autocmd ' . a:event)
 
   call dein#autoload#_source(a:plugins)
 
-  let new_autocmd = s:CMP.execute('autocmd ' . a:event)
+  let new_autocmd = execute('autocmd ' . a:event)
 
   if a:event ==# 'InsertCharPre'
     " Queue this key again
@@ -153,6 +150,21 @@ function! dein#autoload#_on_func(name) abort
   call dein#autoload#_source(filter(dein#util#_get_lazy_plugins(),
         \  "stridx(function_prefix, v:val.normalized_name.'#') == 0
         \   || (index(get(v:val, 'on_func', []), a:name) >= 0)"))
+endfunction
+
+function! dein#autoload#_on_lua(name) abort
+  if has_key(g:dein#_called_lua, a:name)
+    return
+  endif
+
+  " Only use the root of module name.
+  let mod_root = matchstr(a:name, '^[^./]\+')
+
+  " Prevent infinite loop
+  let g:dein#_called_lua[a:name] = v:true
+
+  call dein#autoload#_source(filter(dein#util#_get_lazy_plugins(),
+        \  "index(get(v:val, 'on_lua', []), mod_root) >= 0"))
 endfunction
 
 function! dein#autoload#_on_pre_cmd(name) abort
@@ -300,6 +312,16 @@ function! s:source_plugin(rtps, index, plugin, sourced) abort
       call dein#util#_add_after(a:rtps, a:plugin.rtp.'/after')
     endif
   endif
+
+  if get(g:, 'dein#lazy_rplugins', v:false) && !g:dein#_loaded_rplugins
+        \ && isdirectory(a:plugin.rtp.'/rplugin')
+    " Enable remote plugin
+    unlet! g:loaded_remote_plugins
+
+    runtime! plugin/rplugin.vim
+
+    let g:dein#_loaded_rplugins = v:true
+  endif
 endfunction
 function! s:reset_ftplugin() abort
   let filetype_state = dein#util#_redir('filetype')
@@ -324,7 +346,7 @@ function! s:get_input() abort
 
   while 1
     let char = getchar()
-    let input .= (type(char) == 0) ? nr2char(char) : char
+    let input .= (type(char) == v:t_number) ? nr2char(char) : char
 
     let idx = stridx(input, termstr)
     if idx >= 1

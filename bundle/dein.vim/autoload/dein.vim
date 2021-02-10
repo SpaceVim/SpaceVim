@@ -5,18 +5,16 @@
 "=============================================================================
 
 function! dein#_init() abort
-  let g:dein#_cache_version = 150
-  let g:dein#_merged_format =
-        \ "{'repo': v:val.repo, 'rev': get(v:val, 'rev', '')}"
-  let g:dein#_merged_length = 3
   let g:dein#name = ''
   let g:dein#plugin = {}
+  let g:dein#_cache_version = 150
   let g:dein#_plugins = {}
   let g:dein#_base_path = ''
   let g:dein#_cache_path = ''
   let g:dein#_runtime_path = ''
   let g:dein#_hook_add = ''
   let g:dein#_ftplugin = {}
+  let g:dein#_called_lua = {}
   let g:dein#_off1 = ''
   let g:dein#_off2 = ''
   let g:dein#_vimrcs = []
@@ -27,10 +25,19 @@ function! dein#_init() abort
         \ && $HOME ==# expand('~'.$SUDO_USER)
   let g:dein#_progname = fnamemodify(v:progname, ':r')
   let g:dein#_init_runtimepath = &runtimepath
+  let g:dein#_loaded_rplugins = v:false
+
+  if get(g:, 'dein#lazy_rplugins', v:false)
+    " Disable remote plugin loading
+    let g:loaded_remote_plugins = 1
+  endif
 
   augroup dein
     autocmd!
-    autocmd FuncUndefined * call dein#autoload#_on_func(expand('<afile>'))
+    autocmd FuncUndefined *
+          \ if stridx(expand('<afile>'), 'remote#') != 0 |
+          \   call dein#autoload#_on_func(expand('<afile>')) |
+          \ endif
     autocmd BufRead *? call dein#autoload#_on_default_event('BufRead')
     autocmd BufNew,BufNewFile *? call dein#autoload#_on_default_event('BufNew')
     autocmd VimEnter *? call dein#autoload#_on_default_event('VimEnter')
@@ -43,6 +50,16 @@ function! dein#_init() abort
   if !exists('##CmdUndefined') | return | endif
   autocmd dein CmdUndefined *
         \ call dein#autoload#_on_pre_cmd(expand('<afile>'))
+  if has('nvim-0.5')
+    lua <<END
+table.insert(package.loaders, 1, (function()
+  return function(mod_name)
+    vim.fn['dein#autoload#_on_lua'](mod_name)
+    return nil
+  end
+end)())
+END
+  endif
 endfunction
 function! dein#load_cache_raw(vimrcs) abort
   let g:dein#_vimrcs = a:vimrcs
@@ -101,7 +118,7 @@ function! dein#end() abort
   return dein#util#_end()
 endfunction
 function! dein#add(repo, ...) abort
-  return dein#parse#_add(a:repo, get(a:000, 0, {}))
+  return dein#parse#_add(a:repo, get(a:000, 0, {}), v:false)
 endfunction
 function! dein#local(dir, ...) abort
   return dein#parse#_local(a:dir, get(a:000, 0, {}), get(a:000, 1, ['*']))
@@ -127,8 +144,9 @@ function! dein#update(...) abort
         \ 'update', dein#install#_is_async())
 endfunction
 function! dein#check_update(...) abort
-  return dein#install#_update(get(a:000, 0, []),
-        \ 'check_update', dein#install#_is_async())
+  return dein#install#_check_update(
+        \ get(a:000, 1, []), get(a:000, 0, v:false),
+        \ dein#install#_is_async())
 endfunction
 function! dein#direct_install(repo, ...) abort
   call dein#install#_direct_install(a:repo, (a:0 ? a:1 : {}))
@@ -189,7 +207,7 @@ function! dein#disable(names) abort
   return dein#util#_disable(a:names)
 endfunction
 function! dein#config(arg, ...) abort
-  return type(a:arg) != 3 ?
+  return type(a:arg) != v:t_list ?
         \ dein#util#_config(a:arg, get(a:000, 0, {})) :
         \ map(copy(a:arg), 'dein#util#_config(v:val, a:1)')
 endfunction

@@ -5,6 +5,7 @@
 "=============================================================================
 
 let s:is_windows = has('win32') || has('win64')
+let s:merged_length = 3
 
 function! dein#util#_init() abort
 endfunction
@@ -149,8 +150,8 @@ function! dein#util#_is_powershell() abort
   return dein#install#_is_async() && fnamemodify(&shell, ':t:r') =~? 'powershell\|pwsh'
 endfunction
 function! dein#util#_has_job() abort
-  return has('nvim')
-        \ || (has('patch-7.4.1689') && has('job'))
+  return (has('nvim') && exists('v:t_list'))
+        \ || (has('patch-8.0.0027') && has('job'))
 endfunction
 
 function! dein#util#_check_lazy_plugins() abort
@@ -211,7 +212,7 @@ function! dein#util#_save_cache(vimrcs, is_state, is_starting) abort
           \ 'hook_add', 'hook_source',
           \ 'hook_post_source', 'hook_post_update',
           \ ], 'has_key(plugin, v:val)
-          \     && type(plugin[v:val]) == 2')
+          \     && type(plugin[v:val]) == v:t_func')
       call remove(plugin, hook)
     endfor
   endfor
@@ -235,15 +236,6 @@ function! dein#util#_check_vimrcs() abort
 
   call dein#clear_state()
 
-  if get(g:, 'dein#auto_recache', 0)
-    silent execute 'source' dein#util#_get_myvimrc()
-
-    if dein#util#_get_merged_plugins() !=# dein#util#_load_merged_plugins()
-      call dein#util#_notify('auto recached')
-      call dein#recache_runtimepath()
-    endif
-  endif
-
   return ret
 endfunction
 function! dein#util#_load_merged_plugins() abort
@@ -252,15 +244,15 @@ function! dein#util#_load_merged_plugins() abort
     return []
   endif
   let merged = readfile(path)
-  if len(merged) != g:dein#_merged_length
+  if len(merged) != s:merged_length
     return []
   endif
-  sandbox return merged[: g:dein#_merged_length - 2] + eval(merged[-1])
+  sandbox return merged[: s:merged_length - 2] + eval(merged[-1])
 endfunction
 function! dein#util#_save_merged_plugins() abort
   let merged = dein#util#_get_merged_plugins()
-  call writefile(merged[: g:dein#_merged_length - 2] +
-        \ [string(merged[g:dein#_merged_length - 1 :])],
+  call writefile(merged[: s:merged_length - 2] +
+        \ [string(merged[s:merged_length - 1 :])],
         \ dein#util#_get_cache_path() . '/merged')
 endfunction
 function! dein#util#_get_merged_plugins() abort
@@ -268,8 +260,10 @@ function! dein#util#_get_merged_plugins() abort
   for ftplugin in values(g:dein#_ftplugin)
     let ftplugin_len += len(ftplugin)
   endfor
-  return [g:dein#_merged_format, string(ftplugin_len)] +
-         \ sort(map(values(g:dein#_plugins), g:dein#_merged_format))
+  let merged_format =
+        \ "{'repo': v:val.repo, 'rev': get(v:val, 'rev', '')}"
+  return [merged_format, string(ftplugin_len)] +
+         \ sort(map(values(g:dein#_plugins), merged_format))
 endfunction
 
 function! dein#util#_save_state(is_starting) abort
@@ -281,6 +275,11 @@ function! dein#util#_save_state(is_starting) abort
   if dein#util#_get_cache_path() ==# '' || !a:is_starting
     " Ignore
     return 1
+  endif
+
+  if get(g:, 'dein#auto_recache', 0)
+    call dein#util#_notify('auto recached')
+    call dein#recache_runtimepath()
   endif
 
   let g:dein#_vimrcs = dein#util#_uniq(g:dein#_vimrcs)
@@ -328,9 +327,17 @@ function! dein#util#_save_state(is_starting) abort
     let lines += s:skipempty(g:dein#_hook_add)
   endif
   for plugin in dein#util#_tsort(values(dein#get()))
-    if has_key(plugin, 'hook_add') && type(plugin.hook_add) == 1
+    if has_key(plugin, 'hook_add') && type(plugin.hook_add) == v:t_string
       let lines += s:skipempty(plugin.hook_add)
     endif
+
+    " Invalid hooks detection
+    for key in keys(filter(copy(plugin),
+          \ "stridx(v:key, 'hook_') == 0 && type(v:val) != v:t_string"))
+        call dein#util#_error(
+              \ printf('%s: "%s" must be string to save state',
+              \        plugin.name, key))
+    endfor
   endfor
 
   " Add events
@@ -340,6 +347,11 @@ function! dein#util#_save_state(is_starting) abort
           \. 'dein#autoload#_on_event("%s", %s)',
           \ (exists('##' . event) ? event . ' *' : 'User ' . event),
           \ event, string(plugins)))
+  endfor
+
+  " Add inline vimrcs
+  for vimrc in get(g:, 'dein#inline_vimrcs', [])
+    let lines += filter(readfile(vimrc), "v:val !=# '' && v:val !~# '^\\s*\"'")
   endfor
 
   call writefile(lines, get(g:, 'dein#cache_directory', g:dein#_base_path)
@@ -357,14 +369,6 @@ function! dein#util#_begin(path, vimrcs) abort
   if !exists('#dein')
     call dein#_init()
   endif
-
-  " Reset variables
-  if has('vim_starting')
-    let g:dein#_plugins = {}
-    let g:dein#_event_plugins = {}
-  endif
-  let g:dein#_ftplugin = {}
-  let g:dein#_hook_add = ''
 
   if !dein#util#_has_job()
     call dein#util#_error('Does not work in the Vim (' . v:version . ').')
@@ -477,6 +481,10 @@ function! dein#util#_end() abort
           \ event, string(plugins))
   endfor
 
+  for vimrc in get(g:, 'dein#inline_vimrcs', [])
+    execute 'source' fnameescape(vimrc)
+  endfor
+
   if !has('vim_starting')
     call dein#call_hook('add')
     call dein#call_hook('source')
@@ -484,9 +492,9 @@ function! dein#util#_end() abort
   endif
 endfunction
 function! dein#util#_config(arg, dict) abort
-  let name = type(a:arg) == 4 ?
+  let name = type(a:arg) == v:t_dict ?
         \   g:dein#name : a:arg
-  let dict = type(a:arg) == 4 ?
+  let dict = type(a:arg) == v:t_dict ?
         \   a:arg : a:dict
   if !has_key(g:dein#_plugins, name)
         \ || g:dein#_plugins[name].sourced
@@ -498,7 +506,7 @@ function! dein#util#_config(arg, dict) abort
   if has_key(plugin, 'orig_opts')
     call extend(options, copy(plugin.orig_opts), 'keep')
   endif
-  return dein#parse#_add(options.repo, options)
+  return dein#parse#_add(options.repo, options, v:true)
 endfunction
 
 function! dein#util#_call_hook(hook_name, ...) abort
@@ -517,7 +525,7 @@ function! dein#util#_execute_hook(plugin, hook) abort
   try
     let g:dein#plugin = a:plugin
 
-    if type(a:hook) == 1
+    if type(a:hook) == v:t_string
       call s:execute(a:hook)
     else
       call call(a:hook, [])
@@ -539,7 +547,7 @@ function! dein#util#_set_hook(plugins, hook_name, hook) abort
     endif
     let plugin = g:dein#_plugins[name]
     let plugin[a:hook_name] =
-          \ type(a:hook) != 1 ? a:hook :
+          \ type(a:hook) != v:t_string ? a:hook :
           \   substitute(a:hook, '\n\s*\\\|\%(^\|\n\)\s*"[^\n]*', '', 'g')
     if a:hook_name ==# 'hook_add'
       call dein#util#_execute_hook(plugin, plugin[a:hook_name])
@@ -597,13 +605,13 @@ function! dein#util#_globlist(path) abort
 endfunction
 
 function! dein#util#_convert2list(expr) abort
-  return type(a:expr) ==# 3 ? copy(a:expr) :
-        \ type(a:expr) ==# 1 ?
+  return type(a:expr) ==# v:t_list ? copy(a:expr) :
+        \ type(a:expr) ==# v:t_string ?
         \   (a:expr ==# '' ? [] : split(a:expr, '\r\?\n', 1))
         \ : [a:expr]
 endfunction
 function! dein#util#_split(expr) abort
-  return type(a:expr) ==# 3 ? copy(a:expr) :
+  return type(a:expr) ==# v:t_list ? copy(a:expr) :
         \ split(a:expr, '\r\?\n')
 endfunction
 
@@ -630,7 +638,7 @@ function! dein#util#_get_plugins(plugins) abort
   return empty(a:plugins) ?
         \ values(dein#get()) :
         \ filter(map(dein#util#_convert2list(a:plugins),
-        \   'type(v:val) == 4 ? v:val : dein#get(v:val)'),
+        \   'type(v:val) == v:t_dict ? v:val : dein#get(v:val)'),
         \   '!empty(v:val)')
 endfunction
 
@@ -713,7 +721,7 @@ function! dein#util#_check_install(plugins) abort
 endfunction
 
 function! s:msg2list(expr) abort
-  return type(a:expr) ==# 3 ? a:expr : split(a:expr, '\n')
+  return type(a:expr) ==# v:t_list ? a:expr : split(a:expr, '\n')
 endfunction
 function! s:skipempty(string) abort
   return filter(split(a:string, '\n'), "v:val !=# ''")
@@ -725,7 +733,7 @@ function! s:escape(path) abort
 endfunction
 
 function! s:sort(list, expr) abort
-  if type(a:expr) == 2
+  if type(a:expr) == v:t_func
     return sort(a:list, a:expr)
   endif
   let s:expr = a:expr

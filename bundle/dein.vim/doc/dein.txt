@@ -117,7 +117,11 @@ dein#add({repo}[, {options}])
 		path.  If {repo} starts with github user name (ex:
 		"Shougo/dein.vim"), dein will install github plugins.
 		See |dein-options| for what to set in {options}.
+		Note: If plugin is already defined, duplicated calls will be
+		ignored.
 		Note: You must call it in |dein#begin()| block.
+		Note: If you install plugins, you need to call
+		|dein#install()| manually.
 
 							*dein#begin()*
 dein#begin({base-path}, [{vimrcs}])
@@ -149,7 +153,7 @@ dein#call_hook({hook-name})
 
 							*dein#check_install()*
 dein#check_install({plugins})
-		Check the plugins installation.
+		Check {plugins} installation.
 		If {plugins} are not installed, it will return non-zero.
 		If {plugins} are invalid, it will return -1.
 		{plugins} are the plugins name list or the plugin name to
@@ -163,12 +167,23 @@ dein#check_lazy_plugins()
 		"plugin/" directory.
 
 							*dein#check_update()*
-dein#check_update([{plugins}])
-		Check the plugins update asynchronously.
-		{plugins} is the plugins name list to check.
-		If you omit it, dein will check all plugins update.
+dein#check_update([{force}[, {plugins}]])
+		Check updated {plugins} by github GraphQL API.
+		https://docs.github.com/en/graphql
+		If {force} is |v:true|, it call |dein#update()|after updated
+		check.
+		{plugins} are the plugins name list or the plugin name to
+		check.
+		Note: You can use it for github plugins.
 		Note: It does not return value instead of
 		|dein#check_install()|.
+		Note: You need to set |g:dein#install_github_api_token| to use
+		the feature.
+		Note: |+python3| or |strptime()| is required.
+		Note: The update check is quick but it is not perfect
+		solution.  If "git" command change ".git" directory status(for
+		example: "git reset"), it cannot detect the update properly.
+		And github API cannot detect upstream changes immediately.
 
 							*dein#check_clean()*
 dein#check_clean()
@@ -194,7 +209,7 @@ dein#config({options})
 >
 	call dein#add('Shougo/deoplete.nvim')
 	call dein#config('deoplete.nvim', {
-	\ 'lazy' : 1, 'on_i' : 1,
+	\ 'lazy' : 1, 'on_event' : 'InsertEnter',
 	\ })
 <
 						*dein#direct_install()*
@@ -315,7 +330,7 @@ dein#load_toml({filename}, [{options}])
 		For toml file formats: |dein-toml|
 >
 	let s:toml = '~/test_vim/lazy.toml'
-	if dein#load_state('~/test_vim/.cache/dein', [$MYVIMRC, s:toml])
+	if dein#load_state('~/test_vim/.cache/dein')
 	  call dein#begin('~/test_vim/.cache/dein')
 
 	  call dein#load_toml(s:toml, {'lazy': 1})
@@ -422,8 +437,7 @@ VARIABLES						*dein-variables*
 						*g:dein#auto_recache*
 g:dein#auto_recache
 		If you set it to 1, call |dein#recache_runtimepath()|
-		automatically if necessary when saving the vimrc, toml file.
-		Note: It reloads your $MYVIMRC.
+		automatically in |dein#save_state()|.
 
 		Default: 0
 
@@ -465,6 +479,20 @@ https://github.com/julienXX/terminal-notifier
 		In Linux: "notify-send" command
 
 		Defaults: "0"
+
+						*g:dein#inline_vimrcs*
+g:dein#inline_vimrcs
+		The vimrcs are sourced in |dein#end()| or
+		|dein#load_state()|.
+
+		Defaults: []
+
+					*g:dein#install_github_api_token*
+g:dein#install_github_api_token
+		github API key to use |dein#check_update()|.
+		https://github.com/settings/tokens
+
+		Defaults: ""
 
 						*g:dein#install_max_processes*
 g:dein#install_max_processes
@@ -510,10 +538,18 @@ g:dein#install_message_type
 						*g:dein#install_log_filename*
 g:dein#install_log_filename
 		The log filename. Set it to "" to disable logging.
+		Note: This option slows your installation process.
 
 		Default: ""
 
-                                                                 *g:dein#name*
+							*g:dein#lazy_rplugins*
+g:dein#lazy_rplugins
+		If you set it to 1, neovim remote plugins are lazy loaded.
+		It is useful to save startup time.
+
+		Defaults: "0"
+
+								*g:dein#name*
 g:dein#name
 		Current plugin name.
 		You can only use it in |dein#tap()| block.
@@ -580,7 +616,6 @@ build		(String)
 		runtimepath.
 		Note: In previous versions of dein, build could also be of
 		type dictionary, but that is now deprecated.
-		dictionary, but that is now deprecated.
 		Please use |dein-options-hook_post_update| instead.
 
 		Example:
@@ -669,6 +704,7 @@ on_event	(String) or (List)
 on_func		(List) or (String)
 		If it is matched to the called function, dein will call
 		|dein#source()|.
+		Note: It does not work when Vim initialised.
 
 							*dein-options-on_ft*
 on_ft		(List) or (String)
@@ -702,6 +738,12 @@ on_if		(String)
 		call dein#add('blueyed/vim-diminactive',
 		\ {'on_event': 'WinEnter', 'on_if': 'winnr("$") > 1'})
 <
+							*dein-options-on_lua*
+on_lua		(List) or (String)
+		If it is matched to the required lua module root, dein will
+		call |dein#source()|.
+		Note: It is for neovim only.
+
 							*dein-options-on_map*
 on_map		(Dictionary) or (List) or (String)
 		If it is the Dictionary, the key is {mode} and the items are
@@ -827,9 +869,8 @@ HOOKS							*dein-hooks*
 
 		The string will be split by the lines.
 		It is useful for the plugins initialization.
-		Note: The Function hooks cannot be cached.  You must
-		initialize it.
 
+		Note: You cannot use function hooks in |dein#save_state()|.
 		Note: You can use |g:dein#plugin| in the hooks.
 		Note: The loading order is not guaranteed in non lazy plugins.
 		Note: The string is executed as Ex commands.
@@ -941,7 +982,7 @@ TOML							*dein-toml*
 
 		[[plugins]]
 		repo = 'Shougo/neosnippet.vim'
-		on_i = 1
+		on_event = 'InsertEnter'
 		on_ft = 'snippet'
 
 		[[plugins]]
@@ -1242,6 +1283,10 @@ Why dein.vim has the feature?  It is for loading performance.
 Other plugin manager adds 'runtimepath' to load external plugins.
 But if 'runtimepath' is very big, plugin loading is slower.  Because Vim needs
 to search all huge 'runtimepath' to load it.  Dein.vim has not the problem.
+
+Q: I want to load plugins lazily on requiring lua modules
+A: >
+	call dein#add('neovim/nvim-lsp', {'on_lua': 'nvim_lsp'})
 
 ==============================================================================
 COMPATIBILITY						*dein-compatibility*
