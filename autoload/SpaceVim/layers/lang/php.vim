@@ -19,7 +19,6 @@ function! SpaceVim#layers#lang#php#plugins() abort
   let plugins = []
   call add(plugins, ['StanAngeloff/php.vim', { 'on_ft' : 'php'}])
   call add(plugins, ['2072/PHP-Indenting-for-VIm', { 'on_ft' : 'php'}])
-  call add(plugins, ['rafi/vim-phpspec', { 'on_ft' : 'php'}])
   if SpaceVim#layers#lsp#check_filetype('php')
     call add(plugins, ['phpactor/phpactor', {'on_ft' : 'php', 'build' : 'composer install --no-dev -o'}])
   else

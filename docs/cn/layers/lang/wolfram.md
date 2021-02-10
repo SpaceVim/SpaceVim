@@ -33,7 +33,7 @@ lang: zh
 
 ### 交互式编程
 
-启动 `walframscript` 交互进程，快捷键为： `SPC l s i`。
+启动 `wolframscript` 交互进程，快捷键为： `SPC l s i`。
 
 将代码传输给 REPL 进程执行：
 

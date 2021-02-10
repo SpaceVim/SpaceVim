@@ -32,6 +32,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
         \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
+        \ ['andrewradev/splitjoin.vim',{ 'merged' : 0, 'loadconf' : 1}],
         \ ]
   if executable('fcitx')
     call add(plugins,[g:_spacevim_root_dir . 'bundle/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
@@ -217,6 +218,11 @@ function! SpaceVim#layers#edit#config() abort
         \ . string(s:_function('s:transpose_with_next')) . ', ["line"])',
         \ 'swap-current-line-with-next-one', 1)
 
+  " splitjoin
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'o'],
+        \ 'SplitjoinJoin', 'join into a single-line statement', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'm'],
+        \ 'SplitjoinSplit', 'split a one-liner into multiple lines', 1)
 endfunction
 
 function! s:transpose_with_previous(type) abort

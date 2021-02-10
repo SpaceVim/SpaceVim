@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#lisp layer"
-description: "This layer is for Lisp development, provide autocompletion, syntax checking, code format for Lisp file."
+description: "This layer is for Common Lisp development, provide autocompletion, syntax checking, code format for Common Lisp file."
 ---
 
 # [Available Layers](../../) >> lang#lisp
@@ -16,7 +16,7 @@ description: "This layer is for Lisp development, provide autocompletion, syntax
 
 ## Description
 
-This layer is for Lisp development.
+This layer is for Common Lisp development.
 
 ## Install
 

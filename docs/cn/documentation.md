@@ -306,7 +306,8 @@ endfunction
 
 函数 `bootstrap_before` 将在读取用户配置后执行，而函数 `bootstrap_after` 将在 VimEnter autocmd 之后执行。
 
-如果你需要添加自定义以 `SPC` 为前缀的快捷键，你需要使用 bootstrap function，在其中加入：
+如果你需要添加自定义以 `SPC` 为前缀的快捷键，你需要使用 bootstrap function，
+在其中加入以下代码（注意你定义的按键必须是 SpaceVim 没有使用的）：
 
 ```vim
 function! myspacevim#before() abort
@@ -314,6 +315,18 @@ function! myspacevim#before() abort
     call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
 endfunction
 ```
+
+同样地，如果你需要定义语言相关的功能，可以使用以下函数定义：
+
+```vim
+function! myspacevim#before() abort
+    call SpaceVim#custom#LangSPCGroupName('python', ['G'], '+TestGroup')
+    call SpaceVim#custom#LangSPC('python', 'nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+endfunction
+```
+
+这些按键绑定以语言相关的前缀键开头，默认的前缀键是 `,` 。
+同样，你为特定语言定义的按键必须是 SpaceVim 没有使用的。
 
 ### Vim 兼容模式
 
@@ -2202,7 +2215,7 @@ SpaceVim 通过默认通过 [checkers](../layers/checkers/) 模块来进行文�
 
 ### 格式规范
 
-SpaceVim 添加了 [EditorConfig](http://editorconfig.org/) 支持，通过一个配置文件来为不同的文件格式设置对应的代码格式规范，
+SpaceVim 添加了 [EditorConfig](https://editorconfig.org/) 支持，通过一个配置文件来为不同的文件格式设置对应的代码格式规范，
 这一工具兼容多种文本编辑器和集成开发环境。
 
 更多配置方式，可以阅读其官方文档：[editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).

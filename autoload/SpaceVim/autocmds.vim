@@ -7,10 +7,7 @@
 "=============================================================================
 
 
-let s:SYS = SpaceVim#api#import('system')
-let s:JOB = SpaceVim#api#import('job')
 let s:VIM = SpaceVim#api#import('vim')
-let s:CMP = SpaceVim#api#import('vim#compatible')
 
 
 "autocmds
@@ -62,7 +59,6 @@ function! SpaceVim#autocmds#init() abort
       autocmd FocusGained * call s:reload_touchpad_status()
     endif
     autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
-    autocmd BufWritePost *.vim call s:generate_doc()
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
     autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized call s:fix_colorschem_in_SpaceVim()
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
@@ -112,15 +108,6 @@ function! s:fixindentline() abort
       echohl None
     endif
     let s:done = 1
-  endif
-endfunction
-function! s:generate_doc() abort
-  " neovim in windows executable function is broken
-  " https://github.com/neovim/neovim/issues/9391
-  if filereadable('./addon-info.json') && executable('vimdoc') && !s:SYS.isWindows
-    call s:JOB.start(['vimdoc', '.'])
-  elseif filereadable('./addon-info.json') && executable('python')
-    call s:JOB.start(['python', '-m', 'vimdoc', '.'])
   endif
 endfunction
 
