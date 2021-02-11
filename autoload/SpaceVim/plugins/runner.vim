@@ -45,6 +45,7 @@ function! s:open_win() abort
   set filetype=SpaceVimRunner
   nnoremap <silent><buffer> q :call <SID>close()<cr>
   nnoremap <silent><buffer> i :call <SID>insert()<cr>
+  nnoremap <silent><buffer> <C-c> :call <SID>stop_runner()<cr>
   augroup spacevim_runner
     autocmd!
     autocmd BufWipeout <buffer> call <SID>stop_runner()
