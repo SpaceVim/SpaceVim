@@ -60,9 +60,16 @@ function! s:basic_mode() abort
   call s:write_to_config(config)
 endfunction
 
-function! s:write_to_config(config) abort
+function! s:global_dir() abort
+  if empty($SPACEVIMDIR)
+    return  s:FILE.unify_path(s:CMP.resolve(expand('~/.SpaceVim.d/')))
+  else
+    return s:FILE.unify_path($SPACEVIMDIR)
+  endif
+endfunction
 
-  let global_dir = empty($SPACEVIMDIR) ? expand('~/.SpaceVim.d/') : $SPACEVIMDIR
+function! s:write_to_config(config) abort
+  let global_dir = s:global_dir()
   let g:_spacevim_global_config_path = global_dir . 'init.toml'
   let cf = global_dir . 'init.toml'
   if filereadable(cf)
@@ -108,7 +115,7 @@ function! SpaceVim#custom#apply(config, type) abort
     let options = get(a:config, 'options', {})
     for [name, value] in items(options)
       if name ==# 'filemanager'
-        if value ==# 'defx' && !has("python3")
+        if value ==# 'defx' && !has('python3')
           call SpaceVim#logger#warn('defx requires +python3!', 0)
           continue
         endif
@@ -217,7 +224,7 @@ endfunction
 
 
 function! s:load_glob_conf() abort
-  let global_dir = empty($SPACEVIMDIR) ? s:FILE.unify_path(s:CMP.resolve(expand('~/.SpaceVim.d/'))) : $SPACEVIMDIR
+  let global_dir = s:global_dir()
   call SpaceVim#logger#info('global_dir is: ' . global_dir)
   if filereadable(global_dir . 'init.toml')
     let g:_spacevim_global_config_path = global_dir . 'init.toml'
