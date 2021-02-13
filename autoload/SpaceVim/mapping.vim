@@ -193,6 +193,9 @@ function! SpaceVim#mapping#close_current_buffer(...) abort
         exe cmd_close_buf . bn
       else
         exe cmd_close_buf . bn
+        if exists(':Startify') ==# 2
+          Startify
+        endif
       endif
     elseif index > 0
       if index + 1 == len(buffers)
