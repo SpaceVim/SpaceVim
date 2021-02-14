@@ -1,3 +1,11 @@
+""
+" @section git-cherry-pick, cherry-pick
+" @parentsection commands
+" This command is to cherry pick commit from other branch.
+" >
+"   :Git cherry-pick <HashA> <HashB>
+" <
+
 let s:JOB = SpaceVim#api#import('job')
 
 function! git#cherry_pick#run(args) abort
