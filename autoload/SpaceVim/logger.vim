@@ -39,7 +39,7 @@ function! SpaceVim#logger#viewRuntimeLog() abort
 
   let info .= "\n```\n"
   tabnew +setl\ nobuflisted
-  nnoremap <buffer><silent> q :bd!<CR>
+  nnoremap <buffer><silent> q :tabclose!<CR>
   for msg in split(info, "\n")
     call append(line('$'), msg)
   endfor
