@@ -4,7 +4,7 @@ function! git#cherry_pick#run(args) abort
     if len(a:args) == 0
         finish
     else
-        let cmd = ['git', 'cherry-pcik'] + a:args
+        let cmd = ['git', 'cherry-pick'] + a:args
     endif
     call git#logger#info('git-cherry-pick cmd:' . string(cmd))
     let s:conflict_files = []
