@@ -13,7 +13,7 @@
 " git.vim is a simple plugin for using git in vim and neovim.
 " This plugin requires SpaceVim API and |job| support.
 
-function! git#run(...)
+function! git#run(...) abort
     let cmd = get(a:000, 0, '')
     if cmd ==# 'add'
         call git#add#run(a:000[1:])
@@ -49,13 +49,6 @@ function! git#run(...)
         call git#branch#run(a:000[1:])
     elseif cmd ==# 'checkout'
         call git#checkout#run(a:000[1:])
-    elseif cmd ==# '--log'
-        let args = get(a:000, 1, '')
-        if args ==# 'clear'
-            call git#logger#clear()
-        else
-            call git#logger#view()
-        endif
     else
         echohl WarningMsg
         echo 'Git ' . cmd . ' has not been implemented!'
