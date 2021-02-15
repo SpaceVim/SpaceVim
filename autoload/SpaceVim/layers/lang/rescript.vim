@@ -20,7 +20,7 @@ function! SpaceVim#layers#lang#rescript#plugins() abort
 endfunction
 
 
-function! SpaceVim#layers#lang#reason#config() abort
+function! SpaceVim#layers#lang#rescript#config() abort
   call SpaceVim#plugins#tasks#reg_provider(funcref('s:rescript_tasks'))
   if index(g:spacevim_project_rooter_patterns, 'package.json') ==# -1
     call add(g:spacevim_project_rooter_patterns, 'package.json')
