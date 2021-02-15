@@ -28,5 +28,4 @@ To use this configuration layer, update custom configuration file with:
 ## Features
 
 - syntax highlighting
-- esy integration
-
+- esy tasks detection
