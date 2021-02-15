@@ -146,6 +146,7 @@ gem install solargraph
 | `purescript` | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
 | `python`     | `['pyls']`                                                                                                                                                                                       |
 | `ruby`       | `['solargraph',  'stdio']`
+| `reason`     | `['ocaml-language-server']`                                                                                                                                                                      |
 | `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
 | `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
 | `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
