@@ -7,6 +7,8 @@
 " Global options definition."
 let g:dein#enable_name_conversion =
       \ get(g:, 'dein#enable_name_conversion', 0)
+let g:dein#default_options =
+      \ get(g:, 'dein#default_options', {})
 
 
 let s:git = dein#types#git#define()
@@ -14,19 +16,25 @@ let s:git = dein#types#git#define()
 function! dein#parse#_add(repo, options, overwrite) abort
   let plugin = dein#parse#_dict(dein#parse#_init(a:repo, a:options))
   let plugin_check = get(g:dein#_plugins, plugin.name, {})
+  let overwrite = get(a:options, 'overwrite', a:overwrite)
   if get(plugin_check, 'sourced', 0) || !get(plugin, 'if', 1)
     " Skip already loaded or not enabled plugin.
     return {}
   endif
 
   " Duplicated plugins check
-  if !a:overwrite && !empty(plugin_check)
-    " Only warning when starting
-    if has('vim_starting')
-      call dein#util#_error(printf(
-            \ 'Plugin name "%s" is already defined.', plugin.name))
+  if !empty(plugin_check)
+    if !overwrite
+      if has('vim_starting')
+        " Only warning when starting
+        call dein#util#_error(printf(
+              \ 'Plugin name "%s" is already defined.', plugin.name))
+      endif
       return {}
     endif
+
+    " Overwrite
+    call extend(plugin, copy(g:dein#_plugins[plugin.name]), 'keep')
   endif
 
   if plugin.rtp !=# ''
@@ -54,6 +62,9 @@ function! dein#parse#_init(repo, options) abort
     let plugin = s:check_type(repo, a:options)
   endif
   call extend(plugin, a:options)
+  if !empty(g:dein#default_options)
+    call extend(plugin, g:dein#default_options, 'keep')
+  endif
   let plugin.repo = repo
   if !empty(a:options)
     let plugin.orig_opts = deepcopy(a:options)

@@ -173,8 +173,9 @@ function! dein#install#_check_update(plugins, force, async) abort
     call process.job.wait(g:dein#install_process_timeout * 1000)
 
     if !empty(process.candidates)
+      let result = process.candidates[0]
       try
-        let json = json_decode(process.candidates[0])
+        let json = json_decode(result)
         let results += filter(values(json['data']),
               \ "type(v:val) == v:t_dict && has_key(v:val, 'pushedAt')")
       catch
@@ -1542,6 +1543,7 @@ function! dein#install#_args2string_unix(args) abort
 endfunction
 
 function! s:strptime_py(format, str) abort
+  let ret = ''
 python3 << EOF
 import datetime
 import vim

@@ -165,6 +165,24 @@ function! s:suite.config() abort
   call s:assert.equals(dein#get('denite.nvim').on_i, 1)
 endfunction
 
+function! s:suite.skip_overwrite() abort
+  call dein#begin(s:path)
+  call dein#add('Shougo/denite.nvim', {'on_i': 0})
+  call dein#add('Shougo/denite.nvim', {'on_i': 1})
+  call dein#end()
+
+  call s:assert.equals(dein#get('denite.nvim').on_i, 0)
+endfunction
+
+function! s:suite.overwrite() abort
+  call dein#begin(s:path)
+  call dein#add('Shougo/denite.nvim', {'on_i': 0})
+  call dein#add('Shougo/denite.nvim', {'on_i': 1, 'overwrite': 1})
+  call dein#end()
+
+  call s:assert.equals(dein#get('denite.nvim').on_i, 1)
+endfunction
+
 function! s:suite.plugins2toml() abort
   let parsed_plugin = dein#parse#_init('Shougo/denite.nvim', {})
   let parsed_plugin2 = dein#parse#_init('Shougo/deoplete.nvim',

@@ -22,7 +22,7 @@ function! s:load_plugins() abort
     let g:_spacevim_plugin_layer = group
     for plugin in s:getLayerPlugins(group)
       if len(plugin) == 2
-        call SpaceVim#plugins#add(plugin[0], plugin[1])
+        call SpaceVim#plugins#add(plugin[0], extend(plugin[1], {'overwrite' : 1}))
         if SpaceVim#plugins#tap(split(plugin[0], '/')[-1]) && get(plugin[1], 'loadconf', 0 )
           call SpaceVim#plugins#defind_hooks(split(plugin[0], '/')[-1])
         endif
@@ -30,7 +30,7 @@ function! s:load_plugins() abort
           call SpaceVim#plugins#loadPluginBefore(split(plugin[0], '/')[-1])
         endif
       else
-        call SpaceVim#plugins#add(plugin[0])
+        call SpaceVim#plugins#add(plugin[0], {'overwrite' : 1})
       endif
     endfor
     call s:loadLayerConfig(group)

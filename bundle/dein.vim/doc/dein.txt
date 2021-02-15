@@ -118,7 +118,8 @@ dein#add({repo}[, {options}])
 		"Shougo/dein.vim"), dein will install github plugins.
 		See |dein-options| for what to set in {options}.
 		Note: If plugin is already defined, duplicated calls will be
-		ignored.
+		ignored.  If you want to overwrite plugin config, you need to
+		use |dein-options-overwrite| or |dein#config()| instead.
 		Note: You must call it in |dein#begin()| block.
 		Note: If you install plugins, you need to call
 		|dein#install()| manually.
@@ -448,6 +449,12 @@ g:dein#cache_directory
 		Default: Under the base directory you have already specified
 		by |dein#begin()|.
 
+						*g:dein#default_options*
+g:dein#default_options
+		The default options for plugins.
+
+		Default: {}
+
 						*g:dein#download_command*
 g:dein#download_command
 		The default download command.
@@ -636,8 +643,8 @@ depends		(List or String)
 		Note: The loading order is not guaranteed in non lazy plugins.
 
 							*dein-options-frozen*
-frozen		(Number)
-		If set to 1, dein doesn't update it automatically. It is
+frozen		(Bool)
+		If set to v:true, dein doesn't update it automatically. It is
 		useful for outdated plugins that can no longer be updated.
 
 						*dein-options-ftplugin*
@@ -646,15 +653,15 @@ ftplugin	(Dictionary)
 		"{filetype}" key is executed {filetype} ftplugin.
 
 							*dein-options-if*
-if		(Number) or (String)
-		If set to zero, dein doesn't register the plugin, i.e. the
+if		(Bool) or (String)
+		If set to v:false, dein doesn't register the plugin, i.e. the
 		plugin will be disabled.
 		If it is String, dein will eval it.
 		If you don't set it, dein will register (enable) the plugin.
 
 							*dein-options-lazy*
-lazy		(Number)
-		If set to non-zero, dein doesn't add the path to 'runtimepath'
+lazy		(Bool)
+		If set to v:true, dein doesn't add the path to 'runtimepath'
 		automatically.
 		If you don't set it, dein will set it automatically when the
 		conditions are met.
@@ -664,9 +671,9 @@ lazy		(Number)
 		lazy plugins by |dein#check_lazy_plugins()|.
 
 							*dein-options-merged*
-merged		(Number)
-		If set to 0, dein doesn't merge the plugin directory.  It is
-		useful for the plugin files conflicts.
+merged		(Bool)
+		If set to v:false, dein doesn't merge the plugin directory.
+		It is useful for the plugin files conflicts.
 
 							*dein-options-name*
 name		(String)
@@ -712,15 +719,15 @@ on_ft		(List) or (String)
 		|dein#source()|.
 
 							*dein-options-on_i*
-on_i		(Number)
-		If set to non-zero, dein will call |dein#source()| on
+on_i		(Bool)
+		If set to v:true, dein will call |dein#source()| on
 		|InsertEnter| autocmd.
 		Note: This is deprecated option.  You should use
 		|dein-options-on_event| instead.
 
 							*dein-options-on_idle*
-on_idle		(Number)
-		If set to non-zero, dein will call |dein#source()| on
+on_idle		(Bool)
+		If set to v:true, dein will call |dein#source()| on
 		|FocusLost| or |CursorHold| autocmd.
 		Note: This is deprecated option.  You should use
 		|dein-options-on_event| instead.
@@ -785,6 +792,11 @@ on_source	(List) or (String)
 		Load the plugin before the listed plugins are loaded.
 		Note: The plugins must be lazy loaded plugins.
 
+						*dein-options-overwrite*
+overwrite	(Bool)
+		If set to v:true, dein overwrite existing plugin config when
+		|dein#add()|.
+
 							*dein-options-path*
 path		(String)
 		Specify the plugin downloaded path.
@@ -835,8 +847,8 @@ timeout		(Number)
 		If omit it, |g:dein#install_process_timeout| will be used.
 
 							*dein-options-trusted*
-trusted        (Number)
-		If set to non-zero, dein will load the plugin in "sudo" mode.
+trusted        (Bool)
+		If set to v:true, dein will load the plugin in "sudo" mode.
 		If you don't set it, dein won't load it.
 
 							*dein-options-type*

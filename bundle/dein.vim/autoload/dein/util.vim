@@ -503,9 +503,6 @@ function! dein#util#_config(arg, dict) abort
 
   let plugin = g:dein#_plugins[name]
   let options = extend({'repo': plugin.repo}, dict)
-  if has_key(plugin, 'orig_opts')
-    call extend(options, copy(plugin.orig_opts), 'keep')
-  endif
   return dein#parse#_add(options.repo, options, v:true)
 endfunction
 
