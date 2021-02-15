@@ -74,6 +74,8 @@ This is a list of programming languages supported in SpaceVim:
 | Red               | [lang#red](https://spacevim.org/layers/lang/red/)                   |                                                                                                               |
 | Ring              | [lang#ring](https://spacevim.org/layers/lang/ring)                  |                                                                                                               |
 | Ruby              | [lang#ruby](https://spacevim.org/layers/lang/ruby/)                 |                                                                                                               |
+| Reason            | [lang#ruby](https://spacevim.org/layers/lang/reason/)               |                                                                                                               |
+| ReScript          | [lang#ruby](https://spacevim.org/layers/lang/rescript/)             |                                                                                                               |
 | Rust              | [lang#rust](https://spacevim.org/layers/lang/rust/)                 |                                                                                                               |
 | Scala             | [lang#scala](https://spacevim.org/layers/lang/scala/)               |                                                                                                               |
 | Scheme            | [lang#scheme](https://spacevim.org/layers/lang/scheme/)             |                                                                                                               |
