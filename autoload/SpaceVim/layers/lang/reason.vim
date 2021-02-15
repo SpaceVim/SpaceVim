@@ -9,6 +9,6 @@
 
 function! SpaceVim#layers#lang#reason#plugins() abort
   let plugins = []
-  call add(plugins, ['reasonml-editor/vim-reason-plus', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-reason', {'merged' : 0}])
   return plugins
 endfunction
