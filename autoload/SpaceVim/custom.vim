@@ -73,7 +73,7 @@ function! s:write_to_config(config) abort
   let g:_spacevim_global_config_path = global_dir . 'init.toml'
   let cf = global_dir . 'init.toml'
   if filereadable(cf)
-    call SpaceVim#logger#warn('Failed to generate config file, it is not readable: ' . cf)
+    call SpaceVim#logger#warn('The file already exists:' . cf)
     return
   endif
   let dir = expand(fnamemodify(cf, ':p:h'))
