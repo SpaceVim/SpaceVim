@@ -20,7 +20,7 @@ if exists('*RescriptIndent')
   finish
 endif
 
-function! SkipRescriptBlanksAndComments(startline)
+function! s:SkipRescriptBlanksAndComments(startline)
   let lnum = a:startline
   while lnum > 1
     let lnum = prevnonblank(lnum)
@@ -43,7 +43,7 @@ function! SkipRescriptBlanksAndComments(startline)
 endfunction
 
 function! RescriptIndent(lnum)
-  let l:prevlnum = SkipRescriptBlanksAndComments(a:lnum-1)
+  let l:prevlnum = s:SkipRescriptBlanksAndComments(a:lnum-1)
   if l:prevlnum == 0 " We're at top of file
     return 0
   endif
