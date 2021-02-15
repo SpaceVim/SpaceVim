@@ -10,6 +10,7 @@ description: "This layer is for reason development, provide syntax checking, cod
 - [Description](#description)
 - [Install](#install)
 - [Features](#features)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -25,7 +26,28 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#reason"
 ```
+
 ## Features
 
 - syntax highlighting
 - esy tasks detection
+
+## Key bindings
+
+The following key bindings are reason language specific key binding, only available when editing
+reason file.
+
+| Key binding     | Description     |
+| --------------- | --------------- |
+| `K` / `SPC l d` | Show cursor doc |
+| `SPC l e`       | Rename symbol   |
+
+**NOTE:** These key bindings require `lsp` layer loaded:
+
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "reason"
+  ]
+```
