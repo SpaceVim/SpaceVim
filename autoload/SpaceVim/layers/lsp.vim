@@ -124,6 +124,7 @@ let s:lsp_servers = {
       \ 'ada' : ['ada_language_server'],
       \ 'c' : ['clangd'],
       \ 'cpp' : ['clangd'],
+      \ 'crystal' : ['scry'],
       \ 'css' : ['css-languageserver', '--stdio'],
       \ 'dart' : ['dart_language_server'],
       \ 'dockerfile' : ['docker-langserver', '--stdio'],
@@ -137,12 +138,12 @@ let s:lsp_servers = {
       \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/phpactor/phpactor/bin/phpactor', 'language-server'],
       \ 'purescript' : ['purescript-language-server', '--stdio'],
       \ 'python' : ['pyls'],
-      \ 'crystal' : ['scry'],
+      \ 'reason' : ['ocaml-language-server'],
+      \ 'ruby' : ['solargraph',  'stdio'],
       \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
       \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
-      \ 'ruby' : ['solargraph',  'stdio'],
       \ 'vue' : ['vls']
       \ }
 
