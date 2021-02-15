@@ -10,6 +10,7 @@ description: "This layer is for ReScript development, provide syntax checking, c
 - [Description](#description)
 - [Install](#install)
 - [Features](#features)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -25,8 +26,14 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#rescript"
 ```
+
 ## Features
 
 - syntax highlighting
-- bsb tasks detection
+- tasks detection
 
+## Key bindings
+
+| Key binding | Description    |
+| ----------- | -------------- |
+| `SPC p t l` | list all tasks |
