@@ -83,7 +83,6 @@ elif [ "$LINT" = "vader" ]; then
     make test_coverage
     covimerage -vv xml --omit 'build/*'
     codecov -X search gcov pycov -f coverage.xml
-    make test
 elif [ "$LINT" = "jekyll" ]; then
     .ci/build-production
 fi

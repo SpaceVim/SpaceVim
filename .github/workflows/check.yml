@@ -7,19 +7,43 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        vimFlavor: ["vim", "nvim"]
+          include:
+              - vimbin: vim
+                vimtag: ["v0.4.3", "v0.4.3", "v0.4.3", "v0.4.2", "v0.3.8", "v0.3.7", "v0.3.5", "v0.3.4", "v0.3.3", "v0.3.2", "v0.3.1", "v0.3.0"]
+              - vimbin: nvim
+                vimtag: []
+                vimtag: ["v0.4.3", "v0.4.3", "v0.4.3", "v0.4.2", "v0.3.8", "v0.3.7", "v0.3.5", "v0.3.4", "v0.3.3", "v0.3.2", "v0.3.1", "v0.3.0"]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Install ${{ matrix.vimFlavor }}
-      if: matrix.vimFlavor == 'nvim'
+    - name: Install ${{ matrix.vimbin }} ${{ matrix.vimtag }}
+      env:
+          VIM_BIN: matrix.vimbin
+          VIM_TAG: matrix.vimtag
+          DEPS: $HOME/deps
+          PATH: $DEPS/bin:$HOME/vim/bin:$PATH
       run: |
-        sudo add-apt-repository universe
-        sudo apt-get update
-        sudo apt-get install neovim
-    - name: Review ${{ matrix.vimFlavor }} version
-      run: ${{ matrix.vimFlavor }} --version
-    - name: Run vader test
+        .ci/install/linux.sh $VIM_BIN $VIM_TAG
+    - name: Review ${{ matrix.vimbin }} version
+      run: ${{ matrix.vimbin }} --version
+    - name: Run test
       run: |
-        make test
+        if [ "$VIM_BIN" = "nvim" ]; then
+            export PATH="${DEPS}/_neovim/${VIM_TAG}/bin:${PATH}"
+            export VIM="${DEPS}/_neovim/${VIM_TAG}/share/nvim/runtime"
+        else
+            export PATH="${DEPS}/_vim/${VIM_TAG}/bin:${PATH}"
+            export VIM="${DEPS}/_vim/${VIM_TAG}/share/vim"
+        fi
+
+        echo "\$PATH: \"${PATH}\""
+        echo "\$VIM: \"${VIM}\""
+        echo "=================  ${VIM_BIN} version ======================"
+        $VIM_BIN --version
+        pip install covimerage
+        pip install codecov
+        python -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); fcntl.fcntl(sys.stdout, fcntl.F_SETFL, flags&~os.O_NONBLOCK);'
+        make test_coverage
+        covimerage -vv xml --omit 'build/*'
+        codecov -X search gcov pycov -f coverage.xml
