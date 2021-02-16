@@ -13,5 +13,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
     - name: Detach ${{ matrix.detachPlugin }}
-      run: |
-        .ci/detach_plugin.sh ${{ matrix.detachPlugin }}
+      env:
+        BOTSECRET: ${{ secrets.BOTSECRET }}
+      run: .ci/detach_plugin.sh ${{ matrix.detachPlugin }}
