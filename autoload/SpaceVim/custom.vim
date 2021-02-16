@@ -160,10 +160,12 @@ function! SpaceVim#custom#apply(config, type) abort
     if !empty(bootstrap_before)
       try
         call call(bootstrap_before, [])
+        let g:_spacevim_bootstrap_before_success = 1
       catch
         call SpaceVim#logger#error('failed to call bootstrap_before function: ' . bootstrap_before)
         call SpaceVim#logger#error('       exception: ' . v:exception)
         call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
+        let g:_spacevim_bootstrap_before_success = 0
       endtry
     endif
   endif
