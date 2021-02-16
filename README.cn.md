@@ -9,7 +9,7 @@
 [中文交流群](https://gitter.im/SpaceVim/SpaceVim)
 
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/cn)
-[![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.org/SpaceVim/SpaceVim)
+[![Build Status](https://travis-ci.com/SpaceVim/SpaceVim.svg?branch=master)](https://travis-ci.com/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/master?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master)
 [![Version](https://img.shields.io/badge/version-1.7.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
