@@ -13,6 +13,5 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
     - name: Detach ${{ matrix.detachPlugin }}
-      if: matrix.detachPlugin == 'nvim'
       run: |
         .ci/detach_plugin.sh ${{ matrix.detachPlugin }}
