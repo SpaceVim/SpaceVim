@@ -1,5 +1,5 @@
 name: Vint
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   vint:
     strategy:
@@ -10,3 +10,6 @@ jobs:
       uses: actions/checkout@master
     - name: Run vint with reviewdog
       uses: reviewdog/action-vint@v1.0.1
+      with:
+        github_token: ${{ secrets.github_token }}
+        reporter: github-pr-review
