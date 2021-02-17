@@ -38,7 +38,7 @@ jobs:
             export PATH="${DEPS}/_vim/${VIM_TAG}/bin:${PATH}"
             export VIM="${DEPS}/_vim/${VIM_TAG}/share/vim"
         fi
-
+        export PATH="/home/runner/.local/bin:${PATH}"
         echo "\$PATH: \"${PATH}\""
         echo "\$VIM: \"${VIM}\""
         echo "=================  ${VIM_BIN} version ======================"
