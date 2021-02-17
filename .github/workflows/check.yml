@@ -20,8 +20,8 @@ jobs:
       env:
           VIM_BIN: matrix.vimbin
           VIM_TAG: matrix.vimtag
-          DEPS: $HOME/deps
-          PATH: $DEPS/bin:$HOME/vim/bin:$PATH
+          DEPS: ~/deps
+          PATH: ~/deps/bin:~/vim/bin:$PATH
       run: |
         .ci/install/linux.sh $VIM_BIN $VIM_TAG
     - name: Review ${{ matrix.vimbin }} version
