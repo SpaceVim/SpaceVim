@@ -228,12 +228,13 @@ endfunction
 let s:file['updateFiles'] = function('s:updatefiles')
 
 " this function should return a unify path
+" This function will run resolve too
 " 1. the sep is /
 " 2. if it is a dir, end with /
 " 3. if a:path end with /, then return path also end with /
 function! s:unify_path(path, ...) abort
   let mod = a:0 > 0 ? a:1 : ':p'
-  let path = resolve(fnamemodify(a:path, mod . ':gs?[\\/]?/?'))
+  let path = s:vim_comp.resolve(fnamemodify(a:path, mod . ':gs?[\\/]?/?'))
   if isdirectory(path) && path[-1:] !=# '/'
     return path . '/'
   elseif a:path[-1:] ==# '/' && path[-1:] !=# '/'

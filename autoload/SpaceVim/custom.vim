@@ -62,7 +62,7 @@ endfunction
 
 function! s:global_dir() abort
   if empty($SPACEVIMDIR)
-    return  s:FILE.unify_path(s:CMP.resolve(expand('~/.SpaceVim.d/')))
+    return  s:FILE.unify_path('~/.SpaceVim.d/')
   else
     return s:FILE.unify_path($SPACEVIMDIR)
   endif
