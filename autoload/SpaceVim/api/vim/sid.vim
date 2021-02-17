@@ -12,8 +12,8 @@
 "" Capture command
 
 let s:self = {}
-
-let s:DICT = SpaceVim#api#import('data#dict')
+let s:self._file = SpaceVim#api#import('file')
+let s:self._data_dict = SpaceVim#api#import('data#dict')
 
 let s:self._cache = {}
 
@@ -29,9 +29,6 @@ function! s:self._capture(command) abort
   endtry
   return out
 endfunction
-function! s:self._unify_path(path) abort
-  return resolve(fnamemodify(a:path, ':p:gs?[\\/]?/?'))
-endfunction
 "" Capture command and return lines
 function! s:self._capture_lines(command) abort
   return split(self._capture(a:command), "\n")
@@ -42,14 +39,14 @@ function! s:self.scriptnames() abort
   let sdict = {} " { sid: path }
   for line in self._capture_lines(':scriptnames')
     let [sid, path] = split(line, '\m^\s*\d\+\zs:\s\ze')
-    let sdict[str2nr(sid)] = self._unify_path(path)  " str2nr(): '  1' -> 1
+    let sdict[str2nr(sid)] = self._file.unify_path(path)  " str2nr(): '  1' -> 1
   endfor
   return sdict
 endfunction
 
 function! s:self.get_sid_from_path(path) abort
-  let path = self._unify_path(a:path)
-  let scriptnames = s:DICT.swap(self.scriptnames())
+  let path = self._file.unify_path(a:path)
+  let scriptnames = s:self._data_dict.swap(self.scriptnames())
   if has_key(scriptnames, path)
     return scriptnames[path]
   else
