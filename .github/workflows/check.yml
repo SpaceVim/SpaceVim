@@ -26,7 +26,7 @@ jobs:
       env:
           VIM_BIN: ${{ matrix.vimbin }}
           VIM_TAG: ${{ matrix.vimtag }}
-          DEPS: ~/deps
+          DEPS: /home/runner/work/SpaceVim/deps
       run: |
         .ci/install/linux.sh $VIM_BIN $VIM_TAG
     - name: Review ${{ matrix.vimbin }} version
