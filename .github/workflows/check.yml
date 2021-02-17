@@ -15,6 +15,10 @@ jobs:
                 vimtag: v0.4.4
                 # vimtag: ["v0.4.3", "v0.4.3", "v0.4.3", "v0.4.2", "v0.3.8", "v0.3.7", "v0.3.5", "v0.3.4", "v0.3.3", "v0.3.2", "v0.3.1", "v0.3.0"]
     runs-on: ubuntu-16.04
+    env:
+        VIM_BIN: ${{ matrix.vimbin }}
+        VIM_TAG: ${{ matrix.vimtag }}
+        DEPS: /home/runner/work/SpaceVim/deps
     steps:
     - name: Checkout
       uses: actions/checkout@master
@@ -23,10 +27,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y autoconf automake build-essential cmake gcc-multilib gettext gperf libtool-bin locales ninja-build pkg-config unzip
     - name: Install ${{ matrix.vimbin }} ${{ matrix.vimtag }}
-      env:
-          VIM_BIN: ${{ matrix.vimbin }}
-          VIM_TAG: ${{ matrix.vimtag }}
-          DEPS: /home/runner/work/SpaceVim/deps
       run: |
         .ci/install/linux.sh $VIM_BIN $VIM_TAG
     - name: Review ${{ matrix.vimbin }} version
