@@ -27,7 +27,6 @@ jobs:
           VIM_BIN: ${{ matrix.vimbin }}
           VIM_TAG: ${{ matrix.vimtag }}
           DEPS: ~/deps
-          PATH: ~/deps/bin:~/vim/bin:$PATH
       run: |
         .ci/install/linux.sh $VIM_BIN $VIM_TAG
     - name: Review ${{ matrix.vimbin }} version
