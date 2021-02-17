@@ -25,7 +25,7 @@ jobs:
     - name: Install dependencies
       run: |
           sudo apt-get update
-          sudo apt-get install -y autoconf automake build-essential cmake gcc-multilib gettext gperf libtool-bin locales ninja-build pkg-config unzip
+          sudo apt-get install -y autoconf automake build-essential cmake gcc-multilib gettext gperf libtool-bin locales ninja-build pkg-config unzip python3-pip python-pip libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev python3-dev ruby-dev lua5.1 liblua5.1-dev libperl-dev ninja-build
     - name: Install ${{ matrix.vimbin }} ${{ matrix.vimtag }}
       run: |
         .ci/install/linux.sh $VIM_BIN $VIM_TAG
@@ -45,8 +45,8 @@ jobs:
         echo "\$VIM: \"${VIM}\""
         echo "=================  ${VIM_BIN} version ======================"
         $VIM_BIN --version
-        pip install --upgrade "pip < 21.0"
-        pip install covimerage virtualenv codecov
+        pip3 install --upgrade pip
+        pip3 install covimerage virtualenv codecov
         make test_coverage
         covimerage -vv xml --omit 'build/*'
         codecov -X search gcov pycov -f coverage.xml
