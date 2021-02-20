@@ -38,9 +38,9 @@ function! s:load_plugins() abort
   unlet g:_spacevim_plugin_layer
   for plugin in g:spacevim_custom_plugins
     if len(plugin) == 2
-      call SpaceVim#plugins#add(plugin[0], plugin[1])
+      call SpaceVim#plugins#add(plugin[0], extend(plugin[1], {'overwrite' : 1}))
     else
-      call SpaceVim#plugins#add(plugin[0])
+      call SpaceVim#plugins#add(plugin[0], {'overwrite' : 1})
     endif
   endfor
 endfunction
