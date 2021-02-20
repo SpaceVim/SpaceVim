@@ -9,6 +9,16 @@ jobs:
       matrix:
           include:
               - vimbin: vim
+                vimtag: v7.4.052
+              - vimbin: vim
+                vimtag: v7.4.629
+              - vimbin: vim
+                vimtag: v7.4.1689
+              - vimbin: vim
+                vimtag: v8.0.0027
+              - vimbin: vim
+                vimtag: v8.0.1453
+              - vimbin: vim
                 vimtag: v8.1.2269
                 # vimtag: ["v7.4.052", "v7.4.629", "v7.4.1689", "v8.0.0027", "v8.0.1453", "v8.1.2269"]
               - vimbin: nvim
