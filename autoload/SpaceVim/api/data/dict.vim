@@ -46,7 +46,7 @@ function! SpaceVim#api#data#dict#get() abort
 endfunction
 
 
-if has('lua') || has('nvim')
+if get(g:, '_spacevim_if_lua', 0) || has('nvim')
   function! s:entrys(dict) abort
     lua require("spacevim.api.data.dict").entrys(
           \ require("spacevim").eval("a:dict")
