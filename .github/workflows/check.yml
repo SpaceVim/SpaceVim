@@ -9,10 +9,20 @@ jobs:
       matrix:
           include:
               - vimbin: vim
+                vimtag: v7.4.052
+              - vimbin: vim
+                vimtag: v7.4.629
+              - vimbin: vim
+                vimtag: v7.4.1689
+              - vimbin: vim
+                vimtag: v8.0.0027
+              - vimbin: vim
+                vimtag: v8.0.1453
+              - vimbin: vim
                 vimtag: v8.1.2269
                 # vimtag: ["v7.4.052", "v7.4.629", "v7.4.1689", "v8.0.0027", "v8.0.1453", "v8.1.2269"]
-              - vimbin: nvim
-                vimtag: v0.4.4
+              # - vimbin: nvim
+                # vimtag: v0.4.4
                 # vimtag: ["v0.4.3", "v0.4.3", "v0.4.3", "v0.4.2", "v0.3.8", "v0.3.7", "v0.3.5", "v0.3.4", "v0.3.3", "v0.3.2", "v0.3.1", "v0.3.0"]
     runs-on: ubuntu-latest
     env:
@@ -46,5 +56,5 @@ jobs:
         pip3 install --upgrade "pip < 21.0"
         pip3 install covimerage virtualenv codecov
         make test_coverage
-        covimerage -vv xml --omit 'build/*,bundle/*'
+        covimerage -vv xml --omit 'build/*' --omit 'bundle/*'
         codecov -X search gcov pycov -f coverage.xml
