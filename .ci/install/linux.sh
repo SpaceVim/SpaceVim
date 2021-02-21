@@ -35,6 +35,8 @@ install_nvim() {
     local ncpu=$(awk '/^processor/{n+=1}END{print n}' /proc/cpuinfo)
     git clone --depth 1 --single-branch $ext $URL $tmp
     cd $tmp
+    git fetch origin
+    git cherry-pick 38145b919d160ea63c2547533595e761b40cfe45
     make deps
     make -j$ncpu \
         CMAKE_BUILD_TYPE=Release \
