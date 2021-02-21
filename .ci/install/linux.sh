@@ -41,7 +41,7 @@ install_nvim() {
         CMAKE_BUILD_TYPE=Release \
         CMAKE_EXTRA_FLAGS="-DTRAVIS_CI_BUILD=ON -DCMAKE_INSTALL_PREFIX:PATH=$out"
     make install
-    pip install pynvim
+    pip3 install --upgrade "pip < 21.0"
     pip3 install pynvim
 }
 
