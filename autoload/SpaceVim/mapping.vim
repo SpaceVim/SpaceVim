@@ -302,7 +302,7 @@ fu! SpaceVim#mapping#SmartClose() abort
         \ && exists('*popup_list')
         \ && exists('*popup_getoptions')
         \ && exists('*popup_getpos')
-    let popup_count =  len(
+    let win_count =  len(
           \ filter(
           \ map(
           \ filter(popup_list(), 'popup_getpos(v:val).visible'),
