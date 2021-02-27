@@ -516,8 +516,8 @@ function! s:open_item_in_tab() abort
     let s:MPT._quit = 1
     let line = getline('.')
     let filename = fnameescape(split(line, ':\d\+:')[0])
-    let linenr = matchstr(line, ':\d\+:')[1:-2]
-    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    let linenr = str2nr(matchstr(line, ':\d\+:')[1:-2])
+    let colum = str2nr(matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2])
     if s:preview_able == 1
       call s:close_preview_win()
     endif
