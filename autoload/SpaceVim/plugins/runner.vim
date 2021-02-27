@@ -309,7 +309,7 @@ endfunction
 " @vimlint(EVL103, 0, a:event)
 
 function! SpaceVim#plugins#runner#status() abort
-  if s:status.is_running == 0
+  if s:status.is_running == 0 && exists('s:end_time')
     return 'exit code : ' . s:status.exit_code 
           \ . '    time: ' . s:STRING.trim(reltimestr(s:end_time))
           \ . '    language: ' . get(s:, 'selected_language', &ft)
