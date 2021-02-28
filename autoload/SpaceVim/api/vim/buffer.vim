@@ -276,6 +276,11 @@ function! s:self.displayArea() abort
         \ ]
 endfunction
 
+function! s:self.open_pos(cmd, file, line, col) abort
+    exe 'silent ' . a:cmd . ' ' . a:file
+    call cursor(a:line, a:col)
+endfunction
+
 function! s:self.add_highlight(bufnr, hl, line, col, long) abort
   if exists('*nvim_buf_add_highlight')
     call nvim_buf_add_highlight(a:bufnr, 0, a:hl, a:line, a:col, a:col + a:long)

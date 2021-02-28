@@ -491,17 +491,14 @@ function! s:open_item() abort
     call s:MPT._clear_prompt()
     let s:MPT._quit = 1
     let line = getline('.')
-    let filename = fnameescape(split(line, ':\d\+:')[0])
-    let linenr = matchstr(line, ':\d\+:')[1:-2]
-    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    let [filename, linenr, colum] = s:get_file_pos(line)
     if s:preview_able == 1
       call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
-    exe 'silent e ' . filename
     call s:update_history()
-    call cursor(linenr, colum)
+    call s:BUFFER.open_pos('edit', filename, linenr, colum)
     noautocmd normal! :
   endif
 endfunction
@@ -515,17 +512,14 @@ function! s:open_item_in_tab() abort
     call s:MPT._clear_prompt()
     let s:MPT._quit = 1
     let line = getline('.')
-    let filename = fnameescape(split(line, ':\d\+:')[0])
-    let linenr = str2nr(matchstr(line, ':\d\+:')[1:-2])
-    let colum = str2nr(matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2])
+    let [filename, linenr, colum] = s:get_file_pos(line)
     if s:preview_able == 1
       call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
-    exe 'silent tabedit ' . filename
     call s:update_history()
-    call cursor(linenr, colum)
+    call s:BUFFER.open_pos('tabedit', filename, linenr, colum)
     noautocmd normal! :
   endif
 endfunction
@@ -539,17 +533,14 @@ function! s:open_item_vertically() abort
     call s:MPT._clear_prompt()
     let s:MPT._quit = 1
     let line = getline('.')
-    let filename = fnameescape(split(line, ':\d\+:')[0])
-    let linenr = matchstr(line, ':\d\+:')[1:-2]
-    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    let [filename, linenr, colum] = s:get_file_pos(line)
     if s:preview_able == 1
       call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
-    exe 'silent vsplit ' . filename
     call s:update_history()
-    call cursor(linenr, colum)
+    call s:BUFFER.open_pos('vsplit', filename, linenr, colum)
     noautocmd normal! :
   endif
 endfunction
@@ -563,19 +554,23 @@ function! s:open_item_horizontally() abort
     call s:MPT._clear_prompt()
     let s:MPT._quit = 1
     let line = getline('.')
-    let filename = fnameescape(split(line, ':\d\+:')[0])
-    let linenr = matchstr(line, ':\d\+:')[1:-2]
-    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    let [filename, linenr, colum] = s:get_file_pos(line)
     if s:preview_able == 1
       call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
-    exe 'silent split ' . filename
     call s:update_history()
-    call cursor(linenr, colum)
+    call s:BUFFER.open_pos('split', filename, linenr, colum)
     noautocmd normal! :
   endif
+endfunction
+
+function! s:get_file_pos(line) abort
+    let filename = fnameescape(split(a:line, ':\d\+:')[0])
+    let linenr = str2nr(matchstr(a:line, ':\d\+:')[1:-2])
+    let colum = str2nr(matchstr(a:line, '\(:\d\+\)\@<=:\d\+:')[1:-2])
+    return [filename, linenr, colum]
 endfunction
 
 function! s:apply_to_quickfix() abort
