@@ -498,7 +498,7 @@ function! s:open_item() abort
     let s:preview_able = 0
     noautocmd q
     call s:update_history()
-    call s:BUFFER.open('edit', filename, linenr, colum)
+    call s:BUFFER.open_pos('edit', filename, linenr, colum)
     noautocmd normal! :
   endif
 endfunction
@@ -519,7 +519,7 @@ function! s:open_item_in_tab() abort
     let s:preview_able = 0
     noautocmd q
     call s:update_history()
-    call s:BUFFER.open('tabedit', filename, linenr, colum)
+    call s:BUFFER.open_pos('tabedit', filename, linenr, colum)
     noautocmd normal! :
   endif
 endfunction
@@ -540,7 +540,7 @@ function! s:open_item_vertically() abort
     let s:preview_able = 0
     noautocmd q
     call s:update_history()
-    call s:BUFFER.open('vsplit', filename, linenr, colum)
+    call s:BUFFER.open_pos('vsplit', filename, linenr, colum)
     noautocmd normal! :
   endif
 endfunction
@@ -561,7 +561,7 @@ function! s:open_item_horizontally() abort
     let s:preview_able = 0
     noautocmd q
     call s:update_history()
-    call s:BUFFER.open('split', filename, linenr, colum)
+    call s:BUFFER.open_pos('split', filename, linenr, colum)
     noautocmd normal! :
   endif
 endfunction

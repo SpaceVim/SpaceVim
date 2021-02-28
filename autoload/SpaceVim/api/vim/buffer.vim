@@ -276,7 +276,7 @@ function! s:self.displayArea() abort
         \ ]
 endfunction
 
-function! s:self.open(cmd, file, line, col) abort
+function! s:self.open_pos(cmd, file, line, col) abort
     exe 'silent ' . a:cmd . ' ' . a:file
     call cursor(a:line, a:col)
 endfunction
