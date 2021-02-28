@@ -1359,9 +1359,12 @@ function! SpaceVim#end() abort
   " tab options:
   set smarttab
   let &expandtab = g:spacevim_expand_tab
-  let &tabstop = g:spacevim_default_indent
-  let &softtabstop = g:spacevim_default_indent
-  let &shiftwidth = g:spacevim_default_indent
+  
+  if g:spacevim_default_indent > 0
+    let &tabstop = g:spacevim_default_indent
+    let &softtabstop = g:spacevim_default_indent
+    let &shiftwidth = g:spacevim_default_indent
+  endif
 
   let g:unite_source_menu_menus =
         \ get(g:,'unite_source_menu_menus',{})
