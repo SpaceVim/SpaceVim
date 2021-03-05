@@ -1,0 +1,56 @@
+# Security Policy 
+
+## Supported Versions
+
+Use this section to tell people about which versions of your project are
+currently being supported with security updates.
+
+| Version | Supported          |
+| ------- | ------------------ |
+| 5.1.x   | :white_check_mark: |
+| 5.0.x   | :x:                |
+| 4.0.x   | :white_check_mark: |
+| < 4.0   | :x:                |
+
+## Reporting 
+
+This section to tell people how to report a vulnerability.
+
+Tell them where to go, how often they can expect to get an update on a
+reported vulnerability, what to expect if the vulnerability is accepted or
+declined, etc.
+- name: Codacy Analysis CLI
+  # You may pin to the exact commit or the version.
+  # uses: codacy/codacy-analysis-cli-action@719f3c81c34b74acd0f8ed69cd8e4be28fc70ac8
+  uses: codacy/codacy-analysis-cli-action@2.0.1
+  with:
+    # Run with verbose output
+    verbose: # optional
+    # API token to retrieve your remote Codacy configuration for the project being analyzed
+    project-token: # optional
+    # Codacy's API URL, to retrieve your remote Codacy configuration
+    codacy-api-base-url: # optional
+    # Format of the output file
+    format: # optional
+    # Send analysis results to an output file
+    output: # optional
+    # The directory to be analyzed
+    directory: # optional
+    # Number of tools to run in parallel
+    parallel: # optional
+    # Maximum number of issues allowed for the analysis to succeed
+    max-allowed-issues: # optional
+    # The name of the tool to analyze the code
+    tool: # optional
+    # Maximum time each tool has to execute
+    tool-timeout: # optional
+    # Upload analysis results to Codacy
+    upload: # optional
+    # Fail the analysis if any tool fails to run
+    fail-if-incomplete: # optional
+    # Allow network access for tools
+    allow-network: # optional
+    # Force files to be readable by changing the permissions before running the analysis
+    force-file-permissions: # optional
+    # Reduce issue severity by one level, for non-security issues, for compatibility with GitHub's code scanning feature. This option will only have an effect when used in conjunction with '--format sarif'.
+    gh-code-scanning-compat: # optional
