@@ -144,6 +144,8 @@ function! s:handle(mode, char) abort
     return s:handle_f_char(a:char)
   elseif a:mode ==# 'n'
     return s:handle_normal(a:char)
+  elseif a:mode ==# 'i' && s:Operator ==# 'r'
+    return s:handle_register(a:char)
   elseif a:mode ==# 'i'
     return s:handle_insert(a:char)
   endif
@@ -164,6 +166,10 @@ function! s:handle_f_char(char) abort
   endif
   silent! call s:highlight_cursor()
   return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
+endfunction
+
+function! s:handle_register(char) abort
+  
 endfunction
 
 let s:toggle_stack = {}
@@ -427,6 +433,9 @@ function! s:handle_insert(char) abort
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end,
             \ '^.', '', 'g')
     endfor
+  elseif a:char == 18 " <C-r>
+    let s:Operator = 'r'
+    call s:timeout()
   elseif a:char == 1 || a:char ==# "\<Home>"
     " Ctrl-a or <Home>
     let is_movement = 1
