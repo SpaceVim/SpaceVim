@@ -169,9 +169,10 @@ function! s:handle_f_char(char) abort
 endfunction
 
 function! s:handle_register(char) abort
-  if a:char =~# '[a-zA-Z0-9"+:/]'
+  let char = nr2char(a:char)
+  if char =~# '[a-zA-Z0-9"+:/]'
     let s:Operator = ''
-    let reg = '@' . a:char
+    let reg = '@' . char
     let paste = get(split(eval(reg), "\n"), 0, '')
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = s:cursor_stack[i].begin . paste
