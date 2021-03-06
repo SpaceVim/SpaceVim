@@ -171,13 +171,16 @@ endfunction
 function! s:handle_register(char) abort
   let char = nr2char(a:char)
   if char =~# '[a-zA-Z0-9"+:/]'
+  silent! call s:remove_cursor_highlight()
     let s:Operator = ''
     let reg = '@' . char
     let paste = get(split(eval(reg), "\n"), 0, '')
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = s:cursor_stack[i].begin . paste
     endfor
+    silent! call s:highlight_cursor()
   endif
+  return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
 endfunction
 
 let s:toggle_stack = {}
