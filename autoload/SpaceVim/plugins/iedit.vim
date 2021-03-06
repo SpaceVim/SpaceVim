@@ -178,6 +178,7 @@ function! s:handle_register(char) abort
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = s:cursor_stack[i].begin . paste
     endfor
+    call s:replace_symbol()
     silent! call s:highlight_cursor()
   endif
   return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
