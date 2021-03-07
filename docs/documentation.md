@@ -528,25 +528,26 @@ Also note that changing this value has no effect if you are running Vim/Neovim i
 
 Some UI indicators can be toggled on and off (toggles start with t and T):
 
-| Key Bindings | Descriptions                                             |
-| ------------ | -------------------------------------------------------- |
-| `SPC t 8`    | highlight any character past the 80th column             |
-| `SPC t f`    | display the fill column (by default `max_column` is 120) |
-| `SPC t h h`  | toggle highlight of the current line                     |
-| `SPC t h i`  | toggle highlight indentation levels (TODO)               |
-| `SPC t h c`  | toggle highlight indentation current column              |
-| `SPC t h s`  | toggle syntax highlighting                               |
-| `SPC t i`    | toggle indentation guide at point                        |
-| `SPC t n`    | toggle line numbers                                      |
-| `SPC t b`    | toggle background                                        |
-| `SPC t c`    | toggle conceal                                           |
-| `SPC t p`    | toggle paste mode                                        |
-| `SPC t t`    | open tabs manager                                        |
-| `SPC T ~`    | display ~ in the fringe on empty lines                   |
-| `SPC T F`    | toggle frame fullscreen                                  |
-| `SPC T f`    | toggle display of the fringe                             |
-| `SPC T m`    | toggle menu bar                                          |
-| `SPC T t`    | toggle tool bar                                          |
+| Key Bindings | Descriptions                                                               |
+| ------------ | -------------------------------------------------------------------------- |
+| `SPC t 8`    | highlight any character past the 80th column                               |
+| `SPC t a`    | toggle autocomplete (only available with `autocomplete_method = deoplete`) |
+| `SPC t f`    | display the fill column (by default `max_column` is 120)                   |
+| `SPC t h h`  | toggle highlight of the current line                                       |
+| `SPC t h i`  | toggle highlight indentation levels (TODO)                                 |
+| `SPC t h c`  | toggle highlight indentation current column                                |
+| `SPC t h s`  | toggle syntax highlighting                                                 |
+| `SPC t i`    | toggle indentation guide at point                                          |
+| `SPC t n`    | toggle line numbers                                                        |
+| `SPC t b`    | toggle background                                                          |
+| `SPC t c`    | toggle conceal                                                             |
+| `SPC t p`    | toggle paste mode                                                          |
+| `SPC t t`    | open tabs manager                                                          |
+| `SPC T ~`    | display ~ in the fringe on empty lines                                     |
+| `SPC T F`    | toggle frame fullscreen                                                    |
+| `SPC T f`    | toggle display of the fringe                                               |
+| `SPC T m`    | toggle menu bar                                                            |
+| `SPC T t`    | toggle tool bar                                                            |
 
 ### Statusline
 
