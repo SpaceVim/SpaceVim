@@ -411,7 +411,7 @@ function! s:match_problems(output, matcher) abort
       let &errorformat = a:matcher.errorformat
       let cmd = 'noautocmd cexpr a:output'
       exe cmd
-      call setqflist([], 'a', {'title' : 'task output'})
+      call setqflist([], 'a', {'title' : ' task output'})
       copen
     endif
   finally
