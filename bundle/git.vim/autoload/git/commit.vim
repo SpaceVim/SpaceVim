@@ -98,8 +98,7 @@ endfunction
 " :w      -- BufWriteCmd
 " <C-w>p  -- WinLeave
 " :wq     -- QuitPre -> BufWriteCmd -> WinLeave
-" fuck when run `:wq` the commit window will not be closed
-" @fixme what the fuck
+" when run `:wq` the commit window will not be closed
 " :q      -- QuitPre -> WinLeave
 function! s:BufWriteCmd() abort
   let commit_file = '.git\COMMIT_EDITMSG'

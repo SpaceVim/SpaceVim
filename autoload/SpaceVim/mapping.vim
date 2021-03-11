@@ -217,7 +217,8 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
     if bufexists(abuf)
       exe 'bd!' . abuf
     endif
-    " fuck the terminal windows
+    " can not close the terminal windows
+    " close again
     if get(w:, 'shell_layer_win', 0) == 1
       close
     endif
