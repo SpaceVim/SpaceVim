@@ -34,6 +34,9 @@ let s:status = {
       \ 'exit_code' : 0
       \ }
 
+let s:task_stdout = {}
+let s:task_problem_matcher = {}
+
 function! s:open_win() abort
   if s:bufnr !=# 0 && bufexists(s:bufnr) && index(tabpagebuflist(), s:bufnr) !=# -1
     return
@@ -392,16 +395,26 @@ function! SpaceVim#plugins#runner#run_task(task) abort
     if !empty(opts) && has_key(opts, 'env') && !empty(opts.env)
       call extend(opt, {'env' : opts.env})
     endif
+    let problemMatcher = get(a:task, 'problemMatcher', {})
     if isBackground
-      call s:run_backgroud(cmd, opt)
+      call s:run_backgroud(cmd, opt, problemMatcher)
     else
-      call SpaceVim#plugins#runner#open(cmd, opt) 
+      call SpaceVim#plugins#runner#open(cmd, opt, problemMatcher) 
     endif
   endif
 endfunction
 
+function! s:match_problems(output, matcher) abort
+  
+endfunction
+
 function! s:on_backgroud_exit(job_id, data, event) abort
   let s:end_time = reltime(s:start_time)
+  let task_stdout = get(s:task_stdout, a:job_id, [])
+  let task_problem_matcher = get(s:task_problem_matcher, a:job_id, {})
+  if !empty(task_problem_matcher) && !empty(task_stdout)
+    call s:match_problems(task_stdout, task_problem_matcher)
+  endif
   let exit_code = a:data
   echo 'task finished with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds'
 endfunction
@@ -410,7 +423,9 @@ function! s:run_backgroud(cmd, ...) abort
   echo 'task running'
   let opts = get(a:000, 0, {})
   let s:start_time = reltime()
-  call s:JOB.start(a:cmd,extend({
+  let problemMatcher = get(a:000, 1, {})
+  let task_id = s:JOB.start(a:cmd,extend({
         \ 'on_exit' : function('s:on_backgroud_exit'),
         \ }, opts))
+  call extend(s:task_problem_matcher, {task_id : problemMatcher})
 endfunction

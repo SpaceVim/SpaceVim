@@ -2065,6 +2065,7 @@ The task's properties have the following semantic:
 - **isBackground**: `true` or `false`, specifies whether background running is required,
   by default, it is `false`.
 - **description**: short description of the task
+- **problemMatcher**: problems matcher of the task 
 
 When start a new task, it will kill the previous task. If you want to keep the task
 run in background, set `isBackground` to `true`.
