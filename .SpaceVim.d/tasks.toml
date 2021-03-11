@@ -8,4 +8,4 @@
     args = ['.SpaceVim.d/tasks.toml:6:1 test error message']
     isBackground = true
 [test_problemMatcher.problemMatcher]
-    errorformat = ''
+    errorformat = '%f:%l:%c\ %m'
