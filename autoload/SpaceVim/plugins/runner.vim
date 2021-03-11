@@ -81,7 +81,7 @@ function! s:async_run(runner, ...) abort
     catch
       let cmd = a:runner
     endtry
-    call SpaceVim#logger#info('   cmd:' . string(cmd))
+    call s:LOGGER.info('   cmd:' . string(cmd))
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , -1, 0, ['[Running] ' . cmd, '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
@@ -159,7 +159,7 @@ function! s:async_run(runner, ...) abort
     else
       let cmd = exe + a:runner.opt + [get(s:, 'selected_file', bufname('%'))]
     endif
-    call SpaceVim#logger#info('   cmd:' . string(cmd))
+    call s:LOGGER.info('   cmd:' . string(cmd))
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , -1, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
@@ -345,8 +345,8 @@ function! SpaceVim#plugins#runner#select_file() abort
   let runner = get(a:000, 0, get(s:runners, &filetype, ''))
   let s:selected_language = &filetype
   if !empty(runner)
-    call SpaceVim#logger#info('Code runner startting:')
-    call SpaceVim#logger#info('selected file :' . s:selected_file)
+    call s:LOGGER.info('Code runner startting:')
+    call s:LOGGER.info('selected file :' . s:selected_file)
     call s:open_win()
     call s:async_run(runner)
     call s:update_statusline()
