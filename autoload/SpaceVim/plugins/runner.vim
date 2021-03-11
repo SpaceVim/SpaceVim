@@ -409,7 +409,7 @@ function! s:match_problems(output, matcher) abort
     let olderrformat = &errorformat
     if has_key(a:matcher, 'errorformat')
       let &errorformat = a:matcher.errorformat
-      let cmd = 'noautocmd caddexpr a:output'
+      let cmd = 'noautocmd cexpr a:output'
       exe cmd
       copen
     endif
