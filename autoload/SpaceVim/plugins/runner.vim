@@ -411,10 +411,16 @@ function! s:match_problems(output, matcher) abort
       let &errorformat = a:matcher.errorformat
       let cmd = 'noautocmd caddexpr a:output'
       exe cmd
+      copen
     endif
   finally
     let &errorformat = olderrformat
   endtry
+endfunction
+
+function! s:on_backgroud_stdout(job_id, data, event) abort
+  let data = get(s:task_stdout, 'task' . a:job_id, []) + a:data
+  let s:task_stdout['task' . a:job_id] = data
 endfunction
 
 function! s:on_backgroud_exit(job_id, data, event) abort
@@ -434,6 +440,7 @@ function! s:run_backgroud(cmd, ...) abort
   let s:start_time = reltime()
   let problemMatcher = get(a:000, 1, {})
   let task_id = s:JOB.start(a:cmd,extend({
+        \ 'on_stdout' : function('s:on_backgroud_stdout'),
         \ 'on_exit' : function('s:on_backgroud_exit'),
         \ }, opts))
   call extend(s:task_problem_matcher, {'task' . task_id : problemMatcher})
