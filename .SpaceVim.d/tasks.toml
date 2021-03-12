@@ -14,7 +14,7 @@
     args = ['.SpaceVim.d/tasks.toml:12:1 test error message']
     isBackground = true
 [test_regexp.problemMatcher.pattern]
-      regexp = "^(.*):(\\d+):(\\d+)\\s+(\\S.*)$"
+      regexp = '\(.*\):\(\d\+\):\(\d\+\)\s\(\S.*\)'
       file = 1
       line = 2
       column = 3
