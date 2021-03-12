@@ -405,18 +405,39 @@ function! SpaceVim#plugins#runner#run_task(task) abort
 endfunction
 
 function! s:match_problems(output, matcher) abort
-  try
-    let olderrformat = &errorformat
-    if has_key(a:matcher, 'errorformat')
-      let &errorformat = a:matcher.errorformat
-      let cmd = 'noautocmd cexpr a:output'
-      exe cmd
-      call setqflist([], 'a', {'title' : ' task output'})
-      copen
-    endif
-  finally
-    let &errorformat = olderrformat
-  endtry
+  if has_key(a:matcher, 'pattern')
+    let items = []
+    for line in a:output
+      let rst = matchlist(line, a:matcher.pattern.regexp)
+      let file = rst[a:matcher.pattern.file]
+      let line = rst[a:matcher.pattern.line]
+      let column = rst[a:matcher.pattern.column]
+      let message = rst[a:matcher.pattern.message]
+      call add(items, {
+            \ 'filename' : file,
+            \ 'lnum' : line,
+            \ 'text' : message,
+            \ })
+    endfor
+    call setqflist([], 'r', {'title' : ' task output',
+          \ 'items' : items,
+          \ })
+    copen
+    copen
+  else
+    try
+      let olderrformat = &errorformat
+      if has_key(a:matcher, 'errorformat')
+        let &errorformat = a:matcher.errorformat
+        let cmd = 'noautocmd cexpr a:output'
+        exe cmd
+        call setqflist([], 'a', {'title' : ' task output'})
+        copen
+      endif
+    finally
+      let &errorformat = olderrformat
+    endtry
+  endif
 endfunction
 
 function! s:on_backgroud_stdout(job_id, data, event) abort
