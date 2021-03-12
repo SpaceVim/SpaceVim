@@ -1923,8 +1923,8 @@ is based on on `project_rooter_patterns` option, and the default value is:
     project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
 ```
 
-The project manager will find outermost directory by default, to find nearest directory,
-you need to change `project_rooter_outermost` to `false`.
+The project manager will find the outermost directory by default. To find the nearest directory instead,
+you need to change `project_rooter_outermost` to `false`:
 
 ```toml
 [options]
@@ -1932,14 +1932,22 @@ you need to change `project_rooter_outermost` to `false`.
     project_rooter_outermost = false
 ```
 
-Sometimes we want to ignore some directorys when detect the project root directory.
-add a `!` prefix before the pattern.
+Sometimes we want to ignore some directories when detecting the project root directory.
+Add a `!` prefix before the pattern.
 For example, ignore `node_packages/` directory:
 
 ```toml
 [options]
     project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/', '!node_packages/']
     project_rooter_outermost = false
+```
+
+You can also disable project root detection completely (i.e. vim will set the
+root directory to the present working directory):
+
+```toml
+[options]
+    project_rooter_automatically = false
 ```
 
 Project manager commands start with `p`:
