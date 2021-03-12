@@ -440,6 +440,9 @@ function! s:run_backgroud(cmd, ...) abort
   let opts = get(a:000, 0, {})
   let s:start_time = reltime()
   let problemMatcher = get(a:000, 1, {})
+  if !has_key(problemMatcher, 'errorformat') && !has_key(problemMatcher, 'regexp')
+    call extend(problemMatcher, {'errorformat' : &errorformat})
+  endif
   let task_id = s:JOB.start(a:cmd,extend({
         \ 'on_stdout' : function('s:on_backgroud_stdout'),
         \ 'on_exit' : function('s:on_backgroud_exit'),
