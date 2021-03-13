@@ -406,18 +406,22 @@ endfunction
 
 function! s:match_problems(output, matcher) abort
   if has_key(a:matcher, 'pattern')
+    let pattern = a:matcher.pattern
     let items = []
     for line in a:output
-      let rst = matchlist(line, a:matcher.pattern.regexp)
-      let file = rst[a:matcher.pattern.file]
-      let line = rst[a:matcher.pattern.line]
-      let column = rst[a:matcher.pattern.column]
-      let message = rst[a:matcher.pattern.message]
-      call add(items, {
-            \ 'filename' : file,
-            \ 'lnum' : line,
-            \ 'text' : message,
-            \ })
+      let rst = matchlist(line, pattern.regexp)
+      let file = get(rst, get(pattern, 'file', 1), '')
+      let line = get(rst, get(pattern, 'line', 2), 1)
+      let column = get(rst, get(pattern, 'column', 3), 1)
+      let message = get(rst, get(pattern, 'message', 4), '')
+      if !empty(file)
+        call add(items, {
+              \ 'filename' : file,
+              \ 'lnum' : line,
+              \ 'col' : column,
+              \ 'text' : message,
+              \ })
+      endif
     endfor
     call setqflist([], 'r', {'title' : ' task output',
           \ 'items' : items,
