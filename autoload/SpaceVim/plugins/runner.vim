@@ -35,6 +35,7 @@ let s:status = {
       \ }
 
 let s:task_stdout = {}
+let s:task_stderr = {}
 let s:task_problem_matcher = {}
 
 function! s:open_win() abort
@@ -449,12 +450,21 @@ function! s:on_backgroud_stdout(job_id, data, event) abort
   let s:task_stdout['task' . a:job_id] = data
 endfunction
 
+function! s:on_backgroud_stderr(job_id, data, event) abort
+  let data = get(s:task_stderr, 'task' . a:job_id, []) + a:data
+  let s:task_stderr['task' . a:job_id] = data
+endfunction
+
 function! s:on_backgroud_exit(job_id, data, event) abort
   let s:end_time = reltime(s:start_time)
-  let task_stdout = get(s:task_stdout, 'task' . a:job_id, [])
   let task_problem_matcher = get(s:task_problem_matcher, 'task' . a:job_id, {})
-  if !empty(task_problem_matcher) && !empty(task_stdout)
-    call s:match_problems(task_stdout, task_problem_matcher)
+  if get(task_problem_matcher, 'useStdout', 0)
+    let output = get(s:task_stdout, 'task' . a:job_id, [])
+  else
+    let output = get(s:task_stderr, 'task' . a:job_id, [])
+  endif
+  if !empty(task_problem_matcher) && !empty(output)
+    call s:match_problems(output, task_problem_matcher)
   endif
   let exit_code = a:data
   echo 'task finished with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds'
