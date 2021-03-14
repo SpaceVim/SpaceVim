@@ -2108,6 +2108,19 @@ Problem matcher is used to capture the message in the task output
 and show a corresponding problem in quickfix windows.
 
 `problemMatcher` supports `errorformat` and `pattern` property.
+
+If `errorformat` property is not defined, `&errorformat` option
+will be used.
+
+```toml
+[tesk_errorformat]
+    command = "echo"
+    args = ['.SpaceVim.d/tasks.toml:6:1 test error message']
+    isBackground = true
+[tesk_errorformat.problemMatcher]
+    errorformat = '%f:%l:%c\ %m'
+```
+
 If `pattern` is defined, the `errorformat` option will be ignored.
 Here is an example:
 
