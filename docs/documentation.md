@@ -84,6 +84,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Bookmarks management](#bookmarks-management)
   - [Tasks](#tasks)
     - [Custom tasks](#custom-tasks)
+    - [Task Problems Matcher](#task-problems-matcher)
     - [Task auto-detection](#task-auto-detection)
     - [Task provider](#task-provider)
   - [Replace text with iedit](#replace-text-with-iedit)
@@ -2074,6 +2075,7 @@ The task's properties have the following semantic:
 - **isBackground**: `true` or `false`, specifies whether background running is required,
   by default, it is `false`.
 - **description**: short description of the task
+- **problemMatcher**: problems matcher of the task 
 
 When start a new task, it will kill the previous task. If you want to keep the task
 run in background, set `isBackground` to `true`.
@@ -2108,6 +2110,41 @@ So you will have the following values for each variable:
 - **\${fileDirname}**: - `/home/your-username/your-project/folder/`
 - **\${fileExtname}**: - `.ext`
 - **\${lineNumber}**: - line number of the cursor
+
+#### Task Problems Matcher
+
+Problem matcher is used to capture the message in the task output 
+and show a corresponding problem in quickfix windows.
+
+`problemMatcher` supports `errorformat` and `pattern` property.
+
+If `errorformat` property is not defined, `&errorformat` option
+will be used.
+
+```toml
+[tesk_errorformat]
+    command = "echo"
+    args = ['.SpaceVim.d/tasks.toml:6:1 test error message']
+    isBackground = true
+[tesk_errorformat.problemMatcher]
+    errorformat = '%f:%l:%c\ %m'
+```
+
+If `pattern` is defined, the `errorformat` option will be ignored.
+Here is an example:
+
+```toml
+[test_regexp]
+    command = "echo"
+    args = ['.SpaceVim.d/tasks.toml:12:1 test error message']
+    isBackground = true
+[test_regexp.problemMatcher.pattern]
+      regexp = '\(.*\):\(\d\+\):\(\d\+\)\s\(\S.*\)'
+      file = 1
+      line = 2
+      column = 3
+      message = 4
+```
 
 #### Task auto-detection
 

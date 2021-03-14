@@ -34,6 +34,10 @@ let s:status = {
       \ 'exit_code' : 0
       \ }
 
+let s:task_stdout = {}
+let s:task_stderr = {}
+let s:task_problem_matcher = {}
+
 function! s:open_win() abort
   if s:bufnr !=# 0 && bufexists(s:bufnr) && index(tabpagebuflist(), s:bufnr) !=# -1
     return
@@ -78,7 +82,7 @@ function! s:async_run(runner, ...) abort
     catch
       let cmd = a:runner
     endtry
-    call SpaceVim#logger#info('   cmd:' . string(cmd))
+    call s:LOGGER.info('   cmd:' . string(cmd))
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , -1, 0, ['[Running] ' . cmd, '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
@@ -156,7 +160,7 @@ function! s:async_run(runner, ...) abort
     else
       let cmd = exe + a:runner.opt + [get(s:, 'selected_file', bufname('%'))]
     endif
-    call SpaceVim#logger#info('   cmd:' . string(cmd))
+    call s:LOGGER.info('   cmd:' . string(cmd))
     call s:BUFFER.buf_set_lines(s:bufnr, s:lines , -1, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
     let s:lines += 3
     let s:start_time = reltime()
@@ -342,8 +346,8 @@ function! SpaceVim#plugins#runner#select_file() abort
   let runner = get(a:000, 0, get(s:runners, &filetype, ''))
   let s:selected_language = &filetype
   if !empty(runner)
-    call SpaceVim#logger#info('Code runner startting:')
-    call SpaceVim#logger#info('selected file :' . s:selected_file)
+    call s:LOGGER.info('Code runner startting:')
+    call s:LOGGER.info('selected file :' . s:selected_file)
     call s:open_win()
     call s:async_run(runner)
     call s:update_statusline()
@@ -392,16 +396,76 @@ function! SpaceVim#plugins#runner#run_task(task) abort
     if !empty(opts) && has_key(opts, 'env') && !empty(opts.env)
       call extend(opt, {'env' : opts.env})
     endif
+    let problemMatcher = get(a:task, 'problemMatcher', {})
     if isBackground
-      call s:run_backgroud(cmd, opt)
+      call s:run_backgroud(cmd, opt, problemMatcher)
     else
-      call SpaceVim#plugins#runner#open(cmd, opt) 
+      call SpaceVim#plugins#runner#open(cmd, opt, problemMatcher) 
     endif
   endif
 endfunction
 
+function! s:match_problems(output, matcher) abort
+  if has_key(a:matcher, 'pattern')
+    let pattern = a:matcher.pattern
+    let items = []
+    for line in a:output
+      let rst = matchlist(line, pattern.regexp)
+      let file = get(rst, get(pattern, 'file', 1), '')
+      let line = get(rst, get(pattern, 'line', 2), 1)
+      let column = get(rst, get(pattern, 'column', 3), 1)
+      let message = get(rst, get(pattern, 'message', 4), '')
+      if !empty(file)
+        call add(items, {
+              \ 'filename' : file,
+              \ 'lnum' : line,
+              \ 'col' : column,
+              \ 'text' : message,
+              \ })
+      endif
+    endfor
+    call setqflist([], 'r', {'title' : ' task output',
+          \ 'items' : items,
+          \ })
+    copen
+    copen
+  else
+    try
+      let olderrformat = &errorformat
+      if has_key(a:matcher, 'errorformat')
+        let &errorformat = a:matcher.errorformat
+        let cmd = 'noautocmd cexpr a:output'
+        exe cmd
+        call setqflist([], 'a', {'title' : ' task output'})
+        copen
+      endif
+    finally
+      let &errorformat = olderrformat
+    endtry
+  endif
+endfunction
+
+function! s:on_backgroud_stdout(job_id, data, event) abort
+  let data = get(s:task_stdout, 'task' . a:job_id, []) + a:data
+  let s:task_stdout['task' . a:job_id] = data
+endfunction
+
+function! s:on_backgroud_stderr(job_id, data, event) abort
+  let data = get(s:task_stderr, 'task' . a:job_id, []) + a:data
+  let s:task_stderr['task' . a:job_id] = data
+endfunction
+
 function! s:on_backgroud_exit(job_id, data, event) abort
   let s:end_time = reltime(s:start_time)
+  let task_problem_matcher = get(s:task_problem_matcher, 'task' . a:job_id, {})
+  if get(task_problem_matcher, 'useStdout', 0)
+    let output = get(s:task_stdout, 'task' . a:job_id, [])
+  else
+    let output = get(s:task_stderr, 'task' . a:job_id, [])
+  endif
+  if !empty(task_problem_matcher) && !empty(output)
+    call s:match_problems(output, task_problem_matcher)
+  endif
   let exit_code = a:data
   echo 'task finished with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds'
 endfunction
@@ -410,7 +474,13 @@ function! s:run_backgroud(cmd, ...) abort
   echo 'task running'
   let opts = get(a:000, 0, {})
   let s:start_time = reltime()
-  call s:JOB.start(a:cmd,extend({
+  let problemMatcher = get(a:000, 1, {})
+  if !has_key(problemMatcher, 'errorformat') && !has_key(problemMatcher, 'regexp')
+    call extend(problemMatcher, {'errorformat' : &errorformat})
+  endif
+  let task_id = s:JOB.start(a:cmd,extend({
+        \ 'on_stdout' : function('s:on_backgroud_stdout'),
         \ 'on_exit' : function('s:on_backgroud_exit'),
         \ }, opts))
+  call extend(s:task_problem_matcher, {'task' . task_id : problemMatcher})
 endfunction

@@ -84,7 +84,8 @@ function! SpaceVim#plugins#iedit#start(...) abort
     let curpos = getcurpos()
     let argv = get(a:000, 0, '')
     let save_reg_k = @k
-    " what the fuck, why register " is cleared.
+    " the register " is cleared
+    " save the register context before run following command
     let save_reg_default = @"
     let use_expr = 0
     if !empty(argv) && type(argv) == 4
