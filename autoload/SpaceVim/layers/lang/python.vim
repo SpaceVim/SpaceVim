@@ -85,7 +85,7 @@ function! SpaceVim#layers#lang#python#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
   call SpaceVim#layers#edit#add_ft_head_tamplate('python', s:python_file_head)
   if executable('ipython')
-    call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title')
+    call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title --colors=NoColor')
   elseif executable('python')
     call SpaceVim#plugins#repl#reg('python', ['python', '-i'])
   endif
