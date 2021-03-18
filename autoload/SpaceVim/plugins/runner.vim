@@ -34,6 +34,8 @@ let s:status = {
       \ 'exit_code' : 0
       \ }
 
+
+let s:task_status = {}
 let s:task_stdout = {}
 let s:task_stderr = {}
 let s:task_problem_matcher = {}
@@ -471,7 +473,12 @@ function! s:on_backgroud_exit(job_id, data, event) abort
 endfunction
 
 function! s:run_backgroud(cmd, ...) abort
-  echo 'task running'
+  " how many tasks are running?
+  "
+  " echo 'tasks: 1 running, 2 done'
+  let running_nr = len(filter(values(s:task_status), 'v:val.is_running')) + 1
+  let running_done = len(filter(values(s:task_status), '!v:val.is_running'))
+  echo printf('tasks: %s running, %s done', running_nr, running_done)
   let opts = get(a:000, 0, {})
   let s:start_time = reltime()
   let problemMatcher = get(a:000, 1, {})
@@ -483,4 +490,9 @@ function! s:run_backgroud(cmd, ...) abort
         \ 'on_exit' : function('s:on_backgroud_exit'),
         \ }, opts))
   call extend(s:task_problem_matcher, {'task' . task_id : problemMatcher})
+  call extend(s:task_status, {'task' . task_id : { 
+        \ 'is_running' : 1,
+        \ 'has_errors' : 0,
+        \ 'exit_code' : 0
+        \ }})
 endfunction
