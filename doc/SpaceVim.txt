@@ -216,8 +216,8 @@ will also be added to runtimepath.
 here is an example setting SpaceVim options:
 >
   [options]
-    enable-guicolors = true
-    max-column = 120
+    enable_guicolors = true
+    max_column = 120
 <
 
 ==============================================================================
@@ -238,7 +238,7 @@ Set the autocomplete engine of spacevim, the default logic is:
   endif
 <
 
-and you can alse set this option to coc, then coc.nvim will be used.
+and you can also set this option to coc, then coc.nvim will be used.
 
 ==============================================================================
 AUTOCOMPLETE_PARENS                     *SpaceVim-options-autocomplete_parens*
