@@ -54,6 +54,8 @@ function! SpaceVim#layers#lang#typescript#config() abort
         \ function('s:go_to_typescriptreact_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('typescript',
         \ function('s:on_typescript_ft'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('typescriptreact',
+        \ function('s:on_typescript_ft'))
   call SpaceVim#plugins#repl#reg('typescript', ['ts-node', '-i'])
   call SpaceVim#plugins#runner#reg_runner('typescript', {
         \ 'exe' : 'ts-node',
