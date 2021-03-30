@@ -111,6 +111,12 @@ function! s:on_typescript_ft() abort
             \ 'preview definition', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'], 'TSType',
             \ 'view type', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'R'], 'TSRefs',
+            \ 'show reference', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'D'], 'TSGetDiagnostics',
+            \ 'show errors', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'o'], 'TSOrganizeImports',
+            \ 'organizes imports', 1)            
     else
       nnoremap <silent><buffer> gD :<C-u>TsuTypeDefinition<Cr>
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TsuquyomiSignatureHelp',
