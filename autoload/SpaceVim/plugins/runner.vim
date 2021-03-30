@@ -458,7 +458,13 @@ function! s:on_backgroud_stderr(job_id, data, event) abort
 endfunction
 
 function! s:on_backgroud_exit(job_id, data, event) abort
-  let s:end_time = reltime(s:start_time)
+  let task_status = get(s:task_status, 'task' . a:job_id, { 
+        \ 'is_running' : 0,
+        \ 'has_errors' : 0,
+        \ 'start_time' : 0,
+        \ 'exit_code' : 0
+        \ })
+  let end_time = reltime(task_status.start_time)
   let task_problem_matcher = get(s:task_problem_matcher, 'task' . a:job_id, {})
   if get(task_problem_matcher, 'useStdout', 0)
     let output = get(s:task_stdout, 'task' . a:job_id, [])
@@ -468,8 +474,7 @@ function! s:on_backgroud_exit(job_id, data, event) abort
   if !empty(task_problem_matcher) && !empty(output)
     call s:match_problems(output, task_problem_matcher)
   endif
-  let exit_code = a:data
-  echo 'task finished with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds'
+  echo 'task finished with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(end_time)) . ' seconds'
 endfunction
 
 function! s:run_backgroud(cmd, ...) abort
@@ -480,7 +485,9 @@ function! s:run_backgroud(cmd, ...) abort
   let running_done = len(filter(values(s:task_status), '!v:val.is_running'))
   echo printf('tasks: %s running, %s done', running_nr, running_done)
   let opts = get(a:000, 0, {})
+  " this line can not be removed.
   let s:start_time = reltime()
+  let start_time = reltime()
   let problemMatcher = get(a:000, 1, {})
   if !has_key(problemMatcher, 'errorformat') && !has_key(problemMatcher, 'regexp')
     call extend(problemMatcher, {'errorformat' : &errorformat})
@@ -493,6 +500,7 @@ function! s:run_backgroud(cmd, ...) abort
   call extend(s:task_status, {'task' . task_id : { 
         \ 'is_running' : 1,
         \ 'has_errors' : 0,
+        \ 'start_time' : start_time,
         \ 'exit_code' : 0
         \ }})
 endfunction
