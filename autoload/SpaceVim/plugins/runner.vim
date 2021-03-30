@@ -317,7 +317,7 @@ endfunction
 
 
 function! SpaceVim#plugins#runner#status() abort
-  let running_nr = len(filter(values(s:task_status), 'v:val.is_running')) + 1
+  let running_nr = len(filter(values(s:task_status), 'v:val.is_running'))
   let running_done = len(filter(values(s:task_status), '!v:val.is_running'))
   return printf(' %s running, %s done', running_nr, running_done)
 endfunction
@@ -505,5 +505,9 @@ function! s:run_backgroud(cmd, ...) abort
 endfunction
 
 function! SpaceVim#plugins#runner#clear_tasks() abort
-  call filter(s:task_status, '!v:val[v:key].is_running')
+  for taskid in keys(s:task_status)
+    if s:task_status[taskid].is_running ==# 1
+      call remove(s:task_status, taskid)
+    endif
+  endfor
 endfunction
