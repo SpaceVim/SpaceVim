@@ -503,3 +503,7 @@ function! s:run_backgroud(cmd, ...) abort
         \ 'exit_code' : 0
         \ }})
 endfunction
+
+function! SpaceVim#plugins#runner#clear_tasks() abort
+  call filter(s:task_status, '!v:val[v:key].is_running')
+endfunction
