@@ -2122,11 +2122,12 @@ If `errorformat` property is not defined, `&errorformat` option
 will be used.
 
 ```toml
-[tesk_errorformat]
+[test_problemMatcher]
     command = "echo"
     args = ['.SpaceVim.d/tasks.toml:6:1 test error message']
     isBackground = true
-[tesk_errorformat.problemMatcher]
+[test_problemMatcher.problemMatcher]
+    useStdout = true
     errorformat = '%f:%l:%c\ %m'
 ```
 
@@ -2138,11 +2139,14 @@ Here is an example:
     command = "echo"
     args = ['.SpaceVim.d/tasks.toml:12:1 test error message']
     isBackground = true
+[test_regexp.problemMatcher]
+    useStdout = true
 [test_regexp.problemMatcher.pattern]
       regexp = '\(.*\):\(\d\+\):\(\d\+\)\s\(\S.*\)'
       file = 1
       line = 2
       column = 3
+      #severity = 4
       message = 4
 ```
 

@@ -14,7 +14,6 @@
     command = "echo"
     args = ['.SpaceVim.d/tasks.toml:12:1 test error message']
     isBackground = true
-    useStdout = true
 [test_regexp.problemMatcher]
     useStdout = true
 [test_regexp.problemMatcher.pattern]
