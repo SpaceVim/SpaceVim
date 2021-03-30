@@ -317,7 +317,7 @@ endfunction
 
 
 function! SpaceVim#plugins#runner#status() abort
-  let running_nr = len(filter(values(s:task_status), 'v:val.is_running'))
+  let running_nr = len(filter(values(s:task_status), 'v:val.is_running')) + s:runner_status.is_running
   let running_done = len(filter(values(s:task_status), '!v:val.is_running'))
   return printf(' %s running, %s done', running_nr, running_done)
 endfunction
