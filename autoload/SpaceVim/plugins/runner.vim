@@ -314,13 +314,11 @@ endfunction
 " @vimlint(EVL103, 0, a:data)
 " @vimlint(EVL103, 0, a:event)
 
+
 function! SpaceVim#plugins#runner#status() abort
-  if s:status.is_running == 0 && exists('s:end_time')
-    return 'exit code : ' . s:status.exit_code 
-          \ . '    time: ' . s:STRING.trim(reltimestr(s:end_time))
-          \ . '    language: ' . get(s:, 'selected_language', &ft)
-  endif
-  return ''
+  let running_nr = len(filter(values(s:task_status), 'v:val.is_running')) + 1
+  let running_done = len(filter(values(s:task_status), '!v:val.is_running'))
+  return printf(' %s running, %s done', running_nr, running_done)
 endfunction
 
 function! s:close() abort
