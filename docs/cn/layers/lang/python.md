@@ -108,19 +108,21 @@ pip install --user coverage
 
 ## 模块设置
 
-默认情况下，当新建一个空白 python 文件时，会自动添加文件头，如果需要修改默认的文件头样式，
-可以通过设置 `python_file_head` 选项：
+- `python_file_head`: 设置默认的 Python 文件头信息模板。
 
-```toml
-[[layers]]
-  name = "lang#python"
-  python_file_head = [
-      '#!/usr/bin/env python',
-      '# -*- coding: utf-8 -*-',
-      '',
-      ''
-  ]
-```
+  默认情况下，当新建一个空白 python 文件时，会自动添加文件头，如果需要修改默认的文件头样式，
+  可以通过设置 `python_file_head` 选项：
+
+  ```toml
+  [[layers]]
+    name = "lang#python"
+    python_file_head = [
+        '#!/usr/bin/env python',
+        '# -*- coding: utf-8 -*-',
+        '',
+        ''
+    ]
+  ```
 
 默认自动补全是不显示类型信息，因为这会让补全变得比较慢，如果需要显示，可以启用 `enable_typeinfo` 选项：
 
@@ -129,6 +131,22 @@ pip install --user coverage
   name = "lang#python"
   enable_typeinfo = true
 ```
+
+- `format_on_save`: 启用或者禁用文件保存时的自动格式化，默认为禁用状态，
+  若想启用这一功能，可以使用如下配置：
+  ```toml
+  [[layers]]
+      name = 'lang#python'
+      format_on_save = true
+  ```
+
+- `python_interpreter`: 设置 python 的可执行命令路劲，默认值为 `python3`，该选项的值将被应用于
+  `g:neomake_python_python_exe` 和代码快速运行器。
+  ```toml
+  [[layers]]
+      name = 'lang#python'
+      python_interpreter = 'D:\scoop\shims\python.exe'
+  ```
 
 ## 快捷键
 
