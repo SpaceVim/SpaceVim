@@ -74,9 +74,6 @@ function! s:insert() abort
   call inputrestore()
 endfunction
 
-
-let s:running_cmd = ''
-
 function! s:async_run(runner, ...) abort
   if type(a:runner) == type('')
     " the runner is a string, the %s will be replaced as a file name.
@@ -187,9 +184,6 @@ function! s:async_run(runner, ...) abort
   endif
 endfunction
 
-" @vimlint(EVL103, 1, a:id)
-" @vimlint(EVL103, 1, a:data)
-" @vimlint(EVL103, 1, a:event)
 function! s:on_compile_exit(id, data, event) abort
   if a:id !=# s:runner_jobid
     " make sure the compile exit callback is for current compile command.
@@ -217,9 +211,6 @@ function! s:on_compile_exit(id, data, event) abort
   endif
   call s:update_statusline()
 endfunction
-" @vimlint(EVL103, 0, a:id)
-" @vimlint(EVL103, 0, a:data)
-" @vimlint(EVL103, 0, a:event)
 
 function! s:update_statusline() abort
   redrawstatus!
