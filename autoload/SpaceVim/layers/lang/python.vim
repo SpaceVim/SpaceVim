@@ -20,7 +20,7 @@ if exists('s:enabled_linters')
   finish
 endif
 
-let s:enabled_linters = ['python', 'flake8']
+let s:enabled_linters = ['python']
 let s:format_on_save = 0
 let s:python_file_head = [
       \ '#!/usr/bin/env python',
