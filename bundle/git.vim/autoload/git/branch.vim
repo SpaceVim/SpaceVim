@@ -1,5 +1,14 @@
+"=============================================================================
+" branch.vim --- branch action of git.vim
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 let s:JOB = SpaceVim#api#import('job')
 let s:STR = SpaceVim#api#import('data#string')
+
 
 function! git#branch#run(args) abort
   if len(a:args) == 0
@@ -47,11 +56,14 @@ function! git#branch#complete(ArgLead, CmdLine, CursorPos) abort
 endfunction
 
 let s:branch = ''
-function! s:update_branch_name() abort
+let s:branch_info = {}
+
+function! s:update_branch_name(pwd) abort
   let cmd = 'git rev-parse --abbrev-ref HEAD'
   call s:JOB.start(cmd,
         \ {
         \ 'on_stdout' : function('s:on_stdout_show_branch'),
+        \ 'cwd' : a:pwd,
         \ }
         \ )
 endfunction
@@ -62,12 +74,14 @@ function! s:on_stdout_show_branch(id, data, event) abort
   endif
 endfunction
 function! git#branch#current() abort
-  if empty(s:branch)
-    call s:update_branch_name()
+  let pwd = getcwd()
+  let branch = get(s:branch_info, pwd, '')
+  if empty(branch)
+    call s:update_branch_name(pwd)
   endif
-  return s:branch
+  return branch
 endfunction
 
 function! git#branch#detect() abort
-  call s:update_branch_name()
+  call s:update_branch_name(getcwd())
 endfunction
