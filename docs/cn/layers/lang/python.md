@@ -148,6 +148,14 @@ pip install --user coverage
       python_interpreter = 'D:\scoop\shims\python.exe'
   ```
 
+- `python_linters`: 设置 python 语言默认的语法检查工具，默认是 `['python']`，你也可以修改该选项为
+  `['python', 'pylint']`。
+  ```toml
+  [[layers]]
+    name = 'lang#python'
+    enabled_linters = ['python', 'pylint']
+  ```
+
 ## 快捷键
 
 ### 跳至定义处
