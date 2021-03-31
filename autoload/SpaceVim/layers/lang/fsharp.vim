@@ -38,7 +38,7 @@ endfunction
 function! SpaceVim#layers#lang#fsharp#config() abort
   " @todo add code runner support for fsharp
   call SpaceVim#plugins#repl#reg('fsharp', ['fsharpi', '--readline-'])
-  call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('fsharp', function('s:language_specified_mappings'))
 endfunction
 function! s:language_specified_mappings() abort
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
