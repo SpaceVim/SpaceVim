@@ -24,7 +24,7 @@ jobs:
               # - vimbin: nvim
                 # vimtag: v0.4.4
                 # vimtag: ["v0.4.3", "v0.4.3", "v0.4.3", "v0.4.2", "v0.3.8", "v0.3.7", "v0.3.5", "v0.3.4", "v0.3.3", "v0.3.2", "v0.3.1", "v0.3.0"]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     env:
         VIM_BIN: ${{ matrix.vimbin }}
         VIM_TAG: ${{ matrix.vimtag }}

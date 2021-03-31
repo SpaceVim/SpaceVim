@@ -22,24 +22,27 @@ let s:LOGGER =SpaceVim#logger#derive('runner')
 "
 "
 
-let s:bufnr = 0
+" the buffer number of code runner
+let s:code_runner_bufnr = 0
 " @fixme win_getid requires vim 7.4.1557
 let s:winid = -1
 let s:target = ''
-let s:lines = 0
+let s:runner_lines = 0
 let s:runner_jobid = 0
-let s:status = {
+let s:runner_status = {
       \ 'is_running' : 0,
       \ 'has_errors' : 0,
       \ 'exit_code' : 0
       \ }
 
+
+let s:task_status = {}
 let s:task_stdout = {}
 let s:task_stderr = {}
 let s:task_problem_matcher = {}
 
 function! s:open_win() abort
-  if s:bufnr !=# 0 && bufexists(s:bufnr) && index(tabpagebuflist(), s:bufnr) !=# -1
+  if s:code_runner_bufnr !=# 0 && bufexists(s:code_runner_bufnr) && index(tabpagebuflist(), s:code_runner_bufnr) !=# -1
     return
   endif
   botright split __runner__
@@ -54,7 +57,7 @@ function! s:open_win() abort
     autocmd!
     autocmd BufWipeout <buffer> call <SID>stop_runner()
   augroup END
-  let s:bufnr = bufnr('%')
+  let s:code_runner_bufnr = bufnr('%')
   if exists('*win_getid')
     let s:winid = win_getid(winnr())
   endif
@@ -64,15 +67,12 @@ endfunction
 function! s:insert() abort
   call inputsave()
   let input = input('input >')
-  if !empty(input) && s:status.is_running == 1
+  if !empty(input) && s:runner_status.is_running == 1
     call s:JOB.send(s:runner_jobid, input)
   endif
   normal! :
   call inputrestore()
 endfunction
-
-
-let s:running_cmd = ''
 
 function! s:async_run(runner, ...) abort
   if type(a:runner) == type('')
@@ -83,8 +83,8 @@ function! s:async_run(runner, ...) abort
       let cmd = a:runner
     endtry
     call s:LOGGER.info('   cmd:' . string(cmd))
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , -1, 0, ['[Running] ' . cmd, '', repeat('-', 20)])
-    let s:lines += 3
+    call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , -1, 0, ['[Running] ' . cmd, '', repeat('-', 20)])
+    let s:runner_lines += 3
     let s:start_time = reltime()
     let opts = get(a:000, 0, {})
     let s:runner_jobid =  s:JOB.start(cmd,extend({
@@ -123,12 +123,12 @@ function! s:async_run(runner, ...) abort
     else
       let compile_cmd_info = compile_cmd . (usestdin ? ' STDIN' : '') 
     endif
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , -1, 0, [
+    call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , -1, 0, [
           \ '[Compile] ' . compile_cmd_info,
           \ '[Running] ' . s:target,
           \ '',
           \ repeat('-', 20)])
-    let s:lines += 4
+    let s:runner_lines += 4
     let s:start_time = reltime()
     let s:runner_jobid =  s:JOB.start(compile_cmd,{
           \ 'on_stdout' : function('s:on_stdout'),
@@ -161,8 +161,8 @@ function! s:async_run(runner, ...) abort
       let cmd = exe + a:runner.opt + [get(s:, 'selected_file', bufname('%'))]
     endif
     call s:LOGGER.info('   cmd:' . string(cmd))
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , -1, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
-    let s:lines += 3
+    call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , -1, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
+    let s:runner_lines += 3
     let s:start_time = reltime()
     let s:runner_jobid =  s:JOB.start(cmd,{
           \ 'on_stdout' : function('s:on_stdout'),
@@ -176,7 +176,7 @@ function! s:async_run(runner, ...) abort
     endif
   endif
   if s:runner_jobid > 0
-    let s:status = {
+    let s:runner_status = {
           \ 'is_running' : 1,
           \ 'has_errors' : 0,
           \ 'exit_code' : 0
@@ -184,9 +184,6 @@ function! s:async_run(runner, ...) abort
   endif
 endfunction
 
-" @vimlint(EVL103, 1, a:id)
-" @vimlint(EVL103, 1, a:data)
-" @vimlint(EVL103, 1, a:event)
 function! s:on_compile_exit(id, data, event) abort
   if a:id !=# s:runner_jobid
     " make sure the compile exit callback is for current compile command.
@@ -199,7 +196,7 @@ function! s:on_compile_exit(id, data, event) abort
           \ 'on_exit' : function('s:on_exit'),
           \ })
     if s:runner_jobid > 0
-      let s:status = {
+      let s:runner_status = {
             \ 'is_running' : 1,
             \ 'has_errors' : 0,
             \ 'exit_code' : 0
@@ -207,16 +204,13 @@ function! s:on_compile_exit(id, data, event) abort
     endif
   else
     let s:end_time = reltime(s:start_time)
-    let s:status.is_running = 0
-    let s:status.exit_code = a:data
+    let s:runner_status.is_running = 0
+    let s:runner_status.exit_code = a:data
     let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
+    call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , s:runner_lines + 1, 0, done)
   endif
   call s:update_statusline()
 endfunction
-" @vimlint(EVL103, 0, a:id)
-" @vimlint(EVL103, 0, a:data)
-" @vimlint(EVL103, 0, a:event)
 
 function! s:update_statusline() abort
   redrawstatus!
@@ -238,8 +232,8 @@ endfunction
 function! SpaceVim#plugins#runner#open(...) abort
   call s:stop_runner()
   let s:runner_jobid = 0
-  let s:lines = 0
-  let s:status = {
+  let s:runner_lines = 0
+  let s:runner_status = {
         \ 'is_running' : 0,
         \ 'has_errors' : 0,
         \ 'exit_code' : 0
@@ -265,12 +259,12 @@ function! s:on_stdout(job_id, data, event) abort
     " this is previous runner exit_callback
     return
   endif
-  if bufexists(s:bufnr)
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+  if bufexists(s:code_runner_bufnr)
+    call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , s:runner_lines + 1, 0, a:data)
   endif
-  let s:lines += len(a:data)
+  let s:runner_lines += len(a:data)
   if s:winid >= 0
-    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:code_runner_bufnr), 1])
   endif
   call s:update_statusline()
 endfunction
@@ -281,13 +275,13 @@ function! s:on_stderr(job_id, data, event) abort
     " this is previous runner exit_callback
     return
   endif
-  let s:status.has_errors = 1
-  if bufexists(s:bufnr)
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, a:data)
+  let s:runner_status.has_errors = 1
+  if bufexists(s:code_runner_bufnr)
+    call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , s:runner_lines + 1, 0, a:data)
   endif
-  let s:lines += len(a:data)
+  let s:runner_lines += len(a:data)
   if s:winid >= 0
-    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:code_runner_bufnr), 1])
   endif
   call s:update_statusline()
 endfunction
@@ -299,12 +293,12 @@ function! s:on_exit(job_id, data, event) abort
     return
   endif
   let s:end_time = reltime(s:start_time)
-  let s:status.is_running = 0
-  let s:status.exit_code = a:data
+  let s:runner_status.is_running = 0
+  let s:runner_status.exit_code = a:data
   let done = ['', '[Done] exited with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds']
-  if bufexists(s:bufnr)
-    call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 1, 0, done)
-    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:bufnr), 1])
+  if bufexists(s:code_runner_bufnr)
+    call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , s:runner_lines + 1, 0, done)
+    call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:code_runner_bufnr), 1])
     call s:update_statusline()
   endif
 endfunction
@@ -312,31 +306,29 @@ endfunction
 " @vimlint(EVL103, 0, a:data)
 " @vimlint(EVL103, 0, a:event)
 
+
 function! SpaceVim#plugins#runner#status() abort
-  if s:status.is_running == 0 && exists('s:end_time')
-    return 'exit code : ' . s:status.exit_code 
-          \ . '    time: ' . s:STRING.trim(reltimestr(s:end_time))
-          \ . '    language: ' . get(s:, 'selected_language', &ft)
-  endif
-  return ''
+  let running_nr = len(filter(values(s:task_status), 'v:val.is_running')) + s:runner_status.is_running
+  let running_done = len(filter(values(s:task_status), '!v:val.is_running'))
+  return printf(' %s running, %s done', running_nr, running_done)
 endfunction
 
 function! s:close() abort
   call s:stop_runner()
-  if s:bufnr != 0 && bufexists(s:bufnr)
-    exe 'bd ' s:bufnr
+  if s:code_runner_bufnr != 0 && bufexists(s:code_runner_bufnr)
+    exe 'bd ' s:code_runner_bufnr
   endif
 endfunction
 
 function! s:stop_runner() abort
-  if s:status.is_running == 1
+  if s:runner_status.is_running == 1
     call s:JOB.stop(s:runner_jobid)
   endif
 endfunction
 
 function! SpaceVim#plugins#runner#select_file() abort
-  let s:lines = 0
-  let s:status = {
+  let s:runner_lines = 0
+  let s:runner_status = {
         \ 'is_running' : 0,
         \ 'is_exit' : 0,
         \ 'has_errors' : 0,
@@ -456,7 +448,13 @@ function! s:on_backgroud_stderr(job_id, data, event) abort
 endfunction
 
 function! s:on_backgroud_exit(job_id, data, event) abort
-  let s:end_time = reltime(s:start_time)
+  let task_status = get(s:task_status, 'task' . a:job_id, { 
+        \ 'is_running' : 0,
+        \ 'has_errors' : 0,
+        \ 'start_time' : 0,
+        \ 'exit_code' : 0
+        \ })
+  let end_time = reltime(task_status.start_time)
   let task_problem_matcher = get(s:task_problem_matcher, 'task' . a:job_id, {})
   if get(task_problem_matcher, 'useStdout', 0)
     let output = get(s:task_stdout, 'task' . a:job_id, [])
@@ -466,14 +464,20 @@ function! s:on_backgroud_exit(job_id, data, event) abort
   if !empty(task_problem_matcher) && !empty(output)
     call s:match_problems(output, task_problem_matcher)
   endif
-  let exit_code = a:data
-  echo 'task finished with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(s:end_time)) . ' seconds'
+  echo 'task finished with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(end_time)) . ' seconds'
 endfunction
 
 function! s:run_backgroud(cmd, ...) abort
-  echo 'task running'
+  " how many tasks are running?
+  "
+  " echo 'tasks: 1 running, 2 done'
+  let running_nr = len(filter(values(s:task_status), 'v:val.is_running')) + 1
+  let running_done = len(filter(values(s:task_status), '!v:val.is_running'))
+  echo printf('tasks: %s running, %s done', running_nr, running_done)
   let opts = get(a:000, 0, {})
+  " this line can not be removed.
   let s:start_time = reltime()
+  let start_time = reltime()
   let problemMatcher = get(a:000, 1, {})
   if !has_key(problemMatcher, 'errorformat') && !has_key(problemMatcher, 'regexp')
     call extend(problemMatcher, {'errorformat' : &errorformat})
@@ -483,4 +487,18 @@ function! s:run_backgroud(cmd, ...) abort
         \ 'on_exit' : function('s:on_backgroud_exit'),
         \ }, opts))
   call extend(s:task_problem_matcher, {'task' . task_id : problemMatcher})
+  call extend(s:task_status, {'task' . task_id : { 
+        \ 'is_running' : 1,
+        \ 'has_errors' : 0,
+        \ 'start_time' : start_time,
+        \ 'exit_code' : 0
+        \ }})
+endfunction
+
+function! SpaceVim#plugins#runner#clear_tasks() abort
+  for taskid in keys(s:task_status)
+    if s:task_status[taskid].is_running ==# 1
+      call remove(s:task_status, taskid)
+    endif
+  endfor
 endfunction
