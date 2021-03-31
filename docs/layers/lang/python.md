@@ -134,12 +134,20 @@ you need to add following snippet into your spacevim configuration file.
       format_on_save = true
   ```
 
-* `python_interpreter`: Set the python interpreter, by default, it is `python3`. The value of this option will
+- `python_interpreter`: Set the python interpreter, by default, it is `python3`. The value of this option will
   be apply to `g:neomake_python_python_exe` and code runner.
   ```toml
   [[layers]]
       name = 'lang#python'
       python_interpreter = 'D:\scoop\shims\python.exe'
+  ```
+
+- `python_linters`: Set the default linters for python language, by default it is `['python']`. You can change
+  it to `['python', 'pylint']`.
+  ```toml
+  [[layers]]
+    name = 'lang#python'
+    enabled_linters = ['python', 'pylint']
   ```
 
 ## Key bindings
