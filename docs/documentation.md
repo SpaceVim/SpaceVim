@@ -84,6 +84,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Bookmarks management](#bookmarks-management)
   - [Tasks](#tasks)
     - [Custom tasks](#custom-tasks)
+    - [Task Problems Matcher](#task-problems-matcher)
     - [Task auto-detection](#task-auto-detection)
     - [Task provider](#task-provider)
   - [Replace text with iedit](#replace-text-with-iedit)
@@ -528,25 +529,26 @@ Also note that changing this value has no effect if you are running Vim/Neovim i
 
 Some UI indicators can be toggled on and off (toggles start with t and T):
 
-| Key Bindings | Descriptions                                             |
-| ------------ | -------------------------------------------------------- |
-| `SPC t 8`    | highlight any character past the 80th column             |
-| `SPC t f`    | display the fill column (by default `max_column` is 120) |
-| `SPC t h h`  | toggle highlight of the current line                     |
-| `SPC t h i`  | toggle highlight indentation levels (TODO)               |
-| `SPC t h c`  | toggle highlight indentation current column              |
-| `SPC t h s`  | toggle syntax highlighting                               |
-| `SPC t i`    | toggle indentation guide at point                        |
-| `SPC t n`    | toggle line numbers                                      |
-| `SPC t b`    | toggle background                                        |
-| `SPC t c`    | toggle conceal                                           |
-| `SPC t p`    | toggle paste mode                                        |
-| `SPC t t`    | open tabs manager                                        |
-| `SPC T ~`    | display ~ in the fringe on empty lines                   |
-| `SPC T F`    | toggle frame fullscreen                                  |
-| `SPC T f`    | toggle display of the fringe                             |
-| `SPC T m`    | toggle menu bar                                          |
-| `SPC T t`    | toggle tool bar                                          |
+| Key Bindings | Descriptions                                                               |
+| ------------ | -------------------------------------------------------------------------- |
+| `SPC t 8`    | highlight any character past the 80th column                               |
+| `SPC t a`    | toggle autocomplete (only available with `autocomplete_method = deoplete`) |
+| `SPC t f`    | display the fill column (by default `max_column` is 120)                   |
+| `SPC t h h`  | toggle highlight of the current line                                       |
+| `SPC t h i`  | toggle highlight indentation levels (TODO)                                 |
+| `SPC t h c`  | toggle highlight indentation current column                                |
+| `SPC t h s`  | toggle syntax highlighting                                                 |
+| `SPC t i`    | toggle indentation guide at point                                          |
+| `SPC t n`    | toggle line numbers                                                        |
+| `SPC t b`    | toggle background                                                          |
+| `SPC t c`    | toggle conceal                                                             |
+| `SPC t p`    | toggle paste mode                                                          |
+| `SPC t t`    | open tabs manager                                                          |
+| `SPC T ~`    | display ~ in the fringe on empty lines                                     |
+| `SPC T F`    | toggle frame fullscreen                                                    |
+| `SPC T f`    | toggle display of the fringe                                               |
+| `SPC T m`    | toggle menu bar                                                            |
+| `SPC T t`    | toggle tool bar                                                            |
 
 ### Statusline
 
@@ -1922,8 +1924,8 @@ is based on on `project_rooter_patterns` option, and the default value is:
     project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
 ```
 
-The project manager will find outermost directory by default, to find nearest directory,
-you need to change `project_rooter_outermost` to `false`.
+The project manager will find the outermost directory by default. To find the nearest directory instead,
+you need to change `project_rooter_outermost` to `false`:
 
 ```toml
 [options]
@@ -1931,14 +1933,22 @@ you need to change `project_rooter_outermost` to `false`.
     project_rooter_outermost = false
 ```
 
-Sometimes we want to ignore some directorys when detect the project root directory.
-add a `!` prefix before the pattern.
+Sometimes we want to ignore some directories when detecting the project root directory.
+Add a `!` prefix before the pattern.
 For example, ignore `node_packages/` directory:
 
 ```toml
 [options]
     project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/', '!node_packages/']
     project_rooter_outermost = false
+```
+
+You can also disable project root detection completely (i.e. vim will set the
+root directory to the present working directory):
+
+```toml
+[options]
+    project_rooter_automatically = false
 ```
 
 Project manager commands start with `p`:
@@ -2065,6 +2075,7 @@ The task's properties have the following semantic:
 - **isBackground**: `true` or `false`, specifies whether background running is required,
   by default, it is `false`.
 - **description**: short description of the task
+- **problemMatcher**: problems matcher of the task 
 
 When start a new task, it will kill the previous task. If you want to keep the task
 run in background, set `isBackground` to `true`.
@@ -2099,6 +2110,45 @@ So you will have the following values for each variable:
 - **\${fileDirname}**: - `/home/your-username/your-project/folder/`
 - **\${fileExtname}**: - `.ext`
 - **\${lineNumber}**: - line number of the cursor
+
+#### Task Problems Matcher
+
+Problem matcher is used to capture the message in the task output 
+and show a corresponding problem in quickfix windows.
+
+`problemMatcher` supports `errorformat` and `pattern` property.
+
+If `errorformat` property is not defined, `&errorformat` option
+will be used.
+
+```toml
+[test_problemMatcher]
+    command = "echo"
+    args = ['.SpaceVim.d/tasks.toml:6:1 test error message']
+    isBackground = true
+[test_problemMatcher.problemMatcher]
+    useStdout = true
+    errorformat = '%f:%l:%c\ %m'
+```
+
+If `pattern` is defined, the `errorformat` option will be ignored.
+Here is an example:
+
+```toml
+[test_regexp]
+    command = "echo"
+    args = ['.SpaceVim.d/tasks.toml:12:1 test error message']
+    isBackground = true
+[test_regexp.problemMatcher]
+    useStdout = true
+[test_regexp.problemMatcher.pattern]
+      regexp = '\(.*\):\(\d\+\):\(\d\+\)\s\(\S.*\)'
+      file = 1
+      line = 2
+      column = 3
+      #severity = 4
+      message = 4
+```
 
 #### Task auto-detection
 

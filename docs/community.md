@@ -11,7 +11,7 @@ Visit these resources for help or general questions.
 <!-- vim-markdown-toc GFM -->
 
 - [News](#news)
-- [Bug report and feature request](#bug-repport-and-feature-request)
+- [Bug repport and feature request](#bug-repport-and-feature-request)
 - [Mail list](#mail-list)
 - [Chat](#chat)
 - [Others](#others)
@@ -64,7 +64,7 @@ messages is:
 - <i class="fab fa-gitter"></i> [`SpaceVim/SpaceVim` on Gitter](https://gitter.im/SpaceVim/SpaceVim)
 - <i class="fas fa-comments"></i> [`#spacevim` on FreeNode](https://webchat.freenode.net/?channels=spacevim)
 - <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim` on telegram](https://t.me/SpaceVim)
-- <i class="fab fa-rocketchat"></i> [`#spacevim:matrix.org` on Matrix](https://riot.im/app/#/room/%23spacevim:matrix.org)
+- <i class="fab fa-rocketchat"></i> [`#spacevim:matrix.org` on Matrix](https://app.element.io/#/room/#spacevim:matrix.org)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` on slack](https://spacevim.slack.com/messages/C88CTJ62J)
 - <i class="fab fa-discord"></i> [`#spacevim` on discord](https://discord.gg/xcRQnF8)
 - <i class="fab fa-whatsapp"></i> [`SpaceVim` on WhatsApp](https://chat.whatsapp.com/E3HvOvKmFfHDDIq82Rfflx)
