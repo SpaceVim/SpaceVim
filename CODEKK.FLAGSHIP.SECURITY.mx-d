@@ -8,9 +8,9 @@ currently being supported with security updates.
 | Version | Supported          |
 | ------- | ------------------ |
 | 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
+| 5.0.x   | :white_check_mark: |
 | 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| < 4.0   | :white_check_mark: |                
 
 ## Reporting 
 
@@ -19,11 +19,12 @@ This section to tell people how to report a vulnerability.
 Tell them where to go, how often they can expect to get an update on a
 reported vulnerability, what to expect if the vulnerability is accepted or
 declined, etc.
-- name: Codacy Analysis CLI
-  # You may pin to the exact commit or the version.
-  # uses: codacy/codacy-analysis-cli-action@719f3c81c34b74acd0f8ed69cd8e4be28fc70ac8
-  uses: codacy/codacy-analysis-cli-action@2.0.1
-  with:
+
+# name: Codacy Analysis CLI
+# You may pin to the exact commit or the version.
+# uses: codacy/codacy-analysis-cli-action@719f3c81c34b74acd0f8ed69cd8e4be28fc70ac8
+# Uses: codacy/codacy-analysis-cli-action@2.0.1
+##  with:
     # Run with verbose output
     verbose: # optional
     # API token to retrieve your remote Codacy configuration for the project being analyzed
