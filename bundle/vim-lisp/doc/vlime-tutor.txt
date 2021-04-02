@@ -1,0 +1,732 @@
+*vlime-tutor.txt*  A tutorial for Vlime                  *vlime-tutor*
+
+======================================================================
+CONTENTS                                        *vlime-tutor-contents*
+
+    1. Introduction .............................. |vlime-tutor-intro|
+    2. Starting the Server ................ |vlime-tutor-start-server|
+    3. Connecting .............................. |vlime-tutor-connect|
+    4. The REPL ................................... |vlime-tutor-repl|
+    5. Coding ..................................... |vlime-tutor-code|
+    6. Compiling ............................... |vlime-tutor-compile|
+    7. Debugging ................................. |vlime-tutor-debug|
+    8. The inspector ......................... |vlime-tutor-inspector|
+    9. Conclusion ........................... |vlime-tutor-conclusion|
+
+======================================================================
+1. Introduction                                    *vlime-tutor-intro*
+
+This is a guided tour to show the major features of Vlime. For a
+complete list of the features and key mappings etc., see |vlime.txt|.
+
+This tutorial was written on a Linux machine, so there may be some
+Linux-specific commands. Vlime also works fine on Windows, and maybe
+MacOS, but these systems will not be covered here.
+
+Before we get started, please make sure your system has all these
+prerequisites:
+
+    * A decent Common Lisp implementation. SBCL is strongly
+      recommended, but other implementations that support the debugger
+      may also be fine. See |vlime-intro| for a list of supported
+      implementations.
+
+    * The Paredit plugin for Vim (https://github.com/kovisoft/paredit).
+
+    * Vlime being properly installed. See README.md in the Vlime
+      source repo for installation instructions.
+
+We will be building a Fibonacci sequence generator in the rest of this
+tutorial. Fascinating, right?
+
+======================================================================
+2. Starting the Server                      *vlime-tutor-start-server*
+
+Vlime works in a client-server fashion. The server is written in
+Common Lisp. You can let Vlime start the server for you (see
+|vlime-start-up|), but let's do it manually for the first time. To
+start the server on the local machine:
+
+    sbcl --load <vlime repo>/lisp/start-vlime.lisp
+
+To run the server on a remote machine, see |vlime-remote-server|.
+
+The server is fully functional when we see something like this in the
+console:
+
+    <INFO> [10:08:07] vlime-usocket - Server created: ....
+
+It will be listening on port 7002 by default.
+
+======================================================================
+3. Connecting                                    *vlime-tutor-connect*
+
+Now we can create a new *.lisp file in Vim:
+
+    :tabedit ad-hoc.lisp
+
+Then type "\cc" (without the quote marks) in normal mode to create a
+connection. The backslash "\" is the default mapping for
+|<LocalLeader>|. See |vlime-mappings|.
+
+Vlime will show a message in Vim if everything went well:
+
+    Vlime Connection 1 established.
+
+There can be multiple Vlime connections in a single Vim process. You
+can use "\cc" to make more connections to the same server (though that
+usually doesn't make any sense), or call vlime#plugin#ConnectREPL() in
+Vim to connect to another server. For example:
+
+    :call vlime#plugin#ConnectREPL("127.0.0.1", 9999)
+
+This will try to make a connection to 127.0.0.1:9999.
+
+Now, just for demostrating, let's type "\cc" a few more times, to
+create more connections. Then type "\cs" (without the quote marks) in
+the ad-hoc.lisp buffer to see the connection list. A list with three
+connections should look like this:
+
+    Which connection to use?
+    1. Vlime Connection 1 (127.0.0.1:7002)
+    2. Vlime Connection 2 (127.0.0.1:7002)
+    3. Vlime Connection 3 (127.0.0.1:7002)
+    Type number and <Enter> or click with mouse (empty cancels):
+
+From there you can also choose a connection for the current buffer to
+use by typing it's ID and then <Enter>. See
+|vlime-current-connection|.
+
+When you're done with a connection, type "\cd" (without the quote
+marks) in a *.lisp buffer to close it. The connection list may pop up
+if Vlime was not sure which connection to close.
+
+You may try out the "\cc", "\cs", and "\cd" commands now, until you
+feel comfortable to move on. Please leave at least one connection open
+before proceeding to the next section.
+
+======================================================================
+4. The REPL                                         *vlime-tutor-repl*
+
+Now that we have an active connection, let's try something simple.
+
+Vlime has good REPL integration, but it's different from other Lisp
+environments, in that Vlime's REPL buffer is dedicated for output,
+i.e. you can not type and evaluate an expression directly in the REPL
+buffer. To evaluate something in the REPL, you send it using key
+mappings listed in |vlime-mappings-send|.
+
+Let's go to ad-hoc.lisp, the file we created in |vlime-tutor-connect|,
+and write a simple expression in it:
+
+    (cons 1 2)
+
+Note: You may notice some "strange" behaviors when typing the
+      expression, such as parentheses being paired up automatically.
+      They are in fact features to aid you in code editing. We will
+      get to them in |vlime-tutor-code|.
+
+Make sure the cursor is on or inside the parentheses, then type "\ss"
+(without the quote marks) in normal mode. A new buffer will pop up at
+the bottom, showing some info about the server and the evaluation
+result:
+
+    SWANK version 2016-04-19, pid 14403
+    ===================================
+    --
+    (1 . 2)
+
+This is the REPL buffer.
+
+Try typing "i" (without the quote marks) in the REPL buffer. It will
+result in an error message:
+
+    E21: Cannot make changes, 'modifiable' is off
+
+Indeed, it's read-only.
+
+To make sending things to the REPL easier, Vlime has an interaction
+mode for *.lisp buffers. Go back to the ad-hoc.lisp buffer at the top,
+then type "\i" (without the quote marks) to activate interaction mode.
+
+To send something to the REPL in interaction mode, simply press <CR>.
+Consider the expression we just wrote:
+
+    (cons 1 2)
+
+Again, make sure the cursor is on or inside the parentheses, then
+press <CR>, the new result will also come out in the REPL buffer:
+
+    SWANK version 2016-04-19, pid 14403
+    ===================================
+    --
+    (1 . 2)
+    --
+    (1 . 2)
+
+Be careful with nested expressions though. Vlime will only match the
+nearest parentheses that enclose the cursor. Let's add one more line
+to ad-hoc.lisp:
+
+    (cons 1 2)
+    (+ 1 (- 10 2))  ; the new line
+
+When <CR> is pressed, if the cursor was on the "+" operator, the whole
+expression "(+ 1 (- 10 2))" will be sent, and the result will be 9. If
+the cursor was on the "-" operator, only the nested expression
+"(- 10 2)" will be sent, and the result will be 8.
+
+To disable interaction mode, type "\i" (without the quote marks) again
+in the ad-hoc.lisp buffer.
+
+But in what package were those expressions evaluated? Let's have a
+look. Add one more line to ad-hoc.lisp and evaluate it by typing "\ss"
+(without the quote marks) in normal mode or <CR> in interaction mode:
+
+    (cons 1 2)
+    (+ 1 (- 10 2))
+    (symbol-value (find-symbol "*PACKAGE*" "COMMON-LISP"))  ; the new line
+
+The result should look like
+
+    --
+    #<PACKAGE "COMMON-LISP-USER">
+
+When evaluating an expression, Vlime would use the package associated
+with the buffer containing that expression (see
+|vlime-current-package|). And the default package is COMMON-LISP-USER.
+
+In the examples above, we never explicitly set the package for
+ad-hoc.lisp, so it used the default package, and all the expressions
+are evaluated in the default package too.
+
+There are two methods to set the package for a buffer:
+
+    1. Write an "in-package" expression in the buffer. Change the
+       content of ad-hoc.list to
+
+           (cons 1 2)
+           (+ 1 (- 10 2))
+           (in-package :vlime) ; the new line
+           (symbol-value (find-symbol "*PACKAGE*" "COMMON-LISP"))
+
+       And then evaluate the last line again, the result would be
+
+           --
+           #<PACKAGE "VLIME">
+
+    2. Type "\p" (without the quote marks) in a buffer in normal mode.
+       Vim will then prompt for the new package name, with the current
+       package displayed as the default. You can edit the package name
+       like you edit any other text in a normal buffer, and then press
+       <CR> in normal mode to submit (see |vlime-input-buffer|). The
+       name to enter can be a nickname, and is case-insensitive. This
+       method will take precedence over method 1.
+
+       Now type "\p" in ad-hoc.lisp, and set the package to "cl-user"
+       (without the quote marks). Evaluate the last line again, the
+       result would be
+
+           --
+           #<PACKAGE "COMMON-LISP-USER">
+
+You may try out the REPL and the interaction mode now, until you feel
+comfortable to move on. Try writing some complex expressions in
+ad-hoc.lisp, such as multi-line DEFUNs, and evaluate them using
+interaction mode.
+
+======================================================================
+5. Coding                                           *vlime-tutor-code*
+
+Finally, we are going to write some real code. Our goal is to build a
+Fibonacci sequence generator. Let's create a new file in Vim:
+
+    :tabedit fibonacci.lisp
+
+And then type the content in it:
+
+    (in-package #:cl-user)
+
+    (defpackage #:fibonacci
+      (:use #:cl)
+      (:export #:generate))
+
+    (in-package #:fibonacci)
+
+    (defun generate (n &optional (a 0) (b 1) (acc (list)))
+      (if (<= n 0)
+        (reverse acc)
+        (generate (1- n) b (+ a b) (push acc a))))
+
+The GENERATE function should build a list of N Fibonacci numbers. If
+you typed the code manually instead of copy-and-paste, You may have
+noticed a few things when typing:
+
+    1. The parentheses are automatically paired. This is done by the
+       Paredit plugin. It's an invaluable tool for editing Lisp code.
+       See |paredit.txt| for details and more advanced usage.
+
+    2. When pressing <Space> or <CR> inside a pair of parentheses in
+       insert mode, a small preview window may pop up at the top,
+       showing the argument list for the current expression.
+
+    3. The code is automatically indented. See |vlime-auto-indent|.
+
+    4. You can press <Tab> or the old-school CTRL-x CTRL-o keys in
+       insert mode to activate the omni-completion menu, and then
+       use CTRL-n or CTRL-p to select a candidate. See
+       |vlime-completions|.
+
+Note: If you have other completion plugins installed, the <Tab> key
+      may be mapped to the other plugins, and may not work as
+      expected. You can fall back to CTRL-x CTRL-o, or remap the
+      <Tab> key as described in |vlime-mappings-remap|.
+
+These are the most frequently used features when editing the source
+code.
+
+Vlime also has support for showing document strings and cross
+references. Move the cursor inside the word "reverse", and type "\dda"
+(without the quote marks), a preview buffer will then show a brief
+description of the REVERSE function:
+
+    Documentation for the symbol REVERSE:
+    
+    Function:
+     Arglist: (SEQUENCE)
+    
+     Return a new sequence containing the same elements but in reverse order.
+
+This information varies between Common Lisp implementations, but is
+generally helpful. See |vlime-mappings-describe| for more operations
+on describing symbols.
+
+Now keep the cursor inside the word "reverse", and type "\xc" (without
+the quote marks). The cross reference (a.k.a. xref) buffer will pop up
+with some content like this:
+
+    SB-WALKER::LET*-BINDINGS
+    SB-SYS:CLOSE-SHARED-OBJECTS
+    SB-PCL::MAKE-PRELIMINARY-LAYOUT
+    SB-PCL::STD-COMPUTE-SLOTS
+    SB-PCL::STANDARD-COMPUTE-EFFECTIVE-METHOD
+    SB-PCL::COMPUTE-STD-CPL-PHASE-3
+    SB-PCL::%UPDATE-LISP-CLASS-LAYOUT
+    ....
+
+Note: Depending on how your Common Lisp implementation was built, you
+      may get the "No xref found" error message instead. Don't worry.
+      You can try other xrefs listed in |vlime-mappings-invoke-xref|,
+      or skip this operation and proceed to the next section.
+
+These are the locations where the REVERSE function is called. Press
+<CR> on one of them and Vlime will take you directly to the referenced
+location, provided the source code is readable. Use |CTRL-O| to go
+back to previous cursor locations. There are other kinds of cross
+references, see |vlime-mappings-invoke-xref|.
+
+Before proceeding to the next section, you can close all Vlime windows
+in the current tab page by typing "\wA" (without the quote marks) in
+fibonacci.lisp in normal mode. See |vlime-mappings-close-window| for
+all window-manipulating commands.
+
+======================================================================
+6. Compiling                                     *vlime-tutor-compile*
+
+Make sure you have saved fibonacci.lisp, and then type "\of" (without
+the quote marks) in it's buffer in normal mode. Go back to the REPL
+buffer, you'll see the compilation result:
+
+    --
+    ; compiling file "/home/user/fibonacci.lisp" (written 28 FEB 2017 11:16:53 AM):
+
+    ; /home/user/fibonacci.fasl written
+    ; compilation finished in 0:00:00.093
+
+Note: If you have closed the window containing the REPL buffer, it
+      should now pop up again.
+
+This result means our code compiled cleanly, with no errors or
+warnings etc. To generate a warning message, let's change the
+expression calling the GENERATE function from
+
+    (generate (1- n) b (+ a b) (push acc a))
+
+To
+
+    (some-other-func (1- n) b (+ a b) (push acc a))
+
+SOME-OTHER-FUNC is not defined, of course. Save the file, and Compile
+it again by typing "\of" (without the quote marks). A buffer will pop
+up with a warning message:
+
+    STYLE-WARNING: undefined function: SOME-OTHER-FUNC
+
+Pressing <CR> on the message will take you to the exact location where
+the undefined function is called.
+
+Let's change the function call back to GENERATE, then save and compile
+fibonacci.lisp again. The compiler messages (a.k.a. notes) buffer
+should say:
+
+    No message from the compiler.
+
+We will see whether the GENERATE function can work as expected in
+|vlime-tutor-debug|. See |vlime-mappings-compile| for other compiling
+operations.
+
+You can close the notes window before proceeding to the next section.
+
+======================================================================
+7. Debugging                                       *vlime-tutor-debug*
+
+The first step of debugging in Common Lisp is usually trying out the
+new function in the REPL. We'll do the same here.
+
+Go back to ad-hoc.lisp, write an expression to call
+FIBONACCI:GENERATE:
+
+    (fibonacci:generate 10)
+
+And send it to the REPL, via either "\ss" or interaction mode.
+
+A new buffer came out instead of the evaluation result. The buffer
+content looks quite scary:
+
+    Thread: 1; Level: 1
+    
+    The value
+      34
+    is not of type
+      LIST
+       [Condition of type TYPE-ERROR]
+    
+    Restarts:
+      0.  RETRY - Retry SLIME REPL evaluation request.
+      1. *ABORT - Return to SLIME's top level.
+      2.  ABORT - abort thread (#<THREAD "repl-thread" RUNNING ...
+    
+    Frames:
+      0.  (SB-IMPL::LIST-REVERSE 34)
+      1.  (SB-INT:SIMPLE-EVAL-IN-LEXENV (FIBONACCI:GENERATE 10) ...
+      2.  (EVAL (FIBONACCI:GENERATE 10))
+      3.  (SWANK::EVAL-REGION "(fibonacci:generate 10)")
+      4.  ((LAMBDA NIL :IN SWANK-REPL::REPL-EVAL))
+      5.  (SWANK-REPL::TRACK-PACKAGE #<CLOSURE (LAMBDA NIL :IN ...
+      6.  (SWANK::CALL-WITH-RETRY-RESTART "Retry SLIME REPL ...
+      7.  (SWANK::CALL-WITH-BUFFER-SYNTAX NIL #<CLOSURE (LAMBDA ...
+      8.  (SWANK-REPL::REPL-EVAL "(fibonacci:generate 10)")
+      9.  (SB-INT:SIMPLE-EVAL-IN-LEXENV (SWANK-REPL:LISTENER-EVAL ...
+      ....
+
+This is the debugger. It pops up whenever an unhandled condition
+occurs. The content can be divided into four parts, separated by an
+empty line:
+
+    * The thread and netsted level this condition occured in.
+    * The description of this condition.
+    * Some available restarts.
+    * The stack frames.
+
+Our GENERATE function is recursive, but we see no GENERATE function
+call in the stack frames. That's because the compiler did it's job and
+optimized our code a bit, so the debugger has fewer info available.
+
+We can't determine what went wrong yet, so let's abort the evaluation
+for now. Select the restart labeled "ABORT - Return to SLIME's top
+level" by moving the cursor to that line and press <CR>. The debugger
+will then disappear, leaving a printed condition in the REPL buffer to
+indicate the evaluation was aborted:
+
+    --
+    #<TYPE-ERROR expected-type: "LIST"datum: 34>
+
+There's an option in Vlime to tell the compiler our preference. Let's
+use it now to preserve all available debug info:
+
+    :let g:vlime_compiler_policy = {"DEBUG": 3}
+
+See |g:vlime_compiler_policy| for a detailed description of this
+variable.
+
+With the compiler policy set, we compile fibonacci.lisp and call
+FIBONACCI:GENERATE in the REPL again. Of course the debugger will
+still pop up, but this time it has more detailed stack info:
+
+    Thread: 1; Level: 1
+    
+    The value
+      34
+    is not of type
+      LIST
+       [Condition of type TYPE-ERROR]
+    
+    Restarts:
+      0.  RETRY - Retry SLIME REPL evaluation request.
+      1. *ABORT - Return to SLIME's top level.
+      2.  ABORT - abort thread (#<THREAD "repl-thread" RUNNING {1003907F93}>)
+    
+    Frames:
+      0.  (SB-IMPL::LIST-REVERSE 34)
+      1.  (FIBONACCI:GENERATE 0 55 89 (((# . 13) . 21) . 34))
+      2.  (FIBONACCI:GENERATE 1 (((# . 13) . 21) . 34) 55 (((# . 8) . 13) . 21))
+      3.  (FIBONACCI:GENERATE 2 (((# . 8) . 13) . 21) 34 (((# . 5) . 8) . 13))
+      4.  (FIBONACCI:GENERATE 3 (((# . 5) . 8) . 13) 21 (((# . 3) . 5) . 8))
+      5.  (FIBONACCI:GENERATE 4 (((# . 3) . 5) . 8) 13 (((# . 2) . 3) . 5))
+      6.  (FIBONACCI:GENERATE 5 (((# . 2) . 3) . 5) 8 (((# . 1) . 2) . 3))
+      7.  (FIBONACCI:GENERATE 6 (((# . 1) . 2) . 3) 5 (((# . 1) . 1) . 2))
+      8.  (FIBONACCI:GENERATE 7 (((# . 1) . 1) . 2) 3 (((NIL . 0) . 1) . 1))
+      9.  (FIBONACCI:GENERATE 8 (((NIL . 0) . 1) . 1) 2 ((NIL . 0) . 1))
+      10. (FIBONACCI:GENERATE 9 ((NIL . 0) . 1) 1 (NIL . 0))
+      11. (FIBONACCI:GENERATE 10 (NIL . 0) 1 NIL)
+      12. (SB-INT:SIMPLE-EVAL-IN-LEXENV (FIBONACCI:GENERATE 10) #<NULL-LEXENV>)
+      13. (EVAL (FIBONACCI:GENERATE 10))
+      ....
+
+This stack deserves careful examination. We can see each call of the
+FIBONACCI:GENERATE function and the values of it's arguments. To see
+more details, move the cursor to frame 2 and press "d" (without the
+quote marks). A preview buffer will show all local variable names and
+their values, plus other useful info:
+
+    Frame: 2 (Restartable)
+
+    Locals:
+      A:   ((((# . 8) . 13) . 21) . 34)
+      ACC: ((((# . 5) . 8) . 13) . 21)
+      B:   55
+      N:   1
+
+    Location:
+      File: /home/user/fibonacci.lisp
+      Position: 239
+      Snippet:
+        (generate (1- n) b (+ a b) (push acc a))))
+      ....
+
+The variables A and B should be adjacent Fibonacci numbers, but A is
+in fact a strange cons struct.
+
+To make it more challenging, I'll let you use what you learnt to
+figure out what's wrong with our program. Don't worry if you can't
+make it right. There is a corrected version of fibonacci.lisp in the
+next section. See |vlime-mappings-debugger| for all available debugger
+operations.
+
+======================================================================
+8. The Inspector                               *vlime-tutor-inspector*
+
+Now that we have fixed fibonacci.lisp, it should look like this:
+
+    (in-package #:cl-user)
+
+    (defpackage #:fibonacci
+      (:use #:cl)
+      (:export #:generate))
+
+    (in-package #:fibonacci)
+
+    (defun generate (n &optional (a 0) (b 1) (acc (list)))
+      (if (<= n 0)
+        (reverse acc)
+        (generate (1- n) b (+ a b) (push a acc))))
+
+It works well, but It's a boring function after all. We should
+probably add some fancy classes and methods:
+
+    (in-package #:cl-user)
+    
+    (defpackage #:fibonacci
+      (:use #:cl)
+      (:export #:generate
+               #:generator
+               #:next))
+    
+    (in-package #:fibonacci)
+    
+    (defun generate (n &optional (a 0) (b 1) (acc (list)))
+      (if (<= n 0)
+        (values (reverse acc) a b)
+        (generate (1- n) b (+ a b) (push a acc))))
+    
+    (defclass generator ()
+      ((param-a :accessor generator-param-a :initform 0)
+       (param-b :accessor generator-param-b :initform 1)))
+    
+    (defgeneric next (obj)
+      (:method ((obj generator))
+        (with-slots (param-a param-b) obj
+          (multiple-value-bind (result a b) (generate 1 param-a param-b)
+            (setf param-a a
+                  param-b b)
+            (car result)))))
+
+We use a modified GENERATE function as a backend to build a GENERATOR
+class. Now let's test it by first creating an instance. Save
+fibonacci.lisp, and compile it by typing "\of" (without the quote
+marks), then go back to ad-hoc.lisp, write down this MAKE-INSTANCE
+expression and send it to the REPL:
+
+    (make-instance 'fibonacci:generator)
+
+The REPL buffer will show the result:
+
+    --
+    #<FIBONACCI:GENERATOR {1003D83903}>
+
+We can call the accessors or SLOT-VALUE to see whether the slots are
+initialized correctly, but there is an easier way. We should bring up
+the inspector.
+
+Go to the REPL buffer, and move the cursor to the printed
+representation of our newly created instance, then type "\I" (without
+the quote marks). The inspector buffer should appear. The info
+displayed in the inspector will look like this:
+
+    #<FIBONACCI:GENERATOR {1003D83903}>
+    ===================================
+    
+    Class: #<STANDARD-CLASS FIBONACCI:GENERATOR>
+    --------------------
+     Group slots by inheritance [ ]
+     Sort slots alphabetically  [X]
+    
+    All Slots:
+    [ ]  PARAM-A = 0
+    [ ]  PARAM-B = 1
+    
+    [set value]  [make unbound]
+
+We can see that PARAM-A is 0 and PARAM-B is 1. They are initialized
+correctly.
+
+Now we are going to test the FIBONACCI:NEXT method. We want to call
+the method on the instance we just created, and see if the slot values
+are changed correctly.
+
+We didn't save a reference to the generator instance, but that's not
+a problem. The REPL buffer remembers all evaluation results it has
+seen. We can just yank the result from the REPL buffer.
+
+Keep the inspector open, go back to the REPL buffer, and make sure the
+cursor is still on the printed representation of our
+FIBONACCI:GENERATOR instance. Type "\y" (without the quote marks) to
+yank the object into the register |quotequote|.
+
+Then add a new line in ad-hoc.lisp:
+
+    (fibonacci:next )
+
+Place the cursor on the space character just before the right
+parentheses, and type "p" (without the quote marks). The new line
+should now look like this:
+
+    (fibonacci:next (swank:lookup-presented-object 10))
+
+You may have a number other than "10", and that's OK. The
+SWANK:LOOKUP-PRESENTED-OBJECT expression returns the
+FIBONACCI:GENERATOR instance saved by the REPL.
+
+Evaluate the whole FIBONACCI:NEXT expression a few times, and we'll
+get a series of Fibonacci numbers in the REPL buffer.
+
+Now go to the inspector and press "R" (without the quote marks) to
+refresh it. We can see that PARAM-A and PARAM-B are successfully
+changed:
+
+    #<FIBONACCI:GENERATOR {100257FFE3}>
+    ===================================
+    
+    Class: #<STANDARD-CLASS FIBONACCI:GENERATOR>
+    --------------------
+     Group slots by inheritance [ ]
+     Sort slots alphabetically  [X]
+                                                                                                                                             
+    All Slots:
+    [ ]  PARAM-A = 377
+    [ ]  PARAM-B = 610
+    
+    [set value]  [make unbound]
+
+The inspector is also capable of setting slot values. The square
+brackets in the inspector buffer denote buttons, we can use these
+buttons to manipulate PARAM-A and PARAM-B.
+
+Say we want to fast forward the generator to the 50th Fibonacci
+number. Move the cursor inside the brackets just before PARAM-A, and
+press <CR> or <Space>. An "X" will appear to indicate that this slot
+is selected. Do the same with PARAM-B. The inspector should now look
+like this:
+
+    #<FIBONACCI:GENERATOR {100257FFE3}>
+    ===================================
+    
+    Class: #<STANDARD-CLASS FIBONACCI:GENERATOR>
+    --------------------
+     Group slots by inheritance [ ]
+     Sort slots alphabetically  [X]
+                                                                                                                                             
+    All Slots:
+    [X]  PARAM-A = 377
+    [X]  PARAM-B = 610
+    
+    [set value]  [make unbound]
+
+Now move the cursor to "[set value]" and press <CR> or <Space>. A
+buffer will pop up at the bottom prompting for the value of slot
+PARAM-A. Let's write an expression to calculate the 50th Fibonacci
+number:
+
+    ; Set slot FIBONACCI::PARAM-A to (evaluated) :
+    (car (last (fibonacci:generate 50)))
+
+Then go back to normal mode and press <CR>. Another buffer will
+appear, prompting for the value of PARAM-B. We give it the 51st
+number:
+
+    ; Set slot FIBONACCI::PARAM-B to (evaluated) :
+    (car (last (fibonacci:generate 51)))
+
+Remember to press <CR> in normal mode after you have done editing the
+expression. The inspector should be automatically updated and look
+like this:
+
+    #<FIBONACCI:GENERATOR {100257FFE3}>
+    ===================================
+    
+    Class: #<STANDARD-CLASS FIBONACCI:GENERATOR>
+    --------------------
+     Group slots by inheritance [ ]
+     Sort slots alphabetically  [X]
+                                                                                                                                             
+    All Slots:
+    [X]  PARAM-A = 7778742049
+    [X]  PARAM-B = 12586269025
+    
+    [set value]  [make unbound]
+
+We can call FIBONACCI:NEXT again to confirm that the internal state of
+our generator instance is indeed changed:
+
+    (fibonacci:next (swank:lookup-presented-object 10))
+
+And the REPL buffer shows:
+
+    --                                                                                                                                       
+    7778742049
+
+The inspector can also look inside lists, vectors, hashtables, and
+packages. You can try to create some of these data structures and peek
+inside. See |vlime-mappings-inspector| for all available operations in
+the inspector.
+
+You can simply close the inspector window when you've done playing
+with it.
+
+======================================================================
+9. Conclusion                                 *vlime-tutor-conclusion*
+
+Our Finbonacci sequence generator is working, and we have covered the
+most frequently used features of Vlime. You should now be able to use
+Vlime to write and debug Common Lisp programs. You can then read the
+full documentation in |vlime.txt|.
