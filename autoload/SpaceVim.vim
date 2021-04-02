@@ -279,7 +279,9 @@ let g:spacevim_realtime_leader_guide   = 1
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
+if (has('python3') 
+      \ && (SpaceVim#util#haspy3lib('neovim')
+      \ || SpaceVim#util#haspy3lib('pynvim'))) &&
       \ (has('nvim') || (has('patch-8.0.0027')))
 
   ""
@@ -320,7 +322,9 @@ if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
   "
   " and you can alse set this option to coc, then coc.nvim will be used.
   let g:spacevim_autocomplete_method = 'deoplete'
-elseif has('lua')
+
+  " neocomplete does not work with Vim 8.2.1066
+elseif has('lua') && !has('patch-8.2.1066')
   let g:spacevim_autocomplete_method = 'neocomplete'
 elseif has('python') && ((has('job') && has('timers') && has('lambda')) || has('nvim'))
   let g:spacevim_autocomplete_method = 'completor'
