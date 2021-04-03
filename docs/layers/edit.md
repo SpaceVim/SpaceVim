@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim edit layer"
-description: "Improve code edit expr in SpaceVim, provide more text opjects."
+description: "Improve code edit expr in SpaceVim, provide more text objects."
 ---
 
 # [Available Layers](../) >> edit
