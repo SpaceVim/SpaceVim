@@ -102,6 +102,13 @@ function! SpaceVim#layers#lang#ruby#config() abort
       let g:neomake_ruby_{lint}_remove_invalid_entries = 1
     endfor
   endif
+  " Format on save
+  if s:format_on_save
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'ruby',
+          \ 'enable' : 1,
+          \ })
+  endif
 endfunction
 
 function! SpaceVim#layers#lang#ruby#set_variable(var) abort
