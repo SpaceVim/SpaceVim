@@ -72,7 +72,8 @@ else
         \ ''
         \ ]
   let s:format_on_save = 0
-
+  let s:lint_on_save = 0
+  let s:enabled_linters = ['rubylint']
 endif
 
 function! SpaceVim#layers#lang#ruby#plugins() abort
@@ -95,12 +96,20 @@ function! SpaceVim#layers#lang#ruby#config() abort
   else
     call SpaceVim#plugins#repl#reg('ruby', 'irb')
   endif
+  if g:spacevim_lint_engine ==# 'neomake'
+    let g:neomake_ruby_enabled_makers = s:enabled_linters
+    for lint in g:neomake_ruby_enabled_makers
+      let g:neomake_ruby_{lint}_remove_invalid_entries = 1
+    endfor
+  endif
 endfunction
 
 function! SpaceVim#layers#lang#ruby#set_variable(var) abort
   let s:ruby_repl_command = get(a:var, 'repl_command', '') 
   let s:ruby_file_head = get(a:var, 'ruby-file-head', s:ruby_file_head)
   let s:format_on_save = get(a:var, 'format_on_save', s:format_on_save)
+  let s:lint_on_save = get(a:var, 'lint_on_save', s:lint_on_save)
+  let s:enabled_linters = get(a:var, 'enabled_linters', s:enabled_linters)
 endfunction
 
 function! s:language_specified_mappings() abort
