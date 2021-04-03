@@ -13,7 +13,6 @@ description: "This layer is for Ruby development, provide autocompletion, syntax
 - [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
-  - [RuboCop](#rubocop)
   - [Running current script](#running-current-script)
 
 <!-- vim-markdown-toc -->
@@ -83,7 +82,9 @@ gem install rubocop
 
 ### Inferior REPL process
 
-Start a `irb` inferior REPL process with `SPC l s i`. You may change the REPL command by layer option `repl_command`. For example, if you want to use `pry`, load this layer via:
+Start a `irb` inferior REPL process with `SPC l s i`.
+You may change the REPL command by layer option `repl_command`.
+For example, if you want to use `pry`, load this layer via:
 
 ```toml
 [[layers]]
@@ -96,7 +97,7 @@ however, if the executable is not on your $PATH, then you need to specify a comp
 ```toml
 [[layers]]
     name = "lang#ruby"
-    repl_command = "/NOT/IN/YOUR/PATH/rubocop"
+    repl_command = "/path/to/pry"
 ```
 
 Send code to inferior process commands:
@@ -106,12 +107,6 @@ Send code to inferior process commands:
 | `SPC l s b`  | send buffer and keep code buffer focused         |
 | `SPC l s l`  | send line and keep code buffer focused           |
 | `SPC l s s`  | send selection text and keep code buffer focused |
-
-### RuboCop
-
-| Key Bindings | Descriptions                               |
-| ------------ | ------------------------------------------ |
-| `SPC l c f`  | Runs RuboCop on the currently visited file |
 
 ### Running current script
 
