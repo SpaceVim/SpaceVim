@@ -75,9 +75,11 @@ npm install --global prettier
 
 ## 快捷键
 
-| 快捷键     | 模式          | 按键描述                               |
-| ---------- | ------------- | -------------------------------------- |
-| `SPC b f`  | Normal        | 格式化当前文件                         |
-| `SPC l k`  | Normal/Visual | 为光标下的单词或者选中文本增加 URL 链接|
-| `SPC l K`  | Normal/Visual | 为光标下的单词或者选中文本增加图片链接 |
-| `SPC l p`  | Normal        | 通过浏览器实时预览当前文件             |
+| 快捷键    | 模式          | 按键描述                                |
+| --------- | ------------- | --------------------------------------- |
+| `SPC b f` | Normal        | 格式化当前文件                          |
+| `SPC l c` | Normal/Visual | 在光标处创建目录                        |
+| `SPC l k` | Normal/Visual | 为光标下的单词或者选中文本增加 URL 链接 |
+| `SPC l K` | Normal/Visual | 为光标下的单词或者选中文本增加图片链接  |
+| `SPC l u` | Normal/Visual | 更新目录                                |
+| `SPC l p` | Normal        | 通过浏览器实时预览当前文件              |
