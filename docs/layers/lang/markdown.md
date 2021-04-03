@@ -82,7 +82,7 @@ Bullet marker to use for list items (`'-'`, `'*'`, or `'+'`, default: `'-'`).
 
 **enabled_formater**
 
-Specific the enabled formater for markdown file, default is `['remark']`.
+Specific the enabled formater for markdown file, default is `['remark']`. You can also append this list with other markdown formatter(s), such as `["remark", "prettier"]`.
 
 ## Tagbar
 
