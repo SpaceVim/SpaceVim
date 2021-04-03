@@ -10,7 +10,7 @@ description: "This layer is for Ruby development, provide autocompletion, syntax
 - [Description](#description)
 - [Install](#install)
   - [Layer](#layer)
-  - [Syntax checking && Code formatting](#syntax-checking--code-formatting)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
   - [RuboCop](#rubocop)
@@ -33,14 +33,27 @@ To use this configuration layer, update custom configuration file with:
   name = "lang#ruby"
 ```
 
-### Syntax checking && Code formatting
+The default syntax linter for ruby is [rubylint](https://gitlab.com/yorickpeterse/ruby-lint).
 
-To enable syntax checking and code formatting in spacevim, you need to install [rubocop](https://github.com/bbatsov/rubocop).
+```
+gem install ruby-lint
+```
+
+The default code formatter is [rubocop](https://github.com/bbatsov/rubocop).
 
 ```sh
 gem install rubocop
 ```
 
+## Layer options
+
+- `format_on_save`: Enable/disable code formatting when saving ruby file. Default is `false`.
+  To enable this feature:
+  ```toml
+  [[layers]]
+      name = 'lang#ruby'
+      format_on_save = true
+  ```
 
 ## Key bindings
 
