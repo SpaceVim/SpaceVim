@@ -70,12 +70,12 @@ gem install rubocop
       format_on_save = true
   ```
 
-- `enabled_linters`: Set the default linters for ruby language, by default it is `['rubocop']`. You can change
-  it to `['rubybeautify', 'rubocop']`.
+- `enabled_linters`: Set the default linters for ruby language, by default it is `['rubylint']`. You can change
+  it to `['rubylint, 'rubocop']`.
   ```toml
   [[layers]]
     name = 'lang#ruby'
-    enabled_linters = ['rubybeautify', 'rubocop']
+    enabled_linters = ['rubylint', 'rubocop']
   ```
 
 ## Key bindings
