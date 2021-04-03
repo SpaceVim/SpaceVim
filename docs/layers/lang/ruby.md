@@ -47,6 +47,22 @@ gem install rubocop
 
 ## Layer options
 
+- `python_file_head`: Default file head when create new python file.
+
+  By default, when create a new python file, SpaceVim will insert file head automatically.
+  to change the file head, use `python_file_head` option:
+
+  ```toml
+  [[layers]]
+    name = "lang#python"
+    python_file_head = [
+        '#!/usr/bin/env python',
+        '# -*- coding: utf-8 -*-',
+        '',
+        ''
+    ]
+  ```
+
 - `format_on_save`: Enable/disable code formatting when saving ruby file. Default is `false`.
   To enable this feature:
   ```toml

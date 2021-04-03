@@ -106,7 +106,12 @@ endfunction
 
 function! SpaceVim#layers#lang#ruby#set_variable(var) abort
   let s:ruby_repl_command = get(a:var, 'repl_command', '') 
-  let s:ruby_file_head = get(a:var, 'ruby-file-head', s:ruby_file_head)
+  " add backward compatible for ruby-file-head
+  let s:ruby_file_head = get(a:var,
+        \ 'ruby_file_head',
+        \ get(a:var,
+        \ 'ruby-file-head',
+        \ s:ruby_file_head))
   let s:format_on_save = get(a:var, 'format_on_save', s:format_on_save)
   let s:lint_on_save = get(a:var, 'lint_on_save', s:lint_on_save)
   let s:enabled_linters = get(a:var, 'enabled_linters', s:enabled_linters)
@@ -153,6 +158,6 @@ endfunction
 function! SpaceVim#layers#lang#ruby#get_options() abort
   return [
         \ 'repl_command',
-        \ 'ruby-file-head'
+        \ 'ruby_file_head'
         \ ]
 endfunction
