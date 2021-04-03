@@ -47,16 +47,16 @@ gem install rubocop
 
 ## Layer options
 
-- `python_file_head`: Default file head when create new python file.
+- `ruby_file_head`: Default file head when create new ruby file.
 
-  By default, when create a new python file, SpaceVim will insert file head automatically.
-  to change the file head, use `python_file_head` option:
+  By default, when create a new ruby file, SpaceVim will insert file head automatically.
+  to change the file head, use `ruby_file_head` option:
 
   ```toml
   [[layers]]
     name = "lang#python"
-    python_file_head = [
-        '#!/usr/bin/env python',
+    ruby_file_head = [
+        '#!/usr/bin/ruby -w',
         '# -*- coding: utf-8 -*-',
         '',
         ''
