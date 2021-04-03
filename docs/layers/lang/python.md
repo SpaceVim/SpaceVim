@@ -142,7 +142,7 @@ you need to add following snippet into your spacevim configuration file.
       python_interpreter = 'D:\scoop\shims\python.exe'
   ```
 
-- `python_linters`: Set the default linters for python language, by default it is `['python']`. You can change
+- `enabled_linters`: Set the default linters for python language, by default it is `['python']`. You can change
   it to `['python', 'pylint']`.
   ```toml
   [[layers]]
