@@ -62,6 +62,13 @@ gem install rubocop
     ]
   ```
 
+- `repl_command`: Set the REPL command for ruby.
+  ```toml
+  [[layers]]
+    name = 'lang#ruby'
+    repl_command = '~/download/bin/ruby_repl'
+  ```
+
 - `format_on_save`: Enable/disable code formatting when saving ruby file. Default is `false`.
   To enable this feature:
   ```toml
