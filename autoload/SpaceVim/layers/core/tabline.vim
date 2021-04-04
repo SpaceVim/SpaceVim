@@ -215,48 +215,34 @@ function! SpaceVim#layers#core#tabline#get() abort
       if right_hidden_tab_number > 0
         let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep 
       endif
-      let t .= '%#SpaceVim_tabline_b# '
+      let t .= s:is_modified(shown_items[0].bufnr) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
     endif
     let index = 1
     for item in shown_items[:-2]
-      if s:is_modified(item.bufnr)
-        if item.tabnr == current_tabnr - 1
-          let t.= '%#SpaceVim_tabline_m# '
-        elseif item.tabnr == current_tabnr
-          let t.= '%#SpaceVim_tabline_m_i# '
-        else
-          let t.= ' '
-        endif
-      else
-        if item.tabnr == current_tabnr - 1
-          let t.= '%#SpaceVim_tabline_b# '
-        elseif item.tabnr == current_tabnr
-          let t.= '%#SpaceVim_tabline_b# '
-        else
-          let t.= ' '
-        endif
-      endif
       if has('tablineat')
         let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
       endif
       let t .= s:wrap_id(index)
       let t .= s:get_no_empty(gettabvar(item.tabnr, '_spacevim_tab_name'), item.bufname)
-      if item.tabnr == current_tabnr - 1
-        if s:is_modified(item.bufnr)
-          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_a#' . s:lsep 
-        else
-          let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep 
-        endif
-      elseif item.tabnr == current_tabnr
+      let index += 1
+      if item.tabnr == current_tabnr
         if s:is_modified(item.bufnr)
           let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep 
         else
           let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep 
         endif
+        let t .= s:is_modified(shown_items[index].bufnr) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
+      elseif item.tabnr == current_tabnr - 1
+        " check if current_tabnr is modified
+        if s:is_modified(s:BUFFER.bufnr())
+          let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_m#' . s:lsep . '%#SpaceVim_tabline_m# '
+        else
+          let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
+        endif
       else
-        let t .= ' ' . s:ilsep
+        let t .= s:is_modified(shown_items[index].bufnr) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
+        let t .= s:ilsep . ' '
       endif
-      let index += 1
     endfor
     let item = shown_items[-1]
     if has('tablineat')
