@@ -31,7 +31,7 @@ set cpo&vim
 
 " where to store cscope file?
 
-function! s:echo(msg)
+function! s:echo(msg) abort
   echon a:msg
 endfunction
 
@@ -56,7 +56,7 @@ let s:dbs = {}
 ""
 " search your {word} with {action} in the database suitable for current
 " file.
-function! cscope#find(action, word)
+function! cscope#find(action, word) abort
   let dirtyDirs = []
   for d in keys(s:dbs)
     if s:dbs[d]['dirty'] == 1
@@ -79,18 +79,18 @@ function! cscope#find(action, word)
   endif
 endfunction
 
-function! s:RmDBfiles()
-  let odbs = split(globpath(s:cscope_cache_dir, "*"), "\n")
+function! s:RmDBfiles() abort
+  let odbs = split(globpath(s:cscope_cache_dir, '*'), "\n")
   for f in odbs
     call delete(f, 'rf')
   endfor
 endfunction
 
 
-function! s:CheckNewFile(dir, newfile)
+function! s:CheckNewFile(dir, newfile) abort
   let dir = s:FILE.path_to_fname(a:dir)
   let id = s:dbs[dir]['id']
-  let cscope_files = s:cscope_cache_dir. dir ."/cscope.files"
+  let cscope_files = s:cscope_cache_dir. dir .'/cscope.files'
   let files = readfile(cscope_files)
   " @todo support threshold
   " if len(files) > g:cscope_split_threshold
@@ -107,27 +107,27 @@ function! s:CheckNewFile(dir, newfile)
   endif
 endfunction
 
-function! s:FlushIndex()
+function! s:FlushIndex() abort
   call writefile([s:JSON.json_encode(s:dbs)], s:cscope_db_index)
 endfunction
 
 
-function! s:ListFiles(dir)
+function! s:ListFiles(dir) abort
   let d = []
   let f = []
   let cwd = a:dir
   try
     while cwd != ''
-      let a = split(globpath(cwd, "*"), "\n")
+      let a = split(globpath(cwd, '*'), "\n")
       for fn in a
-        if getftype(fn) == 'dir'
+        if getftype(fn) ==# 'dir'
           if !exists('g:cscope_ignored_dir') || fn !~? g:cscope_ignored_dir
             call add(d, fn)
           endif
-        elseif getftype(fn) != 'file'
+        elseif getftype(fn) !=# 'file'
           continue
         else
-          if stridx(fn, ' ') != -1
+          if stridx(fn, ' ') !=# -1
             let fn = '"'.fn.'"'
           endif
           call add(f, fn)
@@ -137,7 +137,7 @@ function! s:ListFiles(dir)
     endwhile
   catch /^Vim:Interrupt$/
   catch
-    echo "caught" v:exception
+    echo 'caught' v:exception
   endtry
   return f
 endfunction
@@ -160,13 +160,13 @@ endfunction
 
 " 0 -- loaded
 " 1 -- cancelled
-function! s:AutoloadDB(dir)
+function! s:AutoloadDB(dir) abort
   let ret = 0
   let m_dir = s:GetBestPath(a:dir)
   if m_dir == ''
-    echohl WarningMsg | echo "Can not find proper cscope db, please input a path to generate cscope db for." | echohl None
-    let m_dir = input("", a:dir, 'dir')
-    if m_dir != ''
+    echohl WarningMsg | echo 'Can not find proper cscope db, please input a path to generate cscope db for.' | echohl None
+    let m_dir = input('', a:dir, 'dir')
+    if m_dir !=# ''
       let m_dir = s:CheckAbsolutePath(m_dir, a:dir)
       call s:InitDB(m_dir)
       call s:LoadDB(m_dir)
@@ -182,7 +182,7 @@ function! s:AutoloadDB(dir)
   return ret
 endfunction
 
-function! s:updateDBs(dirs)
+function! s:updateDBs(dirs) abort
   for d in a:dirs
     call s:CreateDB(d, 0)
   endfor
@@ -192,7 +192,7 @@ endfunction
 
 ""
 " clear databases
-function! cscope#clear_databases(...)
+function! cscope#clear_databases(...) abort
   silent cs kill -1
   if a:0 == 0
     let s:dbs = {}
@@ -200,8 +200,8 @@ function! cscope#clear_databases(...)
   else
     let dir = s:FILE.path_to_fname(a:1)
     let id = s:dbs[dir]['id']
-    call delete(s:cscope_cache_dir. dir ."/cscope.files")
-    call delete(s:cscope_cache_dir. dir .'/cscope.db')
+    call delete(s:cscope_cache_dir. dir . '/cscope.files')
+    call delete(s:cscope_cache_dir. dir . '/cscope.db')
     unlet s:dbs[dir]
     call s:echo('database cleared: ' . s:cscope_cache_dir. dir .'/cscope.db')
     call s:FlushIndex()
@@ -209,26 +209,26 @@ function! cscope#clear_databases(...)
 endfunction
 
 " complete function for command :CscopeClear
-function! cscope#listDirs(A,L,P)
+function! cscope#listDirs(A,L,P) abort
   return map(keys(s:dbs), 's:dbs[v:val].root')
 endfunction
 
-function! ToggleLocationList()
+function! ToggleLocationList() abort
   let l:own = winnr()
   lw
   let l:cwn = winnr()
   if(l:cwn == l:own)
-    if &buftype == 'quickfix'
+    if &buftype ==# 'quickfix'
       lclose
     elseif len(getloclist(winnr())) > 0
       lclose
     else
-      echohl WarningMsg | echo "No location list." | echohl None
+      echohl WarningMsg | echo 'No location list.' | echohl None
     endif
   endif
 endfunction
 
-function! s:GetBestPath(dir)
+function! s:GetBestPath(dir) abort
   let f = s:FILE.path_to_fname(a:dir)
   let bestDir = ''
   for d in keys(s:dbs)
@@ -240,15 +240,15 @@ function! s:GetBestPath(dir)
 endfunction
 
 
-function! s:CheckAbsolutePath(dir, defaultPath)
+function! s:CheckAbsolutePath(dir, defaultPath) abort
   let d = a:dir
   while 1
     if !isdirectory(d)
-      echohl WarningMsg | echo "Please input a valid path." | echohl None
-      let d = input("", a:defaultPath, 'dir')
+      echohl WarningMsg | echo 'Please input a valid path.' | echohl None
+      let d = input('', a:defaultPath, 'dir')
     elseif (len(d) < 2 || (d[0] != '/' && d[1] != ':'))
-      echohl WarningMsg | echo "Please input an absolute path." | echohl None
-      let d = input("", a:defaultPath, 'dir')
+      echohl WarningMsg | echo 'Please input an absolute path.' | echohl None
+      let d = input('', a:defaultPath, 'dir')
     else
       break
     endif
@@ -264,7 +264,7 @@ endfunction
 " 3. dirty:
 " 4. root: path of the project
 
-function! s:InitDB(dir)
+function! s:InitDB(dir) abort
   let id = localtime()
   let dir = s:FILE.path_to_fname(a:dir)
   let s:dbs[dir] = {}
@@ -287,7 +287,7 @@ function! s:add_databases(db) abort
   endif
 endfunction
 
-function! s:LoadDB(dir)
+function! s:LoadDB(dir) abort
   let dir = s:FILE.path_to_fname(a:dir)
   silent cs kill -1
   call s:add_databases(s:cscope_cache_dir . dir .'/cscope.db')
@@ -295,18 +295,18 @@ function! s:LoadDB(dir)
   call s:FlushIndex()
 endfunction
 
-function! cscope#list_databases()
+function! cscope#list_databases() abort
   let dirs = keys(s:dbs)
   if len(dirs) == 0
-    echo "You have no cscope dbs now."
+    echo 'You have no cscope dbs now.'
   else
     let s = ['  PROJECT_ROOT                   LOADTIMES']
     for d in dirs
       let id = s:dbs[d]['id']
       if cscope_connection(2, s:cscope_cache_dir. d . '/cscope.db') == 1
-        let l = printf("* %s                   %d", s:dbs[d].root, s:dbs[d]['loadtimes'])
+        let l = printf('* %s                   %d', s:dbs[d].root, s:dbs[d]['loadtimes'])
       else
-        let l = printf("  %s                   %d", s:dbs[d].root, s:dbs[d]['loadtimes'])
+        let l = printf('  %s                   %d', s:dbs[d].root, s:dbs[d]['loadtimes'])
       endif
       call add(s, l)
     endfor
@@ -314,7 +314,7 @@ function! cscope#list_databases()
   endif
 endfunction
 
-function! cscope#loadIndex()
+function! cscope#loadIndex() abort
   let s:dbs = {}
   if ! isdirectory(s:cscope_cache_dir)
     call mkdir(s:cscope_cache_dir)
@@ -325,7 +325,7 @@ function! cscope#loadIndex()
   endif
 endfunction
 
-function! cscope#preloadDB()
+function! cscope#preloadDB() abort
   let dirs = split(g:cscope_preload_path, s:FILE.pathSeparator)
   for m_dir in dirs
     let m_dir = s:CheckAbsolutePath(m_dir, m_dir)
@@ -337,7 +337,7 @@ function! cscope#preloadDB()
   endfor
 endfunction
 
-function! CscopeFindInteractive(pat)
+function! CscopeFindInteractive(pat) abort
   call inputsave()
   let qt = input("\nChoose a querytype for '".a:pat."'(:help cscope-find)\n  c: functions calling this function\n  d: functions called by this function\n  e: this egrep pattern\n  f: this file\n  g: this definition\n  i: files #including this file\n  s: this C symbol\n  t: this text string\n\n  or\n  <querytype><pattern> to query `pattern` instead of '".a:pat."' as `querytype`, Ex. `smain` to query a C symbol named 'main'.\n> ")
   call inputrestore()
@@ -349,9 +349,9 @@ function! CscopeFindInteractive(pat)
   call feedkeys("\<CR>")
 endfunction
 
-function! cscope#onChange()
+function! cscope#onChange() abort
   let m_dir = s:GetBestPath(expand('%:p:h'))
-  if m_dir != ""
+  if m_dir != ''
     let s:dbs[m_dir]['dirty'] = 1
     call s:FlushIndex()
     call s:CheckNewFile(s:dbs[m_dir].root, expand('%:p'))
@@ -359,10 +359,10 @@ function! cscope#onChange()
   endif
 endfunction
 
-function! s:CreateDB(dir, init)
+function! s:CreateDB(dir, init) abort
   let dir = s:FILE.path_to_fname(a:dir)
   let id = s:dbs[dir]['id']
-  let cscope_files = s:cscope_cache_dir . dir . "/cscope.files"
+  let cscope_files = s:cscope_cache_dir . dir . '/cscope.files'
   let cscope_db = s:cscope_cache_dir . dir . '/cscope.db'
   if ! isdirectory(s:cscope_cache_dir . dir)
     call mkdir(s:cscope_cache_dir . dir)
@@ -379,7 +379,7 @@ function! s:CreateDB(dir, init)
   redir @x
   exec 'silent !'.g:cscope_cmd.' -b -i '.cscope_files.' -f'.cscope_db
   redi END
-  if @x =~ "\nCommand terminated\n"
+  if @x =~# "\nCommand terminated\n"
     echohl WarningMsg | echo 'Failed to create cscope database for ' . a:dir | echohl None
   else
     let s:dbs[dir]['dirty'] = 0
@@ -394,7 +394,7 @@ function! cscope#toggleLocationList() abort
 
 endfunction
 
-function! cscope#process_data(query)
+function! cscope#process_data(query) abort
   let data = cscope#execute_command(a:query)
 
   let results = []
@@ -406,50 +406,50 @@ function! cscope#process_data(query)
   return results
 endfunction
 
-function! cscope#find_this_symbol(keyword)
-  return "cscope -d -L0 " . shellescape(a:keyword)
+function! cscope#find_this_symbol(keyword) abort
+  return 'cscope -d -L0 ' . shellescape(a:keyword)
 endfunction
 
-function! cscope#global_definition(keyword)
-  return "cscope -d -L1 " . shellescape(a:keyword)
+function! cscope#global_definition(keyword) abort
+  return 'cscope -d -L1 ' . shellescape(a:keyword)
 endfunction
 
-function! cscope#functions_called_by(keyword)
-  return "cscope -d -L2 " . shellescape(a:keyword)
+function! cscope#functions_called_by(keyword) abort
+  return 'cscope -d -L2 ' . shellescape(a:keyword)
 endfunction
 
-function! cscope#functions_calling(keyword)
-  return "cscope -d -L3 " . shellescape(a:keyword)
+function! cscope#functions_calling(keyword) abort
+  return 'cscope -d -L3 ' . shellescape(a:keyword)
 endfunction
 
-function! cscope#text_string(keyword)
-  return "cscope -d -L4 " . shellescape(a:keyword)
+function! cscope#text_string(keyword) abort
+  return 'cscope -d -L4 ' . shellescape(a:keyword)
 endfunction
 
-function! cscope#egrep_pattern(keyword)
-  return "cscope -d -L6 " . shellescape(a:keyword)
+function! cscope#egrep_pattern(keyword) abort
+  return 'cscope -d -L6 ' . shellescape(a:keyword)
 endfunction
 
-function! cscope#find_file(keyword)
-  return "cscope -d -L7 " . shellescape(a:keyword)
+function! cscope#find_file(keyword) abort
+  return 'cscope -d -L7 ' . shellescape(a:keyword)
 endfunction
 
-function! cscope#including_this_file(keyword)
-  return "cscope -d -L8 " . shellescape(a:keyword)
+function! cscope#including_this_file(keyword) abort
+  return 'cscope -d -L8 ' . shellescape(a:keyword)
 endfunction
 
-function! cscope#assignments_to_symbol(keyword)
-  return "cscope -d -L9 " . shellescape(a:keyword)
+function! cscope#assignments_to_symbol(keyword) abort
+  return 'cscope -d -L9 ' . shellescape(a:keyword)
 endfunction
 
-function! cscope#line_parse(line)
+function! cscope#line_parse(line) abort
   let details = split(a:line)
   return {
-        \    "line": a:line,
-        \    "file_name": details[0],
-        \    "function_name": details[1],
-        \    "line_number": str2nr(details[2], 10),
-        \    "code_line": join(details[3:])
+        \    'line': a:line,
+        \    'file_name': details[0],
+        \    'function_name': details[1],
+        \    'line_number': str2nr(details[2], 10),
+        \    'code_line': join(details[3:])
         \  }
 endfunction
 
