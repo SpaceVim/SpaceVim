@@ -223,15 +223,23 @@ function! SpaceVim#layers#core#tabline#get() abort
         let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
       endif
       let t .= s:wrap_id(index)
-      let index += 1
       let t .= s:get_no_empty(gettabvar(item.tabnr, '_spacevim_tab_name'), item.bufname)
       if item.tabnr == current_tabnr - 1
-        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
+        if s:is_modified(item.bufnr)
+          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
+        else
+          let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
+        endif
       elseif item.tabnr == current_tabnr
-        let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+        if s:is_modified(item.bufnr)
+          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+        else
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+        endif
       else
         let t .= ' ' . s:ilsep . ' '
       endif
+      let index += 1
     endfor
     let item = shown_items[-1]
     if has('tablineat')
@@ -448,20 +456,20 @@ function! SpaceVim#layers#core#tabline#config() abort
     autocmd!
     autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
   augroup END
-  
-  
+
+
   let shift_keys = {
-   \  '1': '!',
-   \  '2': '@',
-   \  '3': '#',
-   \  '4': '$',
-   \  '5': '%',
-   \  '6': '^',
-   \  '7': '&',
-   \  '8': '*',
-   \  '9': '(',
-   \  '0': ')'
-   \}
+        \  '1': '!',
+        \  '2': '@',
+        \  '3': '#',
+        \  '4': '$',
+        \  '5': '%',
+        \  '6': '^',
+        \  '7': '&',
+        \  '8': '*',
+        \  '9': '(',
+        \  '0': ')'
+        \}
 
   for i in range(1, 20)
     let key = i % 10
