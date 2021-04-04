@@ -13,7 +13,7 @@
 " If you want to use airline's statusline, just disable this layer
 " >
 "   [[layers]]
-"     name = "core#statusline"
+"     name = 'core#statusline'
 "     enable = false
 " <
 
