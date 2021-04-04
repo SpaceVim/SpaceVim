@@ -231,7 +231,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         else
           let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep 
         endif
-        let t .= s:is_modified(shown_items[index].bufnr) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
+        let t .= s:is_modified(shown_items[index-1].bufnr) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
       elseif item.tabnr == current_tabnr - 1
         " check if current_tabnr is modified
         if s:is_modified(s:BUFFER.bufnr())
@@ -240,7 +240,7 @@ function! SpaceVim#layers#core#tabline#get() abort
           let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
         endif
       else
-        let t .= s:is_modified(shown_items[index].bufnr) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
+        let t .= s:is_modified(shown_items[index-1].bufnr) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
         let t .= s:ilsep . ' '
       endif
     endfor
