@@ -18,7 +18,13 @@
 " <
 
 scriptencoding utf-8
+
+if exists('g:_spacevim_statusline_loaded')
+  finish
+endif
+
 let g:_spacevim_statusline_loaded = 1
+
 " APIs
 let s:MESSLETTERS = SpaceVim#api#import('messletters')
 let s:TIME = SpaceVim#api#import('time')
