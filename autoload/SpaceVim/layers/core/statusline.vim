@@ -13,12 +13,18 @@
 " If you want to use airline's statusline, just disable this layer
 " >
 "   [[layers]]
-"     name = "core#statusline"
+"     name = 'core#statusline'
 "     enable = false
 " <
 
 scriptencoding utf-8
+
+if exists('g:_spacevim_statusline_loaded')
+  finish
+endif
+
 let g:_spacevim_statusline_loaded = 1
+
 " APIs
 let s:MESSLETTERS = SpaceVim#api#import('messletters')
 let s:TIME = SpaceVim#api#import('time')
@@ -97,9 +103,6 @@ let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters',
 
 let s:loaded_sections_r = g:spacevim_statusline_right_sections
 let s:loaded_sections_l = g:spacevim_statusline_left_sections
-
-let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
-let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, s:i_separators['arrow'])
 
 if SpaceVim#layers#isLoaded('checkers')
   call add(s:loaded_modes, 'syntax-checking')
@@ -389,9 +392,11 @@ function! SpaceVim#layers#core#statusline#get(...) abort
             \ . '%#SpaceVim_statusline_b#'
             \ . ' QuickFix %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
             \ . s:lsep
-            \ . ( has('patch-8.0.1384') ? ((getqflist({'title' : 0}).title ==# ':setqflist()') ? '' : 
+            \ . ( has('patch-8.0.1384') 
+            \ ? ((getqflist({'title' : 0}).title ==# ':setqflist()') ? '' : 
             \ '%#SpaceVim_statusline_c#'
-            \ . getqflist({'title' : 0}).title . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
+            \ . getqflist({'title' : 0}).title
+            \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
             \ ) : '')
     else
       return '%#SpaceVim_statusline_ia#' 
@@ -400,15 +405,22 @@ function! SpaceVim#layers#core#statusline#get(...) abort
             \ . '%#SpaceVim_statusline_b#'
             \ . ' Location List %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
             \ . s:lsep
-            \ . ( has('patch-8.0.1384') ? ((getloclist(winnr(),{'title' : 0}).title ==# ':setloclist()') ? '' : 
+            \ . ( has('patch-8.0.1384')
+            \ ? ((getloclist(winnr(),{'title' : 0}).title ==# ':setloclist()')
+            \ ? '' : 
             \ '%#SpaceVim_statusline_c#'
-            \ . getloclist(winnr(),{'title' : 0}).title . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
+            \ . getloclist(winnr(),{'title' : 0}).title
+            \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
             \ ) : '')
 
     endif
   elseif &filetype ==# 'defx'
-    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# defx %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1)
+          \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b#'
+          \ . ' defx '
+          \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+          \ . s:lsep . ' '
   elseif &filetype ==# 'Fuzzy'
     return '%#SpaceVim_statusline_a_bold# Fuzzy %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# %{fuzzy#statusline()} %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep 
@@ -519,7 +531,10 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_z#%=%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:rsep
           \ . '%#SpaceVim_statusline_c# %{SpaceVim#layers#core#statusline#denite_status("path") . SpaceVim#layers#core#statusline#denite_status("linenr")}'
   elseif &filetype ==# 'denite-filter'
-    return '%#SpaceVim_statusline_a_bold# Filter %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+    return '%#SpaceVim_statusline_a_bold#'
+          \ . ' Filter '
+          \ . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+          \ . s:lsep
   elseif &filetype ==# 'unite'
     return '%#SpaceVim_statusline_a_bold#%{SpaceVim#layers#core#statusline#unite_mode()} Unite '
           \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b#' . s:lsep . ' %{get(unite#get_context(), "buffer_name", "")} '
@@ -539,9 +554,17 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   elseif &filetype ==# 'SpaceVimRunner'
     return '%#SpaceVim_statusline_a# Runner %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{SpaceVim#plugins#runner#status()}'
   elseif &filetype ==# 'SpaceVimREPL'
-    return '%#SpaceVim_statusline_a# REPL %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{SpaceVim#plugins#repl#status()}'
+    return '%#SpaceVim_statusline_a#'
+          \ . ' REPL '
+          \ . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+          \ . s:lsep
+          \ . ' %{SpaceVim#plugins#repl#status()}'
   elseif &filetype ==# 'VimMailClient'
-    return '%#SpaceVim_statusline_a# VimMail %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{mail#client#win#status().dir}'
+    return '%#SpaceVim_statusline_a#'
+          \ . ' VimMail '
+          \ . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+          \ . s:lsep
+          \ . ' %{mail#client#win#status().dir}'
   elseif &filetype ==# 'SpaceVimQuickFix'
     return '%#SpaceVim_statusline_a# SpaceVimQuickFix %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'VebuggerShell'
@@ -715,6 +738,9 @@ function! SpaceVim#layers#core#statusline#rsep() abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#config() abort
+  let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
+  let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, s:i_separators['arrow'])
+
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'm'], 'call SpaceVim#layers#core#statusline#toggle_section("minor mode lighters")',
         \ 'toggle the minor mode lighters', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'M'], 'call SpaceVim#layers#core#statusline#toggle_section("major mode")',
