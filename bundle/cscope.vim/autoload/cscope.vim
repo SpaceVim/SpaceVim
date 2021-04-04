@@ -247,7 +247,7 @@ function! s:GetBestPath(dir) abort
   let bestDir = ''
   for d in keys(s:dbs)
     if stridx(f, d) == 0 && len(d) > len(bestDir)
-      return d
+      return s:dbs[d].root
     endif
   endfor
   return ''
