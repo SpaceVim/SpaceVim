@@ -1363,7 +1363,7 @@ function! SpaceVim#end() abort
   " tab options:
   set smarttab
   let &expandtab = g:spacevim_expand_tab
-  
+
   if g:spacevim_default_indent > 0
     let &tabstop = g:spacevim_default_indent
     let &softtabstop = g:spacevim_default_indent
@@ -1433,30 +1433,21 @@ function! SpaceVim#end() abort
 
   call SpaceVim#autocmds#init()
 
-  if has('nvim')
-    if !has('nvim-0.2.0')
-      let $NVIM_TUI_ENABLE_CURSOR_SHAPE = g:spacevim_terminal_cursor_shape
-    else
-      if g:spacevim_terminal_cursor_shape == 0
-        " prevent nvim from changing the cursor shape
-        set guicursor=
-      elseif g:spacevim_terminal_cursor_shape == 1
-        " enable non-blinking mode-sensitive cursor
-        set guicursor=n-v-c:block-blinkon0,i-ci-ve:ver25-blinkon0,r-cr:hor20,o:hor50
-      elseif g:spacevim_terminal_cursor_shape == 2
-        " enable blinking mode-sensitive cursor
-        set guicursor=n-v-c:block-blinkon10,i-ci-ve:ver25-blinkon10,r-cr:hor20,o:hor50
-      endif
+  if !has('nvim-0.2.0') && !has('nvim')
+    " In old version of neovim, &guicursor do not support cursor shape
+    " setting.
+    let $NVIM_TUI_ENABLE_CURSOR_SHAPE = g:spacevim_terminal_cursor_shape
+  else
+    if g:spacevim_terminal_cursor_shape == 0
+      " prevent nvim from changing the cursor shape
+      set guicursor=
+    elseif g:spacevim_terminal_cursor_shape == 1
+      " enable non-blinking mode-sensitive cursor
+      set guicursor=n-v-c:block-blinkon0,i-ci-ve:ver25-blinkon0,r-cr:hor20,o:hor50
+    elseif g:spacevim_terminal_cursor_shape == 2
+      " enable blinking mode-sensitive cursor
+      set guicursor=n-v-c:block-blinkon10,i-ci-ve:ver25-blinkon10,r-cr:hor20,o:hor50
     endif
-
-    "silent! let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-    "silent! let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-    "silent! let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
-    augroup nvimrc_aucmd
-      autocmd!
-      autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
-    augroup END
   endif
   filetype plugin indent on
   syntax on
