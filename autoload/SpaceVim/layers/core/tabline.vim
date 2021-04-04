@@ -219,6 +219,23 @@ function! SpaceVim#layers#core#tabline#get() abort
     endif
     let index = 1
     for item in shown_items[:-2]
+      if s:is_modified(item.bufnr)
+        if item.tabnr == current_tabnr - 1
+          let t.= '%#SpaceVim_tabline_m# '
+        elseif item.tabnr == current_tabnr
+          let t.= '%#SpaceVim_tabline_m_i# '
+        else
+          let t.= ' '
+        endif
+      else
+        if item.tabnr == current_tabnr - 1
+          let t.= '%#SpaceVim_tabline_b# '
+        elseif item.tabnr == current_tabnr
+          let t.= '%#SpaceVim_tabline_b# '
+        else
+          let t.= ' '
+        endif
+      endif
       if has('tablineat')
         let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
       endif
@@ -226,18 +243,18 @@ function! SpaceVim#layers#core#tabline#get() abort
       let t .= s:get_no_empty(gettabvar(item.tabnr, '_spacevim_tab_name'), item.bufname)
       if item.tabnr == current_tabnr - 1
         if s:is_modified(item.bufnr)
-          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
+          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_a#' . s:lsep 
         else
-          let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
+          let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep 
         endif
       elseif item.tabnr == current_tabnr
         if s:is_modified(item.bufnr)
-          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep 
         else
-          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep 
         endif
       else
-        let t .= ' ' . s:ilsep . ' '
+        let t .= ' ' . s:ilsep
       endif
       let index += 1
     endfor
