@@ -188,6 +188,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         endfor
       endif
     endif
+    " get the list of displayed items
     let s:shown_items = shown_items
     if empty(shown_items)
       return ''
