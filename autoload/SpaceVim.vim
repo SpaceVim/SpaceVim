@@ -1435,6 +1435,8 @@ function! SpaceVim#end() abort
 
   if has('nvim')
     if !has('nvim-0.2.0')
+      " In old version of neovim, &guicursor do not support cursor shape
+      " setting.
       let $NVIM_TUI_ENABLE_CURSOR_SHAPE = g:spacevim_terminal_cursor_shape
     else
       if g:spacevim_terminal_cursor_shape == 0
@@ -1449,14 +1451,10 @@ function! SpaceVim#end() abort
       endif
     endif
 
+  else
     "silent! let &t_SI = "\<Esc>]50;CursorShape=1\x7"
     "silent! let &t_SR = "\<Esc>]50;CursorShape=2\x7"
     "silent! let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-
-    augroup nvimrc_aucmd
-      autocmd!
-      autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
-    augroup END
   endif
   filetype plugin indent on
   syntax on

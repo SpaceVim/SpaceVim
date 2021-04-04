@@ -65,6 +65,9 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
     autocmd VimLeavePre * call SpaceVim#plugins#manager#terminal()
+    if has('nvim')
+      autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
+    endif
   augroup END
 endfunction
 
