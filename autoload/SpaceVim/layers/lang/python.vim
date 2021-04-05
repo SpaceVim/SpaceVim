@@ -86,8 +86,12 @@ function! SpaceVim#layers#lang#python#config() abort
   call SpaceVim#layers#edit#add_ft_head_tamplate('python', s:python_file_head)
   if executable('ipython')
     call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title --colors=NoColor')
+  elseif executable('ipython3')
+    call SpaceVim#plugins#repl#reg('python', 'ipython3 --no-term-title --colors=NoColor')
   elseif executable('python')
     call SpaceVim#plugins#repl#reg('python', ['python', '-i'])
+  elseif executable('python3')
+    call SpaceVim#plugins#repl#reg('python', ['python3', '-i'])
   endif
   let g:neomake_python_enabled_makers = ['python']
   let g:neomake_python_python_exe = s:python_interpreter
