@@ -1,11 +1,11 @@
-function! s:SID() "{{{1
-  let fullname = expand("<sfile>")
+function! s:SID() abort "{{{1
+  let fullname = expand('<sfile>')
   return matchstr(fullname, '<SNR>\d\+_')
 endfunction
 "}}}
 let s:sid = s:SID()
 
-function! s:uniq(list) "{{{1
+function! s:uniq(list) abort "{{{1
   let R = []
   for e in a:list
     if index(R, e) is -1
@@ -16,7 +16,7 @@ function! s:uniq(list) "{{{1
 endfunction
 "}}}
 
-function! s:debug(msg) "{{{1
+function! s:debug(msg) abort "{{{1
   if !get(g:,'choosewin_debug')
     return
   endif
@@ -26,7 +26,7 @@ function! s:debug(msg) "{{{1
 endfunction
 
 
-function! s:buffer_options_set(bufnr, options) "{{{1
+function! s:buffer_options_set(bufnr, options) abort "{{{1
   let R = {}
   for [var, val] in items(a:options)
     let R[var] = getbufvar(a:bufnr, var)
@@ -36,7 +36,7 @@ function! s:buffer_options_set(bufnr, options) "{{{1
   return R
 endfunction
 
-function! s:window_options_set(winnr, options) "{{{1
+function! s:window_options_set(winnr, options) abort "{{{1
   let R = {}
   for [var, val] in items(a:options)
     let R[var] = getwinvar(a:winnr, var)
@@ -49,33 +49,33 @@ endfunction
 
 " s:strchars() "{{{1
 if exists('*strchars')
-  function! s:strchars(str)
+  function! s:strchars(str) abort
     return strchars(a:str)
   endfunction
 else
-  function! s:strchars(str)
-    return strlen(substitute(str, ".", "x", "g"))
+  function! s:strchars(str) abort
+    return strlen(substitute(a:str, '.', 'x', 'g'))
   endfunction
 endif
 "}}}
 
-function! s:include_multibyte_char(str) "{{{1
+function! s:include_multibyte_char(str) abort "{{{1
   return strlen(a:str) !=# s:strchars(a:str)
 endfunction
 
-function! s:str_split(str) "{{{1
+function! s:str_split(str) abort "{{{1
   return split(a:str, '\zs')
 endfunction
 
-function! s:define_type_checker() "{{{1
+function! s:define_type_checker() abort "{{{1
   " dynamically define s:is_Number(v)  etc..
   let types = {
-        \ "Number":     0,
-        \ "String":     1,
-        \ "Funcref":    2,
-        \ "List":       3,
-        \ "Dictionary": 4,
-        \ "Float":      5,
+        \ 'Number':     0,
+        \ 'String':     1,
+        \ 'Funcref':    2,
+        \ 'List':       3,
+        \ 'Dictionary': 4,
+        \ 'Float':      5,
         \ }
 
   for [type, number] in items(types)
@@ -88,9 +88,8 @@ function! s:define_type_checker() "{{{1
 endfunction
 "}}}
 call s:define_type_checker()
-unlet! s:define_type_checker
 
-function! s:get_ic(table, char, ...) "{{{1
+function! s:get_ic(table, char, ...) abort "{{{1
   let default = get(a:000, 0)
   " get() with ignore case
   let keys = keys(a:table)
@@ -101,11 +100,11 @@ function! s:get_ic(table, char, ...) "{{{1
   return a:table[keys[i]]
 endfunction
 
-function! s:dict_invert(d) "{{{1
+function! s:dict_invert(d) abort "{{{1
   return s:dict_create(values(a:d), keys(a:d))
 endfunction
 
-function! s:dict_create(keys, values) "{{{1
+function! s:dict_create(keys, values) abort "{{{1
   " Create dict from two List.
   let R = {}
   for i in range(0, min([len(a:keys), len(a:values)]) - 1)
@@ -114,7 +113,7 @@ function! s:dict_create(keys, values) "{{{1
   return R
 endfunction
 
-function! s:blink(count, color, pattern) "{{{1
+function! s:blink(count, color, pattern) abort "{{{1
   for i in range(a:count)
     let id = matchadd(a:color, a:pattern)
     redraw
@@ -125,14 +124,14 @@ function! s:blink(count, color, pattern) "{{{1
   endfor
 endfunction
 
-function! s:message(msg) "{{{1
+function! s:message(msg) abort "{{{1
   echohl Type
   echon 'choosewin: '
   echohl Normal
   echon a:msg
 endfunction
 
-function! s:read_char(prompt) "{{{1
+function! s:read_char(prompt) abort "{{{1
   redraw
   echohl PreProc
   echon a:prompt
@@ -142,28 +141,28 @@ endfunction
 "}}}
 
 let s:functions = [
-      \ "debug",
-      \ "uniq",
-      \ "dict_invert",
-      \ "dict_create",
-      \ "str_split",
-      \ "buffer_options_set",
-      \ "window_options_set",
-      \ "strchars",
-      \ "include_multibyte_char",
-      \ "is_Number",
-      \ "is_String",
-      \ "is_Funcref",
-      \ "is_List",
-      \ "is_Dictionary",
-      \ "is_Float",
-      \ "get_ic",
-      \ "blink",
-      \ "message",
-      \ "read_char",
+      \ 'debug',
+      \ 'uniq',
+      \ 'dict_invert',
+      \ 'dict_create',
+      \ 'str_split',
+      \ 'buffer_options_set',
+      \ 'window_options_set',
+      \ 'strchars',
+      \ 'include_multibyte_char',
+      \ 'is_Number',
+      \ 'is_String',
+      \ 'is_Funcref',
+      \ 'is_List',
+      \ 'is_Dictionary',
+      \ 'is_Float',
+      \ 'get_ic',
+      \ 'blink',
+      \ 'message',
+      \ 'read_char',
       \ ]
 
-function! choosewin#util#get() "{{{1
+function! choosewin#util#get() abort "{{{1
   let R = {}
   for fname in s:functions
     let R[fname] = function(s:sid . fname)
