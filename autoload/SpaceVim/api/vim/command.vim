@@ -9,7 +9,7 @@
 ""
 " @section vim#command, api-vim-command
 " @parentsection api
-" This api is for create complete function for custom vim command. This is
+" This api is for creating complete function for custom vim command. This is
 " example for create complete function for command TEST
 " >
 "   let s:CMD = SpaceVim#api#import('vim#command')

@@ -1,3 +1,11 @@
+#!/usr/bin/env bash
+
+# Fail on unset variables and command errors
+set -ue -o pipefail
+
+# Prevent commands misbehaving due to locale differences
+export LC_ALL=C
+
 install_vim() {
     local URL=https://github.com/vim/vim
     local tag=$1

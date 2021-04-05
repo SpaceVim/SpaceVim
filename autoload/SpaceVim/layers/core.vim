@@ -6,7 +6,16 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:string_hi')
+  finish
+endif
+
+
 let s:SYS = SpaceVim#api#import('system')
+let s:FILE = SpaceVim#api#import('file')
+let s:MESSAGE = SpaceVim#api#import('vim#message')
+let s:CMP = SpaceVim#api#import('vim#compatible')
+
 
 function! SpaceVim#layers#core#plugins() abort
   let plugins = []
@@ -94,7 +103,9 @@ function! SpaceVim#layers#core#config() abort
   " Select last paste
   nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save-current-file', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'call call('
+        \ . string(s:_function('s:save_current_file')) . ', [])',
+        \ 'save-current-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save-all-files', 1)
   " help mappings
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'I'], 'call SpaceVim#issue#report()', 'report-issue-or-bug', 1)
@@ -265,6 +276,7 @@ function! SpaceVim#layers#core#config() abort
   let g:_spacevim_mappings_space.p.t = {'name' : '+Tasks'}
   call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'e'], 'call SpaceVim#plugins#tasks#edit()', 'edit-project-task', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'l'], 'call SpaceVim#plugins#tasks#list()', 'list-tasks', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'c'], 'call SpaceVim#plugins#runner#clear_tasks()', 'clear-tasks', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'r'],
         \ 'call SpaceVim#plugins#runner#run_task(SpaceVim#plugins#tasks#get())', 'pick-task-to-run', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'k'], 'call SpaceVim#plugins#projectmanager#kill_project()', 'kill-all-project-buffers', 1)
@@ -367,23 +379,19 @@ function! s:number_transient_state(n) abort
   call state.open()
 endfunction
 
-let s:file = SpaceVim#api#import('file')
-let s:MESSAGE = SpaceVim#api#import('vim#message')
-let s:CMP = SpaceVim#api#import('vim#compatible')
-
 function! s:next_file() abort
   let dir = expand('%:p:h')
   let f = expand('%:t')
-  let file = s:file.ls(dir, 1)
+  let file = s:FILE.ls(dir, 1)
   if index(file, f) == -1
     call add(file,f)
   endif
   call sort(file)
   if len(file) != 1
     if index(file, f) == len(file) - 1
-      exe 'e ' . dir . s:file.separator . file[0]
+      exe 'e ' . dir . s:FILE.separator . file[0]
     else
-      exe 'e ' . dir . s:file.separator . file[index(file, f) + 1]
+      exe 'e ' . dir . s:FILE.separator . file[index(file, f) + 1]
     endif
   endif
 endfunction
@@ -391,16 +399,16 @@ endfunction
 function! s:previous_file() abort
   let dir = expand('%:p:h')
   let f = expand('%:t')
-  let file = s:file.ls(dir, 1)
+  let file = s:FILE.ls(dir, 1)
   if index(file, f) == -1
     call add(file,f)
   endif
   call sort(file)
   if len(file) != 1
     if index(file, f) == 0
-      exe 'e ' . dir . s:file.separator . file[-1]
+      exe 'e ' . dir . s:FILE.separator . file[-1]
     else
-      exe 'e ' . dir . s:file.separator . file[index(file, f) - 1]
+      exe 'e ' . dir . s:FILE.separator . file[index(file, f) - 1]
     endif
   endif
 endfunction
@@ -857,6 +865,20 @@ function! s:jump_transient_state() abort
         \ }
         \ )
   call state.open()
+endfunction
+
+function! s:save_current_file() abort
+  let v:errmsg = ''
+  silent! write
+  if v:errmsg !=# ''
+    echohl ErrorMsg
+    echo  v:errmsg
+    echohl None
+  else
+    echohl Delimiter
+    echo  bufname() . ' written'
+    echohl None
+  endif
 endfunction
 
 let g:_spacevim_autoclose_filetree = 1

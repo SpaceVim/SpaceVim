@@ -657,7 +657,7 @@ doesn't work as expected because a mapping is missing. In that case, the
 conflicting mappings should be resolved by either disabling the conflicting
 mapping or creating a custom mappings.
 
-In order to make custom mappings easier and prevent overwritting existing
+In order to make custom mappings easier and prevent overwriting existing
 ones, delimitMate uses the |<Plug>| + |hasmapto()| (|usr_41.txt|) construct
 for its mappings.
 

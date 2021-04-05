@@ -2,78 +2,65 @@
 
 ## 下一个版本
 
-下一个版本号为 v1.6.0
+下一个版本号为 v1.7.0
 
 <!-- call SpaceVim#dev#followHEAD#update('cn') -->
 <!-- SpaceVim follow HEAD en start -->
 
 #### 新特性
 
-- Add doc for vim#message api [#3805](https://github.com/SpaceVim/SpaceVim/pull/3805)
-- Add doc for data#number api [#3804](https://github.com/SpaceVim/SpaceVim/pull/3804)
-- Add doc for code indentation [#3799](https://github.com/SpaceVim/SpaceVim/pull/3799)
-- Add vim#regex api [#3791](https://github.com/SpaceVim/SpaceVim/pull/3791)
-- Add format_on_save options [#3746](https://github.com/SpaceVim/SpaceVim/pull/3746)
-- Add: random-candidates for colorscheme layer [#3671](https://github.com/SpaceVim/SpaceVim/pull/3671)
-- Add lua api [#2861](https://github.com/SpaceVim/SpaceVim/pull/2861)
-- Add automated adjustment of indentation with heuristics [#2307](https://github.com/SpaceVim/SpaceVim/pull/2307)
+- Add multiple tasks support [#4150](https://github.com/SpaceVim/SpaceVim/pull/4150)
+- add more language support key for typescript [#4141](https://github.com/SpaceVim/SpaceVim/pull/4141)
+- Add .SpaceVim.d/after to the end of rtp [#4136](https://github.com/SpaceVim/SpaceVim/pull/4136)
+- Add task problem matcher [#4127](https://github.com/SpaceVim/SpaceVim/pull/4127)
+- Add build action [#4096](https://github.com/SpaceVim/SpaceVim/pull/4096)
+- Add github_action_check [#4095](https://github.com/SpaceVim/SpaceVim/pull/4095)
+- Add vint github action [#4094](https://github.com/SpaceVim/SpaceVim/pull/4094)
+- Add lang#reason & lang#rescript layer [#4089](https://github.com/SpaceVim/SpaceVim/pull/4089)
+- Add Git cherry-pick support [#4088](https://github.com/SpaceVim/SpaceVim/pull/4088)
+- Add: new configuration options for go layer to take advantage of gopls features [#3837](https://github.com/SpaceVim/SpaceVim/pull/3837)
 
 #### 改变
 
-- Change default keybinding loading [#3792](https://github.com/SpaceVim/SpaceVim/pull/3792)
+- Change the go lsp to gopls, add lsp for terraform and yaml [#4015](https://github.com/SpaceVim/SpaceVim/pull/4015)
+- Change Lint options [#3943](https://github.com/SpaceVim/SpaceVim/pull/3943)
 
 #### 问题修复
 
-- Fix key binding SPC f Y [#3817](https://github.com/SpaceVim/SpaceVim/pull/3817)
-- Fix transient state api [#3809](https://github.com/SpaceVim/SpaceVim/pull/3809)
-- Fix key_sequence option [#3806](https://github.com/SpaceVim/SpaceVim/pull/3806)
-- Fix travis-ci checker status [#3802](https://github.com/SpaceVim/SpaceVim/pull/3802)
-- Fix AppVeyor lint [#3801](https://github.com/SpaceVim/SpaceVim/pull/3801)
-- Fix code runner [#3800](https://github.com/SpaceVim/SpaceVim/pull/3800)
-- Fix lang#c layer [#3796](https://github.com/SpaceVim/SpaceVim/pull/3796)
-- Fix autocomplete layer options [#3786](https://github.com/SpaceVim/SpaceVim/pull/3786)
-- Fix website [#3780](https://github.com/SpaceVim/SpaceVim/pull/3780)
-- Fix find path in project manager [#3761](https://github.com/SpaceVim/SpaceVim/pull/3761)
-- fix g:spacevim_project_rooter_outermost [#3759](https://github.com/SpaceVim/SpaceVim/pull/3759)
-- Fix a.vim config [#3756](https://github.com/SpaceVim/SpaceVim/pull/3756)
-- Fix tab name [#3752](https://github.com/SpaceVim/SpaceVim/pull/3752)
-- Fix job test for windows [#3750](https://github.com/SpaceVim/SpaceVim/pull/3750)
-- Fix tabline for inactive buffer [#3749](https://github.com/SpaceVim/SpaceVim/pull/3749)
-- Fix detack vim-todo [#3745](https://github.com/SpaceVim/SpaceVim/pull/3745)
-- fix Leaderf neoyank. [#3541](https://github.com/SpaceVim/SpaceVim/pull/3541)
+- Fix cursor shape option [#4168](https://github.com/SpaceVim/SpaceVim/pull/4168)
+- Fix autocomplete_method logic [#4159](https://github.com/SpaceVim/SpaceVim/pull/4159)
+- fix language leader key not work when open tsx file [#4140](https://github.com/SpaceVim/SpaceVim/pull/4140)
+- Fix flygrep open_item function [#4115](https://github.com/SpaceVim/SpaceVim/pull/4115)
+- Fix smart close issue for Vim [#4110](https://github.com/SpaceVim/SpaceVim/pull/4110)
+- Fix github action build status [#4105](https://github.com/SpaceVim/SpaceVim/pull/4105)
+- Fix configuration path [#4097](https://github.com/SpaceVim/SpaceVim/pull/4097)
 
 #### 未知
 
-- Update doc for key binding SPC f / [#3822](https://github.com/SpaceVim/SpaceVim/pull/3822)
-- Remove key binding <Tab> [#3818](https://github.com/SpaceVim/SpaceVim/pull/3818)
-- Update contributing guide [#3808](https://github.com/SpaceVim/SpaceVim/pull/3808)
-- Improve pastebin plugin [#3797](https://github.com/SpaceVim/SpaceVim/pull/3797)
-- Update website [#3789](https://github.com/SpaceVim/SpaceVim/pull/3789)
-- Improve the github ISSUE_TEMPLATE [#3787](https://github.com/SpaceVim/SpaceVim/pull/3787)
-- Improve issue template [#3785](https://github.com/SpaceVim/SpaceVim/pull/3785)
-- Improve issue template [#3782](https://github.com/SpaceVim/SpaceVim/pull/3782)
-- Pick up commit from upstream [#3779](https://github.com/SpaceVim/SpaceVim/pull/3779)
-- Use bundle dein [#3777](https://github.com/SpaceVim/SpaceVim/pull/3777)
-- Improve lang#asciidoc layer [#3775](https://github.com/SpaceVim/SpaceVim/pull/3775)
-- Doc custom plugins [#3774](https://github.com/SpaceVim/SpaceVim/pull/3774)
-- Improve foldsearch plugin [#3768](https://github.com/SpaceVim/SpaceVim/pull/3768)
-- Yabuki/layer of plantuml [#3765](https://github.com/SpaceVim/SpaceVim/pull/3765)
-- Update doc for project manager(rooter) [#3764](https://github.com/SpaceVim/SpaceVim/pull/3764)
-- clarification of plantuml layer [#3763](https://github.com/SpaceVim/SpaceVim/pull/3763)
-- :bug: cache init.toml based on filename if linked [#3762](https://github.com/SpaceVim/SpaceVim/pull/3762)
-- Update key binding guide [#3753](https://github.com/SpaceVim/SpaceVim/pull/3753)
-- Update codecov [#3751](https://github.com/SpaceVim/SpaceVim/pull/3751)
-- Update quick-start-guide [#3748](https://github.com/SpaceVim/SpaceVim/pull/3748)
-- Update copyright [#3744](https://github.com/SpaceVim/SpaceVim/pull/3744)
-- Update doc for statusline [#3665](https://github.com/SpaceVim/SpaceVim/pull/3665)
-- Update g map [#3496](https://github.com/SpaceVim/SpaceVim/pull/3496)
-- Update file head [#3379](https://github.com/SpaceVim/SpaceVim/pull/3379)
-- Improve tabline [#2242](https://github.com/SpaceVim/SpaceVim/pull/2242)
+- Improve tabline and statusline [#4169](https://github.com/SpaceVim/SpaceVim/pull/4169)
+- docs: fix typos in edit layer [#4166](https://github.com/SpaceVim/SpaceVim/pull/4166)
+- Secret.allah [#4165](https://github.com/SpaceVim/SpaceVim/pull/4165)
+- Update `lang#ruby` layer [#4164](https://github.com/SpaceVim/SpaceVim/pull/4164)
+- Doc: update markdown documents. [#4162](https://github.com/SpaceVim/SpaceVim/pull/4162)
+- Update python doc [#4154](https://github.com/SpaceVim/SpaceVim/pull/4154)
+- Ignore E790 on formating [#4148](https://github.com/SpaceVim/SpaceVim/pull/4148)
+- Define dir to save edits [#4143](https://github.com/SpaceVim/SpaceVim/pull/4143)
+- Lazy-load vimtex [#4139](https://github.com/SpaceVim/SpaceVim/pull/4139)
+- Doc: Fix typos [#4137](https://github.com/SpaceVim/SpaceVim/pull/4137)
+- disable colors for ipython repl [#4134](https://github.com/SpaceVim/SpaceVim/pull/4134)
+- doc: project_rooter_automatically [#4129](https://github.com/SpaceVim/SpaceVim/pull/4129)
+- feat: add autocomplete toggle for deoplete [#4125](https://github.com/SpaceVim/SpaceVim/pull/4125)
+- Iedit read from vim register [#4124](https://github.com/SpaceVim/SpaceVim/pull/4124)
+- readme.md [#4123](https://github.com/SpaceVim/SpaceVim/pull/4123)
+- Update gtags install guide [#4119](https://github.com/SpaceVim/SpaceVim/pull/4119)
+- Set `tabstop`, `softtabstop` and `shiftwidth` to the same value only if default_indent is positive [#4116](https://github.com/SpaceVim/SpaceVim/pull/4116)
+- Update codecov [#4107](https://github.com/SpaceVim/SpaceVim/pull/4107)
+- Print error if user's bootstrap was unsuccessful [#4093](https://github.com/SpaceVim/SpaceVim/pull/4093)
 
 <!-- SpaceVim follow HEAD en end -->
 
 ## 上一个版本
 
-SpaceVim 于 2020-08-01 发布 v1.5.0 版本，可查阅版本发布文章：
+SpaceVim 于 2020-12-31 发布 v1.6.0 版本，可查阅版本发布文章：
 
-- [SpaceVim 发布 v1.5.0 版本](https://spacevim.org/SpaceVim-release-v1.5.0/)
+- [SpaceVim 发布 v1.6.0 版本](https://spacevim.org/SpaceVim-release-v1.6.0/)

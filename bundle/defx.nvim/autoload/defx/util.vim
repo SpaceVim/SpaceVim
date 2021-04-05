@@ -40,6 +40,9 @@ endfunction
 function! defx#util#has_yarp() abort
   return !has('nvim') || get(g:, 'defx#enable_yarp', 0)
 endfunction
+function! defx#util#has_textprop() abort
+  return v:version >= 802 && exists('*prop_add')
+endfunction
 
 function! defx#util#execute_path(command, path) abort
   try
@@ -127,8 +130,16 @@ function! s:parse_options(cmdline) abort
         \ s:eval_cmdline(a:cmdline) : a:cmdline
 
   for s in split(cmdline, s:re_unquoted_match('\%(\\\@<!\s\)\+'))
-    let arg = substitute(s, '\\\( \)', '\1', 'g')
-    let arg_key = substitute(arg, '=\zs.*$', '', '')
+    let s = substitute(s, '\\\( \)', '\1', 'g')
+    let splits = split(s, '\a\a\+\zs:')
+    if len(splits) == 1
+      let source_name = 'file'
+      let source_arg = s
+    else
+      let source_name = splits[0]
+      let source_arg = join(splits[1:], ':')
+    endif
+    let arg_key = substitute(s, '=\zs.*$', '', '')
 
     let name = substitute(tr(arg_key, '-', '_'), '=$', '', '')[1:]
     if name =~# '^no_'
@@ -136,13 +147,13 @@ function! s:parse_options(cmdline) abort
       let value = v:false
     else
       let value = (arg_key =~# '=$') ?
-            \ s:remove_quote_pairs(arg[len(arg_key) :]) : v:true
+            \ s:remove_quote_pairs(s[len(arg_key) :]) : v:true
     endif
 
     if index(keys(defx#init#_user_options()), name) >= 0
       let options[name] = value
     else
-      call add(args, arg)
+      call add(args, [source_name, source_arg])
     endif
   endfor
 
@@ -322,4 +333,135 @@ function! s:strwidthpart_reverse(str, width) abort
   let str = tr(a:str, "\t", ' ')
   let vcol = strwidth(str) - a:width
   return matchstr(str, '\%>' . (vcol < 0 ? 0 : vcol) . 'v.*')
+endfunction
+
+function! defx#util#buffer_rename(bufnr, new_filename) abort
+  if a:bufnr < 0 || !bufloaded(a:bufnr)
+    return
+  endif
+
+  let hidden = &hidden
+
+  set hidden
+  let bufnr_save = bufnr('%')
+  noautocmd silent! execute 'buffer' a:bufnr
+  silent execute (&l:buftype ==# '' ? 'saveas!' : 'file')
+        \ fnameescape(a:new_filename)
+  if &l:buftype ==# ''
+    " Remove old buffer.
+    silent! bdelete! #
+  endif
+
+  noautocmd silent execute 'buffer' bufnr_save
+  let &hidden = hidden
+endfunction
+
+function! defx#util#buffer_delete(bufnr) abort
+  if a:bufnr < 0
+    return
+  endif
+
+  let winid = get(win_findbuf(a:bufnr), 0, -1)
+  if winid > 0
+    let winid_save = win_getid()
+    call win_gotoid(winid)
+
+    noautocmd silent enew
+    execute 'silent! bdelete!' a:bufnr
+
+    call win_gotoid(winid_save)
+  else
+    execute 'silent! bdelete!' a:bufnr
+  endif
+endfunction
+
+function! defx#util#_get_preview_window() abort
+  " Note: For popup preview feature
+  if exists('*popup_findpreview') && popup_findpreview() > 0
+    return 1
+  endif
+
+  return len(filter(range(1, winnr('$')),
+        \ "getwinvar(v:val, '&previewwindow') ==# 1"))
+endfunction
+
+function! defx#util#preview_file(context, filename) abort
+  let preview_width = str2nr(a:context.preview_width)
+  let preview_height = str2nr(a:context.preview_height)
+  let pos = win_screenpos(win_getid())
+  let win_width = winwidth(0)
+  let win_height = winheight(0)
+
+  if a:context.vertical_preview
+    call defx#util#execute_path(
+          \ 'silent rightbelow vertical pedit!', a:filename)
+    wincmd P
+
+    if a:context.floating_preview && exists('*nvim_win_set_config')
+      if a:context['split'] ==# 'floating'
+        let win_row = str2nr(a:context['winrow'])
+        let win_col = str2nr(a:context['wincol'])
+      else
+        let win_row = pos[0] - 1
+        let win_col = pos[1] - 1
+      endif
+      let win_col += win_width
+      if (win_col + preview_width) > &columns
+        let win_col -= preview_width
+      endif
+
+      call nvim_win_set_config(win_getid(), {
+           \ 'relative': 'editor',
+           \ 'row': win_row,
+           \ 'col': win_col,
+           \ 'width': preview_width,
+           \ 'height': preview_height,
+           \ })
+    else
+      execute 'vert resize ' . preview_width
+    endif
+  else
+    call defx#util#execute_path('silent aboveleft pedit!', a:filename)
+
+    wincmd P
+
+    if a:context.floating_preview && exists('*nvim_win_set_config')
+      let win_row = pos[0] - 1
+      let win_col = pos[1] + 1
+      if win_row <= preview_height
+        let win_row += win_height + 1
+        let anchor = 'NW'
+      else
+        let anchor = 'SW'
+      endif
+
+      call nvim_win_set_config(0, {
+            \ 'relative': 'editor',
+            \ 'anchor': anchor,
+            \ 'row': win_row,
+            \ 'col': win_col,
+            \ 'width': preview_width,
+            \ 'height': preview_height,
+            \ })
+    else
+      execute 'resize ' . preview_height
+    endif
+  endif
+
+  if exists('#User#defx-preview')
+    doautocmd User defx-preview
+  endif
+endfunction
+
+function! defx#util#call_atomic(calls) abort
+  let results = []
+  for [name, args] in a:calls
+    try
+      call add(results, call(name, args))
+    catch
+      call defx#util#print_error(v:exception)
+      return [results, v:exception]
+    endtry
+  endfor
+  return [results, v:null]
 endfunction

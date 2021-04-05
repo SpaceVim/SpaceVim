@@ -1,4 +1,4 @@
-" set verbose=1
+"set verbose=1
 
 let s:suite = themis#suite('install')
 let s:assert = themis#helper('assert')
@@ -24,10 +24,6 @@ function! s:dein_update() abort
   return dein#install#_update([], 'update', 0)
 endfunction
 
-function! s:dein_check_update() abort
-  return dein#install#_update([], 'check_update', 0)
-endfunction
-
 function! s:suite.before_each() abort
   call dein#_init()
   let &runtimepath = s:runtimepath_save
@@ -37,6 +33,7 @@ function! s:suite.before_each() abort
   let g:dein#enable_notification = 0
 endfunction
 
+" Note: It must be checked in the first
 function! s:suite.install() abort
   let g:dein#install_progress_type = 'title'
   let g:dein#enable_notification = 1
@@ -435,6 +432,31 @@ function! s:suite.lazy_on_pre_cmd() abort
         \     'v:val ==# plugin.rtp')), 1)
 endfunction
 
+if has('nvim-0.5')
+  function! s:suite.lazy_on_lua() abort
+    call dein#begin(s:path)
+
+    call dein#add('Shougo/deoplete.nvim', { 'on_lua': 'vim' })
+
+    call s:assert.equals(s:dein_install(), 0)
+
+    call dein#end()
+
+    let plugin = dein#get('deoplete.nvim')
+
+    call s:assert.equals(
+          \ len(filter(dein#util#_split_rtp(&runtimepath),
+          \     'v:val ==# plugin.rtp')), 0)
+
+    lua require'vim.highlight'
+
+    call s:assert.equals(plugin.sourced, 1)
+    call s:assert.equals(
+          \ len(filter(dein#util#_split_rtp(&runtimepath),
+          \     'v:val ==# plugin.rtp')), 1)
+  endfunction
+endif
+
 function! s:suite.lazy_on_idle() abort
   call dein#begin(s:path)
 
@@ -675,7 +697,6 @@ function! s:suite.build() abort
   call s:assert.true(dein#check_install(['vimproc.vim']))
 
   call s:assert.equals(s:dein_install(), 0)
-  call s:assert.equals(s:dein_check_update(), 0)
 
   call s:assert.equals(g:foobar, 4)
 

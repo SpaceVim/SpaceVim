@@ -32,23 +32,35 @@ function! SpaceVim#layers#lsp#config() abort
   let g:LanguageClient_diagnosticsDisplay = {
         \ 1: {
         \ 'name': 'Error',
+        \ 'texthl': 'LanguageClientError',
         \ 'signText': g:spacevim_error_symbol,
+        \ 'signTexthl': 'LanguageClientError', 
+        \ 'virtualTexthl': 'Error',
         \ },
         \ 2: {
         \ 'name': 'Warning',
+        \ 'texthl': 'LanguageClientWarning',
         \ 'signText': g:spacevim_warning_symbol,
+        \ 'signTexthl': 'LanguageClientWarningSign',
+        \ 'virtualTexthl': 'Todo',
         \ },
         \ 3: {
         \ 'name': 'Information',
+        \ 'texthl': 'LanguageClientInfo',
         \ 'signText': g:spacevim_info_symbol,
+        \ 'signTexthl': 'LanguageClientInfoSign',
+        \ 'virtualTexthl': 'Todo',
         \ },
         \ 4: {
         \ 'name': 'Hint',
+        \ 'texthl': 'LanguageClientInfo',
         \ 'signText': g:spacevim_info_symbol,
+        \ 'signTexthl': 'LanguageClientInfoSign',
+        \ 'virtualTexthl': 'Todo',
         \ },
         \ }
 
-  if g:spacevim_enable_neomake
+  if g:spacevim_lint_engine ==# 'neomake'
     let g:LanguageClient_diagnosticsDisplay[1].texthl = 'NeomakeError'
     let g:LanguageClient_diagnosticsDisplay[1].signTexthl = 'NeomakeErrorSign'
 
@@ -62,7 +74,7 @@ function! SpaceVim#layers#lsp#config() abort
     let g:LanguageClient_diagnosticsDisplay[4].texthl = 'NeomakeMessage'
     let g:LanguageClient_diagnosticsDisplay[4].signTexthl = 
           \ 'NeomakeMessageSign'
-  elseif g:spacevim_enable_ale
+  elseif g:spacevim_lint_engine ==# 'ale'
     let g:LanguageClient_diagnosticsDisplay[1].texthl = 'ALEError'
     let g:LanguageClient_diagnosticsDisplay[1].signTexthl = 'ALEErrorSign'
 
@@ -112,6 +124,7 @@ let s:lsp_servers = {
       \ 'ada' : ['ada_language_server'],
       \ 'c' : ['clangd'],
       \ 'cpp' : ['clangd'],
+      \ 'crystal' : ['scry'],
       \ 'css' : ['css-languageserver', '--stdio'],
       \ 'dart' : ['dart_language_server'],
       \ 'dockerfile' : ['docker-langserver', '--stdio'],
@@ -122,15 +135,15 @@ let s:lsp_servers = {
       \ 'julia' : ['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);'],
       \ 'objc' : ['clangd'],
       \ 'objcpp' : ['clangd'],
-      \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/felixfbecker/php-language-server/bin/php-language-server.php'],
+      \ 'php' : ['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/phpactor/phpactor/bin/phpactor', 'language-server'],
       \ 'purescript' : ['purescript-language-server', '--stdio'],
       \ 'python' : ['pyls'],
-      \ 'crystal' : ['scry'],
+      \ 'reason' : ['ocaml-language-server'],
+      \ 'ruby' : ['solargraph',  'stdio'],
       \ 'rust' : ['rustup', 'run', 'nightly', 'rls'],
       \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
-      \ 'ruby' : ['solargraph',  'stdio'],
       \ 'vue' : ['vls']
       \ }
 

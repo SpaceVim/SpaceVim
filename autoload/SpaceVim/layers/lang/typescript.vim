@@ -25,8 +25,8 @@
 
 function! SpaceVim#layers#lang#typescript#plugins() abort
   let plugins = []
-  call add(plugins, ['leafgarland/typescript-vim'])
-  call add(plugins, ['peitalin/vim-jsx-typescript'])
+  call add(plugins, ['leafgarland/typescript-vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-jsx-typescript', {'merged' : 0}])
   call add(plugins, ['heavenshell/vim-jsdoc', { 'on_cmd': 'JsDoc' }])
   if !SpaceVim#layers#lsp#check_filetype('typescript')
     if has('nvim')
@@ -44,18 +44,32 @@ function! SpaceVim#layers#lang#typescript#config() abort
     augroup SpaceVim_lang_typescript
       autocmd!
       autocmd FileType typescript setlocal omnifunc=tsuquyomi#complete
+      " Does tsuquyomi support tsx file?
+      autocmd FileType typescriptreact setlocal omnifunc=tsuquyomi#complete
     augroup END
   endif
   call SpaceVim#mapping#gd#add('typescript',
-        \ function('s:go_to_def'))
+        \ function('s:go_to_typescript_def'))
+  call SpaceVim#mapping#gd#add('typescriptreact',
+        \ function('s:go_to_typescriptreact_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('typescript',
-        \ function('s:on_ft'))
+        \ function('s:on_typescript_ft'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('typescriptreact',
+        \ function('s:on_typescript_ft'))
   call SpaceVim#plugins#repl#reg('typescript', ['ts-node', '-i'])
   call SpaceVim#plugins#runner#reg_runner('typescript', {
         \ 'exe' : 'ts-node',
         \ 'usestdin' : 1,
         \ 'opt': [],
         \ })
+  let g:neomake_typescript_enabled_makers = ['eslint']
+  " does eslint support tsx?
+  let g:neoformat_typescriptreact_prettier = {
+        \ 'exe': 'prettier',
+        \ 'args': ['--stdin', '--stdin-filepath', '"%:p"', '--parser', 'typescript'],
+        \ 'stdin': 1
+        \ }
+  let g:neoformat_enabled_typescriptreact = ['prettier']
 endfunction
 
 function! SpaceVim#layers#lang#typescript#set_variable(var) abort
@@ -70,9 +84,10 @@ function! SpaceVim#layers#lang#typescript#set_variable(var) abort
       let g:tsuquyomi_tsserver_path = tsserver_path
     endif
   endif
+  let g:jsdoc_lehre_path = get(a:var, 'lehre_path', 'lehre')
 endfunction
 
-function! s:on_ft() abort
+function! s:on_typescript_ft() abort
   if SpaceVim#layers#lsp#check_filetype('typescript')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
@@ -96,6 +111,12 @@ function! s:on_ft() abort
             \ 'preview definition', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'], 'TSType',
             \ 'view type', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'R'], 'TSRefs',
+            \ 'show reference', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'D'], 'TSGetDiagnostics',
+            \ 'show errors', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'o'], 'TSOrganizeImports',
+            \ 'organizes imports', 1)            
     else
       nnoremap <silent><buffer> gD :<C-u>TsuTypeDefinition<Cr>
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TsuquyomiSignatureHelp',
@@ -135,8 +156,19 @@ function! s:on_ft() abort
 
 endfunction
 
-function! s:go_to_def() abort
+function! s:go_to_typescript_def() abort
   if !SpaceVim#layers#lsp#check_filetype('typescript')
+    if has('nvim')
+      TSDef
+    else 
+      call SpaceVim#lsp#go_to_def()
+    endif
+  else
+    call SpaceVim#lsp#go_to_def()
+  endif
+endfunction
+function! s:go_to_typescriptreact_def() abort
+  if !SpaceVim#layers#lsp#check_filetype('typescriptreact')
     if has('nvim')
       TSDef
     else 

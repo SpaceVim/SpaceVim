@@ -10,6 +10,7 @@ lang: zh
 
 - [模块简介](#模块简介)
 - [启用模块](#启用模块)
+- [模块选项](#模块选项)
 - [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
@@ -26,6 +27,10 @@ lang: zh
 [[layers]]
   name = "lang#vim"
 ```
+
+## 模块选项
+
+- `auto_generate_doc`: 保存 vim 脚本文件时，自动生成对应的帮助文档，这一功能依赖外部命令 [vimdoc](https://github.com/google/vimdoc)。
 
 ## 快捷键
 

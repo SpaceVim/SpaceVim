@@ -1,0 +1,50 @@
+*git.txt*	Git support in vim
+Wang Shidong                                                             *git*
+
+==============================================================================
+CONTENTS                                                        *git-contents*
+  1. Introduction..................................................|git-intro|
+  2. Commands...................................................|git-commands|
+      1. git-add.....................................................|git-add|
+      2. git-cherry-pick.....................................|git-cherry-pick|
+      3. git-stash.................................................|git-stash|
+
+==============================================================================
+INTRODUCTION                                                       *git-intro*
+
+git.vim is a simple plugin for using git in vim and neovim. This plugin
+requires SpaceVim API and |job| support.
+
+==============================================================================
+COMMANDS                                                        *git-commands*
+
+:Git                                                                    *:Git*
+  Run git command asynchronously
+
+==============================================================================
+GIT-ADD                                                              *git-add*
+
+This commands is to add file contents to the index. For example, add current
+file to the index.
+>
+  :Git add %
+<
+
+==============================================================================
+GIT-CHERRY-PICK                                              *git-cherry-pick*
+
+This command is to cherry pick commit from other branch.
+>
+  :Git cherry-pick <HashA> <HashB>
+<
+
+==============================================================================
+GIT-STASH                                                          *git-stash*
+
+This commands is to manage git stash.
+>
+  :Git stash list
+<
+
+
+vim:tw=78:ts=8:ft=help:norl:

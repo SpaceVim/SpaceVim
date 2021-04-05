@@ -92,7 +92,7 @@ if exists('*nvim_create_buf')
 else
   function! s:self.create_buf(listed, scratch) abort
     let bufnr = self.bufadd('')
-    " in vim, a:listed must be number, what the fuck!
+    " in vim, a:listed must be number
     " why can not use v:true and v:false
     call setbufvar(bufnr, '&buflisted', a:listed ? 1 : 0)
     if a:scratch
@@ -274,6 +274,11 @@ function! s:self.displayArea() abort
   return [
         \ line('w0'), line('w$')
         \ ]
+endfunction
+
+function! s:self.open_pos(cmd, file, line, col) abort
+    exe 'silent ' . a:cmd . ' ' . a:file
+    call cursor(a:line, a:col)
 endfunction
 
 function! s:self.add_highlight(bufnr, hl, line, col, long) abort

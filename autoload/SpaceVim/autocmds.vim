@@ -7,10 +7,7 @@
 "=============================================================================
 
 
-let s:SYS = SpaceVim#api#import('system')
-let s:JOB = SpaceVim#api#import('job')
 let s:VIM = SpaceVim#api#import('vim')
-let s:CMP = SpaceVim#api#import('vim#compatible')
 
 
 "autocmds
@@ -62,13 +59,15 @@ function! SpaceVim#autocmds#init() abort
       autocmd FocusGained * call s:reload_touchpad_status()
     endif
     autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
-    autocmd BufWritePost *.vim call s:generate_doc()
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
     autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized call s:fix_colorschem_in_SpaceVim()
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
     autocmd VimLeavePre * call SpaceVim#plugins#manager#terminal()
+    if has('nvim')
+      autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
+    endif
   augroup END
 endfunction
 
@@ -112,15 +111,6 @@ function! s:fixindentline() abort
       echohl None
     endif
     let s:done = 1
-  endif
-endfunction
-function! s:generate_doc() abort
-  " neovim in windows executable function is broken
-  " https://github.com/neovim/neovim/issues/9391
-  if filereadable('./addon-info.json') && executable('vimdoc') && !s:SYS.isWindows
-    call s:JOB.start(['vimdoc', '.'])
-  elseif filereadable('./addon-info.json') && executable('python')
-    call s:JOB.start(['python', '-m', 'vimdoc', '.'])
   endif
 endfunction
 
@@ -184,11 +174,24 @@ function! SpaceVim#autocmds#VimEnter() abort
   if !empty(get(g:, '_spacevim_bootstrap_after', ''))
     try
       call call(g:_spacevim_bootstrap_after, [])
+      let g:_spacevim_bootstrap_after_success = 1
     catch
       call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
       call SpaceVim#logger#error('       exception: ' . v:exception)
       call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
+      let g:_spacevim_bootstrap_after_success = 0
     endtry
+  endif
+
+  if !get(g:, '_spacevim_bootstrap_before_success', 1)
+    echohl Error
+    echom 'bootstrap_before function failed to execute. Check `SPC h L` for errors.'
+    echohl None
+  endif
+  if !get(g:, '_spacevim_bootstrap_after_success', 1)
+    echohl Error
+    echom 'bootstrap_after function failed to execute. Check `SPC h L` for errors.'
+    echohl None
   endif
 endfunction
 

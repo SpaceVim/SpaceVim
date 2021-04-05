@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#processing layer"
-description: "This layer is for working on Processing sketches. It provides sytnax checking and an app runner"
+description: "This layer is for working on Processing sketches. It provides syntax checking and an app runner"
 ---
 
 # [Available Layers](../../) >> lang#processing

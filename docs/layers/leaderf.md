@@ -32,6 +32,7 @@ SpaceVim use `F` as the default customized key bindings prefix for denite layer.
 | `<Leader> f j`       | Fuzzy find jump, change       |
 | `<Leader> f l`       | Fuzzy find location list      |
 | `<Leader> f m`       | Fuzzy find output messages    |
-| `<Leader> f o`       | Fuzzy find outline            |
+| `<Leader> f o`       | Fuzzy find functions          |
+| `<Leader> f t`       | Fuzzy find tags               |
 | `<Leader> f q`       | Fuzzy find quick fix          |
 | `<Leader> f r`       | Resumes Unite window          |

@@ -308,7 +308,7 @@ endfunction
 " }}}
 
 " local function: update_checkers_argv {{{
-if g:spacevim_enable_neomake && g:spacevim_enable_ale == 0
+if g:spacevim_lint_engine ==# 'neomake'
   function! s:update_checkers_argv(argv, fts) abort
     for ft in a:fts
       let g:neomake_{ft}_clang_maker = {
@@ -327,7 +327,7 @@ if g:spacevim_enable_neomake && g:spacevim_enable_ale == 0
             \ }
     endfor
   endfunction
-elseif g:spacevim_enable_ale
+elseif g:spacevim_lint_engine ==# 'ale'
   function! s:update_checkers_argv(argv, fts) abort
     " g:ale_c_clang_options
     for ft in a:fts

@@ -15,6 +15,22 @@
 "   mode            key             function
 " <
 
+
+if exists('s:enabled_linters')
+  finish
+endif
+
+let s:enabled_linters = ['python']
+let s:format_on_save = 0
+let s:python_file_head = [
+      \ '#!/usr/bin/env python',
+      \ '# -*- coding: utf-8 -*-',
+      \ '',
+      \ ''
+      \ ]
+let s:enable_typeinfo = 0
+let s:python_interpreter = 'python3'
+
 function! SpaceVim#layers#lang#python#plugins() abort
   let plugins = []
   " python
@@ -69,10 +85,12 @@ function! SpaceVim#layers#lang#python#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
   call SpaceVim#layers#edit#add_ft_head_tamplate('python', s:python_file_head)
   if executable('ipython')
-    call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title')
+    call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title --colors=NoColor')
   elseif executable('python')
     call SpaceVim#plugins#repl#reg('python', ['python', '-i'])
   endif
+  let g:neomake_python_enabled_makers = ['python']
+  let g:neomake_python_python_exe = s:python_interpreter
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -158,7 +176,7 @@ func! s:getexe() abort
   if line =~# '^#!'
     return s:Shebang_to_cmd(line)
   endif
-  return ['python']
+  return [s:python_interpreter]
 endf
 
 function! s:go_to_def() abort
@@ -169,16 +187,7 @@ function! s:go_to_def() abort
   endif
 endfunction
 
-let s:format_on_save = 0
-let s:python_file_head = [
-      \ '#!/usr/bin/env python',
-      \ '# -*- coding: utf-8 -*-',
-      \ '',
-      \ ''
-      \ ]
-let s:enable_typeinfo = 0
 function! SpaceVim#layers#lang#python#set_variable(var) abort
-
   let s:format_on_save = get(a:var,
         \ 'format_on_save',
         \ get(a:var,
@@ -192,5 +201,13 @@ function! SpaceVim#layers#lang#python#set_variable(var) abort
   let s:enable_typeinfo = get(a:var,
         \ 'enable_typeinfo',
         \ s:enable_typeinfo
+        \ )
+  let s:enabled_linters = get(a:var,
+        \ 'enabled_linters',
+        \ s:enabled_linters
+        \ )
+  let s:python_interpreter = get(a:var,
+        \ 'python_interpreter',
+        \ s:python_interpreter
         \ )
 endfunction

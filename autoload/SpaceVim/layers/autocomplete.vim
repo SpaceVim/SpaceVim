@@ -64,7 +64,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
   if g:spacevim_autocomplete_method ==# 'ycm'
     call add(plugins, ['Valloric/YouCompleteMe',            { 'loadconf_before' : 1, 'merged' : 0}])
   elseif g:spacevim_autocomplete_method ==# 'neocomplete'
-    call add(plugins, ['Shougo/neocomplete', {
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/neocomplete.vim', {
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
@@ -75,9 +75,9 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ }])
   elseif g:spacevim_autocomplete_method ==# 'coc'
     if executable('yarn')
-      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': 'yarn install --frozen-lockfile'}])
+      call add(plugins, ['neoclide/coc.nvim',  {'loadconf': 1, 'merged': 0, 'build': 'yarn install --frozen-lockfile'}])
     else
-      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'rev': 'release'}])
+      call add(plugins, ['neoclide/coc.nvim',  {'loadconf': 1, 'merged': 0, 'rev': 'release'}])
     endif
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete.nvim', {
@@ -249,6 +249,14 @@ function! SpaceVim#layers#autocomplete#getprfile() abort
 
 
 
+endfunction
+
+function! SpaceVim#layers#autocomplete#toggle_deoplete() abort
+  if deoplete#custom#_get_option('auto_complete')
+    call deoplete#custom#option('auto_complete', v:false)
+  else
+    call deoplete#custom#option('auto_complete', v:true)
+  endif
 endfunction
 
 function! s:apply_sequence_delay() abort

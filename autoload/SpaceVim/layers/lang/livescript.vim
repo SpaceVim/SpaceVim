@@ -67,7 +67,7 @@ function! s:language_specified_mappings() abort
         \ 'eval code::String', 1)
 
   " checker layer configuration
-  if SpaceVim#layers#isLoaded('checkers') && g:spacevim_enable_neomake
+  if SpaceVim#layers#isLoaded('checkers') && g:spacevim_lint_engine ==# 'neomake'
     let g:neomake_livescript_enabled_makers = ['lsc']
     " Failed at: test.ls
     " { Error: Parse error on line 1: Unexpected 'NEWLINE'

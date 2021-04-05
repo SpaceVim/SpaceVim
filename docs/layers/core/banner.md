@@ -14,8 +14,8 @@ description: "This layer provides many default banner on welcome page."
 
 ## Description
 
-  This layer provides many default banner on welcome page.
+  This layer provides many default banners on welcome page.
 
 ## Configuration
 
-Currently, SpaceVim do not allowed to set the frequency.
+Currently, SpaceVim does not allow to set the frequency.

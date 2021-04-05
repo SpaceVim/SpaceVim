@@ -47,10 +47,13 @@ endfunction
 function! s:suite.add_overwrite() abort
   call s:assert.equals(dein#begin(s:path), 0)
 
-  call dein#add('foo', {})
+  call dein#parse#_add('foo', {}, v:true)
   call s:assert.equals(g:dein#_plugins.foo.sourced, 0)
 
-  call dein#add('foo', { 'sourced': 1 })
+  call dein#parse#_add('foo', { 'sourced': 1 }, v:true)
+  call s:assert.equals(g:dein#_plugins.foo.sourced, 1)
+
+  call dein#parse#_add('foo', { 'sourced': 2 }, v:false)
   call s:assert.equals(g:dein#_plugins.foo.sourced, 1)
 
   call s:assert.equals(dein#end(), 0)

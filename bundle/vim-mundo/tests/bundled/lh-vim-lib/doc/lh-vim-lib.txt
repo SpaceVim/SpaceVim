@@ -1,0 +1,1252 @@
+*lh-vim-lib.txt*        Vim common libraries (v2.2.1)
+                        For Vim version 7+      Last change: $Date: 2010-09-19 18:40:58 -0400 (Sun, 19 Sep 2010) $
+
+                        By Luc Hermitte
+                        hermitte {at} free {dot} fr
+
+
+==============================================================================
+CONTENTS                                      *lhvl-contents*      {{{1
+|lhvl-presentation|     Presentation
+|lhvl-functions|        Functions
+    
+|add-local-help|        Instructions on installing this help file
+
+
+------------------------------------------------------------------------------
+PRESENTATION                                  *lhvl-presentation*  {{{1
+
+|lh-vim-lib| is a library that defines some common VimL functions I use in my
+various plugins and ftplugins.
+This library has been conceived as a suite of |autoload| plugins, and a few
+|macros| plugins. As such, it requires Vim 7+.
+
+
+==============================================================================
+FUNCTIONS                                     *lhvl-functions*     {{{1
+{{{2Functions list~
+Miscellanous functions:                                 |lhvl#misc|
+- |lh#askvim#exe()|
+- |lh#common#check_deps()|
+- |lh#common#error_msg()|
+- |lh#common#warning_msg()|
+- |lh#common#echomsg_multilines()|
+- |lh#encoding#iconv()|
+- |lh#event#register_for_one_execution_at()|
+- |lh#option#get()|
+- |lh#option#get_non_empty()|
+- |lh#position#char_at_mark()|
+- |lh#position#char_at_pos()|
+- |lh#position#is_before()|
+- |lh#visual#selection()|
+Functors related functions:                             |lhvl#function|
+- |lh#function#bind()|
+- |lh#function#execute()|
+- |lh#function#prepare()|
+Lists related functions:                                |lhvl#list|
+- |lh#list#accumulate()|
+- |lh#list#copy_if()|
+- |lh#list#Find_if()| and |lh#list#find_if()|
+- |lh#list#intersect()|
+- |lh#list#match()|
+- |lh#list#subset()|
+- |lh#list#Transform()| and |lh#list#transform()|
+- |lh#list#transform_if()|
+- |lh#list#unique_sort()| and |lh#list#unique_sort2()|
+o |lh#list#equal_range()|, 
+  |lh#list#lower_bound()| and |lh#list#upper_bound()| 
+Graphs related functions:                               |lhvl#graph|
+- |lh#graph#tsort#depth()|
+- |lh#graph#tsort#breadth()|
+Paths related functions:                                |lhvl#path|
+- |lh#path#common()|
+- |lh#path#depth()|
+- |lh#path#glob_as_list()|
+- |lh#path#is_absolute_path()|
+- |lh#path#is_url()|
+- |lh#path#select_one()|
+- |lh#path#simplify()|
+- |lh#path#strip_common()|
+- |lh#path#strip_start()|
+- |lh#path#to_dirname()|
+- |lh#path#to_relative()|
+- |lh#path#relative_to()|
+- |lh#path#to_regex()|
+Commands related functions:                             |lhvl#command|
+- |lh#command#new()| (alpha version)
+- |lh#command#Fargs2String()| (alpha version)
+- |lh#command#complete()| (alpha version)
+Menus related functions:                                |lhvl#menu|
+- |lh#menu#def_toggle_item()|
+- |lh#menu#text()|
+- |lh#menu#make()|
+- |lh#menu#IVN_make()|
+- |lh#menu#is_in_visual_mode()|
+- |lh#menu#map_all()|
+- |lh#askvim#menu()| (beta version)
+Buffers related functions:                              |lhvl#buffer|
+- |lh#buffer#list()|
+- |lh#buffer#find()|
+- |lh#buffer#jump()|
+- |lh#buffer#scratch()|
+- |lh#buffer#dialog#| functions for building interactive dialogs
+    - |lh#buffer#dialog#new()|
+    - |lh#buffer#dialog#add_help()|
+    - |lh#buffer#dialog#select()|
+    - |lh#buffer#dialog#quit()|
+    - |lh#buffer#dialog#update()|
+Syntax related functions:                               |lhvl#syntax|
+- |lh#syntax#name_at()|
+- |lh#syntax#name_at_mark()|
+- |lh#syntax#skip()|
+- |lh#syntax#skip_at()|
+- |lh#syntax#skip_at_mark()|
+- |lh#syntax#list_raw()|
+- |lh#syntax#list()|
+
+}}}2
+------------------------------------------------------------------------------
+MISCELLANOUS FUNCTIONS                                *lhvl#misc*       {{{2
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                       *lh#common#echomsgMultilines()*  {{{3
+lh#common#echomsgMultilines()({text}) (*deprecated*)~
+                                      *lh#common#echomsg_multilines()*
+lh#common#echomsg_multilines()({text})~
+@param  {text}      Message to display on several lines
+@return             Nothing
+
+This function executes |:echomsg| as many times as required as there are lines
+in the original {text}.
+This is a workaround |:echomsg| that is unable to handle correctly multi-lines
+messages.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#common#ErrorMsg()*  {{{3
+lh#common#ErrorMsg({text}) (*deprecated*)~
+                                               *lh#common#error_msg()*
+lh#common#error_msg({text})~
+@param  {text}      Error message to display
+@return             Nothing
+
+This function displays an error message in a |confirm()| box if gvim is being
+used, or as a standard vim error message through |:echoerr| otherwise. 
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                               *lh#common#WarningMsg()* {{{3
+lh#common#WarningMsg({text}) (*deprecated*)~
+                                              *lh#common#warning_msg()*
+lh#common#warning_msg({text})~
+@param  {text}      Error message to display
+@return             Nothing
+
+This function displays a warning message highlighted with |WarningMsg| syntax.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#common#CheckDeps()* {{{3
+lh#common#CheckDeps({symbol},{file},{path},{requester}) (*deprecated*)~
+                                               *lh#common#check_deps()*
+lh#common#check_deps({symbol},{file},{path},{requester})~
+@param  {symbol}    Symbol required, see |exists()| for symbol format.
+@param  {file}      File in which the symbol is expected to be defined
+@param  {path}      Path where the file can be found
+@param  {requester} Name of the script in need of this symbol
+@return 0/1 whether the {symbol} exists
+
+Checks if {symbol} exists in vim. If not, this function first tries
+to |:source| the {file} in which the {symbol} is expected to be defined. If the
+{symbol} is still not defined, an error message is issued (with
+|lh#common#error_msg()|, and 0 is returned.
+
+Example: >
+    if   
+          \    !lh#common#check_deps('*Cpp_CurrentScope', 
+          \                     'cpp_FindContextClass.vim', 'ftplugin/cpp/',
+          \                     'cpp#GotoFunctionImpl.vim')
+          \ || !lh#common#check_deps(':CheckOptions',
+          \                     'cpp_options-commands.vim', 'ftplugin/cpp/',
+          \                     'cpp#GotoFunctionImpl.vim')
+      let &cpo=s:cpo_save
+      finish
+    endif
+
+Note: Since the introduction of |autoload| plugins in Vim 7, this function has
+lost most of its interrest.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#option#Get()*       {{{3
+lh#option#Get({name},{default}[,{scopes}])  (*deprecated*)~
+                                                *lh#option#get()*
+lh#option#get({name},{default}[,{scopes}])~
+@param {name}       Name of the option to fetch
+@param {default}    Default value in case the option is not defined
+@param {scopes}     Vim scopes in which the options must be searched,
+                    default="bg".
+@return             b:{name} if it exists, or g:{name} if it exists, or
+                    {default} otherwise.
+@see                For development oriented options, |lh-dev| provides a
+                    dedicated function: |lh#dev#option#get()|.
+
+This function fetches the value of an user defined option (not Vim |options|).
+The option can be either a |global-variable|, a |buffer-variable|, or even
+a|window-variable|.
+
+The order of the variables checked can be specified through the optional
+argument {scopes}. By default, buffer-local options have the priority over
+global options.
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                              *lh#option#GetNonEmpty()* {{{3
+lh#option#GetNonEmpty({name},{default}[,{scopes}])  (*deprecated*)~
+                                              *lh#option#get_non_empty()*
+lh#option#get_non_empty({name},{default}[,{scopes}])~
+@param {name}       Name of the option to fetch
+@param {default}    Default value in case the option is not defined, nor empty
+@param {scopes}     Vim scopes in which the options must be searched,
+                    default="bg".
+@return b:{name}    If it exists, of g:{name} if it exists, or {default}
+                    otherwise.
+
+This function works exactly like |lh#option#get()| except that a defined
+variable with an empty value will be ignored as well.
+An |expr-string| will be considered empty if its |strlen()| is 0, an
+|expr-number| when it values 0, |Lists| and |Dictionaries| when their |len()|
+is 0.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#askvim#Exe()*       {{{3
+lh#askvim#Exe({command}) (*deprecated*)~
+                                                *lh#askvim#exe()*
+lh#askvim#exe({command})~
+@param {command}    Command to execute from vim.
+@return             What the command echoes while executed.
+@note               This function encapsultates |redir| without altering any
+                    register.
+
+Some information aren't directly accessible (yet) through vim API
+(|functions|).  However, they can be obtained by executing some commands, and
+redirecting the result of these commands.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#askvim#menu()*      {{{3
+lh#askvim#menu({menuid},{modes})~
+@param {menuid}     Menu identifier.
+@param {modes}      List of modes
+@return             Information related to the {menuid}
+@todo               Still bugged
+
+This function provides a way to obtain information related to a menu entry in
+Vim.
+
+The format of the result being «to be stabilized»
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                               *lh#position#IsBefore()* {{{3
+lh#position#IsBefore({lhs_pos},{rhs_pos})  (*deprecated*)~
+                                               *lh#position#is_before()*
+lh#position#is_before({lhs_pos},{rhs_pos})~
+@param[in]          Positions as those returned from |getpos()|
+@return             Whether {lhs_pos} is before {rhs_pos}
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                             *lh#position#CharAtMark()* {{{3
+lh#position#CharAtMark({mark})  (*deprecated*)~
+                                             *lh#position#char_at_mark()*
+lh#position#char_at_mark({mark})~
+@return             The character at a given |mark|.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                              *lh#position#CharAtPos()* {{{3
+lh#position#CharAtPos({pos})  (*deprecated*)~
+                                              *lh#position#char_at_pos()* {{{3
+lh#position#char_at_pos({pos})~
+@return             The character at a position (see |getpos()|).
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#visual#selection()* {{{3
+lh#visual#selection()~
+@return             The current visual selection
+@post              |registers| are not altered by this function
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                 *lh#event#RegisterForOneExecutionAt()* {{{3
+lh#event#RegisterForOneExecutionAt({event}, {cmd}, {group})  (*deprecated*)~
+                                 *lh#event#register_for_one_execution_at()*
+lh#event#register_for_one_execution_at({event}, {cmd}, {group})~
+Registers a command to be executed once (and only once) when {event} is
+triggered on the current file.
+
+@param {event}  Event that will trigger the execution of {cmd}|autocmd-events|
+@param   {cmd} |expression-command| to execute
+@param {group} |autocmd-groups| under which the internal autocommand will be
+                registered.
+@todo possibility to specify the file pattern
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#encoding#iconv()*   {{{3
+lh#encoding#iconv({expr}, {from}, {to})~
+This function just calls |iconv()| with the same arguments. The only
+difference is that it return {expr} when we know that |iconv()| will return an
+empty string.
+
+
+------------------------------------------------------------------------------
+FUNCTORS RELATED FUNCTIONS                            *lhvl#function*   {{{2
+
+This sub-library helps defining functors-like variables, and execute them.
+
+NB: C++ developpers may be already familiar with boost.bind
+(/std(::tr1)::bind) function that inspired by feature.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                                                      *lhvl#functor*    {{{3
+A functor is implemented as a |Dictionary| that has the following fields:
+- {execute}  is the |Funcref| that will be actually executed by
+             |lh#function#execute()|. Its only argument is a |List| of
+              arguments for {function}.
+- {function} that identifies the function to execute, 
+              internals: it could be either a |Funcref|or a |expr-string|, or
+              whatever is compatible with the {execute} |FuncRef| field.
+- {args}     will contain the binded arguments as defined by
+             |lh#function#bind()|. If you attach a {execute} function of your
+              own to a functor, you don't need to fill "args".
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                                                *lh#function#bind()*    {{{3
+lh#function#bind({fn} [, {arguments} ...])~
+This function creates a new |lhvl#functor| based on a given function {fn}, and
+where some arguments are binded to the ones from {arguments}.
+The result is a new function-like data having for parameter v:1_, v:2_, ...
+that were specified in |lh#function#bind()| {arguments} list.
+
+Examples:~
+   See tests/lh/function.vim
+
+Let's suppose Print(...) a VimL variadic function that echoes the arguments it
+receives, i.e. >
+   call Print(1,2,"text", ['foo', 'bar'])
+will echo: >
+   1 ## 2 ## 'text' ## ['foo', 'bar']
+
+* Binding a |FuncRef|:~
+  and reverse the arguments given to it when it will be executed >
+   >:let func = lh#function#bind(function('Print'), 'v:3_', 'v:2_', 'v:1_')
+   >:echo lh#function#execute(func, 1, 'two', [3])
+   [3] ## 'two' ## 1
+
+* Binding a named function:~
+  the new function has 3 parameters and calls the named function with its 3rd
+  parameter, 42, its second and its first parameters as arguments. >
+   >:let func = lh#function#bind('Print', 'v:3_', 42, 'v:2_', 'v:1_')
+   >:echo lh#function#execute(func, 1, 'two', [3])
+   [3] ## 42 ## 'two' ## 1
+< NB: if exists('*'.func_name) is false, then the string is considered to be
+  an expression that will be evaluated as specified in the next use case.
+
+* Binding an expression:~
+  This time more complex on-the-fly computations on the |lhvl#functor|
+  parameters can be accomplished >
+   >:let func = lh#function#bind('Print(len(v:3_), 42, v:2_, v:1_)')
+   >:echo lh#function#execute(func, 1, 'two', [1,2,3])
+   3 ## 42 ## 'two' ## 1
+< NB: func["args"] is defined, but empty, and unused.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                                                *lh#function#execute()* {{{3
+lh#function#execute({functor} [, {arguments} ...])~
+While |lh#function#bind()| defines a |lhvl#functor| that can be stored and
+used later, |lh#function#execute()| directly executes the {functor} received.
+
+Different kind of {functors} are accepted:
+- |FuncRef|, and function names, where arguments are |lh#function#execute()|
+  ones ;
+- |expr-string|, where "v:{pos}_" strings are binded on-the-fly to {arguments} ;
+- |lhvl#functor|, that will be given {arguments} as arguments.
+
+Examples:~
+   See tests/lh/function.vim
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                                                *lh#function#prepare()* {{{3
+lh#function#prepare({function}, {arguments} ...)~
+This function expands all the elements from the {arguments} |List|, and
+prepares a |expr-string| that once evaluated will call the n-ary {function}
+with the n-{arguments}.
+The evaluation is meant to be done with |eval()|.
+>
+   >:let call = lh#function#prepare('Print', [1,2,"foo"])
+   >:echo eval(call)
+   1 ## 2 ## 'foo'
+
+
+------------------------------------------------------------------------------
+LISTS RELATED FUNCTIONS                               *lhvl#list*       {{{2
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#list#Match()*       {{{3
+lh#list#Match({list},{pattern}[, {start-pos}])  (*deprecated*)~
+                                                *lh#list#match()*
+lh#list#match({list},{pattern}[, {start-pos}])~
+@param      {list} |List| 
+@param   {pattern} |expr-string|
+@param {start-pos}  First index to check
+@return             The lowest index, >= {start-pos}, in |List| {list} where
+                    the item matches {pattern}.
+@return             -1 if no item matches {pattern}.
+@see |index()|, |match()|
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                            *lh#list#find_if()* *lh#list#Find_if()*     {{{3
+lh#list#Find_if({list},{string-predicate} [, {pred-parameters}][, {start-pos}])~
+lh#list#find_if({list},{functor-predicate} [, {pred-parameters}][, {start-pos}])~
+@param             {list} |List| 
+@param      {*-predicate}  Predicate to evaluate
+@param {pred-parameters}] |List| of Parameters to bind to special arguments in
+                           the {predicate}.
+@param         {start-pos} First index to check
+@return                    The lowest index, >= {start-pos}, in |List| {list}
+                           where the {predicate} evals to true.
+@return                    -1 if no item matches {pattern}.
+@see |index()|, |eval()|
+
+The {string-predicate} recognizes some special arguments:
+- |v:val| is substituted with the current element being evaluated in the list
+- *v:1_* *v:2_* , ..., are substituted with the i-th elements from
+  {pred-parameters}.
+  NB: the "v:\d\+_" are 1-indexed while {pred-parameters} is indeed seen as
+  0-indexed by Vim. 
+  This particular feature permits to pass any type of variable to the
+  predicate: a |expr-string|, a |List|, a |Dictionary|, ...
+
+e.g.: >
+    :let b = { 'min': 12, 'max': 42 }
+    :let l = [ 1, 5, 48, 25, 5, 28, 6]
+    :let i = lh#list#Find_if(l, 'v:val>v:1_.min  && v:val<v:1_.max && v:val%v:2_==0', [b, 2] )
+    :echo l[i]
+    28
+
+The {functor-predicate} is a |lhvl#function|. The same example can be
+rewritten as: >
+    :let l = [ 1, 5, 48, 25, 5, 28, 6]
+    :let i = lh#list#find_if(l, 'v:1_>12  && v:1_<42 && v:1_%2==0')
+    :echo l[i]
+    28
+NB: Expect the Find_if() version to be replaced with the find_if() one.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                   *lh#list#unique_sort()* *lh#list#unique_sort2()*     {{{3
+lh#list#unique_sort({list} [, {cmp}])~
+lh#list#unique_sort2({list} [, {cmp}])~
+@param[in] {list} |List| to sort
+@param      {cmp} |Funcref| or function name that acts as a compare predicate.
+                   It seems to be required in order to not compare number with
+                   a lexicographic order (with vim 7.1-156)
+@return            A new |List| sorted with no element repeated
+@todo support an optional {equal} predicate to use in the /unique/ making
+process.
+
+The difference between the two functions is the following:
+- unique_sort() stores all the elements in a |Dictionary|, then sort the values
+  stored in the dictionary ;
+- unique_sort2() sorts all the elements from the initial |List|, and then
+  keeps only the elements that appear once.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#list#Transform()*   {{{3
+lh#list#Transform({input},{output},{action})~
+@param[in]   {input} Input |List| to transform
+@param[out] {output} Output |List| where the transformed elements will be
+                     appended.
+@param      {action} Stringified action to apply on each element from {input}.
+                     The string "v:val" will always be replaced with the
+                     element currently transformed.
+@return {output}
+
+This function is actually returning >
+    extend(a:output, map(copy(a:input), a:action))
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#list#transform()*   {{{3
+lh#list#transform({input},{output},{action})~
+@param[in]   {input} Input |List| to transform
+@param[out] {output} Output |List| where the transformed elements will be
+                     appended.
+@param      {action}|lhvl#functor| action to apply on each element from
+                     {input}.
+@return              {output}
+
+This function is equivalent to (|lh#list#Transform()|) >
+    extend(a:output, map(copy(a:input), a:action))
+except the action is not a string but a |lhvl#functor|.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                               *lh#list#transform_if()* {{{3
+lh#list#transform_if({input},{output},{action},{predicate})~
+@param[in]   {input} Input |List| to transform
+@param[out] {output} Output |List| where the transformed elements will be
+                     appended.
+@param      {action}|lhvl#functor| action to apply on each element from
+                     {input} that verifies the {predicate}.
+@param   {predicate} Boolean |lhvl#functor| tested on each element before
+                     transforming it.
+@return              {output}
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                               *lh#list#copy_if()*      {{{3
+lh#list#copy_if({input},{output},{predicate})~
+Appends in {output} the elements from {input} that verifies the {predicate}. 
+
+@param[in]   {input} Input |List| to transform
+@param[out] {output} Output |List| where the elements that verify the
+                     {predicate} will be appended.
+@param   {predicate} Boolean |lhvl#functor| tested on each element.
+@return              {output}
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                               *lh#list#accumulate()*   {{{3
+lh#list#accumulate({input},{transformation},{accumulator})~
+Accumulates the transformed elements from {input}.
+
+@param[in]      {input} Input |List| to transform
+@param {transformation}|lhvl#functor| applied on each element from {input}.
+@param    {accumulator}|lhvl#functor| taking the list of tranformaed elements
+                        as input
+@return                 the result of {accumulator}
+
+Examples: >
+   :let strings = [ 'foo', 'bar', 'toto' ]
+   :echo eval(lh#list#accumulate(strings, 'strlen', 'join(v:1_,  "+")'))
+   10
+
+   :let l = [ 1, 2, 'foo', ['bar']]
+   :echo lh#list#accumulate(l, 'string', 'join(v:1_, "##")')
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                               *lh#list#subset()*       {{{3
+lh#list#subset({input},{indices})~
+Returns a subset slice of the {input} list.
+
+@param[in] {input}   Input |List| from which  element will be extracted
+@param[in] {indices}|List| of indices to extract
+@return a |List| of the elements from {input} indexed by the {indices}
+
+Example: >
+    :let l = [ 1, 25, 5, 48, 25, 5, 28, 6]
+    :let indices = [ 0, 5, 7, 3 ]
+    :echo lh#list#subset(l, indices) 
+    [ 1, 5, 6, 48 ]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                               *lh#list#intersect()*    {{{3
+lh#list#intersect({list1},{list2})~
+Returns the elements present in both input lists.
+
+@param[in] {list1}|List| 
+@param[in] {list2}|List| 
+@return a |List| of the elements in both {list1} and {list2}, the elements are
+kepts in the same order as in {list1}
+@note the algorithm is in O(len({list1})*len({list2}))
+
+Example: >
+    :let l1 = [ 1, 25, 7, 48, 26, 5, 28, 6]
+    :let l2 = [ 3, 8, 7, 25, 6 ]
+    :echo lh#list#intersect(l1, l2) 
+    [ 25, 7, 6 ]
+
+------------------------------------------------------------------------------
+GRAPHS RELATED FUNCTIONS                              *lhvl#graph*      {{{2
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                             *lh#graph#tsort#depth()*   {{{3
+                                             *lh#graph#tsort#breadth()* {{{3
+lh#graph#tsort#depth({dag}, {start-nodes})~
+lh#graph#tsort#breadth({dag}, {start-nodes})~
+These two functions implement a topological sort on the Direct Acyclic Graph.
+- depth() is a recursive implementation of a depth-first search. 
+- breadth() is a non recursive implementation of a breadth-first search.
+
+@param {dag} is a direct acyclic graph defined either:
+             - as a |Dictionnary| that associates to each node, the |List| of
+               all its successors
+             - or as a /fetch/ |function()| that returns the |List| of the
+               successors of a given node -- works only with depth() which
+               takes care of not calling this function more than once for each
+               given node.
+@param {start-nodes} is a |List| of start nodes with no incoming edge
+@throw "Tsort: cyclic graph detected:" if {dag} is not a DAG.
+@see http://en.wikipedia.org/wiki/Topological_sort
+@since Version 2.1.0
+@test tests/lh/topological-sort.vim
+
+
+------------------------------------------------------------------------------
+PATHS RELATED FUNCTIONS                               *lhvl#path*       {{{2
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                   *lh#path#depth()*    {{{3
+lh#path#depth({dirname})~
+Returns the depth of a directory name.
+
+@param {dirname}  Pathname to simplify
+@return the depth of the simplified directory name, i.e. 
+        lh#path#depth("bar/b2/../../foo/") returns 1
+
+@todo However, it is not able to return depth of negative paths like
+      "../../foo/". I still need to decide whether the function should return
+      -1 or 3.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                 *lh#path#dirname()*    {{{3
+lh#path#dirname({dirname})~
+Ensures the returned directory name ends with a '/' or a '\'.
+
+@todo On windows, it should take 'shellslash' into account to decide the
+      character to append.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#path#Simplify()*    {{{3
+lh#path#Simplify({pathname})  (*deprecated*)~
+                                                *lh#path#simplify()*
+lh#path#simplify({pathname})~
+Simplifies a path by getting rid of useless '../' and './'.
+
+@param {pathname}  Pathname to simplify
+@return the simplified pathname
+
+This function works like |simplify()|, except that it also strips the leading
+"./".
+
+Note: when vim is compiled for unix, it seems unable to |simplify()| paths
+containing "..\". (It likelly works this way when vim is compiled without
+'shellslash' support)
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                    *lh#path#common()*  {{{3
+lh#path#common({pathnames})~
+@param[in] {pathnames} |List| of pathnames to analyse
+@return the common leading path between all {pathnames}
+
+e.g.: >
+ :echo lh#path#common(['foo/bar/file','foo/file', 'foo/foo/file'])
+echoes >
+ foo/
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#path#StripCommon()* {{{3
+lh#path#StripCommon({pathnames})  (*deprecated*)~
+                                                *lh#path#strip_common()*
+lh#path#strip_common({pathnames})~
+@param[in,out] {pathnames} |List| of pathnames to simplify
+@return the simplified pathnames
+
+This function strips all pathnames from their common leading part. The
+compuation of the common leading part is ensured by |lh#path#common()|
+thank.
+e.g.: >
+ :echo lh#path#strip_common(['foo/bar/file','foo/file', 'foo/foo/file'])
+echoes >
+ ['bar/file','file', 'foo/file']
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                 *lh#path#StripStart()* {{{3
+lh#path#StripStart({pathname}, {pathslist})  (*deprecated*)~
+                                                 *lh#path#strip_start()*
+lh#path#strip_start({pathname}, {pathslist})~
+@param[in] {pathname}  name to simplify
+@param[in] {pathslist} list of pathname (can be a |string| of pathnames
+                       separated by ",", of a |List|).
+
+Strips {pathname} from any path from {pathslist}.
+
+e.g.: >
+ :echo lh#path#strip_start($HOME.'/.vim/template/bar.template',
+   \ ['/home/foo/.vim', '/usr/local/share/vim/'])
+ :echo lh#path#strip_start($HOME.'/.vim/template/bar.template',&rtp)
+echoes >
+ template/bar.template
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#path#IsAbsolutePath()* {{{3
+lh#path#IsAbsolutePath({path})  (*deprecated*)~
+                                                *lh#path#is_absolute_path()*
+lh#path#is_absolute_path({path})~
+@return {path} Path to test
+@return whether the path is an absolute path
+@note Supports Unix absolute paths, Windows absolute paths, and UNC paths
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#path#IsURL()*       {{{3
+lh#path#IsURL({path})  (*deprecated*)~
+                                                *lh#path#is_url()*
+lh#path#is_url({path})~
+@return {path} Path to test
+@return whether the path is an URL
+@note Supports http(s)://, (s)ftp://, dav://, fetch://, file://, rcp://,
+rsynch://, scp://
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#path#SelectOne()*   {{{3
+lh#path#SelectOne({pathnames},{prompt})  (*deprecated*)~
+                                                *lh#path#select_one()*
+lh#path#select_one({pathnames},{prompt})~
+@param[in] {pathnames} |List| of pathname
+@param     {prompt}     Prompt for the dialog box
+
+@return "" if len({pathnames}) == 0
+@return {pathnames}[0] if len({pathnames}) == 1
+@return the selected pathname otherwise
+
+Asks the end-user to choose a pathname among a list of pathnames.
+The pathnames displayed will be simplified thanks to |lh#path#strip_common()|
+-- the pathname returned is the "full" original pathname matching the
+simplified pathname selected.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#path#ToRelative()*  {{{3
+lh#path#ToRelative({pathname})  (*deprecated*)~
+                                                *lh#path#to_relative()*
+lh#path#to_relative({pathname})~
+@param {pathname} Pathname to convert
+@return the simplified {pathname} in its relative form as it would be seen
+        from the current directory.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#path#relative_to()*  {{{3
+lh#path#relative_to({from}, {to})~
+Returns the relative directory that indentifies {to} from {from} location.
+@param {from} origin directory
+@param {to}   destination directory
+@return the simplified pathname {to} in its relative form as it would be seen
+        from the {from} directory.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#path#GlobAsList()*  {{{3
+lh#path#GlobAsList({pathslist}, {expr})  (*deprecated*)~
+                                                *lh#path#glob_as_list()*
+lh#path#glob_as_list({pathslist}, {expr})~
+@return |globpath()|'s result, but formatted as a list of matching pathnames.
+In case {expr} is a |List|, |globpath()| is applied on each expression in
+{expr}.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                    *lh#path#find()*    {{{3
+lh#path#find({pathslist}, {regex})~
+@param[in] {pathslist} List of paths which can be received as a |List| or as a
+                       string made of coma separated paths.
+@return the path that matches the given {regex}
+
+e.g.: >
+ let expected_win = $HOME . '/vimfiles'
+ let expected_nix = $HOME . '/.vim'
+ let what =  lh#path#to_regex($HOME.'/').'\(vimfiles\|.vim\)'
+ let z = lh#path#find(&rtp,what)
+ if has('win16')||has('win32')||has('win64')
+   Assert z == expected_win
+ else
+   Assert z == expected_nix
+ endif
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#path#to_regex()*    {{{3
+lh#path#to_regex({pathname})~
+Transforms the {pathname} to separate each node-name by the string '[/\\]' 
+
+The rationale behind this function is to build system independant regex
+pattern to use on pathnames as sometimes pathnames are built by appending
+'/stuff/like/this' without taking 'shellslash' into account.
+
+e.g.: >
+ echo lh#path#to_regex('/home/luc/').'\(vimfiles\|.vim\)'
+echoes >
+ [/\\]home[/\\]luc[/\\]\(vimfiles\|.vim\)
+
+
+------------------------------------------------------------------------------
+MENUS RELATED FUNCTIONS                               *lhvl#menu*       {{{2
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                             *lh#menu#def_toggle_item()*  {{{3
+lh#menu#def_toggle_item({Data})~
+@param[in,out] {Data} Definition of a |menu| item.
+
+This function defines a |menu| entry that will be associated to a
+|global-variable| whose values can be cycled and explored from the menu. This
+global variable can be seen as an enumerate whose value can be cyclically
+updated through a menu.
+
+{Data} is a |Dictionary| whose keys are:
+- "variable": name of the |global-variable| to bind to the menu entry
+  Mandatory.
+- "values": associated values of string or integers (|List|)
+  Mandatory.
+- "menu": describes where the menu entry must be placed (|Dictionary|)
+    - "priority": complete priority of the entry (see |sub-menu-priority|)
+    - "name": complete name of the entry -- ampersand (&) can be used to define
+      shortcut keys
+  Mandatory.
+- "idx_crt_value": index of the current value for the option (|expr-number|)
+  This is also an internal variable that will be automatically updated to
+  keep the index of the current value of the "variable" in "values".
+  Optional ; default value is 1, or the associated index of the initial value
+  of the variable (in "values") before the function call.
+- "texts": texts to display according to the variable value (|List|)
+  Optional, "values" will be used by default. This option is to be used to
+  distinguish the short encoded value, from the long self explanatory name.
+
+Warning:
+    If the variable is changed by hand without using the menu, then the menu
+    and the variable will be out of synch. Unless the command |lhvl-:Toggle|
+    is used to change the value of the options (and keep the menu
+    synchronized).
+
+Examples:
+   See tests/lh/test-toggle-menu.vim
+
+                                                            *lhvl-:Toggle*
+:Toggle {variable-name}~
+@param {variable-name} must be a |global-variable| name used as "variable" in
+the definition of a toggable menu item thanks to |lh#menu#def_toggle_item()|.
+
+This command supports autocompletion on the {variable-name}.
+
+Todo:
+    Propose a *lhvl-:Set{vaName}* command.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                      *lh#menu#text()*  {{{3
+lh#menu#text({text})~
+@param[in] {text} Text to send to |:menu| commands
+@return a text to be used in menus where "\" and spaces have been escaped.
+
+This helper function transforms a regular text into a text that can be
+directly used with |:menu| commands.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                      *lh#menu#make()*  {{{3
+option: *[gb]:want_buffermenu_or_global_disable*
+If Michael Geddes's |buffer-menu| plugin is installed, this option tells
+whether we want to take advantage of it to define menus or to ignore it.
+
+lh#menu#make({modes}, {menu-priority}, {menu-text}, {key-binding}, [<buffer>,]  {action})~
+Creates a menu entry and its associated mappings for several modes at once.
+
+@param[in] {modes} Vim modes the menus and maps will be provided for
+@param[in] {menu-priority} |sub-menu-priority| for the new menu entry
+@param[in] {menu-text}      Name of the new menu entry
+@param[in] {key-binding}    Sequence of keys to execute the associated action
+@param[in] "<buffer>"       If the string "<buffer>" is provided, then the 
+                            associated mapping will be a |map-<buffer>|, and
+                            the menu will be available to the current buffer
+                            only. See |[gb]:want_buffermenu_or_global_disable|
+                            When "<buffer>" is set, the call to lh#menu#make()
+                            must be done in the buffer-zone from a |ftplugin|,
+                            or from a |local_vimrc|.
+@param[in] {action}         Action to execute when {key-binding} is typed, or
+                            when the menu entry is selected.
+@todo support select ('s') and visual-not-select ('x') modes
+
+First example:~
+The following call will add the menu "LaTeX.Run LaTeX once <C-L><C-O>", with
+the priority (placement) 50.305, for the NORMAL, INSERT and COMMAND modes. The
+action associated first saves all the changed buffers and then invokes LaTeX.
+The same action is also binded to <C-L><C-O> for the same modes, with the
+nuance that the maps will be local to the buffer.
+>
+  call lh#menu#make("nic", '50.305', '&LaTeX.Run LaTeX &once', "<C-L><C-O>",
+          \ '<buffer>', ":wa<CR>:call TKMakeDVIfile(1)<CR>")
+
+Second example:~
+This example demonstrates an hidden, but useful, behavior: if the mode is the
+visual one, then the register v is filled with the text of the visual area.
+This text can then be used in the function called. Here, it will be proposed
+as a default name for the section to insert:
+>
+  function! TKinsertSec()
+    " ...
+    if (strlen(@v) != 0) && (visualmode() == 'v')
+      let SecName = input("name of ".SecType.": ", @v)
+    else
+      let SecName = input("name of ".SecType.": ")
+    endif
+    " ...
+  endfunction
+  
+  call lh#menu#make("vnic", '50.360.100', '&LaTeX.&Insert.&Section',
+          \ "<C-L><C-S>", '<buffer>', ":call TKinsertSec()<CR>")
+
+We have to be cautious to one little thing, there is a side effect: the visual
+mode vanishes when we enter the function. If you don't want this to happen,
+use the non-existant command: |:VCall|.
+
+Third example:~
+If it is known that a function will be called only under |VISUAL-mode|, and
+that we don't want of the previous behavior, we can explicitly invoke the
+function with |:VCall| -- command that doesn't actually exist. Check
+lh-tex/ftplugin/tex/tex-set.vim |s:MapMenu4Env| for such an example.
+
+Fourth thing: actually, lh#menu#make() is not restricted to commands. The
+action can be anything that could come at the right hand side of any |:map| or
+|:menu| action. But this time, you have to be cautious with the modes you
+dedicate your map to. I won't give any related example ; this is the
+underlying approach in |lh#menu#IVN_make()|. 
+
+
+                                                    *lh#menu#make()_modes*
+Implementation details:~
+The actual creation of the mappings is delegated to |lh#menu#map_all()|. 
+If the {action} to execute doesn't start with ':', it is left untransformed,
+otherwise it is adapted depending on each {mode}:
+- INSERT-mode: each recognized |:command| call is prepended with |i_CTRL-O| 
+- NORMAL-mode: the {action} is used as it is
+- VISUAL-mode: ":Vcall" is replaced by "\<cr>gV", otherwise the selection is
+  recorded into @v register, the {action} command is executed after a
+  |v_CTRL-C|, and eventually @v is cleared. 
+  The use is @v is deprecated, rely instead on |lh#menu#is_in_visual_mode()|
+  and on |lh#selection#visual()|.
+- COMMAND-mode: the {action} is prepended with |c_CTRL-C|.
+
+Examples:
+   See tests/lh/test-menu-map.vim
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                  *lh#menu#IVN_make()*  {{{3
+Mappings & menus inserting text~
+lh#menu#IVN_make(<priority>, {text}, {key}, {IM-action}, {VM-action}, {NM-action} [, {nore-IM}, {nore-VM}, {nore-NM}])~
+
+lh#menu#IVN_MenuMake() accepts three different actions for the three modes:
+INSERT, VISUAL and NORMAL. The mappings defined will be relative to the
+current buffer -- this function is addressed to ftplugins writers. The last
+arguments specify whether the inner mappings and abbreviations embedded within
+the actions should be expanded or not ; i.e. are we defining
+«noremaps/noremenus» ?
+
+You will find very simple examples of what could be done at the end of
+menu-map.vim. Instead, I'll show here an extract of my TeX ftplugin: it
+defines complex functions that will help to define very simply the different
+mappings I use. You could find another variation on this theme in
+ftplugin/html/html_set.vim.
+
+>
+  :MapMenu 50.370.300 &LaTeX.&Fonts.&Emphasize ]em emph
+  call <SID>MapMenu4Env("50.370.200", '&LaTeX.&Environments.&itemize',
+        \ ']ei', 'itemize', '\item ')
+  
+
+The first command binds ]em to \emph{} for the three different modes. In
+INSERT mode, the cursor is positioned between the curly brackets, and a marker
+is added after the closing bracket -- cf. my bracketing system. In VISUAL
+mode, the curly brackets are added around the visual area. In NORMAL mode, the
+area is considered to be the current word.
+
+The second call binds for the three modes: ]ei to:
+>
+      \begin{itemize}
+          \item
+      \end{itemize}
+    
+The definition of the different functions and commands involved just follows.
+>
+  command -nargs=1 -buffer MapMenu :call <SID>MapMenu(<f-args>)
+  
+  function! s:MapMenu(code,text,binding, tex_cmd, ...)
+    let _2visual = (a:0 > 0) ? a:1 : "viw"
+    " If the tex_cmd starts with an alphabetic character, then suppose the
+    " command must begin with a '\'.
+    let texc = ((a:tex_cmd[0] =~ '\a') ? '\' : "") . a:tex_cmd
+    call lh#menu#IVN_make(a:code, a:text.'     --  ' . texc .'{}', a:binding,
+          \ texc.'{',
+          \ '<ESC>`>a}<ESC>`<i' . texc . '{<ESC>%l',
+          \ ( (_2visual=='0') ? "" : _2visual.a:binding),
+          \ 0, 1, 0)
+  endfunction
+
+  " a function and its map to close a "}", and that works whatever the
+  " activation states of the brackets and marking features are.
+  function! s:Close()
+    if strlen(maparg('{')) == 0                    | exe "normal a} \<esc>"
+    elseif exists("b:usemarks") && (b:usemarks==1) | exe "normal ¡jump! "
+    else                                           | exe "normal a "
+    endif
+  endfunction
+
+  imap <buffer> ¡close! <c-o>:call <SID>Close()<cr>
+
+  function! s:MapMenu4Env(code,text,binding, tex_env, middle, ...)
+    let _2visual = (a:0 > 0) ? a:1 : "vip"
+    let b = "'" . '\begin{' . a:tex_env . '}' . "'"
+    let e = "'" . '\end{' . a:tex_env . '}' . "'"
+    call IVN_MenuMake(a:code, a:text, a:binding,
+          \ '\begin{'.a:tex_env.'¡close!<CR>'.a:middle.' <CR>\end{'.a:tex_env.'}<C-F><esc>ks',
+          \ ':VCall MapAroundVisualLines('.b. ',' .e.',1,1)',
+          \ _2visual.a:binding,
+          \ 0, 1, 0)
+  endfunction
+
+Examples:
+   See tests/lh/test-menu-map.vim
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                         *lh#menu#is_in_visual_mode()*  {{{3
+lh#menu#is_in_visual_mode()~
+@return a boolean that tells whether the {action} used in
+|lh#menu#is_in_visual_mode()| has been invoked from the VISUAL-mode.
+
+NB: this function deprecates the test on @v.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                   *lh#menu#map_all()*  {{{3
+lh#menu#map_all({map-type}[, {map-args...}])~
+This function is a helper function that defines several mappings at once as
+|:amenu| would do.
+
+@param {map-type}     String of the form "[aincv]*(nore)?map" that tells the
+                      mode on which mappings should be defined, and whether
+                      the mappings shall be |:noremap|.
+@param {map-args...}  Rest of the parameters that defines the mapping
+
+
+The action to execute will be corrected depending on the current mode. See
+|lh#menu#make()_modes| for more details.
+
+
+------------------------------------------------------------------------------
+COMMANDS RELATED FUNCTIONS                            *lhvl#command*    {{{2
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#command#new()*      {{{3
+Highly Experimental.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                       *lh#command#Fargs2String()*      {{{3
+lh#command#Fargs2String({aList})~
+@param[in,out] aList list of params from <f-args>
+@see tests/lh/test-Fargs2String.vim
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                            *lh#command#complete()*     {{{3
+lh#command#complete({argLead}, {cmdLine}, {cursorPos})~
+Under developpement
+
+
+------------------------------------------------------------------------------
+BUFFERS RELATED FUNCTIONS                             *lhvl#buffer*     {{{2
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#buffer#list()*      {{{3
+lh#buffer#list()~
+@return The |List| of |buflisted| buffers.
+
+e.g.: >
+ echo lh#list#transform(lh#buffer#list(), [], "bufname")
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#buffer#Find()*      {{{3
+lh#buffer#Find({filename})  (*deprecated*)~
+                                                *lh#buffer#find()*
+lh#buffer#find({filename})~
+Searchs for a window where the buffer is opened.
+
+@param {filename}
+@return The number of the first window found, in which {filename} is opened.
+
+If {filename} is opened in a window, jump to this window. Otherwise, return
+-1.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#buffer#Jump()*      {{{3
+lh#buffer#Jump({filename}, {cmd})  (*deprecated*)~
+                                                *lh#buffer#jump()*
+lh#buffer#jump({filename}, {cmd})~
+Jumps to the window where the buffer is opened, or open the buffer in a new
+windows if none match.
+
+@param {filename}
+@param {cmd}
+@return Nothing.
+
+If {filename} is opened in a window, jump to this window. 
+Otherwise, execute {cmd} with {filename} as a parameter. Typical values for
+the command will be "sp" or "vsp". (see |:split|, |:vsplit|).
+
+N.B.: While it is not the rationale behind this function, other commands that
+does not open the buffer may be used in the {cmd} parameter.
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#buffer#Scratch()*   {{{3
+lh#buffer#Scratch({bname},{where})  (*deprecated*)~
+                                      *scratch* *lh#buffer#scratch()*
+lh#buffer#scratch({bname},{where})~
+Split-opens a new scratch buffer.
+
+@param {bname} Name for the new scratch buffer
+@param {where} Where the new scratch buffer will be opened ('', or 'v')
+@post          The buffer has the following properties set: 
+                   'bt'=nofile, 'bh'=wipe, 'nobl', 'noswf', 'ro'
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                             *lhvl-dialog*      *lh#buffer#dialog#*     {{{3
+Functions for building interactive dialogs~
+Unlike other |lh-vim-lib| functions which can be used independently from each
+others, all the lh#buffer#dialog#*() functions constitute a coherent framework
+to define interactive dialogs.
+
+For the moment it only supports the selection of one or several items in a
+list.
+
+From a end-user point of view, a list of items is displayed in a (|scratch|)
+buffer. If enabled, the user can select (/tag) one or several items, and then
+validate its choice. He can always abort and quit the dialog. A few other
+features are also supported: a help message can be shown, the list may be
+colored, etc.
+
+
+The items displayed can be of any kind (function signatures, email addresses,
+suggested spellings, ...), as well as the validating action.  The
+help-header can be customized, as well as colours, other mappings, ...
+
+However the list displaying + selection aspect is almost hardcoded. 
+
+
+How it works~
+------------
+Scripts have to call the function                    *lh#buffer#dialog#new()*
+  lh#buffer#dialog#new(bname, title, where, support-tagging, action, choices)~
+with:
+- {bname} being the name the |scratch| buffer will receive.
+- {title} the title that appears at the first line of the scratch buffer.
+  I usually use it to display the name of the "client" script, its version,
+  and its purpose/what to do.
+- {where} are |:split| options (like "bot below") used to open the scratch
+  buffer.
+- {support-tagging} is a boolean (0/1) option to enable the multi-selection.
+- {action} is the name of the callback function (more
+  advanced calling mechanisms latter may be supported later with
+  |lhvl-functions|).
+- {choices} is the |List| of exact strings to display.
+
+The #new function builds and returns a |Dictionary|, it also opens and fills
+the scratch buffer, and put us within its context -- i.e. any |:map-<buffer>|
+or other buffer-related definitions will done in the new scratch buffer.
+
+Thus, if we want to add other mappings, and set a syntax highlighting for the
+new buffer, it is done at this point (see the *s:PostInit()* function in my
+"client" scripts like |lh-tags|).
+At this point, I also add all the high level information to the
+dictionary (for instance, the list of function signatures is nice, but
+it does not provides enough information (the corresponding file, the
+command to jump to the definition/declaration, the scope, ...)
+
+The dictionary returned is filled with the following information:
+- buffer ids,
+- where was the cursor at the time of the creation of the new scratch buffer,
+- name of the callback function.
+
+
+Regarding the callback function: *lhvl-dialog-select-callback*
+- It ca not be a |script-local| function, only global and autoload functions
+  are supported.
+- When called, we are still within the scratch buffer context.
+- It must accept a |List| of numbers as its first parameter: the index (+1) of
+  the items selected.
+- The number 0, when in the list, means "aborted". In that case, the
+  callback function is expected to call |lh#buffer#dialog#quit()| that will
+  terminate the scratch buffer (with |:quit|), and jump back to where we were
+  when #new was called, and display a little "Abort" message.
+- We can terminate the dialog with just :quit if we don't need to jump
+  back anywhere. For instance, lh-tags callback function first
+  terminates the dialog, then jumps to the file where the selected tag
+  comes from.
+
+- It's completely asynchronous: the callback function does not return anything
+  to anyone, but instead applies transformations in other places.
+  This aspect is very important. I don't see how this kind of feature can work
+  if not asynchronously in vim.
+
+How to customize it:
+- *lh#buffer#dialog#quit()* can be explicitly called, from a registered select
+  callback (|lhvl-dialog-select-callback|), in order to terminate the dialog.
+- *lh#buffer#dialog#add_help()* can be used to complete the help/usage message
+  in both its short and long form.
+- *lh#buffer#dialog#update()* can be called after the list of items has been
+  altered in order to refresh what is displayed. The rationale behind this
+  feature is to support sorting, filtering, items expansion, etc. See
+ |lh-tags| implementation for an example.
+- *lh#buffer#dialog#select()* can be used in new mappings in order to handle
+  differently the selected items.
+ |lh-tags| uses this function to map 'o' to the split-opening of the selected
+  items.
+  NB: the way this feature is supported may change in future releases.
+
+Limitations:
+This script is a little bit experimental (even if it the result of almost 10
+years of evolution), and it is a little bit cumbersome.
+- it is defined to support only one callback -- see the hacks in |lh-tags| to
+  workaround this limitation.
+- it is defined to display list of items, and to select one or several items
+  in the end.
+- and of course, it requires many other functions from |lh-vim-lib|, but
+  nothing else.
+
+------------------------------------------------------------------------------
+SYNTAX RELATED FUNCTIONS                              *lhvl#syntax*     {{{2
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#syntax#NameAt()*    {{{3
+lh#syntax#NameAt({lnum},{col}[,{trans}])  (*deprecated*)~
+                                                *lh#syntax#name_at()*
+lh#syntax#name_at({lnum},{col}[,{trans}])~
+@param {lnum}  line of the character
+@param {col}   column of the character
+@param {trans} see |synID()|, default=0
+@return the syntax kind of the given character at {lnum}, {col}
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                               *lh#syntax#NameAtMark()* {{{3
+lh#syntax#NameAtMark({mark}[,{trans}])  (*deprecated*)~
+                                               *lh#syntax#name_at_mark()* {{{3
+lh#syntax#name_at_mark({mark}[,{trans}])~
+@param {mark}  position of the character
+@param {trans} see |synID()|, default=0
+@return the syntax kind of the character at the given |mark|.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+       *lh#syntax#Skip()* *lh#syntax#SkipAt()* *lh#syntax#SkipAtMark()* {{{3
+lh#syntax#Skip()  (*deprecated*)~
+lh#syntax#SkipAt({lnum},{col})  (*deprecated*)~
+lh#syntax#SkipAtMark({mark})  (*deprecated*)~
+       *lh#syntax#skip()* *lh#syntax#skip_at()* *lh#syntax#skip_at_mark()*
+lh#syntax#skip()~
+lh#syntax#skip_at({lnum},{col})~
+lh#syntax#skip_at_mark({mark})~
+
+Functions to be used with |searchpair()| functions in order to search for a
+pair of elements, without taking comments, strings, characters and doxygen
+(syntax) contexts into account while searching.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                               *lh#syntax#list_raw()*   {{{3
+lh#syntax#list_raw({name})~
+@param {group-name} 
+@return the result of "syn list {group-name}" as a string
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+                                                *lh#syntax#list()*      {{{3
+lh#syntax#list()~
+@param {group-name} 
+@return the result of "syn list {group-name}" as a list. 
+
+This function tries to interpret the result of the raw list of syntax
+elements. 
+
+
+------------------------------------------------------------------------------
+                                                                     }}}1
+==============================================================================
+ © Luc Hermitte, 2001-2010, <http://code.google.com/p/lh-vim/>       {{{1
+ $Id: lh-vim-lib.txt 246 2010-09-19 22:40:58Z luc.hermitte $
+ VIM: let b:VS_language = 'american' 
+ vim:ts=8:sw=4:tw=80:fo=tcq2:ft=help:
+ vim600:fdm=marker:
