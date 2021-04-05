@@ -64,7 +64,8 @@ endf
 
 function! s:self._getchar(...) abort
   let ret = call('getchar', a:000)
-  " @bug getchar() does not work for <
+  " getchar() does not work for < in old version of
+  " neovim-qt.
   " https://github.com/neovim/neovim/issues/12487
   if ret ==# "\x80\xfc\<C-b><"
     return '<'

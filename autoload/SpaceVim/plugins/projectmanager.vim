@@ -19,6 +19,10 @@ let s:FILE = SpaceVim#api#import('file')
 " the name projectmanager is too long
 " use rooter instead
 let s:LOGGER =SpaceVim#logger#derive('rooter')
+let s:TIME = SpaceVim#api#import('time')
+let s:JSON = SpaceVim#api#import('data#json')
+let s:LIST = SpaceVim#api#import('data#list')
+let s:VIM = SpaceVim#api#import('vim')
 
 function! s:update_rooter_patterns() abort
   let s:project_rooter_patterns = filter(copy(g:spacevim_project_rooter_patterns), 'v:val !~# "^!"')
@@ -35,15 +39,30 @@ let s:spacevim_project_rooter_patterns = copy(g:spacevim_project_rooter_patterns
 call s:update_rooter_patterns()
 
 let s:project_paths = {}
+let s:project_cache_path = s:FILE.unify_path(g:spacevim_data_dir, ':p') . 'SpaceVim/projects.json'
 
-function! s:cache_project(prj) abort
-  if !has_key(s:project_paths, a:prj.path)
-    let s:project_paths[a:prj.path] = a:prj
-    let desc = '[' . a:prj.name . '] ' . a:prj.path
-    let cmd = "call SpaceVim#plugins#projectmanager#open('" . a:prj.path . "')"
-    call add(g:unite_source_menu_menus.Projects.command_candidates, [desc,cmd])
+function! s:cache() abort
+  call writefile([s:JSON.json_encode(s:project_paths)], s:FILE.unify_path(s:project_cache_path, ':p'))
+endfunction
+
+function! s:load_cache() abort
+  if filereadable(s:project_cache_path)
+    call s:LOGGER.info('Load projects cache from: ' . s:project_cache_path)
+    let cache_context = join(readfile(s:project_cache_path, ''), '')
+    if !empty(cache_context)
+      let cache_object = s:JSON.json_decode(cache_context)
+      if s:VIM.is_dict(cache_object)
+        let s:project_paths = filter(cache_object, '!empty(v:key)')
+      endif
+    endif
+  else
+    call s:LOGGER.info('projects cache file does not exists!')
   endif
 endfunction
+
+if g:spacevim_enable_projects_cache
+  call s:load_cache()
+endif
 
 let g:unite_source_menu_menus =
       \ get(g:,'unite_source_menu_menus',{})
@@ -51,6 +70,42 @@ let g:unite_source_menu_menus.Projects = {'description':
       \ 'Custom mapped keyboard shortcuts                   [SPC] p p'}
 let g:unite_source_menu_menus.Projects.command_candidates =
       \ get(g:unite_source_menu_menus.Projects,'command_candidates', [])
+
+function! s:cache_project(prj) abort
+  let s:project_paths[a:prj.path] = a:prj
+  let g:unite_source_menu_menus.Projects.command_candidates = []
+  for key in s:sort_by_opened_time()
+    let desc = '[' . s:project_paths[key].name . '] ' . s:project_paths[key].path . ' <' . strftime('%Y-%m-%d %T', s:project_paths[key].opened_time) . '>'
+    let cmd = "call SpaceVim#plugins#projectmanager#open('" . s:project_paths[key].path . "')"
+    call add(g:unite_source_menu_menus.Projects.command_candidates, [desc,cmd])
+  endfor
+  if g:spacevim_enable_projects_cache
+    call s:cache()
+  endif
+endfunction
+
+" sort projects based on opened_time, and remove extra projects based on
+" projects_cache_num
+function! s:sort_by_opened_time() abort
+  let paths = keys(s:project_paths)
+  let paths = sort(paths, function('s:compare_time'))
+  if g:spacevim_projects_cache_num > 0 && s:LIST.has_index(paths, g:spacevim_projects_cache_num)
+    for path in paths[g:spacevim_projects_cache_num :]
+      call remove(s:project_paths, path)
+    endfor
+    let paths = paths[:g:spacevim_projects_cache_num - 1]
+  endif
+  return paths
+endfunction
+
+function! s:compare_time(d1, d2) abort
+  let proj1 = get(s:project_paths, a:d1, {})
+  let proj1time = get(proj1, 'opened_time', 0)
+  let proj2 = get(s:project_paths, a:d2, {})
+  let proj2time = get(proj2, 'opened_time', 0)
+  return proj2time - proj1time
+endfunction
+
 
 " this function will use fuzzy find layer, now only denite and unite are
 " supported.
@@ -62,6 +117,8 @@ function! SpaceVim#plugins#projectmanager#list() abort
     Denite menu:Projects
   elseif SpaceVim#layers#isLoaded('fzf')
     FzfMenu Projects
+  elseif SpaceVim#layers#isLoaded('leaderf')
+    call SpaceVim#layers#leaderf#run_menu('Projects')
   else
     call SpaceVim#logger#warn('fuzzy find layer is needed to find project!')
   endif
@@ -75,6 +132,8 @@ function! SpaceVim#plugins#projectmanager#open(project) abort
     Startify | VimFiler
   elseif g:spacevim_filemanager ==# 'nerdtree'
     Startify | NERDTree
+  elseif g:spacevim_filemanager ==# 'defx'
+    Startify | Defx
   endif
 endfunction
 
@@ -82,13 +141,19 @@ function! SpaceVim#plugins#projectmanager#current_name() abort
   return get(b:, '_spacevim_project_name', '')
 endfunction
 
-" this func is called when vim-rooter change the dir, That means the project
-" is changed, so will call call the registered function.
+" This function is called when projectmanager change the directory.
+"
+" What should be cached?
+" only the directory and project name.
 function! SpaceVim#plugins#projectmanager#RootchandgeCallback() abort
   let project = {
         \ 'path' : getcwd(),
-        \ 'name' : fnamemodify(getcwd(), ':t')
+        \ 'name' : fnamemodify(getcwd(), ':t'),
+        \ 'opened_time' : localtime()
         \ }
+  if empty(project.path)
+    return
+  endif
   call s:cache_project(project)
   let g:_spacevim_project_name = project.name
   let b:_spacevim_project_name = g:_spacevim_project_name
@@ -176,16 +241,17 @@ endif
 function! s:find_root_directory() abort
   " @question confused about expand and fnamemodify
   " ref: https://github.com/vim/vim/issues/6793
-  
-  " get the current path of buffer
-  " If it is a empty buffer, do nothing?
+
+
+  " get the current path of buffer or working dir
+
   let fd = expand('%:p')
   if empty(fd)
-    call s:LOGGER.info('buffer name is empty, skipped!')
-    return ''
+    let fd = getcwd()
   endif
+
   let dirs = []
-  call SpaceVim#logger#info('Start to find root for: ' . s:FILE.unify_path(fd))
+  call s:LOGGER.info('Start to find root for: ' . s:FILE.unify_path(fd))
   for pattern in s:project_rooter_patterns
     if stridx(pattern, '/') != -1
       if g:spacevim_project_rooter_outermost
@@ -202,8 +268,6 @@ function! s:find_root_directory() abort
     endif
     let path_type = getftype(find_path)
     if ( path_type ==# 'dir' || path_type ==# 'file' ) 
-          \ && find_path !=# expand('~/.SpaceVim.d/')
-          \ && find_path !=# expand('~/.Rprofile')
           \ && !s:is_ignored_dir(find_path)
       let find_path = s:FILE.unify_path(find_path, ':p')
       if path_type ==# 'dir'
@@ -211,8 +275,10 @@ function! s:find_root_directory() abort
       else
         let dir = s:FILE.unify_path(find_path, ':h')
       endif
-      call SpaceVim#logger#info('        (' . pattern . '):' . dir)
-      call add(dirs, dir)
+      if dir !=# s:FILE.unify_path(expand('$HOME'))
+        call s:LOGGER.info('        (' . pattern . '):' . dir)
+        call add(dirs, dir)
+      endif
     endif
   endfor
   return s:sort_dirs(deepcopy(dirs))

@@ -92,7 +92,7 @@ if exists('*nvim_create_buf')
 else
   function! s:self.create_buf(listed, scratch) abort
     let bufnr = self.bufadd('')
-    " in vim, a:listed must be number, what the fuck!
+    " in vim, a:listed must be number
     " why can not use v:true and v:false
     call setbufvar(bufnr, '&buflisted', a:listed ? 1 : 0)
     if a:scratch
@@ -274,6 +274,43 @@ function! s:self.displayArea() abort
   return [
         \ line('w0'), line('w$')
         \ ]
+endfunction
+
+function! s:self.open_pos(cmd, file, line, col) abort
+    exe 'silent ' . a:cmd . ' ' . a:file
+    call cursor(a:line, a:col)
+endfunction
+
+function! s:self.add_highlight(bufnr, hl, line, col, long) abort
+  if exists('*nvim_buf_add_highlight')
+    call nvim_buf_add_highlight(a:bufnr, 0, a:hl, a:line, a:col, a:col + a:long)
+  else
+    call SpaceVim#logger#warn('vim#buffer.add_highlight api only support neovim', 0)
+  endif
+endfunction
+
+function! s:self.buf_get_lines(bufnr, start, end, strict_indexing) abort
+  if exists('*nvim_buf_get_lines')
+    return nvim_buf_get_lines(a:bufnr, a:start, a:end, a:strict_indexing)
+  elseif exists('*getbufline') && exists('*bufload') && exists('*bufloaded')
+    let lct = self.line_count(a:bufnr)
+    if a:start > lct
+      return
+    elseif a:start >= 0 && a:end > a:start
+      " in vim, getbufline will not load buffer automatically
+      " but in neovim, nvim_buf_set_lines will do it.
+      " @fixme vim issue #5044
+      " https://github.com/vim/vim/issues/5044
+      if !bufloaded(a:bufnr)
+        call bufload(a:bufnr)
+      endif
+      return getbufline(a:bufnr, a:start + 1, a:end)
+    elseif a:start >= 0 && a:end < 0 && lct + a:end >= a:start
+      return self.buf_get_lines(a:bufnr, a:start, lct + a:end + 1, a:strict_indexing)
+    elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
+      return self.buf_get_lines(a:bufnr, lct + a:start + 1, lct + a:end + 2, a:strict_indexing)
+    endif
+  endif
 endfunction
 
 

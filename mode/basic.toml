@@ -19,7 +19,7 @@
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "nil"
-    statusline_inactive_separator = "bar"
+    statusline_iseparator = "bar"
     buffer_index_type = 4
     windows_index_type = 3
     enable_tabline_filetype_icon = false

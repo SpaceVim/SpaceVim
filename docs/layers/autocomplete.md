@@ -118,21 +118,23 @@ You can customize the user experience of autocompletion with the following layer
    - `complete` completes with the current selection
    - `smart` completes with current selection and expand snippet or argvs
    - `nil`
-     By default it is `complete`.
+   By default it is `complete`.
 2. `auto_completion_tab_key_behavior` set the action to
    perform when the `TAB` key is pressed, the possible values are:
    - `smart` cycle candidates, expand snippets, jump parameters
    - `complete` completes with the current selection
    - `cycle` completes the common prefix and cycle between candidates
    - `nil` insert a carriage return
-     By default it is `complete`.
+   By default it is `complete`.
 3. `auto_completion_delay` is a number to delay the completion after input in milliseconds,
    by default it is 50 ms.
 4. `auto_completion_complete_with_key_sequence` is a string of two characters denoting
    a key sequence that will perform a `complete` action if the sequence as been entered
    quickly enough. If its value is `nil` then the feature is disabled.
+   **NOTE:** This option should not has same value as `escape_key_binding`
 5. `auto_completion_complete_with_key_sequence_delay` is the number of seconds to wait for
-the autocompletion key sequence to be entered. The default value is 0.1 seconds.
+   the autocompletion key sequence to be entered. The default value is 1 seconds.
+   This option is used for vim's `timeoutlen` option in insert mode.
 
 The default configuration of the layer is:
 

@@ -1,5 +1,5 @@
 ---
-title: "password api"
+title: "password API"
 description: "password API provides some basic functions for generating password"
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "vim#highlight api"
+title: "vim#highlight API"
 description: "vim#highlight API provides some basic functions and values for getting and setting highlight info."
 ---
 

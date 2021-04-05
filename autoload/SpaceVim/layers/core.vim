@@ -6,7 +6,16 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:string_hi')
+  finish
+endif
+
+
 let s:SYS = SpaceVim#api#import('system')
+let s:FILE = SpaceVim#api#import('file')
+let s:MESSAGE = SpaceVim#api#import('vim#message')
+let s:CMP = SpaceVim#api#import('vim#compatible')
+
 
 function! SpaceVim#layers#core#plugins() abort
   let plugins = []
@@ -94,7 +103,9 @@ function! SpaceVim#layers#core#config() abort
   " Select last paste
   nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'write', 'save-current-file', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'call call('
+        \ . string(s:_function('s:save_current_file')) . ', [])',
+        \ 'save-current-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save-all-files', 1)
   " help mappings
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'I'], 'call SpaceVim#issue#report()', 'report-issue-or-bug', 1)
@@ -149,6 +160,7 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'u'], 'call call('
         \ . string(s:_function('s:jump_to_url')) . ', [])',
         \ 'jump-to-url', 1)
+  call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
   call SpaceVim#mapping#space#def('nnoremap', ['<Tab>'], 'try | b# | catch | endtry', 'last-buffer', 1)
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', '.'], 'call call('
@@ -263,6 +275,8 @@ function! SpaceVim#layers#core#config() abort
   " call SpaceVim#mapping#space#def('nnoremap', ['p', 't'], 'call SpaceVim#plugins#projectmanager#current_root()', 'find-project-root', 1)
   let g:_spacevim_mappings_space.p.t = {'name' : '+Tasks'}
   call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'e'], 'call SpaceVim#plugins#tasks#edit()', 'edit-project-task', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'l'], 'call SpaceVim#plugins#tasks#list()', 'list-tasks', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'c'], 'call SpaceVim#plugins#runner#clear_tasks()', 'clear-tasks', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'r'],
         \ 'call SpaceVim#plugins#runner#run_task(SpaceVim#plugins#tasks#get())', 'pick-task-to-run', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'k'], 'call SpaceVim#plugins#projectmanager#kill_project()', 'kill-all-project-buffers', 1)
@@ -278,7 +292,17 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['q', 'R'], '', 'restart-vim(TODO)', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['q', 'r'], '', 'restart-vim-resume-layouts(TODO)', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['q', 't'], 'tabclose!', 'kill-current-tab', 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['q', 't'], 'call call('
+        \ . string(s:_function('s:close_current_tab')) . ', [])',
+        \ ['close-current-tab',
+        \ [
+        \ '[SPC q t] is to close the current tab, if it is the last tab, do nothing.',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#gd#add('HelpDescribe', function('s:gotodef'))
 
   let g:_spacevim_mappings_space.c = {'name' : '+Comments'}
@@ -355,23 +379,19 @@ function! s:number_transient_state(n) abort
   call state.open()
 endfunction
 
-let s:file = SpaceVim#api#import('file')
-let s:MESSAGE = SpaceVim#api#import('vim#message')
-let s:CMP = SpaceVim#api#import('vim#compatible')
-
 function! s:next_file() abort
   let dir = expand('%:p:h')
   let f = expand('%:t')
-  let file = s:file.ls(dir, 1)
+  let file = s:FILE.ls(dir, 1)
   if index(file, f) == -1
     call add(file,f)
   endif
   call sort(file)
   if len(file) != 1
     if index(file, f) == len(file) - 1
-      exe 'e ' . dir . s:file.separator . file[0]
+      exe 'e ' . dir . s:FILE.separator . file[0]
     else
-      exe 'e ' . dir . s:file.separator . file[index(file, f) + 1]
+      exe 'e ' . dir . s:FILE.separator . file[index(file, f) + 1]
     endif
   endif
 endfunction
@@ -379,16 +399,16 @@ endfunction
 function! s:previous_file() abort
   let dir = expand('%:p:h')
   let f = expand('%:t')
-  let file = s:file.ls(dir, 1)
+  let file = s:FILE.ls(dir, 1)
   if index(file, f) == -1
     call add(file,f)
   endif
   call sort(file)
   if len(file) != 1
     if index(file, f) == 0
-      exe 'e ' . dir . s:file.separator . file[-1]
+      exe 'e ' . dir . s:FILE.separator . file[-1]
     else
-      exe 'e ' . dir . s:file.separator . file[index(file, f) - 1]
+      exe 'e ' . dir . s:FILE.separator . file[index(file, f) - 1]
     endif
   endif
 endfunction
@@ -847,6 +867,20 @@ function! s:jump_transient_state() abort
   call state.open()
 endfunction
 
+function! s:save_current_file() abort
+  let v:errmsg = ''
+  silent! write
+  if v:errmsg !=# ''
+    echohl ErrorMsg
+    echo  v:errmsg
+    echohl None
+  else
+    echohl Delimiter
+    echo  bufname() . ' written'
+    echohl None
+  endif
+endfunction
+
 let g:_spacevim_autoclose_filetree = 1
 function! s:explore_current_dir(cur) abort
   if g:spacevim_filemanager ==# 'vimfiler'
@@ -883,4 +917,10 @@ function! SpaceVim#layers#core#set_variable(var) abort
         \ 'filetree_show_hidden',
         \ g:_spacevim_filetree_show_hidden_files)
 
+endfunction
+
+function! s:close_current_tab() abort
+  if tabpagenr('$') > 1
+    tabclose!
+  endif
 endfunction

@@ -54,6 +54,10 @@ function! SpaceVim#layers#lang#markdown#config() abort
   let g:markdown_fenced_languages = []
   let g:markdown_nested_languages = map(filter(SpaceVim#layers#get(),
         \ 'v:val =~# "^lang#" && v:val !=# "lang#markdown" && v:val !=# "lang#ipynb" && v:val !=# "lang#vim"'), 'v:val[5:]')
+  if index(g:markdown_nested_languages, 'latex') !=# -1
+    call remove(g:markdown_nested_languages, index(g:markdown_nested_languages, 'latex'))
+    call add(g:markdown_nested_languages, 'tex')
+  endif
   let g:vmt_list_item_char = s:md_listItemChar
   let g:markdown_minlines = 100
   let g:markdown_syntax_conceal = 0
@@ -99,6 +103,8 @@ function! s:mappings() abort
         \ 'call call('
         \ . string(function('s:run_code_in_block'))
         \ . ', [])', 'run code in block', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','c'], 'GenTocGFM', 'create content at cursor', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','u'], 'UpdateToc', 'update content', 1)
 endfunction
 
 function! s:generate_remarkrc() abort

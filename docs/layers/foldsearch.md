@@ -28,7 +28,8 @@ To use this layer, add it to your configuration file.
     name = "foldsearch"
 ```
 
-This layer requires [ripgrep](https://github.com/BurntSushi/ripgrep).
+This layer requires at least one search tools: `ag`, `rg`, `ack`, `pt` and `grep`,
+Choose your favorite one.
 
 ## Options
 

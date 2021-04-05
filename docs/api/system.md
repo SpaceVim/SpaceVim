@@ -1,5 +1,5 @@
 ---
-title: "system api"
+title: "system API"
 description: "system API provides some basic functions and values for current os."
 ---
 

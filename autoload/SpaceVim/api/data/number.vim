@@ -17,6 +17,18 @@ function! SpaceVim#api#data#number#get() abort
         \ )
 endfunction
 
+""
+" @section data#number, api-data-number
+" @parentsection api
+" data#number API provides some basic functions to generate number.
+"
+" random([{a}[, {b}]])
+" >
+"   random()     : an unbounded random integer number.
+"   random(a)    : an unbounded random number larger than a.
+"   random(a, b) : a random number from [a, a + b - 1].
+" <
+
 " Random seed.
 if has('reltime')
   let s:rel = reltime() + reltime()
@@ -29,10 +41,6 @@ else
   let [s:x, s:y, s:z, s:w] = [1, 2, 3, 4]
 endif
 
-" Random number.
-"   random()     : an unbounded random integer number.
-"   random(a)    : an unbounded random number larger than a.
-"   random(a, b) : a random number from [a, a + b - 1].
 function! s:random(...) abort
   let a = a:0 ? a:1 : 0
   let b = a:0 > 1 ? a:2 : 0x1000000

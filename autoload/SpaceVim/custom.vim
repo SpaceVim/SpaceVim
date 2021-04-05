@@ -60,13 +60,20 @@ function! s:basic_mode() abort
   call s:write_to_config(config)
 endfunction
 
-function! s:write_to_config(config) abort
+function! s:global_dir() abort
+  if empty($SPACEVIMDIR)
+    return s:FILE.unify_path('~/.SpaceVim.d/')
+  else
+    return s:FILE.unify_path($SPACEVIMDIR)
+  endif
+endfunction
 
-  let global_dir = empty($SPACEVIMDIR) ? expand('~/.SpaceVim.d/') : $SPACEVIMDIR
+function! s:write_to_config(config) abort
+  let global_dir = s:global_dir()
   let g:_spacevim_global_config_path = global_dir . 'init.toml'
   let cf = global_dir . 'init.toml'
   if filereadable(cf)
-    call SpaceVim#logger#warn('Failed to generate config file, it is not readable: ' . cf)
+    call SpaceVim#logger#warn('The file already exists:' . cf)
     return
   endif
   let dir = expand(fnamemodify(cf, ':p:h'))
@@ -84,6 +91,19 @@ function! SpaceVim#custom#SPCGroupName(keys, name) abort
   call add(g:_spacevim_mappings_space_custom_group_name, [a:keys, a:name])
 endfunction
 
+function! SpaceVim#custom#LangSPC(ft, m, keys, cmd, desc, is_cmd) abort
+  if !has_key(g:_spacevim_mappings_language_specified_space_custom, a:ft)
+    let g:_spacevim_mappings_language_specified_space_custom[a:ft] = []
+  endif
+  call add(g:_spacevim_mappings_language_specified_space_custom[a:ft], [a:m, a:keys, a:cmd, a:desc, a:is_cmd])
+endfunction
+
+function! SpaceVim#custom#LangSPCGroupName(ft, keys, name) abort
+  if !has_key(g:_spacevim_mappings_language_specified_space_custom_group_name, a:ft)
+    let g:_spacevim_mappings_language_specified_space_custom_group_name[a:ft] = []
+  endif
+  call add(g:_spacevim_mappings_language_specified_space_custom_group_name[a:ft], [a:keys, a:name])
+endfunction
 
 function! SpaceVim#custom#apply(config, type) abort
   " the type can be local or global
@@ -95,7 +115,7 @@ function! SpaceVim#custom#apply(config, type) abort
     let options = get(a:config, 'options', {})
     for [name, value] in items(options)
       if name ==# 'filemanager'
-        if value ==# 'defx' && !has("python3")
+        if value ==# 'defx' && !has('python3')
           call SpaceVim#logger#warn('defx requires +python3!', 0)
           continue
         endif
@@ -140,10 +160,12 @@ function! SpaceVim#custom#apply(config, type) abort
     if !empty(bootstrap_before)
       try
         call call(bootstrap_before, [])
+        let g:_spacevim_bootstrap_before_success = 1
       catch
         call SpaceVim#logger#error('failed to call bootstrap_before function: ' . bootstrap_before)
         call SpaceVim#logger#error('       exception: ' . v:exception)
         call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
+        let g:_spacevim_bootstrap_before_success = 0
       endtry
     endif
   endif
@@ -161,8 +183,9 @@ endfunction
 function! SpaceVim#custom#load() abort
   " if file .SpaceVim.d/init.toml exist
   if filereadable('.SpaceVim.d/init.toml')
-    let g:_spacevim_config_path = s:CMP.resolve(fnamemodify('.SpaceVim.d/init.toml', ':p'))
-    let &rtp =  s:FILE.unify_path(s:CMP.resolve(fnamemodify('.SpaceVim.d', ':p:h'))) . ',' . &rtp
+    let local_dir = s:FILE.unify_path(s:CMP.resolve(fnamemodify('.SpaceVim.d/', ':p:h')))
+    let g:_spacevim_config_path = local_dir . 'init.toml'
+    let &rtp = local_dir . ',' . &rtp . ',' . local_dir . 'after'
     let local_conf = g:_spacevim_config_path
     call SpaceVim#logger#info('find local conf: ' . local_conf)
     let local_conf_cache = s:path_to_fname(local_conf)
@@ -181,8 +204,9 @@ function! SpaceVim#custom#load() abort
       call s:load_glob_conf()
     endif
   elseif filereadable('.SpaceVim.d/init.vim')
-    let g:_spacevim_config_path = fnamemodify('.SpaceVim.d/init.vim', ':p')
-    let &rtp =  s:FILE.unify_path(s:CMP.resolve(fnamemodify('.SpaceVim.d', ':p:h'))) . ',' . &rtp
+    let local_dir = s:FILE.unify_path(s:CMP.resolve(fnamemodify('.SpaceVim.d/', ':p:h')))
+    let g:_spacevim_config_path = local_dir . 'init.vim'
+    let &rtp = local_dir . ',' . &rtp . ',' . local_dir . 'after'
     let local_conf = g:_spacevim_config_path
     call SpaceVim#logger#info('find local conf: ' . local_conf)
     exe 'source .SpaceVim.d/init.vim'
@@ -204,14 +228,14 @@ endfunction
 
 
 function! s:load_glob_conf() abort
-  let global_dir = empty($SPACEVIMDIR) ? s:FILE.unify_path(s:CMP.resolve(expand('~/.SpaceVim.d/'))) : $SPACEVIMDIR
+  let global_dir = s:global_dir()
   call SpaceVim#logger#info('global_dir is: ' . global_dir)
   if filereadable(global_dir . 'init.toml')
     let g:_spacevim_global_config_path = global_dir . 'init.toml'
     let local_conf = global_dir . 'init.toml'
-    let local_conf_cache = s:FILE.unify_path(expand(g:spacevim_data_dir.'/SpaceVim/conf/init.json'))
-    let &rtp = global_dir . ',' . &rtp
-    if getftime(local_conf) < getftime(local_conf_cache)
+    let local_conf_cache = s:FILE.unify_path(expand(g:spacevim_data_dir.'/SpaceVim/conf/' . fnamemodify(resolve(local_conf), ':t:r') . '.json'))
+    let &rtp = global_dir . ',' . &rtp . ',' . global_dir . 'after'
+    if getftime(resolve(local_conf)) < getftime(resolve(local_conf_cache))
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
       call SpaceVim#custom#apply(conf, 'glob')
     else
@@ -222,7 +246,7 @@ function! s:load_glob_conf() abort
   elseif filereadable(global_dir . 'init.vim')
     let g:_spacevim_global_config_path = global_dir . 'init.vim'
     let custom_glob_conf = global_dir . 'init.vim'
-    let &rtp = global_dir . ',' . &rtp
+    let &rtp = global_dir . ',' . &rtp . ',' . global_dir . 'after'
     exe 'source ' . custom_glob_conf
   else
     if has('timers')

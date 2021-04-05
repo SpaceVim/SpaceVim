@@ -1,0 +1,6 @@
+Execute ( lua module spacevim ):
+  let g:test_lua = 'abc'
+  if has('nvim')
+    " AssertEqual luaeval('require("spacevim").eval("g:test_lua")'), 'abc'
+  endif
+

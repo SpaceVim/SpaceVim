@@ -26,6 +26,18 @@
 " directory is `~/.SpaceVim/snippets/`. If `g:spacevim_force_global_config = 1`,
 " SpaceVim will not append `./.SpaceVim/snippets` as default snippets directory.
 
+
+if exists('s:return_key_behavior')
+  finish
+else
+  let s:return_key_behavior = 'smart'
+  let s:tab_key_behavior = 'smart'
+  let g:_spacevim_key_sequence = 'nil'
+  let s:key_sequence_delay = 1
+  let g:_spacevim_autocomplete_delay = 50
+  let s:timeoutlen = &timeoutlen
+endif
+
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
         \ [g:_spacevim_root_dir . 'bundle/vim-snippets',          { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}],
@@ -52,7 +64,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
   if g:spacevim_autocomplete_method ==# 'ycm'
     call add(plugins, ['Valloric/YouCompleteMe',            { 'loadconf_before' : 1, 'merged' : 0}])
   elseif g:spacevim_autocomplete_method ==# 'neocomplete'
-    call add(plugins, ['Shougo/neocomplete', {
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/neocomplete.vim', {
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
@@ -63,9 +75,9 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ }])
   elseif g:spacevim_autocomplete_method ==# 'coc'
     if executable('yarn')
-      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'build': 'yarn install --frozen-lockfile'}])
+      call add(plugins, ['neoclide/coc.nvim',  {'loadconf': 1, 'merged': 0, 'build': 'yarn install --frozen-lockfile'}])
     else
-      call add(plugins, ['neoclide/coc.nvim',  {'merged': 0, 'rev': 'release'}])
+      call add(plugins, ['neoclide/coc.nvim',  {'loadconf': 1, 'merged': 0, 'rev': 'release'}])
     endif
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete.nvim', {
@@ -115,7 +127,6 @@ function! SpaceVim#layers#autocomplete#plugins() abort
   endif
   return plugins
 endfunction
-
 
 function! SpaceVim#layers#autocomplete#config() abort
   if g:spacevim_autocomplete_parens
@@ -183,13 +194,18 @@ function! SpaceVim#layers#autocomplete#config() abort
   elseif g:spacevim_snippet_engine ==# 'ultisnips'
     call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite ultisnips', 'insert snippets', 1)
   endif
+  if !empty(g:_spacevim_key_sequence) && g:_spacevim_key_sequence !=# 'nil'
+    if g:spacevim_escape_key_binding !=# g:_spacevim_key_sequence
+      augroup spacevim_layer_autocomplete
+        autocmd!
+        autocmd InsertEnter * call s:apply_sequence_delay()
+        autocmd InsertLeave * call s:restore_sequence_delay()
+      augroup END
+    else
+      call SpaceVim#logger#warn('Can not use same value for escape_key_binding and auto_completion_complete_with_key_sequence')
+    endif
+  endif
 endfunction
-
-let s:return_key_behavior = 'smart'
-let s:tab_key_behavior = 'smart'
-let s:key_sequence = 'nil'
-let s:key_sequence_delay = 0.1
-let g:_spacevim_autocomplete_delay = 50
 
 function! SpaceVim#layers#autocomplete#set_variable(var) abort
 
@@ -203,12 +219,12 @@ function! SpaceVim#layers#autocomplete#set_variable(var) abort
         \ get(a:var,
         \ 'auto-completion-tab-key-behavior',
         \ s:tab_key_behavior))
-  let s:key_sequence = get(a:var,
+  let g:_spacevim_key_sequence = get(a:var,
         \ 'auto_completion_complete_with_key_sequence',
         \ get(a:var,
         \ 'auto-completion-complete-with-key-sequence',
-        \ s:key_sequence))
-  let s:key_sequence_delay = get(a:var,
+        \ g:_spacevim_key_sequence))
+  let g:_spacevim_key_sequence_delay = get(a:var,
         \ 'auto_completion_complete_with_key_sequence_delay',
         \ get(a:var,
         \ 'auto-completion-complete-with-key-sequence-delay',
@@ -233,6 +249,22 @@ function! SpaceVim#layers#autocomplete#getprfile() abort
 
 
 
+endfunction
+
+function! SpaceVim#layers#autocomplete#toggle_deoplete() abort
+  if deoplete#custom#_get_option('auto_complete')
+    call deoplete#custom#option('auto_complete', v:false)
+  else
+    call deoplete#custom#option('auto_complete', v:true)
+  endif
+endfunction
+
+function! s:apply_sequence_delay() abort
+  let &timeoutlen =  s:key_sequence_delay * 1000
+endfunction
+
+function! s:restore_sequence_delay() abort
+  let &timeoutlen = s:timeoutlen
 endfunction
 
 " vim:set et sw=2 cc=80:

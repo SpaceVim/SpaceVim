@@ -59,10 +59,7 @@ endfunction
 function! s:get_project_config(conf_file) abort
   call s:LOGGER.info('read context from: '. a:conf_file)
   let context = join(readfile(a:conf_file), "\n")
-  call s:LOGGER.info(context)
-  let g:wsdjson = context
   let conf = s:JSON.json_decode(context)
-  call s:LOGGER.info('decode result is: '. string(conf))
   if type(conf) !=# type({})
     " in Old vim we get E706
     " Variable type mismatch for conf, so we need to unlet conf first
@@ -101,7 +98,17 @@ endfunction
 function! s:parse(alt_config_json) abort
   call s:LOGGER.info('Start to parse alternate files for: ' . a:alt_config_json.root)
   let s:project_config[a:alt_config_json.root] = {}
-  for key in keys(a:alt_config_json.config)
+  " @question why need sory()
+  " if we have two key docs/*.md and docs/cn/*.md
+  " with the first key, we can also find files in 
+  " docs/cn/ directory, for example docs/cn/index.md
+  " and the alt file will be
+  " docs/cn/cn/index.md. this should be overrided by login in
+  " docs/cn/*.md
+  "
+  " so we need to use sort, and make sure `docs/cn/*.md` is parsed after
+  " docs/*.md
+  for key in sort(keys(a:alt_config_json.config))
     call s:LOGGER.info('start parse key:' . key)
     let searchpath = key
     if match(searchpath, '/\*')
@@ -137,10 +144,6 @@ endfunction
 function! s:get_type_path(a, f, b) abort
   let begin_len = strlen(a:a[0])
   let end_len = strlen(a:a[1])
-  "docs/*.md": {"alternate": "docs/cn/{}.md"},
-  "begin_end = 5
-  "end_len = 3
-  "docs/index.md
   return substitute(a:b, '{}', a:f[begin_len : (end_len+1) * -1], 'g')
 endfunction
 

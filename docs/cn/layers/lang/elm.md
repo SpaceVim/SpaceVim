@@ -38,7 +38,7 @@ lang: zh
 
 ### 依赖安装
 
-首先，需要安装 [elm](http://elm-lang.org/) 语言，最方便的安装方式是使用官方的 npm 包。
+首先，需要安装 [elm](https://elm-lang.org/) 语言，最方便的安装方式是使用官方的 npm 包。
 
 ```sh
 npm install -g elm

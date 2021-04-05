@@ -34,10 +34,12 @@ function! SpaceVim#mapping#space#init() abort
   if s:has_map_to_spc()
     return
   endif
-  nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide " "<CR>
-  vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual " "<CR>
-  nmap <Space> [SPC]
-  vmap <Space> [SPC]
+  if g:spacevim_default_custom_leader ==# '<Space>'
+    nnoremap <silent><nowait> [SPC] :<c-u>LeaderGuide ' '<CR>
+    vnoremap <silent><nowait> [SPC] :<c-u>LeaderGuideVisual ' '<CR>
+  endif
+  exe printf('nmap %s [SPC]', g:spacevim_default_custom_leader)
+  exe printf('vmap %s [SPC]', g:spacevim_default_custom_leader)
   if !g:spacevim_vimcompatible && g:spacevim_enable_language_specific_leader
     nmap , [SPC]l
     xmap , [SPC]l
@@ -51,7 +53,7 @@ function! SpaceVim#mapping#space#init() abort
   let g:_spacevim_mappings_space.w['<Tab>'] = ['wincmd w', 'alternate-window']
   nnoremap <silent> [SPC]w<tab> :wincmd w<cr>
   call SpaceVim#mapping#menu('alternate-window', '[SPC]w<Tab>', 'wincmd w')
-  call SpaceVim#mapping#space#def('nnoremap', ['w', '+'], 
+  call SpaceVim#mapping#space#def('nnoremap', ['w', '+'],
         \ 'call call('
         \ . string(function('s:windows_layout_toggle'))
         \ . ', [])', 'windows-layout-toggle', 1)
@@ -129,6 +131,16 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'x'], 'wincmd x',
+        \ ['window-switch-placement',
+        \ [
+        \ '[SPC w x] is to jump to exchange current window with next one.',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'k'], 'wincmd k',
         \ ['window-up',
         \ [
@@ -199,7 +211,7 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'], 
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'],
         \ "execute eval(\"winnr('$')<=2 ? 'wincmd x' : 'ChooseWinSwap'\")",
         \ ['swap window',
         \ [
@@ -289,10 +301,27 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'V'],
-        \ 'bel vs', 'split-window-right-focus', 1)
+        \ 'bel vs',
+        \ ['split-window-right-focus',
+        \ [
+        \ '[SPC w V] is to split window on the right',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', '='],
-        \ 'wincmd =', 'balance-windows', 1)
+        \ 'wincmd =',
+        \ ['balance-windows',
+        \ [
+        \ '[SPC w =] is to balance all the windows in current tab',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'w'],
         \ 'wincmd w', 'cycle and focus between windows', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'W'],
@@ -300,7 +329,9 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'u'], 'call SpaceVim#plugins#windowsmanager#UndoQuitWin()', 'undo quieted window', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'U'], 'call SpaceVim#plugins#windowsmanager#RedoQuitWin()', 'redo quieted window', 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'n'], 'bnext', ['next-buffer',
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'n'], 'call call('
+        \ . string(function('s:next_buffer'))
+        \ . ', [])', ['next-buffer',
         \ [
         \ '[SPC b n] is running :bnext, jump to next buffer',
         \ 'which is a vim build in command',
@@ -315,7 +346,9 @@ function! SpaceVim#mapping#space#init() abort
         \ . string(function('s:switch_scratch_buffer'))
         \ . ', [])', 'switch-to-scratch-buffer', 1)
   let s:lnum = expand('<slnum>') + 3
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'p'], 'bp', ['previous-buffer',
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'p'], 'call call('
+        \ . string(function('s:previous_buffer'))
+        \ . ', [])', ['previous-buffer',
         \ [
         \ 'SPC b p is running :bp, jump to previous buffer',
         \ 'which is a vim build in command',
@@ -544,8 +577,8 @@ function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
   endif
   let is_visual = a:0 > 0 ? a:1 : 0
   if a:is_cmd
-    let cmd = ':<C-u>' . a:cmd . '<CR>' 
-    let xcmd = ':' . a:cmd . '<CR>' 
+    let cmd = ':<C-u>' . a:cmd . '<CR>'
+    let xcmd = ':' . a:cmd . '<CR>'
     let lcmd = a:cmd
   else
     let cmd = a:cmd
@@ -601,7 +634,7 @@ function! s:windows_layout_toggle() abort
     echohl WarningMsg
     echom "Can't toggle window layout when the number of windows isn't two."
     echohl None
-  else 
+  else
     if winnr() == 1
       let b = winbufnr(2)
     else
@@ -622,12 +655,29 @@ endfunction
 
 let s:language_specified_mappings = {}
 function! SpaceVim#mapping#space#refrashLSPC() abort
+  " Predefined mappings
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
   if !empty(&filetype) && has_key(s:language_specified_mappings, &filetype)
     call call(s:language_specified_mappings[&filetype], [])
     let b:spacevim_lang_specified_mappings = g:_spacevim_mappings_space.l
   endif
 
+  " Customized mappings
+  if has_key(g:_spacevim_mappings_language_specified_space_custom_group_name, &filetype)
+    for argv in g:_spacevim_mappings_language_specified_space_custom_group_name[&filetype]
+      " Only support one layer of groups
+      if !has_key(g:_spacevim_mappings_space.l, argv[0][0])
+        let g:_spacevim_mappings_space.l[argv[0][0]] = {'name' : argv[1]}
+      endif
+    endfor
+  endif
+  if has_key(g:_spacevim_mappings_language_specified_space_custom, &filetype)
+    for argv in g:_spacevim_mappings_language_specified_space_custom[&filetype]
+      let argv = deepcopy(argv)
+      let argv[1] = ['l'] + argv[1]
+      call call('SpaceVim#mapping#space#langSPC', argv)
+    endfor
+  endif
 endfunction
 
 function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func) abort
@@ -640,7 +690,7 @@ function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd, ...) abort
   endif
   let is_visual = a:0 > 0 ? a:1 : 0
   if a:is_cmd
-    let cmd = ':<C-u>' . a:cmd . '<CR>' 
+    let cmd = ':<C-u>' . a:cmd . '<CR>'
     let lcmd = a:cmd
   else
     let cmd = a:cmd
@@ -692,7 +742,7 @@ endfunction
 
 function! s:windows_transient_state() abort
 
-  let state = SpaceVim#api#import('transient_state') 
+  let state = SpaceVim#api#import('transient_state')
   call state.set_title('Buffer Selection Transient State')
   call state.defind_keys(
         \ {
@@ -711,6 +761,26 @@ function! s:windows_transient_state() abort
         \ }
         \ )
   call state.open()
+endfunction
+
+function! s:next_buffer() abort
+  try
+    bnext
+  catch
+    echohl WarningMsg
+    echo 'no listed buffer'
+    echohl None
+  endtry
+endfunction
+
+function! s:previous_buffer() abort
+  try
+    bp
+  catch
+    echohl WarningMsg
+    echo 'no listed buffer'
+    echohl None
+  endtry
 endfunction
 
 " function() wrapper

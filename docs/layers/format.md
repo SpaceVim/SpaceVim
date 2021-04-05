@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim format layer"
-description: "Code formatting support for SpaceVim"
+description: "Code formatting layer for SpaceVim, includes a variety of formatters for many filetypes"
 ---
 
 # [Available Layers](../) >> format
@@ -12,13 +12,14 @@ description: "Code formatting support for SpaceVim"
 - [Configuration](#configuration)
   - [Layer options](#layer-options)
   - [Global options](#global-options)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
 ## Description
 
-`format` layer provides code formation feature for SpaceVim, this layer includes `neoformat`
-as default code formation plugin.
+`format` layer provides code formatting feature for SpaceVim, this layer includes `neoformat`
+as default code formatting plugin.
 
 ## Install
 
@@ -72,3 +73,9 @@ let g:neoformat_java_googlefmt = {
     \ 'stdin': 1,
     \ }
 ```
+
+## Key bindings
+
+| Key binding | Description                           |
+| ----------- | ------------------------------------- |
+| `SPC b f`   | format whole buffer or selected lines |

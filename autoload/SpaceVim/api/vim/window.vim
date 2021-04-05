@@ -29,6 +29,10 @@
 "
 "   Check if the window is a floating windows, return `v:true` if the window
 "   is a floating window.
+"
+" winexists({winid})
+"
+"   Check if the window with {winid} exists in current tabpage.
 
 let s:self = {}
 
@@ -79,6 +83,11 @@ if has('nvim')
   endfunction
 else
   function! s:self.is_float(winnr) abort
+    " vim without win_getid() is old, which do not support floating window.
+    " so if_float always return 0
+    if !exists('*win_getid')
+      return 0
+    endif
     let id = win_getid(a:winnr)
     if id > 0 && exists('*popup_getoptions')
       try
@@ -92,6 +101,12 @@ else
   endfunction
 endif
 
+function! s:self.winexists(winid) abort
+  if !exists('win_id2tabwin')
+    return 0
+  endif
+  return win_id2tabwin(a:winid)[0] == tabpagenr()
+endfunction
 
 function! SpaceVim#api#vim#window#get() abort
   return deepcopy(s:self)

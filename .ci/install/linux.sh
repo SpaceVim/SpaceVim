@@ -1,3 +1,11 @@
+#!/usr/bin/env bash
+
+# Fail on unset variables and command errors
+set -ue -o pipefail
+
+# Prevent commands misbehaving due to locale differences
+export LC_ALL=C
+
 install_vim() {
     local URL=https://github.com/vim/vim
     local tag=$1
@@ -32,8 +40,8 @@ install_nvim() {
         CMAKE_BUILD_TYPE=Release \
         CMAKE_EXTRA_FLAGS="-DTRAVIS_CI_BUILD=ON -DCMAKE_INSTALL_PREFIX:PATH=$out"
     make install
-    pip install --user pynvim
-    pip3 install --user pynvim
+    pip install pynvim
+    pip3 install pynvim
 }
 
 install() {

@@ -5,6 +5,7 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
 
 ""
 " @section Introduction, intro
@@ -38,12 +39,13 @@
 " please take a look at the following options.
 "
 
+let s:SYSTEM = SpaceVim#api#import('system')
+
 " Public SpaceVim Options {{{
-scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.6.0-dev'
+let g:spacevim_version = '1.7.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -104,6 +106,22 @@ let g:spacevim_enable_bepo_layout  = 0
 "   let g:spacevim_max_column = 120
 " <
 let g:spacevim_max_column              = 120
+
+
+""
+" @section default_custom_leader, options-default_custom_leader
+" @parentsection options
+" Change the default custom leader of SpaceVim. Default is <Space>.
+" >
+"   default_custom_leader = "<Space>"
+" <
+
+""
+" Change the default custom leader of SpaceVim. Default is <Space>.
+" >
+"   let g:spacevim_default_custom_leader = '<Space>'
+" <
+let g:spacevim_default_custom_leader = '<Space>'
 
 ""
 " @section home_files_number, options-home_files_number
@@ -189,15 +207,6 @@ let g:spacevim_enable_googlesuggest    = 0
 let g:spacevim_windows_leader          = 's'
 
 ""
-" @section enable_insert_leader, options-enable_insert_leader
-" @parentsection options
-" Enable/Disable spacevim's insert mode leader, default is enable
-
-""
-" Enable/Disable spacevim's insert mode leader, default is enable
-let g:spacevim_enable_insert_leader    = 1
-
-""
 " @section data_dir, options-data_dir
 " @parentsection options
 " Set the cache directory of SpaceVim. Default is `$XDG_CACHE_HOME` 
@@ -270,7 +279,9 @@ let g:spacevim_realtime_leader_guide   = 1
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
+if (has('python3') 
+      \ && (SpaceVim#util#haspy3lib('neovim')
+      \ || SpaceVim#util#haspy3lib('pynvim'))) &&
       \ (has('nvim') || (has('patch-8.0.0027')))
 
   ""
@@ -311,7 +322,9 @@ if (has('python3') && SpaceVim#util#haspy3lib('neovim')) &&
   "
   " and you can alse set this option to coc, then coc.nvim will be used.
   let g:spacevim_autocomplete_method = 'deoplete'
-elseif has('lua')
+
+  " neocomplete does not work with Vim 8.2.1066
+elseif has('lua') && !has('patch-8.2.1066')
   let g:spacevim_autocomplete_method = 'neocomplete'
 elseif has('python') && ((has('job') && has('timers') && has('lambda')) || has('nvim'))
   let g:spacevim_autocomplete_method = 'completor'
@@ -322,34 +335,24 @@ else
 endif
 
 ""
-" @section enable_neomake, options-enable_neomake
+" @section lint_engine, options-lint_engine
 " @parentsection options
-" SpaceVim default checker is neomake. If you want to use syntastic, use:
+" Set the lint engine used in checkers layer, the default engine is neomake,
+" if you want to use ale, use:
 " >
-"   enable_neomake = false
+"   lint_engine = 'ale'
 " <
+" NOTE: the `enable_neomake` and `enable_ale` option has been deprecated.
+" *spacevim-options-enable_naomake*
+" *spacevim-options-enable_ale*
 
 ""
-" SpaceVim default checker is neomake. If you want to use syntastic, use:
+" Set the lint engine used in checkers layer, the default engine is neomake,
+" if you want to use ale, use:
 " >
-"   let g:spacevim_enable_neomake = 0
+"   let g:spacevim_lint_engine = 'ale'
 " <
-let g:spacevim_enable_neomake          = 1
-
-""
-" @section enable_ale, options-enable_ale
-" @parentsection options
-" Use ale for syntax checking, disabled by default.
-" >
-"   enable_ale = true
-" <
-
-""
-" Use ale for syntax checking, disabled by default.
-" >
-"   let g:spacevim_enable_ale = 1
-" <
-let g:spacevim_enable_ale          = 0
+let g:spacevim_lint_engine = 'neomake'
 
 ""
 " @section guifont, options-guifont
@@ -560,7 +563,20 @@ let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
 let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos', 'percentage']
 
 ""
-" Enable/Disable unicode symbols in statusline
+" @section statusline_unicode_symbols, options-statusline_unicode_symbols
+" @parentsection options
+" Enable/Disable unicode symbols in statusline, includes the mode icons and
+" fileformat icons. This option is enabled by default, to disable it:
+" >
+"   statusline_unicode_symbols = false
+" <
+
+""
+" Enable/Disable unicode symbols in statusline, includes the mode icons and
+" fileformat icons. This option is enabled by default, to disable it:
+" >
+"   let g:spacevim_statusline_unicode_symbols = 0
+" <
 let g:spacevim_statusline_unicode_symbols = 1
 ""
 " Enable/Disable language specific leader, by default you can use `,` ket
@@ -769,13 +785,13 @@ let g:spacevim_filemanager             = 'vimfiler'
 " @section filetree_direction, options-filetree_direction
 " @parentsection options
 " Config the direction of file tree. Default is 'right'. you can also set to
-" 'left'. 
+" 'left'.
 "
 " NOTE: if it is 'left', the tagbar will be move to right.
 
 ""
 " Config the direction of file tree. Default is 'right'. you can also set to
-" 'left'. 
+" 'left'.
 "
 " NOTE: if it is 'left', the tagbar will be move to right.
 let g:spacevim_filetree_direction             = 'right'
@@ -785,7 +801,7 @@ let g:spacevim_sidebar_direction        = ''
 " The default plugin manager of SpaceVim.
 " if has patch 7.4.2071, the default value is dein. Otherwise it is neobundle.
 " Options are dein, neobundle, or vim-plug.
-if has('patch-7.4.1689')
+if has('patch-7.4.2071')
   let g:spacevim_plugin_manager          = 'dein'
 else
   let g:spacevim_plugin_manager          = 'neobundle'
@@ -817,7 +833,7 @@ let g:spacevim_checkinstall            = 1
 ""
 " @section vimcompatible, options-vimcompatible
 " @parentsection options
-" Enable/Disable vimcompatible mode, by default it is false. 
+" Enable/Disable vimcompatible mode, by default it is false.
 " to enable vimcompatible mode, just add:
 " >
 "   vimcompatible = true
@@ -836,7 +852,7 @@ let g:spacevim_checkinstall            = 1
 " <
 
 ""
-" Enable/Disable vimcompatible mode, by default it is false. 
+" Enable/Disable vimcompatible mode, by default it is false.
 " to enable vimcompatible mode, just add:
 " >
 "   let g:spacevim_vimcompatible = 1
@@ -1028,14 +1044,71 @@ let g:spacevim_lint_on_save            = 1
 " 'pt', 'ack', 'grep', 'findstr', 'git']
 let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr', 'git']
 ""
-" Set the project rooter patterns, by default it is
-" `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`
+" @section project_rooter_patterns, options-project_rooter_patterns
+" @parentsection options
+" Set the project root patterns, SpaceVim determines the root directory of the
+" project based on this option. By default it is:
+" >
+"   ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+" <
+
+""
+" Set the project root patterns, SpaceVim determines the root directory of the
+" project based on this option. By default it is:
+" >
+"   ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+" <
 let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+""
+" @section enable_projects_cache, options-enable_projects_cache
+" @parentsection options
+" Enable/Disable cross session projects cache. Enabled by default.
+
+""
+" Enable/Disable cross session projects cache. Enabled by default.
+let g:spacevim_enable_projects_cache = 1
+""
+" @section projects_cache_num, options-projects_cache_num
+" @parentsection options
+" Setting the numbers of cached projects, by default it is 20.
+
+""
+" Setting the numbers of cached projects, by default it is 20.
+let g:spacevim_projects_cache_num = 20
+""
+" @section project_rooter_automatically, options-project_rooter_automatically
+" @parentsection options
+" Enable/Disable project root detection. By default, SpaceVim will change the
+" directory to the project root directory based on `project_rooter_patterns`
+" option. To disable this feature:
+" >
+"   [options]
+"     project_rooter_automatically = false
+" <
+
 ""
 " Enable/Disable changing directory automatically. Enabled by default.
 let g:spacevim_project_rooter_automatically = 1
 ""
+" @section project_rooter_outermost, options-project_rooter_outermost
+" @parentsection options
 " Enable/Disable finding outermost directory for project root detection.
+" By default SpaceVim will find the outermost directory based on
+" `project_rooter_patterns`. To find nearest directory, you need to disable
+" this option:
+" >
+"   [options]
+"     project_rooter_outermost = false
+" <
+
+""
+" Enable/Disable finding outermost directory for project root detection.
+" By default SpaceVim will find the outermost directory based on
+" `project_rooter_patterns`. To find nearest directory, you need to disable
+" this option:
+" >
+"   let g:spacevim_project_rooter_outermost = 0
+" <
 let g:spacevim_project_rooter_outermost = 1
 
 ""
@@ -1146,6 +1219,8 @@ let g:spacevim_wildignore
 let g:_spacevim_mappings = {}
 let g:_spacevim_mappings_space_custom = []
 let g:_spacevim_mappings_space_custom_group_name = []
+let g:_spacevim_mappings_language_specified_space_custom = {}
+let g:_spacevim_mappings_language_specified_space_custom_group_name = {}
 let g:_spacevim_neobundle_installed     = 0
 let g:_spacevim_dein_installed          = 0
 let g:_spacevim_vim_plug_installed      = 0
@@ -1216,17 +1291,12 @@ command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <a
 command -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
 function! SpaceVim#end() abort
-  if !g:spacevim_vimcompatible
-    call SpaceVim#mapping#def('nnoremap <silent>', '<Tab>', ':wincmd w<CR>', 'Switch to next window or tab','wincmd w')
-    call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
-  endif
   if g:spacevim_vimcompatible
     let g:spacevim_windows_leader = ''
     let g:spacevim_windows_smartclose = ''
   endif
 
   if !g:spacevim_vimcompatible
-    nnoremap <silent><C-x> <C-w>x
     cnoremap <C-f> <Right>
     " Navigation in command line
     cnoremap <C-a> <Home>
@@ -1239,6 +1309,7 @@ function! SpaceVim#end() abort
       exe printf('inoremap %s <esc>', g:spacevim_escape_key_binding)
     endif
   endif
+
   call SpaceVim#server#connect()
 
   if g:spacevim_enable_neocomplcache
@@ -1292,9 +1363,12 @@ function! SpaceVim#end() abort
   " tab options:
   set smarttab
   let &expandtab = g:spacevim_expand_tab
-  let &tabstop = g:spacevim_default_indent
-  let &softtabstop = g:spacevim_default_indent
-  let &shiftwidth = g:spacevim_default_indent
+
+  if g:spacevim_default_indent > 0
+    let &tabstop = g:spacevim_default_indent
+    let &softtabstop = g:spacevim_default_indent
+    let &shiftwidth = g:spacevim_default_indent
+  endif
 
   let g:unite_source_menu_menus =
         \ get(g:,'unite_source_menu_menus',{})
@@ -1318,19 +1392,63 @@ function! SpaceVim#end() abort
   let g:leaderGuide_max_size = 15
   call SpaceVim#plugins#load()
 
-  call SpaceVim#plugins#projectmanager#RootchandgeCallback()
-
-  call SpaceVim#util#loadConfig('general.vim')
+  exe 'set wildignore+=' . g:spacevim_wildignore
+  " shell
+  if has('filterpipe')
+    set noshelltemp
+  endif
+  if g:spacevim_enable_guicolors == 1
+    if !has('nvim') && has('patch-7.4.1770')
+      let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+      let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    endif
+    if exists('+termguicolors')
+      set termguicolors
+    elseif exists('+guicolors')
+      set guicolors
+    endif
+  endif
+  if g:spacevim_colorscheme !=# '' "{{{
+    try
+      exec 'set background=' . g:spacevim_colorscheme_bg
+      exec 'colorscheme ' . g:spacevim_colorscheme
+    catch
+      exec 'colorscheme '. g:spacevim_colorscheme_default
+    endtry
+  else
+    exec 'colorscheme '. g:spacevim_colorscheme_default
+  endif
+  if g:spacevim_hiddenfileinfo == 1 && has('patch-7.4.1570')
+    set shortmess+=F
+  endif
+  if has('gui_running') && !empty(g:spacevim_guifont)
+    if has('gui_vimr')
+      " VimR has removed support for guifont
+    else
+      let &guifont = g:spacevim_guifont
+    endif
+  endif
 
 
 
   call SpaceVim#autocmds#init()
 
-  if has('nvim')
-    call SpaceVim#util#loadConfig('neovim.vim')
+  if !has('nvim-0.2.0') && !has('nvim')
+    " In old version of neovim, &guicursor do not support cursor shape
+    " setting.
+    let $NVIM_TUI_ENABLE_CURSOR_SHAPE = g:spacevim_terminal_cursor_shape
+  else
+    if g:spacevim_terminal_cursor_shape == 0
+      " prevent nvim from changing the cursor shape
+      set guicursor=
+    elseif g:spacevim_terminal_cursor_shape == 1
+      " enable non-blinking mode-sensitive cursor
+      set guicursor=n-v-c:block-blinkon0,i-ci-ve:ver25-blinkon0,r-cr:hor20,o:hor50
+    elseif g:spacevim_terminal_cursor_shape == 2
+      " enable blinking mode-sensitive cursor
+      set guicursor=n-v-c:block-blinkon10,i-ci-ve:ver25-blinkon10,r-cr:hor20,o:hor50
+    endif
   endif
-
-  call SpaceVim#util#loadConfig('commands.vim')
   filetype plugin indent on
   syntax on
 endfunction
@@ -1361,8 +1479,58 @@ endfunction
 
 function! SpaceVim#begin() abort
 
-  call SpaceVim#util#loadConfig('functions.vim')
-  call SpaceVim#util#loadConfig('init.vim')
+
+  "Use English for anything in vim
+  try
+    if s:SYSTEM.isWindows
+      silent exec 'lan mes en_US.UTF-8'
+    elseif s:SYSTEM.isOSX
+      silent exec 'language en_US.UTF-8'
+    else
+      let s:uname = system('uname -s')
+      if s:uname ==# "Darwin\n"
+        " in mac-terminal
+        silent exec 'language en_US.UTF-8'
+      elseif s:uname ==# "SunOS\n"
+        " in Sun-OS terminal
+        silent exec 'lan en_US.UTF-8'
+      elseif s:uname ==# "FreeBSD\n"
+        " in FreeBSD terminal
+        silent exec 'lan en_US.UTF-8'
+      else
+        " in linux-terminal
+        silent exec 'lan en_US.UTF-8'
+      endif
+    endif
+  catch /^Vim\%((\a\+)\)\=:E197/
+    call SpaceVim#logger#error('Can not set language to en_US.utf8')
+  endtry
+
+  " try to set encoding to utf-8
+  if s:SYSTEM.isWindows
+    " Be nice and check for multi_byte even if the config requires
+    " multi_byte support most of the time
+    if has('multi_byte')
+      " Windows cmd.exe still uses cp850. If Windows ever moved to
+      " Powershell as the primary terminal, this would be utf-8
+      if exists('&termencoding') && !has('nvim')
+        set termencoding=cp850
+      endif
+      setglobal fileencoding=utf-8
+      " Windows has traditionally used cp1252, so it's probably wise to
+      " fallback into cp1252 instead of eg. iso-8859-15.
+      " Newer Windows files might contain utf-8 or utf-16 LE so we might
+      " want to try them first.
+      set fileencodings=ucs-bom,utf-8,gbk,utf-16le,cp1252,iso-8859-15,cp936
+    endif
+
+  else
+    if exists('&termencoding') && !has('nvim')
+      set termencoding=utf-8
+    endif
+    set fileencoding=utf-8
+    set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+  endif
 
   " Before loading SpaceVim, We need to parser argvs.
   let s:status = s:parser_argv()
@@ -1386,7 +1554,6 @@ function! SpaceVim#begin() abort
   endif
   call SpaceVim#default#options()
   call SpaceVim#default#layers()
-  call SpaceVim#default#keyBindings()
   call SpaceVim#commands#load()
 endfunction
 

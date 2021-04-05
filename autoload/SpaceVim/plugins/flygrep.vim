@@ -13,6 +13,7 @@ let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
+let s:REGEX = SpaceVim#api#import('vim#regex')
 
 let s:LOGGER =SpaceVim#logger#derive('FlyGrep')
 let s:HI = SpaceVim#api#import('vim#highlight')
@@ -28,6 +29,7 @@ let s:Window = SpaceVim#api#import('vim#window')
 
 let s:grepid = 0
 
+let s:filename_pattern = '[^:]*:\d\+:\d\+:'
 
 " Init local options: {{{
 let s:grep_expr = ''
@@ -143,7 +145,11 @@ endfunction
 function! s:expr_to_pattern(expr) abort
   if s:grep_mode ==# 'expr'
     let items = split(a:expr)
-    return join(items, '\|')
+    let pattern = join(items, '.*')
+    let ignorecase = &ignorecase ? '\c' : '\C'
+    let pattern = s:filename_pattern . '.*\zs' . ignorecase . s:REGEX.parser(pattern, 0)
+    call s:LOGGER.info('matchadd pattern: ' . pattern)
+    return pattern
   else
     return a:expr
   endif
@@ -485,17 +491,35 @@ function! s:open_item() abort
     call s:MPT._clear_prompt()
     let s:MPT._quit = 1
     let line = getline('.')
-    let filename = fnameescape(split(line, ':\d\+:')[0])
-    let linenr = matchstr(line, ':\d\+:')[1:-2]
-    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    let [filename, linenr, colum] = s:get_file_pos(line)
     if s:preview_able == 1
       call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
-    exe 'silent e ' . filename
     call s:update_history()
-    call cursor(linenr, colum)
+    call s:BUFFER.open_pos('edit', filename, linenr, colum)
+    noautocmd normal! :
+  endif
+endfunction
+
+function! s:open_item_in_tab() abort
+  let s:MPT._handle_fly = function('s:flygrep')
+  if getline('.') !=# ''
+    if s:grepid != 0
+      call s:JOB.stop(s:grepid)
+    endif
+    call s:MPT._clear_prompt()
+    let s:MPT._quit = 1
+    let line = getline('.')
+    let [filename, linenr, colum] = s:get_file_pos(line)
+    if s:preview_able == 1
+      call s:close_preview_win()
+    endif
+    let s:preview_able = 0
+    noautocmd q
+    call s:update_history()
+    call s:BUFFER.open_pos('tabedit', filename, linenr, colum)
     noautocmd normal! :
   endif
 endfunction
@@ -509,17 +533,14 @@ function! s:open_item_vertically() abort
     call s:MPT._clear_prompt()
     let s:MPT._quit = 1
     let line = getline('.')
-    let filename = fnameescape(split(line, ':\d\+:')[0])
-    let linenr = matchstr(line, ':\d\+:')[1:-2]
-    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    let [filename, linenr, colum] = s:get_file_pos(line)
     if s:preview_able == 1
       call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
-    exe 'silent vsplit ' . filename
     call s:update_history()
-    call cursor(linenr, colum)
+    call s:BUFFER.open_pos('vsplit', filename, linenr, colum)
     noautocmd normal! :
   endif
 endfunction
@@ -533,17 +554,45 @@ function! s:open_item_horizontally() abort
     call s:MPT._clear_prompt()
     let s:MPT._quit = 1
     let line = getline('.')
-    let filename = fnameescape(split(line, ':\d\+:')[0])
-    let linenr = matchstr(line, ':\d\+:')[1:-2]
-    let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+    let [filename, linenr, colum] = s:get_file_pos(line)
     if s:preview_able == 1
       call s:close_preview_win()
     endif
     let s:preview_able = 0
     noautocmd q
-    exe 'silent split ' . filename
     call s:update_history()
-    call cursor(linenr, colum)
+    call s:BUFFER.open_pos('split', filename, linenr, colum)
+    noautocmd normal! :
+  endif
+endfunction
+
+function! s:get_file_pos(line) abort
+    let filename = fnameescape(split(a:line, ':\d\+:')[0])
+    let linenr = str2nr(matchstr(a:line, ':\d\+:')[1:-2])
+    let colum = str2nr(matchstr(a:line, '\(:\d\+\)\@<=:\d\+:')[1:-2])
+    return [filename, linenr, colum]
+endfunction
+
+function! s:apply_to_quickfix() abort
+  let s:MPT._handle_fly = function('s:flygrep')
+  if getline('.') !=# ''
+    if s:grepid != 0
+      call s:JOB.stop(s:grepid)
+    endif
+    let s:MPT._quit = 1
+    if s:preview_able == 1
+      call s:close_preview_win()
+    endif
+    let s:preview_able = 0
+    let searching_result = s:BUFFER.buf_get_lines(s:buffer_id, 0, -1, 0)
+    noautocmd q
+    call s:update_history()
+    if !empty(searching_result)
+      cgetexpr join(searching_result, "\n")
+      call setqflist([], 'a', {'title' : 'FlyGrep partten:' . s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end})
+      call s:MPT._clear_prompt()
+      copen
+    endif
     noautocmd normal! :
   endif
 endfunction
@@ -728,11 +777,13 @@ let s:MPT._function_key = {
       \ "\<C-k>" : function('s:previous_item'),
       \ "\<ScrollWheelUp>" : function('s:previous_item'),
       \ "\<Return>" : function('s:open_item'),
+      \ "\<C-t>" : function('s:open_item_in_tab'),
       \ "\<LeftMouse>" : function('s:move_cursor'),
       \ "\<2-LeftMouse>" : function('s:double_click'),
       \ "\<C-f>" : function('s:start_filter'),
       \ "\<C-v>" : function('s:open_item_vertically'),
       \ "\<C-s>" : function('s:open_item_horizontally'),
+      \ "\<C-q>" : function('s:apply_to_quickfix'),
       \ "\<M-r>" : function('s:start_replace'),
       \ "\<C-p>" : function('s:toggle_preview'),
       \ "\<C-e>" : function('s:toggle_expr_mode'),
@@ -805,7 +856,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
   call s:update_statusline()
-  call s:matchadd('FileName', '[^:]*:\d\+:\d\+:', 3)
+  call s:matchadd('FileName', s:filename_pattern, 3)
   let s:MPT._prompt.begin = get(a:argv, 'input', '')
   let fs = get(a:argv, 'files', '')
   if fs ==# '@buffers'
@@ -857,6 +908,10 @@ endfunction
 " }}}
 
 function! s:update_statusline() abort
+  if !get(g:, 'FlyGrep_enable_statusline', 1)
+    return
+  endif
+
   if s:SL.support_float() && win_id2tabwin(s:flygrep_win_id)[0] ==# tabpagenr() && s:Window.is_float(win_id2win(s:flygrep_win_id))
     noautocmd call s:SL.open_float([
           \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],

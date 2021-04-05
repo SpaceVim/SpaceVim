@@ -73,8 +73,7 @@ docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevi
 ## Configuration
 
 The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`. This is
-an example for basic usage of SpaceVim. For more info, please checkout SpaceVim
-documentation.
+an example for basic usage of SpaceVim. For more info, please checkout [documentation](../documentation/) and [available layers](../layers/).
 
 ```toml
 # This is a basic configuration example for SpaceVim
@@ -92,7 +91,7 @@ documentation.
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "nil"
-    statusline_separator = "bar"
+    statusline_iseparator = "bar"
     buffer_index_type = 4
     # Display file type icon on the tabline, If you do not have nerd fonts
     # installed, please change the value to false

@@ -155,7 +155,7 @@ default language server commands:
 
 | language     | server command                                                                                                                                                                                   |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `ada`        | `['ada_language_server']`                                                                                                                                                                                     |
+| `ada`        | `['ada_language_server']`                                                                                                                                                                        |
 | `c`          | `['clangd']`                                                                                                                                                                                     |
 | `cpp`        | `['clangd']`                                                                                                                                                                                     |
 | `crystal`    | `['scry']`                                                                                                                                                                                       |
@@ -173,6 +173,7 @@ default language server commands:
 | `purescript` | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
 | `python`     | `['pyls']`                                                                                                                                                                                       |
 | `ruby`       | `['solargraph', 'stdio']`                                                                                                                                                                        |
+| `reason`     | `['ocaml-language-server']`                                                                                                                                                                      |
 | `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
 | `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
 | `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |

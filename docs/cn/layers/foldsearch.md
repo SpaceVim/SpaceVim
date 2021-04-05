@@ -27,7 +27,7 @@ lang: zh
   name = "foldsearch"
 ```
 
-该模块依赖于命令：[ripgrep](https://github.com/BurntSushi/ripgrep)。
+使用这一模块，需要安装一个文本搜索命令，可以选择：`ag`、`rg`、`ack`、`pt` 或者 `grep`。
 
 ## 快捷键
 

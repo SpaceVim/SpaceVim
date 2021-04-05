@@ -1,10 +1,10 @@
 ---
-title: "异步协同 API"
-description: "兼容 neovim 和 vim 的异步协同 API，对于旧版 vim 采用非异步机制"
+title: "job 接口"
+description: "兼容 neovim 和 vim 的异步协同接口，对于旧版 vim 采用非异步机制"
 lang: zh
 ---
 
-# [公共 API](../) >> job
+# [可用接口](../) >> job
 
 <!-- vim-markdown-toc GFM -->
 
@@ -16,7 +16,7 @@ lang: zh
 
 #### 简介
 
-`job`API 提供了一套可以兼容 neovim 和 vim 的异步控制机制，具体实现模型是参考的 neovim 的模型。
+`job` 接口提供了一套可以兼容 neovim 和 vim 的异步控制机制，具体实现模型是参考的 neovim 的模型。
 
 #### 函数及变量
 

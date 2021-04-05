@@ -10,6 +10,7 @@
 scriptencoding utf-8
 let s:MPT = SpaceVim#api#import('prompt')
 let s:JOB = SpaceVim#api#import('job')
+let s:FILE = SpaceVim#api#import('file')
 " let s:SYS = SpaceVim#api#import('system')
 " let s:BUFFER = SpaceVim#api#import('vim#buffer')
 " let s:LIST = SpaceVim#api#import('data#list')
@@ -17,8 +18,12 @@ let s:JOB = SpaceVim#api#import('job')
 
 
 let s:support_tools = ['find', 'fd']
+let s:default_cmd = {
+      \ 'find' : 'find -not -iwholename "*.git*" ',
+      \ 'fd' : 'fd',
+      \ }
 let s:current_tool = 'find'
-let s:MPT._prompt.mpt = ' ' . s:current_tool . ' '
+  let s:MPT._prompt.mpt = ' ' . s:default_cmd[s:current_tool] . ' '
 let s:options = {}
 let s:second_option = {}
 let s:options.find = {
@@ -115,15 +120,13 @@ let s:second_option.fd = {
 
 function! s:start_find() abort
   if s:current_tool ==# 'find'
-    let cmd = 'find -not -iwholename "*.git*" ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
+    let cmd = s:default_cmd[s:current_tool] . ' ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
   elseif s:current_tool ==# 'fd'
-    let cmd = 'fd ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
+    let cmd = s:default_cmd[s:current_tool] . ' ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
   endif
-  call s:MPT._clear_prompt()
   let s:MPT._quit = 1
-  let line = getline('.')
-  noautocmd q
-  redraw!
+  call s:MPT._clear_prompt()
+  call s:close_buffer()
   let s:finded_files = []
   call s:JOB.start(cmd,
         \ {
@@ -138,9 +141,12 @@ function! s:find_on_stdout(id, data, event) abort
 endfunction
 
 function! s:find_on_exit(id, data, event) abort
+  " let files = map(filter(deepcopy(s:finded_files), '!empty(v:val)'), "{'filename' : v:val, 'module' : s:FILE.unify_path(v:val, ':.')}")
   let files = map(filter(deepcopy(s:finded_files), '!empty(v:val)'), "{'filename' : v:val}")
   if !empty(files)
-    call setqflist(files)
+    call setqflist([], 'r', {'title' : ' SPC f /',
+          \ 'items' : files,
+          \ })
     copen
   else
     echo 'Can not find anything'
@@ -148,8 +154,8 @@ function! s:find_on_exit(id, data, event) abort
 endfunction
 
 function! s:close_buffer() abort
-  noautocmd pclose
-  noautocmd q
+  exe 'noautocmd bwipeout' s:find_argvs_buffer_id
+  noautocmd normal! :
 endfunction
 let s:MPT._onclose = function('s:close_buffer')
 
@@ -204,7 +210,7 @@ function! s:switch_tool() abort
   let s:MPT._prompt.begin = ''
   let s:MPT._prompt.cursor = ''
   let s:MPT._prompt.end = ''
-  let s:MPT._prompt.mpt = ' ' . s:current_tool . ' '
+  let s:MPT._prompt.mpt = ' ' . s:default_cmd[s:current_tool] . ' '
   redraw
   call s:MPT._build_prompt()
 endfunction
@@ -214,7 +220,7 @@ function! s:enter() abort
 endfunction
 
 function! s:handle_command_line(cmd) abort
-  normal! "_dG
+  noautocmd silent normal! "_dG
   if empty(s:MPT._prompt.begin)
     redraw
     call s:MPT._build_prompt()

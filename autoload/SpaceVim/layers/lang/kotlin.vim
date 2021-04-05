@@ -53,7 +53,7 @@ function! SpaceVim#layers#lang#kotlin#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#kotlin#config() abort
-  if g:spacevim_enable_neomake
+  if g:spacevim_lint_engine ==# 'neomake'
     " neomake support:
     let g:neomake_kotlin_kotlinc_maker = {
           \ 'args': ['-cp', s:classpath(), '-d', s:outputdir()],
@@ -64,12 +64,17 @@ function! SpaceVim#layers#lang#kotlin#config() abort
           \ '%Wwarning: %m,' .
           \ '%Iinfo: %m,'
           \ }
-    let g:neomake_kotlin_enabled_makers = ['kotlinc']
+    let g:neomake_kotlin_ktlint_maker = {
+          \ 'errorformat': '%E%f:%l:%c: %m',
+          \ }
+    let g:neomake_kotlin_enabled_makers = ['ktlint']
+    let g:neomake_kotlin_kotlinc_remove_invalid_entries = 1
+    let g:neomake_kotlin_ktlint_remove_invalid_entries = 1
   endif
   call SpaceVim#mapping#space#regesit_lang_mappings('kotlin', function('s:language_specified_mappings'))
   if s:enable_native_support
     let runner = {
-          \ 'exe' : 'kotlinc-native'. (s:SYS.isWindows ? '.BAT' : ''),
+          \ 'exe' : 'kotlinc-native'. (s:SYS.isWindows ? '.CMD' : ''),
           \ 'targetopt' : '-o',
           \ 'opt' : [],
           \ 'usestdin' : 0,
@@ -77,13 +82,13 @@ function! SpaceVim#layers#lang#kotlin#config() abort
     call SpaceVim#plugins#runner#reg_runner('kotlin', [runner, '#TEMP#'])
   else
     let runner = {
-          \ 'exe' : 'kotlinc-jvm'. (s:SYS.isWindows ? '.BAT' : ''),
+          \ 'exe' : 'kotlinc-jvm'. (s:SYS.isWindows ? '.CMD' : ''),
           \ 'opt' : ['-script'],
           \ 'usestdin' : 0,
           \ }
     call SpaceVim#plugins#runner#reg_runner('kotlin', runner)
   endif
-  call SpaceVim#plugins#repl#reg('kotlin', ['kotlinc-jvm'. (s:SYS.isWindows ? '.BAT' : '')])
+  call SpaceVim#plugins#repl#reg('kotlin', ['kotlinc-jvm'. (s:SYS.isWindows ? '.CMD' : '')])
 endfunction
 
 function! s:language_specified_mappings() abort

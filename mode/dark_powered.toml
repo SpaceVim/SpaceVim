@@ -19,7 +19,7 @@
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "arrow"
-    statusline_inactive_separator = "arrow"
+    statusline_iseparator = "arrow"
     buffer_index_type = 4
     enable_tabline_filetype_icon = true
     enable_statusline_mode = false

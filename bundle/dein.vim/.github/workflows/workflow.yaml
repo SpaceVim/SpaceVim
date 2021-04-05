@@ -1,0 +1,31 @@
+name: Lint & Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Neovim (${{ matrix.build }})
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        build:
+          - nightly
+          - stable
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Initialize Neovim
+        uses: rhysd/action-setup-vim@v1
+        id: vim
+        with:
+          neovim: true
+          version: ${{ matrix.build }}
+      - name: Clone vim-themis
+        uses: actions/checkout@v2
+        with:
+          repository: thinca/vim-themis
+          path: vim-themis
+      - name: Run Test
+        run: make --keep-going THEMIS_VIM=${{ steps.vim.outputs.executable }} test

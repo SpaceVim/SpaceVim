@@ -45,6 +45,8 @@ Then you give the path to `plantuml_jar_path`. see below.
 
 This is just example.
 ```toml
+ [[layers]]
+  name = "lang#plantuml"
   plantuml_jar_path = "/usr/share/plantuml/plantuml.jar"
 ```
 

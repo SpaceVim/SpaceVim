@@ -19,7 +19,8 @@ function! SpaceVim#commands#load() abort
   ""
   " Set or check SpaceVim option. {opt} should be the option name of
   " spacevim, This command will use [value] as the value of option name.
-  command! -nargs=+ SPSet call SpaceVim#options#set(<f-args>)
+  command! -nargs=+ -complete=custom,SpaceVim#commands#complete_options
+        \ SPSet call SpaceVim#options#set(<f-args>)
   ""
   " print the debug information of spacevim, [!] forces the output into a
   " new buffer.
@@ -294,6 +295,10 @@ function! s:SHA() abort
     return ''
   endif
   return '-' . sha
+endfunction
+
+function! SpaceVim#commands#complete_options(...)
+  return join(map(getcompletion('g:spacevim_','var'), 'v:val[11:]'), "\n")
 endfunction
 
 

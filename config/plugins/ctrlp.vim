@@ -12,7 +12,7 @@ let s:SYS = SpaceVim#api#import('system')
 let g:ctrlp_map = get(g:,'ctrlp_map', '<c-p>')
 let g:ctrlp_cmd = get(g:, 'ctrlp_cmd', 'CtrlP')
 let g:ctrlp_working_path_mode = get(g:, 'ctrlp_working_path_mode', 'ra')
-let g:ctrlp_root_markers = get(g:, 'ctrlp_root_markers', ['pom.xml'])
+let g:ctrlp_root_markers = get(g:, 'ctrlp_root_markers', get(g:, 'spacevim_project_rooter_patterns', ''))
 let g:ctrlp_match_window = get(g:, 'ctrlp_match_window', 'bottom,order:btt,min:1,max:15,results:15')
 let g:ctrlp_show_hidden = get(g:, 'ctrlp_show_hidden', 1)
 "for caching
@@ -35,9 +35,12 @@ elseif executable('ag') && !exists('g:ctrlp_user_command')
 elseif s:SYS.isWindows
   let g:ctrlp_user_command =
     \ 'dir %s /-n /b /s /a-d | findstr /v /l ".jpg \\tmp\\"' " Windows
+elseif s:SYS.isOSX
+  let g:ctrlp_user_command =
+    \ 'find %s -type f | grep --invert-match --extended-regexp "\.jpg$|/tmp/"' " MacOSX
 else
   let g:ctrlp_user_command =
-    \ 'find %s -type f | grep -v -P "\.jpg$|/tmp/"'          " MacOSX/Linux
+    \ 'find %s -type f | grep -v -P "\.jpg$|/tmp/"'          " Linux
 endif
 if !exists('g:ctrlp_match_func') && (has('python') || has('python3'))
   let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch'  }

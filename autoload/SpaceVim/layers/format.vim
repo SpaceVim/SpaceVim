@@ -12,8 +12,14 @@
 " format layer provides code formation for SpaceVim, the default formatting
 " plugin is |neoformat|.
 " @subsection options
-" format_on_save: disabled by default.
 "
+" `format_on_save`: disabled by default.
+"
+" @subsection key bindings
+" >
+"   Key binding     Description
+"   SPC b f         format current buffer or selection lines
+" <
 " 
 
 if exists('s:format_on_save')
@@ -30,7 +36,7 @@ function! SpaceVim#layers#format#plugins() abort
 endfunction
 
 function! SpaceVim#layers#format#config() abort
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Neoformat', 'format-code', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], ":Neoformat\<Enter>", 'format-code', 0, 1)
   augroup spacevim_layer_format
     autocmd!
     autocmd BufWritePre * call s:format()
@@ -62,6 +68,6 @@ endfunction
 function! s:format() abort
   if !empty(&ft) &&
         \ ( index(s:format_ft, &ft) !=# -1 || s:format_on_save ==# 1)
-    undojoin | Neoformat
+    try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
   endif
 endfunction

@@ -6,6 +6,7 @@
   xmlns:fb="http://www.facebook.com/2008/fbml"
 >
   <head>
+    <meta charset="utf-8" />
     <title>{{ page.title }} | SpaceVim</title>
     <meta name="baidu-site-verification" content="AN14j6xQVd" />
     <!-- This is for google search console -->
@@ -14,7 +15,7 @@
     <meta name="author" content="Shidong Wang" />
     <meta name="description" content="{{ page.description }}" />
     {% if page.type %}
-    <meta property="og:type" content="{{ page.type }}" />
+    <meta property="og:type" content="{{ page.type }}"/>
     {% else %}
     <meta property="og:type" content="webpage" />
     {% endif %}
@@ -34,35 +35,10 @@
     />
     <meta name="twitter:title" content="{{ page.title }} | SpaceVim" />
     <meta name="twitter:description" content="{{ page.description }}" />
-    {% if page.lang == "zh" %}
-    <script
-      type="text/javascript"
-      src="https://tajs.qq.com/stats?sId=60680063"
-      charset="UTF-8"
-    ></script>
-    {% endif %}
     <script
       defer
       src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
     ></script>
-    <script>
-      (function(w, d, s, l, i) {
-          w[l] = w[l] || [];
-          w[l].push({
-              'gtm.start': new Date().getTime(),
-              event: 'gtm.js'
-          });
-    </script>
-    <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?c6bde3c13e6fd8fde7357f71b4dd53a7";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-      })();
-    </script>
-
     {% if page.lang == "zh" %}
     <script>
       ((window.gitter = {}).chat = {}).options = {
@@ -82,7 +58,6 @@
       async
       defer
     ></script>
-    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
     {% if page.lang == "zh" %}
@@ -91,23 +66,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     {% endif %}
     <script src="{{ '/assets/js/respond.js' | relative_url }}"></script>
-    <meta
-      property="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no"
-    />
-    <script>
-      (function() {
-        var bp = document.createElement("script");
-        var curProtocol = window.location.protocol.split(":")[0];
-        if (curProtocol === "https") {
-          bp.src = "https://zz.bdstatic.com/linksubmit/push.js";
-        } else {
-          bp.src = "https://push.zhanzhang.baidu.com/push.js";
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-      })();
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
   <body>
@@ -262,7 +221,7 @@
         id="textbox"
         type="text"
         placeholder="Search on Google..."
-        onkeydown="if (event.keyCode == 13 || event.which == 13) { location='http://www.google.com/search?q=' + encodeURIComponent(document.getElementById('textbox').value) + '+site%3Aspacevim.org';}"
+        onkeydown="if (event.keyCode == 13 || event.which == 13) { location='https://www.google.com/search?q=' + encodeURIComponent(document.getElementById('textbox').value) + '+site%3Aspacevim.org';}"
       />
     </p>
     {% else %}
@@ -279,7 +238,7 @@
         id="textbox"
         type="text"
         placeholder="Search on Google..."
-        onkeydown="if (event.keyCode == 13 || event.which == 13) { location='http://www.google.com/search?q=' + encodeURIComponent(document.getElementById('textbox').value) + '+site%3Aspacevim.org';}"
+        onkeydown="if (event.keyCode == 13 || event.which == 13) { location='https://www.google.com/search?q=' + encodeURIComponent(document.getElementById('textbox').value) + '+site%3Aspacevim.org';}"
       />
     </p>
     {% endif %}

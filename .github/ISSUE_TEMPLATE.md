@@ -1,15 +1,31 @@
-<!-- bug reporting without issue template will be closed automatically -->
+<!-- Following this template is mandatory to open an issue. Please use English -->
 
-## Expected behavior, english is required
+## Describe the behavior that you expect from SpaceVim
 
-## The reproduce ways from Vim starting (Required!)
+**[This is a mandatory section]**
 
-## Debug info
+If possible, in addition to the description, please also provide a link to the relevant SpaceVim documentation that describes the expected behaviour/feature.
 
-Please press <kbd>SPC h I</kbd>, debug info will be put into clipboard, then paste all content below.
+## Describe the problem
 
-## Screenshots
+**[This is a mandatory section]**
 
-If you have any screenshots for this issue, please upload here. BTW you can use https://asciinema.org/ for recording video in terminal.
+Please describe the observed problem in simple and clear terms.
 
-<!-- please remove the issue template when request for a feature -->
+## Describe steps to reproduce the problem
+
+**[This is a mandatory section]**
+
+Please list all the steps from the point the Vim session was started until the problem was observed, in simple and clear terms.
+
+## Provide debug information from SpaceVim
+
+**[This is a mandatory section]**
+
+From within SpaceVim, please tap the following in order: `SPC h I` (ie: tap `space`, then tap the `h` key and finally tap the `I` key (uppercase)). This will make SpaceVim print out a lot of debug information and also copy it to the clipboard. Please paste this debug information below in entirety.
+
+## If needed, provide Screenshots and/or Video captures
+
+Ideally, please use asciinema for video captures. See https://asciinema.org/.
+
+<!-- Please do not use this issue template when requesting a feature -->

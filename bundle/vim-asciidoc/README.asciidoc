@@ -1,0 +1,135 @@
+== vim-asciidoc
+
+__Enhanced editing support for http://asciidoc.org[Asciidoc] files in Vim__
+
+=== Dependencies
+
+* https://github.com/dahu/vimple[]
+* https://github.com/dahu/Asif[]
+* https://github.com/Raimondi/VimRegStyle[]
+* (optional) https://github.com/vim-scripts/SyntaxRange[]
+
+=== Compilers
+
+vim-asciidoc provides:
+
+[style="horizontal"]
+`:compiler asciidoc` :: To use the original Python Asciidoc
+`:compiler asciidoctor` :: To use the newer Ruby Asciidoctor
+
+Each compiler provides a `:Theme` command for changing the style-sheet.
+
+.Asciidoc
+
+[style="horizontal"]
+`g:asciidoc_themes` :: The list of installed themes, defaulting to the
+two themes that come with standard asciidoc, _flask_ and _volnitsky_.
+
+`g:asciidoc_theme` :: The name of your preferred default theme,
+defaulting to the asciidoc default blue stylesheet.
+
+.Asciidoctor
+
+`g:asciidoctor_themes_dir` :: The location of your CSS stylesheets
+`g:asciidoctor_theme` :: The name of your preferred default theme,
+defaulting to the asciidoctor default red stylesheet.
+
+==== Live Reload
+
+- The https://wiki.gnome.org/Apps/Web[Epiphany browser] automatically
+refreshes when it detects that the source has been updated. This makes
+for a wonderful previewer when editing asciidoc files. Just run
+`:make` and switch to Epiphany and watch it auto-refresh. 
+- Firefox has the plugin 
+ (https://addons.mozilla.org/fr/firefox/addon/auto-reload[AutoReload]), and
+- Chrome has the plugins
+(https://chrome.google.com/webstore/detail/livepage/pilnojpmdoofaelbinaeodfpjheijkbh[LivePage]
+and
+https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei[LiveReload])
+to the same effect.
+
+=== Headings
+
+The key sequence `<leader>1` will turn the current line into a level 1
+heading using the current heading style as defined in
+`g:asciidoc_title_style` (_setext_, or the default, _atx_). Similar
+mappings exist for heading levels 2-5.
+
+The Vim _section keys_ (`[[ ]] [] ][`) will move you between headings.
+
+==== Heading Styles
+
+By default, vim-asciidoc uses asymmetric _atx_ style headings, like:
+
+....
+== Level 2 Heading
+....
+
+You can force symmetric _atx_ style headings with `let
+g:asciidoc_title_style_atx = "symmetric"` which will result in
+headings like:
+
+....
+== Level 2 Heading ==
+....
+
+_Setext_ style headings are also supported with `let
+g:asciidoc_title_style = "setext"` which results in headings like:
+
+....
+Level 2 Heading
+---------------
+....
+
+=== Lists
+
+.Nested bullet and number lists are supported using the following syntax:
+
+....
+* item
+** sub-item
+*** sub-sub-item
+....
+
+.And numbered lists:
+
+....
+. item
+.. sub-item
+... sub-sub-item
+....
+
+==== List Building Commands
+
+Use the following visual mode list building commands:
+
+[style="horizontal"]
+`lu` :: Create unordered lists
+`lo` :: Create ordered lists
+`l>` :: Increase list depth
+`l<` :: Decrease list depth
+
+=== Reformatting
+
+By default, Vim does the wrong thing by reformatting Asciidoc's block
+delimiters as part of the paragraph. This plugin fixes that problem,
+correctly formatting blocks, lists and normal paragraphs.
+
+Use the `Q` key to reformat the current _block_.
+
+=== Syntax Highlighting
+
+vim-asciidoc merely bundles Stuart Rackham's original asciidoc syntax
+file.
+
+If you have the
+https://github.com/vim-scripts/SyntaxRange[SyntaxRange] plugin
+installed, source blocks within ++[=+-]++ blocks will be highlighted
+according to the named language. Currently only C, Python and VimL are
+highlighted by default. Submit a PR if you want to extend this set, or just
+add your own to ++~/.vim/after/syntax/asciidoc.vim++
+
+=== Snippets
+
+vim-asciidoc provides several convenient snippets in the
+https://github.com/SirVer/ultisnips[UltiSnips] format.
