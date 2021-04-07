@@ -2010,12 +2010,13 @@ name = "tools"
 | Key Bindings | Descriptions                    |
 | ------------ | ------------------------------- |
 | `m a`        | Show list of all bookmarks      |
+| `m c`        | Clear all bookmarks             |
 | `m m`        | Toggle bookmark in current line |
 | `m n`        | Jump to next bookmark           |
 | `m p`        | Jump to previous bookmark       |
 | `m i`        | Annotate bookmark               |
 
-As SpaceVim use above bookmarks mappings, so you cannot use `a`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should work well.
+As SpaceVim use above bookmarks mappings, so you cannot use `a`, `c`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should work well.
 If you really need to use these registers, you can map `<Leader> m` to `m` in your bootstrap function,
 then you can use `a` registers via `<Leader> m a`.
 
