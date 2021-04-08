@@ -64,7 +64,7 @@ spacevim-cn+unsubscribe@googlegroups.com
 
 以下几个频道作为 SpaceVim 中文用户交流平台，之间消息实现了互通，请选择任意合适的频道参与交流。
 也可以在网页右下角点击加入聊天，进群后，请不要发布无意义的内容，在你提问前，
-请务必要阅读[《提问的智慧》](http://doc.zengrong.net/smart-questions/cn.html)。
+请务必要阅读[《提问的智慧》](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)。
 
 - <i class="fab fa-gitter"></i> [`SpaceVim/cn` Gitter 聊天室](https://gitter.im/SpaceVim/cn)
 - <i class="fas fa-comments"></i> [`#spacevim-cn` IRC 聊天室](https://webchat.freenode.net/?channels=spacevim-cn)
