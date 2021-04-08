@@ -57,31 +57,44 @@ endfunction
 
 let s:branch = ''
 let s:branch_info = {}
+" {
+"   branch_name : 'xxx',
+"   last_update : 111111, ms
+" }
+let s:job_pwds = {}
 
-function! s:update_branch_name(pwd) abort
+function! s:update_branch_name(pwd, ...) abort
+  let forces = get(a:000, 0, 0)
   let cmd = 'git rev-parse --abbrev-ref HEAD'
-  call s:JOB.start(cmd,
+  let jobid =  s:JOB.start(cmd,
         \ {
         \ 'on_stdout' : function('s:on_stdout_show_branch'),
         \ 'cwd' : a:pwd,
         \ }
         \ )
+  if jobid > 0
+    call extend(s:job_pwds, {'jobid' . jobid : a:pwd})
+  endif
 endfunction
 function! s:on_stdout_show_branch(id, data, event) abort
   let b = s:STR.trim(join(a:data, ''))
   if !empty(b)
-    let s:branch = b
+    let pwd = get(s:job_pwds, 'jobid' . a:id, '')
+    let s:branch_info[pwd] = {
+          \ 'name' : b,
+          \ 'last_update' : localtime(),
+          \ }
   endif
 endfunction
 function! git#branch#current() abort
   let pwd = getcwd()
-  let branch = get(s:branch_info, pwd, '')
+  let branch = get(s:branch_info, pwd, {})
   if empty(branch)
     call s:update_branch_name(pwd)
   endif
-  return branch
+  return branch.name
 endfunction
 
 function! git#branch#detect() abort
-  call s:update_branch_name(getcwd())
+  call s:update_branch_name(getcwd(), 1)
 endfunction
