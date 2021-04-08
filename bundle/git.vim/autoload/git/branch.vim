@@ -64,16 +64,18 @@ let s:branch_info = {}
 let s:job_pwds = {}
 
 function! s:update_branch_name(pwd, ...) abort
-  let forces = get(a:000, 0, 0)
+  let force = get(a:000, 0, 0)
   let cmd = 'git rev-parse --abbrev-ref HEAD'
-  let jobid =  s:JOB.start(cmd,
-        \ {
-        \ 'on_stdout' : function('s:on_stdout_show_branch'),
-        \ 'cwd' : a:pwd,
-        \ }
-        \ )
-  if jobid > 0
-    call extend(s:job_pwds, {'jobid' . jobid : a:pwd})
+  if force || get(get(s:branch_info, a:pwd, {}), 'last_update', 0) >= localtime() - 1
+    let jobid =  s:JOB.start(cmd,
+          \ {
+          \ 'on_stdout' : function('s:on_stdout_show_branch'),
+          \ 'cwd' : a:pwd,
+          \ }
+          \ )
+    if jobid > 0
+      call extend(s:job_pwds, {'jobid' . jobid : a:pwd})
+    endif
   endif
 endfunction
 function! s:on_stdout_show_branch(id, data, event) abort
