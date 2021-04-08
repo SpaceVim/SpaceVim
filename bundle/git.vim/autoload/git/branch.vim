@@ -94,7 +94,7 @@ function! git#branch#current() abort
   if empty(branch)
     call s:update_branch_name(pwd)
   endif
-  return branch.name
+  return get(branch, 'name', '')
 endfunction
 
 function! git#branch#detect() abort
