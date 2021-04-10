@@ -1169,7 +1169,7 @@ Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommen
 | `SPC c s`    | comment with pretty layout                              |
 | `SPC c t`    | toggle comment to line                                  |
 | `SPC c T`    | comment to line                                         |
-| `SPC c y`    | toggle comment and yank(TODO)                           |
+| `SPC c y`    | toggle comment and yank                                 |
 | `SPC c Y`    | yank and comment                                        |
 | `SPC c $`    | comment current line from cursor to the end of the line |
 

@@ -989,8 +989,8 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 | `SPC x J`     | 将当前行向下移动一行并进入临时快捷键状态                           |
 | `SPC x K`     | 将当前行向上移动一行并进入临时快捷键状态                           |
 | `SPC x l d`   | 重复当前行或区域                                                   |
-| `SPC x l s`   | 排序多行文档 (忽略大小写)                                                  |
-| `SPC x l S`   | 排序多行文档 (大小写敏感)                                                  |
+| `SPC x l s`   | 排序多行文档 (忽略大小写)                                          |
+| `SPC x l S`   | 排序多行文档 (大小写敏感)                                          |
 | `SPC x l u`   | 去除重复的行 (忽略大小写)                                          |
 | `SPC x l U`   | 去除重复的行 (大小写敏感)                                          |
 | `SPC x o`     | use avy to select a link in the frame and open it (TODO)           |
@@ -1078,21 +1078,21 @@ echo "selected text" | curl -s -F "content=<-" http://dpaste.com/api/v2/
 注释的增删是通过插件 [nerdcommenter](https://github.com/preservim/nerdcommenter) 来实现的，
 以下为注释相关的常用快捷键：
 
-| 快捷键    | 功能描述                  |
-| --------- | ------------------------- |
-| `SPC ;`   | 进入注释操作模式          |
-| `SPC c h` | 隐藏/显示注释             |
-| `SPC c l` | 注释/反注释当前行         |
-| `SPC c L` | 注释行                    |
-| `SPC c u` | 反注释行                  |
-| `SPC c p` | 注释/反注释段落           |
-| `SPC c P` | 注释段落                  |
-| `SPC c s` | 使用完美格式注释          |
-| `SPC c t` | 注释/反注释到行           |
-| `SPC c T` | 注释到行                  |
-| `SPC c y` | 注释/反注释同时复制(TODO) |
-| `SPC c Y` | 复制到未命名寄存器后注释  |
-| `SPC c $` | 从光标位置开始注释当前行  |
+| 快捷键    | 功能描述                 |
+| --------- | ------------------------ |
+| `SPC ;`   | 进入注释操作模式         |
+| `SPC c h` | 隐藏/显示注释            |
+| `SPC c l` | 注释/反注释当前行        |
+| `SPC c L` | 注释行                   |
+| `SPC c u` | 反注释行                 |
+| `SPC c p` | 注释/反注释段落          |
+| `SPC c P` | 注释段落                 |
+| `SPC c s` | 使用完美格式注释         |
+| `SPC c t` | 注释/反注释到行          |
+| `SPC c T` | 注释到行                 |
+| `SPC c y` | 注释/反注释同时复制      |
+| `SPC c Y` | 复制到未命名寄存器后注释 |
+| `SPC c $` | 从光标位置开始注释当前行 |
 
 小提示：
 
