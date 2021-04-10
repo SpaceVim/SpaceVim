@@ -158,6 +158,9 @@ function! SpaceVim#layers#edit#config() abort
         \ . string(s:_function('s:join_string_with')) . ', [])',
         \ 'join-string-with', 1)
 
+  " word
+  let g:_spacevim_mappings_space.x.l = {'name' : '+Line'}
+
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
   let g:_spacevim_mappings_space.i.p = {'name' : '+Passwords'}
