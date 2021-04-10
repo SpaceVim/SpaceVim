@@ -599,8 +599,12 @@ function! s:insert_simple_password() abort
   let @k = save_register
 endfunction
 
-function! s:duplicate_lines(is_visual) abort
-  
+function! s:duplicate_lines(visual) abort
+  if a:visual
+    call setline('.', getline("'<"))
+  else
+    call setline('.', getline(line('.') - 1))
+  endif
 endfunction
 
 function! s:insert_stronger_password() abort
