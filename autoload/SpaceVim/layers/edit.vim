@@ -619,8 +619,8 @@ function! s:uniquify_lines(visual, ignorecase) abort
     let end_line = line("'>")
     let rst = []
     for l in range(start_line, end_line)
-      if index(rst, getline(l)) ==# -1
-        call add(rst, getline(l), 0, a:ignorecase)
+      if index(rst, getline(l), 0, a:ignorecase) ==# -1
+        call add(rst, getline(l))
       endif
     endfor
     call s:BUFFER.buf_set_lines(bufnr('.'), start_line-1 , end_line, 0, rst)
