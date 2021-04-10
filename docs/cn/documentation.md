@@ -989,7 +989,8 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 | `SPC x J`     | 将当前行向下移动一行并进入临时快捷键状态                           |
 | `SPC x K`     | 将当前行向上移动一行并进入临时快捷键状态                           |
 | `SPC x l d`   | 重复当前行或区域                                                   |
-| `SPC x l s`   | sort lines (TODO)                                                  |
+| `SPC x l s`   | 排序多行文档 (忽略大小写)                                                  |
+| `SPC x l S`   | 排序多行文档 (大小写敏感)                                                  |
 | `SPC x l u`   | 去除重复的行 (忽略大小写)                                          |
 | `SPC x l U`   | 去除重复的行 (大小写敏感)                                          |
 | `SPC x o`     | use avy to select a link in the frame and open it (TODO)           |
