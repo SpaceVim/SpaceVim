@@ -288,7 +288,6 @@ You can also use the url of the repository, for example:
     merged = false
 ```
 
-
 `on_cmd` option means this plugin will be loaded only when the following commands are called.
 
 `merged` option is used for merging plugins directory. When `merged` is `true`, all files in
@@ -1062,9 +1061,10 @@ Text related commands (start with `x`):
 | `SPC x j r`   | set the justification to right                                     |
 | `SPC x J`     | move down a line of text (enter transient state)                   |
 | `SPC x K`     | move up a line of text (enter transient state)                     |
-| `SPC x l d`   | duplicate line or region                                    |
+| `SPC x l d`   | duplicate line or region                                           |
 | `SPC x l s`   | sort lines (TODO)                                                  |
-| `SPC x l u`   | uniquify lines (TODO)                                              |
+| `SPC x l u`   | uniquify lines (ignorecase)                                        |
+| `SPC x l U`   | uniquify lines (case-senstive)                                     |
 | `SPC x o`     | use avy to select a link in the frame and open it (TODO)           |
 | `SPC x O`     | use avy to select multiple links in the frame and open them (TODO) |
 | `SPC x t c`   | swap (transpose) the current character with the previous one       |
@@ -2076,7 +2076,7 @@ The task's properties have the following semantic:
 - **isBackground**: `true` or `false`, specifies whether background running is required,
   by default, it is `false`.
 - **description**: short description of the task
-- **problemMatcher**: problems matcher of the task 
+- **problemMatcher**: problems matcher of the task
 
 When start a new task, it will kill the previous task. If you want to keep the task
 run in background, set `isBackground` to `true`.
@@ -2114,7 +2114,7 @@ So you will have the following values for each variable:
 
 #### Task Problems Matcher
 
-Problem matcher is used to capture the message in the task output 
+Problem matcher is used to capture the message in the task output
 and show a corresponding problem in quickfix windows.
 
 `problemMatcher` supports `errorformat` and `pattern` property.

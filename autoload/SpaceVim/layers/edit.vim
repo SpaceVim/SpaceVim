@@ -172,9 +172,9 @@ function! SpaceVim#layers#edit#config() abort
   nnoremap <silent> <Plug>UniquifyCaseSenstiveLines :call <SID>uniquify_lines(0, 0)<Cr>
   vnoremap <silent> <Plug>UniquifyCaseSenstiveLines :call <SID>uniquify_lines(1, 0)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'u'], '<Plug>UniquifyIgnoreCaseLines',
-        \ 'uniquify lines (ignorecase)', 0, 1)
+        \ 'uniquify-lines (ignorecase)', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'U'], '<Plug>UniquifyCaseSenstiveLines',
-        \ 'uniquify lines (case-senstive)', 0, 1)
+        \ 'uniquify-lines (case-senstive)', 0, 1)
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
