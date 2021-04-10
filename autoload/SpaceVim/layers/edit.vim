@@ -160,8 +160,10 @@ function! SpaceVim#layers#edit#config() abort
 
   " line
   let g:_spacevim_mappings_space.x.l = {'name' : '+Line'}
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'l', 'd'], 'call call('
-        \ . string(s:_function('s:duplicate_line_or_region')) . ', [])',
+  nnoremap <silent> <Plug>DuplicateLines :call <SID>duplicate_lines(0)<Cr>
+  vnoremap <silent> <Plug>DuplicateLines :call <SID>duplicate_lines(1)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'd'], 'call call('
+        \ . string(s:_function('s:duplicate_lines')) . ', [])',
         \ 'duplicate-line-or-region', 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 's'] , 'sort i'  , 'sort lines (ignorecase)'                    , 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'S'] , 'sort'    , 'sort lines (case-sensitive)'                , 1)
@@ -597,7 +599,7 @@ function! s:insert_simple_password() abort
   let @k = save_register
 endfunction
 
-function! s:duplicate_line_or_region() abort
+function! s:duplicate_lines(is_visual) abort
   
 endfunction
 
