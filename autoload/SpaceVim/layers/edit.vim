@@ -162,9 +162,8 @@ function! SpaceVim#layers#edit#config() abort
   let g:_spacevim_mappings_space.x.l = {'name' : '+Line'}
   nnoremap <silent> <Plug>DuplicateLines :call <SID>duplicate_lines(0)<Cr>
   vnoremap <silent> <Plug>DuplicateLines :call <SID>duplicate_lines(1)<Cr>
-  call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'd'], 'call call('
-        \ . string(s:_function('s:duplicate_lines')) . ', [])',
-        \ 'duplicate-line-or-region', 1)
+  call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'd'], '<Plug>DuplicateLines',
+        \ 'duplicate-line-or-region', 0, 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 's'] , 'sort i'  , 'sort lines (ignorecase)'                    , 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'S'] , 'sort'    , 'sort lines (case-sensitive)'                , 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'u'] , 'sort ui' , 'uniquify lines (ignorecase)'         , 1)
