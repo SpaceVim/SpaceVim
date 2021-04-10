@@ -608,7 +608,7 @@ endfunction
 function! s:duplicate_lines(visual) abort
   if a:visual
     call setline('.', getline("'<"))
-  else
+  elseif line('.') > 1
     call setline('.', getline(line('.') - 1))
   endif
 endfunction
