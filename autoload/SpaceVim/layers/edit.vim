@@ -158,8 +158,15 @@ function! SpaceVim#layers#edit#config() abort
         \ . string(s:_function('s:join_string_with')) . ', [])',
         \ 'join-string-with', 1)
 
-  " word
+  " line
   let g:_spacevim_mappings_space.x.l = {'name' : '+Line'}
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'l', 'd'], 'call call('
+        \ . string(s:_function('s:duplicate_line_or_region')) . ', [])',
+        \ 'duplicate-line-or-region', 1)
+  call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 's'] , 'sort i'  , 'sort lines (ignorecase)'                    , 1)
+  call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'S'] , 'sort'    , 'sort lines (case-sensitive)'                , 1)
+  call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'u'] , 'sort ui' , 'uniquify lines (ignorecase)'         , 1)
+  call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'U'] , 'sort u'  , 'uniquify lines (case-senstive)'      , 1)
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
@@ -589,6 +596,11 @@ function! s:insert_simple_password() abort
   normal! "kPl
   let @k = save_register
 endfunction
+
+function! s:duplicate_line_or_region() abort
+  
+endfunction
+
 function! s:insert_stronger_password() abort
   let save_register = @k
   let @k = s:PASSWORD.generate_strong(v:count ? v:count : 12)
