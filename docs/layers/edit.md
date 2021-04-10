@@ -65,6 +65,7 @@ This layer provides many edit key bindings for SpaceVim, and also provides more 
 | `SPC x j l`  | set the justification to left        |
 | `SPC x j n`  | set the justification to none (TODO) |
 | `SPC x j r`  | set the justification to right       |
+| `SPC x l d`   | duplicate line or region                                    |
 | `SPC x u`    | set the selected text to lower case  |
 | `SPC x U`    | set the selected text to upper case  |
 | `SPC x w c`  | count the words in the select region |
