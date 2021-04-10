@@ -534,7 +534,7 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | `SPC t a`    | toggle autocomplete (only available with `autocomplete_method = deoplete`) |
 | `SPC t f`    | display the fill column (by default `max_column` is 120)                   |
 | `SPC t h h`  | toggle highlight of the current line                                       |
-| `SPC t h i`  | toggle highlight indentation levels (TODO)                                 |
+| `SPC t h i`  | toggle highlight indentation levels                                        |
 | `SPC t h c`  | toggle highlight indentation current column                                |
 | `SPC t h s`  | toggle syntax highlighting                                                 |
 | `SPC t i`    | toggle indentation guide at point                                          |
