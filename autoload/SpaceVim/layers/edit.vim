@@ -13,6 +13,7 @@ let s:NUMBER = SpaceVim#api#import('data#number')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
@@ -613,7 +614,21 @@ function! s:duplicate_lines(visual) abort
 endfunction
 
 function! s:uniquify_lines(visual, ignorecase) abort
-  
+  if a:visual
+    let start_line = line("'<")
+    let end_line = line("'>")
+    let rst = []
+    for l in range(start_line, end_line)
+      if index(rst, getline(l)) ==# -1
+        call add(rst, getline(l))
+      endif
+    endfor
+    call s:BUFFER.buf_set_lines(bufnr('.'), start_line , end_line, 0, rst)
+  else
+    if line('.') > 1 && getline('.') ==# getline(line('.') - 1)
+      normal! dd
+    endif
+  endif
 endfunction
 
 function! s:insert_stronger_password() abort
