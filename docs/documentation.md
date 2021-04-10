@@ -1312,8 +1312,8 @@ Windows manipulation commands (start with `w`):
 | `SPC w R`             | rotate windows backward                                                                                       |
 | `SPC w s` / `SPC w -` | horizontal split                                                                                              |
 | `SPC w S`             | horizontal split and focus new window                                                                         |
-| `SPC w u`             | undo window layout (used to effectively undo a closed window) (TODO)                                          |
-| `SPC w U`             | redo window layout (TODO)                                                                                     |
+| `SPC w u`             | undo window layout                                                                                            |
+| `SPC w U`             | redo window layout                                                                                            |
 | `SPC w v` / `SPC w /` | vertical split                                                                                                |
 | `SPC w V`             | vertical split and focus new window                                                                           |
 | `SPC w w`             | cycle and focus between windows                                                                               |
