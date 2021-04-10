@@ -13,6 +13,7 @@ let s:NUMBER = SpaceVim#api#import('data#number')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
@@ -157,6 +158,23 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 's', 'j'], 'call call('
         \ . string(s:_function('s:join_string_with')) . ', [])',
         \ 'join-string-with', 1)
+
+  " line
+  let g:_spacevim_mappings_space.x.l = {'name' : '+Line'}
+  nnoremap <silent> <Plug>DuplicateLines :call <SID>duplicate_lines(0)<Cr>
+  vnoremap <silent> <Plug>DuplicateLines :call <SID>duplicate_lines(1)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'd'], '<Plug>DuplicateLines',
+        \ 'duplicate-line-or-region', 0, 1)
+  call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 's'] , 'sort i'  , 'sort lines (ignorecase)'                    , 1)
+  call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'S'] , 'sort'    , 'sort lines (case-sensitive)'                , 1)
+  nnoremap <silent> <Plug>UniquifyIgnoreCaseLines :call <SID>uniquify_lines(0, 1)<Cr>
+  vnoremap <silent> <Plug>UniquifyIgnoreCaseLines :call <SID>uniquify_lines(1, 1)<Cr>
+  nnoremap <silent> <Plug>UniquifyCaseSenstiveLines :call <SID>uniquify_lines(0, 0)<Cr>
+  vnoremap <silent> <Plug>UniquifyCaseSenstiveLines :call <SID>uniquify_lines(1, 0)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'u'], '<Plug>UniquifyIgnoreCaseLines',
+        \ 'uniquify-lines (ignorecase)', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'U'], '<Plug>UniquifyCaseSenstiveLines',
+        \ 'uniquify-lines (case-senstive)', 0, 1)
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
@@ -586,6 +604,33 @@ function! s:insert_simple_password() abort
   normal! "kPl
   let @k = save_register
 endfunction
+
+function! s:duplicate_lines(visual) abort
+  if a:visual
+    call setline('.', getline("'<"))
+  else
+    call setline('.', getline(line('.') - 1))
+  endif
+endfunction
+
+function! s:uniquify_lines(visual, ignorecase) abort
+  if a:visual
+    let start_line = line("'<")
+    let end_line = line("'>")
+    let rst = []
+    for l in range(start_line, end_line)
+      if index(rst, getline(l)) ==# -1
+        call add(rst, getline(l))
+      endif
+    endfor
+    call s:BUFFER.buf_set_lines(bufnr('.'), start_line-1 , end_line, 0, rst)
+  else
+    if line('.') > 1 && getline('.') ==# getline(line('.') - 1)
+      normal! dd
+    endif
+  endif
+endfunction
+
 function! s:insert_stronger_password() abort
   let save_register = @k
   let @k = s:PASSWORD.generate_strong(v:count ? v:count : 12)
