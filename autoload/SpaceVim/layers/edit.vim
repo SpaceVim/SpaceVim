@@ -623,7 +623,7 @@ function! s:uniquify_lines(visual, ignorecase) abort
         call add(rst, getline(l))
       endif
     endfor
-    call s:BUFFER.buf_set_lines(bufnr('.'), start_line , end_line, 0, rst)
+    call s:BUFFER.buf_set_lines(bufnr('.'), start_line-1 , end_line, 0, rst)
   else
     if line('.') > 1 && getline('.') ==# getline(line('.') - 1)
       normal! dd
