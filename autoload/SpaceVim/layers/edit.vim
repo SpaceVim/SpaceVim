@@ -166,8 +166,14 @@ function! SpaceVim#layers#edit#config() abort
         \ 'duplicate-line-or-region', 0, 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 's'] , 'sort i'  , 'sort lines (ignorecase)'                    , 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'S'] , 'sort'    , 'sort lines (case-sensitive)'                , 1)
-  call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'u'] , 'sort ui' , 'uniquify lines (ignorecase)'         , 1)
-  call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'U'] , 'sort u'  , 'uniquify lines (case-senstive)'      , 1)
+  nnoremap <silent> <Plug>UniquifyIgnoreCaseLines :call <SID>uniquify_lines(0, 1)<Cr>
+  vnoremap <silent> <Plug>UniquifyIgnoreCaseLines :call <SID>uniquify_lines(1, 1)<Cr>
+  nnoremap <silent> <Plug>UniquifyCaseSenstiveLines :call <SID>uniquify_lines(0, 0)<Cr>
+  vnoremap <silent> <Plug>UniquifyCaseSenstiveLines :call <SID>uniquify_lines(1, 0)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'u'], '<Plug>UniquifyIgnoreCaseLines',
+        \ 'uniquify lines (ignorecase)', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'U'], '<Plug>UniquifyCaseSenstiveLines',
+        \ 'uniquify lines (case-senstive)', 0, 1)
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
@@ -604,6 +610,10 @@ function! s:duplicate_lines(visual) abort
   else
     call setline('.', getline(line('.') - 1))
   endif
+endfunction
+
+function! s:uniquify_lines(visual, ignorecase) abort
+  
 endfunction
 
 function! s:insert_stronger_password() abort
