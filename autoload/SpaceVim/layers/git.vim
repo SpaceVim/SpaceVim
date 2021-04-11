@@ -7,9 +7,27 @@
 "=============================================================================
 
 
-" Layer Options:
-" s:git_plugin which plugin is used as the background plugin in git layer
+""
+" @section git, layer-git
+" @parentsection layers
+" `git` layer provides git integration for SpaceVim.
+"
+" @subsection Layer options
+"
+" `git_plugin`: Set the background plugin used in `git` layer. The default
+" value is `git`, the following plugins are supported: `gina`, `fugitive` and
+" `gita`.
+" >
+"   [[layers]]
+"     name = 'git'
+"     git_plugin = 'git'
+" <
+"
 
+
+if exists('s:git_plugin')
+  finish
+endif
 
 let s:git_plugin = 'git'
 
@@ -116,8 +134,10 @@ endfunction
 function! SpaceVim#layers#git#set_variable(var) abort
 
   let s:git_plugin = get(a:var,
+        \ 'git_plugin',
+        \ get(a:var,
         \ 'git-plugin',
-        \ s:git_plugin)
+        \ s:git_plugin))
 
 endfunction
 
