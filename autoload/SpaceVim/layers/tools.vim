@@ -6,6 +6,10 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:CMP')
+  finish
+endif
+
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#layers#tools#plugins() abort
