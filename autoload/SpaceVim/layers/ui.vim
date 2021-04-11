@@ -121,7 +121,7 @@ function! SpaceVim#layers#ui#config() abort
         \ . string(s:_function('s:toggle_syntax_hi')) . ', [])',
         \ 'toggle-syntax-highlighting', 1)
 
-  call SpaceVim#mapping#space#def('nnoremap', ['T', 'F'], '<F11>',
+  call SpaceVim#mapping#space#def('nmap', ['T', 'F'], '<F11>',
         \ 'fullscreen-frame', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['T', 'm'], 'call call('
         \ . string(s:_function('s:toggle_menu_bar')) . ', [])',
