@@ -205,7 +205,7 @@ function! SpaceVim#mapping#close_current_buffer(...) abort
       exe cmd_close_buf . bn
     endif
   else
-    if len(buffers) > 1
+    if len(buffers) >= 1
       exe 'bp'
       exe cmd_close_buf . bn
     else
