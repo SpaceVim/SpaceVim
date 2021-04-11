@@ -134,8 +134,10 @@ endfunction
 function! SpaceVim#layers#git#set_variable(var) abort
 
   let s:git_plugin = get(a:var,
+        \ 'git_plugin',
+        \ get(a:var,
         \ 'git-plugin',
-        \ s:git_plugin)
+        \ s:git_plugin))
 
 endfunction
 
