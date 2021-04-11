@@ -625,8 +625,16 @@ function! s:uniquify_lines(visual, ignorecase) abort
     endfor
     call s:BUFFER.buf_set_lines(bufnr('.'), start_line-1 , end_line, 0, rst)
   else
-    if line('.') > 1 && getline('.') ==# getline(line('.') - 1)
-      normal! dd
+    if line('.') > 1
+      if a:ignorecase
+        if getline('.') ==? getline(line('.') - 1)
+          normal! dd
+        endif
+      else
+        if getline('.') ==# getline(line('.') - 1)
+          normal! dd
+        endif
+      endif
     endif
   endif
 endfunction
