@@ -29,7 +29,15 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ## Layer options
 
-- `git-plugin`: default value is `gina` (or `gita` on older vim versions), available values include: `gina`, `fugitive`, `gita`
+- `git_plugin`: default value is `git`, available values include: `gina`, `fugitive`, `gita`, `git`.
+
+if you want to use `fugitive` instead:
+
+```toml
+[[layers]]
+  name = "git"
+  git_plugin = 'fugitive'
+```
 
 ## Key bindings
 
