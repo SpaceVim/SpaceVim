@@ -101,6 +101,8 @@ else
 endif
 " }}}
 
+let s:format_on_save = 0
+
 " Load the APIs{{{
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:CPT = SpaceVim#api#import('vim#compatible')
@@ -200,6 +202,26 @@ function! SpaceVim#layers#lang#c#config() abort
   else
     let s:highlight_cmd = 'ClighterEnable'
   endif
+
+  " Format on save
+  if s:format_on_save
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'c',
+          \ 'enable' : 1,
+          \ })
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'cpp',
+          \ 'enable' : 1,
+          \ })
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'objc',
+          \ 'enable' : 1,
+          \ })
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'objcpp',
+          \ 'enable' : 1,
+          \ })
+  endif
 endfunction
 " }}}
 
@@ -245,6 +267,10 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
   let s:clang_flag = get(a:var, 'clang_flag', s:clang_flag)
 
   let s:enable_clang_syntax = get(a:var, 'enable_clang_syntax_highlight', s:enable_clang_syntax)
+
+  let s:format_on_save = get(a:var,
+        \ 'format_on_save',
+        \ s:format_on_save)
 
   call extend(s:clang_std, get(a:var, 'clang_std', {}))
 endfunction
