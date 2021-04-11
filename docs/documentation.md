@@ -1074,8 +1074,9 @@ Text related commands (start with `x`):
 | `SPC x t W`   | swap (transpose) the current word with the next one                |
 | `SPC x t l`   | swap (transpose) the current line with the previous one            |
 | `SPC x t L`   | swap (transpose) the current line with the next one                |
-| `SPC x u`     | set the selected text to lower case                                |
-| `SPC x U`     | set the selected text to upper case                                |
+| `SPC x u`     | lowercase text                                                     |
+| `SPC x U`     | uppercase text                                                     |
+| `SPC x ~`     | toggle case text                                                   |
 | `SPC x w c`   | count the words in the select region                               |
 | `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)              |
 | `SPC x <Tab>` | indent or dedent a region rigidly (TODO)                           |
