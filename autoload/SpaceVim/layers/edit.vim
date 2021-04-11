@@ -148,8 +148,15 @@ function! SpaceVim#layers#edit#config() abort
         \ . string(s:_function('s:set_justification_to')) . ', ["right"])',
         \ 'set-the-justification-to-right', 1)
 
-  call SpaceVim#mapping#space#def('vnoremap', ['x', 'u'], 'gu', 'set the selected text to lower case', 0)
-  call SpaceVim#mapping#space#def('vnoremap', ['x', 'U'], 'gU', 'set the selected text to up case', 0)
+  nnoremap <silent> <Plug>Lowercase  :call <SID>toggle_case(0, -1)<Cr>
+  vnoremap <silent> <Plug>Lowercase  :call <SID>toggle_case(1, -1)<Cr>
+  nnoremap <silent> <Plug>Uppercase  :call <SID>toggle_case(0, 1)<Cr>
+  vnoremap <silent> <Plug>Uppercase  :call <SID>toggle_case(1, 1)<Cr>
+  nnoremap <silent> <Plug>ToggleCase :call <SID>toggle_case(0, 0)<Cr>
+  vnoremap <silent> <Plug>ToggleCase :call <SID>toggle_case(1, 0)<Cr>
+  call SpaceVim#mapping#space#def('nmap' , ['x' , 'u'] , '<Plug>Lowercase'  , 'lowercase-text'   , 0, 1)
+  call SpaceVim#mapping#space#def('nmap' , ['x' , 'U'] , '<Plug>Uppercase'  , 'uppercase-text'   , 0, 1)
+  call SpaceVim#mapping#space#def('nmap' , ['x' , '~'] , '<Plug>ToggleCase' , 'toggle-case-text' , 0, 1)
 
   " word
   let g:_spacevim_mappings_space.x.w = {'name' : '+Word'}
@@ -627,6 +634,26 @@ function! s:uniquify_lines(visual, ignorecase) abort
   else
     if line('.') > 1 && getline('.') ==# getline(line('.') - 1)
       normal! dd
+    endif
+  endif
+endfunction
+
+function! s:toggle_case(visual, uppercase) abort
+  if a:visual
+    if a:uppercase == 1
+      normal! gvgU
+    elseif a:uppercase == -1
+      normal! gvgu
+    elseif a:uppercase == 0
+      normal! gv~
+    endif
+  else
+    if a:uppercase == 1
+      normal! gUl
+    elseif a:uppercase == -1
+      normal! gul
+    elseif a:uppercase == 0
+      normal! ~
     endif
   endif
 endfunction
