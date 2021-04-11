@@ -2006,25 +2006,26 @@ Bookmarks manager is included in `tools` layer, to use following key bindings, y
 
 ```toml
 [[layers]]
-name = "tools"
+    name = "tools"
 ```
 
-| Key Bindings | Descriptions                    |
-| ------------ | ------------------------------- |
-| `m a`        | Show list of all bookmarks      |
-| `m c`        | Clear all bookmarks             |
-| `m m`        | Toggle bookmark in current line |
-| `m n`        | Jump to next bookmark           |
-| `m p`        | Jump to previous bookmark       |
-| `m i`        | Annotate bookmark               |
+| Key Bindings | Descriptions                         |
+| ------------ | ------------------------------------ |
+| `m a`        | Show list of all bookmarks           |
+| `m c`        | Removes bookmarks for current buffer |
+| `m m`        | Toggle bookmark in current line      |
+| `m n`        | Jump to next bookmark                |
+| `m p`        | Jump to previous bookmark            |
+| `m i`        | Annotate bookmark                    |
 
-As SpaceVim use above bookmarks mappings, so you cannot use `a`, `c`, `m`, `n`, `p` or `i` registers to mark current position, but other registers should work well.
-If you really need to use these registers, you can map `<Leader> m` to `m` in your bootstrap function,
-then you can use `a` registers via `<Leader> m a`.
+As SpaceVim use above bookmarks mappings, so you cannot use `a`, `c`, `m`, `n`,
+`p` or `i` registers to mark current position, but other registers should work well.
+If you really need to use these registers, you can map `<Leader> m` to `m`
+in your bootstrap function, then you can use `a` registers via `<Leader> m a`.
 
 ```viml
 function! myspacevim#before() abort
-nnoremap <silent><Leader>m m
+    nnoremap <silent><Leader>m m
 endfunction
 ```
 
