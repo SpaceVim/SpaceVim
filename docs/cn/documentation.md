@@ -1001,8 +1001,9 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 | `SPC x t W`   | 交换当前单词和后一个单词的位置                                     |
 | `SPC x t l`   | 交换当前行和前一行的位置                                           |
 | `SPC x t L`   | 交换当前行和后一行的位置                                           |
-| `SPC x u`     | 将选中字符串转为小写                                               |
-| `SPC x U`     | 将选中字符串转为大写                                               |
+| `SPC x u`     | 将字符转为小写                                                     |
+| `SPC x U`     | 将字符转为大写                                                     |
+| `SPC x ~`     | 切换字符的大小写                                                   |
 | `SPC x w c`   | 统计选中区域的单词数                                               |
 | `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)              |
 | `SPC x <Tab>` | indent or dedent a region rigidly (TODO)                           |
