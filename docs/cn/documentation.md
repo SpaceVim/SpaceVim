@@ -1212,6 +1212,7 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 | `SPC w C`     | 选择某一个窗口，并且进入阅读模式 (需要 tools 模块) |
 | `SPC w d`     | 删除一个窗口                                       |
 | `SPC w D`     | 选择一个窗口并关闭                                 |
+| `SPC w f`     | 切换同步滚屏                                       |
 | `SPC w F`     | 新建一个新的标签页                                 |
 | `SPC w h`     | 移至左边窗口                                       |
 | `SPC w H`     | 将窗口向左移动                                     |

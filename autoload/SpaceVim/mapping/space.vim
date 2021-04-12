@@ -79,6 +79,16 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'], 'setlocal scrollbind!',
+        \ ['toggle-follow-mode',
+        \ [
+        \ '[SPC w f] is to toggle follow mode',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'], 'ChooseWin | close | wincmd w',
         \ ['delete-window-(other-windows)',
         \ [
@@ -89,27 +99,27 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'], 'tabnew',
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'tabnew',
         \ ['create-new-tab',
         \ [
-        \ '[SPC w f] is to create new tab',
+        \ '[SPC w F] is to create new tab',
         \ '',
         \ 'Definition: ' . s:file . ':' . s:lnum,
         \ ]
         \ ]
         \ , 1)
-  let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'call call('
-        \ . string(function('s:create_new_named_tab'))
-        \ . ', [])',
-        \ ['create-new-named-tab',
-        \ [
-        \ '[SPC w F] is to create new named tab',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+"  let s:lnum = expand('<slnum>') + s:funcbeginline
+"  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'call call('
+"        \ . string(function('s:create_new_named_tab'))
+"        \ . ', [])',
+"        \ ['create-new-named-tab',
+"        \ [
+"        \ '[SPC w F] is to create new named tab',
+"        \ '',
+"        \ 'Definition: ' . s:file . ':' . s:lnum,
+"        \ ]
+"        \ ]
+"        \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'], 'wincmd h',
         \ ['window-left',

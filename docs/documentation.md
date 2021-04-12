@@ -1294,8 +1294,8 @@ Windows manipulation commands (start with `w`):
 | `SPC w D`             | delete another window using vim-choosewin                                                                     |
 | `SPC u SPC w D`       | delete another window and its current buffer using vim-choosewin (TODO)                                       |
 | `SPC w t`             | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)                                 |
-| `SPC w f`             | toggle follow mode (TODO)                                                                                     |
-| `SPC w F`             | create new tab(frame)                                                                                         |
+| `SPC w f`             | toggle follow mode                                                                                            |
+| `SPC w F`             | create new tab                                                                                                |
 | `SPC w h`             | move to window on the left                                                                                    |
 | `SPC w H`             | move window to the left                                                                                       |
 | `SPC w j`             | move to window below                                                                                          |
