@@ -79,7 +79,7 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'], 'setlocal scrollbind',
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'], 'setlocal scrollbind!',
         \ ['toggle-follow-mode',
         \ [
         \ '[SPC w f] is to toggle follow mode',
