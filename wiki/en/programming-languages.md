@@ -29,6 +29,7 @@ This is a list of programming languages supported in SpaceVim:
 | Dart              | [lang#dart](https://spacevim.org/layers/lang/dart/)                 |                                                                                                               |
 | DOS batch         | [lang#batch](https://spacevim.org/layers/lang/batch/)               |                                                                                                               |
 | Elixir            | [lang#elixir](https://spacevim.org/layers/lang/elixir/)             |                                                                                                               |
+| Eiffel            | [lang#eiffel](https://spacevim.org/layers/lang/eiffel/)             |
 | Elm               | [lang#elm](https://spacevim.org/layers/lang/elm/)                   |                                                                                                               |
 | erlang            | [lang#erlang](https://spacevim.org/layers/lang/erlang/)             |                                                                                                               |
 | F#                | [lang#fsharp](https://spacevim.org/layers/lang/fsharp/)             |                                                                                                               |
@@ -153,7 +154,6 @@ Before adding these languages, we need to know:
 | E                             |           |        |
 | ECMAScript                    |           |        |
 | EGL                           |           |        |
-| Eiffel                        |           |        |
 | Emacs Lisp                    |           |        |
 | Etoys                         |           |        |
 | Euphoria                      |           |        |
