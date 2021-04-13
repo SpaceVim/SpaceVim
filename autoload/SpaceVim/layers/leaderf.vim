@@ -16,7 +16,7 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#layers#leaderf#loadable() abort
 
-  return s:CMP.has('python') || s:CMP.has('python3')
+  return s:CMP.has('python3') || s:CMP.has('python')
 
 endfunction
 

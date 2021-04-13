@@ -75,7 +75,7 @@ function! SpaceVim#layers#edit#config() abort
   " }}}
 
 
-  if s:CMP.has('python') || s:CMP.has('python3')
+  if s:CMP.has('python3') || s:CMP.has('python')
     nnoremap <silent> <F7> :MundoToggle<CR>
   else
     nnoremap <silent> <F7> :UndotreeToggle<CR>
