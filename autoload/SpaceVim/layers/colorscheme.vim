@@ -99,7 +99,6 @@ function! SpaceVim#layers#colorscheme#config() abort
               \ ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'frequency', ''), 0)
           let id = s:NUMBER.random(0, len(s:random_candidates))
           let g:spacevim_colorscheme = s:random_candidates[id]
-          echom len(s:random_candidates)
           call s:update_conf()
         else
           let g:spacevim_colorscheme = conf.theme
