@@ -9,6 +9,7 @@ description: "This layer is for smalltalk development, includes syntax highlight
 
 - [Description](#description)
 - [Install](#install)
+- [Features](#features)
 
 <!-- vim-markdown-toc -->
 
@@ -24,4 +25,8 @@ To use this configuration layer, update custom configuration file with:
 [[layers]]
   name = "lang#smalltalk"
 ```
+
+## Features
+
+- syntax highlighting for `.st` file
 
