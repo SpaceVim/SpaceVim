@@ -286,6 +286,11 @@ function! s:DefxPasteFile(_) abort
     let destination = path . s:FILE.separator . fnamemodify(s:copyed_file_path, ':t')
     let cmd = 'cmd /c copy ' . shellescape(s:copyed_file_path) . ' ' . shellescape(destination)
     call s:VCOP.systemlist(cmd)
+  elseif !s:SYS.isWindows && !empty(s:copyed_file_path)
+    " in Linux or MacOS, use cp command for paste file.
+    let destination = path . s:FILE.separator . fnamemodify(s:copyed_file_path, ':t')
+    let cmd = 'cp ' . shellescape(s:copyed_file_path) . ' ' . shellescape(destination)
+    call s:VCOP.systemlist(cmd)
   endif
   if v:shell_error
     echohl WarningMsg
