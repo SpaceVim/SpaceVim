@@ -9,11 +9,11 @@
 
 function! SpaceVim#layers#lang#smalltalk#plugins() abort
   let plugins = []
-  
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/smalltalk', {'merged' : 0}])
   return plugins
 endfunction
 
 
 function! SpaceVim#layers#lang#smalltalk#config() abort
-  
+
 endfunction
