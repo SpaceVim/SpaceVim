@@ -33,7 +33,7 @@ This is a list of programming languages supported in SpaceVim:
 | Elm               | [lang#elm](https://spacevim.org/layers/lang/elm/)                   |                                                                                                               |
 | erlang            | [lang#erlang](https://spacevim.org/layers/lang/erlang/)             |                                                                                                               |
 | F#                | [lang#fsharp](https://spacevim.org/layers/lang/fsharp/)             |                                                                                                               |
-| Factor            | [lang#factor](https://spacevim.org/layers/lang/factor/)                                                                          |                                                                                                               |
+| Factor            | [lang#factor](https://spacevim.org/layers/lang/factor/)             |                                                                                                               |
 | FoxPro            | [lang#foxpro](https://spacevim.org/layers/lang/foxpro/)             |                                                                                                               |
 | Fortran           | [lang#fortran](https://spacevim.org/layers/lang/fortran/)           |                                                                                                               |
 | Go                | [lang#go](https://spacevim.org/layers/lang/go/)                     |                                                                                                               |
@@ -56,6 +56,7 @@ This is a list of programming languages supported in SpaceVim:
 | Kotlin            | [lang#kotlin](https://spacevim.org/layers/lang/kotlin/)             |                                                                                                               |
 | lasso             | [lang#lasso](https://spacevim.org/layers/lang/lasso/)               |                                                                                                               |
 | latex             | [lang#latex](https://spacevim.org/layers/lang/latex/)               |                                                                                                               |
+| Lisp              | [lang#lisp](https://spacevim.org/layers/lang/lisp/)                 |                                                                                                               |
 | LiveScript        | [lang#livescript](https://spacevim.org/layers/lang/livescript/)     |                                                                                                               |
 | Lua               | [lang#lua](https://spacevim.org/layers/lang/lua/)                   |                                                                                                               |
 | MoonScript        | [lang#moonscript](https://spacevim.org/layers/lang/moonscript/)     |                                                                                                               |
@@ -189,7 +190,6 @@ Before adding these languages, we need to know:
 | Lasso                         |           |        |
 | Limbo                         |           |        |
 | Lingo                         |           |        |
-| Lisp                          |           |        |
 | LiveCode                      |           |        |
 | Logo                          |           |        |
 | LotusScript                   |           |        |
