@@ -10,6 +10,7 @@ description: "This layer is for e development, provide syntax checking, code run
 - [Description](#description)
 - [Install](#install)
 - [Features](#features)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Running current script](#running-current-script)
   - [Inferior REPL process](#inferior-repl-process)
@@ -33,6 +34,20 @@ To use this configuration layer, update custom configuration file with:
 - repl support
 - code runner
 
+## Layer options
+
+- `e_interpreter`: set the interpreter of e language.
+- `e_jar_path`: set the jar path of `e.jar`.
+
+for example:
+
+```toml
+[[layers]]
+    name = 'lang#e'
+    e_interpreter = 'D:\Program Files\e\rune.bat'
+    e_jar_path = 'D:\Program Files\e\e.jar'
+```
+
 ## Key bindings
 
 ### Running current script
@@ -41,7 +56,7 @@ To running a e file, you can press `SPC l r` to run current file without loss fo
 
 ### Inferior REPL process
 
-Start a `e` inferior REPL process with `SPC l s i`.
+Start a `rune` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
