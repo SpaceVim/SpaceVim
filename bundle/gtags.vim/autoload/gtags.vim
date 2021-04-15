@@ -266,7 +266,6 @@ function! s:ExecLoad(option, long_option, pattern) abort
     let $GTAGSDBPATH = ''
   endif
 
-  e
   if v:shell_error != 0
     if v:shell_error == 2
       call s:Error('invalid arguments. (gtags.vim requires GLOBAL 5.7 or later)')
@@ -357,7 +356,7 @@ function! gtags#global(line) abort
     if l:option =~# 'f'
       let l:line = input('Gtags for file: ', expand('%'), 'file')
     else
-      let l:line = input('Gtags for pattern: ', expand('<cword>'), 'custom,GtagsCandidateCore')
+      let l:line = input('Gtags for pattern: ', expand('<cword>'), 'custom,gtags#complete')
     endif
     let l:pattern = s:Extract(l:line, 'pattern')
     if l:pattern ==# ''
