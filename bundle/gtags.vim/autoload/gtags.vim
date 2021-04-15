@@ -212,6 +212,34 @@ function! s:TrimOption(option) abort
   return l:option
 endfunction
 
+function! s:ExecGlobal(cmd) abort
+  let l:restore_gtagsroot = 0
+  if empty($GTAGSROOT)
+    let $GTAGSROOT = SpaceVim#plugins#projectmanager#current_root()
+    let l:restore_gtagsroot = 1
+  endif
+
+  let l:restore_gtagsdbpath = 0
+  if empty($GTAGSDBPATH)
+    let $GTAGSDBPATH = s:FILE.unify_path(g:tags_cache_dir) . s:FILE.path_to_fname($GTAGSROOT)
+    let l:restore_gtagsdbpath = 1
+  endif
+
+  let l:result = system(a:cmd)
+
+  " restore $GTAGSROOT and $GTAGSDBPATH to make it possible to switch
+  " between multiple projects or parent/child projects
+  if l:restore_gtagsroot
+    let $GTAGSROOT = ''
+  endif
+
+  if l:restore_gtagsdbpath
+    let $GTAGSDBPATH = ''
+  endif
+
+  return l:result
+endfunction
+
 "
 " Execute global and load the result into quickfix window.
 "
@@ -242,29 +270,7 @@ function! s:ExecLoad(option, long_option, pattern) abort
     let l:cmd = g:gtags_global_command . ' ' . l:option . 'e ' . g:Gtags_Shell_Quote_Char . a:pattern . g:Gtags_Shell_Quote_Char
   endif
 
-  let l:restore_gtagsroot = 0
-  if empty($GTAGSROOT)
-    let $GTAGSROOT = SpaceVim#plugins#projectmanager#current_root()
-    let l:restore_gtagsroot = 1
-  endif
-
-  let l:restore_gtagsdbpath = 0
-  if empty($GTAGSDBPATH)
-    let $GTAGSDBPATH = s:FILE.unify_path(g:tags_cache_dir) . s:FILE.path_to_fname($GTAGSROOT)
-    let l:restore_gtagsdbpath = 1
-  endif
-
-  let l:result = system(l:cmd)
-
-  " restore $GTAGSROOT and $GTAGSDBPATH to make it possible to switch
-  " between multiple projects or parent/child projects
-  if l:restore_gtagsroot
-    let $GTAGSROOT = ''
-  endif
-
-  if l:restore_gtagsdbpath
-    let $GTAGSDBPATH = ''
-  endif
+  let l:result = s:ExecGlobal(l:cmd)
 
   if v:shell_error != 0
     if v:shell_error == 2
@@ -432,7 +438,7 @@ function! s:GtagsCandidateCore(lead, ...) abort
     endif
     return glob(l:pattern)
   else
-    let l:cands = system(g:gtags_global_command . ' ' . '-c' . s:option . ' ' . a:lead)
+    let l:cands = s:ExecGlobal(g:gtags_global_command . ' ' . '-c' . s:option . ' ' . a:lead)
     if v:shell_error == 0
       return l:cands
     endif
