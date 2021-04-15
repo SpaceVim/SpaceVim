@@ -20,7 +20,7 @@ endfunction
 
 function! SpaceVim#layers#lang#e#config() abort
   call SpaceVim#plugins#repl#reg('e', s:e_interpreter)
-  call SpaceVim#plugins#runner#reg_runner('e', [s:e_interpreter, '%s'])
+  call SpaceVim#plugins#runner#reg_runner('e', s:e_interpreter . ' %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('e', function('s:language_specified_mappings'))
 endfunction
 function! s:language_specified_mappings() abort
