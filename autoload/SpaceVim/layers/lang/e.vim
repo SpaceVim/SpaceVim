@@ -11,6 +11,7 @@ if exists('s:e_interpreter')
 endif
 
 let s:e_interpreter = 'rune'
+let s:e_jar_path = 'e.jar'
 
 function! SpaceVim#layers#lang#e#plugins() abort
   let plugins = []
@@ -20,7 +21,7 @@ endfunction
 
 function! SpaceVim#layers#lang#e#config() abort
   call SpaceVim#plugins#repl#reg('e', shellescape(s:e_interpreter))
-  call SpaceVim#plugins#runner#reg_runner('e', shellescape(s:e_interpreter) . ' %s')
+  call SpaceVim#plugins#runner#reg_runner('e', 'java -jar ' . shellescape(s:e_jar_path) .  ' --rune %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('e', function('s:language_specified_mappings'))
 endfunction
 function! s:language_specified_mappings() abort
@@ -42,6 +43,7 @@ endfunction
 
 function! SpaceVim#layers#lang#e#set_variable(var) abort
   let s:e_interpreter = get(a:var, 'e_interpreter', s:e_interpreter)
+  let s:e_jar_path = get(a:var, 'e_jar_path', s:e_jar_path)
 endfunction
 
 function! SpaceVim#layers#lang#e#get_options() abort
