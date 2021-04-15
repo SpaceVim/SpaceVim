@@ -6,9 +6,15 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:e_interpreter')
+  finish
+endif
+
+let s:e_interpreter = 'rune'
+
 function! SpaceVim#layers#lang#e#plugins() abort
   let plugins = []
-  
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-elang', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -32,4 +38,14 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+endfunction
+
+function! SpaceVim#layers#lang#e#set_variable(var) abort
+  let s:e_interpreter = get(a:var, 'e_interpreter', s:e_interpreter)
+endfunction
+
+function! SpaceVim#layers#lang#e#get_options() abort
+
+  return ['e_interpreter']
+
 endfunction
