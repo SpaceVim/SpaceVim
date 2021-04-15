@@ -19,7 +19,7 @@ description: "This layer is for e development, provide syntax checking, code run
 
 ## Description
 
-This layer is for [E](http://erights.org/index.html) development.
+This layer is for [e](http://erights.org/index.html) development.
 
 ## Install
 
@@ -31,6 +31,8 @@ To use this configuration layer, update custom configuration file with:
 ```
 ## Features
 
+- filetype detection
+- syntax highlighting(TODO)
 - repl support
 - code runner
 
