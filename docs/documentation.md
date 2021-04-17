@@ -228,7 +228,13 @@ plugin names after `:SPUpdate`.
 ### Reinstall plugins
 
 When a plugin is failed to update or is broken, Use `:SPReinstall`
-command to reinstall this plugin.
+command to reinstall this plugin. The plugins name can be complete via key binding `<Tab>`.
+
+For example:
+
+```
+:SPReinstall echodoc.vim
+```
 
 ### Get SpaceVim log
 
