@@ -117,6 +117,9 @@ an example for basic usage of SpaceVim. For more info, please checkout [document
     merged = false
 ```
 
+If you want to use vim script to configure SpaceVim, please checkout the
+[bootstrap function](../documentation/#bootstrap-functions) section.
+
 ## Online tutor
 
 This is a list of online tutor for using SpaceVim as general IDE and programming language support:
