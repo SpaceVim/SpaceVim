@@ -23,6 +23,7 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Private Layers](#private-layers)
   - [Debug upstream plugins](#debug-upstream-plugins)
 - [Interface elements](#interface-elements)
+  - [start screen](#start-screen)
   - [Colorschemes](#colorschemes)
   - [Font](#font)
   - [UI Toggles](#ui-toggles)
@@ -477,6 +478,18 @@ SpaceVim has a minimalistic and distraction free UI:
 
 - custom airline with color feedback according to current check status
 - custom icon in sign column and error feedbacks for checker.
+
+### start screen
+
+The start screen for of SpaceVim is [startify](https://github.com/mhinz/vim-startify).
+This plugin is included in [ui]() layer which is enabled by default.
+
+If you want to disable the start screen, put following code into SpaceVim configuration file:
+
+```toml
+[options]
+    enable_welcome_page = false
+```
 
 ### Colorschemes
 
