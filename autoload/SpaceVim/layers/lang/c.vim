@@ -418,6 +418,16 @@ function! s:update_runner(argv, fts) abort
           \ }
     call SpaceVim#plugins#runner#reg_runner('cpp', [cpp_runner, '#TEMP#'])
   endif
+  " update clang_flag for objective-c
+  if index(a:fts, 'objc') !=# -1
+    let cpp_runner = {
+          \ 'exe' : 'gcc',
+          \ 'targetopt' : '-o',
+          \ 'opt' : a:argv + (default_std ? [] : ['-std=' . s:clang_std.objc]) + s:clang_flag + ['-xobjc', '-'],
+          \ 'usestdin' : 1,
+          \ }
+    call SpaceVim#plugins#runner#reg_runner('objc', [cpp_runner, '#TEMP#'])
+  endif
 endfunction
 " }}}
 
