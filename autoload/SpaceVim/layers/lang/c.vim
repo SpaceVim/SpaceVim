@@ -182,7 +182,7 @@ function! SpaceVim#layers#lang#c#config() abort
         \ 'opt' : ['-std=' . s:clang_std.objc] + s:clang_flag + ['-xobjc', '-'],
         \ 'usestdin' : 1,
         \ }
-  call SpaceVim#plugins#runner#reg_runner('cpp', [objc_runner, '#TEMP#'])
+  call SpaceVim#plugins#runner#reg_runner('objc', [objc_runner, '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('objc', funcref('s:language_specified_mappings'))
   call SpaceVim#plugins#projectmanager#reg_callback(funcref('s:update_clang_flag'))
   if executable('clang')
