@@ -33,6 +33,7 @@ To use this configuration layer, update the custom configuration file with:
 - code completion
 - syntax checking
 - formatting
+- syntax highlighting: Objective-C(`.m`), C(`.c`), CPP(`.cpp`)
 
 ## Configuration
 
