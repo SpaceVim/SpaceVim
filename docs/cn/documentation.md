@@ -455,10 +455,10 @@ SpaceVim 集成了多种实用的 UI 插件，如常用的文件树、语法树�
     colorscheme_bg = "dark"
 ```
 
-| 快捷键    | 功能描述             |
-| --------- | -------------------- |
+| 快捷键    | 功能描述                                                         |
+| --------- | ---------------------------------------------------------------- |
 | `SPC T n` | 切换至下一个随机主题，需要载入[主题模块](../layers/colorscheme/) |
-| `SPC T s` | 通过[模糊搜索模块](#模糊搜索)选择主题  |
+| `SPC T s` | 通过[模糊搜索模块](#模糊搜索)选择主题                            |
 
 可以在[主题模块](../layers/colorscheme/)中查看 SpaceVim 支持的所有主题。
 
@@ -1605,21 +1605,21 @@ endfunction
 
 在工程中进行后台搜索时，当搜索完成时，会在状态栏上进行显示．
 
-| 快捷键      | 功能描述                                                   |
-| ----------- | ---------------------------------------------------------- |
-| `SPC s j`   | searching input expr background with the first found tool  |
-| `SPC s J`   | searching cursor word background with the first found tool |
-| `SPC s l`   | List all searching result in quickfix buffer               |
-| `SPC s a j` | ag                                                         |
-| `SPC s a J` | ag with default text                                       |
-| `SPC s g j` | grep                                                       |
-| `SPC s g J` | grep with default text                                     |
-| `SPC s k j` | ack                                                        |
-| `SPC s k J` | ack with default text                                      |
-| `SPC s t j` | pt                                                         |
-| `SPC s t J` | pt with default text                                       |
-| `SPC s r j` | rg                                                         |
-| `SPC s r J` | rg with default text                                       |
+| 快捷键      | 功能描述                                   |
+| ----------- | ------------------------------------------ |
+| `SPC s j`   | 使用默认搜索工具，后台检索输入的正则表达式 |
+| `SPC s J`   | 使用默认搜索工具，后台检索光标下的词语     |
+| `SPC s l`   | 使用 quickfix 窗口列出搜索结果             |
+| `SPC s a j` | 使用 `ag` 后台检索输入的正则表达式         |
+| `SPC s a J` | 使用 `ag` 后台检索光标下的词语             |
+| `SPC s g j` | 使用 `grep` 后台检索输入的正则表达式       |
+| `SPC s g J` | 使用 `grep` 后台检索光标下的词语           |
+| `SPC s k j` | 使用 `ack` 后台检索输入的正则表达式        |
+| `SPC s k J` | 使用 `ack` 后台检索光标下的词语            |
+| `SPC s t j` | 使用 `pt` 后台检索输入的正则表达式         |
+| `SPC s t J` | 使用 `pt` 后台检索光标下的词语             |
+| `SPC s r j` | 使用 `rg` 后台检索输入的正则表达式         |
+| `SPC s r J` | 使用 `rg` 后台检索光标下的词语             |
 
 #### 在网上进行搜索
 
