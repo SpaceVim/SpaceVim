@@ -504,9 +504,7 @@ the variable colorschemes. For instance, to specify `desert`:
 | `SPC T n` | switch to next random colorscheme listed in [colorscheme layer](../layers/colorscheme/). |
 | `SPC T s` | select a theme using a [fuzzy finder](#fuzzy-finder).                                                     |
 
-
-
-These key bindings are included in [colorscheme layer](../layers/colorscheme/).
+All the included colorschemes can be found in [colorscheme layer](../layers/colorscheme/).
 
 SpaceVim supports true colors in terminal, and it is disabled by default, to enable this feature,
 you should make sure your terminal supports true colors.
