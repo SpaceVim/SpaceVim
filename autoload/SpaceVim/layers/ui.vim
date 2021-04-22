@@ -141,7 +141,7 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#layers#core#statusline#register_mode(
         \ {
         \ 'key' : 'spell-checking',
-        \ 'func' : s:_function('s:toggle_spell_check'),
+        \ 'func' : string(s:_function('s:toggle_spell_check')),
         \ }
         \ )
 
