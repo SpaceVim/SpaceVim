@@ -104,7 +104,7 @@ function! SpaceVim#layers#checkers#config() abort
   call SpaceVim#layers#core#statusline#register_mode(
         \ {
         \ 'key' : 'syntax-checking',
-        \ 'func' : string(s:_function('s:toggle_syntax_checker')),
+        \ 'func' : s:_function('s:toggle_syntax_checker'),
         \ }
         \ )
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'e'], 'call call('
