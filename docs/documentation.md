@@ -490,7 +490,7 @@ The default colorscheme of SpaceVim is [gruvbox](https://github.com/morhetz/gruv
 There are two variants of this colorscheme, a dark one and a light one. Some aspects
 of these colorscheme can be customized in the custom configuration file, read `:h gruvbox`.
 
-It is possible to define your default themes in your `~/.SpaceVim.d/init.toml` with
+It is possible to change the colorscheme in `~/.SpaceVim.d/init.toml` with
 the variable colorschemes. For instance, to specify `desert`:
 
 ```toml
@@ -499,10 +499,10 @@ the variable colorschemes. For instance, to specify `desert`:
     colorscheme_bg = "dark"
 ```
 
-| Mappings  | Descriptions                                                   |
-| --------- | -------------------------------------------------------------- |
-| `SPC T n` | switch to next random colorscheme listed in colorscheme layer. |
-| `SPC T s` | select a theme using a unite buffer.                           |
+| Mappings  | Descriptions                                                                             |
+| --------- | ---------------------------------------------------------------------------------------- |
+| `SPC T n` | switch to next random colorscheme listed in [colorscheme layer](../layers/colorscheme/). |
+| `SPC T s` | select a theme using a [fuzzy finder](#fuzzy-finder).                                                     |
 
 All the included colorschemes can be found in [colorscheme layer](../layers/colorscheme/).
 
@@ -616,7 +616,7 @@ Search index shows the number of occurrence when performing a search via `/` or 
 Search index is provided by `incsearch` layer, to enable this layer:
 
 ```toml
-[layers]
+[[layers]]
     name = "incsearch"
 ```
 
