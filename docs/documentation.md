@@ -499,10 +499,12 @@ the variable colorschemes. For instance, to specify `desert`:
     colorscheme_bg = "dark"
 ```
 
-| Mappings  | Descriptions                                                   |
-| --------- | -------------------------------------------------------------- |
-| `SPC T n` | switch to next random colorscheme listed in colorscheme layer. |
-| `SPC T s` | select a theme using a unite buffer.                           |
+| Mappings  | Descriptions                                                                             |
+| --------- | ---------------------------------------------------------------------------------------- |
+| `SPC T n` | switch to next random colorscheme listed in [colorscheme layer](../layers/colorscheme/). |
+| `SPC T s` | select a theme using a [fuzzy finder](#fuzzy-finder).                                                     |
+
+
 
 These key bindings are included in [colorscheme layer](../layers/colorscheme/).
 
