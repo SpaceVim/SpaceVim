@@ -20,9 +20,6 @@ CONFIGURATION                                                   *gtags-config*
 Set the global command name. If it is not set, will use $GTAGSGLOBAL, and if
 $GTAGSGLOBAL still is an empty string, then will use 'global'.
 
-                                                            *g:gtags_auto_map*
-Enable/Disable default mappings. By default it is disabled.
-
                                                            *g:gtags_open_list*
 This setting will open the |quickfix| list when adding entries. A value of 2
 will preserve the cursor position when the |quickfix| window is opened.
