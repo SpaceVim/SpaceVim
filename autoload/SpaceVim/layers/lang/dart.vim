@@ -20,6 +20,10 @@
 "     name = "lang#dart"
 " <
 "
+" @subsection Layer options
+"
+" 1. `dart_sdk_path`: Set the path of dart sdk, by default, it is ''.
+"
 " @subsection Key bindings
 " >
 "   Mode            Key             Function
@@ -44,9 +48,10 @@
 
 if exists('s:flutter_job_id')
   finish
-else
-  let s:flutter_job_id = 0
 endif
+
+let s:flutter_job_id = 0
+let s:dart_sdk_path = ''
 
 let s:JOB = SpaceVim#api#import('job')
 let s:NOTI =SpaceVim#api#import('notification')
@@ -66,6 +71,11 @@ function! SpaceVim#layers#lang#dart#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('dart', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('dart', ['pub', 'global', 'run', 'dart_repl'])
   call add(g:spacevim_project_rooter_patterns, 'pubspec.yaml')
+  let g:deoplete#sources#dart#dart_sdk_path = s:dart_sdk_path
+endfunction
+
+function! SpaceVim#layers#lang#dart#set_variable(var) abort
+  let s:dart_sdk_path = get(a:var, 'dart_sdk_path', s:dart_sdk_path)
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -155,17 +165,17 @@ function! s:on_exit(...) abort
 endfunction
 
 function! s:flutter_emulators_launch() abort
-    call inputsave()
-    let emulators = input('emulators id:')
-    call inputrestore()
-    if !empty(emulators)
-      call s:JOB.start(['flutter', 'emulators', '--launch', emulators],
+  call inputsave()
+  let emulators = input('emulators id:')
+  call inputrestore()
+  if !empty(emulators)
+    call s:JOB.start(['flutter', 'emulators', '--launch', emulators],
           \ {
           \ 'on_stdout' : function('s:on_stdout'),
           \ 'on_stderr' : function('s:on_stderr'),
           \ }
           \ )
-    endif
+  endif
 endfunction
 
 
