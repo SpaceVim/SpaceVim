@@ -305,6 +305,11 @@ function! s:ExecLoad(option, long_option, pattern) abort
   let &efm = g:Gtags_Efm
   cgetexpr l:result
   let &efm = l:efm_org
+
+  " If there is only one item, jump to the position.
+  if len(getqflist()) ==# 1
+    cnext
+  endif
 endfunction
 
 let s:prev_windows = []
