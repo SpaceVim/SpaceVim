@@ -10,6 +10,7 @@ description: "PHP language support, including code completion, syntax lint and c
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Jump to definition](#jump-to-definition)
   - [Running current script](#running-current-script)
@@ -39,6 +40,10 @@ snippet into SpaceVim configuration file:
 [[layers]]
   name = "lang#php"
 ```
+
+## Layer options
+
+- `php_interpreter`: Set the PHP interpreter, by default, it is `php`.
 
 ## Key bindings
 

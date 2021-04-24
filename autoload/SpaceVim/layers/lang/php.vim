@@ -13,6 +13,12 @@
 " This layer is for PHP development. It proides code completion, syntax
 " checking, and jump to definition.
 
+if exists('s:php_interpreter')
+  finish
+endif
+
+let s:php_interpreter = 'php'
+
 
 
 function! SpaceVim#layers#lang#php#plugins() abort
@@ -31,11 +37,12 @@ let s:auto_fix = 0
 
 function! SpaceVim#layers#lang#php#set_variable(var) abort
   let s:auto_fix = get(a:var, 'auto_fix', 0)
+  let s:php_interpreter = get(a:var, 'php_interpreter', s:php_interpreter)
 endfunction
 
 function! SpaceVim#layers#lang#php#config() abort
-  call SpaceVim#plugins#runner#reg_runner('php', 'php %s')
-  call SpaceVim#plugins#repl#reg('php', ['php', '-a'])
+  call SpaceVim#plugins#runner#reg_runner('php', s:php_interpreter . ' %s')
+  call SpaceVim#plugins#repl#reg('php', [s:php_interpreter, '-a'])
   call SpaceVim#mapping#space#regesit_lang_mappings('php',
         \ function('s:on_ft'))
   if SpaceVim#layers#lsp#check_filetype('php')
