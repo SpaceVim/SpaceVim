@@ -1857,6 +1857,10 @@ checker which is loaded in |SpaceVim-layer-checkers|. To enable this layer:
     name = "lang#dart"
 <
 
+LAYER OPTIONS
+
+  1. `dart_sdk_path`: Set the path of dart sdk, by default, it is ''.
+
 KEY BINDINGS
 
 >
