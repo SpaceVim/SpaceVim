@@ -6,6 +6,10 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:CMP')
+  finish
+endif
+
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#layers#tools#plugins() abort
@@ -52,6 +56,7 @@ function! SpaceVim#layers#tools#config() abort
 
   " bootmark key binding
   nnoremap <silent> mm :<C-u>BookmarkToggle<Cr>
+  nnoremap <silent> mc :<C-u>BookmarkClear<Cr>
   nnoremap <silent> mi :<C-u>BookmarkAnnotate<Cr>
   nnoremap <silent> ma :<C-u>BookmarkShowAll<Cr>
   nnoremap <silent> mn :<C-u>BookmarkNext<Cr>

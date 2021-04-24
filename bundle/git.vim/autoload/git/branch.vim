@@ -1,5 +1,14 @@
+"=============================================================================
+" branch.vim --- branch action of git.vim
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 let s:JOB = SpaceVim#api#import('job')
 let s:STR = SpaceVim#api#import('data#string')
+
 
 function! git#branch#run(args) abort
   if len(a:args) == 0
@@ -47,27 +56,47 @@ function! git#branch#complete(ArgLead, CmdLine, CursorPos) abort
 endfunction
 
 let s:branch = ''
-function! s:update_branch_name() abort
+let s:branch_info = {}
+" {
+"   branch_name : 'xxx',
+"   last_update : 111111, ms
+" }
+let s:job_pwds = {}
+
+function! s:update_branch_name(pwd, ...) abort
+  let force = get(a:000, 0, 0)
   let cmd = 'git rev-parse --abbrev-ref HEAD'
-  call s:JOB.start(cmd,
-        \ {
-        \ 'on_stdout' : function('s:on_stdout_show_branch'),
-        \ }
-        \ )
+  if force || get(get(s:branch_info, a:pwd, {}), 'last_update', 0) >= localtime() - 1
+    let jobid =  s:JOB.start(cmd,
+          \ {
+          \ 'on_stdout' : function('s:on_stdout_show_branch'),
+          \ 'cwd' : a:pwd,
+          \ }
+          \ )
+    if jobid > 0
+      call extend(s:job_pwds, {'jobid' . jobid : a:pwd})
+    endif
+  endif
 endfunction
 function! s:on_stdout_show_branch(id, data, event) abort
   let b = s:STR.trim(join(a:data, ''))
   if !empty(b)
-    let s:branch = b
+    let pwd = get(s:job_pwds, 'jobid' . a:id, '')
+    let s:branch_info[pwd] = {
+          \ 'name' : b,
+          \ 'last_update' : localtime(),
+          \ }
   endif
 endfunction
 function! git#branch#current() abort
-  if empty(s:branch)
-    call s:update_branch_name()
+  let pwd = getcwd()
+  let branch = get(s:branch_info, pwd, {})
+  if empty(branch)
+    call s:update_branch_name(pwd)
   endif
-  return s:branch
+  return get(branch, 'name', '')
 endfunction
 
 function! git#branch#detect() abort
-  call s:update_branch_name()
+  call s:update_branch_name(getcwd(), 1)
 endfunction

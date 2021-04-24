@@ -124,6 +124,8 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
     merged = false
 ```
 
+如果需要使用 Vim 脚本对 SpaceVim 进行设置，可以阅读[启动函数](../documentation/#启动函数)章节。
+
 ## 在线教程
 
 以下主要为 SpaceVim 的基本使用教程，侧重于各种语言开发环境的搭建，可以理解为 SpaceVim 用户文档的精简版，主要包括以下内容：

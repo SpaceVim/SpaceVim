@@ -20,7 +20,7 @@ This is a list of programming languages supported in SpaceVim:
 | AutoHotkey        | [lang#autohotkey](https://spacevim.org/layers/lang/autohotkey/)     |                                                                                                               |
 | Bash, Fish, zsh   | [lang#sh](https://spacevim.org/layers/lang/sh/)                     |                                                                                                               |
 | C#                | [lang#csharp](https://spacevim.org/layers/lang/csharp/)             |                                                                                                               |
-| C/C++             | [lang#c](https://spacevim.org/layers/lang/c/)                       |                                                                                                               |
+| C/C++/Objective-C | [lang#c](https://spacevim.org/layers/lang/c/)                       |                                                                                                               |
 | Clojure           | [lang#clojure](https://spacevim.org/layers/lang/clojure/)           |                                                                                                               |
 | CoffeeScript      | [lang#coffeescript](https://spacevim.org/layers/lang/coffeescript/) |                                                                                                               |
 | Crystal           | [lang#crystal](https://spacevim.org/layers/lang/crystal/)           |                                                                                                               |
@@ -224,7 +224,6 @@ Before adding these languages, we need to know:
 | NXT-G                         |           |        |
 | Oberon                        |           |        |
 | Object Rexx                   |           |        |
-| Objective-C                   |           |        |
 | Occam                         |           |        |
 | OpenCL                        |           |        |
 | OpenEdge ABL                  |           |        |

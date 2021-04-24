@@ -772,7 +772,8 @@ function! SpaceVim#layers#core#statusline#config() abort
     let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/major_mode.json'), ''), ''))
     for key in keys(conf)
       if conf[key]
-        call SpaceVim#layers#core#statusline#toggle_mode(key)
+        " this function should be called silent.
+        silent! call SpaceVim#layers#core#statusline#toggle_mode(key)
       endif
     endfor
   endif

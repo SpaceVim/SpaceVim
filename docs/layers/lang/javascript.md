@@ -53,6 +53,15 @@ auto_fix = true
 enable_flow_syntax = true
 ```
 
+`format_on_save`: Enable/disable file formatting when saving current javascript file. By default,
+it is disabled, to enable it:
+```toml
+[[layers]]
+    name = 'lang#javascript'
+    format_on_save = true
+  ```
+
+
 ## Key bindings
 
 ### Import key bindings

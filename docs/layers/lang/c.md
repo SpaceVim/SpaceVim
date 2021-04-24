@@ -33,6 +33,7 @@ To use this configuration layer, update the custom configuration file with:
 - code completion
 - syntax checking
 - formatting
+- syntax highlighting: Objective-C(`.m`), C(`.c`), CPP(`.cpp`)
 
 ## Configuration
 
@@ -91,6 +92,14 @@ defined in `.clang` file. For example:
 
 Note: If `.clang` file contains std configuration, it will override
 `clang_std` layer option.
+
+`format_on_save`: Enable/disable file formatting when saving current file. By default,
+it is disabled, to enable it:
+```toml
+[[layers]]
+    name = 'lang#c'
+    format_on_save = true
+  ```
 
 ## Key bindings
 

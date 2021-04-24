@@ -104,7 +104,7 @@ function! SpaceVim#layers#checkers#config() abort
   call SpaceVim#layers#core#statusline#register_mode(
         \ {
         \ 'key' : 'syntax-checking',
-        \ 'func' : string(s:_function('s:toggle_syntax_checker')),
+        \ 'func' : s:_function('s:toggle_syntax_checker'),
         \ }
         \ )
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'e'], 'call call('
@@ -255,7 +255,6 @@ endfunction
 
 function! s:toggle_syntax_checker() abort
   call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
-  call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
   if g:spacevim_lint_engine ==# 'neomake'
     verbose NeomakeToggle
   elseif g:spacevim_lint_engine ==# 'ale'

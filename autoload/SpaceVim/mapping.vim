@@ -186,24 +186,32 @@ function! SpaceVim#mapping#close_current_buffer(...) abort
 
   let cmd_close_buf = 'bd' . f
   let index = index(buffers, bn)
-  if index != -1
-    if index == 0
-      if len(buffers) > 1
-        exe 'b' . buffers[1]
-        exe cmd_close_buf . bn
-      else
-        exe cmd_close_buf . bn
-        if exists(':Startify') ==# 2
-          Startify
-        endif
+  if index == 0
+    if len(buffers) > 1
+      exe 'b' . buffers[1]
+      exe cmd_close_buf . bn
+    else
+      exe cmd_close_buf . bn
+      if exists(':Startify') ==# 2
+        Startify
       endif
-    elseif index > 0
-      if index + 1 == len(buffers)
-        exe 'b' . buffers[index - 1]
-        exe cmd_close_buf . bn
-      else
-        exe 'b' . buffers[index + 1]
-        exe cmd_close_buf . bn
+    endif
+  elseif index > 0
+    if index + 1 == len(buffers)
+      exe 'b' . buffers[index - 1]
+      exe cmd_close_buf . bn
+    else
+      exe 'b' . buffers[index + 1]
+      exe cmd_close_buf . bn
+    endif
+  else
+    if len(buffers) >= 1
+      exe 'bp'
+      exe cmd_close_buf . bn
+    else
+      exe cmd_close_buf . bn
+      if exists(':Startify') ==# 2
+        Startify
       endif
     endif
   endif
