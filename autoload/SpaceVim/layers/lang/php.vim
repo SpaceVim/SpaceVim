@@ -10,8 +10,39 @@
 ""
 " @section lang#php, layer-lang-php
 " @parentsection layers
-" This layer is for PHP development. It proides code completion, syntax
-" checking, and jump to definition.
+" This layer is for php development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#php'
+" <
+"
+" @subsection layer options
+"
+" 1. `php_interpreter`: Set the PHP interpreter, by default, it is `php`
+" >
+"   [[layers]]
+"     name = 'lang#php'
+"     php_interpreter = 'path/to/php'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for php, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 if exists('s:php_interpreter')
   finish
