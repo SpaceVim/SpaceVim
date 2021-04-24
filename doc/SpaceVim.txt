@@ -1752,7 +1752,6 @@ This layer also provides REPL support for coffeescript, the key bindings are:
   SPC l s s       send selection text
 <
 
-
 ==============================================================================
 LANG#CRYSTAL                                     *SpaceVim-layer-lang-crystal*
 
