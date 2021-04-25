@@ -16,6 +16,15 @@
 "     name = 'lang#hy'
 " <
 "
+" @subsection layer options
+"
+" 1. `hy_interpreter`: Set the hy interpreter, by default, it is `hy`
+" >
+"   [[layers]]
+"     name = 'lang#hy'
+"     hy_interpreter = 'path/to/hy'
+" <
+"
 " @subsection Key bindings
 " >
 "   Mode            Key             Function
