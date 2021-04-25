@@ -2277,6 +2277,16 @@ add following snippet to your SpaceVim configuration file.
     name = 'lang#hy'
 <
 
+LAYER OPTIONS
+
+  1. `hy_interpreter`: Set the hy interpreter, by default, it is `hy`
+
+>
+  [[layers]]
+    name = 'lang#hy'
+    hy_interpreter = 'path/to/hy'
+<
+
 KEY BINDINGS
 
 >
