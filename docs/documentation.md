@@ -856,8 +856,8 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `g x`                 | Execute with vimfiler associated                  |
 | `'`                   | Toggle mark current line                          |
 | `V`                   | Clear all marks                                   |
-| `>`                   | iecrease filetree screenwidth                     |
-| `<`                   | dncrease filetree screenwidth                     |
+| `>`                   | increase filetree screenwidth                     |
+| `<`                   | decrease filetree screenwidth                     |
 | `<Home>`              | Jump to first line                                |
 | `<End>`               | Jump to last line                                 |
 | `Ctrl-Home`           | Switch to project root directory                  |
