@@ -29,7 +29,7 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ## Layer options
 
-- `git_plugin`: default value is `git`, available values include: `gina`, `fugitive`, `gita`, `git`.
+- `git_plugin`: default value is `git`, available values include: [`gina`](https://github.com/lambdalisue/gina.vim), [`fugitive`](https://github.com/tpope/vim-fugitive), [`gita`](https://github.com/lambdalisue/vim-gita) (obsolete), `git`.
 
 if you want to use `fugitive` instead:
 
