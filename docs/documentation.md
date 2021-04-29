@@ -847,7 +847,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `y y`                 | Copy file full path to system clipboard           |
 | `y Y`                 | Copy file to system clipboard                     |
 | `P`                   | Paste file to the position under the cursor       |
-| `.`                   | Toggle visible ignored files                      |
+| `.`                   | Toggle hidden files                               |
 | `s v`                 | Split edit                                        |
 | `s g`                 | Vertical split edit                               |
 | `p`                   | Preview                                           |
