@@ -61,14 +61,7 @@ description: "General documentation about how to use SpaceVim, including the qui
     - [With an external tool](#with-an-external-tool)
     - [Custom searching tool](#custom-searching-tool)
     - [Useful key bindings](#useful-key-bindings)
-    - [Searching in current file](#searching-in-current-file)
-    - [Searching in buffer directory](#searching-in-buffer-directory)
-    - [Searching in all loaded buffers](#searching-in-all-loaded-buffers)
-    - [Searching in an arbitrary directory](#searching-in-an-arbitrary-directory)
-    - [Searching in a project](#searching-in-a-project)
-    - [Background searching in a project](#background-searching-in-a-project)
-    - [Searching the web](#searching-the-web)
-    - [Searching on the fly](#searching-on-the-fly)
+    - [Summary](#summary)
     - [Persistent highlighting](#persistent-highlighting)
     - [Getting help](#getting-help)
   - [Unimpaired bindings](#unimpaired-bindings)
@@ -1561,8 +1554,6 @@ The available scopes and corresponding keys are:
 | files in a given directory | f   |
 | current project            | p   |
 
-It is possible to search in the current file by double pressing the second key of the sequence, for instance `SPC s a a` will search in the current file with `ag`.
-
 Notes:
 
 - `rg`, `ag` and `pt` are optimized to be used in a source control repository but they can be used in an arbitrary directory as well.
@@ -1607,130 +1598,41 @@ The structure of searching tool profile is:
 | `` SPC s ` ``   | go back to the previous place before jump |
 | Prefix argument | will ask for file extensions              |
 
-#### Searching in current file
+#### Summary
 
-| Key Bindings | Descriptions                                        |
-| ------------ | --------------------------------------------------- |
-| `SPC s s`    | search with the first found tool                    |
-| `SPC s S`    | search with the first found tool with default input |
-| `SPC s a a`  | ag                                                  |
-| `SPC s a A`  | ag with default input                               |
-| `SPC s g g`  | grep                                                |
-| `SPC s g G`  | grep with default input                             |
-| `SPC s r r`  | rg                                                  |
-| `SPC s r R`  | rg with default input                               |
+The following table summurizes the search key bindings:
 
-#### Searching in buffer directory
+| Key Bindings      | Descriptions                                                |
+| ----------------- | ----------------------------------------------------------- |
+| `SPC s <scope>`   | Search using the first found tool                           |
+| `SPC s a <scope>` | Search using `ag`                                           |
+| `SPC s g <scope>` | Search using `grep`                                         |
+| `SPC s G <scope>` | Search using `git-grep`                                     |
+| `SPC s k <scope>` | Search using `ack`                                          |
+| `SPC s r <scope>` | Search using `rg`                                           |
+| `SPC s t <scope>` | Search using `pt`                                           |
+| `SPC s /`         | Search in the project on the fly using the default tools    |
+| `SPC s w g`       | Search google (opens search results in a browser) (TODO)    |
+| `SPC s w w`       | Search wikipedia (opens search results in a browser) (TODO) |
 
-| Key Bindings | Descriptions                                                |
-| ------------ | ----------------------------------------------------------- |
-| `SPC s d`    | searching in buffer directory with default tool             |
-| `SPC s D`    | searching in buffer directory cursor word with default tool |
-| `SPC s a d`  | searching in buffer directory with ag                       |
-| `SPC s a D`  | searching in buffer directory cursor word with ag           |
-| `SPC s g d`  | searching in buffer directory with grep                     |
-| `SPC s g D`  | searching in buffer directory cursor word with grep         |
-| `SPC s G d`  | searching in buffer directory with git-grep                 |
-| `SPC s G D`  | searching in buffer directory cursor word with git-grep     |
-| `SPC s k d`  | searching in buffer directory with ack                      |
-| `SPC s k D`  | searching in buffer directory cursor word with ack          |
-| `SPC s r d`  | searching in buffer directory with rg                       |
-| `SPC s r D`  | searching in buffer directory cursor word with rg           |
-| `SPC s t d`  | searching in buffer directory with pt                       |
-| `SPC s t D`  | searching in buffer directory cursor word with pt           |
+With `<scope>` being one of the following:
 
-#### Searching in all loaded buffers
+|  Scope  |            Description           |
+| ------- | -------------------------------- |
+|   `b`   | All open buffers                 |
+|   `d`   | Current buffer's directory       |
+|   `f`   | Arbitrary directory              |
+|   `p`   | Current project                  |
+|   `s`   | Current buffer                   |
+|   `j`   | Background search in the project |
 
-| Key Bindings | Descriptions                                        |
-| ------------ | --------------------------------------------------- |
-| `SPC s b`    | search with the first found tool                    |
-| `SPC s B`    | search with the first found tool with default input |
-| `SPC s a b`  | ag                                                  |
-| `SPC s a B`  | ag with default input                               |
-| `SPC s g b`  | grep                                                |
-| `SPC s g B`  | grep with default input                             |
-| `SPC s G b`  | git-grep                                            |
-| `SPC s G B`  | git-grep with default input                         |
-| `SPC s k b`  | ack                                                 |
-| `SPC s k B`  | ack with default input                              |
-| `SPC s r b`  | rg                                                  |
-| `SPC s r B`  | rg with default input                               |
-| `SPC s t b`  | pt                                                  |
-| `SPC s t B`  | pt with default input                               |
+**Notes**:
 
-#### Searching in an arbitrary directory
+- A capital letter may be used for `<scope>` to search for the word under the cursor.
+- To enable google suggestions, you need to add `enable_googlesuggest = 1` to your custom configurations file.
 
-| Key Bindings | Descriptions                                        |
-| ------------ | --------------------------------------------------- |
-| `SPC s f`    | search with the first found tool                    |
-| `SPC s F`    | search with the first found tool with default input |
-| `SPC s a f`  | ag                                                  |
-| `SPC s a F`  | ag with default text                                |
-| `SPC s g f`  | grep                                                |
-| `SPC s g F`  | grep with default text                              |
-| `SPC s G f`  | git-grep                                            |
-| `SPC s G F`  | git-grep with default text                          |
-| `SPC s k f`  | ack                                                 |
-| `SPC s k F`  | ack with default text                               |
-| `SPC s r f`  | rg                                                  |
-| `SPC s r F`  | rg with default text                                |
-| `SPC s t f`  | pt                                                  |
-| `SPC s t F`  | pt with default text                                |
-
-#### Searching in a project
-
-| Key Bindings | Descriptions                                        |
-| ------------ | --------------------------------------------------- |
-| `SPC s p`    | search with the first found tool                    |
-| `SPC s P`    | search with the first found tool with default input |
-| `SPC s a p`  | ag                                                  |
-| `SPC s a P`  | ag with default text                                |
-| `SPC s g p`  | grep                                                |
-| `SPC s g p`  | grep with default text                              |
-| `SPC s k p`  | ack                                                 |
-| `SPC s k P`  | ack with default text                               |
-| `SPC s t p`  | pt                                                  |
-| `SPC s t P`  | pt with default text                                |
-| `SPC s r p`  | rg                                                  |
-| `SPC s r P`  | rg with default text                                |
-
-**Hint**: It is also possible to search in a project without needing to open a file beforehand.
-To do so use `SPC p p` and then `C-s` on a given project to directly search into it like with `SPC s p`. (TODO)
-
-#### Background searching in a project
-
-Background search keyword in a project, when searching done, the count will be shown on the statusline.
-
-| Key Bindings | Descriptions                                               |
-| ------------ | ---------------------------------------------------------- |
-| `SPC s j`    | searching input expr background with the first found tool  |
-| `SPC s J`    | searching cursor word background with the first found tool |
-| `SPC s l`    | List all searching result in quickfix buffer               |
-| `SPC s a j`  | ag                                                         |
-| `SPC s a J`  | ag with default text                                       |
-| `SPC s g j`  | grep                                                       |
-| `SPC s g J`  | grep with default text                                     |
-| `SPC s k j`  | ack                                                        |
-| `SPC s k J`  | ack with default text                                      |
-| `SPC s t j`  | pt                                                         |
-| `SPC s t J`  | pt with default text                                       |
-| `SPC s r j`  | rg                                                         |
-| `SPC s r J`  | rg with default text                                       |
-
-#### Searching the web
-
-| Key Bindings | Descriptions                                                             |
-| ------------ | ------------------------------------------------------------------------ |
-| `SPC s w g`  | Get Google suggestions in Vim. Opens Google results in Browser.          |
-| `SPC s w w`  | Get Wikipedia suggestions in Vim. Opens Wikipedia page in Browser.(TODO) |
-
-**Note**: to enable google suggestions in Vim, you need to add `enable_googlesuggest = 1` to your custom Configuration file.
-
-#### Searching on the fly
-
-| Key Bindings | Descriptions                                       |
-| ------------ | -------------------------------------------------- |
-| `SPC s /`    | Searching in project on the fly with default tools |
+**Hint**: It is also possible to search in a project without having to open a file beforehand.
+To do so use `[SPC] p p` and then `C-s` on a given project to directly search into it like with `[SPC] s p`. (TODO)
 
 Key bindings in FlyGrep buffer:
 
