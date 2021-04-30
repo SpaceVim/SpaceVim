@@ -11,7 +11,7 @@ language or feature by grouping all the related plugins together. It got inspire
 
 ## Contact us
 
-You can also get in touch with us using the supporting email. 
+You can get in touch with us using the support email.
 Your message will be sent to our teams, who will get back to you as soon as they can.
 Please be advised that weekends and public holidays might delay response time.
 
@@ -21,12 +21,12 @@ Email: [support@spacevim.org](mailto:support@spacevim.org)
 
 - Mnemonic key bindings navigation
 - More IDE-like features in Vim and Neovim
-- Better default different languages
+- Better language support by default
 - Cross platform experience
 
 ## Credits & Thanks
 
-This project exists to thank all the people who have contributed:
+This project exists thanks to all the people who have contributed:
 
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 
