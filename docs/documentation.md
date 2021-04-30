@@ -2028,49 +2028,54 @@ To run the task in the background, you need to set `isBackground` to `true`:
     isBackground = true
 ```
 
-The task's properties have the following semantic:
+The following task properties are available:
 
-- **command**: the actual command to execute.
-- **args**: the arguments passed to the command, it shoud be an array a string list and can be omitted.
-- **options**: override the defaults for `cwd`,`env` or `shell`.
-- **isBackground**: `true` or `false`, specifies whether background running is required,
-  by default, it is `false`.
-- **description**: short description of the task
-- **problemMatcher**: problems matcher of the task
+| Name           | Description                                                                                            |
+| -------------- | ------------------------------------------------------------------------------------------------------ |
+| command        | The actual command to execute.                                                                         |
+| args           | The arguments passed to the command, it should be a list of strings and may be omitted.                |
+| options        | Override the defaults for `cwd`,`env` or `shell`.                                                      |
+| isBackground   | Specifies whether the task should run in the background. by default, it is `false`.                    |
+| description    | Short description of the task                                                                          |
+| problemMatcher | Problems matcher of the task                                                                           |
 
-When start a new task, it will kill the previous task. If you want to keep the task
-run in background, set `isBackground` to `true`.
+**Note**: When a new task is executed, it will kill the previous task. If you want to keep the task,
+run it in background by setting `isBackground` to `true`.
 
-SpaceVim supports variable substitution in task, The following predefined variables are supported:
+SpaceVim supports variable substitution in the task properties, The following predefined variables are supported:
 
-- **\${workspaceFolder}**: - the project root directory
-- **\${workspaceFolderBasename}**: - the parent directory name of current project root
-- **\${file}**: - the path of current file
-- **\${relativeFile}**: - the current file relative to project root
-- **\${relativeFileDirname}**: - the current file's dirname relative to workspaceFolder
-- **\${fileBasename}**: - the current file's basename
-- **\${fileBasenameNoExtension}**: - the current file's basename without file extension
-- **\${fileDirname}**: - the current file's dirname
-- **\${fileExtname}**: - the current file's extension
-- **\${cwd}**: - the task runner's current working directory on startup
-- **\${lineNumber}**: - the current selected line number in the active file
+| Name                       | Description                                            |
+| -------------------------- | ------------------------------------------------------ |
+| ${workspaceFolder}         | The project's root directory                           |
+| ${workspaceFolderBasename} | The name of current project's root directory           |
+| ${file}                    | The path of current file                               |
+| ${relativeFile}            | The current file relative to project root              |
+| ${relativeFileDirname}     | The current file's dirname relative to workspaceFolder |
+| ${fileBasename}            | The current file's basename                            |
+| ${fileBasenameNoExtension} | The current file's basename without file extension     |
+| ${fileDirname}             | The current file's dirname                             |
+| ${fileExtname}             | The current file's extension                           |
+| ${cwd}                     | The task runner's current working directory on startup |
+| ${lineNumber}              | The current selected line number in the active file    |
 
-for example: Supposing that you have the following requirements:
+For example: Supposing that you have the following requirements:
 
 A file located at `/home/your-username/your-project/folder/file.ext` opened in your editor;
 The directory `/home/your-username/your-project` opened as your root workspace.
 So you will have the following values for each variable:
 
-- **\${workspaceFolder}**: - `/home/your-username/your-project/`
-- **\${workspaceFolderBasename}**: - `your-project`
-- **\${file}**: - `/home/your-username/your-project/folder/file.ext`
-- **\${relativeFile}**: - `folder/file.ext`
-- **\${relativeFileDirname}**: - `folder/`
-- **\${fileBasename}**: - `file.ext`
-- **\${fileBasenameNoExtension}**: - `file`
-- **\${fileDirname}**: - `/home/your-username/your-project/folder/`
-- **\${fileExtname}**: - `.ext`
-- **\${lineNumber}**: - line number of the cursor
+| Name                       | Value                                              |
+| -------------------------- | -------------------------------------------------- |
+| ${workspaceFolder}         | `/home/your-username/your-project/`                |
+| ${workspaceFolderBasename} | `your-project`                                     |
+| ${file}                    | `/home/your-username/your-project/folder/file.ext` |
+| ${relativeFile}            | `folder/file.ext`                                  |
+| ${relativeFileDirname}     | `folder/`                                          |
+| ${fileBasename}            | `file.ext`                                         |
+| ${fileBasenameNoExtension} | `file`                                             |
+| ${fileDirname}             | `/home/your-username/your-project/folder/`         |
+| ${fileExtname}             | `.ext`                                             |
+| ${lineNumber}              | line number of the cursor                          |
 
 #### Task Problems Matcher
 

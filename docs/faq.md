@@ -1,6 +1,6 @@
 ---
 title: "FAQ"
-description: "A list of questions and answers relating to SpaceVim, especially those most asked in the SpaceVim community"
+description: "A list of questions and answers related to SpaceVim, especially those most asked in the SpaceVim community"
 ---
 
 # [Home](../) >> FAQ
