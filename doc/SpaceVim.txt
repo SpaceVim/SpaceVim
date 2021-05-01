@@ -819,6 +819,9 @@ to disable this key binding, set this option to empty string.
   let g:spacevim_escape_key_binding = 'jk'
 <
 
+                                             *g:spacevim_file_searching_tools*
+Set the default file searching tool, by default it is `[]`.
+
                                              *g:spacevim_enable_googlesuggest*
 Enable/Disable Google suggestions for neocomplete. Default is 0.
 >

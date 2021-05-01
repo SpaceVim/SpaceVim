@@ -174,6 +174,10 @@ let g:spacevim_enable_guicolors = 0
 let g:spacevim_escape_key_binding = 'jk'
 
 ""
+" Set the default file searching tool, by default it is `[]`.
+let g:spacevim_file_searching_tools = []
+
+""
 " @section enable_googlesuggest, options-enable_googlesuggest
 " @parentsection options
 " Enable/Disable Google suggestions for neocomplete. Default is false.

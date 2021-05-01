@@ -21,7 +21,7 @@ let s:file_searching_commands = {
       \ 'find' : 'find -not -iwholename "*.git*" ',
       \ 'fd' : 'fd',
       \ }
-if exists('g:spacevim_file_searching_tools')
+if !empty(g:spacevim_file_searching_tools)
   call extend(s:file_searching_commands, {g:spacevim_file_searching_tools[0] : g:spacevim_file_searching_tools[1]})
   let s:current_tool = g:spacevim_file_searching_tools[0]
 else
