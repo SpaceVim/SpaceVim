@@ -1417,6 +1417,9 @@ It is `[]` by default.
     file_searching_tools = ['find', 'find -not -iwholename "*.git*" ']
 ```
 
+The first item is the name of the tool, the second one is the default searching command.
+
+
 #### Vim and SpaceVim files
 
 Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
