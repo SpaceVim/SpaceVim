@@ -1409,6 +1409,14 @@ By default, `find` is the default tool, you can use `ctrl-e` to switch tools.
 
 ![find](https://user-images.githubusercontent.com/13142418/97999590-79717000-1e26-11eb-91b1-458ab30d6254.gif)
 
+To change the default file searching tool, you can use `file_searching_tools` option.
+It is `['find', 'fd']` by default.
+
+```toml
+[options]
+    file_searching_tools = ['find', 'fd']
+```
+
 #### Vim and SpaceVim files
 
 Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
