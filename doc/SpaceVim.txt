@@ -43,41 +43,42 @@ CONTENTS                                                   *SpaceVim-contents*
       23. enable_ycm.............................|SpaceVim-options-enable_ycm|
       24. error_symbol.........................|SpaceVim-options-error_symbol|
       25. escape_key_binding.............|SpaceVim-options-escape_key_binding|
-      26. filemanager...........................|SpaceVim-options-filemanager|
-      27. filetree_direction.............|SpaceVim-options-filetree_direction|
-      28. guifont...................................|SpaceVim-options-guifont|
-      29. home_files_number...............|SpaceVim-options-home_files_number|
-      30. info_symbol...........................|SpaceVim-options-info_symbol|
-      31. keep_server_alive...............|SpaceVim-options-keep_server_alive|
-      32. language.................................|SpaceVim-options-language|
-      33. lint_engine...........................|SpaceVim-options-lint_engine|
-      34. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      35. max_column.............................|SpaceVim-options-max_column|
-      36. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      37. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      38. project_rooter_automatically
+      26. file_searching_tools.........|SpaceVim-options-file_searching_tools|
+      27. filemanager...........................|SpaceVim-options-filemanager|
+      28. filetree_direction.............|SpaceVim-options-filetree_direction|
+      29. guifont...................................|SpaceVim-options-guifont|
+      30. home_files_number...............|SpaceVim-options-home_files_number|
+      31. info_symbol...........................|SpaceVim-options-info_symbol|
+      32. keep_server_alive...............|SpaceVim-options-keep_server_alive|
+      33. language.................................|SpaceVim-options-language|
+      34. lint_engine...........................|SpaceVim-options-lint_engine|
+      35. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      36. max_column.............................|SpaceVim-options-max_column|
+      37. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      38. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      39. project_rooter_automatically
 ...............................|SpaceVim-options-project_rooter_automatically|
-      39. project_rooter_outermost.|SpaceVim-options-project_rooter_outermost|
-      40. project_rooter_patterns...|SpaceVim-options-project_rooter_patterns|
-      41. projects_cache_num.............|SpaceVim-options-projects_cache_num|
-      42. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      43. relativenumber.....................|SpaceVim-options-relativenumber|
-      44. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      45. search_tools.........................|SpaceVim-options-search_tools|
-      46. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      47. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      48. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      49. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
-      50. statusline_separator.........|SpaceVim-options-statusline_separator|
-      51. statusline_unicode_symbols
+      40. project_rooter_outermost.|SpaceVim-options-project_rooter_outermost|
+      41. project_rooter_patterns...|SpaceVim-options-project_rooter_patterns|
+      42. projects_cache_num.............|SpaceVim-options-projects_cache_num|
+      43. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      44. relativenumber.....................|SpaceVim-options-relativenumber|
+      45. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      46. search_tools.........................|SpaceVim-options-search_tools|
+      47. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      48. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      49. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      50. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
+      51. statusline_separator.........|SpaceVim-options-statusline_separator|
+      52. statusline_unicode_symbols
 .................................|SpaceVim-options-statusline_unicode_symbols|
-      52. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      53. vim_help_language...............|SpaceVim-options-vim_help_language|
-      54. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      55. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      56. windows_index_type.............|SpaceVim-options-windows_index_type|
-      57. windows_leader.....................|SpaceVim-options-windows_leader|
-      58. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      53. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      54. vim_help_language...............|SpaceVim-options-vim_help_language|
+      55. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      56. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      57. windows_index_type.............|SpaceVim-options-windows_index_type|
+      58. windows_leader.....................|SpaceVim-options-windows_leader|
+      59. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -438,6 +439,16 @@ Set the key binding for switch to normal mode in insert mode. Default is `jk`,
 to disable this key binding, set this option to empty string.
 >
   escape_key_binding = 'jk'
+<
+
+==============================================================================
+FILE_SEARCHING_TOOLS                   *SpaceVim-options-file_searching_tools*
+
+Set the default file searching tool used by `SPC f /`, by default it is `[]`.
+The first item in this list is the name of the tool, the second one is the
+default command. for example:
+>
+  file_searching_tools = ['find', 'find -not -iwholename "*.git*" ']
 <
 
 ==============================================================================
