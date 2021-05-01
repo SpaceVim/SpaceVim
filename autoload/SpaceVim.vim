@@ -174,7 +174,15 @@ let g:spacevim_enable_guicolors = 0
 let g:spacevim_escape_key_binding = 'jk'
 
 ""
+" @section file_searching_tools, options-file_searching_tools
+" @parentsection options
 " Set the default file searching tool, by default it is `[]`.
+" The first item in this list the name of the tool, the second item is the
+" default command. for example:
+" >
+"   file_searching_tools = ['find', 'find -not -iwholename "*.git*" ']
+" <
+
 let g:spacevim_file_searching_tools = []
 
 ""
