@@ -32,6 +32,8 @@ function! SpaceVim#layers#tools#plugins() abort
         \ 'BookmarkAnnotate',
         \ 'BookmarkNext',
         \ 'BookmarkPrev',
+        \ 'BookmarkClear',
+        \ 'BookmarkClearAll'
         \ ],
         \ 'loadconf_before' : 1}])
   if s:CMP.has('python')

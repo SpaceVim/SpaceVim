@@ -133,7 +133,7 @@ function! SpaceVim#layers#checkers#config() abort
         endif
       endif
     elseif g:spacevim_lint_engine ==# 'ale' && SpaceVim#layers#isLoaded('core#statusline')
-      autocmd User ALELint 
+      autocmd User ALELintPost
             \ let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     endif
   augroup END
