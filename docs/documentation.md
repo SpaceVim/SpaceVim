@@ -609,7 +609,9 @@ When syntax checking minor mode is enabled, a new element appears showing the nu
 
 **Search index integration:**
 
-Search index shows the number of occurrence when performing a search via `/` or `?`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 20/22 segment on the screenshot below.
+Search index shows the number of occurrence when performing a search via `/` or `?`.
+SpaceVim integrates nicely the search status by displaying it temporarily
+when `n` or `N` are being pressed. See the `20/22` segment on the screenshot below.
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
