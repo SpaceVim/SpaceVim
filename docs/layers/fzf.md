@@ -15,7 +15,7 @@ description: "This layers provide a heavily customized fzf centric work-flow"
 
 ## Description
 
-This layer is a heavily customized wrapper for fzf.
+This layer is a heavily customized wrapper for [fzf](https://github.com/junegunn/fzf.vim).
 
 ## Install
 
