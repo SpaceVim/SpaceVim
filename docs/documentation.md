@@ -1369,9 +1369,9 @@ Buffer manipulation commands (start with `b`):
 
 #### Special Buffers
 
-In SpaceVim, there are many special buffers,
-these buffers are created by plugins or SpaceVim itself.
-And these buffers are not listed.
+Buffers created by plugins are not normal files, and they will not be listed
+on tabline. And also will not be listed by `SPC b b` key binding in fuzzy finder
+layer.
 
 #### Files manipulations key bindings
 
@@ -1439,8 +1439,13 @@ All plugins can be easily discovered via `<Leader> f p`.
 
 ### Fuzzy finder
 
+Fuzzy finder provides a variety of efficient content searching key bindings,
+including file searching, outline searching, vim messages searching and register
+content searching.
+
 SpaceVim provides five fuzzy find tools, each of them is configured in a layer
-(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+([`unite`](../layers/unite/), `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+
 These layers have the same key bindings and features. But they need different dependencies.
 
 Users only need to load one of these layers, they will be able to get these features.
