@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#csharp layer"
-description: "This layer is for csharp development"
+description: "csharp language layer, including syntax highlighting, asynchronously code runner."
 ---
 
 # [Available Layers](../../) >> lang#csharp
@@ -9,8 +9,6 @@ description: "This layer is for csharp development"
 
 - [Description](#description)
 - [Install](#install)
-  - [Layer](#layer)
-  - [OmniSharp Server](#omnisharp-server)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
