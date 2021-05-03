@@ -1749,11 +1749,42 @@ KEY BINDINGS
 ==============================================================================
 LANG#CLOJURE                                     *SpaceVim-layer-lang-clojure*
 
-This layer provides syntax highlighting for clojure. To enable this layer:
+This layer provides clojure language support in SpaceVim. Including syntax
+highlighting, code indent, code runner and REPL. This layer is not enabled by
+default, To enable this layer:
 >
   [layers]
     name = "lang#clojure"
 <
+
+LAYER OPTIONS
+
+  1. `clojure_interpreter`: Set the clojure interpreter, by default, it is
+`clojure`
+>
+  [[layers]]
+    name = 'lang#clojure'
+    clojure_interpreter = 'path/to/clojure'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for clojure, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
 
 ==============================================================================
 LANG#COFFEESCRIPT                           *SpaceVim-layer-lang-coffeescript*
