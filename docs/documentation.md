@@ -25,6 +25,7 @@ description: "General documentation about how to using SpaceVim, including the q
 - [Interface elements](#interface-elements)
   - [Colorschemes](#colorschemes)
   - [Font](#font)
+  - [Mouse](#mouse)
   - [UI Toggles](#ui-toggles)
   - [Statusline](#statusline)
   - [Tabline](#tabline)
@@ -529,6 +530,21 @@ guifont = "SourceCodePro Nerd Font Mono:h11"
 
 If the specified font is not found, the fallback one will be used (depends on your system).
 Also note that changing this value has no effect if you are running Vim/Neovim in terminal.
+
+### Mouse
+
+Mouse support is enabled in Normal mode and Visual mode by default.
+To change the default value, you need to use the bootstrap function.
+
+For example, to disable mouse:
+
+```vim
+function! myspacevim#before() abort
+    set mouse=
+endfunction
+```
+
+Read `:h 'mouse'` for more info.
 
 ### UI Toggles
 
