@@ -169,16 +169,17 @@ CONTENTS                                                   *SpaceVim-contents*
       84. lang#typescript.....................|SpaceVim-layer-lang-typescript|
       85. lang#v.......................................|SpaceVim-layer-lang-v|
       86. lang#vbnet...............................|SpaceVim-layer-lang-vbnet|
-      87. lang#xml...................................|SpaceVim-layer-lang-xml|
-      88. lang#xquery.............................|SpaceVim-layer-lang-xquery|
-      89. language server protocol........................|SpaceVim-layer-lsp|
-      90. leaderf.....................................|SpaceVim-layer-leaderf|
-      91. operator...................................|SpaceVim-layer-operator|
-      92. shell.........................................|SpaceVim-layer-shell|
-      93. test...........................................|SpaceVim-layer-test|
-      94. tmux...........................................|SpaceVim-layer-tmux|
-      95. tools#dash...............................|SpaceVim-layer-tools-dash|
-      96. tools#zeal...............................|SpaceVim-layer-tools-zeal|
+      87. lang#wolfram...........................|SpaceVim-layer-lang-wolfram|
+      88. lang#xml...................................|SpaceVim-layer-lang-xml|
+      89. lang#xquery.............................|SpaceVim-layer-lang-xquery|
+      90. language server protocol........................|SpaceVim-layer-lsp|
+      91. leaderf.....................................|SpaceVim-layer-leaderf|
+      92. operator...................................|SpaceVim-layer-operator|
+      93. shell.........................................|SpaceVim-layer-shell|
+      94. test...........................................|SpaceVim-layer-test|
+      95. tmux...........................................|SpaceVim-layer-tmux|
+      96. tools#dash...............................|SpaceVim-layer-tools-dash|
+      97. tools#zeal...............................|SpaceVim-layer-tools-zeal|
   7. Usage....................................................|SpaceVim-usage|
       1. custom_plugins........................|SpaceVim-usage-custom_plugins|
       2. repl............................................|SpaceVim-usage-repl|
@@ -3675,6 +3676,35 @@ KEY BINDINGS
   Mode            Key             Function
   ---------------------------------------------
   normal          SPC l r         run current file
+<
+
+
+==============================================================================
+LANG#WOLFRAM                                     *SpaceVim-layer-lang-wolfram*
+
+This layer is for wolfram development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#wolfram'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for wolfram, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
 <
 
 
