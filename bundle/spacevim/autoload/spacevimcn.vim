@@ -44,3 +44,15 @@ scriptencoding utf-8
 "   let g:spacevim_default_indent = 2
 " <
 let g:spacevim_default_indent          = 2
+
+""
+" @section relativenumber, options-relativenumber
+" @parentsection options
+" 启用/禁用相对行号，相对行号可以用于快速上下多行移动，默认已启用。
+" >
+"   relativenumber = true
+" <
+
+""
+" 启用/禁用相对行号，相对行号可以用于快速上下多行移动，默认已启用。
+let g:spacevim_relativenumber          = 1

@@ -19,6 +19,7 @@ CONTENTS                                                   *SpaceVim-contents*
   1. 简介.......................................................|SpaceVim-intro|
   2. 选项.....................................................|SpaceVim-options|
       1. default_indent......................|SpaceVim-options-default_indent|
+      2. relativenumber......................|SpaceVim-options-relativenumber|
   3. Configuration...........................................|SpaceVim-config|
 
 ==============================================================================
@@ -50,6 +51,14 @@ DEFAULT_INDENT                               *SpaceVim-options-default_indent*
 <
 
 ==============================================================================
+RELATIVENUMBER                               *SpaceVim-options-relativenumber*
+
+启用/禁用相对行号，相对行号可以用于快速上下多行移动，默认已启用。
+>
+  relativenumber = true
+<
+
+==============================================================================
 CONFIGURATION                                                *SpaceVim-config*
 
                                                    *g:spacevim_default_indent*
@@ -57,6 +66,9 @@ CONFIGURATION                                                *SpaceVim-config*
 >
   let g:spacevim_default_indent = 2
 <
+
+                                                   *g:spacevim_relativenumber*
+启用/禁用相对行号，相对行号可以用于快速上下多行移动，默认已启用。
 
 
 vim:tw=78:ts=8:ft=help:norl:
