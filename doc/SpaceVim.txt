@@ -3486,6 +3486,23 @@ OPTIONS
 
   2. scheme_interpreter: Set the path or interpreter of scheme.
 
+MAPPINGS
+
+>
+  Key         Function
+  -----------------------------------------------
+  SPC l r     Run current file
+<
+This layer also provides REPL support for scheme, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
 
 ==============================================================================
 LANG#SH                                               *SpaceVim-layer-lang-sh*
