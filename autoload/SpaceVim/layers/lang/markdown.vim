@@ -17,8 +17,13 @@
 " <
 " @subsection Layer options
 "
-" - `enabled_formater`: Set the enabled formater, by default it is
+" 1. `enabled_formater`: Set the enabled formater, by default it is
 "   `['remark']`.
+" 2. `enableWcwidth`: Enable/disabled wcwidth option, it is disabled by
+"    default.
+" 3. `listItemChar`: Set the default list item char, it is `-` by default.
+" 4. `listItemIndent`: Set the default indent of list item. It is `1` by
+"    default.
 
 if exists('s:md_listItemIndent')
   finish
