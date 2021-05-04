@@ -18,6 +18,8 @@ wsdjeg                                                   *spacevim* *SpaceVim*
 CONTENTS                                                   *SpaceVim-contents*
   1. 简介.......................................................|SpaceVim-intro|
   2. 选项.....................................................|SpaceVim-options|
+      1. default_indent......................|SpaceVim-options-default_indent|
+  3. Configuration...........................................|SpaceVim-config|
 
 ==============================================================================
 简介                                                            *SpaceVim-intro*
@@ -37,6 +39,23 @@ SpaceVim 使用 `~/.SpaceVim.d/init.toml` 作为默认的全局配置文件。�
   [options]
     enable-guicolors = true
     max-column = 120
+<
+
+==============================================================================
+DEFAULT_INDENT                               *SpaceVim-options-default_indent*
+
+设置默认的对齐具体，默认的值为 2。
+>
+  default_indent = 2
+<
+
+==============================================================================
+CONFIGURATION                                                *SpaceVim-config*
+
+                                                   *g:spacevim_default_indent*
+设置默认的对齐具体，默认的值为 2。
+>
+  let g:spacevim_default_indent = 2
 <
 
 

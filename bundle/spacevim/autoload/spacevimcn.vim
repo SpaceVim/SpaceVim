@@ -29,3 +29,18 @@ scriptencoding utf-8
 "     enable-guicolors = true
 "     max-column = 120
 " <
+
+""
+" @section default_indent, options-default_indent
+" @parentsection options
+" 设置默认的对齐具体，默认的值为 2。
+" >
+"   default_indent = 2
+" <
+
+""
+" 设置默认的对齐具体，默认的值为 2。
+" >
+"   let g:spacevim_default_indent = 2
+" <
+let g:spacevim_default_indent          = 2
