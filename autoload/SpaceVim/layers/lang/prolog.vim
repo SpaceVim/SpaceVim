@@ -24,6 +24,9 @@
 "   SPC l r         run current file
 " <
 "
+" The default code runner command is `swipl -q -f %s -t main`, `%s` will be
+" replaced to the path of current file.
+"
 " This layer also provides REPL support for prolog, the key bindings are:
 " >
 "   Key             Function
