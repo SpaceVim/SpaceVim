@@ -20,7 +20,7 @@
 " >
 "   Key             Function
 "   -----------------------------
-"   SPC l          
+"   SPC l c         run eclean          
 " <
 "
 
