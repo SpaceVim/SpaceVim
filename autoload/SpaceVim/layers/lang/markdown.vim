@@ -6,6 +6,24 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#markdown, layer-lang-markdown
+" @parentsection layers
+" This layer is for markdown language, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#markdown'
+" <
+" @subsection Layer options
+"
+" - `enabled_formater`: Set the enabled formater, by default it is
+"   `['remark']`.
+
+if exists('s:md_listItemIndent')
+  finish
+endif
+
 let s:SYS = SpaceVim#api#import('system')
 
 
