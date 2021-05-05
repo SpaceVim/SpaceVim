@@ -1605,6 +1605,24 @@ endfunction
 "   General guide for using SpaceVim. Including layer configuration, bootstrap
 "   function.
 
+
+""
+" @section buffers-and-files, usage-buffers-and-files
+" @parentsection usage
+" @subsection Buffers manipulation key bindings
+" All buffers key bindings are start with `b` prefix:
+" >
+"   Key Bindings	Descriptions
+"   SPC <Tab>	    switch to alternate buffer in the current window (switch back and forth)
+"   SPC b .	      buffer transient state
+"   SPC b b	      switch to a buffer (via denite/unite)
+"   SPC b d	      kill the current buffer (does not delete the visited file)
+"   SPC u SPC b d	kill the current buffer and window (does not delete the visited file) (TODO)
+"   SPC b D	      kill a visible buffer using vim-choosewin
+" <
+
+
+
 ""
 " @section FAQ, faq
 " This is a list of the frequently asked questions about SpaceVim.

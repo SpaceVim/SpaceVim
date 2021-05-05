@@ -187,9 +187,10 @@ CONTENTS                                                   *SpaceVim-contents*
       102. tools#dash..............................|SpaceVim-layer-tools-dash|
       103. tools#zeal..............................|SpaceVim-layer-tools-zeal|
   7. Usage....................................................|SpaceVim-usage|
-      1. custom_plugins........................|SpaceVim-usage-custom_plugins|
-      2. repl............................................|SpaceVim-usage-repl|
-      3. tasks..........................................|SpaceVim-usage-tasks|
+      1. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
+      2. custom_plugins........................|SpaceVim-usage-custom_plugins|
+      3. repl............................................|SpaceVim-usage-repl|
+      4. tasks..........................................|SpaceVim-usage-tasks|
   8. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -4085,6 +4086,24 @@ USAGE                                                         *SpaceVim-usage*
 
   General guide for using SpaceVim. Including layer configuration, bootstrap
 function.
+
+==============================================================================
+BUFFERS-AND-FILES                           *SpaceVim-usage-buffers-and-files*
+
+BUFFERS MANIPULATION KEY BINDINGS
+All buffers key bindings are start with `b` prefix:
+>
+  Key Bindings  Descriptions
+  SPC <Tab>         switch to alternate buffer in the current window (switch
+    back and forth)
+  SPC b .             buffer transient state
+  SPC b b             switch to a buffer (via denite/unite)
+  SPC b d             kill the current buffer (does not delete the visited
+    file)
+  SPC u SPC b d kill the current buffer and window (does not delete the
+    visited file) (TODO)
+  SPC b D             kill a visible buffer using vim-choosewin
+<
 
 ==============================================================================
 CUSTOM_PLUGINS                                 *SpaceVim-usage-custom_plugins*
