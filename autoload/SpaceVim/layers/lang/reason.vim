@@ -11,6 +11,16 @@ if exists('s:JSON')
   finish
 endif
 
+""
+" @section lang#reason, layer-lang-reason
+" @parentsection layers
+" This layer is for reason development, disabled by default, to enable this
+" layer, add following snippet to your @section(options) file.
+" >
+"   [[layers]]
+"     name = 'lang#reason'
+" <
+
 let s:JSON = SpaceVim#api#import('data#json')
 
 function! SpaceVim#layers#lang#reason#plugins() abort

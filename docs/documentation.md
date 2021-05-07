@@ -25,6 +25,7 @@ description: "General documentation about how to using SpaceVim, including the q
 - [Interface elements](#interface-elements)
   - [Colorschemes](#colorschemes)
   - [Font](#font)
+  - [Mouse](#mouse)
   - [UI Toggles](#ui-toggles)
   - [Statusline](#statusline)
   - [Tabline](#tabline)
@@ -136,7 +137,7 @@ packages tuned by power users and bugs are fixed quickly.
 - **Minimalistic and nice graphical UI:** you'll love the awesome UI and its useful features.
 - **Keep your fingers on the home row:** for quicker editing with support for QWERTY and BEPO layouts.
 - **Mnemonic key bindings:** commands have mnemonic prefixes like `[WIN]` for all the window and buffer commands or `[Unite]` for the unite work flow commands.
-- **Fast boot time:** Lazy-load 90% of plugins with [dein.vim]
+- **Fast boot time:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
 - **Lower the risk of RSI:** by heavily using the space bar instead of modifiers.
 - **Batteries included:** discover hundreds of ready-to-use packages nicely organised in configuration layers following a set of [conventions](http://spacevim.org/conventions/).
 - **Neovim centric:** Dark powered mode of SpaceVim
@@ -530,6 +531,21 @@ guifont = "SourceCodePro Nerd Font Mono:h11"
 If the specified font is not found, the fallback one will be used (depends on your system).
 Also note that changing this value has no effect if you are running Vim/Neovim in terminal.
 
+### Mouse
+
+Mouse support is enabled in Normal mode and Visual mode by default.
+To change the default value, you need to use the bootstrap function.
+
+For example, to disable mouse:
+
+```vim
+function! myspacevim#before() abort
+    set mouse=
+endfunction
+```
+
+Read `:h 'mouse'` for more info.
+
 ### UI Toggles
 
 Some UI indicators can be toggled on and off (toggles start with t and T):
@@ -609,7 +625,9 @@ When syntax checking minor mode is enabled, a new element appears showing the nu
 
 **Search index integration:**
 
-Search index shows the number of occurrence when performing a search via `/` or `?`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 20/22 segment on the screenshot below.
+Search index shows the number of occurrence when performing a search via `/` or `?`.
+SpaceVim integrates nicely the search status by displaying it temporarily
+when `n` or `N` are being pressed. See the `20/22` segment on the screenshot below.
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
@@ -1369,9 +1387,9 @@ Buffer manipulation commands (start with `b`):
 
 #### Special Buffers
 
-In SpaceVim, there are many special buffers,
-these buffers are created by plugins or SpaceVim itself.
-And these buffers are not listed.
+Buffers created by plugins are not normal files, and they will not be listed
+on tabline. And also will not be listed by `SPC b b` key binding in fuzzy finder
+layer.
 
 #### Files manipulations key bindings
 
@@ -1439,8 +1457,13 @@ All plugins can be easily discovered via `<Leader> f p`.
 
 ### Fuzzy finder
 
+Fuzzy finder provides a variety of efficient content searching key bindings,
+including file searching, outline searching, vim messages searching and register
+content searching.
+
 SpaceVim provides five fuzzy find tools, each of them is configured in a layer
-(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+([`unite`](../layers/unite/), `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+
 These layers have the same key bindings and features. But they need different dependencies.
 
 Users only need to load one of these layers, they will be able to get these features.

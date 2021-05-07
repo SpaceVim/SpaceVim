@@ -10,7 +10,7 @@ description: "This layer is for Clojure development, provide autocompletion, syn
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
-  - [Layer](#layer)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Running current script](#running-current-script)
   - [Inferior REPL process](#inferior-repl-process)
@@ -31,14 +31,23 @@ This layer is for Clojure development, and it includes vim-clojure-static and vi
 
 ## Install
 
-### Layer
-
 To use this configuration layer, update custom configuration file with:
 
 ```toml
 [[layers]]
   name = "lang#clojure"
 ```
+
+## Layer options
+
+- `clojure_interpreter`: Set the clojure interpreter, by default, it is
+  `clojure`
+  ```toml
+  [[layers]]
+    name = 'lang#clojure'
+    clojure_interpreter = 'path/to/clojure'
+  ```
+
 
 ## Key bindings
 

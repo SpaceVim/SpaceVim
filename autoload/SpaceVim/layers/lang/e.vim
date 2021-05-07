@@ -6,6 +6,18 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#e, layer-lang-e
+" @parentsection layers
+" @subsection Intro
+"
+" This layer includes utilities and language-specific mappings for e development.
+" By default it is disabled, to enable this layer:
+" >
+"   [layers]
+"     name = "lang#e"
+" <
+
 if exists('s:e_interpreter')
   finish
 endif

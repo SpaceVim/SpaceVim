@@ -6,6 +6,22 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#pascal, layer-lang-pascal
+" @parentsection layers
+" This layer is for pascal development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#pascal'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
 
 let s:SYS = SpaceVim#api#import('system')
 

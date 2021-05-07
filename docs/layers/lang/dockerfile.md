@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#dockerfile layer"
-description: "This layer adds DockerFile to SpaceVim"
+description: "DockerFile language support, includding syntax highlighting and code formatting."
 ---
 
 # [Available Layers](../../) >> lang#dockerfile

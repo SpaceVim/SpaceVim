@@ -19,6 +19,7 @@ and usage.
   - [E492: Not an editor command: ^M](#e492-not-an-editor-command-m)
   - [Why SpaceVim can not display default colorscheme?](#why-spacevim-can-not-display-default-colorscheme)
   - [Why can't I update plugins?](#why-cant-i-update-plugins)
+  - [How to reload `init.toml`?](#how-to-reload-inittoml)
   - [How to enable +py and +py3 in Neovim?](#how-to-enable-py-and-py3-in-neovim)
   - [Why does Vim freeze after pressing Ctrl-s?](#why-does-vim-freeze-after-pressing-ctrl-s)
 
@@ -90,6 +91,10 @@ Sometimes you will see `Updating failed, The plugin dir is dirty`. Since the plu
 directory is dirty (has changes that haven't been committed to git) you can not use `git pull` to update plugin. To fix this
 issue, just move your cursor to the error line, and press `gf`, then run `git reset --hard HEAD` or `git checkout .`. For
 more info please read git documentation.
+
+### How to reload `init.toml`?
+
+You can not reload `init.toml` after startup. After editing the `init.toml` file, you need to restart your vim or neovim.
 
 ### How to enable +py and +py3 in Neovim?
 
