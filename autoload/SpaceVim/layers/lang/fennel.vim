@@ -30,7 +30,7 @@ function! SpaceVim#layers#lang#fennel#config() abort
 
 endfunction
 
-function! SpaceVim#layers#lang#hy#set_variable(var) abort
+function! SpaceVim#layers#lang#fennel#set_variable(var) abort
   let s:fennel_interpreter = get(a:var, 'fennel_interpreter', s:fennel_interpreter)
 endfunction
 
