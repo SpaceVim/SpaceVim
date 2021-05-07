@@ -30,6 +30,10 @@ function! SpaceVim#layers#lang#fennel#config() abort
 
 endfunction
 
+function! SpaceVim#layers#lang#hy#set_variable(var) abort
+  let s:fennel_interpreter = get(a:var, 'fennel_interpreter', s:fennel_interpreter)
+endfunction
+
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
