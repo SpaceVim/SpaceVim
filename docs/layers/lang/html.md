@@ -22,7 +22,7 @@ This layer adds support for editing HTML and CSS.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -49,7 +49,7 @@ npm install --global vscode-html-languageserver-bin
 
 ## Features
 
-- Generate HTML and CSS coding using [neosnippet](https://github.com/Shougo/neosnippet.vim/) and [emmet-vim](https://github.com/mattn/emmet-vim)
+- Generate HTML and CSS code using [neosnippet](https://github.com/Shougo/neosnippet.vim/) and [emmet-vim](https://github.com/mattn/emmet-vim)
 - Tags navigation on key `%` using vim-matchup
 - auto-completion
 - syntax checking

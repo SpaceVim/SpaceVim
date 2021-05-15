@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#plantuml layer"
-description: "This layer is for PlantUML development, syntax highlighting for PlantUML file."
+description: "This layer is for PlantUML development, provides syntax highlighting for PlantUML files."
 ---
 
 # [Available Layers](../../) >> lang#plantuml
@@ -29,7 +29,7 @@ This layer is for PlantUML development.
 
 ### Layer
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

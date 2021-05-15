@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#eiffel layer"
-description: "This layer is for eiffel development, provides syntax highlighting, indent for eiffel file."
+description: "This layer is for eiffel development, provides syntax highlighting and indentation for eiffel files."
 ---
 
 # [Available Layers](../../) >> lang#eiffel
@@ -19,7 +19,7 @@ This layer is for eiffel development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

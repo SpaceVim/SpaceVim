@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#j layer"
-description: "This layer is for j development, provide syntax checking and repl support for j file."
+description: "This layer is for j development, provides syntax checking and repl support for j files."
 ---
 
 # [Available Layers](../../) >> lang#j
@@ -21,7 +21,7 @@ This layer is for [j language](https://www.jsoftware.com/#/) development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

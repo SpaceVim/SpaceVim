@@ -18,11 +18,11 @@ description: "This layer is for TypeScript development, includding code completi
 
 ## Description
 
-This layer is for TypeScript development, includding code completion, syntax lint and doc generation.
+This layer is for TypeScript development, including code completion, syntax lint and doc generation.
 
 ## Installation
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -56,7 +56,7 @@ yarn add -D lehre
 
 ### Code runner
 
-To run TypeScript code in current buffer, you can press `SPC l r`. It will run without loss focus,
+To run TypeScript code in current buffer, you can press `SPC l r`. It will run without losing focus,
 and the result will be shown in a runner buffer.
 
 ### Inferior REPL process

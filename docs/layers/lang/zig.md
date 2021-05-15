@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#zig layer"
-description: "This layer is for zig development, provide code runner support for zig file."
+description: "This layer is for zig development, provides code runner support for zig files."
 ---
 
 # [Available Layers](../../) >> lang#zig
@@ -21,7 +21,7 @@ This layer is for [zig](https://ziglang.org/) development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

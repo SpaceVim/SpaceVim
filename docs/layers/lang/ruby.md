@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#ruby layer"
-description: "This layer is for Ruby development, provide autocompletion, syntax checking, code format for Ruby file."
+description: "This layer is for Ruby development, provides autocompletion, syntax checking and code formatting for Ruby files."
 ---
 
 # [Available Layers](../../) >> lang#ruby
@@ -25,7 +25,7 @@ This layer is for Ruby development.
 
 ### Layer
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -117,4 +117,4 @@ Send code to inferior process commands:
 
 ### Running current script
 
-To running a Ruby script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To run a Ruby script, you can press `SPC l r` to run the current file without losing focus, and the result will be shown in a runner buffer.

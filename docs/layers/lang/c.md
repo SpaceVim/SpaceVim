@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#c layer"
-description: "C/C++/Object-C language support for SpaceVim, include code completion, jump to definition, quick runner."
+description: "C/C++/Object-C language support for SpaceVim, including code completion, jump to definition, and quick runner."
 ---
 
 # [Available Layers](../../) >> lang#c
@@ -103,10 +103,10 @@ it is disabled, to enable it:
 
 ## Key bindings
 
-| key bindings | Descriptions                 |
-| ------------ | ---------------------------- |
-| `SPC l d`    | show documentation           |
-| `SPC l e`    | rename symbol                |
-| `SPC l f`    | references                   |
-| `SPC l r`    | compile and run current file |
-| `g d`        | defintion preview            |
+| key bindings | Descriptions                     |
+| ------------ | -------------------------------- |
+| `SPC l d`    | show documentation               |
+| `SPC l e`    | rename symbol                    |
+| `SPC l f`    | references                       |
+| `SPC l r`    | compile and run the current file |
+| `g d`        | defintion preview                |

@@ -20,7 +20,7 @@ This layer is for golang development. It also provides additional language-speci
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -72,7 +72,7 @@ go get -u github.com/jstemmer/gotags
 
 **Code formatting:**
 
-the default key bindings for format current buffer is `SPC b f`, and this key bindings is defined in [format layer](<>). You can also use `g=` to indent current buffer.
+the default key bindings for formatting current buffer is `SPC b f`, and this key bindings is defined in [format layer](<>). You can also use `g=` to indent current buffer.
 
 To make neoformat support go files, you should have [go-fmt](http://golang.org/cmd/gofmt/) command available, or
 install [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports). `go-fmt` is delivered by golang's default installation, so make sure you have correctly setup your go environment.
