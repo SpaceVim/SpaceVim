@@ -272,6 +272,9 @@ function! s:DefxPasteFile(_) abort
     let path = fnamemodify(path, ':p:h')
   endif
 
+  " If you have xclip-pastefile in your PATH.
+  " this command will be run on action directory
+  " support paste file which is copied outside of vim.
   if executable('xclip-pastefile')
     let old_wd = getcwd()
     if old_wd == path
@@ -281,10 +284,18 @@ function! s:DefxPasteFile(_) abort
       call s:VCOP.systemlist(['xclip-pastefile'])
       noautocmd exe 'cd' fnameescape(old_wd)
     endif
-  elseif s:SYS.isWindows && !empty(s:copyed_file_path)
+    return
+  endif
+
+  if s:SYS.isWindows && !empty(s:copyed_file_path)
     " in windows, use copy command for paste file.
     let destination = path . s:FILE.separator . fnamemodify(s:copyed_file_path, ':t')
     let cmd = 'cmd /c copy ' . shellescape(s:copyed_file_path) . ' ' . shellescape(destination)
+    call s:VCOP.systemlist(cmd)
+  elseif !s:SYS.isWindows && !empty(s:copyed_file_path)
+    " in Linux or MacOS, use cp command for paste file.
+    let destination = path . s:FILE.separator . fnamemodify(s:copyed_file_path, ':t')
+    let cmd = 'cp -r ' . shellescape(s:copyed_file_path) . ' ' . shellescape(destination)
     call s:VCOP.systemlist(cmd)
   endif
   if v:shell_error
