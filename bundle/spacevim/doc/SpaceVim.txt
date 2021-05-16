@@ -67,6 +67,9 @@ CONFIGURATION                                                *SpaceVim-config*
   let g:spacevim_default_indent = 2
 <
 
+                                                       *g:spacevim_expand_tab*
+在输入模式下，使用空格替代 `<Tab>`
+
                                                    *g:spacevim_relativenumber*
 启用/禁用相对行号，相对行号可以用于快速上下多行移动，默认已启用。
 
