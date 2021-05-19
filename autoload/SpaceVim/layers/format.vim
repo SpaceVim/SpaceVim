@@ -68,6 +68,12 @@ endfunction
 function! s:format() abort
   if !empty(&ft) &&
         \ ( index(s:format_ft, &ft) !=# -1 || s:format_on_save ==# 1)
-    try | undojoin | Neoformat | catch /^Vim\%((\a\+)\)\=:E790/ | finally | silent Neoformat | endtry
+    try
+      undojoin
+      Neoformat
+    catch /^Vim\%((\a\+)\)\=:E790/
+    finally
+      silent Neoformat
+    endtry
   endif
 endfunction
