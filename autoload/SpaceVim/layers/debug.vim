@@ -38,15 +38,23 @@ function! SpaceVim#layers#debug#config() abort
 endfunction
 
 function! SpaceVim#layers#debug#launching(ft) abort
+  if exists('g:spacevim_debug_config')
+    let s:config = getcwd() . '/' . g:spacevim_debug_config
+  else
+    let s:config = getcwd() . '/.vim/debug.vim'
+  endif
+
   if a:ft ==# 'python'
     exe 'VBGstartPDB ' . bufname('%')
   elseif a:ft ==# 'ruby'
     exe 'VBGstartRDebug ' . bufname('%')
   elseif a:ft ==# 'powershell'
     exe 'VBGstartPowerShell ' . bufname('%')
+  elseif filereadable(s:config)
+    exe "source " . fnameescape(s:config)
   else
     echohl WarningMsg
-    echo 'read :h vebugger-launching'
+    echo 'No configuration file found, see :h vebugger-launching'
     echohl None
   endif
 endfunction
