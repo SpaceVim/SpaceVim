@@ -92,7 +92,7 @@ This should be different from the path of the user's project files (which is sen
 ### Code completion
 
 javacomplete2 which has been included in `lang#java` layer provides omnifunc for java file and deoplete source.
-with this plugin and `autocomplete` layer, the completion popup menu will be opened automatically。
+with this plugin and `autocomplete` layer, the completion popup menu will be opened automatically.
 
 ![code complete](https://user-images.githubusercontent.com/13142418/46297202-ba0ab980-c5ce-11e8-81a0-4a4a85bc98a5.png)
 
