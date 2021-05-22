@@ -145,7 +145,7 @@ If there are more than one class, a menu will be shown below current windows.
 
 ### Jump to test file
 
-SpaceVim use vim-project to manager the files in a project, you can add a `.projections.json` to the root of your project with following content:
+SpaceVim uses vim-project to manager the files in a project, you can add a `.projections.json` to the root of your project with following content:
 
 ```json
 {
