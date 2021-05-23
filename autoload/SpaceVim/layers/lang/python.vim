@@ -141,7 +141,7 @@ function! SpaceVim#layers#lang#python#config() abort
   elseif executable('python3')
     call SpaceVim#plugins#repl#reg('python', ['python3', '-i'])
   endif
-  let g:neomake_python_enabled_makers = ['python']
+  let g:neomake_python_enabled_makers = s:enabled_linters
   let g:neomake_python_python_exe = s:python_interpreter
 endfunction
 
