@@ -38,9 +38,8 @@ To use this configuration layer, update your custom configuration file with:
 
 ## Configuration
 
-When you want to see picture which plantuml draw, you need to set
-plantuml_jar_path. You should find or install plantuml.jar in 
-your system.
+When you want to see the picture which plantuml drew, you need to set
+plantuml_jar_path. You also need to install [plantuml.jar](https://plantuml.com/download) on your system.
 Then you give the path to `plantuml_jar_path`. see below.
 
 This is just example.

@@ -441,7 +441,7 @@ describe 'Default settings'
         " }}}
     end
 
-    it 'provides autoload functions'
+    it 'provide autoload functions'
         try
             " load autoload functions
             runtime autoload/EasyMotion.vim

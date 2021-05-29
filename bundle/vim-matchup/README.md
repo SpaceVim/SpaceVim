@@ -713,7 +713,7 @@ surround replacement rules but is not currently supported.
 
 ### Auto-closing plugins
 
-match-up does not provides auto-complete or auto-insertion of matches.
+match-up does not provide auto-complete or auto-insertion of matches.
 See for instance one of the following plugins for this;
 
 - [vim-endwise](https://github.com/tpope/vim-endwise)
