@@ -11,7 +11,6 @@ Visit these resources for help or general questions.
 <!-- vim-markdown-toc GFM -->
 
 - [News](#news)
-- [Bug repport and feature request](#bug-repport-and-feature-request)
 - [Mail list](#mail-list)
 - [Chat](#chat)
 - [Others](#others)
@@ -21,10 +20,6 @@ Visit these resources for help or general questions.
 ### News
 
 - <i class="fab fa-twitter"></i> [Twitter](https://twitter.com/SpaceVim)
-
-### Bug repport and feature request
-
-- [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
 
 ### Mail list
 
