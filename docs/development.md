@@ -8,7 +8,7 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
 <!-- vim-markdown-toc GFM -->
 
 - [Asking for help](#asking-for-help)
-- [Reporting issues](#reporting-issues)
+- [Bug reporting](#bug-reporting)
 - [Contributing code](#contributing-code)
   - [License](#license)
   - [Conventions](#conventions)
@@ -47,18 +47,21 @@ You can only consider reading the sections relevant to what you are going to do:
 
 ## Asking for help
 
-If you want to ask an usage question, be sure to look first into some places as it may hold the answers:
+If you want to ask an usage question,
+be sure to look first into some places as it may hold the answers:
 
 - <kbd>:h SpaceVim-faq</kbd>: Some of the most frequently asked questions are answered there.
 - [SpaceVim documentation](https://spacevim.org/documentation/): It is the general documentation of SpaceVim.
 
-## Reporting issues
+## Bug reporting
 
-Issues have to be reported on [issues tracker](https://github.com/SpaceVim/SpaceVim/issues), please:
+To report a bug, you can use the spacevim mailing list `spacevim@googlegroups.com`,
+before sending mail, please:
 
-- Check that no duplicate issue is in the issues tracker, you can search for keywords in the issues tracker.
-- Check that the issue has not been fixed in latest version of SpaceVim, please update your SpaceVim, and try to reproduce the bug here.
-- Use a clear title and follow the issue template.
+- Check that no duplicate issue in [google groups](https://groups.google.com/forum/#!forum/spacevim)
+- Check that the issue has not been fixed in latest version of SpaceVim,
+  please update your SpaceVim, and try to reproduce the bug here.
+- Use a clear title with `[bug]` prefix.
 - Include details on how to reproduce it, just like a step by step guide.
 
 ## Contributing code
