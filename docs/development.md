@@ -54,7 +54,7 @@ If you want to ask an usage question, be sure to look first into some places as 
 
 ## Reporting issues
 
-Issues have to be reported on [issues tracker](https://github.com/SpaceVim/SpaceVim/issues), please:
+Issues have to be reported to SpaceVim mailing list: spacevim@googlegroups.com, please:
 
 - Check that no duplicate issue is in the issues tracker, you can search for keywords in the issues tracker.
 - Check that the issue has not been fixed in latest version of SpaceVim, please update your SpaceVim, and try to reproduce the bug here.
