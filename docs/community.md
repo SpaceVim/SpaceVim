@@ -11,7 +11,7 @@ Visit these resources for help or general questions.
 <!-- vim-markdown-toc GFM -->
 
 - [News](#news)
-- [Mail list](#mail-list)
+- [Mailing list](#mailing-list)
 - [Chat](#chat)
 - [Others](#others)
 
@@ -21,16 +21,15 @@ Visit these resources for help or general questions.
 
 - <i class="fab fa-twitter"></i> [Twitter](https://twitter.com/SpaceVim)
 
-### Mail list
+### Mailing list
 
-Users who are accustomed to using email can also communicate with each other through the mail group.
-They can send email to the mailing list to participate in the discussion.
+To report a bug or feature request, you can use the SpaceVim google mail list.
 
 ```
 spacevim@googlegroups.com
 ```
 
-Please note that to post on these lists, you must be a member,
+Please note that to post on the list, you must be a member,
 To join this group send an empty message to:
 
 ```
