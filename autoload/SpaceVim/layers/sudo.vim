@@ -15,12 +15,9 @@ function! SpaceVim#layers#sudo#plugins() abort
 endfunction
 
 function! SpaceVim#layers#sudo#config() abort
-  let g:suda_startup = 0 
   if has('nvim') 
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'call call('
-          \ . string(s:_function('s:SudoWriteCurrentFile')) . ', [])',
-          \ 'save buffer with sudo', 1)
-    command! W call <SID>SudoWriteCurrentFile()
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'W'], 'SudaWrite', 'save buffer with sudo', 1)
+    command! W SudaWrite
     cnoremap w!! W
   else 
     " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
@@ -28,17 +25,6 @@ function! SpaceVim#layers#sudo#config() abort
     cnoremap w!! W
     command! W w !sudo tee % > /dev/null
   endif
-endfunction
-
-function! s:SudoWriteCurrentFile() abort
-  let l:lhs = expand('%')
-  try 
-    let l:echo_message = suda#write(l:lhs)
-    redraw | echo l:echo_message
-  finally
-    doautocmd BufWritePost l:lhs
-    checktime
-  endtry
 endfunction
 
 if v:version > 703 || v:version == 703 && has('patch1170')
