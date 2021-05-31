@@ -15,7 +15,7 @@ description: "This layers provide a heavily customized ctrlp centric work-flow"
 
 ## Description
 
-This layer is a heavily customized wrapper for ctrlp.
+This layer is a heavily customized wrapper for [ctrlp](https://github.com/kien/ctrlp.vim) (discontinued use [this fork](https://github.com/ctrlpvim/ctrlp.vim) instead).
 
 ## Install
 

@@ -26,6 +26,8 @@ let s:WINDOW = SpaceVim#api#import('vim#window')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:SPI = SpaceVim#api#import('unicode#spinners') 
 
+let s:LOGGER =SpaceVim#logger#derive('repl')
+
 augroup spacevim_repl
   autocmd!
   autocmd VimLeavePre * call s:close()
@@ -33,9 +35,9 @@ augroup END
 
 
 function! SpaceVim#plugins#repl#start(ft) abort
-
+  call s:LOGGER.info('start repl for filetype:' . a:ft)
   let exe = get(s:exes, a:ft, '')
-
+  call s:LOGGER.info('get the command:' . a:ft)
   if !empty(exe)
     call s:start(exe)
   else

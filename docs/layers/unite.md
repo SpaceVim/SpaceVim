@@ -16,7 +16,7 @@ description: "This layers provide a heavily customized Unite centric work-flow"
 
 ## Description
 
-This layer is a heavily customized wrapper for unite.vim and unite sources.
+This layer is a heavily customized wrapper for [unite.vim](https://github.com/Shougo/unite.vim) (discontinued, use [denite](../denite)) and its sources.
 
 ## Install
 

@@ -33,7 +33,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
         \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
-        \ ['andrewradev/splitjoin.vim',{ 'merged' : 0, 'loadconf' : 1}],
+        \ ['andrewradev/splitjoin.vim',{ 'on_cmd':['SplitjoinJoin', 'SplitjoinSplit'],'merged' : 0, 'loadconf' : 1}],
         \ ]
   if executable('fcitx')
     call add(plugins,[g:_spacevim_root_dir . 'bundle/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
@@ -41,7 +41,7 @@ function! SpaceVim#layers#edit#plugins() abort
   if g:spacevim_enable_bepo_layout
     call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-bepo',        { 'merged' : 0}])
   endif
-  if s:CMP.has('python') || s:CMP.has('python3')
+  if s:CMP.has('python3') || s:CMP.has('python')
     call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-mundo',        { 'on_cmd' : 'MundoToggle'}])
   else
     call add(plugins,[g:_spacevim_root_dir . 'bundle/undotree',        { 'on_cmd' : 'UndotreeToggle'}])
@@ -75,7 +75,7 @@ function! SpaceVim#layers#edit#config() abort
   " }}}
 
 
-  if s:CMP.has('python') || s:CMP.has('python3')
+  if s:CMP.has('python3') || s:CMP.has('python')
     nnoremap <silent> <F7> :MundoToggle<CR>
   else
     nnoremap <silent> <F7> :UndotreeToggle<CR>

@@ -13,6 +13,7 @@ description: "This layer is for Dart development, provide autocompletion, syntax
   - [Layer](#layer)
   - [Syntax checking && Code formatting](#syntax-checking--code-formatting)
   - [Install dart-repl](#install-dart-repl)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
@@ -57,6 +58,10 @@ You need to install the dart_repl via pub, pub is a build-in package manager in 
 ```sh
 pub global activate dart_repl
 ```
+
+## Layer options
+
+- `dart_sdk_path`: Set the path of dart sdk, by default, it is `''`.
 
 ## Key bindings
 

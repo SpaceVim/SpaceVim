@@ -476,7 +476,7 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'P'], 'call SpaceVim#mapping#search#grep("G", "P")',
         \ 'search cursor word in project with git-grep', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'f'], 'call SpaceVim#mapping#search#grep("G", "f")',
-        \ 'search in arbitrary directory  with git-grep', 1)
+        \ 'search in arbitrary directory with git-grep', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'F'], 'call SpaceVim#mapping#search#grep("G", "F")',
         \ 'search cursor word in arbitrary directory with git-grep', 1)
 

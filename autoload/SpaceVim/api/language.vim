@@ -15,6 +15,7 @@ let s:self.__aliases = {
       \ 'python' : 'Python',
       \ 'java' : 'Java',
       \ 'smalltalk' : 'SmallTalk',
+      \ 'objc' : 'Objective-C',
       \ }
 
 

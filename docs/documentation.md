@@ -25,6 +25,7 @@ description: "General documentation about how to using SpaceVim, including the q
 - [Interface elements](#interface-elements)
   - [Colorschemes](#colorschemes)
   - [Font](#font)
+  - [Mouse](#mouse)
   - [UI Toggles](#ui-toggles)
   - [Statusline](#statusline)
   - [Tabline](#tabline)
@@ -136,7 +137,7 @@ packages tuned by power users and bugs are fixed quickly.
 - **Minimalistic and nice graphical UI:** you'll love the awesome UI and its useful features.
 - **Keep your fingers on the home row:** for quicker editing with support for QWERTY and BEPO layouts.
 - **Mnemonic key bindings:** commands have mnemonic prefixes like `[WIN]` for all the window and buffer commands or `[Unite]` for the unite work flow commands.
-- **Fast boot time:** Lazy-load 90% of plugins with [dein.vim]
+- **Fast boot time:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
 - **Lower the risk of RSI:** by heavily using the space bar instead of modifiers.
 - **Batteries included:** discover hundreds of ready-to-use packages nicely organised in configuration layers following a set of [conventions](http://spacevim.org/conventions/).
 - **Neovim centric:** Dark powered mode of SpaceVim
@@ -228,7 +229,13 @@ plugin names after `:SPUpdate`.
 ### Reinstall plugins
 
 When a plugin is failed to update or is broken, Use `:SPReinstall`
-command to reinstall this plugin.
+command to reinstall this plugin. The plugins name can be complete via key binding `<Tab>`.
+
+For example:
+
+```
+:SPReinstall echodoc.vim
+```
 
 ### Get SpaceVim log
 
@@ -484,7 +491,7 @@ The default colorscheme of SpaceVim is [gruvbox](https://github.com/morhetz/gruv
 There are two variants of this colorscheme, a dark one and a light one. Some aspects
 of these colorscheme can be customized in the custom configuration file, read `:h gruvbox`.
 
-It is possible to define your default themes in your `~/.SpaceVim.d/init.toml` with
+It is possible to change the colorscheme in `~/.SpaceVim.d/init.toml` with
 the variable colorschemes. For instance, to specify `desert`:
 
 ```toml
@@ -493,10 +500,10 @@ the variable colorschemes. For instance, to specify `desert`:
     colorscheme_bg = "dark"
 ```
 
-| Mappings  | Descriptions                                                   |
-| --------- | -------------------------------------------------------------- |
-| `SPC T n` | switch to next random colorscheme listed in colorscheme layer. |
-| `SPC T s` | select a theme using a unite buffer.                           |
+| Mappings  | Descriptions                                                                             |
+| --------- | ---------------------------------------------------------------------------------------- |
+| `SPC T n` | switch to next random colorscheme listed in [colorscheme layer](../layers/colorscheme/). |
+| `SPC T s` | select a theme using a [fuzzy finder](#fuzzy-finder).                                                     |
 
 All the included colorschemes can be found in [colorscheme layer](../layers/colorscheme/).
 
@@ -523,6 +530,21 @@ guifont = "SourceCodePro Nerd Font Mono:h11"
 
 If the specified font is not found, the fallback one will be used (depends on your system).
 Also note that changing this value has no effect if you are running Vim/Neovim in terminal.
+
+### Mouse
+
+Mouse support is enabled in Normal mode and Visual mode by default.
+To change the default value, you need to use the bootstrap function.
+
+For example, to disable mouse:
+
+```vim
+function! myspacevim#before() abort
+    set mouse=
+endfunction
+```
+
+Read `:h 'mouse'` for more info.
 
 ### UI Toggles
 
@@ -603,14 +625,16 @@ When syntax checking minor mode is enabled, a new element appears showing the nu
 
 **Search index integration:**
 
-Search index shows the number of occurrence when performing a search via `/` or `?`. SpaceVim integrates nicely the search status by displaying it temporarily when n or N are being pressed. See the 20/22 segment on the screenshot below.
+Search index shows the number of occurrence when performing a search via `/` or `?`.
+SpaceVim integrates nicely the search status by displaying it temporarily
+when `n` or `N` are being pressed. See the `20/22` segment on the screenshot below.
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
 Search index is provided by `incsearch` layer, to enable this layer:
 
 ```toml
-[layers]
+[[layers]]
     name = "incsearch"
 ```
 
@@ -841,7 +865,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `y y`                 | Copy file full path to system clipboard           |
 | `y Y`                 | Copy file to system clipboard                     |
 | `P`                   | Paste file to the position under the cursor       |
-| `.`                   | Toggle visible ignored files                      |
+| `.`                   | Toggle hidden files                               |
 | `s v`                 | Split edit                                        |
 | `s g`                 | Vertical split edit                               |
 | `p`                   | Preview                                           |
@@ -850,8 +874,8 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `g x`                 | Execute with vimfiler associated                  |
 | `'`                   | Toggle mark current line                          |
 | `V`                   | Clear all marks                                   |
-| `>`                   | iecrease filetree screenwidth                     |
-| `<`                   | dncrease filetree screenwidth                     |
+| `>`                   | increase filetree screenwidth                     |
+| `<`                   | decrease filetree screenwidth                     |
 | `<Home>`              | Jump to first line                                |
 | `<End>`               | Jump to last line                                 |
 | `Ctrl-Home`           | Switch to project root directory                  |
@@ -1363,9 +1387,9 @@ Buffer manipulation commands (start with `b`):
 
 #### Special Buffers
 
-In SpaceVim, there are many special buffers,
-these buffers are created by plugins or SpaceVim itself.
-And these buffers are not listed.
+Buffers created by plugins are not normal files, and they will not be listed
+on tabline. And also will not be listed by `SPC b b` key binding in fuzzy finder
+layer.
 
 #### Files manipulations key bindings
 
@@ -1403,6 +1427,17 @@ By default, `find` is the default tool, you can use `ctrl-e` to switch tools.
 
 ![find](https://user-images.githubusercontent.com/13142418/97999590-79717000-1e26-11eb-91b1-458ab30d6254.gif)
 
+To change the default file searching tool, you can use `file_searching_tools` option.
+It is `[]` by default.
+
+```toml
+[options]
+    file_searching_tools = ['find', 'find -not -iwholename "*.git*" ']
+```
+
+The first item is the name of the tool, the second one is the default searching command.
+
+
 #### Vim and SpaceVim files
 
 Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
@@ -1422,8 +1457,13 @@ All plugins can be easily discovered via `<Leader> f p`.
 
 ### Fuzzy finder
 
+Fuzzy finder provides a variety of efficient content searching key bindings,
+including file searching, outline searching, vim messages searching and register
+content searching.
+
 SpaceVim provides five fuzzy find tools, each of them is configured in a layer
-(`unite`, `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+([`unite`](../layers/unite/), `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+
 These layers have the same key bindings and features. But they need different dependencies.
 
 Users only need to load one of these layers, they will be able to get these features.
@@ -1997,6 +2037,26 @@ here is an example of `.project_alt.json`:
     "test": "test/layer/lang/{}.vader"
   }
 }
+```
+
+instead of using `.project_alt.json`, `b:alternate_file_config`
+can be used in bootstrap function, for example:
+
+```vim
+augroup myspacevim
+    autocmd!
+    autocmd BufNewFile,BufEnter *.c let b:alternate_file_config = {
+        \ "src/*.c" : {
+            \ "doc" : "docs/{}.md",
+            \ "alternate" : "include/{}.h",
+            \ }
+        \ }
+    autocmd BufNewFile,BufEnter *.h let b:alternate_file_config = {
+        \ "include/*.h" : {
+            \ "alternate" : "scr/{}.c",
+            \ }
+        \ }
+augroup END
 ```
 
 ### Bookmarks management

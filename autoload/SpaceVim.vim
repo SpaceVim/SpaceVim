@@ -174,6 +174,18 @@ let g:spacevim_enable_guicolors = 0
 let g:spacevim_escape_key_binding = 'jk'
 
 ""
+" @section file_searching_tools, options-file_searching_tools
+" @parentsection options
+" Set the default file searching tool used by `SPC f /`, by default it is `[]`.
+" The first item in this list is the name of the tool, the second one is the
+" default command. for example:
+" >
+"   file_searching_tools = ['find', 'find -not -iwholename "*.git*" ']
+" <
+
+let g:spacevim_file_searching_tools = []
+
+""
 " @section enable_googlesuggest, options-enable_googlesuggest
 " @parentsection options
 " Enable/Disable Google suggestions for neocomplete. Default is false.
@@ -1592,6 +1604,24 @@ endfunction
 " @section Usage, usage
 "   General guide for using SpaceVim. Including layer configuration, bootstrap
 "   function.
+
+
+""
+" @section buffers-and-files, usage-buffers-and-files
+" @parentsection usage
+" @subsection Buffers manipulation key bindings
+" All buffers key bindings are start with `b` prefix:
+" >
+"   Key Bindings	Descriptions
+"   SPC <Tab>	    switch to alternate buffer in the current window (switch back and forth)
+"   SPC b .	      buffer transient state
+"   SPC b b	      switch to a buffer (via denite/unite)
+"   SPC b d	      kill the current buffer (does not delete the visited file)
+"   SPC u SPC b d	kill the current buffer and window (does not delete the visited file) (TODO)
+"   SPC b D	      kill a visible buffer using vim-choosewin
+" <
+
+
 
 ""
 " @section FAQ, faq

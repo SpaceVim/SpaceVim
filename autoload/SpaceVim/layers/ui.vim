@@ -22,7 +22,7 @@ function! SpaceVim#layers#ui#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/tagbar', {'loadconf' : 1, 'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar-makefile.vim', {'merged': 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar-proto.vim', {'merged': 0}],
-        \ [g:_spacevim_root_dir . 'bundle/vim-choosewin', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-choosewin', {'on_cmd' : 'ChooseWin', 'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/vim-startify', {'loadconf' : 1, 'merged' : 0}],
         \ ]
   if !SpaceVim#layers#isLoaded('core#statusline')
@@ -141,7 +141,7 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#layers#core#statusline#register_mode(
         \ {
         \ 'key' : 'spell-checking',
-        \ 'func' : string(s:_function('s:toggle_spell_check')),
+        \ 'func' : s:_function('s:toggle_spell_check'),
         \ }
         \ )
 

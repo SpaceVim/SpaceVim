@@ -17,6 +17,7 @@ lang: zh
 - [更新回滚](#更新回滚)
   - [自身更新](#自身更新)
   - [更新插件](#更新插件)
+  - [重新安装插件](#重新安装插件)
   - [获取日志](#获取日志)
 - [用户配置](#用户配置)
   - [启动函数](#启动函数)
@@ -212,6 +213,17 @@ SpaceVim 根据需要定义了很多临时快捷键，
 使用 `:SPUpdate` 这一命令将会更新所有插件，包括 SpaceVim 自身。
 当然这一命令也支持参数，参数为插件名称，可同时添加多个插件名称作为参数，
 同时可以使用 `Tab` 键来补全插件名称。
+
+### 重新安装插件
+
+在插件安装、更新过程中，如果发现某个插件损坏了，
+可以使用 `:SPReinstall` 命令进行重新安装插件。
+类似于 `:SPUpdate`，需要添加一个插件名称参数，
+可以使用 `Tab` 键来补全插件名称。比如：
+
+```
+:SPReinstall echodoc.vim
+```
 
 ### 获取日志
 
@@ -443,10 +455,10 @@ SpaceVim 集成了多种实用的 UI 插件，如常用的文件树、语法树�
     colorscheme_bg = "dark"
 ```
 
-| 快捷键    | 功能描述             |
-| --------- | -------------------- |
-| `SPC T n` | 切换至下一个随机主题 |
-| `SPC T s` | 通过 Unite 选择主题  |
+| 快捷键    | 功能描述                                                         |
+| --------- | ---------------------------------------------------------------- |
+| `SPC T n` | 切换至下一个随机主题，需要载入[主题模块](../layers/colorscheme/) |
+| `SPC T s` | 通过[模糊搜索模块](#模糊搜索)选择主题                            |
 
 可以在[主题模块](../layers/colorscheme/)中查看 SpaceVim 支持的所有主题。
 
@@ -1593,21 +1605,21 @@ endfunction
 
 在工程中进行后台搜索时，当搜索完成时，会在状态栏上进行显示．
 
-| 快捷键      | 功能描述                                                   |
-| ----------- | ---------------------------------------------------------- |
-| `SPC s j`   | searching input expr background with the first found tool  |
-| `SPC s J`   | searching cursor word background with the first found tool |
-| `SPC s l`   | List all searching result in quickfix buffer               |
-| `SPC s a j` | ag                                                         |
-| `SPC s a J` | ag with default text                                       |
-| `SPC s g j` | grep                                                       |
-| `SPC s g J` | grep with default text                                     |
-| `SPC s k j` | ack                                                        |
-| `SPC s k J` | ack with default text                                      |
-| `SPC s t j` | pt                                                         |
-| `SPC s t J` | pt with default text                                       |
-| `SPC s r j` | rg                                                         |
-| `SPC s r J` | rg with default text                                       |
+| 快捷键      | 功能描述                                   |
+| ----------- | ------------------------------------------ |
+| `SPC s j`   | 使用默认搜索工具，后台检索输入的正则表达式 |
+| `SPC s J`   | 使用默认搜索工具，后台检索光标下的词语     |
+| `SPC s l`   | 使用 quickfix 窗口列出搜索结果             |
+| `SPC s a j` | 使用 `ag` 后台检索输入的正则表达式         |
+| `SPC s a J` | 使用 `ag` 后台检索光标下的词语             |
+| `SPC s g j` | 使用 `grep` 后台检索输入的正则表达式       |
+| `SPC s g J` | 使用 `grep` 后台检索光标下的词语           |
+| `SPC s k j` | 使用 `ack` 后台检索输入的正则表达式        |
+| `SPC s k J` | 使用 `ack` 后台检索光标下的词语            |
+| `SPC s t j` | 使用 `pt` 后台检索输入的正则表达式         |
+| `SPC s t J` | 使用 `pt` 后台检索光标下的词语             |
+| `SPC s r j` | 使用 `rg` 后台检索输入的正则表达式         |
+| `SPC s r J` | 使用 `rg` 后台检索光标下的词语             |
 
 #### 在网上进行搜索
 
@@ -1911,6 +1923,26 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
     "test": "test/layer/lang/{}.vader"
   }
 }
+```
+
+除了使用 `.project_alt.json` 文件以外，还可以在启动函数中设置 `b:alternate_file_config`，
+例如：
+
+```vim
+augroup myspacevim
+    autocmd!
+    autocmd BufNewFile,BufEnter *.c let b:alternate_file_config = {
+        \ "src/*.c" : {
+            \ "doc" : "docs/{}.md",
+            \ "alternate" : "include/{}.h",
+            \ }
+        \ }
+    autocmd BufNewFile,BufEnter *.h let b:alternate_file_config = {
+        \ "include/*.h" : {
+            \ "alternate" : "scr/{}.c",
+            \ }
+        \ }
+augroup END
 ```
 
 ### 标签管理

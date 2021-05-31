@@ -19,6 +19,10 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#layers#core#plugins() abort
   let plugins = []
+  if !has('nvim')
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-yarp',  {'merged': 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-hug-neovim-rpc',  {'merged': 0}])
+  endif
   if g:spacevim_filemanager ==# 'nerdtree'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nerdtree', { 'merged' : 0,
           \ 'loadconf' : 1}])

@@ -16,6 +16,27 @@
 "     name = 'lang#prolog'
 " <
 "
+" @subsection Key bindings
+"
+" >
+"   Key             Function
+"   --------------------------------
+"   SPC l r         run current file
+" <
+"
+" The default code runner command is `swipl -q -f %s -t main`, `%s` will be
+" replaced to the path of current file.
+"
+" This layer also provides REPL support for prolog, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 function! SpaceVim#layers#lang#prolog#plugins() abort
   let plugins = []

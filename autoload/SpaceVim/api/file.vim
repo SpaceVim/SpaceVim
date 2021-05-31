@@ -228,18 +228,30 @@ endfunction
 let s:file['updateFiles'] = function('s:updatefiles')
 
 " this function should return a unify path
-" This function will run resolve too
+" CHANGED: This function will not run resolve
 " 1. the sep is /
 " 2. if it is a dir, end with /
 " 3. if a:path end with /, then return path also end with /
 function! s:unify_path(path, ...) abort
+  call SpaceVim#logger#info('a:path is :' . a:path)
   let mod = a:0 > 0 ? a:1 : ':p'
-  let path = s:vim_comp.resolve(fnamemodify(a:path, mod . ':gs?[\\/]?/?'))
+  let path = fnamemodify(a:path, mod . ':gs?[\\/]?/?')
+  call SpaceVim#logger#info('a:path is :' . a:path)
+  call SpaceVim#logger#info('path is :' . path)
   if isdirectory(path) && path[-1:] !=# '/'
+    call SpaceVim#logger#info('case one')
+    call SpaceVim#logger#info('a:path is :' . a:path)
+    call SpaceVim#logger#info('path is :' . path)
     return path . '/'
   elseif a:path[-1:] ==# '/' && path[-1:] !=# '/'
+    call SpaceVim#logger#info('case two')
+    call SpaceVim#logger#info('a:path is :' . a:path)
+    call SpaceVim#logger#info('path is :' . path)
     return path . '/'
   else
+    call SpaceVim#logger#info('case three')
+    call SpaceVim#logger#info('a:path is :' . a:path)
+    call SpaceVim#logger#info('path is :' . path)
     return path
   endif
 endfunction
@@ -262,7 +274,7 @@ function! s:findfile(what, where, ...) abort
   let old_suffixesadd = &suffixesadd
   let &suffixesadd = ''
   let l:count = get(a:000, 0, 0)
-  
+
   if filereadable(a:where) && !isdirectory(a:where)
     let path = fnamemodify(a:where, ':h')
   else

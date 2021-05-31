@@ -10,6 +10,7 @@ description: "This layer is for hy development, provide syntax checking, code ru
 - [Description](#description)
 - [Install](#install)
 - [Features](#features)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Running current script](#running-current-script)
   - [Inferior REPL process](#inferior-repl-process)
@@ -18,10 +19,11 @@ description: "This layer is for hy development, provide syntax checking, code ru
 
 ## Description
 
-This layer is for hy development.
+`lang#hy` layer provides syntax highlighting, code runner and repl support for [hy language](http://hylang.org/).
 
 ## Install
 
+This layer is not enabled by default.
 To use this configuration layer, update custom configuration file with:
 
 ```toml
@@ -30,14 +32,22 @@ To use this configuration layer, update custom configuration file with:
 ```
 ## Features
 
+- syntax highlighting
 - repl support
 - code runner
+
+## Layer options
+
+
+- `hy_interpreter`: Set the path of `hy` command.
+
 
 ## Key bindings
 
 ### Running current script
 
-To running a hy file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To running a hy file, you can press `SPC l r` to run current file without loss focus,
+and the result will be shown in a runner buffer.
 
 ### Inferior REPL process
 
