@@ -24,10 +24,6 @@ let g:gtags_global_command = get(g:, 'gtags_global_command',
       \ )
 
 ""
-" Enable/Disable default mappings. By default it is disabled.
-let g:gtags_auto_map = get(g:, 'gtags_auto_map', 0)
-
-""
 " This setting will open the |quickfix| list when adding entries. A value of 2 will
 " preserve the cursor position when the |quickfix| window is
 " opened. Defaults to 2.
@@ -308,12 +304,15 @@ function! s:ExecLoad(option, long_option, pattern) abort
   " Parse the output of 'global -x or -t' and show in the quickfix window.
   let l:efm_org = &efm
   let &efm = g:Gtags_Efm
-  if l:result =~# '\n.'
-    cgetexpr l:result
-  else
-    cexpr! l:result
-  endif
+
+  cgetexpr l:result
+
   let &efm = l:efm_org
+
+  " If there is only one item, jump to the position.
+  if len(getqflist()) ==# 1
+    cnext
+  endif
 endfunction
 
 let s:prev_windows = []
