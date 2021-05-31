@@ -2039,6 +2039,26 @@ here is an example of `.project_alt.json`:
 }
 ```
 
+instead of using `.project_alt.json`, `b:alternate_file_config`
+can be used in bootstrap function, for example:
+
+```vim
+augroup myspacevim
+    autocmd!
+    autocmd BufNewFile,BufEnter *.c let b:alternate_file_config = {
+        \ "src/*.c" : {
+            \ "doc" : "docs/{}.md",
+            \ "alternate" : "include/{}.h",
+            \ }
+        \ }
+    autocmd BufNewFile,BufEnter *.h let b:alternate_file_config = {
+        \ "include/*.h" : {
+            \ "alternate" : "scr/{}.c",
+            \ }
+        \ }
+augroup END
+```
+
 ### Bookmarks management
 
 Bookmarks manager is included in `tools` layer, to use following key bindings, you need to enable

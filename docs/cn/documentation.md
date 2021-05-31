@@ -1925,6 +1925,26 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 }
 ```
 
+除了使用 `.project_alt.json` 文件以外，还可以在启动函数中设置 `b:alternate_file_config`，
+例如：
+
+```vim
+augroup myspacevim
+    autocmd!
+    autocmd BufNewFile,BufEnter *.c let b:alternate_file_config = {
+        \ "src/*.c" : {
+            \ "doc" : "docs/{}.md",
+            \ "alternate" : "include/{}.h",
+            \ }
+        \ }
+    autocmd BufNewFile,BufEnter *.h let b:alternate_file_config = {
+        \ "include/*.h" : {
+            \ "alternate" : "scr/{}.c",
+            \ }
+        \ }
+augroup END
+```
+
 ### 标签管理
 
 在浏览代码时，通常需要给指定位置添加标签，方便快速跳转，在 SpaceVim
