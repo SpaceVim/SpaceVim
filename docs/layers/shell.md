@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim shell layer"
-description: "This layer provide shell support in SpaceVim"
+description: "This layer provides shell support in SpaceVim"
 ---
 
 # [Available Layers](../) >> shell
@@ -34,7 +34,7 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ### Default shell
 
-Vim support these kinds of shell:
+Vim supports these kinds of shells:
 
 To define the default shell you can set the layer variable `default_shell` to the following variables:
 

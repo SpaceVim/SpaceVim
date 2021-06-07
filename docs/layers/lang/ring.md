@@ -32,7 +32,7 @@ To use this configuration layer, update your custom configuration file with:
 
 ## Options
 
-This layer provides following layer options:
+This layer provides the following layer options:
 
 - `ring_repl`: specific of the `ringrepl.ring` file.
 

@@ -35,8 +35,7 @@ This layer is for Rust development.
 - Cargo integration
 - Code formatting
 
-SpaceVim also provides code runner and Language Server protocol support for Rust. To enable language server protocol
-for Rust, you need to load `lsp` layer for Rust.
+SpaceVim also provides code runner and Language Server Protocol support for Rust. To enable LSP, you need to load the `lsp` layer for Rust.
 
 ## Install
 
@@ -68,8 +67,8 @@ To use this configuration layer, update your custom configuration file with:
 | `SPC l d` / `K` | Show doc of cursor symbol          |
 | `SPC l g`       | Jump to definition                 |
 | `SPC l v`       | Jump to definition (vertical)      |
-| `SPC l e`       | Rename symbol (need `lsp` layer)   |
-| `SPC l u`       | Show references (need `lsp` layer) |
+| `SPC l e`       | Rename symbol (needs `lsp` layer)  |
+| `SPC l u`       | Show references (needs `lsp` layer)|
 | `SPC l c b`     | Run `cargo build`                  |
 | `SPC l c c`     | Run `cargo clean`                  |
 | `SPC l c f`     | Run `cargo fmt`                    |

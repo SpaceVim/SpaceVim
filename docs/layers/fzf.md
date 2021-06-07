@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim fzf layer"
-description: "This layers provide a heavily customized fzf centric work-flow"
+description: "This layer provides a heavily customized fzf centric workflow"
 ---
 
 # [Available Layers](../) >> fzf

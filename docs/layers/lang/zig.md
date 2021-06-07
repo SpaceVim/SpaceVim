@@ -11,7 +11,8 @@ description: "This layer is for zig development, provides code runner support fo
 - [Install](#install)
 - [Options](#options)
 - [Key bindings](#key-bindings)
-  - [Running current script](#running-current-script)
+  - [Run current file](#run-current-file)
+  - [Test current file](#test-current-file)
 
 <!-- vim-markdown-toc -->
 
@@ -30,7 +31,7 @@ To use this configuration layer, update your custom configuration file with:
 
 ## Options
 
-- `ztagsbin`: specific the path of ztags.
+- `ztagsbin`: The path of ztags.
 
 ## Key bindings
 

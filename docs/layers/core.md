@@ -16,7 +16,7 @@ description: "SpaceVim core layer provides many default key bindings and feature
 
 ## Intro
 
-This is core layer of SpaceVim, and it is loaded by default.
+This is the core layer of SpaceVim, and it is loaded by default.
 
 ## Features
 

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim git layer"
-description: "This layers adds extensive support for git"
+description: "This layer adds extensive support for git"
 ---
 
 # [Available Layers](../) >> git
@@ -16,11 +16,11 @@ description: "This layers adds extensive support for git"
 
 ## Description
 
-This layers adds extensive support for [git](https://git-scm.com/).
+This layer adds extensive support for [git](https://git-scm.com/).
 
 ## Install
 
-To use this configuration layer, add following snippet to your custom configuration file (`SPC f v d`).
+To use this configuration layer, add the following snippet to your custom configuration file (`SPC f v d`).
 
 ```toml
 [[layers]]

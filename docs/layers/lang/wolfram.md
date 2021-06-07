@@ -18,9 +18,8 @@ description: "This layer is for wolfram development, provides syntax checking, c
 
 ## Description
 
-The [Wolfram](https://www.wolfram.com/language/) Language is a general multi-paradigm computational language
-and this layer provides wolfram language syntax highlighting, code completion
-and code runner.
+The [Wolfram](https://www.wolfram.com/language/) Language is a general multi-paradigm computational language.
+This layer provides wolfram language syntax highlighting, code completion and code runner.
 
 ## Install
 

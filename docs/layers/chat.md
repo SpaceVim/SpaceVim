@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim chat layer"
-description: "SpaceVim chatting layer provide chatting with qq and weixin in vim."
+description: "SpaceVim chatting layer provides chatting with qq and weixin in vim."
 ---
 
 # [Available Layers](../) >> chat
@@ -16,11 +16,11 @@ description: "SpaceVim chatting layer provide chatting with qq and weixin in vim
 
 ## Description
 
-SpaceVim chatting layer provide chatting feature in vim.
+SpaceVim chatting layer provides chatting feature in vim.
 
 ## Install
 
-To use this configuration layer, add following snippet to your custom configuration file.
+To use this configuration layer, add the following snippet to your custom configuration file.
 
 ```toml
 [[layers]]
@@ -34,7 +34,7 @@ To use this configuration layer, add following snippet to your custom configurat
 
 within chatting buffer:
 
-`Alt + Left/Right` : switch between buffer.
-`Alt + 1-9` : jump to specified channel.
+`Alt + Left/Right` : switch between buffers.
+`Alt + 1-9` : jump to the specified channel.
 
 for more mappings in chatting buffer, please read <kbd>:h vim-chat</kbd>.

@@ -36,4 +36,4 @@ To use this configuration layer, update your custom configuration file with:
 
 | Key Bindings | Descriptions            |
 | ------------ | ----------------------- |
-| `SPC l k`    | jumping to placeholders |
+| `SPC l k`    | jump to placeholders |

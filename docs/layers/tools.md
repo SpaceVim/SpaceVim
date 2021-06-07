@@ -15,12 +15,11 @@ description: "This layer provides some tools for vim"
 
 ## Description
 
-This layer provides some extra vim tools for SpaceVim. All tools can be
-called via command.
+This layer provides some extra vim tools for SpaceVim. All tools can be called via command.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

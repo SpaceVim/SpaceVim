@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#typescript layer"
-description: "This layer is for TypeScript development, includding code completion, Syntax lint, and doc generation."
+description: "This layer is for TypeScript development, including code completion, Syntax lint, and doc generation."
 ---
 
 # [Available Layers](../../) >> lang#typescript

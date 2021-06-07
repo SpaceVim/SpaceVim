@@ -50,5 +50,5 @@ To use this configuration layer, update your custom configuration file with:
 ### Code runner
 
 You can build and run your sketch with `SPC l r`.
-The sketch to run is decided based on the directory of you current buffer.
+The sketch to run is decided based on the directory of your current buffer.
 Note that the sketch is run asynchonously, so you are free to continue editing while it is running.

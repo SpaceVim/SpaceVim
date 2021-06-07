@@ -46,10 +46,10 @@ gem install rubocop
 
 ## Layer options
 
-- `ruby_file_head`: Default file head when create new ruby file.
+- `ruby_file_head`: Default file head when a new file is created.
 
-  By default, when create a new ruby file, SpaceVim will insert file head automatically.
-  to change the file head, use `ruby_file_head` option:
+  By default, when create a new ruby file, SpaceVim will insert the file head automatically.
+  to change the file head, use the `ruby_file_head` option:
 
   ```toml
   [[layers]]

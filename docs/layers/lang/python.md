@@ -44,7 +44,7 @@ you need to add following snippet into your spacevim configuration file.
 
 - **syntax checking:**
 
-  `checker` layer provides syntax checking feature, and for Python it uses `pylint` package:
+  `checker` layer provides syntax checking feature, and for Python it uses the `pylint` package:
 
   ```sh
   pip install --user pylint

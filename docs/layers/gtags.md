@@ -44,7 +44,7 @@ this layer can be used to generate and update tags database automatically.
 ## Installation
 
 To use `gtags` layer, you first have to install [GNU Global](https://www.gnu.org/software/global/download.html).
-You can install global from the software repository of your OS or built from source.
+You can install global from the software repository of your OS or build it from source.
 
 **Install on Ubuntu:**
 
@@ -81,7 +81,7 @@ sudo make install
 
 ## Configuration
 
-gtags layer provides following options:
+gtags layer provides the following options:
 
 - `gtagslabel`: the backend of gtags command, you can use `ctags` or `pygments`. It is empty string by default.
   for example, to use pygments as backend:
@@ -137,8 +137,8 @@ and use that as the backend the following additional languages will have tags cr
 
 ### Pygments languages
 
-In order to look up symbol references for any language not in the built in parser you must use the pygments backend.
-When this backend is used global actually uses both ctags and pygments to find the definitions
+In order to look up symbol references for any language not in the built-in parser, you must use the pygments backend.
+When this backend is used, global actually uses both ctags and pygments to find the definitions
 and uses of functions and variables as well as “other symbols”.
 
 If you enabled pygments (the best choice) and use that as the backend
