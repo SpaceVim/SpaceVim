@@ -10,7 +10,7 @@ if exists('g:GuiLoaded')
   if exists('g:spacevim_guifont') && !empty(g:spacevim_guifont)
     exe 'Guifont! ' . g:spacevim_guifont
   else
-    exe 'Guifont! SauceCodePro Nerd Font Mono:h11:cANSI:qDRAFT'
+    exe 'Guifont! SourceCodePro Nerd Font Mono:h11:cANSI:qDRAFT'
   endif
   " As using neovim-qt by default
 
