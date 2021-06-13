@@ -838,7 +838,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
           \ 'col': 0
           \ })
   else
-    noautocmd rightbelow split __flygrep__
+    noautocmd botright split __flygrep__
     let s:flygrep_win_id = win_getid()
   endif
   if exists('&winhighlight')
