@@ -73,7 +73,6 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 ## Bug Fixs
 
 - Fix python lint option [#4273](https://github.com/SpaceVim/SpaceVim/pull/4273)
-- Fixed typo in docs [#4235](https://github.com/SpaceVim/SpaceVim/pull/4235)
 - Fix directory [#4227](https://github.com/SpaceVim/SpaceVim/pull/4227)
 - Fix SPC t s/S key binding [#4225](https://github.com/SpaceVim/SpaceVim/pull/4225)
 - Fix Objective C language support [#4215](https://github.com/SpaceVim/SpaceVim/pull/4215)
@@ -112,3 +111,4 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Add links to the fuzzy finders [#4239](https://github.com/SpaceVim/SpaceVim/pull/4239)
 - Add bootstrap function link to quick guide [#4213](https://github.com/SpaceVim/SpaceVim/pull/4213)
 - Fix broken link in doc [#4256](https://github.com/SpaceVim/SpaceVim/pull/4256)
+- Fix type in docs [#4235](https://github.com/SpaceVim/SpaceVim/pull/4235)
