@@ -84,7 +84,6 @@ The next release is v1.7.0:
 - Update Following head page [#4170](https://github.com/SpaceVim/SpaceVim/pull/4170)
 - Improve tabline and statusline [#4169](https://github.com/SpaceVim/SpaceVim/pull/4169)
 - Improve alternate file config [#3493](https://github.com/SpaceVim/SpaceVim/pull/3493)
-- fzf.vim :: FzfFiles :: Allow fzf custom options [#3491](https://github.com/SpaceVim/SpaceVim/pull/3491)
 
 <!-- SpaceVim follow HEAD en end -->
 
