@@ -92,6 +92,9 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 
 ## Doc&&Wiki
 
+- Update doc of `git` layer [#4192](https://github.com/SpaceVim/SpaceVim/pull/4192)
+- Update doc for key binding `SPC t h i` [#4184](https://github.com/SpaceVim/SpaceVim/pull/4184)
+
 #### Unmarked PRs
 
 - Update readme [#4282](https://github.com/SpaceVim/SpaceVim/pull/4282)
@@ -108,8 +111,6 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Check python3 first [#4208](https://github.com/SpaceVim/SpaceVim/pull/4208)
 - Update language list [#4203](https://github.com/SpaceVim/SpaceVim/pull/4203)
 - Format on save with clang-format [#4195](https://github.com/SpaceVim/SpaceVim/pull/4195)
-- Update doc of git layer [#4192](https://github.com/SpaceVim/SpaceVim/pull/4192)
-- Update doc for SPC t h i [#4184](https://github.com/SpaceVim/SpaceVim/pull/4184)
 - Replace the invalid URL of smart questions with a new one. [#4179](https://github.com/SpaceVim/SpaceVim/pull/4179)
 - Doc: add description for the key bindings m c. [#4178](https://github.com/SpaceVim/SpaceVim/pull/4178)
 - Improve gtags layer [#4172](https://github.com/SpaceVim/SpaceVim/pull/4172)
