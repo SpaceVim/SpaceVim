@@ -57,6 +57,10 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 
 ### Improvements
 
+- Improve `format` layer [#4265](https://github.com/SpaceVim/SpaceVim/pull/4265)
+- Improve `lang#dart` layer [#4228](https://github.com/SpaceVim/SpaceVim/pull/4228)
+- Improve `lang#php` layer [#4226](https://github.com/SpaceVim/SpaceVim/pull/4226)
+
 ## Feature Changes
 
 - Change the go lsp to gopls, add lsp for terraform and yaml [#4015](https://github.com/SpaceVim/SpaceVim/pull/4015)
@@ -91,7 +95,6 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Disable github issue [#4280](https://github.com/SpaceVim/SpaceVim/pull/4280)
 - Type in doc [#4271](https://github.com/SpaceVim/SpaceVim/pull/4271)
 - Update cndoc [#4266](https://github.com/SpaceVim/SpaceVim/pull/4266)
-- Update format function [#4265](https://github.com/SpaceVim/SpaceVim/pull/4265)
 - Load nvim-yarp [#4264](https://github.com/SpaceVim/SpaceVim/pull/4264)
 - Update doc [#4246](https://github.com/SpaceVim/SpaceVim/pull/4246)
 - Reword '.' key-binding description to make it clearer [#4240](https://github.com/SpaceVim/SpaceVim/pull/4240)
@@ -99,8 +102,6 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Update lang#hy layer [#4232](https://github.com/SpaceVim/SpaceVim/pull/4232)
 - Develop [#4230](https://github.com/SpaceVim/SpaceVim/pull/4230)
 - Update lang#coffeescript layer [#4229](https://github.com/SpaceVim/SpaceVim/pull/4229)
-- Update lang#dart layer [#4228](https://github.com/SpaceVim/SpaceVim/pull/4228)
-- Update lang#php layer [#4226](https://github.com/SpaceVim/SpaceVim/pull/4226)
 - Update doc [#4223](https://github.com/SpaceVim/SpaceVim/pull/4223)
 - Bump py from 1.4.32 to 1.10.0 in /bundle/neoformat/test [#4220](https://github.com/SpaceVim/SpaceVim/pull/4220)
 - Update doc for SPReinstall [#4212](https://github.com/SpaceVim/SpaceVim/pull/4212)
