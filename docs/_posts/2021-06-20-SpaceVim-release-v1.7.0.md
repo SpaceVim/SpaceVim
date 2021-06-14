@@ -1,7 +1,7 @@
 ---
 title: SpaceVim release v1.7.0
 categories: [changelog, blog]
-description: "SpaceVim release v1.7.0 with four new language layers and floating window support."
+description: "SpaceVim release v1.7.0 with four with a number of language layers and new features."
 type: article
 image: https://user-images.githubusercontent.com/13142418/103414298-5e1da980-4bb8-11eb-96bc-b2e118f672b5.png
 commentsID: "SpaceVim release v1.7.0"
@@ -43,18 +43,14 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 ### New Features
 
 - Add `python3` and `ipython3` support [#4173](https://github.com/SpaceVim/SpaceVim/pull/4173)
-- Add split flygrep horizontally across vertical split [#4284](https://github.com/SpaceVim/SpaceVim/pull/4284)
-- Add link to DT [#4281](https://github.com/SpaceVim/SpaceVim/pull/4281)
-- Add file search option [#4245](https://github.com/SpaceVim/SpaceVim/pull/4245)
-- Add relevant repo links to the fuzzy finders [#4239](https://github.com/SpaceVim/SpaceVim/pull/4239)
-- Add github repository links to the available git_plugins [#4238](https://github.com/SpaceVim/SpaceVim/pull/4238)
-- Add bootstrap function link to quick guide [#4213](https://github.com/SpaceVim/SpaceVim/pull/4213)
-- Add SPC w f for toggle follow mode [#4201](https://github.com/SpaceVim/SpaceVim/pull/4201)
-- Add m c key binding [#4199](https://github.com/SpaceVim/SpaceVim/pull/4199)
-- Add format_on_save toggle for javascript [#4183](https://github.com/SpaceVim/SpaceVim/pull/4183)
-- Add SPC x l key binding group [#4182](https://github.com/SpaceVim/SpaceVim/pull/4182)
-- Add: new configuration options for go layer to take advantage of gopls features [#3837](https://github.com/SpaceVim/SpaceVim/pull/3837)
+- Add key binding `SPC w f` for toggle follow mode [#4201](https://github.com/SpaceVim/SpaceVim/pull/4201)
+- Add key binding `m c` [#4199](https://github.com/SpaceVim/SpaceVim/pull/4199)
+- Add key binding group `SPC x l` [#4182](https://github.com/SpaceVim/SpaceVim/pull/4182)
 - Add `format_on_save` option for `lang#c` layer [#4195](https://github.com/SpaceVim/SpaceVim/pull/4195)
+- Add `format_on_save` option for `lang#javascript` [#4183](https://github.com/SpaceVim/SpaceVim/pull/4183)
+- Add split flygrep horizontally across vertical split [#4284](https://github.com/SpaceVim/SpaceVim/pull/4284)
+- Add file search option [#4245](https://github.com/SpaceVim/SpaceVim/pull/4245)
+- Add: new configuration options for go layer to take advantage of gopls features [#3837](https://github.com/SpaceVim/SpaceVim/pull/3837)
 
 ### Improvements
 
@@ -114,3 +110,7 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Type in doc [#4271](https://github.com/SpaceVim/SpaceVim/pull/4271)
 - Update cndoc [#4266](https://github.com/SpaceVim/SpaceVim/pull/4266)
 - Update doc [#4246](https://github.com/SpaceVim/SpaceVim/pull/4246)
+- Add link to DT [#4281](https://github.com/SpaceVim/SpaceVim/pull/4281)
+- Add links to the available git_plugins [#4238](https://github.com/SpaceVim/SpaceVim/pull/4238)
+- Add links to the fuzzy finders [#4239](https://github.com/SpaceVim/SpaceVim/pull/4239)
+- Add bootstrap function link to quick guide [#4213](https://github.com/SpaceVim/SpaceVim/pull/4213)
