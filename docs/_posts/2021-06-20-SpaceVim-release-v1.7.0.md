@@ -35,7 +35,7 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 
 ### New language layers
 
-- Add `lang#sml` layer [#3972](https://github.com/SpaceVim/SpaceVim/pull/3972)
+- Add `lang#e` layer [#4210](https://github.com/SpaceVim/SpaceVim/pull/4210)
 
 #### New Features
 
@@ -46,7 +46,6 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Add relevant repo links to the fuzzy finders [#4239](https://github.com/SpaceVim/SpaceVim/pull/4239)
 - Add github repository links to the available git_plugins [#4238](https://github.com/SpaceVim/SpaceVim/pull/4238)
 - Add bootstrap function link to quick guide [#4213](https://github.com/SpaceVim/SpaceVim/pull/4213)
-- Add lang#e layer [#4210](https://github.com/SpaceVim/SpaceVim/pull/4210)
 - Add SPC w f for toggle follow mode [#4201](https://github.com/SpaceVim/SpaceVim/pull/4201)
 - Add m c key binding [#4199](https://github.com/SpaceVim/SpaceVim/pull/4199)
 - Add format_on_save toggle for javascript [#4183](https://github.com/SpaceVim/SpaceVim/pull/4183)
