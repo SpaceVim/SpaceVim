@@ -5,7 +5,6 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim)
 [![build](https://github.com/SpaceVim/SpaceVim/workflows/build/badge.svg)](https://github.com/SpaceVim/SpaceVim/actions?query=workflow%3Abuild)
-[![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master/graph/badge.svg?token=jVQLVETbAI)](https://codecov.io/gh/SpaceVim/SpaceVim)
 [![Version](https://img.shields.io/badge/version-1.7.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
