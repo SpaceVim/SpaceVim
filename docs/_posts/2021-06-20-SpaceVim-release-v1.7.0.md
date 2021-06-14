@@ -104,7 +104,6 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Develop [#4230](https://github.com/SpaceVim/SpaceVim/pull/4230)
 - Update lang#coffeescript layer [#4229](https://github.com/SpaceVim/SpaceVim/pull/4229)
 - Update doc [#4223](https://github.com/SpaceVim/SpaceVim/pull/4223)
-- Bump py from 1.4.32 to 1.10.0 in /bundle/neoformat/test [#4220](https://github.com/SpaceVim/SpaceVim/pull/4220)
 - Update doc for SPReinstall [#4212](https://github.com/SpaceVim/SpaceVim/pull/4212)
 - Check python3 first [#4208](https://github.com/SpaceVim/SpaceVim/pull/4208)
 - Update language list [#4203](https://github.com/SpaceVim/SpaceVim/pull/4203)
