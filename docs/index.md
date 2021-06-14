@@ -5,7 +5,7 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim)
 [![build](https://github.com/SpaceVim/SpaceVim/workflows/build/badge.svg)](https://github.com/SpaceVim/SpaceVim/actions?query=workflow%3Abuild)
-[![Version](https://img.shields.io/badge/version-1.7.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-1.7.0-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
 ![welcome page](https://user-images.githubusercontent.com/13142418/121829909-64cb5380-ccf6-11eb-9d5a-f576fa63e69c.png)
@@ -26,7 +26,7 @@ appreciation while providing us motivation to continue working on this project.
 - [Documentation](documentation/): the primary official document of SpaceVim
 - [Available layers](layers/): a list of available layers which can be used in SpaceVim
 
-The last release is [v1.6.0](https://spacevim.org/SpaceVim-release-v1.6.0/), check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The last release is [v1.7.0](https://spacevim.org/SpaceVim-release-v1.7.0/), check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## New features
 
@@ -55,7 +55,7 @@ Contribute code, report bugs and request features at [GitHub](https://github.com
 
 - What is the project status?
 
-  The current stable version is v1.6.0, See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
+  The current stable version is v1.7.0, See the [milestones page](https://github.com/SpaceVim/SpaceVim/milestones)
   for development progress and the [Roadmap](roadmap/) for high-level plans.
 
 - Is SpaceVim trying to turn Vim/Neovim into an IDE?
