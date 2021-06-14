@@ -65,7 +65,6 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 
 ## Feature Changes
 
-- Change the go lsp to gopls, add lsp for terraform and yaml [#4015](https://github.com/SpaceVim/SpaceVim/pull/4015)
 - Change Lint options [#3943](https://github.com/SpaceVim/SpaceVim/pull/3943)
 - Remove travis files [#4233](https://github.com/SpaceVim/SpaceVim/pull/4233)
 - Disable github issue [#4280](https://github.com/SpaceVim/SpaceVim/pull/4280)
