@@ -43,6 +43,7 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 
 ### New Features
 
+- Add `python3` and `ipython3` support [#4173](https://github.com/SpaceVim/SpaceVim/pull/4173)
 - Add split flygrep horizontally across vertical split [#4284](https://github.com/SpaceVim/SpaceVim/pull/4284)
 - Add link to DT [#4281](https://github.com/SpaceVim/SpaceVim/pull/4281)
 - Add file search option [#4245](https://github.com/SpaceVim/SpaceVim/pull/4245)
@@ -112,7 +113,6 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Update doc for SPC t h i [#4184](https://github.com/SpaceVim/SpaceVim/pull/4184)
 - Replace the invalid URL of smart questions with a new one. [#4179](https://github.com/SpaceVim/SpaceVim/pull/4179)
 - Doc: add description for the key bindings m c. [#4178](https://github.com/SpaceVim/SpaceVim/pull/4178)
-- yabuki/added python3 and ipython3 [#4173](https://github.com/SpaceVim/SpaceVim/pull/4173)
 - Improve gtags layer [#4172](https://github.com/SpaceVim/SpaceVim/pull/4172)
 - Improve cscope layer [#4171](https://github.com/SpaceVim/SpaceVim/pull/4171)
 - Update Following head page [#4170](https://github.com/SpaceVim/SpaceVim/pull/4170)
