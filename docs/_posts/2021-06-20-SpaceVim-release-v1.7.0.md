@@ -98,6 +98,7 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 
 - Update doc of `git` layer [#4192](https://github.com/SpaceVim/SpaceVim/pull/4192)
 - Update doc of key binding `SPC t h i` [#4184](https://github.com/SpaceVim/SpaceVim/pull/4184)
+- Update doc of key binding `m c` [#4178](https://github.com/SpaceVim/SpaceVim/pull/4178)
 - Update readme [#4282](https://github.com/SpaceVim/SpaceVim/pull/4282)
 
 #### Unmarked PRs
@@ -114,7 +115,6 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Update language list [#4203](https://github.com/SpaceVim/SpaceVim/pull/4203)
 - Format on save with clang-format [#4195](https://github.com/SpaceVim/SpaceVim/pull/4195)
 - Replace the invalid URL of smart questions with a new one. [#4179](https://github.com/SpaceVim/SpaceVim/pull/4179)
-- Doc: add description for the key bindings m c. [#4178](https://github.com/SpaceVim/SpaceVim/pull/4178)
 - Update Following head page [#4170](https://github.com/SpaceVim/SpaceVim/pull/4170)
 - Improve tabline and statusline [#4169](https://github.com/SpaceVim/SpaceVim/pull/4169)
 - Improve alternate file config [#3493](https://github.com/SpaceVim/SpaceVim/pull/3493)
