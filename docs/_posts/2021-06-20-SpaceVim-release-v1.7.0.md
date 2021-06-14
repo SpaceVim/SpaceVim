@@ -68,6 +68,7 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Change the go lsp to gopls, add lsp for terraform and yaml [#4015](https://github.com/SpaceVim/SpaceVim/pull/4015)
 - Change Lint options [#3943](https://github.com/SpaceVim/SpaceVim/pull/3943)
 - Remove travis files [#4233](https://github.com/SpaceVim/SpaceVim/pull/4233)
+- Disable github issue [#4280](https://github.com/SpaceVim/SpaceVim/pull/4280)
 
 ## Bug Fixs
 
@@ -93,12 +94,11 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 ## Doc&&Wiki
 
 - Update doc of `git` layer [#4192](https://github.com/SpaceVim/SpaceVim/pull/4192)
-- Update doc for key binding `SPC t h i` [#4184](https://github.com/SpaceVim/SpaceVim/pull/4184)
+- Update doc of key binding `SPC t h i` [#4184](https://github.com/SpaceVim/SpaceVim/pull/4184)
+- Update readme [#4282](https://github.com/SpaceVim/SpaceVim/pull/4282)
 
 #### Unmarked PRs
 
-- Update readme [#4282](https://github.com/SpaceVim/SpaceVim/pull/4282)
-- Disable github issue [#4280](https://github.com/SpaceVim/SpaceVim/pull/4280)
 - Type in doc [#4271](https://github.com/SpaceVim/SpaceVim/pull/4271)
 - Update cndoc [#4266](https://github.com/SpaceVim/SpaceVim/pull/4266)
 - Load nvim-yarp [#4264](https://github.com/SpaceVim/SpaceVim/pull/4264)
