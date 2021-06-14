@@ -66,6 +66,8 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Improve `lang#coffeescript` layer [#4229](https://github.com/SpaceVim/SpaceVim/pull/4229)
 - Improve `gtags` layer [#4172](https://github.com/SpaceVim/SpaceVim/pull/4172)
 - Improve `cscope` layer [#4171](https://github.com/SpaceVim/SpaceVim/pull/4171)
+- Improve tabline and statusline [#4169](https://github.com/SpaceVim/SpaceVim/pull/4169)
+- Improve alternate file config [#3493](https://github.com/SpaceVim/SpaceVim/pull/3493)
 
 ## Feature Changes
 
@@ -116,5 +118,3 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Update language list [#4203](https://github.com/SpaceVim/SpaceVim/pull/4203)
 - Replace the invalid URL of smart questions with a new one. [#4179](https://github.com/SpaceVim/SpaceVim/pull/4179)
 - Update Following head page [#4170](https://github.com/SpaceVim/SpaceVim/pull/4170)
-- Improve tabline and statusline [#4169](https://github.com/SpaceVim/SpaceVim/pull/4169)
-- Improve alternate file config [#3493](https://github.com/SpaceVim/SpaceVim/pull/3493)
