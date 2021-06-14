@@ -50,7 +50,6 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Add `format_on_save` option for `lang#javascript` [#4183](https://github.com/SpaceVim/SpaceVim/pull/4183)
 - Add split flygrep horizontally across vertical split [#4284](https://github.com/SpaceVim/SpaceVim/pull/4284)
 - Add file search option [#4245](https://github.com/SpaceVim/SpaceVim/pull/4245)
-- Add: new configuration options for go layer to take advantage of gopls features [#3837](https://github.com/SpaceVim/SpaceVim/pull/3837)
 
 ### Improvements
 
