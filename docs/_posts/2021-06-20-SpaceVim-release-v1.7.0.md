@@ -36,12 +36,12 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 ### New language layers
 
 - Add `lang#e` layer [#4210](https://github.com/SpaceVim/SpaceVim/pull/4210)
+- Add `lang#fennel` layer [#4260](https://github.com/SpaceVim/SpaceVim/pull/4260)
 
 #### New Features
 
 - Add split flygrep horizontally across vertical split [#4284](https://github.com/SpaceVim/SpaceVim/pull/4284)
 - Add link to DT [#4281](https://github.com/SpaceVim/SpaceVim/pull/4281)
-- Add Fennel language support [#4260](https://github.com/SpaceVim/SpaceVim/pull/4260)
 - Add file search option [#4245](https://github.com/SpaceVim/SpaceVim/pull/4245)
 - Add relevant repo links to the fuzzy finders [#4239](https://github.com/SpaceVim/SpaceVim/pull/4239)
 - Add github repository links to the available git_plugins [#4238](https://github.com/SpaceVim/SpaceVim/pull/4238)
