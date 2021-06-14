@@ -55,6 +55,7 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Add format_on_save toggle for javascript [#4183](https://github.com/SpaceVim/SpaceVim/pull/4183)
 - Add SPC x l key binding group [#4182](https://github.com/SpaceVim/SpaceVim/pull/4182)
 - Add: new configuration options for go layer to take advantage of gopls features [#3837](https://github.com/SpaceVim/SpaceVim/pull/3837)
+- Add `format_on_save` option for `lang#c` layer [#4195](https://github.com/SpaceVim/SpaceVim/pull/4195)
 
 ### Improvements
 
@@ -113,7 +114,6 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Update doc for SPReinstall [#4212](https://github.com/SpaceVim/SpaceVim/pull/4212)
 - Check python3 first [#4208](https://github.com/SpaceVim/SpaceVim/pull/4208)
 - Update language list [#4203](https://github.com/SpaceVim/SpaceVim/pull/4203)
-- Format on save with clang-format [#4195](https://github.com/SpaceVim/SpaceVim/pull/4195)
 - Replace the invalid URL of smart questions with a new one. [#4179](https://github.com/SpaceVim/SpaceVim/pull/4179)
 - Update Following head page [#4170](https://github.com/SpaceVim/SpaceVim/pull/4170)
 - Improve tabline and statusline [#4169](https://github.com/SpaceVim/SpaceVim/pull/4169)
