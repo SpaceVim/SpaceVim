@@ -9,7 +9,7 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 [![Version](https://img.shields.io/badge/version-1.7.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
-![welcome page](https://user-images.githubusercontent.com/13142418/103414298-5e1da980-4bb8-11eb-96bc-b2e118f672b5.png)
+![welcome page](https://user-images.githubusercontent.com/13142418/121829909-64cb5380-ccf6-11eb-9d5a-f576fa63e69c.png)
 
 # SpaceVim - Modern Vim distribution
 
