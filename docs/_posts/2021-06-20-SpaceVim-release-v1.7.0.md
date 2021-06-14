@@ -14,9 +14,11 @@ comments: true
 
 - [What's New](#whats-new)
   - [New language layers](#new-language-layers)
-    - [New Features](#new-features)
-    - [Feature Changes](#feature-changes)
-    - [Bug Fixs](#bug-fixs)
+  - [New Features](#new-features)
+  - [Improvements](#improvements)
+- [Feature Changes](#feature-changes)
+- [Bug Fixs](#bug-fixs)
+- [Doc&&Wiki](#docwiki)
     - [Unmarked PRs](#unmarked-prs)
 
 <!-- vim-markdown-toc -->
@@ -37,8 +39,9 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 
 - Add `lang#e` layer [#4210](https://github.com/SpaceVim/SpaceVim/pull/4210)
 - Add `lang#fennel` layer [#4260](https://github.com/SpaceVim/SpaceVim/pull/4260)
+- Add `lang#autoit` layer [#4181](https://github.com/SpaceVim/SpaceVim/pull/4181)
 
-#### New Features
+### New Features
 
 - Add split flygrep horizontally across vertical split [#4284](https://github.com/SpaceVim/SpaceVim/pull/4284)
 - Add link to DT [#4281](https://github.com/SpaceVim/SpaceVim/pull/4281)
@@ -50,15 +53,16 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Add m c key binding [#4199](https://github.com/SpaceVim/SpaceVim/pull/4199)
 - Add format_on_save toggle for javascript [#4183](https://github.com/SpaceVim/SpaceVim/pull/4183)
 - Add SPC x l key binding group [#4182](https://github.com/SpaceVim/SpaceVim/pull/4182)
-- Add lang#autoit layer [#4181](https://github.com/SpaceVim/SpaceVim/pull/4181)
 - Add: new configuration options for go layer to take advantage of gopls features [#3837](https://github.com/SpaceVim/SpaceVim/pull/3837)
 
-#### Feature Changes
+### Improvements
+
+## Feature Changes
 
 - Change the go lsp to gopls, add lsp for terraform and yaml [#4015](https://github.com/SpaceVim/SpaceVim/pull/4015)
 - Change Lint options [#3943](https://github.com/SpaceVim/SpaceVim/pull/3943)
 
-#### Bug Fixs
+## Bug Fixs
 
 - Fix python lint option [#4273](https://github.com/SpaceVim/SpaceVim/pull/4273)
 - Fix broken link [#4256](https://github.com/SpaceVim/SpaceVim/pull/4256)
@@ -78,6 +82,8 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Fix uniquify lines in normal mode when ignorecase. [#4189](https://github.com/SpaceVim/SpaceVim/pull/4189)
 - Fix SPC x l d in first line [#4185](https://github.com/SpaceVim/SpaceVim/pull/4185)
 - Fix choosewin [#4174](https://github.com/SpaceVim/SpaceVim/pull/4174)
+
+## Doc&&Wiki
 
 #### Unmarked PRs
 
