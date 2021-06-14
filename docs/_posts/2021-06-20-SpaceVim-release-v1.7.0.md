@@ -19,7 +19,6 @@ comments: true
 - [Feature Changes](#feature-changes)
 - [Bug Fixs](#bug-fixs)
 - [Doc&&Wiki](#docwiki)
-    - [Unmarked PRs](#unmarked-prs)
 
 <!-- vim-markdown-toc -->
 
@@ -75,6 +74,7 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Change Lint options [#3943](https://github.com/SpaceVim/SpaceVim/pull/3943)
 - Remove travis files [#4233](https://github.com/SpaceVim/SpaceVim/pull/4233)
 - Disable github issue [#4280](https://github.com/SpaceVim/SpaceVim/pull/4280)
+- Check `+python3` first [#4208](https://github.com/SpaceVim/SpaceVim/pull/4208)
 
 ## Bug Fixs
 
@@ -90,31 +90,27 @@ The v1.7.0 has been released. So let's take a look at what happened since last r
 - Fix random theme functionality of the [colorscheme] layer [#4204](https://github.com/SpaceVim/SpaceVim/pull/4204)
 - Fix lang#html layer [#4202](https://github.com/SpaceVim/SpaceVim/pull/4202)
 - Fix configuration file path [#4200](https://github.com/SpaceVim/SpaceVim/pull/4200)
+- Fix ale event [#4230](https://github.com/SpaceVim/SpaceVim/pull/4230)
 - Fix SPC T F key binding [#4198](https://github.com/SpaceVim/SpaceVim/pull/4198)
 - Fix SPC b d key binding [#4197](https://github.com/SpaceVim/SpaceVim/pull/4197)
 - Fix and add the key bindings toggle case [#4190](https://github.com/SpaceVim/SpaceVim/pull/4190)
 - Fix uniquify lines in normal mode when ignorecase. [#4189](https://github.com/SpaceVim/SpaceVim/pull/4189)
 - Fix SPC x l d in first line [#4185](https://github.com/SpaceVim/SpaceVim/pull/4185)
 - Fix choosewin [#4174](https://github.com/SpaceVim/SpaceVim/pull/4174)
+- Fix nvim-yarp [#4264](https://github.com/SpaceVim/SpaceVim/pull/4264)
 
 ## Doc&&Wiki
 
 - Update doc of `git` layer [#4192](https://github.com/SpaceVim/SpaceVim/pull/4192)
 - Update doc of key binding `SPC t h i` [#4184](https://github.com/SpaceVim/SpaceVim/pull/4184)
 - Update doc of key binding `m c` [#4178](https://github.com/SpaceVim/SpaceVim/pull/4178)
+- Update doc of key binding `.` [#4240](https://github.com/SpaceVim/SpaceVim/pull/4240)
 - Update readme [#4282](https://github.com/SpaceVim/SpaceVim/pull/4282)
-
-#### Unmarked PRs
-
-- Type in doc [#4271](https://github.com/SpaceVim/SpaceVim/pull/4271)
-- Update cndoc [#4266](https://github.com/SpaceVim/SpaceVim/pull/4266)
-- Load nvim-yarp [#4264](https://github.com/SpaceVim/SpaceVim/pull/4264)
-- Update doc [#4246](https://github.com/SpaceVim/SpaceVim/pull/4246)
-- Reword '.' key-binding description to make it clearer [#4240](https://github.com/SpaceVim/SpaceVim/pull/4240)
-- Develop [#4230](https://github.com/SpaceVim/SpaceVim/pull/4230)
+- Replace the URL of smart questions [#4179](https://github.com/SpaceVim/SpaceVim/pull/4179)
+- Update Following head page [#4170](https://github.com/SpaceVim/SpaceVim/pull/4170)
+- Update language list [#4203](https://github.com/SpaceVim/SpaceVim/pull/4203)
 - Update doc [#4223](https://github.com/SpaceVim/SpaceVim/pull/4223)
 - Update doc for SPReinstall [#4212](https://github.com/SpaceVim/SpaceVim/pull/4212)
-- Check python3 first [#4208](https://github.com/SpaceVim/SpaceVim/pull/4208)
-- Update language list [#4203](https://github.com/SpaceVim/SpaceVim/pull/4203)
-- Replace the invalid URL of smart questions with a new one. [#4179](https://github.com/SpaceVim/SpaceVim/pull/4179)
-- Update Following head page [#4170](https://github.com/SpaceVim/SpaceVim/pull/4170)
+- Type in doc [#4271](https://github.com/SpaceVim/SpaceVim/pull/4271)
+- Update cndoc [#4266](https://github.com/SpaceVim/SpaceVim/pull/4266)
+- Update doc [#4246](https://github.com/SpaceVim/SpaceVim/pull/4246)
