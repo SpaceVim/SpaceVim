@@ -13,12 +13,12 @@
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 
-![welcome page](https://user-images.githubusercontent.com/13142418/103414298-5e1da980-4bb8-11eb-96bc-b2e118f672b5.png)
+![welcome page](https://user-images.githubusercontent.com/13142418/121829909-64cb5380-ccf6-11eb-9d5a-f576fa63e69c.png)
 
 [SpaceVim](https://spacevim.org/) is a community-driven modular Vim distribution. It manages collections
 of plugins in layers, which help to collect related packages together to provide IDE-like features.
 
-The last release is [v1.6.0](https://spacevim.org/SpaceVim-release-v1.6.0/), check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The last release is [v1.7.0](https://spacevim.org/SpaceVim-release-v1.7.0/), check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 **See the followings below for more information:**
 

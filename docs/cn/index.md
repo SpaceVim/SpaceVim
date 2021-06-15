@@ -10,7 +10,7 @@ lang: zh
 [![Version](https://img.shields.io/badge/version-1.7.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
-![welcome page](https://user-images.githubusercontent.com/13142418/103414298-5e1da980-4bb8-11eb-96bc-b2e118f672b5.png)
+![welcome page](https://user-images.githubusercontent.com/13142418/121829909-64cb5380-ccf6-11eb-9d5a-f576fa63e69c.png)
 
 # SpaceVim - 模块化的 Vim IDE
 
@@ -50,7 +50,7 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 
 - 目前 SpaceVim 的开发状态如何？
 
-当前最新发布的稳定版本是 v1.6.0。可以查看 [时间表](https://github.com/SpaceVim/SpaceVim/milestones) 获取开发进度，
+当前最新发布的稳定版本是 v1.7.0。可以查看 [时间表](https://github.com/SpaceVim/SpaceVim/milestones) 获取开发进度，
 或者阅读 [Roadmap](roadmap/) 获取开发计划。
 
 - SpaceVim 是尝试搭建一个 IDE 吗？
