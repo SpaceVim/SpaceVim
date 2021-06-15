@@ -45,7 +45,7 @@ let s:SYSTEM = SpaceVim#api#import('system')
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.7.0'
+let g:spacevim_version = '1.8.0-dev'
 lockvar g:spacevim_version
 
 ""
