@@ -7,7 +7,7 @@ lang: zh
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/cn)
 [![build](https://github.com/SpaceVim/SpaceVim/workflows/build/badge.svg)](https://github.com/SpaceVim/SpaceVim/actions?query=workflow%3Abuild)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master/graph/badge.svg?token=jVQLVETbAI)](https://codecov.io/gh/SpaceVim/SpaceVim)
-[![Version](https://img.shields.io/badge/version-1.7.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-1.8.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
 ![welcome page](https://user-images.githubusercontent.com/13142418/121829909-64cb5380-ccf6-11eb-9d5a-f576fa63e69c.png)
