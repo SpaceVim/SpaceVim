@@ -840,6 +840,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   else
     noautocmd botright split __flygrep__
     let s:flygrep_win_id = win_getid()
+    let s:buffer_id = bufnr('__flygrep__')
   endif
   if exists('&winhighlight')
     set winhighlight=Normal:Pmenu,EndOfBuffer:Pmenu,CursorLine:PmenuSel
