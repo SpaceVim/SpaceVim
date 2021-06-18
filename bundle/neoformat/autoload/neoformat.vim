@@ -1,13 +1,18 @@
 function! neoformat#Neoformat(bang, user_input, start_line, end_line) abort
-    let search = @/
     let view = winsaveview()
+    let search = @/
     let original_filetype = &filetype
 
     call s:neoformat(a:bang, a:user_input, a:start_line, a:end_line)
 
+    " Setting &filetype might destroy existing folds, so only do that
+    " if the filetype got changed (which can only be possible when
+    " invoking with a bang)
+    if a:bang && &filetype != original_filetype
+        let &filetype = original_filetype
+    endif
     let @/ = search
     call winrestview(view)
-    let &filetype = original_filetype
 endfunction
 
 function! s:neoformat(bang, user_input, start_line, end_line) abort
@@ -92,8 +97,7 @@ function! s:neoformat(bang, user_input, start_line, end_line) abort
         endif
 
         " read from /tmp file if formatter replaces file on format
-        " make sure cmd.tmp_file_path is readable
-        if (cmd.replace || len(stdout) == 0) && filereadable(cmd.tmp_file_path)
+        if cmd.replace
             let stdout = readfile(cmd.tmp_file_path)
         endif
 
@@ -137,10 +141,10 @@ function! s:neoformat(bang, user_input, start_line, end_line) abort
         endif
     endfor
     if len(formatters_failed) > 0
-        call neoformat#utils#msg('formatters ' . join(formatters_failed, ", ") . ' failed to run')
+        call neoformat#utils#msg('formatters ' . join(formatters_failed, ', ') . ' failed to run')
     endif
     if len(formatters_changed) > 0
-        call neoformat#utils#msg(join(formatters_changed, ", ") . ' formatted buffer')
+        call neoformat#utils#msg(join(formatters_changed, ', ') . ' formatted buffer')
     elseif len(formatters_failed) == 0
         call neoformat#utils#msg('no change necessary')
     endif
@@ -192,7 +196,7 @@ function! neoformat#CompleteFormatters(ArgLead, CmdLine, CursorPos) abort
                     \ "fnamemodify(v:val, ':t:r')"))),
                     \ "v:val =~? '^" . a:ArgLead . "'")
     endif
-    if a:ArgLead =~ '[^A-Za-z0-9]'
+    if a:ArgLead =~# '[^A-Za-z0-9]'
         return []
     endif
     let filetype = s:split_filetypes(&filetype)
@@ -222,7 +226,13 @@ function! s:generate_cmd(definition, filetype) abort
         call neoformat#utils#log('no exe field in definition')
         return {}
     endif
-    if !executable(executable)
+
+    if &shell =~# '\v%(powershell|pwsh)'
+        if system('[bool](Get-Command ' . executable . ' -ErrorAction SilentlyContinue)') !~# 'True'
+            call neoformat#utils#log('executable: ' . executable . ' is not a cmdlet, function, script file, or an executable program')
+            return {}
+        endif
+    elseif !executable(executable)
         call neoformat#utils#log('executable: ' . executable . ' is not an executable')
         return {}
     endif
@@ -240,8 +250,8 @@ function! s:generate_cmd(definition, filetype) abort
 
     let filename = expand('%:t')
 
-    let tmp_dir = has('win32') ? expand('$TEMP/neoformat') :
-                \ exists('$TMPDIR') ? expand('$TMPDIR/neoformat') :
+    let tmp_dir = has('win32') ? expand('$TEMP/neoformat', 1) :
+                \ exists('$TMPDIR') ? expand('$TMPDIR/neoformat', 1) :
                 \ '/tmp/neoformat'
 
     if !isdirectory(tmp_dir)
@@ -249,7 +259,7 @@ function! s:generate_cmd(definition, filetype) abort
     endif
 
     if get(a:definition, 'replace', 0)
-        let path = !using_stdin ? expand(tmp_dir . '/' . fnameescape(filename)) : ''
+        let path = !using_stdin ? expand(tmp_dir . '/' . fnameescape(filename), 1) : ''
     else
         let path = !using_stdin ? tempname() : ''
     endif

@@ -1,5 +1,5 @@
 function! neoformat#formatters#lua#enabled() abort
-    return ['luaformatter', 'luafmt']
+    return ['luaformatter', 'luafmt', 'luaformat']
 endfunction
 
 function! neoformat#formatters#lua#luaformatter() abort
@@ -13,5 +13,11 @@ function! neoformat#formatters#lua#luafmt() abort
         \ 'exe': 'luafmt',
         \ 'args': ['--stdin'],
         \ 'stdin': 1,
+        \ }
+endfunction
+
+function! neoformat#formatters#lua#luaformat() abort
+    return {
+        \ 'exe': 'lua-format'
         \ }
 endfunction

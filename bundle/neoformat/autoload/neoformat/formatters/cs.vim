@@ -1,5 +1,5 @@
 function! neoformat#formatters#cs#enabled() abort
-    return ['uncrustify', 'astyle']
+    return ['uncrustify', 'astyle', 'clangformat']
 endfunction
 
 function! neoformat#formatters#cs#uncrustify() abort
@@ -16,4 +16,12 @@ function! neoformat#formatters#cs#astyle() abort
         \ 'args': ['--mode=cs'],
         \ 'stdin': 1,
         \ }
+endfunction
+
+function! neoformat#formatters#cs#clangformat() abort
+    return {
+            \ 'exe': 'clang-format',
+            \ 'args': ['-assume-filename=' . expand('%:t')],
+            \ 'stdin': 1,
+            \ }
 endfunction
