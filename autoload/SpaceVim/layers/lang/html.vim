@@ -59,7 +59,7 @@ function! SpaceVim#layers#lang#html#config() abort
   let g:user_emmet_leader_key = s:user_emmet_leader_key
   augroup spacevim_lang_html
     autocmd!
-    autocmd FileType html,css,scss,sass,less,javascript,jsp,vue,eex,php call s:install_emmet()
+    autocmd FileType html,css,scss,sass,less,javascript,jsp,vue,eex,php,erb call s:install_emmet()
     autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   augroup END
