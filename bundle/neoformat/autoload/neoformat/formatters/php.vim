@@ -12,6 +12,7 @@ function! neoformat#formatters#php#phpcsfixer() abort
     return {
            \ 'exe': 'php-cs-fixer',
            \ 'args': ['fix', '-q'],
+           \ 'replace': 1,
            \ }
 endfunction
 
@@ -19,6 +20,7 @@ function! neoformat#formatters#php#phpcbf() abort
     return {
            \ 'exe': 'phpcbf',
            \ 'stdin': 1,
+           \ 'args': ['-'],
            \ 'valid_exit_codes': [0,1],
            \ }
 endfunction

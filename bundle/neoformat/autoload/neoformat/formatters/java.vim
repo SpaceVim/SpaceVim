@@ -31,7 +31,7 @@ endfunction
 function! neoformat#formatters#java#prettier() abort
     return {
         \ 'exe': 'prettier',
-        \ 'args': ['--stdin', '--stdin-filepath', '"%:p"'],
+        \ 'args': ['--stdin-filepath', '"%:p"'],
         \ 'stdin': 1,
         \ }
 endfunction
