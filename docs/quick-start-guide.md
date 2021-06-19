@@ -7,6 +7,7 @@ description: "A quick start guide which will tell you how to install and config 
 
 <!-- vim-markdown-toc GFM -->
 
+- [Intro](#intro)
 - [Install](#install)
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows)
@@ -20,8 +21,11 @@ description: "A quick start guide which will tell you how to install and config 
 This is a quick start guide for SpaceVim, which will tell you how to install and config SpaceVim.
 And also provides a list of resources for learning SpaceVim.
 
-If you haven’t seen SpaceVim at all yet, the first thing you should read is this guide.
-It will give you a good idea of what SpaceVim is like,
+## Intro
+
+SpaceVim is a configuration distribution for vim or neovim. This is a guide for general usage of vim/neovim:
+
+- [Vim Basics Tutorial](../vim-basic-tutorial/)
 
 ## Install
 
