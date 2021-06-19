@@ -27,6 +27,19 @@ To use this configuration layer, add following snippet to your custom configurat
   name = "debug"
 ```
 
+In order to configure which debugger needs to be started, a project should define a configuration
+file in the project root.
+
+By default, SpaceVim will look for `.vim/debug.vim`, though this can be overridden by setting
+`g:spacevim_debug_config` another relative file path.
+
+This configuration file should contain the command to start the debugger.
+
+Example `.vim/debug.vim` in a Rust project root:
+```vim
+call vebugger#gdb#start('target/debug/myapp', {'args': ['hello', 'world']})
+```
+
 ## Key bindings
 
 | Key Binding | Description                              |
