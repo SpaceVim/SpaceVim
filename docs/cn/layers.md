@@ -20,17 +20,29 @@ lang: zh
 
 SpaceVim 是一个社区驱动的 Vim 配置集合，通常一个 Vim 的配置集合包含了诸多的
 Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管理这些插件以及相关
-的配置。默认情况下，这些模块都是禁用的，用户可以根据自己需要或是项目需要
+的配置。默认情况下，大部分模块都是禁用的，用户可以根据自己需要或是项目需要
 来载入指定的模块以获取相关功能。
 
 通过模块的方式管理插件和相关配置，为使用者节省了大量的搜索插件和调试插件的时
-间。用户仅仅需要根据自己的实际需求，来启用相关模块。比如，当我需要频繁调用终
-端时，可以启用终端支持的 `shell` 模块。
+间。用户仅仅需要根据自己的实际需求，来启用相关模块。比如，当需要做 python
+开发时，启用 [`lang#python`](lang/python/) 模块.
+
+默认已启用的模块：
+
+- [autocomplete](autocomplete/)
+- [checkers](checkers/)
+- [format](format/)
+- [edit](edit/)
+- [ui](ui/)
+- [core](core/)
+- [core#banner](core/banner/)
+- [core#statusline](core/statusline/)
+- [core#tabline](core/tabline/)
 
 ### 启用模块
 
 以 `shell` 模块为例，启用该模块，并且通过设定一些模块选项，指定终端打开位置为
-顶部，高度 30。
+顶部，高度 30，使用快捷键 `SPC f v d` 打开配置文件，加入：
 
 ```toml
 [[layers]]
@@ -135,6 +147,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#moonscript](lang/moonscript/)                   | 这一模块为 moonscript 开发提供支持，包括交互式编程、一键运行等特性。                                                                |
 | [lang#nim](lang/nim/)                                 | 该模块为 SpaceVim 提供 Nim 开发支持，包括语法高亮、代码补全、编译运行以及交互式编程等功能。                                         |
 | [lang#ocaml](lang/ocaml/)                             | 这一模块为 OCaml 开发提供了支持，包括语法高亮、代码补全、以及定义处跳转等功能。                                                     |
+| [lang#org](lang/org/)                                 | 这一模块为 SpaceVim 提供了 org 的编辑支持，包括格式化、自动生成文章目录、代码块等特性。                                             |
 | [lang#pact](lang/pact/)                               | 这一模块为 pact 开发提供支持，包括交互式编程、一键运行等特性。                                                                      |
 | [lang#pascal](lang/pascal/)                           | 这一模块为 pascal 开发提供支持，包括一键运行等特性。                                                                                |
 | [lang#perl](lang/perl/)                               | 这一模块为 Perl 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
