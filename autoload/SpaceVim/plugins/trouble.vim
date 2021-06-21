@@ -53,12 +53,17 @@ function! s:update_trouble_content() abort
       let line = join([s:icons.fold_closed, file.filename, len(keys(file.errors))], ' ')
       call add(lines, line)
     else
+      let line = join([s:icons.fold_open, file.filename, len(keys(file.errors))], ' ')
+      call add(lines, line)
+      for error in file.errors
+        let line = join(['    ', error.description, printf('[%d, %d]', error.line, error.col)], ' ')
+        call add(lines, line)
+      endfor
     endif
-
   endfor
   call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, lines)
 endfunction
 
 function! s:WinEnter() abort
-  
+
 endfunction
