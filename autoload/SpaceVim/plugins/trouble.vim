@@ -69,3 +69,20 @@ endfunction
 function! s:WinEnter() abort
 
 endfunction
+
+
+" :h getqflist()
+function! SpaceVim#plugins#trouble#swapqf(qflist) abort
+  for item in a:qflist
+    if has_key(s:troubles, bufname(item.bufnr))
+    else
+      call extend(s:troubles, {
+            \ bufname(item.bufnr) : {
+            \ 'line' : item.lnum,
+            \ 'col' : item.col,
+            \ 'description' : item.text
+            \ }
+            \ })
+    endif
+  endfor
+endfunction
