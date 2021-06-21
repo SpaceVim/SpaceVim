@@ -11,10 +11,6 @@ Visit these resources for help or general questions.
 <!-- vim-markdown-toc GFM -->
 
 - [News](#news)
-<<<<<<< HEAD
-=======
-- [Bug reports and feature requests](#bug-reports-and-feature-requests)
->>>>>>> c55c445e (Fix grammar)
 - [Mailing list](#mailing-list)
 - [Chat](#chat)
 - [Others](#others)
