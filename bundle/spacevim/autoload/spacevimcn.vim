@@ -46,6 +46,10 @@ scriptencoding utf-8
 let g:spacevim_default_indent          = 2
 
 ""
+" 在输入模式下，使用空格替代 `<Tab>`
+let g:spacevim_expand_tab              = 1
+
+""
 " @section relativenumber, options-relativenumber
 " @parentsection options
 " 启用/禁用相对行号，相对行号可以用于快速上下多行移动，默认已启用。
