@@ -51,21 +51,17 @@ name = "ctrlspace"
 
 * `home-mapping-key` (default: `<C-Space>`) - keybinding to enter CtrlSpace's
 home menu, which displays the buffers list
-* `autosave-workspaces` (default: `true`) - enable to autosave current
+* `autosave-workspaces` (default: `true`) - enable this to autosave current
 workspace on switching WS and exiting SpaceVim
-* `autoload-workspaces` (default: `false`) - enable to autoload last workspace
-on starting SpaceVim
+* `autoload-workspaces` (default: `false`) - enable this to autoload last workspace
+when starting SpaceVim
 * For more granular CtrlSpace options, refer to the [plugin's GitHub
 page](https://github.com/vim-ctrlspace/vim-ctrlspace).
 
-* `enable-spacevim-styled-keys` (default: `false`) - enable to make
-available [SpaceVim styled keybindings](#keybindings-spacevim-styled).
+* `enable-spacevim-styled-keys` (default: `false`) - enable this to use [SpaceVim styled keybindings](#keybindings-spacevim-styled).
 
 **Note**: when disabled, another traditional fuzzy finder layer (such
-as Denite or FZF) may still be used without concerns of keybinding
-conflicts.
-
-
+as Denite or FZF) may still be used without concerns of keybinding conflicts.
 
 ## Keybindings: CtrlSpace Defaults
 

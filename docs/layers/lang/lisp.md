@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#lisp layer"
-description: "This layer is for Common Lisp development, provide autocompletion, syntax checking, code format for Common Lisp file."
+description: "This layer is for Common Lisp development, provides autocompletion, syntax checking, and code formatting for Common Lisp files."
 ---
 
 # [Available Layers](../../) >> lang#lisp
@@ -20,7 +20,7 @@ This layer is for Common Lisp development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

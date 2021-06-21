@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#pascal layer"
-description: "This layer is for pascal development, provides syntax highlighting, code runner for pascal file."
+description: "This layer is for pascal development, provides syntax highlighting, and code runner for pascal files."
 ---
 
 # [Available Layers](../../) >> lang#pascal
@@ -21,7 +21,7 @@ the compiler before using this layer.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

@@ -128,7 +128,7 @@ rather than what it did. For example, use change; not changed or changes.
 #### body
 
 Not all commits are complex enough to warrant a body,
-therefore it is optional and only used when a commit requires a bit of explanation and context. 
+therefore it is optional and only used when a commit requires a bit of explanation and context.
 
 
 #### footer
@@ -140,7 +140,7 @@ The footer is optional and is used to reference issue tracker IDs.
 
 #### Title prefix of pull request
 
-Pull request titles should contain one of these prefix:
+Pull request titles should contain one of these prefixes:
 
 - `Add:` Adding new features.
 - `Change:` Change default behaviors or the existing features.
@@ -207,13 +207,13 @@ The file header for Vim script should look like the following template:
 "=============================================================================
 ```
 
-You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by the name of the layer you are creating, don’t forget to replace **YOUR NAME** and **YOUR EMAIL** neighter. 
+You should replace FILENAME by the name of the file (e.g. foo.vim) and NAME by the name of the layer you are creating, don’t forget to replace **YOUR NAME** and **YOUR EMAIL** too.
 
 #### Author of a new layer
 
-In the files header, replace the default author name (Shidong Wang) with your name.
+In the file's header, replace the default author name (Shidong Wang) with your name.
 
-The following example shows how to create a new layer names `foo`:
+The following example shows how to create a new layer named `foo`:
 
 1. Fork SpaceVim repo.
 2. Add a layer file `autoload/SpaceVim/layers/foo.vim` for `foo` layer.
@@ -231,7 +231,7 @@ The following example shows how to create a new layer names `foo`:
 ""
 " @section foo, layer-foo
 " @parentsection layers
-" This the doc for this layer:
+" This is the doc for this layer:
 "
 " @subsection Key Bindings
 " >
@@ -283,9 +283,9 @@ function! SpaceVim#layers#foo#get_options() abort
 endfunction
 ```
 
-4. Add layer document `docs/layers/foo.md` for `foo` layer.
-5. Open `docs/layers/index.md`, run `:call SpaceVim#dev#layers#update()` to update layer list.
-6. Send PR to SpaceVim.
+4. Create the layer's documentation file `docs/layers/foo.md` for `foo` layer.
+5. Open `docs/layers/index.md`, and run `:call SpaceVim#dev#layers#update()` to update the layers list.
+6. Send a PR to SpaceVim.
 
 #### Contributor to an existing layer
 
@@ -297,16 +297,16 @@ Mappings are an important part of SpaceVim.
 
 First if you want to have some personal mappings. This can be done in your bootstrap function.
 
-If you think it worth contributing new mappings, be sure to read the documentation to find the best mappings, then create a Pull-Request with your mappings.
+If you think it is worth contributing new mappings, be sure to read the documentation to find the best mappings, then create a Pull-Request with your mappings.
 
-ALWAYS document your new mappings or mappings changes inside the relevant documentation file.
+ALWAYS document your new mappings or mapping changes inside the relevant documentation file.
 It should be the layername.md and the [documentation](../documentation/).
 
 ##### Language specified key bindings
 
-All language specified key bindings prefix `SPC l`.
+All language specified key bindings have the prefix `SPC l`.
 
-We recommend to keep same language specified key bindings for different languages:
+We recommend you to use the common language specified key bindings for the same purpose as the following:
 
 | Key Binding | Description                                      |
 | ----------- | ------------------------------------------------ |
@@ -320,7 +320,7 @@ We recommend to keep same language specified key bindings for different language
 | `SPC l s l` | send line and keep code buffer focused           |
 | `SPC l s s` | send selection text and keep code buffer focused |
 
-All above key bindings are just recommended as default, but they also base on the language layer itself.
+All above key bindings are just recommended as default, but they are also based on the language layer itself.
 
 #### Contributing a banner
 
@@ -332,7 +332,7 @@ You are free to choose a reasonable height size but the width size should be aro
 
 ## Build with SpaceVim
 
-SpaceVim provide a lot of public [APIs](../api/), you can create plugins base on this APIs. Also you can add a badge to the README.md of your plugin.
+SpaceVim provides a lot of public [APIs](../api/), you can create plugins based on these APIs. Also you can add a badge to the README.md of your plugin.
 
 ![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)
 

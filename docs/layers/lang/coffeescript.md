@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#coffeescript layer"
-description: "This layer is for CoffeeScript development, provide autocompletion, syntax checking, code format for CoffeeScript file."
+description: "This layer is for CoffeeScript development, provides autocompletion, syntax checking, code format for CoffeeScript files."
 ---
 
 # [Available Layers](../../) >> lang#coffeescript
@@ -30,7 +30,7 @@ This layer is for CoffeeScript development, and it includes vim-coffeescript.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -41,7 +41,7 @@ To use this configuration layer, update custom configuration file with:
 
 ### Running current script
 
-To running a coffeescript file, you can press `SPC l r` to run current file without loss focus,
+To run a coffeescript file, you can press `SPC l r` to run the current file without losing focus,
 and the result will be shown in a runner buffer.
 
 ### Inferior REPL process
@@ -55,4 +55,3 @@ Send code to inferior process commands:
 | `SPC l s b`  | send buffer and keep code buffer focused         |
 | `SPC l s l`  | send line and keep code buffer focused           |
 | `SPC l s s`  | send selection text and keep code buffer focused |
-

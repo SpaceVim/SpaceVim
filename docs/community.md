@@ -1,6 +1,6 @@
 ---
 title:  "Community"
-description: "A list of public channels SpaceVim, All messages are bridged between IRC, gitter, telegram, matrix and slack"
+description: "A list of SpaceVim's public channels, All messages are bridged between IRC, gitter, telegram, matrix and slack"
 ---
 
 # [Home](../) >> Community
@@ -42,7 +42,7 @@ To unsubscribe, send an empty message to:
 spacevim+unsubscribe@googlegroups.com
 ```
 
-You can also view all the mail list history via google forum:
+You can also view all of the mailing list's history via google forum:
 
 - <i class="fas fa-envelope"></i> [google groups](https://groups.google.com/forum/#!forum/spacevim)
 
@@ -50,7 +50,7 @@ You can also view all the mail list history via google forum:
 
 All of these channels are bridged together. Click on one of the badges
 below to join the chat. In all of these channels, messages from
-`SpaceVimBot` is sent by remote user, and the format of the remote
+`SpaceVimBot` are sent by a remote user, and the format of the remote
 messages is:
 
 `**Nick:**` message

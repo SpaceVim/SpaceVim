@@ -55,7 +55,7 @@ snippet into SpaceVim configuration file:
 
 ### Running current script
 
-To running a php script, you can press `SPC l r` to run current file without loss focus,
+To run a php script, you can press `SPC l r` to run the current file without losing focus,
 and the result will be shown in a runner buffer.
 
 ### Inferior REPL process

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#fennel layer"
-description: "This layer is for fennel development, provide syntax checking, code runner and repl support for fennel file."
+description: "This layer is for fennel development, provides syntax checking, code runner and repl support for fennel files."
 ---
 
 # [Available Layers](../../) >> lang#fennel
@@ -24,7 +24,7 @@ description: "This layer is for fennel development, provide syntax checking, cod
 ## Install
 
 This layer is not enabled by default.
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -46,7 +46,7 @@ To use this configuration layer, update custom configuration file with:
 
 ### Running current script
 
-To running a fennel file, you can press `SPC l r` to run current file without loss focus,
+To run a fennel file, you can press `SPC l r` to run the current file without losing focus,
 and the result will be shown in a runner buffer.
 
 ### Inferior REPL process

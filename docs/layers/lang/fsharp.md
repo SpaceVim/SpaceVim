@@ -21,7 +21,7 @@ This layer adds FSharp language support to SpaceVim.
 
 ## Features
 
-- syntax highlighting, indent provide by [vim-fsharp](https://github.com/wsdjeg/vim-fsharp)
+- syntax highlighting, indentation provided by [vim-fsharp](https://github.com/wsdjeg/vim-fsharp)
 - REPL support
 
 ## Install
@@ -32,7 +32,7 @@ This layer adds FSharp language support to SpaceVim.
 yaourt -S fsharp-git
 ```
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
