@@ -18,9 +18,11 @@ let s:icons = {
 let s:troubles = {}
 
 function! SpaceVim#plugins#trouble#open() abort
-
   call s:open_win()
+endfunction
 
+function! SpaceVim#plugins#trouble#update(troubles) abort
+  let s:troubles = a:troubles
 endfunction
 
 " open viewer windows
