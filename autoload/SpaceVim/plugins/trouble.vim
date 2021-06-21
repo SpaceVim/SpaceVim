@@ -7,6 +7,8 @@
 "=============================================================================
 scriptencoding utf-8
 
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
+
 
 let s:icons = {
       \ 'fold_open' : '',
@@ -34,7 +36,7 @@ function! s:open_win() abort
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
-  set filetype=SpaceVimTodoManager
+  set filetype=SpaceVimTroubleManager
   let s:bufnr = bufnr('%')
   call s:update_trouble_content()
   augroup spacevim_plugin_todo
@@ -45,5 +47,18 @@ function! s:open_win() abort
 endfunction
 
 function! s:update_trouble_content() abort
+  let lines = []
+  for file in keys(s:troubles)
+    if file.is_folded
+      let line = join([s:icons.fold_closed, file.filename, len(keys(file.errors))], ' ')
+      call add(lines, line)
+    else
+    endif
+
+  endfor
+  call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, lines)
+endfunction
+
+function! s:WinEnter() abort
   
 endfunction
