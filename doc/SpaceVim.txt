@@ -810,6 +810,9 @@ In Insert mode: Use the appropriate number of spaces to insert a <Tab>
                                                    *g:spacevim_relativenumber*
 Enable/Disable relativenumber in current windows, by default it is enabled.
 
+                                                        *g:spacevim_wrap_line*
+Enable/Disable line wrap of vim
+
                                                *g:spacevim_enable_bepo_layout*
 Enable/Disable bepo layout, by default it is disabled.
 

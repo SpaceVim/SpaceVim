@@ -78,6 +78,9 @@ let g:spacevim_expand_tab              = 1
 " Enable/Disable relativenumber in current windows, by default it is enabled.
 let g:spacevim_relativenumber          = 1
 
+""
+" Enable/Disable line wrap of vim
+let g:spacevim_wrap_line = 0
 
 ""
 " @section enable_bepo_layout, options-enable_bepo_layout
@@ -1375,6 +1378,7 @@ function! SpaceVim#end() abort
   " tab options:
   set smarttab
   let &expandtab = g:spacevim_expand_tab
+  let &wrap = g:spacevim_wrap_line
 
   if g:spacevim_default_indent > 0
     let &tabstop = g:spacevim_default_indent
