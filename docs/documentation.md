@@ -81,6 +81,7 @@ description: "General documentation about how to use SpaceVim, including the qui
     - [Task Problems Matcher](#task-problems-matcher)
     - [Task auto-detection](#task-auto-detection)
     - [Task provider](#task-provider)
+  - [Todo manager](#todo-manager)
   - [Replace text with iedit](#replace-text-with-iedit)
     - [iedit states key bindings](#iedit-states-key-bindings)
   - [Code runner and REPL](#code-runner-and-repl)
@@ -2165,6 +2166,15 @@ call SpaceVim#plugins#tasks#reg_provider(function('s:make_tasks'))
 With the above configuration, you will see the following tasks in the SpaceVim repo:
 
 ![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
+
+### Todo manager
+
+The todo manager plugin will run `rg` asynchronously, the results will be displayed on todo manager windows.
+The key binding is `SPC a o`.
+
+The default tags is: `'@fixme', '@question', '@todo', '@idea'`.
+
+![todo manager](https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
 
 ### Replace text with iedit
 
