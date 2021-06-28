@@ -16,10 +16,11 @@ lang: zh
 
 nerdtree 或者 vimfiler，默认为 vimfiler，由 `filemanager` 选项控制。
 
-如果需要使用 nerdtree 作为文件树插件，可以添加：
+如果需要使用 nerdtree, coc-explorer 作为文件树插件，可以添加：
 
 ```toml
 [options]
+  #filemanager = "coc-explorer"
   filemanager = "nerdtree"
 ```
 

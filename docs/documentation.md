@@ -819,6 +819,7 @@ To change the filemanager plugin:
     # - vimfiler (default)
     # - nerdtree
     # - defx
+    # - coc-explorer
     filemanager = "defx"
 ```
 
@@ -1269,7 +1270,7 @@ SpaceVim has mapped normal `q` (record a macro) as smart buffer close, and recor
 | Key Bindings | Descriptions                     |
 | ------------ | -------------------------------- |
 | `<F2>`       | Toggle tagbar                    |
-| `<F3>`       | Toggle Vimfiler                  |
+| `<F3>`       | Toggle Vimfiler/ coc-explorer    |
 | `Ctrl-Down`  | Move to split below (`Ctrl-w j`) |
 | `Ctrl-Up`    | Move to upper split (`Ctrl-w k`) |
 | `Ctrl-Left`  | Move to left split (`Ctrl-w h`)  |

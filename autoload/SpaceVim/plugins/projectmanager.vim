@@ -134,6 +134,8 @@ function! SpaceVim#plugins#projectmanager#open(project) abort
     Startify | NERDTree
   elseif g:spacevim_filemanager ==# 'defx'
     Startify | Defx
+  elseif g:spacevim_filemanager ==# 'coc-explorer'
+    Startify | CocCommand explorer 
   endif
 endfunction
 
