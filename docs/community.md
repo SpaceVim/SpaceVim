@@ -11,7 +11,8 @@ Visit these resources for help or general questions.
 <!-- vim-markdown-toc GFM -->
 
 - [News](#news)
-- [Mailing list](#mailing-list)
+- [Bug repport and feature request](#bug-repport-and-feature-request)
+- [Mail list](#mail-list)
 - [Chat](#chat)
 - [Others](#others)
 
@@ -21,15 +22,20 @@ Visit these resources for help or general questions.
 
 - <i class="fab fa-twitter"></i> [Twitter](https://twitter.com/SpaceVim)
 
-### Mailing list
+### Bug repport and feature request
 
-To report a bug or feature request, you can use the SpaceVim google mail list.
+- [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
+
+### Mail list
+
+Users who are accustomed to using email can also communicate with each other through the mailing list.
+They can send email to the mailing list to participate in the discussion.
 
 ```
 spacevim@googlegroups.com
 ```
 
-Please note that to post on the list, you must be a member,
+Please note that to post on these lists, you must be a member,
 To join this group send an empty message to:
 
 ```
@@ -42,7 +48,7 @@ To unsubscribe, send an empty message to:
 spacevim+unsubscribe@googlegroups.com
 ```
 
-You can also view all of the mailing list's history via google forum:
+You can also view all the mail list history via google forum:
 
 - <i class="fas fa-envelope"></i> [google groups](https://groups.google.com/forum/#!forum/spacevim)
 
