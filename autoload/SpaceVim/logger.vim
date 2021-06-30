@@ -13,6 +13,20 @@ call s:LOGGER.set_level(get(g:, 'spacevim_debug_level', 1))
 call s:LOGGER.set_silent(1)
 call s:LOGGER.set_verbose(1)
 
+
+function! SpaceVim#logger#enable_debug() abort
+
+  let s:LOGGER.debug_mode = 1
+
+endfunction
+
+
+function! SpaceVim#logger#disable_debug() abort
+
+  let s:LOGGER.debug_mode = 0
+
+endfunction
+
 function! SpaceVim#logger#info(msg) abort
 
   call s:LOGGER.info(a:msg)
