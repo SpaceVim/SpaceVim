@@ -279,6 +279,8 @@ function! s:flygrep_result_to_files() abort
   for line in getbufline(s:flygrep_buffer_id, 1, '$')
     let filename = fnameescape(split(line, ':\d\+:')[0])
     let linenr = matchstr(line, ':\d\+:')[1:-2]
+    " if the search command is grep, the searching result is
+    " helloworld.vim:12: echo 'hello'
     let str = matchstr(line, '\(:\d\+:\d\+:\)\@<=.*')
     call add(files, [filename, linenr, str])
   endfor
