@@ -490,10 +490,10 @@ the variable `colorscheme`. For instance, to specify `desert`:
     colorscheme_bg = "dark"
 ```
 
-| Mappings  | Descriptions                                                                             |
-| --------- | ---------------------------------------------------------------------------------------- |
+| Mappings  | Descriptions                                                                          |
+| --------- | ------------------------------------------------------------------------------------- |
 | `SPC T n` | switch to a random colorscheme listed in [colorscheme layer](../layers/colorscheme/). |
-| `SPC T s` | select a theme using a [fuzzy finder](#fuzzy-finder).                                                     |
+| `SPC T s` | select a theme using a [fuzzy finder](#fuzzy-finder).                                 |
 
 All the included colorschemes can be found in [colorscheme layer](../layers/colorscheme/).
 
@@ -669,8 +669,8 @@ Unicode symbols are displayed by default. Add `statusline_unicode_symbols = fals
 
 The letters displayed in the statusline correspond to the key bindings used to toggle them.
 
-| Key Bindings | Unicode | ASCII | Mode                                             |
-| ------------ | ------- | ----- | ------------------------------------------------ |
+| Key Bindings | Unicode | ASCII | Mode                                            |
+| ------------ | ------- | ----- | ----------------------------------------------- |
 | `SPC t 8`    | ⑧       | 8     | toggle character highlighting for long lines    |
 | `SPC t f`    | ⓕ       | f     | fill-column-indicator mode                      |
 | `SPC t s`    | ⓢ       | s     | syntax checking (neomake)                       |
@@ -874,9 +874,9 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 
 If only one file buffer is opened, a file is opened in the active window, otherwise we need to use vim-choosewin to select a window to open the file.
 
-| Key Bindings    | Descriptions                              |
-| --------------- | ----------------------------------------- |
-| `l` / `<Enter>` | open file in one window                   |
+| Key Bindings    | Descriptions                             |
+| --------------- | ---------------------------------------- |
+| `l` / `<Enter>` | open file in one window                  |
 | `s g`           | open file in a vertically split window   |
 | `s v`           | open file in a horizontally split window |
 
@@ -1061,7 +1061,7 @@ Text related commands (start with `x`):
 | `SPC x g T`   | reverse source and target languages (TODO)                         |
 | `SPC x i c`   | change symbol style to `lowerCamelCase`                            |
 | `SPC x i C`   | change symbol style to `UpperCamelCase`                            |
-| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                   |
+| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                     |
 | `SPC x i -`   | change symbol style to `kebab-case`                                |
 | `SPC x i k`   | change symbol style to `kebab-case`                                |
 | `SPC x i _`   | change symbol style to `under_score`                               |
@@ -1126,8 +1126,8 @@ Key bindings available in visual mode:
 
 #### Increase/Decrease numbers
 
-| Key Bindings | Descriptions                                                        |
-| ------------ | ------------------------------------------------------------------- |
+| Key Bindings | Descriptions                                                             |
+| ------------ | ------------------------------------------------------------------------ |
 | `SPC n +`    | increase the number under the cursor by one and initiate transient state |
 | `SPC n -`    | decrease the number under the cursor by one and initiate transient state |
 
@@ -1425,7 +1425,6 @@ It is `[]` by default.
 
 The first item is the name of the tool, the second one is the default searching command.
 
-
 #### Vim and SpaceVim files
 
 Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
@@ -1617,14 +1616,14 @@ The following table summurizes the search key bindings:
 
 With `<scope>` being one of the following:
 
-|  Scope  |            Description           |
-| ------- | -------------------------------- |
-|   `b`   | All open buffers                 |
-|   `d`   | Current buffer's directory       |
-|   `f`   | Arbitrary directory              |
-|   `p`   | Current project                  |
-|   `s`   | Current buffer                   |
-|   `j`   | Background search in the project |
+| Scope | Description                      |
+| ----- | -------------------------------- |
+| `b`   | All open buffers                 |
+| `d`   | Current buffer's directory       |
+| `f`   | Arbitrary directory              |
+| `p`   | Current project                  |
+| `s`   | Current buffer                   |
+| `j`   | Background search in the project |
 
 **Notes**:
 
@@ -1902,6 +1901,7 @@ Project manager commands start with `p`:
 | Key Bindings | Descriptions                             |
 | ------------ | ---------------------------------------- |
 | `SPC p f`    | find files in current project            |
+| `SPC p F`    | find cursor file in current project      |
 | `SPC p /`    | fuzzy search for text in current project |
 | `SPC p k`    | kill all buffers of current project      |
 | `SPC p p`    | list all projects                        |
@@ -2030,33 +2030,33 @@ To run the task in the background, you need to set `isBackground` to `true`:
 
 The following task properties are available:
 
-| Name           | Description                                                                                            |
-| -------------- | ------------------------------------------------------------------------------------------------------ |
-| command        | The actual command to execute.                                                                         |
-| args           | The arguments passed to the command, it should be a list of strings and may be omitted.                |
-| options        | Override the defaults for `cwd`,`env` or `shell`.                                                      |
-| isBackground   | Specifies whether the task should run in the background. by default, it is `false`.                    |
-| description    | Short description of the task                                                                          |
-| problemMatcher | Problems matcher of the task                                                                           |
+| Name           | Description                                                                             |
+| -------------- | --------------------------------------------------------------------------------------- |
+| command        | The actual command to execute.                                                          |
+| args           | The arguments passed to the command, it should be a list of strings and may be omitted. |
+| options        | Override the defaults for `cwd`,`env` or `shell`.                                       |
+| isBackground   | Specifies whether the task should run in the background. by default, it is `false`.     |
+| description    | Short description of the task                                                           |
+| problemMatcher | Problems matcher of the task                                                            |
 
 **Note**: When a new task is executed, it will kill the previous task. If you want to keep the task,
 run it in background by setting `isBackground` to `true`.
 
 SpaceVim supports variable substitution in the task properties, The following predefined variables are supported:
 
-| Name                       | Description                                            |
-| -------------------------- | ------------------------------------------------------ |
-| ${workspaceFolder}         | The project's root directory                           |
-| ${workspaceFolderBasename} | The name of current project's root directory           |
-| ${file}                    | The path of current file                               |
-| ${relativeFile}            | The current file relative to project root              |
-| ${relativeFileDirname}     | The current file's dirname relative to workspaceFolder |
-| ${fileBasename}            | The current file's basename                            |
-| ${fileBasenameNoExtension} | The current file's basename without file extension     |
-| ${fileDirname}             | The current file's dirname                             |
-| ${fileExtname}             | The current file's extension                           |
-| ${cwd}                     | The task runner's current working directory on startup |
-| ${lineNumber}              | The current selected line number in the active file    |
+| Name                        | Description                                            |
+| --------------------------- | ------------------------------------------------------ |
+| \${workspaceFolder}         | The project's root directory                           |
+| \${workspaceFolderBasename} | The name of current project's root directory           |
+| \${file}                    | The path of current file                               |
+| \${relativeFile}            | The current file relative to project root              |
+| \${relativeFileDirname}     | The current file's dirname relative to workspaceFolder |
+| \${fileBasename}            | The current file's basename                            |
+| \${fileBasenameNoExtension} | The current file's basename without file extension     |
+| \${fileDirname}             | The current file's dirname                             |
+| \${fileExtname}             | The current file's extension                           |
+| \${cwd}                     | The task runner's current working directory on startup |
+| \${lineNumber}              | The current selected line number in the active file    |
 
 For example: Supposing that you have the following requirements:
 
@@ -2064,18 +2064,18 @@ A file located at `/home/your-username/your-project/folder/file.ext` opened in y
 The directory `/home/your-username/your-project` opened as your root workspace.
 So you will have the following values for each variable:
 
-| Name                       | Value                                              |
-| -------------------------- | -------------------------------------------------- |
-| ${workspaceFolder}         | `/home/your-username/your-project/`                |
-| ${workspaceFolderBasename} | `your-project`                                     |
-| ${file}                    | `/home/your-username/your-project/folder/file.ext` |
-| ${relativeFile}            | `folder/file.ext`                                  |
-| ${relativeFileDirname}     | `folder/`                                          |
-| ${fileBasename}            | `file.ext`                                         |
-| ${fileBasenameNoExtension} | `file`                                             |
-| ${fileDirname}             | `/home/your-username/your-project/folder/`         |
-| ${fileExtname}             | `.ext`                                             |
-| ${lineNumber}              | line number of the cursor                          |
+| Name                        | Value                                              |
+| --------------------------- | -------------------------------------------------- |
+| \${workspaceFolder}         | `/home/your-username/your-project/`                |
+| \${workspaceFolderBasename} | `your-project`                                     |
+| \${file}                    | `/home/your-username/your-project/folder/file.ext` |
+| \${relativeFile}            | `folder/file.ext`                                  |
+| \${relativeFileDirname}     | `folder/`                                          |
+| \${fileBasename}            | `file.ext`                                         |
+| \${fileBasenameNoExtension} | `file`                                             |
+| \${fileDirname}             | `/home/your-username/your-project/folder/`         |
+| \${fileExtname}             | `.ext`                                             |
+| \${lineNumber}              | line number of the cursor                          |
 
 #### Task Problems Matcher
 
