@@ -28,12 +28,18 @@ To use this configuration layer, update your custom configuration file with:
 [[layers]]
   name = "lang#typescript"
 ```
+and also use npm to install neovim using:
+```bash
+npm install -g neovim
+```
+then in SpaceVim run `:UpdateRemotePlugin`
 
 To generate doc of typescript file, you need to install [lehre](https://www.npmjs.com/package/lehre)
 
 ```
 yarn add -D lehre
 ```
+
 
 ## Layer options
 
