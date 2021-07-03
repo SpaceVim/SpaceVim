@@ -271,6 +271,18 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'F'],
+        \ 'LeaderfFileCword',
+        \ ['find cursor file in current project',
+        \ [
+        \ '[SPC p F] is to find cursor file in the root of the current project',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ 'Leaderf file --fullPath '
         \ . SpaceVim#plugins#projectmanager#current_root(),
