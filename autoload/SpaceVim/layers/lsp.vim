@@ -24,9 +24,12 @@ function! SpaceVim#layers#lsp#plugins() abort
     " The version is >= 0.5.0, using the builtin lsp
   elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
     " nop
+  elseif has('nvim-0.4.3')
+    " use neovim build-in lsp
   elseif has('nvim')
-    call add(plugins, ['autozimu/LanguageClient-neovim',
-          \ { 'merged': 0, 'if': has('python3'), 'build' : 'bash install.sh' }])
+    call add(plugins, ['bfredl/nvim-lspmirror', {'merged' : 0}])
+    call add(plugins, ['bfredl/nvim-lspext', {'merged' : 0}])
+    call add(plugins, ['shougo/deoplete-lsp', {'merged' : 0}])
   else
     call add(plugins, ['prabirshrestha/async.vim', {'merged' : 0}])
     call add(plugins, ['prabirshrestha/vim-lsp', {'merged' : 0}])
@@ -36,6 +39,9 @@ function! SpaceVim#layers#lsp#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lsp#config() abort
+  for ft in s:enabled_fts
+    call SpaceVim#lsp#reg_server(ft, s:lsp_servers[ft])
+  endfor
   " SpaceVim/LanguageClient-neovim {{{
   let g:LanguageClient_diagnosticsDisplay = {
         \ 1: {
@@ -121,9 +127,6 @@ function! SpaceVim#layers#lsp#config() abort
   let g:LanguageClient_autoStart = 1
   let g:lsp_async_completion = 1
   " }}}
-  for ft in s:enabled_fts
-    call SpaceVim#lsp#reg_server(ft, s:lsp_servers[ft])
-  endfor
 endfunction
 
 let s:enabled_fts = []

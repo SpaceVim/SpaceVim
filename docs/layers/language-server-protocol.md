@@ -7,30 +7,35 @@ description: "This layers provides language server protocol for vim and neovim"
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Features](#features)
-- [Install](#install)
-  - [Install language server](#install-language-server)
-- [Configuration](#configuration)
-- [Key bindings](#key-bindings)
+  - [Description](#description)
+- [SpaceVim should work well in different versions of vim/neovim, so in the future, the logic of this layer should be:](#spacevim-should-work-well-in-different-versions-of-vimneovim-so-in-the-future-the-logic-of-this-layer-should-be)
+  - [Features](#features)
+  - [Install](#install)
+    - [Install language server](#install-language-server)
+  - [Configuration](#configuration)
+  - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
 ## Description
 
-This layer adds extensive support for [language-server-protocol](https://microsoft.github.io/language-server-protocol/),
-This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) (an old fork),
-The upstream is rewritten in rust.
+This layers adds extensive support for [language-server-protocol](https://microsoft.github.io/language-server-protocol/),
+This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim),
+The upstream is rewritten by rust.
 
 We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is written in pure vim script.
 
 Note that if `coc` is used as the autocomplete method in the `autocomplete` layer, it will be used as the lsp client.
 
+<<<<<<< HEAD
 The neovim team is going to implement the build-in LSP support, the
 PR is [neovim#6856](https://github.com/neovim/neovim/pull/6856). and the author of this PR
 create another plugin [tjdevries/nvim-langserver-shim](https://github.com/tjdevries/nvim-langserver-shim)
 
 SpaceVim should work well in different versions of vim/neovim, so in the future, the logic of this layer should be:
+=======
+SpaceVim should works well in different version of vim/neovim, the logic of this layer is:
+>>>>>>> lsp2
 
 ```vim
 if has('nvim')
