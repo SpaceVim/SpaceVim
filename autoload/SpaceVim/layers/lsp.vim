@@ -6,15 +6,23 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:NVIM_VERSION')
+  finish
+endif
+
 ""
 " @section language server protocol, layer-lsp
 " @parentsection layers
 " This layer provides language client support for SpaceVim.
 
+let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
+
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
 
-  if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
+  if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
+    " The version is >= 0.5.0, using the builtin lsp
+  elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
     " nop
   elseif has('nvim')
     call add(plugins, ['autozimu/LanguageClient-neovim',
@@ -31,34 +39,34 @@ function! SpaceVim#layers#lsp#config() abort
   " SpaceVim/LanguageClient-neovim {{{
   let g:LanguageClient_diagnosticsDisplay = {
         \ 1: {
-        \ 'name': 'Error',
-        \ 'texthl': 'LanguageClientError',
-        \ 'signText': g:spacevim_error_symbol,
-        \ 'signTexthl': 'LanguageClientError', 
-        \ 'virtualTexthl': 'Error',
-        \ },
-        \ 2: {
-        \ 'name': 'Warning',
-        \ 'texthl': 'LanguageClientWarning',
-        \ 'signText': g:spacevim_warning_symbol,
-        \ 'signTexthl': 'LanguageClientWarningSign',
-        \ 'virtualTexthl': 'Todo',
-        \ },
-        \ 3: {
-        \ 'name': 'Information',
-        \ 'texthl': 'LanguageClientInfo',
-        \ 'signText': g:spacevim_info_symbol,
-        \ 'signTexthl': 'LanguageClientInfoSign',
-        \ 'virtualTexthl': 'Todo',
-        \ },
-        \ 4: {
-        \ 'name': 'Hint',
-        \ 'texthl': 'LanguageClientInfo',
-        \ 'signText': g:spacevim_info_symbol,
-        \ 'signTexthl': 'LanguageClientInfoSign',
-        \ 'virtualTexthl': 'Todo',
-        \ },
-        \ }
+          \ 'name': 'Error',
+          \ 'texthl': 'LanguageClientError',
+          \ 'signText': g:spacevim_error_symbol,
+          \ 'signTexthl': 'LanguageClientError', 
+          \ 'virtualTexthl': 'Error',
+          \ },
+          \ 2: {
+            \ 'name': 'Warning',
+            \ 'texthl': 'LanguageClientWarning',
+            \ 'signText': g:spacevim_warning_symbol,
+            \ 'signTexthl': 'LanguageClientWarningSign',
+            \ 'virtualTexthl': 'Todo',
+            \ },
+            \ 3: {
+              \ 'name': 'Information',
+              \ 'texthl': 'LanguageClientInfo',
+              \ 'signText': g:spacevim_info_symbol,
+              \ 'signTexthl': 'LanguageClientInfoSign',
+              \ 'virtualTexthl': 'Todo',
+              \ },
+              \ 4: {
+                \ 'name': 'Hint',
+                \ 'texthl': 'LanguageClientInfo',
+                \ 'signText': g:spacevim_info_symbol,
+                \ 'signTexthl': 'LanguageClientInfoSign',
+                \ 'virtualTexthl': 'Todo',
+                \ },
+                \ }
 
   if g:spacevim_lint_engine ==# 'neomake'
     let g:LanguageClient_diagnosticsDisplay[1].texthl = 'NeomakeError'
