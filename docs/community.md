@@ -9,8 +9,8 @@ description: "A list of SpaceVim's public channels, All messages are bridged bet
 <!-- vim-markdown-toc GFM -->
 
 - [News](#news)
-- [Bug repport and feature request](#bug-repport-and-feature-request)
-- [Mail list](#mail-list)
+- [Bug report](#bug-report)
+- [Mailing list](#mailing-list)
 - [Chat](#chat)
 - [Others](#others)
 
@@ -20,11 +20,11 @@ description: "A list of SpaceVim's public channels, All messages are bridged bet
 
 - <i class="fab fa-twitter"></i> [Twitter](https://twitter.com/SpaceVim)
 
-### Bug repport and feature request
+### Bug report
 
 - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
 
-### Mail list
+### Mailing list
 
 Users who are accustomed to using email can also communicate with each other through the mailing list.
 They can send email to the mailing list to participate in the discussion.
