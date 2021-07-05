@@ -22,6 +22,8 @@ description: "A list of SpaceVim's public channels, All messages are bridged bet
 
 ### Bug report
 
+Have you found a bug? Or maybe you have a nice feature to contribute?
+
 - [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
 
 ### Mailing list
