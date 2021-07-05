@@ -16,6 +16,7 @@ endif
 " This layer provides language client support for SpaceVim.
 
 let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
+let s:lsp_client = ''
 
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
@@ -159,6 +160,7 @@ let s:lsp_servers = {
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort
+  let s:lsp_client = get(a:var, 'lsp_client', s:lsp_client)
   let override = get(a:var, 'override_cmd', {})
   if !empty(override)
     call extend(s:lsp_servers, override, 'force')
