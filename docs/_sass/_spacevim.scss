@@ -643,9 +643,19 @@ a small {
 }
 
 ul {
-  list-style: coral;
+  list-style: none;
+  padding: 0;
 }
-// ul { list-style-image: url("../images/bullet.png"); }
+li {
+  padding-left: 1.3em;
+}
+li:before {
+  content: "·"; /* FontAwesome Unicode */
+  // font-family: FontAwesome;
+  display: inline-block;
+  margin-left: -1.3em; /* same as padding-left set on li */
+  width: 1.3em; /* same as padding-left set on li */
+}
 
 strong {
   font-family: "OpenSansBold", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
