@@ -9,7 +9,7 @@ description: "A list of SpaceVim's public channels, All messages are bridged bet
 <!-- vim-markdown-toc GFM -->
 
 - [News](#news)
-- [Bug report](#bug-report)
+- [Feedback](#feedback)
 - [Mailing list](#mailing-list)
 - [Chat](#chat)
 - [Others](#others)
@@ -18,13 +18,12 @@ description: "A list of SpaceVim's public channels, All messages are bridged bet
 
 ### News
 
-- <i class="fab fa-twitter"></i> [Twitter](https://twitter.com/SpaceVim)
+- [Follow @SpaceVim](https://twitter.com/SpaceVim)
 
-### Bug report
+### Feedback
 
-Have you found a bug? Or maybe you have a nice feature to contribute?
-
-- [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) for issue and feature requests
+Have you found a bug? Or maybe you want a new feature. Please use the
+[issue tracker](https://github.com/SpaceVim/SpaceVim/issues) to report any bugs or file feature requests.
 
 ### Mailing list
 
