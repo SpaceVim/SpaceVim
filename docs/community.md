@@ -5,12 +5,11 @@ description: "A list of SpaceVim's public channels, All messages are bridged bet
 
 # [Home](../) >> Community
 
-Visit these resources for help or general questions.
-
 
 <!-- vim-markdown-toc GFM -->
 
 - [News](#news)
+- [Feedback](#feedback)
 - [Mailing list](#mailing-list)
 - [Chat](#chat)
 - [Others](#others)
@@ -19,17 +18,23 @@ Visit these resources for help or general questions.
 
 ### News
 
-- <i class="fab fa-twitter"></i> [Twitter](https://twitter.com/SpaceVim)
+- [Follow @SpaceVim](https://twitter.com/SpaceVim)
+
+### Feedback
+
+Have you found a bug? Or maybe you want a new feature. Please use the
+[issue tracker](https://github.com/SpaceVim/SpaceVim/issues) to report any bugs or file feature requests.
 
 ### Mailing list
 
-To report a bug or feature request, you can use the SpaceVim google mail list.
+Users who are accustomed to using email can also communicate with each other through the mailing list.
+They can send email to the mailing list to participate in the discussion.
 
 ```
 spacevim@googlegroups.com
 ```
 
-Please note that to post on the list, you must be a member,
+Please note that to post on these lists, you must be a member,
 To join this group send an empty message to:
 
 ```
@@ -42,7 +47,7 @@ To unsubscribe, send an empty message to:
 spacevim+unsubscribe@googlegroups.com
 ```
 
-You can also view all of the mailing list's history via google forum:
+You can also view all the mail list history via google forum:
 
 - <i class="fas fa-envelope"></i> [google groups](https://groups.google.com/forum/#!forum/spacevim)
 
