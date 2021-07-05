@@ -5,8 +5,6 @@ description: "A list of SpaceVim's public channels, All messages are bridged bet
 
 # [Home](../) >> Community
 
-Visit these resources for help or general questions.
-
 
 <!-- vim-markdown-toc GFM -->
 
