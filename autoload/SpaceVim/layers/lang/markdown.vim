@@ -52,10 +52,10 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
   call add(plugins, ['iamcco/mathjax-support-for-mkdp',{ 'on_ft' : 'markdown'}])
   call add(plugins, ['lvht/tagbar-markdown',{'merged' : 0}])
   " check node package managers to ensure building of 2 plugins below
-  if executable('npm')
-    let s:node_pkgm = 'npm'
-  elseif executable('yarn')
+  if executable('yarn')
     let s:node_pkgm = 'yarn'
+  elseif executable('npm')
+    let s:node_pkgm = 'npm'
   else
     let s:node_pkgm = ''
     call SpaceVim#logger#error('npm or yarn is required to build iamcco/markdown-preview and neoclide/vim-node-rpc')
