@@ -18,13 +18,17 @@ endif
 
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
-        \ [g:_spacevim_root_dir . 'bundle/indentLine', {'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar', {'loadconf' : 1, 'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar-makefile.vim', {'merged': 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar-proto.vim', {'merged': 0}],
         \ [g:_spacevim_root_dir . 'bundle/vim-choosewin', {'on_cmd' : 'ChooseWin', 'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/vim-startify', {'loadconf' : 1, 'merged' : 0}],
         \ ]
+  if has('nvim-0.5.0')
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/indent-blankline.nvim',         { 'merged' : 0}])
+  else
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/indentLine',         { 'merged' : 0}])
+  endif
   if !SpaceVim#layers#isLoaded('core#statusline')
     call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline',                { 'merged' : 0, 
           \ 'loadconf' : 1}])
