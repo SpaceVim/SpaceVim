@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/SpaceVim/SpaceVim)
+
 [![SpaceVim](https://spacevim.org/logo.png)](https://spacevim.org)
 
 [Wiki](https://github.com/SpaceVim/SpaceVim/wiki) \|
