@@ -46,6 +46,14 @@ else
   endfunction
 endif
 
+function! s:self.set_var(buf, var, val) abort
+  return setbufvar(a:buf, a:var, a:val)
+endfunction
+
+function! s:self.get_var(buf, var) abort
+  return getbufvar(a:buf, a:var)
+endfunction
+
 " bufnr needs atleast one argv before patch-8.1.1924 has('patch-8.1.1924')
 function! s:self.bufnr(...) abort
   if has('patch-8.1.1924')

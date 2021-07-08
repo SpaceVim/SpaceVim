@@ -9,6 +9,11 @@
 let s:VIM = SpaceVim#api#import('vim')
 let s:BUF = SpaceVim#api#import('vim#buffer')
 let s:WIN = SpaceVim#api#import('vim#window')
+if has('nvim')
+  let s:FLOAT = SpaceVim#api#import('neovim#floating')
+else
+  let s:FLOAT = SpaceVim#api#import('vim#floating')
+endif
 
 scriptencoding utf-8
 
