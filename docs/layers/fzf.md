@@ -23,8 +23,11 @@ To use this configuration layer, add it to your configuration file.
 
 ```toml
 [[layers]]
-name = "fzf"
+    name = "fzf"
 ```
+
+Install `fzf` command with your system package manager. And make sure
+`fzf` command is in `$PATH`.
 
 ## Key bindings
 

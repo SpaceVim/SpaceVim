@@ -6,6 +6,8 @@
 " License: GPLv3
 "=============================================================================
 
+scriptencoding utf-8
+
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:SYS = SpaceVim#api#import('system')
@@ -13,7 +15,7 @@ let s:SYS = SpaceVim#api#import('system')
 
 function! SpaceVim#layers#fzf#plugins() abort
   let plugins = []
-  call add(plugins, ['junegunn/fzf',                { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/fzf',{'merged' : 0}])
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
   call add(plugins, ['SpaceVim/fzf-neoyank',                { 'merged' : 0}])
@@ -177,14 +179,14 @@ endfunction
 
 " Function below is largely lifted directly out of project junegunn/fzf.vim from
 " file autoload/fzf/vim.vim ; w/ minor mods to better integrate into SpaceVim
-function! s:wrap(name, opts)
+function! s:wrap(name, opts) abort
   " fzf#wrap does not append --expect if 'sink' is found
   let opts = copy(a:opts)
   let options = ''
   if has_key(opts, 'options')
     let options = type(opts.options) == v:t_list ? join(opts.options) : opts.options
   endif
-  if options !~ '--expect' && has_key(opts, 'sink')
+  if options !~# '--expect' && has_key(opts, 'sink')
     call remove(opts, 'sink')
     let wrapped = fzf#wrap(a:name, opts)
   else
@@ -204,7 +206,11 @@ endfunction
 command! FzfFiles call <SID>files()
 function! s:files() abort
   let s:source = 'files'
-  call fzf#run(s:wrap('files', {'sink': 'e', 'options': '--reverse', 'down' : '40%'}))
+  call fzf#run(s:wrap('files', {
+        \ 'sink': 'e',
+        \ 'options': '--reverse',
+        \ 'down' : '40%',
+        \ }))
 endfunction
 
 let s:source = ''
@@ -245,10 +251,10 @@ function! s:jumps() abort
     return split(s:CMP.execute('jumps'), '\n')[1:]
   endfunction
   call fzf#run(fzf#wrap('jumps', {
-        \   'source':  reverse(<sid>jumplist()),
+        \   'source':  <sid>jumplist(),
         \   'sink':    function('s:bufopen'),
-        \   'options': '+m',
-        \   'down':    len(<sid>jumplist()) + 2
+        \   'options': '--reverse',
+        \   'down':  '40%',
         \ }))
 endfunction
 
@@ -265,17 +271,14 @@ function! s:message() abort
     return split(s:CMP.execute('message'), '\n')
   endfunction
   call fzf#run(fzf#wrap('messages', {
-        \   'source':  reverse(<sid>messagelist()),
+        \   'source':  <sid>messagelist(),
         \   'sink':    function('s:yankmessage'),
-        \   'options': '+m',
-        \   'down':    len(<sid>messagelist()) + 2
+        \   'options': '--reverse',
+        \   'down':    '40%'
         \ }))
 endfunction
 
 command! FzfMru call <SID>file_mru()
-function! s:open_file(path) abort
-  exe 'e' a:path
-endfunction
 function! s:file_mru() abort
   let s:source = 'mru'
   function! s:mru_files() abort
@@ -283,8 +286,9 @@ function! s:file_mru() abort
   endfunction
   call fzf#run(s:wrap('mru', {
         \ 'source':  <sid>mru_files(),
-        \ 'sink':    function('s:open_file'),
-        \ 'down' : '40%',
+        \ 'sink': 'e',
+        \ 'options': '--reverse',
+        \ 'down': '40%',
         \ }))
 endfunction
 
@@ -354,10 +358,6 @@ function! s:outline_format(lists) abort
 endfunction
 
 function! s:outline_source(tag_cmds) abort
-  if !filereadable(expand('%'))
-    throw 'Save the file first'
-  endif
-
   let lines = []
   for cmd in a:tag_cmds
     let lines = split(system(cmd), "\n")
@@ -366,7 +366,12 @@ function! s:outline_source(tag_cmds) abort
     endif
   endfor
   if v:shell_error
-    throw get(lines, 0, 'Failed to extract tags')
+    if s:SYS.isWindows
+      let codepage = libcallnr('kernel32.dll', 'GetACP', 0)
+      throw iconv(get(lines, 0, 'Failed to extract tags'), 'cp'. codepage, 'utf-8')
+    else
+      throw get(lines, 0, 'Failed to extract tags')
+    endif
   elseif empty(lines)
     throw 'No tags found'
   endif
@@ -382,9 +387,21 @@ endfunction
 
 function! s:outline(...) abort
   let s:source = 'outline'
+  " Error detected while processing function <SNR>55_outline[5]..<SNR>55_outline_source:
+  " line   11:
+  " E605: Exception not caught: 系统找不到指定的路径。
+  " This error is because `2>/dev/null` is not supported in window
+  " let tag_cmds = [
+        " \ printf('ctags -f - --sort=no --excmd=number --language-force=%s %s 2>/dev/null', &filetype, expand('%:S')),
+        " \ printf('ctags -f - --sort=no --excmd=number %s 2>/dev/null', expand('%:S'))]
+  if s:SYS.isWindows
+    let redirect = '2>nul'
+  else
+    let redirect = '2>/dev/null'
+  endif
   let tag_cmds = [
-        \ printf('ctags -f - --sort=no --excmd=number --language-force=%s %s 2>/dev/null', &filetype, expand('%:S')),
-        \ printf('ctags -f - --sort=no --excmd=number %s 2>/dev/null', expand('%:S'))]
+        \ printf('ctags -f - --sort=no --excmd=number --language-force=%s %s %s', &filetype, expand('%:S'), redirect),
+        \ printf('ctags -f - --sort=no --excmd=number %s %s', expand('%:S'), redirect)]
   return {
         \ 'source':  s:outline_source(tag_cmds),
         \ 'sink*':   function('s:outline_sink'),
@@ -485,7 +502,7 @@ function! s:helptags(...) abort
     silent! call delete(s:helptags_script)
   endif
   let s:helptags_script = tempname()
-  call writefile(['/('.(s:SYS.isWindows ? '^[A-Z]:\/.*?[^:]' : '.*?').'):(.*?)\t(.*?)\t/; printf(qq('. call('s:green', ['%-40s', 'Label']) . '\t%s\t%s\n), $2, $3, $1)'], s:helptags_script)
+  call writefile(['/('.(s:SYS.isWindows ? '^[A-Z]:\/.*?[^:]' : '.*?').'):(.*?)\t(.*?)\t/; printf(qq('. call('s:' . 'green', ['%-40s', 'Label']) . '\t%s\t%s\n), $2, $3, $1)'], s:helptags_script)
   let s:source = 'help'
   call fzf#run(fzf#wrap('helptags', {
         \ 'source':  'grep -H ".*" '.join(map(tags, 'shellescape(v:val)')).
@@ -551,11 +568,11 @@ function! s:tags() abort
   endif
 
   call fzf#run({
-  \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
-  \            '| grep -v -a ^!',
-  \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index --reverse',
-  \ 'down':    '40%',
-  \ 'sink':    function('s:tags_sink')})
+        \ 'source':  'cat '.join(map(tagfiles(), 'fnamemodify(v:val, ":S")')).
+        \            '| grep -v -a ^!',
+        \ 'options': '+m -d "\t" --with-nth 1,4.. -n 1 --tiebreak=index --reverse',
+        \ 'down':    '40%',
+        \ 'sink':    function('s:tags_sink')})
 endfunction
 
 command! FzfTags call s:tags()
