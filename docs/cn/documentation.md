@@ -2073,10 +2073,10 @@ SpaceVim 目前支持自动识别以下构建系统的任务：npm。
 ```vim
 function! s:make_tasks() abort
     if filereadable('Makefile')
-        let subcmd = filter(readfile('Makefile', ''), "v:val=~#'^.PHONY'")
-        if !empty(subcmd)
-            let commands = split(subcmd[0])[1:]
-            let conf = {}
+        let subcmds = filter(readfile('Makefile', ''), "v:val=~#'^.PHONY'")
+        let conf = {}
+        for subcmd in subcmds
+            let commands = split(subcmd)[1:]
             for cmd in commands
                 call extend(conf, {
                             \ cmd : {
@@ -2087,10 +2087,8 @@ function! s:make_tasks() abort
                             \ }
                             \ })
             endfor
-            return conf
-        else
-            return {}
-        endif
+        endfor
+        return conf
     else
         return {}
     endif
