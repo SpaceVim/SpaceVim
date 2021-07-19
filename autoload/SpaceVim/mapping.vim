@@ -128,6 +128,12 @@ function! SpaceVim#mapping#clear_buffers() abort
   endif
 endfunction
 
+function! SpaceVim#mapping#kill_buffer_expr() abort
+
+  
+
+endfunction
+
 function! SpaceVim#mapping#split_previous_buffer() abort
   if bufnr('#') == -1
     call SpaceVim#util#echoWarn('There is no previous buffer')
