@@ -135,7 +135,7 @@ gem install solargraph
 | `crystal`    | `['scry']`                                                                                                                                                                                       |
 | `css`        | `['css-languageserver', '--stdio']`                                                                                                                                                              |
 | `dart`       | `['dart_language_server']`                                                                                                                                                                       |
-| `go`         | `['go-langserver', '-mode', 'stdio']`                                                                                                                                                            |
+| `go`         | `['gopls']`                                                                                                                                                            |
 | `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
 | `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
 | `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |
