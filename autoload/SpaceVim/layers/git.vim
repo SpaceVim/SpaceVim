@@ -69,14 +69,14 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'Gina log %', 'git-log-of-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'Gina log', 'git-log-of-current-repo', 1)
   elseif s:git_plugin ==# 'fugitive'
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gstatus', 'git-status', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Git', 'git-status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Git add %', 'stage-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Git reset -q %', 'unstage-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Git commit', 'edit-git-commit', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gpush', 'git-push', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Git push', 'git-push', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gdiff', 'view-git-diff', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Git add .', 'stage-all-files', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gblame', 'view-git-blame', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Git blame', 'view-git-blame', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'Glog -- %', 'git-log-of-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'Glog --', 'git-log-of-current-repo', 1)
   elseif s:git_plugin ==# 'gita'
