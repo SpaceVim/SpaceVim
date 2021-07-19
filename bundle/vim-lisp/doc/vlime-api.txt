@@ -1,0 +1,1151 @@
+*vlime-api.txt*
+                                                                   *vlime-api*
+
+==============================================================================
+CONTENTS                                                  *vlime-api-contents*
+  1. Dictionaries............................................|vlime-api-dicts|
+  2. Functions...........................................|vlime-api-functions|
+
+==============================================================================
+DICTIONARIES                                                 *vlime-api-dicts*
+
+                                                   *vlime-api.VlimeConnection*
+Vlime uses |vlime-api.VlimeConnection| objects to represent connections to the
+servers. You can create such an object by calling |vlime#plugin#ConnectREPL()|
+or |vlime#New()|.
+
+Most of the connection object's methods are thin wrappers around raw
+SLIME/SWANK messages, and they are asynchronous. These async methods have an
+optional callback argument, to allow a function be registered for handling the
+result returned by the server. The callback functions should accept two
+arguments:
+
+    function! SomeCallbackFunc({conn_obj}, {result}) ...
+
+{conn_obj} is the connection object in question, and {result} is the returned
+value.
+
+See below for a detailed list of methods for |vlime-api.VlimeConnection|
+objects.
+
+
+VlimeConnection.Connect({host}, {port}, [remote_prefix], [timeout])
+                                                   *VlimeConnection.Connect()*
+
+  Connect to a server.
+
+  {host} and {port} specify the server to connect to. [remote_prefix], if
+  specified, is an SFTP URL prefix, to tell Vlime to open remote files via
+  SFTP (see |vlime-remote-server|). [timeout] is the time to wait for the
+  connection to be made, in milliseconds.
+
+VlimeConnection.IsConnected()                  *VlimeConnection.IsConnected()*
+
+  Return |TRUE| for a connected connection, |FALSE| otherwise.
+
+VlimeConnection.Close()                              *VlimeConnection.Close()*
+
+  Close this connection.
+
+VlimeConnection.Call({msg})                           *VlimeConnection.Call()*
+
+  Send a raw message {msg} to the server, and wait for a reply.
+
+VlimeConnection.Send({msg}, [callback])               *VlimeConnection.Send()*
+
+  Send a raw message {msg} to the server, and optionally register an async
+  [callback] function to handle the reply.
+
+VlimeConnection.FixRemotePath({path})        *VlimeConnection.FixRemotePath()*
+
+  Fix the remote file paths after they are received from the server, so that
+  Vim can open the files via SFTP. {path} can be a plain string or a Swank
+  source location object.
+
+VlimeConnection.FixLocalPath({path})          *VlimeConnection.FixLocalPath()*
+
+  Fix the local file paths before sending them to the server, so that the
+  server can see the correct files. {path} should be a plain string or v:null.
+
+VlimeConnection.GetCurrentPackage()      *VlimeConnection.GetCurrentPackage()*
+
+  Return the Common Lisp package bound to the current buffer. See
+  |vlime-current-package|.
+
+VlimeConnection.SetCurrentPackage({package})
+                                         *VlimeConnection.SetCurrentPackage()*
+
+  Bind a Common Lisp package to the current buffer. See
+  |vlime-current-package|. This method does NOT check whether the argument is
+  a valid package. See |VlimeConnection.SetPackage()| for a safer alternative.
+
+VlimeConnection.GetCurrentThread()        *VlimeConnection.GetCurrentThread()*
+
+  Return the thread bound to the current buffer. Currently this method only
+  makes sense in the debugger buffer.
+
+VlimeConnection.SetCurrentThread({thread})
+                                          *VlimeConnection.SetCurrentThread()*
+
+  Bind a thread to the current buffer. Don't call this method directly, unless
+  you know what you're doing.
+
+VlimeConnection.WithThread({thread}, {Func})    *VlimeConnection.WithThread()*
+
+  Call {Func} with {thread} set as the current thread. The current thread will
+  be reset once this method returns. This is useful when you want to e.g.
+  evaluate something in certain threads.
+
+VlimeConnection.WithPackage({package}, {Func}) *VlimeConnection.WithPackage()*
+
+  Call {Func} with {package} set as the current package. The current package
+  will be reset once this method returns.
+
+VlimeConnection.MakeLocalChannel([chan_id], [callback])
+                                          *VlimeConnection.MakeLocalChannel()*
+
+  Create a local channel (in the sense of SLIME channels). [chan_id], if
+  provided and not v:null, should be be a unique integer to identify the new
+  channel. A new ID will be generated if [chan_id] is omitted or v:null.
+  [callback] is a function responsible for handling the messages directed to
+  this very channel. It should have such a signature:
+
+    SomeCallbackFunction(<conn>, <chan>, <msg>)
+
+  <conn> is a |vlime-api.VlimeConnection| object. <chan> is the channel object
+  in question, and <msg> is the channel message received from the server.
+
+VlimeConnection.RemoveLocalChannel({chan_id})
+                                        *VlimeConnection.RemoveLocalChannel()*
+
+  Remove a local channel with the ID {chan_id}.
+
+VlimeConnection.MakeRemoteChannel({chan_id})
+                                         *VlimeConnection.MakeRemoteChannel()*
+
+  Save the info for a remote channel (in the sense of SLIME channels).
+  {chan_id} should be an ID assigned by the server.
+
+VlimeConnection.RemoveRemoteChannel({chan_id})
+                                       *VlimeConnection.RemoveRemoteChannel()*
+
+  Remove a remote channel with the ID {chan_id}
+
+VlimeConnection.EmacsChannelSend({chan_id}, {msg})
+                                          *VlimeConnection.EmacsChannelSend()*
+
+  Construct an :EMACS-CHANNEL-SEND message. {chan_id} should be the
+  destination remote channel ID, and {msg} is the message to be sent. Note
+  that, despite the word "Send" in its name, this function WILL NOT send the
+  constructed message. You still need to call |VlimeConnection.Send()| for
+  that.
+
+VlimeConnection.EmacsRex({cmd})                   *VlimeConnection.EmacsRex()*
+
+  Construct an :EMACS-REX message, with the current package and the current
+  thread. {cmd} should be a raw :EMACS-REX command.
+
+VlimeConnection.Ping()                                *VlimeConnection.Ping()*
+
+  Send a PING request to the server, and wait for the reply.
+
+VlimeConnection.ConnectionInfo([return_dict], [callback])
+                                            *VlimeConnection.ConnectionInfo()*
+
+  Ask the server for some info regarding this connection, and optionally
+  register a [callback] function to handle the result.
+
+  If [return_dict] is specified and |TRUE|, this method will convert the
+  result to a dictionary before passing it to the [callback] function.
+
+VlimeConnection.SwankRequire({contrib}, [callback])
+                                              *VlimeConnection.SwankRequire()*
+
+  Require Swank contrib modules, and optionally register a [callback] function
+  to handle the result.
+
+  {contrib} can be a string or a list of strings. Each string is a contrib
+  module name. These names are case-sensitive. Normally you should use
+  uppercase.
+
+  For example, "conn_obj.SwankRequire('SWANK-REPL')" tells Swank to load the
+  SWANK-REPL contrib module, and "conn_obj.SwankRequire(['SWANK-REPL',
+  'SWANK-PRESENTATIONS'])" tells Swank to load both SWANK-REPL and
+  SWANK-PRESENTATIONS.
+
+VlimeConnection.Interrupt({thread})              *VlimeConnection.Interrupt()*
+
+  Interrupt {thread}. {thread} should be a numeric thread ID, or {"package":
+  "KEYWORD", "name": "REPL-THREAD"} for the REPL thread. The debugger will be
+  activated upon interruption.
+
+VlimeConnection.SLDBAbort([callback])            *VlimeConnection.SLDBAbort()*
+
+  When the debugger is active, invoke the ABORT restart.
+
+VlimeConnection.SLDBBreak({func_name}, [callback])
+                                                 *VlimeConnection.SLDBBreak()*
+
+  Set a breakpoint at entry to a function with the name {func_name}.
+
+VlimeConnection.SLDBContinue([callback])      *VlimeConnection.SLDBContinue()*
+
+  When the debugger is active, invoke the CONTINUE restart.
+
+VlimeConnection.SLDBStep({frame}, [callback])     *VlimeConnection.SLDBStep()*
+
+  When the debugger is active, enter stepping mode in {frame}. {frame} should
+  be a valid frame number presented by the debugger.
+
+VlimeConnection.SLDBNext({frame}, [callback])     *VlimeConnection.SLDBNext()*
+
+  When the debugger is active, step over the current function call in {frame}.
+
+VlimeConnection.SLDBOut({frame}, [callback])       *VlimeConnection.SLDBOut()*
+
+  When the debugger is active, step out of the current function in {frame}.
+
+VlimeConnection.SLDBReturnFromFrame({frame}, {str}, [callback])
+                                       *VlimeConnection.SLDBReturnFromFrame()*
+
+  When the debugger is active, evaluate {str} and return from {frame} with the
+  evaluation result. {str} should be a plain string containing the lisp
+  expression to be evaluated.
+
+VlimeConnection.SLDBDisassemble({frame}, [callback])
+                                           *VlimeConnection.SLDBDisassemble()*
+
+  Disassemble the code for {frame}.
+
+VlimeConnection.InvokeNthRestartForEmacs({level}, {restart}, [callback])
+                                  *VlimeConnection.InvokeNthRestartForEmacs()*
+
+  When the debugger is active, invoke a {restart} at {level}. {restart} should
+  be a valid restart number, and {level} a valid debugger level.
+
+VlimeConnection.RestartFrame({frame}, [callback])
+                                              *VlimeConnection.RestartFrame()*
+
+  When the debugger is active, restart a {frame}.
+
+VlimeConnection.FrameLocalsAndCatchTags({frame}, [callback])
+                                   *VlimeConnection.FrameLocalsAndCatchTags()*
+
+  When the debugger is active, get info about local variables and catch tags
+  for {frame}.
+
+VlimeConnection.FrameSourceLocation({frame}, [callback])
+                                       *VlimeConnection.FrameSourceLocation()*
+
+  When the debugger is active, get the source location for {frame}.
+
+VlimeConnection.EvalStringInFrame({str}, {frame}, {package}, [callback])
+                                         *VlimeConnection.EvalStringInFrame()*
+
+  When the debugger is active, evaluate {str} in {package}, and within the
+  context of {frame}.
+
+VlimeConnection.InitInspector({thing}, [callback])
+                                             *VlimeConnection.InitInspector()*
+
+  Evaluate {thing} and start inspecting the evaluation result with the
+  inspector. {thing} should be a plain string containing the lisp expression
+  to be evaluated.
+
+VlimeConnection.InspectorReinspect([callback])
+                                        *VlimeConnection.InspectorReinspect()*
+
+  Reload the object being inspected, and update inspector states.
+
+VlimeConnection.InspectorRange({r_start}, {r_end}, [callback])
+                                            *VlimeConnection.InspectorRange()*
+
+  Pagination for inspector content. {r_start} is the first index to retrieve
+  in the inspector content list. {r_end} is the last index plus one.
+
+VlimeConnection.InspectNthPart({nth}, [callback])
+                                            *VlimeConnection.InspectNthPart()*
+
+  Inspect an object presented by the inspector. {nth} should be a valid part
+  number presented by the inspector.
+
+VlimeConnection.InspectorCallNthAction({nth}, [callback])
+                                    *VlimeConnection.InspectorCallNthAction()*
+
+  Perform an action in the inspector. {nth} should be a valid action number
+  presented by the inspector.
+
+VlimeConnection.InspectorPop([callback])      *VlimeConnection.InspectorPop()*
+
+  Inspect the previous object in the stack of inspected objects.
+
+VlimeConnection.InspectorNext([callback])    *VlimeConnection.InspectorNext()*
+
+  Inspect the next object in the stack of inspected objects.
+
+VlimeConnection.InspectCurrentCondition([callback])
+                                   *VlimeConnection.InspectCurrentCondition()*
+
+  When the debugger is active, inspect the current condition.
+
+VlimeConnection.InspectInFrame({thing}, {frame}, [callback])
+                                            *VlimeConnection.InspectInFrame()*
+
+  When the debugger is active, evaluate {thing} in the context of {frame}, and
+  start inspecting the evaluation result.
+
+VlimeConnection.ListThreads([callback])        *VlimeConnection.ListThreads()*
+
+  Get a list of running threads.
+
+VlimeConnection.KillNthThread({nth}, [callback])
+                                             *VlimeConnection.KillNthThread()*
+
+  Kill a thread presented in the thread list. {nth} should be a valid index in
+  the thread list, instead of a thread ID.
+
+VlimeConnection.DebugNthThread({nth}, [callback])
+                                            *VlimeConnection.DebugNthThread()*
+
+  Activate the debugger in a thread presented in the thread list. {nth} should
+  be a valid index in the thread list, instead of a thread ID.
+
+VlimeConnection.UndefineFunction({func_name}, [callback])
+                                          *VlimeConnection.UndefineFunction()*
+
+  Undefine a function with the name {func_name}.
+
+VlimeConnection.UninternSymbol({sym_name}, [package], [callback])
+                                            *VlimeConnection.UninternSymbol()*
+
+  Unintern a symbol with the name {sym_name}. {sym_name} should be a plain
+  string containing the name of the symbol to be uninterned.
+
+VlimeConnection.SetPackage({package}, [callback])
+                                                *VlimeConnection.SetPackage()*
+
+  Bind a Common Lisp package to the current buffer. See
+  |vlime-current-package|.
+
+VlimeConnection.DescribeSymbol({symbol}, [callback])
+                                            *VlimeConnection.DescribeSymbol()*
+
+  Get a description for {symbol}. {symbol} should be a plain string containing
+  the symbol name.
+
+VlimeConnection.OperatorArgList({operator}, [callback])
+                                           *VlimeConnection.OperatorArgList()*
+
+  Get the arglist description for {operator}. {operator} should be a plain
+  string containing a symbol name.
+
+VlimeConnection.SimpleCompletions({symbol}, [callback])
+                                         *VlimeConnection.SimpleCompletions()*
+
+  Get a simple completion list for {symbol}. {symbol} should be a plain string
+  containing a (partial) symbol name.
+
+VlimeConnection.SwankMacroExpandOne({expr}, [callback])
+                                       *VlimeConnection.SwankMacroExpandOne()*
+
+  Perform one macro expansion on {expr}. {expr} should be a plain string
+  containing the lisp expression to be expanded.
+
+VlimeConnection.SwankMacroExpand({expr}, [callback])
+                                          *VlimeConnection.SwankMacroExpand()*
+
+  Expand {expr}, until the resulting form cannot be macro-expanded anymore.
+
+VlimeConnection.SwankMacroExpandAll({expr}, [callback])
+                                       *VlimeConnection.SwankMacroExpandAll()*
+
+  Recursively expand all macros in {expr}.
+
+VlimeConnection.DisassembleForm({expr}, [callback])
+                                           *VlimeConnection.DisassembleForm()*
+
+  Compile and disassemble {expr}.
+
+VlimeConnection.CompileStringForEmacs({expr}, {buffer}, {position},
+  {filename}, [policy], [callback])  *VlimeConnection.CompileStringForEmacs()*
+
+  Compile {expr}. {buffer}, {position} and {filename} specify where {expr} is
+  from. When {buffer} or {filename} is unknown, one can pass v:null instead.
+  [policy] should be a dictionary specifying a compiler policy. For example,
+
+      {"DEBUG": 3, "SPEED": 0}
+
+  This means no optimization in runtime speed, and maximum debug info.
+
+VlimeConnection.CompileFileForEmacs({filename}, [load], [policy], [callback])
+                                       *VlimeConnection.CompileFileForEmacs()*
+
+  Compile a file with the name {filename}. [load], if present and |TRUE|,
+  tells Vlime to automatically load the compiled file after successful
+  compilation. [policy] is the compiler policy, see
+  |VlimeConnection.CompileStringForEmacs()|.
+
+VlimeConnection.LoadFile({filename}, [callback])  *VlimeConnection.LoadFile()*
+
+  Load a file with the name {filename}.
+
+VlimeConnection.XRef({ref_type}, {name}, [callback])  *VlimeConnection.XRef()*
+
+  Cross reference lookup. {ref_type} can be "CALLS", "CALLS-WHO",
+  "REFERENCES", "BINDS", "SETS", "MACROEXPANDS", or "SPECIALIZES". {name} is
+  the symbol name to lookup.
+
+VlimeConnection.FindDefinitionsForEmacs({name}, [callback])
+                                   *VlimeConnection.FindDefinitionsForEmacs()*
+
+  Lookup definitions for symbol {name}.
+
+VlimeConnection.FindSourceLocationForEmacs({spec}, [callback])
+                                *VlimeConnection.FindSourceLocationForEmacs()*
+
+  Lookup source locations for certain objects. {spec} specifies what to look
+  for. When {spec} is ['STRING', <expr>, <package>], evaluate <expr> in
+  <package>, and then find the source for the resulting object. When {spec} is
+  ['INSPECTOR', <part_id>], find the source for the object shown in the
+  inspector with <part_id>. When {spec} is ['SLDB', <frame>, <nth>], find the
+  source for the <nth> local variable in <frame> in the debugger.
+
+VlimeConnection.AproposListForEmacs({name}, {external_only}, {case_sensitive},
+  {package}, [callback])               *VlimeConnection.AproposListForEmacs()*
+
+  Lookup symbol names containing {name}. If {external_only} is |TRUE|, only
+  return external symbols. {case_sensitive} specifies whether the search is
+  case-sensitive or not. {package} limits the search to a specific package,
+  but one can pass v:null to search all packages.
+
+VlimeConnection.DocumentationSymbol({sym_name}, [callback])
+                                       *VlimeConnection.DocumentationSymbol()*
+
+  Find the documentation for symbol {sym_name}.
+
+VlimeConnection.Autodoc({raw_form}, [margin], [callback])
+                                                   *VlimeConnection.Autodoc()*
+
+  Get the arglist description for {raw_form}. {raw_form} should be a value
+  returned by |vlime#ui#CurRawForm()| or |vlime#ToRawForm()|. See the source
+  of SWANK:AUTODOC for an explanation of the raw forms. [margin], if specified
+  and not v:null, gives the line width to wrap to.
+
+  This method needs the SWANK-ARGLISTS contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.FuzzyCompletions({symbol}, [callback])
+                                          *VlimeConnection.FuzzyCompletions()*
+
+  Get a completion list for {symbol}, using a more clever fuzzy algorithm.
+  {symbol} should be a plain string containing a (partial) symbol name.
+
+  This method needs the SWANK-FUZZY contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.CreateMREPL([chan_id], [callback])
+                                               *VlimeConnection.CreateMREPL()*
+
+  Create an REPL listener using SWANK-MREPL. [chan_id] should be a unique
+  number identifying the local channel. Use a automatically generated ID if
+  [chan_id] is omitted or v:null.
+
+  This method needs the SWANK-MREPL contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.InspectPresentation({pres_id}, {reset}, [callback])
+                                       *VlimeConnection.InspectPresentation()*
+
+  Start inspecting an object saved by SWANK-PRESENTATIONS. {pres_id} should be
+  a valid ID presented by PRESENTATION-START messages. If {reset} is |TRUE|,
+  the inspector will be reset first.
+
+  This method needs the SWANK-PRESENTATIONS contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.CreateREPL([coding_system], [callback])
+                                                *VlimeConnection.CreateREPL()*
+
+  Create the REPL thread, and optionally register a [callback] function to
+  handle the result.
+
+  [coding_system] is implementation-dependent. Omit this argument or pass
+  v:null to let the server choose it for you.
+
+  This method needs the SWANK-REPL contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.ListenerEval({expr}, [callback])
+                                              *VlimeConnection.ListenerEval()*
+
+  Evaluate {expr} in the current package and thread, and optionally register a
+  [callback] function to handle the result. {expr} should be a plain string
+  containing the lisp expression to be evaluated.
+
+  This method needs the SWANK-REPL contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.ClearTraceTree([callback])  *VlimeConnection.ClearTraceTree()*
+
+  Clear all trace entries in SWANK-TRACE-DIALOG.
+
+  This method needs the SWANK-TRACE-DIALOG contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.DialogToggleTrace({name}, [callback])
+                                         *VlimeConnection.DialogToggleTrace()*
+
+  Toggle the traced state of a function in SWANK-TRACE-DIALOG. {name} can be a
+  plain string specifying the function name, or "(setf <name>)" to refer to a
+  SETF function. You can also pass raw JSON objects.
+
+  This method needs the SWANK-TRACE-DIALOG contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.DialogTrace({name}, [callback])
+                                               *VlimeConnection.DialogTrace()*
+
+  Trace a function in SWANK-TRACE-DIALOG. See
+  |VlimeConnection.DialogToggleTrace()| for the use of {name}.
+
+  This method needs the SWANK-TRACE-DIALOG contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.DialogUntrace({name}, [callback])
+                                             *VlimeConnection.DialogUntrace()*
+
+  Untrace a function in SWANK-TRACE-DIALOG. See
+  |VlimeConnection.DialogToggleTrace()| for the use of {name}.
+
+  This method needs the SWANK-TRACE-DIALOG contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.DialogUntraceAll([callback])
+                                          *VlimeConnection.DialogUntraceAll()*
+
+  Untrace all functions in SWANK-TRACE-DIALOG.
+
+  This method needs the SWANK-TRACE-DIALOG contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.FindTrace({id}, [callback])      *VlimeConnection.FindTrace()*
+
+  Retrieve a trace entry by {id}.
+
+  This method needs the SWANK-TRACE-DIALOG contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.FindTracePart({id}, {part_id}, {type}, [callback])
+                                             *VlimeConnection.FindTracePart()*
+
+  Retrieve an argument or return value saved in a trace entry. {id} is the
+  trace entry ID. {part_id} is the argument or return value ID. {type} can be
+  "ARG" or "RETVAL".
+
+  This method needs the SWANK-TRACE-DIALOG contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.InspectTracePart({id}, {part_id}, {type}, [callback])
+                                          *VlimeConnection.InspectTracePart()*
+
+  Inspect an argument or return value saved in a trace entry. See
+  |VlimeConnection.FindTracePart()| for the use of the arguments.
+
+  This method needs the SWANK-TRACE-DIALOG contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.ReportPartialTree({key}, [callback])
+                                         *VlimeConnection.ReportPartialTree()*
+
+  Retrieve at most SWANK-TRACE-DIALOG:*TRACES-PER-REPORT* trace entries. {key}
+  should be a uniqe number or string to identify the requesting entity.
+  Subsequent requests should provide the same key.
+
+  This method needs the SWANK-TRACE-DIALOG contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.ReportSpecs([callback])        *VlimeConnection.ReportSpecs()*
+
+  Retrieve traced function specs from SWANK-TRACE-DIALOG.
+
+  This method needs the SWANK-TRACE-DIALOG contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.ReportTotal([callback])        *VlimeConnection.ReportTotal()*
+
+  Retrieve the total count of trace entries.
+
+  This method needs the SWANK-TRACE-DIALOG contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+VlimeConnection.ReportTraceDetail({id}, [callback])
+                                         *VlimeConnection.ReportTraceDetail()*
+
+  Retrieve the details of a trace entry by {id}.
+
+  This method needs the SWANK-TRACE-DIALOG contrib module. See
+  |VlimeConnection.SwankRequire()|.
+
+                                                           *vlime-api.VlimeUI*
+The |vlime-api.VlimeUI| object is a singleton. It's meant to be injected into
+|vlime-api.VlimeConnection| objects, to grant them access to the user
+interface. See |vlime#New()|.
+
+
+VlimeUI.GetCurrentPackage([buffer])              *VlimeUI.GetCurrentPackage()*
+
+  Return the Common Lisp package bound to the specified [buffer]. If no
+  package is bound yet, try to guess one by looking into the buffer content.
+  [buffer], if specified, should be an expression as described in |bufname()|.
+  When [buffer] is omitted, work on the current buffer.
+
+  The returned value is a list of two strings. The first string is the full
+  name of the package, and the second string is one of the package's
+  nicknames.
+
+VlimeUI.SetCurrentPackage({pkg}, [buffer])       *VlimeUI.SetCurrentPackage()*
+
+  Bind a Common Lisp package {pkg} to the specified [buffer]. {pkg} should be
+  a list of two strings, i.e. in the same format as the return value of
+  |VlimeUI.GetCurrentPackage()|. See |VlimeUI.GetCurrentPackage()| for the use
+  of [buffer].
+
+  Note that this method doesn't check the validity of {pkg}.
+
+VlimeUI.GetCurrentThread([buffer])                *VlimeUI.GetCurrentThread()*
+
+  Return the thread bound to [buffer]. See |VlimeUI.GetCurrentPackage()| for
+  the use of [buffer].
+
+  Currently, this method only makes sense in the debugger buffer.
+
+VlimeUI.SetCurrentThread({thread}, [buffer])      *VlimeUI.SetCurrentThread()*
+
+  Bind a thread to [buffer]. See |VlimeUI.GetCurrentPackage()| for the use of
+  [buffer].
+
+==============================================================================
+FUNCTIONS                                                *vlime-api-functions*
+
+vlime#New([cb_data], [ui])                                       *vlime#New()*
+
+  Create a |vlime-api.VlimeConnection|.
+
+  [cb_data] is arbitrary data, accessible from the connection callbacks. [ui]
+  is an instance of |vlime-api.VlimeUI|, see |vlime#ui#GetUI()|.
+
+  This function is seldom used directly. To connect to a server, call
+  |vlime#plugin#ConnectREPL()|.
+
+vlime#PListToDict({plist})                               *vlime#PListToDict()*
+
+  Convert a {plist} sent from the server to a native |dict|.
+
+vlime#ChainCallbacks([func_and_cb...])                *vlime#ChainCallbacks()*
+
+  Make a chain of async calls and corresponding callbacks. For example:
+
+      call vlime#ChainCallbacks(<f1>, <cb1>, <f2>, <cb2>, <f3>, <cb3>)
+
+  <f2> will be called after <cb1> has finished, and <f3> will be called after
+  <cb2> has finished, and so on.
+
+vlime#ParseSourceLocation({loc})                 *vlime#ParseSourceLocation()*
+
+  Parse a source location object {loc} sent from the server, and convert it
+  into a native |dict|.
+
+vlime#GetValidSourceLocation({loc})           *vlime#GetValidSourceLocation()*
+
+  Normalize a source location object parsed by |vlime#ParseSourceLocation()|.
+
+vlime#ToRawForm({expr})                                    *vlime#ToRawForm()*
+
+  Parse {expr} and turn it into a raw form usable by
+  |VlimeConnection.Autodoc()|. See the source of SWANK:AUTODOC for an
+  explanation of the raw forms.
+
+vlime#plugin#CloseCurConnection()          *vlime#plugin#CloseCurConnection()*
+
+  Close the connection bound to the current buffer. If no connection is bound,
+  show a menu to choose one.
+
+vlime#plugin#RenameCurConnection()        *vlime#plugin#RenameCurConnection()*
+
+  Rename the connection bound to the current buffer. If no connection is
+  bound, show a menu to choose one.
+
+vlime#plugin#ShowSelectedServer()          *vlime#plugin#ShowSelectedServer()*
+
+  Show the output buffer for a server started by Vlime.
+
+vlime#plugin#StopSelectedServer()          *vlime#plugin#StopSelectedServer()*
+
+  Stop a server started by Vlime.
+
+vlime#plugin#RenameSelectedServer()      *vlime#plugin#RenameSelectedServer()*
+
+  Rename a server started by Vlime. Prompt for the new server name.
+
+vlime#plugin#ConnectREPL([host], [port], [remote_prefix], [timeout], [name])
+                                                  *vlime#plugin#ConnectREPL()*
+
+  Connect to a server, and return a connection object (see
+  |vlime-api.VlimeConnection|).
+
+  [host] and [port] specify the server to connect to. This function will use
+  the value in |g:vlime_address| if they are omitted. [remote_prefix], if
+  specified, is an SFTP URL prefix, to tell Vlime to open remote files via
+  SFTP (see |vlime-remote-server|). [timeout] is the time to wait for the
+  connection to be made, in milliseconds. [name] gives the new connection a
+  name. Omit this argument to use an automatically generated name.
+
+vlime#plugin#CreateMREPL()                        *vlime#plugin#CreateMREPL()*
+
+  Create a new REPL thread using SWANK-MREPL. This function needs the
+  SWANK-MREPL contrib module. See |g:vlime_contribs| and
+  |vlime#plugin#SwankRequire()|.
+
+vlime#plugin#SelectCurConnection()        *vlime#plugin#SelectCurConnection()*
+
+  Show a menu to let you choose a connection, and bind this connection to the
+  current buffer.
+
+vlime#plugin#SendToREPL([content], [edit])         *vlime#plugin#SendToREPL()*
+
+  Evaluate [content] in the REPL and show the result in the REPL buffer. If
+  [content] is omitted, or [edit] is present and |TRUE|, show an input buffer.
+
+vlime#plugin#Compile([content], [policy], [edit])     *vlime#plugin#Compile()*
+
+  Compile [content], with the specified [policy], and show the result in the
+  REPL buffer. If [content] is omitted or v:null, or [edit] is present and
+  |TRUE|, show an input buffer. If [policy] is omitted, try to use
+  |g:vlime_compiler_policy|. Open the compiler notes window when there are
+  warnings or errors etc.
+
+vlime#plugin#Inspect([content], [edit])               *vlime#plugin#Inspect()*
+
+  Evaluate [content] and launch the inspector with the evaluation result
+  loaded. If [content] is omitted, or [edit] is present and |TRUE|, show an
+  input buffer.
+
+vlime#plugin#DialogToggleTrace([func], [edit])
+                                            *vlime#plugin#DialogToggleTrace()*
+
+  Toggle the traced state of [func]. [func] should be a string specifying a
+  plain function name, or in the form "(setf <name>)", to trace a
+  setf-expander. If [func] is omitted, or [edit] is present and |TRUE|, show
+  an input buffer.
+
+  This function needs the SWANK-TRACE-DIALOG contrib module. See
+  |g:vlime_contribs| and |vlime#plugin#SwankRequire()|.
+
+vlime#plugin#OpenTraceDialog()                *vlime#plugin#OpenTraceDialog()*
+
+  Show the trace dialog.
+
+vlime#plugin#CompileFile([file_name], [policy], [load], [edit])
+                                                  *vlime#plugin#CompileFile()*
+
+  Compile a file named [file_name], with the specified [policy], and show the
+  result in the REPL buffer. If [file_name] is omitted or v:null, or [edit] is
+  present and |TRUE|, prompt for the file name. If [policy] is omitted, try to
+  use |g:vlime_compiler_policy|. If [load] is present and |FALSE|, do not load
+  the compiled file after successful compilation. Open the compiler notes
+  window when there are warnings or errors etc.
+
+vlime#plugin#ExpandMacro([expr], [type], [edit])  *vlime#plugin#ExpandMacro()*
+
+  Perform macro expansion on [expr] and show the result in the preview window.
+  If [expr] is omitted or v:null, or [edit] is present and |TRUE|, show an
+  input buffer.
+
+  [type] specifies the type of expansion to perform. It can be "expand",
+  "one", or "all". When it's omitted or "expand", repeatedly expand [expr]
+  until the resulting form cannot be expanded anymore. When it's "one", only
+  expand once. And "all" means to recursively expand all macros contained in
+  [expr].
+
+vlime#plugin#DisassembleForm([content], [edit])
+                                              *vlime#plugin#DisassembleForm()*
+
+  Compile and disassemble [content]. Show the result in the preview window. If
+  [content] is omitted, or [edit] is present and |TRUE|, show an input buffer.
+
+vlime#plugin#LoadFile([file_name], [edit])           *vlime#plugin#LoadFile()*
+
+  Load a file named [file_name]. If [file_name] is omitted, or [edit] is
+  present and |TRUE|, prompt for the file name.
+
+vlime#plugin#SetPackage([pkg])                     *vlime#plugin#SetPackage()*
+
+  Bind a Common Lisp package [pkg] to the current buffer. If [pkg] is omitted,
+  show an input buffer.
+
+vlime#plugin#SwankRequire({contribs}, [do_init]) *vlime#plugin#SwankRequire()*
+
+  Require Swank contrib modules. {contribs} should be a plain string or a list
+  of strings. Each string is a contrib module name. These names are
+  case-sensitive. Normally you should use uppercase. If [do_init] is present
+  and |FALSE|, suppress initialization for newly loaded contrib modules.
+
+vlime#plugin#ShowOperatorArgList([op], [edit])
+                                          *vlime#plugin#ShowOperatorArgList()*
+
+  Show the arglist description for operator [op] in the arglist window. If
+  [op] is omitted, or [edit] is present and |TRUE|, show an input buffer.
+
+vlime#plugin#CurAutodoc()                          *vlime#plugin#CurAutodoc()*
+
+  Show the arglist description for the current expression and cursor position,
+  in the arglist window. If the SWANK-ARGLISTS contrib module is available,
+  the current argument will be marked in the arglist.
+
+vlime#plugin#DescribeSymbol([symbol], [edit])  *vlime#plugin#DescribeSymbol()*
+
+  Show a description for [symbol] in the preview window. If [symbol] is
+  omitted, or [edit] is present and |TRUE|, show an input buffer.
+
+vlime#plugin#XRefSymbol({ref_type}, [sym], [edit]) *vlime#plugin#XRefSymbol()*
+
+  Lookup cross references for [sym], and show the results in the xref window.
+  If [sym] is omitted, or [edit] is present and |TRUE|, show an input buffer.
+  See |VlimeConnection.XRef()| for possible values for {ref_type}.
+
+vlime#plugin#XRefSymbolWrapper()            *vlime#plugin#XRefSymbolWrapper()*
+
+  A wrapper function for |vlime#plugin#XRefSymbol()| and
+  |vlime#plugin#FindDefinition()|. Pick the type of cross reference
+  interactively.
+
+vlime#plugin#FindDefinition([sym], [edit])     *vlime#plugin#FindDefinition()*
+
+  Find the definition for [sym], and show the results in the xref window. If
+  [sym] is omitted, or [edit] is present and |TRUE|, show an input buffer.
+
+vlime#plugin#AproposList([pattern], [edit])       *vlime#plugin#AproposList()*
+
+  Apropos search for [pattern]. Show the results in the preview window. If
+  [pattern] is omitted, or [edit] is present and |TRUE|, show an input buffer.
+
+vlime#plugin#DocumentationSymbol([symbol], [edit])
+                                          *vlime#plugin#DocumentationSymbol()*
+
+  Show the documentation for [symbol] in the preview window. If [symbol] is
+  omitted, or [edit] is present and |TRUE|, show an input buffer.
+
+vlime#plugin#SetBreakpoint([sym], [edit])       *vlime#plugin#SetBreakpoint()*
+
+  Set a breakpoint at entry to a function with the name [sym]. If [sym] is
+  omitted, or [edit] is present and |TRUE|, show an input buffer.
+
+vlime#plugin#ListThreads()                        *vlime#plugin#ListThreads()*
+
+  Show the thread list window.
+
+vlime#plugin#UndefineFunction([sym], [edit]) *vlime#plugin#UndefineFunction()*
+
+  Undefine a function with the name [sym]. If [sym] is omitted, or [edit] is
+  present and |TRUE|, show an input buffer.
+
+vlime#plugin#UninternSymbol([sym], [edit])     *vlime#plugin#UninternSymbol()*
+
+  Unintern a symbol [sym]. If [sym] is omitted, or [edit] is present and
+  |TRUE|, show an input buffer.
+
+vlime#plugin#UndefineUninternWrapper()
+                                      *vlime#plugin#UndefineUninternWrapper()*
+
+  A wrapper function for |vlime#plugin#UndefineFunction()| and
+  |vlime#plugin#UninternSymbol()|. Pick the type of action to perform
+  interactively.
+
+vlime#plugin#CloseWindow([win_name])              *vlime#plugin#CloseWindow()*
+
+  Close Vlime special windows. [win_name] is the type of windows to close. See
+  |vlime#ui#GetWindowList()| for valid values for [win_name]. If [win_name] is
+  omitted, show a menu to let you choose which window to close.
+
+vlime#plugin#CompleteFunc({findstart}, {base})   *vlime#plugin#CompleteFunc()*
+
+  The completion function. This function is meant to be used as |omnifunc| or
+  |completefunc|. It is asynchronous, and will NOT return the completion list
+  immediately.
+
+vlime#plugin#CalcCurIndent([shift_width])       *vlime#plugin#CalcCurIndent()*
+
+  Calculate the indent size for the current line, in number of <space>
+  characters. [shift_width] is the size for one indent level, defaults to 2 if
+  omitted.
+
+vlime#plugin#Setup([force])                             *vlime#plugin#Setup()*
+
+  Set up Vlime for the current buffer. Do nothing if the current buffer is
+  already initialized. If [force] is present and |TRUE|, always perform the
+  initialization.
+
+vlime#plugin#InteractionMode()                *vlime#plugin#InteractionMode()*
+
+  Toggle interaction mode.
+
+vlime#ui#New()                                                *vlime#ui#New()*
+
+  Create a |vlime-api.VlimeUI| object. One should probably use
+  |vlime#ui#GetUI()| instead.
+
+vlime#ui#GetUI()                                            *vlime#ui#GetUI()*
+
+  Return the UI singleton.
+
+vlime#ui#OnWriteString({conn}, {str}, {str_type})   *vlime#ui#OnWriteString()*
+
+  Write an arbitrary string {str} to the REPL buffer. {conn} should be a valid
+  |vlime-api.VlimeConnection|. {str_type} is currently ignored.
+
+vlime#ui#CurChar()                                        *vlime#ui#CurChar()*
+
+  Return the current character under the cursor. If there's no character, an
+  empty string is returned.
+
+vlime#ui#CurExprOrAtom()                            *vlime#ui#CurExprOrAtom()*
+
+  If there is a parentheses-enclosed expression under the cursor, return it.
+  Otherwise look for an atom under the cursor. Return an empty string if
+  nothing is found.
+
+vlime#ui#CurAtom()                                        *vlime#ui#CurAtom()*
+
+  Return the atom under the cursor, or an empty string if there is no atom.
+
+vlime#ui#CurExpr([return_pos])                            *vlime#ui#CurExpr()*
+
+  Return the parentheses-enclosed expression under the cursor, or an empty
+  string, when there is no expression. If [return_pos] is specified and
+  |TRUE|, return a list containing the expression, as well as the beginning
+  and ending positions.
+
+vlime#ui#CurExprPos({cur_char}, [side])                *vlime#ui#CurExprPos()*
+
+  Return the beginning or ending position of the parentheses-enclosed
+  expression under the cursor. {cur_char} is the character under the cursor,
+  which can be obtained by calling |vlime#ui#CurChar()|. If [side] is "begin",
+  the beginning position is returned. If [side] is "end", the ending position
+  is returned. "begin" is the default when [side] is omitted.
+
+vlime#ui#CurTopExpr([return_pos])                      *vlime#ui#CurTopExpr()*
+
+  Return the top-level parentheses-enclosed expression. See
+  |vlime#ui#CurExpr()| for the use of [return_pos].
+
+vlime#ui#CurTopExprPos([side], [max_level], [max_lines])
+                                                    *vlime#ui#CurTopExprPos()*
+
+  Return the beginning or ending position of the top-level
+  parentheses-enclosed expression under the cursor. See
+  |vlime#ui#CurExprPos()| for the use of [side].
+
+  Stop when [max_level] parentheses are seen, or [max_lines] lines have been
+  searched. Pass v:null or ommit these two arguments to impose no limit at
+  all.
+
+vlime#ui#CurRawForm([max_level], [max_lines])          *vlime#ui#CurRawForm()*
+
+  Retrieve the parentheses-enclosed expression under the cursor, and parse it
+  into a "raw form" usable by |VlimeConnection.Autodoc()|. See the source of
+  SWANK:AUTODOC for an explanation of the raw forms.
+
+  The raw-form-parsing operation is quite slow, you can pass [max_level] and
+  [max_lines] to impose some limits when searching for expressions. See
+  |vlime#ui#CurTopExprPos()| for the use of these arguments.
+
+vlime#ui#CurInPackage()                              *vlime#ui#CurInPackage()*
+
+  Search for an "in-package" expression in the current buffer, and return the
+  package name specified in that expression. If no such an expression can be
+  found, an empty string is returned.
+
+vlime#ui#CurOperator()                                *vlime#ui#CurOperator()*
+
+  Return the operator symbol name of the parentheses-enclosed expression under
+  the cursor. If no expression is found, return an empty string.
+
+vlime#ui#SurroundingOperator()                *vlime#ui#SurroundingOperator()*
+
+  Similar to |vlime#ui#CurOperator()|, but return the operator of the
+  surrounding expression instead, if the cursor is on the left enclosing
+  parentheses.
+
+vlime#ui#CurSelection([return_pos])                  *vlime#ui#CurSelection()*
+
+  Return the content of current/last selection. See |vlime#ui#CurExpr()| for
+  the use of [return_pos].
+
+vlime#ui#CurBufferContent([raw])                 *vlime#ui#CurBufferContent()*
+
+  Get the text content of the current buffer. Lines starting with ";" will be
+  dropped, unless [raw] is specified and |TRUE|.
+
+vlime#ui#GetText({from_pos}, {to_pos})                    *vlime#ui#GetText()*
+
+  Retrieve the text in the current buffer from {from_pos} to {to_pos}. These
+  positions should be lists in the form [<line>, <col>].
+
+vlime#ui#KeepCurWindow({Func})                      *vlime#ui#KeepCurWindow()*
+
+  Call {Func}. When {Func} returns, move the cursor back to the current
+  window.
+
+vlime#ui#WithBuffer({buf}, {Func}, [ev_ignore])        *vlime#ui#WithBuffer()*
+
+  Call {Func} with {buf} set as the current buffer. {buf} should be an
+  expression as described in |bufname()|. [ev_ignore] specifies what autocmd
+  events to ignore when switching buffers. When [ev_ignore] is omitted, all
+  events are ignored by default.
+
+vlime#ui#OpenBuffer({name}, {create}, {show}, [vertical], [initial_size])
+                                                       *vlime#ui#OpenBuffer()*
+
+  Open a buffer with the specified {name}. {name} should be an expression as
+  described in |bufname()|. Return -1 if the buffer doesn't exist, unless
+  {create} is |TRUE|. In that case, a new buffer is created.
+
+  When {show} is |TRUE| or a non-empty string, the buffer will be shown in a
+  new window, but if the buffer is already visible, move the cursor to it's
+  window instead. The string values can be "aboveleft", "belowright",
+  "topleft", or "botright", to further specify the window position. See
+  |aboveleft| and the alike to get explanations of these positions.
+
+  [vertical], if specified and |TRUE|, indicates that the new window should be
+  created vertically. [initial_size] assigns an initial size to the newly
+  created window.
+
+vlime#ui#OpenBufferWithWinSettings({buf_name}, {buf_create}, {win_name})
+                                        *vlime#ui#OpenBufferWithWinSettings()*
+
+  Like |vlime#ui#OpenBuffer()|, but consult |g:vlime_window_settings| when
+  creating a new window. {buf_name} should be an expression as described in
+  |bufname()|. {buf_create} specifies whether to create a new buffer or not.
+  {win_name} is the type of the window to create. See
+  |g:vlime_window_settings| for a list of Vlime window types.
+
+vlime#ui#CloseBuffer({buf})                           *vlime#ui#CloseBuffer()*
+
+  Close all windows that contain {buf}. It's like "execute 'bunload!' {buf}",
+  but the buffer remains loaded, and the local settings for {buf} are kept.
+  {buf} should be a buffer number as returned by |bufnr()|.
+
+vlime#ui#ShowPreview({conn}, {content}, {append})     *vlime#ui#ShowPreview()*
+
+  Show {content} in the preview buffer. {conn} should be a
+  |vlime-api.VlimeConnection|. When {append} is |TRUE|, append {content} to
+  the existing content in the preview buffer.
+
+vlime#ui#ShowArgList({conn}, {content})               *vlime#ui#ShowArgList()*
+
+  Show {content} in the arglist buffer. {conn} should be a
+  |vlime-api.VlimeConnection|.
+
+vlime#ui#GetWindowList({conn}, {win_name})          *vlime#ui#GetWindowList()*
+
+  Return a list of Vlime windows. {conn} should be a
+  |vlime-api.VlimeConnection| or v:null. When {conn} is v:null, windows
+  associated with all connections are returned. {win_name} is the type of
+  window to look for, or an empty string to indicate all window types. See
+  |g:vlime_window_settings| for a full list of window types.
+
+vlime#ui#GetFiletypeWindowList({ft})        *vlime#ui#GetFiletypeWindowList()*
+
+  Return a list of windows containing buffers of filetype {ft}.
+
+vlime#ui#CloseWindow({conn}, {win_name})              *vlime#ui#CloseWindow()*
+
+  Close Vlime windows. See |vlime#ui#GetWindowList()| for the use of {conn}
+  and {win_name}.
+
+vlime#ui#AppendString({str}, [line])                 *vlime#ui#AppendString()*
+
+  Append {str} to [line] in the current buffer. Append to the last line if
+  [line] is omitted. Elaborately handle newline characters.
+
+vlime#ui#ReplaceContent({str}, [first_line], [last_line])
+                                                   *vlime#ui#ReplaceContent()*
+
+  Replace the content of the current buffer, from [first_line] to [last_line]
+  (inclusive), with {str}. If [first_line] is omitted, start from line 1. If
+  [last_line] is omitted, stop at the last line of the current buffer.
+
+vlime#ui#IndentCurLine({indent})                    *vlime#ui#IndentCurLine()*
+
+  Adjust the indentation of the current line. {indent} is the amount to
+  indent, in number of space characters.
+
+vlime#ui#CurArgPos([pos])                               *vlime#ui#CurArgPos()*
+
+  Return the index of the argument under the cursor, inside a
+  parentheses-enclosed expression. A returned value of zero means the cursor
+  is on the operator. If no parentheses-enclosed expression is found, -1 is
+  returned. [pos] should be the position where the parentheses-enclosed
+  expression begins, in the form [<line>, <col>]. If [pos] is omitted, this
+  function will try to find the beginning position.
+
+vlime#ui#ErrMsg({msg})                                     *vlime#ui#ErrMsg()*
+
+  Show an error message.
+
+vlime#ui#JumpToOrOpenFile({file_path}, {byte_pos}, [snippet], [edit_cmd],
+  [force_open])                                  *vlime#ui#JumpToOrOpenFile()*
+
+  Open a file specified by {file_path}, and move the cursor to {byte_pos}. If
+  the specified file is already loaded in a window, move the cursor to that
+  window instead.
+
+  [snippet] is used to fine-tune the cursor position to jump to. One can pass
+  v:null to safely ignore the fine-tuning. [edit_cmd] is the command used to
+  open the specified file, if it's not loaded in any window yet. The default
+  is "hide edit". When [force_open] is specified and |TRUE|, always open the
+  file with [edit_cmd].
+
+vlime#ui#ShowSource({conn}, {loc}, [edit_cmd], [force_open])
+                                                       *vlime#ui#ShowSource()*
+
+  Open the source location specified by {loc}. {conn} should be a
+  |vlime-api.VlimeConnection|, and {loc} a normalized source location returned
+  by |vlime#GetValidSourceLocation()|. See |vlime#ui#JumpToOrOpenFile()| for
+  the use of [edit_cmd] and [force_open].
+
+vlime#ui#GetWindowSettings({win_name})          *vlime#ui#GetWindowSettings()*
+
+  Return settings for a window type {win_name}. See |g:vlime_window_settings|
+  for the format of the settings and a full list of window types.
+
+vlime#ui#EnsureKeyMapped({mode}, {key}, {cmd}, [force], [log], [flags])
+                                                  *vlime#ui#EnsureKeyMapped()*
+
+  Ensure the specified {key} or {cmd} is mapped in {mode}. If both {key} and
+  {cmd} are not mapped, map {key} to run {cmd}. If [force] is specified and
+  |TRUE|, always do the mapping. [log] is the category for logging conflicting
+  keys, should usually be the buffer type. See the value of
+  g:vlime_default_mappings for all buffer types. [flags] is a string
+  specifying |:map-arguments|.
+
+vlime#ui#MapBufferKeys({buf_type}, [force])         *vlime#ui#MapBufferKeys()*
+
+  Map default Vlime keys for buffer type {buf_type}. See the value of
+  g:vlime_default_mappings for all buffer types. This function consults
+  |g:vlime_force_default_keys| when trying to map the keys. If [force] is
+  specified, it's value overrides the global variable.
+
+vlime#ui#ChooseWindowWithCount({default_win})
+                                            *vlime#ui#ChooseWindowWithCount()*
+
+  Choose a window with |v:count|. The special variable v:count should contain
+  a valid window number (see |winnr()|) or zero when this function is called.
+  The coresponding window ID is returned. If v:count is zero, try to use
+  {default_win} as the result. In that case, if {default_win} is not a legal
+  window number, try to find a window automatically.
+
+  When all measures fail, zero is returned.
+
+
+vim:tw=78:ts=8:ft=help:norl:

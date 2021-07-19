@@ -36,7 +36,7 @@
 
 function! SpaceVim#layers#lang#lisp#plugins() abort
   let plugins = []
-  call add(plugins,['wsdjeg/vim-lisp', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-lisp', {'merged' : 0}])
   return plugins
 endfunction
 
