@@ -38,6 +38,8 @@ else
   let s:timeoutlen = &timeoutlen
 endif
 
+let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
+
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
         \ [g:_spacevim_root_dir . 'bundle/vim-snippets',          { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}],

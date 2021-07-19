@@ -6,19 +6,31 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:NVIM_VERSION')
+  finish
+endif
+
 ""
 " @section language server protocol, layer-lsp
 " @parentsection layers
 " This layer provides language client support for SpaceVim.
 
+let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
+let s:lsp_client = ''
+
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
 
-  if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
+  if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
+    " The version is >= 0.5.0, using the builtin lsp
+  elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
     " nop
+  elseif has('nvim-0.4.3')
+    " use neovim build-in lsp
   elseif has('nvim')
-    call add(plugins, ['autozimu/LanguageClient-neovim',
-          \ { 'merged': 0, 'if': has('python3'), 'build' : 'bash install.sh' }])
+    call add(plugins, ['bfredl/nvim-lspmirror', {'merged' : 0}])
+    call add(plugins, ['bfredl/nvim-lspext', {'merged' : 0}])
+    call add(plugins, ['shougo/deoplete-lsp', {'merged' : 0}])
   else
     call add(plugins, ['prabirshrestha/async.vim', {'merged' : 0}])
     call add(plugins, ['prabirshrestha/vim-lsp', {'merged' : 0}])
@@ -28,37 +40,40 @@ function! SpaceVim#layers#lsp#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lsp#config() abort
+  for ft in s:enabled_fts
+    call SpaceVim#lsp#reg_server(ft, s:lsp_servers[ft])
+  endfor
   " SpaceVim/LanguageClient-neovim {{{
   let g:LanguageClient_diagnosticsDisplay = {
         \ 1: {
-        \ 'name': 'Error',
-        \ 'texthl': 'LanguageClientError',
-        \ 'signText': g:spacevim_error_symbol,
-        \ 'signTexthl': 'LanguageClientError', 
-        \ 'virtualTexthl': 'Error',
-        \ },
-        \ 2: {
-        \ 'name': 'Warning',
-        \ 'texthl': 'LanguageClientWarning',
-        \ 'signText': g:spacevim_warning_symbol,
-        \ 'signTexthl': 'LanguageClientWarningSign',
-        \ 'virtualTexthl': 'Todo',
-        \ },
-        \ 3: {
-        \ 'name': 'Information',
-        \ 'texthl': 'LanguageClientInfo',
-        \ 'signText': g:spacevim_info_symbol,
-        \ 'signTexthl': 'LanguageClientInfoSign',
-        \ 'virtualTexthl': 'Todo',
-        \ },
-        \ 4: {
-        \ 'name': 'Hint',
-        \ 'texthl': 'LanguageClientInfo',
-        \ 'signText': g:spacevim_info_symbol,
-        \ 'signTexthl': 'LanguageClientInfoSign',
-        \ 'virtualTexthl': 'Todo',
-        \ },
-        \ }
+          \ 'name': 'Error',
+          \ 'texthl': 'LanguageClientError',
+          \ 'signText': g:spacevim_error_symbol,
+          \ 'signTexthl': 'LanguageClientError', 
+          \ 'virtualTexthl': 'Error',
+          \ },
+          \ 2: {
+            \ 'name': 'Warning',
+            \ 'texthl': 'LanguageClientWarning',
+            \ 'signText': g:spacevim_warning_symbol,
+            \ 'signTexthl': 'LanguageClientWarningSign',
+            \ 'virtualTexthl': 'Todo',
+            \ },
+            \ 3: {
+              \ 'name': 'Information',
+              \ 'texthl': 'LanguageClientInfo',
+              \ 'signText': g:spacevim_info_symbol,
+              \ 'signTexthl': 'LanguageClientInfoSign',
+              \ 'virtualTexthl': 'Todo',
+              \ },
+              \ 4: {
+                \ 'name': 'Hint',
+                \ 'texthl': 'LanguageClientInfo',
+                \ 'signText': g:spacevim_info_symbol,
+                \ 'signTexthl': 'LanguageClientInfoSign',
+                \ 'virtualTexthl': 'Todo',
+                \ },
+                \ }
 
   if g:spacevim_lint_engine ==# 'neomake'
     let g:LanguageClient_diagnosticsDisplay[1].texthl = 'NeomakeError'
@@ -113,9 +128,6 @@ function! SpaceVim#layers#lsp#config() abort
   let g:LanguageClient_autoStart = 1
   let g:lsp_async_completion = 1
   " }}}
-  for ft in s:enabled_fts
-    call SpaceVim#lsp#reg_server(ft, s:lsp_servers[ft])
-  endfor
 endfunction
 
 let s:enabled_fts = []
@@ -148,6 +160,7 @@ let s:lsp_servers = {
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort
+  let s:lsp_client = get(a:var, 'lsp_client', s:lsp_client)
   let override = get(a:var, 'override_cmd', {})
   if !empty(override)
     call extend(s:lsp_servers, override, 'force')
