@@ -72,7 +72,7 @@ function! s:update_todo_content() abort
         \ s:grep_default_opt +
         \ s:grep_default_expr_opt
   let argv += [s:labels_regex]
-  if s:SYS.isWindows && (s:grep_default_exe ==# 'rg' || s:grep_default_exe ==# 'ag' || s:grep_default_exe ==# 'pt' )
+  if !s:SYS.isWindows && (s:grep_default_exe ==# 'rg' || s:grep_default_exe ==# 'ag' || s:grep_default_exe ==# 'pt' )
     let argv += ['.']
   elseif s:SYS.isWindows && s:grep_default_exe ==# 'findstr'
     let argv += ['*.*']
