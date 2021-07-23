@@ -38,9 +38,9 @@ if exists('s:coffee_interpreter')
   finish
 endif
 
-let s:coffee_interpreter = 'coffee' . (s:SYS.isWindows ? '.CMD' : '')
-
 let s:SYS = SpaceVim#api#import('system')
+
+let s:coffee_interpreter = 'coffee' . (s:SYS.isWindows ? '.CMD' : '')
 
 function! SpaceVim#layers#lang#coffeescript#plugins() abort
   let plugins = []
