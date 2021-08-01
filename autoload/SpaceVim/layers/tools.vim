@@ -25,8 +25,16 @@ function! SpaceVim#layers#tools#plugins() abort
   call add(plugins, ['itchyny/calendar.vim',             { 'on_cmd' : 'Calendar'}])
   call add(plugins, ['junegunn/limelight.vim',           { 'on_cmd' : 'Limelight'}])
   call add(plugins, ['junegunn/goyo.vim',                { 'on_cmd' : 'Goyo', 'loadconf' : 1}])
-  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-bookmarks',
-        \ {'merged': 0,
+  call add(plugins, ['MattesGroeger/vim-bookmarks',      { 'on_cmd' :
+        \ [
+        \ 'BookmarkShowAll',
+        \ 'BookmarkToggle',
+        \ 'BookmarkAnnotate',
+        \ 'BookmarkNext',
+        \ 'BookmarkPrev',
+        \ 'BookmarkClear',
+        \ 'BookmarkClearAll'
+        \ ],
         \ 'loadconf_before' : 1}])
   if s:CMP.has('python')
     call add(plugins, ['gregsexton/VimCalc', {'on_cmd' : 'Calc'}])
