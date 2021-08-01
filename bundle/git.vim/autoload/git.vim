@@ -29,6 +29,8 @@ function! git#run(...) abort
         call git#config#run(a:000[1:])
     elseif cmd ==# 'diff'
         call git#diff#run(a:000[1:])
+    elseif cmd ==# 'rm'
+        call git#rm#run(a:000[1:])
     elseif cmd ==# 'log'
         call git#log#run(a:000[1:])
     elseif cmd ==# 'reflog'
@@ -72,11 +74,13 @@ function! git#complete(ArgLead, CmdLine, CursorPos) abort
         return join(['add', 'push', 'status', 'commit', 'diff',
                     \ 'merge', 'rebase', 'branch', 'checkout',
                     \ 'fetch', 'reset', 'log', 'config', 'reflog',
-                    \ 'blame', 'pull', 'stash', 'cherry-pick',
+                    \ 'blame', 'pull', 'stash', 'cherry-pick', 'rm'
                     \ ],
                     \ "\n")
     elseif str =~# '^Git\s\+add\s\+.*$'
         return git#add#complete(a:ArgLead, a:CmdLine, a:CursorPos)
+    elseif str =~# '^Git\s\+rm\s\+.*$'
+        return git#rm#complete(a:ArgLead, a:CmdLine, a:CursorPos)
     elseif str =~# '^Git\s\+push\s\+.*$'
         return git#push#complete(a:ArgLead, a:CmdLine, a:CursorPos)
     elseif str =~# '^Git\s\+diff\s\+.*$'
