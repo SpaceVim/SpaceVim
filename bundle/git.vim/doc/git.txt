@@ -7,7 +7,8 @@ CONTENTS                                                        *git-contents*
   2. Commands...................................................|git-commands|
       1. git-add.....................................................|git-add|
       2. git-cherry-pick.....................................|git-cherry-pick|
-      3. git-stash.................................................|git-stash|
+      3. git-rm.......................................................|git-rm|
+      4. git-stash.................................................|git-stash|
 
 ==============================================================================
 INTRODUCTION                                                       *git-intro*
@@ -36,6 +37,15 @@ GIT-CHERRY-PICK                                              *git-cherry-pick*
 This command is to cherry pick commit from other branch.
 >
   :Git cherry-pick <HashA> <HashB>
+<
+
+==============================================================================
+GIT-RM                                                                *git-rm*
+
+This commands is to rm file contents to the index. For example, rm current
+file to the index.
+>
+  :Git rm %
 <
 
 ==============================================================================
