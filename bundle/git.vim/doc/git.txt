@@ -43,10 +43,10 @@ This command is to cherry pick commit from other branch.
 ==============================================================================
 GIT-MV                                                                *git-mv*
 
-This commands is to mv file contents to the index. For example, mv current
-file to the index.
+This commands is to run `git mv` command asynchronously. It is to move file to
+the index. For example, rename current file.
 >
-  :Git mv %
+  :Git mv % new_file.txt
 <
 
 ==============================================================================

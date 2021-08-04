@@ -1,21 +1,22 @@
 ""
 " @section git-mv, mv
 " @parentsection commands
-" This commands is to mv file contents to the index. For example, mv current
-" file to the index.
+" This commands is to run `git mv` command asynchronously.
+" It is to move file to the index. For example, rename current file.
 " >
-"   :Git mv %
+"   :Git mv % new_file.txt
 " <
 
 let s:JOB = SpaceVim#api#import('job')
 
-function! git#mv#run(files) abort
+function! git#mv#run(args) abort
 
-    if len(a:files) == 1 && a:files[0] ==# '%'
-        let cmd = ['git', 'mv', expand('%')] 
-    else
-        let cmd = ['git', 'mv'] + a:files
+  let args = a:args
+    if index(a:args, '%') !=# -1
+      let index = index(a:args, '%')
+      let args[index] = expand('%')
     endif
+    let cmd = ['git', 'mv'] + args
     call git#logger#info('git-mv cmd:' . string(cmd))
     call s:JOB.start(cmd,
                 \ {
