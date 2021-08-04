@@ -1,0 +1,356 @@
+*bookmarks.txt*                    A Vim plugin for using line-based bookmarks.
+
+
+                                Vim Bookmarks
+
+
+Author:            Mattes Groeger <http://blog.mattes-groeger.de/>
+Plugin Homepage:   <https://github.com/MattesGroeger/vim-bookmarks>
+
+===============================================================================
+CONTENTS                                                    *BookmarksContents*
+
+  1.  Introduction ................. |BookmarksIntroduction|
+  2.  Installation ................. |BookmarksInstallation|
+  3.  Usage ........................ |BookmarksUsage|
+  4.  Commands ..................... |BookmarksCommands|
+  5.  Customisation ................ |BookmarksCustomisation|
+  6.  Extending .................... |BookmarksExtening|
+  7.  Unite Integration ............ |BookmarksUniteIntegration|
+  8.  CtrlP Integration ............ |BookmarksCtrlPIntegration|
+  9.  FAQ .......................... |BookmarksFAQ|
+
+===============================================================================
+1. INTRODUCTION                                         *BookmarksIntroduction*
+                                                                    *Bookmarks*
+
+This vim plugin allows toggling bookmarks per line. A quickfix window gives
+access to all bookmarks. Annotations can be added as well. These are special
+bookmarks with a comment attached. They are useful for preparing code reviews.
+All bookmarks will be restored on the next startup.
+
+===============================================================================
+2. INSTALLATION                                         *BookmarksInstallation*
+
+Use your favorite plugin manager:
+
+Pathogen:
+>
+  git clone https://github.com/MattesGroeger/vim-bookmarks.git \
+            ~/.vim/bundle/vim-bookmarks
+<
+
+Vundle:
+  1. Add Plugin 'MattesGroeger/vim-bookmarks' to .vimrc
+  2. Run :PluginInstall
+
+NeoBundle:
+  1. Add NeoBundle 'MattesGroeger/vim-bookmarks' to .vimrc
+  2. Run :NeoBundleInstall
+
+vim-plug:
+  1. Add Plug 'MattesGroeger/vim-bookmarks' to .vimrc
+  2. Run :PlugInstall
+
+===============================================================================
+3. USAGE                                                       *BookmarksUsage*
+
+You don't have to do anything: it just works.
+
+===============================================================================
+4. COMMANDS                                                 *BookmarksCommands*
+
+Commands for using Bookmarks
+
+  :BookmarkToggle                                             *:BookmarkToggle*
+      Add or remove bookmark at current line
+
+  :BookmarkAnnotate <TEXT>                                  *:BookmarkAnnotate*
+      Add/edit/remove annotation at current line
+
+  :BookmarkNext                                                 *:BookmarkNext*
+      Jump to the next bookmark downwards
+
+  :BookmarkPrev                                                 *:BookmarkPrev*
+      Jump to the next bookmark upwards
+
+  :BookmarkShowAll                                           *:BookmarkShowAll*
+      Show bookmarks across all buffers in new window (toggle)
+
+  :BookmarkClear                                               *:BookmarkClear*
+      Removes bookmarks for current buffer
+
+  :BookmarkClearAll                                         *:BookmarkClearAll*
+      Removes bookmarks for all buffer
+
+  :BookmarkMoveUp [<COUNT>]                                   *:BookmarkMoveUp*
+      Move up the bookmark at current line by the specified amount of lines
+      (default: 1)
+
+  :BookmarkMoveDown [<COUNT>]                               *:BookmarkMoveDown*
+      Move down the bookmark at current line by the specified amount of lines
+      (default: 1)
+
+  :BookmarkMoveToLine <LINE>                              *:BookmarkMoveToLine*
+      Move the bookmark at current line to the specified <LINE>
+
+  :BookmarkSave <FILE_PATH>                                     *:BookmarkSave*
+      Saves all bookmarks to a file so you can load them back in later
+
+  :BookmarkLoad <FILE_PATH>                                     *:BookmarkLoad*
+      Loads bookmarks from a file (see :BookmarkSave)
+
+===============================================================================
+5. CUSTOMISATION                                       *BookmarksCustomisation*
+
+You can customise:
+
+- The sign column's colours
+- The signs' colours and symbols
+- Line highlights
+- Key mappings
+- Whether or not line highlighting is on (defaults to off)
+- Whether to close bookmarks split when jumping to a bookmark or not.
+
+Please note that vim-bookmarks won't override any colours or highlights you've
+set in your colorscheme.
+
+SIGN COLUMN
+
+The background colour of the sign column is controlled by the |hlSignColumn|
+highlight group.  This will be either set in your colorscheme or Vim's default.
+
+To find out where it's set, and to what it's set, use:
+>
+  :verbose highlight SignColumn
+<
+
+To change your sign column's appearance, update your colorscheme or |vimrc|
+like this:
+
+  Desired appearance                  Command ~
+  Same as line number column          highlight clear SignColumn
+  User-defined (terminal Vim)         highlight SignColumn ctermbg={whatever}
+  User-defined (graphical Vim)        highlight SignColumn guibg={whatever}
+
+SIGNS' COLOURS AND SYMBOLS
+
+To customise the colours, set up the following highlight groups in your
+colorscheme or |vimrc|:
+>
+  BookmarkSign            " the sign
+  BookmarkAnnotationSign  " the annotation sign
+<
+
+You can either set these with `highlight BookmarkSign {key}={arg}...` or link
+them to existing highlight groups with, say:
+>
+  highlight link BookmarkSign Todo
+<
+
+To customise the symbols, add the following to your |vimrc|:
+>
+  let g:bookmark_sign = '>>'
+  let g:bookmark_annotation_sign = '##'
+<
+
+LINE HIGHLIGHTS
+
+Similarly to the signs' colours, set up the following highlight group in your
+colorscheme or |vimrc|:
+>
+  BookmarkLine            " the highlighted line
+  BookmarkAnnotationLine  " the highlighted annotation line
+<
+
+KEY MAPPINGS
+
+To change the default keys:
+>
+  nmap <Leader><Leader> <Plug>BookmarkToggle
+  nmap <Leader>i <Plug>BookmarkAnnotate
+  nmap <Leader>a <Plug>BookmarkShowAll
+  nmap <Leader>j <Plug>BookmarkNext
+  nmap <Leader>k <Plug>BookmarkPrev
+  nmap <Leader>c <Plug>BookmarkClear
+  nmap <Leader>x <Plug>BookmarkClearAll
+
+  " these will also work with a [count] prefix
+  nmap <Leader>kk <Plug>BookmarkMoveUp
+  nmap <Leader>jj <Plug>BookmarkMoveDown
+  nmap <Leader>g <Plug>BookmarkMoveToLine
+<
+
+To prevent any default mappings from being created (default: 0):
+>
+  let g:bookmark_no_default_key_mappings = 1
+<
+
+MORE OPTIONS
+
+Change the following options in your |vimrc| to customize the plugin behaviour.
+
+Save/show bookmarks per working directory/project (default 0):
+
+>
+  let g:bookmark_save_per_working_dir = 1
+<
+
+When this option is enabled, a file called `.vim-bookmarks` will be stored in
+the current working directory whenever you create bookmarks. You should add this
+file to your (global) `.gitignore` file so it doesn't get checked into version
+control.
+
+Enable bookmark management on a per buffer basis:
+
+>
+  let g:bookmark_manage_per_buffer = 1
+<
+
+This will save and load the bookmarks file whenever the buffer changes (e.g.,
+switching tabs/buffers). It makes most sense when g:bookmark_save_per_working_dir
+is turned on as well, or when a customizing function is used.
+
+Disable auto saving (default 1):
+
+>
+  let g:bookmark_auto_save = 0
+<
+
+Change file for auto saving (default $HOME .'/.vim-bookmarks'):
+
+>
+  let g:bookmark_auto_save_file = '/tmp/my_bookmarks'
+<
+
+Turn on line highlighting (default 0):
+
+>
+  let g:bookmark_highlight_lines = 1
+<
+
+Turn off the warning when clearing all bookmarks (default 1):
+
+>
+  let g:bookmark_show_warning = 0
+<
+
+Turn off the warning when toggling to clear a bookmark with annotation (default 1):
+
+>
+  let g:bookmark_show_toggle_warning = 0
+<
+
+Turn on vertical line centering when jumping to bookmark (default 0):
+
+>
+  let g:bookmark_center = 1
+<
+
+Automatically close bookmarks split when jumping to a bookmark (default 0):
+
+>
+  let g:bookmark_auto_close = 1
+<
+
+Use the location list to show all bookmarks (default 0):
+
+>
+  let g:bookmark_location_list = 1
+
+
+You can disable Ctrlp by setting (default 0)
+>
+  let g:bookmark_disable_ctrlp = 1
+<
+===============================================================================
+6. EXTENDING                                               *BookmarksExtending*
+
+You can implement automatic switching of bookmarks file on your desired event.
+To do so, use functions BookmarkSave, BookmarkLoad and BookmarkClearAll with
+the last argument set to 1. This will suppress any messages and prompts these
+functions normally issue. The BookmarkLoad function will return 1 to indicate
+that file loading was successful, and 0 for failure. An example script using
+this feature is located in the 'examples/bm-autoload-example.vim' file.
+
+===============================================================================
+7. Unite Integration                                *BookmarksUniteIntegration*
+
+Unite is a multi-purpose user-interface plugin platform. vim-bookmarks provide
+an Unite source called *vim_bookmarks* so users who use Unite will handle
+bookmarks with the Unite interface. When showing all your bookmarks, Unite is
+detected and the plugin will open ':Unite vim_bookmarks' instead of Vim's
+quickfix window. Note that |g:bookmark_auto_close| is no longer applied, once
+opened, the window is managed by Unite.
+
+To set a global per-source context setting, that will apply to Unite's quickfix
+source everytime it's opened, you can add this to your |vimrc|:
+>
+  call unite#custom#profile('source/vim_bookmarks', 'context', {
+    \   'winheight': 13,
+    \   'direction': 'botright',
+    \   'start_insert': 0,
+    \   'keep_focus': 1,
+    \   'no_quit': 1,
+    \ })
+<
+
+With the Unite interface, when you select bookmarks, you can perform the
+following actions.
+
+- Open the selected bookmarks in various ways (open in right, open in above,
+  open in new tab, etc.)
+- Yank the informations of selected bookmarks (path and line number, the line
+  content, annotation, etc.)
+- Highlight the lines of the selected bookmarks
+- Replace the contents of selected bookmarks with vim-qfreplace
+- Delete the selected bookmarks
+- And more!
+
+For more information about Unite, start reading |:Unite|.
+
+https://github.com/Shougo/unite.vim
+https://github.com/thinca/vim-qfreplace
+
+===============================================================================
+8. CtrlP Integration                                *BookmarksCtrlPIntegration*
+
+ctrlp.vim is a Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
+
+Additionally, when showing all your bookmarks, CtrlP is detected and the plugin
+will open *:CtrlPBookmark* instead of Vim's quickfix window. Note that
+|g:bookmark_auto_close| is no longer applied. Once opened, the window is managed 
+by CtrlP.
+
+With the CtrlP interface, when you select bookmarks, you can perform the 
+following actions:
+
+* Open the selected bookmarks in various ways (open to the right, open above,
+  open in new tab, etc.)
+* And more...
+ 
+For more information about CtrlP start reading |CtrlP@en|.
+
+https://github.com/ctrlpvim/ctrlp.vim
+
+===============================================================================
+9. FAQ                                                           *BookmarksFAQ*
+
+a. Why are the colours in the sign column weird?
+
+  Your colorscheme is configuring the |hl-SignColumn| highlight group weirdly.
+  Please see |BookmarksCustomisation| on customising the sign column.
+
+b. What happens if I also use another plugin which uses signs (e.g. Syntastic)?
+
+  Vim only allows one sign per line. Therefore bookmarks will override any
+  existing sign. When removing the bookmark the original sign will show up
+  again. In other words vim-bookmarks won't remove another plugin's signs.
+
+c. Why aren't any signs showing at all?
+
+  Make sure your vim supports signs. This should return "1":
+>
+  :echo has('signs')
+<
+vim:ft=help:et:ts=2:sw=2:sts=2:norl
