@@ -61,7 +61,7 @@ messages is:
 `**Nick:**` message
 
 - <i class="fab fa-gitter"></i> [`SpaceVim/SpaceVim` on Gitter](https://gitter.im/SpaceVim/SpaceVim)
-- <i class="fas fa-comments"></i> [`#spacevim` on FreeNode](https://webchat.freenode.net/?channels=spacevim)
+- <i class="fas fa-comments"></i> [`#spacevim` on libera.chat](https://web.libera.chat/#spacevim)
 - <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim` on telegram](https://t.me/SpaceVim)
 - <i class="fab fa-rocketchat"></i> [`#spacevim:matrix.org` on Matrix](https://app.element.io/#/room/#spacevim:matrix.org)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` on slack](https://spacevim.slack.com/messages/C88CTJ62J)
