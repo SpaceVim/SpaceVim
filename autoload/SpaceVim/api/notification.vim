@@ -25,6 +25,7 @@ let s:self.title = ''
 let s:self.win_is_open = 0
 let s:self.timeout = 3000
 let s:self.hashkey = ''
+let s:self.config = {}
 let s:self.config.icons = {
       \ 'ERROR' : '',
       \ 'WARN' : '',
