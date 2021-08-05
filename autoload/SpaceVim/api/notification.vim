@@ -5,7 +5,7 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
-
+scriptencoding utf-8
 
 " Global values, this can be used between different notification
 
@@ -25,6 +25,13 @@ let s:self.title = ''
 let s:self.win_is_open = 0
 let s:self.timeout = 3000
 let s:self.hashkey = ''
+let s:self.config.icons = {
+      \ 'ERROR' : '',
+      \ 'WARN' : '',
+      \ 'INFO' : '',
+      \ 'DEBUG' : '',
+      \ 'TRACE' : '✎',
+      \ }
 
 if has('nvim')
   let s:self.__floating = SpaceVim#api#import('neovim#floating')
@@ -49,7 +56,7 @@ function! s:self.draw_border(title, width, height) abort
   return lines
 endfunction
 
-function! s:self.string_compose(target, pos, source)
+function! s:self.string_compose(target, pos, source) abort
   if a:source == ''
     return a:target
   endif
@@ -72,7 +79,7 @@ function! s:self.string_compose(target, pos, source)
 endfunction
 
 
-function! s:self.close(...) dict
+function! s:self.close(...) abort
   if !empty(self.message)
     call remove(self.message, 0)
     let self.notification_width = max(map(deepcopy(self.message), 'strwidth(v:val)'))
@@ -84,7 +91,7 @@ function! s:self.close(...) dict
     let self.win_is_open = v:false
   endif
   for hashkey in keys(s:notifications)
-      call s:notifications[hashkey].redraw_windows()
+    call s:notifications[hashkey].redraw_windows()
   endfor
 endfunction
 
@@ -127,45 +134,45 @@ function! s:self.redraw_windows() abort
   if self.win_is_open
     call self.__floating.win_config(self.winid,
           \ {
-          \ 'relative': 'editor',
-          \ 'width'   : self.notification_width, 
-          \ 'height'  : len(self.message),
-          \ 'row': self.begin_row + 1,
-          \ 'highlight' : self.notification_color,
-          \ 'focusable' : v:false,
-          \ 'col': &columns - self.notification_width - 1,
-          \ })
+            \ 'relative': 'editor',
+            \ 'width'   : self.notification_width, 
+            \ 'height'  : len(self.message),
+            \ 'row': self.begin_row + 1,
+            \ 'highlight' : self.notification_color,
+            \ 'focusable' : v:false,
+            \ 'col': &columns - self.notification_width - 1,
+            \ })
     call self.__floating.win_config(self.border.winid,
           \ {
-          \ 'relative': 'editor',
-          \ 'width'   : self.notification_width + 2, 
-          \ 'height'  : len(self.message) + 2,
-          \ 'row': self.begin_row,
-          \ 'col': &columns - self.notification_width - 2,
-          \ 'highlight' : 'VertSplit',
-          \ 'focusable' : v:false,
-          \ })
+            \ 'relative': 'editor',
+            \ 'width'   : self.notification_width + 2, 
+            \ 'height'  : len(self.message) + 2,
+            \ 'row': self.begin_row,
+            \ 'col': &columns - self.notification_width - 2,
+            \ 'highlight' : 'VertSplit',
+            \ 'focusable' : v:false,
+            \ })
   else
     let self.winid =  self.__floating.open_win(self.bufnr, v:false,
           \ {
-          \ 'relative': 'editor',
-          \ 'width'   : self.notification_width, 
-          \ 'height'  : len(self.message),
-          \ 'row': self.begin_row + 1,
-          \ 'highlight' : self.notification_color,
-          \ 'col': &columns - self.notification_width - 1,
-          \ 'focusable' : v:false,
-          \ })
+            \ 'relative': 'editor',
+            \ 'width'   : self.notification_width, 
+            \ 'height'  : len(self.message),
+            \ 'row': self.begin_row + 1,
+            \ 'highlight' : self.notification_color,
+            \ 'col': &columns - self.notification_width - 1,
+            \ 'focusable' : v:false,
+            \ })
     let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
           \ {
-          \ 'relative': 'editor',
-          \ 'width'   : self.notification_width + 2, 
-          \ 'height'  : len(self.message) + 2,
-          \ 'row': self.begin_row,
-          \ 'col': &columns - self.notification_width - 2,
-          \ 'highlight' : 'VertSplit',
-          \ 'focusable' : v:false,
-          \ })
+            \ 'relative': 'editor',
+            \ 'width'   : self.notification_width + 2, 
+            \ 'height'  : len(self.message) + 2,
+            \ 'row': self.begin_row,
+            \ 'col': &columns - self.notification_width - 2,
+            \ 'highlight' : 'VertSplit',
+            \ 'focusable' : v:false,
+            \ })
     let self.win_is_open = v:true
   endif
   call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, self.notification_width, len(self.message)))
@@ -173,7 +180,7 @@ function! s:self.redraw_windows() abort
 endfunction
 
 
-function! SpaceVim#api#notification#get()
+function! SpaceVim#api#notification#get() abort
 
   return deepcopy(s:self)
 
