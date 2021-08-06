@@ -61,14 +61,12 @@ endfunction
 
 function! s:self.increase_window(...) abort
   " let self.notification_width = self.__floating.get_width(self.winid)
-  if self.notification_width <= float2nr(&columns * 0.3)
+  if self.notification_width <= &columns * 0.3
     let self.notification_width += min([float2nr((&columns * 0.3 - self.notification_width) * 1 / 10), float2nr(&columns * 0.3)])
     call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
           \ self.draw_border(self.title, self.notification_width, len(self.message)))
     call self.redraw_windows()
     call timer_start(30, self.increase_window, {'repeat' : 1})
-  else
-    call timer_start(self.timeout, self.close, {'repeat' : 1})
   endif
 endfunction
 
@@ -133,6 +131,7 @@ function! s:self.notify(msg, color) abort
   call setbufvar(self.border.bufnr, '&cursorline', 0)
   call extend(s:notifications, {self.hashkey : self})
   call self.increase_window()
+  call timer_start(self.timeout, self.close, {'repeat' : 1})
 endfunction
 
 function! s:self.redraw_windows() abort
