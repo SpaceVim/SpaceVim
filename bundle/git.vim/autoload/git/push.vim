@@ -6,7 +6,7 @@
 "=============================================================================
 
 let s:JOB = SpaceVim#api#import('job')
-let s:NOTI =SpaceVim#api#import('notification')
+let s:NOTI = SpaceVim#api#import('notify')
 
 function! git#push#run(...)
 

@@ -7,7 +7,7 @@
 " <
 
 let s:JOB = SpaceVim#api#import('job')
-let s:NOTI =SpaceVim#api#import('notification')
+let s:NOTI = SpaceVim#api#import('notify')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 

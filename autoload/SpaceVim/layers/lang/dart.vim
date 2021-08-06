@@ -54,7 +54,7 @@ let s:flutter_job_id = 0
 let s:dart_sdk_path = ''
 
 let s:JOB = SpaceVim#api#import('job')
-let s:NOTI =SpaceVim#api#import('notification')
+let s:NOTI = SpaceVim#api#import('notify')
 
 function! SpaceVim#layers#lang#dart#plugins() abort
   let plugins = []
