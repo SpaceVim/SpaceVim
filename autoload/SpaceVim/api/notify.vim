@@ -62,7 +62,7 @@ endfunction
 function! s:self.increase_window(...) abort
   let self.notification_width = self.__floating.get_width(self.winid)
   if self.notification_width <= &columns * 0.3
-    let self.notification_width += 1
+    let self.notification_width += (&columns * 0.3 - self.notification_width) * 3 / 10
     call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
           \ self.draw_border(self.title, self.notification_width, len(self.message)))
     call self.redraw_windows()
