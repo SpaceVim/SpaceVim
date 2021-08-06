@@ -64,7 +64,7 @@ function! s:self.increase_window(...) abort
     let self.notification_width += 1
     call self.__floating.win_config(self.winid,
           \ {
-            \ 'width'   : self.notification_width, 
+            \ 'width'   : self.notification_width + 1, 
             \ })
     call self.__floating.win_config(self.border.winid,
           \ {
