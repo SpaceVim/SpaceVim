@@ -102,6 +102,7 @@ function! s:self.close(...) abort
     noautocmd call self.__floating.win_close(self.winid, v:true)
     call remove(s:notifications, self.hashkey)
     let self.win_is_open = v:false
+    let self.notification_width = 1
   endif
   for hashkey in keys(s:notifications)
     call s:notifications[hashkey].redraw_windows()
