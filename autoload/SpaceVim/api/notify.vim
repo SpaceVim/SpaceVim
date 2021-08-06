@@ -63,16 +63,9 @@ function! s:self.increase_window(...) abort
   let self.notification_width = self.__floating.get_width(self.winid)
   if self.notification_width <= &columns * 0.3
     let self.notification_width += 1
-    call self.__floating.win_config(self.winid,
-          \ {
-            \ 'width'   : self.notification_width + 1, 
-            \ })
-    call self.__floating.win_config(self.border.winid,
-          \ {
-            \ 'width'   : self.notification_width + 2, 
-            \ })
     call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
           \ self.draw_border(self.title, self.notification_width, len(self.message)))
+    call self.redraw_windows()
     call timer_start(30, self.increase_window, {'repeat' : 1})
   endif
 endfunction
