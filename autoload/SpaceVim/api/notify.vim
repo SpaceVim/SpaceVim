@@ -59,7 +59,19 @@ function! s:self.draw_border(title, width, height) abort
 endfunction
 
 function! s:self.increase_window() abort
-  
+  let win_width = self.__floating.get_width()
+  if win_width <= &columns * 0.3
+    let win_width += 1
+    call self.__floating.win_config(self.winid,
+          \ {
+            \ 'width'   : win_width, 
+            \ })
+    call self.__floating.win_config(self.border.winid,
+          \ {
+            \ 'width'   : win_width + 2, 
+            \ })
+    call timer_start(30, self.increase_window, {'repeat' : 1})
+  endif
 endfunction
 
 function! s:self.string_compose(target, pos, source) abort
