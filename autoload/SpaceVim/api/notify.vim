@@ -15,6 +15,7 @@ let s:notifications = {}
 
 let s:self = {}
 let s:self.message = []
+let s:self.notification_width = 1
 let s:self.winid = -1
 let s:self.bufnr = -1
 let s:self.border = {}
@@ -102,7 +103,6 @@ endfunction
 function! s:self.close(...) abort
   if !empty(self.message)
     call remove(self.message, 0)
-    let self.notification_width = max(map(deepcopy(self.message), 'strwidth(v:val)'))
   endif
   if len(self.message) == 0
     noautocmd call self.__floating.win_close(self.border.winid, v:true)
@@ -145,7 +145,6 @@ function! s:self.redraw_windows() abort
   if empty(self.message)
     return
   endif
-  let self.notification_width = 1
   let self.begin_row = 2
   for hashkey in keys(s:notifications)
     if hashkey !=# self.hashkey
