@@ -58,18 +58,20 @@ function! s:self.draw_border(title, width, height) abort
   return lines
 endfunction
 
-function! s:self.increase_window() abort
-  let win_width = self.__floating.get_width(self.winid)
-  if win_width <= &columns * 0.3
-    let win_width += 1
+function! s:self.increase_window(...) abort
+  let self.notification_width = self.__floating.get_width(self.winid)
+  if self.notification_width <= &columns * 0.3
+    let self.notification_width += 1
     call self.__floating.win_config(self.winid,
           \ {
-            \ 'width'   : win_width, 
+            \ 'width'   : self.notification_width, 
             \ })
     call self.__floating.win_config(self.border.winid,
           \ {
-            \ 'width'   : win_width + 2, 
+            \ 'width'   : self.notification_width + 2, 
             \ })
+    call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
+          \ self.draw_border(self.title, self.notification_width, len(self.message)))
     call timer_start(30, self.increase_window, {'repeat' : 1})
   endif
 endfunction
@@ -196,7 +198,8 @@ function! s:self.redraw_windows() abort
             \ })
     let self.win_is_open = v:true
   endif
-  call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0, self.draw_border(self.title, self.notification_width, len(self.message)))
+  call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
+        \ self.draw_border(self.title, self.notification_width, len(self.message)))
   call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, self.message)
 endfunction
 
