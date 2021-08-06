@@ -59,7 +59,7 @@ function! s:self.draw_border(title, width, height) abort
 endfunction
 
 function! s:self.increase_window() abort
-  let win_width = self.__floating.get_width()
+  let win_width = self.__floating.get_width(self.winid)
   if win_width <= &columns * 0.3
     let win_width += 1
     call self.__floating.win_config(self.winid,
