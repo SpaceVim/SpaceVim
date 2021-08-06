@@ -108,9 +108,9 @@ function! s:self.close(...) abort
   endfor
 endfunction
 
-function! s:self.notify(msg, color) abort
+function! s:self.notify(msg, ...) abort
   call add(self.message, a:msg)
-  let self.notification_color = a:color
+  let self.notification_color = get(a:000, 0, 'Normal')
   if !bufexists(self.border.bufnr)
     let self.border.bufnr = self.__buffer.create_buf(0, 0)
   endif

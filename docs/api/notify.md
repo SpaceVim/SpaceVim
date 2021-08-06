@@ -27,4 +27,3 @@ call s:NOTIFY.notify('This is a simple notification!')
 | --------------------------- | ------------------------------------------------- |
 | `notify(string)`            | generate notification with default color          |
 | `notify(string, highlight)` | generate notification with custom highlight group |
-| `notify(string, opt)`       | generate notification with custom option          |
