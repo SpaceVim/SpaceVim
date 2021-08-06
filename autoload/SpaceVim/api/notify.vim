@@ -33,6 +33,7 @@ let s:self.config.icons = {
       \ 'DEBUG' : '',
       \ 'TRACE' : '✎',
       \ }
+let s:self.config.title = 'SpaceVim'
 
 if has('nvim')
   let s:self.__floating = SpaceVim#api#import('neovim#floating')
@@ -55,6 +56,10 @@ function! s:self.draw_border(title, width, height) abort
   let top = self.string_compose(top, 1, a:title)
   let lines = [top] + repeat([mid], a:height) + [bot]
   return lines
+endfunction
+
+function! s:self.increase_window() abort
+  
 endfunction
 
 function! s:self.string_compose(target, pos, source) abort
@@ -118,6 +123,7 @@ function! s:self.notify(msg, color) abort
   call setbufvar(self.border.bufnr, '&buftype', 'nofile')
   call setbufvar(self.border.bufnr, '&cursorline', 0)
   call extend(s:notifications, {self.hashkey : self})
+  call self.increase_window()
   call timer_start(self.timeout, self.close, {'repeat' : 1})
 endfunction
 
@@ -125,7 +131,7 @@ function! s:self.redraw_windows() abort
   if empty(self.message)
     return
   endif
-  let self.notification_width = max(map(deepcopy(self.message), 'strwidth(v:val)'))
+  let self.notification_width = 1
   let self.begin_row = 2
   for hashkey in keys(s:notifications)
     if hashkey !=# self.hashkey
