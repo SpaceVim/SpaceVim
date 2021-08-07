@@ -49,15 +49,6 @@ function! s:echo(msg) abort
   echon a:msg
 endfunction
 
-if !exists('g:cscope_cmd')
-  if executable('cscope')
-    let g:cscope_cmd = 'cscope'
-  else
-    call s:echo('cscope: command not found')
-    finish
-  endif
-endif
-
 let s:FILE = SpaceVim#api#import('file')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:cscope_cache_dir = s:FILE.unify_path('~/.cache/SpaceVim/cscope/')
