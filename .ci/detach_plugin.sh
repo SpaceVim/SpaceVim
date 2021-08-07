@@ -46,8 +46,10 @@ main () {
             _detect autoload/SpaceVim/api/data/dict.vim
             _detect autoload/SpaceVim/api/data/list.vim
             _detect autoload/SpaceVim/api/data/json.vim
+            _detect autoload/SpaceVim/api/data/string.vim
             _detect autoload/SpaceVim/api/prompt.vim
             _detect autoload/SpaceVim/api/job.vim
+            _detect autoload/SpaceVim/api/vim.vim
             _detect autoload/SpaceVim/api/file.vim
             _detect autoload/SpaceVim/api/system.vim
             _detect autoload/SpaceVim/mapping/search.vim
