@@ -16,7 +16,7 @@ function! SpaceVim#layers#tools#plugins() abort
   let plugins = []
   call add(plugins, ['tpope/vim-scriptease',             { 'merged' : 0}])
   call add(plugins, ['lymslive/vimloo',                  { 'merged' : 0}])
-  call add(plugins, ['lymslive/vnote',                   { 'depends' : 'vimloo', 'on_cmd' : ['NoteBook','NoteNew','NoteEdit', 'NoteList', 'NoteConfig', 'NoteIndex', 'NoteImport']}])
+  call add(plugins, ['lymslive/vnote',                   { 'merged' : 0}])
   call add(plugins, ['junegunn/rainbow_parentheses.vim', { 'merged' : 0}])
   call add(plugins, ['mbbill/fencview',                  { 'on_cmd' : 'FencAutoDetect'}])
   call add(plugins, ['wsdjeg/vim-cheat',                 { 'on_cmd' : 'Cheat'}])

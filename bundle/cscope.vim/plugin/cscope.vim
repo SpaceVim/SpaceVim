@@ -7,25 +7,30 @@
 "=============================================================================
 
 if !exists('g:cscope_silent')
-    ""
-    " Silent or not when run cscope command. by default it is 1.
-    let g:cscope_silent = 1
+  ""
+  " Silent or not when run cscope command. by default it is 1.
+  let g:cscope_silent = 1
 endif
 
+if !exists('g:cscope_cmd')
+  let g:cscope_cmd = 'cscope'
+endif
+
+
 if !exists('g:cscope_auto_update')
-    let g:cscope_auto_update = 1
+  let g:cscope_auto_update = 1
 endif
 
 if !exists('g:cscope_open_location')
-    let g:cscope_open_location = 1
+  let g:cscope_open_location = 1
 endif
 
 if exists('g:cscope_preload_path')
-    let g:cscope_preload_path = ''
+  let g:cscope_preload_path = ''
 endif
 
 if !exists('g:cscope_split_threshold')
-    let g:cscope_split_threshold = 10000
+  let g:cscope_split_threshold = 10000
 endif
 
 set cscopequickfix=s-,g-,d-,c-,t-,e-,f-,i-
@@ -41,10 +46,10 @@ if exists('g:cscope_preload_path')
 endif
 
 if g:cscope_auto_update == 1
-    augroup cscope_core
-        autocmd!
-        au BufWritePost * call cscope#onChange()
-    augroup END
+  augroup cscope_core
+    autocmd!
+    au BufWritePost * call cscope#onChange()
+  augroup END
 endif
 
 
