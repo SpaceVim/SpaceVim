@@ -111,9 +111,10 @@ function! SpaceVim#layers#edit#config() abort
         \ . string(s:_function('s:align_at_regular_expression')) . ', [])',
         \ 'align-region-at-user-specified-regexp', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', 'w'], 'StripWhitespace', 'delete trailing whitespaces', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', '<Space>'], 'silent call call('
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', '[SPC]'], 'silent call call('
         \ . string(s:_function('s:delete_extra_space')) . ', [])',
         \ 'delete extra space arround cursor', 1)
+  nmap <Space>xd<Space> [SPC]xd[SPC]
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'c'], 'silent call call('
         \ . string(s:_function('s:lowerCamelCase')) . ', [])',
         \ 'change symbol style to lowerCamelCase', 1)
