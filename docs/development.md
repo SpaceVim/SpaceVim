@@ -50,12 +50,12 @@ You can only consider reading the sections relevant to what you are going to do:
 If you want to ask an usage question,
 be sure to look first into some places as it may hold the answers:
 
-- <kbd>:h SpaceVim-faq</kbd>: Some of the most frequently asked questions are answered there.
+- `:h SpaceVim-faq`: Some of the most frequently asked questions are answered there.
 - [SpaceVim documentation](https://spacevim.org/documentation/): It is the general documentation of SpaceVim.
 
 ## Bug reporting
 
-To report a bug, you can use the spacevim mailing list `spacevim@googlegroups.com`,
+If you run into a bug, please follow these guidelines to get feedback.
 before sending mail, please:
 
 - Check that no duplicate issue in [google groups](https://groups.google.com/forum/#!forum/spacevim)
