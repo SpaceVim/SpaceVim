@@ -147,9 +147,11 @@ footer
 
 **scopes:**
 
-- `layer`
-- `api`
-- `plugin`
+- `core`: vim script in `autoload/SpaceVim/` directory
+- `layer`: vim script in `autoload/SpaceVim/layers/` directory
+- `api`: vim script in `autoload/SpaceVim/api/` directory
+- `plugin`: vim script in `autoload/SpaceVim/plugins/` directory
+- `bundle`: files in `bundle/` directory
 
 **subject:**
 
