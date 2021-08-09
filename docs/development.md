@@ -45,17 +45,19 @@ We have some guidelines that we need all contributors to follow.
 You can only think about reading the part that is relevant to what you are going to do:
 
 - [Asking for help](#asking-for-help): if you are about to open an issue to ask a question.
-- [Requesting new feature](#requesting-new-feature):
-- [Reporting bugs](#reporting-bugs): if you are about to open a new issue.
+- [Requesting new feature](#requesting-new-feature): if you want a new feature.
+- [Reporting bugs](#reporting-bugs): if you run into a bug.
 - [Contributing code](#contributing-code): if you are about to send a pull-request.
 
 ## Asking for help
 
-If you want to ask an usage question,
-be sure to look first into some places as it may hold the answers:
+If you have any questions about using SpaceVim,
+check out the following context first, which may contain the answers:
 
 - `:h SpaceVim-faq`: Some of the most frequently asked questions are answered there.
 - [SpaceVim documentation](https://spacevim.org/documentation/): It is the general documentation of SpaceVim.
+
+Besides, you can also [chat with us](../community/#chat)
 
 ## Reporting bugs
 
