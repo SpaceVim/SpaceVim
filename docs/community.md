@@ -22,8 +22,9 @@ description: "A list of SpaceVim's public channels, All messages are bridged bet
 
 ### Feedback
 
-Have you found a bug? Or maybe you want a new feature. Please use the
-[issue tracker](https://github.com/SpaceVim/SpaceVim/issues) to report any bugs or file feature requests.
+If you run into a bug or want a new feature.
+Please use the [issue tracker](https://github.com/SpaceVim/SpaceVim/issues)
+to report any bugs or file feature requests.
 
 ### Mailing list
 
