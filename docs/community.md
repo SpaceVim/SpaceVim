@@ -71,7 +71,7 @@ Join on one of them to chat with us:
 
 ### Forum
 
-If you have something you'd like to share, or a question you'd like to discuss in depth, use the following forums
+If you have something you'd like to share, or a question you'd like to discuss in depth, use the following forums:
 
 - [Reddit channel](https://reddit.com/r/spacevim)
 - [Facebook group](https://www.facebook.com/groups/spacevim)
