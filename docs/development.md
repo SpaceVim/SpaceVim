@@ -13,17 +13,12 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
 - [Contributing code](#contributing-code)
   - [License](#license)
   - [Conventions](#conventions)
-  - [Git commit style guide](#git-commit-style-guide)
-    - [types](#types)
-    - [scopes](#scopes)
-    - [subject](#subject)
-    - [body](#body)
-    - [footer](#footer)
+  - [Commit style guide](#commit-style-guide)
   - [Pull Request](#pull-request)
-    - [Title prefix of pull request](#title-prefix-of-pull-request)
-    - [Rebase on top of upstream master](#rebase-on-top-of-upstream-master)
-    - [Ideally for simple PRs](#ideally-for-simple-prs)
-    - [For complex PRs](#for-complex-prs)
+    - [Prefix of title](#prefix-of-title)
+    - [Workflow](#workflow)
+    - [Simple PRs](#simple-prs)
+    - [Complex PRs](#complex-prs)
   - [Contributing a layer](#contributing-a-layer)
     - [File header](#file-header)
     - [Author of a new layer](#author-of-a-new-layer)
@@ -61,14 +56,28 @@ Besides, you can also [chat with us](../community/#chat)
 
 ## Reporting bugs
 
-If you run into a bug, please follow these guidelines to get feedback.
-before sending mail, please:
+If you run into a bug, please follow the guidelines below to give feedback.
 
-- Check that no duplicate issue in [google groups](https://groups.google.com/forum/#!forum/spacevim)
+- Check that no duplicate issue in [issue tracker](https://github.com/SpaceVim/SpaceVim/issues)
 - Check that the issue has not been fixed in latest version of SpaceVim,
   please update your SpaceVim, and try to reproduce the bug here.
-- Use a clear title with `[bug]` prefix.
-- Include details on how to reproduce it, just like a step by step guide.
+- Use a clear title with `bug reporting` issue template
+
+```
+<!-- bug reporting without issue template will be closed automatically -->
+## Expected behavior, english is required
+
+## The reproduce ways from Vim starting (Required!)
+
+## Debug info
+<!-- Please press SPC h I, debug info will be put into clipboard, -->
+<!-- then paste all content below. -->
+
+## Screenshots
+<!-- If you have any screenshots for this issue, -->
+<!-- please upload here. -->
+<!-- BTW you can use https://asciinema.org/ for recording video in terminal. -->
+```
 
 ## Requesting new feature
 
@@ -91,8 +100,9 @@ You need to choose a concise title and refine the content in the issue template:
 
 ## Contributing code
 
-Code contributions are welcome. Please read the following sections carefully.
-In any case, feel free to join us on the [gitter chat](https://gitter.im/SpaceVim/SpaceVim) to ask questions about contributing!
+Code and documentation contributions of any kind are welcome.
+Please read the following sections carefully.
+In any case, feel free to [chat with us](../community/#chat) to ask questions about contributing!
 
 ### License
 
@@ -102,16 +112,18 @@ The license is GPLv3 for all the parts of SpaceVim. This includes:
 - All the layer files.
 - The documentation
 
-For files not belonging to SpaceVim like local packages and libraries,
-refer to the header file. Those files should not have an empty header, we may not accept code without a proper header file.
+For files not belonging to SpaceVim like bundle packages,
+refer to the header file. Those files should not have an empty header,
+we may not accept code without a proper header file.
 
 ### Conventions
 
 SpaceVim is based on conventions, mainly for naming functions,
 keybindings definition and writing documentation.
-Please read the [conventions](https://spacevim.org/conventions/) before your first contribution to get to know them.
+Please read these [conventions](../conventions/) to make sure you
+understand them before you contribute code or documentation for the first time.
 
-### Git commit style guide
+### Commit style guide
 
 A git commit message consists a three distinct parts separated by black line.
 
@@ -123,23 +135,25 @@ body
 footer
 ```
 
-#### types
+**types:**
 
-- `feat`: A new feature
-- `fix`: A bug fix
-- `docs`: Changes to documentation
-- `style`: Formatting, missing semi colons, etc; no code change
-- `refactor`: Refactoring production code
-- `test`: Adding tests, refactoring test; no production code change
-- `chore`: Updating build tasks, package manager configs, etc; no production code change
+- `feat`: a new feature
+- `fix`: a bug fix
+- `docs`: changes to documentation
+- `style`: formatting, missing semi colons, etc; no code change
+- `refactor`: refactoring production code
+- `test`: adding tests, refactoring test; no production code change
+- `chore`: updating build tasks, package manager configs, etc; no production code change
 
-#### scopes
+**scopes:**
 
-- `layer`
-- `api`
-- `plugin`
+- `core`: vim script in `autoload/SpaceVim/` directory
+- `layer`: vim script in `autoload/SpaceVim/layers/` directory
+- `api`: vim script in `autoload/SpaceVim/api/` directory
+- `plugin`: vim script in `autoload/SpaceVim/plugins/` directory
+- `bundle`: files in `bundle/` directory
 
-#### subject
+**subject:**
 
 Subjects should be no greater than 50 characters,
 should begin with a capital letter and do not end with a period.
@@ -147,20 +161,20 @@ should begin with a capital letter and do not end with a period.
 Use an imperative tone to describe what a commit does,
 rather than what it did. For example, use change; not changed or changes.
 
-#### body
+**body:**
 
 Not all commits are complex enough to warrant a body,
 therefore it is optional and only used when a commit requires a bit of explanation and context.
 
-#### footer
+**footer**
 
 The footer is optional and is used to reference issue tracker IDs.
 
 ### Pull Request
 
-#### Title prefix of pull request
+#### Prefix of title 
 
-Pull request titles should contain one of these prefixes:
+The title of a pull request should contain one of the following prefixes::
 
 - `Add:` Adding new features.
 - `Change:` Change default behaviors or the existing features.
@@ -173,7 +187,7 @@ Here is an example:
 
 `Website: Update the lang#c layer page.`
 
-#### Rebase on top of upstream master
+#### Workflow
 
 - Fork SpaceVim repository
 - Clone your repository
@@ -195,7 +209,7 @@ git fetch upstream
 git rebase upstream/master
 ```
 
-#### Ideally for simple PRs
+#### Simple PRs
 
 - Branch from `master`
 - One topic per PR
@@ -203,7 +217,7 @@ git rebase upstream/master
 - If you have several commits on different topics, close the PR and create one PR per topic
 - If you still have several commits, squash them into only one commit
 
-#### For complex PRs
+#### Complex PRs
 
 Squash only the commits with uninteresting changes like typos, syntax fixes, etc.
 And keep the important and isolated steps in different commits.
