@@ -63,16 +63,18 @@ Messages from `SpaceVimBot` are sent by a remote user.
 Join on one of them to chat with us:
 
 - <i class="fab fa-gitter"></i> [`SpaceVim/SpaceVim` on Gitter](https://gitter.im/SpaceVim/SpaceVim)
-- <i class="fas fa-comments"></i> [`#spacevim` on libera.chat](https://web.libera.chat/#spacevim)
 - <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim` on telegram](https://t.me/SpaceVim)
+- <i class="fas fa-comments"></i> [`#spacevim` on libera.chat](https://web.libera.chat/#spacevim)
 - <i class="fab fa-rocketchat"></i> [`#spacevim:matrix.org` on Matrix](https://app.element.io/#/room/#spacevim:matrix.org)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` on slack](https://spacevim.slack.com/messages/C88CTJ62J)
 - <i class="fab fa-discord"></i> [`#spacevim` on discord](https://discord.gg/xcRQnF8)
 
 ### Forum
 
-- [Facebook group](https://www.facebook.com/groups/spacevim)
+If you have something you'd like to share, or a question you'd like to discuss in depth, use the following forums
+
 - [Reddit channel](https://reddit.com/r/spacevim)
+- [Facebook group](https://www.facebook.com/groups/spacevim)
 
 
 ### Others
