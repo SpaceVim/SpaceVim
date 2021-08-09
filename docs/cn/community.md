@@ -20,9 +20,10 @@ lang: zh
 
 ### 资讯订阅
 
-关注 SpaceVim 官方微博或微信公众号以获取最新资讯、新特性介绍、使用技巧等。
+最新的版本发布、新功能增加会通过 twitter 或者 Facebook 进行推送，欢迎订阅：
 
-- <i class="fab fa-weibo"></i> [新浪微博](https://weibo.com/SpaceVim)
+- <i class="fab fa-twitter"></i> [twitter](https://twitter.com/SpaceVim)
+- <i class="fab fa-facebook"></i> [Facebook](https://www.facebook.com/SpaceVim)
 
 ### 问题反馈
 
