@@ -1,5 +1,5 @@
 ---
-title:  "Development"
+title: "Development"
 description: "General contributing guidelines and changelog of SpaceVim, including development information about SpaceVim"
 ---
 
@@ -8,7 +8,8 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
 <!-- vim-markdown-toc GFM -->
 
 - [Asking for help](#asking-for-help)
-- [Bug reporting](#bug-reporting)
+- [Reporting bugs](#reporting-bugs)
+- [Requesting new feature](#requesting-new-feature)
 - [Contributing code](#contributing-code)
   - [License](#license)
   - [Conventions](#conventions)
@@ -36,26 +37,31 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
 
 <!-- vim-markdown-toc -->
 
-SpaceVim is an effort of all the volunteers. We encourage you to pitch in. The community makes SpaceVim what it is.
-We have a few guidelines which we need all contributors to follow.
+SpaceVim is a joint effort of all contributors.
+We encourage you to participate in SpaceVim's development.
+This page describes the entire development process of SpaceVim.
 
-You can only consider reading the sections relevant to what you are going to do:
+We have some guidelines that we need all contributors to follow.
+You can only think about reading the part that is relevant to what you are going to do:
 
-- [Asking for help](#asking-for-help) if you are about to open an issue to ask a question.
-- [Reporting issues](#reporting-issues) if you are about to open a new issue.
-- [Contributing code](#contributing-code) if you are about to send a pull-request.
+- [Asking for help](#asking-for-help): if you are about to open an issue to ask a question.
+- [Requesting new feature](#requesting-new-feature): if you want a new feature.
+- [Reporting bugs](#reporting-bugs): if you run into a bug.
+- [Contributing code](#contributing-code): if you are about to send a pull-request.
 
 ## Asking for help
 
-If you want to ask an usage question,
-be sure to look first into some places as it may hold the answers:
+If you have any questions about using SpaceVim,
+check out the following context first, which may contain the answers:
 
-- <kbd>:h SpaceVim-faq</kbd>: Some of the most frequently asked questions are answered there.
+- `:h SpaceVim-faq`: Some of the most frequently asked questions are answered there.
 - [SpaceVim documentation](https://spacevim.org/documentation/): It is the general documentation of SpaceVim.
 
-## Bug reporting
+Besides, you can also [chat with us](../community/#chat)
 
-To report a bug, you can use the spacevim mailing list `spacevim@googlegroups.com`,
+## Reporting bugs
+
+If you run into a bug, please follow these guidelines to get feedback.
 before sending mail, please:
 
 - Check that no duplicate issue in [google groups](https://groups.google.com/forum/#!forum/spacevim)
@@ -63,6 +69,25 @@ before sending mail, please:
   please update your SpaceVim, and try to reproduce the bug here.
 - Use a clear title with `[bug]` prefix.
 - Include details on how to reproduce it, just like a step by step guide.
+
+## Requesting new feature
+
+If you want a new feature, use the [github issue tracker](https://github.com/SpaceVim/SpaceVim/issues) to file a new issue.
+You need to choose a concise title and refine the content in the issue template:
+
+```
+**Is your feature request related to a problem? Please describe.**
+<!-- A clear and concise description of what the problem is. Ex. I'm always frustrated when [...] -->
+
+**Describe the solution you'd like**
+<!-- A clear and concise description of what you want to happen. -->
+
+**Describe alternatives you've considered**
+<!-- A clear and concise description of any alternative solutions or features you've considered. -->
+
+**Additional context**
+<!-- Add any other context or screenshots about the feature request here. -->
+```
 
 ## Contributing code
 
@@ -86,7 +111,6 @@ SpaceVim is based on conventions, mainly for naming functions,
 keybindings definition and writing documentation.
 Please read the [conventions](https://spacevim.org/conventions/) before your first contribution to get to know them.
 
-
 ### Git commit style guide
 
 A git commit message consists a three distinct parts separated by black line.
@@ -109,13 +133,11 @@ footer
 - `test`: Adding tests, refactoring test; no production code change
 - `chore`: Updating build tasks, package manager configs, etc; no production code change
 
-
 #### scopes
 
 - `layer`
 - `api`
 - `plugin`
-
 
 #### subject
 
@@ -130,11 +152,9 @@ rather than what it did. For example, use change; not changed or changes.
 Not all commits are complex enough to warrant a body,
 therefore it is optional and only used when a commit requires a bit of explanation and context.
 
-
 #### footer
 
 The footer is optional and is used to reference issue tracker IDs.
-
 
 ### Pull Request
 
@@ -157,16 +177,19 @@ Here is an example:
 
 - Fork SpaceVim repository
 - Clone your repository
+
 ```sh
 git clone ${YOUR_OWN_REPOSITORY_URL}
 ```
 
 - Add upstream remote
+
 ```sh
 git remote add upstream https://github.com/SpaceVim/SpaceVim.git
 ```
 
 - Fetch upstream and rebase on top of upstream master
+
 ```sh
 git fetch upstream
 git rebase upstream/master
