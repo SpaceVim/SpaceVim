@@ -35,7 +35,6 @@ install_nvim() {
     local ncpu=$(awk '/^processor/{n+=1}END{print n}' /proc/cpuinfo)
     git clone --depth 1 --single-branch $ext $URL $tmp
     cd $tmp
-    sed -i '30d' ./third-party/cmake/BuildLibvterm.cmake
     make deps
     make -j$ncpu \
         CMAKE_BUILD_TYPE=Release \
