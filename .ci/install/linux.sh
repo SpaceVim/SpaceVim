@@ -40,6 +40,8 @@ install_nvim() {
         CMAKE_BUILD_TYPE=Release \
         CMAKE_EXTRA_FLAGS="-DTRAVIS_CI_BUILD=ON -DCMAKE_INSTALL_PREFIX:PATH=$out"
     make install
+    # fix ModuleNotFoundError: No module named 'setuptools'
+    python3 -m pip install -U setuptools
     python3 -m pip install pynvim
 }
 
