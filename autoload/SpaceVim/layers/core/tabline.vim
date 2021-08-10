@@ -540,3 +540,8 @@ function! SpaceVim#layers#core#tabline#def_colors() abort
   call s:HI.hi_separator('SpaceVim_tabline_m', 'SpaceVim_tabline_b')
   call s:HI.hi_separator('SpaceVim_tabline_m', 'SpaceVim_tabline_a')
 endfunction
+
+function! SpaceVim#layers#core#tabline#health() abort
+  call SpaceVim#layers#core#tabline#config()
+  return 1
+endfunction

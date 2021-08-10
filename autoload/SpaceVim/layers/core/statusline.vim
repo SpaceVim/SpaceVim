@@ -964,4 +964,9 @@ function! SpaceVim#layers#core#statusline#remove_section(name) abort
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction
 
+function! SpaceVim#layers#core#statusline#health() abort
+  call SpaceVim#layers#core#statusline#config()
+  return 1
+endfunction
+
 " vim:set et sw=2 cc=80 nowrap:
