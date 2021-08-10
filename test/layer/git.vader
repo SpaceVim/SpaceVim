@@ -1,0 +1,3 @@
+Execute ( SpaceVim layer: git ):
+  Assert SpaceVim#layers#git#health()
+
