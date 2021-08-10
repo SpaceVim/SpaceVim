@@ -26,3 +26,9 @@ function! SpaceVim#layers#chinese#config() abort
   " do not load vimcdoc plugin 
   let g:loaded_vimcdoc = 1
 endfunction
+
+function! SpaceVim#layers#chinese#health() abort
+  call SpaceVim#layers#chinese#plugins()
+  call SpaceVim#layers#chinese#config()
+  return 1
+endfunction
