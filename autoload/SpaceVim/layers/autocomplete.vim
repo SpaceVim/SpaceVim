@@ -256,8 +256,11 @@ function! SpaceVim#layers#autocomplete#toggle_deoplete() abort
 endfunction
 
 function! SpaceVim#layers#autocomplete#health() abort
+  call SpaceVim#layers#autocomplete#getprfile()
+  call SpaceVim#layers#autocomplete#plugins()
+  call SpaceVim#layers#autocomplete#config()
 
-  return 0
+  return 1
 
 endfunction
 
