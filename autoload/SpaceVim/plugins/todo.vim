@@ -76,6 +76,8 @@ function! s:update_todo_content() abort
     let argv += ['.']
   elseif s:SYS.isWindows && s:grep_default_exe ==# 'findstr'
     let argv += ['*.*']
+  elseif !s:SYS.isWindows && s:grep_default_exe ==# 'rg'
+    let argv += ['./']
   endif
   let argv += s:grep_default_ropt
   call s:LOG.info('cmd: ' . string(argv))
