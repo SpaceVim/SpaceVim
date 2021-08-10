@@ -70,6 +70,6 @@ spacevim-cn+unsubscribe@googlegroups.com
 - <i class="fab fa-gitter"></i> [`SpaceVim/cn` Gitter 聊天室](https://gitter.im/SpaceVim/cn)
 - <i class="fas fa-comments"></i> [`#spacevim-cn` IRC 聊天室](https://web.libera.chat/#spacevim-cn)
 - <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim_cn` telegram 聊天室](https://t.me/SpaceVim_cn)
-- <i class="fab fa-rocketchat"></i> [`#spacevim-cn:matrix.org` Matrix 聊天室](https://app.element.io/#/room/#spacevim-cn:matrix.org)
+- <i class="fa fa-matrix-org" aria-hidden="true"></i> [`#spacevim-cn:matrix.org` Matrix 聊天室](https://app.element.io/#/room/#spacevim-cn:matrix.org)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` slack 聊天室](https://spacevim.slack.com/messages/C88CTJ62J)
 - <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)
