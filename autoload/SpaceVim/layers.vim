@@ -138,7 +138,7 @@ endfunction
 
 function! SpaceVim#layers#list() abort
 
-  let files = SpaceVim#util#globpath(&rtp, 'autoload/SpaceVim/layers/**/*.vim')
+  let files = SpaceVim#util#globpath('.', 'autoload/SpaceVim/layers/**/*.vim')
   let pattern = s:SYS.isWindows ? '\\autoload\\SpaceVim\\layers\\' : '/autoload/SpaceVim/layers/'
   let layers = []
   for file in files
