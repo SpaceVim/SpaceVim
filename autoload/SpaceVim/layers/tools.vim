@@ -73,4 +73,10 @@ function! SpaceVim#layers#tools#config() abort
   endif
 endfunction
 
+function! SpaceVim#layers#tools#health() abort
+  call SpaceVim#layers#tools#plugins()
+  call SpaceVim#layers#tools#config()
+  return 1
+endfunction
+
 " vim:set et sw=2 cc=80:

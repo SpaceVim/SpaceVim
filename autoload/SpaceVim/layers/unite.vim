@@ -232,6 +232,12 @@ function! s:run_shell_cmd_project() abort
   endif
 endfunction
 
+function! SpaceVim#layers#unite#health() abort
+  call SpaceVim#layers#unite#plugins()
+  call SpaceVim#layers#unite#config()
+  return 1
+endfunction
+
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
   function! s:_function(fstr) abort

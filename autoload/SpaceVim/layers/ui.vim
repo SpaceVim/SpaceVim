@@ -450,3 +450,9 @@ function! s:clear_previous_scrollbar() abort
   let bufnr = bufnr('#')
   call SpaceVim#plugins#scrollbar#clear(bufnr)
 endfunction
+
+function! SpaceVim#layers#ui#health() abort
+  call SpaceVim#layers#ui#plugins()
+  call SpaceVim#layers#ui#config()
+  return 1
+endfunction

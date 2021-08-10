@@ -12,3 +12,13 @@ function! SpaceVim#layers#org#plugins() abort
   call add(plugins, ['SpaceVim/org-mode', {'merged' : 0}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#org#config() abort
+  
+endfunction
+
+function! SpaceVim#layers#org#health() abort
+  call SpaceVim#layers#org#plugins()
+  call SpaceVim#layers#org#config()
+  return 1
+endfunction
