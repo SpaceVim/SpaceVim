@@ -62,6 +62,11 @@ function! SpaceVim#layers#gtags#set_variable(var) abort
         \ s:auto_update)
 endfunction
 
+function! SpaceVim#layers#gtags#health() abort
+  call SpaceVim#layers#gtags#plugins()
+  call SpaceVim#layers#gtags#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#gtags#get_options() abort
 

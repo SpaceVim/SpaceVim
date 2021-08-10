@@ -13,6 +13,12 @@ if exists('s:filename')
   finish
 endif
 
+function! SpaceVim#layers#foldsearch#health() abort
+  call SpaceVim#layers#foldsearch#plugins()
+  call SpaceVim#layers#foldsearch#config()
+  return 1
+endfunction
+
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#foldsearch#config()

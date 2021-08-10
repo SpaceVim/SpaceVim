@@ -15,6 +15,12 @@ let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
+function! SpaceVim#layers#edit#health() abort
+  call SpaceVim#layers#edit#plugins()
+  call SpaceVim#layers#edit#config()
+  return 1
+endfunction
+
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
         \ [g:_spacevim_root_dir . 'bundle/vim-surround'],

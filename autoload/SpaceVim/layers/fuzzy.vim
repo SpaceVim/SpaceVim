@@ -14,6 +14,12 @@ function! SpaceVim#layers#fuzzy#plugins() abort
   return plugins
 endfunction
 
+function! SpaceVim#layers#fuzzy#health() abort
+  call SpaceVim#layers#fuzzy#plugins()
+  call SpaceVim#layers#fuzzy#config()
+  return 1
+endfunction
+
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#fuzzy#config() abort
