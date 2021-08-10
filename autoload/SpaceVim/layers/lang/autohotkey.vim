@@ -24,6 +24,5 @@ endfunction
 
 function! SpaceVim#layers#lang#autohotkey#health() abort
   call SpaceVim#layers#lang#autohotkey#plugins()
-  call SpaceVim#layers#lang#autohotkey#config()
   return 1
 endfunction

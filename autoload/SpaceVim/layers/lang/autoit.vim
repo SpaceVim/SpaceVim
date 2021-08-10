@@ -16,7 +16,6 @@ function! s:language_specified_mappings() abort
 endfunction
 
 function! SpaceVim#layers#lang#autoit#health() abort
-  call SpaceVim#layers#lang#autoit#plugins()
   call SpaceVim#layers#lang#autoit#config()
   return 1
 endfunction

@@ -16,7 +16,7 @@
 "     name = "lang#asepctj"
 " <
 
-function! SpaceVim#layers#lang#asepctj#plugins() abort
+function! SpaceVim#layers#lang#aspectj#plugins() abort
   let plugins = []
   call add(plugins, ['wsdjeg/vim-asepctj', { 'merged' : 0}])
   return plugins

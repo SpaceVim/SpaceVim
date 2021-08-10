@@ -35,7 +35,7 @@
 "
 
 
-function! SpaceVim#layers#lang#groovy#plugin() abort
+function! SpaceVim#layers#lang#groovy#plugins() abort
   let plugins = []
   call add(plugins, ['wsdjeg/groovy.vim', {'merged' : 0}])
   return plugins
