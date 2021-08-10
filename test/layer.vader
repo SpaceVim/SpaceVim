@@ -1,0 +1,5 @@
+Execute ( SpaceVim layer health: ):
+  for layer in SpaceVim#layers#list()
+    Assert SpaceVim#layers#{layer}#health()
+  endfor
+
