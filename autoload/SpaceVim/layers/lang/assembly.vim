@@ -21,3 +21,8 @@ function! SpaceVim#layers#lang#assembly#plugins() abort
   call add(plugins, ['wsdjeg/vim-assembly', { 'merged' : 0}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#assembly#health() abort
+  call SpaceVim#layers#lang#assembly#plugins()
+  return 1
+endfunction

@@ -130,3 +130,9 @@ function! SpaceVim#layers#lang#sml#set_variable(var) abort
   let s:sml_enable_conceal = get(a:var, 'enable_conceal', s:sml_enable_conceal)
   let s:sml_file_head = get(a:var, 'sml_file_head', s:sml_file_head)
 endfunction
+
+function! SpaceVim#layers#lang#sml#health() abort
+  call SpaceVim#layers#lang#sml#plugins()
+  call SpaceVim#layers#lang#sml#config()
+  return 1
+endfunction

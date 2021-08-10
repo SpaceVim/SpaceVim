@@ -224,3 +224,10 @@ function! s:checktime_if_javascript() abort
 endfunction
 
 " vi: et sw=2 cc=80
+
+
+function! SpaceVim#layers#lang#javascript#health() abort
+  call SpaceVim#layers#lang#javascript#plugins()
+  call SpaceVim#layers#lang#javascript#config()
+  return 1
+endfunction

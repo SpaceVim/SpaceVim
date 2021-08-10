@@ -69,3 +69,10 @@ endfunction
 " ref:
 " 1. https://jblevins.org/log/swift
 " 2. https://medium.com/@mahmudahsan/running-and-compiling-swift-code-in-terminal-237ee4087a9c
+
+
+function! SpaceVim#layers#lang#swift#health() abort
+  call SpaceVim#layers#lang#swift#plugins()
+  call SpaceVim#layers#lang#swift#config()
+  return 1
+endfunction

@@ -22,3 +22,7 @@ function! SpaceVim#layers#lang#asepctj#plugins() abort
   return plugins
 endfunction
 
+function! SpaceVim#layers#lang#aspectj#health() abort
+  call SpaceVim#layers#lang#aspectj#plugins()
+  return 1
+endfunction

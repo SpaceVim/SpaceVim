@@ -193,3 +193,9 @@ else
     return function(substitute(a:fstr, 's:', s:_s, 'g'))
   endfunction
 endif
+
+function! SpaceVim#layers#lang#dart#health() abort
+  call SpaceVim#layers#lang#dart#plugins()
+  call SpaceVim#layers#lang#dart#config()
+  return 1
+endfunction

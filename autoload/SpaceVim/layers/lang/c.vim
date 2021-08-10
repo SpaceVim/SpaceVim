@@ -456,3 +456,9 @@ function! s:go_to_def() abort
   endif
 endfunction
 " }}}
+
+function! SpaceVim#layers#lang#c#health() abort
+  call SpaceVim#layers#lang#c#plugins()
+  call SpaceVim#layers#lang#c#config()
+  return 1
+endfunction

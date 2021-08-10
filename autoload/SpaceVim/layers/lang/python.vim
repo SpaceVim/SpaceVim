@@ -263,3 +263,9 @@ function! SpaceVim#layers#lang#python#set_variable(var) abort
         \ s:python_interpreter
         \ )
 endfunction
+
+function! SpaceVim#layers#lang#python#health() abort
+  call SpaceVim#layers#lang#python#plugins()
+  call SpaceVim#layers#lang#python#config()
+  return 1
+endfunction

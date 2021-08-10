@@ -98,3 +98,9 @@ function! s:nimble_tesks() abort
   endif
   return detect_task
 endfunction
+
+function! SpaceVim#layers#lang#nim#health() abort
+  call SpaceVim#layers#lang#nim#plugins()
+  call SpaceVim#layers#lang#nim#config()
+  return 1
+endfunction

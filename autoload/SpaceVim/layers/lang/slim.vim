@@ -11,3 +11,9 @@ function! SpaceVim#layers#lang#slim#plugins() abort
   call add(plugins, ['slim-template/vim-slim', {'on_ft' : ['slim']}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#slim#health() abort
+  call SpaceVim#layers#lang#slim#plugins()
+  call SpaceVim#layers#lang#slim#config()
+  return 1
+endfunction

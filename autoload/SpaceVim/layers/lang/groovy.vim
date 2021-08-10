@@ -75,3 +75,10 @@ endfunction
 " Groovy Version: 2.5.7 JVM: 9.0.4 Vendor: Oracle Corporation OS: Windows 7
 " in windows, use scoop to instal jdk 1.8
 " scoop install ojdkbuild8
+
+
+function! SpaceVim#layers#lang#groovy#health() abort
+  call SpaceVim#layers#lang#groovy#plugins()
+  call SpaceVim#layers#lang#groovy#config()
+  return 1
+endfunction

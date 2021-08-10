@@ -157,3 +157,9 @@ function! s:preferLocalPHPMD() abort
     let b:neomake_php_phpmd_args = ['%:p', 'text', l:phpmd_path]
   endif
 endfunction
+
+function! SpaceVim#layers#lang#php#health() abort
+  call SpaceVim#layers#lang#php#plugins()
+  call SpaceVim#layers#lang#php#config()
+  return 1
+endfunction

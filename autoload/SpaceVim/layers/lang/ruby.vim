@@ -163,3 +163,9 @@ function! SpaceVim#layers#lang#ruby#get_options() abort
         \ 'ruby_file_head'
         \ ]
 endfunction
+
+function! SpaceVim#layers#lang#ruby#health() abort
+  call SpaceVim#layers#lang#ruby#plugins()
+  call SpaceVim#layers#lang#ruby#config()
+  return 1
+endfunction

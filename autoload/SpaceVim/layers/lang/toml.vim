@@ -20,3 +20,9 @@ function! SpaceVim#layers#lang#toml#plugins() abort
   call add(plugins, ['cespare/vim-toml', {'merged' : 0}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#toml#health() abort
+  call SpaceVim#layers#lang#toml#plugins()
+  call SpaceVim#layers#lang#toml#config()
+  return 1
+endfunction

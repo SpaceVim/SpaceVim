@@ -146,3 +146,9 @@ function! s:language_specified_mappings() abort
         \ 'freevars', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
+
+function! SpaceVim#layers#lang#go#health() abort
+  call SpaceVim#layers#lang#go#plugins()
+  call SpaceVim#layers#lang#go#config()
+  return 1
+endfunction

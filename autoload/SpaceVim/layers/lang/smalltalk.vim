@@ -17,3 +17,9 @@ endfunction
 function! SpaceVim#layers#lang#smalltalk#config() abort
 
 endfunction
+
+function! SpaceVim#layers#lang#smalltalk#health() abort
+  call SpaceVim#layers#lang#smalltalk#plugins()
+  call SpaceVim#layers#lang#smalltalk#config()
+  return 1
+endfunction

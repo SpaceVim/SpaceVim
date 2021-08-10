@@ -43,3 +43,9 @@ function! s:rescript_tasks() abort
   return detect_task
 endfunction
 
+
+function! SpaceVim#layers#lang#rescript#health() abort
+  call SpaceVim#layers#lang#rescript#plugins()
+  call SpaceVim#layers#lang#rescript#config()
+  return 1
+endfunction

@@ -47,3 +47,9 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
 endfunction
 
+
+function! SpaceVim#layers#lang#processing#health() abort
+  call SpaceVim#layers#lang#processing#plugins()
+  call SpaceVim#layers#lang#processing#config()
+  return 1
+endfunction

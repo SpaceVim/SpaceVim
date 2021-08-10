@@ -108,3 +108,9 @@ endfunction
 function! SpaceVim#layers#lang#coffeescript#set_variable(var) abort
   let s:coffee_interpreter = get(a:var, 'coffee_interpreter', s:coffee_interpreter)
 endfunction
+
+function! SpaceVim#layers#lang#coffeescript#health() abort
+  call SpaceVim#layers#lang#coffeescript#plugins()
+  call SpaceVim#layers#lang#coffeescript#config()
+  return 1
+endfunction

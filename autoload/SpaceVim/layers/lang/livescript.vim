@@ -91,3 +91,9 @@ function! s:eval() abort
   let cmd = ['lsc', '-e', input, expand('%:p')]
   " @todo fix livescript eval function
 endfunction
+
+function! SpaceVim#layers#lang#livescript#health() abort
+  call SpaceVim#layers#lang#livescript#plugins()
+  call SpaceVim#layers#lang#livescript#config()
+  return 1
+endfunction

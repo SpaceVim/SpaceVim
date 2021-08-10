@@ -115,3 +115,9 @@ endfunction
 function! SpaceVim#layers#lang#clojure#set_variable(var) abort
   let s:clojure_interpreter = get(a:var, 'clojure_interpreter', s:clojure_interpreter)
 endfunction
+
+function! SpaceVim#layers#lang#clojure#health() abort
+  call SpaceVim#layers#lang#clojure#plugins()
+  call SpaceVim#layers#lang#clojure#config()
+  return 1
+endfunction

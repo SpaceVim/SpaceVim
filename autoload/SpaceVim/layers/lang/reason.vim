@@ -60,3 +60,9 @@ function! s:reasonml_tasks() abort
   endif
   return detect_task
 endfunction
+
+function! SpaceVim#layers#lang#reason#health() abort
+  call SpaceVim#layers#lang#reason#plugins()
+  call SpaceVim#layers#lang#reason#config()
+  return 1
+endfunction

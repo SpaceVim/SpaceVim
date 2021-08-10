@@ -62,3 +62,9 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
 endfunction
+
+function! SpaceVim#layers#lang#v#health() abort
+  call SpaceVim#layers#lang#v#plugins()
+  call SpaceVim#layers#lang#v#config()
+  return 1
+endfunction

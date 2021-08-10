@@ -118,3 +118,9 @@ function! s:go_to_def() abort
     call SpaceVim#lsp#go_to_def()
   endif
 endfunction
+
+function! SpaceVim#layers#lang#purescript#health() abort
+  call SpaceVim#layers#lang#purescript#plugins()
+  call SpaceVim#layers#lang#purescript#config()
+  return 1
+endfunction
