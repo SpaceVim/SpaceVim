@@ -650,7 +650,7 @@ li {
   padding-left: 1.3em;
 }
 li:before {
-  content: "·"; /* FontAwesome Unicode */
+  content: "●"; /* FontAwesome Unicode */
   // font-family: FontAwesome;
   display: inline-block;
   margin-left: -1.3em; /* same as padding-left set on li */
