@@ -152,4 +152,13 @@ function! s:display_last_commit_of_current_line() abort
   endif
 endfunction
 
+
+function! SpaceVim#layers#git#health() abort
+  call SpaceVim#layers#git#plugins()
+  call SpaceVim#layers#git#config()
+
+  return 1
+
+endfunction
+
 " vim:set et sw=2 cc=80:

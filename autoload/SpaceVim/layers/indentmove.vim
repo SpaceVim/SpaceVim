@@ -50,3 +50,8 @@ function! SpaceVim#layers#indentmove#config() abort
     xnoremap <silent> EI :<c-u>call ZF_IndentMoveChild('v')<cr>
 endfunction
 
+function! SpaceVim#layers#indentmove#health() abort
+  call SpaceVim#layers#indentmove#plugins()
+  call SpaceVim#layers#indentmove#config()
+  return 1
+endfunction

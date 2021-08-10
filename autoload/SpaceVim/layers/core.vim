@@ -923,6 +923,12 @@ function! SpaceVim#layers#core#set_variable(var) abort
 
 endfunction
 
+function! SpaceVim#layers#core#health() abort
+  call SpaceVim#layers#core#plugins()
+  call SpaceVim#layers#core#config()
+  return 1
+endfunction
+
 function! s:close_current_tab() abort
   if tabpagenr('$') > 1
     tabclose!

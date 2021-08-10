@@ -58,3 +58,9 @@ function! s:language_specified_mappings() abort
 " au Filetype supercollider nnoremap <leader>si yiw :call SCimplementation(""")<CR>
 " au Filetype supercollider nnoremap <leader>sr yiw :call SCreference(""")<CR>
 endfunction
+
+function! SpaceVim#layers#lang#supercollider#health() abort
+  call SpaceVim#layers#lang#supercollider#plugins()
+  call SpaceVim#layers#lang#supercollider#config()
+  return 1
+endfunction

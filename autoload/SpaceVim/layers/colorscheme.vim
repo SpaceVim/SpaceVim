@@ -145,6 +145,11 @@ function! SpaceVim#layers#colorscheme#get_options() abort
 
 endfunction
 
+function! SpaceVim#layers#colorscheme#health() abort
+  call SpaceVim#layers#colorscheme#plugins()
+  call SpaceVim#layers#colorscheme#config()
+  return 1
+endfunction
 
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')

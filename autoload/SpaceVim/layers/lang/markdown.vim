@@ -195,3 +195,9 @@ function! s:run_code_in_block() abort
   endif
 endfunction
 
+
+function! SpaceVim#layers#lang#markdown#health() abort
+  call SpaceVim#layers#lang#markdown#plugins()
+  call SpaceVim#layers#lang#markdown#config()
+  return 1
+endfunction

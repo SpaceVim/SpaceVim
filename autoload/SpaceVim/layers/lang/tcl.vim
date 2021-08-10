@@ -68,3 +68,10 @@ endfunction
 " https://www.yiibai.com/tcl/tcl_basic_syntax.html
 "
 " 1. the default tcl shell command is tclsh
+
+
+function! SpaceVim#layers#lang#tcl#health() abort
+  call SpaceVim#layers#lang#tcl#plugins()
+  call SpaceVim#layers#lang#tcl#config()
+  return 1
+endfunction

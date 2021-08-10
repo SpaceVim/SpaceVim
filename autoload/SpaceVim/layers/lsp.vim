@@ -11,6 +11,12 @@
 " @parentsection layers
 " This layer provides language client support for SpaceVim.
 
+function! SpaceVim#layers#lsp#health() abort
+  call SpaceVim#layers#lsp#plugins()
+  call SpaceVim#layers#lsp#config()
+  return 1
+endfunction
+
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
 

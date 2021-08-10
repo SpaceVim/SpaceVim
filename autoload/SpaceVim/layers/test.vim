@@ -49,3 +49,9 @@ function! SpaceVim#layers#test#set_variable(var) abort
     endfor
   endif
 endfunction
+
+function! SpaceVim#layers#test#health() abort
+  call SpaceVim#layers#test#plugins()
+  call SpaceVim#layers#test#config()
+  return 1
+endfunction

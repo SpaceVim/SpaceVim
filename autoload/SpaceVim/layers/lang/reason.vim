@@ -31,7 +31,7 @@ endfunction
 
 
 function! SpaceVim#layers#lang#reason#config() abort
-  call SpaceVim#plugins#tasks#reg_provider(funcref('s:reasonml_tasks'))
+  call SpaceVim#plugins#tasks#reg_provider(function('s:reasonml_tasks'))
   call SpaceVim#mapping#space#regesit_lang_mappings('reason', function('s:language_specified_mappings'))
 endfunction
 
@@ -59,4 +59,10 @@ function! s:reasonml_tasks() abort
     endfor
   endif
   return detect_task
+endfunction
+
+function! SpaceVim#layers#lang#reason#health() abort
+  call SpaceVim#layers#lang#reason#plugins()
+  call SpaceVim#layers#lang#reason#config()
+  return 1
 endfunction

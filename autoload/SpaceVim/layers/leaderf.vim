@@ -20,6 +20,12 @@ function! SpaceVim#layers#leaderf#loadable() abort
 
 endfunction
 
+function! SpaceVim#layers#leaderf#health() abort
+  call SpaceVim#layers#leaderf#plugins()
+  call SpaceVim#layers#leaderf#config()
+  return 1
+endfunction
+
 function! SpaceVim#layers#leaderf#plugins() abort
   let plugins = []
   call add(plugins, 

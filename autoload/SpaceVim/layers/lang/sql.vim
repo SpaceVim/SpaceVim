@@ -11,3 +11,8 @@ function! SpaceVim#layers#lang#sql#plugins() abort
   call add(plugins, ['tpope/vim-dadbod', {'merged' : 0}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#sql#health() abort
+  call SpaceVim#layers#lang#sql#plugins()
+  return 1
+endfunction

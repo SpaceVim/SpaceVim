@@ -46,3 +46,9 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'compile and run current file', 1)
 endfunction
+
+function! SpaceVim#layers#lang#pascal#health() abort
+  call SpaceVim#layers#lang#pascal#plugins()
+  call SpaceVim#layers#lang#pascal#config()
+  return 1
+endfunction

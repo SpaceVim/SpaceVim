@@ -101,3 +101,8 @@ endfunction
 function! SpaceVim#layers#lang#scheme#get_options() abort
   return ['scheme_dialect', 'scheme_interpreter']
 endfunction
+
+function! SpaceVim#layers#lang#scheme#health() abort
+  call SpaceVim#layers#lang#scheme#config()
+  return 1
+endfunction

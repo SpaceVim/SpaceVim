@@ -25,3 +25,9 @@ endfunction
 function! SpaceVim#layers#lang#swig#config() abort
     
 endfunction
+
+function! SpaceVim#layers#lang#swig#health() abort
+  call SpaceVim#layers#lang#swig#plugins()
+  call SpaceVim#layers#lang#swig#config()
+  return 1
+endfunction

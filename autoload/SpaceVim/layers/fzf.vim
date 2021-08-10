@@ -10,6 +10,11 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:SYS = SpaceVim#api#import('system')
 
+function! SpaceVim#layers#fzf#health() abort
+  call SpaceVim#layers#fzf#plugins()
+  call SpaceVim#layers#fzf#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#fzf#plugins() abort
   let plugins = []

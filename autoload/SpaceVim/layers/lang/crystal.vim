@@ -72,3 +72,9 @@ function! s:language_specified_mappings() abort
   endif
 endfunction
 
+
+function! SpaceVim#layers#lang#crystal#health() abort
+  call SpaceVim#layers#lang#crystal#plugins()
+  call SpaceVim#layers#lang#crystal#config()
+  return 1
+endfunction

@@ -12,3 +12,8 @@ function! SpaceVim#layers#lang#vue#plugins() abort
   call add(plugins, ['posva/vim-vue', {'merged' : 0}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#vue#health() abort
+  call SpaceVim#layers#lang#vue#plugins()
+  return 1
+endfunction

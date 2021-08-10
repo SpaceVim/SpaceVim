@@ -21,6 +21,12 @@
 " <
 
 
+function! SpaceVim#layers#exprfold#health() abort
+  call SpaceVim#layers#exprfold#plugins()
+  call SpaceVim#layers#exprfold#config()
+  return 1
+endfunction
+
 function! SpaceVim#layers#exprfold#plugins() abort
     return [
                 \ ['ZSaberLv0/ZFVimFoldBlock', {'merged' : 0}],

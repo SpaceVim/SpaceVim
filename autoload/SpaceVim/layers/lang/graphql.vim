@@ -34,3 +34,8 @@ function! SpaceVim#layers#lang#graphql#plugins() abort
   call add(plugins, ['jparise/vim-graphql', {'merged' : 0}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#graphql#health() abort
+  call SpaceVim#layers#lang#graphql#plugins()
+  return 1
+endfunction

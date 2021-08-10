@@ -12,3 +12,8 @@ function! SpaceVim#layers#lang#wdl#plugins() abort
   call add(plugins, ['wsdjeg/vim-wdl', {'merged' : 0}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#wdl#health() abort
+  call SpaceVim#layers#lang#wdl#plugins()
+  return 1
+endfunction

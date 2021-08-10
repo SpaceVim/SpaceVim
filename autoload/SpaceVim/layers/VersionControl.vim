@@ -20,6 +20,12 @@ function! SpaceVim#layers#VersionControl#plugins() abort
   return plugins
 endfunction
 
+function! SpaceVim#layers#VersionControl#health() abort
+  call SpaceVim#layers#VersionControl#plugins()
+  call SpaceVim#layers#VersionControl#config()
+  return 1
+endfunction
+
 function! SpaceVim#layers#VersionControl#config() abort
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
   let g:_spacevim_mappings_space.g.v = get(g:_spacevim_mappings_space.g, 'v',  {'name' : '+VersionControl'})

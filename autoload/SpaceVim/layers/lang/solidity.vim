@@ -16,3 +16,9 @@ endfunction
 function! SpaceVim#layers#lang#solidity#config() abort
   
 endfunction
+
+function! SpaceVim#layers#lang#solidity#health() abort
+  call SpaceVim#layers#lang#solidity#plugins()
+  call SpaceVim#layers#lang#solidity#config()
+  return 1
+endfunction

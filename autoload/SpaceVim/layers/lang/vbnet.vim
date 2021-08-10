@@ -51,3 +51,10 @@ endf
 " https://github.com/vim-scripts/VB.NET-Syntax
 " https://github.com/vim-scripts/vbnet.vim
 " http://www.viemu.com/viemu-vi-vim-visual-studio.html
+
+
+function! SpaceVim#layers#lang#vbnet#health() abort
+  call SpaceVim#layers#lang#vbnet#plugins()
+  call SpaceVim#layers#lang#vbnet#config()
+  return 1
+endfunction

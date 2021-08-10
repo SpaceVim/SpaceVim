@@ -77,3 +77,9 @@ function! s:install_emmet() abort
     
   endtry
 endfunction
+
+function! SpaceVim#layers#lang#html#health() abort
+  call SpaceVim#layers#lang#html#plugins()
+  call SpaceVim#layers#lang#html#config()
+  return 1
+endfunction

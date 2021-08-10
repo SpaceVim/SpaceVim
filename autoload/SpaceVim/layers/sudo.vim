@@ -27,6 +27,12 @@ function! SpaceVim#layers#sudo#config() abort
   endif
 endfunction
 
+function! SpaceVim#layers#sudo#health() abort
+  call SpaceVim#layers#sudo#plugins()
+  call SpaceVim#layers#sudo#config()
+  return 1
+endfunction
+
 if v:version > 703 || v:version == 703 && has('patch1170')
   function! s:_function(fstr) abort
     return function(a:fstr)

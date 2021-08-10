@@ -63,3 +63,9 @@ function! SpaceVim#layers#lang#e#get_options() abort
   return ['e_interpreter']
 
 endfunction
+
+function! SpaceVim#layers#lang#e#health() abort
+  call SpaceVim#layers#lang#e#plugins()
+  call SpaceVim#layers#lang#e#config()
+  return 1
+endfunction
