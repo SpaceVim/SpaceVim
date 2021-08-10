@@ -175,7 +175,7 @@ function! SpaceVim#layers#lang#c#config() abort
   else
     call SpaceVim#plugins#repl#reg('c', 'igcc')
   endif
-  call SpaceVim#mapping#space#regesit_lang_mappings('cpp', funcref('s:language_specified_mappings'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('cpp', function('s:language_specified_mappings'))
   let objc_runner = {
         \ 'exe' : 'gcc',
         \ 'targetopt' : '-o',
@@ -183,8 +183,8 @@ function! SpaceVim#layers#lang#c#config() abort
         \ 'usestdin' : 1,
         \ }
   call SpaceVim#plugins#runner#reg_runner('objc', [objc_runner, '#TEMP#'])
-  call SpaceVim#mapping#space#regesit_lang_mappings('objc', funcref('s:language_specified_mappings'))
-  call SpaceVim#plugins#projectmanager#reg_callback(funcref('s:update_clang_flag'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('objc', function('s:language_specified_mappings'))
+  call SpaceVim#plugins#projectmanager#reg_callback(function('s:update_clang_flag'))
   if executable('clang')
     let g:neomake_c_enabled_makers = ['clang']
     let g:neomake_cpp_enabled_makers = ['clang']
