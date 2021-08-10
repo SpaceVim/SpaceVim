@@ -14,6 +14,5 @@ endfunction
 
 function! SpaceVim#layers#lang#slim#health() abort
   call SpaceVim#layers#lang#slim#plugins()
-  call SpaceVim#layers#lang#slim#config()
   return 1
 endfunction

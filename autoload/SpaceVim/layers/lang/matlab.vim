@@ -14,6 +14,5 @@ endfunction
 
 function! SpaceVim#layers#lang#matlab#health() abort
   call SpaceVim#layers#lang#matlab#plugins()
-  call SpaceVim#layers#lang#matlab#config()
   return 1
 endfunction
