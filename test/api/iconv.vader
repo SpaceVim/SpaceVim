@@ -1,0 +1,6 @@
+Execute ( SpaceVim api: iconv.iconv() ):
+  let iconv = SpaceVim#api#import('iconv')
+  for from in keys(SpaceVim#api#iconv#import().codecs)
+    AssertEqual iconv.iconv('', from, 'utf-8'), ''
+  endfor
+
