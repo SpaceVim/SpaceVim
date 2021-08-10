@@ -1,12 +1,8 @@
-
-let s:nsiconv = expand('<sfile>:p:h:h:gs?[\\/]?#?:s?^.*#autoload\(#\|$\)??:s?$?#?')
-let s:ns = expand('<sfile>:p:r:gs?[\\/]?#?:s?^.*#autoload#??:s?$?#?')
-
-function {s:ns}import()
+function! SpaceVim#api#iconv#codecs#tablebase#import() abort
   return s:tablebase
 endfunction
 
-let s:base = {s:nsiconv}codecs#base#import()
+let s:base = SpaceVim#api#iconv#codecs#base#import()
 
 let s:tablebase = {}
 
