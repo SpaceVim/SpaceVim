@@ -28,7 +28,6 @@ install_vim() {
 install_nvim() {
     local URL=https://github.com/neovim/neovim
     local tag=$1
-    local ext=$([[ $tag == "nightly" ]] && echo "" || echo "-b $tag")
     local tmp="$(mktemp -d)"
     local out="${DEPS}/_neovim/$tag"
     mkdir -p $out
