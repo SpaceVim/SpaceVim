@@ -73,3 +73,5 @@ spacevim-cn+unsubscribe@googlegroups.com
 - <i class="fab fa-rocketchat"></i> [`#spacevim-cn:matrix.org` Matrix 聊天室](https://app.element.io/#/room/#spacevim-cn:matrix.org)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` slack 聊天室](https://spacevim.slack.com/messages/C88CTJ62J)
 - <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)
+
+以上为同步聊天群，同时SpaceVim有对应的QQ群：[970953433](https://jq.qq.com/?_wv=1027&k=XYqDdQTM)
