@@ -474,3 +474,14 @@ function! SpaceVim#layers#ui#health() abort
   call SpaceVim#layers#ui#config()
   return 1
 endfunction
+
+function! SpaceVim#layers#ui#get_options() abort
+
+  return ['enable_sidebar',
+        \ 'enable_scrollbar',
+        \ 'enable_indentline',
+        \ 'enable_cursorword',
+        \ 'cursorword_delay',
+        \ 'cursorword_exclude_filetype']
+
+endfunction
