@@ -71,12 +71,11 @@ Contribute code, report bugs and request features at [GitHub](https://github.com
 
 - Which version of Vim/Neovim is needed?
 
-  SpaceVim has been tested in [travis-ci](https://travis-ci.com/SpaceVim/SpaceVim) and
-[appveyor](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master) with following
+  SpaceVim has been tested in [github action](https://github.com/SpaceVim/SpaceVim/actions) with following
 versions of neovim and vim:
 
     1. vim: ~~`7.4.052`~~, `7.4.629`, `7.4.1689`,`8.0.0027`,`8.0.1453`, `8.1.2269`
-    2. neovim: `0.3.0`, `0.3.1`, `0.3.2`, `0.3.3`, `0.3.4`, `0.3.5`, `0.3.7`, `0.3.8`, `0.4.2`, `0.4.3`
+    2. neovim: `nightly`, `v0.5.0`, `v0.4.4`, `v0.4.3`, `v0.4.2`, `v0.4.0`, `v0.3.8`
 
 For more general questions, please read SpaceVim [FAQ](faq/).
 
