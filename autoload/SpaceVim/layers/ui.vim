@@ -16,6 +16,7 @@ else
   let s:enable_indentline = 1
   let s:enable_cursorword = 1
   let s:cursorword_delay = 50
+  let s:cursorword_exclude_filetype = []
 endif
 
 function! SpaceVim#layers#ui#plugins() abort
@@ -67,17 +68,20 @@ function! SpaceVim#layers#ui#config() abort
   endif
 
   " this options only support neovim now.
-  if s:enable_scrollbar && has('nvim')
-    augroup spacevim_layer_ui
-      autocmd!
+  augroup spacevim_layer_ui
+    autocmd!
+    if s:enable_scrollbar && has('nvim')
       autocmd BufEnter,CursorMoved,VimResized,FocusGained    * call SpaceVim#plugins#scrollbar#show()
       autocmd BufLeave,FocusLost,QuitPre    * call SpaceVim#plugins#scrollbar#clear()
       " why this autocmd is needed?
       "
       " because the startify use noautocmd enew
       autocmd User Startified call s:clear_previous_scrollbar()
-    augroup end
-  endif
+    endif
+    if !empty(s:cursorword_exclude_filetype)
+      exe printf('autocmd FileType %s let b:cursorword = 0', join(s:cursorword_exclude_filetype, ','))
+    endif
+  augroup end
 
   if !empty(g:spacevim_windows_smartclose)
     call SpaceVim#mapping#def('nnoremap <silent>', g:spacevim_windows_smartclose, ':<C-u>call SpaceVim#mapping#SmartClose()<cr>',
@@ -110,16 +114,16 @@ function! SpaceVim#layers#ui#config() abort
         \ . string(s:_function('s:toggle_cursorline')) . ', [])',
         \ ['toggle-highlight-current-line',
         \ [
-        \ 'SPC t h h is to toggle the highlighting of cursorline'
-        \ ]
-        \ ], 1)
+          \ 'SPC t h h is to toggle the highlighting of cursorline'
+          \ ]
+          \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'i'], 'call call('
         \ . string(s:_function('s:toggle_indentline')) . ', [])',
         \ ['toggle-highlight-indentation-levels',
         \ [
-        \ 'SPC t h i is to running :IndentLinesToggle which is definded in indentLine'
-        \ ]
-        \ ], 1)
+          \ 'SPC t h i is to running :IndentLinesToggle which is definded in indentLine'
+          \ ]
+          \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'c'], 'set cursorcolumn!',
         \ 'toggle-highlight-current-column', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 's'], 'call call('
@@ -145,10 +149,10 @@ function! SpaceVim#layers#ui#config() abort
 
   call SpaceVim#layers#core#statusline#register_mode(
         \ {
-        \ 'key' : 'spell-checking',
-        \ 'func' : s:_function('s:toggle_spell_check'),
-        \ }
-        \ )
+          \ 'key' : 'spell-checking',
+          \ 'func' : s:_function('s:toggle_spell_check'),
+          \ }
+          \ )
 
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'p'], 'call call('
         \ . string(s:_function('s:toggle_paste')) . ', [])',
@@ -370,69 +374,69 @@ function! s:win_resize_transient_state() abort
   call state.set_title('Windows Resize Transient State')
   call state.defind_keys(
         \ {
-        \ 'layout' : 'vertical split',
-        \ 'left' : [
-        \ {
-        \ 'key' : 'H',
-        \ 'desc' : 'left',
-        \ 'func' : '',
-        \ 'cmd' : 'wincmd h',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'J',
-        \ 'desc' : 'below',
-        \ 'func' : '',
-        \ 'cmd' : 'wincmd j',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'K',
-        \ 'desc' : 'up',
-        \ 'func' : '',
-        \ 'cmd' : 'wincmd k',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'L',
-        \ 'desc' : 'right',
-        \ 'func' : '',
-        \ 'cmd' : 'wincmd l',
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ 'right' : [
-        \ {
-        \ 'key' : 'h',
-        \ 'desc' : 'decrease width',
-        \ 'func' : '',
-        \ 'cmd' : 'vertical resize -1',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'l',
-        \ 'desc' : 'increase width',
-        \ 'func' : '',
-        \ 'cmd' : 'vertical resize +1',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'j',
-        \ 'desc' : 'decrease height',
-        \ 'func' : '',
-        \ 'cmd' : 'resize -1',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'k',
-        \ 'desc' : 'increase height',
-        \ 'func' : '',
-        \ 'cmd' : 'resize +1',
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ }
-        \ )
+          \ 'layout' : 'vertical split',
+          \ 'left' : [
+            \ {
+              \ 'key' : 'H',
+              \ 'desc' : 'left',
+              \ 'func' : '',
+              \ 'cmd' : 'wincmd h',
+              \ 'exit' : 0,
+              \ },
+              \ {
+                \ 'key' : 'J',
+                \ 'desc' : 'below',
+                \ 'func' : '',
+                \ 'cmd' : 'wincmd j',
+                \ 'exit' : 0,
+                \ },
+                \ {
+                  \ 'key' : 'K',
+                  \ 'desc' : 'up',
+                  \ 'func' : '',
+                  \ 'cmd' : 'wincmd k',
+                  \ 'exit' : 0,
+                  \ },
+                  \ {
+                    \ 'key' : 'L',
+                    \ 'desc' : 'right',
+                    \ 'func' : '',
+                    \ 'cmd' : 'wincmd l',
+                    \ 'exit' : 0,
+                    \ },
+                    \ ],
+                    \ 'right' : [
+                      \ {
+                        \ 'key' : 'h',
+                        \ 'desc' : 'decrease width',
+                        \ 'func' : '',
+                        \ 'cmd' : 'vertical resize -1',
+                        \ 'exit' : 0,
+                        \ },
+                        \ {
+                          \ 'key' : 'l',
+                          \ 'desc' : 'increase width',
+                          \ 'func' : '',
+                          \ 'cmd' : 'vertical resize +1',
+                          \ 'exit' : 0,
+                          \ },
+                          \ {
+                            \ 'key' : 'j',
+                            \ 'desc' : 'decrease height',
+                            \ 'func' : '',
+                            \ 'cmd' : 'resize -1',
+                            \ 'exit' : 0,
+                            \ },
+                            \ {
+                              \ 'key' : 'k',
+                              \ 'desc' : 'increase height',
+                              \ 'func' : '',
+                              \ 'cmd' : 'resize +1',
+                              \ 'exit' : 0,
+                              \ },
+                              \ ],
+                              \ }
+                              \ )
   call state.open()
 endfunction
 
@@ -454,6 +458,9 @@ function! SpaceVim#layers#ui#set_variable(var) abort
   let s:cursorword_delay = get(a:var,
         \ 'cursorword_delay',
         \ s:cursorword_delay)
+  let s:cursorword_exclude_filetype = get(a:var,
+        \ 'cursorword_exclude_filetype',
+        \ s:cursorword_exclude_filetype)
 
 endfunction
 
