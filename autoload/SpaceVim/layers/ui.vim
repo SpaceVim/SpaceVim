@@ -14,11 +14,13 @@ else
   let s:enable_sidebar = 0
   let s:enable_scrollbar = 0
   let s:enable_indentline = 1
+  let s:enable_cword_highlight = 1
 endif
 
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
         \ [g:_spacevim_root_dir . 'bundle/indentLine', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-cursorword', {'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar', {'loadconf' : 1, 'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar-makefile.vim', {'merged': 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar-proto.vim', {'merged': 0}],
