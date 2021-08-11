@@ -35,7 +35,7 @@ install_nvim() {
     curl -LO "https://github.com/neovim/neovim/releases/download/$tag/nvim-linux64.tar.gz" \
         -o $tmp/nvim-linux64.tar.gz
     cd $tmp
-    tar -cvf nvim-linux64.tar.gz
+    tar -xzvf nvim-linux64.tar.gz
     cp -r nvim-linux64 $out
     chmod +x $out/bin/nvim
     # fix ModuleNotFoundError: No module named 'setuptools'
