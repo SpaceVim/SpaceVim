@@ -31,8 +31,7 @@ install_nvim() {
     local tmp="$(mktemp -d)"
     local out="${DEPS}/_neovim/$tag"
     mkdir -p $out
-    curl -LO "https://github.com/neovim/neovim/releases/download/$tag/nvim-linux64.tar.gz" \
-        -o $tmp/nvim-linux64.tar.gz
+    curl  -o $tmp/nvim-linux64.tar.gz -L "https://github.com/neovim/neovim/releases/download/$tag/nvim-linux64.tar.gz"
     tar -xzvf $tmp/nvim-linux64.tar.gz
     cp -r $tmp/nvim-linux64 $out
     chmod +x $out/bin/nvim
