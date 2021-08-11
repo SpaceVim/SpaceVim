@@ -32,14 +32,12 @@ install_nvim() {
     local tmp="$(mktemp -d)"
     local out="${DEPS}/_neovim/$tag"
     mkdir -p $out
-    local ncpu=$(awk '/^processor/{n+=1}END{print n}' /proc/cpuinfo)
-    git clone --depth 1 --single-branch $ext $URL $tmp
+    curl -LO "https://github.com/neovim/neovim/releases/download/$tag/nvim-linux64.tar.gz" \
+        -o $tmp/nvim-linux64.tar.gz
     cd $tmp
-    make deps
-    make -j$ncpu \
-        CMAKE_BUILD_TYPE=Release \
-        CMAKE_EXTRA_FLAGS="-DTRAVIS_CI_BUILD=ON -DCMAKE_INSTALL_PREFIX:PATH=$out"
-    make install
+    tar -cvf nvim-linux64.tar.gz
+    cp -r nvim-linux64 $out
+    chmod +x $out/bin/nvim
     # fix ModuleNotFoundError: No module named 'setuptools'
     python3 -m pip install -U setuptools
     python3 -m pip install pynvim
