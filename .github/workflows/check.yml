@@ -34,8 +34,6 @@ jobs:
               - vimbin: nvim
                 vimtag: v0.4.2
               - vimbin: nvim
-                vimtag: v0.4.1
-              - vimbin: nvim
                 vimtag: v0.4.0
               - vimbin: nvim
                 vimtag: v0.3.8
