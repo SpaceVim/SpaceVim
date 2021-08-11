@@ -217,3 +217,10 @@ endfunction
 " set RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 "
 " vim:set et sw=2 cc=80
+
+
+function! SpaceVim#layers#lang#rust#health() abort
+  call SpaceVim#layers#lang#rust#plugins()
+  call SpaceVim#layers#lang#rust#config()
+  return 1
+endfunction

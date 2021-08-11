@@ -94,4 +94,12 @@ function! s:go_to_def() abort
 endfunction
 
 
+
+
+function! SpaceVim#layers#lang#elixir#health() abort
+  call SpaceVim#layers#lang#elixir#plugins()
+  call SpaceVim#layers#lang#elixir#config()
+  return 1
+endfunction
+
 " vim:set et sw=2 cc=80:

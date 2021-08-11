@@ -20,6 +20,12 @@ function! SpaceVim#layers#leaderf#loadable() abort
 
 endfunction
 
+function! SpaceVim#layers#leaderf#health() abort
+  call SpaceVim#layers#leaderf#plugins()
+  call SpaceVim#layers#leaderf#config()
+  return 1
+endfunction
+
 function! SpaceVim#layers#leaderf#plugins() abort
   let plugins = []
   call add(plugins, 
@@ -200,7 +206,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \ ]
         \ ],
         \ 1)
-  " @fixme SPC h SPC make vim flick
+  " without this key binding, SPC h SPC always open key binding guide.
   nmap <Space>h<Space> [SPC]h[SPC]
 
   let lnum = expand('<slnum>') + s:lnum - 1

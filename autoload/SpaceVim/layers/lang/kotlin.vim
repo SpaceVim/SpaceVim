@@ -128,3 +128,9 @@ function! SpaceVim#layers#lang#kotlin#set_variable(var) abort
         \ 'enable-native-support',
         \ 'nil')
 endfunction
+
+function! SpaceVim#layers#lang#kotlin#health() abort
+  call SpaceVim#layers#lang#kotlin#plugins()
+  call SpaceVim#layers#lang#kotlin#config()
+  return 1
+endfunction

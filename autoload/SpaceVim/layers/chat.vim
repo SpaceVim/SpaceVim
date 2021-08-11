@@ -30,3 +30,12 @@ function! SpaceVim#layers#chat#config() abort
         \ 'Open chatting room','call chat#chatting#OpenMsgWin()')
 
 endfunction
+
+function! SpaceVim#layers#chat#health() abort
+
+  call SpaceVim#layers#chat#plugins()
+  call SpaceVim#layers#chat#config()
+
+  return 1
+
+endfunction

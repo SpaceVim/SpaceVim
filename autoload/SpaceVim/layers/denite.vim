@@ -25,6 +25,12 @@ function! SpaceVim#layers#denite#plugins() abort
   return plugins
 endfunction
 
+function! SpaceVim#layers#denite#health() abort
+  call SpaceVim#layers#denite#plugins()
+  call SpaceVim#layers#denite#config()
+  return 1
+endfunction
+
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#denite#config() abort

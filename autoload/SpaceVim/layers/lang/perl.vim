@@ -98,3 +98,9 @@ endfunction
 function! SpaceVim#layers#lang#perl#set_variable(var) abort
   let s:perl_interpreter = get(a:var, 'perl_interpreter', s:perl_interpreter)
 endfunction
+
+function! SpaceVim#layers#lang#perl#health() abort
+  call SpaceVim#layers#lang#perl#plugins()
+  call SpaceVim#layers#lang#perl#config()
+  return 1
+endfunction

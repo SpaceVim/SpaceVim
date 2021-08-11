@@ -4,7 +4,7 @@ test: build/vader | build
 COVIMERAGE=$(shell command -v covimerage 2>/dev/null || echo build/covimerage/bin/covimerage)
 
 test_coverage: $(COVIMERAGE) build/vader | build
-	$(COVIMERAGE) run $(VIM_BIN) -Nu test/vimrc -c 'Vader! test/**'
+	$(COVIMERAGE) run --source after  --source autoload --source colors --source config --source ftplugin $(VIM_BIN) -Nu test/vimrc -c 'Vader! test/**'
 
 build/covimerage:
 	virtualenv $@

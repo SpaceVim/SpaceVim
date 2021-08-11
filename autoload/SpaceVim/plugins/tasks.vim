@@ -229,4 +229,4 @@ function! SpaceVim#plugins#tasks#reg_provider(provider) abort
   call add(s:providers, a:provider)
 endfunction
 
-call SpaceVim#plugins#tasks#reg_provider(funcref('s:detect_npm_tasks'))
+call SpaceVim#plugins#tasks#reg_provider(function('s:detect_npm_tasks'))

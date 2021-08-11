@@ -63,9 +63,14 @@ scriptencoding utf-8
 if exists('s:sml_file_head')
   finish
 else
+  let g:sml_auto_create_def_use = 'mlb'
+  let g:sml_greek_tyvar_show_tick = '0'
+  let g:sml_mlton_executable = 'mlton'
+  let g:sml_repl_options = []
+  let g:sml_smlnj_executable = 'sml'
+  let s:sml_enable_conceal = 0
   let s:sml_file_head = ['']
   let s:sml_repl_options = ''
-  let s:sml_enable_conceal = 0
 endif
 
 
@@ -123,10 +128,16 @@ endfunction
 function! SpaceVim#layers#lang#sml#set_variable(var) abort
   let g:sml_smlnj_executable = get(a:var, 'smlnj_path', 'sml')
   let g:sml_mlton_executable = get(a:var, 'mlton_path', 'mlton')
-  let s:sml_repl_options = get(a:var, 'repl_options', s:sml_repl_options)
-  let g:sml_repl_options = s:sml_repl_options
   let g:sml_auto_create_def_use = get(a:var, 'auto_create_def_use', 'mlb')
   let g:sml_greek_tyvar_show_tick = get(a:var, 'enable_conceal_show_tick', '0')
+  let s:sml_repl_options = get(a:var, 'repl_options', s:sml_repl_options)
+  let g:sml_repl_options = s:sml_repl_options
   let s:sml_enable_conceal = get(a:var, 'enable_conceal', s:sml_enable_conceal)
   let s:sml_file_head = get(a:var, 'sml_file_head', s:sml_file_head)
+endfunction
+
+function! SpaceVim#layers#lang#sml#health() abort
+  call SpaceVim#layers#lang#sml#plugins()
+  call SpaceVim#layers#lang#sml#config()
+  return 1
 endfunction

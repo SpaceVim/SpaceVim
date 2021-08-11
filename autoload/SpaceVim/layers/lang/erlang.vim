@@ -90,3 +90,9 @@ function! s:go_to_def() abort
     normal! gd
   endif
 endfunction
+
+function! SpaceVim#layers#lang#erlang#health() abort
+  call SpaceVim#layers#lang#erlang#plugins()
+  call SpaceVim#layers#lang#erlang#config()
+  return 1
+endfunction

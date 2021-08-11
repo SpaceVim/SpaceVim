@@ -9,6 +9,7 @@
 
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim)
 [![build](https://github.com/SpaceVim/SpaceVim/workflows/build/badge.svg)](https://github.com/SpaceVim/SpaceVim/actions?query=workflow%3Abuild)
+[![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
 [![Version](https://img.shields.io/badge/version-1.8.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)

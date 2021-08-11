@@ -5,6 +5,7 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
 
 let s:self = {}
 
@@ -122,6 +123,10 @@ endfunction
 
 function! s:self.exists() abort
   return exists('*popup_create')
+endfunction
+
+function! s:self.get_width(winid) abort
+ return winwidth(a:winid) 
 endfunction
 
 function! s:self.win_close(id, focuce) abort

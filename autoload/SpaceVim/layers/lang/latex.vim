@@ -123,3 +123,9 @@ function! s:language_specified_mappings() abort
         \ '<plug>(vimtex-toggle-main)',
         \ 'vimtex-toggle-main', 0)
 endfunction
+
+function! SpaceVim#layers#lang#latex#health() abort
+  call SpaceVim#layers#lang#latex#plugins()
+  call SpaceVim#layers#lang#latex#config()
+  return 1
+endfunction

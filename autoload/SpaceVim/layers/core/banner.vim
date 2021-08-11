@@ -237,4 +237,9 @@ function! SpaceVim#layers#core#banner#config() abort
         \ ]
 endfunction
 
+function! SpaceVim#layers#core#banner#health() abort
+  call SpaceVim#layers#core#banner#config()
+  return 1
+endfunction
+
 " vim:set et sw=2:

@@ -55,7 +55,7 @@ function! SpaceVim#layers#lang#go#config() abort
   let g:go_highlight_structs = 1
   let g:go_highlight_operators = 1
   let g:go_highlight_build_constraints = 1
-  let g:go_fmt_command = 'goimports'
+  let g:go_fmt_command = 'gopls'
   let g:syntastic_go_checkers = ['golint', 'govet']
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
   let g:neomake_go_gometalinter_args = ['--disable-all']
@@ -145,4 +145,10 @@ function! s:language_specified_mappings() abort
         \ ':GoFreevars',
         \ 'freevars', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+endfunction
+
+function! SpaceVim#layers#lang#go#health() abort
+  call SpaceVim#layers#lang#go#plugins()
+  call SpaceVim#layers#lang#go#config()
+  return 1
 endfunction

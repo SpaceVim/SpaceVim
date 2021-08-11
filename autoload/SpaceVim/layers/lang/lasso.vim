@@ -13,3 +13,8 @@ function! SpaceVim#layers#lang#lasso#plugins() abort
   return plugins
 endfunction
 
+
+function! SpaceVim#layers#lang#lasso#health() abort
+  call SpaceVim#layers#lang#lasso#plugins()
+  return 1
+endfunction

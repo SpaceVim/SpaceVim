@@ -255,6 +255,15 @@ function! SpaceVim#layers#autocomplete#toggle_deoplete() abort
   endif
 endfunction
 
+function! SpaceVim#layers#autocomplete#health() abort
+  call SpaceVim#layers#autocomplete#getprfile()
+  call SpaceVim#layers#autocomplete#plugins()
+  call SpaceVim#layers#autocomplete#config()
+
+  return 1
+
+endfunction
+
 function! s:apply_sequence_delay() abort
   let &timeoutlen =  s:key_sequence_delay * 1000
 endfunction

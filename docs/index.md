@@ -1,10 +1,11 @@
 ---
-title:  "Home"
+title: "Home"
 description: "SpaceVim is a community-driven vim distribution that seeks to provide layer feature."
 ---
 
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim)
 [![build](https://github.com/SpaceVim/SpaceVim/workflows/build/badge.svg)](https://github.com/SpaceVim/SpaceVim/actions?query=workflow%3Abuild)
+[![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
 [![Version](https://img.shields.io/badge/version-1.8.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
@@ -20,7 +21,6 @@ from having to think about what packages to install.
 
 If you like SpaceVim, please feel free to star the project on [github](https://github.com/SpaceVim/SpaceVim). It is a great way to show your
 appreciation while providing us motivation to continue working on this project.
-
 
 - [Quick start guide](quick-start-guide/): installation, configuration, and resources of learning SpaceVim
 - [Documentation](documentation/): the primary official document of SpaceVim
@@ -71,12 +71,11 @@ Contribute code, report bugs and request features at [GitHub](https://github.com
 
 - Which version of Vim/Neovim is needed?
 
-  SpaceVim has been tested in [travis-ci](https://travis-ci.com/SpaceVim/SpaceVim) and
-[appveyor](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/master) with following
-versions of neovim and vim:
+  SpaceVim has been tested in [github action](https://github.com/SpaceVim/SpaceVim/actions) with following
+  versions of neovim and vim:
 
-    1. vim: ~~`7.4.052`~~, `7.4.629`, `7.4.1689`,`8.0.0027`,`8.0.1453`, `8.1.2269`
-    2. neovim: `0.3.0`, `0.3.1`, `0.3.2`, `0.3.3`, `0.3.4`, `0.3.5`, `0.3.7`, `0.3.8`, `0.4.2`, `0.4.3`
+  - vim: `master`, `8.1.2269`, `8.0.1453`, `8.0.0027`,`7.4.1689`,`7.4.629`, `7.4.052`
+  - neovim: `nightly`, `v0.5.0`, `v0.4.4`, `v0.4.3`, `v0.4.2`, `v0.4.0`, `v0.3.8`
 
 For more general questions, please read SpaceVim [FAQ](faq/).
 

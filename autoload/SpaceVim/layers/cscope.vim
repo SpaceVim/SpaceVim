@@ -31,3 +31,10 @@ function! SpaceVim#layers#cscope#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'm'], 'call cscope#clear_databases(SpaceVim#plugins#projectmanager#current_root())', 'remove-current-cscope-databases', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'M'], 'call cscope#clear_databases()', 'remove-all-cscope-databases', 1)
 endfunction
+
+
+function! SpaceVim#layers#cscope#health() abort
+  call SpaceVim#layers#cscope#plugins()
+  call SpaceVim#layers#cscope#config()
+  return 1
+endfunction

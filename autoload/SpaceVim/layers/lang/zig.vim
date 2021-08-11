@@ -59,3 +59,9 @@ endfunction
 function! SpaceVim#layers#lang#zig#set_variable(opt) abort
   let s:ztagsbin = get(a:opt, 'ztagsbin', s:ztagsbin) 
 endfunction
+
+function! SpaceVim#layers#lang#zig#health() abort
+  call SpaceVim#layers#lang#zig#plugins()
+  call SpaceVim#layers#lang#zig#config()
+  return 1
+endfunction

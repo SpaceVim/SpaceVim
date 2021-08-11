@@ -98,12 +98,6 @@ let s:modes = {
       \ },
       \ }
 
-"  TODO This can not be deleted, it is used for toggle section
-let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters', 'version control info', 'cursorpos']
-
-let s:loaded_sections_r = g:spacevim_statusline_right_sections
-let s:loaded_sections_l = g:spacevim_statusline_left_sections
-
 if SpaceVim#layers#isLoaded('checkers')
   call add(s:loaded_modes, 'syntax-checking')
 endif
@@ -113,7 +107,7 @@ endif
 if &cc ==# '80'
   call add(s:loaded_modes, 'fill-column-indicator')
 endif
-if index(s:loaded_sections_r, 'whitespace') != -1
+if index(g:spacevim_statusline_right_sections, 'whitespace') != -1
   call add(s:loaded_modes, 'whitespace')
 endif
 " build in sections for SpaceVim statusline
@@ -583,13 +577,13 @@ endfunction
 
 function! s:active() abort
   let lsec = []
-  for section in s:loaded_sections_l
+  for section in g:spacevim_statusline_left_sections
     if has_key(s:registed_sections, section)
       call add(lsec, call(s:registed_sections[section], []))
     endif
   endfor
   let rsec = []
-  for section in s:loaded_sections_r
+  for section in g:spacevim_statusline_right_sections
     if has_key(s:registed_sections, section)
       call add(rsec, call(s:registed_sections[section], []))
     endif
@@ -632,7 +626,7 @@ function! SpaceVim#layers#core#statusline#init() abort
     autocmd BufWinEnter,WinEnter,FileType,BufWritePost
           \ * let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     autocmd WinLeave * call SpaceVim#layers#core#statusline#remove_section('search status')
-    autocmd BufWinLeave,WinLeave * let &l:statusline = SpaceVim#layers#core#statusline#get()
+    autocmd WinLeave * let &l:statusline = SpaceVim#layers#core#statusline#get()
     autocmd ColorScheme * call SpaceVim#layers#core#statusline#def_colors()
   augroup END
 endfunction
@@ -709,25 +703,25 @@ let s:section_old_pos = {
       \ }
 
 function! SpaceVim#layers#core#statusline#toggle_section(name) abort
-  if index(s:loaded_sections_l, a:name) == -1
-        \ && index(s:loaded_sections_r, a:name) == -1
+  if index(g:spacevim_statusline_left_sections, a:name) == -1
+        \ && index(g:spacevim_statusline_right_sections, a:name) == -1
         \ && !has_key(s:section_old_pos, a:name)
     if a:name ==# 'search status'
-      call insert(s:loaded_sections_l, a:name, 2)
+      call insert(g:spacevim_statusline_left_sections, a:name, 2)
     else
-      call add(s:loaded_sections_r, a:name)
+      call add(g:spacevim_statusline_right_sections, a:name)
     endif
-  elseif index(s:loaded_sections_r, a:name) != -1
-    let s:section_old_pos[a:name] = ['r', index(s:loaded_sections_r, a:name)]
-    call remove(s:loaded_sections_r, index(s:loaded_sections_r, a:name))
-  elseif index(s:loaded_sections_l, a:name) != -1
-    let s:section_old_pos[a:name] = ['l', index(s:loaded_sections_l, a:name)]
-    call remove(s:loaded_sections_l, index(s:loaded_sections_l, a:name))
+  elseif index(g:spacevim_statusline_right_sections, a:name) != -1
+    let s:section_old_pos[a:name] = ['r', index(g:spacevim_statusline_right_sections, a:name)]
+    call remove(g:spacevim_statusline_right_sections, index(g:spacevim_statusline_right_sections, a:name))
+  elseif index(g:spacevim_statusline_left_sections, a:name) != -1
+    let s:section_old_pos[a:name] = ['l', index(g:spacevim_statusline_left_sections, a:name)]
+    call remove(g:spacevim_statusline_left_sections, index(g:spacevim_statusline_left_sections, a:name))
   elseif has_key(s:section_old_pos, a:name)
     if s:section_old_pos[a:name][0] ==# 'r'
-      call insert(s:loaded_sections_r, a:name, s:section_old_pos[a:name][1])
+      call insert(g:spacevim_statusline_right_sections, a:name, s:section_old_pos[a:name][1])
     else
-      call insert(s:loaded_sections_l, a:name, s:section_old_pos[a:name][1])
+      call insert(g:spacevim_statusline_left_sections, a:name, s:section_old_pos[a:name][1])
     endif
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
@@ -956,18 +950,23 @@ function! SpaceVim#layers#core#statusline#register_sections(name, func) abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#check_section(name) abort
-  return (index(s:loaded_sections_l, a:name) != -1
-        \ || index(s:loaded_sections_r, a:name) != -1)
+  return (index(g:spacevim_statusline_left_sections, a:name) != -1
+        \ || index(g:spacevim_statusline_right_sections, a:name) != -1)
 endfunction
 
 function! SpaceVim#layers#core#statusline#remove_section(name) abort
-  if index(s:loaded_sections_l, a:name) != -1
-    call remove(s:loaded_sections_l, index(s:loaded_sections_l, a:name))
+  if index(g:spacevim_statusline_left_sections, a:name) != -1
+    call remove(g:spacevim_statusline_left_sections, index(g:spacevim_statusline_left_sections, a:name))
   endif
-  if index(s:loaded_sections_r, a:name) != -1
-    call remove(s:loaded_sections_r, index(s:loaded_sections_l, a:name))
+  if index(g:spacevim_statusline_right_sections, a:name) != -1
+    call remove(g:spacevim_statusline_right_sections, index(g:spacevim_statusline_left_sections, a:name))
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+endfunction
+
+function! SpaceVim#layers#core#statusline#health() abort
+  call SpaceVim#layers#core#statusline#config()
+  return 1
 endfunction
 
 " vim:set et sw=2 cc=80 nowrap:

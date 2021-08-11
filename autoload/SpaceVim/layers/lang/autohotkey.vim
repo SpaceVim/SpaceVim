@@ -21,3 +21,8 @@ function! SpaceVim#layers#lang#autohotkey#plugins() abort
   call add(plugins, ['wsdjeg/vim-autohotkey', {'merged' : 0}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#autohotkey#health() abort
+  call SpaceVim#layers#lang#autohotkey#plugins()
+  return 1
+endfunction

@@ -178,3 +178,9 @@ function! s:go_to_typescriptreact_def() abort
     call SpaceVim#lsp#go_to_def()
   endif
 endfunction
+
+function! SpaceVim#layers#lang#typescript#health() abort
+  call SpaceVim#layers#lang#typescript#plugins()
+  call SpaceVim#layers#lang#typescript#config()
+  return 1
+endfunction

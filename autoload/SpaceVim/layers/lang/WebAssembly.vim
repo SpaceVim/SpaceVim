@@ -12,3 +12,8 @@ function! SpaceVim#layers#lang#WebAssembly#plugins() abort
   call add(plugins, ['rhysd/vim-wasm', {'merged' : 0}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#WebAssembly#health() abort
+  call SpaceVim#layers#lang#WebAssembly#plugins()
+  return 1
+endfunction

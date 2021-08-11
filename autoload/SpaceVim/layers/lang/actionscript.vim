@@ -21,3 +21,8 @@ function! SpaceVim#layers#lang#actionscript#plugins() abort
   call add(plugins, ['wsdjeg/vim-actionscript', {'merged' : 0}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#actionscript#health() abort
+  call SpaceVim#layers#lang#actionscript#plugins()
+  return 1
+endfunction

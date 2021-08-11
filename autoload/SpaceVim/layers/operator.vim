@@ -23,3 +23,9 @@ function! SpaceVim#layers#operator#config() abort
     map y <Plug>(operator-flashy)
     nmap Y <Plug>(operator-flashy)$
 endfunction
+
+function! SpaceVim#layers#operator#health() abort
+  call SpaceVim#layers#operator#plugins()
+  call SpaceVim#layers#operator#config()
+  return 1
+endfunction

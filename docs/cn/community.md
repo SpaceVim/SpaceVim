@@ -20,9 +20,10 @@ lang: zh
 
 ### 资讯订阅
 
-关注 SpaceVim 官方微博或微信公众号以获取最新资讯、新特性介绍、使用技巧等。
+最新的版本发布、新功能增加会通过 twitter 或者 Facebook 进行推送，欢迎订阅：
 
-- <i class="fab fa-weibo"></i> [新浪微博](https://weibo.com/SpaceVim)
+- <i class="fab fa-twitter"></i> [twitter](https://twitter.com/SpaceVim)
+- <i class="fab fa-facebook"></i> [Facebook](https://www.facebook.com/SpaceVim)
 
 ### 问题反馈
 
@@ -33,7 +34,7 @@ lang: zh
 
 ### 经验分享
 
-之所以没有新建一个论坛，是因为每个用户都有自己喜欢和习惯了的社区，我们以 SpaceVim 标签汇总如下社区：
+如果你有想分享的东西，或者有想深入讨论的问题，请使用以下论坛：
 
 - [知乎](https://www.zhihu.com/topic/20168681/newest)
 - [思否](https://segmentfault.com/t/spacevim)
@@ -67,9 +68,10 @@ spacevim-cn+unsubscribe@googlegroups.com
 请务必要阅读[《提问的智慧》](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)。
 
 - <i class="fab fa-gitter"></i> [`SpaceVim/cn` Gitter 聊天室](https://gitter.im/SpaceVim/cn)
-- <i class="fas fa-comments"></i> [`#spacevim-cn` IRC 聊天室](https://webchat.freenode.net/?channels=spacevim-cn)
+- <i class="fas fa-comments"></i> [`#spacevim-cn` IRC 聊天室](https://web.libera.chat/#spacevim-cn)
 - <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim_cn` telegram 聊天室](https://t.me/SpaceVim_cn)
 - <i class="fab fa-rocketchat"></i> [`#spacevim-cn:matrix.org` Matrix 聊天室](https://app.element.io/#/room/#spacevim-cn:matrix.org)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` slack 聊天室](https://spacevim.slack.com/messages/C88CTJ62J)
 - <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)
-- <i class="fab fa-whatsapp"></i> [`SpaceVim` WhatsApp 聊天室](https://chat.whatsapp.com/GQ40y0oiPhDHA9tMvDZteo)
+
+以上为同步聊天群，同时SpaceVim有对应的QQ群：[970953433](https://jq.qq.com/?_wv=1027&k=XYqDdQTM)

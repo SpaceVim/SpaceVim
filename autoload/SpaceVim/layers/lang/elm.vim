@@ -81,3 +81,9 @@ function! s:language_specified_mappings() abort
   nmap <buffer> K <Plug>(elm-show-docs)
   let g:elm_setup_keybindings = 0
 endfunction
+
+function! SpaceVim#layers#lang#elm#health() abort
+  call SpaceVim#layers#lang#elm#plugins()
+  call SpaceVim#layers#lang#elm#config()
+  return 1
+endfunction

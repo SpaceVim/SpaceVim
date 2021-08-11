@@ -331,3 +331,10 @@ function! SpaceVim#layers#lang#java#set_variable(var) abort
 endfunction
 
 " vim:set et sw=2 cc=80:
+
+
+function! SpaceVim#layers#lang#java#health() abort
+  call SpaceVim#layers#lang#java#plugins()
+  call SpaceVim#layers#lang#java#config()
+  return 1
+endfunction

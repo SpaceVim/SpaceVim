@@ -51,7 +51,7 @@ function! SpaceVim#layers#lang#nim#config() abort
   call SpaceVim#mapping#gd#add('nim', function('s:go_to_def'))
   call SpaceVim#plugins#runner#reg_runner('nim', 'nim c -r --hints:off --verbosity:0 %s')
   call SpaceVim#plugins#repl#reg('nim', 'nim secret')
-  call SpaceVim#plugins#tasks#reg_provider(funcref('s:nimble_tesks'))
+  call SpaceVim#plugins#tasks#reg_provider(function('s:nimble_tesks'))
   let g:neomake_nim_nim_remove_invalid_entries = 1
 endfunction
 
@@ -97,4 +97,10 @@ function! s:nimble_tesks() abort
     endfor
   endif
   return detect_task
+endfunction
+
+function! SpaceVim#layers#lang#nim#health() abort
+  call SpaceVim#layers#lang#nim#plugins()
+  call SpaceVim#layers#lang#nim#config()
+  return 1
 endfunction

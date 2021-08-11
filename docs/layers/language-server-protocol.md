@@ -161,7 +161,7 @@ default language server commands:
 | `css`        | `['css-languageserver', '--stdio']`                                                                                                                                                              |
 | `dart`       | `['dart_language_server']`                                                                                                                                                                       |
 | `elm`        | `['elm-language-server']`                                                                                                                                                                        |
-| `go`         | `['go-langserver', '-mode', 'stdio']`                                                                                                                                                            |
+| `go`         | `['gopls']`                                                                                                                                                            |
 | `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
 | `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
 | `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |

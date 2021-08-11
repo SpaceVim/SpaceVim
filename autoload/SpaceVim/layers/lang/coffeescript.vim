@@ -38,9 +38,9 @@ if exists('s:coffee_interpreter')
   finish
 endif
 
-let s:coffee_interpreter = 'coffee' . (s:SYS.isWindows ? '.CMD' : '')
-
 let s:SYS = SpaceVim#api#import('system')
+
+let s:coffee_interpreter = 'coffee' . (s:SYS.isWindows ? '.CMD' : '')
 
 function! SpaceVim#layers#lang#coffeescript#plugins() abort
   let plugins = []
@@ -107,4 +107,10 @@ function! s:filter_coffee_lint(lines, job) abort
 endfunction
 function! SpaceVim#layers#lang#coffeescript#set_variable(var) abort
   let s:coffee_interpreter = get(a:var, 'coffee_interpreter', s:coffee_interpreter)
+endfunction
+
+function! SpaceVim#layers#lang#coffeescript#health() abort
+  call SpaceVim#layers#lang#coffeescript#plugins()
+  call SpaceVim#layers#lang#coffeescript#config()
+  return 1
 endfunction

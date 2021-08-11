@@ -89,6 +89,12 @@ function! SpaceVim#layers#github#config() abort
   "" }}}
 endfunction
 
+function! SpaceVim#layers#github#health() abort
+  call SpaceVim#layers#github#plugins()
+  call SpaceVim#layers#github#config()
+  return 1
+endfunction
+
 function! s:update_stared_repo_list() abort
     if empty(g:spacevim_github_username)
         call SpaceVim#logger#warn('You need to set g:spacevim_github_username')

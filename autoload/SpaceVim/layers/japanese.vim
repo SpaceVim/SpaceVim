@@ -14,3 +14,9 @@ endfunction
 
 function! SpaceVim#layers#japanese#config() abort
 endfunction
+
+function! SpaceVim#layers#japanese#health() abort
+  call SpaceVim#layers#japanese#plugins()
+  call SpaceVim#layers#japanese#config()
+  return 1
+endfunction

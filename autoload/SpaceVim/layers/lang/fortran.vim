@@ -69,3 +69,10 @@ endfunction
 " fortran wiki org
 "
 " http://fortranwiki.org/fortran/show/Source+code+editors
+
+
+function! SpaceVim#layers#lang#fortran#health() abort
+  call SpaceVim#layers#lang#fortran#plugins()
+  call SpaceVim#layers#lang#fortran#config()
+  return 1
+endfunction

@@ -57,3 +57,9 @@ function! SpaceVim#layers#lang#json#set_variable(var) abort
   let s:concealcursor = get(a:var, 'concealcursor', 0)
 endfunction
 
+
+function! SpaceVim#layers#lang#json#health() abort
+  call SpaceVim#layers#lang#json#plugins()
+  call SpaceVim#layers#lang#json#config()
+  return 1
+endfunction
