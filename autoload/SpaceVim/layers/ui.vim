@@ -77,12 +77,18 @@ function! SpaceVim#layers#ui#config() abort
   else
     let g:indentLine_color_gui = get(g:, 'indentLine_color_gui', '#d5c4a1')
   endif
+
+  " indentLine config
   let g:indentLine_char = get(g:, 'indentLine_char', '┊')
   let g:indentLine_concealcursor = 'niv'
   let g:indentLine_conceallevel = 2
   let g:indentLine_enabled = s:enable_indentline
   let g:indentLine_fileTypeExclude = get(g:, 'indentLine_fileTypeExclude', [])
   let g:indentLine_fileTypeExclude += ['help', 'man', 'startify', 'vimfiler', 'json']
+
+  " indent_blankline config
+  let g:indent_blankline_enabled = s:enable_indentline
+
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
         \ 'qf', 'help', 'markdown', 'leaderGuide',
         \ 'startify'
@@ -287,7 +293,11 @@ function! s:toggle_fill_column() abort
 endfunction
 
 function! s:toggle_indentline() abort
-  IndentLinesToggle
+  if exists(':IndentLinesToggle')
+    IndentLinesToggle
+  elseif exists(':IndentBlanklineToggle')
+    IndentBlanklineToggle
+  endif
 endfunction
 
 let s:shflag = 0
