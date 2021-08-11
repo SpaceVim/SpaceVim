@@ -4097,7 +4097,7 @@ Disabled by default. This feature requires neovim's floating window.
   2. `enable_indentline`: Enable/disable indentline of current buffer.
 Enabled by default.
   3. `enable_cursorword`: Enable/disable  cursorword highlighting.
-Enabled by default.
+Disabled by default.
   4. `cursorword_delay`: The delay duration in milliseconds for setting the
 word highlight after cursor motions, the default is 50.
   5. `cursorword_exclude_filetype`: Ignore filetypes when enable cursorword

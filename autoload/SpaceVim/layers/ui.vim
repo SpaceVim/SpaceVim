@@ -19,7 +19,7 @@ scriptencoding utf-8
 " 2. `enable_indentline`: Enable/disable indentline of current buffer.
 " Enabled by default.
 " 3. `enable_cursorword`: Enable/disable  cursorword highlighting.
-" Enabled by default.
+" Disabled by default.
 " 4. `cursorword_delay`: The delay duration in milliseconds for setting the
 " word highlight after cursor motions, the default is 50.
 " 5. `cursorword_exclude_filetype`: Ignore filetypes when enable cursorword
@@ -39,7 +39,7 @@ else
   let s:enable_sidebar = 0
   let s:enable_scrollbar = 0
   let s:enable_indentline = 1
-  let s:enable_cursorword = 1
+  let s:enable_cursorword = 0
   let s:cursorword_delay = 50
   let s:cursorword_exclude_filetype = []
 endif
