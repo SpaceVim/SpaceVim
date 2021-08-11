@@ -5,8 +5,26 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
-
 scriptencoding utf-8
+
+""
+" @section ui, layer-ui
+" @parentsection layers
+" ui layer provides basic ui for SpaceVim, including scrollbar, indentline,
+" and cursorword highlighting.
+" @subsection options
+"
+" 1. `enable_scrollbar`: enable/disable scrollbar, disabled by default.
+" 2. `enable_cursorword`: enable/disable cursorword highlighting, enabled by
+" default.
+"
+" @subsection key bindings
+" >
+"   Key binding     Description
+"   SPC t h         ui current buffer or selection lines
+" <
+" 
+
 
 if exists('s:enable_sidebar')
   finish
