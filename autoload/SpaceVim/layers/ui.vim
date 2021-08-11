@@ -44,9 +44,10 @@ else
   let s:cursorword_exclude_filetype = []
 endif
 
+let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
+
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
-        \ [g:_spacevim_root_dir . 'bundle/indentLine', {'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/vim-cursorword', {'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar', {'loadconf' : 1, 'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar-makefile.vim', {'merged': 0}],
@@ -54,6 +55,11 @@ function! SpaceVim#layers#ui#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/vim-choosewin', {'on_cmd' : 'ChooseWin', 'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/vim-startify', {'loadconf' : 1, 'merged' : 0}],
         \ ]
+  if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/indent-blankline.nvim',         { 'merged' : 0}])
+  else
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/indentLine',         { 'merged' : 0}])
+  endif
   if !SpaceVim#layers#isLoaded('core#statusline')
     call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline',                { 'merged' : 0, 
           \ 'loadconf' : 1}])
@@ -71,12 +77,18 @@ function! SpaceVim#layers#ui#config() abort
   else
     let g:indentLine_color_gui = get(g:, 'indentLine_color_gui', '#d5c4a1')
   endif
+
+  " indentLine config
   let g:indentLine_char = get(g:, 'indentLine_char', '┊')
   let g:indentLine_concealcursor = 'niv'
   let g:indentLine_conceallevel = 2
   let g:indentLine_enabled = s:enable_indentline
   let g:indentLine_fileTypeExclude = get(g:, 'indentLine_fileTypeExclude', [])
   let g:indentLine_fileTypeExclude += ['help', 'man', 'startify', 'vimfiler', 'json']
+
+  " indent_blankline config
+  let g:indent_blankline_enabled = s:enable_indentline
+
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
         \ 'qf', 'help', 'markdown', 'leaderGuide',
         \ 'startify'
@@ -281,7 +293,11 @@ function! s:toggle_fill_column() abort
 endfunction
 
 function! s:toggle_indentline() abort
-  IndentLinesToggle
+  if exists(':IndentLinesToggle')
+    IndentLinesToggle
+  elseif exists(':IndentBlanklineToggle')
+    IndentBlanklineToggle
+  endif
 endfunction
 
 let s:shflag = 0
