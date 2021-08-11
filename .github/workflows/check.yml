@@ -54,7 +54,6 @@ jobs:
           sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl
     - name: Install ${{ matrix.vimbin }} ${{ matrix.vimtag }}
       run: |
-        pip install cmake
         .ci/install/linux.sh $VIM_BIN $VIM_TAG
     - name: Run test
       run: |
