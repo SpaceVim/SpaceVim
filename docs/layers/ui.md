@@ -33,3 +33,4 @@ To use this configuration layer, update custom configuration file with:
 - `enable_indentline`: Enable/disable indentline of current buffer. Enabled by default.
 - `enable_cursorword`: Enable/disable  cursorword highlighting, enabled by default.
 - `cursorword_delay`: The delay duration in milliseconds for setting the word highlight after cursor motions, the default is 50.
+- `cursorword_exclude_filetype`: Ignore filetypes when enable cursorword highlighting. 
