@@ -33,7 +33,7 @@ install_nvim() {
     mkdir -p $out
     curl  -o $tmp/nvim-linux64.tar.gz -L "https://github.com/neovim/neovim/releases/download/$tag/nvim-linux64.tar.gz"
     tar -xzvf $tmp/nvim-linux64.tar.gz
-    cp -r $tmp/nvim-linux64 $out
+    cp -r nvim-linux64 $out
     chmod +x $out/bin/nvim
     # fix ModuleNotFoundError: No module named 'setuptools'
     python3 -m pip install -U setuptools
