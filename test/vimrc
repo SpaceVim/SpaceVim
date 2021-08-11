@@ -1,6 +1,3 @@
-let prof_fname = get(g:, 'prof_fname')
-exe 'profile start '.prof_fname
-profile! file autoload/SpaceVim/*
 filetype off
 set rtp+=build/vader
 set rtp+=.
