@@ -898,10 +898,10 @@ The following key bindings are the general key bindings for moving the cursor.
 | `>`                                    | Indent to right and re-select           |
 | `}`                                    | paragraphs forward                      |
 | `{`                                    | paragraphs backward                     |
-| `Ctrl-f` / `Shift-Down` / `<PageDown>` | smoothie forwards                       |
-| `Ctrl-b` / `Shift-Up` / `<PageUp>`     | smoothie backwards                      |
-| `Ctrl-d`                               | smoothie downwards                      |
-| `Ctrl-u`                               | smoothie upwards                        |
+| `Ctrl-f` / `Shift-Down` / `<PageDown>` | Smooth scrolling forwards               |
+| `Ctrl-b` / `Shift-Up` / `<PageUp>`     | Smooth scrolling backwards              |
+| `Ctrl-d`                               | Smooth scrolling downwards              |
+| `Ctrl-u`                               | Smooth scrolling upwards                |
 | `Ctrl-e`                               | Smart scroll down (`3 Ctrl-e/j`)        |
 | `Ctrl-y`                               | Smart scroll up (`3Ctrl-y/k`)           |
 
