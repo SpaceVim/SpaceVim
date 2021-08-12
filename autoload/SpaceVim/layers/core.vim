@@ -198,6 +198,7 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'R'], 'call call('
         \ . string(s:_function('s:safe_revert_buffer')) . ', [])',
         \ 'safe-revert-buffer', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'y'], 'normal! 0V$"+y', 'copy-present-line-to-clipboard', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'Y'], 'normal! ggVG"+y``', 'copy-whole-buffer-to-clipboard', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'w'], 'setl readonly!', 'read-only-mode', 1)
   let g:_spacevim_mappings_space.b.N = {'name' : '+New empty buffer'}
