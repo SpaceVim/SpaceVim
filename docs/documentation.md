@@ -885,23 +885,25 @@ If only one file buffer is opened, a file is opened in the active window, otherw
 
 The following key bindings are the general key bindings for moving the cursor.
 
-| Key Bindings     | Descriptions                             |
-| ---------------- | ---------------------------------------- |
-| `h`              | move cursor left                         |
-| `j`              | move cursor down                         |
-| `k`              | move cursor up                           |
-| `l`              | move cursor right                        |
-| `<Up>`, `<Down>` | Smart up and down                        |
-| `H`              | move cursor to the top of the screen     |
-| `L`              | move cursor to the bottom of the screen  |
-| `<`              | Indent to left and re-select             |
-| `>`              | Indent to right and re-select            |
-| `}`              | paragraphs forward                       |
-| `{`              | paragraphs backward                      |
-| `Ctrl-f`         | Smart page forward (`Ctrl-f` / `Ctrl-d`) |
-| `Ctrl-b`         | Smart page backward (`C-b` / `C-u`)      |
-| `Ctrl-e`         | Smart scroll down (`3 Ctrl-e/j`)         |
-| `Ctrl-y`         | Smart scroll up (`3Ctrl-y/k`)            |
+| Key Bindings                           | Descriptions                            |
+| -------------------------------------- | --------------------------------------- |
+| `h`                                    | move cursor left                        |
+| `j`                                    | move cursor down                        |
+| `k`                                    | move cursor up                          |
+| `l`                                    | move cursor right                       |
+| `<Up>`, `<Down>`                       | Smart up and down                       |
+| `H`                                    | move cursor to the top of the screen    |
+| `L`                                    | move cursor to the bottom of the screen |
+| `<`                                    | Indent to left and re-select            |
+| `>`                                    | Indent to right and re-select           |
+| `}`                                    | paragraphs forward                      |
+| `{`                                    | paragraphs backward                     |
+| `Ctrl-f` / `Shift-Down` / `<PageDown>` | Smooth scrolling forwards               |
+| `Ctrl-b` / `Shift-Up` / `<PageUp>`     | Smooth scrolling backwards              |
+| `Ctrl-d`                               | Smooth scrolling downwards              |
+| `Ctrl-u`                               | Smooth scrolling upwards                |
+| `Ctrl-e`                               | Smart scroll down (`3 Ctrl-e/j`)        |
+| `Ctrl-y`                               | Smart scroll up (`3Ctrl-y/k`)           |
 
 ### Native functions
 
