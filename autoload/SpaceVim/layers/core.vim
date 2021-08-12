@@ -10,7 +10,7 @@ if exists('s:string_hi')
   finish
 endif
 
-let s:enable_smooth_scroll = 1
+let s:enable_smooth_scrolling = 1
 
 
 let s:SYS = SpaceVim#api#import('system')
