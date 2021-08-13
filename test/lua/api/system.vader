@@ -1,0 +1,3 @@
+Execute ( lua api system ):
+    let api_system = SpaceVim#api#import('system')
+    AssertEqual luaeval('require("spacevim.api").import("system").fileformat()'), api_system.fileformat()
