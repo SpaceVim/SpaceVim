@@ -6,10 +6,10 @@ M.isWindows = has('win16') and has('win32') and has('win64')
 M.isLinux = has('unix') or not(has('macunix')) or not(has('win32unix'))
 M.isOSX = has('macunix')
 
-function M:name()
-    if self.isLinux then
+function M.name()
+    if M.isLinux then
         return 'linux'
-    elseif self.isWindows then
+    elseif M.isWindows then
         if vim.fn.has('win32unix') then
             return 'cygwin'
         else
@@ -20,16 +20,16 @@ function M:name()
     end
 end
 
-function M:isDarwin()
-    
+function M.isDarwin()
+
 end
 
-function M:fileformat()
+function M.fileformat()
     local fileformat = ''
     if vim.o.fileformat == 'dos' then
         fileformat = ''
     elseif vim.o.fileformat == 'unix' then
-        if self.isDarwin() then
+        if M.isDarwin() then
             fileformat = ''
         else
             fileformat = ''
