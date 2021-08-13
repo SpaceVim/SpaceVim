@@ -22,7 +22,7 @@ function M.eval(l)
 end
 
 function M.has(feature)
-    return vim.eval('has(' .. feature .. ')')
+    return vim.eval('has("' .. feature .. '")')
 end
 
 return M
