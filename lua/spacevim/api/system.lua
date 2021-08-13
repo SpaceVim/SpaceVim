@@ -10,5 +10,17 @@ function M.name()
     end
 end
 
+function M.isDarwin()
+    
+end
+
+function M.fileformat()
+    local fileformat = ''
+    if vim.o.fileformat == 'dos' then
+        fileformat = ''
+    end
+    return fileformat
+end
+
 return M
 
