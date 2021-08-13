@@ -10,9 +10,13 @@ local M = {}
 
 if has('win16') ==1 or has('win32') == 1 or has('win64') == 1 then
     M.isWindows = 1
+else
+    M.isWindows = 0
 end
 if has('unix') == 1 and has('macunix') == 0 and has('win32unix') == 0 then
     M.isLinux = 1
+else
+    M.isLinux = 0
 else
     M.isLinux = 0
 end
