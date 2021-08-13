@@ -2,9 +2,9 @@ local has = vim.fn.has
 
 local M = {}
 
-M.isWindows = has('win16') and has('win32') and has('win64')
-M.isLinux = has('unix') and not(has('macunix')) and not(has('win32unix'))
-M.isOSX = has('macunix')
+M.isWindows = has('win16') and has('win32') and has('win64') == 1
+M.isLinux = has('unix') and not(has('macunix')) and not(has('win32unix')) == 1
+M.isOSX = has('macunix') == 1
 
 function M.name()
     if M.isLinux then
