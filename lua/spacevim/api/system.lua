@@ -1,6 +1,8 @@
+local has = vim.fn.has
+
 local M = {}
 
-M.isWindows = vim.fn.has('win16')
+M.isWindows = has('win16') or has('win32') or has('win64')
 M.isLinux = vim.fn.has('unix') and not(vim.fn.has('macunix')) and not(vim.fn.has('win32unix'))
 M.isOSX = vim.fn.has('macunix')
 
