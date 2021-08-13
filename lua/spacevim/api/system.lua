@@ -2,7 +2,7 @@ local M = {}
 
 M.isWindows = vim.fn.has('win16')
 
-function M.name()
+function M:name()
     if self.isLinux then
         return 'linux'
     elseif self.isWindows then
@@ -10,11 +10,11 @@ function M.name()
     end
 end
 
-function M.isDarwin()
+function M:isDarwin()
     
 end
 
-function M.fileformat()
+function M:fileformat()
     local fileformat = ''
     if vim.o.fileformat == 'dos' then
         fileformat = ''
