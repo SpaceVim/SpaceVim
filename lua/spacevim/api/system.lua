@@ -3,8 +3,8 @@ local has = vim.fn.has
 local M = {}
 
 M.isWindows = has('win16') and has('win32') and has('win64')
-M.isLinux = vim.fn.has('unix') or not(vim.fn.has('macunix')) or not(vim.fn.has('win32unix'))
-M.isOSX = vim.fn.has('macunix')
+M.isLinux = has('unix') or not(has('macunix')) or not(has('win32unix'))
+M.isOSX = has('macunix')
 
 function M:name()
     if self.isLinux then
