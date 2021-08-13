@@ -17,8 +17,6 @@ if has('unix') == 1 and has('macunix') == 0 and has('win32unix') == 0 then
     M.isLinux = 1
 else
     M.isLinux = 0
-else
-    M.isLinux = 0
 end
 M.isOSX = has('macunix')
 
