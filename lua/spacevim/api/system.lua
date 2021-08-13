@@ -10,7 +10,7 @@ function M.name()
     if M.isLinux then
         return 'linux'
     elseif M.isWindows then
-        if vim.fn.has('win32unix') then
+        if vim.fn.has('win32unix') == 1 then
             return 'cygwin'
         else
             return 'windows'
