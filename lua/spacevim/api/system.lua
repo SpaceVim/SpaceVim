@@ -1,4 +1,7 @@
-local has = vim.fn.has
+if vim.api == nil then
+else
+    local has = vim.fn.has
+end
 
 local M = {}
 
