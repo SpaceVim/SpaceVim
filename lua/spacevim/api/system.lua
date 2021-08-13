@@ -1,4 +1,5 @@
 if vim.api == nil then
+    local has = require('spacevim').has
 else
     local has = vim.fn.has
 end
