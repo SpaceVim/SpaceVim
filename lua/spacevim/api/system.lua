@@ -8,8 +8,10 @@ end
 
 local M = {}
 
-M.isWindows = has('win16') and has('win32') and has('win64')
-if has('unix') and not(has('macunix')) and not(has('win32unix')) then
+if has('win16') ==1 or has('win32') == 1 or has('win64') == 1 then
+    M.isWindows = 1
+end
+if has('unix') == 1 and has('macunix') == 0 and has('win32unix') == 0 then
     M.isLinux = 1
 else
     M.isLinux = 0
