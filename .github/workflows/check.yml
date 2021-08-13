@@ -49,7 +49,7 @@ jobs:
     - name: Install dependencies
       run: |
           sudo apt-get update
-          sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl
+          sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl lua
     - name: Install ${{ matrix.vimbin }} ${{ matrix.vimtag }}
       run: |
         .ci/install/linux.sh $VIM_BIN $VIM_TAG
