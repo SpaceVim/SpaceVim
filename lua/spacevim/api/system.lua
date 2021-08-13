@@ -18,6 +18,14 @@ function M.fileformat()
     local fileformat = ''
     if vim.o.fileformat == 'dos' then
         fileformat = ''
+    elseif vim.o.fileformat == 'unix' then
+        if self.isDarwin() then
+            fileformat = ''
+        else
+            fileformat = ''
+        end
+    elseif vim.o.fileformat == 'mac' then
+        fileformat = ''
     end
     return fileformat
 end
