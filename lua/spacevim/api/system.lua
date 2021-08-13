@@ -1,12 +1,20 @@
 local M = {}
 
 M.isWindows = vim.fn.has('win16')
+M.isLinux = vim.fn.has('unix') and not(vim.fn.has('macunix')) and not(vim.fn.has('win32unix'))
+M.isOSX = vim.fn.has('macunix')
 
 function M:name()
     if self.isLinux then
         return 'linux'
     elseif self.isWindows then
+        if vim.fn.has('win32unix') then
+            return 'cygwin'
+        else
+            return 'windows'
+        end
     else
+        return 'mac'
     end
 end
 
