@@ -1,13 +1,14 @@
 Execute ( lua api system ):
   let api_system = SpaceVim#api#import('system')
+  let cmp = SpaceVim#api#import('vim#compatible')
   Log 'test system.isWindows'
-  AssertEqual luaeval('require("spacevim.api").import("system").isWindows'), api_system.isWindows
+  AssertEqual cmp.luaeval('require("spacevim.api").import("system").isWindows'), api_system.isWindows
   Log 'test system.isLinux'
-  AssertEqual luaeval('require("spacevim.api").import("system").isLinux'), api_system.isLinux
+  AssertEqual cmp.luaeval('require("spacevim.api").import("system").isLinux'), api_system.isLinux
   Log 'test system.isOSX'
-  AssertEqual luaeval('require("spacevim.api").import("system").isOSX'), api_system.isOSX
+  AssertEqual cmp.luaeval('require("spacevim.api").import("system").isOSX'), api_system.isOSX
   Log 'test system.name()'
-  AssertEqual luaeval('require("spacevim.api").import("system").name()'), api_system.name()
+  AssertEqual cmp.luaeval('require("spacevim.api").import("system").name()'), api_system.name()
   Log 'test system.isDarwin()'
-  AssertEqual luaeval('require("spacevim.api").import("system").isDarwin()'), api_system.isDarwin()
+  AssertEqual cmp.luaeval('require("spacevim.api").import("system").isDarwin()'), api_system.isDarwin()
   unlet api_system

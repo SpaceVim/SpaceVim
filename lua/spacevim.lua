@@ -21,8 +21,9 @@ function M.eval(l)
     end
 end
 
+-- this function is only for vim
 function M.has(feature)
-    return vim.eval('has("' .. feature .. '")')
+    return vim.eval('float2nr(has("' .. feature .. '"))')
 end
 
 return M
