@@ -11,7 +11,7 @@ end
 M.isOSX = has('macunix')
 
 function M.name()
-    if M.isLinux then
+    if M.isLinux == 1 then
         return 'linux'
     elseif M.isWindows == 1 then
         if has('win32unix') == 1 then
