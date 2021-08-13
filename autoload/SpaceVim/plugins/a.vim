@@ -72,20 +72,29 @@ function! s:get_project_config(conf_file) abort
         \ }
 endfunction
 
-function! SpaceVim#plugins#a#alt(request_parse,...) abort
-  let type = get(a:000, 0, 'alternate')
-  if !exists('b:alternate_file_config')
-    let conf_file_path = SpaceVim#plugins#a#getConfigPath()
-    let file = s:FILE.unify_path(bufname('%'), ':.')
-    let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, a:request_parse, type)
-  else
-  endif
-  if !empty(alt)
-    exe 'e ' . alt
-  else
-    echo 'failed to find alternate file!'
-  endif
-endfunction
+if get(g:, 'spacevim_use_lua', 1)
+  function! SpaceVim#plugins#a#alt(request_parse, ...) abort
+    lua require("spacevim.plugins.a").alt(
+          \ require("spacevim").eval("a:request_parse"),
+          \ require("spacevim").eval("a:000")
+          \ )
+  endfunction
+else
+  function! SpaceVim#plugins#a#alt(request_parse,...) abort
+    let type = get(a:000, 0, 'alternate')
+    if !exists('b:alternate_file_config')
+      let conf_file_path = SpaceVim#plugins#a#getConfigPath()
+      let file = s:FILE.unify_path(bufname('%'), ':.')
+      let alt = SpaceVim#plugins#a#get_alt(file, conf_file_path, a:request_parse, type)
+    else
+    endif
+    if !empty(alt)
+      exe 'e ' . alt
+    else
+      echo 'failed to find alternate file!'
+    endif
+  endfunction
+endif
 
 
 " the parse function should only accept one argv
