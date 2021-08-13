@@ -1,9 +1,16 @@
 local has = nil
+local fn = nil
 
 if vim.api == nil then
     has = require('spacevim').has
 else
     has = vim.fn.has
+end
+
+if vim.fn == nil then
+    fn = require('spacevim').fn
+else
+    fn = vim.fn
 end
 
 local M = {}
@@ -47,7 +54,7 @@ function M.isDarwin()
         is_darwin = 0
         return is_darwin
     end
-    if vim.fn.system('uname -s') == "Darwin\n" then
+    if fn.system('uname -s') == "Darwin\n" then
         is_darwin = 1
     else
         is_darwin = 0
