@@ -16,7 +16,7 @@ description: "system API provides some basic functions and values for current os
 
 ## Intro
 
-The `system` provides basic functions for os detection. 
+The `system` provides basic functions for os detection.
 
 ## Valuables
 
@@ -25,13 +25,13 @@ The `system` provides basic functions for os detection.
 | isWindows | 0 or 1 | check if the os is windows |
 | isLinux   | 0 or 1 | check if the os is linux   |
 | isOSX     | 0 or 1 | check if the os is OSX     |
-| isDarwin  | 0 or 1 | check if the os is Darwin  |
 
 ## Functions
 
-| name       | description                            |
-| ---------- | -------------------------------------- |
-| fileformat | return the icon of current file format |
+| name         | description                              |
+| ------------ | ---------------------------------------- |
+| fileformat() | return the icon of current file format   |
+| isDarwin()   | return 0 or 1, check if the os is Darwin |
 
 ## Usage
 

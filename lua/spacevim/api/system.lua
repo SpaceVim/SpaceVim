@@ -30,17 +30,17 @@ function M.isDarwin()
         return is_darwin
     end
     if has('macunix') == 1 then
-        is_darwin = true
+        is_darwin = 1
         return is_darwin
     end
     if has('unix') ~= 1 then
-        is_darwin = false
+        is_darwin = 0
         return is_darwin
     end
     if vim.fn.system('uname -s') == "Darwin\n" then
-        is_darwin = true
+        is_darwin = 1
     else
-        is_darwin = false
+        is_darwin = 0
     end
     return is_darwin
 end
