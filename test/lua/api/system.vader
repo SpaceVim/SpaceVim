@@ -1,5 +1,11 @@
 Execute ( lua api system ):
-    let api_system = SpaceVim#api#import('system')
-    AssertEqual luaeval('require("spacevim.api").import("system").fileformat()'), api_system.fileformat()
-    AssertEqual luaeval('require("spacevim.api").import("system").name()'), api_system.name()
-    unlet api_system
+  let api_system = SpaceVim#api#import('system')
+  Log 'test system.isWindows'
+  AssertEqual luaeval('require("spacevim.api").import("system").isWindows'), api_system.isWindows
+  Log 'test system.isLinux'
+  AssertEqual luaeval('require("spacevim.api").import("system").isLinux'), api_system.isLinux
+  Log 'test system.isOSX'
+  AssertEqual luaeval('require("spacevim.api").import("system").isOSX'), api_system.isOSX
+  Log 'test system.name()'
+  AssertEqual luaeval('require("spacevim.api").import("system").name()'), api_system.name()
+  unlet api_system
