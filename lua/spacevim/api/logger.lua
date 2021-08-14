@@ -30,9 +30,14 @@ function M.set_level(l)
     M.level = l
 end
 
-function M.error(msg)
+function M._build_msg(msg)
+    msg = msg or ''
     local time = fn.strftime('%H:%M:%S')
     local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[1] .. ' ] ' .. msg
+end
+
+function M.error(msg)
+    local log = M._build_msg(msg)
     if M.silent == 0 and M.verbose >= 1 then
         cmd('echohl Error')
         cmd('echom "' .. log .. '"')
@@ -57,31 +62,25 @@ function M.write(msg)
 end
 
 function M.warn(msg, ...)
+    local log = M._build_msg(msg)
     if M.level <= 2 then
-        local time = fn.strftime('%H:%M:%S')
-        local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[1] .. ' ] ' .. msg
         if (M.silent == 0 and M.verbose >= 2) or select(1, ...) == 1 then
             cmd('echohl WarningMsg')
             cmd('echom "' .. log .. '"')
             cmd('echohl None')
         end
-        M.write(log)
     end
-
+    M.write(log)
 end
 
 function M.info(msg)
-    if msg == nil then
-        return
-    end
+    local log = M._build_msg(msg)
     if M.level <= 1 then
-        local time = fn.strftime('%H:%M:%S')
-        local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[1] .. ' ] ' .. msg
         if M.silent == 0 and M.verbose >= 3 then
             cmd('echom "' .. log .. '"')
         end
-        M.write(log)
     end
+    M.write(log)
 end
 
 function M.view(l)
