@@ -37,24 +37,54 @@ function M.setOutput(file)
 end
 
 function M.viewRuntimeLog()
-  local info = "### SpaceVim runtime log :\n\n"
-  ..  "```log\n"
-  .. logger.view(logger.level)
-  .. "\n```\n"
-  cmd('tabnew')
-  cmd('setl nobuflisted')
-  cmd('nnoremap <buffer><silent> q :tabclose!<CR>')
-  -- put info into buffer
-  fn.append(0, fn.split(info, "\n"))
-  cmd('setl nomodifiable')
-  cmd('setl buftype=nofile')
-  cmd('setl filetype=markdown')
-  M.syntax_extra()
+    local info = "### SpaceVim runtime log :\n\n"
+    ..  "```log\n"
+    .. logger.view(logger.level)
+    .. "\n```\n"
+    cmd('tabnew')
+    cmd('setl nobuflisted')
+    cmd('nnoremap <buffer><silent> q :tabclose!<CR>')
+    -- put info into buffer
+    fn.append(0, fn.split(info, "\n"))
+    cmd('setl nomodifiable')
+    cmd('setl buftype=nofile')
+    cmd('setl filetype=markdown')
+    M.syntax_extra()
+end
+
+function M.viewLog(bang)
+    local info = "<details><summary> SpaceVim debug information </summary>\n\n"
+    .. "### SpaceVim options :\n\n"
+    .. "```toml\n"
+    .. fn.join(fn.call('SpaceVim#options#list', {}), "\n")
+    .. "\n```\n"
+    .. "\n\n"
+    .. "### SpaceVim layers :\n\n"
+    .. fn.call('SpaceVim#layers#report', {})
+    .. "\n\n"
+    .. "### SpaceVim Health checking :\n\n"
+    .. fn.call('SpaceVim#health#report', {})
+    .. "\n\n"
+    .. "### SpaceVim runtime log :\n\n"
+    .. "```log\n"
+    .. logger.view(logger.level)
+    .. "\n```\n</details>\n\n"
+    if bang == 1 then
+        cmd('tabnew')
+        cmd('setl nobuflisted')
+        cmd('nnoremap <buffer><silent> q :tabclose!<CR>')
+        -- put info into buffer
+        fn.append(0, fn.split(info, "\n"))
+        cmd('setl nomodifiable')
+        cmd('setl buftype=nofile')
+        cmd('setl filetype=markdown')
+    end
+    return info
 end
 
 function M.syntax_extra()
-  fn.matchadd('ErrorMsg','.*[\\sError\\s\\].*')
-  fn.matchadd('WarningMsg','.*[\\sWarn\\s\\].*')
+    fn.matchadd('ErrorMsg','.*[\\sError\\s\\].*')
+    fn.matchadd('WarningMsg','.*[\\sWarn\\s\\].*')
 end
 
 function M.derive(name)

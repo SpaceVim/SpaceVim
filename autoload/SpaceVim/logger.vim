@@ -35,9 +35,7 @@ if get(g:, 'spacevim_use_lua', 1)
 
   function! SpaceVim#logger#viewLog(...) abort
     let bang = get(a:000, 0, 0)
-    lua require("spacevim.logger").viewLog(
-          \ require("spacevim").eval("bang")
-          \ )
+    return luaeval('require("spacevim.logger").viewLog(require("spacevim").eval("bang"))')
   endfunction
 
   function! SpaceVim#logger#setLevel(level) abort
