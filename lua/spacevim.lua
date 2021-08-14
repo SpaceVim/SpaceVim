@@ -61,9 +61,7 @@ M.vim_options = setmetatable({}, {
                 return vim.api.nvim_get_option(key)
             else
                 -- for vim
-                _fn = function()
-                    return M.eval('&' .. key)
-                end
+                _fn = M.eval('&' .. key)
             end
             t[key] = _fn
             return _fn
