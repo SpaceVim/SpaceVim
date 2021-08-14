@@ -184,6 +184,10 @@ function M.unify_path(_path, ...)
   end
 end
 
+function M.path_to_fname(path)
+    return fn.substitute(M.unify_path(path), '[\\/:;.]', '_', 'g')
+end
+
 
 
 
