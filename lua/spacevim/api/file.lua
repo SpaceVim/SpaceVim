@@ -169,6 +169,34 @@ function M.read(path)
   end
 end
 
+function M.write(msg, fname)
+    local flags
+    if fn.filereadable(fname) == 1 then
+        flags = 'a'
+    else
+        flags = ''
+    end
+    fn.writefile({msg}, fname, flags)
+end
+
+function M.override(msg, fname)
+    local flags
+    if fn.filereadable(fname) == 1 then
+        flags = 'b'
+    else
+        flags = ''
+    end
+    fn.writefile({msg}, fname, flags)
+end
+
+function M.read(fname)
+    if fn.filereadable(fname) == 1 then
+        return fn.readfile(fname, '')
+    else
+        return ''
+    end
+end
+
 function M.unify_path(_path, ...)
   local mod = select('1', ...)
   if mod == nil then
