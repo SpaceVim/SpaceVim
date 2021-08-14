@@ -1,5 +1,13 @@
 local has = nil
 local fn = nil
+local vim_options = nil
+
+if vim.o ~= nil then
+    vim_options = vim.o
+else
+    vim_options = require('spacevim').vim_options
+end
+
 
 if vim.api == nil then
     has = require('spacevim').has
@@ -68,15 +76,15 @@ end
 
 function M.fileformat()
     local fileformat = ''
-    if vim.o.fileformat == 'dos' then
+    if vim_options.fileformat == 'dos' then
         fileformat = ''
-    elseif vim.o.fileformat == 'unix' then
+    elseif vim_options.fileformat == 'unix' then
         if M.isDarwin() then
             fileformat = ''
         else
             fileformat = ''
         end
-    elseif vim.o.fileformat == 'mac' then
+    elseif vim_options.fileformat == 'mac' then
         fileformat = ''
     end
     return fileformat

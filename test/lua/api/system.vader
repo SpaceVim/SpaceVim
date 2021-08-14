@@ -11,4 +11,6 @@ Execute ( lua api system ):
   AssertEqual cmp.luaeval('require("spacevim.api").import("system").name()'), api_system.name()
   Log 'test system.isDarwin()'
   AssertEqual cmp.luaeval('require("spacevim.api").import("system").isDarwin()'), api_system.isDarwin()
+  Log 'test system.fileformat()'
+  AssertEqual cmp.luaeval('require("spacevim.api").import("system").fileformat()'), api_system.fileformat()
   unlet api_system

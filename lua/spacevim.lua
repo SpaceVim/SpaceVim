@@ -52,6 +52,24 @@ M.fn = setmetatable({}, {
         end
     })
 
+-- This is for vim and old neovim to use vim.o
+M.vim_options = setmetatable({}, {
+        __index = function(t, key)
+            local _fn
+            if vim.api ~= nil then
+                -- for neovim
+                return vim.api.nvim_get_option(key)
+            else
+                -- for vim
+                _fn = function()
+                    return M.eval('&' .. key)
+                end
+            end
+            t[key] = _fn
+            return _fn
+        end
+    })
+
 -- this function is only for vim
 function M.has(feature)
     return M.eval('float2nr(has("' .. feature .. '"))')
