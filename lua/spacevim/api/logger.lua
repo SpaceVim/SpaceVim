@@ -5,6 +5,8 @@ else
     fn = vim.fn
 end
 
+local cmd = require('spacevim').cmd
+
 local M = {
     ['name'] = '',
     ['silent'] = 1,
@@ -45,7 +47,7 @@ function M.info(msg)
         local time = fn.strftime('%H:%M:%S')
         local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. levels[1] .. ' ] ' .. msg
         if M.silent == 0 and M.verbose >= 3 then
-            vim.command('echom "' .. log .. '"')
+            cmd('echom "' .. log .. '"')
         end
         M.write(log)
     end
