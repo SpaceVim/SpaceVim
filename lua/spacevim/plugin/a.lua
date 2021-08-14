@@ -30,18 +30,18 @@ function M.set_config_name(path, name)
 end
 
 function M.alt(request_parse, ...)
-   local arg={...}
-   local type = 'alternate'
-   local alt = nil
-   if fn.exists('b:alternate_file_config') ~= 1 then
-      local conf_file_path = M.getConfigPath()
-      local file = sp_file.unify_path(fn.bufname('%'), '.')
-      alt = M.get_alt(file, conf_file_path, request_parse, type)
-   end
-   if alt ~= nil then
-   else
-       print('failed to find alternate file!')
-   end
+    local arg={...}
+    local type = 'alternate'
+    local alt = nil
+    if fn.exists('b:alternate_file_config') ~= 1 then
+        local conf_file_path = M.getConfigPath()
+        local file = sp_file.unify_path(fn.bufname('%'), '.')
+        alt = M.get_alt(file, conf_file_path, request_parse, type)
+    end
+    if alt ~= nil then
+    else
+        print('failed to find alternate file!')
+    end
 end
 
 local function get_project_config(conf_file)
@@ -61,6 +61,37 @@ end
 local function parse(alt_config_json)
     logger.info('Start to parse alternate file for:' .. alt_config_json.root)
     project_config[alt_config_json.root] = {}
+    for key, value in ipairs(alt_config_json.config) do
+        logger.info('start parse key:' .. key)
+        local searchpath = key
+        if string.match(searchpath, '*') == '*' then
+            searchpath = string.gsub(searchpath, '*', '**/*')
+        end
+        logger.info('run globpath for: '.. searchpath)
+        for file in pairs(cmp.globpath('.', searchpath)) do
+            file = sp_file.unify_path(file, ':.')
+            project_config[alt_config_json.root][file] = {}
+            if alt_config_json.config.file ~= nil then
+                for type, _ in ipairs(alt_config_json.config[file]) do
+                    project_config[alt_config_json.root][file][type] = alt_config_json.config[file][type]
+                end
+            else
+                for type, _ in ipairs(alt_config_json.config[key]) do
+                    local begin_end = fn.split(key, '*')
+                    if #begin_end == 2 then
+                        project_config[alt_config_json.root][file][type] =
+                        get_type_path(
+                            begin_end,
+                            file,
+                            alt_config_json.config[key][type]
+                            )
+                    end
+                end
+            end
+        end
+    end
+    logger.info('Paser done, try to cache alternate info')
+    cache()
 end
 
 local function get_type_path(a, f, b)
@@ -79,7 +110,7 @@ local function is_config_changed(conf_path)
 end
 
 function M.get_alt(file, conf_path, request_parse, ...)
-    
+
 end
 
 function M.getConfigPath()
