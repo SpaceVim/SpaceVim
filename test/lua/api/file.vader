@@ -1,7 +1,13 @@
-Execute ( SpaceVim lua api: file.fticon() ):
+Execute ( SpaceVim lua api: file.fticon(ft) ):
   let &encoding = 'utf-8'
   let file = SpaceVim#api#import('file')
   let cmp = SpaceVim#api#import('vim#compatible')
   AssertEqual cmp.luaeval('require("spacevim.api").import("file").fticon("foo.md")'), file.fticon('foo.md')
   AssertEqual cmp.luaeval('require("spacevim.api").import("file").fticon("foo.mdxx")'), file.fticon('foo.mdxx')
 
+Execute ( SpaceVim lua api: file.unify_path(path, ...) ):
+  let file = SpaceVim#api#import('file')
+  let cmp = SpaceVim#api#import('vim#compatible')
+  AssertEqual cmp.luaeval('require("spacevim.api").import("file").unify_path(".SpaceVim.d/init.vim", ":p")'), fnamemodify('.SpaceVim.d/init.vim', ':p:gs?[\\/]?/?')
+  AssertEqual cmp.luaeval('string.sub(require("spacevim.api").import("file").unify_path("~/.SpaceVim.d/", ":p"), -1)'),  '/'
+  AssertEqual cmp.luaeval('string.sub(require("spacevim.api").import("file").unify_path("autoload", ":p"), -1)'),  '/'

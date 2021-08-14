@@ -174,8 +174,8 @@ function M.unify_path(_path, ...)
   if mod == nil then
       mod = ':p'
   end
-  local path = fn.fnamemodify(_path, mod .. ':gs?[\\/]?/?')
-  if fn.isdirectory(path) and string.sub(path, -1) ~= '/' then
+  local path = fn.fnamemodify(_path, mod .. ':gs?[\\\\/]?/?')
+  if fn.isdirectory(path) == 1 and string.sub(path, -1) ~= '/' then
     return path .. '/'
   elseif string.sub(_path, -1) == '/' and string.sub(path, -1) ~= '/' then
     return path .. '/'
