@@ -23,6 +23,9 @@ end
 
 -- there is no want to call viml function in old vim and neovim
 
+local function build_argv(...)
+end
+
 function M.call(funcname, ...)
     if vim.call ~= nil then
         return vim.call(funcname, ...)
@@ -30,7 +33,8 @@ function M.call(funcname, ...)
         if vim.api ~= nil then
             return vim.api.nvim_call_function(funcname, {...})
         else
-            -- how to run viml function in lua
+            -- call not call vim script function in lua
+            return vim.command('call funcname(' .. build_argv(...) .. '))')
         end
     end
 end
