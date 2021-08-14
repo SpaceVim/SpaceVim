@@ -193,7 +193,7 @@ if has('patch-7.4.279')
   endfunction
 else
   function! s:self.globpath(dir, expr) abort
-    return split(globpath(a:dir, a:expr), '\n')
+    return split(globpath(a:dir, a:expr), "\n")
   endfunction
 endif
 
