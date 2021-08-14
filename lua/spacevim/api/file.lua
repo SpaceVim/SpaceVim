@@ -154,7 +154,11 @@ function M.fticon(path)
         end
     end
     local ext = fn.fnamemodify(file, ':e')
-    return file_node_extensions[ext] or ''
+    if file_node_extensions[ext] ~= nil then
+        return file_node_extensions[ext]
+    else
+        return ''
+    end
 end
 
 function M.read(path)
