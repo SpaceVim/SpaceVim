@@ -1,5 +1,15 @@
 local M = {}
 
+local system = require('spacevim.api').import('system')
+
+if system.isWindows then
+    M.separator = '\\'
+    M.pathSeparator = ';'
+else
+    M.separator = '/'
+    M.pathSeparator = ':'
+end
+
 local file_node_extensions = {}
 file_node_extensions['styl'] = ''
 file_node_extensions['scss'] = ''
@@ -91,6 +101,39 @@ file_node_extensions['exs'] = ''
 file_node_extensions['eex'] = ''
 file_node_extensions['leex'] = ''
 
+local file_node_exact_matches = {
+    'exact-match-case-sensitive-1.txt'  = 'X1',
+    'exact-match-case-sensitive-2'      = 'X2',
+    'gruntfile.coffee'                  = '',
+    'gruntfile.js'                      = '',
+    'gruntfile.ls'                      = '',
+    'gulpfile.coffee'                   = '',
+    'gulpfile.js'                       = '',
+    'gulpfile.ls'                       = '',
+    'dropbox'                           = '',
+    '.ds_store'                         = '',
+    '.gitconfig'                        = '',
+    '.gitignore'                        = '',
+    '.bashrc'                           = '',
+    '.bashprofile'                      = '',
+    'favicon.ico'                       = '',
+    'license'                           = '',
+    'node_modules'                      = '',
+    'react.jsx'                         = '',
+    'Procfile'                          = '',
+    '.vimrc'                            = '',
+    'mix.lock'                          = '',
+    }
+
+local file_node_pattern_matches = {
+    '.*jquery.*\.js$'       = '',
+    '.*angular.*\.js$'      = '',
+    '.*backbone.*\.js$'     = '',
+    '.*require.*\.js$'      = '',
+    '.*materialize.*\.js$'  = '',
+    '.*materialize.*\.css$' = '',
+    '.*mootools.*\.js$'     = ''
+    }
 
 function M.fticon(ft)
     
