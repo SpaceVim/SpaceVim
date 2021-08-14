@@ -31,14 +31,42 @@ function M.set_level(l)
 end
 
 function M.error(msg)
-
+    local time = fn.strftime('%H:%M:%S')
+    local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. levels[1] .. ' ] ' .. msg
+    if M.silent == 0 and M.verbose >= 1 then
+        cmd('echohl Error')
+        cmd('echom "' .. log .. '"')
+        cmd('echohl None')
+    end
+    M.write(log)
 end
 
 function M.write(msg)
+    table.insert(M.temp, msg)
+    if M.file ~= '' then
+        if fn.isdirectory(fn.fnamemodify(M.file, ':p:h')) == 0 then
+            fn.mkdir(fn.expand(fn.fnamemodify(M.file, ':p:h')), 'p')
+        end
+        local flags = ''
+        if fn.filereadable(M.file) == 1 then
+            flags = 'a'
+        end
+        fn.writefile({msg}, M.file, flags)
+    end
 
 end
 
 function M.warn(msg, ...)
+    if M.level <= 2 then
+        local time = fn.strftime('%H:%M:%S')
+        local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. levels[1] .. ' ] ' .. msg
+        if (M.silent == 0 and M.verbose >= 2) or select(1, ...) == 1 then
+            cmd('echohl WarningMsg')
+            cmd('echom "' .. log .. '"')
+            cmd('echohl None')
+        end
+        M.write(log)
+    end
 
 end
 
