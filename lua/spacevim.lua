@@ -30,6 +30,7 @@ function M.call(funcname, ...)
         if vim.api ~= nil then
             return vim.api.nvim_call_function(funcname, {...})
         else
+            -- how to run viml function in lua
         end
     end
 end
