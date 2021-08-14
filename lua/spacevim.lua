@@ -21,6 +21,16 @@ function M.eval(l)
     end
 end
 
+if vim.command ~= nil then
+    function M.cmd(command)
+        return vim.command(command)
+    end
+else
+    function M.cmd(command)
+        return vim.api.nvim_command(command)
+    end
+end
+
 -- there is no want to call viml function in old vim and neovim
 
 local function build_argv(...)
