@@ -10,6 +10,16 @@ else
     fn = vim.fn
 end
 
+if vim.api == nil then
+    has = require('spacevim').has
+else
+    if vim.fn ~= nil then
+        has = vim.fn.has
+    else
+        has = require('spacevim').has
+    end
+end
+
 if has('patch-7.4.279') then
     function M.globpath(dir, expr)
         return fn.globpath(dir, expr, 1, 1)
