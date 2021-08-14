@@ -10,6 +10,8 @@ if exists('s:string_hi')
   finish
 endif
 
+let s:enable_smooth_scrolling = 1
+
 
 let s:SYS = SpaceVim#api#import('system')
 let s:FILE = SpaceVim#api#import('file')
@@ -70,6 +72,7 @@ function! SpaceVim#layers#core#config() abort
     noremap <silent> <F3> :NERDTreeToggle<CR>
   endif
   let g:matchup_matchparen_status_offscreen = 0
+  let g:smoothie_no_default_mappings = !s:enable_smooth_scrolling
   " Unimpaired bindings
   " Quickly add empty lines
   nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
@@ -921,6 +924,9 @@ function! SpaceVim#layers#core#set_variable(var) abort
   let g:_spacevim_filetree_show_hidden_files = get(a:var,
         \ 'filetree_show_hidden',
         \ g:_spacevim_filetree_show_hidden_files)
+  let s:enable_smooth_scrolling = get(a:var,
+        \ 'enable_smooth_scrolling',
+        \ s:enable_smooth_scrolling)
 
 endfunction
 
