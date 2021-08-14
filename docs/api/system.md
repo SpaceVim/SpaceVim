@@ -46,7 +46,6 @@ let s:system = SpaceVim#api#import('system')
 if s:system.isWindows
     echom "OS is Windows"
 endif
-
 ```
 
 **lua script:**
@@ -57,5 +56,4 @@ local sys = require('spacevim.api').import('system')
 if sys.isWindows == 1 then
     print('this is windows os!')
 end
-
 ```
