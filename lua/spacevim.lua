@@ -46,7 +46,8 @@ function M.call(funcname, ...)
             return vim.api.nvim_call_function(funcname, {...})
         else
             -- call not call vim script function in lua
-            return vim.command('call funcname(' .. build_argv(...) .. '))')
+            vim.command('let g:lua_rst = ' .. funcname .. '(' .. build_argv({...}) .. ')')
+            return M.eval('g:lua_rst')
         end
     end
 end
