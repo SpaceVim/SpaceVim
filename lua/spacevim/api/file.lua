@@ -221,26 +221,35 @@ end
 function M.finddir(what, where, ...)
   -- let old_suffixesadd = &suffixesadd
   -- let &suffixesadd = ''
+  print(...)
   local count = select('1', ...)
   if count == nil then
       count = 0
   end
   local path = ''
   local file = ''
+  print('1', file, path)
   if fn.filereadable(where) == 1 and fn.isdirectory(where) == 0 then
+  print('2', file, path)
     path = fn.fnamemodify(where, ':h')
   else
+  print('3', file, path)
     path = where
   end
   if count > 0 then
+  print('4', file, path)
     file = fn.finddir(what, fn.escape(path, ' ') .. ';', count)
   elseif #{...} == 0 then
+  print('5', file, path)
     file = fn.finddir(what, fn.escape(path, ' ') .. ';')
   elseif count == 0 then
+  print('6', file, path)
     file = fn.finddir(what, fn.escape(path, ' ') .. ';', -1)
   else
+  print('7', file, path)
     file = fn.get(fn.finddir(what, fn.escape(path, ' ') .. ';', -1), count, '')
   end
+  print('8', file, path)
   -- let &suffixesadd = old_suffixesadd
   return file
 end

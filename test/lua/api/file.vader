@@ -20,5 +20,8 @@ Execute ( SpaceVim lua api: file.path_to_fname(path) ):
 Execute ( SpaceVim lua api: file.findfile(what, where, ...) ):
   let file = SpaceVim#api#import('file')
   let cmp = SpaceVim#api#import('vim#compatible')
-  AssertEqual cmp.luaeval('require("spacevim.api").import("file").path_to_fname(".SpaceVim.d/init.vim")'), file.path_to_fname('.SpaceVim.d/init.vim')
-  AssertEqual cmp.luaeval('require("spacevim.api").import("file").finddir("doc/", "bundle/dein.vim/autoload/dein.vim")'), 'bundle/dein.vim/doc/'
+  lua spacevim_file = require('spacevim.api').import('file')
+  lua if vim.fn == nil then fn = require('spacevim').fn else fn = vim.fn end
+  AssertEqual cmp.luaeval('spacevim_file.finddir("doc/", fn.fnamemodify("bundle/dein.vim/autoload/dein.vim", ":p:."))'), 'bundle/dein.vim/doc/'
+  AssertEqual cmp.luaeval('spacevim_file.unify_path(spacevim_file.findfile("vimrc", "bundle/dein.vim/autoload/dein.vim"), ":.")'), 'vimrc'
+  lua spacevim_file = nil
