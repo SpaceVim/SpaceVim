@@ -3,4 +3,5 @@ Execute ( SpaceVim lua api: file.fticon() ):
   let file = SpaceVim#api#import('file')
   let cmp = SpaceVim#api#import('vim#compatible')
   AssertEqual cmp.luaeval('require("spacevim.api").import("file").fticon("foo.md")'), file.fticon('foo.md')
+  AssertEqual cmp.luaeval('require("spacevim.api").import("file").fticon("foo.mdxx")'), file.fticon('foo.mdxx')
 
