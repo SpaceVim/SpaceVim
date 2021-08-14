@@ -92,17 +92,17 @@ function M.derive(name)
     local derive = {}
     derive['origin_name'] = logger.get_name()
 
-    function derive.info()
+    function derive.info(msg)
         logger.set_name(derive.derive_name)
         logger.info(msg)
         logger.set_name(derive.origin_name)
     end
-    function derive.warn()
+    function derive.warn(msg)
         logger.set_name(derive.derive_name)
         logger.warn(msg)
         logger.set_name(derive.origin_name)
     end
-    function derive.error()
+    function derive.error(msg)
         logger.set_name(derive.derive_name)
         logger.error(msg)
         logger.set_name(derive.origin_name)
