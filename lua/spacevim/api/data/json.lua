@@ -38,3 +38,5 @@ if fn.exists('*json_encode') then
     end
 else
 end
+
+return M
