@@ -2,7 +2,7 @@ local M = {}
 local sp = require('spacevim')
 local cmp = require('spacevim.api').import('vim.compatible')
 local sp_file = require('spacevim.api').import('file')
-local sp_json = require('spacevim.api').import('date.json')
+local sp_json = require('spacevim.api').import('data.json')
 local logger = require('spacevim.logger').derive('a.vim')
 
 local alternate_conf = {}
