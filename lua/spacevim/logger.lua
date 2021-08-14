@@ -62,19 +62,19 @@ function M.derive(name)
     derive['origin_name'] = logger.get_name()
 
     function derive.info()
-        logger.set_name(self.derive_name)
+        logger.set_name(derive.derive_name)
         logger.info(msg)
-        logger.set_name(self.origin_name)
+        logger.set_name(derive.origin_name)
     end
     function derive.warn()
-        logger.set_name(self.derive_name)
+        logger.set_name(derive.derive_name)
         logger.warn(msg)
-        logger.set_name(self.origin_name)
+        logger.set_name(derive.origin_name)
     end
     function derive.error()
-        logger.set_name(self.derive_name)
+        logger.set_name(derive.derive_name)
         logger.error(msg)
-        logger.set_name(self.origin_name)
+        logger.set_name(derive.origin_name)
     end
 
     derive['derive_name'] = fn.printf('%' .. fn.strdisplaywidth(logger.get_name()) .. 'S', name)
