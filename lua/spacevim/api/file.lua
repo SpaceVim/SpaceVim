@@ -198,6 +198,8 @@ function M.findfile(what, where, ...)
       count = 0
   end
 
+  local file = ''
+
   if fn.filereadable(where) == 1 and  fn.isdirectory(where) == 0 then
     local path = fn.fnamemodify(where, ':h')
   else
@@ -223,19 +225,21 @@ function M.finddir(what, where, ...)
   if count == nil then
       count = 0
   end
+  local path = ''
+  local file = ''
   if fn.filereadable(where) == 1 and fn.isdirectory(where) == 0 then
-    local path = fn.fnamemodify(where, ':h')
+    path = fn.fnamemodify(where, ':h')
   else
-    local path = where
+    path = where
   end
   if count > 0 then
-    local file = fn.finddir(what, fn.escape(path, ' ') .. ';', count)
+    file = fn.finddir(what, fn.escape(path, ' ') .. ';', count)
   elseif #{...} == 0 then
-    local file = fn.finddir(what, fn.escape(path, ' ') .. ';')
+    file = fn.finddir(what, fn.escape(path, ' ') .. ';')
   elseif count == 0 then
-    local file = fn.finddir(what, fn.escape(path, ' ') .. ';', -1)
+    file = fn.finddir(what, fn.escape(path, ' ') .. ';', -1)
   else
-    local file = fn.get(fn.finddir(what, fn.escape(path, ' ') .. ';', -1), count, '')
+    file = fn.get(fn.finddir(what, fn.escape(path, ' ') .. ';', -1), count, '')
   end
   -- let &suffixesadd = old_suffixesadd
   return file
