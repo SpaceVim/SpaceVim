@@ -345,6 +345,17 @@ else
 endif
 
 
+" this function is only for test
+function! s:self.luaeval(expr) abort
+  let rst = luaeval(a:expr)
+  if type(rst) ==# 5
+    return float2nr(rst)
+  else
+    return rst
+  endif
+endfunction
+
+
 
 function! SpaceVim#api#vim#compatible#get() abort
   return deepcopy(s:self)
