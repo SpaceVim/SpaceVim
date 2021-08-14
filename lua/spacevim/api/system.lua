@@ -79,7 +79,7 @@ function M.fileformat()
     if vim_options.fileformat == 'dos' then
         fileformat = ''
     elseif vim_options.fileformat == 'unix' then
-        if M.isDarwin() then
+        if M.isDarwin() == 1 then
             fileformat = ''
         else
             fileformat = ''
