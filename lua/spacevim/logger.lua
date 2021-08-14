@@ -2,6 +2,7 @@ local M = {}
 
 local logger = require('spacevim.api').import('logger')
 local cmd = require('spacevim').cmd
+local call = require('spacevim').call
 local fn = nil
 if vim.fn == nil then
     fn = require('spacevim').fn
@@ -56,14 +57,14 @@ function M.viewLog(bang)
     local info = "<details><summary> SpaceVim debug information </summary>\n\n"
     .. "### SpaceVim options :\n\n"
     .. "```toml\n"
-    .. fn.join(fn.call('SpaceVim#options#list', {}), "\n")
+    .. fn.join(call('SpaceVim#options#list'), "\n")
     .. "\n```\n"
     .. "\n\n"
     .. "### SpaceVim layers :\n\n"
-    .. fn.call('SpaceVim#layers#report', {})
+    .. call('SpaceVim#layers#report')
     .. "\n\n"
     .. "### SpaceVim Health checking :\n\n"
-    .. fn.call('SpaceVim#health#report', {})
+    .. call('SpaceVim#health#report')
     .. "\n\n"
     .. "### SpaceVim runtime log :\n\n"
     .. "```log\n"
