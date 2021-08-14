@@ -81,6 +81,30 @@ function M.info(msg)
     end
 end
 
+function M.view(l)
+  local info = ''
+  local logs = ''
+  if fn.filereadable(M.file) == 1 then
+    logs = fn.readfile(M.file, '')
+    info = info .. fn.join(fn.filter(logs, 'self._comp(v:val, a:l)'), "\n")
+  else
+    info = info .. '[ ' .. M.name .. ' ] : logger file ' .. M.file
+          .. ' does not exists, only log for current process will be shown!'
+          ..  "\n"
+          for key, value in pairs(M.temp) do
+              if M._comp(value, l) == 1 then
+                  info = info .. value .. "\n"
+              end
+          end
+  end
+  return info
+    
+end
+
+function M._comp(a, b)
+    
+end
+
 function M.set_name(name)
     M.name = name
 end
