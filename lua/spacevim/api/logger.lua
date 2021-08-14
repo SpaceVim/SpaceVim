@@ -16,7 +16,7 @@ local M = {
     ['temp'] = {},
 }
 
-local levels = {'Info', 'Warn', 'Error'}
+M.levels = {'Info', 'Warn', 'Error'}
 
 function M.set_silent(sl)
     M.silent = sl
@@ -32,7 +32,7 @@ end
 
 function M.error(msg)
     local time = fn.strftime('%H:%M:%S')
-    local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. levels[1] .. ' ] ' .. msg
+    local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[1] .. ' ] ' .. msg
     if M.silent == 0 and M.verbose >= 1 then
         cmd('echohl Error')
         cmd('echom "' .. log .. '"')
@@ -59,7 +59,7 @@ end
 function M.warn(msg, ...)
     if M.level <= 2 then
         local time = fn.strftime('%H:%M:%S')
-        local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. levels[1] .. ' ] ' .. msg
+        local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[1] .. ' ] ' .. msg
         if (M.silent == 0 and M.verbose >= 2) or select(1, ...) == 1 then
             cmd('echohl WarningMsg')
             cmd('echom "' .. log .. '"')
@@ -71,9 +71,12 @@ function M.warn(msg, ...)
 end
 
 function M.info(msg)
+    if msg == nil then
+        return
+    end
     if M.level <= 1 then
         local time = fn.strftime('%H:%M:%S')
-        local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. levels[1] .. ' ] ' .. msg
+        local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[1] .. ' ] ' .. msg
         if M.silent == 0 and M.verbose >= 3 then
             cmd('echom "' .. log .. '"')
         end

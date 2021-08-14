@@ -50,9 +50,6 @@ endfunction
 
 " when this function is called, the project_config file name is changed, and
 " the project_config info is cleared.
-function! SpaceVim#plugins#a#set_config_name(path, name) abort
-  let s:alternate_conf[a:path] = a:name
-endfunction
 function! s:get_project_config(conf_file) abort
   call s:LOGGER.info('read context from: '. a:conf_file)
   let context = join(readfile(a:conf_file), "\n")
@@ -79,10 +76,15 @@ if get(g:, 'spacevim_use_lua', 1)
           \ require("spacevim").eval("a:000")
           \ )
   endfunction
-function! SpaceVim#plugins#a#getConfigPath() abort
-  return s:FILE.unify_path(get(s:alternate_conf, getcwd(), s:alternate_conf['_']), ':p')
+  function! SpaceVim#plugins#a#getConfigPath() abort
     return luaeval('require("spacevim.plugin.a").ConfigPath()')
-endfunction
+  endfunction
+  function! SpaceVim#plugins#a#set_config_name(path, name) abort
+    lua require("spacevim.plugin.a").set_config_name(
+          \ require("spacevim").eval("a:path"),
+          \ require("spacevim").eval("a:name")
+          \ )
+  endfunction
 else
   function! SpaceVim#plugins#a#alt(request_parse,...) abort
     let type = get(a:000, 0, 'alternate')
@@ -97,6 +99,9 @@ else
     else
       echo 'failed to find alternate file!'
     endif
+  endfunction
+  function! SpaceVim#plugins#a#set_config_name(path, name) abort
+    let s:alternate_conf[a:path] = a:name
   endfunction
 endif
 
