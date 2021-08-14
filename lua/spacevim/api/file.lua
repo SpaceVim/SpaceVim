@@ -144,7 +144,10 @@ local file_node_pattern_matches = {
 }
 
 function M.fticon(path)
+    print(path)
     local file = fn.fnamemodify(path, ':t')
+    -- why it is nil in vim, what the fuck
+    print(file)
     if file_node_exact_matches[file] ~= nil then
         return file_node_exact_matches[file]
     end
@@ -154,6 +157,7 @@ function M.fticon(path)
         end
     end
     local ext = fn.fnamemodify(file, ':e')
+    print(ext)
     if file_node_extensions[ext] ~= nil then
         return file_node_extensions[ext]
     else
