@@ -76,14 +76,14 @@ local function parse(alt_config_json)
                     project_config[alt_config_json.root][file][type] = alt_config_json.config[file][type]
                 end
             else
-                for type, _ in ipairs(alt_config_json.config[key]) do
+                for a_type, _ in ipairs(alt_config_json.config[key]) do
                     local begin_end = fn.split(key, '*')
                     if #begin_end == 2 then
-                        project_config[alt_config_json.root][file][type] =
+                        project_config[alt_config_json.root][file][a_type] =
                         get_type_path(
                             begin_end,
                             file,
-                            alt_config_json.config[key][type]
+                            alt_config_json.config[key][a_type]
                             )
                     end
                 end
