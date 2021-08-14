@@ -21,6 +21,19 @@ function M.eval(l)
     end
 end
 
+-- there is no want to call viml function in old vim and neovim
+
+function M.call(funcname, ...)
+    if vim.call ~= nil then
+        return vim.call(funcname, ...)
+    else
+        if vim.api ~= nil then
+            return vim.api.nvim_call_function(funcname, {...})
+        else
+        end
+    end
+end
+
 -- this is for Vim and old neovim
 M.fn = setmetatable({}, {
         __index = function(t, key)
@@ -31,7 +44,7 @@ M.fn = setmetatable({}, {
                 end
             else
                 _fn = function(...)
-                    return vim.api.nvim_call_function(key, {...})
+                    return M.call(key, ...)
                 end
             end
             t[key] = _fn
