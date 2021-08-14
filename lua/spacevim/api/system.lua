@@ -4,7 +4,11 @@ local fn = nil
 if vim.api == nil then
     has = require('spacevim').has
 else
-    has = vim.fn.has
+    if vim.fn ~= nil then
+        has = vim.fn.has
+    else
+        has = require('spacevim').has
+    end
 end
 
 if vim.fn == nil then
