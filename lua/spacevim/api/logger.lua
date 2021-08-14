@@ -43,7 +43,7 @@ end
 function M.info(msg)
     if M.level <= 1 then
         local time = fn.strftime('%H:%M:%S')
-        local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. levels[0] .. ' ] ' .. msg
+        local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. levels[1] .. ' ] ' .. msg
         if M.silent == 0 and M.verbose >= 3 then
             vim.command('echom "' .. log .. '"')
         end
