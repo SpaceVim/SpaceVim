@@ -24,6 +24,18 @@ end
 -- there is no want to call viml function in old vim and neovim
 
 local function build_argv(...)
+    local str = ''
+    for index, value in ipairs(...) do
+        if str ~= '' then
+            str = str .. ','
+        end
+        if type(value) == 'string' then
+            str = str .. '"' .. value .. '"'
+        elseif type(value) == 'number' then
+            str = str .. value
+        end
+    end
+    return str
 end
 
 function M.call(funcname, ...)
