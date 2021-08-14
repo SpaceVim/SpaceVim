@@ -105,24 +105,14 @@ function M.view(l)
 end
 
 function M._comp(msg, l)
-    return 1
   -- if a:msg =~# '\[ ' . self.name . ' \] \[\d\d\:\d\d\:\d\d\] \[ '
-        -- \ . s:levels[2] . ' \]'
-    -- return 1
-  -- elseif a:msg =~# '\[ ' . self.name . ' \] \[\d\d\:\d\d\:\d\d\] \[ '
-        -- \ . s:levels[1] . ' \]'
-    -- if a:l > 2
-      -- return 0
-    -- else
-      -- return 1
-    -- endif
-  -- else
-    -- if a:l > 1
-      -- return 0
-    -- else
-      -- return 1
-    -- endif
-  -- endif
+  if string.find(msg, M.levels[2]) ~= nil then
+      return 1
+  elseif string.find(msg, M.levels[1]) ~= nil then
+      if l > 2 then return 0 else return 1 end
+  else
+      if l > 1 then return 0 else return 1 end
+  end
 end
 
 function M.set_name(name)
