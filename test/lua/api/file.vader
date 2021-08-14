@@ -22,6 +22,8 @@ Execute ( SpaceVim lua api: file.findfile(what, where, ...) ):
   let cmp = SpaceVim#api#import('vim#compatible')
   lua spacevim_file = require('spacevim.api').import('file')
   lua if vim.fn == nil then fn = require('spacevim').fn else fn = vim.fn end
-  AssertEqual cmp.luaeval('spacevim_file.finddir("doc/", fn.fnamemodify("bundle/dein.vim/autoload/dein.vim", ":p:."))'), 'bundle/dein.vim/doc/'
-  AssertEqual cmp.luaeval('spacevim_file.unify_path(spacevim_file.findfile("vimrc", "bundle/dein.vim/autoload/dein.vim"), ":.")'), 'vimrc'
+  AssertEqual cmp.luaeval('spacevim_file.finddir("doc/", fn.fnamemodify("bundle/dein.vim/autoload/dein.vim", ":p:."))'),
+  \ file.finddir("doc/", fnamemodify("bundle/dein.vim/autoload/dein.vim", ":p:."))
+  AssertEqual cmp.luaeval('spacevim_file.unify_path(spacevim_file.findfile("vimrc", "bundle/dein.vim/autoload/dein.vim"), ":.")'),
+  \ file.unify_path(file.findfile("vimrc", "bundle/dein.vim/autoload/dein.vim"), ":.")
   lua spacevim_file = nil
