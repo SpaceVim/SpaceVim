@@ -34,6 +34,7 @@ function M._build_msg(msg)
     msg = msg or ''
     local time = fn.strftime('%H:%M:%S')
     local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[1] .. ' ] ' .. msg
+    return log
 end
 
 function M.error(msg)
@@ -103,8 +104,25 @@ function M.view(l)
     
 end
 
-function M._comp(a, b)
-    
+function M._comp(msg, l)
+    return 1
+  -- if a:msg =~# '\[ ' . self.name . ' \] \[\d\d\:\d\d\:\d\d\] \[ '
+        -- \ . s:levels[2] . ' \]'
+    -- return 1
+  -- elseif a:msg =~# '\[ ' . self.name . ' \] \[\d\d\:\d\d\:\d\d\] \[ '
+        -- \ . s:levels[1] . ' \]'
+    -- if a:l > 2
+      -- return 0
+    -- else
+      -- return 1
+    -- endif
+  -- else
+    -- if a:l > 1
+      -- return 0
+    -- else
+      -- return 1
+    -- endif
+  -- endif
 end
 
 function M.set_name(name)
