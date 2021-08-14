@@ -20,6 +20,14 @@ else
     end
 end
 
+local has_cache = {}
+
+function M.has(feature)
+    if has_cache[feature] ~= nil then
+        return has_cache[feature]
+    end
+end
+
 if has('patch-7.4.279') then
     function M.globpath(dir, expr)
         return fn.globpath(dir, expr, 1, 1)
