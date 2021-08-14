@@ -14,9 +14,46 @@ local cache_path = sp_file.unify_path(sp.eval('g:spacevim_data_dir'), ':p') .. '
 local project_config = {}
 
 local function cache()
+    fn.writefile({sp_json.json_encode(project_config)}, sp_file.unify_path(cache_path, ':p'))
+end
 
+local function load_cache()
+    logger.info('Try to load alt cache from:' .. cache_path)
+    local cache_context = fn.join(fn.readfile(cache_path, ''), '')
+    if cache_context ~= '' then
+        project_config = sp_json.json_decode(cache_context)
+    end
+end
+
+function M.set_config_name(path, name)
+    alternate_conf[path] = name
 end
 
 function M.alt(request_parse, ...)
-    
+   local arg={...}
+   local type = 'alternate'
+   local alt = nil
+   if fn.exists('b:alternate_file_config') ~= 1 then
+      local conf_file_path = M.getConfigPath()
+      local file = sp_file.unify_path(fn.bufname('%'), '.')
+      alt = M.get_alt(file, conf_file_path, request_parse, type)
+   end
+   if alt ~= nil then
+   else
+       print('failed to find alternate file!')
+   end
+end
+
+local function get_project_config(conf_file)
+    logger.info('read context from:' .. conf_file)
+    local context = fn.join(fn.readfile(conf_file), "\n")
+    local conf = sp_json.json_decode(context)
+    if type(conf) ~= type({}) then
+        conf = {}
+    end
+    local root = sp_file.unify_path(conf_file, ':p:h')
+    return {
+        ['root'] = root,
+        ['config'] = conf
+    }
 end
