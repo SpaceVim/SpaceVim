@@ -157,6 +157,14 @@ function M.fticon(path)
     return file_node_extensions[ext] or ''
 end
 
+function M.read(path)
+  if fn.filereadable(path) then
+    return fn.readfile(path, '')
+  else
+    return ''
+  end
+end
+
 
 
 
