@@ -64,6 +64,9 @@ local function parse(alt_config_json)
 end
 
 local function get_type_path(a, f, b)
+    local begin_len = fn.strlen(a[0])
+    local end_len = fn.strlen(a[1])
+    return fn.substitute(b, '{}', string.sub(f, begin_len,  (end_len+1) * -1), 'g')
 end
 
 local function is_config_changed(conf_path)
