@@ -74,7 +74,7 @@ endfunction
 
 if get(g:, 'spacevim_use_lua', 1)
   function! SpaceVim#plugins#a#alt(request_parse, ...) abort
-    lua require("spacevim.plugins.a").alt(
+    lua require("spacevim.plugin.a").alt(
           \ require("spacevim").eval("a:request_parse"),
           \ require("spacevim").eval("a:000")
           \ )
