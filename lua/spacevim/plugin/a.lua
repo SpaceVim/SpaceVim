@@ -109,8 +109,30 @@ local function is_config_changed(conf_path)
     end
 end
 
-function M.get_alt(file, conf_path, request_parse, ...)
-
+function M.get_alt(file, conf_path, request_parse, a_type)
+  logger.info('getting alt file for:' .. file)
+  logger.info('  >   type: ' .. a_type)
+  logger.info('  >  parse: ' .. request_parse)
+  logger.info('  > config: ' .. conf_path)
+  alt_config_json = get_project_config(conf_path)
+  if project_config[alt_config_json.root] == nil
+        and is_config_changed(conf_path) == 0
+        and request_parse == 0 then
+    load_cache()
+    if project_config[alt_config_json.root] == nil
+          or project_config[alt_config_json.root][file] == nil then
+        parse(alt_config_json)
+    end
+  else
+    parse(alt_config_json)
+  end
+  if project_config[alt_config_json.root] ~= nil
+        and project_config[alt_config_json.root][file] ~= nil
+        and project_config[alt_config_json.root][file][a_type] ~= nil then
+    return project_config[alt_config_json.root][file][a_type]
+  else
+    return ''
+  end
 end
 
 function M.getConfigPath()
