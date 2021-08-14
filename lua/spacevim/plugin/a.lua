@@ -57,3 +57,35 @@ local function get_project_config(conf_file)
         ['config'] = conf
     }
 end
+
+local function parse(alt_config_json)
+    logger.info('Start to parse alternate file for:' .. alt_config_json.root)
+    project_config[alt_config_json.root] = {}
+end
+
+local function get_type_path(a, f, b)
+end
+
+local function is_config_changed(conf_path)
+    if fn.getftime(conf_path) > fn.getftime(cache_path) then
+        logger.info('alt config file('
+            .. conf_path
+            .. ')')
+        return 1
+    end
+end
+
+function M.get_alt(file, conf_path, request_parse, ...)
+    
+end
+
+function M.getConfigPath()
+    local pwd = fn.getcwd()
+    local p = alternate_conf['_']
+    if alternate_conf[pwd] ~= nil then
+        p = alternate_conf[pwd]
+    end
+    return sp_file.unify_path(p, ':p')
+end
+
+

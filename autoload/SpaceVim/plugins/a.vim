@@ -79,6 +79,10 @@ if get(g:, 'spacevim_use_lua', 1)
           \ require("spacevim").eval("a:000")
           \ )
   endfunction
+function! SpaceVim#plugins#a#getConfigPath() abort
+  return s:FILE.unify_path(get(s:alternate_conf, getcwd(), s:alternate_conf['_']), ':p')
+    return luaeval('require("spacevim.plugin.a").ConfigPath()')
+endfunction
 else
   function! SpaceVim#plugins#a#alt(request_parse,...) abort
     let type = get(a:000, 0, 'alternate')
