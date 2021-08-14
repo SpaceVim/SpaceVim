@@ -1,0 +1,6 @@
+Execute ( SpaceVim lua api: file.fticon() ):
+  let &encoding = 'utf-8'
+  let file = SpaceVim#api#import('file')
+  let cmp = SpaceVim#api#import('vim#compatible')
+  AssertEqual cmp.luaeval('require("spacevim.api").import("file").fticon("foo.md")'), file.fticon('foo.md')
+
