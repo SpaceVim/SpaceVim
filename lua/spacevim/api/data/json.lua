@@ -6,8 +6,8 @@ else
     fn = vim.fn
 end
 
-M._vim = require('spacevim.api').import('vim')
-M._iconv = require('spacevim.api').import('iconv')
+-- M._vim = require('spacevim.api').import('vim')
+-- M._iconv = require('spacevim.api').import('iconv')
 
 function M._json_null()
     return nil
