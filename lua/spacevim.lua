@@ -23,6 +23,21 @@ end
 
 -- there is no want to call viml function in old vim and neovim
 
+local function build_argv(...)
+    local str = ''
+    for index, value in ipairs(...) do
+        if str ~= '' then
+            str = str .. ','
+        end
+        if type(value) == 'string' then
+            str = str .. '"' .. value .. '"'
+        elseif type(value) == 'number' then
+            str = str .. value
+        end
+    end
+    return str
+end
+
 function M.call(funcname, ...)
     if vim.call ~= nil then
         return vim.call(funcname, ...)
@@ -30,6 +45,9 @@ function M.call(funcname, ...)
         if vim.api ~= nil then
             return vim.api.nvim_call_function(funcname, {...})
         else
+            -- call not call vim script function in lua
+            vim.command('let g:lua_rst = ' .. funcname .. '(' .. build_argv({...}) .. ')')
+            return M.eval('g:lua_rst')
         end
     end
 end
