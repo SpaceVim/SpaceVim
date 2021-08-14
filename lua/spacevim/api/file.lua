@@ -1,6 +1,13 @@
 local M = {}
 
 local system = require('spacevim.api').import('system')
+local fn = nil
+
+if vim.fn == nil then
+    fn = require('spacevim').fn
+else
+    fn = vim.fn
+end
 
 if system.isWindows then
     M.separator = '\\'
@@ -124,7 +131,7 @@ local file_node_exact_matches = {
     ['Procfile']                          = '',
     ['.vimrc']                            = '',
     ['mix.lock']                          = '',
-    }
+}
 
 local file_node_pattern_matches = {
     ['.*jquery.*\\.js$']       = '',
@@ -134,10 +141,20 @@ local file_node_pattern_matches = {
     ['.*materialize.*\\.js$']  = '',
     ['.*materialize.*\\.css$'] = '',
     ['.*mootools.*\\.js$']     = ''
-    }
+}
 
-function M.fticon(ft)
-    
+function M.fticon(path)
+    local file = fn.fnamemodify(path, ':t')
+    if file_node_exact_matches[file] ~= nil then
+        return file_node_exact_matches[file]
+    end
+    for k,v in ipairs(file_node_pattern_matches) do
+        if fn.match(file, k) ~= -1 then
+            return v
+        end
+    end
+    local ext = fn.fnamemodify(file, ':e')
+    return file_node_extensions[ext] or ''
 end
 
 
