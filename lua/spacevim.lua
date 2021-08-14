@@ -14,10 +14,10 @@ function M.bootstrap()
 end
 
 function M.eval(l)
-    if vim['api'] ~= nil then
-        return vim.eval(l)
-    else
+    if vim.api ~= nil then
         return vim.api.nvim_eval(l)
+    else
+        return vim.eval(l)
     end
 end
 
@@ -31,7 +31,7 @@ M.fn = setmetatable({}, {
                 end
             else
                 _fn = function(...)
-                    vim.api.nvim_call_function(key, ...)
+                    return vim.api.nvim_call_function(key, {...})
                 end
             end
             t[key] = _fn
@@ -41,7 +41,7 @@ M.fn = setmetatable({}, {
 
 -- this function is only for vim
 function M.has(feature)
-    return vim.eval('float2nr(has("' .. feature .. '"))')
+    return M.eval('float2nr(has("' .. feature .. '"))')
 end
 
 return M
