@@ -1,6 +1,7 @@
 local M = {}
 
 local logger = require('spacevim.api').import('logger')
+local cmd = require('spacevim').cmd
 
 logger.set_name('SpaceVim')
 logger.set_level(1)
@@ -27,6 +28,25 @@ end
 
 function M.setOutput(file)
     logger.set_file(file)
+end
+
+function M.viewRuntimeLog()
+  local info = "### SpaceVim runtime log :\n\n"
+  ..  "```log\n"
+  .. logger.view(logger.level)
+  .. "\n```\n"
+  cmd('tabnew +setl nobuflisted')
+  cmd('nnoremap <buffer><silent> q :tabclose!<CR>')
+  -- put info into buffer
+  cmd('setl nomodifiable')
+  cmd('setl buftype=nofile')
+  cmd('setl filetype=markdown')
+  syntax_extra()
+end
+
+local function syntax_extra()
+  fn.matchadd('ErrorMsg','.*[\\sError\\s\\].*')
+  fn.matchadd('WarningMsg','.*[\\sWarn\\s\\].*')
 end
 
 function M.derive(name)
