@@ -169,6 +169,21 @@ function M.read(path)
   end
 end
 
+function M.unify_path(_path, ...)
+  local mod = select('1', ...)
+  if mod == nil then
+      mod = ':p'
+  end
+  local path = fn.fnamemodify(_path, mod .. ':gs?[\\/]?/?')
+  if fn.isdirectory(path) and string.sub(path, -2, -1) ~= '/' then
+    return path .. '/'
+  elseif string.sub(_path, -2, -1) == '/' and string.sub(path, -2, -1) ~= '/' then
+    return path .. '/'
+  else
+    return path
+  end
+end
+
 
 
 
