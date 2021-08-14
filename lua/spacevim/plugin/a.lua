@@ -88,4 +88,5 @@ function M.getConfigPath()
     return sp_file.unify_path(p, ':p')
 end
 
+return M
 
