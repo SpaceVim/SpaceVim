@@ -229,18 +229,18 @@ function M.findfile(what, where, ...)
   local file = ''
 
   if fn.filereadable(where) == 1 and  fn.isdirectory(where) == 0 then
-    local path = fn.fnamemodify(where, ':h')
+    path = fn.fnamemodify(where, ':h')
   else
-    local path = where
+    path = where
   end
   if count > 0 then
-    local file = fn.findfile(what, fn.escape(path, ' ') .. ';', count)
+    file = fn.findfile(what, fn.escape(path, ' ') .. ';', count)
   elseif #{...} == 0 then
-    local file = fn.findfile(what, fn.escape(path, ' ') .. ';')
+    file = fn.findfile(what, fn.escape(path, ' ') .. ';')
   elseif count == 0 then
-    local file = fn.findfile(what, fn.escape(path, ' ') .. ';', -1)
+    file = fn.findfile(what, fn.escape(path, ' ') .. ';', -1)
   else
-    local file = fn.get(fn.findfile(what, fn.escape(path, ' ') .. ';', -1), count, '')
+    file = fn.get(fn.findfile(what, fn.escape(path, ' ') .. ';', -1), count, '')
   end
   -- let &suffixesadd = old_suffixesadd
   return file
