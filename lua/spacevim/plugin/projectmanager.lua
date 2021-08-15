@@ -78,4 +78,30 @@ local function change_dir(dir)
   end
 end
 
+function M.current_root()
+    local bufname = fn.bufname('%')
+  if bufname == '[denite]'
+        or bufname == 'denite-filter'
+        or bufname == '[defx]' then
+    return
+  end
+  if fn.join(opt.project_rooter_patterns, ':') ~= fn.join(project_rooter_patterns, ':') then
+    logger.info('project_rooter_patterns option has been change, clear b:rootDir')
+    fn.setbufvar('%', 'rootDir', '')
+    project_rooter_patterns = opt.project_rooter_patterns
+    update_rooter_patterns()
+  end
+  local rootdir = fn.getbufvar('%', 'rootDir', '')
+  if rootdir == '' then
+    rootdir = find_root_directory()
+    if rootdir == '' then
+      rootdir = sp_file.unify_path(fn.getcwd())
+    end
+    fn.setbufvar('%', 'rootDir', rootdir)
+  end
+  change_dir(rootdir)
+  M.RootchandgeCallback()
+  return rootdir
+end
+
 return M
