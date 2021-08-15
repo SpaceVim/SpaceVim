@@ -47,7 +47,7 @@ function M.alt(request_parse, ...)
     local argvs=...
     local alt_type = 'alternate'
     if arg ~= nil then
-        alt_type = argv[1] or alt_type
+        alt_type = argvs[1] or alt_type
     end
     local alt = nil
     if fn.exists('b:alternate_file_config') ~= 1 then
