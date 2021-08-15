@@ -44,13 +44,16 @@ function M.set_config_name(path, name)
 end
 
 function M.alt(request_parse, ...)
-    local arg=...
-    local type = arg[1] or 'alternate'
+    local argvs=...
+    local alt_type = 'alternate'
+    if arg ~= nil then
+        alt_type = argv[1] or alt_type
+    end
     local alt = nil
     if fn.exists('b:alternate_file_config') ~= 1 then
         local conf_file_path = M.getConfigPath()
         local file = sp_file.unify_path(fn.bufname('%'), ':.')
-        alt = M.get_alt(file, conf_file_path, request_parse, type)
+        alt = M.get_alt(file, conf_file_path, request_parse, alt_type)
     end
     logger.debug('alt is:' .. alt)
     if alt ~= nil and alt ~= '' then
@@ -87,7 +90,7 @@ local function _keys(val)
 end
 local function _comp(a, b)
     if (string.match(a, '*') == '*'
-        and string.match(b, '*') == '*')
+            and string.match(b, '*') == '*')
         then
         return #a < #b
     elseif string.match(a, '*') == '*' then
@@ -119,8 +122,8 @@ local function parse(alt_config_json)
             logger.debug(file)
             project_config[alt_config_json.root][file] = {}
             if alt_config_json.config[file] ~= nil then
-                for type, type_v in pairs(alt_config_json.config[file]) do
-                    project_config[alt_config_json.root][file][type] = type_v
+                for alt_type, type_v in pairs(alt_config_json.config[file]) do
+                    project_config[alt_config_json.root][file][alt_type] = type_v
                 end
             else
                 for a_type, _ in pairs(alt_config_json.config[key]) do
