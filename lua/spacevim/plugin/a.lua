@@ -78,14 +78,21 @@ end
 -- we need to sort the keys in config
 --
 
-local function keys(_)
+local function keys(val)
     local new_keys = {}
-    for k,v in _ do
+    for k,v in pairs(val) do
         logger.debug(k)
         table.insert(new_keys, k)
     end
     return new_keys
 end
+
+local test_table = {
+    ['ssss/ssss'] = 'ssssssss',
+    ['ssss/ssss'] = 'ssssssss',
+    ['ssss/ssss'] = 'ssssssss',
+    ['ssss/ssss'] = 'ssssssss'
+}
 
 local function sort(list)
     return table.sort(liat, function (a, b)
