@@ -12,6 +12,7 @@ local sp_file = require('spacevim.api.file')
 local sp_json = require('spacevim.api.data.json')
 local sp_opt = require('spacevim.opt')
 local fn = sp.fn
+local layer = require('spacevim.layer')
 
 local M = {}
 
@@ -79,6 +80,65 @@ local function compare_time(d1, d2)
   local proj2 = project_paths[d2] or {}
   local proj2time = proj2['opened_time'] or 0
   return proj2time - proj1time
+end
+
+function M.list()
+  if layer.isLoaded('unite') then
+    cmd('Unite menu:Projects')
+  elseif layer.isLoaded('denite') then
+    cmd('Denite menu:Projects')
+  elseif layer.isLoaded('fzf') then
+    cmd('FzfMenu Projects')
+  elseif layer.isLoaded('leaderf') then
+    cmd("call SpaceVim#layers#leaderf#run_menu('Projects')")
+  else
+    logger.warn('fuzzy find layer is needed to find project!')
+  end
+end
+
+function M.open(project)
+  local path = project_paths[project]['path']
+  cmd('tabnew')
+  cmd('lcd ' .. path)
+  if opt.filemanager == 'vimfiler' then
+    cmd('Startify | VimFiler')
+  elseif opt.filemanager == 'nerdtree' then
+    cmd('Startify | NERDTree')
+  elseif opt.filemanager == 'defx' then
+    cmd('Startify | Defx')
+  end
+end
+
+function M.current_name()
+  return sp.eval('b:_spacevim_project_name')
+end
+
+
+function M.RootchandgeCallback()
+  local project = {
+        ['path'] = fn.getcwd(),
+        ['name'] = fn.fnamemodify(fn.getcwd(), ':t'),
+        ['opened_time'] = fn.localtime()
+        }
+  if project.path == '' then
+    return
+  end
+  cache_project(project)
+  -- let g:_spacevim_project_name = project.name
+  -- let b:_spacevim_project_name = g:_spacevim_project_name
+  fn.setbufvar('_spacevim_project_name', project.name)
+  for Callback in project_callback do
+    fn.call(Callback)
+  end
+end
+
+local project_callback = {}
+function M.reg_callback(func)
+  if type(func) == 2 then
+    table.insert(project_callback, func)
+  else
+    logger.warn('can not register the project callback: ' .. fn.string(func))
+  end
 end
 
 if sp_opt.enable_projects_cache == 1 then
