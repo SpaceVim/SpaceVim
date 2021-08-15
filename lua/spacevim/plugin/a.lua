@@ -80,7 +80,10 @@ end
 
 local function keys(_)
     local new_keys = {}
-    for k,v in _ do table.insert(new_keys, k) end
+    for k,v in _ do
+        logger.debug(k)
+        table.insert(new_keys, k)
+    end
     return new_keys
 end
 
