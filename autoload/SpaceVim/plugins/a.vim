@@ -18,17 +18,21 @@ if get(g:, 'spacevim_use_lua', 1)
           \ require("spacevim").eval("a:000")
           \ )
   endfunction
-  function! SpaceVim#plugins#a#getConfigPath() abort
-    return luaeval('require("spacevim.plugin.a").ConfigPath()')
-  endfunction
   function! SpaceVim#plugins#a#set_config_name(path, name) abort
     lua require("spacevim.plugin.a").set_config_name(
           \ require("spacevim").eval("a:path"),
           \ require("spacevim").eval("a:name")
           \ )
   endfunction
+  function! SpaceVim#plugins#a#getConfigPath() abort
+    return luaeval('require("spacevim.plugin.a").getConfigPath()')
+  endfunction
   function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
     return luaeval('require("spacevim.plugin.a").complete(require("spacevim").eval("a:ArgLead"), require("spacevim").eval("a:CmdLine"), require("spacevim").eval("a:CursorPos"))')
+  endfunction
+  function! SpaceVim#plugins#a#get_alt(file, conf_path, request_parse,...) abort
+    let type = get(a:000, 0, 'alternate')
+    return luaeval('require("spacevim.plugin.a").get_alt(require("spacevim").eval("a:file"), require("spacevim").eval("a:conf_path"), require("spacevim").eval("a:request_parse"), require("spacevim").eval("type"))')
   endfunction
 else
   " Load SpaceVim API
