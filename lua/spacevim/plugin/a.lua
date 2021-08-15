@@ -89,7 +89,7 @@ local function parse(alt_config_json)
             file = sp_file.unify_path(file, ':.')
             logger.debug(file)
             project_config[alt_config_json.root][file] = {}
-            if alt_config_json.config.file ~= nil then
+            if alt_config_json.config[file] ~= nil then
                 for type, type_v in pairs(alt_config_json.config[file]) do
                     project_config[alt_config_json.root][file][type] = type_v
                 end
