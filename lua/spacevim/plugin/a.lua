@@ -17,6 +17,13 @@ local function cache()
     fn.writefile({sp_json.json_encode(project_config)}, sp_file.unify_path(cache_path, ':p'))
 end
 
+local function get_type_path(a, f, b)
+    local begin_len = fn.strlen(a[0])
+    local end_len = fn.strlen(a[1])
+    return fn.substitute(b, '{}', string.sub(f, begin_len,  (end_len+1) * -1), 'g')
+end
+
+
 local function load_cache()
     logger.info('Try to load alt cache from:' .. cache_path)
     local cache_context = fn.join(fn.readfile(cache_path, ''), '')
@@ -93,12 +100,6 @@ local function parse(alt_config_json)
     end
     logger.info('Paser done, try to cache alternate info')
     cache()
-end
-
-local function get_type_path(a, f, b)
-    local begin_len = fn.strlen(a[0])
-    local end_len = fn.strlen(a[1])
-    return fn.substitute(b, '{}', string.sub(f, begin_len,  (end_len+1) * -1), 'g')
 end
 
 local function is_config_changed(conf_path)
