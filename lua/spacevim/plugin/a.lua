@@ -148,8 +148,11 @@ function M.get_alt(file, conf_path, request_parse, a_type)
 end
 
 function M.getConfigPath()
+    logger.debug('getConfigPath')
     local pwd = fn.getcwd()
+    logger.debug(pwd)
     local p = alternate_conf['_']
+    logger.debug(p)
     if alternate_conf[pwd] ~= nil then
         p = alternate_conf[pwd]
     end
@@ -157,11 +160,11 @@ function M.getConfigPath()
 end
 
 function M.complete(arglead, cmdline, cursorpos)
-  local file = cmp.unify_path(fn.bufname('%'), ':.')
+  local file = sp_file.unify_path(fn.bufname('%'), ':.')
   local conf_file_path = M.getConfigPath()
   local alt_config_json = get_project_config(conf_file_path)
 
-  M.get_alt(file, conf_file_path, 0)
+  M.get_alt(file, conf_file_path, 0, '')
   local a = project_config[alt_config_json.root][file]
   if a ~= nil then
       return fn.join(fn.keys(a), "\n")
