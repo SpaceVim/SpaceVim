@@ -108,7 +108,7 @@ end
 local function parse(alt_config_json)
     logger.debug('Start to parse alternate file for:' .. alt_config_json.root)
     project_config[alt_config_json.root] = {}
-    for key in sort(keys(pairs(alt_config_json.config))) do
+    for key,_ in pairs(alt_config_json.config) do
         logger.info('start parse key:' .. key)
         local searchpath = key
         if string.match(searchpath, '*') == '*' then
