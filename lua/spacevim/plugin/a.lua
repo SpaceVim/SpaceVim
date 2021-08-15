@@ -72,7 +72,7 @@ local function get_project_config(conf_file)
 end
 
 local function parse(alt_config_json)
-    logger.info('Start to parse alternate file for:' .. alt_config_json.root)
+    logger.debug('Start to parse alternate file for:' .. alt_config_json.root)
     project_config[alt_config_json.root] = {}
     for key, value in pairs(alt_config_json.config) do
         logger.info('start parse key:' .. key)
