@@ -49,7 +49,7 @@ function M.alt(request_parse, ...)
     local alt = nil
     if fn.exists('b:alternate_file_config') ~= 1 then
         local conf_file_path = M.getConfigPath()
-        local file = sp_file.unify_path(fn.bufname('%'), '.')
+        local file = sp_file.unify_path(fn.bufname('%'), ':.')
         alt = M.get_alt(file, conf_file_path, request_parse, type)
     end
     logger.debug('alt is:' .. alt)

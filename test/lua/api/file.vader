@@ -9,12 +9,16 @@ Execute ( SpaceVim lua api: file.unify_path(path, ...) ):
   let file = SpaceVim#api#import('file')
   let cmp = SpaceVim#api#import('vim#compatible')
   lua spacevim_file = require('spacevim.api').import('file')
+  lua cmp = require('spacevim.api').import('vim.compatible')
+  lua fn = require('spacevim').fn
   AssertEqual cmp.luaeval('spacevim_file.unify_path(".SpaceVim.d/init.vim", ":p")'),
   \ file.unify_path(".SpaceVim.d/init.vim", ":p")
   AssertEqual cmp.luaeval('spacevim_file.unify_path("~/.SpaceVim.d/", ":p")'),
   \ file.unify_path("~/.SpaceVim.d/", ":p")
   AssertEqual cmp.luaeval('spacevim_file.unify_path("autoload", ":p")'),
   \ file.unify_path("autoload", ":p")
+  AssertEqual cmp.luaeval('spacevim_file.unify_path(fn.bufname("%"), ":.")'),
+  \ file.unify_path(bufname("%"), ":.")
 
 Execute ( SpaceVim lua api: file.path_to_fname(path) ):
   let file = SpaceVim#api#import('file')
