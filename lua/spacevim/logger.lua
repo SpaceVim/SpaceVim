@@ -53,8 +53,8 @@ function M.viewRuntimeLog()
     fn.append(0, fn.split(info, "\n"))
     cmd('setl nomodifiable')
     cmd('setl buftype=nofile')
-    cmd('setl filetype=markdown')
-    M.syntax_extra()
+    -- cmd('setl filetype=markdown')
+    -- M.syntax_extra()
 end
 
 function M.viewLog(bang)
