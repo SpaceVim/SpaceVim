@@ -44,8 +44,8 @@ function M.set_config_name(path, name)
 end
 
 function M.alt(request_parse, ...)
-    local arg={...}
-    local type = 'alternate'
+    local arg=...
+    local type = arg[1] or 'alternate'
     local alt = nil
     if fn.exists('b:alternate_file_config') ~= 1 then
         local conf_file_path = M.getConfigPath()
