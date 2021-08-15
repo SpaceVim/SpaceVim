@@ -60,6 +60,27 @@ local function load_cache()
     end
 end
 
+local function sort_by_opened_time()
+  local paths = {}
+  for k,v in pairs(project_paths) do table.insert(paths, k) end
+  table.sort(paths, compare_time)
+  if opt.projects_cache_num > 0 and sp_list.has_index(paths, opt.projects_cache_num) then
+    for path in select(paths, opt.projects_cache_num, #paths) do
+      table.remove(project_paths, path)
+    end
+    paths = select(paths, 1, opt._projects_cache_num - 1)
+  end
+  return paths
+end
+
+local function compare_time(d1, d2)
+  local proj1 = project_paths[d1] or {}
+  local proj1time = proj1['opened_time'] or 0
+  local proj2 = project_paths[d2] or {}
+  local proj2time = proj2['opened_time'] or 0
+  return proj2time - proj1time
+end
+
 if sp_opt.enable_projects_cache == 1 then
     load_cache()
 end
