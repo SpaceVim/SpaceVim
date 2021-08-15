@@ -9,6 +9,7 @@
 local logger = require('spacevim.logger').derive('roter')
 local sp = require('spacevim')
 local sp_file = require('spacevim.api.file')
+local sp_json = require('spacevim.api.data.json')
 
 local M = {}
 
