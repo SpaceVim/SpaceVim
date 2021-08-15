@@ -28,6 +28,12 @@ if get(g:, 'spacevim_use_lua', 1)
           \ )
   endfunction
 
+  function! SpaceVim#logger#debug(msg) abort
+    lua require("spacevim.logger").debug(
+          \ require("spacevim").eval("a:msg")
+          \ )
+  endfunction
+
   function! SpaceVim#logger#viewRuntimeLog() abort
     lua require("spacevim.logger").viewRuntimeLog()
   endfunction
