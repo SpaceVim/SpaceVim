@@ -1,6 +1,7 @@
 local M = {}
 local sp = require('spacevim')
 local cmp = require('spacevim.api').import('vim.compatible')
+local cmd = require('spacevim').cmd
 local sp_file = require('spacevim.api').import('file')
 local sp_json = require('spacevim.api').import('data.json')
 local logger = require('spacevim.logger').derive('a.vim')
@@ -52,6 +53,7 @@ function M.alt(request_parse, ...)
         alt = M.get_alt(file, conf_file_path, request_parse, type)
     end
     if alt ~= nil then
+        cmd('e ' .. alt)
     else
         print('failed to find alternate file!')
     end
