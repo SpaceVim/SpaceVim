@@ -11,6 +11,7 @@ local sp = require('spacevim')
 local sp_file = require('spacevim.api.file')
 local sp_json = require('spacevim.api.data.json')
 local sp_opt = require('spacevim.opt')
+local fn = sp.fn
 
 local M = {}
 
@@ -61,6 +62,20 @@ end
 
 if sp_opt.enable_projects_cache == 1 then
   load_cache()
+end
+
+local function change_dir(dir)
+  local bufname = fn.bufname('%')
+  if bufname == '' then
+    bufname = 'No Name'
+  end
+  logger.debug('buffer name: ' .. bufname)
+  if dir == sp_file.unify_path(fn.getcwd()) then
+    logger.debug('same as current directory, no need to change.')
+  else
+    logger.info('change to root: ' .. dir)
+    sp.cmd('cd ' .. sp.fn.fnameescape(sp.fn.fnamemodify(dir, ':p')))
+  end
 end
 
 return M
