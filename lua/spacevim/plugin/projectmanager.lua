@@ -42,107 +42,128 @@ local project_paths = {}
 local project_cache_path = sp_file.unify_path(sp_opt.data_dir, ':p') .. 'SpaceVim/projects.json'
 
 local function cache()
-  fn.writefile({sp_json.json_encode(project_paths)}, sp_file.unify_path(project_cache_path, ':p'))
+    fn.writefile({sp_json.json_encode(project_paths)}, sp_file.unify_path(project_cache_path, ':p'))
 end
 
 local function load_cache()
-  if fn.filereadable(project_cache_path) == 1 then
-    logger.info('Load projects cache from: ' .. project_cache_path)
-    local cache_context = fn.join(fn.readfile(project_cache_path, ''), '')
-    if fn.empty(cache_context) == 0 then
-      local cache_object = sp_json.json_decode(cache_context)
-      if sp_vim.is_dict(cache_object) then
-        project_paths = fn.filter(cache_object, '!empty(v:key)')
-      end
+    if fn.filereadable(project_cache_path) == 1 then
+        logger.info('Load projects cache from: ' .. project_cache_path)
+        local cache_context = fn.join(fn.readfile(project_cache_path, ''), '')
+        if fn.empty(cache_context) == 0 then
+            local cache_object = sp_json.json_decode(cache_context)
+            if sp_vim.is_dict(cache_object) then
+                project_paths = fn.filter(cache_object, '!empty(v:key)')
+            end
+        end
+    else
+        logger.info('projects cache file does not exists!')
     end
-  else
-    logger.info('projects cache file does not exists!')
-  end
 end
 
 if sp_opt.enable_projects_cache == 1 then
-  load_cache()
+    load_cache()
 end
 
 local function change_dir(dir)
-  local bufname = fn.bufname('%')
-  if bufname == '' then
-    bufname = 'No Name'
-  end
-  logger.debug('buffer name: ' .. bufname)
-  if dir == sp_file.unify_path(fn.getcwd()) then
-    logger.debug('same as current directory, no need to change.')
-  else
-    logger.info('change to root: ' .. dir)
-    sp.cmd('cd ' .. sp.fn.fnameescape(sp.fn.fnamemodify(dir, ':p')))
-  end
+    local bufname = fn.bufname('%')
+    if bufname == '' then
+        bufname = 'No Name'
+    end
+    logger.debug('buffer name: ' .. bufname)
+    if dir == sp_file.unify_path(fn.getcwd()) then
+        logger.debug('same as current directory, no need to change.')
+    else
+        logger.info('change to root: ' .. dir)
+        sp.cmd('cd ' .. sp.fn.fnameescape(sp.fn.fnamemodify(dir, ':p')))
+    end
+end
+
+local function sort_dirs(dirs)
+    table.sort(dirs, compare)
+    local dir = dirs[1]
+    local bufdir = fn.getbufvar('%', 'rootDir', '')
+    if bufdir == dir then
+        return ''
+    else
+        return dir
+    end
+end
+
+local function compare(d1, d2)
+    local _, al =  string.gsub(d1, "/", "")
+    local _, bl =  string.gsub(d2, "/", "")
+    if opt.project_rooter_outermost == 0 then
+        return bl - al
+    else
+        return al - bl
+    end
 end
 
 local function find_root_directory()
-  local fd = fn.expand('%:p')
-  if fn == '' then
-    fd = fn.getcwd()
-  end
+    local fd = fn.expand('%:p')
+    if fn == '' then
+        fd = fn.getcwd()
+    end
 
-  local dirs = {}
-  logger.info('Start to find root for: ' .. sp_file.unify_path(fd))
-  for _,pattern in pairs(project_rooter_patterns) do
-    local find_path = ''
-    if fn.stridx(pattern, '/') ~= -1 then
-      if opt.project_rooter_outermost == 1 then
-        find_path = sp_file.finddir(pattern, fd, -1)
-      else
-        find_path = sp_file.finddir(pattern, fd)
-      end
-    else
-      if opt.project_rooter_outermost == 1 then
-        find_path = sp_file.findfile(pattern, fd, -1)
-      else
-        find_path = sp_file.findfile(pattern, fd)
-      end
+    local dirs = {}
+    logger.info('Start to find root for: ' .. sp_file.unify_path(fd))
+    for _,pattern in pairs(project_rooter_patterns) do
+        local find_path = ''
+        if fn.stridx(pattern, '/') ~= -1 then
+            if opt.project_rooter_outermost == 1 then
+                find_path = sp_file.finddir(pattern, fd, -1)
+            else
+                find_path = sp_file.finddir(pattern, fd)
+            end
+        else
+            if opt.project_rooter_outermost == 1 then
+                find_path = sp_file.findfile(pattern, fd, -1)
+            else
+                find_path = sp_file.findfile(pattern, fd)
+            end
+        end
+        local path_type = fn.getftype(find_path)
+        if ( path_type == 'dir' or path_type == 'file' ) 
+            and is_ignored_dir(find_path) == 0 then
+            find_path = sp_file.unify_path(find_path, ':p')
+            if path_type == 'dir' then
+                local dir = sp_file.unify_path(find_path, ':h:h')
+            else
+                local dir = sp_file.unify_path(find_path, ':h')
+            end
+            if dir ~= sp_file.unify_path(fn.expand('$HOME')) then
+                logger.info('        (' .. pattern .. '):' .. dir)
+                table.insert(dirs, dir)
+            end
+        end
     end
-    local path_type = fn.getftype(find_path)
-    if ( path_type == 'dir' or path_type == 'file' ) 
-          and is_ignored_dir(find_path) == 0 then
-      find_path = sp_file.unify_path(find_path, ':p')
-      if path_type == 'dir' then
-        local dir = sp_file.unify_path(find_path, ':h:h')
-      else
-        local dir = sp_file.unify_path(find_path, ':h')
-      end
-      if dir ~= sp_file.unify_path(fn.expand('$HOME')) then
-        logger.info('        (' .. pattern .. '):' .. dir)
-        table.insert(dirs, dir)
-      end
-    end
-  end
-  return sort_dirs(dirs)
+    return sort_dirs(dirs)
 end
 
 function M.current_root()
     local bufname = fn.bufname('%')
-  if bufname == '[denite]'
+    if bufname == '[denite]'
         or bufname == 'denite-filter'
         or bufname == '[defx]' then
-    return
-  end
-  if table.concat(opt.project_rooter_patterns, ':') ~= table.concat(project_rooter_patterns, ':') then
-    logger.info('project_rooter_patterns option has been change, clear b:rootDir')
-    fn.setbufvar('%', 'rootDir', '')
-    project_rooter_patterns = opt.project_rooter_patterns
-    update_rooter_patterns()
-  end
-  local rootdir = fn.getbufvar('%', 'rootDir', '')
-  if rootdir == '' then
-    rootdir = find_root_directory()
-    if rootdir == '' then
-      rootdir = sp_file.unify_path(fn.getcwd())
+        return
     end
-    fn.setbufvar('%', 'rootDir', rootdir)
-  end
-  change_dir(rootdir)
-  M.RootchandgeCallback()
-  return rootdir
+    if table.concat(opt.project_rooter_patterns, ':') ~= table.concat(project_rooter_patterns, ':') then
+        logger.info('project_rooter_patterns option has been change, clear b:rootDir')
+        fn.setbufvar('%', 'rootDir', '')
+        project_rooter_patterns = opt.project_rooter_patterns
+        update_rooter_patterns()
+    end
+    local rootdir = fn.getbufvar('%', 'rootDir', '')
+    if rootdir == '' then
+        rootdir = find_root_directory()
+        if rootdir == '' then
+            rootdir = sp_file.unify_path(fn.getcwd())
+        end
+        fn.setbufvar('%', 'rootDir', rootdir)
+    end
+    change_dir(rootdir)
+    M.RootchandgeCallback()
+    return rootdir
 end
 
 return M
