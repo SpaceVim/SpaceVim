@@ -141,6 +141,38 @@ function M.reg_callback(func)
   end
 end
 
+function M.kill_project()
+  local name = sp.eval('b:_spacevim_project_name')
+  if name ~= '' then
+    sp_buffer.filter_do(
+          {
+           ['expr'] = {
+          'buflisted(v:val)',
+          'getbufvar(v:val, "_spacevim_project_name") == "' .. name .. '"',
+          },
+           ['do'] = 'bd %d'
+          }
+          )
+  end
+end
+
+function M.complete_project(arglead, cmdline, cursorpos)
+  local dir = '~'
+  local result = fn.split(fn.globpath(dir, '*'), "\n")
+  local ps = {}
+  for p in result do
+    if fn.isdirectory(p) == 1 and fn.isdirectory(p .. sp_file.separator .. '.git') == 1 then
+      table.insert(ps, fn.fnamemodify(p, ':t'))
+    end
+  end
+  return fn.join(ps, "\n")
+end
+
+
+function M.OpenProject(p)
+  cmd('CtrlP '.. dir)
+end
+
 if sp_opt.enable_projects_cache == 1 then
     load_cache()
 end
