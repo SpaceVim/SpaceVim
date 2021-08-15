@@ -87,13 +87,6 @@ local function keys(val)
     return new_keys
 end
 
-local test_table = {
-    ['ssss/ssss'] = 'ssssssss',
-    ['ssss/ssss'] = 'ssssssss',
-    ['ssss/ssss'] = 'ssssssss',
-    ['ssss/ssss'] = 'ssssssss'
-}
-
 local function sort(list)
     return table.sort(liat, function (a, b)
         if string.match(a, '*') == nil
@@ -115,7 +108,7 @@ end
 local function parse(alt_config_json)
     logger.debug('Start to parse alternate file for:' .. alt_config_json.root)
     project_config[alt_config_json.root] = {}
-    for key,_ in pairs(alt_config_json.config) do
+    for key in sort(keys(alt_config_json.config)) do
         logger.info('start parse key:' .. key)
         local searchpath = key
         if string.match(searchpath, '*') == '*' then
