@@ -78,6 +78,47 @@ local function change_dir(dir)
   end
 end
 
+local function find_root_directory()
+  local fd = fn.expand('%:p')
+  if fn == '' then
+    fd = fn.getcwd()
+  end
+
+  local dirs = {}
+  logger.info('Start to find root for: ' .. sp_file.unify_path(fd))
+  for _,pattern in pairs(project_rooter_patterns) do
+    local find_path = ''
+    if fn.stridx(pattern, '/') ~= -1 then
+      if opt.project_rooter_outermost == 1 then
+        find_path = sp_file.finddir(pattern, fd, -1)
+      else
+        find_path = sp_file.finddir(pattern, fd)
+      end
+    else
+      if opt.project_rooter_outermost == 1 then
+        find_path = sp_file.findfile(pattern, fd, -1)
+      else
+        find_path = sp_file.findfile(pattern, fd)
+      end
+    end
+    local path_type = fn.getftype(find_path)
+    if ( path_type == 'dir' or path_type == 'file' ) 
+          and is_ignored_dir(find_path) == 0 then
+      find_path = sp_file.unify_path(find_path, ':p')
+      if path_type == 'dir' then
+        local dir = sp_file.unify_path(find_path, ':h:h')
+      else
+        local dir = sp_file.unify_path(find_path, ':h')
+      end
+      if dir ~= sp_file.unify_path(fn.expand('$HOME')) then
+        logger.info('        (' .. pattern .. '):' .. dir)
+        table.insert(dirs, dir)
+      end
+    end
+  end
+  return sort_dirs(dirs)
+end
+
 function M.current_root()
     local bufname = fn.bufname('%')
   if bufname == '[denite]'
@@ -85,7 +126,7 @@ function M.current_root()
         or bufname == '[defx]' then
     return
   end
-  if fn.join(opt.project_rooter_patterns, ':') ~= fn.join(project_rooter_patterns, ':') then
+  if table.concat(opt.project_rooter_patterns, ':') ~= table.concat(project_rooter_patterns, ':') then
     logger.info('project_rooter_patterns option has been change, clear b:rootDir')
     fn.setbufvar('%', 'rootDir', '')
     project_rooter_patterns = opt.project_rooter_patterns
