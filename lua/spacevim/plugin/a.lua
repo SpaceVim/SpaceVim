@@ -46,7 +46,7 @@ end
 function M.alt(request_parse, ...)
     local argvs=...
     local alt_type = 'alternate'
-    if arg ~= nil then
+    if argvs ~= nil then
         alt_type = argvs[1] or alt_type
     end
     local alt = nil
