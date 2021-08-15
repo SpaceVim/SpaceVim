@@ -78,37 +78,36 @@ end
 -- we need to sort the keys in config
 --
 
-local function keys(val)
+local function _keys(val)
     local new_keys = {}
     for k,v in pairs(val) do
-        logger.debug(k)
         table.insert(new_keys, k)
     end
     return new_keys
 end
+local function _comp(a, b)
+    if (string.match(a, '*') == '*'
+        and string.match(b, '*') == '*')
+        then
+        return #a < #b
+    elseif string.match(a, '*') == '*' then
+        return true
+    elseif string.match(b, '*') == '*' then
+        return false
+    else
+        local _, al =  string.gsub(a, "/", "")
+        local _, bl =  string.gsub(b, "/", "")
+        return al < bl
+    end
 
-local function sort(list)
-    return table.sort(liat, function (a, b)
-        if string.match(a, '*') == nil
-            and string.match(a, '*') == nil
-            then
-            return #a < #b
-        elseif string.match(a, '*') == nil then
-            return true
-        elseif string.match(b, '*') == nil then
-            return false
-        else
-            local _, al =  string.gsub(a, "/", "")
-            local _, bl =  string.gsub(b, "/", "")
-            return al < bl
-        end
-    end)
 end
 
 local function parse(alt_config_json)
     logger.debug('Start to parse alternate file for:' .. alt_config_json.root)
     project_config[alt_config_json.root] = {}
-    for key in sort(keys(alt_config_json.config)) do
+    local keys = keys(alt_config_json.config)
+    table.sort(keys, _comp)
+    for _, key in pairs(keys) do
         logger.info('start parse key:' .. key)
         local searchpath = key
         if string.match(searchpath, '*') == '*' then
