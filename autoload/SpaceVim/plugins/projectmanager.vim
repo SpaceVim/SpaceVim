@@ -24,6 +24,7 @@ if $SPACEVIM_LUA_T
   function! SpaceVim#plugins#projectmanager#reg_callback(func) abort
   endfunction
   function! SpaceVim#plugins#projectmanager#current_root() abort
+    return luaeval('require("spacevim.plugin.projectmanager").current_root()')
   endfunction
   function! SpaceVim#plugins#projectmanager#kill_project() abort
   endfunction
