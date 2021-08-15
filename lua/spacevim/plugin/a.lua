@@ -75,10 +75,37 @@ local function get_project_config(conf_file)
     }
 end
 
+-- we need to sort the keys in config
+--
+
+local function keys(_)
+    local new_keys = {}
+    for k,v in _ do table.insert(new_keys, k) end
+    return new_keys
+end
+
+local function sort(list)
+    return table.sort(liat, function (a, b)
+        if string.match(a, '*') == nil
+            and string.match(a, '*') == nil
+            then
+            return #a < #b
+        elseif string.match(a, '*') == nil then
+            return true
+        elseif string.match(b, '*') == nil then
+            return false
+        else
+            local _, al =  string.gsub(a, "/", "")
+            local _, bl =  string.gsub(b, "/", "")
+            return al < bl
+        end
+    end)
+end
+
 local function parse(alt_config_json)
     logger.debug('Start to parse alternate file for:' .. alt_config_json.root)
     project_config[alt_config_json.root] = {}
-    for key, value in pairs(alt_config_json.config) do
+    for key in sort(keys(pairs(alt_config_json.config))) do
         logger.info('start parse key:' .. key)
         local searchpath = key
         if string.match(searchpath, '*') == '*' then
@@ -122,29 +149,29 @@ local function is_config_changed(conf_path)
 end
 
 function M.get_alt(file, conf_path, request_parse, a_type)
-  logger.info('getting alt file for:' .. file)
-  logger.info('  >   type: ' .. a_type)
-  logger.info('  >  parse: ' .. request_parse)
-  logger.info('  > config: ' .. conf_path)
-  alt_config_json = get_project_config(conf_path)
-  if project_config[alt_config_json.root] == nil
+    logger.info('getting alt file for:' .. file)
+    logger.info('  >   type: ' .. a_type)
+    logger.info('  >  parse: ' .. request_parse)
+    logger.info('  > config: ' .. conf_path)
+    alt_config_json = get_project_config(conf_path)
+    if project_config[alt_config_json.root] == nil
         and is_config_changed(conf_path) == 0
         and request_parse == 0 then
-    load_cache()
-    if project_config[alt_config_json.root] == nil
-          or project_config[alt_config_json.root][file] == nil then
+        load_cache()
+        if project_config[alt_config_json.root] == nil
+            or project_config[alt_config_json.root][file] == nil then
+            parse(alt_config_json)
+        end
+    else
         parse(alt_config_json)
     end
-  else
-    parse(alt_config_json)
-  end
-  if project_config[alt_config_json.root] ~= nil
+    if project_config[alt_config_json.root] ~= nil
         and project_config[alt_config_json.root][file] ~= nil
         and project_config[alt_config_json.root][file][a_type] ~= nil then
-    return project_config[alt_config_json.root][file][a_type]
-  else
-    return ''
-  end
+        return project_config[alt_config_json.root][file][a_type]
+    else
+        return ''
+    end
 end
 
 function M.getConfigPath()
@@ -160,17 +187,17 @@ function M.getConfigPath()
 end
 
 function M.complete(arglead, cmdline, cursorpos)
-  local file = sp_file.unify_path(fn.bufname('%'), ':.')
-  local conf_file_path = M.getConfigPath()
-  local alt_config_json = get_project_config(conf_file_path)
+    local file = sp_file.unify_path(fn.bufname('%'), ':.')
+    local conf_file_path = M.getConfigPath()
+    local alt_config_json = get_project_config(conf_file_path)
 
-  M.get_alt(file, conf_file_path, 0, '')
-  local a = project_config[alt_config_json.root][file]
-  if a ~= nil then
-      return fn.join(fn.keys(a), "\n")
-  else
-      return ''
-  end
+    M.get_alt(file, conf_file_path, 0, '')
+    local a = project_config[alt_config_json.root][file]
+    if a ~= nil then
+        return fn.join(fn.keys(a), "\n")
+    else
+        return ''
+    end
 end
 
 return M
