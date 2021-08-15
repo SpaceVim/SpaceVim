@@ -20,10 +20,11 @@ end
 local function get_type_path(a, f, b)
     logger.debug('get_type_path')
     logger.debug(fn.string(a))
+    logger.debug(f)
     logger.debug(b)
     local begin_len = fn.strlen(a[1])
     local end_len = fn.strlen(a[2])
-    local r = fn.substitute(b, '{}', string.sub(f, begin_len,  (end_len+1) * -1), 'g')
+    local r = fn.substitute(b, '{}', string.sub(f, begin_len + 1,  (end_len+1) * -1), 'g')
     logger.debug(r)
     return r
 end
@@ -81,7 +82,7 @@ local function parse(alt_config_json)
             searchpath = string.gsub(searchpath, '*', '**/*')
         end
         logger.info('run globpath for: '.. searchpath)
-        for file in pairs(cmp.globpath('.', searchpath)) do
+        for _,file in pairs(cmp.globpath('.', searchpath)) do
             file = sp_file.unify_path(file, ':.')
             logger.debug(file)
             project_config[alt_config_json.root][file] = {}
