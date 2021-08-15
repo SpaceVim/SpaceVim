@@ -45,7 +45,7 @@ if get(g:, 'spacevim_use_lua', 1)
   endfunction
 
   function! SpaceVim#logger#setLevel(level) abort
-    lua require("spacevim.logger").set_level(require("spacevim").eval("a:level"))
+    lua require("spacevim.logger").setLevel(require("spacevim").eval("a:level"))
   endfunction
 
   function! SpaceVim#logger#setOutput(file) abort

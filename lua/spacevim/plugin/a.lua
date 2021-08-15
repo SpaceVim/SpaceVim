@@ -18,9 +18,14 @@ local function cache()
 end
 
 local function get_type_path(a, f, b)
-    local begin_len = fn.strlen(a[0])
-    local end_len = fn.strlen(a[1])
-    return fn.substitute(b, '{}', string.sub(f, begin_len,  (end_len+1) * -1), 'g')
+    logger.debug('get_type_path')
+    logger.debug(fn.string(a))
+    logger.debug(f)
+    local begin_len = fn.strlen(a[1])
+    local end_len = fn.strlen(a[2])
+    local r = fn.substitute(b, '{}', string.sub(f, begin_len,  (end_len+1) * -1), 'g')
+    logger.debug(r)
+    return r
 end
 
 
@@ -78,10 +83,11 @@ local function parse(alt_config_json)
         logger.info('run globpath for: '.. searchpath)
         for file in pairs(cmp.globpath('.', searchpath)) do
             file = sp_file.unify_path(file, ':.')
+            logger.debug(file)
             project_config[alt_config_json.root][file] = {}
             if alt_config_json.config.file ~= nil then
-                for type, _ in pairs(alt_config_json.config[file]) do
-                    project_config[alt_config_json.root][file][type] = alt_config_json.config[file][type]
+                for type, type_v in pairs(alt_config_json.config[file]) do
+                    project_config[alt_config_json.root][file][type] = type_v
                 end
             else
                 for a_type, _ in pairs(alt_config_json.config[key]) do
