@@ -105,7 +105,7 @@ end
 local function parse(alt_config_json)
     logger.debug('Start to parse alternate file for:' .. alt_config_json.root)
     project_config[alt_config_json.root] = {}
-    local keys = keys(alt_config_json.config)
+    local keys = _keys(alt_config_json.config)
     table.sort(keys, _comp)
     for _, key in pairs(keys) do
         logger.info('start parse key:' .. key)
