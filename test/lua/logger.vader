@@ -3,17 +3,3 @@ Execute ( SpaceVim lua api: logger ):
   lua spacevim_logger = require('spacevim.api').import('logger')
   lua spacevim_logger.set_name('TestLog')
   AssertEqual cmp.luaeval('spacevim_logger.name'), 'TestLog'
-  lua spacevim_logger.info('info test')
-  lua spacevim_logger.warn('info test')
-  lua spacevim_logger.error('info test')
-  AssertEqual cmp.luaeval('#spacevim_logger.temp'), 3
-  lua spacevim_logger.set_level(2)
-  lua spacevim_logger.info('info test')
-  lua spacevim_logger.warn('info test')
-  lua spacevim_logger.error('info test')
-  AssertEqual cmp.luaeval('#spacevim_logger.temp'), 5
-  lua spacevim_logger.set_level(3)
-  lua spacevim_logger.info('info test')
-  lua spacevim_logger.warn('info test')
-  lua spacevim_logger.error('info test')
-  AssertEqual cmp.luaeval('#spacevim_logger.temp'), 6
