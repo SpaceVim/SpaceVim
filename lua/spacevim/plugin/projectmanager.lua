@@ -10,6 +10,7 @@ local logger = require('spacevim.logger').derive('roter')
 local sp = require('spacevim')
 local sp_file = require('spacevim.api.file')
 local sp_json = require('spacevim.api.data.json')
+local sp_opt = require('spacevim.opt')
 
 local M = {}
 
@@ -37,7 +38,7 @@ end
 update_rooter_patterns()
 
 local project_paths = {}
-local project_cache_path = sp_file.unify_path(sp.eval('g:spacevim_data_dir'), ':p') .. 'SpaceVim/projects.json'
+local project_cache_path = sp_file.unify_path(sp_opt.data_dir, ':p') .. 'SpaceVim/projects.json'
 
 local function cache()
   fn.writefile({sp_json.json_encode(project_paths)}, sp_file.unify_path(project_cache_path, ':p'))
@@ -56,6 +57,10 @@ local function load_cache()
   else
     logger.info('projects cache file does not exists!')
   end
+end
+
+if sp_opt.enable_projects_cache == 1 then
+  load_cache()
 end
 
 return M
