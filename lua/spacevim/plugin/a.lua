@@ -156,5 +156,19 @@ function M.getConfigPath()
     return sp_file.unify_path(p, ':p')
 end
 
+function M.complete(arglead, cmdline, cursorpos)
+  local file = cmp.unify_path(fn.bufname('%'), ':.')
+  local conf_file_path = M.getConfigPath()
+  local alt_config_json = get_project_config(conf_file_path)
+
+  M.get_alt(file, conf_file_path, 0)
+  local a = project_config[alt_config_json.root][file]
+  if a ~= nil then
+      return fn.join(fn.keys(a), "\n")
+  else
+      return ''
+  end
+end
+
 return M
 

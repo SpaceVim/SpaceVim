@@ -85,6 +85,9 @@ if get(g:, 'spacevim_use_lua', 1)
           \ require("spacevim").eval("a:name")
           \ )
   endfunction
+  function! SpaceVim#plugins#a#complete(ArgLead, CmdLine, CursorPos) abort
+    return luaeval('require("spacevim.plugin.a").complete(require("spacevim").eval("a:ArgLead"), require("spacevim").eval("a:CmdLine"), require("spacevim").eval("a:CursorPos"))')
+  endfunction
 else
   function! SpaceVim#plugins#a#alt(request_parse,...) abort
     let type = get(a:000, 0, 'alternate')
