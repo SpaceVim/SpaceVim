@@ -29,6 +29,10 @@ function M.error(msg)
     logger.error(msg)
 end
 
+function M.debug(msg)
+    logger.debug(msg)
+end
+
 function M.setLevel(level)
     logger.set_level(level)
 end
@@ -108,6 +112,11 @@ function M.derive(name)
         logger.set_name(derive.origin_name)
     end
 
+    function derive.debug(msg)
+        logger.set_name(derive.derive_name)
+        logger.debug(msg)
+        logger.set_name(derive.origin_name)
+    end
     derive['derive_name'] = fn.printf('%' .. fn.strdisplaywidth(logger.get_name()) .. 'S', name)
     return derive
 end
