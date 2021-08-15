@@ -38,5 +38,23 @@ update_rooter_patterns()
 local project_paths = {}
 local project_cache_path = sp_file.unify_path(sp.eval('g:spacevim_data_dir'), ':p') .. 'SpaceVim/projects.json'
 
+local function cache()
+  fn.writefile({sp_json.json_encode(project_paths)}, sp_file.unify_path(project_cache_path, ':p'))
+end
+
+local function load_cache()
+  if fn.filereadable(project_cache_path) == 1 then
+    logger.info('Load projects cache from: ' .. project_cache_path)
+    local cache_context = fn.join(fn.readfile(project_cache_path, ''), '')
+    if fn.empty(cache_context) == 0 then
+      local cache_object = sp_json.json_decode(cache_context)
+      if sp_vim.is_dict(cache_object) then
+        project_paths = fn.filter(cache_object, '!empty(v:key)')
+      end
+    end
+  else
+    logger.info('projects cache file does not exists!')
+  end
+end
 
 return M
