@@ -96,8 +96,6 @@ else
     normal! "_dd
     setl nomodifiable
     setl buftype=nofile
-    setl filetype=markdown
-    call s:syntax_extra()
   endfunction
 
 
