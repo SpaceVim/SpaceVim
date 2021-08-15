@@ -10,23 +10,40 @@
 
 if $SPACEVIM_LUA_T
   function! SpaceVim#plugins#projectmanager#complete_project(ArgLead, CmdLine, CursorPos) abort
+    return luaeval('require("spacevim.plugin.projectmanager").complete('
+          \ .'require("spacevim").eval("a:ArgLead"),'
+          \ .'require("spacevim").eval("a:CmdLine"),'
+          \ .'require("spacevim").eval("a:CursorPos"))')
   endfunction
   function! SpaceVim#plugins#projectmanager#OpenProject(p) abort
+    lua require("spacevim.plugin.projectmanager").OpenProject(
+          \ require("spacevim").eval("a:p")
+          \ )
   endfunction
   function! SpaceVim#plugins#projectmanager#list() abort
+    lua require("spacevim.plugin.projectmanager").list()
   endfunction
   function! SpaceVim#plugins#projectmanager#open(project) abort
+    lua require("spacevim.plugin.projectmanager").open(
+          \ require("spacevim").eval("a:project")
+          \ )
   endfunction
   function! SpaceVim#plugins#projectmanager#current_name() abort
+    return luaeval('require("spacevim.plugin.projectmanager").current_name()')
   endfunction
   function! SpaceVim#plugins#projectmanager#RootchandgeCallback() abort
+    lua require("spacevim.plugin.projectmanager").RootchandgeCallback()
   endfunction
   function! SpaceVim#plugins#projectmanager#reg_callback(func) abort
+    lua require("spacevim.plugin.projectmanager").reg_callback(
+          \ require("spacevim").eval("a:func")
+          \ )
   endfunction
   function! SpaceVim#plugins#projectmanager#current_root() abort
     return luaeval('require("spacevim.plugin.projectmanager").current_root()')
   endfunction
   function! SpaceVim#plugins#projectmanager#kill_project() abort
+    lua require("spacevim.plugin.projectmanager").kill_project()
   endfunction
 else
 
