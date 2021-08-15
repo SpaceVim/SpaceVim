@@ -48,6 +48,7 @@ local function get_project_config(conf_file)
     logger.info('read context from:' .. conf_file)
     local context = fn.join(fn.readfile(conf_file), "\n")
     local conf = sp_json.json_decode(context)
+    logger.debug(context)
     if type(conf) ~= type({}) then
         conf = {}
     end
