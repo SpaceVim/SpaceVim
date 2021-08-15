@@ -62,7 +62,7 @@ end
 local function parse(alt_config_json)
     logger.info('Start to parse alternate file for:' .. alt_config_json.root)
     project_config[alt_config_json.root] = {}
-    for key, value in ipairs(alt_config_json.config) do
+    for key, value in pairs(alt_config_json.config) do
         logger.info('start parse key:' .. key)
         local searchpath = key
         if string.match(searchpath, '*') == '*' then
@@ -73,11 +73,11 @@ local function parse(alt_config_json)
             file = sp_file.unify_path(file, ':.')
             project_config[alt_config_json.root][file] = {}
             if alt_config_json.config.file ~= nil then
-                for type, _ in ipairs(alt_config_json.config[file]) do
+                for type, _ in pairs(alt_config_json.config[file]) do
                     project_config[alt_config_json.root][file][type] = alt_config_json.config[file][type]
                 end
             else
-                for a_type, _ in ipairs(alt_config_json.config[key]) do
+                for a_type, _ in pairs(alt_config_json.config[key]) do
                     local begin_end = fn.split(key, '*')
                     if #begin_end == 2 then
                         project_config[alt_config_json.root][file][a_type] =
