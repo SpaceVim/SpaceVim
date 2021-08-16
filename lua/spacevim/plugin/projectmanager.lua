@@ -170,6 +170,22 @@ local function find_root_directory()
     end
     return sort_dirs(dirs)
 end
+local function cache_project(prj)
+    project_paths[prj.path] = prj
+    sp.cmd('let g:unite_source_menu_menus.Projects.command_candidates = []')
+    for key in sort_by_opened_time() do
+        local desc = '[' .. project_paths[key].name .. '] ' .. project_paths[key].path .. ' <' .. fn.strftime('%Y-%m-%d %T', project_paths[key].opened_time) .. '>'
+        local cmd = "call SpaceVim#plugins#projectmanager#open('" .. project_paths[key].path .. "')"
+        sp.cmd('call add(g:unite_source_menu_menus.Projects.command_candidates, ["'
+            .. desc
+            .. '", "'
+            .. cmd
+            .. '"])')
+    end
+    if sp_opt.enable_projects_cache then
+        cache()
+    end
+end
 
 update_rooter_patterns()
 
