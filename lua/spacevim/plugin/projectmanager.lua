@@ -82,10 +82,10 @@ local function sort_by_opened_time()
     local paths = {}
     for k,v in pairs(project_paths) do table.insert(paths, k) end
     table.sort(paths, compare_time)
-    if opt.projects_cache_num > 0 and #paths >= opt.projects_cache_num then
-        for i = opt.projects_cache_num, #paths, 1 do
-            project_paths[paths[opt.projects_cache_num]] = nil
-            table.remove(paths, opt.projects_cache_num)
+    if sp_opt.projects_cache_num > 0 and #paths >= sp_opt.projects_cache_num then
+        for i = sp_opt.projects_cache_num, #paths, 1 do
+            project_paths[paths[sp_opt.projects_cache_num]] = nil
+            table.remove(paths, sp_opt.projects_cache_num)
         end
     end
     return paths
@@ -126,7 +126,7 @@ end
 local function compare(d1, d2)
     local _, al =  string.gsub(d1, "/", "")
     local _, bl =  string.gsub(d2, "/", "")
-    if opt.project_rooter_outermost == 0 then
+    if sp_opt.project_rooter_outermost == 0 then
         return bl - al
     else
         return al - bl
@@ -144,13 +144,13 @@ local function find_root_directory()
     for _,pattern in pairs(project_rooter_patterns) do
         local find_path = ''
         if fn.stridx(pattern, '/') ~= -1 then
-            if opt.project_rooter_outermost == 1 then
+            if sp_opt.project_rooter_outermost == 1 then
                 find_path = sp_file.finddir(pattern, fd, -1)
             else
                 find_path = sp_file.finddir(pattern, fd)
             end
         else
-            if opt.project_rooter_outermost == 1 then
+            if sp_opt.project_rooter_outermost == 1 then
                 find_path = sp_file.findfile(pattern, fd, -1)
             else
                 find_path = sp_file.findfile(pattern, fd)
@@ -202,11 +202,11 @@ function M.open(project)
     local path = project_paths[project]['path']
     cmd('tabnew')
     cmd('lcd ' .. path)
-    if opt.filemanager == 'vimfiler' then
+    if sp_opt.filemanager == 'vimfiler' then
         cmd('Startify | VimFiler')
-    elseif opt.filemanager == 'nerdtree' then
+    elseif sp_opt.filemanager == 'nerdtree' then
         cmd('Startify | NERDTree')
-    elseif opt.filemanager == 'defx' then
+    elseif sp_opt.filemanager == 'defx' then
         cmd('Startify | Defx')
     end
 end
@@ -282,10 +282,10 @@ function M.current_root()
         or bufname == '[defx]' then
         return
     end
-    if table.concat(opt.project_rooter_patterns, ':') ~= table.concat(project_rooter_patterns, ':') then
+    if table.concat(sp_opt.project_rooter_patterns, ':') ~= table.concat(project_rooter_patterns, ':') then
         logger.info('project_rooter_patterns option has been change, clear b:rootDir')
         fn.setbufvar('%', 'rootDir', '')
-        project_rooter_patterns = opt.project_rooter_patterns
+        project_rooter_patterns = sp_opt.project_rooter_patterns
         update_rooter_patterns()
     end
     local rootdir = fn.getbufvar('%', 'rootDir', '')
