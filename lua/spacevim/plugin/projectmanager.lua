@@ -21,7 +21,7 @@ local project_callback = {}
 
 local function update_rooter_patterns()
     project_rooter_patterns = {}
-    for _,v in pairs(sp.eval('g:spacevim_project_rooter_patterns')) do
+    for _,v in pairs(sp_opt.project_rooter_patterns) do
         if string.match(v, '^!') ~= nil then
             table.insert(project_rooter_patterns, v)
         else
@@ -36,16 +36,40 @@ local function is_ignored_dir(dir)
     return false
 end
 local function cache()
-    fn.writefile({sp_json.json_encode(project_paths)}, sp_file.unify_path(project_cache_path, ':p'))
+    local path = sp_file.unify_path(project_cache_path, ':p')
+    local file = io.open(path, 'w')
+    if file then
+        if file:write({sp_json.json_encode(project_paths)}) == nil then
+            logger.debug('failed to write to file:' .. path)
+        end
+        io.close(file)
+    else
+        logger.debug('failed to open file:' .. path)
+    end
+end
+
+local function readfile(path)
+    local file = io.open(path, "r")
+    if file then
+        local content = file:read("*a")
+        io.close(file)
+        return content
+    end
+    return nil
+end
+
+local function filereadable(fpath)
+    local f = io.open(fpath, 'r')
+    if f ~= nil then io.close(f) return true else return false end
 end
 
 local function load_cache()
-    if fn.filereadable(project_cache_path) == 1 then
+    if filereadable(project_cache_path) then
         logger.info('Load projects cache from: ' .. project_cache_path)
-        local cache_context = fn.join(fn.readfile(project_cache_path, ''), '')
-        if fn.empty(cache_context) == 0 then
+        local cache_context = readfile(project_cache_path)
+        if cache_context == nil then
             local cache_object = sp_json.json_decode(cache_context)
-            if sp_vim.is_dict(cache_object) then
+            if type(cache_object) == 'table' then
                 project_paths = fn.filter(cache_object, '!empty(v:key)')
             end
         end
@@ -55,24 +79,24 @@ local function load_cache()
 end
 
 local function sort_by_opened_time()
-  local paths = {}
-  for k,v in pairs(project_paths) do table.insert(paths, k) end
-  table.sort(paths, compare_time)
-  if opt.projects_cache_num > 0 and sp_list.has_index(paths, opt.projects_cache_num) then
-    for path in select(paths, opt.projects_cache_num, #paths) do
-      table.remove(project_paths, path)
+    local paths = {}
+    for k,v in pairs(project_paths) do table.insert(paths, k) end
+    table.sort(paths, compare_time)
+    if opt.projects_cache_num > 0 and #paths >= opt.projects_cache_num then
+        for i = opt.projects_cache_num, #paths, 1 do
+            project_paths[paths[opt.projects_cache_num]] = nil
+            table.remove(paths, opt.projects_cache_num)
+        end
     end
-    paths = select(paths, 1, opt._projects_cache_num - 1)
-  end
-  return paths
+    return paths
 end
 
 local function compare_time(d1, d2)
-  local proj1 = project_paths[d1] or {}
-  local proj1time = proj1['opened_time'] or 0
-  local proj2 = project_paths[d2] or {}
-  local proj2time = proj2['opened_time'] or 0
-  return proj2time - proj1time
+    local proj1 = project_paths[d1] or {}
+    local proj1time = proj1['opened_time'] or 0
+    local proj2 = project_paths[d2] or {}
+    local proj2time = proj2['opened_time'] or 0
+    return proj2time - proj1time
 end
 local function change_dir(dir)
     local bufname = fn.bufname('%')
@@ -161,93 +185,93 @@ end
 local M = {}
 
 function M.list()
-  if layer.isLoaded('unite') then
-    cmd('Unite menu:Projects')
-  elseif layer.isLoaded('denite') then
-    cmd('Denite menu:Projects')
-  elseif layer.isLoaded('fzf') then
-    cmd('FzfMenu Projects')
-  elseif layer.isLoaded('leaderf') then
-    cmd("call SpaceVim#layers#leaderf#run_menu('Projects')")
-  else
-    logger.warn('fuzzy find layer is needed to find project!')
-  end
+    if layer.isLoaded('unite') then
+        cmd('Unite menu:Projects')
+    elseif layer.isLoaded('denite') then
+        cmd('Denite menu:Projects')
+    elseif layer.isLoaded('fzf') then
+        cmd('FzfMenu Projects')
+    elseif layer.isLoaded('leaderf') then
+        cmd("call SpaceVim#layers#leaderf#run_menu('Projects')")
+    else
+        logger.warn('fuzzy find layer is needed to find project!')
+    end
 end
 
 function M.open(project)
-  local path = project_paths[project]['path']
-  cmd('tabnew')
-  cmd('lcd ' .. path)
-  if opt.filemanager == 'vimfiler' then
-    cmd('Startify | VimFiler')
-  elseif opt.filemanager == 'nerdtree' then
-    cmd('Startify | NERDTree')
-  elseif opt.filemanager == 'defx' then
-    cmd('Startify | Defx')
-  end
+    local path = project_paths[project]['path']
+    cmd('tabnew')
+    cmd('lcd ' .. path)
+    if opt.filemanager == 'vimfiler' then
+        cmd('Startify | VimFiler')
+    elseif opt.filemanager == 'nerdtree' then
+        cmd('Startify | NERDTree')
+    elseif opt.filemanager == 'defx' then
+        cmd('Startify | Defx')
+    end
 end
 
 function M.current_name()
-  return sp.eval('b:_spacevim_project_name')
+    return sp.eval('b:_spacevim_project_name')
 end
 
 
 function M.RootchandgeCallback()
-  local project = {
+    local project = {
         ['path'] = fn.getcwd(),
         ['name'] = fn.fnamemodify(fn.getcwd(), ':t'),
         ['opened_time'] = fn.localtime()
-        }
-  if project.path == '' then
-    return
-  end
-  cache_project(project)
-  -- let g:_spacevim_project_name = project.name
-  -- let b:_spacevim_project_name = g:_spacevim_project_name
-  fn.setbufvar('_spacevim_project_name', project.name)
-  for Callback in project_callback do
-    fn.call(Callback)
-  end
+    }
+    if project.path == '' then
+        return
+    end
+    cache_project(project)
+    -- let g:_spacevim_project_name = project.name
+    -- let b:_spacevim_project_name = g:_spacevim_project_name
+    fn.setbufvar('_spacevim_project_name', project.name)
+    for Callback in project_callback do
+        fn.call(Callback)
+    end
 end
 
 function M.reg_callback(func)
-  if type(func) == 2 then
-    table.insert(project_callback, func)
-  else
-    logger.warn('can not register the project callback: ' .. fn.string(func))
-  end
+    if type(func) == 2 then
+        table.insert(project_callback, func)
+    else
+        logger.warn('can not register the project callback: ' .. fn.string(func))
+    end
 end
 
 function M.kill_project()
-  local name = sp.eval('b:_spacevim_project_name')
-  if name ~= '' then
-    sp_buffer.filter_do(
-          {
-           ['expr'] = {
-          'buflisted(v:val)',
-          'getbufvar(v:val, "_spacevim_project_name") == "' .. name .. '"',
-          },
-           ['do'] = 'bd %d'
-          }
-          )
-  end
+    local name = sp.eval('b:_spacevim_project_name')
+    if name ~= '' then
+        sp_buffer.filter_do(
+            {
+                ['expr'] = {
+                    'buflisted(v:val)',
+                    'getbufvar(v:val, "_spacevim_project_name") == "' .. name .. '"',
+                },
+                ['do'] = 'bd %d'
+            }
+            )
+    end
 end
 
 function M.complete_project(arglead, cmdline, cursorpos)
-  local dir = '~'
-  local result = fn.split(fn.globpath(dir, '*'), "\n")
-  local ps = {}
-  for p in result do
-    if fn.isdirectory(p) == 1 and fn.isdirectory(p .. sp_file.separator .. '.git') == 1 then
-      table.insert(ps, fn.fnamemodify(p, ':t'))
+    local dir = '~'
+    local result = fn.split(fn.globpath(dir, '*'), "\n")
+    local ps = {}
+    for p in result do
+        if fn.isdirectory(p) == 1 and fn.isdirectory(p .. sp_file.separator .. '.git') == 1 then
+            table.insert(ps, fn.fnamemodify(p, ':t'))
+        end
     end
-  end
-  return fn.join(ps, "\n")
+    return fn.join(ps, "\n")
 end
 
 
 function M.OpenProject(p)
-  cmd('CtrlP '.. dir)
+    cmd('CtrlP '.. dir)
 end
 
 
