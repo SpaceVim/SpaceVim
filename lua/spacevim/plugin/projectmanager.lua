@@ -19,11 +19,6 @@ local project_rooter_patterns = {}
 local project_rooter_ignores = {}
 local project_callback = {}
 
-if sp_opt.enable_projects_cache == 1 then
-    load_cache()
-end
-
-
 local function update_rooter_patterns()
     project_rooter_patterns = {}
     for _,v in pairs(sp.eval('g:spacevim_project_rooter_patterns')) do
@@ -156,6 +151,11 @@ local function find_root_directory()
 end
 
 update_rooter_patterns()
+
+if sp_opt.enable_projects_cache == 1 then
+    load_cache()
+end
+
 
 
 local M = {}
