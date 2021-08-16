@@ -99,16 +99,13 @@ local function compare_time(d1, d2)
     return proj2time - proj1time
 end
 local function change_dir(dir)
-    local bufname = fn.bufname('%')
-    if bufname == '' then
-        bufname = 'No Name'
-    end
-    logger.debug('buffer name: ' .. bufname)
     if dir == sp_file.unify_path(fn.getcwd()) then
         logger.debug('same as current directory, no need to change.')
     else
-        logger.info('change to root: ' .. dir)
-        sp.cmd('cd ' .. sp.fn.fnameescape(sp.fn.fnamemodify(dir, ':p')))
+        if dir ~= nil then
+            logger.info('change to root: ' .. dir)
+            sp.cmd('cd ' .. sp.fn.fnameescape(sp.fn.fnamemodify(dir, ':p')))
+        end
     end
 end
 
