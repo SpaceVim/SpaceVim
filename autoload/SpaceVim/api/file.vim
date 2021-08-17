@@ -233,25 +233,16 @@ let s:file['updateFiles'] = function('s:updatefiles')
 " 2. if it is a dir, end with /
 " 3. if a:path end with /, then return path also end with /
 function! s:unify_path(path, ...) abort
-  call SpaceVim#logger#info('a:path is :' . a:path)
+  if empty(a:path)
+    return ''
+  endif
   let mod = a:0 > 0 ? a:1 : ':p'
   let path = fnamemodify(a:path, mod . ':gs?[\\/]?/?')
-  call SpaceVim#logger#info('a:path is :' . a:path)
-  call SpaceVim#logger#info('path is :' . path)
   if isdirectory(path) && path[-1:] !=# '/'
-    call SpaceVim#logger#info('case one')
-    call SpaceVim#logger#info('a:path is :' . a:path)
-    call SpaceVim#logger#info('path is :' . path)
     return path . '/'
   elseif a:path[-1:] ==# '/' && path[-1:] !=# '/'
-    call SpaceVim#logger#info('case two')
-    call SpaceVim#logger#info('a:path is :' . a:path)
-    call SpaceVim#logger#info('path is :' . path)
     return path . '/'
   else
-    call SpaceVim#logger#info('case three')
-    call SpaceVim#logger#info('a:path is :' . a:path)
-    call SpaceVim#logger#info('path is :' . path)
     return path
   endif
 endfunction
