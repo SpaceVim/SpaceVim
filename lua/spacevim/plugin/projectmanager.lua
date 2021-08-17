@@ -203,13 +203,13 @@ local M = {}
 
 function M.list()
     if layer.isLoaded('unite') then
-        cmd('Unite menu:Projects')
+        sp.cmd('Unite menu:Projects')
     elseif layer.isLoaded('denite') then
-        cmd('Denite menu:Projects')
+        sp.cmd('Denite menu:Projects')
     elseif layer.isLoaded('fzf') then
-        cmd('FzfMenu Projects')
+        sp.cmd('FzfMenu Projects')
     elseif layer.isLoaded('leaderf') then
-        cmd("call SpaceVim#layers#leaderf#run_menu('Projects')")
+        sp.cmd("call SpaceVim#layers#leaderf#run_menu('Projects')")
     else
         logger.warn('fuzzy find layer is needed to find project!')
     end
@@ -217,14 +217,14 @@ end
 
 function M.open(project)
     local path = project_paths[project]['path']
-    cmd('tabnew')
-    cmd('lcd ' .. path)
+    sp.cmd('tabnew')
+    sp.cmd('lcd ' .. path)
     if sp_opt.filemanager == 'vimfiler' then
-        cmd('Startify | VimFiler')
+        sp.cmd('Startify | VimFiler')
     elseif sp_opt.filemanager == 'nerdtree' then
-        cmd('Startify | NERDTree')
+        sp.cmd('Startify | NERDTree')
     elseif sp_opt.filemanager == 'defx' then
-        cmd('Startify | Defx')
+        sp.cmd('Startify | Defx')
     end
 end
 
@@ -294,7 +294,7 @@ end
 
 
 function M.OpenProject(p)
-    cmd('CtrlP '.. dir)
+    sp.cmd('CtrlP '.. dir)
 end
 
 
