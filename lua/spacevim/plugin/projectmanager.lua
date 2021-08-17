@@ -205,6 +205,15 @@ sp.cmd([[
   let g:unite_source_menu_menus.Projects.command_candidates = get(g:unite_source_menu_menus.Projects,'command_candidates', [])
     ]])
 
+if sp_opt.project_rooter_automatically == 1 then
+    sp.cmd([[
+    augroup spacevim_project_rooter
+      autocmd!
+      autocmd VimEnter,BufEnter * call SpaceVim#plugins#projectmanager#current_root()
+      autocmd BufWritePost * :call setbufvar('%', 'rootDir', '') | call SpaceVim#plugins#projectmanager#current_root()
+    augroup END
+    ]])
+end
 local M = {}
 
 function M.list()
