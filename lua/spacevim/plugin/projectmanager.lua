@@ -33,7 +33,10 @@ local function update_rooter_patterns()
 end
 local function is_ignored_dir(dir)
     for _,v in pairs(project_rooter_ignores) do
-        if string.match(dir, v) ~= nil then return true end
+        if string.match(dir, v) ~= nil then
+            logger.debug('this is an ignored dir:' .. dir)
+        return true
+    end
     end
     return false
 end
@@ -141,7 +144,7 @@ local function find_root_directory()
     logger.debug('start to find root for: ' .. fd)
     local dirs = {}
     for _,pattern in pairs(project_rooter_patterns) do
-        logger.debug('rooter_patterns:' .. pattern)
+        logger.debug('searching rooter_patterns:' .. pattern)
         local find_path = ''
         if string.sub(pattern, -1) == '/' then
             if sp_opt.project_rooter_outermost == 1 then
@@ -158,17 +161,21 @@ local function find_root_directory()
         end
         logger.debug('find_path is:' .. find_path)
         local path_type = fn.getftype(find_path)
+        logger.debug('path_type is:' .. path_type)
         if ( path_type == 'dir' or path_type == 'file' ) 
-            and is_ignored_dir(find_path) == 0 then
+            and not(is_ignored_dir(find_path)) then
             find_path = sp_file.unify_path(find_path, ':p')
             if path_type == 'dir' then
-                local dir = sp_file.unify_path(find_path, ':h:h')
+                find_path = sp_file.unify_path(find_path, ':h:h')
             else
-                local dir = sp_file.unify_path(find_path, ':h')
+                find_path = sp_file.unify_path(find_path, ':h')
             end
-            if dir ~= sp_file.unify_path(fn.expand('$HOME')) then
-                logger.info('        (' .. pattern .. '):' .. dir)
-                table.insert(dirs, dir)
+            logger.debug('find_path is:' .. find_path)
+            if find_path ~= sp_file.unify_path(fn.expand('$HOME')) then
+                logger.info('        (' .. pattern .. '):' .. find_path)
+                table.insert(dirs, find_path)
+            else
+                logger.info('ignore $HOME directory:' .. find_path)
             end
         end
     end
@@ -207,11 +214,11 @@ sp.cmd([[
     ]])
 
 if sp_opt.project_rooter_automatically == 1 then
-sp.cmd("augroup spacevim_project_rooter")
-sp.cmd("autocmd!")
-sp.cmd("autocmd VimEnter,BufEnter * call SpaceVim#plugins#projectmanager#current_root()")
-sp.cmd("autocmd BufWritePost * :call setbufvar('%', 'rootDir', '') | call SpaceVim#plugins#projectmanager#current_root()")
-sp.cmd("augroup END")
+    sp.cmd("augroup spacevim_project_rooter")
+    sp.cmd("autocmd!")
+    sp.cmd("autocmd VimEnter,BufEnter * call SpaceVim#plugins#projectmanager#current_root()")
+    sp.cmd("autocmd BufWritePost * :call setbufvar('%', 'rootDir', '') | call SpaceVim#plugins#projectmanager#current_root()")
+    sp.cmd("augroup END")
 end
 local M = {}
 
