@@ -246,7 +246,7 @@ function M.RootchandgeCallback()
     -- let g:_spacevim_project_name = project.name
     -- let b:_spacevim_project_name = g:_spacevim_project_name
     fn.setbufvar('%', '_spacevim_project_name', project.name)
-    for Callback in project_callback do
+    for _, Callback in pairs(project_callback) do
         fn.call(Callback)
     end
 end
