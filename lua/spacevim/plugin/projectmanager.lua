@@ -35,8 +35,8 @@ local function is_ignored_dir(dir)
     for _,v in pairs(project_rooter_ignores) do
         if string.match(dir, v) ~= nil then
             logger.debug('this is an ignored dir:' .. dir)
-        return true
-    end
+            return true
+        end
     end
     return false
 end
@@ -68,14 +68,23 @@ local function filereadable(fpath)
     if f ~= nil then io.close(f) return true else return false end
 end
 
+local function filter_invalid(projects)
+    for key, value in pairs(projects) do
+        if #value == 0 then
+            projects[key] = nil
+        end
+    end
+    return projects
+end
+
 local function load_cache()
     if filereadable(project_cache_path) then
         logger.info('Load projects cache from: ' .. project_cache_path)
         local cache_context = readfile(project_cache_path)
-        if cache_context == nil then
+        if cache_context ~= nil then
             local cache_object = sp_json.json_decode(cache_context)
             if type(cache_object) == 'table' then
-                project_paths = fn.filter(cache_object, '!empty(v:key)')
+                project_paths = filter_invalid(cache_object)
             end
         end
     else
