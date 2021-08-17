@@ -39,7 +39,7 @@ local function cache()
     local path = sp_file.unify_path(project_cache_path, ':p')
     local file = io.open(path, 'w')
     if file then
-        if file:write({sp_json.json_encode(project_paths)}) == nil then
+        if file:write(sp_json.json_encode(project_paths)) == nil then
             logger.debug('failed to write to file:' .. path)
         end
         io.close(file)
