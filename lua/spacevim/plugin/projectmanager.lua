@@ -31,6 +31,7 @@ local function update_rooter_patterns()
         end
     end
 end
+
 local function is_ignored_dir(dir)
     for _,v in pairs(project_rooter_ignores) do
         if string.match(dir, v) ~= nil then
@@ -66,6 +67,15 @@ end
 local function filereadable(fpath)
     local f = io.open(fpath, 'r')
     if f ~= nil then io.close(f) return true else return false end
+end
+
+local function isdirectory(fpath)
+    local f, err, code = io.open(fpath, "r")
+    if f ~= nil then
+        f:close()
+        return false
+    end
+    return code == 13
 end
 
 local function filter_invalid(projects)
