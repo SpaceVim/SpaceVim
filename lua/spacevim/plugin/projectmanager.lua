@@ -139,8 +139,9 @@ local function find_root_directory()
     local dirs = {}
     logger.info('Start to find root for: ' .. sp_file.unify_path(fd))
     for _,pattern in pairs(project_rooter_patterns) do
+        logger.debug('rooter_patterns:' .. pattern)
         local find_path = ''
-        if fn.stridx(pattern, '/') ~= -1 then
+        if string.sub(pattern, -1) == '/' then
             if sp_opt.project_rooter_outermost == 1 then
                 find_path = sp_file.finddir(pattern, fd, -1)
             else
@@ -153,6 +154,7 @@ local function find_root_directory()
                 find_path = sp_file.findfile(pattern, fd)
             end
         end
+        logger.debug('find_path is:' .. find_path)
         local path_type = fn.getftype(find_path)
         if ( path_type == 'dir' or path_type == 'file' ) 
             and is_ignored_dir(find_path) == 0 then
