@@ -247,12 +247,13 @@ function M.RootchandgeCallback()
     -- let b:_spacevim_project_name = g:_spacevim_project_name
     fn.setbufvar('%', '_spacevim_project_name', project.name)
     for _, Callback in pairs(project_callback) do
+        logger.debug('run callback:' .. Callback)
         fn.call(Callback)
     end
 end
 
 function M.reg_callback(func)
-    if type(func) == 2 then
+    if type(func) == 'string' then
         table.insert(project_callback, func)
     else
         logger.warn('type of func is:' .. type(func))
