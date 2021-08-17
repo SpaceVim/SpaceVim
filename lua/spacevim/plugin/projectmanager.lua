@@ -318,16 +318,17 @@ function M.current_root()
         or bufname == '[defx]' then
         return
     end
-    if table.concat(sp_opt.project_rooter_patterns, ':') ~= table.concat(project_rooter_patterns, ':') then
+    if table.concat(sp_opt.project_rooter_patterns, ':') ~= table.concat(spacevim_project_rooter_patterns, ':') then
         logger.info('project_rooter_patterns option has been change, clear b:rootDir')
         fn.setbufvar('%', 'rootDir', '')
         spacevim_project_rooter_patterns = sp_opt.project_rooter_patterns
         update_rooter_patterns()
     end
     local rootdir = fn.getbufvar('%', 'rootDir', '')
-    if rootdir == '' then
+    -- @bug fn.getbufvar('%', 'rootDir', '') return nil
+    if rootdir == nil or rootdir == '' then
         rootdir = find_root_directory()
-        if rootdir == '' then
+        if rootdir == nil or rootdir == '' then
             rootdir = sp_file.unify_path(fn.getcwd())
         end
         fn.setbufvar('%', 'rootDir', rootdir)
