@@ -36,7 +36,7 @@ if $SPACEVIM_LUA
   endfunction
   function! SpaceVim#plugins#projectmanager#reg_callback(func) abort
     lua require("spacevim.plugin.projectmanager").reg_callback(
-          \ require("spacevim").eval("a:func")
+          \ require("spacevim").eval("string(a:func)")
           \ )
   endfunction
   function! SpaceVim#plugins#projectmanager#current_root() abort

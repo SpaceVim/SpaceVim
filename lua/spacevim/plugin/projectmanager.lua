@@ -255,6 +255,7 @@ function M.reg_callback(func)
     if type(func) == 2 then
         table.insert(project_callback, func)
     else
+        logger.warn('type of func is:' .. type(func))
         logger.warn('can not register the project callback: ' .. fn.string(func))
     end
 end
