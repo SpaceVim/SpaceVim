@@ -15,6 +15,7 @@ local fn = sp.fn
 local layer = require('spacevim.layer')
 local project_paths = {}
 local project_cache_path = sp_file.unify_path(sp_opt.data_dir, ':p') .. 'SpaceVim/projects.json'
+local spacevim_project_rooter_patterns = {}
 local project_rooter_patterns = {}
 local project_rooter_ignores = {}
 local project_callback = {}
@@ -189,6 +190,9 @@ local function cache_project(prj)
     end
 end
 
+-- call add(g:spacevim_project_rooter_patterns, '.SpaceVim.d/')
+
+-- let s:spacevim_project_rooter_patterns = copy(g:spacevim_project_rooter_patterns)
 update_rooter_patterns()
 
 if sp_opt.enable_projects_cache == 1 then
@@ -310,7 +314,7 @@ function M.current_root()
     if table.concat(sp_opt.project_rooter_patterns, ':') ~= table.concat(project_rooter_patterns, ':') then
         logger.info('project_rooter_patterns option has been change, clear b:rootDir')
         fn.setbufvar('%', 'rootDir', '')
-        project_rooter_patterns = sp_opt.project_rooter_patterns
+        spacevim_project_rooter_patterns = sp_opt.project_rooter_patterns
         update_rooter_patterns()
     end
     local rootdir = fn.getbufvar('%', 'rootDir', '')
