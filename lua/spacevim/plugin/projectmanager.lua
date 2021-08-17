@@ -255,10 +255,12 @@ end
 
 
 function M.RootchandgeCallback()
+    local path = sp_file.unify_path(fn.getcwd(), ':p')
+    local name = fn.fnamemodify(path, ':t')
     local project = {
-        ['path'] = fn.getcwd(),
-        ['name'] = fn.fnamemodify(fn.getcwd(), ':t'),
-        ['opened_time'] = fn.localtime()
+        ['path'] = path,
+        ['name'] = name,
+        ['opened_time'] = os.time()
     }
     if project.path == '' then
         return
