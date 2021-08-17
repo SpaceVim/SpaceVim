@@ -193,7 +193,11 @@ if sp_opt.enable_projects_cache == 1 then
     load_cache()
 end
 
-
+sp.cmd([[
+  let g:unite_source_menu_menus = get(g:,'unite_source_menu_menus',{})
+  let g:unite_source_menu_menus.Projects = {'description': 'Custom mapped keyboard shortcuts                   [SPC] p p'}
+  let g:unite_source_menu_menus.Projects.command_candidates = get(g:unite_source_menu_menus.Projects,'command_candidates', [])
+    ]])
 
 local M = {}
 
