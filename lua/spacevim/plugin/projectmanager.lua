@@ -206,13 +206,11 @@ sp.cmd([[
     ]])
 
 if sp_opt.project_rooter_automatically == 1 then
-    sp.cmd([[
-    augroup spacevim_project_rooter
-      autocmd!
-      autocmd VimEnter,BufEnter * call SpaceVim#plugins#projectmanager#current_root()
-      autocmd BufWritePost * :call setbufvar('%', 'rootDir', '') | call SpaceVim#plugins#projectmanager#current_root()
-    augroup END
-    ]])
+sp.cmd("augroup spacevim_project_rooter")
+sp.cmd("autocmd!")
+sp.cmd("autocmd VimEnter,BufEnter * call SpaceVim#plugins#projectmanager#current_root()")
+sp.cmd("autocmd BufWritePost * :call setbufvar('%', 'rootDir', '') | call SpaceVim#plugins#projectmanager#current_root()")
+sp.cmd("augroup END")
 end
 local M = {}
 
