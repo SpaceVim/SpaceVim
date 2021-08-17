@@ -25,7 +25,7 @@ local sp = require('spacevim')
 -- setmetatable(M, mt)
 
 function M.isLoaded(layer)
-    return sp.call('SpaceVim#layers#isLoaded', layer)
+    return sp.call('SpaceVim#layers#isLoaded', layer) == 1
 end
 
 
