@@ -254,7 +254,11 @@ end
 
 function M.reg_callback(func)
     if type(func) == 'string' then
-        table.insert(project_callback, func)
+        if string.match(func, '^function(') ~= nil then
+            table.insert(project_callback, string.sub(func, 11, -3))
+        else
+            table.insert(project_callback, func)
+        end
     else
         logger.warn('type of func is:' .. type(func))
         logger.warn('can not register the project callback: ' .. fn.string(func))
