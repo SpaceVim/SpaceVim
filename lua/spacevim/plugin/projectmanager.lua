@@ -22,8 +22,9 @@ local project_callback = {}
 
 local function update_rooter_patterns()
     project_rooter_patterns = {}
+    project_rooter_ignores = {}
     for _,v in pairs(sp_opt.project_rooter_patterns) do
-        if string.match(v, '^!') ~= nil then
+        if string.match(v, '^!') == nil then
             table.insert(project_rooter_patterns, v)
         else
             table.insert(project_rooter_ignores, string.sub(v, 2, -1))
@@ -132,13 +133,13 @@ local function compare(d1, d2)
 end
 
 local function find_root_directory()
-    local fd = fn.expand('%:p')
+    local fd = fn.bufname('%')
     if fn == '' then
+        logger.debug('bufname is empty')
         fd = fn.getcwd()
     end
-
+    logger.debug('start to find root for: ' .. fd)
     local dirs = {}
-    logger.info('Start to find root for: ' .. sp_file.unify_path(fd))
     for _,pattern in pairs(project_rooter_patterns) do
         logger.debug('rooter_patterns:' .. pattern)
         local find_path = ''
