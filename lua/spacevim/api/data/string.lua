@@ -41,7 +41,7 @@ end
 
 function M.toggle_case(str)
     local chars = {}
-    for char in pairs(M.string2chars(str)) do
+    for _, char in pairs(M.string2chars(str)) do
         local cn = string.byte(char)
         if cn >= 97 and cn <= 122 then
             table.insert(chars, string.char(cn - 32))
