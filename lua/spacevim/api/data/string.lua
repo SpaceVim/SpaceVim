@@ -16,9 +16,23 @@ end
 
 
 function M.fill(str, length, ...)
-    if string.len(str) > length then
+    local v = ''
+    if string.len(str) <= length then
+        v = str
+    else
+        local rightmost= 0
+        while string.len(string.sub(str, 0, rightmost)) < length do
+            rightmost = rightmost + 1
+        end
+
     end
-    
+    v = string.sub(str, 0, rightmost)
+    local argvs = ...
+    local char = ' '
+    if argvs ~= nil then
+        char = argvs[1] or char
+    end
+    return v .. string.rep(char, length - string.len(v))
 end
 
 function M.strcharpart(str, start, ...)
