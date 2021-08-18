@@ -40,7 +40,18 @@ function M.strcharpart(str, start, ...)
 end
 
 function M.toggle_case(str)
-    
+    local chars = {}
+    for char in pairs(M.string2chars(str)) do
+        local cn = string.byte(char)
+        if cn >= 97 and cn <= 122 then
+            table.insert(chars, string.char(cn - 32))
+        elseif cn >= 65 and cn <= 90 then
+            table.insert(chars, string.char(cn + 32))
+        else
+            table.insert(chars, char)
+        end
+    end
+    return table.concat(chars, '')
 end
 
 function M.fill_left(str)
@@ -61,7 +72,9 @@ function M.trim_end(str)
 end
 
 function M.string2chars(str)
-    
+    local t = {}
+    for k in string.gmatch(str, '.') do table.insert(t, k) end
+    return t
 end
 
 function M.matchstrpos(str, need, ...)
