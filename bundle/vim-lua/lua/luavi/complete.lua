@@ -1,6 +1,6 @@
 local PATTERN_LUA_IDENTIFIER = '([%a_]+[%a%d_.]*)'
 
-complete = {}
+local M = {}
 
 local vimutil = require('luavi.vimutils')
 
@@ -232,15 +232,15 @@ end
 
 
 
-function complete.complete(findstart, base)
+function M.complete(findstart, base)
     -- this function is called twice - first for finding range in line to complete
     if findstart == 1 then
-        vimutil.command("return " .. completion_findstart())
+        return completion_findstart()
     else      -- the second run - do proper complete
         local comps = complete_base_string(base)
         for i = 1, #comps do comps[i] = "'" .. comps[i] .. "'" end
         -- returning
-        vimutil.command("return [" .. table.concat(comps, ", ") .. "]")
+        return comps
     end
 end
 
