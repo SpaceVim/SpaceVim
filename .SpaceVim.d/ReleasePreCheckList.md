@@ -15,3 +15,4 @@ from `v1.0.0-dev` to `v1.0.0`
 - [ ] Home page
 - [ ] Readme of github and gitee
 - [ ] roadmap
+- [ ] screenshort

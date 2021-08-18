@@ -87,16 +87,16 @@ function! SpaceVim#layers#colorscheme#config() abort
   if s:random_colorscheme
     let ctime = ''
     " Use local file's save time, the local file is
-    " ~/.cache/SpaceVim/colorscheme_frequence.json
-    " {"fequecnce" : "dalily", "last" : 000000, 'theme' : 'one'}
+    " ~/.cache/SpaceVim/colorscheme_frequency.json
+    " {"frequency" : "dalily", "last" : 000000, 'theme' : 'one'}
     " FIXME: when global config cache is updated, check the cache also should
     " be updated
-    if filereadable(expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequence.json'))
-      let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequence.json'), ''), ''))
+    if filereadable(expand(g:spacevim_data_dir.'SpaceVim/colorscheme_frequency.json'))
+      let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'SpaceVim/colorscheme_frequency.json'), ''), ''))
       if s:random_frequency !=# '' && !empty(conf)
         let ctime = localtime()
         if index(s:random_candidates, get(conf, 'theme', '')) == -1 ||
-              \ ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'fequecnce', ''), 0)
+              \ ctime - get(conf, 'last', 0) >= get(s:time,  get(conf, 'frequency', ''), 0)
           let id = s:NUMBER.random(0, len(s:random_candidates))
           let g:spacevim_colorscheme = s:random_candidates[id]
           call s:update_conf()
@@ -120,11 +120,11 @@ endfunction
 
 function! s:update_conf() abort
   let conf = {
-        \ 'fequecnce' : s:random_frequency,
+        \ 'frequency' : s:random_frequency,
         \ 'last' : localtime(),
         \ 'theme' : g:spacevim_colorscheme
         \ }
-  call writefile([s:JSON.json_encode(conf)], expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequence.json'))
+  call writefile([s:JSON.json_encode(conf)], expand(g:spacevim_data_dir.'SpaceVim/colorscheme_frequency.json'))
 endfunction
 
 
@@ -145,6 +145,11 @@ function! SpaceVim#layers#colorscheme#get_options() abort
 
 endfunction
 
+function! SpaceVim#layers#colorscheme#health() abort
+  call SpaceVim#layers#colorscheme#plugins()
+  call SpaceVim#layers#colorscheme#config()
+  return 1
+endfunction
 
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#povray layer"
-description: "This layer is for povray development, provide syntax highlighting, viewing images."
+description: "This layer is for povray development, provides syntax highlighting, and viewing images."
 ---
 
 # [Available Layers](../../) >> lang#povray
@@ -18,7 +18,7 @@ This layer is for writing [POV-Ray](https://www.povray.org/) code, including syn
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

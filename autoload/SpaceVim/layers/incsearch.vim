@@ -42,6 +42,13 @@ function! SpaceVim#layers#incsearch#plugins() abort
   return plugins
 endfunction
 
+
+function! SpaceVim#layers#incsearch#health() abort
+  call SpaceVim#layers#incsearch#plugins()
+  call SpaceVim#layers#incsearch#config()
+  return 1
+endfunction
+
 let s:lnum = expand('<slnum>') + 3
 function! SpaceVim#layers#incsearch#config() abort
   " makes * and # work on visual mode too.

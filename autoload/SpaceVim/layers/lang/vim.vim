@@ -124,3 +124,9 @@ endfunction
 function! s:helpversion_cursor() abort
   exe 'HelpfulVersion' expand('<cword>')
 endfunction
+
+function! SpaceVim#layers#lang#vim#health() abort
+  call SpaceVim#layers#lang#vim#plugins()
+  call SpaceVim#layers#lang#vim#config()
+  return 1
+endfunction

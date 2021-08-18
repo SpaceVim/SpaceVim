@@ -11,6 +11,7 @@ lang: zh
 - [模块描述](#模块描述)
 - [启用模块](#启用模块)
   - [安装语言服务器](#安装语言服务器)
+- [模块选项](#模块选项)
 - [功能特性](#功能特性)
 - [快捷键](#快捷键)
 
@@ -36,6 +37,16 @@ lang: zh
 ```bash
 npm install --global vscode-html-languageserver-bin
 ```
+
+## 模块选项
+
+- `user_emmet_leader_key`: 设置插件 emmet 的默认前置键。
+
+  ```toml
+  [layers]
+    name = "lang#html"
+    user_emmet_leader_key = "<C-e>"
+  ```
 
 ## 功能特性
 

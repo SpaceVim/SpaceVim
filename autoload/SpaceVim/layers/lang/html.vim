@@ -34,6 +34,13 @@
 " <
 "
 
+if exists('s:user_emmet_leader_key')
+  finish
+
+endif
+
+let s:user_emmet_leader_key = '<C-e>'
+
 
 function! SpaceVim#layers#lang#html#plugins() abort
   let plugins = [
@@ -49,13 +56,17 @@ function! SpaceVim#layers#lang#html#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#html#config() abort
-  let g:user_emmet_leader_key=get(g:, 'user_emmet_leader_key', '<C-e>')
+  let g:user_emmet_leader_key = s:user_emmet_leader_key
   augroup spacevim_lang_html
     autocmd!
-    autocmd FileType html,css,scss,sass,less,javascript,jsp,vue,eex,php call s:install_emmet()
+    autocmd FileType html,css,scss,sass,less,javascript,jsp,vue,eex,php,erb call s:install_emmet()
     autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   augroup END
+endfunction
+
+function! SpaceVim#layers#lang#html#set_variable(var) abort
+  let s:user_emmet_leader_key = get(a:var, 'user_emmet_leader_key', s:user_emmet_leader_key)
 endfunction
 
 
@@ -65,4 +76,10 @@ function! s:install_emmet() abort
   catch
     
   endtry
+endfunction
+
+function! SpaceVim#layers#lang#html#health() abort
+  call SpaceVim#layers#lang#html#plugins()
+  call SpaceVim#layers#lang#html#config()
+  return 1
 endfunction

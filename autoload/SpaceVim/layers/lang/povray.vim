@@ -38,3 +38,9 @@ function! s:language_specified_mappings() abort
         \ 'call povray#CompileSilent()',
         \ 'build-silent', 1)
 endfunction
+
+function! SpaceVim#layers#lang#povray#health() abort
+  call SpaceVim#layers#lang#povray#plugins()
+  call SpaceVim#layers#lang#povray#config()
+  return 1
+endfunction

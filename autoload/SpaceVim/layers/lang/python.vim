@@ -9,18 +9,66 @@
 ""
 " @section lang#python, layer-lang-python
 " @parentsection layers
-" To make this layer work well, you should install jedi.
-" @subsection mappings
+" This layer provides python language support for SpaceVim. Includding syntax
+" highlighting, code formatting and code completion. This layer is not enabled
+" by default, to enable this layer, add following snippet into SpaceVim
+" configuration file:
 " >
-"   mode            key             function
+"   [[layers]]
+"     name = 'lang#python'
 " <
+"
+" @subsection Options
+"
+" 1. python_file_head: the default file head for python source code.
+" >
+"   [layers]
+"     name = "lang#python"
+"     python_file_head = [      
+"       '#!/usr/bin/python3',
+"       '# -*- coding : utf-8 -*-'
+"       ''
+"     ]
+" <
+" 2. `python_interpreter`: Set the interpreter of python.
+" >
+"   [[layers]]
+"     name = 'lang#python'
+"     python_interpreter = '~/download/bin/python3'
+" <
+" 3. format_on_save: enable/disable code formation when save python file. This
+" options is disabled by default, to enable it:
+" >
+"   [[layers]]
+"     name = 'lang#python'
+"     format_on_save = true
+" <
+"
+" @subsection Key bindings
+"
+" >
+"   Key             Function
+"   --------------------------------
+"   SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for python, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 
 if exists('s:enabled_linters')
   finish
 endif
 
-let s:enabled_linters = ['python', 'flake8']
+let s:enabled_linters = ['python']
 let s:format_on_save = 0
 let s:python_file_head = [
       \ '#!/usr/bin/env python',
@@ -85,11 +133,15 @@ function! SpaceVim#layers#lang#python#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
   call SpaceVim#layers#edit#add_ft_head_tamplate('python', s:python_file_head)
   if executable('ipython')
-    call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title')
+    call SpaceVim#plugins#repl#reg('python', 'ipython --no-term-title --colors=NoColor')
+  elseif executable('ipython3')
+    call SpaceVim#plugins#repl#reg('python', 'ipython3 --no-term-title --colors=NoColor')
   elseif executable('python')
     call SpaceVim#plugins#repl#reg('python', ['python', '-i'])
+  elseif executable('python3')
+    call SpaceVim#plugins#repl#reg('python', ['python3', '-i'])
   endif
-  let g:neomake_python_enabled_makers = ['python']
+  let g:neomake_python_enabled_makers = s:enabled_linters
   let g:neomake_python_python_exe = s:python_interpreter
 endfunction
 
@@ -210,4 +262,10 @@ function! SpaceVim#layers#lang#python#set_variable(var) abort
         \ 'python_interpreter',
         \ s:python_interpreter
         \ )
+endfunction
+
+function! SpaceVim#layers#lang#python#health() abort
+  call SpaceVim#layers#lang#python#plugins()
+  call SpaceVim#layers#lang#python#config()
+  return 1
 endfunction

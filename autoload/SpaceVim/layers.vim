@@ -30,7 +30,7 @@ function! SpaceVim#layers#load(layer, ...) abort
   endif
   let loadable = 1
   try
-      let loadable = SpaceVim#layers#{a:layer}#loadable()
+    let loadable = SpaceVim#layers#{a:layer}#loadable()
   catch /^Vim\%((\a\+)\)\=:E117/
   endtry
   if index(s:enabled_layers, a:layer) == -1
@@ -134,6 +134,24 @@ function! SpaceVim#layers#report() abort
   endfor
   let info .= "```\n"
   return info
+endfunction
+
+function! SpaceVim#layers#list() abort
+
+  let files = SpaceVim#util#globpath('.', 'autoload/SpaceVim/layers/**/*.vim')
+  let pattern = s:SYS.isWindows ? '\\autoload\\SpaceVim\\layers\\' : '/autoload/SpaceVim/layers/'
+  let layers = []
+  for file in files
+    if s:SYS.isWindows
+      let layer = substitute(file[matchend(file, pattern):-5], '\\', '/', 'g')
+    else
+      let layer = file[matchend(file, pattern):-5]
+    endif
+    call add(layers, layer)
+  endfor
+
+  return map(layers, "substitute(v:val, '/', '#','g')")
+
 endfunction
 
 

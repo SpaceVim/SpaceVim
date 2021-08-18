@@ -6,6 +6,12 @@
 " License: GPLv3
 "=============================================================================
 
+function! SpaceVim#layers#ctrlp#health() abort
+  call SpaceVim#layers#ctrlp#plugins()
+  call SpaceVim#layers#ctrlp#config()
+  return 1
+endfunction
+
 function! SpaceVim#layers#ctrlp#plugins() abort
   let plugins = [
         \ ['ctrlpvim/ctrlp.vim', {'loadconf' : 1, 'merged' : 0}],

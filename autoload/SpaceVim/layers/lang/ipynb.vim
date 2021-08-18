@@ -33,3 +33,9 @@ function! s:language_specified_mappings() abort
         \ 'VimpyterStartNteract',
         \ 'start nteract', 1)
 endfunction
+
+function! SpaceVim#layers#lang#ipynb#health() abort
+  call SpaceVim#layers#lang#ipynb#plugins()
+  call SpaceVim#layers#lang#ipynb#config()
+  return 1
+endfunction

@@ -36,3 +36,9 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   endif
 endfunction
+
+function! SpaceVim#layers#lang#dockerfile#health() abort
+  call SpaceVim#layers#lang#dockerfile#plugins()
+  call SpaceVim#layers#lang#dockerfile#config()
+  return 1
+endfunction

@@ -34,7 +34,10 @@ function! dein#parse#_add(repo, options, overwrite) abort
     endif
 
     " Overwrite
-    call extend(plugin, copy(g:dein#_plugins[plugin.name]), 'keep')
+    " Note: reparse is needed.
+    let options = extend(a:options,
+          \ get(g:dein#_plugins[plugin.name], 'orig_opts', {}), 'keep')
+    let plugin = dein#parse#_dict(dein#parse#_init(a:repo, options))
   endif
 
   if plugin.rtp !=# ''

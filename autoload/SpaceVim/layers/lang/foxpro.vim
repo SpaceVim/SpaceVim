@@ -22,3 +22,9 @@ endfunction
 function! SpaceVim#layers#lang#foxpro#config() abort
   
 endfunction
+
+function! SpaceVim#layers#lang#foxpro#health() abort
+  call SpaceVim#layers#lang#foxpro#plugins()
+  call SpaceVim#layers#lang#foxpro#config()
+  return 1
+endfunction

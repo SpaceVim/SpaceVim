@@ -5,7 +5,7 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
-
+scriptencoding utf-8
 
 let s:self = {}
 let s:self.__dict = SpaceVim#api#import('data#dict')
@@ -86,6 +86,10 @@ function! s:self.win_config(winid, opt) abort
     call setwinvar(id, '&winhighlight', 'Normal:' . a:opt.highlight)
   endif
   return id
+endfunction
+
+function! s:self.get_width(winid) abort
+ return nvim_win_get_width(a:winid) 
 endfunction
 
 

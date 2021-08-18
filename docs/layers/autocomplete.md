@@ -23,7 +23,7 @@ description: "Autocomplete code within SpaceVim, fuzzy find the candidates from 
 
 ## Description
 
-This layer provides auto-completion to SpaceVim.
+This layer provides auto-completion in SpaceVim.
 
 The following completion engines are supported:
 
@@ -39,7 +39,7 @@ Snippets are supported via [neosnippet](https://github.com/Shougo/neosnippet.vim
 
 ## Install
 
-To use this configuration layer, add following snippet to your custom configuration file.
+To use this configuration layer, add the following snippet to your custom configuration file:
 
 ```toml
 [[layers]]
@@ -50,9 +50,8 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ### Completion engine
 
-By default, SpaceVim will choose the completion engine automatically base on your vim version.
-But you can choose the completion engine to be used
-with the following variable:
+By default, SpaceVim will choose the completion engine automatically based on your vim version.
+But you can choose the completion engine to be used with the following variable:
 
 - `autocomplete_method`: the possible values are:
   - `ycm`: for YouCompleteMe
@@ -114,7 +113,7 @@ By default, the parens will be completed automatically, to disabled this feature
 You can customize the user experience of autocompletion with the following layer variables:
 
 1. `auto_completion_return_key_behavior` set the action to perform
-   when the `Return`/`Enter` key is pressed, the possible values are:
+   when the `Return`/`Enter` key is pressed. the possible values are:
    - `complete` completes with the current selection
    - `smart` completes with current selection and expand snippet or argvs
    - `nil`
@@ -165,13 +164,13 @@ To disable this feature, set the variable `auto_completion_enable_snippets_in_po
 
 ### Completion
 
-| Key bindings | Description                                   |
-| ------------ | --------------------------------------------- |
-| `Ctrl-n`     | select next candidate                         |
-| `Ctrl-p`     | select previous candidate                     |
-| `<Tab>`      | base on `auto_completion_tab_key_behavior`    |
-| `Shift-Tab`  | select previous candidate                     |
-| `<Return>`   | base on `auto_completion_return_key_behavior` |
+| Key bindings | Description								    |
+| ------------ | -----------------------------------------------|
+| `Ctrl-n`     | select next candidate						    |
+| `Ctrl-p`     | select previous candidate					    |
+| `<Tab>`      | based on `auto_completion_tab_key_behavior`    |
+| `Shift-Tab`  | select previous candidate					    |
+| `<Return>`   | based on `auto_completion_return_key_behavior` |
 
 ### Neosnippet
 

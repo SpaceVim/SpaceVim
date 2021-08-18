@@ -31,6 +31,22 @@ endif
 "
 " 2. scheme_interpreter: Set the path or interpreter of scheme.
 "
+" @subsection Mappings
+" >
+"   Key         Function
+"   -----------------------------------------------
+"   SPC l r     Run current file
+" <
+" This layer also provides REPL support for scheme, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 function! SpaceVim#layers#lang#scheme#config() abort
   if s:scheme_dialect ==# 'mit-scheme'
@@ -84,4 +100,9 @@ endfunction
 
 function! SpaceVim#layers#lang#scheme#get_options() abort
   return ['scheme_dialect', 'scheme_interpreter']
+endfunction
+
+function! SpaceVim#layers#lang#scheme#health() abort
+  call SpaceVim#layers#lang#scheme#config()
+  return 1
 endfunction

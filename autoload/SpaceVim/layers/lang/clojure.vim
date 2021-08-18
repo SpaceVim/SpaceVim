@@ -9,12 +9,47 @@
 ""
 " @section lang#clojure, layer-lang-clojure
 " @parentsection layers
-" This layer provides syntax highlighting for clojure. To enable this
-" layer:
+" This layer provides clojure language support in SpaceVim. Including syntax
+" highlighting, code indent, code runner and REPL. This layer is not enabled
+" by default, To enable this layer:
 " >
 "   [layers]
 "     name = "lang#clojure"
 " <
+"
+" @subsection layer options
+"
+" 1. `clojure_interpreter`: Set the clojure interpreter, by default, it is
+" `clojure`
+" >
+"   [[layers]]
+"     name = 'lang#clojure'
+"     clojure_interpreter = 'path/to/clojure'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for clojure, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
+if exists('s:clojure_interpreter')
+  finish
+endif
+
+let s:clojure_interpreter = 'clojure'
 
 function! SpaceVim#layers#lang#clojure#plugins() abort
   let plugins = []
@@ -40,10 +75,10 @@ function! SpaceVim#layers#lang#clojure#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('clojure', function('s:language_specified_mappings'))
   " in Window, if install clojure via scoop install clojure, the command is
   " cmd-clj
-  let clojure = get(filter(['cmd-clj'], 'executable(v:val)'), 0, 'clojure')
-  call SpaceVim#plugins#runner#reg_runner('clojure', clojure . ' -M %s')
-  call SpaceVim#plugins#repl#reg('clojure', clojure)
-  call SpaceVim#plugins#tasks#reg_provider(funcref('s:lein_tasks'))
+  " let clojure = get(filter(['cmd-clj'], 'executable(v:val)'), 0, 'clojure')
+  call SpaceVim#plugins#runner#reg_runner('clojure', s:clojure_interpreter . ' -M %s')
+  call SpaceVim#plugins#repl#reg('clojure', s:clojure_interpreter)
+  call SpaceVim#plugins#tasks#reg_provider(function('s:lein_tasks'))
   call add(g:spacevim_project_rooter_patterns, 'project.clj')
 endfunction
 
@@ -75,4 +110,14 @@ function! s:lein_tasks() abort
     endfor
   endif
   return detect_task
+endfunction
+
+function! SpaceVim#layers#lang#clojure#set_variable(var) abort
+  let s:clojure_interpreter = get(a:var, 'clojure_interpreter', s:clojure_interpreter)
+endfunction
+
+function! SpaceVim#layers#lang#clojure#health() abort
+  call SpaceVim#layers#lang#clojure#plugins()
+  call SpaceVim#layers#lang#clojure#config()
+  return 1
 endfunction

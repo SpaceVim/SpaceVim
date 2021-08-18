@@ -74,3 +74,9 @@ function! s:language_specified_mappings() abort
         \ 'Metas',
         \ 'Metas', 1)
 endfunction
+
+function! SpaceVim#layers#lang#agda#health() abort
+  call SpaceVim#layers#lang#agda#plugins()
+  call SpaceVim#layers#lang#agda#config()
+  return 1
+endfunction

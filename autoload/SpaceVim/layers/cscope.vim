@@ -8,7 +8,7 @@
 
 function! SpaceVim#layers#cscope#plugins() abort
   let plugins = [
-        \ ['SpaceVim/cscope.vim', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/cscope.vim', {'merged' : 0}],
         \ ]
   return plugins
 endfunction
@@ -30,4 +30,11 @@ function! SpaceVim#layers#cscope#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'l'], 'call cscope#list_databases()', 'list-cscope-databases', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'm'], 'call cscope#clear_databases(SpaceVim#plugins#projectmanager#current_root())', 'remove-current-cscope-databases', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'M'], 'call cscope#clear_databases()', 'remove-all-cscope-databases', 1)
+endfunction
+
+
+function! SpaceVim#layers#cscope#health() abort
+  call SpaceVim#layers#cscope#plugins()
+  call SpaceVim#layers#cscope#config()
+  return 1
 endfunction

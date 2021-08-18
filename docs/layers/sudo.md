@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim sudo layer"
-description: "sudo layer provides ability to read and write file elevated privileges in SpaceVim"
+description: "sudo layer provides the ability to read and write files with elevated privileges in SpaceVim"
 ---
 
 # [Available Layers](../) >> sudo
@@ -15,11 +15,11 @@ description: "sudo layer provides ability to read and write file elevated privil
 
 ## Description
 
-sudo layer provides ability to read and write file elevated privileges.
+sudo layer provides the ability to read and write files with elevated privileges.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -28,7 +28,7 @@ To use this configuration layer, update custom configuration file with:
 
 ## Key bindings
 
-| Key Binding | Description                          |
-| ----------- | ------------------------------------ |
+| Key Binding | Description                                 |
+| ----------- | --------------------------------------------|
 | `SPC f E`   | open a file with elevated privileges (TODO) |
-| `SPC f W`   | save a file with elevated privileges |
+| `SPC f W`   | save a file with elevated privileges        |

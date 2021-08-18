@@ -80,5 +80,15 @@ let s:bash_file_head = ['#!/usr/bin/env bash',
       \ ]
 
 function! SpaceVim#layers#lang#sh#set_variable(var) abort
-  let s:bash_file_head = get(a:var, 'bash-file-head', s:bash_file_head)
+  let s:bash_file_head = get(a:var,
+        \ 'bash_file_head',
+        \ get(a:var,
+        \ 'bash-file-head',
+        \ s:bash_file_head))
+endfunction
+
+function! SpaceVim#layers#lang#sh#health() abort
+  call SpaceVim#layers#lang#sh#plugins()
+  call SpaceVim#layers#lang#sh#config()
+  return 1
 endfunction

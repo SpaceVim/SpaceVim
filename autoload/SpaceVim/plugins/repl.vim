@@ -26,6 +26,8 @@ let s:WINDOW = SpaceVim#api#import('vim#window')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:SPI = SpaceVim#api#import('unicode#spinners') 
 
+let s:LOGGER =SpaceVim#logger#derive('repl')
+
 augroup spacevim_repl
   autocmd!
   autocmd VimLeavePre * call s:close()
@@ -33,9 +35,9 @@ augroup END
 
 
 function! SpaceVim#plugins#repl#start(ft) abort
-
+  call s:LOGGER.info('start repl for filetype:' . a:ft)
   let exe = get(s:exes, a:ft, '')
-
+  call s:LOGGER.info('get the command:' . a:ft)
   if !empty(exe)
     call s:start(exe)
   else
@@ -56,7 +58,7 @@ function! SpaceVim#plugins#repl#send(type, ...) abort
   if !exists('s:job_id')
     echom('Please start REPL via the key binding "SPC l s i" first.')
   elseif s:job_id == 0
-    echom('please retart the REPL')
+    echom('please restart the REPL')
   else
     if a:type ==# 'line'
       call s:JOB.send(s:job_id, [getline('.'), ''])

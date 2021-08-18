@@ -1,6 +1,6 @@
 ---
 title:  "Quick start guide"
-description: "A quick start guide which will tell you how to install and config SpaceVim, also provides a list of resources for learning SpaceVim."
+description: "A quick start guide which will tell you how to install and configure SpaceVim, also provides a list of resources for learning SpaceVim."
 ---
 
 # [Home](../) >> Quick start guide
@@ -17,18 +17,18 @@ description: "A quick start guide which will tell you how to install and config 
 
 <!-- vim-markdown-toc -->
 
-This is a quick start guide for SpaceVim, which will tell you how to install and config SpaceVim.
-And also provides a list of resources for learning SpaceVim.
+This is a quick start guide for SpaceVim, which will tell you how to install and configure SpaceVim.
+And provides a list of resources for learning SpaceVim.
 
 If you haven’t seen SpaceVim at all yet, the first thing you should read is this guide.
-It will give you a good idea of what SpaceVim is like,
+It will give you a good idea of what SpaceVim is like.
 
 ## Install
 
 At a minimum, SpaceVim requires `git` and `curl` to be installed. Both tools
 are needed for downloading plugins and fonts.
 
-If you are using Vim/Neovim in terminal, you also need to set the font of your terminal.
+If you are using Vim/Neovim in a terminal, you will also need to set the font of your terminal.
 
 ### Linux and macOS
 
@@ -36,7 +36,7 @@ If you are using Vim/Neovim in terminal, you also need to set the font of your t
 curl -sLf https://spacevim.org/install.sh | bash
 ```
 
-After SpaceVim being installed, launch `vim` and SpaceVim will **automatically** install plugins.
+After SpaceVim is installed, launch `vim` and SpaceVim will **automatically** install plugins.
 
 For more info about the install script, please check:
 
@@ -51,7 +51,7 @@ If you got a vimproc error like:
 ````
 
 Please read `:help vimproc` and make it, you may need to install make (from `build-essential`)
-and a C compilator (like `gcc`) to build the dll (see issue [#435](https://github.com/SpaceVim/SpaceVim/issues/435) and [#544](https://github.com/SpaceVim/SpaceVim/issues/544)).
+and a C compiler (like `gcc`) to build the dll (see issue [#435](https://github.com/SpaceVim/SpaceVim/issues/435) and [#544](https://github.com/SpaceVim/SpaceVim/issues/544)).
 
 ### Windows
 
@@ -64,7 +64,7 @@ docker pull spacevim/spacevim
 docker run -it --rm spacevim/spacevim nvim
 ```
 
-You can also load local config:
+You can also load local configurations:
 
 ```sh
 docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevim nvim
@@ -73,7 +73,7 @@ docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevi
 ## Configuration
 
 The default configuration file of SpaceVim is `~/.SpaceVim.d/init.toml`. This is
-an example for basic usage of SpaceVim. For more info, please checkout [documentation](../documentation/) and [available layers](../layers/).
+an example for basic usage of SpaceVim. For more info, please check out [documentation](../documentation/) and [available layers](../layers/).
 
 ```toml
 # This is a basic configuration example for SpaceVim
@@ -117,13 +117,16 @@ an example for basic usage of SpaceVim. For more info, please checkout [document
     merged = false
 ```
 
-## Online tutor
+If you want to use vim script to configure SpaceVim, please check out the
+[bootstrap function](../documentation/#bootstrap-functions) section.
 
-This is a list of online tutor for using SpaceVim as general IDE and programming language support:
+## Online tutorials
 
-- [use vim as general IDE](../use-vim-as-ide/): a general guide for using SpaceVim as IDE
+This is a list of online tutorials for using SpaceVim as a general IDE and programming language support:
 
-A list of guide for programming language support:
+- [use vim as general IDE](../use-vim-as-ide/): a general guide for using SpaceVim as an IDE
+
+A list of guides for programming language support:
 
 
 <ul>
@@ -139,4 +142,4 @@ A list of guide for programming language support:
 - [SpaceVim Documentation](../documentation). Also known as "The Book",
 The SpaceVim Documentation will introduce you to the main topics important to using SpaceVim.
 The book is the primary official document of SpaceVim.
-- [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim). Tell you how to hack SpaceVim.
+- [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim). Teaches you how to hack SpaceVim.

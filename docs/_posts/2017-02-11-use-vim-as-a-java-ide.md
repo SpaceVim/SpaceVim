@@ -92,7 +92,7 @@ This should be different from the path of the user's project files (which is sen
 ### Code completion
 
 javacomplete2 which has been included in `lang#java` layer provides omnifunc for java file and deoplete source.
-with this plugin and `autocomplete` layer, the completion popup menu will be opened automatically。
+with this plugin and `autocomplete` layer, the completion popup menu will be opened automatically.
 
 ![code complete](https://user-images.githubusercontent.com/13142418/46297202-ba0ab980-c5ce-11e8-81a0-4a4a85bc98a5.png)
 
@@ -145,7 +145,7 @@ If there are more than one class, a menu will be shown below current windows.
 
 ### Jump to test file
 
-SpaceVim use vim-project to manager the files in a project, you can add a `.projections.json` to the root of your project with following content:
+SpaceVim uses vim-project to manager the files in a project, you can add a `.projections.json` to the root of your project with following content:
 
 ```json
 {

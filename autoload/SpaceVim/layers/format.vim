@@ -29,6 +29,12 @@ else
   let s:format_ft = []
 endif
 
+function! SpaceVim#layers#format#health() abort
+  call SpaceVim#layers#format#plugins()
+  call SpaceVim#layers#format#config()
+  return 1
+endfunction
+
 function! SpaceVim#layers#format#plugins() abort
   return [
         \ [g:_spacevim_root_dir . 'bundle/neoformat', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}],
@@ -68,6 +74,12 @@ endfunction
 function! s:format() abort
   if !empty(&ft) &&
         \ ( index(s:format_ft, &ft) !=# -1 || s:format_on_save ==# 1)
-    undojoin | Neoformat
+    try
+      undojoin
+      Neoformat
+    catch /^Vim\%((\a\+)\)\=:E790/
+    finally
+      silent Neoformat
+    endtry
   endif
 endfunction

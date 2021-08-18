@@ -28,18 +28,18 @@
 "       ''
 "     ]
 " <
-" 2. ruby_repl_command: the REPL command for ruby
+" 2. repl_command: the REPL command for ruby
 " >
 "   [[layers]]
 "     name = 'lang#ruby'
-"     ruby_repl_command = '~/download/bin/ruby_repl'
+"     repl_command = '~/download/bin/ruby_repl'
 " <
 " 3. format_on_save: enable/disable code formation when save ruby file. This
 " options is disabled by default, to enable it:
 " >
 "   [[layers]]
 "     name = 'lang#ruby'
-"     ruby_repl_command = '~/download/bin/ruby_repl'
+"     repl_command = '~/download/bin/ruby_repl'
 "     format_on_save = true
 " <
 " @subsection Key bindings
@@ -72,7 +72,8 @@ else
         \ ''
         \ ]
   let s:format_on_save = 0
-
+  let s:lint_on_save = 0
+  let s:enabled_linters = ['rubylint']
 endif
 
 function! SpaceVim#layers#lang#ruby#plugins() abort
@@ -95,12 +96,32 @@ function! SpaceVim#layers#lang#ruby#config() abort
   else
     call SpaceVim#plugins#repl#reg('ruby', 'irb')
   endif
+  if g:spacevim_lint_engine ==# 'neomake'
+    let g:neomake_ruby_enabled_makers = s:enabled_linters
+    for lint in g:neomake_ruby_enabled_makers
+      let g:neomake_ruby_{lint}_remove_invalid_entries = 1
+    endfor
+  endif
+  " Format on save
+  if s:format_on_save
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'ruby',
+          \ 'enable' : 1,
+          \ })
+  endif
 endfunction
 
 function! SpaceVim#layers#lang#ruby#set_variable(var) abort
   let s:ruby_repl_command = get(a:var, 'repl_command', '') 
-  let s:ruby_file_head = get(a:var, 'ruby-file-head', s:ruby_file_head)
+  " add backward compatible for ruby-file-head
+  let s:ruby_file_head = get(a:var,
+        \ 'ruby_file_head',
+        \ get(a:var,
+        \ 'ruby-file-head',
+        \ s:ruby_file_head))
   let s:format_on_save = get(a:var, 'format_on_save', s:format_on_save)
+  let s:lint_on_save = get(a:var, 'lint_on_save', s:lint_on_save)
+  let s:enabled_linters = get(a:var, 'enabled_linters', s:enabled_linters)
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -126,11 +147,6 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
-  let g:_spacevim_mappings_space.l.c = {'name' : '+RuboCop'}
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'f'],
-        \ 'Neoformat rubocop',
-        \ 'Runs RuboCop on the currently visited file', 1)
-  let g:neomake_ruby_rubylint_remove_invalid_entries = 1
 endfunction
 
 function! s:go_to_def() abort
@@ -144,6 +160,12 @@ endfunction
 function! SpaceVim#layers#lang#ruby#get_options() abort
   return [
         \ 'repl_command',
-        \ 'ruby-file-head'
+        \ 'ruby_file_head'
         \ ]
+endfunction
+
+function! SpaceVim#layers#lang#ruby#health() abort
+  call SpaceVim#layers#lang#ruby#plugins()
+  call SpaceVim#layers#lang#ruby#config()
+  return 1
 endfunction

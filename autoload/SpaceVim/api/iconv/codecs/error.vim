@@ -1,7 +1,4 @@
-
-let s:ns = expand('<sfile>:p:r:gs?[\\/]?#?:s?^.*#autoload#??:s?$?#?')
-
-function {s:ns}import()
+function! SpaceVim#api#iconv#codecs#error#import() abort
   return s:error
 endfunction
 

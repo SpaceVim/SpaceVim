@@ -1,5 +1,25 @@
 [file-run]
-    command = "dir"
-    isBackground = false
+    command = "cat"
+    isBackground = true
 [file-run.options]
     cwd = '${workspaceFolder}bin/'
+[test_problemMatcher]
+    command = "echo"
+    args = ['.SpaceVim.d/tasks.toml:6:1 test error message']
+    isBackground = true
+[test_problemMatcher.problemMatcher]
+    useStdout = true
+    errorformat = '%f:%l:%c\ %m'
+[test_regexp]
+    command = "echo"
+    args = ['.SpaceVim.d/tasks.toml:12:1 test error message']
+    isBackground = true
+[test_regexp.problemMatcher]
+    useStdout = true
+[test_regexp.problemMatcher.pattern]
+      regexp = '\(.*\):\(\d\+\):\(\d\+\)\s\(\S.*\)'
+      file = 1
+      line = 2
+      column = 3
+      #severity = 4
+      message = 4

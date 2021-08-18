@@ -1,4 +1,4 @@
-If you need help, ask your question in the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim),
+If you need help, ask your question in the [Gitter room](https://gitter.im/SpaceVim/SpaceVim),
 a member of the community will help you out.
 
 Here is a simple guide for how to get help with SpaceVim. Before asking

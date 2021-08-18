@@ -55,3 +55,9 @@ endfunction
 function! s:go_to_def() abort
     :MerlinLocate
 endfunction
+
+function! SpaceVim#layers#lang#ocaml#health() abort
+  call SpaceVim#layers#lang#ocaml#plugins()
+  call SpaceVim#layers#lang#ocaml#config()
+  return 1
+endfunction

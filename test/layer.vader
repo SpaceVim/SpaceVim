@@ -1,0 +1,6 @@
+Execute ( SpaceVim layer health: ):
+  for layer in SpaceVim#layers#list()
+    Log 'testing ' . layer . ' layer'
+    Assert SpaceVim#layers#{layer}#health(), 'function SpaceVim#layers#' . layer . '#health() return false' 
+  endfor
+

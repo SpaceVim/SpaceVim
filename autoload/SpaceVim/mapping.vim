@@ -186,24 +186,32 @@ function! SpaceVim#mapping#close_current_buffer(...) abort
 
   let cmd_close_buf = 'bd' . f
   let index = index(buffers, bn)
-  if index != -1
-    if index == 0
-      if len(buffers) > 1
-        exe 'b' . buffers[1]
-        exe cmd_close_buf . bn
-      else
-        exe cmd_close_buf . bn
-        if exists(':Startify') ==# 2
-          Startify
-        endif
+  if index == 0
+    if len(buffers) > 1
+      exe 'b' . buffers[1]
+      exe cmd_close_buf . bn
+    else
+      exe cmd_close_buf . bn
+      if exists(':Startify') ==# 2
+        Startify
       endif
-    elseif index > 0
-      if index + 1 == len(buffers)
-        exe 'b' . buffers[index - 1]
-        exe cmd_close_buf . bn
-      else
-        exe 'b' . buffers[index + 1]
-        exe cmd_close_buf . bn
+    endif
+  elseif index > 0
+    if index + 1 == len(buffers)
+      exe 'b' . buffers[index - 1]
+      exe cmd_close_buf . bn
+    else
+      exe 'b' . buffers[index + 1]
+      exe cmd_close_buf . bn
+    endif
+  else
+    if len(buffers) >= 1
+      exe 'bp'
+      exe cmd_close_buf . bn
+    else
+      exe cmd_close_buf . bn
+      if exists(':Startify') ==# 2
+        Startify
       endif
     endif
   endif
@@ -217,7 +225,8 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
     if bufexists(abuf)
       exe 'bd!' . abuf
     endif
-    " fuck the terminal windows
+    " can not close the terminal windows
+    " close again
     if get(w:, 'shell_layer_win', 0) == 1
       close
     endif
@@ -302,7 +311,7 @@ fu! SpaceVim#mapping#SmartClose() abort
         \ && exists('*popup_list')
         \ && exists('*popup_getoptions')
         \ && exists('*popup_getpos')
-    let popup_count =  len(
+    let win_count =  len(
           \ filter(
           \ map(
           \ filter(popup_list(), 'popup_getpos(v:val).visible'),

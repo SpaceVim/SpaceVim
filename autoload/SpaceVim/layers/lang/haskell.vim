@@ -97,3 +97,9 @@ function! s:on_ft() abort
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
 endfunction
+
+function! SpaceVim#layers#lang#haskell#health() abort
+  call SpaceVim#layers#lang#haskell#plugins()
+  call SpaceVim#layers#lang#haskell#config()
+  return 1
+endfunction

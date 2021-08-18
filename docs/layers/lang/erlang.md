@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#elang layer"
-description: "This layer is for Erlang development, provide autocompletion, syntax checking, code format for Erlang file."
+description: "This layer is for Erlang development, provides autocompletion, syntax checking and code formatting for Erlang files."
 ---
 
 # [Available Layers](../../) >> lang#erlang
@@ -34,7 +34,7 @@ for Erlang, you need to load `lsp` layer for Erlang.
 
 ### Layer
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

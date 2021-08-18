@@ -26,14 +26,14 @@ function! SpaceVim#layers#gtags#config() abort
   let g:_spacevim_mappings_space.m.g = {'name' : '+gtags'}
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'c'], 'GtagsGenerate!', 'create-a-gtags-database', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'u'], 'GtagsGenerate', 'update-tag-database', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'p'], 'Gtags -p', 'list-all-file-in-GTAGS', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'p'], 'Gtags -P', 'list-all-file-in-GTAGS', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'd'], 'exe "Gtags -d " . expand("<cword>")', 'find-definitions', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'r'], 'exe "Gtags -r " . expand("<cword>")', 'find-references', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 's'], 'exe "Gtags -s " . expand("<cword>")', 'find-cursor-symbol', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'g'], 'exe "Gtags -g " . expand("<cword>")', 'find-cursor-string', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'f'], 'Gtags -f %', 'list of objects', 1)
   let g:gtags_gtagslabel = s:gtagslabel
-  call SpaceVim#plugins#projectmanager#reg_callback(funcref('s:update_ctags_option'))
+  call SpaceVim#plugins#projectmanager#reg_callback(function('s:update_ctags_option'))
   if s:auto_update
     augroup spacevim_layer_gtags
       autocmd!
@@ -62,6 +62,11 @@ function! SpaceVim#layers#gtags#set_variable(var) abort
         \ s:auto_update)
 endfunction
 
+function! SpaceVim#layers#gtags#health() abort
+  call SpaceVim#layers#gtags#plugins()
+  call SpaceVim#layers#gtags#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#gtags#get_options() abort
 

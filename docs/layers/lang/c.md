@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#c layer"
-description: "C/C++/Object-C language support for SpaceVim, include code completion, jump to definition, quick runner."
+description: "C/C++/Object-C language support for SpaceVim, including code completion, jump to definition, and quick runner."
 ---
 
 # [Available Layers](../../) >> lang#c
@@ -33,6 +33,7 @@ To use this configuration layer, update the custom configuration file with:
 - code completion
 - syntax checking
 - formatting
+- syntax highlighting: Objective-C(`.m`), C(`.c`), CPP(`.cpp`)
 
 ## Configuration
 
@@ -92,12 +93,20 @@ defined in `.clang` file. For example:
 Note: If `.clang` file contains std configuration, it will override
 `clang_std` layer option.
 
+`format_on_save`: Enable/disable file formatting when saving current file. By default,
+it is disabled, to enable it:
+```toml
+[[layers]]
+    name = 'lang#c'
+    format_on_save = true
+  ```
+
 ## Key bindings
 
-| key bindings | Descriptions                 |
-| ------------ | ---------------------------- |
-| `SPC l d`    | show documentation           |
-| `SPC l e`    | rename symbol                |
-| `SPC l f`    | references                   |
-| `SPC l r`    | compile and run current file |
-| `g d`        | defintion preview            |
+| key bindings | Descriptions                     |
+| ------------ | -------------------------------- |
+| `SPC l d`    | show documentation               |
+| `SPC l e`    | rename symbol                    |
+| `SPC l f`    | references                       |
+| `SPC l r`    | compile and run the current file |
+| `g d`        | defintion preview                |

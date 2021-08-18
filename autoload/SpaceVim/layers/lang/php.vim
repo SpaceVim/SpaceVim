@@ -10,8 +10,45 @@
 ""
 " @section lang#php, layer-lang-php
 " @parentsection layers
-" This layer is for PHP development. It proides code completion, syntax
-" checking, and jump to definition.
+" This layer is for php development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#php'
+" <
+"
+" @subsection layer options
+"
+" 1. `php_interpreter`: Set the PHP interpreter, by default, it is `php`
+" >
+"   [[layers]]
+"     name = 'lang#php'
+"     php_interpreter = 'path/to/php'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for php, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
+if exists('s:php_interpreter')
+  finish
+endif
+
+let s:php_interpreter = 'php'
 
 
 
@@ -31,11 +68,12 @@ let s:auto_fix = 0
 
 function! SpaceVim#layers#lang#php#set_variable(var) abort
   let s:auto_fix = get(a:var, 'auto_fix', 0)
+  let s:php_interpreter = get(a:var, 'php_interpreter', s:php_interpreter)
 endfunction
 
 function! SpaceVim#layers#lang#php#config() abort
-  call SpaceVim#plugins#runner#reg_runner('php', 'php %s')
-  call SpaceVim#plugins#repl#reg('php', ['php', '-a'])
+  call SpaceVim#plugins#runner#reg_runner('php', s:php_interpreter . ' %s')
+  call SpaceVim#plugins#repl#reg('php', [s:php_interpreter, '-a'])
   call SpaceVim#mapping#space#regesit_lang_mappings('php',
         \ function('s:on_ft'))
   if SpaceVim#layers#lsp#check_filetype('php')
@@ -118,4 +156,10 @@ function! s:preferLocalPHPMD() abort
   if filereadable(l:phpmd_path) && !exists('b:neomake_php_phpmd_args')
     let b:neomake_php_phpmd_args = ['%:p', 'text', l:phpmd_path]
   endif
+endfunction
+
+function! SpaceVim#layers#lang#php#health() abort
+  call SpaceVim#layers#lang#php#plugins()
+  call SpaceVim#layers#lang#php#config()
+  return 1
 endfunction

@@ -6,6 +6,34 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#fortran, layer-lang-fortran
+" @parentsection layers
+" This layer is for fortran development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#fortran'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for fortran, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
 function! SpaceVim#layers#lang#fortran#plugins() abort
   let plugins = []
   call add(plugins,[g:_spacevim_root_dir . 'bundle/fortran.vim',        { 'merged' : 0}])
@@ -41,3 +69,10 @@ endfunction
 " fortran wiki org
 "
 " http://fortranwiki.org/fortran/show/Source+code+editors
+
+
+function! SpaceVim#layers#lang#fortran#health() abort
+  call SpaceVim#layers#lang#fortran#plugins()
+  call SpaceVim#layers#lang#fortran#config()
+  return 1
+endfunction

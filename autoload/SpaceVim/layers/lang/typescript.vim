@@ -54,6 +54,8 @@ function! SpaceVim#layers#lang#typescript#config() abort
         \ function('s:go_to_typescriptreact_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('typescript',
         \ function('s:on_typescript_ft'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('typescriptreact',
+        \ function('s:on_typescript_ft'))
   call SpaceVim#plugins#repl#reg('typescript', ['ts-node', '-i'])
   call SpaceVim#plugins#runner#reg_runner('typescript', {
         \ 'exe' : 'ts-node',
@@ -109,6 +111,12 @@ function! s:on_typescript_ft() abort
             \ 'preview definition', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'], 'TSType',
             \ 'view type', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'R'], 'TSRefs',
+            \ 'show reference', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'D'], 'TSGetDiagnostics',
+            \ 'show errors', 1)
+      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'o'], 'TSOrganizeImports',
+            \ 'organizes imports', 1)            
     else
       nnoremap <silent><buffer> gD :<C-u>TsuTypeDefinition<Cr>
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TsuquyomiSignatureHelp',
@@ -169,4 +177,10 @@ function! s:go_to_typescriptreact_def() abort
   else
     call SpaceVim#lsp#go_to_def()
   endif
+endfunction
+
+function! SpaceVim#layers#lang#typescript#health() abort
+  call SpaceVim#layers#lang#typescript#plugins()
+  call SpaceVim#layers#lang#typescript#config()
+  return 1
 endfunction

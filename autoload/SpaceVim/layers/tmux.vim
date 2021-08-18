@@ -147,3 +147,9 @@ function! SpaceVim#layers#tmux#get_options() abort
   return ['tmuxline_separators', 'tmuxline_separators_alt', 'tmux_navigator_modifier']
 
 endfunction
+
+function! SpaceVim#layers#tmux#health() abort
+  call SpaceVim#layers#tmux#plugins()
+  call SpaceVim#layers#tmux#config()
+  return 1
+endfunction

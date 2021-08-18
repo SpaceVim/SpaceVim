@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim git layer"
-description: "This layers adds extensive support for git"
+description: "This layer adds extensive support for git"
 ---
 
 # [Available Layers](../) >> git
@@ -16,11 +16,11 @@ description: "This layers adds extensive support for git"
 
 ## Description
 
-This layers adds extensive support for [git](https://git-scm.com/).
+This layer adds extensive support for [git](https://git-scm.com/).
 
 ## Install
 
-To use this configuration layer, add following snippet to your custom configuration file (`SPC f v d`).
+To use this configuration layer, add the following snippet to your custom configuration file (`SPC f v d`).
 
 ```toml
 [[layers]]
@@ -29,7 +29,15 @@ To use this configuration layer, add following snippet to your custom configurat
 
 ## Layer options
 
-- `git-plugin`: default value is `gina` (or `gita` on older vim versions), available values include: `gina`, `fugitive`, `gita`
+- `git_plugin`: default value is `git`, available values include: [`gina`](https://github.com/lambdalisue/gina.vim), [`fugitive`](https://github.com/tpope/vim-fugitive), [`gita`](https://github.com/lambdalisue/vim-gita) (obsolete), `git`.
+
+if you want to use `fugitive` instead:
+
+```toml
+[[layers]]
+  name = "git"
+  git_plugin = 'fugitive'
+```
 
 ## Key bindings
 

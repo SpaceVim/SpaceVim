@@ -31,3 +31,6 @@ SpaceVim ui 模块提供了一个 IDE-like 的界面，包括状态栏、文件�
 
 - `enable_scrollbar`：启用/禁用悬浮滚动条，默认为禁用的，该功能需要 Neovim 的悬浮窗口支持。
 - `enable_indentline`: 启用/禁用对齐线，默认为启用的。
+- `enable_cursorword`: 启用/禁用高亮光标下的词，默认为禁用状态。需要禁用的话，可设为 `false`。
+- `cursorword_delay`: 设置高亮光标下词的延迟时间，默认为 50 毫秒。
+- `cursorword_exclude_filetype`: 设置哪些文件类型需要禁用高亮光标下的词。

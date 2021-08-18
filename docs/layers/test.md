@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim test layer"
-description: "This layer allows to run tests directly on SpaceVim"
+description: "This layer allows to run tests directly in SpaceVim"
 ---
 
 # [Available Layers](../) >> test
@@ -9,17 +9,18 @@ description: "This layer allows to run tests directly on SpaceVim"
 
 - [Description](#description)
 - [Install](#install)
+- [Configuration](#configuration)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
 ## Description
 
-This layers allow to run tests directly on Vim.
+This layers allows to run tests directly in SpaceVim.
 
 ## Install
 
-To use this configuration layer, add following snippet to your custom configuration file.
+To use this configuration layer, add the following snippet to your custom configuration file.
 
 ```toml
 [[layers]]
@@ -38,7 +39,7 @@ To set or override any configuration ([see supported settings here](https://gith
     java_gradletest_executable = "./gradlew test"
 ```
 
-In the example above is equivalent to adding the following in viml:
+The example above is equivalent to adding the following in viml:
 
 ```viml
 let test#java#runner = "gradletest"

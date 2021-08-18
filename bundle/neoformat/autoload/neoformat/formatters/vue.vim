@@ -5,7 +5,7 @@ endfunction
 function! neoformat#formatters#vue#prettier() abort
     return {
         \ 'exe': 'prettier',
-        \ 'args': ['--stdin', '--stdin-filepath', '"%:p"', '--parser', 'vue'],
+        \ 'args': ['--stdin-filepath', '"%:p"', '--parser', 'vue'],
         \ 'stdin': 1
         \ }
 endfunction

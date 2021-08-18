@@ -25,7 +25,7 @@ This layer adds [Agda](https://github.com/agda/agda) language support to SpaceVi
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

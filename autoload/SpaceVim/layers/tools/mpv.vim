@@ -47,7 +47,7 @@ function! SpaceVim#layers#tools#mpv#set_variable(var) abort
   let s:mpv_interpreter = get(a:var, 'mpv_interpreter', 1)
 endfunction
 
-function! SpaceVim#layers#tools#mpv#play(fpath)
+function! SpaceVim#layers#tools#mpv#play(fpath) abort
   let s:stop_mpv = 0
   if s:playId != 0
     call s:JOB.stop(s:playId)
@@ -71,6 +71,11 @@ function! s:load_musics() abort
   endfor
 endfunction
 
+
+function! SpaceVim#layers#tools#mpv#health() abort
+  call SpaceVim#layers#tools#mpv#config()
+  return 1
+endfunction
 
 let s:playId = 0
 fu! s:handler(id, data, event) abort

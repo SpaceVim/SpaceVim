@@ -6,6 +6,29 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#markdown, layer-lang-markdown
+" @parentsection layers
+" This layer is for markdown language, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#markdown'
+" <
+" @subsection Layer options
+"
+" 1. `enabled_formater`: Set the enabled formater, by default it is
+"   `['remark']`.
+" 2. `enableWcwidth`: Enable/disabled wcwidth option, it is disabled by
+"    default.
+" 3. `listItemChar`: Set the default list item char, it is `-` by default.
+" 4. `listItemIndent`: Set the default indent of list item. It is `1` by
+"    default.
+
+if exists('s:md_listItemIndent')
+  finish
+endif
+
 let s:SYS = SpaceVim#api#import('system')
 
 
@@ -29,16 +52,16 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
   call add(plugins, ['iamcco/mathjax-support-for-mkdp',{ 'on_ft' : 'markdown'}])
   call add(plugins, ['lvht/tagbar-markdown',{'merged' : 0}])
   " check node package managers to ensure building of 2 plugins below
-  if executable('npm')
-    let s:node_pkgm = 'npm'
-  elseif executable('yarn')
+  if executable('yarn')
     let s:node_pkgm = 'yarn'
+  elseif executable('npm')
+    let s:node_pkgm = 'npm'
   else
     let s:node_pkgm = ''
     call SpaceVim#logger#error('npm or yarn is required to build iamcco/markdown-preview and neoclide/vim-node-rpc')
   endif
   call add(plugins, ['iamcco/markdown-preview.nvim',
-        \ { 'on_ft' : 'markdown',
+        \ { 'on_cmd' : 'MarkdownPreview',
         \ 'depends': 'open-browser.vim',
         \ 'build' : 'cd app & ' . s:node_pkgm . ' install' }])
   if !has('nvim')
@@ -103,6 +126,8 @@ function! s:mappings() abort
         \ 'call call('
         \ . string(function('s:run_code_in_block'))
         \ . ', [])', 'run code in block', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','c'], 'GenTocGFM', 'create content at cursor', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','u'], 'UpdateToc', 'update content', 1)
 endfunction
 
 function! s:generate_remarkrc() abort
@@ -170,3 +195,9 @@ function! s:run_code_in_block() abort
   endif
 endfunction
 
+
+function! SpaceVim#layers#lang#markdown#health() abort
+  call SpaceVim#layers#lang#markdown#plugins()
+  call SpaceVim#layers#lang#markdown#config()
+  return 1
+endfunction

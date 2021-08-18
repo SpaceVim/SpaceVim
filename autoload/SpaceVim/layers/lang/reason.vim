@@ -11,6 +11,16 @@ if exists('s:JSON')
   finish
 endif
 
+""
+" @section lang#reason, layer-lang-reason
+" @parentsection layers
+" This layer is for reason development, disabled by default, to enable this
+" layer, add following snippet to your @section(options) file.
+" >
+"   [[layers]]
+"     name = 'lang#reason'
+" <
+
 let s:JSON = SpaceVim#api#import('data#json')
 
 function! SpaceVim#layers#lang#reason#plugins() abort
@@ -21,8 +31,8 @@ endfunction
 
 
 function! SpaceVim#layers#lang#reason#config() abort
-  call SpaceVim#plugins#tasks#reg_provider(funcref('s:reasonml_tasks'))
-  call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
+  call SpaceVim#plugins#tasks#reg_provider(function('s:reasonml_tasks'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('reason', function('s:language_specified_mappings'))
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -49,4 +59,10 @@ function! s:reasonml_tasks() abort
     endfor
   endif
   return detect_task
+endfunction
+
+function! SpaceVim#layers#lang#reason#health() abort
+  call SpaceVim#layers#lang#reason#plugins()
+  call SpaceVim#layers#lang#reason#config()
+  return 1
 endfunction

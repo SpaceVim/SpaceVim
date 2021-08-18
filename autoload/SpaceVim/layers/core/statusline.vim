@@ -13,12 +13,18 @@
 " If you want to use airline's statusline, just disable this layer
 " >
 "   [[layers]]
-"     name = "core#statusline"
+"     name = 'core#statusline'
 "     enable = false
 " <
 
 scriptencoding utf-8
+
+if exists('g:_spacevim_statusline_loaded')
+  finish
+endif
+
 let g:_spacevim_statusline_loaded = 1
+
 " APIs
 let s:MESSLETTERS = SpaceVim#api#import('messletters')
 let s:TIME = SpaceVim#api#import('time')
@@ -92,15 +98,6 @@ let s:modes = {
       \ },
       \ }
 
-"  TODO This can not be deleted, it is used for toggle section
-let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters', 'version control info', 'cursorpos']
-
-let s:loaded_sections_r = g:spacevim_statusline_right_sections
-let s:loaded_sections_l = g:spacevim_statusline_left_sections
-
-let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
-let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, s:i_separators['arrow'])
-
 if SpaceVim#layers#isLoaded('checkers')
   call add(s:loaded_modes, 'syntax-checking')
 endif
@@ -110,7 +107,7 @@ endif
 if &cc ==# '80'
   call add(s:loaded_modes, 'fill-column-indicator')
 endif
-if index(s:loaded_sections_r, 'whitespace') != -1
+if index(g:spacevim_statusline_right_sections, 'whitespace') != -1
   call add(s:loaded_modes, 'whitespace')
 endif
 " build in sections for SpaceVim statusline
@@ -389,9 +386,11 @@ function! SpaceVim#layers#core#statusline#get(...) abort
             \ . '%#SpaceVim_statusline_b#'
             \ . ' QuickFix %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
             \ . s:lsep
-            \ . ( has('patch-8.0.1384') ? ((getqflist({'title' : 0}).title ==# ':setqflist()') ? '' : 
+            \ . ( has('patch-8.0.1384') 
+            \ ? ((getqflist({'title' : 0}).title ==# ':setqflist()') ? '' : 
             \ '%#SpaceVim_statusline_c#'
-            \ . getqflist({'title' : 0}).title . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
+            \ . getqflist({'title' : 0}).title
+            \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
             \ ) : '')
     else
       return '%#SpaceVim_statusline_ia#' 
@@ -400,15 +399,22 @@ function! SpaceVim#layers#core#statusline#get(...) abort
             \ . '%#SpaceVim_statusline_b#'
             \ . ' Location List %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
             \ . s:lsep
-            \ . ( has('patch-8.0.1384') ? ((getloclist(winnr(),{'title' : 0}).title ==# ':setloclist()') ? '' : 
+            \ . ( has('patch-8.0.1384')
+            \ ? ((getloclist(winnr(),{'title' : 0}).title ==# ':setloclist()')
+            \ ? '' : 
             \ '%#SpaceVim_statusline_c#'
-            \ . getloclist(winnr(),{'title' : 0}).title . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
+            \ . getloclist(winnr(),{'title' : 0}).title
+            \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
             \ ) : '')
 
     endif
   elseif &filetype ==# 'defx'
-    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# defx %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1)
+          \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b#'
+          \ . ' defx '
+          \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+          \ . s:lsep . ' '
   elseif &filetype ==# 'Fuzzy'
     return '%#SpaceVim_statusline_a_bold# Fuzzy %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# %{fuzzy#statusline()} %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep 
@@ -519,7 +525,10 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_z#%=%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:rsep
           \ . '%#SpaceVim_statusline_c# %{SpaceVim#layers#core#statusline#denite_status("path") . SpaceVim#layers#core#statusline#denite_status("linenr")}'
   elseif &filetype ==# 'denite-filter'
-    return '%#SpaceVim_statusline_a_bold# Filter %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+    return '%#SpaceVim_statusline_a_bold#'
+          \ . ' Filter '
+          \ . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+          \ . s:lsep
   elseif &filetype ==# 'unite'
     return '%#SpaceVim_statusline_a_bold#%{SpaceVim#layers#core#statusline#unite_mode()} Unite '
           \ . '%#SpaceVim_statusline_a_bold_SpaceVim_statusline_b#' . s:lsep . ' %{get(unite#get_context(), "buffer_name", "")} '
@@ -539,9 +548,17 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   elseif &filetype ==# 'SpaceVimRunner'
     return '%#SpaceVim_statusline_a# Runner %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{SpaceVim#plugins#runner#status()}'
   elseif &filetype ==# 'SpaceVimREPL'
-    return '%#SpaceVim_statusline_a# REPL %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{SpaceVim#plugins#repl#status()}'
+    return '%#SpaceVim_statusline_a#'
+          \ . ' REPL '
+          \ . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+          \ . s:lsep
+          \ . ' %{SpaceVim#plugins#repl#status()}'
   elseif &filetype ==# 'VimMailClient'
-    return '%#SpaceVim_statusline_a# VimMail %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{mail#client#win#status().dir}'
+    return '%#SpaceVim_statusline_a#'
+          \ . ' VimMail '
+          \ . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+          \ . s:lsep
+          \ . ' %{mail#client#win#status().dir}'
   elseif &filetype ==# 'SpaceVimQuickFix'
     return '%#SpaceVim_statusline_a# SpaceVimQuickFix %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'VebuggerShell'
@@ -560,13 +577,13 @@ endfunction
 
 function! s:active() abort
   let lsec = []
-  for section in s:loaded_sections_l
+  for section in g:spacevim_statusline_left_sections
     if has_key(s:registed_sections, section)
       call add(lsec, call(s:registed_sections[section], []))
     endif
   endfor
   let rsec = []
-  for section in s:loaded_sections_r
+  for section in g:spacevim_statusline_right_sections
     if has_key(s:registed_sections, section)
       call add(rsec, call(s:registed_sections[section], []))
     endif
@@ -609,7 +626,7 @@ function! SpaceVim#layers#core#statusline#init() abort
     autocmd BufWinEnter,WinEnter,FileType,BufWritePost
           \ * let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     autocmd WinLeave * call SpaceVim#layers#core#statusline#remove_section('search status')
-    autocmd BufWinLeave,WinLeave * let &l:statusline = SpaceVim#layers#core#statusline#get()
+    autocmd WinLeave * let &l:statusline = SpaceVim#layers#core#statusline#get()
     autocmd ColorScheme * call SpaceVim#layers#core#statusline#def_colors()
   augroup END
 endfunction
@@ -686,25 +703,25 @@ let s:section_old_pos = {
       \ }
 
 function! SpaceVim#layers#core#statusline#toggle_section(name) abort
-  if index(s:loaded_sections_l, a:name) == -1
-        \ && index(s:loaded_sections_r, a:name) == -1
+  if index(g:spacevim_statusline_left_sections, a:name) == -1
+        \ && index(g:spacevim_statusline_right_sections, a:name) == -1
         \ && !has_key(s:section_old_pos, a:name)
     if a:name ==# 'search status'
-      call insert(s:loaded_sections_l, a:name, 2)
+      call insert(g:spacevim_statusline_left_sections, a:name, 2)
     else
-      call add(s:loaded_sections_r, a:name)
+      call add(g:spacevim_statusline_right_sections, a:name)
     endif
-  elseif index(s:loaded_sections_r, a:name) != -1
-    let s:section_old_pos[a:name] = ['r', index(s:loaded_sections_r, a:name)]
-    call remove(s:loaded_sections_r, index(s:loaded_sections_r, a:name))
-  elseif index(s:loaded_sections_l, a:name) != -1
-    let s:section_old_pos[a:name] = ['l', index(s:loaded_sections_l, a:name)]
-    call remove(s:loaded_sections_l, index(s:loaded_sections_l, a:name))
+  elseif index(g:spacevim_statusline_right_sections, a:name) != -1
+    let s:section_old_pos[a:name] = ['r', index(g:spacevim_statusline_right_sections, a:name)]
+    call remove(g:spacevim_statusline_right_sections, index(g:spacevim_statusline_right_sections, a:name))
+  elseif index(g:spacevim_statusline_left_sections, a:name) != -1
+    let s:section_old_pos[a:name] = ['l', index(g:spacevim_statusline_left_sections, a:name)]
+    call remove(g:spacevim_statusline_left_sections, index(g:spacevim_statusline_left_sections, a:name))
   elseif has_key(s:section_old_pos, a:name)
     if s:section_old_pos[a:name][0] ==# 'r'
-      call insert(s:loaded_sections_r, a:name, s:section_old_pos[a:name][1])
+      call insert(g:spacevim_statusline_right_sections, a:name, s:section_old_pos[a:name][1])
     else
-      call insert(s:loaded_sections_l, a:name, s:section_old_pos[a:name][1])
+      call insert(g:spacevim_statusline_left_sections, a:name, s:section_old_pos[a:name][1])
     endif
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
@@ -715,6 +732,9 @@ function! SpaceVim#layers#core#statusline#rsep() abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#config() abort
+  let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
+  let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, s:i_separators['arrow'])
+
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'm'], 'call SpaceVim#layers#core#statusline#toggle_section("minor mode lighters")',
         \ 'toggle the minor mode lighters', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'M'], 'call SpaceVim#layers#core#statusline#toggle_section("major mode")',
@@ -746,7 +766,8 @@ function! SpaceVim#layers#core#statusline#config() abort
     let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/major_mode.json'), ''), ''))
     for key in keys(conf)
       if conf[key]
-        call SpaceVim#layers#core#statusline#toggle_mode(key)
+        " this function should be called silent.
+        silent! call SpaceVim#layers#core#statusline#toggle_mode(key)
       endif
     endfor
   endif
@@ -929,18 +950,23 @@ function! SpaceVim#layers#core#statusline#register_sections(name, func) abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#check_section(name) abort
-  return (index(s:loaded_sections_l, a:name) != -1
-        \ || index(s:loaded_sections_r, a:name) != -1)
+  return (index(g:spacevim_statusline_left_sections, a:name) != -1
+        \ || index(g:spacevim_statusline_right_sections, a:name) != -1)
 endfunction
 
 function! SpaceVim#layers#core#statusline#remove_section(name) abort
-  if index(s:loaded_sections_l, a:name) != -1
-    call remove(s:loaded_sections_l, index(s:loaded_sections_l, a:name))
+  if index(g:spacevim_statusline_left_sections, a:name) != -1
+    call remove(g:spacevim_statusline_left_sections, index(g:spacevim_statusline_left_sections, a:name))
   endif
-  if index(s:loaded_sections_r, a:name) != -1
-    call remove(s:loaded_sections_r, index(s:loaded_sections_l, a:name))
+  if index(g:spacevim_statusline_right_sections, a:name) != -1
+    call remove(g:spacevim_statusline_right_sections, index(g:spacevim_statusline_left_sections, a:name))
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
+endfunction
+
+function! SpaceVim#layers#core#statusline#health() abort
+  call SpaceVim#layers#core#statusline#config()
+  return 1
 endfunction
 
 " vim:set et sw=2 cc=80 nowrap:

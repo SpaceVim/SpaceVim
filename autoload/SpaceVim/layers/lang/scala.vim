@@ -335,3 +335,10 @@ function! s:execCMD(cmd) abort
 endfunction
 
 " vim:set et sw=2 cc=80:
+
+
+function! SpaceVim#layers#lang#scala#health() abort
+  call SpaceVim#layers#lang#scala#plugins()
+  call SpaceVim#layers#lang#scala#config()
+  return 1
+endfunction

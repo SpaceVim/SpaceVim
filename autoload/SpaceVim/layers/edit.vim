@@ -13,6 +13,13 @@ let s:NUMBER = SpaceVim#api#import('data#number')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:BUFFER = SpaceVim#api#import('vim#buffer')
+
+function! SpaceVim#layers#edit#health() abort
+  call SpaceVim#layers#edit#plugins()
+  call SpaceVim#layers#edit#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
@@ -32,7 +39,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
         \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
-        \ ['andrewradev/splitjoin.vim',{ 'merged' : 0, 'loadconf' : 1}],
+        \ ['andrewradev/splitjoin.vim',{ 'on_cmd':['SplitjoinJoin', 'SplitjoinSplit'],'merged' : 0, 'loadconf' : 1}],
         \ ]
   if executable('fcitx')
     call add(plugins,[g:_spacevim_root_dir . 'bundle/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
@@ -40,7 +47,7 @@ function! SpaceVim#layers#edit#plugins() abort
   if g:spacevim_enable_bepo_layout
     call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-bepo',        { 'merged' : 0}])
   endif
-  if s:CMP.has('python') || s:CMP.has('python3')
+  if s:CMP.has('python3') || s:CMP.has('python')
     call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-mundo',        { 'on_cmd' : 'MundoToggle'}])
   else
     call add(plugins,[g:_spacevim_root_dir . 'bundle/undotree',        { 'on_cmd' : 'UndotreeToggle'}])
@@ -74,7 +81,7 @@ function! SpaceVim#layers#edit#config() abort
   " }}}
 
 
-  if s:CMP.has('python') || s:CMP.has('python3')
+  if s:CMP.has('python3') || s:CMP.has('python')
     nnoremap <silent> <F7> :MundoToggle<CR>
   else
     nnoremap <silent> <F7> :UndotreeToggle<CR>
@@ -110,9 +117,10 @@ function! SpaceVim#layers#edit#config() abort
         \ . string(s:_function('s:align_at_regular_expression')) . ', [])',
         \ 'align-region-at-user-specified-regexp', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', 'w'], 'StripWhitespace', 'delete trailing whitespaces', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', '<Space>'], 'silent call call('
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', '[SPC]'], 'silent call call('
         \ . string(s:_function('s:delete_extra_space')) . ', [])',
         \ 'delete extra space arround cursor', 1)
+  nmap <Space>xd<Space> [SPC]xd[SPC]
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'c'], 'silent call call('
         \ . string(s:_function('s:lowerCamelCase')) . ', [])',
         \ 'change symbol style to lowerCamelCase', 1)
@@ -147,8 +155,15 @@ function! SpaceVim#layers#edit#config() abort
         \ . string(s:_function('s:set_justification_to')) . ', ["right"])',
         \ 'set-the-justification-to-right', 1)
 
-  call SpaceVim#mapping#space#def('vnoremap', ['x', 'u'], 'gu', 'set the selected text to lower case', 0)
-  call SpaceVim#mapping#space#def('vnoremap', ['x', 'U'], 'gU', 'set the selected text to up case', 0)
+  nnoremap <silent> <Plug>Lowercase  :call <SID>toggle_case(0, -1)<Cr>
+  vnoremap <silent> <Plug>Lowercase  :call <SID>toggle_case(1, -1)<Cr>
+  nnoremap <silent> <Plug>Uppercase  :call <SID>toggle_case(0, 1)<Cr>
+  vnoremap <silent> <Plug>Uppercase  :call <SID>toggle_case(1, 1)<Cr>
+  nnoremap <silent> <Plug>ToggleCase :call <SID>toggle_case(0, 0)<Cr>
+  vnoremap <silent> <Plug>ToggleCase :call <SID>toggle_case(1, 0)<Cr>
+  call SpaceVim#mapping#space#def('nmap' , ['x' , 'u'] , '<Plug>Lowercase'  , 'lowercase-text'   , 0, 1)
+  call SpaceVim#mapping#space#def('nmap' , ['x' , 'U'] , '<Plug>Uppercase'  , 'uppercase-text'   , 0, 1)
+  call SpaceVim#mapping#space#def('nmap' , ['x' , '~'] , '<Plug>ToggleCase' , 'toggle-case-text' , 0, 1)
 
   " word
   let g:_spacevim_mappings_space.x.w = {'name' : '+Word'}
@@ -157,6 +172,23 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 's', 'j'], 'call call('
         \ . string(s:_function('s:join_string_with')) . ', [])',
         \ 'join-string-with', 1)
+
+  " line
+  let g:_spacevim_mappings_space.x.l = {'name' : '+Line'}
+  nnoremap <silent> <Plug>DuplicateLines :call <SID>duplicate_lines(0)<Cr>
+  vnoremap <silent> <Plug>DuplicateLines :call <SID>duplicate_lines(1)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'd'], '<Plug>DuplicateLines',
+        \ 'duplicate-line-or-region', 0, 1)
+  call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 's'] , 'sort i'  , 'sort lines (ignorecase)'                    , 1)
+  call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'S'] , 'sort'    , 'sort lines (case-sensitive)'                , 1)
+  nnoremap <silent> <Plug>UniquifyIgnoreCaseLines :call <SID>uniquify_lines(0, 1)<Cr>
+  vnoremap <silent> <Plug>UniquifyIgnoreCaseLines :call <SID>uniquify_lines(1, 1)<Cr>
+  nnoremap <silent> <Plug>UniquifyCaseSenstiveLines :call <SID>uniquify_lines(0, 0)<Cr>
+  vnoremap <silent> <Plug>UniquifyCaseSenstiveLines :call <SID>uniquify_lines(1, 0)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'u'], '<Plug>UniquifyIgnoreCaseLines',
+        \ 'uniquify-lines (ignorecase)', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'U'], '<Plug>UniquifyCaseSenstiveLines',
+        \ 'uniquify-lines (case-senstive)', 0, 1)
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
@@ -586,6 +618,61 @@ function! s:insert_simple_password() abort
   normal! "kPl
   let @k = save_register
 endfunction
+
+function! s:duplicate_lines(visual) abort
+  if a:visual
+    call setline('.', getline("'<"))
+  elseif line('.') > 1
+    call setline('.', getline(line('.') - 1))
+  endif
+endfunction
+
+function! s:uniquify_lines(visual, ignorecase) abort
+  if a:visual
+    let start_line = line("'<")
+    let end_line = line("'>")
+    let rst = []
+    for l in range(start_line, end_line)
+      if index(rst, getline(l), 0, a:ignorecase) ==# -1
+        call add(rst, getline(l))
+      endif
+    endfor
+    call s:BUFFER.buf_set_lines(bufnr('.'), start_line-1 , end_line, 0, rst)
+  else
+    if line('.') > 1
+      if a:ignorecase
+        if getline('.') ==? getline(line('.') - 1)
+          normal! dd
+        endif
+      else
+        if getline('.') ==# getline(line('.') - 1)
+          normal! dd
+        endif
+      endif
+    endif
+  endif
+endfunction
+
+function! s:toggle_case(visual, uppercase) abort
+  if a:visual
+    if a:uppercase == 1
+      normal! gvgU
+    elseif a:uppercase == -1
+      normal! gvgu
+    elseif a:uppercase == 0
+      normal! gv~
+    endif
+  else
+    if a:uppercase == 1
+      normal! gUl
+    elseif a:uppercase == -1
+      normal! gul
+    elseif a:uppercase == 0
+      normal! ~
+    endif
+  endif
+endfunction
+
 function! s:insert_stronger_password() abort
   let save_register = @k
   let @k = s:PASSWORD.generate_strong(v:count ? v:count : 12)

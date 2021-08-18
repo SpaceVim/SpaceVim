@@ -19,7 +19,7 @@ This layer is for Chinese users, and provide Chinese documentations and runtime 
 
 ## Install
 
-Add following snippet to your custom configuration file to use this configuration layer.
+Add the following snippet to your custom configuration file to use this configuration layer.
 
 ```toml
 [[layers]]

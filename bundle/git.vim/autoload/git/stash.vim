@@ -7,13 +7,13 @@
 " <
 
 let s:JOB = SpaceVim#api#import('job')
-let s:NOTI =SpaceVim#api#import('notification')
+let s:NOTI = SpaceVim#api#import('notify')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 
 let s:stash_show_bufnr = -1
 
-function! git#stash#run(args)
+function! git#stash#run(args) abort
 
     let cmd = ['git', 'stash'] + a:args
     let subcmd = get(a:args, 0, '')
@@ -37,7 +37,7 @@ endfunction
 function! s:on_stdout(id, data, event) abort
     for line in filter(a:data, '!empty(v:val)')
         call git#logger#info('git-stash stdout:' . line)
-        call s:NOTI.notification(line, 'Normal')
+        call s:NOTI.notify(line, 'Normal')
     endfor
 endfunction
 
@@ -59,14 +59,14 @@ endfunction
 function! s:on_drop_stdout(id, data, event) abort
     for line in filter(a:data, '!empty(v:val)')
         call git#logger#info('git-stash stdout:' . line)
-        call s:NOTI.notification(line, 'Normal')
+        call s:NOTI.notify(line, 'Normal')
     endfor
 endfunction
 
 function! s:on_drop_stderr(id, data, event) abort
     for line in filter(a:data, '!empty(v:val)')
         call git#logger#info('git-stash stdout:' . line)
-        call s:NOTI.notification(line, 'WarningMsg')
+        call s:NOTI.notify(line, 'WarningMsg')
     endfor
 endfunction
 
@@ -89,7 +89,7 @@ endfunction
 function! s:on_show_stderr(id, data, event) abort
     for line in filter(a:data, '!empty(v:val)')
         call git#logger#info('git-stash stdout:' . line)
-        call s:NOTI.notification(line, 'WarningMsg')
+        call s:NOTI.notify(line, 'WarningMsg')
     endfor
 endfunction
 
@@ -130,7 +130,7 @@ function! s:sub_commands() abort
                 \ "\n")
 endfunction
 
-function! git#stash#complete(ArgLead, CmdLine, CursorPos)
+function! git#stash#complete(ArgLead, CmdLine, CursorPos) abort
 
     let str = a:CmdLine[:a:CursorPos-1]
     if str =~# '^Git\s\+stash\s\+[a-z]\=$'

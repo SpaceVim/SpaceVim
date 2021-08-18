@@ -17,13 +17,17 @@ let s:FILE = SpaceVim#api#import('file')
 "}}}
 
 
-let s:support_tools = ['find', 'fd']
-let s:default_cmd = {
+let s:file_searching_commands = {
       \ 'find' : 'find -not -iwholename "*.git*" ',
       \ 'fd' : 'fd',
       \ }
-let s:current_tool = 'find'
-  let s:MPT._prompt.mpt = ' ' . s:default_cmd[s:current_tool] . ' '
+if !empty(g:spacevim_file_searching_tools)
+  call extend(s:file_searching_commands, {g:spacevim_file_searching_tools[0] : g:spacevim_file_searching_tools[1]})
+  let s:current_tool = g:spacevim_file_searching_tools[0]
+else
+  let s:current_tool = 'find'
+endif
+let s:MPT._prompt.mpt = ' ' . s:file_searching_commands[s:current_tool] . ' '
 let s:options = {}
 let s:second_option = {}
 let s:options.find = {
@@ -119,11 +123,7 @@ let s:second_option.fd = {
       \ }
 
 function! s:start_find() abort
-  if s:current_tool ==# 'find'
-    let cmd = s:default_cmd[s:current_tool] . ' ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
-  elseif s:current_tool ==# 'fd'
-    let cmd = s:default_cmd[s:current_tool] . ' ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
-  endif
+  let cmd = s:file_searching_commands[s:current_tool] . ' ' . s:MPT._prompt.begin . s:MPT._prompt.cursor . s:MPT._prompt.end
   let s:MPT._quit = 1
   call s:MPT._clear_prompt()
   call s:close_buffer()
@@ -210,7 +210,7 @@ function! s:switch_tool() abort
   let s:MPT._prompt.begin = ''
   let s:MPT._prompt.cursor = ''
   let s:MPT._prompt.end = ''
-  let s:MPT._prompt.mpt = ' ' . s:default_cmd[s:current_tool] . ' '
+  let s:MPT._prompt.mpt = ' ' . s:file_searching_commands[s:current_tool] . ' '
   redraw
   call s:MPT._build_prompt()
 endfunction
@@ -227,13 +227,16 @@ function! s:handle_command_line(cmd) abort
     return
   endif
   let argv = split(s:MPT._prompt.begin)[-1]
-  if s:MPT._prompt.begin[-1:] ==# ' ' && has_key(s:second_option[s:current_tool], argv)
+  if s:MPT._prompt.begin[-1:] ==# ' '
+        \ && has_key(s:second_option, s:current_tool)
+        \ && has_key(s:second_option[s:current_tool], argv)
     let line = []
     for item in items(s:second_option[s:current_tool][argv])
       call add(line, '  ' . item[0] . repeat(' ', 8 - len(item[0])) . item[1])
     endfor
     call setline(1, line)
   elseif argv =~# '^-[a-zA-Z0-1]*'
+        \ && has_key(s:options, s:current_tool)
     let argvs = filter(deepcopy(s:options[s:current_tool]), 'v:key =~ argv')
     let line = []
     for item in items(argvs)

@@ -158,7 +158,7 @@ function! s:open_default_shell(open_with_file_cwd) abort
     if getwinvar(window, '&buftype') ==# 'terminal'
       exe window .  'wincmd w'
       if getbufvar(winbufnr(window), '_spacevim_shell_cwd') ==# l:path
-        " fuck gvim bug, startinsert do not work in gvim
+        " startinsert do not work in gvim
         if has('nvim')
           startinsert
         else
@@ -282,4 +282,10 @@ function! SpaceVim#layers#shell#close_terminal() abort
       exe 'silent bd!' . terminal_bufnr
     endif
   endfor
+endfunction
+
+function! SpaceVim#layers#shell#health() abort
+  call SpaceVim#layers#shell#plugins()
+  call SpaceVim#layers#shell#config()
+  return 1
 endfunction

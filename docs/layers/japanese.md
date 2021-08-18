@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim japanese layer"
-description: "Layer for japanese users, include japanese docs and runtime messages"
+description: "Layer for japanese users, includes japanese docs and runtime messages"
 ---
 
 # [Available Layers](../) >> japanese
@@ -15,11 +15,11 @@ description: "Layer for japanese users, include japanese docs and runtime messag
 
 ## Description
 
-This layer is for japanese users, and provide japanese docs and runtime messages.
+This layer is for japanese users, and provides japanese docs and runtime messages.
 
 ## Install
 
-To use this configuration layer, add following snippet to your custom configuration file.
+To use this configuration layer, add the following snippet to your custom configuration file.
 
 ```toml
 [[layers]]

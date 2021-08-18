@@ -17,6 +17,12 @@ function! SpaceVim#layers#debug#plugins() abort
   return plugins
 endfunction
 
+function! SpaceVim#layers#debug#health() abort
+  call SpaceVim#layers#debug#plugins()
+  call SpaceVim#layers#debug#config()
+  return 1
+endfunction
+
 function! SpaceVim#layers#debug#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['d', 'l'], 'call SpaceVim#layers#debug#launching(&ft)', 'launching-debugger', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['d', 'b'], 'VBGtoggleBreakpointThisLine', 'toggle-line-breakpoint', 1)

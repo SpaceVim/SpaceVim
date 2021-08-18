@@ -24,10 +24,6 @@ let g:gtags_global_command = get(g:, 'gtags_global_command',
       \ )
 
 ""
-" Enable/Disable default mappings. By default it is disabled.
-let g:gtags_auto_map = get(g:, 'gtags_auto_map', 0)
-
-""
 " This setting will open the |quickfix| list when adding entries. A value of 2 will
 " preserve the cursor position when the |quickfix| window is
 " opened. Defaults to 2.
@@ -212,6 +208,34 @@ function! s:TrimOption(option) abort
   return l:option
 endfunction
 
+function! s:ExecGlobal(cmd) abort
+  let l:restore_gtagsroot = 0
+  if empty($GTAGSROOT)
+    let $GTAGSROOT = SpaceVim#plugins#projectmanager#current_root()
+    let l:restore_gtagsroot = 1
+  endif
+
+  let l:restore_gtagsdbpath = 0
+  if empty($GTAGSDBPATH)
+    let $GTAGSDBPATH = s:FILE.unify_path(g:tags_cache_dir) . s:FILE.path_to_fname($GTAGSROOT)
+    let l:restore_gtagsdbpath = 1
+  endif
+
+  let l:result = system(a:cmd)
+
+  " restore $GTAGSROOT and $GTAGSDBPATH to make it possible to switch
+  " between multiple projects or parent/child projects
+  if l:restore_gtagsroot
+    let $GTAGSROOT = ''
+  endif
+
+  if l:restore_gtagsdbpath
+    let $GTAGSDBPATH = ''
+  endif
+
+  return l:result
+endfunction
+
 "
 " Execute global and load the result into quickfix window.
 "
@@ -242,31 +266,8 @@ function! s:ExecLoad(option, long_option, pattern) abort
     let l:cmd = g:gtags_global_command . ' ' . l:option . 'e ' . g:Gtags_Shell_Quote_Char . a:pattern . g:Gtags_Shell_Quote_Char
   endif
 
-  let l:restore_gtagsroot = 0
-  if empty($GTAGSROOT)
-    let $GTAGSROOT = SpaceVim#plugins#projectmanager#current_root()
-    let l:restore_gtagsroot = 1
-  endif
+  let l:result = s:ExecGlobal(l:cmd)
 
-  let l:restore_gtagsdbpath = 0
-  if empty($GTAGSDBPATH)
-    let $GTAGSDBPATH = s:FILE.unify_path(g:tags_cache_dir) . s:FILE.path_to_fname($GTAGSROOT)
-    let l:restore_gtagsdbpath = 1
-  endif
-
-  let l:result = system(l:cmd)
-
-  " restore $GTAGSROOT and $GTAGSDBPATH to make it possible to switch
-  " between multiple projects or parent/child projects
-  if l:restore_gtagsroot
-    let $GTAGSROOT = ''
-  endif
-
-  if l:restore_gtagsdbpath
-    let $GTAGSDBPATH = ''
-  endif
-
-  e
   if v:shell_error != 0
     if v:shell_error == 2
       call s:Error('invalid arguments. (gtags.vim requires GLOBAL 5.7 or later)')
@@ -303,8 +304,15 @@ function! s:ExecLoad(option, long_option, pattern) abort
   " Parse the output of 'global -x or -t' and show in the quickfix window.
   let l:efm_org = &efm
   let &efm = g:Gtags_Efm
-  cexpr! l:result
+
+  cgetexpr l:result
+
   let &efm = l:efm_org
+
+  " If there is only one item, jump to the position.
+  if len(getqflist()) ==# 1
+    cnext
+  endif
 endfunction
 
 let s:prev_windows = []
@@ -357,7 +365,7 @@ function! gtags#global(line) abort
     if l:option =~# 'f'
       let l:line = input('Gtags for file: ', expand('%'), 'file')
     else
-      let l:line = input('Gtags for pattern: ', expand('<cword>'), 'custom,GtagsCandidateCore')
+      let l:line = input('Gtags for pattern: ', expand('<cword>'), 'custom,gtags#complete')
     endif
     let l:pattern = s:Extract(l:line, 'pattern')
     if l:pattern ==# ''
@@ -429,7 +437,7 @@ function! s:GtagsCandidateCore(lead, ...) abort
     endif
     return glob(l:pattern)
   else
-    let l:cands = system(g:gtags_global_command . ' ' . '-c' . s:option . ' ' . a:lead)
+    let l:cands = s:ExecGlobal(g:gtags_global_command . ' ' . '-c' . s:option . ' ' . a:lead)
     if v:shell_error == 0
       return l:cands
     endif

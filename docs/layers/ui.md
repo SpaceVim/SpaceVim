@@ -31,3 +31,6 @@ To use this configuration layer, update custom configuration file with:
 - `enable_scrollbar`: Enable/disable floating scrollbar of current buffer. Disabled by default.
   This feature requires neovim's floating window.
 - `enable_indentline`: Enable/disable indentline of current buffer. Enabled by default.
+- `enable_cursorword`: Enable/disable  cursorword highlighting, enabled by default.
+- `cursorword_delay`: The delay duration in milliseconds for setting the word highlight after cursor motions, the default is 50.
+- `cursorword_exclude_filetype`: Ignore filetypes when enable cursorword highlighting. 

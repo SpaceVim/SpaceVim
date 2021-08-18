@@ -27,3 +27,9 @@ endfunction
 function! SpaceVim#layers#lang#xquery#config() abort
   
 endfunction
+
+function! SpaceVim#layers#lang#xquery#health() abort
+  call SpaceVim#layers#lang#xquery#plugins()
+  call SpaceVim#layers#lang#xquery#config()
+  return 1
+endfunction

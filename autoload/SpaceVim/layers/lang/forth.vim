@@ -6,6 +6,23 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#forth, layer-lang-forth
+" @parentsection layers
+" This layer is for forth development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#forth'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
 
 function! SpaceVim#layers#lang#forth#plugins() abort
   let plugins = []
@@ -21,4 +38,10 @@ endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+endfunction
+
+function! SpaceVim#layers#lang#forth#health() abort
+  call SpaceVim#layers#lang#forth#plugins()
+  call SpaceVim#layers#lang#forth#config()
+  return 1
 endfunction

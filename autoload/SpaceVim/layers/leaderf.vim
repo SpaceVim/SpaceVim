@@ -16,8 +16,14 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#layers#leaderf#loadable() abort
 
-  return s:CMP.has('python') || s:CMP.has('python3')
+  return s:CMP.has('python3') || s:CMP.has('python')
 
+endfunction
+
+function! SpaceVim#layers#leaderf#health() abort
+  call SpaceVim#layers#leaderf#plugins()
+  call SpaceVim#layers#leaderf#config()
+  return 1
 endfunction
 
 function! SpaceVim#layers#leaderf#plugins() abort
@@ -200,7 +206,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \ ]
         \ ],
         \ 1)
-  " @fixme SPC h SPC make vim flick
+  " without this key binding, SPC h SPC always open key binding guide.
   nmap <Space>h<Space> [SPC]h[SPC]
 
   let lnum = expand('<slnum>') + s:lnum - 1
@@ -264,6 +270,18 @@ function! SpaceVim#layers#leaderf#config() abort
         \ ['Find files in the directory of the current buffer',
         \ [
         \ '[SPC f f] is to find files in the directory of the current buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'F'],
+        \ 'LeaderfFileCword',
+        \ ['find cursor file in current project',
+        \ [
+        \ '[SPC p F] is to find cursor file in the root of the current project',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]

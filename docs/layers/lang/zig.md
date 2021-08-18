@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#zig layer"
-description: "This layer is for zig development, provide code runner support for zig file."
+description: "This layer is for zig development, provides code runner support for zig files."
 ---
 
 # [Available Layers](../../) >> lang#zig
@@ -11,7 +11,8 @@ description: "This layer is for zig development, provide code runner support for
 - [Install](#install)
 - [Options](#options)
 - [Key bindings](#key-bindings)
-  - [Running current script](#running-current-script)
+  - [Run current file](#run-current-file)
+  - [Test current file](#test-current-file)
 
 <!-- vim-markdown-toc -->
 
@@ -21,7 +22,7 @@ This layer is for [zig](https://ziglang.org/) development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -30,7 +31,7 @@ To use this configuration layer, update custom configuration file with:
 
 ## Options
 
-- `ztagsbin`: specific the path of ztags.
+- `ztagsbin`: The path of ztags.
 
 ## Key bindings
 

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#slim layer"
-description: "This layer is for slim development, includes syntax highlighting for slim file."
+description: "This layer is for slim development, includes syntax highlighting for slim files."
 ---
 
 # [Available Layers](../../) >> lang#slim
@@ -18,7 +18,7 @@ This layer provides syntax highlighting for [Slim Template Language](http://slim
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

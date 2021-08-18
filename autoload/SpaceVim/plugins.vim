@@ -38,9 +38,9 @@ function! s:load_plugins() abort
   unlet g:_spacevim_plugin_layer
   for plugin in g:spacevim_custom_plugins
     if len(plugin) == 2
-      call SpaceVim#plugins#add(plugin[0], plugin[1])
+      call SpaceVim#plugins#add(plugin[0], extend(plugin[1], {'overwrite' : 1}))
     else
-      call SpaceVim#plugins#add(plugin[0])
+      call SpaceVim#plugins#add(plugin[0], {'overwrite' : 1})
     endif
   endfor
 endfunction
@@ -124,12 +124,12 @@ function! s:install_manager() abort
     let &rtp .= ',' . g:_spacevim_root_dir . 'bundle/dein.vim/'
   elseif g:spacevim_plugin_manager ==# 'vim-plug'
     "auto install vim-plug
-    if filereadable(expand(g:spacevim_data_dir.'/vim-plug/autoload/plug.vim'))
+    if filereadable(expand(g:spacevim_data_dir.'vim-plug/autoload/plug.vim'))
       let g:_spacevim_vim_plug_installed = 1
     else
       if executable('curl')
         exec '!curl -fLo '
-              \ . g:spacevim_data_dir.'/vim-plug/autoload/plug.vim'
+              \ . g:spacevim_data_dir.'vim-plug/autoload/plug.vim'
               \ . ' --create-dirs '
               \ . 'https://raw.githubusercontent.com/'
               \ . 'junegunn/vim-plug/master/plug.vim'

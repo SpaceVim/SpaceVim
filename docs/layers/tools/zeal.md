@@ -31,6 +31,6 @@ To use this configuration layer, add it to your `~/.SpaceVim.d/init.toml`.
 
 | Key Binding | Description                                          |
 | ----------- | ---------------------------------------------------- |
-| `SPC D d`   | search word under cursor                             |
+| `SPC D d`   | search for the word under cursor                     |
 | `SPC D D`   | search selected text                                 |
 | `SPC D s`   | select docset (TIP: use tab completion) and search   |
