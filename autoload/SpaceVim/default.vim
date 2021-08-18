@@ -78,9 +78,9 @@ function! SpaceVim#default#options() abort
   set undolevels=1000
   " Neovim 0.5 changed the undofile format
   if has('nvim-0.5.0')
-    let g:data_dir = g:spacevim_data_dir.'/SpaceVim/'
+    let g:data_dir = g:spacevim_data_dir.'SpaceVim/'
   else
-    let g:data_dir = g:spacevim_data_dir.'/SpaceVim/old/'
+    let g:data_dir = g:spacevim_data_dir.'SpaceVim/old/'
   endif
   let g:backup_dir = g:data_dir . 'backup//'
   let g:swap_dir = g:data_dir . 'swap//'
