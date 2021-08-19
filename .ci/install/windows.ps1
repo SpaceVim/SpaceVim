@@ -11,6 +11,7 @@ function install_vim($ver)
   }
   $Env:VIM_BIN = $Env:DEPS + '\vim\vim82\vim.exe'
   $zip1 = $Env:DEPS + '\vim.zip'
+  write-host $Env:DEPS
   (New-Object Net.WebClient).DownloadFile($url1, $zip1)
   [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem') > $null
   [System.IO.Compression.ZipFile]::ExtractToDirectory($zip1, $Env:DEPS)
@@ -28,6 +29,7 @@ function install_nvim($ver)
   }
   $Env:VIM_BIN = $Env:DEPS + '\Neovim\bin\nvim.exe'
   $zip = $Env:DEPS + '\nvim.zip'
+  write-host $Env:DEPS
   (New-Object Net.WebClient).DownloadFile($url, $zip)
   [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem') > $null
   [System.IO.Compression.ZipFile]::ExtractToDirectory($zip, $Env:DEPS)
