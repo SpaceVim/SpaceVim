@@ -85,7 +85,7 @@ jobs:
     env:
         VIM_BIN: ${{ matrix.vimbin }}
         VIM_TAG: ${{ matrix.vimtag }}
-        DEPS: C:\SpaceVim
+        DEPS: C:\deps
     steps:
     - name: Checkout
       uses: actions/checkout@master
