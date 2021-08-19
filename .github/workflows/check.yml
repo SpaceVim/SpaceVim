@@ -79,49 +79,19 @@ jobs:
           include:
               - vimbin: vim
                 vimtag: nightly
-              - vimbin: vim
-                vimtag: v7.4.052
-              - vimbin: vim
-                vimtag: v7.4.629
-              - vimbin: vim
-                vimtag: v7.4.1689
-              - vimbin: vim
-                vimtag: v8.0.0027
-              - vimbin: vim
-                vimtag: v8.0.1453
-              - vimbin: vim
-                vimtag: v8.1.2269
-                # vimtag: ["v7.4.052", "v7.4.629", "v7.4.1689", "v8.0.0027", "v8.0.1453", "v8.1.2269"]
               - vimbin: nvim
                 vimtag: nightly
-              - vimbin: nvim
-                vimtag: v0.5.0
-              - vimbin: nvim
-                vimtag: v0.4.4
-              - vimbin: nvim
-                vimtag: v0.4.3
-              - vimbin: nvim
-                vimtag: v0.4.2
-              - vimbin: nvim
-                vimtag: v0.4.0
-              - vimbin: nvim
-                vimtag: v0.3.8
-                # vimtag: ["v0.4.3", "v0.4.3", "v0.4.3", "v0.4.2", "v0.3.8", "v0.3.7", "v0.3.5", "v0.3.4", "v0.3.3", "v0.3.2", "v0.3.1", "v0.3.0"]
-    runs-on: ubuntu-18.04
+    runs-on: windows-2016
     env:
         VIM_BIN: ${{ matrix.vimbin }}
         VIM_TAG: ${{ matrix.vimtag }}
-        DEPS: /home/runner/work/SpaceVim/deps
+        DEPS: C:\SpaceVim
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Install dependencies
-      run: |
-          sudo apt-get update
-          sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl lua5.2 liblua5.2-dev
     - name: Install ${{ matrix.vimbin }} ${{ matrix.vimtag }}
       run: |
-        .ci/install/linux.sh $VIM_BIN $VIM_TAG
+        .ci/install/windows.ps1 $VIM_BIN $VIM_TAG
     - name: Run test
       run: |
         if [ "$VIM_BIN" = "nvim" ]; then
