@@ -11,6 +11,7 @@ function install_vim($ver)
   }
   $Env:VIM_BIN = $Env:DEPS + '\vim\vim82\vim.exe'
   $zip1 = $Env:DEPS + '\vim.zip'
+  mkdir $Env:DEPS
   curl  -o $zip1 -L $url1
   tar -xzvf $zip1 -C $Env:DEPS
 }
@@ -27,6 +28,7 @@ function install_nvim($ver)
   }
   $Env:VIM_BIN = $Env:DEPS + '\Neovim\bin\nvim.exe'
   $zip = $Env:DEPS + '\nvim.zip'
+  mkdir $Env:DEPS
   curl  -o $zip1 -L $url1
   tar -xzvf $zip1 -C $Env:DEPS
 }
