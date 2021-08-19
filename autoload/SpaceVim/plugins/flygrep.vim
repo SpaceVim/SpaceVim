@@ -127,7 +127,7 @@ function! s:get_search_cmd(expr) abort
     if s:grep_exe ==# 'rg' || s:grep_exe ==# 'ag' || s:grep_exe ==# 'pt'
       let cmd += ['.']
     endif
-    " let cmd += s:grep_ropt
+    let cmd += s:grep_ropt
   endif
   " let cmd = map(cmd, 'shellescape(v:val)')
   " if has('win32')
