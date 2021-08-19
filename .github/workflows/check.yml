@@ -94,17 +94,6 @@ jobs:
         .ci/install/windows.ps1 $VIM_BIN $VIM_TAG
     - name: Run test
       run: |
-        if [ "$VIM_BIN" = "nvim" ]; then
-            export PATH="${DEPS}/_neovim/${VIM_TAG}/bin:${PATH}"
-            export VIM="${DEPS}/_neovim/${VIM_TAG}/share/nvim/runtime"
-        else
-            export PATH="${DEPS}/_vim/${VIM_TAG}/bin:${PATH}"
-            export VIM="${DEPS}/_vim/${VIM_TAG}/share/vim"
-        fi
-        export PATH="/home/runner/.local/bin:${PATH}"
-        echo "\$PATH: \"${PATH}\""
-        echo "\$VIM: \"${VIM}\""
-        echo "=================  ${VIM_BIN} version ======================"
         $VIM_BIN --version
         pip3 install --upgrade "pip < 21.0"
         pip3 install covimerage virtualenv codecov
