@@ -123,11 +123,11 @@ function! s:get_search_cmd(expr) abort
     " if grep dir is empty, grep files is empty, which means searhing in
     " current directory.
     let cmd += [a:expr] 
-    " in window, when using rg, ag, need to add '.' at the end.
-    if s:SYS.isWindows && (s:grep_exe ==# 'rg' || s:grep_exe ==# 'ag' || s:grep_exe ==# 'pt' )
+    " when using rg, ag, need to add '.' at the end.
+    if s:grep_exe ==# 'rg' || s:grep_exe ==# 'ag' || s:grep_exe ==# 'pt'
       let cmd += ['.']
     endif
-    let cmd += s:grep_ropt
+    " let cmd += s:grep_ropt
   endif
   " let cmd = map(cmd, 'shellescape(v:val)')
   " if has('win32')
