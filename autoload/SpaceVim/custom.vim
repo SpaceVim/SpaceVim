@@ -195,6 +195,10 @@ function! SpaceVim#custom#load() abort
       call SpaceVim#custom#apply(conf, 'local')
     else
       let conf = s:TOML.parse_file(local_conf)
+      let dir = s:FILE.unify_path(expand(g:spacevim_data_dir . 'SpaceVim/conf/'))
+      if !isdirectory(dir)
+        call mkdir(dir, 'p')
+      endif
       call SpaceVim#logger#info('generate local conf: ' . local_conf_cache)
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
       call SpaceVim#custom#apply(conf, 'local')
@@ -239,6 +243,10 @@ function! s:load_glob_conf() abort
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
       call SpaceVim#custom#apply(conf, 'glob')
     else
+      let dir = s:FILE.unify_path(expand(g:spacevim_data_dir . 'SpaceVim/conf/'))
+      if !isdirectory(dir)
+        call mkdir(dir, 'p')
+      endif
       let conf = s:TOML.parse_file(local_conf)
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
       call SpaceVim#custom#apply(conf, 'glob')
