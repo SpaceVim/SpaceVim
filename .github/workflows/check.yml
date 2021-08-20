@@ -104,10 +104,7 @@ jobs:
           $Env:PATH = $Env:DEPS + '\vim\vim82\;' + $Env:PATH
           $Env:VIM = $Env:DEPS + '\vim'
         }
-        pip install --upgrade pip
         # https://github.com/Vimjas/covimerage/issues/95
-        pip install 'click<8.0.0'
-        pip install covimerage virtualenv codecov
-        make test_coverage
-        covimerage -vv xml --omit 'build/*' --omit 'bundle/*'
-        codecov -X search gcov pycov -f coverage.xml
+        # https://github.com/Vimjas/covimerage/issues/90
+        # covimerage do not support windows now
+        make test
