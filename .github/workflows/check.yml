@@ -94,13 +94,16 @@ jobs:
         .ci/install/windows.ps1 $VIM_BIN $VIM_TAG
     - name: Run test
       run: |
-        if [ "$VIM_BIN" = "nvim" ]; then
-            export PATH="${DEPS}/_neovim/${VIM_TAG}/bin:${PATH}"
-            export VIM="${DEPS}/_neovim/${VIM_TAG}/share/nvim/runtime"
-        else
-            export PATH="${DEPS}/_vim/${VIM_TAG}/bin:${PATH}"
-            export VIM="${DEPS}/_vim/${VIM_TAG}/share/vim"
-        fi
+        if ($Env:VIM_BIN.StartsWith("nvim"))
+        {
+          $Env:PATH = $Env:DEPS + '\Neovim\bin\;' + $Env:PATH
+          $Env:VIM = $Env:DEPS + '\Neovim\share\nvim'
+        }
+        elseif ($Env:VIM_BIN.StartsWith("vim"))
+        {
+          $Env:PATH = $Env:DEPS + '\vim\vim82\;' + $Env:PATH
+          $Env:VIM = $Env:DEPS + '\vim'
+        }
         pip3 install --upgrade "pip < 21.0"
         pip3 install covimerage virtualenv codecov
         make test_coverage
