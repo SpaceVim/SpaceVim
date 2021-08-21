@@ -65,7 +65,7 @@ function! cscope#find(action, word) abort
   let dirtyDirs = []
   for d in keys(s:dbs)
     if s:dbs[d]['dirty'] == 1
-      call add(dirtyDirs, s:dbs[d].root)
+      call add(dirtyDirs, d)
     endif
   endfor
   if len(dirtyDirs) > 0
@@ -93,8 +93,8 @@ endfunction
 
 
 function! s:CheckNewFile(dir, newfile) abort
+  let id = s:dbs[a:dir]['id']
   let dir = s:FILE.path_to_fname(a:dir)
-  let id = s:dbs[dir]['id']
   let cscope_files = s:cscope_cache_dir. dir .'/cscope.files'
   let files = readfile(cscope_files)
   " @todo support threshold
@@ -160,7 +160,7 @@ endfunction
 " update all existing cscope databases in case that you disable cscope database
 " auto update.
 function! cscope#update_databeses() abort
-  call s:updateDBs(map(keys(s:dbs), 's:dbs[v:val].root'))
+  call s:updateDBs(keys(s:dbs))
 endfunction
 
 
@@ -212,10 +212,9 @@ function! cscope#clear_databases(...) abort
     call s:RmDBfiles()
   else
     let dir = s:FILE.path_to_fname(a:1)
-    let id = s:dbs[dir]['id']
     call delete(s:cscope_cache_dir. dir . '/cscope.files')
     call delete(s:cscope_cache_dir. dir . '/cscope.db')
-    unlet s:dbs[dir]
+    unlet s:dbs[a:1]
     call s:echo('database cleared: ' . s:cscope_cache_dir. dir .'/cscope.db')
     call s:FlushIndex()
   endif
@@ -223,7 +222,7 @@ endfunction
 
 " complete function for command :CscopeClear
 function! cscope#listDirs(A,L,P) abort
-  return map(keys(s:dbs), 's:dbs[v:val].root')
+  return keys(s:dbs)
 endfunction
 
 function! ToggleLocationList() abort
@@ -242,11 +241,11 @@ function! ToggleLocationList() abort
 endfunction
 
 function! s:GetBestPath(dir) abort
-  let f = s:FILE.path_to_fname(a:dir)
+  let f = a:dir
   let bestDir = ''
   for d in keys(s:dbs)
     if stridx(f, d) == 0 && len(d) > len(bestDir)
-      return s:dbs[d].root
+      return d
     endif
   endfor
   return ''
