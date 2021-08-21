@@ -78,7 +78,7 @@ function! s:self.drawing_table(json, ...) abort
     let keys = a:1
   endif
   for key in keys
-    let tytle .= self._string.fill(key , self.box_width) . side
+    let tytle .= self._string.fill_middle(key , self.box_width) . side
   endfor
   call add(table, tytle)
   call add(table, middle_line)
