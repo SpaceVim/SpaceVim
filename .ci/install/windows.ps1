@@ -33,6 +33,15 @@ function install_nvim($ver)
   [System.IO.Compression.ZipFile]::ExtractToDirectory($zip, $Env:DEPS)
 }
 
+function download_lua()
+{
+  $url = 'https://github.com/wsdjeg/vim-galore-zh_cn/releases/download/downdows/lua53.zip'
+  $zip = $Env:DEPS + '\lua53.zip'
+  (New-Object Net.WebClient).DownloadFile($url, $zip)
+  [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem') > $null
+  [System.IO.Compression.ZipFile]::ExtractToDirectory($zip, $Env:DEPS + '\vim\vim82')
+}
+
 if ($Env:VIM_BIN.StartsWith("nvim"))
 {
   mkdir $Env:DEPS
@@ -42,4 +51,5 @@ elseif ($Env:VIM_BIN.StartsWith("vim"))
 {
   mkdir $Env:DEPS
   install_vim $Env:VIM_TAG
+  download_lua
 }
