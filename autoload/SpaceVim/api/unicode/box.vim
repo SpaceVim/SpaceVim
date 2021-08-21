@@ -21,6 +21,7 @@ scriptencoding utf-8
 let s:self = {}
 let s:self._json = SpaceVim#api#import('data#json')
 let s:self._string = SpaceVim#api#import('data#string')
+let s:self.box_width = 40
 " http://jrgraphix.net/r/Unicode/2500-257F
 " http://www.alanflavell.org.uk/unicode/unidata.html
 
@@ -58,16 +59,16 @@ function! s:self.drawing_table(json, ...) abort
   let items = self._json.json_decode(a:json)
   let col = len(keys(items[0]))
   let top_line = top_left_corner
-        \ . repeat(repeat(top_bottom_side, 40) . top_middle, col - 1)
-        \ . repeat(top_bottom_side, 40)
+        \ . repeat(repeat(top_bottom_side, self.box_width) . top_middle, col - 1)
+        \ . repeat(top_bottom_side, self.box_width)
         \ . top_right_corner
   let middle_line = left_middle
-        \ . repeat(repeat(top_bottom_side, 40) . middle, col - 1)
-        \ . repeat(top_bottom_side, 40)
+        \ . repeat(repeat(top_bottom_side, self.box_width) . middle, col - 1)
+        \ . repeat(top_bottom_side, self.box_width)
         \ . right_middle
   let bottom_line = bottom_left_corner
-        \ . repeat(repeat(top_bottom_side, 40) . bottom_middle, col - 1)
-        \ . repeat(top_bottom_side, 40)
+        \ . repeat(repeat(top_bottom_side, self.box_width) . bottom_middle, col - 1)
+        \ . repeat(top_bottom_side, self.box_width)
         \ . bottom_right_corner
   call add(table, top_line)
   let tytle = side
@@ -77,14 +78,14 @@ function! s:self.drawing_table(json, ...) abort
     let keys = a:1
   endif
   for key in keys
-    let tytle .= self._string.fill(key , 40) . side
+    let tytle .= self._string.fill(key , self.box_width) . side
   endfor
   call add(table, tytle)
   call add(table, middle_line)
   for item in items
     let value_line = side
     for key in keys
-      let value_line .= self._string.fill(item[key], 40) . side
+      let value_line .= self._string.fill(item[key], self.box_width) . side
     endfor
     call add(table, value_line)
     call add(table, middle_line)

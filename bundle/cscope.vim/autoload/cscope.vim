@@ -49,6 +49,7 @@ let s:logger = SpaceVim#logger#derive('cscope')
 let s:notify = SpaceVim#api#import('notify')
 let s:notify.timeout = 5000
 let s:box = SpaceVim#api#import('unicode#box')
+let s:box.box_width = 40
 let s:FILE = SpaceVim#api#import('file')
 let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
