@@ -291,7 +291,7 @@ endfunction
 function! s:add_databases(db) abort
   exe 'silent cs add ' . a:db
   if cscope_connection(2, a:db) == 1
-    call s:echo('cscope added: ' . a:db)
+    call s:logger.info('cscope added: ' . a:db)
     return 0
   else
     return 1
@@ -376,7 +376,7 @@ function! s:on_create_db_exit(id, data, event) abort
     echohl WarningMsg | echo 'Failed to create cscope database for ' . d | echohl None
   else
     let s:dbs[d]['dirty'] = 0
-    call s:echo('database created: '  )
+    call s:logger.info('database created for: ' . d)
     call s:FlushIndex()
   endif
 endfunction
