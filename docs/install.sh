@@ -438,6 +438,17 @@ main () {
                 usage
                 exit 0
                 ;;
+            --no-fonts)
+                welcome
+                need_cmd 'git'
+                fetch_repo
+                install_vim
+                install_neovim
+                install_package_manager
+                install_fonts
+                install_done
+                exit 0
+                ;;
             --version|-v)
                 msg "${Version}"
                 exit 0
