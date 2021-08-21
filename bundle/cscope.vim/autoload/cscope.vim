@@ -278,6 +278,7 @@ endfunction
 " 4. root: path of the project
 
 function! s:InitDB(dir) abort
+  call s:logger.debug('start to init database for:' . a:dir)
   let id = localtime()
   let dir = s:FILE.path_to_fname(a:dir)
   let s:dbs[dir] = {}
