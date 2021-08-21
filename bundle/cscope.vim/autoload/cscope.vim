@@ -45,17 +45,17 @@ set cpo&vim
 
 " where to store cscope file?
 
-function! s:echo(msg) abort
-  echon a:msg
-endfunction
-
+let s:logger = SpaceVim#logger#derive('cscope')
 let s:FILE = SpaceVim#api#import('file')
+let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:cscope_cache_dir = s:FILE.unify_path('~/.cache/SpaceVim/cscope/')
 let s:cscope_db_index = s:cscope_cache_dir.'index'
 let s:dbs = {}
 
-
+function! s:echo(msg) abort
+  echon a:msg
+endfunction
 
 
 ""
@@ -114,6 +114,11 @@ endfunction
 
 function! s:FlushIndex() abort
   call writefile([s:JSON.json_encode(s:dbs)], s:cscope_db_index)
+endfunction
+
+
+function! s:on_list_file_exit(id, date, event) abort
+  
 endfunction
 
 
@@ -364,6 +369,25 @@ function! cscope#onChange() abort
   endif
 endfunction
 
+function! s:on_create_db_exit(id, data, event) abort
+  let d = ''
+  for dir in keys(s:create_db_process)
+    if s:create_db_process[dir].jobid == a:id
+      let d = dir
+      break
+    endif
+  endfor
+  if a:data !=# 0
+    echohl WarningMsg | echo 'Failed to create cscope database for ' . d | echohl None
+  else
+    let s:dbs[d]['dirty'] = 0
+    call s:echo('database created: '  )
+  endif
+endfunction
+
+
+let s:create_db_process = {}
+
 function! s:CreateDB(dir, init) abort
   let dir = s:FILE.path_to_fname(a:dir)
   let id = s:dbs[dir]['id']
@@ -380,17 +404,13 @@ function! s:CreateDB(dir, init) abort
     exec 'silent cs kill '.cscope_db
   catch
   endtry
-  let save_x = @x
-  redir @x
-  exec 'silent !'.g:cscope_cmd.' -b -i '.cscope_files.' -f'.cscope_db
-  redi END
-  if @x =~# "\nCommand terminated\n"
-    echohl WarningMsg | echo 'Failed to create cscope database for ' . a:dir | echohl None
-  else
-    let s:dbs[dir]['dirty'] = 0
-    call s:echo('database created: ' . cscope_db)
-  endif
-  let @x = save_x
+  let jobid = s:JOB.start([g:cscope_cmd, '-b', '-i', cscope_files, '-f', cscope_db], {
+        \ 'on_exit' : function('s:on_create_db_exit')
+        \ })
+  let s:create_db_process[a:dir] = {
+        \ 'jobid' : jobid,
+        \ 'cscope_db' : cscope_db,
+        \ }
 endfunction
 
 ""
