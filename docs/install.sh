@@ -287,6 +287,7 @@ usage () {
     echo " -v, --version            Show version information and exit"
     echo " -u, --uninstall          Uninstall SpaceVim"
     echo " -c, --checkRequirements  checkRequirements for SpaceVim"
+    echo " --no-fonts               skip downloading fonts"
     echo ""
     echo "EXAMPLE"
     echo ""
