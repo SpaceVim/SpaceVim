@@ -48,6 +48,7 @@ set cpo&vim
 let s:logger = SpaceVim#logger#derive('cscope')
 let s:notify = SpaceVim#api#import('notify')
 let s:notify.timeout = 5000
+let s:box = SpaceVim#api#import('unicode#box')
 let s:FILE = SpaceVim#api#import('file')
 let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
@@ -307,20 +308,27 @@ endfunction
 
 function! cscope#list_databases() abort
   let dirs = keys(s:dbs)
+  let databases = []
   if len(dirs) == 0
-    echo 'You have no cscope dbs now.'
+    call s:notify.notify('You have no cscope dbs now.', 'WarningMsg')
   else
-    let s = ['  PROJECT_ROOT                   LOADTIMES']
     for d in dirs
       let id = s:dbs[d]['id']
       if cscope_connection(2, s:cscope_cache_dir. d . '/cscope.db') == 1
-        let l = printf('* %s                   %d', s:dbs[d].root, s:dbs[d]['loadtimes'])
+        " let l = printf('* %s                   %d', s:dbs[d].root, )
+        let l = {
+              \ 'project' : '* ' .d,
+              \ 'loadtimes' : s:dbs[d]['loadtimes']
+              \ }
       else
-        let l = printf('  %s                   %d', s:dbs[d].root, s:dbs[d]['loadtimes'])
+        let l = {
+              \ 'project' : ' ' .d,
+              \ 'loadtimes' : s:dbs[d]['loadtimes']
+              \ }
       endif
-      call add(s, l)
+      call add(databases, l)
     endfor
-    echo join(s, "\n")
+    call s:box.drawing_table(s:JSON.encoding(databases), ['project', 'loadtimes'])
   endif
 endfunction
 
