@@ -118,25 +118,40 @@ endfunction
 
 
 function! s:on_list_file_exit(id, date, event) abort
-  
+
 endfunction
 
 
 let s:list_files_process = {}
 
 function! s:list_files_stdout(id, data, event) abort
-  
+  call extend(s:list_files_process['jobid' . a:id].cscope_files, a:data)
 endfunction
 
 function! s:list_files_exit(id, date, event) abort
-  
+  if a:date == 0
+    call writefile(s:list_files_process['jobid' . a:id].cscope_files,
+          \ s:list_files_process['jobid' . a:id].cscope_files_path
+          \ )
+  endif
+  call s:create_databese(s:list_files_process['jobid' . a:id].dir,
+        \ s:list_files_process['jobid' . a:id].cscope_files_path,
+        \ s:list_files_process['jobid' . a:id].cscope_db,
+        \ )
 endfunction
 
-function! s:ListFiles(dir, cscope_files) abort
-  let jobid = s:JOB.start('', {
+function! s:list_project_files(dir, cscope_files, cscope_db) abort
+  let jobid = s:JOB.start(['rg', '--color=never', '--files', a:dir], {
         \ 'on_stdout' : function('s:list_files_stdout'),
         \ 'on_exit' : function('s:list_files_exit')
         \ })
+  let s:list_files_process['jobid' . jobid] = {
+        \ 'jobid' : jobid,
+        \ 'dir' : a:dir,
+        \ 'cscope_files' : [],
+        \ 'cscope_db' : a:cscope_db,
+        \ 'cscope_files_path' : a:cscope_files
+        \ }
 endfunction
 
 ""
@@ -183,7 +198,6 @@ function! s:updateDBs(dirs) abort
   for d in a:dirs
     call s:CreateDB(d, 0)
   endfor
-  call s:FlushIndex()
 endfunction
 
 
@@ -270,7 +284,6 @@ function! s:InitDB(dir) abort
   let s:dbs[dir]['dirty'] = 0
   let s:dbs[dir]['root'] = a:dir
   call s:CreateDB(a:dir, 1)
-  call s:FlushIndex()
 endfunction
 
 
@@ -357,18 +370,13 @@ function! cscope#onChange() abort
 endfunction
 
 function! s:on_create_db_exit(id, data, event) abort
-  let d = ''
-  for dir in keys(s:create_db_process)
-    if s:create_db_process[dir].jobid == a:id
-      let d = dir
-      break
-    endif
-  endfor
+  let d = s:create_db_process['jobid' . a:id].dir
   if a:data !=# 0
     echohl WarningMsg | echo 'Failed to create cscope database for ' . d | echohl None
   else
     let s:dbs[d]['dirty'] = 0
     call s:echo('database created: '  )
+    call s:FlushIndex()
   endif
 endfunction
 
@@ -380,23 +388,28 @@ function! s:CreateDB(dir, init) abort
   let id = s:dbs[dir]['id']
   let cscope_files = s:cscope_cache_dir . dir . '/cscope.files'
   let cscope_db = s:cscope_cache_dir . dir . '/cscope.db'
-  if ! isdirectory(s:cscope_cache_dir . dir)
-    call mkdir(s:cscope_cache_dir . dir)
-  endif
-  if !filereadable(cscope_files) || a:init
-    call s:ListFiles(a:dir, cscope_files)
-  endif
   try
     exec 'silent cs kill '.cscope_db
   catch
   endtry
-  let jobid = s:JOB.start([g:cscope_cmd, '-b', '-i', cscope_files, '-f', cscope_db], {
+  if !isdirectory(s:cscope_cache_dir . dir)
+    call mkdir(s:cscope_cache_dir . dir)
+  endif
+  if !filereadable(cscope_files) || a:init
+    call s:list_project_files(a:dir, cscope_files, cscope_db)
+  endif
+endfunction
+
+function! s:create_databese(dir, cscope_files, cscope_db) abort
+  let jobid = s:JOB.start([g:cscope_cmd, '-b', '-i', a:cscope_files, '-f', a:cscope_db], {
         \ 'on_exit' : function('s:on_create_db_exit')
         \ })
-  let s:create_db_process[a:dir] = {
+  let s:create_db_process['jobid' . jobid] = {
         \ 'jobid' : jobid,
-        \ 'cscope_db' : cscope_db,
+        \ 'dir' : a:dir,
+        \ 'cscope_db' : a:cscope_db,
         \ }
+
 endfunction
 
 ""
