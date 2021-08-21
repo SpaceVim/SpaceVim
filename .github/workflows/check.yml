@@ -80,9 +80,7 @@ jobs:
               - vimbin: vim
                 vimtag: nightly
               - vimbin: vim
-                vimtag: v7.4.052
-              - vimbin: vim
-                vimtag: v7.4.629
+                vimtag: v7.4.1185
               - vimbin: vim
                 vimtag: v7.4.1689
               - vimbin: vim
