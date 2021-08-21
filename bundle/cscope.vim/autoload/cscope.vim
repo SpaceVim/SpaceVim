@@ -280,12 +280,11 @@ endfunction
 function! s:InitDB(dir) abort
   call s:logger.debug('start to init database for:' . a:dir)
   let id = localtime()
-  let dir = s:FILE.path_to_fname(a:dir)
-  let s:dbs[dir] = {}
-  let s:dbs[dir]['id'] = id
-  let s:dbs[dir]['loadtimes'] = 0
-  let s:dbs[dir]['dirty'] = 0
-  let s:dbs[dir]['root'] = a:dir
+  let s:dbs[a:dir] = {}
+  let s:dbs[a:dir]['id'] = id
+  let s:dbs[a:dir]['loadtimes'] = 0
+  let s:dbs[a:dir]['dirty'] = 0
+  let s:dbs[a:dir]['root'] = a:dir
   call s:CreateDB(a:dir, 1)
 endfunction
 
@@ -388,7 +387,6 @@ let s:create_db_process = {}
 
 function! s:CreateDB(dir, init) abort
   let dir = s:FILE.path_to_fname(a:dir)
-  let id = s:dbs[dir]['id']
   let cscope_files = s:cscope_cache_dir . dir . '/cscope.files'
   let cscope_db = s:cscope_cache_dir . dir . '/cscope.db'
   try
