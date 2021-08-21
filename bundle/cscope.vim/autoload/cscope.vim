@@ -122,34 +122,21 @@ function! s:on_list_file_exit(id, date, event) abort
 endfunction
 
 
-function! s:ListFiles(dir) abort
-  let d = []
-  let f = []
-  let cwd = a:dir
-  try
-    while cwd != ''
-      let a = split(globpath(cwd, '*'), "\n")
-      for fn in a
-        if getftype(fn) ==# 'dir'
-          if !exists('g:cscope_ignored_dir') || fn !~? g:cscope_ignored_dir
-            call add(d, fn)
-          endif
-        elseif getftype(fn) !=# 'file'
-          continue
-        else
-          if stridx(fn, ' ') !=# -1
-            let fn = '"'.fn.'"'
-          endif
-          call add(f, fn)
-        endif
-      endfor
-      let cwd = len(d) ? remove(d, 0) : ''
-    endwhile
-  catch /^Vim:Interrupt$/
-  catch
-    echo 'caught' v:exception
-  endtry
-  return f
+let s:list_files_process = {}
+
+function! s:list_files_stdout(id, data, event) abort
+  
+endfunction
+
+function! s:list_files_exit(id, date, event) abort
+  
+endfunction
+
+function! s:ListFiles(dir, cscope_files) abort
+  let jobid = s:JOB.start('', {
+        \ 'on_stdout' : function('s:list_files_stdout'),
+        \ 'on_exit' : function('s:list_files_exit')
+        \ })
 endfunction
 
 ""
@@ -397,8 +384,7 @@ function! s:CreateDB(dir, init) abort
     call mkdir(s:cscope_cache_dir . dir)
   endif
   if !filereadable(cscope_files) || a:init
-    let files = s:ListFiles(a:dir)
-    call writefile(files, cscope_files)
+    call s:ListFiles(a:dir, cscope_files)
   endif
   try
     exec 'silent cs kill '.cscope_db
