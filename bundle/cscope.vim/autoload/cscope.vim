@@ -46,7 +46,7 @@ set cpo&vim
 " where to store cscope file?
 
 let s:logger = SpaceVim#logger#derive('cscope')
-let s:notify = SpaceVim#logger#derive('notify')
+let s:notify = SpaceVim#api#import('notify')
 let s:FILE = SpaceVim#api#import('file')
 let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
