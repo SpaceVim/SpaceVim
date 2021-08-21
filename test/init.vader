@@ -3,5 +3,7 @@ Execute ( SpaceVim api: SpaceVim main code ):
   if has('nvim')
     source init.vim
   else
+    Log "fuck!, has('nvim-0.5') is " . has('nvim-0.5')
+    AssertEqual has('nvim-0.5'), 1
     source vimrc
   endif
