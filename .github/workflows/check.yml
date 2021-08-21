@@ -101,8 +101,6 @@ jobs:
               - vimbin: nvim
                 vimtag: v0.4.2
               - vimbin: nvim
-                vimtag: v0.4.0
-              - vimbin: nvim
                 vimtag: v0.3.8
                 # vimtag: ["v0.4.3", "v0.4.3", "v0.4.3", "v0.4.2", "v0.3.8", "v0.3.7", "v0.3.5", "v0.3.4", "v0.3.3", "v0.3.2", "v0.3.1", "v0.3.0"]
     runs-on: windows-2016
