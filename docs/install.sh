@@ -445,7 +445,6 @@ main () {
                 install_vim
                 install_neovim
                 install_package_manager
-                install_fonts
                 install_done
                 exit 0
                 ;;
