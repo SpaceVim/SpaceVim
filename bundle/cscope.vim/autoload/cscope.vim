@@ -47,6 +47,7 @@ set cpo&vim
 
 let s:logger = SpaceVim#logger#derive('cscope')
 let s:notify = SpaceVim#api#import('notify')
+let s:notify.timeout = 5000
 let s:FILE = SpaceVim#api#import('file')
 let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
@@ -75,7 +76,9 @@ function! cscope#find(action, word) abort
         lw
       endif
     catch
-      call s:notify.notify('Can not find '.a:word.' with querytype as '.a:action.'.', 'WarningMsg')
+      let message = 'Can not find '.a:word.' with querytype as '.a:action.'.'
+      let s:notify.notify_max_width = strwidth(message) + 10
+      call s:notify.notify(message, 'WarningMsg')
     endtry
   endif
 endfunction
