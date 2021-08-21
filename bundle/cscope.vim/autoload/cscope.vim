@@ -133,11 +133,13 @@ function! s:list_files_exit(id, date, event) abort
     call writefile(s:list_files_process['jobid' . a:id].cscope_files,
           \ s:list_files_process['jobid' . a:id].cscope_files_path
           \ )
+    call s:create_databese(s:list_files_process['jobid' . a:id].dir,
+          \ s:list_files_process['jobid' . a:id].cscope_files_path,
+          \ s:list_files_process['jobid' . a:id].cscope_db,
+          \ )
+  else
+    call s:logger.warn('failed to list files in dir:' . s:list_files_process['jobid' . a:id].dir)
   endif
-  call s:create_databese(s:list_files_process['jobid' . a:id].dir,
-        \ s:list_files_process['jobid' . a:id].cscope_files_path,
-        \ s:list_files_process['jobid' . a:id].cscope_db,
-        \ )
 endfunction
 
 function! s:list_project_files(dir, cscope_files, cscope_db) abort
