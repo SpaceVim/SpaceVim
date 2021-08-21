@@ -1,3 +1,6 @@
+let g:_spacevim_root_dir = fnamemodify(fnamemodify(expand('<sfile>'),
+      \ ':p:h:h:gs?\\?'.((has('win16') || has('win32')
+      \ || has('win64'))?'\':'/') . '?'), ':p:gs?[\\/]?/?')
 filetype off
 set rtp+=build/vader
 set rtp+=.
