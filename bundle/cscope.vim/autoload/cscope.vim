@@ -46,17 +46,13 @@ set cpo&vim
 " where to store cscope file?
 
 let s:logger = SpaceVim#logger#derive('cscope')
+let s:notify = SpaceVim#logger#derive('notify')
 let s:FILE = SpaceVim#api#import('file')
 let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:cscope_cache_dir = s:FILE.unify_path('~/.cache/SpaceVim/cscope/')
 let s:cscope_db_index = s:cscope_cache_dir.'index'
 let s:dbs = {}
-
-function! s:echo(msg) abort
-  echon a:msg
-endfunction
-
 
 ""
 " search your {word} with {action} in the database suitable for current
@@ -79,7 +75,7 @@ function! cscope#find(action, word) abort
         lw
       endif
     catch
-      echohl WarningMsg | echo 'Can not find '.a:word.' with querytype as '.a:action.'.' | echohl None
+      call s:notify.notify('Can not find '.a:word.' with querytype as '.a:action.'.', 'WarningMsg')
     endtry
   endif
 endfunction
@@ -215,7 +211,7 @@ function! cscope#clear_databases(...) abort
     call delete(s:cscope_cache_dir. dir . '/cscope.files')
     call delete(s:cscope_cache_dir. dir . '/cscope.db')
     unlet s:dbs[a:1]
-    call s:echo('database cleared: ' . s:cscope_cache_dir. dir .'/cscope.db')
+    call s:logger.info('database cleared: ' . s:cscope_cache_dir. dir .'/cscope.db')
     call s:FlushIndex()
   endif
 endfunction
