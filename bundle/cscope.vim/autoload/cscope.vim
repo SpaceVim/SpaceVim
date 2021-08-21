@@ -302,7 +302,7 @@ function! s:LoadDB(dir) abort
   let dir = s:FILE.path_to_fname(a:dir)
   silent cs kill -1
   call s:add_databases(s:cscope_cache_dir . dir .'/cscope.db')
-  let s:dbs[dir]['loadtimes'] = s:dbs[dir]['loadtimes'] + 1
+  let s:dbs[a:dir]['loadtimes'] = s:dbs[a:dir]['loadtimes'] + 1
   call s:FlushIndex()
 endfunction
 
