@@ -58,16 +58,16 @@ function! s:self.drawing_table(json, ...) abort
   let items = self._json.json_decode(a:json)
   let col = len(keys(items[0]))
   let top_line = top_left_corner
-        \ . repeat(repeat(top_bottom_side, 15) . top_middle, col - 1)
-        \ . repeat(top_bottom_side, 15)
+        \ . repeat(repeat(top_bottom_side, 40) . top_middle, col - 1)
+        \ . repeat(top_bottom_side, 40)
         \ . top_right_corner
   let middle_line = left_middle
-        \ . repeat(repeat(top_bottom_side, 15) . middle, col - 1)
-        \ . repeat(top_bottom_side, 15)
+        \ . repeat(repeat(top_bottom_side, 40) . middle, col - 1)
+        \ . repeat(top_bottom_side, 40)
         \ . right_middle
   let bottom_line = bottom_left_corner
-        \ . repeat(repeat(top_bottom_side, 15) . bottom_middle, col - 1)
-        \ . repeat(top_bottom_side, 15)
+        \ . repeat(repeat(top_bottom_side, 40) . bottom_middle, col - 1)
+        \ . repeat(top_bottom_side, 40)
         \ . bottom_right_corner
   call add(table, top_line)
   let tytle = side
@@ -77,14 +77,14 @@ function! s:self.drawing_table(json, ...) abort
     let keys = a:1
   endif
   for key in keys
-    let tytle .= self._string.fill(key , 15) . side
+    let tytle .= self._string.fill(key , 40) . side
   endfor
   call add(table, tytle)
   call add(table, middle_line)
   for item in items
     let value_line = side
     for key in keys
-      let value_line .= self._string.fill(item[key], 15) . side
+      let value_line .= self._string.fill(item[key], 40) . side
     endfor
     call add(table, value_line)
     call add(table, middle_line)

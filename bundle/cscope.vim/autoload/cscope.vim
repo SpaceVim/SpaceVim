@@ -328,7 +328,8 @@ function! cscope#list_databases() abort
       endif
       call add(databases, l)
     endfor
-    call s:box.drawing_table(s:JSON.encoding(databases), ['project', 'loadtimes'])
+    let table = s:box.drawing_table(s:JSON.json_encode(databases), ['project', 'loadtimes'])
+    echo join(table, "\n")
   endif
 endfunction
 
