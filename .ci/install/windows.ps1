@@ -2,7 +2,7 @@ function install_vim($ver)
 {
   if ($ver -eq "nightly")
   {
-    $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v8.2.0129/gvim_8.2.0129_x86.zip'
+    $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v8.2.3361/gvim_8.2.3361_x86.zip'
   }
   else
   {
