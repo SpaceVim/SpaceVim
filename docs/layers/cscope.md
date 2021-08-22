@@ -12,6 +12,7 @@ description: "cscope layer provides a smart cscope and pycscope helper for Space
 - [Install](#install)
   - [cscope](#cscope)
   - [layer](#layer)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -49,6 +50,11 @@ To use this configuration layer, add it to your configuration file.
 [[layers]]
     name = "cscope"
 ```
+
+## Layer options
+
+- `cscope_command`: set the command or path of `cscope` executable.
+
 
 ## Key bindings
 
