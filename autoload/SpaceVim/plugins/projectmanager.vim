@@ -8,7 +8,7 @@
 
 
 
-if $SPACEVIM_LUA
+if $SPACEVIM_LUA && has('nvim')
   function! SpaceVim#plugins#projectmanager#complete_project(ArgLead, CmdLine, CursorPos) abort
     return luaeval('require("spacevim.plugin.projectmanager").complete('
           \ .'require("spacevim").eval("a:ArgLead"),'

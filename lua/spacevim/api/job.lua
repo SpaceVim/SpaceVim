@@ -1,6 +1,7 @@
 local M = {}
 local sp = require('spacevim')
 M.vim_job = vim.api == nil
+M.jobs = {}
 
 
 function warp_vim(argv, opts)
@@ -50,7 +51,7 @@ function M.start(argv, ...)
     if argvs ~= nil then
         opts = argvs[1] or opts
     end
-    local id = #self.jobs + 1
+    local id = #M.jobs + 1
     opts.jobpid = id
     local wrapped = warp_vim(argv, opts)
     local old_wd = ''
@@ -61,6 +62,7 @@ function M.start(argv, ...)
       wrapped.opts.cwd = nil
       sp.cmd('cd' .. sp.fn.fnameescape(cwd))
     end
+    wrapped.opts.out_cb(1, 3)
     local job = sp.fn.job_start(wrapped.argv, wrapped.opts)
     if old_wd ~= '' then
       sp.cmd('cd' .. sp.fn.fnameescape(old_wd))
