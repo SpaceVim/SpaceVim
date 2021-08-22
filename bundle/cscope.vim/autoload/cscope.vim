@@ -311,7 +311,8 @@ function! cscope#list_databases() abort
   let dirs = keys(s:dbs)
   let databases = []
   if len(dirs) == 0
-    call s:notify.notify('You have no cscope dbs now.', 'WarningMsg')
+    call s:notify.notify('no cscope dbs now.', 'WarningMsg')
+    call s:notify.notify('Press SPC m c i to init.', 'WarningMsg')
   else
     for d in dirs
       let id = s:dbs[d]['id']
