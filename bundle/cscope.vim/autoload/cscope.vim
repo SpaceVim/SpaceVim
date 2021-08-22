@@ -217,6 +217,9 @@ function! cscope#clear_databases(...) abort
     call delete(s:cscope_cache_dir. dir . '/cscope.files')
     call delete(s:cscope_cache_dir. dir . '/cscope.db')
     unlet s:dbs[a:1]
+    let message = 'databases cleared:' . a:1
+    let s:notify.notify_max_width = strwidth(message) + 10
+    call s:notify.notify(message, 'WarningMsg')
     call s:logger.info('database cleared: ' . s:cscope_cache_dir. dir .'/cscope.db')
     call s:FlushIndex()
   endif
