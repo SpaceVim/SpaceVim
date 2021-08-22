@@ -82,6 +82,10 @@ function! cscope#find(action, word) abort
       let s:notify.notify_max_width = strwidth(message) + 10
       call s:notify.notify(message, 'WarningMsg')
     endtry
+  elseif dbl == 2 " the database does not init, the process has been started.
+      let message = 'start to init database, please try later!'
+      let s:notify.notify_max_width = strwidth(message) + 10
+      call s:notify.notify(message, 'WarningMsg')
   endif
 endfunction
 
@@ -175,6 +179,7 @@ endfunction
 
 " 0 -- loaded
 " 1 -- cancelled
+" 2 -- init db
 function! s:AutoloadDB(dir) abort
   let ret = 0
   let m_dir = s:GetBestPath(a:dir)
@@ -185,6 +190,7 @@ function! s:AutoloadDB(dir) abort
       let m_dir = s:CheckAbsolutePath(m_dir, a:dir)
       call s:InitDB(m_dir)
       call s:LoadDB(m_dir)
+      let ret = 2
     else
       let ret = 1
     endif
