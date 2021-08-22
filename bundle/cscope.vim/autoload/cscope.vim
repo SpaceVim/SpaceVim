@@ -390,7 +390,10 @@ function! s:on_create_db_exit(id, data, event) abort
     echohl WarningMsg | echo 'Failed to create cscope database for ' . d | echohl None
   else
     let s:dbs[d]['dirty'] = 0
-    call s:logger.info('database created for: ' . d)
+    let message = 'database created for: ' . d
+    let s:notify.notify_max_width = strwidth(message) + 10
+    call s:notify.notify(message, 'WarningMsg')
+    call s:logger.info()
     call s:FlushIndex()
   endif
 endfunction
