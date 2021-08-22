@@ -210,6 +210,7 @@ function! cscope#clear_databases(...) abort
   silent cs kill -1
   if a:0 == 0
     let s:dbs = {}
+    call s:notify.notify('All databases cleared!', 'String')
     call s:RmDBfiles()
   else
     let dir = s:FILE.path_to_fname(a:1)
