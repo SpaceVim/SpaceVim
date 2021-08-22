@@ -138,16 +138,17 @@ function! s:list_files_exit(id, date, event) abort
     call writefile(s:list_files_process['jobid' . a:id].cscope_files,
           \ s:list_files_process['jobid' . a:id].cscope_files_path
           \ )
-    call s:create_databese(s:list_files_process['jobid' . a:id].dir,
+    call s:run_create_database_job(s:list_files_process['jobid' . a:id].dir,
           \ s:list_files_process['jobid' . a:id].cscope_files_path,
           \ s:list_files_process['jobid' . a:id].cscope_db,
+          \ s:list_files_process['jobid' . a:id].load,
           \ )
   else
     call s:logger.warn('failed to list files in dir:' . s:list_files_process['jobid' . a:id].dir)
   endif
 endfunction
 
-function! s:list_project_files(dir, cscope_files, cscope_db) abort
+function! s:list_project_files(dir, cscope_files, cscope_db, load) abort
   let jobid = s:JOB.start(['rg', '--color=never', '--files', a:dir], {
         \ 'on_stdout' : function('s:list_files_stdout'),
         \ 'on_exit' : function('s:list_files_exit')
@@ -157,6 +158,7 @@ function! s:list_project_files(dir, cscope_files, cscope_db) abort
         \ 'dir' : a:dir,
         \ 'cscope_files' : [],
         \ 'cscope_db' : a:cscope_db,
+        \ 'load' : a:load,
         \ 'cscope_files_path' : a:cscope_files
         \ }
 endfunction
@@ -173,7 +175,7 @@ endfunction
 " Create databases for current project
 function! cscope#create_databeses() abort
   let dir = SpaceVim#plugins#projectmanager#current_root()
-  call s:InitDB(dir)
+  call s:init_database(dir, 0)
 endfunction
 
 
@@ -188,8 +190,7 @@ function! s:AutoloadDB(dir) abort
     let m_dir = input('', a:dir, 'dir')
     if m_dir !=# ''
       let m_dir = s:CheckAbsolutePath(m_dir, a:dir)
-      call s:InitDB(m_dir)
-      call s:LoadDB(m_dir)
+      call s:init_database(m_dir, 1)
       let ret = 2
     else
       let ret = 1
@@ -205,7 +206,7 @@ endfunction
 
 function! s:updateDBs(dirs) abort
   for d in a:dirs
-    call s:CreateDB(d, 0)
+    call s:create_database(d, 0, 0)
   endfor
 endfunction
 
@@ -286,8 +287,12 @@ endfunction
 " 2. loadtimes:
 " 3. dirty:
 " 4. root: path of the project
+"
+" the argv: dir, load?
+"
+" if load == 1, the database will be loaded after init
 
-function! s:InitDB(dir) abort
+function! s:init_database(dir, load) abort
   call s:logger.debug('start to init database for:' . a:dir)
   let id = localtime()
   let s:dbs[a:dir] = {}
@@ -295,7 +300,7 @@ function! s:InitDB(dir) abort
   let s:dbs[a:dir]['loadtimes'] = 0
   let s:dbs[a:dir]['dirty'] = 0
   let s:dbs[a:dir]['root'] = a:dir
-  call s:CreateDB(a:dir, 1)
+  call s:create_database(a:dir, 1, a:load)
 endfunction
 
 
@@ -362,9 +367,8 @@ function! cscope#preloadDB() abort
     let m_dir = s:CheckAbsolutePath(m_dir, m_dir)
     let m_key = s:FILE.path_to_fname(m_dir)
     if !has_key(s:dbs, m_key)
-      call s:InitDB(m_dir)
+      call s:init_database(m_dir, 1)
     endif
-    call s:LoadDB(m_dir)
   endfor
 endfunction
 
@@ -399,15 +403,23 @@ function! s:on_create_db_exit(id, data, event) abort
     let message = 'database created for: ' . d
     let s:notify.notify_max_width = strwidth(message) + 10
     call s:notify.notify(message, 'WarningMsg')
-    call s:logger.info()
-    call s:FlushIndex()
+    if s:create_db_process['jobid' . a:id].load
+      call s:LoadDB(d)
+    else
+      call s:FlushIndex()
+    endif
   endif
 endfunction
 
 
 let s:create_db_process = {}
 
-function! s:CreateDB(dir, init) abort
+
+" argvs:
+" dir: the path of project
+" init: init database?
+" load: load after init
+function! s:create_database(dir, init, load) abort
   let dir = s:FILE.path_to_fname(a:dir)
   let cscope_files = s:cscope_cache_dir . dir . '/cscope.files'
   let cscope_db = s:cscope_cache_dir . dir . '/cscope.db'
@@ -419,17 +431,18 @@ function! s:CreateDB(dir, init) abort
     call mkdir(s:cscope_cache_dir . dir)
   endif
   if !filereadable(cscope_files) || a:init
-    call s:list_project_files(a:dir, cscope_files, cscope_db)
+    call s:list_project_files(a:dir, cscope_files, cscope_db, a:load)
   endif
 endfunction
 
-function! s:create_databese(dir, cscope_files, cscope_db) abort
+function! s:run_create_database_job(dir, cscope_files, cscope_db, load) abort
   let jobid = s:JOB.start([g:cscope_cmd, '-b', '-i', a:cscope_files, '-f', a:cscope_db], {
         \ 'on_exit' : function('s:on_create_db_exit')
         \ })
   let s:create_db_process['jobid' . jobid] = {
         \ 'jobid' : jobid,
         \ 'dir' : a:dir,
+        \ 'load' : a:load,
         \ 'cscope_db' : a:cscope_db,
         \ }
 
