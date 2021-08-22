@@ -1,4 +1,6 @@
 local M = {}
+local sp = require('spacevim')
+M.vim_job = vim.api == nil
 
 
 function warp_vim(argv, opts)
@@ -40,8 +42,33 @@ function warp_vim(argv, opts)
     return obj
 end
 
-function M.start(cmd, opt)
-
+function M.start(argv, ...)
+  if M.nvim_job then
+  elseif M.vim_job then
+    local argvs=...
+    local opts = {}
+    if argvs ~= nil then
+        opts = argvs[1] or opts
+    end
+    local id = #self.jobs + 1
+    opts.jobpid = id
+    local wrapped = warp_vim(argv, opts)
+    local old_wd = ''
+    local cmd = ''
+    if wrapped.opts.cwd ~= nil and sp.has('patch-8.0.0902') then
+      old_wd = sp.fn.getcwd()
+      cwd = sp.fn.expand(wrapped.opts.cwd, 1)
+      wrapped.opts.cwd = nil
+      sp.cmd('cd' .. sp.fn.fnameescape(cwd))
+    end
+    local job = sp.fn.job_start(wrapped.argv, wrapped.opts)
+    if old_wd ~= '' then
+      sp.cmd('cd' .. sp.fn.fnameescape(old_wd))
+    end
+    table.insert(M.jobs, {id = job})
+    return id
+  else
+  end
 end
 
 return M
