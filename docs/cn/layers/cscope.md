@@ -9,10 +9,10 @@ lang: zh
 <!-- vim-markdown-toc GFM -->
 
 - [模块描述](#模块描述)
-- [模块特性](#模块特性)
 - [安装依赖及启用模块](#安装依赖及启用模块)
   - [安装 cscope](#安装-cscope)
   - [启用模块](#启用模块)
+- [模块选项](#模块选项)
 - [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
@@ -22,11 +22,6 @@ lang: zh
 这以模块为 SpaceVim 提供了一个智能的[Cscope](http://cscope.sourceforge.net/) 和 [PyCscope](https://github.com/portante/pycscope) 辅助工具。
 
 如果想要了解更多关于 cscope 和其它类似工具之间的区别，请阅读 [Comparison with Similar Tools](https://github.com/oracle/opengrok/wiki/Comparison-with-Similar-Tools)
-
-## 模块特性
-
-- 通过 cscope 为 C 和 C++ 建立索引，并提供查询功能
-- 通过 Pycscope 为 Python 建立索引，并提供查询功能
 
 ## 安装依赖及启用模块
 
@@ -52,6 +47,13 @@ scoop install cscope
 [[layers]]
   name = "cscope"
 ```
+
+## 模块选项
+
+- `cscope_command`: 设置 `cscope` 可执行命令的路径。
+- `auto_update`: 启用/禁用数据库自动更新，若启用，则在保存文件时自动更新数据库。
+- `open_location`: 启用/禁用自动打开搜索结果列表。
+- `preload_path`: 设置预加载的数据量路径。
 
 ## 快捷键
 
