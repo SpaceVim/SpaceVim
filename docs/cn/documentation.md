@@ -5,7 +5,7 @@ redirect_from: "/README_zh_cn/"
 lang: zh
 ---
 
-# [主页](../) >> 使用文档
+# 使用文档
 
 <!-- vim-markdown-toc GFM -->
 
