@@ -3,7 +3,7 @@ title: "Documentation"
 description: "General documentation about how to use SpaceVim, including the quick start guide and FAQs."
 ---
 
-# [Home](../) >> Documentation
+# Documentation
 
 <!-- vim-markdown-toc GFM -->
 

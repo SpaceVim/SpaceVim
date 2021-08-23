@@ -3,7 +3,7 @@ title:  "Quick start guide"
 description: "A quick start guide which will tell you how to install and configure SpaceVim, also provides a list of resources for learning SpaceVim."
 ---
 
-# [Home](../) >> Quick start guide
+# Quick start guide
 
 <!-- vim-markdown-toc GFM -->
 
@@ -12,7 +12,7 @@ description: "A quick start guide which will tell you how to install and configu
   - [Windows](#windows)
 - [Run in docker](#run-in-docker)
 - [Configuration](#configuration)
-- [Online tutor](#online-tutor)
+- [Online tutorials](#online-tutorials)
 - [Learning SpaceVim](#learning-spacevim)
 
 <!-- vim-markdown-toc -->
