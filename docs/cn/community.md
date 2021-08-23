@@ -12,8 +12,8 @@ lang: zh
 
 - [资讯订阅](#资讯订阅)
 - [问题反馈](#问题反馈)
-- [邮件列表](#邮件列表)
 - [即时聊天](#即时聊天)
+- [邮件列表](#邮件列表)
 
 <!-- vim-markdown-toc -->
 
@@ -32,15 +32,6 @@ lang: zh
 - [码云](https://gitee.com/spacevim/SpaceVim/issues) -（中文）
 - [GitHub](https://github.com/SpaceVim/SpaceVim) -（英文）
 
-## 邮件列表
-
-习惯使用邮件的用户，也可以通过[中文邮件组](https://groups.google.com/forum/#!forum/spacevim-cn)进行交流，
-可以发送邮件至邮件列表参与讨论：
-
-```
-spacevim-cn@googlegroups.com
-```
-
 ## 即时聊天
 
 以下几个频道作为 SpaceVim 中文用户交流平台，之间消息实现了互通，请选择任意合适的频道参与交流。
@@ -55,3 +46,13 @@ spacevim-cn@googlegroups.com
 - <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)
 
 以上为同步聊天群，同时SpaceVim有对应的QQ群：[970953433](https://jq.qq.com/?_wv=1027&k=XYqDdQTM)
+
+## 邮件列表
+
+习惯使用邮件的用户，也可以通过[中文邮件组](https://groups.google.com/forum/#!forum/spacevim-cn)进行交流，
+可以发送邮件至邮件列表参与讨论：
+
+```
+spacevim-cn@googlegroups.com
+```
+
