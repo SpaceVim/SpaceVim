@@ -1,5 +1,5 @@
 ---
-title:  "About"
+title: "About"
 description: "The goals, credits and contact information about SpaceVim."
 ---
 
@@ -16,6 +16,9 @@ description: "The goals, credits and contact information about SpaceVim."
 
 ## History
 
+SpaceVim started in December 2016 as a spin-off from @wsdjeg's [DotFiles repository](https://github.com/wsdjeg/DotFiles).
+An early idea for modular configuration came from the Vim configuration by airline's author.
+The earliest version was further influenced by spacemacs' layer concept.
 
 ## Goals
 
