@@ -12,7 +12,6 @@ lang: zh
 
 - [资讯订阅](#资讯订阅)
 - [问题反馈](#问题反馈)
-- [经验分享](#经验分享)
 - [邮件列表](#邮件列表)
 - [即时聊天](#即时聊天)
 
@@ -20,8 +19,9 @@ lang: zh
 
 ### 资讯订阅
 
-最新的版本发布、新功能增加会通过 twitter 或者 Facebook 进行推送，欢迎订阅：
+最新的版本发布、新功能增加会通过微博、Twitter 或者 Facebook 进行推送，欢迎订阅：
 
+- <i class="fab fa-weibo"></i> [新浪微博](https://weibo.com/SpaceVim)
 - <i class="fab fa-twitter"></i> [twitter](https://twitter.com/SpaceVim)
 - <i class="fab fa-facebook"></i> [Facebook](https://www.facebook.com/SpaceVim)
 
@@ -31,15 +31,6 @@ lang: zh
 
 - [码云](https://gitee.com/spacevim/SpaceVim/issues) -（中文）
 - [GitHub](https://github.com/SpaceVim/SpaceVim) -（英文）
-
-### 经验分享
-
-如果你有想分享的东西，或者有想深入讨论的问题，请使用以下论坛：
-
-- [知乎](https://www.zhihu.com/topic/20168681/newest)
-- [思否](https://segmentfault.com/t/spacevim)
-- [黑客派](https://hacpai.com/tag/spacevim)
-- [贴吧](https://tieba.baidu.com/spacevim)
 
 ### 邮件列表
 
