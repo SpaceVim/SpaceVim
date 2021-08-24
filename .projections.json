@@ -3,6 +3,11 @@
     "alternate": "test/api/{}.vader",
     "doc": "docs/api/{}.md"
   },
+  "lua/spacevim/api/*.lua": {
+    "alternate": "test/lua/api/{}.vader",
+    "vim": "autoload/SpaceVim/api/{}.vim",
+    "doc": "docs/api/{}.md"
+  },
   "autoload/SpaceVim/plugins/a.vim": {
       "alternate": "test/plugin/a.vader",
       "lua" : "lua/spacevim/plugin/a.lua"
