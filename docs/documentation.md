@@ -341,6 +341,18 @@ function! myspacevim#after() abort
 endfunction
 ```
 
+Within the bootstrap function, you can also use `:lua` command. for example:
+
+```vim
+function! myspacevim#before() abort
+    lua << EOF
+    local opt = requires('spacevim.opt')
+    opt.enable_projects_cache = false
+    opt.enable_statusline_mode = true
+EOF
+endfunction
+```
+
 The `bootstrap_before` will be called after custom configuration file is loaded.
 And the `bootstrap_after` will be called after Vim Enter autocmd.
 
