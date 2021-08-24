@@ -20,6 +20,10 @@ The easiest way to install neovim in windows is download [Neovim.zip](https://gi
 and extract then into `C:\Neovim`. you can also add `C:\Neovim\bin` into your `PATH`.
 
 
+Install python3:
+
+You can download the installer
+
 > [neovim installation](https://github.com/neovim/neovim/wiki/Installing-Neovim)
 
 > [Building Vim from source](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
