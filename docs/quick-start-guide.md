@@ -5,7 +5,8 @@ description: "A quick start guide which will tell you how to install and configu
 
 # Quick start guide
 
-This is a quick start guide to installing and configuring SpaceVim. It will show you how to install, configure, and use SpaceVim. It also lists a series of resources for learning SpaceVim.
+This is a quick start guide for SpaceVim. It will show you how to install,
+configure, and use SpaceVim. It also lists a series of resources for learning SpaceVim.
 
 If you've never heard of SpaceVim, this is the best place to start.
 It will give you a good idea of what SpaceVim is like.

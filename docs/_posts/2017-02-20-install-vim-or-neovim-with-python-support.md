@@ -7,7 +7,18 @@ commentsID: "Install neovim or vim"
 ---
 
 
-# Installation of neovim/vim with python support
+# Install Vim/Neovim with Python support
+
+
+This artical will tell you how to install vim and neovim, and how to enable `+python3` support.
+
+## Install Neovim
+
+### Windows
+
+The easiest way to install neovim in windows is download the Neovim.zip file from neovim release page.
+and extract then into `C:\Neovim`. you can also add `C:\Neovim\bin` into your `PATH`.
+
 
 > [neovim installation](https://github.com/neovim/neovim/wiki/Installing-Neovim)
 
