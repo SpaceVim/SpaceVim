@@ -66,6 +66,16 @@ else
   let s:LIST = SpaceVim#api#import('data#list')
   let s:VIM = SpaceVim#api#import('vim')
 
+  " use cd or lcd or tcd
+  "
+  if exists(':tcd')
+    let s:cd = 'tcd'
+  elseif exists(':lcd')
+    let s:cd = 'lcd'
+  else
+    let s:cd = 'cd'
+  endif
+
   function! s:update_rooter_patterns() abort
     let s:project_rooter_patterns = filter(copy(g:spacevim_project_rooter_patterns), 'v:val !~# "^!"')
     let s:project_rooter_ignores = map(filter(copy(g:spacevim_project_rooter_patterns), 'v:val =~# "^!"'), 'v:val[1:]')
@@ -160,7 +170,7 @@ else
       call s:LOGGER.info('same as current directory, no need to change.')
     else
       call s:LOGGER.info('change to root: ' . a:dir)
-      exe 'cd ' . fnameescape(fnamemodify(a:dir, ':p'))
+      exe s:cd fnameescape(fnamemodify(a:dir, ':p'))
       try
         let b:git_dir = fugitive#extract_git_dir(expand('%:p'))
       catch
@@ -281,7 +291,7 @@ else
   function! SpaceVim#plugins#projectmanager#open(project) abort
     let path = s:project_paths[a:project]['path']
     tabnew
-    exe 'lcd ' . path
+    exe s:cd path
     if g:spacevim_filemanager ==# 'vimfiler'
       Startify | VimFiler
     elseif g:spacevim_filemanager ==# 'nerdtree'
