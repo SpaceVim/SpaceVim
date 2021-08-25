@@ -70,7 +70,11 @@ function! s:init_buffer() abort
 endfunction
 
 function! s:workspace_directory(tabnr) abort
-  return bufname(tabpagebuflist(a:tabnr)[tabpagewinnr(a:tabnr) - 1])
+  if exists(':tcd')
+    return getcwd(-1, str2nr(a:tabnr))
+  else
+    return getcwd(win_getid(tabpagewinnr(a:tabnr)))
+  endif
 endfunction
 
 function! s:update_context() abort
