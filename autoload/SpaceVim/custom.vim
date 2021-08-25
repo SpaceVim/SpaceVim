@@ -70,7 +70,7 @@ endfunction
 
 function! s:write_to_config(config) abort
   let global_dir = s:global_dir()
-  let g:_spacevim_global_config_path = global_dir . 'init.toml'
+  let g:_spacevim_global_config_path = resolve(global_dir . 'init.toml')
   let cf = global_dir . 'init.toml'
   if filereadable(cf)
     call SpaceVim#logger#warn('The file already exists:' . cf)
@@ -235,7 +235,7 @@ function! s:load_glob_conf() abort
   let global_dir = s:global_dir()
   call SpaceVim#logger#info('global_dir is: ' . global_dir)
   if filereadable(global_dir . 'init.toml')
-    let g:_spacevim_global_config_path = global_dir . 'init.toml'
+    let g:_spacevim_global_config_path = resolve(global_dir . 'init.toml')
     let local_conf = global_dir . 'init.toml'
     let local_conf_cache = s:FILE.unify_path(expand(g:spacevim_data_dir . 'SpaceVim/conf/' . fnamemodify(resolve(local_conf), ':t:r') . '.json'))
     let &rtp = global_dir . ',' . &rtp . ',' . global_dir . 'after'
@@ -252,7 +252,7 @@ function! s:load_glob_conf() abort
       call SpaceVim#custom#apply(conf, 'glob')
     endif
   elseif filereadable(global_dir . 'init.vim')
-    let g:_spacevim_global_config_path = global_dir . 'init.vim'
+    let g:_spacevim_global_config_path = resolve(global_dir . 'init.vim')
     let custom_glob_conf = global_dir . 'init.vim'
     let &rtp = global_dir . ',' . &rtp . ',' . global_dir . 'after'
     exe 'source ' . custom_glob_conf
