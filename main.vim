@@ -31,25 +31,7 @@ if has('vim_starting')
     endif
   endif
 endif
-" Detect root directory of SpaceVim
-if has('win16') || has('win32') || has('win64')
-  function! s:resolve(path) abort
-    let cmd = 'dir /a "' . a:path . '" | findstr SYMLINK'
-    " 2018/12/07 周五  下午 10:23    <SYMLINK>      vimfiles [C:\Users\Administrator\.SpaceVim]
-    " ref: https://superuser.com/questions/524669/checking-where-a-symbolic-link-points-at-in-windows-7
-    silent let rst = system(cmd)
-    if !v:shell_error
-      let dir = split(rst)[-1][1:-2]
-      return dir
-    endif
-    return a:path
-  endfunction
-else
-  function! s:resolve(path) abort
-    return resolve(a:path)
-  endfunction
-endif
-let g:_spacevim_root_dir = fnamemodify(s:resolve(fnamemodify(expand('<sfile>'),
+let g:_spacevim_root_dir = fnamemodify(resolve(fnamemodify(expand('<sfile>'),
       \ ':p:h:gs?\\?'.((has('win16') || has('win32')
       \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?')
 lockvar g:_spacevim_root_dir
