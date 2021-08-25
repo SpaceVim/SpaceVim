@@ -72,8 +72,11 @@ endfunction
 function! s:workspace_directory(tabnr) abort
   if exists(':tcd')
     return getcwd(-1, str2nr(a:tabnr))
-  else
+  elseif exists('*win_getid')
     return getcwd(win_getid(tabpagewinnr(a:tabnr)))
+  elseif exists(':lcd')
+    let bufnr = tabpagebuflist(a:tabnr)[tabpagewinnr(a:tabnr) - 1]
+    return getbufvar('%', 'rootDir', '')
   endif
 endfunction
 
