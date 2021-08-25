@@ -1,0 +1,12 @@
+Execute ( SpaceVim lua api: job ):
+  lua << EOF
+    local job = require('spacevim.api').import('job')
+    function on_stdout(id, data, event)
+    end
+    job.start({'echo', 'hello world!'},
+        {
+        on_stdout = on_stdout
+        }
+        )
+  EOF
+

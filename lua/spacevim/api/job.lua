@@ -6,24 +6,23 @@ M.jobs = {}
 
 function warp_vim(argv, opts)
     local obj = {}
-    obj._argv = argv
-    obj._opts = opts
+    local origin_opts = opts
     obj.in_io = opts.in_io or 'pipe'
     function obj._out_cb(job_id, data)
-        if obj._opts.on_stdout ~= nil then
-            obj._opts.on_stdout(obj._opts.jobpid, {data}, 'stdout')
+        if origin_opts.on_stdout ~= nil then
+            origin_opts.on_stdout(origin_opts.jobpid, {data}, 'stdout')
         end
     end
 
     function obj._err_cb(job_id, data)
-        if obj._opts.on_stderr ~= nil then
-            obj._opts.on_stderr(obj._opts.jobpid, {data}, 'stderr')
+        if origin_opts.on_stderr ~= nil then
+            origin_opts.on_stderr(origin_opts.jobpid, {data}, 'stderr')
         end
     end
 
     function obj._exit_cb(job_id, data)
-        if obj._opts.on_exit ~= nil then
-            obj._opts.on_exit(obj._opts.jobpid, data, 'exit')
+        if origin_opts.on_exit ~= nil then
+            origin_opts.on_exit(origin_opts.jobpid, data, 'exit')
         end
     end
 
