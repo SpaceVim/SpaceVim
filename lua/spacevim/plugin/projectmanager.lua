@@ -20,6 +20,14 @@ local project_rooter_patterns = {}
 local project_rooter_ignores = {}
 local project_callback = {}
 
+
+local cd = 'cd'
+if fn.exists(':tcd') then
+    cd = 'tcd'
+elseif fn.exists(':lcd') then
+    cd = 'lcd'
+end
+
 local function update_rooter_patterns()
     project_rooter_patterns = {}
     project_rooter_ignores = {}
@@ -35,8 +43,8 @@ local function is_ignored_dir(dir)
     for _,v in pairs(project_rooter_ignores) do
         if string.match(dir, v) ~= nil then
             logger.debug('this is an ignored dir:' .. dir)
-        return true
-    end
+            return true
+        end
     end
     return false
 end
@@ -109,7 +117,7 @@ local function change_dir(dir)
     else
         if dir ~= nil then
             logger.info('change to root: ' .. dir)
-            sp.cmd('cd ' .. sp.fn.fnameescape(sp.fn.fnamemodify(dir, ':p')))
+            sp.cmd(cd .. ' ' .. sp.fn.fnameescape(sp.fn.fnamemodify(dir, ':p')))
         end
     end
 end
@@ -239,7 +247,7 @@ end
 function M.open(project)
     local path = project_paths[project]['path']
     sp.cmd('tabnew')
-    sp.cmd('lcd ' .. path)
+    sp.cmd(cd .. ' ' .. path)
     if sp_opt.filemanager == 'vimfiler' then
         sp.cmd('Startify | VimFiler')
     elseif sp_opt.filemanager == 'nerdtree' then
