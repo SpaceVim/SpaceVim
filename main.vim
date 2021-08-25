@@ -32,7 +32,7 @@ if has('vim_starting')
     endif
   endif
 endif
-let g:_spacevim_root_dir = fnamemodify(resolve(fnamemodify(expand('<sfile>'),
+let g:_spacevim_root_dir = escape(fnamemodify(resolve(fnamemodify(expand('<sfile>'),
       \ ':p:h:gs?\\?'.((has('win16') || has('win32')
       \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?'), ' ')
 lockvar g:_spacevim_root_dir
