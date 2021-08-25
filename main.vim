@@ -32,9 +32,9 @@ if has('vim_starting')
     endif
   endif
 endif
-let g:_spacevim_root_dir = escape(fnamemodify(resolve(fnamemodify(expand('<sfile>'),
+let g:_spacevim_root_dir = escape(fnamemodify(fnamemodify(resolve(expand('<sfile>')),
       \ ':p:h:gs?\\?'.((has('win16') || has('win32')
-      \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?'), ' ')
+      \ || has('win64'))?'\':'/') . '?'), ':p:gs?[\\/]?/?'), ' ')
 lockvar g:_spacevim_root_dir
 if has('nvim')
   let s:qtdir = split(&rtp, ',')[-1]
