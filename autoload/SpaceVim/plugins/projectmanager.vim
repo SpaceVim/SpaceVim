@@ -160,7 +160,7 @@ else
       call s:LOGGER.info('same as current directory, no need to change.')
     else
       call s:LOGGER.info('change to root: ' . a:dir)
-      exe 'cd ' . fnameescape(fnamemodify(a:dir, ':p'))
+      exe 'lcd ' . fnameescape(fnamemodify(a:dir, ':p'))
       try
         let b:git_dir = fugitive#extract_git_dir(expand('%:p'))
       catch
