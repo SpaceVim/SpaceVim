@@ -1,4 +1,4 @@
-name: Async SpaceVim wiki
+name: mirror
 
 on: [push]
 
@@ -7,15 +7,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        wikiLang: ["cn", "en"]
+        mirror: ["gitee", "coding"]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@master
-    - name: Detach ${{ matrix.wikiLang }}
+    - name: Push to ${{ matrix.mirror }}
       env:
         BOTSECRET: ${{ secrets.BOTSECRET }}
         BOTSECRET_GITHUB: ${{ secrets.BOTSECRET_GITHUB }}
-      run: ./wiki/async.sh ${{ matrix.wikiLang }}
-    
+        CODINGBOTSECRET: ${{ secrets.CODINGBOTSECRET }}
+      run: .ci/update_mirror.sh ${{ matrix.mirror }}
 

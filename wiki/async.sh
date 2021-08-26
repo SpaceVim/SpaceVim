@@ -9,7 +9,7 @@ main () {
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
             git commit -m "Update wiki"
-            git remote add SpaceVimWikiEn https://SpaceVimBot:${BOTSECRET}@github.com/SpaceVim/SpaceVim.wiki.git
+            git remote add SpaceVimWikiEn https://SpaceVimBot:${BOTSECRET_GITHUB}@github.com/SpaceVim/SpaceVim.wiki.git
             git push -f -u SpaceVimWikiEn master 
             cd -
             rm -rf ./wiki/en/.git/
