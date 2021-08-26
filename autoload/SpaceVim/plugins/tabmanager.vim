@@ -69,6 +69,17 @@ function! s:init_buffer() abort
   augroup END
 endfunction
 
+function! s:workspace_directory(tabnr) abort
+  if exists(':tcd')
+    return getcwd(-1, str2nr(a:tabnr))
+  elseif exists('*win_getid')
+    return getcwd(win_getid(tabpagewinnr(a:tabnr)))
+  elseif exists(':lcd')
+    let bufnr = tabpagebuflist(a:tabnr)[tabpagewinnr(a:tabnr) - 1]
+    return getbufvar('%', 'rootDir', '')
+  endif
+endfunction
+
 function! s:update_context() abort
   setl modifiable
   silent! normal! gg"_dG
@@ -79,7 +90,7 @@ function! s:update_context() abort
       call add(ctx,
             \ '▼ ' . (page == tabpagenr() ? '*' : ' ')
             \ . 'Tab ' . page 
-            \ . ' ' . gettabvar(page, '_spacevim_tab_name', bufname(tabpagebuflist(page)[tabpagewinnr(page) - 1]))
+            \ . ' ' . gettabvar(page, '_spacevim_tab_name', fnamemodify(s:workspace_directory(page), ':t'))
             \ )
       let winid = 1
       for _buf in tree[page]
@@ -94,7 +105,7 @@ function! s:update_context() abort
       call add(ctx,
             \ '▷ ' . (page == tabpagenr() ? '*' : ' ')
             \ . 'Tab ' . page 
-            \ . ' ' . gettabvar(page, '_spacevim_tab_name', bufname(tabpagebuflist(page)[tabpagewinnr(page) - 1]))
+            \ . ' ' . gettabvar(page, '_spacevim_tab_name', fnamemodify(s:workspace_directory(page), ':t'))
             \ )
     endif
   endfor
