@@ -27,3 +27,7 @@ You can download the installer
 > [neovim installation](https://github.com/neovim/neovim/wiki/Installing-Neovim)
 
 > [Building Vim from source](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source)
+
+### Linux
+
+You can install neovim or vim with default package manager.
