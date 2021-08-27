@@ -11,7 +11,7 @@ Execute ( SpaceVim language mapping: ):
     if !empty(LMAPF)
       call call(LMAPF, [])
       " https://github.com/vim/vim/commit/f6f32c38bf3319144a84a01a154c8c91939e7acf
-      unlet LMAPF
     endif
+    unlet LMAPF
   endfor
 
