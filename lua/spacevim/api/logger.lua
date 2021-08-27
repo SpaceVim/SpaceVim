@@ -43,11 +43,13 @@ function M.set_level(l)
     M.level = l
 end
 
+local log = {}
+
 function M._build_msg(msg, l)
     msg = msg or ''
     local time = fn.strftime('%H:%M:%S')
     -- local log = 
-    local log = {
+    log = {
         name = M.name,
         time = time,
         level = l,
