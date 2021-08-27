@@ -60,9 +60,13 @@ function! s:self.draw_border(title, width, height) abort
 endfunction
 
 function! s:self.win_is_open() abort
-  return self.winid >= 0 && self.border.winid >= 0
-        \ && has_key(nvim_win_get_config(self.winid), 'col')
-        \ && has_key(nvim_win_get_config(self.border.winid), 'col')
+  try
+    return self.winid >= 0 && self.border.winid >= 0
+          \ && has_key(nvim_win_get_config(self.winid), 'col')
+          \ && has_key(nvim_win_get_config(self.border.winid), 'col')
+  catch
+    return 0
+  endtry
 endfunction
 
 function! s:self.increase_window(...) abort
