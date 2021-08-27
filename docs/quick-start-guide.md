@@ -25,7 +25,7 @@ It will give you a good idea of what SpaceVim is like.
 
 ## Installation
 
-First of all, you need to install Vim or Neovim, preferably with `+python3` support enabled.
+First of all, you need to [install Vim or Neovim](../install-vim-or-neovim-with-python-support/), preferably with `+python3` support enabled.
 
 Also, you need to have `git` and `curl` installed in your system,
 which are needed for downloading plugins and fonts.
@@ -58,7 +58,7 @@ and a C compiler (like `gcc`) to build the dll (see issue [#435](https://github.
 
 ### Windows
 
-The easiest way is to download [install.cmd](https://spacevim.org/install.cmd) and run it as administrator, or install SpaceVim manually.
+The easiest way is to download [install.cmd](../install.cmd) and run it as administrator, or install SpaceVim manually.
 
 ## Run in docker
 
