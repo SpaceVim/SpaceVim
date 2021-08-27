@@ -4,11 +4,12 @@ description: "SpaceVim 入门教程，包括安装、初始化配置等内容"
 lang: zh
 ---
 
-
 # 入门指南
 
-如果你从未使用过 SpaceVim，建议先阅读这篇简短的教程。这篇教程主要讲述：
-如何安装 SpaceVim，SpaceVim 的入门配置以及 SpaceVim 常用学习资源。
+这是一个安装和配置 SpaceVim 的入门指南，它将指引你如何安装、配置和使用 SpaceVim。同时罗列了一系列学习 SpaceVim 的资源。
+
+如果你从未了解过 SpaceVim，那么这篇内容将是你最好的开始。
+它会让你对 SpaceVim 有一个很好的了解。
 
 <!-- vim-markdown-toc GFM -->
 
@@ -24,10 +25,11 @@ lang: zh
 
 ## 安装指南
 
+首先，需要安装 Vim 或者 Neovim，同时启用 +python3 的支持会更好
 在安装 SpaceVim 之前，你需要确保电脑上已经安装了 `Git` 和 `cURL`。这两个工具用来
 下载插件以及字体。
 
-如果在终端中使用 Vim 或 Neovim，还需要设置终端的字体。
+如果你使用的是终端模拟器，你需要再终端配置里设置字体。
 
 ### Linux 或 macOS
 
@@ -47,7 +49,6 @@ curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
 
 Windows 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
 
-
 ## Docker 支持
 
 ```sh
@@ -65,12 +66,10 @@ docker run
   \ spacevim/spacevim nvim
 ```
 
-
 ## 基本配置
 
 SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单的配置示例。
 如果需要查阅更多 SpaceVim 配置相关的信息，请阅读 SpaceVim 用户文档。
-
 
 ```toml
 # 这是一个基础的 SpaceVim 配置示例
@@ -146,4 +145,3 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
 
 - [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim). Tell you how to hack SpaceVim.
 - [SpaceVim 入门教程](https://everettjf.gitbooks.io/spacevimtutorial/content/)：everettjf 所著的 SpaceVim 入门教程。
-

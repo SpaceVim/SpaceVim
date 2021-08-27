@@ -324,6 +324,18 @@ function! myspacevim#after() abort
 endfunction
 ```
 
+在启动函数中，可以使用`:lua` 命令对 SpaceVim 进行配置，比如：
+
+```vim
+function! myspacevim#before() abort
+    lua << EOF
+    local opt = requires('spacevim.opt')
+    opt.enable_projects_cache = false
+    opt.enable_statusline_mode = true
+EOF
+endfunction
+```
+
 函数 `bootstrap_before` 将在读取用户配置后执行，而函数 `bootstrap_after` 将在 VimEnter autocmd 之后执行。
 
 如果你需要添加自定义以 `SPC` 为前缀的快捷键，你需要使用 bootstrap function，
