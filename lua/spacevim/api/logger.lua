@@ -130,9 +130,9 @@ function M.view(l)
         info = info .. '[ ' .. M.name .. ' ] : logger file ' .. M.file
         .. ' does not exists, only log for current process will be shown!'
         ..  "\n"
-        for key, value in pairs(M.temp) do
-            if M._comp(value, l) == 1 then
-                info = info .. value .. "\n"
+        for _, log in pairs(M.temp) do
+            if M._comp(log, l) == 1 then
+                info = info .. to_string(log) .. "\n"
             end
         end
     end
@@ -140,11 +140,11 @@ function M.view(l)
 
 end
 
-function M._comp(msg, l)
+function M._comp(log, l)
     -- if a:msg =~# '\[ ' . self.name . ' \] \[\d\d\:\d\d\:\d\d\] \[ '
-    if string.find(msg, M.levels[2]) ~= nil then
+    if log.level == 2 then
         return 1
-    elseif string.find(msg, M.levels[1]) ~= nil then
+    elseif log.level == 3 then
         if l > 2 then return 0 else return 1 end
     else
         if l > 1 then return 0 else return 1 end
