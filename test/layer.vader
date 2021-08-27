@@ -10,6 +10,8 @@ Execute ( SpaceVim language mapping: ):
     let LMAPF = SpaceVim#mapping#space#get_lang_mappings(get(split(layer, '#'), 1, ''))
     if !empty(LMAPF)
       call call(LMAPF, [])
+      " https://github.com/vim/vim/commit/f6f32c38bf3319144a84a01a154c8c91939e7acf
+      unlet LMAPF
     endif
   endfor
 
