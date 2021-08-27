@@ -16,6 +16,14 @@ local M = {
     ['temp'] = {},
 }
 
+-- a log opject should be:
+-- {
+--  name:
+--  time:
+--  level:
+--  body:
+-- }
+
 
 -- 0 : log debug, info, warn, error messages
 -- 1 : log info, warn, error messages
@@ -38,15 +46,28 @@ end
 function M._build_msg(msg, l)
     msg = msg or ''
     local time = fn.strftime('%H:%M:%S')
-    local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[l] .. ' ] ' .. msg
+    -- local log = 
+    local log = {
+        name = M.name,
+        time = time,
+        level = l,
+        body = msg
+    }
+    function log:__tostring()
+        return '[ ' ..  self.name .. ' ] [' .. self.time .. '] [ ' .. M.levels[self.level] .. ' ] ' .. self.body
+    end
     return log
+end
+
+function M.to_string(log)
+
 end
 
 function M.debug(msg)
     if M.level <= 0 then
         local log = M._build_msg(msg, 4)
         if M.silent == 0 and M.verbose >= 4 then
-            cmd('echom "' .. log .. '"')
+            cmd('echom "' .. to_string(log) .. '"')
         end
         M.write(log)
     end
@@ -62,8 +83,8 @@ function M.error(msg)
     M.write(log)
 end
 
-function M.write(msg)
-    table.insert(M.temp, msg)
+function M.write(log)
+    table.insert(M.temp, log)
     if M.file ~= '' then
         if fn.isdirectory(fn.fnamemodify(M.file, ':p:h')) == 0 then
             fn.mkdir(fn.expand(fn.fnamemodify(M.file, ':p:h')), 'p')
@@ -72,7 +93,7 @@ function M.write(msg)
         if fn.filereadable(M.file) == 1 then
             flags = 'a'
         end
-        fn.writefile({msg}, M.file, flags)
+        fn.writefile({to_string(log)}, M.file, flags)
     end
 
 end
