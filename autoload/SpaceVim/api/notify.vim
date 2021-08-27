@@ -121,12 +121,6 @@ endfunction
 function! s:self.notify(msg, ...) abort
   call add(self.message, a:msg)
   let self.notification_color = get(a:000, 0, 'Normal')
-  if !bufexists(self.border.bufnr)
-    let self.border.bufnr = self.__buffer.create_buf(0, 1)
-  endif
-  if !bufexists(self.bufnr)
-    let self.bufnr = self.__buffer.create_buf(0, 1)
-  endif
   if empty(self.hashkey)
     let self.hashkey = self.__password.generate_simple(10)
   endif
@@ -178,6 +172,12 @@ function! s:self.redraw_windows() abort
             \ 'focusable' : v:false,
             \ })
   else
+    if !bufexists(self.border.bufnr)
+      let self.border.bufnr = self.__buffer.create_buf(0, 1)
+    endif
+    if !bufexists(self.bufnr)
+      let self.bufnr = self.__buffer.create_buf(0, 1)
+    endif
     let self.winid =  self.__floating.open_win(self.bufnr, v:false,
           \ {
             \ 'relative': 'editor',
