@@ -149,7 +149,7 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-overwin-w)', 'jump-to-a-word', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-overwin-line)', 'jump-to-a-line', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'n'], "i\<cr>\<esc>", 'sp-newline', 0)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'o'], "i\<cr>\<esc>k$", 'open-line', 0)
+  " call SpaceVim#mapping#space#def('nnoremap', ['j', 'o'], "i\<cr>\<esc>k$", 'open-line', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 's'], 'call call('
         \ . string(s:_function('s:split_string')) . ', [0])',
         \ 'split-sexp', 1)
