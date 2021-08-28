@@ -6,7 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
-if $SPACEVIM_LUA
+if $SPACEVIM_LUA && has('nvim')
   function! SpaceVim#logger#info(msg) abort
     lua require("spacevim.logger").info(
           \ require("spacevim").eval("a:msg")
