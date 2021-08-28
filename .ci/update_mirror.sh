@@ -4,16 +4,16 @@ usage () {
     echo ".ci/update_remote.sh [option] [target]"
 }
 
-check_remote () {
-    if [ -z "$(git remote -v | grep git@gitee.com:spacevim/SpaceVim.git)" ];then
-        git remote add gitee git@gitee.com:spacevim/SpaceVim.git
-    fi
-}
-
 push_gitee()
 {
     git remote add gitee https://SpaceVimBot:${BOTSECRET}@gitee.com/spacevim/SpaceVim.git
     git push gitee master 
+}
+
+push_gitlab()
+{
+    git remote add gitlab https://SpaceVimBot:${BOTSECRET}@gitlab.com/SpaceVim/SpaceVim.git
+    git push gitlab master 
 }
 
 push_coding()
@@ -23,24 +23,24 @@ push_coding()
 }
 
 main () {
-    if [ $# -gt 0 ]
-        check_remote
-    then
-        case $1 in
-            --help|-h)
-                usage
-                exit 0
-                ;;
-            gitee)
-                push_gitee
-                exit 0
-                ;;
-            coding)
-                push_coding
-                exit 0
-                ;;
-        esac
-    fi
+    case $1 in
+        --help|-h)
+            usage
+            exit 0
+            ;;
+        gitee)
+            push_gitee
+            exit 0
+            ;;
+        gitlab)
+            push_gitlab
+            exit 0
+            ;;
+        coding)
+            push_coding
+            exit 0
+            ;;
+    esac
 }
 
 main $@

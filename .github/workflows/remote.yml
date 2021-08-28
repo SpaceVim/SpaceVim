@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mirror: ["gitee", "coding"]
+        mirror: ["gitee", "coding", "gitlab"]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
