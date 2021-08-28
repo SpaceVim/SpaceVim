@@ -10,6 +10,12 @@ push_gitee()
     git push gitee master 
 }
 
+push_gitlab()
+{
+    git remote add gitlab https://SpaceVimBot:${BOTSECRET}@gitlab.com/SpaceVim/SpaceVim.git
+    git push gitlab master 
+}
+
 push_coding()
 {
     git remote add coding https://spacevim%40outlook.com:${CODINGBOTSECRET}@e.coding.net/spacevim/SpaceVim.git
@@ -24,6 +30,10 @@ main () {
             ;;
         gitee)
             push_gitee
+            exit 0
+            ;;
+        gitlab)
+            push_gitlab
             exit 0
             ;;
         coding)
