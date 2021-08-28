@@ -1730,14 +1730,15 @@ The `SPC j` prefix is for jumping, joining and splitting.
 
 | Key Bindings | Descriptions                                                                      |
 | ------------ | --------------------------------------------------------------------------------- |
-| `SPC j 0`    | go to the beginning of line (and set a mark at the previous location in the line) |
 | `SPC j $`    | go to the end of line (and set a mark at the previous location in the line)       |
+| `SPC j 0`    | go to the beginning of line (and set a mark at the previous location in the line) |
 | `SPC j b`    | jump backward                                                                     |
-| `SPC j f`    | jump forward                                                                      |
+| `SPC j c`    | jump to last change                                                               |
 | `SPC j d`    | jump to a listing of the current directory                                        |
 | `SPC j D`    | jump to a listing of the current directory (other window)                         |
-| `SPC j i`    | jump to a definition in buffer (denite outline)                                   |
+| `SPC j f`    | jump forward                                                                      |
 | `SPC j I`    | jump to a definition in any buffer (denite outline)                               |
+| `SPC j i`    | jump to a definition in buffer (denite outline)                                   |
 | `SPC j j`    | jump to a character in the buffer (easymotion)                                    |
 | `SPC j J`    | jump to a suite of two characters in the buffer (easymotion)                      |
 | `SPC j k`    | jump to next line and indent it using auto-indent rules                           |
