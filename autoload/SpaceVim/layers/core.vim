@@ -467,7 +467,7 @@ let g:string_info = {
 function! s:jump_last_change() abort
   let [bufnum, lnum, col, off] = getpos("'.")
   let [_, l, c, _] = getpos('.')
-  if lnum !=# l && c != col
+  if lnum !=# l && c != col && lnum !=# 0 && col !=# 0
     call setpos('.', [bufnum, lnum, col, off])
   else
     call s:NOTI.notify('no change position!', 'WarningMsg')
