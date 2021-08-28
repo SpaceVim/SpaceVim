@@ -17,6 +17,7 @@ let s:SYS = SpaceVim#api#import('system')
 let s:FILE = SpaceVim#api#import('file')
 let s:MESSAGE = SpaceVim#api#import('vim#message')
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:NOTI = SpaceVim#api#import('notify')
 
 
 function! SpaceVim#layers#core#plugins() abort
@@ -149,7 +150,9 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-overwin-w)', 'jump-to-a-word', 0)
   call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-overwin-line)', 'jump-to-a-line', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'n'], "i\<cr>\<esc>", 'sp-newline', 0)
-  " call SpaceVim#mapping#space#def('nnoremap', ['j', 'o'], "i\<cr>\<esc>k$", 'open-line', 0)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'c'], 'call call('
+        \ . string(s:_function('s:jump_last_change')) . ', [])',
+        \ 'jump-to-last-change', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 's'], 'call call('
         \ . string(s:_function('s:split_string')) . ', [0])',
         \ 'split-sexp', 1)
@@ -460,6 +463,16 @@ let g:string_info = {
               \ 'quotes_hi' : ['pythonQuotes']
               \ },
               \ }
+
+function! s:jump_last_change() abort
+  let [bufnum, lnum, col, off] = getpos("'.")
+  let [_, l, c, _] = getpos('.')
+  if lnum !=# l && c != col
+    call setpos('.', [bufnum, lnum, col, off])
+  else
+    call s:NOTI.notify('no change position!', 'WarningMsg')
+  endif
+endfunction
 
 function! s:split_string(newline) abort
   if s:is_string(line('.'), col('.'))
