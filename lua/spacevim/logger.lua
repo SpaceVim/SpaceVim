@@ -75,8 +75,7 @@ function M.viewLog(...)
     .. "```log\n"
     .. logger.view(logger.level)
     .. "\n```\n</details>\n\n"
-    if #argvs >= 1 then
-
+    if argvs ~= nil and #argvs >= 1 then
         local bang = argvs[1]
         if bang == 1 then
             cmd('tabnew')

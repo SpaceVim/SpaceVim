@@ -40,8 +40,12 @@ if $SPACEVIM_LUA && has('nvim')
 
 
   function! SpaceVim#logger#viewLog(...) abort
-    let bang = get(a:000, 0, 0)
-    return luaeval('require("spacevim.logger").viewLog(require("spacevim").eval("bang"))')
+    if a:0 >= 1
+      let bang = get(a:000, 0, 0)
+      return luaeval('require("spacevim.logger").viewLog(require("spacevim").eval("bang"))')
+    else
+      return luaeval('require("spacevim.logger").viewLog()')
+    endif
   endfunction
 
   function! SpaceVim#logger#setLevel(level) abort
