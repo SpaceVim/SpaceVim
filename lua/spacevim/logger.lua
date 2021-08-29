@@ -57,7 +57,8 @@ function M.viewRuntimeLog()
     -- M.syntax_extra()
 end
 
-function M.viewLog(bang)
+function M.viewLog(...)
+    local argvs=...
     local info = "<details><summary> SpaceVim debug information </summary>\n\n"
     .. "### SpaceVim options :\n\n"
     .. "```toml\n"
@@ -74,17 +75,24 @@ function M.viewLog(bang)
     .. "```log\n"
     .. logger.view(logger.level)
     .. "\n```\n</details>\n\n"
-    if bang == 1 then
-        cmd('tabnew')
-        cmd('setl nobuflisted')
-        cmd('nnoremap <buffer><silent> q :tabclose!<CR>')
-        -- put info into buffer
-        fn.append(0, fn.split(info, "\n"))
-        cmd('setl nomodifiable')
-        cmd('setl buftype=nofile')
-        cmd('setl filetype=markdown')
+    if #argvs >= 1 then
+
+        local bang = argvs[1]
+        if bang == 1 then
+            cmd('tabnew')
+            cmd('setl nobuflisted')
+            cmd('nnoremap <buffer><silent> q :tabclose!<CR>')
+            -- put info into buffer
+            fn.append(0, fn.split(info, "\n"))
+            cmd('setl nomodifiable')
+            cmd('setl buftype=nofile')
+            cmd('setl filetype=markdown')
+        else
+            print(info)
+        end
+    else
+        return info
     end
-    return info
 end
 
 function M.syntax_extra()
