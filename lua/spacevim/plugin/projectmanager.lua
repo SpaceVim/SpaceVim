@@ -6,7 +6,7 @@
 -- License: GPLv3
 --=============================================================================
 
-local logger = require('spacevim.logger').derive('roter')
+local logger = require('spacevim.logger').derive('project')
 local sp = require('spacevim')
 local sp_file = require('spacevim.api.file')
 local sp_json = require('spacevim.api.data.json')
@@ -39,6 +39,7 @@ local function update_rooter_patterns()
         end
     end
 end
+
 local function is_ignored_dir(dir)
     for _,v in pairs(project_rooter_ignores) do
         if string.match(dir, v) ~= nil then
@@ -76,14 +77,32 @@ local function filereadable(fpath)
     if f ~= nil then io.close(f) return true else return false end
 end
 
+local function isdirectory(fpath)
+    local f, err, code = io.open(fpath, "r")
+    if f ~= nil then
+        f:close()
+        return false
+    end
+    return code == 13
+end
+
+local function filter_invalid(projects)
+    for key, value in pairs(projects) do
+        if fn.isdirectory(value.path) == 0 then
+            projects[key] = nil
+        end
+    end
+    return projects
+end
+
 local function load_cache()
     if filereadable(project_cache_path) then
         logger.info('Load projects cache from: ' .. project_cache_path)
         local cache_context = readfile(project_cache_path)
-        if cache_context == nil then
+        if cache_context ~= nil then
             local cache_object = sp_json.json_decode(cache_context)
             if type(cache_object) == 'table' then
-                project_paths = fn.filter(cache_object, '!empty(v:key)')
+                project_paths = filter_invalid(cache_object)
             end
         end
     else
@@ -246,14 +265,17 @@ end
 
 function M.open(project)
     local path = project_paths[project]['path']
+    local name = project_paths[project]['name']
     sp.cmd('tabnew')
+    -- I am not sure we should set the project name here.
+    -- sp.cmd('let t:_spacevim_tab_name = "[' .. name .. ']"')
     sp.cmd(cd .. ' ' .. path)
     if sp_opt.filemanager == 'vimfiler' then
         sp.cmd('Startify | VimFiler')
     elseif sp_opt.filemanager == 'nerdtree' then
         sp.cmd('Startify | NERDTree')
     elseif sp_opt.filemanager == 'defx' then
-        sp.cmd('Startify | Defx')
+        sp.cmd('Startify | Defx -new')
     end
 end
 
@@ -264,7 +286,9 @@ end
 
 function M.RootchandgeCallback()
     local path = sp_file.unify_path(fn.getcwd(), ':p')
-    local name = fn.fnamemodify(path, ':t')
+    local name = fn.fnamemodify(path, ':h:t')
+    logger.debug('project name is:' .. name)
+    logger.debug('project path is:' .. path)
     local project = {
         ['path'] = path,
         ['name'] = name,
