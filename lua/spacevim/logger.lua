@@ -3,6 +3,7 @@ local M = {}
 local logger = require('spacevim.api').import('logger')
 local cmd = require('spacevim').cmd
 local call = require('spacevim').call
+local echo = require('spacevim').echo
 local fn = nil
 if vim.fn == nil then
     fn = require('spacevim').fn
@@ -87,7 +88,7 @@ function M.viewLog(...)
             cmd('setl buftype=nofile')
             cmd('setl filetype=markdown')
         else
-            print(info)
+            echo(info)
         end
     else
         return info
