@@ -6,7 +6,7 @@
 -- License: GPLv3
 --=============================================================================
 
-local logger = require('spacevim.logger').derive('roter')
+local logger = require('spacevim.logger').derive('project')
 local sp = require('spacevim')
 local sp_file = require('spacevim.api.file')
 local sp_json = require('spacevim.api.data.json')
@@ -283,7 +283,9 @@ end
 
 function M.RootchandgeCallback()
     local path = sp_file.unify_path(fn.getcwd(), ':p')
-    local name = fn.fnamemodify(path, ':t')
+    local name = fn.fnamemodify(path, ':h:t')
+    logger.debug('project name is:' .. name)
+    logger.debug('project path is:' .. path)
     local project = {
         ['path'] = path,
         ['name'] = name,
