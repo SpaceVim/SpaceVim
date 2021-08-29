@@ -58,7 +58,7 @@ function M.viewRuntimeLog()
 end
 
 function M.viewLog(...)
-    local argvs=...
+    local argvs={...}
     local info = "<details><summary> SpaceVim debug information </summary>\n\n"
     .. "### SpaceVim options :\n\n"
     .. "```toml\n"
