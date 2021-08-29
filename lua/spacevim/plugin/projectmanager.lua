@@ -88,7 +88,7 @@ end
 
 local function filter_invalid(projects)
     for key, value in pairs(projects) do
-        if #value == 0 then
+        if fn.isdirectory(value.path) == 0 then
             projects[key] = nil
         end
     end
