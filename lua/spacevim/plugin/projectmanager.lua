@@ -265,14 +265,17 @@ end
 
 function M.open(project)
     local path = project_paths[project]['path']
+    local name = project_paths[project]['name']
     sp.cmd('tabnew')
+    -- I am not sure we should set the project name here.
+    -- sp.cmd('let t:_spacevim_tab_name = "[' .. name .. ']"')
     sp.cmd(cd .. ' ' .. path)
     if sp_opt.filemanager == 'vimfiler' then
         sp.cmd('Startify | VimFiler')
     elseif sp_opt.filemanager == 'nerdtree' then
         sp.cmd('Startify | NERDTree')
     elseif sp_opt.filemanager == 'defx' then
-        sp.cmd('Startify | Defx')
+        sp.cmd('Startify | Defx -new')
     end
 end
 
