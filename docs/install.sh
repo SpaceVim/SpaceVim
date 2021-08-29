@@ -287,6 +287,7 @@ usage () {
     echo " -v, --version            Show version information and exit"
     echo " -u, --uninstall          Uninstall SpaceVim"
     echo " -c, --checkRequirements  checkRequirements for SpaceVim"
+    echo " --no-fonts               skip downloading fonts"
     echo ""
     echo "EXAMPLE"
     echo ""
@@ -436,6 +437,16 @@ main () {
                 ;;
             --help|-h)
                 usage
+                exit 0
+                ;;
+            --no-fonts)
+                welcome
+                need_cmd 'git'
+                fetch_repo
+                install_vim
+                install_neovim
+                install_package_manager
+                install_done
                 exit 0
                 ;;
             --version|-v)

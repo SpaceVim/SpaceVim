@@ -694,6 +694,12 @@ function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func) abort
   call extend(s:language_specified_mappings, {a:ft : a:func})
 endfunction
 
+function! SpaceVim#mapping#space#get_lang_mappings(ft) abort
+
+  return get(s:language_specified_mappings, a:ft, '')
+
+endfunction
+
 function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd, ...) abort
   if s:has_map_to_spc()
     return

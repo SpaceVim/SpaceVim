@@ -5,7 +5,7 @@ redirect_from: "/README_zh_cn/"
 lang: zh
 ---
 
-# [主页](../) >> 使用文档
+# 使用文档
 
 <!-- vim-markdown-toc GFM -->
 
@@ -321,6 +321,18 @@ endfunction
 
 function! myspacevim#after() abort
     iunmap jk
+endfunction
+```
+
+在启动函数中，可以使用`:lua` 命令对 SpaceVim 进行配置，比如：
+
+```vim
+function! myspacevim#before() abort
+    lua << EOF
+    local opt = requires('spacevim.opt')
+    opt.enable_projects_cache = false
+    opt.enable_statusline_mode = true
+EOF
 endfunction
 ```
 
@@ -1720,16 +1732,17 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 | 快捷键    | 功能描述                                         |
 | --------- | ------------------------------------------------ |
-| `SPC j 0` | 跳至行首，并且在原始位置留下标签，以便跳回       |
 | `SPC j $` | 跳至行尾，并且在原始位置留下标签，以便跳回       |
+| `SPC j 0` | 跳至行首，并且在原始位置留下标签，以便跳回       |
 | `SPC j b` | 向后回跳                                         |
-| `SPC j f` | 向前跳                                           |
-| `SPC j d` | 跳至当前目录某个文件夹                           |
+| `SPC j c` | 跳至前一个修改位置                               |
 | `SPC j D` | 跳至当前目录某个文件夹（在另外窗口展示文件列表） |
+| `SPC j d` | 跳至当前目录某个文件夹                           |
+| `SPC j f` | 向前跳                                           |
 | `SPC j i` | 跳至当前文件的某个函数，使用 Denite 打开语法树   |
 | `SPC j I` | 跳至所有 Buffer 的语法树（TODO）                 |
-| `SPC j j` | 跳至当前窗口的某个字符 (easymotion)              |
 | `SPC j J` | 跳至当前窗口的某两个字符的组合 (easymotion)      |
+| `SPC j j` | 跳至当前窗口的某个字符 (easymotion)              |
 | `SPC j k` | 跳至下一行，并且对齐下一行                       |
 | `SPC j l` | 跳至某一行 (easymotion)                          |
 | `SPC j q` | show the dumb-jump quick look tooltip (TODO)     |

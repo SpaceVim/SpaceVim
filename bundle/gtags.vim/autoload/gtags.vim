@@ -311,7 +311,7 @@ function! s:ExecLoad(option, long_option, pattern) abort
 
   " If there is only one item, jump to the position.
   if len(getqflist()) ==# 1
-    cnext
+    silent cc
   endif
 endfunction
 

@@ -89,4 +89,12 @@ function M.has(feature)
     return M.eval('float2nr(has("' .. feature .. '"))')
 end
 
+function M.echo(msg)
+    if vim.api ~= nil then
+        vim.api.nvim_echo({{msg}}, false, {})
+    else
+        vim.command('echo ' .. build_argv({msg}))
+    end
+end
+
 return M

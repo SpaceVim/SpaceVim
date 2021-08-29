@@ -257,7 +257,7 @@ endif
 ""
 " Set the cache directory of plugins. Default is `$data_dir/vimfiles`.
 " >
-"   let g:spacevim_plugin_bundle_dir = g:spacevim_data_dir.'/vimplugs'
+"   let g:spacevim_plugin_bundle_dir = g:spacevim_data_dir.'vimplugs'
 " <
 let g:spacevim_plugin_bundle_dir
       \ = g:spacevim_data_dir . join(['vimfiles', ''],

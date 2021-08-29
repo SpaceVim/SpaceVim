@@ -58,6 +58,13 @@ function! s:language_specified_mappings() abort
         \ 'compile-to-html', 1)
 endfunction
 
+function! s:compile_to_html() abort
+  let input = expand('%')
+  let target = fnamemodify(input, ':r') . '.html'
+  let cmd = printf('asciidoc -o %s %s', target, input)
+  call system(cmd)
+endfunction
+
 function! SpaceVim#layers#lang#asciidoc#health() abort
   call SpaceVim#layers#lang#asciidoc#plugins()
   call SpaceVim#layers#lang#asciidoc#config()

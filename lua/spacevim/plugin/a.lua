@@ -3,13 +3,14 @@ local sp = require('spacevim')
 local cmp = require('spacevim.api').import('vim.compatible')
 local cmd = require('spacevim').cmd
 local sp_file = require('spacevim.api').import('file')
+local sp_opt = require('spacevim.opt')
 local sp_json = require('spacevim.api').import('data.json')
 local logger = require('spacevim.logger').derive('a.vim')
 
 local alternate_conf = {}
 alternate_conf['_'] = '.project_alt.json'
 
-local cache_path = sp_file.unify_path(sp.eval('g:spacevim_data_dir'), ':p') .. 'SpaceVim/a.json'
+local cache_path = sp_file.unify_path(sp_opt.data_dir, ':p') .. 'SpaceVim/a.json'
 
 
 local project_config = {}
