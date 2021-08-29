@@ -13,9 +13,7 @@ assignees: ''
 
 ## The reproduce ways from Vim starting (Required!)
 
-## Debug info
-
-Please press <kbd>SPC h I</kbd>, debug info will be put into clipboard, then paste all content below.
+## Output of the `:SPDebugInfo!`
 
 ## Screenshots
 

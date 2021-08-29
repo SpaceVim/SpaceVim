@@ -46,7 +46,7 @@ function! s:template() abort
         \ '',
         \ '## Environment Information',
         \ '',
-        \ '- OS: ' . SpaceVim#api#import('system').name,
+        \ '- OS: ' . SpaceVim#api#import('system').name(),
         \ '- vim version: ' . (has('nvim') ? '-' : s:CMP.version()),
         \ '- neovim version: ' . (has('nvim') ? s:CMP.version() : '-'),
         \ '- SpaceVim version: ' . g:spacevim_version,
