@@ -16,6 +16,11 @@ local keystrokes = {}
 -- timeout for remove the first key
 local remove_timeout = 3000
 
+-- 需要再什么位置显示
+-- 根据按键的长度
+
+local first_col = 15
+
 local recordid = vim.api.nvim_create_namespace('')
 
 local borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'}
@@ -39,12 +44,28 @@ local function escape(char)
     return char
 end
 
+local function remove_first_key()
+    
+end
+
 local function record(char)
     table.insert(keystrokes, escape(char))
+    vim.fn.timer_start(remove_first_key, remove_timeout)
+end
+
+local function print_key(key)
+    
+end
+
+local function get_first_col()
+    return 15
 end
 
 local function display()
-    
+    first_col = get_first_col()
+    for _, key in pairs(keystrokes) do
+        print_key(key)
+    end
 end
 
 
