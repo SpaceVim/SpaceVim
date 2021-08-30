@@ -26,18 +26,18 @@ local recordid = vim.api.nvim_create_namespace('')
 local borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'}
 
 local function draw_border(title, width, height)
-  local top = borderchars[5] ..
-        string.rep(borderchars[1], width) ..
-        borderchars[6]
-  local mid = borderchars[4] ..
-        string.rep(' ', width) ..
-        self.borderchars[2]
-  local bot = borderchars[8] ..
-        string.rep(borderchars[3], width) ..
-        borderchars[7]
-  top = string_compose(top, 1, title)
-  local lines = {top} + string.rep({mid}, height) + {bot}
-  return lines
+    local top = borderchars[5] ..
+    string.rep(borderchars[1], width) ..
+    borderchars[6]
+    local mid = borderchars[4] ..
+    string.rep(' ', width) ..
+    self.borderchars[2]
+    local bot = borderchars[8] ..
+    string.rep(borderchars[3], width) ..
+    borderchars[7]
+    top = string_compose(top, 1, title)
+    local lines = {top} + string.rep({mid}, height) + {bot}
+    return lines
 end
 
 local function escape(char)
@@ -45,7 +45,7 @@ local function escape(char)
 end
 
 local function remove_first_key()
-    
+
 end
 
 local function record(char)
@@ -54,7 +54,7 @@ local function record(char)
 end
 
 local function print_key(key)
-    
+
 end
 
 local function get_first_col()
@@ -70,6 +70,7 @@ end
 
 
 local function enable()
+    -- https://github.com/neovim/neovim/issues/15527
     vim.register_keystroke_callback(record, recordid)
     M.enabled = true
 end
