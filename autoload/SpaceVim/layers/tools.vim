@@ -71,6 +71,7 @@ function! SpaceVim#layers#tools#config() abort
   if maparg('<C-_>', 'n') ==# ''
     nnoremap <silent> <C-_> <Esc>:Ydc<CR>
   endif
+
 endfunction
 
 function! SpaceVim#layers#tools#health() abort
