@@ -2387,9 +2387,8 @@ add following snippet to your SpaceVim configuration file.
 
 OPTIONS
 
-`emmet_leader_key`: change the default leader key for emmet `emmet_filetyps`:
-Set the filetypes for enabling emmet
-
+`emmet_leader_key`: change the default leader key for emmet
+`emmet_filetyps`: Set the filetypes for enabling emmet
 
 >
   [layers]
@@ -2397,9 +2396,6 @@ Set the filetypes for enabling emmet
     emmet_leader_key = "<C-e>"
     emmet_filetyps = ['html']
 <
-
-
-
 
 KEY BINDINGS
 

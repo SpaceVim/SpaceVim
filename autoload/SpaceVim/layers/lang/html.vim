@@ -18,18 +18,14 @@
 " 
 " @subsection Options
 "
-" `emmet_leader_key`: change the default leader key for emmet
-" `emmet_filetyps`: Set the filetypes for enabling emmet
-"
+" - `emmet_leader_key`: change the default leader key for emmet
+" - `emmet_filetyps`: Set the filetypes for enabling emmet
 " >
 "   [layers]
 "     name = "lang#html"
 "     emmet_leader_key = "<C-e>"
 "     emmet_filetyps = ['html']
 " <
-" 
-"
-"
 "
 " @subsection Key bindings
 "
