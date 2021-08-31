@@ -45,7 +45,8 @@ npm install --global vscode-html-languageserver-bin
   ```toml
   [layers]
     name = "lang#html"
-    user_emmet_leader_key = "<C-e>"
+    emmet_leader_key = "<C-e>"
+    emmet_filetyps = ['html']
   ```
 
 ## Features
