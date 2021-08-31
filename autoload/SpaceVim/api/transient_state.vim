@@ -71,7 +71,7 @@ function! s:self.open() abort
       let self._clear_cmdline = 1
     endif
     redraw
-    let char = self._getchar()
+    let char = self.__vim.getchar()
     if char ==# "\<FocusLost>" || char ==# "\<FocusGained>" || char2nr(char) == 128
       continue
     endif
@@ -103,13 +103,6 @@ function! s:self.open() abort
     let self._clear_cmdline = 1
   endif
   redraw
-endfunction
-
-
-
-function! s:self._getchar(...) abort
-  let ret = call('getchar', a:000)
-  return (type(ret) == type(0) ? nr2char(ret) : ret)
 endfunction
 
 function! s:self.defind_keys(dict) abort
