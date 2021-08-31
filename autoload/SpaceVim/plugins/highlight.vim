@@ -114,7 +114,7 @@ endfunction
 " use SPC s h to highlight current symbol on default range.
 
 " public API func: start Highlight mode {{{
-function! SpaceVim#plugins#highlight#start(current) abort
+function! SpaceVim#plugins#highlight#start(...) abort
   let curpos = getcurpos()
   let save_reg_k = @k
   normal! viw"ky

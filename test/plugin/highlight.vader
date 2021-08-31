@@ -8,8 +8,8 @@ Given (fixture):
   Hello
 
 Execute ( SpaceVim plugin: iedit ):
-  let g:_spacevim_input_list = ['D', 'a', 'W', 'o', 'r', 'l', 'd', "\<Esc>", "\<Esc>"]
-  call SpaceVim#plugins#iedit#start()
+  let g:_spacevim_input_list = ['e', 'D', 'a', 'W', 'o', 'r', 'l', 'd', "\<Esc>", "\<Esc>"]
+  call SpaceVim#plugins#highlight#start()
   
 
 Expect (result):
@@ -17,3 +17,4 @@ Expect (result):
   World World
     World
   World
+
