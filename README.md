@@ -21,7 +21,7 @@ of plugins in layers, which help to collect related packages together to provide
 
 The last release is [v1.7.0](https://spacevim.org/SpaceVim-release-v1.7.0/), check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
-**See the followings below for more information:**
+**See the following links below for more information:**
 
 - [Quick Start Guide](https://spacevim.org/quick-start-guide/): A simple guide for Beginners.
 - [Documentation](https://spacevim.org/documentation/): The full documentation about using SpaceVim.
@@ -29,13 +29,12 @@ The last release is [v1.7.0](https://spacevim.org/SpaceVim-release-v1.7.0/), che
 
 ## Support SpaceVim
 
-This project exists thanks to all the people who [contributed](CONTRIBUTING.md),
+This project wouldn't exist without all the people who [contributed](CONTRIBUTING.md),
 We are thankful for any contributions from the community.
 
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 
-The best way to support SpaceVim is to contribute to it either by reporting bugs.
-Helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim) or sending pull requests.
+The best way to support SpaceVim is to contribute to it either by reporting bugs, helping the community on the [Gitter Chat](https://gitter.im/SpaceVim/SpaceVim), or sending pull requests.
 
 For more information please check our [development guidelines](https://spacevim.org/development/).
 
