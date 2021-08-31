@@ -16,6 +16,7 @@ let s:Operator = ''
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:VIM = SpaceVim#api#import('vim')
 
 let s:cursor_stack = []
 
@@ -118,7 +119,7 @@ function! SpaceVim#plugins#iedit#start(...) abort
   redrawstatus!
   while s:mode !=# ''
     redraw!
-    let char = getchar()
+    let char = s:VIM.getchar()
     if s:mode ==# 'n' && char == 27
       let s:mode = ''
     else
