@@ -489,7 +489,7 @@ function! s:handle_insert(char) abort
     endfor
   else
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin .=  nr2char(a:char)
+      let s:cursor_stack[i].begin .=  a:char
     endfor
   endif
   if !is_movement
