@@ -18,14 +18,15 @@
 " 
 " @subsection Options
 "
-" user_emmet_leader_key: change the default leader key for emmet
-"
+" - `emmet_leader_key`: change the default leader key for emmet
+" - `emmet_filetyps`: Set the filetypes for enabling emmet
 " >
 "   [layers]
 "     name = "lang#html"
-"     user_emmet_leader_key = "<C-e>"
+"     emmet_leader_key = "<C-e>"
+"     emmet_filetyps = ['html']
 " <
-" 
+"
 " @subsection Key bindings
 "
 " >
@@ -34,12 +35,13 @@
 " <
 "
 
-if exists('s:user_emmet_leader_key')
+if exists('s:emmet_leader_key')
   finish
 
 endif
 
-let s:user_emmet_leader_key = '<C-e>'
+let s:emmet_leader_key = '<C-e>'
+let s:emmet_filetyps = ['']
 
 
 function! SpaceVim#layers#lang#html#plugins() abort
@@ -56,17 +58,18 @@ function! SpaceVim#layers#lang#html#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#html#config() abort
-  let g:user_emmet_leader_key = s:user_emmet_leader_key
+  let g:emmet_leader_key = s:emmet_leader_key
   augroup spacevim_lang_html
     autocmd!
-    autocmd FileType html,css,scss,sass,less,javascript,jsp,vue,eex,php,erb call s:install_emmet()
+    exe printf('autocmd FileType %s call s:install_emmet()', join(s:emmet_filetyps, ','))
     autocmd Filetype html setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   augroup END
 endfunction
 
 function! SpaceVim#layers#lang#html#set_variable(var) abort
-  let s:user_emmet_leader_key = get(a:var, 'user_emmet_leader_key', s:user_emmet_leader_key)
+  let s:emmet_leader_key = get(a:var, 'emmet_leader_key', get(a:var, 'user_emmet_leader_key', s:emmet_leader_key))
+  let s:emmet_filetyps = get(a:var, 'emmet_filetyps', s:emmet_filetyps)
 endfunction
 
 
@@ -82,4 +85,12 @@ function! SpaceVim#layers#lang#html#health() abort
   call SpaceVim#layers#lang#html#plugins()
   call SpaceVim#layers#lang#html#config()
   return 1
+endfunction
+
+
+function! SpaceVim#layers#lang#html#get_options() abort
+
+  return ['emmet_filetyps',
+        \ 'emmet_leader_key']
+
 endfunction
