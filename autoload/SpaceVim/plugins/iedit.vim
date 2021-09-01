@@ -82,7 +82,7 @@ function! SpaceVim#plugins#iedit#start(...) abort
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
   if empty(s:stack)
-    let curpos = getcurpos()
+    let curpos = getpos('.')
     let argv = get(a:000, 0, '')
     let save_reg_k = @k
     " the register " is cleared
