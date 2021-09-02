@@ -40,7 +40,7 @@ go get -u github.com/jstemmer/gotags
 - auto-completion
 - syntax checking
 - goto definition
-- refernce finder
+- reference finder
 
 ## Key bindings
 
