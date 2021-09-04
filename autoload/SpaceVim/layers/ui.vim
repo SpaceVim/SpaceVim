@@ -10,8 +10,22 @@ scriptencoding utf-8
 ""
 " @section ui, layer-ui
 " @parentsection layers
-" ui layer provides basic ui for SpaceVim, including scrollbar, indentline,
-" and cursorword highlighting.
+" The `ui` layer defines the default interface for SpaceVim,
+" and it is loaded by default.
+" This layer includes scrollbar, indentline, and cursorword highlighting.
+" >
+"   [[layers]]
+"     name = "ui"
+"     enable_sidebar = false
+"     enable_scrollbar = false
+"     enable_indentline = true
+"     indentline_char = '|'
+"     enable_cursorword = false
+"     conceallevel = 0
+"     concealcursor = ''
+"     cursorword_delay = 50
+"     cursorword_exclude_filetype = []
+" <
 " @subsection options
 "
 " 1. `enable_scrollbar`: Enable/disable floating scrollbar of current buffer.
