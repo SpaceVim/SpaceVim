@@ -512,9 +512,14 @@ function! SpaceVim#layers#ui#set_variable(var) abort
   let s:cursorword_delay = get(a:var,
         \ 'cursorword_delay',
         \ s:cursorword_delay)
-  let s:cursorword_exclude_filetypes = get(a:var,
+  " The old layer option is cursorword_exclude_filetype
+  let s:cursorword_exclude_filetypes =
+        \ get(a:var,
         \ 'cursorword_exclude_filetypes',
-        \ s:cursorword_exclude_filetypes)
+        \ get(a:var,
+        \ 'cursorword_exclude_filetype',
+        \ s:cursorword_exclude_filetypes
+        \ ))
   let s:indentline_exclude_filetyps = get(a:var,
         \ 'indentline_exclude_filetyps',
         \ s:indentline_exclude_filetyps)
