@@ -22,7 +22,7 @@ scriptencoding utf-8
 " Disabled by default.
 " 4. `cursorword_delay`: The delay duration in milliseconds for setting the
 " word highlight after cursor motions, the default is 50.
-" 5. `cursorword_exclude_filetype`: Ignore filetypes when enable cursorword
+" 5. `cursorword_exclude_filetypes`: Ignore filetypes when enable cursorword
 " highlighting.
 "
 " @subsection key bindings
@@ -45,7 +45,7 @@ else
   let s:conceallevel = 0
   let s:concealcursor = ''
   let s:cursorword_delay = 50
-  let s:cursorword_exclude_filetype = []
+  let s:cursorword_exclude_filetypes = []
 endif
 
 let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
@@ -128,8 +128,8 @@ function! SpaceVim#layers#ui#config() abort
       " because the startify use noautocmd enew
       autocmd User Startified call s:clear_previous_scrollbar()
     endif
-    if !empty(s:cursorword_exclude_filetype)
-      exe printf('autocmd FileType %s let b:cursorword = 0', join(s:cursorword_exclude_filetype, ','))
+    if !empty(s:cursorword_exclude_filetypes)
+      exe printf('autocmd FileType %s let b:cursorword = 0', join(s:cursorword_exclude_filetypes, ','))
     endif
   augroup end
 
@@ -512,9 +512,12 @@ function! SpaceVim#layers#ui#set_variable(var) abort
   let s:cursorword_delay = get(a:var,
         \ 'cursorword_delay',
         \ s:cursorword_delay)
-  let s:cursorword_exclude_filetype = get(a:var,
-        \ 'cursorword_exclude_filetype',
-        \ s:cursorword_exclude_filetype)
+  let s:cursorword_exclude_filetypes = get(a:var,
+        \ 'cursorword_exclude_filetypes',
+        \ s:cursorword_exclude_filetypes)
+  let s:indentline_exclude_filetyps = get(a:var,
+        \ 'indentline_exclude_filetyps',
+        \ s:indentline_exclude_filetyps)
 
 endfunction
 
@@ -536,6 +539,6 @@ function! SpaceVim#layers#ui#get_options() abort
         \ 'enable_indentline',
         \ 'enable_cursorword',
         \ 'cursorword_delay',
-        \ 'cursorword_exclude_filetype']
+        \ 'cursorword_exclude_filetypes']
 
 endfunction

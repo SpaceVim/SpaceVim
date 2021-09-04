@@ -4101,7 +4101,7 @@ Enabled by default.
 Disabled by default.
   4. `cursorword_delay`: The delay duration in milliseconds for setting the
 word highlight after cursor motions, the default is 50.
-  5. `cursorword_exclude_filetype`: Ignore filetypes when enable cursorword
+  5. `cursorword_exclude_filetypes`: Ignore filetypes when enable cursorword
 highlighting.
 
 KEY BINDINGS
