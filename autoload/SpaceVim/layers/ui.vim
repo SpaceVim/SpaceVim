@@ -51,7 +51,7 @@ scriptencoding utf-8
 "   Key binding     Description
 "   SPC t h         ui current buffer or selection lines
 " <
-" 
+"
 
 
 if exists('s:enable_sidebar')
@@ -87,7 +87,7 @@ function! SpaceVim#layers#ui#plugins() abort
     call add(plugins, [g:_spacevim_root_dir . 'bundle/indentLine',         { 'merged' : 0}])
   endif
   if !SpaceVim#layers#isLoaded('core#statusline')
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline',                { 'merged' : 0, 
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline',                { 'merged' : 0,
           \ 'loadconf' : 1}])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline-themes',         { 'merged' : 0}])
   endif
@@ -446,7 +446,7 @@ endfunction
 
 
 function! s:win_resize_transient_state() abort
-  let state = SpaceVim#api#import('transient_state') 
+  let state = SpaceVim#api#import('transient_state')
   call state.set_title('Windows Resize Transient State')
   call state.defind_keys(
         \ {
