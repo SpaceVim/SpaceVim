@@ -39,6 +39,7 @@ else
   let s:enable_sidebar = 0
   let s:enable_scrollbar = 0
   let s:enable_indentline = 1
+  let s:indentline_char = '|'
   let s:enable_cursorword = 0
   let s:conceallevel = 0
   let s:concealcursor = ''
@@ -80,16 +81,24 @@ function! SpaceVim#layers#ui#config() abort
     let g:indentLine_color_gui = get(g:, 'indentLine_color_gui', '#d5c4a1')
   endif
 
-  " indentLine config
-  let g:indentLine_char = get(g:, 'indentLine_char', '┊')
+  " indent line configuration
+  " indent_blankline for neovim, indentLine for vim and old neovim
+
+  " indent line character
+  let g:indent_blankline_char = s:indentline_char
+  let g:indentLine_char = s:indentline_char
+
+  " indent line conceal setting, only for indentLine
   let g:indentLine_concealcursor = s:concealcursor
   let g:indentLine_conceallevel = s:conceallevel
-  let g:indentLine_enabled = s:enable_indentline
-  let g:indentLine_fileTypeExclude = get(g:, 'indentLine_fileTypeExclude', [])
-  let g:indentLine_fileTypeExclude += ['help', 'man', 'startify', 'vimfiler', 'json']
 
-  " indent_blankline config
+
+  " enable/disable indentline
+  let g:indentLine_enabled = s:enable_indentline
   let g:indent_blankline_enabled = s:enable_indentline
+
+  " exclude filetypes for indentline
+  let g:indentLine_fileTypeExclude = s:cursorword_exclude_filetype
 
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
         \ 'qf', 'help', 'markdown', 'leaderGuide',
