@@ -79,6 +79,7 @@ function! SpaceVim#layers#ui#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/tagbar-proto.vim', {'merged': 0}],
         \ [g:_spacevim_root_dir . 'bundle/vim-choosewin', {'on_cmd' : 'ChooseWin', 'merged' : 0}],
         \ [g:_spacevim_root_dir . 'bundle/vim-startify', {'loadconf' : 1, 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
         \ ]
   if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
     call add(plugins, [g:_spacevim_root_dir . 'bundle/indent-blankline.nvim',         { 'merged' : 0}])
