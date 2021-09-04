@@ -236,19 +236,25 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['T', '~'], 'call call('
         \ . string(s:_function('s:toggle_end_of_buffer')) . ', [])',
         \ 'display ~ in the fringe on empty lines', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call SpaceVim#layers#core#statusline#toggle_mode("spell-checking")',
-        \ 'toggle-spell-checker', 1)
-
   call SpaceVim#layers#core#statusline#register_mode(
         \ {
           \ 'key' : 'spell-checking',
           \ 'func' : s:_function('s:toggle_spell_check'),
           \ }
           \ )
-
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'p'], 'call call('
-        \ . string(s:_function('s:toggle_paste')) . ', [])',
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'],
+        \ 'call SpaceVim#layers#core#statusline#toggle_mode("spell-checking")',
+        \ 'toggle-spell-checker', 1)
+  call SpaceVim#layers#core#statusline#register_mode(
+        \ {
+          \ 'key' : 'paste-mode',
+          \ 'func' : s:_function('s:toggle_paste'),
+          \ }
+          \ )
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'p'],
+        \ 'call SpaceVim#layers#core#statusline#toggle_mode("paste-mode")',
         \ 'toggle-paste-mode', 1)
+
 
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'l'], 'setlocal list!',
         \ 'toggle-hidden-listchars', 1)
@@ -424,13 +430,11 @@ function! s:toggle_paste() abort
   else
     let &l:paste = 1
   endif
-  call SpaceVim#layers#core#statusline#toggle_mode('paste-mode')
   if &l:paste == 1
     echo 'paste-mode enabled.'
   else
     echo 'paste-mode disabled.'
   endif
-
 endfunction
 
 let s:whitespace_enable = 0
