@@ -427,7 +427,7 @@ function! s:toggle_whitespace() abort
 endfunction
 
 function! s:toggle_conceallevel() abort
-  if &conceallevel == 0 
+  if &conceallevel == 0
     setlocal conceallevel=2
   else
     setlocal conceallevel=0
