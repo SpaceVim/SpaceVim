@@ -15,7 +15,7 @@ scriptencoding utf-8
 " This layer includes scrollbar, indentline, and cursorword highlighting.
 " >
 "   [[layers]]
-"     name = "ui"
+"     name = 'ui'
 "     enable_sidebar = false
 "     enable_scrollbar = false
 "     enable_indentline = true
@@ -25,6 +25,13 @@ scriptencoding utf-8
 "     concealcursor = ''
 "     cursorword_delay = 50
 "     cursorword_exclude_filetype = []
+" <
+"
+" if you want to disable `ui` layer, you can use:
+" >
+"   [[layers]]
+"     name = 'ui'
+"     enabled = fasle
 " <
 " @subsection options
 "
