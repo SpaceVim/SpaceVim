@@ -40,6 +40,7 @@ else
   let s:enable_scrollbar = 0
   let s:enable_indentline = 1
   let s:indentline_char = '|'
+  let s:indentline_exclude_filetyps = []
   let s:enable_cursorword = 0
   let s:conceallevel = 0
   let s:concealcursor = ''
@@ -98,7 +99,8 @@ function! SpaceVim#layers#ui#config() abort
   let g:indent_blankline_enabled = s:enable_indentline
 
   " exclude filetypes for indentline
-  let g:indentLine_fileTypeExclude = s:cursorword_exclude_filetype
+  let g:indentLine_fileTypeExclude = s:indentline_exclude_filetyps
+  let g:indent_blankline_buftype_exclude = s:indentline_exclude_filetyps
 
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
         \ 'qf', 'help', 'markdown', 'leaderGuide',
