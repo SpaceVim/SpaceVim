@@ -40,6 +40,8 @@ else
   let s:enable_scrollbar = 0
   let s:enable_indentline = 1
   let s:enable_cursorword = 0
+  let s:conceallevel = 0
+  let s:concealcursor = ''
   let s:cursorword_delay = 50
   let s:cursorword_exclude_filetype = []
 endif
@@ -80,8 +82,8 @@ function! SpaceVim#layers#ui#config() abort
 
   " indentLine config
   let g:indentLine_char = get(g:, 'indentLine_char', '┊')
-  let g:indentLine_concealcursor = 'niv'
-  let g:indentLine_conceallevel = 2
+  let g:indentLine_concealcursor = s:concealcursor
+  let g:indentLine_conceallevel = s:conceallevel
   let g:indentLine_enabled = s:enable_indentline
   let g:indentLine_fileTypeExclude = get(g:, 'indentLine_fileTypeExclude', [])
   let g:indentLine_fileTypeExclude += ['help', 'man', 'startify', 'vimfiler', 'json']
