@@ -552,9 +552,21 @@ function! SpaceVim#layers#ui#set_variable(var) abort
   let s:enable_indentline = get(a:var,
         \ 'enable_indentline',
         \ 1)
+  let s:indentline_char = get(a:var,
+        \ 'indentline_char',
+        \ s:indentline_char)
+  let s:indentline_exclude_filetyps = get(a:var,
+        \ 'indentline_exclude_filetyps',
+        \ s:indentline_exclude_filetyps)
   let s:enable_cursorword = get(a:var,
         \ 'enable_cursorword',
         \ s:enable_cursorword)
+  let s:conceallevel = get(a:var,
+        \ 'conceallevel',
+        \ s:conceallevel)
+  let s:concealcursor = get(a:var,
+        \ 'concealcursor',
+        \ s:concealcursor)
   let s:cursorword_delay = get(a:var,
         \ 'cursorword_delay',
         \ s:cursorword_delay)
@@ -566,10 +578,6 @@ function! SpaceVim#layers#ui#set_variable(var) abort
         \ 'cursorword_exclude_filetype',
         \ s:cursorword_exclude_filetypes
         \ ))
-  let s:indentline_exclude_filetyps = get(a:var,
-        \ 'indentline_exclude_filetyps',
-        \ s:indentline_exclude_filetyps)
-
 endfunction
 
 function! s:clear_previous_scrollbar() abort
