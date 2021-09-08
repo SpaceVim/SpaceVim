@@ -15,9 +15,8 @@ description: "Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and 
 
 ## Description
 
-The `ui` layer defines the default interface for SpaceVim, and it is loaded by default.
-
-This layer is enabled by default with following options:
+The `ui` layer defines the default interface for SpaceVim,
+and this layer is enabled by default with following options:
 
 ```toml
 [[layers]]
