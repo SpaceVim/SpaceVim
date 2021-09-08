@@ -682,13 +682,17 @@ function! SpaceVim#layers#core#statusline#register_mode(mode) abort
   endif
 endfunction
 
+
+
+" This func is used to toggle major mode in statusline
+
 function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
   if index(s:loaded_modes, a:name) != -1
     call remove(s:loaded_modes, index(s:loaded_modes, a:name))
   else
     call add(s:loaded_modes, a:name)
   endif
-  let mode = s:modes[a:name]
+  let mode = get(s:modes, a:name, {})
   call SpaceVim#logger#info('try to call func of mode:' . a:name)
   if has_key(mode, 'func')
     call call(mode.func, [])
