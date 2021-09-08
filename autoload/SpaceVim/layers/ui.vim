@@ -598,6 +598,10 @@ function! SpaceVim#layers#ui#get_options() abort
         \ 'enable_indentline',
         \ 'enable_cursorword',
         \ 'cursorword_delay',
+        \ 'concealcursor',
+        \ 'conceallevel',
+        \ 'indentline_exclude_filetyps',
+        \ 'indentline_char',
         \ 'cursorword_exclude_filetypes']
 
 endfunction
