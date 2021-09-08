@@ -19,12 +19,13 @@ scriptencoding utf-8
 "     enable_sidebar = false
 "     enable_scrollbar = false
 "     enable_indentline = true
-"     indentline_char = '|'
 "     enable_cursorword = false
+"     indentline_char = '|'
 "     conceallevel = 0
 "     concealcursor = ''
 "     cursorword_delay = 50
 "     cursorword_exclude_filetype = []
+"     indentline_exclude_filetyps = []
 " <
 "
 " if you want to disable `ui` layer, you can use:
@@ -35,16 +36,21 @@ scriptencoding utf-8
 " <
 " @subsection options
 "
-" 1. `enable_scrollbar`: Enable/disable floating scrollbar of current buffer.
+" 1. `enable_sidebar`: Enable/disable sidebar.
+" 2. `enable_scrollbar`: Enable/disable floating scrollbar of current buffer.
 " Disabled by default. This feature requires neovim's floating window.
-" 2. `enable_indentline`: Enable/disable indentline of current buffer.
+" 3. `enable_indentline`: Enable/disable indentline of current buffer.
 " Enabled by default.
-" 3. `enable_cursorword`: Enable/disable  cursorword highlighting.
+" 4. `enable_cursorword`: Enable/disable  cursorword highlighting.
 " Disabled by default.
-" 4. `cursorword_delay`: The delay duration in milliseconds for setting the
+" 5. `indentline_char`: Set the character of indentline.
+" 6. `conceallevel`: set the conceallevel option.
+" 7. `concealcursor`: set the concealcursor option.
+" 8. `cursorword_delay`: The delay duration in milliseconds for setting the
 " word highlight after cursor motions, the default is 50.
-" 5. `cursorword_exclude_filetypes`: Ignore filetypes when enable cursorword
+" 9. `cursorword_exclude_filetypes`: Ignore filetypes when enable cursorword
 " highlighting.
+" 10. `indentline_exclude_filetyps`: Ignore filetypes when enable indentline.
 "
 " @subsection key bindings
 " >
