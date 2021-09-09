@@ -13,6 +13,7 @@ description: "General documentation about how to use SpaceVim, including the qui
 - [Concepts](#concepts)
 - [Who can benefit from this?](#who-can-benefit-from-this)
 - [Update and Rollback](#update-and-rollback)
+  - [Mirrors](#mirrors)
   - [Update SpaceVim itself](#update-spacevim-itself)
   - [Update plugins](#update-plugins)
   - [Reinstall plugins](#reinstall-plugins)
@@ -178,6 +179,14 @@ Move Text Transient State:
 - Vim users wanting a simple but deep configuration system.
 
 ## Update and Rollback
+
+### Mirrors
+
+The official mirrors are: gitee, gitlab, and coding. When install SpaceVim, run the installation script with `--mirror` option.
+
+```
+curl -sLf https://spacevim.org/install.sh | bash -s -- --mirror github
+```
 
 ### Update SpaceVim itself
 

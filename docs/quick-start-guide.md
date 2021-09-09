@@ -34,7 +34,7 @@ If you are using a terminal emulator, you will need to set the font in the termi
 
 ### Linux and macOS
 
-```bash
+```
 curl -sLf https://spacevim.org/install.sh | bash
 ```
 
@@ -43,18 +43,9 @@ all plugins will be downloaded **automatically**.
 
 For more info about the install script, please check:
 
-```bash
+```
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
-
-If you got a vimproc error like this:
-
-```
-[vimproc] vimproc's DLL: "~/.SpaceVim/bundle/vimproc.vim/lib/vimproc_linux64.so" is not found.
-```
-
-Please read `:help vimproc` and make it, you may need to install make (from `build-essential`)
-and a C compiler (like `gcc`) to build the dll (see issue [#435](https://github.com/SpaceVim/SpaceVim/issues/435) and [#544](https://github.com/SpaceVim/SpaceVim/issues/544)).
 
 ### Windows
 
@@ -62,14 +53,14 @@ The easiest way is to download [install.cmd](../install.cmd) and run it as admin
 
 ## Run in docker
 
-```sh
+```
 docker pull spacevim/spacevim
 docker run -it --rm spacevim/spacevim nvim
 ```
 
 You can also load local configurations:
 
-```sh
+```
 docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevim nvim
 ```
 
