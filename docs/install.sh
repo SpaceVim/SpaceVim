@@ -326,7 +326,9 @@ list_available_mirrors()
     echo_with_color ${Green} ""
     echo_with_color ${Green} "Available Mirrors:"
     echo_with_color ${Green} "=============================================================================="
-    echo_with_color ${Green} "gitee -> https://gitee.com/spacevim/SpaceVim"
+    echo_with_color ${Green} "gitee  -> https://gitee.com/spacevim/SpaceVim"
+    echo_with_color ${Green} "gitlab -> https://gitlab.com/SpaceVim/SpaceVim"
+    echo_with_color ${Green} "coding -> https://spacevim.coding.net/public/SpaceVim/SpaceVim/git/files"
     echo_with_color ${Green} "=============================================================================="
     echo_with_color ${Green} ""
 }
@@ -413,6 +415,10 @@ main () {
     if [ $# -gt 0 ]
     then
         case $1 in
+            --list-mirrors)
+                list_available_mirrors
+                exit 0
+                ;;
             --uninstall|-u)
                 info "Trying to uninstall SpaceVim"
                 uninstall_vim
