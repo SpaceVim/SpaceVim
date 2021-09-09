@@ -286,8 +286,10 @@ usage () {
     echo " -i, --install            install spacevim for vim or neovim"
     echo " -v, --version            Show version information and exit"
     echo " -u, --uninstall          Uninstall SpaceVim"
+    echo " -m, --mirror             Specifies the mirror to use"
     echo " -c, --checkRequirements  checkRequirements for SpaceVim"
     echo " --no-fonts               skip downloading fonts"
+    echo " --list-mirrors           list available mirrors"
     echo ""
     echo "EXAMPLE"
     echo ""
@@ -319,6 +321,16 @@ install_done () {
     echo_with_color ${Yellow} ""
 }
 
+list_available_mirrors()
+{
+    echo_with_color ${Green} ""
+    echo_with_color ${Green} "Available Mirrors:"
+    echo_with_color ${Green} "=============================================================================="
+    echo_with_color ${Green} "gitee -> https://gitee.com/spacevim/SpaceVim"
+    echo_with_color ${Green} "=============================================================================="
+    echo_with_color ${Green} ""
+}
+
 # }}}
 
 # welcome {{{
@@ -327,17 +339,17 @@ install_done () {
 welcome () {
     echo_with_color ${Yellow} "        /######                                     /##    /##/##             "
     echo_with_color ${Yellow} "       /##__  ##                                   | ##   | #|__/             "
-        echo_with_color ${Yellow} "      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### "
-        echo_with_color ${Yellow} "      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##"
-        echo_with_color ${Yellow} "       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##"
-        echo_with_color ${Yellow} "       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##"
-        echo_with_color ${Yellow} "      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##"
-        echo_with_color ${Yellow} "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/"
-        echo_with_color ${Yellow} "               | ##                                                           "
-        echo_with_color ${Yellow} "               | ##                                                           "
-        echo_with_color ${Yellow} "               |__/                                                           "
-            echo_with_color ${Yellow} "                      version : ${Version}      by : spacevim.org             "
-        }
+    echo_with_color ${Yellow} "      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### "
+    echo_with_color ${Yellow} "      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##"
+    echo_with_color ${Yellow} "       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##"
+    echo_with_color ${Yellow} "       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##"
+    echo_with_color ${Yellow} "      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##"
+    echo_with_color ${Yellow} "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/"
+    echo_with_color ${Yellow} "               | ##                                                           "
+    echo_with_color ${Yellow} "               | ##                                                           "
+    echo_with_color ${Yellow} "               |__/                                                           "
+    echo_with_color ${Yellow} "                      version : ${Version}      by : spacevim.org             "
+}
 
 # }}}
 
