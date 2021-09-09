@@ -7,19 +7,19 @@ usage () {
 push_gitee()
 {
     git remote add gitee https://SpaceVimBot:${BOTSECRET}@gitee.com/spacevim/SpaceVim.git
-    git push gitee master 
+    git push gitee master -f
 }
 
 push_gitlab()
 {
     git remote add gitlab https://SpaceVimBot:${BOTSECRET}@gitlab.com/SpaceVim/SpaceVim.git
-    git push gitlab master 
+    git push gitlab master -f
 }
 
 push_coding()
 {
     git remote add coding https://spacevim%40outlook.com:${CODINGBOTSECRET}@e.coding.net/spacevim/SpaceVim.git
-    git push coding master 
+    git push coding master -f
 }
 
 main () {
