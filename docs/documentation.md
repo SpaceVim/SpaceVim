@@ -182,7 +182,14 @@ Move Text Transient State:
 
 ### Mirrors
 
-The official mirrors are: gitee, gitlab, and coding. When install SpaceVim, run the installation script with `--mirror` option.
+Accessing Github is very slow in some areas due to geography,
+so we provide several auto-updated repository mirrors:
+
+- [gitee](https://gitee.com/spacevim/SpaceVim)
+- [gitlab](https://gitlab.com/SpaceVim/SpaceVim)
+- [coding](https://spacevim.coding.net/public/SpaceVim/SpaceVim/git/files)
+
+When install SpaceVim, run the installation script with `--mirror` option.
 
 ```
 curl -sLf https://spacevim.org/install.sh | bash -s -- --mirror github
