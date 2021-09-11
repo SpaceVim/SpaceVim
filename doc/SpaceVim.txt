@@ -469,8 +469,8 @@ default command. for example:
 ==============================================================================
 FILEMANAGER                                     *SpaceVim-options-filemanager*
 
-The default file manager of SpaceVim. Default is 'vimfiler'. you can also use
-nerdtree or defx
+The default file manager of SpaceVim. Default is 'nerdtree'. you can also use
+defx or vimfiler
 
 ==============================================================================
 FILETREE_DIRECTION                       *SpaceVim-options-filetree_direction*
@@ -1113,8 +1113,8 @@ installed.
 <
 
                                                       *g:spacevim_filemanager*
-The default file manager of SpaceVim. Default is 'vimfiler'. you can also use
-nerdtree or defx
+The default file manager of SpaceVim. Default is 'nerdtree'. you can also use
+defx or vimfiler
 
                                                *g:spacevim_filetree_direction*
 Config the direction of file tree. Default is 'right'. you can also set to

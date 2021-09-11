@@ -832,8 +832,8 @@ To change the filemanager plugin:
 ```toml
 [options]
     # file manager plugins supported in SpaceVim:
-    # - vimfiler (default)
-    # - nerdtree
+    # - nerdtree (default)
+    # - vimfiler
     # - defx
     filemanager = "defx"
 ```

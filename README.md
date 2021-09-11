@@ -6,7 +6,6 @@
 [Twitter](https://twitter.com/SpaceVim) \|
 [中文官网](https://spacevim.org/cn/)
 
-
 [![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/SpaceVim)
 [![build](https://github.com/SpaceVim/SpaceVim/workflows/build/badge.svg)](https://github.com/SpaceVim/SpaceVim/actions?query=workflow%3Abuild)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
