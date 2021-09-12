@@ -31,54 +31,56 @@ CONTENTS                                                   *SpaceVim-contents*
       11. enable_cursorcolumn...........|SpaceVim-options-enable_cursorcolumn|
       12. enable_cursorline...............|SpaceVim-options-enable_cursorline|
       13. enable_debug.........................|SpaceVim-options-enable_debug|
-      14. enable_googlesuggest.........|SpaceVim-options-enable_googlesuggest|
-      15. enable_guicolors.................|SpaceVim-options-enable_guicolors|
-      16. enable_key_frequency.........|SpaceVim-options-enable_key_frequency|
-      17. enable_projects_cache.......|SpaceVim-options-enable_projects_cache|
-      18. enable_statusline_bfpath.|SpaceVim-options-enable_statusline_bfpath|
-      19. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
-      20. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
-      21. enable_tabline_ft_icon.....|SpaceVim-options-enable_tabline_ft_icon|
-      22. enable_vimfiler_welcome...|SpaceVim-options-enable_vimfiler_welcome|
-      23. enable_ycm.............................|SpaceVim-options-enable_ycm|
-      24. error_symbol.........................|SpaceVim-options-error_symbol|
-      25. escape_key_binding.............|SpaceVim-options-escape_key_binding|
-      26. file_searching_tools.........|SpaceVim-options-file_searching_tools|
-      27. filemanager...........................|SpaceVim-options-filemanager|
-      28. filetree_direction.............|SpaceVim-options-filetree_direction|
-      29. guifont...................................|SpaceVim-options-guifont|
-      30. home_files_number...............|SpaceVim-options-home_files_number|
-      31. info_symbol...........................|SpaceVim-options-info_symbol|
-      32. keep_server_alive...............|SpaceVim-options-keep_server_alive|
-      33. language.................................|SpaceVim-options-language|
-      34. lint_engine...........................|SpaceVim-options-lint_engine|
-      35. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      36. max_column.............................|SpaceVim-options-max_column|
-      37. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      38. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      39. project_rooter_automatically
+      14. enable_filetree_gitstatus
+..................................|SpaceVim-options-enable_filetree_gitstatus|
+      15. enable_googlesuggest.........|SpaceVim-options-enable_googlesuggest|
+      16. enable_guicolors.................|SpaceVim-options-enable_guicolors|
+      17. enable_key_frequency.........|SpaceVim-options-enable_key_frequency|
+      18. enable_projects_cache.......|SpaceVim-options-enable_projects_cache|
+      19. enable_statusline_bfpath.|SpaceVim-options-enable_statusline_bfpath|
+      20. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
+      21. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
+      22. enable_tabline_ft_icon.....|SpaceVim-options-enable_tabline_ft_icon|
+      23. enable_vimfiler_welcome...|SpaceVim-options-enable_vimfiler_welcome|
+      24. enable_ycm.............................|SpaceVim-options-enable_ycm|
+      25. error_symbol.........................|SpaceVim-options-error_symbol|
+      26. escape_key_binding.............|SpaceVim-options-escape_key_binding|
+      27. file_searching_tools.........|SpaceVim-options-file_searching_tools|
+      28. filemanager...........................|SpaceVim-options-filemanager|
+      29. filetree_direction.............|SpaceVim-options-filetree_direction|
+      30. guifont...................................|SpaceVim-options-guifont|
+      31. home_files_number...............|SpaceVim-options-home_files_number|
+      32. info_symbol...........................|SpaceVim-options-info_symbol|
+      33. keep_server_alive...............|SpaceVim-options-keep_server_alive|
+      34. language.................................|SpaceVim-options-language|
+      35. lint_engine...........................|SpaceVim-options-lint_engine|
+      36. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      37. max_column.............................|SpaceVim-options-max_column|
+      38. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      39. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      40. project_rooter_automatically
 ...............................|SpaceVim-options-project_rooter_automatically|
-      40. project_rooter_outermost.|SpaceVim-options-project_rooter_outermost|
-      41. project_rooter_patterns...|SpaceVim-options-project_rooter_patterns|
-      42. projects_cache_num.............|SpaceVim-options-projects_cache_num|
-      43. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      44. relativenumber.....................|SpaceVim-options-relativenumber|
-      45. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      46. search_tools.........................|SpaceVim-options-search_tools|
-      47. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      48. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      49. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      50. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
-      51. statusline_separator.........|SpaceVim-options-statusline_separator|
-      52. statusline_unicode_symbols
+      41. project_rooter_outermost.|SpaceVim-options-project_rooter_outermost|
+      42. project_rooter_patterns...|SpaceVim-options-project_rooter_patterns|
+      43. projects_cache_num.............|SpaceVim-options-projects_cache_num|
+      44. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      45. relativenumber.....................|SpaceVim-options-relativenumber|
+      46. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      47. search_tools.........................|SpaceVim-options-search_tools|
+      48. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      49. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      50. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      51. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
+      52. statusline_separator.........|SpaceVim-options-statusline_separator|
+      53. statusline_unicode_symbols
 .................................|SpaceVim-options-statusline_unicode_symbols|
-      53. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      54. vim_help_language...............|SpaceVim-options-vim_help_language|
-      55. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      56. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      57. windows_index_type.............|SpaceVim-options-windows_index_type|
-      58. windows_leader.....................|SpaceVim-options-windows_leader|
-      59. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      54. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      55. vim_help_language...............|SpaceVim-options-vim_help_language|
+      56. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      57. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      58. windows_index_type.............|SpaceVim-options-windows_index_type|
+      59. windows_leader.....................|SpaceVim-options-windows_leader|
+      60. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -355,6 +357,17 @@ Enable/Disable debug mode for SpaceVim. Default is false.
 >
   enable_debug = true
 <
+
+==============================================================================
+ENABLE_FILETREE_GITSTATUS         *SpaceVim-options-enable_filetree_gitstatus*
+
+Enable/Disable gitstatus column in filetree buffer, default is false.
+>
+  enable_filetree_gitstatus = false
+<
+NOTE: the `enable_vimfiler_gitstatus` option has been deprecated.
+*spacevim-options-enable_vimfiler_gitstatus*
+*g:spacevim_enable_vimfiler_gitstatus*
 
 ==============================================================================
 ENABLE_GOOGLESUGGEST                   *SpaceVim-options-enable_googlesuggest*
@@ -1294,8 +1307,8 @@ vim to start up slowly if there are too many files in the current directory.
                                               *g:spacevim_autocomplete_parens*
 Enable/Disable autocompletion of parentheses, default is 1 (enabled).
 
-                                        *g:spacevim_enable_vimfiler_gitstatus*
-Enable/Disable gitstatus column in vimfiler buffer, default is 0.
+                                        *g:spacevim_enable_filetree_gitstatus*
+Enable/Disable gitstatus column in filetree buffer, default is 0.
 
                                      *g:spacevim_enable_vimfiler_filetypeicon*
 Enable/Disable filetypeicon column in vimfiler buffer, default is 0.

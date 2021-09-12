@@ -47,9 +47,6 @@ function! SpaceVim#layers#git#plugins() abort
   else
     call add(plugins, [g:_spacevim_root_dir . 'bundle/git.vim', { 'merged' : 0}])
   endif
-  if g:spacevim_filemanager ==# 'nerdtree'
-    call add(plugins, ['Xuyuanp/nerdtree-git-plugin', {'merged' : 0}])
-  endif
   return plugins
 endfunction
 

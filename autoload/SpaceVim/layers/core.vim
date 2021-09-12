@@ -30,6 +30,10 @@ function! SpaceVim#layers#core#plugins() abort
   if g:spacevim_filemanager ==# 'nerdtree'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nerdtree', { 'merged' : 0,
           \ 'loadconf' : 1}])
+    if g:spacevim_enable_filetree_gitstatus
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/nerdtree-git-plugin', { 'merged' : 0,
+            \ 'loadconf' : 1}])
+    endif
   elseif g:spacevim_filemanager ==# 'vimfiler'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/vimfiler.vim',{
           \ 'merged' : 0,
