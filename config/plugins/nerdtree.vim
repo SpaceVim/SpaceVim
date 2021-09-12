@@ -58,7 +58,12 @@ endfunction
 function! s:nerdtree_l() abort
   let path = g:NERDTreeFileNode.GetSelected().path.str()
   if isdirectory(path)
-    let path = fnamemodify(path, ':p:h')
+    if matchstr(getline('.'), 'S') ==# g:NERDTreeDirArrowCollapsible
+      normal! gj
+    else
+      call g:NERDTreeKeyMap.Invoke('o')
+      normal! gj
+    endif
   else
     call g:NERDTreeKeyMap.Invoke('o')
   endif
