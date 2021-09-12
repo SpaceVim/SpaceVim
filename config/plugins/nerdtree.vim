@@ -24,6 +24,8 @@ augroup END
 function! s:nerdtreeinit() abort
   nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
   nnoremap <silent><buffer> P  :<C-u>call <SID>paste_to_file_manager()<CR>
+  nnoremap <silent><buffer> h  :<C-u>call <SID>nerdtree_h()<CR>
+  nnoremap <silent><buffer> l  :<C-u>call <SID>nerdtree_l()<CR>
 endfunction
 
 function! s:paste_to_file_manager() abort
@@ -45,4 +47,19 @@ function! s:copy_to_system_clipboard() abort
   let filename = g:NERDTreeFileNode.GetSelected().path.str()
   call s:VCOP.systemlist(['xclip-copyfile', filename])
   echo 'Yanked:' . (type(filename) == 3 ? len(filename) : 1 ) . ( isdirectory(filename) ? 'directory' : 'file'  )
+endfunction
+
+function! s:nerdtree_h() abort
+  let path = g:NERDTreeFileNode.GetSelected().path.str()
+  let path = fnamemodify(path, ':p:h')
+  exe 'NERDTreeFind ' . path
+endfunction
+
+function! s:nerdtree_l() abort
+  let path = g:NERDTreeFileNode.GetSelected().path.str()
+  if isdirectory(path)
+    let path = fnamemodify(path, ':p:h')
+  else
+    call g:NERDTreeKeyMap.Invoke('o')
+  endif
 endfunction
