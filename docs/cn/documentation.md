@@ -772,7 +772,7 @@ SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 
 
 SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性需要分析文件夹内容，
 会使得文件树插件比较慢，因此默认没有打开，如果需要使用这一特性，
-可向配置文件中加入 `enable_vimfiler_gitstatus = true`，启用后的截图如下：
+可向配置文件中加入 `enable_filetree_gitstatus = true`，启用后的截图如下：
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
 
