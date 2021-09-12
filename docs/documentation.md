@@ -824,7 +824,7 @@ Key bindings within the tab manager window:
 
 ### File tree
 
-SpaceVim uses vimfiler as the default file tree, the default key binding is `<F3>`.
+SpaceVim uses `nerdtree` as the default file tree, the default key binding is `<F3>`.
 SpaceVim also provides `SPC f t` and `SPC f T` to open the file tree.
 
 To change the filemanager plugin:
@@ -833,13 +833,15 @@ To change the filemanager plugin:
 [options]
     # file manager plugins supported in SpaceVim:
     # - nerdtree (default)
-    # - vimfiler
-    # - defx
-    filemanager = "defx"
+    # - vimfiler: you need to build the vimproc.vim in bundle/vimproc.vim directory
+    # - defx: requires +py3 feature
+    filemanager = "nerdtree"
 ```
 
-VCS integration is supported, there will be a column status, this feature may make vimfiler slow, so it is not enabled by default.
-To enable this feature, add `enable_vimfiler_gitstatus = true` to your custom configuration file. Here is a picture of this feature:
+VCS integration is supported, there will be a column status,
+this feature may make filetree slow, so it is not enabled by default.
+To enable this feature, add `enable_filetree_gitstatus = true`
+to your custom configuration file. Here is a picture of this feature:
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
 
