@@ -1202,6 +1202,9 @@ let g:spacevim_autocomplete_parens = 1
 " >
 "   enable_filetree_gitstatus = false
 " <
+" NOTE: the `enable_vimfiler_gitstatus` option has been deprecated.
+" *spacevim-options-enable_vimfiler_gitstatus*
+" *g:spacevim_enable_vimfiler_gitstatus*
 
 ""
 " Enable/Disable gitstatus column in filetree buffer, default is 0.

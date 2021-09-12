@@ -365,6 +365,9 @@ Enable/Disable gitstatus column in filetree buffer, default is false.
 >
   enable_filetree_gitstatus = false
 <
+NOTE: the `enable_vimfiler_gitstatus` option has been deprecated.
+*spacevim-options-enable_vimfiler_gitstatus*
+*g:spacevim_enable_vimfiler_gitstatus*
 
 ==============================================================================
 ENABLE_GOOGLESUGGEST                   *SpaceVim-options-enable_googlesuggest*
