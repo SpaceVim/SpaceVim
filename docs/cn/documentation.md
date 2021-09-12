@@ -758,16 +758,17 @@ call SpaceVim#layers#core#statusline#register_sections('test', function('s:test_
 
 ### 文件树
 
-SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 `F3`, SpaceVim 也提供了另外一组快捷键 `SPC f t` 和 `SPC f T` 来打开文件树。
+SpaceVim 使用 nerdtree 作为默认的文件树插件，默认的快捷键是 `F3`,
+SpaceVim 也提供了另外一组快捷键 `SPC f t` 和 `SPC f T` 来打开文件树。
 如果需要修改默认文件树插件，需要在 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中修改选项 `filemanager`：
 
 ```toml
 [options]
     # 文件树插件可选值包括：
-    # - vimfiler （默认）
-    # - nerdtree
-    # - defx
-    filemanager = "defx"
+    # - nerdtree （默认）
+    # - vimfiler: 需要编译 vimproc.vim, 在目录 bundle/vimproc.vim 下
+    # - defx: 需要 +py3 支持
+    filemanager = "nerdtree"
 ```
 
 SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性需要分析文件夹内容，
