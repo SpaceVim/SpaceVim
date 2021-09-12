@@ -1,5 +1,6 @@
 scriptencoding utf-8
 let s:VCOP = SpaceVim#api#import('vim#compatible')
+let s:FILE = SpaceVim#api#import('file')
 if get(g:, 'spacevim_filetree_direction', 'right') ==# 'right'
   let g:NERDTreeWinPos = 'rightbelow'
 else
@@ -51,7 +52,7 @@ endfunction
 
 function! s:nerdtree_h() abort
   let path = g:NERDTreeFileNode.GetSelected().path.str()
-  let path = fnamemodify(path, ':p:h')
+  let path = s:FILE.unify_path(path, ':p:h')
   exe 'NERDTreeFind ' . path
 endfunction
 
