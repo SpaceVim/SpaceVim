@@ -52,8 +52,13 @@ endfunction
 
 function! s:nerdtree_h() abort
   let path = g:NERDTreeFileNode.GetSelected().path.str()
-  let path = s:FILE.unify_path(path, ':p:h')
+  if isdirectory(path)
+    let path = s:FILE.unify_path(path, ':p:h:h')
+  else
+    let path = s:FILE.unify_path(path, ':p:h')
+  endif
   exe 'NERDTreeFind ' . path
+  call g:NERDTreeKeyMap.Invoke('o')
 endfunction
 
 function! s:nerdtree_l() abort
