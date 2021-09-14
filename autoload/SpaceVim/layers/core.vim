@@ -959,6 +959,12 @@ function! SpaceVim#layers#core#set_variable(var) abort
 
 endfunction
 
+function! SpaceVim#layers#core#get_options() abort
+
+  return ['filetree_closed_icon']
+
+endfunction
+
 function! SpaceVim#layers#core#health() abort
   call SpaceVim#layers#core#plugins()
   call SpaceVim#layers#core#config()
