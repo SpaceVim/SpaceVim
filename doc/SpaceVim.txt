@@ -648,7 +648,7 @@ option to:
 SIDEBAR_WIDTH                                 *SpaceVim-options-sidebar_width*
 
 Set the width of the SpaceVim sidebar. Default is 30. This value will be used
-by tagbar and vimfiler.
+by tagbar and filetree.
 
 ==============================================================================
 SNIPPET_ENGINE                               *SpaceVim-options-snippet_engine*
@@ -939,7 +939,7 @@ Enable/Disable YouCompleteMe. Default is 0.
 
                                                     *g:spacevim_sidebar_width*
 Set the width of the SpaceVim sidebar. Default is 30. This value will be used
-by tagbar and vimfiler.
+by tagbar and filetree.
 
                                                    *g:spacevim_snippet_engine*
 Set the snippet engine of SpaceVim, default is neosnippet. to enable

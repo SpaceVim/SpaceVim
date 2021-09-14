@@ -6,7 +6,7 @@ if get(g:, 'spacevim_filetree_direction', 'right') ==# 'right'
 else
   let g:NERDTreeWinPos = 'left'
 endif
-let g:NERDTreeWinSize=get(g:,'NERDTreeWinSize',31)
+let g:NERDTreeWinSize=get(g:,'NERDTreeWinSize',g:spacevim_sidebar_width)
 let g:NERDTreeChDirMode=get(g:,'NERDTreeChDirMode',1)
 let g:NERDTreeShowHidden = get(g:, '_spacevim_filetree_show_hidden_files', 0)
 let g:NERDTreeDirArrowExpandable = '▶'
