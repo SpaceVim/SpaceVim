@@ -961,7 +961,12 @@ endfunction
 
 function! SpaceVim#layers#core#get_options() abort
 
-  return ['filetree_closed_icon']
+  return [
+        \ 'filetree_closed_icon',
+        \ 'filetree_opened_icon',
+        \ 'filetree_show_hidden',
+        \ 'enable_smooth_scrolling'
+        \ ]
 
 endfunction
 
