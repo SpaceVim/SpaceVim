@@ -939,12 +939,20 @@ endfunction
 
 
 let g:_spacevim_filetree_show_hidden_files = 0
+let g:_spacevim_filetree_opened_icon = '▼'
+let g:_spacevim_filetree_closed_icon = '▶'
 
 function! SpaceVim#layers#core#set_variable(var) abort
 
   let g:_spacevim_filetree_show_hidden_files = get(a:var,
         \ 'filetree_show_hidden',
         \ g:_spacevim_filetree_show_hidden_files)
+  let g:_spacevim_filetree_opened_icon = get(a:var,
+        \ 'filetree_opened_icon',
+        \ g:_spacevim_filetree_opened_icon)
+  let g:_spacevim_filetree_closed_icon = get(a:var,
+        \ 'filetree_closed_icon',
+        \ g:_spacevim_filetree_closed_icon)
   let s:enable_smooth_scrolling = get(a:var,
         \ 'enable_smooth_scrolling',
         \ s:enable_smooth_scrolling)

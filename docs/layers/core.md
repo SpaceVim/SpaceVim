@@ -42,6 +42,8 @@ To use defx, please add following snippet into your configuration file.
     name = 'core'
     filetree_show_hidden = true
     enable_smooth_scrolling = true
+    filetree_opened_icon = ''
+    filetree_closed_icon = ''
 ```
 
 ## Key bindings
