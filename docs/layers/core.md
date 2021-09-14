@@ -11,23 +11,25 @@ description: "SpaceVim core layer provides many default key bindings and feature
 - [Features](#features)
   - [FileTree](#filetree)
 - [Configuration](#configuration)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
 ## Intro
 
-This is the core layer of SpaceVim, and it is loaded by default.
+The `core` layer of SpaceVim. This layer is enabled by default, and it provides filetree,
+comment key bindings etc.
 
 ## Features
 
 ### FileTree
 
-The filetree plugin is included in core layer, by default `vimfiler` is used as filetree manager.
-To use nerdtree or defx, please add following snippet into your configuration file.
+The filetree is included in core layer, by default `nerdtree` is used as filetree manager.
+To use defx, please add following snippet into your configuration file.
 
 ```toml
 [options]
-  filemanager = "nerdtree"
+  filemanager = "defx"
 ```
 
 ## Configuration
@@ -42,3 +44,8 @@ To use nerdtree or defx, please add following snippet into your configuration fi
     enable_smooth_scrolling = true
 ```
 
+## Key bindings
+
+| key bindings | description           |
+| ------------ | --------------------- |
+| `g o`        | open url under cursor |

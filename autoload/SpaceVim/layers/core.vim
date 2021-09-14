@@ -13,6 +13,10 @@ endif
 let s:enable_smooth_scrolling = 1
 
 
+" disabel netrw
+let g:loaded_netrwPlugin = 1
+
+
 let s:SYS = SpaceVim#api#import('system')
 let s:FILE = SpaceVim#api#import('file')
 let s:MESSAGE = SpaceVim#api#import('vim#message')
