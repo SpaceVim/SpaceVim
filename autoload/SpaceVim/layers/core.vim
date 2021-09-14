@@ -5,6 +5,8 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
+
 
 if exists('s:string_hi')
   finish
