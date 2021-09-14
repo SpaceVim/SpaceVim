@@ -11,6 +11,7 @@ let g:NERDTreeChDirMode=get(g:,'NERDTreeChDirMode',1)
 let g:NERDTreeShowHidden = get(g:, '_spacevim_filetree_show_hidden_files', 0)
 let g:NERDTreeDirArrowExpandable = '▶'
 let g:NERDTreeDirArrowCollapsible = '▼'
+let g:NERDTreeMinimalUI=1
 augroup nerdtree_zvim
   autocmd!
   autocmd bufenter *
