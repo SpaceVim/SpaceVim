@@ -907,7 +907,7 @@ function! s:save_current_file() abort
     echohl None
   else
     echohl Delimiter
-    echo  bufname() . ' written'
+    echo  fnamemodify(bufname(), ':.:gs?[\\/]?/?') . ' written'
     echohl None
   endif
 endfunction
