@@ -11,7 +11,6 @@ description: "SpaceVim core layer provides many default key bindings and feature
 - [Features](#features)
   - [FileTree](#filetree)
 - [Configuration](#configuration)
-- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -45,9 +44,3 @@ To use defx, please add following snippet into your configuration file.
     filetree_opened_icon = ''
     filetree_closed_icon = ''
 ```
-
-## Key bindings
-
-| key bindings | description           |
-| ------------ | --------------------- |
-| `g o`        | open url under cursor |
