@@ -403,11 +403,11 @@ let g:spacevim_enable_ycm              = 0
 " @section sidebar_width, options-sidebar_width
 " @parentsection options
 " Set the width of the SpaceVim sidebar. Default is 30.
-" This value will be used by tagbar and vimfiler.
+" This value will be used by tagbar and filetree.
 
 ""
 " Set the width of the SpaceVim sidebar. Default is 30.
-" This value will be used by tagbar and vimfiler.
+" This value will be used by tagbar and filetree.
 let g:spacevim_sidebar_width           = 30
 
 ""

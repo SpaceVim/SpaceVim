@@ -5,12 +5,18 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
+
 
 if exists('s:string_hi')
   finish
 endif
 
 let s:enable_smooth_scrolling = 1
+
+
+" disabel netrw
+let g:loaded_netrwPlugin = 1
 
 
 let s:SYS = SpaceVim#api#import('system')
@@ -935,15 +941,34 @@ endfunction
 
 
 let g:_spacevim_filetree_show_hidden_files = 0
+let g:_spacevim_filetree_opened_icon = '▼'
+let g:_spacevim_filetree_closed_icon = '▶'
 
 function! SpaceVim#layers#core#set_variable(var) abort
 
   let g:_spacevim_filetree_show_hidden_files = get(a:var,
         \ 'filetree_show_hidden',
         \ g:_spacevim_filetree_show_hidden_files)
+  let g:_spacevim_filetree_opened_icon = get(a:var,
+        \ 'filetree_opened_icon',
+        \ g:_spacevim_filetree_opened_icon)
+  let g:_spacevim_filetree_closed_icon = get(a:var,
+        \ 'filetree_closed_icon',
+        \ g:_spacevim_filetree_closed_icon)
   let s:enable_smooth_scrolling = get(a:var,
         \ 'enable_smooth_scrolling',
         \ s:enable_smooth_scrolling)
+
+endfunction
+
+function! SpaceVim#layers#core#get_options() abort
+
+  return [
+        \ 'filetree_closed_icon',
+        \ 'filetree_opened_icon',
+        \ 'filetree_show_hidden',
+        \ 'enable_smooth_scrolling'
+        \ ]
 
 endfunction
 

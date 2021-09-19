@@ -6,11 +6,12 @@ if get(g:, 'spacevim_filetree_direction', 'right') ==# 'right'
 else
   let g:NERDTreeWinPos = 'left'
 endif
-let g:NERDTreeWinSize=get(g:,'NERDTreeWinSize',31)
+let g:NERDTreeWinSize=get(g:,'NERDTreeWinSize', get(g:, 'spacevim_sidebar_width', 35))
 let g:NERDTreeChDirMode=get(g:,'NERDTreeChDirMode',1)
 let g:NERDTreeShowHidden = get(g:, '_spacevim_filetree_show_hidden_files', 0)
-let g:NERDTreeDirArrowExpandable = '▶'
-let g:NERDTreeDirArrowCollapsible = '▼'
+let g:NERDTreeDirArrowExpandable = get(g:, 'NERDTreeDirArrowExpandable', get(g:, '_spacevim_filetree_closed_icon', ''))
+let g:NERDTreeDirArrowCollapsible = get(g:, 'NERDTreeDirArrowCollapsible', get(g:, '_spacevim_filetree_opened_icon', ''))
+let g:NERDTreeMinimalUI=1
 augroup nerdtree_zvim
   autocmd!
   autocmd bufenter *
