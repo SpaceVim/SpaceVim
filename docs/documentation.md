@@ -1002,6 +1002,12 @@ Use `SpaceVim#custom#SPC()` to define custom SPC mappings. For instance:
 call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
 ```
 
+The first parameter sets the type of shortcut key,
+which can be `nnoremap` or `nmap`, the second parameter is a list of keys,
+and the third parameter is an ex command or key binding,
+depending on whether the last parameter is true.
+The fourth parameter is a short description of this custom key binding.
+
 **Fuzzy find key bindings**
 
 It is possible to search for specific key bindings by pressing `?` in the root of the guide buffer.

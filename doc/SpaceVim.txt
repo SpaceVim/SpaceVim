@@ -1382,6 +1382,14 @@ SpaceVim#api#import({name})                            *SpaceVim#api#import()*
   Import API base the given {name}, and return the API object. for all
   available APIs please check |spacevim-api|
 
+SpaceVim#custom#SPC({m}, {keys}, {cmd}, {desc}, {is_cmd})
+                                                       *SpaceVim#custom#SPC()*
+  The first parameter sets the type of shortcut key, which can be `nnoremap`
+  or `nmap`, the second parameter is a list of keys, and the third parameter
+  is an ex command or key binding, depending on whether the last parameter is
+  true. The fourth parameter is a short description of this custom key
+  binding.
+
 SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
   Load the {layer} you want. For all the layers SpaceVim supports, see
   |SpaceVim-layers|. the second argv is the layer variable.

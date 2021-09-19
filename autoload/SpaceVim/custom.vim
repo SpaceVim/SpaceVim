@@ -83,6 +83,13 @@ function! s:write_to_config(config) abort
   call writefile(a:config, cf, '')
 endfunction
 
+
+""
+" The first parameter sets the type of shortcut key,
+" which can be `nnoremap` or `nmap`, the second parameter is a list of keys,
+" and the third parameter is an ex command or key binding,
+" depending on whether the last parameter is true.
+" The fourth parameter is a short description of this custom key binding.
 function! SpaceVim#custom#SPC(m, keys, cmd, desc, is_cmd) abort
   call add(g:_spacevim_mappings_space_custom,[a:m, a:keys, a:cmd, a:desc, a:is_cmd])
 endfunction
