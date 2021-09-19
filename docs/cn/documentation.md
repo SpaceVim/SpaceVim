@@ -926,6 +926,10 @@ endfunction
 call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
 ```
 
+第一个参数设定快捷键的类型，
+可以是 `nnoremap` 或者 `nmap`，第二个参数是一个按键列表，
+第三个参数是一个 ex 命令或者按键，这基于最后一个参数是否为`true`。第四个参数是一个简短的描述。
+
 **模糊搜索快捷键**
 
 可以通过 `SPC ?` 将当前快捷键罗列出来。然后可以输入快捷键按键字母或者描述，可以模糊匹配并展示结果。
