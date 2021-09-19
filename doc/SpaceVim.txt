@@ -85,9 +85,9 @@ CONTENTS                                                   *SpaceVim-contents*
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
   6. Layers..................................................|SpaceVim-layers|
-      1. autocomplete..................................|SpaceVim-autocomplete|
+      1. autocomplete............................|SpaceVim-layer-autocomplete|
       2. checkers....................................|SpaceVim-layer-checkers|
-      3. colorscheme....................................|SpaceVim-colorscheme|
+      3. colorscheme..............................|SpaceVim-layer-colorscheme|
       4. core#statusline......................|SpaceVim-layer-core-statusline|
       5. core#tabline............................|SpaceVim-layer-core-tabline|
       6. exprfold....................................|SpaceVim-layer-exprfold|
@@ -1427,7 +1427,7 @@ https://www.scriptol.com/programming/list-programming-languages.php#query-lang
 uage
 
 ==============================================================================
-AUTOCOMPLETE                                           *SpaceVim-autocomplete*
+AUTOCOMPLETE                                     *SpaceVim-layer-autocomplete*
 
 CODE COMPLETION
 SpaceVim uses neocomplete as the default completion engine if vim has lua
@@ -1453,7 +1453,7 @@ CHECKERS                                             *SpaceVim-layer-checkers*
 SpaceVim uses neomake as default syntax checker.
 
 ==============================================================================
-COLORSCHEME                                             *SpaceVim-colorscheme*
+COLORSCHEME                                       *SpaceVim-layer-colorscheme*
 
 The ldefault colorscheme for SpaceVim is gruvbox. The colorscheme can be
 changed with the `g:spacevim_colorscheme` option by adding the following line

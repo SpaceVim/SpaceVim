@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section autocomplete, autocomplete
+" @section autocomplete, layer-autocomplete
 " @parentsection layers
 " @subsection code completion
 " SpaceVim uses neocomplete as the default completion engine if vim has lua
