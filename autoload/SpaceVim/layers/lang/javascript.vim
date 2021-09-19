@@ -47,7 +47,7 @@
 " <
 "
 
-
+let s:format_on_save = 0
 
 function! SpaceVim#layers#lang#javascript#plugins() abort
   let plugins = [
@@ -86,6 +86,9 @@ let s:enable_flow_syntax = 0
 function! SpaceVim#layers#lang#javascript#set_variable(var) abort
   let s:auto_fix = get(a:var, 'auto_fix', 0)
   let s:enable_flow_syntax = get(a:var, 'enable_flow_syntax', 0)
+  let s:format_on_save = get(a:var,
+        \ 'format_on_save',
+        \ s:format_on_save)
 endfunction
 
 function! SpaceVim#layers#lang#javascript#config() abort
@@ -136,6 +139,14 @@ function! SpaceVim#layers#lang#javascript#config() abort
   " be flushed by sender.
   " Use node -i will show the output of repl command.
   call SpaceVim#plugins#repl#reg('javascript', ['node', '-i'])
+
+  " Format on save
+  if s:format_on_save
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'javascript',
+          \ 'enable' : 1,
+          \ })
+  endif
 endfunction
 
 function! s:on_ft() abort
@@ -213,3 +224,10 @@ function! s:checktime_if_javascript() abort
 endfunction
 
 " vi: et sw=2 cc=80
+
+
+function! SpaceVim#layers#lang#javascript#health() abort
+  call SpaceVim#layers#lang#javascript#plugins()
+  call SpaceVim#layers#lang#javascript#config()
+  return 1
+endfunction

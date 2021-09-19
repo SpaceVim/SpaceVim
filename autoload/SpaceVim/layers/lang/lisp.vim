@@ -182,3 +182,9 @@ fu! s:vlime_arglist() abort
 endf
 fu! s:vlime_input() abort
 endf
+
+function! SpaceVim#layers#lang#lisp#health() abort
+  call SpaceVim#layers#lang#lisp#plugins()
+  call SpaceVim#layers#lang#lisp#config()
+  return 1
+endfunction

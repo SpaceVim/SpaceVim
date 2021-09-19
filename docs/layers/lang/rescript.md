@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#rescript layer"
-description: "This layer is for ReScript development, provide syntax checking, code runner and repl support for ReScript file."
+description: "This layer is for ReScript development, provides syntax checking, code runner and repl support for ReScript files."
 ---
 
 # [Available Layers](../../) >> lang#rescript
@@ -20,7 +20,7 @@ This layer is for [ReScript](https://rescript-lang.org/) development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

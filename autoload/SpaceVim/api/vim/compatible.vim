@@ -193,7 +193,7 @@ if has('patch-7.4.279')
   endfunction
 else
   function! s:self.globpath(dir, expr) abort
-    return split(globpath(a:dir, a:expr), '\n')
+    return split(globpath(a:dir, a:expr), "\n")
   endfunction
 endif
 
@@ -343,6 +343,17 @@ else
     return resolve(a:path)
   endfunction
 endif
+
+
+" this function is only for test
+function! s:self.luaeval(expr) abort
+  let rst = luaeval(a:expr)
+  if type(rst) ==# 5
+    return float2nr(rst)
+  else
+    return rst
+  endif
+endfunction
 
 
 

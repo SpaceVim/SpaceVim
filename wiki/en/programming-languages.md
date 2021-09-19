@@ -20,7 +20,7 @@ This is a list of programming languages supported in SpaceVim:
 | AutoHotkey        | [lang#autohotkey](https://spacevim.org/layers/lang/autohotkey/)     |                                                                                                               |
 | Bash, Fish, zsh   | [lang#sh](https://spacevim.org/layers/lang/sh/)                     |                                                                                                               |
 | C#                | [lang#csharp](https://spacevim.org/layers/lang/csharp/)             |                                                                                                               |
-| C/C++             | [lang#c](https://spacevim.org/layers/lang/c/)                       |                                                                                                               |
+| C/C++/Objective-C | [lang#c](https://spacevim.org/layers/lang/c/)                       |                                                                                                               |
 | Clojure           | [lang#clojure](https://spacevim.org/layers/lang/clojure/)           |                                                                                                               |
 | CoffeeScript      | [lang#coffeescript](https://spacevim.org/layers/lang/coffeescript/) |                                                                                                               |
 | Crystal           | [lang#crystal](https://spacevim.org/layers/lang/crystal/)           |                                                                                                               |
@@ -29,9 +29,11 @@ This is a list of programming languages supported in SpaceVim:
 | Dart              | [lang#dart](https://spacevim.org/layers/lang/dart/)                 |                                                                                                               |
 | DOS batch         | [lang#batch](https://spacevim.org/layers/lang/batch/)               |                                                                                                               |
 | Elixir            | [lang#elixir](https://spacevim.org/layers/lang/elixir/)             |                                                                                                               |
+| Eiffel            | [lang#eiffel](https://spacevim.org/layers/lang/eiffel/)             |
 | Elm               | [lang#elm](https://spacevim.org/layers/lang/elm/)                   |                                                                                                               |
 | erlang            | [lang#erlang](https://spacevim.org/layers/lang/erlang/)             |                                                                                                               |
 | F#                | [lang#fsharp](https://spacevim.org/layers/lang/fsharp/)             |                                                                                                               |
+| Factor            | [lang#factor](https://spacevim.org/layers/lang/factor/)             |                                                                                                               |
 | FoxPro            | [lang#foxpro](https://spacevim.org/layers/lang/foxpro/)             |                                                                                                               |
 | Fortran           | [lang#fortran](https://spacevim.org/layers/lang/fortran/)           |                                                                                                               |
 | Go                | [lang#go](https://spacevim.org/layers/lang/go/)                     |                                                                                                               |
@@ -54,6 +56,7 @@ This is a list of programming languages supported in SpaceVim:
 | Kotlin            | [lang#kotlin](https://spacevim.org/layers/lang/kotlin/)             |                                                                                                               |
 | lasso             | [lang#lasso](https://spacevim.org/layers/lang/lasso/)               |                                                                                                               |
 | latex             | [lang#latex](https://spacevim.org/layers/lang/latex/)               |                                                                                                               |
+| Lisp              | [lang#lisp](https://spacevim.org/layers/lang/lisp/)                 |                                                                                                               |
 | LiveScript        | [lang#livescript](https://spacevim.org/layers/lang/livescript/)     |                                                                                                               |
 | Lua               | [lang#lua](https://spacevim.org/layers/lang/lua/)                   |                                                                                                               |
 | MoonScript        | [lang#moonscript](https://spacevim.org/layers/lang/moonscript/)     |                                                                                                               |
@@ -104,168 +107,276 @@ Before adding these languages, we need to know:
 | 4th Dimension                 |           |        |
 | ABAP                          |           |        |
 | ABC                           |           |        |
+| ABCL                          |           |        |
+| ALF                           |           |        |
+| ALGOL                         |           |        |
+| APL                           |           |        |
+| APL                           |           |        |
+| ATLAS                         |           |        |
 | Ada                           |           |        |
+| Ada                           |           |        |
+| Afnix                         |           |        |
 | Agilent VEE                   |           |        |
+| Agora                         |           |        |
 | Algol                         |           |        |
 | Alice                         |           |        |
 | Angelscript                   |           |        |
 | Apex                          |           |        |
-| APL                           |           |        |
+| AppleScript                   |           |        |
 | Applescript                   |           |        |
 | Arc                           |           |        |
-| ATLAS                         |           |        |
+| AssemblyScript/assemblyscript |           |        |
+| AutoIt                        |           |        |
 | AutoIt                        |           |        |
 | AutoLISP                      |           |        |
 | Automator                     |           |        |
 | Avenue                        |           |        |
 | Awk                           |           |        |
-| Basic                         |           |        |
+| Awk                           |           |        |
+| BASIC                         |           |        |
 | BBC BASIC                     |           |        |
-| bc                            |           |        |
 | BCPL                          |           |        |
 | BETA                          |           |        |
+| BETA                          |           |        |
+| Basic                         |           |        |
+| BeanShell                     |           |        |
+| Bliss                         |           |        |
 | BlitzMax                      |           |        |
 | Boo                           |           |        |
 | Bourne shell                  |           |        |
+| C                             |           |        |
 | C shell                       |           |        |
+| C#                            |           |        |
+| C++                           |           |        |
 | C-Omega                       |           |        |
-| Ceylon                        |           |        |
 | CFML                          |           |        |
-| cg                            |           |        |
-| Ch                            |           |        |
 | CHILL                         |           |        |
 | CIL                           |           |        |
 | CL                            |           |        |
-| Clarion                       |           |        |
-| Clean                         |           |        |
-| Clipper                       |           |        |
+| CLEO                          |           |        |
+| CLIST                         |           |        |
 | CLU                           |           |        |
 | COBOL                         |           |        |
-| Cobra                         |           |        |
+| COBOL                         |           |        |
 | COMAL                         |           |        |
+| Cecil                         |           |        |
+| Ceylon                        |           |        |
+| Ch                            |           |        |
+| Charity                       |           |        |
+| ChucK                         |           |        |
+| Cilk                          |           |        |
+| Clarion                       |           |        |
+| Clean                         |           |        |
+| Clean                         |           |        |
+| Clipper                       |           |        |
+| Cobra                         |           |        |
+| Cobra                         |           |        |
+| ColdFusion                    |           |        |
 | Common Lisp                   |           |        |
-| cT                            |           |        |
+| Component Pascal              |           |        |
+| Concurrent Pascal             |           |        |
 | Curl                          |           |        |
+| Curl                          |           |        |
+| Curry                         |           |        |
+| D                             |           |        |
+| DASL                          |           |        |
 | DCL                           |           |        |
+| DIBOL                         |           |        |
 | Delphi                        |           |        |
 | DiBOL                         |           |        |
 | Dylan                         |           |        |
 | E                             |           |        |
+| E                             |           |        |
 | ECMAScript                    |           |        |
 | EGL                           |           |        |
+| EXEC                          |           |        |
 | Eiffel                        |           |        |
 | Emacs Lisp                    |           |        |
+| Erlang                        |           |        |
 | Etoys                         |           |        |
 | Euphoria                      |           |        |
-| EXEC                          |           |        |
-| Factor                        |           |        |
+| F#                            |           |        |
+| F-Script                      |           |        |
 | Falcon                        |           |        |
 | Fantom                        |           |        |
+| FascinatedBox/lily            |           |        |
 | Felix                         |           |        |
 | Forth                         |           |        |
+| Forth                         |           |        |
+| Fortran                       |           |        |
 | Fortress                      |           |        |
-| Gambas                        |           |        |
+| Frege/frege                   |           |        |
+| Fril                          |           |        |
+| Frink                         |           |        |
 | GAMS                          |           |        |
 | GLSL                          |           |        |
 | GML                           |           |        |
 | GNU Octave                    |           |        |
-| Haxe                          |           |        |
-| Heron                         |           |        |
+| Gambas                        |           |        |
+| Game Maker Language           |           |        |
 | HPL                           |           |        |
+| HTML                          |           |        |
+| Haskell                       |           |        |
+| Haxe                          |           |        |
+| HaxeFoundation/haxe           |           |        |
+| Heron                         |           |        |
 | HyperTalk                     |           |        |
-| Icon                          |           |        |
+| HyperTalk                     |           |        |
+| ICI                           |           |        |
 | IDL                           |           |        |
+| INTERCAL                      |           |        |
+| IO                            |           |        |
+| Icon                          |           |        |
 | Inform                        |           |        |
 | Informix-4GL                  |           |        |
-| INTERCAL                      |           |        |
 | Ioke                          |           |        |
+| J                             |           |        |
 | JADE                          |           |        |
-| JavaFX Script                 |           |        |
+| JASS                          |           |        |
+| JOVIAL                        |           |        |
 | JScript                       |           |        |
 | JScript.NET                   |           |        |
+| Janus                         |           |        |
+| Java                          |           |        |
+| JavaFX Script                 |           |        |
+| Joule                         |           |        |
+| Joy                           |           |        |
+| Kite                          |           |        |
 | Korn shell                    |           |        |
+| LPC                           |           |        |
 | LabVIEW                       |           |        |
 | Ladder Logic                  |           |        |
 | Lasso                         |           |        |
+| Lava                          |           |        |
+| Leda                          |           |        |
+| Limbo                         |           |        |
 | Limbo                         |           |        |
 | Lingo                         |           |        |
+| Lisaac                        |           |        |
 | Lisp                          |           |        |
 | LiveCode                      |           |        |
 | Logo                          |           |        |
 | LotusScript                   |           |        |
-| LPC                           |           |        |
+| Lua                           |           |        |
 | Lustre                        |           |        |
+| M                             |           |        |
 | M4                            |           |        |
 | MAD                           |           |        |
-| Magic                         |           |        |
-| Magik                         |           |        |
-| Malbolge                      |           |        |
 | MANTIS                        |           |        |
-| Maple                         |           |        |
-| Max/MSP                       |           |        |
+| MATLAB                        |           |        |
 | MAXScript                     |           |        |
 | MDX                           |           |        |
 | MEL                           |           |        |
-| Mercury                       |           |        |
-| Miva                          |           |        |
 | ML                            |           |        |
-| Modula-2                      |           |        |
-| Modula-3                      |           |        |
-| Monkey                        |           |        |
+| ML                            |           |        |
 | MOO                           |           |        |
-| Moto                          |           |        |
+| MOO                           |           |        |
 | MQL4                          |           |        |
 | MUMPS                         |           |        |
+| Magic                         |           |        |
+| Magik                         |           |        |
+| Malbolge                      |           |        |
+| Maple                         |           |        |
+| Max/MSP                       |           |        |
+| Maya Embedded Language        |           |        |
+| Mercury                       |           |        |
+| Miva                          |           |        |
+| Modula-2                      |           |        |
+| Modula-2                      |           |        |
+| Modula-3                      |           |        |
+| Mondrian                      |           |        |
+| Monkey                        |           |        |
+| Moto                          |           |        |
+| Moto                          |           |        |
 | NATURAL                       |           |        |
-| Nemerle                       |           |        |
-| NetLogo                       |           |        |
 | NQC                           |           |        |
 | NSIS                          |           |        |
 | NXT-G                         |           |        |
+| Nemerle                       |           |        |
+| Nemerle                       |           |        |
+| NetLogo                       |           |        |
+| OPAL                          |           |        |
+| OPL                           |           |        |
+| OPS5                          |           |        |
+| Oberon                        |           |        |
 | Oberon                        |           |        |
 | Object Rexx                   |           |        |
+| Object-Z                      |           |        |
 | Objective-C                   |           |        |
+| Obliq                         |           |        |
+| Occam                         |           |        |
 | Occam                         |           |        |
 | OpenCL                        |           |        |
 | OpenEdge ABL                  |           |        |
-| OPL                           |           |        |
+| Oxygene                       |           |        |
 | Oxygene                       |           |        |
 | Oz                            |           |        |
-| Paradox                       |           |        |
-| Pike                          |           |        |
+| Oz                            |           |        |
+| PCASTL                        |           |        |
+| PHP                           |           |        |
 | PILOT                         |           |        |
+| PL/C                          |           |        |
+| PL/I                          |           |        |
 | PL/I                          |           |        |
 | PL/SQL                        |           |        |
-| Pliant                        |           |        |
-| PostScript                    |           |        |
 | POV-Ray                       |           |        |
+| PWCT                          |           |        |
+| Paradox                       |           |        |
+| Pascal                        |           |        |
+| Perl                          |           |        |
+| Pict                          |           |        |
+| Pike                          |           |        |
+| Pliant                        |           |        |
+| Pliant                        |           |        |
+| Poplog                        |           |        |
+| PostScript                    |           |        |
+| PostScript                    |           |        |
 | PowerBasic                    |           |        |
 | PowerScript                   |           |        |
-| PWCT                          |           |        |
+| Prograph                      |           |        |
+| Prolog                        |           |        |
 | Pure Data                     |           |        |
 | PureBasic                     |           |        |
+| Python                        |           |        |
+| Q                             |           |        |
 | Q                             |           |        |
 | REBOL                         |           |        |
+| REBOL                         |           |        |
 | REXX                          |           |        |
+| REXX                          |           |        |
+| ROOP                          |           |        |
 | RPG                           |           |        |
-| S-PLUS                        |           |        |
+| RPG                           |           |        |
+| Rapira                        |           |        |
+| Revolution                    |           |        |
+| Ruby                          |           |        |
 | S                             |           |        |
+| S-Lang                        |           |        |
+| S-PLUS                        |           |        |
+| SALSA                         |           |        |
 | SAS                           |           |        |
-| Sather                        |           |        |
-| Scratch                       |           |        |
-| sed                           |           |        |
-| Seed7                         |           |        |
+| SGML                          |           |        |
 | SIGNAL                        |           |        |
-| Simula                        |           |        |
-| Simulink                      |           |        |
-| Slate                         |           |        |
-| Smalltalk                     |           |        |
-| Smarty                        |           |        |
-| Snap!                         |           |        |
+| SMALL                         |           |        |
 | SNOBOL                        |           |        |
 | SPARK                         |           |        |
 | SPSS                          |           |        |
 | SQR                           |           |        |
+| SR                            |           |        |
+| Sather                        |           |        |
+| Scala                         |           |        |
+| Scratch                       |           |        |
+| Seed7                         |           |        |
+| Self                          |           |        |
+| Simula                        |           |        |
+| Simulink                      |           |        |
+| Slate                         |           |        |
+| Slate                         |           |        |
+| Smalltalk                     |           |        |
+| Smalltalk                     |           |        |
+| Smarty                        |           |        |
+| Snap!                         |           |        |
+| Spin                          |           |        |
 | Squeak                        |           |        |
 | Squirrel                      |           |        |
 | Standard ML                   |           |        |
@@ -273,42 +384,52 @@ Before adding these languages, we need to know:
 | Suneido                       |           |        |
 | SuperCollider                 |           |        |
 | TACL                          |           |        |
-| tcsh                          |           |        |
-| Tex                           |           |        |
-| thinBasic                     |           |        |
 | TOM                           |           |        |
+| Tcl                           |           |        |
+| Tex                           |           |        |
 | Transact-SQL                  |           |        |
-| Vala/Genie                    |           |        |
+| Turing                        |           |        |
 | VBScript                      |           |        |
-| Verilog                       |           |        |
+| VBScript                      |           |        |
 | VHDL                          |           |        |
+| Vala/Genie                    |           |        |
+| Verilog                       |           |        |
 | Visual Basic                  |           |        |
+| Visual Basic                  |           |        |
+| Visual FoxPro                 |           |        |
 | WebAssembly                   |           |        |
 | WebDNA                        |           |        |
 | Whitespace                    |           |        |
+| Windows PowerShell            |           |        |
 | Wolfram                       |           |        |
 | X10                           |           |        |
-| xBase                         |           |        |
 | XBase++                       |           |        |
-| Xen                           |           |        |
-| Xojo                          |           |        |
+| XHTML                         |           |        |
+| XL                            |           |        |
+| XML                           |           |        |
+| XOTcl                         |           |        |
 | XPL                           |           |        |
 | XQuery                        |           |        |
 | XSLT                          |           |        |
+| Xen                           |           |        |
+| Xojo                          |           |        |
 | Xtend                         |           |        |
-| yacc                          |           |        |
 | Yorick                        |           |        |
+| bc                            |           |        |
+| cT                            |           |        |
+| cg                            |           |        |
 | dotnet/roslyn                 |           |        |
-| micropython/micropython       |           |        |
-| AssemblyScript/assemblyscript |           |        |
-| Frege/frege                   |           |        |
-| typelead/eta                  |           |        |
-| programming-nu/nu             |           |        |
-| zdevito/terra                 |           |        |
-| skiplang/skip                 |           |        |
-| FascinatedBox/lily            |           |        |
-| rakudo/rakudo                 |           |        |
-| lucee/Lucee                   |           |        |
 | eclipse/golo-lang             |           |        |
-| HaxeFoundation/haxe           |           |        |
 | livecode/livecode             |           |        |
+| lucee/Lucee                   |           |        |
+| micropython/micropython       |           |        |
+| programming-nu/nu             |           |        |
+| rakudo/rakudo                 |           |        |
+| sed                           |           |        |
+| skiplang/skip                 |           |        |
+| tcsh                          |           |        |
+| thinBasic                     |           |        |
+| typelead/eta                  |           |        |
+| xBase                         |           |        |
+| yacc                          |           |        |
+| zdevito/terra                 |           |        |

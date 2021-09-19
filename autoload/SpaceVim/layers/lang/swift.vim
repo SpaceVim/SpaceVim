@@ -20,7 +20,18 @@
 "   Key         Function
 "   -----------------------------------------------
 "   SPC l k     jumping to placeholders
+"   SPC l r     Run current file
 " <
+" This layer also provides REPL support for swift, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 func! SpaceVim#layers#lang#swift#plugins() abort
   let plugins = []
@@ -58,3 +69,10 @@ endfunction
 " ref:
 " 1. https://jblevins.org/log/swift
 " 2. https://medium.com/@mahmudahsan/running-and-compiling-swift-code-in-terminal-237ee4087a9c
+
+
+function! SpaceVim#layers#lang#swift#health() abort
+  call SpaceVim#layers#lang#swift#plugins()
+  call SpaceVim#layers#lang#swift#config()
+  return 1
+endfunction

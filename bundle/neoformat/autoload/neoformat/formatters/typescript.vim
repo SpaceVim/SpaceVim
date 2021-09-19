@@ -1,5 +1,5 @@
 function! neoformat#formatters#typescript#enabled() abort
-   return ['tsfmt', 'prettier', 'tslint', 'eslint_d', 'clangformat']
+   return ['tsfmt', 'prettier', 'prettiereslint', 'tslint', 'eslint_d', 'clangformat', 'denofmt']
 endfunction
 
 function! neoformat#formatters#typescript#tsfmt() abort
@@ -13,8 +13,16 @@ endfunction
 function! neoformat#formatters#typescript#prettier() abort
     return {
         \ 'exe': 'prettier',
-        \ 'args': ['--stdin', '--stdin-filepath', '"%:p"', '--parser', 'typescript'],
+        \ 'args': ['--stdin-filepath', '"%:p"', '--parser', 'typescript'],
         \ 'stdin': 1
+        \ }
+endfunction
+
+function! neoformat#formatters#typescript#prettiereslint() abort
+    return {
+        \ 'exe': 'prettier-eslint',
+        \ 'args': ['--stdin', '--stdin-filepath', '"%:p"', '--parser', 'typescript'],
+        \ 'stdin': 1,
         \ }
 endfunction
 
@@ -46,4 +54,8 @@ function! neoformat#formatters#typescript#clangformat() abort
             \ 'args': ['-assume-filename=' . expand('%:t')],
             \ 'stdin': 1
             \ }
+endfunction
+
+function! neoformat#formatters#typescript#denofmt() abort
+    return neoformat#formatters#javascript#denofmt()
 endfunction

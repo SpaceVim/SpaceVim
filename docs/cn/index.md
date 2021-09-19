@@ -4,13 +4,13 @@ description: "SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块�
 lang: zh
 ---
 
-[![Gitter](https://badges.gitter.im/SpaceVim/SpaceVim.svg)](https://gitter.im/SpaceVim/cn)
+[![Gitter](https://img.shields.io/gitter/room/SpaceVim/SpaceVim?color=%2364CEAA)](https://gitter.im/SpaceVim/cn)
 [![build](https://github.com/SpaceVim/SpaceVim/workflows/build/badge.svg)](https://github.com/SpaceVim/SpaceVim/actions?query=workflow%3Abuild)
-[![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/master/graph/badge.svg?token=jVQLVETbAI)](https://codecov.io/gh/SpaceVim/SpaceVim)
-[![Version](https://img.shields.io/badge/version-1.7.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
+[![Version](https://img.shields.io/badge/version-1.8.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
-![welcome page](https://user-images.githubusercontent.com/13142418/103414298-5e1da980-4bb8-11eb-96bc-b2e118f672b5.png)
+![welcome page](https://user-images.githubusercontent.com/13142418/121829909-64cb5380-ccf6-11eb-9d5a-f576fa63e69c.png)
 
 # SpaceVim - 模块化的 Vim IDE
 
@@ -38,7 +38,9 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
     {% endfor %}
 </ul>
 
-更多精彩内容欢迎订阅 SpaceVim [博客](blog/) 或关注微博 [@SpaceVim](https://weibo.com/SpaceVim)。
+更多精彩内容会定期在 SpaceVim [博客](blog/)上发布。
+
+或者可以关注我们的推特：[@SpaceVim](https://twitter.com/SpaceVim)。
 
 ## 参与
 
@@ -50,23 +52,26 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 
 - 目前 SpaceVim 的开发状态如何？
 
-当前最新发布的稳定版本是 v1.6.0。可以查看 [时间表](https://github.com/SpaceVim/SpaceVim/milestones) 获取开发进度，
-或者阅读 [Roadmap](roadmap/) 获取开发计划。
+  当前最新发布的稳定版本是 v1.7.0。可以查看 [时间表](https://github.com/SpaceVim/SpaceVim/milestones) 获取开发进度，
+  或者阅读 [Roadmap](roadmap/) 获取开发计划。
 
 - SpaceVim 是尝试搭建一个 IDE 吗？
 
-是的，通过模块的方式，将各种功能封装成相应的模块，对多种语言提供了语言开发模块，目标是尝试模拟简易的集成开发环境。
+  是的，通过模块的方式，将各种功能封装成相应的模块，对多种语言提供了语言开发模块，目标是尝试模拟简易的集成开发环境。
 
 - SpaceVim 支持多少种编程语言？
 
-```sh
-~/.SpaceVim> ls autoload/SpaceVim/layers/lang | wc -l
-87
-```
+  ```sh
+  ~/.SpaceVim> ls autoload/SpaceVim/layers/lang | wc -l
+  87
+  ```
 
 - SpaceVim 支持什么版本的 Vim/Neovim？
 
-建议使用 Vim 7.4 或者 Neovim v0.1.7 及其以上版本。为了更好的使用体验，建议使用最新版的 Neovim。
+  SpaceVim 目前已通过 gh 测试了如下版本的 vim 和 neovim：
+
+  - vim: `master`, `8.1.2269`, `8.0.1453`, `8.0.0027`,`7.4.1689`,`7.4.629`, `7.4.052`
+  - neovim: `nightly`, `v0.5.0`, `v0.4.4`, `v0.4.3`, `v0.4.2`, `v0.4.0`, `v0.3.8`
 
 更多常见问题请阅读[常见问题解答](faq/)
 

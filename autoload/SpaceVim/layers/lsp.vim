@@ -11,6 +11,12 @@
 " @parentsection layers
 " This layer provides language client support for SpaceVim.
 
+function! SpaceVim#layers#lsp#health() abort
+  call SpaceVim#layers#lsp#plugins()
+  call SpaceVim#layers#lsp#config()
+  return 1
+endfunction
+
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
 
@@ -128,7 +134,7 @@ let s:lsp_servers = {
       \ 'css' : ['css-languageserver', '--stdio'],
       \ 'dart' : ['dart_language_server'],
       \ 'dockerfile' : ['docker-langserver', '--stdio'],
-      \ 'go' : ['go-langserver', '-mode', 'stdio'],
+      \ 'go' : ['gopls'],
       \ 'haskell' : ['hie-wrapper', '--lsp'],
       \ 'html' : ['html-languageserver', '--stdio'],
       \ 'javascript' : ['javascript-typescript-stdio'],

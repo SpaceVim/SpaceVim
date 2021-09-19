@@ -123,3 +123,9 @@ function! s:language_specified_mappings() abort
         \ 'Stop the OmniSharp server', 1)
 
 endfunction
+
+function! SpaceVim#layers#lang#csharp#health() abort
+  call SpaceVim#layers#lang#csharp#plugins()
+  call SpaceVim#layers#lang#csharp#config()
+  return 1
+endfunction

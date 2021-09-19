@@ -12,6 +12,7 @@ lang: zh
 - [启用模块](#启用模块)
 - [代码格式化](#代码格式化)
 - [模块设置](#模块设置)
+- [标签栏](#标签栏)
 - [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
@@ -36,6 +37,7 @@ lang: zh
 SpaceVim 默认使用 remark 来格式化 Markdown 文件，Windows 下建议使用 [Prettier](https://github.com/prettier/prettier) 来格式化 Markdown 文件。
 
 remark 可通过 [npm](https://www.npmjs.com/get-npm) 命令来安装：
+
 ```sh
 npm -g install remark
 npm -g install remark-cli
@@ -44,13 +46,18 @@ npm -g install remark-frontmatter
 npm -g install wcwidth
 ```
 
+默认值是 remark 而不是 prettier，如果您想使用 prettier，你需要修改此模块的选项：`enable_formater`。
+
 [Prettier](https://github.com/prettier/prettier) 可通过 [yarn](https://yarnpkg.com/lang/zh-hans/docs/install/#windows-stable) 或 [npm](https://www.npmjs.com/get-npm) 命令来安装：
 
 1. 通过 `yarn` 命令来安装
+
 ```sh
 yarn global add prettier
 ```
+
 2. 通过 `npm` 命令来安装
+
 ```sh
 npm install --global prettier
 ```
@@ -73,11 +80,23 @@ npm install --global prettier
 
 设置无序列表前缀 (`'-'`, `'*'`, or `'+'`, 默认: `'-'`)。
 
+**enabled_formater**
+
+为 markdown 文件指定启用的格式化工具，默认值是`["remark"]`，您也可以添加其它格式化工具到此列表，例如：`["remark", "prettier"]`。
+
+## 标签栏
+
+为了在标签栏中显示标题（使用<kbd>F2</kbd>切换），请确保 php 在你的环境变量`$PATH`中，在 SpaceVim 中，您可以这样测试：`:!php --version`，如果 php 安装成功，此命令应该会显示一些 php 的信息。
+
+如果不希望安装 php，也可以直接下载 [mdctags](https://github.com/wsdjeg/mdctags.rs) 命令。
+
 ## 快捷键
 
-| 快捷键     | 模式          | 按键描述                               |
-| ---------- | ------------- | -------------------------------------- |
-| `SPC b f`  | Normal        | 格式化当前文件                         |
-| `SPC l k`  | Normal/Visual | 为光标下的单词或者选中文本增加 URL 链接|
-| `SPC l K`  | Normal/Visual | 为光标下的单词或者选中文本增加图片链接 |
-| `SPC l p`  | Normal        | 通过浏览器实时预览当前文件             |
+| 快捷键    | 模式          | 按键描述                                |
+| --------- | ------------- | --------------------------------------- |
+| `SPC b f` | Normal        | 格式化当前文件                          |
+| `SPC l c` | Normal/Visual | 在光标处创建目录                        |
+| `SPC l k` | Normal/Visual | 为光标下的单词或者选中文本增加 URL 链接 |
+| `SPC l K` | Normal/Visual | 为光标下的单词或者选中文本增加图片链接  |
+| `SPC l u` | Normal/Visual | 更新目录                                |
+| `SPC l p` | Normal        | 通过浏览器实时预览当前文件              |

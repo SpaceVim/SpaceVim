@@ -22,3 +22,9 @@ endfunction
 function! SpaceVim#layers#lang#nix#config() abort
 endfunction
 
+
+function! SpaceVim#layers#lang#nix#health() abort
+  call SpaceVim#layers#lang#nix#plugins()
+  call SpaceVim#layers#lang#nix#config()
+  return 1
+endfunction

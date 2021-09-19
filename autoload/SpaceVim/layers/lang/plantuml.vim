@@ -43,3 +43,9 @@ function! s:language_specified_mappings() abort
         \ 'PlantumlSave',
         \ 'save uml file', 1)
 endfunction
+
+function! SpaceVim#layers#lang#plantuml#health() abort
+  call SpaceVim#layers#lang#plantuml#plugins()
+  call SpaceVim#layers#lang#plantuml#config()
+  return 1
+endfunction

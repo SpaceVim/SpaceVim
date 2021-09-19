@@ -49,7 +49,9 @@ function! SpaceVim#autocmds#init() abort
     autocmd Filetype qf setlocal nobuflisted
     autocmd FileType python,coffee call SpaceVim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()
-    autocmd InsertEnter * call s:fixindentline()
+    if !has('nvim-0.5.0')
+      autocmd InsertEnter * call s:fixindentline()
+    endif
     autocmd BufEnter,FileType * call SpaceVim#mapping#space#refrashLSPC()
     if executable('synclient') && g:spacevim_auto_disable_touchpad
       let s:touchpadoff = 0
@@ -65,6 +67,9 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
     autocmd VimLeavePre * call SpaceVim#plugins#manager#terminal()
+    if has('nvim')
+      autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
+    endif
   augroup END
 endfunction
 

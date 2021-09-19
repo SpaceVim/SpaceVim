@@ -84,3 +84,9 @@ endfunction
 function! SpaceVim#layers#lang#ring#get_options() abort
   return ['ring_repl']
 endfunction
+
+function! SpaceVim#layers#lang#ring#health() abort
+  call SpaceVim#layers#lang#ring#plugins()
+  call SpaceVim#layers#lang#ring#config()
+  return 1
+endfunction

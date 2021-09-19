@@ -15,7 +15,7 @@ description: "This layer adds extra language support to SpaceVim"
 
 ## Description
 
-This layer adds many extra language support for less common languages to SpaceVim.
+This layer adds extra language support for less common languages to SpaceVim.
 
 ## Included languages
 
@@ -32,7 +32,7 @@ This layer adds many extra language support for less common languages to SpaceVi
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

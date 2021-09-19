@@ -30,3 +30,9 @@ function! SpaceVim#layers#lang#puppet#config() abort
     let g:syntastic_puppet_puppetlint_args='--no-autoloader_layout-check --no-class_inherits_from_params_class-check'
     let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['puppet'] }
 endfunction
+
+function! SpaceVim#layers#lang#puppet#health() abort
+  call SpaceVim#layers#lang#puppet#plugins()
+  call SpaceVim#layers#lang#puppet#config()
+  return 1
+endfunction

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#elixir layer"
-description: "This layer is for Elixir development, provide autocompletion, syntax checking, code format for Elixir file."
+description: "This layer is for Elixir development, provides autocompletion, syntax checking, code formatting for Elixir files."
 ---
 
 # [Available Layers](../../) >> lang#elixir
@@ -24,7 +24,7 @@ This layer is for Elixir development.
 
 ## Features
 
-This layer include the plugin [slashmili/alchemist.vim](https://github.com/slashmili/alchemist.vim), which provides:
+This layer includes the plugin [slashmili/alchemist.vim](https://github.com/slashmili/alchemist.vim), which provides:
 
 - Completion for Modules and functions.
 - Documentation lookup for Modules and functions.
@@ -37,7 +37,7 @@ for Elixir, you need to load `lsp` layer for Elixir.
 
 ### Layer
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -69,4 +69,4 @@ Send code to inferior process commands:
 
 ### Running current script
 
-To running current script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To run the current script, you can press `SPC l r` to run the current file without losing focus, and the result will be shown in a runner buffer.

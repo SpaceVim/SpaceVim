@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#swift layer"
-description: "swift language support for SpaceVim, includes code completion, syntax highlighting"
+description: "swift language support for SpaceVim, includes code completion and syntax highlighting"
 ---
 
 # [Available Layers](../../) >> lang#swift
@@ -20,7 +20,7 @@ This layer is for swift development in SpaceVim.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -36,4 +36,4 @@ To use this configuration layer, update custom configuration file with:
 
 | Key Bindings | Descriptions            |
 | ------------ | ----------------------- |
-| `SPC l k`    | jumping to placeholders |
+| `SPC l k`    | jump to placeholders |

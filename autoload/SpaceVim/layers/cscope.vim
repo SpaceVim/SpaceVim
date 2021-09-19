@@ -8,7 +8,7 @@
 
 function! SpaceVim#layers#cscope#plugins() abort
   let plugins = [
-        \ ['SpaceVim/cscope.vim', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/cscope.vim', {'merged' : 0}],
         \ ]
   return plugins
 endfunction
@@ -30,4 +30,37 @@ function! SpaceVim#layers#cscope#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'l'], 'call cscope#list_databases()', 'list-cscope-databases', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'm'], 'call cscope#clear_databases(SpaceVim#plugins#projectmanager#current_root())', 'remove-current-cscope-databases', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'M'], 'call cscope#clear_databases()', 'remove-all-cscope-databases', 1)
+endfunction
+
+
+function! SpaceVim#layers#cscope#health() abort
+  call SpaceVim#layers#cscope#plugins()
+  call SpaceVim#layers#cscope#config()
+  return 1
+endfunction
+
+function! SpaceVim#layers#cscope#set_variable(var) abort
+
+  let g:cscope_cmd = get(a:var,
+        \ 'cscope_command',
+        \ 'cscope')
+  let g:cscope_auto_update = get(a:var,
+        \ 'auto_update',
+        \ 1)
+  let g:cscope_open_location = get(a:var,
+        \ 'open_location',
+        \ 1)
+  let g:cscope_preload_path = get(a:var,
+        \ 'preload_path',
+        \ '')
+
+endfunction
+
+function! SpaceVim#layers#cscope#get_options() abort
+
+  return ['cscope_command',
+        \ 'auto_update',
+        \ 'open_location',
+        \ 'preload_path']
+
 endfunction

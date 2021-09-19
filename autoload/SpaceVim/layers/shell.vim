@@ -283,3 +283,9 @@ function! SpaceVim#layers#shell#close_terminal() abort
     endif
   endfor
 endfunction
+
+function! SpaceVim#layers#shell#health() abort
+  call SpaceVim#layers#shell#plugins()
+  call SpaceVim#layers#shell#config()
+  return 1
+endfunction

@@ -31,3 +31,9 @@ function! SpaceVim#layers#tools#zeal#config() abort
   call SpaceVim#mapping#space#def('nmap', ['D', 's'],
         \ '<Plug>ZVKeyDocset', 'specify docset and query', 0)
 endfunction
+
+function! SpaceVim#layers#tools#zeal#health() abort
+  call SpaceVim#layers#tools#zeal#plugins()
+  call SpaceVim#layers#tools#zeal#config()
+  return 1
+endfunction

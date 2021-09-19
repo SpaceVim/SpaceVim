@@ -79,6 +79,16 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'], 'setlocal scrollbind!',
+        \ ['toggle-follow-mode',
+        \ [
+        \ '[SPC w f] is to toggle follow mode',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'], 'ChooseWin | close | wincmd w',
         \ ['delete-window-(other-windows)',
         \ [
@@ -89,27 +99,27 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'], 'tabnew',
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'tabnew',
         \ ['create-new-tab',
         \ [
-        \ '[SPC w f] is to create new tab',
+        \ '[SPC w F] is to create new tab',
         \ '',
         \ 'Definition: ' . s:file . ':' . s:lnum,
         \ ]
         \ ]
         \ , 1)
-  let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'call call('
-        \ . string(function('s:create_new_named_tab'))
-        \ . ', [])',
-        \ ['create-new-named-tab',
-        \ [
-        \ '[SPC w F] is to create new named tab',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+"  let s:lnum = expand('<slnum>') + s:funcbeginline
+"  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'call call('
+"        \ . string(function('s:create_new_named_tab'))
+"        \ . ', [])',
+"        \ ['create-new-named-tab',
+"        \ [
+"        \ '[SPC w F] is to create new named tab',
+"        \ '',
+"        \ 'Definition: ' . s:file . ':' . s:lnum,
+"        \ ]
+"        \ ]
+"        \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'], 'wincmd h',
         \ ['window-left',
@@ -466,7 +476,7 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'P'], 'call SpaceVim#mapping#search#grep("G", "P")',
         \ 'search cursor word in project with git-grep', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'f'], 'call SpaceVim#mapping#search#grep("G", "f")',
-        \ 'search in arbitrary directory  with git-grep', 1)
+        \ 'search in arbitrary directory with git-grep', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'G', 'F'], 'call SpaceVim#mapping#search#grep("G", "F")',
         \ 'search cursor word in arbitrary directory with git-grep', 1)
 
@@ -682,6 +692,12 @@ endfunction
 
 function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func) abort
   call extend(s:language_specified_mappings, {a:ft : a:func})
+endfunction
+
+function! SpaceVim#mapping#space#get_lang_mappings(ft) abort
+
+  return get(s:language_specified_mappings, a:ft, '')
+
 endfunction
 
 function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd, ...) abort

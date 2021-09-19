@@ -188,6 +188,7 @@ function! SpaceVim#layers#core#tabline#get() abort
         endfor
       endif
     endif
+    " get the list of displayed items
     let s:shown_items = shown_items
     if empty(shown_items)
       return ''
@@ -214,7 +215,7 @@ function! SpaceVim#layers#core#tabline#get() abort
       if right_hidden_tab_number > 0
         let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep 
       endif
-      let t .= '%#SpaceVim_tabline_b# '
+      let t .= s:is_modified(shown_items[0].bufnr) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
     endif
     let index = 1
     for item in shown_items[:-2]
@@ -222,14 +223,25 @@ function! SpaceVim#layers#core#tabline#get() abort
         let t .=  '%' . index . '@SpaceVim#layers#core#tabline#jump@'
       endif
       let t .= s:wrap_id(index)
-      let index += 1
       let t .= s:get_no_empty(gettabvar(item.tabnr, '_spacevim_tab_name'), item.bufname)
-      if item.tabnr == current_tabnr - 1
-        let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
-      elseif item.tabnr == current_tabnr
-        let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep . '%#SpaceVim_tabline_b# '
+      let index += 1
+      if item.tabnr == current_tabnr
+        if s:is_modified(item.bufnr)
+          let t .= ' %#SpaceVim_tabline_m_SpaceVim_tabline_b#' . s:lsep 
+        else
+          let t .= ' %#SpaceVim_tabline_a_SpaceVim_tabline_b#' . s:lsep 
+        endif
+        let t .= s:is_modified(shown_items[index-1].bufnr) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
+      elseif item.tabnr == current_tabnr - 1
+        " check if current_tabnr is modified
+        if s:is_modified(s:BUFFER.bufnr())
+          let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_m#' . s:lsep . '%#SpaceVim_tabline_m# '
+        else
+          let t .= ' %#SpaceVim_tabline_b_SpaceVim_tabline_a#' . s:lsep . '%#SpaceVim_tabline_a# '
+        endif
       else
-        let t .= ' ' . s:ilsep . ' '
+        let t .= s:is_modified(shown_items[index-1].bufnr) ? '%#SpaceVim_tabline_m_i# ' : '%#SpaceVim_tabline_b# '
+        let t .= s:ilsep . ' '
       endif
     endfor
     let item = shown_items[-1]
@@ -447,20 +459,20 @@ function! SpaceVim#layers#core#tabline#config() abort
     autocmd!
     autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
   augroup END
-  
-  
+
+
   let shift_keys = {
-   \  '1': '!',
-   \  '2': '@',
-   \  '3': '#',
-   \  '4': '$',
-   \  '5': '%',
-   \  '6': '^',
-   \  '7': '&',
-   \  '8': '*',
-   \  '9': '(',
-   \  '0': ')'
-   \}
+        \  '1': '!',
+        \  '2': '@',
+        \  '3': '#',
+        \  '4': '$',
+        \  '5': '%',
+        \  '6': '^',
+        \  '7': '&',
+        \  '8': '*',
+        \  '9': '(',
+        \  '0': ')'
+        \}
 
   for i in range(1, 20)
     let key = i % 10
@@ -527,4 +539,9 @@ function! SpaceVim#layers#core#tabline#def_colors() abort
   call s:HI.hi_separator('SpaceVim_tabline_a', 'SpaceVim_tabline_b')
   call s:HI.hi_separator('SpaceVim_tabline_m', 'SpaceVim_tabline_b')
   call s:HI.hi_separator('SpaceVim_tabline_m', 'SpaceVim_tabline_a')
+endfunction
+
+function! SpaceVim#layers#core#tabline#health() abort
+  call SpaceVim#layers#core#tabline#config()
+  return 1
 endfunction

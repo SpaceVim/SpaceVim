@@ -18,20 +18,19 @@ description: "This layers provides language server protocol for vim and neovim"
 
 ## Description
 
-This layers adds extensive support for [language-server-protocol](https://microsoft.github.io/language-server-protocol/),
+This layer adds extensive support for [language-server-protocol](https://microsoft.github.io/language-server-protocol/),
 This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) (an old fork),
-The upstream is rewritten by rust.
+The upstream is rewritten in rust.
 
 We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is written in pure vim script.
 
-Note that if `coc` is used as autocomplete method in the `autocomplete` layer,
-it will be used as lsp client.
+Note that if `coc` is used as the autocomplete method in the `autocomplete` layer, it will be used as the lsp client.
 
 The neovim team is going to implement the build-in LSP support, the
 PR is [neovim#6856](https://github.com/neovim/neovim/pull/6856). and the author of this PR
 create another plugin [tjdevries/nvim-langserver-shim](https://github.com/tjdevries/nvim-langserver-shim)
 
-SpaceVim should works well in different version of vim/neovim, so in the features, the logic of this layer should be:
+SpaceVim should work well in different versions of vim/neovim, so in the future, the logic of this layer should be:
 
 ```vim
 if has('nvim')
@@ -58,12 +57,12 @@ endif
 - Formatting.
 - Code Action/Fix.
 
-**Note:** All these features dependent on the implementation of the language server, please
+**Note:** All these features depend on the implementation of the language server, please
 check the list of [Language Servers](https://microsoft.github.io/language-server-protocol/implementors/servers/)
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -72,10 +71,10 @@ To use this configuration layer, update custom configuration file with:
 
 ### Install language server
 
-Ada
+**Ada**
 
-After installing AdaCore's GNAT Studio, add the directory containing ada_language_server to your PATH variable.
-For instance, if the GNAT Studio 2020 was installed, ada_language_server is present by default in
+After installing AdaCore's GNAT Studio, add the directory containing `ada_language_server` to your PATH variable.
+For instance, if the GNAT Studio 2020 was installed, `ada_language_server` is present by default in
 `/opt/GNAT/2020/libexec/gnatstudio/als`.
 
 **Bash**
@@ -162,7 +161,7 @@ default language server commands:
 | `css`        | `['css-languageserver', '--stdio']`                                                                                                                                                              |
 | `dart`       | `['dart_language_server']`                                                                                                                                                                       |
 | `elm`        | `['elm-language-server']`                                                                                                                                                                        |
-| `go`         | `['go-langserver', '-mode', 'stdio']`                                                                                                                                                            |
+| `go`         | `['gopls']`                                                                                                                                                            |
 | `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
 | `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
 | `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |

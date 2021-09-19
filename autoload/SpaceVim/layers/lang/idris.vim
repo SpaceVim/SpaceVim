@@ -81,3 +81,9 @@ function! s:language_specified_mappings() abort
   " nnoremap <buffer> <silent> <LocalLeader>md 0:call search(":")<ENTER>b:call IdrisAddClause(1)<ENTER>w
   " nnoremap <buffer> <silent> <LocalLeader>mc :call IdrisMakeCase()<ENTER>
 endfunction
+
+function! SpaceVim#layers#lang#idris#health() abort
+  call SpaceVim#layers#lang#idris#plugins()
+  call SpaceVim#layers#lang#idris#config()
+  return 1
+endfunction

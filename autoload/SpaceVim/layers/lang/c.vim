@@ -101,6 +101,8 @@ else
 endif
 " }}}
 
+let s:format_on_save = 0
+
 " Load the APIs{{{
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:CPT = SpaceVim#api#import('vim#compatible')
@@ -153,28 +155,36 @@ function! SpaceVim#layers#lang#c#config() abort
   call SpaceVim#mapping#gd#add('cpp',
         \ function('s:go_to_def'))
   " TODO: add stdin suport flex -t lexer.l | gcc -o lexer.o -xc -
-  let runner1 = {
+  let c_runner = {
         \ 'exe' : 'gcc',
         \ 'targetopt' : '-o',
         \ 'opt' : ['-std=' . s:clang_std.c] + s:clang_flag + ['-xc', '-'],
         \ 'usestdin' : 1,
         \ }
-  call SpaceVim#plugins#runner#reg_runner('c', [runner1, '#TEMP#'])
+  call SpaceVim#plugins#runner#reg_runner('c', [c_runner, '#TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('c', function('s:language_specified_mappings'))
-  let runner2 = {
+  let cpp_runner = {
         \ 'exe' : 'g++',
         \ 'targetopt' : '-o',
         \ 'opt' : ['-std=' . s:clang_std.cpp] + s:clang_flag + ['-xc++', '-'],
         \ 'usestdin' : 1,
         \ }
-  call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])
+  call SpaceVim#plugins#runner#reg_runner('cpp', [cpp_runner, '#TEMP#'])
   if !empty(s:c_repl_command)
     call SpaceVim#plugins#repl#reg('c', s:c_repl_command)
   else
     call SpaceVim#plugins#repl#reg('c', 'igcc')
   endif
-  call SpaceVim#mapping#space#regesit_lang_mappings('cpp', funcref('s:language_specified_mappings'))
-  call SpaceVim#plugins#projectmanager#reg_callback(funcref('s:update_clang_flag'))
+  call SpaceVim#mapping#space#regesit_lang_mappings('cpp', function('s:language_specified_mappings'))
+  let objc_runner = {
+        \ 'exe' : 'gcc',
+        \ 'targetopt' : '-o',
+        \ 'opt' : ['-std=' . s:clang_std.objc] + s:clang_flag + ['-xobjc', '-'],
+        \ 'usestdin' : 1,
+        \ }
+  call SpaceVim#plugins#runner#reg_runner('objc', [objc_runner, '#TEMP#'])
+  call SpaceVim#mapping#space#regesit_lang_mappings('objc', function('s:language_specified_mappings'))
+  call SpaceVim#plugins#projectmanager#reg_callback(function('s:update_clang_flag'))
   if executable('clang')
     let g:neomake_c_enabled_makers = ['clang']
     let g:neomake_cpp_enabled_makers = ['clang']
@@ -187,6 +197,7 @@ function! SpaceVim#layers#lang#c#config() abort
     if s:enable_clang_syntax
       auto FileType c,cpp  call s:highlight()
     endif
+    au BufRead,BufNewFile *.m set filetype=objc
   augroup END
   call add(g:spacevim_project_rooter_patterns, '.clang')
   if has('nvim')
@@ -199,6 +210,26 @@ function! SpaceVim#layers#lang#c#config() abort
     let s:highlight_cmd = 'ClStart'
   else
     let s:highlight_cmd = 'ClighterEnable'
+  endif
+
+  " Format on save
+  if s:format_on_save
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'c',
+          \ 'enable' : 1,
+          \ })
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'cpp',
+          \ 'enable' : 1,
+          \ })
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'objc',
+          \ 'enable' : 1,
+          \ })
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'objcpp',
+          \ 'enable' : 1,
+          \ })
   endif
 endfunction
 " }}}
@@ -245,6 +276,10 @@ function! SpaceVim#layers#lang#c#set_variable(var) abort
   let s:clang_flag = get(a:var, 'clang_flag', s:clang_flag)
 
   let s:enable_clang_syntax = get(a:var, 'enable_clang_syntax_highlight', s:enable_clang_syntax)
+
+  let s:format_on_save = get(a:var,
+        \ 'format_on_save',
+        \ s:format_on_save)
 
   call extend(s:clang_std, get(a:var, 'clang_std', {}))
 endfunction
@@ -366,22 +401,32 @@ function! s:update_runner(argv, fts) abort
     let default_std = 0
   endif
   if index(a:fts, 'c') !=# -1
-    let runner1 = {
+    let c_runner = {
           \ 'exe' : 'gcc',
           \ 'targetopt' : '-o',
           \ 'opt' : a:argv + (default_std ? [] : ['-std=' . s:clang_std.c]) + s:clang_flag + ['-xc', '-'],
           \ 'usestdin' : 1,
           \ }
-    call SpaceVim#plugins#runner#reg_runner('c', [runner1, '#TEMP#'])
+    call SpaceVim#plugins#runner#reg_runner('c', [c_runner, '#TEMP#'])
   endif
   if index(a:fts, 'cpp') !=# -1
-    let runner2 = {
+    let cpp_runner = {
           \ 'exe' : 'g++',
           \ 'targetopt' : '-o',
           \ 'opt' : a:argv + (default_std ? [] : ['-std=' . s:clang_std.cpp]) + s:clang_flag + ['-xc++', '-'],
           \ 'usestdin' : 1,
           \ }
-    call SpaceVim#plugins#runner#reg_runner('cpp', [runner2, '#TEMP#'])
+    call SpaceVim#plugins#runner#reg_runner('cpp', [cpp_runner, '#TEMP#'])
+  endif
+  " update clang_flag for objective-c
+  if index(a:fts, 'objc') !=# -1
+    let cpp_runner = {
+          \ 'exe' : 'gcc',
+          \ 'targetopt' : '-o',
+          \ 'opt' : a:argv + (default_std ? [] : ['-std=' . s:clang_std.objc]) + s:clang_flag + ['-xobjc', '-'],
+          \ 'usestdin' : 1,
+          \ }
+    call SpaceVim#plugins#runner#reg_runner('objc', [cpp_runner, '#TEMP#'])
   endif
 endfunction
 " }}}
@@ -411,3 +456,9 @@ function! s:go_to_def() abort
   endif
 endfunction
 " }}}
+
+function! SpaceVim#layers#lang#c#health() abort
+  call SpaceVim#layers#lang#c#plugins()
+  call SpaceVim#layers#lang#c#config()
+  return 1
+endfunction

@@ -20,3 +20,9 @@ function! SpaceVim#layers#vim#config() abort
     " autocmd Syntax vim syntax clear vimCommentString
   augroup END
 endfunction
+
+function! SpaceVim#layers#vim#health() abort
+  call SpaceVim#layers#vim#plugins()
+  call SpaceVim#layers#vim#config()
+  return 1
+endfunction

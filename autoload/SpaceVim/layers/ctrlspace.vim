@@ -28,6 +28,11 @@ let s:autoload_ws = 0
 let s:enable_spacevim_styled_keys = 0
 
 
+function! SpaceVim#layers#ctrlspace#health() abort
+  call SpaceVim#layers#ctrlspace#plugins()
+  call SpaceVim#layers#ctrlspace#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#ctrlspace#plugins() abort
     return [

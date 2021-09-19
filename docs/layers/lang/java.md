@@ -38,7 +38,7 @@ This layer is for Java development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -137,7 +137,7 @@ You can also use `g=` to indent current buffer.
 | Key bindings | Descriptions                    |
 | ------------ | ------------------------------- |
 | `SPC l r m`  | run main method of current file |
-| `SPC l r m`  | run current method              |
+| `SPC l r m`  | run the current method              |
 | `SPC l r t`  | run all test methods            |
 
 ### Inferior REPL process

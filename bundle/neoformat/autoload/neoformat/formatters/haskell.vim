@@ -55,7 +55,7 @@ function! neoformat#formatters#haskell#ormolu() abort
     endif
     return {
         \ 'exe' : 'ormolu',
-        \ 'args': ['-p', opts],
+        \ 'args': [opts],
         \ 'stdin' : 1,
         \ }
 endfunction

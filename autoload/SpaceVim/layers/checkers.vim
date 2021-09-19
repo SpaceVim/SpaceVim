@@ -103,10 +103,10 @@ function! SpaceVim#layers#checkers#config() abort
         \ 'toggle-syntax-checker', 1)
   call SpaceVim#layers#core#statusline#register_mode(
         \ {
-        \ 'key' : 'syntax-checking',
-        \ 'func' : string(s:_function('s:toggle_syntax_checker')),
-        \ }
-        \ )
+          \ 'key' : 'syntax-checking',
+          \ 'func' : s:_function('s:toggle_syntax_checker'),
+          \ }
+          \ )
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'e'], 'call call('
         \ . string(s:_function('s:explain_the_error')) . ', [])',
         \ 'explain-the-error', 1)
@@ -133,11 +133,23 @@ function! SpaceVim#layers#checkers#config() abort
         endif
       endif
     elseif g:spacevim_lint_engine ==# 'ale' && SpaceVim#layers#isLoaded('core#statusline')
-      autocmd User ALELint 
+      autocmd User ALELintPost
             \ let &l:statusline = SpaceVim#layers#core#statusline#get(1)
     endif
   augroup END
 endfunction
+
+
+function! SpaceVim#layers#checkers#health() abort
+
+  call SpaceVim#layers#checkers#plugins()
+  call SpaceVim#layers#checkers#set_variable({})
+  call SpaceVim#layers#checkers#get_options()
+  call SpaceVim#layers#checkers#config()
+  return 1
+
+endfunction
+
 
 function! s:neomake_cursor_move_delay() abort
   call s:neomake_signatures_clear()
@@ -255,7 +267,6 @@ endfunction
 
 function! s:toggle_syntax_checker() abort
   call SpaceVim#layers#core#statusline#toggle_section('syntax checking')
-  call SpaceVim#layers#core#statusline#toggle_mode('syntax-checking')
   if g:spacevim_lint_engine ==# 'neomake'
     verbose NeomakeToggle
   elseif g:spacevim_lint_engine ==# 'ale'
@@ -304,34 +315,34 @@ function! s:error_transient_state() abort
   call state.set_title('Error Transient State')
   call state.defind_keys(
         \ {
-        \ 'layout' : 'vertical split',
-        \ 'left' : [
-        \ {
-        \ 'key' : 'n',
-        \ 'desc' : 'next error',
-        \ 'func' : '',
-        \ 'cmd' : 'try | lnext | catch | endtry',
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ 'right' : [
-        \ {
-        \ 'key' : ['p', 'N'],
-        \ 'desc' : 'previous error',
-        \ 'func' : '',
-        \ 'cmd' : 'try | lprevious | catch | endtry',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'q',
-        \ 'desc' : 'quit',
-        \ 'func' : '',
-        \ 'cmd' : '',
-        \ 'exit' : 1,
-        \ },
-        \ ],
-        \ }
-        \ )
+          \ 'layout' : 'vertical split',
+          \ 'left' : [
+            \ {
+              \ 'key' : 'n',
+              \ 'desc' : 'next error',
+              \ 'func' : '',
+              \ 'cmd' : 'try | lnext | catch | endtry',
+              \ 'exit' : 0,
+              \ },
+              \ ],
+              \ 'right' : [
+                \ {
+                  \ 'key' : ['p', 'N'],
+                  \ 'desc' : 'previous error',
+                  \ 'func' : '',
+                  \ 'cmd' : 'try | lprevious | catch | endtry',
+                  \ 'exit' : 0,
+                  \ },
+                  \ {
+                    \ 'key' : 'q',
+                    \ 'desc' : 'quit',
+                    \ 'func' : '',
+                    \ 'cmd' : '',
+                    \ 'exit' : 1,
+                    \ },
+                    \ ],
+                    \ }
+                    \ )
   call state.open()
 endfunction
 

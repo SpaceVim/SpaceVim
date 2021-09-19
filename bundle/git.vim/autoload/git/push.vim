@@ -6,9 +6,9 @@
 "=============================================================================
 
 let s:JOB = SpaceVim#api#import('job')
-let s:NOTI =SpaceVim#api#import('notification')
+let s:NOTI = SpaceVim#api#import('notify')
 
-function! git#push#run(...)
+function! git#push#run(...) abort
 
     let cmd = ['git', 'push']
     if len(a:1) > 0
@@ -36,13 +36,13 @@ endfunction
 
 function! s:on_stdout(id, data, event) abort
     for line in filter(a:data, '!empty(v:val)')
-        call s:NOTI.notification(line, 'Normal')
+        call s:NOTI.notify(line, 'Normal')
     endfor
 endfunction
 
 function! s:on_stderr(id, data, event) abort
     for line in filter(a:data, '!empty(v:val)')
-        call s:NOTI.notification(line, 'WarningMsg')
+        call s:NOTI.notify(line, 'WarningMsg')
     endfor
 endfunction
 
@@ -52,7 +52,7 @@ function! s:options() abort
                 \ ]
 endfunction
 
-function! git#push#complete(ArgLead, CmdLine, CursorPos)
+function! git#push#complete(ArgLead, CmdLine, CursorPos) abort
     let str = a:CmdLine[:a:CursorPos-1]
     if str =~# '^Git\s\+push\s\+-$'
         return join(s:options(), "\n")

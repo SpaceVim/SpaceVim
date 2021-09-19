@@ -14,7 +14,7 @@ let s:SYS = SpaceVim#api#import('system')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:REGEX = SpaceVim#api#import('vim#regex')
-
+let s:VIM = SpaceVim#api#import('vim')
 let s:LOGGER =SpaceVim#logger#derive('FlyGrep')
 let s:HI = SpaceVim#api#import('vim#highlight')
 if has('nvim')
@@ -46,8 +46,8 @@ let s:grep_timer_id = -1
 let s:preview_timer_id = -1
 let s:grepid = 0
 function! s:read_histroy() abort
-  if filereadable(expand(g:spacevim_data_dir.'/SpaceVim/flygrep_history'))
-    let _his = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'/SpaceVim/flygrep_history'), ''), ''))
+  if filereadable(expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'))
+    let _his = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'), ''), ''))
     if type(_his) ==# type([])
       return _his
     else
@@ -62,10 +62,10 @@ function! s:update_history() abort
     call remove(s:grep_history, index(s:grep_history, s:grep_expr))
   endif
   call add(s:grep_history, s:grep_expr)
-  if !isdirectory(expand(g:spacevim_data_dir.'/SpaceVim'))
-    call mkdir(expand(g:spacevim_data_dir.'/SpaceVim'))
+  if !isdirectory(expand(g:spacevim_data_dir.'SpaceVim'))
+    call mkdir(expand(g:spacevim_data_dir.'SpaceVim'))
   endif
-  call writefile([s:JSON.json_encode(s:grep_history)], expand(g:spacevim_data_dir.'/SpaceVim/flygrep_history'))
+  call writefile([s:JSON.json_encode(s:grep_history)], expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'))
 endfunction
 let s:grep_history = s:read_histroy()
 let s:complete_input_history_num = [0,0]
@@ -123,8 +123,8 @@ function! s:get_search_cmd(expr) abort
     " if grep dir is empty, grep files is empty, which means searhing in
     " current directory.
     let cmd += [a:expr] 
-    " in window, when using rg, ag, need to add '.' at the end.
-    if s:SYS.isWindows && (s:grep_exe ==# 'rg' || s:grep_exe ==# 'ag' || s:grep_exe ==# 'pt' )
+    " when using rg, ag, need to add '.' at the end.
+    if s:grep_exe ==# 'rg' || s:grep_exe ==# 'ag' || s:grep_exe ==# 'pt'
       let cmd += ['.']
     endif
     let cmd += s:grep_ropt
@@ -838,8 +838,9 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
           \ 'col': 0
           \ })
   else
-    noautocmd rightbelow split __flygrep__
+    noautocmd botright split __flygrep__
     let s:flygrep_win_id = win_getid()
+    let s:buffer_id = bufnr('__flygrep__')
   endif
   if exists('&winhighlight')
     set winhighlight=Normal:Pmenu,EndOfBuffer:Pmenu,CursorLine:PmenuSel
@@ -859,7 +860,7 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   call s:matchadd('FileName', s:filename_pattern, 3)
   let s:MPT._prompt.begin = get(a:argv, 'input', '')
   let fs = get(a:argv, 'files', '')
-  if fs ==# '@buffers'
+  if !s:VIM.is_list(fs) && fs ==# '@buffers'
     let s:grep_files = map(s:BUFFER.listed_buffers(), 'bufname(v:val)')
   elseif !empty(fs)
     let s:grep_files = fs

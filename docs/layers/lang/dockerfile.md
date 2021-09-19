@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#dockerfile layer"
-description: "This layer adds DockerFile to SpaceVim"
+description: "Dockerfile language support, including syntax highlighting and code formatting."
 ---
 
 # [Available Layers](../../) >> lang#dockerfile
@@ -15,16 +15,16 @@ description: "This layer adds DockerFile to SpaceVim"
 
 ## Description
 
-This layer adds DockerFile language support to SpaceVim.
+This layer adds Dockerfile language support to SpaceVim.
 
 ## Features
 
 - syntax highlighting
-- lsp support (require [lsp](https://spacevim.org/layers/language-server-protocol/) layer)
+- lsp support (requires [lsp](https://spacevim.org/layers/language-server-protocol/) layer)
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

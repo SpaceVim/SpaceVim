@@ -63,6 +63,9 @@ function! SpaceVim#layers#lang#typescript#config() abort
         \ 'opt': [],
         \ })
   let g:neomake_typescript_enabled_makers = ['eslint']
+  if index(g:spacevim_project_rooter_patterns, 'tsconfig.json') == -1
+    call add(g:spacevim_project_rooter_patterns, 'tsconfig.json')
+  endif
   " does eslint support tsx?
   let g:neoformat_typescriptreact_prettier = {
         \ 'exe': 'prettier',
@@ -158,10 +161,12 @@ endfunction
 
 function! s:go_to_typescript_def() abort
   if !SpaceVim#layers#lsp#check_filetype('typescript')
+    " if lsp layer is not enabled for typescript, use following commands
     if has('nvim')
+      " TSDef is definded in nvim-typescript
       TSDef
     else 
-      call SpaceVim#lsp#go_to_def()
+      TsuDefinition
     endif
   else
     call SpaceVim#lsp#go_to_def()
@@ -172,9 +177,15 @@ function! s:go_to_typescriptreact_def() abort
     if has('nvim')
       TSDef
     else 
-      call SpaceVim#lsp#go_to_def()
+      TsuDefinition
     endif
   else
     call SpaceVim#lsp#go_to_def()
   endif
+endfunction
+
+function! SpaceVim#layers#lang#typescript#health() abort
+  call SpaceVim#layers#lang#typescript#plugins()
+  call SpaceVim#layers#lang#typescript#config()
+  return 1
 endfunction

@@ -36,3 +36,9 @@ function! SpaceVim#layers#lang#xml#config() abort
   augroup END
 endfunction
 
+
+function! SpaceVim#layers#lang#xml#health() abort
+  call SpaceVim#layers#lang#xml#plugins()
+  call SpaceVim#layers#lang#xml#config()
+  return 1
+endfunction

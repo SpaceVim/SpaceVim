@@ -38,3 +38,9 @@ function! SpaceVim#layers#tools#dash#config() abort
   call SpaceVim#mapping#space#def('nmap', ['D', 'D'],
         \ '<Plug>DashGlobalSearch', 'search word under cursor in all docs', 0)
 endfunction
+
+function! SpaceVim#layers#tools#dash#health() abort
+  call SpaceVim#layers#tools#dash#plugins()
+  call SpaceVim#layers#tools#dash#config()
+  return 1
+endfunction

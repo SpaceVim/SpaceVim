@@ -1,5 +1,5 @@
 function! neoformat#formatters#javascript#enabled() abort
-    return ['jsbeautify', 'standard', 'prettier', 'prettydiff', 'clangformat', 'esformatter', 'prettiereslint', 'eslint_d']
+    return ['jsbeautify', 'standard', 'semistandard', 'prettier', 'prettydiff', 'clangformat', 'esformatter', 'prettiereslint', 'eslint_d', 'denofmt']
 endfunction
 
 function! neoformat#formatters#javascript#jsbeautify() abort
@@ -40,7 +40,7 @@ endfunction
 function! neoformat#formatters#javascript#prettier() abort
     return {
         \ 'exe': 'prettier',
-        \ 'args': ['--stdin', '--stdin-filepath', '"%:p"'],
+        \ 'args': ['--stdin-filepath', '"%:p"'],
         \ 'stdin': 1,
         \ }
 endfunction
@@ -64,6 +64,22 @@ endfunction
 function! neoformat#formatters#javascript#standard() abort
     return {
         \ 'exe': 'standard',
+        \ 'args': ['--stdin','--fix'],
+        \ 'stdin': 1,
+        \ }
+endfunction
+
+function! neoformat#formatters#javascript#denofmt() abort
+    return {
+        \ 'exe': 'deno',
+        \ 'args': ['fmt','-'],
+        \ 'stdin': 1,
+        \ }
+endfunction
+
+function! neoformat#formatters#javascript#semistandard() abort
+    return {
+        \ 'exe': 'semistandard',
         \ 'args': ['--stdin','--fix'],
         \ 'stdin': 1,
         \ }

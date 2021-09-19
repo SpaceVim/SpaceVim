@@ -40,7 +40,7 @@ function! s:name() abort
   endif
 endfunction
 
-let s:system['name'] = s:name()
+let s:system['name'] = function('s:name')
 
 function! s:isDarwin() abort
   if exists('s:is_darwin')

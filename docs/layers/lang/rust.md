@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#rust layer"
-description: "This layer is for Rust development, provide autocompletion, syntax checking, code format for Rust file."
+description: "This layer is for Rust development, provides autocompletion, syntax checking, and code formatting for Rust files."
 ---
 
 # [Available Layers](../../) >> lang#rust
@@ -35,14 +35,13 @@ This layer is for Rust development.
 - Cargo integration
 - Code formatting
 
-SpaceVim also provides code runner and Language Server protocol support for Rust. To enable language server protocol
-for Rust, you need to load `lsp` layer for Rust.
+SpaceVim also provides code runner and Language Server Protocol support for Rust. To enable LSP, you need to load the `lsp` layer for Rust.
 
 ## Install
 
 ### Layer
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -56,7 +55,7 @@ To use this configuration layer, update custom configuration file with:
 ## Layer options
 
 - `recommended_style`: `true`/`false` (Enable/Disable) recommended code style for rust. This option is disabled by default.
-- `format_on_save`: `true`/`false` (Enable/Disable) format current buffer after saved. This option is disabled by default.
+- `format_on_save`: `true`/`false` (Enable/Disable) format current buffer after save. This option is disabled by default.
 - `racer_cmd`: The path of `racer` binary. This option is `racer` by default.
 - `rustfmt_cmd`: The path of `rustfmt` binary. This option is `rustfmt` by default.
 
@@ -68,8 +67,8 @@ To use this configuration layer, update custom configuration file with:
 | `SPC l d` / `K` | Show doc of cursor symbol          |
 | `SPC l g`       | Jump to definition                 |
 | `SPC l v`       | Jump to definition (vertical)      |
-| `SPC l e`       | Rename symbol (need `lsp` layer)   |
-| `SPC l u`       | Show references (need `lsp` layer) |
+| `SPC l e`       | Rename symbol (needs `lsp` layer)  |
+| `SPC l u`       | Show references (needs `lsp` layer)|
 | `SPC l c b`     | Run `cargo build`                  |
 | `SPC l c c`     | Run `cargo clean`                  |
 | `SPC l c f`     | Run `cargo fmt`                    |
@@ -79,7 +78,7 @@ To use this configuration layer, update custom configuration file with:
 | `SPC l c D`     | Run `cargo doc`                    |
 | `SPC l c r`     | Run `cargo run`                    |
 
-**Note:** When enable lsp layer for rust, `SPC l g` and `SPC l v` will not exist.
+**Note:** `SPC l g` and `SPC l v` will not be available if the `lsp` layer is not enabled.
 
 ### Inferior REPL process
 
@@ -95,4 +94,4 @@ Send code to inferior process commands:
 
 ### Running current script
 
-To running a rust file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To run a rust file, you can press `SPC l r` to run the current file without losing focus, and the result will be shown in a runner buffer.

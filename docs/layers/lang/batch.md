@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#batch layer"
-description: "This layer is for DOS batch file development, provide syntax highlighting, code runner and repl support for batch file."
+description: "This layer is for DOS batch file development, provides syntax highlighting, code runner and repl support for batch files."
 ---
 
 # [Available Layers](../../) >> lang#batch
@@ -18,11 +18,11 @@ description: "This layer is for DOS batch file development, provide syntax highl
 
 ## Description
 
-This layer is for DOS batch file development, which provides syntax highlighting, code runner and repl support for batch file.
+This layer is for DOS batch file development, which provides syntax highlighting, code runner and repl support for batch files.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -37,7 +37,7 @@ To use this configuration layer, update custom configuration file with:
 
 ### Running current script
 
-To running a batch file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To run a batch file, you can press `SPC l r` to run the current file without losing focus, and the result will be shown in a runner buffer.
 
 ### Inferior REPL process
 
@@ -50,6 +50,3 @@ Send code to inferior process commands:
 | `SPC l s b`  | send buffer and keep code buffer focused         |
 | `SPC l s l`  | send line and keep code buffer focused           |
 | `SPC l s s`  | send selection text and keep code buffer focused |
-
-
-

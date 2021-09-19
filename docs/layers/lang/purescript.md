@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#purescript layer"
-description: "This layer is for PureScript development, provide autocompletion, syntax checking, code format for PureScript file."
+description: "This layer is for PureScript development, provides autocompletion, syntax checking, and code formatting for PureScript files."
 ---
 
 # [Available Layers](../../) >> lang#purescript
@@ -34,7 +34,7 @@ for PureScript, you need to load `lsp` layer for PureScript.
 
 ## Install
 
-### Get the compiler and recommended  tools
+### Get the compiler and recommended tools
 
 ```sh
 npm install -g purescript
@@ -43,7 +43,7 @@ npm install -g pulp bower
 
 ### Layer
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -59,7 +59,7 @@ To use this configuration layer, update custom configuration file with:
 | `g d`        | Goto identifier.                      |
 | `SPC l L`    | list loaded modules                   |
 | `SPC l l`    | reset loaded modules and load externs |
-| `SPC l r`    | run current project                   |
+| `SPC l r`    | run the current project               |
 | `SPC l R`    | rubuild current buffer                |
 | `SPC l f`    | generate function template            |
 | `SPC l t`    | add type annotation                   |
@@ -84,4 +84,4 @@ Send code to inferior process commands:
 
 ### Running current script
 
-To running current script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To run the current script, you can press `SPC l r` to run the current file without losing focus, and the result will be shown in a runner buffer.

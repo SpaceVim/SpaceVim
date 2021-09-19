@@ -11,3 +11,8 @@ function! SpaceVim#layers#tools#screensaver#plugins() abort
     call add(plugins, ['itchyny/screensaver.vim', {'merged' : 0}])
     return plugins
 endfunction
+
+function! SpaceVim#layers#tools#screensaver#health() abort
+  call SpaceVim#layers#tools#screensaver#plugins()
+  return 1
+endfunction

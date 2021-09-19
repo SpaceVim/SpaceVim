@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim colorscheme layer"
-description: "colorscheme provides a list of colorscheme for SpaceVim, default colorscheme is gruvbox with dark theme."
+description: "colorscheme provides a list of colorschemes for SpaceVim, the default colorscheme is gruvbox with dark theme."
 ---
 
 # [Available Layers](../) >> colorschemes
@@ -54,8 +54,8 @@ Colorscheme list
 | material     | yes  | yes   | yes  | yes |    yes     |
 | SpaceVim     | yes  | yes   | yes  | yes |    yes     |
 
-By default this layer only include above colorschemes. If you want to use other colorschemes which
-are available on Github, use the `custom_plugins` section in configuration file. For example:
+By default this layer only includes above colorschemes. If you want to use other colorschemes which
+are available on Github, use the `custom_plugins` section in the configuration file. For example:
 
 ```toml
 [options]
@@ -69,8 +69,7 @@ are available on Github, use the `custom_plugins` section in configuration file.
 ```
 
 Some colorschemes offer dark and light styles. Most of them are set by changing
-Vim background color. SpaceVim support to change the background color with
-`colorscheme_bg`:
+Vim's background color. SpaceVim supports changing the background color with `colorscheme_bg`:
 
 ```toml
 [options]
@@ -78,7 +77,7 @@ Vim background color. SpaceVim support to change the background color with
   colorscheme_bg = "dark"
 ```
 
-Colorscheme layer support random colorscheme on startup. just load this layer with layer option `random_theme`
+The colorscheme layer supports random colorschemes on startup. just load this layer with layer option `random_theme`
 
 ```toml
 [[layers]]
@@ -86,7 +85,7 @@ Colorscheme layer support random colorscheme on startup. just load this layer wi
   random_theme = true
 ```
 
-The frequency can be changed via `frequency` layer options, the available values are `daily`, `hourly`, `weekly`.
+The frequency can be changed via `frequency` layer option, the available values are `daily`, `hourly`, `weekly`.
 You can also use `number + unit`, for example: `1h`.
 
 ```toml

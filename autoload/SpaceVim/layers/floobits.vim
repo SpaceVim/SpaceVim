@@ -17,6 +17,11 @@ function! SpaceVim#layers#floobits#plugins() abort
   return plugins
 endfunction 
 
+function! SpaceVim#layers#floobits#health() abort
+  call SpaceVim#layers#floobits#plugins()
+  call SpaceVim#layers#floobits#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#floobits#config() abort
   let g:_spacevim_mappings_space.m.f = {'name' : '+floobits'}

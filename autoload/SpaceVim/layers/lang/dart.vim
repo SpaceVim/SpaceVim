@@ -20,6 +20,10 @@
 "     name = "lang#dart"
 " <
 "
+" @subsection Layer options
+"
+" 1. `dart_sdk_path`: Set the path of dart sdk, by default, it is ''.
+"
 " @subsection Key bindings
 " >
 "   Mode            Key             Function
@@ -44,12 +48,13 @@
 
 if exists('s:flutter_job_id')
   finish
-else
-  let s:flutter_job_id = 0
 endif
 
+let s:flutter_job_id = 0
+let s:dart_sdk_path = ''
+
 let s:JOB = SpaceVim#api#import('job')
-let s:NOTI =SpaceVim#api#import('notification')
+let s:NOTI = SpaceVim#api#import('notify')
 
 function! SpaceVim#layers#lang#dart#plugins() abort
   let plugins = []
@@ -66,6 +71,11 @@ function! SpaceVim#layers#lang#dart#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('dart', function('s:language_specified_mappings'))
   call SpaceVim#plugins#repl#reg('dart', ['pub', 'global', 'run', 'dart_repl'])
   call add(g:spacevim_project_rooter_patterns, 'pubspec.yaml')
+  let g:deoplete#sources#dart#dart_sdk_path = s:dart_sdk_path
+endfunction
+
+function! SpaceVim#layers#lang#dart#set_variable(var) abort
+  let s:dart_sdk_path = get(a:var, 'dart_sdk_path', s:dart_sdk_path)
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -119,7 +129,7 @@ endfunction
 
 function! s:flutter_run() abort
   if s:flutter_job_id ==# 0
-    " call s:NOTI.notification(line, 'Normal')
+    " call s:NOTI.notify(line, 'Normal')
     let s:flutter_job_id = s:JOB.start('flutter run',
           \ {
           \ 'on_stdout' : function('s:on_stdout'),
@@ -132,7 +142,7 @@ endfunction
 
 function! s:flutter_send(msg) abort
   if s:flutter_job_id ==# 0
-    call s:NOTI.notification('Flutter is not running.', 'WarningMsg')
+    call s:NOTI.notify('Flutter is not running.', 'WarningMsg')
   else
     call s:JOB.send(s:flutter_job_id, a:msg)
   endif
@@ -140,13 +150,13 @@ endfunction
 
 function! s:on_stdout(id, data, event) abort
   for line in filter(a:data, '!empty(v:val)')
-    call s:NOTI.notification(line, 'Normal')
+    call s:NOTI.notify(line, 'Normal')
   endfor
 endfunction
 
 function! s:on_stderr(id, data, event) abort
   for line in filter(a:data, '!empty(v:val)')
-    call s:NOTI.notification(line, 'WarningMsg')
+    call s:NOTI.notify(line, 'WarningMsg')
   endfor
 endfunction
 
@@ -155,17 +165,17 @@ function! s:on_exit(...) abort
 endfunction
 
 function! s:flutter_emulators_launch() abort
-    call inputsave()
-    let emulators = input('emulators id:')
-    call inputrestore()
-    if !empty(emulators)
-      call s:JOB.start(['flutter', 'emulators', '--launch', emulators],
+  call inputsave()
+  let emulators = input('emulators id:')
+  call inputrestore()
+  if !empty(emulators)
+    call s:JOB.start(['flutter', 'emulators', '--launch', emulators],
           \ {
           \ 'on_stdout' : function('s:on_stdout'),
           \ 'on_stderr' : function('s:on_stderr'),
           \ }
           \ )
-    endif
+  endif
 endfunction
 
 
@@ -183,3 +193,9 @@ else
     return function(substitute(a:fstr, 's:', s:_s, 'g'))
   endfunction
 endif
+
+function! SpaceVim#layers#lang#dart#health() abort
+  call SpaceVim#layers#lang#dart#plugins()
+  call SpaceVim#layers#lang#dart#config()
+  return 1
+endfunction

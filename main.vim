@@ -9,10 +9,12 @@
 " Enable nocompatible
 if has('vim_starting')
   " set default encoding to utf-8
+
   " Let Vim use utf-8 internally, because many scripts require this
-  exe 'set encoding=utf-8'
+  set encoding=utf-8
   scriptencoding utf-8
   if &compatible
+    " compatible mode is not supported in SpaceVim
     set nocompatible
   endif
   " python host
@@ -48,9 +50,9 @@ else
     return resolve(a:path)
   endfunction
 endif
-let g:_spacevim_root_dir = fnamemodify(s:resolve(fnamemodify(expand('<sfile>'),
+let g:_spacevim_root_dir = escape(fnamemodify(s:resolve(fnamemodify(expand('<sfile>'),
       \ ':p:h:gs?\\?'.((has('win16') || has('win32')
-      \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?')
+      \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?'), ' ')
 lockvar g:_spacevim_root_dir
 if has('nvim')
   let s:qtdir = split(&rtp, ',')[-1]

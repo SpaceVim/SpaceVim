@@ -14,6 +14,8 @@ let s:self.__aliases = {
       \ 'typescriptreact' : 'TypeScript React',
       \ 'python' : 'Python',
       \ 'java' : 'Java',
+      \ 'smalltalk' : 'SmallTalk',
+      \ 'objc' : 'Objective-C',
       \ }
 
 

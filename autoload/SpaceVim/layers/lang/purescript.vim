@@ -6,6 +6,45 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#purescript, layer-lang-purescript
+" @parentsection layers
+" This layer provides purescript language support for SpaceVim. Includding syntax
+" highlighting, code formatting and code completion. This layer is not enabled
+" by default, to enable this layer, add following snippet into SpaceVim
+" configuration file:
+" >
+"   [[layers]]
+"     name = 'lang#purescript'
+" <
+" @subsection Key bindings
+"
+" >
+"   Key             Function
+"   --------------------------------
+"   SPC l L         list loaded modules
+"   SPC l l         reset loaded modules and load externs
+"   SPC l R         rebuild current buffer
+"   SPC l f         generate function template
+"   SPC l t         add type annotation
+"   SPC l a         apply current line suggestion
+"   SPC l A         apply all suggestions
+"   SPC l C         add case expression
+"   SPC l i         import module
+"   SPC l p         search pursuit for cursor ident
+"   SPC l T         find type of cursor ident
+" <
+"
+" This layer also provides REPL support for purescript, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 function! SpaceVim#layers#lang#purescript#plugins() abort
   let plugins = []
@@ -78,4 +117,10 @@ function! s:go_to_def() abort
   else
     call SpaceVim#lsp#go_to_def()
   endif
+endfunction
+
+function! SpaceVim#layers#lang#purescript#health() abort
+  call SpaceVim#layers#lang#purescript#plugins()
+  call SpaceVim#layers#lang#purescript#config()
+  return 1
 endfunction
