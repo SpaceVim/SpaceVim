@@ -35,11 +35,11 @@ else
 endif
 
 function! s:setcolum() abort
-  if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_vimfiler_gitstatus
+  if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_filetree_gitstatus
     return 'filetypeicon'
-  elseif !g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+  elseif !g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_filetree_gitstatus
     return 'gitstatus'
-  elseif g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+  elseif g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_filetree_gitstatus
     return 'filetypeicon:gitstatus'
   else
     return ''

@@ -19,11 +19,11 @@ else
 endif
 
 function! s:setcolum() abort
-  if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_vimfiler_gitstatus
+  if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_filetree_gitstatus
     return 'indent:icons:filename:type'
-  elseif !g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+  elseif !g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_filetree_gitstatus
     return 'indent:git:filename:type'
-  elseif g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+  elseif g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_filetree_gitstatus
     return 'indent:git:icons:filename:type'
   else
     return 'mark:indent:icon:filename:type'

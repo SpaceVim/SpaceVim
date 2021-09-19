@@ -789,13 +789,13 @@ let g:spacevim_colorscheme_default     = 'desert'
 ""
 " @section filemanager, options-filemanager
 " @parentsection options
-" The default file manager of SpaceVim. Default is 'vimfiler'.
-" you can also use nerdtree or defx
+" The default file manager of SpaceVim. Default is 'nerdtree'.
+" you can also use defx or vimfiler
 
 ""
-" The default file manager of SpaceVim. Default is 'vimfiler'.
-" you can also use nerdtree or defx
-let g:spacevim_filemanager             = 'vimfiler'
+" The default file manager of SpaceVim. Default is 'nerdtree'.
+" you can also use defx or vimfiler
+let g:spacevim_filemanager             = 'nerdtree'
 ""
 " @section filetree_direction, options-filetree_direction
 " @parentsection options
@@ -1196,7 +1196,19 @@ let g:spacevim_enable_vimfiler_welcome = 1
 " Enable/Disable autocompletion of parentheses, default is 1 (enabled).
 let g:spacevim_autocomplete_parens = 1
 ""
-" Enable/Disable gitstatus column in vimfiler buffer, default is 0.
+" @section enable_filetree_gitstatus, options-enable_filetree_gitstatus
+" @parentsection options
+" Enable/Disable gitstatus column in filetree buffer, default is false.
+" >
+"   enable_filetree_gitstatus = false
+" <
+" NOTE: the `enable_vimfiler_gitstatus` option has been deprecated.
+" *spacevim-options-enable_vimfiler_gitstatus*
+" *g:spacevim_enable_vimfiler_gitstatus*
+
+""
+" Enable/Disable gitstatus column in filetree buffer, default is 0.
+let g:spacevim_enable_filetree_gitstatus = 0
 let g:spacevim_enable_vimfiler_gitstatus = 0
 ""
 " Enable/Disable filetypeicon column in vimfiler buffer, default is 0.

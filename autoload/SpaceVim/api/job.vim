@@ -114,6 +114,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
         let self._eof = a:data[-1]
       elseif len(a:data) ==# 1 && a:data[-1] ==# '' && !empty(self._eof)
         call self._opts.on_stdout(a:id, [self._eof], 'stdout')
+        let self._eof = ''
       elseif len(a:data) ==# 1 && a:data[-1] !=# ''
         let self._eof .= a:data[-1]
       endif
@@ -130,6 +131,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
         let self._eof = a:data[-1]
       elseif len(a:data) ==# 1 && a:data[-1] ==# '' && !empty(self._eof)
         call self._opts.on_stderr(a:id, [self._eof], 'stderr')
+        let self._eof = ''
       elseif len(a:data) ==# 1 && a:data[-1] !=# ''
         let self._eof .= a:data[-1]
       endif
