@@ -9,7 +9,18 @@
 ""
 " @section checkers, layer-checkers
 " @parentsection layers
-" SpaceVim uses neomake as default syntax checker.
+" The `checkers` layer provides syntax lint feature. The default lint engine
+" is |neomake|, this can be changed by `lint_engine` option:
+" >
+"   [options]
+"     lint_engine = 'ale'
+" <
+"
+" @subsection options
+"
+" - `lint_on_the_fly`: Syntax checking on the fly feature, disabled by default.
+" - `lint_on_save`: Run syntax checking when saving a file.
+" - `show_cursor_error`: Enable/Disable displaying error below current line.
 
 
 if exists('s:show_cursor_error')
