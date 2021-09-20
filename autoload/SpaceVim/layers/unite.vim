@@ -17,6 +17,9 @@ function! SpaceVim#layers#unite#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/unite-sources', { 'merged' : 0}],
         \ ]
 
+  if g:spacevim_filemanager !=# 'vimfiler'
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
+  endif
   " \ ['mileszs/ack.vim',{'on_cmd' : 'Ack'}],
   " \ ['albfan/ag.vim',{'on_cmd' : 'Ag' , 'loadconf' : 1}],
   " \ ['dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF', 'loadconf' : 1 , 'loadconf_before' : 1}],
