@@ -32,11 +32,6 @@ function! SpaceVim#layers#unite#plugins() abort
   call add(plugins, ['Shougo/unite-outline', {'merged' : 0}])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
 
-  " This repo merge:
-  " - https://github.com/sgur/unite-qf locationlist
-  " - https://github.com/ujihisa/unite-colorscheme colorscheme
-  " - unicode
-  call add(plugins, ['SpaceVim/Unite-sources', {'merged' : 0}])
   if g:spacevim_enable_googlesuggest
     call add(plugins, ['mopp/googlesuggest-source.vim'])
     call add(plugins, ['mattn/googlesuggest-complete-vim'])
