@@ -28,6 +28,7 @@ function! s:nerdtreeinit() abort
   nnoremap <silent><buffer> P  :<C-u>call <SID>paste_to_file_manager()<CR>
   nnoremap <silent><buffer> h  :<C-u>call <SID>nerdtree_h()<CR>
   nnoremap <silent><buffer> l  :<C-u>call <SID>nerdtree_l()<CR>
+  nnoremap <silent><buffer> N  :<C-u>call NERDTreeAddNode()<CR>
 endfunction
 
 function! s:paste_to_file_manager() abort
