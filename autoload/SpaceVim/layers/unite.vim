@@ -6,6 +6,36 @@
 " License: GPLv3
 "=============================================================================
 
+
+""
+" @section unite, layer-unite
+" @parentsection layers
+" This layer provides fuzzy finder feature which is based on |unite|. This
+" layer is not loaded by default, to use this layer, you need to load `unite`
+" layer in your configuration file.
+" >
+"   [[layers]]
+"     name = 'unite'
+" <
+"
+" @subsection Key bindings
+" >
+"   | Key bindings         | Discription                   |
+"   | -------------------- | ----------------------------- |
+"   | `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
+"   | `<Leader> f e`       | Fuzzy find register           |
+"   | `<Leader> f h`       | Fuzzy find history/yank       |
+"   | `<Leader> f j`       | Fuzzy find jump, change       |
+"   | `<Leader> f l`       | Fuzzy find location list      |
+"   | `<Leader> f m`       | Fuzzy find output messages    |
+"   | `<Leader> f o`       | Fuzzy find outline            |
+"   | `<Leader> f q`       | Fuzzy find quick fix          |
+"   | `<Leader> f r`       | Resumes Unite window          |
+" <
+"
+
+
+
 function! SpaceVim#layers#unite#plugins() abort
   " The default sources:
   " file: <Leader>ff
@@ -13,13 +43,13 @@ function! SpaceVim#layers#unite#plugins() abort
   " jump: <Leader>fj
   " messages: <Leader>fm
   let plugins = [
-        \ ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}],
-        \ ['thinca/vim-unite-history', {'merged' : 0}],
-        \ ['Shougo/unite-help', {'merged' : 0}],
-        \ ['wsdjeg/unite-radio.vim', {'loadconf' : 1, 'merged' : 0}],
-        \ ['hewes/unite-gtags' ,{'loadconf' : 1, 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/unite.vim', { 'merged' : 0, 'loadconf' : 1}],
+        \ [g:_spacevim_root_dir . 'bundle/unite-sources', { 'merged' : 0}],
         \ ]
 
+  if g:spacevim_filemanager !=# 'vimfiler'
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
+  endif
   " \ ['mileszs/ack.vim',{'on_cmd' : 'Ack'}],
   " \ ['albfan/ag.vim',{'on_cmd' : 'Ag' , 'loadconf' : 1}],
   " \ ['dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF', 'loadconf' : 1 , 'loadconf_before' : 1}],
@@ -32,11 +62,6 @@ function! SpaceVim#layers#unite#plugins() abort
   call add(plugins, ['Shougo/unite-outline', {'merged' : 0}])
   call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
 
-  " This repo merge:
-  " - https://github.com/sgur/unite-qf locationlist
-  " - https://github.com/ujihisa/unite-colorscheme colorscheme
-  " - unicode
-  call add(plugins, ['SpaceVim/Unite-sources', {'merged' : 0}])
   if g:spacevim_enable_googlesuggest
     call add(plugins, ['mopp/googlesuggest-source.vim'])
     call add(plugins, ['mattn/googlesuggest-complete-vim'])

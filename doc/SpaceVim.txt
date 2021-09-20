@@ -189,6 +189,7 @@ CONTENTS                                                   *SpaceVim-contents*
       104. tools#dash..............................|SpaceVim-layer-tools-dash|
       105. tools#zeal..............................|SpaceVim-layer-tools-zeal|
       106. ui..............................................|SpaceVim-layer-ui|
+      107. unite........................................|SpaceVim-layer-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
       2. custom_plugins........................|SpaceVim-usage-custom_plugins|
@@ -4195,6 +4196,34 @@ KEY BINDINGS
 >
   Key binding     Description
   SPC t h         ui current buffer or selection lines
+<
+
+
+==============================================================================
+UNITE                                                   *SpaceVim-layer-unite*
+
+This layer provides fuzzy finder feature which is based on |unite|. This layer
+is not loaded by default, to use this layer, you need to load `unite` layer in
+your configuration file.
+>
+  [[layers]]
+    name = 'unite'
+<
+
+KEY BINDINGS
+
+>
+  | Key bindings         | Discription                   |
+  | -------------------- | ----------------------------- |
+  | `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
+  | `<Leader> f e`       | Fuzzy find register           |
+  | `<Leader> f h`       | Fuzzy find history/yank       |
+  | `<Leader> f j`       | Fuzzy find jump, change       |
+  | `<Leader> f l`       | Fuzzy find location list      |
+  | `<Leader> f m`       | Fuzzy find output messages    |
+  | `<Leader> f o`       | Fuzzy find outline            |
+  | `<Leader> f q`       | Fuzzy find quick fix          |
+  | `<Leader> f r`       | Resumes Unite window          |
 <
 
 

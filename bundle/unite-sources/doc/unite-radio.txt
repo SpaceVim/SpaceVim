@@ -1,0 +1,75 @@
+*unite-radio.txt*	Unite.vim radio source
+
+Version: 0.1
+Author : Kirill Klenov <horneds@gmail.com>
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+CONTENTS					*unite-radio-contents*
+
+Introduction		|unite-radio-introduction|
+Usage			|unite-radio-usage|
+Interface		|unite-radio-interface|
+Changelog		|unite-radio-changelog|
+
+==============================================================================
+INTRODUCTION					*unite-radio-introduction*
+
+The source provides interface for listening a online radio stations.
+
+==============================================================================
+USAGE						*unite-radio-usage*
+
+Note: |unite.vim| and |vimproc| is required. Also you should have installed
+`mplayer` or `VLC`.
+
+==============================================================================
+INTERFACE					*unite-radio-interface*
+
+------------------------------------------------------------------------------
+COMMANDS 					*unite-radio-commands*
+
+:UniteMPlay [{url}]                             *:UniteMPlay*
+        Play given station with given {url}.
+
+:UniteMStop                                     *:UniteMStop*
+        Stop playing.
+
+------------------------------------------------------------------------------
+VARIABLES 					*unite-radio-variables*
+
+g:unite_source_radio_stations                   *g:unite_source_radio_stations*
+        List of defined radio stations.
+
+        Format: [[{name}, {url}], [{name}, {url}]]
+
+g:unite_source_radio_play_cmd                   *g:unite_source_radio_play_cmd*
+        Command for play radio.
+
+        By default unite-radio checks `mplayer` and `VLC`
+
+==============================================================================
+CHANGELOG					*unite-radio-changelog*
+
+2013-08-27
+- Initial version.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:
