@@ -6,6 +6,36 @@
 " License: GPLv3
 "=============================================================================
 
+
+""
+" @section unite, layer-unite
+" @parentsection layers
+" This layer provides fuzzy finder feature which is based on |unite|. This
+" layer is not loaded by default, to use this layer, you need to load `unite`
+" layer in your configuration file.
+" >
+"   [[layers]]
+"     name = 'unite'
+" <
+"
+" @subsection Key bindings
+" >
+"   | Key bindings         | Discription                   |
+"   | -------------------- | ----------------------------- |
+"   | `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
+"   | `<Leader> f e`       | Fuzzy find register           |
+"   | `<Leader> f h`       | Fuzzy find history/yank       |
+"   | `<Leader> f j`       | Fuzzy find jump, change       |
+"   | `<Leader> f l`       | Fuzzy find location list      |
+"   | `<Leader> f m`       | Fuzzy find output messages    |
+"   | `<Leader> f o`       | Fuzzy find outline            |
+"   | `<Leader> f q`       | Fuzzy find quick fix          |
+"   | `<Leader> f r`       | Resumes Unite window          |
+" <
+"
+
+
+
 function! SpaceVim#layers#unite#plugins() abort
   " The default sources:
   " file: <Leader>ff
