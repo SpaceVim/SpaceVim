@@ -13,11 +13,8 @@ function! SpaceVim#layers#unite#plugins() abort
   " jump: <Leader>fj
   " messages: <Leader>fm
   let plugins = [
-        \ ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}],
-        \ ['thinca/vim-unite-history', {'merged' : 0}],
-        \ ['Shougo/unite-help', {'merged' : 0}],
-        \ ['wsdjeg/unite-radio.vim', {'loadconf' : 1, 'merged' : 0}],
-        \ ['hewes/unite-gtags' ,{'loadconf' : 1, 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/unite.vim', { 'merged' : 0, 'loadconf' : 1}],
+        \ [g:_spacevim_root_dir . 'bundle/unite-sources', { 'merged' : 0}],
         \ ]
 
   " \ ['mileszs/ack.vim',{'on_cmd' : 'Ack'}],
