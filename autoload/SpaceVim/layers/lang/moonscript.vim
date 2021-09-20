@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#moonscript, layer-lang-moonscript
+" @section lang#moonscript, layers-lang-moonscript
 " @parentsection layers
 " This layer is for moonscript development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

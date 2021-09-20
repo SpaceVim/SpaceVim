@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#julia, layer-lang-julia
+" @section lang#julia, layers-lang-julia
 " @parentsection layers
 " This layer is for julia development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

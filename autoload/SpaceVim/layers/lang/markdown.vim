@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#markdown, layer-lang-markdown
+" @section lang#markdown, layers-lang-markdown
 " @parentsection layers
 " This layer is for markdown language, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

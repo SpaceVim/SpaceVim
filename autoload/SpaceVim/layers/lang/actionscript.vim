@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#actionscript, layer-lang-actionscript
+" @section lang#actionscript, layers-lang-actionscript
 " @parentsection layers
 " This layer provides syntax highlighting for actionscript. To enable this
 " layer:

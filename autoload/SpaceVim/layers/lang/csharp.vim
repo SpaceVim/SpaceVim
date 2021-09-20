@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#csharp, layer-lang-csharp
+" @section lang#csharp, layers-lang-csharp
 " @parentsection layers
 " @subsection Intro
 "

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#python, layer-lang-python
+" @section lang#python, layers-lang-python
 " @parentsection layers
 " This layer provides python language support for SpaceVim. Includding syntax
 " highlighting, code formatting and code completion. This layer is not enabled

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section tmux, layer-tmux
+" @section tmux, layers-tmux
 " @parentsection layers
 " Adds integration between tmux and vim panes. Switch between panes
 " seamlessly.syntax highlighting, commenting, man page navigation

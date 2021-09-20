@@ -8,7 +8,7 @@
 
 
 ""
-" @section lang#rust, layer-lang-rust
+" @section lang#rust, layers-lang-rust
 " @parentsection layers
 " This layer is for Rust development. 
 "

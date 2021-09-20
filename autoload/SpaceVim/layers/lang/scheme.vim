@@ -16,7 +16,7 @@ else
 endif
 
 ""
-" @section lang#scheme, layer-lang-scheme
+" @section lang#scheme, layers-lang-scheme
 " @parentsection layers
 " This layer is for scheme development, disabled by default, to enable this
 " layer, add following snippet to your @section(options) file.

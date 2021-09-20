@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#janet, layer-lang-janet
+" @section lang#janet, layers-lang-janet
 " @parentsection layers
 " This layer is for janet development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

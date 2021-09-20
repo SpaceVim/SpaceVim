@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#dockerfile, layer-lang-dockerfile
+" @section lang#dockerfile, layers-lang-dockerfile
 " @parentsection layers
 " @subsection Intro
 "

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section language server protocol, layer-lsp
+" @section language server protocol, layers-lsp
 " @parentsection layers
 " This layer provides language client support for SpaceVim.
 

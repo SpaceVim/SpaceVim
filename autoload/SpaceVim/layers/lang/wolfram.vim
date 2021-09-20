@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#wolfram, layer-lang-wolfram
+" @section lang#wolfram, layers-lang-wolfram
 " @parentsection layers
 " This layer is for wolfram development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

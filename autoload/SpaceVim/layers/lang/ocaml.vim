@@ -8,7 +8,7 @@
 
 
 ""
-" @section lang#ocaml, layer-lang-ocaml
+" @section lang#ocaml, layers-lang-ocaml
 " @parentsection layers
 " OCaml autocompletion provided by merlin.
 "

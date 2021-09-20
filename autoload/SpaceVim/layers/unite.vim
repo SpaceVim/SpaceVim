@@ -8,7 +8,7 @@
 
 
 ""
-" @section unite, layer-unite
+" @section unite, layers-unite
 " @parentsection layers
 " This layer provides fuzzy finder feature which is based on |unite|. This
 " layer is not loaded by default, to use this layer, you need to load `unite`

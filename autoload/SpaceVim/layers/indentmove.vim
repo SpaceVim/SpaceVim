@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section indentmove, layer-indentmove
+" @section indentmove, layers-indentmove
 " @parentsection layers
 " Move cursor quickly according to indent.
 "

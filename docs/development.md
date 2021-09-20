@@ -266,7 +266,7 @@ The following example shows how to create a new layer named `foo`:
 "=============================================================================
 
 ""
-" @section foo, layer-foo
+" @section foo, layers-foo
 " @parentsection layers
 " This is the doc for this layer:
 "

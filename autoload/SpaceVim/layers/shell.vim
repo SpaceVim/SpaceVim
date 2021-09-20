@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section shell, layer-shell
+" @section shell, layers-shell
 " @parentsection layers
 " SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for
 " vim. For more info, read |deol| and |vimshell|.

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#perl, layer-lang-perl
+" @section lang#perl, layers-lang-perl
 " @parentsection layers
 " This layer is for perl development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#latex, layer-lang-latex
+" @section lang#latex, layers-lang-latex
 " @parentsection layers
 " This layer is for latex development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

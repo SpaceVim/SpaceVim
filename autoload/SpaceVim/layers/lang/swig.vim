@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#swig, layer-lang-swig
+" @section lang#swig, layers-lang-swig
 " @parentsection layers
 " This layer is for swig development, including syntax highlighting and
 " indent. To enable it:

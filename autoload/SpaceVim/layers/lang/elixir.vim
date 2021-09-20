@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#elixir, layer-lang-elixir
+" @section lang#elixir, layers-lang-elixir
 " @parentsection layers
 " This layer is for elixir development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

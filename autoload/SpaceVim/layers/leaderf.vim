@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section leaderf, layer-leaderf
+" @section leaderf, layers-leaderf
 " @parentsection layers
 " This layer provides fuzzy finder feature which is based on leaderf, and this
 " layer requires vim compiled with `+python` or `+python3`.

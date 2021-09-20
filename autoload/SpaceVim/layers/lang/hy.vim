@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#hy, layer-lang-hy
+" @section lang#hy, layers-lang-hy
 " @parentsection layers
 " This layer is for hy development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

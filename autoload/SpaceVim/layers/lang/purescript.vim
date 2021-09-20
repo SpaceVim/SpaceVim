@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#purescript, layer-lang-purescript
+" @section lang#purescript, layers-lang-purescript
 " @parentsection layers
 " This layer provides purescript language support for SpaceVim. Includding syntax
 " highlighting, code formatting and code completion. This layer is not enabled

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#sh, layer-lang-sh
+" @section lang#sh, layers-lang-sh
 " @parentsection layers
 " This layer is for shell script development, including bash, zsh and fish.
 " This layer provides basic syntax highlighting and code completion , and it

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section exprfold, layer-exprfold
+" @section exprfold, layers-exprfold
 " @parentsection layers
 " Fold code quickly according to expr.
 "

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#fsharp, layer-lang-fsharp
+" @section lang#fsharp, layers-lang-fsharp
 " @parentsection layers
 " This layer is for fsharp development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

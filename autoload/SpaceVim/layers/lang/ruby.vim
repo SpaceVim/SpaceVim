@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#ruby, layer-lang-ruby
+" @section lang#ruby, layers-lang-ruby
 " @parentsection layers
 " This layer is for ruby development, disabled by default, to enable this
 " layer, add following snippet to your @section(options) file.

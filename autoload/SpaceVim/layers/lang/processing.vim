@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#processing, layer-lang-processing
+" @section lang#processing, layers-lang-processing
 " @parentsection layers
 " This layer is for Processing development:
 " https://processing.org

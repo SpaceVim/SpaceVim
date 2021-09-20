@@ -8,7 +8,7 @@
 
 scriptencoding utf-8
 ""
-" @section lang#sml, layer-lang-sml
+" @section lang#sml, layers-lang-sml
 " @parentsection layers
 " This layer is for Standard ML development.
 " This layer provides basic syntax highlighting and code completion , and it

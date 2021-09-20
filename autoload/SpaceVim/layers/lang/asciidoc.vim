@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#asciidoc, layer-lang-asciidoc
+" @section lang#asciidoc, layers-lang-asciidoc
 " @parentsection layers
 " This layer provides syntax highlighting for asciidoc. To enable this
 " layer:

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#fortran, layer-lang-fortran
+" @section lang#fortran, layers-lang-fortran
 " @parentsection layers
 " This layer is for fortran development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

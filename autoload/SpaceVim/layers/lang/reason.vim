@@ -12,7 +12,7 @@ if exists('s:JSON')
 endif
 
 ""
-" @section lang#reason, layer-lang-reason
+" @section lang#reason, layers-lang-reason
 " @parentsection layers
 " This layer is for reason development, disabled by default, to enable this
 " layer, add following snippet to your @section(options) file.

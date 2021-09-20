@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section checkers, layer-checkers
+" @section checkers, layers-checkers
 " @parentsection layers
 " The `checkers` layer provides syntax lint feature. The default lint engine
 " is |neomake|, this can be changed by `lint_engine` option:

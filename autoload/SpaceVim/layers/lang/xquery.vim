@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#xquery, layer-lang-xquery
+" @section lang#xquery, layers-lang-xquery
 " @parentsection layers
 " This layer provides basic syntax highlighting and indent file for xquery,
 " disabled by default, to enable this layer, add following snippet to 

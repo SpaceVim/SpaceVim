@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section tools#zeal, layer-tools-zeal
+" @section tools#zeal, layers-tools-zeal
 " @parentsection layers
 " This layer provides Zeal integration for SpaceVim
 

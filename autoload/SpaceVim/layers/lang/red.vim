@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#racket, layer-lang-red
+" @section lang#racket, layers-lang-red
 " @parentsection layers
 " This layer is for red development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

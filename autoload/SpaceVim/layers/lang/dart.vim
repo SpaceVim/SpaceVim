@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#dart, layer-lang-dart
+" @section lang#dart, layers-lang-dart
 " @parentsection layers
 " @subsection Intro
 "

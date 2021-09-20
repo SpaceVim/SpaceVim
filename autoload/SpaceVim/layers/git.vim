@@ -8,7 +8,7 @@
 
 
 ""
-" @section git, layer-git
+" @section git, layers-git
 " @parentsection layers
 " `git` layer provides git integration for SpaceVim.
 "

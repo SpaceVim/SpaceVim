@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#assembly, layer-lang-assembly
+" @section lang#assembly, layers-lang-assembly
 " @parentsection layers
 " This layer provides syntax highlighting for assembly. To enable this
 " layer:

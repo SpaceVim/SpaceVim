@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#crystal, layer-lang-crystal
+" @section lang#crystal, layers-lang-crystal
 " @parentsection layers
 " @subsection Intro
 "

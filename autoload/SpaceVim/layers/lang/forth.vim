@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#forth, layer-lang-forth
+" @section lang#forth, layers-lang-forth
 " @parentsection layers
 " This layer is for forth development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

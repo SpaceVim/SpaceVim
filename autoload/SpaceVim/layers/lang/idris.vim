@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#idris, layer-lang-idris
+" @section lang#idris, layers-lang-idris
 " @parentsection layers
 " This layer is for idris development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

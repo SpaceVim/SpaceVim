@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#javascript, layer-lang-javascript
+" @section lang#javascript, layers-lang-javascript
 " @parentsection layers
 " This layer is for JavaScript development, includes syntax lint, code
 " completion etc. To enable this layer:

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#typescript, layer-lang-typescript
+" @section lang#typescript, layers-lang-typescript
 " @parentsection layers
 " This layer provides typescript development support for SpaceVim.
 " To enable this layer, add following sinippet into SpaceVim configuration

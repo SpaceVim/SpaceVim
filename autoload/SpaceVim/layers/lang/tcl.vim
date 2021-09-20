@@ -8,7 +8,7 @@
 
 
 ""
-" @section lang#tcl, layer-lang-tcl
+" @section lang#tcl, layers-lang-tcl
 " @parentsection layers
 " This layer is for tcl development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

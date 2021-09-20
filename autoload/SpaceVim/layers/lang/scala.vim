@@ -9,7 +9,7 @@ scriptencoding utf-8
 
 
 ""
-" @section lang#scala, layer-lang-scala
+" @section lang#scala, layers-lang-scala
 " @parentsection layers
 " This layer is for Scala development.
 "

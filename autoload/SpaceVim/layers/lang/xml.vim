@@ -8,7 +8,7 @@
 
 
 ""
-" @section lang#xml, layer-lang-xml
+" @section lang#xml, layers-lang-xml
 " @parentsection layers
 " When editing an xml file, the omni func is xmlcomplete#CompleteTags. You can
 " read the documentation in autoload/xmlcomplete.vim in the vim or neovim

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section tools#dash, layer-tools-dash
+" @section tools#dash, layers-tools-dash
 " @parentsection layers
 " This layer provides Dash integration for SpaceVim
 

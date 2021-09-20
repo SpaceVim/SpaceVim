@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#chapel, layer-lang-chapel
+" @section lang#chapel, layers-lang-chapel
 " @parentsection layers
 " This layer is for chapel development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

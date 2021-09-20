@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#lua, layer-lang-lua
+" @section lang#lua, layers-lang-lua
 " @parentsection layers
 " This layer includes utilities and language-specific mappings for lua development.
 " >

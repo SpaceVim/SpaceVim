@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section operator, layer-operator
+" @section operator, layers-operator
 " @parentsection layers
 " With this layer, you can confirm that text is yanked correctly and see
 " yanked text by highlighting.

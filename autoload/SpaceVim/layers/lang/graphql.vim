@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#graphql, layer-lang-graphql
+" @section lang#graphql, layers-lang-graphql
 " @parentsection layers
 " @subsection Intro
 "

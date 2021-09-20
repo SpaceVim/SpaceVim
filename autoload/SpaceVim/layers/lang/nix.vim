@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#nix, layer-lang-nix
+" @section lang#nix, layers-lang-nix
 " @parentsection layers
 " @subsection Intro
 " The lang#nix layer provides syntax highlighting for the Nix

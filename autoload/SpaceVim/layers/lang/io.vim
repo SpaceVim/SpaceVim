@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#io, layer-lang-io
+" @section lang#io, layers-lang-io
 " @parentsection layers
 " This layer is for io development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

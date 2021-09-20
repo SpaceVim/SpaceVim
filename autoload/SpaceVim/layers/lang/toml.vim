@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#toml, layer-lang-toml
+" @section lang#toml, layers-lang-toml
 " @parentsection layers
 " This layer provides basic syntax highlighting for toml. To enable it:
 " >

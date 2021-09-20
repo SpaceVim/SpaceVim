@@ -8,7 +8,7 @@
 
 
 ""
-" @section lang#php, layer-lang-php
+" @section lang#php, layers-lang-php
 " @parentsection layers
 " This layer is for php development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

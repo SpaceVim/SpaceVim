@@ -8,7 +8,7 @@
 
 
 ""
-" @section lang#nim, layer-lang-nim
+" @section lang#nim, layers-lang-nim
 " @parentsection layers
 " This layer is for nim development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#vbnet, layer-lang-vbnet
+" @section lang#vbnet, layers-lang-vbnet
 " @parentsection layers
 " This layer is for vbnet development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

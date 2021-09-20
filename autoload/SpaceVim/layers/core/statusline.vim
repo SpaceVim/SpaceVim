@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section core#statusline, layer-core-statusline
+" @section core#statusline, layers-core-statusline
 " @parentsection layers
 " This layer provides default statusline for SpaceVim
 " If you want to use airline's statusline, just disable this layer

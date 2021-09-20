@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#coffeescript, layer-lang-coffeescript
+" @section lang#coffeescript, layers-lang-coffeescript
 " @parentsection layers
 " This layer is for coffeescript development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

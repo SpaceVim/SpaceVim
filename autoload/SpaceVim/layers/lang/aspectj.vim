@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#asepctj, layer-lang-asepctj
+" @section lang#asepctj, layers-lang-asepctj
 " @parentsection layers
 " This layer provides syntax highlighting for asepctj. To enable this
 " layer:

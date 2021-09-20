@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#hack, layer-lang-hack
+" @section lang#hack, layers-lang-hack
 " @parentsection layers
 " @subsection Intro
 "

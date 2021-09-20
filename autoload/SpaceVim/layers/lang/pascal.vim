@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#pascal, layer-lang-pascal
+" @section lang#pascal, layers-lang-pascal
 " @parentsection layers
 " This layer is for pascal development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

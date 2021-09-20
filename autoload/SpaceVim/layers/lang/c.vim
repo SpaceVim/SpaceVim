@@ -9,7 +9,7 @@
 " Layer doc {{{
 
 ""
-" @section lang#c, layer-lang-c
+" @section lang#c, layers-lang-c
 " @parentsection layers
 " This layer is for c/cpp development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

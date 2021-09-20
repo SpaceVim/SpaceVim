@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#groovy, layer-lang-groovy
+" @section lang#groovy, layers-lang-groovy
 " @parentsection layers
 " This layer is for groovy development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

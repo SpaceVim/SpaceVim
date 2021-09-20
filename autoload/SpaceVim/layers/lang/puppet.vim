@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#puppet, layer-lang-puppet
+" @section lang#puppet, layers-lang-puppet
 " @parentsection layers
 " This layer is for Puppet development. It provides syntax highlighting and
 " syntax checking.

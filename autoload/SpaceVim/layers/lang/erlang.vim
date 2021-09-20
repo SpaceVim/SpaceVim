@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#erlang, layer-lang-erlang
+" @section lang#erlang, layers-lang-erlang
 " @parentsection layers
 " This layer is for erlang development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

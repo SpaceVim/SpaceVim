@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section core#tabline, layer-core-tabline
+" @section core#tabline, layers-core-tabline
 " @parentsection layers
 " This layer provides default tabline for SpaceVim
 " If you want to use airline's tabline, just disable this layer

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section format, layer-format
+" @section format, layers-format
 " @parentsection layers
 " format layer provides code formation for SpaceVim, the default formatting
 " plugin is |neoformat|.

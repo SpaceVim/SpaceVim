@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#haskell, layer-lang-haskell
+" @section lang#haskell, layers-lang-haskell
 " @parentsection layers
 " This layer is for haskell development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

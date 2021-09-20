@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#agda, layer-lang-agda
+" @section lang#agda, layers-lang-agda
 " @parentsection layers
 " This layer provides syntax highlighting for agda. To enable this
 " layer:

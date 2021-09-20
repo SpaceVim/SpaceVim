@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#pact, layer-lang-pact
+" @section lang#pact, layers-lang-pact
 " @parentsection layers
 " This layer is for pact development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

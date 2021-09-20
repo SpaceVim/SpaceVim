@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#kotlin, layer-lang-kotlin
+" @section lang#kotlin, layers-lang-kotlin
 " @parentsection layers
 " This layer is for kotlin development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

@@ -8,7 +8,7 @@
 scriptencoding utf-8
 
 ""
-" @section gtags, layer-gtags
+" @section gtags, layers-gtags
 " @parentsection layers
 " `gtags` layer provides |gtags| integration for SpaceVim.
 " To load this layer:

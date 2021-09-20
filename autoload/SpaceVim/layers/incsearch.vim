@@ -8,7 +8,7 @@
 
 
 ""
-" @section incsearch, layer-incsearch
+" @section incsearch, layers-incsearch
 " @parentsection layers
 " This layer improved incremental searching for neovim/vim
 "

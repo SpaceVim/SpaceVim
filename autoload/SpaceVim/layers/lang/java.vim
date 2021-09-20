@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#java, layer-lang-java
+" @section lang#java, layers-lang-java
 " @parentsection layers
 " This layer is for java development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

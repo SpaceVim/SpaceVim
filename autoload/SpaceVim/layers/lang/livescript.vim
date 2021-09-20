@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#livescript, layer-lang-livescript
+" @section lang#livescript, layers-lang-livescript
 " @parentsection layers
 " This layer is for livescript development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

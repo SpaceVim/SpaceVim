@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#elm, layer-lang-elm
+" @section lang#elm, layers-lang-elm
 " @parentsection layers
 " This layer is for elm development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

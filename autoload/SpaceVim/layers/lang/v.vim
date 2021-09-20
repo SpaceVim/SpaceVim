@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#v, layer-lang-v
+" @section lang#v, layers-lang-v
 " @parentsection layers
 " This layer is for v development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

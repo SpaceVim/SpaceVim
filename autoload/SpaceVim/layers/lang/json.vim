@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#json, layer-lang-json
+" @section lang#json, layers-lang-json
 " @parentsection layers
 " This layer provides syntax highlighting for json file. To enable this layer:
 " >

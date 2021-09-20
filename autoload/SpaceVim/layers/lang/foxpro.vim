@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#foxpro, layer-lang-foxpro
+" @section lang#foxpro, layers-lang-foxpro
 " @parentsection layers
 " @subsection Intro
 "

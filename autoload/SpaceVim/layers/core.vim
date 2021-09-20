@@ -8,7 +8,7 @@
 scriptencoding utf-8
 
 ""
-" @section core, layer-core
+" @section core, layers-core
 " @parentsection layers
 " The `core` layer of SpaceVim. This layer is enabled by default,
 " and it provides filetree, comment key bindings etc.

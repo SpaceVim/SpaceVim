@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#html, layer-lang-html
+" @section lang#html, layers-lang-html
 " @parentsection layers
 " This layer is for html development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

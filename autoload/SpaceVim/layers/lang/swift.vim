@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#swig, layer-lang-swift
+" @section lang#swig, layers-lang-swift
 " @parentsection layers
 " This layer is for swift development, including syntax highlighting and
 " indent. To enable it:

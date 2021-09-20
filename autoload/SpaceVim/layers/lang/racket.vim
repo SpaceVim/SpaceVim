@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#racket, layer-lang-racket
+" @section lang#racket, layers-lang-racket
 " @parentsection layers
 " This layer is for racket development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

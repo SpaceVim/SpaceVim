@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section github, layer-github
+" @section github, layers-github
 " @parentsection layers
 " This layer provides GitHub integration for SpaceVim
 "

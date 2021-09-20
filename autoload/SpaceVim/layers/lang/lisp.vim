@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#lisp, layer-lang-lisp
+" @section lang#lisp, layers-lang-lisp
 " @parentsection layers
 " This layer is for Common Lisp development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

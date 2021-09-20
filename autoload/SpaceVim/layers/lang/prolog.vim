@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#prolog, layer-lang-prolog
+" @section lang#prolog, layers-lang-prolog
 " @parentsection layers
 " This layer is for prolog development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

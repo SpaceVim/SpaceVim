@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#go, layer-lang-go
+" @section lang#go, layers-lang-go
 " @parentsection layers
 " This layer includes code completion and syntax checking for Go development.
 "

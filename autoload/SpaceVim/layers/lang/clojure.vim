@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#clojure, layer-lang-clojure
+" @section lang#clojure, layers-lang-clojure
 " @parentsection layers
 " This layer provides clojure language support in SpaceVim. Including syntax
 " highlighting, code indent, code runner and REPL. This layer is not enabled

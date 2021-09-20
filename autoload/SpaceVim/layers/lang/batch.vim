@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#batch, layer-lang-batch
+" @section lang#batch, layers-lang-batch
 " @parentsection layers
 " This layer is for batch development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

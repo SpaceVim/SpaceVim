@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#pony, layer-lang-pony
+" @section lang#pony, layers-lang-pony
 " @parentsection layers
 " This layer is for pony development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

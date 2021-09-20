@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#gosu, layer-lang-gosu
+" @section lang#gosu, layers-lang-gosu
 " @parentsection layers
 " This layer is for gosu development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

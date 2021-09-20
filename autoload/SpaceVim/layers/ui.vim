@@ -8,7 +8,7 @@
 scriptencoding utf-8
 
 ""
-" @section ui, layer-ui
+" @section ui, layers-ui
 " @parentsection layers
 " The `ui` layer defines the default interface for SpaceVim,
 " and it is loaded by default.

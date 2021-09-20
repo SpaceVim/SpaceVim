@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#ring, layer-lang-ring
+" @section lang#ring, layers-lang-ring
 " @parentsection layers
 " This layer is for ring development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

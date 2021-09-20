@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#autohotkey, layer-lang-autohotkey
+" @section lang#autohotkey, layers-lang-autohotkey
 " @parentsection layers
 " This layer provides syntax highlighting for autohotkey. To enable this
 " layer:

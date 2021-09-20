@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#goby, layer-lang-goby
+" @section lang#goby, layers-lang-goby
 " @parentsection layers
 " This layer is for goby development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

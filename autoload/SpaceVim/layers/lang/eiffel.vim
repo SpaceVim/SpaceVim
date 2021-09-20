@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#eiffel, layer-lang-eiffel
+" @section lang#eiffel, layers-lang-eiffel
 " @parentsection layers
 " This layer is for lang#eiffel development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
