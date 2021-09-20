@@ -5,6 +5,37 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
+
+""
+" @section cscope, layers-cscope
+" @parentsection layers
+" `cscope` layer provides |cscope| integration for SpaceVim.
+" To load this layer:
+" >
+"   [[layers]]
+"     name = 'cscope'
+" <
+" @subsection Layer options
+"
+" The layer option can be used when loading the `cscope` layer, for example:
+" >
+"   [[layers]]
+"     name = 'cscope'
+"     auto_update = true
+"     open_quickfix = 0
+" <
+" 1. `auto_update`: Enable or disable automatic updating of the cscope database.
+" 2. `cscope_command`: set the command or path of `cscope` executable.
+" 3. `open_location`: enable/disable open location list after searching.
+" 4. `preload_path`: set the proload paths.
+
+if exists('s:cscope_command')
+  finish
+endif
+
+let s:cscope_command = 'cscope'
+let s:auto_update = 1
 
 function! SpaceVim#layers#cscope#plugins() abort
   let plugins = [
@@ -30,6 +61,10 @@ function! SpaceVim#layers#cscope#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'l'], 'call cscope#list_databases()', 'list-cscope-databases', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'm'], 'call cscope#clear_databases(SpaceVim#plugins#projectmanager#current_root())', 'remove-current-cscope-databases', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'M'], 'call cscope#clear_databases()', 'remove-all-cscope-databases', 1)
+
+  " setting cscope.vim based on layer options
+  let g:cscope_cmd = s:cscope_command
+  let g:cscope_auto_update = s:auto_update
 endfunction
 
 
@@ -41,12 +76,12 @@ endfunction
 
 function! SpaceVim#layers#cscope#set_variable(var) abort
 
-  let g:cscope_cmd = get(a:var,
+  let s:cscope_command = get(a:var,
         \ 'cscope_command',
-        \ 'cscope')
-  let g:cscope_auto_update = get(a:var,
+        \ s:cscope_command)
+  let s:auto_update = get(a:var,
         \ 'auto_update',
-        \ 1)
+        \ s:auto_update)
   let g:cscope_open_location = get(a:var,
         \ 'open_location',
         \ 1)
