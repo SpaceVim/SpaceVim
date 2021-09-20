@@ -246,7 +246,7 @@ let [
 let s:async_command = [s:grep_default_exe] + 
       \ s:grep_default_opt +
       \ s:grep_default_fix_string_opt +
-      \ ['']
+      \ ['--files', '.']
 let g:unite_source_rec_async_command = get(g:,
       \ 'unite_source_rec_async_command',
       \ s:async_command)
