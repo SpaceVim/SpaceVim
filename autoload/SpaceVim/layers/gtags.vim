@@ -5,6 +5,31 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
+
+""
+" @section gtags, layer-gtags
+" @parentsection layers
+" `gtags` layer provides |gtags| integration for SpaceVim.
+" To load this layer:
+" >
+"   [[layers]]
+"     name = 'gtags'
+" <
+" @subsection Layer options
+"
+" The layer option can be used when loading the `gtags` layer, for example:
+" >
+"   [[layers]]
+"     name = 'gtags'
+"     auto_update = true
+"     open_quickfix = 0
+" <
+" 1. `auto_update`: enable/disable database update automatically.
+" 2. `open_quickfix`: This setting will open the |quickfix| list when
+" adding entries. same as |g:gtags_open_list|
+" 3. `gtagslabel`: the backend of gtags command, you can use `ctags` or
+" `pygments`. It is empty string by default.
 
 if exists('s:gtagslabel')
   finish
@@ -15,6 +40,7 @@ let s:FILE = SpaceVim#api#import('file')
 let s:gtagslabel = ''
 let s:auto_update = 1
 let g:tags_cache_dir = '~/.cache/SpaceVim/tags/'
+let g:gtags_open_list = 2
 
 function! SpaceVim#layers#gtags#plugins() abort
   return [
@@ -49,17 +75,18 @@ function! SpaceVim#layers#gtags#config() abort
 endfunction
 
 function! SpaceVim#layers#gtags#set_variable(var) abort
-
   let s:gtagslabel = get(a:var,
         \ 'gtagslabel',
         \ '')
   let g:tags_cache_dir = get(a:var,
         \ 'tags_cache_dir',
         \ g:tags_cache_dir)
-
   let s:auto_update = get(a:var,
         \ 'auto_update',
         \ s:auto_update)
+  let g:gtags_open_list = get(a:var,
+        \ 'open_quickfix',
+        \ g:gtags_open_list)
 endfunction
 
 function! SpaceVim#layers#gtags#health() abort
