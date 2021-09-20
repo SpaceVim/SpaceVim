@@ -29,6 +29,7 @@ function! s:nerdtreeinit() abort
   nnoremap <silent><buffer> h  :<C-u>call <SID>nerdtree_h()<CR>
   nnoremap <silent><buffer> l  :<C-u>call <SID>nerdtree_l()<CR>
   nnoremap <silent><buffer> N  :<C-u>call NERDTreeAddNode()<CR>
+  nnoremap <silent><buffer> . :<C-u>call <SID>nerdtree_dot()<CR>
 endfunction
 
 function! s:paste_to_file_manager() abort
@@ -55,9 +56,9 @@ endfunction
 function! s:nerdtree_h() abort
   " let path = g:NERDTreeFileNode.GetSelected().path.str()
   " if isdirectory(path)
-    " let path = s:FILE.unify_path(path, ':p:h:h')
+  " let path = s:FILE.unify_path(path, ':p:h:h')
   " else
-    " let path = s:FILE.unify_path(path, ':p:h')
+  " let path = s:FILE.unify_path(path, ':p:h')
   " endif
   " exe 'NERDTreeFind ' . path
   call g:NERDTreeKeyMap.Invoke('p')
@@ -76,4 +77,8 @@ function! s:nerdtree_l() abort
   else
     call g:NERDTreeKeyMap.Invoke('o')
   endif
+endfunction
+
+function! s:nerdtree_dot() abort
+  call g:NERDTreeKeyMap.Invoke('I')
 endfunction
