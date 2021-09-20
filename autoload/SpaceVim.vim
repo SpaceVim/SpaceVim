@@ -1195,24 +1195,6 @@ let g:spacevim_enable_vimfiler_welcome = 1
 ""
 " Enable/Disable autocompletion of parentheses, default is 1 (enabled).
 let g:spacevim_autocomplete_parens = 1
-""
-" @section enable_filetree_gitstatus, options-enable_filetree_gitstatus
-" @parentsection options
-" Enable/Disable gitstatus column in filetree buffer, default is false.
-" >
-"   enable_filetree_gitstatus = false
-" <
-" NOTE: the `enable_vimfiler_gitstatus` option has been deprecated.
-" *spacevim-options-enable_vimfiler_gitstatus*
-" *g:spacevim_enable_vimfiler_gitstatus*
-
-""
-" Enable/Disable gitstatus column in filetree buffer, default is 0.
-let g:spacevim_enable_filetree_gitstatus = 0
-let g:spacevim_enable_vimfiler_gitstatus = 0
-""
-" Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
-let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = [
       \ 'tagbar',

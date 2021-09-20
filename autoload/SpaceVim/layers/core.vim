@@ -7,12 +7,36 @@
 "=============================================================================
 scriptencoding utf-8
 
+""
+" @section core, layer-core
+" @parentsection layers
+" The `core` layer of SpaceVim. This layer is enabled by default,
+" and it provides filetree, comment key bindings etc.
+"
+" @subsection options
+" - `filetree_show_hidden`: option for showing hidden file in filetree,
+"   disabled by default.
+" - `enable_smooth_scrolling`: enable/disabled smooth scrolling key bindings,
+"   enabled by default.
+" - `enable_filetree_gitstatus`: enable/disable git status column in filetree.
+" - `enable_filetree_filetypeicon`: enable/disable filetype icons in filetree.
+"
+" NOTE: the `enable_vimfiler_gitstatus` and `enable_filetree_gitstatus` option
+" has been deprecated. Use layer option instead.
+" *spacevim-options-enable_vimfiler_gitstatus*
+" *spacevim-options-enable_filetree_gitstatus*
+" *g:spacevim_enable_vimfiler_gitstatus*
+" *g:spacevim_enable_filetree_gitstatus*
+" *g:spacevim_enable_vimfiler_filetypeicon*
 
 if exists('s:string_hi')
   finish
 endif
 
 let s:enable_smooth_scrolling = 1
+
+let g:_spacevim_enable_filetree_gitstatus = 0
+let g:_spacevim_enable_filetree_filetypeicon = 0
 
 
 " disabel netrw
@@ -36,7 +60,7 @@ function! SpaceVim#layers#core#plugins() abort
   if g:spacevim_filemanager ==# 'nerdtree'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nerdtree', { 'merged' : 0,
           \ 'loadconf' : 1}])
-    if g:spacevim_enable_filetree_gitstatus
+    if g:_spacevim_enable_filetree_gitstatus
       call add(plugins, [g:_spacevim_root_dir . 'bundle/nerdtree-git-plugin', { 'merged' : 0,
             \ 'loadconf' : 1}])
     endif
@@ -958,7 +982,12 @@ function! SpaceVim#layers#core#set_variable(var) abort
   let s:enable_smooth_scrolling = get(a:var,
         \ 'enable_smooth_scrolling',
         \ s:enable_smooth_scrolling)
-
+  let g:_spacevim_enable_filetree_filetypeicon = get(a:var,
+        \ 'enable_filetree_filetypeicon',
+        \ g:_spacevim_enable_filetree_filetypeicon)
+  let g:_spacevim_enable_filetree_gitstatus = get(a:var,
+        \ 'enable_filetree_gitstatus',
+        \ g:_spacevim_enable_filetree_gitstatus)
 endfunction
 
 function! SpaceVim#layers#core#get_options() abort
