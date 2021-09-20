@@ -11,10 +11,20 @@
 " first, namespace should avoid b d f j p B D F J P
 " then, the exist namespace should be avoid too
 
+
+
+" Use ack
+" http://beyondgrep.com/
+" Use jvgrep
+" https://github.com/mattn/jvgrep
+" Use beagrep
+" https://github.com/baohaojun/beagrep
+
 let s:search_tools = {}
 let s:search_tools.namespace = {
       \ 'rg' : 'r',
       \ 'ag' : 'a',
+      \ 'hw' : 'h',
       \ 'pt' : 't',
       \ 'ack' : 'k',
       \ 'grep' : 'g',
@@ -24,9 +34,9 @@ let s:search_tools.a = {}
 let s:search_tools.a.command = 'ag'
 let s:search_tools.a.default_opts =
       \ [
-      \ '-i', '--nocolor', '--filename', '--noheading', '--column', '--hidden', '--ignore',
-      \ '.hg', '--ignore', '.svn', '--ignore', '.git', '--ignore', '.bzr',
-      \ ]
+        \ '-i', '--nocolor', '--filename', '--noheading', '--column', '--hidden', '--ignore',
+        \ '.hg', '--ignore', '.svn', '--ignore', '.git', '--ignore', '.bzr',
+        \ ]
 let s:search_tools.a.recursive_opt = []
 let s:search_tools.a.expr_opt = []
 let s:search_tools.a.fixed_string_opt = ['-F']
@@ -43,6 +53,16 @@ let s:search_tools.t.fixed_string_opt = []
 let s:search_tools.t.default_fopts = []
 let s:search_tools.t.smart_case = ['-S']
 let s:search_tools.t.ignore_case = ['-i']
+
+let s:search_tools.h = {}
+let s:search_tools.h.command = 'hw'
+let s:search_tools.h.default_opts = ['--no-group', '--no-color']
+let s:search_tools.h.recursive_opt = []
+let s:search_tools.h.expr_opt = []
+let s:search_tools.h.fixed_string_opt = []
+let s:search_tools.h.default_fopts = []
+let s:search_tools.h.smart_case = []
+let s:search_tools.h.ignore_case = []
 
 let s:search_tools.r = {}
 let s:search_tools.r.command = 'rg'
