@@ -30,6 +30,7 @@ function! s:nerdtreeinit() abort
   nnoremap <silent><buffer> l  :<C-u>call <SID>nerdtree_l()<CR>
   nnoremap <silent><buffer> N  :<C-u>call NERDTreeAddNode()<CR>
   nnoremap <silent><buffer> . :<C-u>call <SID>nerdtree_dot()<CR>
+  nnoremap <silent><buffer> <C-Home> :<C-u>NERDTreeCWD<CR>
 endfunction
 
 function! s:paste_to_file_manager() abort
