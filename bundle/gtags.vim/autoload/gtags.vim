@@ -27,6 +27,8 @@ let g:gtags_global_command = get(g:, 'gtags_global_command',
 " This setting will open the |quickfix| list when adding entries. A value of 2 will
 " preserve the cursor position when the |quickfix| window is
 " opened. Defaults to 2.
+"
+" NOTE: when there is only one entry. the quickfix list will not be opened.
 let g:gtags_open_list = get(g:, 'gtags_open_list', 2)
 
 " -- ctags-x format
@@ -293,14 +295,6 @@ function! s:ExecLoad(option, long_option, pattern) abort
 
   call s:Memorize()
 
-  " Open the quickfix window
-  if g:gtags_open_list == 1
-    botright copen
-  elseif g:gtags_open_list == 2
-    call s:save_prev_windows()
-    botright copen
-    call s:restore_prev_windows()
-  endif
   " Parse the output of 'global -x or -t' and show in the quickfix window.
   let l:efm_org = &efm
   let &efm = g:Gtags_Efm
@@ -312,6 +306,15 @@ function! s:ExecLoad(option, long_option, pattern) abort
   " If there is only one item, jump to the position.
   if len(getqflist()) ==# 1
     silent cc
+  else
+    " Open the quickfix list windows only when there multiple results.
+    if g:gtags_open_list == 1
+      botright copen
+    elseif g:gtags_open_list == 2
+      call s:save_prev_windows()
+      botright copen
+      call s:restore_prev_windows()
+    endif
   endif
 endfunction
 
