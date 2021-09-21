@@ -149,6 +149,9 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'call call('
         \ . string(s:_function('s:save_current_file')) . ', [])',
         \ 'save-current-file', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'a'], 'call call('
+        \ . string(s:_function('s:save_as_new_file')) . ', [])',
+        \ 'save-as-new-file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'S'], 'wall', 'save-all-files', 1)
   " help mappings
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'I'], 'call SpaceVim#issue#report()', 'report-issue-or-bug', 1)
@@ -934,6 +937,34 @@ function! s:save_current_file() abort
     echo  fnamemodify(bufname(), ':.:gs?[\\/]?/?') . ' written'
     echohl None
   endif
+endfunction
+
+function! s:save_as_new_file() abort
+  let current_fname = bufname()
+  if !empty(current_fname)
+    let dir = fnamemodify(current_fname, ':h') . s:FILE.separator
+  else
+    let dir = getcwd() . s:FILE.separator
+  endif
+  let input = input('save as: ', dir, 'file')
+  " clear cmdline
+  noautocmd normal! :
+  if !empty(input)
+    exe 'silent! write ' . input
+    exe 'e ' . input
+    if v:errmsg !=# ''
+      echohl ErrorMsg
+      echo  v:errmsg
+      echohl None
+    else
+      echohl Delimiter
+      echo  fnamemodify(bufname(), ':.:gs?[\\/]?/?') . ' written'
+      echohl None
+    endif
+  else
+    echo 'canceled!'
+  endif
+
 endfunction
 
 let g:_spacevim_autoclose_filetree = 1

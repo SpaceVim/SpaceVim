@@ -1334,6 +1334,7 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 | `SPC f o`            | 代开文件树，并定位到当前文件                           |
 | `SPC f R`            | rename the current file(TODO)                          |
 | `SPC f s` / `Ctrl-s` | 保存文件 (:w)                                          |
+| `SPC f a`            | 另存为新的文件                                         |
 | `SPC f W`            | 使用管理员模式保存                                     |
 | `SPC f S`            | 保存所有文件                                           |
 | `SPC f r`            | 打开文件历史                                           |

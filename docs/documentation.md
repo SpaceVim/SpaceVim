@@ -1424,6 +1424,7 @@ Files manipulation commands (start with `f`):
 | `SPC f o`    | Find current file in file tree                                          |
 | `SPC f R`    | rename the current file(TODO)                                           |
 | `SPC f s`    | save a file                                                             |
+| `SPC f a`    | save as new file name                                                   |
 | `SPC f S`    | save all files                                                          |
 | `SPC f r`    | open a recent file                                                      |
 | `SPC f t`    | toggle file tree side bar                                               |
