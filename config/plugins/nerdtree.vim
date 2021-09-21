@@ -31,6 +31,8 @@ function! s:nerdtreeinit() abort
   nnoremap <silent><buffer> N  :<C-u>call NERDTreeAddNode()<CR>
   nnoremap <silent><buffer> . :<C-u>call <SID>nerdtree_dot()<CR>
   nnoremap <silent><buffer> <C-Home> :<C-u>NERDTreeCWD<CR>
+  nnoremap <silent><buffer> <CR> :<C-u>call <SID>nerdtree_enter()<CR>
+  " nnoremap <silent><buffer> <CR> :<C-u>silent! exe 'NERDTree' g:NERDTreeFileNode.GetSelected().path.str()<CR>
 endfunction
 
 function! s:paste_to_file_manager() abort
@@ -82,4 +84,13 @@ endfunction
 
 function! s:nerdtree_dot() abort
   call g:NERDTreeKeyMap.Invoke('I')
+endfunction
+
+function! s:nerdtree_enter() abort
+  let path = g:NERDTreeFileNode.GetSelected().path.str()
+  if isdirectory(path)
+    silent! exe 'NERDTree' g:NERDTreeFileNode.GetSelected().path.str()
+  else
+    call g:NERDTreeKeyMap.Invoke('o')
+  endif
 endfunction
