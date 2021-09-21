@@ -150,6 +150,7 @@ let s:lsp_servers = {
       \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
+      \ 'typescriptreact' : ['typescript-language-server', '--stdio'],
       \ 'vue' : ['vls']
       \ }
 

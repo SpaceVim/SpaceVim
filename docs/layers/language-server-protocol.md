@@ -152,31 +152,32 @@ To enable lsp support for a specified filetype, you may need to load this layer 
 
 default language server commands:
 
-| language     | server command                                                                                                                                                                                   |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `ada`        | `['ada_language_server']`                                                                                                                                                                        |
-| `c`          | `['clangd']`                                                                                                                                                                                     |
-| `cpp`        | `['clangd']`                                                                                                                                                                                     |
-| `crystal`    | `['scry']`                                                                                                                                                                                       |
-| `css`        | `['css-languageserver', '--stdio']`                                                                                                                                                              |
-| `dart`       | `['dart_language_server']`                                                                                                                                                                       |
-| `elm`        | `['elm-language-server']`                                                                                                                                                                        |
-| `go`         | `['gopls']`                                                                                                                                                            |
-| `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
-| `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
-| `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |
-| `julia`      | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
-| `objc`       | `['clangd']`                                                                                                                                                                                     |
-| `objcpp`     | `['clangd']`                                                                                                                                                                                     |
-| `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
-| `purescript` | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
-| `python`     | `['pyls']`                                                                                                                                                                                       |
-| `ruby`       | `['solargraph', 'stdio']`                                                                                                                                                                        |
-| `reason`     | `['ocaml-language-server']`                                                                                                                                                                      |
-| `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
-| `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
-| `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
-| `vue`        | `['vls']`                                                                                                                                                                                        |
+| language          | server command                                                                                                                                                                                   |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ada`             | `['ada_language_server']`                                                                                                                                                                        |
+| `c`               | `['clangd']`                                                                                                                                                                                     |
+| `cpp`             | `['clangd']`                                                                                                                                                                                     |
+| `crystal`         | `['scry']`                                                                                                                                                                                       |
+| `css`             | `['css-languageserver', '--stdio']`                                                                                                                                                              |
+| `dart`            | `['dart_language_server']`                                                                                                                                                                       |
+| `elm`             | `['elm-language-server']`                                                                                                                                                                        |
+| `go`              | `['gopls']`                                                                                                                                                                                      |
+| `haskell`         | `['hie', '--lsp']`                                                                                                                                                                               |
+| `html`            | `['html-languageserver', '--stdio']`                                                                                                                                                             |
+| `javascript`      | `['javascript-typescript-stdio']`                                                                                                                                                                |
+| `julia`           | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
+| `objc`            | `['clangd']`                                                                                                                                                                                     |
+| `objcpp`          | `['clangd']`                                                                                                                                                                                     |
+| `php`             | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
+| `purescript`      | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
+| `python`          | `['pyls']`                                                                                                                                                                                       |
+| `ruby`            | `['solargraph', 'stdio']`                                                                                                                                                                        |
+| `reason`          | `['ocaml-language-server']`                                                                                                                                                                      |
+| `rust`            | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
+| `sh`              | `['bash-language-server', 'start']`                                                                                                                                                              |
+| `typescript`      | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
+| `typescriptreact` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
+| `vue`             | `['vls']`                                                                                                                                                                                        |
 
 To override the server command, you may need to use `override_cmd` option:
 
