@@ -126,7 +126,7 @@ endfunction
 
 function! SpaceVim#layers#autocomplete#config() abort
   if g:spacevim_autocomplete_parens
-    imap <expr>(
+    imap <expr> (
           \ pumvisible() ?
           \ has('patch-7.4.744') ?
           \ complete_parameter#pre_complete("()") : '(' :

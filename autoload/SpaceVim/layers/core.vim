@@ -939,6 +939,18 @@ function! s:save_current_file() abort
   endif
 endfunction
 
+
+" the `SPC f a` key binding cause many erros:
+" E212: Can't open file for writing: no such file or directory
+" E216: No such group or event: FileExplorer
+"
+" Fix E216: No such group or event: FileExplorer
+" which is called in bundle/nerdtree/plugin/NERD_tree.vim:184
+augroup FileExplorer
+  autocmd!
+augroup END
+
+
 function! s:save_as_new_file() abort
   let current_fname = bufname()
   if !empty(current_fname)
