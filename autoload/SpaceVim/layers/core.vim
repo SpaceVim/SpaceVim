@@ -221,6 +221,26 @@ function! SpaceVim#layers#core#config() abort
           \ ]
           \ ]
           \ , 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'g'], 'call SpaceVim#plugins#helpgrep#help()',
+        \ ['asynchronous-helpgrep',
+        \ [
+          \ '[SPC h g] is to run helpgrep asynchronously',
+          \ '',
+          \ 'Definition: ' . s:filename . ':' . lnum,
+          \ ]
+          \ ]
+          \ , 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'G'], 'call SpaceVim#plugins#helpgrep#help(expand("<cword>"))',
+        \ ['asynchronous-helpgrep-with-cword',
+        \ [
+          \ '[SPC h g] is to run helpgrep asynchronously with cword',
+          \ '',
+          \ 'Definition: ' . s:filename . ':' . lnum,
+          \ ]
+          \ ]
+          \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'd'], 'call SpaceVim#mapping#close_current_buffer()', 'delete-this-buffer', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'D'],
         \ 'call SpaceVim#mapping#kill_visible_buffer_choosewin()',

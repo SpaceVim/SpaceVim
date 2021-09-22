@@ -1694,6 +1694,8 @@ getting help info about functions, variables etc:
 | ------------ | ----------------------------------------------------------------------------- |
 | `SPC h SPC`  | discover SpaceVim documentation, layers and packages using fuzzy finder layer |
 | `SPC h i`    | get help with the symbol at point                                             |
+| `SPC h g`    | run `:helpgrep` asynchronously                                                |
+| `SPC h G`    | run `:helpgrep` asynchronously with the word under cursor                     |
 | `SPC h k`    | show top-level bindings with which-key                                        |
 | `SPC h m`    | search available man pages                                                    |
 
