@@ -1687,16 +1687,19 @@ SpaceVim 使用 `search_highlight_persist` 保持当前搜索结果的高亮状�
 
 #### 获取帮助信息
 
-Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的 [Helm](https://github.com/emacs-helm/helm)。以下这些快捷键将帮助你快速获取需要的帮助信息：
+模糊搜索模块是一个强大的信息筛选浏览器，这类似于 Emacs 中的 [Helm](https://github.com/emacs-helm/helm)。
+以下这些快捷键将帮助你快速获取需要的帮助信息：
 
 | 快捷键      | 功能描述                                           |
 | ----------- | -------------------------------------------------- |
-| `SPC h SPC` | 使用 fuzzy find 模块展示 SpaceVim 帮助文档章节目录 |
-| `SPC h i`   | 获取光标下单词的帮助信息                           |
+| `SPC h SPC` | 使用模糊搜索模块展示 SpaceVim 帮助文档章节目录 |
+| `SPC h i`   | 使用模糊搜索模块获取光标下单词的帮助信息                           |
 | `SPC h g`   | 异步执行`:helpgrep`                                |
 | `SPC h G`   | 异步执行`:helpgrep`，并搜索光标下的词              |
 | `SPC h k`   | 使用快捷键导航，展示 SpaceVim 所支持的前缀键       |
-| `SPC h m`   | 使用 Unite 浏览所有 man 文档                       |
+| `SPC h m`   | 使用模糊搜索模块浏览所有 man 文档                       |
+
+注意：`SPC h i` 和 `SPC h m` 需要载入一个模糊搜索模块。
 
 报告一个问题：
 

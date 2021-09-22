@@ -1699,6 +1699,8 @@ getting help info about functions, variables etc:
 | `SPC h k`    | show top-level bindings with which-key                                        |
 | `SPC h m`    | search available man pages                                                    |
 
+NOTE: `SPC h i` and `SPC h m` need to load at least one fuzzy finder layer.
+
 Reporting an issue:
 
 | Key Bindings | Descriptions                                                    |
