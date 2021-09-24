@@ -62,15 +62,13 @@ function! s:copy_to_system_clipboard() abort
 endfunction
 
 function! s:nerdtree_h() abort
-  " let path = g:NERDTreeFileNode.GetSelected().path.str()
-  " if isdirectory(path)
-  " let path = s:FILE.unify_path(path, ':p:h:h')
-  " else
-  " let path = s:FILE.unify_path(path, ':p:h')
-  " endif
-  " exe 'NERDTreeFind ' . path
-  call g:NERDTreeKeyMap.Invoke('p')
-  call g:NERDTreeKeyMap.Invoke('o')
+  if g:NERDTree.ForCurrentTab().getRoot().path.str()
+        \ ==# g:NERDTreeFileNode.GetSelected().path.getParent().str() 
+    silent! exe 'NERDTree' g:NERDTreeFileNode.GetSelected().path.getParent().getParent().str()
+  else
+    call g:NERDTreeKeyMap.Invoke('p')
+    call g:NERDTreeKeyMap.Invoke('o')
+  endif
 endfunction
 
 function! s:nerdtree_l() abort
