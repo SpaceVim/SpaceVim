@@ -27,6 +27,7 @@ function! s:nerdtreeinit() abort
   nnoremap <silent><buffer> yY  :<C-u>call <SID>copy_to_system_clipboard()<CR>
   nnoremap <silent><buffer> P  :<C-u>call <SID>paste_to_file_manager()<CR>
   nnoremap <silent><buffer> h  :<C-u>call <SID>nerdtree_h()<CR>
+  nnoremap <silent><buffer> d  :<C-u>call NERDTreeDeleteNode()<CR>
   nnoremap <silent><buffer> l  :<C-u>call <SID>nerdtree_l()<CR>
   nnoremap <silent><buffer> <Left>  :<C-u>call <SID>nerdtree_h()<CR>
   nnoremap <silent><buffer> <Right>  :<C-u>call <SID>nerdtree_l()<CR>
