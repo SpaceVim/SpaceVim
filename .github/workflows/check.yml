@@ -23,8 +23,8 @@ jobs:
               - vimbin: vim
                 vimtag: v8.1.2269
                 # vimtag: ["v7.4.052", "v7.4.629", "v7.4.1689", "v8.0.0027", "v8.0.1453", "v8.1.2269"]
-              - vimbin: nvim
-                vimtag: nightly
+              # - vimbin: nvim
+                # vimtag: nightly
               - vimbin: nvim
                 vimtag: v0.5.0
               - vimbin: nvim
@@ -90,8 +90,8 @@ jobs:
               - vimbin: vim
                 vimtag: v8.1.2269
                 # vimtag: ["v7.4.052", "v7.4.629", "v7.4.1689", "v8.0.0027", "v8.0.1453", "v8.1.2269"]
-              - vimbin: nvim
-                vimtag: nightly
+              # - vimbin: nvim
+                # vimtag: nightly
               - vimbin: nvim
                 vimtag: v0.5.0
               - vimbin: nvim
