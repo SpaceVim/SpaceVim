@@ -497,6 +497,7 @@ function! s:open_item() abort
     endif
     let s:preview_able = 0
     noautocmd q
+    wincmd p
     call s:update_history()
     call s:BUFFER.open_pos('edit', filename, linenr, colum)
     noautocmd normal! :
