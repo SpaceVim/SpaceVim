@@ -37,12 +37,18 @@
 "   <C-l>     normal      Switch to vim/tmux pane in right direction
 " <
 
+if exists('s:enable_tmux_clipboard')
+  finish
+endif
+
+let s:enable_tmux_clipboard = 0
+
 function! SpaceVim#layers#tmux#plugins() abort
   let plugins = [
         \ ['christoomey/vim-tmux-navigator', { 'on_cmd': [
-        \ 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp',
-        \ 'TmuxNavigateRight'] }],
-        \ ]
+          \ 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp',
+          \ 'TmuxNavigateRight'] }],
+          \ ]
   call add(plugins, ['tmux-plugins/vim-tmux', {'on_ft' : 'tmux'}])
   call add(plugins, ['edkolev/tmuxline.vim', {'merged' : 0}])
   return plugins
@@ -56,6 +62,11 @@ function! SpaceVim#layers#tmux#config() abort
     autocmd FocusGained * set cursorline
     autocmd FocusLost * set nocursorline | redraw!
   augroup END
+
+  if s:enable_tmux_clipboard
+    call s:Enable()
+  endif
+
 
   if s:tmux_navigator_modifier ==# 'alt'
     nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
@@ -165,65 +176,54 @@ function! SpaceVim#layers#tmux#health() abort
 endfunction
 
 func! s:get_tmux_name()
-    let list = systemlist('tmux list-buffers -F"#{buffer_name}"')
-    if len(list)==0
-        return ""
-    else
-        return list[0]
-    endif
+  let list = systemlist('tmux list-buffers -F"#{buffer_name}"')
+  if len(list)==0
+    return ""
+  else
+    return list[0]
+  endif
 endfunc
 
 func! s:get_tmux_buf()
-    return system('tmux show-buffer')
+  return system('tmux show-buffer')
 endfunc
 
 func! s:Enable()
 
-    if $TMUX=='' 
-        " not in tmux session
-        return
-    endif
+  if $TMUX=='' 
+    " not in tmux session
+    return
+  endif
 
-    let s:lastbname=""
+  let s:lastbname=""
 
-    " if support TextYankPost
-    if exists('##TextYankPost')==1
-        " @"
-        augroup vimtmuxclipboard
-            autocmd!
-            autocmd FocusLost * call s:update_from_tmux()
-            autocmd	FocusGained   * call s:update_from_tmux()
-            autocmd TextYankPost * silent! call system('tmux loadb -',join(v:event["regcontents"],"\n"))
-        augroup END
-        let @" = s:get_tmux_buf()
-    else
-        " vim doesn't support TextYankPost event
-        " This is a workaround for vim
-        augroup vimtmuxclipboard
-            autocmd!
-            autocmd FocusLost     *  silent! call system('tmux loadb -',@")
-            autocmd	FocusGained   *  let @" = s:get_tmux_buf()
-        augroup END
-        let @" = s:get_tmux_buf()
-    endif
+  " if support TextYankPost
+  if exists('##TextYankPost')==1
+    " @"
+    augroup SpaceVim_layer_tmux
+      autocmd FocusLost * call s:update_from_tmux()
+      autocmd	FocusGained   * call s:update_from_tmux()
+      autocmd TextYankPost * silent! call system('tmux loadb -',join(v:event["regcontents"],"\n"))
+    augroup END
+    let @" = s:get_tmux_buf()
+  else
+    " vim doesn't support TextYankPost event
+    " This is a workaround for vim
+    augroup SpaceVim_layer_tmux
+      autocmd FocusLost     *  silent! call system('tmux loadb -',@")
+      autocmd	FocusGained   *  let @" = s:get_tmux_buf()
+    augroup END
+    let @" = s:get_tmux_buf()
+  endif
 
 endfunc
 
 func! s:update_from_tmux()
-    let buffer_name = s:get_tmux_name()
-    if s:lastbname != buffer_name
-        let @" = s:get_tmux_buf()
-    endif
-    let s:lastbname=s:get_tmux_name()
+  let buffer_name = s:get_tmux_name()
+  if s:lastbname != buffer_name
+    let @" = s:get_tmux_buf()
+  endif
+  let s:lastbname=s:get_tmux_name()
 endfunc
 
 call s:Enable()
-
-" " workaround for this bug
-" if shellescape("\n")=="'\\\n'"
-" 	let l:s=substitute(l:s,'\\\n',"\n","g")
-" 	let g:tmp_s=substitute(l:s,'\\\n',"\n","g")
-" 	");
-" 	let g:tmp_cmd='tmux set-buffer ' . l:s
-" endif
-" silent! call system('tmux loadb -',l:s)
