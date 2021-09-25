@@ -516,6 +516,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 | `SPC t b`   | 切换背景色                                |
 | `SPC t c`   | 切换 conceal 模式                         |
 | `SPC t p`   | 切换 paste 模式                           |
+| `SPC t P`   | 切换 auto parens 模式                           |
 | `SPC t t`   | 打开 Tab 管理器                           |
 | `SPC T ~`   | 显示/隐藏 Buffer 结尾空行行首的 `~`       |
 | `SPC T F`   | 切换全屏(TODO)                            |

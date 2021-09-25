@@ -260,7 +260,9 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'p'],
         \ 'call SpaceVim#layers#core#statusline#toggle_mode("paste-mode")',
         \ 'toggle-paste-mode', 1)
-
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'P'],
+        \ 'DelimitMateSwitch',
+        \ 'toggle-auto-parens-mode', 1)
 
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'l'], 'setlocal list!',
         \ 'toggle-hidden-listchars', 1)

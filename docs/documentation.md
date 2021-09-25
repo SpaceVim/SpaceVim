@@ -570,6 +570,7 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | `SPC t b`    | toggle background                                                          |
 | `SPC t c`    | toggle conceal                                                             |
 | `SPC t p`    | toggle paste mode                                                          |
+| `SPC t P`    | toggle auto parens mode                                                          |
 | `SPC t t`    | open tabs manager                                                          |
 | `SPC T ~`    | display ~ in the fringe on empty lines                                     |
 | `SPC T F`    | toggle frame fullscreen                                                    |
