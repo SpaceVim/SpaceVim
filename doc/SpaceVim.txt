@@ -56,8 +56,7 @@ CONTENTS                                                   *SpaceVim-contents*
       36. max_column.............................|SpaceVim-options-max_column|
       37. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
       38. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      39. project_rooter_automatically
-...............................|SpaceVim-options-project_rooter_automatically|
+      39. project_auto_root...............|SpaceVim-options-project_auto_root|
       40. project_rooter_outermost.|SpaceVim-options-project_rooter_outermost|
       41. project_rooter_patterns...|SpaceVim-options-project_rooter_patterns|
       42. projects_cache_num.............|SpaceVim-options-projects_cache_num|
@@ -562,15 +561,17 @@ PLUGIN_MANAGER_PROCESSES           *SpaceVim-options-plugin_manager_processes*
 Set the max process of SpaceVim plugin manager
 
 ==============================================================================
-PROJECT_ROOTER_AUTOMATICALLY   *SpaceVim-options-project_rooter_automatically*
+PROJECT_AUTO_ROOT                         *SpaceVim-options-project_auto_root*
 
 Enable/Disable project root detection. By default, SpaceVim will change the
 directory to the project root directory based on `project_rooter_patterns`
 option. To disable this feature:
 >
   [options]
-    project_rooter_automatically = false
+    project_auto_root = false
 <
+NOTE: *g:spacevim_project_rooter_automatically* and
+*SpaceVim-options-project_rooter_automatically* are deprecated.
 
 ==============================================================================
 PROJECT_ROOTER_OUTERMOST           *SpaceVim-options-project_rooter_outermost*
@@ -1257,7 +1258,7 @@ Enable/Disable cross session projects cache. Enabled by default.
                                                *g:spacevim_projects_cache_num*
 Setting the numbers of cached projects, by default it is 20.
 
-                                     *g:spacevim_project_rooter_automatically*
+                                                *g:spacevim_project_auto_root*
 Enable/Disable changing directory automatically. Enabled by default.
 
                                          *g:spacevim_project_rooter_outermost*

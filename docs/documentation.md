@@ -1919,7 +1919,7 @@ root directory to the present working directory):
 
 ```toml
 [options]
-    project_rooter_automatically = false
+    project_auto_root = false
 ```
 
 Project manager commands start with `p`:

@@ -179,7 +179,7 @@ else
   endfunction
 
 
-  if g:spacevim_project_rooter_automatically
+  if g:spacevim_project_auto_root
     augroup spacevim_project_rooter
       autocmd!
       autocmd VimEnter,BufEnter * call SpaceVim#plugins#projectmanager#current_root()

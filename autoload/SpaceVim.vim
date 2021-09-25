@@ -1091,19 +1091,21 @@ let g:spacevim_enable_projects_cache = 1
 " Setting the numbers of cached projects, by default it is 20.
 let g:spacevim_projects_cache_num = 20
 ""
-" @section project_rooter_automatically, options-project_rooter_automatically
+" @section project_auto_root, options-project_auto_root
 " @parentsection options
 " Enable/Disable project root detection. By default, SpaceVim will change the
 " directory to the project root directory based on `project_rooter_patterns`
 " option. To disable this feature:
 " >
 "   [options]
-"     project_rooter_automatically = false
+"     project_auto_root = false
 " <
+" NOTE: *g:spacevim_project_rooter_automatically* and
+" *SpaceVim-options-project_rooter_automatically* are deprecated.
 
 ""
 " Enable/Disable changing directory automatically. Enabled by default.
-let g:spacevim_project_rooter_automatically = 1
+let g:spacevim_project_auto_root = 1
 ""
 " @section project_rooter_outermost, options-project_rooter_outermost
 " @parentsection options

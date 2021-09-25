@@ -240,7 +240,7 @@ sp.cmd([[
   let g:unite_source_menu_menus.Projects.command_candidates = get(g:unite_source_menu_menus.Projects,'command_candidates', [])
     ]])
 
-if sp_opt.project_rooter_automatically == 1 then
+if sp_opt.project_auto_root == 1 then
     sp.cmd("augroup spacevim_project_rooter")
     sp.cmd("autocmd!")
     sp.cmd("autocmd VimEnter,BufEnter * call SpaceVim#plugins#projectmanager#current_root()")
