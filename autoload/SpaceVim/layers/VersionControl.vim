@@ -70,7 +70,7 @@ function! s:git_branch() abort
         call fugitive#detect(getcwd())
         let head = fugitive#head()
       endif
-      if g:spacevim_statusline_unicode_symbols == 1
+      if g:spacevim_statusline_unicode == 1
         return empty(head) ? '' : '  '.head . ' ' . s:gtm_status()
       else
         return empty(head) ? '' : ' '.head . ' ' . s:gtm_status()
@@ -80,7 +80,7 @@ function! s:git_branch() abort
   elseif exists('g:loaded_git')
     try
       let head = '%{git#branch#current()}'
-      if g:spacevim_statusline_unicode_symbols == 1
+      if g:spacevim_statusline_unicode == 1
         return empty(head) ? '' : '  '.head . ' ' . s:gtm_status()
       else
         return empty(head) ? '' : ' '.head . ' ' . s:gtm_status()

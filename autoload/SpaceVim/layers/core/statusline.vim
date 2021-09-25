@@ -142,7 +142,7 @@ function! s:filename() abort
 endfunction
 
 function! s:fileformat() abort
-  if g:spacevim_statusline_unicode_symbols == 1
+  if g:spacevim_statusline_unicode == 1
     let g:_spacevim_statusline_fileformat = s:SYSTEM.fileformat()
   else
     let g:_spacevim_statusline_fileformat = &ff
@@ -156,13 +156,13 @@ function! s:major_mode() abort
 endfunction
 
 function! s:modes() abort
-  if g:spacevim_statusline_unicode_symbols
+  if g:spacevim_statusline_unicode
     let m = ' ❖ '
   else
     let m = ' # '
   endif
   for mode in s:loaded_modes
-    if g:spacevim_statusline_unicode_symbols
+    if g:spacevim_statusline_unicode
       let m .= s:modes[mode].icon . ' '
     else
       let m .= s:modes[mode].icon_asc . ' '
@@ -202,14 +202,14 @@ endfunction
 function! s:battery_status() abort
   if executable('acpi')
     let battery = split(system('acpi'))[-1][:-2]
-    if g:spacevim_statusline_unicode_symbols
+    if g:spacevim_statusline_unicode
       return ' ' . s:ICON.battery_status(battery) . '  '
     else
       return ' ⚡' . battery . ' '
     endif
   elseif executable('pmset')
     let battery = matchstr(system('pmset -g batt'), '\d\+%')[:-2]
-    if g:spacevim_statusline_unicode_symbols
+    if g:spacevim_statusline_unicode
       return ' ' . s:ICON.battery_status(battery) . '  '
     else
       return ' ⚡' . battery . ' '

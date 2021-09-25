@@ -69,8 +69,7 @@ CONTENTS                                                   *SpaceVim-contents*
       49. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
       50. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
       51. statusline_separator.........|SpaceVim-options-statusline_separator|
-      52. statusline_unicode_symbols
-.................................|SpaceVim-options-statusline_unicode_symbols|
+      52. statusline_unicode.............|SpaceVim-options-statusline_unicode|
       53. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
       54. vim_help_language...............|SpaceVim-options-vim_help_language|
       55. vimcompatible.......................|SpaceVim-options-vimcompatible|
@@ -699,12 +698,12 @@ See more details in: http://spacevim.org/documentation/#statusline
 
 
 ==============================================================================
-STATUSLINE_UNICODE_SYMBOLS       *SpaceVim-options-statusline_unicode_symbols*
+STATUSLINE_UNICODE                       *SpaceVim-options-statusline_unicode*
 
 Enable/Disable unicode symbols in statusline, includes the mode icons and
 fileformat icons. This option is enabled by default, to disable it:
 >
-  statusline_unicode_symbols = false
+  statusline_unicode = false
 <
 
 ==============================================================================
@@ -1010,11 +1009,11 @@ Define the right section of statusline in active windows. By default:
     \ ]
 <
 
-                                       *g:spacevim_statusline_unicode_symbols*
+                                               *g:spacevim_statusline_unicode*
 Enable/Disable unicode symbols in statusline, includes the mode icons and
 fileformat icons. This option is enabled by default, to disable it:
 >
-  let g:spacevim_statusline_unicode_symbols = 0
+  let g:spacevim_statusline_unicode = 0
 <
 
                                   *g:spacevim_enable_language_specific_leader*

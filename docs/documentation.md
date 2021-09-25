@@ -681,7 +681,7 @@ Here is an exhaustive set of screenshots for all the available separators:
 
 The minor mode area can be toggled on and off with `SPC t m m`.
 
-Unicode symbols are displayed by default. Add `statusline_unicode_symbols = false` to your custom configuration file to use ASCII characters instead (may be useful in the terminal if you cannot set an appropriate font).
+Unicode symbols are displayed by default. Add `statusline_unicode = false` to your custom configuration file to use ASCII characters instead (may be useful in the terminal if you cannot set an appropriate font).
 
 The letters displayed in the statusline correspond to the key bindings used to toggle them.
 

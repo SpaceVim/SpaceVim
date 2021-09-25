@@ -578,21 +578,21 @@ let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
 let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos', 'percentage']
 
 ""
-" @section statusline_unicode_symbols, options-statusline_unicode_symbols
+" @section statusline_unicode, options-statusline_unicode
 " @parentsection options
 " Enable/Disable unicode symbols in statusline, includes the mode icons and
 " fileformat icons. This option is enabled by default, to disable it:
 " >
-"   statusline_unicode_symbols = false
+"   statusline_unicode = false
 " <
 
 ""
 " Enable/Disable unicode symbols in statusline, includes the mode icons and
 " fileformat icons. This option is enabled by default, to disable it:
 " >
-"   let g:spacevim_statusline_unicode_symbols = 0
+"   let g:spacevim_statusline_unicode = 0
 " <
-let g:spacevim_statusline_unicode_symbols = 1
+let g:spacevim_statusline_unicode = 1
 ""
 " Enable/Disable language specific leader, by default you can use `,` ket
 " instead of `SPC` `l`.
