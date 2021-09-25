@@ -159,13 +159,18 @@ function! SpaceVim#layers#tmux#set_variable(var) abort
   let s:tmux_navigator_modifier = get(a:var,
         \ 'tmux_navigator_modifier',
         \ s:tmux_navigator_modifier)
-
+  let s:enable_tmux_clipboard = get(a:var,
+        \ 'enable_tmux_clipboard',
+        \ s:enable_tmux_clipboard)
 endfunction
 
 
 function! SpaceVim#layers#tmux#get_options() abort
 
-  return ['tmuxline_separators', 'tmuxline_separators_alt', 'tmux_navigator_modifier']
+  return ['tmuxline_separators',
+        \ 'tmuxline_separators_alt',
+        \ 'tmux_navigator_modifier',
+        \ 'enable_tmux_clipboard']
 
 endfunction
 
