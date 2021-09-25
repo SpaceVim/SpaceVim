@@ -147,11 +147,11 @@ footer
 
 **scopes:**
 
-- `core`: vim script in `autoload/SpaceVim/` directory
-- `layer`: vim script in `autoload/SpaceVim/layers/` directory
-- `api`: vim script in `autoload/SpaceVim/api/` directory
-- `plugin`: vim script in `autoload/SpaceVim/plugins/` directory
+- `api`: files in `autoload/SpaceVim/api/` and `docs/api/` directory
+- `layer`: files in `autoload/SpaceVim/layers/` and `docs/layers/` directory
+- `plugin`: files in `autoload/SpaceVim/plugins/` directory
 - `bundle`: files in `bundle/` directory
+- `core`: other files in this repository
 
 **subject:**
 
