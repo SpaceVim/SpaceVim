@@ -4142,12 +4142,22 @@ MAPPINGS
 ==============================================================================
 TMUX                                                    *SpaceVim-layers-tmux*
 
-Adds integration between tmux and vim panes. Switch between panes
-seamlessly.syntax highlighting, commenting, man page navigation and ability to
-execute lines as tmux commands. This layer is not added by default. To include
-it, add `SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`. If
-you are having issues with <C-h> in a neovim buffer, see
-`https://github.com/neovim/neovim/issues/2048#issuecomment-78045837`
+`tmux` layer adds integration between tmux and vim panes. Switch between panes
+seamlessly, syntax highlighting, commenting, man page navigation and ability
+to execute lines as tmux commands. This layer is not added by default. To
+include it, add following to spacevim configuration file:
+>
+  [[layers]]
+    name = 'tmux'
+<
+If you are having issues with <C-h> in a neovim buffer, see
+
+https://github.com/neovim/neovim/issues/2048#issuecomment-78045837
+
+LAYER OPTIONS
+
+`enable_tmux_clipboard`: this option is used to enable or disable tmux
+clipboard, by default this option is `false`.
 
 MAPPINGS
 
