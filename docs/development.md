@@ -139,6 +139,7 @@ footer
 
 - `feat`: a new feature
 - `fix`: a bug fix
+- `change`: no backward compatible changes
 - `docs`: changes to documentation
 - `style`: formatting, missing semi colons, etc; no code change
 - `refactor`: refactoring production code
