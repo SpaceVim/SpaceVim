@@ -9,8 +9,30 @@
 ""
 " @section leaderf, layers-leaderf
 " @parentsection layers
-" This layer provides fuzzy finder feature which is based on leaderf, and this
+" This layer provides fuzzy finder feature which is based on |leaderf|, and this
 " layer requires vim compiled with `+python` or `+python3`.
+" This layer is not loaded by default. To use this layer:
+" >
+"   [[layers]]
+"     name = 'leaderf'
+" <
+" @subsection Key bindings
+"
+" The following key bindings will be enabled when this layer is loaded:
+" >
+"   Key bindings      Description
+"   SPC p f / Ctrl-p  search files in current directory
+"   <Leader> f SPC    Fuzzy find menu:CustomKeyMaps
+"   <Leader> f e      Fuzzy find register
+"   <Leader> f h      Fuzzy find history/yank
+"   <Leader> f j      Fuzzy find jump, change
+"   <Leader> f l      Fuzzy find location list
+"   <Leader> f m      Fuzzy find output messages
+"   <Leader> f o      Fuzzy find functions
+"   <Leader> f t      Fuzzy find tags
+"   <Leader> f q      Fuzzy find quick fix
+"   <Leader> f r      Resumes Unite window
+" <
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
