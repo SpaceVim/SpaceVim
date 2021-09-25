@@ -175,27 +175,27 @@ function! SpaceVim#layers#tmux#health() abort
   return 1
 endfunction
 
-func! s:get_tmux_name()
+func! s:get_tmux_name() abort
   let list = systemlist('tmux list-buffers -F"#{buffer_name}"')
   if len(list)==0
-    return ""
+    return ''
   else
     return list[0]
   endif
 endfunc
 
-func! s:get_tmux_buf()
+func! s:get_tmux_buf() abort
   return system('tmux show-buffer')
 endfunc
 
-func! s:Enable()
+func! s:Enable() abort
 
   if $TMUX=='' 
     " not in tmux session
     return
   endif
 
-  let s:lastbname=""
+  let s:lastbname = ''
 
   " if support TextYankPost
   if exists('##TextYankPost')==1
@@ -218,7 +218,7 @@ func! s:Enable()
 
 endfunc
 
-func! s:update_from_tmux()
+func! s:update_from_tmux() abort
   let buffer_name = s:get_tmux_name()
   if s:lastbname != buffer_name
     let @" = s:get_tmux_buf()
