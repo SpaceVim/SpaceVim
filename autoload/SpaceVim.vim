@@ -11,7 +11,7 @@ scriptencoding utf-8
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro options config layers usage api faq changelog
+" @order intro options config layers usage api dev faq changelog
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "
@@ -1620,6 +1620,61 @@ endfunction
 "   SPC u SPC b d	kill the current buffer and window (does not delete the visited file) (TODO)
 "   SPC b D	      kill a visible buffer using vim-choosewin
 " <
+
+""
+" @section Development, dev
+"
+" SpaceVim is a joint effort of all contributors.
+" We encourage you to participate in SpaceVim's development.
+" We have some guidelines that we need all contributors to follow.
+
+
+""
+" @section commit-style-guide, dev-commit-style-guide
+" @parentsection dev
+" A git commit message consists a three distinct parts separated by black line.
+" >
+"   Type (scope): Subject
+" 
+"   body
+"
+"   footer
+" <
+" types:
+"
+" - `feat`: a new feature
+" - `fix`: a bug fix
+" - `change`: no backward compatible changes
+" - `docs`: changes to documentation
+" - `style`: formatting, missing semi colons, etc; no code change
+" - `refactor`: refactoring production code
+" - `test`: adding tests, refactoring test; no production code change
+" - `chore`: updating build tasks, package manager configs, etc; no production code change
+"
+" scopes:
+"
+" - `api`: files in `autoload/SpaceVim/api/` and `docs/api/` directory
+" - `layer`: files in `autoload/SpaceVim/layers/` and `docs/layers/` directory
+" - `plugin`: files in `autoload/SpaceVim/plugins/` directory
+" - `bundle`: files in `bundle/` directory
+" - `core`: other files in this repository
+"
+" subject:
+"
+" Subjects should be no greater than 50 characters,
+" should begin with a capital letter and do not end with a period.
+"
+" Use an imperative tone to describe what a commit does,
+" rather than what it did. For example, use change; not changed or changes.
+"
+" body:
+"
+" Not all commits are complex enough to warrant a body,
+" therefore it is optional and only used when a commit requires a bit of explanation and context.
+"
+" footer:
+"
+" The footer is optional and is used to reference issue tracker IDs.
 
 
 

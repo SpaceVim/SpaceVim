@@ -212,8 +212,10 @@ CONTENTS                                                   *SpaceVim-contents*
       15. vim#command...............................|SpaceVim-api-vim-command|
       16. vim#compatible.........................|SpaceVim-api-vim-compatible|
       17. vim#message...............................|SpaceVim-api-vim-message|
-  9. FAQ........................................................|SpaceVim-faq|
-  10. Changelog...........................................|SpaceVim-changelog|
+  9. Development................................................|SpaceVim-dev|
+      1. commit-style-guide..................|SpaceVim-dev-commit-style-guide|
+  10. FAQ.......................................................|SpaceVim-faq|
+  11. Changelog...........................................|SpaceVim-changelog|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -4676,6 +4678,62 @@ command line.
 echo({hi}, {msg})
 
   print message with {hi} highlight group.
+
+==============================================================================
+DEVELOPMENT                                                     *SpaceVim-dev*
+
+
+SpaceVim is a joint effort of all contributors. We encourage you to
+participate in SpaceVim's development. We have some guidelines that we need
+all contributors to follow.
+
+==============================================================================
+COMMIT-STYLE-GUIDE                           *SpaceVim-dev-commit-style-guide*
+
+A git commit message consists a three distinct parts separated by black line.
+>
+  Type (scope): Subject
+
+  body
+
+  footer
+<
+types:
+
+`feat`: a new feature
+`fix`: a bug fix
+`change`: no backward compatible changes
+`docs`: changes to documentation
+`style`: formatting, missing semi colons, etc; no code change
+`refactor`: refactoring production code
+`test`: adding tests, refactoring test; no production code change
+`chore`: updating build tasks, package manager configs, etc; no production
+  code change
+
+scopes:
+
+`api`: files in `autoload/SpaceVim/api/` and `docs/api/` directory
+`layer`: files in `autoload/SpaceVim/layers/` and `docs/layers/` directory
+`plugin`: files in `autoload/SpaceVim/plugins/` directory
+`bundle`: files in `bundle/` directory
+`core`: other files in this repository
+
+subject:
+
+Subjects should be no greater than 50 characters, should begin with a capital
+letter and do not end with a period.
+
+Use an imperative tone to describe what a commit does, rather than what it
+did. For example, use change; not changed or changes.
+
+body:
+
+Not all commits are complex enough to warrant a body, therefore it is optional
+and only used when a commit requires a bit of explanation and context.
+
+footer:
+
+The footer is optional and is used to reference issue tracker IDs.
 
 ==============================================================================
 FAQ                                                             *SpaceVim-faq*
