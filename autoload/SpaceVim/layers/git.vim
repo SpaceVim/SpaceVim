@@ -22,7 +22,24 @@
 "     name = 'git'
 "     git_plugin = 'git'
 " <
+" @subsection Key bindings
 "
+" The following key bindings will be definded when the `git` layer is loaded.
+" >
+"   Key Binding   Description
+"   SPC g s       view git status
+"   SPC g S       stage current file
+"   SPC g U       unstage current file
+"   SPC g c       edit git commit
+"   SPC g p       git push
+"   SPC g m       git branch manager
+"   SPC g d       view git diff
+"   SPC g A       stage all files
+"   SPC g b       open git blame windows
+"   SPC g h a     stage current hunk
+"   SPC g h r     undo cursor hunk
+"   SPC g h v     preview cursor hunk
+" <
 
 
 if exists('s:git_plugin')
