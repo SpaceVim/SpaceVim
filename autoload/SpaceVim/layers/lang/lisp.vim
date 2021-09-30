@@ -75,7 +75,7 @@ fu! s:lisp() abort
     call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'R'], 'call vlime#plugin#RenameSelectedServer()', 'Rename a server', 1)
       call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 't'], 'call vlime#plugin#RestartCurrentServer()', 'Select and Stop a server', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'v'], 'call vlime#plugin#ShowSelectedServer()', 'View the console output of a server', 1)
-  call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'c'], 'call vlime#plugin#ClearREPLBuffer()', 'Clear the REPL buffer', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r', 'c'], 'call vlime#ui#repl#ClearREPLBuffer()', 'Clear the REPL buffer', 1)
 
   let g:_spacevim_mappings_space.l.s = {'name' : '+Sending Stuff To The REPL'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s','s'], 'call vlime#plugin#SendToREPL(vlime#ui#CurExprOrAtom())',
