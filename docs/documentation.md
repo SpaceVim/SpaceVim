@@ -570,7 +570,7 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | `SPC t b`    | toggle background                                                          |
 | `SPC t c`    | toggle conceal                                                             |
 | `SPC t p`    | toggle paste mode                                                          |
-| `SPC t P`    | toggle auto parens mode                                                          |
+| `SPC t P`    | toggle auto parens mode                                                    |
 | `SPC t t`    | open tabs manager                                                          |
 | `SPC T ~`    | display ~ in the fringe on empty lines                                     |
 | `SPC T F`    | toggle frame fullscreen                                                    |
@@ -866,6 +866,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<Down>` / `j`        | select next file or directory                     |
 | `<Up>` / `k`          | select previous file or directory                 |
 | `<Right>` / `l`       | open selected file or expand directory            |
+| `<Enter>`             | open file or switch to directory                     |
 | `N`                   | Create new file under cursor                      |
 | `r`                   | Rename the file under cursor                      |
 | `d`                   | Delete the file under cursor                      |
