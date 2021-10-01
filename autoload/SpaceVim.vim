@@ -140,7 +140,19 @@ let g:spacevim_default_custom_leader = '<Space>'
 "   let g:spacevim_home_files_number = 6
 " <
 let g:spacevim_home_files_number        = 6
+""
+" @section code_runner_focus, options-code_runner_focus
+" @parentsection options
+" enable/disable code runner window focus mode, by default this option is
+" `false`, to enable this mode, set this option to `true`.
+" >
+"   code_runner_focus = true
+" <
 
+""
+" enable/disable code runner window focus mode, by default this option is 0,
+" to enable this mode, set this option to 1.
+let g:spacevim_code_runner_focus = 0
 
 ""
 " @section enable_guicolors, options-enable_guicolors
