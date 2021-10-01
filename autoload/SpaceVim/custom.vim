@@ -162,7 +162,29 @@ function! SpaceVim#custom#apply(config, type) abort
         call SpaceVim#logger#info(string(plugin))
       endif
     endfor
+
+    ""
+    " @section bootstrap_before, options-bootstrap_before
+    " @parentsection options
+    " set the bootstrap_before function, this function will be called when
+    " loading custom configuration file. for example:
+    " >
+    "   [options]
+    "     bootstrap_before = 'myspacevim#before'
+    " <
+
     let bootstrap_before = get(options, 'bootstrap_before', '')
+
+    ""
+    " @section bootstrap_after, options-bootstrap_after
+    " @parentsection options
+    " set the bootstrap_after function, this function will be called on
+    " `VimEnter` event.
+    " >
+    "   [options]
+    "     bootstrap_after = 'myspacevim#after'
+    " <
+
     let g:_spacevim_bootstrap_after = get(options, 'bootstrap_after', '')
     if !empty(bootstrap_before)
       try
