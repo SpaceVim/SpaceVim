@@ -7,6 +7,22 @@
 "=============================================================================
 
 
+""
+" @section lang#vue, layers-lang-vue
+" @parentsection layers
+" This layer is for vue development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#vue'
+" <
+"
+" The |checkers| layer provides syntax linter for vue. you need to install the
+" `eslint` and `eslint-plugin-vue`:
+" >
+"   npm install -g eslint eslint-plugin-vue
+" <
+
 function! SpaceVim#layers#lang#vue#plugins() abort
   let plugins = []
   call add(plugins, ['posva/vim-vue', {'merged' : 0}])

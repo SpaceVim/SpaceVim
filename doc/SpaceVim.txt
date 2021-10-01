@@ -181,20 +181,21 @@ CONTENTS                                                   *SpaceVim-contents*
       95. lang#typescript....................|SpaceVim-layers-lang-typescript|
       96. lang#v......................................|SpaceVim-layers-lang-v|
       97. lang#vbnet..............................|SpaceVim-layers-lang-vbnet|
-      98. lang#wolfram..........................|SpaceVim-layers-lang-wolfram|
-      99. lang#xml..................................|SpaceVim-layers-lang-xml|
-      100. lang#xquery...........................|SpaceVim-layers-lang-xquery|
-      101. lang#zig.................................|SpaceVim-layers-lang-zig|
-      102. language server protocol......................|SpaceVim-layers-lsp|
-      103. leaderf...................................|SpaceVim-layers-leaderf|
-      104. operator.................................|SpaceVim-layers-operator|
-      105. shell.......................................|SpaceVim-layers-shell|
-      106. test.........................................|SpaceVim-layers-test|
-      107. tmux.........................................|SpaceVim-layers-tmux|
-      108. tools#dash.............................|SpaceVim-layers-tools-dash|
-      109. tools#zeal.............................|SpaceVim-layers-tools-zeal|
-      110. ui.............................................|SpaceVim-layers-ui|
-      111. unite.......................................|SpaceVim-layers-unite|
+      98. lang#vue..................................|SpaceVim-layers-lang-vue|
+      99. lang#wolfram..........................|SpaceVim-layers-lang-wolfram|
+      100. lang#xml.................................|SpaceVim-layers-lang-xml|
+      101. lang#xquery...........................|SpaceVim-layers-lang-xquery|
+      102. lang#zig.................................|SpaceVim-layers-lang-zig|
+      103. language server protocol......................|SpaceVim-layers-lsp|
+      104. leaderf...................................|SpaceVim-layers-leaderf|
+      105. operator.................................|SpaceVim-layers-operator|
+      106. shell.......................................|SpaceVim-layers-shell|
+      107. test.........................................|SpaceVim-layers-test|
+      108. tmux.........................................|SpaceVim-layers-tmux|
+      109. tools#dash.............................|SpaceVim-layers-tools-dash|
+      110. tools#zeal.............................|SpaceVim-layers-tools-zeal|
+      111. ui.............................................|SpaceVim-layers-ui|
+      112. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
       2. custom_plugins........................|SpaceVim-usage-custom_plugins|
@@ -4191,6 +4192,22 @@ KEY BINDINGS
   normal          SPC l r         run current file
 <
 
+
+==============================================================================
+LANG#VUE                                            *SpaceVim-layers-lang-vue*
+
+This layer is for vue development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#vue'
+<
+
+The |checkers| layer provides syntax linter for vue. you need to install the
+`eslint` and `eslint-plugin-vue`:
+>
+  npm install -g eslint eslint-plugin-vue
+<
 
 ==============================================================================
 LANG#WOLFRAM                                    *SpaceVim-layers-lang-wolfram*
