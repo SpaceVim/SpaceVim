@@ -3681,6 +3681,19 @@ Requirements:
     racer_cmd = "/path/to/racer/bin"
 <
 
+LAYER OPTIONS
+
+The following layer options are supported when loading this layer:
+
+  1. `recommended_style`: `true`/`false` (Enable/Disable) recommended code
+style for rust. This option is disabled by default.
+  2. `format_on_save`: `true`/`false` (Enable/Disable) format current buffer
+after save. This option is disabled by default.
+  3. `racer_cmd`: The path of `racer` binary. This option is `racer` by
+default.
+  4. `rustfmt_cmd`: The path of `rustfmt` binary. This option is `rustfmt`
+by default.
+
 MAPPINGS
 
 >
