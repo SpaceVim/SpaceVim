@@ -10,6 +10,39 @@ if exists('s:fennel_interpreter')
   finish
 endif
 
+""
+" @section lang#fennel, layers-lang-fennel
+" @parentsection layers
+" This layer is for fennel development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#fennel'
+" <
+"
+" @subsection layer options
+"
+" 1. `fennel_interpreter`: Set the path of `fennel` command,
+" by default it is `fennel`.
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for fennel, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
 let s:fennel_interpreter = 'fennel'
 
 function! SpaceVim#layers#lang#fennel#plugins() abort
