@@ -32,7 +32,7 @@ After the installation, run `:GoInstallBinaries` inside vim.
 To enable tagbar support, you need to install [gotags](https://github.com/jstemmer/gotags):
 
 ```sh
-go get -u github.com/jstemmer/gotags
+go install github.com/jstemmer/gotags@latest
 ```
 
 ## Features
