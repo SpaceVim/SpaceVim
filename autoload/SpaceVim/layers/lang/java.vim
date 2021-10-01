@@ -105,7 +105,12 @@
 " or download google's formater jar from:
 " https://github.com/google/google-java-format
 "
-" and set 'g:spacevim_layer_lang_java_formatter' to the path of the jar.
+" and set the layer option `java_formatter_jar` to the path of the jar.
+" >
+"   [[layers]]
+"     name = 'lang#java'
+"     java_formatter_jar = 'path/to/google-java-format.jar'
+" <
 
 
 
