@@ -1,3 +1,0 @@
-let l:bm_file_version = 1
-let l:bm_sessions = {'default': {'C:\Users\wsdjeg\DotFiles\work.md': [{'sign_idx': 9502, 'line_nr': 2043, 'content': '#### 南京市妇幼保健院'},{'sign_idx': 9501, 'line_nr': 2016, 'content': '#### 南京儿童医院'},{'sign_idx': 9500, 'line_nr': 2032, 'content': '#### 南京玄武医院'},],}}
-let l:bm_current_session = 'default'
