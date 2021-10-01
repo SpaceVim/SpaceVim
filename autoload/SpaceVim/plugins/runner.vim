@@ -61,7 +61,9 @@ function! s:open_win() abort
   if exists('*win_getid')
     let s:winid = win_getid(winnr())
   endif
-  wincmd p
+  if !g:spacevim_code_runner_focus
+    wincmd p
+  endif
 endfunction
 
 function! s:insert() abort
