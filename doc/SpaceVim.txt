@@ -181,21 +181,22 @@ CONTENTS                                                   *SpaceVim-contents*
       95. lang#typescript....................|SpaceVim-layers-lang-typescript|
       96. lang#v......................................|SpaceVim-layers-lang-v|
       97. lang#vbnet..............................|SpaceVim-layers-lang-vbnet|
-      98. lang#vue..................................|SpaceVim-layers-lang-vue|
-      99. lang#wolfram..........................|SpaceVim-layers-lang-wolfram|
-      100. lang#xml.................................|SpaceVim-layers-lang-xml|
-      101. lang#xquery...........................|SpaceVim-layers-lang-xquery|
-      102. lang#zig.................................|SpaceVim-layers-lang-zig|
-      103. language server protocol......................|SpaceVim-layers-lsp|
-      104. leaderf...................................|SpaceVim-layers-leaderf|
-      105. operator.................................|SpaceVim-layers-operator|
-      106. shell.......................................|SpaceVim-layers-shell|
-      107. test.........................................|SpaceVim-layers-test|
-      108. tmux.........................................|SpaceVim-layers-tmux|
-      109. tools#dash.............................|SpaceVim-layers-tools-dash|
-      110. tools#zeal.............................|SpaceVim-layers-tools-zeal|
-      111. ui.............................................|SpaceVim-layers-ui|
-      112. unite.......................................|SpaceVim-layers-unite|
+      98. lang#vim..................................|SpaceVim-layers-lang-vim|
+      99. lang#vue..................................|SpaceVim-layers-lang-vue|
+      100. lang#wolfram.........................|SpaceVim-layers-lang-wolfram|
+      101. lang#xml.................................|SpaceVim-layers-lang-xml|
+      102. lang#xquery...........................|SpaceVim-layers-lang-xquery|
+      103. lang#zig.................................|SpaceVim-layers-lang-zig|
+      104. language server protocol......................|SpaceVim-layers-lsp|
+      105. leaderf...................................|SpaceVim-layers-leaderf|
+      106. operator.................................|SpaceVim-layers-operator|
+      107. shell.......................................|SpaceVim-layers-shell|
+      108. test.........................................|SpaceVim-layers-test|
+      109. tmux.........................................|SpaceVim-layers-tmux|
+      110. tools#dash.............................|SpaceVim-layers-tools-dash|
+      111. tools#zeal.............................|SpaceVim-layers-tools-zeal|
+      112. ui.............................................|SpaceVim-layers-ui|
+      113. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
       2. custom_plugins........................|SpaceVim-usage-custom_plugins|
@@ -4194,6 +4195,33 @@ KEY BINDINGS
 
 
 ==============================================================================
+LANG#VIM                                            *SpaceVim-layers-lang-vim*
+
+This layer is for vim script development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#vim'
+<
+
+The `checkers` layer provides syntax linter for vim. you need to install the
+`vint` command:
+>
+  pip install vim-vint
+<
+
+KEY BINDINGS
+
+The following key bindings will be added when this layer is loaded:
+>
+  key binding     Description
+  SPC l e         eval cursor expr
+  SPC l v         run HelpfulVersion cword
+  SPC l f         open exception trace
+  g d             jump to definition
+<
+
+==============================================================================
 LANG#VUE                                            *SpaceVim-layers-lang-vue*
 
 This layer is for vue development, disabled by default, to enable this layer,
@@ -4203,7 +4231,7 @@ add following snippet to your SpaceVim configuration file.
     name = 'lang#vue'
 <
 
-The |checkers| layer provides syntax linter for vue. you need to install the
+The `checkers` layer provides syntax linter for vue. you need to install the
 `eslint` and `eslint-plugin-vue`:
 >
   npm install -g eslint eslint-plugin-vue

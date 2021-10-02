@@ -17,7 +17,7 @@
 "     name = 'lang#vue'
 " <
 "
-" The |checkers| layer provides syntax linter for vue. you need to install the
+" The `checkers` layer provides syntax linter for vue. you need to install the
 " `eslint` and `eslint-plugin-vue`:
 " >
 "   npm install -g eslint eslint-plugin-vue
