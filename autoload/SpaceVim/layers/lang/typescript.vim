@@ -14,13 +14,35 @@
 " file.
 " >
 "   [layers]
-"       name = "lang#typescript"
+"       name = 'lang#typescript'
 " <
-" @subsection mappings
+" @subsection key bindings
+"
+" The following key bindings works well in both vim and neovim.
 " >
 "   Ket binding          Description
 "   ----------------------------------------
-"   g d                  defintion preview
+"   g D                  jump to type definition
+"   SPC l d              show document
+"   SPC l e              rename symbol
+"   SPC l i              import
+" <
+" The following key bindings only work in neovim.
+" >
+"   Ket binding          Description
+"   ----------------------------------------
+"   SPC l f              run code fix
+"   SPC l p              preview definition
+"   SPC l t              view type
+"   SPC l R              show reference
+"   SPC l D              show errors
+"   SPC l o              organizes imports
+" <
+" The following key bindings only work in vim.
+" >
+"   Ket binding          Description
+"   ----------------------------------------
+"   SPC l m              interface implementations
 " <
 
 function! SpaceVim#layers#lang#typescript#plugins() abort
