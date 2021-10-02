@@ -190,7 +190,7 @@ else
     let s:project_config[a:alt_config_json.root] = {}
     " @question why need sory()
     " if we have two key docs/*.md and docs/cn/*.md
-    " with the first key, we can also find files in 
+    " with the first key, we can also find files in
     " docs/cn/ directory, for example docs/cn/index.md
     " and the alt file will be
     " docs/cn/cn/index.md. this should be overrided by login in
@@ -214,11 +214,11 @@ else
           endfor
         else
           for type in keys(a:alt_config_json.config[key])
-            let begin_end = split(key, '*')
-            if len(begin_end) == 2
+            let left_index = stridx(key, '*')
+            if left_index != -1 && left_index == strridx(key, '*')
               let s:project_config[a:alt_config_json.root][file][type] =
                     \ s:get_type_path(
-                    \ begin_end,
+                    \ key,
                     \ file,
                     \ a:alt_config_json.config[key][type]
                     \ )
@@ -232,8 +232,8 @@ else
   endfunction
 
   function! s:get_type_path(a, f, b) abort
-    let begin_len = strlen(a:a[0])
-    let end_len = strlen(a:a[1])
+    let begin_len = stridx(a:a, '*')
+    let end_len = strlen(a:a) - begin_len - 1
     return substitute(a:b, '{}', a:f[begin_len : (end_len+1) * -1], 'g')
   endfunction
 
