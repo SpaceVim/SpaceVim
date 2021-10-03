@@ -195,9 +195,10 @@ CONTENTS                                                   *SpaceVim-contents*
       109. test.........................................|SpaceVim-layers-test|
       110. tmux.........................................|SpaceVim-layers-tmux|
       111. tools#dash.............................|SpaceVim-layers-tools-dash|
-      112. tools#zeal.............................|SpaceVim-layers-tools-zeal|
-      113. ui.............................................|SpaceVim-layers-ui|
-      114. unite.......................................|SpaceVim-layers-unite|
+      112. tools#mpv...............................|SpaceVim-layers-tools-mpv|
+      113. tools#zeal.............................|SpaceVim-layers-tools-zeal|
+      114. ui.............................................|SpaceVim-layers-ui|
+      115. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
       2. custom_plugins........................|SpaceVim-usage-custom_plugins|
@@ -4458,6 +4459,34 @@ MAPPINGS
 TOOLS#DASH                                        *SpaceVim-layers-tools-dash*
 
 This layer provides Dash integration for SpaceVim
+
+==============================================================================
+TOOLS#MPV                                          *SpaceVim-layers-tools-mpv*
+
+The `tools#mpv` layer provides mpv integration for SpaceVim. this layer is
+disabled by default, to enable this layer, add following snippet to your
+SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'tools#mpv'
+<
+
+LAYER OPTIONS
+
+The following options can be used with this layer:
+
+  1. `mpv_interpreter`: set the path of `mpv`.
+  2. `musics_directory`: set the path of directory where to store musics.
+
+KEY BINDINGS
+
+>
+  Key             Function
+  ---------------------------------------------
+  SPC m m l       fuzzy find musics
+  SPC m m n       next music
+  SPC m m s       stop mpv
+<
 
 ==============================================================================
 TOOLS#ZEAL                                        *SpaceVim-layers-tools-zeal*
