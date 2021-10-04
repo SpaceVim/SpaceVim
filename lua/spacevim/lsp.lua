@@ -1,7 +1,13 @@
 local M = {}
 
+M.clients = {}
+-- store the clients for different filetype
+-- which can be called via vim.lsp.start_client()
+
 function M.register(filetype, cmd)
-    
+    M.clients[filetype] = {
+        ['cmd'] = cmd
+    }
 end
 
 local function spliteof(data, delimiter)
