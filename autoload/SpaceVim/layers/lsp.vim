@@ -25,6 +25,12 @@ function! SpaceVim#layers#lsp#health() abort
 endfunction
 
 
+function! SpaceVim#layers#lsp#setup() abort
+
+  
+
+endfunction
+
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
 
