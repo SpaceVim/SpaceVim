@@ -16,6 +16,25 @@ endif
 let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
 
 if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
+  " use neovim built-in lsp
+  function! SpaceVim#lsp#reg_server(ft, cmds) abort
+  endfunction
+  function! SpaceVim#lsp#show_doc() abort
+  endfunction
+  function! SpaceVim#lsp#go_to_def() abort
+  endfunction
+  function! SpaceVim#lsp#go_to_declaration() abort
+  endfunction
+  function! SpaceVim#lsp#rename() abort
+  endfunction
+  function! SpaceVim#lsp#references() abort
+  endfunction
+  function! SpaceVim#lsp#go_to_typedef() abort
+  endfunction
+  function! SpaceVim#lsp#refactor() abort
+  endfunction
+  function! SpaceVim#lsp#go_to_impl() abort
+  endfunction
 elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
   " use coc.nvim
   let s:coc_language_servers = {}
