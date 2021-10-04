@@ -1,6 +1,6 @@
 "=============================================================================
 " autocmd.vim --- main autocmd group for spacevim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -49,7 +49,9 @@ function! SpaceVim#autocmds#init() abort
     autocmd Filetype qf setlocal nobuflisted
     autocmd FileType python,coffee call SpaceVim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()
-    autocmd InsertEnter * call s:fixindentline()
+    if !has('nvim-0.5.0')
+      autocmd InsertEnter * call s:fixindentline()
+    endif
     autocmd BufEnter,FileType * call SpaceVim#mapping#space#refrashLSPC()
     if executable('synclient') && g:spacevim_auto_disable_touchpad
       let s:touchpadoff = 0
@@ -58,6 +60,7 @@ function! SpaceVim#autocmds#init() abort
       autocmd FocusLost * call system('synclient touchpadoff=0')
       autocmd FocusGained * call s:reload_touchpad_status()
     endif
+    " @fixme this autocmd should also support `:w foo/test.vim`
     autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
     autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized call s:fix_colorschem_in_SpaceVim()

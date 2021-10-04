@@ -1,6 +1,6 @@
 "=============================================================================
 " php.vim --- lang#php layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -8,7 +8,7 @@
 
 
 ""
-" @section lang#php, layer-lang-php
+" @section lang#php, layers-lang-php
 " @parentsection layers
 " This layer is for php development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -156,4 +156,10 @@ function! s:preferLocalPHPMD() abort
   if filereadable(l:phpmd_path) && !exists('b:neomake_php_phpmd_args')
     let b:neomake_php_phpmd_args = ['%:p', 'text', l:phpmd_path]
   endif
+endfunction
+
+function! SpaceVim#layers#lang#php#health() abort
+  call SpaceVim#layers#lang#php#plugins()
+  call SpaceVim#layers#lang#php#config()
+  return 1
 endfunction

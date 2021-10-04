@@ -1,13 +1,13 @@
 "=============================================================================
 " python.vim --- SpaceVim lang#python layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#python, layer-lang-python
+" @section lang#python, layers-lang-python
 " @parentsection layers
 " This layer provides python language support for SpaceVim. Includding syntax
 " highlighting, code formatting and code completion. This layer is not enabled
@@ -262,4 +262,10 @@ function! SpaceVim#layers#lang#python#set_variable(var) abort
         \ 'python_interpreter',
         \ s:python_interpreter
         \ )
+endfunction
+
+function! SpaceVim#layers#lang#python#health() abort
+  call SpaceVim#layers#lang#python#plugins()
+  call SpaceVim#layers#lang#python#config()
+  return 1
 endfunction

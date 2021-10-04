@@ -1,0 +1,600 @@
+*indent_blankline.txt*        Show vertical lines for indent on empty lines
+
+
+Author: Lukas Reineke <lukas.reineke@protonmail.com>
+Version: 2.0.0
+
+==============================================================================
+CONTENTS                                                    *indent-blankline*
+
+  1. Introduction                          |indent-blankline-introduction|
+  2. Highlights                            |indent-blankline-highlights|
+  3. Variables                             |indent-blankline-variables|
+  4. Commands                              |indent-blankline-commands|
+  5. Changelog                             |indent-blankline-changelog|
+  6. License                               |indent-blankline-license|
+
+==============================================================================
+ 1. INTRODUCTION                               *indent-blankline-introduction*
+
+This plugin adds indentation guides to all lines (including empty lines).
+
+It uses Neovims virtual text feature and **no conceal**
+
+This plugin requires Neovim 0.5 or higher. It makes use of Neovim only
+features so it will not work in Vim.
+There is a legacy version of the plugin that supports Neovim 0.4 under the
+branch `version-1`
+
+==============================================================================
+ 3. HIGHLIGHTS                                   *indent-blankline-highlights*
+
+To change the highlighting of either the indent character, or the whitespace
+between indent characters, define or update these highlight groups.
+
+IndentBlanklineChar                                   *hl-IndentBlanklineChar*
+
+    Highlight of indent character.
+
+    Default: takes guifg color from 'Whitespace'                             ~
+
+    Example: >
+
+        highlight IndentBlanklineChar guifg=#00FF00 gui=nocombine
+
+IndentBlanklineSpaceChar                         *hl-IndentBlanklineSpaceChar*
+
+    Highlight of space character.
+
+    Default: takes guifg color from 'Whitespace'                             ~
+
+    Example: >
+
+        highlight IndentBlanklineSpaceChar guifg=#00FF00 gui=nocombine
+
+IndentBlanklineSpaceCharBlankline       *hl-IndentBlanklineSpaceCharBlankline*
+
+    Highlight of space character on blank lines.
+
+    Default: takes guifg color from 'Whitespace'                             ~
+
+    Example: >
+
+        highlight IndentBlanklineSpaceCharBlankline guifg=#00FF00 gui=nocombine
+
+IndentBlanklineContextChar                     *hl-IndentBlanklineContextChar*
+
+    Highlight of indent character when base of current context.
+    Only used when |g:indent_blankline_show_current_context| is active
+
+    Default: takes guifg color from 'Label'                             ~
+
+    Example: >
+
+        highlight IndentBlanklineContextChar guifg=#00FF00 gui=nocombine
+
+When defining the highlight group, it is important to set |nocombine| as a
+gui option. This is to make sure the character does not inherit gui options
+from the underlying text, like italic or bold.
+
+Highlight groups get reset on |ColorScheme| autocommand, *if* both fg and bg
+are empty.
+
+The set more than one highlight group that changes based on indentation level,
+see:
+|g:indent_blankline_char_highlight_list|
+|g:indent_blankline_space_char_highlight_list|
+|g:indent_blankline_space_char_blankline_highlight_list|
+
+==============================================================================
+ 3. VARIABLES                                     *indent-blankline-variables*
+
+g:indent_blankline_char                              *g:indent_blankline_char*
+
+    Specifies the character to be used as indent line.
+    Not used if |g:indent_blankline_char_list| is not empty.
+
+    Also set by |g:indentLine_char|
+
+    Default: '|'                                                             ~
+
+    Example: >
+
+        let g:indent_blankline_char = '|'
+
+------------------------------------------------------------------------------
+g:indent_blankline_char_list                    *g:indent_blankline_char_list*
+
+    Specifies a list of characters to be used as indent line for
+    each indentation level.
+    Ignored if the value is an empty list.
+
+    Also set by |g:indentLine_char_list|
+
+    Default: []                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
+
+------------------------------------------------------------------------------
+
+g:indent_blankline_char_highlight_list*g:indent_blankline_char_highlight_list*
+
+    Specifies the list of character highlights for each indentation level.
+    Ignored if the value is an empty list.
+
+    Default: []                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_char_highlight_list = ['Error', 'Function']
+
+------------------------------------------------------------------------------
+g:indent_blankline_space_char                  *g:indent_blankline_space_char*
+
+    Specifies the character to be used as the space value in between indent
+    lines.
+
+    Default: The listchars space value                                       ~
+
+    Example: >
+
+        let g:indent_blankline_space_char = ' '
+
+------------------------------------------------------------------------------
+g:indent_blankline_space_char_blankline*g:indent_blankline_space_char_blankline*
+
+    Specifies the character to be used as the space value in between indent
+    lines when the line is blank.
+
+    Also set by |g:indent_blankline_space_char|
+
+    Default: The listchars space value                                       ~
+
+    Example: >
+
+        let g:indent_blankline_space_char_blankline = ' '
+
+------------------------------------------------------------------------------
+
+g:indent_blankline_space_char_highlight_list*g:indent_blankline_space_char_highlight_list*
+
+    Specifies the list of space character highlights for each indentation
+    level.
+    Ignored if the value is an empty list.
+
+    Default: []                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_space_char_highlight_list = ['Error', 'Function']
+
+------------------------------------------------------------------------------
+
+g:indent_blankline_space_char_blankline_highlight_list*g:indent_blankline_space_char_blankline_highlight_list*
+
+    Specifies the list of space character highlights for each indentation
+    level when the line is empty.
+    Ignored if the value is an empty list.
+
+    Also set by |g:indent_blankline_space_char_highlight_list|
+
+    Default: []                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_space_char_blankline_highlight_list = ['Error', 'Function']
+
+------------------------------------------------------------------------------
+
+g:indent_blankline_use_treesitter          *g:indent_blankline_use_treesitter*
+
+    Use treesitter to calculate indentation when possible.
+    Requires treesitter
+
+    Default: false                                                           ~
+
+    Example: >
+
+        let g:indent_blankline_use_treesitter = v:true
+
+------------------------------------------------------------------------------
+g:indent_blankline_indent_level              *g:indent_blankline_indent_level*
+
+    Specifies the maximum indent level to display.
+
+    Also set by |g:indentLine_indentLevel|
+
+    Default: 10                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_indent_level = 4
+
+------------------------------------------------------------------------------
+g:indent_blankline_show_first_indent_level*g:indent_blankline_show_first_indent_level*
+
+    Displays indentation in the first column.
+
+    Default: v:true                                                         ~
+
+    Example: >
+
+        let g:indent_blankline_show_first_indent_level = v:false
+
+------------------------------------------------------------------------------
+g:indent_blankline_show_trailing_blankline_indent*g:indent_blankline_show_trailing_blankline_indent*
+
+    Displays a trailing indentation guide on blank lines, to match the
+    indentation of surrounding code.
+    Turn this off if you want to use background highlighting instead of chars.
+
+    Default: v:true                                                         ~
+
+    Example: >
+
+        let g:indent_blankline_show_trailing_blankline_indent = v:false
+
+------------------------------------------------------------------------------
+g:indent_blankline_show_end_of_line      *g:indent_blankline_show_end_of_line*
+
+    Displays the end of line character set by |listchars| instead of the
+    indent guide on line returns.
+
+    Default: v:false                                                         ~
+
+    Example: >
+
+        let g:indent_blankline_show_end_of_line = v:true
+
+------------------------------------------------------------------------------
+g:indent_blankline_show_foldtext            *g:indent_blankline_show_foldtext*
+
+    Displays the full fold text instead of the indent guide on folded lines.
+
+    Note: there is no autocommand to subscribe to changes in folding. This
+          might lead to unexpected results. A possible solution for this is to
+          remap folding bindings to also call |IndentBlanklineRefresh|
+
+    Default: v:true                                                         ~
+
+    Example: >
+
+        let g:indent_blankline_show_foldtext = v:false
+
+------------------------------------------------------------------------------
+g:indent_blankline_enabled                        *g:indent_blankline_enabled*
+
+    Turns this plugin on or off globally.
+
+    Also set by |g:indentLine_enabled|
+
+    Default: v:true                                                          ~
+
+    Example: >
+
+        let g:indent_blankline_enabled = v:false
+
+------------------------------------------------------------------------------
+b:indent_blankline_enabled                        *b:indent_blankline_enabled*
+
+    Turns this plugin on or off for the buffer.
+
+    Also set by |b:indentLine_enabled|
+
+    Default: v:true                                                          ~
+
+    Example: >
+
+        let b:indent_blankline_enabled = v:false
+
+------------------------------------------------------------------------------
+g:indent_blankline_filetype                      *g:indent_blankline_filetype*
+
+    Specifies a list of |filetype| values for which this plugin is enabled.
+    All |filetypes| are enabled if the value is an empty list.
+
+    Also set by |g:indentLine_fileType|
+
+    Default: []                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_filetype = ['vim']
+
+------------------------------------------------------------------------------
+g:indent_blankline_filetype_exclude      *g:indent_blankline_filetype_exclude*
+
+    Specifies a list of |filetype| values for which this plugin is not enabled.
+    Ignored if the value is an empty list.
+
+    Also set by |g:indentLine_fileTypeExclude|
+
+    Default: []                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_filetype_exclude = ['help']
+
+------------------------------------------------------------------------------
+g:indent_blankline_buftype_exclude        *g:indent_blankline_buftype_exclude*
+
+    Specifies a list of |buftype| values for which this plugin is not enabled.
+    Ignored if the value is an empty list.
+
+    Also set by |g:indentLine_bufTypeExclude|
+
+    Default: []                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_buftype_exclude = ['terminal']
+
+------------------------------------------------------------------------------
+g:indent_blankline_bufname_exclude        *g:indent_blankline_bufname_exclude*
+
+    Specifies a list of buffer names (file name with full path) for which
+    this plugin is not enabled.
+    A name can be regular expression as well.
+
+    Also set by |g:indentLine_bufNameExclude|
+
+    Default: []                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_bufname_exclude = ['README.md', '.*\.py']
+
+------------------------------------------------------------------------------
+g:indent_blankline_strict_tabs                *g:indent_blankline_strict_tabs*
+
+    When on, if there is a single tab in a line, only tabs are used to
+    calculate the indentation level.
+    When off, both spaces and tabs are used to calculate the indentation
+    level.
+    Only makes a difference if a line has a mix of tabs and spaces for
+    indentation.
+
+    Default: v:false                                                         ~
+
+    Example: >
+
+        let g:indent_blankline_strict_tabs = v:true
+
+------------------------------------------------------------------------------
+g:indent_blankline_show_current_context*g:indent_blankline_show_current_context*
+
+    When on, use treesitter to determine the current context. Then show the
+    indent character in a different highlight.
+    Requires treesitter
+
+    Note: With this option enabled, the plugin refreshes on |CursorMoved|,
+          which might be slower
+
+    Default: v:false                                                         ~
+
+    Example: >
+
+        let g:indent_blankline_show_current_context = v:true
+
+------------------------------------------------------------------------------
+g:indent_blankline_context_highlight_list*g:indent_blankline_context_highlight_list*
+
+    Specifies the list of character highlights for the current context at
+    each indentation level.
+    Ignored if the value is an empty list.
+
+    Only used when |g:indent_blankline_show_current_context| is active
+
+    Default: []                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_context_highlight_list = ['Error', 'Warning']
+
+------------------------------------------------------------------------------
+g:indent_blankline_context_patterns      *g:indent_blankline_context_patterns*
+
+    Specifies a list of lua patterns that are used to match against the
+    treesitter |tsnode:type()| at the cursor position to find the current
+    context.
+
+    To learn more about how lua pattern work, see here:
+    https://www.lua.org/manual/5.1/manual.html#5.4.1
+
+    Only used when |g:indent_blankline_show_current_context| is active
+
+    Default: ['class', 'function', 'method']                                 ~
+
+    Example: >
+
+        let g:indent_blankline_context_patterns = ['^if']
+
+------------------------------------------------------------------------------
+g:indent_blankline_viewport_buffer        *g:indent_blankline_viewport_buffer*
+
+    Sets the buffer of extra lines before and after the current viewport that
+    are considered when generating indentation and the context.
+
+    Default: 10                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_viewport_buffer = 20
+
+------------------------------------------------------------------------------
+g:indent_blankline_disable_warning_message*g:indent_blankline_disable_warning_message*
+
+    Turns deprecation warning messages off.
+
+    Default: v:false                                                         ~
+
+    Example: >
+
+        let g:indent_blankline_disable_warning_message = v:true
+
+------------------------------------------------------------------------------
+g:indent_blankline_debug                            *g:indent_blankline_debug*
+
+    Turns on error logging.
+
+    Default: v:false                                                         ~
+
+    Example: >
+
+        let g:indent_blankline_debug = v:true
+
+==============================================================================
+ 4. COMMANDS                                       *indent-blankline-commands*
+
+:IndentBlanklineRefresh[!]                            *IndentBlanklineRefresh*
+
+    Refreshes the indent guides for the current buffer.
+    Run this with |autocmd| when the file changes. For example after a plugin
+    formats the file.
+
+    With bang (IndentBlanklineRefresh!) refreshes the indent guides globally.
+
+    By default it is run for:
+      1. |VimEnter| *  [bang]
+      2. |FileChangedShellPost| *
+      3. |TextChanged| *
+      4. |TextChangedI| *
+      5. |WinScrolled| *
+      6. |BufWinEnter| *
+      7. |Filetype| *
+      8. |OptionSet| shiftwidth,tabstop,expandtab
+
+    Example: >
+
+        autocmd User ALEFixPost IndentBlanklineRefresh
+
+------------------------------------------------------------------------------
+:IndentBlanklineEnable[!]                               *IndentBlanklineEnable*
+
+    Enables this plugin for the current buffer.
+    This overwrites any include/exclude rules.
+
+    With bang (IndentBlanklineEnable!) enables this plugin globally
+
+------------------------------------------------------------------------------
+:IndentBlanklineDisable[!]                            *IndentBlanklineDisable*
+
+    Disables this plugin for the current buffer.
+    This overwrites any include/exclude rules.
+
+    With bang (IndentBlanklineDisable!) disables this plugin globally
+
+------------------------------------------------------------------------------
+:IndentBlanklineToggle[!]                              *IndentBlanklineToggle*
+
+    Toggles between |IndentBlanklineEnable| and |IndentBlanklineDisable|.
+
+    With bang (IndentBlanklineToggle!) toggles globally
+
+==============================================================================
+ 5. CHANGELOG                                     *indent-blankline-changelog*
+
+2.0.0
+ * Complete lua rewrite
+ * Drop support for Neovim 0.4
+ * Trigger on `TextChanged`, `TextChangedI` and `WinScrolled`
+ * Removed IndentGuide dependency
+ * Removed commands
+    - IndentBlanklineEnableAll
+    - IndentBlanklineDisableAll
+    - IndentBlanklineToggleAll
+ * Added Bang for commands
+    - IndentBlanklineRefresh
+    - IndentBlanklineEnable
+    - IndentBlanklineDisable
+    - IndentBlanklineToggle
+ * New options:
+    |g:indent_blankline_char_highlight_list|
+    |g:indent_blankline_space_char_highlight_list|
+    |g:indent_blankline_show_end_of_line|
+    |g:indent_blankline_show_foldtext|
+    |g:indent_blankline_show_current_context|
+    |g:indent_blankline_context_highlight_list|
+    |g:indent_blankline_context_patterns|
+    |g:indent_blankline_viewport_buffer|
+    |g:indent_blankline_disable_warning_message|
+ * Remove options:
+    `indent_blankline_extra_indent_level`
+
+1.4.1
+ * Fix windows working directory bug
+
+1.4.0
+ * Don't create jumps in embedded nvim instance
+ * Restore cursor and close buffer after every search
+ * Only clear the namespace on disable if it exists
+
+1.3.2
+ * Call indentexpr with `silent!` to not exit early on errors
+
+1.3.1
+ * Moved more of init function in the try/catch block
+
+1.3.0
+ * Error logs have more context
+ * More error logs
+ * Added `g:indent_blankline_debug` option to only display the errors logs
+   when needed
+
+1.2.2
+ * Apply `indent_blankline_indent_level` after
+   `indent_blankline_extra_indent_level`
+
+1.2.1
+ * Fixed out of range bug with `g:indent_blankline_extra_indent_level`
+
+1.2.0
+ * Added `g:indent_blankline_extra_indent_level` option.
+
+1.1.0
+ * Don't throw errors when `rpcnotify` fails. Just print the error message and
+   try again next time.
+
+1.0.3
+ * Fixed wrong help tag
+
+1.0.2
+* Fixed wrong variable reference form `indentLine_bufTypeExclude`
+  to `indent_blankline_buftype_exclude`
+
+1.0.1
+  * Fixed typo in docs
+
+1.0.0
+  * First release
+
+==============================================================================
+ 6. LICENSE                                         *indent-blankline-license*
+
+The MIT Licence
+http://www.opensource.org/licenses/mit-license.php
+
+Copyright (c) 2021 Lukas Reineke
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl

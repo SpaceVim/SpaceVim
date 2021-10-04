@@ -1,13 +1,13 @@
 "=============================================================================
 " erlang.vim --- erlang support for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#erlang, layer-lang-erlang
+" @section lang#erlang, layers-lang-erlang
 " @parentsection layers
 " This layer is for erlang development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -89,4 +89,10 @@ function! s:go_to_def() abort
   else
     normal! gd
   endif
+endfunction
+
+function! SpaceVim#layers#lang#erlang#health() abort
+  call SpaceVim#layers#lang#erlang#plugins()
+  call SpaceVim#layers#lang#erlang#config()
+  return 1
 endfunction

@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section format, layer-format
+" @section format, layers-format
 " @parentsection layers
 " format layer provides code formation for SpaceVim, the default formatting
 " plugin is |neoformat|.
@@ -28,6 +28,12 @@ else
   let s:format_on_save = 0
   let s:format_ft = []
 endif
+
+function! SpaceVim#layers#format#health() abort
+  call SpaceVim#layers#format#plugins()
+  call SpaceVim#layers#format#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#format#plugins() abort
   return [

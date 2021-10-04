@@ -1,10 +1,38 @@
 "=============================================================================
 " vim.vim --- SpaceVim vim layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+
+""
+" @section lang#vim, layers-lang-vim
+" @parentsection layers
+" This layer is for vim script development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#vim'
+" <
+"
+" The `checkers` layer provides syntax linter for vim. you need to install the
+" `vint` command:
+" >
+"   pip install vim-vint
+" <
+"
+" @subsection key bindings
+"
+" The following key bindings will be added when this layer is loaded:
+" >
+"   key binding     Description
+"   SPC l e         eval cursor expr
+"   SPC l v         run HelpfulVersion cword
+"   SPC l f         open exception trace
+"   g d             jump to definition
+" <
 
 if exists('s:auto_generate_doc')
   finish
@@ -19,6 +47,7 @@ let s:SID = SpaceVim#api#import('vim#sid')
 let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
 let s:FILE = SpaceVim#api#import('file')
+let s:NOTI = SpaceVim#api#import('notify')
 
 function! SpaceVim#layers#lang#vim#plugins() abort
   let plugins = [
@@ -58,6 +87,15 @@ function! SpaceVim#layers#lang#vim#config() abort
   endif
 endfunction
 
+function! s:on_exit(...) abort
+    let data = get(a:000, 2)
+    if data != 0
+        call s:NOTI.notify('failed to generate doc!', 'WarningMsg')
+    else
+        call s:NOTI.notify('vim doc generated!', 'Normal')
+    endif
+endfunction
+
 function! s:generate_doc() abort
   " neovim in windows executable function is broken
   " https://github.com/neovim/neovim/issues/9391
@@ -66,9 +104,17 @@ function! s:generate_doc() abort
   if !empty(addon_info)
     let dir = s:FILE.unify_path(addon_info, ':h')
     if executable('vimdoc') && !s:SYS.isWindows
-      call s:JOB.start(['vimdoc', dir])
+      call s:JOB.start(['vimdoc', dir], 
+              \ {
+              \ 'on_exit' : function('s:on_exit'),
+              \ }
+              \ )
     elseif executable('python')
-      call s:JOB.start(['python', '-m', 'vimdoc', dir])
+      call s:JOB.start(['python', '-m', 'vimdoc', dir], 
+              \ {
+              \ 'on_exit' : function('s:on_exit'),
+              \ }
+              \ )
     endif
   endif
 endfunction
@@ -123,4 +169,10 @@ endfunction
 
 function! s:helpversion_cursor() abort
   exe 'HelpfulVersion' expand('<cword>')
+endfunction
+
+function! SpaceVim#layers#lang#vim#health() abort
+  call SpaceVim#layers#lang#vim#plugins()
+  call SpaceVim#layers#lang#vim#config()
+  return 1
 endfunction

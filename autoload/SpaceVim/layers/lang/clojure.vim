@@ -1,13 +1,13 @@
 "=============================================================================
 " clojure.vim --- SpaceVim lang#clojure layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#clojure, layer-lang-clojure
+" @section lang#clojure, layers-lang-clojure
 " @parentsection layers
 " This layer provides clojure language support in SpaceVim. Including syntax
 " highlighting, code indent, code runner and REPL. This layer is not enabled
@@ -78,7 +78,7 @@ function! SpaceVim#layers#lang#clojure#config() abort
   " let clojure = get(filter(['cmd-clj'], 'executable(v:val)'), 0, 'clojure')
   call SpaceVim#plugins#runner#reg_runner('clojure', s:clojure_interpreter . ' -M %s')
   call SpaceVim#plugins#repl#reg('clojure', s:clojure_interpreter)
-  call SpaceVim#plugins#tasks#reg_provider(funcref('s:lein_tasks'))
+  call SpaceVim#plugins#tasks#reg_provider(function('s:lein_tasks'))
   call add(g:spacevim_project_rooter_patterns, 'project.clj')
 endfunction
 
@@ -114,4 +114,10 @@ endfunction
 
 function! SpaceVim#layers#lang#clojure#set_variable(var) abort
   let s:clojure_interpreter = get(a:var, 'clojure_interpreter', s:clojure_interpreter)
+endfunction
+
+function! SpaceVim#layers#lang#clojure#health() abort
+  call SpaceVim#layers#lang#clojure#plugins()
+  call SpaceVim#layers#lang#clojure#config()
+  return 1
 endfunction

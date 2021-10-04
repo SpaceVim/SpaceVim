@@ -5,7 +5,7 @@ redirect_from: "/README_zh_cn/"
 lang: zh
 ---
 
-# [主页](../) >> 使用文档
+# 使用文档
 
 <!-- vim-markdown-toc GFM -->
 
@@ -309,6 +309,9 @@ SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以�
     bootstrap_after  = "myspacevim#after"
 ```
 
+这两种启动函数的区别在于，`bootstrap_before`函数是在载入用户配置时候执行的，
+而`bootstrap_after`函数是在触发`VimEnter`事件时执行的。
+
 启动函数文件应放置在 Vim &runtimepath 的 autoload 文件夹内。例如：
 
 文件名：`~/.SpaceVim.d/autoload/myspacevim.vim`
@@ -321,6 +324,18 @@ endfunction
 
 function! myspacevim#after() abort
     iunmap jk
+endfunction
+```
+
+在启动函数中，可以使用`:lua` 命令对 SpaceVim 进行配置，比如：
+
+```vim
+function! myspacevim#before() abort
+    lua << EOF
+    local opt = requires('spacevim.opt')
+    opt.enable_projects_cache = false
+    opt.enable_statusline_mode = true
+EOF
 endfunction
 ```
 
@@ -504,6 +519,7 @@ SpaceVim 在终端下默认使用了真色，因此使用之前需要确认下�
 | `SPC t b`   | 切换背景色                                |
 | `SPC t c`   | 切换 conceal 模式                         |
 | `SPC t p`   | 切换 paste 模式                           |
+| `SPC t P`   | 切换 auto parens 模式                     |
 | `SPC t t`   | 打开 Tab 管理器                           |
 | `SPC T ~`   | 显示/隐藏 Buffer 结尾空行行首的 `~`       |
 | `SPC T F`   | 切换全屏(TODO)                            |
@@ -568,7 +584,7 @@ SpaceVim 默认使用 `nerd fonts`，可参阅其安装指南进行安装。
 
 ![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
-搜索结果展示由`incsearch`模块提供，可以再配置中启用该模块：
+搜索结果展示由`incsearch`模块提供，可以在配置中启用该模块：
 
 ```toml
 [layers]
@@ -609,7 +625,7 @@ SpaceVim 所支持的分割符以及截图如下：
 
 **SpaceVim 功能模块：**
 
-功能模块可以通过 `SPC t m m` 快捷键显示或者隐藏。默认使用 Unicode 字符，可通过设置 `statusline_unicode_symbols = false` 来启用 ASCII 字符。(或许在终端中无法设置合适的字体时，可使用这一选项)。
+功能模块可以通过 `SPC t m m` 快捷键显示或者隐藏。默认使用 Unicode 字符，可通过设置 `statusline_unicode = false` 来启用 ASCII 字符。(或许在终端中无法设置合适的字体时，可使用这一选项)。
 
 状态栏中功能模块内的字符显示与否，同如下快捷键功能保持一致：
 
@@ -746,21 +762,22 @@ call SpaceVim#layers#core#statusline#register_sections('test', function('s:test_
 
 ### 文件树
 
-SpaceVim 使用 vimfiler 作为默认的文件树插件，默认的快捷键是 `F3`, SpaceVim 也提供了另外一组快捷键 `SPC f t` 和 `SPC f T` 来打开文件树。
+SpaceVim 使用 nerdtree 作为默认的文件树插件，默认的快捷键是 `F3`,
+SpaceVim 也提供了另外一组快捷键 `SPC f t` 和 `SPC f T` 来打开文件树。
 如果需要修改默认文件树插件，需要在 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中修改选项 `filemanager`：
 
 ```toml
 [options]
     # 文件树插件可选值包括：
-    # - vimfiler （默认）
-    # - nerdtree
-    # - defx
-    filemanager = "defx"
+    # - nerdtree （默认）
+    # - vimfiler: 需要编译 vimproc.vim, 在目录 bundle/vimproc.vim 下
+    # - defx: 需要 +py3 支持
+    filemanager = "nerdtree"
 ```
 
 SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性需要分析文件夹内容，
 会使得文件树插件比较慢，因此默认没有打开，如果需要使用这一特性，
-可向配置文件中加入 `enable_vimfiler_gitstatus = true`，启用后的截图如下：
+可向配置文件中加入 `enable_filetree_gitstatus = true`，启用后的截图如下：
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
 
@@ -784,6 +801,7 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 | `<Down>` / `j`       | 向下移动光标                   |
 | `<Up>` / `k`         | 向上移动光标                   |
 | `<Right>` / `l`      | 展开目录，或打开文件           |
+| `<Enter>`            | 切换目录，或打开文件           |
 | `N`                  | 在光标位置新建文件             |
 | `y y`                | 复制光标下文件路径至系统剪切板 |
 | `y Y`                | 复制光标下文件至系统剪切板     |
@@ -815,26 +833,28 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 以下列出了最常用的移动光标以及滚屏的快捷键：
 
-| 快捷键            | 功能描述                       |
-| ----------------- | ------------------------------ |
-| `h`               | 向左移动光标                   |
-| `j`               | 向下移动光标                   |
-| `k`               | 向上移动光标                   |
-| `l`               | 向右移动光标                   |
-| `<Up>`            | 向上移动光标，不跳过折行       |
-| `<Down>`          | 向下移动光标，不跳过折行       |
-| `H`               | 移动光标至屏幕顶部             |
-| `L`               | 移动光标至屏幕底部             |
-| `<`               | 向左移动文本                   |
-| `>`               | 向右移动文本                   |
-| `}`               | 向前移动一个段落               |
-| `{`               | 向后移动一个段落               |
-| `Ctrl-f`          | 向下翻页 (`Ctrl-f` / `Ctrl-d`) |
-| `Ctrl-b`          | 向上翻页 (`C-b` / `C-u`)       |
-| `Ctrl-e`          | 向下滚屏 (`3 Ctrl-e/j`)        |
-| `Ctrl-y`          | 向上滚屏 (`3Ctrl-y/k`)         |
-| `Ctrl-Shift-Up`   | 向上移动当前行                 |
-| `Ctrl-Shift-Down` | 向下移动当前行                 |
+| 快捷键                                 | 功能描述                 |
+| -------------------------------------- | ------------------------ |
+| `h`                                    | 向左移动光标             |
+| `j`                                    | 向下移动光标             |
+| `k`                                    | 向上移动光标             |
+| `l`                                    | 向右移动光标             |
+| `<Up>`                                 | 向上移动光标，不跳过折行 |
+| `<Down>`                               | 向下移动光标，不跳过折行 |
+| `H`                                    | 移动光标至屏幕顶部       |
+| `L`                                    | 移动光标至屏幕底部       |
+| `<`                                    | 向左移动文本             |
+| `>`                                    | 向右移动文本             |
+| `}`                                    | 向前移动一个段落         |
+| `{`                                    | 向后移动一个段落         |
+| `Ctrl-f` / `Shift-Down` / `<PageDown>` | 向下翻页                 |
+| `Ctrl-b` / `Shift-Up` / `<PageUp>`     | 向上翻页                 |
+| `Ctrl-d`                               | 向下滚屏                 |
+| `Ctrl-u`                               | 向上滚屏                 |
+| `Ctrl-e`                               | 向下滚屏 (`3 Ctrl-e/j`)  |
+| `Ctrl-y`                               | 向上滚屏 (`3Ctrl-y/k`)   |
+| `Ctrl-Shift-Up`                        | 向上移动当前行           |
+| `Ctrl-Shift-Down`                      | 向下移动当前行           |
 
 ### 原生功能
 
@@ -910,6 +930,10 @@ endfunction
 ```vim
 call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
 ```
+
+第一个参数设定快捷键的类型，
+可以是 `nnoremap` 或者 `nmap`，第二个参数是一个按键列表，
+第三个参数是一个 ex 命令或者按键，这基于最后一个参数是否为`true`。第四个参数是一个简短的描述。
 
 **模糊搜索快捷键**
 
@@ -1315,6 +1339,7 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 | `SPC f o`            | 代开文件树，并定位到当前文件                           |
 | `SPC f R`            | rename the current file(TODO)                          |
 | `SPC f s` / `Ctrl-s` | 保存文件 (:w)                                          |
+| `SPC f a`            | 另存为新的文件                                         |
 | `SPC f W`            | 使用管理员模式保存                                     |
 | `SPC f S`            | 保存所有文件                                           |
 | `SPC f r`            | 打开文件历史                                           |
@@ -1667,14 +1692,19 @@ SpaceVim 使用 `search_highlight_persist` 保持当前搜索结果的高亮状�
 
 #### 获取帮助信息
 
-Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的 [Helm](https://github.com/emacs-helm/helm)。以下这些快捷键将帮助你快速获取需要的帮助信息：
+模糊搜索模块是一个强大的信息筛选浏览器，这类似于 Emacs 中的 [Helm](https://github.com/emacs-helm/helm)。
+以下这些快捷键将帮助你快速获取需要的帮助信息：
 
-| 快捷键      | 功能描述                                           |
-| ----------- | -------------------------------------------------- |
-| `SPC h SPC` | 使用 fuzzy find 模块展示 SpaceVim 帮助文档章节目录 |
-| `SPC h i`   | 获取光标下单词的帮助信息                           |
-| `SPC h k`   | 使用快捷键导航，展示 SpaceVim 所支持的前缀键       |
-| `SPC h m`   | 使用 Unite 浏览所有 man 文档                       |
+| 快捷键      | 功能描述                                       |
+| ----------- | ---------------------------------------------- |
+| `SPC h SPC` | 使用模糊搜索模块展示 SpaceVim 帮助文档章节目录 |
+| `SPC h i`   | 使用模糊搜索模块获取光标下单词的帮助信息       |
+| `SPC h g`   | 异步执行`:helpgrep`                            |
+| `SPC h G`   | 异步执行`:helpgrep`，并搜索光标下的词          |
+| `SPC h k`   | 使用快捷键导航，展示 SpaceVim 所支持的前缀键   |
+| `SPC h m`   | 使用模糊搜索模块浏览所有 man 文档              |
+
+注意：`SPC h i` 和 `SPC h m` 需要载入一个模糊搜索模块。
 
 报告一个问题：
 
@@ -1718,16 +1748,17 @@ Denite/Unite 是一个强大的信息筛选浏览器，这类似于 Emacs 中的
 
 | 快捷键    | 功能描述                                         |
 | --------- | ------------------------------------------------ |
-| `SPC j 0` | 跳至行首，并且在原始位置留下标签，以便跳回       |
 | `SPC j $` | 跳至行尾，并且在原始位置留下标签，以便跳回       |
+| `SPC j 0` | 跳至行首，并且在原始位置留下标签，以便跳回       |
 | `SPC j b` | 向后回跳                                         |
-| `SPC j f` | 向前跳                                           |
-| `SPC j d` | 跳至当前目录某个文件夹                           |
+| `SPC j c` | 跳至前一个修改位置                               |
 | `SPC j D` | 跳至当前目录某个文件夹（在另外窗口展示文件列表） |
+| `SPC j d` | 跳至当前目录某个文件夹                           |
+| `SPC j f` | 向前跳                                           |
 | `SPC j i` | 跳至当前文件的某个函数，使用 Denite 打开语法树   |
 | `SPC j I` | 跳至所有 Buffer 的语法树（TODO）                 |
-| `SPC j j` | 跳至当前窗口的某个字符 (easymotion)              |
 | `SPC j J` | 跳至当前窗口的某两个字符的组合 (easymotion)      |
+| `SPC j j` | 跳至当前窗口的某个字符 (easymotion)              |
 | `SPC j k` | 跳至下一行，并且对齐下一行                       |
 | `SPC j l` | 跳至某一行 (easymotion)                          |
 | `SPC j q` | show the dumb-jump quick look tooltip (TODO)     |
@@ -2073,10 +2104,10 @@ SpaceVim 目前支持自动识别以下构建系统的任务：npm。
 ```vim
 function! s:make_tasks() abort
     if filereadable('Makefile')
-        let subcmd = filter(readfile('Makefile', ''), "v:val=~#'^.PHONY'")
-        if !empty(subcmd)
-            let commands = split(subcmd[0])[1:]
-            let conf = {}
+        let subcmds = filter(readfile('Makefile', ''), "v:val=~#'^.PHONY'")
+        let conf = {}
+        for subcmd in subcmds
+            let commands = split(subcmd)[1:]
             for cmd in commands
                 call extend(conf, {
                             \ cmd : {
@@ -2087,10 +2118,8 @@ function! s:make_tasks() abort
                             \ }
                             \ })
             endfor
-            return conf
-        else
-            return {}
-        endif
+        endfor
+        return conf
     else
         return {}
     endif

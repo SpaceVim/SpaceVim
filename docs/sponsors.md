@@ -3,7 +3,7 @@ title: "Sponsors"
 description: "The companies or individuals contributing a monthly amount to help sustain SpaceVim's development."
 ---
 
-# [Home](../) >> Sponsors
+# Sponsors
 
 <!-- vim-markdown-toc GFM -->
 

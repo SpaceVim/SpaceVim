@@ -1,13 +1,13 @@
 "=============================================================================
 " shell.vim --- SpaceVim shell layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section shell, layer-shell
+" @section shell, layers-shell
 " @parentsection layers
 " SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for
 " vim. For more info, read |deol| and |vimshell|.
@@ -282,4 +282,10 @@ function! SpaceVim#layers#shell#close_terminal() abort
       exe 'silent bd!' . terminal_bufnr
     endif
   endfor
+endfunction
+
+function! SpaceVim#layers#shell#health() abort
+  call SpaceVim#layers#shell#plugins()
+  call SpaceVim#layers#shell#config()
+  return 1
 endfunction

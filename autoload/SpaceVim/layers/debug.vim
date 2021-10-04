@@ -1,6 +1,6 @@
 "=============================================================================
 " debug.vim --- SpaceVim debug layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -15,6 +15,12 @@ function! SpaceVim#layers#debug#plugins() abort
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
   endif
   return plugins
+endfunction
+
+function! SpaceVim#layers#debug#health() abort
+  call SpaceVim#layers#debug#plugins()
+  call SpaceVim#layers#debug#config()
+  return 1
 endfunction
 
 function! SpaceVim#layers#debug#config() abort

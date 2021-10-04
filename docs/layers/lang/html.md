@@ -39,12 +39,14 @@ npm install --global vscode-html-languageserver-bin
 
 ## Layer options
 
-- `user_emmet_leader_key`: change the default leader key for emmet.
+- `emmet_leader_key`: change the default leader key for emmet.
+- `emmet_filetyps`: Set the filetypes for enabling emmet
 
   ```toml
   [layers]
     name = "lang#html"
-    user_emmet_leader_key = "<C-e>"
+    emmet_leader_key = "<C-e>"
+    emmet_filetyps = ['html']
   ```
 
 ## Features

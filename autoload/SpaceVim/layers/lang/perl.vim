@@ -1,13 +1,13 @@
 "=============================================================================
 " perl.vim --- SpaceVim lang#perl layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#perl, layer-lang-perl
+" @section lang#perl, layers-lang-perl
 " @parentsection layers
 " This layer is for perl development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -97,4 +97,10 @@ endfunction
 
 function! SpaceVim#layers#lang#perl#set_variable(var) abort
   let s:perl_interpreter = get(a:var, 'perl_interpreter', s:perl_interpreter)
+endfunction
+
+function! SpaceVim#layers#lang#perl#health() abort
+  call SpaceVim#layers#lang#perl#plugins()
+  call SpaceVim#layers#lang#perl#config()
+  return 1
 endfunction

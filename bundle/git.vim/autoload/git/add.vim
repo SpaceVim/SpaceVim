@@ -9,36 +9,43 @@
 
 let s:JOB = SpaceVim#api#import('job')
 
-function! git#add#run(files)
-
-    if len(a:files) == 1 && a:files[0] ==# '%'
-        let cmd = ['git', 'add', expand('%')] 
+function! s:replace_argvs(argvs) abort
+  let argvs = []
+  for argv in a:argvs
+    if argv ==# '%'
+      call insert(argvs, expand('%'))
     else
-        let cmd = ['git', 'add'] + a:files
+      call insert(argvs, argv)
     endif
-    call git#logger#info('git-add cmd:' . string(cmd))
-    call s:JOB.start(cmd,
-                \ {
-                \ 'on_exit' : function('s:on_exit'),
-                \ }
-                \ )
+  endfor
+  return argvs
+endfunction
+
+function! git#add#run(argvs) abort
+  let cmd = ['git', 'add'] + s:replace_argvs(a:argvs)
+  call git#logger#info('git-add cmd:' . string(cmd))
+  call s:JOB.start(cmd,
+        \ {
+          \ 'on_exit' : function('s:on_exit'),
+          \ }
+          \ )
 
 endfunction
 
 function! s:on_exit(id, data, event) abort
-    call git#logger#info('git-add exit data:' . string(a:data))
-    if a:data ==# 0
-        if exists(':GitGutter')
-            GitGutter
-        endif
-        echo 'done!'
-    else
-        echo 'failed!'
+  call git#logger#info('git-add exit data:' . string(a:data))
+  if a:data ==# 0
+    if exists(':GitGutter')
+      GitGutter
     endif
+    echo 'done!'
+  else
+    echo 'failed!'
+  endif
 endfunction
 
-function! git#add#complete(ArgLead, CmdLine, CursorPos)
+function! git#add#complete(ArgLead, CmdLine, CursorPos) abort
 
-    return "%\n" . join(getcompletion(a:ArgLead, 'file'), "\n")
+  return "%\n" . join(getcompletion(a:ArgLead, 'file'), "\n")
 
 endfunction

@@ -28,10 +28,13 @@ To use this configuration layer, update your custom configuration file with:
 [[layers]]
   name = "lang#typescript"
 ```
-and also use npm to install neovim using:
+
+If you are using neovim instead of vim, please use `npm` to install `neovim` lib:
+
 ```bash
 npm install -g neovim
 ```
+
 then in SpaceVim run `:UpdateRemotePlugin`
 
 To generate doc of typescript file, you need to install [lehre](https://www.npmjs.com/package/lehre)
@@ -40,6 +43,11 @@ To generate doc of typescript file, you need to install [lehre](https://www.npmj
 yarn add -D lehre
 ```
 
+Install `eslint` for syntax checking:
+
+```
+npm install -g eslint
+```
 
 ## Layer options
 

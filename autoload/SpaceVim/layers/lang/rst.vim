@@ -19,3 +19,9 @@ endfunction
 function! SpaceVim#layers#lang#rst#config() abort
   
 endfunction
+
+function! SpaceVim#layers#lang#rst#health() abort
+  call SpaceVim#layers#lang#rst#plugins()
+  call SpaceVim#layers#lang#rst#config()
+  return 1
+endfunction

@@ -41,7 +41,6 @@ function! neomake#makers#ft#javascript#eslint() abort
         \ 'args': ['--format=compact'],
         \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
         \   '%W%f: line %l\, col %c\, Warning - %m,%-G,%-G%*\d problems%#',
-        \ 'cwd': '%:p:h',
         \ 'output_stream': 'stdout',
         \ }
 

@@ -1,6 +1,6 @@
 "=============================================================================
 " banner.vim --- SpaceVim core#banner layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -235,6 +235,11 @@ function! SpaceVim#layers#core#banner#config() abort
         \ '                                                                               ',
         \ ]
         \ ]
+endfunction
+
+function! SpaceVim#layers#core#banner#health() abort
+  call SpaceVim#layers#core#banner#config()
+  return 1
 endfunction
 
 " vim:set et sw=2:

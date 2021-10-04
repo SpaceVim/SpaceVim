@@ -1,13 +1,13 @@
 "=============================================================================
 " dart.vim --- SpaceVim lang#dart layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#dart, layer-lang-dart
+" @section lang#dart, layers-lang-dart
 " @parentsection layers
 " @subsection Intro
 "
@@ -54,7 +54,7 @@ let s:flutter_job_id = 0
 let s:dart_sdk_path = ''
 
 let s:JOB = SpaceVim#api#import('job')
-let s:NOTI =SpaceVim#api#import('notification')
+let s:NOTI = SpaceVim#api#import('notify')
 
 function! SpaceVim#layers#lang#dart#plugins() abort
   let plugins = []
@@ -129,7 +129,7 @@ endfunction
 
 function! s:flutter_run() abort
   if s:flutter_job_id ==# 0
-    " call s:NOTI.notification(line, 'Normal')
+    " call s:NOTI.notify(line, 'Normal')
     let s:flutter_job_id = s:JOB.start('flutter run',
           \ {
           \ 'on_stdout' : function('s:on_stdout'),
@@ -142,7 +142,7 @@ endfunction
 
 function! s:flutter_send(msg) abort
   if s:flutter_job_id ==# 0
-    call s:NOTI.notification('Flutter is not running.', 'WarningMsg')
+    call s:NOTI.notify('Flutter is not running.', 'WarningMsg')
   else
     call s:JOB.send(s:flutter_job_id, a:msg)
   endif
@@ -150,13 +150,13 @@ endfunction
 
 function! s:on_stdout(id, data, event) abort
   for line in filter(a:data, '!empty(v:val)')
-    call s:NOTI.notification(line, 'Normal')
+    call s:NOTI.notify(line, 'Normal')
   endfor
 endfunction
 
 function! s:on_stderr(id, data, event) abort
   for line in filter(a:data, '!empty(v:val)')
-    call s:NOTI.notification(line, 'WarningMsg')
+    call s:NOTI.notify(line, 'WarningMsg')
   endfor
 endfunction
 
@@ -193,3 +193,9 @@ else
     return function(substitute(a:fstr, 's:', s:_s, 'g'))
   endfunction
 endif
+
+function! SpaceVim#layers#lang#dart#health() abort
+  call SpaceVim#layers#lang#dart#plugins()
+  call SpaceVim#layers#lang#dart#config()
+  return 1
+endfunction

@@ -6,8 +6,8 @@ let g:vimfiler_as_default_explorer = get(g:, 'vimfiler_as_default_explorer', 1)
 let g:vimfiler_restore_alternate_file = get(g:, 'vimfiler_restore_alternate_file', 1)
 let g:vimfiler_tree_indentation = get(g:, 'vimfiler_tree_indentation', 1)
 let g:vimfiler_tree_leaf_icon = get(g:, 'vimfiler_tree_leaf_icon', '')
-let g:vimfiler_tree_opened_icon = get(g:, 'vimfiler_tree_opened_icon', '')
-let g:vimfiler_tree_closed_icon = get(g:, 'vimfiler_tree_closed_icon', '')
+let g:vimfiler_tree_opened_icon = get(g:, 'vimfiler_tree_opened_icon', g:_spacevim_filetree_opened_icon)
+let g:vimfiler_tree_closed_icon = get(g:, 'vimfiler_tree_closed_icon', g:_spacevim_filetree_closed_icon)
 let g:vimfiler_file_icon = get(g:, 'vimfiler_file_icon', '')
 let g:vimfiler_readonly_file_icon = get(g:, 'vimfiler_readonly_file_icon', '*')
 let g:vimfiler_marked_file_icon = get(g:, 'vimfiler_marked_file_icon', '√')
@@ -35,11 +35,11 @@ else
 endif
 
 function! s:setcolum() abort
-  if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_vimfiler_gitstatus
+  if g:_spacevim_enable_filetree_filetypeicon && !g:_spacevim_enable_filetree_gitstatus
     return 'filetypeicon'
-  elseif !g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+  elseif !g:_spacevim_enable_filetree_filetypeicon && g:_spacevim_enable_filetree_gitstatus
     return 'gitstatus'
-  elseif g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+  elseif g:_spacevim_enable_filetree_filetypeicon && g:_spacevim_enable_filetree_gitstatus
     return 'filetypeicon:gitstatus'
   else
     return ''

@@ -1,13 +1,13 @@
 "=============================================================================
 " xquery.vim --- xquery langauge support
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#xquery, layer-lang-xquery
+" @section lang#xquery, layers-lang-xquery
 " @parentsection layers
 " This layer provides basic syntax highlighting and indent file for xquery,
 " disabled by default, to enable this layer, add following snippet to 
@@ -26,4 +26,10 @@ endfunction
 
 function! SpaceVim#layers#lang#xquery#config() abort
   
+endfunction
+
+function! SpaceVim#layers#lang#xquery#health() abort
+  call SpaceVim#layers#lang#xquery#plugins()
+  call SpaceVim#layers#lang#xquery#config()
+  return 1
 endfunction

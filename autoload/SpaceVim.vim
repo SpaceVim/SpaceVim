@@ -1,6 +1,6 @@
 "=============================================================================
 " SpaceVim.vim --- Initialization and core files for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -11,7 +11,7 @@ scriptencoding utf-8
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro options config layers usage api faq changelog
+" @order intro options config layers usage api dev faq changelog
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "
@@ -45,7 +45,7 @@ let s:SYSTEM = SpaceVim#api#import('system')
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.8.0-dev'
+let g:spacevim_version = '1.9.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -140,7 +140,19 @@ let g:spacevim_default_custom_leader = '<Space>'
 "   let g:spacevim_home_files_number = 6
 " <
 let g:spacevim_home_files_number        = 6
+""
+" @section code_runner_focus, options-code_runner_focus
+" @parentsection options
+" enable/disable code runner window focus mode, by default this option is
+" `false`, to enable this mode, set this option to `true`.
+" >
+"   code_runner_focus = true
+" <
 
+""
+" enable/disable code runner window focus mode, by default this option is 0,
+" to enable this mode, set this option to 1.
+let g:spacevim_code_runner_focus = 0
 
 ""
 " @section enable_guicolors, options-enable_guicolors
@@ -257,7 +269,7 @@ endif
 ""
 " Set the cache directory of plugins. Default is `$data_dir/vimfiles`.
 " >
-"   let g:spacevim_plugin_bundle_dir = g:spacevim_data_dir.'/vimplugs'
+"   let g:spacevim_plugin_bundle_dir = g:spacevim_data_dir.'vimplugs'
 " <
 let g:spacevim_plugin_bundle_dir
       \ = g:spacevim_data_dir . join(['vimfiles', ''],
@@ -403,11 +415,11 @@ let g:spacevim_enable_ycm              = 0
 " @section sidebar_width, options-sidebar_width
 " @parentsection options
 " Set the width of the SpaceVim sidebar. Default is 30.
-" This value will be used by tagbar and vimfiler.
+" This value will be used by tagbar and filetree.
 
 ""
 " Set the width of the SpaceVim sidebar. Default is 30.
-" This value will be used by tagbar and vimfiler.
+" This value will be used by tagbar and filetree.
 let g:spacevim_sidebar_width           = 30
 
 ""
@@ -578,21 +590,21 @@ let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
 let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos', 'percentage']
 
 ""
-" @section statusline_unicode_symbols, options-statusline_unicode_symbols
+" @section statusline_unicode, options-statusline_unicode
 " @parentsection options
 " Enable/Disable unicode symbols in statusline, includes the mode icons and
 " fileformat icons. This option is enabled by default, to disable it:
 " >
-"   statusline_unicode_symbols = false
+"   statusline_unicode = false
 " <
 
 ""
 " Enable/Disable unicode symbols in statusline, includes the mode icons and
 " fileformat icons. This option is enabled by default, to disable it:
 " >
-"   let g:spacevim_statusline_unicode_symbols = 0
+"   let g:spacevim_statusline_unicode = 0
 " <
-let g:spacevim_statusline_unicode_symbols = 1
+let g:spacevim_statusline_unicode = 1
 ""
 " Enable/Disable language specific leader, by default you can use `,` ket
 " instead of `SPC` `l`.
@@ -789,13 +801,13 @@ let g:spacevim_colorscheme_default     = 'desert'
 ""
 " @section filemanager, options-filemanager
 " @parentsection options
-" The default file manager of SpaceVim. Default is 'vimfiler'.
-" you can also use nerdtree or defx
+" The default file manager of SpaceVim. Default is 'nerdtree'.
+" you can also use defx or vimfiler
 
 ""
-" The default file manager of SpaceVim. Default is 'vimfiler'.
-" you can also use nerdtree or defx
-let g:spacevim_filemanager             = 'vimfiler'
+" The default file manager of SpaceVim. Default is 'nerdtree'.
+" you can also use defx or vimfiler
+let g:spacevim_filemanager             = 'nerdtree'
 ""
 " @section filetree_direction, options-filetree_direction
 " @parentsection options
@@ -1091,19 +1103,21 @@ let g:spacevim_enable_projects_cache = 1
 " Setting the numbers of cached projects, by default it is 20.
 let g:spacevim_projects_cache_num = 20
 ""
-" @section project_rooter_automatically, options-project_rooter_automatically
+" @section project_auto_root, options-project_auto_root
 " @parentsection options
 " Enable/Disable project root detection. By default, SpaceVim will change the
 " directory to the project root directory based on `project_rooter_patterns`
 " option. To disable this feature:
 " >
 "   [options]
-"     project_rooter_automatically = false
+"     project_auto_root = false
 " <
+" NOTE: *g:spacevim_project_rooter_automatically* and
+" *SpaceVim-options-project_rooter_automatically* are deprecated.
 
 ""
 " Enable/Disable changing directory automatically. Enabled by default.
-let g:spacevim_project_rooter_automatically = 1
+let g:spacevim_project_auto_root = 1
 ""
 " @section project_rooter_outermost, options-project_rooter_outermost
 " @parentsection options
@@ -1195,12 +1209,6 @@ let g:spacevim_enable_vimfiler_welcome = 1
 ""
 " Enable/Disable autocompletion of parentheses, default is 1 (enabled).
 let g:spacevim_autocomplete_parens = 1
-""
-" Enable/Disable gitstatus column in vimfiler buffer, default is 0.
-let g:spacevim_enable_vimfiler_gitstatus = 0
-""
-" Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
-let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = [
       \ 'tagbar',
@@ -1625,6 +1633,61 @@ endfunction
 "   SPC b D	      kill a visible buffer using vim-choosewin
 " <
 
+""
+" @section Development, dev
+"
+" SpaceVim is a joint effort of all contributors.
+" We encourage you to participate in SpaceVim's development.
+" We have some guidelines that we need all contributors to follow.
+
+
+""
+" @section commit-style-guide, dev-commit-style-guide
+" @parentsection dev
+" A git commit message consists a three distinct parts separated by black line.
+" >
+"   Type (scope): Subject
+" 
+"   body
+"
+"   footer
+" <
+" types:
+"
+" - `feat`: a new feature
+" - `fix`: a bug fix
+" - `change`: no backward compatible changes
+" - `docs`: changes to documentation
+" - `style`: formatting, missing semi colons, etc; no code change
+" - `refactor`: refactoring production code
+" - `test`: adding tests, refactoring test; no production code change
+" - `chore`: updating build tasks, package manager configs, etc; no production code change
+"
+" scopes:
+"
+" - `api`: files in `autoload/SpaceVim/api/` and `docs/api/` directory
+" - `layer`: files in `autoload/SpaceVim/layers/` and `docs/layers/` directory
+" - `plugin`: files in `autoload/SpaceVim/plugins/` directory
+" - `bundle`: files in `bundle/` directory
+" - `core`: other files in this repository
+"
+" subject:
+"
+" Subjects should be no greater than 50 characters,
+" should begin with a capital letter and do not end with a period.
+"
+" Use an imperative tone to describe what a commit does,
+" rather than what it did. For example, use change; not changed or changes.
+"
+" body:
+"
+" Not all commits are complex enough to warrant a body,
+" therefore it is optional and only used when a commit requires a bit of explanation and context.
+"
+" footer:
+"
+" The footer is optional and is used to reference issue tracker IDs.
+
 
 
 ""
@@ -1696,9 +1759,21 @@ endfunction
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v1.4.0
+" Following HEAD: changes in master branch since last release v1.7.0
 "
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+"
+" 2021-06-16: v1.4.0
+"
+" https://spacevim.org/SpaceVim-release-v1.7.0/
+"
+" 2020-12-31: v1.6.0
+"
+" https://spacevim.org/SpaceVim-release-v1.6.0/
+"
+" 2020-08-01: v1.5.0
+"
+" https://spacevim.org/SpaceVim-release-v1.5.0/
 "
 " 2020-04-05: v1.4.0
 "

@@ -1,13 +1,13 @@
 "=============================================================================
 " fortran.vim --- fortran language support for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#fortran, layer-lang-fortran
+" @section lang#fortran, layers-lang-fortran
 " @parentsection layers
 " This layer is for fortran development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -69,3 +69,10 @@ endfunction
 " fortran wiki org
 "
 " http://fortranwiki.org/fortran/show/Source+code+editors
+
+
+function! SpaceVim#layers#lang#fortran#health() abort
+  call SpaceVim#layers#lang#fortran#plugins()
+  call SpaceVim#layers#lang#fortran#config()
+  return 1
+endfunction

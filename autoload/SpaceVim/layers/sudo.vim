@@ -1,6 +1,6 @@
 "=============================================================================
 " sudo.vim --- SpaceVim sudo layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -25,6 +25,12 @@ function! SpaceVim#layers#sudo#config() abort
     cnoremap w!! W
     command! W w !sudo tee % > /dev/null
   endif
+endfunction
+
+function! SpaceVim#layers#sudo#health() abort
+  call SpaceVim#layers#sudo#plugins()
+  call SpaceVim#layers#sudo#config()
+  return 1
 endfunction
 
 if v:version > 703 || v:version == 703 && has('patch1170')

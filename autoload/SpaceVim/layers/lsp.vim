@@ -1,6 +1,6 @@
 "=============================================================================
 " lsp.vim --- SpaceVim lsp layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -11,12 +11,19 @@ if exists('s:NVIM_VERSION')
 endif
 
 ""
-" @section language server protocol, layer-lsp
+" @section language server protocol, layers-lsp
 " @parentsection layers
 " This layer provides language client support for SpaceVim.
 
 let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
 let s:lsp_client = ''
+
+function! SpaceVim#layers#lsp#health() abort
+  call SpaceVim#layers#lsp#plugins()
+  call SpaceVim#layers#lsp#config()
+  return 1
+endfunction
+
 
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
@@ -140,10 +147,11 @@ let s:lsp_servers = {
       \ 'css' : ['css-languageserver', '--stdio'],
       \ 'dart' : ['dart_language_server'],
       \ 'dockerfile' : ['docker-langserver', '--stdio'],
-      \ 'go' : ['go-langserver', '-mode', 'stdio'],
+      \ 'go' : ['gopls'],
       \ 'haskell' : ['hie-wrapper', '--lsp'],
       \ 'html' : ['html-languageserver', '--stdio'],
-      \ 'javascript' : ['javascript-typescript-stdio'],
+      \ 'javascript' : ['typescript-language-server', '--stdio'],
+      \ 'javascriptreact' : ['typescript-language-server', '--stdio'],
       \ 'julia' : ['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);'],
       \ 'objc' : ['clangd'],
       \ 'objcpp' : ['clangd'],
@@ -156,6 +164,7 @@ let s:lsp_servers = {
       \ 'scala' : ['metals-vim'],
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
+      \ 'typescriptreact' : ['typescript-language-server', '--stdio'],
       \ 'vue' : ['vls']
       \ }
 

@@ -16,30 +16,31 @@ description: "SpaceVim core layer provides many default key bindings and feature
 
 ## Intro
 
-This is the core layer of SpaceVim, and it is loaded by default.
+The `core` layer of SpaceVim. This layer is enabled by default, and it provides filetree,
+comment key bindings etc.
 
 ## Features
 
 ### FileTree
 
-
-The filetree plugin is included in core layer, by default `vimfiler` is used as filetree manager.
-To use nerdtree or defx, please add following snippet into your configuration file.
+The filetree is included in core layer, by default `nerdtree` is used as filetree manager.
+To use defx, please add following snippet into your configuration file.
 
 ```toml
 [options]
-  filemanager = "nerdtree"
+  filemanager = "defx"
 ```
 
 ## Configuration
 
 - `filetree_show_hidden`: option for showing hidden file in filetree, disabled by default.
+- `enable_smooth_scrolling`: enable/disabled smooth scrolling key bindings, enabled by default.
 
 ```toml
 [[layers]]
     name = 'core'
     filetree_show_hidden = true
+    enable_smooth_scrolling = true
+    filetree_opened_icon = ''
+    filetree_closed_icon = ''
 ```
-
-
-

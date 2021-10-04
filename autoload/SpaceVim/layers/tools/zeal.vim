@@ -1,13 +1,13 @@
 "=============================================================================
 " zeal.vim --- SpaceVim tools#zeal layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section tools#zeal, layer-tools-zeal
+" @section tools#zeal, layers-tools-zeal
 " @parentsection layers
 " This layer provides Zeal integration for SpaceVim
 
@@ -30,4 +30,10 @@ function! SpaceVim#layers#tools#zeal#config() abort
         \ '<Plug>ZVVisSelection', 'search selected text', 0)
   call SpaceVim#mapping#space#def('nmap', ['D', 's'],
         \ '<Plug>ZVKeyDocset', 'specify docset and query', 0)
+endfunction
+
+function! SpaceVim#layers#tools#zeal#health() abort
+  call SpaceVim#layers#tools#zeal#plugins()
+  call SpaceVim#layers#tools#zeal#config()
+  return 1
 endfunction

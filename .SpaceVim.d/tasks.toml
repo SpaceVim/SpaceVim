@@ -1,8 +1,7 @@
-[file-run]
-    command = "cat"
+[generate-vim-doc]
+    command = "python"
+    args = ['-m', 'vimdoc', '.']
     isBackground = true
-[file-run.options]
-    cwd = '${workspaceFolder}bin/'
 [test_problemMatcher]
     command = "echo"
     args = ['.SpaceVim.d/tasks.toml:6:1 test error message']

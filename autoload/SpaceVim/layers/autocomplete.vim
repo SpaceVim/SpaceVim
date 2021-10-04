@@ -1,13 +1,13 @@
 "=============================================================================
 " autocomplete.vim --- SpaceVim autocomplete layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section autocomplete, autocomplete
+" @section autocomplete, layers-autocomplete
 " @parentsection layers
 " @subsection code completion
 " SpaceVim uses neocomplete as the default completion engine if vim has lua
@@ -128,7 +128,7 @@ endfunction
 
 function! SpaceVim#layers#autocomplete#config() abort
   if g:spacevim_autocomplete_parens
-    imap <expr>(
+    imap <expr> (
           \ pumvisible() ?
           \ has('patch-7.4.744') ?
           \ complete_parameter#pre_complete("()") : '(' :
@@ -255,6 +255,15 @@ function! SpaceVim#layers#autocomplete#toggle_deoplete() abort
   else
     call deoplete#custom#option('auto_complete', v:true)
   endif
+endfunction
+
+function! SpaceVim#layers#autocomplete#health() abort
+  call SpaceVim#layers#autocomplete#getprfile()
+  call SpaceVim#layers#autocomplete#plugins()
+  call SpaceVim#layers#autocomplete#config()
+
+  return 1
+
 endfunction
 
 function! s:apply_sequence_delay() abort

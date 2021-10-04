@@ -1,6 +1,6 @@
 "=============================================================================
 " incsearch.vim --- SpaceVim incsearch layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -8,7 +8,7 @@
 
 
 ""
-" @section incsearch, layer-incsearch
+" @section incsearch, layers-incsearch
 " @parentsection layers
 " This layer improved incremental searching for neovim/vim
 "
@@ -40,6 +40,13 @@ function! SpaceVim#layers#incsearch#plugins() abort
   call add(plugins, ['osyo-manga/vim-over', {'merged' : 0}])
   call add(plugins, ['haya14busa/incsearch-easymotion.vim', {'merged' : 0}])
   return plugins
+endfunction
+
+
+function! SpaceVim#layers#incsearch#health() abort
+  call SpaceVim#layers#incsearch#plugins()
+  call SpaceVim#layers#incsearch#config()
+  return 1
 endfunction
 
 let s:lnum = expand('<slnum>') + 3
