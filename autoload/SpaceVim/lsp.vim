@@ -25,13 +25,15 @@ if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0
           \ {}, require('spacevim.lsp').hover_callback)
   endfunction
   function! SpaceVim#lsp#go_to_def() abort
+    lua vim.lsp.buf.definition()
   endfunction
   function! SpaceVim#lsp#go_to_declaration() abort
+    lua vim.lsp.buf.declaration()
   endfunction
   function! SpaceVim#lsp#rename() abort
-    lua require('lsp.plugin')
-          \ .client.request('textDocument/rename',
-          \ {}, require('spacevim.lsp').rename_callback)
+    " @todo add float prompt api
+    " lua vim.lsp.buf.rename(require('spacevim.api.input').float_prompt())
+    lua vim.lsp.buf.rename()
   endfunction
   function! SpaceVim#lsp#references() abort
   endfunction
@@ -40,6 +42,7 @@ if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0
   function! SpaceVim#lsp#refactor() abort
   endfunction
   function! SpaceVim#lsp#go_to_impl() abort
+    lua vim.lsp.buf.implementation()
   endfunction
 elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
   " use coc.nvim
