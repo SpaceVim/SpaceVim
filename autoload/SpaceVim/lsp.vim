@@ -20,12 +20,18 @@ if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
   endfunction
   function! SpaceVim#lsp#show_doc() abort
+    lua require('lsp.plugin')
+          \ .client.request('textDocument/hover',
+          \ {}, require('spacevim.lsp').hover_callback)
   endfunction
   function! SpaceVim#lsp#go_to_def() abort
   endfunction
   function! SpaceVim#lsp#go_to_declaration() abort
   endfunction
   function! SpaceVim#lsp#rename() abort
+    lua require('lsp.plugin')
+          \ .client.request('textDocument/rename',
+          \ {}, require('spacevim.lsp').rename_callback)
   endfunction
   function! SpaceVim#lsp#references() abort
   endfunction
