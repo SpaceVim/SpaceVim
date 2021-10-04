@@ -18,6 +18,10 @@ let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
 if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
   " use neovim built-in lsp
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
+    lua require("spacevim.lsp").register(
+          \ require("spacevim").eval("a:ft"),
+          \ require("spacevim").eval("a:cmds")
+          \ )
   endfunction
   function! SpaceVim#lsp#show_doc() abort
     lua require('lsp.plugin')

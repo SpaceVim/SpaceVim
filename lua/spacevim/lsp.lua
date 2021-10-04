@@ -1,4 +1,8 @@
-local lsp = {}
+local M = {}
+
+function M.register(filetype, cmd)
+    
+end
 
 local function spliteof(data, delimiter)
     local result = { }
@@ -17,7 +21,7 @@ end
 --        silent put =a:data
 --        return 'markdown'
 -- if data 
-function lsp.hover_callback(success, data)
+function M.hover_callback(success, data)
     if not success then
         vim.api.nvim_command('call SpaceVim#util#echoWarn("Failed to retrieve hover information")')
         return
@@ -62,4 +66,4 @@ function lsp.hover_callback(success, data)
     end
     -- print(type(data))
 end
-return lsp
+return M
