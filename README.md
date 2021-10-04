@@ -9,11 +9,11 @@
 [![Gitter](https://img.shields.io/gitter/room/SpaceVim/SpaceVim?color=%2364CEAA)](https://gitter.im/SpaceVim/SpaceVim)
 [![build](https://img.shields.io/github/workflow/status/SpaceVim/SpaceVim/test)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
-[![Version](https://img.shields.io/badge/version-1.8.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-1.8.0-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
 
-![welcome page](https://user-images.githubusercontent.com/13142418/121829909-64cb5380-ccf6-11eb-9d5a-f576fa63e69c.png)
+![welcome page](https://user-images.githubusercontent.com/13142418/135842225-addb0f53-7520-4a8b-bdd2-c4f7e98b3253.png)
 
 [SpaceVim](https://spacevim.org/) is a community-driven modular Vim distribution. It manages collections
 of plugins in layers, which help to collect related packages together to provide IDE-like features.
