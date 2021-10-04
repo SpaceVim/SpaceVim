@@ -2982,7 +2982,8 @@ This layer also provides REPL support for julia, the key bindings are:
   SPC l s l       send current line
   SPC l s s       send selection text
 <
-
+To format julia code, you need to install `JuliaFormatter`, and the key
+binding is `SPC b f`
 
 ==============================================================================
 LANG#KOTLIN                                      *SpaceVim-layers-lang-kotlin*
