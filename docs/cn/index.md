@@ -7,7 +7,7 @@ lang: zh
 [![Gitter](https://img.shields.io/gitter/room/SpaceVim/SpaceVim?color=%2364CEAA)](https://gitter.im/SpaceVim/cn)
 [![build](https://img.shields.io/github/workflow/status/SpaceVim/SpaceVim/test)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
-[![Version](https://img.shields.io/badge/version-1.8.0-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-1.9.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
 ![welcome page](https://user-images.githubusercontent.com/13142418/135842225-addb0f53-7520-4a8b-bdd2-c4f7e98b3253.png)
@@ -24,6 +24,9 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 - [入门指南](quick-start-guide/): 包括最基本的安装以及配置教程，同时包括了针对不同语言的配置技巧
 - [使用文档](documentation/): 完整的用户使用文档，详细介绍了每一个快捷键以及配置的功能
 - [可用模块](layers/): 罗列了目前已经支持的所有模块，包括功能模块和不同的语言模块
+
+当前最新的稳定版为[v1.8.0](https://spacevim.org/SpaceVim-release-v1.8.0/)，[following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) 页面罗列了
+master 分支最新的更新以及变动。
 
 ## 最新特性
 
@@ -52,7 +55,7 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 
 - 目前 SpaceVim 的开发状态如何？
 
-  当前最新发布的稳定版本是 v1.7.0。可以查看 [时间表](https://github.com/SpaceVim/SpaceVim/milestones) 获取开发进度，
+  当前最新发布的稳定版本是 v1.8.0。可以查看 [时间表](https://github.com/SpaceVim/SpaceVim/milestones) 获取开发进度，
   或者阅读 [Roadmap](roadmap/) 获取开发计划。
 
 - SpaceVim 是尝试搭建一个 IDE 吗？
