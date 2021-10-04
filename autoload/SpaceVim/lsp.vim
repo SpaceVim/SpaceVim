@@ -8,8 +8,15 @@
 
 scriptencoding utf-8
 
+if exists('s:NVIM_VERSION')
+  finish
+endif
 
-if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
+
+let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
+
+if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
+elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
   " use coc.nvim
   let s:coc_language_servers = {}
   let s:coc_language_servers_key_id_map = {}
@@ -121,13 +128,14 @@ elseif has('nvim-0.4.3')
     call LanguageClient_textDocument_declaration()
   endfunction
 
-  function! SpaceVim#lsp#documentSymbol()
+  function! SpaceVim#lsp#documentSymbol() abort
     call LanguageClient_textDocument_documentSymbol()
   endfunction
 
   function! SpaceVim#lsp#refactor() abort
     " @todo languageclient do not support refactor
   endfunction
+elseif has('nvim')
 else
   " use vim-lsp
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
