@@ -169,70 +169,82 @@ function! s:neomake_cursor_move_delay() abort
 endfunction
 
 function! s:toggle_show_error(...) abort
-  let llist = getloclist(0, {'size' : 1, 'winid' : 1})
-  let qlist = getqflist({'size' : 1, 'winid' : 1})
-  if llist.size == 0 && qlist.size == 0
-    echohl WarningMsg
-    echon 'There is no errors!'
-    echohl None
-    return
-  endif
-  if llist.winid > 0
-    lclose
-  elseif qlist.winid > 0
-    cclose
-  elseif llist.size > 0
-    botright lopen
-  elseif qlist.size > 0
-    botright copen
-  endif
-  if a:1 == 1
-    wincmd w
+  if SpaceVim#lsp#buf_server_ready()
+    call SpaceVim#lsp#diagnostic_set_loclist()
+  else
+    let llist = getloclist(0, {'size' : 1, 'winid' : 1})
+    let qlist = getqflist({'size' : 1, 'winid' : 1})
+    if llist.size == 0 && qlist.size == 0
+      echohl WarningMsg
+      echon 'There is no errors!'
+      echohl None
+      return
+    endif
+    if llist.winid > 0
+      lclose
+    elseif qlist.winid > 0
+      cclose
+    elseif llist.size > 0
+      botright lopen
+    elseif qlist.size > 0
+      botright copen
+    endif
+    if a:1 == 1
+      wincmd w
+    endif
   endif
 endfunction
 
 function! s:jump_to_next_error() abort
-  try
-    lnext
-  catch
+  if SpaceVim#lsp#buf_server_ready()
+    call SpaceVim#lsp#diagnostic_goto_next()
+  else
     try
-      ll
+      lnext
     catch
       try
-        cnext
+        ll
       catch
         try
-          cc
+          cnext
         catch
-          echohl WarningMsg
-          echon 'There is no errors!'
-          echohl None
+          try
+            cc
+          catch
+            echohl WarningMsg
+            echon 'There is no errors!'
+            echohl None
+          endtry
         endtry
       endtry
     endtry
-  endtry
+  endif
 endfunction
 
 function! s:jump_to_previous_error() abort
-  try
-    lprevious
-  catch
+  if SpaceVim#lsp#buf_server_ready()
+    call SpaceVim#lsp#diagnostic_goto_prev()
+  else
     try
-      ll
+      lprevious
     catch
       try
-        cprevious
+        ll
       catch
         try
-          cc
+          cprevious
         catch
-          echohl WarningMsg
-          echon 'There is no errors!'
-          echohl None
+          try
+            cc
+          catch
+            echohl WarningMsg
+            echon 'There is no errors!'
+            echohl None
+          endtry
         endtry
       endtry
     endtry
-  endtry
+  endif
 endfunction
 
 let s:last_echoed_error = ''

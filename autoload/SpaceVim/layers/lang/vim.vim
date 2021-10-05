@@ -101,6 +101,10 @@ function! SpaceVim#layers#lang#vim#config() abort
       autocmd BufWritePost *.vim call s:generate_doc()
     augroup END
   endif
+  " if the lsp layer is enabled, we should disable default linter
+  if SpaceVim#layers#lsp#check_server('vimls') || SpaceVim#layers#lsp#check_filetype('vim')
+    let g:neomake_vim_enabled_makers = []
+  endif
 endfunction
 
 function! s:on_exit(...) abort
