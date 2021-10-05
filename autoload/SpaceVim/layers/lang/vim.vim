@@ -57,18 +57,20 @@ function! SpaceVim#layers#lang#vim#plugins() abort
         \ ]
   call add(plugins,['tweekmonster/exception.vim', {'merged' : 0}])
   call add(plugins,['wsdjeg/vim-lookup', {'merged' : 0}])
-  call add(plugins,['Shougo/neco-vim',              { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}])
-  if g:spacevim_autocomplete_method ==# 'asyncomplete'
-    call add(plugins, ['prabirshrestha/asyncomplete-necovim.vim', {
-          \ 'loadconf' : 1,
-          \ 'merged' : 0,
-          \ }])
-  elseif g:spacevim_autocomplete_method ==# 'coc'
-    call add(plugins, ['neoclide/coc-neco', {'merged' : 0}])
-  elseif g:spacevim_autocomplete_method ==# 'completor'
-    " call add(plugins, ['kyouryuukunn/completor-necovim', {'merged' : 0}])
-    " This plugin has bug in neovim-qt win 7
-    " https://github.com/maralla/completor.vim/issues/250
+  if !SpaceVim#layers#lsp#check_server('vimls') && !SpaceVim#layers#lsp#check_filetype('vim')
+    call add(plugins,['Shougo/neco-vim',              { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}])
+    if g:spacevim_autocomplete_method ==# 'asyncomplete'
+      call add(plugins, ['prabirshrestha/asyncomplete-necovim.vim', {
+            \ 'loadconf' : 1,
+            \ 'merged' : 0,
+            \ }])
+    elseif g:spacevim_autocomplete_method ==# 'coc'
+      call add(plugins, ['neoclide/coc-neco', {'merged' : 0}])
+    elseif g:spacevim_autocomplete_method ==# 'completor'
+      " call add(plugins, ['kyouryuukunn/completor-necovim', {'merged' : 0}])
+      " This plugin has bug in neovim-qt win 7
+      " https://github.com/maralla/completor.vim/issues/250
+    endif
   endif
   call add(plugins,['tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'}])
   return plugins
@@ -88,12 +90,12 @@ function! SpaceVim#layers#lang#vim#config() abort
 endfunction
 
 function! s:on_exit(...) abort
-    let data = get(a:000, 2)
-    if data != 0
-        call s:NOTI.notify('failed to generate doc!', 'WarningMsg')
-    else
-        call s:NOTI.notify('vim doc generated!', 'Normal')
-    endif
+  let data = get(a:000, 2)
+  if data != 0
+    call s:NOTI.notify('failed to generate doc!', 'WarningMsg')
+  else
+    call s:NOTI.notify('vim doc generated!', 'Normal')
+  endif
 endfunction
 
 function! s:generate_doc() abort
@@ -105,13 +107,13 @@ function! s:generate_doc() abort
     let dir = s:FILE.unify_path(addon_info, ':h')
     if executable('vimdoc') && !s:SYS.isWindows
       call s:JOB.start(['vimdoc', dir], 
-              \ {
+            \ {
               \ 'on_exit' : function('s:on_exit'),
               \ }
               \ )
     elseif executable('python')
       call s:JOB.start(['python', '-m', 'vimdoc', dir], 
-              \ {
+            \ {
               \ 'on_exit' : function('s:on_exit'),
               \ }
               \ )
