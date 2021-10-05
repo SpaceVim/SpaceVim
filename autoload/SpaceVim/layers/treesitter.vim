@@ -16,3 +16,7 @@ function! SpaceVim#layers#treesitter#plugins() abort
   call add(plugins, ['nvim-treesitter/nvim-treesitter', {'do' : ':TSUpdate'}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#treesitter#health() abort
+  call SpaceVim#layers#treesitter#plugins()
+endfunction
