@@ -151,7 +151,7 @@ elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplet
   function! SpaceVim#lsp#references() abort
     call CocAction('jumpReferences')
   endfunction
-elseif has('nvim-0.4.3')
+elseif has('nvim-0.4.3') && $ENABLE_NVIM043LSP
   function! SpaceVim#lsp#show_doc() abort
     lua require('lsp.plugin')
           \ .client.request('textDocument/hover',
@@ -191,6 +191,46 @@ elseif has('nvim-0.4.3')
     " @todo languageclient do not support refactor
   endfunction
 elseif has('nvim')
+  " use LanguageClient-neovim
+  function! SpaceVim#lsp#reg_server(ft, cmds) abort
+    let g:LanguageClient_serverCommands[a:ft] = copy(a:cmds)
+  endfunction
+
+  function! SpaceVim#lsp#show_doc() abort
+    call LanguageClient_textDocument_hover()
+  endfunction
+
+  function! SpaceVim#lsp#go_to_def() abort
+    call LanguageClient_textDocument_definition()
+  endfunction
+
+  function! SpaceVim#lsp#go_to_typedef() abort
+    call LanguageClient_textDocument_typeDefinition()
+  endfunction
+
+  function! SpaceVim#lsp#go_to_impl() abort
+    call LanguageClient_textDocument_implementation()
+  endfunction
+
+  function! SpaceVim#lsp#rename() abort
+    call LanguageClient_textDocument_rename()
+  endfunction
+
+  function! SpaceVim#lsp#references() abort
+    call LanguageClient_textDocument_references()
+  endfunction
+
+  function! SpaceVim#lsp#go_to_declaration() abort
+    call LanguageClient_textDocument_declaration()
+  endfunction
+
+  function! SpaceVim#lsp#documentSymbol()
+    call LanguageClient_textDocument_documentSymbol()
+  endfunction
+
+  function! SpaceVim#lsp#refactor() abort
+    " @todo languageclient do not support refactor
+  endfunction
 else
   " use vim-lsp
   function! SpaceVim#lsp#reg_server(ft, cmds) abort

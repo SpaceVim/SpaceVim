@@ -86,12 +86,12 @@ function! SpaceVim#layers#lsp#plugins() abort
     endif
   elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
     " nop
-  elseif has('nvim-0.4.3')
-    " use neovim build-in lsp
-  elseif has('nvim')
+  elseif has('nvim-0.4.3') && $ENABLE_NVIM043LSP
     call add(plugins, ['bfredl/nvim-lspmirror', {'merged' : 0}])
     call add(plugins, ['bfredl/nvim-lspext', {'merged' : 0}])
-    call add(plugins, ['shougo/deoplete-lsp', {'merged' : 0}])
+  elseif has('nvim')
+    call add(plugins, ['autozimu/LanguageClient-neovim',
+          \ { 'merged': 0, 'if': has('python3'), 'build' : 'bash install.sh' }])
   else
     call add(plugins, ['prabirshrestha/async.vim', {'merged' : 0}])
     call add(plugins, ['prabirshrestha/vim-lsp', {'merged' : 0}])
