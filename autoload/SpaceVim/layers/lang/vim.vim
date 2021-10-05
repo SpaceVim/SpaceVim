@@ -43,6 +43,9 @@
 "   SPC l s         show line diagnostics
 "   SPC l d         show document
 "   K               show document
+"   SPC l w l       list workspace folder
+"   SPC l w a       add workspace folder
+"   SPC l w r       remove workspace folder
 " <
 
 if exists('s:auto_generate_doc')
@@ -157,6 +160,13 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
           \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
+    let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],
+          \ 'call SpaceVim#lsp#list_workspace_folder()', 'list-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'a'],
+          \ 'call SpaceVim#lsp#add_workspace_folder()', 'add-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'r'],
+          \ 'call SpaceVim#lsp#remove_workspace_folder()', 'remove-workspace-folder', 1)
   endif
 
 endfunction

@@ -50,6 +50,15 @@ if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0
   function! SpaceVim#lsp#show_line_diagnostics() abort
     lua vim.lsp.diagnostic.show_line_diagnostics()
   endfunction
+  function! SpaceVim#lsp#list_workspace_folder() abort
+    lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  endfunction
+  function! SpaceVim#lsp#add_workspace_folder() abort
+    lua vim.lsp.buf.add_workspace_folder()
+  endfunction
+  function! SpaceVim#lsp#remove_workspace_folder() abort
+    lua vim.lsp.buf.remove_workspace_folder()
+  endfunction
 elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
   " use coc.nvim
   let s:coc_language_servers = {}

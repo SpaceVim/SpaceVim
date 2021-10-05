@@ -4266,6 +4266,9 @@ used:
   SPC l s         show line diagnostics
   SPC l d         show document
   K               show document
+  SPC l w l       list workspace folder
+  SPC l w a       add workspace folder
+  SPC l w r       remove workspace folder
 <
 
 ==============================================================================
