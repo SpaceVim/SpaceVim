@@ -4257,15 +4257,15 @@ The following key bindings will be added when this layer is loaded:
   g d             jump to definition
 <
 
+If the lsp layer is enabled for vim script, the following key bindings can be
+used:
 >
   key binding     Description
   SPC l e         rename symbol
+  SPC l x         show references
   SPC l d         show document
   K               show document
 <
-
-If the lsp layer is enabled for vim script, the following key bindings can be
-used:
 
 ==============================================================================
 LANG#VUE                                            *SpaceVim-layers-lang-vue*

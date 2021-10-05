@@ -33,15 +33,16 @@
 "   SPC l f         open exception trace
 "   g d             jump to definition
 " <
-" >
-"   key binding     Description
-"   SPC l e         rename symbol
-"   SPC l d         show document
-"   K               show document
-" <
 "
 " If the lsp layer is enabled for vim script, the following key bindings can
 " be used:
+" >
+"   key binding     Description
+"   SPC l e         rename symbol
+"   SPC l x         show references
+"   SPC l d         show document
+"   K               show document
+" <
 
 if exists('s:auto_generate_doc')
   finish
@@ -149,6 +150,8 @@ function! s:language_specified_mappings() abort
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
           \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
+          \ 'call SpaceVim#lsp#references()', 'show-references', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   endif
