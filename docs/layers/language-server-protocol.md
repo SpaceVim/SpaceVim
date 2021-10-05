@@ -8,7 +8,6 @@ description: "This layers provides language server protocol for vim and neovim"
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Options](#options)
 - [Features](#features)
 - [Install](#install)
   - [Install language server](#install-language-server)
@@ -19,11 +18,12 @@ description: "This layers provides language server protocol for vim and neovim"
 
 ## Description
 
-This layers adds extensive support for [language-server-protocol](https://microsoft.github.io/language-server-protocol/),
+This layers adds extensive support for [language-server-protocol](https://microsoft.github.io/language-server-protocol/).
+By default, this layer use following language server client implementations:
 
-## Options
-
-- `lsp_client`
+1. vim-lsp: for vim
+2. LanguageClient-neovim: for neovim
+3. built-in lsp: for neovim(>=0.5.0)
 
 ## Features
 
