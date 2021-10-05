@@ -197,8 +197,9 @@ CONTENTS                                                   *SpaceVim-contents*
       111. tools#dash.............................|SpaceVim-layers-tools-dash|
       112. tools#mpv...............................|SpaceVim-layers-tools-mpv|
       113. tools#zeal.............................|SpaceVim-layers-tools-zeal|
-      114. ui.............................................|SpaceVim-layers-ui|
-      115. unite.......................................|SpaceVim-layers-unite|
+      114. treesitter.............................|SpaceVim-layers-treesitter|
+      115. ui.............................................|SpaceVim-layers-ui|
+      116. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
       2. custom_plugins........................|SpaceVim-usage-custom_plugins|
@@ -4493,6 +4494,11 @@ KEY BINDINGS
 TOOLS#ZEAL                                        *SpaceVim-layers-tools-zeal*
 
 This layer provides Zeal integration for SpaceVim
+
+==============================================================================
+TREESITTER                                        *SpaceVim-layers-treesitter*
+
+This layer provides treesitter support for SpaceVim.
 
 ==============================================================================
 UI                                                        *SpaceVim-layers-ui*
