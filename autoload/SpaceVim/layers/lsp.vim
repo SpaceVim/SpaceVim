@@ -16,7 +16,7 @@ endif
 " This layer provides language client support for SpaceVim.
 
 let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
-let s:lsp_client = ''
+let s:enabled_clients = []
 
 function! SpaceVim#layers#lsp#health() abort
   call SpaceVim#layers#lsp#plugins()
@@ -26,9 +26,9 @@ endfunction
 
 
 function! SpaceVim#layers#lsp#setup() abort
-
-  
-
+  for client in s:enabled_clients
+    exe printf("lua require('lspconfig').%s.setup{}", client)
+  endfor
 endfunction
 
 function! SpaceVim#layers#lsp#plugins() abort
@@ -175,7 +175,7 @@ let s:lsp_servers = {
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort
-  let s:lsp_client = get(a:var, 'lsp_client', s:lsp_client)
+  let s:enabled_clients = get(a:var, 'enabled_clients', s:enabled_clients)
   let override = get(a:var, 'override_cmd', {})
   if !empty(override)
     call extend(s:lsp_servers, override, 'force')

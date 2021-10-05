@@ -174,6 +174,15 @@ To override the server command, you may need to use `override_cmd` option:
     rust = ["rustup", "run", "nightly", "rls"]
 ```
 
+If you are using `nvim(>=0.5.0)`. You need to use `enabled_clients` to specific the language servers.
+for example:
+
+```toml
+[[layers]]
+    name = 'lsp'
+    enabled_clients = ['vimls', 'clangd']
+```
+
 ## Key bindings
 
 | Key Binding     | Description   |
