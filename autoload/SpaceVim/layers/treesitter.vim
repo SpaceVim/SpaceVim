@@ -19,4 +19,5 @@ endfunction
 
 function! SpaceVim#layers#treesitter#health() abort
   call SpaceVim#layers#treesitter#plugins()
+  return 1
 endfunction

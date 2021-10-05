@@ -24,9 +24,7 @@ if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0
           \ )
   endfunction
   function! SpaceVim#lsp#show_doc() abort
-    lua require('lsp.plugin')
-          \ .client.request('textDocument/hover',
-          \ {}, require('spacevim.lsp').hover_callback)
+    lua vim.lsp.buf.hover()
   endfunction
   function! SpaceVim#lsp#go_to_def() abort
     lua vim.lsp.buf.definition()
