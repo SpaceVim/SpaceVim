@@ -8,8 +8,47 @@
 
 scriptencoding utf-8
 
+if exists('s:NVIM_VERSION')
+  finish
+endif
 
-if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
+
+let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
+
+if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
+  " use neovim built-in lsp
+  function! SpaceVim#lsp#reg_server(ft, cmds) abort
+    lua require("spacevim.lsp").register(
+          \ require("spacevim").eval("a:ft"),
+          \ require("spacevim").eval("a:cmds")
+          \ )
+  endfunction
+  function! SpaceVim#lsp#show_doc() abort
+    lua require('lsp.plugin')
+          \ .client.request('textDocument/hover',
+          \ {}, require('spacevim.lsp').hover_callback)
+  endfunction
+  function! SpaceVim#lsp#go_to_def() abort
+    lua vim.lsp.buf.definition()
+  endfunction
+  function! SpaceVim#lsp#go_to_declaration() abort
+    lua vim.lsp.buf.declaration()
+  endfunction
+  function! SpaceVim#lsp#rename() abort
+    " @todo add float prompt api
+    " lua vim.lsp.buf.rename(require('spacevim.api.input').float_prompt())
+    lua vim.lsp.buf.rename()
+  endfunction
+  function! SpaceVim#lsp#references() abort
+  endfunction
+  function! SpaceVim#lsp#go_to_typedef() abort
+  endfunction
+  function! SpaceVim#lsp#refactor() abort
+  endfunction
+  function! SpaceVim#lsp#go_to_impl() abort
+    lua vim.lsp.buf.implementation()
+  endfunction
+elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
   " use coc.nvim
   let s:coc_language_servers = {}
   let s:coc_language_servers_key_id_map = {}
@@ -89,18 +128,16 @@ if SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_me
   function! SpaceVim#lsp#references() abort
     call CocAction('jumpReferences')
   endfunction
-elseif has('nvim')
-  " use LanguageClient-neovim
-  function! SpaceVim#lsp#reg_server(ft, cmds) abort
-    let g:LanguageClient_serverCommands[a:ft] = copy(a:cmds)
-  endfunction
-
+elseif has('nvim-0.4.3')
   function! SpaceVim#lsp#show_doc() abort
-    call LanguageClient_textDocument_hover()
+    lua require('lsp.plugin')
+          \ .client.request('textDocument/hover',
+          \ {}, require('spacevim.lsp').hover_callback)
   endfunction
-
   function! SpaceVim#lsp#go_to_def() abort
-    call LanguageClient_textDocument_definition()
+    lua require('lsp.plugin')
+          \ .client.request('textDocument/hover',
+          \ {}, require('spacevim.lsp').hover_callback)
   endfunction
 
   function! SpaceVim#lsp#go_to_typedef() abort
@@ -123,13 +160,14 @@ elseif has('nvim')
     call LanguageClient_textDocument_declaration()
   endfunction
 
-  function! SpaceVim#lsp#documentSymbol()
+  function! SpaceVim#lsp#documentSymbol() abort
     call LanguageClient_textDocument_documentSymbol()
   endfunction
 
   function! SpaceVim#lsp#refactor() abort
     " @todo languageclient do not support refactor
   endfunction
+elseif has('nvim')
 else
   " use vim-lsp
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
@@ -148,13 +186,23 @@ else
   function! SpaceVim#lsp#go_to_def() abort
     LspDefinition
   endfunction
-
+  function! SpaceVim#lsp#go_to_declaration() abort
+    LspDeclaration
+  endfunction
   function! SpaceVim#lsp#rename() abort
     LspRename
   endfunction
-
   function! SpaceVim#lsp#references() abort
     LspReferences
+  endfunction
+  function! SpaceVim#lsp#go_to_typedef() abort
+    LspPeekTypeDefinition
+  endfunction
+  function! SpaceVim#lsp#refactor() abort
+    LspCodeAction refactor
+  endfunction
+  function! SpaceVim#lsp#go_to_impl() abort
+    LspImplementation
   endfunction
 endif
 

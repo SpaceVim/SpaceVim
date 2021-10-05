@@ -8,6 +8,7 @@ description: "This layers provides language server protocol for vim and neovim"
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
+- [Options](#options)
 - [Features](#features)
 - [Install](#install)
   - [Install language server](#install-language-server)
@@ -18,31 +19,11 @@ description: "This layers provides language server protocol for vim and neovim"
 
 ## Description
 
-This layer adds extensive support for [language-server-protocol](https://microsoft.github.io/language-server-protocol/),
-This layer is a heavy wallpaper of [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) (an old fork),
-The upstream is rewritten in rust.
+This layers adds extensive support for [language-server-protocol](https://microsoft.github.io/language-server-protocol/),
 
-We also include [vim-lsp](https://github.com/prabirshrestha/vim-lsp), which is written in pure vim script.
+## Options
 
-Note that if `coc` is used as the autocomplete method in the `autocomplete` layer, it will be used as the lsp client.
-
-The neovim team is going to implement the build-in LSP support, the
-PR is [neovim#6856](https://github.com/neovim/neovim/pull/6856). and the author of this PR
-create another plugin [tjdevries/nvim-langserver-shim](https://github.com/tjdevries/nvim-langserver-shim)
-
-SpaceVim should work well in different versions of vim/neovim, so in the future, the logic of this layer should be:
-
-```vim
-if has('nvim')
-  " use neovim build-in lsp
-if SpaceVim#layers#isLoaded("autocomplete") && get(g:, "spacevim_autocomplete_method") ==# 'coc'
-  " use coc.nvim
-elseif has('python3')
-  " use LanguageClient-neovim
-else
-  " use vim-lsp
-endif
-```
+- `lsp_client`
 
 ## Features
 
@@ -191,6 +172,15 @@ To override the server command, you may need to use `override_cmd` option:
   ]
   [layers.override_cmd]
     rust = ["rustup", "run", "nightly", "rls"]
+```
+
+If you are using `nvim(>=0.5.0)`. You need to use `enabled_clients` to specific the language servers.
+for example:
+
+```toml
+[[layers]]
+    name = 'lsp'
+    enabled_clients = ['vimls', 'clangd']
 ```
 
 ## Key bindings
