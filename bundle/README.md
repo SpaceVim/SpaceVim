@@ -13,3 +13,5 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 - [dein.vim](https://github.com/Shougo/dein.vim/tree/772ae08cef5e712b2b31b4aaee908fc853accd94)
 - [neoformat](https://github.com/sbdchd/neoformat/tree/1a49552cdaddeaaa766a6f0016effe530634b39f)
 - [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim/tree/17a83ea765831cb0cc64f768b8c3f43479b90bbe)
+- [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/tree/507f8a570ac2b8b8dabdd0f62da3b3194bf822f8)
+- [deoplete-lsp](https://github.com/deoplete-plugins/deoplete-lsp/tree/6299a22bedfb4f814d95cb0010291501472f8fd0)
