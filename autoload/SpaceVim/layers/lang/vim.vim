@@ -40,6 +40,7 @@
 "   key binding     Description
 "   SPC l e         rename symbol
 "   SPC l x         show references
+"   SPC l s         show line diagnostics
 "   SPC l d         show document
 "   K               show document
 " <
@@ -149,11 +150,13 @@ function! s:language_specified_mappings() abort
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
-          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+          \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
           \ 'call SpaceVim#lsp#references()', 'show-references', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
-          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+          \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
+          \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
   endif
 
 endfunction

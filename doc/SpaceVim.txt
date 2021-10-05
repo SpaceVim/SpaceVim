@@ -4263,6 +4263,7 @@ used:
   key binding     Description
   SPC l e         rename symbol
   SPC l x         show references
+  SPC l s         show line diagnostics
   SPC l d         show document
   K               show document
 <
