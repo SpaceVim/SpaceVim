@@ -62,6 +62,19 @@
 "   SPC l s s       send selection text
 " <
 "
+" If the lsp layer is enabled for python, the following key bindings can
+" be used:
+" >
+"   key binding     Description
+"   SPC l e         rename symbol
+"   SPC l x         show references
+"   SPC l s         show line diagnostics
+"   SPC l d         show document
+"   K               show document
+"   SPC l w l       list workspace folder
+"   SPC l w a       add workspace folder
+"   SPC l w r       remove workspace folder
+" <
 
 
 if exists('s:enabled_linters')
@@ -122,13 +135,13 @@ function! SpaceVim#layers#lang#python#config() abort
     augroup end
   endif
   " }}}
- let g:deoplete#sources#jedi#enable_typeinfo = s:enable_typeinfo
+  let g:deoplete#sources#jedi#enable_typeinfo = s:enable_typeinfo
   call SpaceVim#plugins#runner#reg_runner('python', 
         \ {
-        \ 'exe' : function('s:getexe'),
-        \ 'opt' : ['-'],
-        \ 'usestdin' : 1,
-        \ })
+          \ 'exe' : function('s:getexe'),
+          \ 'opt' : ['-'],
+          \ 'usestdin' : 1,
+          \ })
   call SpaceVim#mapping#gd#add('python', function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
   call SpaceVim#layers#edit#add_ft_head_tamplate('python', s:python_file_head)
@@ -141,8 +154,12 @@ function! SpaceVim#layers#lang#python#config() abort
   elseif executable('python3')
     call SpaceVim#plugins#repl#reg('python', ['python3', '-i'])
   endif
-  let g:neomake_python_enabled_makers = s:enabled_linters
-  let g:neomake_python_python_exe = s:python_interpreter
+  if SpaceVim#layers#lsp#check_server('pyright') || SpaceVim#layers#lsp#check_filetype('python')
+    let g:neomake_python_enabled_makers = []
+  else
+    let g:neomake_python_enabled_makers = s:enabled_linters
+    let g:neomake_python_python_exe = s:python_interpreter
+  endif
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -198,12 +215,24 @@ function! s:language_specified_mappings() abort
   " }}}
 
   if SpaceVim#layers#lsp#check_filetype('python')
+        \ || SpaceVim#layers#lsp#check_server('pyright')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
-          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+          \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
+          \ 'call SpaceVim#lsp#references()', 'show-references', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
-          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+          \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
+          \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
+    let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],
+          \ 'call SpaceVim#lsp#list_workspace_folder()', 'list-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'a'],
+          \ 'call SpaceVim#lsp#add_workspace_folder()', 'add-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'r'],
+          \ 'call SpaceVim#lsp#remove_workspace_folder()', 'remove-workspace-folder', 1)
   endif
 
   " Format on save

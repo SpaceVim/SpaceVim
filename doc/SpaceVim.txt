@@ -3552,6 +3552,19 @@ This layer also provides REPL support for python, the key bindings are:
   SPC l s s       send selection text
 <
 
+If the lsp layer is enabled for python, the following key bindings can be
+used:
+>
+  key binding     Description
+  SPC l e         rename symbol
+  SPC l x         show references
+  SPC l s         show line diagnostics
+  SPC l d         show document
+  K               show document
+  SPC l w l       list workspace folder
+  SPC l w a       add workspace folder
+  SPC l w r       remove workspace folder
+<
 
 ==============================================================================
 LANG#RACKET                                      *SpaceVim-layers-lang-racket*
