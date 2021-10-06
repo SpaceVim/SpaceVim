@@ -172,6 +172,11 @@ function! s:toggle_show_error(...) abort
   if SpaceVim#lsp#buf_server_ready()
     call SpaceVim#lsp#diagnostic_set_loclist()
   else
+    " if buf_server_ready return false, the language server loclist
+    " should be cleared.
+    if get(getloclist(0, {'title': 0}), 'title', '') ==# 'Language Server'
+      call setloclist(0, [], 'r')
+    endif
     let llist = getloclist(0, {'size' : 1, 'winid' : 1})
     let qlist = getqflist({'size' : 1, 'winid' : 1})
     if llist.size == 0 && qlist.size == 0
