@@ -3540,6 +3540,7 @@ KEY BINDINGS
   Key             Function
   --------------------------------
   SPC l r         run current file
+  g d             jump to definition
 <
 
 This layer also provides REPL support for python, the key bindings are:
@@ -3556,6 +3557,7 @@ If the lsp layer is enabled for python, the following key bindings can be
 used:
 >
   key binding     Description
+  g D             jump to type definition
   SPC l e         rename symbol
   SPC l x         show references
   SPC l s         show line diagnostics

@@ -50,6 +50,7 @@
 "   Key             Function
 "   --------------------------------
 "   SPC l r         run current file
+"   g d             jump to definition
 " <
 "
 " This layer also provides REPL support for python, the key bindings are:
@@ -66,6 +67,7 @@
 " be used:
 " >
 "   key binding     Description
+"   g D             jump to type definition
 "   SPC l e         rename symbol
 "   SPC l x         show references
 "   SPC l s         show line diagnostics
@@ -217,6 +219,7 @@ function! s:language_specified_mappings() abort
   if SpaceVim#layers#lsp#check_filetype('python')
         \ || SpaceVim#layers#lsp#check_server('pyright')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+    nnoremap <silent><buffer> gD :<C-u>call SpaceVim#lsp#go_to_typedef()<Cr>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
           \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
@@ -261,7 +264,8 @@ func! s:getexe() abort
 endf
 
 function! s:go_to_def() abort
-  if !SpaceVim#layers#lsp#check_filetype('python')
+  if SpaceVim#layers#lsp#check_filetype('python')
+        \ || SpaceVim#layers#lsp#check_server('pyright')
     call jedi#goto()
   else
     call SpaceVim#lsp#go_to_def()
