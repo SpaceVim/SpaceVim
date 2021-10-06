@@ -125,26 +125,29 @@ understand them before you contribute code or documentation for the first time.
 
 ### Commit style guide
 
-A git commit message consists a three distinct parts separated by black line.
+Follow the [conventional commits guidelines](https://www.conventionalcommits.org/) to _make reviews easier_ and to make the git logs more valuable.
+The general structure of a commit message is:
 
 ```
-Type (scope): Subject
+<type>([optional scope]): <description>
 
-body
+[optional body]
 
-footer
+[optional footer(s)]
 ```
 
 **types:**
 
-- `feat`: a new feature
-- `fix`: a bug fix
-- `change`: no backward compatible changes
-- `docs`: changes to documentation
-- `style`: formatting, missing semi colons, etc; no code change
-- `refactor`: refactoring production code
-- `test`: adding tests, refactoring test; no production code change
-- `chore`: updating build tasks, package manager configs, etc; no production code change
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Changes that do not affect the meaning of the code
+- `refactor`: A code change that neither fixes a bug nor adds a feature
+- `pref`: A code change that improves performance
+- `test`: Adding missing tests or correcting existing tests
+- `ci`: Changes to our CI configuration files and scripts
+- `chore`: Other changes that don't modify src or test files
+- `revert`: Reverts a previous commit
 
 **scopes:**
 
@@ -153,6 +156,9 @@ footer
 - `plugin`: files in `autoload/SpaceVim/plugins/` directory
 - `bundle`: files in `bundle/` directory
 - `core`: other files in this repository
+
+In addition to these scopes above,
+you can also use a specific layer name or plugin name as a scope.
 
 **subject:**
 
