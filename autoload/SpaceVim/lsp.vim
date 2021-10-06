@@ -270,6 +270,26 @@ else
   function! SpaceVim#lsp#go_to_impl() abort
     LspImplementation
   endfunction
+  function! SpaceVim#lsp#show_line_diagnostics() abort
+  endfunction
+  function! SpaceVim#lsp#list_workspace_folder() abort
+  endfunction
+  function! SpaceVim#lsp#add_workspace_folder() abort
+  endfunction
+  function! SpaceVim#lsp#remove_workspace_folder() abort
+  endfunction
+  function! SpaceVim#lsp#buf_server_ready() abort
+  endfunction
+  function! SpaceVim#lsp#diagnostic_set_loclist() abort
+  endfunction
+  function! SpaceVim#lsp#diagnostic_goto_next() abort
+    LspNextDiagnostic
+  endfunction
+  function! SpaceVim#lsp#diagnostic_goto_prev() abort
+    LspPreviousDiagnostic
+  endfunction
+  function! SpaceVim#lsp#diagnostic_clear() abort
+  endfunction
 endif
 
 " vi: et sw=2 cc=80
