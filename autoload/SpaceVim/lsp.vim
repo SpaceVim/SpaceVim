@@ -71,6 +71,9 @@ if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0
   function! SpaceVim#lsp#diagnostic_goto_prev() abort
     lua vim.lsp.diagnostic.goto_prev()
   endfunction
+  function! SpaceVim#lsp#diagnostic_clear() abort
+    lua vim.lsp.diagnostic.clear(0)
+  endfunction
 elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
   " use coc.nvim
   let s:coc_language_servers = {}

@@ -391,5 +391,12 @@ endif
 
 " TODO clear errors
 function! s:clear_errors() abort
-  sign unplace *
+  if SpaceVim#lsp#buf_server_ready()
+    call SpaceVim#lsp#diagnostic_clear()
+    if get(getloclist(0, {'title': 0}), 'title', '') ==# 'Language Server'
+      call setloclist(0, [], 'r')
+    endif
+  else
+    sign unplace *
+  endif
 endfunction
