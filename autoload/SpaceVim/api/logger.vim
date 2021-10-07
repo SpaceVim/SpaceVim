@@ -96,7 +96,6 @@ function! s:self.info(msg) abort
   call self.write(log)
 endfunction
 
-
 function! s:self.set_name(name) abort
   let self.name = a:name
 endfunction
