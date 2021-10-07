@@ -1,14 +1,49 @@
 "=============================================================================
 " zig.vim --- zig language support
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
+
+""
+" @section lang#zig, layers-lang-zig
+" @parentsection layers
+" This layer is for zig language development, disabled by default,
+" to enable this layer, add following snippet to your SpaceVim
+" configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#zig'
+" <
+"
+" @subsection layer option
+"
+" 1. `ztagsbin`: set the path of ztags, by default this option is `ztags`
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for zig, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
 
 if exists('s:ztagsbin')
   finish
 endif
+
 let s:ztagsbin = 'ztags'
 
 function! SpaceVim#layers#lang#zig#plugins() abort
@@ -58,4 +93,10 @@ endfunction
 
 function! SpaceVim#layers#lang#zig#set_variable(opt) abort
   let s:ztagsbin = get(a:opt, 'ztagsbin', s:ztagsbin) 
+endfunction
+
+function! SpaceVim#layers#lang#zig#health() abort
+  call SpaceVim#layers#lang#zig#plugins()
+  call SpaceVim#layers#lang#zig#config()
+  return 1
 endfunction

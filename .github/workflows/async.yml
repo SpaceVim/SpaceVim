@@ -14,5 +14,5 @@ jobs:
       uses: actions/checkout@master
     - name: Detach ${{ matrix.detachPlugin }}
       env:
-        BOTSECRET: ${{ secrets.BOTSECRET }}
+        BOTSECRET: ${{ secrets.BOTSECRET_GITHUB }}
       run: .ci/detach_plugin.sh ${{ matrix.detachPlugin }}

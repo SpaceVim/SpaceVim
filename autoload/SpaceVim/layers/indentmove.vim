@@ -1,13 +1,13 @@
 "=============================================================================
 " indentmove.vim --- SpaceVim indentmove layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section indentmove, layer-indentmove
+" @section indentmove, layers-indentmove
 " @parentsection layers
 " Move cursor quickly according to indent.
 "
@@ -50,3 +50,8 @@ function! SpaceVim#layers#indentmove#config() abort
     xnoremap <silent> EI :<c-u>call ZF_IndentMoveChild('v')<cr>
 endfunction
 
+function! SpaceVim#layers#indentmove#health() abort
+  call SpaceVim#layers#indentmove#plugins()
+  call SpaceVim#layers#indentmove#config()
+  return 1
+endfunction

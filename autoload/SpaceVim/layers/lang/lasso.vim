@@ -1,6 +1,6 @@
 "=============================================================================
 " lasso.vim --- lasso language support in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -13,3 +13,8 @@ function! SpaceVim#layers#lang#lasso#plugins() abort
   return plugins
 endfunction
 
+
+function! SpaceVim#layers#lang#lasso#health() abort
+  call SpaceVim#layers#lang#lasso#plugins()
+  return 1
+endfunction

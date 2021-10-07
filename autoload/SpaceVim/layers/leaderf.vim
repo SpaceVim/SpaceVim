@@ -1,16 +1,38 @@
 "=============================================================================
 " leaderf.vim --- leaderf layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section leaderf, layer-leaderf
+" @section leaderf, layers-leaderf
 " @parentsection layers
-" This layer provides fuzzy finder feature which is based on leaderf, and this
+" This layer provides fuzzy finder feature which is based on |leaderf|, and this
 " layer requires vim compiled with `+python` or `+python3`.
+" This layer is not loaded by default. To use this layer:
+" >
+"   [[layers]]
+"     name = 'leaderf'
+" <
+" @subsection Key bindings
+"
+" The following key bindings will be enabled when this layer is loaded:
+" >
+"   Key bindings      Description
+"   SPC p f / Ctrl-p  search files in current directory
+"   <Leader> f SPC    Fuzzy find menu:CustomKeyMaps
+"   <Leader> f e      Fuzzy find register
+"   <Leader> f h      Fuzzy find history/yank
+"   <Leader> f j      Fuzzy find jump, change
+"   <Leader> f l      Fuzzy find location list
+"   <Leader> f m      Fuzzy find output messages
+"   <Leader> f o      Fuzzy find functions
+"   <Leader> f t      Fuzzy find tags
+"   <Leader> f q      Fuzzy find quick fix
+"   <Leader> f r      Resumes Unite window
+" <
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
@@ -18,6 +40,12 @@ function! SpaceVim#layers#leaderf#loadable() abort
 
   return s:CMP.has('python3') || s:CMP.has('python')
 
+endfunction
+
+function! SpaceVim#layers#leaderf#health() abort
+  call SpaceVim#layers#leaderf#plugins()
+  call SpaceVim#layers#leaderf#config()
+  return 1
 endfunction
 
 function! SpaceVim#layers#leaderf#plugins() abort
@@ -200,7 +228,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \ ]
         \ ],
         \ 1)
-  " @fixme SPC h SPC make vim flick
+  " without this key binding, SPC h SPC always open key binding guide.
   nmap <Space>h<Space> [SPC]h[SPC]
 
   let lnum = expand('<slnum>') + s:lnum - 1
@@ -271,6 +299,18 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'F'],
+        \ 'LeaderfFileCword',
+        \ ['find cursor file in current project',
+        \ [
+        \ '[SPC p F] is to find cursor file in the root of the current project',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ 'Leaderf file --fullPath '
         \ . SpaceVim#plugins#projectmanager#current_root(),
@@ -288,7 +328,7 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'LeaderfHelpCword',
-        \ ['get help with the symbol at point',
+        \ ['get-help-for-cursor-symbol',
         \ [
         \ '[SPC h i] is to get help with the symbol at point',
         \ '',

@@ -1,13 +1,13 @@
 "=============================================================================
 " chapel.vim --- chapel language support
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#chapel, layer-lang-chapel
+" @section lang#chapel, layers-lang-chapel
 " @parentsection layers
 " This layer is for chapel development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -37,4 +37,9 @@ endfunction
 
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+endfunction
+function! SpaceVim#layers#lang#chapel#health() abort
+  call SpaceVim#layers#lang#chapel#plugins()
+  call SpaceVim#layers#lang#chapel#config()
+  return 1
 endfunction

@@ -1,13 +1,13 @@
 "=============================================================================
 " elixir.vim --- SpaceVim lang#elm layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#elm, layer-lang-elm
+" @section lang#elm, layers-lang-elm
 " @parentsection layers
 " This layer is for elm development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -80,4 +80,10 @@ function! s:language_specified_mappings() abort
         \ 'Browse symbol doc', 0)
   nmap <buffer> K <Plug>(elm-show-docs)
   let g:elm_setup_keybindings = 0
+endfunction
+
+function! SpaceVim#layers#lang#elm#health() abort
+  call SpaceVim#layers#lang#elm#plugins()
+  call SpaceVim#layers#lang#elm#config()
+  return 1
 endfunction

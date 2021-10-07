@@ -1,0 +1,4 @@
+if exists('$THEMIS_PROFILE')
+    execute 'profile' 'start' $THEMIS_PROFILE
+    profile! file ./autoload/*
+endif

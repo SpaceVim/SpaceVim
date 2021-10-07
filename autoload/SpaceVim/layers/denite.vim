@@ -1,6 +1,6 @@
 "=============================================================================
 " denite.vim --- SpaceVim denite layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -23,6 +23,12 @@ function! SpaceVim#layers#denite#plugins() abort
   call add(plugins, ['SpaceVim/Denite-sources', {'merged' : 0}])
 
   return plugins
+endfunction
+
+function! SpaceVim#layers#denite#health() abort
+  call SpaceVim#layers#denite#plugins()
+  call SpaceVim#layers#denite#config()
+  return 1
 endfunction
 
 let s:filename = expand('<sfile>:~')

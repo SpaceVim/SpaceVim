@@ -1,13 +1,13 @@
 "=============================================================================
 " lua.vim --- SpaceVim lang#lua layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#lua, layer-lang-lua
+" @section lang#lua, layers-lang-lua
 " @parentsection layers
 " This layer includes utilities and language-specific mappings for lua development.
 " >
@@ -102,4 +102,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+endfunction
+
+function! SpaceVim#layers#lang#lua#health() abort
+  call SpaceVim#layers#lang#lua#plugins()
+  call SpaceVim#layers#lang#lua#config()
+  return 1
 endfunction

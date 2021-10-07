@@ -1,6 +1,6 @@
 "=============================================================================
 " space.vim --- Space key bindings
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -692,6 +692,12 @@ endfunction
 
 function! SpaceVim#mapping#space#regesit_lang_mappings(ft, func) abort
   call extend(s:language_specified_mappings, {a:ft : a:func})
+endfunction
+
+function! SpaceVim#mapping#space#get_lang_mappings(ft) abort
+
+  return get(s:language_specified_mappings, a:ft, '')
+
 endfunction
 
 function! SpaceVim#mapping#space#langSPC(m, keys, cmd, desc, is_cmd, ...) abort

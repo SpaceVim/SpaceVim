@@ -1,13 +1,13 @@
 "=============================================================================
 " julia.vim --- SpaceVim lang#julia layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#julia, layer-lang-julia
+" @section lang#julia, layers-lang-julia
 " @parentsection layers
 " This layer is for julia development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -32,7 +32,8 @@
 "   SPC l s l       send current line
 "   SPC l s s       send selection text
 " <
-"
+" To format julia code, you need to install `JuliaFormatter`, and the key
+" binding is `SPC b f`
 
 function! SpaceVim#layers#lang#julia#plugins() abort
   let plugins = []
@@ -54,6 +55,15 @@ function! SpaceVim#layers#lang#julia#config() abort
 
   " julia
   let g:default_julia_version = '0.7'
+  " format code
+  " if you want to use mirror:
+  " let $JULIA_PKG_SERVER = 'https://mirrors.tuna.tsinghua.edu.cn/julia'
+  let g:neoformat_enabled_julia = ['juliafmt']
+  let g:neoformat_julia_juliafmt = {
+        \ 'exe': 'julia',
+        \ 'args': ['-e', '"using JuliaFormatter; print(format_text(read(stdin, String)))"'],
+        \ 'stdin': 1,
+        \ }
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -82,4 +92,10 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
   endif
+endfunction
+
+function! SpaceVim#layers#lang#julia#health() abort
+  call SpaceVim#layers#lang#julia#plugins()
+  call SpaceVim#layers#lang#julia#config()
+  return 1
 endfunction

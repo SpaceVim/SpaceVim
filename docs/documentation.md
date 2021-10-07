@@ -3,7 +3,7 @@ title: "Documentation"
 description: "General documentation about how to use SpaceVim, including the quick start guide and FAQs."
 ---
 
-# [Home](../) >> Documentation
+# Documentation
 
 <!-- vim-markdown-toc GFM -->
 
@@ -81,6 +81,7 @@ description: "General documentation about how to use SpaceVim, including the qui
     - [Task Problems Matcher](#task-problems-matcher)
     - [Task auto-detection](#task-auto-detection)
     - [Task provider](#task-provider)
+  - [Todo manager](#todo-manager)
   - [Replace text with iedit](#replace-text-with-iedit)
     - [iedit states key bindings](#iedit-states-key-bindings)
   - [Code runner and REPL](#code-runner-and-repl)
@@ -329,11 +330,26 @@ with the following contents, for example:
 ```vim
 function! myspacevim#before() abort
     let g:neomake_c_enabled_makers = ['clang']
-    nnoremap jk <Esc>
+    " you can defined mappings in bootstrap function
+    " for example, use kj to exit insert mode.
+    inoremap kj <Esc>
 endfunction
 
 function! myspacevim#after() abort
-    iunmap jk
+    " you can remove key binding in bootstrap_after function
+    iunmap kj
+endfunction
+```
+
+Within the bootstrap function, you can also use `:lua` command. for example:
+
+```vim
+function! myspacevim#before() abort
+    lua << EOF
+    local opt = requires('spacevim.opt')
+    opt.enable_projects_cache = false
+    opt.enable_statusline_mode = true
+EOF
 endfunction
 ```
 
@@ -490,10 +506,10 @@ the variable `colorscheme`. For instance, to specify `desert`:
     colorscheme_bg = "dark"
 ```
 
-| Mappings  | Descriptions                                                                             |
-| --------- | ---------------------------------------------------------------------------------------- |
+| Mappings  | Descriptions                                                                          |
+| --------- | ------------------------------------------------------------------------------------- |
 | `SPC T n` | switch to a random colorscheme listed in [colorscheme layer](../layers/colorscheme/). |
-| `SPC T s` | select a theme using a [fuzzy finder](#fuzzy-finder).                                                     |
+| `SPC T s` | select a theme using a [fuzzy finder](#fuzzy-finder).                                 |
 
 All the included colorschemes can be found in [colorscheme layer](../layers/colorscheme/).
 
@@ -554,6 +570,7 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | `SPC t b`    | toggle background                                                          |
 | `SPC t c`    | toggle conceal                                                             |
 | `SPC t p`    | toggle paste mode                                                          |
+| `SPC t P`    | toggle auto parens mode                                                    |
 | `SPC t t`    | open tabs manager                                                          |
 | `SPC T ~`    | display ~ in the fringe on empty lines                                     |
 | `SPC T F`    | toggle frame fullscreen                                                    |
@@ -665,12 +682,12 @@ Here is an exhaustive set of screenshots for all the available separators:
 
 The minor mode area can be toggled on and off with `SPC t m m`.
 
-Unicode symbols are displayed by default. Add `statusline_unicode_symbols = false` to your custom configuration file to use ASCII characters instead (may be useful in the terminal if you cannot set an appropriate font).
+Unicode symbols are displayed by default. Add `statusline_unicode = false` to your custom configuration file to use ASCII characters instead (may be useful in the terminal if you cannot set an appropriate font).
 
 The letters displayed in the statusline correspond to the key bindings used to toggle them.
 
-| Key Bindings | Unicode | ASCII | Mode                                             |
-| ------------ | ------- | ----- | ------------------------------------------------ |
+| Key Bindings | Unicode | ASCII | Mode                                            |
+| ------------ | ------- | ----- | ----------------------------------------------- |
 | `SPC t 8`    | ⑧       | 8     | toggle character highlighting for long lines    |
 | `SPC t f`    | ⓕ       | f     | fill-column-indicator mode                      |
 | `SPC t s`    | ⓢ       | s     | syntax checking (neomake)                       |
@@ -808,7 +825,7 @@ Key bindings within the tab manager window:
 
 ### File tree
 
-SpaceVim uses vimfiler as the default file tree, the default key binding is `<F3>`.
+SpaceVim uses `nerdtree` as the default file tree, the default key binding is `<F3>`.
 SpaceVim also provides `SPC f t` and `SPC f T` to open the file tree.
 
 To change the filemanager plugin:
@@ -816,14 +833,16 @@ To change the filemanager plugin:
 ```toml
 [options]
     # file manager plugins supported in SpaceVim:
-    # - vimfiler (default)
-    # - nerdtree
-    # - defx
-    filemanager = "defx"
+    # - nerdtree (default)
+    # - vimfiler: you need to build the vimproc.vim in bundle/vimproc.vim directory
+    # - defx: requires +py3 feature
+    filemanager = "nerdtree"
 ```
 
-VCS integration is supported, there will be a column status, this feature may make vimfiler slow, so it is not enabled by default.
-To enable this feature, add `enable_vimfiler_gitstatus = true` to your custom configuration file. Here is a picture of this feature:
+VCS integration is supported, there will be a column status,
+this feature may make filetree slow, so it is not enabled by default.
+To enable this feature, add `enable_filetree_gitstatus = true`
+to your custom configuration file. Here is a picture of this feature:
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
 
@@ -847,6 +866,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<Down>` / `j`        | select next file or directory                     |
 | `<Up>` / `k`          | select previous file or directory                 |
 | `<Right>` / `l`       | open selected file or expand directory            |
+| `<Enter>`             | open file or switch to directory                     |
 | `N`                   | Create new file under cursor                      |
 | `r`                   | Rename the file under cursor                      |
 | `d`                   | Delete the file under cursor                      |
@@ -874,9 +894,9 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 
 If only one file buffer is opened, a file is opened in the active window, otherwise we need to use vim-choosewin to select a window to open the file.
 
-| Key Bindings    | Descriptions                              |
-| --------------- | ----------------------------------------- |
-| `l` / `<Enter>` | open file in one window                   |
+| Key Bindings    | Descriptions                             |
+| --------------- | ---------------------------------------- |
+| `l` / `<Enter>` | open file in one window                  |
 | `s g`           | open file in a vertically split window   |
 | `s v`           | open file in a horizontally split window |
 
@@ -884,23 +904,25 @@ If only one file buffer is opened, a file is opened in the active window, otherw
 
 The following key bindings are the general key bindings for moving the cursor.
 
-| Key Bindings     | Descriptions                             |
-| ---------------- | ---------------------------------------- |
-| `h`              | move cursor left                         |
-| `j`              | move cursor down                         |
-| `k`              | move cursor up                           |
-| `l`              | move cursor right                        |
-| `<Up>`, `<Down>` | Smart up and down                        |
-| `H`              | move cursor to the top of the screen     |
-| `L`              | move cursor to the bottom of the screen  |
-| `<`              | Indent to left and re-select             |
-| `>`              | Indent to right and re-select            |
-| `}`              | paragraphs forward                       |
-| `{`              | paragraphs backward                      |
-| `Ctrl-f`         | Smart page forward (`Ctrl-f` / `Ctrl-d`) |
-| `Ctrl-b`         | Smart page backward (`C-b` / `C-u`)      |
-| `Ctrl-e`         | Smart scroll down (`3 Ctrl-e/j`)         |
-| `Ctrl-y`         | Smart scroll up (`3Ctrl-y/k`)            |
+| Key Bindings                           | Descriptions                            |
+| -------------------------------------- | --------------------------------------- |
+| `h`                                    | move cursor left                        |
+| `j`                                    | move cursor down                        |
+| `k`                                    | move cursor up                          |
+| `l`                                    | move cursor right                       |
+| `<Up>`, `<Down>`                       | Smart up and down                       |
+| `H`                                    | move cursor to the top of the screen    |
+| `L`                                    | move cursor to the bottom of the screen |
+| `<`                                    | Indent to left and re-select            |
+| `>`                                    | Indent to right and re-select           |
+| `}`                                    | paragraphs forward                      |
+| `{`                                    | paragraphs backward                     |
+| `Ctrl-f` / `Shift-Down` / `<PageDown>` | Smooth scrolling forwards               |
+| `Ctrl-b` / `Shift-Up` / `<PageUp>`     | Smooth scrolling backwards              |
+| `Ctrl-d`                               | Smooth scrolling downwards              |
+| `Ctrl-u`                               | Smooth scrolling upwards                |
+| `Ctrl-e`                               | Smart scroll down (`3 Ctrl-e/j`)        |
+| `Ctrl-y`                               | Smart scroll up (`3Ctrl-y/k`)           |
 
 ### Native functions
 
@@ -982,6 +1004,12 @@ Use `SpaceVim#custom#SPC()` to define custom SPC mappings. For instance:
 call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test custom SPC', 1)
 ```
 
+The first parameter sets the type of shortcut key,
+which can be `nnoremap` or `nmap`, the second parameter is a list of keys,
+and the third parameter is an ex command or key binding,
+depending on whether the last parameter is true.
+The fourth parameter is a short description of this custom key binding.
+
 **Fuzzy find key bindings**
 
 It is possible to search for specific key bindings by pressing `?` in the root of the guide buffer.
@@ -1061,7 +1089,7 @@ Text related commands (start with `x`):
 | `SPC x g T`   | reverse source and target languages (TODO)                         |
 | `SPC x i c`   | change symbol style to `lowerCamelCase`                            |
 | `SPC x i C`   | change symbol style to `UpperCamelCase`                            |
-| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                   |
+| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                     |
 | `SPC x i -`   | change symbol style to `kebab-case`                                |
 | `SPC x i k`   | change symbol style to `kebab-case`                                |
 | `SPC x i _`   | change symbol style to `under_score`                               |
@@ -1126,8 +1154,8 @@ Key bindings available in visual mode:
 
 #### Increase/Decrease numbers
 
-| Key Bindings | Descriptions                                                        |
-| ------------ | ------------------------------------------------------------------- |
+| Key Bindings | Descriptions                                                             |
+| ------------ | ------------------------------------------------------------------------ |
 | `SPC n +`    | increase the number under the cursor by one and initiate transient state |
 | `SPC n -`    | decrease the number under the cursor by one and initiate transient state |
 
@@ -1398,6 +1426,7 @@ Files manipulation commands (start with `f`):
 | `SPC f o`    | Find current file in file tree                                          |
 | `SPC f R`    | rename the current file(TODO)                                           |
 | `SPC f s`    | save a file                                                             |
+| `SPC f a`    | save as new file name                                                   |
 | `SPC f S`    | save all files                                                          |
 | `SPC f r`    | open a recent file                                                      |
 | `SPC f t`    | toggle file tree side bar                                               |
@@ -1424,7 +1453,6 @@ It is `[]` by default.
 ```
 
 The first item is the name of the tool, the second one is the default searching command.
-
 
 #### Vim and SpaceVim files
 
@@ -1617,14 +1645,14 @@ The following table summurizes the search key bindings:
 
 With `<scope>` being one of the following:
 
-|  Scope  |            Description           |
-| ------- | -------------------------------- |
-|   `b`   | All open buffers                 |
-|   `d`   | Current buffer's directory       |
-|   `f`   | Arbitrary directory              |
-|   `p`   | Current project                  |
-|   `s`   | Current buffer                   |
-|   `j`   | Background search in the project |
+| Scope | Description                      |
+| ----- | -------------------------------- |
+| `b`   | All open buffers                 |
+| `d`   | Current buffer's directory       |
+| `f`   | Arbitrary directory              |
+| `p`   | Current project                  |
+| `s`   | Current buffer                   |
+| `j`   | Background search in the project |
 
 **Notes**:
 
@@ -1668,8 +1696,12 @@ getting help info about functions, variables etc:
 | ------------ | ----------------------------------------------------------------------------- |
 | `SPC h SPC`  | discover SpaceVim documentation, layers and packages using fuzzy finder layer |
 | `SPC h i`    | get help with the symbol at point                                             |
+| `SPC h g`    | run `:helpgrep` asynchronously                                                |
+| `SPC h G`    | run `:helpgrep` asynchronously with the word under cursor                     |
 | `SPC h k`    | show top-level bindings with which-key                                        |
 | `SPC h m`    | search available man pages                                                    |
+
+NOTE: `SPC h i` and `SPC h m` need to load at least one fuzzy finder layer.
 
 Reporting an issue:
 
@@ -1713,14 +1745,15 @@ The `SPC j` prefix is for jumping, joining and splitting.
 
 | Key Bindings | Descriptions                                                                      |
 | ------------ | --------------------------------------------------------------------------------- |
-| `SPC j 0`    | go to the beginning of line (and set a mark at the previous location in the line) |
 | `SPC j $`    | go to the end of line (and set a mark at the previous location in the line)       |
+| `SPC j 0`    | go to the beginning of line (and set a mark at the previous location in the line) |
 | `SPC j b`    | jump backward                                                                     |
-| `SPC j f`    | jump forward                                                                      |
+| `SPC j c`    | jump to last change                                                               |
 | `SPC j d`    | jump to a listing of the current directory                                        |
 | `SPC j D`    | jump to a listing of the current directory (other window)                         |
-| `SPC j i`    | jump to a definition in buffer (denite outline)                                   |
+| `SPC j f`    | jump forward                                                                      |
 | `SPC j I`    | jump to a definition in any buffer (denite outline)                               |
+| `SPC j i`    | jump to a definition in buffer (denite outline)                                   |
 | `SPC j j`    | jump to a character in the buffer (easymotion)                                    |
 | `SPC j J`    | jump to a suite of two characters in the buffer (easymotion)                      |
 | `SPC j k`    | jump to next line and indent it using auto-indent rules                           |
@@ -1888,7 +1921,7 @@ root directory to the present working directory):
 
 ```toml
 [options]
-    project_rooter_automatically = false
+    project_auto_root = false
 ```
 
 Project manager commands start with `p`:
@@ -1902,6 +1935,7 @@ Project manager commands start with `p`:
 | Key Bindings | Descriptions                             |
 | ------------ | ---------------------------------------- |
 | `SPC p f`    | find files in current project            |
+| `SPC p F`    | find cursor file in current project      |
 | `SPC p /`    | fuzzy search for text in current project |
 | `SPC p k`    | kill all buffers of current project      |
 | `SPC p p`    | list all projects                        |
@@ -2030,33 +2064,33 @@ To run the task in the background, you need to set `isBackground` to `true`:
 
 The following task properties are available:
 
-| Name           | Description                                                                                            |
-| -------------- | ------------------------------------------------------------------------------------------------------ |
-| command        | The actual command to execute.                                                                         |
-| args           | The arguments passed to the command, it should be a list of strings and may be omitted.                |
-| options        | Override the defaults for `cwd`,`env` or `shell`.                                                      |
-| isBackground   | Specifies whether the task should run in the background. by default, it is `false`.                    |
-| description    | Short description of the task                                                                          |
-| problemMatcher | Problems matcher of the task                                                                           |
+| Name           | Description                                                                             |
+| -------------- | --------------------------------------------------------------------------------------- |
+| command        | The actual command to execute.                                                          |
+| args           | The arguments passed to the command, it should be a list of strings and may be omitted. |
+| options        | Override the defaults for `cwd`,`env` or `shell`.                                       |
+| isBackground   | Specifies whether the task should run in the background. by default, it is `false`.     |
+| description    | Short description of the task                                                           |
+| problemMatcher | Problems matcher of the task                                                            |
 
 **Note**: When a new task is executed, it will kill the previous task. If you want to keep the task,
 run it in background by setting `isBackground` to `true`.
 
 SpaceVim supports variable substitution in the task properties, The following predefined variables are supported:
 
-| Name                       | Description                                            |
-| -------------------------- | ------------------------------------------------------ |
-| ${workspaceFolder}         | The project's root directory                           |
-| ${workspaceFolderBasename} | The name of current project's root directory           |
-| ${file}                    | The path of current file                               |
-| ${relativeFile}            | The current file relative to project root              |
-| ${relativeFileDirname}     | The current file's dirname relative to workspaceFolder |
-| ${fileBasename}            | The current file's basename                            |
-| ${fileBasenameNoExtension} | The current file's basename without file extension     |
-| ${fileDirname}             | The current file's dirname                             |
-| ${fileExtname}             | The current file's extension                           |
-| ${cwd}                     | The task runner's current working directory on startup |
-| ${lineNumber}              | The current selected line number in the active file    |
+| Name                        | Description                                            |
+| --------------------------- | ------------------------------------------------------ |
+| \${workspaceFolder}         | The project's root directory                           |
+| \${workspaceFolderBasename} | The name of current project's root directory           |
+| \${file}                    | The path of current file                               |
+| \${relativeFile}            | The current file relative to project root              |
+| \${relativeFileDirname}     | The current file's dirname relative to workspaceFolder |
+| \${fileBasename}            | The current file's basename                            |
+| \${fileBasenameNoExtension} | The current file's basename without file extension     |
+| \${fileDirname}             | The current file's dirname                             |
+| \${fileExtname}             | The current file's extension                           |
+| \${cwd}                     | The task runner's current working directory on startup |
+| \${lineNumber}              | The current selected line number in the active file    |
 
 For example: Supposing that you have the following requirements:
 
@@ -2064,18 +2098,18 @@ A file located at `/home/your-username/your-project/folder/file.ext` opened in y
 The directory `/home/your-username/your-project` opened as your root workspace.
 So you will have the following values for each variable:
 
-| Name                       | Value                                              |
-| -------------------------- | -------------------------------------------------- |
-| ${workspaceFolder}         | `/home/your-username/your-project/`                |
-| ${workspaceFolderBasename} | `your-project`                                     |
-| ${file}                    | `/home/your-username/your-project/folder/file.ext` |
-| ${relativeFile}            | `folder/file.ext`                                  |
-| ${relativeFileDirname}     | `folder/`                                          |
-| ${fileBasename}            | `file.ext`                                         |
-| ${fileBasenameNoExtension} | `file`                                             |
-| ${fileDirname}             | `/home/your-username/your-project/folder/`         |
-| ${fileExtname}             | `.ext`                                             |
-| ${lineNumber}              | line number of the cursor                          |
+| Name                        | Value                                              |
+| --------------------------- | -------------------------------------------------- |
+| \${workspaceFolder}         | `/home/your-username/your-project/`                |
+| \${workspaceFolderBasename} | `your-project`                                     |
+| \${file}                    | `/home/your-username/your-project/folder/file.ext` |
+| \${relativeFile}            | `folder/file.ext`                                  |
+| \${relativeFileDirname}     | `folder/`                                          |
+| \${fileBasename}            | `file.ext`                                         |
+| \${fileBasenameNoExtension} | `file`                                             |
+| \${fileDirname}             | `/home/your-username/your-project/folder/`         |
+| \${fileExtname}             | `.ext`                                             |
+| \${lineNumber}              | line number of the cursor                          |
 
 #### Task Problems Matcher
 
@@ -2137,10 +2171,10 @@ here is an example for building a task provider.
 ```vim
 function! s:make_tasks() abort
     if filereadable('Makefile')
-        let subcmd = filter(readfile('Makefile', ''), "v:val=~#'^.PHONY'")
-        if !empty(subcmd)
-            let commands = split(subcmd[0])[1:]
-            let conf = {}
+        let subcmds = filter(readfile('Makefile', ''), "v:val=~#'^.PHONY'")
+        let conf = {}
+        for subcmd in subcmds
+            let commands = split(subcmd)[1:]
             for cmd in commands
                 call extend(conf, {
                             \ cmd : {
@@ -2151,10 +2185,8 @@ function! s:make_tasks() abort
                             \ }
                             \ })
             endfor
-            return conf
-        else
-            return {}
-        endif
+        endfor
+        return conf
     else
         return {}
     endif
@@ -2165,6 +2197,15 @@ call SpaceVim#plugins#tasks#reg_provider(function('s:make_tasks'))
 With the above configuration, you will see the following tasks in the SpaceVim repo:
 
 ![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
+
+### Todo manager
+
+The todo manager plugin will run `rg` asynchronously, the results will be displayed on todo manager windows.
+The key binding is `SPC a o`.
+
+The default tags is: `'@fixme', '@question', '@todo', '@idea'`.
+
+![todo manager](https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
 
 ### Replace text with iedit
 

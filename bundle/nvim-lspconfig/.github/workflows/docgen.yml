@@ -1,0 +1,85 @@
+name: docgen
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  docgen:
+    runs-on: [ubuntu-latest]
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v2
+    - run: date +%F > todays-date
+    - name: Restore cache for today's nightly.
+      uses: actions/cache@v2
+      with:
+        path: _neovim
+        key: ${{ runner.os }}-nightly-${{ hashFiles('todays-date') }}
+    - name: Setup from neovim nightly and run docgen
+      run: |
+        curl -OL https://raw.githubusercontent.com/norcalli/bot-ci/master/scripts/github-actions-setup.sh
+        source github-actions-setup.sh nightly-x64
+        scripts/docgen.sh
+    - name: Commit changes
+      env:
+        COMMIT_MSG: |
+          [docgen] Update CONFIG.md
+          skip-checks: true
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add CONFIG.md
+        # Only commit and push if we have changes
+        git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push)
+  vimdocgen:
+    needs: docgen
+    runs-on: [ubuntu-latest]
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v2
+      - run: date +%F > todays-date
+      - name: Restore cache for today's nightly.
+        uses: actions/cache@v2
+        with:
+          path: build
+          key: ${{ runner.os }}-appimage-${{ hashFiles('todays-date') }}
+
+      - name: Setup neovim nightly and install plugins
+        run: |
+          test -d build || {
+            mkdir -p build
+            wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+            chmod +x nvim.appimage
+            mv nvim.appimage ./build/nvim
+          }
+          mkdir -p ~/.local/share/nvim/site/pack/vendor/start
+          git clone --depth 1 https://github.com/mjlbach/babelfish.nvim ~/.local/share/nvim/site/pack/vendor/start/babelfish.nvim
+          git clone --depth 1 https://github.com/nvim-treesitter/nvim-treesitter ~/.local/share/nvim/site/pack/vendor/start/nvim-treesitter
+          ln -s $(pwd) ~/.local/share/nvim/site/pack/vendor/start
+
+      - name: Build parser
+        run: |
+          export PACKPATH=$HOME/.local/share/nvim/site
+          ./build/nvim -u ~/.local/share/nvim/site/pack/vendor/start/babelfish.nvim/scripts/init.lua --headless -c 'TSInstallSync markdown' -c 'qa'
+      - name: Generating docs
+        run: |
+          export PATH="${PWD}/build/:${PATH}"
+          export PACKPATH=$HOME/.local/share/nvim/site
+          ./build/nvim -u ~/.local/share/nvim/site/pack/vendor/start/babelfish.nvim/scripts/init.lua --headless -c 'luafile ./scripts/vimdocgen.lua' -c 'qa'
+      - name: Commit changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_MSG: |
+            [docgen] Update README.md
+            skip-checks: true
+        run: |
+          git config user.email "actions@github"
+          git config user.name "Github Actions"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          git add doc/lspconfig.txt
+          # Only commit and push if we have changes
+          git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push origin HEAD:${GITHUB_REF})

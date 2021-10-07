@@ -1,6 +1,6 @@
 "=============================================================================
 " ps1.vim --- SpaceVim lang#ps1 layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -35,4 +35,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+endfunction
+
+function! SpaceVim#layers#lang#powershell#health() abort
+  call SpaceVim#layers#lang#powershell#plugins()
+  call SpaceVim#layers#lang#powershell#config()
+  return 1
 endfunction

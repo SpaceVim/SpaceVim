@@ -20,24 +20,12 @@ lang: zh
 ## 模块描述
 
 lsp 模块提供了 [language-server-protocol](https://microsoft.github.io/language-server-protocol/) 的支持，
-这以模块在 [LanguageClient-neovim](https://github.com/SpaceVim/LanguageClient-neovim) 基础上做了许多定制，
-这一链接为一克隆的版本，需要 `+python` 支持。
+默认使用的 lsp 插件为：
 
-同时，当你的 Vim 不支持 `+python3` 时，我们采用 [vim-lsp](https://github.com/prabirshrestha/vim-lsp) 这一使用纯 Vim 脚本书写的插件。
+1. vim-lsp: for vim
+2. LanguageClient-neovim: for neovim
+3. built-in lsp: for neovim(>=0.5.0)
 
-Neovim 团队也在尝试实现一个内置的 [lsp 框架](https://github.com/neovim/neovim/pull/6856)，后续该框架完成后，在 Neovim 内将默认使用该框架。
-
-在 SpaceVim 内部，lsp 的框架选择逻辑大致时这样的：
-
-```vim
-if has('nvim')
-  " use neovim build-in lsp
-elseif has('python3')
-  " use LanguageClient-neovim
-else
-  " use vim-lsp
-endif
-```
 
 ## 模块特性
 
@@ -135,7 +123,7 @@ gem install solargraph
 | `crystal`    | `['scry']`                                                                                                                                                                                       |
 | `css`        | `['css-languageserver', '--stdio']`                                                                                                                                                              |
 | `dart`       | `['dart_language_server']`                                                                                                                                                                       |
-| `go`         | `['go-langserver', '-mode', 'stdio']`                                                                                                                                                            |
+| `go`         | `['gopls']`                                                                                                                                                            |
 | `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
 | `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
 | `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |

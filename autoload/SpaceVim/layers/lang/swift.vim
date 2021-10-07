@@ -1,13 +1,13 @@
 "=============================================================================
 " swift.vim --- swift layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#swig, layer-lang-swift
+" @section lang#swig, layers-lang-swift
 " @parentsection layers
 " This layer is for swift development, including syntax highlighting and
 " indent. To enable it:
@@ -69,3 +69,10 @@ endfunction
 " ref:
 " 1. https://jblevins.org/log/swift
 " 2. https://medium.com/@mahmudahsan/running-and-compiling-swift-code-in-terminal-237ee4087a9c
+
+
+function! SpaceVim#layers#lang#swift#health() abort
+  call SpaceVim#layers#lang#swift#plugins()
+  call SpaceVim#layers#lang#swift#config()
+  return 1
+endfunction

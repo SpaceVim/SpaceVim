@@ -1,6 +1,6 @@
 "=============================================================================
 " chinese.vim --- SpaceVim chinese layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -25,4 +25,10 @@ function! SpaceVim#layers#chinese#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['l', 'c']     , 'CheckChinese', 'Check with ChineseLinter', 1)
   " do not load vimcdoc plugin 
   let g:loaded_vimcdoc = 1
+endfunction
+
+function! SpaceVim#layers#chinese#health() abort
+  call SpaceVim#layers#chinese#plugins()
+  call SpaceVim#layers#chinese#config()
+  return 1
 endfunction

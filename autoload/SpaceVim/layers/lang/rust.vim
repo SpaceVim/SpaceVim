@@ -1,6 +1,6 @@
 "=============================================================================
 " rust.vim --- SpaceVim lang#rust layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -8,7 +8,7 @@
 
 
 ""
-" @section lang#rust, layer-lang-rust
+" @section lang#rust, layers-lang-rust
 " @parentsection layers
 " This layer is for Rust development. 
 "
@@ -38,6 +38,19 @@
 "     name = 'lang#rust'
 "     racer_cmd = "/path/to/racer/bin"
 " <
+"
+" @subsection Layer options
+" 
+" The following layer options are supported when loading this layer:
+"
+" 1. `recommended_style`: `true`/`false` (Enable/Disable) recommended code
+" style for rust. This option is disabled by default.
+" 2. `format_on_save`: `true`/`false` (Enable/Disable) format current buffer
+" after save. This option is disabled by default.
+" 3. `racer_cmd`: The path of `racer` binary. This option is `racer` by
+" default.
+" 4. `rustfmt_cmd`: The path of `rustfmt` binary. This option is `rustfmt`
+" by default.
 "
 " @subsection Mappings
 " >
@@ -96,6 +109,12 @@ function! SpaceVim#layers#lang#rust#config() abort
 
   let g:racer_cmd = s:racer_cmd
   let g:rustfmt_cmd = s:rustfmt_cmd
+  " format layer setting
+  let g:neoformat_rust_rustfmt = {
+        \ 'exe': s:rustfmt_cmd,
+        \ 'stdin': 1,
+        \ }
+  let g:neoformat_enabled_rust = ['rustfmt']
   let g:rust_recommended_style = s:recommended_style
   " Disable racer format, use Neoformat instead!
   let g:rustfmt_autosave = 0
@@ -217,3 +236,10 @@ endfunction
 " set RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 "
 " vim:set et sw=2 cc=80
+
+
+function! SpaceVim#layers#lang#rust#health() abort
+  call SpaceVim#layers#lang#rust#plugins()
+  call SpaceVim#layers#lang#rust#config()
+  return 1
+endfunction

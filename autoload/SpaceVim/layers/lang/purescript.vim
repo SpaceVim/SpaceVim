@@ -1,13 +1,13 @@
 "=============================================================================
 " purescript.vim --- lang#purescript layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#purescript, layer-lang-purescript
+" @section lang#purescript, layers-lang-purescript
 " @parentsection layers
 " This layer provides purescript language support for SpaceVim. Includding syntax
 " highlighting, code formatting and code completion. This layer is not enabled
@@ -117,4 +117,10 @@ function! s:go_to_def() abort
   else
     call SpaceVim#lsp#go_to_def()
   endif
+endfunction
+
+function! SpaceVim#layers#lang#purescript#health() abort
+  call SpaceVim#layers#lang#purescript#plugins()
+  call SpaceVim#layers#lang#purescript#config()
+  return 1
 endfunction

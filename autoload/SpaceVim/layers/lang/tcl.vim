@@ -1,6 +1,6 @@
 "=============================================================================
 " tcl.vim --- tcl language support for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -8,7 +8,7 @@
 
 
 ""
-" @section lang#tcl, layer-lang-tcl
+" @section lang#tcl, layers-lang-tcl
 " @parentsection layers
 " This layer is for tcl development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -68,3 +68,10 @@ endfunction
 " https://www.yiibai.com/tcl/tcl_basic_syntax.html
 "
 " 1. the default tcl shell command is tclsh
+
+
+function! SpaceVim#layers#lang#tcl#health() abort
+  call SpaceVim#layers#lang#tcl#plugins()
+  call SpaceVim#layers#lang#tcl#config()
+  return 1
+endfunction

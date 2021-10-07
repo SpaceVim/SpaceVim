@@ -1,13 +1,13 @@
 "=============================================================================
 " javascript.vim --- SpaceVim lang#javascript layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#javascript, layer-lang-javascript
+" @section lang#javascript, layers-lang-javascript
 " @parentsection layers
 " This layer is for JavaScript development, includes syntax lint, code
 " completion etc. To enable this layer:
@@ -224,3 +224,10 @@ function! s:checktime_if_javascript() abort
 endfunction
 
 " vi: et sw=2 cc=80
+
+
+function! SpaceVim#layers#lang#javascript#health() abort
+  call SpaceVim#layers#lang#javascript#plugins()
+  call SpaceVim#layers#lang#javascript#config()
+  return 1
+endfunction
