@@ -53,7 +53,8 @@ if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0
   endfunction
   function! SpaceVim#lsp#list_workspace_folder() abort
     let workspace = luaeval('vim.lsp.buf.list_workspace_folders()')
-    let box = s:box.drawing_box(workspace, 1, 1, 100)
+    let bw = max(map(deepcopy(workspace), 'strwidth(v:val)')) + 5
+    let box = s:box.drawing_box(workspace, 1, 1, bw, {'align' : 'left'})
     echo join(box, "\n")
   endfunction
   function! SpaceVim#lsp#add_workspace_folder() abort

@@ -95,7 +95,16 @@ function! s:self.drawing_table(json, ...) abort
 endfunction
 
 " @vimlint(EVL102, 1, l:j)
-function! s:self.drawing_box(data, h, w, bw) abort
+" @param data: a list of string
+" @param h: max height of box
+" @param w: max width of box
+" @param bw: cell width
+" @param [opt]: a dict of options
+"     align: right/left/center
+function! s:self.drawing_box(data, h, w, bw, ...) abort
+  let opt = get(a:000, 0, {
+        \ 'align': 'center'
+        \ })
   if &encoding ==# 'utf-8'
     let top_left_corner = '╭'
     let top_right_corner = '╮'
@@ -141,7 +150,13 @@ function! s:self.drawing_box(data, h, w, bw) abort
   let ls = 1
   let line = side
   for sel in a:data
-    let line .=self._string.fill_middle(sel, a:bw) . side
+    if opt.align == 'center'
+      let line .=self._string.fill_middle(sel, a:bw) . side
+    elseif opt.align == 'right'
+      let line .=self._string.fill_left(sel, a:bw) . side
+    else
+      let line .=self._string.fill(sel, a:bw) . side
+    endif
     let i += 1
     if i == a:w
       call add(box, line)
