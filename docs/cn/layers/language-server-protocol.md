@@ -100,6 +100,12 @@ npm install -g vscode-css-languageserver-bin
 gem install solargraph
 ```
 
+**vim**
+
+```
+npm install -g vim-language-server
+```
+
 ## 模块配置
 
 为指定模块启用语言服务器支持，需要在载入模块时，指定 `filetypes` 选项：
@@ -117,28 +123,32 @@ gem install solargraph
 
 | 语言         | 命令                                                                                                                                                                                             |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `ada`        | `['ada_language_server']`                                                                                                                                                                                     |
-| `c`          | `['clangd']`                                                                                                                                                                                     |
-| `cpp`        | `['clangd']`                                                                                                                                                                                     |
-| `crystal`    | `['scry']`                                                                                                                                                                                       |
-| `css`        | `['css-languageserver', '--stdio']`                                                                                                                                                              |
-| `dart`       | `['dart_language_server']`                                                                                                                                                                       |
-| `go`         | `['gopls']`                                                                                                                                                            |
-| `haskell`    | `['hie', '--lsp']`                                                                                                                                                                               |
-| `html`       | `['html-languageserver', '--stdio']`                                                                                                                                                             |
-| `javascript` | `['javascript-typescript-stdio']`                                                                                                                                                                |
-| `julia`      | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
-| `objc`       | `['clangd']`                                                                                                                                                                                     |
-| `objcpp`     | `['clangd']`                                                                                                                                                                                     |
-| `php`        | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
-| `purescript` | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
-| `python`     | `['pyls']`                                                                                                                                                                                       |
-| `ruby`       | `['solargraph',  'stdio']`
-| `reason`     | `['ocaml-language-server']`                                                                                                                                                                      |
-| `rust`       | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
-| `sh`         | `['bash-language-server', 'start']`                                                                                                                                                              |
-| `typescript` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
-| `vue`        | `['vls']`                                                                                                                                                                                        |
+| `ada`             | `['ada_language_server']`                                                                                                                                                                        |
+| `c`               | `['clangd']`                                                                                                                                                                                     |
+| `cpp`             | `['clangd']`                                                                                                                                                                                     |
+| `crystal`         | `['scry']`                                                                                                                                                                                       |
+| `css`             | `['css-languageserver', '--stdio']`                                                                                                                                                              |
+| `dart`            | `['dart_language_server']`                                                                                                                                                                       |
+| `elm`             | `['elm-language-server']`                                                                                                                                                                        |
+| `go`              | `['gopls']`                                                                                                                                                                                      |
+| `haskell`         | `['hie', '--lsp']`                                                                                                                                                                               |
+| `html`            | `['html-languageserver', '--stdio']`                                                                                                                                                             |
+| `javascript`      | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
+| `javascriptreact` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
+| `julia`           | `['julia', '--startup-file=no', '--history-file=no', '-e', 'using LanguageServer; server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false); server.runlinter = true; run(server);']` |
+| `objc`            | `['clangd']`                                                                                                                                                                                     |
+| `objcpp`          | `['clangd']`                                                                                                                                                                                     |
+| `php`             | `['php', 'path/to/bin/php-language-server.php']`                                                                                                                                                 |
+| `purescript`      | `['purescript-language-server', '--stdio']`                                                                                                                                                      |
+| `python`          | `['pyls']`                                                                                                                                                                                       |
+| `ruby`            | `['solargraph', 'stdio']`                                                                                                                                                                        |
+| `reason`          | `['ocaml-language-server']`                                                                                                                                                                      |
+| `rust`            | `['rustup', 'run', 'nightly', 'rls']`                                                                                                                                                            |
+| `sh`              | `['bash-language-server', 'start']`                                                                                                                                                              |
+| `typescript`      | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
+| `typescriptreact` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
+| `vim`             | `['vim-language-server', '--stdio']`                                                                                                                                                             |
+| `vue`             | `['vls']`                                                                                                                                                                                        |
 
 如果需要修改语言服务器的命令，在载入模块时，需要指定 `override_cmd` 选项：
 

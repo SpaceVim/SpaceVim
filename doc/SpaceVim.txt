@@ -2779,3 +2779,2417 @@ This layer also provides REPL support for janet, the key bindings are:
   SPC l s i       Start a inferior REPL process
   SPC l s b       send whole buffer
   SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#JAVA                                          *SpaceVim-layers-lang-java*
+
+This layer is for java development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#java'
+<
+LAYER OPTIONS
+
+  1. `format_on_save`: Enable/disabled code formatting when saving current
+    file. Disabled by default.
+  2. `java_formatter_jar`: Set the full path of google's java formatter jar.
+  3. `java_file_head`: The default file header for new java file. by default
+    it is:
+
+>
+  [[layers]]
+    name = 'lang#java'
+    java_file_head = [
+      '/**',
+      ' * @author : `fnamemodify(expand("~"), ":t")`',
+      ' * @created : `strftime("%Y-%m-%d")`',
+      '**/',
+      ''
+    ]
+<
+MAPPINGS
+
+>
+  Import key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l I       import missing classes
+  normal    SPC l R       remove unused imports
+  normal    SPC l i       smart import class under cursor
+  insert    <c-j>I        import missing imports
+  insert    <c-j>R        remove unused imports
+  insert    <c-j>i        smart import class under cursor
+
+  Generate key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l g A     generate accessors
+  normal    SPC l g s     generate setter accessor
+  normal    SPC l g g     generate getter accessor
+  normal    SPC l g a     generate setter and getter accessor
+  normal    SPC l g t     generate toString function
+  normal    SPC l g e     generate equals and hashcode function
+  normal    SPC l g c     generate constructor
+  normal    SPC l g C     generate default constructor
+  insert    <c-j>s        generate setter accessor
+  insert    <c-j>g        generate getter accessor
+  insert    <c-j>a        generate getter and setter accessor
+  visual    SPC l g s     generate setter accessor
+  visual    SPC l g g     generate getter accessor
+  visual    SPC l g a     generate setter and getter accessor
+
+  Maven key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l m i     run maven clean install
+  normal    SPC l m I     run maven install
+  normal    SPC l m p     run one already goal from list
+  normal    SPC l m r     run maven goals
+  normal    SPC l m R     run one maven goal
+  normal    SPC l m t     run maven test
+
+  Gradle key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l g r     run gradle run
+  normal    SPC l g b     run gradle build
+  normal    SPC l g B     run gradle clean build
+  normal    SPC l g t     run gradle test
+
+  Jump key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l j a     jump to alternate file
+
+  REPL key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l s i     start a jshell inferior REPL process
+  normal    SPC l s b     send buffer and keep code buffer focused
+  normal    SPC l s l     send line and keep code buffer focused
+  normal    SPC l s s     send selection text and keep code buffer focused
+<
+CODE FORMATTING
+To make neoformat support java file, you should install uncrustify. or
+download google's formater jar from:
+https://github.com/google/google-java-format
+
+and set the layer option `java_formatter_jar` to the path of the jar.
+>
+  [[layers]]
+    name = 'lang#java'
+    java_formatter_jar = 'path/to/google-java-format.jar'
+<
+
+==============================================================================
+LANG#JAVASCRIPT                              *SpaceVim-layers-lang-javascript*
+
+This layer is for JavaScript development, includes syntax lint, code
+completion etc. To enable this layer:
+>
+  [layers]
+    name = "lang#javascript"
+<
+The code linter is eslint, install eslint via:
+>
+  npm install -g eslint-cli
+<
+LAYER OPTION
+
+  1. auto_fix: If this option is true, --fix will be added to neomake eslint
+maker.
+>
+  [layers]
+    name = "lang#javascript"
+    auto_fix = true
+<
+KEY BINDINGS
+
+>
+  Key             Function
+  -----------------------------
+  SPC l r         run current file
+  SPC b f         format current buffer
+<
+
+This layer also provides REPL support for javascript, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#JSON                                          *SpaceVim-layers-lang-json*
+
+This layer provides syntax highlighting for json file. To enable this layer:
+>
+  [layers]
+    name = "lang#json"
+<
+
+OPTIONS
+
+  1. conceal: Set the valuable for |g:vim_json_syntax_conceal|
+
+  2. concealcursor: Set the valuable for |g:vim_json_syntax_concealcursor|
+
+
+>
+  [layers]
+    name = 'lang#json'
+    conceal = false
+    concealcursor = ''
+<
+
+==============================================================================
+LANG#JULIA                                        *SpaceVim-layers-lang-julia*
+
+This layer is for julia development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#julia'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for julia, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+To format julia code, you need to install `JuliaFormatter`, and the key
+binding is `SPC b f`
+
+==============================================================================
+LANG#KOTLIN                                      *SpaceVim-layers-lang-kotlin*
+
+This layer is for kotlin development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#kotlin'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for kotlin, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#LATEX                                        *SpaceVim-layers-lang-latex*
+
+This layer is for latex development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#latex'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l i         vimtex-info
+  normal          SPC l I         vimtex-info-full
+  normal          SPC l t         vimtex-toc-open
+  normal          SPC l T         vimtex-toc-toggle
+  normal          SPC l y         vimtex-labels-open
+  normal          SPC l Y         vimtex-labels-toggle
+  normal          SPC l v         vimtex-view
+  normal          SPC l r         vimtex-reverse-search
+  normal          SPC l l         vimtex-compile
+  normal          SPC l L         vimtex-compile-selected
+  normal          SPC l k         vimtex-stop
+  normal          SPC l K         vimtex-stop-all
+  normal          SPC l e         vimtex-errors
+  normal          SPC l o         vimtex-compile-output
+  normal          SPC l g         vimtex-status
+  normal          SPC l G         vimtex-status-all
+  normal          SPC l c         vimtex-clean
+  normal          SPC l C         vimtex-clean-full
+  normal          SPC l m         vimtex-imaps-list
+  normal          SPC l x         vimtex-reload
+  normal          SPC l X         vimtex-reload-state
+  normal          SPC l s         vimtex-toggle-main
+<
+
+==============================================================================
+LANG#LISP                                          *SpaceVim-layers-lang-lisp*
+
+This layer is for Common Lisp development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#lisp'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for lisp, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#LIVESCRIPT                              *SpaceVim-layers-lang-livescript*
+
+This layer is for livescript development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#livescript'
+<
+
+KEY BINDINGS
+
+>
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l r       run current file
+<
+
+This layer also provides REPL support for livescript, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#LUA                                            *SpaceVim-layers-lang-lua*
+
+This layer includes utilities and language-specific mappings for lua
+development.
+>
+  [[layers]]
+    name = 'lang#lua'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current script
+  normal          SPC l b         compile current file
+<
+
+This layer also provides REPL support for lua, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#MARKDOWN                                  *SpaceVim-layers-lang-markdown*
+
+This layer is for markdown language, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#markdown'
+<
+LAYER OPTIONS
+
+  1. `enabled_formater`: Set the enabled formater, by default it is
+    `['remark']`.
+  2. `enableWcwidth`: Enable/disabled wcwidth option, it is disabled by
+    default.
+  3. `listItemChar`: Set the default list item char, it is `-` by default.
+  4. `listItemIndent`: Set the default indent of list item. It is `1` by
+    default.
+
+==============================================================================
+LANG#MOONSCRIPT                              *SpaceVim-layers-lang-moonscript*
+
+This layer is for moonscript development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#moonscript'
+<
+
+KEY BINDINGS
+
+>
+  Key             Function
+  -----------------------------
+  SPC l r         Run current moonscript
+<
+
+This layer also provides REPL support for moonscript, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#NIM                                            *SpaceVim-layers-lang-nim*
+
+This layer is for nim development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#nim'
+<
+
+KEY BINDINGS
+
+>
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l r       run current file
+  normal    SPC l d       show symbol info
+  normal    SPC l e       rename symbol in file
+  normal    SPC l E       rename symbol in project
+  normal    g d           go to definition
+<
+
+This layer also provides REPL support for nim, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#NIX                                            *SpaceVim-layers-lang-nix*
+
+INTRO
+The lang#nix layer provides syntax highlighting for the Nix expression
+language.
+
+==============================================================================
+LANG#OCAML                                        *SpaceVim-layers-lang-ocaml*
+
+OCaml autocompletion provided by merlin.
+
+Requirements:
+>
+  opam
+  merlin
+<
+
+==============================================================================
+LANG#PACT                                          *SpaceVim-layers-lang-pact*
+
+This layer is for pact development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#pact'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for pact, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#PASCAL                                      *SpaceVim-layers-lang-pascal*
+
+This layer is for pascal development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#pascal'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+==============================================================================
+LANG#PERL                                          *SpaceVim-layers-lang-perl*
+
+This layer is for perl development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#perl'
+<
+
+LAYER OPTIONS
+
+  1. `perl_interpreter`: Set the perl interpreter, by default, it is `perl`
+
+>
+  [[layers]]
+    name = 'lang#perl'
+    perl_interpreter = 'path/to/perl'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for perl, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#PHP                                            *SpaceVim-layers-lang-php*
+
+This layer is for php development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#php'
+<
+
+LAYER OPTIONS
+
+  1. `php_interpreter`: Set the PHP interpreter, by default, it is `php`
+
+>
+  [[layers]]
+    name = 'lang#php'
+    php_interpreter = 'path/to/php'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for php, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#PONY                                          *SpaceVim-layers-lang-pony*
+
+This layer is for pony development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#pony'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+==============================================================================
+LANG#PROCESSING                              *SpaceVim-layers-lang-processing*
+
+This layer is for Processing development: https://processing.org
+
+This is based on the work from https://github.com/sophacles/vim-processing
+
+Requirements:
+
+  1. You will need a copy of processing-java. The best way to do this is to
+    get a copy of the Processing IDE from https://processing.org/download/
+
+      Once you have it, run it, and then select Tools -> install
+"processing-java"
+
+MAPPINGS
+
+>
+  Mode        Key         Function
+  -----------------------------------------------
+  normal      SPC l r     execute current sketch
+<
+
+==============================================================================
+LANG#PROLOG                                      *SpaceVim-layers-lang-prolog*
+
+This layer is for prolog development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#prolog'
+<
+
+KEY BINDINGS
+
+
+>
+  Key             Function
+  --------------------------------
+  SPC l r         run current file
+<
+
+The default code runner command is `swipl -q -f %s -t main`, `%s` will be
+replaced to the path of current file.
+
+This layer also provides REPL support for prolog, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#PUPPET                                      *SpaceVim-layers-lang-puppet*
+
+This layer is for Puppet development. It provides syntax highlighting and
+syntax checking.
+
+Requirements:
+>
+  Puppet
+  Puppet Lint
+<
+
+==============================================================================
+LANG#PURESCRIPT                              *SpaceVim-layers-lang-purescript*
+
+This layer provides purescript language support for SpaceVim. Includding
+syntax highlighting, code formatting and code completion. This layer is not
+enabled by default, to enable this layer, add following snippet into SpaceVim
+configuration file:
+>
+  [[layers]]
+    name = 'lang#purescript'
+<
+KEY BINDINGS
+
+
+>
+  Key             Function
+  --------------------------------
+  SPC l L         list loaded modules
+  SPC l l         reset loaded modules and load externs
+  SPC l R         rebuild current buffer
+  SPC l f         generate function template
+  SPC l t         add type annotation
+  SPC l a         apply current line suggestion
+  SPC l A         apply all suggestions
+  SPC l C         add case expression
+  SPC l i         import module
+  SPC l p         search pursuit for cursor ident
+  SPC l T         find type of cursor ident
+<
+
+This layer also provides REPL support for purescript, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#PYTHON                                      *SpaceVim-layers-lang-python*
+
+This layer provides python language support for SpaceVim. Includding syntax
+highlighting, code formatting and code completion. This layer is not enabled
+by default, to enable this layer, add following snippet into SpaceVim
+configuration file:
+>
+  [[layers]]
+    name = 'lang#python'
+<
+
+OPTIONS
+
+  1. python_file_head: the default file head for python source code.
+
+>
+  [layers]
+    name = "lang#python"
+    python_file_head = [
+      '#!/usr/bin/python3',
+      '# -*- coding : utf-8 -*-'
+      ''
+    ]
+<
+  2. `python_interpreter`: Set the interpreter of python.
+
+>
+  [[layers]]
+    name = 'lang#python'
+    python_interpreter = '~/download/bin/python3'
+<
+  3. format_on_save: enable/disable code formation when save python file. This
+options is disabled by default, to enable it:
+>
+  [[layers]]
+    name = 'lang#python'
+    format_on_save = true
+<
+
+KEY BINDINGS
+
+
+>
+  Key             Function
+  --------------------------------
+  SPC l r         run current file
+  g d             jump to definition
+<
+
+This layer also provides REPL support for python, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+If the lsp layer is enabled for python, the following key bindings can be
+used:
+>
+  key binding     Description
+  g D             jump to type definition
+  SPC l e         rename symbol
+  SPC l x         show references
+  SPC l s         show line diagnostics
+  SPC l d         show document
+  K               show document
+  SPC l w l       list workspace folder
+  SPC l w a       add workspace folder
+  SPC l w r       remove workspace folder
+<
+
+==============================================================================
+LANG#RACKET                                      *SpaceVim-layers-lang-racket*
+
+This layer is for racket development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#racket'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for racket, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#RACKET                                         *SpaceVim-layers-lang-red*
+
+This layer is for red development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#red'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for red, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#REASON                                      *SpaceVim-layers-lang-reason*
+
+This layer is for reason development, disabled by default, to enable this
+layer, add following snippet to your |SpaceVim-options| file.
+>
+  [[layers]]
+    name = 'lang#reason'
+<
+
+==============================================================================
+LANG#RING                                             *SpaceVim-layers-lang-r*
+
+This layer is for r development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#r'
+<
+
+KEY BINDINGS
+
+The command of code runner for R is `"R <%s"` `%s` will be replaced to the
+path of current R file.
+>
+  Key             Function
+  --------------------------------
+  SPC l r         run current file
+<
+
+This layer also provides REPL support for r, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#RING                                          *SpaceVim-layers-lang-ring*
+
+This layer is for ring development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#ring'
+<
+
+OPTIONS
+
+  1. ring_repl: Set the path of ring repl.
+
+>
+  [layers]
+    name = "lang#ring"
+    ring_repl = "/path/to/repl.ring"
+<
+KEY BINDINGS
+
+The code runner for ring is "ring %" % will be replaced to the path of current
+ring file.
+>
+  Key             Function
+  --------------------------------
+  SPC l r         run current file
+<
+
+This layer also provides REPL support for ring, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#RUBY                                          *SpaceVim-layers-lang-ruby*
+
+This layer is for ruby development, disabled by default, to enable this layer,
+add following snippet to your |SpaceVim-options| file.
+>
+  [[layers]]
+    name = 'lang#ruby'
+<
+
+OPTIONS
+
+  1. ruby_file_head: the default file head for ruby source code.
+
+>
+  [layers]
+    name = "lang#ruby"
+    ruby_file_head = [
+      '#!/usr/bin/ruby -w',
+      '# -*- coding : utf-8 -*-'
+      ''
+    ]
+<
+  2. repl_command: the REPL command for ruby
+
+>
+  [[layers]]
+    name = 'lang#ruby'
+    repl_command = '~/download/bin/ruby_repl'
+<
+  3. format_on_save: enable/disable code formation when save ruby file. This
+options is disabled by default, to enable it:
+>
+  [[layers]]
+    name = 'lang#ruby'
+    repl_command = '~/download/bin/ruby_repl'
+    format_on_save = true
+<
+KEY BINDINGS
+
+
+>
+  Key             Function
+  --------------------------------
+  SPC l r         run current file
+<
+
+This layer also provides REPL support for ruby, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#RUST                                          *SpaceVim-layers-lang-rust*
+
+This layer is for Rust development.
+
+Requirements:
+
+  1. Racer needs a copy of the rust source. The easiest way to do this is with
+    rustup. Once rustup is installed, download the source with:
+
+>
+  rustup component add rust-src
+<
+  2. Install Rust nightly build
+
+>
+  rustup install nightly
+<
+  3. Install racer:
+
+>
+  cargo +nightly install racer
+<
+  4. Set the RUST_SRC_PATH variable in your .bashrc:
+
+>
+  RUST_SRC_PATH=~/.multirust/toolchains/<change>/lib/rustlib/src/rust/src
+  export RUST_SRC_PATH
+<
+  5. Add racer to your path, or set the path with:
+
+>
+  [[layers]]
+    name = 'lang#rust'
+    racer_cmd = "/path/to/racer/bin"
+<
+
+LAYER OPTIONS
+
+The following layer options are supported when loading this layer:
+
+  1. `recommended_style`: `true`/`false` (Enable/Disable) recommended code
+style for rust. This option is disabled by default.
+  2. `format_on_save`: `true`/`false` (Enable/Disable) format current buffer
+after save. This option is disabled by default.
+  3. `racer_cmd`: The path of `racer` binary. This option is `racer` by
+default.
+  4. `rustfmt_cmd`: The path of `rustfmt` binary. This option is `rustfmt`
+by default.
+
+MAPPINGS
+
+>
+  Key         Function
+  -----------------------------------------------
+  g d         rust-definition
+  SPC l d     rust-doc
+  SPC l r     run current file
+  SPC l e     rls-rename-symbol
+  SPC l u     rls-show-references
+  SPC l c b   cargo-build
+  SPC l c c   cargo-clean
+  SPC l c f   cargo-fmt
+  SPC l c t   cargo-test
+  SPC l c u   cargo-update
+  SPC l c B   cargo-bench
+  SPC l c D   cargo-docs
+  SPC l c r   cargo-run
+<
+
+This layer also provides REPL support for rust, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#SCALA                                        *SpaceVim-layers-lang-scala*
+
+This layer is for Scala development.
+
+MAPPINGS
+
+>
+  Import key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    <F4>          show candidates for importing of cursor symbol
+  insert    <F4>          show candidates for importing of cursor symbol
+  normal    SPC l i c     show candidates for importing of cursor symbol
+  normal    SPC l i q     prompt for a qualified import
+  normal    SPC l i o     organize imports of current file
+  normal    SPC l i s     sort imports of current file
+  insert    <c-;>i        prompt for a qualified import
+  insert    <c-;>o        organize imports of current file
+  insert    <c-;>s        sort imports of current file
+
+  Debug key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l d t     show debug stack trace of current frame
+  normal    SPC l d c     continue the execution
+  normal    SPC l d b     set a breakpoint for the current line
+  normal    SPC l d B     clear all breakpoints
+  normal    SPC l d l     launching debugger
+  normal    SPC l d i     step into next statement
+  normal    SPC l d o     step over next statement
+  normal    SPC l d O     step out of current function
+
+  Sbt key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l b c     sbt clean compile
+  normal    SPC l b r     sbt run
+  normal    SPC l b t     sbt test
+  normal    SPC l b p     sbt package
+  normal    SPC l b d     sbt show project dependencies tree
+  normal    SPC l b l     sbt reload project build definition
+  normal    SPC l b u     sbt update external dependencies
+  normal    SPC l b e     run sbt to generate .ensime config file
+
+  Execute key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l r       run main class
+
+  REPL key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l s i     start a scala inferior REPL process
+  normal    SPC l s b     send buffer and keep code buffer focused
+  normal    SPC l s l     send line and keep code buffer focused
+  normal    SPC l s s     send selection text and keep code buffer focused
+
+  Other key bindings:
+
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC l Q       bootstrap server when first-time-use
+  normal    SPC l h       show Documentation of cursor symbol
+  normal    SPC l n       inline local refactoring of cursor symbol
+  normal    SPC l e       rename cursor symbol
+  normal    SPC l g       find Definition of cursor symbol
+  normal    SPC l t       show Type of expression of cursor symbol
+  normal    SPC l p       show Hierarchical view of a package
+  normal    SPC l u       find Usages of cursor symbol
+
+<
+SpaceVim uses [`ensime-vim`](https://ensime.github.io/editors/vim/install/) to
+provide code completion, format, sort imports etc, if has python support. Also
+you can enable lsp layer to has a better experience.
+
+
+LANGUAGE SERVER `METALS-VIM`
+
+Right now `metals-vim` works with `coc.nvim` to offer a richer user experience
+than other servers(LanguageClient-neovim or vim-lsp). Please make sure that
+`metals-vim` executable is in your `system $PATH`. Installation guide is here:
+[`metals-vim`](https://scalameta.org/metals/docs/editors/vim.html)
+
+
+ENSIME-VIM SETUP STEPS
+
+The following is quick install steps, if you want to see complete details,
+please see: [`ensime-vim`](https://ensime.github.io/editors/vim/install/)
+
+  1. Install vim`s plugin and its dependencies as following.
+
+     `pip install websocket-client sexpdata`,
+
+     `pip install pynvim` (neovim only).
+
+  2. Integration ENSIME with your build tools, here we use sbt. add
+    (sbt-ensime) as global plugin for sbt: Put code `addSbtPlugin("org.ensime"
+    % "sbt-ensime" % "2.6.1")` in file  '~/.sbt/plugins/plugins.sbt' (create
+    if not exists). Armed with your build tool plugin, generate the `.ensime`
+    config file from your project directory in command line, e.g. for sbt use
+    `sbt ensimeConfig`, or `./gradlew ensime` for Gradle. the first time will
+    take several minutes.
+
+  3. The first time you use ensime-vim (per Scala version), it will
+    `bootstrap` the ENSIME server installation when opening a Scala file you
+    will be prompted to run |:EnInstall|. Do that and give it a minute or two
+    to run. After this, you should see reports in Vim's message area that
+    ENSIME is coming up, and the indexer and analyzer are ready. Going
+    forward, ensime-vim will automatically start the ENSIME server when you
+    edit Scala files in a project with an `.ensime` config present.
+
+
+CODE FORMATTING
+
+  1. To make neoformat support scala file, you should install scalariform.
+    [`scalariform`](https://github.com/scala-ide/scalariform) and set
+    'g:spacevim_layer_lang_scala_formatter' to the path of the jar.
+
+  2. If lsp
+    [`metals-vim`](https://scalameta.org/metals/docs/editors/overview.html) is
+    enabled, it will automatically use
+    [`scalafmt`](https://scalameta.org/scalafmt/docs/configuration.html)  to
+    format code.
+
+==============================================================================
+LANG#SCHEME                                      *SpaceVim-layers-lang-scheme*
+
+This layer is for scheme development, disabled by default, to enable this
+layer, add following snippet to your |SpaceVim-options| file.
+>
+  [[layers]]
+    name = 'lang#scheme'
+<
+
+OPTIONS
+
+  1. scheme_dialect: Set the dialect of scheme.
+
+  2. scheme_interpreter: Set the path or interpreter of scheme.
+
+MAPPINGS
+
+>
+  Key         Function
+  -----------------------------------------------
+  SPC l r     Run current file
+<
+This layer also provides REPL support for scheme, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#SH                                              *SpaceVim-layers-lang-sh*
+
+This layer is for shell script development, including bash, zsh and fish. This
+layer provides basic syntax highlighting and code completion , and it is
+disabled by default, to enable this layer, add following snippet to your
+|SpaceVim-options| file.
+>
+  [[layers]]
+    name = 'lang#sh'
+<
+
+
+==============================================================================
+LANG#SMALLTALK                                *SpaceVim-layers-lang-smalltalk*
+
+This layer is for smalltalk development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#smalltalk'
+<
+
+
+==============================================================================
+LANG#SML                                            *SpaceVim-layers-lang-sml*
+
+This layer is for Standard ML development. This layer provides basic syntax
+highlighting and code completion , and it is disabled by default, to enable
+this layer, add following snippet to your |SpaceVim-options| file.
+>
+  [[layers]]
+    name = 'lang#sml'
+<
+
+You can run `:SMLCheckHealth` to check whether the environment if OK.
+
+LAYER OPTIONS
+
+`smlnj_path`: Set the path to the smlnj executable, by default, it is `sml`.
+
+`mlton_path`: Set the path to the mlton executable, by default, it is `mlton`.
+
+`repl_options`: Options used for REPL, by default, it is ''.
+
+`auto_create_def_use`: Whether to build def-use files on save automatically.
+By default, it is `mlb`. Valid values is:
+>
+   'mlb': Auto build def-use if there's a *.mlb file
+   'always': Always build def-use file
+   'never': Never build def-use file
+<
+
+`enable_conceal`: `0`/`1`. Whether to enable concealing for SML files. `0` by
+defaults.    `'a` becomes `α` (or `'α`).    `fn` becomes `λ.`
+
+`enable_conceal_show_tick`: `0`/`1`. When conceal is enabled, show `'α` for
+`'a` instead of `α`.    Helps for alignment. `0` by default.
+
+`sml_file_head`: Template for new sml file.
+
+Here is an example how to use above options:
+>
+  [[layers]]
+    name = "lang#sml"
+    smlnj_path = "/usr/local/smlnj/bin/sml"
+    mlton_path = "/usr/local/bin/mlton"
+    repl_options = ''
+    enable_conceal = 1
+    enable_conceal_show_tick = 1
+    auto_create_def_use = 'always'
+<
+
+==============================================================================
+LANG#SWIG                                         *SpaceVim-layers-lang-swift*
+
+This layer is for swift development, including syntax highlighting and indent.
+To enable it:
+>
+  [layers]
+    name = "lang#swift"
+<
+MAPPINGS
+
+>
+  Key         Function
+  -----------------------------------------------
+  SPC l k     jumping to placeholders
+  SPC l r     Run current file
+<
+This layer also provides REPL support for swift, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#SWIG                                          *SpaceVim-layers-lang-swig*
+
+This layer is for swig development, including syntax highlighting and indent.
+To enable it:
+>
+  [layers]
+    name = "lang#swig"
+<
+
+==============================================================================
+LANG#TCL                                            *SpaceVim-layers-lang-tcl*
+
+This layer is for tcl development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#tcl'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for tcl, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#TOML                                          *SpaceVim-layers-lang-toml*
+
+This layer provides basic syntax highlighting for toml. To enable it:
+>
+  [layers]
+    name = "lang#toml"
+<
+
+==============================================================================
+LANG#TYPESCRIPT                              *SpaceVim-layers-lang-typescript*
+
+This layer provides typescript development support for SpaceVim. To enable
+this layer, add following sinippet into SpaceVim configuration file.
+>
+  [layers]
+      name = 'lang#typescript'
+<
+KEY BINDINGS
+
+The following key bindings works well in both vim and neovim.
+>
+  Ket binding          Description
+  ----------------------------------------
+  g D                  jump to type definition
+  SPC l d              show document
+  SPC l e              rename symbol
+  SPC l i              import
+<
+The following key bindings only work in neovim.
+>
+  Ket binding          Description
+  ----------------------------------------
+  SPC l f              run code fix
+  SPC l p              preview definition
+  SPC l t              view type
+  SPC l R              show reference
+  SPC l D              show errors
+  SPC l o              organizes imports
+<
+The following key bindings only work in vim.
+>
+  Ket binding          Description
+  ----------------------------------------
+  SPC l m              interface implementations
+<
+
+==============================================================================
+LANG#V                                                *SpaceVim-layers-lang-v*
+
+This layer is for v development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#v'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for v, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#VBNET                                        *SpaceVim-layers-lang-vbnet*
+
+This layer is for vbnet development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#vbnet'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+
+==============================================================================
+LANG#VIM                                            *SpaceVim-layers-lang-vim*
+
+This layer is for vim script development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#vim'
+<
+
+The `checkers` layer provides syntax linter for vim. you need to install the
+`vint` command:
+>
+  pip install vim-vint
+<
+
+KEY BINDINGS
+
+The following key bindings will be added when this layer is loaded:
+>
+  key binding     Description
+  SPC l e         eval cursor expr
+  SPC l v         run HelpfulVersion cword
+  SPC l f         open exception trace
+  g d             jump to definition
+<
+
+If the lsp layer is enabled for vim script, the following key bindings can be
+used:
+>
+  key binding     Description
+  SPC l e         rename symbol
+  SPC l x         show references
+  SPC l s         show line diagnostics
+  SPC l d         show document
+  K               show document
+  SPC l w l       list workspace folder
+  SPC l w a       add workspace folder
+  SPC l w r       remove workspace folder
+<
+
+==============================================================================
+LANG#VUE                                            *SpaceVim-layers-lang-vue*
+
+This layer is for vue development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#vue'
+<
+
+The `checkers` layer provides syntax linter for vue. you need to install the
+`eslint` and `eslint-plugin-vue`:
+>
+  npm install -g eslint eslint-plugin-vue
+<
+
+==============================================================================
+LANG#WOLFRAM                                    *SpaceVim-layers-lang-wolfram*
+
+This layer is for wolfram development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#wolfram'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for wolfram, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#XML                                            *SpaceVim-layers-lang-xml*
+
+When editing an xml file, the omni func is xmlcomplete#CompleteTags. You can
+read the documentation in autoload/xmlcomplete.vim in the vim or neovim
+runtime directory.
+
+==============================================================================
+LANG#XQUERY                                      *SpaceVim-layers-lang-xquery*
+
+This layer provides basic syntax highlighting and indent file for xquery,
+disabled by default, to enable this layer, add following snippet to  your
+|SpaceVim-options| file.
+>
+  [[layers]]
+    name = 'lang#xquery'
+<
+
+==============================================================================
+LANG#ZIG                                            *SpaceVim-layers-lang-zig*
+
+This layer is for zig language development, disabled by default, to enable
+this layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#zig'
+<
+
+LAYER OPTION
+
+  1. `ztagsbin`: set the path of ztags, by default this option is `ztags`
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for zig, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANGUAGE SERVER PROTOCOL                                 *SpaceVim-layers-lsp*
+
+This layer provides language client support for SpaceVim.
+
+==============================================================================
+LEADERF                                              *SpaceVim-layers-leaderf*
+
+This layer provides fuzzy finder feature which is based on |leaderf|, and this
+layer requires vim compiled with `+python` or `+python3`. This layer is not
+loaded by default. To use this layer:
+>
+  [[layers]]
+    name = 'leaderf'
+<
+KEY BINDINGS
+
+The following key bindings will be enabled when this layer is loaded:
+>
+  Key bindings      Description
+  SPC p f / Ctrl-p  search files in current directory
+  <Leader> f SPC    Fuzzy find menu:CustomKeyMaps
+  <Leader> f e      Fuzzy find register
+  <Leader> f h      Fuzzy find history/yank
+  <Leader> f j      Fuzzy find jump, change
+  <Leader> f l      Fuzzy find location list
+  <Leader> f m      Fuzzy find output messages
+  <Leader> f o      Fuzzy find functions
+  <Leader> f t      Fuzzy find tags
+  <Leader> f q      Fuzzy find quick fix
+  <Leader> f r      Resumes Unite window
+<
+
+==============================================================================
+OPERATOR                                            *SpaceVim-layers-operator*
+
+With this layer, you can confirm that text is yanked correctly and see yanked
+text by highlighting.
+
+==============================================================================
+SHELL                                                  *SpaceVim-layers-shell*
+
+SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for vim.
+For more info, read |deol| and |vimshell|.
+
+VARIABLE
+
+default_shell: config the default shell to be used by shell layer.
+
+KEY BINDINGS
+
+>
+  SPC '   Open or switch to terminal windows
+  q       Hide terminal windows in normal mode
+<
+
+==============================================================================
+TEST                                                    *SpaceVim-layers-test*
+
+This layer allows to run tests on SpaceVim
+
+MAPPINGS
+
+>
+  Mode      Key         Function
+  -------------------------------------------------------------
+  normal    SPC k n     run nearest test
+  normal    SPC k f     run test file
+  normal    SPC k s     run test suite
+  normal    SPC k l     run the latest test
+  normal    SPC k v     visits the last run test file
+<
+
+==============================================================================
+TMUX                                                    *SpaceVim-layers-tmux*
+
+`tmux` layer adds integration between tmux and vim panes. Switch between panes
+seamlessly, syntax highlighting, commenting, man page navigation and ability
+to execute lines as tmux commands. This layer is not added by default. To
+include it, add following to spacevim configuration file:
+>
+  [[layers]]
+    name = 'tmux'
+<
+If you are having issues with <C-h> in a neovim buffer, see
+
+https://github.com/neovim/neovim/issues/2048#issuecomment-78045837
+
+LAYER OPTIONS
+
+`enable_tmux_clipboard`: this option is used to enable or disable tmux
+clipboard, by default this option is `false`.
+
+MAPPINGS
+
+>
+  Key       Mode        Function
+  ------------------------------
+  <C-h>     normal      Switch to vim/tmux pane in left direction
+  <C-j>     normal      Switch to vim/tmux pane in down direction
+  <C-k>     normal      Switch to vim/tmux pane in up direction
+  <C-l>     normal      Switch to vim/tmux pane in right direction
+<
+
+==============================================================================
+TOOLS#DASH                                        *SpaceVim-layers-tools-dash*
+
+This layer provides Dash integration for SpaceVim
+
+==============================================================================
+TOOLS#MPV                                          *SpaceVim-layers-tools-mpv*
+
+The `tools#mpv` layer provides mpv integration for SpaceVim. this layer is
+disabled by default, to enable this layer, add following snippet to your
+SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'tools#mpv'
+<
+
+LAYER OPTIONS
+
+The following options can be used with this layer:
+
+  1. `mpv_interpreter`: set the path of `mpv`.
+  2. `musics_directory`: set the path of directory where to store musics.
+
+KEY BINDINGS
+
+>
+  Key             Function
+  ---------------------------------------------
+  SPC m m l       fuzzy find musics
+  SPC m m n       next music
+  SPC m m s       stop mpv
+<
+
+==============================================================================
+TOOLS#ZEAL                                        *SpaceVim-layers-tools-zeal*
+
+This layer provides Zeal integration for SpaceVim
+
+==============================================================================
+TREESITTER                                        *SpaceVim-layers-treesitter*
+
+This layer provides treesitter support for SpaceVim.
+
+==============================================================================
+UI                                                        *SpaceVim-layers-ui*
+
+The `ui` layer defines the default interface for SpaceVim, and it is loaded by
+default. This layer includes scrollbar, indentline, and cursorword
+highlighting.
+>
+  [[layers]]
+    name = 'ui'
+    enable_sidebar = false
+    enable_scrollbar = false
+    enable_indentline = true
+    enable_cursorword = false
+    indentline_char = '|'
+    conceallevel = 0
+    concealcursor = ''
+    cursorword_delay = 50
+    cursorword_exclude_filetype = []
+    indentline_exclude_filetyps = []
+<
+
+if you want to disable `ui` layer, you can use:
+>
+  [[layers]]
+    name = 'ui'
+    enabled = fasle
+<
+OPTIONS
+
+  1. `enable_sidebar`: Enable/disable sidebar.
+  2. `enable_scrollbar`: Enable/disable floating scrollbar of current buffer.
+Disabled by default. This feature requires neovim's floating window.
+  3. `enable_indentline`: Enable/disable indentline of current buffer.
+Enabled by default.
+  4. `enable_cursorword`: Enable/disable  cursorword highlighting.
+Disabled by default.
+  5. `indentline_char`: Set the character of indentline.
+  6. `conceallevel`: set the conceallevel option.
+  7. `concealcursor`: set the concealcursor option.
+  8. `cursorword_delay`: The delay duration in milliseconds for setting the
+word highlight after cursor motions, the default is 50.
+  9. `cursorword_exclude_filetypes`: Ignore filetypes when enable cursorword
+highlighting.
+  10. `indentline_exclude_filetyps`: Ignore filetypes when enable indentline.
+
+KEY BINDINGS
+
+>
+  Key binding     Description
+  SPC t h         ui current buffer or selection lines
+<
+
+
+==============================================================================
+UNITE                                                  *SpaceVim-layers-unite*
+
+This layer provides fuzzy finder feature which is based on |unite|. This layer
+is not loaded by default, to use this layer, you need to load `unite` layer in
+your configuration file.
+>
+  [[layers]]
+    name = 'unite'
+<
+
+KEY BINDINGS
+
+>
+  | Key bindings         | Discription                   |
+  | -------------------- | ----------------------------- |
+  | `<Leader> f <Space>` | Fuzzy find menu:CustomKeyMaps |
+  | `<Leader> f e`       | Fuzzy find register           |
+  | `<Leader> f h`       | Fuzzy find history/yank       |
+  | `<Leader> f j`       | Fuzzy find jump, change       |
+  | `<Leader> f l`       | Fuzzy find location list      |
+  | `<Leader> f m`       | Fuzzy find output messages    |
+  | `<Leader> f o`       | Fuzzy find outline            |
+  | `<Leader> f q`       | Fuzzy find quick fix          |
+  | `<Leader> f r`       | Resumes Unite window          |
+<
+
+
+==============================================================================
+USAGE                                                         *SpaceVim-usage*
+
+  General guide for using SpaceVim. Including layer configuration, bootstrap
+function.
+
+==============================================================================
+BUFFERS-AND-FILES                           *SpaceVim-usage-buffers-and-files*
+
+BUFFERS MANIPULATION KEY BINDINGS
+All buffers key bindings are start with `b` prefix:
+>
+  Key Bindings  Descriptions
+  SPC <Tab>         switch to alternate buffer in the current window (switch
+    back and forth)
+  SPC b .             buffer transient state
+  SPC b b             switch to a buffer (via denite/unite)
+  SPC b d             kill the current buffer (does not delete the visited
+    file)
+  SPC u SPC b d kill the current buffer and window (does not delete the
+    visited file) (TODO)
+  SPC b D             kill a visible buffer using vim-choosewin
+<
+
+==============================================================================
+CUSTOM_PLUGINS                                 *SpaceVim-usage-custom_plugins*
+
+Add custom plugins.
+>
+  [[custom_plugins]]
+    repo = 'vimwiki/vimwiki'
+    merged = false
+<
+
+==============================================================================
+REPL                                                     *SpaceVim-usage-repl*
+
+In language layer, REPL key bindings has been added. To start a REPL process,
+the default key binding is `SPC l s i` . Key bindings for sending code to REPL
+process only support following types: `line`, `selection` and `buffer` . All
+of the key binding is mapped to function `SpaceVim#plugins#repl#send`. The
+first argument is {type}. To send raw string, use `raw` as type, for example:
+>
+  call SpaceVim#plugins#repl#send('raw', 'print("hello world!")')
+<
+
+>
+<
+
+==============================================================================
+TASKS                                                   *SpaceVim-usage-tasks*
+
+general guide for tasks manager in SpaceVim.
+
+==============================================================================
+API                                                             *SpaceVim-api*
+
+SpaceVim contains a variety of public apis. To using the api, you need to make
+sure SpaceVim has been added to your &rtp. after that, you can use
+|SpaceVim#api#import| to import the API you need.
+
+USAGE
+
+This is just an example, and it works well in old version vim.
+>
+  let s:json = SpaceVim#api#import('data#json')
+  let rst = s:json.json_encode(onject)
+  let rst = s:json.json_decode(string)
+<
+
+here is list of resources where SpaceVim comes from:
+
+vital: https://github.com/vim-jp/vital.vim
+
+==============================================================================
+CMDLINEMENU                                         *SpaceVim-api-cmdlinemenu*
+
+menu({items})
+
+Create a cmdline selection menu from a list of {items}, each item should be a
+list of two value in it, first one is the description, and the next one should
+be a funcrc.
+
+==============================================================================
+DATA#DICT                                             *SpaceVim-api-data-dict*
+
+provides some functions to manipulate a dict.
+
+make({keys}, {values}[, {fill}])
+
+  make a dictionary from two list, the {keys} and {values}.
+
+swap({dict})
+
+  swap the keys and values in a dictionary.
+
+make_index
+
+  make a dictionary from a list, use
+
+==============================================================================
+DATA#LIST                                             *SpaceVim-api-data-list*
+
+provides some functions to manipulate a list.
+
+pop({list})
+
+  Removes the last element from {list} and returns the element, as if the
+{list} is a stack.
+
+push({list})
+
+  Appends {val} to the end of {list} and returns the list itself, as if the
+{list} is a stack.
+
+listpart({list}, {start}[, {len}])
+
+  The result is a List, which is part of {list}, starting from index {start},
+with the length {len}
+
+replace(list, begin, end, re_list)
+
+  replace {list} from {begin} to {end} with {re_list}
+
+shift({list})
+
+  remove first item in a {list}, and return the item
+
+unshift({list})
+
+ insert an item to the begin of the {list}
+
+clear({list})
+
+ clear items in the {list}
+
+char_range({from}, {to})
+
+ return a characters list based on the ascii number range.
+
+==============================================================================
+DATA#NUMBER                                         *SpaceVim-api-data-number*
+
+data#number API provides some basic functions to generate number.
+
+random([{a}[, {b}]])
+>
+  random()     : an unbounded random integer number.
+  random(a)    : an unbounded random number larger than a.
+  random(a, b) : a random number from [a, a + b - 1].
+<
+
+==============================================================================
+DATA#STRING                                         *SpaceVim-api-data-string*
+
+
+FUNCTIONS
+
+split(str [, sep [, keepempty[, max]]])
+
+  run vim command, and return the output of such command.
+
+trim(str)
+
+  remove space at the begin and end of a string, same as |trim()|
+
+fill(str, length[, char])
+
+  fill string to length with {char}, if {char} is omnit, a space is used.
+
+==============================================================================
+JOB                                                         *SpaceVim-api-job*
+
+provides some functions to manager job
+
+start({cmd}[, {opt}])
+
+  spawns {cmd} as a job. {opts} is a dictionary with these keys:
+
+  on_stdout: stdout event handler (function name or Funcref)
+
+  on_stderr: stderr event handler (function name or Funcref)
+
+  on_exit: exit event handler (function name or Funcref)
+
+  cwd: working directory of the job; defaults to current directory
+
+==============================================================================
+LOGGER                                                   *SpaceVim-api-logger*
+
+provides some functions to manager logger
+
+set_silent({silent})
+
+  {silent} is a Boolean. by default it is false, and log will be print to
+screen.
+
+==============================================================================
+PASSWORD                                               *SpaceVim-api-password*
+
+provides some functions to generate password
+
+generate_simple({len})
+
+  generate simple password
+
+generate_strong({len})
+
+  generate strong password
+
+generate_paranoid({len})
+
+  generate paranoid password
+
+generate_numeric({len})
+
+  generate numeric password
+
+generate_phonetic({len})
+
+  generate phonetic password
+
+==============================================================================
+PROMPT                                                   *SpaceVim-api-prompt*
+
+open()
+
+Create a cmdline prompt, use while loop to get the input from user. The
+default mapping for prompt is:
+>
+  <Bs>            remove last character
+  <C-w>           remove the Word before the cursor
+  <C-u>           remove the Line before the cursor
+  <C-k>           remove the Line after the cursor
+  <C-a> / <Home>  Go to the beginning of the line
+  <C-e> / <End>   Go to the end of the line
+<
+
+==============================================================================
+SID                                                     *SpaceVim-api-vim-sid*
+
+" Capture command
+
+==============================================================================
+SYSTEM                                                   *SpaceVim-api-system*
+
+name()
+
+Return the name of current os, availibel value is: linux, cygwin, windows and
+mac.
+
+==============================================================================
+UNICODE#BOX                                         *SpaceVim-api-unicode-box*
+
+provides some functions to draw box and table.
+
+drawing_table({json}[, {keys}])
+
+  drawing table with json data.
+
+
+==============================================================================
+VIM#BUFFER                                           *SpaceVim-api-vim-buffer*
+
+INTRO
+
+vim#buffer API provides some basic functions for setting and getting config of
+vim buffer.
+
+FUNCTIONS
+
+is_cmdwin()
+
+Check if current windows is command line windows.
+
+open(opt)
+
+Open a new buffer with specifice options, return the buffer number, the {opt}
+is a dict with following keys:
+
+    bufname : the buffer name of the new buffer
+
+    mode: how to open the new buffer, default is vertical topleft split
+
+    initfunc: the function which will be call after creating buffer
+
+    cmd: the ex command which will be run after the new buffer is created
+
+==============================================================================
+VIM#BUFFER                                           *SpaceVim-api-vim-window*
+
+INTRO
+
+`vim#window` API provides some basic functions for setting and getting config
+of vim window.
+
+FUNCTIONS
+
+get_cursor({winid})
+
+  Gets the cursor position in the window {winid}, to get the ID of a window,
+checkout |window-ID|.
+
+set_cursor({winid}, {pos})
+
+  Sets the cursor position to {pos} in the window {winid}.
+
+is_float({winnr})
+
+  Check if the window is a floating windows, return `v:true` if the window
+is a floating window.
+
+winexists({winid})
+
+  Check if the window with {winid} exists in current tabpage.
+
+==============================================================================
+VIM#COMMAND                                         *SpaceVim-api-vim-command*
+
+This api is for creating complete function for custom vim command. This is
+example for create complete function for command TEST
+>
+  let s:CMD = SpaceVim#api#import('vim#command')
+  let s:CMD.options = {
+      \ '-f' : {
+      \ 'description' : '',
+      \ 'complete' : ['text'],
+      \ },
+      \ '-d' : {
+      \ 'description' : 'Root directory for sources',
+      \ 'complete' : 'file',
+      \ },
+      \ }
+  function! CompleteTest(a, b, c)
+    return s:CMD.complete(a:a, a:b, a:c)
+  endfunction
+  function! Test(...)
+  endfunction
+  command! -nargs=* -complete=custom,CompleteTest TEST :call Test(<f-args>)
+<
+
+==============================================================================
+VIM#COMPATIBLE                                   *SpaceVim-api-vim-compatible*
+
+
+FUNCTIONS
+
+execute(cmd)
+
+  run vim command, and return the output of such command.
+
+system(cmd)
+
+  like |system()| but can accept list as argv.
+
+systemlist(cmd)
+
+  like |systemlist()| but can accept list as argv.
+
+has(feature)
+
+  check if {feature} is supported in current version.
+
+getjumplist()
+
+  return a list of jump position, like result of |:jump|
+
+==============================================================================
+VIM#MESSAGE                                         *SpaceVim-api-vim-message*
+
+`vim#message` API provide functions for generating colored message in vim's
+command line.
+
+echo({hi}, {msg})
+
+  print message with {hi} highlight group.
+
+==============================================================================
+DEVELOPMENT                                                     *SpaceVim-dev*
+
+
+SpaceVim is a joint effort of all contributors. We encourage you to
+participate in SpaceVim's development. We have some guidelines that we need
+all contributors to follow.
+
+==============================================================================
+COMMIT-STYLE-GUIDE                           *SpaceVim-dev-commit-style-guide*
+
+A git commit message consists a three distinct parts separated by black line.
+>
+  Type (scope): Subject
+
+  body
+
+  footer
+<
+types:
+
+`feat`: a new feature
+`fix`: a bug fix
+`change`: no backward compatible changes
+`docs`: changes to documentation
+`style`: formatting, missing semi colons, etc; no code change
+`refactor`: refactoring production code
+`test`: adding tests, refactoring test; no production code change
+`chore`: updating build tasks, package manager configs, etc; no production
+  code change
+
+scopes:
+
+`api`: files in `autoload/SpaceVim/api/` and `docs/api/` directory
+`layer`: files in `autoload/SpaceVim/layers/` and `docs/layers/` directory
+`plugin`: files in `autoload/SpaceVim/plugins/` directory
+`bundle`: files in `bundle/` directory
+`core`: other files in this repository
+
+subject:
+
+Subjects should be no greater than 50 characters, should begin with a capital
+letter and do not end with a period.
+
+Use an imperative tone to describe what a commit does, rather than what it
+did. For example, use change; not changed or changes.
+
+body:
+
+Not all commits are complex enough to warrant a body, therefore it is optional
+and only used when a commit requires a bit of explanation and context.
+
+footer:
+
+The footer is optional and is used to reference issue tracker IDs.
+
+==============================================================================
+FAQ                                                             *SpaceVim-faq*
+
+This is a list of the frequently asked questions about SpaceVim.
+
+  1. How do I enable YouCompleteMe?
+
+  Step 1: Add `enable_ycm = true` to custom_config. By default it should be
+`~/.SpaceVim.d/init.toml`.
+
+  Step 2: Get into the directory of YouCompleteMe's author. By default it
+should be `~/.cache/vimfiles/repos/github.com/Valloric/`. If you find the
+directory `YouCompleteMe` in it, go into it. Otherwise clone   YouCompleteMe
+repo by   `git clone https://github.com/Valloric/YouCompleteMe.git`. After
+cloning,   get into it and run `git submodule update --init --recursive`.
+
+  Step 3: Compile YouCompleteMe with the features you want. If you just want
+C family support, run `./install.py --clang-completer`.
+
+
+  2. How to add custom snippet?
+
+ SpaceVim uses neosnippet as the default snippet engine. This can be changed
+by |SpaceVim-options-snippet_engine| option.
+
+ If you want to add a snippet for a current filetype, run |:NeoSnippetEdit|
+command. A buffer will be opened and you can add your custom snippet. By
+default this buffer will be save in `~/.SpaceVim.d/snippets`.
+
+ For more info about how to write snippet, please read
+|neosnippet-snippet-syntax|.
+
+
+  3. Where is `<c-f>` in cmdline-mode?
+
+  `<c-f>` is the default value of |cedit| option, but in SpaceVim we use that
+binding as `<Right>`, so maybe you can change the `cedit` option or use
+`<leader>+<c-f>`.
+
+  4. How to use `<Space>` as `<Leader>`?
+
+  Add `let g:mapleader = "\<Space>"` to bootstrap function.
+
+  5. Why does Vim freeze after pressing Ctrl-s?
+
+  This is a feature of terminal emulators. You can use `Ctrl-q` to unfreeze
+Vim. To disable this feature you need the following in either
+`~/.bash_profile` or `~/.bashrc`:
+>
+  stty -ixon
+<
+
+  6. How to enable `+py` and `+py3` in Neovim?
+
+  In Neovim we can use `g:python_host_prog` and `g:python3_host_prog`   to
+config python prog. But in SpaceVim the custom configuration file is   loaded
+after SpaceVim core code. So in SpaceVim itself, if we using `:py`   command,
+it may cause errors.
+
+  So we introduce two new environment variables: `PYTHON_HOST_PROG` and
+`PYTHON3_HOST_PROG`.
+
+  For example:
+>
+  export PYTHON_HOST_PROG='/home/q/envs/neovim2/bin/python'
+  export PYTHON3_HOST_PROG='/home/q/envs/neovim3/bin/python'
+<
+
+==============================================================================
+CHANGELOG                                                 *SpaceVim-changelog*
+
+Following HEAD: changes in master branch since last release v1.7.0
+
+https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+
+2021-06-16: v1.4.0
+
+https://spacevim.org/SpaceVim-release-v1.7.0/
+
+2020-12-31: v1.6.0
+
+https://spacevim.org/SpaceVim-release-v1.6.0/
+
+2020-08-01: v1.5.0
+
+https://spacevim.org/SpaceVim-release-v1.5.0/
+
+2020-04-05: v1.4.0
+
+https://spacevim.org/SpaceVim-release-v1.4.0/
+
+2019-11-04: v1.3.0
+
+https://spacevim.org/SpaceVim-release-v1.3.0/
+
+2019-07-17: v1.2.0
+
+https://spacevim.org/SpaceVim-release-v1.2.0/
+
+2019-04-08: v1.1.0
+
+https://spacevim.org/SpaceVim-release-v1.1.0/
+
+2018-12-25: v1.0.0
+
+https://spacevim.org/SpaceVim-release-v1.0.0/
+
+2018-09-26: v0.9.0
+
+https://spacevim.org/SpaceVim-release-v0.9.0/
+
+2018-06-18: v0.8.0
+
+https://spacevim.org/SpaceVim-release-v0.8.0/
+
+2018-03-18: v0.7.0
+
+https://spacevim.org/SpaceVim-release-v0.7.0/
+
+2017-12-30: v0.6.0
+
+https://spacevim.org/SpaceVim-release-v0.6.0/
+
+2017-11-06: v0.5.0
+
+https://spacevim.org/SpaceVim-release-v0.5.0/
+
+2017-08-05: v0.4.0
+
+https://spacevim.org/SpaceVim-release-v0.4.0/
+
+2017-06-27: v0.3.1
+
+https://spacevim.org/SpaceVim-release-v0.3.1/
+
+2017-05-31: v0.3.0
+
+https://spacevim.org/SpaceVim-release-v0.3.0/
+
+2017-03-30: v0.2.0
+
+https://spacevim.org/SpaceVim-release-v0.2.0/
+
+2017-01-26: v0.1.0
+
+https://spacevim.org/SpaceVim-release-v0.1.0/
+
+
+
+vim:tw=78:ts=8:ft=help:norl:

@@ -219,6 +219,7 @@ let s:lsp_servers = {
       \ 'sh' : ['bash-language-server', 'start'],
       \ 'typescript' : ['typescript-language-server', '--stdio'],
       \ 'typescriptreact' : ['typescript-language-server', '--stdio'],
+      \ 'vim' : ['vim-language-server', '--stdio'],
       \ 'vue' : ['vls']
       \ }
 

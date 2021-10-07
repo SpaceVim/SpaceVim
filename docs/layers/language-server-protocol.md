@@ -118,6 +118,12 @@ npm install -g @elm-tooling/elm-language-server
 npm install -g elm elm-test elm-format
 ```
 
+**vim**
+
+```
+npm install -g vim-language-server
+```
+
 ## Configuration
 
 To enable lsp support for a specified filetype, you may need to load this layer with `filetypes` option, for example:
@@ -159,6 +165,7 @@ default language server commands:
 | `sh`              | `['bash-language-server', 'start']`                                                                                                                                                              |
 | `typescript`      | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
 | `typescriptreact` | `['typescript-language-server', '--stdio']`                                                                                                                                                      |
+| `vim`             | `['vim-language-server', '--stdio']`                                                                                                                                                             |
 | `vue`             | `['vls']`                                                                                                                                                                                        |
 
 To override the server command, you may need to use `override_cmd` option:
