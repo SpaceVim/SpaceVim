@@ -328,7 +328,7 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'LeaderfHelpCword',
-        \ ['get help with the symbol at point',
+        \ ['get-help-for-cursor-symbol',
         \ [
         \ '[SPC h i] is to get help with the symbol at point',
         \ '',
