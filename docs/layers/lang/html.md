@@ -43,7 +43,7 @@ npm install --global vscode-html-languageserver-bin
 - `emmet_filetyps`: Set the filetypes for enabling emmet
 
   ```toml
-  [layers]
+  [[layers]]
     name = "lang#html"
     emmet_leader_key = "<C-e>"
     emmet_filetyps = ['html']
