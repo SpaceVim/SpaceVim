@@ -22,7 +22,6 @@ let s:self = {
       \ 'silent' : 1,
       \ 'level' : 1,
       \ 'verbose' : 1,
-      \ 'debug_mode' : 0,
       \ 'file' : '',
       \ 'temp' : [],
       \ }
@@ -97,13 +96,6 @@ function! s:self.info(msg) abort
   call self.write(log)
 endfunction
 
-function! s:self.debug(msg) abort
-  if self.debug_mode
-    let time = strftime('%H:%M:%S')
-    let log = '[ ' . self.name . ' ] [' . time . '] [ Debug ] ' . a:msg
-    call self.write(log)
-  endif
-endfunction
 
 function! s:self.set_name(name) abort
   let self.name = a:name
