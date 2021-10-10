@@ -37,6 +37,7 @@
 "   SPC l R              show reference
 "   SPC l D              show errors
 "   SPC l o              organizes imports
+"   SPC l g d            generate JSDoc
 " <
 " The following key bindings only work in vim.
 " >
@@ -162,7 +163,7 @@ function! s:on_typescript_ft() abort
   " generate groups
   let g:_spacevim_mappings_space.l.g = {'name' : '+Generate'}
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'g', 'd'], 'JsDoc',
-        \ 'generate JSDoc', 1)
+        \ 'generate-JSDoc', 1)
 
   " REPL support
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}

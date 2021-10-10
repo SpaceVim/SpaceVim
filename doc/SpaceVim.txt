@@ -4218,6 +4218,7 @@ The following key bindings only work in neovim.
   SPC l R              show reference
   SPC l D              show errors
   SPC l o              organizes imports
+  SPC l g d            generate JSDoc
 <
 The following key bindings only work in vim.
 >
