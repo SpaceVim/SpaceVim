@@ -9,21 +9,43 @@
 ""
 " @section lang#markdown, layers-lang-markdown
 " @parentsection layers
-" This layer is for markdown language, disabled by default, to enable this
-" layer, add following snippet to your SpaceVim configuration file.
+" This layer adds markdown support to SpaceVim. It is disabled by default,
+" to enable this layer, add following snippet to your SpaceVim configuration
+" file.
 " >
 "   [[layers]]
 "     name = 'lang#markdown'
 " <
 " @subsection Layer options
 "
-" 1. `enabled_formater`: Set the enabled formater, by default it is
-"   `['remark']`.
+" The following layer options are supported in this layer:
+"
+" 1. `enabled_formater`: Set the enabled formater, by default it is 
+" `['remark']`. To use `prettier`, you need to install `prettier` via:
+" >
+"   npm install --global prettier
+" <
 " 2. `enableWcwidth`: Enable/disabled wcwidth option, it is disabled by
 "    default.
 " 3. `listItemChar`: Set the default list item char, it is `-` by default.
 " 4. `listItemIndent`: Set the default indent of list item. It is `1` by
 "    default.
+" Here is an example for loading `lang#markdown` layer:
+" >
+"   [[layers]]
+"       name = 'lang#markdown'
+"       enableWcwidth = 1
+"       listItemIndent = 1
+"       enabled_formater = ['prettier']
+" <
+" @subsection key bindings
+"
+" This layer brings following key bindings to markdown file:
+" >
+"   Key binding         Description
+"   Ctrl-b              insert code block
+"   SPC l r             run code in code block
+" <
 
 if exists('s:md_listItemIndent')
   finish
