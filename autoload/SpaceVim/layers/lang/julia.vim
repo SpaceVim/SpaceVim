@@ -17,12 +17,13 @@
 " <
 "
 " @subsection Key bindings
+"
+" This layer brings following key bindings to julia file:
 " >
 "   Mode            Key             Function
 "   ---------------------------------------------
 "   normal          SPC l r         run current file
 " <
-"
 " This layer also provides REPL support for julia, the key bindings are:
 " >
 "   Key             Function
@@ -34,6 +35,21 @@
 " <
 " To format julia code, you need to install `JuliaFormatter`, and the key
 " binding is `SPC b f`
+"
+" If the lsp layer is enabled for python, the following key bindings can
+" be used:
+" >
+"   key binding     Description
+"   g D             jump to type definition
+"   SPC l e         rename symbol
+"   SPC l x         show references
+"   SPC l s         show line diagnostics
+"   SPC l d         show document
+"   K               show document
+"   SPC l w l       list workspace folder
+"   SPC l w a       add workspace folder
+"   SPC l w r       remove workspace folder
+" <
 
 function! SpaceVim#layers#lang#julia#plugins() abort
   let plugins = []
@@ -86,11 +102,25 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'],
         \ 'call LaTeXtoUnicode#Toggle()', 'toggle latex to unicode', 1)
   if SpaceVim#layers#lsp#check_filetype('julia')
+        \ || SpaceVim#layers#lsp#check_server('julials')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+    nnoremap <silent><buffer> gD :<C-u>call SpaceVim#lsp#go_to_typedef()<Cr>
+
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
-          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+          \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
+          \ 'call SpaceVim#lsp#references()', 'show-references', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
-          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+          \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
+          \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
+    let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],
+          \ 'call SpaceVim#lsp#list_workspace_folder()', 'list-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'a'],
+          \ 'call SpaceVim#lsp#add_workspace_folder()', 'add-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'r'],
+          \ 'call SpaceVim#lsp#remove_workspace_folder()', 'remove-workspace-folder', 1)
   endif
 endfunction
 
