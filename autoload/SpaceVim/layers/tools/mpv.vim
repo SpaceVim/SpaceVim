@@ -22,7 +22,8 @@
 " The following options can be used with this layer:
 "
 " 1. `mpv_interpreter`: set the path of `mpv`.
-" 2. `musics_directory`: set the path of directory where to store musics.
+" 2. `musics_directory`: set the path of directory where to store musics. The
+" default directory is `~/Music`
 "
 " @subsection Key bindings
 " >
@@ -36,7 +37,7 @@
 if exists('s:musics_directory')
   finish
 else
-  let s:musics_directory = '~/Musics'
+  let s:musics_directory = '~/Music'
   let s:mpv_interpreter = 'mpv'
   let s:loop_mode = 'random'
   let s:stop_mpv = 0

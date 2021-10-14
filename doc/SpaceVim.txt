@@ -4573,7 +4573,8 @@ LAYER OPTIONS
 The following options can be used with this layer:
 
   1. `mpv_interpreter`: set the path of `mpv`.
-  2. `musics_directory`: set the path of directory where to store musics.
+  2. `musics_directory`: set the path of directory where to store musics. The
+default directory is `~/Music`
 
 KEY BINDINGS
 
