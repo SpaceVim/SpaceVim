@@ -866,7 +866,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<Down>` / `j`        | select next file or directory                     |
 | `<Up>` / `k`          | select previous file or directory                 |
 | `<Right>` / `l`       | open selected file or expand directory            |
-| `<Enter>`             | open file or switch to directory                     |
+| `<Enter>`             | open file or switch to directory                  |
 | `N`                   | Create new file under cursor                      |
 | `r`                   | Rename the file under cursor                      |
 | `d`                   | Delete the file under cursor                      |
@@ -1176,10 +1176,10 @@ Read `:h registers` for more info about other registers.
 
 | Key          | Descriptions                                 |
 | ------------ | -------------------------------------------- |
-| `<Leader> y` | Copy text to system clipboard                |
+| `<Leader> y` | Copy selected text to system clipboard       |
 | `<Leader> p` | Paste text from system clipboard after here  |
 | `<Leader> P` | Paste text from system clipboard before here |
-| `<Leader> Y` | Copy text to pastebin                        |
+| `<Leader> Y` | Copy selected text to pastebin               |
 
 The `<Leader> Y` key binding will copy selected text to a pastebin server. It requires `curl` in your `$PATH`.
 The default command is:

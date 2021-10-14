@@ -1090,10 +1090,10 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 
 | 快捷键       | 功能描述                         |
 | ------------ | -------------------------------- |
-| `<Leader> y` | 复制文本至系统剪切板             |
+| `<Leader> y` | 复制已选中的文本至系统剪切板     |
 | `<Leader> p` | 粘贴系统剪切板文字至当前位置之后 |
 | `<Leader> P` | 粘贴系统剪切板文字至当前位置之前 |
-| `<Leader> Y` | 复制文本至 pastebin              |
+| `<Leader> Y` | 复制已选中的文本至 pastebin      |
 
 快捷键 `<Leader> Y` 将把选中的文本复制到 pastebin 服务器，并且将返回的链接复制到系统剪切板。
 使用该功能，需要系统里有 `curl` 可执行程序（Windows 系统下，Neovim 自带 `curl`）。
