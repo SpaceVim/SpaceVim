@@ -14,10 +14,58 @@ let s:pr_cache = {}
 
 let s:github_cache = {}
 
+let s:commit_types = [
+      \ {
+        \ 'word' : 'feat',
+        \ 'menu' : 'A new feature'
+        \ },
+      \ {
+        \ 'word' : 'fix',
+        \ 'menu' : 'A bug fix'
+        \ },
+      \ {
+        \ 'word' : 'docs',
+        \ 'menu' : 'Documentation only changes'
+        \ },
+      \ {
+        \ 'word' : 'style',
+        \ 'menu' : 'Changes that do not affect the meaning of the code'
+        \ },
+      \ {
+        \ 'word' : 'refactor',
+        \ 'menu' : 'A code change that neither fixes a bug nor adds a feature'
+        \ },
+      \ {
+        \ 'word' : 'pref',
+        \ 'menu' : 'A code change that improves performance'
+        \ },
+      \ {
+        \ 'word' : 'test',
+        \ 'menu' : 'Adding missing tests or correcting existing tests'
+        \ },
+      \ {
+        \ 'word' : 'build',
+        \ 'menu' : 'Changes that affect the build system or external dependencies'
+        \ },
+      \ {
+        \ 'word' : 'ci',
+        \ 'menu' : 'Changes to our CI configuration files and scripts'
+        \ },
+      \ {
+        \ 'word' : 'chore',
+        \ 'menu' : 'Other changes that do not modify src or test files'
+        \ },
+      \ {
+        \ 'word' : 'revert',
+        \ 'menu' : 'Reverts a previous commit'
+        \ },
+      \ ]
+
 
 function! SpaceVim#plugins#gitcommit#complete(findstart, base) abort
   if a:findstart
     let s:complete_ol = 0
+    let s:complete_type = 0
     let line = getline('.')
     let start = col('.') - 1
     while start > 0 && line[start - 1] !=# ' ' && line[start - 1] !=# '#'
@@ -25,11 +73,15 @@ function! SpaceVim#plugins#gitcommit#complete(findstart, base) abort
     endwhile
     if line[start - 1] ==# '#'
       let s:complete_ol = 1
+    elseif line('.') ==# 1 && start ==# 0
+      let s:complete_type = 1
     endif
     return start
   else
     if s:complete_ol == 1
       return s:complete_pr(a:base)
+    elseif s:complete_type == 1
+      return s:complete('types')
     endif
     let res = []
     for m in s:cache_commits()
@@ -44,6 +96,14 @@ endfunction
 function! s:cache_commits() abort
   let rst = systemlist("git log --oneline -n 50 --pretty=format:'%h %s' --abbrev-commit")
   return rst
+endfunction
+
+function! s:complete(what) abort
+  if a:what ==# 'types'
+    return s:commit_types
+  else
+    return []
+  endif
 endfunction
 
 function! s:complete_pr(base) abort
