@@ -177,6 +177,19 @@ therefore it is optional and only used when a commit requires a bit of explanati
 
 The footer is optional and is used to reference issue tracker IDs.
 
+
+**Breaking change**
+
+Breaking changes must be indicated by "!" after the type/scope, and
+a "BREAKING CHANGE" footer describing the change. Example:
+
+```
+refactor(tools#mpv)!: change default musics_directory
+
+BREAKING CHANGE: `~/Music` is standard on macOS and
+also on FreeDesktop's XDG.
+```
+
 ### Pull Request
 
 #### Prefix of title 
