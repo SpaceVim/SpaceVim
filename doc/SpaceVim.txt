@@ -3151,6 +3151,32 @@ development.
     name = 'lang#lua'
 <
 
+LAYER OPTIONS
+
+  1. lua_file_head: the default file head for lua source code.
+
+>
+  [layers]
+    name = "lang#lua"
+    ruby_file_head = [
+      '--!/usr/bin/lua',
+      ''
+    ]
+<
+  2. repl_command: the REPL command for lua
+
+>
+  [[layers]]
+    name = 'lang#lua'
+    repl_command = '~/download/bin/lua'
+<
+  3. format_on_save: enable/disable code formation when save lua file. This
+options is disabled by default, to enable it:
+>
+  [[layers]]
+    name = 'lang#lua'
+    format_on_save = true
+<
 KEY BINDINGS
 
 >
