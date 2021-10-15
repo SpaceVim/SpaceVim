@@ -14,6 +14,31 @@ endif
 " @section language server protocol, layers-lsp
 " @parentsection layers
 " This layer provides language client support for SpaceVim.
+" By default, this layer is not loaded. You need to enable this layer with
+" specific clients, for example:
+" >
+"   [[layers]]
+"     name = 'lsp'
+"     enabled_clients = ['vimls']
+" <
+"
+" @subsection layer options
+"
+" The following options can be used with this layer:
+"
+" 1. `enabled_clients`: set the enabled servers. This options only for
+" neovim 0.5.0+.
+" 2. `override_cmd`: If you are not using neovim 0.5.0+, use this option to
+" set default lsp command.
+"
+" @subsection LSP servers
+"
+" The default LSP servers are:
+" >
+"   name      Discriptions
+"   ---------------------------------------------------
+"   vimls     vim-language-server
+" <
 
 let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
 let s:enabled_clients = []
