@@ -1525,22 +1525,20 @@ endfunction
 
 | 快捷键          | 功能描述                                  |
 | --------------- | ----------------------------------------- |
-| `SPC r l`       | resume the last completion buffer         |
-| `` SPC s ` ``   | go back to the previous place before jump |
-| Prefix argument | will ask for file extensions              |
+| `SPC r l`       | 恢复上一次搜索历史                        |
 
 #### 在当前文件中进行搜索
 
-| 快捷键      | 功能描述                                            |
-| ----------- | --------------------------------------------------- |
-| `SPC s s`   | search with the first found tool                    |
-| `SPC s S`   | search with the first found tool with default input |
-| `SPC s a a` | ag                                                  |
-| `SPC s a A` | ag with default input                               |
-| `SPC s g g` | grep                                                |
-| `SPC s g G` | grep with default input                             |
-| `SPC s r r` | rg                                                  |
-| `SPC s r R` | rg with default input                               |
+| 快捷键      | 功能描述                             |
+| ----------- | ------------------------------------ |
+| `SPC s s`   | 使用默认的搜索工具进行搜索           |
+| `SPC s S`   | 使用默认的搜索工具进行搜索光标下的词 |
+| `SPC s a a` | 使用 ag 进行搜索                     |
+| `SPC s a A` | 使用 ag 进行搜索光标下的词           |
+| `SPC s g g` | 使用 grep 进行搜索                   |
+| `SPC s g G` | 使用 grep 进行搜索光标下的词         |
+| `SPC s r r` | 使用 rg 进行搜索                     |
+| `SPC s r R` | 使用 rg 进行搜索光标下的词           |
 
 #### 搜索当前文件所在的文件夹
 
