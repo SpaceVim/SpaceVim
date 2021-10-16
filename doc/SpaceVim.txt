@@ -2407,7 +2407,15 @@ This layer also provides REPL support for goby, the key bindings are:
 ==============================================================================
 LANG#GO                                              *SpaceVim-layers-lang-go*
 
-This layer includes code completion and syntax checking for Go development.
+The `lang#go` layer includes code completion and syntax checking for Go
+development. This layer is not enabled by default, to enable it:
+>
+  [[layers]]
+    name = 'go'
+<
+LAYER OPTIONS
+  1. `enabled_linters`: set a list of enabled lint for golang. by default this
+option is `['golint']`. The available linters includes: `go`, `gometalinter`
 
 MAPPINGS
 
@@ -2436,6 +2444,19 @@ MAPPINGS
   normal          SPC l t         go test
   normal          SPC l v         freevars
   normal          SPC l r         go run
+<
+If the lsp layer is enabled for go, the following key bindings can be used:
+>
+  key binding     Description
+  g D             jump to type definition
+  SPC l e         rename symbol
+  SPC l x         show references
+  SPC l s         show line diagnostics
+  SPC l d         show document
+  K               show document
+  SPC l w l       list workspace folder
+  SPC l w a       add workspace folder
+  SPC l w r       remove workspace folder
 <
 
 ==============================================================================
