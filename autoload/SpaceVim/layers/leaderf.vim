@@ -255,7 +255,7 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Leaderf function',
-        \ ['jump to a definition in buffer',
+        \ ['jump-to-definition-in-buffer',
         \ [
         \ 'SPC j i is to jump to a definition in buffer',
         \ '',
@@ -267,7 +267,7 @@ function! SpaceVim#layers#leaderf#config() abort
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["Leaderf --recall"])',
-        \ ['resume fuzzy finder windows',
+        \ ['resume-fuzzy-finder-windows',
         \ [
         \ 'SPC r l is to resume fuzzy finder windows',
         \ '',
@@ -278,7 +278,7 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Leaderf colorscheme',
-        \ ['fuzzy find colorschemes',
+        \ ['fuzzy-find-colorschemes',
         \ [
         \ 'SPC T s is to fuzzy find colorschemes',
         \ '',
@@ -289,7 +289,7 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'], 'exe "Leaderf file " . expand("%:p:h")',
-        \ ['Find files in the directory of the current buffer',
+        \ ['Find-files-in-buffer-directory',
         \ [
         \ '[SPC f f] is to find files in the directory of the current buffer',
         \ '',
@@ -301,7 +301,7 @@ function! SpaceVim#layers#leaderf#config() abort
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'F'],
         \ 'LeaderfFileCword',
-        \ ['find cursor file in current project',
+        \ ['find-cursor-file-in-project',
         \ [
         \ '[SPC p F] is to find cursor file in the root of the current project',
         \ '',
@@ -314,7 +314,7 @@ function! SpaceVim#layers#leaderf#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ 'Leaderf file --fullPath '
         \ . SpaceVim#plugins#projectmanager#current_root(),
-        \ ['find files in current project',
+        \ ['find-files-in-project',
         \ [
         \ '[SPC p f] is to find files in the root of the current project',
         \ '',
@@ -529,7 +529,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf --recall<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.r = ['Leaderf --recall',
-        \ 'resume fuzzy finder window',
+        \ 'resume-fuzzy-finder-window',
         \ [
         \ '[Leader f r ] is to resume fuzzy finder window',
         \ '',
@@ -540,7 +540,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf register<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.e = ['Leaderf register',
-        \ 'fuzzy find registers',
+        \ 'fuzzy-find-registers',
         \ [
         \ '[Leader f r ] is to fuzzy find registers',
         \ '',
@@ -551,7 +551,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf neoyank<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.h = ['Leaderf neoyank',
-        \ 'fuzzy find yank history',
+        \ 'fuzzy-find-yank-history',
         \ [
         \ '[Leader f h] is to fuzzy find history and yank content',
         \ '',
@@ -562,7 +562,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf jumplist<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.j = ['Leaderf jumplist',
-        \ 'fuzzy find jump list',
+        \ 'fuzzy-find-jump-list',
         \ [
         \ '[Leader f j] is to fuzzy find jump list',
         \ '',
@@ -573,7 +573,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf locationlist<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.l = ['Leaderf locationlist',
-        \ 'fuzzy find location list',
+        \ 'fuzzy-find-location-list',
         \ [
         \ '[Leader f l] is to fuzzy find location list',
         \ '',
@@ -584,7 +584,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf message<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.m = ['Leaderf message',
-        \ 'fuzzy find message',
+        \ 'fuzzy-find-message',
         \ [
         \ '[Leader f m] is to fuzzy find message',
         \ '',
@@ -595,7 +595,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf quickfix<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.q = ['Leaderf quickfix',
-        \ 'fuzzy find quickfix list',
+        \ 'fuzzy-find-quickfix-list',
         \ [
         \ '[Leader f q] is to fuzzy find quickfix list',
         \ '',
@@ -605,7 +605,7 @@ function! s:defind_fuzzy_finder() abort
   nnoremap <silent> <Leader>fo  :<C-u>Leaderf function<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.o = ['Leaderf function',
-        \ 'fuzzy find outline',
+        \ 'fuzzy-find-outline',
         \ [
         \ '[Leader f o] is to fuzzy find outline',
         \ '',
@@ -615,7 +615,7 @@ function! s:defind_fuzzy_finder() abort
   nnoremap <silent> <Leader>ft :<C-u>Leaderf tag<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.t = ['Leaderf tag',
-        \ 'fuzzy find tags',
+        \ 'fuzzy-find-tags',
         \ [
         \ '[Leader f t] is to fuzzy find tags',
         \ '',
@@ -624,7 +624,7 @@ function! s:defind_fuzzy_finder() abort
         \ ]
   nnoremap <silent> <Leader>f<Space> :<C-u>call <SID>run_menu('CustomKeyMaps')<CR>
   let g:_spacevim_mappings.f['[SPC]'] = ['Leaderf menu --name CustomKeyMaps',
-        \ 'fuzzy find custom key bindings',
+        \ 'fuzzy-find-custom-key-bindings',
         \ [
         \ '[Leader f SPC] is to fuzzy find custom key bindings',
         \ '',
@@ -634,7 +634,7 @@ function! s:defind_fuzzy_finder() abort
   nnoremap <silent> <Leader>fp  :<C-u>call <SID>run_menu('AddedPlugins')<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.p = ['Leaderf menu --name AddedPlugins',
-        \ 'fuzzy find vim packages',
+        \ 'fuzzy-find-vim-packages',
         \ [
         \ '[Leader f p] is to fuzzy find vim packages installed in SpaceVim',
         \ '',
