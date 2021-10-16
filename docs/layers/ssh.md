@@ -1,0 +1,51 @@
+---
+title: "SpaceVim ssh layer"
+description: "This layer provides ssh support in SpaceVim"
+---
+
+# [Available Layers](../) >> shell
+
+<!-- vim-markdown-toc GFM -->
+
+- [Description](#description)
+- [Install](#install)
+- [Configuration](#configuration)
+- [Key bindings](#key-bindings)
+
+<!-- vim-markdown-toc -->
+
+## Description
+
+This layer provides ssh connection support for SpaceVim.
+
+## Install
+
+To use this configuration layer, add following snippet to your custom configuration file.
+
+```toml
+[[layers]]
+  name = "ssh"
+```
+
+## Configuration
+
+- `ssh_port`: set the port of ssh server
+- `ssh_address`: set the ip of ssh server
+- `ssh_user`: set the user name of ssh server
+
+Example:
+
+```
+[[layers]]
+    name = 'ssh'
+    ssh_command = 'D:\Programs\Git\usr\bin\ssh.exe'
+    ssh_user = 'root'
+    ssh_address = '192.168.1.10'
+    ssh_port = '8097'
+```
+
+## Key bindings
+
+| Key Binding | Description                 |
+| ----------- | --------------------------- |
+| `SPC S o`   | open ssh connection windows |
