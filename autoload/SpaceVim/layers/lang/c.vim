@@ -345,9 +345,14 @@ endfunction
 " local function: update_checkers_argv {{{
 if g:spacevim_lint_engine ==# 'neomake'
   function! s:update_checkers_argv(argv, fts) abort
+    if s:has_std(a:argv)
+      let default_std = 1
+    else
+      let default_std = 0
+    endif
     for ft in a:fts
       let g:neomake_{ft}_clang_maker = {
-            \ 'args': ['-fsyntax-only', '-Wall', '-Wextra', '-I./'] + a:argv,
+            \ 'args': ['-fsyntax-only', '-Wall', '-Wextra', '-I./'] + a:argv + (default_std ? [] : ['-std=' . s:clang_std[ft]]) + s:clang_flag,
             \ 'exe' : s:clang_executable,
             \ 'errorformat':
             \ '%-G%f:%s:,' .
