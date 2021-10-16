@@ -1421,8 +1421,8 @@ Files manipulation commands (start with `f`):
 | `SPC f D`    | delete a file and the associated buffer with confirmation               |
 | `SPC f E`    | open a file with elevated privileges (sudo layer) (TODO)                |
 | `SPC f W`    | save a file with elevated privileges (sudo layer)                       |
-| `SPC f f`    | open file                                                               |
-| `SPC f F`    | try to open the file under point                                        |
+| `SPC f f`    | fuzzy find files in buffer directory                                    |
+| `SPC f F`    | fuzzy find cursor file in buffer directory                              |
 | `SPC f o`    | Find current file in file tree                                          |
 | `SPC f R`    | rename the current file(TODO)                                           |
 | `SPC f s`    | save a file                                                             |

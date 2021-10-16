@@ -299,6 +299,17 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'F'], 'exe "Leaderf file --input=" . expand("<cword>") . " " . expand("%:p:h")',
+        \ ['Find-cursor-file-in-buffer-directory',
+        \ [
+        \ '[SPC f F] is to find cursor file in the directory of the current buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'F'],
         \ 'LeaderfFileCword',
         \ ['find-cursor-file-in-project',
