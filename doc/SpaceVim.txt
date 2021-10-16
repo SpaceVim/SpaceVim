@@ -1689,22 +1689,21 @@ INCSEARCH                                          *SpaceVim-layers-incsearch*
 
 This layer improved incremental searching for neovim/vim
 
-mappings
+KEY BINDINGS
+
+The following key bindings will be defined when this layer is loaded.
 >
-  key         mode        description
-  /           n/v         incsearch forward
-  ?           n/v         incsearch backward
-  g/          n/v         incsearch stay
-  n           n           nohlsearch n
-  N           n           nohlsearch N
-  *           n           nohlsearch *
-  g*          n           nohlsearch g*
-  #           n           nohlsearch #
-  g#          n           nohlsearch g#
-  z/          n           incsearch fuzzy /
-  z?          n           incsearch fuzzy ?
-  zg?         n           incsearch fuzzy g?
-  <Space>/    n           incsearch easymotion
+  key binding     description
+  /               incsearch forward
+  ?               incsearch backward
+  g/              incsearch stay
+  n               nohlsearch n
+  N               nohlsearch N
+  *               nohlsearch *
+  #               nohlsearch #
+  g*              nohlsearch g*
+  g#              nohlsearch g#
+  SPC b /         fuzzy find word
 <
 
 ==============================================================================
