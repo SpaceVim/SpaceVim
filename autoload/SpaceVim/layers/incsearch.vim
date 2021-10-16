@@ -84,9 +84,9 @@ function! SpaceVim#layers#incsearch#config() abort
           \ }), get(a:, 1, {}))
   endfunction
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nmap', ['b', '/'], '<Plug>(incsearch-fuzzyword-/)', ['fuzzy find word',
+  call SpaceVim#mapping#space#def('nmap', ['b', '/'], '<Plug>(incsearch-fuzzyword-/)', ['fuzzy-find-word',
         \ [
-        \ '[SPC b /] is fuzzy find word in current buffer',
+        \ '[SPC b /] is to fuzzy find word in current buffer',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
