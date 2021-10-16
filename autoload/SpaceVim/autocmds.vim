@@ -63,7 +63,7 @@ function! SpaceVim#autocmds#init() abort
     " @fixme this autocmd should also support `:w foo/test.vim`
     autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
-    autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized call s:fix_colorschem_in_SpaceVim()
+    autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized,one call s:fix_colorschem_in_SpaceVim()
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
@@ -121,6 +121,8 @@ function! s:fix_colorschem_in_SpaceVim() abort
   if &background ==# 'dark'
     if g:colors_name ==# 'gruvbox'
       hi VertSplit guibg=#282828 guifg=#181A1F
+    elseif g:colors_name ==# 'one'
+      hi VertSplit guibg=#282c34 guifg=#181A1F
     elseif g:colors_name ==# 'jellybeans'
       hi VertSplit guibg=#151515 guifg=#080808
     elseif g:colors_name ==# 'nord'
