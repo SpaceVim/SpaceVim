@@ -3,23 +3,20 @@ title: "SpaceVim ssh layer"
 description: "This layer provides ssh support in SpaceVim"
 ---
 
-# [Available Layers](../) >> shell
+# [Available Layers](../) >> ssh
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Install](#install)
-- [Configuration](#configuration)
+- [Intro](#intro)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## Intro
 
 This layer provides ssh connection support for SpaceVim.
-
-## Install
-
+By default this layer is not enabled.
 To use this configuration layer, add following snippet to your custom configuration file.
 
 ```toml
@@ -27,7 +24,7 @@ To use this configuration layer, add following snippet to your custom configurat
   name = "ssh"
 ```
 
-## Configuration
+## Layer options
 
 - `ssh_port`: set the port of ssh server
 - `ssh_address`: set the ip of ssh server
