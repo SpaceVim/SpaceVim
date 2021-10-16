@@ -69,6 +69,7 @@ let s:lua_file_head = [
       \ '--!/usr/bin/lua',
       \ ''
       \ ]
+let s:format_on_save = 0
 
 function! SpaceVim#layers#lang#lua#plugins() abort
   let plugins = []
@@ -123,7 +124,7 @@ endfunction
 function! SpaceVim#layers#lang#lua#set_variable(opt) abort
   let s:lua_repl_command = get(a:opt, 'repl_command', '') 
   let s:lua_foldmethod = get(a:opt, 'foldmethod', 'manual')
-  let s:format_on_save = get(a:var, 'format_on_save', s:format_on_save)
+  let s:format_on_save = get(a:opt, 'format_on_save', s:format_on_save)
 endfunction
 
 " Add language specific mappings
