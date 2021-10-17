@@ -60,3 +60,8 @@ function! SpaceVim#layers#ssh#get_options() abort
   return ['ssh_port', 'ssh_user', 'ssh_address', 'ssh_command']
 
 endfunction
+
+function! SpaceVim#layers#ssh#health() abort
+  call SpaceVim#layers#ssh#config()
+  return 1
+endfunction
