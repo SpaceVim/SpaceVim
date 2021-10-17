@@ -31,6 +31,19 @@ let s:grepid = 0
 
 let s:filename_pattern = '[^:]*:\d\+:\d\+:'
 
+" if win_getid does not existing, use winnr instead
+let s:previous_winid = 0
+
+function! s:close_flygrep_win() abort
+  noautocmd q
+  " this function requires vim 7.4.1557
+  if has('patch-7.4.1557')
+    call win_gotoid(s:previous_winid)
+  else
+    exe s:previous_winid .  'wincmd w'
+  endif
+endfunction
+
 " Init local options: {{{
 let s:grep_expr = ''
 let [
@@ -342,7 +355,7 @@ function! s:close_buffer() abort
     noautocmd call s:close_preview_win()
     let s:preview_able = 0
   endif
-  noautocmd q
+  call s:close_flygrep_win()
 endfunction
 let s:MPT._onclose = function('s:close_buffer')
 " }}}
@@ -502,7 +515,7 @@ function! s:open_item() abort
       call s:close_preview_win()
     endif
     let s:preview_able = 0
-    noautocmd q
+    call s:close_flygrep_win()
     call s:update_history()
     call s:BUFFER.open_pos('edit', filename, linenr, colum)
     noautocmd normal! :
@@ -523,7 +536,7 @@ function! s:open_item_in_tab() abort
       call s:close_preview_win()
     endif
     let s:preview_able = 0
-    noautocmd q
+    call s:close_flygrep_win()
     call s:update_history()
     call s:BUFFER.open_pos('tabedit', filename, linenr, colum)
     noautocmd normal! :
@@ -544,7 +557,7 @@ function! s:open_item_vertically() abort
       call s:close_preview_win()
     endif
     let s:preview_able = 0
-    noautocmd q
+    call s:close_flygrep_win()
     call s:update_history()
     call s:BUFFER.open_pos('vsplit', filename, linenr, colum)
     noautocmd normal! :
@@ -565,7 +578,7 @@ function! s:open_item_horizontally() abort
       call s:close_preview_win()
     endif
     let s:preview_able = 0
-    noautocmd q
+    call s:close_flygrep_win()
     call s:update_history()
     call s:BUFFER.open_pos('split', filename, linenr, colum)
     noautocmd normal! :
@@ -573,10 +586,10 @@ function! s:open_item_horizontally() abort
 endfunction
 
 function! s:get_file_pos(line) abort
-    let filename = fnameescape(split(a:line, ':\d\+:')[0])
-    let linenr = str2nr(matchstr(a:line, ':\d\+:')[1:-2])
-    let colum = str2nr(matchstr(a:line, '\(:\d\+\)\@<=:\d\+:')[1:-2])
-    return [filename, linenr, colum]
+  let filename = fnameescape(split(a:line, ':\d\+:')[0])
+  let linenr = str2nr(matchstr(a:line, ':\d\+:')[1:-2])
+  let colum = str2nr(matchstr(a:line, '\(:\d\+\)\@<=:\d\+:')[1:-2])
+  return [filename, linenr, colum]
 endfunction
 
 function! s:apply_to_quickfix() abort
@@ -591,7 +604,7 @@ function! s:apply_to_quickfix() abort
     endif
     let s:preview_able = 0
     let searching_result = s:BUFFER.buf_get_lines(s:buffer_id, 0, -1, 0)
-    noautocmd q
+    call s:close_flygrep_win()
     call s:update_history()
     if !empty(searching_result)
       cgetexpr join(searching_result, "\n")
@@ -671,12 +684,12 @@ if exists('*nvim_open_win') && exists('*nvim_win_set_buf')
       let flygrep_win_height = 16
       noautocmd let s:preview_win_id = s:FLOATING.open_win(bufnr, v:false,
             \ {
-            \ 'relative': 'editor',
-            \ 'width'   : &columns, 
-            \ 'height'  : 5,
-            \ 'row': &lines - flygrep_win_height - 2 - 5,
-            \ 'col': 0
-            \ })
+              \ 'relative': 'editor',
+              \ 'width'   : &columns, 
+              \ 'height'  : 5,
+              \ 'row': &lines - flygrep_win_height - 2 - 5,
+              \ 'col': 0
+              \ })
 
     endif
     noautocmd call s:Window.set_cursor(s:preview_win_id, [linenr, 1])
@@ -804,16 +817,16 @@ let s:MPT._function_key = {
 if has('nvim')
   call extend(s:MPT._function_key, 
         \ {
-        \ "\x80\xfdJ" : function('s:previous_item'),
-        \ "\x80\xfc \x80\xfdJ" : function('s:previous_item'),
-        \ "\x80\xfc@\x80\xfdJ" : function('s:previous_item'),
-        \ "\x80\xfc`\x80\xfdJ" : function('s:previous_item'),
-        \ "\x80\xfdK" : function('s:next_item'),
-        \ "\x80\xfc \x80\xfdK" : function('s:next_item'),
-        \ "\x80\xfc@\x80\xfdK" : function('s:next_item'),
-        \ "\x80\xfc`\x80\xfdK" : function('s:next_item'),
-        \ }
-        \ )
+          \ "\x80\xfdJ" : function('s:previous_item'),
+          \ "\x80\xfc \x80\xfdJ" : function('s:previous_item'),
+          \ "\x80\xfc@\x80\xfdJ" : function('s:previous_item'),
+          \ "\x80\xfc`\x80\xfdJ" : function('s:previous_item'),
+          \ "\x80\xfdK" : function('s:next_item'),
+          \ "\x80\xfc \x80\xfdK" : function('s:next_item'),
+          \ "\x80\xfc@\x80\xfdK" : function('s:next_item'),
+          \ "\x80\xfc`\x80\xfdK" : function('s:next_item'),
+          \ }
+          \ )
 endif
 
 let s:MPT._keys.close = ["\<Esc>", "\<C-c>"]
@@ -825,6 +838,11 @@ let s:MPT._keys.close = ["\<Esc>", "\<C-c>"]
 " files: files for grep, @buffers means listed buffer.
 " dir: specific a directory for grep
 function! SpaceVim#plugins#flygrep#open(argv) abort
+  if has('patch-7.4.1557')
+    let s:previous_winid = win_getid()
+  else
+    let s:previous_winid = winnr()
+  endif
   if empty(s:grep_default_exe)
     call s:LOGGER.warn(' [flygrep] make sure you have one search tool in your PATH', 1)
     return
@@ -837,12 +855,12 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
     let flygrep_win_height = 16
     noautocmd let s:flygrep_win_id =  s:FLOATING.open_win(s:buffer_id, v:true,
           \ {
-          \ 'relative': 'editor',
-          \ 'width'   : &columns, 
-          \ 'height'  : flygrep_win_height,
-          \ 'row': &lines - flygrep_win_height - 2,
-          \ 'col': 0
-          \ })
+            \ 'relative': 'editor',
+            \ 'width'   : &columns, 
+            \ 'height'  : flygrep_win_height,
+            \ 'row': &lines - flygrep_win_height - 2,
+            \ 'col': 0
+            \ })
   else
     noautocmd botright split __flygrep__
     let s:flygrep_win_id = win_getid()
