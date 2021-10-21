@@ -1483,13 +1483,13 @@ endfunction
 "         1 : dir
 "         2 : default arguments
 function! s:parser_argv() abort
-  if  !exists('v:argv') || index(v:argv, '--embed') !=# -1
-        \ || len(v:argv) >=# 3
-    " if there is no arguments
-    " or use embed nvim
+  if  !exists('v:argv')
+        \ || (len(v:argv) >=# 3 && index(v:argv, '--embed') ==# -1)
     " or do not support v:argv
     return [2, get(v:, 'argv', ['failed to get v:argv'])]
-  elseif len(v:argv) ==# 1
+  elseif len(v:argv) ==# 1 || index(v:argv, '--embed') !=# -1
+    " if there is no arguments
+    " or use embed nvim
     return [0]
   elseif v:argv[1] =~# '/$'
     let f = fnamemodify(expand(v:argv[1]), ':p')
