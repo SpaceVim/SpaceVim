@@ -7,6 +7,21 @@
 "=============================================================================
 let s:self = {}
 
+
+""
+" @section time, api-time
+" @parentsection api
+" `time` api provides basic functions to get time information.
+"
+" current_time()
+"
+"   get current time, the format is `%I:%M %p`
+"
+" current_date()
+"
+"   get current date, the format is `%a %b %d`
+
+
 " see: man 3 strftime
 function! s:self.current_time() abort
   return strftime('%I:%M %p')   
