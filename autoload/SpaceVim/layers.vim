@@ -8,11 +8,43 @@
 
 ""
 " @section Layers, layers
-"   SpaceVim support such layers:
+"   Layers help collecting related packages together to provides features.
+" This approach helps keep configuration organized and reduces overhead for
+" the user by keeping them from having to think about what packages to install.
 "
-" languages:
-"   
-" https://www.scriptol.com/programming/list-programming-languages.php#query-language
+" @subsection Enable layers
+"
+" By default SpaceVim enables these layers:
+"
+" 1. `autocomplete`
+" 2. `checkers`
+" 3. `format`
+" 4. `edit`
+" 5. `ui`
+" 5. `core`
+" 6. `core#banner`
+" 7. `core#statusline`
+" 8. `core#tabline`
+"
+" To enable a specific layer you need to edit SpaceVim's custom configuration files.
+" The key binding for opening the configuration files.s `SPC f v d`.
+"
+" The following example shows how to load `shell` layer with some specified options:
+" >
+"   [[layers]]
+"     name = 'shell'
+"     default_position = 'top'
+"     default_height = 30
+" <
+"
+" @subsection Disable layers
+"
+" Some layers are enabled by default. The following example shows how to disable `shell` layer:
+" >
+"   [[layers]]
+"     name = 'shell'
+"     enable = false
+" <
 
 let s:enabled_layers = []
 let s:layers_vars = {}
