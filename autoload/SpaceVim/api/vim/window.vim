@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section vim#buffer, api-vim-window
+" @section vim#window, api-vim-window
 " @parentsection api
 " @subsection Intro
 "

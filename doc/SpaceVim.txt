@@ -221,10 +221,10 @@ CONTENTS                                                   *SpaceVim-contents*
       12. time.............................................|SpaceVim-api-time|
       13. unicode#box...............................|SpaceVim-api-unicode-box|
       14. vim#buffer.................................|SpaceVim-api-vim-buffer|
-      15. vim#buffer.................................|SpaceVim-api-vim-window|
-      16. vim#command...............................|SpaceVim-api-vim-command|
-      17. vim#compatible.........................|SpaceVim-api-vim-compatible|
-      18. vim#message...............................|SpaceVim-api-vim-message|
+      15. vim#command...............................|SpaceVim-api-vim-command|
+      16. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      17. vim#message...............................|SpaceVim-api-vim-message|
+      18. vim#window.................................|SpaceVim-api-vim-window|
   9. Development................................................|SpaceVim-dev|
       1. commit-style-guide..................|SpaceVim-dev-commit-style-guide|
   10. FAQ.......................................................|SpaceVim-faq|
@@ -5105,34 +5105,6 @@ is a dict with following keys:
     cmd: the ex command which will be run after the new buffer is created
 
 ==============================================================================
-VIM#BUFFER                                           *SpaceVim-api-vim-window*
-
-INTRO
-
-`vim#window` API provides some basic functions for setting and getting config
-of vim window.
-
-FUNCTIONS
-
-get_cursor({winid})
-
-  Gets the cursor position in the window {winid}, to get the ID of a window,
-checkout |window-ID|.
-
-set_cursor({winid}, {pos})
-
-  Sets the cursor position to {pos} in the window {winid}.
-
-is_float({winnr})
-
-  Check if the window is a floating windows, return `v:true` if the window
-is a floating window.
-
-winexists({winid})
-
-  Check if the window with {winid} exists in current tabpage.
-
-==============================================================================
 VIM#COMMAND                                         *SpaceVim-api-vim-command*
 
 This api is for creating complete function for custom vim command. This is
@@ -5192,6 +5164,34 @@ command line.
 echo({hi}, {msg})
 
   print message with {hi} highlight group.
+
+==============================================================================
+VIM#WINDOW                                           *SpaceVim-api-vim-window*
+
+INTRO
+
+`vim#window` API provides some basic functions for setting and getting config
+of vim window.
+
+FUNCTIONS
+
+get_cursor({winid})
+
+  Gets the cursor position in the window {winid}, to get the ID of a window,
+checkout |window-ID|.
+
+set_cursor({winid}, {pos})
+
+  Sets the cursor position to {pos} in the window {winid}.
+
+is_float({winnr})
+
+  Check if the window is a floating windows, return `v:true` if the window
+is a floating window.
+
+winexists({winid})
+
+  Check if the window with {winid} exists in current tabpage.
 
 ==============================================================================
 DEVELOPMENT                                                     *SpaceVim-dev*
