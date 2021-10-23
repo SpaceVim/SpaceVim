@@ -4,15 +4,12 @@ let s:job_noop_timer = ''
 let s:JOB = SpaceVim#api#import('job')
 
 function! mail#client#connect(ip, port)
-  let argv = ['telnet', a:ip, a:port]
-  let s:job_id = s:JOB.start(argv,
+  let s:job_id = sockconnect('tcp', a:ip . ':' . a:port,
         \ {
-          \ 'on_stdout' : function('s:on_stdout'),
-          \ 'on_stderr' : function('s:on_stderr'),
-          \ 'on_exit' : function('s:on_exit'),
+          \ 'on_data' : function('s:on_stdout'),
           \ }
           \ )
-  call mail#client#logger#info('mail client job id:' . s:job_id)
+  call mail#logger#info('mail client job id:' . s:job_id)
 endfunction
 
 " Wed, 06 Sep 2017 02:55:41 +0000  ===> 2017-09-06
@@ -39,7 +36,7 @@ let s:mail_unseen = 0
 
 function! s:on_stdout(id, data, event) abort
   for data in a:data
-    call mail#client#logger#info('STDOUT: ' . data)
+    call mail#logger#info('STDOUT: ' . data)
     if data =~ '^\* \d\+ FETCH '
       let s:_mail_id = matchstr(data, '\d\+')
     elseif data =~ '^From: '
@@ -66,7 +63,7 @@ endfunction
 
 function! s:on_stderr(id, data, event) abort
   for data in a:data
-    call mail#client#logger#error('STDERR: ' . data)
+    call mail#logger#error('STDERR: ' . data)
   endfor
 endfunction
 
@@ -80,11 +77,11 @@ endfunction
 
 
 function! mail#client#send(command)
-  call mail#client#logger#info('Send command: ' . a:command)
+  call mail#logger#info('Send command: ' . a:command)
   if s:job_id >= 0
-    call s:JOB.send(s:job_id, a:command)   
+    call chansend(s:job_id, [a:command, ''])
   else
-    call mail#client#logger#info('skipped!, job id is:' . s:job_id)
+    call mail#logger#info('skipped!, job id is:' . s:job_id)
   endif
 endfunction
 
