@@ -14,6 +14,9 @@ let g:mail_sending_address = 'wsdjeg@163.com'
 let g:mail_logger_silent = 0
 
 let g:mail_imap_host = get(g:, 'mail_imap_host', 'imap.163.com')
+let g:mail_imap_port = get(g:, 'mail_imap_port', 143)
+let g:mail_imap_login = get(g:, 'mail_imap_login', '')
+let g:mail_imap_password = get(g:, 'mail_imap_password', '')
 
 if !exists('g:mail_directory')
     let g:mail_directory = expand('~/.vim-mail/')

@@ -4631,6 +4631,7 @@ LAYER OPTIONS
   1. `imap_host`: set the imap server host
   2. `imap_port`: set the imap server port
   3. `imap_login`: set the login of imap server
+  4. `imap_password`: set the password of imap server
 
 KEY BINDINGS
 

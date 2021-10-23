@@ -16,6 +16,7 @@
 " 1. `imap_host`: set the imap server host
 " 2. `imap_port`: set the imap server port
 " 3. `imap_login`: set the login of imap server
+" 4. `imap_password`: set the password of imap server
 "
 " @subsection key bindings
 " >
@@ -30,6 +31,7 @@ endif
 let s:imap_host = 'imap.163.com'
 let s:imap_port = 143
 let s:imap_login = ''
+let s:imap_password = ''
 
 function! SpaceVim#layers#mail#plugins() abort
     return [
@@ -40,6 +42,8 @@ endfunction
 function! SpaceVim#layers#mail#set_variable(opt) abort
   let s:imap_host = get(a:opt, 'imap_host', s:imap_host)
   let s:imap_port = get(a:opt, 'imap_port', s:imap_port)
+  let s:imap_login = get(a:opt, 'imap_login', s:imap_login)
+  let s:imap_password = get(a:opt, 'imap_password', s:imap_password)
 endfunction
 
 function! SpaceVim#layers#mail#config() abort
@@ -47,6 +51,7 @@ function! SpaceVim#layers#mail#config() abort
     let g:mail_imap_host = s:imap_port
     let g:mail_imap_port = s:imap_port
     let g:mail_imap_login = s:imap_login
+    let g:mail_imap_password = s:imap_password
 endfunction
 
 function! SpaceVim#layers#mail#health() abort

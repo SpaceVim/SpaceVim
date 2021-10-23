@@ -89,11 +89,9 @@ endfunction
 
 function! mail#client#open()
     if s:job_id == 0
-        let username = input('USERNAME: ')
-        let password = input('PASSWORD: ')
-        if !empty(username) && !empty(password)
+        if !empty(g:mail_imap_login) && !empty(g:mail_imap_password)
             call mail#client#connect(g:mail_imap_host, g:mail_imap_port)
-            call mail#client#send(mail#command#login(username, password))
+            call mail#client#send(mail#command#login(g:mail_imap_login, g:mail_imap_password))
             call mail#client#send(mail#command#select(mail#client#win#currentDir()))
             call mail#client#send(mail#command#fetch('1:15', 'BODY[HEADER.FIELDS ("DATE" "FROM" "SUBJECT")]'))
             call mail#client#send(mail#command#status('INBOX', '["RECENT"]'))
