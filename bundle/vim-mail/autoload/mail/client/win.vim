@@ -4,6 +4,7 @@
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:BASE64 = SpaceVim#api#import('data#base64')
 let s:QUOPRI = SpaceVim#api#import('data#quopri')
+let s:ICONV = SpaceVim#api#import('iconv')
 
 
 let s:bufnr = -1
@@ -44,7 +45,7 @@ function! s:encode(str) abort
     let text = matchstr(str, '^=?[^?]*?[^?]*?\zs[^?]*')
     if encoding ==? 'b'
       let text = s:BASE64.decode(text)
-      let target_str .= text
+      let target_str .= iconv(text, charset, 'utf-8')
     elseif encoding ==? 'q' && 0
       let text = s:QUOPRI.decode(text)
       let target_str .= text
