@@ -4,13 +4,13 @@
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 
-let s:bufnr = 0
+let s:bufnr = -1
 let s:win_name = 'home'
 let s:win_dir = 'INBOX'
 let s:win_unseen = {}
 
 function! mail#client#win#open()
-    if s:bufnr == 0
+    if s:bufnr ==# -1
         split __VIM_MAIL__
         let s:bufnr = bufnr('%')
         setlocal buftype=nofile nobuflisted nolist noswapfile nowrap cursorline nospell nomodifiable nowrap norelativenumber number
