@@ -6,6 +6,35 @@
 " License: GPLv3
 "=============================================================================
 
+
+""
+" @section ctrlp, layers-ctrlp
+" @parentsection layers
+" `ctrlp` layer provides fuzzy finder feature which is based on |ctrlp|. This
+" layer is not loaded by default, to use this layer, you need to add following
+" snippent in your configuration file.
+" >
+"   [[layers]]
+"     name = 'ctrlp'
+" <
+"
+" @subsection Key bindings
+"
+" The following key bindings will be defined when `ctrlp` layer is loaded:
+" >
+"    Key bindings         | Discription
+"    -------------------- | -----------------------------
+"    <Leader> f <Space>   | Fuzzy find menu:CustomKeyMaps
+"    <Leader> f e         | Fuzzy find register
+"    <Leader> f h         | Fuzzy find history/yank
+"    <Leader> f j         | Fuzzy find jump, change
+"    <Leader> f l         | Fuzzy find location list
+"    <Leader> f m         | Fuzzy find output messages
+"    <Leader> f o         | Fuzzy find outline
+"    <Leader> f q         | Fuzzy find quick fix
+"    <Leader> f r         | Resumes Unite window
+" <
+
 function! SpaceVim#layers#ctrlp#health() abort
   call SpaceVim#layers#ctrlp#plugins()
   call SpaceVim#layers#ctrlp#config()
@@ -184,7 +213,7 @@ function! s:defind_fuzzy_finder() abort
   let g:_spacevim_mappings.f.e = ['CtrlPRegister',
         \ 'fuzzy find registers',
         \ [
-        \ '[Leader f r ] is to resume unite window',
+        \ '[Leader f r ] is to resume ctrlp window',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
