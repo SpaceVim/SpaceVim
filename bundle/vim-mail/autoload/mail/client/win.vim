@@ -45,7 +45,7 @@ function! s:encode(str) abort
     if encoding ==? 'b'
       let text = s:BASE64.decode(text)
       let target_str .= text
-    elseif encoding ==? 'q'
+    elseif encoding ==? 'q' && 0
       let text = s:QUOPRI.decode(text)
       let target_str .= text
     else
