@@ -191,17 +191,18 @@ CONTENTS                                                   *SpaceVim-contents*
       105. lang#zig.................................|SpaceVim-layers-lang-zig|
       106. language server protocol......................|SpaceVim-layers-lsp|
       107. leaderf...................................|SpaceVim-layers-leaderf|
-      108. operator.................................|SpaceVim-layers-operator|
-      109. shell.......................................|SpaceVim-layers-shell|
-      110. ssh...........................................|SpaceVim-layers-ssh|
-      111. test.........................................|SpaceVim-layers-test|
-      112. tmux.........................................|SpaceVim-layers-tmux|
-      113. tools#dash.............................|SpaceVim-layers-tools-dash|
-      114. tools#mpv...............................|SpaceVim-layers-tools-mpv|
-      115. tools#zeal.............................|SpaceVim-layers-tools-zeal|
-      116. treesitter.............................|SpaceVim-layers-treesitter|
-      117. ui.............................................|SpaceVim-layers-ui|
-      118. unite.......................................|SpaceVim-layers-unite|
+      108. mail.........................................|SpaceVim-layers-mail|
+      109. operator.................................|SpaceVim-layers-operator|
+      110. shell.......................................|SpaceVim-layers-shell|
+      111. ssh...........................................|SpaceVim-layers-ssh|
+      112. test.........................................|SpaceVim-layers-test|
+      113. tmux.........................................|SpaceVim-layers-tmux|
+      114. tools#dash.............................|SpaceVim-layers-tools-dash|
+      115. tools#mpv...............................|SpaceVim-layers-tools-mpv|
+      116. tools#zeal.............................|SpaceVim-layers-tools-zeal|
+      117. treesitter.............................|SpaceVim-layers-treesitter|
+      118. ui.............................................|SpaceVim-layers-ui|
+      119. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
       2. custom_plugins........................|SpaceVim-usage-custom_plugins|
@@ -4618,6 +4619,22 @@ The following key bindings will be enabled when this layer is loaded:
   <Leader> f t      Fuzzy find tags
   <Leader> f q      Fuzzy find quick fix
   <Leader> f r      Resumes Unite window
+<
+
+==============================================================================
+MAIL                                                    *SpaceVim-layers-mail*
+
+The `mail` layer provides basic function to connected to mail server.
+
+LAYER OPTIONS
+
+  1. `ssh_port`: set the port of mail server
+
+KEY BINDINGS
+
+>
+  Key Bingding    Description
+  SPC a m         open mail client
 <
 
 ==============================================================================

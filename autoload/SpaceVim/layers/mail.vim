@@ -6,9 +6,24 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section mail, layers-mail
+" @parentsection layers
+" The `mail` layer provides basic function to connected to mail server.
+"
+" @subsection layer options
+"
+" 1. `ssh_port`: set the port of mail server
+"
+" @subsection key bindings
+" >
+"   Key Bingding    Description
+"   SPC a m         open mail client
+" <
+
 function! SpaceVim#layers#mail#plugins() abort
     return [
-            \ ['vim-mail/vim-mail',{ 'merged' : 0, 'loadconf' : 1}],
+          \ [g:_spacevim_root_dir . 'bundle/vim-mail', {'merged' : 0, 'loadconf' : 1}],
             \ ]
 endfunction
 
