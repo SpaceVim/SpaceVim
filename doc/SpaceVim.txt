@@ -4624,11 +4624,13 @@ The following key bindings will be enabled when this layer is loaded:
 ==============================================================================
 MAIL                                                    *SpaceVim-layers-mail*
 
-The `mail` layer provides basic function to connected to mail server.
-
+The `mail` layer provides basic function to connected to mail server. NOTE:
+this layer is still wip now.
 LAYER OPTIONS
 
-  1. `ssh_port`: set the port of mail server
+  1. `imap_host`: set the imap server host
+  2. `imap_port`: set the imap server port
+  3. `imap_login`: set the login of imap server
 
 KEY BINDINGS
 
