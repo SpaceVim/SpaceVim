@@ -4,12 +4,21 @@ let s:job_noop_timer = ''
 let s:JOB = SpaceVim#api#import('job')
 
 function! mail#client#connect(ip, port)
-  let s:job_id = sockconnect('tcp', a:ip . ':' . a:port,
-        \ {
-          \ 'on_data' : function('s:on_stdout'),
-          \ }
-          \ )
-  call mail#logger#info('mail client job id:' . s:job_id)
+  if has('nvim')
+    let s:job_id = sockconnect('tcp', a:ip . ':' . a:port,
+          \ {
+            \ 'on_data' : function('s:on_stdout'),
+            \ }
+            \ )
+    call mail#logger#info('mail client job id:' . s:job_id)
+  else
+    let s:job_channel = ch_open(a:ip . ':' . a:port,
+          \ {
+            \ 'callback' : function('s:data_handle'),
+            \ }
+            \ )
+    call mail#logger#info('mail client job channel:' . s:job_channel)
+  endif
 endfunction
 
 " Wed, 06 Sep 2017 02:55:41 +0000  ===> 2017-09-06
@@ -33,6 +42,10 @@ let s:_mail_date = ''
 let s:_mail_from = ''
 let s:_mail_subject = ''
 let s:mail_unseen = 0
+
+function! s:data_handle(...) abort
+  call s:on_stdout(1,1, [a:1])
+endfunction
 
 function! s:on_stdout(id, data, event) abort
   for data in a:data
@@ -78,10 +91,14 @@ endfunction
 
 function! mail#client#send(command)
   call mail#logger#info('Send command: ' . a:command)
-  if s:job_id >= 0
-    call chansend(s:job_id, [a:command, ''])
+  if has('nvim')
+    if s:job_id >= 0
+      call chansend(s:job_id, [a:command, ''])
+    else
+      call mail#logger#info('skipped!, job id is:' . s:job_id)
+    endif
   else
-    call mail#logger#info('skipped!, job id is:' . s:job_id)
+    call ch_sendraw(s:job_channel, a:command . "\n")
   endif
 endfunction
 
