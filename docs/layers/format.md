@@ -18,8 +18,11 @@ description: "Code formatting layer for SpaceVim, includes a variety of formatte
 
 ## Description
 
-`format` layer provides code formatting feature for SpaceVim, this layer includes `neoformat`
-as the default code formatting plugin.
+The `format` layer provides code formatting for SpaceVim, with support for
+[`neoformat`](https://github.com/sbdchd/neoformat) (default) and
+[`codefmt`](https://github.com/google/vim-codefmt) underlying code
+formatting plugins.
+
 
 ## Install
 
@@ -35,7 +38,16 @@ This layer is enabled by default. If you want to disable it, add the following t
 
 ### Layer options
 
-- **`format_on_save`**: This option is to enable/disable code formatting when save current buffer,
+- **`format_method`**: The default plugin is `neoformat` but can be changed to `codefmt`:
+
+  ```toml
+  [[layers]]
+    name = "format"
+    format_method = "codefmt"
+  ```
+
+- **`format_on_save`**: This layer option is to enable/disable code formatting when save current buffer,
+
   and it is disabled by default. To enable it:
 
   ```toml
@@ -63,7 +75,9 @@ This layer is enabled by default. If you want to disable it, add the following t
 neoformat is a formatting framework, all of it's options can be used in bootstrap function. You can read
 `:help neoformat` for more info.
 
-here is an example to add a formater for java file, and it has been included into `lang#java` layer:
+
+Here is an example for add formatter for java file, and it has been included into `lang#java` layer:
+
 
 ```viml
 let g:neoformat_enabled_java = ['googlefmt']
