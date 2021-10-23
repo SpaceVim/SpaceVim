@@ -5,7 +5,7 @@ function! s:self.decode(str) abort
   
 endfunction
 
-function! s;self.encode(str) abort
+function! s:self.encode(str) abort
   
 endfunction
 
