@@ -1623,6 +1623,33 @@ endfunction
 "   General guide for using SpaceVim. Including layer configuration, bootstrap
 "   function.
 
+""
+" @section windows-and-tabs, usage-windows-and-tabs
+" @parentsection usage
+" @subsection Windows related key bindings
+" Window manager key bindings can only be used in normal mode.
+" The default leader `[WIN]` is `s`, you can change it via `windows_leader`
+" option:
+" >
+"   [options]
+"     windows_leader = "s"
+" <
+" The following key bindings can be used to manager vim windows and tabs.
+" >
+"     Key Bindings | Descriptions
+"     ------------ | --------------------------------------------------
+"     q            | Smart buffer close
+"     WIN v        | :split
+"     WIN V        | Split with previous buffer
+"     WIN g        | :vsplit
+"     WIN G        | Vertically split with previous buffer
+"     WIN t        | Open new tab (:tabnew)
+"     WIN o        | Close other windows (:only)
+"     WIN x        | Remove buffer, leave blank window
+"     WIN q        | Remove current buffer
+"     WIN Q        | Close current buffer (:close)
+"     Shift-Tab    | Switch to alternate window (switch back and forth)
+" <
 
 ""
 " @section buffers-and-files, usage-buffers-and-files

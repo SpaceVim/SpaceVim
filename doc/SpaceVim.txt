@@ -206,6 +206,7 @@ CONTENTS                                                   *SpaceVim-contents*
       2. custom_plugins........................|SpaceVim-usage-custom_plugins|
       3. repl............................................|SpaceVim-usage-repl|
       4. tasks..........................................|SpaceVim-usage-tasks|
+      5. windows-and-tabs....................|SpaceVim-usage-windows-and-tabs|
   8. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -4856,6 +4857,33 @@ first argument is {type}. To send raw string, use `raw` as type, for example:
 TASKS                                                   *SpaceVim-usage-tasks*
 
 general guide for tasks manager in SpaceVim.
+
+==============================================================================
+WINDOWS-AND-TABS                             *SpaceVim-usage-windows-and-tabs*
+
+WINDOWS RELATED KEY BINDINGS
+Window manager key bindings can only be used in normal mode. The default
+leader `[WIN]` is `s`, you can change it via `windows_leader` option:
+>
+  [options]
+    windows_leader = "s"
+<
+The following key bindings can be used to manager vim windows and tabs.
+>
+    Key Bindings | Descriptions
+    ------------ | --------------------------------------------------
+    q            | Smart buffer close
+    WIN v        | :split
+    WIN V        | Split with previous buffer
+    WIN g        | :vsplit
+    WIN G        | Vertically split with previous buffer
+    WIN t        | Open new tab (:tabnew)
+    WIN o        | Close other windows (:only)
+    WIN x        | Remove buffer, leave blank window
+    WIN q        | Remove current buffer
+    WIN Q        | Close current buffer (:close)
+    Shift-Tab    | Switch to alternate window (switch back and forth)
+<
 
 ==============================================================================
 API                                                             *SpaceVim-api*
