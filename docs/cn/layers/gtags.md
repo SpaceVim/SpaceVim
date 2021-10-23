@@ -68,26 +68,25 @@ sudo apt-get install exuberant-ctags python-pygments
 **ArchLinux**
 
 ```sh
-sudo pacman -S ctags python-pygments
+sudo pacman -S ctags global python-pygments
 ```
 
 **编译安装**
 
-下载最新的 tar.gz 文件，执行如下命令：
+下载最新的 [tar.gz](http://tamacom.com/global/global-6.6.5.tar.gz) 文件，执行如下命令：
 
 ```sh
-tar xvf global-6.5.3.tar.gz
-cd global-6.5.3
+tar xvf global-6.5.5.tar.gz
+cd global-6.5.5
 ./configure --with-exuberant-ctags=/usr/bin/ctags
 make
 sudo make install
 ```
 
-To be able to use pygments and ctags, you need to copy the sample gtags.conf either to /etc/gtags.conf or
-如果需要启用 pygments 和 ctags，需要复制示例 gtags.conf 至 `/etc/gtags.conf` 或者 `$HOME/.globalrc`。例如：
+如果需要启用 pygments 和 ctags，需要复制示例 gtags.conf.in 至 `/etc/gtags.conf` 或者 `$HOME/.globalrc`。例如：
 
 ```sh
-cp gtags.conf ~/.globalrc
+cp gtags.conf.in ~/.globalrc
 ```
 
 此外，启动 shell 时需要设置环境变量 `GTAGSLABEL`，通常需要修改 `.profile` 文件。

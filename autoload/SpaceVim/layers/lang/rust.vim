@@ -1,6 +1,6 @@
 "=============================================================================
 " rust.vim --- SpaceVim lang#rust layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -8,9 +8,10 @@
 
 
 ""
-" @section lang#rust, layer-lang-rust
+" @section lang#rust, layers-lang-rust
 " @parentsection layers
-" This layer is for Rust development. 
+" `lang#rust` layers provides rust programming language support for SpaceVim.
+" This layers includes syntax highlighting, code runner, REPL for rust.
 "
 " Requirements:
 "   
@@ -38,6 +39,19 @@
 "     name = 'lang#rust'
 "     racer_cmd = "/path/to/racer/bin"
 " <
+"
+" @subsection Layer options
+" 
+" The following layer options are supported when loading this layer:
+"
+" 1. `recommended_style`: `true`/`false` (Enable/Disable) recommended code
+" style for rust. This option is disabled by default.
+" 2. `format_on_save`: `true`/`false` (Enable/Disable) format current buffer
+" after save. This option is disabled by default.
+" 3. `racer_cmd`: The path of `racer` binary. This option is `racer` by
+" default.
+" 4. `rustfmt_cmd`: The path of `rustfmt` binary. This option is `rustfmt`
+" by default.
 "
 " @subsection Mappings
 " >
@@ -68,6 +82,20 @@
 "   SPC l s s       send selection text
 " <
 "
+" If the lsp layer is enabled for python, the following key bindings can
+" be used:
+" >
+"   key binding     Description
+"   g D             jump to type definition
+"   SPC l e         rename symbol
+"   SPC l x         show references
+"   SPC l s         show line diagnostics
+"   SPC l d         show document
+"   K               show document
+"   SPC l w l       list workspace folder
+"   SPC l w a       add workspace folder
+"   SPC l w r       remove workspace folder
+" <
 
 if exists('s:racer_cmd')
   finish
@@ -96,6 +124,12 @@ function! SpaceVim#layers#lang#rust#config() abort
 
   let g:racer_cmd = s:racer_cmd
   let g:rustfmt_cmd = s:rustfmt_cmd
+  " format layer setting
+  let g:neoformat_rust_rustfmt = {
+        \ 'exe': s:rustfmt_cmd,
+        \ 'stdin': 1,
+        \ }
+  let g:neoformat_enabled_rust = ['rustfmt']
   let g:rust_recommended_style = s:recommended_style
   " Disable racer format, use Neoformat instead!
   let g:rustfmt_autosave = 0
@@ -163,12 +197,23 @@ function! s:language_specified_mappings() abort
 
   if SpaceVim#layers#lsp#check_filetype('rust')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+    nnoremap <silent><buffer> gD :<C-u>call SpaceVim#lsp#go_to_typedef()<Cr>
+
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
-          \ 'call SpaceVim#lsp#show_doc()', 'show documentation', 1)
+          \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
+          \ 'call SpaceVim#lsp#references()', 'show-references', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
-          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'u'],
-          \ 'call SpaceVim#lsp#references()', 'show references', 1)
+          \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
+          \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
+    let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],
+          \ 'call SpaceVim#lsp#list_workspace_folder()', 'list-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'a'],
+          \ 'call SpaceVim#lsp#add_workspace_folder()', 'add-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'r'],
+          \ 'call SpaceVim#lsp#remove_workspace_folder()', 'remove-workspace-folder', 1)
   else
     nmap <silent><buffer> K <Plug>(rust-doc)
     call SpaceVim#mapping#space#langSPC('nmap', ['l', 'd'],
@@ -217,3 +262,10 @@ endfunction
 " set RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 "
 " vim:set et sw=2 cc=80
+
+
+function! SpaceVim#layers#lang#rust#health() abort
+  call SpaceVim#layers#lang#rust#plugins()
+  call SpaceVim#layers#lang#rust#config()
+  return 1
+endfunction

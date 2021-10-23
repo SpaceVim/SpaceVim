@@ -29,14 +29,14 @@ Nim is a compiled, garbage-collected systems programming language.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
   name = "lang#nim"
 ```
 
-Before using this layer, you need to install Nim via package manager. For example in archlinux:
+Before using this layer, you need to install Nim via a package manager. For example in archlinux:
 
 ```sh
 sudo pacman -S nim nimble
@@ -44,11 +44,11 @@ sudo pacman -S nim nimble
 
 ## Key bindings
 
-| Key Bindings | Descriptions                 |
-| ------------ | ---------------------------- |
-| `SPC l r`    | compile and run current file |
-| `SPC l e`    | rename symbol in file        |
-| `SPC l E`    | rename symbol in project     |
+| Key Bindings | Descriptions                     |
+| ------------ | -------------------------------- |
+| `SPC l r`    | compile and run the current file |
+| `SPC l e`    | rename symbol in file            |
+| `SPC l E`    | rename symbol in project         |
 
 ### Inferior REPL process
 

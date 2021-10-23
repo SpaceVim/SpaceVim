@@ -32,7 +32,7 @@ These new features have been added to tab manager in [#1887](https://github.com/
 
 - Display tab name on tabline and tab manager, you can also rename the tab via key binding `r` in tab manager buffer.
 ![rename](https://user-images.githubusercontent.com/13142418/80611134-ce45bf80-8a6c-11ea-8c1a-1a50ffea3880.gif)
-- Move cursor tab forward and backword, default key binding is `<C-S-Up>/<C-S-Down>`
+- Move cursor tab forward and backward, default key binding is `<C-S-Up>/<C-S-Down>`
 ![movetab](https://user-images.githubusercontent.com/13142418/80611339-0d741080-8a6d-11ea-890c-f8b389cee866.gif)
 - Create new tab after the tab under the cursor, key bindings: (`n`: create named tab / `N` : create anonymous tab)
 ![newtab](https://user-images.githubusercontent.com/13142418/80611475-398f9180-8a6d-11ea-9aa5-a975d61ebab9.gif)

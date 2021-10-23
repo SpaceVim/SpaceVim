@@ -1,6 +1,6 @@
 "=============================================================================
 " scala.vim --- SpaceVim lang#scala layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,7 +9,7 @@ scriptencoding utf-8
 
 
 ""
-" @section lang#scala, layer-lang-scala
+" @section lang#scala, layers-lang-scala
 " @parentsection layers
 " This layer is for Scala development.
 "
@@ -84,7 +84,7 @@ scriptencoding utf-8
 "   normal    SPC l u       find Usages of cursor symbol
 "
 " <
-" SpaceVim uses [`ensime-vim`](http://ensime.github.io/editors/vim/install/)
+" SpaceVim uses [`ensime-vim`](https://ensime.github.io/editors/vim/install/)
 " to provide code completion, format, sort imports etc, if has python support.
 " Also you can enable lsp layer to has a better experience.
 "
@@ -100,7 +100,7 @@ scriptencoding utf-8
 " @subsection Ensime-vim setup steps
 "
 " The following is quick install steps, if you want to see complete details,
-" please see: [`ensime-vim`](http://ensime.github.io/editors/vim/install/)
+" please see: [`ensime-vim`](https://ensime.github.io/editors/vim/install/)
 "
 " 1. Install vim`s plugin and its dependencies as following.
 "
@@ -335,3 +335,10 @@ function! s:execCMD(cmd) abort
 endfunction
 
 " vim:set et sw=2 cc=80:
+
+
+function! SpaceVim#layers#lang#scala#health() abort
+  call SpaceVim#layers#lang#scala#plugins()
+  call SpaceVim#layers#lang#scala#config()
+  return 1
+endfunction

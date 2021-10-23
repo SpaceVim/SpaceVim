@@ -1,5 +1,5 @@
 # Tagbar: a class outline viewer for Vim
-> a forked version which is based on SpaceVim's API.
+> a forked version which is based on [tagbar](https://github.com/majutsushi/tagbar/commit/387bbadda98e1376ff3871aa461b1f0abd4ece70).
 
 ## What Tagbar is
 

@@ -1,13 +1,13 @@
 "=============================================================================
 " foxpro.vim --- Visual FoxPro language support
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#foxpro, layer-lang-foxpro
+" @section lang#foxpro, layers-lang-foxpro
 " @parentsection layers
 " @subsection Intro
 "
@@ -21,4 +21,10 @@ endfunction
 
 function! SpaceVim#layers#lang#foxpro#config() abort
   
+endfunction
+
+function! SpaceVim#layers#lang#foxpro#health() abort
+  call SpaceVim#layers#lang#foxpro#plugins()
+  call SpaceVim#layers#lang#foxpro#config()
+  return 1
 endfunction

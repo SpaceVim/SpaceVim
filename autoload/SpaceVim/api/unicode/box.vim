@@ -1,20 +1,32 @@
 "=============================================================================
 " box.vim --- SpaceVim box API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
-let s:box = {}
-let s:json = SpaceVim#api#import('data#json')
-let s:string = SpaceVim#api#import('data#string')
 scriptencoding utf-8
+
+""
+" @section unicode#box, api-unicode-box
+" @parentsection api
+" provides some functions to draw box and table.
+"
+" drawing_table({json}[, {keys}])
+" 
+"   drawing table with json data.
+"
+
+let s:self = {}
+let s:self._json = SpaceVim#api#import('data#json')
+let s:self._string = SpaceVim#api#import('data#string')
+let s:self.box_width = 40
 " http://jrgraphix.net/r/Unicode/2500-257F
 " http://www.alanflavell.org.uk/unicode/unidata.html
 
 " json should be a list of items which have same keys
-function! s:drawing_table(json, ...) abort
+function! s:self.drawing_table(json, ...) abort
   if empty(a:json)
     return []
   endif
@@ -44,19 +56,19 @@ function! s:drawing_table(json, ...) abort
     let bottom_middle = '*'
   endif
   let table = []
-  let items = s:json.json_decode(a:json)
+  let items = self._json.json_decode(a:json)
   let col = len(keys(items[0]))
   let top_line = top_left_corner
-        \ . repeat(repeat(top_bottom_side, 15) . top_middle, col - 1)
-        \ . repeat(top_bottom_side, 15)
+        \ . repeat(repeat(top_bottom_side, self.box_width) . top_middle, col - 1)
+        \ . repeat(top_bottom_side, self.box_width)
         \ . top_right_corner
   let middle_line = left_middle
-        \ . repeat(repeat(top_bottom_side, 15) . middle, col - 1)
-        \ . repeat(top_bottom_side, 15)
+        \ . repeat(repeat(top_bottom_side, self.box_width) . middle, col - 1)
+        \ . repeat(top_bottom_side, self.box_width)
         \ . right_middle
   let bottom_line = bottom_left_corner
-        \ . repeat(repeat(top_bottom_side, 15) . bottom_middle, col - 1)
-        \ . repeat(top_bottom_side, 15)
+        \ . repeat(repeat(top_bottom_side, self.box_width) . bottom_middle, col - 1)
+        \ . repeat(top_bottom_side, self.box_width)
         \ . bottom_right_corner
   call add(table, top_line)
   let tytle = side
@@ -66,14 +78,14 @@ function! s:drawing_table(json, ...) abort
     let keys = a:1
   endif
   for key in keys
-    let tytle .= s:string.fill(key , 15) . side
+    let tytle .= self._string.fill_middle(key , self.box_width) . side
   endfor
   call add(table, tytle)
   call add(table, middle_line)
   for item in items
     let value_line = side
     for key in keys
-      let value_line .= s:string.fill(item[key], 15) . side
+      let value_line .= self._string.fill(item[key], self.box_width) . side
     endfor
     call add(table, value_line)
     call add(table, middle_line)
@@ -82,10 +94,17 @@ function! s:drawing_table(json, ...) abort
   return table
 endfunction
 
-let s:box['drawing_table'] = function('s:drawing_table')
-
 " @vimlint(EVL102, 1, l:j)
-function! s:drawing_box(data, h, w, bw) abort
+" @param data: a list of string
+" @param h: max height of box
+" @param w: max width of box
+" @param bw: cell width
+" @param [opt]: a dict of options
+"     align: right/left/center
+function! s:self.drawing_box(data, h, w, bw, ...) abort
+  let opt = get(a:000, 0, {
+        \ 'align': 'center'
+        \ })
   if &encoding ==# 'utf-8'
     let top_left_corner = '╭'
     let top_right_corner = '╮'
@@ -131,7 +150,13 @@ function! s:drawing_box(data, h, w, bw) abort
   let ls = 1
   let line = side
   for sel in a:data
-    let line .=s:string.fill_middle(sel, a:bw) . side
+    if opt.align == 'center'
+      let line .=self._string.fill_middle(sel, a:bw) . side
+    elseif opt.align == 'right'
+      let line .=self._string.fill_left(sel, a:bw) . side
+    else
+      let line .=self._string.fill(sel, a:bw) . side
+    endif
     let i += 1
     if i == a:w
       call add(box, line)
@@ -153,10 +178,8 @@ function! s:drawing_box(data, h, w, bw) abort
 endfunction
 " @vimlint(EVL102, 0, l:j)
 
-let s:box['drawing_box'] = function('s:drawing_box')
-
 function! SpaceVim#api#unicode#box#get() abort
-  return deepcopy(s:box)
+  return deepcopy(s:self)
 endfunction
 
 " vim:set et sw=2:

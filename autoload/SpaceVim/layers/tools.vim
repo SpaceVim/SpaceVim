@@ -1,35 +1,33 @@
 "=============================================================================
 " tools.vim --- SpaceVim tools layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+if exists('s:CMP')
+  finish
+endif
+
+let s:CMP = SpaceVim#api#import('vim#compatible')
+
 function! SpaceVim#layers#tools#plugins() abort
   let plugins = []
   call add(plugins, ['tpope/vim-scriptease',             { 'merged' : 0}])
   call add(plugins, ['lymslive/vimloo',                  { 'merged' : 0}])
-  call add(plugins, ['lymslive/vnote',                   { 'depends' : 'vimloo', 'on_cmd' : ['NoteBook','NoteNew','NoteEdit', 'NoteList', 'NoteConfig', 'NoteIndex', 'NoteImport']}])
+  call add(plugins, ['lymslive/vnote',                   { 'merged' : 0}])
   call add(plugins, ['junegunn/rainbow_parentheses.vim', { 'merged' : 0}])
   call add(plugins, ['mbbill/fencview',                  { 'on_cmd' : 'FencAutoDetect'}])
-  call add(plugins, ['simnalamburt/vim-mundo',           { 'on_cmd' : 'MundoToggle'}])
   call add(plugins, ['wsdjeg/vim-cheat',                 { 'on_cmd' : 'Cheat'}])
   call add(plugins, ['wsdjeg/Mysql.vim',                 { 'on_cmd' : 'SQLGetConnection'}])
   call add(plugins, ['wsdjeg/SourceCounter.vim',         { 'on_cmd' : 'SourceCounter'}])
   call add(plugins, ['itchyny/calendar.vim',             { 'on_cmd' : 'Calendar'}])
   call add(plugins, ['junegunn/limelight.vim',           { 'on_cmd' : 'Limelight'}])
   call add(plugins, ['junegunn/goyo.vim',                { 'on_cmd' : 'Goyo', 'loadconf' : 1}])
-  call add(plugins, ['MattesGroeger/vim-bookmarks',      { 'on_cmd' :
-        \ [
-        \ 'BookmarkShowAll',
-        \ 'BookmarkToggle',
-        \ 'BookmarkAnnotate',
-        \ 'BookmarkNext',
-        \ 'BookmarkPrev',
-        \ ],
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-bookmarks',
+        \ {'merged': 0,
         \ 'loadconf_before' : 1}])
-  let s:CMP = SpaceVim#api#import('vim#compatible')
   if s:CMP.has('python')
     call add(plugins, ['gregsexton/VimCalc', {'on_cmd' : 'Calc'}])
   elseif s:CMP.has('python3')
@@ -52,11 +50,11 @@ function! SpaceVim#layers#tools#config() abort
 
   " bootmark key binding
   nnoremap <silent> mm :<C-u>BookmarkToggle<Cr>
+  nnoremap <silent> mc :<C-u>BookmarkClear<Cr>
   nnoremap <silent> mi :<C-u>BookmarkAnnotate<Cr>
   nnoremap <silent> ma :<C-u>BookmarkShowAll<Cr>
   nnoremap <silent> mn :<C-u>BookmarkNext<Cr>
   nnoremap <silent> mp :<C-u>BookmarkPrev<Cr>
-  nnoremap <silent> <F7> :MundoToggle<CR>
   augroup rainbow_lisp
     autocmd!
     autocmd FileType lisp,clojure,scheme,racket,java RainbowParentheses
@@ -73,6 +71,12 @@ function! SpaceVim#layers#tools#config() abort
   if maparg('<C-_>', 'n') ==# ''
     nnoremap <silent> <C-_> <Esc>:Ydc<CR>
   endif
+endfunction
+
+function! SpaceVim#layers#tools#health() abort
+  call SpaceVim#layers#tools#plugins()
+  call SpaceVim#layers#tools#config()
+  return 1
 endfunction
 
 " vim:set et sw=2 cc=80:

@@ -1,17 +1,17 @@
 ---
 title: "SpaceVim leaderf layer"
-description: "This layers provide a heavily customized LeaderF centric work-flow"
+description: "This layer provides a heavily customized LeaderF centric workflow"
 ---
 
 # [Available Layers](../) >> leaderf
 
 ## Description
 
-This layer is a heavily customized wrapper for LeaderF and it's sources.
+This layer is a heavily customized wrapper for [LeaderF](https://github.com/Yggdroot/LeaderF) and it's sources.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -20,7 +20,7 @@ To use this configuration layer, update custom configuration file with:
 
 ## Configuration
 
-SpaceVim use `F` as the default customized key bindings prefix for denite layer.
+SpaceVim uses `f` as the default customized key binding prefix for denite layer.
 
 ## Key bindings
 
@@ -32,6 +32,7 @@ SpaceVim use `F` as the default customized key bindings prefix for denite layer.
 | `<Leader> f j`       | Fuzzy find jump, change       |
 | `<Leader> f l`       | Fuzzy find location list      |
 | `<Leader> f m`       | Fuzzy find output messages    |
-| `<Leader> f o`       | Fuzzy find outline            |
+| `<Leader> f o`       | Fuzzy find functions          |
+| `<Leader> f t`       | Fuzzy find tags               |
 | `<Leader> f q`       | Fuzzy find quick fix          |
 | `<Leader> f r`       | Resumes Unite window          |

@@ -1,6 +1,6 @@
 "=============================================================================
 " key.vim --- SpaceVim key API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -22,6 +22,8 @@ function! s:self.nr2name(nr) abort
             return '<C-d>'
         elseif a:nr == 9
             return '<Tab>'
+        elseif a:nr == 92
+            return '<Leader>'
         elseif a:nr == 27
             return '<Esc>'
         else

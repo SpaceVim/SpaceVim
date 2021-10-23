@@ -1,6 +1,6 @@
 "=============================================================================
 " statusline.vim --- SpaceVim statusline API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -25,7 +25,8 @@ let s:self.__bufnr = -1
 function! s:self.len(sec) abort
   let str = matchstr(a:sec, '%{.*}')
   if !empty(str)
-    return len(a:sec) - len(str) + len(eval(str[2:-2])) + 4
+    let pos = match(str, '}')
+    return len(a:sec) - len(str) + len(eval(str[2:pos-1])) + 4
   else
     return len(a:sec) + 4
   endif
@@ -167,11 +168,13 @@ endfunction
 
 if s:self.__floating.exists()
   function! s:self.close_float() abort
-    call self.__floating.win_close(self.__winid, 1)
+    if get(self, '__winid', -1) != -1
+      call self.__floating.win_close(self.__winid, 1)
+    endif
   endfunction
 else
   function! s:self.close_float() abort
-    if has_key(self, '__winid') && win_id2tabwin(self.__winid)[0] == tabpagenr()
+    if get(self, '__winid', -1) != -1 && win_id2tabwin(self.__winid)[0] == tabpagenr()
       noautocmd execute win_id2win(self.__winid).'wincmd w'
       noautocmd close
     endif

@@ -18,6 +18,7 @@ Each of the following sections will be covered:
 - [Enable language layer](#enable-language-layer)
 - [Code completion](#code-completion)
 - [Syntax linting](#syntax-linting)
+- [Ctags integration](#ctags-integration)
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)
 - [Code formatting](#code-formatting)
@@ -55,6 +56,21 @@ To install psalm, you may need to run:
 composer require --dev vimeo/psalm
 ```
 
+### Ctags integration
+
+The `gtags` layer provides `ctags` integration for your project. It will create the index file for
+each of your project. To enable `gtags` layer:
+
+```toml
+[[layers]]
+    name = 'gtags'
+```
+
+With this layer, you can jump to method and class definitions easily (using `ctrl + ]` by default).
+Read [gtags](../layers/gtags/) layer for more info.
+
+
+
 ### Jump to test file
 
 To manage the alternate file for a project, you may need to create a `.project_alt.json` file in the root of your
@@ -81,8 +97,9 @@ It is running asynchronously, and will not block your Vim.
 
 ### Code formatting
 
-The format layer is also enabled by default. With this layer you can use key binding `SPC b f` to format current buffer.
-Before using this feature, please install php_beautifier:
+The [format](../layers/format/) layer is also enabled by default.
+With this layer you can use key binding `SPC b f` to format current buffer.
+Before using this feature, please install [php_beautifier](http://phpbeautifier.com/):
 
 ```sh
 pear install PHP_Beautifier

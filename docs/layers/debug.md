@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim debug layer"
-description: "This layer provide debug workflow support in SpaceVim"
+description: "This layer provides debug workflow support in SpaceVim"
 ---
 
 # [Available Layers](../) >> debug
@@ -15,12 +15,11 @@ description: "This layer provide debug workflow support in SpaceVim"
 
 ## Description
 
-This layer provide a debug workflow for SpaceVim. All of the function is based on [vim-vebugger](https://github.com/idanarye/vim-vebugger).
+This layer provides debug workflow for SpaceVim. All of the functionality is based on [vim-vebugger](https://github.com/idanarye/vim-vebugger).
 
 ## Install
 
-
-To use this configuration layer, add following snippet to your custom configuration file.
+To use this configuration layer, add the following snippet to your custom configuration file.
 
 ```toml
 [[layers]]
@@ -31,7 +30,7 @@ To use this configuration layer, add following snippet to your custom configurat
 
 | Key Binding | Description                              |
 | ----------- | ---------------------------------------- |
-| `SPC d l`   | launching debugger                       |
+| `SPC d l`   | launch the debugger                      |
 | `SPC d c`   | Continue the execution                   |
 | `SPC d b`   | Toggle a breakpoint for the current line |
 | `SPC d B`   | Clear all breakpoints                    |
@@ -45,6 +44,6 @@ To use this configuration layer, add following snippet to your custom configurat
 
 **Debug Transient State**
 
-key bindings is too long? use `SPC d .` to open the debug transient state:
+key bindings are too long? use `SPC d .` to open the debug transient state:
 
 ![Debug Transient State](https://user-images.githubusercontent.com/13142418/33996076-b03c05bc-e0a5-11e7-90fd-5f31e2703d7e.png)

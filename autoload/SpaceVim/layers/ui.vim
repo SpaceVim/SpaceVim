@@ -1,33 +1,116 @@
 "=============================================================================
 " ui.vim --- SpaceVim ui layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
-
 scriptencoding utf-8
+
+""
+" @section ui, layers-ui
+" @parentsection layers
+" The `ui` layer defines the default interface for SpaceVim,
+" and it is loaded by default.
+" This layer includes scrollbar, indentline, and cursorword highlighting.
+" >
+"   [[layers]]
+"     name = 'ui'
+"     enable_sidebar = false
+"     enable_scrollbar = false
+"     enable_indentline = true
+"     enable_cursorword = false
+"     indentline_char = '|'
+"     conceallevel = 0
+"     concealcursor = ''
+"     cursorword_delay = 50
+"     cursorword_exclude_filetype = []
+"     indentline_exclude_filetyps = []
+" <
+"
+" if you want to disable `ui` layer, you can use:
+" >
+"   [[layers]]
+"     name = 'ui'
+"     enabled = fasle
+" <
+" @subsection options
+"
+" 1. `enable_sidebar`: Enable/disable sidebar.
+" 2. `enable_scrollbar`: Enable/disable floating scrollbar of current buffer.
+" Disabled by default. This feature requires neovim's floating window.
+" 3. `enable_indentline`: Enable/disable indentline of current buffer.
+" Enabled by default.
+" 4. `enable_cursorword`: Enable/disable  cursorword highlighting.
+" Disabled by default.
+" 5. `indentline_char`: Set the character of indentline.
+" 6. `conceallevel`: set the conceallevel option.
+" 7. `concealcursor`: set the concealcursor option.
+" 8. `cursorword_delay`: The delay duration in milliseconds for setting the
+" word highlight after cursor motions, the default is 50.
+" 9. `cursorword_exclude_filetypes`: Ignore filetypes when enable cursorword
+" highlighting.
+" 10. `indentline_exclude_filetyps`: Ignore filetypes when enable indentline.
+"
+" @subsection key bindings
+" >
+"   Key binding     Description
+"   SPC t h         ui current buffer or selection lines
+" <
+"
+
 
 if exists('s:enable_sidebar')
   finish
 else
   let s:enable_sidebar = 0
   let s:enable_scrollbar = 0
+  let s:enable_indentline = 1
+  let s:indentline_char = '|'
+  let s:indentline_exclude_filetyps = []
+  let s:enable_cursorword = 0
+  let s:conceallevel = 0
+  let s:concealcursor = ''
+  let s:cursorword_delay = 50
+  let s:cursorword_exclude_filetypes = []
 endif
+
+let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
 
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
-        \ [g:_spacevim_root_dir . 'bundle/indentLine', {'merged' : 0}],
-        \ [g:_spacevim_root_dir . 'bundle/tagbar', {'loadconf' : 1, 'merged' : 0}],
-        \ [g:_spacevim_root_dir . 'bundle/tagbar-makefile.vim', {'merged': 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-cursorword', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/tagbar',
+        \ {'loadconf' : 1, 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/tagbar-makefile.vim',
+        \ {'merged': 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar-proto.vim', {'merged': 0}],
-        \ [g:_spacevim_root_dir . 'bundle/vim-choosewin', {'merged' : 0}],
-        \ [g:_spacevim_root_dir . 'bundle/vim-startify', {'loadconf' : 1, 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-choosewin',
+        \ {'on_cmd' : 'ChooseWin', 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-startify',
+        \ {'loadconf' : 1, 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-better-whitespace',
+        \ { 'on_cmd' : [
+          \ 'StripWhitespace',
+          \ 'ToggleWhitespace',
+          \ 'DisableWhitespace',
+          \ 'EnableWhitespace'
+          \ ]}],
         \ ]
+  if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version())
+        \ || has('nvim-0.6.0')
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/indent-blankline.nvim',
+          \ { 'merged' : 0}])
+  else
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/indentLine',
+          \ { 'merged' : 0}])
+  endif
   if !SpaceVim#layers#isLoaded('core#statusline')
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline',                { 'merged' : 0, 
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline',
+          \ { 'merged' : 0,
           \ 'loadconf' : 1}])
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline-themes',         { 'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-airline-themes',
+          \ { 'merged' : 0}])
   endif
 
   return plugins
@@ -41,16 +124,35 @@ function! SpaceVim#layers#ui#config() abort
   else
     let g:indentLine_color_gui = get(g:, 'indentLine_color_gui', '#d5c4a1')
   endif
-  let g:indentLine_char = get(g:, 'indentLine_char', '┊')
-  let g:indentLine_concealcursor = 'niv'
-  let g:indentLine_conceallevel = 2
-  let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler', 'json']
+
+  " indent line configuration
+  " indent_blankline for neovim, indentLine for vim and old neovim
+
+  " indent line character
+  let g:indent_blankline_char = s:indentline_char
+  let g:indentLine_char = s:indentline_char
+
+  " indent line conceal setting, only for indentLine
+  let g:indentLine_concealcursor = s:concealcursor
+  let g:indentLine_conceallevel = s:conceallevel
+
+
+  " enable/disable indentline
+  let g:indentLine_enabled = s:enable_indentline
+  let g:indent_blankline_enabled = s:enable_indentline
+
+  " exclude filetypes for indentline
+  let g:indentLine_fileTypeExclude = s:indentline_exclude_filetyps
+  let g:indent_blankline_buftype_exclude = s:indentline_exclude_filetyps
+
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
         \ 'qf', 'help', 'markdown', 'leaderGuide',
         \ 'startify'
         \ ]
   let g:signify_disable_by_default = 0
   let g:signify_line_highlight = 0
+  let g:cursorword = s:enable_cursorword
+  let g:cursorword_delay = s:cursorword_delay
 
   if s:enable_sidebar
     noremap <silent> <F2> :call SpaceVim#plugins#sidebar#toggle()<CR>
@@ -59,16 +161,28 @@ function! SpaceVim#layers#ui#config() abort
   endif
 
   " this options only support neovim now.
-  if s:enable_scrollbar && has('nvim')
-    augroup spacevim_layer_ui
-        autocmd!
-        autocmd BufEnter,CursorMoved,VimResized,FocusGained    * call SpaceVim#plugins#scrollbar#show()
-        autocmd BufLeave,FocusLost,QuitPre    * call SpaceVim#plugins#scrollbar#clear()
-    augroup end
-  endif
+  augroup spacevim_layer_ui
+    autocmd!
+    if s:enable_scrollbar && has('nvim')
+      autocmd BufEnter,CursorMoved,VimResized,FocusGained
+            \ * call SpaceVim#plugins#scrollbar#show()
+      autocmd BufLeave,FocusLost,QuitPre
+            \ * call SpaceVim#plugins#scrollbar#clear()
+      " why this autocmd is needed?
+      "
+      " because the startify use noautocmd enew
+      autocmd User Startified call s:clear_previous_scrollbar()
+    endif
+    if !empty(s:cursorword_exclude_filetypes)
+      exe printf('autocmd FileType %s let b:cursorword = 0',
+            \ join(s:cursorword_exclude_filetypes, ','))
+    endif
+  augroup end
 
   if !empty(g:spacevim_windows_smartclose)
-    call SpaceVim#mapping#def('nnoremap <silent>', g:spacevim_windows_smartclose, ':<C-u>call SpaceVim#mapping#SmartClose()<cr>',
+    call SpaceVim#mapping#def('nnoremap <silent>',
+          \ g:spacevim_windows_smartclose,
+          \ ':<C-u>call SpaceVim#mapping#SmartClose()<cr>',
           \ 'smart-close-windows',
           \ 'call SpaceVim#mapping#SmartClose()')
   endif
@@ -76,6 +190,10 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', '8'], 'call call('
         \ . string(s:_function('s:toggle_fill_column')) . ', [])',
         \ 'highlight-long-lines', 1)
+  if g:spacevim_autocomplete_method ==# 'deoplete'
+    call SpaceVim#mapping#space#def('nnoremap', ['t', 'a'], 'call SpaceVim#layers#autocomplete#toggle_deoplete()',
+          \ 'toggle autocomplete', 1)
+  endif
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'b'], 'call call('
         \ . string(s:_function('s:toggle_background')) . ', [])',
         \ 'toggle background', 1)
@@ -94,23 +212,23 @@ function! SpaceVim#layers#ui#config() abort
         \ . string(s:_function('s:toggle_cursorline')) . ', [])',
         \ ['toggle-highlight-current-line',
         \ [
-        \ 'SPC t h h is to toggle the highlighting of cursorline'
-        \ ]
-        \ ], 1)
+          \ 'SPC t h h is to toggle the highlighting of cursorline'
+          \ ]
+          \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'i'], 'call call('
         \ . string(s:_function('s:toggle_indentline')) . ', [])',
         \ ['toggle-highlight-indentation-levels',
         \ [
-        \ 'SPC t h i is to running :IndentLinesToggle which is definded in indentLine'
-        \ ]
-        \ ], 1)
+          \ 'SPC t h i is to running :IndentLinesToggle which is definded in indentLine'
+          \ ]
+          \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'c'], 'set cursorcolumn!',
         \ 'toggle-highlight-current-column', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 's'], 'call call('
         \ . string(s:_function('s:toggle_syntax_hi')) . ', [])',
         \ 'toggle-syntax-highlighting', 1)
 
-  call SpaceVim#mapping#space#def('nnoremap', ['T', 'F'], '<F11>',
+  call SpaceVim#mapping#space#def('nmap', ['T', 'F'], '<F11>',
         \ 'fullscreen-frame', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['T', 'm'], 'call call('
         \ . string(s:_function('s:toggle_menu_bar')) . ', [])',
@@ -124,12 +242,28 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['T', '~'], 'call call('
         \ . string(s:_function('s:toggle_end_of_buffer')) . ', [])',
         \ 'display ~ in the fringe on empty lines', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'], 'call call('
-        \ . string(s:_function('s:toggle_spell_check')) . ', [])',
+  call SpaceVim#layers#core#statusline#register_mode(
+        \ {
+          \ 'key' : 'spell-checking',
+          \ 'func' : s:_function('s:toggle_spell_check'),
+          \ }
+          \ )
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'],
+        \ 'call SpaceVim#layers#core#statusline#toggle_mode("spell-checking")',
         \ 'toggle-spell-checker', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'p'], 'call call('
-        \ . string(s:_function('s:toggle_paste')) . ', [])',
+  call SpaceVim#layers#core#statusline#register_mode(
+        \ {
+          \ 'key' : 'paste-mode',
+          \ 'func' : s:_function('s:toggle_paste'),
+          \ }
+          \ )
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'p'],
+        \ 'call SpaceVim#layers#core#statusline#toggle_mode("paste-mode")',
         \ 'toggle-paste-mode', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'P'],
+        \ 'DelimitMateSwitch',
+        \ 'toggle-auto-parens-mode', 1)
+
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'l'], 'setlocal list!',
         \ 'toggle-hidden-listchars', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'W'], 'setlocal wrap!',
@@ -228,7 +362,11 @@ function! s:toggle_fill_column() abort
 endfunction
 
 function! s:toggle_indentline() abort
-  IndentLinesToggle
+  if exists(':IndentLinesToggle')
+    IndentLinesToggle
+  elseif exists(':IndentBlanklineToggle')
+    IndentBlanklineToggle
+  endif
 endfunction
 
 let s:shflag = 0
@@ -287,7 +425,6 @@ function! s:toggle_spell_check() abort
   else
     let &l:spell = 1
   endif
-  call SpaceVim#layers#core#statusline#toggle_mode('spell-checking')
   if &l:spell == 1
     echo 'spell-checking enabled.'
   else
@@ -301,13 +438,11 @@ function! s:toggle_paste() abort
   else
     let &l:paste = 1
   endif
-  call SpaceVim#layers#core#statusline#toggle_mode('paste-mode')
   if &l:paste == 1
     echo 'paste-mode enabled.'
   else
     echo 'paste-mode disabled.'
   endif
-  
 endfunction
 
 let s:whitespace_enable = 0
@@ -324,92 +459,92 @@ function! s:toggle_whitespace() abort
 endfunction
 
 function! s:toggle_conceallevel() abort
-    if &conceallevel == 0 
-        setlocal conceallevel=2
-    else
-        setlocal conceallevel=0
-    endif
+  if &conceallevel == 0
+    setlocal conceallevel=2
+  else
+    setlocal conceallevel=0
+  endif
 endfunction
 
 function! s:toggle_background() abort
-    let s:tbg = &background
-    " Inversion
-    if s:tbg ==# 'dark'
-        set background=light
-    else
-        set background=dark
-    endif
+  let s:tbg = &background
+  " Inversion
+  if s:tbg ==# 'dark'
+    set background=light
+  else
+    set background=dark
+  endif
 endfunction
 
 
 function! s:win_resize_transient_state() abort
-  let state = SpaceVim#api#import('transient_state') 
+  let state = SpaceVim#api#import('transient_state')
   call state.set_title('Windows Resize Transient State')
   call state.defind_keys(
         \ {
-        \ 'layout' : 'vertical split',
-        \ 'left' : [
-        \ {
-        \ 'key' : 'H',
-        \ 'desc' : 'left',
-        \ 'func' : '',
-        \ 'cmd' : 'wincmd h',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'J',
-        \ 'desc' : 'below',
-        \ 'func' : '',
-        \ 'cmd' : 'wincmd j',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'K',
-        \ 'desc' : 'up',
-        \ 'func' : '',
-        \ 'cmd' : 'wincmd k',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'L',
-        \ 'desc' : 'right',
-        \ 'func' : '',
-        \ 'cmd' : 'wincmd l',
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ 'right' : [
-        \ {
-        \ 'key' : 'h',
-        \ 'desc' : 'decrease width',
-        \ 'func' : '',
-        \ 'cmd' : 'vertical resize -1',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'l',
-        \ 'desc' : 'increase width',
-        \ 'func' : '',
-        \ 'cmd' : 'vertical resize +1',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'j',
-        \ 'desc' : 'decrease height',
-        \ 'func' : '',
-        \ 'cmd' : 'resize -1',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'k',
-        \ 'desc' : 'increase height',
-        \ 'func' : '',
-        \ 'cmd' : 'resize +1',
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ }
-        \ )
+          \ 'layout' : 'vertical split',
+          \ 'left' : [
+            \ {
+              \ 'key' : 'H',
+              \ 'desc' : 'left',
+              \ 'func' : '',
+              \ 'cmd' : 'wincmd h',
+              \ 'exit' : 0,
+              \ },
+              \ {
+                \ 'key' : 'J',
+                \ 'desc' : 'below',
+                \ 'func' : '',
+                \ 'cmd' : 'wincmd j',
+                \ 'exit' : 0,
+                \ },
+                \ {
+                  \ 'key' : 'K',
+                  \ 'desc' : 'up',
+                  \ 'func' : '',
+                  \ 'cmd' : 'wincmd k',
+                  \ 'exit' : 0,
+                  \ },
+                  \ {
+                    \ 'key' : 'L',
+                    \ 'desc' : 'right',
+                    \ 'func' : '',
+                    \ 'cmd' : 'wincmd l',
+                    \ 'exit' : 0,
+                    \ },
+                    \ ],
+                    \ 'right' : [
+                      \ {
+                        \ 'key' : 'h',
+                        \ 'desc' : 'decrease width',
+                        \ 'func' : '',
+                        \ 'cmd' : 'vertical resize -1',
+                        \ 'exit' : 0,
+                        \ },
+                        \ {
+                          \ 'key' : 'l',
+                          \ 'desc' : 'increase width',
+                          \ 'func' : '',
+                          \ 'cmd' : 'vertical resize +1',
+                          \ 'exit' : 0,
+                          \ },
+                          \ {
+                            \ 'key' : 'j',
+                            \ 'desc' : 'decrease height',
+                            \ 'func' : '',
+                            \ 'cmd' : 'resize -1',
+                            \ 'exit' : 0,
+                            \ },
+                            \ {
+                              \ 'key' : 'k',
+                              \ 'desc' : 'increase height',
+                              \ 'func' : '',
+                              \ 'cmd' : 'resize +1',
+                              \ 'exit' : 0,
+                              \ },
+                              \ ],
+                              \ }
+                              \ )
   call state.open()
 endfunction
 
@@ -422,5 +557,59 @@ function! SpaceVim#layers#ui#set_variable(var) abort
   let s:enable_scrollbar = get(a:var,
         \ 'enable_scrollbar',
         \ 0)
+  let s:enable_indentline = get(a:var,
+        \ 'enable_indentline',
+        \ 1)
+  let s:indentline_char = get(a:var,
+        \ 'indentline_char',
+        \ s:indentline_char)
+  let s:indentline_exclude_filetyps = get(a:var,
+        \ 'indentline_exclude_filetyps',
+        \ s:indentline_exclude_filetyps)
+  let s:enable_cursorword = get(a:var,
+        \ 'enable_cursorword',
+        \ s:enable_cursorword)
+  let s:conceallevel = get(a:var,
+        \ 'conceallevel',
+        \ s:conceallevel)
+  let s:concealcursor = get(a:var,
+        \ 'concealcursor',
+        \ s:concealcursor)
+  let s:cursorword_delay = get(a:var,
+        \ 'cursorword_delay',
+        \ s:cursorword_delay)
+  " The old layer option is cursorword_exclude_filetype
+  let s:cursorword_exclude_filetypes =
+        \ get(a:var,
+        \ 'cursorword_exclude_filetypes',
+        \ get(a:var,
+        \ 'cursorword_exclude_filetype',
+        \ s:cursorword_exclude_filetypes
+        \ ))
+endfunction
+
+function! s:clear_previous_scrollbar() abort
+  let bufnr = bufnr('#')
+  call SpaceVim#plugins#scrollbar#clear(bufnr)
+endfunction
+
+function! SpaceVim#layers#ui#health() abort
+  call SpaceVim#layers#ui#plugins()
+  call SpaceVim#layers#ui#config()
+  return 1
+endfunction
+
+function! SpaceVim#layers#ui#get_options() abort
+
+  return ['enable_sidebar',
+        \ 'enable_scrollbar',
+        \ 'enable_indentline',
+        \ 'enable_cursorword',
+        \ 'cursorword_delay',
+        \ 'concealcursor',
+        \ 'conceallevel',
+        \ 'indentline_exclude_filetyps',
+        \ 'indentline_char',
+        \ 'cursorword_exclude_filetypes']
 
 endfunction

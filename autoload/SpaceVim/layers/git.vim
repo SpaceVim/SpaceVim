@@ -1,15 +1,50 @@
 "=============================================================================
 " git.vim --- SpaceVim git layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 
-" Layer Options:
-" s:git_plugin which plugin is used as the background plugin in git layer
+""
+" @section git, layers-git
+" @parentsection layers
+" `git` layer provides git integration for SpaceVim.
+"
+" @subsection Layer options
+"
+" `git_plugin`: Set the background plugin used in `git` layer. The default
+" value is `git`, the following plugins are supported: `gina`, `fugitive` and
+" `gita`.
+" >
+"   [[layers]]
+"     name = 'git'
+"     git_plugin = 'git'
+" <
+" @subsection Key bindings
+"
+" The following key bindings will be definded when the `git` layer is loaded.
+" >
+"   Key Binding   Description
+"   SPC g s       view git status
+"   SPC g S       stage current file
+"   SPC g U       unstage current file
+"   SPC g c       edit git commit
+"   SPC g p       git push
+"   SPC g m       git branch manager
+"   SPC g d       view git diff
+"   SPC g A       stage all files
+"   SPC g b       open git blame windows
+"   SPC g h a     stage current hunk
+"   SPC g h r     undo cursor hunk
+"   SPC g h v     preview cursor hunk
+" <
 
+
+if exists('s:git_plugin')
+  finish
+endif
 
 let s:git_plugin = 'git'
 
@@ -27,10 +62,7 @@ function! SpaceVim#layers#git#plugins() abort
   elseif s:git_plugin ==# 'gita'
     call add(plugins, ['lambdalisue/vim-gita', { 'on_cmd' : 'Gita'}])
   else
-    call add(plugins, ['wsdjeg/git.vim', { 'on_cmd' : 'Git'}])
-  endif
-  if g:spacevim_filemanager ==# 'nerdtree'
-    call add(plugins, ['Xuyuanp/nerdtree-git-plugin', {'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/git.vim', { 'merged' : 0}])
   endif
   return plugins
 endfunction
@@ -51,14 +83,14 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'Gina log %', 'git-log-of-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'Gina log', 'git-log-of-current-repo', 1)
   elseif s:git_plugin ==# 'fugitive'
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gstatus', 'git-status', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Git', 'git-status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Git add %', 'stage-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Git reset -q %', 'unstage-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Git commit', 'edit-git-commit', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gpush', 'git-push', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Git push', 'git-push', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gdiff', 'view-git-diff', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Git add .', 'stage-all-files', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gblame', 'view-git-blame', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Git blame', 'view-git-blame', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'Glog -- %', 'git-log-of-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'Glog --', 'git-log-of-current-repo', 1)
   elseif s:git_plugin ==# 'gita'
@@ -116,8 +148,10 @@ endfunction
 function! SpaceVim#layers#git#set_variable(var) abort
 
   let s:git_plugin = get(a:var,
+        \ 'git_plugin',
+        \ get(a:var,
         \ 'git-plugin',
-        \ s:git_plugin)
+        \ s:git_plugin))
 
 endfunction
 
@@ -130,6 +164,15 @@ function! s:display_last_commit_of_current_line() abort
   if v:shell_error == 0
     echo 'Last commit of current line is: ' . title
   endif
+endfunction
+
+
+function! SpaceVim#layers#git#health() abort
+  call SpaceVim#layers#git#plugins()
+  call SpaceVim#layers#git#config()
+
+  return 1
+
 endfunction
 
 " vim:set et sw=2 cc=80:

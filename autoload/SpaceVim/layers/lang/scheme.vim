@@ -1,14 +1,12 @@
 "=============================================================================
 " scheme.vim --- lang#scheme layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 if exists('s:scheme_interpreter')
-  " @bug s:scheme_interpreter always return 'scheme'
-  "
   " because this script will be loaded twice. This is the feature of vim,
   " when call an autoload func, vim will try to load the script again
   finish
@@ -18,7 +16,7 @@ else
 endif
 
 ""
-" @section lang#scheme, layer-lang-scheme
+" @section lang#scheme, layers-lang-scheme
 " @parentsection layers
 " This layer is for scheme development, disabled by default, to enable this
 " layer, add following snippet to your @section(options) file.
@@ -32,6 +30,22 @@ endif
 " 1. scheme_dialect: Set the dialect of scheme.
 "
 " 2. scheme_interpreter: Set the path or interpreter of scheme.
+"
+" @subsection Mappings
+" >
+"   Key         Function
+"   -----------------------------------------------
+"   SPC l r     Run current file
+" <
+" This layer also provides REPL support for scheme, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
 "
 
 function! SpaceVim#layers#lang#scheme#config() abort
@@ -86,4 +100,9 @@ endfunction
 
 function! SpaceVim#layers#lang#scheme#get_options() abort
   return ['scheme_dialect', 'scheme_interpreter']
+endfunction
+
+function! SpaceVim#layers#lang#scheme#health() abort
+  call SpaceVim#layers#lang#scheme#config()
+  return 1
 endfunction

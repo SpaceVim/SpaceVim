@@ -1,13 +1,13 @@
 "=============================================================================
 " window.vim --- window api for vim and neovim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section vim#buffer, api-vim-window
+" @section vim#window, api-vim-window
 " @parentsection api
 " @subsection Intro
 "
@@ -29,6 +29,10 @@
 "
 "   Check if the window is a floating windows, return `v:true` if the window
 "   is a floating window.
+"
+" winexists({winid})
+"
+"   Check if the window with {winid} exists in current tabpage.
 
 let s:self = {}
 
@@ -97,6 +101,12 @@ else
   endfunction
 endif
 
+function! s:self.winexists(winid) abort
+  if !exists('win_id2tabwin')
+    return 0
+  endif
+  return win_id2tabwin(a:winid)[0] == tabpagenr()
+endfunction
 
 function! SpaceVim#api#vim#window#get() abort
   return deepcopy(s:self)

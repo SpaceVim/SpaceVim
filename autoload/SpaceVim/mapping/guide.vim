@@ -1,24 +1,25 @@
 "=============================================================================
 " guide.vim --- key binding guide for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
+
+if exists('s:save_cpo')
+  finish
+endif
 
 let s:save_cpo = &cpo
 set cpo&vim
-scriptencoding utf-8
 
 " Load SpaceVim API
-
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:STR = SpaceVim#api#import('data#string')
 let s:KEY = SpaceVim#api#import('vim#key')
-
 let s:VIM = SpaceVim#api#import('vim')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
-
 if has('nvim')
   let s:FLOATING = SpaceVim#api#import('neovim#floating')
 else
@@ -27,7 +28,6 @@ endif
 let s:SL = SpaceVim#api#import('vim#statusline')
 
 " guide specific var
-
 let s:winid = -1
 let s:bufnr = -1
 let s:prefix_key_inp = []
@@ -787,7 +787,7 @@ if get(g:, 'mapleader', '\') ==# ' '
 else
   call SpaceVim#mapping#guide#register_prefix_descriptions(get(g:, 'mapleader', '\'),
         \ 'g:_spacevim_mappings')
-  call SpaceVim#plugins#help#regist_root({'<leader>' : g:_spacevim_mappings})
+  call SpaceVim#plugins#help#regist_root({'<Leader>' : g:_spacevim_mappings})
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
         \ 'g:_spacevim_mappings_space')
   call SpaceVim#plugins#help#regist_root({'SPC' : g:_spacevim_mappings_space})

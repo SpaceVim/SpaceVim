@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#ocaml layer"
-description: "This layer is for OCaml development, provide autocompletion, syntax checking, code format for OCaml file."
+description: "This layer is for OCaml development, provides autocompletion, syntax checking, and code formatting for OCaml files."
 ---
 
 # [Available Layers](../../) >> lang#ocaml
@@ -22,7 +22,7 @@ When using in a multi-file project, be sure to include a [.merlin](https://githu
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

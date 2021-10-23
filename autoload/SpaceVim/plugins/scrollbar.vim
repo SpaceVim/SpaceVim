@@ -1,6 +1,6 @@
 "=============================================================================
 " scrollbar.vim --- scrollbar support for SpaceVim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -17,7 +17,7 @@ let s:default = {
       \    'min_size' : 3,
       \    'width' : 1,
       \    'right_offset' : 1,
-      \    'excluded_filetypes' : [],
+      \    'excluded_filetypes' : ['startify'],
       \    'shape' : {
       \        'head' : '▲',
       \        'body' : '█',
@@ -177,11 +177,15 @@ function! SpaceVim#plugins#scrollbar#show(...) abort
 
 endfunction
 
+" the first argument is buffer number
+
 function! SpaceVim#plugins#scrollbar#clear(...) abort
-  let bufnr = get(a:000, 1, 0)
+  let bufnr = get(a:000, 0, 0)
   let state = s:buf_get_var(bufnr, 'scrollbar_state')
   if !empty(state) && has_key(state, 'winnr')
-    noautocmd call nvim_win_close(state.winnr, 1)
+    if win_id2win(state.winnr) > 0
+      noautocmd call nvim_win_close(state.winnr, 1)
+    endif
     noautocmd call nvim_buf_set_var(bufnr, 'scrollbar_state', {
           \ 'size' : state.size,
           \ 'bufnr' : state.bufnr,

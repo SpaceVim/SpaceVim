@@ -3,17 +3,24 @@
     "alternate": "test/api/{}.vader",
     "doc": "docs/api/{}.md"
   },
-  "autoload/SpaceVim/plugins/a.vim": { "alternate": "test/plugin/a.vader" },
+  "autoload/SpaceVim/plugins/a.vim": {
+      "alternate": "test/plugin/a.vader",
+      "lua" : "lua/spacevim/plugin/a.lua"
+  },
+  "lua/spacevim/plugin/a.lua": {
+      "alternate": "test/lua/plugin/a.vader",
+      "vim" : "autoload/SpaceVim/plugins/a.vim"
+  },
   "test/plugin/a.vader": { "alternate": "autoload/SpaceVim/plugins/a.vim" },
   "autoload/SpaceVim/layers/lang/*.vim": { "doc": "docs/layers/lang/{}.md" },
   "test/api/*.vader": { "alternate": "autoload/SpaceVim/api/{}.vim" },
-  "docs/layers/lang/*.md": {
-    "alternate": "docs/cn/layers/lang/{}.md",
-    "code": "autoload/SpaceVim/layers/lang/{}.vim"
+  "docs/layers/*.md": {
+    "alternate": "docs/cn/layers/{}.md",
+    "code": "autoload/SpaceVim/layers/{}.vim"
   },
-  "docs/cn/layers/lang/*.md": {
-    "alternate": "docs/layers/lang/{}.md",
-    "code": "autoload/SpaceVim/layers/lang/{}.vim"
+  "docs/cn/layers/*.md": {
+    "alternate": "docs/layers/{}.md",
+    "code": "autoload/SpaceVim/layers/{}.vim"
   },
   "docs/*.md": { "alternate": "docs/cn/{}.md" },
   "docs/cn/*.md": { "alternate": "docs/{}.md" },

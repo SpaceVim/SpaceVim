@@ -7,25 +7,20 @@ description: "cscope layer provides a smart cscope and pycscope helper for Space
 
 <!-- vim-markdown-toc GFM -->
 
-- [Description](#description)
-- [Features](#features)
+- [Intro](#intro)
 - [Install](#install)
   - [cscope](#cscope)
   - [layer](#layer)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
-## Description
+## Intro
 
 This layer provides a smart [Cscope](http://cscope.sourceforge.net/) and [PyCscope](https://github.com/portante/pycscope) helper for SpaceVim.
 
 For more info about the differences between Cscope and other similar tools, please read [Comparison with Similar Tools](https://github.com/oracle/opengrok/wiki/Comparison-with-Similar-Tools)
-
-## Features
-
-- Tag indexing and searching for C-C++ via Cscope
-- Tag indexing and searching for python via PyCscope
 
 ## Install
 
@@ -49,6 +44,14 @@ To use this configuration layer, add it to your configuration file.
 [[layers]]
     name = "cscope"
 ```
+
+## Layer options
+
+- `cscope_command`: set the command or path of `cscope` executable.
+- `auto_update`: enable/disable auto udpate when saving files.
+- `open_location`: enable/disable open location list after searching.
+- `preload_path`: set the proload paths.
+
 
 ## Key bindings
 

@@ -107,6 +107,8 @@ function! s:type.get_sync_command(plugin) abort
     let commands = []
 
     call add(commands, self.command)
+    call add(commands, '-c')
+    call add(commands, 'credential.helper=')
     call add(commands, 'clone')
     call add(commands, '--recursive')
 
@@ -124,25 +126,29 @@ function! s:type.get_sync_command(plugin) abort
   else
     let git = self.command
 
-    let cmd = g:dein#types#git#pull_command
+    let fetch_cmd = git . ' -c credential.helper= fetch '
+    let remote_origin_cmd = git . ' remote set-head origin -a'
+    let pull_cmd = git . ' ' . g:dein#types#git#pull_command
     let submodule_cmd = git . ' submodule update --init --recursive'
+
     if dein#util#_is_powershell()
+      let cmd = fetch_cmd
+      let cmd .= '; if ($?) { ' . remote_origin_cmd . ' }'
+      let cmd .= '; if ($?) { ' . pull_cmd . ' }'
       let cmd .= '; if ($?) { ' . submodule_cmd . ' }'
     else
       let and = dein#util#_is_fish() ? '; and ' : ' && '
-      let cmd .= and . submodule_cmd
+      let cmd = join([
+            \ fetch_cmd, remote_origin_cmd, pull_cmd, submodule_cmd
+            \ ], and)
     endif
 
-    return git . ' ' . cmd
+    return cmd
   endif
 endfunction
 
-function! s:type.get_revision_number_command(plugin) abort
-  if !self.executable
-    return []
-  endif
-
-  return [self.command, 'rev-parse', 'HEAD']
+function! s:type.get_revision_number(plugin) abort
+  return s:git_get_revision(a:plugin.path)
 endfunction
 function! s:type.get_log_command(plugin, new_rev, old_rev) abort
   if !self.executable || a:new_rev ==# '' || a:old_rev ==# ''
@@ -192,25 +198,6 @@ function! s:type.get_rollback_command(plugin, rev) abort
   endif
 
   return [self.command, 'reset', '--hard', a:rev]
-endfunction
-function! s:type.get_revision_remote_command(plugin) abort
-  if !self.executable
-    return []
-  endif
-
-  let rev = get(a:plugin, 'rev', '')
-  if rev ==# ''
-    let rev = 'HEAD'
-  endif
-
-  return [self.command, 'ls-remote', 'origin', rev]
-endfunction
-function! s:type.get_fetch_remote_command(plugin) abort
-  if !self.executable
-    return []
-  endif
-
-  return [self.command, 'fetch', 'origin']
 endfunction
 
 function! s:is_git_dir(path) abort
@@ -298,3 +285,105 @@ else
     return a:path =~# '^/'
   endfunction
 endif
+
+" From minpac plugin manager
+" https://github.com/k-takata/minpac
+" https://github.com/junegunn/vim-plug/pull/937
+function! s:isabsolute(dir) abort
+  return a:dir =~# '^/' || (has('win32') && a:dir =~? '^\%(\\\|[A-Z]:\)')
+endfunction
+
+function! s:get_gitdir(dir) abort
+  let gitdir = a:dir . '/.git'
+  if isdirectory(gitdir)
+    return gitdir
+  endif
+  try
+    let line = readfile(gitdir)[0]
+    if line =~# '^gitdir: '
+      let gitdir = line[8:]
+      if !s:isabsolute(gitdir)
+        let gitdir = a:dir . '/' . gitdir
+      endif
+      if isdirectory(gitdir)
+        return gitdir
+      endif
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! s:git_get_remote_origin_url(dir) abort
+  let gitdir = s:get_gitdir(a:dir)
+  if gitdir ==# ''
+    return ''
+  endif
+  try
+    let lines = readfile(gitdir . '/config')
+    let [n, ll, url] = [0, len(lines), '']
+    while n < ll
+      let line = trim(lines[n])
+      if stridx(line, '[remote "origin"]') != 0
+        let n += 1
+        continue
+      endif
+      let n += 1
+      while n < ll
+        let line = trim(lines[n])
+        if line ==# '['
+          break
+        endif
+        let url = matchstr(line, '^url\s*=\s*\zs[^ #]\+')
+        if !empty(url)
+          break
+        endif
+        let n += 1
+      endwhile
+      let n += 1
+    endwhile
+    return url
+  catch
+    return ''
+  endtry
+endfunction
+
+function! s:git_get_revision(dir) abort
+  let gitdir = s:get_gitdir(a:dir)
+  if gitdir ==# ''
+    return ''
+  endif
+  try
+    let line = readfile(gitdir . '/HEAD')[0]
+    if line =~# '^ref: '
+      let ref = line[5:]
+      if filereadable(gitdir . '/' . ref)
+        return readfile(gitdir . '/' . ref)[0]
+      endif
+      for line in readfile(gitdir . '/packed-refs')
+        if line =~# ' ' . ref
+          return substitute(line, '^\([0-9a-f]*\) ', '\1', '')
+        endif
+      endfor
+    endif
+    return line
+  catch
+  endtry
+  return ''
+endfunction
+
+function! s:git_get_branch(dir) abort
+  let gitdir = s:get_gitdir(a:dir)
+  if gitdir ==# ''
+    return ''
+  endif
+  try
+    let line = readfile(gitdir . '/HEAD')[0]
+    if line =~# '^ref: refs/heads/'
+      return line[16:]
+    endif
+    return 'HEAD'
+  catch
+    return ''
+  endtry
+endfunction

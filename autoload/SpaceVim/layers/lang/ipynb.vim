@@ -1,6 +1,6 @@
 "=============================================================================
 " ipynb.vim --- SpaceVim lang#ipynb layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -32,4 +32,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','n'],
         \ 'VimpyterStartNteract',
         \ 'start nteract', 1)
+endfunction
+
+function! SpaceVim#layers#lang#ipynb#health() abort
+  call SpaceVim#layers#lang#ipynb#plugins()
+  call SpaceVim#layers#lang#ipynb#config()
+  return 1
 endfunction

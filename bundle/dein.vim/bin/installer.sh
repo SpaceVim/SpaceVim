@@ -32,7 +32,7 @@ echo ""
 if ! [ -e "$INSTALL_DIR" ]; then
   echo "Begin fetching dein..."
   mkdir -p "$PLUGIN_DIR"
-  git clone https://github.com/Shougo/dein.vim "$INSTALL_DIR"
+  git clone --depth=1 https://github.com/Shougo/dein.vim "$INSTALL_DIR"
   echo "Done."
   echo ""
 fi

@@ -18,7 +18,9 @@ This is a general guide for using SpaceVim as IDE. including following sections:
 - [Default UI](#default-ui)
 - [project manager](#project-manager)
 - [Fuzzy finder](#fuzzy-finder)
+- [Git integration](#git-integration)
 - [Files and Windows](#files-and-windows)
+- [Search and replace](#search-and-replace)
 - [Language support](#language-support)
 
 <!-- vim-markdown-toc -->
@@ -59,6 +61,15 @@ This is a list of patterns of filename or directory.
 the default value is `['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']`.
 read the [documentation](../documentation/#managing-projects) for more info.
 
+SpaceVim will change switch to project root automatically based on `project_rooter_patterns` option.
+By default it will find outermost directory by default, to find nearest directory,
+you need to change `project_rooter_outermost` to `false`.
+
+```toml
+[options]
+    project_rooter_outermost = false
+```
+
 ### Fuzzy finder
 
 SpaceVim provides 5 fuzzy finder layer, they are unite, denite, fzf, leaderf and ctrlp.
@@ -70,11 +81,31 @@ fuzzy finder layer. for example enable denite layer:
     name = "denite"
 ```
 
+### Git integration
+
+The `git` layer and `VersionControl` layer provide Version control integration for SpaceVim.
+These layers are not loaded by default. To use these features, you need to enable these layers
+in your configuration file.
+
+```toml
+[[layers]]
+    name = 'git'
+[[layers]]
+    name = 'VersionControl'
+```
+
 ### Files and Windows
 
 The windows ID will be shown on the statusline, and users can use `SPC + number` to jump to specific windows,
 the buffer index or tabpage index will be shown on the tabline.
 To jump to specific tab, you can use `Leader + number` the default leader in SpaceVim is `\`.
+
+### Search and replace
+
+With the flygrep, you can search text in whole project on the fly. When the results are displayed
+on flygrep windows, you can also use `Alt-r` to start iedit mode based on the input of flygrep
+promote.
+
 
 ### Language support
 

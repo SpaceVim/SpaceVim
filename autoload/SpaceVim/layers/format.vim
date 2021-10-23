@@ -7,13 +7,19 @@
 "=============================================================================
 
 ""
-" @section format, layer-format
+" @section format, layers-format
 " @parentsection layers
 " format layer provides code formation for SpaceVim, the default formatting
 " plugin is |neoformat|.
 " @subsection options
-" format_on_save: disabled by default.
 "
+" `format_on_save`: disabled by default.
+"
+" @subsection key bindings
+" >
+"   Key binding     Description
+"   SPC b f         format current buffer or selection lines
+" <
 " 
 
 if exists('s:format_on_save')
@@ -23,6 +29,12 @@ else
   let s:format_on_save = 0
   let s:format_ft = []
 endif
+
+function! SpaceVim#layers#format#health() abort
+  call SpaceVim#layers#format#plugins()
+  call SpaceVim#layers#format#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#format#plugins() abort
   if s:format_method ==# 'neoformat'
@@ -39,6 +51,7 @@ function! SpaceVim#layers#format#plugins() abort
 endfunction
 
 function! SpaceVim#layers#format#config() abort
+
   if s:format_method ==# 'neoformat'
     call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Neoformat', 'format-code', 1)
   elseif s:format_method ==# 'codefmt'
@@ -74,6 +87,7 @@ endfunction
 function! s:format() abort
   if !empty(&ft) &&
         \ ( index(s:format_ft, &ft) !=# -1 || s:format_on_save ==# 1)
+
     if s:format_method ==# 'neoformat'
       undojoin | Neoformat
     elseif s:format_method ==# 'codefmt'

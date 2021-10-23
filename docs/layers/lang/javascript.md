@@ -25,7 +25,7 @@ This layer is for JavaScript development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -53,6 +53,15 @@ auto_fix = true
 enable_flow_syntax = true
 ```
 
+`format_on_save`: Enable/disable file formatting when saving current javascript file. By default,
+it is disabled, to enable it:
+```toml
+[[layers]]
+    name = 'lang#javascript'
+    format_on_save = true
+  ```
+
+
 ## Key bindings
 
 ### Import key bindings
@@ -75,7 +84,7 @@ enable_flow_syntax = true
 
 ### Code runner
 
-To run JavaScript code in current buffer, you can press `SPC l r`. It will run without loss focus,
+To run JavaScript code in current buffer, you can press `SPC l r`. It will run without losing focus,
 and the result will be shown in a runner buffer.
 
 ### Inferior REPL process

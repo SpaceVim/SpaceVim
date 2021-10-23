@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim core#statusline layer"
-description: "This layer provides default statusline for SpaceVim"
+description: "This layer provides a default statusline for SpaceVim"
 ---
 
 # [Available Layers](../) >> core#statusline
@@ -45,7 +45,7 @@ Here is a list of SpaceVim options for statusline, these are different from laye
     # Set the statusline separators of statusline, default is "arrow"
     statusline_separator = "arrow"
     # Set the statusline separators of inactive statusline
-    statusline_inactive_separator = "bar"
+    statusline_iseparator = "bar"
 
     # Set SpaceVim buffer index type
     buffer_index_type = 4

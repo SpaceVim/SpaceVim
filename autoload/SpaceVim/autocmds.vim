@@ -1,16 +1,13 @@
 "=============================================================================
 " autocmd.vim --- main autocmd group for spacevim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 
-let s:SYS = SpaceVim#api#import('system')
-let s:JOB = SpaceVim#api#import('job')
 let s:VIM = SpaceVim#api#import('vim')
-let s:CMP = SpaceVim#api#import('vim#compatible')
 
 
 "autocmds
@@ -52,7 +49,9 @@ function! SpaceVim#autocmds#init() abort
     autocmd Filetype qf setlocal nobuflisted
     autocmd FileType python,coffee call SpaceVim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()
-    autocmd InsertEnter * call s:fixindentline()
+    if !has('nvim-0.5.0')
+      autocmd InsertEnter * call s:fixindentline()
+    endif
     autocmd BufEnter,FileType * call SpaceVim#mapping#space#refrashLSPC()
     if executable('synclient') && g:spacevim_auto_disable_touchpad
       let s:touchpadoff = 0
@@ -61,14 +60,17 @@ function! SpaceVim#autocmds#init() abort
       autocmd FocusLost * call system('synclient touchpadoff=0')
       autocmd FocusGained * call s:reload_touchpad_status()
     endif
+    " @fixme this autocmd should also support `:w foo/test.vim`
     autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
-    autocmd BufWritePost *.vim call s:generate_doc()
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
-    autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized call s:fix_colorschem_in_SpaceVim()
+    autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized,one call s:fix_colorschem_in_SpaceVim()
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
     autocmd VimLeavePre * call SpaceVim#plugins#manager#terminal()
+    if has('nvim')
+      autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
+    endif
   augroup END
 endfunction
 
@@ -114,20 +116,13 @@ function! s:fixindentline() abort
     let s:done = 1
   endif
 endfunction
-function! s:generate_doc() abort
-  " neovim in windows executable function is broken
-  " https://github.com/neovim/neovim/issues/9391
-  if filereadable('./addon-info.json') && executable('vimdoc') && !s:SYS.isWindows
-    call s:JOB.start(['vimdoc', '.'])
-  elseif filereadable('./addon-info.json') && executable('python')
-    call s:JOB.start(['python', '-m', 'vimdoc', '.'])
-  endif
-endfunction
 
 function! s:fix_colorschem_in_SpaceVim() abort
   if &background ==# 'dark'
     if g:colors_name ==# 'gruvbox'
       hi VertSplit guibg=#282828 guifg=#181A1F
+    elseif g:colors_name ==# 'one'
+      hi VertSplit guibg=#282c34 guifg=#181A1F
     elseif g:colors_name ==# 'jellybeans'
       hi VertSplit guibg=#151515 guifg=#080808
     elseif g:colors_name ==# 'nord'
@@ -184,11 +179,24 @@ function! SpaceVim#autocmds#VimEnter() abort
   if !empty(get(g:, '_spacevim_bootstrap_after', ''))
     try
       call call(g:_spacevim_bootstrap_after, [])
+      let g:_spacevim_bootstrap_after_success = 1
     catch
       call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
       call SpaceVim#logger#error('       exception: ' . v:exception)
       call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
+      let g:_spacevim_bootstrap_after_success = 0
     endtry
+  endif
+
+  if !get(g:, '_spacevim_bootstrap_before_success', 1)
+    echohl Error
+    echom 'bootstrap_before function failed to execute. Check `SPC h L` for errors.'
+    echohl None
+  endif
+  if !get(g:, '_spacevim_bootstrap_after_success', 1)
+    echohl Error
+    echom 'bootstrap_after function failed to execute. Check `SPC h L` for errors.'
+    echohl None
   endif
 endfunction
 

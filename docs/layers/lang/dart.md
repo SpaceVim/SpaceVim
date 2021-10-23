@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#dart layer"
-description: "This layer is for Dart development, provide autocompletion, syntax checking, code format for Dart file."
+description: "This layer is for Dart development, provides autocompletion, syntax checking and code formatting for Dart files."
 ---
 
 # [Available Layers](../../) >> lang#dart
@@ -13,11 +13,12 @@ description: "This layer is for Dart development, provide autocompletion, syntax
   - [Layer](#layer)
   - [Syntax checking && Code formatting](#syntax-checking--code-formatting)
   - [Install dart-repl](#install-dart-repl)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
   - [Code formatting](#code-formatting)
-- [Screenshots](#screenshots)
+  - [Flutter integration](#flutter-integration)
 
 <!-- vim-markdown-toc -->
 
@@ -32,12 +33,13 @@ This layer is for Dart development.
 - code formatting
 - REPL
 - code runner
+- flutter integration
 
 ## Install
 
 ### Layer
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -46,7 +48,8 @@ To use this configuration layer, update custom configuration file with:
 
 ### Syntax checking && Code formatting
 
-To enable syntax checking and code formatting in spacevim, you need to install [dart sdk](https://github.com/dart-lang/sdk).
+To enable syntax checking and code formatting in spacevim,
+you need to install [dart sdk](https://github.com/dart-lang/sdk).
 
 ### Install dart-repl
 
@@ -55,6 +58,10 @@ You need to install the dart_repl via pub, pub is a build-in package manager in 
 ```sh
 pub global activate dart_repl
 ```
+
+## Layer options
+
+- `dart_sdk_path`: Set the path of dart sdk, by default, it is `''`.
 
 ## Key bindings
 
@@ -72,24 +79,27 @@ Send code to inferior process commands:
 
 ### Running current script
 
-To running a ruby script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To run a ruby script, you can press `SPC l r` to run the current file without losing focus, and the result will be shown in a runner buffer.
 
 ### Code formatting
+
+The code formatting is provided by the `format` layer, and it will run `dartfmt` asynchronously.
 
 | Key Bindings | Descriptions          |
 | ------------ | --------------------- |
 | `SPC b f`    | format current buffer |
 
-## Screenshots
+### Flutter integration
 
-**code formatting:**
+When editing a dart file, the following key bindings are available for running flutter commands.
 
-![format-dart-file-in-spacevim](https://user-images.githubusercontent.com/13142418/34455939-b094db54-ed4f-11e7-9df0-80cf5de1128d.gif)
-
-**auto completion:**
-
-![complete-dart-in-spacevim](https://user-images.githubusercontent.com/13142418/34455816-ee77182c-ed4c-11e7-8f63-402849f60405.png)
-
-**code runner:**
-
-![dart-runner-in-spacevim](https://user-images.githubusercontent.com/13142418/34455403-1f6d4c3e-ed44-11e7-893f-09a6e64e27ed.png)
+| Key bindings | Descriptions                     |
+| ------------ | -------------------------------- |
+| `SPC l f D`  | Display flutter doctor result    |
+| `SPC l f E`  | Launch to a flutter emulators id |
+| `SPC l f d`  | Display flutter devices result   |
+| `SPC l f e`  | Display flutter emulators list   |
+| `SPC l f l`  | Reload flutter app               |
+| `SPC l f r`  | Run `flutter run` command        |
+| `SPC l f s`  | Restart flutter app              |
+| `SPC l f q`  | Quit current flutter process     |

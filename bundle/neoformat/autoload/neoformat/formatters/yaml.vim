@@ -13,7 +13,7 @@ endfunction
 function! neoformat#formatters#yaml#prettier() abort
     return {
             \ 'exe': 'prettier',
-            \ 'args': ['--stdin', '--stdin-filepath', '"%:p"', '--parser', 'yaml'],
+            \ 'args': ['--stdin-filepath', '"%:p"', '--parser', 'yaml'],
             \ 'stdin': 1
             \ }
 endfunction

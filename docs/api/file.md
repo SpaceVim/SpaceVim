@@ -10,6 +10,7 @@ description: "file API provides some basic functions and values for current os."
 
 - [values](#values)
 - [functions](#functions)
+- [Usage](#usage)
 
 <!-- vim-markdown-toc -->
 
@@ -30,3 +31,21 @@ description: "file API provides some basic functions and values for current os."
 | `read(file)`              | read message from file                          |
 | `ls(dir, if_file_only)`   | list files and directorys in specific directory |
 | `updateFiles(files)`      | update the contents of all files                |
+
+## Usage
+
+This api can be used in both vim script and lua script.
+
+**vim script:**
+
+```vim
+let s:FILE = SpaceVim#api#import('file')
+echom S:FILE.separator
+```
+
+**lua script:**
+
+```lua
+local file_api = require('spacevim.api').import('file')
+print(file_api.separator)
+```

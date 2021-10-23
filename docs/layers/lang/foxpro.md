@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#foxpro layer"
-description: "This layer is for Visual FoxPro development, provide syntax highlighting for foxpro file."
+description: "This layer is for Visual FoxPro development, provides syntax highlighting for foxpro files."
 ---
 
 # [Available Layers](../../) >> lang#foxpro
@@ -19,7 +19,7 @@ This layer is for foxpro development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

@@ -1,6 +1,6 @@
 "=============================================================================
 " regex.vim --- regex parser for vim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -44,7 +44,15 @@ function! s:self.parser(regex, is_perl) abort
 
   " word boundary
   " \bword\b => <word>
-  let vim_regex = substitute(vim_regex, '\\b\(\w\+\)\\b', '\\<\1\\>', 'g')
+  let vim_regex = substitute(vim_regex, '\\b\(\w\+\)\\b', '<\1>', 'g')
+
+  " right word boundary
+  " \bword => \<word
+  let vim_regex = substitute(vim_regex, '\\b\(\w\+\)', '<\1', 'g')
+
+  " left word boundary
+  " word\b => word\>
+  let vim_regex = substitute(vim_regex, '\(\w\+\)\\b', '\1>', 'g')
 
   " case-insensitive
   " (?i)abc => \cabc

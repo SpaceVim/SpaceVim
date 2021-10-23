@@ -1,6 +1,6 @@
 "=============================================================================
 " commands.vim --- commands in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -19,7 +19,8 @@ function! SpaceVim#commands#load() abort
   ""
   " Set or check SpaceVim option. {opt} should be the option name of
   " spacevim, This command will use [value] as the value of option name.
-  command! -nargs=+ SPSet call SpaceVim#options#set(<f-args>)
+  command! -nargs=+ -complete=custom,SpaceVim#commands#complete_options
+        \ SPSet call SpaceVim#options#set(<f-args>)
   ""
   " print the debug information of spacevim, [!] forces the output into a
   " new buffer.
@@ -294,6 +295,10 @@ function! s:SHA() abort
     return ''
   endif
   return '-' . sha
+endfunction
+
+function! SpaceVim#commands#complete_options(...)
+  return join(map(getcompletion('g:spacevim_','var'), 'v:val[11:]'), "\n")
 endfunction
 
 
