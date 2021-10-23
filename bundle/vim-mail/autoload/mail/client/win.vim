@@ -33,7 +33,8 @@ endfunction
 " =?<charset>?<encoding>?<encoded-text>?=
 " '=?UTF-8?B?VGhpcyBpcyBhIGhvcnNleTog8J+Qjg==?='
 function! s:encode(str) abort
-  let origin_str = a:str
+  " line endings (^M), strip these characters.
+  let origin_str = substitute(a:str, '\r', '', 'g')
   let target_str = ''
   let id = 0
   while !empty(matchstr(origin_str, '^=?[^?]*?[^?]*?[^?]*?='))
