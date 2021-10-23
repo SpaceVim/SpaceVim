@@ -9,11 +9,14 @@
 ""
 " @section format, layers-format
 " @parentsection layers
-" format layer provides code formation for SpaceVim, the default formatting
-" plugin is |neoformat|.
-" @subsection options
+" `format` layer provides code formation for SpaceVim, the default formatting
+" plugin is `neoformat`, and you can also use `vim-codefmt`.
 "
-" `format_on_save`: disabled by default.
+" @subsection layer options
+"
+" 1. `format_on_save`: disabled by default.
+" 2. `format_method`: set the format plugin, default plugin is `neoformat`.
+" You can also use `vim-codefmt`.
 "
 " @subsection key bindings
 " >

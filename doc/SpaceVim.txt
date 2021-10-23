@@ -1632,11 +1632,14 @@ Mappings:
 ==============================================================================
 FORMAT                                                *SpaceVim-layers-format*
 
-format layer provides code formation for SpaceVim, the default formatting
-plugin is |neoformat|.
-OPTIONS
+`format` layer provides code formation for SpaceVim, the default formatting
+plugin is `neoformat`, and you can also use `vim-codefmt`.
 
-`format_on_save`: disabled by default.
+LAYER OPTIONS
+
+  1. `format_on_save`: disabled by default.
+  2. `format_method`: set the format plugin, default plugin is `neoformat`.
+You can also use `vim-codefmt`.
 
 KEY BINDINGS
 
