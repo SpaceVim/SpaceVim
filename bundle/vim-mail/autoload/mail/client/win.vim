@@ -8,6 +8,7 @@ let s:ICONV = SpaceVim#api#import('iconv')
 
 
 let s:bufnr = -1
+let s:mail_context_bufnr = -1
 let s:win_name = 'home'
 let s:win_dir = 'INBOX'
 let s:win_unseen = {}
@@ -18,12 +19,29 @@ function! mail#client#win#open()
     let s:bufnr = bufnr('%')
     setlocal buftype=nofile nobuflisted nolist noswapfile nowrap cursorline nospell nomodifiable nowrap norelativenumber number
     nnoremap <silent><buffer> <F5> :call <SID>refresh()<Cr>
+    nnoremap <silent><buffer> <Cr> :call <SID>view_mail()<Cr>
     setfiletype VimMailClient
   else
     split
     exe 'b' . s:bufnr
   endif
   call s:refresh()
+endfunction
+
+function! s:view_mail() abort
+  let uid = line('.') - 1
+  let dir = s:win_dir
+  tabedit __VIM_MAIL__context
+  setlocal buftype=nofile nobuflisted nolist noswapfile nowrap cursorline nospell nomodifiable nowrap norelativenumber number
+  let s:mail_context_bufnr = bufnr('%')
+  call mail#client#send(mail#command#fetch(uid . ':' . uid, 'BODY[TEXT]'))
+endfunction
+
+function! mail#client#win#update_context(stdout) abort
+  let text = s:BASE64.decode(a:stdout)
+  call setbufvar(s:mail_context_bufnr, '&modifiable', 1)
+  call s:BUFFER.buf_set_lines(s:mail_context_bufnr, -1, -1, 0, [text])
+  call setbufvar(s:mail_context_bufnr, '&modifiable', 0)
 endfunction
 
 function! mail#client#win#currentDir()
