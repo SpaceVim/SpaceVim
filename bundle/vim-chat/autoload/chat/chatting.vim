@@ -11,7 +11,7 @@ let s:server_ip = get(g:, 'chatting_server_ip', '127.0.0.1')
 let s:server_port = get(g:, 'chatting_server_port', 8080)
 let s:server_database = get(g:, 'chatting_server_database', '~/Desktop/database.txt')
 let s:vim8_ch_waittime = get(g:, 'chatting_ch_waittime', 100)
-let s:close_windows_char = get(g:, 'chatting_close_win_char',"\<M-c>")
+let s:close_windows_char = get(g:, 'chatting_close_win_char',"\<Esc>")
 let s:messages = []
 let s:opened_channels = []
 let s:unread_msg_num = {}
@@ -154,6 +154,7 @@ function! chat#chatting#OpenMsgWin() abort
     let s:current_channel = s:last_channel
   endif
   call s:update_msg_screen()
+  call s:update_statusline()
   call s:echon()
   while get(s:, 'quit_chating_win', 0) == 0
     let nr = getchar()
@@ -211,7 +212,7 @@ function! chat#chatting#OpenMsgWin() abort
       let s:c_begin = s:c_begin . s:c_char . s:c_end
       let s:c_char = ''
       let s:c_end = ''
-    elseif nr ==# s:close_windows_char
+    elseif nr ==# s:close_windows_char || nr ==# char2nr(s:close_windows_char)
       let s:quit_chating_win = 1
     elseif nr == 8 || nr ==# "\<bs>"                                        " ctrl+h or <bs> delete last char
       let s:c_begin = substitute(s:c_begin,'.$','','g')
@@ -302,6 +303,7 @@ fu! s:windowsinit() abort
   setl nospell
   setl nofoldenable
   setl cursorline
+  setl filetype=vimchat
 endf
 
 function! s:debug() abort
