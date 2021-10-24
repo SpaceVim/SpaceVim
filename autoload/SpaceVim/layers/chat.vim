@@ -7,9 +7,9 @@
 "=============================================================================
 
 function! SpaceVim#layers#chat#plugins() abort
-    return [
-            \ ['vim-chat/vim-chat',{ 'merged' : 0, 'loadconf' : 1}],
-            \ ]
+  return [
+        \ [g:_spacevim_root_dir . 'bundle/vim-chat', {'merged' : 0, 'loadconf' : 1}],
+        \ ]
 endfunction
 
 let s:BASE64 = SpaceVim#api#import('data#base64')
