@@ -1532,7 +1532,7 @@ KEY BINDINGS
 
 >
   Key Bingding    Description
-  SPC a o         open chat window
+  SPC a h         open chat window
 <
 
 ==============================================================================
