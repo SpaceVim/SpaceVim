@@ -27,14 +27,26 @@ if exists('s:chat_address')
   finish
 endif
 
-let s:chat_address = ''
-let s:chat_port = ''
-let s:chat_client_jar = ''
+let s:chat_address = '127.0.0.1'
+let s:chat_port = 8080
+let s:chat_client_jar = fnamemodify(expand('<sfile>:p:h:h:h:h') . 'bundle\Chatting-server\target\Chatting-1.0-SNAPSHOT.jar', ':gs?[\\/]?/?')
 
 function! SpaceVim#layers#chat#plugins() abort
   return [
         \ [g:_spacevim_root_dir . 'bundle/vim-chat', {'merged' : 0, 'loadconf' : 1}],
         \ ]
+endfunction
+
+function! SpaceVim#layers#chat#set_variable(opt) abort
+  let s:chat_address = get(a:opt, 'chat_address', s:chat_address)
+  let s:chat_port = get(a:opt, 'chat_port', s:chat_port)
+  let s:chat_client_jar = get(a:opt, 'chat_client_jar', s:chat_client_jar)
+endfunction
+
+function! SpaceVim#layers#chat#get_options() abort
+
+  return ['chat_address', 'chat_port', 'chat_client_jar']
+
 endfunction
 
 function! SpaceVim#layers#chat#config() abort

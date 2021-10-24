@@ -1,5 +1,5 @@
 scriptencoding utf-8
-let s:server_lib = get(g:, 'chatting_server_lib', fnamemodify('~/sources/Chatting/target/Chatting-1.0-SNAPSHOT.jar', ':p'))
+let s:server_lib = get(g:, 'chatting_server_lib', '~/jars/Chatting-1.0-SNAPSHOT.jar')
 let s:login_user = ''
 let s:server_job_id = 0
 let s:client_job_id = 0
@@ -7,8 +7,8 @@ let s:debug_log = []
 let s:chatting_commands = []
 let s:current_channel = ''
 let s:last_channel = ''
-let s:server_ip = get(g:, 'chatting_server_ip', 'perfi.wang')
-let s:server_port = get(g:, 'chatting_server_port', 2013)
+let s:server_ip = get(g:, 'chatting_server_ip', '127.0.0.1')
+let s:server_port = get(g:, 'chatting_server_port', 8080)
 let s:vim8_ch_waittime = get(g:, 'chatting_ch_waittime', 100)
 let s:close_windows_char = get(g:, 'chatting_close_win_char',"\<M-c>")
 let s:messages = []
@@ -63,7 +63,7 @@ endfunction
 
 function! chat#chatting#start() abort
     if s:server_job_id == 0
-        call s:log('startting server, server_lib is ' . s:server_lib . '(' . (empty(glob(s:server_lib)) ? 'no such file' : 'file exists' ). ')')
+        call chat#logger#info('startting server, server_lib is ' . s:server_lib . '(' . (empty(glob(s:server_lib)) ? 'no such file' : 'file exists' ). ')')
         if has('nvim')
             let s:server_job_id = jobstart(['java', '-cp', s:server_lib, 'com.wsdjeg.chat.Server'],{
                         \ 'on_stdout' : function('s:server_handler'),
@@ -84,7 +84,7 @@ function! s:client_handler(id, data, event) abort
         call s:push_message(a:data)
         call s:update_msg_screen()
     elseif a:event ==# 'exit'
-        call s:log('client exit with code:' . a:data)
+        call chat#logger#info('client exit with code:' . a:data)
         let s:client_job_id = 0
     endif
 endfunction
@@ -101,14 +101,14 @@ function! s:start_client() abort
                         \ 'on_stdout' : function('s:client_handler'),
                         \ 'on_exit' : function('s:client_handler')
                         \ })
-            call s:log('Server_lib:' . s:server_lib)
+            call chat#logger#info('Server_lib:' . s:server_lib)
         endif
     else
         let s:channel = ch_open(s:server_ip . ':' . s:server_port,
                     \ {'callback': function('s:ch_callbakc') ,'mode': 'nl', 'waittime': s:vim8_ch_waittime})
-        call s:log('Client channel status:' . ch_status(s:channel))
+        call chat#logger#info('Client channel status:' . ch_status(s:channel))
     endif
-    call s:log('Client startting with server ip(' . s:server_ip . ') port(' . s:server_port . ')')
+    call chat#logger#info('Client startting with server ip(' . s:server_ip . ') port(' . s:server_port . ')')
 endfunction
 
 let s:name = '__Chatting__'
@@ -293,12 +293,6 @@ fu! s:windowsinit() abort
     setl nofoldenable
     setl cursorline
 endf
-
-function! s:log(msg) abort
-    let time = strftime('%H:%M:%S')
-    let msg = '[' . time . '] ' . string(a:msg)
-    call add(s:debug_log, msg)
-endfunction
 
 function! s:debug() abort
     tabnew
