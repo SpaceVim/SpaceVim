@@ -9,6 +9,7 @@ let s:current_channel = ''
 let s:last_channel = ''
 let s:server_ip = get(g:, 'chatting_server_ip', '127.0.0.1')
 let s:server_port = get(g:, 'chatting_server_port', 8080)
+let s:server_database = get(g:, 'chatting_server_database', '~/Desktop/database.txt')
 let s:vim8_ch_waittime = get(g:, 'chatting_ch_waittime', 100)
 let s:close_windows_char = get(g:, 'chatting_close_win_char',"\<M-c>")
 let s:messages = []
@@ -66,7 +67,12 @@ endfunction
 function! chat#chatting#start() abort
   if s:server_job_id == 0
     call chat#logger#info('startting server, server_lib is ' . s:server_lib . '(' . (filereadable(s:server_lib) ? 'no such file' : 'file exists' ). ')')
-    let s:server_job_id = s:JOB.start(['java', '-cp', s:server_lib, 'com.wsdjeg.chat.Server', '-D', s:server_port],{
+    let s:server_job_id = s:JOB.start([
+          \ 'java',
+          \ '-cp', s:server_lib, 'com.wsdjeg.chat.Server',
+          \ '-D', s:server_port,
+          \ '--database', s:server_database,
+          \ ],{
           \ 'on_stdout' : function('s:server_handler'),
           \ 'on_exit' : function('s:server_exit'),
           \ })
