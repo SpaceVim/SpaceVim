@@ -22,15 +22,53 @@ function! mail#client#connect(ip, port)
 endfunction
 
 " Wed, 06 Sep 2017 02:55:41 +0000  ===> 2017-09-06
+" 一月份＝JAN.  Jan.=January
+" 二月份＝FEB.  Feb.=February
+" 三月份＝MAR.  Mar.=March
+" 四月份＝APR.  Apr.=April
+" 五月份＝MAY    May=May
+" 六月份＝JUN.  Jun.=June
+" 七月份＝JUL.  Jul.=July
+" 八月份＝AUG.  Aug.=August
+" 九月份＝SEP.  Sept.=September
+" 十月份＝OCT.  Oct.=October
+" 十一月份＝NOV. Nov.=November
+" 十二月份＝DEC. Dec.=December
 let s:__months = {
+      \ 'Jan' : 1,
+      \ 'Feb' : 2,
+      \ 'Mar' : 3,
+      \ 'Apr' : 4,
+      \ 'May' : 5,
+      \ 'Jun' : 6,
+      \ 'Jul' : 7,
+      \ 'Aug' : 8,
       \ 'Sep' : 9,
+      \ 'Oct' : 10,
+      \ 'Nov' : 11,
+      \ 'Dec' : 12,
       \ }
+
+let s:__week = {
+      \ 'Sun' : 7,
+      \ 'Mon' : 1,
+      \ 'Tue' : 2,
+      \ 'Wed' : 3,
+      \ 'Thu' : 4,
+      \ 'Fri' : 5,
+      \ 'Sat' : 6,
+      \ }
+
+" Date: Sun, 24 Oct 2021 05:56:21 +0000
+" Date: 23 Oct 2021 18:55:36 +0800
+" Date: Wed, 13 Oct 2021 14:00:24 +0800 (CST)
 function! s:convert(date) abort
-  let info = split(a:date, ' ')
-  let year = info[3]
-  let m = get(s:__months, info[2], 00)
-  let day = len(info[1]) == 1 ? '0' . info[1] : info[1]
-  return join([year, m, day], '-')
+  let week = matchstr(a:date, '^\(Sun\|Mon\|Tue\|Wed\|Thu\|Fri\|Sat\)')
+  let day = matchstr(a:date, '\d\+')
+  let mounth = get(s:__months, matchstr(a:date, '\d\+\s\zs\S\+'), '00')
+  let year = matchstr(a:date, '\d\+\s\S\+\s\zs\d\+')
+  let time = matchstr(a:date, '\d\+:\d\+:\d\+')
+  return printf('%04d-%02d-%02d', year, mounth, day) . ' ' . time
 endfunction
 
 function! s:noop(id) abort

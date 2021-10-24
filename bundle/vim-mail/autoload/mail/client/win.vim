@@ -60,7 +60,7 @@ endfunction
 
 function! s:refresh() abort
   let mails = mail#client#mailbox#get(s:win_dir)
-  let lines = ['DATA       FROM                                                SUBJECT']
+  let lines = ['DATA                 FROM                                                SUBJECT']
   for id in keys(mails)
     call add(lines, mails[id]['data'] . '  ' . s:encode(mails[id]['from']) . '  ' . s:encode(mails[id]['subject']))
   endfor
