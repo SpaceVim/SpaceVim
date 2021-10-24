@@ -45,6 +45,7 @@ public class Server extends ServerSocket {
 
     public Server() throws IOException {
         super(SERVER_PORT);
+        System.out.println("Server started on port:" + SERVER_PORT);
         try {
             while (true) {
                 Socket socket = accept();

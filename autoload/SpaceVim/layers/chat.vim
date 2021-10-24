@@ -29,7 +29,7 @@ endif
 
 let s:chat_address = '127.0.0.1'
 let s:chat_port = 8080
-let s:chat_client_jar = fnamemodify(expand('<sfile>:p:h:h:h:h') . 'bundle\Chatting-server\target\Chatting-1.0-SNAPSHOT.jar', ':gs?[\\/]?/?')
+let s:chat_client_jar = fnamemodify(expand('<sfile>:p:h:h:h:h') . '/bundle/Chatting-server/target/Chatting-1.0-SNAPSHOT.jar', ':gs?[\\/]?/?')
 
 function! SpaceVim#layers#chat#plugins() abort
   return [
