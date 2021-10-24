@@ -48,7 +48,7 @@ endfunction
 
 function! SpaceVim#layers#mail#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['a', 'm'], 'call mail#client#open()', 'Start mail client', 1)
-    let g:mail_imap_host = s:imap_port
+    let g:mail_imap_host = s:imap_host
     let g:mail_imap_port = s:imap_port
     let g:mail_imap_login = s:imap_login
     let g:mail_imap_password = s:imap_password
