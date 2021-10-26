@@ -15,7 +15,7 @@ public class Command {
         cmds.put("/help"         , "   /help : show help message.");
         cmds.put("/login"        , "   /login USERNAME PASSWORD : login with your chatting account.");
         cmds.put("/logout"       , "   /logout : logout current account.");
-        cmds.put("/signup"       , "   /signup : create a new account.");
+        cmds.put("/signup"       , "   /signup USERNAME PASSWORD PASSWORD: create a new account.");
         cmds.put("/password"     , "   /password : change the password of current user.");
         cmds.put("/names"        , "   /names : list all the user in current channel.");
         cmds.put("/join"         , "   /join : join a channel.");
