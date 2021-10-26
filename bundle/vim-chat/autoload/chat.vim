@@ -36,7 +36,7 @@ function! s:push_message(msg) abort
       endif
     endfor
   else
-    if !empty(a:msg)
+    if !empty(a:msg) && a:msg !=# "\<C-m>"
       call s:hander_msg(a:msg)
     endif
   endif
