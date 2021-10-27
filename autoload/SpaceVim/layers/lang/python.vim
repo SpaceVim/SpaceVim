@@ -193,19 +193,19 @@ function! s:language_specified_mappings() abort
 
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'r'],
         \ 'Coveragepy report',
-        \ 'coverager eport', 1)
+        \ 'coverage report', 1)
 
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 's'],
         \ 'Coveragepy show',
-        \ 'coverager show', 1)
+        \ 'coverage show', 1)
 
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'e'],
         \ 'Coveragepy session',
-        \ 'coverager session', 1)
+        \ 'coverage session', 1)
 
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'f'],
         \ 'Coveragepy refresh',
-        \ 'coverager refresh', 1)
+        \ 'coverage refresh', 1)
 
   " +Generate {{{
 
