@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:ICONV = SpaceVim#api#import('iconv')
+let s:LOGGER = SpaceVim#logger#derive('windisk')
 
 func! SpaceVim#plugins#windisk#open() abort
   let disks = s:get_disks()
@@ -70,6 +71,7 @@ function! s:open_disk(d) abort
   if g:spacevim_filemanager ==# 'vimfiler'
     exe 'VimFiler -no-toggle ' . disk
   elseif g:spacevim_filemanager ==# 'nerdtree'
+    silent! exe 'NERDTree ' . disk 
   elseif g:spacevim_filemanager ==# 'defx'
     exe 'Defx -no-toggle -no-resume ' . disk
   endif
