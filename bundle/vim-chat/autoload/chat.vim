@@ -316,15 +316,6 @@ fu! s:windowsinit() abort
   setl filetype=vimchat
 endf
 
-function! s:debug() abort
-  tabnew
-  for line in s:debug_log
-    call append(line('$'), line)
-  endfor
-  nnoremap <buffer><silent> q :bd!<CR>
-endfunction
-
-
 let s:enter_history = []
 function! s:enter() abort
   if s:c_begin . s:c_char . s:c_end =~# '/quit\s*'
@@ -497,6 +488,3 @@ function! s:send(msg) abort
     call ch_sendraw(s:channel, a:msg ."\n")
   endif
 endfunction
-
-call chat#debug#defind('chatting', function('s:debug'))
-
