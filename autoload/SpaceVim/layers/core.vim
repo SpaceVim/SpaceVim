@@ -229,7 +229,8 @@ function! SpaceVim#layers#core#config() abort
           \ ]
           \ , 1)
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['h', 'G'], 'call SpaceVim#plugins#helpgrep#help(expand("<cword>"))',
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'G'],
+        \ 'call SpaceVim#plugins#helpgrep#help(expand("<cword>"))',
         \ ['asynchronous-helpgrep-with-cword',
         \ [
           \ '[SPC h g] is to run helpgrep asynchronously with cword',
@@ -238,7 +239,17 @@ function! SpaceVim#layers#core#config() abort
           \ ]
           \ ]
           \ , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['b', 'd'], 'call SpaceVim#mapping#close_current_buffer()', 'delete-this-buffer', 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'd'],
+        \ 'call SpaceVim#mapping#close_current_buffer()',
+        \ ['delete-this-buffer',
+        \ [
+          \ '[SPC b d] is to delete current buffer',
+          \ '',
+          \ 'Definition: ' . s:filename . ':' . lnum,
+          \ ]
+          \ ]
+          \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'D'],
         \ 'call SpaceVim#mapping#kill_visible_buffer_choosewin()',
         \ 'delete-the-selected-buffer', 1)
@@ -1071,3 +1082,5 @@ function! s:close_current_tab() abort
     tabclose!
   endif
 endfunction
+
+" vim:set et sw=2 cc=80:
