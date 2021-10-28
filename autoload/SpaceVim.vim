@@ -1016,10 +1016,21 @@ let g:spacevim_disabled_plugins        = []
 ""
 " @section custom_plugins, usage-custom_plugins
 " @parentsection usage
-" Add custom plugins.
+" If you want to add custom plugin, use `custom_plugins` section. For example:
+" if you want to add https://github.com/vimwiki/vimwiki, add following code
+" into your configuration file.
 " >
 "   [[custom_plugins]]
 "     repo = 'vimwiki/vimwiki'
+"     merged = false
+" <
+" Use one custom_plugins for each plugin, example:
+" >
+"   [[custom_plugins]]
+"     repo = 'vimwiki/vimwiki'
+"     merged = false
+"   [[custom_plugins]]
+"     repo = 'wsdjeg/vim-j'
 "     merged = false
 " <
 
@@ -1649,6 +1660,55 @@ endfunction
 "     WIN q        | Remove current buffer
 "     WIN Q        | Close current buffer (:close)
 "     Shift-Tab    | Switch to alternate window (switch back and forth)
+" <
+
+""
+" @section search-and-replace, usage-search-and-replace
+" @parentsection usage
+" This section document how to find and replace text in SpaceVim.
+"
+" @subsection Searching with  an external tool
+"
+" SpaceVim can be interfaced with different searching tools like:
+" 1. rg - ripgrep
+" 2. ag - the silver searcher
+" 3. pt - the platinum searcher
+" 4. ack
+" 5. grep
+" The search commands in SpaceVim are organized under the `SPC s` prefix
+" with the next key being the tool to use and the last key is the scope.
+" For instance, `SPC s a b` will search in all opened buffers using `ag`.
+" 
+" If the `<scope>` is uppercase then the current word under the cursor
+" is used as default input for the search.
+" For instance, `SPC s a B` will search for the word under the cursor.
+" 
+" If the tool key is omitted then a default tool will be automatically
+" selected for the search. This tool corresponds to the first tool found
+" on the system from the list `search_tools`, the default order is
+" `['rg', 'ag', 'pt', 'ack', 'grep', 'findstr', 'git']`.
+" For instance `SPC s b` will search in the opened buffers using
+" `pt` if `rg` and `ag` have not been found on the system.
+" 
+" The tool keys are:
+" >
+"     Tool     | Key
+"     ---------|-----
+"     ag       | a
+"     grep     | g
+"     git grep | G
+"     ack      | k
+"     rg       | r
+"     pt       | t
+" <
+" The available scopes and corresponding keys are:
+" >
+"     Scope                      | Key
+"     ---------------------------|-----
+"     opened buffers             | b
+"     buffer directory           | d
+"     files in a given directory | f
+"     current project            | p
 " <
 
 ""

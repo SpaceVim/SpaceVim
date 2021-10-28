@@ -208,8 +208,9 @@ CONTENTS                                                   *SpaceVim-contents*
       1. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
       2. custom_plugins........................|SpaceVim-usage-custom_plugins|
       3. repl............................................|SpaceVim-usage-repl|
-      4. tasks..........................................|SpaceVim-usage-tasks|
-      5. windows-and-tabs....................|SpaceVim-usage-windows-and-tabs|
+      4. search-and-replace................|SpaceVim-usage-search-and-replace|
+      5. tasks..........................................|SpaceVim-usage-tasks|
+      6. windows-and-tabs....................|SpaceVim-usage-windows-and-tabs|
   8. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -4902,10 +4903,21 @@ All buffers key bindings are start with `b` prefix:
 ==============================================================================
 CUSTOM_PLUGINS                                 *SpaceVim-usage-custom_plugins*
 
-Add custom plugins.
+If you want to add custom plugin, use `custom_plugins` section. For example:
+if you want to add https://github.com/vimwiki/vimwiki, add following code into
+your configuration file.
 >
   [[custom_plugins]]
     repo = 'vimwiki/vimwiki'
+    merged = false
+<
+Use one custom_plugins for each plugin, example:
+>
+  [[custom_plugins]]
+    repo = 'vimwiki/vimwiki'
+    merged = false
+  [[custom_plugins]]
+    repo = 'wsdjeg/vim-j'
     merged = false
 <
 
@@ -4922,6 +4934,54 @@ first argument is {type}. To send raw string, use `raw` as type, for example:
 <
 
 >
+<
+
+==============================================================================
+SEARCH-AND-REPLACE                         *SpaceVim-usage-search-and-replace*
+
+This section document how to find and replace text in SpaceVim.
+
+SEARCHING WITH  AN EXTERNAL TOOL
+
+SpaceVim can be interfaced with different searching tools like:
+  1. rg - ripgrep
+  2. ag - the silver searcher
+  3. pt - the platinum searcher
+  4. ack
+  5. grep
+The search commands in SpaceVim are organized under the `SPC s` prefix with
+the next key being the tool to use and the last key is the scope. For
+instance, `SPC s a b` will search in all opened buffers using `ag`.
+
+If the `<scope>` is uppercase then the current word under the cursor is used
+as default input for the search. For instance, `SPC s a B` will search for the
+word under the cursor.
+
+If the tool key is omitted then a default tool will be automatically selected
+for the search. This tool corresponds to the first tool found on the system
+from the list `search_tools`, the default order is `['rg', 'ag', 'pt', 'ack',
+'grep', 'findstr', 'git']`. For instance `SPC s b` will search in the opened
+buffers using `pt` if `rg` and `ag` have not been found on the system.
+
+The tool keys are:
+>
+    Tool     | Key
+    ---------|-----
+    ag       | a
+    grep     | g
+    git grep | G
+    ack      | k
+    rg       | r
+    pt       | t
+<
+The available scopes and corresponding keys are:
+>
+    Scope                      | Key
+    ---------------------------|-----
+    opened buffers             | b
+    buffer directory           | d
+    files in a given directory | f
+    current project            | p
 <
 
 ==============================================================================
