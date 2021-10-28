@@ -143,9 +143,6 @@ function! SpaceVim#layers#core#config() abort
   nnoremap <silent> [p P
   nnoremap <silent> ]p p
 
-  " Select last paste
-  nnoremap <silent><expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
-
   call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'call call('
         \ . string(s:_function('s:save_current_file')) . ', [])',
         \ 'save-current-file', 1)
