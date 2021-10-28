@@ -48,6 +48,10 @@ function! SpaceVim#layers#ssh#set_variable(opt) abort
 endfunction
 
 function! SpaceVim#layers#ssh#connect() abort
+  " the ssh client should be opened on new tab
+  tabnew
+  " set the tab name to SSH(user@ip:port)
+  let t:_spacevim_tab_name = 'SSH(' . s:user . '@' . s:ip . ':' . s:port . ')'
   if has('nvim')
     call termopen([s:ssh, '-p', s:port, s:user . '@' . s:ip])
   else
