@@ -281,9 +281,13 @@ endfunction " }}}
 
 " icon -> number -> A-Za-z 
 " 65-90 97-122
+function! s:get_key_number(key) abort
+  return char2nr(a:key ==# '[SPC]' ? ' ' : a:key ==? '<Tab>' ? "\t" : a:key)
+endfunction
+
 function! s:compare_key(i1, i2) abort
-  let a = char2nr(a:i1 ==# '[SPC]' ? ' ' : a:i1 ==? '<Tab>' ? "\t" : a:i1)
-  let b = char2nr(a:i2 ==# '[SPC]' ? ' ' : a:i2 ==? '<Tab>' ? "\t" : a:i2)
+  let a = s:get_key_number(a:i1)
+  let b = s:get_key_number(a:i2)
   if a - b == 32 && a >= 97 && a <= 122
     return -1
   elseif b - a == 32 && b >= 97 && b <= 122
