@@ -20,7 +20,7 @@ local function cache()
 end
 
 local function get_type_path(a, f, b)
-    logger.debug('get_type_path')
+    logger.debug('run get_type_path function')
     logger.debug(fn.string(a))
     logger.debug(f)
     logger.debug(b)
@@ -107,17 +107,17 @@ local function _comp(a, b)
 end
 
 local function parse(alt_config_json)
-    logger.debug('Start to parse alternate file for:' .. alt_config_json.root)
+    logger.info('Start to parse alternate file for:' .. alt_config_json.root)
     project_config[alt_config_json.root] = {}
     local keys = _keys(alt_config_json.config)
     table.sort(keys, _comp)
     for _, key in pairs(keys) do
-        logger.info('start parse key:' .. key)
+        logger.debug('start parse key:' .. key)
         local searchpath = key
         if string.match(searchpath, '*') == '*' then
             searchpath = string.gsub(searchpath, '*', '**/*')
         end
-        logger.info('run globpath for: '.. searchpath)
+        logger.debug('run globpath for: '.. searchpath)
         for _,file in pairs(cmp.globpath('.', searchpath)) do
             file = sp_file.unify_path(file, ':.')
             logger.debug(file)
