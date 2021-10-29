@@ -87,11 +87,7 @@ else
 
   function! SpaceVim#logger#viewRuntimeLog() abort
     let info = "### SpaceVim runtime log :\n\n"
-    let info .= "```log\n"
-
     let info .= s:LOGGER.view(s:LOGGER.level)
-
-    let info .= "\n```\n"
     tabnew +setl\ nobuflisted
     nnoremap <buffer><silent> q :tabclose!<CR>
     for msg in split(info, "\n")
@@ -100,6 +96,7 @@ else
     normal! "_dd
     setl nomodifiable
     setl buftype=nofile
+    setl filetype=SpaceVimLog
   endfunction
 
 

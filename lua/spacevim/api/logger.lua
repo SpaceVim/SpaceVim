@@ -21,7 +21,7 @@ local M = {
 -- 1 : log info, warn, error messages
 -- 2 : log warn, error messages
 -- 3 : log error messages
-M.levels = {'Info', 'Warn', 'Error', 'Debug'}
+M.levels = {'Info ', 'Warn ', 'Error', 'Debug'}
 
 function M.set_silent(sl)
     M.silent = sl
@@ -38,7 +38,7 @@ end
 function M._build_msg(msg, l)
     msg = msg or ''
     local time = fn.strftime('%H:%M:%S')
-    local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[l] .. ' ] ' .. msg
+    local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[l] .. '] ' .. msg
     return log
 end
 

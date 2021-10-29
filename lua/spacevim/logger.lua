@@ -44,9 +44,7 @@ end
 
 function M.viewRuntimeLog()
     local info = "### SpaceVim runtime log :\n\n"
-    ..  "```log\n"
     .. logger.view(logger.level)
-    .. "\n```\n"
     cmd('tabnew')
     cmd('setl nobuflisted')
     cmd('nnoremap <buffer><silent> q :tabclose!<CR>')
@@ -54,7 +52,7 @@ function M.viewRuntimeLog()
     fn.append(0, fn.split(info, "\n"))
     cmd('setl nomodifiable')
     cmd('setl buftype=nofile')
-    -- cmd('setl filetype=markdown')
+    cmd('setl filetype=SpaceVimLog')
     -- M.syntax_extra()
 end
 

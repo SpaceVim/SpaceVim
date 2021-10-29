@@ -49,7 +49,7 @@ endfunction
 
 function! s:self.error(msg) abort
   let time = strftime('%H:%M:%S')
-  let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[2] . ' ] ' . a:msg
+  let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[2] . '] ' . a:msg
   if !self.silent && self.verbose >= 1
     echohl Error
     echom log
