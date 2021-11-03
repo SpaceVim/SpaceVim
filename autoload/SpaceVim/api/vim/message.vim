@@ -11,11 +11,37 @@
 " @parentsection api
 " `vim#message` API provide functions for generating colored message in vim's
 " command line.
+" >
+"   let s:MSG = SpaceVim#api#import('vim#message')
+"   call s:MSG.echo('WarningMsg', 'hello world!')
+" <
+" @subsection functions
 "
 " echo({hi}, {msg})
 "
-"   print message with {hi} highlight group.
-
+"   print message with {hi} highlight group. The {msg} starts on a new line.
+"
+" echon({hi}, {msg})
+"
+"   print message with {hi} highlight group. The {msg} will be displayed
+"   without anything added.
+"
+" echomsg({hi}, {msg})
+"
+"   print message with {hi} highlight group. The {msg} starts on a new line.
+"   The {msg} also will be added to `:messages` history.
+"
+" error({msg})
+"
+"   same as `echomsg('Error', {msg})`
+"
+" warn({msg})
+"
+"   same as `echomsg('WarningMsg', {msg})`
+"
+" confirm({msg})
+"   
+"   promote a confirm message, accept user input `y/n`.
 
 let s:self = {}
 
