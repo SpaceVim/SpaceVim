@@ -1428,6 +1428,18 @@ SpaceVim#custom#SPC({m}, {keys}, {cmd}, {desc}, {is_cmd})
   true. The fourth parameter is a short description of this custom key
   binding.
 
+SpaceVim#custom#SPCGroupName({keys}, {name})  *SpaceVim#custom#SPCGroupName()*
+  Set the group name of custom key bindings.
+
+SpaceVim#custom#LangSPC({ft}, {m}, {keys}, {cmd}, {desc}, {is_cmd})
+                                                   *SpaceVim#custom#LangSPC()*
+  This function offers user a way to add custom language specific key
+  bindings.
+
+SpaceVim#custom#LangSPCGroupName({ft}, {keys}, {name})
+                                          *SpaceVim#custom#LangSPCGroupName()*
+  Set the group name of custom language specific key bindings.
+
 SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
   Load the {layer} you want. For all the layers SpaceVim supports, see
   |SpaceVim-layers|. the second argv is the layer variable.

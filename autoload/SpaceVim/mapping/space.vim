@@ -673,8 +673,8 @@ function! SpaceVim#mapping#space#refrashLSPC() abort
   endif
 
   " Customized mappings
-  if has_key(g:_spacevim_mappings_language_specified_space_custom_group_name, &filetype)
-    for argv in g:_spacevim_mappings_language_specified_space_custom_group_name[&filetype]
+  if has_key(g:_spacevim_mappings_lang_group_name, &filetype)
+    for argv in g:_spacevim_mappings_lang_group_name[&filetype]
       " Only support one layer of groups
       if !has_key(g:_spacevim_mappings_space.l, argv[0][0])
         let g:_spacevim_mappings_space.l[argv[0][0]] = {'name' : argv[1]}
