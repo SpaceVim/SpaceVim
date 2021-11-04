@@ -191,6 +191,12 @@ else
     call s:LOGGER.set_name(self.origin_name)
   endfunction
 
+  function! s:derive.debug(msg) abort
+    call s:LOGGER.set_name(self.derive_name)
+    call s:LOGGER.debug(a:msg)
+    call s:LOGGER.set_name(self.origin_name)
+  endfunction
+
   function! SpaceVim#logger#derive(name) abort
     let s:derive.derive_name = printf('%' . strdisplaywidth(s:LOGGER.get_name()) . 'S', a:name)
     return deepcopy(s:derive)
