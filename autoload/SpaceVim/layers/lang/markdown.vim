@@ -123,7 +123,7 @@ function! SpaceVim#layers#lang#markdown#config() abort
         \ }
 
   " iamcco/markdown-preview.vim {{{
-  let g:mkdp_browserfunc = 'openbrowser#open'
+  " let g:mkdp_browserfunc = 'openbrowser#open'
   " }}}
   call SpaceVim#mapping#space#regesit_lang_mappings('markdown', function('s:mappings'))
   nnoremap <silent> <plug>(markdown-insert-link) :call <SID>markdown_insert_link(0, 0)<Cr>
