@@ -29,7 +29,7 @@ let s:self = {
 "1 : log all messages
 "2 : log warning and error messages
 "3 : log error messages only
-let s:levels = ['Info', 'Warn', 'Error']
+let s:levels = ['Info', 'Warn', 'Error', 'Debug']
 
 function! SpaceVim#api#logger#get() abort
   return deepcopy(s:self)
@@ -80,6 +80,18 @@ function! s:self.warn(msg, ...) abort
     echohl WarningMsg
     echom log
     echohl None
+  endif
+  call self.write(log)
+endfunction
+
+function! s:self.debug(msg) abort
+  if self.level > 0
+    return
+  endif
+  let time = strftime('%H:%M:%S')
+  let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[3] . ' ] ' . a:msg
+  if !self.silent && self.verbose >= 4
+    echom log
   endif
   call self.write(log)
 endfunction
