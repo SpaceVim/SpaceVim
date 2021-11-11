@@ -4,6 +4,8 @@ endfunction
 
 function! neoformat#formatters#cmake#cmakeformat() abort
     return {
-        \ 'exe': 'cmake-format'
+        \ 'exe': 'cmake-format',
+        \ 'args': ['-'],
+        \ 'stdin': 1,
         \ }
 endfunction
