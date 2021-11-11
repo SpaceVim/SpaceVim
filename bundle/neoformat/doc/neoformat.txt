@@ -98,6 +98,7 @@ Options:
 | `env`       | list of environment variables to prepend to the command | default: [] | optional
 
 | `valid_exit_codes` | list of valid exit codes for formatters who do not respect common unix practices | \[0] | optional
+| `try_node_exe` | attempt to find `exe` in a `node_modules/.bin` directory in the current working directory or one of its parents (requires setting `g:neoformat_try_node_exe`) | default: 0 | optional
 
 Example:
 
@@ -150,6 +151,13 @@ When debugging, you can enable either of following variables for extra logging.
     " Or
     let &verbose            = 1 " also increases verbosity of the editor as a whole
 <
+Have Neoformat look for a formatter executable in the `node_modules/.bin`
+directory in the current working directory or one of its parents (only applies
+to formatters with `try_node_exe` set to `1`):
+>
+    let g:neoformat_try_node_exe = 1
+<
+
 ==============================================================================
 ADDING A NEW FORMATTER				*neoformat-adding-new-formatter*
 
@@ -245,11 +253,14 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
     [`csscomb`](http://csscomb.com)
 - CSV
   - [`prettydiff`](https://github.com/prettydiff/prettydiff)
+- Cue
+  - [`cue fmt`](https://cuelang.org/)
 - D
   - [`uncrustify`](http://uncrustify.sourceforge.net),
     [`dfmt`](https://github.com/Hackerpilot/dfmt)
 - Dart
   - [`dartfmt`](https://www.dartlang.org/tools/)
+  - [`dart format`](https://dart.dev/tools/dart-format)
 - Dhall
   - [`dhall format`](https://dhall-lang.org)
 - dune
@@ -262,6 +273,8 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
   - [`erlfmt`](https://github.com/WhatsApp/erlfmt)
 - Fish
   - [`fish_indent`](http://fishshell.com)
+- Fortran
+  - [`fprettify`](https://github.com/pseewald/fprettify)
 - F#
   - [`fantomas`](https://github.com/fsprojects/fantomas)
 - GDScript
@@ -294,6 +307,7 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
 - Puppet
   - [`puppet-lint`](https://github.com/rodjek/puppet-lint)
 - PureScript
+  - [`purs-tidy`](https://github.com/natefaubion/purescript-tidy)
   - [`purty`](https://gitlab.com/joneshf/purty)
 - HTML
   - `html-beautify` (ships with [`js-beautify`](https://github.com/beautify-web/js-beautify)),
@@ -322,6 +336,7 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
     [`prettier`](https://github.com/prettier/prettier),
     [`jq`](https://stedolan.github.io/jq/),
     [`fixjson`](https://github.com/rhysd/fixjson)
+    [`deno fmt`](https://deno.land/manual/tools/formatter)
 - Kotlin
   - [`ktlint`](https://github.com/shyiko/ktlint)
     [`prettier`](https://github.com/prettier/prettier)
@@ -336,9 +351,11 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
   - [`luaformatter`](https://github.com/LuaDevelopmentTools/luaformatter)
   - [`lua-fmt`](https://github.com/trixnz/lua-fmt)
   - [`lua-format`](https://github.com/Koihik/LuaFormatter)
+  - [`stylua`](https://github.com/JohnnyMorganz/StyLua)
 - Markdown
   - [`remark`](https://github.com/wooorm/remark)
     [`prettier`](https://github.com/prettier/prettier),
+    [`deno fmt`](https://deno.land/manual/tools/formatter)
 - Matlab
   - [`matlab-formatter-vscode`](https://github.com/affenwiesel/matlab-formatter-vscode)
 - Nginx
@@ -430,6 +447,8 @@ SUPPORTED FILETYPES				*neoformat-supported-filetypes*
     [`eslint_d`](https://github.com/mantoni/eslint_d.js)
     [`clang-format`](http://clang.llvm.org/docs/ClangFormat.html),
     [`deno fmt`](https://deno.land/manual/tools/formatter)
+- Toml
+  - [`taplo`](https://taplo.tamasfe.dev/cli)
 - V
   - `v fmt` (ships with [`v`](https://vlang.io))
 - VALA

@@ -11,7 +11,8 @@ function! neoformat#formatters#html#tidy() abort
         \          '--vertical-space yes',
         \          '--tidy-mark no',
         \          '-wrap ' . &textwidth
-        \         ]
+        \         ],
+        \ 'try_node_exe': 1,
         \ }
 endfunction
 
@@ -20,6 +21,7 @@ function! neoformat#formatters#html#prettier() abort
         \ 'exe': 'prettier',
         \ 'args': ['--stdin-filepath', '"%:p"'],
         \ 'stdin': 1,
+        \ 'try_node_exe': 1,
         \ }
 endfunction
 
