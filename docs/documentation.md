@@ -273,9 +273,22 @@ to the `custom_plugins` section:
 
 ```toml
 [[custom_plugins]]
-    repo = "lilydjwg/colorizer"
-    on_cmd = ["ColorHighlight", "ColorToggle"]
+    repo = 'lilydjwg/colorizer'
+    # `on_cmd` option means this plugin will be loaded
+    # only when the specific commands are called.
+    # for example, when `:ColorHighlight` or `:ColorToggle`
+    # commands are called.
+    on_cmd = ['ColorHighlight', 'ColorToggle']
+    # `on_func` option means this plugin will be loaded
+    # only when the specific functions are called.
+    # for example, when `colorizer#ColorToggle()` function is called.
+    on_func = 'colorizer#ColorToggle'
+    # `merged` option is used for merging plugins directory.
+    # When `merged` is `true`, all files in this custom plugin
+    # will be merged into `~/.cache/vimfiles/.cache/init.vim/`
+    # for neovim or `~/.cache/vimfiles/.cache/vimrc/` for vim.
     merged = false
+    # For more options see `:h dein-options`.
 ```
 
 You can also use the url of the repository, for example:
@@ -285,14 +298,6 @@ You can also use the url of the repository, for example:
     repo = "https://gitlab.com/code-stats/code-stats-vim.git"
     merged = false
 ```
-
-`on_cmd` option means this plugin will be loaded only when the following commands are called.
-
-`merged` option is used for merging plugins directory. When `merged` is `true`, all files in
-this custom plugin will be merged into `~/.cache/vimfiles/.cache/init.vim/` for neovim or
-`~/.cache/vimfiles/.cache/vimrc/` for vim.
-
-For more options see `:h dein-options`.
 
 **disable existing plugins**
 
