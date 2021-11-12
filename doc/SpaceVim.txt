@@ -77,9 +77,10 @@ CONTENTS                                                   *SpaceVim-contents*
       57. vim_help_language...............|SpaceVim-options-vim_help_language|
       58. vimcompatible.......................|SpaceVim-options-vimcompatible|
       59. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      60. windows_index_type.............|SpaceVim-options-windows_index_type|
-      61. windows_leader.....................|SpaceVim-options-windows_leader|
-      62. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      60. windisk_encoding.................|SpaceVim-options-windisk_encoding|
+      61. windows_index_type.............|SpaceVim-options-windows_index_type|
+      62. windows_leader.....................|SpaceVim-options-windows_leader|
+      63. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Functions............................................|SpaceVim-functions|
@@ -809,6 +810,14 @@ WARNING_SYMBOL                               *SpaceVim-options-warning_symbol*
 Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
 >
   warning_symbol = '!'
+<
+
+==============================================================================
+WINDISK_ENCODING                           *SpaceVim-options-windisk_encoding*
+
+Setting the encoding of windisk info. by default it is `cp936`.
+>
+  windisk_encoding = 'cp936'
 <
 
 ==============================================================================

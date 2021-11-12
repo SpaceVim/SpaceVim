@@ -110,6 +110,15 @@ let g:spacevim_enable_bepo_layout  = 0
 " <
 let g:spacevim_max_column              = 120
 
+""
+" @section windisk_encoding, options-windisk_encoding
+" @parentsection options
+" Setting the encoding of windisk info. by default it is `cp936`.
+" >
+"   windisk_encoding = 'cp936'
+" <
+
+let g:spacevim_windisk_encoding = 'cp936'
 
 ""
 " @section default_custom_leader, options-default_custom_leader
