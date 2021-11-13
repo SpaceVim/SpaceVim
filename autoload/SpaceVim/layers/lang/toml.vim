@@ -17,8 +17,16 @@
 
 function! SpaceVim#layers#lang#toml#plugins() abort
   let plugins = []
-  call add(plugins, ['cespare/vim-toml', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-toml', {'merged' : 0}])
   return plugins
+endfunction
+
+function! SpaceVim#layers#lang#toml#config() abort
+  call SpaceVim#mapping#space#regesit_lang_mappings('toml', function('s:toml_lang_mappings'))
+endfunction
+
+function! s:toml_lang_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','j'], 'call toml#preview()', 'toml-to-json', 1)
 endfunction
 
 function! SpaceVim#layers#lang#toml#health() abort

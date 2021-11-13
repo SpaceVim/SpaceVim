@@ -1,0 +1,35 @@
+# Visual test file.
+# You can run
+#
+#     nnoremap <F10> <cmd>echo synIDattr(synID(line('.'), col('.'), 1), 'name')<CR>
+#
+# and then press F10 to get the highlight group under the cursor.
+
+# https://github.com/cespare/vim-toml/issues/9
+issue9 = [
+  ["a", "b", "c"]
+]
+
+# https://github.com/cespare/vim-toml/issues/10
+issue10_1 = -12
+issue10_2 = +200.3
+
+# https://github.com/cespare/vim-toml/issues/11
+issue11 = -210_000.0
+
+# https://github.com/cespare/vim-toml/issues/13
+issue13 = { version="1.0", features=["derive"] }
+
+# https://github.com/cespare/vim-toml/pull/52
+[foo.baz]
+apple.type = "fruit"
+3.14159 = "pi"
+"127.0.0.1" = "value"
+
+[[foo.quux]]
+e = 2
+
+# https://github.com/cespare/vim-toml/issues/58
+site."google.com" = true
+
+# vim: et sw=2 sts=2

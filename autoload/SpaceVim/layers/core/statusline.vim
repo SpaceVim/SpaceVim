@@ -545,6 +545,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     return '%#SpaceVim_statusline_a# Transient State %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'SpaceVimLog'
     return '%#SpaceVim_statusline_a# SpaceVim Runtime log %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+  elseif &filetype ==# 'SpaceVimTomlViewer'
+    return '%#SpaceVim_statusline_a# Toml Json Viewer %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'vimcalc'
     return '%#SpaceVim_statusline_a#' . s:winnr() . ' VimCalc %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'HelpDescribe'
