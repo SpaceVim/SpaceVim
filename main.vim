@@ -6,6 +6,8 @@
 " License: GPLv3
 "=============================================================================
 
+call SpaceVim#logger#info('start to loading SpaceVim!')
+
 " Enable nocompatible
 if has('vim_starting')
   " set default encoding to utf-8
@@ -20,20 +22,26 @@ if has('vim_starting')
   " python host
   if !empty($PYTHON_HOST_PROG)
     let g:python_host_prog  = $PYTHON_HOST_PROG
+    call SpaceVim#logger#info('$PYTHON_HOST_PROG is not empty, setting g:python_host_prog:' . g:python_host_prog)
   endif
   if !empty($PYTHON3_HOST_PROG)
     let g:python3_host_prog = $PYTHON3_HOST_PROG
+    call SpaceVim#logger#info('$PYTHON3_HOST_PROG is not empty, setting g:python3_host_prog:' . g:python3_host_prog)
     if !has('nvim') 
           \ && (has('win16') || has('win32') || has('win64'))
           \ && exists('&pythonthreedll')
           \ && exists('&pythonthreehome')
       let &pythonthreedll = get(split(globpath(fnamemodify($PYTHON3_HOST_PROG, ':h'), 'python*.dll'), '\n'), -1, '')
+      call SpaceVim#logger#info('init &pythonthreedll:' . &pythonthreedll)
       let &pythonthreehome = fnamemodify($PYTHON3_HOST_PROG, ':h')
+      call SpaceVim#logger#info('init &pythonthreehome:' . &pythonthreehome)
     endif
   endif
 endif
 " Detect root directory of SpaceVim
 if has('win16') || has('win32') || has('win64')
+  " this function is too slow.
+  " and will be deleted soon.
   function! s:resolve(path) abort
     let cmd = 'dir /a "' . a:path . '" | findstr SYMLINK'
     " 2018/12/07 周五  下午 10:23    <SYMLINK>      vimfiles [C:\Users\Administrator\.SpaceVim]
@@ -50,9 +58,10 @@ else
     return resolve(a:path)
   endfunction
 endif
-let g:_spacevim_root_dir = escape(fnamemodify(s:resolve(fnamemodify(expand('<sfile>'),
+let g:_spacevim_root_dir = escape(fnamemodify(resolve(fnamemodify(expand('<sfile>'),
       \ ':p:h:gs?\\?'.((has('win16') || has('win32')
       \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?'), ' ')
+call SpaceVim#logger#info('init spacevim root dir:' . g:_spacevim_root_dir)
 lockvar g:_spacevim_root_dir
 if has('nvim')
   let s:qtdir = split(&rtp, ',')[-1]
@@ -72,4 +81,6 @@ call SpaceVim#custom#load()
 call SpaceVim#default#keyBindings()
 
 call SpaceVim#end()
+
+call SpaceVim#logger#info('finished loading SpaceVim!')
 " vim:set et sw=2 cc=80:
