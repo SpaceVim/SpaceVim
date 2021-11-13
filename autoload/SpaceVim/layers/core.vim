@@ -143,9 +143,16 @@ function! SpaceVim#layers#core#config() abort
   nnoremap <silent> [p P
   nnoremap <silent> ]p p
 
+  let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['f', 's'], 'call call('
         \ . string(s:_function('s:save_current_file')) . ', [])',
-        \ 'save-current-file', 1)
+        \ ['save-current-file',
+        \  ['[SPC f s] is to save current file',
+        \   '',
+        \   'Definition: ' . s:filename . ':' . lnum,
+        \  ]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'a'], 'call call('
         \ . string(s:_function('s:save_as_new_file')) . ', [])',
         \ 'save-as-new-file', 1)
