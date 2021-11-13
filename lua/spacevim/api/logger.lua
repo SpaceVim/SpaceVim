@@ -38,7 +38,9 @@ end
 function M._build_msg(msg, l)
     msg = msg or ''
     local time = fn.strftime('%H:%M:%S')
-    local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[l] .. '] ' .. msg
+    -- error(string.format("Tried to call API function with vim.fn: use vim.api.%s instead", key))
+    -- local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[l] .. '] ' .. msg
+    local log = string.format('[ %s ] [%s] [ %s ] %s', M.name, time, M.levels[l], msg)
     return log
 end
 
