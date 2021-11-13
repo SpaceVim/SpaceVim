@@ -21,13 +21,13 @@ function! toml#preview() abort
   " close other windows
   silent only
   " open preview windows
-  rightbelow vsplit __toml_json_preview__
+  rightbelow vsplit __toml_json_preview__.json
   set ft=SpaceVimTomlViewer
-  set syntax=json
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixwidth
   let s:preview_bufnr = bufnr()
   setlocal modifiable
   call setline(1, json)
-  Neoformat! json
+  silent Neoformat! json
   setlocal nomodifiable
+  set syntax=json
 endfunction
