@@ -429,28 +429,23 @@ function! s:number_transient_state(n) abort
   let state = SpaceVim#api#import('transient_state') 
   call state.set_title('Number Transient State')
   call state.defind_keys(
-        \ {
-          \ 'layout' : 'vertical split',
-          \ 'left' : [
-            \ {
-              \ 'key' : ['+','='],
-              \ 'desc' : 'increase number',
-              \ 'func' : '',
-              \ 'cmd' : "normal! \<c-a>",
-              \ 'exit' : 0,
-              \ },
-              \ ],
-              \ 'right' : [
-                \ {
-                  \ 'key' : '-',
-                  \ 'desc' : 'decrease number',
-                  \ 'func' : '',
-                  \ 'cmd' : "normal! \<c-x>",
-                  \ 'exit' : 0,
-                  \ },
-                  \ ],
-                  \ }
-                  \ )
+        \ {'layout' : 'vertical split',
+        \  'left' : [{'key' : ['+','='],
+        \             'desc' : 'increase number',
+        \             'func' : '',
+        \             'cmd' : "normal! \<c-a>",
+        \             'exit' : 0,
+        \            },
+        \           ],
+        \ 'right' : [{'key' : '-',
+        \             'desc' : 'decrease number',
+        \             'func' : '',
+        \             'cmd' : "normal! \<c-x>",
+        \             'exit' : 0,
+        \            },
+        \           ],
+        \ }
+        \ )
   call state.open()
 endfunction
 
