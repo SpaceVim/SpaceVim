@@ -22,6 +22,7 @@ local M = {
 -- 2 : log warn, error messages
 -- 3 : log error messages
 M.levels = {'Info ', 'Warn ', 'Error', 'Debug'}
+M.clock = fn.reltime()
 
 function M.set_silent(sl)
     M.silent = sl
@@ -40,7 +41,12 @@ function M._build_msg(msg, l)
     local time = fn.strftime('%H:%M:%S')
     -- error(string.format("Tried to call API function with vim.fn: use vim.api.%s instead", key))
     -- local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[l] .. '] ' .. msg
-    local log = string.format('[ %s ] [%s] [ %s ] %s', M.name, time, M.levels[l], msg)
+    local log = string.format('[ %s ] [%s] [%00.3f] [ %s ] %s',
+        M.name,
+        time,
+        fn.reltimefloat(fn.reltime(M.clock)),
+        M.levels[l],
+        msg)
     return log
 end
 
