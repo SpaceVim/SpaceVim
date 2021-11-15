@@ -1554,6 +1554,8 @@ function! SpaceVim#begin() abort
     endif
   catch /^Vim\%((\a\+)\)\=:E197/
     call SpaceVim#logger#error('Can not set language to en_US.utf8')
+  catch /^Vim\%((\a\+)\)\=:E319/
+    call SpaceVim#logger#error('Can not set language to en_US.utf8, language not implemented in this Vim build')
   endtry
 
   " try to set encoding to utf-8
