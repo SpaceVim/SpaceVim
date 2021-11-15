@@ -24,12 +24,13 @@ let s:self = {
       \ 'verbose' : 1,
       \ 'file' : '',
       \ 'temp' : [],
+      \ 'clock' : reltime(),
       \ }
 
 "1 : log all messages
 "2 : log warning and error messages
 "3 : log error messages only
-let s:levels = ['Info', 'Warn', 'Error', 'Debug']
+let s:self.levels = ['Info', 'Warn', 'Error', 'Debug']
 
 function! SpaceVim#api#logger#get() abort
   return deepcopy(s:self)
@@ -47,9 +48,20 @@ function! s:self.set_level(l) abort
   let self.level = a:l
 endfunction
 
-function! s:self.error(msg) abort
+function! s:self._build_msg(msg, l) abort
+  let msg = a:msg
   let time = strftime('%H:%M:%S')
-  let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[2] . '] ' . a:msg
+  let log = printf('[ %s ] [%s] [%00.3f] [ %s ] %s',
+        \ self.name,
+        \ time,
+        \ reltimefloat(reltime(self.clock)),
+        \ self.levels[a:l],
+        \ msg)
+  return log
+endfunction
+
+function! s:self.error(msg) abort
+  let log = self._build_msg(a:msg, 2)
   if !self.silent && self.verbose >= 1
     echohl Error
     echom log
@@ -74,8 +86,7 @@ function! s:self.warn(msg, ...) abort
   if self.level > 2
     return
   endif
-  let time = strftime('%H:%M:%S')
-  let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[1] . ' ] ' . a:msg
+  let log = self._build_msg(a:msg, 1)
   if (!self.silent && self.verbose >= 2) || get(a:000, 0, 0) == 1
     echohl WarningMsg
     echom log
@@ -88,8 +99,7 @@ function! s:self.debug(msg) abort
   if self.level > 0
     return
   endif
-  let time = strftime('%H:%M:%S')
-  let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[3] . ' ] ' . a:msg
+  let log = self._build_msg(a:msg, 3)
   if !self.silent && self.verbose >= 4
     echom log
   endif
@@ -100,8 +110,7 @@ function! s:self.info(msg) abort
   if self.level > 1
     return
   endif
-  let time = strftime('%H:%M:%S')
-  let log = '[ ' . self.name . ' ] [' . time . '] [ ' . s:levels[0] . ' ] ' . a:msg
+  let log = self._build_msg(a:msg, 0)
   if !self.silent && self.verbose >= 3
     echom log
   endif
@@ -135,23 +144,13 @@ function! s:self.view(l) abort
 endfunction
 
 function! s:self._comp(msg, l) abort
-  if a:msg =~# '\[ ' . self.name . ' \] \[\d\d\:\d\d\:\d\d\] \[ '
-        \ . s:levels[2] . ' \]'
+  if empty(matchstr(a:msg, self.levels[1]))
     return 1
-  elseif a:msg =~# '\[ ' . self.name . ' \] \[\d\d\:\d\d\:\d\d\] \[ '
-        \ . s:levels[1] . ' \]'
-    if a:l > 2
-      return 0
-    else
-      return 1
-    endif
+  elseif empty(matchstr(a:msg, self.levels[0]))
+    return a:l <= 2
   else
-    if a:l > 1
-      return 0
-    else
-      return 1
-    endif
-  endif
+    return a:l <= 1
+  end
 endfunction
 
 function! s:self.clear(level) abort
