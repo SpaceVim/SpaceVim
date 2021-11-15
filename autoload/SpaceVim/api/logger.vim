@@ -27,10 +27,11 @@ let s:self = {
       \ 'clock' : reltime(),
       \ }
 
-"1 : log all messages
-"2 : log warning and error messages
-"3 : log error messages only
-let s:self.levels = ['Info', 'Warn', 'Error', 'Debug']
+"0 : debug, info, warn, error
+"1 : info, warn, error
+"2 : warn, error
+"3 : error
+let s:self.levels = ['Debug', 'Info', 'Warn', 'Error']
 
 function! SpaceVim#api#logger#get() abort
   return deepcopy(s:self)
@@ -61,7 +62,7 @@ function! s:self._build_msg(msg, l) abort
 endfunction
 
 function! s:self.error(msg) abort
-  let log = self._build_msg(a:msg, 2)
+  let log = self._build_msg(a:msg, 3)
   if !self.silent && self.verbose >= 1
     echohl Error
     echom log
@@ -86,7 +87,7 @@ function! s:self.warn(msg, ...) abort
   if self.level > 2
     return
   endif
-  let log = self._build_msg(a:msg, 1)
+  let log = self._build_msg(a:msg, 2)
   if (!self.silent && self.verbose >= 2) || get(a:000, 0, 0) == 1
     echohl WarningMsg
     echom log
@@ -99,7 +100,7 @@ function! s:self.debug(msg) abort
   if self.level > 0
     return
   endif
-  let log = self._build_msg(a:msg, 3)
+  let log = self._build_msg(a:msg, 0)
   if !self.silent && self.verbose >= 4
     echom log
   endif
@@ -110,7 +111,7 @@ function! s:self.info(msg) abort
   if self.level > 1
     return
   endif
-  let log = self._build_msg(a:msg, 0)
+  let log = self._build_msg(a:msg, 1)
   if !self.silent && self.verbose >= 3
     echom log
   endif
@@ -144,12 +145,14 @@ function! s:self.view(l) abort
 endfunction
 
 function! s:self._comp(msg, l) abort
-  if empty(matchstr(a:msg, self.levels[1]))
+  if !empty(matchstr(a:msg, self.levels[3]))
     return 1
-  elseif empty(matchstr(a:msg, self.levels[0]))
+  elseif !empty(matchstr(a:msg, self.levels[2]))
     return a:l <= 2
-  else
+  elseif !empty(matchstr(a:msg, self.levels[1]))
     return a:l <= 1
+  else
+    return a:l <= 0
   end
 endfunction
 
