@@ -1386,7 +1386,6 @@ function! SpaceVim#end() abort
   elseif g:spacevim_vim_help_language ==# 'ja'
     let &helplang = 'jp'
   endif
-  ""
   " generate tags for SpaceVim
   let help = fnamemodify(g:_spacevim_root_dir, ':p:h') . '/doc'
   try
@@ -1394,8 +1393,6 @@ function! SpaceVim#end() abort
   catch
     call SpaceVim#logger#warn('Failed to generate helptags for SpaceVim')
   endtry
-
-  ""
   " set language
   if !empty(g:spacevim_language)
     silent exec 'lan ' . g:spacevim_language
