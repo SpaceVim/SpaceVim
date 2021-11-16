@@ -51,12 +51,12 @@ endfunction
 
 
 function! SpaceVim#layers#lsp#setup() abort
-lua << EOF
-local nvim_lsp = require('lspconfig')
+  lua << EOF
+  local nvim_lsp = require('lspconfig')
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+  -- Use an on_attach function to only map the following keys
+  -- after the language server attaches to the current buffer
+  local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -95,8 +95,8 @@ for _, lsp in ipairs(servers) do
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150,
+      }
     }
-  }
 end
 EOF
 endfunction
@@ -108,6 +108,10 @@ function! SpaceVim#layers#lsp#plugins() abort
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-lspconfig', {'merged' : 0, 'loadconf' : 1}])
     if g:spacevim_autocomplete_method ==# 'deoplete'
       call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete-lsp', {'merged' : 0}])
+    elseif g:spacevim_autocomplete_method ==# 'nvim-cmp'
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-nvim-lsp', {
+            \ 'merged' : 0,
+            \ }])
     endif
   elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
     " nop
