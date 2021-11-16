@@ -52,7 +52,7 @@ endfunction
 function! s:self._build_msg(msg, l) abort
   let msg = a:msg
   let time = strftime('%H:%M:%S')
-  let log = printf('[ %s ] [%s] [%00.3f] [ %s ] %s',
+  let log = printf('[ %s ] [%s] [%00.3f] [ %5s ] %s',
         \ self.name,
         \ time,
         \ reltimefloat(reltime(self.clock)),
