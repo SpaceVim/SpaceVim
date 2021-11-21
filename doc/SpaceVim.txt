@@ -184,27 +184,28 @@ CONTENTS                                                   *SpaceVim-contents*
       97. lang#toml................................|SpaceVim-layers-lang-toml|
       98. lang#typescript....................|SpaceVim-layers-lang-typescript|
       99. lang#v......................................|SpaceVim-layers-lang-v|
-      100. lang#vbnet.............................|SpaceVim-layers-lang-vbnet|
-      101. lang#vim.................................|SpaceVim-layers-lang-vim|
-      102. lang#vue.................................|SpaceVim-layers-lang-vue|
-      103. lang#wolfram.........................|SpaceVim-layers-lang-wolfram|
-      104. lang#xml.................................|SpaceVim-layers-lang-xml|
-      105. lang#xquery...........................|SpaceVim-layers-lang-xquery|
-      106. lang#zig.................................|SpaceVim-layers-lang-zig|
-      107. language server protocol......................|SpaceVim-layers-lsp|
-      108. leaderf...................................|SpaceVim-layers-leaderf|
-      109. mail.........................................|SpaceVim-layers-mail|
-      110. operator.................................|SpaceVim-layers-operator|
-      111. shell.......................................|SpaceVim-layers-shell|
-      112. ssh...........................................|SpaceVim-layers-ssh|
-      113. test.........................................|SpaceVim-layers-test|
-      114. tmux.........................................|SpaceVim-layers-tmux|
-      115. tools#dash.............................|SpaceVim-layers-tools-dash|
-      116. tools#mpv...............................|SpaceVim-layers-tools-mpv|
-      117. tools#zeal.............................|SpaceVim-layers-tools-zeal|
-      118. treesitter.............................|SpaceVim-layers-treesitter|
-      119. ui.............................................|SpaceVim-layers-ui|
-      120. unite.......................................|SpaceVim-layers-unite|
+      100. lang#vala...............................|SpaceVim-layers-lang-vala|
+      101. lang#vbnet.............................|SpaceVim-layers-lang-vbnet|
+      102. lang#vim.................................|SpaceVim-layers-lang-vim|
+      103. lang#vue.................................|SpaceVim-layers-lang-vue|
+      104. lang#wolfram.........................|SpaceVim-layers-lang-wolfram|
+      105. lang#xml.................................|SpaceVim-layers-lang-xml|
+      106. lang#xquery...........................|SpaceVim-layers-lang-xquery|
+      107. lang#zig.................................|SpaceVim-layers-lang-zig|
+      108. language server protocol......................|SpaceVim-layers-lsp|
+      109. leaderf...................................|SpaceVim-layers-leaderf|
+      110. mail.........................................|SpaceVim-layers-mail|
+      111. operator.................................|SpaceVim-layers-operator|
+      112. shell.......................................|SpaceVim-layers-shell|
+      113. ssh...........................................|SpaceVim-layers-ssh|
+      114. test.........................................|SpaceVim-layers-test|
+      115. tmux.........................................|SpaceVim-layers-tmux|
+      116. tools#dash.............................|SpaceVim-layers-tools-dash|
+      117. tools#mpv...............................|SpaceVim-layers-tools-mpv|
+      118. tools#zeal.............................|SpaceVim-layers-tools-zeal|
+      119. treesitter.............................|SpaceVim-layers-treesitter|
+      120. ui.............................................|SpaceVim-layers-ui|
+      121. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
       2. custom_plugins........................|SpaceVim-usage-custom_plugins|
@@ -4447,6 +4448,43 @@ This layer also provides REPL support for v, the key bindings are:
   SPC l s s       send selection text
 <
 
+
+==============================================================================
+LANG#VALA                                          *SpaceVim-layers-lang-vala*
+
+This layer is for v development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#vala'
+<
+ENABLE LANGUAGE SERVER
+
+To enable lsp layer for vala language. you need to install
+vala-language-server, for example, use AUR in Arch Linux.
+>
+  yay -S vala-language-server
+<
+If you are using `nvim(>=0.5.0)`. You need to use `enabled_clients` to
+specific the language servers. For example:
+>
+  [[layers]]
+    name = 'lsp'
+    enabled_clients = ['vala_ls']
+<
+If you are using `nvim(<0.5.0)` or `vim`, you need to use `override_cmd`
+option. For example:
+>
+  [[layers]]
+    name = "lsp"
+    filetypes = [
+        "vala",
+        "genie",
+    ]
+    [layers.override_cmd]
+        vala = ["vala-language-server"]
+        genie = ["vala-language-server"]
+<
 
 ==============================================================================
 LANG#VBNET                                        *SpaceVim-layers-lang-vbnet*
