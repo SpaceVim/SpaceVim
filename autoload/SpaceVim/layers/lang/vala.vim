@@ -1,5 +1,5 @@
 "=============================================================================
-" pascal.vim --- vlang language support in SpaceVim
+" vala.vim --- vala language support in SpaceVim
 " Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
@@ -9,7 +9,7 @@
 ""
 " @section lang#vala, layers-lang-vala
 " @parentsection layers
-" This layer is for v development, disabled by default, to enable this
+" This layer is for vala development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
 " >
 "   [[layers]]

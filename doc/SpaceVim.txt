@@ -4452,7 +4452,7 @@ This layer also provides REPL support for v, the key bindings are:
 ==============================================================================
 LANG#VALA                                          *SpaceVim-layers-lang-vala*
 
-This layer is for v development, disabled by default, to enable this layer,
+This layer is for vala development, disabled by default, to enable this layer,
 add following snippet to your SpaceVim configuration file.
 >
   [[layers]]
