@@ -851,6 +851,13 @@ to your custom configuration file. Here is a picture of this feature:
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
 
+There is also an option to configure show/hide the file tree, default to show. To hide the file tree by default, you can use the `enable_vimfiler_welcome` option:
+
+```toml
+[options]
+    enable_vimfiler_welcome = false
+```
+
 There is also an option to configure the side of the file tree, by default it is right. To move the file tree to the left,
 you can use the `filetree_direction` option:
 

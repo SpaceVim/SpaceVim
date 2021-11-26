@@ -781,6 +781,13 @@ SpaceVim 的文件树提供了版本控制信息的接口，但是这一特性�
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
 
+默认情况下文件树是打开的，如果需要设置文件树默认关闭，需要修改 `enable_vimfiler_welcome` 选项。
+
+```toml
+[options]
+    enable_vimfiler_welcome = false
+```
+
 默认情况下文件树是在窗口的右边打开，如果需要设置文件树默认在左边，需要修改 `filetree_direction` 选项。
 需要注意的是，当设置文件树在左边时，函数列表 tagbar 将会在右边。
 
