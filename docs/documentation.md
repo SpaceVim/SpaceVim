@@ -570,7 +570,6 @@ Some UI indicators can be toggled on and off (toggles start with t and T):
 | `SPC t h i`  | toggle highlight indentation levels                                        |
 | `SPC t h c`  | toggle highlight current column                                            |
 | `SPC t h s`  | toggle syntax highlighting                                                 |
-| `SPC t i`    | toggle indentation guide at point                                          |
 | `SPC t n`    | toggle line numbers                                                        |
 | `SPC t b`    | toggle background                                                          |
 | `SPC t c`    | toggle conceal                                                             |
