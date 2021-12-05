@@ -18,7 +18,7 @@ lang: zh
 ## 起源
 
 SpaceVim 这一项目起源于 2016 年 12 月份，是由 @wsdjeg 的 [DotFiles](https://github.com/wsdjeg/DotFiles) 仓库分离衍生出来的。
-早起的模块化配置理念来源于 airline 作者的 Vim 配置。
+早期的模块化配置理念来源于 airline 作者的 Vim 配置。
 进一步受到 spacemacs 的 layers 这一概念的影响，最终形成了最早期的版本。
 
 ## 目标
