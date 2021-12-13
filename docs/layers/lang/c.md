@@ -73,7 +73,7 @@ Here is an example how to use above options:
 [[layers]]
   name = "lang#c"
   clang_executable = "/usr/bin/clang"
-  clang_flag = ['-I/user/include']
+  clang_flag = ['-I/usr/include']
   [layer.clang_std]
     c = "c11"
     cpp = "c++1z"
