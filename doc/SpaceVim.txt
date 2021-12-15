@@ -208,11 +208,12 @@ CONTENTS                                                   *SpaceVim-contents*
       121. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
-      2. custom_plugins........................|SpaceVim-usage-custom_plugins|
-      3. repl............................................|SpaceVim-usage-repl|
-      4. search-and-replace................|SpaceVim-usage-search-and-replace|
-      5. tasks..........................................|SpaceVim-usage-tasks|
-      6. windows-and-tabs....................|SpaceVim-usage-windows-and-tabs|
+      2. command-line-mode..................|SpaceVim-usage-command-line-mode|
+      3. custom_plugins........................|SpaceVim-usage-custom_plugins|
+      4. repl............................................|SpaceVim-usage-repl|
+      5. search-and-replace................|SpaceVim-usage-search-and-replace|
+      6. tasks..........................................|SpaceVim-usage-tasks|
+      7. windows-and-tabs....................|SpaceVim-usage-windows-and-tabs|
   8. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#dict....................................|SpaceVim-api-data-dict|
@@ -4956,6 +4957,24 @@ All buffers key bindings are start with `b` prefix:
   SPC u SPC b d kill the current buffer and window (does not delete the
     visited file) (TODO)
   SPC b D             kill a visible buffer using vim-choosewin
+<
+
+==============================================================================
+COMMAND-LINE-MODE                           *SpaceVim-usage-command-line-mode*
+
+After pressing `:`, you can switch to command line mode, here is a list of key
+bindings can be used in command line mode:
+>
+  Key bindings    Descriptions
+  Ctrl-a          move cursor to beginning
+  Ctrl-b          Move cursor backward in command line
+  Ctrl-f          Move cursor forward in command line
+  Ctrl-w          delete a whole word
+  Ctrl-u          remove all text before cursor
+  Ctrl-k          remove all text after cursor
+  Ctrl-c/Esc      cancel command line mode
+  Tab             next item in popup menu
+  Shift-Tab       previous item in popup menu
 <
 
 ==============================================================================

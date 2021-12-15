@@ -1737,6 +1737,25 @@ endfunction
 "   SPC b D	      kill a visible buffer using vim-choosewin
 " <
 
+
+""
+" @section command-line-mode, usage-command-line-mode
+" @parentsection usage
+" After pressing `:`, you can switch to command line mode, here is a list
+" of key bindings can be used in command line mode:
+" >
+"   Key bindings    Descriptions
+"   Ctrl-a          move cursor to beginning
+"   Ctrl-b          Move cursor backward in command line
+"   Ctrl-f          Move cursor forward in command line
+"   Ctrl-w          delete a whole word
+"   Ctrl-u          remove all text before cursor
+"   Ctrl-k          remove all text after cursor
+"   Ctrl-c/Esc      cancel command line mode
+"   Tab             next item in popup menu
+"   Shift-Tab       previous item in popup menu
+" <
+
 ""
 " @section Development, dev
 "
