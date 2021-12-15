@@ -10,12 +10,11 @@
 " @section lang#puppet, layers-lang-puppet
 " @parentsection layers
 " This layer is for Puppet development. It provides syntax highlighting and
-" syntax checking.
-"
-" Requirements:
+" syntax checking. This layer is not loaded by default. To load this layer,
+" add following snippet into SpaceVim configuration file:
 " >
-"   Puppet
-"   Puppet Lint
+"   [[layers]]
+"     name = 'lang#puppet'
 " <
 
 function! SpaceVim#layers#lang#puppet#plugins() abort
