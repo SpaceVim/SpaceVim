@@ -33,7 +33,7 @@ if exists('s:string_hi')
   finish
 endif
 
-let s:enable_smooth_scrolling = 1
+let g:enable_smooth_scrolling = 1
 
 let g:_spacevim_enable_filetree_gitstatus = 0
 let g:_spacevim_enable_filetree_filetypeicon = 0
@@ -107,7 +107,7 @@ function! SpaceVim#layers#core#config() abort
     noremap <silent> <F3> :NERDTreeToggle<CR>
   endif
   let g:matchup_matchparen_status_offscreen = 0
-  let g:smoothie_no_default_mappings = !s:enable_smooth_scrolling
+  let g:smoothie_no_default_mappings = !g:enable_smooth_scrolling
   " Unimpaired bindings
   " Quickly add empty lines
   nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
@@ -1051,9 +1051,9 @@ function! SpaceVim#layers#core#set_variable(var) abort
   let g:_spacevim_filetree_closed_icon = get(a:var,
         \ 'filetree_closed_icon',
         \ g:_spacevim_filetree_closed_icon)
-  let s:enable_smooth_scrolling = get(a:var,
+  let g:enable_smooth_scrolling = get(a:var,
         \ 'enable_smooth_scrolling',
-        \ s:enable_smooth_scrolling)
+        \ g:enable_smooth_scrolling)
   let g:_spacevim_enable_filetree_filetypeicon = get(a:var,
         \ 'enable_filetree_filetypeicon',
         \ g:_spacevim_enable_filetree_filetypeicon)
