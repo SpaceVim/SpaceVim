@@ -9,8 +9,18 @@ scriptencoding utf-8
 
 function! SpaceVim#layers#debug#plugins() abort
   let plugins = []
+
+  if !exists('g:spacevim_debugger_plugin')
+    let g:spacevim_debugger_plugin = ''
+  endif
   " @todo fork verbugger
-  call add(plugins,['wsdjeg/vim-debug', {'merged' : 0}])
+
+  if g:spacevim_debugger_plugin ==# 'vimspector'
+    call add(plugins,['puremourning/vimspector', {'merged' : 0}])
+  else
+    call add(plugins,['wsdjeg/vim-debug', {'merged' : 0}])
+  endif
+
   if g:spacevim_filemanager !=# 'vimfiler'
     call add(plugins, ['Shougo/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
   endif
