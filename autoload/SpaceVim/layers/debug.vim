@@ -89,64 +89,105 @@ endfunction
 function! s:debug_transient_state() abort
     let state = SpaceVim#api#import('transient_state') 
     call state.set_title('Debug Transient State')
-    call state.defind_keys(
-                \ {
-                \ 'layout' : 'vertical split',
-                \ 'left' : [
-                \ {
-                \ 'key' : 'c',
-                \ 'desc' : 'Continue execution',
-                \ 'func' : '',
-                \ 'cmd' : 'call vimspector#Continue()',
-                \ 'exit' : 0,
-                \ },
-                \ {
-                \ 'key' : 'u',
-                \ 'desc' : 'Move up a frame',
-                \ 'func' : '',
-                \ 'cmd' : 'call vimspector#UpFrame()',
-                \ 'exit' : 0,
-                \ },
-                \ {
-                \ 'key' : 'd',
-                \ 'desc' : 'Move down a frame',
-                \ 'func' : '',
-                \ 'cmd' : 'call vimspector#DownFrame()',
-                \ 'exit' : 0,
-                \ },
-                \ ],
-                \ 'right' : [
-                \ {
-                \ 'key' : 'o',
-                \ 'desc' : 'step over',
-                \ 'func' : '',
-                \ 'cmd' : 'call vimspector#StepOver()',
-                \ 'exit' : 0,
-                \ },
-                \ {
-                \ 'key' : 'i',
-                \ 'desc' : 'step into functions',
-                \ 'func' : '',
-                \ 'cmd' : 'call vimspector#StepInto()',
-                \ 'exit' : 0,
-                \ },
-                \ {
-                \ 'key' : 'O',
-                \ 'desc' : 'step out of current function',
-                \ 'func' : '',
-                \ 'cmd' : 'call vimspector#StepOut()',
-                \ 'exit' : 0,
-                \ },
-                \ {
-                \ 'key' : 'k',
-                \ 'desc' : 'Terminates the debugger',
-                \ 'func' : '',
-                \ 'cmd' : 'call vimspector#Stop() | VimspectorReset',
-                \ 'exit' : 1,
-                \ },
-                \ ],
-                \ }
-          \ )
+
+    if g:spacevim_debugger_plugin ==# 'vimspector'
+      call state.defind_keys(
+                  \ {
+                  \ 'layout' : 'vertical split',
+                  \ 'left' : [
+                  \ {
+                  \ 'key' : 'c',
+                  \ 'desc' : 'Continue execution',
+                  \ 'func' : '',
+                  \ 'cmd' : 'call vimspector#Continue()',
+                  \ 'exit' : 0,
+                  \ },
+                  \ {
+                  \ 'key' : 'u',
+                  \ 'desc' : 'Move up a frame',
+                  \ 'func' : '',
+                  \ 'cmd' : 'call vimspector#UpFrame()',
+                  \ 'exit' : 0,
+                  \ },
+                  \ {
+                  \ 'key' : 'd',
+                  \ 'desc' : 'Move down a frame',
+                  \ 'func' : '',
+                  \ 'cmd' : 'call vimspector#DownFrame()',
+                  \ 'exit' : 0,
+                  \ },
+                  \ ],
+                  \ 'right' : [
+                  \ {
+                  \ 'key' : 'o',
+                  \ 'desc' : 'step over',
+                  \ 'func' : '',
+                  \ 'cmd' : 'call vimspector#StepOver()',
+                  \ 'exit' : 0,
+                  \ },
+                  \ {
+                  \ 'key' : 'i',
+                  \ 'desc' : 'step into functions',
+                  \ 'func' : '',
+                  \ 'cmd' : 'call vimspector#StepInto()',
+                  \ 'exit' : 0,
+                  \ },
+                  \ {
+                  \ 'key' : 'O',
+                  \ 'desc' : 'step out of current function',
+                  \ 'func' : '',
+                  \ 'cmd' : 'call vimspector#StepOut()',
+                  \ 'exit' : 0,
+                  \ },
+                  \ {
+                  \ 'key' : 'k',
+                  \ 'desc' : 'Terminates the debugger',
+                  \ 'func' : '',
+                  \ 'cmd' : 'call vimspector#Stop() | VimspectorReset',
+                  \ 'exit' : 1,
+                  \ },
+                  \ ],
+                  \ }
+            \ )
+    else
+      call state.defind_keys(
+                  \ {
+                  \ 'layout' : 'vertical split',
+                  \ 'left' : [
+                  \ {
+                  \ 'key' : 'o',
+                  \ 'desc' : 'step over',
+                  \ 'func' : '',
+                  \ 'cmd' : 'VBGstepOver',
+                  \ 'exit' : 0,
+                  \ },
+                  \ {
+                  \ 'key' : 'i',
+                  \ 'desc' : 'step into functions',
+                  \ 'func' : '',
+                  \ 'cmd' : 'VBGstepIn',
+                  \ 'exit' : 0,
+                  \ },
+                  \ ],
+                  \ 'right' : [
+                  \ {
+                  \ 'key' : 'O',
+                  \ 'desc' : 'step out of current function',
+                  \ 'func' : '',
+                  \ 'cmd' : 'VBGstepOut',
+                  \ 'exit' : 0,
+                  \ },
+                  \ {
+                  \ 'key' : 'k',
+                  \ 'desc' : 'Terminates the debugger',
+                  \ 'func' : '',
+                  \ 'cmd' : 'VBGkill',
+                  \ 'exit' : 1,
+                  \ },
+                  \ ],
+                  \ }
+            \ )
+    endif
     call state.open()
 endfunction
 
