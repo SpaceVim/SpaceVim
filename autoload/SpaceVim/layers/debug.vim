@@ -7,15 +7,16 @@
 "=============================================================================
 scriptencoding utf-8
 
+function! SpaceVim#layers#debug#set_variable(var) abort
+  let s:debugger_plugin = get(a:var, 'debugger_plugin', '')
+endfunction
+
 function! SpaceVim#layers#debug#plugins() abort
   let plugins = []
 
-  if !exists('g:spacevim_debugger_plugin')
-    let g:spacevim_debugger_plugin = ''
-  endif
   " @todo fork verbugger
 
-  if g:spacevim_debugger_plugin ==# 'vimspector'
+  if s:debugger_plugin ==# 'vimspector'
     call add(plugins,['puremourning/vimspector', {'merged' : 0}])
   else
     call add(plugins,['wsdjeg/vim-debug', {'merged' : 0}])
@@ -35,7 +36,7 @@ endfunction
 
 function! SpaceVim#layers#debug#config() abort
 
-  if g:spacevim_debugger_plugin ==# 'vimspector'
+  if s:debugger_plugin ==# 'vimspector'
     call SpaceVim#mapping#space#def('nnoremap', ['d', 'c'], 'call vimspector#Continue()', 'launch-or-continue-debugger', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['d', 'r'], 'call vimspector#Restart()', 'restart-debugger-with-the-same-config', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['d', 'x'], 'call vimspector#RunToCursor()', 'run-to-cursor', 1)
@@ -90,7 +91,7 @@ function! s:debug_transient_state() abort
     let state = SpaceVim#api#import('transient_state') 
     call state.set_title('Debug Transient State')
 
-    if g:spacevim_debugger_plugin ==# 'vimspector'
+    if s:debugger_plugin ==# 'vimspector'
       call state.defind_keys(
                   \ {
                   \ 'layout' : 'vertical split',
