@@ -7,6 +7,7 @@
 "=============================================================================
 
 let s:BUF = SpaceVim#api#import('vim#buffer')
+let s:TIME = SpaceVim#api#import('time')
 
 let s:file = expand('<sfile>:~')
 let s:funcbeginline =  expand('<slnum>') + 1
@@ -579,6 +580,17 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 'k'],
         \ 'call SpaceVim#plugins#help#describe_key()',
         \ 'describe-key-bindings', 1)
+  let s:lnum = expand('<slnum>') + 3
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 't'], 'call call('
+        \ . string(function('s:describe_current_time'))
+        \ . ', [])', ['describe-current-time',
+        \ [
+        \ 'SPC h d t is to display current time.',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#plugins#todo#list()', 'open-todo-manager', 1)
 endfunction
 
@@ -798,6 +810,11 @@ function! s:previous_buffer() abort
     echo 'no listed buffer'
     echohl None
   endtry
+endfunction
+
+function! s:describe_current_time() abort
+  let time = s:TIME.current_date() . ' ' . s:TIME.current_time()
+  echo time
 endfunction
 
 " function() wrapper
