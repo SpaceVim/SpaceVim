@@ -18,9 +18,10 @@ function! SpaceVim#plugins#load() abort
 
 endfunction
 function! s:load_plugins() abort
-  for group in SpaceVim#layers#get()
-    let g:_spacevim_plugin_layer = group
-    for plugin in s:getLayerPlugins(group)
+  for layer in SpaceVim#layers#get()
+    call SpaceVim#logger#debug('init ' . layer . ' layer plugins list.')
+    let g:_spacevim_plugin_layer = layer
+    for plugin in s:getLayerPlugins(layer)
       if len(plugin) == 2
         call SpaceVim#plugins#add(plugin[0], extend(plugin[1], {'overwrite' : 1}))
         if SpaceVim#plugins#tap(split(plugin[0], '/')[-1]) && get(plugin[1], 'loadconf', 0 )
@@ -33,7 +34,7 @@ function! s:load_plugins() abort
         call SpaceVim#plugins#add(plugin[0], {'overwrite' : 1})
       endif
     endfor
-    call s:loadLayerConfig(group)
+    call s:loadLayerConfig(layer)
   endfor
   unlet g:_spacevim_plugin_layer
   for plugin in g:spacevim_custom_plugins
@@ -55,6 +56,7 @@ function! s:getLayerPlugins(layer) abort
 endfunction
 
 function! s:loadLayerConfig(layer) abort
+  call SpaceVim#logger#debug('load ' . a:layer . ' layer config.')
   try
     call SpaceVim#layers#{a:layer}#config()
   catch /^Vim\%((\a\+)\)\=:E117/

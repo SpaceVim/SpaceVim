@@ -315,7 +315,9 @@ let g:spacevim_realtime_leader_guide   = 1
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-if (has('python3') 
+if has('nvim-0.5.0')
+  let g:spacevim_autocomplete_method = 'nvim-cmp'
+elseif (has('python3') 
       \ && (SpaceVim#util#haspy3lib('neovim')
       \ || SpaceVim#util#haspy3lib('pynvim'))) &&
       \ (has('nvim') || (has('patch-8.0.0027')))
@@ -1384,7 +1386,6 @@ function! SpaceVim#end() abort
   elseif g:spacevim_vim_help_language ==# 'ja'
     let &helplang = 'jp'
   endif
-  ""
   " generate tags for SpaceVim
   let help = fnamemodify(g:_spacevim_root_dir, ':p:h') . '/doc'
   try
@@ -1392,8 +1393,6 @@ function! SpaceVim#end() abort
   catch
     call SpaceVim#logger#warn('Failed to generate helptags for SpaceVim')
   endtry
-
-  ""
   " set language
   if !empty(g:spacevim_language)
     silent exec 'lan ' . g:spacevim_language

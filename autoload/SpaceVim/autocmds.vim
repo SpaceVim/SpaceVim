@@ -12,6 +12,7 @@ let s:VIM = SpaceVim#api#import('vim')
 
 "autocmds
 function! SpaceVim#autocmds#init() abort
+  call SpaceVim#logger#debug('init SpaceVim_core autocmd group')
   augroup SpaceVim_core
     au!
     autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
