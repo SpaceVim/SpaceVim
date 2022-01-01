@@ -31,16 +31,3 @@ function! s:suite.copy_directories() abort
   call s:assert.true(filereadable(temp2.'/foo'))
   call s:assert.true(filereadable(temp2.'/bar'))
 endfunction
-
-function! s:suite.args2string() abort
-  call s:assert.equals(
-        \ dein#install#_args2string_unix(['foo', 'bar']), "'foo' 'bar'")
-  call s:assert.equals(
-        \ dein#install#_args2string_windows([]), '')
-  call s:assert.equals(
-        \ dein#install#_args2string_windows(['foo']), 'foo')
-  call s:assert.equals(
-        \ dein#install#_args2string_windows(['foo', 'bar']), 'foo "bar"')
-  call s:assert.equals(
-        \ dein#install#_args2string_windows(['fo o', 'bar']), '"fo o" "bar"')
-endfunction
