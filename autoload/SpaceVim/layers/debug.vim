@@ -7,6 +7,35 @@
 "=============================================================================
 scriptencoding utf-8
 
+""
+" @section debug, layers-debug
+" @parentsection layers
+" `debug` layer debug workflow for SpaceVim. All of the functionality is based
+" on vebugger or vimspector.
+"
+" @subsection layer options
+"
+" 1. `debugger_plugin`: set the debug engine. It can be `vimspector` or
+" `vebugger`.
+"
+" @subsection key bindings
+" >
+"   Key binding     Description
+"   SPC d c	      	launch-or-continue-debugger
+"   SPC d r	      	restart-debugger-with-the-same-config
+"   SPC d x	      	run-to-cursor
+"   SPC d p	      	pause-debugger
+"   SPC d b	      	toggle-line-breakpoint
+"   SPC d B	      	clear-all-breakpoints
+"   SPC d o	      	step-over
+"   SPC d i	      	step-into-functions
+"   SPC d O	      	step-out-of-current-function
+"   SPC d u	      	move-up-a-frame
+"   SPC d d	      	move-down-a-frame
+"   SPC d k	        terminate-the-debugger
+"   SPC d e	        evaluate-cursor-symbol-or-selection
+" <
+
 function! SpaceVim#layers#debug#set_variable(var) abort
   let s:debugger_plugin = get(a:var, 'debugger_plugin', '')
 endfunction
