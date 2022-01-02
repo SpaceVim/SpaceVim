@@ -1449,6 +1449,9 @@ function! SpaceVim#end() abort
       set guicolors
     endif
   endif
+
+  call SpaceVim#autocmds#init()
+
   if g:spacevim_colorscheme !=# '' "{{{
     try
       exec 'set background=' . g:spacevim_colorscheme_bg
@@ -1469,10 +1472,6 @@ function! SpaceVim#end() abort
       let &guifont = g:spacevim_guifont
     endif
   endif
-
-
-
-  call SpaceVim#autocmds#init()
 
   if !has('nvim-0.2.0') && !has('nvim')
     " In old version of neovim, &guicursor do not support cursor shape
