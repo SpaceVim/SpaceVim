@@ -83,7 +83,7 @@ CONTENTS                                                   *SpaceVim-contents*
       63. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
-  5. Functions............................................|SpaceVim-functions|
+  5. Public functions.....................................|SpaceVim-functions|
   6. Layers..................................................|SpaceVim-layers|
       1. autocomplete...........................|SpaceVim-layers-autocomplete|
       2. chat...........................................|SpaceVim-layers-chat|
@@ -857,8 +857,7 @@ feature, just set it to empty string:
 CONFIGURATION                                                *SpaceVim-config*
 
 If you still want to use `~/.SpaceVim.d/init.vim` as configuration file,
-please take a look at the following options.
-
+please take a look at the following options add |SpaceVim-functions|
 
                                                           *g:spacevim_version*
 Version of SpaceVim , this value can not be changed.
@@ -1425,7 +1424,10 @@ COMMANDS                                                   *SpaceVim-commands*
   Switch to alternate file based on {type}.
 
 ==============================================================================
-FUNCTIONS                                                 *SpaceVim-functions*
+PUBLIC FUNCTIONS                                          *SpaceVim-functions*
+
+All of these functions can be used in `~/.SpaceVim.d/init.vim` and bootstrap
+functions.
 
 SpaceVim#api#import({name})                            *SpaceVim#api#import()*
   Import API base the given {name}, and return the API object. for all
@@ -1453,7 +1455,14 @@ SpaceVim#custom#LangSPCGroupName({ft}, {keys}, {name})
 
 SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
   Load the {layer} you want. For all the layers SpaceVim supports, see
-  |SpaceVim-layers|. the second argv is the layer variable.
+  |SpaceVim-layers|. the second argv is the layer variable. For example:
+>
+    call SpaceVim#layers#load('autocomplete',
+      \ {
+      \  'auto_completion_delay' : 50,
+      \ }
+      \ )
+<
 
 SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
   Set debug level of SpaceVim. Default is 1.
