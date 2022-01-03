@@ -10,9 +10,7 @@ lang: zh
 
 <a href='https://ko-fi.com/SpaceVim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
-| 微信                                                                   | 支付宝                                                                     |
-| ---------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| <img src="../../img/weixin.png" height="150" width="150">              | <img src="../../img/zhifubao.png" height="150" width="150">                |
+<img src="https://spacevim.org/img/weixin.png" height="300" width="300">
 
 ## 历史赞助
 
