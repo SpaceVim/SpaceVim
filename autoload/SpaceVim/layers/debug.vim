@@ -36,6 +36,8 @@ scriptencoding utf-8
 "   SPC d e	        evaluate-cursor-symbol-or-selection
 " <
 
+let s:debugger_plugin = 'vebugger'
+
 function! SpaceVim#layers#debug#set_variable(var) abort
   let s:debugger_plugin = get(a:var, 'debugger_plugin', '')
 endfunction
