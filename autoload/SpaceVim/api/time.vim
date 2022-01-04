@@ -31,7 +31,18 @@ function! s:self.current_date() abort
   return strftime('%a %b %d')
 endfunction
 
+" reltimefloat() is added in 7.4.1724
+if exists('*reltimefloat')
+  function! s:self.reltimefloat(reltime) abort
+    return reltimefloat(a:reltime)
+  endfunction
+else
+  function! s:self.reltimefloat(reltime) abort
+    return str2float(reltimestr(a:reltime))
+  endfunction
+endif
+
 
 function! SpaceVim#api#time#get() abort
-    return deepcopy(s:self)
+  return deepcopy(s:self)
 endfunction
