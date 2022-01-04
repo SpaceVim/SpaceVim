@@ -86,7 +86,7 @@ function! SpaceVim#layers#lang#vim#plugins() abort
       " https://github.com/maralla/completor.vim/issues/250
     endif
   endif
-  call add(plugins,['tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/helpful.vim', {'merged' : 0, 'on_cmd' : 'HelpfulVersion'}])
   return plugins
 endfunction
 
