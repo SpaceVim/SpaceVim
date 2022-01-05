@@ -1,7 +1,11 @@
 
-function! indent_blankline#Refresh()
+function! indent_blankline#Refresh(...)
     try
-        lua require("indent_blankline").refresh()
+        if a:0 > 0
+            call luaeval("require('indent_blankline').refresh(_A)", a:1)
+        else
+            lua require("indent_blankline").refresh()
+        end
     catch /E12/
         return
     catch
