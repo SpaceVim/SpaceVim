@@ -58,7 +58,7 @@ function! SpaceVim#layers#lang#html#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#html#config() abort
-  let g:emmet_leader_key = s:emmet_leader_key
+  let g:user_emmet_leader_key = s:emmet_leader_key
   augroup spacevim_lang_html
     autocmd!
     exe printf('autocmd FileType %s call s:install_emmet()', join(s:emmet_filetyps, ','))
