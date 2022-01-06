@@ -772,8 +772,8 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'main': 'SpaceVim#layers#core#statusline#ctrlp',
         \ 'prog': 'SpaceVim#layers#core#statusline#ctrlp_status',
         \ }
-  if filereadable(expand('~/.cache/SpaceVim/major_mode.json'))
-    let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/major_mode.json'), ''), ''))
+  if filereadable(expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'))
+    let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'), ''), ''))
     for key in keys(conf)
       if conf[key]
         " this function should be called silent.
@@ -788,7 +788,7 @@ function! s:update_conf() abort
   for key in keys(s:modes)
     call extend(conf, {key : (index(s:loaded_modes, key) > -1 ? 1 : 0)})
   endfor
-  call writefile([s:JSON.json_encode(conf)], expand('~/.cache/SpaceVim/major_mode.json'))
+  call writefile([s:JSON.json_encode(conf)], expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'))
 endfunction
 
 " Arguments:

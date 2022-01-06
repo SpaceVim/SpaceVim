@@ -39,7 +39,7 @@ let s:FILE = SpaceVim#api#import('file')
 
 let s:gtagslabel = ''
 let s:auto_update = 1
-let g:tags_cache_dir = '~/.cache/SpaceVim/tags/'
+let g:tags_cache_dir = g:spacevim_data_dir . 'SpaceVim/tags/'
 let g:gtags_open_list = 2
 
 function! SpaceVim#layers#gtags#plugins() abort
