@@ -51,7 +51,7 @@ let s:SYSTEM = SpaceVim#api#import('system')
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.9.0-dev'
+let g:spacevim_version = '1.9.0'
 lockvar g:spacevim_version
 
 ""
@@ -1884,11 +1884,19 @@ endfunction
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v1.7.0
+" Following HEAD: changes in master branch since last release v1.9.0
 "
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
 "
-" 2021-06-16: v1.4.0
+" 2021-06-16: v1.9.0
+"
+" https://spacevim.org/SpaceVim-release-v1.9.0/
+"
+" 2021-06-16: v1.8.0
+"
+" https://spacevim.org/SpaceVim-release-v1.8.0/
+"
+" 2021-06-16: v1.7.0
 "
 " https://spacevim.org/SpaceVim-release-v1.7.0/
 "
