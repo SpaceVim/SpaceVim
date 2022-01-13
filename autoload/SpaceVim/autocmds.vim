@@ -26,7 +26,6 @@ function! SpaceVim#autocmds#init() abort
       autocmd BufEnter,WinEnter * if &nu | set rnu   | endif
       autocmd BufLeave,WinLeave * if &nu | set nornu | endif
     endif
-    autocmd BufRead,BufNewFile *.pp setfiletype puppet
     if g:spacevim_enable_cursorline == 1
       autocmd BufEnter,WinEnter,InsertLeave * call s:enable_cursorline()
       autocmd BufLeave,WinLeave,InsertEnter * call s:disable_cursorline()
