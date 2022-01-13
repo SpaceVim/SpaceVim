@@ -1,6 +1,6 @@
 "=============================================================================
 " iedit.vim --- iedit mode for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -84,6 +84,9 @@ function! SpaceVim#plugins#iedit#start(...) abort
     let curpos = getcurpos()
     let argv = get(a:000, 0, '')
     let save_reg_k = @k
+    " the register " is cleared
+    " save the register context before run following command
+    let save_reg_default = @"
     let use_expr = 0
     if !empty(argv) && type(argv) == 4
       if has_key(argv, 'expr')
@@ -101,6 +104,7 @@ function! SpaceVim#plugins#iedit#start(...) abort
       let symbol = split(@k, "\n")[0]
     endif
     let @k = save_reg_k
+    let @" = save_reg_default
     call setpos('.', curpos)
     let begin = get(a:000, 1, 1)
     let end = get(a:000, 2, line('$'))
@@ -144,6 +148,8 @@ function! s:handle(mode, char) abort
     return s:handle_f_char(a:char)
   elseif a:mode ==# 'n'
     return s:handle_normal(a:char)
+  elseif a:mode ==# 'i' && s:Operator ==# 'r'
+    return s:handle_register(a:char)
   elseif a:mode ==# 'i'
     return s:handle_insert(a:char)
   endif
@@ -163,6 +169,22 @@ function! s:handle_f_char(char) abort
     endfor
   endif
   silent! call s:highlight_cursor()
+  return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
+endfunction
+
+function! s:handle_register(char) abort
+  let char = nr2char(a:char)
+  if char =~# '[a-zA-Z0-9"+:/]'
+  silent! call s:remove_cursor_highlight()
+    let s:Operator = ''
+    let reg = '@' . char
+    let paste = get(split(eval(reg), "\n"), 0, '')
+    for i in range(len(s:cursor_stack))
+      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . paste
+    endfor
+    call s:replace_symbol()
+    silent! call s:highlight_cursor()
+  endif
   return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
 endfunction
 
@@ -427,6 +449,9 @@ function! s:handle_insert(char) abort
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end,
             \ '^.', '', 'g')
     endfor
+  elseif a:char == 18 " <C-r>
+    let s:Operator = 'r'
+    call s:timeout()
   elseif a:char == 1 || a:char ==# "\<Home>"
     " Ctrl-a or <Home>
     let is_movement = 1

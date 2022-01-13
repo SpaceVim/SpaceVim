@@ -1,0 +1,7 @@
+Execute ( SpaceVim lua api: logger ):
+  if has('nvim-0.5.0') || has('+lua')
+    let cmp = SpaceVim#api#import('vim#compatible')
+    lua spacevim_logger = require('spacevim.api').import('logger')
+    lua spacevim_logger.set_name('TestLog')
+    AssertEqual cmp.luaeval('spacevim_logger.name'), 'TestLog'
+  endif

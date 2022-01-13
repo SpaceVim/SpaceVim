@@ -1,13 +1,13 @@
 "=============================================================================
 " java.vim --- SpaceVim lang#java layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#java, layer-lang-java
+" @section lang#java, layers-lang-java
 " @parentsection layers
 " This layer is for java development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -19,7 +19,7 @@
 "
 " 1. `format_on_save`: Enable/disabled code formatting when saving current file.
 "   Disabled by default.
-" 2. `java_fomatter_jar`: Set the full path of google's java formatter jar.
+" 2. `java_formatter_jar`: Set the full path of google's java formatter jar.
 " 3. `java_file_head`: The default file header for new java file.
 "   by default it is: 
 " >
@@ -105,16 +105,21 @@
 " or download google's formater jar from:
 " https://github.com/google/google-java-format
 "
-" and set 'g:spacevim_layer_lang_java_formatter' to the path of the jar.
+" and set the layer option `java_formatter_jar` to the path of the jar.
+" >
+"   [[layers]]
+"     name = 'lang#java'
+"     java_formatter_jar = 'path/to/google-java-format.jar'
+" <
 
 
 
-if exists('s:java_fomatter_jar')
+if exists('s:java_formatter_jar')
   finish
 endif
 
 
-let s:java_fomatter_jar = ''
+let s:java_formatter_jar = ''
 let s:format_on_save = 0
 let s:java_file_head = [
       \ '/**',
@@ -157,7 +162,7 @@ function! SpaceVim#layers#lang#java#config() abort
   let g:neoformat_enabled_java = get(g:, 'neoformat_enabled_java', ['googlefmt'])
   let g:neoformat_java_googlefmt = {
         \ 'exe': 'java',
-        \ 'args': ['-jar', s:java_fomatter_jar, '-'],
+        \ 'args': ['-jar', s:java_formatter_jar, '-'],
         \ 'stdin': 1,
         \ }
   try
@@ -183,15 +188,6 @@ endfunction
 function! s:language_specified_mappings() abort
 
   let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
-  " we have removed all insert key bindings which use leader as prefix.
-  " because when use leader in insert mode key bindings. vim will wait for
-  " next key after insert \ in insert mode.
-  " if g:spacevim_enable_insert_leader
-    " inoremap <silent> <buffer> <leader>UU <esc>bgUwea
-    " inoremap <silent> <buffer> <leader>uu <esc>bguwea
-    " inoremap <silent> <buffer> <leader>ua <esc>bgulea
-    " inoremap <silent> <buffer> <leader>Ua <esc>bgUlea
-  " endif
   imap <silent><buffer> <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
   imap <silent><buffer> <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
   imap <silent><buffer> <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
@@ -272,17 +268,17 @@ function! s:language_specified_mappings() abort
         \ 'Run maven package', 1)
 
   " Gradle
-  let g:_spacevim_mappings_space.l.g = {'name' : '+Gradle'}
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'B'], 'call call('
+  let g:_spacevim_mappings_space.l.a = {'name' : '+Gradle'}
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a', 'B'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle clean build"])',
         \ 'Run gradle clean build', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'b'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a', 'b'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle build"])',
         \ 'Run gradle build', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 't'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle test"])',
         \ 'Run gradle test', 1)
-  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','g', 'r'], 'call call('
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','a', 'r'], 'call call('
         \ . string(function('s:execCMD')) . ', ["gradle run"])',
         \ 'Run gradle run', 1)
 
@@ -334,6 +330,16 @@ function! SpaceVim#layers#lang#java#set_variable(var) abort
         \ 'java_interpreter',
         \ s:java_interpreter
         \ )
+  let s:java_formatter_jar = get(a:var,
+        \ 'java_formatter_jar',
+        \ s:java_formatter_jar)
 endfunction
 
 " vim:set et sw=2 cc=80:
+
+
+function! SpaceVim#layers#lang#java#health() abort
+  call SpaceVim#layers#lang#java#plugins()
+  call SpaceVim#layers#lang#java#config()
+  return 1
+endfunction

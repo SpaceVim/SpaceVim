@@ -16,7 +16,7 @@ description: "This layer provides support for writing LaTeX documents, including
 
 ## Description
 
-This layer is for LaTex development. [vimtex](https://github.com/lervag/vimtex) is incuded in this layer.
+This layer is for LaTex development. [vimtex](https://github.com/lervag/vimtex) is included in this layer.
 
 ## Features
 
@@ -27,7 +27,7 @@ This layer is for LaTex development. [vimtex](https://github.com/lervag/vimtex) 
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

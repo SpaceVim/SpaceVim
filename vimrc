@@ -1,6 +1,6 @@
 "=============================================================================
 " vimrc --- Entry file for vim
-" Copyright (c) 2016-2020 Shidong Wang & Contributors
+" Copyright (c) 2016-2021 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -22,6 +22,6 @@ if 1
             let g:_spacevim_if_lua = 1
         endif
     endif
-    execute 'source' fnamemodify(expand('<sfile>'), ':h').'/config/main.vim'
+    execute 'source' fnamemodify(expand('<sfile>'), ':h').'/main.vim'
 endif
 " vim:set et sw=2

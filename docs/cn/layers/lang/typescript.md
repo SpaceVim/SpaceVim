@@ -31,8 +31,14 @@ lang: zh
 
 同时，需要通过以下命令安装 TypeScript：
 
-```sh
+```
 npm install -g typescript
+```
+
+语法检查需要安装`eslint`命令：
+
+```
+npm install -g eslint
 ```
 
 ## 功能特性

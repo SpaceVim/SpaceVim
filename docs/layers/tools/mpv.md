@@ -29,7 +29,7 @@ To use this configuration layer, add it to your `~/.SpaceVim.d/init.toml`.
 
 ## Options
 
-- `musics_directory`: the directory of musics
+- `musics_directory`: the directory of musics. By default this option is `~/Music`.
 - `mpv_interpreter`: mpv executable path
 - `loop_mode`: loop mode, default is `random`
 

@@ -1,0 +1,17 @@
+Execute ( SpaceVim layer health: ):
+  for layer in SpaceVim#layers#list()
+    Log 'testing ' . layer . ' layer'
+    Assert SpaceVim#layers#{layer}#health(), 'function SpaceVim#layers#' . layer . '#health() return false' 
+  endfor
+
+Execute ( SpaceVim language mapping: ):
+  for layer in SpaceVim#layers#list()
+    Log 'testing ' . layer . ' language key bindings'
+    let LMAPF = SpaceVim#mapping#space#get_lang_mappings(get(split(layer, '#'), 1, ''))
+    if !empty(LMAPF)
+      call call(LMAPF, [])
+      " https://github.com/vim/vim/commit/f6f32c38bf3319144a84a01a154c8c91939e7acf
+    endif
+    unlet LMAPF
+  endfor
+

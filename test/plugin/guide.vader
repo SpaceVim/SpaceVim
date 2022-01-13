@@ -1,5 +1,5 @@
-Execute ( SpaceVim key binding guide ):
-  " let g:_spacevim_input_list = ['h', 'd', 'k', ' ', 'b', 'n']
-  " LeaderGuide " "
-  " AssertEqual &ft, 'HelpDescribe'
+Execute ( SpaceVim plugin: key bindings guide ):
+  let g:_spacevim_input_list = ['t', 't']
+  LeaderGuide " "
+  AssertEqual &ft, 'SpaceVimTabsManager'
 

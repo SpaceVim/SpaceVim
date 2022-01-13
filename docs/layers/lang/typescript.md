@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#typescript layer"
-description: "This layer is for TypeScript development, includding code completion, Syntax lint, and doc generation."
+description: "This layer is for TypeScript development, including code completion, Syntax lint, and doc generation."
 ---
 
 # [Available Layers](../../) >> lang#typescript
@@ -8,9 +8,8 @@ description: "This layer is for TypeScript development, includding code completi
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Install](#install)
-- [Features](#features)
-- [Layer configuration](#layer-configuration)
+- [Installation](#installation)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Code runner](#code-runner)
   - [Inferior REPL process](#inferior-repl-process)
@@ -19,36 +18,41 @@ description: "This layer is for TypeScript development, includding code completi
 
 ## Description
 
-This layer is for TypeScript development, includding code completion, Syntax lint and doc generation.
+This layer is for TypeScript development, including code completion, syntax lint and doc generation.
 
-## Install
+## Installation
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
   name = "lang#typescript"
 ```
 
-BTW, you need to install TypeScript via:
+If you are using neovim instead of vim, please use `npm` to install `neovim` lib:
 
-```sh
-npm install -g typescript
+```bash
+npm install -g neovim
 ```
 
-## Features
+then in SpaceVim run `:UpdateRemotePlugin`
 
-- auto-completion
-- syntax checking
-- viewing documentation
-- type-signature
-- goto definition
-- refernce finder
-- lsp support
+To generate doc of typescript file, you need to install [lehre](https://www.npmjs.com/package/lehre)
 
-## Layer configuration
+```
+yarn add -D lehre
+```
 
-`typescript_server_path`: set the path of the tsserver.
+Install `eslint` for syntax checking:
+
+```
+npm install -g eslint
+```
+
+## Layer options
+
+- `typescript_server_path`: set the path of the tsserver.
+- `lehre_path`: set the path of lehre
 
 ## Key bindings
 
@@ -66,7 +70,7 @@ npm install -g typescript
 
 ### Code runner
 
-To run TypeScript code in current buffer, you can press `SPC l r`. It will run without loss focus,
+To run TypeScript code in current buffer, you can press `SPC l r`. It will run without losing focus,
 and the result will be shown in a runner buffer.
 
 ### Inferior REPL process

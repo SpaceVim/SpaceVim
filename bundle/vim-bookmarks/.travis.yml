@@ -1,0 +1,4 @@
+language: ruby
+cache: bundler
+rvm: 2.0.0
+script: bundle exec rake ci

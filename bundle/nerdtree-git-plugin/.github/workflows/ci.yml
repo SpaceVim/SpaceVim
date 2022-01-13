@@ -1,0 +1,57 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  vint:
+    name: Vint
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Run vint with reviewdog
+      uses: reviewdog/action-vint@v1.0.1
+      with:
+        github_token: ${{ secrets.github_token }}
+        reporter: github-pr-review
+  test:
+    name: Unit tests
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        neovim: [true, false]
+        version: [stable, nightly]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Checkout themis.vim
+      uses: actions/checkout@v2
+      with:
+        repository: thinca/vim-themis
+        path: tmp/vim-themis
+    - name: Checkout nerdtree
+      uses: actions/checkout@v2
+      with:
+        repository: preservim/nerdtree
+        path: tmp/nerdtree
+    # Remove apt repos that are known to break from time to time
+    # See https://github.com/actions/virtual-environments/issues/323
+    - name: Remove broken apt repos [Ubuntu]
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        for apt_file in `grep -lr microsoft /etc/apt/sources.list.d/`; do sudo rm $apt_file; done
+    - name: Install Vim or Neovim
+      uses: rhysd/action-setup-vim@v1
+      id: vim
+      with:
+        neovim: ${{ matrix.neovim }}
+        version: ${{ matrix.version }}
+    - name: Run unit tests
+      env:
+        THEMIS_VIM: ${{ steps.vim.outputs.executable }}
+        THEMIS_PROFILE: profile.txt
+      run: |
+        echo $THEMIS_VIM
+        ./tmp/vim-themis/bin/themis --runtimepath ./tmp/nerdtree --reporter spec tests/
+    # TODO: coverage

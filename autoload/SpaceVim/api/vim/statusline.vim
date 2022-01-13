@@ -1,6 +1,6 @@
 "=============================================================================
 " statusline.vim --- SpaceVim statusline API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -25,7 +25,8 @@ let s:self.__bufnr = -1
 function! s:self.len(sec) abort
   let str = matchstr(a:sec, '%{.*}')
   if !empty(str)
-    return len(a:sec) - len(str) + len(eval(str[2:-2])) + 4
+    let pos = match(str, '}')
+    return len(a:sec) - len(str) + len(eval(str[2:pos-1])) + 4
   else
     return len(a:sec) + 4
   endif

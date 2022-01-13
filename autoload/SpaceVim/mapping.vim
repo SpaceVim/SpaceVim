@@ -1,6 +1,6 @@
 "=============================================================================
 " mapping.vim --- mapping functions in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -186,21 +186,32 @@ function! SpaceVim#mapping#close_current_buffer(...) abort
 
   let cmd_close_buf = 'bd' . f
   let index = index(buffers, bn)
-  if index != -1
-    if index == 0
-      if len(buffers) > 1
-        exe 'b' . buffers[1]
-        exe cmd_close_buf . bn
-      else
-        exe cmd_close_buf . bn
+  if index == 0
+    if len(buffers) > 1
+      exe 'b' . buffers[1]
+      exe cmd_close_buf . bn
+    else
+      exe cmd_close_buf . bn
+      if exists(':Startify') ==# 2
+        Startify
       endif
-    elseif index > 0
-      if index + 1 == len(buffers)
-        exe 'b' . buffers[index - 1]
-        exe cmd_close_buf . bn
-      else
-        exe 'b' . buffers[index + 1]
-        exe cmd_close_buf . bn
+    endif
+  elseif index > 0
+    if index + 1 == len(buffers)
+      exe 'b' . buffers[index - 1]
+      exe cmd_close_buf . bn
+    else
+      exe 'b' . buffers[index + 1]
+      exe cmd_close_buf . bn
+    endif
+  else
+    if len(buffers) >= 1
+      exe 'bp'
+      exe cmd_close_buf . bn
+    else
+      exe cmd_close_buf . bn
+      if exists(':Startify') ==# 2
+        Startify
       endif
     endif
   endif
@@ -211,8 +222,11 @@ function! SpaceVim#mapping#close_term_buffer(...) abort
   let abuf = str2nr(g:_spacevim_termclose_abuf)
   let index = index(buffers, abuf)
   if get(w:, 'shell_layer_win', 0) == 1
-    exe 'bd!' . abuf
-    " fuck the terminal windows
+    if bufexists(abuf)
+      exe 'bd!' . abuf
+    endif
+    " can not close the terminal windows
+    " close again
     if get(w:, 'shell_layer_win', 0) == 1
       close
     endif
@@ -290,9 +304,22 @@ endfunction
 fu! SpaceVim#mapping#SmartClose() abort
   let ignorewin = get(g:,'spacevim_smartcloseignorewin',[])
   let ignoreft = get(g:, 'spacevim_smartcloseignoreft',[])
-  " @bug vim winnr('$') do not include popup
+  " in vim winnr('$') do not include popup.
+  " so we need to check the popuplist
   " ref: https://github.com/vim/vim/issues/6474
-  let win_count = winnr('$')
+  if !has('nvim') 
+        \ && exists('*popup_list')
+        \ && exists('*popup_getoptions')
+        \ && exists('*popup_getpos')
+    let win_count =  len(
+          \ filter(
+          \ map(
+          \ filter(popup_list(), 'popup_getpos(v:val).visible'),
+          \ 'popup_getoptions(v:val).tabpage'),
+          \ 'v:val == -1 || v:val ==0'))
+  else
+    let win_count = winnr('$')
+  endif
   let num = win_count
   for i in range(1,win_count)
     if index(ignorewin , bufname(winbufnr(i))) != -1 || index(ignoreft, getbufvar(bufname(winbufnr(i)),'&filetype')) != -1

@@ -1,6 +1,6 @@
 "=============================================================================
 " default.vim --- default options in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -76,10 +76,15 @@ function! SpaceVim#default#options() abort
   set backup
   set undofile
   set undolevels=1000
-  let g:data_dir = g:spacevim_data_dir.'/SpaceVim/'
-  let g:backup_dir = g:data_dir . 'backup'
-  let g:swap_dir = g:data_dir . 'swap'
-  let g:undo_dir = g:data_dir . 'undofile'
+  " Neovim 0.5 changed the undofile format
+  if has('nvim-0.5.0')
+    let g:data_dir = g:spacevim_data_dir.'SpaceVim/'
+  else
+    let g:data_dir = g:spacevim_data_dir.'SpaceVim/old/'
+  endif
+  let g:backup_dir = g:data_dir . 'backup//'
+  let g:swap_dir = g:data_dir . 'swap//'
+  let g:undo_dir = g:data_dir . 'undofile//'
   let g:conf_dir = g:data_dir . 'conf'
   if finddir(g:data_dir) ==# ''
     silent call mkdir(g:data_dir, 'p', 0700)
@@ -142,6 +147,7 @@ endfunction
 "}}}
 
 function! SpaceVim#default#layers() abort
+  call SpaceVim#logger#debug('init default layer list.')
   call SpaceVim#layers#load('autocomplete')
   call SpaceVim#layers#load('checkers')
   call SpaceVim#layers#load('format')
@@ -154,10 +160,7 @@ function! SpaceVim#default#layers() abort
 endfunction
 
 function! SpaceVim#default#keyBindings() abort
-  if g:spacevim_enable_insert_leader
-    " inoremap <silent> <Leader><Tab> <C-r>=MyLeaderTabfunc()<CR>
-  endif
-
+  call SpaceVim#logger#debug('init default key bindings.')
   " yank and paste
   if has('unnamedplus')
     xnoremap <Leader>y "+y
@@ -231,12 +234,6 @@ function! SpaceVim#default#keyBindings() abort
   " Improve scroll, credits: https://github.com/Shougo
   nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
         \ 'zt' : (winline() == &scrolloff + 1) ? 'zb' : 'zz'
-  noremap <expr> <C-f> max([winheight(0) - 2, 1])
-        \ ."\<C-d>".(line('w$') >= line('$') ? "L" : "H")
-  noremap <expr> <C-b> max([winheight(0) - 2, 1])
-        \ ."\<C-u>".(line('w0') <= 1 ? "H" : "L")
-  noremap <expr> <C-e> (line("w$") >= line('$') ? "j" : "3\<C-e>")
-  noremap <expr> <C-y> (line("w0") <= 1         ? "k" : "3\<C-y>")
 
   " Select blocks after indenting
   xnoremap < <gv
@@ -279,8 +276,6 @@ function! SpaceVim#default#keyBindings() abort
   nnoremap <silent><M-5> :<C-u>call <SID>tobur(5)<CR>
   nnoremap <silent><M-Right> :<C-U>call <SID>tobur("next")<CR>
   nnoremap <silent><M-Left> :<C-U>call <SID>tobur("prev")<CR>
-
-  call SpaceVim#mapping#def('nnoremap <silent>','g=',':call SpaceVim#mapping#format()<cr>','format current buffer','call SpaceVim#mapping#format()')
 
 endfunction
 

@@ -1,6 +1,6 @@
 "=============================================================================
 " file.vim --- SpaceVim file API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -228,12 +228,16 @@ endfunction
 let s:file['updateFiles'] = function('s:updatefiles')
 
 " this function should return a unify path
+" CHANGED: This function will not run resolve
 " 1. the sep is /
 " 2. if it is a dir, end with /
 " 3. if a:path end with /, then return path also end with /
 function! s:unify_path(path, ...) abort
+  if empty(a:path)
+    return ''
+  endif
   let mod = a:0 > 0 ? a:1 : ':p'
-  let path = resolve(fnamemodify(a:path, mod . ':gs?[\\/]?/?'))
+  let path = fnamemodify(a:path, mod . ':gs?[\\/]?/?')
   if isdirectory(path) && path[-1:] !=# '/'
     return path . '/'
   elseif a:path[-1:] ==# '/' && path[-1:] !=# '/'
@@ -261,7 +265,7 @@ function! s:findfile(what, where, ...) abort
   let old_suffixesadd = &suffixesadd
   let &suffixesadd = ''
   let l:count = get(a:000, 0, 0)
-  
+
   if filereadable(a:where) && !isdirectory(a:where)
     let path = fnamemodify(a:where, ':h')
   else

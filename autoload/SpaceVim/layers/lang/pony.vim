@@ -1,13 +1,13 @@
 "=============================================================================
 " pony.vim --- SpaceVim lang#pony layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#pony, layer-lang-pony
+" @section lang#pony, layers-lang-pony
 " @parentsection layers
 " This layer is for pony development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -34,7 +34,7 @@ function! SpaceVim#layers#lang#pony#config() abort
   " @todo pony neomake support
   " in github, there is a plugin https://github.com/killerswan/pony-currycomb.vim which provides syntastic suppotr
   " checker layer configuration
-  if SpaceVim#layers#isLoaded('checkers') && g:spacevim_enable_neomake
+  if SpaceVim#layers#isLoaded('checkers') && g:spacevim_lint_engine ==# 'neomake'
     let g:neomake_pony_enabled_makers = ['ponyc']
     let g:neomake_pony_ponyc_maker =  {
           \ 'args': ['--pass=expr', '.'],
@@ -56,4 +56,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'execute current file', 1)
+endfunction
+
+function! SpaceVim#layers#lang#pony#health() abort
+  call SpaceVim#layers#lang#pony#plugins()
+  call SpaceVim#layers#lang#pony#config()
+  return 1
 endfunction

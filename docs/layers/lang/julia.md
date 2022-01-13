@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#julia layer"
-description: "This layer is for Julia development, provide autocompletion, syntax checking and code formatting"
+description: "This layer is for Julia development, provides autocompletion, syntax checking and code formatting"
 ---
 
 # [Available Layers](../../) >> lang#julia
@@ -32,7 +32,7 @@ SpaceVim also provides REPL support for Julia.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -55,4 +55,4 @@ Send code to inferior process commands:
 
 ### Running current script
 
-To running current script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To run the current script, you can press `SPC l r` to run the current file without losing focus, and the result will be shown in a runner buffer.

@@ -3,6 +3,27 @@
 "
 " public api
 "
+function! dein#toml#syntax() abort
+  if has('nvim') && exists(':TSEnableAll')
+    TSBufDisable highlight
+  endif
+
+  syntax clear
+
+  unlet! b:current_syntax
+  runtime! syntax/toml.vim
+
+  unlet! b:current_syntax
+  syntax include @tomlVim syntax/vim.vim
+
+  syntax region tomlVim matchgroup=tomlString
+        \ start=+\<\w*\s*=\s*'''+
+        \ end=+'''+ contains=@tomlVim keepend
+  syntax region tomlVim matchgroup=tomlString
+        \ start=+\<\w*\s*=\s*"""+
+        \ end=+"""+ contains=@tomlVim keepend
+endfunction
+
 function! dein#toml#parse(text) abort
   let input = {
   \   'text': a:text,
@@ -212,7 +233,7 @@ endfunction
 "
 function! s:_boolean(input) abort
   let s = s:_consume(a:input, '\%(true\|false\)')
-  return (s ==# 'true') ? 1 : 0
+  return (s ==# 'true') ? v:true : v:false
 endfunction
 
 "
@@ -325,9 +346,9 @@ function! s:_put_dict(dict, key, value) abort
 
   let ref = a:dict
   for key in keys[ : -2]
-    if has_key(ref, key) && type(ref[key]) == 4
+    if has_key(ref, key) && type(ref[key]) == v:t_dict
       let ref = ref[key]
-    elseif has_key(ref, key) && type(ref[key]) == 3
+    elseif has_key(ref, key) && type(ref[key]) == v:t_list
       let ref = ref[key][-1]
     else
       let ref[key] = {}
@@ -345,7 +366,7 @@ function! s:_put_array(dict, key, value) abort
   for key in keys[ : -2]
     let ref[key] = get(ref, key, {})
 
-    if type(ref[key]) == 3
+    if type(ref[key]) == v:t_list
       let ref = ref[key][-1]
     else
       let ref = ref[key]

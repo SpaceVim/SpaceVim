@@ -10,7 +10,7 @@ CONTENTS                                                      *gtags-contents*
 ==============================================================================
 INTRODUCTION                                                     *gtags-intro*
 
-The gtags.vim plug-in script integrates the GNU GLOBAL source code tag system
+The gtags.vim plugin script integrates the GNU GLOBAL source code tag system
 with Vim. About the details, see http://www.gnu.org/software/global/.
 
 ==============================================================================
@@ -20,13 +20,12 @@ CONFIGURATION                                                   *gtags-config*
 Set the global command name. If it is not set, will use $GTAGSGLOBAL, and if
 $GTAGSGLOBAL still is an empty string, then will use 'global'.
 
-                                                            *g:gtags_auto_map*
-Enable/Disable default mappings. By default it is disabled.
-
                                                            *g:gtags_open_list*
 This setting will open the |quickfix| list when adding entries. A value of 2
 will preserve the cursor position when the |quickfix| window is opened.
 Defaults to 2.
+
+NOTE: when there is only one entry. the quickfix list will not be opened.
 
                                                             *g:gtags_log_file*
 set the path to gtags log file.

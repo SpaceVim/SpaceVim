@@ -1,0 +1,21 @@
+name: Async SpaceVim wiki
+
+on: [push]
+
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        wikiLang: ["cn", "en"]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Detach ${{ matrix.wikiLang }}
+      env:
+        BOTSECRET: ${{ secrets.BOTSECRET }}
+        BOTSECRET_GITHUB: ${{ secrets.BOTSECRET_GITHUB }}
+      run: ./wiki/async.sh ${{ matrix.wikiLang }}
+    
+

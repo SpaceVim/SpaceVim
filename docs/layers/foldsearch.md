@@ -28,13 +28,11 @@ To use this layer, add it to your configuration file.
     name = "foldsearch"
 ```
 
-This layer requires at least one search tools: `ag`, `rg`, `ack`, `pt` and `grep`,
-Choose your favorite one.
+This layer requires at least one search tool: `ag`, `rg`, `ack`, `pt` and `grep`, Choose your favorite one.
 
 ## Options
 
-- foldsearch_highlight: a boolean option for enable/disabled highlight. Enabled by default. To disable
-  the highlight:
+- foldsearch_highlight: a boolean option to enable/disabled highlight. Enabled by default. To disable the highlight:
 
 ```toml
 [[layers]]

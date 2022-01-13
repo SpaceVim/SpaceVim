@@ -43,11 +43,11 @@ function! s:source.async_gather_candidates(args, context) abort
   let log = a:context.source__is_bang ?
         \   dein#install#_get_updates_log()
         \ : dein#install#_get_log()
-  let candidates = map(copy(log[len(a:context.source__log):]), "{
-        \ 'word' : (v:val =~# '^\\s*\\h\\w*://' ? ' -> diff URI' : v:val),
-        \ 'kind' : (v:val =~# '^\\s*\\h\\w*://' ? 'uri' : 'word'),
-        \ 'action__uri' : substitute(v:val, '^\\s\\+', '', ''),
-        \ }")
+  let candidates = map(copy(log[len(a:context.source__log):]), { _, val -> {
+        \ 'word' : (val =~# '^\s*\h\w*://' ? ' -> diff URI' : val),
+        \ 'kind' : (val =~# '^\s*\h\w*://' ? 'uri' : 'word'),
+        \ 'action__uri' : substitute(val, '^\s\+', '', ''),
+        \ } })
   let a:context.source__log = copy(log)
   return candidates
 endfunction

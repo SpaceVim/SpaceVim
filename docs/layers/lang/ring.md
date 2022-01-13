@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#ring layer"
-description: "This layer is for ring development, provide syntax checking, code runner and repl support for ring file."
+description: "This layer is for ring development, provides syntax checking, code runner and repl support for ring files."
 ---
 
 # [Available Layers](../../) >> lang#ring
@@ -23,7 +23,7 @@ This layer is for ring development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -32,7 +32,7 @@ To use this configuration layer, update custom configuration file with:
 
 ## Options
 
-This layer provides following layer options:
+This layer provides the following layer options:
 
 - `ring_repl`: specific of the `ringrepl.ring` file.
 
@@ -53,7 +53,7 @@ for example:
 
 ### Running current script
 
-To running a ring file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To run a ring file, you can press `SPC l r` to run the current file without losing focus, and the result will be shown in a runner buffer.
 
 ### Inferior REPL process
 

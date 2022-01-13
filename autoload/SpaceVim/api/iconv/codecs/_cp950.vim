@@ -5,7 +5,7 @@ function {s:ns}import()
   return s:lib
 endfunction
 
-let s:tablebase = {s:nsiconv}codecs#tablebase#import()
+let s:tablebase = SpaceVim#api#iconv#codecs#tablebase#import()
 
 let s:lib = {}
 

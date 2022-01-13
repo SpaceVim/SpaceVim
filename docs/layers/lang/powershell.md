@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#powershell layer"
-description: "This layer is for powershell development, provide syntax checking, code runner and repl support for powershell file."
+description: "This layer is for powershell development, provides syntax checking, code runner and repl support for powershell files."
 ---
 
 # [Available Layers](../../) >> lang#powershell
@@ -22,7 +22,7 @@ This layer is for powershell development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -37,7 +37,7 @@ To use this configuration layer, update custom configuration file with:
 
 ### Running current script
 
-To running a powershell file, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To run a powershell file, you can press `SPC l r` to run the current file without losing focus, and the result will be shown in a runner buffer.
 
 ### Inferior REPL process
 

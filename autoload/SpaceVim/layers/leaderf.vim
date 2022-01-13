@@ -1,23 +1,51 @@
 "=============================================================================
 " leaderf.vim --- leaderf layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section leaderf, layer-leaderf
+" @section leaderf, layers-leaderf
 " @parentsection layers
-" This layer provides fuzzy finder feature which is based on leaderf, and this
+" This layer provides fuzzy finder feature which is based on |leaderf|, and this
 " layer requires vim compiled with `+python` or `+python3`.
+" This layer is not loaded by default. To use this layer:
+" >
+"   [[layers]]
+"     name = 'leaderf'
+" <
+" @subsection Key bindings
+"
+" The following key bindings will be enabled when this layer is loaded:
+" >
+"   Key bindings      Description
+"   SPC p f / Ctrl-p  search files in current directory
+"   <Leader> f SPC    Fuzzy find menu:CustomKeyMaps
+"   <Leader> f e      Fuzzy find register
+"   <Leader> f h      Fuzzy find history/yank
+"   <Leader> f j      Fuzzy find jump, change
+"   <Leader> f l      Fuzzy find location list
+"   <Leader> f m      Fuzzy find output messages
+"   <Leader> f o      Fuzzy find functions
+"   <Leader> f t      Fuzzy find tags
+"   <Leader> f q      Fuzzy find quick fix
+"   <Leader> f r      Resumes Unite window
+" <
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#layers#leaderf#loadable() abort
 
-  return s:CMP.has('python') || s:CMP.has('python3')
+  return s:CMP.has('python3') || s:CMP.has('python')
 
+endfunction
+
+function! SpaceVim#layers#leaderf#health() abort
+  call SpaceVim#layers#leaderf#plugins()
+  call SpaceVim#layers#leaderf#config()
+  return 1
 endfunction
 
 function! SpaceVim#layers#leaderf#plugins() abort
@@ -50,13 +78,13 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let g:Lf_Extensions = get(g:, 'Lf_Extensions', {})
   let g:Lf_Extensions = {
-  \ 'neomru': {
-  \       'source': string(s:_function('s:neomru', 1))[10:-3],
-  \       'accept': string(s:_function('s:neomru_acp', 1))[10:-3],
-  \       'supports_name_only': 1,
-  \       'supports_multi': 0,
-  \ },
-  \}
+        \ 'neomru': {
+        \       'source': string(s:_function('s:neomru', 1))[10:-3],
+        \       'accept': string(s:_function('s:neomru_acp', 1))[10:-3],
+        \       'supports_name_only': 1,
+        \       'supports_multi': 0,
+        \ },
+        \}
 
   let g:Lf_Extensions.menu =
         \ {
@@ -200,7 +228,7 @@ function! SpaceVim#layers#leaderf#config() abort
         \ ]
         \ ],
         \ 1)
-  " @fixme SPC h SPC make vim flick
+  " without this key binding, SPC h SPC always open key binding guide.
   nmap <Space>h<Space> [SPC]h[SPC]
 
   let lnum = expand('<slnum>') + s:lnum - 1
@@ -227,7 +255,7 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Leaderf function',
-        \ ['jump to a definition in buffer',
+        \ ['jump-to-definition-in-buffer',
         \ [
         \ 'SPC j i is to jump to a definition in buffer',
         \ '',
@@ -239,7 +267,7 @@ function! SpaceVim#layers#leaderf#config() abort
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'call call('
         \ . string(s:_function('s:warp_denite')) . ', ["Leaderf --recall"])',
-        \ ['resume fuzzy finder windows',
+        \ ['resume-fuzzy-finder-windows',
         \ [
         \ 'SPC r l is to resume fuzzy finder windows',
         \ '',
@@ -250,7 +278,7 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Leaderf colorscheme',
-        \ ['fuzzy find colorschemes',
+        \ ['fuzzy-find-colorschemes',
         \ [
         \ 'SPC T s is to fuzzy find colorschemes',
         \ '',
@@ -261,9 +289,32 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'], 'exe "Leaderf file " . expand("%:p:h")',
-        \ ['Find files in the directory of the current buffer',
+        \ ['Find-files-in-buffer-directory',
         \ [
         \ '[SPC f f] is to find files in the directory of the current buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'F'], 'exe "Leaderf file --input=" . expand("<cword>") . " " . expand("%:p:h")',
+        \ ['Find-cursor-file-in-buffer-directory',
+        \ [
+        \ '[SPC f F] is to find cursor file in the directory of the current buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ],
+        \ 1)
+
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 'F'],
+        \ 'LeaderfFileCword',
+        \ ['find-cursor-file-in-project',
+        \ [
+        \ '[SPC p F] is to find cursor file in the root of the current project',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]
@@ -274,7 +325,7 @@ function! SpaceVim#layers#leaderf#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ 'Leaderf file --fullPath '
         \ . SpaceVim#plugins#projectmanager#current_root(),
-        \ ['find files in current project',
+        \ ['find-files-in-project',
         \ [
         \ '[SPC p f] is to find files in the root of the current project',
         \ '',
@@ -288,7 +339,7 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'LeaderfHelpCword',
-        \ ['get help with the symbol at point',
+        \ ['get-help-for-cursor-symbol',
         \ [
         \ '[SPC h i] is to get help with the symbol at point',
         \ '',
@@ -318,7 +369,7 @@ function! s:register_acp(line, args) abort
 endfunction
 
 function! s:neomru(...) abort
-    return neomru#_gather_file_candidates()
+  return neomru#_gather_file_candidates()
 endfunction
 
 function! s:neomru_acp(line, args) abort
@@ -378,9 +429,23 @@ function! s:neoyank_acp(line, args) abort
   call append(0, split(line, '\\n'))
 endfunction
 
+
+let s:menu_high = {}
+call extend(s:menu_high, {'Projects' :
+      \ {
+      \     'highlights_def' : {
+      \                           'Lf_menu_projects_time' : '<\d\+-\d\+-\d\+\s\d\+:\d\+:\d\+>'
+      \                        },
+      \     'highlights_cmd' : [
+      \                           'hi def link Lf_menu_projects_time Comment'
+      \                        ],
+      \ }
+      \ })
+
 function! s:menu(name) abort
+  let menu_name = a:name['--name'][0]
   let s:menu_action = {}
-  let menu = get(g:unite_source_menu_menus, a:name['--name'][0], {})
+  let menu = get(g:unite_source_menu_menus, menu_name, {})
   if has_key(menu, 'command_candidates')
     let rt = []
     for item in menu.command_candidates
@@ -391,6 +456,16 @@ function! s:menu(name) abort
   else
     return []
   endif
+endfunction
+
+function! SpaceVim#layers#leaderf#run_menu(name) abort
+  call s:run_menu(a:name)
+endfunction
+
+function! s:run_menu(name) abort
+  let g:Lf_Extensions.menu.highlights_def = get(get(s:menu_high, a:name, {}), 'highlights_def', {})
+  let g:Lf_Extensions.menu.highlights_cmd = get(get(s:menu_high, a:name, {}), 'highlights_cmd', {})
+  exe printf('Leaderf menu --name %s', a:name)
 endfunction
 
 function! s:accept(line, args) abort
@@ -465,7 +540,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf --recall<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.r = ['Leaderf --recall',
-        \ 'resume fuzzy finder window',
+        \ 'resume-fuzzy-finder-window',
         \ [
         \ '[Leader f r ] is to resume fuzzy finder window',
         \ '',
@@ -476,7 +551,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf register<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.e = ['Leaderf register',
-        \ 'fuzzy find registers',
+        \ 'fuzzy-find-registers',
         \ [
         \ '[Leader f r ] is to fuzzy find registers',
         \ '',
@@ -487,7 +562,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf neoyank<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.h = ['Leaderf neoyank',
-        \ 'fuzzy find yank history',
+        \ 'fuzzy-find-yank-history',
         \ [
         \ '[Leader f h] is to fuzzy find history and yank content',
         \ '',
@@ -498,7 +573,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf jumplist<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.j = ['Leaderf jumplist',
-        \ 'fuzzy find jump list',
+        \ 'fuzzy-find-jump-list',
         \ [
         \ '[Leader f j] is to fuzzy find jump list',
         \ '',
@@ -509,7 +584,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf locationlist<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.l = ['Leaderf locationlist',
-        \ 'fuzzy find location list',
+        \ 'fuzzy-find-location-list',
         \ [
         \ '[Leader f l] is to fuzzy find location list',
         \ '',
@@ -520,7 +595,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf message<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.m = ['Leaderf message',
-        \ 'fuzzy find message',
+        \ 'fuzzy-find-message',
         \ [
         \ '[Leader f m] is to fuzzy find message',
         \ '',
@@ -531,7 +606,7 @@ function! s:defind_fuzzy_finder() abort
         \ :<C-u>Leaderf quickfix<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.q = ['Leaderf quickfix',
-        \ 'fuzzy find quickfix list',
+        \ 'fuzzy-find-quickfix-list',
         \ [
         \ '[Leader f q] is to fuzzy find quickfix list',
         \ '',
@@ -541,7 +616,7 @@ function! s:defind_fuzzy_finder() abort
   nnoremap <silent> <Leader>fo  :<C-u>Leaderf function<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.o = ['Leaderf function',
-        \ 'fuzzy find outline',
+        \ 'fuzzy-find-outline',
         \ [
         \ '[Leader f o] is to fuzzy find outline',
         \ '',
@@ -551,26 +626,26 @@ function! s:defind_fuzzy_finder() abort
   nnoremap <silent> <Leader>ft :<C-u>Leaderf tag<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.t = ['Leaderf tag',
-        \ 'fuzzy find tags',
+        \ 'fuzzy-find-tags',
         \ [
         \ '[Leader f t] is to fuzzy find tags',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>f<Space> :<C-u>Leaderf menu --name CustomKeyMaps<CR>
+  nnoremap <silent> <Leader>f<Space> :<C-u>call <SID>run_menu('CustomKeyMaps')<CR>
   let g:_spacevim_mappings.f['[SPC]'] = ['Leaderf menu --name CustomKeyMaps',
-        \ 'fuzzy find custom key bindings',
+        \ 'fuzzy-find-custom-key-bindings',
         \ [
         \ '[Leader f SPC] is to fuzzy find custom key bindings',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
         \ ]
-  nnoremap <silent> <Leader>fp  :<C-u>Leaderf menu --name AddedPlugins<CR>
+  nnoremap <silent> <Leader>fp  :<C-u>call <SID>run_menu('AddedPlugins')<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   let g:_spacevim_mappings.f.p = ['Leaderf menu --name AddedPlugins',
-        \ 'fuzzy find vim packages',
+        \ 'fuzzy-find-vim-packages',
         \ [
         \ '[Leader f p] is to fuzzy find vim packages installed in SpaceVim',
         \ '',

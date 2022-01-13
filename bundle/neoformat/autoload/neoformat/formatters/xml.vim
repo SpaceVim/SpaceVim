@@ -13,6 +13,7 @@ function! neoformat#formatters#xml#tidy() abort
             \          '--tidy-mark no'
             \         ],
             \ 'stdin': 1,
+            \ 'try_node_exe': 1,
             \ }
 endfunction
 
@@ -23,8 +24,9 @@ endfunction
 function! neoformat#formatters#xml#prettier() abort
     return {
         \ 'exe': 'prettier',
-        \ 'args': ['--stdin', '--stdin-filepath', '"%:p"'],
+        \ 'args': ['--stdin-filepath', '"%:p"'],
         \ 'stdin': 1,
+        \ 'try_node_exe': 1,
         \ }
 endfunction
 

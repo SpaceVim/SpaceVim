@@ -1,13 +1,13 @@
 "=============================================================================
 " groovy.vim --- groovy support for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#groovy, layer-lang-groovy
+" @section lang#groovy, layers-lang-groovy
 " @parentsection layers
 " This layer is for groovy development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -35,7 +35,7 @@
 "
 
 
-function! SpaceVim#layers#lang#groovy#plugin() abort
+function! SpaceVim#layers#lang#groovy#plugins() abort
   let plugins = []
   call add(plugins, ['wsdjeg/groovy.vim', {'merged' : 0}])
   return plugins
@@ -75,3 +75,10 @@ endfunction
 " Groovy Version: 2.5.7 JVM: 9.0.4 Vendor: Oracle Corporation OS: Windows 7
 " in windows, use scoop to instal jdk 1.8
 " scoop install ojdkbuild8
+
+
+function! SpaceVim#layers#lang#groovy#health() abort
+  call SpaceVim#layers#lang#groovy#plugins()
+  call SpaceVim#layers#lang#groovy#config()
+  return 1
+endfunction

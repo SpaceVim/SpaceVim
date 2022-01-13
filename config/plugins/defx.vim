@@ -1,12 +1,16 @@
 "=============================================================================
 " defx.vim --- defx configuration
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
+
 
 let s:SYS = SpaceVim#api#import('system')
+let s:FILE = SpaceVim#api#import('file')
+let s:VCOP = SpaceVim#api#import('vim#compatible')
 
 if g:spacevim_filetree_direction ==# 'right'
   let s:direction = 'rightbelow'
@@ -15,11 +19,11 @@ else
 endif
 
 function! s:setcolum() abort
-  if g:spacevim_enable_vimfiler_filetypeicon && !g:spacevim_enable_vimfiler_gitstatus
+  if g:_spacevim_enable_filetree_filetypeicon && !g:_spacevim_enable_filetree_gitstatus
     return 'indent:icons:filename:type'
-  elseif !g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+  elseif !g:_spacevim_enable_filetree_filetypeicon && g:_spacevim_enable_filetree_gitstatus
     return 'indent:git:filename:type'
-  elseif g:spacevim_enable_vimfiler_filetypeicon && g:spacevim_enable_vimfiler_gitstatus
+  elseif g:_spacevim_enable_filetree_filetypeicon && g:_spacevim_enable_filetree_gitstatus
     return 'indent:git:icons:filename:type'
   else
     return 'mark:indent:icon:filename:type'
@@ -48,9 +52,9 @@ call defx#custom#column('icon', {
       \ 'root_icon': ' ',
       \ })
 
-	call defx#custom#column('filename', {
-	      \ 'max_width': -90,
-	      \ })
+call defx#custom#column('filename', {
+      \ 'max_width': -90,
+      \ })
 
 augroup vfinit
   au!
@@ -112,11 +116,11 @@ function! s:defx_init()
         \ defx#do_action('move')
   nnoremap <silent><buffer><expr> P
         \ defx#do_action('paste')
-  nnoremap <silent><buffer><expr> h defx#do_action('call', 'DefxSmartH')
-  nnoremap <silent><buffer><expr> <Left> defx#do_action('call', 'DefxSmartH')
-  nnoremap <silent><buffer><expr> l defx#do_action('call', 'DefxSmartL')
-  nnoremap <silent><buffer><expr> <Right> defx#do_action('call', 'DefxSmartL')
-  nnoremap <silent><buffer><expr> o defx#do_action('call', 'DefxSmartL')
+  nnoremap <silent><buffer><expr> h defx#do_action('call', g:defx_config_sid . 'DefxSmartH')
+  nnoremap <silent><buffer><expr> <Left> defx#do_action('call', g:defx_config_sid . 'DefxSmartH')
+  nnoremap <silent><buffer><expr> l defx#do_action('call', g:defx_config_sid . 'DefxSmartL')
+  nnoremap <silent><buffer><expr> <Right> defx#do_action('call', g:defx_config_sid . 'DefxSmartL')
+  nnoremap <silent><buffer><expr> o defx#do_action('call', g:defx_config_sid . 'DefxSmartL')
   nnoremap <silent><buffer><expr> <Cr>
         \ defx#is_directory() ?
         \ defx#do_action('open_directory') : defx#do_action('drop')
@@ -144,7 +148,9 @@ function! s:defx_init()
         \ defx#do_action('remove')
   nnoremap <silent><buffer><expr> r
         \ defx#do_action('rename')
-  nnoremap <silent><buffer><expr> yy defx#do_action('call', 'DefxYarkPath')
+  nnoremap <silent><buffer><expr> yy defx#do_action('call', g:defx_config_sid . 'DefxYarkPath')
+  nnoremap <silent><buffer><expr> yY defx#do_action('call', g:defx_config_sid . 'DefxCopyFile')
+  nnoremap <silent><buffer><expr> P defx#do_action('call', g:defx_config_sid . 'DefxPasteFile')
   nnoremap <silent><buffer><expr> .
         \ defx#do_action('toggle_ignored_files')
   nnoremap <silent><buffer><expr> <C-f>
@@ -163,14 +169,14 @@ function! s:defx_init()
   nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
   nnoremap <silent><buffer><expr> <C-Home>
         \ defx#do_action('cd', SpaceVim#plugins#projectmanager#current_root())
-	nnoremap <silent><buffer><expr> > defx#do_action('resize',
-	\ defx#get_context().winwidth + 10)
-	nnoremap <silent><buffer><expr> < defx#do_action('resize',
-	\ defx#get_context().winwidth - 10)
+  nnoremap <silent><buffer><expr> > defx#do_action('resize',
+        \ defx#get_context().winwidth + 10)
+  nnoremap <silent><buffer><expr> < defx#do_action('resize',
+        \ defx#get_context().winwidth - 10)
 endf
 
 " in this function we should vim-choosewin if possible
-function! DefxSmartL(_)
+function! s:DefxSmartL(_)
   if defx#is_directory()
     call defx#call_action('open_tree')
     normal! j
@@ -193,7 +199,7 @@ function! DefxSmartL(_)
   endif
 endfunction
 
-function! DefxSmartH(_)
+function! s:DefxSmartH(_)
   " if cursor line is first line, or in empty dir
   if line('.') ==# 1 || line('$') ==# 1
     return defx#call_action('cd', ['..'])
@@ -219,12 +225,94 @@ function! DefxSmartH(_)
   call defx#call_action('close_tree')
 endfunction
 
-function! DefxYarkPath(_) abort
+function! s:DefxYarkPath(_) abort
   let candidate = defx#get_candidate()
   let @+ = candidate['action__path']
-  echo 'yanked: ' . @+
+  echo 'yanked path: ' . @+
+endfunction
+
+
+let s:copyed_file_path = ''
+
+function! s:DefxCopyFile(_) abort
+  if !executable('xclip-copyfile') &&  !s:SYS.isWindows
+    echohl WarningMsg
+    echo 'you need to have xclip-copyfile in your PATH'
+    echohl NONE
+    return
+  endif
+  let candidate = defx#get_candidate()
+  let filename = candidate['action__path']
+
+  if executable('xclip-copyfile')
+    call s:VCOP.systemlist(['xclip-copyfile', filename])
+    if v:shell_error
+      echohl WarningMsg
+      echo 'failed to copy file!'
+      echohl NONE
+    else
+      echo 'Yanked:' . filename
+    endif
+  elseif s:SYS.isWindows
+    let s:copyed_file_path = filename
+    echo 'Yanked:' . filename
+  endif
+endfunction
+
+function! s:DefxPasteFile(_) abort
+  if !executable('xclip-pastefile') && !s:SYS.isWindows
+    echohl WarningMsg
+    echo 'you need to have xclip-copyfile in your PATH'
+    echohl NONE
+    return
+  endif
+  let candidate = defx#get_candidate()
+  let path = candidate['action__path']
+  if !isdirectory(path)
+    let path = fnamemodify(path, ':p:h')
+  endif
+
+  " If you have xclip-pastefile in your PATH.
+  " this command will be run on action directory
+  " support paste file which is copied outside of vim.
+  if executable('xclip-pastefile')
+    let old_wd = getcwd()
+    if old_wd == path
+      call s:VCOP.systemlist(['xclip-pastefile'])
+    else
+      noautocmd exe 'cd' fnameescape(path)
+      call s:VCOP.systemlist(['xclip-pastefile'])
+      noautocmd exe 'cd' fnameescape(old_wd)
+    endif
+    return
+  endif
+
+  if s:SYS.isWindows && !empty(s:copyed_file_path)
+    " in windows, use copy command for paste file.
+    let destination = path . s:FILE.separator . fnamemodify(s:copyed_file_path, ':t')
+    let cmd = 'cmd /c copy ' . shellescape(s:copyed_file_path) . ' ' . shellescape(destination)
+    call s:VCOP.systemlist(cmd)
+  elseif !s:SYS.isWindows && !empty(s:copyed_file_path)
+    " in Linux or MacOS, use cp command for paste file.
+    let destination = path . s:FILE.separator . fnamemodify(s:copyed_file_path, ':t')
+    let cmd = 'cp -r ' . shellescape(s:copyed_file_path) . ' ' . shellescape(destination)
+    call s:VCOP.systemlist(cmd)
+  endif
+  if v:shell_error
+    echohl WarningMsg
+    echo 'failed to paste file!'
+    echohl NONE
+  else
+    echo 'Pasted:' . destination
+  endif
 endfunction
 
 function! s:trim_right(str, trim)
   return substitute(a:str, printf('%s$', a:trim), '', 'g')
 endfunction
+
+function! s:SID_PREFIX() abort
+  return matchstr(expand('<sfile>'),
+        \ '<SNR>\d\+_\zeSID_PREFIX$')
+endfunction
+let g:defx_config_sid = s:SID_PREFIX()

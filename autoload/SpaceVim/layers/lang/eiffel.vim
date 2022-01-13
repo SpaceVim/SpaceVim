@@ -1,13 +1,13 @@
 "=============================================================================
 " eiffel.vim --- Eiffel language layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#eiffel, layer-lang-eiffel
+" @section lang#eiffel, layers-lang-eiffel
 " @parentsection layers
 " This layer is for lang#eiffel development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -20,7 +20,7 @@
 " >
 "   Key             Function
 "   -----------------------------
-"   SPC l          
+"   SPC l c         run eclean          
 " <
 "
 
@@ -39,4 +39,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c'],
         \ 'call SpaceVim#plugins#runner#run_task({"command" : "eclean", "args" : ["."], "isBackground" : 1})',
         \ 'run-eclean', 1)
+endfunction
+
+function! SpaceVim#layers#lang#eiffel#health() abort
+  call SpaceVim#layers#lang#eiffel#plugins()
+  call SpaceVim#layers#lang#eiffel#config()
+  return 1
 endfunction

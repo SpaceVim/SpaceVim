@@ -286,10 +286,11 @@ autocommand BufEnter <buffer>
 ## Key notations
 
 - Use capital case and angle brackets for keyboard buttons: `<Down>`, `<Up>`.
-- Use uppercase for custom leader: `SPC`, `WIN`, `UNITE`, `DENITE`.
+- Use uppercase for custom leader: `SPC`, `WIN`.
 - Use space as delimiter for key sequences: `SPC t w`, `<Leader> f o`.
 - Use `/` for alternative sequences: `<Tab>` / `Ctrl-n`.
 - Use `Ctrl-e` rather than `<C-e>` in documentation.
+- Use `kebab-case` for key binding short description
 
 ## Vimscript Style
 

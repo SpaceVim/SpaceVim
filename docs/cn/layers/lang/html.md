@@ -11,6 +11,7 @@ lang: zh
 - [模块描述](#模块描述)
 - [启用模块](#启用模块)
   - [安装语言服务器](#安装语言服务器)
+- [模块选项](#模块选项)
 - [功能特性](#功能特性)
 - [快捷键](#快捷键)
 
@@ -37,6 +38,18 @@ lang: zh
 npm install --global vscode-html-languageserver-bin
 ```
 
+## 模块选项
+
+- `emmet_leader_key`: 设置插件 emmet 的默认前置键。
+- `emmet_filetyps`：设置启用 emmet 插件的文件类型列表。
+
+  ```toml
+  [layers]
+    name = "lang#html"
+    emmet_leader_key = "<C-e>"
+    emmet_filetyps = ['html']
+  ```
+
 ## 功能特性
 
 - 通过[neosnippet](https://github.com/Shougo/neosnippet.vim/) 和 [emmet-vim](https://github.com/mattn/emmet-vim) 自动生成 HTML、CSS 代码块
@@ -48,5 +61,5 @@ npm install --global vscode-html-languageserver-bin
 ## 快捷键
 
 | 快捷键   | 功能描述     |
-| -------  | ------------ |
+| -------- | ------------ |
 | `Ctrl-e` | emmet 前缀键 |

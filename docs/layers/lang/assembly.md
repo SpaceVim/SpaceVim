@@ -23,7 +23,7 @@ This layer adds Assembly language support to SpaceVim.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
