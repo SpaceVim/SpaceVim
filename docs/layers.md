@@ -26,15 +26,15 @@ keeping them from having to think about what packages to install.
 
 By default SpaceVim enables these layers:
 
-- `autocomplete`
-- `checkers`
-- `format`
-- `edit`
-- `ui`
-- `core`
-- `core#banner`
-- `core#statusline`
-- `core#tabline`
+- [autocomplete](autocomplete/)
+- [checkers](checkers/)
+- [format](format/)
+- [edit](edit/)
+- [ui](ui/)
+- [core](core/)
+- [core#banner](core/banner/)
+- [core#statusline](core/statusline/)
+- [core#tabline](core/tabline/)
 
 To enable a specific layer you need to edit SpaceVim's custom configuration files.
 The key binding for opening the configuration files is `SPC f v d`.
@@ -85,8 +85,6 @@ Some layers are enabled by default. The following example shows how to disable `
 | [floobits](floobits/)                                 | This layer adds support for the peer programming tool floobits to SpaceVim.                                                                                         |
 | [foldsearch](foldsearch/)                             | This layer provides functions that fold away lines that don't match a specific search pattern.                                                                      |
 | [format](format/)                                     | Code formatting layer for SpaceVim, includes a variety of formatters for many filetypes                                                                             |
-| [fzf](fzf/)                                           | This layer provides a heavily customized fzf centric workflow                                                                                                       |
-| [git](git/)                                           | This layer adds extensive support for git                                                                                                                           |
 | [github](github/)                                     | This layer provides GitHub integration for SpaceVim                                                                                                                 |
 | [gtags](gtags/)                                       | This layer provides gtags manager for project                                                                                                                       |
 | [japanese](japanese/)                                 | Layer for japanese users, includes japanese docs and runtime messages                                                                                               |
@@ -145,10 +143,6 @@ Some layers are enabled by default. The following example shows how to disable `
 | [lang#moonscript](lang/moonscript/)                   | This layer is for moonscript development, provides syntax checking, code runner and repl support for moonscript files.                                              |
 | [lang#nim](lang/nim/)                                 | This layer adds Nim language support to SpaceVim                                                                                                                    |
 | [lang#nix](lang/nix/)                                 | This layer adds Nix language support to SpaceVim.                                                                                                                   |
-| [lang#ocaml](lang/ocaml/)                             | This layer is for OCaml development, provides autocompletion, syntax checking, and code formatting for OCaml files.                                                 |
-| [lang#pact](lang/pact/)                               | This layer is for pact development, provides syntax checking, code runner and repl support for pact files.                                                          |
-| [lang#pascal](lang/pascal/)                           | This layer is for pascal development, provides syntax highlighting, and code runner for pascal files.                                                               |
-| [lang#perl](lang/perl/)                               | This layer is for Perl development, provides autocompletion, syntax checking, and code formatting for Perl files.                                                   |
 | [lang#php](lang/php/)                                 | PHP language support, including code completion, syntax lint and code runner                                                                                        |
 | [lang#plantuml](lang/plantuml/)                       | This layer is for PlantUML development, provides syntax highlighting for PlantUML files.                                                                            |
 | [lang#pony](lang/pony/)                               | This layer is for pony development, provides syntax checking, code runner and repl support for pony files.                                                          |
