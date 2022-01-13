@@ -1,6 +1,6 @@
 "=============================================================================
 " tasks.vim --- tasks support
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -20,13 +20,14 @@ let s:FILE = SpaceVim#api#import('file')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:SYS = SpaceVim#api#import('system')
 let s:MENU = SpaceVim#api#import('cmdlinemenu')
+let s:VIM = SpaceVim#api#import('vim')
+let s:BUF = SpaceVim#api#import('vim#buffer')
 
 " task object
 
-let s:self = {}
 let s:select_task = {}
-let s:conf = []
-let s:bufnr = -1
+let s:task_config = []
+let s:task_viewer_bufnr = -1
 let s:variables = {}
 let s:providers = []
 
@@ -42,7 +43,7 @@ function! s:load() abort
   if filereadable('.SpaceVim.d/tasks.toml')
     let local_conf = s:TOML.parse_file('.SpaceVim.d/tasks.toml')
   endif
-  let s:conf = extend(global_conf, local_conf)
+  let s:task_config = extend(global_conf, local_conf)
 endfunction
 
 function! s:init_variables() abort
@@ -61,17 +62,17 @@ function! s:init_variables() abort
 endfunction
 
 function! s:select_task(taskName) abort
-  let s:select_task = s:conf[a:taskName]
+  let s:select_task = s:task_config[a:taskName]
 endfunction
 
 function! s:pick() abort
   let s:select_task = {}
   let ques = []
-  for key in keys(s:conf)
-    if has_key(s:conf[key], 'isGlobal') && s:conf[key].isGlobal
+  for key in keys(s:task_config)
+    if has_key(s:task_config[key], 'isGlobal') && s:task_config[key].isGlobal
       let task_name = key . '(global)'
-    elseif has_key(s:conf[key], 'isDetected') && s:conf[key].isDetected
-      let task_name = s:conf[key].detectedName . key . '(detected)'
+    elseif has_key(s:task_config[key], 'isDetected') && s:task_config[key].isDetected
+      let task_name = s:task_config[key].detectedName . key . '(detected)'
     else
       let task_name = key
     endif
@@ -89,13 +90,8 @@ function! s:replace_variables(str) abort
   return str
 endfunction
 
-function! SpaceVim#plugins#tasks#get()
-  call s:load()
-  for Provider in s:providers
-    call extend(s:conf, call(Provider, []))
-  endfor
-  call s:init_variables()
-  let task = s:pick()
+function! s:expand_task(task) abort
+  let task = a:task
   if has_key(task, 'windows') && s:SYS.isWindows
     let task = task.windows
   elseif has_key(task, 'osx') && s:SYS.isOSX
@@ -106,6 +102,9 @@ function! SpaceVim#plugins#tasks#get()
   if has_key(task, 'command') && type(task.command) ==# 1
     let task.command = s:replace_variables(task.command)
   endif
+  if has_key(task, 'args') && s:VIM.is_list(task.args)
+    let task.args = map(task.args, 's:replace_variables(v:val)')
+  endif
   if has_key(task, 'options') && type(task.options) ==# 4
     if has_key(task.options, 'cwd') && type(task.options.cwd) ==# 1
       let task.options.cwd = s:replace_variables(task.options.cwd)
@@ -114,21 +113,33 @@ function! SpaceVim#plugins#tasks#get()
   return task
 endfunction
 
+function! SpaceVim#plugins#tasks#get() abort
+  call s:load()
+  for Provider in s:providers
+    call extend(s:task_config, call(Provider, []))
+  endfor
+  call s:init_variables()
+  let task = s:expand_task(s:pick())
+  return task
+endfunction
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " list all the tasks
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! SpaceVim#plugins#tasks#list()
+function! SpaceVim#plugins#tasks#list() abort
   call s:load()
+  for Provider in s:providers
+    call extend(s:task_config, call(Provider, []))
+  endfor
   call s:init_variables()
   call s:open_tasks_list_win()
-
-
+  call s:update_tasks_win_context()
 endfunction
 
 
-function! SpaceVim#plugins#tasks#complete(...)
+function! SpaceVim#plugins#tasks#complete(...) abort
 
 
 
@@ -136,8 +147,8 @@ endfunction
 
 
 function! s:open_tasks_list_win() abort
-  if s:bufnr != 0 && bufexists(s:bufnr)
-    exe 'bd ' . s:bufnr
+  if s:task_viewer_bufnr != 0 && bufexists(s:task_viewer_bufnr)
+    exe 'bd ' . s:task_viewer_bufnr
   endif
   botright split __tasks_info__
   let lines = &lines * 30 / 100
@@ -152,10 +163,45 @@ function! s:open_tasks_list_win() abort
         \ winfixheight
         \ nomodifiable
   set filetype=SpaceVimTasksInfo
-  let s:bufnr = bufnr('%')
+  let s:task_viewer_bufnr = bufnr('%')
+  nnoremap <buffer><silent> <Enter> :call <SID>open_task()<cr>
 endfunction
 
-function! SpaceVim#plugins#tasks#edit(...)
+function! s:open_task() abort
+  let line = getline('.')
+  if line =~# '^\[.*\]'
+    let task = matchstr(line, '^\[.*\]')[1:-2]
+    if line =~# '^\[.*\]\s\+detected'
+      let task = split(task, ':')[1]
+    endif
+    let task = s:expand_task(s:task_config[task])
+    call SpaceVim#mapping#SmartClose()
+    call SpaceVim#plugins#runner#run_task(task)
+  else
+    " not on a task
+  endif
+endfunction
+
+function! s:update_tasks_win_context() abort
+  let lines = ['Task                    Type          Description']
+  for task in keys(s:task_config)
+    if has_key(s:task_config[task], 'isGlobal') && s:task_config[task].isGlobal ==# 1
+      let line = '[' . task . ']' . repeat(' ', 22 - strlen(task))
+      let line .= 'global        '
+    elseif has_key(s:task_config[task], 'isDetected') && s:task_config[task].isDetected ==# 1
+      let line = '[' . s:task_config[task].detectedName . task . ']' . repeat(' ', 22 - strlen(task . s:task_config[task].detectedName))
+      let line .= 'detected      '
+    else
+      let line = '[' . task . ']' . repeat(' ', 22 - strlen(task))
+      let line .= 'local         '
+    endif
+    let line .= get(s:task_config[task], 'description', s:task_config[task].command . ' ' .  join(get(s:task_config[task], 'args', []), ' '))
+    call add(lines, line)
+  endfor
+  call s:BUF.buf_set_lines(s:task_viewer_bufnr, 0, -1, 0, sort(lines))
+endfunction
+
+function! SpaceVim#plugins#tasks#edit(...) abort
   if get(a:000, 0, 0)
     exe 'e ~/.SpaceVim.d/tasks.toml'
   else
@@ -179,8 +225,8 @@ function! s:detect_npm_tasks() abort
   return detect_task
 endfunction
 
-function! SpaceVim#plugins#tasks#reg_provider(provider)
+function! SpaceVim#plugins#tasks#reg_provider(provider) abort
   call add(s:providers, a:provider)
 endfunction
 
-call SpaceVim#plugins#tasks#reg_provider(funcref('s:detect_npm_tasks'))
+call SpaceVim#plugins#tasks#reg_provider(function('s:detect_npm_tasks'))

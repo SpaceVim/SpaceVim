@@ -6,7 +6,7 @@ let g:Lf_StlColorscheme = get(g:, 'spacevim_colorscheme', 'default')
 " disable default mru, and use neomru by default
 augroup LeaderF_Mru
   autocmd!
-  autocmd FileType leaderf setlocal nonumber
+  autocmd FileType leaderf setlocal nonumber nowrap
 augroup END
 
 " change the leaderf Colorscheme automatically
@@ -35,5 +35,7 @@ let g:Lf_CommandMap = {
       \ '<C-]>' : ['<C-V>'],
       \ '<C-F>' : ['<C-D>'],
       \ '<Tab>' : ['<Esc>'],
+      \ '<Esc>' : ['<C-G>'],
       \ }
 let g:Lf_HideHelp = 1
+let g:indentLine_bufTypeExclude = ['help', 'terminal']

@@ -1,25 +1,27 @@
 "=============================================================================
 " shell.vim --- SpaceVim shell layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section shell, layer-shell
+" @section shell, layers-shell
 " @parentsection layers
 " SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for
 " vim. For more info, read |deol| and |vimshell|.
 "
-" @subsection variable
+" @subsection layer options
 "
-" default_shell: config the default shell to be used by shell layer.
+" 1. `default_shell`: config the default shell to be used by shell layer.
 "
 " @subsection key bindings
 " >
-"   SPC '   Open or switch to terminal windows
-"   q       Hide terminal windows in normal mode
+"   Key bindings    Description
+"   SPC '           Open or switch to terminal windows
+"   q               Hide terminal windows in normal mode
+"   ctrl-`          Hide terminal window in terminal mode
 " <
 
 let s:SYSTEM = SpaceVim#api#import('system')
@@ -63,7 +65,7 @@ function! SpaceVim#layers#shell#config() abort
     exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
     exe 'tnoremap <silent><M-Left>  <C-\><C-n>:<C-u>bprev<CR>'
     exe 'tnoremap <silent><M-Right>  <C-\><C-n>:<C-u>bnext<CR>'
-    exe 'tnoremap <silent><esc>     <C-\><C-n>'
+    exe 'tnoremap <silent><C-`>     <C-\><C-n>:q<Cr>'
     if s:SYSTEM.isWindows
       exe 'tnoremap <expr><silent><C-d>  SpaceVim#layers#shell#terminal()'
       exe 'tnoremap <expr><silent><C-u>  SpaceVim#layers#shell#ctrl_u()'
@@ -71,7 +73,18 @@ function! SpaceVim#layers#shell#config() abort
       exe 'tnoremap <expr><silent><C-r>  SpaceVim#layers#shell#ctrl_r()'
     endif
   endif
-  " in window gvim, use <C-d> to close terminal buffer
+
+  if has('nvim')
+    augroup spacevim_layer_shell
+      au!
+      au WinEnter,BufWinEnter term://* startinsert
+      if has('timers')
+        au TermClose * let g:_spacevim_termclose_abuf = expand('<abuf>') | call timer_start(5, 'SpaceVim#mapping#close_term_buffer')
+      else
+        au TermClose * let g:_spacevim_termclose_abuf = expand('<abuf>') | call SpaceVim#mapping#close_term_buffer()
+      endif
+    augroup END
+  endif
 
 endfunction
 
@@ -81,7 +94,7 @@ func! SpaceVim#layers#shell#terminal() abort
   if isdirectory(line[:-2])
     return "exit\<CR>"
   endif
-  return ""
+  return ''
 endf
 func! SpaceVim#layers#shell#ctrl_u() abort
   let line = getline('.')
@@ -147,7 +160,7 @@ function! s:open_default_shell(open_with_file_cwd) abort
     if getwinvar(window, '&buftype') ==# 'terminal'
       exe window .  'wincmd w'
       if getbufvar(winbufnr(window), '_spacevim_shell_cwd') ==# l:path
-        " fuck gvim bug, startinsert do not work in gvim
+        " startinsert do not work in gvim
         if has('nvim')
           startinsert
         else
@@ -163,7 +176,7 @@ function! s:open_default_shell(open_with_file_cwd) abort
     endif
   endfor
 
-  if s:default_position == 'float' && exists('*nvim_open_win')
+  if s:default_position ==# 'float' && exists('*nvim_open_win')
     let s:term_win_id =  s:FLOAT.open_win(bufnr('%'), v:true,
           \ {
           \ 'relative': 'editor',
@@ -271,4 +284,10 @@ function! SpaceVim#layers#shell#close_terminal() abort
       exe 'silent bd!' . terminal_bufnr
     endif
   endfor
+endfunction
+
+function! SpaceVim#layers#shell#health() abort
+  call SpaceVim#layers#shell#plugins()
+  call SpaceVim#layers#shell#config()
+  return 1
 endfunction

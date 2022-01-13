@@ -34,7 +34,7 @@ NOTE: if you are using windows, you need to add this dir to your \$PATH.
 
 `%HOME%\AppData\Roaming\Python\Python37\Scripts`
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

@@ -6,7 +6,7 @@ endfunction
 
 function! neomake#makers#ft#vue#eslint() abort
     let maker = neomake#makers#ft#javascript#eslint()
-    call extend(get(maker, 'args', []), ['--plugin', 'html'])
+    call extend(get(maker, 'args', []), ['--plugin', 'vue'])
     return maker
 endfunction
 
@@ -16,13 +16,13 @@ endfunction
 
 function! neomake#makers#ft#vue#standard() abort
     let maker = neomake#makers#ft#javascript#standard()
-    call extend(get(maker, 'args', []), ['--plugin', 'html'])
+    call extend(get(maker, 'args', []), ['--plugin', 'vue'])
     return maker
 endfunction
 
 function! neomake#makers#ft#vue#semistandard() abort
     let maker = neomake#makers#ft#javascript#semistandard()
-    call extend(get(maker, 'args', []), ['--plugin', 'html'])
+    call extend(get(maker, 'args', []), ['--plugin', 'vue'])
     return maker
 endfunction
 

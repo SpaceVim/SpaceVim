@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#asciidoc layer"
-description: "Edit AsciiDoc within vim, autopreview AsciiDoc in the default browser, with this layer you can also format AsciiDoc file."
+description: "Edit AsciiDoc within vim, autopreview AsciiDoc in the default browser, with this layer you can also format AsciiDoc files."
 ---
 
 # [Available Layers](../../) >> lang#asciidoc
@@ -17,11 +17,11 @@ description: "Edit AsciiDoc within vim, autopreview AsciiDoc in the default brow
 
 ## Description
 
-This layer is for editing AsciiDoc file. Including syntax highlighting, indent and syntax lint.
+This layer is for editing AsciiDoc files. Including syntax highlighting, indent and syntax lint.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

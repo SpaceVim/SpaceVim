@@ -1,6 +1,6 @@
 "=============================================================================
 " supercollider.vim --- supercollider language support in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -57,4 +57,10 @@ function! s:language_specified_mappings() abort
 " au Filetype supercollider nnoremap <leader>sj yiw :call SCdef(""")<CR>
 " au Filetype supercollider nnoremap <leader>si yiw :call SCimplementation(""")<CR>
 " au Filetype supercollider nnoremap <leader>sr yiw :call SCreference(""")<CR>
+endfunction
+
+function! SpaceVim#layers#lang#supercollider#health() abort
+  call SpaceVim#layers#lang#supercollider#plugins()
+  call SpaceVim#layers#lang#supercollider#config()
+  return 1
 endfunction

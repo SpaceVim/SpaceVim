@@ -1,13 +1,13 @@
 "=============================================================================
 " livescript.vim --- LiveScript support in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#livescript, layer-lang-livescript
+" @section lang#livescript, layers-lang-livescript
 " @parentsection layers
 " This layer is for livescript development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -67,7 +67,7 @@ function! s:language_specified_mappings() abort
         \ 'eval code::String', 1)
 
   " checker layer configuration
-  if SpaceVim#layers#isLoaded('checkers') && g:spacevim_enable_neomake
+  if SpaceVim#layers#isLoaded('checkers') && g:spacevim_lint_engine ==# 'neomake'
     let g:neomake_livescript_enabled_makers = ['lsc']
     " Failed at: test.ls
     " { Error: Parse error on line 1: Unexpected 'NEWLINE'
@@ -90,4 +90,10 @@ function! s:eval() abort
   let input = input('>>')
   let cmd = ['lsc', '-e', input, expand('%:p')]
   " @todo fix livescript eval function
+endfunction
+
+function! SpaceVim#layers#lang#livescript#health() abort
+  call SpaceVim#layers#lang#livescript#plugins()
+  call SpaceVim#layers#lang#livescript#config()
+  return 1
 endfunction

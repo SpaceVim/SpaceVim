@@ -1,24 +1,25 @@
 "=============================================================================
 " guide.vim --- key binding guide for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
+
+if exists('s:save_cpo')
+  finish
+endif
 
 let s:save_cpo = &cpo
 set cpo&vim
-scriptencoding utf-8
 
 " Load SpaceVim API
-
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:STR = SpaceVim#api#import('data#string')
 let s:KEY = SpaceVim#api#import('vim#key')
-
 let s:VIM = SpaceVim#api#import('vim')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
-
 if has('nvim')
   let s:FLOATING = SpaceVim#api#import('neovim#floating')
 else
@@ -27,7 +28,6 @@ endif
 let s:SL = SpaceVim#api#import('vim#statusline')
 
 " guide specific var
-
 let s:winid = -1
 let s:bufnr = -1
 let s:prefix_key_inp = []
@@ -281,9 +281,13 @@ endfunction " }}}
 
 " icon -> number -> A-Za-z 
 " 65-90 97-122
+function! s:get_key_number(key) abort
+  return char2nr(a:key ==# '[SPC]' ? ' ' : a:key ==? '<Tab>' ? "\t" : a:key)
+endfunction
+
 function! s:compare_key(i1, i2) abort
-  let a = char2nr(a:i1 ==# '[SPC]' ? ' ' : a:i1 ==? '<Tab>' ? "\t" : a:i1)
-  let b = char2nr(a:i2 ==# '[SPC]' ? ' ' : a:i2 ==? '<Tab>' ? "\t" : a:i2)
+  let a = s:get_key_number(a:i1)
+  let b = s:get_key_number(a:i2)
   if a - b == 32 && a >= 97 && a <= 122
     return -1
   elseif b - a == 32 && b >= 97 && b <= 122
@@ -787,7 +791,7 @@ if get(g:, 'mapleader', '\') ==# ' '
 else
   call SpaceVim#mapping#guide#register_prefix_descriptions(get(g:, 'mapleader', '\'),
         \ 'g:_spacevim_mappings')
-  call SpaceVim#plugins#help#regist_root({'<leader>' : g:_spacevim_mappings})
+  call SpaceVim#plugins#help#regist_root({'<Leader>' : g:_spacevim_mappings})
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',
         \ 'g:_spacevim_mappings_space')
   call SpaceVim#plugins#help#regist_root({'SPC' : g:_spacevim_mappings_space})

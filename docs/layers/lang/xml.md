@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#xml layer"
-description: "This layer is for xml development, provide syntax checking, indent etc."
+description: "This layer is for xml development, provides syntax checking, indentation etc."
 ---
 
 # [Available Layers](../../) >> lang#xml
@@ -18,7 +18,7 @@ This layer is for xml development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

@@ -1,13 +1,13 @@
 "=============================================================================
 " kotlin.vim --- SpaceVim lang#kotlin layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#kotlin, layer-lang-kotlin
+" @section lang#kotlin, layers-lang-kotlin
 " @parentsection layers
 " This layer is for kotlin development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -53,7 +53,7 @@ function! SpaceVim#layers#lang#kotlin#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#kotlin#config() abort
-  if g:spacevim_enable_neomake
+  if g:spacevim_lint_engine ==# 'neomake'
     " neomake support:
     let g:neomake_kotlin_kotlinc_maker = {
           \ 'args': ['-cp', s:classpath(), '-d', s:outputdir()],
@@ -64,12 +64,17 @@ function! SpaceVim#layers#lang#kotlin#config() abort
           \ '%Wwarning: %m,' .
           \ '%Iinfo: %m,'
           \ }
-    let g:neomake_kotlin_enabled_makers = ['kotlinc']
+    let g:neomake_kotlin_ktlint_maker = {
+          \ 'errorformat': '%E%f:%l:%c: %m',
+          \ }
+    let g:neomake_kotlin_enabled_makers = ['ktlint']
+    let g:neomake_kotlin_kotlinc_remove_invalid_entries = 1
+    let g:neomake_kotlin_ktlint_remove_invalid_entries = 1
   endif
   call SpaceVim#mapping#space#regesit_lang_mappings('kotlin', function('s:language_specified_mappings'))
   if s:enable_native_support
     let runner = {
-          \ 'exe' : 'kotlinc-native'. (s:SYS.isWindows ? '.BAT' : ''),
+          \ 'exe' : 'kotlinc-native'. (s:SYS.isWindows ? '.CMD' : ''),
           \ 'targetopt' : '-o',
           \ 'opt' : [],
           \ 'usestdin' : 0,
@@ -77,13 +82,13 @@ function! SpaceVim#layers#lang#kotlin#config() abort
     call SpaceVim#plugins#runner#reg_runner('kotlin', [runner, '#TEMP#'])
   else
     let runner = {
-          \ 'exe' : 'kotlinc-jvm'. (s:SYS.isWindows ? '.BAT' : ''),
+          \ 'exe' : 'kotlinc-jvm'. (s:SYS.isWindows ? '.CMD' : ''),
           \ 'opt' : ['-script'],
           \ 'usestdin' : 0,
           \ }
     call SpaceVim#plugins#runner#reg_runner('kotlin', runner)
   endif
-  call SpaceVim#plugins#repl#reg('kotlin', ['kotlinc-jvm'. (s:SYS.isWindows ? '.BAT' : '')])
+  call SpaceVim#plugins#repl#reg('kotlin', ['kotlinc-jvm'. (s:SYS.isWindows ? '.CMD' : '')])
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -122,4 +127,10 @@ function! SpaceVim#layers#lang#kotlin#set_variable(var) abort
   let s:enable_native_support = get(a:var,
         \ 'enable-native-support',
         \ 'nil')
+endfunction
+
+function! SpaceVim#layers#lang#kotlin#health() abort
+  call SpaceVim#layers#lang#kotlin#plugins()
+  call SpaceVim#layers#lang#kotlin#config()
+  return 1
 endfunction

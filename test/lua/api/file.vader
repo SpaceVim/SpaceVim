@@ -1,0 +1,55 @@
+Execute ( SpaceVim lua api: file.fticon(ft) ):
+  if has('nvim-0.5.0') || has('+lua')
+    let file = SpaceVim#api#import('file')
+    let cmp = SpaceVim#api#import('vim#compatible')
+    lua spacevim_file = require('spacevim.api').import('file')
+    AssertEqual cmp.luaeval('spacevim_file.fticon("foo.md")'), file.fticon('foo.md')
+    AssertEqual cmp.luaeval('spacevim_file.fticon("foo.mdxx")'), file.fticon('foo.mdxx')
+  else
+    Log 'skip lua test'
+  endif
+
+Execute ( SpaceVim lua api: file.unify_path(path, ...) ):
+  if has('nvim-0.5.0') || has('+lua')
+    let file = SpaceVim#api#import('file')
+    let cmp = SpaceVim#api#import('vim#compatible')
+    lua spacevim_file = require('spacevim.api').import('file')
+    lua cmp = require('spacevim.api').import('vim.compatible')
+    lua fn = require('spacevim').fn
+    AssertEqual cmp.luaeval('spacevim_file.unify_path(".SpaceVim.d/init.vim", ":p")'),
+    \ file.unify_path(".SpaceVim.d/init.vim", ":p")
+    AssertEqual cmp.luaeval('spacevim_file.unify_path("~/.SpaceVim.d/", ":p")'),
+    \ file.unify_path("~/.SpaceVim.d/", ":p")
+    AssertEqual cmp.luaeval('spacevim_file.unify_path("autoload", ":p")'),
+    \ file.unify_path("autoload", ":p")
+    AssertEqual cmp.luaeval('spacevim_file.unify_path(fn.bufname("%"), ":.")'),
+    \ file.unify_path(bufname("%"), ":.")
+  else
+    Log 'skip lua test'
+  endif
+
+Execute ( SpaceVim lua api: file.path_to_fname(path) ):
+  if has('nvim-0.5.0') || has('+lua')
+    let file = SpaceVim#api#import('file')
+    let cmp = SpaceVim#api#import('vim#compatible')
+    lua spacevim_file = require('spacevim.api').import('file')
+    AssertEqual cmp.luaeval('spacevim_file.path_to_fname(".SpaceVim.d/init.vim")'),
+    \ file.path_to_fname('.SpaceVim.d/init.vim')
+  else
+    Log 'skip lua test'
+  endif
+
+Execute ( SpaceVim lua api: file.findfile(what, where, ...) ):
+  if has('nvim-0.5.0') || has('+lua')
+    let file = SpaceVim#api#import('file')
+    let cmp = SpaceVim#api#import('vim#compatible')
+    lua spacevim_file = require('spacevim.api').import('file')
+    lua if vim.fn == nil then fn = require('spacevim').fn else fn = vim.fn end
+    AssertEqual cmp.luaeval('spacevim_file.finddir("doc/", fn.fnamemodify("bundle/dein.vim/autoload/dein.vim", ":p:."))'),
+    \ file.finddir("doc/", fnamemodify("bundle/dein.vim/autoload/dein.vim", ":p:."))
+    AssertEqual cmp.luaeval('spacevim_file.unify_path(spacevim_file.findfile("vimrc", "bundle/dein.vim/autoload/dein.vim"), ":.")'),
+    \ file.unify_path(file.findfile("vimrc", "bundle/dein.vim/autoload/dein.vim"), ":.")
+    lua spacevim_file = nil
+  else
+    Log 'skip lua test'
+  endif

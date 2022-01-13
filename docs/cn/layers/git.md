@@ -10,13 +10,14 @@ lang: zh
 
 - [模块描述](#模块描述)
 - [启用模块](#启用模块)
+- [模块选项](#模块选项)
 - [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
 ## 模块描述
 
-这一模块为 SpaceVim 提供了 [Git](http://git-scm.com/) 支持，根据当前 Vim 版本特性，选择 gina 或者 gita 作为默认的后台 Git 插件。
+这一模块为 SpaceVim 提供了 [Git](https://git-scm.com/) 支持，根据当前 Vim 版本特性，选择 gina 或者 gita 作为默认的后台 Git 插件。
 
 ## 启用模块
 
@@ -25,6 +26,18 @@ lang: zh
 ```toml
 [[layers]]
   name = "git"
+```
+
+## 模块选项
+
+- `git_plugin`: 设置后台使用的 git 插件，默认为 `git`，除此之外，还可以设置成为：`gina`, `fugitive`, `gita`, `git`。
+
+如果需要使用 `fugitive` 作为后台插件，可以使用：
+
+```toml
+[[layers]]
+  name = "git"
+  git_plugin = 'fugitive'
 ```
 
 ## 快捷键

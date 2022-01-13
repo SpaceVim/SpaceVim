@@ -1,6 +1,6 @@
 "=============================================================================
 " command.vim --- SpaceVim command API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -9,7 +9,7 @@
 ""
 " @section vim#command, api-vim-command
 " @parentsection api
-" This api is for create complete function for custom vim command. This is
+" This api is for creating complete function for custom vim command. This is
 " example for create complete function for command TEST
 " >
 "   let s:CMD = SpaceVim#api#import('vim#command')

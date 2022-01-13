@@ -8,7 +8,8 @@ description: "logger API provides some basic functions for log message when crea
 <!-- vim-markdown-toc GFM -->
 
 - [Intro](#intro)
-- [functions](#functions)
+- [Functions](#functions)
+- [Usage](#usage)
 
 <!-- vim-markdown-toc -->
 
@@ -16,7 +17,24 @@ description: "logger API provides some basic functions for log message when crea
 
 `logger` API provides some functions to create logger for plugin.
 
-In vim script, loading the API before using it. You can also config the options of the API.
+## Functions
+
+| name                  | description                       |
+| --------------------- | --------------------------------- |
+| `set_name(string)`    | set the name of current logger    |
+| `set_silent(0 or 1)`  | enable/disable silent mode        |
+| `set_verbose(number)` | set the verbose level             |
+| `set_level(number)`   | set the logger level              |
+| `error(string)`       | log error message                 |
+| `warn(string)`        | log string only when `level <= 2` |
+| `info(string)`        | log string only when `level <= 1` |
+| `debug(string)`       | log string only when `level <= 0` |
+
+## Usage
+
+The `logger` api provides two versions, the vim script and lua:
+
+**vim script:**
 
 here is an example for creatting logger for plugin `foo.vim`.
 
@@ -56,8 +74,18 @@ function! foo#log#setOutput(file) abort
 endfunction
 ```
 
-## functions
+**lua script:**
 
-| name            | description                    |
-| --------------- | ------------------------------ |
-| `set_name(str)` | set the name of current logger |
+```lua
+local logger = require('spacevim.api').import('logger')
+
+logger.set_name('foo')
+logger.set_level(1)
+logger.set_silent(1)
+logger.set_verbose(1)
+
+local function warn(msg)
+    logger.warn(msg)
+end
+
+```

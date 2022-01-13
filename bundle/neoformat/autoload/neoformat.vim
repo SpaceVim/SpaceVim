@@ -1,13 +1,21 @@
+" Set global flag to allow checking in custom user config
+let g:neoformat = 1
+
 function! neoformat#Neoformat(bang, user_input, start_line, end_line) abort
-    let search = @/
     let view = winsaveview()
+    let search = @/
     let original_filetype = &filetype
 
     call s:neoformat(a:bang, a:user_input, a:start_line, a:end_line)
 
+    " Setting &filetype might destroy existing folds, so only do that
+    " if the filetype got changed (which can only be possible when
+    " invoking with a bang)
+    if a:bang && &filetype != original_filetype
+        let &filetype = original_filetype
+    endif
     let @/ = search
     call winrestview(view)
-    let &filetype = original_filetype
 endfunction
 
 function! s:neoformat(bang, user_input, start_line, end_line) abort
@@ -92,8 +100,7 @@ function! s:neoformat(bang, user_input, start_line, end_line) abort
         endif
 
         " read from /tmp file if formatter replaces file on format
-        " make sure cmd.tmp_file_path is readable
-        if (cmd.replace || len(stdout) == 0) && filereadable(cmd.tmp_file_path)
+        if cmd.replace
             let stdout = readfile(cmd.tmp_file_path)
         endif
 
@@ -216,13 +223,34 @@ function! s:split_filetypes(filetype) abort
     return split(a:filetype, '\.')[0]
 endfunction
 
+function! s:get_node_exe(exe) abort
+    let node_exe = findfile('node_modules/.bin/' . a:exe, getcwd() . ';')
+    if !empty(node_exe) && executable(node_exe)
+        return node_exe
+    endif
+
+    return a:exe
+endfunction
+
 function! s:generate_cmd(definition, filetype) abort
     let executable = get(a:definition, 'exe', '')
     if executable == ''
         call neoformat#utils#log('no exe field in definition')
         return {}
     endif
-    if !executable(executable)
+
+    if exists('g:neoformat_try_node_exe')
+                \ && g:neoformat_try_node_exe
+                \ && get(a:definition, 'try_node_exe', 0)
+        let executable = s:get_node_exe(executable)
+    endif
+
+    if &shell =~ '\v%(powershell|pwsh)'
+        if system('[bool](Get-Command ' . executable . ' -ErrorAction SilentlyContinue)') !~ 'True'
+            call neoformat#utils#log('executable: ' . executable . ' is not a cmdlet, function, script file, or an executable program')
+            return {}
+        endif
+    elseif !executable(executable)
         call neoformat#utils#log('executable: ' . executable . ' is not an executable')
         return {}
     endif

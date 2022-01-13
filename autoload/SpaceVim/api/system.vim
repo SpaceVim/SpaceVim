@@ -1,6 +1,6 @@
 "=============================================================================
 " system.vim --- SpaceVim system API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -40,7 +40,7 @@ function! s:name() abort
   endif
 endfunction
 
-let s:system['name'] = s:name()
+let s:system['name'] = function('s:name')
 
 function! s:isDarwin() abort
   if exists('s:is_darwin')

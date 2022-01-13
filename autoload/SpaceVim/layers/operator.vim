@@ -1,13 +1,13 @@
 "=============================================================================
 " operator.vim --- SpaceVim operator layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section operator, layer-operator
+" @section operator, layers-operator
 " @parentsection layers
 " With this layer, you can confirm that text is yanked correctly and see
 " yanked text by highlighting.
@@ -22,4 +22,10 @@ endfunction
 function! SpaceVim#layers#operator#config() abort
     map y <Plug>(operator-flashy)
     nmap Y <Plug>(operator-flashy)$
+endfunction
+
+function! SpaceVim#layers#operator#health() abort
+  call SpaceVim#layers#operator#plugins()
+  call SpaceVim#layers#operator#config()
+  return 1
 endfunction

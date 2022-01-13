@@ -1,0 +1,21 @@
+name: codespell
+on: [pull_request]
+jobs:
+  codespell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          fetch-depth: 0
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install codespell
+      - name: Use codespell
+        run: |
+          codespell --quiet-level=2 --check-hidden --skip=CONFIG.md --ignore-words=.codespellignorewords || exit

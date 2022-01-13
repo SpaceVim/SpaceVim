@@ -13,6 +13,7 @@ function! neoformat#formatters#xhtml#tidy() abort
             \          '--tidy-mark no'
             \         ],
             \ 'stdin': 1,
+            \ 'try_node_exe': 1,
             \ }
 endfunction
 

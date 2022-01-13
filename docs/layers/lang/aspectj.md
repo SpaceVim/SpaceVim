@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#asepctj layer"
-description: "AsepctJ language support, include syntax highlighting."
+description: "AsepctJ language support, including syntax highlighting."
 ---
 
 # [Available Layers](../../) >> lang#asepctj
@@ -14,11 +14,11 @@ description: "AsepctJ language support, include syntax highlighting."
 
 ## Description
 
-This layer is for editing AsepctJ file, include syntax highlighting.
+This layer is for editing AsepctJ file, including syntax highlighting.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

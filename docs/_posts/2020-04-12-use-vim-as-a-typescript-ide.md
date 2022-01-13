@@ -17,7 +17,7 @@ Each of the following sections will be covered:
 
 - [Enable language layer](#enable-language-layer)
 - [Code completion](#code-completion)
-- [Syntax linting](#syntax-linting)
+- [Code linting](#code-linting)
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)
 - [Code formatting](#code-formatting)
@@ -25,9 +25,15 @@ Each of the following sections will be covered:
 
 <!-- vim-markdown-toc -->
 
+
+This tutorial is not intended to teach you TypeScript itself.
+
+If you have any problems, feel free to join the [SpaceVim gitter chatting room](https://gitter.im/SpaceVim/SpaceVim) for general discussion.
+
 ### Enable language layer
 
-By default `lang#typescript` layer is not loaded. To add TypeScript language support in SpaceVim,
+TypeScript language support in SpaceVim is provided by `lang#typescript` layer.
+This layer is not loaded by default. To add TypeScript language support in SpaceVim,
 you need to enable the `lang#typescript` layer. Press `SPC f v d` to open
 SpaceVim configuration file, and add following configuration:
 
@@ -45,15 +51,16 @@ The completion menu will be opened as you type.
 
 ![ts](https://user-images.githubusercontent.com/13142418/79134364-2bd8db80-7de0-11ea-848e-71d3f07cb79d.png)
 
-### Syntax linting
+### Code linting
 
-The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
-It will run [tslint](https://www.npmjs.com/package/tslint) asynchronously.
+Code linting is provided by `checkers` layer which is loaded by default.
+The default lint engine is [neomake](https://github.com/neomake/neomake).
+It will run [eslint](https://eslint.org/) asynchronously.
 
 To install eslint, just run following command in terminal.
 
-```sh
-npm install -g tslint
+```
+npm install -g eslint
 ```
 
 ### Jump to test file

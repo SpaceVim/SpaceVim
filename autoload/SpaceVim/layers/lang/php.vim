@@ -1,6 +1,6 @@
 "=============================================================================
 " php.vim --- lang#php layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -8,10 +8,47 @@
 
 
 ""
-" @section lang#php, layer-lang-php
+" @section lang#php, layers-lang-php
 " @parentsection layers
-" This layer is for PHP development. It proides code completion, syntax
-" checking, and jump to definition.
+" This layer is for php development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#php'
+" <
+"
+" @subsection layer options
+"
+" 1. `php_interpreter`: Set the PHP interpreter, by default, it is `php`
+" >
+"   [[layers]]
+"     name = 'lang#php'
+"     php_interpreter = 'path/to/php'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for php, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
+if exists('s:php_interpreter')
+  finish
+endif
+
+let s:php_interpreter = 'php'
 
 
 
@@ -19,9 +56,8 @@ function! SpaceVim#layers#lang#php#plugins() abort
   let plugins = []
   call add(plugins, ['StanAngeloff/php.vim', { 'on_ft' : 'php'}])
   call add(plugins, ['2072/PHP-Indenting-for-VIm', { 'on_ft' : 'php'}])
-  call add(plugins, ['rafi/vim-phpspec', { 'on_ft' : 'php'}])
   if SpaceVim#layers#lsp#check_filetype('php')
-    call add(plugins, ['felixfbecker/php-language-server', {'on_ft' : 'php', 'build' : 'composer install && composer run-script parse-stubs'}])
+    call add(plugins, ['phpactor/phpactor', {'on_ft' : 'php', 'build' : 'composer install --no-dev -o'}])
   else
     call add(plugins, ['shawncplus/phpcomplete.vim', { 'on_ft' : 'php'}])
   endif
@@ -32,11 +68,12 @@ let s:auto_fix = 0
 
 function! SpaceVim#layers#lang#php#set_variable(var) abort
   let s:auto_fix = get(a:var, 'auto_fix', 0)
+  let s:php_interpreter = get(a:var, 'php_interpreter', s:php_interpreter)
 endfunction
 
 function! SpaceVim#layers#lang#php#config() abort
-  call SpaceVim#plugins#runner#reg_runner('php', 'php %s')
-  call SpaceVim#plugins#repl#reg('php', ['php', '-a'])
+  call SpaceVim#plugins#runner#reg_runner('php', s:php_interpreter . ' %s')
+  call SpaceVim#plugins#repl#reg('php', [s:php_interpreter, '-a'])
   call SpaceVim#mapping#space#regesit_lang_mappings('php',
         \ function('s:on_ft'))
   if SpaceVim#layers#lsp#check_filetype('php')
@@ -57,18 +94,6 @@ function! SpaceVim#layers#lang#php#config() abort
       autocmd Filetype php call <SID>preferLocalPHPMD()
     augroup END
   endif
-
-  " let g:neomake_php_php_maker =  {
-        " \ 'args': ['-l', '-d', 'error_reporting=E_ALL', '-d', 'display_errors=1', '-d', 'log_errors=0'],
-        " \ 'errorformat':
-        " \ '%-GNo syntax errors detected in%.%#,'.
-        " \ '%EParse error: syntax error\, %m in %f on line %l,'.
-        " \ '%EParse error: %m in %f on line %l,'.
-        " \ '%EFatal error: %m in %f on line %l,'.
-        " \ '%-G\s%#,'.
-        " \ '%-GErrors parsing %.%#',
-        " \ 'output_stream': 'stderr',
-        " \ }
 endfunction
 
 function! s:on_ft() abort
@@ -131,4 +156,10 @@ function! s:preferLocalPHPMD() abort
   if filereadable(l:phpmd_path) && !exists('b:neomake_php_phpmd_args')
     let b:neomake_php_phpmd_args = ['%:p', 'text', l:phpmd_path]
   endif
+endfunction
+
+function! SpaceVim#layers#lang#php#health() abort
+  call SpaceVim#layers#lang#php#plugins()
+  call SpaceVim#layers#lang#php#config()
+  return 1
 endfunction

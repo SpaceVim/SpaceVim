@@ -1,0 +1,4 @@
+line_endings = "Unix"
+indent_type = "Spaces"
+indent_width = 4
+no_call_parentheses = true

@@ -1,12 +1,13 @@
 "=============================================================================
 " issue.vim --- issue reporter for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:STR = SpaceVim#api#import('data#string')
 
 function! SpaceVim#issue#report() abort
   call s:open()
@@ -45,11 +46,11 @@ function! s:template() abort
         \ '',
         \ '## Environment Information',
         \ '',
-        \ '- OS: ' . SpaceVim#api#import('system').name,
+        \ '- OS: ' . SpaceVim#api#import('system').name(),
         \ '- vim version: ' . (has('nvim') ? '-' : s:CMP.version()),
         \ '- neovim version: ' . (has('nvim') ? s:CMP.version() : '-'),
         \ '- SpaceVim version: ' . g:spacevim_version,
-        \ '- SpaceVim status: ',
+        \ '- SpaceVim status: ' . s:spacevim_version(),
         \ '',
         \ '```'
         \ ]
@@ -106,4 +107,18 @@ function! SpaceVim#issue#close(id) abort
     let username = input('github username:')
     let password = input('github password:')
   call github#api#issues#Edit('SpaceVim', 'SpaceVim', a:id, username, password, issue)
+endfunction
+
+function! s:spacevim_version() abort
+  let pwd = getcwd()
+  try
+    exe 'cd ' . fnamemodify(g:_spacevim_root_dir, ':p:h')
+    let status = s:CMP.system('git rev-parse --short HEAD')
+  catch
+    exe 'cd ~/.SpaceVim'
+    let status = s:CMP.system('git rev-parse --short HEAD')
+  endtry
+  exe 'cd ' . pwd
+  return s:STR.trim(status)
+  
 endfunction

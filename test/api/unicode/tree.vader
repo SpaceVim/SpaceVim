@@ -1,0 +1,11 @@
+Execute ( SpaceVim api: unicode#tree ):
+  let box = SpaceVim#api#import('unicode#tree')
+  " AssertEqual box.drawing_tree({'test' : [{'hello' : ['one', 'two']},'world']}),
+    " \ [
+    " \ 'test',
+    " \ '  ├hello',
+    " \ '  │  ├one',
+    " \ '  │  ╰two',
+    " \ '  ╰world',
+    " \ ]
+

@@ -14,11 +14,11 @@ description: "Lasso language support, include syntax highlighting."
 
 ## Description
 
-This layer is for editing lasso file, include syntax highlighting.
+This layer is for editing lasso file, including syntax highlighting.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

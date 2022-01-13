@@ -1,6 +1,6 @@
 "=============================================================================
 " prompt.vim --- SpaceVim prompt API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -64,7 +64,8 @@ endf
 
 function! s:self._getchar(...) abort
   let ret = call('getchar', a:000)
-  " @bug getchar() does not work for <
+  " getchar() does not work for < in old version of
+  " neovim-qt.
   " https://github.com/neovim/neovim/issues/12487
   if ret ==# "\x80\xfc\<C-b><"
     return '<'

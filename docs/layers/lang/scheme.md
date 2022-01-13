@@ -23,7 +23,7 @@ image: https://user-images.githubusercontent.com/13142418/46590501-4e50b100-cae6
 This layer adds [Scheme](http://www.scheme-reports.org) support to SpaceVim.
 The following scheme dialect support has been added:
 
-- [MIT Scheme](http://www.gnu.org/software/mit-scheme/)
+- [MIT Scheme](https://www.gnu.org/software/mit-scheme/)
 - [Chez Scheme](https://cisco.github.io/ChezScheme/)
 - [guile](https://www.gnu.org/software/guile/)
 
@@ -35,7 +35,7 @@ The following scheme dialect support has been added:
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -44,8 +44,8 @@ To use this configuration layer, update custom configuration file with:
 
 ## Options
 
-- scheme_dialect: specific which scheme dialect is used.
-- scheme_interpreter: option for setting scheme interperter.
+- `scheme_dialect`: specify which scheme dialect is used.
+- `scheme_interpreter`: option for setting scheme interperter.
 
 for example:
 
@@ -73,6 +73,6 @@ Send code to inferior process commands:
 
 ### Running current script
 
-To running current script, you can press `SPC l r`
-to run current file without loss focus,
+To run the current script, you can press `SPC l r`
+to run the current file without losing focus,
 and the result will be shown in a runner buffer.

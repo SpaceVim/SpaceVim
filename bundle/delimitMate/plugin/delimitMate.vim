@@ -275,7 +275,7 @@ function! s:NoAutoClose() "{{{
       let delim = '<Bar>'
     endif
     exec 'inoremap <silent> <Plug>delimitMate' . delim . ' <C-R>=<SID>TriggerAbb().delimitMate#SkipDelim("' . escape(delim,'"') . '")<CR>'
-    exec 'silent! imap <unique> <buffer> '.delim.' <Plug>delimitMate'.delim
+    exec 'silent! imap <buffer> '.delim.' <Plug>delimitMate'.delim
   endfor
 endfunction "}}}
 
@@ -288,7 +288,7 @@ function! s:AutoClose() "{{{
     let rd = s:get('right_delims')[i] == '|' ? '<bar>' : s:get('right_delims')[i]
     exec 'inoremap <expr><silent> <Plug>delimitMate' . ld
                 \. ' <SID>TriggerAbb().delimitMate#ParenDelim("' . escape(rd, '|') . '")'
-    exec 'silent! imap <unique> <buffer> '.ld
+    exec 'silent! imap <buffer> '.ld
                 \.' <Plug>delimitMate'.ld
     let i += 1
   endwhile
@@ -298,7 +298,7 @@ function! s:AutoClose() "{{{
     let delim = delim == '|' ? '<bar>' : delim
     exec 'inoremap <expr><silent> <Plug>delimitMate' . delim
                 \. ' <SID>TriggerAbb().delimitMate#JumpOut("\' . delim . '")'
-    exec 'silent! imap <unique> <buffer> ' . delim
+    exec 'silent! imap <buffer> ' . delim
                 \. ' <Plug>delimitMate'. delim
   endfor
 
@@ -310,7 +310,7 @@ function! s:AutoClose() "{{{
     endif
     exec 'inoremap <expr><silent> <Plug>delimitMate' . delim
                 \. ' <SID>TriggerAbb()."<C-R>=delimitMate#QuoteDelim(\"\\\' . delim . '\")<CR>"'
-    exec 'silent! imap <unique> <buffer> ' . delim
+    exec 'silent! imap <buffer> ' . delim
                 \. ' <Plug>delimitMate' . delim
   endfor
 
@@ -318,7 +318,7 @@ function! s:AutoClose() "{{{
   " inoremap <silent> <buffer> n't n't
   for map in s:get('apostrophes_list')
     exec "inoremap <silent> " . map . " " . map
-    exec 'silent! imap <unique> <buffer> ' . map . ' <Plug>delimitMate' . map
+    exec 'silent! imap <buffer> ' . map . ' <Plug>delimitMate' . map
   endfor
 endfunction "}}}
 
@@ -327,31 +327,31 @@ function! s:ExtraMappings() "{{{
   inoremap <silent> <Plug>delimitMateBS <C-R>=delimitMate#BS()<CR>
   if !hasmapto('<Plug>delimitMateBS','i')
     if empty(maparg('<BS>', 'i'))
-      silent! imap <unique> <buffer> <BS> <Plug>delimitMateBS
+      silent! imap <buffer> <BS> <Plug>delimitMateBS
     endif
     if empty(maparg('<C-H>', 'i'))
-      silent! imap <unique> <buffer> <C-h> <Plug>delimitMateBS
+      silent! imap <buffer> <C-h> <Plug>delimitMateBS
     endif
   endif
   " If pair is empty, delete closing delimiter:
   inoremap <silent> <expr> <Plug>delimitMateS-BS delimitMate#WithinEmptyPair() ? "\<Del>" : "\<S-BS>"
   if !hasmapto('<Plug>delimitMateS-BS','i') && maparg('<S-BS>', 'i') == ''
-    silent! imap <unique> <buffer> <S-BS> <Plug>delimitMateS-BS
+    silent! imap <buffer> <S-BS> <Plug>delimitMateS-BS
   endif
   " Expand return if inside an empty pair:
   inoremap <expr><silent> <Plug>delimitMateCR <SID>TriggerAbb()."\<C-R>=delimitMate#ExpandReturn()\<CR>"
   if s:get('expand_cr') && !hasmapto('<Plug>delimitMateCR', 'i') && maparg('<CR>', 'i') == ''
-    silent! imap <unique> <buffer> <CR> <Plug>delimitMateCR
+    silent! imap <buffer> <CR> <Plug>delimitMateCR
   endif
   " Expand space if inside an empty pair:
   inoremap <expr><silent> <Plug>delimitMateSpace <SID>TriggerAbb()."\<C-R>=delimitMate#ExpandSpace()\<CR>"
   if s:get('expand_space') && !hasmapto('<Plug>delimitMateSpace', 'i') && maparg('<Space>', 'i') == ''
-    silent! imap <unique> <buffer> <Space> <Plug>delimitMateSpace
+    silent! imap <buffer> <Space> <Plug>delimitMateSpace
   endif
   " Jump over any delimiter:
   inoremap <expr><silent> <Plug>delimitMateS-Tab <SID>TriggerAbb()."\<C-R>=delimitMate#JumpAny()\<CR>"
   if s:get('tab2exit') && !hasmapto('<Plug>delimitMateS-Tab', 'i') && maparg('<S-Tab>', 'i') == ''
-    silent! imap <unique> <buffer> <S-Tab> <Plug>delimitMateS-Tab
+    silent! imap <buffer> <S-Tab> <Plug>delimitMateS-Tab
   endif
   " Jump over next delimiters
   inoremap <expr><buffer> <Plug>delimitMateJumpMany <SID>TriggerAbb()."\<C-R>=delimitMate#JumpMany()\<CR>"

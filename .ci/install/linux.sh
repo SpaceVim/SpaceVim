@@ -1,7 +1,15 @@
+#!/usr/bin/env bash
+
+# Fail on unset variables and command errors
+set -ue -o pipefail
+
+# Prevent commands misbehaving due to locale differences
+export LC_ALL=C
+
 install_vim() {
     local URL=https://github.com/vim/vim
     local tag=$1
-    local ext=$([[ $tag == "HEAD" ]] && echo "" || echo "-b $tag")
+    local ext=$([[ $tag == "nightly" ]] && echo "" || echo "-b $tag")
     local tmp="$(mktemp -d)"
     local out="${DEPS}/_vim/$tag"
     mkdir -p $out
@@ -20,20 +28,16 @@ install_vim() {
 install_nvim() {
     local URL=https://github.com/neovim/neovim
     local tag=$1
-    local ext=$([[ $tag == "HEAD" ]] && echo "" || echo "-b $tag")
     local tmp="$(mktemp -d)"
     local out="${DEPS}/_neovim/$tag"
     mkdir -p $out
-    local ncpu=$(awk '/^processor/{n+=1}END{print n}' /proc/cpuinfo)
-    git clone --depth 1 --single-branch $ext $URL $tmp
-    cd $tmp
-    make deps
-    make -j$ncpu \
-        CMAKE_BUILD_TYPE=Release \
-        CMAKE_EXTRA_FLAGS="-DTRAVIS_CI_BUILD=ON -DCMAKE_INSTALL_PREFIX:PATH=$out"
-    make install
-    pip install --user pynvim
-    pip3 install --user pynvim
+    curl  -o $tmp/nvim-linux64.tar.gz -L "https://github.com/neovim/neovim/releases/download/$tag/nvim-linux64.tar.gz"
+    tar -xzvf $tmp/nvim-linux64.tar.gz -C $tmp
+    cp -r $tmp/nvim-linux64/* $out
+    chmod +x $out/bin/nvim
+    # fix ModuleNotFoundError: No module named 'setuptools'
+    python3 -m pip install -U setuptools
+    python3 -m pip install pynvim
 }
 
 install() {

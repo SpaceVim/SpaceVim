@@ -1,21 +1,31 @@
 "=============================================================================
 " tmux.vim --- SpaceVim tmux layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section tmux, layer-tmux
+" @section tmux, layers-tmux
 " @parentsection layers
-" Adds integration between tmux and vim panes. Switch between panes
-" seamlessly.syntax highlighting, commenting, man page navigation
+" `tmux` layer adds integration between tmux and vim panes. Switch between panes
+" seamlessly, syntax highlighting, commenting, man page navigation
 " and ability to execute lines as tmux commands.
-" This layer is not added by default. To include it, add
-" `SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`.
+" This layer is not added by default. To include it, add following to spacevim
+" configuration file:
+" >
+"   [[layers]]
+"     name = 'tmux'
+" <
 " If you are having issues with <C-h> in a neovim buffer, see
-" `https://github.com/neovim/neovim/issues/2048#issuecomment-78045837`
+"
+" https://github.com/neovim/neovim/issues/2048#issuecomment-78045837
+"
+" @subsection Layer options
+"
+" `enable_tmux_clipboard`: this option is used to enable or disable tmux
+" clipboard, by default this option is `false`.
 "
 " @subsection mappings
 " >
@@ -27,12 +37,18 @@
 "   <C-l>     normal      Switch to vim/tmux pane in right direction
 " <
 
+if exists('s:enable_tmux_clipboard')
+  finish
+endif
+
+let s:enable_tmux_clipboard = 0
+
 function! SpaceVim#layers#tmux#plugins() abort
   let plugins = [
         \ ['christoomey/vim-tmux-navigator', { 'on_cmd': [
-        \ 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp',
-        \ 'TmuxNavigateRight'] }],
-        \ ]
+          \ 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp',
+          \ 'TmuxNavigateRight'] }],
+          \ ]
   call add(plugins, ['tmux-plugins/vim-tmux', {'on_ft' : 'tmux'}])
   call add(plugins, ['edkolev/tmuxline.vim', {'merged' : 0}])
   return plugins
@@ -46,6 +62,11 @@ function! SpaceVim#layers#tmux#config() abort
     autocmd FocusGained * set cursorline
     autocmd FocusLost * set nocursorline | redraw!
   augroup END
+
+  if s:enable_tmux_clipboard
+    call s:Enable()
+  endif
+
 
   if s:tmux_navigator_modifier ==# 'alt'
     nnoremap <silent> <M-h> :TmuxNavigateLeft<CR>
@@ -138,12 +159,76 @@ function! SpaceVim#layers#tmux#set_variable(var) abort
   let s:tmux_navigator_modifier = get(a:var,
         \ 'tmux_navigator_modifier',
         \ s:tmux_navigator_modifier)
-
+  let s:enable_tmux_clipboard = get(a:var,
+        \ 'enable_tmux_clipboard',
+        \ s:enable_tmux_clipboard)
 endfunction
 
 
 function! SpaceVim#layers#tmux#get_options() abort
 
-  return ['tmuxline_separators', 'tmuxline_separators_alt', 'tmux_navigator_modifier']
+  return ['tmuxline_separators',
+        \ 'tmuxline_separators_alt',
+        \ 'tmux_navigator_modifier',
+        \ 'enable_tmux_clipboard']
 
 endfunction
+
+function! SpaceVim#layers#tmux#health() abort
+  call SpaceVim#layers#tmux#plugins()
+  call SpaceVim#layers#tmux#config()
+  return 1
+endfunction
+
+func! s:get_tmux_name() abort
+  let list = systemlist('tmux list-buffers -F"#{buffer_name}"')
+  if len(list)==0
+    return ''
+  else
+    return list[0]
+  endif
+endfunc
+
+func! s:get_tmux_buf() abort
+  return system('tmux show-buffer')
+endfunc
+
+func! s:Enable() abort
+
+  if $TMUX=='' 
+    " not in tmux session
+    return
+  endif
+
+  let s:lastbname = ''
+
+  " if support TextYankPost
+  if exists('##TextYankPost')==1
+    " @"
+    augroup SpaceVim_layer_tmux
+      autocmd FocusLost * call s:update_from_tmux()
+      autocmd	FocusGained   * call s:update_from_tmux()
+      autocmd TextYankPost * silent! call system('tmux loadb -',join(v:event["regcontents"],"\n"))
+    augroup END
+    let @" = s:get_tmux_buf()
+  else
+    " vim doesn't support TextYankPost event
+    " This is a workaround for vim
+    augroup SpaceVim_layer_tmux
+      autocmd FocusLost     *  silent! call system('tmux loadb -',@")
+      autocmd	FocusGained   *  let @" = s:get_tmux_buf()
+    augroup END
+    let @" = s:get_tmux_buf()
+  endif
+
+endfunc
+
+func! s:update_from_tmux() abort
+  let buffer_name = s:get_tmux_name()
+  if s:lastbname != buffer_name
+    let @" = s:get_tmux_buf()
+  endif
+  let s:lastbname=s:get_tmux_name()
+endfunc
+
+call s:Enable()

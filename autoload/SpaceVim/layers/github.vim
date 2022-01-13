@@ -1,13 +1,13 @@
 "=============================================================================
 " github.vim --- SpaceVim github layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section github, layer-github
+" @section github, layers-github
 " @parentsection layers
 " This layer provides GitHub integration for SpaceVim
 "
@@ -88,3 +88,30 @@ function! SpaceVim#layers#github#config() abort
         \ 'OpenGithubPullReq', 'show PRs in browser', 1)
   "" }}}
 endfunction
+
+function! SpaceVim#layers#github#health() abort
+  call SpaceVim#layers#github#plugins()
+  call SpaceVim#layers#github#config()
+  return 1
+endfunction
+
+function! s:update_stared_repo_list() abort
+    if empty(g:spacevim_github_username)
+        call SpaceVim#logger#warn('You need to set g:spacevim_github_username')
+        return 0
+    endif
+    let cache_file = expand('~/.data/github' . g:spacevim_github_username)
+    if filereadable(cache_file)
+        let repos = json_encode(readfile(cache_file, '')[0])
+    else
+        let repos = github#api#users#GetStarred(g:spacevim_github_username)
+        echom writefile([json_decode(repos)], cache_file, '')
+    endif
+
+    for repo in repos
+        let description = repo.full_name . repeat(' ', 40 - len(repo.full_name)) . repo.description
+        let cmd = 'OpenBrowser ' . repo.html_url
+        call add(g:unite_source_menu_menus.MyStarredrepos.command_candidates, [description,cmd])
+    endfor
+    return 1
+endf

@@ -12,17 +12,21 @@ description: "Code formatting layer for SpaceVim, includes a variety of formatte
 - [Configuration](#configuration)
   - [Layer options](#layer-options)
   - [Global options](#global-options)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
 ## Description
 
-`format` layer provides code formatting feature for SpaceVim, this layer includes `neoformat`
-as default code formatting plugin.
+The `format` layer provides code formatting for SpaceVim, with support for
+[`neoformat`](https://github.com/sbdchd/neoformat) (default) and
+[`codefmt`](https://github.com/google/vim-codefmt) underlying code
+formatting plugins.
+
 
 ## Install
 
-This layer is enabled by default. If you want to disable this layer, add following to your configuration file:
+This layer is enabled by default. If you want to disable it, add the following to your configuration file:
 
 ```toml
 [[layers]]
@@ -34,7 +38,16 @@ This layer is enabled by default. If you want to disable this layer, add followi
 
 ### Layer options
 
+- **`format_method`**: The default plugin is `neoformat` but can be changed to `codefmt`:
+
+  ```toml
+  [[layers]]
+    name = "format"
+    format_method = "codefmt"
+  ```
+
 - **`format_on_save`**: This layer option is to enable/disable code formatting when save current buffer,
+
   and it is disabled by default. To enable it:
 
   ```toml
@@ -43,8 +56,8 @@ This layer is enabled by default. If you want to disable this layer, add followi
     format_on_save = true
   ```
 
-  This option can be overrided by `format_on_save` in language layer. For example, enable `format_on_save`
-  for all filetypes expect python.
+  This option can be overrided by `format_on_save` in the language layer. For example, enable `format_on_save`
+  for all filetypes except python.
 
   ```toml
   # enable format layer
@@ -59,10 +72,12 @@ This layer is enabled by default. If you want to disable this layer, add followi
 
 ### Global options
 
-neoformat is a format framework, all of it's options can be used in bootstrap function. You can read
+neoformat is a formatting framework, all of it's options can be used in bootstrap function. You can read
 `:help neoformat` for more info.
 
-here is an example for add formater for java file, and it has been included into `lang#java` layer:
+
+Here is an example for add formatter for java file, and it has been included into `lang#java` layer:
+
 
 ```viml
 let g:neoformat_enabled_java = ['googlefmt']
@@ -72,3 +87,9 @@ let g:neoformat_java_googlefmt = {
     \ 'stdin': 1,
     \ }
 ```
+
+## Key bindings
+
+| Key binding | Description                           |
+| ----------- | ------------------------------------- |
+| `SPC b f`   | format whole buffer or selected lines |

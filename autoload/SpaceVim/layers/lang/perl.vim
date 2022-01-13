@@ -1,10 +1,53 @@
 "=============================================================================
 " perl.vim --- SpaceVim lang#perl layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section lang#perl, layers-lang-perl
+" @parentsection layers
+" This layer is for perl development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#perl'
+" <
+"
+" @subsection layer options
+"
+" 1. `perl_interpreter`: Set the perl interpreter, by default, it is `perl`
+" >
+"   [[layers]]
+"     name = 'lang#perl'
+"     perl_interpreter = 'path/to/perl'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l r         run current file
+" <
+"
+" This layer also provides REPL support for perl, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
+" <
+"
+
+if exists('s:perl_interpreter')
+  finish
+endif
+
+let s:perl_interpreter = 'perl'
 
 let s:SYS = SpaceVim#api#import('system')
 
@@ -19,7 +62,7 @@ endfunction
 function! SpaceVim#layers#lang#perl#config() abort
   let g:perldoc_no_default_key_mappings = 1
   call SpaceVim#plugins#runner#reg_runner('perl', {
-        \ 'exe' : 'perl',
+        \ 'exe' : s:perl_interpreter,
         \ 'opt' : ['-'],
         \ 'usestdin' : 1,
         \ })
@@ -27,7 +70,7 @@ function! SpaceVim#layers#lang#perl#config() abort
   if executable('perli')
     call SpaceVim#plugins#repl#reg('perl', ['perli'. (s:SYS.isWindows ? '.CMD' : '')])
   else
-    call SpaceVim#plugins#repl#reg('perl', ['perl', '-del'])
+    call SpaceVim#plugins#repl#reg('perl', [s:perl_interpreter, '-del'])
   endif
 endfunction
 function! s:language_specified_mappings() abort
@@ -50,4 +93,14 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+endfunction
+
+function! SpaceVim#layers#lang#perl#set_variable(var) abort
+  let s:perl_interpreter = get(a:var, 'perl_interpreter', s:perl_interpreter)
+endfunction
+
+function! SpaceVim#layers#lang#perl#health() abort
+  call SpaceVim#layers#lang#perl#plugins()
+  call SpaceVim#layers#lang#perl#config()
+  return 1
 endfunction

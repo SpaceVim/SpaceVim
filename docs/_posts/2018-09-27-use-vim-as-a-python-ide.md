@@ -9,26 +9,35 @@ commentsID: "Use Vim as a Python IDE"
 
 # [Blogs](../blog/) >> Use Vim as a Python IDE
 
-This is a general guide for using SpaceVim as a Python IDE, including layer configuration and usage.
+This tutorial introduces you to SpaceVim as a Python environment,
+by using the `lang#python` layer, you make SpaceVim into a great lightweight Python IDE.
+
 Each of the following sections will be covered:
 
 <!-- vim-markdown-toc GFM -->
 
 - [Enable language layer](#enable-language-layer)
+- [Select a Python interpreter](#select-a-python-interpreter)
 - [Code completion](#code-completion)
 - [Syntax linting](#syntax-linting)
-- [Import packages](#import-packages)
-- [Jump to test file](#jump-to-test-file)
-- [running code](#running-code)
 - [Code formatting](#code-formatting)
+- [Import packages](#import-packages)
+- [Jump between alternate files](#jump-between-alternate-files)
+- [Code running](#code-running)
 - [REPL](#repl)
 
 <!-- vim-markdown-toc -->
 
+This tutorial is not intended to teach you Python itself.
+
+If you have any problems, feel free to join the [SpaceVim gitter chatting room](https://gitter.im/SpaceVim/SpaceVim) for general discussion.
+
+
 ### Enable language layer
 
-To add Python language support in SpaceVim, you need to enable the `lang#python` layer. Press `SPC f v d` to open
-SpaceVim configuration file, and add the following snippet to your configuration:
+The python language support in SpaceVim is provided by `lang#python` layer, and it is not enabled by default.
+You need to enable it in SpaceVim configuration file. Press `SPC f v d` to open the SpaceVim configuration file,
+and add following snippet to your configuration file.
 
 ```toml
 [[layers]]
@@ -37,24 +46,50 @@ SpaceVim configuration file, and add the following snippet to your configuration
 
 For more info, you can read the [lang#python](../layers/lang/python/) layer documentation.
 
+### Select a Python interpreter
+
+Python is an interpreted language, and in order to run Python code and get semantic information,
+you need to tell SpaceVim which interpreter to use. This can be set with `python_interpreter` layer
+option. For example:
+
+```toml
+[[layers]]
+  name = 'lang#python'
+  python_interpreter = 'D:\scoop\shims\python.exe'
+```
+
+This option will be applied to neomake's python maker and python code runner.
+
 ### Code completion
 
-`lang#python` layer will load the jedi plugin automatically, unless overriden in your `init.toml`.
-The completion menu will be opened as you type.
+Code autocompletion is provided by `autocomplete` layer, which is loaded by default.
+The language completion source is included in `lang#python` layer.
+This layer includes `deoplete-jedi` for neovim.
 
 ![complete python code](https://user-images.githubusercontent.com/13142418/46339650-f5a49280-c665-11e8-86d4-20944ec23098.png)
 
 ### Syntax linting
 
-The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
-It will run flake asynchronously.
+Code Linting is provided by [`checkers`](../layers/checkers/) layer, which is also enabled by default.
+There are two syntax linters enabled by default,
+python and [pylint](https://pylint.org/), both of them run asynchronously.
 
-To install flake8, just run following command in terminal.
+To install pylint, just run following command in terminal.
 
 ```sh
-pip install --user flake8
+pip install --user pylint
 ```
 
+### Code formatting
+
+Code formatting is provided by [`format`](../layers/format/) layer, this layer is also enabled by default.
+And the key binding to format current buffer is `SPC b f`. The default formatter for python code is [yapf](https://github.com/google/yapf).
+
+So, before using this feature, please install yapf.
+
+```sh
+pip install --user yapf
+```
 ### Import packages
 
 When edit Python file, you can import the package automatically, remove unused package and format package list.
@@ -63,10 +98,15 @@ When edit Python file, you can import the package automatically, remove unused p
 pip install --user isort
 ```
 
-### Jump to test file
+### Jump between alternate files
 
-SpaceVim use built-in plugin to manager the files in a project,
-you can add a `.project_alt.json` to the root of your project with following content:
+The alternate files manager provides a command `:A`, with this command,
+you can jump between alternate files within a project.
+
+The alternate file structure can be definded in a `.project_alt.json`
+file in the root of your project.
+
+For example:
 
 ```json
 {
@@ -77,22 +117,15 @@ you can add a `.project_alt.json` to the root of your project with following con
 
 with this configuration, you can jump between the source code and test file via command `:A`.
 
-### running code
+### Code running
 
-To run current script, you can press `SPC l r`, and a split window
-will open, the output of the script will be shown in this window.
+Code running is provided by builtin code runner. To run current script,
+you can press `SPC l r`, and a split window will open,
+the output of the script will be shown in this window.
 It is running asynchronously, and will not block your Vim.
 
 ![code runner](https://user-images.githubusercontent.com/13142418/46293837-1c5fbc00-c5c7-11e8-9f3c-c11504e2e04a.png)
 
-### Code formatting
-
-The format layer is also enabled by default, with this layer you can use key binding `SPC b f` to format current buffer.
-Before using this feature, please install yapf.
-
-```sh
-pip install --user yapf
-```
 
 ### REPL
 

@@ -984,9 +984,9 @@ function! s:finish_up(flags)
           \ ? cmdline
           \ : {'title': cmdline, 'context': {'query': @/}}
     if qf
-      call setqflist(list, a:flags.append ? 'a' : 'r', attrs)
+      call setqflist([], a:flags.append ? 'a' : 'r', attrs)
     else
-      call setloclist(0, list, a:flags.append ? 'a' : 'r', attrs)
+      call setloclist(0, [], a:flags.append ? 'a' : 'r', attrs)
     endif
   catch /E118/
   endtry

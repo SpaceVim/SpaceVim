@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#markdown layer"
-description: "Edit markdown within vim, autopreview markdown in the default browser, with this layer you can also format markdown file."
+description: "Edit markdown within vim, autopreview markdown in the default browser, with this layer you can also format markdown files."
 ---
 
 # [Available Layers](../../) >> lang#markdown
@@ -22,20 +22,20 @@ This layer is for editing markdown file.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
   name = "lang#markdown"
 ```
 
-The tagbar support is provided via lvht/tagbar-markdown which needs php has been installed. You can also use [mdctags](https://github.com/wsdjeg/mdctags.rs)
+The tagbar support is provided via lvht/tagbar-markdown which requires php to be installed. You can also use [mdctags](https://github.com/wsdjeg/mdctags.rs)
 which is written in rust.
 
 ## Formatting
 
 SpaceVim uses remark to format Markdown file by default.
-You can install remark via [npm](https://www.npmjs.com/get-npm), the commands are shown as below.
+You can install remark via [npm](https://www.npmjs.com/get-npm), the commands are shown below.
 
 ```sh
 npm -g install remark
@@ -48,7 +48,7 @@ npm -g install wcwidth
 To use [Prettier](https://github.com/prettier/prettier),
 you need to change the layer option: `enabled_formater`.
 
-You can install [Prettier](https://github.com/prettier/prettier) via [yarn](https://yarnpkg.com/lang/zh-hans/docs/install/#windows-stable) or [npm](https://www.npmjs.com/get-npm), the commands are shown as below:
+You can install [Prettier](https://github.com/prettier/prettier) via [yarn](https://yarnpkg.com/lang/zh-hans/docs/install/#windows-stable) or [npm](https://www.npmjs.com/get-npm), the commands are shown below:
 
 1. Via `yarn`
 
@@ -82,7 +82,7 @@ Bullet marker to use for list items (`'-'`, `'*'`, or `'+'`, default: `'-'`).
 
 **enabled_formater**
 
-Specific the enabled formater for markdown file, default is `['remark']`.
+Specify the enabled formater for markdown file, default is `['remark']`. You can also append multiple formatters to this list. e.g. `["remark", "prettier"]`.
 
 ## Tagbar
 
@@ -95,6 +95,8 @@ If you don't want to install php, you can use [mdctags](https://github.com/wsdje
 | Key bindings | mode          | Descriptions                                           |
 | ------------ | ------------- | ------------------------------------------------------ |
 | `SPC b f`    | Normal        | Format current buffer                                  |
+| `SPC l c`    | Normal/Visual | Create content at cursor                               |
 | `SPC l k`    | Normal/Visual | Add URL link for word under cursor or slected word     |
 | `SPC l K`    | Normal/Visual | Add picture link for word under cursor or slected word |
+| `SPC l u`    | Normal/Visual | Update content                                         |
 | `SPC l p`    | Normal        | Real-time markdown preview                             |

@@ -11,7 +11,7 @@ echo "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ 
 echo "               | ##                                                           "
 echo "               | ##                                                           "
 echo "               |__/                                                           "
-echo "                      version : 1.6.0-dev       by : spacevim.org             "
+echo "                      version : 2.0.0-dev       by : spacevim.org             "
 
 Push-Location ~
 
@@ -57,7 +57,7 @@ if (Get-Command "gvim" -ErrorAction SilentlyContinue) {
     echo "[OK] Test successfully. Moving to next..."
     sleep 1
 } else {
-    echo "[WARNING] Unable to find 'gvim.exe' in your PATH. But intallation still can continue..."
+    echo "[WARNING] Unable to find 'gvim.exe' in your PATH. But installation still can continue..."
     echo ""
     echo "[WARNING] Please install gvim later or  make your PATH correctly set! "
     Pause
@@ -80,7 +80,7 @@ if (!(Test-Path "$HOME\.SpaceVim")) {
 echo ""
 
 if (!(Test-Path "$HOME\vimfiles")) {
-    cmd /c mklink $HOME\vimfiles $repo_path
+    cmd /c mklink /J $HOME\vimfiles $repo_path
 } else {
     echo "[OK] vimfiles already exists"
 	sleep 1
@@ -88,7 +88,7 @@ if (!(Test-Path "$HOME\vimfiles")) {
 echo ""
 
 if (!(Test-Path "$HOME\AppData\Local\nvim")) {
-  cmd /c mklink "$HOME\AppData\Local\nvim" $repo_path
+  cmd /c mklink /J "$HOME\AppData\Local\nvim" $repo_path
 } else {
     echo "[OK] $HOME\AppData\Local\nvim already exists"
 	sleep 1

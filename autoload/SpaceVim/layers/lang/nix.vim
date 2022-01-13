@@ -1,13 +1,13 @@
 "=============================================================================
 " nix.vim --- nix language support for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Ben Gamari <ben@smart-cactus.org>
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#nix, layer-lang-nix
+" @section lang#nix, layers-lang-nix
 " @parentsection layers
 " @subsection Intro
 " The lang#nix layer provides syntax highlighting for the Nix
@@ -22,3 +22,9 @@ endfunction
 function! SpaceVim#layers#lang#nix#config() abort
 endfunction
 
+
+function! SpaceVim#layers#lang#nix#health() abort
+  call SpaceVim#layers#lang#nix#plugins()
+  call SpaceVim#layers#lang#nix#config()
+  return 1
+endfunction

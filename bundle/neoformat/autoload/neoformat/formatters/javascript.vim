@@ -1,5 +1,5 @@
 function! neoformat#formatters#javascript#enabled() abort
-    return ['jsbeautify', 'standard', 'prettier', 'prettydiff', 'clangformat', 'esformatter', 'prettiereslint', 'eslint_d']
+    return ['jsbeautify', 'standard', 'semistandard', 'prettier', 'prettydiff', 'clangformat', 'esformatter', 'prettiereslint', 'eslint_d', 'denofmt']
 endfunction
 
 function! neoformat#formatters#javascript#jsbeautify() abort
@@ -7,6 +7,7 @@ function! neoformat#formatters#javascript#jsbeautify() abort
             \ 'exe': 'js-beautify',
             \ 'args': ['--indent-size ' .shiftwidth()],
             \ 'stdin': 1,
+            \ 'try_node_exe': 1,
             \ }
 endfunction
 
@@ -14,7 +15,8 @@ function! neoformat#formatters#javascript#clangformat() abort
     return {
             \ 'exe': 'clang-format',
             \ 'args': ['-assume-filename=' . expand('%:t')],
-            \ 'stdin': 1
+            \ 'stdin': 1,
+            \ 'try_node_exe': 1,
             \ }
 endfunction
 
@@ -34,14 +36,16 @@ function! neoformat#formatters#javascript#esformatter() abort
     return {
         \ 'exe': 'esformatter',
         \ 'stdin': 1,
+        \ 'try_node_exe': 1,
         \ }
 endfunction
 
 function! neoformat#formatters#javascript#prettier() abort
     return {
         \ 'exe': 'prettier',
-        \ 'args': ['--stdin', '--stdin-filepath', '"%:p"'],
+        \ 'args': ['--stdin-filepath', '"%:p"'],
         \ 'stdin': 1,
+        \ 'try_node_exe': 1,
         \ }
 endfunction
 
@@ -50,6 +54,7 @@ function! neoformat#formatters#javascript#prettiereslint() abort
         \ 'exe': 'prettier-eslint',
         \ 'args': ['--stdin', '--stdin-filepath', '"%:p"'],
         \ 'stdin': 1,
+        \ 'try_node_exe': 1,
         \ }
 endfunction
 
@@ -58,6 +63,7 @@ function! neoformat#formatters#javascript#eslint_d() abort
         \ 'exe': 'eslint_d',
         \ 'args': ['--stdin', '--stdin-filename', '"%:p"', '--fix-to-stdout'],
         \ 'stdin': 1,
+        \ 'try_node_exe': 1,
         \ }
 endfunction
 
@@ -66,5 +72,23 @@ function! neoformat#formatters#javascript#standard() abort
         \ 'exe': 'standard',
         \ 'args': ['--stdin','--fix'],
         \ 'stdin': 1,
+        \ 'try_node_exe': 1,
+        \ }
+endfunction
+
+function! neoformat#formatters#javascript#denofmt() abort
+    return {
+        \ 'exe': 'deno',
+        \ 'args': ['fmt','-'],
+        \ 'stdin': 1,
+        \ }
+endfunction
+
+function! neoformat#formatters#javascript#semistandard() abort
+    return {
+        \ 'exe': 'semistandard',
+        \ 'args': ['--stdin','--fix'],
+        \ 'stdin': 1,
+        \ 'try_node_exe': 1,
         \ }
 endfunction

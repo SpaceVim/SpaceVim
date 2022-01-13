@@ -1,6 +1,6 @@
 "=============================================================================
 " fuzzy.vim --- fuzzy layer of SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -12,6 +12,12 @@ function! SpaceVim#layers#fuzzy#plugins() abort
         \ ]
   call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
   return plugins
+endfunction
+
+function! SpaceVim#layers#fuzzy#health() abort
+  call SpaceVim#layers#fuzzy#plugins()
+  call SpaceVim#layers#fuzzy#config()
+  return 1
 endfunction
 
 let s:filename = expand('<sfile>:~')

@@ -1,5 +1,5 @@
 let g:neocomplete#data_directory= get(g:, 'neocomplete#data_directory',
-      \ g:spacevim_data_dir.'/neocomplete')
+      \ g:spacevim_data_dir.'neocomplete')
 let g:acp_enableAtStartup = get(g:, 'acp_enableAtStartup', 0)
 let g:neocomplete#enable_at_startup =
       \ get(g:, 'neocomplete#enable_at_startup', 1)
@@ -69,6 +69,8 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 
-if !empty(g:_spacevim_key_sequence) && g:spacevim_escape_key_binding !=# g:_spacevim_key_sequence
+if !empty(g:_spacevim_key_sequence)
+      \ && g:_spacevim_key_sequence !=# 'nil'
+      \ && g:spacevim_escape_key_binding !=# g:_spacevim_key_sequence
   exe printf('imap <silent>%s <Plug>(neocomplete_auto_refresh)', g:_spacevim_key_sequence)
 endif

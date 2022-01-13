@@ -1,6 +1,6 @@
 "=============================================================================
 " job.vim --- job api
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2021 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -114,6 +114,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
         let self._eof = a:data[-1]
       elseif len(a:data) ==# 1 && a:data[-1] ==# '' && !empty(self._eof)
         call self._opts.on_stdout(a:id, [self._eof], 'stdout')
+        let self._eof = ''
       elseif len(a:data) ==# 1 && a:data[-1] !=# ''
         let self._eof .= a:data[-1]
       endif
@@ -130,6 +131,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
         let self._eof = a:data[-1]
       elseif len(a:data) ==# 1 && a:data[-1] ==# '' && !empty(self._eof)
         call self._opts.on_stderr(a:id, [self._eof], 'stderr')
+        let self._eof = ''
       elseif len(a:data) ==# 1 && a:data[-1] !=# ''
         let self._eof .= a:data[-1]
       endif
@@ -275,7 +277,7 @@ function! s:self.send(id, data) abort dict
   if self.nvim_job
     if has_key(self.jobs, a:id)
       if type(a:data) == type('')
-        call jobsend(a:id, [a:data, ''])
+        call jobsend(a:id, a:data . "\n")
       else
         call jobsend(a:id, a:data)
       endif
