@@ -9,7 +9,7 @@
 
 function! SpaceVim#layers#lang#org#plugins() abort
   let plugins = []
-  call add(plugins, ['SpaceVim/org-mode', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/org-mode', {'merged' : 0}])
   return plugins
 endfunction
 
