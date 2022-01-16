@@ -385,8 +385,21 @@ function! SpaceVim#mapping#space#init() abort
   call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
 
   " Searching in current buffer
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 's'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\"), 'files': bufname(\"%\")})",
-        \ 'grep-in-current-buffer', 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 's'],
+        \ 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : input("grep pattern:"), "files": bufname("%")}'
+        \ . ')',
+        \ ['grep-in-current-buffer',
+        \ [
+        \ 'SPC s s will search text in current buffer, an input promot will be opened.',
+        \ 'The default searching tool is based on search_tools option',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'S'], "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\"), 'files': bufname(\"%\")})",
         \ 'grep-cword-in-current-buffer', 1)
   " Searching in all loaded buffers
