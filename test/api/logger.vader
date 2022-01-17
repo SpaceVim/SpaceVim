@@ -17,6 +17,6 @@ Execute ( SpaceVim api: logger ):
   call log.error('info test')
   AssertEqual len(log.temp), 6
   AssertEqual len(split(log.view(1), "\n")), 7
-  AssertEqual len(split(log.view(2), "\n")), 3
-  AssertEqual len(split(log.view(3), "\n")), 1
+  AssertEqual len(split(log.view(2), "\n")), 6
+  AssertEqual len(split(log.view(3), "\n")), 4
   unlet log

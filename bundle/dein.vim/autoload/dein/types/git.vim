@@ -7,11 +7,13 @@
 
 " Global options definition.
 call dein#util#_set_default(
+      \ 'g:dein#types#git#clone_depth', 0)
+call dein#util#_set_default(
       \ 'g:dein#types#git#command_path', 'git')
 call dein#util#_set_default(
-      \ 'g:dein#types#git#default_protocol', 'https')
+      \ 'g:dein#types#git#default_hub_site', 'github.com')
 call dein#util#_set_default(
-      \ 'g:dein#types#git#clone_depth', 0)
+      \ 'g:dein#types#git#default_protocol', 'https')
 call dein#util#_set_default(
       \ 'g:dein#types#git#pull_command', 'pull --ff --ff-only')
 
@@ -69,7 +71,7 @@ function! s:type.get_uri(repo, options) abort
           \ ':.*$', '', '')
   endif
   if host ==# ''
-    let host = 'github.com'
+    let host = g:dein#types#git#default_hub_site
   endif
 
   if protocol ==# ''
@@ -198,6 +200,14 @@ function! s:type.get_rollback_command(plugin, rev) abort
   endif
 
   return [self.command, 'reset', '--hard', a:rev]
+endfunction
+function! s:type.get_diff_command(plugin, old_rev, new_rev) abort
+  if !self.executable
+    return []
+  endif
+
+  return [self.command, 'diff', a:old_rev . '..'. a:new_rev,
+        \ '--', 'doc', 'README', 'README.md']
 endfunction
 
 function! s:is_git_dir(path) abort

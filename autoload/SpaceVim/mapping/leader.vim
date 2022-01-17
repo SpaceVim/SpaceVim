@@ -199,6 +199,7 @@ function! SpaceVim#mapping#leader#getName(key) abort
 endfunction
 
 function! SpaceVim#mapping#leader#defindKEYs() abort
+  call SpaceVim#logger#debug('defind SPC h k prefixs')
   let g:_spacevim_mappings_prefixs = {}
   if !g:spacevim_vimcompatible && !empty(g:spacevim_windows_leader)
     let g:_spacevim_mappings_prefixs[g:spacevim_windows_leader] = {'name' : '+Window prefix'}

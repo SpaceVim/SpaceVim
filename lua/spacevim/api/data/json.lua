@@ -1,4 +1,6 @@
 local M = {}
+-- should use local val
+local fn = nil
 
 if vim.fn == nil then
     fn = require('spacevim').fn

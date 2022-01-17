@@ -20,8 +20,16 @@ if g:spacevim_snippet_engine ==# 'neosnippet'
     elseif neosnippet#expandable_or_jumpable() && getline('.')[col('.')-2] !=#'('
       return "\<plug>(neosnippet_expand_or_jump)"
     elseif pumvisible()
+          \ ||
+          \ (
+          \   g:spacevim_autocomplete_method ==# 'nvim-cmp'
+          \   && luaeval("require('cmp').visible()")
+          \ )
       return "\<C-n>"
-    elseif has('patch-7.4.774') && complete_parameter#jumpable(1) && getline('.')[col('.')-2] !=# ')'
+    elseif has('patch-7.4.774')
+          \ && g:spacevim_autocomplete_method !=# 'nvim-cmp'
+          \ && complete_parameter#jumpable(1)
+          \ && getline('.')[col('.')-2] !=# ')'
       return "\<plug>(complete_parameter#goto_next_parameter)"
     else
       return "\<tab>"

@@ -6,7 +6,7 @@ function! tagbar#sorting#sort(tags, compareby, compare_typeinfo) abort
     let s:compare_typeinfo = a:compare_typeinfo
 
     let comparemethod =
-            \ a:compareby == 'kind' ? 's:compare_by_kind' : 's:compare_by_line'
+            \ a:compareby ==# 'kind' ? 's:compare_by_kind' : 's:compare_by_line'
 
     call sort(a:tags, comparemethod)
 
@@ -21,6 +21,12 @@ endfunction
 function! s:compare_by_kind(tag1, tag2) abort
     let typeinfo = s:compare_typeinfo
 
+    if !has_key(typeinfo.kinddict, a:tag1.fields.kind)
+        return -1
+    endif
+    if !has_key(typeinfo.kinddict, a:tag2.fields.kind)
+        return 1
+    endif
     if typeinfo.kinddict[a:tag1.fields.kind] <#
      \ typeinfo.kinddict[a:tag2.fields.kind]
         return -1

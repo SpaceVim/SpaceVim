@@ -1,0 +1,120 @@
+Common subdirectories: src/auto and patched_src/auto
+diff -u src/eval.c patched_src/eval.c
+--- src/eval.c	2012-01-01 16:30:50.421710297 +0100
++++ patched_src/eval.c	2012-01-01 17:12:53.261832394 +0100
+@@ -360,6 +360,8 @@
+     {VV_NAME("searchforward",	 VAR_NUMBER), 0},
+     {VV_NAME("oldfiles",	 VAR_LIST), 0},
+     {VV_NAME("windowid",	 VAR_NUMBER), VV_RO},
++    {VV_NAME("foldhighlight",	 VAR_NUMBER), 0},
++    {VV_NAME("todohighlight",	 VAR_NUMBER), 0},
+ };
+ 
+ /* shorthand */
+Common subdirectories: src/GvimExt and patched_src/GvimExt
+Common subdirectories: src/os_mac_rsrc and patched_src/os_mac_rsrc
+Common subdirectories: src/po and patched_src/po
+Common subdirectories: src/proto and patched_src/proto
+diff -u src/screen.c patched_src/screen.c
+--- src/screen.c	2012-01-01 16:41:32.945741392 +0100
++++ patched_src/screen.c	2012-01-01 17:17:33.209845943 +0100
+@@ -2214,6 +2214,9 @@
+      * 4. Compose the text
+      * 5. Add the text
+      * 6. set highlighting for the Visual area an other text
++     * NOTE: in patch for VimOrganizer step 4, composing text
++     *  is moved up to happen as part of step 2.
++
+      */
+     col = 0;
+ 
+@@ -2271,11 +2274,16 @@
+ # define RL_MEMSET(p, v, l)   for (ri = 0; ri < l; ++ri) \
+ 				 ScreenAttrs[off + (p) + ri] = v
+ #endif
+-
+-    /* Set all attributes of the 'number' or 'relativenumber' column and the
+-     * text */
+-    RL_MEMSET(col, hl_attr(HLF_FL), W_WIDTH(wp) - col);
+-
++    /*
++     * 4. Compose the folded-line string with 'foldtext', if set.
++     */
++    text = get_foldtext(wp, lnum, lnume, foldinfo, buf);
++ 
++    txtcol = col;	/* remember where text starts */
++  
++    /* Set all attributes of the 'number' column and the text */
++    RL_MEMSET(col, syn_id2attr(get_vim_var_nr(VV_FOLDHIGHLIGHT)), W_WIDTH(wp) - col);
++ 
+ #ifdef FEAT_SIGNS
+     /* If signs are being displayed, add two spaces. */
+     if (draw_signcolumn(wp))
+@@ -2289,10 +2297,10 @@
+ 	    if (wp->w_p_rl)
+ 		/* the line number isn't reversed */
+ 		copy_text_attr(off + W_WIDTH(wp) - len - col,
+-					(char_u *)"  ", len, hl_attr(HLF_FL));
++					(char_u *)"  ", len, hl_attr(HLF_SC));
+ 	    else
+ # endif
+-		copy_text_attr(off + col, (char_u *)"  ", len, hl_attr(HLF_FL));
++		copy_text_attr(off + col, (char_u *)"  ", len, hl_attr(HLF_SC));
+ 	    col += len;
+ 	}
+     }
+@@ -2324,20 +2332,31 @@
+ 	    if (wp->w_p_rl)
+ 		/* the line number isn't reversed */
+ 		copy_text_attr(off + W_WIDTH(wp) - len - col, buf, len,
+-							     hl_attr(HLF_FL));
++							     hl_attr(HLF_N));
+ 	    else
+ #endif
+-		copy_text_attr(off + col, buf, len, hl_attr(HLF_FL));
++		copy_text_attr(off + col, buf, len, hl_attr(HLF_N));
+ 	    col += len;
+ 	}
+     }
++    /* now set attributes for vimorganizer todo word in headline, if any */
++    /* v:todohighlight is set in user's OrgFoldText() function. . . */
++    if (get_vim_var_nr(VV_TODOHIGHLIGHT) > 0 )
++    {
++       int start=0, end;
++       
++       while( *(text + start) == ' ' )
++         start++;     
++       end = start;
++       while( *(text + end) != ' ' )
++         end++; 
++       RL_MEMSET(start+col, syn_id2attr(get_vim_var_nr(VV_TODOHIGHLIGHT)), end - start);
++    }
+ 
+     /*
+      * 4. Compose the folded-line string with 'foldtext', if set.
+      */
+-    text = get_foldtext(wp, lnum, lnume, foldinfo, buf);
+-
+-    txtcol = col;	/* remember where text starts */
++    // moved up above to happen earlier h.s.
+ 
+     /*
+      * 5. move the text to current_ScreenLine.  Fill up with "fill_fold".
+Common subdirectories: src/tee and patched_src/tee
+Common subdirectories: src/testdir and patched_src/testdir
+diff -u src/vim.h patched_src/vim.h
+--- src/vim.h	2012-01-01 16:30:51.025710325 +0100
++++ patched_src/vim.h	2012-01-01 17:18:31.933848785 +0100
+@@ -1860,7 +1860,9 @@
+ #define VV_SEARCHFORWARD 53
+ #define VV_OLDFILES	54
+ #define VV_WINDOWID	55
+-#define VV_LEN		56	/* number of v: vars */
++#define VV_FOLDHIGHLIGHT  56
++#define VV_TODOHIGHLIGHT  57
++#define VV_LEN		58	/* number of v: vars */
+ 
+ #ifdef FEAT_CLIPBOARD
+ 
+Common subdirectories: src/VisVim and patched_src/VisVim
+Common subdirectories: src/xxd and patched_src/xxd

@@ -7,6 +7,7 @@
 "=============================================================================
 
 function! SpaceVim#mapping#z#init() abort "{{{
+  call SpaceVim#logger#debug('init z key bindings')
     nnoremap <silent><nowait> [Z] :<c-u>LeaderGuide "z"<CR>
     nmap z [Z]
     let g:_spacevim_mappings_z = {}

@@ -1,0 +1,29 @@
+name: Update Tags
+
+on:
+  # Run at midnight every day
+  schedule:
+  - cron: '0 0 * * *'
+
+jobs:
+  update:
+    name: Update Tags
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: update tags
+      run: make update
+    - name: get date
+      id: date
+      run: echo "::set-output name=date::$(date --rfc-3339=seconds)"
+    - name: check for update
+      id: diff
+      run: echo "::set-output name=diff::$(git diff --name-only data/)"
+    - name: push
+      uses: actions-x/commit@v2
+      with:
+        name: Tag Update Bot
+        files: data/tags doc/helpful-version.txt
+        message: Auto-updated tags ${{ steps.date.outputs.date }}
+      if: ${{ steps.diff.outputs.diff != '' }}

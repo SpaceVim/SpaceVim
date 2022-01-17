@@ -1,5 +1,3 @@
-let s:LOG = SpaceVim#api#import('logger')
-
 function! tagbar#debug#start_debug(...) abort
     let filename = a:0 > 0 ? a:1 : ''
 
@@ -27,14 +25,6 @@ endfunction
 function! tagbar#debug#stop_debug() abort
     let s:debug_enabled = 0
     let s:debug_file = ''
-endfunction
-
-function! tagbar#debug#info(msg) abort
-   call s:LOG.info(a:msg)
-endfunction
-
-function! tagbar#debug#warn(msg) abort
-   call s:LOG.warn(a:msg)
 endfunction
 
 function! tagbar#debug#log(msg) abort
