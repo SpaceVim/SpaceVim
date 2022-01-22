@@ -70,6 +70,7 @@
 "   SPC l c B   cargo-bench
 "   SPC l c D   cargo-docs
 "   SPC l c r   cargo-run
+"   SPC l c l   cargo-clippy
 " <
 "
 " This layer also provides REPL support for rust, the key bindings are:
