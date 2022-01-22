@@ -182,6 +182,9 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["cargo test"])',
         \ 'cargo-test', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'l'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["cargo clippy"])',
+        \ 'cargo-clippy', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'u'], 'call call('
         \ . string(function('s:execCMD')) . ', ["cargo update"])',
         \ 'update-external-dependencies', 1)
