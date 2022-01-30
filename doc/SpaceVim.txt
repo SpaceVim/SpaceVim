@@ -3497,8 +3497,8 @@ This layer also provides REPL support for nim, the key bindings are:
 LANG#NIX                                            *SpaceVim-layers-lang-nix*
 
 INTRO
-The lang#nix layer provides syntax highlighting for the Nix expression
-language.
+The lang#nix layer provides syntax highlighting and basic LSP support for the
+Nix expression language.
 
 ==============================================================================
 LANG#OCAML                                        *SpaceVim-layers-lang-ocaml*
@@ -4103,6 +4103,7 @@ MAPPINGS
   SPC l c B   cargo-bench
   SPC l c D   cargo-docs
   SPC l c r   cargo-run
+  SPC l c l   cargo-clippy
 <
 
 This layer also provides REPL support for rust, the key bindings are:

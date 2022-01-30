@@ -400,8 +400,20 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
 
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'S'], "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\"), 'files': bufname(\"%\")})",
-        \ 'grep-cword-in-current-buffer', 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'S'],
+        \ 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : expand("<cword>"), "files": bufname("%")}'
+        \ . ')',
+        \ ['grep-cword-in-current-buffer',
+        \ [
+        \ 'SPC s S will search the word under cursor within current buffer, an input promot will be opened.',
+        \ 'The default searching tool is based on search_tools option',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   " Searching in all loaded buffers
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'b'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\"), 'files':'@buffers'})",
         \ 'grep-in-all-buffers', 1)
