@@ -445,12 +445,33 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   " Searching in buffer directory
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'd'], "call SpaceVim#plugins#flygrep#open({'input' :"
-        \ . " input(\"grep pattern:\"), 'dir' : fnamemodify(expand('%'), ':p:h')})",
-        \ 'grep-in-buffer-directory', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'D'], "call SpaceVim#plugins#flygrep#open({'input' :"
-        \ . " expand(\"<cword>\"), 'dir' : fnamemodify(expand('%'), ':p:h')})",
-        \ 'grep-cword-in-buffer-directory', 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'd'],
+        \ 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : input("grep pattern:"), "dir": fnamemodify(expand("%"), ":p:h")}'
+        \ . ')',
+        \ ['grep-in-buffer-directory',
+        \ [
+        \ 'SPC s d will search text in buffer directory, an input promot will be opened.',
+        \ 'The default searching tool is based on search_tools option',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'D'],
+        \ 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : expand("<cword>"), "dir": fnamemodify(expand("%"), ":p:h")}'
+        \ . ')',
+        \ ['grep-cword-in-buffer-directory',
+        \ [
+        \ 'SPC s d will search cursor word in buffer directory, an input promot will be opened.',
+        \ 'The default searching tool is based on search_tools option',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   " Searching in files in an arbitrary directory
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'f'], "call SpaceVim#plugins#flygrep#open({'input' :"
         \ . " input(\"grep pattern:\"), 'dir' : input(\"arbitrary dir:\", '', 'dir')})",
