@@ -198,6 +198,12 @@ function! SpaceVim#autocmds#VimEnter() abort
     echom 'bootstrap_after function failed to execute. Check `SPC h L` for errors.'
     echohl None
   endif
+
+  if !filereadable('.SpaceVim.d/init.toml') && filereadable('.SpaceVim.d/init.vim')
+    call SpaceVim#logger#info('loading local conf: .SpaceVim.d/init.vim')
+    exe 'source .SpaceVim.d/init.vim'
+    call SpaceVim#logger#info('finished loading local conf')
+  endif
 endfunction
 
 function! s:disable_welcome() abort
