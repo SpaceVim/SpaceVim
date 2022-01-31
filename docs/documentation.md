@@ -160,7 +160,7 @@ To get more screenshots, see: [issue #415](https://github.com/SpaceVim/SpaceVim/
 
 SpaceVim defines a wide variety of transient states (temporary overlay maps)
 where it makes sense. This prevents one from doing repetitive and tedious
-presses on the SPC key.
+presses on the `SPC` (space) key.
 
 When a transient state is active, a documentation is displayed in the
 transient state buffer. Additional information may as well be displayed in it.
