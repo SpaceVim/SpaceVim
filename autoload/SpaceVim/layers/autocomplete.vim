@@ -86,6 +86,22 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
+  elseif g:spacevim_autocomplete_method ==# 'nvim-cmp'
+    " use bundle nvim-cmp
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-cmp', {
+          \ 'merged' : 0,
+          \ 'loadconf' : 1,
+          \ }])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-buffer', {
+          \ 'merged' : 0,
+          \ }])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-path', {
+          \ 'merged' : 0,
+          \ }])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/lspkind-nvim', {
+          \ 'merged' : 0,
+          \ 'loadconf' : 1,
+          \ }])
   elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
     call add(plugins, ['prabirshrestha/asyncomplete.vim', {
           \ 'loadconf' : 1,
@@ -120,8 +136,11 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_event' : 'CompleteDone',
           \ 'loadconf_before' : 1,
           \ }])
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/CompleteParameter.vim',
-          \ { 'merged' : 0}])
+    if g:spacevim_autocomplete_method !=# 'nvim-cmp'
+      " this plugin use same namespace as nvim-cmp
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/CompleteParameter.vim',
+            \ { 'merged' : 0}])
+    endif
   endif
   return plugins
 endfunction

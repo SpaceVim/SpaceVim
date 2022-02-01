@@ -1,5 +1,5 @@
 Execute ( SpaceVim lua api: file.fticon(ft) ):
-  if has('nvim') || has('+lua')
+  if has('nvim-0.5.0') || has('+lua')
     let file = SpaceVim#api#import('file')
     let cmp = SpaceVim#api#import('vim#compatible')
     lua spacevim_file = require('spacevim.api').import('file')
@@ -10,7 +10,7 @@ Execute ( SpaceVim lua api: file.fticon(ft) ):
   endif
 
 Execute ( SpaceVim lua api: file.unify_path(path, ...) ):
-  if has('nvim') || has('+lua')
+  if has('nvim-0.5.0') || has('+lua')
     let file = SpaceVim#api#import('file')
     let cmp = SpaceVim#api#import('vim#compatible')
     lua spacevim_file = require('spacevim.api').import('file')
@@ -29,7 +29,7 @@ Execute ( SpaceVim lua api: file.unify_path(path, ...) ):
   endif
 
 Execute ( SpaceVim lua api: file.path_to_fname(path) ):
-  if has('nvim') || has('+lua')
+  if has('nvim-0.5.0') || has('+lua')
     let file = SpaceVim#api#import('file')
     let cmp = SpaceVim#api#import('vim#compatible')
     lua spacevim_file = require('spacevim.api').import('file')
@@ -40,7 +40,7 @@ Execute ( SpaceVim lua api: file.path_to_fname(path) ):
   endif
 
 Execute ( SpaceVim lua api: file.findfile(what, where, ...) ):
-  if has('nvim') || has('+lua')
+  if has('nvim-0.5.0') || has('+lua')
     let file = SpaceVim#api#import('file')
     let cmp = SpaceVim#api#import('vim#compatible')
     lua spacevim_file = require('spacevim.api').import('file')

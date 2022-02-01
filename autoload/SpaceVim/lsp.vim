@@ -49,7 +49,7 @@ if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0
     lua vim.lsp.buf.implementation()
   endfunction
   function! SpaceVim#lsp#show_line_diagnostics() abort
-    lua vim.lsp.diagnostic.show_line_diagnostics()
+    lua require('spacevim.diagnostic').open_float()
   endfunction
   function! SpaceVim#lsp#list_workspace_folder() abort
     let workspace = luaeval('vim.lsp.buf.list_workspace_folders()')

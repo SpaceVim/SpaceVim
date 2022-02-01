@@ -94,18 +94,29 @@ function! s:wrap_id(id) abort
   return id . ' '
 endfunction
 
+" build the tab item, the first argv is bufnr, and the second argv is tabnr
 function! s:buffer_item(bufnr, ...) abort
   let name = s:tabname(a:bufnr)
+  let tabnr = get(a:000, 0, -1)
+  if tabnr != -1
+    let tabname = gettabvar(tabnr, '_spacevim_tab_name', '')
+    let len = strlen(tabname) + 3
+  else
+    let tabname = ''
+    let len = strlen(name) + 3
+  endif
   let item = {
         \ 'bufnr' : a:bufnr,
-        \ 'len' :  strlen(name) + 3,
+        \ 'len' :  len,
         \ 'bufname' : name,
-        \ 'tabnr' : get(a:000, 0, -1),
+        \ 'tabname' : tabname,
+        \ 'tabnr' : tabnr,
         \ }
   return item
 endfunction
 
 " check if the items len longer than &columns
+" the check_len function should also check the tab name.
 function! s:check_len(items) abort
   let len = 0
   for item in a:items

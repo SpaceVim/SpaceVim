@@ -1,9 +1,12 @@
-local fn = nil
-if vim.fn == nil then
-    fn = require('spacevim').fn
-else
-    fn = vim.fn
-end
+--=============================================================================
+-- logger.lua --- logger api implemented in lua
+-- Copyright (c) 2016-2019 Wang Shidong & Contributors
+-- Author: Wang Shidong < wsdjeg@outlook.com >
+-- URL: https://spacevim.org
+-- License: GPLv3
+--=============================================================================
+
+local fn = vim.fn or require('spacevim').fn
 
 local cmd = require('spacevim').cmd
 

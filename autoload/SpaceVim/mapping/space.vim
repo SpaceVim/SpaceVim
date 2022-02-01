@@ -7,10 +7,12 @@
 "=============================================================================
 
 let s:BUF = SpaceVim#api#import('vim#buffer')
+let s:TIME = SpaceVim#api#import('time')
 
 let s:file = expand('<sfile>:~')
 let s:funcbeginline =  expand('<slnum>') + 1
 function! SpaceVim#mapping#space#init() abort
+  call SpaceVim#logger#debug('init SPC key bindings')
   let g:_spacevim_mappings_space = {}
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
   let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
@@ -383,22 +385,93 @@ function! SpaceVim#mapping#space#init() abort
   call extend(g:_spacevim_mappings_prefixs['[SPC]'], get(g:, '_spacevim_mappings_space', {}))
 
   " Searching in current buffer
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 's'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\"), 'files': bufname(\"%\")})",
-        \ 'grep-in-current-buffer', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'S'], "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\"), 'files': bufname(\"%\")})",
-        \ 'grep-cword-in-current-buffer', 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 's'],
+        \ 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : input("grep pattern:"), "files": bufname("%")}'
+        \ . ')',
+        \ ['grep-in-current-buffer',
+        \ [
+        \ 'SPC s s will search text in current buffer, an input promot will be opened.',
+        \ 'The default searching tool is based on search_tools option',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'S'],
+        \ 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : expand("<cword>"), "files": bufname("%")}'
+        \ . ')',
+        \ ['grep-cword-in-current-buffer',
+        \ [
+        \ 'SPC s S will search the word under cursor within current buffer, an input promot will be opened.',
+        \ 'The default searching tool is based on search_tools option',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   " Searching in all loaded buffers
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'b'], "call SpaceVim#plugins#flygrep#open({'input' : input(\"grep pattern:\"), 'files':'@buffers'})",
-        \ 'grep-in-all-buffers', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'B'], "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\"), 'files':'@buffers'})",
-        \ 'grep-cword-in-all-buffers', 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'b'],
+        \ 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : input("grep pattern:"), "files": "@buffers"}'
+        \ . ')',
+        \ ['grep-in-all-buffers',
+        \ [
+        \ 'SPC s b will search text in all loaded buffers, an input promot will be opened.',
+        \ 'The default searching tool is based on search_tools option',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'B'],
+        \ 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : expand("<cword>"), "files": "@buffers"}'
+        \ . ')',
+        \ ['grep-cword-in-all-buffers',
+        \ [
+        \ 'SPC s B will search cursor word in all loaded buffers, an input promot will be opened.',
+        \ 'The default searching tool is based on search_tools option',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   " Searching in buffer directory
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'd'], "call SpaceVim#plugins#flygrep#open({'input' :"
-        \ . " input(\"grep pattern:\"), 'dir' : fnamemodify(expand('%'), ':p:h')})",
-        \ 'grep-in-buffer-directory', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'D'], "call SpaceVim#plugins#flygrep#open({'input' :"
-        \ . " expand(\"<cword>\"), 'dir' : fnamemodify(expand('%'), ':p:h')})",
-        \ 'grep-cword-in-buffer-directory', 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'd'],
+        \ 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : input("grep pattern:"), "dir": fnamemodify(expand("%"), ":p:h")}'
+        \ . ')',
+        \ ['grep-in-buffer-directory',
+        \ [
+        \ 'SPC s d will search text in buffer directory, an input promot will be opened.',
+        \ 'The default searching tool is based on search_tools option',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'D'],
+        \ 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : expand("<cword>"), "dir": fnamemodify(expand("%"), ":p:h")}'
+        \ . ')',
+        \ ['grep-cword-in-buffer-directory',
+        \ [
+        \ 'SPC s d will search cursor word in buffer directory, an input promot will be opened.',
+        \ 'The default searching tool is based on search_tools option',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   " Searching in files in an arbitrary directory
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'f'], "call SpaceVim#plugins#flygrep#open({'input' :"
         \ . " input(\"grep pattern:\"), 'dir' : input(\"arbitrary dir:\", '', 'dir')})",
@@ -578,6 +651,17 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 'k'],
         \ 'call SpaceVim#plugins#help#describe_key()',
         \ 'describe-key-bindings', 1)
+  let s:lnum = expand('<slnum>') + 3
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'd', 't'], 'call call('
+        \ . string(function('s:describe_current_time'))
+        \ . ', [])', ['describe-current-time',
+        \ [
+        \ 'SPC h d t is to display current time.',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#plugins#todo#list()', 'open-todo-manager', 1)
 endfunction
 
@@ -797,6 +881,11 @@ function! s:previous_buffer() abort
     echo 'no listed buffer'
     echohl None
   endtry
+endfunction
+
+function! s:describe_current_time() abort
+  let time = s:TIME.current_date() . ' ' . s:TIME.current_time()
+  echo time
 endfunction
 
 " function() wrapper

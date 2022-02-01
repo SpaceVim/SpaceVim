@@ -11,7 +11,7 @@ scriptencoding utf-8
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro options config layers usage api dev faq changelog
+" @order intro options config functions layers usage api dev faq changelog
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "
@@ -36,8 +36,14 @@ scriptencoding utf-8
 ""
 " @section Configuration, config
 " If you still want to use `~/.SpaceVim.d/init.vim` as configuration file,
-" please take a look at the following options.
-"
+" please take a look at the following options add @section(functions)
+
+
+""
+" @section Public functions, functions
+" All of these functions can be used in `~/.SpaceVim.d/init.vim` and bootstrap
+" functions.
+
 
 let s:SYSTEM = SpaceVim#api#import('system')
 
@@ -45,7 +51,7 @@ let s:SYSTEM = SpaceVim#api#import('system')
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.9.0-dev'
+let g:spacevim_version = '2.0.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -1384,7 +1390,6 @@ function! SpaceVim#end() abort
   elseif g:spacevim_vim_help_language ==# 'ja'
     let &helplang = 'jp'
   endif
-  ""
   " generate tags for SpaceVim
   let help = fnamemodify(g:_spacevim_root_dir, ':p:h') . '/doc'
   try
@@ -1392,8 +1397,6 @@ function! SpaceVim#end() abort
   catch
     call SpaceVim#logger#warn('Failed to generate helptags for SpaceVim')
   endtry
-
-  ""
   " set language
   if !empty(g:spacevim_language)
     silent exec 'lan ' . g:spacevim_language
@@ -1452,6 +1455,9 @@ function! SpaceVim#end() abort
       set guicolors
     endif
   endif
+
+  call SpaceVim#autocmds#init()
+
   if g:spacevim_colorscheme !=# '' "{{{
     try
       exec 'set background=' . g:spacevim_colorscheme_bg
@@ -1472,10 +1478,6 @@ function! SpaceVim#end() abort
       let &guifont = g:spacevim_guifont
     endif
   endif
-
-
-
-  call SpaceVim#autocmds#init()
 
   if !has('nvim-0.2.0') && !has('nvim')
     " In old version of neovim, &guicursor do not support cursor shape
@@ -1882,11 +1884,19 @@ endfunction
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v1.7.0
+" Following HEAD: changes in master branch since last release v1.9.0
 "
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
 "
-" 2021-06-16: v1.4.0
+" 2021-06-16: v1.9.0
+"
+" https://spacevim.org/SpaceVim-release-v1.9.0/
+"
+" 2021-06-16: v1.8.0
+"
+" https://spacevim.org/SpaceVim-release-v1.8.0/
+"
+" 2021-06-16: v1.7.0
 "
 " https://spacevim.org/SpaceVim-release-v1.7.0/
 "

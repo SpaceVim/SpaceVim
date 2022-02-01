@@ -4,104 +4,15 @@
 " License: MIT license
 "=============================================================================
 
-function! dein#_init() abort
-  let g:dein#name = ''
-  let g:dein#plugin = {}
-  let g:dein#_cache_version = 150
-  let g:dein#_plugins = {}
-  let g:dein#_base_path = ''
-  let g:dein#_cache_path = ''
-  let g:dein#_runtime_path = ''
-  let g:dein#_hook_add = ''
-  let g:dein#_ftplugin = {}
-  let g:dein#_called_lua = {}
-  let g:dein#_off1 = ''
-  let g:dein#_off2 = ''
-  let g:dein#_vimrcs = []
-  let g:dein#_block_level = 0
-  let g:dein#_event_plugins = {}
-  let g:dein#_is_sudo = $SUDO_USER !=# '' && $USER !=# $SUDO_USER
-        \ && $HOME !=# expand('~'.$USER)
-        \ && $HOME ==# expand('~'.$SUDO_USER)
-  let g:dein#_progname = fnamemodify(v:progname, ':r')
-  let g:dein#_init_runtimepath = &runtimepath
-  let g:dein#_loaded_rplugins = v:false
-
-  if get(g:, 'dein#lazy_rplugins', v:false)
-    " Disable remote plugin loading
-    let g:loaded_remote_plugins = 1
-  endif
-
-  augroup dein
-    autocmd!
-    autocmd FuncUndefined *
-          \ if stridx(expand('<afile>'), 'remote#') != 0 |
-          \   call dein#autoload#_on_func(expand('<afile>')) |
-          \ endif
-    autocmd BufRead *? call dein#autoload#_on_default_event('BufRead')
-    autocmd BufNew,BufNewFile *? call dein#autoload#_on_default_event('BufNew')
-    autocmd VimEnter *? call dein#autoload#_on_default_event('VimEnter')
-    autocmd FileType *? call dein#autoload#_on_default_event('FileType')
-    autocmd BufWritePost *.vim,*.toml,vimrc,.vimrc
-          \ call dein#util#_check_vimrcs()
-  augroup END
-  augroup dein-events | augroup END
-
-  if !exists('##CmdUndefined') | return | endif
-  autocmd dein CmdUndefined *
-        \ call dein#autoload#_on_pre_cmd(expand('<afile>'))
-  if has('nvim-0.5')
-    lua <<END
-table.insert(package.loaders, 1, (function()
-  return function(mod_name)
-    vim.fn['dein#autoload#_on_lua'](mod_name)
-    return nil
-  end
-end)())
-END
-  endif
-endfunction
 function! dein#load_cache_raw(vimrcs) abort
-  let g:dein#_vimrcs = a:vimrcs
-  let cache = get(g:, 'dein#cache_directory', g:dein#_base_path)
-        \ .'/cache_' . g:dein#_progname
-  let time = getftime(cache)
-  if !empty(filter(map(copy(g:dein#_vimrcs),
-        \ 'getftime(expand(v:val))'), 'time < v:val'))
-    return [{}, {}]
-  endif
-  let list = readfile(cache)
-  if len(list) != 3 || string(g:dein#_vimrcs) !=# list[0]
-    return [{}, {}]
-  endif
-  return [json_decode(list[1]), json_decode(list[2])]
+  return dein#min#_load_cache_raw(a:vimrcs)
 endfunction
 function! dein#load_state(path, ...) abort
-  if !exists('#dein')
-    call dein#_init()
-  endif
-  let sourced = a:0 > 0 ? a:1 : has('vim_starting') &&
-        \  (!exists('&loadplugins') || &loadplugins)
-  if (g:dein#_is_sudo || !sourced) | return 1 | endif
-  let g:dein#_base_path = expand(a:path)
-
-  let state = get(g:, 'dein#cache_directory', g:dein#_base_path)
-        \ . '/state_' . g:dein#_progname . '.vim'
-  if !filereadable(state) | return 1 | endif
-  try
-    execute 'source' fnameescape(state)
-  catch
-    if v:exception !=# 'Cache loading error'
-      call dein#util#_error('Loading state error: ' . v:exception)
-    endif
-    call dein#clear_state()
-    return 1
-  endtry
+  return call('dein#min#load_state', [a:path] + a:000)
 endfunction
 
 function! dein#tap(name) abort
-  if !has_key(g:dein#_plugins, a:name)
-        \ || !isdirectory(g:dein#_plugins[a:name].path) | return 0 | endif
+  if !dein#is_available(a:name) | return 0 | endif
   let g:dein#name = a:name
   let g:dein#plugin = g:dein#_plugins[a:name]
   return 1
@@ -110,6 +21,15 @@ function! dein#is_sourced(name) abort
   return has_key(g:dein#_plugins, a:name)
         \ && isdirectory(g:dein#_plugins[a:name].path)
         \ && g:dein#_plugins[a:name].sourced
+endfunction
+function! dein#is_available(names) abort
+  for name in type(a:names) ==# v:t_list ? a:names : [a:names]
+    if !has_key(g:dein#_plugins, name) | return 0 | endif
+    let plugin = g:dein#_plugins[name]
+    if !isdirectory(plugin.path)
+          \ || (has_key(plugin, 'if') && !eval(plugin.if)) | return 0 | endif
+  endfor
+  return 1
 endfunction
 function! dein#begin(path, ...) abort
   return dein#util#_begin(a:path, (empty(a:000) ? [] : a:1))
@@ -209,7 +129,7 @@ endfunction
 function! dein#config(arg, ...) abort
   return type(a:arg) != v:t_list ?
         \ dein#util#_config(a:arg, get(a:000, 0, {})) :
-        \ map(copy(a:arg), 'dein#util#_config(v:val, a:1)')
+        \ map(copy(a:arg), { _, val -> dein#util#_config(val, a:1) })
 endfunction
 function! dein#set_hook(plugins, hook_name, hook) abort
   return dein#util#_set_hook(a:plugins, a:hook_name, a:hook)
@@ -218,5 +138,10 @@ function! dein#save_state() abort
   return dein#util#_save_state(has('vim_starting'))
 endfunction
 function! dein#clear_state() abort
-  return dein#util#_clear_state()
+  call dein#util#_clear_state()
+
+  if !get(g:, 'dein#auto_recache', v:false) && !empty(g:dein#_ftplugin)
+    call dein#util#_notify(
+          \ 'call dein#recache_runtimepath() is needed for ftplugin feature')
+  endif
 endfunction

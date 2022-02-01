@@ -1,0 +1,108 @@
+diff -u src-orig\eval.c src-changed\eval.c
+--- src-orig\eval.c	Fri Jul 05 09:23:42 2013
++++ src-changed\eval.c	Tue Oct 29 13:58:08 2013
+@@ -358,6 +358,8 @@
+     {VV_NAME("searchforward",	 VAR_NUMBER), 0},
+     {VV_NAME("oldfiles",	 VAR_LIST), 0},
+     {VV_NAME("windowid",	 VAR_NUMBER), VV_RO},
++    {VV_NAME("foldhighlight",	 VAR_NUMBER), 0},
++    {VV_NAME("todohighlight",	 VAR_NUMBER), 0},
+ };
+ 
+ /* shorthand */
+diff -u src-orig\screen.c src-changed\screen.c
+--- src-orig\screen.c	Sat Jul 13 03:23:00 2013
++++ src-changed\screen.c	Tue Oct 29 13:52:39 2013
+@@ -2374,6 +2374,9 @@
+      * 4. Compose the text
+      * 5. Add the text
+      * 6. set highlighting for the Visual area an other text
++     * NOTE: in patch for VimOrganizer step 4, composing text
++     *  is moved up to happen as part of step 2.
++
+      */
+     col = 0;
+ 
+@@ -2432,9 +2435,15 @@
+ 				 ScreenAttrs[off + (p) + ri] = v
+ #endif
+ 
+-    /* Set all attributes of the 'number' or 'relativenumber' column and the
+-     * text */
+-    RL_MEMSET(col, hl_attr(HLF_FL), W_WIDTH(wp) - col);
++    /*
++     * 4. Compose the folded-line string with 'foldtext', if set.
++     */
++    text = get_foldtext(wp, lnum, lnume, foldinfo, buf);
++ 
++    txtcol = col;	/* remember where text starts */
++  
++    /* Set all attributes of the 'number' column and the text */
++    RL_MEMSET(col, syn_id2attr(get_vim_var_nr(VV_FOLDHIGHLIGHT)), W_WIDTH(wp) - col);
+ 
+ #ifdef FEAT_SIGNS
+     /* If signs are being displayed, add two spaces. */
+@@ -2449,10 +2458,10 @@
+ 	    if (wp->w_p_rl)
+ 		/* the line number isn't reversed */
+ 		copy_text_attr(off + W_WIDTH(wp) - len - col,
+-					(char_u *)"  ", len, hl_attr(HLF_FL));
++					(char_u *)"  ", len, hl_attr(HLF_SC));
+ 	    else
+ # endif
+-		copy_text_attr(off + col, (char_u *)"  ", len, hl_attr(HLF_FL));
++		copy_text_attr(off + col, (char_u *)"  ", len, hl_attr(HLF_SC));
+ 	    col += len;
+ 	}
+     }
+@@ -2494,20 +2503,31 @@
+ 	    if (wp->w_p_rl)
+ 		/* the line number isn't reversed */
+ 		copy_text_attr(off + W_WIDTH(wp) - len - col, buf, len,
+-							     hl_attr(HLF_FL));
++							     hl_attr(HLF_N));
+ 	    else
+ #endif
+-		copy_text_attr(off + col, buf, len, hl_attr(HLF_FL));
++		copy_text_attr(off + col, buf, len, hl_attr(HLF_N));
+ 	    col += len;
+ 	}
+     }
++    /* now set attributes for vimorganizer todo word in headline, if any */
++    /* v:todohighlight is set in user's OrgFoldText() function. . . */
++    if (get_vim_var_nr(VV_TODOHIGHLIGHT) > 0 )
++    {
++       int start=0, end;
++       
++       while( *(text + start) == ' ' )
++         start++;     
++       end = start;
++       while( *(text + end) != ' ' )
++         end++; 
++       RL_MEMSET(start+col, syn_id2attr(get_vim_var_nr(VV_TODOHIGHLIGHT)), end - start);
++    }
+ 
+     /*
+      * 4. Compose the folded-line string with 'foldtext', if set.
+      */
+-    text = get_foldtext(wp, lnum, lnume, foldinfo, buf);
+-
+-    txtcol = col;	/* remember where text starts */
++    // moved up above to happen earlier h.s.
+ 
+     /*
+      * 5. move the text to current_ScreenLine.  Fill up with "fill_fold".
+diff -u src-orig\vim.h src-changed\vim.h
+--- src-orig\vim.h	Fri Aug 02 07:02:27 2013
++++ src-changed\vim.h	Tue Oct 29 13:59:29 2013
+@@ -1866,7 +1866,9 @@
+ #define VV_SEARCHFORWARD 53
+ #define VV_OLDFILES	54
+ #define VV_WINDOWID	55
+-#define VV_LEN		56	/* number of v: vars */
++#define VV_FOLDHIGHLIGHT  56
++#define VV_TODOHIGHLIGHT  57
++#define VV_LEN		58	/* number of v: vars */
+ 
+ #ifdef FEAT_CLIPBOARD
+ 

@@ -1,5 +1,5 @@
 Execute ( lua api system ):
-  if has('nvim') || has('+lua')
+  if has('nvim-0.5.0') || has('+lua')
     let api_system = SpaceVim#api#import('system')
     let cmp = SpaceVim#api#import('vim#compatible')
     Log 'test system.isWindows'

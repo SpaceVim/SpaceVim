@@ -142,6 +142,7 @@ endfunction
 "}}}
 
 function! SpaceVim#default#layers() abort
+  call SpaceVim#logger#debug('init default layer list.')
   call SpaceVim#layers#load('autocomplete')
   call SpaceVim#layers#load('checkers')
   call SpaceVim#layers#load('format')
@@ -154,6 +155,7 @@ function! SpaceVim#default#layers() abort
 endfunction
 
 function! SpaceVim#default#keyBindings() abort
+  call SpaceVim#logger#debug('init default key bindings.')
   " yank and paste
   if has('unnamedplus')
     xnoremap <Leader>y "+y

@@ -163,6 +163,14 @@ npm install -g vim-language-server
     rust = ["rustup", "run", "nightly", "rls"]
 ```
 
+如果使用的是nvim(>=0.5.0)，则需要指定 `enabled_clients` 选项：
+
+```toml
+[[layers]]
+    name = 'lsp'
+    enabled_clients = ['vimls', 'clangd']
+```
+
 ## 快捷键
 
 | 快捷键          | 功能描述      |

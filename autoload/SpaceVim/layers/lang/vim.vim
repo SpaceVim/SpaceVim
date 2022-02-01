@@ -40,7 +40,7 @@
 "   key binding     Description
 "   SPC l e         rename symbol
 "   SPC l x         show references
-"   SPC l s         show line diagnostics
+"   SPC l h         show line diagnostics
 "   SPC l d         show document
 "   K               show document
 "   SPC l w l       list workspace folder
@@ -86,7 +86,7 @@ function! SpaceVim#layers#lang#vim#plugins() abort
       " https://github.com/maralla/completor.vim/issues/250
     endif
   endif
-  call add(plugins,['tweekmonster/helpful.vim',      {'on_cmd': 'HelpfulVersion'}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/helpful.vim', {'merged' : 0, 'on_cmd' : 'HelpfulVersion'}])
   return plugins
 endfunction
 
@@ -162,7 +162,7 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#references()', 'show-references', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'h'],
           \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
     let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],

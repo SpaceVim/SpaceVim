@@ -15,7 +15,8 @@ endfunction
 
 " s:getKind() {{{1
 function! s:getKind(kind) abort dict
-    let idx = self.kinddict[a:kind]
+    "let idx = self.kinddict[a:kind]
+    let idx = has_key(self.kinddict, a:kind) ? self.kinddict[a:kind] : -1
     return self.kinds[idx]
 endfunction
 
@@ -32,7 +33,7 @@ endfunction
 
 " s:add_snr() {{{1
 function! s:add_snr(funcname) abort
-    if !exists("s:snr")
+    if !exists('s:snr')
         let s:snr = matchstr(expand('<sfile>'), '<SNR>\d\+_\zeget_snr$')
     endif
     return s:snr . a:funcname
