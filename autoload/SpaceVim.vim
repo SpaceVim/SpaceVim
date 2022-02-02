@@ -1648,6 +1648,40 @@ endfunction
 "   function.
 
 ""
+" @section undo-tree, usage-undotree
+" @parentsection usage
+" Undo tree visualizes the undo history and makes it easier to browse and
+" switch between different undo branches.The default key binding is `F7`.
+" If `+python` or `+python3` is enabled, `vim-mundo` will be used,
+" otherwise `undotree` will be used.
+" 
+" Key bindings within undo tree windows:
+" >
+"    key bindings     description
+"    `G`              move bottom
+"    `J`              move older write
+"    `K`              move newer write
+"    `N`              previous match
+"    `P`              play to
+"    `<2-LeftMouse>`  mouse click
+"    `/`              search
+"    `<CR>`           preview
+"    `d`              diff
+"    `<down>`         move older
+"    `<up>`           move newer
+"    `i`              toggle inline
+"    `j`              move older
+"    `k`              move newer
+"    `n`              next match
+"    `o`              preview
+"    `p`              diff current buffer
+"    `q`              quit
+"    `r`              diff
+"    `gg`             move top
+"    `?`              toggle help
+" <
+
+""
 " @section windows-and-tabs, usage-windows-and-tabs
 " @parentsection usage
 " @subsection Windows related key bindings
