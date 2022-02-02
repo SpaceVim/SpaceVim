@@ -459,6 +459,7 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ ]
         \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'D'],
         \ 'call SpaceVim#plugins#flygrep#open('
         \ . '{"input" : expand("<cword>"), "dir": fnamemodify(expand("%"), ":p:h")}'
@@ -473,13 +474,34 @@ function! SpaceVim#mapping#space#init() abort
         \ ]
         \ , 1)
   " Searching in files in an arbitrary directory
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'f'], "call SpaceVim#plugins#flygrep#open({'input' :"
-        \ . " input(\"grep pattern:\"), 'dir' : input(\"arbitrary dir:\", '', 'dir')})",
-        \ 'grep-in-arbitrary-directory', 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'f'],
+        \ 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : input("grep pattern:"), "dir": input("arbitrary dir:", "", "dir")}'
+        \ . ')',
+        \ ['grep-in-arbitrary-directory',
+        \ [
+        \ 'SPC s f will search text in arbitrary directory, an input promot will be opened.',
+        \ 'The default searching tool is based on search_tools option',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'F'],
-        \ "call SpaceVim#plugins#flygrep#open({'input' :"
-        \ . " expand(\"<cword>\"), 'dir' : input(\"arbitrary dir:\", '', 'dir')})",
-        \ 'grep-cword-in-arbitrary-directory', 1)
+        \ 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : expand("<cword>"), "dir": input("arbitrary dir:", "", "dir")}'
+        \ . ')',
+        \ ['grep-cword-in-arbitrary-directory',
+        \ [
+        \ 'SPC s F will search cursor world in arbitrary directory, an input promot will be opened.',
+        \ 'The default searching tool is based on search_tools option',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ]
+        \ , 1)
   " Searching in project
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'p'],
         \ 'call SpaceVim#plugins#flygrep#open(' .
