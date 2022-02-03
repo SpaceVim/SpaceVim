@@ -61,6 +61,16 @@ function! SpaceVim#layers#leaderf#plugins() abort
 
   " use this repo unicode data
   call add(plugins, ['SpaceVim/Unite-sources', {'merged' : 0}])
+  " snippet
+  if g:spacevim_snippet_engine ==# 'neosnippet'
+    call add(plugins,  [g:_spacevim_root_dir . 'bundle/LeaderF-neosnippet', {
+          \ 'merged' : 0,
+          \ 'loadconf' : 1}])
+  elseif g:spacevim_snippet_engine ==# 'ultisnips'
+    call add(plugins,  [g:_spacevim_root_dir . 'bundle/LeaderF-snippet', {
+          \ 'merged' : 0,
+          \ 'loadconf' : 1}])
+  endif
   return plugins
 endfunction
 
@@ -205,6 +215,11 @@ function! SpaceVim#layers#leaderf#config() abort
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Leaderf unicode', 'search-and-insert-unicode', 1)
+  if g:spacevim_snippet_engine ==# 'neosnippet'
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Leaderf neosnippet', 'insert snippets', 1)
+  elseif g:spacevim_snippet_engine ==# 'ultisnips'
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Leaderf snippet', 'insert snippets', 1)
+  endif
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('

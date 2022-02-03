@@ -205,12 +205,6 @@ function! SpaceVim#layers#autocomplete#config() abort
     inoremap <silent> <M-/> <C-R>=UltiSnips#ExpandSnippetOrJump()<cr>
   endif
 
-  let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
-  if g:spacevim_snippet_engine ==# 'neosnippet'
-    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert snippets', 1)
-  elseif g:spacevim_snippet_engine ==# 'ultisnips'
-    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite ultisnips', 'insert snippets', 1)
-  endif
   if !empty(g:_spacevim_key_sequence) && g:_spacevim_key_sequence !=# 'nil'
     if g:spacevim_escape_key_binding !=# g:_spacevim_key_sequence
       augroup spacevim_layer_autocomplete
