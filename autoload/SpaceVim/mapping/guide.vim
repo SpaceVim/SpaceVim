@@ -479,7 +479,7 @@ function! s:wait_for_input() abort " {{{
     if inp ==# ' '
       let inp = '[SPC]'
     else
-      let inp = s:KEY.nr2name(char2nr(inp))
+      let inp = s:KEY.char2name(inp)
     endif
     let fsel = get(s:lmap, inp)
     if !empty(fsel)

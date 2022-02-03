@@ -985,71 +985,71 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 
 文本相关的命令 (以 `x` 开头)：
 
-| 快捷键        | 功能描述                                                           |
-| ------------- | ------------------------------------------------------------------ |
-| `SPC x a #`   | 基于分隔符 # 进行文本对齐                                          |
-| `SPC x a %`   | 基于分隔符 % 进行文本对齐                                          |
-| `SPC x a &`   | 基于分隔符 & 进行文本对齐                                          |
-| `SPC x a (`   | 基于分隔符 ( 进行文本对齐                                          |
-| `SPC x a )`   | 基于分隔符 ) 进行文本对齐                                          |
-| `SPC x a [`   | 基于分隔符 [ 进行文本对齐                                          |
-| `SPC x a ]`   | 基于分隔符 ] 进行文本对齐                                          |
-| `SPC x a {`   | 基于分隔符 { 进行文本对齐                                          |
-| `SPC x a }`   | 基于分隔符 } 进行文本对齐                                          |
-| `SPC x a ,`   | 基于分隔符 , 进行文本对齐                                          |
-| `SPC x a .`   | 基于分隔符 . 进行文本对齐(for numeric tables)                      |
-| `SPC x a :`   | 基于分隔符 : 进行文本对齐                                          |
-| `SPC x a ;`   | 基于分隔符 ; 进行文本对齐                                          |
-| `SPC x a =`   | 基于分隔符 = 进行文本对齐                                          |
-| `SPC x a ¦`   | 基于分隔符 ¦ 进行文本对齐                                          |
-| `SPC x a |`   | 基于分隔符 \| 进行文本对齐                                         |
-| `SPC x a SPC` | 基于分隔符 <Space> 进行文本对齐                                    |
-| `SPC x a a`   | align region (or guessed section) using default rules (TODO)       |
-| `SPC x a c`   | align current indentation region using default rules (TODO)        |
-| `SPC x a l`   | left-align with evil-lion (TODO)                                   |
-| `SPC x a L`   | right-align with evil-lion (TODO)                                  |
-| `SPC x a r`   | 基于用户自定义正则表达式进行文本对齐                               |
-| `SPC x a o`   | 对齐算术运算符 `+-*/`                                              |
-| `SPC x c`     | 统计选中区域的字符/单词/行数                                       |
-| `SPC x d w`   | 删除行尾空白字符                                                   |
-| `SPC x d SPC` | Delete all spaces and tabs around point, leaving one space         |
-| `SPC x g l`   | set lanuages used by translate commands (TODO)                     |
-| `SPC x g t`   | 使用 Google Translate 翻译当前单词                                 |
-| `SPC x g T`   | reverse source and target languages (TODO)                         |
-| `SPC x i c`   | change symbol style to `lowerCamelCase`                            |
-| `SPC x i C`   | change symbol style to `UpperCamelCase`                            |
-| `SPC x i i`   | cycle symbol naming styles (i to keep cycling)                     |
-| `SPC x i -`   | change symbol style to `kebab-case`                                |
-| `SPC x i k`   | change symbol style to `kebab-case`                                |
-| `SPC x i _`   | change symbol style to `under_score`                               |
-| `SPC x i u`   | change symbol style to `under_score`                               |
-| `SPC x i U`   | change symbol style to `UP_CASE`                                   |
-| `SPC x j c`   | 居中对齐当前段落                                                   |
-| `SPC x j f`   | set the justification to full (TODO)                               |
-| `SPC x j l`   | 左对齐当前段落                                                     |
-| `SPC x j n`   | set the justification to none (TODO)                               |
-| `SPC x j r`   | 右对齐当前段落                                                     |
-| `SPC x J`     | 将当前行向下移动一行并进入临时快捷键状态                           |
-| `SPC x K`     | 将当前行向上移动一行并进入临时快捷键状态                           |
-| `SPC x l d`   | 重复当前行或区域                                                   |
-| `SPC x l s`   | 排序多行文档 (忽略大小写)                                          |
-| `SPC x l S`   | 排序多行文档 (大小写敏感)                                          |
-| `SPC x l u`   | 去除重复的行 (忽略大小写)                                          |
-| `SPC x l U`   | 去除重复的行 (大小写敏感)                                          |
-| `SPC x o`     | use avy to select a link in the frame and open it (TODO)           |
-| `SPC x O`     | use avy to select multiple links in the frame and open them (TODO) |
-| `SPC x t c`   | 交换当前字符和前一个字符的位置                                     |
-| `SPC x t C`   | 交换当前字符和后一个字符的位置                                     |
-| `SPC x t w`   | 交换当前单词和前一个单词的位置                                     |
-| `SPC x t W`   | 交换当前单词和后一个单词的位置                                     |
-| `SPC x t l`   | 交换当前行和前一行的位置                                           |
-| `SPC x t L`   | 交换当前行和后一行的位置                                           |
-| `SPC x u`     | 将字符转为小写                                                     |
-| `SPC x U`     | 将字符转为大写                                                     |
-| `SPC x ~`     | 切换字符的大小写                                                   |
-| `SPC x w c`   | 统计选中区域的单词数                                               |
-| `SPC x w d`   | show dictionary entry of word from wordnik.com (TODO)              |
-| `SPC x <Tab>` | indent or dedent a region rigidly (TODO)                           |
+| 快捷键           | 功能描述                                                           |
+| ---------------- | ------------------------------------------------------------------ |
+| `SPC x a #`      | 基于分隔符 # 进行文本对齐                                          |
+| `SPC x a %`      | 基于分隔符 % 进行文本对齐                                          |
+| `SPC x a &`      | 基于分隔符 & 进行文本对齐                                          |
+| `SPC x a (`      | 基于分隔符 ( 进行文本对齐                                          |
+| `SPC x a )`      | 基于分隔符 ) 进行文本对齐                                          |
+| `SPC x a [`      | 基于分隔符 [ 进行文本对齐                                          |
+| `SPC x a ]`      | 基于分隔符 ] 进行文本对齐                                          |
+| `SPC x a {`      | 基于分隔符 { 进行文本对齐                                          |
+| `SPC x a }`      | 基于分隔符 } 进行文本对齐                                          |
+| `SPC x a ,`      | 基于分隔符 , 进行文本对齐                                          |
+| `SPC x a .`      | 基于分隔符 . 进行文本对齐(for numeric tables)                      |
+| `SPC x a :`      | 基于分隔符 : 进行文本对齐                                          |
+| `SPC x a ;`      | 基于分隔符 ; 进行文本对齐                                          |
+| `SPC x a =`      | 基于分隔符 = 进行文本对齐                                          |
+| `SPC x a ¦`      | 基于分隔符 ¦ 进行文本对齐                                          |
+| `SPC x a <bar> ` | 基于分隔符 \| 进行文本对齐                                         |
+| `SPC x a SPC`    | 基于分隔符 <Space> 进行文本对齐                                    |
+| `SPC x a a`      | align region (or guessed section) using default rules (TODO)       |
+| `SPC x a c`      | align current indentation region using default rules (TODO)        |
+| `SPC x a l`      | left-align with evil-lion (TODO)                                   |
+| `SPC x a L`      | right-align with evil-lion (TODO)                                  |
+| `SPC x a r`      | 基于用户自定义正则表达式进行文本对齐                               |
+| `SPC x a o`      | 对齐算术运算符 `+-*/`                                              |
+| `SPC x c`        | 统计选中区域的字符/单词/行数                                       |
+| `SPC x d w`      | 删除行尾空白字符                                                   |
+| `SPC x d SPC`    | Delete all spaces and tabs around point, leaving one space         |
+| `SPC x g l`      | set lanuages used by translate commands (TODO)                     |
+| `SPC x g t`      | 使用 Google Translate 翻译当前单词                                 |
+| `SPC x g T`      | reverse source and target languages (TODO)                         |
+| `SPC x i c`      | change symbol style to `lowerCamelCase`                            |
+| `SPC x i C`      | change symbol style to `UpperCamelCase`                            |
+| `SPC x i i`      | cycle symbol naming styles (i to keep cycling)                     |
+| `SPC x i -`      | change symbol style to `kebab-case`                                |
+| `SPC x i k`      | change symbol style to `kebab-case`                                |
+| `SPC x i _`      | change symbol style to `under_score`                               |
+| `SPC x i u`      | change symbol style to `under_score`                               |
+| `SPC x i U`      | change symbol style to `UP_CASE`                                   |
+| `SPC x j c`      | 居中对齐当前段落                                                   |
+| `SPC x j f`      | set the justification to full (TODO)                               |
+| `SPC x j l`      | 左对齐当前段落                                                     |
+| `SPC x j n`      | set the justification to none (TODO)                               |
+| `SPC x j r`      | 右对齐当前段落                                                     |
+| `SPC x J`        | 将当前行向下移动一行并进入临时快捷键状态                           |
+| `SPC x K`        | 将当前行向上移动一行并进入临时快捷键状态                           |
+| `SPC x l d`      | 重复当前行或区域                                                   |
+| `SPC x l s`      | 排序多行文档 (忽略大小写)                                          |
+| `SPC x l S`      | 排序多行文档 (大小写敏感)                                          |
+| `SPC x l u`      | 去除重复的行 (忽略大小写)                                          |
+| `SPC x l U`      | 去除重复的行 (大小写敏感)                                          |
+| `SPC x o`        | use avy to select a link in the frame and open it (TODO)           |
+| `SPC x O`        | use avy to select multiple links in the frame and open them (TODO) |
+| `SPC x t c`      | 交换当前字符和前一个字符的位置                                     |
+| `SPC x t C`      | 交换当前字符和后一个字符的位置                                     |
+| `SPC x t w`      | 交换当前单词和前一个单词的位置                                     |
+| `SPC x t W`      | 交换当前单词和后一个单词的位置                                     |
+| `SPC x t l`      | 交换当前行和前一行的位置                                           |
+| `SPC x t L`      | 交换当前行和后一行的位置                                           |
+| `SPC x u`        | 将字符转为小写                                                     |
+| `SPC x U`        | 将字符转为大写                                                     |
+| `SPC x ~`        | 切换字符的大小写                                                   |
+| `SPC x w c`      | 统计选中区域的单词数                                               |
+| `SPC x w d`      | show dictionary entry of word from wordnik.com (TODO)              |
+| `SPC x <Tab>`    | indent or dedent a region rigidly (TODO)                           |
 
 #### 文本插入命令
 
@@ -1289,30 +1289,30 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 缓冲区（Buffer）操作相关快捷键都是以 `SPC b` 为前缀的，以下为常用的缓冲区操作快捷键，
 主要包括了缓冲区的切换和删除等操作：
 
-| 快捷键          | 功能描述                                                                       |
-| --------------- | ------------------------------------------------------------------------------ |
-| `SPC <Tab>`     | 切换至前一缓冲区，常用于两个缓冲区来回切换                                     |
-| `SPC b .`       | 启用缓冲区临时快捷键                                                           |
-| `SPC b b`       | 通过模糊搜索工具进行缓冲区切换，需要启用一个模糊搜索工具模块                   |
-| `SPC b d`       | 删除当前缓冲区，但保留编辑窗口                                                 |
-| `SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)   |
-| `SPC b D`       | 选择一个窗口，并删除其缓冲区                                                   |
-| `SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)                    |
-| `SPC b c`       | 删除其它已保存的缓冲区                                                         |
-| `SPC b C-d`     | 删除其它所有缓冲区                                                             |
-| `SPC b C-D`     | kill buffers using a regular expression(TODO)                                  |
-| `SPC b e`       | 清除当前缓冲区内容，需要手动确认                                               |
-| `SPC b h`       | 打开欢迎界面, 等同于快捷键 `SPC a s`                                           |
-| `SPC b n`       | 切换至下一个缓冲区，排除特殊插件的缓冲区                                       |
-| `SPC b m`       | 打开消息缓冲区                                                                 |
-| `SPC u SPC b m` | kill all buffers and windows except the current one(TODO)                      |
-| `SPC b p`       | 切换至前一个缓冲区，排除特殊插件的缓冲区                                       |
-| `SPC b P`       | 使用系统剪切板内容替换当前缓冲区                                               |
-| `SPC b R`       | 从磁盘重新读取当前缓冲区所对应的文件                                           |
-| `SPC b s`       | switch to the _scratch_ buffer (create it if needed) (TODO)                    |
-| `SPC b w`       | 切换只读权限                                                                   |
-| `SPC b Y`       | 将整个缓冲区复制到系统剪切板                                                   |
-| `z f`           | Make current function or comments visible in buffer as much as possible (TODO) |
+| 快捷键               | 功能描述                                                                       |
+| -------------------- | ------------------------------------------------------------------------------ |
+| `SPC <Tab>`          | 切换至前一缓冲区，常用于两个缓冲区来回切换                                     |
+| `SPC b .`            | 启用缓冲区临时快捷键                                                           |
+| `SPC b b`            | 通过模糊搜索工具进行缓冲区切换，需要启用一个模糊搜索工具模块                   |
+| `SPC b d`            | 删除当前缓冲区，但保留编辑窗口                                                 |
+| `SPC u SPC b d`      | kill the current buffer and window (does not delete the visited file) (TODO)   |
+| `SPC b D`            | 选择一个窗口，并删除其缓冲区                                                   |
+| `SPC u SPC b D`      | kill a visible buffer and its window using ace-window(TODO)                    |
+| `SPC b c`            | 删除其它已保存的缓冲区                                                         |
+| `SPC b Ctrl-d`       | 删除其它所有缓冲区                                                             |
+| `SPC b Ctrl-Shift-d` | 删除名称匹配指定正则表达式的缓冲区                                             |
+| `SPC b e`            | 清除当前缓冲区内容，需要手动确认                                               |
+| `SPC b h`            | 打开欢迎界面, 等同于快捷键 `SPC a s`                                           |
+| `SPC b n`            | 切换至下一个缓冲区，排除特殊插件的缓冲区                                       |
+| `SPC b m`            | 打开消息缓冲区                                                                 |
+| `SPC u SPC b m`      | kill all buffers and windows except the current one(TODO)                      |
+| `SPC b p`            | 切换至前一个缓冲区，排除特殊插件的缓冲区                                       |
+| `SPC b P`            | 使用系统剪切板内容替换当前缓冲区                                               |
+| `SPC b R`            | 从磁盘重新读取当前缓冲区所对应的文件                                           |
+| `SPC b s`            | switch to the _scratch_ buffer (create it if needed) (TODO)                    |
+| `SPC b w`            | 切换只读权限                                                                   |
+| `SPC b Y`            | 将整个缓冲区复制到系统剪切板                                                   |
+| `z f`                | Make current function or comments visible in buffer as much as possible (TODO) |
 
 #### 新建空白 buffer
 
@@ -1530,9 +1530,9 @@ endfunction
 
 #### 常用按键绑定
 
-| 快捷键          | 功能描述                                  |
-| --------------- | ----------------------------------------- |
-| `SPC r l`       | 恢复上一次搜索历史                        |
+| 快捷键    | 功能描述           |
+| --------- | ------------------ |
+| `SPC r l` | 恢复上一次搜索历史 |
 
 #### 在当前文件中进行搜索
 

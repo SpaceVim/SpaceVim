@@ -129,9 +129,24 @@ function! SpaceVim#mapping#clear_buffers() abort
 endfunction
 
 function! SpaceVim#mapping#kill_buffer_expr() abort
-
-  
-
+  let regexp = input('kill buffer by regexp:',
+        \ '')
+  if !empty(regexp)
+    let blisted = filter(range(1, bufnr('$')), 'bufname(v:val) =~ regexp')
+    for i in blisted
+      if i != bufnr('%')
+        try 
+          exe 'bw ' . i
+        catch
+        endtry
+      endif
+    endfor
+    noautocmd normal! :
+    echo printf('killed buffers done(%s)', regexp)
+  else
+    noautocmd normal! :
+    echo 'canceled!'
+  endif
 endfunction
 
 function! SpaceVim#mapping#split_previous_buffer() abort
