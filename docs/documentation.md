@@ -1069,7 +1069,7 @@ to spaces. This feature can be disabled by `expand_tab` option.
 Text related commands (start with `x`):
 
 | Key Bindings  | Descriptions                                                       |
-| ------------- | ------------------------------------------------------------------ |
+| ------------- | ------------------------------------------------------------------ | ------------------ |
 | `SPC x a #`   | align region at #                                                  |
 | `SPC x a %`   | align region at %                                                  |
 | `SPC x a &`   | align region at &                                                  |
@@ -1085,7 +1085,7 @@ Text related commands (start with `x`):
 | `SPC x a ;`   | align region at ;                                                  |
 | `SPC x a =`   | align region at =                                                  |
 | `SPC x a ¦`   | align region at ¦                                                  |
-| `SPC x a |`   | align region at \|                                                 |
+| `SPC x a      | `                                                                  | align region at \| |
 | `SPC x a SPC` | align region at [SPC]                                              |
 | `SPC x a a`   | align region (or guessed section) using default rules (TODO)       |
 | `SPC x a c`   | align current indentation region using default rules (TODO)        |
@@ -1944,13 +1944,13 @@ Project manager commands start with `p`:
 
 #### Searching files in project
 
-| Key Bindings | Descriptions                             |
-| ------------ | ---------------------------------------- |
-| `SPC p f`    | find files in current project            |
-| `SPC p F`    | find cursor file in current project      |
-| `SPC p /`    | fuzzy search for text in current project |
-| `SPC p k`    | kill all buffers of current project      |
-| `SPC p p`    | list all projects                        |
+| Key Bindings         | Descriptions                             |
+| -------------------- | ---------------------------------------- |
+| `SPC p f` / `Ctrl-p` | find files in current project            |
+| `SPC p F`            | find cursor file in current project      |
+| `SPC p /`            | fuzzy search for text in current project |
+| `SPC p k`            | kill all buffers of current project      |
+| `SPC p p`            | list all projects                        |
 
 `SPC p p` will list all the projects history cross vim sessions. By default
 only 20 projects will be listed. To increase it, you can change the value
