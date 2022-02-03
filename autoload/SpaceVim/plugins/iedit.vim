@@ -16,6 +16,7 @@ let s:Operator = ''
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:VIM = SpaceVim#api#import('vim')
 
 let s:cursor_stack = []
 
@@ -81,7 +82,7 @@ function! SpaceVim#plugins#iedit#start(...) abort
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
   if empty(s:stack)
-    let curpos = getcurpos()
+    let curpos = getpos('.')
     let argv = get(a:000, 0, '')
     let save_reg_k = @k
     " the register " is cleared
@@ -118,8 +119,8 @@ function! SpaceVim#plugins#iedit#start(...) abort
   redrawstatus!
   while s:mode !=# ''
     redraw!
-    let char = getchar()
-    if s:mode ==# 'n' && char == 27
+    let char = s:VIM.getchar()
+    if s:mode ==# 'n' && char ==# "\<Esc>"
       let s:mode = ''
     else
       let symbol = s:handle(s:mode, char)
@@ -193,13 +194,13 @@ let s:toggle_stack = {}
 " here is a list of normal command which can be handled by idedit
 function! s:handle_normal(char) abort
   silent! call s:remove_cursor_highlight()
-  if a:char ==# 105
+  if a:char ==# 'i'
     " i: switch to iedit insert mode
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     redrawstatus!
-  elseif a:char == 73
+  elseif a:char ==# 'I'
     " I: move surcor to the begin, and switch to iedit insert mode
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
@@ -219,7 +220,7 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].begin = ''
     endfor
     redrawstatus!
-  elseif a:char == 9 " <tab>
+  elseif a:char ==# "\<Tab>"
     if index(keys(s:toggle_stack), s:index . '') == -1
       call extend(s:toggle_stack, {s:index : [s:stack[s:index], s:cursor_stack[s:index]]})
       call remove(s:stack, s:index)
@@ -229,7 +230,7 @@ function! s:handle_normal(char) abort
       call insert(s:cursor_stack, s:toggle_stack[s:index][1] , s:index)
       call remove(s:toggle_stack, s:index)
     endif
-  elseif a:char == 97
+  elseif a:char ==# 'a'
     " a: goto iedit insert mode after cursor char
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
@@ -243,7 +244,7 @@ function! s:handle_normal(char) abort
             \ '^.', '', 'g')
     endfor
     redrawstatus!
-  elseif a:char == 65 " A
+  elseif a:char ==# 'A'
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
@@ -253,7 +254,7 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].end = ''
     endfor
     redrawstatus!
-  elseif a:char == 67 " C
+  elseif a:char ==# 'C'
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
@@ -262,15 +263,15 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].end = ''
     endfor
     call s:replace_symbol()
-  elseif a:char == 126 " ~
+  elseif a:char ==# '~'
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].cursor = s:STRING.toggle_case(s:cursor_stack[i].cursor)
     endfor
     call s:replace_symbol()
-  elseif a:char == 102 " f
+  elseif a:char ==# 'f'
     let s:Operator = 'f'
     call s:timeout()
-  elseif a:char == 115 " s
+  elseif a:char ==# 's'
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
@@ -280,18 +281,18 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
     call s:replace_symbol()
-  elseif a:char == 120 " x
+  elseif a:char ==# 'x'
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
     call s:replace_symbol()
-  elseif a:char == 88 " X
+  elseif a:char ==# 'X'
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
     endfor
     call s:replace_symbol()
-  elseif a:char ==# "\<Left>" || a:char == 104
+  elseif a:char ==# "\<Left>" || a:char ==# 'h'
     for i in range(len(s:cursor_stack))
       if !empty(s:cursor_stack[i].begin)
         let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end
@@ -299,41 +300,41 @@ function! s:handle_normal(char) abort
         let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
       endif
     endfor
-  elseif a:char ==# "\<Right>" || a:char == 108
+  elseif a:char ==# "\<Right>" || a:char ==# 'l'
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
-  elseif a:char == 48 || a:char ==# "\<Home>" " 0 or <Home>
+  elseif a:char ==# '0' || a:char ==# "\<Home>" " 0 or <Home>
     for i in range(len(s:cursor_stack))
       let old_cursor_char = s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . old_cursor_char . s:cursor_stack[i].end , '^.', '', 'g')
       let s:cursor_stack[i].begin = ''
     endfor
-  elseif a:char == 36 || a:char ==# "\<End>"  " $ or <End>
+  elseif a:char ==# '$' || a:char ==# "\<End>"  " $ or <End>
     for i in range(len(s:cursor_stack))
       let old_cursor_char = s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '.$')
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin . old_cursor_char . s:cursor_stack[i].end , '.$', '', 'g')
       let s:cursor_stack[i].end = ''
     endfor
-  elseif a:char == 68 " D
+  elseif a:char ==# 'D'
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = ''
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
     endfor
     call s:replace_symbol()
-  elseif a:char == 112 " p
+  elseif a:char ==# 'p'
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = @"
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
     endfor
     call s:replace_symbol()
-  elseif a:char == 83 " S
+  elseif a:char ==# 'S'
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = ''
       let s:cursor_stack[i].cursor = ''
@@ -344,10 +345,10 @@ function! s:handle_normal(char) abort
     let w:spacevim_statusline_mode = 'ii'
     redrawstatus!
     call s:replace_symbol()
-  elseif a:char == 71 " G
+  elseif a:char ==# 'G'
     exe s:stack[-1][0]
     let s:index = len(s:stack) - 1
-  elseif a:char == 103 "g
+  elseif a:char ==# 'g'
     if s:Operator ==# 'g'
       exe s:stack[0][0]
       let s:Operator = ''
@@ -356,7 +357,7 @@ function! s:handle_normal(char) abort
       let s:Operator = 'g'
       call s:timeout()
     endif
-  elseif a:char == 110 " n
+  elseif a:char ==# 'n'
     if s:index == len(s:stack) - 1
       let s:index = 0
     else
@@ -364,7 +365,7 @@ function! s:handle_normal(char) abort
     endif
     call cursor(s:stack[s:index][0],
           \ s:stack[s:index][1] + len(s:cursor_stack[s:index].begin))
-  elseif a:char == 78 " N
+  elseif a:char ==# 'N'
     if s:index == 0
       let s:index = len(s:stack) - 1
     else
@@ -393,7 +394,7 @@ endfunction
 function! s:handle_insert(char) abort
   silent! call s:remove_cursor_highlight()
   let is_movement = 0
-  if a:char ==# 27 || a:char ==# 7
+  if a:char ==# "\<Esc>" || a:char ==# "\<C-g>"
     " Ctrl-g / <Esc>: switch to iedit normal mode
     let s:mode = 'n'
     let w:spacevim_iedit_mode = s:mode
@@ -402,34 +403,34 @@ function! s:handle_insert(char) abort
     redraw!
     redrawstatus!
     return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
-  elseif a:char ==# 23
+  elseif a:char ==# "\<C-w>"
     " ctrl-w: delete word before cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '\S*\s*$', '', 'g')
     endfor
-  elseif a:char ==# 21
+  elseif a:char ==# "\<C-u>"
     " ctrl-u: delete all words before cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = ''
     endfor
-  elseif a:char ==# 11
+  elseif a:char ==# "\<C-r>"
     " Ctrl-k: delete all words after cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
     endfor
-  elseif a:char ==# "\<bs>" || a:char ==# 8
+  elseif a:char ==# "\<bs>" || a:char ==# "\<C-h>"
     " BackSpace or Ctrl-h: delete char before cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
     endfor
-  elseif a:char ==# "\<Delete>" || a:char ==# 127 " <Delete>
+  elseif a:char ==# "\<Delete>" || a:char ==# "\<C-?>" " <Delete>
     " Delete: delete char after cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
-  elseif a:char ==# 2 || a:char ==# "\<Left>"
+  elseif a:char ==# "\<C-b>" || a:char ==# "\<Left>"
     " ctrl-b / <Left>: moves the cursor back one character
     let is_movement = 1
     for i in range(len(s:cursor_stack))
@@ -439,7 +440,7 @@ function! s:handle_insert(char) abort
         let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
       endif
     endfor
-  elseif a:char ==# 6 || a:char ==# "\<Right>"
+  elseif a:char ==# "\<C-f>" || a:char ==# "\<Right>"
     " ctrl-f / <Right>: moves the cursor forward one character
     let is_movement = 1
     for i in range(len(s:cursor_stack))
@@ -449,10 +450,10 @@ function! s:handle_insert(char) abort
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end,
             \ '^.', '', 'g')
     endfor
-  elseif a:char == 18 " <C-r>
+  elseif a:char ==# "\<C-r>"
     let s:Operator = 'r'
     call s:timeout()
-  elseif a:char == 1 || a:char ==# "\<Home>"
+  elseif a:char ==# "\<C-a>" || a:char ==# "\<Home>"
     " Ctrl-a or <Home>
     let is_movement = 1
     for i in range(len(s:cursor_stack))
@@ -469,7 +470,7 @@ function! s:handle_insert(char) abort
             \ '^.', '', 'g')
       let s:cursor_stack[i].begin = ''
     endfor
-  elseif a:char == 5 || a:char ==# "\<End>"
+  elseif a:char ==# "\<C-e>" || a:char ==# "\<End>"
     " Ctrl-e or <End>
     let is_movement = 1
     for i in range(len(s:cursor_stack))
@@ -488,7 +489,7 @@ function! s:handle_insert(char) abort
     endfor
   else
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin .=  nr2char(a:char)
+      let s:cursor_stack[i].begin .=  a:char
     endfor
   endif
   if !is_movement

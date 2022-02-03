@@ -1,0 +1,4 @@
+Execute ( SpaceVim plugin: code runner ):
+  call SpaceVim#plugins#tasks#list()
+  exe "normal jjjj\<Cr>"
+
