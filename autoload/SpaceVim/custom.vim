@@ -1,6 +1,6 @@
 "=============================================================================
 " custom.vim --- custom API in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -21,7 +21,7 @@ endfunction
 
 function! s:set(key,val) abort
   if !exists('g:spacevim_' . a:key)
-    call SpaceVim#logger#warn('no option named ' . a:key)
+    call SpaceVim#logger#warn('unsupported option: ' . a:key)
   else
     exe 'let ' . 'g:spacevim_' . a:key . '=' . a:val
   endif
@@ -83,29 +83,44 @@ function! s:write_to_config(config) abort
   call writefile(a:config, cf, '')
 endfunction
 
+
+""
+" The first parameter sets the type of shortcut key,
+" which can be `nnoremap` or `nmap`, the second parameter is a list of keys,
+" and the third parameter is an ex command or key binding,
+" depending on whether the last parameter is true.
+" The fourth parameter is a short description of this custom key binding.
 function! SpaceVim#custom#SPC(m, keys, cmd, desc, is_cmd) abort
-  call add(g:_spacevim_mappings_space_custom,[a:m, a:keys, a:cmd, a:desc, a:is_cmd])
+  call add(g:_spacevim_mappings_space_custom,
+        \ [a:m, a:keys, a:cmd, a:desc, a:is_cmd])
 endfunction
 
+""
+" Set the group name of custom key bindings.
 function! SpaceVim#custom#SPCGroupName(keys, name) abort
   call add(g:_spacevim_mappings_space_custom_group_name, [a:keys, a:name])
 endfunction
 
+""
+" This function offers user a way to add custom language specific key
+" bindings.
 function! SpaceVim#custom#LangSPC(ft, m, keys, cmd, desc, is_cmd) abort
   if !has_key(g:_spacevim_mappings_language_specified_space_custom, a:ft)
     let g:_spacevim_mappings_language_specified_space_custom[a:ft] = []
   endif
-  call add(g:_spacevim_mappings_language_specified_space_custom[a:ft], [a:m, a:keys, a:cmd, a:desc, a:is_cmd])
+  call add(g:_spacevim_mappings_language_specified_space_custom[a:ft],
+        \ [a:m, a:keys, a:cmd, a:desc, a:is_cmd])
 endfunction
-
+""
+" Set the group name of custom language specific key bindings.
 function! SpaceVim#custom#LangSPCGroupName(ft, keys, name) abort
-  if !has_key(g:_spacevim_mappings_language_specified_space_custom_group_name, a:ft)
-    let g:_spacevim_mappings_language_specified_space_custom_group_name[a:ft] = []
+  if !has_key(g:_spacevim_mappings_lang_group_name, a:ft)
+    let g:_spacevim_mappings_lang_group_name[a:ft] = []
   endif
-  call add(g:_spacevim_mappings_language_specified_space_custom_group_name[a:ft], [a:keys, a:name])
+  call add(g:_spacevim_mappings_lang_group_name[a:ft], [a:keys, a:name])
 endfunction
 
-function! SpaceVim#custom#apply(config, type) abort
+function! s:apply(config, type) abort
   " the type can be local or global
   " local config can override global config
   if type(a:config) != type({})
@@ -133,7 +148,8 @@ function! SpaceVim#custom#apply(config, type) abort
     let layers = get(a:config, 'layers', [])
     for layer in layers
       let enable = get(layer, 'enable', 1)
-      if (type(enable) == type('') && !eval(enable)) || (type(enable) != type('') && !enable)
+      if (type(enable) == type('') && !eval(enable))
+            \ || (type(enable) != type('') && !enable)
         call SpaceVim#layers#disable(layer.name)
       else
         call SpaceVim#layers#load(layer.name, layer)
@@ -155,14 +171,37 @@ function! SpaceVim#custom#apply(config, type) abort
         call SpaceVim#logger#info(string(plugin))
       endif
     endfor
+
+    ""
+    " @section bootstrap_before, options-bootstrap_before
+    " @parentsection options
+    " set the bootstrap_before function, this function will be called when
+    " loading custom configuration file. for example:
+    " >
+    "   [options]
+    "     bootstrap_before = 'myspacevim#before'
+    " <
+
     let bootstrap_before = get(options, 'bootstrap_before', '')
+
+    ""
+    " @section bootstrap_after, options-bootstrap_after
+    " @parentsection options
+    " set the bootstrap_after function, this function will be called on
+    " `VimEnter` event.
+    " >
+    "   [options]
+    "     bootstrap_after = 'myspacevim#after'
+    " <
+
     let g:_spacevim_bootstrap_after = get(options, 'bootstrap_after', '')
     if !empty(bootstrap_before)
       try
         call call(bootstrap_before, [])
         let g:_spacevim_bootstrap_before_success = 1
       catch
-        call SpaceVim#logger#error('failed to call bootstrap_before function: ' . bootstrap_before)
+        call SpaceVim#logger#error('bootstrap_before function failed: '
+              \ . bootstrap_before)
         call SpaceVim#logger#error('       exception: ' . v:exception)
         call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
         let g:_spacevim_bootstrap_before_success = 0
@@ -177,51 +216,53 @@ function! SpaceVim#custom#write(force) abort
 endfunction
 
 function! s:path_to_fname(path) abort
-  return expand(g:spacevim_data_dir.'/SpaceVim/conf/') . substitute(a:path, '[\\/:;.]', '_', 'g') . '.json'
+  return expand(g:spacevim_data_dir.'SpaceVim/conf/')
+        \ . substitute(a:path, '[\\/:;.]', '_', 'g') . '.json'
 endfunction
 
 function! SpaceVim#custom#load() abort
+  call SpaceVim#logger#info('start loading global config >>>')
+  call s:load_glob_conf()
   " if file .SpaceVim.d/init.toml exist
   if filereadable('.SpaceVim.d/init.toml')
-    let local_dir = s:FILE.unify_path(s:CMP.resolve(fnamemodify('.SpaceVim.d/', ':p:h')))
+    let local_dir = s:FILE.unify_path(
+          \ s:CMP.resolve(fnamemodify('.SpaceVim.d/', ':p:h')))
     let g:_spacevim_config_path = local_dir . 'init.toml'
     let &rtp = local_dir . ',' . &rtp . ',' . local_dir . 'after'
     let local_conf = g:_spacevim_config_path
     call SpaceVim#logger#info('find local conf: ' . local_conf)
     let local_conf_cache = s:path_to_fname(local_conf)
     if getftime(local_conf) < getftime(local_conf_cache)
-      call SpaceVim#logger#info('loading cached local conf: ' . local_conf_cache)
+      call SpaceVim#logger#info('loading cached local conf: '
+            \ . local_conf_cache)
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
-      call SpaceVim#custom#apply(conf, 'local')
+      call s:apply(conf, 'local')
     else
       let conf = s:TOML.parse_file(local_conf)
+      let dir = s:FILE.unify_path(expand(g:spacevim_data_dir
+            \ . 'SpaceVim/conf/'))
+      if !isdirectory(dir)
+        call mkdir(dir, 'p')
+      endif
       call SpaceVim#logger#info('generate local conf: ' . local_conf_cache)
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
-      call SpaceVim#custom#apply(conf, 'local')
-    endif
-    if g:spacevim_force_global_config
-      call SpaceVim#logger#info('force loading global config >>>')
-      call s:load_glob_conf()
+      call s:apply(conf, 'local')
     endif
   elseif filereadable('.SpaceVim.d/init.vim')
-    let local_dir = s:FILE.unify_path(s:CMP.resolve(fnamemodify('.SpaceVim.d/', ':p:h')))
+    let local_dir = s:FILE.unify_path(
+          \ s:CMP.resolve(fnamemodify('.SpaceVim.d/', ':p:h')))
     let g:_spacevim_config_path = local_dir . 'init.vim'
     let &rtp = local_dir . ',' . &rtp . ',' . local_dir . 'after'
     let local_conf = g:_spacevim_config_path
     call SpaceVim#logger#info('find local conf: ' . local_conf)
-    exe 'source .SpaceVim.d/init.vim'
-    if g:spacevim_force_global_config
-      call SpaceVim#logger#info('force loading global config >>>')
-      call s:load_glob_conf()
-    endif
   else
-    call SpaceVim#logger#info('Can not find project local config, start loading global config')
-    call s:load_glob_conf()
+    call SpaceVim#logger#info('Could not find project local config')
   endif
 
 
   if g:spacevim_enable_ycm && g:spacevim_snippet_engine !=# 'ultisnips'
-    call SpaceVim#logger#info('YCM only support ultisnips, change g:spacevim_snippet_engine to ultisnips')
+    call SpaceVim#logger#info(
+          \ 'YCM only support ultisnips')
     let g:spacevim_snippet_engine = 'ultisnips'
   endif
 endfunction
@@ -233,15 +274,22 @@ function! s:load_glob_conf() abort
   if filereadable(global_dir . 'init.toml')
     let g:_spacevim_global_config_path = global_dir . 'init.toml'
     let local_conf = global_dir . 'init.toml'
-    let local_conf_cache = s:FILE.unify_path(expand(g:spacevim_data_dir.'/SpaceVim/conf/' . fnamemodify(resolve(local_conf), ':t:r') . '.json'))
+    let local_conf_cache = s:FILE.unify_path(expand(g:spacevim_data_dir
+          \ . 'SpaceVim/conf/' . fnamemodify(resolve(local_conf), ':t:r')
+          \ . '.json'))
     let &rtp = global_dir . ',' . &rtp . ',' . global_dir . 'after'
     if getftime(resolve(local_conf)) < getftime(resolve(local_conf_cache))
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
-      call SpaceVim#custom#apply(conf, 'glob')
+      call s:apply(conf, 'glob')
     else
+      let dir = s:FILE.unify_path(expand(g:spacevim_data_dir
+            \ . 'SpaceVim/conf/'))
+      if !isdirectory(dir)
+        call mkdir(dir, 'p')
+      endif
       let conf = s:TOML.parse_file(local_conf)
       call writefile([s:JSON.json_encode(conf)], local_conf_cache)
-      call SpaceVim#custom#apply(conf, 'glob')
+      call s:apply(conf, 'glob')
     endif
   elseif filereadable(global_dir . 'init.vim')
     let g:_spacevim_global_config_path = global_dir . 'init.vim'
@@ -254,7 +302,8 @@ function! s:load_glob_conf() abort
       let g:spacevim_checkinstall = 0
       augroup SpaceVimBootstrap
         au!
-        au VimEnter * call timer_start(2000, function('SpaceVim#custom#autoconfig'))
+        au VimEnter * call timer_start(2000,
+              \ function('SpaceVim#custom#autoconfig'))
       augroup END
     endif
   endif
@@ -300,7 +349,8 @@ function! SpaceVim#custom#complete(findstart, base) abort
         let s:complete_type = 'layers_options'
         let layer_name_line = search('^\s*name\s*=','bn')
         if layer_name_line > section_line && layer_name_line < line('.')
-          let s:complete_layer_name = eval(split(getline(layer_name_line), '=')[1])
+          let s:complete_layer_name =
+                \ eval(split(getline(layer_name_line), '=')[1])
         endif
       endif
     endif
@@ -342,3 +392,5 @@ function! SpaceVim#custom#complete(findstart, base) abort
     return res
   endif
 endfunction
+
+" vim:set et sw=2 cc=80:

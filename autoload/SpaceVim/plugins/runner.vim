@@ -1,6 +1,6 @@
 "=============================================================================
 " runner.vim --- code runner for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -61,7 +61,9 @@ function! s:open_win() abort
   if exists('*win_getid')
     let s:winid = win_getid(winnr())
   endif
-  wincmd p
+  if !g:spacevim_code_runner_focus
+    wincmd p
+  endif
 endfunction
 
 function! s:insert() abort

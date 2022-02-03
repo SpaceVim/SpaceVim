@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#sml layer"
-description: "This layer is for Standard ML development, provide syntax highlighting and repl support for sml file."
+description: "This layer is for Standard ML development, provides syntax highlighting and repl support for sml files."
 ---
 
 # [Available Layers](../../) >> lang#sml
@@ -22,7 +22,7 @@ This layer is for Standard ML development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -39,7 +39,7 @@ To use this configuration layer, update custom configuration file with:
   - `mlb`: Auto build def-use if there's a `*.mlb` file
   - `always`: Always build def-use file
   - `never`: Never build def-use file
-- `enable_conceal`: `true`/`false`. Whether to enable concealing for SML files. `false` by defaults.
+- `enable_conceal`: `true`/`false`. Whether to enable concealing for SML files. `false` by default.
   `'a` becomes `α` (or `'α`). `fn` becomes `λ.`
 - `enable_conceal_show_tick`: `true`/`false`. When conceal is enabled, show `'α` for `'a` instead of `α`.
   Helps for alignment. `false` by default.
@@ -51,7 +51,7 @@ To use this configuration layer, update custom configuration file with:
 ### Running current script
 
 The key binding for running current sml file is `SPC l r`.
-It will run current file without loss focus,
+It will run the current file without losing focus,
 and the result will be shown in a runner buffer.
 
 ### Inferior REPL process

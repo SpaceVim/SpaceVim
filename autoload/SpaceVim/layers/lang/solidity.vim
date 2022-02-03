@@ -1,6 +1,6 @@
 "=============================================================================
 " solidity.vim --- SpaceVim solidity layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -15,4 +15,10 @@ endfunction
 
 function! SpaceVim#layers#lang#solidity#config() abort
   
+endfunction
+
+function! SpaceVim#layers#lang#solidity#health() abort
+  call SpaceVim#layers#lang#solidity#plugins()
+  call SpaceVim#layers#lang#solidity#config()
+  return 1
 endfunction

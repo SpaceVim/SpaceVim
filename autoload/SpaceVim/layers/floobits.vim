@@ -1,6 +1,6 @@
 "=============================================================================
 " floobits.vim --- SpaceVim floobits layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -17,6 +17,11 @@ function! SpaceVim#layers#floobits#plugins() abort
   return plugins
 endfunction 
 
+function! SpaceVim#layers#floobits#health() abort
+  call SpaceVim#layers#floobits#plugins()
+  call SpaceVim#layers#floobits#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#floobits#config() abort
   let g:_spacevim_mappings_space.m.f = {'name' : '+floobits'}

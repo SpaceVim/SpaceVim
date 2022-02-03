@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim core#statusline layer"
-description: "This layer provides default statusline for SpaceVim"
+description: "This layer provides a default statusline for SpaceVim"
 ---
 
 # [Available Layers](../) >> core#statusline

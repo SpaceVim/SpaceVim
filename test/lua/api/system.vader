@@ -1,0 +1,20 @@
+Execute ( lua api system ):
+  if has('nvim-0.5.0') || has('+lua')
+    let api_system = SpaceVim#api#import('system')
+    let cmp = SpaceVim#api#import('vim#compatible')
+    Log 'test system.isWindows'
+    AssertEqual cmp.luaeval('require("spacevim.api").import("system").isWindows'), api_system.isWindows
+    Log 'test system.isLinux'
+    AssertEqual cmp.luaeval('require("spacevim.api").import("system").isLinux'), api_system.isLinux
+    Log 'test system.isOSX'
+    AssertEqual cmp.luaeval('require("spacevim.api").import("system").isOSX'), api_system.isOSX
+    Log 'test system.name()'
+    AssertEqual cmp.luaeval('require("spacevim.api").import("system").name()'), api_system.name()
+    Log 'test system.isDarwin()'
+    AssertEqual cmp.luaeval('require("spacevim.api").import("system").isDarwin()'), api_system.isDarwin()
+    Log 'test system.fileformat()'
+    AssertEqual cmp.luaeval('require("spacevim.api").import("system").fileformat()'), api_system.fileformat()
+    unlet api_system
+  else
+    Log 'skip lua test'
+  endif

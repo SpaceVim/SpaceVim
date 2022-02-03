@@ -1,6 +1,6 @@
 "=============================================================================
 " vim.vim --- SpaceVim vim layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -19,4 +19,10 @@ function! SpaceVim#layers#vim#config() abort
     " @todo clear vim comment string highlight
     " autocmd Syntax vim syntax clear vimCommentString
   augroup END
+endfunction
+
+function! SpaceVim#layers#vim#health() abort
+  call SpaceVim#layers#vim#plugins()
+  call SpaceVim#layers#vim#config()
+  return 1
 endfunction

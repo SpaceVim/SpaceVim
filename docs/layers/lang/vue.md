@@ -8,8 +8,9 @@ description: "This layer adds Vue language support to SpaceVim"
 <!-- vim-markdown-toc GFM -->
 
 - [Description](#description)
-- [Features](#features)
-- [Install](#install)
+- [Installation](#installation)
+  - [Enable language layer](#enable-language-layer)
+  - [Language tools](#language-tools)
 
 <!-- vim-markdown-toc -->
 
@@ -17,16 +18,24 @@ description: "This layer adds Vue language support to SpaceVim"
 
 This layer adds Vue language support to SpaceVim. This layer includes plugin [vim-vue](https://github.com/posva/vim-vue).
 
-## Features
+## Installation
 
-- syntax highlighting
-- lsp support (require [lsp](https://spacevim.org/layers/language-server-protocol/) layer)
+### Enable language layer
 
-## Install
-
-To use this configuration layer, update custom configuration file with:
+The `lang#vue` layer is not loaded by default, to use this layer,
+you need to add following snippet into your spacevim configuration file.
 
 ```toml
 [[layers]]
   name = "lang#vue"
 ```
+
+### Language tools
+
+- **syntax checking:**
+
+  `checker` layer provides syntax checking feature, and for vue it uses the `eslint` and `eslint-plugin-vue` package:
+
+  ```sh
+  npm install -g eslint eslint-plugin-vue
+  ```

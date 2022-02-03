@@ -118,12 +118,12 @@ function! s:_self_vital_files() abort
   let builtin = printf('%s/__%s__/', s:vital_base_dir, s:plugin_name)
   let installed = printf('%s/_%s/', s:vital_base_dir, s:plugin_name)
   let base = builtin . ',' . installed
-  return split(globpath(base, '**/*.vim', 1), "\n")
+  return globpath(base, '**/*.vim', v:true, v:true)
 endfunction
 
 function! s:_global_vital_files() abort
   let pattern = 'autoload/vital/__*__/**/*.vim'
-  return split(globpath(&runtimepath, pattern, 1), "\n")
+  return globpath(&runtimepath, pattern, v:true, v:true)
 endfunction
 
 function! s:_extract_files(pattern, files) abort

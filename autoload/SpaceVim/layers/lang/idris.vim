@@ -1,13 +1,13 @@
 "=============================================================================
 " idris.vim --- idris language support
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#idris, layer-lang-idris
+" @section lang#idris, layers-lang-idris
 " @parentsection layers
 " This layer is for idris development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -80,4 +80,10 @@ function! s:language_specified_mappings() abort
   " nnoremap <buffer> <silent> <LocalLeader>b 0:call IdrisAddClause(0)<ENTER>
   " nnoremap <buffer> <silent> <LocalLeader>md 0:call search(":")<ENTER>b:call IdrisAddClause(1)<ENTER>w
   " nnoremap <buffer> <silent> <LocalLeader>mc :call IdrisMakeCase()<ENTER>
+endfunction
+
+function! SpaceVim#layers#lang#idris#health() abort
+  call SpaceVim#layers#lang#idris#plugins()
+  call SpaceVim#layers#lang#idris#config()
+  return 1
 endfunction

@@ -1,25 +1,27 @@
 "=============================================================================
 " shell.vim --- SpaceVim shell layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section shell, layer-shell
+" @section shell, layers-shell
 " @parentsection layers
 " SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for
 " vim. For more info, read |deol| and |vimshell|.
 "
-" @subsection variable
+" @subsection layer options
 "
-" default_shell: config the default shell to be used by shell layer.
+" 1. `default_shell`: config the default shell to be used by shell layer.
 "
 " @subsection key bindings
 " >
-"   SPC '   Open or switch to terminal windows
-"   q       Hide terminal windows in normal mode
+"   Key bindings    Description
+"   SPC '           Open or switch to terminal windows
+"   q               Hide terminal windows in normal mode
+"   ctrl-`          Hide terminal window in terminal mode
 " <
 
 let s:SYSTEM = SpaceVim#api#import('system')
@@ -63,7 +65,7 @@ function! SpaceVim#layers#shell#config() abort
     exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
     exe 'tnoremap <silent><M-Left>  <C-\><C-n>:<C-u>bprev<CR>'
     exe 'tnoremap <silent><M-Right>  <C-\><C-n>:<C-u>bnext<CR>'
-    exe 'tnoremap <silent><esc>     <C-\><C-n>'
+    exe 'tnoremap <silent><C-`>     <C-\><C-n>:q<Cr>'
     if s:SYSTEM.isWindows
       exe 'tnoremap <expr><silent><C-d>  SpaceVim#layers#shell#terminal()'
       exe 'tnoremap <expr><silent><C-u>  SpaceVim#layers#shell#ctrl_u()'
@@ -282,4 +284,10 @@ function! SpaceVim#layers#shell#close_terminal() abort
       exe 'silent bd!' . terminal_bufnr
     endif
   endfor
+endfunction
+
+function! SpaceVim#layers#shell#health() abort
+  call SpaceVim#layers#shell#plugins()
+  call SpaceVim#layers#shell#config()
+  return 1
 endfunction

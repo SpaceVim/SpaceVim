@@ -1,13 +1,13 @@
 "=============================================================================
 " pony.vim --- SpaceVim lang#pony layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#pony, layer-lang-pony
+" @section lang#pony, layers-lang-pony
 " @parentsection layers
 " This layer is for pony development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -56,4 +56,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'execute current file', 1)
+endfunction
+
+function! SpaceVim#layers#lang#pony#health() abort
+  call SpaceVim#layers#lang#pony#plugins()
+  call SpaceVim#layers#lang#pony#config()
+  return 1
 endfunction

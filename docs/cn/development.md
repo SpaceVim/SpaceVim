@@ -4,7 +4,7 @@ description: "本文档是 SpaceVim 开发者文档，描述了：1. 如何提�
 lang: zh
 ---
 
-# [主页](../) >> 开发者文档
+# 开发者文档
 
 <!-- vim-markdown-toc GFM -->
 
@@ -227,7 +227,7 @@ Vim 脚本的文件头，应该采用下面的格式：
 "=============================================================================
 
 ""
-" @section foo, layer-foo
+" @section foo, layers-foo
 " @parentsection layers
 " This the doc for this layer:
 "

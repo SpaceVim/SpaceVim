@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#csharp layer"
-description: "This layer is for csharp development"
+description: "csharp language layer, including syntax highlighting, asynchronous code runner."
 ---
 
 # [Available Layers](../../) >> lang#csharp
@@ -9,8 +9,6 @@ description: "This layer is for csharp development"
 
 - [Description](#description)
 - [Install](#install)
-  - [Layer](#layer)
-  - [OmniSharp Server](#omnisharp-server)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -21,7 +19,7 @@ This layer is for csharp development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update the custom configuration file with:
 
 ```toml
 [[layers]]
@@ -29,7 +27,7 @@ To use this configuration layer, update custom configuration file with:
   highlight_types = 0
 ```
 
-When opening a cs file at first time, it will popup a window and ask whether install the OmniSharp
+When opening a cs file for the first time, it will popup a window and ask whether install the OmniSharp
 server or not, enter 'Y' to confirm.
 
 If you choose "coc" as your auto completion engine, you must run ":CocInstall coc-omnisharp"

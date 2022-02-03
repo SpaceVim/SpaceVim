@@ -1,13 +1,13 @@
 "=============================================================================
 " kotlin.vim --- SpaceVim lang#kotlin layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#kotlin, layer-lang-kotlin
+" @section lang#kotlin, layers-lang-kotlin
 " @parentsection layers
 " This layer is for kotlin development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -127,4 +127,10 @@ function! SpaceVim#layers#lang#kotlin#set_variable(var) abort
   let s:enable_native_support = get(a:var,
         \ 'enable-native-support',
         \ 'nil')
+endfunction
+
+function! SpaceVim#layers#lang#kotlin#health() abort
+  call SpaceVim#layers#lang#kotlin#plugins()
+  call SpaceVim#layers#lang#kotlin#config()
+  return 1
 endfunction

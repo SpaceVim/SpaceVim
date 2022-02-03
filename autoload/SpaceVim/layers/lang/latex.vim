@@ -1,11 +1,48 @@
 "=============================================================================
 " latex.vim --- lang#latex layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#latex, layers-lang-latex
+" @parentsection layers
+" This layer is for latex development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#latex'
+" <
+"
+" @subsection Key bindings
+" >
+"   Mode            Key             Function
+"   ---------------------------------------------
+"   normal          SPC l i         vimtex-info
+"   normal          SPC l I         vimtex-info-full
+"   normal          SPC l t         vimtex-toc-open
+"   normal          SPC l T         vimtex-toc-toggle
+"   normal          SPC l y         vimtex-labels-open
+"   normal          SPC l Y         vimtex-labels-toggle
+"   normal          SPC l v         vimtex-view
+"   normal          SPC l r         vimtex-reverse-search
+"   normal          SPC l l         vimtex-compile
+"   normal          SPC l L         vimtex-compile-selected
+"   normal          SPC l k         vimtex-stop
+"   normal          SPC l K         vimtex-stop-all
+"   normal          SPC l e         vimtex-errors
+"   normal          SPC l o         vimtex-compile-output
+"   normal          SPC l g         vimtex-status
+"   normal          SPC l G         vimtex-status-all
+"   normal          SPC l c         vimtex-clean
+"   normal          SPC l C         vimtex-clean-full
+"   normal          SPC l m         vimtex-imaps-list
+"   normal          SPC l x         vimtex-reload
+"   normal          SPC l X         vimtex-reload-state
+"   normal          SPC l s         vimtex-toggle-main
+" <
 
 function! SpaceVim#layers#lang#latex#plugins() abort
   let plugins = []
@@ -85,4 +122,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s'],
         \ '<plug>(vimtex-toggle-main)',
         \ 'vimtex-toggle-main', 0)
+endfunction
+
+function! SpaceVim#layers#lang#latex#health() abort
+  call SpaceVim#layers#lang#latex#plugins()
+  call SpaceVim#layers#lang#latex#config()
+  return 1
 endfunction

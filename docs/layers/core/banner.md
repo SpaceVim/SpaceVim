@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim core#banner layer"
-description: "This layer provides many default banner on welcome page."
+description: "This layer provides many default banners on the welcome page."
 ---
 
 # [Available Layers](../) >> core#banner
@@ -14,7 +14,7 @@ description: "This layer provides many default banner on welcome page."
 
 ## Description
 
-  This layer provides many default banners on welcome page.
+  This layer provides many default banners on the welcome page.
 
 ## Configuration
 

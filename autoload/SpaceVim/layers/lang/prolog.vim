@@ -1,19 +1,40 @@
 "=============================================================================
 " prolog.vim --- prolog support in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#prolog, layer-lang-prolog
+" @section lang#prolog, layers-lang-prolog
 " @parentsection layers
 " This layer is for prolog development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
 " >
 "   [[layers]]
 "     name = 'lang#prolog'
+" <
+"
+" @subsection Key bindings
+"
+" >
+"   Key             Function
+"   --------------------------------
+"   SPC l r         run current file
+" <
+"
+" The default code runner command is `swipl -q -f %s -t main`, `%s` will be
+" replaced to the path of current file.
+"
+" This layer also provides REPL support for prolog, the key bindings are:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC l s i       Start a inferior REPL process
+"   SPC l s b       send whole buffer
+"   SPC l s l       send current line
+"   SPC l s s       send selection text
 " <
 "
 
@@ -46,4 +67,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+endfunction
+
+function! SpaceVim#layers#lang#prolog#health() abort
+  call SpaceVim#layers#lang#prolog#plugins()
+  call SpaceVim#layers#lang#prolog#config()
+  return 1
 endfunction

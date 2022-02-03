@@ -1,6 +1,6 @@
 "=============================================================================
 " tasks.vim --- tasks support
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -229,4 +229,4 @@ function! SpaceVim#plugins#tasks#reg_provider(provider) abort
   call add(s:providers, a:provider)
 endfunction
 
-call SpaceVim#plugins#tasks#reg_provider(funcref('s:detect_npm_tasks'))
+call SpaceVim#plugins#tasks#reg_provider(function('s:detect_npm_tasks'))

@@ -1,13 +1,13 @@
 "=============================================================================
 " exprfold.vim --- SpaceVim exprfold layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section exprfold, layer-exprfold
+" @section exprfold, layers-exprfold
 " @parentsection layers
 " Fold code quickly according to expr.
 "
@@ -20,6 +20,12 @@
 "   ZC          normal          Fold block comment
 " <
 
+
+function! SpaceVim#layers#exprfold#health() abort
+  call SpaceVim#layers#exprfold#plugins()
+  call SpaceVim#layers#exprfold#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#exprfold#plugins() abort
     return [

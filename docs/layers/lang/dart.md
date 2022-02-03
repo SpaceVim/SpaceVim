@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#dart layer"
-description: "This layer is for Dart development, provide autocompletion, syntax checking, code format for Dart file."
+description: "This layer is for Dart development, provides autocompletion, syntax checking and code formatting for Dart files."
 ---
 
 # [Available Layers](../../) >> lang#dart
@@ -13,6 +13,7 @@ description: "This layer is for Dart development, provide autocompletion, syntax
   - [Layer](#layer)
   - [Syntax checking && Code formatting](#syntax-checking--code-formatting)
   - [Install dart-repl](#install-dart-repl)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
   - [Running current script](#running-current-script)
@@ -38,7 +39,7 @@ This layer is for Dart development.
 
 ### Layer
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
@@ -58,6 +59,10 @@ You need to install the dart_repl via pub, pub is a build-in package manager in 
 pub global activate dart_repl
 ```
 
+## Layer options
+
+- `dart_sdk_path`: Set the path of dart sdk, by default, it is `''`.
+
 ## Key bindings
 
 ### Inferior REPL process
@@ -74,11 +79,11 @@ Send code to inferior process commands:
 
 ### Running current script
 
-To running a ruby script, you can press `SPC l r` to run current file without loss focus, and the result will be shown in a runner buffer.
+To run a ruby script, you can press `SPC l r` to run the current file without losing focus, and the result will be shown in a runner buffer.
 
 ### Code formatting
 
-The code formatting is provided by `format` layer, and it will run `dartfmt` asynchronously.
+The code formatting is provided by the `format` layer, and it will run `dartfmt` asynchronously.
 
 | Key Bindings | Descriptions          |
 | ------------ | --------------------- |
@@ -86,7 +91,7 @@ The code formatting is provided by `format` layer, and it will run `dartfmt` asy
 
 ### Flutter integration
 
-When edit dart file, the following key bindings are available for running flutter commands.
+When editing a dart file, the following key bindings are available for running flutter commands.
 
 | Key bindings | Descriptions                     |
 | ------------ | -------------------------------- |

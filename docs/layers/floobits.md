@@ -18,7 +18,7 @@ description: "This layer adds support for the peer programming tool floobits to 
 
 This layer adds support for the peer programming tool floobits to SpaceVim.
 
-NOTE: This layer only support neovim.
+NOTE: This layer only supports neovim.
 
 ## Features
 

@@ -1,6 +1,6 @@
 "=============================================================================
 " language.vim --- programming language information layer
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -14,6 +14,8 @@ let s:self.__aliases = {
       \ 'typescriptreact' : 'TypeScript React',
       \ 'python' : 'Python',
       \ 'java' : 'Java',
+      \ 'smalltalk' : 'SmallTalk',
+      \ 'objc' : 'Objective-C',
       \ }
 
 

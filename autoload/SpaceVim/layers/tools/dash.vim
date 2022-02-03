@@ -1,13 +1,13 @@
 "=============================================================================
 " dash.vim --- tools#dash layer file for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section tools#dash, layer-tools-dash
+" @section tools#dash, layers-tools-dash
 " @parentsection layers
 " This layer provides Dash integration for SpaceVim
 
@@ -37,4 +37,10 @@ function! SpaceVim#layers#tools#dash#config() abort
         \ '<Plug>DashSearch', 'search word under cursor', 0)
   call SpaceVim#mapping#space#def('nmap', ['D', 'D'],
         \ '<Plug>DashGlobalSearch', 'search word under cursor in all docs', 0)
+endfunction
+
+function! SpaceVim#layers#tools#dash#health() abort
+  call SpaceVim#layers#tools#dash#plugins()
+  call SpaceVim#layers#tools#dash#config()
+  return 1
 endfunction

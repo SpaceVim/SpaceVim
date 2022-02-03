@@ -1,0 +1,49 @@
+*vim-lua.txt*	lua development plugin for Vim
+SpaceVim                                                             *vim-lua*
+
+==============================================================================
+CONTENTS                                                    *vim-lua-contents*
+  1. Introduction..............................................|vim-lua-intro|
+  2. Configuration............................................|vim-lua-config|
+  3. Functions.............................................|vim-lua-functions|
+  4. Mappings...............................................|vim-lua-mappings|
+
+==============================================================================
+INTRODUCTION                                                   *vim-lua-intro*
+
+lua development plugin for vim and neovim.
+
+==============================================================================
+CONFIGURATION                                                 *vim-lua-config*
+
+                                                      *g:lua_default_mappings*
+Diable/Enable default mappings in lua buffer.
+>
+  mode        key         functinon
+  normal      <leader>fl  print functin list
+<
+
+==============================================================================
+FUNCTIONS                                                  *vim-lua-functions*
+
+lua#complete({findstart}, {base})                             *lua#complete()*
+  this function is the omnifunc for lua file. to enable lua complete, add this
+  to you vimrc.
+>
+    augroup vim-lua
+    autocmd!
+    autocmd FileType lua setlocal omnifunc=lua#complete
+    augroup END
+<
+
+==============================================================================
+MAPPINGS                                                    *vim-lua-mappings*
+
+luacomplete defined some mappings for lua buffer:
+>
+  <Plug>PrintFunctionList  print functino list
+  <Plug>WriteAndLuaFile    wirte and luafile
+<
+
+
+vim:tw=78:ts=8:ft=help:norl:

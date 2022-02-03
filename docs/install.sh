@@ -2,7 +2,7 @@
 
 #=============================================================================
 # install.sh --- bootstrap script for SpaceVim
-# Copyright (c) 2016-2020 Shidong Wang & Contributors
+# Copyright (c) 2016-2021 Shidong Wang & Contributors
 # Author: Shidong Wang < wsdjeg at 163.com >
 # URL: https://spacevim.org
 # License: GPLv3
@@ -84,7 +84,7 @@ On_IWhite='\033[0;107m'   # White
 # }}}
 
 # version
-Version='1.7.0-dev'
+Version='2.0.0-dev'
 #System name
 System="$(uname -s)"
 
@@ -287,6 +287,7 @@ usage () {
     echo " -v, --version            Show version information and exit"
     echo " -u, --uninstall          Uninstall SpaceVim"
     echo " -c, --checkRequirements  checkRequirements for SpaceVim"
+    echo " --no-fonts               skip downloading fonts"
     echo ""
     echo "EXAMPLE"
     echo ""
@@ -436,6 +437,16 @@ main () {
                 ;;
             --help|-h)
                 usage
+                exit 0
+                ;;
+            --no-fonts)
+                welcome
+                need_cmd 'git'
+                fetch_repo
+                install_vim
+                install_neovim
+                install_package_manager
+                install_done
                 exit 0
                 ;;
             --version|-v)

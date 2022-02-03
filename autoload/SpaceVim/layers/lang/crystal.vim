@@ -1,13 +1,13 @@
 "=============================================================================
 " crystal.vim --- SpaceVim lang#crystal layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#crystal, layer-lang-crystal
+" @section lang#crystal, layers-lang-crystal
 " @parentsection layers
 " @subsection Intro
 "
@@ -72,3 +72,9 @@ function! s:language_specified_mappings() abort
   endif
 endfunction
 
+
+function! SpaceVim#layers#lang#crystal#health() abort
+  call SpaceVim#layers#lang#crystal#plugins()
+  call SpaceVim#layers#lang#crystal#config()
+  return 1
+endfunction

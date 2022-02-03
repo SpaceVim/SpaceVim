@@ -1,13 +1,13 @@
 "=============================================================================
 " github.vim --- SpaceVim github layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section github, layer-github
+" @section github, layers-github
 " @parentsection layers
 " This layer provides GitHub integration for SpaceVim
 "
@@ -87,6 +87,12 @@ function! SpaceVim#layers#github#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'h', 'p'],
         \ 'OpenGithubPullReq', 'show PRs in browser', 1)
   "" }}}
+endfunction
+
+function! SpaceVim#layers#github#health() abort
+  call SpaceVim#layers#github#plugins()
+  call SpaceVim#layers#github#config()
+  return 1
 endfunction
 
 function! s:update_stared_repo_list() abort

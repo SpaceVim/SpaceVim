@@ -1,13 +1,13 @@
 "=============================================================================
 " elixir.vim --- SpaceVim lang#elixir layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#elixir, layer-lang-elixir
+" @section lang#elixir, layers-lang-elixir
 " @parentsection layers
 " This layer is for elixir development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -93,5 +93,13 @@ function! s:go_to_def() abort
   endif
 endfunction
 
+
+
+
+function! SpaceVim#layers#lang#elixir#health() abort
+  call SpaceVim#layers#lang#elixir#plugins()
+  call SpaceVim#layers#lang#elixir#config()
+  return 1
+endfunction
 
 " vim:set et sw=2 cc=80:

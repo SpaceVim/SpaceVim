@@ -1,15 +1,48 @@
 "=============================================================================
 " fzf.vim --- fzf layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+""
+" @section fzf, layers-fzf
+" @parentsection layers
+" This layer provides fuzzy finder feature which is based on `fzf`.
+" This layer is not loaded by default. To use this layer:
+" >
+"   [[layers]]
+"     name = 'fzf'
+" <
+" @subsection Key bindings
+"
+" The following key bindings will be enabled when this layer is loaded:
+" >
+"   Key bindings      Description
+"   SPC p f / Ctrl-p  search files in current directory
+"   <Leader> f SPC    Fuzzy find menu:CustomKeyMaps
+"   <Leader> f e      Fuzzy find register
+"   <Leader> f h      Fuzzy find history/yank
+"   <Leader> f j      Fuzzy find jump, change
+"   <Leader> f l      Fuzzy find location list
+"   <Leader> f m      Fuzzy find output messages
+"   <Leader> f o      Fuzzy find functions
+"   <Leader> f t      Fuzzy find tags
+"   <Leader> f q      Fuzzy find quick fix
+"   <Leader> f p      Fuzzy find bundle plugins
+" <
+
+
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:SYS = SpaceVim#api#import('system')
 
+function! SpaceVim#layers#fzf#health() abort
+  call SpaceVim#layers#fzf#plugins()
+  call SpaceVim#layers#fzf#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#fzf#plugins() abort
   let plugins = []
@@ -458,11 +491,27 @@ function! s:ansi(str, group, default, ...) abort
         \ (empty(bg) ? '' : s:csi(bg, 0))
   return printf("\x1b[%s%sm%s\x1b[m", color, a:0 ? ';1' : '', a:str)
 endfunction
-for s:color_name in keys(s:ansi)
-  execute 'function! s:'.s:color_name."(str, ...)\n"
-        \ "  return s:ansi(a:str, get(a:, 1, ''), '".s:color_name."')\n"
-        \ 'endfunction'
-endfor
+function! s:black(str, ...)
+  return s:ansi(a:str, get(a:, 1, ''), 'black')
+endfunction
+function! s:blue(str, ...)
+  return s:ansi(a:str, get(a:, 1, ''), 'blue')
+endfunction
+function! s:green(str, ...)
+  return s:ansi(a:str, get(a:, 1, ''), 'green')
+endfunction
+function! s:cyan(str, ...)
+  return s:ansi(a:str, get(a:, 1, ''), 'cyan')
+endfunction
+function! s:yellow(str, ...)
+  return s:ansi(a:str, get(a:, 1, ''), 'yellow')
+endfunction
+function! s:magenta(str, ...)
+  return s:ansi(a:str, get(a:, 1, ''), 'magenta')
+endfunction
+function! s:red(str, ...)
+  return s:ansi(a:str, get(a:, 1, ''), 'red')
+endfunction
 function! s:helptag_sink(line) abort
   let [tag, file, path] = split(a:line, "\t")[0:2]
   unlet file

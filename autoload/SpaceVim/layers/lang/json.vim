@@ -1,13 +1,13 @@
 "=============================================================================
 " json.vim --- lang#json layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#json, layer-lang-json
+" @section lang#json, layers-lang-json
 " @parentsection layers
 " This layer provides syntax highlighting for json file. To enable this layer:
 " >
@@ -57,3 +57,9 @@ function! SpaceVim#layers#lang#json#set_variable(var) abort
   let s:concealcursor = get(a:var, 'concealcursor', 0)
 endfunction
 
+
+function! SpaceVim#layers#lang#json#health() abort
+  call SpaceVim#layers#lang#json#plugins()
+  call SpaceVim#layers#lang#json#config()
+  return 1
+endfunction

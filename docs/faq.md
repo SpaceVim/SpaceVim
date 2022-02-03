@@ -1,6 +1,6 @@
 ---
 title: "FAQ"
-description: "A list of questions and answers relating to SpaceVim, especially those most asked in the SpaceVim community"
+description: "A list of questions and answers related to SpaceVim, especially those most asked in the SpaceVim community"
 ---
 
 # [Home](../) >> FAQ
@@ -12,6 +12,7 @@ and usage.
 
 - [Installation](#installation)
   - [Where is my old vim configuration?](#where-is-my-old-vim-configuration)
+  - [How to uninstall SpaceVim?](#how-to-uninstall-spacevim)
 - [Configuration](#configuration)
   - [Can I try SpaceVim without overwriting my vimrc?](#can-i-try-spacevim-without-overwriting-my-vimrc)
   - [Why use toml as the default configuration file format?](#why-use-toml-as-the-default-configuration-file-format)
@@ -19,6 +20,7 @@ and usage.
   - [E492: Not an editor command: ^M](#e492-not-an-editor-command-m)
   - [Why SpaceVim can not display default colorscheme?](#why-spacevim-can-not-display-default-colorscheme)
   - [Why can't I update plugins?](#why-cant-i-update-plugins)
+  - [How to reload `init.toml`?](#how-to-reload-inittoml)
   - [How to enable +py and +py3 in Neovim?](#how-to-enable-py-and-py3-in-neovim)
   - [Why does Vim freeze after pressing Ctrl-s?](#why-does-vim-freeze-after-pressing-ctrl-s)
 
@@ -30,6 +32,15 @@ and usage.
 
 In Linux/MacOS, the old vim configuration file `~/.vimrc` will be renamed to `~/.vimrc_back`,
 and the directory `~/.vim` also will be renamed to `~/.vim_back`.
+
+### How to uninstall SpaceVim?
+
+The installation script does not remove your vimrc, it just changes the name from `~/.vim` to `~/.vim_back`.
+and if you uninstalll SpaceVim, your vimrc will come back. you can run:
+
+```
+curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
+```
 
 ## Configuration
 
@@ -90,6 +101,10 @@ Sometimes you will see `Updating failed, The plugin dir is dirty`. Since the plu
 directory is dirty (has changes that haven't been committed to git) you can not use `git pull` to update plugin. To fix this
 issue, just move your cursor to the error line, and press `gf`, then run `git reset --hard HEAD` or `git checkout .`. For
 more info please read git documentation.
+
+### How to reload `init.toml`?
+
+You can not reload `init.toml` after startup. After editing the `init.toml` file, you need to restart your vim or neovim.
 
 ### How to enable +py and +py3 in Neovim?
 

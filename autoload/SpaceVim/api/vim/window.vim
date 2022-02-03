@@ -1,13 +1,13 @@
 "=============================================================================
 " window.vim --- window api for vim and neovim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section vim#buffer, api-vim-window
+" @section vim#window, api-vim-window
 " @parentsection api
 " @subsection Intro
 "

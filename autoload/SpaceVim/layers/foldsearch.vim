@@ -1,6 +1,6 @@
 "=============================================================================
 " foldsearch.vim --- Fold search support in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -12,6 +12,11 @@ if exists('s:filename')
   " when call an autoload func, vim will try to load the script again
   finish
 endif
+
+function! SpaceVim#layers#foldsearch#health() abort
+  call SpaceVim#layers#foldsearch#config()
+  return 1
+endfunction
 
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2

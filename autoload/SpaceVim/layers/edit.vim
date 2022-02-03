@@ -1,6 +1,6 @@
 "=============================================================================
 " edit.vim --- SpaceVim edit layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -14,6 +14,12 @@ let s:LIST = SpaceVim#api#import('data#list')
 let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+
+function! SpaceVim#layers#edit#health() abort
+  call SpaceVim#layers#edit#plugins()
+  call SpaceVim#layers#edit#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
@@ -32,8 +38,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
         \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
         \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
-        \ [g:_spacevim_root_dir . 'bundle/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
-        \ ['andrewradev/splitjoin.vim',{ 'merged' : 0, 'loadconf' : 1}],
+        \ ['andrewradev/splitjoin.vim',{ 'on_cmd':['SplitjoinJoin', 'SplitjoinSplit'],'merged' : 0, 'loadconf' : 1}],
         \ ]
   if executable('fcitx')
     call add(plugins,[g:_spacevim_root_dir . 'bundle/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
@@ -41,7 +46,7 @@ function! SpaceVim#layers#edit#plugins() abort
   if g:spacevim_enable_bepo_layout
     call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-bepo',        { 'merged' : 0}])
   endif
-  if s:CMP.has('python') || s:CMP.has('python3')
+  if s:CMP.has('python3') || s:CMP.has('python')
     call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-mundo',        { 'on_cmd' : 'MundoToggle'}])
   else
     call add(plugins,[g:_spacevim_root_dir . 'bundle/undotree',        { 'on_cmd' : 'UndotreeToggle'}])
@@ -75,7 +80,7 @@ function! SpaceVim#layers#edit#config() abort
   " }}}
 
 
-  if s:CMP.has('python') || s:CMP.has('python3')
+  if s:CMP.has('python3') || s:CMP.has('python')
     nnoremap <silent> <F7> :MundoToggle<CR>
   else
     nnoremap <silent> <F7> :UndotreeToggle<CR>
@@ -103,7 +108,7 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /===\|<=>\|\(&&\|||\|<<\|>>\|\/\/\)=\|=\~[#?]\?\|=>\|[:+/*!%^=><&|.?-]\?=[#?]\?/l1r1', 'align-region-at-=', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', 'o'], 'Tabularize /&&\|||\|\.\.\|\*\*\|<<\|>>\|\/\/\|[-+*/.%^><&|?]/l1r1', 'align-region-at-operator, such as +,-,*,/,%,^,etc', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '¦'], 'Tabularize /¦', 'align-region-at-¦', 1, 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '<Bar>'], 'Tabularize /|', 'align-region-at-|', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '<Bar>'], 'Tabularize /[|｜]', 'align-region-at-|', 1, 1)
   call SpaceVim#mapping#space#def('nmap', ['x', 'a', '[SPC]'], 'Tabularize /\s\ze\S/l0', 'align-region-at-space', 1, 1)
   " @fixme SPC x a SPC make vim flick
   nmap <Space>xa<Space> [SPC]xa[SPC]
@@ -111,9 +116,10 @@ function! SpaceVim#layers#edit#config() abort
         \ . string(s:_function('s:align_at_regular_expression')) . ', [])',
         \ 'align-region-at-user-specified-regexp', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', 'w'], 'StripWhitespace', 'delete trailing whitespaces', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', '<Space>'], 'silent call call('
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'd', '[SPC]'], 'silent call call('
         \ . string(s:_function('s:delete_extra_space')) . ', [])',
         \ 'delete extra space arround cursor', 1)
+  nmap <Space>xd<Space> [SPC]xd[SPC]
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'i', 'c'], 'silent call call('
         \ . string(s:_function('s:lowerCamelCase')) . ', [])',
         \ 'change symbol style to lowerCamelCase', 1)
@@ -148,8 +154,15 @@ function! SpaceVim#layers#edit#config() abort
         \ . string(s:_function('s:set_justification_to')) . ', ["right"])',
         \ 'set-the-justification-to-right', 1)
 
-  call SpaceVim#mapping#space#def('vnoremap', ['x', 'u'], 'gu', 'set the selected text to lower case', 0)
-  call SpaceVim#mapping#space#def('vnoremap', ['x', 'U'], 'gU', 'set the selected text to up case', 0)
+  nnoremap <silent> <Plug>Lowercase  :call <SID>toggle_case(0, -1)<Cr>
+  vnoremap <silent> <Plug>Lowercase  :call <SID>toggle_case(1, -1)<Cr>
+  nnoremap <silent> <Plug>Uppercase  :call <SID>toggle_case(0, 1)<Cr>
+  vnoremap <silent> <Plug>Uppercase  :call <SID>toggle_case(1, 1)<Cr>
+  nnoremap <silent> <Plug>ToggleCase :call <SID>toggle_case(0, 0)<Cr>
+  vnoremap <silent> <Plug>ToggleCase :call <SID>toggle_case(1, 0)<Cr>
+  call SpaceVim#mapping#space#def('nmap' , ['x' , 'u'] , '<Plug>Lowercase'  , 'lowercase-text'   , 0, 1)
+  call SpaceVim#mapping#space#def('nmap' , ['x' , 'U'] , '<Plug>Uppercase'  , 'uppercase-text'   , 0, 1)
+  call SpaceVim#mapping#space#def('nmap' , ['x' , '~'] , '<Plug>ToggleCase' , 'toggle-case-text' , 0, 1)
 
   " word
   let g:_spacevim_mappings_space.x.w = {'name' : '+Word'}
@@ -625,8 +638,36 @@ function! s:uniquify_lines(visual, ignorecase) abort
     endfor
     call s:BUFFER.buf_set_lines(bufnr('.'), start_line-1 , end_line, 0, rst)
   else
-    if line('.') > 1 && getline('.') ==# getline(line('.') - 1)
-      normal! dd
+    if line('.') > 1
+      if a:ignorecase
+        if getline('.') ==? getline(line('.') - 1)
+          normal! dd
+        endif
+      else
+        if getline('.') ==# getline(line('.') - 1)
+          normal! dd
+        endif
+      endif
+    endif
+  endif
+endfunction
+
+function! s:toggle_case(visual, uppercase) abort
+  if a:visual
+    if a:uppercase == 1
+      normal! gvgU
+    elseif a:uppercase == -1
+      normal! gvgu
+    elseif a:uppercase == 0
+      normal! gv~
+    endif
+  else
+    if a:uppercase == 1
+      normal! gUl
+    elseif a:uppercase == -1
+      normal! gul
+    elseif a:uppercase == 0
+      normal! ~
     endif
   endif
 endfunction

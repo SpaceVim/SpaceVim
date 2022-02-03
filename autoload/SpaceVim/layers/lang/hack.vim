@@ -1,13 +1,13 @@
 "=============================================================================
 " hack.vim --- SpaceVim lang#hack layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#hack, layer-lang-hack
+" @section lang#hack, layers-lang-hack
 " @parentsection layers
 " @subsection Intro
 "
@@ -64,4 +64,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+endfunction
+
+function! SpaceVim#layers#lang#hack#health() abort
+  call SpaceVim#layers#lang#hack#plugins()
+  call SpaceVim#layers#lang#hack#config()
+  return 1
 endfunction

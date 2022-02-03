@@ -1,6 +1,6 @@
 "=============================================================================
 " reason.vim --- reason indent file
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3

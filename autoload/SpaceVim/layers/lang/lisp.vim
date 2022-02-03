@@ -1,13 +1,13 @@
 "=============================================================================
 " lisp.vim --- SpaceVim lang#lisp layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#lisp, layer-lang-lisp
+" @section lang#lisp, layers-lang-lisp
 " @parentsection layers
 " This layer is for Common Lisp development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -182,3 +182,9 @@ fu! s:vlime_arglist() abort
 endf
 fu! s:vlime_input() abort
 endf
+
+function! SpaceVim#layers#lang#lisp#health() abort
+  call SpaceVim#layers#lang#lisp#plugins()
+  call SpaceVim#layers#lang#lisp#config()
+  return 1
+endfunction

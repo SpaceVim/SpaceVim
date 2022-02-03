@@ -1,13 +1,13 @@
 "=============================================================================
 " test.vim --- SpaceVim test layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section test, layer-test
+" @section test, layers-test
 " @parentsection layers
 " This layer allows to run tests on SpaceVim
 "
@@ -48,4 +48,10 @@ function! SpaceVim#layers#test#set_variable(var) abort
       execute 'let g:'.l:varname.' = '."'".l:override[l:option]."'"
     endfor
   endif
+endfunction
+
+function! SpaceVim#layers#test#health() abort
+  call SpaceVim#layers#test#plugins()
+  call SpaceVim#layers#test#config()
+  return 1
 endfunction

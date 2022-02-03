@@ -1,6 +1,6 @@
 "=============================================================================
 " factor.vim --- factor language support
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -39,3 +39,10 @@ endfunction
 " ref:
 " - https://www.howtoforge.com/linux-factor-command/
 " - https://medium.com/@jdxcode/12-factor-cli-apps-dd3c227a0e46
+
+
+function! SpaceVim#layers#lang#factor#health() abort
+  call SpaceVim#layers#lang#factor#plugins()
+  call SpaceVim#layers#lang#factor#config()
+  return 1
+endfunction

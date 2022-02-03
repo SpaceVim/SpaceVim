@@ -1,13 +1,13 @@
 "=============================================================================
 " sh.vim --- SpaceVim lang#sh layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#sh, layer-lang-sh
+" @section lang#sh, layers-lang-sh
 " @parentsection layers
 " This layer is for shell script development, including bash, zsh and fish.
 " This layer provides basic syntax highlighting and code completion , and it
@@ -85,4 +85,10 @@ function! SpaceVim#layers#lang#sh#set_variable(var) abort
         \ get(a:var,
         \ 'bash-file-head',
         \ s:bash_file_head))
+endfunction
+
+function! SpaceVim#layers#lang#sh#health() abort
+  call SpaceVim#layers#lang#sh#plugins()
+  call SpaceVim#layers#lang#sh#config()
+  return 1
 endfunction

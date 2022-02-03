@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#reason layer"
-description: "This layer is for reason development, provide syntax checking, code runner and repl support for reason file."
+description: "This layer is for reason development, provides syntax checking, code runner and repl support for reason files."
 ---
 
 # [Available Layers](../../) >> lang#reason
@@ -20,7 +20,7 @@ This layer is for [reason](http://reasonml.github.io/) development.
 
 ## Install
 
-To use this configuration layer, update custom configuration file with:
+To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]

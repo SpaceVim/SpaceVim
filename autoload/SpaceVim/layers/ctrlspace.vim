@@ -1,6 +1,6 @@
 "=============================================================================
 " ctrlspace.vim --- SpaceVim CtrlSpace layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Jethro Cao < jethrocao at gmail dot com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -28,6 +28,11 @@ let s:autoload_ws = 0
 let s:enable_spacevim_styled_keys = 0
 
 
+function! SpaceVim#layers#ctrlspace#health() abort
+  call SpaceVim#layers#ctrlspace#plugins()
+  call SpaceVim#layers#ctrlspace#config()
+  return 1
+endfunction
 
 function! SpaceVim#layers#ctrlspace#plugins() abort
     return [

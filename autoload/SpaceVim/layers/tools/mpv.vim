@@ -1,15 +1,43 @@
 "=============================================================================
 " mpv.vim --- mpv layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+""
+" @section tools#mpv, layers-tools-mpv
+" @parentsection layers
+" The `tools#mpv` layer provides mpv integration for SpaceVim.
+" this layer is disabled by default, to enable this layer, add following
+" snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'tools#mpv'
+" <
+"
+" @subsection layer options
+"
+" The following options can be used with this layer:
+"
+" 1. `mpv_interpreter`: set the path of `mpv`.
+" 2. `musics_directory`: set the path of directory where to store musics. The
+" default directory is `~/Music`
+"
+" @subsection Key bindings
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC m m l       fuzzy find musics
+"   SPC m m n       next music
+"   SPC m m s       stop mpv
+" <
+
 if exists('s:musics_directory')
   finish
 else
-  let s:musics_directory = '~/Musics'
+  let s:musics_directory = '~/Music'
   let s:mpv_interpreter = 'mpv'
   let s:loop_mode = 'random'
   let s:stop_mpv = 0
@@ -47,7 +75,7 @@ function! SpaceVim#layers#tools#mpv#set_variable(var) abort
   let s:mpv_interpreter = get(a:var, 'mpv_interpreter', 1)
 endfunction
 
-function! SpaceVim#layers#tools#mpv#play(fpath)
+function! SpaceVim#layers#tools#mpv#play(fpath) abort
   let s:stop_mpv = 0
   if s:playId != 0
     call s:JOB.stop(s:playId)
@@ -71,6 +99,11 @@ function! s:load_musics() abort
   endfor
 endfunction
 
+
+function! SpaceVim#layers#tools#mpv#health() abort
+  call SpaceVim#layers#tools#mpv#config()
+  return 1
+endfunction
 
 let s:playId = 0
 fu! s:handler(id, data, event) abort

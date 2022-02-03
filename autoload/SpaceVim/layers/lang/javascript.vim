@@ -1,13 +1,13 @@
 "=============================================================================
 " javascript.vim --- SpaceVim lang#javascript layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#javascript, layer-lang-javascript
+" @section lang#javascript, layers-lang-javascript
 " @parentsection layers
 " This layer is for JavaScript development, includes syntax lint, code
 " completion etc. To enable this layer:
@@ -44,6 +44,20 @@
 "   SPC l s b       send whole buffer
 "   SPC l s l       send current line
 "   SPC l s s       send selection text
+" <
+" If the lsp layer is enabled for javascript, the following key
+" bindings can be used:
+" >
+"   key binding     Description
+"   g D             jump to type definition
+"   SPC l e         rename symbol
+"   SPC l x         show references
+"   SPC l h         show line diagnostics
+"   SPC l d         show document
+"   K               show document
+"   SPC l w l       list workspace folder
+"   SPC l w a       add workspace folder
+"   SPC l w r       remove workspace folder
 " <
 "
 
@@ -103,7 +117,7 @@ function! SpaceVim#layers#lang#javascript#config() abort
         \ 'opt': ['-'],
         \ })
   call SpaceVim#mapping#space#regesit_lang_mappings('javascript',
-        \ function('s:on_ft'))
+        \ function('s:language_mappings'))
 
   if SpaceVim#layers#lsp#check_filetype('javascript')
     call SpaceVim#mapping#gd#add('javascript',
@@ -149,7 +163,7 @@ function! SpaceVim#layers#lang#javascript#config() abort
   endif
 endfunction
 
-function! s:on_ft() abort
+function! s:language_mappings() abort
   nnoremap <silent><buffer> <F4> :ImportJSWord<CR>
   nnoremap <silent><buffer> <Leader>ji :ImportJSWord<CR>
   nnoremap <silent><buffer> <Leader>jf :ImportJSFix<CR>
@@ -175,12 +189,25 @@ function! s:on_ft() abort
 
 
   if SpaceVim#layers#lsp#check_filetype('javascript')
+        \ || SpaceVim#layers#lsp#check_server('tssserver')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+    nnoremap <silent><buffer> gD :<C-u>call SpaceVim#lsp#go_to_typedef()<Cr>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
-          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+          \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
+          \ 'call SpaceVim#lsp#references()', 'show-references', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
-          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+          \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'h'],
+          \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
+    let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],
+          \ 'call SpaceVim#lsp#list_workspace_folder()', 'list-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'a'],
+          \ 'call SpaceVim#lsp#add_workspace_folder()', 'add-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'r'],
+          \ 'call SpaceVim#lsp#remove_workspace_folder()', 'remove-workspace-folder', 1)
   else
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TernDoc',
           \ 'show document', 1)
@@ -224,3 +251,10 @@ function! s:checktime_if_javascript() abort
 endfunction
 
 " vi: et sw=2 cc=80
+
+
+function! SpaceVim#layers#lang#javascript#health() abort
+  call SpaceVim#layers#lang#javascript#plugins()
+  call SpaceVim#layers#lang#javascript#config()
+  return 1
+endfunction

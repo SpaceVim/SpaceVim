@@ -1,26 +1,49 @@
 "GetUserUserContext=============================================================================
 " typescript.vim --- lang#typescript layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#typescript, layer-lang-typescript
+" @section lang#typescript, layers-lang-typescript
 " @parentsection layers
 " This layer provides typescript development support for SpaceVim.
 " To enable this layer, add following sinippet into SpaceVim configuration
 " file.
 " >
 "   [layers]
-"       name = "lang#typescript"
+"       name = 'lang#typescript'
 " <
-" @subsection mappings
+" @subsection key bindings
+"
+" The following key bindings works well in both vim and neovim.
 " >
 "   Ket binding          Description
 "   ----------------------------------------
-"   g d                  defintion preview
+"   g D                  jump to type definition
+"   SPC l d              show document
+"   SPC l e              rename symbol
+"   SPC l i              import
+" <
+" The following key bindings only work in neovim.
+" >
+"   Ket binding          Description
+"   ----------------------------------------
+"   SPC l f              run code fix
+"   SPC l p              preview definition
+"   SPC l t              view type
+"   SPC l R              show reference
+"   SPC l D              show errors
+"   SPC l o              organizes imports
+"   SPC l g d            generate JSDoc
+" <
+" The following key bindings only work in vim.
+" >
+"   Ket binding          Description
+"   ----------------------------------------
+"   SPC l m              interface implementations
 " <
 
 function! SpaceVim#layers#lang#typescript#plugins() abort
@@ -63,6 +86,9 @@ function! SpaceVim#layers#lang#typescript#config() abort
         \ 'opt': [],
         \ })
   let g:neomake_typescript_enabled_makers = ['eslint']
+  if index(g:spacevim_project_rooter_patterns, 'tsconfig.json') == -1
+    call add(g:spacevim_project_rooter_patterns, 'tsconfig.json')
+  endif
   " does eslint support tsx?
   let g:neoformat_typescriptreact_prettier = {
         \ 'exe': 'prettier',
@@ -137,7 +163,7 @@ function! s:on_typescript_ft() abort
   " generate groups
   let g:_spacevim_mappings_space.l.g = {'name' : '+Generate'}
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'g', 'd'], 'JsDoc',
-        \ 'generate JSDoc', 1)
+        \ 'generate-JSDoc', 1)
 
   " REPL support
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
@@ -158,10 +184,12 @@ endfunction
 
 function! s:go_to_typescript_def() abort
   if !SpaceVim#layers#lsp#check_filetype('typescript')
+    " if lsp layer is not enabled for typescript, use following commands
     if has('nvim')
+      " TSDef is definded in nvim-typescript
       TSDef
     else 
-      call SpaceVim#lsp#go_to_def()
+      TsuDefinition
     endif
   else
     call SpaceVim#lsp#go_to_def()
@@ -172,9 +200,15 @@ function! s:go_to_typescriptreact_def() abort
     if has('nvim')
       TSDef
     else 
-      call SpaceVim#lsp#go_to_def()
+      TsuDefinition
     endif
   else
     call SpaceVim#lsp#go_to_def()
   endif
+endfunction
+
+function! SpaceVim#layers#lang#typescript#health() abort
+  call SpaceVim#layers#lang#typescript#plugins()
+  call SpaceVim#layers#lang#typescript#config()
+  return 1
 endfunction

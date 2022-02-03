@@ -1,13 +1,13 @@
 "=============================================================================
 " extra.vim --- lang#extra layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#extra, layer-lang-extra
+" @section lang#extra, layers-lang-extra
 " @parentsection layers
 " @subsection Intro
 "
@@ -36,4 +36,9 @@ function! SpaceVim#layers#lang#extra#plugins() abort
         \ ['peterhoeg/vim-qml',                      { 'on_ft' : 'qml'}],
         \ ] 
   return plugins
+endfunction
+
+function! SpaceVim#layers#lang#extra#health() abort
+  call SpaceVim#layers#lang#extra#plugins()
+  return 1
 endfunction

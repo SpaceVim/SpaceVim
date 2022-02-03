@@ -1,5 +1,5 @@
 ---
-title: "Use Vim as a Elixir IDE"
+title: "Use Vim as Elixir IDE"
 categories: [tutorials, blog]
 image: https://user-images.githubusercontent.com/13142418/90253911-80669300-de74-11ea-9786-4b97a4091bc6.png
 description: "A general guide for using SpaceVim as Elixir IDE, including layer configuration, requiems installation and usage."
@@ -8,7 +8,7 @@ comments: true
 commentsID: "Use Vim as a Elixir IDE"
 ---
 
-# [Blogs](../blog/) >> Use Vim as a Elixir IDE
+# [Blogs](../blog/) >> Use Vim as Elixir IDE
 
 This is a general guide for using SpaceVim as a Elixir IDE, including layer configuration and usage. 
 Each of the following sections will be covered:

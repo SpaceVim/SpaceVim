@@ -1,19 +1,43 @@
 "=============================================================================
 " agda.vim --- lang#agda layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#agda, layer-lang-agda
+" @section lang#agda, layers-lang-agda
 " @parentsection layers
 " This layer provides syntax highlighting for agda. To enable this
 " layer:
 " >
 "   [layers]
 "     name = "lang#agda"
+" <
+"
+" @subsection key bindings
+"
+" The following key bindings will be added when this layer is loaded. All key
+" bindings start with `SPC l`.
+"
+" >
+"   Key binding Description
+"   SPC l r     execute current file
+"   SPC l l     reload
+"   SPC l t     infer
+"   SPC l f     refine false
+"   SPC l F     refine true
+"   SPC l g     give
+"   SPC l c     make case
+"   SPC l a     auto
+"   SPC l e     context
+"   SPC l n     Normalize IgnoreAbstract
+"   SPC l N     Normalize DefaultCompute
+"   SPC l M     Show module
+"   SPC l y     why in scope
+"   SPC l h     helper function
+"   SPC l m     metas
 " <
 
 function! SpaceVim#layers#lang#agda#plugins() abort
@@ -73,4 +97,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','m'],
         \ 'Metas',
         \ 'Metas', 1)
+endfunction
+
+function! SpaceVim#layers#lang#agda#health() abort
+  call SpaceVim#layers#lang#agda#plugins()
+  call SpaceVim#layers#lang#agda#config()
+  return 1
 endfunction

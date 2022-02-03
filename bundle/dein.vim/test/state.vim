@@ -8,7 +8,7 @@ let s:path = fnamemodify('.cache', ':p') . '/'
 let s:filetype_save = &l:filetype
 
 function! s:suite.before_each() abort
-  call dein#_init()
+  call dein#min#_init()
   let &runtimepath = s:runtimepath_save
   let &l:filetype = s:filetype_save
   let g:temp = tempname()

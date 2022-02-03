@@ -1,13 +1,13 @@
 "=============================================================================
 " lua.vim --- SpaceVim lang#lua layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#lua, layer-lang-lua
+" @section lang#lua, layers-lang-lua
 " @parentsection layers
 " This layer includes utilities and language-specific mappings for lua development.
 " >
@@ -15,6 +15,30 @@
 "     name = 'lang#lua'
 " <
 "
+" @subsection Layer options
+"
+" 1. lua_file_head: the default file head for lua source code.
+" >
+"   [layers]
+"     name = "lang#lua"
+"     ruby_file_head = [      
+"       '--!/usr/bin/lua',
+"       ''
+"     ]
+" <
+" 2. repl_command: the REPL command for lua
+" >
+"   [[layers]]
+"     name = 'lang#lua'
+"     repl_command = '~/download/bin/lua'
+" <
+" 3. format_on_save: enable/disable code formation when save lua file. This
+" options is disabled by default, to enable it:
+" >
+"   [[layers]]
+"     name = 'lang#lua'
+"     format_on_save = true
+" <
 " @subsection Key bindings
 " >
 "   Mode            Key             Function
@@ -34,16 +58,25 @@
 " <
 "
 
-function! SpaceVim#layers#lang#lua#plugins() abort
-  let plugins = []
-  " Improved Lua 5.3 syntax and indentation support for Vim
-  call add(plugins, ['wsdjeg/vim-lua', {'on_ft' : 'lua'}])
-  call add(plugins, ['WolfgangMehner/lua-support', {'on_ft' : 'lua'}])
-  return plugins
-endfunction
+
+if exists('s:lua_repl_command')
+  finish
+endif
 
 let s:lua_repl_command = ''
 let s:lua_foldmethod = 'manual'
+let s:lua_file_head = [
+      \ '--!/usr/bin/lua',
+      \ ''
+      \ ]
+let s:format_on_save = 0
+
+function! SpaceVim#layers#lang#lua#plugins() abort
+  let plugins = []
+  " Improved Lua 5.3 syntax and indentation support for Vim
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-lua', {'on_ft' : 'lua'}])
+  return plugins
+endfunction
 
 function! SpaceVim#layers#lang#lua#config() abort
 
@@ -78,11 +111,20 @@ function! SpaceVim#layers#lang#lua#config() abort
     let lua_repl = ['lua', '-i']
   endif
   call SpaceVim#plugins#repl#reg('lua', lua_repl)
+  call SpaceVim#layers#edit#add_ft_head_tamplate('lua', s:lua_file_head)
+  " Format on save
+  if s:format_on_save
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'lua',
+          \ 'enable' : 1,
+          \ })
+  endif
 endfunction
 
 function! SpaceVim#layers#lang#lua#set_variable(opt) abort
   let s:lua_repl_command = get(a:opt, 'repl_command', '') 
   let s:lua_foldmethod = get(a:opt, 'foldmethod', 'manual')
+  let s:format_on_save = get(a:opt, 'format_on_save', s:format_on_save)
 endfunction
 
 " Add language specific mappings
@@ -102,4 +144,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+endfunction
+
+function! SpaceVim#layers#lang#lua#health() abort
+  call SpaceVim#layers#lang#lua#plugins()
+  call SpaceVim#layers#lang#lua#config()
+  return 1
 endfunction

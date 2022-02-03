@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim edit layer"
-description: "Improve code edit expr in SpaceVim, provide more text objects."
+description: "Improve code edit experience in SpaceVim, provides more text objects."
 ---
 
 # [Available Layers](../) >> edit
@@ -20,11 +20,11 @@ This layer provides many edit key bindings for SpaceVim, and also provides more 
 ## Features
 
 - change surround symbol via vim-surround
-- repeat latest action via vim-repeat
-- multiple cursor
+- repeat last action via vim-repeat
+- multiple cursors
 - align
 - set justification for paragraph
-- highlight whitespaces at the end of a line
+- highlight whitespace at the end of a line
 - load editorconfig config, need `+python` or `+python3`
 
 ## Options

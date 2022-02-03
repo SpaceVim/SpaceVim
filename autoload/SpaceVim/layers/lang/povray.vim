@@ -1,6 +1,6 @@
 "=============================================================================
 " povray.vim --- POV-Ray language support
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -37,4 +37,10 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','b'],
         \ 'call povray#CompileSilent()',
         \ 'build-silent', 1)
+endfunction
+
+function! SpaceVim#layers#lang#povray#health() abort
+  call SpaceVim#layers#lang#povray#plugins()
+  call SpaceVim#layers#lang#povray#config()
+  return 1
 endfunction

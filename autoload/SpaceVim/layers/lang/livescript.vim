@@ -1,13 +1,13 @@
 "=============================================================================
 " livescript.vim --- LiveScript support in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#livescript, layer-lang-livescript
+" @section lang#livescript, layers-lang-livescript
 " @parentsection layers
 " This layer is for livescript development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -90,4 +90,10 @@ function! s:eval() abort
   let input = input('>>')
   let cmd = ['lsc', '-e', input, expand('%:p')]
   " @todo fix livescript eval function
+endfunction
+
+function! SpaceVim#layers#lang#livescript#health() abort
+  call SpaceVim#layers#lang#livescript#plugins()
+  call SpaceVim#layers#lang#livescript#config()
+  return 1
 endfunction

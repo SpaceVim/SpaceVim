@@ -1,6 +1,6 @@
 "=============================================================================
 " todo.vim --- todo manager for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -76,6 +76,8 @@ function! s:update_todo_content() abort
     let argv += ['.']
   elseif s:SYS.isWindows && s:grep_default_exe ==# 'findstr'
     let argv += ['*.*']
+  elseif !s:SYS.isWindows && s:grep_default_exe ==# 'rg'
+    let argv += ['./']
   endif
   let argv += s:grep_default_ropt
   call s:LOG.info('cmd: ' . string(argv))
