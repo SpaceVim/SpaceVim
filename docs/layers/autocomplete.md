@@ -179,6 +179,7 @@ To disable this feature, set the variable `auto_completion_enable_snippets_in_po
 | `M-/`       | Expand a snippet if text before point is a prefix of a snippet |
 | `SPC i s`   | List all current snippets for inserting                      |
 
-NOTE: `SPC i s` requires that at least one fuzzy search layer be loaded.
+NOTE: `SPC i s` requires that at least one fuzzy search layer be loaded. If the `snippet_engine` is `neosnippet`.
+The fuzzy finder layer can be `leaderf`, `denite` or `unite`. For `ultisnips`, you can use `leaderf` or `unite` layer.
 
 
