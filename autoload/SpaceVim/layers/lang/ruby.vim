@@ -1,6 +1,6 @@
 "=============================================================================
 " ruby.vim --- lang#ruby layer for SpaceVim
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3

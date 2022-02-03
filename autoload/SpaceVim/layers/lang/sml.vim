@@ -1,6 +1,6 @@
 "=============================================================================
 " sml.vim --- SpaceVim lang#sml layer
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Tommy Tam < thawk009 # gmail.com >
 " URL: https://spacevim.org
 " License: GPLv3

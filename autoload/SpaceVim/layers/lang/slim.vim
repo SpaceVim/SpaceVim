@@ -1,6 +1,6 @@
 "=============================================================================
 " slim.vim --- SpaceVim lang#slimlayer
-" Copyright (c) 2016-2021 Wang Shidong & Contributors 
+" Copyright (c) 2016-2022 Wang Shidong & Contributors 
 " Author: Keisuke Tsukamoto < keisuke.cs at gmail.com >
 " URL: https://spacevim.org
 " License: GPLv3
