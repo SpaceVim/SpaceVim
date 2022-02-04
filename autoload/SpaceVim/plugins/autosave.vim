@@ -8,6 +8,9 @@
 
 " this plugin is inspired from:
 " https://github.com/907th/vim-auto-save
+" This plugin is simply run `:w` or `:wa` based on events
+" 
+"
 " https://github.com/Pocco81/AutoSave.nvim
 " https://github.com/chrisbra/vim-autosave
 
