@@ -6,6 +6,20 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section edit, layers-edit
+" @parentsection layers
+" The `edit` layer provides basic feature for editing files.
+" This layer is loaded by default. To disable this layer:
+" >
+"   [[layers]]
+"     name = 'edit'
+"     enable = false
+" <
+" @subsection Configuration
+" 1. `autosave_timeout`: set the timeoutlen of autosave plugin. By default it
+" is 0. And autosave is disabled.
+" 
 
 scriptencoding utf-8
 let s:PASSWORD = SpaceVim#api#import('password')
@@ -14,6 +28,9 @@ let s:LIST = SpaceVim#api#import('data#list')
 let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+
+let s:autosave_timeout = 0
+let s:autosave_events = []
 
 function! SpaceVim#layers#edit#health() abort
   call SpaceVim#layers#edit#plugins()
@@ -55,6 +72,14 @@ function! SpaceVim#layers#edit#plugins() abort
 endfunction
 
 function! SpaceVim#layers#edit#config() abort
+  " autosave plugins options
+  let autosave_opt = {
+        \ 'timeoutlen' : s:autosave_timeout,
+        \ 'event' : s:autosave_events,
+        \ }
+  call SpaceVim#plugins#autosave#config(autosave_opt)
+
+
   let g:multi_cursor_next_key=get(g:, 'multi_cursor_next_key', '<C-n>')
   let g:multi_cursor_prev_key=get(g:, 'multi_cursor_prev_key', '<C-m>')
   let g:multi_cursor_skip_key=get(g:, 'multi_cursor_skip_key', '<C-x>')
