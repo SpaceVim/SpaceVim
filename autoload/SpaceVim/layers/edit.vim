@@ -19,6 +19,14 @@
 " @subsection Configuration
 " 1. `autosave_timeout`: set the timeoutlen of autosave plugin. By default it
 " is 0. And autosave is disabled.
+" 2. `autosave_events`: set the events on which autosave will perform a save.
+" This option is an empty list by default. you can trigger saving based
+" on vim's events, for example:
+" >
+"   [[layers]]
+"     name = 'edit'
+"     autosave_events = ['InsertLeave', 'TextChanged']
+" <
 " 
 
 scriptencoding utf-8
