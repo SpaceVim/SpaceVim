@@ -46,7 +46,7 @@ function! s:save_buffer(bufnr) abort
   endif
 endfunction
 
-function! s:auto_dosave(timer) abort
+function! s:auto_dosave(...) abort
   for nr in range(1, bufnr('$'))
     call s:save_buffer(nr)
   endfor
@@ -54,6 +54,15 @@ endfunction
 
 function! s:setup_timer(timeoutlen) abort
   
+endfunction
+
+function! s:setup_events() abort
+  augroup spacevim_autosave
+    autocmd!
+    for event in s:default_opt.event
+      exe printf('autocmd %s * call s:auto_dosave()')
+    endfor
+  augroup END
 endfunction
 
 call s:setup_timer(s:default_opt.timeoutlen)
