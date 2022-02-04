@@ -8,10 +8,10 @@
 
 " this plugin is inspired from:
 " https://github.com/907th/vim-auto-save
-" This plugin is simply run `:w` or `:wa` based on events
+" https://github.com/Pocco81/AutoSave.nvim
+" These plugins are simply run `:w` or `:wa` based on save_all_buffers option
 " 
 "
-" https://github.com/Pocco81/AutoSave.nvim
 " https://github.com/chrisbra/vim-autosave
 " This plugin uses timers to automatically save your work as temporary files.
 
