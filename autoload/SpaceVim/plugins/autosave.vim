@@ -18,12 +18,17 @@ let s:default_opt = {
       \ 'event' : ['InsertLeave', 'TextChanged']
       \ }
 
+let s:LOGGER =SpaceVim#logger#derive('autosave')
+
 
 
 function! SpaceVim#plugins#autosave#config(opt) abort
-
-  
-
+  for option in keys(s:default_opt)
+    if has_key(a:opt, option)
+      call s:LOGGER.debug('set option `' . option . '` to : ' . string(get(a:opt, option, s:default_opt[option])))
+      let s:default_opt[option] = get(a:opt, option, s:default_opt[option])
+    endif
+  endfor
 endfunction
 
 function! s:save_buffer(bufnr) abort
@@ -31,8 +36,8 @@ function! s:save_buffer(bufnr) abort
     return
   endif
   if !getbufvar(a:bufnr, '&modified') ||
-  \  !empty(getbufvar(a:bufnr, '&buftype')) ||
-  \  getbufvar(a:bufnr, 'autosave_disabled', 0)
-      return
+        \  !empty(getbufvar(a:bufnr, '&buftype')) ||
+        \  getbufvar(a:bufnr, 'autosave_disabled', 0)
+    return
   endif
 endfunction
