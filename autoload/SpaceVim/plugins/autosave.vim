@@ -24,6 +24,8 @@ let s:default_opt = {
 
 let s:LOGGER =SpaceVim#logger#derive('autosave')
 
+let s:autosave_timer  = -1
+
 
 
 function! SpaceVim#plugins#autosave#config(opt) abort
@@ -31,6 +33,9 @@ function! SpaceVim#plugins#autosave#config(opt) abort
     if has_key(a:opt, option)
       call s:LOGGER.debug('set option `' . option . '` to : ' . string(get(a:opt, option, s:default_opt[option])))
       let s:default_opt[option] = get(a:opt, option, s:default_opt[option])
+      if option ==# 'timeoutlen'
+        call s:setup_timer(s:default_opt[option])
+      endif
     endif
   endfor
 endfunction
@@ -53,7 +58,25 @@ function! s:auto_dosave(...) abort
 endfunction
 
 function! s:setup_timer(timeoutlen) abort
-  
+  if !has('timers')
+    call s:LOGGER.warn('failed to setup timer, needs `+timers` feature!')
+    return
+  endif
+  if a:timeoutlen ==# 0
+    call timer_stop(s:autosave_timer)
+    call s:LOGGER.debug('disabled autosave timer!')
+    return
+  endif
+  if a:timeoutlen < 1000 || a:timeoutlen > 60 * 100 * 1000
+    let msg = "timeoutlen must be given in millisecods and can't be > 100*60*1000 (100 minutes) or < 1000 (1 second)"
+    call s:LOGGER.warn(msg)
+    return
+  endif
+  call timer_stop(s:autosave_timer)
+  let s:autosave_timer = timer_start(a:timeoutlen, function('s:auto_dosave'), {'repeat': -1})
+  if !empty(s:autosave_timer)
+    call s:LOGGER.debug('setup new autosave timer, timeoutlen:' . a:timeoutlen)
+  endif
 endfunction
 
 function! s:setup_events() abort
