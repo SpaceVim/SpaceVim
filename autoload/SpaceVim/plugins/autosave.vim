@@ -13,6 +13,7 @@
 "
 " https://github.com/Pocco81/AutoSave.nvim
 " https://github.com/chrisbra/vim-autosave
+" This plugin uses timers to automatically save your work as temporary files.
 
 
 let s:default_opt = {
@@ -44,3 +45,15 @@ function! s:save_buffer(bufnr) abort
     return
   endif
 endfunction
+
+function! s:auto_dosave(timer) abort
+  for nr in range(1, bufnr('$'))
+    call s:save_buffer(nr)
+  endfor
+endfunction
+
+function! s:setup_timer(timeoutlen) abort
+  
+endfunction
+
+call s:setup_timer(s:default_opt.timeoutlen)
