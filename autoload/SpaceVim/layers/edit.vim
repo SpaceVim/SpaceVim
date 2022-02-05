@@ -124,12 +124,12 @@ function! SpaceVim#layers#edit#config() abort
   let g:user_emmet_mode='a'
   let g:user_emmet_settings = {
         \ 'javascript': {
-        \ 'extends': 'jsx',
-        \ },
-        \ 'jsp' : {
-        \ 'extends': 'html',
-        \ },
-        \ }
+          \ 'extends': 'jsx',
+          \ },
+          \ 'jsp' : {
+            \ 'extends': 'html',
+            \ },
+            \ }
 
   "noremap <SPACE> <Plug>(wildfire-fuel)
   vnoremap <C-SPACE> <Plug>(wildfire-water)
@@ -391,27 +391,27 @@ function! s:text_transient_state() abort
   call state.set_title('Move Text Transient State')
   call state.defind_keys(
         \ {
-        \ 'layout' : 'vertical split',
-        \ 'left' : [
-        \ {
-        \ 'key' : 'J',
-        \ 'desc' : 'move text down',
-        \ 'func' : '',
-        \ 'cmd' : 'noautocmd silent! m .+1',
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ 'right' : [
-        \ {
-        \ 'key' : 'K',
-        \ 'func' : '',
-        \ 'desc' : 'move text up',
-        \ 'cmd' : 'noautocmd silent! m .-2',
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ }
-        \ )
+          \ 'layout' : 'vertical split',
+          \ 'left' : [
+            \ {
+              \ 'key' : 'J',
+              \ 'desc' : 'move text down',
+              \ 'func' : '',
+              \ 'cmd' : 'noautocmd silent! m .+1',
+              \ 'exit' : 0,
+              \ },
+              \ ],
+              \ 'right' : [
+                \ {
+                  \ 'key' : 'K',
+                  \ 'func' : '',
+                  \ 'desc' : 'move text up',
+                  \ 'cmd' : 'noautocmd silent! m .-2',
+                  \ 'exit' : 0,
+                  \ },
+                  \ ],
+                  \ }
+                  \ )
   call state.open()
 endfunction
 

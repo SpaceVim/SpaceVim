@@ -36,31 +36,25 @@ function! SpaceVim#plugins#autosave#config(opt) abort
       let s:default_opt[option] = get(a:opt, option, s:default_opt[option])
       if option ==# 'timeoutlen'
         call s:setup_timer(s:default_opt[option])
+      elseif option ==# 'event'
+        call s:setup_events()
       endif
     endif
   endfor
 endfunction
 
-function! s:save_buffer(bufnr) abort
-  if !bufexists(a:bufnr)
-    return
-  endif
-  if !getbufvar(a:bufnr, '&modified') ||
-        \  !empty(getbufvar(a:bufnr, '&buftype')) ||
-        \  getbufvar(a:bufnr, 'autosave_disabled', 0)
-    return
-  endif
-endfunction
-
 function! s:auto_dosave(...) abort
-  " for nr in range(1, bufnr('$'))
-    " call s:save_buffer(nr)
-  " endfor
+  if !getbufvar(bufnr('%'), '&modified') ||
+        \  !empty(getbufvar(bufnr('%'), '&buftype')) ||
+        \  getbufvar(bufnr('%'), 'autosave_disabled', 0)
+    return
+  endif
   if s:default_opt.save_all_buffers
     wa
   else
     w
   endif
+
 endfunction
 
 function! s:setup_timer(timeoutlen) abort
@@ -89,9 +83,11 @@ function! s:setup_events() abort
   augroup spacevim_autosave
     autocmd!
     for event in s:default_opt.event
-      exe printf('autocmd %s * call s:auto_dosave()')
+      exe printf('autocmd %s * call s:auto_dosave()', event)
+      call s:LOGGER.debug('setup new autosave autocmd, event:' . event)
     endfor
   augroup END
 endfunction
 
 call s:setup_timer(s:default_opt.timeoutlen)
+call s:setup_events()
