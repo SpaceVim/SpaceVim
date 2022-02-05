@@ -19,6 +19,7 @@
 let s:default_opt = {
       \ 'timeoutlen' : 60*5*1000,
       \ 'backupdir' : '~/.cache/SpaceVim/backup/',
+      \ 'save_all_buffers' : 0,
       \ 'event' : ['InsertLeave', 'TextChanged']
       \ }
 
@@ -52,9 +53,14 @@ function! s:save_buffer(bufnr) abort
 endfunction
 
 function! s:auto_dosave(...) abort
-  for nr in range(1, bufnr('$'))
-    call s:save_buffer(nr)
-  endfor
+  " for nr in range(1, bufnr('$'))
+    " call s:save_buffer(nr)
+  " endfor
+  if s:default_opt.save_all_buffers
+    wa
+  else
+    w
+  endif
 endfunction
 
 function! s:setup_timer(timeoutlen) abort

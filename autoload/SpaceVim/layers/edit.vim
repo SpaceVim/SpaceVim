@@ -34,9 +34,19 @@
 "     name = 'edit'
 "     autosave_events = ['InsertLeave', 'TextChanged']
 " <
-" 
+" 3. `autosave_all_buffers`: By default autosave plugin only save current buffer.
+" If you want to save all buffers automatically. Set this option to `true`.
+" >
+"   [[layers]]
+"     name = 'edit'
+"     autosave_all_buffers = true
+" <
 
 scriptencoding utf-8
+if exists('s:autosave_timeout')
+  finish
+endif
+
 let s:PASSWORD = SpaceVim#api#import('password')
 let s:NUMBER = SpaceVim#api#import('data#number')
 let s:LIST = SpaceVim#api#import('data#list')
@@ -46,6 +56,7 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 let s:autosave_timeout = 0
 let s:autosave_events = []
+let s:autosave_all_buffers = 0
 
 function! SpaceVim#layers#edit#health() abort
   call SpaceVim#layers#edit#plugins()
@@ -86,10 +97,16 @@ function! SpaceVim#layers#edit#plugins() abort
   return plugins
 endfunction
 
+function! SpaceVim#layers#edit#set_variable(var) abort
+  let s:autosave_timeout = get(a:var, 'autosave_timeout', s:autosave_timeout)
+  let s:autosave_events = get(a:var, 'autosave_events', s:autosave_events)
+  let s:autosave_all_buffers = get(a:var, 'autosave_all_buffers', s:autosave_all_buffers)
+endfunction
 function! SpaceVim#layers#edit#config() abort
   " autosave plugins options
   let autosave_opt = {
         \ 'timeoutlen' : s:autosave_timeout,
+        \ 'save_all_buffers' : s:autosave_all_buffers,
         \ 'event' : s:autosave_events,
         \ }
   call SpaceVim#plugins#autosave#config(autosave_opt)

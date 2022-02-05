@@ -1781,7 +1781,14 @@ events, for example:
     name = 'edit'
     autosave_events = ['InsertLeave', 'TextChanged']
 <
-
+  3. `autosave_all_buffers`: By default autosave plugin only save current
+    buffer.
+If you want to save all buffers automatically. Set this option to `true`.
+>
+  [[layers]]
+    name = 'edit'
+    autosave_all_buffers = true
+<
 
 ==============================================================================
 EXPRFOLD                                            *SpaceVim-layers-exprfold*
