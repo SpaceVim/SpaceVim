@@ -150,6 +150,21 @@ function! SpaceVim#layers#leaderf#config() abort
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
 
+  let g:Lf_Extensions.manpage =
+        \ {
+        \       'source': string(s:_function('s:manpage', 1))[10:-3],
+        \       'accept': string(s:_function('s:manpage_acp', 1))[10:-3],
+        \       'highlights_def': {
+        \               'Lf_register_name': '^".',
+        \               'Lf_register_content': '\s\+.*',
+        \       },
+        \       'highlights_cmd': [
+        \               'hi def link Lf_register_name ModeMsg',
+        \               'hi def link Lf_register_content Normal',
+        \       ],
+        \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
+        \ }
+
   let g:Lf_Extensions.neoyank =
         \ {
         \       'source': string(s:_function('s:neoyank', 1))[10:-3],
@@ -245,6 +260,8 @@ function! SpaceVim#layers#leaderf#config() abort
         \ 1)
   " without this key binding, SPC h SPC always open key binding guide.
   nmap <Space>h<Space> [SPC]h[SPC]
+
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'm'], 'Leaderf manpage', 'search-available-man-pages', 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Leaderf buffer',
@@ -429,6 +446,20 @@ function! s:message_acp(line, args) abort
   echohl ModeMsg
   echo 'Yanked'
   echohl None
+endfunction
+
+function! s:manpage(...) abort
+  if executable('man') && exists(':Man') ==# 2
+    return getcompletion(':Man ', 'cmdline')
+  else
+    return []
+  endif
+endfunction
+
+function! s:manpage_acp(line, args) abort
+  if !empty(a:line) && exists(':Man') ==# 2
+    exe printf('Man %s', a:line)
+  endif
 endfunction
 
 func! s:neoyank(...) abort
