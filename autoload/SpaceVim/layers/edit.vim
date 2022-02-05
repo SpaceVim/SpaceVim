@@ -102,6 +102,10 @@ function! SpaceVim#layers#edit#set_variable(var) abort
   let s:autosave_events = get(a:var, 'autosave_events', s:autosave_events)
   let s:autosave_all_buffers = get(a:var, 'autosave_all_buffers', s:autosave_all_buffers)
 endfunction
+
+function! SpaceVim#layers#edit#get_options() abort
+  return ['autosave_all_buffers', 'autosave_timeout', 'autosave_events']
+endfunction
 function! SpaceVim#layers#edit#config() abort
   " autosave plugins options
   let autosave_opt = {
