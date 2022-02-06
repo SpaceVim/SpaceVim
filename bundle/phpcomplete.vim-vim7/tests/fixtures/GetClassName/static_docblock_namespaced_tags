@@ -1,0 +1,19 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	Development	//
+Foo	static_docblock_namespaced.php	/^namespace Foo;$/;"	n
+Page	static_docblock_namespaced.php	/^class Page {$/;"	c	namespace:Foo
+getPage	static_docblock_namespaced.php	/^    public static function getPage(){$/;"	f	class:Foo::Page	access:public	signature:()
+getPage2	static_docblock_namespaced.php	/^    public static function getPage2(){$/;"	f	class:Foo::Page	access:public	signature:()
+getRenamedPage	static_docblock_namespaced.php	/^    public static function getRenamedPage(){$/;"	f	class:Foo::Page	access:public	signature:()
+getRenamedPage2	static_docblock_namespaced.php	/^    public static function getRenamedPage2(){$/;"	f	class:Foo::Page	access:public	signature:()
+p	static_docblock_namespaced.php	/^$p = P::getPage();$/;"	v	namespace:Foo
+p	static_docblock_namespaced.php	/^$p = Page::getPage();$/;"	v	namespace:Foo
+p	static_docblock_namespaced.php	/^$p = Page::getPage2();$/;"	v	namespace:Foo
+p	static_docblock_namespaced.php	/^$p = Page::getRenamedPage();$/;"	v	namespace:Foo
+p	static_docblock_namespaced.php	/^$p = Page::getRenamedPage2();$/;"	v	namespace:Foo
+p	static_docblock_namespaced.php	/^$p = RenamedFoo\\Page::getPage();$/;"	v	namespace:Foo
+p	static_docblock_namespaced.php	/^$p = \\Foo\\Page::getPage();$/;"	v	namespace:Foo

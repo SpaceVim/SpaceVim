@@ -1,0 +1,13 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+FooClass	function_return_type.php	/^class FooClass {$/;"	c
+findme	function_return_type.php	/^    public function findme() {$/;"	f
+foo	function_return_type.php	/^$foo = make_a_foo();$/;"	v
+foo2	function_return_type.php	/^$foo2 = make_a_renamed_foo();$/;"	v
+make_a_foo	function_return_type.php	/^function make_a_foo(){$/;"	f
+make_a_renamed_foo	function_return_type.php	/^function make_a_renamed_foo(){$/;"	f
+no_ns_make_a_foo	non_namespaced_function.php	/^function no_ns_make_a_foo(){ $/;"	f

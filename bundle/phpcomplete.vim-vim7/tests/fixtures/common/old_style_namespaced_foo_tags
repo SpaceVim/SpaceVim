@@ -1,0 +1,13 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Foo	fixtures/common/namespaced_foo.php	/^class Foo {$/;"	c
+FooInterface	fixtures/common/namespaced_foo.php	/^interface FooInterface {$/;"	i
+FooSub	fixtures/common/namespaced_foo.php	/^class FooSub {$/;"	c
+FooSubSub	fixtures/common/namespaced_foo.php	/^class FooSubSub {$/;"	c
+bar	fixtures/common/namespaced_foo.php	/^function bar(){}$/;"	f
+barsub	fixtures/common/namespaced_foo.php	/^function barsub(){$/;"	f
+barsubsub	fixtures/common/namespaced_foo.php	/^function barsubsub(){$/;"	f
