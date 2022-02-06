@@ -8,6 +8,9 @@ lang: zh
 
 如果你想赞助 SpaceVim，或者希望 SpaceVim 开发得更快一点，也许你可以给我买杯咖啡：
 
+- [通过 opencollective 捐助](https://opencollective.com/spacevim)
+- [通过 Bountysource 捐助](https://salt.bountysource.com/teams/spacevim)
+
 <a href='https://ko-fi.com/SpaceVim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 <img src="https://spacevim.org/img/weixin.png" height="300" width="300">

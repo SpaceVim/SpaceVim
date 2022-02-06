@@ -18,6 +18,7 @@ If you use SpaceVim in your daily work and feel that it has made your life easie
 please consider supporting SpaceVim by:
 
 - [Become a backer on opencollective](https://opencollective.com/spacevim)
+- [Become a backer on Bountysource](https://salt.bountysource.com/teams/spacevim)
 
 Also, you can buy me a coffee via ko-fi.com or wechat:
 
