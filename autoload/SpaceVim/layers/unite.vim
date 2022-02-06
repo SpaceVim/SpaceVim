@@ -55,7 +55,7 @@ function! SpaceVim#layers#unite#plugins() abort
   " \ ['dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF', 'loadconf' : 1 , 'loadconf_before' : 1}],
 
   " history/yank source <Leader>fh
-  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neoyank.vim', {'merged' : 0}])
   " quickfix source <Leader>fq
   call add(plugins, ['osyo-manga/unite-quickfix', {'merged' : 0}])
   " outline source <Leader>fo

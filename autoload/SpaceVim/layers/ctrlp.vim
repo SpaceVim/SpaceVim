@@ -51,7 +51,7 @@ function! SpaceVim#layers#ctrlp#plugins() abort
         \ ['hara/ctrlp-colorscheme', {'on_cmd' : 'CtrlPColorscheme'}],
         \ ]
   call add(plugins, ['wsdjeg/ctrlp-menu', {'merged' : 0}])
-  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neoyank.vim', {'merged' : 0}])
   call add(plugins, ['wsdjeg/ctrlp-yank', {'merged' : 0}])
   call add(plugins, ['wsdjeg/vim-ctrlp-message', {'merged' : 0}])
   return plugins

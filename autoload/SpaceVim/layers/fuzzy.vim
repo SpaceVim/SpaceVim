@@ -10,7 +10,7 @@ function! SpaceVim#layers#fuzzy#plugins() abort
   let plugins = [
         \ ['wsdjeg/vim-fuzzy-search', {'loadconf' : 1, 'merged' : 0}],
         \ ]
-  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neoyank.vim', {'merged' : 0}])
   return plugins
 endfunction
 
