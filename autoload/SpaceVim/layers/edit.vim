@@ -41,6 +41,13 @@
 "     name = 'edit'
 "     autosave_all_buffers = true
 " <
+" 4. `autosave_location`: set the directory where to save changed files. By
+" default it is empty string, that means saving to the original file. If this
+" option is not an empty string. files will me saved to that directory
+" automatically. and the format is:
+" >
+"   autosave_location/path+=to+=filename.ext.backup
+" <
 
 scriptencoding utf-8
 if exists('s:autosave_timeout')
@@ -57,6 +64,7 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:autosave_timeout = 0
 let s:autosave_events = []
 let s:autosave_all_buffers = 0
+let s:autosave_location = ''
 
 function! SpaceVim#layers#edit#health() abort
   call SpaceVim#layers#edit#plugins()
@@ -101,6 +109,7 @@ function! SpaceVim#layers#edit#set_variable(var) abort
   let s:autosave_timeout = get(a:var, 'autosave_timeout', s:autosave_timeout)
   let s:autosave_events = get(a:var, 'autosave_events', s:autosave_events)
   let s:autosave_all_buffers = get(a:var, 'autosave_all_buffers', s:autosave_all_buffers)
+  let s:autosave_location = get(a:var, 'autosave_location', s:autosave_location)
 endfunction
 
 function! SpaceVim#layers#edit#get_options() abort
@@ -111,6 +120,7 @@ function! SpaceVim#layers#edit#config() abort
   let autosave_opt = {
         \ 'timeoutlen' : s:autosave_timeout,
         \ 'save_all_buffers' : s:autosave_all_buffers,
+        \ 'backupdir' : s:autosave_location,
         \ 'event' : s:autosave_events,
         \ }
   call SpaceVim#plugins#autosave#config(autosave_opt)

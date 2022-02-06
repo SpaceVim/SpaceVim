@@ -28,6 +28,7 @@ let s:default_opt = {
       \ }
 
 let s:LOGGER =SpaceVim#logger#derive('autosave')
+let s:FILE = SpaceVim#api#import('file')
 
 let s:autosave_timer  = -1
 
@@ -47,6 +48,16 @@ function! SpaceVim#plugins#autosave#config(opt) abort
   endfor
 endfunction
 
+function! s:location_path(bufname) abort
+  if empty(s:default_opt.backupdir)
+    return a:bufname
+  else
+    return s:default_opt.backupdir . '/'
+          \ . s:FILE.path_to_fname(a:bufname)
+          \ . '.backup'
+  endif
+endfunction
+
 
 function! s:save_buffer(bufnr) abort
   if getbufvar(a:bufnr, '&modified') &&
@@ -54,9 +65,11 @@ function! s:save_buffer(bufnr) abort
         \ filewritable(bufname(a:bufnr)) &&
         \ !empty(bufname(a:bufnr))
     let lines = getbufline(a:bufnr, 1, "$")
-    call writefile(lines, bufname(a:bufnr))
-    call setbufvar(a:bufnr, "&modified", 0)
-    exe 'silent checktime ' . a:bufnr
+    call writefile(lines, s:location_path(bufname(a:bufnr), '+='))
+    if empty(s:default_opt.backupdir)
+      call setbufvar(a:bufnr, "&modified", 0)
+      exe 'silent checktime ' . a:bufnr
+    endif
   endif
 endfunction
 
