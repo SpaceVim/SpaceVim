@@ -20,7 +20,11 @@ let s:default_opt = {
       \ 'timeoutlen' : 60*5*1000,
       \ 'backupdir' : '~/.cache/SpaceVim/backup/',
       \ 'save_all_buffers' : 0,
-      \ 'event' : ['InsertLeave', 'TextChanged']
+      \ 'event' : ['InsertLeave', 'TextChanged'],
+      \ 'filetype' : [],
+      \ 'filetypeExclude' : [],
+      \ 'buftypeExclude' : [],
+      \ 'bufNameExclude' : [],
       \ }
 
 let s:LOGGER =SpaceVim#logger#derive('autosave')
@@ -43,18 +47,27 @@ function! SpaceVim#plugins#autosave#config(opt) abort
   endfor
 endfunction
 
-function! s:auto_dosave(...) abort
-  if !getbufvar(bufnr('%'), '&modified') ||
-        \  !empty(getbufvar(bufnr('%'), '&buftype')) ||
-        \  getbufvar(bufnr('%'), 'autosave_disabled', 0)
-    return
-  endif
-  if s:default_opt.save_all_buffers
-    wa
-  else
-    w
-  endif
 
+function! s:save_buffer(bufnr) abort
+  if getbufvar(a:bufnr, '&modified') &&
+        \ empty(getbufvar(a:bufnr, '&buftype')) &&
+        \ filewritable(bufname(a:bufnr)) &&
+        \ !empty(bufname(a:bufnr))
+    let lines = getbufline(a:bufnr, 1, "$")
+    call writefile(lines, bufname(a:bufnr))
+    call setbufvar(a:bufnr, "&modified", 0)
+  endif
+endfunction
+
+
+function! s:auto_dosave(...) abort
+  if s:default_opt.save_all_buffers
+    for nr in range(1, bufnr('$'))
+      call s:save_buffer(nr)
+    endfor
+  else
+    call s:save_buffer(bufnr('%'))
+  endif
 endfunction
 
 function! s:setup_timer(timeoutlen) abort
