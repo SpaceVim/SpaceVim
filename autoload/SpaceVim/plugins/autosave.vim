@@ -56,6 +56,7 @@ function! s:save_buffer(bufnr) abort
     let lines = getbufline(a:bufnr, 1, "$")
     call writefile(lines, bufname(a:bufnr))
     call setbufvar(a:bufnr, "&modified", 0)
+    exe 'silent checktime ' . a:bufnr
   endif
 endfunction
 
