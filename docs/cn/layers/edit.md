@@ -31,8 +31,8 @@ lang: zh
 
 ## 模块选项
 
-- `textobj`: specified a list of text opjects to be enabled, the avaliable list is: `indent`, `line`, `entire`
-- `autosave_timeout`: 设置自动保存的时间间隔，默认是0，表示未开启定时自动保存。这个选项设定的值需要是毫秒数，并且需要小于100\*60\*1000 (100 分钟) 且 大于1000（1分钟）。比如设定成每隔5分钟自动保存一次：
+- `textobj`: 设定启用的文本对象列表，可用列表包括：`indent`, `line`, `entire`
+- `autosave_timeout`: 设置自动保存的时间间隔，默认是0，表示未开启定时自动保存。这个选项设定的值需要是毫秒数，并且需要小于100\*60\*1000 (100 分钟) 且 大于1000（1秒）。比如设定成每隔5分钟自动保存一次：
   ```
   [[layers]]
     name = 'edit'
