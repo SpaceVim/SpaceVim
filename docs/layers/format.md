@@ -70,6 +70,15 @@ This layer is enabled by default. If you want to disable it, add the following t
     format_on_save = false
   ```
 
+- **`silent_format`**: Setting this to true will run the formatter silently without any messages. Default is
+disabled.
+
+  ```toml
+  [[layers]]
+    name = "format"
+    silent_format = true
+  ```
+
 ### Global options
 
 neoformat is a formatting framework, all of it's options can be used in bootstrap function. You can read

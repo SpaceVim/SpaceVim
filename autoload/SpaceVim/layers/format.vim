@@ -17,6 +17,7 @@
 " 1. `format_on_save`: disabled by default.
 " 2. `format_method`: set the format plugin, default plugin is `neoformat`.
 " You can also use `vim-codefmt`.
+" 3. `silent_format`: Runs the formatter without any messages.
 "
 " @subsection key bindings
 " >
