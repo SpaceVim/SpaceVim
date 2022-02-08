@@ -30,6 +30,7 @@ if exists('s:format_on_save')
 else
   let s:format_method = 'neoformat'
   let s:format_on_save = 0
+  let s:silent_format = 0
   let s:format_ft = []
 endif
 
@@ -62,17 +63,22 @@ function! SpaceVim#layers#format#config() abort
   endif
   augroup spacevim_layer_format
     autocmd!
-    autocmd BufWritePre * call s:format()
+    if s:silent_format
+      autocmd BufWritePre * silent! call s:format()
+    else
+      autocmd BufWritePre * call s:format()
+    endif
   augroup END
 endfunction
 
 function! SpaceVim#layers#format#set_variable(var) abort
   let s:format_method = get(a:var, 'format_method', s:format_method)
   let s:format_on_save = get(a:var, 'format_on_save', s:format_on_save)
+  let s:silent_format = get(a:var, 'silent_format', s:silent_format)
 endfunction
 
 function! SpaceVim#layers#format#get_options() abort
-  return ['format_method', 'format_on_save']
+  return ['format_method', 'format_on_save', 'silent_format']
 endfunction
 
 function! SpaceVim#layers#format#add_filetype(ft) abort
