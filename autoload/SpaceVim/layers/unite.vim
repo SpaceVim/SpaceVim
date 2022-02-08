@@ -60,7 +60,7 @@ function! SpaceVim#layers#unite#plugins() abort
   call add(plugins, ['osyo-manga/unite-quickfix', {'merged' : 0}])
   " outline source <Leader>fo
   call add(plugins, ['Shougo/unite-outline', {'merged' : 0}])
-  call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neomru.vim', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-van', {'merged' : 0}])
 
   if g:spacevim_enable_googlesuggest

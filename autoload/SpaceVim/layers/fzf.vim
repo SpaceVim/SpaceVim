@@ -48,7 +48,7 @@ function! SpaceVim#layers#fzf#plugins() abort
   let plugins = []
   call add(plugins, ['junegunn/fzf',                { 'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/neoyank.vim', {'merged' : 0}])
-  call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neomru.vim', {'merged' : 0}])
   call add(plugins, ['SpaceVim/fzf-neoyank',                { 'merged' : 0}])
   return plugins
 endfunction

@@ -56,7 +56,7 @@ function! SpaceVim#layers#leaderf#plugins() abort
         \ 'loadconf' : 1,
         \ 'merged' : 0,
         \ }])
-  call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neomru.vim', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/neoyank.vim',        { 'merged' : 0}])
 
   " use this repo unicode data

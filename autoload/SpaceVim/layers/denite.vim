@@ -19,7 +19,7 @@ function! SpaceVim#layers#denite#plugins() abort
   call add(plugins, ['Shougo/unite-outline', {'merged' : 0}])
   call add(plugins, ['ozelentok/denite-gtags', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/neoyank.vim', {'merged' : 0}])
-  call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neomru.vim', {'merged' : 0}])
   call add(plugins, ['SpaceVim/Denite-sources', {'merged' : 0}])
 
   return plugins
