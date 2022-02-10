@@ -59,10 +59,10 @@ endfunction
 
 function! s:ConvertChineseNumberUnderCursorToDigit() abort
   let cword = expand('<cword>')
-  let ChineseNumberPattern = "[〇一二三四五六七八九零壹贰叁肆伍陆柒捌玖貮两点]\+"
+  let ChineseNumberPattern = '[〇一二三四五六七八九十百千万亿兆零壹贰叁肆伍陆柒捌玖拾佰仟萬億貮两点]\+'
   while cword =~ ChineseNumberPattern
     let matchword = matchstr(cword, ChineseNumberPattern)
-    let cword = substitute(cword, matchword, s:Chinese2Digit(matchword))
+    let cword = substitute(cword, matchword, s:Chinese2Digit(matchword), "")
   endwhile
   if !empty(cword)
     let save_register = @k
