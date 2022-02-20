@@ -158,6 +158,7 @@ function! plantuml_previewer#refresh(bufnr) "{{{
   let finial_path = s:viewer_path() . '/tmp.' . image_ext
   let cmd = [
        \ s:update_viewer_script_path,
+       \ s:java,
        \ s:jar_path(),
        \ puml_src_path,
        \ s:normalize_path(output_dir_path),
@@ -197,6 +198,7 @@ function! plantuml_previewer#save_as(...) "{{{
   call mkdir(fnamemodify(save_path, ':p:h'), 'p')
   let cmd = [
         \ s:save_as_script_path,
+        \ s:java,
         \ s:jar_path(),
         \ puml_src_path,
         \ s:normalize_path(output_dir_path),
