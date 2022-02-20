@@ -24,12 +24,20 @@
 "     name = 'lang#plantuml'
 "     java_command = 'path/to/java'
 " <
+" 2. `plantuml_jar_path`: Set the path of `pluatuml.jar`.
+" >
+"   [[layers]]
+"     name = 'lang#plantuml'
+"     plantuml_jar_path = 'path/to/plantuml.jar'
+" <
 "
 " @subsection Key bindings
 " >
 "   Mode            Key             Function
 "   ---------------------------------------------
 "   normal          SPC l p         preview uml file
+"   normal          SPC l c         stop preview
+"   normal          SPC l s         save uml file
 " <
 "
 
