@@ -90,5 +90,5 @@ kotlin language server command via:
     'kotlin',
   ]
   [layers.override_cmd]
-    kotlin = 'path/to/kotlin-language-server'
+    kotlin = ['path/to/kotlin-language-server']
 ```
