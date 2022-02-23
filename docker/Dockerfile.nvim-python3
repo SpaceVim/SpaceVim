@@ -20,6 +20,7 @@ RUN echo "deb $DEBIAN_URL testing main contrib non-free" >> /etc/apt/sources.lis
     unzip                                                       \
     xclip                                                       \
     xfonts-utils                                                \
+    exuberant-ctags                                             \
   && apt-get clean all
 
 RUN cd /usr/src                                                 \
