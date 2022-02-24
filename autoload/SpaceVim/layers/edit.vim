@@ -249,6 +249,9 @@ function! SpaceVim#layers#edit#config() abort
   vnoremap <silent> <Plug>DuplicateLines :call <SID>duplicate_lines(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'd'], '<Plug>DuplicateLines',
         \ 'duplicate-line-or-region', 0, 1)
+  nnoremap <silent> <Plug>ReverseLines :call <SID>reverse_lines(0)<Cr>
+  vnoremap <silent> <Plug>ReverseLines :call <SID>reverse_lines(1)<Cr>
+  call SpaceVim#mapping#space#def('nmap' , ['x' , 'l' , 'r'] , '<Plug>ReverseLines'  , 'reverse-lines'                  , 0, 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 's'] , 'sort i'  , 'sort lines (ignorecase)'                    , 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'S'] , 'sort'    , 'sort lines (case-sensitive)'                , 1)
   nnoremap <silent> <Plug>UniquifyIgnoreCaseLines :call <SID>uniquify_lines(0, 1)<Cr>
@@ -695,6 +698,19 @@ function! s:duplicate_lines(visual) abort
   elseif line('.') > 1
     call setline('.', getline(line('.') - 1))
   endif
+endfunction
+
+function! s:reverse_lines(visual) abort
+  if a:visual
+    let start_line = line("'<")
+    let end_line = line("'>")
+  else
+    let start_line = 1
+    let end_line = line('$')
+  endif
+  let rst = getline(start_line, end_line)
+  call reverse(rst)
+  call s:BUFFER.buf_set_lines(bufnr('.'), start_line-1 , end_line, 0, rst)
 endfunction
 
 function! s:uniquify_lines(visual, ignorecase) abort
