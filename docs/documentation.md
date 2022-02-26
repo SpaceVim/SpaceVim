@@ -1115,6 +1115,7 @@ Text related commands (start with `x`):
 | `SPC x J`        | move down a line of text (enter transient state)                   |
 | `SPC x K`        | move up a line of text (enter transient state)                     |
 | `SPC x l d`      | duplicate a line or region                                         |
+| `SPC x l r`      | reverse lines                                                      |
 | `SPC x l s`      | sort lines (ignorecase)                                            |
 | `SPC x l S`      | sort lines (case-senstive)                                         |
 | `SPC x l u`      | uniquify lines (ignorecase)                                        |
