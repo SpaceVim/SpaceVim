@@ -178,6 +178,9 @@ function! SpaceVim#layers#edit#config() abort
   vnoremap <silent> <Plug>DuplicateLines :call <SID>duplicate_lines(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'd'], '<Plug>DuplicateLines',
         \ 'duplicate-line-or-region', 0, 1)
+  nnoremap <silent> <Plug>ReverseLines :ReverseLines<cr>
+  vnoremap <silent> <Plug>ReverseLines :ReverseLines<cr>
+  call SpaceVim#mapping#space#def('nmap' , ['x' , 'l' , 'r'] , '<Plug>ReverseLines'  , 'reverse-lines'                  , 0, 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 's'] , 'sort i'  , 'sort lines (ignorecase)'                    , 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'S'] , 'sort'    , 'sort lines (case-sensitive)'                , 1)
   nnoremap <silent> <Plug>UniquifyIgnoreCaseLines :call <SID>uniquify_lines(0, 1)<Cr>
@@ -624,6 +627,13 @@ function! s:duplicate_lines(visual) abort
   elseif line('.') > 1
     call setline('.', getline(line('.') - 1))
   endif
+endfunction
+
+command! -nargs=0 -range=% ReverseLines :<line1>,<line2>call <sid>reverse_lines()
+function! s:reverse_lines() range
+  let rst = getline(a:firstline, a:lastline)
+  call reverse(rst)
+  call s:BUFFER.buf_set_lines(bufnr('.'), a:firstline-1 , a:lastline, 0, rst)
 endfunction
 
 function! s:uniquify_lines(visual, ignorecase) abort
