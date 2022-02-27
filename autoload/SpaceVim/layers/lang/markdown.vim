@@ -149,6 +149,7 @@ function! s:mappings() abort
         \ . string(function('s:run_code_in_block'))
         \ . ', [])', 'run code in block', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c'], 'GenTocGFM', 'create content at cursor', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'RemoveToc', 'remove content', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','u'], 'UpdateToc', 'update content', 1)
 endfunction
 
