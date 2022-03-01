@@ -93,7 +93,7 @@ function! s:Chinese2Digit(cnDigitString)
     let decimal = len(cnList) == 2 ? cnList[1] : [] " 小数部分
     let unit = 0  " 当前单位
     let parse = []  " 解析数组
-    while len(integer) > 0
+    while !empty(integer)
       let x = remove(integer, -1)
       if has_key(CN_UNIT, x)
         " 当前字符是单位
@@ -144,9 +144,7 @@ function! s:Chinese2Digit(cnDigitString)
     endwhile
     let result += tmp
     if !empty(decimal)
-      for [k, v] in items(CN_NUM)
-        let decimal = substitute(decimal, k, v, 'g')
-      endfor
+      let decimal = substitute(decimal, ".", {m -> CN_NUM[m[0]]}, 'g')
       let result .= "." . decimal
     endif
   endif
