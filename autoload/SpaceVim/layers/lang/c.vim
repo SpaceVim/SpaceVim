@@ -150,6 +150,10 @@ endfunction
 
 " config {{{
 function! SpaceVim#layers#lang#c#config() abort
+  call SpaceVim#mapping#g_capital_d#add('c',
+        \ function('s:go_to_declaration'))
+  call SpaceVim#mapping#g_capital_d#add('cpp',
+        \ function('s:go_to_declaration'))
   call SpaceVim#mapping#gd#add('c',
         \ function('s:go_to_def'))
   call SpaceVim#mapping#gd#add('cpp',
@@ -309,7 +313,6 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#go_to_typedef()', 'type definition', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'R'],
           \ 'call SpaceVim#lsp#refactor()', 'refactor', 1)
-    " TODO this should be gD
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'D'],
           \ 'call SpaceVim#lsp#go_to_declaration()', 'declaration', 1)
 
@@ -449,6 +452,16 @@ function! s:update_neoinclude(argv, fts) abort
     endif
   endfor
   let b:neoinclude_paths = path
+endfunction
+" }}}
+
+" local function: go_to_declaration {{{
+function! s:go_to_declaration() abort
+  if !SpaceVim#layers#lsp#check_filetype(&ft)
+    execute "norm! g\<c-]>"
+  else
+    call SpaceVim#lsp#go_to_declaration()
+  endif
 endfunction
 " }}}
 
