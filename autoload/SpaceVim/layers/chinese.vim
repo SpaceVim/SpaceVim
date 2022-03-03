@@ -124,20 +124,22 @@ function! s:Chinese2Digit(cnDigitString)
     endif
     let result = 0
     let tmp = 0
-    while len(parse)
+    while !empty(parse)
       let x = remove(parse, -1)
-      if x == 'w'
-          let tmp *= 10000
-          let result += tmp
-          let tmp = 0
-      elseif x == 'y'
-          let tmp *= 100000000
-          let result += tmp
-          let tmp = 0
-      elseif x == 'z'
-          let tmp *= 1000000000000
-          let result += tmp
-          let tmp = 0
+      if type(x) == type("")
+        if x == 'w'
+            let tmp *= 10000
+            let result += tmp
+            let tmp = 0
+        elseif x == 'y'
+            let tmp *= 100000000
+            let result += tmp
+            let tmp = 0
+        elseif x == 'z'
+            let tmp *= 1000000000000
+            let result += tmp
+            let tmp = 0
+        endif
       else
           let tmp += x
       endif
