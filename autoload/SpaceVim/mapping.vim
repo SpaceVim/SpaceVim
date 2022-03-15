@@ -106,6 +106,14 @@ function! SpaceVim#mapping#enter() abort
   return SpaceVim#mapping#enter#i_enter()
 endfunction
 
+function! SpaceVim#mapping#g_capital_d() abort
+  if !empty(SpaceVim#mapping#g_capital_d#get())
+    call call(SpaceVim#mapping#g_capital_d#get(), [])
+  else
+    normal! gD
+  endif
+endfunction
+
 function! SpaceVim#mapping#gd() abort
   if !empty(SpaceVim#mapping#gd#get())
     call call(SpaceVim#mapping#gd#get(), [])
