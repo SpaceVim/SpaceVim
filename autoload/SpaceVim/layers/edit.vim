@@ -700,6 +700,7 @@ function! s:duplicate_lines(visual) abort
   endif
 endfunction
 
+command! -nargs=0 -range=% ReverseLines :<line1>,<line2>call <sid>reverse_lines()
 function! s:reverse_lines() range
   let rst = getline(a:firstline, a:lastline)
   call reverse(rst)
