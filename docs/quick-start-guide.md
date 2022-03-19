@@ -47,6 +47,14 @@ For more info about the install script, please check:
 curl -sLf https://spacevim.org/install.sh | bash -s -- -h
 ```
 
+By default the latest version of SpaceVim will be installed.
+If you want to switch to specific version, for example `v1.8.0`, run following command in your terminal.
+
+```
+cd ~/.SpaceVim
+git checkout v1.8.0
+```
+
 If you got a vimproc error like this:
 
 ```
