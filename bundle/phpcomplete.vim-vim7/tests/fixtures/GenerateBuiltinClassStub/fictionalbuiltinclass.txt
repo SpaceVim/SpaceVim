@@ -1,0 +1,21 @@
+class FictionalBuiltinClass {
+	const IS_PUBLIC = 256;
+	// @var $name Foo
+	public $name;
+	// @var $_app Foo2
+	public static $_app = 3;
+	/**
+	 * getName
+	 *
+	 * @return Closure
+	 */
+	public function getName(object $object | Closure){
+	}
+	/**
+	 * export
+	 *
+	 * @return string
+	 */
+	public static function export(mixed $class, string $name [, bool $return] | string){
+	}
+}

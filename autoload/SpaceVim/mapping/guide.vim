@@ -1,6 +1,6 @@
 "=============================================================================
 " guide.vim --- key binding guide for SpaceVim
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -479,7 +479,7 @@ function! s:wait_for_input() abort " {{{
     if inp ==# ' '
       let inp = '[SPC]'
     else
-      let inp = s:KEY.nr2name(char2nr(inp))
+      let inp = s:KEY.char2name(inp)
     endif
     let fsel = get(s:lmap, inp)
     if !empty(fsel)

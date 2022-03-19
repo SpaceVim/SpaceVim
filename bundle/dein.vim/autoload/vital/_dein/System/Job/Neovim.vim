@@ -14,7 +14,10 @@ endfunction
 
 function! s:start(args, options) abort
   let job = extend(copy(s:job), a:options)
-  let job_options = {}
+  let job_options = {
+        \ 'stderr_buffered': v:false,
+        \ 'stdout_buffered': v:false
+        \ }
   if has_key(a:options, 'cwd')
     let job_options.cwd = a:options.cwd
   endif

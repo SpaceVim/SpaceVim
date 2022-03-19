@@ -1,12 +1,13 @@
 "=============================================================================
 " g.vim --- g key bindings
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 function! SpaceVim#mapping#g#init() abort
+  call SpaceVim#logger#debug('init g key bindings')
   nnoremap <silent><nowait> [G] :<c-u>LeaderGuide "g"<CR>
   nmap g [G]
   let g:_spacevim_mappings_g = {}
@@ -106,8 +107,10 @@ function! SpaceVim#mapping#g#init() abort
   nnoremap gv gv
   let g:_spacevim_mappings_g['<C-]>'] = ['call feedkeys("g<c-]>", "n")', 'jump-to-tag-under-cursor']
   nnoremap g<c-]> g<c-]>
+  let g:_spacevim_mappings_g['D'] = ['call SpaceVim#mapping#g_capital_d()', 'goto-declaration']
+  call SpaceVim#mapping#def('nnoremap <silent>', 'gD', ':call SpaceVim#mapping#g_capital_d()<CR>', 'Goto declaration', '')
   let g:_spacevim_mappings_g['d'] = ['call SpaceVim#mapping#gd()', 'goto-definition']
-  call SpaceVim#mapping#def('nnoremap <silent>', 'gd', ':call SpaceVim#mapping#gd()<CR>', 'Goto declaration', '')
+  call SpaceVim#mapping#def('nnoremap <silent>', 'gd', ':call SpaceVim#mapping#gd()<CR>', 'Goto definition', '')
 
   let g:_spacevim_mappings_g['='] = ['call SpaceVim#mapping#format()', 'format-current-buffer']
   call SpaceVim#mapping#def('nnoremap <silent>','g=',':call SpaceVim#mapping#format()<cr>','format current buffer','call SpaceVim#mapping#format()')

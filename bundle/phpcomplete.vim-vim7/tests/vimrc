@@ -1,0 +1,6 @@
+set nocp
+filetype plugin indent on
+syntax on
+
+let p = fnamemodify(expand('%:p:h'), ':h')
+exe 'set rtp='.p.'/,'.p.'/vimunit/,'.p.'/../vimunit/,'.&rtp

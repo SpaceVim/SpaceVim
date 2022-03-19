@@ -1,6 +1,6 @@
 "=============================================================================
 " rust.vim --- SpaceVim lang#rust layer
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -70,6 +70,7 @@
 "   SPC l c B   cargo-bench
 "   SPC l c D   cargo-docs
 "   SPC l c r   cargo-run
+"   SPC l c l   cargo-clippy
 " <
 "
 " This layer also provides REPL support for rust, the key bindings are:
@@ -89,7 +90,7 @@
 "   g D             jump to type definition
 "   SPC l e         rename symbol
 "   SPC l x         show references
-"   SPC l s         show line diagnostics
+"   SPC l h         show line diagnostics
 "   SPC l d         show document
 "   K               show document
 "   SPC l w l       list workspace folder
@@ -182,6 +183,9 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 't'], 'call call('
         \ . string(function('s:execCMD')) . ', ["cargo test"])',
         \ 'cargo-test', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'l'], 'call call('
+        \ . string(function('s:execCMD')) . ', ["cargo clippy"])',
+        \ 'cargo-clippy', 1)
   call SpaceVim#mapping#space#langSPC('nnoremap', ['l','c', 'u'], 'call call('
         \ . string(function('s:execCMD')) . ', ["cargo update"])',
         \ 'update-external-dependencies', 1)
@@ -205,7 +209,7 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#references()', 'show-references', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'h'],
           \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
     let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],

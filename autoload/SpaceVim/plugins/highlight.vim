@@ -1,6 +1,6 @@
 "=============================================================================
 " highlight.vim --- highlight mode for SpaceVim
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -114,8 +114,9 @@ endfunction
 " use SPC s h to highlight current symbol on default range.
 
 " public API func: start Highlight mode {{{
-function! SpaceVim#plugins#highlight#start(current) abort
-  let curpos = getcurpos()
+function! SpaceVim#plugins#highlight#start(...) abort
+  " getcurpos is added in vim 7.4.313
+  let curpos = getpos('.')
   let save_reg_k = @k
   normal! viw"ky
   let s:current_match = @k

@@ -78,6 +78,14 @@ lsp 模块默认使用 `clangd` 作为 C/C++ 的语言服务器后台命令。
     c = ["clangd"]
 ```
 
+如果使用的是 `nvim(>=0.5.0)`，则需要指定 `enabled_clients` 选项：
+
+```toml
+[[layers]]
+  name = 'lsp'
+  enabled_clients = ['clangd']
+```
+
 ### 语法检查
 
 `checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)

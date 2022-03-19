@@ -1,6 +1,6 @@
 "=============================================================================
 " mapping.vim --- mapping functions in SpaceVim
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -106,6 +106,14 @@ function! SpaceVim#mapping#enter() abort
   return SpaceVim#mapping#enter#i_enter()
 endfunction
 
+function! SpaceVim#mapping#g_capital_d() abort
+  if !empty(SpaceVim#mapping#g_capital_d#get())
+    call call(SpaceVim#mapping#g_capital_d#get(), [])
+  else
+    normal! gD
+  endif
+endfunction
+
 function! SpaceVim#mapping#gd() abort
   if !empty(SpaceVim#mapping#gd#get())
     call call(SpaceVim#mapping#gd#get(), [])
@@ -125,6 +133,27 @@ function! SpaceVim#mapping#clear_buffers() abort
         endtry
       endif
     endfor
+  endif
+endfunction
+
+function! SpaceVim#mapping#kill_buffer_expr() abort
+  let regexp = input('kill buffer by regexp:',
+        \ '')
+  if !empty(regexp)
+    let blisted = filter(range(1, bufnr('$')), 'bufname(v:val) =~ regexp')
+    for i in blisted
+      if i != bufnr('%')
+        try 
+          exe 'bw ' . i
+        catch
+        endtry
+      endif
+    endfor
+    noautocmd normal! :
+    echo printf('killed buffers done(%s)', regexp)
+  else
+    noautocmd normal! :
+    echo 'canceled!'
   endif
 endfunction
 

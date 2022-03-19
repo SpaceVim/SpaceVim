@@ -1,0 +1,23 @@
+{
+  "name": "plantuml-previewer",
+  "version": "1.0.0",
+  "description": "Plantuml Previewer",
+  "private": true,
+  "dependencies": {
+    "draggabilly": "^2.2.0",
+    "vue": "^2.5.16",
+    "wheel": "0.0.5"
+  },
+  "devDependencies": {
+    "file-loader": "^1.1.11",
+    "node-sass": "^4.13.1",
+    "poi": "^10.1.9",
+    "sass-loader": "^7.0.1"
+  },
+  "scripts": {
+    "start": "poi --port 3233 src/index.js",
+    "build": "poi build src/index.js -d dist"
+  },
+  "author": "Weirong Xu <weirongxu.raidou@gmail.com>",
+  "license": "MIT"
+}

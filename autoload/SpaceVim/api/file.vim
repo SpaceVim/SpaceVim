@@ -1,6 +1,6 @@
 "=============================================================================
 " file.vim --- SpaceVim file API
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -249,8 +249,9 @@ endfunction
 
 let s:file['unify_path'] = function('s:unify_path')
 
-function! s:path_to_fname(path) abort
-  return substitute(s:unify_path(a:path), '[\\/:;.]', '_', 'g')
+function! s:path_to_fname(path, ...) abort
+  let sep = get(a:000, 0, '_')
+  return substitute(s:unify_path(a:path), '[\\/:;.]', sep, 'g')
 endfunction
 
 let s:file['path_to_fname'] = function('s:path_to_fname')

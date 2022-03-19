@@ -1,6 +1,6 @@
 "=============================================================================
 " tags.vim --- SpaceVim gtags layer
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -39,7 +39,7 @@ let s:FILE = SpaceVim#api#import('file')
 
 let s:gtagslabel = ''
 let s:auto_update = 1
-let g:tags_cache_dir = '~/.cache/SpaceVim/tags/'
+let g:tags_cache_dir = g:spacevim_data_dir . 'SpaceVim/tags/'
 let g:gtags_open_list = 2
 
 function! SpaceVim#layers#gtags#plugins() abort

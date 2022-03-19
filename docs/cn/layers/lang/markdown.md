@@ -96,7 +96,9 @@ npm install --global prettier
 | --------- | ------------- | --------------------------------------- |
 | `SPC b f` | Normal        | 格式化当前文件                          |
 | `SPC l c` | Normal/Visual | 在光标处创建目录                        |
+| `SPC l C` | Normal/Visual | 删除目录                                |
 | `SPC l k` | Normal/Visual | 为光标下的单词或者选中文本增加 URL 链接 |
 | `SPC l K` | Normal/Visual | 为光标下的单词或者选中文本增加图片链接  |
+| `SPC l r` | Normal/Visual | 运行区块中的代码                        |
 | `SPC l u` | Normal/Visual | 更新目录                                |
 | `SPC l p` | Normal        | 通过浏览器实时预览当前文件              |

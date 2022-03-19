@@ -1,6 +1,6 @@
 "=============================================================================
 " denite.vim --- SpaceVim denite layer
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -18,8 +18,8 @@ function! SpaceVim#layers#denite#plugins() abort
   call add(plugins, ['chemzqm/unite-location', {'merged' : 0}])
   call add(plugins, ['Shougo/unite-outline', {'merged' : 0}])
   call add(plugins, ['ozelentok/denite-gtags', {'merged' : 0}])
-  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
-  call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neoyank.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neomru.vim', {'merged' : 0}])
   call add(plugins, ['SpaceVim/Denite-sources', {'merged' : 0}])
 
   return plugins
@@ -37,6 +37,13 @@ function! SpaceVim#layers#denite#config() abort
 
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Denite unicode', 'search-and-insert-unicode', 1)
+  if g:spacevim_snippet_engine ==# 'neosnippet'
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Denite neosnippet', 'insert snippets', 1)
+  elseif g:spacevim_snippet_engine ==# 'ultisnips'
+    " @todo ultisnips do not support denite now.
+    " https://github.com/SirVer/ultisnips/issues/869
+    " call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Denite ultisnips', 'insert snippets', 1)
+  endif
 
 
   let lnum = expand('<slnum>') + s:lnum - 1

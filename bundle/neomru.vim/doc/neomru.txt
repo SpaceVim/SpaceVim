@@ -1,0 +1,185 @@
+*neomru.txt*	MRU plugin includes unite.vim MRU sources.
+
+Version: 1.0
+Author : Shougo <Shougo.Matsu@gmail.com>
+License: MIT license
+
+CONTENTS					*neomru-contents*
+
+Usage			|neomru-usage|
+Install			|neomru-install|
+Configuration Examples	|neomru-examples|
+Interface		|neomru-interface|
+  Variables		  |neomru-variables|
+  Sources		  |neomru-sources|
+  Commands		  |neomru-commands|
+  Functions		  |neomru-functions|
+FAQ			|neomru-faq|
+
+==============================================================================
+USAGE						*neomru-usage*
+
+	To browse a list of mru files.
+>
+	:Unite neomru/file
+	:Unite file_mru
+<
+	To browse a list of mru directories.
+>
+	:Unite neomru/directory
+	:Unite directory_mru
+>
+	nnoremap <silent> [unite]d
+	        \ :<C-u>Unite -buffer-name=files -default-action=lcd neomru/directory<CR>
+<
+	Note: To import previous version of unite mru candidates, you must use
+	|:NeoMRUImportFile| and |:NeoMRUImportDirectory| commands.
+
+==============================================================================
+INSTALL						*neomru-install*
+
+Requirements: unite.vim
+
+https://github.com/Shougo/unite.vim
+
+==============================================================================
+INTERFACE					*neomru-interface*
+
+------------------------------------------------------------------------------
+VARIABLES 					*neomru-variables*
+
+						*g:neomru#time_format*
+g:neomru#time_format
+		Specify the output format of the modified file
+		in MRU sources. Uses |strftime()| formatting.
+		Note: It is not access time format.
+						*g:neomru#filename_format*
+g:neomru#filename_format
+		Specify the output format of the filename of in MRU sources.
+		The format is same to |fnamemodify()|.  If this variable is
+		empty, drawing speed is faster.
+g:neomru#do_validate				*g:neomru#do_validate*
+		Specify whether automatically remove invalid file paths from
+		mru history.
+						*g:neomru#update_interval*
+g:neomru#update_interval
+		Specify the update interval to save updated mru
+		files/directories to disk.
+g:neomru#file_mru_path				*g:neomru#file_mru_path*
+		Specifies the file to write the information of most recent
+		used files.
+
+		Default value is "$XDG_CACHE_HOME/neomru/file" or
+		expand("~/.cache/neomru/file"); the absolute path of it.
+
+g:neomru#file_mru_limit				*g:neomru#file_mru_limit*
+		The number of recent file candidates to show in default
+		file_mru window.
+					*g:neomru#file_mru_ignore_pattern*
+g:neomru#file_mru_ignore_pattern
+		The ignore regex pattern of neomru/file source.
+		Refer autoload/neomru.vim about the default
+		value.
+		Note: This variable is deprecated.  Please use
+		|unite#custom#source()| instead.
+		Note: This variable must be set before using |unite|.
+						*g:neomru#directory_mru_path*
+g:neomru#directory_mru_path
+
+		Default value is "$XDG_CACHE_HOME/neomru/directory" or
+		expand("~/.cache/neomru/directory"); the absolute path of it.
+
+						*g:neomru#directory_mru_limit*
+g:neomru#directory_mru_limit
+					*g:neomru#directory_mru_ignore_pattern*
+g:neomru#directory_mru_ignore_pattern
+		The ignore regexp pattern of neomru/directory source.
+		Refer autoload/neomru.vim about the default
+		value.
+
+							*g:neomru#follow_links*
+g:neomru#follow_links
+		A boolean which determines whether symbolic or hard-linked
+		files should be followed (resolved): if false, symlinked
+		files and directories are listed in the unite buffer using the
+		symlink's path; if true, they are listed using the real path.
+
+		The default value is 0 (false).
+
+
+------------------------------------------------------------------------------
+SOURCES						*neomru-sources*
+
+						*unite-source-neomru/file*
+neomru/file
+						*unite-source-file_mru*
+file_mru
+		Nominates files you used recently as candidates, ordering
+		by time series.
+
+		The mru code is overhauled to tracking long mru history.
+		Set a large number like 5000 for the long limit will not
+		impact vim performance.
+
+		Source custom variables:
+		fnamemodify
+			a flag to modify given paths.
+			Use |filename-modifiers|.
+				(default is ':~')
+
+						*unite-source-neomru/directory*
+neomru/directory
+						*unite-source-directory_mru*
+directory_mru
+		Nominates directories you used recently as candidates,
+		ordering by time series.
+
+------------------------------------------------------------------------------
+COMMANDS 					*neomru-commands*
+
+:NeoMRUReload					*:NeoMRUReload*
+		Reload MRU files.
+		It validates the MRU files.
+
+:NeoMRUSave					*:NeoMRUSave*
+		Save MRU files manually.
+
+:NeoMRUImportFile [{path}]			*:NeoMRUImportFile*
+		Import the files from previous version of MRU {path} file and
+		|v:oldfiles|.
+		If {path} is omitted, "~/.unite/file_mru" is used.
+
+:NeoMRUImportDirectory [{path}]			*:NeoMRUImportDirectory*
+		Import the directories from previous version of MRU {path}
+		file.
+		If {path} is omitted, "~/.unite/directory_mru" is used.
+
+------------------------------------------------------------------------------
+FUNCTIONS					*neomru-functions*
+
+						*neomru#append()*
+neomru#append({filename})
+		Include the specified file in the MRU list, mimicking a file
+		open by unite/denite. This will mainly be used in
+		|unite#custom#action()|/|denite#custom#action()|.
+
+==============================================================================
+FAQ						*neomru-faq*
+
+Q: mru sources are slow in large mru files.
+https://github.com/Shougo/unite.vim/issues/422
+
+A: You can set |g:neomru#do_validate| to 0. It is faster. But unite
+does not validate mru files.
+
+Q: I want to restrict the files I see to the current project or the current
+directory in mru sources.
+https://github.com/Shougo/unite.vim/issues/456
+
+A: You should use |unite-filter-matcher_project_files|. >
+  call unite#custom#source(
+        \ 'neomru/file', 'matchers',
+        \ ['matcher_project_files', 'matcher_fuzzy'])
+<
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:

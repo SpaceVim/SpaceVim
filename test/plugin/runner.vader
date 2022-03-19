@@ -1,0 +1,4 @@
+Execute ( SpaceVim plugin: code runner ):
+  call SpaceVim#plugins#runner#open('echo 1')
+  tabclose
+

@@ -20,13 +20,20 @@ function! s:strfmt() abort dict
     if has_key(typeinfo.kind2scope, self.fields.kind)
         let suffix .= ' : ' . typeinfo.kind2scope[self.fields.kind]
     endif
+    let prefix = self._getPrefix()
 
-    return self._getPrefix() . self.name . '*' . suffix
+    if g:tagbar_show_tag_linenumbers == 1
+        let suffix .= ' [' . self.fields.line . ']'
+    elseif g:tagbar_show_tag_linenumbers == 2
+        let prefix .= '[' . self.fields.line . '] '
+    endif
+
+    return prefix . self.name . '*' . suffix
 endfunction
 
 " s:add_snr() {{{1
 function! s:add_snr(funcname) abort
-    if !exists("s:snr")
+    if !exists('s:snr')
         let s:snr = matchstr(expand('<sfile>'), '<SNR>\d\+_\zeget_snr$')
     endif
     return s:snr . a:funcname

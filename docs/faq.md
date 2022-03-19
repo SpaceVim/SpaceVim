@@ -12,6 +12,7 @@ and usage.
 
 - [Installation](#installation)
   - [Where is my old vim configuration?](#where-is-my-old-vim-configuration)
+  - [How to uninstall SpaceVim?](#how-to-uninstall-spacevim)
 - [Configuration](#configuration)
   - [Can I try SpaceVim without overwriting my vimrc?](#can-i-try-spacevim-without-overwriting-my-vimrc)
   - [Why use toml as the default configuration file format?](#why-use-toml-as-the-default-configuration-file-format)
@@ -31,6 +32,15 @@ and usage.
 
 In Linux/MacOS, the old vim configuration file `~/.vimrc` will be renamed to `~/.vimrc_back`,
 and the directory `~/.vim` also will be renamed to `~/.vim_back`.
+
+### How to uninstall SpaceVim?
+
+The installation script does not remove your vimrc, it just changes the name from `~/.vim` to `~/.vim_back`.
+and if you uninstalll SpaceVim, your vimrc will come back. you can run:
+
+```
+curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
+```
 
 ## Configuration
 

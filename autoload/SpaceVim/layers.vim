@@ -1,6 +1,6 @@
 "=============================================================================
 " layers.vim --- layers public API
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -54,7 +54,14 @@ let s:SYS = SpaceVim#api#import('system')
 
 ""
 " Load the {layer} you want. For all the layers SpaceVim supports, see @section(layers).
-" the second argv is the layer variable.
+" the second argv is the layer variable. For example:
+" >
+"   call SpaceVim#layers#load('autocomplete',
+"     \ {
+"     \  'auto_completion_delay' : 50,
+"     \ } 
+"     \ )
+" <
 function! SpaceVim#layers#load(layer, ...) abort
   if a:layer ==# '-l'
     call s:list_layers()

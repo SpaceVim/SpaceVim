@@ -1,6 +1,6 @@
 "=============================================================================
 " SpaceVim.vim --- Initialization and core files for SpaceVim
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -11,7 +11,7 @@ scriptencoding utf-8
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro options config layers usage api dev faq changelog
+" @order intro options config functions layers usage api dev faq changelog
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "
@@ -36,8 +36,14 @@ scriptencoding utf-8
 ""
 " @section Configuration, config
 " If you still want to use `~/.SpaceVim.d/init.vim` as configuration file,
-" please take a look at the following options.
-"
+" please take a look at the following options add @section(functions)
+
+
+""
+" @section Public functions, functions
+" All of these functions can be used in `~/.SpaceVim.d/init.vim` and bootstrap
+" functions.
+
 
 let s:SYSTEM = SpaceVim#api#import('system')
 
@@ -45,7 +51,7 @@ let s:SYSTEM = SpaceVim#api#import('system')
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.9.0-dev'
+let g:spacevim_version = '2.0.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -110,6 +116,15 @@ let g:spacevim_enable_bepo_layout  = 0
 " <
 let g:spacevim_max_column              = 120
 
+""
+" @section windisk_encoding, options-windisk_encoding
+" @parentsection options
+" Setting the encoding of windisk info. by default it is `cp936`.
+" >
+"   windisk_encoding = 'cp936'
+" <
+
+let g:spacevim_windisk_encoding = 'cp936'
 
 ""
 " @section default_custom_leader, options-default_custom_leader
@@ -1254,7 +1269,7 @@ let g:_spacevim_mappings = {}
 let g:_spacevim_mappings_space_custom = []
 let g:_spacevim_mappings_space_custom_group_name = []
 let g:_spacevim_mappings_language_specified_space_custom = {}
-let g:_spacevim_mappings_language_specified_space_custom_group_name = {}
+let g:_spacevim_mappings_lang_group_name = {}
 let g:_spacevim_neobundle_installed     = 0
 let g:_spacevim_dein_installed          = 0
 let g:_spacevim_vim_plug_installed      = 0
@@ -1375,7 +1390,6 @@ function! SpaceVim#end() abort
   elseif g:spacevim_vim_help_language ==# 'ja'
     let &helplang = 'jp'
   endif
-  ""
   " generate tags for SpaceVim
   let help = fnamemodify(g:_spacevim_root_dir, ':p:h') . '/doc'
   try
@@ -1383,8 +1397,6 @@ function! SpaceVim#end() abort
   catch
     call SpaceVim#logger#warn('Failed to generate helptags for SpaceVim')
   endtry
-
-  ""
   " set language
   if !empty(g:spacevim_language)
     silent exec 'lan ' . g:spacevim_language
@@ -1443,6 +1455,9 @@ function! SpaceVim#end() abort
       set guicolors
     endif
   endif
+
+  call SpaceVim#autocmds#init()
+
   if g:spacevim_colorscheme !=# '' "{{{
     try
       exec 'set background=' . g:spacevim_colorscheme_bg
@@ -1463,10 +1478,6 @@ function! SpaceVim#end() abort
       let &guifont = g:spacevim_guifont
     endif
   endif
-
-
-
-  call SpaceVim#autocmds#init()
 
   if !has('nvim-0.2.0') && !has('nvim')
     " In old version of neovim, &guicursor do not support cursor shape
@@ -1545,6 +1556,8 @@ function! SpaceVim#begin() abort
     endif
   catch /^Vim\%((\a\+)\)\=:E197/
     call SpaceVim#logger#error('Can not set language to en_US.utf8')
+  catch /^Vim\%((\a\+)\)\=:E319/
+    call SpaceVim#logger#error('Can not set language to en_US.utf8, language not implemented in this Vim build')
   endtry
 
   " try to set encoding to utf-8
@@ -1633,6 +1646,40 @@ endfunction
 " @section Usage, usage
 "   General guide for using SpaceVim. Including layer configuration, bootstrap
 "   function.
+
+""
+" @section undo-tree, usage-undotree
+" @parentsection usage
+" Undo tree visualizes the undo history and makes it easier to browse and
+" switch between different undo branches.The default key binding is `F7`.
+" If `+python` or `+python3` is enabled, `vim-mundo` will be used,
+" otherwise `undotree` will be used.
+" 
+" Key bindings within undo tree windows:
+" >
+"    key bindings     description
+"    `G`              move bottom
+"    `J`              move older write
+"    `K`              move newer write
+"    `N`              previous match
+"    `P`              play to
+"    `<2-LeftMouse>`  mouse click
+"    `/`              search
+"    `<CR>`           preview
+"    `d`              diff
+"    `<down>`         move older
+"    `<up>`           move newer
+"    `i`              toggle inline
+"    `j`              move older
+"    `k`              move newer
+"    `n`              next match
+"    `o`              preview
+"    `p`              diff current buffer
+"    `q`              quit
+"    `r`              diff
+"    `gg`             move top
+"    `?`              toggle help
+" <
 
 ""
 " @section windows-and-tabs, usage-windows-and-tabs
@@ -1724,6 +1771,25 @@ endfunction
 "   SPC b d	      kill the current buffer (does not delete the visited file)
 "   SPC u SPC b d	kill the current buffer and window (does not delete the visited file) (TODO)
 "   SPC b D	      kill a visible buffer using vim-choosewin
+" <
+
+
+""
+" @section command-line-mode, usage-command-line-mode
+" @parentsection usage
+" After pressing `:`, you can switch to command line mode, here is a list
+" of key bindings can be used in command line mode:
+" >
+"   Key bindings    Descriptions
+"   Ctrl-a          move cursor to beginning
+"   Ctrl-b          Move cursor backward in command line
+"   Ctrl-f          Move cursor forward in command line
+"   Ctrl-w          delete a whole word
+"   Ctrl-u          remove all text before cursor
+"   Ctrl-k          remove all text after cursor
+"   Ctrl-c/Esc      cancel command line mode
+"   Tab             next item in popup menu
+"   Shift-Tab       previous item in popup menu
 " <
 
 ""
@@ -1852,11 +1918,19 @@ endfunction
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v1.7.0
+" Following HEAD: changes in master branch since last release v1.9.0
 "
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
 "
-" 2021-06-16: v1.4.0
+" 2021-06-16: v1.9.0
+"
+" https://spacevim.org/SpaceVim-release-v1.9.0/
+"
+" 2021-06-16: v1.8.0
+"
+" https://spacevim.org/SpaceVim-release-v1.8.0/
+"
+" 2021-06-16: v1.7.0
 "
 " https://spacevim.org/SpaceVim-release-v1.7.0/
 "

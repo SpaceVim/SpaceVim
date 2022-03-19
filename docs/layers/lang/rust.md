@@ -77,6 +77,7 @@ To use this configuration layer, update your custom configuration file with:
 | `SPC l c B`     | Run `cargo bench`                  |
 | `SPC l c D`     | Run `cargo doc`                    |
 | `SPC l c r`     | Run `cargo run`                    |
+| `SPC l c l`     | Run `cargo clippy`                 |
 
 **Note:** `SPC l g` and `SPC l v` will not be available if the `lsp` layer is not enabled.
 

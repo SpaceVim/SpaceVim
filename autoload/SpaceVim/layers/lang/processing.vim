@@ -1,6 +1,6 @@
 "=============================================================================
 " processing.vim --- SpaceVim lang#processing layer
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Russell Bentley < russell.w.bentley at icloud.com >
 " URL: https://spacevim.org
 " License: GPLv3

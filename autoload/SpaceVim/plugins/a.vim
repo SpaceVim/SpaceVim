@@ -1,6 +1,6 @@
 "=============================================================================
 " a.vim --- plugin for manager alternate file
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -199,12 +199,12 @@ else
     " so we need to use sort, and make sure `docs/cn/*.md` is parsed after
     " docs/*.md
     for key in sort(keys(a:alt_config_json.config))
-      call s:LOGGER.info('start parse key:' . key)
+      call s:LOGGER.debug('start parse key:' . key)
       let searchpath = key
       if match(searchpath, '/\*')
         let searchpath = substitute(searchpath, '*', '**/*', 'g')
       endif
-      call s:LOGGER.info('run globpath for: '. searchpath)
+      call s:LOGGER.debug('run globpath for: '. searchpath)
       for file in s:CMP.globpath('.', searchpath)
         let file = s:FILE.unify_path(file, ':.')
         let s:project_config[a:alt_config_json.root][file] = {}

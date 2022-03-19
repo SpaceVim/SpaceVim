@@ -1,6 +1,6 @@
 "=============================================================================
 " find.vim --- vim plugin for find
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong 
 " URL: https://spacevim.org
 " License: GPLv3

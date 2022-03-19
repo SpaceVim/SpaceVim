@@ -156,7 +156,7 @@ EOT
             cat <<EOT > autoload/plugin/iedit.vim
 "=============================================================================
 " iedit.vim --- multiple cursor support for neovim and vim
-" Copyright (c) 2016-2020 Shidong Wang & Contributors
+" Copyright (c) 2016-2021 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://github.com/wsdjeg/iedit.vim
 " License: MIT license
@@ -210,7 +210,7 @@ EOT
             cat <<EOT > plugin/todo.vim
 "=============================================================================
 " todo.vim --- todo manager for SpaceVim
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3

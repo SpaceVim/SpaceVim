@@ -1,0 +1,9 @@
+Execute ( SpaceVim lua api: data#string ):
+  if $SPACEVIM_LUA != 1
+    finish
+  endif
+  let cmp = SpaceVim#api#import('vim#compatible')
+  Log 'test trim()'
+  lua sp_str = require('spacevim.api').import('data.string')
+  AssertEqual cmp.luaeval("sp_str.trim(' s b ')"), 's b'
+

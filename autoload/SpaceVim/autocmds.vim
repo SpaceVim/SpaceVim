@@ -1,6 +1,6 @@
 "=============================================================================
 " autocmd.vim --- main autocmd group for spacevim
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -12,6 +12,7 @@ let s:VIM = SpaceVim#api#import('vim')
 
 "autocmds
 function! SpaceVim#autocmds#init() abort
+  call SpaceVim#logger#debug('init SpaceVim_core autocmd group')
   augroup SpaceVim_core
     au!
     autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
@@ -25,7 +26,6 @@ function! SpaceVim#autocmds#init() abort
       autocmd BufEnter,WinEnter * if &nu | set rnu   | endif
       autocmd BufLeave,WinLeave * if &nu | set nornu | endif
     endif
-    autocmd BufRead,BufNewFile *.pp setfiletype puppet
     if g:spacevim_enable_cursorline == 1
       autocmd BufEnter,WinEnter,InsertLeave * call s:enable_cursorline()
       autocmd BufLeave,WinLeave,InsertEnter * call s:disable_cursorline()
@@ -197,6 +197,12 @@ function! SpaceVim#autocmds#VimEnter() abort
     echohl Error
     echom 'bootstrap_after function failed to execute. Check `SPC h L` for errors.'
     echohl None
+  endif
+
+  if !filereadable('.SpaceVim.d/init.toml') && filereadable('.SpaceVim.d/init.vim')
+    call SpaceVim#logger#info('loading local conf: .SpaceVim.d/init.vim')
+    exe 'source .SpaceVim.d/init.vim'
+    call SpaceVim#logger#info('finished loading local conf')
   endif
 endfunction
 

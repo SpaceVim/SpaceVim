@@ -1,19 +1,70 @@
 "=============================================================================
 " edit.vim --- SpaceVim edit layer
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+""
+" @section edit, layers-edit
+" @parentsection layers
+" The `edit` layer provides basic feature for editing files.
+" This layer is loaded by default. To disable this layer:
+" >
+"   [[layers]]
+"     name = 'edit'
+"     enable = false
+" <
+" @subsection Configuration
+" 1. `autosave_timeout`: set the timeoutlen of autosave plugin. By default it
+" is 0. And autosave is disabled. timeoutlen must be given in millisecods and
+" can't be > 100*60*1000 (100 minutes) or < 1000 (1 second). For example,
+" setup timer with 5 minutes:
+" >
+"   [[layers]]
+"     name = 'edit'
+"     autosave_timeout = 300000
+" <
+" 2. `autosave_events`: set the events on which autosave will perform a save.
+" This option is an empty list by default. you can trigger saving based
+" on vim's events, for example:
+" >
+"   [[layers]]
+"     name = 'edit'
+"     autosave_events = ['InsertLeave', 'TextChanged']
+" <
+" 3. `autosave_all_buffers`: By default autosave plugin only save current buffer.
+" If you want to save all buffers automatically. Set this option to `true`.
+" >
+"   [[layers]]
+"     name = 'edit'
+"     autosave_all_buffers = true
+" <
+" 4. `autosave_location`: set the directory where to save changed files. By
+" default it is empty string, that means saving to the original file. If this
+" option is not an empty string. files will me saved to that directory
+" automatically. and the format is:
+" >
+"   autosave_location/path+=to+=filename.ext.backup
+" <
 
 scriptencoding utf-8
+if exists('s:autosave_timeout')
+  finish
+endif
+
 let s:PASSWORD = SpaceVim#api#import('password')
 let s:NUMBER = SpaceVim#api#import('data#number')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+
+let s:autosave_timeout = 0
+let s:autosave_events = []
+let s:autosave_all_buffers = 0
+let s:autosave_location = ''
 
 function! SpaceVim#layers#edit#health() abort
   call SpaceVim#layers#edit#plugins()
@@ -54,7 +105,27 @@ function! SpaceVim#layers#edit#plugins() abort
   return plugins
 endfunction
 
+function! SpaceVim#layers#edit#set_variable(var) abort
+  let s:autosave_timeout = get(a:var, 'autosave_timeout', s:autosave_timeout)
+  let s:autosave_events = get(a:var, 'autosave_events', s:autosave_events)
+  let s:autosave_all_buffers = get(a:var, 'autosave_all_buffers', s:autosave_all_buffers)
+  let s:autosave_location = get(a:var, 'autosave_location', s:autosave_location)
+endfunction
+
+function! SpaceVim#layers#edit#get_options() abort
+  return ['autosave_all_buffers', 'autosave_timeout', 'autosave_events']
+endfunction
 function! SpaceVim#layers#edit#config() abort
+  " autosave plugins options
+  let autosave_opt = {
+        \ 'timeoutlen' : s:autosave_timeout,
+        \ 'save_all_buffers' : s:autosave_all_buffers,
+        \ 'backupdir' : s:autosave_location,
+        \ 'event' : s:autosave_events,
+        \ }
+  call SpaceVim#plugins#autosave#config(autosave_opt)
+
+
   let g:multi_cursor_next_key=get(g:, 'multi_cursor_next_key', '<C-n>')
   let g:multi_cursor_prev_key=get(g:, 'multi_cursor_prev_key', '<C-m>')
   let g:multi_cursor_skip_key=get(g:, 'multi_cursor_skip_key', '<C-x>')
@@ -63,12 +134,12 @@ function! SpaceVim#layers#edit#config() abort
   let g:user_emmet_mode='a'
   let g:user_emmet_settings = {
         \ 'javascript': {
-        \ 'extends': 'jsx',
-        \ },
-        \ 'jsp' : {
-        \ 'extends': 'html',
-        \ },
-        \ }
+          \ 'extends': 'jsx',
+          \ },
+          \ 'jsp' : {
+            \ 'extends': 'html',
+            \ },
+            \ }
 
   "noremap <SPACE> <Plug>(wildfire-fuel)
   vnoremap <C-SPACE> <Plug>(wildfire-water)
@@ -333,27 +404,27 @@ function! s:text_transient_state() abort
   call state.set_title('Move Text Transient State')
   call state.defind_keys(
         \ {
-        \ 'layout' : 'vertical split',
-        \ 'left' : [
-        \ {
-        \ 'key' : 'J',
-        \ 'desc' : 'move text down',
-        \ 'func' : '',
-        \ 'cmd' : 'noautocmd silent! m .+1',
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ 'right' : [
-        \ {
-        \ 'key' : 'K',
-        \ 'func' : '',
-        \ 'desc' : 'move text up',
-        \ 'cmd' : 'noautocmd silent! m .-2',
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ }
-        \ )
+          \ 'layout' : 'vertical split',
+          \ 'left' : [
+            \ {
+              \ 'key' : 'J',
+              \ 'desc' : 'move text down',
+              \ 'func' : '',
+              \ 'cmd' : 'noautocmd silent! m .+1',
+              \ 'exit' : 0,
+              \ },
+              \ ],
+              \ 'right' : [
+                \ {
+                  \ 'key' : 'K',
+                  \ 'func' : '',
+                  \ 'desc' : 'move text up',
+                  \ 'cmd' : 'noautocmd silent! m .-2',
+                  \ 'exit' : 0,
+                  \ },
+                  \ ],
+                  \ }
+                  \ )
   call state.open()
 endfunction
 
@@ -629,7 +700,6 @@ function! s:duplicate_lines(visual) abort
   endif
 endfunction
 
-command! -nargs=0 -range=% ReverseLines :<line1>,<line2>call <sid>reverse_lines()
 function! s:reverse_lines() range
   let rst = getline(a:firstline, a:lastline)
   call reverse(rst)

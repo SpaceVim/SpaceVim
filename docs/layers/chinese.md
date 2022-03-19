@@ -10,6 +10,7 @@ description: "Layer for chinese users, include chinese docs and runtime messages
 - [Description](#description)
 - [Install](#install)
 - [Configuration](#configuration)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -34,3 +35,9 @@ Add the following snippet to your custom config file to enable this feature.
 [options]
     vim_help_language = "cn"
 ```
+
+## Key bindings
+
+| Key Binding | Description                     |
+| ----------- | ------------------------------- |
+| `SPC n c d` | Convert Chinese Number to Digit |

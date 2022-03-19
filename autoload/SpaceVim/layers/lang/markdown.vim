@@ -1,6 +1,6 @@
 "=============================================================================
 " markdown.vim --- lang#markdown layer for SpaceVim
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -123,7 +123,7 @@ function! SpaceVim#layers#lang#markdown#config() abort
         \ }
 
   " iamcco/markdown-preview.vim {{{
-  let g:mkdp_browserfunc = 'openbrowser#open'
+  " let g:mkdp_browserfunc = 'openbrowser#open'
   " }}}
   call SpaceVim#mapping#space#regesit_lang_mappings('markdown', function('s:mappings'))
   nnoremap <silent> <plug>(markdown-insert-link) :call <SID>markdown_insert_link(0, 0)<Cr>
@@ -149,6 +149,7 @@ function! s:mappings() abort
         \ . string(function('s:run_code_in_block'))
         \ . ', [])', 'run code in block', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c'], 'GenTocGFM', 'create content at cursor', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','C'], 'RemoveToc', 'remove content', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','u'], 'UpdateToc', 'update content', 1)
 endfunction
 

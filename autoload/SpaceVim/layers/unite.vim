@@ -1,6 +1,6 @@
 "=============================================================================
 " unite.vim --- SpaceVim unite layer
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -55,12 +55,13 @@ function! SpaceVim#layers#unite#plugins() abort
   " \ ['dyng/ctrlsf.vim',{'on_cmd' : 'CtrlSF', 'on_map' : '<Plug>CtrlSF', 'loadconf' : 1 , 'loadconf_before' : 1}],
 
   " history/yank source <Leader>fh
-  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neoyank.vim', {'merged' : 0}])
   " quickfix source <Leader>fq
   call add(plugins, ['osyo-manga/unite-quickfix', {'merged' : 0}])
   " outline source <Leader>fo
   call add(plugins, ['Shougo/unite-outline', {'merged' : 0}])
-  call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neomru.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-van', {'merged' : 0}])
 
   if g:spacevim_enable_googlesuggest
     call add(plugins, ['mopp/googlesuggest-source.vim'])
@@ -75,6 +76,7 @@ let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#unite#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['?'], 'Unite menu:CustomKeyMaps -input=[SPC]', 'show mappings', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', '[SPC]'], 'Unite help -input=SpaceVim', 'unite-SpaceVim-help', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['h', 'm'], 'Unite manpage', 'search available man pages', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'b'], 'Unite buffer', 'buffer list', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'UniteWithCursorWord help', 'get help with the symbol at point', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Unite unicode', 'search-and-insert-unicode', 1)
@@ -82,6 +84,11 @@ function! SpaceVim#layers#unite#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['r', 'l'], 'Unite resume', 'resume unite buffer', 1)
   let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Unite unicode', 'search-and-insert-unicode', 1)
+  if g:spacevim_snippet_engine ==# 'neosnippet'
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert snippets', 1)
+  elseif g:spacevim_snippet_engine ==# 'ultisnips'
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite ultisnips', 'insert snippets', 1)
+  endif
   if has('nvim')
     let cmd = 'Unite file_rec/neovim'
   else

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim chat layer"
-description: "SpaceVim chatting layer provides chatting with qq and weixin in vim."
+description: "SpaceVim chatting layer provides chatting with weixin in vim."
 ---
 
 # [Available Layers](../) >> chat
@@ -29,8 +29,8 @@ To use this configuration layer, add the following snippet to your custom config
 
 ## Key Mappings
 
-`Alt + x` : open chatting buffer for qq.
 `Alt + w` : open chatting buffer for weixin.
+Note: The web-qq has stopped providing service.
 
 within chatting buffer:
 

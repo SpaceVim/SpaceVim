@@ -43,22 +43,22 @@ let s:source.converters = s:source.source__converter
 
 
 function! s:source.gather_candidates(args, context) abort
-  let _ = map(copy(a:context.source__plugins), "{
-        \ 'word': substitute(v:val.repo,
+  let _ = map(copy(a:context.source__plugins), { _, val -> {
+        \ 'word': substitute(val.repo,
         \  '^\%(https\?\|git\)://\%(github.com/\)\?', '', ''),
         \ 'kind': 'dein',
-        \ 'action__path': v:val.path,
-        \ 'action__directory': v:val.path,
-        \ 'action__plugin': v:val,
-        \ 'action__plugin_name': v:val.name,
-        \ 'source__type': v:val.type,
-        \ 'source__is_sourced': v:val.sourced,
-        \ 'source__is_installed': isdirectory(v:val.path),
+        \ 'action__path': val.path,
+        \ 'action__directory': val.path,
+        \ 'action__plugin': val,
+        \ 'action__plugin_name': val.name,
+        \ 'source__type': val.type,
+        \ 'source__is_sourced': val.sourced,
+        \ 'source__is_installed': isdirectory(val.path),
         \ 'is_multiline': 1,
         \ }
-        \")
+        \ } )
 
-  let max = max(map(copy(_), 'len(v:val.word)'))
+  let max = max(map(copy(_), { _, val -> len(val.word) }))
 
   call unite#print_source_message(
         \ '#: not sourced, X: not installed', self.name)
@@ -85,24 +85,10 @@ function! s:get_commit_status(plugin) abort
     return 'Not installed'
   endif
 
-  let type = dein#types#git#define()
-  let cmd = type.get_revision_number_command(a:plugin)
-  if cmd ==# ''
+  let type = dein#util#_get_type(a:plugin.type)
+  if !has_key(type, 'get_revision_number')
     return ''
   endif
 
-  let cwd = getcwd()
-  try
-    call dein#install#_cd(a:plugin.path)
-    let output = dein#install#_system(cmd)
-  finally
-    call dein#install#_cd(cwd)
-  endtry
-
-  if dein#install#_get_last_status()
-    return printf('Error(%d) occurred when executing "%s"',
-          \ dein#install#_get_last_status(), cmd)
-  endif
-
-  return output
+  return type.get_revision_number(a:plugin)
 endfunction

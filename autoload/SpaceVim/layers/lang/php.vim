@@ -1,6 +1,6 @@
 "=============================================================================
 " php.vim --- lang#php layer
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Shidong Wang < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -59,7 +59,11 @@ function! SpaceVim#layers#lang#php#plugins() abort
   if SpaceVim#layers#lsp#check_filetype('php')
     call add(plugins, ['phpactor/phpactor', {'on_ft' : 'php', 'build' : 'composer install --no-dev -o'}])
   else
-    call add(plugins, ['shawncplus/phpcomplete.vim', { 'on_ft' : 'php'}])
+    if exists('*popup_create')
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/phpcomplete.vim', {'merged' : 0}])
+    else
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/phpcomplete.vim-vim7', {'merged' : 0}])
+    endif
   endif
   return plugins
 endfunction

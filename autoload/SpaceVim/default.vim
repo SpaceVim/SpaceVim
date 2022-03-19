@@ -1,6 +1,6 @@
 "=============================================================================
 " default.vim --- default options in SpaceVim
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg at 163.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -147,6 +147,7 @@ endfunction
 "}}}
 
 function! SpaceVim#default#layers() abort
+  call SpaceVim#logger#debug('init default layer list.')
   call SpaceVim#layers#load('autocomplete')
   call SpaceVim#layers#load('checkers')
   call SpaceVim#layers#load('format')
@@ -159,6 +160,7 @@ function! SpaceVim#default#layers() abort
 endfunction
 
 function! SpaceVim#default#keyBindings() abort
+  call SpaceVim#logger#debug('init default key bindings.')
   " yank and paste
   if has('unnamedplus')
     xnoremap <Leader>y "+y
