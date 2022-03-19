@@ -7,6 +7,28 @@
 "=============================================================================
 
 
+""
+" @section foldsearch, layers-foldsearch
+" @parentsection layers
+" `foldsearch` layer provides key bindings to searching text and fold
+" searching results. This layer is not enabled by default, to enable this
+" layer, add following code to your configuration file:
+" >
+"   [[layers]]
+"     name = 'foldsearch'
+" <
+" @subsection Key bindings
+"
+" The following key bindings will be definded when the `foldsearch` layer is
+" loaded.
+" >
+"   Key Binding   Description
+"   SPC F w       searching with input word
+"   SPC F W       searching with cursor word
+"   SPC F p       searching with regexp
+"   SPC F e       end foldsearch
+" <
+
 if exists('s:filename')
   " because this script will be loaded twice. This is the feature of vim,
   " when call an autoload func, vim will try to load the script again
