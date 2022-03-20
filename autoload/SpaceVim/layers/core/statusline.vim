@@ -62,41 +62,41 @@ let s:i_separators = {
 let s:loaded_modes = []
 let s:modes = {
       \ 'center-cursor': {
-      \ 'icon' : '⊝',
-      \ 'icon_asc' : '-',
-      \ 'desc' : 'centered-cursor mode',
-      \ },
-      \ 'hi-characters-for-long-lines' :{
-      \ 'icon' : '⑧',
-      \ 'icon_asc' : '8',
-      \ 'desc' : 'toggle highlight of characters for long lines',
-      \ },
-      \ 'fill-column-indicator' :{
-      \ 'icon' : s:MESSLETTERS.circled_letter('f'),
-      \ 'icon_asc' : 'f',
-      \ 'desc' : 'fill-column-indicator mode',
-      \ },
-      \ 'syntax-checking' :{
-      \ 'icon' : s:MESSLETTERS.circled_letter('s'),
-      \ 'icon_asc' : 's',
-      \ 'desc' : 'syntax-checking mode',
-      \ },
-      \ 'spell-checking' :{
-      \ 'icon' : s:MESSLETTERS.circled_letter('S'),
-      \ 'icon_asc' : 'S',
-      \ 'desc' : 'spell-checking mode',
-      \ },
-      \ 'paste-mode' :{
-      \ 'icon' : s:MESSLETTERS.circled_letter('p'),
-      \ 'icon_asc' : 'p',
-      \ 'desc' : 'paste mode',
-      \ },
-      \ 'whitespace' :{
-      \ 'icon' : s:MESSLETTERS.circled_letter('w'),
-      \ 'icon_asc' : 'w',
-      \ 'desc' : 'whitespace mode',
-      \ },
-      \ }
+        \ 'icon' : '⊝',
+        \ 'icon_asc' : '-',
+        \ 'desc' : 'centered-cursor mode',
+        \ },
+        \ 'hi-characters-for-long-lines' :{
+        \ 'icon' : '⑧',
+        \ 'icon_asc' : '8',
+        \ 'desc' : 'toggle highlight of characters for long lines',
+        \ },
+        \ 'fill-column-indicator' :{
+        \ 'icon' : s:MESSLETTERS.circled_letter('f'),
+        \ 'icon_asc' : 'f',
+        \ 'desc' : 'fill-column-indicator mode',
+        \ },
+        \ 'syntax-checking' :{
+        \ 'icon' : s:MESSLETTERS.circled_letter('s'),
+        \ 'icon_asc' : 's',
+        \ 'desc' : 'syntax-checking mode',
+        \ },
+        \ 'spell-checking' :{
+        \ 'icon' : s:MESSLETTERS.circled_letter('S'),
+        \ 'icon_asc' : 'S',
+        \ 'desc' : 'spell-checking mode',
+        \ },
+        \ 'paste-mode' :{
+        \ 'icon' : s:MESSLETTERS.circled_letter('p'),
+        \ 'icon_asc' : 'p',
+        \ 'desc' : 'paste mode',
+        \ },
+        \ 'whitespace' :{
+        \ 'icon' : s:MESSLETTERS.circled_letter('w'),
+        \ 'icon_asc' : 'w',
+        \ 'desc' : 'whitespace mode',
+        \ },
+        \ }
 
 if SpaceVim#layers#isLoaded('checkers')
   call add(s:loaded_modes, 'syntax-checking')
@@ -236,8 +236,8 @@ function! s:input_method() abort
 endfunction
 
 
-if g:spacevim_lint_engine ==# 'neomake'
-  function! s:syntax_checking() abort
+function! s:syntax_checking() abort
+  if g:spacevim_lint_engine ==# 'neomake'
     if !exists('g:loaded_neomake')
       return ''
     endif
@@ -247,9 +247,7 @@ if g:spacevim_lint_engine ==# 'neomake'
     let l =  warnings ? '%#SpaceVim_statusline_warn# ● ' . warnings . ' ' : ''
     let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#● ' . errors  . ' ' : ''
     return l
-  endfunction
-elseif g:spacevim_lint_engine ==# 'ale'
-  function! s:syntax_checking() abort
+  elseif g:spacevim_lint_engine ==# 'ale'
     if !exists('g:ale_enabled')
       return ''
     endif
@@ -259,9 +257,7 @@ elseif g:spacevim_lint_engine ==# 'ale'
     let l =  warnings ? '%#SpaceVim_statusline_warn# ● ' . warnings . ' ' : ''
     let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#● ' . errors  . ' ' : ''
     return l
-  endfunction
-else
-  function! s:syntax_checking() abort
+  else
     if !exists(':SyntasticCheck')
       return ''
     endif
@@ -271,8 +267,8 @@ else
     else
       return ''
     endif
-  endfunction
-endif
+  endif
+endfunction
 
 function! s:search_status() abort
   let save_cursor = getpos('.')
