@@ -8,11 +8,9 @@ lsp_complete_configured_servers = function()
   return table.concat(require'lspconfig'.available_servers(), '\n')
 end
 lsp_get_active_client_ids = function()
-  client_ids = {}
-  for idx, client in ipairs(vim.lsp.get_active_clients()) do
-    table.insert(client_ids, tostring(client.id))
-  end
-  return client_ids
+  return vim.tbl_map(function(client)
+    return ("%d (%s)"):format(client.id, client.name)
+  end, require'lspconfig.util'.get_managed_clients())
 end
 require'lspconfig'._root._setup()
 EOF

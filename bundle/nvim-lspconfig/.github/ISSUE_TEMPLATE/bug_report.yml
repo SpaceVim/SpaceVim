@@ -66,12 +66,6 @@ body:
       description: "You can download a minimal_init.lua via `curl -fLO https://raw.githubusercontent.com/neovim/nvim-lspconfig/master/test/minimal_init.lua`. Then edit it to include your language server and add necessary configuration and paste it here."
     validations:
       required: true
-  - type: textarea
-    attributes:
-      label: "Health check"
-      description: "Run `:checkhealth lspconfig` and paste the results here."
-    validations:
-      required: true
   - type: input
     attributes:
       label: "LSP log"

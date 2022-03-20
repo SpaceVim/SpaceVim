@@ -1,8 +1,0 @@
-pull_request_rules:
-  - name: disallow changing a file
-    conditions:
-      - files=CONFIG.md
-    actions:
-      close:
-      comment: 
-        message: "CONFIG.md is auto-generated: edit the lua source file instead (and re-read the PR template)."

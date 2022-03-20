@@ -1,8 +1,20 @@
-vim.cmd [[set runtimepath=$VIMRUNTIME]]
-vim.cmd [[set packpath=/tmp/nvim/site]]
+local on_windows = vim.loop.os_uname().version:match 'Windows'
 
-local package_root = '/tmp/nvim/site/pack'
-local install_path = package_root .. '/packer/start/packer.nvim'
+local function join_paths(...)
+  local path_sep = on_windows and '\\' or '/'
+  local result = table.concat({ ... }, path_sep)
+  return result
+end
+
+vim.cmd [[set runtimepath=$VIMRUNTIME]]
+
+local temp_dir = vim.loop.os_getenv 'TEMP' or '/tmp'
+
+vim.cmd('set packpath=' .. join_paths(temp_dir, 'nvim', 'site'))
+
+local package_root = join_paths(temp_dir, 'nvim', 'site', 'pack')
+local install_path = join_paths(package_root, 'packer', 'start', 'packer.nvim')
+local compile_path = join_paths(install_path, 'plugin', 'packer_compiled.lua')
 
 local function load_plugins()
   require('packer').startup {
@@ -12,13 +24,16 @@ local function load_plugins()
     },
     config = {
       package_root = package_root,
-      compile_path = install_path .. '/plugin/packer_compiled.lua',
+      compile_path = compile_path,
     },
   }
 end
 
 _G.load_config = function()
   vim.lsp.set_log_level 'trace'
+  if vim.fn.has 'nvim-0.5.1' == 1 then
+    require('vim.lsp.log').set_format_func(vim.inspect)
+  end
   local nvim_lsp = require 'lspconfig'
   local on_attach = function(_, bufnr)
     local function buf_set_keymap(...)

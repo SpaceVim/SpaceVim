@@ -19,24 +19,11 @@ M.default_config = {
 -- global on_setup hook
 M.on_setup = nil
 
--- add compatibility shim for breaking signature change
--- from https://github.com/mfussenegger/nvim-lsp-compl/
--- TODO: remove after Neovim release
-function M.compat_handler(handler)
-  return function(...)
-    local config_or_client_id = select(4, ...)
-    local is_new = type(config_or_client_id) ~= 'number'
-    if is_new then
-      return handler(...)
-    else
-      local err = select(1, ...)
-      local method = select(2, ...)
-      local result = select(3, ...)
-      local client_id = select(4, ...)
-      local bufnr = select(5, ...)
-      local config = select(6, ...)
-      return handler(err, result, { method = method, client_id = client_id, bufnr = bufnr }, config)
-    end
+function M.bufname_valid(bufname)
+  if bufname and bufname ~= '' and (bufname:match '^([a-zA-Z]:).*' or bufname:match '^/') then
+    return true
+  else
+    return false
   end
 end
 
@@ -108,6 +95,16 @@ end
 
 -- Some path utilities
 M.path = (function()
+  local is_windows = uv.os_uname().version:match 'Windows'
+
+  local function sanitize(path)
+    if is_windows then
+      path = path:sub(1, 1):upper() .. path:sub(2)
+      path = path:gsub('\\', '/')
+    end
+    return path
+  end
+
   local function exists(filename)
     local stat = uv.fs_stat(filename)
     return stat and stat.type or false
@@ -121,16 +118,10 @@ M.path = (function()
     return exists(filename) == 'file'
   end
 
-  local is_windows = uv.os_uname().version:match 'Windows'
-  local path_sep = is_windows and '\\' or '/'
-
-  local is_fs_root
-  if is_windows then
-    is_fs_root = function(path)
+  local function is_fs_root(path)
+    if is_windows then
       return path:match '^%a:$'
-    end
-  else
-    is_fs_root = function(path)
+    else
       return path == '/'
     end
   end
@@ -143,25 +134,25 @@ M.path = (function()
     end
   end
 
-  local dirname
-  do
-    local strip_dir_pat = path_sep .. '([^' .. path_sep .. ']+)$'
-    local strip_sep_pat = path_sep .. '$'
-    dirname = function(path)
-      if not path or #path == 0 then
-        return
-      end
-      local result = path:gsub(strip_sep_pat, ''):gsub(strip_dir_pat, '')
-      if #result == 0 then
+  local function dirname(path)
+    local strip_dir_pat = '/([^/]+)$'
+    local strip_sep_pat = '/$'
+    if not path or #path == 0 then
+      return
+    end
+    local result = path:gsub(strip_sep_pat, ''):gsub(strip_dir_pat, '')
+    if #result == 0 then
+      if is_windows then
+        return path:sub(1, 2):upper()
+      else
         return '/'
       end
-      return result
     end
+    return result
   end
 
   local function path_join(...)
-    local result = table.concat(vim.tbl_flatten { ... }, path_sep):gsub(path_sep .. '+', path_sep)
-    return result
+    return table.concat(vim.tbl_flatten { ... }, '/')
   end
 
   -- Traverse the path calling cb along the way.
@@ -186,7 +177,7 @@ M.path = (function()
 
   -- Iterate the path until we find the rootdir.
   local function iterate_parents(path)
-    local function it(s, v)
+    local function it(_, v)
       if v and not is_fs_root(v) then
         v = dirname(v)
       else
@@ -220,9 +211,9 @@ M.path = (function()
     is_file = is_file,
     is_absolute = is_absolute,
     exists = exists,
-    sep = path_sep,
     dirname = dirname,
     join = path_join,
+    sanitize = sanitize,
     traverse_parents = traverse_parents,
     iterate_parents = iterate_parents,
     is_descendant = is_descendant,
@@ -233,18 +224,23 @@ end)()
 -- seen before, will call make_config(root_dir) and start a new client.
 function M.server_per_root_dir_manager(_make_config)
   local clients = {}
+  local single_file_clients = {}
   local manager = {}
 
-  function manager.add(root_dir)
-    if not root_dir then
-      return
-    end
-    if not M.path.is_dir(root_dir) then
+  function manager.add(root_dir, single_file)
+    local client_id
+    -- This is technically unnecessary, as lspconfig's path utilities should be hermetic,
+    -- however users are free to return strings in custom root resolvers.
+    root_dir = M.path.sanitize(root_dir)
+    if single_file then
+      client_id = single_file_clients[root_dir]
+    elseif root_dir and M.path.is_dir(root_dir) then
+      client_id = clients[root_dir]
+    else
       return
     end
 
     -- Check if we have a client already or start and store it.
-    local client_id = clients[root_dir]
     if not client_id then
       local new_config = _make_config(root_dir)
       -- do nothing if the client is not enabled
@@ -252,22 +248,45 @@ function M.server_per_root_dir_manager(_make_config)
         return
       end
       if not new_config.cmd then
-        print(
+        vim.notify(
           string.format(
-            'Error: cmd not defined for %q. You must manually set cmd in the setup{} call according to CONFIG.md.',
+            '[lspconfig] cmd not defined for %q. Manually set cmd in the setup {} call according to server_configurations.md, see :help lspconfig-index.',
             new_config.name
-          )
+          ),
+          vim.log.levels.ERROR
         )
-        return
-      elseif vim.fn.executable(new_config.cmd[1]) == 0 then
-        vim.notify(string.format('cmd [%q] is not executable.', new_config.cmd[1]), vim.log.levels.Error)
         return
       end
       new_config.on_exit = M.add_hook_before(new_config.on_exit, function()
         clients[root_dir] = nil
+        single_file_clients[root_dir] = nil
       end)
+
+      -- Launch the server in the root directory used internally by lspconfig, if otherwise unset
+      -- also check that the path exist
+      if not new_config.cmd_cwd and uv.fs_realpath(root_dir) then
+        new_config.cmd_cwd = root_dir
+      end
+
+      -- Sending rootDirectory and workspaceFolders as null is not explicitly
+      -- codified in the spec. Certain servers crash if initialized with a NULL
+      -- root directory.
+      if single_file then
+        new_config.root_dir = nil
+        new_config.workspace_folders = nil
+      end
       client_id = lsp.start_client(new_config)
-      clients[root_dir] = client_id
+
+      -- Handle failures in start_client
+      if not client_id then
+        return
+      end
+
+      if single_file then
+        single_file_clients[root_dir] = client_id
+      else
+        clients[root_dir] = client_id
+      end
     end
     return client_id
   end
@@ -322,7 +341,8 @@ function M.root_pattern(...)
 end
 function M.find_git_ancestor(startpath)
   return M.search_ancestors(startpath, function(path)
-    if M.path.is_dir(M.path.join(path, '.git')) then
+    -- Support git directories and git files (worktrees)
+    if M.path.is_dir(M.path.join(path, '.git')) or M.path.is_file(M.path.join(path, '.git')) then
       return path
     end
   end)
@@ -357,7 +377,7 @@ function M.get_active_clients_list_by_ft(filetype)
 end
 
 function M.get_other_matching_providers(filetype)
-  local configs = require 'lspconfig/configs'
+  local configs = require 'lspconfig.configs'
   local active_clients_list = M.get_active_clients_list_by_ft(filetype)
   local other_matching_configs = {}
   for _, config in pairs(configs) do
@@ -371,6 +391,36 @@ function M.get_other_matching_providers(filetype)
     end
   end
   return other_matching_configs
+end
+
+function M.get_clients_from_cmd_args(arg)
+  local result = {}
+  for id in (arg or ''):gmatch '(%d+)' do
+    result[id] = vim.lsp.get_client_by_id(tonumber(id))
+  end
+  if vim.tbl_isempty(result) then
+    return M.get_managed_clients()
+  end
+  return vim.tbl_values(result)
+end
+
+function M.get_active_client_by_name(bufnr, servername)
+  for _, client in pairs(vim.lsp.buf_get_clients(bufnr)) do
+    if client.name == servername then
+      return client
+    end
+  end
+end
+
+function M.get_managed_clients()
+  local configs = require 'lspconfig.configs'
+  local clients = {}
+  for _, config in pairs(configs) do
+    if config.manager then
+      vim.list_extend(clients, config.manager.clients())
+    end
+  end
+  return clients
 end
 
 return M

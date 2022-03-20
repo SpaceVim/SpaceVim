@@ -1,6 +1,6 @@
-local configs = require 'lspconfig/configs'
-local windows = require 'lspconfig/ui/windows'
-local util = require 'lspconfig/util'
+local configs = require 'lspconfig.configs'
+local windows = require 'lspconfig.ui.windows'
+local util = require 'lspconfig.util'
 
 local error_messages = {
   cmd_not_found = 'Unable to find executable. Please check your path and ensure the server is installed',
@@ -73,7 +73,11 @@ local function make_client_info(client)
   local client_info = {}
 
   client_info.cmd = remove_newlines(client.config.cmd)
-  client_info.root_dir = client.workspaceFolders[1].name
+  if client.workspaceFolders then
+    client_info.root_dir = client.workspaceFolders[1].name
+  else
+    client_info.root_dir = 'Running in single file mode.'
+  end
   client_info.filetypes = table.concat(client.config.filetypes or {}, ', ')
   client_info.autostart = (client.config.autostart and 'true') or 'false'
   client_info.attached_buffers_list = table.concat(vim.lsp.get_buffers_by_client_id(client.id), ', ')
@@ -199,7 +203,9 @@ return function()
   vim.api.nvim_buf_set_option(bufnr, 'filetype', 'lspinfo')
 
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<esc>', '<cmd>bd<CR>', { noremap = true })
-  vim.lsp.util.close_preview_autocmd({ 'BufHidden', 'BufLeave' }, win_id)
+  vim.api.nvim_command(
+    string.format('autocmd BufHidden,BufLeave <buffer> ++once lua pcall(vim.api.nvim_win_close, %d, true)', win_id)
+  )
 
   vim.fn.matchadd(
     'Error',

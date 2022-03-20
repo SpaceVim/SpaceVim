@@ -1,6 +1,6 @@
 require 'lspconfig'
-local configs = require 'lspconfig/configs'
-local util = require 'lspconfig/util'
+local configs = require 'lspconfig.configs'
+local util = require 'lspconfig.util'
 local inspect = vim.inspect
 local uv = vim.loop
 local fn = vim.fn
@@ -84,9 +84,9 @@ require'lspconfig'.{{template_name}}.setup{}
 
 local function require_all_configs()
   -- Configs are lazy-loaded, tickle them to populate the `configs` singleton.
-  for _, v in ipairs(vim.fn.glob('lua/lspconfig/*.lua', 1, 1)) do
+  for _, v in ipairs(vim.fn.glob('lua/lspconfig/server_configurations/*.lua', 1, 1)) do
     local module_name = v:gsub('.*/', ''):gsub('%.lua$', '')
-    require('lspconfig/' .. module_name)
+    configs[module_name] = require('lspconfig.server_configurations.' .. module_name)
   end
 end
 
@@ -272,9 +272,10 @@ local function generate_readme(template_file, params)
   local input_template = readfile(template_file)
   local readme_data = template(input_template, params)
 
-  local writer = io.open('CONFIG.md', 'w')
+  local writer = io.open('doc/server_configurations.md', 'w')
   writer:write(readme_data)
   writer:close()
+  uv.fs_copyfile('doc/server_configurations.md', 'doc/server_configurations.txt')
 end
 
 require_all_configs()

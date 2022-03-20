@@ -1,0 +1,28 @@
+name: Close Non-Feature Branches
+
+on:
+  pull_request_target:
+    branches:
+      - master
+
+jobs:
+  close-master-branch:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Close if master branch
+        if: ${{ github.head_ref	== 'master' }}
+        run: |
+          gh pr close $PR_NUMBER
+          gh pr comment $PR_NUMBER --body "This pull request has been automatically closed. Please develop on a feature branch. Thank you."
+          exit 1
