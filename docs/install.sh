@@ -172,16 +172,6 @@ install_vim () {
 }
 # }}}
 
-# install_package_manager {{{
-install_package_manager () {
-    if [[ ! -d "$HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim" ]]; then
-        info "Install dein.vim"
-        git clone https://github.com/Shougo/dein.vim.git $HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim
-        success "dein.vim installation done"
-    fi
-}
-# }}}
-
 # install_neovim {{{
 install_neovim () {
     if [[ -d "$HOME/.config/nvim" ]]; then
@@ -421,17 +411,20 @@ main () {
                     case $2 in
                         neovim)
                             install_neovim
+                            install_fonts
                             install_done
                             exit 0
                             ;;
                         vim)
                             install_vim
+                            install_fonts
                             install_done
                             exit 0
                     esac
                 fi
                 install_vim
                 install_neovim
+                install_fonts
                 install_done
                 exit 0
                 ;;
@@ -445,7 +438,7 @@ main () {
                 fetch_repo
                 install_vim
                 install_neovim
-                install_package_manager
+                install_fonts
                 install_done
                 exit 0
                 ;;
@@ -459,7 +452,6 @@ main () {
         fetch_repo
         install_vim
         install_neovim
-        install_package_manager
         install_fonts
         install_done
     fi
