@@ -25,10 +25,8 @@
 
 function! SpaceVim#layers#github#plugins() abort
   return [
-        \ [g:_spacevim_root_dir . 'bundle/github-issues.vim', {'merged': 0}],
-        \ ['junegunn/vim-github-dashboard', {
-        \ 'on_cmd': ['GHA', 'GHD', 'GHActivity', 'GHDashboard'],
-        \ }],
+        \ [g:_spacevim_root_dir . 'bundle/github-issues.vim', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-github-dashboard', {'merged' : 0}],
         \ ['tyru/open-browser-github.vim',  {
         \ 'depends': 'open-browser.vim',
         \ 'on_cmd': ['OpenGithubFile', 'OpenGithubIssue', 'OpenGithubPullReq'],
