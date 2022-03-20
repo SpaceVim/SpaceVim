@@ -69,6 +69,11 @@ lockvar g:spacevim_version
 " <
 let g:spacevim_default_indent          = 2
 ""
+" @section expand_tab, options-expand_tab
+" @parentsection options
+" In Insert mode: Use the appropriate number of spaces to insert a <Tab>
+
+""
 " In Insert mode: Use the appropriate number of spaces to insert a <Tab>
 let g:spacevim_expand_tab              = 1
 
