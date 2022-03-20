@@ -25,7 +25,7 @@
 
 function! SpaceVim#layers#github#plugins() abort
   return [
-        \ ['jaxbot/github-issues.vim', { 'on_cmd' : 'Gissues' }],
+        \ [g:_spacevim_root_dir . 'bundle/github-issues.vim', {'merged': 0}],
         \ ['junegunn/vim-github-dashboard', {
         \ 'on_cmd': ['GHA', 'GHD', 'GHActivity', 'GHDashboard'],
         \ }],
