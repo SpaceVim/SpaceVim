@@ -593,6 +593,24 @@ let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
       \ 'syntax checking', 'minor mode lighters',
       \ ]
 ""
+" @section statusline_right_sections, options-statusline_right_sections
+" @parentsection options
+" Define the right section of statusline in active windows. By default:
+" >
+"   statusline_right_sections = [
+"     'fileformat',
+"     'cursorpos',
+"     'percentage'
+"     ]
+" <
+"
+" The following sections can be used in this option:
+" - fileformat: the format of current file
+" - cursorpos: the corsur position
+" - percentage: the percent of current page
+" - totallines: the total lines of current buffer
+
+""
 " Define the right section of statusline in active windows. By default:
 " >
 "   g:spacevim_statusline_right_sections =

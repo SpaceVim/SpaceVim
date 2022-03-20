@@ -171,6 +171,9 @@ function! s:modes() abort
   return m . ' '
 endfunction
 
+function! s:totallines() abort
+  return ' %L '
+endfunction
 
 function! s:percentage() abort
   return ' %P '
@@ -304,6 +307,7 @@ let s:registed_sections = {
       \ 'minor mode lighters' : function('s:modes'),
       \ 'cursorpos' : function('s:cursorpos'),
       \ 'percentage' : function('s:percentage'),
+      \ 'totallines' : function('s:totallines'),
       \ 'time' : function('s:time'),
       \ 'date' : function('s:date'),
       \ 'whitespace' : function('s:whitespace'),

@@ -71,16 +71,18 @@ CONTENTS                                                   *SpaceVim-contents*
       51. snippet_engine.....................|SpaceVim-options-snippet_engine|
       52. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
       53. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
-      54. statusline_separator.........|SpaceVim-options-statusline_separator|
-      55. statusline_unicode.............|SpaceVim-options-statusline_unicode|
-      56. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      57. vim_help_language...............|SpaceVim-options-vim_help_language|
-      58. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      59. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      60. windisk_encoding.................|SpaceVim-options-windisk_encoding|
-      61. windows_index_type.............|SpaceVim-options-windows_index_type|
-      62. windows_leader.....................|SpaceVim-options-windows_leader|
-      63. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      54. statusline_right_sections
+..................................|SpaceVim-options-statusline_right_sections|
+      55. statusline_separator.........|SpaceVim-options-statusline_separator|
+      56. statusline_unicode.............|SpaceVim-options-statusline_unicode|
+      57. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      58. vim_help_language...............|SpaceVim-options-vim_help_language|
+      59. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      60. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      61. windisk_encoding.................|SpaceVim-options-windisk_encoding|
+      62. windows_index_type.............|SpaceVim-options-windows_index_type|
+      63. windows_leader.....................|SpaceVim-options-windows_leader|
+      64. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Public functions.....................................|SpaceVim-functions|
@@ -739,6 +741,24 @@ Define the left section of statusline in active windows. By default:
     'version control info'
     ]
 <
+
+==============================================================================
+STATUSLINE_RIGHT_SECTIONS         *SpaceVim-options-statusline_right_sections*
+
+Define the right section of statusline in active windows. By default:
+>
+  statusline_right_sections = [
+    'fileformat',
+    'cursorpos',
+    'percentage'
+    ]
+<
+
+The following sections can be used in this option:
+fileformat: the format of current file
+cursorpos: the corsur position
+percentage: the percent of current page
+totallines: the total lines of current buffer
 
 ==============================================================================
 STATUSLINE_SEPARATOR                   *SpaceVim-options-statusline_separator*
