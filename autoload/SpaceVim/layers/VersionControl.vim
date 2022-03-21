@@ -8,6 +8,19 @@
 
 scriptencoding utf-8
 
+""
+" @section VersionControl, layers-VersionControl
+" @parentsection layers
+" This layer provides version control system (VCS) integration for SpaceVim.
+"
+" @subsection Key bindings
+" >
+"   Key binding     Description
+"   SPC t m v       toggle version control info
+"   SPC t m h       toggle hunks summary
+"   SPC g .         version control transient state
+" <
+
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
 let s:enable_gtm_status = 0
@@ -27,19 +40,18 @@ function! SpaceVim#layers#VersionControl#health() abort
 endfunction
 
 function! SpaceVim#layers#VersionControl#config() abort
-  let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
-  let g:_spacevim_mappings_space.g.v = get(g:_spacevim_mappings_space.g, 'v',  {'name' : '+VersionControl'})
+  let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VCS/git'})
   call SpaceVim#mapping#space#def('nnoremap', ['g', '.'], 'call call('
         \ . string(s:_function('s:git_transient_state')) . ', [])',
-        \ 'buffer transient state', 1)
+        \ 'vcs-transient-state', 1)
   call SpaceVim#layers#core#statusline#register_sections('vcs', s:_function('s:git_branch'))
   call SpaceVim#layers#core#statusline#register_sections('hunks', s:_function('s:hunks'))
   call add(g:spacevim_statusline_left_sections, 'vcs')
   call add(g:spacevim_statusline_left_sections, 'hunks')
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'v'], 'call SpaceVim#layers#core#statusline#toggle_section("vcs")',
-        \ 'version control info', 1)
+        \ 'toggle-vcs-info', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'h'], 'call SpaceVim#layers#core#statusline#toggle_section("hunks")',
-        \ 'toggle the hunks summary', 1)
+        \ 'toggle-hunks-summary', 1)
   let g:gtm_plugin_status_enabled = s:enable_gtm_status
   if s:enable_gtm_status
     augroup gtm_plugin

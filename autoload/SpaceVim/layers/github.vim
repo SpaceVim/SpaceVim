@@ -39,7 +39,7 @@ endfunction
 function! SpaceVim#layers#github#config() abort
   " TODO Remove duplicated line exists in git layer
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {
-        \ 'name' : '+VersionControl/git',
+        \ 'name' : '+VCS/git',
         \ })
 
 	if !exists('g:_spacevim_mappings_space.g.h')
