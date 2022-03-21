@@ -867,34 +867,36 @@ function! SpaceVim#layers#core#statusline#mode(mode) abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#mode_text(mode) abort
+  let past_mode = &paste ? 'Paste ' . s:ilsep . ' ' : ''
+  let mode_text = ''
   let iedit_mode = get(w:, 'spacevim_iedit_mode', '')
   if a:mode ==# 'n'
     if !empty(iedit_mode)
       if iedit_mode ==# 'n'
-        return 'IEDIT-NORMAL'
+        let mode_text = 'IEDIT-NORMAL'
       else
-        return 'IEDIT-INSERT'
+        let mode_text = 'IEDIT-INSERT'
       endif
     endif
-    return 'NORMAL'
+    let mode_text = 'NORMAL'
   elseif a:mode ==# 'i'
-    return 'INSERT'
+    let mode_text = 'INSERT'
   elseif a:mode ==# 'R'
-    return 'REPLACE'
+    let mode_text = 'REPLACE'
   elseif a:mode ==# 'v'
-    return 'VISUAL'
+    let mode_text = 'VISUAL'
   elseif a:mode ==# 'V'
-    return 'V-LINE'
+    let mode_text = 'V-LINE'
   elseif a:mode ==# ''
-    return 'V-BLOCK'
+    let mode_text = 'V-BLOCK'
   elseif a:mode ==# 'c'
-    return 'COMMAND'
+    let mode_text = 'COMMAND'
   elseif a:mode ==# 't'
-    return 'TERMINAL'
+    let mode_text = 'TERMINAL'
   elseif a:mode ==# 'v' || a:mode ==# 'V' || a:mode ==# '^V' || a:mode ==# 's' || a:mode ==# 'S' || a:mode ==# '^S'
-    return 'VISUAL'
+    let mode_text = 'VISUAL'
   endif
-  return ' '
+  return past_mode . mode_text
 endfunction
 
 
