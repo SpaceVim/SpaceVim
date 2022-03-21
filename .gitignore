@@ -40,3 +40,5 @@ jdt.ls-java-project/
 # https://github.com/rust-lang/rust.vim/blob/master/autoload/rustfmt.vim#L110
 view/
 .vim-bookmarks
+# ignore cache
+.cache/
