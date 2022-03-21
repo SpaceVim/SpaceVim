@@ -13,3 +13,9 @@ function! SpaceVim#layers#lang#org#plugins() abort
   return plugins
 endfunction
 
+
+function! SpaceVim#layers#lang#org#health() abort
+  call SpaceVim#layers#lang#org#plugins()
+  return 1
+endfunction
+
