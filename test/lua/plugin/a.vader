@@ -1,4 +1,5 @@
 Execute ( SpaceVim plugin: a.lua ):
+  call SpaceVim#plugins#a#set_config_name(getcwd(), '.projections.json')
   let root = SpaceVim#plugins#a#getConfigPath()
   AssertEqual SpaceVim#plugins#a#get_alt('docs/index.md', root, 1), 'docs/cn/index.md'
   AssertEqual SpaceVim#plugins#a#get_alt('docs/cn/index.md', root, 1), 'docs/index.md'
