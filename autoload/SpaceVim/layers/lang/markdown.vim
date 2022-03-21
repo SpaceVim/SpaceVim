@@ -85,7 +85,7 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
   call add(plugins, ['iamcco/markdown-preview.nvim',
         \ { 'on_cmd' : 'MarkdownPreview',
         \ 'depends': 'open-browser.vim',
-        \ 'build' : 'cd app & ' . s:node_pkgm . ' install' }])
+        \ 'build' : 'cd app & ' . s:node_pkgm . ' install --force' }])
   if !has('nvim')
     call add(plugins, ['neoclide/vim-node-rpc',  {'merged': 0, 'build' : s:node_pkgm . ' install'}])
   endif
