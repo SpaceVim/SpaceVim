@@ -26,7 +26,7 @@ let s:BUF = SpaceVim#api#import('vim#buffer')
 " task object
 
 let s:select_task = {}
-let s:task_config = []
+let s:task_config = {}
 let s:task_viewer_bufnr = -1
 let s:variables = {}
 let s:providers = []
