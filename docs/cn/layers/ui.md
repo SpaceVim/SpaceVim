@@ -31,7 +31,7 @@ lang: zh
     concealcursor = ''
     cursorword_delay = 50
     cursorword_exclude_filetype = []
-    indentline_exclude_filetyps = []
+    indentline_exclude_filetype = []
 ```
 
 ## 启用模块
@@ -54,4 +54,4 @@ lang: zh
 - `indentline_char`: 设置对齐线的字符。
 - `conceallevel`: 设置 conceallevel 选项。
 - `concealcursor`: 设置 concealcursor 选项。
-- `indentline_exclude_filetyps`: 设置禁用对齐线的文件类型。
+- `indentline_exclude_filetype`: 设置禁用对齐线的文件类型。

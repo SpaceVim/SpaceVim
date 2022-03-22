@@ -30,7 +30,7 @@ and this layer is enabled by default with following options:
     concealcursor = ''
     cursorword_delay = 50
     cursorword_exclude_filetype = []
-    indentline_exclude_filetyps = []
+    indentline_exclude_filetype = []
 ```
 
 ## Install
@@ -58,4 +58,4 @@ To use this configuration layer, update custom configuration file with:
   word highlight after cursor motions, the default is 50.
 - `cursorword_exclude_filetypes`: Ignore filetypes when enable cursorword
   highlighting.
-- `indentline_exclude_filetyps`: Ignore filetypes when enable indentline.
+- `indentline_exclude_filetype`: Ignore filetypes when enable indentline.
