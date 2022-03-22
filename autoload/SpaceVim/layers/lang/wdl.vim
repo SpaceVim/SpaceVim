@@ -6,6 +6,17 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#wdl, layers-lang-wdl
+" @parentsection layers
+" This layer provides syntax highlighting for WDL file. and it is disabled by
+" default, to enable this layer, add following snippet to your SpaceVim
+" configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#wdl'
+" <
+"
 
 function! SpaceVim#layers#lang#wdl#plugins() abort
   let plugins = []
