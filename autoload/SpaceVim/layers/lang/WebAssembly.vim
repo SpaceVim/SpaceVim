@@ -6,6 +6,18 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#WebAssembly, layers-lang-WebAssembly
+" @parentsection layers
+" This layer provides syntax highlighting for WebAssembly file. and it is disabled by
+" default, to enable this layer, add following snippet to your SpaceVim
+" configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#WebAssembly'
+" <
+"
+
 
 function! SpaceVim#layers#lang#WebAssembly#plugins() abort
   let plugins = []
