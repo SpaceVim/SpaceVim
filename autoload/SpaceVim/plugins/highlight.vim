@@ -309,7 +309,9 @@ function! s:highlight() abort
   for item in s:stack
     call add(s:highlight_id, s:CMP.matchaddpos('HiBlueBold', [ item ]))
   endfor
-  let s:highlight_id_c = s:CMP.matchaddpos('HiPurpleBold', [s:stack[s:index]])
+  if !empty(get(s:stack, s:index, []))
+    let s:highlight_id_c = s:CMP.matchaddpos('HiPurpleBold', [s:stack[s:index]])
+  endif
 endfunction
 " }}}
 
