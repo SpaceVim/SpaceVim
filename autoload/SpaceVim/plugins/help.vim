@@ -127,7 +127,7 @@ function! s:open_describe_buffer(desc) abort
     exe winnr .  'wincmd w'
   endif
   setlocal modifiable
-  silent normal! "_ggdG
+  silent normal! gg"_dG
   silent call setline(1, a:desc)
   setlocal nomodifiable
   let b:defind_file_name = split(a:desc[-1][12:], ':')

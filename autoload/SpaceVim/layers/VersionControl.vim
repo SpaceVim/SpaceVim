@@ -324,7 +324,7 @@ function! s:change_options(key) abort
     endif
     setlocal modifiable
     let content = s:generate_git_log_popup_content()
-    normal! "_ggdG
+    normal! gg"_dG
     call setline(1, content)
     setlocal nomodifiable
   endif
