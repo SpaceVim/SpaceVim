@@ -1,7 +1,7 @@
 ## Steps of sending a PR
 
 1. fork this repo
-2. checkout new branch from dev branch
+2. checkout a new branch from master
 3. push your commits
 4. sending pull request
 
