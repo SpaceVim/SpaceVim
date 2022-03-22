@@ -64,8 +64,11 @@ endfunction
 function! s:remove_cursor_highlight() abort
   call clearmatches()
 endfunction
+
 ""
-" public API for iedit mode
+" This is public function to evoke iedit with [options]. The default
+" [firstline] is 1, and the default [lastline] is `line('$')`.
+" The following key are supported in [options]:
 " >
 "   KEY:
 "   expr     match expression

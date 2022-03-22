@@ -1510,8 +1510,11 @@ SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
 SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
   Set the log output file of SpaceVim. Default is empty.
 
-SpaceVim#plugins#iedit#start()                *SpaceVim#plugins#iedit#start()*
-  public API for iedit mode
+SpaceVim#plugins#iedit#start([options], [firstline], [lastline])
+                                              *SpaceVim#plugins#iedit#start()*
+  This is public function to evoke iedit with [options]. The default
+  [firstline] is 1, and the default [lastline] is `line('$')`. The following
+  key are supported in [options]:
 >
     KEY:
     expr     match expression
