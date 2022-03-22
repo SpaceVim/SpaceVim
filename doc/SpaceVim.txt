@@ -1938,6 +1938,13 @@ is `git`, the following plugins are supported: `gina`, `fugitive` and `gita`.
     name = 'git'
     git_plugin = 'git'
 <
+`git_diff_position`: set the default command to split diff windows, by default
+it is `10split`. Example:
+>
+  [[layers]]
+    name = 'git'
+    git_diff_position = 'vsplit'
+<
 KEY BINDINGS
 
 The following key bindings will be definded when the `git` layer is loaded.

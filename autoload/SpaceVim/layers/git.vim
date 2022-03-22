@@ -22,6 +22,13 @@
 "     name = 'git'
 "     git_plugin = 'git'
 " <
+" `git_diff_position`: set the default command to split diff windows, by
+" default it is `10split`. Example:
+" >
+"   [[layers]]
+"     name = 'git'
+"     git_diff_position = 'vsplit'
+" <
 " @subsection Key bindings
 "
 " The following key bindings will be definded when the `git` layer is loaded.
@@ -152,6 +159,7 @@ function! SpaceVim#layers#git#set_variable(var) abort
         \ get(a:var,
         \ 'git-plugin',
         \ s:git_plugin))
+  let g:git_diff_position = get(a:var, 'git_diff_position', '10split')
 
 endfunction
 
