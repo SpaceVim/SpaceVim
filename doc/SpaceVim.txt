@@ -1655,6 +1655,8 @@ OPTIONS
 `lint_on_the_fly`: Syntax checking on the fly feature, disabled by default.
 `lint_on_save`: Run syntax checking when saving a file.
 `show_cursor_error`: Enable/Disable displaying error below current line.
+`lint_exclude_filetype`: Set the filetypes which does not enable syntax
+  checking.
 
 ==============================================================================
 COLORSCHEME                                      *SpaceVim-layers-colorscheme*

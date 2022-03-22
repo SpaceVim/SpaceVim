@@ -21,6 +21,8 @@
 " - `lint_on_the_fly`: Syntax checking on the fly feature, disabled by default.
 " - `lint_on_save`: Run syntax checking when saving a file.
 " - `show_cursor_error`: Enable/Disable displaying error below current line.
+" - `lint_exclude_filetype`: Set the filetypes which does not enable syntax
+"   checking.
 
 
 if exists('s:show_cursor_error')
@@ -32,6 +34,8 @@ if has('timers')
 else
   let s:show_cursor_error = 0
 endif
+
+let s:lint_exclude_filetype = []
 
 let s:SIG = SpaceVim#api#import('vim#signatures')
 let s:STRING = SpaceVim#api#import('data#string')
@@ -59,6 +63,7 @@ function! SpaceVim#layers#checkers#set_variable(var) abort
 
   let s:show_cursor_error = get(a:var, 'show_cursor_error', 1)
   let s:lint_on_the_fly =  get(a:var, 'lint_on_the_fly', 1)
+  let s:lint_exclude_filetype =  get(a:var, 'lint_exclude_filetype', [])
 
   if s:show_cursor_error && !has('timers')
     call SpaceVim#logger#warn('show_cursor_error in checkers layer needs timers feature')
@@ -79,6 +84,11 @@ function! SpaceVim#layers#checkers#config() abort
     let g:neomake_echo_current_error = get(g:, 'neomake_echo_current_error', !s:show_cursor_error)
     let g:neomake_cursormoved_delay = get(g:, 'neomake_cursormoved_delay', 300)
     let g:neomake_virtualtext_current_error = get(g:, 'neomake_virtualtext_current_error', !s:show_cursor_error)
+
+    " exclude filetypes:
+    for ft in s:lint_exclude_filetype
+      let g:neomake_{ft}_enabled_makers = []
+    endfor
 
   elseif g:spacevim_lint_engine ==# 'ale'
     let g:ale_echo_delay = get(g:, 'ale_echo_delay', 300)
