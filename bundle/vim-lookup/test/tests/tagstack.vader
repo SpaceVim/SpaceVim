@@ -1,0 +1,108 @@
+Given vim:
+  function! s:func(a, b)
+    return s:nested(a, b)
+  endfunc
+  execute 'let s:var = "bar"'
+  let s:const = "foo"
+  echomsg s:var
+  function! s:nested(a, b)
+    return [s:var + a:a, s:const + a:b]
+  endfunc
+
+Execute (lookup#lookup() a couple levels deep and C-t to go back):
+  " on s:nested
+  normal! 2G4e
+  AssertEqual [2, 17], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [7, 13], [line('.'), col('.')]
+
+  " on s:var
+  normal! j
+  AssertEqual [8, 13], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [4, 16], [line('.'), col('.')]
+  exec "normal! \<C-t>"
+  AssertEqual [8, 13], [line('.'), col('.')]
+
+  " on s:const
+  normal! fc
+  AssertEqual [8, 26], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [5, 7], [line('.'), col('.')]
+  exec "normal! \<C-t>"
+  AssertEqual [8, 26], [line('.'), col('.')]
+
+  exec "normal! \<C-t>"
+  AssertEqual [2, 17], [line('.'), col('.')]
+
+
+Execute (lookup#lookup() a couple levels deep and lookup#pop to go back):
+  " on s:nested
+  normal! 2G4e
+  AssertEqual [2, 17], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [7, 13], [line('.'), col('.')]
+
+  " on s:var
+  normal! j
+  AssertEqual [8, 13], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [4, 16], [line('.'), col('.')]
+  call lookup#pop()
+  AssertEqual [8, 13], [line('.'), col('.')]
+
+  " on s:const
+  normal! fc
+  AssertEqual [8, 26], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [5, 7], [line('.'), col('.')]
+  call lookup#pop()
+  AssertEqual [8, 26], [line('.'), col('.')]
+
+  call lookup#pop()
+  AssertEqual [2, 17], [line('.'), col('.')]
+
+
+Execute (lookup#lookup() across files and C-t to go back):
+  edit fixture/plugin/auto.vim
+  normal! 5G^3w
+  AssertEqual [5, 17], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual expand('fixture/autoload/auto/foo.vim'), expand('%')
+  AssertEqual [5, 5], [line('.'), col('.')]
+  exec "normal! \<C-t>"
+  AssertEqual expand('fixture/plugin/auto.vim'), expand('%')
+  AssertEqual [5, 17], [line('.'), col('.')]
+
+  normal! k
+  AssertEqual expand('fixture/plugin/auto.vim'), expand('%')
+  AssertEqual [4, 17], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual expand('fixture/autoload/auto/foo.vim'), expand('%')
+  AssertEqual [5, 5], [line('.'), col('.')]
+  exec "normal! \<C-t>"
+  AssertEqual expand('fixture/plugin/auto.vim'), expand('%')
+  AssertEqual [4, 17], [line('.'), col('.')]
+
+
+Execute (lookup#lookup() across files and lookup#pop to go back):
+  edit fixture/plugin/auto.vim
+  normal! 5G^3w
+  AssertEqual [5, 17], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual expand('fixture/autoload/auto/foo.vim'), expand('%')
+  AssertEqual [5, 5], [line('.'), col('.')]
+  call lookup#pop()
+  AssertEqual expand('fixture/plugin/auto.vim'), expand('%')
+  AssertEqual [5, 17], [line('.'), col('.')]
+
+  normal! k
+  AssertEqual expand('fixture/plugin/auto.vim'), expand('%')
+  AssertEqual [4, 17], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual expand('fixture/autoload/auto/foo.vim'), expand('%')
+  AssertEqual [5, 5], [line('.'), col('.')]
+  call lookup#pop()
+  AssertEqual expand('fixture/plugin/auto.vim'), expand('%')
+  AssertEqual [4, 17], [line('.'), col('.')]
+

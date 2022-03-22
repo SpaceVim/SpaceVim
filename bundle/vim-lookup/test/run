@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e
+
+vim="$(command -v vim)"
+
+# Change to the directory of this script.
+cd "$( dirname "${BASH_SOURCE[0]}" )" || exit 1
+
+if [[ "$TRAVIS" = true ]] || [[ -z $vim ]]; then
+    # The "test/vim" directory is created and cached by Travis CI.
+    if [[ ! -d vim/src ]]; then
+        git clone --depth=1 https://github.com/vim/vim.git
+    fi
+
+    # Build vim executable if needed.
+    if [[ ! -x vim/src/vim ]]; then
+        (cd vim; ./configure && make)
+    fi
+    vim=vim/src/vim
+fi
+
+# The "test/vader" directory is created and cached by Travis CI.
+if [[ ! -d vader.vim/plugin ]]; then
+    git clone --depth=1 https://github.com/junegunn/vader.vim.git
+fi
+
+$vim -Nnu vimrc -i NONE +'Vader! tests/*.vader'
+
+echo -e "\nExecutable used: $vim\n"

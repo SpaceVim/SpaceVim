@@ -18,6 +18,8 @@ let s:STRING = SpaceVim#api#import('data#string')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:VIM = SpaceVim#api#import('vim')
 
+let s:LOGGER =SpaceVim#logger#derive('iedit')
+
 let s:cursor_stack = []
 
 let s:iedit_hi_info = [

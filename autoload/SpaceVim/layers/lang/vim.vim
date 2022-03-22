@@ -70,7 +70,7 @@ function! SpaceVim#layers#lang#vim#plugins() abort
         \ ['todesking/vint-syntastic',               { 'on_ft' : 'vim'}],
         \ ]
   call add(plugins,['tweekmonster/exception.vim', {'merged' : 0}])
-  call add(plugins,['wsdjeg/vim-lookup', {'merged' : 0}])
+  call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-lookup', {'merged' : 0}])
   if !SpaceVim#layers#lsp#check_server('vimls') && !SpaceVim#layers#lsp#check_filetype('vim')
     call add(plugins,['Shougo/neco-vim',              { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}])
     if g:spacevim_autocomplete_method ==# 'asyncomplete'
