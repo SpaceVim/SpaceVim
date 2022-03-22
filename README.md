@@ -25,6 +25,7 @@ The last release is [v1.9.0](https://spacevim.org/SpaceVim-release-v1.9.0/), che
 - [Quick Start Guide](https://spacevim.org/quick-start-guide/): A simple guide for Beginners.
 - [Documentation](https://spacevim.org/documentation/): The full documentation about using SpaceVim.
 - [Available Layers](https://spacevim.org/layers/): A list of all available layers included in SpaceVim.
+- [FAQ](https://spacevim.org/faq/): The most asked questions about SpaceVim.
 
 ## Support SpaceVim
 
