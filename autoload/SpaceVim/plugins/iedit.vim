@@ -328,6 +328,17 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
+  elseif a:char ==# 'e'
+    for i in range(len(s:cursor_stack))
+      let word = matchstr(s:cursor_stack[i].end, '^\s*\S*')
+      let s:cursor_stack[i].begin =
+            \ s:cursor_stack[i].begin
+            \ . s:cursor_stack[i].cursor
+            \ . word
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^\s*\S*', '', 'g')
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+    endfor
   elseif a:char ==# '0' || a:char ==# "\<Home>" " 0 or <Home>
     for i in range(len(s:cursor_stack))
       let old_cursor_char = s:cursor_stack[i].cursor
@@ -435,7 +446,7 @@ function! s:handle_insert(char) abort
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].begin = ''
     endfor
-  elseif a:char ==# "\<C-r>"
+  elseif a:char ==# "\<C-k>"
     " Ctrl-k: delete all words after cursor
     for i in range(len(s:cursor_stack))
       let s:cursor_stack[i].cursor = ''
