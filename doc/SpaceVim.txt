@@ -5428,8 +5428,10 @@ KEY BINDINGS
 
 After starting iedit, the following key bindings can be used:
 >
-  Mode       Key binding     Description
+  Mode            Key binding     Description
   Iedit-Normal    a           start iedit-insert mode after cursor
+  Iedit-Normal    e           forward to the end of word
+  Iedit-Normal    w           forward to the begin of next word
 <
 
 ==============================================================================

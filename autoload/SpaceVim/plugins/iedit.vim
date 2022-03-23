@@ -19,8 +19,10 @@
 "
 " After starting iedit, the following key bindings can be used:
 " >
-"   Mode       Key binding     Description
+"   Mode            Key binding     Description
 "   Iedit-Normal    a           start iedit-insert mode after cursor
+"   Iedit-Normal    e           forward to the end of word
+"   Iedit-Normal    w           forward to the begin of next word
 " <
 
 let s:stack = []
@@ -338,6 +340,17 @@ function! s:handle_normal(char) abort
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '.$')
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^\s*\S*', '', 'g')
+    endfor
+  elseif a:char ==# 'w'
+    for i in range(len(s:cursor_stack))
+      let word = matchstr(s:cursor_stack[i].end, '^\S*\s*')
+      let s:cursor_stack[i].begin =
+            \ s:cursor_stack[i].begin
+            \ . s:cursor_stack[i].cursor
+            \ . word
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^\S*\s*', '', 'g')
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
   elseif a:char ==# '0' || a:char ==# "\<Home>" " 0 or <Home>
     for i in range(len(s:cursor_stack))
