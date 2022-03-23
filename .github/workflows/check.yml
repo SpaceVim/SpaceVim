@@ -26,6 +26,12 @@ jobs:
               # - vimbin: nvim
                 # vimtag: nightly
               - vimbin: nvim
+                vimtag: v0.6.1
+              - vimbin: nvim
+                vimtag: v0.6.0
+              - vimbin: nvim
+                vimtag: v0.5.1
+              - vimbin: nvim
                 vimtag: v0.5.0
               - vimbin: nvim
                 vimtag: v0.4.4
