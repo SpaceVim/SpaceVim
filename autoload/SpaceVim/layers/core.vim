@@ -267,6 +267,9 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'm'], 'call call('
         \ . string(s:_function('s:open_message_buffer')) . ', [])',
         \ 'open-message-buffer', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['b', 'o'], 'call call('
+        \ . string(s:_function('s:only_buf_win')) . ', [])',
+        \ 'kill-other-buffers-and-windows', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'P'], 'normal! ggdG"+P', 'copy-clipboard-to-whole-buffer', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 'R'], 'call call('
         \ . string(s:_function('s:safe_revert_buffer')) . ', [])',
@@ -633,6 +636,11 @@ function! s:open_message_buffer() abort
   normal! G
   setlocal nomodifiable
   nnoremap <buffer><silent> q :call <SID>close_message_buffer()<CR>
+endfunction
+
+function! s:only_buf_win() abort
+  only
+  call SpaceVim#mapping#clear_saved_buffers()
 endfunction
 
 function! s:close_message_buffer() abort

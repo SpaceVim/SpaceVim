@@ -1306,7 +1306,7 @@ SpaceVim 选项 `window_leader` 的值来设为其它按键：
 | `SPC b h`            | 打开欢迎界面, 等同于快捷键 `SPC a s`                                           |
 | `SPC b n`            | 切换至下一个缓冲区，排除特殊插件的缓冲区                                       |
 | `SPC b m`            | 打开消息缓冲区                                                                 |
-| `SPC u SPC b m`      | kill all buffers and windows except the current one(TODO)                      |
+| `SPC b o`            | 关闭所有窗口和已保存的缓冲区                                                   |
 | `SPC b p`            | 切换至前一个缓冲区，排除特殊插件的缓冲区                                       |
 | `SPC b P`            | 使用系统剪切板内容替换当前缓冲区                                               |
 | `SPC b R`            | 从磁盘重新读取当前缓冲区所对应的文件                                           |
