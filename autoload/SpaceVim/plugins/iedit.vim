@@ -97,6 +97,16 @@ endfunction
 " <
 " if only argv 1 is given, use selected word as pattern
 function! SpaceVim#plugins#iedit#start(...) abort
+  " do not start iedit if symbol is empty
+  let argv = get(a:000, 0, '')
+  if empty(argv) && 
+        \ (
+        \ matchstr(getline('.'), '\%' . col('.') . 'c.') ==# ''
+        \ || matchstr(getline('.'), '\%' . col('.') . 'c.') ==# ' '
+        \ )
+    echo 'no pattern found under cursor'
+    return
+  endif
   let save_tve = &t_ve
   let save_cl = &l:cursorline
   setlocal nocursorline
@@ -108,7 +118,6 @@ function! SpaceVim#plugins#iedit#start(...) abort
   let w:spacevim_statusline_mode = 'in'
   if empty(s:stack)
     let curpos = getpos('.')
-    let argv = get(a:000, 0, '')
     let save_reg_k = @k
     " the register " is cleared
     " save the register context before run following command
