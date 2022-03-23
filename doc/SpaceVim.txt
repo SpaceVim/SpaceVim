@@ -5432,6 +5432,7 @@ After starting iedit, the following key bindings can be used:
   Iedit-Normal    a           start iedit-insert mode after cursor
   Iedit-Normal    e           forward to the end of word
   Iedit-Normal    w           forward to the begin of next word
+  Iedit-Normal    b           move to the begin of current word
 <
 
 ==============================================================================
