@@ -11,7 +11,7 @@ scriptencoding utf-8
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro options config functions layers usage api dev faq changelog
+" @order intro options config functions layers usage plugins api dev faq changelog
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "

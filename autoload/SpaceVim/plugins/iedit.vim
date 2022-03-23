@@ -6,6 +6,23 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section iedit, plugins-iedit
+" @parentsection plugins
+" The `iedit` plugin provides multiple cursor support for SpaceVim.
+" 
+" @subsection Key bindings
+" >
+"   Key binding     Description
+"   SPC s e         string iedit mode
+" <
+"
+" After starting iedit, the following key bindings can be used:
+" >
+"   Mode       Key binding     Description
+"   Iedit-Normal    a           start iedit-insert mode after cursor
+" <
+
 let s:stack = []
 let s:index = -1
 let s:cursor_col = -1

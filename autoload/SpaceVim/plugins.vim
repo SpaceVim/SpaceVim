@@ -7,6 +7,13 @@
 "=============================================================================
 
 scriptencoding utf-8
+
+
+""
+" @section Plugins, plugins
+" This is a list of buildin plugins.
+
+
 function! SpaceVim#plugins#load() abort
   if SpaceVim#plugins#enable_plug()
     call SpaceVim#plugins#begin(g:spacevim_plugin_bundle_dir)

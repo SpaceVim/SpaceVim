@@ -227,7 +227,9 @@ CONTENTS                                                   *SpaceVim-contents*
       6. tasks..........................................|SpaceVim-usage-tasks|
       7. undo-tree...................................|SpaceVim-usage-undotree|
       8. windows-and-tabs....................|SpaceVim-usage-windows-and-tabs|
-  8. API........................................................|SpaceVim-api|
+  8. Plugins................................................|SpaceVim-plugins|
+      1. iedit........................................|SpaceVim-plugins-iedit|
+  9. API........................................................|SpaceVim-api|
       1. clock............................................|SpaceVim-api-clock|
       2. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       3. data#dict....................................|SpaceVim-api-data-dict|
@@ -247,10 +249,10 @@ CONTENTS                                                   *SpaceVim-contents*
       17. vim#compatible.........................|SpaceVim-api-vim-compatible|
       18. vim#message...............................|SpaceVim-api-vim-message|
       19. vim#window.................................|SpaceVim-api-vim-window|
-  9. Development................................................|SpaceVim-dev|
+  10. Development...............................................|SpaceVim-dev|
       1. commit-style-guide..................|SpaceVim-dev-commit-style-guide|
-  10. FAQ.......................................................|SpaceVim-faq|
-  11. Changelog...........................................|SpaceVim-changelog|
+  11. FAQ.......................................................|SpaceVim-faq|
+  12. Changelog...........................................|SpaceVim-changelog|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -5405,6 +5407,29 @@ The following key bindings can be used to manager vim windows and tabs.
     WIN q        | Remove current buffer
     WIN Q        | Close current buffer (:close)
     Shift-Tab    | Switch to alternate window (switch back and forth)
+<
+
+==============================================================================
+PLUGINS                                                     *SpaceVim-plugins*
+
+This is a list of buildin plugins.
+
+==============================================================================
+IEDIT                                                 *SpaceVim-plugins-iedit*
+
+The `iedit` plugin provides multiple cursor support for SpaceVim.
+
+KEY BINDINGS
+
+>
+  Key binding     Description
+  SPC s e         string iedit mode
+<
+
+After starting iedit, the following key bindings can be used:
+>
+  Mode       Key binding     Description
+  Iedit-Normal    a           start iedit-insert mode after cursor
 <
 
 ==============================================================================
