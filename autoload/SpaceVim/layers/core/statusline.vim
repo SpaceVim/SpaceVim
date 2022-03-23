@@ -878,7 +878,6 @@ function! SpaceVim#layers#core#statusline#mode_text(mode) abort
         let mode_text = 'IEDIT-INSERT'
       endif
     endif
-    let mode_text = 'NORMAL'
   elseif a:mode ==# 'i'
     let mode_text = 'INSERT'
   elseif a:mode ==# 'R'
