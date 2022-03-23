@@ -335,9 +335,9 @@ function! s:handle_normal(char) abort
             \ s:cursor_stack[i].begin
             \ . s:cursor_stack[i].cursor
             \ . word
+      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '.$')
+      let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^\s*\S*', '', 'g')
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
     endfor
   elseif a:char ==# '0' || a:char ==# "\<Home>" " 0 or <Home>
     for i in range(len(s:cursor_stack))
