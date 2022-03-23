@@ -144,8 +144,16 @@ function! SpaceVim#plugins#iedit#start(...) abort
     let begin = get(a:000, 1, 1)
     let end = get(a:000, 2, line('$'))
     if use_expr
+      call s:LOGGER.debug('iedit symbol:>' . symbol . '<')
+      call s:LOGGER.debug('iedit use_expr:' . use_expr)
+      call s:LOGGER.debug('iedit begin:' . begin)
+      call s:LOGGER.debug('iedit end:' . end)
       call s:parse_symbol(begin, end, symbol, 1)
     else
+      call s:LOGGER.debug('iedit symbol:>' . symbol . '<')
+      call s:LOGGER.debug('iedit use_expr:' . use_expr)
+      call s:LOGGER.debug('iedit begin:' . begin)
+      call s:LOGGER.debug('iedit end:' . end)
       call s:parse_symbol(begin, end, symbol)
     endif
   endif
