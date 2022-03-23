@@ -54,6 +54,16 @@ endfunction
 " Create a cmdline selection menu from a list of {items}, each item should be a
 " list of two value in it, first one is the description, and the next one
 " should be a funcrc.
+"
+" Example:
+" >
+" let menu = SpaceVim#api#import('cmdlinemenu')
+" let ques = [
+"     \ ['basic mode', function('s:basic_mode')],
+"     \ ['dark powered mode', function('s:awesome_mode')],
+"     \ ]
+" call menu.menu(ques)
+" <
 
 function! s:menu(items) abort
   let cancelled = 0
