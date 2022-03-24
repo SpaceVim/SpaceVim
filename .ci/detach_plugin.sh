@@ -52,6 +52,7 @@ main () {
             _detect autoload/SpaceVim/api/vim.vim
             _detect autoload/SpaceVim/api/file.vim
             _detect autoload/SpaceVim/api/system.vim
+            _detect autoload/SpaceVim/api/time.vim
             _detect autoload/SpaceVim/mapping/search.vim
             _detect autoload/SpaceVim/logger.vim
             _detect syntax/SpaceVimFlyGrep.vim
