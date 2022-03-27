@@ -1,7 +1,7 @@
 "=============================================================================
 " flygrep.vim --- Grep on the fly in SpaceVim
 " Copyright (c) 2016-2022 Wang Shidong & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================

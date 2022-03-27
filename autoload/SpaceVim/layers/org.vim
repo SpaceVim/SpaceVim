@@ -1,5 +1,5 @@
 "=============================================================================
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================

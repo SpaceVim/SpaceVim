@@ -1,7 +1,7 @@
 "=============================================================================
 " floating.vim --- neovim#floating api
 " Copyright (c) 2016-2022 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================

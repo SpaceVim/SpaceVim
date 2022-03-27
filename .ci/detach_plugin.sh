@@ -63,7 +63,7 @@ main () {
 "=============================================================================
 " FlyGrep.vim --- Fly grep in vim
 " Copyright (c) 2016-2017 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://github.com/wsdjeg/FlyGrep.vim
 " License: MIT license
 "=============================================================================
@@ -158,7 +158,7 @@ EOT
 "=============================================================================
 " iedit.vim --- multiple cursor support for neovim and vim
 " Copyright (c) 2016-2021 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://github.com/wsdjeg/iedit.vim
 " License: MIT license
 "=============================================================================
@@ -212,7 +212,7 @@ EOT
 "=============================================================================
 " todo.vim --- todo manager for SpaceVim
 " Copyright (c) 2016-2022 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
