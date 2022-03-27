@@ -5049,6 +5049,10 @@ TEST                                                    *SpaceVim-layers-test*
 
 This layer allows to run tests on SpaceVim
 
+LAYER OPTIONS
+
+`use_ultest`: enable/disable vim-ultest plugin, this is disabled by default.
+
 MAPPINGS
 
 >

@@ -11,6 +11,11 @@
 " @parentsection layers
 " This layer allows to run tests on SpaceVim
 "
+" @subsection layer options
+"
+" - `use_ultest`: enable/disable vim-ultest plugin, this is disabled by
+"   default.
+"
 " @subsection Mappings
 " >
 "   Mode      Key         Function
