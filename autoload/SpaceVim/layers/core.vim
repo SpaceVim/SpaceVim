@@ -48,6 +48,7 @@ let s:FILE = SpaceVim#api#import('file')
 let s:MESSAGE = SpaceVim#api#import('vim#message')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:NOTI = SpaceVim#api#import('notify')
+let s:HI = SpaceVim#api#import('vim#highlight')
 
 
 function! SpaceVim#layers#core#plugins() abort
@@ -542,12 +543,12 @@ function! s:jump_last_change() abort
 endfunction
 
 function! s:split_string(newline) abort
-  if s:is_string(line('.'), col('.'))
+  if s:HI.is_string(line('.'), col('.'))
     let save_cursor = getcurpos()
     let c = col('.')
     let sep = ''
     while c > 0
-      if s:is_string(line('.'), c)
+      if s:HI.is_string(line('.'), c)
         let c -= 1
       else
         if !empty(get(get(g:string_info, &filetype, {}), 'quotes_hi', []))
@@ -577,18 +578,6 @@ function! s:split_string(newline) abort
     endif
     call setpos('.', save_cursor)
   endif
-endfunction
-
-
-" @toto add sting highlight for other filetype
-let s:string_hi = {
-      \ 'c' : 'cCppString',
-      \ 'cpp' : 'cCppString',
-      \ 'python' : 'pythonString',
-      \ }
-
-function! s:is_string(l, c) abort
-  return synIDattr(synID(a:l, a:c, 1), 'name') == get(s:string_hi, &filetype, &filetype . 'String')
 endfunction
 
 " function() wrapper

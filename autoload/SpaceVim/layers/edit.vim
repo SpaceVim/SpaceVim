@@ -60,6 +60,7 @@ let s:LIST = SpaceVim#api#import('data#list')
 let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:HI = SpaceVim#api#import('vim#highlight')
 
 let s:autosave_timeout = 0
 let s:autosave_events = []
@@ -798,13 +799,13 @@ endfunction
 
 
 function! s:join_string_with() abort
-  if s:is_string(line('.'), col('.'))
+  if s:HI.is_string(line('.'), col('.'))
     let c = col('.')
     let a = 0
     let b = 0
     let _c = c
     while c > 0
-      if s:is_string(line('.'), c)
+      if s:HI.is_string(line('.'), c)
         let c -= 1
       else
         let a = c
@@ -813,7 +814,7 @@ function! s:join_string_with() abort
     endwhile
     let c = _c
     while c > 0
-      if s:is_string(line('.'), c)
+      if s:HI.is_string(line('.'), c)
         let c += 1
       else
         let b = c
@@ -826,16 +827,6 @@ function! s:join_string_with() abort
     let @m = l:save_register_m
   endif
 endfunction
-
-let s:string_hi = {
-      \ 'c' : 'cCppString',
-      \ 'cpp' : 'cCppString',
-      \ }
-
-function! s:is_string(l, c) abort
-  return synIDattr(synID(a:l, a:c, 1), 'name') == get(s:string_hi, &filetype, &filetype . 'String')
-endfunction
-
 
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')

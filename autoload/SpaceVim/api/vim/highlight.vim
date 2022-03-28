@@ -161,6 +161,16 @@ function! s:self.syntax_at(...) abort
   return synIDattr(synID(l:lnum, l:col, 1), 'name')
 endfunction
 
+let s:string_hi = {
+      \ 'c' : 'cCppString',
+      \ 'cpp' : 'cCppString',
+      \ 'python' : 'pythonString',
+      \ }
+
+function! s:self.is_string(l, c) abort
+  return synIDattr(synID(a:l, a:c, 1), 'name') == get(s:string_hi, &filetype, &filetype . 'String')
+endfunction
+
 function! s:self.syntax_of(pattern, ...) abort
   if a:0 < 1
     let l:nth = 1
