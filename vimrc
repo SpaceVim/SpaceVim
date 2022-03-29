@@ -10,6 +10,7 @@
 if 1
     let g:_spacevim_if_lua = 0
     if has('lua')
+        " add ~/.SpaceVim/lua to lua package path
         if has('win16') || has('win32') || has('win64')
             let s:plugin_dir = fnamemodify(expand('<sfile>'), ':h').'\lua'
             let s:str = s:plugin_dir . '\?.lua;' . s:plugin_dir . '\?\init.lua;'
