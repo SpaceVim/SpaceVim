@@ -46,7 +46,7 @@ function! SpaceVim#default#options() abort
   set backspace=indent,eol,start
   set nrformats-=octal
   set listchars=tab:→\ ,eol:↵,trail:·,extends:↷,precedes:↶
-  set fillchars=vert:│,fold:·
+  set fillchars=vert:|,fold:·
 
   set laststatus=2
 
