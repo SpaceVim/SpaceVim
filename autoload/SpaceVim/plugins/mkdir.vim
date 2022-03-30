@@ -10,9 +10,8 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! SpaceVim#plugins#mkdir#CreateCurrent() abort
-
-  call s:CreateDirectory(expand('%:p:h'))
-
+  let file = fnamemodify( expand('<afile>'), ':p:h')
+  call s:CreateDirectory(file)
 endfunction
 
 fun! s:Mkdirp(dir) abort

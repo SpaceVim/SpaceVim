@@ -60,7 +60,6 @@ function! SpaceVim#autocmds#init() abort
       autocmd FocusLost * call system('synclient touchpadoff=0')
       autocmd FocusGained * call s:reload_touchpad_status()
     endif
-    " @fixme this autocmd should also support `:w foo/test.vim`
     autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
     autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized,one call s:fix_colorschem_in_SpaceVim()
