@@ -70,9 +70,14 @@ M.is_indent_blankline_enabled = M.memo(
             return false
         end
 
+        local undotted_filetypes = vim.split(filetype, ".", { plain = true })
+        table.insert(undotted_filetypes, filetype)
+
         for _, ft in ipairs(filetype_exclude) do
-            if ft == filetype then
-                return false
+            for _, undotted_filetype in ipairs(undotted_filetypes) do
+                if undotted_filetype == ft then
+                    return false
+                end
             end
         end
 
@@ -188,7 +193,6 @@ M.get_current_context = function(type_patterns)
                 if node_start ~= node_end then
                     return true, node_start + 1, node_end + 1, rgx
                 end
-                node_start, node_end = nil, nil
             end
         end
         cursor_node = cursor_node:parent()
@@ -210,13 +214,15 @@ M.reset_highlights = function()
         vim.fn.synIDattr(label_highlight, "fg", "cterm"),
     }
 
-    for highlight_name, highlight in pairs {
-        IndentBlanklineChar = whitespace_fg,
-        IndentBlanklineSpaceChar = whitespace_fg,
-        IndentBlanklineSpaceCharBlankline = whitespace_fg,
-        IndentBlanklineContextChar = label_fg,
-        IndentBlanklineContextStart = label_fg,
-    } do
+    for highlight_name, highlight in
+        pairs {
+            IndentBlanklineChar = whitespace_fg,
+            IndentBlanklineSpaceChar = whitespace_fg,
+            IndentBlanklineSpaceCharBlankline = whitespace_fg,
+            IndentBlanklineContextChar = label_fg,
+            IndentBlanklineContextStart = label_fg,
+        }
+    do
         local current_highlight = vim.fn.synIDtrans(vim.fn.hlID(highlight_name))
         if
             vim.fn.synIDattr(current_highlight, "fg") == ""
@@ -246,7 +252,7 @@ M.reset_highlights = function()
 end
 
 M.first_not_nil = function(...)
-    for _, value in pairs { ... } do
+    for _, value in pairs { ... } do -- luacheck: ignore
         return value
     end
 end

@@ -2,7 +2,7 @@
 
 
 Author: Lukas Reineke <lukas.reineke@protonmail.com>
-Version: 2.11.0
+Version: 2.15.0
 
 ==============================================================================
 CONTENTS                                                    *indent-blankline*
@@ -150,6 +150,18 @@ g:indent_blankline_char                              *g:indent_blankline_char*
         let g:indent_blankline_char = '|'
 
 ------------------------------------------------------------------------------
+g:indent_blankline_char_blankline          *g:indent_blankline_char_blankline*
+
+    Specifies the character to be used as indent line for blanklines.
+    Not used if |g:indent_blankline_char_list_blankline| is not empty.
+
+    Default: ''                                                             ~
+
+    Example: >
+
+        let g:indent_blankline_char_blankline = '┆'
+
+------------------------------------------------------------------------------
 g:indent_blankline_char_list                    *g:indent_blankline_char_list*
 
     Specifies a list of characters to be used as indent line for
@@ -163,6 +175,19 @@ g:indent_blankline_char_list                    *g:indent_blankline_char_list*
     Example: >
 
         let g:indent_blankline_char_list = ['|', '¦', '┆', '┊']
+
+------------------------------------------------------------------------------
+g:indent_blankline_char_list_blankline *g:indent_blankline_char_list_blankline*
+
+    Specifies a list of characters to be used as indent line for
+    each indentation level on blanklines.
+    Ignored if the value is an empty list.
+
+    Default: []                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_char_list_blankline = ['|', '¦', '┆', '┊']
 
 ------------------------------------------------------------------------------
 
@@ -359,7 +384,13 @@ g:indent_blankline_filetype_exclude      *g:indent_blankline_filetype_exclude*
 
     Also set by |g:indentLine_fileTypeExclude|
 
-    Default: []                                                              ~
+    Default: [                                                               ~
+        "lspinfo",                                                           ~
+        "packer",                                                            ~
+        "checkhealth",                                                       ~
+        "help",                                                              ~
+        "",                                                                  ~
+    ]                                                                        ~
 
     Example: >
 
@@ -476,6 +507,18 @@ g:indent_blankline_context_char              *g:indent_blankline_context_char*
         let g:indent_blankline_context_char = '┃'
 
 ------------------------------------------------------------------------------
+g:indent_blankline_context_char_blankline *g:indent_blankline_context_char_blankline*
+
+    Equivalent of |g:indent_blankline_char_blankline| for
+    |g:indent_blankline_context_char|.
+
+    Default: ''                                                             ~
+
+    Example: >
+
+        let g:indent_blankline_context_char_blankline = '┆'
+
+------------------------------------------------------------------------------
 g:indent_blankline_context_char_list    *g:indent_blankline_context_char_list*
 
     Equivalent of |g:indent_blankline_char_list| for
@@ -486,6 +529,18 @@ g:indent_blankline_context_char_list    *g:indent_blankline_context_char_list*
     Example: >
 
         let g:indent_blankline_context_char_list = ['┃', '║', '╬', '█']
+
+------------------------------------------------------------------------------
+g:indent_blankline_context_char_list_blankline *g:indent_blankline_context_char_list_blankline*
+
+    Equivalent of |g:indent_blankline_char_list_blankline| for
+    |g:indent_blankline_context_char_blankline|.
+
+    Default: []                                                              ~
+
+    Example: >
+
+        let g:indent_blankline_context_char_list_blankline = ['┃', '║', '╬', '█']
 
 ------------------------------------------------------------------------------
 g:indent_blankline_context_highlight_list *g:indent_blankline_context_highlight_list*
@@ -514,7 +569,24 @@ g:indent_blankline_context_patterns      *g:indent_blankline_context_patterns*
 
     Only used when |g:indent_blankline_show_current_context| is active
 
-    Default: ['class', 'function', 'method']                                 ~
+    Default: [                                                               ~
+        "class",                                                             ~
+        "^func",                                                             ~
+        "method",                                                            ~
+        "^if",                                                               ~
+        "while",                                                             ~
+        "for",                                                               ~
+        "with",                                                              ~
+        "try",                                                               ~
+        "except",                                                            ~
+        "arguments",                                                         ~
+        "argument_list",                                                     ~
+        "object",                                                            ~
+        "dictionary",                                                        ~
+        "element",                                                           ~
+        "table",                                                             ~
+        "tuple",                                                             ~
+    ]                                                                        ~
 
     Example: >
 
@@ -636,6 +708,26 @@ g:indent_blankline_debug                            *g:indent_blankline_debug*
 
 ==============================================================================
  6. CHANGELOG                                     *indent-blankline-changelog*
+
+2.15.0
+ * Add |g:indent_blankline_context_char_blankline| and
+   |g:indent_blankline_context_char_list_blankline| options
+
+2.14.0
+ * Add |g:indent_blankline_char_blankline| and
+   |g:indent_blankline_char_list_blankline| options
+
+2.13.0
+ * Support both the concatenated string, as well as the individual |filetypes|
+   in |g:indent_blankline_filetype_exclude| when a buffer has multiple filetypes
+
+2.12.1
+ * Add ext mark priority
+
+2.12.0
+ * Remove old vimscript functions
+ * Better default values for |g:indent_blankline_context_patterns| and
+   |g:indent_blankline_filetype_exclude|
 
 2.11.0
  * Add |g:indent_blankline_show_current_context_start_on_current_line|

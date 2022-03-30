@@ -1,22 +1,43 @@
 name: Pull request check
 
 on:
-    pull_request:
+  pull_request:
 
 jobs:
-    format:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v2
-            - uses: JohnnyMorganz/stylua-action@1.0.0
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  args: --check .
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: JohnnyMorganz/stylua-action@1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --check .
 
-    block-fixup:
-        runs-on: ubuntu-latest
+  block-fixup:
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@v2
-            - name: Block Fixup Commit Merge
-              uses: 13rac1/block-fixup-merge-action@v2.0.0
+    steps:
+      - uses: actions/checkout@v2
+      - name: Block Fixup Commit Merge
+        uses: 13rac1/block-fixup-merge-action@v2.0.0
+
+  luacheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - uses: leafo/gh-actions-lua@v8.0.0
+        with:
+          luaVersion: 'luajit-2.1.0-beta3'
+
+      - uses: leafo/gh-actions-luarocks@v4.0.0
+
+      - name: build
+        run: |
+          luarocks install luacheck
+
+      - name: test
+        run: |
+          luacheck lua
+
