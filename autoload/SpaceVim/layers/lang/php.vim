@@ -57,6 +57,7 @@ function! SpaceVim#layers#lang#php#plugins() abort
   call add(plugins, ['StanAngeloff/php.vim', { 'on_ft' : 'php'}])
   call add(plugins, ['2072/PHP-Indenting-for-VIm', { 'on_ft' : 'php'}])
   if SpaceVim#layers#lsp#check_filetype('php')
+        \ || SpaceVim#layers#lsp#check_server('phpactor')
     call add(plugins, ['phpactor/phpactor', {'on_ft' : 'php', 'build' : 'composer install --no-dev -o'}])
   else
     if exists('*popup_create')
@@ -81,6 +82,8 @@ function! SpaceVim#layers#lang#php#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('php',
         \ function('s:on_ft'))
   if SpaceVim#layers#lsp#check_filetype('php')
+        \ || SpaceVim#layers#lsp#check_server('phpactor')
+        \ || SpaceVim#layers#lsp#check_server('intelephense')
     call SpaceVim#mapping#gd#add('php',
           \ function('SpaceVim#lsp#go_to_def'))
   endif
