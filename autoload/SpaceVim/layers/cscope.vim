@@ -29,6 +29,27 @@ scriptencoding utf-8
 " 2. `cscope_command`: set the command or path of `cscope` executable.
 " 3. `open_location`: enable/disable open location list after searching.
 " 4. `preload_path`: set the proload paths.
+"
+" @subsection key bindings
+" 
+" The following key bindings will be added when this layer is loaded.
+" >
+"   Key binding       Description
+"   SPC m c c         find functions called by this function
+"   SPC m c C         find functions calling this function
+"   SPC m c d         find global definition of a symbol
+"   SPC m c r         find references of a symbol
+"   SPC m c f         find files
+"   SPC m c F         find files including this file
+"   SPC m c e         find this egrep pattern
+"   SPC m c t         find this text string
+"   SPC m c =         find assignments to this symbol
+"   SPC m c u         create cscope index
+"   SPC m c i         create cscope database
+"   SPC m c l         list cscope database
+"   SPC m c m         remove current cscope database
+"   SPC m c M         remove all cscope database
+" <
 
 if exists('s:cscope_command')
   finish
