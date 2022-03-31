@@ -55,22 +55,22 @@ let s:stack = []
 
 let s:iedit_hi_info = [
       \ {
-      \ 'name' : 'IeditPurpleBold',
-      \ 'guibg' : '#3c3836',
-      \ 'guifg' : '#d3869b',
-      \ 'ctermbg' : '',
-      \ 'ctermfg' : 175,
-      \ 'bold' : 1,
-      \ },
-      \ {
-      \ 'name' : 'IeditBlueBold',
-      \ 'guibg' : '#3c3836',
-      \ 'guifg' : '#83a598',
-      \ 'ctermbg' : '',
-      \ 'ctermfg' : 109,
-      \ 'bold' : 1,
-      \ }
-      \ ]
+        \ 'name' : 'IeditPurpleBold',
+        \ 'guibg' : '#3c3836',
+        \ 'guifg' : '#d3869b',
+        \ 'ctermbg' : '',
+        \ 'ctermfg' : 175,
+        \ 'bold' : 1,
+        \ },
+        \ {
+          \ 'name' : 'IeditBlueBold',
+          \ 'guibg' : '#3c3836',
+          \ 'guifg' : '#83a598',
+          \ 'ctermbg' : '',
+          \ 'ctermfg' : 109,
+          \ 'bold' : 1,
+          \ }
+          \ ]
 
 function! s:highlight_cursor() abort
   let info = {
@@ -82,13 +82,26 @@ function! s:highlight_cursor() abort
         \ }
   hi def link SpaceVimGuideCursor Cursor
   call s:VIMH.hi(info)
-  for i in range(len(s:stack))
-    if i == s:index
-      call s:CMP.matchaddpos('IeditPurpleBold', [s:stack[i]])
-    else
-      call s:CMP.matchaddpos('IeditBlueBold', [s:stack[i]])
+  for i in range(len(s:cursor_stack))
+    if s:cursor_stack[i].active
+      if i == s:index
+        call s:CMP.matchaddpos('IeditPurpleBold',
+              \ [[
+              \ s:cursor_stack[i].lnum,
+              \ s:cursor_stack[i].col,
+              \ s:cursor_stack[i].len,
+              \ ]])
+      else
+        call s:CMP.matchaddpos('IeditBlueBold',
+              \ [[
+              \ s:cursor_stack[i].lnum,
+              \ s:cursor_stack[i].col,
+              \ s:cursor_stack[i].len,
+              \ ]])
+      endif
+      call matchadd('SpaceVimGuideCursor', '\%' . s:cursor_stack[i].lnum . 'l\%'
+            \ . (s:cursor_stack[i].col + len(s:cursor_stack[i].begin)) . 'c', 99999)
     endif
-    call matchadd('SpaceVimGuideCursor', '\%' . s:stack[i][0] . 'l\%' . (s:stack[i][1] + len(s:cursor_stack[i].begin)) . 'c', 99999)
   endfor
 endfunction
 
@@ -229,12 +242,14 @@ endfunction
 function! s:handle_register(char) abort
   let char = nr2char(a:char)
   if char =~# '[a-zA-Z0-9"+:/]'
-  silent! call s:remove_cursor_highlight()
+    silent! call s:remove_cursor_highlight()
     let s:Operator = ''
     let reg = '@' . char
     let paste = get(split(eval(reg), "\n"), 0, '')
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . paste
+      if s:cursor_stack[i].active
+        let s:cursor_stack[i].begin = s:cursor_stack[i].begin . paste
+      endif
     endfor
     call s:replace_symbol()
     silent! call s:highlight_cursor()
@@ -596,15 +611,15 @@ function! s:parse_symbol(begin, end, symbol, ...) abort
       " @todo the following line will be deleted after s:stack removed
       call add(s:cursor_stack, 
             \ {
-            \ 'begin' : line[pos_a : pos_b - 2],
-            \ 'cursor' : line[pos_b - 1 : pos_b - 1],
-            \ 'end' : '',
-            \ 'active' : 1,
-            \ 'lnum' : l,
-            \ 'col' : pos_a + 1,
-            \ 'len' : pos_b - pos_a,
-            \ }
-            \ )
+              \ 'begin' : line[pos_a : pos_b - 2],
+              \ 'cursor' : line[pos_b - 1 : pos_b - 1],
+              \ 'end' : '',
+              \ 'active' : 1,
+              \ 'lnum' : l,
+              \ 'col' : pos_a + 1,
+              \ 'len' : pos_b - pos_a,
+              \ }
+              \ )
       if len(idx) > 1 && l == cursor[0] && pos_a + 1 <= cursor[1] && pos_a + 1 + len >= cursor[1]
         let s:index = len(s:cursor_stack) - 1
       endif
