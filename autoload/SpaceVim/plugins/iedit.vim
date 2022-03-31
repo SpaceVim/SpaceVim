@@ -26,7 +26,6 @@
 "   Iedit-Normal    b           move to the begin of current word
 " <
 
-let s:stack = []
 let s:index = -1
 let s:cursor_col = -1
 let s:mode = ''
@@ -40,7 +39,19 @@ let s:VIM = SpaceVim#api#import('vim')
 
 let s:LOGGER =SpaceVim#logger#derive('iedit')
 
+
+" The object in cursor_stack should be:
+" {
+"   begin : string,
+"   cursor : char
+"   end : string
+"   active : boolean
+"   linenr : number
+"   pos : number
+"   len : number
+" }
 let s:cursor_stack = []
+let s:stack = []
 
 let s:iedit_hi_info = [
       \ {
@@ -582,17 +593,22 @@ function! s:parse_symbol(begin, end, symbol, ...) abort
     let line = getline(l)
     let idx = s:STRING.strAllIndex(line, a:symbol, use_expr)
     for [pos_a, pos_b] in idx
+      " @todo the following line will be deleted after s:stack removed
       call add(s:stack, [l, pos_a + 1, pos_b - pos_a])
-      if len(idx) > 1 && l == cursor[0] && pos_a + 1 <= cursor[1] && pos_a + 1 + len >= cursor[1]
-        let s:index = len(s:stack) - 1
-      endif
       call add(s:cursor_stack, 
             \ {
             \ 'begin' : line[pos_a : pos_b - 2],
             \ 'cursor' : line[pos_b - 1 : pos_b - 1],
             \ 'end' : '',
+            \ 'active' : 1,
+            \ 'linenr' : l,
+            \ 'pos' : pos_a + 1,
+            \ 'len' : pos_b - pos_a,
             \ }
             \ )
+      if len(idx) > 1 && l == cursor[0] && pos_a + 1 <= cursor[1] && pos_a + 1 + len >= cursor[1]
+        let s:index = len(s:cursor_stack) - 1
+      endif
     endfor
   endfor
   if s:index == -1 && !empty(s:stack)
