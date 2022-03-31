@@ -205,8 +205,13 @@ SpaceVim 根据需要定义了很多临时快捷键，
 
 **通过 git 进行更新**
 
-可通过在 SpaceVim 目录中手动执行 `git pull`，SpaceVim 在 Windows 下的默认目录为 `~/vimfilers`, 但在 Linux 下则可使用如下命令：
-`git -C ~/.SpaceVim pull`
+可通过在 SpaceVim 目录中手动执行 `git pull`，
+SpaceVim 默认安装的位置为 `~/.SpaceVim`,
+因此可以再命令行使用如下命令进行手动更新：
+
+```
+git -C ~/.SpaceVim pull
+```
 
 ### 更新插件
 
@@ -227,7 +232,8 @@ SpaceVim 根据需要定义了很多临时快捷键，
 
 ### 获取日志
 
-使用 `:SPDebugInfo!` 这一命令可以获取 SpaceVim 运行时日志，同时，可以使用 `SPC h I` 使用打开问题模板。
+使用 `:SPDebugInfo!` 这一命令可以获取 SpaceVim 运行时日志，
+同时，可以使用 `SPC h I` 使用打开问题模板。
 可在这个模板中编辑问题，并提交。
 
 ## 用户配置
@@ -262,9 +268,22 @@ SpaceVim 根据需要定义了很多临时快捷键，
 
 ```toml
 [[custom_plugins]]
-    repo = "lilydjwg/colorizer"
-    on_cmd = ["ColorHighlight", "ColorToggle"]
+    repo = 'lilydjwg/colorizer'
+    # `on_cmd` option means this plugin will be loaded
+    # only when the specific commands are called.
+    # for example, when `:ColorHighlight` or `:ColorToggle`
+    # commands are called.
+    on_cmd = ['ColorHighlight', 'ColorToggle']
+    # `on_func` option means this plugin will be loaded
+    # only when the specific functions are called.
+    # for example, when `colorizer#ColorToggle()` function is called.
+    on_func = 'colorizer#ColorToggle'
+    # `merged` option is used for merging plugins directory.
+    # When `merged` is `true`, all files in this custom plugin
+    # will be merged into `~/.cache/vimfiles/.cache/init.vim/`
+    # for neovim or `~/.cache/vimfiles/.cache/vimrc/` for vim.
     merged = false
+    # For more options see `:h dein-options`.
 ```
 
 也可以使用仓库克隆的地址，比如：
@@ -422,6 +441,7 @@ SpaceVim 的[模块首页](../layers/)。
 - `SpaceVim#layers#autocomplete#plugins()`: 返回该模块插件列表
 - `SpaceVim#layers#autocomplete#config()`: 模块相关设置
 - `SpaceVim#layers#autocomplete#set_variable()`: 模块选项设置函数
+- `SpaceVim#layers#autocomplete#get_options()`: 返回模块选项列表
 
 ### 调试上游插件
 
