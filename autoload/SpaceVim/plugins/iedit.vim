@@ -53,24 +53,29 @@ let s:LOGGER =SpaceVim#logger#derive('iedit')
 let s:cursor_stack = []
 let s:stack = []
 
-let s:iedit_hi_info = [
-      \ {
-        \ 'name' : 'IeditPurpleBold',
-        \ 'guibg' : '#3c3836',
-        \ 'guifg' : '#d3869b',
-        \ 'ctermbg' : '',
-        \ 'ctermfg' : 175,
-        \ 'bold' : 1,
-        \ },
-        \ {
-          \ 'name' : 'IeditBlueBold',
-          \ 'guibg' : '#3c3836',
-          \ 'guifg' : '#83a598',
-          \ 'ctermbg' : '',
-          \ 'ctermfg' : 109,
-          \ 'bold' : 1,
-          \ }
-          \ ]
+let s:iedit_hi_info = [{
+      \ 'name' : 'IeditPurpleBold',
+      \ 'guibg' : '#3c3836',
+      \ 'guifg' : '#d3869b',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 175,
+      \ 'bold' : 1,
+      \ },{
+      \ 'name' : 'IeditBlueBold',
+      \ 'guibg' : '#3c3836',
+      \ 'guifg' : '#83a598',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 109,
+      \ 'bold' : 1,
+      \ },{
+      \ 'name' : 'IeditInactive',
+      \ 'guibg' : '#3c3836',
+      \ 'guifg' : '#abb2bf',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 145,
+      \ 'bold' : 1,
+      \ },
+      \ ]
 
 function! s:highlight_cursor() abort
   let info = {
@@ -101,6 +106,13 @@ function! s:highlight_cursor() abort
       endif
       call matchadd('SpaceVimGuideCursor', '\%' . s:cursor_stack[i].lnum . 'l\%'
             \ . (s:cursor_stack[i].col + len(s:cursor_stack[i].begin)) . 'c', 99999)
+    else
+      call s:CMP.matchaddpos('IeditInactive',
+            \ [[
+            \ s:cursor_stack[i].lnum,
+            \ s:cursor_stack[i].col,
+            \ s:cursor_stack[i].len,
+            \ ]])
     endif
   endfor
 endfunction
@@ -137,6 +149,7 @@ function! SpaceVim#plugins#iedit#start(...) abort
   setlocal t_ve=
   call s:VIMH.hi(s:iedit_hi_info[0])
   call s:VIMH.hi(s:iedit_hi_info[1])
+  call s:VIMH.hi(s:iedit_hi_info[2])
   let s:mode = 'n'
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
