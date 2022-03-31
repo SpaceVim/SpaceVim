@@ -288,7 +288,7 @@ function! s:handle_normal(char) abort
     endfor
     redrawstatus!
   elseif a:char ==# "\<Tab>"
-    let s:cursor_stack[i].active = s:cursor_stack[i].active ? 0 : 1
+    let s:cursor_stack[s:index].active = s:cursor_stack[s:index].active ? 0 : 1
   elseif a:char ==# 'a'
     " a: goto iedit insert mode after cursor char
     let s:mode = 'i'
