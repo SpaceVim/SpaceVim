@@ -150,7 +150,7 @@ function! SpaceVim#layers#ui#config() abort
   let g:indentLine_fileTypeExclude = s:indentline_exclude_filetype
 
   let g:indent_blankline_filetype_exclude = s:indentline_exclude_filetype
-        \ + ['startify']
+        \ + ['startify', 'gitcommit', 'defx']
 
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
         \ 'qf', 'help', 'markdown', 'leaderGuide',
