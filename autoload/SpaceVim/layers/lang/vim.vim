@@ -99,6 +99,7 @@ function! SpaceVim#layers#lang#vim#config() abort
     augroup spacevim_layer_lang_vim
       autocmd!
       autocmd BufWritePost *.vim call s:generate_doc()
+      autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"
     augroup END
   endif
   " if the lsp layer is enabled, we should disable default linter

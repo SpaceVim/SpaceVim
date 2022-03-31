@@ -45,7 +45,6 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
     autocmd FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
     autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
-    autocmd FileType vim set comments=sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"
     autocmd Filetype qf setlocal nobuflisted
     autocmd FileType python,coffee call SpaceVim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()
