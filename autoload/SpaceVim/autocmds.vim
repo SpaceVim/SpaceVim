@@ -46,7 +46,7 @@ function! SpaceVim#autocmds#init() abort
     autocmd FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
     autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
     autocmd Filetype qf setlocal nobuflisted
-    autocmd FileType python,coffee call SpaceVim#util#check_if_expand_tab()
+    autocmd FileType coffee call SpaceVim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()
     if !has('nvim-0.5.0')
       autocmd InsertEnter * call s:fixindentline()

@@ -131,11 +131,13 @@ function! SpaceVim#layers#lang#python#config() abort
   " mapping in your vimrc, such as if you do:
   let g:pydocstring_enable_mapping = 0
 
-  if g:spacevim_autocomplete_parens
-    augroup python_delimit
+  augroup spacevim_layer_lang_python
+    autocmd!
+    autocmd FileType python call SpaceVim#util#check_if_expand_tab()
+    if g:spacevim_autocomplete_parens
       au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
-    augroup end
-  endif
+    endif
+  augroup END
   " }}}
   let g:deoplete#sources#jedi#enable_typeinfo = s:enable_typeinfo
   call SpaceVim#plugins#runner#reg_runner('python', 
