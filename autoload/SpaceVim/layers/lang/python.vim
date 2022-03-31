@@ -98,6 +98,7 @@ function! SpaceVim#layers#lang#python#plugins() abort
   let plugins = []
   " python
   if !SpaceVim#layers#lsp#check_filetype('python')
+        \ && !SpaceVim#layers#lsp#check_server('pyright')
     if has('nvim')
       call add(plugins, ['zchee/deoplete-jedi', { 'on_ft' : 'python'}])
       " in neovim, we can use deoplete-jedi together with jedi-vim,
