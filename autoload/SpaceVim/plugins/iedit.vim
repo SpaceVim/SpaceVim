@@ -545,49 +545,63 @@ function! s:handle_insert(char) abort
   elseif a:char ==# "\<C-w>"
     " ctrl-w: delete word before cursor
     for i in range(len(s:cursor_stack))
+      if s:cursor_stack[i].active
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '\S*\s*$', '', 'g')
+    endif
     endfor
   elseif a:char ==# "\<C-u>"
     " ctrl-u: delete all words before cursor
     for i in range(len(s:cursor_stack))
+      if s:cursor_stack[i].active
       let s:cursor_stack[i].begin = ''
+    endif
     endfor
   elseif a:char ==# "\<C-k>"
     " Ctrl-k: delete all words after cursor
     for i in range(len(s:cursor_stack))
+      if s:cursor_stack[i].active
       let s:cursor_stack[i].cursor = ''
       let s:cursor_stack[i].end = ''
+    endif
     endfor
   elseif a:char ==# "\<bs>" || a:char ==# "\<C-h>"
     " BackSpace or Ctrl-h: delete char before cursor
     for i in range(len(s:cursor_stack))
+      if s:cursor_stack[i].active
       let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
+    endif
     endfor
   elseif a:char ==# "\<Delete>" || a:char ==# "\<C-?>" " <Delete>
     " Delete: delete char after cursor
     for i in range(len(s:cursor_stack))
+      if s:cursor_stack[i].active
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+    endif
     endfor
   elseif a:char ==# "\<C-b>" || a:char ==# "\<Left>"
     " ctrl-b / <Left>: moves the cursor back one character
     let is_movement = 1
     for i in range(len(s:cursor_stack))
+      if s:cursor_stack[i].active
       if !empty(s:cursor_stack[i].begin)
         let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end
         let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '.$')
         let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
       endif
+    endif
     endfor
   elseif a:char ==# "\<C-f>" || a:char ==# "\<Right>"
     " ctrl-f / <Right>: moves the cursor forward one character
     let is_movement = 1
     for i in range(len(s:cursor_stack))
+      if s:cursor_stack[i].active
       let s:cursor_stack[i].begin = s:cursor_stack[i].begin
             \ . s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
       let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end,
             \ '^.', '', 'g')
+    endif
     endfor
   elseif a:char ==# "\<C-r>"
     let s:Operator = 'r'
@@ -596,6 +610,7 @@ function! s:handle_insert(char) abort
     " Ctrl-a or <Home>
     let is_movement = 1
     for i in range(len(s:cursor_stack))
+      if s:cursor_stack[i].active
       let old_cursor_char = s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(
             \ s:cursor_stack[i].begin
@@ -608,11 +623,13 @@ function! s:handle_insert(char) abort
             \ . s:cursor_stack[i].end,
             \ '^.', '', 'g')
       let s:cursor_stack[i].begin = ''
+    endif
     endfor
   elseif a:char ==# "\<C-e>" || a:char ==# "\<End>"
     " Ctrl-e or <End>
     let is_movement = 1
     for i in range(len(s:cursor_stack))
+      if s:cursor_stack[i].active
       let old_cursor_char = s:cursor_stack[i].cursor
       let s:cursor_stack[i].cursor = matchstr(
             \ s:cursor_stack[i].begin
@@ -625,10 +642,13 @@ function! s:handle_insert(char) abort
             \ . s:cursor_stack[i].end,
             \ '.$', '', 'g')
       let s:cursor_stack[i].end = ''
+    endif
     endfor
   else
     for i in range(len(s:cursor_stack))
+      if s:cursor_stack[i].active
       let s:cursor_stack[i].begin .=  a:char
+    endif
     endfor
   endif
   if !is_movement
