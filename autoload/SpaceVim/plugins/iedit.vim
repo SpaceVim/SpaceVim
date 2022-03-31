@@ -257,9 +257,6 @@ function! s:handle_register(char) abort
   return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
 endfunction
 
-let s:toggle_stack = {}
-
-" here is a list of normal command which can be handled by idedit
 function! s:handle_normal(char) abort
   silent! call s:remove_cursor_highlight()
   if a:char ==# 'i'
@@ -274,42 +271,38 @@ function! s:handle_normal(char) abort
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     for i in range(len(s:cursor_stack))
-      let old_cursor_char = s:cursor_stack[i].cursor
-      let s:cursor_stack[i].cursor = matchstr(
-            \ s:cursor_stack[i].begin
-            \ . s:cursor_stack[i].cursor
-            \ . s:cursor_stack[i].end,
-            \ '^.')
-      let s:cursor_stack[i].end = substitute(
-            \ s:cursor_stack[i].begin
-            \ . old_cursor_char
-            \ . s:cursor_stack[i].end,
-            \ '^.', '', 'g')
-      let s:cursor_stack[i].begin = ''
+      if s:cursor_stack[i].active
+        let old_cursor_char = s:cursor_stack[i].cursor
+        let s:cursor_stack[i].cursor = matchstr(
+              \ s:cursor_stack[i].begin
+              \ . s:cursor_stack[i].cursor
+              \ . s:cursor_stack[i].end,
+              \ '^.')
+        let s:cursor_stack[i].end = substitute(
+              \ s:cursor_stack[i].begin
+              \ . old_cursor_char
+              \ . s:cursor_stack[i].end,
+              \ '^.', '', 'g')
+        let s:cursor_stack[i].begin = ''
+      endif
     endfor
     redrawstatus!
   elseif a:char ==# "\<Tab>"
-    if index(keys(s:toggle_stack), s:index . '') == -1
-      call extend(s:toggle_stack, {s:index : [s:stack[s:index], s:cursor_stack[s:index]]})
-      call remove(s:stack, s:index)
-      call remove(s:cursor_stack, s:index)
-    else
-      call insert(s:stack, s:toggle_stack[s:index][0] , s:index)
-      call insert(s:cursor_stack, s:toggle_stack[s:index][1] , s:index)
-      call remove(s:toggle_stack, s:index)
-    endif
+    let s:cursor_stack[i].active = s:cursor_stack[i].active ? 0 : 1
   elseif a:char ==# 'a'
     " a: goto iedit insert mode after cursor char
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin =
-            \ s:cursor_stack[i].begin
-            \ . s:cursor_stack[i].cursor
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end,
-            \ '^.', '', 'g')
+      if s:cursor_stack[i].active
+        let s:cursor_stack[i].begin =
+              \ s:cursor_stack[i].begin
+              \ . s:cursor_stack[i].cursor
+        let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+        let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end,
+              \ '^.', '', 'g')
+      endif
     endfor
     redrawstatus!
   elseif a:char ==# 'A'
@@ -317,9 +310,11 @@ function! s:handle_normal(char) abort
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
-      let s:cursor_stack[i].cursor = ''
-      let s:cursor_stack[i].end = ''
+      if s:cursor_stack[i].active
+        let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
+        let s:cursor_stack[i].cursor = ''
+        let s:cursor_stack[i].end = ''
+      endif
     endfor
     redrawstatus!
   elseif a:char ==# 'C'
@@ -327,13 +322,17 @@ function! s:handle_normal(char) abort
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].cursor = ''
-      let s:cursor_stack[i].end = ''
+      if s:cursor_stack[i].active
+        let s:cursor_stack[i].cursor = ''
+        let s:cursor_stack[i].end = ''
+      endif
     endfor
     call s:replace_symbol()
   elseif a:char ==# '~'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].cursor = s:STRING.toggle_case(s:cursor_stack[i].cursor)
+      if s:cursor_stack[i].active
+        let s:cursor_stack[i].cursor = s:STRING.toggle_case(s:cursor_stack[i].cursor)
+      endif
     endfor
     call s:replace_symbol()
   elseif a:char ==# 'f'
@@ -344,103 +343,130 @@ function! s:handle_normal(char) abort
     let w:spacevim_iedit_mode = s:mode
     let w:spacevim_statusline_mode = 'ii'
     for i in range(len(s:cursor_stack))
-      " let s:cursor_stack[i].begin = s:cursor_stack[i].begin
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      if s:cursor_stack[i].active
+        " let s:cursor_stack[i].begin = s:cursor_stack[i].begin
+        let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+        let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      endif
     endfor
     call s:replace_symbol()
   elseif a:char ==# 'x'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      if s:cursor_stack[i].active
+        let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+        let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      endif
     endfor
     call s:replace_symbol()
   elseif a:char ==# 'X'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
+      if s:cursor_stack[i].active
+        let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
+      endif
     endfor
     call s:replace_symbol()
   elseif a:char ==# "\<Left>" || a:char ==# 'h'
     for i in range(len(s:cursor_stack))
-      if !empty(s:cursor_stack[i].begin)
-        let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end
-        let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '.$')
-        let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
+      if s:cursor_stack[i].active
+        if !empty(s:cursor_stack[i].begin)
+          let s:cursor_stack[i].end = s:cursor_stack[i].cursor . s:cursor_stack[i].end
+          let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '.$')
+          let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
+        endif
       endif
     endfor
   elseif a:char ==# "\<Right>" || a:char ==# 'l'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      if s:cursor_stack[i].active
+        let s:cursor_stack[i].begin = s:cursor_stack[i].begin . s:cursor_stack[i].cursor
+        let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+        let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      endif
     endfor
   elseif a:char ==# 'e'
     for i in range(len(s:cursor_stack))
-      let word = matchstr(s:cursor_stack[i].end, '^\s*\S*')
-      let s:cursor_stack[i].begin =
-            \ s:cursor_stack[i].begin
-            \ . s:cursor_stack[i].cursor
-            \ . word
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '.$')
-      let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^\s*\S*', '', 'g')
+
+      if s:cursor_stack[i].active
+        let word = matchstr(s:cursor_stack[i].end, '^\s*\S*')
+        let s:cursor_stack[i].begin =
+              \ s:cursor_stack[i].begin
+              \ . s:cursor_stack[i].cursor
+              \ . word
+        let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin, '.$')
+        let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '.$', '', 'g')
+        let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^\s*\S*', '', 'g')
+      endif
     endfor
   elseif a:char ==# 'b'
     " b: move to the begin of current word
     for i in range(len(s:cursor_stack))
-      let word = matchstr(s:cursor_stack[i].begin, '\S*\s*$')
-      let s:cursor_stack[i].end =
-            \ word
-            \ . s:cursor_stack[i].cursor
-            \ . s:cursor_stack[i].end
-      let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '\S*\s*$', '', 'g')
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      if s:cursor_stack[i].active
+        let word = matchstr(s:cursor_stack[i].begin, '\S*\s*$')
+        let s:cursor_stack[i].end =
+              \ word
+              \ . s:cursor_stack[i].cursor
+              \ . s:cursor_stack[i].end
+        let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin, '\S*\s*$', '', 'g')
+        let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+        let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      endif
     endfor
   elseif a:char ==# 'w'
     for i in range(len(s:cursor_stack))
-      let word = matchstr(s:cursor_stack[i].end, '^\S*\s*')
-      let s:cursor_stack[i].begin =
-            \ s:cursor_stack[i].begin
-            \ . s:cursor_stack[i].cursor
-            \ . word
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^\S*\s*', '', 'g')
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      if s:cursor_stack[i].active
+        let word = matchstr(s:cursor_stack[i].end, '^\S*\s*')
+        let s:cursor_stack[i].begin =
+              \ s:cursor_stack[i].begin
+              \ . s:cursor_stack[i].cursor
+              \ . word
+        let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^\S*\s*', '', 'g')
+        let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].end, '^.')
+        let s:cursor_stack[i].end = substitute(s:cursor_stack[i].end, '^.', '', 'g')
+      endif
     endfor
   elseif a:char ==# '0' || a:char ==# "\<Home>" " 0 or <Home>
     for i in range(len(s:cursor_stack))
-      let old_cursor_char = s:cursor_stack[i].cursor
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '^.')
-      let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . old_cursor_char . s:cursor_stack[i].end , '^.', '', 'g')
-      let s:cursor_stack[i].begin = ''
+      if s:cursor_stack[i].active
+        let old_cursor_char = s:cursor_stack[i].cursor
+        let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '^.')
+        let s:cursor_stack[i].end = substitute(s:cursor_stack[i].begin . old_cursor_char . s:cursor_stack[i].end , '^.', '', 'g')
+        let s:cursor_stack[i].begin = ''
+      endif
     endfor
   elseif a:char ==# '$' || a:char ==# "\<End>"  " $ or <End>
     for i in range(len(s:cursor_stack))
-      let old_cursor_char = s:cursor_stack[i].cursor
-      let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '.$')
-      let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin . old_cursor_char . s:cursor_stack[i].end , '.$', '', 'g')
-      let s:cursor_stack[i].end = ''
+      if s:cursor_stack[i].active
+        let old_cursor_char = s:cursor_stack[i].cursor
+        let s:cursor_stack[i].cursor = matchstr(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end, '.$')
+        let s:cursor_stack[i].begin = substitute(s:cursor_stack[i].begin . old_cursor_char . s:cursor_stack[i].end , '.$', '', 'g')
+        let s:cursor_stack[i].end = ''
+      endif
     endfor
   elseif a:char ==# 'D'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin = ''
-      let s:cursor_stack[i].cursor = ''
-      let s:cursor_stack[i].end = ''
+      if s:cursor_stack[i].active
+        let s:cursor_stack[i].begin = ''
+        let s:cursor_stack[i].cursor = ''
+        let s:cursor_stack[i].end = ''
+      endif
     endfor
     call s:replace_symbol()
   elseif a:char ==# 'p'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin = @"
-      let s:cursor_stack[i].cursor = ''
-      let s:cursor_stack[i].end = ''
+      if s:cursor_stack[i].active
+        let s:cursor_stack[i].begin = @"
+        let s:cursor_stack[i].cursor = ''
+        let s:cursor_stack[i].end = ''
+      endif
     endfor
     call s:replace_symbol()
   elseif a:char ==# 'S'
     for i in range(len(s:cursor_stack))
-      let s:cursor_stack[i].begin = ''
-      let s:cursor_stack[i].cursor = ''
-      let s:cursor_stack[i].end = ''
+      if s:cursor_stack[i].active
+        let s:cursor_stack[i].begin = ''
+        let s:cursor_stack[i].cursor = ''
+        let s:cursor_stack[i].end = ''
+      endif
     endfor
     let s:mode = 'i'
     let w:spacevim_iedit_mode = s:mode
@@ -460,20 +486,20 @@ function! s:handle_normal(char) abort
       call s:timeout()
     endif
   elseif a:char ==# 'n'
-    if s:index == len(s:stack) - 1
+    if s:index == len(s:cursor_stack) - 1
       let s:index = 0
     else
       let s:index += 1
     endif
-    call cursor(s:stack[s:index][0],
-          \ s:stack[s:index][1] + len(s:cursor_stack[s:index].begin))
+    call cursor(s:cursor_stack[s:index].lnum,
+          \ s:cursor_stack[s:index].col + len(s:cursor_stack[s:index].begin))
   elseif a:char ==# 'N'
     if s:index == 0
-      let s:index = len(s:stack) - 1
+      let s:index = len(s:cursor_stack) - 1
     else
       let s:index -= 1
     endif
-    call cursor(s:stack[s:index][0], s:stack[s:index][1] + len(s:cursor_stack[s:index].begin))
+    call cursor(s:cursor_stack[s:index].lnum, s:cursor_stack[s:index].col + len(s:cursor_stack[s:index].begin))
   endif
   silent! call s:highlight_cursor()
   return s:cursor_stack[0].begin . s:cursor_stack[0].cursor . s:cursor_stack[0].end 
