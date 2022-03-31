@@ -46,8 +46,8 @@ let s:LOGGER =SpaceVim#logger#derive('iedit')
 "   cursor : char
 "   end : string
 "   active : boolean
-"   linenr : number
-"   pos : number
+"   lnum : number
+"   col : number
 "   len : number
 " }
 let s:cursor_stack = []
@@ -594,15 +594,14 @@ function! s:parse_symbol(begin, end, symbol, ...) abort
     let idx = s:STRING.strAllIndex(line, a:symbol, use_expr)
     for [pos_a, pos_b] in idx
       " @todo the following line will be deleted after s:stack removed
-      call add(s:stack, [l, pos_a + 1, pos_b - pos_a])
       call add(s:cursor_stack, 
             \ {
             \ 'begin' : line[pos_a : pos_b - 2],
             \ 'cursor' : line[pos_b - 1 : pos_b - 1],
             \ 'end' : '',
             \ 'active' : 1,
-            \ 'linenr' : l,
-            \ 'pos' : pos_a + 1,
+            \ 'lnum' : l,
+            \ 'col' : pos_a + 1,
             \ 'len' : pos_b - pos_a,
             \ }
             \ )
@@ -611,9 +610,9 @@ function! s:parse_symbol(begin, end, symbol, ...) abort
       endif
     endfor
   endfor
-  if s:index == -1 && !empty(s:stack)
+  if s:index == -1 && !empty(s:cursor_stack)
     let s:index = 0
-    call cursor(s:stack[0][0], s:stack[0][1])
+    call cursor(s:cursor_stack[0].lnum, s:cursor_stack[0].col)
   endif
 endfunction
 
@@ -623,25 +622,25 @@ function! s:replace_symbol() abort
   let line = 0
   let pre = ''
   let idxs = []
-  for i in range(len(s:stack))
-    if s:stack[i][0] != line
+  for i in range(len(s:cursor_stack))
+    if s:cursor_stack[i].lnum != line
       if !empty(idxs)
-        let end = getline(line)[s:stack[i-1][1] + s:stack[i-1][2] - 1: ]
+        let end = getline(line)[s:cursor_stack[i-1].col + s:cursor_stack[i-1].len - 1: ]
         let pre .=  end
       endif
       call s:fixstack(idxs)
       call setline(line, pre)
       let idxs = []
-      let line = s:stack[i][0]
-      let begin = s:stack[i][1] == 1 ? '' : getline(line)[:s:stack[i][1] - 2]
+      let line = s:cursor_stack[i].lnum
+      let begin = s:cursor_stack[i].col == 1 ? '' : getline(line)[:s:cursor_stack[i].col - 2]
       let pre =  begin . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
     else
-      let line = s:stack[i][0]
+      let line = s:cursor_stack[i].lnum
       if i == 0
-        let pre = (s:stack[i][1] == 1 ? '' : getline(line)[:s:stack[i][1] - 2]) . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
+        let pre = (s:cursor_stack[i].col == 1 ? '' : getline(line)[:s:cursor_stack[i].col - 2]) . s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end
       else
-        let a = s:stack[i-1][1] + s:stack[i-1][2] - 1
-        let b = s:stack[i][1] - 2
+        let a = s:cursor_stack[i-1].col + s:cursor_stack[i-1].len - 1
+        let b = s:cursor_stack[i].col - 2
         if a > b
           let next = ''
         else
@@ -653,7 +652,7 @@ function! s:replace_symbol() abort
     call add(idxs, [i, len(s:cursor_stack[i].begin . s:cursor_stack[i].cursor . s:cursor_stack[i].end)])
   endfor
   if !empty(idxs)
-    let end = getline(line)[s:stack[i][1] + s:stack[i][2] - 1: ]
+    let end = getline(line)[s:cursor_stack[i].col + s:cursor_stack[i].len - 1: ]
     let pre .=  end
   endif
   call s:fixstack(idxs)
@@ -670,9 +669,9 @@ function! s:fixstack(idxs) abort
   " endfor
   let change = 0
   for i in range(len(a:idxs))
-    let s:stack[a:idxs[i][0]][1] += change
-    let change += a:idxs[i][1] - s:stack[a:idxs[i][0]][2]
-    let s:stack[a:idxs[i][0]][2] = a:idxs[i][1]
+    let s:cursor_stack[a:idxs[i][0]].col += change
+    let change += a:idxs[i][1] - s:cursor_stack[a:idxs[i][0]].len
+    let s:cursor_stack[a:idxs[i][0]].len = a:idxs[i][1]
   endfor
 endfunction
 
