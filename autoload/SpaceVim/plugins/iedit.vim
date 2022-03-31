@@ -51,7 +51,6 @@ let s:LOGGER =SpaceVim#logger#derive('iedit')
 "   len : number
 " }
 let s:cursor_stack = []
-let s:stack = []
 
 let s:iedit_hi_info = [{
       \ 'name' : 'IeditPurpleBold',
@@ -153,7 +152,7 @@ function! SpaceVim#plugins#iedit#start(...) abort
   let s:mode = 'n'
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
-  if empty(s:stack)
+  if empty(s:cursor_stack)
     let curpos = getpos('.')
     let save_reg_k = @k
     " the register " is cleared
@@ -205,7 +204,6 @@ function! SpaceVim#plugins#iedit#start(...) abort
       let symbol = s:handle(s:mode, char)
     endif
   endwhile
-  let s:stack = []
   let s:cursor_stack = []
   let s:index = -1
   let s:mode = ''
@@ -487,11 +485,11 @@ function! s:handle_normal(char) abort
     redrawstatus!
     call s:replace_symbol()
   elseif a:char ==# 'G'
-    exe s:stack[-1][0]
-    let s:index = len(s:stack) - 1
+    exe s:cursor_stack[-1].lnum
+    let s:index = len(s:cursor_stack) - 1
   elseif a:char ==# 'g'
     if s:Operator ==# 'g'
-      exe s:stack[0][0]
+      exe s:cursor_stack[0].lnum
       let s:Operator = ''
       let s:index = 0
     else
@@ -647,7 +645,6 @@ function! s:parse_symbol(begin, end, symbol, ...) abort
     let line = getline(l)
     let idx = s:STRING.strAllIndex(line, a:symbol, use_expr)
     for [pos_a, pos_b] in idx
-      " @todo the following line will be deleted after s:stack removed
       call add(s:cursor_stack, 
             \ {
               \ 'begin' : line[pos_a : pos_b - 2],
@@ -713,14 +710,7 @@ function! s:replace_symbol() abort
   call setline(line, pre)
 endfunction
 
-" [idx, newlen] 
-" same line
-" [[1,6], [2,6], [3,6]]
 function! s:fixstack(idxs) abort
-  " for [idx, len] in idxs
-  "   let s:stack[idx]
-  "   let s:stack[idx][2] = len
-  " endfor
   let change = 0
   for i in range(len(a:idxs))
     let s:cursor_stack[a:idxs[i][0]].col += change
@@ -731,9 +721,8 @@ endfunction
 
 function! SpaceVim#plugins#iedit#paser(begin, end, symbol, expr) abort
   let s:cursor_stack = []
-  let s:stack = []
   call s:parse_symbol(a:begin, a:end, a:symbol, a:expr) 
-  return [deepcopy(s:stack), s:index]
+  return [deepcopy(s:cursor_stack), s:index]
 endfunction
 
 " vim:set et sw=2 cc=80 nowrap:
