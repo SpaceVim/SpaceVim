@@ -36,7 +36,7 @@ fu! SpaceVim#util#check_if_expand_tab() abort
   let has_noexpandtab = search('^\t','wn')
   let has_expandtab = search('^    ','wn')
   if has_noexpandtab && has_expandtab
-    let idx = inputlist ( ['ERROR: current file exists both expand and noexpand TAB, python can only use one of these two mode in one file.\nSelect Tab Expand Type:',
+    let idx = inputlist ( ["ERROR: current file exists both expand and noexpand TAB, python can only use one of these two mode in one file.\nSelect Tab Expand Type:",
           \ '1. expand (tab=space, recommended)',
           \ '2. noexpand (tab=\t, currently have risk)',
           \ '3. do nothing (I will handle it by myself)'])
@@ -61,9 +61,6 @@ fu! SpaceVim#util#check_if_expand_tab() abort
     echomsg 'substitute TAB to space...'
     set expandtab
     echomsg 'done!'
-  else
-    " it may be a new file
-    " we use original vim setting
   endif
 endf
 
