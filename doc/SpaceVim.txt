@@ -1543,6 +1543,7 @@ SpaceVim#plugins#iedit#start([options], [firstline], [lastline])
     expr     match expression
     word     match word
     stack    cursor pos stack
+    selectall boolean
 <
   if only argv 1 is given, use selected word as pattern
 
