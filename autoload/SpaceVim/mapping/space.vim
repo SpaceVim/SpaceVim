@@ -663,7 +663,9 @@ function! SpaceVim#mapping#space#init() abort
   nnoremap <silent> <plug>SpaceVim-plugin-iedit :call SpaceVim#plugins#iedit#start()<cr>
   xnoremap <silent> <plug>SpaceVim-plugin-iedit :call SpaceVim#plugins#iedit#start(1)<cr>
   call SpaceVim#mapping#space#def('nmap', ['s', 'e'], '<plug>SpaceVim-plugin-iedit',
-        \ 'start-iedit-mode', 0, 1)
+        \ 'start-iedit-with-all-matches', 0, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['s', 'E'], 'call SpaceVim#plugins#iedit#start({"selectall" : 0})',
+        \ 'start-iedit-with-current-match', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'H'], 'call SpaceVim#plugins#highlight#start(1)',
         \ 'highlight-all-symbols', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'h'], 'call SpaceVim#plugins#highlight#start(0)',
