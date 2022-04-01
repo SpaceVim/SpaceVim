@@ -24,8 +24,9 @@
 "   Iedit-Normal    e           forward to the end of word
 "   Iedit-Normal    w           forward to the begin of next word
 "   Iedit-Normal    b           move to the begin of current word
-"   Iedit-Normal    Ctrl-n      forward and active next occurrence
-"   Iedit-Normal    Ctrl-x      inactivate current occurrence and move forward
+"   Iedit-Normal    Ctrl-n      forward and active next match
+"   Iedit-Normal    Ctrl-x      inactivate current match and move forward
+"   Iedit-Normal    Ctrl-p      inactivate current match and move backward
 " <
 
 let s:index = -1
@@ -531,6 +532,7 @@ function! s:handle_normal(char) abort
       let s:index -= 1
     endif
     let s:cursor_stack[s:index].active = 1
+  silent! call s:highlight_cursor()
     call cursor(s:cursor_stack[s:index].lnum,
           \ s:cursor_stack[s:index].col + len(s:cursor_stack[s:index].begin))
   elseif a:char ==# 'n'

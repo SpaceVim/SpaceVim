@@ -5477,8 +5477,9 @@ After starting iedit, the following key bindings can be used:
   Iedit-Normal    e           forward to the end of word
   Iedit-Normal    w           forward to the begin of next word
   Iedit-Normal    b           move to the begin of current word
-  Iedit-Normal    Ctrl-n      forward and active next occurrence
-  Iedit-Normal    Ctrl-x      inactivate current occurrence and move forward
+  Iedit-Normal    Ctrl-n      forward and active next match
+  Iedit-Normal    Ctrl-x      inactivate current match and move forward
+  Iedit-Normal    Ctrl-p      inactivate current match and move backward
 <
 
 ==============================================================================
