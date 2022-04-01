@@ -497,11 +497,21 @@ function! s:handle_normal(char) abort
       call s:timeout()
     endif
   elseif a:char ==# 'n'
+    let origin_index = s:index
     if s:index == len(s:cursor_stack) - 1
       let s:index = 0
     else
       let s:index += 1
     endif
+    while !s:cursor_stack[s:index].active
+      let s:index += 1
+      if s:index == len(s:cursor_stack)
+        let s:index = 0
+      endif
+      if s:index ==# origin_index
+        break
+      endif
+    endwhile
     call cursor(s:cursor_stack[s:index].lnum,
           \ s:cursor_stack[s:index].col + len(s:cursor_stack[s:index].begin))
   elseif a:char ==# 'N'
