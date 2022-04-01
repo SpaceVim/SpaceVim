@@ -523,6 +523,16 @@ function! s:handle_normal(char) abort
     let s:cursor_stack[s:index].active = 1
     call cursor(s:cursor_stack[s:index].lnum,
           \ s:cursor_stack[s:index].col + len(s:cursor_stack[s:index].begin))
+  elseif a:char ==# "\<C-p>"
+    let s:cursor_stack[s:index].active = 0
+    if s:index == 0
+      let s:index = len(s:cursor_stack) - 1
+    else
+      let s:index -= 1
+    endif
+    let s:cursor_stack[s:index].active = 1
+    call cursor(s:cursor_stack[s:index].lnum,
+          \ s:cursor_stack[s:index].col + len(s:cursor_stack[s:index].begin))
   elseif a:char ==# 'n'
     let origin_index = s:index
     if s:index == len(s:cursor_stack) - 1
