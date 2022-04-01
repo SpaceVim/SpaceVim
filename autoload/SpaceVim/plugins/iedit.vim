@@ -24,6 +24,8 @@
 "   Iedit-Normal    e           forward to the end of word
 "   Iedit-Normal    w           forward to the begin of next word
 "   Iedit-Normal    b           move to the begin of current word
+"   Iedit-Normal    Ctrl-n      forward and active next occurrence
+"   Iedit-Normal    Ctrl-x      inactivate current occurrence and move forward
 " <
 
 let s:index = -1
@@ -496,6 +498,34 @@ function! s:handle_normal(char) abort
       let s:Operator = 'g'
       call s:timeout()
     endif
+  elseif a:char ==# "\<C-n>"
+    if s:index == len(s:cursor_stack) - 1
+      let s:index = 0
+    else
+      let s:index += 1
+    endif
+    let s:cursor_stack[s:index].active = 1
+    call cursor(s:cursor_stack[s:index].lnum,
+          \ s:cursor_stack[s:index].col + len(s:cursor_stack[s:index].begin))
+  elseif a:char ==# "\<C-x>"
+    let s:cursor_stack[s:index].active = 0
+    let origin_index = s:index
+    if s:index == len(s:cursor_stack) - 1
+      let s:index = 0
+    else
+      let s:index += 1
+    endif
+    while !s:cursor_stack[s:index].active
+      let s:index += 1
+      if s:index == len(s:cursor_stack)
+        let s:index = 0
+      endif
+      if s:index ==# origin_index
+        break
+      endif
+    endwhile
+    call cursor(s:cursor_stack[s:index].lnum,
+          \ s:cursor_stack[s:index].col + len(s:cursor_stack[s:index].begin))
   elseif a:char ==# 'n'
     let origin_index = s:index
     if s:index == len(s:cursor_stack) - 1
