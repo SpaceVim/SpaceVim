@@ -20,7 +20,7 @@ function install_nvim($ver)
 {
   if ($ver -eq "nightly")
   {
-    $url = 'https://github.com/neovim/neovim/releases/download/nightly/nvim-win32.zip'
+    $url = 'https://github.com/neovim/neovim/releases/download/nightly/nvim-win64.zip'
   }
   else
   {
