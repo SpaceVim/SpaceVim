@@ -874,9 +874,11 @@ function! SpaceVim#layers#core#statusline#mode_text(mode) abort
     if !empty(iedit_mode)
       if iedit_mode ==# 'n'
         let mode_text = 'IEDIT-NORMAL'
-      else
+      elseif iedit_mode ==# 'i'
         let mode_text = 'IEDIT-INSERT'
       endif
+    else
+      let mode_text = 'NORMAL'
     endif
   elseif a:mode ==# 'i'
     let mode_text = 'INSERT'
