@@ -532,7 +532,7 @@ function! s:handle_normal(char) abort
       let s:index -= 1
     endif
     let s:cursor_stack[s:index].active = 1
-  silent! call s:highlight_cursor()
+    silent! call s:highlight_cursor()
     call cursor(s:cursor_stack[s:index].lnum,
           \ s:cursor_stack[s:index].col + len(s:cursor_stack[s:index].begin))
   elseif a:char ==# 'n'
@@ -739,7 +739,9 @@ function! s:parse_symbol(begin, end, symbol, use_expr, selectall) abort
     let s:index = 0
     call cursor(s:cursor_stack[0].lnum, s:cursor_stack[0].col)
   endif
-  let s:cursor_stack[s:index].active = 1
+  if !empty(s:cursor_stack)
+    let s:cursor_stack[s:index].active = 1
+  endif
 endfunction
 
 
