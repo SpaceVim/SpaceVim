@@ -234,8 +234,12 @@ EOT
             git clone https://github.com/wsdjeg/scrollbar.vim.git detach/$1
             cd detach/$1
             _checkdir autoload/SpaceVim/api/
+            _checkdir autoload/SpaceVim/api/vim
             _detect autoload/SpaceVim/api.vim
             _detect autoload/SpaceVim/api/vim.vim
+            _detect autoload/SpaceVim/api/vim/buffer.vim
+            _detect autoload/SpaceVim/api/vim/window.vim
+            _checkdir autoload/SpaceVim/plugins/
             _detect autoload/SpaceVim/plugins/scrollbar.vim
             _detect LICENSE
             _default_readme "scrollbar.vim" "floating scrollbar support for neovim/vim[wip]"
