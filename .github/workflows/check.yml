@@ -120,8 +120,6 @@ jobs:
               - vimbin: nvim
                 vimtag: v0.4.2
               - vimbin: nvim
-                vimtag: v0.4.0
-              - vimbin: nvim
                 vimtag: v0.3.8
     runs-on: windows-2019
     env:
