@@ -27,7 +27,7 @@ let s:hi_range_index = 0
 " }}}
 
 " transient_state API func: logo {{{
-function! s:range_logo() abort dict
+function! s:range_logo() abort
   let line = getline(3)
   let range = s:current_range
   let index = '[' . (s:index + 1) . '/' . len(s:cursor_stack) . ']'
@@ -102,7 +102,7 @@ function! s:hi() abort
   endfor
 endfunction
 
-function! s:init() abort dict
+function! s:init() abort
   call s:hi()
   let s:current_range = 'Display'
   let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
@@ -226,7 +226,7 @@ endfunction
 " }}}
 
 " key binding: R reset_range {{{
-function! s:reset_range() abort dict
+function! s:reset_range() abort
   let s:current_range = 'Display'
   let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
   call s:clear_highlight()
@@ -235,7 +235,7 @@ endfunction
 "}}}
 
 " key binding: n next_item {{{
-function! s:next_item() abort dict
+function! s:next_item() abort
   if s:index == len(s:cursor_stack) - 1
     let s:index = 0
   else
@@ -247,7 +247,7 @@ endfunction
 " }}}
 
 " key binding: r change_range {{{
-function! s:change_range() abort dict
+function! s:change_range() abort
   if s:current_range ==# 'Display'
     let s:current_range = 'Buffer'
     let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(1, line('$'), s:current_match, 0)
@@ -274,13 +274,13 @@ endfunction
 " }}}
 
 " key binding: e iedit {{{
-function! s:iedit() abort dict
+function! s:iedit() abort
   call SpaceVim#plugins#iedit#start() 
 endfunction
 " }}}
 
 " key binding: N/p previous_item {{{
-function! s:previous_item() abort dict
+function! s:previous_item() abort
   if s:index == 0
     let s:index = len(s:cursor_stack) - 1
   else
@@ -292,13 +292,13 @@ endfunction
 " }}}
 
 " key binding: b search_buffers {{{
-function! s:search_buffers() abort dict
+function! s:search_buffers() abort
   call SpaceVim#plugins#flygrep#open({'input' : s:current_match, 'files':'@buffers'}) 
 endfunction
 " }}}
 
 " key binding: / search_project {{{
-function! s:search_project() abort dict
+function! s:search_project() abort
   call SpaceVim#plugins#flygrep#open({'input' : s:current_match}) 
 endfunction
 " }}}
@@ -333,7 +333,7 @@ endfunction
 " }}}
 
 " key binding: Tab toggle_item {{{
-function! s:toggle_item() abort dict
+function! s:toggle_item() abort
 
 endfunction
 " }}}
