@@ -30,7 +30,7 @@ let s:hi_range_index = 0
 function! s:range_logo() abort
   let line = getline(3)
   let range = s:current_range
-  let index = '[' . (s:index + 1) . '/' . len(s:stack) . ']'
+  let index = '[' . (s:index + 1) . '/' . len(s:cursor_stack) . ']'
   let logo = s:STRING.fill_middle(range . '  ' . index, 30)
   let begin = stridx(logo, s:current_range)
   call setline(3,  logo . line[30:])
@@ -105,7 +105,7 @@ endfunction
 function! s:init() abort
   call s:hi()
   let s:current_range = 'Display'
-  let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
+  let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
   call s:highlight()
 endfunction
 " }}}
@@ -228,7 +228,7 @@ endfunction
 " key binding: R reset_range {{{
 function! s:reset_range() abort
   let s:current_range = 'Display'
-  let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
+  let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
   call s:clear_highlight()
   call s:highlight()
 endfunction
@@ -236,12 +236,12 @@ endfunction
 
 " key binding: n next_item {{{
 function! s:next_item() abort
-  if s:index == len(s:stack) - 1
+  if s:index == len(s:cursor_stack) - 1
     let s:index = 0
   else
     let s:index += 1
   endif
-  call cursor(s:stack[s:index][0], s:stack[s:index][1] + s:stack[s:index][2] - 1)
+  call cursor(s:cursor_stack[s:index].lnum, s:cursor_stack[s:index].col + s:cursor_stack[s:index].len - 1)
   call s:update_highlight()
 endfunction
 " }}}
@@ -250,18 +250,18 @@ endfunction
 function! s:change_range() abort
   if s:current_range ==# 'Display'
     let s:current_range = 'Buffer'
-    let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(1, line('$'), s:current_match, 0)
+    let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(1, line('$'), s:current_match, 0)
     call s:clear_highlight()
     call s:highlight()
   elseif s:current_range ==# 'Buffer'
     let s:current_range = 'Function'
     let range = s:find_func_range()
-    let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(range[0], range[1], s:current_match, 0)
+    let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(range[0], range[1], s:current_match, 0)
     call s:clear_highlight()
     call s:highlight()
   elseif s:current_range ==# 'Function'
     let s:current_range = 'Display'
-    let [s:stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
+    let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
     call s:clear_highlight()
     call s:highlight()
   endif
@@ -282,11 +282,11 @@ endfunction
 " key binding: N/p previous_item {{{
 function! s:previous_item() abort
   if s:index == 0
-    let s:index = len(s:stack) - 1
+    let s:index = len(s:cursor_stack) - 1
   else
     let s:index -= 1
   endif
-  call cursor(s:stack[s:index][0], s:stack[s:index][1] + s:stack[s:index][2] - 1)
+  call cursor(s:cursor_stack[s:index].lnum, s:cursor_stack[s:index].col + s:cursor_stack[s:index].len - 1)
   call s:update_highlight()
 endfunction
 " }}}
@@ -306,11 +306,19 @@ endfunction
 " local func: highlight symbol {{{
 function! s:highlight() abort
   let s:highlight_id = []
-  for item in s:stack
-    call add(s:highlight_id, s:CMP.matchaddpos('HiBlueBold', [ item ]))
+  for item in s:cursor_stack
+    call add(s:highlight_id, s:CMP.matchaddpos('HiBlueBold', [[
+          \ item.lnum,
+          \ item.col,
+          \ item.len
+          \ ]]))
   endfor
-  if !empty(get(s:stack, s:index, []))
-    let s:highlight_id_c = s:CMP.matchaddpos('HiPurpleBold', [s:stack[s:index]])
+  if !empty(get(s:cursor_stack, s:index, []))
+    let s:highlight_id_c = s:CMP.matchaddpos('HiPurpleBold', [[
+          \ s:cursor_stack[s:index].lnum,
+          \ s:cursor_stack[s:index].col,
+          \ s:cursor_stack[s:index].len,
+          \ ]])
   endif
 endfunction
 " }}}
