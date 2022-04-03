@@ -1,0 +1,17 @@
+Execute ( SpaceVim plugin: mkdir.vim ):
+  augroup mkdir_test
+    au!
+    autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
+  augroup END
+  let tempfile = tempname() . '/test/test'
+  exe 'e' tempfile
+  w
+  AssertEqual filereadable(tempfile), 1
+  bwipeout
+  unlet tempfile
+  augroup mkdir_test
+    au!
+  augroup END
+
+
+
