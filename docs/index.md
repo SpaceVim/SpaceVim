@@ -74,8 +74,16 @@ Contribute code, report bugs and request features at [GitHub](https://github.com
   SpaceVim has been tested in [github action](https://github.com/SpaceVim/SpaceVim/actions) with following
   versions of neovim and vim:
 
-  - vim: `master`, `8.1.2269`, `8.0.1453`, `8.0.0027`,`7.4.1689`,`7.4.629`, `7.4.052`
-  - neovim: `nightly`, `v0.5.0`, `v0.4.4`, `v0.4.3`, `v0.4.2`, `v0.4.0`, `v0.3.8`
+  | Program | Version | Windows | Linux |
+  | ------- | ------- | ------- | ----- |
+  | neovim  | v0.6.1  | √       | √     |
+  | neovim  | v0.6.0  | √       | √     |
+  | neovim  | v0.5.1  | √       | √     |
+  | neovim  | v0.5.0  | √       | √     |
+  | neovim  | v0.4.4  | √       | √     |
+  | neovim  | v0.4.3  | √       | √     |
+  | neovim  | v0.4.2  | √       | √     |
+  | neovim  | v0.3.8  | √       | √     |
 
 For more general questions, please read SpaceVim [FAQ](faq/).
 

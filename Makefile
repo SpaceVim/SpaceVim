@@ -1,5 +1,5 @@
 test: build/vader | build
-	$(VIM_BIN) -Nu test/vimrc -c 'Vader! test/**'
+	$(VIM_BIN) -Nu test/vimrc -Es -c 'Vader! test/**'
 
 COVIMERAGE=$(shell command -v covimerage 2>/dev/null || echo build/covimerage/bin/covimerage)
 
