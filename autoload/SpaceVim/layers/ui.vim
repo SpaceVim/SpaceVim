@@ -96,7 +96,7 @@ function! SpaceVim#layers#ui#plugins() abort
           \ 'DisableWhitespace',
           \ 'EnableWhitespace'
           \ ]}],
-        \ ]
+          \ ]
   if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version())
         \ || has('nvim-0.6.0')
     call add(plugins, [g:_spacevim_root_dir . 'bundle/indent-blankline.nvim',
@@ -235,8 +235,9 @@ function! SpaceVim#layers#ui#config() abort
         \ . string(s:_function('s:toggle_syntax_hi')) . ', [])',
         \ 'toggle-syntax-highlighting', 1)
 
-  call SpaceVim#mapping#space#def('nmap', ['T', 'F'], '<F11>',
-        \ 'fullscreen-frame', 0)
+  call SpaceVim#mapping#space#def('nnoremap', ['T', 'F'], 'call call('
+        \ . string(s:_function('s:toggle_full_screen')) . ', [])',
+        \ 'fullscreen-frame', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['T', 'm'], 'call call('
         \ . string(s:_function('s:toggle_menu_bar')) . ', [])',
         \ 'toggle-menu-bar', 1)
@@ -279,23 +280,23 @@ function! SpaceVim#layers#ui#config() abort
         \ . string(s:_function('s:toggle_whitespace')) . ', [])',
         \ 'toggle-highlight-tail-spaces', 1)
 
-  " download gvimfullscreen.dll from github, copy gvimfullscreen.dll to
-  " the directory that has gvim.exe
-  if has('nvim')
-    nnoremap <silent> <F11> :call <SID>toggle_full_screen()<Cr>
-  else
-    nnoremap <silent> <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<cr>
-  endif
+  nnoremap <silent> <F11> :call <SID>toggle_full_screen()<Cr>
 endfunction
 
 let s:fullscreen_flag = 0
 function! s:toggle_full_screen() abort
-  if s:fullscreen_flag == 0
-    call GuiWindowFullScreen(1)
-    let s:fullscreen_flag = 1
+  if has('nvim')
+    if s:fullscreen_flag == 0
+      call GuiWindowFullScreen(1)
+      let s:fullscreen_flag = 1
+    else
+      call GuiWindowFullScreen(0)
+      let s:fullscreen_flag = 0
+    endif
   else
-    call GuiWindowFullScreen(0)
-    let s:fullscreen_flag = 0
+    " download gvimfullscreen.dll from github, copy gvimfullscreen.dll to
+    " the directory that has gvim.exe
+    call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)
   endif
 endfunction
 
