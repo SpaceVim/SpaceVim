@@ -178,7 +178,7 @@ function! s:self.redraw_windows() abort
     if !bufexists(self.bufnr)
       let self.bufnr = self.__buffer.create_buf(0, 1)
     endif
-    let self.winid =  self.__floating.open_win(self.bufnr, v:false,
+    noautocmd let self.winid =  self.__floating.open_win(self.bufnr, v:false,
           \ {
             \ 'relative': 'editor',
             \ 'width'   : self.notification_width, 
@@ -188,7 +188,7 @@ function! s:self.redraw_windows() abort
             \ 'col': &columns - self.notification_width - 1,
             \ 'focusable' : v:false,
             \ })
-    let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
+    noautocmd let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
           \ {
             \ 'relative': 'editor',
             \ 'width'   : self.notification_width + 2, 
