@@ -299,6 +299,18 @@ You can also use the url of the repository, for example:
     merged = false
 ```
 
+For adding multiple custom plugins:
+
+```toml
+[[custom_plugins]]
+    repo = 'lilydjwg/colorizer'
+    merged = false
+
+[[custom_plugins]]
+    repo = 'joshdick/onedark.vim'
+    merged = false
+```
+
 **disable existing plugins**
 
 If you want to disable plugins which are added by SpaceVim,

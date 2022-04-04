@@ -307,6 +307,18 @@ git -C ~/.SpaceVim pull
 除了 `on_cmd` 以外，还有一些其它的选项，可以通过
 `:h dein-options` 查阅。
 
+如果需要添加多个自定义插件，可以参考如下设置：
+
+```toml
+[[custom_plugins]]
+    repo = 'lilydjwg/colorizer'
+    merged = false
+
+[[custom_plugins]]
+    repo = 'joshdick/onedark.vim'
+    merged = false
+```
+
 **禁用插件**
 
 SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以通过 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中的 `disabled_plugins` 这一选项来操作：
