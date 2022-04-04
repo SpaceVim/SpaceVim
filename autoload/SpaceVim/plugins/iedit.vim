@@ -204,7 +204,7 @@ function! SpaceVim#plugins#iedit#start(...) abort
   endif
   call s:highlight_cursor()
   redrawstatus!
-  while s:mode !=# ''
+  while s:mode !=# '' && len(s:cursor_stack) > 0
     redraw!
     let char = s:VIM.getchar()
     if s:mode ==# 'n' && char ==# "\<Esc>"
@@ -213,6 +213,10 @@ function! SpaceVim#plugins#iedit#start(...) abort
       let symbol = s:handle(s:mode, char)
     endif
   endwhile
+  if len(s:cursor_stack) == 0
+    normal! :
+    echo 'Pattern not found:' . symbol
+  endif
   let s:cursor_stack = []
   let s:index = -1
   let s:mode = ''
