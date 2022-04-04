@@ -231,6 +231,7 @@ CONTENTS                                                   *SpaceVim-contents*
       8. windows-and-tabs....................|SpaceVim-usage-windows-and-tabs|
   8. Plugins................................................|SpaceVim-plugins|
       1. iedit........................................|SpaceVim-plugins-iedit|
+      2. runner......................................|SpaceVim-plugins-runner|
   9. API........................................................|SpaceVim-api|
       1. clock............................................|SpaceVim-api-clock|
       2. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
@@ -5511,6 +5512,21 @@ After starting iedit, the following key bindings can be used:
   Iedit-Normal    Ctrl-n      forward and active next match
   Iedit-Normal    Ctrl-x      inactivate current match and move forward
   Iedit-Normal    Ctrl-p      inactivate current match and move backward
+<
+
+==============================================================================
+RUNNER                                               *SpaceVim-plugins-runner*
+
+The `code runner` plugin provides the ability to run code snippet or code file
+for a variety of programming languages, as well as running custom commands.
+
+KEY BINDINGS
+
+>
+  Key binding     Description
+  SPC s r         start default code runner
+  q               close coder runner window
+  i               insert text to background process
 <
 
 ==============================================================================

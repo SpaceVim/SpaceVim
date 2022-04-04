@@ -6,6 +6,20 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section runner, plugins-runner
+" @parentsection plugins
+" The `code runner` plugin provides the ability to run code snippet or code
+" file for a variety of programming languages, as well as running custom commands. 
+" 
+" @subsection Key bindings
+" >
+"   Key binding     Description
+"   SPC s r         start default code runner
+"   q               close coder runner window
+"   i               insert text to background process
+" <
+
 let s:runners = {}
 
 let s:JOB = SpaceVim#api#import('job')
