@@ -153,6 +153,9 @@ function! SpaceVim#layers#core#config() abort
         \  ]
         \ ]
         \ , 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'R'], 'call call('
+        \ . string(s:_function('s:rename_current_file')) . ', [])',
+        \ 'rename_current_file', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'a'], 'call call('
         \ . string(s:_function('s:save_as_new_file')) . ', [])',
         \ 'save-as-new-file', 1)
@@ -974,6 +977,34 @@ augroup FileExplorer
   autocmd!
 augroup END
 
+
+function! s:rename_current_file() abort
+  let current_fname = bufname()
+  if empty(current_fname)
+    echo 'can not rename empty filename!'
+    return
+  endif
+  let input = input('Rename to: ', fnamemodify(current_fname, ':p'), 'file')
+  noautocmd normal! :
+  if !empty(input)
+    exe 'silent! file ' . input
+    exe 'silent! w '
+    call delete(current_fname)
+    if v:errmsg !=# ''
+      echohl ErrorMsg
+      echo  v:errmsg
+      echohl None
+    else
+      echohl Delimiter
+      echo  fnamemodify(bufname(), ':.:gs?[\\/]?/?') . ' Renamed'
+      echohl None
+    endif
+  else
+    echo 'canceled!'
+  endif
+
+  
+endfunction
 
 function! s:save_as_new_file() abort
   let current_fname = bufname()
