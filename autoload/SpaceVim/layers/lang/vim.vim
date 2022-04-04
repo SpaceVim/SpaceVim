@@ -109,7 +109,7 @@ function! SpaceVim#layers#lang#vim#config() abort
 endfunction
 
 function! s:on_exit(...) abort
-  let data = get(a:000, 2)
+  let data = get(a:000, 1)
   if data != 0
     call s:NOTI.notify('failed to generate doc!', 'WarningMsg')
   else
