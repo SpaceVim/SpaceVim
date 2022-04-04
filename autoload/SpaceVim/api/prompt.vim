@@ -168,7 +168,7 @@ func! s:self._build_prompt() abort
   echohl None | echon self._prompt.begin
   echohl Wildmenu | echon self._prompt.cursor
   echohl None | echon self._prompt.end
-  if empty(self._prompt.cursor) && !has('nvim')
+  if empty(self._prompt.cursor) && (has('nvim-0.5.0') || !has('nvim'))
     echohl Comment | echon '_' | echohl None
   endif
   " FIXME: Macvim need extra redraw, 
