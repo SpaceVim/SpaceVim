@@ -108,8 +108,10 @@ function! s:self.close(...) abort
     call remove(self.message, 0)
   endif
   if len(self.message) == 0
-    noautocmd call self.__floating.win_close(self.border.winid, v:true)
-    noautocmd call self.__floating.win_close(self.winid, v:true)
+    if self.win_is_open()
+      noautocmd call self.__floating.win_close(self.border.winid, v:true)
+      noautocmd call self.__floating.win_close(self.winid, v:true)
+    endif
     call remove(s:notifications, self.hashkey)
     let self.notification_width = 1
   endif
