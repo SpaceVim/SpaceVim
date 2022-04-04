@@ -61,9 +61,15 @@ endfunction
 
 function! s:self.win_is_open() abort
   try
-    return self.winid >= 0 && self.border.winid >= 0
-          \ && has_key(nvim_win_get_config(self.winid), 'col')
-          \ && has_key(nvim_win_get_config(self.border.winid), 'col')
+    if exists('*nvim_win_get_config')
+      return self.winid >= 0 && self.border.winid >= 0
+            \ && has_key(nvim_win_get_config(self.winid), 'col')
+            \ && has_key(nvim_win_get_config(self.border.winid), 'col')
+    elseif exists('*popup_getoptions')
+      return self.winid >= 0 && self.border.winid >= 0
+            \ && has_key(popup_getoptions(self.winid), 'col')
+            \ && has_key(popup_getoptions(self.border.winid), 'col')
+    endif
   catch
     return 0
   endtry
