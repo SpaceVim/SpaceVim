@@ -874,9 +874,15 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   let save_tve = &t_ve
   setlocal t_ve=
   let cursor_hi = {}
-  if has('gui_running')
-    let cursor_hi = s:HI.group2dict('Cursor')
-    call s:HI.hide_in_normal('Cursor')
+  let cursor_hi = s:HI.group2dict('Cursor')
+  let lcursor_hi = s:HI.group2dict('lCursor')
+  let guicursor = &guicursor
+  call s:HI.hide_in_normal('Cursor')
+  call s:HI.hide_in_normal('lCursor')
+  " hi Cursor ctermbg=16 ctermfg=16 guifg=#282c34 guibg=#282c34
+  " hi lCursor ctermbg=16 ctermfg=16 guifg=#282c34 guibg=#282c34
+  if has('nvim')
+    set guicursor+=a:Cursor/lCursor
   endif
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
@@ -926,9 +932,9 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   endif
   call s:LOGGER.info('FlyGrep ending    ===========================')
   let &t_ve = save_tve
-  if has('gui_running')
-    call s:HI.hi(cursor_hi)
-  endif
+  call s:HI.hi(cursor_hi)
+  call s:HI.hi(lcursor_hi)
+  let &guicursor = guicursor
 endfunction
 " }}}
 
