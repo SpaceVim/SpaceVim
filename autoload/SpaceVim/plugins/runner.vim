@@ -132,15 +132,20 @@ function! s:async_run(runner, ...) abort
           \ repeat('-', 20)])
     let s:runner_lines += 4
     let s:start_time = reltime()
-    let s:runner_jobid =  s:JOB.start(compile_cmd,{
-          \ 'on_stdout' : function('s:on_stdout'),
-          \ 'on_stderr' : function('s:on_stderr'),
-          \ 'on_exit' : function('s:on_compile_exit'),
-          \ })
-    if usestdin && s:runner_jobid > 0
-      let range = get(a:runner[0], 'range', [1, '$'])
-      call s:JOB.send(s:runner_jobid, call('getline', range))
-      call s:JOB.chanclose(s:runner_jobid, 'stdin')
+    if type(compile_cmd) == type('') || (type(compile_cmd) == type([]) && executable(get(compile_cmd, 0, '')))
+      let s:runner_jobid =  s:JOB.start(compile_cmd,{
+            \ 'on_stdout' : function('s:on_stdout'),
+            \ 'on_stderr' : function('s:on_stderr'),
+            \ 'on_exit' : function('s:on_compile_exit'),
+            \ })
+      if usestdin && s:runner_jobid > 0
+        let range = get(a:runner[0], 'range', [1, '$'])
+        call s:JOB.send(s:runner_jobid, call('getline', range))
+        call s:JOB.chanclose(s:runner_jobid, 'stdin')
+      endif
+    else
+      let exe = get(compile_cmd, 0, '')
+      call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , -1, 0, [exe . ' is not executable, make sure ' . exe . ' is in your PATH'])
     endif
   elseif type(a:runner) == type({})
     " the runner is a dict
@@ -166,15 +171,19 @@ function! s:async_run(runner, ...) abort
     call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , -1, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
     let s:runner_lines += 3
     let s:start_time = reltime()
-    let s:runner_jobid =  s:JOB.start(cmd,{
-          \ 'on_stdout' : function('s:on_stdout'),
-          \ 'on_stderr' : function('s:on_stderr'),
-          \ 'on_exit' : function('s:on_exit'),
-          \ })
-    if usestdin && s:runner_jobid > 0
-      let range = get(a:runner, 'range', [1, '$'])
-      call s:JOB.send(s:runner_jobid, call('getline', range))
-      call s:JOB.chanclose(s:runner_jobid, 'stdin')
+    if executable(exe)
+      let s:runner_jobid =  s:JOB.start(cmd,{
+            \ 'on_stdout' : function('s:on_stdout'),
+            \ 'on_stderr' : function('s:on_stderr'),
+            \ 'on_exit' : function('s:on_exit'),
+            \ })
+      if usestdin && s:runner_jobid > 0
+        let range = get(a:runner, 'range', [1, '$'])
+        call s:JOB.send(s:runner_jobid, call('getline', range))
+        call s:JOB.chanclose(s:runner_jobid, 'stdin')
+      endif
+    else
+      call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , -1, 0, [exe . ' is not executable, make sure ' . exe . ' is in your PATH'])
     endif
   endif
   if s:runner_jobid > 0

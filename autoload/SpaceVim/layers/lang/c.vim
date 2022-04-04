@@ -81,6 +81,11 @@
 "   SPC l s s       send selection text
 " <
 "
+" Known issue:
+"
+" You need to use `flush(stdout)` before `scanf()` when run code in code
+" runner.
+"
 " }}}
 
 " Init layer options {{{
