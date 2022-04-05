@@ -436,6 +436,10 @@ function! s:create_database(dir, init, load) abort
 endfunction
 
 function! s:run_create_database_job(dir, cscope_files, cscope_db, load) abort
+  if !executable(g:cscope_cmd)
+      call s:notify.notify('''cscope'' is not executable!', 'WarningMsg')
+      return
+  endif
   let jobid = s:JOB.start([g:cscope_cmd, '-b', '-i', a:cscope_files, '-f', a:cscope_db], {
         \ 'on_exit' : function('s:on_create_db_exit')
         \ })
