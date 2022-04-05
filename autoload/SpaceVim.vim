@@ -1517,6 +1517,7 @@ function! SpaceVim#end() abort
       " enable blinking mode-sensitive cursor
       set guicursor=n-v-c:block-blinkon10,i-ci-ve:ver25-blinkon10,r-cr:hor20,o:hor50
     endif
+    set guicursor+=a:Cursor/lCursor
   endif
   filetype plugin indent on
   syntax on
