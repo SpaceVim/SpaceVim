@@ -6,6 +6,21 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section todo manager, plugins-todomanager
+" @parentsection plugins
+" The `todomanager` plugin provides todo manager support for SpaceVim.
+" 
+" @subsection Key bindings
+" >
+"   Key binding     Description
+"   SPC a o         open todo manager windows
+" <
+" 
+" @subsection Configuration
+"
+" The todo manager labels can be set via @section(options-todo_labels)
+
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:SYS = SpaceVim#api#import('system')

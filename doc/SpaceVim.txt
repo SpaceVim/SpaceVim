@@ -77,13 +77,14 @@ CONTENTS                                                   *SpaceVim-contents*
       56. statusline_separator.........|SpaceVim-options-statusline_separator|
       57. statusline_unicode.............|SpaceVim-options-statusline_unicode|
       58. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      59. vim_help_language...............|SpaceVim-options-vim_help_language|
-      60. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      61. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      62. windisk_encoding.................|SpaceVim-options-windisk_encoding|
-      63. windows_index_type.............|SpaceVim-options-windows_index_type|
-      64. windows_leader.....................|SpaceVim-options-windows_leader|
-      65. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      59. todo_labels...........................|SpaceVim-options-todo_labels|
+      60. vim_help_language...............|SpaceVim-options-vim_help_language|
+      61. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      62. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      63. windisk_encoding.................|SpaceVim-options-windisk_encoding|
+      64. windows_index_type.............|SpaceVim-options-windows_index_type|
+      65. windows_leader.....................|SpaceVim-options-windows_leader|
+      66. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Public functions.....................................|SpaceVim-functions|
@@ -232,6 +233,7 @@ CONTENTS                                                   *SpaceVim-contents*
   8. Plugins................................................|SpaceVim-plugins|
       1. iedit........................................|SpaceVim-plugins-iedit|
       2. runner......................................|SpaceVim-plugins-runner|
+      3. todo manager...........................|SpaceVim-plugins-todomanager|
   9. API........................................................|SpaceVim-api|
       1. clock............................................|SpaceVim-api-clock|
       2. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
@@ -818,6 +820,11 @@ the following to ~/.tmux.conf:
 >
   set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
 <
+
+==============================================================================
+TODO_LABELS                                     *SpaceVim-options-todo_labels*
+
+Option for setting todo labels in current project.
 
 ==============================================================================
 VIM_HELP_LANGUAGE                         *SpaceVim-options-vim_help_language*
@@ -5529,6 +5536,22 @@ KEY BINDINGS
   q               close coder runner window
   i               insert text to background process
 <
+
+==============================================================================
+TODO MANAGER                                    *SpaceVim-plugins-todomanager*
+
+The `todomanager` plugin provides todo manager support for SpaceVim.
+
+KEY BINDINGS
+
+>
+  Key binding     Description
+  SPC a o         open todo manager windows
+<
+
+CONFIGURATION
+
+The todo manager labels can be set via |SpaceVim-options-todo_labels|
 
 ==============================================================================
 API                                                             *SpaceVim-api*

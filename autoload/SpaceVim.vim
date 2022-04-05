@@ -1194,6 +1194,11 @@ let g:spacevim_project_rooter_outermost = 1
 let g:spacevim_commandline_prompt = '➭'
 
 ""
+" @section todo_labels, options-todo_labels
+" @parentsection options
+" Option for setting todo labels in current project.
+
+""
 " Option for setting todo labels in current project.
 let g:spacevim_todo_labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
 
