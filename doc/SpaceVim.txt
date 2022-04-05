@@ -2057,6 +2057,7 @@ The layer option can be used when loading the `gtags` layer, for example:
 adding entries. same as |g:gtags_open_list|
   3. `gtagslabel`: the backend of gtags command, you can use `ctags` or
 `pygments`. It is empty string by default.
+  4. `ctags_bin`: set the command or path of ctags, default is 'ctags'
 
 ==============================================================================
 INCSEARCH                                          *SpaceVim-layers-incsearch*

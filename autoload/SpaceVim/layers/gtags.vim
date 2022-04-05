@@ -30,6 +30,7 @@ scriptencoding utf-8
 " adding entries. same as |g:gtags_open_list|
 " 3. `gtagslabel`: the backend of gtags command, you can use `ctags` or
 " `pygments`. It is empty string by default.
+" 4. `ctags_bin`: set the command or path of ctags, default is 'ctags'
 
 if exists('s:gtagslabel')
   finish
@@ -87,6 +88,9 @@ function! SpaceVim#layers#gtags#set_variable(var) abort
   let g:gtags_open_list = get(a:var,
         \ 'open_quickfix',
         \ g:gtags_open_list)
+  let g:gtags_ctags_bin = get(a:var,
+        \ 'ctags_bin',
+        \ 'ctags')
 endfunction
 
 function! SpaceVim#layers#gtags#health() abort
@@ -97,7 +101,7 @@ endfunction
 
 function! SpaceVim#layers#gtags#get_options() abort
 
-  return ['gtagslabel']
+  return ['gtagslabel', 'ctags_bin']
 
 endfunction
 

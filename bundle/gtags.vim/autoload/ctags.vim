@@ -8,14 +8,19 @@
 
 scriptencoding utf-8
 
-let s:LOGGER =SpaceVim#logger#derive('ctags')
-
-if !executable('ctags')
-  call s:LOGGER.warn('ctags is not executable, you need to install ctags')
+if exists('g:loaded_ctags')
   finish
 endif
 
-if exists('g:loaded_ctags')
+
+let s:LOGGER =SpaceVim#logger#derive('ctags')
+
+if !exists('g:gtags_ctags_bin')
+    let g:gtags_ctags_bin = 'ctags'
+endif
+
+if !executable(g:gtags_ctags_bin)
+  call s:LOGGER.warn(g:gtags_ctags_bin . ' is not executable, you need to install ctags')
   finish
 endif
 
@@ -45,7 +50,7 @@ endfunction
 
 function! ctags#update(...) abort
   if !s:version_checked
-    call s:JOB.start(['ctags', '--version'], {
+    call s:JOB.start([g:gtags_ctags_bin, '--version'], {
           \ 'on_stdout': funcref('s:version_std_out'),
           \ 'on_exit': funcref('s:version_exit'),
           \ })
@@ -55,7 +60,7 @@ function! ctags#update(...) abort
   call s:LOGGER.info('update ctags database for ' . project_root)
   let dir = s:FILE.unify_path(g:tags_cache_dir) 
         \ . s:FILE.path_to_fname(project_root)
-  let cmd = ['ctags']
+  let cmd = [g:gtags_ctags_bin]
   if s:is_u_ctags
     let cmd += ['-G']
   endif
