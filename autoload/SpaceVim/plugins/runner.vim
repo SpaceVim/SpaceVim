@@ -185,7 +185,7 @@ function! s:async_run(runner, ...) abort
     call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , -1, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
     let s:runner_lines += 3
     let s:start_time = reltime()
-    if executable(exe)
+    if !empty(exe) && executable(exe[0])
       let s:runner_jobid =  s:JOB.start(cmd,{
             \ 'on_stdout' : function('s:on_stdout'),
             \ 'on_stderr' : function('s:on_stderr'),
