@@ -201,7 +201,11 @@ if has('nvim')
     if !empty(get(g:, '_spacevim_input_list', []))
       return remove(g:_spacevim_input_list, 0)
     endif
-    let ret = call('getchar', a:000)
+    try
+      let ret = call('getchar', a:000)
+    catch /^Vim:Interrupt$/
+      let ret = 3
+    endtry
     return (type(ret) == type(0) ? nr2char(ret) : ret)
   endfunction
 else
@@ -209,7 +213,11 @@ else
     if !empty(get(g:, '_spacevim_input_list', []))
       return remove(g:_spacevim_input_list, 0)
     endif
-    let ret = call('getchar', a:000)
+    try
+      let ret = call('getchar', a:000)
+    catch /^Vim:Interrupt$/
+      let ret = 3
+    endtry
     while ret ==# "\x80\xfd\d"
       let ret = call('getchar', a:000)
     endwhile

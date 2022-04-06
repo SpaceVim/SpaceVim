@@ -21,6 +21,8 @@ function! s:self.nr2name(nr) abort
             return 'SPC'
         elseif a:nr == 4
             return '<C-d>'
+        elseif a:nr == 3
+            return '<C-c>'
         elseif a:nr == 9
             return '<Tab>'
         elseif a:nr == 92
