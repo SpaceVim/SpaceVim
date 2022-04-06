@@ -1188,10 +1188,18 @@ let g:spacevim_project_auto_root = 1
 "   let g:spacevim_project_rooter_outermost = 0
 " <
 let g:spacevim_project_rooter_outermost = 1
+""
+" @section commandline_prompt, options-commandline_prompt
+" @parentsection options
+" Config the command line prompt for flygrep and denite etc.
+" Default is `>`, for example:
+" >
+"   commandline_prompt = '➭'
+" <
 
 ""
 " Config the command line prompt for flygrep and denite etc.
-let g:spacevim_commandline_prompt = '➭'
+let g:spacevim_commandline_prompt = '>'
 
 ""
 " @section todo_labels, options-todo_labels
