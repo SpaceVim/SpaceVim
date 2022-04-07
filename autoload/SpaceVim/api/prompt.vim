@@ -24,6 +24,7 @@
 
 let s:self = {}
 let s:self.__cmp = SpaceVim#api#import('vim#compatible')
+let s:self.__vim = SpaceVim#api#import('vim')
 
 
 let s:self._keys = {
@@ -62,17 +63,6 @@ func! s:self._c_r_mode_off(timer) abort
   let self._c_r_mode = 0
 endf
 
-function! s:self._getchar(...) abort
-  let ret = call('getchar', a:000)
-  " getchar() does not work for < in old version of
-  " neovim-qt.
-  " https://github.com/neovim/neovim/issues/12487
-  if ret ==# "\x80\xfc\<C-b><"
-    return '<'
-  endif
-  return (type(ret) == type(0) ? nr2char(ret) : ret)
-endfunction
-
 func! s:self._handle_input(...) abort
   let begin = get(a:000, 0, '')
   if !empty(begin)
@@ -86,7 +76,7 @@ func! s:self._handle_input(...) abort
   endif
   let self._c_r_mode = 0
   while self._quit == 0
-    let char = self._getchar()
+    let char = self.__vim.getchar()
     if has_key(self._function_key, char)
       call call(self._function_key[char], [])
       continue
