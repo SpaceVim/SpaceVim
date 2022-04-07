@@ -116,6 +116,8 @@ function! SpaceVim#layers#lang#python#plugins() abort
         \ { 'on_ft' : 'python'}])
   call add(plugins, ['alfredodeza/coveragepy.vim', 
         \ { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-virtualenv', 
+        \ { 'merged' : 0}])
   return plugins
 endfunction
 
@@ -248,6 +250,13 @@ function! s:language_specified_mappings() abort
           \ 'enable' : 1,
           \ })
   endif
+
+  let g:_spacevim_mappings_space.l.v = {'name' : '+Virtualenv'}
+
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'v', 'l'],
+        \ 'VirtualEnvList', 'list-all-virtualenvs', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'v', 'd'],
+        \ 'VirtualEnvDeactivate', 'deactivate-current-virtualenv', 1)
 
 endfunction
 
