@@ -769,7 +769,7 @@ endif
 " directly to the ':call <SID>function()<CR>'.
 if !exists("no_plugin_maps") && !exists("no_java_maps") && !exists('g:java_getset_disable_map')
   if !hasmapto('<Plug>JavagetsetInsertGetterSetter')
-    map <unique> <buffer> <LocalLeader>p <Plug>JavagetsetInsertGetterSetter
+    map <silent> <buffer> <LocalLeader>p <Plug>JavagetsetInsertGetterSetter
   endif
   noremap <buffer> <script> 
     \ <Plug>JavagetsetInsertGetterSetter 
@@ -779,7 +779,7 @@ if !exists("no_plugin_maps") && !exists("no_java_maps") && !exists('g:java_getse
     \ :call <SID>InsertGetterSetter('a')<CR>
 
   if !hasmapto('<Plug>JavagetsetInsertGetterOnly')
-    map <unique> <buffer> <LocalLeader>g <Plug>JavagetsetInsertGetterOnly
+    map <silent> <buffer> <LocalLeader>g <Plug>JavagetsetInsertGetterOnly
   endif
   noremap <buffer> <script> 
     \ <Plug>JavagetsetInsertGetterOnly
@@ -789,7 +789,7 @@ if !exists("no_plugin_maps") && !exists("no_java_maps") && !exists('g:java_getse
     \ :call <SID>InsertGetterSetter('g')<CR>
 
   if !hasmapto('<Plug>JavagetsetInsertSetterOnly')
-    map <unique> <buffer> <LocalLeader>s <Plug>JavagetsetInsertSetterOnly
+    map <silent> <buffer> <LocalLeader>s <Plug>JavagetsetInsertSetterOnly
   endif
   noremap <buffer> <script> 
     \ <Plug>JavagetsetInsertSetterOnly
@@ -799,7 +799,7 @@ if !exists("no_plugin_maps") && !exists("no_java_maps") && !exists('g:java_getse
     \ :call <SID>InsertGetterSetter('s')<CR>
 
   if !hasmapto('<Plug>JavagetsetInsertBothGetterSetter')
-    map <unique> <buffer> <LocalLeader>b <Plug>JavagetsetInsertBothGetterSetter
+    map <silent> <buffer> <LocalLeader>b <Plug>JavagetsetInsertBothGetterSetter
   endif
   noremap <buffer> <script> 
     \ <Plug>JavagetsetInsertBothGetterSetter
