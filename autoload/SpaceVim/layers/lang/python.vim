@@ -251,6 +251,13 @@ function! s:language_specified_mappings() abort
           \ })
   endif
 
+  let g:_spacevim_mappings_space.l.v = {'name' : '+Virtualenv'}
+
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'v', 'l'],
+        \ 'VirtualEnvList', 'list-all-virtualenvs', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'v', 'd'],
+        \ 'VirtualEnvDeactivate', 'deactivate-current-virtualenv', 1)
+
 endfunction
 
 
