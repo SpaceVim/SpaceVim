@@ -1773,6 +1773,18 @@ tabline, just disable this layer
     name = "core#tabline"
     enable = false
 <
+LAYER OPTIONS
+
+  1. `enable_default_mappings`: Enable/disable default key bindings. This is
+enabled by default.
+
+KEY BINDINGS
+
+>
+  Key binding          Description
+  Ctrl-Shift-Right     Move current tabpage to the right
+  Ctrl-Shift-Left      Move current tabpage to the left
+<
 
 ==============================================================================
 CSCOPE                                                *SpaceVim-layers-cscope*

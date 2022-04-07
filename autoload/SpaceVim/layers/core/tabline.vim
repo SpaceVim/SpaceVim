@@ -16,6 +16,17 @@
 "     name = "core#tabline"
 "     enable = false
 " <
+" @subsection Layer options
+"
+" 1. `enable_default_mappings`: Enable/disable default key bindings. This is
+" enabled by default.
+"
+" @subsection Key bindings
+" >
+"   Key binding          Description
+"   Ctrl-Shift-Right     Move current tabpage to the right
+"   Ctrl-Shift-Left      Move current tabpage to the left
+" <
 
 scriptencoding utf-8
 
@@ -54,12 +65,45 @@ let s:i_separators = {
       \ 'nil' : ['', ''],
       \ }
 
+let s:enable_default_mappings = 1
 
 function! s:get_no_empty(a, b) abort
   if empty(a:a)
     return a:b
   else
     return a:a
+  endif
+endfunction
+
+function! s:move_tabpage(direction)
+  " get number of tab pages.
+  let ntp = tabpagenr("$")
+
+  if ntp > 1
+    " get number of current tab page.
+    let ctpn = tabpagenr()
+    if a:direction > 0
+      let index = (ctpn + a:direction) % ntp
+      if index == 0
+        let index = ntp
+      elseif index == 1
+        let index = 0
+      endif
+    else
+      let index = (ctpn + a:direction) % ntp
+      if index < 0
+        let index = ntp + index
+      endif
+      if index == 0
+        let index = ntp
+      elseif index == 1
+        let index = 0
+      else
+        let index -= 1
+      endif
+    endif
+    " move tab page.
+    execute "tabmove ".index
   endif
 endfunction
 
@@ -471,6 +515,10 @@ function! SpaceVim#layers#core#tabline#config() abort
     autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
   augroup END
 
+  if s:enable_default_mappings
+    nnoremap <silent> <C-S-Left> :call <SID>move_tabpage(-1)<CR>
+    nnoremap <silent> <C-S-Right> :call <SID>move_tabpage(1)<CR>
+  endif
 
   let shift_keys = {
         \  '1': '!',
@@ -555,4 +603,14 @@ endfunction
 function! SpaceVim#layers#core#tabline#health() abort
   call SpaceVim#layers#core#tabline#config()
   return 1
+endfunction
+
+function! SpaceVim#layers#core#tabline#set_variable(var) abort
+  let s:enable_default_mappings = get(a:var, 'enable_default_mappings', s:enable_default_mappings)
+endfunction
+
+function! SpaceVim#layers#core#tabline#get_options() abort
+
+  return ['enable_default_mappings']
+
 endfunction
