@@ -116,6 +116,8 @@ function! SpaceVim#layers#lang#python#plugins() abort
         \ { 'on_ft' : 'python'}])
   call add(plugins, ['alfredodeza/coveragepy.vim', 
         \ { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-virtualenv', 
+        \ { 'merged' : 0}])
   return plugins
 endfunction
 
