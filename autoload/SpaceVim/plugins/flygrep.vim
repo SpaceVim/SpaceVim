@@ -817,14 +817,14 @@ let s:MPT._function_key = {
 if has('nvim')
   call extend(s:MPT._function_key, 
         \ {
-          \ "\x80\xfdJ" : function('s:previous_item'),
-          \ "\x80\xfc \x80\xfdJ" : function('s:previous_item'),
-          \ "\x80\xfc@\x80\xfdJ" : function('s:previous_item'),
-          \ "\x80\xfc`\x80\xfdJ" : function('s:previous_item'),
-          \ "\x80\xfdK" : function('s:next_item'),
-          \ "\x80\xfc \x80\xfdK" : function('s:next_item'),
-          \ "\x80\xfc@\x80\xfdK" : function('s:next_item'),
-          \ "\x80\xfc`\x80\xfdK" : function('s:next_item'),
+          \ "\x80\xfdK" : function('s:previous_item'),
+          \ "\x80\xfc \x80\xfdK" : function('s:previous_item'),
+          \ "\x80\xfc@\x80\xfdK" : function('s:previous_item'),
+          \ "\x80\xfc`\x80\xfdK" : function('s:previous_item'),
+          \ "\x80\xfdL" : function('s:next_item'),
+          \ "\x80\xfc \x80\xfdL" : function('s:next_item'),
+          \ "\x80\xfc@\x80\xfdL" : function('s:next_item'),
+          \ "\x80\xfc`\x80\xfdL" : function('s:next_item'),
           \ }
           \ )
 endif
