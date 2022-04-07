@@ -321,7 +321,9 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'exe "Defx -no-toggle " . fnameescape(expand("%:p:h"))', 'show-file-tree-at-buffer-dir', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call SpaceVim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'Y'], 'call SpaceVim#util#CopyToClipboard(1)', 'show-and-copy-buffer-filename', 1)
+  nnoremap <silent> <Plug>YankGitRemoteURL :call SpaceVim#util#CopyToClipboard(2)<Cr>
+  vnoremap <silent> <Plug>YankGitRemoteURL :<C-u>call SpaceVim#util#CopyToClipboard(3)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['f', 'Y'], '<Plug>YankGitRemoteURL', 'yank-remote-url', 0, 1)
   let g:_spacevim_mappings_space.f.v = {'name' : '+Vim/SpaceVim'}
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 'v'], 'let @+=g:spacevim_version | echo g:spacevim_version', 'display-and-copy-version', 1)
   let lnum = expand('<slnum>') + s:lnum - 1

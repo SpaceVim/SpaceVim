@@ -140,11 +140,11 @@ fu! s:findDirInParent(what, where) abort " {{{2
 endf " }}}2
 fu! SpaceVim#util#CopyToClipboard(...) abort
   if a:0
-    if executable('git') && executable('grep')
+    if executable('git')
       let find_path = s:FILE.finddir('.git/', expand('%:p'), -1)
       let repo_home = s:FILE.unify_path(find_path, ':h:h')
       if repo_home !=# '' && isdirectory(repo_home)
-        let [remote_name, branch] = split(split(systemlist('git -C '. repo_home. ' branch -vv | grep "^*"')[0],'')[3], '/')
+        let [remote_name, branch] = split(split(filter(systemlist('git -C '. repo_home. ' branch -vv'), 'v:val =~# "^\*"')[0],'')[3], '/')
         let remotes = filter(systemlist('git -C '. repo_home. ' remote -v'),"match(v:val,'^' . remote_name[1:-2]) >= 0 && match(v:val,'fetch') > 0")
         if len(remotes) > 0
           let remote = remotes[0]
@@ -181,7 +181,7 @@ fu! SpaceVim#util#CopyToClipboard(...) abort
         echohl WarningMsg | echom 'This file is not in a git repo' | echohl None
       endif
     else
-      echohl WarningMsg | echom 'You need to install git and grep!' | echohl None
+      echohl WarningMsg | echom 'You need to install git!' | echohl None
     endif
   else
     try
