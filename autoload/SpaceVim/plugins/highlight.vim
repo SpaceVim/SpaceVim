@@ -340,6 +340,7 @@ endfunction
 " key binding: Tab toggle_item {{{
 function! s:toggle_item() abort
   let s:cursor_stack[s:index].active = s:cursor_stack[s:index].active ? 0 : 1
+  call s:update_highlight()
 endfunction
 " }}}
 
