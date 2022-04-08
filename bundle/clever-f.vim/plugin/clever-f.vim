@@ -2,13 +2,13 @@ if exists('g:loaded_clever_f') && g:loaded_clever_f
     finish
 endif
 
-noremap <silent><expr><Plug>(clever-f-f)              clever_f#find_with('f')
-noremap <silent><expr><Plug>(clever-f-F)              clever_f#find_with('F')
-noremap <silent><expr><Plug>(clever-f-t)              clever_f#find_with('t')
-noremap <silent><expr><Plug>(clever-f-T)              clever_f#find_with('T')
-noremap <silent><expr><Plug>(clever-f-reset)          clever_f#reset()
-noremap <silent><expr><Plug>(clever-f-repeat-forward) clever_f#repeat(0)
-noremap <silent><expr><Plug>(clever-f-repeat-back)    clever_f#repeat(1)
+noremap <silent> <Plug>(clever-f-f)              :<C-u>call clever_f#find_with('f')<Cr>
+noremap <silent> <Plug>(clever-f-F)              :<C-u>call clever_f#find_with('F')<Cr>
+noremap <silent> <Plug>(clever-f-t)              :<C-u>call clever_f#find_with('t')<Cr>
+noremap <silent> <Plug>(clever-f-T)              :<C-u>call clever_f#find_with('T')<Cr>
+noremap <silent> <Plug>(clever-f-reset)          :<C-u>call clever_f#reset()<Cr>
+noremap <silent> <Plug>(clever-f-repeat-forward) :<C-u>call clever_f#repeat(0)<Cr>
+noremap <silent> <Plug>(clever-f-repeat-back)    :<C-u>call clever_f#repeat(1)<Cr>
 
 if ! exists('g:clever_f_not_overwrites_standard_mappings')
     nmap f <Plug>(clever-f-f)
