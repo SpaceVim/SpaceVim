@@ -47,54 +47,61 @@ endfunction
 " transient_state API func: init {{{
 let s:hi_info = [
       \ {
-      \ 'name' : 'HiPurpleBold',
-      \ 'guibg' : '#d3869b',
-      \ 'guifg' : '#282828',
-      \ 'ctermbg' : '',
-      \ 'ctermfg' : 175,
-      \ 'bold' : 1,
-      \ },
-      \ {
-      \ 'name' : 'HiRrangeDisplay',
-      \ 'guibg' : '#458588',
-      \ 'guifg' : '#282828',
-      \ 'ctermbg' : '',
-      \ 'ctermfg' : 175,
-      \ 'bold' : 1,
-      \ },
-      \ {
-      \ 'name' : 'HiRrangeBuffer',
-      \ 'guibg' : '#689d6a',
-      \ 'guifg' : '#282828',
-      \ 'ctermbg' : '',
-      \ 'ctermfg' : 175,
-      \ 'bold' : 1,
-      \ },
-      \ {
-      \ 'name' : 'HiRrangeFunction',
-      \ 'guibg' : '#d38696',
-      \ 'guifg' : '#282828',
-      \ 'ctermbg' : '',
-      \ 'ctermfg' : 175,
-      \ 'bold' : 1,
-      \ },
-      \ {
-      \ 'name' : 'HiRrangeIndex',
-      \ 'guibg' : '#3c3836',
-      \ 'guifg' : '#a89984',
-      \ 'ctermbg' : 237,
-      \ 'ctermfg' : 246,
-      \ 'bold' : 1,
-      \ },
-      \ {
-      \ 'name' : 'HiBlueBold',
-      \ 'guibg' : '#83a598',
-      \ 'guifg' : '#282828',
-      \ 'ctermbg' : '',
-      \ 'ctermfg' : 109,
-      \ 'bold' : 1,
-      \ }
-      \ ]
+        \ 'name' : 'HiPurpleBold',
+        \ 'guibg' : '#d3869b',
+        \ 'guifg' : '#282828',
+        \ 'ctermbg' : '',
+        \ 'ctermfg' : 175,
+        \ 'bold' : 1,
+        \ },
+        \ {
+          \ 'name' : 'HiRrangeDisplay',
+          \ 'guibg' : '#458588',
+          \ 'guifg' : '#282828',
+          \ 'ctermbg' : '',
+          \ 'ctermfg' : 175,
+          \ 'bold' : 1,
+          \ },
+          \ {
+            \ 'name' : 'HiRrangeBuffer',
+            \ 'guibg' : '#689d6a',
+            \ 'guifg' : '#282828',
+            \ 'ctermbg' : '',
+            \ 'ctermfg' : 175,
+            \ 'bold' : 1,
+            \ },
+            \ {
+              \ 'name' : 'HiRrangeFunction',
+              \ 'guibg' : '#d38696',
+              \ 'guifg' : '#282828',
+              \ 'ctermbg' : '',
+              \ 'ctermfg' : 175,
+              \ 'bold' : 1,
+              \ },
+              \ {
+                \ 'name' : 'HiRrangeIndex',
+                \ 'guibg' : '#3c3836',
+                \ 'guifg' : '#a89984',
+                \ 'ctermbg' : 237,
+                \ 'ctermfg' : 246,
+                \ 'bold' : 1,
+                \ },
+                \ {
+                  \ 'name' : 'HiBlueBold',
+                  \ 'guibg' : '#83a598',
+                  \ 'guifg' : '#282828',
+                  \ 'ctermbg' : '',
+                  \ 'ctermfg' : 109,
+                  \ 'bold' : 1,
+                  \ },{
+                  \ 'name' : 'HiInactive',
+                  \ 'guibg' : '#3c3836',
+                  \ 'guifg' : '#abb2bf',
+                  \ 'ctermbg' : '',
+                  \ 'ctermfg' : 145,
+                  \ 'bold' : 1,
+                  \ }
+                  \ ]
 
 function! s:hi() abort
   for info in s:hi_info
@@ -132,75 +139,75 @@ function! SpaceVim#plugins#highlight#start(...) abort
   call s:state.set_title('Highlight Transient State')
   call s:state.defind_keys(
         \ {
-        \ 'layout' : 'vertical split',
-        \ 'logo' : s:_function('s:range_logo'),
-        \ 'logo_width' : 30,
-        \ 'init' : s:_function('s:init'),
-        \ 'left' : [
-        \ {
-        \ 'key' : 'n',
-        \ 'desc' : 'Toggle highlight',
-        \ 'func' : s:_function('s:next_item'),
-        \ 'cmd' : '',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : "\<tab>",
-        \ 'desc' : 'Toggle highlight',
-        \ 'func' : s:_function('s:toggle_item'),
-        \ 'cmd' : '',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'r',
-        \ 'desc' : 'change range',
-        \ 'func' : '',
-        \ 'cmd' : 'call call(' . string(s:_function('s:change_range')) . ', [])',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'e',
-        \ 'desc' : 'iedit',
-        \ 'cmd' : '',
-        \ 'func' : '',
-        \ 'exit_cmd' : 'call call(' . string(s:_function('s:iedit')) . ', [])',
-        \ 'exit' : 1,
-        \ },
-        \ ],
-        \ 'right' : [
-        \ {
-        \ 'key' : ['N', 'p'],
-        \ 'desc' : 'Previous match',
-        \ 'cmd' : 'call call(' . string(s:_function('s:previous_item')) . ', [])',
-        \ 'func' : '',
-        \ 'exit' : 0,
-        \ },
-        \ {
-        \ 'key' : 'b',
-        \ 'desc' : 'search buffers',
-        \ 'cmd' : '',
-        \ 'func' : '',
-        \ 'exit_cmd' : 'call call(' . string(s:_function('s:search_buffers')) . ', [])',
-        \ 'exit' : 1,
-        \ },
-        \ {
-        \ 'key' : '/',
-        \ 'desc' : 'Search project',
-        \ 'cmd' : '',
-        \ 'func' : '',
-        \ 'exit_cmd' : 'call call(' . string(s:_function('s:search_project')) . ', [])',
-        \ 'exit' : 1,
-        \ },
-        \ {
-        \ 'key' : 'R',
-        \ 'desc' : 'Reset',
-        \ 'cmd' : '',
-        \ 'func' : s:_function('s:reset_range'),
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ }
-        \ )
+          \ 'layout' : 'vertical split',
+          \ 'logo' : s:_function('s:range_logo'),
+          \ 'logo_width' : 30,
+          \ 'init' : s:_function('s:init'),
+          \ 'left' : [
+            \ {
+              \ 'key' : 'n',
+              \ 'desc' : 'Toggle highlight',
+              \ 'func' : s:_function('s:next_item'),
+              \ 'cmd' : '',
+              \ 'exit' : 0,
+              \ },
+              \ {
+                \ 'key' : "\<tab>",
+                \ 'desc' : 'Toggle highlight',
+                \ 'func' : s:_function('s:toggle_item'),
+                \ 'cmd' : '',
+                \ 'exit' : 0,
+                \ },
+                \ {
+                  \ 'key' : 'r',
+                  \ 'desc' : 'change range',
+                  \ 'func' : '',
+                  \ 'cmd' : 'call call(' . string(s:_function('s:change_range')) . ', [])',
+                  \ 'exit' : 0,
+                  \ },
+                  \ {
+                    \ 'key' : 'e',
+                    \ 'desc' : 'iedit',
+                    \ 'cmd' : '',
+                    \ 'func' : '',
+                    \ 'exit_cmd' : 'call call(' . string(s:_function('s:iedit')) . ', [])',
+                    \ 'exit' : 1,
+                    \ },
+                    \ ],
+                    \ 'right' : [
+                      \ {
+                        \ 'key' : ['N', 'p'],
+                        \ 'desc' : 'Previous match',
+                        \ 'cmd' : 'call call(' . string(s:_function('s:previous_item')) . ', [])',
+                        \ 'func' : '',
+                        \ 'exit' : 0,
+                        \ },
+                        \ {
+                          \ 'key' : 'b',
+                          \ 'desc' : 'search buffers',
+                          \ 'cmd' : '',
+                          \ 'func' : '',
+                          \ 'exit_cmd' : 'call call(' . string(s:_function('s:search_buffers')) . ', [])',
+                          \ 'exit' : 1,
+                          \ },
+                          \ {
+                            \ 'key' : '/',
+                            \ 'desc' : 'Search project',
+                            \ 'cmd' : '',
+                            \ 'func' : '',
+                            \ 'exit_cmd' : 'call call(' . string(s:_function('s:search_project')) . ', [])',
+                            \ 'exit' : 1,
+                            \ },
+                            \ {
+                              \ 'key' : 'R',
+                              \ 'desc' : 'Reset',
+                              \ 'cmd' : '',
+                              \ 'func' : s:_function('s:reset_range'),
+                              \ 'exit' : 0,
+                              \ },
+                              \ ],
+                              \ }
+                              \ )
   let save_tve = &t_ve
   setlocal t_ve=
   if has('gui_running')
@@ -305,16 +312,23 @@ endfunction
 
 " local func: highlight symbol {{{
 function! s:highlight() abort
-  let s:highlight_id = []
   for item in s:cursor_stack
-    call add(s:highlight_id, s:CMP.matchaddpos('HiBlueBold', [[
-          \ item.lnum,
-          \ item.col,
-          \ item.len
-          \ ]]))
+    if item.active
+      call s:CMP.matchaddpos('HiBlueBold', [[
+            \ item.lnum,
+            \ item.col,
+            \ item.len
+            \ ]])
+    else
+      call s:CMP.matchaddpos('HiInactive', [[
+            \ item.lnum,
+            \ item.col,
+            \ item.len
+            \ ]])
+    endif
   endfor
-  if !empty(get(s:cursor_stack, s:index, []))
-    let s:highlight_id_c = s:CMP.matchaddpos('HiPurpleBold', [[
+  if !empty(get(s:cursor_stack, s:index, [])) && s:cursor_stack[s:index].active
+    call s:CMP.matchaddpos('HiPurpleBold', [[
           \ s:cursor_stack[s:index].lnum,
           \ s:cursor_stack[s:index].col,
           \ s:cursor_stack[s:index].len,
@@ -325,16 +339,13 @@ endfunction
 
 " local func: clear highlight {{{
 function! s:clear_highlight() abort
-  for id in s:highlight_id
-    call matchdelete(id)
-  endfor
-  call matchdelete(s:highlight_id_c)
+  call clearmatches()
 endfunction
 " }}}
 
 " key binding: Tab toggle_item {{{
 function! s:toggle_item() abort
-
+  let s:cursor_stack[s:index].active = s:cursor_stack[s:index].active ? 0 : 1
 endfunction
 " }}}
 
