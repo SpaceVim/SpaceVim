@@ -66,6 +66,8 @@ function! SpaceVim#layers#load(layer, ...) abort
   if a:layer ==# '-l'
     call s:list_layers()
     return
+  elseif empty(a:layer) || type(a:layer) !=# type('')
+    return
   endif
   let loadable = 1
   try

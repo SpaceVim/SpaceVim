@@ -148,11 +148,12 @@ function! s:apply(config, type) abort
     let layers = get(a:config, 'layers', [])
     for layer in layers
       let enable = get(layer, 'enable', 1)
+      let name = get(layer, 'name', '')
       if (type(enable) == type('') && !eval(enable))
             \ || (type(enable) != type('') && !enable)
-        call SpaceVim#layers#disable(layer.name)
+        call SpaceVim#layers#disable(name)
       else
-        call SpaceVim#layers#load(layer.name, layer)
+        call SpaceVim#layers#load(name, layer)
       endif
     endfor
     let custom_plugins = get(a:config, 'custom_plugins', [])
