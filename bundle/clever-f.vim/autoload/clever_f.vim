@@ -3,6 +3,8 @@ set cpo&vim
 
 " constants
 let s:ON_NVIM = has('nvim')
+let s:ESC_CODE = char2nr("\<Esc>")
+let s:HAS_TIMER = has('timers')
 
 " configurations
 let g:clever_f_across_no_line          = get(g:, 'clever_f_across_no_line', 0)
@@ -18,6 +20,7 @@ let g:clever_f_timeout_ms              = get(g:, 'clever_f_timeout_ms', 0)
 let g:clever_f_mark_char               = get(g:, 'clever_f_mark_char', 1)
 let g:clever_f_repeat_last_char_inputs = get(g:, 'clever_f_repeat_last_char_inputs', ["\<CR>"])
 let g:clever_f_mark_direct             = get(g:, 'clever_f_mark_direct', 0)
+let g:clever_f_highlight_timeout_ms    = get(g:, 'clever_f_highlight_timeout_ms', 0)
 
 " below variable must be set before loading this script
 let g:clever_f_clean_labels_eagerly    = get(g:, 'clever_f_clean_labels_eagerly', 1)
@@ -75,6 +78,7 @@ let s:first_move = {}
 let s:migemo_dicts = {}
 let s:previous_char_num = {}
 let s:timestamp = [0, 0]
+let s:highlight_timer = -1
 
 " keys are mode string returned from mode()
 function! clever_f#reset() abort
@@ -99,11 +103,13 @@ function! clever_f#_reset_all() abort
     let s:previous_char_num = {}
     autocmd! plugin-clever-f-finalizer
     unlet! s:moved_forward
-
-    return ''
 endfunction
 
 function! s:remove_highlight() abort
+    if s:highlight_timer >= 0
+        call timer_stop(s:highlight_timer)
+        let s:highlight_timer = -1
+    endif
     for h in filter(getmatches(), 'v:val.group ==# "CleverFChar"')
         call matchdelete(h.id)
     endfor
@@ -117,12 +123,21 @@ function! s:is_timedout() abort
     return elapsed_ms > g:clever_f_timeout_ms
 endfunction
 
+function! s:on_highlight_timer_expired(timer) abort
+    if s:highlight_timer != a:timer
+        return
+    endif
+    let s:highlight_timer = -1
+    call s:remove_highlight()
+endfunction
+
 " highlight characters to which the cursor can be moved directly
-function! s:mark_direct(forward, count) abort
+" Note: public function for test
+function! clever_f#_mark_direct(forward, count) abort
     let line = getline('.')
     let [_, l, c, _] = getpos('.')
 
-    if (a:forward && c == len(line)) || (!a:forward && c == 1)
+    if (a:forward && c >= len(line)) || (!a:forward && c == 1)
         " there is no matching characters
         return []
     endif
@@ -157,11 +172,6 @@ function! s:mark_direct(forward, count) abort
     return matches
 endfunction
 
-" introduce public function for test
-function! clever_f#_mark_direct(forward, count) abort
-    return s:mark_direct(a:forward, a:count)
-endfunction
-
 function! s:mark_char_in_current_line(map, char) abort
     let regex = '\%' . line('.') . 'l' . s:generate_pattern(a:map, a:char)
     call matchadd('CleverFChar', regex , 999)
@@ -185,7 +195,7 @@ endfunction
 
 function! clever_f#find_with(map) abort
     if a:map !~# '^[fFtT]$'
-        throw "Error: Invalid mapping '" . a:map . "'"
+        throw "clever-f: Invalid mapping '" . a:map . "'"
     endif
 
     if &foldopen =~# '\<\%(all\|hor\)\>'
@@ -195,13 +205,20 @@ function! clever_f#find_with(map) abort
     endif
 
     let current_pos = getpos('.')[1 : 2]
-
     let mode = s:mode()
-    if current_pos != get(s:previous_pos, mode, [0, 0])
+    let highlight_timer_enabled = g:clever_f_mark_char && g:clever_f_highlight_timeout_ms > 0 && s:HAS_TIMER
+    let in_macro = clever_f#compat#reg_executing() !=# ''
+
+    " When 'f' is run while executing a macro, do not repeat previous
+    " character. See #59 for more details
+    if current_pos != get(s:previous_pos, mode, [0, 0]) || in_macro
+        let should_redraw = !in_macro
         let back = 0
         if g:clever_f_mark_cursor
             let cursor_marker = matchadd('CleverFCursor', '\%#', 999)
-            redraw
+            if should_redraw
+                redraw
+            endif
         endif
         " block-NONE does not work on Neovim
         if g:clever_f_hide_cursor_on_cmdline && !s:ON_NVIM
@@ -211,15 +228,17 @@ function! clever_f#find_with(map) abort
             set t_ve=
         endif
         try
-            if g:clever_f_mark_direct
-                let direct_markers = s:mark_direct(a:map =~# '\l', v:count1)
+            if g:clever_f_mark_direct && should_redraw
+                let direct_markers = clever_f#_mark_direct(a:map =~# '\l', v:count1)
                 redraw
             endif
-            if g:clever_f_show_prompt | echon 'clever-f: ' | endif
+            if g:clever_f_show_prompt
+                echon 'clever-f: '
+            endif
             let s:previous_map[mode] = a:map
             let s:first_move[mode] = 1
             let cn = s:getchar()
-            if cn == char2nr("\<Esc>")
+            if cn == s:ESC_CODE
                 return "\<Esc>"
             endif
             if index(map(deepcopy(g:clever_f_repeat_last_char_inputs), 'char2nr(v:val)'), cn) == -1
@@ -250,10 +269,12 @@ function! clever_f#find_with(map) abort
                 endif
             endif
 
-            if g:clever_f_show_prompt | redraw! | endif
+            if g:clever_f_show_prompt && should_redraw
+                redraw!
+            endif
         finally
             if g:clever_f_mark_cursor | call matchdelete(cursor_marker) | endif
-            if g:clever_f_mark_direct
+            if g:clever_f_mark_direct && exists('l:direct_markers')
                 for m in direct_markers
                     call matchdelete(m)
                 endfor
@@ -271,10 +292,11 @@ function! clever_f#find_with(map) abort
             endif
         endtry
     else
-        " when repeated
+        " When repeated
+
         let back = a:map =~# '\u'
-        if g:clever_f_fix_key_direction
-            let back = s:previous_map[mode] =~# '\u' ? !back : back
+        if g:clever_f_fix_key_direction && s:previous_map[mode] =~# '\u'
+            let back = !back
         endif
 
         " reset and retry if timed out
@@ -282,6 +304,22 @@ function! clever_f#find_with(map) abort
             call clever_f#reset()
             return clever_f#find_with(a:map)
         endif
+
+        " Restore highlights which were removed by timeout
+        if highlight_timer_enabled && s:highlight_timer < 0
+            call s:remove_highlight()
+            if mode ==# 'n' || mode ==? 'v' || mode ==# "\<C-v>" ||
+             \ mode ==# 'ce' || mode ==? 's' || mode ==# "\<C-s>"
+                call s:mark_char_in_current_line(s:previous_map[mode], s:previous_char_num[mode])
+            endif
+        endif
+    endif
+
+    if highlight_timer_enabled
+        if s:highlight_timer >= 0
+            call timer_stop(s:highlight_timer)
+        endif
+        let s:highlight_timer = timer_start(g:clever_f_highlight_timeout_ms, funcref('s:on_highlight_timer_expired'))
     endif
 
     return clever_f#repeat(back)
@@ -412,7 +450,7 @@ function! s:load_migemo_dict() abort
         return clever_f#migemo#eucjp#load_dict()
     else
         let g:clever_f_use_migemo = 0
-        throw 'Error: ' . enc . ' is not supported. Migemo is disabled.'
+        throw "clever-f: Encoding '" . enc . "' is not supported. Migemo is disabled"
     endif
 endfunction
 

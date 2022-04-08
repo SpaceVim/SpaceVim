@@ -1,8 +1,8 @@
 ## How to execute tests
 
-It requires [vim-themis](https://github.com/thinca/vim-themis). You need to install it in advance.
+[vim-themis](https://github.com/thinca/vim-themis) is required.
 
-For example, following clones it locally in clever-f.vim repository.
+For example, the following clones it locally in clever-f.vim repository.
 
 ```console
 $ cd /path/to/clever-f.vim/test
@@ -12,9 +12,13 @@ $ ./vim-themis/bin/themis .
 
 ## How to measure code coverage
 
-It requires [covimerage](https://github.com/Vimjas/covimerage).
+[covimerage](https://github.com/Vimjas/covimerage) is required. I recommend to use
+[venv](https://docs.python.org/3/library/venv.html) for installing it locally.
 
 ```console
+$ python -m venv venv
+$ source ./venv/bin/activate
+
 $ pip install covimerage
 $ cd /path/to/clever-f.vim/test
 
@@ -33,6 +37,6 @@ $ coverage html
 
 ## CI
 
-CI is run in both Linux and macOS using Travis CI: https://travis-ci.org/rhysd/clever-f.vim
+CI runs on Linux, macOS and Windows using GitHub Actions: https://github.com/rhysd/clever-f.vim/actions?query=workflow%3ACI
 
 Coverage is tracked with codecov.io: https://codecov.io/gh/rhysd/clever-f.vim

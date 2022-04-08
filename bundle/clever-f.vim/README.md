@@ -19,7 +19,7 @@ Lastly, you can customize the behavior of the mappings and features.
 
 ## USAGE
 
-![Screen shot](https://raw.githubusercontent.com/rhysd/screenshots/master/clever-f.vim/cleverf_main.gif)
+![Screen shot](https://raw.githubusercontent.com/rhysd/ss/master/clever-f.vim/cleverf_main.gif)
 
 I'll show some examples of usage. `_` is the place of cursor, `->` is a move of cursor, alphabets above
 `->` is input by keyboard. Note that this is a part of clever-f.vim's features.
@@ -32,7 +32,7 @@ I'll show some examples of usage. `_` is the place of cursor, `->` is a move of 
     move :                        _<-----------------------------_<-_
     text :  hoge        huga    hoo         hugu                ponyo
 
-![f screencast](https://raw.githubusercontent.com/rhysd/screenshots/master/clever-f.vim/cleverf_1.gif)
+![f screencast](https://raw.githubusercontent.com/rhysd/ss/master/clever-f.vim/cleverf_1.gif)
 
 
 ### __`F`__
@@ -43,7 +43,7 @@ I'll show some examples of usage. `_` is the place of cursor, `->` is a move of 
     move :  _---------->_------>_----------->_
     text :  hoge        huga    huyo         hugu                ponyo
 
-![F screencast](https://raw.githubusercontent.com/rhysd/screenshots/master/clever-f.vim/cleverf_2.gif)
+![F screencast](https://raw.githubusercontent.com/rhysd/ss/master/clever-f.vim/cleverf_2.gif)
 
 
 ### __`t`__
@@ -54,7 +54,7 @@ I'll show some examples of usage. `_` is the place of cursor, `->` is a move of 
     move :                         _<-----------------------------__
     text :  hoge        huga    hoo         hugu                ponyo
 
-![t screencast](https://raw.githubusercontent.com/rhysd/screenshots/master/clever-f.vim/cleverf_3.gif)
+![t screencast](https://raw.githubusercontent.com/rhysd/ss/master/clever-f.vim/cleverf_3.gif)
 
 
 ## CUSTOMIZE
@@ -71,7 +71,9 @@ to be case-insensitive, set it to `1` in your vimrc.
 
 ### Smart case
 
-`g:clever_f_smart_case` controls whether searches are smart case or not. If you type a lower case character, the case will be ignored however if you type an upper case character it will only search for upper case characters. Please set it to `1` in your vimrc to enable searching by smart case.
+`g:clever_f_smart_case` controls whether searches are smart case or not. If you type a lower case character,
+the case will be ignored however if you type an upper case character it will only search for upper case characters.
+Please set it to `1` in your vimrc to enable searching by smart case.
 
 ### Target character highlighting in current line
 
@@ -81,18 +83,41 @@ group to `g:clever_f_mark_char_color`.
 
 Below is an example using `ta` in description of clever-f.vim.
 
-![highlight example](https://raw.githubusercontent.com/rhysd/screenshots/master/clever-f.vim/cleverf_4.gif)
+![highlight example](https://raw.githubusercontent.com/rhysd/ss/master/clever-f.vim/cleverf_4.gif)
 
 Here, `ta` searches `a` forward then matches the character before `a` and `Ta` searches `a` backward
 then matches the character after `a`. You can see the highlighted target is dynamically changed following
 the cursor's direction.
 
-### Timeout
+Highlight can be cleared after timeout. See below section.
 
-You can specify the timeout for `f`, `F`, `t` and `T` mappings. If the interval of these mappings
-is greater than the one you specified, clever-f.vim resets its state to make you input a new character.
-This feature is disabled by default. If you want to use this feature, set `g:clever_f_timeout_ms`
-to proper value.
+### Highlighting characters which can be directly jumped to
+
+clever-f.vim can highlight the characters in the line which can be directly jumped to. With this feature, you
+can easily understand where cursor can move by the `f{char}` input before inputting `{char}`.
+
+For example, when 'aba' is in the current line, cursor can reach the first 'a' with `fa` but cannot reach the second 'a'.
+In this case, the first 'a' is highlighted but the second 'a' is not when typing `f`.
+
+To enable this feature, set `1` to `g:clever_f_mark_direct`  in your vimrc. Note that setting `1` after Vim
+starts does not work.
+
+### Repeat timeout
+
+You can specify the timeout for repeating the previous target character on `f`, `F`, `t` and `T` mappings.
+If the interval of these mappings is greater than the one you specified, clever-f.vim resets its state to make you
+input a new character.  This feature is disabled by default. If you want to use this feature, set timeout value in
+milliseconds to `g:clever_f_timeout_ms`.
+
+### Highlight timeout
+
+When target character highlighting is enabled, the highlight can be cleared after specific timeout.
+
+By default, this feature is not enabled. Highlight won't be cleared until the cursor moves. To enable this feature,
+set milliseconds value to `g:clever_f_highlight_timeout_ms`.
+
+This feature requires timer feature added at Vim8. Confirm `:echo has('timers')` returns `1` to check if this feature
+is available.
 
 ### Repeat last input
 

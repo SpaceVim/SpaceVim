@@ -1,0 +1,33 @@
+name: Weekly check
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  unit-tests:
+    name: Unit tests
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        neovim: [false, true]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Checkout themis.vim
+        uses: actions/checkout@v2
+        with:
+          repository: thinca/vim-themis
+          path: vim-themis
+      - name: Install Vim or Neovim
+        uses: rhysd/action-setup-vim@v1
+        id: vim
+        with:
+          neovim: ${{ matrix.neovim }}
+      - name: Run unit tests
+        env:
+          THEMIS_VIM: ${{ steps.vim.outputs.executable }}
+          PROFILE_LOG: profile.txt
+        run: |
+          cd ./test
+          echo "$THEMIS_VIM"
+          ../vim-themis/bin/themis .
