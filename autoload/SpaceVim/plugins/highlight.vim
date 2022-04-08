@@ -45,63 +45,57 @@ endfunction
 " }}}
 
 " transient_state API func: init {{{
-let s:hi_info = [
-      \ {
-        \ 'name' : 'HiPurpleBold',
-        \ 'guibg' : '#d3869b',
-        \ 'guifg' : '#282828',
-        \ 'ctermbg' : '',
-        \ 'ctermfg' : 175,
-        \ 'bold' : 1,
-        \ },
-        \ {
-          \ 'name' : 'HiRrangeDisplay',
-          \ 'guibg' : '#458588',
-          \ 'guifg' : '#282828',
-          \ 'ctermbg' : '',
-          \ 'ctermfg' : 175,
-          \ 'bold' : 1,
-          \ },
-          \ {
-            \ 'name' : 'HiRrangeBuffer',
-            \ 'guibg' : '#689d6a',
-            \ 'guifg' : '#282828',
-            \ 'ctermbg' : '',
-            \ 'ctermfg' : 175,
-            \ 'bold' : 1,
-            \ },
-            \ {
-              \ 'name' : 'HiRrangeFunction',
-              \ 'guibg' : '#d38696',
-              \ 'guifg' : '#282828',
-              \ 'ctermbg' : '',
-              \ 'ctermfg' : 175,
-              \ 'bold' : 1,
-              \ },
-              \ {
-                \ 'name' : 'HiRrangeIndex',
-                \ 'guibg' : '#3c3836',
-                \ 'guifg' : '#a89984',
-                \ 'ctermbg' : 237,
-                \ 'ctermfg' : 246,
-                \ 'bold' : 1,
-                \ },
-                \ {
-                  \ 'name' : 'HiBlueBold',
-                  \ 'guibg' : '#83a598',
-                  \ 'guifg' : '#282828',
-                  \ 'ctermbg' : '',
-                  \ 'ctermfg' : 109,
-                  \ 'bold' : 1,
-                  \ },{
-                  \ 'name' : 'HiInactive',
-                  \ 'guibg' : '#3c3836',
-                  \ 'guifg' : '#abb2bf',
-                  \ 'ctermbg' : '',
-                  \ 'ctermfg' : 145,
-                  \ 'bold' : 1,
-                  \ }
-                  \ ]
+let s:hi_info = [{
+      \ 'name' : 'HiPurpleBold',
+      \ 'guibg' : '#d3869b',
+      \ 'guifg' : '#282828',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 175,
+      \ 'bold' : 1,
+      \ },{
+      \ 'name' : 'HiRrangeDisplay',
+      \ 'guibg' : '#458588',
+      \ 'guifg' : '#282828',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 175,
+      \ 'bold' : 1,
+      \ },{
+      \ 'name' : 'HiRrangeBuffer',
+      \ 'guibg' : '#689d6a',
+      \ 'guifg' : '#282828',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 175,
+      \ 'bold' : 1,
+      \ },{
+      \ 'name' : 'HiRrangeFunction',
+      \ 'guibg' : '#d38696',
+      \ 'guifg' : '#282828',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 175,
+      \ 'bold' : 1,
+      \ },{
+      \ 'name' : 'HiRrangeIndex',
+      \ 'guibg' : '#3c3836',
+      \ 'guifg' : '#a89984',
+      \ 'ctermbg' : 237,
+      \ 'ctermfg' : 246,
+      \ 'bold' : 1,
+      \ },{
+      \ 'name' : 'HiBlueBold',
+      \ 'guibg' : '#83a598',
+      \ 'guifg' : '#282828',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 109,
+      \ 'bold' : 1,
+      \ },{
+      \ 'name' : 'HiInactive',
+      \ 'guibg' : '#3c3836',
+      \ 'guifg' : '#abb2bf',
+      \ 'ctermbg' : '',
+      \ 'ctermfg' : 145,
+      \ 'bold' : 1,
+      \ }
+      \ ]
 
 function! s:hi() abort
   for info in s:hi_info
