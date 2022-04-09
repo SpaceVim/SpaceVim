@@ -34,6 +34,7 @@ let s:cursor_col = -1
 let s:mode = ''
 let s:hi_id = ''
 let s:Operator = ''
+let s:iedit_cursor_hi_info  = {}
 
 let s:VIMH = SpaceVim#api#import('vim#highlight')
 let s:STRING = SpaceVim#api#import('data#string')
@@ -80,15 +81,7 @@ let s:iedit_hi_info = [{
       \ ]
 
 function! s:highlight_cursor() abort
-  let info = {
-        \ 'name' : 'SpaceVimGuideCursor',
-        \ 'guibg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'guifg'),
-        \ 'guifg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'guibg'),
-        \ 'ctermbg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermfg'),
-        \ 'ctermfg' : synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'ctermbg'),
-        \ }
-  hi def link SpaceVimGuideCursor Cursor
-  call s:VIMH.hi(info)
+  call s:VIMH.hi(s:iedit_cursor_hi_info)
   for i in range(len(s:cursor_stack))
     if s:cursor_stack[i].active
       if i == s:index
@@ -154,6 +147,18 @@ function! SpaceVim#plugins#iedit#start(...) abort
   call s:VIMH.hi(s:iedit_hi_info[0])
   call s:VIMH.hi(s:iedit_hi_info[1])
   call s:VIMH.hi(s:iedit_hi_info[2])
+  let cursor_hi = s:VIMH.group2dict('Cursor')
+  let s:iedit_cursor_hi_info  = deepcopy(cursor_hi)
+  let s:iedit_cursor_hi_info.name = 'SpaceVimGuideCursor'
+  let lcursor_hi = s:VIMH.group2dict('lCursor')
+  let guicursor = &guicursor
+  call s:VIMH.hide_in_normal('Cursor')
+  call s:VIMH.hide_in_normal('lCursor')
+  " hi Cursor ctermbg=16 ctermfg=16 guifg=#282c34 guibg=#282c34
+  " hi lCursor ctermbg=16 ctermfg=16 guifg=#282c34 guibg=#282c34
+  if has('nvim')
+    set guicursor+=a:Cursor/lCursor
+  endif
   let s:mode = 'n'
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
@@ -223,6 +228,9 @@ function! SpaceVim#plugins#iedit#start(...) abort
   let w:spacevim_iedit_mode = s:mode
   let w:spacevim_statusline_mode = 'in'
   let &t_ve = save_tve
+  call s:VIMH.hi(cursor_hi)
+  call s:VIMH.hi(lcursor_hi)
+  let &guicursor = guicursor
   call s:remove_cursor_highlight()
   try
     call matchdelete(s:hi_id)
