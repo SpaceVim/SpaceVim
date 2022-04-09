@@ -231,6 +231,7 @@ function! SpaceVim#plugins#iedit#start(...) abort
   call s:VIMH.hi(cursor_hi)
   call s:VIMH.hi(lcursor_hi)
   let &guicursor = guicursor
+  normal! :
   call s:remove_cursor_highlight()
   try
     call matchdelete(s:hi_id)
