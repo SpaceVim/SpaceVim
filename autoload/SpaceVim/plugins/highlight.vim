@@ -105,8 +105,17 @@ endfunction
 
 function! s:init() abort
   call s:hi()
-  let s:current_range = 'Display'
-  let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
+  " https://github.com/neovim/neovim/issues/18050
+  " vim-patch:8.0.0542 make `line('w$')` return 0 in Ex mode
+  " so the default range should be Buffer in Ex mode
+  let mode = mode()
+  if mode ==# 'cv' || mode ==# 'ce'
+    let s:current_range = 'Buffer'
+    let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(1, line('$'), s:current_match, 0)
+  else
+    let s:current_range = 'Display'
+    let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
+  endif
   call s:highlight()
 endfunction
 " }}}
@@ -260,7 +269,12 @@ function! s:change_range() abort
     let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(range[0], range[1], s:current_match, 0)
     call s:clear_highlight()
     call s:highlight()
-  elseif s:current_range ==# 'Function'
+  elseif s:current_range ==# 'Function' && (mode() ==# 'cv' || mode() ==# 'ce')
+    let s:current_range = 'Buffer'
+    let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(1, line('$'), s:current_match, 0)
+    call s:clear_highlight()
+    call s:highlight()
+  else
     let s:current_range = 'Display'
     let [s:cursor_stack, s:index] = SpaceVim#plugins#iedit#paser(line('w0'), line('w$'), s:current_match, 0)
     call s:clear_highlight()
