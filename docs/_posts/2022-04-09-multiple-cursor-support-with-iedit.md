@@ -2,7 +2,7 @@
 title: "Vim 多光标支持"
 categories: [blog_cn, feature_cn]
 description: ""
-image: https://user-images.githubusercontent.com/13142418/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif
+image: https://user-images.githubusercontent.com/13142418/162548036-2598a705-4834-4332-9b55-fc49eae80f99.gif
 commentsID: "Vim 多光标支持"
 comments: true
 permalink: /cn/:title/
