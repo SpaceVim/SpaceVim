@@ -66,7 +66,7 @@ function! s:self.open() abort
       noautocmd wincmd p
     endif
     if self._clear_cmdline
-      normal! :
+      exe "normal! :\<C-C>"
     else
       let self._clear_cmdline = 1
     endif
@@ -98,7 +98,7 @@ function! s:self.open() abort
     endif
   endif
   if self._clear_cmdline
-    normal! :
+    exe "normal! :\<C-C>"
   else
     let self._clear_cmdline = 1
   endif
