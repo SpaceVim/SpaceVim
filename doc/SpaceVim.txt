@@ -79,14 +79,15 @@ CONTENTS                                                   *SpaceVim-contents*
       58. statusline_unicode.............|SpaceVim-options-statusline_unicode|
       59. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
       60. todo_labels...........................|SpaceVim-options-todo_labels|
-      61. vim_help_language...............|SpaceVim-options-vim_help_language|
-      62. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      63. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      64. wildignore.............................|SpaceVim-options-wildignore|
-      65. windisk_encoding.................|SpaceVim-options-windisk_encoding|
-      66. windows_index_type.............|SpaceVim-options-windows_index_type|
-      67. windows_leader.....................|SpaceVim-options-windows_leader|
-      68. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      61. todo_prefix...........................|SpaceVim-options-todo_prefix|
+      62. vim_help_language...............|SpaceVim-options-vim_help_language|
+      63. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      64. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      65. wildignore.............................|SpaceVim-options-wildignore|
+      66. windisk_encoding.................|SpaceVim-options-windisk_encoding|
+      67. windows_index_type.............|SpaceVim-options-windows_index_type|
+      68. windows_leader.....................|SpaceVim-options-windows_leader|
+      69. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Public functions.....................................|SpaceVim-functions|
@@ -836,6 +837,11 @@ the following to ~/.tmux.conf:
 TODO_LABELS                                     *SpaceVim-options-todo_labels*
 
 Option for setting todo labels in current project.
+
+==============================================================================
+TODO_PREFIX                                     *SpaceVim-options-todo_prefix*
+
+Option for setting todo prefix in current project. The default is `@`
 
 ==============================================================================
 VIM_HELP_LANGUAGE                         *SpaceVim-options-vim_help_language*

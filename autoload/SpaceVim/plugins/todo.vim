@@ -75,8 +75,10 @@ function! s:update_todo_content() abort
         \ && type(g:spacevim_todo_labels) == type([])
         \ && !empty(g:spacevim_todo_labels)
     let s:labels = g:spacevim_todo_labels
+    let s:prefix = g:spacevim_todo_prefix
   else
-    let s:labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
+    let s:labels = ['fixme', 'question', 'todo', 'idea']
+    let s:prefix = '@'
   endif
 
   let s:todos = []
@@ -189,7 +191,7 @@ function! s:get_labels_regex()
     let separator = '|'
   endif
 
-  return join(map(copy(s:labels), "v:val . '\\b'"),
+  return join(map(copy(s:labels), "s:prefix . v:val . '\\b'"),
   \ separator)
 endfunc
 

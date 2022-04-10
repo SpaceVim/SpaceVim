@@ -86,6 +86,7 @@ lang: zh
     - [自定义任务](#自定义任务)
     - [任务自动识别](#任务自动识别)
     - [任务提供源](#任务提供源)
+  - [代办事项管理器](#代办事项管理器)
   - [Iedit 多光标编辑](#iedit-多光标编辑)
     - [Iedit 快捷键](#iedit-快捷键)
   - [高亮光标下变量](#高亮光标下变量)
@@ -2168,6 +2169,22 @@ call SpaceVim#plugins#tasks#reg_provider(funcref('s:make_tasks'))
 将以上内容加入启动函数，在 SpceVim 仓库内按下 `SPC p t r` 快捷键，将会展示如下任务：
 
 ![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
+
+### 代办事项管理器
+
+待办事项管理插件将异步执行`rg`命令，结果会展示在底部待办事项窗口。
+默认的快捷键是 `SPC a o`，默认的标签前缀是 `@`，
+默认的标签包含：`['fixme', 'question', 'todo', 'idea']`.
+
+配置示例：
+
+```
+[options]
+   todo_labels = ['fixme', 'question', 'todo', 'idea']
+   todo_prefix = '@'
+```
+
+![todo manager](https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
 
 ### Iedit 多光标编辑
 

@@ -2226,9 +2226,16 @@ With the above configuration, you will see the following tasks in the SpaceVim r
 ### Todo manager
 
 The todo manager plugin will run `rg` asynchronously, the results will be displayed on todo manager windows.
-The key binding is `SPC a o`.
+The key binding is `SPC a o`. The default `todo_prefix` option is `@`,
+and the `todo_labels` is: `['fixme', 'question', 'todo', 'idea']`.
 
-The default tags is: `'@fixme', '@question', '@todo', '@idea'`.
+Example:
+
+```
+[options]
+   todo_labels = ['fixme', 'question', 'todo', 'idea']
+   todo_prefix = '@'
+```
 
 ![todo manager](https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
 

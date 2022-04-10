@@ -1208,7 +1208,15 @@ let g:spacevim_commandline_prompt = '>'
 
 ""
 " Option for setting todo labels in current project.
-let g:spacevim_todo_labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
+let g:spacevim_todo_labels = ['fixme', 'question', 'todo', 'idea']
+
+""
+" @section todo_prefix, options-todo_prefix
+" @parentsection options
+" Option for setting todo prefix in current project.
+" The default is `@`
+
+let g:spacevim_todo_prefix = '@'
 
 ""
 " @section lint_on_the_fly, options-lint_on_the_fly
