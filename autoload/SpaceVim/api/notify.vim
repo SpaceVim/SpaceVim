@@ -242,8 +242,8 @@ function! s:self.redraw_windows() abort
             \ 'focusable' : v:false,
             \ })
     if self.winblend > 0 && exists('&winblend')
-      call nvim_win_set_var(self.winid, 'winblend', self.winblend)
-      call nvim_win_set_var(self.border.winid, 'winblend', self.winblend)
+      call nvim_win_set_option(self.winid, 'winblend', self.winblend)
+      call nvim_win_set_option(self.border.winid, 'winblend', self.winblend)
     endif
   endif
   call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
