@@ -182,9 +182,11 @@ function! BookmarkShowAll()
       let &errorformat = "%f:%l:%m"   " custom format for bookmarks
       if g:bookmark_location_list
         lgetexpr bm#location_list()
+        call setloclist(0, [], 'r', {'title': 'Bookmarks'})
         belowright lopen
       else
         cgetexpr bm#location_list()
+        call setqflist([], 'r', {'title': 'Bookmarks'})
         belowright copen
       endif
       augroup BM_AutoCloseCommand
