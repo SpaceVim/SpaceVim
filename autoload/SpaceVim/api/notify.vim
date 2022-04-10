@@ -7,6 +7,24 @@
 "=============================================================================
 scriptencoding utf-8
 
+""
+" @section notify, api-notify
+" @parentsection api
+" The notification api for SpaceVim
+"
+" notify({msg} [, {Color}[, {option}]])
+"
+" Use floating windows to display notification {msg}. The {msg} should a no
+" empty string. {Color} is the name of highlight ground defined in Vim. The
+" {option} is a dictionary which support following key:
+"
+" - `winblend`: enable transparency for the notify windows. Valid values
+"   are in the range of 0 to 100. Default is 0.
+"
+" NOTE: Floating windows support pseudo-transparency (:help 'winblend')
+" in #neovim HEAD (v0.4.x). 
+" 
+
 " Global values, this can be used between different notify
 
 let s:notifications = {}
@@ -24,6 +42,7 @@ let s:self.border.winid = -1
 let s:self.border.bufnr = -1
 let s:self.borderchars = ['─', '│', '─', '│', '┌', '┐', '┘', '└']
 let s:self.title = ''
+let s:self.winblend = 0
 let s:self.timeout = 3000
 let s:self.hashkey = ''
 let s:self.config = {}
@@ -143,6 +162,8 @@ endfunction
 function! s:self.notify(msg, ...) abort
   call add(self.message, a:msg)
   let self.notification_color = get(a:000, 0, 'Normal')
+  let options = get(a:000, 1, {}) 
+  let self.winblend = get(options, 'winblend', self.winblend)
   if empty(self.hashkey)
     let self.hashkey = self.__password.generate_simple(10)
   endif
@@ -220,6 +241,10 @@ function! s:self.redraw_windows() abort
             \ 'highlight' : 'VertSplit',
             \ 'focusable' : v:false,
             \ })
+    if self.winblend > 0 && exists('&winblend')
+      call nvim_win_set_var(self.winid, 'winblend', self.winblend)
+      call nvim_win_set_var(self.border.winid, 'winblend', self.winblend)
+    endif
   endif
   call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
         \ self.draw_border(self.title, self.notification_width, len(self.message)))

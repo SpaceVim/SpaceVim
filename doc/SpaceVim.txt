@@ -246,17 +246,18 @@ CONTENTS                                                   *SpaceVim-contents*
       6. data#string................................|SpaceVim-api-data-string|
       7. job................................................|SpaceVim-api-job|
       8. logger..........................................|SpaceVim-api-logger|
-      9. password......................................|SpaceVim-api-password|
-      10. prompt.........................................|SpaceVim-api-prompt|
-      11. sid...........................................|SpaceVim-api-vim-sid|
-      12. system.........................................|SpaceVim-api-system|
-      13. time.............................................|SpaceVim-api-time|
-      14. unicode#box...............................|SpaceVim-api-unicode-box|
-      15. vim#buffer.................................|SpaceVim-api-vim-buffer|
-      16. vim#command...............................|SpaceVim-api-vim-command|
-      17. vim#compatible.........................|SpaceVim-api-vim-compatible|
-      18. vim#message...............................|SpaceVim-api-vim-message|
-      19. vim#window.................................|SpaceVim-api-vim-window|
+      9. notify..........................................|SpaceVim-api-notify|
+      10. password.....................................|SpaceVim-api-password|
+      11. prompt.........................................|SpaceVim-api-prompt|
+      12. sid...........................................|SpaceVim-api-vim-sid|
+      13. system.........................................|SpaceVim-api-system|
+      14. time.............................................|SpaceVim-api-time|
+      15. unicode#box...............................|SpaceVim-api-unicode-box|
+      16. vim#buffer.................................|SpaceVim-api-vim-buffer|
+      17. vim#command...............................|SpaceVim-api-vim-command|
+      18. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      19. vim#message...............................|SpaceVim-api-vim-message|
+      20. vim#window.................................|SpaceVim-api-vim-window|
   10. Development...............................................|SpaceVim-dev|
       1. commit-style-guide..................|SpaceVim-dev-commit-style-guide|
   11. FAQ.......................................................|SpaceVim-faq|
@@ -5759,6 +5760,24 @@ set_silent({silent})
 
   {silent} is a Boolean. by default it is false, and log will be print to
 screen.
+
+==============================================================================
+NOTIFY                                                   *SpaceVim-api-notify*
+
+The notification api for SpaceVim
+
+notify({msg} [, {Color}[, {option}]])
+
+Use floating windows to display notification {msg}. The {msg} should a no
+empty string. {Color} is the name of highlight ground defined in Vim. The
+{option} is a dictionary which support following key:
+
+`winblend`: enable transparency for the notify windows. Valid values are in
+  the range of 0 to 100. Default is 0.
+
+NOTE: Floating windows support pseudo-transparency (:help 'winblend') in
+#neovim HEAD (v0.4.x).
+
 
 ==============================================================================
 PASSWORD                                               *SpaceVim-api-password*
