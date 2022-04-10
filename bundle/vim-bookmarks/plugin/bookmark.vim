@@ -177,6 +177,8 @@ function! BookmarkShowAll()
       exec ":Unite vim_bookmarks"
     elseif exists(':CtrlP') == 2 && g:bookmark_disable_ctrlp == 0
       exec ":CtrlPBookmark"
+    elseif exists(':Leaderf')
+      exe ':Leaderf bookmarks'
     else
       let oldformat = &errorformat    " backup original format
       let &errorformat = "%f:%l:%m"   " custom format for bookmarks

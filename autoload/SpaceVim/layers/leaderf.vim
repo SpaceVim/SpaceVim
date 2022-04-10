@@ -195,6 +195,21 @@ function! SpaceVim#layers#leaderf#config() abort
         \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
         \ }
 
+  let g:Lf_Extensions.bookmarks =
+        \ {
+        \       'source': string(s:_function('s:bookmarks', 1))[10:-3],
+        \       'accept': string(s:_function('s:bookmarks_acp', 1))[10:-3],
+        \       'highlights_def': {
+        \               'Lf_register_name': '^".',
+        \               'Lf_register_content': '\s\+.*',
+        \       },
+        \       'highlights_cmd': [
+        \               'hi def link Lf_register_name ModeMsg',
+        \               'hi def link Lf_register_content Normal',
+        \       ],
+        \  'after_enter' : string(s:_function('s:init_leaderf_win', 1))[10:-3]
+        \ }
+
   let g:Lf_Extensions.locationlist =
         \ {
         \       'source': string(s:_function('s:locationlist', 1))[10:-3],
@@ -460,6 +475,33 @@ function! s:manpage_acp(line, args) abort
   if !empty(a:line) && exists(':Man') ==# 2
     exe printf('Man %s', a:line)
   endif
+endfunction
+
+function! s:bookmarks(...) abort
+  let bookmarks = []
+  let files = sort(bm#all_files())
+  for file in files
+    let line_nrs = sort(bm#all_lines(file), "bm#compare_lines")
+    for line_nr in line_nrs
+      let bookmark = bm#get_bookmark_by_line(file, line_nr)
+      call add(bookmarks, printf("%s:%d:1:%s", file, line_nr,
+            \   bookmark.annotation !=# ''
+            \     ? "Annotation: " . bookmark.annotation
+            \     : (bookmark.content !=# "" ? bookmark.content
+            \                                : "empty line")
+            \ ))
+    endfor
+  endfor
+  return bookmarks
+endfunction
+
+function! s:bookmarks_acp(line, argvs) abort
+  let line = a:line
+  let filename = fnameescape(split(line, ':\d\+:')[0])
+  let linenr = matchstr(line, ':\d\+:')[1:-2]
+  let colum = matchstr(line, '\(:\d\+\)\@<=:\d\+:')[1:-2]
+  exe 'e ' . filename
+  call cursor(linenr, colum)
 endfunction
 
 func! s:neoyank(...) abort
