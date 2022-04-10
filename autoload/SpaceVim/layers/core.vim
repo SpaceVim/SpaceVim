@@ -1096,7 +1096,8 @@ function! SpaceVim#layers#core#get_options() abort
         \ 'filetree_closed_icon',
         \ 'filetree_opened_icon',
         \ 'filetree_show_hidden',
-        \ 'enable_smooth_scrolling'
+        \ 'enable_smooth_scrolling',
+        \ 'enable_filetree_filetypeicon'
         \ ]
 
 endfunction
