@@ -69,8 +69,6 @@ augroup END
 function! s:win_count() abort
   if has('nvim') && exists('*nvim_win_get_config')
     return len(filter(range(1, winnr('$')), '!has_key(nvim_win_get_config(win_getid(v:val)), "col")'))
-  elseif exists('*popup_getoptions')
-    return len(filter(range(1, winnr('$')), '!has_key(popup_getoptions(win_getid(v:val)), "col")'))
   else
     return winnr('$')
   endif
