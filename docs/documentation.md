@@ -73,6 +73,7 @@ description: "General documentation about how to use SpaceVim, including the qui
     - [Commands starting with `z`](#commands-starting-with-z)
 - [Advanced usage](#advanced-usage)
   - [Managing projects](#managing-projects)
+    - [Show project info on cmdline](#show-project-info-on-cmdline)
     - [Searching files in project](#searching-files-in-project)
     - [Custom alternate file](#custom-alternate-file)
   - [Bookmarks management](#bookmarks-management)
@@ -1954,6 +1955,10 @@ Project manager commands start with `p`:
 | Key Bindings | Descriptions                                          |
 | ------------ | ----------------------------------------------------- |
 | `SPC p '`    | open a shell in project’s root (need the shell layer) |
+
+#### Show project info on cmdline
+
+By default the key binding `Ctrl-g` will display the information of current project on command line.
 
 #### Searching files in project
 

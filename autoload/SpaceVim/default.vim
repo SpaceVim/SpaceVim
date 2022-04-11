@@ -231,6 +231,11 @@ function! SpaceVim#default#keyBindings() abort
   " Start new line
   inoremap <S-Return> <C-o>o
 
+  if maparg('<c-g>', 'n') == ''
+    nnoremap <silent> <c-g> :<c-u>call SpaceVim#plugins#ctrlg#display()<cr>
+  endif
+
+
   " Improve scroll, credits: https://github.com/Shougo
   nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
         \ 'zt' : (winline() == &scrolloff + 1) ? 'zb' : 'zz'
