@@ -60,7 +60,7 @@ jobs:
         VIM_BIN: ${{ matrix.vimbin }}
         VIM_TAG: ${{ matrix.vimtag }}
         DEPS: /home/runner/work/SpaceVim/deps
-        VIM_Es: "-Es"
+        DISABLE_ES: ${{ matrix.disable_es }}
     steps:
     - name: Checkout
       uses: actions/checkout@master
@@ -71,8 +71,6 @@ jobs:
     - name: Install ${{ matrix.vimbin }} ${{ matrix.vimtag }}
       run: |
         .ci/install/linux.sh $VIM_BIN $VIM_TAG
-    - if: matrix.disable_es
-      run: export VIM_Es=""
     - name: Run test
       run: |
         if [ "$VIM_BIN" = "nvim" ]; then
@@ -81,6 +79,11 @@ jobs:
         else
             export PATH="${DEPS}/_vim/${VIM_TAG}/bin:${PATH}"
             export VIM="${DEPS}/_vim/${VIM_TAG}/share/vim"
+        fi
+        if [ "$DISABLE_ES" = "true" ]; then
+            export VIM_Es=""
+        else
+            export VIM_Es="-Es"
         fi
         export PATH="/home/runner/.local/bin:${PATH}"
         echo "\$PATH: \"${PATH}\""
