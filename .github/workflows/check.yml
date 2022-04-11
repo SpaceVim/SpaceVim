@@ -19,6 +19,14 @@ jobs:
               - vimbin: vim
                 vimtag: v8.0.0027
               - vimbin: vim
+                vimtag: v8.0.0100
+              - vimbin: vim
+                vimtag: v8.0.0200
+              - vimbin: vim
+                vimtag: v8.0.0300
+              - vimbin: vim
+                vimtag: v8.0.0400
+              - vimbin: vim
                 vimtag: v8.0.0500
               - vimbin: vim
                 vimtag: v8.0.0800
