@@ -12,14 +12,19 @@ jobs:
                 vimtag: nightly
               - vimbin: vim
                 vimtag: v7.4.052
+                disable_es: true
               - vimbin: vim
                 vimtag: v7.4.629
+                disable_es: true
               - vimbin: vim
                 vimtag: v7.4.1689
+                disable_es: true
               - vimbin: vim
                 vimtag: v8.0.0027
+                disable_es: true
               - vimbin: vim
                 vimtag: v8.0.0183
+                disable_es: true
               - vimbin: vim
                 vimtag: v8.0.0184
               - vimbin: vim
