@@ -15,10 +15,11 @@ This is the default configuration:
 
 ```vimL
 let g:defx_icons_enable_syntax_highlight = 1
-let g:defx_icons_column_length = 2
+let g:defx_icons_column_length = 1
 let g:defx_icons_directory_icon = ''
 let g:defx_icons_mark_icon = '*'
 let g:defx_icons_copy_icon = ''
+let g:defx_icons_link_icon = ''
 let g:defx_icons_move_icon = ''
 let g:defx_icons_parent_icon = ''
 let g:defx_icons_default_icon = ''
@@ -57,6 +58,7 @@ For directory icons these highlight groups are defined:
 ```vimL
 hi default link DefxIconsMarkIcon Statement
 hi default link DefxIconsCopyIcon WarningMsg
+hi default link DefxIconsLinkIcon WarningMsg
 hi default link DefxIconsMoveIcon ErrorMsg
 hi default link DefxIconsDirectory Directory
 hi default link DefxIconsParentDirectory Directory
