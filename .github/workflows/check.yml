@@ -12,12 +12,21 @@ jobs:
                 vimtag: nightly
               - vimbin: vim
                 vimtag: v7.4.052
+                disable_es: true
               - vimbin: vim
                 vimtag: v7.4.629
+                disable_es: true
               - vimbin: vim
                 vimtag: v7.4.1689
+                disable_es: true
               - vimbin: vim
                 vimtag: v8.0.0027
+                disable_es: true
+              - vimbin: vim
+                vimtag: v8.0.0183
+                disable_es: true
+              - vimbin: vim
+                vimtag: v8.0.0184
               - vimbin: vim
                 vimtag: v8.0.1453
               - vimbin: vim
@@ -51,6 +60,7 @@ jobs:
         VIM_BIN: ${{ matrix.vimbin }}
         VIM_TAG: ${{ matrix.vimtag }}
         DEPS: /home/runner/work/SpaceVim/deps
+        DISABLE_ES: ${{ matrix.disable_es }}
     steps:
     - name: Checkout
       uses: actions/checkout@master
@@ -69,6 +79,11 @@ jobs:
         else
             export PATH="${DEPS}/_vim/${VIM_TAG}/bin:${PATH}"
             export VIM="${DEPS}/_vim/${VIM_TAG}/share/vim"
+        fi
+        if [ "$DISABLE_ES" = "true" ]; then
+            export VIM_Es=""
+        else
+            export VIM_Es="-Es"
         fi
         export PATH="/home/runner/.local/bin:${PATH}"
         echo "\$PATH: \"${PATH}\""
