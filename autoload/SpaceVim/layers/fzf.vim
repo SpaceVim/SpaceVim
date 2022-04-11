@@ -1,10 +1,38 @@
 "=============================================================================
 " fzf.vim --- fzf layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section fzf, layers-fzf
+" @parentsection layers
+" This layer provides fuzzy finder feature which is based on `fzf`.
+" This layer is not loaded by default. To use this layer:
+" >
+"   [[layers]]
+"     name = 'fzf'
+" <
+" @subsection Key bindings
+"
+" The following key bindings will be enabled when this layer is loaded:
+" >
+"   Key bindings      Description
+"   SPC p f / Ctrl-p  search files in current directory
+"   <Leader> f SPC    Fuzzy find menu:CustomKeyMaps
+"   <Leader> f e      Fuzzy find register
+"   <Leader> f h      Fuzzy find history/yank
+"   <Leader> f j      Fuzzy find jump, change
+"   <Leader> f l      Fuzzy find location list
+"   <Leader> f m      Fuzzy find output messages
+"   <Leader> f o      Fuzzy find functions
+"   <Leader> f t      Fuzzy find tags
+"   <Leader> f q      Fuzzy find quick fix
+"   <Leader> f p      Fuzzy find bundle plugins
+" <
+
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:LIST = SpaceVim#api#import('data#list')
@@ -19,8 +47,8 @@ endfunction
 function! SpaceVim#layers#fzf#plugins() abort
   let plugins = []
   call add(plugins, ['junegunn/fzf',                { 'merged' : 0}])
-  call add(plugins, ['Shougo/neoyank.vim', {'merged' : 0}])
-  call add(plugins, ['Shougo/neomru.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neoyank.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neomru.vim', {'merged' : 0}])
   call add(plugins, ['SpaceVim/fzf-neoyank',                { 'merged' : 0}])
   return plugins
 endfunction

@@ -1,7 +1,7 @@
 "=============================================================================
 " c.vim --- SpaceVim lang#c layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -9,7 +9,7 @@
 " Layer doc {{{
 
 ""
-" @section lang#c, layer-lang-c
+" @section lang#c, layers-lang-c
 " @parentsection layers
 " This layer is for c/cpp development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -81,6 +81,11 @@
 "   SPC l s s       send selection text
 " <
 "
+" Known issue:
+"
+" You need to use `flush(stdout)` before `scanf()` when run code in code
+" runner.
+"
 " }}}
 
 " Init layer options {{{
@@ -150,6 +155,10 @@ endfunction
 
 " config {{{
 function! SpaceVim#layers#lang#c#config() abort
+  call SpaceVim#mapping#g_capital_d#add('c',
+        \ function('s:go_to_declaration'))
+  call SpaceVim#mapping#g_capital_d#add('cpp',
+        \ function('s:go_to_declaration'))
   call SpaceVim#mapping#gd#add('c',
         \ function('s:go_to_def'))
   call SpaceVim#mapping#gd#add('cpp',
@@ -309,7 +318,6 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#go_to_typedef()', 'type definition', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'R'],
           \ 'call SpaceVim#lsp#refactor()', 'refactor', 1)
-    " TODO this should be gD
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'D'],
           \ 'call SpaceVim#lsp#go_to_declaration()', 'declaration', 1)
 
@@ -345,9 +353,14 @@ endfunction
 " local function: update_checkers_argv {{{
 if g:spacevim_lint_engine ==# 'neomake'
   function! s:update_checkers_argv(argv, fts) abort
+    if s:has_std(a:argv)
+      let default_std = 1
+    else
+      let default_std = 0
+    endif
     for ft in a:fts
       let g:neomake_{ft}_clang_maker = {
-            \ 'args': ['-fsyntax-only', '-Wall', '-Wextra', '-I./'] + a:argv,
+            \ 'args': ['-fsyntax-only', '-Wall', '-Wextra', '-I./'] + a:argv + (default_std ? [] : ['-std=' . s:clang_std[ft]]) + s:clang_flag,
             \ 'exe' : s:clang_executable,
             \ 'errorformat':
             \ '%-G%f:%s:,' .
@@ -444,6 +457,16 @@ function! s:update_neoinclude(argv, fts) abort
     endif
   endfor
   let b:neoinclude_paths = path
+endfunction
+" }}}
+
+" local function: go_to_declaration {{{
+function! s:go_to_declaration() abort
+  if !SpaceVim#layers#lsp#check_filetype(&ft)
+    execute "norm! g\<c-]>"
+  else
+    call SpaceVim#lsp#go_to_declaration()
+  endif
 endfunction
 " }}}
 

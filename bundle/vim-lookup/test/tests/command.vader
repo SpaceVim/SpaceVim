@@ -1,0 +1,22 @@
+Given vim:
+  command! -nargs=+    TestIt call s:func(<f-args>)
+  execute "command! -nargs=0    TestFlip let s:var = 'hello'"
+  execute 'let s:var = "bar"'
+  echomsg s:var
+  function! s:nested(a, b)
+    TestIt
+    TestFlip
+  endfunc
+
+Execute (:call lookup#lookup() to find definition of commands):
+  " on TestIt
+  normal! 6G
+  AssertEqual [6, 3], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [1, 22], [line('.'), col('.')]
+
+  " on TestFlip
+  normal! 7G
+  call lookup#lookup()
+  AssertEqual [2, 31], [line('.'), col('.')]
+

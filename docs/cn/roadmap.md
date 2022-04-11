@@ -11,7 +11,7 @@ SpaceVim 的设计蓝图和[里程碑](https://github.com/SpaceVim/SpaceVim/mile
 <!-- vim-markdown-toc GFM -->
 
 - [下一个版本](#下一个版本)
-  - [v1.8.0](#v180)
+  - [v2.0.0](#v200)
 - [版本说明](#版本说明)
 - [已完成](#已完成)
   - [v1.5.0](#v150)
@@ -32,12 +32,14 @@ SpaceVim 的设计蓝图和[里程碑](https://github.com/SpaceVim/SpaceVim/mile
   - [v1.4.0](#v140)
   - [v1.6.0](#v160)
   - [v1.7.0](#v170)
+  - [v1.8.0](#v180)
+  - [v1.9.0](#v190)
 
 <!-- vim-markdown-toc -->
 
 ## 下一个版本
 
-### [v1.8.0](https://github.com/SpaceVim/SpaceVim/milestone/21)
+### [v2.0.0](https://github.com/SpaceVim/SpaceVim/milestone/23)
 
 ## 版本说明
 
@@ -166,5 +168,13 @@ release note: [v1.6.0](http://spacevim.org/SpaceVim-release-v1.6.0/)
 ### [v1.7.0](https://github.com/SpaceVim/SpaceVim/milestone/20)
 
 release note: [v1.7.0](http://spacevim.org/SpaceVim-release-v1.7.0/)
+
+### [v1.8.0](https://github.com/SpaceVim/SpaceVim/milestone/21)
+
+release note: [v1.8.0](http://spacevim.org/SpaceVim-release-v1.8.0/)
+
+### [v1.9.0](https://github.com/SpaceVim/SpaceVim/milestone/22)
+
+release note: [v1.9.0](http://spacevim.org/SpaceVim-release-v1.9.0/)
 
 <!-- SpaceVim roadmap completed items end -->

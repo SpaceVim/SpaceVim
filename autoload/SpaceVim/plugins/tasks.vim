@@ -1,6 +1,6 @@
 "=============================================================================
 " tasks.vim --- tasks support
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -26,7 +26,7 @@ let s:BUF = SpaceVim#api#import('vim#buffer')
 " task object
 
 let s:select_task = {}
-let s:task_config = []
+let s:task_config = {}
 let s:task_viewer_bufnr = -1
 let s:variables = {}
 let s:providers = []

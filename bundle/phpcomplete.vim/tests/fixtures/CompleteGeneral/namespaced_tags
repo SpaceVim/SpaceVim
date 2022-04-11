@@ -1,0 +1,18 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	Development	//
+Foo	namespaced_foo.php	/^class Foo {$/;"	c	namespace:NS1
+FooSub	namespaced_foo.php	/^class FooSub {$/;"	c	namespace:NS1\SUBNS
+FooSubSub	namespaced_foo.php	/^class FooSubSub {$/;"	c	namespace:NS1\SUBNS\SUBSUB
+NS1	namespaced_foo.php	/^namespace NS1;$/;"	n
+NS1\SUBNS	namespaced_foo.php	/^namespace NS1\\SUBNS;$/;"	n
+NS1\SUBNS\SUBSUB	namespaced_foo.php	/^namespace NS1\\SUBNS\\SUBSUB;$/;"	n
+ZAP	namespaced_foo.php	/^const ZAP = '';$/;"	d	namespace:NS1
+ZAPSUB	namespaced_foo.php	/^const ZAPSUB = '';$/;"	d	namespace:NS1\SUBNS
+ZAPSUBSUB	namespaced_foo.php	/^const ZAPSUBSUB = '';$/;"	d	namespace:NS1\SUBNS\SUBSUB
+bar	namespaced_foo.php	/^function bar(){}$/;"	f	namespace:NS1	signature:()
+barsub	namespaced_foo.php	/^function barsub(){}$/;"	f	namespace:NS1\SUBNS	signature:()
+barsubsub	namespaced_foo.php	/^function barsubsub(){}$/;"	f	namespace:NS1\SUBNS\SUBSUB	signature:()

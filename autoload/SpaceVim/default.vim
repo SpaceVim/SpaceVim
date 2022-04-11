@@ -1,7 +1,7 @@
 "=============================================================================
 " default.vim --- default options in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -147,6 +147,7 @@ endfunction
 "}}}
 
 function! SpaceVim#default#layers() abort
+  call SpaceVim#logger#debug('init default layer list.')
   call SpaceVim#layers#load('autocomplete')
   call SpaceVim#layers#load('checkers')
   call SpaceVim#layers#load('format')
@@ -159,6 +160,7 @@ function! SpaceVim#default#layers() abort
 endfunction
 
 function! SpaceVim#default#keyBindings() abort
+  call SpaceVim#logger#debug('init default key bindings.')
   " yank and paste
   if has('unnamedplus')
     xnoremap <Leader>y "+y
@@ -229,6 +231,11 @@ function! SpaceVim#default#keyBindings() abort
   " Start new line
   inoremap <S-Return> <C-o>o
 
+  if maparg('<c-g>', 'n') == ''
+    nnoremap <silent> <c-g> :<c-u>call SpaceVim#plugins#ctrlg#display()<cr>
+  endif
+
+
   " Improve scroll, credits: https://github.com/Shougo
   nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
         \ 'zt' : (winline() == &scrolloff + 1) ? 'zb' : 'zz'
@@ -274,8 +281,6 @@ function! SpaceVim#default#keyBindings() abort
   nnoremap <silent><M-5> :<C-u>call <SID>tobur(5)<CR>
   nnoremap <silent><M-Right> :<C-U>call <SID>tobur("next")<CR>
   nnoremap <silent><M-Left> :<C-U>call <SID>tobur("prev")<CR>
-
-  call SpaceVim#mapping#def('nnoremap <silent>','g=',':call SpaceVim#mapping#format()<cr>','format current buffer','call SpaceVim#mapping#format()')
 
 endfunction
 

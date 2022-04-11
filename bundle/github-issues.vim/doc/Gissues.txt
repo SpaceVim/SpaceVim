@@ -1,0 +1,216 @@
+*gissues.txt*  github-issues.vim
+
+===============================================================================
+Contents ~
+
+ 1. Introduction                                         |gissues-introduction|
+  1. Omnicomplete                                        |gissues-omnicomplete|
+  2. Lookup menu                                          |gissues-lookup-menu|
+  3. Handling issues                                  |gissues-handling-issues|
+  4. Creating issues                                  |gissues-creating-issues|
+  5. Milestones                                            |gissues-milestones|
+  6. Fugitive integration                        |gissues-fugitive-integration|
+  7. Requirements and Installation          |gissues-requirements-installation|
+  8. Configuration                                      |gissues-configuration|
+  9. Contributing                                        |gissues-contributing|
+ 2. Shameless plug                                     |gissues-shameless-plug|
+ 3. References                                             |gissues-references|
+
+===============================================================================
+                                                         *gissues-introduction*
+Introduction ~
+
+Github issue integration in Vim. It's kind of awesome.
+
+-------------------------------------------------------------------------------
+                                                         *gissues-omnicomplete*
+Omnicomplete ~
+
+If you use Fugitive or edit gitcommit files in Vim, github-issues will
+automatically populate the omnicomplete menu with issues on Github. This is
+useful when you want to reference commits, close issues, etc., through Github's
+commit message parsing.
+
+Here's how it works with Neocomplete:
+
+  Image: (see reference [1])
+
+If you use pure omnicomplete, use 'C-x C-o' to pull up the menu.
+
+No need to run commands, no need to configure. It just works. ;) (And if it
+doesn't, it should, so submit an issue) Not bad, huh?
+
+-------------------------------------------------------------------------------
+                                                          *gissues-lookup-menu*
+Lookup menu ~
+
+To show Github issues for the current repository:
+>
+  :Gissues
+<
+Press enter to view more details.
+
+  Image: (see reference [2])
+
+-------------------------------------------------------------------------------
+                                                      *gissues-handling-issues*
+Handling issues ~
+
+You can open and close issues using 'co' and 'cc' in the issue view.
+
+  Image: (see reference [3])
+
+They're also totally editable buffers, and saving the file will sync with
+Github's servers. You can use this to write comments, too:
+
+  Image: (see reference [4])
+
+-------------------------------------------------------------------------------
+                                                      *gissues-creating-issues*
+Creating issues ~
+
+You can even use ':Giadd' to create a blank issue. Saving the buffer will
+generate a new issue and update the buffer with an issue number and the ability
+to add comments.
+
+  Image: (see reference [5])
+
+While creating or editing issues it is possible to add multiple space separated
+assignees.
+
+How awesome is that!?
+
+-------------------------------------------------------------------------------
+                                                           *gissues-milestones*
+Milestones ~
+
+New feature: Use ':Gmiles' to open a menu of milestones. Press return on one to
+select it and filter ':Gissues' by that milestone from then on.
+
+-------------------------------------------------------------------------------
+                                                 *gissues-fugitive-integration*
+Fugitive integration ~
+
+Github will show any commits that reference the issue. That's what the
+omnicomplete helps with. But to make things even more awesome, github-
+issues.vim integrates with Fugitive.vim to make commit hashes clickable with
+the return key.
+
+  Image: (see reference [6])
+
+-------------------------------------------------------------------------------
+                                            *gissues-requirements-installation*
+Requirements and Installation ~
+
+Vim with Python 2.7, Python 2.7 installed and working with Vim.
+
+I recommend using Pathogen [7] and Git cloning into ~/.vim/bundle. You can also
+just download the plugin and paste it into your plugin directory.
+
+Then **read below about adding an access token**.
+
+-------------------------------------------------------------------------------
+                                                        *gissues-configuration*
+Configuration ~
+
+The omnicomplete and lookup features will work out of the box for public repos.
+
+If you have private repos, or would like the ability to comment, open, close,
+and add issues, you will need to set an access token. Don't worry, this is
+super easy.
+>
+  g:github_access_token
+<
+Grab an access token from here [8], then set this variable, preferably in a
+local vim file not included in any public repositories:
+
+'let g:github_access_token = "9jb19c1189f083d7013i24367lol"'
+
+**Remember**, you should treat your access token like a password!
+
+Other options include:
+>
+  g:github_issues_no_omni
+<
+When this is set to any value, github-issues will not set Neocomplete and
+Omnicomplete hooks.
+>
+  g:github_upstream_issues
+<
+When this is set to 1, github-issues will use upstream issues (if repo is
+fork). This will require extra requests for the Github API, however.
+>
+  g:github_api_url = "https://api.github.com/"
+<
+If you use Github Enterprise, where the Github server is hosted somewhere other
+than Github.com, set this parameter to your API path. This is specifically for
+Github Enterprise and will not work for Bitbucket, Gitlab, etc.
+>
+  g:github_same_window = 1
+<
+When this is set to 1, github-issues will use the current window instead of
+splitting the screen via the ':new' command.
+>
+  g:gissues_issue_vsplit = 0
+
+When this set to one the issue details buffer will open in vertical buffer
+instead of horizontal. Works only if `g:github_same_window` is not set
+>
+  g:gissues_list_vsplit = 0
+
+Same as above but for the list of issues.
+>
+  g:gissues_split_expand = 0
+
+Setting to 1 will expand the buffer to full width for horizontal split and
+full height for vertical split instead of nesting inside parent split.
+>
+  g:gissues_split_height = 0
+
+Set the height of horizontal split, default 50% of parent.
+>
+  g:issues_vsplit_width = 0
+
+Same as above but for vertical split.
+>
+  g:gissues_lazy_load = 0
+<
+When this is set to 1, omnicomplete will not be populated until it is
+triggered. This eliminates potential lag when opening 'gitcommit' files.
+>
+  g:gissues_async_omni = 0
+<
+**Experimental**: When set to 1, omnicomplete will be populated asynchronously,
+on another thread. This removes almost all lag from the UI when using Gissues,
+and can be combined with g:gissues_lazy_load to reduce network traffic while
+still receiving the same speed boost. However, this uses threads and needs a
+lot more testing to ensure it is stable.
+
+-------------------------------------------------------------------------------
+                                                         *gissues-contributing*
+Contributing ~
+
+Pull requests, feature requests, and issues are always welcome!
+
+===============================================================================
+                                                       *gissues-shameless-plug*
+Shameless plug ~
+
+I hack around with Vim plugins, so follow me [9] if you're into that kind of
+stuff (or just want to make my day) ;)
+
+===============================================================================
+                                                           *gissues-references*
+References ~
+
+[1] https://jaxbot.me/pics/vim/vim_gissues2.gif
+[2] https://jaxbot.me/pics/vim/vim-github-issues-1.gif
+[3] https://jaxbot.me/pics/vim/vim-github-issues-2.gif
+[4] https://jaxbot.me/pics/vim/vim-github-issues-4.gif
+[5] https://jaxbot.me/pics/vim/vim-github-issues-6.gif
+[6] https://jaxbot.me/pics/vim/vim-github-issues-3.gif
+[7] https://github.com/tpope/vim-pathogen
+[8] https://github.com/settings/tokens/new
+[9] https://github.com/jaxbot
+
+vim: ft=help

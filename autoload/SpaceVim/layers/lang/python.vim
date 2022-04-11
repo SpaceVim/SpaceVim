@@ -1,13 +1,13 @@
 "=============================================================================
 " python.vim --- SpaceVim lang#python layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#python, layer-lang-python
+" @section lang#python, layers-lang-python
 " @parentsection layers
 " This layer provides python language support for SpaceVim. Includding syntax
 " highlighting, code formatting and code completion. This layer is not enabled
@@ -50,6 +50,7 @@
 "   Key             Function
 "   --------------------------------
 "   SPC l r         run current file
+"   g d             jump to definition
 " <
 "
 " This layer also provides REPL support for python, the key bindings are:
@@ -62,6 +63,20 @@
 "   SPC l s s       send selection text
 " <
 "
+" If the lsp layer is enabled for python, the following key bindings can
+" be used:
+" >
+"   key binding     Description
+"   g D             jump to type definition
+"   SPC l e         rename symbol
+"   SPC l x         show references
+"   SPC l h         show line diagnostics
+"   SPC l d         show document
+"   K               show document
+"   SPC l w l       list workspace folder
+"   SPC l w a       add workspace folder
+"   SPC l w r       remove workspace folder
+" <
 
 
 if exists('s:enabled_linters')
@@ -83,6 +98,7 @@ function! SpaceVim#layers#lang#python#plugins() abort
   let plugins = []
   " python
   if !SpaceVim#layers#lsp#check_filetype('python')
+        \ && !SpaceVim#layers#lsp#check_server('pyright')
     if has('nvim')
       call add(plugins, ['zchee/deoplete-jedi', { 'on_ft' : 'python'}])
       " in neovim, we can use deoplete-jedi together with jedi-vim,
@@ -100,6 +116,8 @@ function! SpaceVim#layers#lang#python#plugins() abort
         \ { 'on_ft' : 'python'}])
   call add(plugins, ['alfredodeza/coveragepy.vim', 
         \ { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-virtualenv', 
+        \ { 'merged' : 0}])
   return plugins
 endfunction
 
@@ -116,19 +134,21 @@ function! SpaceVim#layers#lang#python#config() abort
   " mapping in your vimrc, such as if you do:
   let g:pydocstring_enable_mapping = 0
 
-  if g:spacevim_autocomplete_parens
-    augroup python_delimit
+  augroup spacevim_layer_lang_python
+    autocmd!
+    autocmd FileType python call SpaceVim#util#check_if_expand_tab()
+    if g:spacevim_autocomplete_parens
       au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
-    augroup end
-  endif
+    endif
+  augroup END
   " }}}
- let g:deoplete#sources#jedi#enable_typeinfo = s:enable_typeinfo
+  let g:deoplete#sources#jedi#enable_typeinfo = s:enable_typeinfo
   call SpaceVim#plugins#runner#reg_runner('python', 
         \ {
-        \ 'exe' : function('s:getexe'),
-        \ 'opt' : ['-'],
-        \ 'usestdin' : 1,
-        \ })
+          \ 'exe' : function('s:getexe'),
+          \ 'opt' : ['-'],
+          \ 'usestdin' : 1,
+          \ })
   call SpaceVim#mapping#gd#add('python', function('s:go_to_def'))
   call SpaceVim#mapping#space#regesit_lang_mappings('python', function('s:language_specified_mappings'))
   call SpaceVim#layers#edit#add_ft_head_tamplate('python', s:python_file_head)
@@ -141,8 +161,12 @@ function! SpaceVim#layers#lang#python#config() abort
   elseif executable('python3')
     call SpaceVim#plugins#repl#reg('python', ['python3', '-i'])
   endif
-  let g:neomake_python_enabled_makers = s:enabled_linters
-  let g:neomake_python_python_exe = s:python_interpreter
+  if SpaceVim#layers#lsp#check_server('pyright') || SpaceVim#layers#lsp#check_filetype('python')
+    let g:neomake_python_enabled_makers = []
+  else
+    let g:neomake_python_enabled_makers = s:enabled_linters
+    let g:neomake_python_python_exe = s:python_interpreter
+  endif
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -174,19 +198,19 @@ function! s:language_specified_mappings() abort
 
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'r'],
         \ 'Coveragepy report',
-        \ 'coverager eport', 1)
+        \ 'coverage report', 1)
 
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 's'],
         \ 'Coveragepy show',
-        \ 'coverager show', 1)
+        \ 'coverage show', 1)
 
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'e'],
         \ 'Coveragepy session',
-        \ 'coverager session', 1)
+        \ 'coverage session', 1)
 
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c', 'f'],
         \ 'Coveragepy refresh',
-        \ 'coverager refresh', 1)
+        \ 'coverage refresh', 1)
 
   " +Generate {{{
 
@@ -198,12 +222,25 @@ function! s:language_specified_mappings() abort
   " }}}
 
   if SpaceVim#layers#lsp#check_filetype('python')
+        \ || SpaceVim#layers#lsp#check_server('pyright')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+    nnoremap <silent><buffer> gD :<C-u>call SpaceVim#lsp#go_to_typedef()<Cr>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
-          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
+          \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
+          \ 'call SpaceVim#lsp#references()', 'show-references', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
-          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
+          \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'h'],
+          \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
+    let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],
+          \ 'call SpaceVim#lsp#list_workspace_folder()', 'list-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'a'],
+          \ 'call SpaceVim#lsp#add_workspace_folder()', 'add-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'r'],
+          \ 'call SpaceVim#lsp#remove_workspace_folder()', 'remove-workspace-folder', 1)
   endif
 
   " Format on save
@@ -213,6 +250,13 @@ function! s:language_specified_mappings() abort
           \ 'enable' : 1,
           \ })
   endif
+
+  let g:_spacevim_mappings_space.l.v = {'name' : '+Virtualenv'}
+
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'v', 'l'],
+        \ 'VirtualEnvList', 'list-all-virtualenvs', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'v', 'd'],
+        \ 'VirtualEnvDeactivate', 'deactivate-current-virtualenv', 1)
 
 endfunction
 
@@ -232,10 +276,11 @@ func! s:getexe() abort
 endf
 
 function! s:go_to_def() abort
-  if !SpaceVim#layers#lsp#check_filetype('python')
-    call jedi#goto()
-  else
+  if SpaceVim#layers#lsp#check_filetype('python')
+        \ || SpaceVim#layers#lsp#check_server('pyright')
     call SpaceVim#lsp#go_to_def()
+  else
+    call jedi#goto()
   endif
 endfunction
 

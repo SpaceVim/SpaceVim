@@ -1,3 +1,12 @@
+--=============================================================================
+-- a.lua --- alternate plugin for SpaceVim
+-- Copyright (c) 2016-2019 Wang Shidong & Contributors
+-- Author: Wang Shidong < wsdjeg@outlook.com >
+-- URL: https://spacevim.org
+-- License: GPLv3
+--=============================================================================
+
+
 local M = {}
 local sp = require('spacevim')
 local cmp = require('spacevim.api').import('vim.compatible')
@@ -16,11 +25,17 @@ local cache_path = sp_file.unify_path(sp_opt.data_dir, ':p') .. 'SpaceVim/a.json
 local project_config = {}
 
 local function cache()
-    fn.writefile({sp_json.json_encode(project_config)}, sp_file.unify_path(cache_path, ':p'))
+    logger.debug('write cache into file:' .. cache_path)
+    local rst = fn.writefile({sp_json.json_encode(project_config)}, cache_path)
+    if rst == 0 then
+        logger.debug('cache succeeded!')
+    else
+        logger.debug('cache failed!')
+    end
 end
 
 local function get_type_path(a, f, b)
-    logger.debug('get_type_path')
+    logger.debug('run get_type_path function')
     logger.debug(fn.string(a))
     logger.debug(f)
     logger.debug(b)
@@ -107,17 +122,17 @@ local function _comp(a, b)
 end
 
 local function parse(alt_config_json)
-    logger.debug('Start to parse alternate file for:' .. alt_config_json.root)
+    logger.info('Start to parse alternate file for:' .. alt_config_json.root)
     project_config[alt_config_json.root] = {}
     local keys = _keys(alt_config_json.config)
     table.sort(keys, _comp)
     for _, key in pairs(keys) do
-        logger.info('start parse key:' .. key)
+        logger.debug('start parse key:' .. key)
         local searchpath = key
         if string.match(searchpath, '*') == '*' then
             searchpath = string.gsub(searchpath, '*', '**/*')
         end
-        logger.info('run globpath for: '.. searchpath)
+        logger.debug('run globpath for: '.. searchpath)
         for _,file in pairs(cmp.globpath('.', searchpath)) do
             file = sp_file.unify_path(file, ':.')
             logger.debug(file)

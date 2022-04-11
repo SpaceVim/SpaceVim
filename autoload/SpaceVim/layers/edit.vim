@@ -1,19 +1,71 @@
 "=============================================================================
 " edit.vim --- SpaceVim edit layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+""
+" @section edit, layers-edit
+" @parentsection layers
+" The `edit` layer provides basic feature for editing files.
+" This layer is loaded by default. To disable this layer:
+" >
+"   [[layers]]
+"     name = 'edit'
+"     enable = false
+" <
+" @subsection Configuration
+" 1. `autosave_timeout`: set the timeoutlen of autosave plugin. By default it
+" is 0. And autosave is disabled. timeoutlen must be given in millisecods and
+" can't be > 100*60*1000 (100 minutes) or < 1000 (1 second). For example,
+" setup timer with 5 minutes:
+" >
+"   [[layers]]
+"     name = 'edit'
+"     autosave_timeout = 300000
+" <
+" 2. `autosave_events`: set the events on which autosave will perform a save.
+" This option is an empty list by default. you can trigger saving based
+" on vim's events, for example:
+" >
+"   [[layers]]
+"     name = 'edit'
+"     autosave_events = ['InsertLeave', 'TextChanged']
+" <
+" 3. `autosave_all_buffers`: By default autosave plugin only save current buffer.
+" If you want to save all buffers automatically. Set this option to `true`.
+" >
+"   [[layers]]
+"     name = 'edit'
+"     autosave_all_buffers = true
+" <
+" 4. `autosave_location`: set the directory where to save changed files. By
+" default it is empty string, that means saving to the original file. If this
+" option is not an empty string. files will me saved to that directory
+" automatically. and the format is:
+" >
+"   autosave_location/path+=to+=filename.ext.backup
+" <
 
 scriptencoding utf-8
+if exists('s:autosave_timeout')
+  finish
+endif
+
 let s:PASSWORD = SpaceVim#api#import('password')
 let s:NUMBER = SpaceVim#api#import('data#number')
 let s:LIST = SpaceVim#api#import('data#list')
 let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:HI = SpaceVim#api#import('vim#highlight')
+
+let s:autosave_timeout = 0
+let s:autosave_events = []
+let s:autosave_all_buffers = 0
+let s:autosave_location = ''
 
 function! SpaceVim#layers#edit#health() abort
   call SpaceVim#layers#edit#plugins()
@@ -38,7 +90,6 @@ function! SpaceVim#layers#edit#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
         \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
         \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
-        \ [g:_spacevim_root_dir . 'bundle/vim-better-whitespace',  { 'on_cmd' : ['StripWhitespace', 'ToggleWhitespace', 'DisableWhitespace', 'EnableWhitespace']}],
         \ ['andrewradev/splitjoin.vim',{ 'on_cmd':['SplitjoinJoin', 'SplitjoinSplit'],'merged' : 0, 'loadconf' : 1}],
         \ ]
   if executable('fcitx')
@@ -55,7 +106,27 @@ function! SpaceVim#layers#edit#plugins() abort
   return plugins
 endfunction
 
+function! SpaceVim#layers#edit#set_variable(var) abort
+  let s:autosave_timeout = get(a:var, 'autosave_timeout', s:autosave_timeout)
+  let s:autosave_events = get(a:var, 'autosave_events', s:autosave_events)
+  let s:autosave_all_buffers = get(a:var, 'autosave_all_buffers', s:autosave_all_buffers)
+  let s:autosave_location = get(a:var, 'autosave_location', s:autosave_location)
+endfunction
+
+function! SpaceVim#layers#edit#get_options() abort
+  return ['autosave_all_buffers', 'autosave_timeout', 'autosave_events']
+endfunction
 function! SpaceVim#layers#edit#config() abort
+  " autosave plugins options
+  let autosave_opt = {
+        \ 'timeoutlen' : s:autosave_timeout,
+        \ 'save_all_buffers' : s:autosave_all_buffers,
+        \ 'backupdir' : s:autosave_location,
+        \ 'event' : s:autosave_events,
+        \ }
+  call SpaceVim#plugins#autosave#config(autosave_opt)
+
+
   let g:multi_cursor_next_key=get(g:, 'multi_cursor_next_key', '<C-n>')
   let g:multi_cursor_prev_key=get(g:, 'multi_cursor_prev_key', '<C-m>')
   let g:multi_cursor_skip_key=get(g:, 'multi_cursor_skip_key', '<C-x>')
@@ -64,12 +135,12 @@ function! SpaceVim#layers#edit#config() abort
   let g:user_emmet_mode='a'
   let g:user_emmet_settings = {
         \ 'javascript': {
-        \ 'extends': 'jsx',
-        \ },
-        \ 'jsp' : {
-        \ 'extends': 'html',
-        \ },
-        \ }
+          \ 'extends': 'jsx',
+          \ },
+          \ 'jsp' : {
+            \ 'extends': 'html',
+            \ },
+            \ }
 
   "noremap <SPACE> <Plug>(wildfire-fuel)
   vnoremap <C-SPACE> <Plug>(wildfire-water)
@@ -109,7 +180,7 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '='], 'Tabularize /===\|<=>\|\(&&\|||\|<<\|>>\|\/\/\)=\|=\~[#?]\?\|=>\|[:+/*!%^=><&|.?-]\?=[#?]\?/l1r1', 'align-region-at-=', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', 'o'], 'Tabularize /&&\|||\|\.\.\|\*\*\|<<\|>>\|\/\/\|[-+*/.%^><&|?]/l1r1', 'align-region-at-operator, such as +,-,*,/,%,^,etc', 1, 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '¦'], 'Tabularize /¦', 'align-region-at-¦', 1, 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '<Bar>'], 'Tabularize /|', 'align-region-at-|', 1, 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'a', '<Bar>'], 'Tabularize /[|｜]', 'align-region-at-|', 1, 1)
   call SpaceVim#mapping#space#def('nmap', ['x', 'a', '[SPC]'], 'Tabularize /\s\ze\S/l0', 'align-region-at-space', 1, 1)
   " @fixme SPC x a SPC make vim flick
   nmap <Space>xa<Space> [SPC]xa[SPC]
@@ -179,6 +250,9 @@ function! SpaceVim#layers#edit#config() abort
   vnoremap <silent> <Plug>DuplicateLines :call <SID>duplicate_lines(1)<Cr>
   call SpaceVim#mapping#space#def('nmap', ['x', 'l', 'd'], '<Plug>DuplicateLines',
         \ 'duplicate-line-or-region', 0, 1)
+  nnoremap <silent> <Plug>ReverseLines :ReverseLines<cr>
+  vnoremap <silent> <Plug>ReverseLines :ReverseLines<cr>
+  call SpaceVim#mapping#space#def('nmap' , ['x' , 'l' , 'r'] , '<Plug>ReverseLines'  , 'reverse-lines'                  , 0, 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 's'] , 'sort i'  , 'sort lines (ignorecase)'                    , 1)
   call SpaceVim#mapping#space#def('nnoremap' , ['x' , 'l' , 'S'] , 'sort'    , 'sort lines (case-sensitive)'                , 1)
   nnoremap <silent> <Plug>UniquifyIgnoreCaseLines :call <SID>uniquify_lines(0, 1)<Cr>
@@ -331,27 +405,27 @@ function! s:text_transient_state() abort
   call state.set_title('Move Text Transient State')
   call state.defind_keys(
         \ {
-        \ 'layout' : 'vertical split',
-        \ 'left' : [
-        \ {
-        \ 'key' : 'J',
-        \ 'desc' : 'move text down',
-        \ 'func' : '',
-        \ 'cmd' : 'noautocmd silent! m .+1',
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ 'right' : [
-        \ {
-        \ 'key' : 'K',
-        \ 'func' : '',
-        \ 'desc' : 'move text up',
-        \ 'cmd' : 'noautocmd silent! m .-2',
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ }
-        \ )
+          \ 'layout' : 'vertical split',
+          \ 'left' : [
+            \ {
+              \ 'key' : 'J',
+              \ 'desc' : 'move text down',
+              \ 'func' : '',
+              \ 'cmd' : 'noautocmd silent! m .+1',
+              \ 'exit' : 0,
+              \ },
+              \ ],
+              \ 'right' : [
+                \ {
+                  \ 'key' : 'K',
+                  \ 'func' : '',
+                  \ 'desc' : 'move text up',
+                  \ 'cmd' : 'noautocmd silent! m .-2',
+                  \ 'exit' : 0,
+                  \ },
+                  \ ],
+                  \ }
+                  \ )
   call state.open()
 endfunction
 
@@ -627,6 +701,13 @@ function! s:duplicate_lines(visual) abort
   endif
 endfunction
 
+command! -nargs=0 -range=% ReverseLines :<line1>,<line2>call <sid>reverse_lines()
+function! s:reverse_lines() range
+  let rst = getline(a:firstline, a:lastline)
+  call reverse(rst)
+  call s:BUFFER.buf_set_lines(bufnr('.'), a:firstline-1 , a:lastline, 0, rst)
+endfunction
+
 function! s:uniquify_lines(visual, ignorecase) abort
   if a:visual
     let start_line = line("'<")
@@ -718,13 +799,13 @@ endfunction
 
 
 function! s:join_string_with() abort
-  if s:is_string(line('.'), col('.'))
+  if s:HI.is_string(line('.'), col('.'))
     let c = col('.')
     let a = 0
     let b = 0
     let _c = c
     while c > 0
-      if s:is_string(line('.'), c)
+      if s:HI.is_string(line('.'), c)
         let c -= 1
       else
         let a = c
@@ -733,7 +814,7 @@ function! s:join_string_with() abort
     endwhile
     let c = _c
     while c > 0
-      if s:is_string(line('.'), c)
+      if s:HI.is_string(line('.'), c)
         let c += 1
       else
         let b = c
@@ -746,16 +827,6 @@ function! s:join_string_with() abort
     let @m = l:save_register_m
   endif
 endfunction
-
-let s:string_hi = {
-      \ 'c' : 'cCppString',
-      \ 'cpp' : 'cCppString',
-      \ }
-
-function! s:is_string(l, c) abort
-  return synIDattr(synID(a:l, a:c, 1), 'name') == get(s:string_hi, &filetype, &filetype . 'String')
-endfunction
-
 
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')

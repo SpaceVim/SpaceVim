@@ -1,12 +1,13 @@
 "=============================================================================
 " windisk.vim --- disk manager for windows
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 let s:ICONV = SpaceVim#api#import('iconv')
+let s:LOGGER = SpaceVim#logger#derive('windisk')
 
 func! SpaceVim#plugins#windisk#open() abort
   let disks = s:get_disks()
@@ -31,10 +32,22 @@ func! SpaceVim#plugins#windisk#open() abort
 endf
 
 function! s:diskinfo() abort
-  let dickinfo = systemlist('wmic LOGICALDISK LIST BRIEF')[1:]
+  if !executable('wmic')
+    call s:LOGGER.warn('windisk requires wmic.exe!')
+    return []
+  endif
+  let rst = systemlist('wmic LOGICALDISK LIST BRIEF')
+  if !empty(rst)
+    let diskinfo = rst[1:]
+  else
+    let diskinfo = []
+  endif
   let rst = []
-  for line in dickinfo
-    let info = split(s:ICONV.iconv(line, 'cp936', &enc))
+  call s:LOGGER.debug('start to parse diskinfo!')
+  for line in diskinfo
+    call s:LOGGER.debug(line)
+    let info = split(s:ICONV.iconv(line, g:spacevim_windisk_encoding, &enc))
+    call s:LOGGER.debug('iconv ' . g:spacevim_windisk_encoding . ' result:' . string(info))
     if len(info) >= 4
       let diskid = info[0]
       let freespace = info[2]
@@ -70,6 +83,7 @@ function! s:open_disk(d) abort
   if g:spacevim_filemanager ==# 'vimfiler'
     exe 'VimFiler -no-toggle ' . disk
   elseif g:spacevim_filemanager ==# 'nerdtree'
+    silent! exe 'NERDTree ' . disk 
   elseif g:spacevim_filemanager ==# 'defx'
     exe 'Defx -no-toggle -no-resume ' . disk
   endif

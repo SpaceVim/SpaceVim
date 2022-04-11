@@ -1,6 +1,6 @@
 "=============================================================================
 " sml.vim --- SpaceVim lang#sml layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Tommy Tam < thawk009 # gmail.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -8,7 +8,7 @@
 
 scriptencoding utf-8
 ""
-" @section lang#sml, layer-lang-sml
+" @section lang#sml, layers-lang-sml
 " @parentsection layers
 " This layer is for Standard ML development.
 " This layer provides basic syntax highlighting and code completion , and it

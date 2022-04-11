@@ -1,15 +1,47 @@
 "=============================================================================
 " go.vim --- SpaceVim lang#go layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#go, layer-lang-go
+" @section lang#go, layers-lang-go
 " @parentsection layers
-" This layer includes code completion and syntax checking for Go development.
+" The `lang#go` layer includes code completion and syntax checking for
+" Go development. This layer is not enabled by default, to enable it:
+" >
+"   [[layers]]
+"     name = 'go'
+" <
+" @subsection layer options
+" 1. `enabled_linters`: set a list of enabled lint for golang. by default this
+" option is `['golint']`. The available linters includes: `go`,
+" `gometalinter`
+" 2. go_file_head: the default file head for golang source code.
+" >
+"   [layers]
+"     name = "lang#go"
+"     go_file_head = [      
+"       '#!/usr/bin/python3',
+"       '# -*- coding : utf-8 -*-'
+"       ''
+"     ]
+" <
+" 3. `go_interpreter`: Set the interpreter of go.
+" >
+"   [[layers]]
+"     name = 'lang#go'
+"     go_interpreter = '~/download/bin/go'
+" <
+" 4. format_on_save: enable/disable code formation when save go file. This
+" options is disabled by default, to enable it:
+" >
+"   [[layers]]
+"     name = 'lang#go'
+"     format_on_save = true
+" <
 "
 " @subsection Mappings
 " >
@@ -38,7 +70,34 @@
 "   normal          SPC l v         freevars
 "   normal          SPC l r         go run
 " <
+" If the lsp layer is enabled for go, the following key bindings can
+" be used:
+" >
+"   key binding     Description
+"   g D             jump to type definition
+"   SPC l e         rename symbol
+"   SPC l x         show references
+"   SPC l s         show line diagnostics
+"   SPC l d         show document
+"   K               show document
+"   SPC l w l       list workspace folder
+"   SPC l w a       add workspace folder
+"   SPC l w r       remove workspace folder
+" <
 
+if exists('s:enabled_linters')
+  finish
+endif
+
+let s:enabled_linters = ['golint']
+let s:format_on_save = 0
+let s:go_file_head = [
+      \ '// @Title',
+      \ '// @Description',
+      \ '// @Author',
+      \ '// @Update',
+      \ ]
+let s:go_interpreter = 'python3'
 
 function! SpaceVim#layers#lang#go#plugins() abort
   let plugins = [['fatih/vim-go', { 'on_ft' : 'go', 'loadconf_before' : 1}]]
@@ -58,7 +117,11 @@ function! SpaceVim#layers#lang#go#config() abort
   let g:go_fmt_command = 'gopls'
   let g:syntastic_go_checkers = ['golint', 'govet']
   let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+  " neomake config:
+  let g:neomake_go_gometalinter_remove_invalid_entries = 1
+  let g:neomake_go_go_remove_invalid_entries = 1
   let g:neomake_go_gometalinter_args = ['--disable-all']
+  let g:neomake_go_enabled_makers = s:enabled_linters
   let g:go_snippet_engine = 'neosnippet'
   let g:go_rename_command = 'gopls'
 
@@ -70,10 +133,22 @@ function! SpaceVim#layers#lang#go#config() abort
   endif
   call SpaceVim#mapping#space#regesit_lang_mappings('go', function('s:language_specified_mappings'))
   call SpaceVim#plugins#runner#reg_runner('go', 'go run %s')
+  if s:format_on_save
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'go',
+          \ 'enable' : 1,
+          \ })
+  endif
+  call SpaceVim#layers#edit#add_ft_head_tamplate('go', s:go_file_head)
 endfunction
 
 function! s:go_to_def() abort
-  call go#def#Jump('', 0)
+  if SpaceVim#layers#lsp#check_filetype('go')
+        \ || SpaceVim#layers#lsp#check_server('gopls')
+    call SpaceVim#lsp#go_to_def()
+  else
+    call go#def#Jump('', 0)
+  endif
 endfunction
 
 function! s:language_specified_mappings() abort
@@ -145,6 +220,45 @@ function! s:language_specified_mappings() abort
         \ ':GoFreevars',
         \ 'freevars', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
+  if SpaceVim#layers#lsp#check_filetype('go')
+        \ || SpaceVim#layers#lsp#check_server('gopls')
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+    nnoremap <silent><buffer> gD :<C-u>call SpaceVim#lsp#go_to_typedef()<Cr>
+
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
+          \ 'call SpaceVim#lsp#references()', 'show-references', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+          \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
+          \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
+    let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],
+          \ 'call SpaceVim#lsp#list_workspace_folder()', 'list-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'a'],
+          \ 'call SpaceVim#lsp#add_workspace_folder()', 'add-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'r'],
+          \ 'call SpaceVim#lsp#remove_workspace_folder()', 'remove-workspace-folder', 1)
+  endif
+endfunction
+function! SpaceVim#layers#lang#go#set_variable(var) abort
+  let s:format_on_save = get(a:var,
+        \ 'format_on_save',
+        \ get(a:var,
+        \ 'format-on-save',
+        \ s:format_on_save))
+  let s:go_file_head = get(a:var,
+        \ 'go_file_head',
+        \ s:go_file_head)
+  let s:enabled_linters = get(a:var,
+        \ 'enabled_linters',
+        \ s:enabled_linters
+        \ )
+  let s:go_interpreter = get(a:var,
+        \ 'go_interpreter',
+        \ s:go_interpreter
+        \ )
 endfunction
 
 function! SpaceVim#layers#lang#go#health() abort

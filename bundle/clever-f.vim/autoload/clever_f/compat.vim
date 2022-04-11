@@ -17,3 +17,14 @@ else
         return a:a && !a:b || !a:a && a:b
     endfunction
 endif
+
+if exists('*reg_executing')
+    function! clever_f#compat#reg_executing() abort
+        return reg_executing()
+    endfunction
+else
+    " reg_executing() was introduced at Vim 8.2.0020 and Neovim 0.4.0
+    function! clever_f#compat#reg_executing() abort
+        return ''
+    endfunction
+endif

@@ -3,6 +3,8 @@
 # Original version is created by shoma2da
 # https://github.com/shoma2da/neobundle_installer
 
+set -e
+
 if [ $# -ne 1 ]; then
   echo "You must specify the installation directory!"
   exit 1
@@ -51,21 +53,18 @@ echo "Please add the following settings for dein to the top of your vimrc (Vim) 
     echo "set runtimepath+=$INSTALL_DIR"
     echo ""
     echo "\" Required:"
-    echo "if dein#load_state('$PLUGIN_DIR')"
-    echo "  call dein#begin('$PLUGIN_DIR')"
+    echo "call dein#begin('$PLUGIN_DIR')"
     echo ""
-    echo "  \" Let dein manage dein"
-    echo "  \" Required:"
-    echo "  call dein#add('$INSTALL_DIR')"
+    echo "\" Let dein manage dein"
+    echo "\" Required:"
+    echo "call dein#add('$INSTALL_DIR')"
     echo ""
-    echo "  \" Add or remove your plugins here like this:"
-    echo "  \"call dein#add('Shougo/neosnippet.vim')"
-    echo "  \"call dein#add('Shougo/neosnippet-snippets')"
+    echo "\" Add or remove your plugins here like this:"
+    echo "\"call dein#add('Shougo/neosnippet.vim')"
+    echo "\"call dein#add('Shougo/neosnippet-snippets')"
     echo ""
-    echo "  \" Required:"
-    echo "  call dein#end()"
-    echo "  call dein#save_state()"
-    echo "endif"
+    echo "\" Required:"
+    echo "call dein#end()"
     echo ""
     echo "\" Required:"
     echo "filetype plugin indent on"

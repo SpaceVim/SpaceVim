@@ -1,13 +1,13 @@
 "=============================================================================
 " github.vim --- SpaceVim github layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section github, layer-github
+" @section github, layers-github
 " @parentsection layers
 " This layer provides GitHub integration for SpaceVim
 "
@@ -22,13 +22,21 @@
 "   normal    SPC g h I     show issues in browser
 "   normal    SPC g h p     show PRs in browser
 " <
+"
+" NOTE: If you are using python2, you may get error:
+" >
+"    No module named past.builtins
+" <
+"
+" To fix this issue, you need to install `future` module.
+" >
+"   python2 -m pip install future
+" <
 
 function! SpaceVim#layers#github#plugins() abort
   return [
-        \ ['jaxbot/github-issues.vim', { 'on_cmd' : 'Gissues' }],
-        \ ['junegunn/vim-github-dashboard', {
-        \ 'on_cmd': ['GHA', 'GHD', 'GHActivity', 'GHDashboard'],
-        \ }],
+        \ [g:_spacevim_root_dir . 'bundle/github-issues.vim', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-github-dashboard', {'merged' : 0}],
         \ ['tyru/open-browser-github.vim',  {
         \ 'depends': 'open-browser.vim',
         \ 'on_cmd': ['OpenGithubFile', 'OpenGithubIssue', 'OpenGithubPullReq'],
@@ -41,7 +49,7 @@ endfunction
 function! SpaceVim#layers#github#config() abort
   " TODO Remove duplicated line exists in git layer
   let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {
-        \ 'name' : '+VersionControl/git',
+        \ 'name' : '+VCS/git',
         \ })
 
 	if !exists('g:_spacevim_mappings_space.g.h')

@@ -1,10 +1,62 @@
 "=============================================================================
 " cscope.vim --- SpaceVim cscope layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+scriptencoding utf-8
+
+""
+" @section cscope, layers-cscope
+" @parentsection layers
+" `cscope` layer provides |cscope| integration for SpaceVim.
+" To load this layer:
+" >
+"   [[layers]]
+"     name = 'cscope'
+" <
+" @subsection Layer options
+"
+" The layer option can be used when loading the `cscope` layer, for example:
+" >
+"   [[layers]]
+"     name = 'cscope'
+"     auto_update = true
+"     open_quickfix = 0
+" <
+" 1. `auto_update`: Enable or disable automatic updating of the cscope database.
+" 2. `cscope_command`: set the command or path of `cscope` executable.
+" 3. `open_location`: enable/disable open location list after searching.
+" 4. `preload_path`: set the proload paths.
+"
+" @subsection key bindings
+" 
+" The following key bindings will be added when this layer is loaded.
+" >
+"   Key binding       Description
+"   SPC m c c         find functions called by this function
+"   SPC m c C         find functions calling this function
+"   SPC m c d         find global definition of a symbol
+"   SPC m c r         find references of a symbol
+"   SPC m c f         find files
+"   SPC m c F         find files including this file
+"   SPC m c e         find this egrep pattern
+"   SPC m c t         find this text string
+"   SPC m c =         find assignments to this symbol
+"   SPC m c u         create cscope index
+"   SPC m c i         create cscope database
+"   SPC m c l         list cscope database
+"   SPC m c m         remove current cscope database
+"   SPC m c M         remove all cscope database
+" <
+
+if exists('s:cscope_command')
+  finish
+endif
+
+let s:cscope_command = 'cscope'
+let s:auto_update = 1
 
 function! SpaceVim#layers#cscope#plugins() abort
   let plugins = [
@@ -30,6 +82,10 @@ function! SpaceVim#layers#cscope#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'l'], 'call cscope#list_databases()', 'list-cscope-databases', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'm'], 'call cscope#clear_databases(SpaceVim#plugins#projectmanager#current_root())', 'remove-current-cscope-databases', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'c', 'M'], 'call cscope#clear_databases()', 'remove-all-cscope-databases', 1)
+
+  " setting cscope.vim based on layer options
+  let g:cscope_cmd = s:cscope_command
+  let g:cscope_auto_update = s:auto_update
 endfunction
 
 
@@ -37,4 +93,30 @@ function! SpaceVim#layers#cscope#health() abort
   call SpaceVim#layers#cscope#plugins()
   call SpaceVim#layers#cscope#config()
   return 1
+endfunction
+
+function! SpaceVim#layers#cscope#set_variable(var) abort
+
+  let s:cscope_command = get(a:var,
+        \ 'cscope_command',
+        \ s:cscope_command)
+  let s:auto_update = get(a:var,
+        \ 'auto_update',
+        \ s:auto_update)
+  let g:cscope_open_location = get(a:var,
+        \ 'open_location',
+        \ 1)
+  let g:cscope_preload_path = get(a:var,
+        \ 'preload_path',
+        \ '')
+
+endfunction
+
+function! SpaceVim#layers#cscope#get_options() abort
+
+  return ['cscope_command',
+        \ 'auto_update',
+        \ 'open_location',
+        \ 'preload_path']
+
 endfunction

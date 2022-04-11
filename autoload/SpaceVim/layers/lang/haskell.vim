@@ -1,13 +1,13 @@
 "=============================================================================
 " haskell.vim --- SpaceVim lang#haskell layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#haskell, layer-lang-haskell
+" @section lang#haskell, layers-lang-haskell
 " @parentsection layers
 " This layer is for haskell development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

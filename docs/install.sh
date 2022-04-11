@@ -2,8 +2,8 @@
 
 #=============================================================================
 # install.sh --- bootstrap script for SpaceVim
-# Copyright (c) 2016-2020 Shidong Wang & Contributors
-# Author: Shidong Wang < wsdjeg at 163.com >
+# Copyright (c) 2016-2021 Shidong Wang & Contributors
+# Author: Shidong Wang < wsdjeg@outlook.com >
 # URL: https://spacevim.org
 # License: GPLv3
 #=============================================================================
@@ -84,7 +84,7 @@ On_IWhite='\033[0;107m'   # White
 # }}}
 
 # version
-Version='1.8.0-dev'
+Version='2.0.0-dev'
 #System name
 System="$(uname -s)"
 
@@ -168,16 +168,6 @@ install_vim () {
     else
         ln -s "$HOME/.SpaceVim" "$HOME/.vim"
         success "Installed SpaceVim for vim"
-    fi
-}
-# }}}
-
-# install_package_manager {{{
-install_package_manager () {
-    if [[ ! -d "$HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim" ]]; then
-        info "Install dein.vim"
-        git clone https://github.com/Shougo/dein.vim.git $HOME/.cache/vimfiles/repos/github.com/Shougo/dein.vim
-        success "dein.vim installation done"
     fi
 }
 # }}}
@@ -287,6 +277,7 @@ usage () {
     echo " -v, --version            Show version information and exit"
     echo " -u, --uninstall          Uninstall SpaceVim"
     echo " -c, --checkRequirements  checkRequirements for SpaceVim"
+    echo " --no-fonts               skip downloading fonts"
     echo ""
     echo "EXAMPLE"
     echo ""
@@ -420,22 +411,35 @@ main () {
                     case $2 in
                         neovim)
                             install_neovim
+                            install_fonts
                             install_done
                             exit 0
                             ;;
                         vim)
                             install_vim
+                            install_fonts
                             install_done
                             exit 0
                     esac
                 fi
                 install_vim
                 install_neovim
+                install_fonts
                 install_done
                 exit 0
                 ;;
             --help|-h)
                 usage
+                exit 0
+                ;;
+            --no-fonts)
+                welcome
+                need_cmd 'git'
+                fetch_repo
+                install_vim
+                install_neovim
+                install_fonts
+                install_done
                 exit 0
                 ;;
             --version|-v)
@@ -448,7 +452,6 @@ main () {
         fetch_repo
         install_vim
         install_neovim
-        install_package_manager
         install_fonts
         install_done
     fi

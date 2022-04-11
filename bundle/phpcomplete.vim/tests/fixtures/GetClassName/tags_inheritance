@@ -1,0 +1,23 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	Development	//
+Level1	foo_inheritance_level1.php	/^class Level1 extends Level2 {$/;"	c	namespace:NS1\SubNS2	inherits:Level2
+Level2	foo_inheritance_level2.php	/^class Level2 extends Level3 {$/;"	c	namespace:NS2\SubNS	inherits:Level3
+Level3	foo_inheritance_level3.php	/^class Level3 {$/;"	c	namespace:NS3\SubNS
+Level31	foo_inheritance_level31.php	/^class Level31 {$/;"	c	namespace:NS31\SubNS
+NS1\SubNS2	foo_inheritance_level1.php	/^<?php$/;"	n
+NS2\SubNS	foo_inheritance_level2.php	/^<?php$/;"	n
+NS31\SubNS	foo_inheritance_level31.php	/^<?php$/;"	n
+NS3\SubNS	foo_inheritance_level3.php	/^<?php$/;"	n
+doSometing	foo_inheritance_level1.php	/^	public function doSometing() {$/;"	f	class:NS1\SubNS2::Level1	access:public	signature:()
+getAnother31Instance	foo_inheritance_level3.php	/^	public function getAnother31Instance() {$/;"	f	class:NS3\SubNS::Level3	access:public	signature:()
+getLevel31Instance	foo_inheritance_level3.php	/^	public function getLevel31Instance() {$/;"	f	class:NS3\SubNS::Level3	access:public	signature:()
+level1Method	foo_inheritance_level1.php	/^	protected function level1Method() {$/;"	f	class:NS1\SubNS2::Level1	access:protected	signature:()
+level2Method_protected	foo_inheritance_level2.php	/^	protected function level2Method_protected() {$/;"	f	class:NS2\SubNS::Level2	access:protected	signature:()
+level2Method_public	foo_inheritance_level2.php	/^	public function level2Method_public() {$/;"	f	class:NS2\SubNS::Level2	access:public	signature:()
+level31Method	foo_inheritance_level31.php	/^	public function level31Method() {$/;"	f	class:NS31\SubNS::Level31	access:public	signature:()
+level3Method_protected	foo_inheritance_level3.php	/^	protected function level3Method_protected() {$/;"	f	class:NS3\SubNS::Level3	access:protected	signature:()
+level3Method_public	foo_inheritance_level3.php	/^	public function level3Method_public() {$/;"	f	class:NS3\SubNS::Level3	access:public	signature:()

@@ -60,7 +60,7 @@ It will run [eslint](https://eslint.org/) asynchronously.
 To install eslint, just run following command in terminal.
 
 ```
-npm install eslint --save-dev
+npm install -g eslint
 ```
 
 ### Jump to test file

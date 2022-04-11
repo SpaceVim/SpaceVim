@@ -1,14 +1,14 @@
 "=============================================================================
 " ocaml.vim --- SpaceVim lang#ocaml layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 
 ""
-" @section lang#ocaml, layer-lang-ocaml
+" @section lang#ocaml, layers-lang-ocaml
 " @parentsection layers
 " OCaml autocompletion provided by merlin.
 "

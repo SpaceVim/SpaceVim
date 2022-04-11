@@ -1,13 +1,13 @@
 "=============================================================================
 " gosu.vim --- gosu language support
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#gosu, layer-lang-gosu
+" @section lang#gosu, layers-lang-gosu
 " @parentsection layers
 " This layer is for gosu development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

@@ -1,7 +1,7 @@
 "=============================================================================
 " a.vim --- plugin for manager alternate file
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -11,7 +11,7 @@ set cpo&vim
 scriptencoding utf-8
 
 
-if $SPACEVIM_LUA
+if $SPACEVIM_LUA && has('nvim-0.5.0')
   function! SpaceVim#plugins#a#alt(request_parse, ...) abort
     lua require("spacevim.plugin.a").alt(
           \ require("spacevim").eval("a:request_parse"),
@@ -190,7 +190,7 @@ else
     let s:project_config[a:alt_config_json.root] = {}
     " @question why need sory()
     " if we have two key docs/*.md and docs/cn/*.md
-    " with the first key, we can also find files in 
+    " with the first key, we can also find files in
     " docs/cn/ directory, for example docs/cn/index.md
     " and the alt file will be
     " docs/cn/cn/index.md. this should be overrided by login in
@@ -199,12 +199,12 @@ else
     " so we need to use sort, and make sure `docs/cn/*.md` is parsed after
     " docs/*.md
     for key in sort(keys(a:alt_config_json.config))
-      call s:LOGGER.info('start parse key:' . key)
+      call s:LOGGER.debug('start parse key:' . key)
       let searchpath = key
       if match(searchpath, '/\*')
         let searchpath = substitute(searchpath, '*', '**/*', 'g')
       endif
-      call s:LOGGER.info('run globpath for: '. searchpath)
+      call s:LOGGER.debug('run globpath for: '. searchpath)
       for file in s:CMP.globpath('.', searchpath)
         let file = s:FILE.unify_path(file, ':.')
         let s:project_config[a:alt_config_json.root][file] = {}
@@ -214,11 +214,11 @@ else
           endfor
         else
           for type in keys(a:alt_config_json.config[key])
-            let begin_end = split(key, '*')
-            if len(begin_end) == 2
+            let left_index = stridx(key, '*')
+            if left_index != -1 && left_index == strridx(key, '*')
               let s:project_config[a:alt_config_json.root][file][type] =
                     \ s:get_type_path(
-                    \ begin_end,
+                    \ key,
                     \ file,
                     \ a:alt_config_json.config[key][type]
                     \ )
@@ -232,8 +232,8 @@ else
   endfunction
 
   function! s:get_type_path(a, f, b) abort
-    let begin_len = strlen(a:a[0])
-    let end_len = strlen(a:a[1])
+    let begin_len = stridx(a:a, '*')
+    let end_len = strlen(a:a) - begin_len - 1
     return substitute(a:b, '{}', a:f[begin_len : (end_len+1) * -1], 'g')
   endfunction
 

@@ -1,13 +1,13 @@
 "=============================================================================
 " ruby.vim --- lang#ruby layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#ruby, layer-lang-ruby
+" @section lang#ruby, layers-lang-ruby
 " @parentsection layers
 " This layer is for ruby development, disabled by default, to enable this
 " layer, add following snippet to your @section(options) file.

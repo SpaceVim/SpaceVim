@@ -15,6 +15,7 @@ let s:root_opened_tree_icon = get(g:, 'defx_icons_root_opened_tree_icon', '')
 let s:nested_closed_tree_icon = get(g: ,'defx_icons_nested_closed_tree_icon', '')
 let s:nested_opened_tree_icon = get(g: ,'defx_icons_nested_opened_tree_icon', '')
 let s:copy_icon = get(g:, 'defx_icons_copy_icon', '')
+let s:link_icon = get(g:, 'defx_icons_link_icon', '')
 let s:move_icon = get(g:, 'defx_icons_move_icon', '')
 let s:default_color = synIDattr(hlID('Normal'), 'fg')
 
@@ -152,10 +153,28 @@ let s:extensions = extend({
       \ 'psd': {'icon': '', 'color': s:gui_colors.darkBlue, 'term_color': s:term_colors.darkBlue},
       \ 'psb': {'icon': '', 'color': s:gui_colors.darkBlue, 'term_color': s:term_colors.darkBlue},
       \ 'ts': {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
-      \ 'tsx': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'tsx': {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
       \ 'jl': {'icon': '', 'color': s:gui_colors.purple, 'term_color': s:term_colors.purple},
       \ 'pp': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
       \ 'vue': {'icon': '﵂', 'color': s:gui_colors.green, 'term_color': s:term_colors.green},
+      \ 'key': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'cs': {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
+      \ 'elm': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'f#': {'icon': '', 'color': s:gui_colors.darkBlue, 'term_color': s:term_colors.darkBlue},
+      \ 'gemspec': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'haml': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'hh': {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
+      \ 'leex': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'mdx': {'icon': '', 'color': s:gui_colors.yellow, 'term_color': s:term_colors.yellow},
+      \ 'r': {'icon': 'ﳒ', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'rake': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'rproj': {'icon': '鉶', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'swift': {'icon': '', 'color': s:gui_colors.orange, 'term_color': s:term_colors.orange},
+      \ 'tex': {'icon': 'ﭨ', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'webmanifest': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'webp': {'icon': '', 'color': s:gui_colors.aqua, 'term_color': s:term_colors.aqua},
+      \ 'xcplayground': {'icon': '', 'color': s:gui_colors.orange, 'term_color': s:term_colors.orange},
+      \ 'svelte': {'icon': '', 'color': s:gui_colors.darkOrange, 'term_color': s:term_colors.darkOrange},
       \ }, get(g:, 'defx_icons_extensions', {}))
 
 let s:exact_matches = extend({
@@ -183,6 +202,13 @@ let s:exact_matches = extend({
       \ 'procfile': {'icon': '', 'color': s:gui_colors.purple, 'term_color': s:term_colors.purple},
       \ 'dockerfile': {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
       \ 'docker-compose.yml': {'icon': '', 'color': s:gui_colors.yellow, 'term_color': s:term_colors.yellow},
+      \ 'makefile': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'gemfile': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ '.gitlab-ci.yml': {'icon': '', 'color': s:gui_colors.orange, 'term_color': s:term_colors.orange},
+      \ 'cmakelists.txt': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'config.ru': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'mix.lock': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'rakefile': {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
       \ }, get(g:, 'defx_icons_exact_matches', {}))
 
 let s:pattern_matches = extend({
@@ -199,6 +225,7 @@ let s:pattern_matches = extend({
 
 hi default link DefxIconsMarkIcon Statement
 hi default link DefxIconsCopyIcon WarningMsg
+hi default link DefxIconsLinkIcon WarningMsg
 hi default link DefxIconsMoveIcon ErrorMsg
 hi default link DefxIconsDirectory Directory
 hi default link DefxIconsParentDirectory Directory
@@ -209,21 +236,26 @@ hi default link DefxIconsClosedTreeIcon Directory
 
 function! defx_icons#get() abort
   return {
-        \ 'extensions': s:extensions,
-        \ 'exact_matches': s:exact_matches,
-        \ 'exact_dir_matches': get(g:, 'defx_icon_exact_dir_matches', {}),
-        \ 'pattern_matches': s:pattern_matches,
-        \ 'enable_syntax_highlight': s:enable_syntax_highlight,
-        \ 'column_length': s:column_length,
-        \ 'parent_icon': s:parent_icon,
-        \ 'directory_icon': s:directory_icon,
-        \ 'directory_symlink_icon': s:directory_symlink_icon,
-        \ 'mark_icon': s:mark_icon,
-        \ 'default_icon': s:default_icon,
-        \ 'root_opened_tree_icon': s:root_opened_tree_icon,
-        \ 'nested_closed_tree_icon': s:nested_closed_tree_icon,
-        \ 'nested_opened_tree_icon': s:nested_opened_tree_icon,
-        \ 'copy_icon': s:copy_icon,
-        \ 'move_icon': s:move_icon,
+        \ 'icons': {
+        \   'extensions': s:extensions,
+        \   'exact_matches': s:exact_matches,
+        \   'pattern_matches': s:pattern_matches,
+        \   'exact_dir_matches': get(g:, 'defx_icon_exact_dir_matches', {}),
+        \   'parent_icon': s:parent_icon,
+        \   'directory_icon': s:directory_icon,
+        \   'directory_symlink_icon': s:directory_symlink_icon,
+        \   'mark_icon': s:mark_icon,
+        \   'default_icon': s:default_icon,
+        \   'root_opened_tree_icon': s:root_opened_tree_icon,
+        \   'nested_closed_tree_icon': s:nested_closed_tree_icon,
+        \   'nested_opened_tree_icon': s:nested_opened_tree_icon,
+        \   'copy_icon': s:copy_icon,
+        \   'link_icon': s:link_icon,
+        \   'move_icon': s:move_icon,
+        \ },
+        \ 'settings': {
+        \   'enable_syntax_highlight': s:enable_syntax_highlight,
+        \   'column_length': s:column_length,
+        \ }
         \ }
 endfunction

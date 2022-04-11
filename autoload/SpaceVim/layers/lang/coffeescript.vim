@@ -1,13 +1,13 @@
 "=============================================================================
 " coffeescript.vim --- lang#coffeescript layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#coffeescript, layer-lang-coffeescript
+" @section lang#coffeescript, layers-lang-coffeescript
 " @parentsection layers
 " This layer is for coffeescript development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

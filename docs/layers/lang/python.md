@@ -21,6 +21,7 @@ description: "This layer is for Python development, provides autocompletion, syn
   - [Running current script](#running-current-script)
   - [Testing](#testing)
   - [Refactoring](#refactoring)
+  - [LSP key Bindings](#lsp-key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -99,6 +100,22 @@ you need to add following snippet into your spacevim configuration file.
   pip install --user coverage
   ```
 
+- **language server**
+
+  To enable python support of `lsp` layer. You may need to install `pyright`:
+
+  ```
+  npm install -g pyright
+  ```
+
+  Also you need enable `lsp` layer with pyright client:
+
+  ```
+  [[layers]]
+    name = 'lsp'
+    enabled_clients = ['pyright']
+  ```
+
 ## Layer options
 
 - `python_file_head`: Default file head when create new python file.
@@ -128,6 +145,7 @@ you need to add following snippet into your spacevim configuration file.
 
 - `format_on_save`: Enable/disable file formatting when saving current python file. By default,
   it is disabled, to enable it:
+
   ```toml
   [[layers]]
       name = 'lang#python'
@@ -136,6 +154,7 @@ you need to add following snippet into your spacevim configuration file.
 
 - `python_interpreter`: Set the python interpreter, by default, it is `python3`. The value of this option will
   be applied to `g:neomake_python_python_exe` and code runner.
+
   ```toml
   [[layers]]
       name = 'lang#python'
@@ -166,12 +185,12 @@ you need to add following snippet into your spacevim configuration file.
 
 ### Code Coverage
 
-| Mode   | Key Binding | Description       |
-| ------ | ----------- | ----------------- |
-| normal | `SPC l c r` | coverager report  |
-| normal | `SPC l c s` | coverager show    |
-| normal | `SPC l c e` | coverager session |
-| normal | `SPC l c f` | coverager refresh |
+| Mode   | Key Binding | Description      |
+| ------ | ----------- | ---------------- |
+| normal | `SPC l c r` | coverage report  |
+| normal | `SPC l c s` | coverage show    |
+| normal | `SPC l c e` | coverage session |
+| normal | `SPC l c f` | coverage refresh |
 
 ### Text objects and motions
 
@@ -211,3 +230,20 @@ To run a Python script, you can press `SPC l r` to run the current file without 
 | ------------ | ------------------------------------ |
 | `SPC l i r`  | remove unused imports with autoflake |
 | `SPC l i s`  | sort imports with isort              |
+
+### LSP key Bindings
+
+If the lsp layer is enabled for python, the following key bindings can
+be used:
+
+| key binding | Description             |
+| ----------- | ----------------------- |
+| `g D`       | jump to type definition |
+| `SPC l e`   | rename symbol           |
+| `SPC l x`   | show references         |
+| `SPC l s`   | show line diagnostics   |
+| `SPC l d`   | show document           |
+| `K`         | show document           |
+| `SPC l w l` | list workspace folder   |
+| `SPC l w a` | add workspace folder    |
+| `SPC l w r` | remove workspace folder |

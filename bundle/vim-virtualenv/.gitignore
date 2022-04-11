@@ -1,0 +1,9 @@
+*.pyc
+/doc/tags
+
+### Template taken from github's gitignore repository
+### Python template
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class

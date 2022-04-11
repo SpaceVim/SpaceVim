@@ -174,10 +174,10 @@ pip install --user coverage
 
 | 模式   | 快捷键      | 功能描述          |
 | ------ | ----------- | ----------------- |
-| normal | `SPC l c r` | coverager report  |
-| normal | `SPC l c s` | coverager show    |
-| normal | `SPC l c e` | coverager session |
-| normal | `SPC l c f` | coverager refresh |
+| normal | `SPC l c r` | coverage report  |
+| normal | `SPC l c s` | coverage show    |
+| normal | `SPC l c e` | coverage session |
+| normal | `SPC l c f` | coverage refresh |
 
 ### 交互式编程
 

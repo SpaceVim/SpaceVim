@@ -1,13 +1,13 @@
 "=============================================================================
 " colorscheme.vim --- SpaceVim colorscheme layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section colorscheme, colorscheme
+" @section colorscheme, layers-colorscheme
 " @parentsection layers
 " The ldefault colorscheme for SpaceVim is gruvbox. The colorscheme can be
 " changed with the `g:spacevim_colorscheme` option by adding the following

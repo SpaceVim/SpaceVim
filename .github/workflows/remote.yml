@@ -1,0 +1,23 @@
+name: mirror
+
+on: [push]
+
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        mirror: ["gitee", "coding", "gitlab"]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+    - name: Push to ${{ matrix.mirror }}
+      env:
+        BOTSECRET: ${{ secrets.BOTSECRET }}
+        BOTSECRET_GITHUB: ${{ secrets.BOTSECRET_GITHUB }}
+        CODINGBOTSECRET: ${{ secrets.CODINGBOTSECRET }}
+      run: .ci/update_mirror.sh ${{ matrix.mirror }}
+

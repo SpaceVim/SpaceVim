@@ -1,13 +1,13 @@
 "=============================================================================
 " java.vim --- SpaceVim lang#java layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#java, layer-lang-java
+" @section lang#java, layers-lang-java
 " @parentsection layers
 " This layer is for java development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -105,7 +105,12 @@
 " or download google's formater jar from:
 " https://github.com/google/google-java-format
 "
-" and set 'g:spacevim_layer_lang_java_formatter' to the path of the jar.
+" and set the layer option `java_formatter_jar` to the path of the jar.
+" >
+"   [[layers]]
+"     name = 'lang#java'
+"     java_formatter_jar = 'path/to/google-java-format.jar'
+" <
 
 
 
@@ -127,12 +132,11 @@ let s:java_interpreter = 'java'
 
 function! SpaceVim#layers#lang#java#plugins() abort
   let plugins = [
-        \ ['wsdjeg/vim-dict',               { 'on_ft' : 'java'}],
-        \ ['wsdjeg/java_getset.vim',        { 'on_ft' : 'java', 'loadconf' : 1}],
-        \ ['wsdjeg/JavaUnit.vim',           { 'on_ft' : 'java'}],
-        \ ['vim-jp/vim-java',               { 'on_ft' : 'java'}],
         \ ['artur-shaik/vim-javacomplete2', { 'on_ft' : ['java','jsp'], 'loadconf' : 1}],
         \ ]
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/JavaUnit.vim', {'on_ft' : 'java'}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/java_getset.vim', {'on_ft' : 'java'}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-dict', {'on_ft' : 'java'}])
   return plugins
 endfunction
 

@@ -103,5 +103,5 @@ of your project. following tasks will be detected:
 
 ![taskmanager](https://user-images.githubusercontent.com/13142418/95338987-1a334500-08e6-11eb-80c4-ad811095d8c8.png)
 
-To select a tast to run, use key binding `SPC p t r`, you can also use `SPC p t l` to list all the tasks
+To select a task to run, use key binding `SPC p t r`, you can also use `SPC p t l` to list all the tasks
 in the tasks manager window.

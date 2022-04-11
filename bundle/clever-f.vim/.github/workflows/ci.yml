@@ -27,40 +27,48 @@ jobs:
           PROFILE_LOG: profile.txt
         run: |
           cd ./test
-          echo $THEMIS_VIM
+          echo "${THEMIS_VIM}"
           ../vim-themis/bin/themis .
       # covimerage seems not maintained for Windows. Skip taking code coverage on Windows
       - name: Install Python
-        if: matrix.os != 'windows-latest'
+        if: ${{ matrix.os != 'windows-latest' }}
         uses: actions/setup-python@v1
       - name: Install covimerage
-        if: matrix.os != 'windows-latest'
+        if: ${{ matrix.os != 'windows-latest' }}
         run: |
+          # https://github.com/Vimjas/covimerage/issues/95
+          pip install 'click<8.0.0'
           pip install covimerage
           covimerage --version
       - name: Run covimerage
-        if: matrix.os != 'windows-latest'
+        if: ${{ matrix.os != 'windows-latest' }}
         run: |
           cd ./test
           covimerage write_coverage profile.txt
       - name: Take coverage
-        if: matrix.os != 'windows-latest'
+        if: ${{ matrix.os != 'windows-latest' }}
         run: |
           cd ./test
           coverage report
           coverage xml
       - name: Upload coverage to codecov
-        if: matrix.os != 'windows-latest'
+        if: ${{ matrix.os != 'windows-latest' }}
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./test/coverage.xml
 
-  vint:
-    name: Run vint
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v1
       - run: pip install vim-vint
       - run: vint --warning --verbose --enable-neovim ./autoload ./plugin
+      - run: sudo apt install shellcheck
+      - name: Run actionlint
+        run: |
+          bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+          ./actionlint -color
+        shell: bash

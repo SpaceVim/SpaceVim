@@ -187,55 +187,27 @@ let g:unite_source_menu_menus.StatusCodeDefinitions.command_candidates = [
       \]
 let g:unite_source_grep_max_candidates = get(g:,
       \ 'unite_source_grep_max_candidates', 200)
-if executable('hw')
-  " Use hw (highway)
-  " https://github.com/tkengo/highway
-  let g:unite_source_grep_command = 'hw'
-  let g:unite_source_grep_default_opts = '--no-group --no-color'
-  let g:unite_source_grep_recursive_opt = ''
-elseif executable('ag')
-  " Use ag (the silver searcher)
-  " https://github.com/ggreer/the_silver_searcher
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts =
-        \ '-i --vimgrep --hidden --ignore ' .
-        \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-  let g:unite_source_grep_recursive_opt = ''
-elseif executable('rg') && 0
-  let g:unite_source_grep_command = 'rg'
-  let g:unite_source_grep_default_opts = ''
-  let g:unite_source_grep_recursive_opt = ''
-elseif executable('pt')
-  " Use pt (the platinum searcher)
-  " https://github.com/monochromegane/the_platinum_searcher
-  let g:unite_source_grep_command = 'pt'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-  let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-  " Use ack
-  " http://beyondgrep.com/
-  let g:unite_source_grep_command = 'ack-grep'
-  let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
-  let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack')
-  let g:unite_source_grep_command = 'ack'
-  let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
-  let g:unite_source_grep_recursive_opt = ''
-elseif executable('jvgrep')
-  " Use jvgrep
-  " https://github.com/mattn/jvgrep
-  let g:unite_source_grep_command = 'jvgrep'
-  let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
-  let g:unite_source_grep_recursive_opt = '-R'
-elseif executable('beagrep')
-  " Use beagrep
-  " https://github.com/baohaojun/beagrep
-  let g:unite_source_grep_command = 'beagrep'
-endif
+" set the unite async command based on spacevim default searcher
+let [
+      \ s:grep_default_exe,
+      \ s:grep_default_opt,
+      \ s:grep_default_ropt,
+      \ s:grep_default_expr_opt,
+      \ s:grep_default_fix_string_opt,
+      \ s:grep_default_ignore_case,
+      \ s:grep_default_smart_case
+      \ ] = SpaceVim#mapping#search#default_tool()
+let g:unite_source_grep_command = s:grep_default_exe
+let g:unite_source_grep_default_opts = join(s:grep_default_opt)
+let g:unite_source_grep_recursive_opt = join(s:grep_default_ropt)
+
+let s:async_command = [s:grep_default_exe] + 
+      \ s:grep_default_opt +
+      \ s:grep_default_fix_string_opt +
+      \ ['--files', '.']
 let g:unite_source_rec_async_command = get(g:,
       \ 'unite_source_rec_async_command',
-      \ ['ag', '--follow', '--nocolor', '--nogroup',
-      \  '--hidden', '-g', ''])
+      \ s:async_command)
 call unite#custom#profile('file_rec/async,file_rec/git', 'context', {
       \   'start_insert' : 1,
       \   'quit'         : 1,
@@ -260,7 +232,7 @@ function! s:view_github_starred_repos() abort
   endif
 endfunction
 " if SpaceVim#layers#isLoaded('tools#mpv')
-  " call SpaceVim#layers#tools#mpv#loadMusics()
+" call SpaceVim#layers#tools#mpv#loadMusics()
 " endif
 augroup unite_buffer_feature
   autocmd FileType unite call s:unite_my_settings()

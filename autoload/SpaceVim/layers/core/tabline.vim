@@ -1,13 +1,13 @@
 "=============================================================================
 " tabline.vim --- SpaceVim tabline
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section core#tabline, layer-core-tabline
+" @section core#tabline, layers-core-tabline
 " @parentsection layers
 " This layer provides default tabline for SpaceVim
 " If you want to use airline's tabline, just disable this layer
@@ -15,6 +15,17 @@
 "   [[layers]]
 "     name = "core#tabline"
 "     enable = false
+" <
+" @subsection Layer options
+"
+" 1. `enable_default_mappings`: Enable/disable default key bindings. This is
+" enabled by default.
+"
+" @subsection Key bindings
+" >
+"   Key binding          Description
+"   Ctrl-Shift-Right     Move current tabpage to the right
+"   Ctrl-Shift-Left      Move current tabpage to the left
 " <
 
 scriptencoding utf-8
@@ -54,12 +65,45 @@ let s:i_separators = {
       \ 'nil' : ['', ''],
       \ }
 
+let s:enable_default_mappings = 1
 
 function! s:get_no_empty(a, b) abort
   if empty(a:a)
     return a:b
   else
     return a:a
+  endif
+endfunction
+
+function! s:move_tabpage(direction)
+  " get number of tab pages.
+  let ntp = tabpagenr("$")
+
+  if ntp > 1
+    " get number of current tab page.
+    let ctpn = tabpagenr()
+    if a:direction > 0
+      let index = (ctpn + a:direction) % ntp
+      if index == 0
+        let index = ntp
+      elseif index == 1
+        let index = 0
+      endif
+    else
+      let index = (ctpn + a:direction) % ntp
+      if index < 0
+        let index = ntp + index
+      endif
+      if index == 0
+        let index = ntp
+      elseif index == 1
+        let index = 0
+      else
+        let index -= 1
+      endif
+    endif
+    " move tab page.
+    execute "tabmove ".index
   endif
 endfunction
 
@@ -94,18 +138,29 @@ function! s:wrap_id(id) abort
   return id . ' '
 endfunction
 
+" build the tab item, the first argv is bufnr, and the second argv is tabnr
 function! s:buffer_item(bufnr, ...) abort
   let name = s:tabname(a:bufnr)
+  let tabnr = get(a:000, 0, -1)
+  if tabnr != -1
+    let tabname = gettabvar(tabnr, '_spacevim_tab_name', '')
+    let len = strlen(tabname) + 3
+  else
+    let tabname = ''
+    let len = strlen(name) + 3
+  endif
   let item = {
         \ 'bufnr' : a:bufnr,
-        \ 'len' :  strlen(name) + 3,
+        \ 'len' :  len,
         \ 'bufname' : name,
-        \ 'tabnr' : get(a:000, 0, -1),
+        \ 'tabname' : tabname,
+        \ 'tabnr' : tabnr,
         \ }
   return item
 endfunction
 
 " check if the items len longer than &columns
+" the check_len function should also check the tab name.
 function! s:check_len(items) abort
   let len = 0
   for item in a:items
@@ -460,6 +515,10 @@ function! SpaceVim#layers#core#tabline#config() abort
     autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
   augroup END
 
+  if s:enable_default_mappings
+    nnoremap <silent> <C-S-Left> :call <SID>move_tabpage(-1)<CR>
+    nnoremap <silent> <C-S-Right> :call <SID>move_tabpage(1)<CR>
+  endif
 
   let shift_keys = {
         \  '1': '!',
@@ -544,4 +603,14 @@ endfunction
 function! SpaceVim#layers#core#tabline#health() abort
   call SpaceVim#layers#core#tabline#config()
   return 1
+endfunction
+
+function! SpaceVim#layers#core#tabline#set_variable(var) abort
+  let s:enable_default_mappings = get(a:var, 'enable_default_mappings', s:enable_default_mappings)
+endfunction
+
+function! SpaceVim#layers#core#tabline#get_options() abort
+
+  return ['enable_default_mappings']
+
 endfunction

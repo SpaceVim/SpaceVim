@@ -1,11 +1,29 @@
 "=============================================================================
 " notify.vim --- notify api
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 scriptencoding utf-8
+
+""
+" @section notify, api-notify
+" @parentsection api
+" The notification api for SpaceVim
+"
+" notify({msg} [, {Color}[, {option}]])
+"
+" Use floating windows to display notification {msg}. The {msg} should a no
+" empty string. {Color} is the name of highlight ground defined in Vim. The
+" {option} is a dictionary which support following key:
+"
+" - `winblend`: enable transparency for the notify windows. Valid values
+"   are in the range of 0 to 100. Default is 0.
+"
+" NOTE: Floating windows support pseudo-transparency (:help 'winblend')
+" in #neovim HEAD (v0.4.x). 
+" 
 
 " Global values, this can be used between different notify
 
@@ -16,7 +34,10 @@ let s:notifications = {}
 let s:self = {}
 let s:self.message = []
 let s:self.notification_width = 1
-let s:self.notify_max_width = &columns * 0.3
+" this should be changed based on the windows
+" if user do not set the notify_max_width, it should use default,
+" it should based on the really windows width
+let s:self.notify_max_width = 0
 let s:self.winid = -1
 let s:self.bufnr = -1
 let s:self.border = {}
@@ -24,7 +45,7 @@ let s:self.border.winid = -1
 let s:self.border.bufnr = -1
 let s:self.borderchars = ['─', '│', '─', '│', '┌', '┐', '┘', '└']
 let s:self.title = ''
-let s:self.win_is_open = 0
+let s:self.winblend = 0
 let s:self.timeout = 3000
 let s:self.hashkey = ''
 let s:self.config = {}
@@ -60,9 +81,25 @@ function! s:self.draw_border(title, width, height) abort
   return lines
 endfunction
 
+function! s:self.win_is_open() abort
+  try
+    if exists('*nvim_win_get_config')
+      return self.winid >= 0 && self.border.winid >= 0
+            \ && has_key(nvim_win_get_config(self.winid), 'col')
+            \ && has_key(nvim_win_get_config(self.border.winid), 'col')
+    elseif exists('*popup_getoptions')
+      return self.winid >= 0 && self.border.winid >= 0
+            \ && has_key(popup_getoptions(self.winid), 'col')
+            \ && has_key(popup_getoptions(self.border.winid), 'col')
+    endif
+  catch
+    return 0
+  endtry
+endfunction
+
 function! s:self.increase_window(...) abort
   " let self.notification_width = self.__floating.get_width(self.winid)
-  if self.notification_width <= self.notify_max_width && self.win_is_open
+  if self.notification_width <= self.notify_max_width && self.win_is_open()
     let self.notification_width += min([float2nr((self.notify_max_width - self.notification_width) * 1 / 10), float2nr(self.notify_max_width)])
     call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
           \ self.draw_border(self.title, self.notification_width, len(self.message)))
@@ -99,10 +136,13 @@ function! s:self.close(...) abort
     call remove(self.message, 0)
   endif
   if len(self.message) == 0
-    noautocmd call self.__floating.win_close(self.border.winid, v:true)
-    noautocmd call self.__floating.win_close(self.winid, v:true)
-    call remove(s:notifications, self.hashkey)
-    let self.win_is_open = v:false
+    if self.win_is_open()
+      noautocmd call self.__floating.win_close(self.border.winid, v:true)
+      noautocmd call self.__floating.win_close(self.winid, v:true)
+    endif
+    if has_key(s:notifications, self.hashkey)
+      call remove(s:notifications, self.hashkey)
+    endif
     let self.notification_width = 1
   endif
   for hashkey in keys(s:notifications)
@@ -110,15 +150,26 @@ function! s:self.close(...) abort
   endfor
 endfunction
 
+function! s:self.close_all() abort
+  let self.message = []
+  if self.win_is_open()
+    noautocmd call self.__floating.win_close(self.border.winid, v:true)
+    noautocmd call self.__floating.win_close(self.winid, v:true)
+  endif
+  if has_key(s:notifications, self.hashkey)
+    call remove(s:notifications, self.hashkey)
+  endif
+  let self.notification_width = 1
+endfunction
+
 function! s:self.notify(msg, ...) abort
+  if self.notify_max_width ==# 0
+    let self.notify_max_width = &columns * 0.3
+  endif
   call add(self.message, a:msg)
   let self.notification_color = get(a:000, 0, 'Normal')
-  if !bufexists(self.border.bufnr)
-    let self.border.bufnr = self.__buffer.create_buf(0, 1)
-  endif
-  if !bufexists(self.bufnr)
-    let self.bufnr = self.__buffer.create_buf(0, 1)
-  endif
+  let options = get(a:000, 1, {}) 
+  let self.winblend = get(options, 'winblend', self.winblend)
   if empty(self.hashkey)
     let self.hashkey = self.__password.generate_simple(10)
   endif
@@ -148,7 +199,7 @@ function! s:self.redraw_windows() abort
       break
     endif
   endfor
-  if self.win_is_open
+  if self.win_is_open()
     call self.__floating.win_config(self.winid,
           \ {
             \ 'relative': 'editor',
@@ -170,7 +221,13 @@ function! s:self.redraw_windows() abort
             \ 'focusable' : v:false,
             \ })
   else
-    let self.winid =  self.__floating.open_win(self.bufnr, v:false,
+    if !bufexists(self.border.bufnr)
+      let self.border.bufnr = self.__buffer.create_buf(0, 1)
+    endif
+    if !bufexists(self.bufnr)
+      let self.bufnr = self.__buffer.create_buf(0, 1)
+    endif
+    noautocmd let self.winid =  self.__floating.open_win(self.bufnr, v:false,
           \ {
             \ 'relative': 'editor',
             \ 'width'   : self.notification_width, 
@@ -180,7 +237,7 @@ function! s:self.redraw_windows() abort
             \ 'col': &columns - self.notification_width - 1,
             \ 'focusable' : v:false,
             \ })
-    let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
+    noautocmd let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
           \ {
             \ 'relative': 'editor',
             \ 'width'   : self.notification_width + 2, 
@@ -190,7 +247,11 @@ function! s:self.redraw_windows() abort
             \ 'highlight' : 'VertSplit',
             \ 'focusable' : v:false,
             \ })
-    let self.win_is_open = v:true
+    if self.winblend > 0 && exists('&winblend')
+          \ && exists('*nvim_win_set_option')
+      call nvim_win_set_option(self.winid, 'winblend', self.winblend)
+      call nvim_win_set_option(self.border.winid, 'winblend', self.winblend)
+    endif
   endif
   call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
         \ self.draw_border(self.title, self.notification_width, len(self.message)))

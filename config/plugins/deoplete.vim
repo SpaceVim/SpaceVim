@@ -1,6 +1,6 @@
 "=============================================================================
 " deoplete.vim --- deoplete default config in spacevim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -86,9 +86,7 @@ call deoplete#custom#var('omni', 'input_patterns', {
 call deoplete#custom#option('ignore_sources', {'gitcommit': ['neosnippet']})
 
 " lua
-call deoplete#custom#var('omni', 'input_patterns', {
-      \ 'lua': '.',
-      \})
+call deoplete#custom#option('ignore_sources', {'lua': ['omni']})
 
 " c c++
 call deoplete#custom#source('clang2', 'mark', '')

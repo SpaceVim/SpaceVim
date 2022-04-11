@@ -3,7 +3,7 @@ title: "Development"
 description: "General contributing guidelines and changelog of SpaceVim, including development information about SpaceVim"
 ---
 
-# [Home](../) >> Development
+# Development
 
 <!-- vim-markdown-toc GFM -->
 
@@ -125,33 +125,40 @@ understand them before you contribute code or documentation for the first time.
 
 ### Commit style guide
 
-A git commit message consists a three distinct parts separated by black line.
+Follow the [conventional commits guidelines](https://www.conventionalcommits.org/) to _make reviews easier_ and to make the git logs more valuable.
+The general structure of a commit message is:
 
 ```
-Type (scope): Subject
+<type>([optional scope]): <description>
 
-body
+[optional body]
 
-footer
+[optional footer(s)]
 ```
 
 **types:**
 
-- `feat`: a new feature
-- `fix`: a bug fix
-- `docs`: changes to documentation
-- `style`: formatting, missing semi colons, etc; no code change
-- `refactor`: refactoring production code
-- `test`: adding tests, refactoring test; no production code change
-- `chore`: updating build tasks, package manager configs, etc; no production code change
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Changes that do not affect the meaning of the code
+- `refactor`: A code change that neither fixes a bug nor adds a feature
+- `pref`: A code change that improves performance
+- `test`: Adding missing tests or correcting existing tests
+- `ci`: Changes to our CI configuration files and scripts
+- `chore`: Other changes that don't modify src or test files
+- `revert`: Reverts a previous commit
 
 **scopes:**
 
-- `core`: vim script in `autoload/SpaceVim/` directory
-- `layer`: vim script in `autoload/SpaceVim/layers/` directory
-- `api`: vim script in `autoload/SpaceVim/api/` directory
-- `plugin`: vim script in `autoload/SpaceVim/plugins/` directory
+- `api`: files in `autoload/SpaceVim/api/` and `docs/api/` directory
+- `layer`: files in `autoload/SpaceVim/layers/` and `docs/layers/` directory
+- `plugin`: files in `autoload/SpaceVim/plugins/` directory
 - `bundle`: files in `bundle/` directory
+- `core`: other files in this repository
+
+In addition to these scopes above,
+you can also use a specific layer name or plugin name as a scope.
 
 **subject:**
 
@@ -169,6 +176,19 @@ therefore it is optional and only used when a commit requires a bit of explanati
 **footer**
 
 The footer is optional and is used to reference issue tracker IDs.
+
+
+**Breaking change**
+
+Breaking changes must be indicated by "!" after the type/scope, and
+a "BREAKING CHANGE" footer describing the change. Example:
+
+```
+refactor(tools#mpv)!: change default musics_directory
+
+BREAKING CHANGE: `~/Music` is standard on macOS and
+also on FreeDesktop's XDG.
+```
 
 ### Pull Request
 
@@ -237,7 +257,7 @@ The file header for Vim script should look like the following template:
 ```vim
 "=============================================================================
 " FILENAME --- NAME layer file for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -260,13 +280,13 @@ The following example shows how to create a new layer named `foo`:
 "=============================================================================
 " foo.vim --- foo Layer file for SpaceVim
 " Copyright (c) 2012-2016 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section foo, layer-foo
+" @section foo, layers-foo
 " @parentsection layers
 " This is the doc for this layer:
 "

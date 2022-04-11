@@ -1,13 +1,13 @@
 "=============================================================================
 " io.vim --- io language support
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#io, layer-lang-io
+" @section lang#io, layers-lang-io
 " @parentsection layers
 " This layer is for io development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

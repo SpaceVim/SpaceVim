@@ -4,21 +4,40 @@ description: "创建SpaceVim这一项目的目的在于提供一个开箱即用�
 lang: zh
 ---
 
-# [主页](../) >> 关于我们
+# 关于我们
 
-[SpaceVim](https://github.com/SpaceVim/SpaceVim) 是一个社区驱动的模块化 Vim/Neovim 配置集合，以模块的方式组织管理插件以
-及相关配置，为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，
-语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱
-即用的 Vim-IDE。这一项目的灵感来自于 spacemacs。
+<!-- vim-markdown-toc GFM -->
 
-### 目标
+- [起源](#起源)
+- [目标](#目标)
+- [联系方式](#联系方式)
+- [特别鸣谢](#特别鸣谢)
 
-- 提供可跨平台的优雅的用户体验。
-- 让搭建不同语言开发环境变得更便捷。
+<!-- vim-markdown-toc -->
 
-### 鸣谢
+## 起源
 
-感谢所有曾经向 SpaceVim 贡献过代码的用户：
+SpaceVim 这一项目起源于 2016 年 12 月份，是由 @wsdjeg 的 [DotFiles](https://github.com/wsdjeg/DotFiles) 仓库分离衍生出来的。
+早期的模块化配置理念来源于 airline 作者的 Vim 配置。
+进一步受到 spacemacs 的 layers 这一概念的影响，最终形成了最早期的版本。
+
+## 目标
+
+- 智能快捷键导航
+- 实现更多的 IDE 功能，支持 Vim 和 Neovim
+- 更好的编程语言支持
+- 跨平台的一致性
+- 快速启动、高效运行
+
+## 联系方式
+
+你可以通过发送邮件至 [support@spacevim.org](mailto:support@spacevim.org) 与维护者取得联系。
+你的信息会被发送给我们的团队，我们会尽快回复你。
+请注意，周末和节假日可能会延迟响应时间。
+
+## 特别鸣谢
+
+感谢所有参与 SpaceVim 开发的用户：
 
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 

@@ -1,13 +1,13 @@
 "=============================================================================
 " autocomplete.vim --- SpaceVim autocomplete layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section autocomplete, autocomplete
+" @section autocomplete, layers-autocomplete
 " @parentsection layers
 " @subsection code completion
 " SpaceVim uses neocomplete as the default completion engine if vim has lua
@@ -37,6 +37,8 @@ else
   let g:_spacevim_autocomplete_delay = 50
   let s:timeoutlen = &timeoutlen
 endif
+
+let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
 
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
@@ -84,6 +86,22 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_event' : 'InsertEnter',
           \ 'loadconf' : 1,
           \ }])
+  elseif g:spacevim_autocomplete_method ==# 'nvim-cmp'
+    " use bundle nvim-cmp
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-cmp', {
+          \ 'merged' : 0,
+          \ 'loadconf' : 1,
+          \ }])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-buffer', {
+          \ 'merged' : 0,
+          \ }])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-path', {
+          \ 'merged' : 0,
+          \ }])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/lspkind-nvim', {
+          \ 'merged' : 0,
+          \ 'loadconf' : 1,
+          \ }])
   elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
     call add(plugins, ['prabirshrestha/asyncomplete.vim', {
           \ 'loadconf' : 1,
@@ -118,15 +136,18 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'on_event' : 'CompleteDone',
           \ 'loadconf_before' : 1,
           \ }])
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/CompleteParameter.vim',
-          \ { 'merged' : 0}])
+    if g:spacevim_autocomplete_method !=# 'nvim-cmp'
+      " this plugin use same namespace as nvim-cmp
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/CompleteParameter.vim',
+            \ { 'merged' : 0}])
+    endif
   endif
   return plugins
 endfunction
 
 function! SpaceVim#layers#autocomplete#config() abort
   if g:spacevim_autocomplete_parens
-    imap <expr>(
+    imap <expr> (
           \ pumvisible() ?
           \ has('patch-7.4.744') ?
           \ complete_parameter#pre_complete("()") : '(' :
@@ -184,12 +205,6 @@ function! SpaceVim#layers#autocomplete#config() abort
     inoremap <silent> <M-/> <C-R>=UltiSnips#ExpandSnippetOrJump()<cr>
   endif
 
-  let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
-  if g:spacevim_snippet_engine ==# 'neosnippet'
-    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert snippets', 1)
-  elseif g:spacevim_snippet_engine ==# 'ultisnips'
-    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite ultisnips', 'insert snippets', 1)
-  endif
   if !empty(g:_spacevim_key_sequence) && g:_spacevim_key_sequence !=# 'nil'
     if g:spacevim_escape_key_binding !=# g:_spacevim_key_sequence
       augroup spacevim_layer_autocomplete

@@ -1,0 +1,49 @@
+virtualenv.vim
+==============
+
+When using :python or :!python, it will only have access to the environment outside of any virtualenvs. If you're working with packages that are only installed in a virtualenv, they will not be available to Vim.
+
+*__Until now!__* The virtualenv.vim plugin will modify python's sys.path and the $PATH environment variable so that anything done with :python or :!python will behave like you would expect for the chosen virtualenv.
+
+If compiled with python support, Vim will have a :python command, but this will be tied to whatever version is the default on your system. If this is the version of python that you use, or you're using a Linux distribution with a sensible package manager (like Debian or Ubuntu), you likely will not have to do anything more than install the plugin. If not, then you will likely have to recompile vim with your version of python.
+
+Usage examples
+==============
+
+Deactivate the current virtualenv
+
+    :VirtualEnvDeactivate
+
+List all virtualenvs
+
+    :VirtualEnvList
+
+Activate the 'spam' virtualenv
+
+    :VirtualEnvActivate spam
+
+If you're unsure which one to activate, you could always use tab completion
+
+    :VirtualEnvActivate <tab>
+
+![tab-completion](http://i.imgur.com/1ZGrM.png "Tab Completion")
+
+If the shell that started vim had $VIRTUAL\_ENV set, omitting the name will
+imply usage of this value.
+
+If you're a virtualenvwrapper user and have $PROJECT\_HOME set, omitting the
+name will try to guess which virtualenv to activate based on the current
+filename.
+
+You can even show the current virtualenv in the statusline with the included function
+
+![statusline](http://i.imgur.com/oxE70.png "Statusline")
+
+Or, for those with a properly configured Powerline (the virtualenv segment is not enabled by default), your virtualenv indicator will toggle on or off accordingly.
+
+![powerline_indicator](http://i.imgur.com/t6pGg7w.png "Powerline Indicator Toggled")
+
+For more detailed help
+
+    :help virtualenv
+

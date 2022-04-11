@@ -1,14 +1,14 @@
 "=============================================================================
 " php.vim --- lang#php layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 
 ""
-" @section lang#php, layer-lang-php
+" @section lang#php, layers-lang-php
 " @parentsection layers
 " This layer is for php development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.
@@ -57,9 +57,14 @@ function! SpaceVim#layers#lang#php#plugins() abort
   call add(plugins, ['StanAngeloff/php.vim', { 'on_ft' : 'php'}])
   call add(plugins, ['2072/PHP-Indenting-for-VIm', { 'on_ft' : 'php'}])
   if SpaceVim#layers#lsp#check_filetype('php')
+        \ || SpaceVim#layers#lsp#check_server('phpactor')
     call add(plugins, ['phpactor/phpactor', {'on_ft' : 'php', 'build' : 'composer install --no-dev -o'}])
   else
-    call add(plugins, ['shawncplus/phpcomplete.vim', { 'on_ft' : 'php'}])
+    if exists('*popup_create')
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/phpcomplete.vim', {'merged' : 0}])
+    else
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/phpcomplete.vim-vim7', {'merged' : 0}])
+    endif
   endif
   return plugins
 endfunction
@@ -77,6 +82,8 @@ function! SpaceVim#layers#lang#php#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('php',
         \ function('s:on_ft'))
   if SpaceVim#layers#lsp#check_filetype('php')
+        \ || SpaceVim#layers#lsp#check_server('phpactor')
+        \ || SpaceVim#layers#lsp#check_server('intelephense')
     call SpaceVim#mapping#gd#add('php',
           \ function('SpaceVim#lsp#go_to_def'))
   endif

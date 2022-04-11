@@ -17,7 +17,7 @@ description: "Autocomplete code within SpaceVim, fuzzy find the candidates from 
   - [Show snippets in auto-completion popup](#show-snippets-in-auto-completion-popup)
 - [Key bindings](#key-bindings)
   - [Completion](#completion)
-  - [Neosnippet](#neosnippet)
+  - [Snippets](#snippets)
 
 <!-- vim-markdown-toc -->
 
@@ -172,9 +172,14 @@ To disable this feature, set the variable `auto_completion_enable_snippets_in_po
 | `Shift-Tab`  | select previous candidate					    |
 | `<Return>`   | based on `auto_completion_return_key_behavior` |
 
-### Neosnippet
+### Snippets
 
 | Key Binding | Description                                                    |
 | ----------- | -------------------------------------------------------------- |
 | `M-/`       | Expand a snippet if text before point is a prefix of a snippet |
-| `SPC i s`   | List all current yasnippets for inserting                      |
+| `SPC i s`   | List all current snippets for inserting                      |
+
+NOTE: `SPC i s` requires that at least one fuzzy search layer be loaded. If the `snippet_engine` is `neosnippet`.
+The fuzzy finder layer can be `leaderf`, `denite` or `unite`. For `ultisnips`, you can use `leaderf` or `unite` layer.
+
+

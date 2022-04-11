@@ -1,0 +1,7 @@
+set nocp
+filetype plugin indent on
+syntax on
+
+let php_sync_method=-1
+let p = fnamemodify(expand('%:p:h'), ':h')
+exe 'set rtp='.p.'/,'.p.'/vimunit/,'.p.'/../vimunit/,'.&rtp

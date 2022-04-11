@@ -1,12 +1,12 @@
 "=============================================================================
 " logger.vim --- SpaceVim logger
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
-if $SPACEVIM_LUA
+if $SPACEVIM_LUA && has('nvim-0.5.0')
   function! SpaceVim#logger#info(msg) abort
     lua require("spacevim.logger").info(
           \ require("spacevim").eval("a:msg")
@@ -40,8 +40,12 @@ if $SPACEVIM_LUA
 
 
   function! SpaceVim#logger#viewLog(...) abort
-    let bang = get(a:000, 0, 0)
-    return luaeval('require("spacevim.logger").viewLog(require("spacevim").eval("bang"))')
+    if a:0 >= 1
+      let bang = get(a:000, 0, 0)
+      return luaeval('require("spacevim.logger").viewLog(require("spacevim").eval("bang"))')
+    else
+      return luaeval('require("spacevim.logger").viewLog()')
+    endif
   endfunction
 
   function! SpaceVim#logger#setLevel(level) abort
@@ -81,13 +85,15 @@ else
 
   endfunction
 
+  function! SpaceVim#logger#debug(msg) abort
+
+    call s:LOGGER.debug(a:msg)
+
+  endfunction
+
   function! SpaceVim#logger#viewRuntimeLog() abort
     let info = "### SpaceVim runtime log :\n\n"
-    let info .= "```log\n"
-
     let info .= s:LOGGER.view(s:LOGGER.level)
-
-    let info .= "\n```\n"
     tabnew +setl\ nobuflisted
     nnoremap <buffer><silent> q :tabclose!<CR>
     for msg in split(info, "\n")
@@ -96,6 +102,7 @@ else
     normal! "_dd
     setl nomodifiable
     setl buftype=nofile
+    setl filetype=SpaceVimLog
   endfunction
 
 
@@ -187,6 +194,12 @@ else
   function! s:derive.error(msg) abort
     call s:LOGGER.set_name(self.derive_name)
     call s:LOGGER.error(a:msg)
+    call s:LOGGER.set_name(self.origin_name)
+  endfunction
+
+  function! s:derive.debug(msg) abort
+    call s:LOGGER.set_name(self.derive_name)
+    call s:LOGGER.debug(a:msg)
     call s:LOGGER.set_name(self.origin_name)
   endfunction
 

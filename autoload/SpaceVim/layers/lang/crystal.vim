@@ -1,13 +1,13 @@
 "=============================================================================
 " crystal.vim --- SpaceVim lang#crystal layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#crystal, layer-lang-crystal
+" @section lang#crystal, layers-lang-crystal
 " @parentsection layers
 " @subsection Intro
 "

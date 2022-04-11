@@ -1,13 +1,13 @@
 "=============================================================================
 " fsharp.vim --- lang#fsharp layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#fsharp, layer-lang-fsharp
+" @section lang#fsharp, layers-lang-fsharp
 " @parentsection layers
 " This layer is for fsharp development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

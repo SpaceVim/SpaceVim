@@ -3,6 +3,9 @@ let s:visibility_symbols = {
     \ 'protected' : '#',
     \ 'private'   : '-'
 \ }
+if exists('g:tagbar_visibility_symbols') && !empty(g:tagbar_visibility_symbols)
+    let s:visibility_symbols = g:tagbar_visibility_symbols
+endif
 
 function! tagbar#prototypes#basetag#new(name) abort
     let newobj = {}
@@ -11,7 +14,9 @@ function! tagbar#prototypes#basetag#new(name) abort
     let newobj.fields        = {}
     let newobj.fields.line   = 0
     let newobj.fields.column = 0
+    let newobj.fields.end    = 0
     let newobj.prototype     = ''
+    let newobj.data_type     = ''
     let newobj.path          = ''
     let newobj.fullpath      = a:name
     let newobj.depth         = 0
@@ -27,6 +32,7 @@ function! tagbar#prototypes#basetag#new(name) abort
     let newobj.isSplitTag = function(s:add_snr('s:isSplitTag'))
     let newobj.isKindheader = function(s:add_snr('s:isKindheader'))
     let newobj.getPrototype = function(s:add_snr('s:getPrototype'))
+    let newobj.getDataType = function(s:add_snr('s:getDataType'))
     let newobj._getPrefix = function(s:add_snr('s:_getPrefix'))
     let newobj.initFoldState = function(s:add_snr('s:initFoldState'))
     let newobj.getClosedParentTline = function(s:add_snr('s:getClosedParentTline'))
@@ -67,6 +73,11 @@ endfunction
 " s:getPrototype() {{{1
 function! s:getPrototype(short) abort dict
     return self.prototype
+endfunction
+
+" s:getDataType() {{{1
+function! s:getDataType() abort dict
+    return self.data_type
 endfunction
 
 " s:_getPrefix() {{{1
@@ -227,7 +238,7 @@ endfunction
 
 " s:add_snr() {{{1
 function! s:add_snr(funcname) abort
-    if !exists("s:snr")
+    if !exists('s:snr')
         let s:snr = matchstr(expand('<sfile>'), '<SNR>\d\+_\zeget_snr$')
     endif
     return s:snr . a:funcname

@@ -1,0 +1,10 @@
+dist: trusty
+sudo: false
+
+cache:
+  directories:
+    - test/vim
+    - test/vader.vim
+
+script:
+  - test/run

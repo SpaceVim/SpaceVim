@@ -1,7 +1,7 @@
 "=============================================================================
 " scheme.vim --- lang#scheme layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -16,7 +16,7 @@ else
 endif
 
 ""
-" @section lang#scheme, layer-lang-scheme
+" @section lang#scheme, layers-lang-scheme
 " @parentsection layers
 " This layer is for scheme development, disabled by default, to enable this
 " layer, add following snippet to your @section(options) file.

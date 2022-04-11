@@ -1,7 +1,7 @@
 "=============================================================================
 " key.vim --- SpaceVim key API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -12,6 +12,7 @@ let s:specified_keys = {
             \ "\<F1>" : 'F1',
             \ "\<F2>" : 'F2',
             \ "\<Space>" : 'SPC',
+            \ "\x80\xfc\<C-b>\<C-d>" : '<C-S-d>',
             \ }
 
 function! s:self.nr2name(nr) abort
@@ -20,6 +21,8 @@ function! s:self.nr2name(nr) abort
             return 'SPC'
         elseif a:nr == 4
             return '<C-d>'
+        elseif a:nr == 3
+            return '<C-c>'
         elseif a:nr == 9
             return '<Tab>'
         elseif a:nr == 92
@@ -32,6 +35,13 @@ function! s:self.nr2name(nr) abort
     else
         return get(s:specified_keys, a:nr, '')
     endif
+endfunction
+
+function! s:self.char2name(char) abort
+  if len(a:char) == 1
+    return self.nr2name(char2nr(a:char))
+  endif
+  return get(s:specified_keys, a:char, a:char)
 endfunction
 
 

@@ -40,12 +40,14 @@ npm install --global vscode-html-languageserver-bin
 
 ## 模块选项
 
-- `user_emmet_leader_key`: 设置插件 emmet 的默认前置键。
+- `emmet_leader_key`: 设置插件 emmet 的默认前置键。
+- `emmet_filetyps`：设置启用 emmet 插件的文件类型列表。
 
   ```toml
   [layers]
     name = "lang#html"
-    user_emmet_leader_key = "<C-e>"
+    emmet_leader_key = "<C-e>"
+    emmet_filetyps = ['html']
   ```
 
 ## 功能特性
@@ -59,5 +61,5 @@ npm install --global vscode-html-languageserver-bin
 ## 快捷键
 
 | 快捷键   | 功能描述     |
-| -------  | ------------ |
+| -------- | ------------ |
 | `Ctrl-e` | emmet 前缀键 |

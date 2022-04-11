@@ -1,7 +1,7 @@
 "=============================================================================
 " scala.vim --- SpaceVim lang#scala layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -9,7 +9,7 @@ scriptencoding utf-8
 
 
 ""
-" @section lang#scala, layer-lang-scala
+" @section lang#scala, layers-lang-scala
 " @parentsection layers
 " This layer is for Scala development.
 "

@@ -1,7 +1,7 @@
 "=============================================================================
 " help.vim --- help plugin for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -127,7 +127,7 @@ function! s:open_describe_buffer(desc) abort
     exe winnr .  'wincmd w'
   endif
   setlocal modifiable
-  silent normal! "_ggdG
+  silent normal! gg"_dG
   silent call setline(1, a:desc)
   setlocal nomodifiable
   let b:defind_file_name = split(a:desc[-1][12:], ':')

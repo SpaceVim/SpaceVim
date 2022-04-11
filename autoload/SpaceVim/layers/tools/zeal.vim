@@ -1,13 +1,13 @@
 "=============================================================================
 " zeal.vim --- SpaceVim tools#zeal layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section tools#zeal, layer-tools-zeal
+" @section tools#zeal, layers-tools-zeal
 " @parentsection layers
 " This layer provides Zeal integration for SpaceVim
 

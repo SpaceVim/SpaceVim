@@ -52,23 +52,23 @@ SpaceVim 初次安装时默认并未启用 TypeScript 相关语言模块。首�
 ### 语法检查
 
 `checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
-这一异步语法检查工具。对于 TypeScript 的支持是通过异步调用 [tslint](https://www.npmjs.com/package/tslint)  命令来完成的。
+这一异步语法检查工具。对于 TypeScript 的支持是通过异步调用 [eslint](https://eslint.org/) 命令来完成的。
 
 可通过以下命令安装：
 
-```sh
-npm install -g tslint
+```
+npm install -g eslint
 ```
 
 ### 工程文件跳转
 
-SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转alternate文件。
+SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 alternate 文件。
 可以在工程根目录添加 `.project_alt.json` 文件，并加入以下内容：
 
 ```json
 {
-  "src/*.ts": {"alternate": "test/{}.ts"},
-  "test/*.ts": {"alternate": "src/{}.ts"}
+  "src/*.ts": { "alternate": "test/{}.ts" },
+  "test/*.ts": { "alternate": "src/{}.ts" }
 }
 ```
 
@@ -101,5 +101,4 @@ npm install -g typescript-formatter
 
 在编辑 TypeScript 文件时，可通过快捷键 `SPC l s i` 启动 `ts-node -i` 交互窗口，之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
-目前 TypeScript 交互式编程还未完全实现，主要是因为 `ts-node -i` 执行是并不刷新buffer，可查看[ts-node #1013](https://github.com/TypeStrong/ts-node/issues/1013)。
-
+目前 TypeScript 交互式编程还未完全实现，主要是因为 `ts-node -i` 执行是并不刷新 buffer，可查看[ts-node #1013](https://github.com/TypeStrong/ts-node/issues/1013)。

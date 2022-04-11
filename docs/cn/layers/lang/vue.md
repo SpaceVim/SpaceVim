@@ -9,8 +9,9 @@ lang: zh
 <!-- vim-markdown-toc GFM -->
 
 - [模块简介](#模块简介)
-- [功能特性](#功能特性)
-- [启用模块](#启用模块)
+- [依赖安装及启用模块](#依赖安装及启用模块)
+  - [启用模块](#启用模块)
+  - [语言工具](#语言工具)
 
 <!-- vim-markdown-toc -->
 
@@ -18,12 +19,9 @@ lang: zh
 
 这一模块为 SpaceVim 提供了 Vue 的的开发支持，包括代码补全、语法检查、代码格式化等特性。该模块包含了插件 [vim-vue](https://github.com/posva/vim-vue)。
 
-## 功能特性
+## 依赖安装及启用模块
 
-- 语法高亮
-- LSP 支持（需要 [lsp](../../language-server-protocol/) 模块）
-
-## 启用模块
+### 启用模块
 
 可通过在配置文件内加入如下配置来启用该模块：
 
@@ -31,3 +29,13 @@ lang: zh
 [[layers]]
   name = "lang#vue"
 ```
+
+### 语言工具
+
+- **语法检查：**
+
+  `checkers` 模块提供了代码检查功能, 此外需要安装 `eslint` 和 `eslint-plugin-vue` 包：
+
+  ```sh
+  npm install -g eslint eslint-plugin-vue
+  ```

@@ -1,10 +1,25 @@
 "=============================================================================
 " todo.vim --- todo manager for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section todo manager, plugins-todomanager
+" @parentsection plugins
+" The `todomanager` plugin provides todo manager support for SpaceVim.
+" 
+" @subsection Key bindings
+" >
+"   Key binding     Description
+"   SPC a o         open todo manager windows
+" <
+" 
+" @subsection Configuration
+"
+" The todo manager labels can be set via @section(options-todo_labels)
 
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
@@ -60,8 +75,10 @@ function! s:update_todo_content() abort
         \ && type(g:spacevim_todo_labels) == type([])
         \ && !empty(g:spacevim_todo_labels)
     let s:labels = g:spacevim_todo_labels
+    let s:prefix = g:spacevim_todo_prefix
   else
-    let s:labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
+    let s:labels = ['fixme', 'question', 'todo', 'idea']
+    let s:prefix = '@'
   endif
 
   let s:todos = []
@@ -174,7 +191,7 @@ function! s:get_labels_regex()
     let separator = '|'
   endif
 
-  return join(map(copy(s:labels), "v:val . '\\b'"),
+  return join(map(copy(s:labels), "s:prefix . v:val . '\\b'"),
   \ separator)
 endfunc
 

@@ -51,7 +51,7 @@ endfunction
 
 " s:add_snr() {{{1
 function! s:add_snr(funcname) abort
-    if !exists("s:snr")
+    if !exists('s:snr')
         let s:snr = matchstr(expand('<sfile>'), '<SNR>\d\+_\zeget_snr$')
     endif
     return s:snr . a:funcname

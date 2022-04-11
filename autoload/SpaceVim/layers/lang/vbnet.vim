@@ -1,13 +1,13 @@
 "=============================================================================
 " vbnet.vim --- Visual Basic .NET support
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#vbnet, layer-lang-vbnet
+" @section lang#vbnet, layers-lang-vbnet
 " @parentsection layers
 " This layer is for vbnet development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

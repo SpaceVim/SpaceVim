@@ -53,7 +53,31 @@ It will run [eslint](https://eslint.org/) asynchronously.
 To install eslint, just run following command in terminal.
 
 ```sh
-npm install -g eslint-cli
+npm install -g eslint
+```
+
+Create .eslintrc.json in $HOME directory
+
+```
+touch ~/.eslintrc.json
+```
+
+Add basic configuration that can be extended based on specific needs 
+
+```
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 13
+    },
+    "rules": {
+    }
+}
 ```
 
 ![eslint](https://user-images.githubusercontent.com/13142418/51972203-dbfd4580-24b5-11e9-9bbd-2a88e6f656f6.png)

@@ -1,13 +1,13 @@
 "=============================================================================
 " ring.vim --- ring language support in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#ring, layer-lang-ring
+" @section lang#ring, layers-lang-ring
 " @parentsection layers
 " This layer is for ring development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

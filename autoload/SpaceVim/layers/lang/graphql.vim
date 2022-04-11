@@ -1,13 +1,13 @@
 "=============================================================================
 " graphql.vim --- graphql layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#graphql, layer-lang-graphql
+" @section lang#graphql, layers-lang-graphql
 " @parentsection layers
 " @subsection Intro
 "

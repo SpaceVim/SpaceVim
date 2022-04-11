@@ -9,3 +9,5 @@ policies:
     enabled: false
   ProhibitSetNoCompatible:
     enabled: false
+  ProhibitEqualTildeOperator:
+    enabled : true

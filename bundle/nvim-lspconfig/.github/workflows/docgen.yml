@@ -1,0 +1,32 @@
+name: docgen
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  docgen:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v2
+    - uses: rhysd/action-setup-vim@v1
+      with:
+        neovim: true
+        version: nightly
+    - name: Run docgen
+      run: |
+        scripts/docgen.sh
+    - name: Commit changes
+      env:
+        COMMIT_MSG: |
+          docs: update server_configurations.md
+          skip-checks: true
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add doc/server_configurations.md doc/server_configurations.txt
+        # Only commit and push if we have changes
+        git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push)

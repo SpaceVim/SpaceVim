@@ -1,10 +1,24 @@
 "=============================================================================
 " runner.vim --- code runner for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+
+""
+" @section runner, plugins-runner
+" @parentsection plugins
+" The `code runner` plugin provides the ability to run code snippet or code
+" file for a variety of programming languages, as well as running custom commands. 
+" 
+" @subsection Key bindings
+" >
+"   Key binding     Description
+"   SPC s r         start default code runner
+"   q               close coder runner window
+"   i               insert text to background process
+" <
 
 let s:runners = {}
 
@@ -61,7 +75,9 @@ function! s:open_win() abort
   if exists('*win_getid')
     let s:winid = win_getid(winnr())
   endif
-  wincmd p
+  if !g:spacevim_code_runner_focus
+    wincmd p
+  endif
 endfunction
 
 function! s:insert() abort
@@ -130,15 +146,20 @@ function! s:async_run(runner, ...) abort
           \ repeat('-', 20)])
     let s:runner_lines += 4
     let s:start_time = reltime()
-    let s:runner_jobid =  s:JOB.start(compile_cmd,{
-          \ 'on_stdout' : function('s:on_stdout'),
-          \ 'on_stderr' : function('s:on_stderr'),
-          \ 'on_exit' : function('s:on_compile_exit'),
-          \ })
-    if usestdin && s:runner_jobid > 0
-      let range = get(a:runner[0], 'range', [1, '$'])
-      call s:JOB.send(s:runner_jobid, call('getline', range))
-      call s:JOB.chanclose(s:runner_jobid, 'stdin')
+    if type(compile_cmd) == type('') || (type(compile_cmd) == type([]) && executable(get(compile_cmd, 0, '')))
+      let s:runner_jobid =  s:JOB.start(compile_cmd,{
+            \ 'on_stdout' : function('s:on_stdout'),
+            \ 'on_stderr' : function('s:on_stderr'),
+            \ 'on_exit' : function('s:on_compile_exit'),
+            \ })
+      if usestdin && s:runner_jobid > 0
+        let range = get(a:runner[0], 'range', [1, '$'])
+        call s:JOB.send(s:runner_jobid, call('getline', range))
+        call s:JOB.chanclose(s:runner_jobid, 'stdin')
+      endif
+    else
+      let exe = get(compile_cmd, 0, '')
+      call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , -1, 0, [exe . ' is not executable, make sure ' . exe . ' is in your PATH'])
     endif
   elseif type(a:runner) == type({})
     " the runner is a dict
@@ -164,15 +185,19 @@ function! s:async_run(runner, ...) abort
     call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , -1, 0, ['[Running] ' . join(cmd) . (usestdin ? ' STDIN' : ''), '', repeat('-', 20)])
     let s:runner_lines += 3
     let s:start_time = reltime()
-    let s:runner_jobid =  s:JOB.start(cmd,{
-          \ 'on_stdout' : function('s:on_stdout'),
-          \ 'on_stderr' : function('s:on_stderr'),
-          \ 'on_exit' : function('s:on_exit'),
-          \ })
-    if usestdin && s:runner_jobid > 0
-      let range = get(a:runner, 'range', [1, '$'])
-      call s:JOB.send(s:runner_jobid, call('getline', range))
-      call s:JOB.chanclose(s:runner_jobid, 'stdin')
+    if !empty(exe) && executable(exe[0])
+      let s:runner_jobid =  s:JOB.start(cmd,{
+            \ 'on_stdout' : function('s:on_stdout'),
+            \ 'on_stderr' : function('s:on_stderr'),
+            \ 'on_exit' : function('s:on_exit'),
+            \ })
+      if usestdin && s:runner_jobid > 0
+        let range = get(a:runner, 'range', [1, '$'])
+        call s:JOB.send(s:runner_jobid, call('getline', range))
+        call s:JOB.chanclose(s:runner_jobid, 'stdin')
+      endif
+    else
+      call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , -1, 0, [exe . ' is not executable, make sure ' . exe . ' is in your PATH'])
     endif
   endif
   if s:runner_jobid > 0
@@ -260,7 +285,10 @@ function! s:on_stdout(job_id, data, event) abort
     return
   endif
   if bufexists(s:code_runner_bufnr)
-    call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , s:runner_lines + 1, 0, a:data)
+    if s:SYS.isWindows
+      let data = map(a:data, 'substitute(v:val, "\r$", "", "g")')
+    endif
+    call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , s:runner_lines + 1, 0, data)
   endif
   let s:runner_lines += len(a:data)
   if s:winid >= 0

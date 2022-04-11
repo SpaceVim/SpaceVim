@@ -1,13 +1,13 @@
 "=============================================================================
 " sh.vim --- SpaceVim lang#sh layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#sh, layer-lang-sh
+" @section lang#sh, layers-lang-sh
 " @parentsection layers
 " This layer is for shell script development, including bash, zsh and fish.
 " This layer provides basic syntax highlighting and code completion , and it

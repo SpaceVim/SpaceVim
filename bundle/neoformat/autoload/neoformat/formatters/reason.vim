@@ -7,6 +7,7 @@ function! neoformat#formatters#reason#refmt() abort
         \ 'exe': 'refmt',
         \ 'stdin': 1,
         \ 'args': ["--interface=" . (expand('%:e') == "rei" ? "true" : "false")],
+        \ 'try_node_exe': 1,
         \ }
 endfunction
 

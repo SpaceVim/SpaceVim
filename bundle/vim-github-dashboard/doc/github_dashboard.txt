@@ -1,0 +1,325 @@
+github-dashboard.txt	github-dashboard	Last change: August 6 2015
+                         *githubdashboard* *github-dashboard* *github-dashboard-toc*
+GITHUB-DASHBOARD - TABLE OF CONTENTS
+==============================================================================
+
+  vim-github-dashboard
+      User dashboard: :GHD! matz
+      User activity: :GHA! matz
+      Repository activity: :GHA! mruby/mruby
+    Installation                                        |github-dashboard-1|
+    Requirements                                        |github-dashboard-2|
+      Mac OS X                                          |github-dashboard-2-1|
+      Ubuntu                                            |github-dashboard-2-2|
+      Windows                                           |github-dashboard-2-3|
+    Commands                                            |github-dashboard-3|
+      With authentication                               |github-dashboard-3-1|
+                                                        |github-dashboard-3-2|
+      Without authentication (60 calls/hour limit, only public activities)
+    Navigation                                          |github-dashboard-4|
+    Authentication                                      |github-dashboard-5|
+      Without authentication                            |github-dashboard-5-1|
+      Caveat about GitHub Two-factor authentication     |github-dashboard-5-2|
+    Optional configuration                              |github-dashboard-6|
+    Profiles                                            |github-dashboard-7|
+    Author                                              |github-dashboard-8|
+    License                                             |github-dashboard-9|
+    "Why Ruby?"                                         |github-dashboard-10|
+
+
+VIM-GITHUB-DASHBOARD                                      *vim-github-dashboard*
+==============================================================================
+
+Browse GitHub events (user dashboard, user/repo activity) in Vim.
+
+
+< User dashboard: :GHD! matz >________________________________________________~
+                                      *github-dashboard-user-dashboard-ghd-matz*
+
+
+https://raw.github.com/junegunn/i/master/matz-dashboard.png
+
+
+< User activity: :GHA! matz >_________________________________________________~
+                                       *github-dashboard-user-activity-gha-matz*
+
+
+https://raw.github.com/junegunn/i/master/matz-activity.png
+
+
+< Repository activity: :GHA! mruby/mruby >____________________________________~
+                          *github-dashboard-repository-activity-gha-mruby-mruby*
+
+
+https://raw.github.com/junegunn/i/master/mruby-activity.png
+
+(Color scheme used: {seoul256-light}{1})
+
+                                  {1} https://github.com/junegunn/seoul256.vim
+
+
+                                                            *github-dashboard-1*
+INSTALLATION                                     *github-dashboard-installation*
+==============================================================================
+
+Using {vim-plug}{2}:
+>
+    Plug 'junegunn/vim-github-dashboard'
+<
+                                      {2} https://github.com/junegunn/vim-plug
+
+
+                                                            *github-dashboard-2*
+REQUIREMENTS                                     *github-dashboard-requirements*
+==============================================================================
+
+ 1. Your Vim must have Ruby support enabled. Check if :echo has('ruby') prints 1.
+ 2. If you see LoadError on :ruby require 'json/pure', you need to install
+    `json_pure` gem.
+
+
+< Mac OS X >__________________________________________________________________~
+                                                     *github-dashboard-mac-os-x*
+                                                          *github-dashboard-2-1*
+
+The current version of Mac OS X is shipped with a Ruby-enabled Vim. However,
+by default it comes with an old Ruby (1.8.7), so you still need to install
+`json_pure` (or `json`) gem.
+>
+    sudo gem install json_pure
+<
+If your Vim crashes, try installing a newer version of Vim with {Homebrew}{3}.
+
+                                           {3} http://mxcl.github.io/homebrew/
+
+
+< Ubuntu >____________________________________________________________________~
+                                                       *github-dashboard-ubuntu*
+                                                          *github-dashboard-2-2*
+>
+    sudo apt-get install ruby rubygems vim-nox && sudo /usr/bin/gem install json_pure
+<
+(Reference: {Installing vim with ruby support (+ruby)}{4})
+
+{4} http://stackoverflow.com/questions/3794895/installing-vim-with-ruby-support-ruby
+
+
+< Windows >___________________________________________________________________~
+                                                      *github-dashboard-windows*
+                                                          *github-dashboard-2-3*
+
+ 1. Download and install the {official GVim}{5}
+ 2. Download a newer build of GVim executable from {here}{6} and replace the
+    existing one
+ 3. Download and install Ruby 1.9.3 using {RubyInstaller}{7}. You must check Add
+    Ruby executable to your PATH option.
+
+                                       {5} http://www.vim.org/download.php#pc
+                                       {6} http://wyw.dcweb.cn/#download
+                                       {7} http://rubyinstaller.org/downloads/
+
+
+                                                            *github-dashboard-3*
+COMMANDS                                             *github-dashboard-commands*
+==============================================================================
+
+
+< With authentication >_______________________________________________________~
+                                          *github-dashboard-with-authentication*
+                                                          *github-dashboard-3-1*
+
+                                                      *:GHDashboard* *:GHActivity*
+
+ - `:GHDashboard`
+ - :GHDashboard USER
+ - `:GHActivity`
+ - :GHActivity USER
+ - :GHActivity USER/REPO
+
+
+< Without authentication (60 calls/hour limit, only public activities) >______~
+*github-dashboard-without-authentication-60-calls-hour-limit-only-public-activities*
+
+                                                          *github-dashboard-3-2*
+
+ - :GHDashboard! USER
+ - :GHActivity! USER
+ - :GHActivity! USER/REPO
+
+
+                                                            *github-dashboard-4*
+NAVIGATION                                         *github-dashboard-navigation*
+==============================================================================
+
+Use CTRL-N and CTRL-P to navigate back and forth through the links.
+
+Press `Enter` key or `double-click` on a link to open it in the browser.
+
+Press `R` to refresh the window.
+
+Press `q` to close the window.
+
+
+                                                            *github-dashboard-5*
+AUTHENTICATION                                 *github-dashboard-authentication*
+==============================================================================
+
+When you first run `:GHDashboard` or `:GHActivity` command, you will be asked
+to enter your GitHub username and the password. Once it is successfully
+authenticated, the Vim process will remember the credentials and will no more
+ask for them.
+
+                                                            *g:github_dashboard*
+
+If you don't want to be asked for username and password, you can set up
+`g:github_dashboard` variable as follows.
+>
+    let g:github_dashboard = { 'username': 'you', 'password': 'secret' }
+<
+Since having plain-text password in your .vimrc is not the most secure thing
+you can do, it is strongly recommended that you don't put password in your Vim
+configuration file.
+
+As a more secure alternative, create a {Personal Access Token}{8}, export it
+as an environment variable and use it as a password.
+>
+    # in some secure file sourced in your .bashrc, .bash_profile, .zshrc, etc.
+    export GITHUB_TOKEN="<your 40 char token>"
+
+    let g:github_dashboard = { 'username': 'you', 'password': $GITHUB_TOKEN }
+<
+                                    {8} https://github.com/settings/tokens/new
+
+
+< Without authentication >____________________________________________________~
+                                       *github-dashboard-without-authentication*
+                                                          *github-dashboard-5-1*
+
+In fact, GitHub API allows you to browse dashboard or activity stream without
+authentication, though the hourly rate is limited to 60. Well, that's good
+enough as long as you don't check GitHub page every minute. Use bang commands
+then: `:GHDashboard!` and `:GHActivity!`.
+
+
+< Caveat about GitHub Two-factor authentication >_____________________________~
+                *github-dashboard-caveat-about-github-two-factor-authentication*
+                                                          *github-dashboard-5-2*
+
+If you have enabled {GitHub Two-factor authentication}{9}, you cannot login
+with your username and password. In that case, you can generate a {Personal
+Access Token}{10} and use it as the password.
+
+           {9} https://github.com/settings/two_factor_authentication/configure
+           {10} https://github.com/settings/applications
+
+
+                                                            *github-dashboard-6*
+OPTIONAL CONFIGURATION                 *github-dashboard-optional-configuration*
+==============================================================================
+
+                                                       *github_dashboard#status*
+>
+    let g:github_dashboard = {}
+
+    " Dashboard window position
+    " - Options: tab, top, bottom, above, below, left, right
+    " - Default: tab
+    let g:github_dashboard['position'] = 'top'
+
+    " Disable Emoji output
+    " - Default: only enable on terminal Vim on Mac
+    let g:github_dashboard['emoji'] = 0
+
+    " Customize emoji (see http://www.emoji-cheat-sheet.com/)
+    let g:github_dashboard['emoji_map'] = {
+    \   'user_dashboard': 'blush',
+    \   'user_activity':  'smile',
+    \   'repo_activity':  'laughing',
+    \   'ForkEvent':      'fork_and_knife'
+    \ }
+
+    " Command to open link URLs
+    " - Default: auto-detect
+    let g:github_dashboard['open_command'] = 'open'
+
+    " API timeout in seconds
+    " - Default: 10, 20
+    let g:github_dashboard['api_open_timeout'] = 10
+    let g:github_dashboard['api_read_timeout'] = 20
+
+    " Do not set statusline
+    " - Then you can customize your own statusline with github_dashboard#status()
+    let g:github_dashboard['statusline'] = 0
+
+    " GitHub Enterprise
+    let g:github_dashboard['api_endpoint'] = 'http://github.mycorp.com/api/v3'
+    let g:github_dashboard['web_endpoint'] = 'http://github.mycorp.com'
+<
+
+                                                            *github-dashboard-7*
+PROFILES                                             *github-dashboard-profiles*
+==============================================================================
+
+In case you need access to GitHub Enterprise as well as the public GitHub, you
+might want to define multiple sets of configuration as profiles.
+>
+    " Default configuration for public GitHub
+    let g:github_dashboard = {
+    \ 'username': 'kent'
+    \ }
+
+    " Profile named `ck`
+    let g:github_dashboard#ck = {
+    \ 'username':     'kent.clark',
+    \ 'api_endpoint': 'http://github.daily-planet.com/api/v3',
+    \ 'web_endpoint': 'http://github.daily-planet.com'
+    \ }
+
+    " Profile named `super`
+    let g:github_dashboard#super = {
+    \ 'username':     'superman',
+    \ 'api_endpoint': 'http://github.justice-league.org/api/v3',
+    \ 'web_endpoint': 'http://github.justice-league.org'
+    \ }
+<
+Then you can access each GitHub instance like so:
+>
+    GHD!
+
+    " GitHub Enterprise requires authentication, so use non-bang versions
+    GHD -ck
+    GHA -ck lois
+
+    GHD -super
+    GHA -super batman/bmobile
+<
+
+                                                            *github-dashboard-8*
+AUTHOR                                                 *github-dashboard-author*
+==============================================================================
+
+{Junegunn Choi}{11}
+
+                                              {11} https://github.com/junegunn
+
+
+                                                            *github-dashboard-9*
+LICENSE                                               *github-dashboard-license*
+==============================================================================
+
+MIT
+
+
+                                                           *github-dashboard-10*
+"WHY RUBY?"                                          *github-dashboard-why-ruby*
+==============================================================================
+
+ 1. This is a personal fun project, and I like Ruby, so why not?
+ 2. Ruby allows me to access GitHub API without another Vim plugin or an external
+    executable
+ 3. Mac OS X (which I use the most) is shipped with a Ruby-enabled Vim, so it's
+    pretty easy to set up
+
+
+==============================================================================
+vim:tw=78:sw=2:ts=2:ft=help:norl:nowrap:

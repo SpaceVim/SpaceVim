@@ -52,6 +52,7 @@ main () {
             _detect autoload/SpaceVim/api/vim.vim
             _detect autoload/SpaceVim/api/file.vim
             _detect autoload/SpaceVim/api/system.vim
+            _detect autoload/SpaceVim/api/time.vim
             _detect autoload/SpaceVim/mapping/search.vim
             _detect autoload/SpaceVim/logger.vim
             _detect syntax/SpaceVimFlyGrep.vim
@@ -62,7 +63,7 @@ main () {
 "=============================================================================
 " FlyGrep.vim --- Fly grep in vim
 " Copyright (c) 2016-2017 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://github.com/wsdjeg/FlyGrep.vim
 " License: MIT license
 "=============================================================================
@@ -156,8 +157,8 @@ EOT
             cat <<EOT > autoload/plugin/iedit.vim
 "=============================================================================
 " iedit.vim --- multiple cursor support for neovim and vim
-" Copyright (c) 2016-2020 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Copyright (c) 2016-2021 Shidong Wang & Contributors
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://github.com/wsdjeg/iedit.vim
 " License: MIT license
 "=============================================================================
@@ -210,8 +211,8 @@ EOT
             cat <<EOT > plugin/todo.vim
 "=============================================================================
 " todo.vim --- todo manager for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -233,8 +234,12 @@ EOT
             git clone https://github.com/wsdjeg/scrollbar.vim.git detach/$1
             cd detach/$1
             _checkdir autoload/SpaceVim/api/
+            _checkdir autoload/SpaceVim/api/vim
             _detect autoload/SpaceVim/api.vim
             _detect autoload/SpaceVim/api/vim.vim
+            _detect autoload/SpaceVim/api/vim/buffer.vim
+            _detect autoload/SpaceVim/api/vim/window.vim
+            _checkdir autoload/SpaceVim/plugins/
             _detect autoload/SpaceVim/plugins/scrollbar.vim
             _detect LICENSE
             _default_readme "scrollbar.vim" "floating scrollbar support for neovim/vim[wip]"

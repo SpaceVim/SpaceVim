@@ -1,14 +1,14 @@
 "=============================================================================
 " projectmanager.vim --- project manager for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 
 
-if $SPACEVIM_LUA
+if $SPACEVIM_LUA && has('nvim-0.5.0')
   function! SpaceVim#plugins#projectmanager#complete_project(ArgLead, CmdLine, CursorPos) abort
     return luaeval('require("spacevim.plugin.projectmanager").complete('
           \ .'require("spacevim").eval("a:ArgLead"),'
@@ -65,6 +65,16 @@ else
   let s:JSON = SpaceVim#api#import('data#json')
   let s:LIST = SpaceVim#api#import('data#list')
   let s:VIM = SpaceVim#api#import('vim')
+
+  " use cd or lcd or tcd
+  "
+  if exists(':tcd')
+    let s:cd = 'tcd'
+  elseif exists(':lcd')
+    let s:cd = 'lcd'
+  else
+    let s:cd = 'cd'
+  endif
 
   function! s:update_rooter_patterns() abort
     let s:project_rooter_patterns = filter(copy(g:spacevim_project_rooter_patterns), 'v:val !~# "^!"')
@@ -160,7 +170,7 @@ else
       call s:LOGGER.info('same as current directory, no need to change.')
     else
       call s:LOGGER.info('change to root: ' . a:dir)
-      exe 'cd ' . fnameescape(fnamemodify(a:dir, ':p'))
+      exe s:cd fnameescape(fnamemodify(a:dir, ':p'))
       try
         let b:git_dir = fugitive#extract_git_dir(expand('%:p'))
       catch
@@ -169,7 +179,7 @@ else
   endfunction
 
 
-  if g:spacevim_project_rooter_automatically
+  if g:spacevim_project_auto_root
     augroup spacevim_project_rooter
       autocmd!
       autocmd VimEnter,BufEnter * call SpaceVim#plugins#projectmanager#current_root()
@@ -281,7 +291,7 @@ else
   function! SpaceVim#plugins#projectmanager#open(project) abort
     let path = s:project_paths[a:project]['path']
     tabnew
-    exe 'lcd ' . path
+    exe s:cd path
     if g:spacevim_filemanager ==# 'vimfiler'
       Startify | VimFiler
     elseif g:spacevim_filemanager ==# 'nerdtree'
