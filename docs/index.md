@@ -26,7 +26,7 @@ appreciation while providing us motivation to continue working on this project.
 - [Documentation](documentation/): the primary official document of SpaceVim
 - [Available layers](layers/): a list of available layers which can be used in SpaceVim
 
-The last release is [v1.9.0](https://spacevim.org/SpaceVim-release-v1.9.0/), check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The latest release [v1.9.0](https://spacevim.org/SpaceVim-release-v1.9.0/) was released at 2022-01-06, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## New features
 
