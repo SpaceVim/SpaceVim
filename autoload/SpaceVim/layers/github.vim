@@ -29,7 +29,7 @@
 " <
 "
 " To fix this issue, you need to install `future` module.
-" <
+" >
 "   python2 -m pip install future
 " <
 
