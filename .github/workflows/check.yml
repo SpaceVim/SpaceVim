@@ -54,6 +54,7 @@ jobs:
     env:
         VIM_BIN: ${{ matrix.vimbin }}
         VIM_TAG: ${{ matrix.vimtag }}
+        DEPS: /home/runner/work/SpaceVim/deps
         VIM_Es: "-Es"
     steps:
     - name: Checkout
