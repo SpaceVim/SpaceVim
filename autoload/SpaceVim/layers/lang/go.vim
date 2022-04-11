@@ -19,6 +19,29 @@
 " 1. `enabled_linters`: set a list of enabled lint for golang. by default this
 " option is `['golint']`. The available linters includes: `go`,
 " `gometalinter`
+" 2. go_file_head: the default file head for golang source code.
+" >
+"   [layers]
+"     name = "lang#go"
+"     go_file_head = [      
+"       '#!/usr/bin/python3',
+"       '# -*- coding : utf-8 -*-'
+"       ''
+"     ]
+" <
+" 3. `go_interpreter`: Set the interpreter of go.
+" >
+"   [[layers]]
+"     name = 'lang#go'
+"     go_interpreter = '~/download/bin/go'
+" <
+" 4. format_on_save: enable/disable code formation when save go file. This
+" options is disabled by default, to enable it:
+" >
+"   [[layers]]
+"     name = 'lang#go'
+"     format_on_save = true
+" <
 "
 " @subsection Mappings
 " >
@@ -62,6 +85,19 @@
 "   SPC l w r       remove workspace folder
 " <
 
+if exists('s:enabled_linters')
+  finish
+endif
+
+let s:enabled_linters = ['golint']
+let s:format_on_save = 0
+let s:go_file_head = [
+      \ '// @Title',
+      \ '// @Description',
+      \ '// @Author',
+      \ '// @Update',
+      \ ]
+let s:go_interpreter = 'python3'
 
 function! SpaceVim#layers#lang#go#plugins() abort
   let plugins = [['fatih/vim-go', { 'on_ft' : 'go', 'loadconf_before' : 1}]]
@@ -85,6 +121,7 @@ function! SpaceVim#layers#lang#go#config() abort
   let g:neomake_go_gometalinter_remove_invalid_entries = 1
   let g:neomake_go_go_remove_invalid_entries = 1
   let g:neomake_go_gometalinter_args = ['--disable-all']
+  let g:neomake_go_enabled_makers = s:enabled_linters
   let g:go_snippet_engine = 'neosnippet'
   let g:go_rename_command = 'gopls'
 
@@ -96,6 +133,13 @@ function! SpaceVim#layers#lang#go#config() abort
   endif
   call SpaceVim#mapping#space#regesit_lang_mappings('go', function('s:language_specified_mappings'))
   call SpaceVim#plugins#runner#reg_runner('go', 'go run %s')
+  if s:format_on_save
+    call SpaceVim#layers#format#add_filetype({
+          \ 'filetype' : 'go',
+          \ 'enable' : 1,
+          \ })
+  endif
+  call SpaceVim#layers#edit#add_ft_head_tamplate('go', s:go_file_head)
 endfunction
 
 function! s:go_to_def() abort
@@ -197,6 +241,24 @@ function! s:language_specified_mappings() abort
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'r'],
           \ 'call SpaceVim#lsp#remove_workspace_folder()', 'remove-workspace-folder', 1)
   endif
+endfunction
+function! SpaceVim#layers#lang#go#set_variable(var) abort
+  let s:format_on_save = get(a:var,
+        \ 'format_on_save',
+        \ get(a:var,
+        \ 'format-on-save',
+        \ s:format_on_save))
+  let s:go_file_head = get(a:var,
+        \ 'go_file_head',
+        \ s:go_file_head)
+  let s:enabled_linters = get(a:var,
+        \ 'enabled_linters',
+        \ s:enabled_linters
+        \ )
+  let s:go_interpreter = get(a:var,
+        \ 'go_interpreter',
+        \ s:go_interpreter
+        \ )
 endfunction
 
 function! SpaceVim#layers#lang#go#health() abort
