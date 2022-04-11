@@ -30,8 +30,8 @@ function! SpaceVim#plugins#ctrlg#display() abort
 
   if !empty(project_name)
     echohl Constant   | echo project_name
+    echohl WarningMsg | echon "  >>  "
   endif
-  echohl WarningMsg | echon "  >>  "
   echohl Special    | echon pwd
   echohl WarningMsg | echon "  >>  "
   echohl Directory  | echon file
