@@ -34,7 +34,10 @@ let s:notifications = {}
 let s:self = {}
 let s:self.message = []
 let s:self.notification_width = 1
-let s:self.notify_max_width = &columns * 0.3
+" this should be changed based on the windows
+" if user do not set the notify_max_width, it should use default,
+" it should based on the really windows width
+let s:self.notify_max_width = 0
 let s:self.winid = -1
 let s:self.bufnr = -1
 let s:self.border = {}
@@ -160,6 +163,9 @@ function! s:self.close_all() abort
 endfunction
 
 function! s:self.notify(msg, ...) abort
+  if self.notify_max_width ==# 0
+    let self.notify_max_width = &columns * 0.3
+  endif
   call add(self.message, a:msg)
   let self.notification_color = get(a:000, 0, 'Normal')
   let options = get(a:000, 1, {}) 
