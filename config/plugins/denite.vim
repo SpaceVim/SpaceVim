@@ -188,6 +188,10 @@ function! s:denite_filter_my_settings() abort
         \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
   inoremap <silent><buffer> <S-Tab>
         \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+  inoremap <silent><buffer> <C-j>
+        \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
+  inoremap <silent><buffer> <C-k>
+        \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
   inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
   " @fixme use this key binding only for sources which has delete action
   inoremap <silent><buffer><expr> <C-d>
