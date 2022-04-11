@@ -22,6 +22,16 @@
 "   normal    SPC g h I     show issues in browser
 "   normal    SPC g h p     show PRs in browser
 " <
+"
+" NOTE: If you are using python2, you may get error:
+" >
+"    No module named past.builtins
+" <
+"
+" To fix this issue, you need to install `future` module.
+" <
+"   python2 -m pip install future
+" <
 
 function! SpaceVim#layers#github#plugins() abort
   return [
