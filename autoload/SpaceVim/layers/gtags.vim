@@ -96,6 +96,11 @@ endfunction
 function! SpaceVim#layers#gtags#health() abort
   call SpaceVim#layers#gtags#plugins()
   call SpaceVim#layers#gtags#config()
+  if !SpaceVim#layers#isLoaded('gtags')
+    augroup spacevim_layer_gtags
+      autocmd!
+    augroup END
+  endif
   return 1
 endfunction
 
