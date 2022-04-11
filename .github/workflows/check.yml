@@ -19,17 +19,27 @@ jobs:
               - vimbin: vim
                 vimtag: v8.0.0027
               - vimbin: vim
-                vimtag: v8.0.0150
-              - vimbin: vim
-                vimtag: v8.0.0160
-              - vimbin: vim
-                vimtag: v8.0.0170
-              - vimbin: vim
                 vimtag: v8.0.0180
               - vimbin: vim
-                vimtag: v8.0.0190
+                vimtag: v8.0.0181
               - vimbin: vim
-                vimtag: v8.0.0200
+                vimtag: v8.0.0182
+              - vimbin: vim
+                vimtag: v8.0.0183
+              - vimbin: vim
+                vimtag: v8.0.0184
+              - vimbin: vim
+                vimtag: v8.0.0185
+              - vimbin: vim
+                vimtag: v8.0.0186
+              - vimbin: vim
+                vimtag: v8.0.0187
+              - vimbin: vim
+                vimtag: v8.0.0188
+              - vimbin: vim
+                vimtag: v8.0.0189
+              - vimbin: vim
+                vimtag: v8.0.0190
               - vimbin: vim
                 vimtag: v8.0.1453
               - vimbin: vim
