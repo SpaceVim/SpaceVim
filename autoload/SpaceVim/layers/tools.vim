@@ -28,10 +28,10 @@ function! SpaceVim#layers#tools#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-bookmarks',
         \ {'merged': 0,
         \ 'loadconf_before' : 1}])
-  if s:CMP.has('python')
-    call add(plugins, ['gregsexton/VimCalc', {'on_cmd' : 'Calc'}])
-  elseif s:CMP.has('python3')
+  if s:CMP.has('python3')
     call add(plugins, ['fedorenchik/VimCalc3', {'on_cmd' : 'Calc'}])
+  elseif s:CMP.has('python')
+    call add(plugins, ['gregsexton/VimCalc', {'on_cmd' : 'Calc'}])
   endif
 
   return plugins
