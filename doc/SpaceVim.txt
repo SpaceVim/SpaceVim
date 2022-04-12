@@ -225,14 +225,15 @@ CONTENTS                                                   *SpaceVim-contents*
       131. ui.............................................|SpaceVim-layers-ui|
       132. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
-      1. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
-      2. command-line-mode..................|SpaceVim-usage-command-line-mode|
-      3. custom_plugins........................|SpaceVim-usage-custom_plugins|
-      4. repl............................................|SpaceVim-usage-repl|
-      5. search-and-replace................|SpaceVim-usage-search-and-replace|
-      6. tasks..........................................|SpaceVim-usage-tasks|
-      7. undo-tree...................................|SpaceVim-usage-undotree|
-      8. windows-and-tabs....................|SpaceVim-usage-windows-and-tabs|
+      1. alternate file........................|SpaceVim-usage-alternate-file|
+      2. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
+      3. command-line-mode..................|SpaceVim-usage-command-line-mode|
+      4. custom_plugins........................|SpaceVim-usage-custom_plugins|
+      5. repl............................................|SpaceVim-usage-repl|
+      6. search-and-replace................|SpaceVim-usage-search-and-replace|
+      7. tasks..........................................|SpaceVim-usage-tasks|
+      8. undo-tree...................................|SpaceVim-usage-undotree|
+      9. windows-and-tabs....................|SpaceVim-usage-windows-and-tabs|
   8. Plugins................................................|SpaceVim-plugins|
       1. iedit........................................|SpaceVim-plugins-iedit|
       2. runner......................................|SpaceVim-plugins-runner|
@@ -5380,6 +5381,25 @@ USAGE                                                         *SpaceVim-usage*
 
   General guide for using SpaceVim. Including layer configuration, bootstrap
 function.
+
+==============================================================================
+ALTERNATE FILE                                 *SpaceVim-usage-alternate-file*
+
+SpaceVim provides a built-in alternate file manager, the command is `:A`.
+
+To use this feature, you can create a `.project_alt.json` file in the root of
+your project. for example:
+>
+   {
+     "autoload/SpaceVim/layers/lang/*.vim" :
+         {
+            "doc" : "docs/layers/lang/{}.md"
+         },
+   }
+<
+after adding this configuration, when edit the source file
+`autoload/SpaceVim/layers/lang/java.vim`, you can use `:A doc` switch to
+`docs/layers/lang/java.md`
 
 ==============================================================================
 BUFFERS-AND-FILES                           *SpaceVim-usage-buffers-and-files*

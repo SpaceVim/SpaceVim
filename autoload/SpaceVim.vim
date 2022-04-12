@@ -1898,7 +1898,24 @@ endfunction
 "
 " The footer is optional and is used to reference issue tracker IDs.
 
-
+""
+" @section alternate file, usage-alternate-file
+" @parentsection usage
+" SpaceVim provides a built-in alternate file manager, the command is `:A`.
+"
+" To use this feature, you can create a `.project_alt.json` file in the root
+" of your project. for example:
+" >
+"    {
+"      "autoload/SpaceVim/layers/lang/*.vim" :
+"          {
+"             "doc" : "docs/layers/lang/{}.md"
+"          },
+"    }
+" <
+" after adding this configuration, when edit the source file 
+" `autoload/SpaceVim/layers/lang/java.vim`,
+" you can use `:A doc` switch to `docs/layers/lang/java.md`
 
 ""
 " @section FAQ, faq
