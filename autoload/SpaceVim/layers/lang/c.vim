@@ -463,7 +463,13 @@ endfunction
 " local function: go_to_declaration {{{
 function! s:go_to_declaration() abort
   if !SpaceVim#layers#lsp#check_filetype(&ft)
-    execute "norm! g\<c-]>"
+    try
+      exe 'ts' expand('<cword>')
+    catch /^Vim\%((\a\+)\)\=:E426/
+      echohl WarningMsg
+      echo 'tag not found: ' . expand('<cword>')
+      echohl NONE
+    endtry
   else
     call SpaceVim#lsp#go_to_declaration()
   endif
@@ -473,7 +479,13 @@ endfunction
 " local function: go_to_def {{{
 function! s:go_to_def() abort
   if !SpaceVim#layers#lsp#check_filetype(&ft)
-    execute "norm! g\<c-]>"
+    try
+      exe 'ts' expand('<cword>')
+    catch /^Vim\%((\a\+)\)\=:E426/
+      echohl WarningMsg
+      echo 'tag not found: ' . expand('<cword>')
+      echohl NONE
+    endtry
   else
     call SpaceVim#lsp#go_to_def()
   endif
