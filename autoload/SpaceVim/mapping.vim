@@ -179,6 +179,11 @@ function! SpaceVim#mapping#vertical_split_previous_buffer(...) abort
 endfunction
 
 function! SpaceVim#mapping#close_current_buffer(...) abort
+  if index(
+        \ ['startify', 'defx'],
+        \ &filetype) !=# -1
+    return
+  endif
   let buffers = get(g:, '_spacevim_list_buffers', [])
   let bn = bufnr('%')
   let f = ''
@@ -235,9 +240,17 @@ function! SpaceVim#mapping#close_current_buffer(...) abort
       exe cmd_close_buf . bn
     endif
   else
-    if len(buffers) >= 1
+    if len(buffers) > 1
       exe 'bp'
       exe cmd_close_buf . bn
+    elseif len(buffers) ==# 1
+      if exists(':Startify') ==# 2
+        Startify
+      endif
+      try
+        exe cmd_close_buf . bn
+      catch
+      endtry
     else
       exe cmd_close_buf . bn
       if exists(':Startify') ==# 2
@@ -307,14 +320,14 @@ endfunction
 function! SpaceVim#mapping#clear_saved_buffers() abort
   call s:BUFFER.filter_do(
         \ {
-        \ 'expr' : [
-        \ 'buflisted(v:val)',
-        \ 'index(tabpagebuflist(), v:val) == -1',
-        \ 'getbufvar(v:val, "&mod") == 0',
-        \ ],
-        \ 'do' : 'noautocmd bd %d'
-        \ }
-        \ )
+          \ 'expr' : [
+            \ 'buflisted(v:val)',
+            \ 'index(tabpagebuflist(), v:val) == -1',
+            \ 'getbufvar(v:val, "&mod") == 0',
+            \ ],
+            \ 'do' : 'noautocmd bd %d'
+            \ }
+            \ )
 endfunction
 
 function! SpaceVim#mapping#format() abort
