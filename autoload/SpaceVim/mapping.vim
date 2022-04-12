@@ -10,6 +10,7 @@ scriptencoding utf-8
 
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:WIN = SpaceVim#api#import('vim#window')
+let s:VIM = SpaceVim#api#import('vim')
 
 
 let g:unite_source_menu_menus =
@@ -188,7 +189,7 @@ function! SpaceVim#mapping#close_current_buffer(...) abort
       let rs = get(a:000, 0)
     else
       echon 'save changes to "' . bufname(bn) . '"?  Yes/No/Cancel'
-      let rs = nr2char(getchar())
+      let rs = s:VIM.getchar()
     endif
     echohl None
     if rs ==? 'y'
