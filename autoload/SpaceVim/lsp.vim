@@ -67,16 +67,16 @@ if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0
     return v:lua.vim.lsp.buf.server_ready()
   endfunction
   function! SpaceVim#lsp#diagnostic_set_loclist() abort
-    lua vim.lsp.diagnostic.set_loclist()
+    lua require('spacevim.diagnostic').set_loclist()
   endfunction
   function! SpaceVim#lsp#diagnostic_goto_next() abort
-    lua vim.lsp.diagnostic.goto_next()
+    lua require("spacevim.diagnostic").goto_next()
   endfunction
   function! SpaceVim#lsp#diagnostic_goto_prev() abort
-    lua vim.lsp.diagnostic.goto_prev()
+    lua require("spacevim.diagnostic").goto_prev()
   endfunction
   function! SpaceVim#lsp#diagnostic_clear() abort
-    lua vim.lsp.diagnostic.clear(0)
+    lua require("spacevim.diagnostic").hide()
   endfunction
 elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
   " use coc.nvim
