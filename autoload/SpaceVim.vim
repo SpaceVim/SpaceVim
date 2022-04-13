@@ -1557,11 +1557,14 @@ endfunction
 " status: 0 : no argv
 "         1 : dir
 "         2 : default arguments
+"
+" argc() return number of files
+" argv() return a list of files/directories
 function! s:parser_argv() abort
   if  !exists('v:argv')
         \ || (len(v:argv) >=# 3 && index(v:argv, '--embed') ==# -1)
     " or do not support v:argv
-    return [2, get(v:, 'argv', ['failed to get v:argv'])]
+    return [0, get(v:, 'argv', ['failed to get v:argv'])]
   elseif len(v:argv) ==# 1 || index(v:argv, '--embed') !=# -1
     " if there is no arguments
     " or use embed nvim
