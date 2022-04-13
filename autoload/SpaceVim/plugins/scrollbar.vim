@@ -17,7 +17,7 @@ let s:default = {
       \    'min_size' : 3,
       \    'width' : 1,
       \    'right_offset' : 1,
-      \    'excluded_filetypes' : ['startify'],
+      \    'excluded_filetypes' : ['startify', 'leaderf'],
       \    'shape' : {
       \        'head' : '▲',
       \        'body' : '█',
