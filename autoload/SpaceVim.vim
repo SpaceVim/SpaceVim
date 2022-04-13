@@ -350,6 +350,8 @@ if (has('python3')
   " <
   "
   " and you can alse set this option to coc, then coc.nvim will be used.
+  " If you are using neovim, you can also set this option to `nvim-cmp`, then
+  " nvim-cmp will be used.
 
   ""
   " Set the autocomplete engine of spacevim, the default logic is:

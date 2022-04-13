@@ -306,7 +306,9 @@ Set the autocomplete engine of spacevim, the default logic is:
   endif
 <
 
-and you can alse set this option to coc, then coc.nvim will be used.
+and you can alse set this option to coc, then coc.nvim will be used. If you
+are using neovim, you can also set this option to `nvim-cmp`, then nvim-cmp
+will be used.
 
 ==============================================================================
 AUTOCOMPLETE_PARENS                     *SpaceVim-options-autocomplete_parens*
