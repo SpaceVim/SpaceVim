@@ -7,7 +7,9 @@ local keymap = {}
 ---@param keys string
 ---@return string
 keymap.t = function(keys)
-  return vim.api.nvim_replace_termcodes(keys, true, true, true)
+  return (string.gsub(keys, '(<[A-Za-z0-9\\%-%[%]%^@]->)', function(match)
+    return vim.api.nvim_eval(string.format([["\%s"]], match))
+  end))
 end
 
 ---Normalize key sequence.
@@ -65,6 +67,9 @@ end
 ---@param count number
 ---@return string
 keymap.backspace = function(count)
+  if type(count) == 'string' then
+    count = vim.fn.strchars(count, true)
+  end
   if count <= 0 then
     return ''
   end
@@ -73,16 +78,11 @@ keymap.backspace = function(count)
   return table.concat(keys, '')
 end
 
----Create autoindent keys
+---Update indentkeys.
+---@param expr string
 ---@return string
-keymap.autoindent = function()
-  local keys = {}
-  table.insert(keys, keymap.t('<Cmd>setlocal cindent<CR>'))
-  table.insert(keys, keymap.t('<Cmd>setlocal indentkeys+=!^F<CR>'))
-  table.insert(keys, keymap.t('<C-f>'))
-  table.insert(keys, keymap.t('<Cmd>setlocal %scindent<CR>'):format(vim.bo.cindent and '' or 'no'))
-  table.insert(keys, keymap.t('<Cmd>setlocal indentkeys=%s<CR>'):format(vim.bo.indentkeys:gsub('|', '\\|')))
-  return table.concat(keys, '')
+keymap.indentkeys = function(expr)
+  return string.format(keymap.t('<Cmd>set indentkeys=%s<CR>'), expr and vim.fn.escape(expr, '| \t\\') or '')
 end
 
 ---Return two key sequence are equal or not.
@@ -97,25 +97,22 @@ end
 keymap.listen = function(mode, lhs, callback)
   lhs = keymap.normalize(keymap.to_keymap(lhs))
 
-  local existing = keymap.get_mapping(mode, lhs)
+  local existing = keymap.get_map(mode, lhs)
   local id = string.match(existing.rhs, 'v:lua%.cmp%.utils%.keymap%.set_map%((%d+)%)')
   if id and keymap.set_map.callbacks[tonumber(id, 10)] then
     return
   end
 
   local bufnr = existing.buffer and vim.api.nvim_get_current_buf() or -1
-  local fallback = keymap.evacuate(bufnr, mode, lhs)
+  local fallback = keymap.fallback(bufnr, mode, existing)
   keymap.set_map(bufnr, mode, lhs, function()
-    if mode == 'c' and vim.fn.getcmdtype() == '=' then
-      return vim.api.nvim_feedkeys(keymap.t(fallback.keys), fallback.mode, true)
+    local ignore = false
+    ignore = ignore or (mode == 'c' and vim.fn.getcmdtype() == '=')
+    if ignore then
+      fallback()
+    else
+      callback(lhs, misc.once(fallback))
     end
-
-    callback(
-      lhs,
-      misc.once(function()
-        vim.api.nvim_feedkeys(keymap.t(fallback.keys), fallback.mode, true)
-      end)
-    )
   end, {
     expr = false,
     noremap = true,
@@ -123,19 +120,66 @@ keymap.listen = function(mode, lhs, callback)
   })
 end
 
----Get mapping
+---Fallback
+keymap.fallback = function(bufnr, mode, map)
+  return function()
+    if map.expr then
+      local fallback_expr = string.format('<Plug>(cmp.u.k.fallback_expr:%s)', map.lhs)
+      keymap.set_map(bufnr, mode, fallback_expr, function()
+        return keymap.solve(bufnr, mode, map).keys
+      end, {
+        expr = true,
+        noremap = map.noremap,
+        script = map.script,
+        nowait = map.nowait,
+        silent = map.silent and mode ~= 'c',
+      })
+      vim.api.nvim_feedkeys(keymap.t(fallback_expr), 'im', true)
+    elseif not map.callback then
+      local solved = keymap.solve(bufnr, mode, map)
+      vim.api.nvim_feedkeys(solved.keys, solved.mode, true)
+    else
+      map.callback()
+    end
+  end
+end
+
+---Solve
+keymap.solve = function(bufnr, mode, map)
+  local lhs = keymap.t(map.lhs)
+  local rhs = map.expr and (map.callback and map.callback() or vim.api.nvim_eval(keymap.t(map.rhs))) or keymap.t(map.rhs)
+
+  if map.noremap then
+    return { keys = rhs, mode = 'in' }
+  end
+
+  if string.find(rhs, lhs, 1, true) == 1 then
+    local recursive = string.format('<SNR>0_(cmp.u.k.recursive:%s)', lhs)
+    keymap.set_map(bufnr, mode, recursive, lhs, {
+      noremap = true,
+      script = map.script,
+      nowait = map.nowait,
+      silent = map.silent and mode ~= 'c',
+    })
+    return { keys = keymap.t(recursive) .. string.gsub(rhs, '^' .. vim.pesc(lhs), ''), mode = 'im' }
+  end
+  return { keys = rhs, mode = 'im' }
+end
+
+---Get map
 ---@param mode string
 ---@param lhs string
 ---@return table
-keymap.get_mapping = function(mode, lhs)
+keymap.get_map = function(mode, lhs)
   lhs = keymap.normalize(lhs)
 
   for _, map in ipairs(vim.api.nvim_buf_get_keymap(0, mode)) do
     if keymap.equals(map.lhs, lhs) then
       return {
         lhs = map.lhs,
-        rhs = map.rhs,
+        rhs = map.rhs or '',
         expr = map.expr == 1,
+        callback = map.callback,
         noremap = map.noremap == 1,
         script = map.script == 1,
         silent = map.silent == 1,
@@ -149,8 +193,9 @@ keymap.get_mapping = function(mode, lhs)
     if keymap.equals(map.lhs, lhs) then
       return {
         lhs = map.lhs,
-        rhs = map.rhs,
+        rhs = map.rhs or '',
         expr = map.expr == 1,
+        callback = map.callback,
         noremap = map.noremap == 1,
         script = map.script == 1,
         silent = map.silent == 1,
@@ -164,78 +209,13 @@ keymap.get_mapping = function(mode, lhs)
     lhs = lhs,
     rhs = lhs,
     expr = false,
+    callback = nil,
     noremap = true,
     script = false,
-    silent = false,
+    silent = true,
     nowait = false,
     buffer = false,
   }
-end
-
----Evacuate existing key mapping
----@param bufnr number
----@param mode string
----@param lhs string
----@return { keys: string, mode: string }
-keymap.evacuate = function(bufnr, mode, lhs)
-  local map = keymap.get_mapping(mode, lhs)
-  if not map then
-    return { keys = lhs, mode = 'itn' }
-  end
-
-  -- Keep existing mapping as <Plug> mapping. We escape fisrt recursive key sequence. See `:help recursive_mapping`)
-  local rhs = map.rhs
-  if not map.noremap and map.expr then
-    -- remap & expr mapping should evacuate as <Plug> mapping with solving recursive mapping.
-    rhs = function()
-      return keymap.t(keymap.recursive(bufnr, mode, lhs, vim.api.nvim_eval(map.rhs)))
-    end
-  elseif map.noremap and map.expr then
-    -- noremap & expr mapping should always evacuate as <Plug> mapping.
-    rhs = rhs
-  elseif map.script then
-    -- script mapping should always evacuate as <Plug> mapping.
-    rhs = rhs
-  elseif not map.noremap then
-    -- remap & non-expr mapping should be checked if recursive or not.
-    rhs = keymap.recursive(bufnr, mode, lhs, rhs)
-    if keymap.equals(rhs, map.rhs) or map.noremap then
-      return { keys = rhs, mode = 'it' .. (map.noremap and 'n' or '') }
-    end
-  else
-    -- noremap & non-expr mapping doesn't need to evacuate.
-    return { keys = rhs, mode = 'it' .. (map.noremap and 'n' or '') }
-  end
-
-  local fallback = ('<Plug>(cmp.utils.keymap.evacuate:%s)'):format(map.lhs)
-  keymap.set_map(bufnr, mode, fallback, rhs, {
-    expr = map.expr,
-    noremap = map.noremap,
-    script = map.script,
-    silent = mode ~= 'c', -- I can't understand but it solves the #427 (wilder.nvim's mapping does not work if silent=true in cmdline mode...)
-  })
-  return { keys = fallback, mode = 'it' }
-end
-
----Solve recursive mapping
----@param bufnr number
----@param mode string
----@param lhs string
----@param rhs string
----@return string
-keymap.recursive = function(bufnr, mode, lhs, rhs)
-  rhs = keymap.normalize(rhs)
-
-  local recursive_lhs = ('<Plug>(cmp.utils.keymap.recursive:%s)'):format(lhs)
-  local recursive_rhs = string.gsub(rhs, '^' .. vim.pesc(keymap.normalize(lhs)), recursive_lhs)
-  if not keymap.equals(recursive_rhs, rhs) then
-    keymap.set_map(bufnr, mode, recursive_lhs, lhs, {
-      expr = false,
-      noremap = true,
-      silent = true,
-    })
-  end
-  return recursive_rhs
 end
 
 ---Set keymapping

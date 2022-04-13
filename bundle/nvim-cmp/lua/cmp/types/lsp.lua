@@ -26,7 +26,7 @@ lsp.Position.to_vim = function(buf, position)
   }
 end
 
----Convert lsp.Position to vim.Position
+---Convert vim.Position to lsp.Position
 ---@param buf number|string
 ---@param position vim.Position
 ---@return lsp.Position
@@ -49,7 +49,7 @@ end
 
 lsp.Range = {}
 
----Convert lsp.Position to vim.Position
+---Convert lsp.Range to vim.Range
 ---@param buf number|string
 ---@param range lsp.Range
 ---@return vim.Range
@@ -60,7 +60,7 @@ lsp.Range.to_vim = function(buf, range)
   }
 end
 
----Convert lsp.Position to vim.Position
+---Convert vim.Range to lsp.Range
 ---@param buf number|string
 ---@param range vim.Range
 ---@return lsp.Range
@@ -96,7 +96,6 @@ lsp.InsertTextMode = vim.tbl_add_reverse_lookup(lsp.InsertTextMode)
 ---@alias lsp.MarkupKind "'plaintext'" | "'markdown'"
 lsp.MarkupKind = {}
 lsp.MarkupKind.PlainText = 'plaintext'
-lsp.MarkupKind.Markdown = 'markdown'
 lsp.MarkupKind.Markdown = 'markdown'
 lsp.MarkupKind = vim.tbl_add_reverse_lookup(lsp.MarkupKind)
 

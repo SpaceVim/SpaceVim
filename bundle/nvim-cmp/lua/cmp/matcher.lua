@@ -72,9 +72,11 @@ end
 ---Match entry
 ---@param input string
 ---@param word string
----@param words string[]
+---@param option { synonyms: string[], disallow_fuzzy_matching: boolean, disallow_partial_matching: boolean, disallow_prefix_unmatching: boolean }
 ---@return number
-matcher.match = function(input, word, words)
+matcher.match = function(input, word, option)
+  option = option or {}
+
   -- Empty input
   if #input == 0 then
     return matcher.PREFIX_FACTOR + matcher.NOT_FUZZY_FACTOR, {}
@@ -85,7 +87,14 @@ matcher.match = function(input, word, words)
     return 0, {}
   end
 
-  --- Gather matched regions
+  -- Check prefix matching.
+  if option.disallow_prefix_unmatching then
+    if not char.match(string.byte(input, 1), string.byte(word, 1)) then
+      return 0, {}
+    end
+  end
+
+  -- Gather matched regions
   local matches = {}
   local input_start_index = 1
   local input_end_index = 1
@@ -105,6 +114,11 @@ matcher.match = function(input, word, words)
     word_bound_index = word_bound_index + 1
   end
 
+  -- Check partial matching.
+  if option.disallow_partial_matching and #matches > 1 then
+    return 0, {}
+  end
+
   if #matches == 0 then
     return 0, {}
   end
@@ -116,11 +130,11 @@ matcher.match = function(input, word, words)
   if matches[1].input_match_start == 1 and matches[1].word_match_start == 1 then
     prefix = true
   else
-    for _, w in ipairs(words or {}) do
+    for _, synonym in ipairs(option.synonyms or {}) do
       prefix = true
       local o = 1
       for i = matches[1].input_match_start, matches[1].input_match_end do
-        if not char.match(string.byte(w, o), string.byte(input, i)) then
+        if not char.match(string.byte(synonym, o), string.byte(input, i)) then
           prefix = false
           break
         end
@@ -152,8 +166,10 @@ matcher.match = function(input, word, words)
 
   -- Check remaining input as fuzzy
   if matches[#matches].input_match_end < #input then
-    if prefix and matcher.fuzzy(input, word, matches) then
-      return score, matches
+    if not option.disallow_fuzzy_matching then
+      if prefix and matcher.fuzzy(input, word, matches) then
+        return score, matches
+      end
     end
     return 0, {}
   end

@@ -13,9 +13,19 @@ mapping = setmetatable({}, {
 })
 
 ---Invoke completion
-mapping.complete = function()
+---@param option cmp.CompleteParams
+mapping.complete = function(option)
   return function(fallback)
-    if not require('cmp').complete() then
+    if not require('cmp').complete(option) then
+      fallback()
+    end
+  end
+end
+
+---Complete common string.
+mapping.complete_common_string = function()
+  return function(fallback)
+    if not require('cmp').complete_common_string() then
       fallback()
     end
   end

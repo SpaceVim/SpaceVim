@@ -29,6 +29,28 @@ misc.concat = function(list1, list2)
   return new_list
 end
 
+---Return the valu is empty or not.
+---@param v any
+---@return boolean
+misc.empty = function(v)
+  if not v then
+    return true
+  end
+  if v == vim.NIL then
+    return true
+  end
+  if type(v) == 'string' and v == '' then
+    return true
+  end
+  if type(v) == 'table' and vim.tbl_isempty(v) then
+    return true
+  end
+  if type(v) == 'number' and v == 0 then
+    return true
+  end
+  return false
+end
+
 ---The symbol to remove key in misc.merge.
 misc.none = vim.NIL
 
@@ -77,7 +99,7 @@ misc.id = setmetatable({
   group = {},
 }, {
   __call = function(_, group)
-    misc.id.group[group] = misc.id.group[group] or vim.loop.now()
+    misc.id.group[group] = misc.id.group[group] or 0
     misc.id.group[group] = misc.id.group[group] + 1
     return misc.id.group[group]
   end,
@@ -144,9 +166,10 @@ end
 
 ---Safe version of vim.str_utfindex
 ---@param text string
----@param vimindex number
+---@param vimindex number|nil
 ---@return number
 misc.to_utfindex = function(text, vimindex)
+  vimindex = vimindex or #text + 1
   return vim.str_utfindex(text, math.max(0, math.min(vimindex - 1, #text)))
 end
 
@@ -155,6 +178,7 @@ end
 ---@param utfindex number
 ---@return number
 misc.to_vimindex = function(text, utfindex)
+  utfindex = utfindex or #text
   for i = utfindex, 1, -1 do
     local s, v = pcall(function()
       return vim.str_byteindex(text, i) + 1
@@ -177,5 +201,35 @@ misc.deprecated = function(fn, msg)
     return fn(...)
   end
 end
+
+--Redraw
+misc.redraw = setmetatable({
+  doing = false,
+  force = false,
+  termcode = vim.api.nvim_replace_termcodes('<C-r><Esc>', true, true, true),
+}, {
+  __call = function(self, force)
+    if vim.tbl_contains({ '/', '?' }, vim.fn.getcmdtype()) then
+      if vim.o.incsearch then
+        return vim.api.nvim_feedkeys(self.termcode, 'in', true)
+      end
+    end
+
+    if self.doing then
+      return
+    end
+    self.doing = true
+    self.force = not not force
+    vim.schedule(function()
+      if self.force then
+        vim.cmd([[redraw!]])
+      else
+        vim.cmd([[redraw]])
+      end
+      self.doing = false
+      self.force = false
+    end)
+  end,
+})
 
 return misc

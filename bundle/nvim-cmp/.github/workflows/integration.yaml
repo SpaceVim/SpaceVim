@@ -26,6 +26,7 @@ jobs:
     - name: Setup neovim
       uses: rhysd/action-setup-vim@v1
       with:
+        version: nightly
         neovim: true
 
     - name: Setup lua

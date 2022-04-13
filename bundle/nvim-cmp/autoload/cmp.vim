@@ -2,18 +2,6 @@ let s:bridge_id = 0
 let s:sources = {}
 
 "
-" cmp#apply_text_edits
-"
-" TODO: Remove this if nvim's apply_text_edits will be improved.
-"
-function! cmp#apply_text_edits(bufnr, text_edits) abort
-  if !exists('s:TextEdit')
-    let s:TextEdit = vital#cmp#import('VS.LSP.TextEdit')
-  endif
-  call s:TextEdit.apply(a:bufnr, a:text_edits)
-endfunction
-
-"
 " cmp#register_source
 "
 function! cmp#register_source(name, source) abort

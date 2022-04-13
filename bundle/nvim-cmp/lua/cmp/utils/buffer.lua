@@ -1,17 +1,30 @@
 local buffer = {}
 
-buffer.ensure = setmetatable({
-  cache = {},
-}, {
-  __call = function(self, name)
-    if not (self.cache[name] and vim.api.nvim_buf_is_valid(self.cache[name])) then
-      local buf = vim.api.nvim_create_buf(false, true)
-      vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
-      vim.api.nvim_buf_set_option(buf, 'bufhidden', 'hide')
-      self.cache[name] = buf
-    end
-    return self.cache[name]
-  end,
-})
+buffer.cache = {}
+
+---@return number buf
+buffer.get = function(name)
+  local buf = buffer.cache[name]
+  if buf and vim.api.nvim_buf_is_valid(buf) then
+    return buf
+  else
+    return nil
+  end
+end
+
+---@return number buf
+---@return boolean created_new
+buffer.ensure = function(name)
+  local created_new = false
+  local buf = buffer.get(name)
+  if not buf then
+    created_new = true
+    buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
+    vim.api.nvim_buf_set_option(buf, 'bufhidden', 'hide')
+    buffer.cache[name] = buf
+  end
+  return buf, created_new
+end
 
 return buffer

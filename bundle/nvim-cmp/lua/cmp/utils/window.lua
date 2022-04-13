@@ -18,6 +18,7 @@ local api = require('cmp.utils.api')
 ---@field public swin2 number|nil
 ---@field public style cmp.WindowStyle
 ---@field public opt table<string, any>
+---@field public buffer_opt table<string, any>
 ---@field public cache cmp.Cache
 local window = {}
 
@@ -32,6 +33,7 @@ window.new = function()
   self.style = {}
   self.cache = cache.new()
   self.opt = {}
+  self.buffer_opt = {}
   return self
 end
 
@@ -54,6 +56,26 @@ window.option = function(self, key, value)
   end
 end
 
+---Set buffer option.
+---NOTE: If the buffer already visible, immediately applied to it.
+---@param key string
+---@param value any
+window.buffer_option = function(self, key, value)
+  if vim.fn.exists('+' .. key) == 0 then
+    return
+  end
+
+  if value == nil then
+    return self.buffer_opt[key]
+  end
+
+  self.buffer_opt[key] = value
+  local existing_buf = buffer.get(self.name)
+  if existing_buf then
+    vim.api.nvim_buf_set_option(existing_buf, key, value)
+  end
+end
+
 ---Set style.
 ---@param style cmp.WindowStyle
 window.set_style = function(self, style)
@@ -70,7 +92,13 @@ end
 ---Return buffer id.
 ---@return number
 window.get_buffer = function(self)
-  return buffer.ensure(self.name)
+  local buf, created_new = buffer.ensure(self.name)
+  if created_new then
+    for k, v in pairs(self.buffer_opt) do
+      vim.api.nvim_buf_set_option(buf, k, v)
+    end
+  end
+  return buf
 end
 
 ---Open window
@@ -89,7 +117,7 @@ window.open = function(self, style)
   else
     local s = misc.copy(self.style)
     s.noautocmd = true
-    self.win = vim.api.nvim_open_win(buffer.ensure(self.name), false, s)
+    self.win = vim.api.nvim_open_win(self:get_buffer(), false, s)
     for k, v in pairs(self.opt) do
       vim.api.nvim_win_set_option(self.win, k, v)
     end
@@ -148,7 +176,7 @@ window.update = function(self)
   -- In cmdline, vim does not redraw automatically.
   if api.is_cmdline_mode() then
     vim.api.nvim_win_call(self.win, function()
-      vim.cmd([[redraw]])
+      misc.redraw()
     end)
   end
 end
@@ -251,9 +279,14 @@ window.get_content_height = function(self)
     vim.api.nvim_buf_get_changedtick(self:get_buffer()),
   }, function()
     local height = 0
-    for _, text in ipairs(vim.api.nvim_buf_get_lines(self:get_buffer(), 0, -1, false)) do
-      height = height + math.ceil(math.max(1, vim.str_utfindex(text)) / self.style.width)
-    end
+    local buf = self:get_buffer()
+    -- The result of vim.fn.strdisplaywidth depends on the buffer it was called
+    -- in (see comment in cmp.Entry.get_view).
+    vim.api.nvim_buf_call(buf, function()
+      for _, text in ipairs(vim.api.nvim_buf_get_lines(buf, 0, -1, false)) do
+        height = height + math.ceil(math.max(1, vim.fn.strdisplaywidth(text)) / self.style.width)
+      end
+    end)
     return height
   end)
 end

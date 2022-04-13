@@ -4,6 +4,7 @@ local event = require('cmp.utils.event')
 local keymap = require('cmp.utils.keymap')
 local docs_view = require('cmp.view.docs_view')
 local custom_entries_view = require('cmp.view.custom_entries_view')
+local wildmenu_entries_view = require('cmp.view.wildmenu_entries_view')
 local native_entries_view = require('cmp.view.native_entries_view')
 local ghost_text_view = require('cmp.view.ghost_text_view')
 
@@ -12,6 +13,7 @@ local ghost_text_view = require('cmp.view.ghost_text_view')
 ---@field private resolve_dedup cmp.AsyncDedup
 ---@field private native_entries_view cmp.NativeEntriesView
 ---@field private custom_entries_view cmp.CustomEntriesView
+---@field private wildmenu_entries_view cmp.CustomEntriesView
 ---@field private change_dedup cmp.AsyncDedup
 ---@field private docs_view cmp.DocsView
 ---@field private ghost_text_view cmp.GhostTextView
@@ -23,6 +25,7 @@ view.new = function()
   self.resolve_dedup = async.dedup()
   self.custom_entries_view = custom_entries_view.new()
   self.native_entries_view = native_entries_view.new()
+  self.wildmenu_entries_view = wildmenu_entries_view.new()
   self.docs_view = docs_view.new()
   self.ghost_text_view = ghost_text_view.new()
   self.event = event.new()
@@ -47,7 +50,7 @@ end
 view.open = function(self, ctx, sources)
   local source_group_map = {}
   for _, s in ipairs(sources) do
-    local group_index = s:get_config().group_index or 0
+    local group_index = s:get_source_config().group_index or 0
     if not source_group_map[group_index] then
       source_group_map[group_index] = {}
     end
@@ -77,10 +80,10 @@ view.open = function(self, ctx, sources)
     -- create filtered entries.
     local offset = ctx.cursor.col
     for i, s in ipairs(source_group) do
-      if s.offset <= offset then
+      if s.offset <= ctx.cursor.col then
         if not has_triggered_by_symbol_source or s.is_triggered_by_symbol then
           -- source order priority bonus.
-          local priority = s:get_config().priority or ((#source_group - (i - 1)) * config.get().sorting.priority_weight)
+          local priority = s:get_source_config().priority or ((#source_group - (i - 1)) * config.get().sorting.priority_weight)
 
           for _, e in ipairs(s:get_entries(ctx)) do
             e.score = e.score + priority
@@ -109,7 +112,7 @@ view.open = function(self, ctx, sources)
     end
   end
 
-  -- close.
+  -- complete_done.
   if #entries == 0 then
     self:close()
   end
@@ -117,6 +120,11 @@ end
 
 ---Close menu
 view.close = function(self)
+  if self:visible() then
+    self.event:emit('complete_done', {
+      entry = self:_get_entries_view():get_selected_entry(),
+    })
+  end
   self:_get_entries_view():close()
   self.docs_view:close()
   self.ghost_text_view:hide()
@@ -153,6 +161,17 @@ view.select_prev_item = function(self, option)
   self:_get_entries_view():select_prev_item(option)
 end
 
+---Get offset.
+view.get_offset = function(self)
+  return self:_get_entries_view():get_offset()
+end
+
+---Get entries.
+---@return cmp.Entry[]
+view.get_entries = function(self)
+  return self:_get_entries_view():get_entries()
+end
+
 ---Get first entry
 ---@param self cmp.Entry|nil
 view.get_first_entry = function(self)
@@ -174,54 +193,51 @@ end
 ---Return current configured entries_view
 ---@return cmp.CustomEntriesView|cmp.NativeEntriesView
 view._get_entries_view = function(self)
-  local c = config.get()
   self.native_entries_view.event:clear()
   self.custom_entries_view.event:clear()
+  self.wildmenu_entries_view.event:clear()
 
-  if c.experimental.native_menu then
-    self.native_entries_view.event:on('change', function()
-      self:on_entry_change()
-    end)
-    return self.native_entries_view
-  else
-    self.custom_entries_view.event:on('change', function()
-      self:on_entry_change()
-    end)
-    return self.custom_entries_view
+  local c = config.get()
+  local v = self.custom_entries_view
+  if (c.view and c.view.entries and (c.view.entries.name or c.view.entries)) == 'wildmenu' then
+    v = self.wildmenu_entries_view
+  elseif (c.view and c.view.entries and (c.view.entries.name or c.view.entries)) == 'native' then
+    v = self.native_entries_view
   end
+  v.event:on('change', function()
+    self:on_entry_change()
+  end)
+  return v
 end
 
 ---On entry change
-view.on_entry_change = async.throttle(
-  vim.schedule_wrap(function(self)
-    if not self:visible() then
-      return
+view.on_entry_change = async.throttle(function(self)
+  if not self:visible() then
+    return
+  end
+  local e = self:get_selected_entry()
+  if e then
+    for _, c in ipairs(config.get().confirmation.get_commit_characters(e:get_commit_characters())) do
+      keymap.listen('i', c, function(...)
+        self.event:emit('keymap', ...)
+      end)
     end
-    local e = self:get_selected_entry()
-    if e then
-      for _, c in ipairs(config.get().confirmation.get_commit_characters(e:get_commit_characters())) do
-        keymap.listen('i', c, function(...)
-          self.event:emit('keymap', ...)
-        end)
+    e:resolve(vim.schedule_wrap(self.resolve_dedup(function()
+      if not self:visible() then
+        return
       end
-      e:resolve(vim.schedule_wrap(self.resolve_dedup(function()
-        if not self:visible() then
-          return
-        end
-        self.docs_view:open(e, self:_get_entries_view():info())
-      end)))
-    else
-      self.docs_view:close()
-    end
+      self.docs_view:open(e, self:_get_entries_view():info())
+    end)))
+  else
+    self.docs_view:close()
+  end
 
-    e = e or self:get_first_entry()
-    if e then
-      self.ghost_text_view:show(e)
-    else
-      self.ghost_text_view:hide()
-    end
-  end),
-  20
-)
+  e = e or self:get_first_entry()
+  if e then
+    self.ghost_text_view:show(e)
+  else
+    self.ghost_text_view:hide()
+  end
+end, 20)
 
 return view
