@@ -287,10 +287,12 @@ function! s:on_stdout(job_id, data, event) abort
   if bufexists(s:code_runner_bufnr)
     if s:SYS.isWindows
       let data = map(a:data, 'substitute(v:val, "\r$", "", "g")')
+    else
+      let data = a:data
     endif
     call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , s:runner_lines + 1, 0, data)
   endif
-  let s:runner_lines += len(a:data)
+  let s:runner_lines += len(data)
   if s:winid >= 0
     call s:VIM.win_set_cursor(s:winid, [s:VIM.buf_line_count(s:code_runner_bufnr), 1])
   endif
