@@ -96,7 +96,7 @@ be used:
 
 | key binding | Description             |
 | ----------- | ----------------------- |
-| `g D`       | jump to type definition |
+| `g D`       | jump to declaration |
 | `SPC l e`   | rename symbol           |
 | `SPC l x`   | show references         |
 | `SPC l s`   | show line diagnostics   |

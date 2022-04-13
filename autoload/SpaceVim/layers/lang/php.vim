@@ -49,7 +49,7 @@
 " >
 "   key binding     Description
 "   --------------------------------
-"   g D             jump to type definition
+"   g D             jump to declaration
 "   SPC l e         rename symbol
 "   SPC l x         show references
 "   SPC l h         show line diagnostics
@@ -103,6 +103,8 @@ function! SpaceVim#layers#lang#php#config() abort
         \ || SpaceVim#layers#lsp#check_server('intelephense')
     call SpaceVim#mapping#gd#add('php',
           \ function('SpaceVim#lsp#go_to_def'))
+    call SpaceVim#mapping#g_capital_d#add('php',
+          \ function('SpaceVim#lsp#go_to_declaration'))
   endif
 
   if s:auto_fix
@@ -125,7 +127,6 @@ function! s:on_ft() abort
         \ || SpaceVim#layers#lsp#check_server('phpactor')
         \ || SpaceVim#layers#lsp#check_server('intelephense')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
-    nnoremap <silent><buffer> gD :<C-u>call SpaceVim#lsp#go_to_typedef()<Cr>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
           \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
