@@ -18,6 +18,7 @@ let s:box = SpaceVim#api#import('unicode#box')
 
 if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
   " use neovim built-in lsp
+  call SpaceVim#logger#info('lsp client: nvim built-in lsp')
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
     lua require("spacevim.lsp").register(
           \ require("spacevim").eval("a:ft"),
@@ -80,6 +81,7 @@ if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0
   endfunction
 elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplete_method') ==# 'coc'
   " use coc.nvim
+  call SpaceVim#logger#info('lsp client: coc.nvim')
   let s:coc_language_servers = {}
   let s:coc_language_servers_key_id_map = {}
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
@@ -159,6 +161,7 @@ elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplet
     call CocAction('jumpReferences')
   endfunction
 elseif has('nvim-0.4.3') && $ENABLE_NVIM043LSP
+  call SpaceVim#logger#info('lsp client: nvim-lspext')
   function! SpaceVim#lsp#show_doc() abort
     lua require('lsp.plugin')
           \ .client.request('textDocument/hover',
@@ -199,6 +202,7 @@ elseif has('nvim-0.4.3') && $ENABLE_NVIM043LSP
   endfunction
 elseif has('nvim')
   " use LanguageClient-neovim
+  call SpaceVim#logger#info('lsp client: LanguageClient-neovim')
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
     let g:LanguageClient_serverCommands[a:ft] = copy(a:cmds)
   endfunction
@@ -240,6 +244,7 @@ elseif has('nvim')
   endfunction
 else
   " use vim-lsp
+  call SpaceVim#logger#info('lsp client: vim-lsp')
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
     exe 'au User lsp_setup call lsp#register_server({'
           \ . "'name': '" . a:ft . "-lsp',"
