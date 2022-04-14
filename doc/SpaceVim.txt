@@ -1754,6 +1754,7 @@ OPTIONS
   enabled by default.
 `enable_filetree_gitstatus`: enable/disable git status column in filetree.
 `enable_filetree_filetypeicon`: enable/disable filetype icons in filetree.
+`enable_netrw`: enable/disable netrw, disabled by default.
 
 NOTE: the `enable_vimfiler_gitstatus` and `enable_filetree_gitstatus` option
 has been deprecated. Use layer option instead.

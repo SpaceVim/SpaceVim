@@ -20,6 +20,7 @@ scriptencoding utf-8
 "   enabled by default.
 " - `enable_filetree_gitstatus`: enable/disable git status column in filetree.
 " - `enable_filetree_filetypeicon`: enable/disable filetype icons in filetree.
+" - `enable_netrw`: enable/disable netrw, disabled by default.
 "
 " NOTE: the `enable_vimfiler_gitstatus` and `enable_filetree_gitstatus` option
 " has been deprecated. Use layer option instead.
@@ -34,13 +35,11 @@ if exists('s:string_hi')
 endif
 
 let s:enable_smooth_scrolling = 1
+let s:enable_netrw = 0
 
 let g:_spacevim_enable_filetree_gitstatus = 0
 let g:_spacevim_enable_filetree_filetypeicon = 0
 
-
-" disabel netrw
-let g:loaded_netrwPlugin = 1
 
 
 let s:SYS = SpaceVim#api#import('system')
@@ -104,6 +103,13 @@ endfunction
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#core#config() abort
+
+  if !s:enable_netrw
+    " disabel netrw
+    let g:loaded_netrwPlugin = 1
+  endif
+
+
   if g:spacevim_filemanager ==# 'nerdtree'
     noremap <silent> <F3> :NERDTreeToggle<CR>
   endif
@@ -1006,7 +1012,7 @@ function! s:rename_current_file() abort
     echo 'canceled!'
   endif
 
-  
+
 endfunction
 
 function! s:save_as_new_file() abort
@@ -1089,6 +1095,9 @@ function! SpaceVim#layers#core#set_variable(var) abort
   let g:_spacevim_enable_filetree_gitstatus = get(a:var,
         \ 'enable_filetree_gitstatus',
         \ g:_spacevim_enable_filetree_gitstatus)
+  let s:enable_netrw = get(a:var,
+        \ 'enable_netrw',
+        \ 0)
 endfunction
 
 function! SpaceVim#layers#core#get_options() abort
