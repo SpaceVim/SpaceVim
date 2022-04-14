@@ -46,8 +46,8 @@ function! SpaceVim#layers#VersionControl#config() abort
         \ 'vcs-transient-state', 1)
   call SpaceVim#layers#core#statusline#register_sections('vcs', s:_function('s:git_branch'))
   call SpaceVim#layers#core#statusline#register_sections('hunks', s:_function('s:hunks'))
-  call add(g:spacevim_statusline_left_sections, 'vcs')
-  call add(g:spacevim_statusline_left_sections, 'hunks')
+  call add(g:spacevim_statusline_left, 'vcs')
+  call add(g:spacevim_statusline_left, 'hunks')
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'v'], 'call SpaceVim#layers#core#statusline#toggle_section("vcs")',
         \ 'toggle-vcs-info', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'h'], 'call SpaceVim#layers#core#statusline#toggle_section("hunks")',

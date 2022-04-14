@@ -774,6 +774,7 @@ Define the left section of statusline in active windows. By default:
     'version control info'
     ]
 <
+`statusline_left_sections` is deprecated, use `statusline_left` instead.
 
 ==============================================================================
 STATUSLINE_RIGHT_SECTIONS         *SpaceVim-options-statusline_right_sections*
@@ -792,6 +793,8 @@ fileformat: the format of current file
 cursorpos: the corsur position
 percentage: the percent of current page
 totallines: the total lines of current buffer
+
+`statusline_right_sections` is deprecated, use `statusline_right` instead.
 
 ==============================================================================
 STATUSLINE_SEPARATOR                   *SpaceVim-options-statusline_separator*
@@ -1127,10 +1130,10 @@ default, to enable this feature:
                                             *g:spacevim_enable_statusline_tag*
 Enable/Disable showing current tag on statusline
 
-                                         *g:spacevim_statusline_left_sections*
+                                                  *g:spacevim_statusline_left*
 Define the left section of statusline in active windows. By default:
 >
-  let g:spacevim_statusline_left_sections =
+  let g:spacevim_statusline_left =
     \ [
     \ 'winnr',
     \ 'filename',
@@ -1139,17 +1142,22 @@ Define the left section of statusline in active windows. By default:
     \ 'version control info'
     \ ]
 <
+`g:spacevim_statusline_left_sections` is deprecated, use
+`g:spacevim_statusline_left` instead.
 
-                                        *g:spacevim_statusline_right_sections*
+                                                 *g:spacevim_statusline_right*
 Define the right section of statusline in active windows. By default:
 >
-  g:spacevim_statusline_right_sections =
+  g:spacevim_statusline_right =
     \ [
     \ 'fileformat',
     \ 'cursorpos',
     \ 'percentage'
     \ ]
 <
+
+`g:spacevim_statusline_right_sections` is deprecated, use
+`g:spacevim_statusline_right` instead.
 
                                                *g:spacevim_statusline_unicode*
 Enable/Disable unicode symbols in statusline, includes the mode icons and

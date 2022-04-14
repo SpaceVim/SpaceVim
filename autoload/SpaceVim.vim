@@ -582,11 +582,12 @@ let g:spacevim_enable_statusline_tag = 1
 "     'version control info'
 "     ]
 " <
+" `statusline_left_sections` is deprecated, use `statusline_left` instead. 
 
 ""
 " Define the left section of statusline in active windows. By default:
 " >
-"   let g:spacevim_statusline_left_sections =
+"   let g:spacevim_statusline_left =
 "     \ [
 "     \ 'winnr',
 "     \ 'filename',
@@ -595,7 +596,9 @@ let g:spacevim_enable_statusline_tag = 1
 "     \ 'version control info'
 "     \ ]
 " <
-let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
+" `g:spacevim_statusline_left_sections` is deprecated,
+" use `g:spacevim_statusline_left` instead. 
+let g:spacevim_statusline_left = ['winnr', 'filename', 'major mode',
       \ 'search count',
       \ 'syntax checking', 'minor mode lighters',
       \ ]
@@ -616,18 +619,23 @@ let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
 " - cursorpos: the corsur position
 " - percentage: the percent of current page
 " - totallines: the total lines of current buffer
+"
+" `statusline_right_sections` is deprecated, use `statusline_right` instead. 
 
 ""
 " Define the right section of statusline in active windows. By default:
 " >
-"   g:spacevim_statusline_right_sections =
+"   g:spacevim_statusline_right =
 "     \ [
 "     \ 'fileformat',
 "     \ 'cursorpos',
 "     \ 'percentage'
 "     \ ]
 " <
-let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos', 'percentage']
+"
+" `g:spacevim_statusline_right_sections` is deprecated,
+" use `g:spacevim_statusline_right` instead. 
+let g:spacevim_statusline_right = ['fileformat', 'cursorpos', 'percentage']
 
 ""
 " @section statusline_unicode, options-statusline_unicode

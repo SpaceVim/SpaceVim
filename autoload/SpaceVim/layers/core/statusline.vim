@@ -107,7 +107,7 @@ endif
 if &cc ==# '80'
   call add(s:loaded_modes, 'fill-column-indicator')
 endif
-if index(g:spacevim_statusline_right_sections, 'whitespace') != -1
+if index(g:spacevim_statusline_right, 'whitespace') != -1
   call add(s:loaded_modes, 'whitespace')
 endif
 " build in sections for SpaceVim statusline
@@ -492,7 +492,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     endtry
     let st = '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# startify %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
-    if index(g:spacevim_statusline_left_sections, 'vcs') != -1
+    if index(g:spacevim_statusline_left, 'vcs') != -1
       let st .= '%#SpaceVim_statusline_c#' .  call(s:registed_sections['vcs'], [])
             \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
     endif
@@ -589,13 +589,13 @@ endfunction
 
 function! s:active() abort
   let lsec = []
-  for section in g:spacevim_statusline_left_sections
+  for section in g:spacevim_statusline_left
     if has_key(s:registed_sections, section)
       call add(lsec, call(s:registed_sections[section], []))
     endif
   endfor
   let rsec = []
-  for section in g:spacevim_statusline_right_sections
+  for section in g:spacevim_statusline_right
     if has_key(s:registed_sections, section)
       call add(rsec, call(s:registed_sections[section], []))
     endif
@@ -719,25 +719,25 @@ let s:section_old_pos = {
       \ }
 
 function! SpaceVim#layers#core#statusline#toggle_section(name) abort
-  if index(g:spacevim_statusline_left_sections, a:name) == -1
-        \ && index(g:spacevim_statusline_right_sections, a:name) == -1
+  if index(g:spacevim_statusline_left, a:name) == -1
+        \ && index(g:spacevim_statusline_right, a:name) == -1
         \ && !has_key(s:section_old_pos, a:name)
     if a:name ==# 'search status'
-      call insert(g:spacevim_statusline_left_sections, a:name, 2)
+      call insert(g:spacevim_statusline_left, a:name, 2)
     else
-      call add(g:spacevim_statusline_right_sections, a:name)
+      call add(g:spacevim_statusline_right, a:name)
     endif
-  elseif index(g:spacevim_statusline_right_sections, a:name) != -1
-    let s:section_old_pos[a:name] = ['r', index(g:spacevim_statusline_right_sections, a:name)]
-    call remove(g:spacevim_statusline_right_sections, index(g:spacevim_statusline_right_sections, a:name))
-  elseif index(g:spacevim_statusline_left_sections, a:name) != -1
-    let s:section_old_pos[a:name] = ['l', index(g:spacevim_statusline_left_sections, a:name)]
-    call remove(g:spacevim_statusline_left_sections, index(g:spacevim_statusline_left_sections, a:name))
+  elseif index(g:spacevim_statusline_right, a:name) != -1
+    let s:section_old_pos[a:name] = ['r', index(g:spacevim_statusline_right, a:name)]
+    call remove(g:spacevim_statusline_right, index(g:spacevim_statusline_right, a:name))
+  elseif index(g:spacevim_statusline_left, a:name) != -1
+    let s:section_old_pos[a:name] = ['l', index(g:spacevim_statusline_left, a:name)]
+    call remove(g:spacevim_statusline_left, index(g:spacevim_statusline_left, a:name))
   elseif has_key(s:section_old_pos, a:name)
     if s:section_old_pos[a:name][0] ==# 'r'
-      call insert(g:spacevim_statusline_right_sections, a:name, s:section_old_pos[a:name][1])
+      call insert(g:spacevim_statusline_right, a:name, s:section_old_pos[a:name][1])
     else
-      call insert(g:spacevim_statusline_left_sections, a:name, s:section_old_pos[a:name][1])
+      call insert(g:spacevim_statusline_left, a:name, s:section_old_pos[a:name][1])
     endif
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
@@ -969,16 +969,16 @@ function! SpaceVim#layers#core#statusline#register_sections(name, func) abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#check_section(name) abort
-  return (index(g:spacevim_statusline_left_sections, a:name) != -1
-        \ || index(g:spacevim_statusline_right_sections, a:name) != -1)
+  return (index(g:spacevim_statusline_left, a:name) != -1
+        \ || index(g:spacevim_statusline_right, a:name) != -1)
 endfunction
 
 function! SpaceVim#layers#core#statusline#remove_section(name) abort
-  if index(g:spacevim_statusline_left_sections, a:name) != -1
-    call remove(g:spacevim_statusline_left_sections, index(g:spacevim_statusline_left_sections, a:name))
+  if index(g:spacevim_statusline_left, a:name) != -1
+    call remove(g:spacevim_statusline_left, index(g:spacevim_statusline_left, a:name))
   endif
-  if index(g:spacevim_statusline_right_sections, a:name) != -1
-    call remove(g:spacevim_statusline_right_sections, index(g:spacevim_statusline_left_sections, a:name))
+  if index(g:spacevim_statusline_right, a:name) != -1
+    call remove(g:spacevim_statusline_right, index(g:spacevim_statusline_left, a:name))
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction
