@@ -72,9 +72,8 @@ CONTENTS                                                   *SpaceVim-contents*
       52. sidebar_width.......................|SpaceVim-options-sidebar_width|
       53. snippet_engine.....................|SpaceVim-options-snippet_engine|
       54. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      55. statusline_left_sections.|SpaceVim-options-statusline_left_sections|
-      56. statusline_right_sections
-..................................|SpaceVim-options-statusline_right_sections|
+      55. statusline_left...................|SpaceVim-options-statusline_left|
+      56. statusline_right.................|SpaceVim-options-statusline_right|
       57. statusline_separator.........|SpaceVim-options-statusline_separator|
       58. statusline_unicode.............|SpaceVim-options-statusline_unicode|
       59. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
@@ -762,11 +761,11 @@ See more details in: http://spacevim.org/documentation/#statusline
 
 
 ==============================================================================
-STATUSLINE_LEFT_SECTIONS           *SpaceVim-options-statusline_left_sections*
+STATUSLINE_LEFT                             *SpaceVim-options-statusline_left*
 
 Define the left section of statusline in active windows. By default:
 >
-  statusline_left_sections = [
+  statusline_left = [
     'winnr',
     'filename',
     'major mode',
@@ -777,11 +776,11 @@ Define the left section of statusline in active windows. By default:
 `statusline_left_sections` is deprecated, use `statusline_left` instead.
 
 ==============================================================================
-STATUSLINE_RIGHT_SECTIONS         *SpaceVim-options-statusline_right_sections*
+STATUSLINE_RIGHT                           *SpaceVim-options-statusline_right*
 
 Define the right section of statusline in active windows. By default:
 >
-  statusline_right_sections = [
+  statusline_right = [
     'fileformat',
     'cursorpos',
     'percentage'

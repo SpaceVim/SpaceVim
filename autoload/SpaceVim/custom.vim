@@ -134,6 +134,11 @@ function! s:apply(config, type) abort
           call SpaceVim#logger#warn('defx requires +python3!', 0)
           continue
         endif
+      " keep backward compatibility
+      elseif name ==# 'statusline_right_sections'
+        let name = 'statusline_right'
+      elseif name ==# 'statusline_right_sections'
+        let name = 'statusline_right'
       endif
       exe 'let g:spacevim_' . name . ' = value'
       if name ==# 'project_rooter_patterns'

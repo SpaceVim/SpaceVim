@@ -570,11 +570,11 @@ let g:spacevim_enable_statusline_bfpath = 0
 " Enable/Disable showing current tag on statusline
 let g:spacevim_enable_statusline_tag = 1
 ""
-" @section statusline_left_sections, options-statusline_left_sections
+" @section statusline_left, options-statusline_left
 " @parentsection options
 " Define the left section of statusline in active windows. By default:
 " >
-"   statusline_left_sections = [
+"   statusline_left = [
 "     'winnr',
 "     'filename',
 "     'major mode',
@@ -603,11 +603,11 @@ let g:spacevim_statusline_left = ['winnr', 'filename', 'major mode',
       \ 'syntax checking', 'minor mode lighters',
       \ ]
 ""
-" @section statusline_right_sections, options-statusline_right_sections
+" @section statusline_right, options-statusline_right
 " @parentsection options
 " Define the right section of statusline in active windows. By default:
 " >
-"   statusline_right_sections = [
+"   statusline_right = [
 "     'fileformat',
 "     'cursorpos',
 "     'percentage'
