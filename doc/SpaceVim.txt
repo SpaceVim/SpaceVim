@@ -236,7 +236,8 @@ CONTENTS                                                   *SpaceVim-contents*
   8. Plugins................................................|SpaceVim-plugins|
       1. iedit........................................|SpaceVim-plugins-iedit|
       2. runner......................................|SpaceVim-plugins-runner|
-      3. todo manager...........................|SpaceVim-plugins-todomanager|
+      3. tab manager.............................|SpaceVim-plugins-tabmanager|
+      4. todo manager...........................|SpaceVim-plugins-todomanager|
   9. API........................................................|SpaceVim-api|
       1. clock............................................|SpaceVim-api-clock|
       2. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
@@ -5655,6 +5656,34 @@ KEY BINDINGS
   SPC s r         start default code runner
   q               close coder runner window
   i               insert text to background process
+<
+
+==============================================================================
+TAB MANAGER                                      *SpaceVim-plugins-tabmanager*
+
+The `tabmanager` plugin provides tab manager support for SpaceVim.
+
+KEY BINDINGS
+
+>
+  Key binding     Description
+  SPC t t         open tab manager windows
+<
+
+In the tab manager windows, the following key bindings can be used:
+>
+  Key binding     Description
+  ---------------------------
+  q               close tab manager
+  o               toggle tab
+  r               rename tabpage
+  n               create new named tabpage
+  N               create new unamed tabpage
+  x               delete tabpage
+  yy              copy tabpage
+  p               paste tabpage
+  Ctrl-Shift-Up   move tabpage backward
+  Ctrl-Shift-Down move tabpage forward
 <
 
 ==============================================================================
