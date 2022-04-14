@@ -26,6 +26,7 @@
 
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:FLOAT = SpaceVim#api#import('neovim#floating')
+let s:WIN = SpaceVim#api#import('vim#window')
 
 function! SpaceVim#layers#shell#plugins() abort
   let plugins = []
@@ -43,20 +44,20 @@ function! SpaceVim#layers#shell#config() abort
         \ . string(function('s:open_default_shell')) . ', [0])',
         \ ['open-shell',
         \ [
-        \ "[SPC '] is to open or jump to default shell window",
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ], 1)
+          \ "[SPC '] is to open or jump to default shell window",
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ["\""], 'call call('
         \ . string(function('s:open_default_shell')) . ', [1])',
         \ ['open-shell-in-buffer-dir',
         \ [
-        \ "[SPC \"] is to open or jump to default shell window with the current file's pwd",
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ], 1)
+          \ "[SPC \"] is to open or jump to default shell window with the current file's pwd",
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ], 1)
 
   if has('nvim') || exists(':tnoremap') == 2
     exe 'tnoremap <silent><C-Right> <C-\><C-n>:<C-u>wincmd l<CR>'
@@ -78,6 +79,7 @@ function! SpaceVim#layers#shell#config() abort
     augroup spacevim_layer_shell
       au!
       au WinEnter,BufWinEnter term://* startinsert
+      au TermOpen * call s:on_term_open()
       if has('timers')
         au TermClose * let g:_spacevim_termclose_abuf = expand('<abuf>') | call timer_start(5, 'SpaceVim#mapping#close_term_buffer')
       else
@@ -86,6 +88,12 @@ function! SpaceVim#layers#shell#config() abort
     augroup END
   endif
 
+endfunction
+
+
+function! s:on_term_open() abort
+  startinsert
+  let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction
 
 " FIXME: 
@@ -179,12 +187,12 @@ function! s:open_default_shell(open_with_file_cwd) abort
   if s:default_position ==# 'float' && exists('*nvim_open_win')
     let s:term_win_id =  s:FLOAT.open_win(bufnr('%'), v:true,
           \ {
-          \ 'relative': 'editor',
-          \ 'width'   : &columns, 
-          \ 'height'  : &lines * s:default_height / 100,
-          \ 'row': 0,
-          \ 'col': &lines - (&lines * s:default_height / 100) - 2
-          \ })
+            \ 'relative': 'editor',
+            \ 'width'   : &columns, 
+            \ 'height'  : &lines * s:default_height / 100,
+            \ 'row': 0,
+            \ 'col': &lines - (&lines * s:default_height / 100) - 2
+            \ })
 
     exe win_id2win(s:term_win_id) .  'wincmd w'
   else

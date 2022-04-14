@@ -434,6 +434,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#'
           \ . s:lsep
           \ . '%#SpaceVim_statusline_b# Terminal %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+          \ . '%#SpaceVim_statusline_c# '
+          \ . matchstr(bufname(), '\d\+:\zs.*')
     if !empty(get(b:, '_spacevim_shell', ''))
       let st .= '%#SpaceVim_statusline_c# %{b:_spacevim_shell} %#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
     endif
