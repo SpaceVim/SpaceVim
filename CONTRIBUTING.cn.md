@@ -14,27 +14,25 @@ SpaceVim 这一项目的存在，得益于所有参与贡献的朋友，我们�
 沟通交流。
 
 
-#### License
+#### 开源协议
 
-The license is GPLv3 for all the parts of SpaceVim. this includes:
+SpaceVim 的所有部分均遵循 GPLv3 协议. 这包括:
 
-- The initialization and core files.
-- All the layer files.
-- The documentation
+- 初始化和核心文件.
+- 所有 layer 文件.
+- 文档.
 
-For files not belonging to SpaceVim, such as local packages and libraries, refer to the header file.
-Those files should not have an empty header. We may not accept code without a proper header file.
+对于不属于 SpaceVim 的文件, 例如本地包和库, 请参考头文件.
+这些文件的头部不应为空, 若没有一个合适的头文件, 我们可能不会接受代码.
 
-#### Conventions
+#### 约定
 
-SpaceVim is based on conventions, mainly for naming functions, keybindings definition and writing
-documentation. Please read the [conventions](https://spacevim.org/conventions/) before your first contribution to get to know them.
+SpaceVim 基于约定, 主要用于函数命名, 按键绑定定义和书写文档..
+请在第一次贡献前阅读 [约定](https://spacevim.org/cn/conventions/) 来了解它们.
 
-#### Pull Request
+#### 拉取请求
 
-Submit your contribution against the `master` branch. You should not use your master branch
-to modify SpaceVim, this branch is considered to be read-only.
+提交你的贡献到 `master` 分支. 你不应该使用自己的 `master` 分支来修改 SpaceVim,
+这个分支是默认只读的.
 
-You may want to read our [development guidelines](https://spacevim.org/development/).
-
-
+你可能需要阅读我们的 [开发者文档](https://spacevim.org/cn/development/).
