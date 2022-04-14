@@ -5547,6 +5547,10 @@ The available scopes and corresponding keys are:
     files in a given directory | f
     current project            | p
 <
+Instead of using flygrep to search text. SpaceVim also provides a general
+async searcher. The key binding is `SPC s j`, an input promote will be opened.
+After inserting text and press enter. searching results will be displayed in
+quickfix window.
 
 ==============================================================================
 TASKS                                                   *SpaceVim-usage-tasks*

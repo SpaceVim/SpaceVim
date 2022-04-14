@@ -1821,6 +1821,10 @@ endfunction
 "     files in a given directory | f
 "     current project            | p
 " <
+" Instead of using flygrep to search text. SpaceVim also provides a general
+" async searcher. The key binding is `SPC s j`, an input promote will be
+" opened. After inserting text and press enter. searching results will be
+" displayed in quickfix window.
 
 ""
 " @section buffers-and-files, usage-buffers-and-files
