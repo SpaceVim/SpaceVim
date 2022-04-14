@@ -1,0 +1,7 @@
+mtcars |>
+  head(
+    n = 6L
+  ) |>
+  subset(
+    cyl > 3
+  )
