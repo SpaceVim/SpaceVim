@@ -1,0 +1,298 @@
+<body>
+<pre>
+<span class="Comment">//                                                               all</span>
+<span class="Comment">//                                                               |  all,block_nested</span>
+<span class="Comment">//                                                               |  |  all,block_named</span>
+
+<span class="Statement">function</span> f<span class="Special">;</span>                                                   <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">begin</span>                                                         <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;1&gt;</span>
+<span class="Statement">end</span>                                                           <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;1&gt;</span>
+<span class="Statement">endfunction</span> <span class="Special">:</span> f                                               <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Statement">task</span> t<span class="Special">;</span>                                                       <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">begin</span>                                                         <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;1&gt;</span>
+    state <span class="Special">=</span> <span class="Identifier">something</span><span class="Special">();</span>                                      <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;1&gt;</span>
+    <span class="Statement">begin</span> <span class="Special">:</span> <span class="Special">block1</span>                                            <span class="Comment">//&lt;3&gt;&lt;3&gt;&lt;2&gt;</span>
+        state <span class="Special">=</span> <span class="Constant">2'b00</span><span class="Special">;</span>                                        <span class="Comment">//&lt;3&gt;&lt;3&gt;&lt;2&gt;</span>
+        <span class="Statement">if</span> <span class="Special">(</span>a <span class="Special">&lt;=</span> b<span class="Special">)</span> <span class="Statement">begin</span>                                     <span class="Comment">//&lt;4&gt;&lt;4&gt;&lt;2&gt;</span>
+            <span class="Statement">begin</span> <span class="Special">:</span> <span class="Special">block2</span>                                    <span class="Comment">//&lt;5&gt;&lt;5&gt;&lt;3&gt;</span>
+            <span class="Statement">end</span> <span class="Comment">// block2                                     //&lt;5&gt;&lt;5&gt;&lt;3&gt;</span>
+            state <span class="Special">=</span> <span class="Constant">2'b11</span><span class="Special">;</span>                                    <span class="Comment">//&lt;4&gt;&lt;4&gt;&lt;2&gt;</span>
+            <span class="Statement">begin</span>                                             <span class="Comment">//&lt;5&gt;&lt;5&gt;&lt;2&gt;</span>
+            <span class="Statement">end</span>                                               <span class="Comment">//&lt;5&gt;&lt;5&gt;&lt;2&gt;</span>
+        <span class="Statement">end</span>                                                   <span class="Comment">//&lt;4&gt;&lt;4&gt;&lt;2&gt;</span>
+        <span class="Statement">begin</span> <span class="Special">:</span> <span class="Special">block3</span>                                        <span class="Comment">//&lt;4&gt;&lt;4&gt;&lt;3&gt;</span>
+        <span class="Statement">end</span> <span class="Comment">// block3                                         //&lt;4&gt;&lt;4&gt;&lt;3&gt;</span>
+        <span class="Statement">begin</span>                                                 <span class="Comment">//&lt;4&gt;&lt;4&gt;&lt;2&gt;</span>
+        <span class="Statement">end</span>                                                   <span class="Comment">//&lt;4&gt;&lt;4&gt;&lt;2&gt;</span>
+    <span class="Statement">end</span> <span class="Comment">// block1                                             //&lt;3&gt;&lt;3&gt;&lt;2&gt;</span>
+<span class="Statement">end</span>                                                           <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">endtask</span> <span class="Special">:</span> t                                                   <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Comment">/*                                                            //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">*                                                             //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">* function in_comment;                                        //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">*                                                             //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">* endfunction                                                 //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">*                                                             //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">*/</span>                                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Statement">extern</span>                        <span class="Statement">function</span>    e_func <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span>              <span class="Statement">static</span>    <span class="Statement">function</span>   es_func <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span>              <span class="Statement">protected</span> <span class="Statement">function</span>   ep_func <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span>              <span class="Statement">local</span>     <span class="Statement">function</span>   el_func <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+
+       <span class="Statement">pure</span> <span class="Statement">virtual</span>           <span class="Statement">function</span>   pv_func <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+       <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">static</span>    <span class="Statement">function</span>  pvs_func <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+       <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">protected</span> <span class="Statement">function</span>  pvp_func <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+       <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">local</span>     <span class="Statement">function</span>  pvl_func <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+
+<span class="Statement">extern</span>      <span class="Statement">virtual</span>           <span class="Statement">function</span>   ev_func <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span>      <span class="Statement">virtual</span> <span class="Statement">static</span>    <span class="Statement">function</span>  evs_func <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span>      <span class="Statement">virtual</span> <span class="Statement">protected</span> <span class="Statement">function</span>  evp_func <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span>      <span class="Statement">virtual</span> <span class="Statement">local</span>     <span class="Statement">function</span>  evl_func <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+
+<span class="Statement">extern</span> <span class="Statement">pure</span> <span class="Statement">virtual</span>           <span class="Statement">function</span>  epv_func <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span> <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">static</span>    <span class="Statement">function</span> epvs_func <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span> <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">protected</span> <span class="Statement">function</span> epvp_func <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span> <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">local</span>     <span class="Statement">function</span> epvl_func <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+
+<span class="Statement">extern</span>                        <span class="Statement">task</span>        e_task <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span>              <span class="Statement">static</span>    <span class="Statement">task</span>       es_task <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span>              <span class="Statement">protected</span> <span class="Statement">task</span>       ep_task <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span>              <span class="Statement">local</span>     <span class="Statement">task</span>       el_task <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+
+       <span class="Statement">pure</span> <span class="Statement">virtual</span>           <span class="Statement">task</span>       pv_task <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+       <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">static</span>    <span class="Statement">task</span>      pvs_task <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+       <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">protected</span> <span class="Statement">task</span>      pvp_task <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+       <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">local</span>     <span class="Statement">task</span>      pvl_task <span class="Special">(</span>x<span class="Special">);</span>         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+
+<span class="Statement">extern</span>      <span class="Statement">virtual</span>           <span class="Statement">task</span>       ev_task <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span>      <span class="Statement">virtual</span> <span class="Statement">static</span>    <span class="Statement">task</span>      evs_task <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span>      <span class="Statement">virtual</span> <span class="Statement">protected</span> <span class="Statement">task</span>      evp_task <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span>      <span class="Statement">virtual</span> <span class="Statement">local</span>     <span class="Statement">task</span>      evl_task <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+
+<span class="Statement">extern</span> <span class="Statement">pure</span> <span class="Statement">virtual</span>           <span class="Statement">task</span>      epv_task <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span> <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">static</span>    <span class="Statement">task</span>     epvs_task <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span> <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">protected</span> <span class="Statement">task</span>     epvp_task <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">extern</span> <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">local</span>     <span class="Statement">task</span>     epvl_task <span class="Special">(</span>x<span class="Special">,</span> y<span class="Special">);</span>      <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+
+
+<span class="Comment">/**                                                           //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">* Static function                                             //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">*/</span>                                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">static</span> <span class="Statement">function</span> f1<span class="Special">;</span>                                           <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">endfunction</span>                                                   <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Statement">specify</span>                                                       <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">endspecify</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Statement">covergroup</span> cov<span class="Special">;</span>                                               <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">endgroup</span>                                                      <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Statement">property</span> prop<span class="Special">;</span>                                                <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">endproperty</span>                                                   <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Statement">sequence</span>                                                      <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">endsequence</span>                                                   <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Comment">// Classes                                                    //&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">class</span> class_a<span class="Special">;</span>                                                <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">endclass</span> <span class="Special">:</span> class_a                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Statement">class</span> class_b<span class="Special">;</span>                                                <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+  <span class="Statement">class</span> class_b1<span class="Special">;</span>                                             <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+  <span class="Statement">endclass</span> <span class="Special">:</span> class_b1                                         <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+  <span class="Statement">class</span> class_b2<span class="Special">;</span>                                             <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+  <span class="Statement">endclass</span> <span class="Special">:</span> class_b2                                         <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+<span class="Statement">endclass</span> <span class="Special">:</span> class_b                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Statement">interface</span> a<span class="Special">;</span>                                                  <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+  <span class="Statement">interface</span> <span class="Statement">class</span> b<span class="Special">;</span>                                          <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+  <span class="Statement">endclass</span> <span class="Special">:</span> b                                                <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+  <span class="Statement">clocking</span> cb <span class="Special">@</span> <span class="Special">(</span><span class="Statement">posedge</span> Clk<span class="Special">);</span>                                <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+  <span class="Statement">endclocking</span> <span class="Special">:</span> cb                                            <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">endinterface</span> <span class="Special">:</span> a                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Type">typedef</span> <span class="Statement">interface</span> <span class="Statement">class</span> my_itf_class<span class="Special">;</span>                         <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+
+<span class="PreProc">`ifdef</span> <span class="Constant">A</span>                                                      <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">reg</span> test<span class="Special">;</span>                                                     <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">//  `ifdef A_1                                                //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">//                                                            //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">//  `else                                                     //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">//                                                            //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">//  `endif                                                    //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="PreProc">`else</span>                                                         <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="PreProc">`endif</span>                                                        <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="PreProc">`ifndef</span> <span class="Constant">B</span>                                                     <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="PreProc">`elsif</span> <span class="Constant">C</span>                                                      <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="PreProc">`elsif</span> <span class="Constant">D</span>                                                      <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="PreProc">`else</span>                                                         <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="PreProc">`endif</span>                                                        <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="PreProc">`ifdef</span> <span class="Constant">E</span>                                                      <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+  <span class="PreProc">`ifndef</span> <span class="Constant">E_1</span>                                                 <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+  <span class="PreProc">`else</span>                                                       <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+  <span class="PreProc">`endif</span>                                                      <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+  <span class="PreProc">`ifndef</span> <span class="Constant">E_2</span>                                                 <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+  <span class="PreProc">`elsif</span> <span class="Constant">E_3</span>                                                  <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+  <span class="PreProc">`endif</span>                                                      <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="PreProc">`endif</span>                                                        <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="PreProc">`ifdef</span> <span class="Constant">A</span>                                                      <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+  <span class="PreProc">`ifdef</span> <span class="Constant">B</span>                                                    <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+  <span class="PreProc">`else</span>                                                       <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+  <span class="PreProc">`endif</span>                                                      <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="PreProc">`elsif</span> <span class="Constant">C</span>                                                      <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="PreProc">`else</span>                                                         <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="PreProc">`endif</span>                                                        <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+
+<span class="Comment">/*                                                            //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">  `ifdef X                                                    //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">                                                              //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">  `else                                                       //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">                                                              //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">  `endif                                                      //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">*/</span>                                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+   module_name <span class="Special">#(</span>                                             <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+       <span class="Special">.</span><span class="Constant">PARAM1</span> <span class="Special">(</span><span class="Constant">VALUE1</span><span class="Special">)</span>                                       <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+   <span class="Special">)</span>                                                          <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+   <span class="Identifier">instance_name</span><span class="Special">(</span>                                             <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+       <span class="Special">.</span>port1 <span class="Special">(</span>net1<span class="Special">),</span>                                         <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+       <span class="Special">.</span>port2 <span class="Special">(</span>net2<span class="Special">)</span>                                          <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+   <span class="Special">);</span>                                                         <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+module_name <span class="Identifier">instance_name</span><span class="Special">(</span>                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Special">.</span>port1 <span class="Special">(</span>net1<span class="Special">),</span>                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Special">.</span>port2 <span class="Special">(</span>net2<span class="Special">)</span>                                             <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Special">);</span>                                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+module_name <span class="Special">#(</span><span class="Constant">VALUE1</span><span class="Special">)</span> instance_name <span class="Special">(</span>                         <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Special">.</span>port1 <span class="Special">(</span>net1<span class="Special">),</span>                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Special">.</span>port2 <span class="Special">(</span>net2<span class="Special">)</span>                                             <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Special">);</span>                                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+module_name <span class="Special">#(</span><span class="Constant">VALUE1</span><span class="Special">)</span> instance_name                           <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Special">(</span>                                                             <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Special">.</span>port1 <span class="Special">(</span>net1<span class="Special">),</span>                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Special">.</span>port2 <span class="Special">(</span>net2<span class="Special">)</span>                                             <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Special">);</span>                                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+uvm_blocking_put_port <span class="Special">#(</span>trans<span class="Special">)</span> out<span class="Special">;</span>                           <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+
+<span class="Statement">task</span> <span class="Identifier">t_multi_line</span><span class="Special">(</span>                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+  <span class="Statement">input</span> an_input                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Special">);</span>                                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">endtask</span> <span class="Special">:</span> t_multi_line                                        <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+  <span class="Statement">task</span> <span class="Identifier">t_multi_line_indented</span><span class="Special">(</span>                                 <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Statement">input</span> an_input                                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+  <span class="Special">);</span>                                                          <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+                                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+  <span class="Statement">endtask</span> <span class="Special">:</span> t_multi_line                                      <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Statement">if</span> <span class="Special">(</span>cond1<span class="Special">)</span> <span class="Statement">begin</span>                                              <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+    <span class="Identifier">do1</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+<span class="Statement">end</span> <span class="Statement">else</span> <span class="Statement">if</span> <span class="Special">(</span>cond2<span class="Special">)</span> <span class="Statement">begin</span>                                     <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+    <span class="Identifier">do2</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+    <span class="Identifier">do3</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+    <span class="Identifier">do4</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+<span class="Statement">end</span> <span class="Statement">else</span> <span class="Statement">begin</span>                                                <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+    <span class="Identifier">do5</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+<span class="Statement">end</span>                                                           <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+
+<span class="Statement">if</span> <span class="Special">(</span>cond1<span class="Special">)</span>                                                    <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+    <span class="Identifier">do1</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">else</span> <span class="Statement">if</span> <span class="Special">(</span>cond2<span class="Special">)</span> <span class="Statement">begin</span>                                         <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+    <span class="Identifier">do2</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+    <span class="Statement">begin</span>                                                     <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;0&gt;</span>
+    <span class="Identifier">do2_1</span><span class="Special">();</span>                                                  <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;0&gt;</span>
+    <span class="Statement">end</span>                                                       <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;0&gt;</span>
+    <span class="Identifier">do3</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+    <span class="Identifier">do4</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+<span class="Statement">end</span> <span class="Statement">else</span> <span class="Statement">begin</span>                                                <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+    <span class="Identifier">do5</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+<span class="Statement">end</span>                                                           <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+
+<span class="Statement">if</span> <span class="Special">(</span>cond1<span class="Special">)</span> <span class="Statement">begin</span> <span class="Special">:</span> <span class="Special">b1</span>                                         <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Identifier">do1</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">end</span> <span class="Statement">else</span> <span class="Statement">if</span> <span class="Special">(</span>cond2<span class="Special">)</span> <span class="Statement">begin</span> <span class="Special">:</span> <span class="Special">b2</span>                                <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Identifier">do2</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Identifier">do3</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Identifier">do4</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">end</span> <span class="Statement">else</span> <span class="Statement">begin</span> <span class="Special">:</span> <span class="Special">b3</span>                                           <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Identifier">do5</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">end</span>                                                           <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Statement">if</span> <span class="Special">(</span>cond1<span class="Special">)</span>                                                    <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+    <span class="Identifier">do1</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;0&gt;&lt;0&gt;&lt;0&gt;</span>
+<span class="Statement">else</span> <span class="Statement">if</span> <span class="Special">(</span>cond2<span class="Special">)</span> <span class="Statement">begin</span> <span class="Special">:</span> <span class="Special">b1</span>                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Identifier">do2</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Statement">begin</span><span class="Special">:</span><span class="Special">b2</span>                                                  <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+    <span class="Identifier">do2_1</span><span class="Special">();</span>                                                  <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+    <span class="Statement">end</span>                                                       <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;2&gt;</span>
+    <span class="Identifier">do3</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Identifier">do4</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">end</span> <span class="Statement">else</span> <span class="Statement">begin</span>                                                <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Identifier">do5</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;0&gt;</span>
+<span class="Statement">end</span> <span class="Statement">else</span> <span class="Statement">begin</span><span class="Special">:</span><span class="Special">b3</span>                                             <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Identifier">do5</span><span class="Special">();</span>                                                    <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">end</span>                                                           <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Statement">task</span> something<span class="Special">;</span>                                               <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">fork</span>                                                          <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+    <span class="Statement">begin</span>                                                     <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;1&gt;</span>
+        <span class="Statement">begin</span>                                                 <span class="Comment">//&lt;3&gt;&lt;3&gt;&lt;1&gt;</span>
+        <span class="Statement">end</span>                                                   <span class="Comment">//&lt;3&gt;&lt;3&gt;&lt;1&gt;</span>
+        <span class="Comment">/*                                                    //&lt;3&gt;&lt;3&gt;&lt;2&gt;</span>
+<span class="Comment">        begin                                                 //&lt;3&gt;&lt;3&gt;&lt;2&gt;</span>
+<span class="Comment">        end                                                   //&lt;3&gt;&lt;3&gt;&lt;2&gt;</span>
+<span class="Comment">        */</span>                                                    <span class="Comment">//&lt;3&gt;&lt;3&gt;&lt;2&gt;</span>
+    <span class="Statement">end</span>                                                       <span class="Comment">//&lt;2&gt;&lt;2&gt;&lt;1&gt;</span>
+<span class="Statement">join</span>                                                          <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">endtask</span>                                                       <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Comment">// spyglass disable_block SOMETHING                           //&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Statement">assign</span> a <span class="Special">=</span> b <span class="Special">&amp;</span> c<span class="Special">;</span>                                             <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+<span class="Comment">// spyglass enable_block SOMETHING</span>                            <span class="Comment">//&lt;1&gt;&lt;1&gt;&lt;1&gt;</span>
+
+<span class="Comment">// vi&#0058; set expandtab softtabstop=4 shiftwidth=4:</span>
+</pre>
+</body>

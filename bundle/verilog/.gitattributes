@@ -1,0 +1,2 @@
+# Hide test folder from language stats on GitHub
+test/* linguist-vendored

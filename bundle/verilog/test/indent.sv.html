@@ -1,0 +1,1081 @@
+<body>
+<pre>
+<span class="Type">typedef</span> <span class="Statement">class</span> a<span class="Special">;</span>
+
+<span class="Comment">// Code based on: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/2">https://github.com/vhda/verilog_systemverilog.vim/issues/2</a></span>
+<span class="Statement">class</span> z<span class="Special">;</span>
+
+    <span class="Comment">// this is a comment</span>
+    <span class="Comment">// -----------------</span>
+    <span class="Type">typedef</span> <span class="Statement">struct</span> <span class="Special">{</span>
+        <span class="Statement">real</span> a<span class="Special">;</span>
+        <span class="Statement">int</span> b<span class="Special">;</span>
+        <span class="Statement">int</span> c<span class="Special">;</span>
+        <span class="Statement">real</span> d<span class="Special">;</span> <span class="Special">}</span> ts<span class="Special">;</span>
+
+    ts s<span class="Special">[];</span>
+
+    <span class="Comment">// if there are</span>
+    <span class="Comment">// more comments</span>
+    <span class="Type">typedef</span> <span class="Statement">struct</span> <span class="Special">{</span>
+        <span class="Statement">real</span> a<span class="Special">;</span>
+        <span class="Statement">int</span> b<span class="Special">;</span>
+        <span class="Statement">int</span> c<span class="Special">;</span>
+        <span class="Statement">real</span> d<span class="Special">;</span>
+    <span class="Special">}</span> ts2<span class="Special">;</span>
+
+    ts2 t<span class="Special">[];</span>
+
+    <span class="Statement">int</span> <span class="Statement">unsigned</span> cnt<span class="Special">=</span><span class="Constant">0</span><span class="Special">;</span>
+
+    <span class="Statement">function</span> <span class="Identifier">new</span><span class="Special">();</span>
+        <span class="Type">super</span><span class="Special">.</span><span class="Identifier">new</span><span class="Special">();</span>
+    <span class="Statement">endfunction</span><span class="Special">;</span>
+
+    <span class="Statement">virtual</span> <span class="Statement">interface</span> my_itf itf<span class="Special">;</span>
+
+    <span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/4">https://github.com/vhda/verilog_systemverilog.vim/issues/4</a></span>
+    <span class="Statement">task</span> <span class="Identifier">run_phase</span><span class="Special">(</span>uvm_phase phase<span class="Special">);</span>
+
+        <span class="Statement">assert</span><span class="Special">(</span><span class="Type">my_seq</span><span class="Special">.</span><span class="Statement">randomize</span><span class="Special">());</span>
+        <span class="Type">my_seq</span><span class="Special">.</span><span class="Identifier">start</span><span class="Special">(</span>low_sequencer_h<span class="Special">);</span>
+
+        <span class="Statement">assert</span><span class="Special">(</span><span class="Type">my_seq</span><span class="Special">.</span><span class="Statement">randomize</span><span class="Special">()</span> <span class="Statement">with</span> <span class="Special">{</span>Nr<span class="Special">==</span><span class="Constant">6</span><span class="Special">;});</span>
+        <span class="Type">my_seq</span><span class="Special">.</span><span class="Identifier">start</span><span class="Special">(</span>low_sequencer_h<span class="Special">);</span>
+
+        <span class="Statement">assert</span><span class="Special">(</span><span class="Type">my_seq</span><span class="Special">.</span><span class="Statement">randomize</span><span class="Special">()</span> <span class="Statement">with</span>
+            <span class="Special">{</span>Nr<span class="Special">==</span><span class="Constant">6</span><span class="Special">;</span> Time<span class="Special">==</span><span class="Constant">8</span><span class="Special">;});</span>
+        <span class="Type">my_seq</span><span class="Special">.</span><span class="Identifier">start</span><span class="Special">(</span>low_sequencer_h<span class="Special">);</span>
+
+        <span class="Statement">assert</span><span class="Special">(</span>
+            <span class="Type">my_seq</span><span class="Special">.</span><span class="Statement">randomize</span><span class="Special">()</span> <span class="Statement">with</span>
+            <span class="Special">{</span>Nr<span class="Special">==</span><span class="Constant">6</span><span class="Special">;</span> Time<span class="Special">==</span><span class="Constant">8</span><span class="Special">;}</span>
+        <span class="Special">);</span>
+        <span class="Type">my_seq</span><span class="Special">.</span><span class="Identifier">start</span><span class="Special">(</span>low_sequencer_h<span class="Special">);</span>
+
+        <span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/5">https://github.com/vhda/verilog_systemverilog.vim/issues/5</a></span>
+        <span class="Statement">fork</span>
+            <span class="Statement">begin</span> <span class="Special">:</span> <span class="Special">isolating_thread</span>
+                <span class="Identifier">do_something</span><span class="Special">();</span>
+            <span class="Statement">end</span> <span class="Special">:</span> <span class="Special">isolating_thread</span>
+        <span class="Statement">join</span>
+        <span class="Comment">// End of copied code</span>
+
+        <span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/15">https://github.com/vhda/verilog_systemverilog.vim/issues/15</a></span>
+        <span class="Statement">assert</span><span class="Special">(</span>out<span class="Special">&gt;</span><span class="Constant">0</span><span class="Special">)</span> <span class="Statement">else</span> <span class="PreProc">$warning</span><span class="Special">(</span><span class="Constant">&quot;xxx&quot;</span><span class="Special">);</span>
+        <span class="PreProc">$display</span><span class="Special">(</span><span class="Constant">&quot;Hi&quot;</span><span class="Special">);</span>
+
+        <span class="Statement">assert</span><span class="Special">(</span>out<span class="Special">&gt;</span><span class="Constant">0</span><span class="Special">)</span>
+        <span class="Statement">else</span> <span class="PreProc">$warning</span><span class="Special">(</span><span class="Constant">&quot;xxx&quot;</span><span class="Special">);</span>
+        <span class="PreProc">$display</span><span class="Special">(</span><span class="Constant">&quot;Hi&quot;</span><span class="Special">);</span>
+
+        <span class="Statement">assert</span><span class="Special">(</span>out<span class="Special">&gt;</span><span class="Constant">0</span><span class="Special">)</span> <span class="Statement">else</span> <span class="PreProc">$warning</span><span class="Special">(</span><span class="Constant">&quot;xxx&quot;</span><span class="Special">);</span>
+        <span class="PreProc">$display</span><span class="Special">(</span><span class="Constant">&quot;Hi&quot;</span><span class="Special">);</span>
+        <span class="PreProc">$display</span><span class="Special">(</span><span class="Constant">&quot;Hi&quot;</span><span class="Special">);</span>
+        <span class="Comment">// End of copied code</span>
+
+        <span class="Statement">assert</span><span class="Special">(</span>out<span class="Special">&gt;</span><span class="Constant">0</span><span class="Special">)</span>
+        <span class="Statement">else</span>
+            <span class="PreProc">$warning</span><span class="Special">(</span><span class="Constant">&quot;xxx&quot;</span><span class="Special">);</span>
+        <span class="PreProc">$display</span><span class="Special">(</span><span class="Constant">&quot;Hi&quot;</span><span class="Special">);</span>
+
+        <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span> <span class="Special">&gt;</span> <span class="Constant">0</span><span class="Special">)</span> <span class="PreProc">$display</span><span class="Special">(</span><span class="Constant">&quot;1 &gt; 0&quot;</span><span class="Special">);</span>
+        <span class="Statement">else</span> <span class="PreProc">$display</span><span class="Special">(</span><span class="Constant">&quot;1 &lt; 0&quot;</span><span class="Special">);</span>
+        <span class="PreProc">$display</span><span class="Special">();</span>
+
+    <span class="Statement">endtask</span>
+    <span class="Comment">// End of copied code</span>
+
+    <span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/7">https://github.com/vhda/verilog_systemverilog.vim/issues/7</a></span>
+    <span class="Statement">task</span> <span class="Identifier">run_phase2</span><span class="Special">(</span>uvm_phase phase<span class="Special">);</span>
+        <span class="Statement">assert</span><span class="Special">(</span>out<span class="Special">&gt;</span><span class="Constant">0</span><span class="Special">)</span> <span class="Statement">else</span> <span class="PreProc">$warning</span><span class="Special">(</span><span class="Constant">&quot;xxx&quot;</span><span class="Special">);</span>
+        <span class="Statement">assert</span><span class="Special">(</span>out<span class="Special">&gt;</span><span class="Constant">0</span><span class="Special">)</span> <span class="Statement">else</span> <span class="PreProc">$warning</span><span class="Special">(</span><span class="Constant">&quot;xxx&quot;</span><span class="Special">);</span>
+        <span class="Statement">foreach</span><span class="Special">(</span>out<span class="Special">[</span>i<span class="Special">])</span> <span class="Statement">begin</span>
+            out<span class="Special">[</span>i<span class="Special">]=</span><span class="Identifier">new</span><span class="Special">;</span>
+        <span class="Statement">end</span>
+    <span class="Statement">endtask</span>
+    <span class="Comment">// End of copied code</span>
+
+    <span class="Comment">/*</span>
+<span class="Comment">    *</span>
+<span class="Comment">    *</span>
+<span class="Comment">    *</span>
+<span class="Comment">    */</span>
+
+    <span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/12">https://github.com/vhda/verilog_systemverilog.vim/issues/12</a></span>
+    <span class="Statement">task</span> <span class="Type">my_seq</span><span class="Special">::</span><span class="Identifier">body</span><span class="Special">();</span>
+        <span class="PreProc">`uvm_info</span><span class="Special">({</span><span class="Identifier">get_type_name</span><span class="Special">(),</span><span class="Constant">&quot;::body&quot;</span><span class="Special">},</span> <span class="Constant">&quot;something&quot;</span> <span class="Special">,</span><span class="Constant">UVM_HIGH</span><span class="Special">)</span>
+        req <span class="Special">=</span> <span class="Type">my_seq_item_REQ</span><span class="Special">::</span><span class="Type">type_id</span><span class="Special">::</span><span class="Identifier">create</span><span class="Special">(</span><span class="Constant">&quot;req&quot;</span><span class="Special">);</span>
+    <span class="Statement">endtask</span>
+    <span class="Comment">// End of copied code</span>
+
+    <span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/14">https://github.com/vhda/verilog_systemverilog.vim/issues/14</a></span>
+    <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">a</span><span class="Special">(</span><span class="Statement">input</span> <span class="Statement">int</span> <span class="Statement">unsigned</span> <span class="Constant">N</span><span class="Special">,</span> <span class="Statement">ref</span> t Data<span class="Special">);</span>
+    <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">b</span><span class="Special">(</span><span class="Statement">input</span> <span class="Statement">int</span> <span class="Statement">unsigned</span> <span class="Constant">N</span><span class="Special">,</span> <span class="Statement">ref</span> t Data<span class="Special">);</span>
+    <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">c</span><span class="Special">(</span><span class="Statement">input</span> <span class="Statement">int</span> <span class="Statement">unsigned</span> <span class="Constant">N</span><span class="Special">,</span> <span class="Statement">ref</span> t Data<span class="Special">);</span>
+    <span class="Comment">// End of copied code</span>
+
+    <span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/17">https://github.com/vhda/verilog_systemverilog.vim/issues/17</a></span>
+    <span class="Statement">function</span> <span class="Statement">void</span> <span class="Type">sink_driver</span><span class="Special">::</span><span class="Identifier">build_phase</span><span class="Special">(</span>uvm_phase phase<span class="Special">);</span>
+        <span class="Statement">if</span> <span class="Special">(!</span>uvm_config_db <span class="Special">#(</span>sink_agent_config<span class="Special">)::</span><span class="Identifier">get</span><span class="Special">(</span><span class="Type">this</span><span class="Special">,</span> <span class="Constant">&quot;&quot;</span><span class="Special">,</span> <span class="Constant">&quot;sink_agent_config&quot;</span><span class="Special">,</span> m_cfg<span class="Special">)</span> <span class="Special">)</span>
+            <span class="PreProc">`uvm_fatal</span><span class="Special">(</span><span class="Constant">&quot;CONFIG_LOAD&quot;</span><span class="Special">,</span> <span class="Constant">&quot;Cannot get() configuration sink_agent_config from uvm_config_db. Have you set() it?&quot;</span><span class="Special">)</span>
+        <span class="Comment">// OK to do this herE&gt;</span>
+        <span class="Statement">foreach</span><span class="Special">(</span>rand_bool_gen<span class="Special">[</span>ch<span class="Special">])</span> <span class="Statement">begin</span>
+            rand_bool_gen<span class="Special">[</span>ch<span class="Special">]=</span><span class="Identifier">new</span><span class="Special">();</span>
+        <span class="Statement">end</span>
+    <span class="Statement">endfunction</span>
+    <span class="Comment">// End of copied code</span>
+
+    <span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/41">https://github.com/vhda/verilog_systemverilog.vim/issues/41</a></span>
+    <span class="PreProc">`uvm_info</span><span class="Special">(</span><span class="Constant">&quot;TAG&quot;</span><span class="Special">,</span> <span class="Constant">&quot;message&quot;</span><span class="Special">,</span> <span class="Constant">UVM_MEDIUM</span><span class="Special">)</span>
+
+    <span class="Statement">if</span> <span class="Special">(</span>condition<span class="Special">)</span>
+        <span class="PreProc">`uvm_info</span><span class="Special">(</span><span class="Constant">&quot;TAG&quot;</span><span class="Special">,</span> <span class="Constant">&quot;message1&quot;</span><span class="Special">,</span> <span class="Constant">UVM_MEDIUM</span><span class="Special">)</span>
+    <span class="Statement">else</span>
+        <span class="PreProc">`uvm_info</span><span class="Special">(</span><span class="Constant">&quot;TAG&quot;</span><span class="Special">,</span> <span class="Constant">&quot;message2&quot;</span><span class="Special">,</span> <span class="Constant">UVM_NONE</span><span class="Special">)</span>
+    <span class="Comment">// End of copied code</span>
+
+    <span class="Comment">// Other tests</span>
+    <span class="Statement">task</span> fork_test<span class="Special">;</span>
+        <span class="Statement">fork</span>
+            <span class="Identifier">do_something1</span><span class="Special">();</span>
+            <span class="Identifier">do_something2</span><span class="Special">();</span>
+        <span class="Statement">join_none</span> <span class="Comment">// {}</span>
+        <span class="Identifier">do_something3</span><span class="Special">();</span>
+    <span class="Statement">endtask</span>
+
+    <span class="Statement">task</span> while_one_line<span class="Special">;</span>
+        <span class="Statement">while</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+            <span class="Identifier">do_something</span><span class="Special">();</span>
+
+        <span class="Special">(*</span> full_case<span class="Special">=</span><span class="Constant">1</span> <span class="Special">*)</span>
+        <span class="Special">(*</span> parallel_case<span class="Special">=</span><span class="Constant">1</span> <span class="Special">*)</span>
+        <span class="Statement">case</span> <span class="Special">(</span>a<span class="Special">)</span>
+        <span class="Statement">endcase</span>
+
+        <span class="Special">(*</span> full_case<span class="Special">,</span>
+            parallel_case<span class="Special">=</span><span class="Constant">1</span> <span class="Special">*)</span>
+        <span class="Statement">case</span> <span class="Special">(</span>a<span class="Special">)</span>
+        <span class="Statement">endcase</span>
+
+    <span class="Statement">endtask</span>
+
+    <span class="Statement">function</span> less_or_equal<span class="Special">;</span>
+        <span class="Statement">if</span> <span class="Special">(</span>a <span class="Special">&lt;=</span> b<span class="Special">)</span>
+            less_or_equal <span class="Special">=</span> a<span class="Special">;</span>
+    <span class="Statement">endfunction</span>
+
+    <span class="Statement">task</span> while_block<span class="Special">;</span>
+        <span class="Statement">while</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+        <span class="Statement">begin</span>
+            <span class="Identifier">do_something</span><span class="Special">();</span>
+        <span class="Statement">end</span>
+    <span class="Statement">endtask</span>
+
+    <span class="Statement">task</span> while_block2<span class="Special">;</span>
+        <span class="Statement">while</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span>
+            <span class="Identifier">do_something</span><span class="Special">();</span>
+        <span class="Statement">end</span>
+    <span class="Statement">endtask</span>
+
+    <span class="Statement">virtual</span> <span class="Statement">task</span> virtual_task<span class="Special">;</span>
+        <span class="Statement">while</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span>
+            <span class="Identifier">do_something</span><span class="Special">();</span>
+        <span class="Statement">end</span>
+    <span class="Statement">endtask</span>
+
+    <span class="Statement">virtual</span> <span class="Statement">function</span> virtual_function<span class="Special">;</span>
+        <span class="Statement">while</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span>
+            <span class="Identifier">do_something</span><span class="Special">();</span>
+        <span class="Statement">end</span>
+
+        <span class="Statement">do</span>
+            <span class="Identifier">do_something</span><span class="Special">();</span>
+        <span class="Statement">while</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">);</span>
+
+        <span class="Statement">do</span> <span class="Statement">begin</span>
+            <span class="Identifier">do_something</span><span class="Special">();</span>
+        <span class="Statement">end</span> <span class="Statement">while</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">);</span>
+
+    <span class="Statement">endfunction</span>
+
+    <span class="Comment">//function old_style_function_with_var(</span>
+    <span class="Comment">//    input a</span>
+    <span class="Comment">//);</span>
+    <span class="Comment">//reg test;    </span>
+    <span class="Comment">//begin</span>
+    <span class="Comment">//    do_something1();</span>
+    <span class="Comment">//    do_something2();</span>
+    <span class="Comment">//    begin</span>
+    <span class="Comment">//        do_something3();</span>
+    <span class="Comment">//    end</span>
+    <span class="Comment">//end</span>
+    <span class="Comment">//endfunction</span>
+
+    <span class="Comment">//function old_style_function_without_var(</span>
+    <span class="Comment">//    input a</span>
+    <span class="Comment">//);</span>
+    <span class="Comment">//begin</span>
+    <span class="Comment">//    do_something1();</span>
+    <span class="Comment">//    do_something2();</span>
+    <span class="Comment">//    begin</span>
+    <span class="Comment">//        do_something3();</span>
+    <span class="Comment">//    end</span>
+    <span class="Comment">//end</span>
+    <span class="Comment">//endfunction</span>
+
+    <span class="Comment">//function old_style_function_one_line_with_var(input a);</span>
+    <span class="Comment">//    reg x;</span>
+    <span class="Comment">//begin</span>
+    <span class="Comment">//    do_something1();</span>
+    <span class="Comment">//    do_something2();</span>
+    <span class="Comment">//    begin</span>
+    <span class="Comment">//        do_something3();</span>
+    <span class="Comment">//    end</span>
+    <span class="Comment">//end</span>
+    <span class="Comment">//endfunction</span>
+
+    <span class="Comment">//function old_style_function_one_line_without_var(input a);</span>
+    <span class="Comment">//begin</span>
+    <span class="Comment">//    do_something1();</span>
+    <span class="Comment">//    do_something2();</span>
+    <span class="Comment">//    begin</span>
+    <span class="Comment">//        do_something3();</span>
+    <span class="Comment">//    end</span>
+    <span class="Comment">//end</span>
+    <span class="Comment">//endfunction</span>
+
+    <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">hello</span><span class="Special">();</span>
+        <span class="Statement">foreach</span> <span class="Special">(</span>element<span class="Special">[</span>i<span class="Special">])</span>
+            <span class="Statement">if</span> <span class="Special">(</span>hi<span class="Special">)</span>
+                <span class="Statement">if</span> <span class="Special">(</span>hi<span class="Special">)</span> <span class="Comment">/* comment */</span> <span class="Statement">begin</span> <span class="Comment">/* comment */</span>
+                    <span class="Statement">if</span> <span class="Special">(</span>hi<span class="Special">)</span> <span class="Statement">begin</span>
+                        <span class="Statement">foreach</span> <span class="Special">(</span>element<span class="Special">[</span>i<span class="Special">])</span>
+                            <span class="Statement">if</span> <span class="Special">(</span>condition0<span class="Special">)</span>
+                                <span class="Statement">if</span> <span class="Special">(</span>condition1<span class="Special">)</span> <span class="Statement">begin</span>
+                                    var0 <span class="Special">&lt;=</span> <span class="Constant">0</span><span class="Special">;</span>
+                                <span class="Statement">end</span>
+                                <span class="Statement">else</span> <span class="Statement">begin</span>
+                                    <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span>
+                                        var1 <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+                                        <span class="Identifier">something</span><span class="Special">();</span>
+                                        <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+                                            <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span>
+                                                <span class="Identifier">something</span><span class="Special">();</span>
+                                            <span class="Statement">end</span>
+                                            <span class="Statement">else</span>
+                                                <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+                                                    <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span>
+                                                        <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+                                                            <span class="Identifier">something</span><span class="Special">();</span>
+                                                        <span class="Statement">else</span> <span class="Statement">begin</span>
+                                                            <span class="Identifier">something</span><span class="Special">();</span>
+                                                        <span class="Statement">end</span>
+                                                    <span class="Statement">end</span>
+                                                    <span class="Statement">else</span> <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+                                                        <span class="Identifier">something</span><span class="Special">();</span>
+                                                    <span class="Statement">else</span>
+                                                        <span class="Identifier">something</span><span class="Special">();</span>
+
+                                        <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+                                            <span class="Identifier">something</span><span class="Special">();</span>
+
+                                        <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span>
+                                            <span class="Identifier">something</span><span class="Special">();</span>
+                                        <span class="Statement">end</span> <span class="Statement">else</span>
+                                            <span class="Identifier">something</span><span class="Special">();</span>
+
+                                        <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span>
+                                            <span class="Identifier">something</span><span class="Special">();</span>
+                                        <span class="Statement">end</span> <span class="Statement">else</span>
+                                            <span class="Identifier">something</span><span class="Special">();</span>
+
+                                        <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+                                            <span class="Comment">// Nested case</span>
+                                            <span class="Statement">case</span><span class="Special">(</span>value<span class="Special">)</span>
+                                                <span class="Constant">0</span><span class="Special">,</span>
+                                                <span class="Constant">1</span><span class="Special">:</span>
+                                                    <span class="Statement">case</span><span class="Special">(</span>value<span class="Special">)</span> <span class="Statement">inside</span>
+                                                        <span class="Special">[</span><span class="Constant">0</span><span class="Special">:</span><span class="Constant">20</span><span class="Special">]:;</span>
+                                                        <span class="Constant">21</span><span class="Special">:</span> <span class="Identifier">something</span><span class="Special">();</span>
+                                                        <span class="Constant">22</span><span class="Special">:;</span>
+                                                        <span class="Statement">default</span><span class="Special">:</span> <span class="Identifier">something</span><span class="Special">();</span>
+                                                    <span class="Statement">endcase</span>
+                                                <span class="Constant">2</span><span class="Special">:;</span>
+                                                <span class="Constant">3</span><span class="Special">:;</span>
+                                            <span class="Statement">endcase</span>
+
+                                        <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+                                            <span class="Identifier">something</span><span class="Special">();</span>
+
+                                        <span class="Comment">/* end */</span>
+
+                                        <span class="Identifier">something</span><span class="Special">();</span>
+                                        <span class="Comment">/* end */</span>
+                                        <span class="Identifier">something</span><span class="Special">();</span>
+                                    <span class="Statement">end</span>
+                                <span class="Statement">end</span>
+                        <span class="Identifier">deindent_x2_please</span><span class="Special">();</span>
+                        <span class="Comment">/* end */</span>
+                        <span class="Identifier">dont_deindent_please</span><span class="Special">();</span>
+                    <span class="Statement">end</span>
+                    <span class="Identifier">deindent_please</span><span class="Special">();</span>
+                <span class="Statement">end</span>
+        <span class="Identifier">deindent_please</span><span class="Special">();</span>
+        <span class="Identifier">dont_deindent_please</span><span class="Special">();</span>
+    <span class="Statement">endfunction</span> <span class="Special">:</span> hello
+
+    <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">hello</span><span class="Special">();</span>
+        <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+            <span class="Statement">fork</span>
+                <span class="Identifier">something</span><span class="Special">();</span>
+                <span class="Identifier">something</span><span class="Special">();</span>
+                <span class="Statement">begin</span>
+                    <span class="Identifier">something</span><span class="Special">();</span>
+                <span class="Statement">end</span>
+                <span class="Statement">begin</span>
+                    <span class="Statement">fork</span>
+                        <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Comment">// begin</span>
+                            <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+                                <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span> <span class="Comment">// comment</span>
+                                    <span class="Identifier">something</span><span class="Special">();</span>
+                                    <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span>
+                                    <span class="Statement">end</span>
+                                    <span class="Identifier">something</span><span class="Special">();</span>
+                                <span class="Statement">end</span>
+                        <span class="Identifier">something</span><span class="Special">();</span>
+                    <span class="Statement">join</span>
+                    <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+                        <span class="Statement">do</span>
+                            <span class="Identifier">something</span><span class="Special">();</span>
+                        <span class="Statement">while</span><span class="Special">(</span><span class="Constant">1</span><span class="Special">);</span>
+                    <span class="Statement">else</span>
+                        <span class="Statement">do</span>
+                            <span class="Identifier">something</span><span class="Special">();</span>
+                        <span class="Statement">while</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Special">;</span>
+                    <span class="Identifier">something</span><span class="Special">();</span>
+                <span class="Statement">end</span>
+                <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+                    <span class="Statement">foreach</span> <span class="Special">(</span>objects<span class="Special">[</span>i<span class="Special">])</span>
+                        <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span>
+                            <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span>
+                                <span class="Identifier">something</span><span class="Special">();</span>
+                                <span class="Statement">fork</span> <span class="Statement">begin</span>
+                                    <span class="Identifier">something</span><span class="Special">();</span>
+                                <span class="Statement">end</span> <span class="Statement">join</span>
+                            <span class="Statement">end</span>
+                <span class="Identifier">something</span><span class="Special">();</span>
+            <span class="Statement">join_none</span>
+
+        <span class="Comment">// Code from: // <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/158">https://github.com/vhda/verilog_systemverilog.vim/issues/158</a></span>
+        <span class="Statement">fork</span>
+            p1<span class="Special">:</span> <span class="Statement">begin</span>
+                myvar<span class="Special">=</span><span class="Constant">1'b1</span><span class="Special">;</span>
+                <span class="PreProc">`info</span><span class="Special">(</span><span class="Constant">&quot;some message with the word join&quot;</span><span class="Special">);</span>
+            <span class="Statement">end</span>
+            p2<span class="Special">:</span> <span class="Statement">begin</span>
+                myvar2<span class="Special">=</span><span class="Constant">1'b1</span><span class="Special">;</span>
+            <span class="Statement">end</span>
+        <span class="Statement">join</span>
+        <span class="Comment">// End of copied code</span>
+    <span class="Statement">endfunction</span> <span class="Special">:</span> hello
+
+    <span class="Statement">local</span> <span class="Statement">static</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">hello</span><span class="Special">();</span>
+        <span class="Statement">const</span> <span class="Statement">bit</span> variable1 <span class="Special">=</span>
+            <span class="Identifier">func_call</span><span class="Special">(</span>object_t<span class="Special">)</span> <span class="Special">&amp;&amp;</span> <span class="Type">structue_t</span><span class="Special">.</span><span class="Type">field_t</span><span class="Special">.</span>source <span class="Special">!=</span> <span class="Constant">ENUM_VALUE</span> <span class="Special">&amp;&amp;</span>
+            <span class="Type">object_t</span><span class="Special">.</span>field_t <span class="Special">&amp;&amp;</span> variable0<span class="Special">;</span>
+
+        <span class="Statement">const</span> <span class="Statement">bit</span> variable1 <span class="Special">=</span>
+            <span class="Identifier">func_call</span><span class="Special">(</span>object_t<span class="Special">)</span> <span class="Special">&amp;&amp;</span> <span class="Type">structue_t</span><span class="Special">.</span><span class="Type">field_t</span><span class="Special">.</span>source <span class="Special">!=</span> <span class="Constant">ENUM_VALUE</span>
+            <span class="Special">&amp;&amp;</span> <span class="Type">object_t</span><span class="Special">.</span>field_t <span class="Special">&amp;&amp;</span> variable0<span class="Special">;</span>
+
+        <span class="Statement">const</span> <span class="Statement">bit</span> variable2 <span class="Special">=</span>
+            <span class="Type">object_t</span><span class="Special">.</span>field_t <span class="Special">&amp;&amp;</span> <span class="Type">object_t</span><span class="Special">.</span><span class="Type">field_t</span><span class="Special">.</span>source <span class="Special">==</span> <span class="Constant">ENUM_VALUE</span><span class="Special">;</span>
+
+        <span class="Statement">bit</span> variable3<span class="Special">;</span>
+
+        <span class="Comment">// Multi-line if with no begin</span>
+        <span class="Statement">if</span> <span class="Special">(</span>variable <span class="Special">&amp;&amp;</span> variable <span class="Special">&amp;&amp;</span> variable <span class="Special">&amp;&amp;</span>
+            variable<span class="Special">)</span>
+            <span class="Identifier">indent</span><span class="Special">();</span>
+
+        <span class="Identifier">de_indent</span><span class="Special">();</span>
+
+        <span class="Comment">// Multi-line if with begin with a line starting with &amp;&amp;</span>
+        <span class="Statement">if</span> <span class="Special">(</span>variable <span class="Special">&amp;&amp;</span> variable <span class="Special">&amp;&amp;</span> variable
+            <span class="Special">&amp;&amp;</span> variable
+            <span class="Special">&amp;&amp;</span> variable<span class="Special">)</span> <span class="Statement">begin</span>
+                <span class="Identifier">indent</span><span class="Special">();</span>
+                <span class="Identifier">stay</span><span class="Special">();</span>
+            <span class="Statement">end</span>
+
+        <span class="Identifier">de_indent</span><span class="Special">();</span>
+
+        variable <span class="Special">=</span> variable
+                   <span class="Special">||</span> variable <span class="Special">||</span> variable<span class="Special">;</span>
+
+        variable <span class="Special">=</span> variable <span class="Special">||</span>
+                   variable <span class="Special">||</span> variable<span class="Special">;</span>
+
+        variable <span class="Special">=</span> <span class="Special">(</span>variable <span class="Special">==</span> <span class="Constant">CONSTANT</span><span class="Special">)</span> <span class="Special">&amp;</span>
+                   variable <span class="Special">&amp;</span>
+                   variable<span class="Special">;</span>
+
+        <span class="Statement">wire</span> var0 <span class="Special">=</span> a <span class="Special">&amp;</span>
+                    b<span class="Special">;</span>
+
+        <span class="Statement">wire</span> <span class="Special">[</span><span class="Constant">1</span><span class="Special">:</span><span class="Constant">0</span><span class="Special">]</span> var1 <span class="Special">=</span> a <span class="Special">&amp;</span>
+                          b<span class="Special">;</span>
+
+        var2<span class="Special">[</span><span class="Constant">0</span><span class="Special">]</span> <span class="Special">=</span> a <span class="Special">&amp;</span>
+                  b<span class="Special">;</span>
+
+        <span class="Special">{</span>var0<span class="Special">,</span> var1<span class="Special">}</span> <span class="Special">=</span> a <span class="Special">&amp;</span>
+                       b<span class="Special">;</span>
+
+        <span class="Type">some_struct</span><span class="Special">.</span>field1 <span class="Special">=</span> a <span class="Special">&amp;</span>
+                             b<span class="Special">;</span>
+
+        some_type <span class="Special">#(</span>params<span class="Special">)</span> some_object <span class="Special">=</span> cond0 <span class="Special">?</span> a <span class="Special">:</span>
+                                          cond1 <span class="Special">?</span> b <span class="Special">:</span> c<span class="Special">;</span>
+
+        <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span>
+            <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">1</span>
+                <span class="Special">&amp;&amp;</span> <span class="Constant">1</span><span class="Special">)</span>
+                <span class="Identifier">something</span><span class="Special">();</span>
+        <span class="Statement">end</span>
+
+    <span class="Statement">endfunction</span>
+
+<span class="Statement">endclass</span>
+
+<span class="Statement">class</span> a<span class="Special">;</span>
+    <span class="Statement">class</span> nested<span class="Special">;</span>
+        <span class="Statement">import</span> <span class="Constant">&quot;DPI-C&quot;</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">c_print</span><span class="Special">();</span>
+        <span class="Statement">int</span> b<span class="Special">;</span>
+    <span class="Statement">endclass</span>
+<span class="Statement">endclass</span>
+
+<span class="Statement">clocking</span> ck1 <span class="Special">@(</span><span class="Statement">posedge</span> clk<span class="Special">);</span>
+    <span class="Statement">default</span> <span class="Statement">input</span> <span class="Special">#</span><span class="Constant">1step</span> <span class="Statement">output</span> <span class="Statement">negedge</span><span class="Special">;</span>
+    <span class="Statement">input</span> a<span class="Special">;</span>
+    <span class="Statement">output</span> y<span class="Special">;</span>
+<span class="Statement">endclocking</span>
+
+<span class="Comment">// </span><span class="Todo">TODO</span><span class="Comment">: Unsupported</span>
+<span class="Comment">// class a;</span>
+<span class="Comment">//     typedef class a;</span>
+<span class="Comment">// endclass</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/14">https://github.com/vhda/verilog_systemverilog.vim/issues/14</a></span>
+<span class="Statement">virtual</span> <span class="Statement">class</span> base<span class="Special">;</span>
+
+    <span class="Statement">extern</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">x</span><span class="Special">(</span><span class="Statement">input</span> <span class="Statement">int</span> <span class="Statement">unsigned</span> <span class="Constant">N</span><span class="Special">,</span> <span class="Statement">ref</span> t Data<span class="Special">);</span>
+    <span class="Statement">extern</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">y</span><span class="Special">(</span><span class="Statement">input</span> <span class="Statement">int</span> <span class="Statement">unsigned</span> <span class="Constant">N</span><span class="Special">,</span> <span class="Statement">ref</span> t Data<span class="Special">);</span>
+
+    <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">a</span><span class="Special">(</span><span class="Statement">input</span> <span class="Statement">int</span> <span class="Statement">unsigned</span> <span class="Constant">N</span><span class="Special">,</span> <span class="Statement">ref</span> t Data<span class="Special">);</span>
+    <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">b</span><span class="Special">(</span><span class="Statement">input</span> <span class="Statement">int</span> <span class="Statement">unsigned</span> <span class="Constant">N</span><span class="Special">,</span> <span class="Statement">ref</span> t Data<span class="Special">);</span>
+    <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">c</span><span class="Special">(</span><span class="Statement">input</span> <span class="Statement">int</span> <span class="Statement">unsigned</span> <span class="Constant">N</span><span class="Special">,</span> <span class="Statement">ref</span> t Data<span class="Special">);</span>
+
+<span class="Statement">endclass</span><span class="Special">;</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/49">https://github.com/vhda/verilog_systemverilog.vim/issues/49</a></span>
+<span class="Statement">module</span> MyModule <span class="Special">#(</span>
+    <span class="Statement">parameter</span> <span class="Constant">A</span> <span class="Special">=</span> <span class="Constant">1</span><span class="Special">,</span>
+    <span class="Statement">parameter</span> <span class="Constant">B</span> <span class="Special">=</span> <span class="Constant">2</span>
+<span class="Special">)(</span>
+    <span class="Statement">input</span> <span class="Constant">I</span><span class="Special">,</span>
+    <span class="Statement">output</span> <span class="Constant">O</span>
+<span class="Special">);</span>
+
+
+<span class="Statement">wire</span> Val_IP  <span class="Special">=</span> <span class="Special">!</span>In_Pkt_S_Bus_enf <span class="Special">||</span>
+               <span class="Special">((</span>Pls_Don <span class="Special">||</span> ResVal<span class="Special">)</span> <span class="Special">&amp;&amp;</span> <span class="Special">(</span>Pls_Res <span class="Special">||</span> ResFnd<span class="Special">));</span>
+
+<span class="Statement">wire</span> Val_IP  <span class="Special">=</span>
+    <span class="Special">!</span>In_Pkt_S_Bus_enf <span class="Special">||</span> <span class="Comment">// A, B, C</span>
+    <span class="Special">((</span>Pls_Don <span class="Special">||</span> ResVal<span class="Special">)</span> <span class="Special">&amp;&amp;</span> <span class="Special">(</span>Pls_Res <span class="Special">||</span> ResFnd<span class="Special">));</span>
+
+<span class="Statement">wire</span> Val_IP  <span class="Special">=</span> <span class="Special">!</span>In_Pkt_S_Bus_enf <span class="Special">?</span>
+               <span class="Special">((</span>Pls_Don <span class="Special">||</span> ResVal<span class="Special">)</span> <span class="Special">&amp;&amp;</span> <span class="Special">(</span>Pls_Res <span class="Special">==</span> ResFnd<span class="Special">))</span> <span class="Special">:</span>
+               <span class="Special">((</span>Pls_Don <span class="Special">||</span> ResVal<span class="Special">)</span> <span class="Special">&amp;&amp;</span> <span class="Special">(</span>Pls_Res <span class="Special">||</span> ResFnd<span class="Special">));</span>
+
+MyModule <span class="Special">#(</span>
+    <span class="Special">.</span><span class="Constant">A</span> <span class="Special">(</span><span class="Constant">1</span><span class="Special">),</span>
+    <span class="Special">.</span><span class="Constant">B</span> <span class="Special">(</span><span class="Constant">2</span><span class="Special">)</span>
+<span class="Special">)</span> Module_1 <span class="Special">(</span>
+    <span class="Special">.</span><span class="Constant">I</span> <span class="Special">(</span>wire1<span class="Special">),</span>
+    <span class="Special">.</span><span class="Constant">O</span> <span class="Special">(</span>wire2<span class="Special">)</span>
+<span class="Special">);</span>
+
+<span class="Statement">or</span> <span class="Identifier">or_0</span><span class="Special">();</span>
+
+<span class="Statement">endmodule</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/51">https://github.com/vhda/verilog_systemverilog.vim/issues/51</a></span>
+<span class="Statement">case</span> <span class="Special">(</span>Signal<span class="Special">)</span>
+    <span class="Constant">2'd0</span><span class="Special">:</span> <span class="Statement">begin</span> Result <span class="Special">&lt;=</span> <span class="Constant">0</span><span class="Special">;</span> <span class="Statement">end</span>
+    <span class="Constant">2'd1</span><span class="Special">:</span> <span class="Statement">begin</span> Result <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span> <span class="Statement">end</span>
+    <span class="Constant">2'd2</span><span class="Special">:</span> <span class="Statement">begin</span> Result <span class="Special">&lt;=</span> <span class="Constant">2</span><span class="Special">;</span> <span class="Statement">end</span>
+    <span class="Statement">default</span><span class="Special">:</span> <span class="Statement">begin</span> Result <span class="Special">&lt;=</span> <span class="Constant">0</span><span class="Special">;</span> <span class="Statement">end</span>
+<span class="Statement">endcase</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Statement">interface</span> <span class="Statement">class</span> base<span class="Special">;</span>
+
+    <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">a</span><span class="Special">(</span><span class="Statement">input</span> <span class="Statement">int</span> <span class="Statement">unsigned</span> <span class="Constant">N</span><span class="Special">,</span> <span class="Statement">ref</span> t Data<span class="Special">);</span>
+    <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">b</span><span class="Special">(</span><span class="Statement">input</span> <span class="Statement">int</span> <span class="Statement">unsigned</span> <span class="Constant">N</span><span class="Special">,</span> <span class="Statement">ref</span> t Data<span class="Special">);</span>
+    <span class="Statement">pure</span> <span class="Statement">virtual</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">c</span><span class="Special">(</span><span class="Statement">input</span> <span class="Statement">int</span> <span class="Statement">unsigned</span> <span class="Constant">N</span><span class="Special">,</span> <span class="Statement">ref</span> t Data<span class="Special">);</span>
+
+<span class="Statement">endclass</span><span class="Special">;</span>
+
+<span class="Statement">module</span> m <span class="Special">#(</span><span class="Constant">1</span><span class="Special">)</span>
+<span class="Special">(</span>
+    portA<span class="Special">,</span>
+    portB
+<span class="Special">);</span>
+
+<span class="Comment">// Nested modules (IEEE - 1800-2012, section 23.4)</span>
+<span class="Statement">module</span> a<span class="Special">;</span>
+<span class="Statement">endmodule</span>
+
+endmodule
+
+<span class="Statement">module</span> m <span class="Special">(</span>
+    portA<span class="Special">,</span>
+    portB
+<span class="Special">);</span>
+
+device d0 <span class="Special">(</span>
+    <span class="Special">.</span>port <span class="Special">(</span>port<span class="Special">[</span><span class="Constant">1</span><span class="Special">]),</span>
+    <span class="Special">.</span>port2<span class="Special">(),</span> <span class="Comment">// comment</span>
+    <span class="Special">.</span>portA<span class="Special">(</span>port<span class="Special">[</span><span class="Constant">2</span><span class="Special">])</span>
+<span class="Special">);</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/6">https://github.com/vhda/verilog_systemverilog.vim/issues/6</a></span>
+device d1 <span class="Special">(</span>
+    <span class="Special">.</span>port <span class="Special">(</span>port<span class="Special">[</span><span class="Constant">1</span><span class="Special">]),</span>
+    <span class="Comment">// .port2(), // comment</span>
+    <span class="Special">.*</span>
+<span class="Special">);</span>
+
+<span class="PreProc">`ifdef</span> <span class="Constant">DO_THIS</span>
+    device d1 <span class="Special">(</span>
+        <span class="Special">.</span>port <span class="Special">(</span>port<span class="Special">[</span><span class="Constant">1</span><span class="Special">]),</span>
+        <span class="Comment">/* comment line 1</span>
+<span class="Comment">        * comment line2 */</span>
+        <span class="Special">.</span>port2<span class="Special">(),</span>
+        <span class="Special">.*</span>
+    <span class="Special">);</span>
+<span class="PreProc">`endif</span>
+
+<span class="PreProc">`ifdef</span> <span class="Constant">DO_THIS</span>
+    device2 d2 <span class="Special">(</span>
+        <span class="Special">.</span>out<span class="Special">,</span>
+        <span class="Special">.</span>a<span class="Special">,</span>
+        <span class="Special">.</span>b<span class="Special">(</span><span class="Constant">B</span><span class="Special">)</span><span class="Comment">/*,</span>
+<span class="Comment">        </span><span class="Todo">TODO</span><span class="Comment">  .c(C) port not implemented yet */</span>
+    <span class="Special">);</span>
+<span class="PreProc">`endif</span>
+<span class="Comment">// End of copied code</span>
+
+device d1 <span class="Special">(</span>
+    <span class="Special">.</span>port <span class="Special">(</span>port<span class="Special">[</span><span class="Constant">1</span><span class="Special">]),</span>
+    <span class="Comment">// .port1(), comment</span>
+    <span class="Comment">/**/</span><span class="Special">.</span>port2<span class="Special">(),</span> <span class="Comment">// comment</span>
+    <span class="Comment">/*.port3(), */</span>
+    <span class="Comment">// .port4(), comment</span>
+    <span class="Special">.</span>portA<span class="Special">(</span>port<span class="Special">[</span><span class="Constant">2</span><span class="Special">])</span>
+<span class="Special">);</span>
+
+<span class="PreProc">`define</span> <span class="Constant">VALUE</span> <span class="Constant">3</span>
+
+<span class="PreProc">`define</span> <span class="Constant">VALUE_MULTI_LINE</span> <span class="Special">\</span>
+    <span class="Constant">16'hFF</span>
+
+<span class="PreProc">`ifdef</span> <span class="Constant">V95</span>
+    device d2 <span class="Special">(</span> out<span class="Special">,</span> portA<span class="Special">,</span> portB <span class="Special">);</span>
+    device d2 <span class="Special">(</span> out<span class="Special">,</span> portA<span class="Special">,</span> portB <span class="Special">);</span>
+    <span class="PreProc">`ifdef</span> <span class="Constant">V95</span>
+        device d2 <span class="Special">(</span> out<span class="Special">,</span> portA<span class="Special">,</span> portB <span class="Special">);</span>
+        device d2 <span class="Special">(</span> out<span class="Special">,</span> portA<span class="Special">,</span> portB <span class="Special">);</span>
+    <span class="PreProc">`endif</span>
+<span class="PreProc">`elsif</span> <span class="Constant">V2K</span>
+    device d2 <span class="Special">(</span> <span class="Special">.</span>out<span class="Special">(</span>out<span class="Special">),</span> <span class="Special">.*</span> <span class="Special">);</span>
+    device d2 <span class="Special">(</span> out<span class="Special">,</span> portA<span class="Special">,</span> portB <span class="Special">);</span>
+    <span class="PreProc">`ifndef</span> <span class="Constant">SWAP</span>
+        device d3 <span class="Special">(</span> <span class="Special">.</span>out<span class="Special">(</span>out<span class="Special">),</span> <span class="Special">.*</span> <span class="Special">);</span>
+        device d2 <span class="Special">(</span> <span class="Special">.</span>out<span class="Special">(</span>out<span class="Special">),</span> <span class="Special">.*</span> <span class="Special">);</span>
+    <span class="PreProc">`else</span>
+        device d3 <span class="Special">(</span> <span class="Special">.</span>out<span class="Special">(</span>out<span class="Special">),</span> <span class="Special">.</span>portA<span class="Special">(</span>portB<span class="Special">),</span> <span class="Special">.</span>portB<span class="Special">(</span>portA<span class="Special">)</span> <span class="Special">);</span>
+        device d2 <span class="Special">(</span> <span class="Special">.</span>out<span class="Special">(</span>out<span class="Special">),</span> <span class="Special">.*</span> <span class="Special">);</span>
+    <span class="PreProc">`endif</span>
+<span class="PreProc">`endif</span>
+<span class="PreProc">`ifndef</span> <span class="Constant">SWAP</span>
+    device d3 <span class="Special">(</span> <span class="Special">.</span>out<span class="Special">(</span>out<span class="Special">),</span> <span class="Special">.*</span> <span class="Special">);</span>
+    device d2 <span class="Special">(</span> <span class="Special">.</span>out<span class="Special">(</span>out<span class="Special">),</span> <span class="Special">.*</span> <span class="Special">);</span>
+<span class="PreProc">`else</span>
+    device d3 <span class="Special">(</span> <span class="Special">.</span>out<span class="Special">(</span>out<span class="Special">),</span> <span class="Special">.</span>portA<span class="Special">(</span>portB<span class="Special">),</span> <span class="Special">.</span>portB<span class="Special">(</span>portA<span class="Special">)</span> <span class="Special">);</span>
+    device d2 <span class="Special">(</span> <span class="Special">.</span>out<span class="Special">(</span>out<span class="Special">),</span> <span class="Special">.*</span> <span class="Special">);</span>
+<span class="PreProc">`endif</span>
+
+<span class="Statement">endmodule</span>
+
+<span class="Statement">class</span> a<span class="Special">;</span>
+<span class="Statement">endclass</span> <span class="Special">:</span> a
+
+<span class="Statement">module</span> a <span class="Statement">import</span> <span class="Type">some_pkg</span><span class="Special">::*;</span>
+<span class="Special">(</span>
+    <span class="Statement">input</span> clk<span class="Special">,</span>
+    <span class="Statement">output</span> x
+<span class="Special">);</span>
+
+<span class="Statement">always</span> <span class="Special">@</span> <span class="Special">(</span><span class="Statement">posedge</span> clk<span class="Special">)</span>
+<span class="Statement">begin</span>
+<span class="Statement">end</span>
+
+<span class="Statement">always</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+
+<span class="Statement">always</span>
+<span class="Statement">begin</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Identifier">statement</span><span class="Special">();</span>
+<span class="Statement">end</span>
+
+<span class="Statement">always</span> <span class="Comment">//</span>
+<span class="Statement">begin</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Identifier">statement</span><span class="Special">();</span>
+<span class="Statement">end</span>
+
+label <span class="Special">:</span> <span class="Statement">always</span> <span class="Comment">//</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+
+<span class="Statement">always</span> <span class="Special">@</span> <span class="Special">(</span><span class="Statement">posedge</span> clk<span class="Special">)</span> <span class="Comment">//</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+
+<span class="Statement">always</span> <span class="Special">@</span> <span class="Special">(</span><span class="Statement">posedge</span> clk<span class="Special">)</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+
+<span class="Statement">always_ff</span> <span class="Comment">// begin</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+
+<span class="Statement">always_comb</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+
+label <span class="Special">:</span> <span class="Statement">always_ff</span> <span class="Statement">begin</span>
+    <span class="Statement">begin</span>
+        x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+        <span class="Identifier">statement</span><span class="Special">();</span>
+    <span class="Statement">end</span>
+<span class="Statement">end</span>
+
+<span class="Statement">always_ff</span> <span class="Special">@</span> <span class="Special">(</span><span class="Statement">posedge</span> clk<span class="Special">)</span>
+<span class="Statement">begin</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Identifier">statement</span><span class="Special">();</span>
+    <span class="Statement">foreach</span> <span class="Special">(</span>object<span class="Special">[</span>i<span class="Special">])</span>
+        <span class="Identifier">statement</span><span class="Special">();</span>
+<span class="Statement">end</span>
+
+<span class="Statement">always_ff</span> <span class="Special">@</span> <span class="Special">(</span><span class="Statement">posedge</span> clk<span class="Special">)</span>
+<span class="Statement">begin</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Identifier">statement</span><span class="Special">();</span>
+    <span class="Statement">foreach</span> <span class="Special">(</span>object<span class="Special">[</span>i<span class="Special">])</span>
+        <span class="Identifier">statement</span><span class="Special">();</span>
+<span class="Statement">end</span>
+
+<span class="Statement">always_ff</span> <span class="Special">@</span> <span class="Special">(</span><span class="Statement">posedge</span> clk<span class="Special">)</span>
+<span class="Statement">begin</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Identifier">statement</span><span class="Special">();</span>
+    <span class="Statement">foreach</span> <span class="Special">(</span>object<span class="Special">[</span>i<span class="Special">])</span>
+        <span class="Identifier">statement</span><span class="Special">();</span>
+<span class="Statement">end</span>
+
+<span class="Statement">always_ff</span> <span class="Special">@</span> <span class="Special">(</span><span class="Statement">posedge</span> clk<span class="Special">)</span>
+<span class="Statement">begin</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Identifier">statement</span><span class="Special">();</span>
+    <span class="Statement">foreach</span> <span class="Special">(</span>object<span class="Special">[</span>i<span class="Special">])</span>
+        <span class="Identifier">statement</span><span class="Special">();</span>
+<span class="Statement">end</span>
+
+<span class="Statement">always_ff</span> <span class="Special">@</span> <span class="Special">(</span><span class="Statement">posedge</span> clk<span class="Special">)</span>
+<span class="Statement">begin</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Identifier">statement</span><span class="Special">();</span>
+    <span class="Statement">foreach</span> <span class="Special">(</span>object<span class="Special">[</span>i<span class="Special">])</span>
+        <span class="Identifier">statement</span><span class="Special">();</span>
+<span class="Statement">end</span>
+
+<span class="Statement">always_ff</span> <span class="Special">@</span> <span class="Special">(</span><span class="Statement">posedge</span> clk<span class="Special">)</span>
+<span class="Statement">begin</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Identifier">statement</span><span class="Special">();</span>
+    <span class="Statement">foreach</span> <span class="Special">(</span>object<span class="Special">[</span>i<span class="Special">])</span>
+        <span class="Identifier">statement</span><span class="Special">();</span>
+<span class="Statement">end</span>
+
+<span class="Statement">always_ff</span> <span class="Special">@</span> <span class="Special">(</span><span class="Statement">posedge</span> clk<span class="Special">)</span>
+<span class="Statement">begin</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Identifier">statement</span><span class="Special">();</span>
+    <span class="Statement">foreach</span> <span class="Special">(</span>object<span class="Special">[</span>i<span class="Special">])</span>
+        <span class="Identifier">statement</span><span class="Special">();</span>
+<span class="Statement">end</span>
+
+<span class="Statement">always_ff</span> <span class="Special">@</span> <span class="Special">(</span><span class="Statement">posedge</span> clk<span class="Special">)</span>
+<span class="Statement">begin</span>
+    x <span class="Special">&lt;=</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Identifier">statement</span><span class="Special">();</span>
+    <span class="Statement">foreach</span> <span class="Special">(</span>object<span class="Special">[</span>i<span class="Special">])</span>
+        <span class="Identifier">statement</span><span class="Special">();</span>
+<span class="Statement">end</span>
+
+<span class="Comment">// always_ff</span>
+<span class="Comment">// begin</span>
+<span class="Comment">//     x &lt;= 1;</span>
+<span class="Comment">// end</span>
+
+<span class="Statement">endmodule</span>
+
+<span class="Statement">if</span> <span class="Special">(</span>condition<span class="Special">)</span> <span class="Statement">begin</span>
+    <span class="Identifier">something</span><span class="Special">();</span>
+<span class="Statement">end</span>
+<span class="Statement">else</span>
+    <span class="PreProc">`macro_call</span><span class="Special">()</span>
+
+<span class="Statement">always</span> <span class="Special">:</span> label
+    <span class="PreProc">`macro_call</span><span class="Special">()</span>
+
+<span class="Statement">begin</span>
+    <span class="Statement">begin</span>
+    <span class="Statement">end</span> <span class="Comment">// always</span>
+    <span class="PreProc">`dont_indent</span><span class="Special">()</span>
+    <span class="Identifier">dont_deindent</span><span class="Special">();</span>
+
+    <span class="Statement">begin</span>
+    <span class="Statement">end</span> <span class="Comment">// foreach()</span>
+    <span class="Identifier">dont_indent</span><span class="Special">();</span>
+    <span class="Identifier">dont_deindent</span><span class="Special">();</span>
+
+    <span class="Statement">begin</span>
+    <span class="Statement">end</span> <span class="Comment">/* while() */</span>
+    <span class="Identifier">dont_indent</span><span class="Special">();</span>
+    <span class="Identifier">dont_deindent</span><span class="Special">();</span>
+<span class="Statement">end</span>
+
+<span class="Statement">class</span> a <span class="Statement">extends</span> b<span class="Special">;</span>
+
+    <span class="Statement">local</span> <span class="Statement">static</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">hello</span><span class="Special">();</span>
+
+        <span class="Identifier">something</span><span class="Special">();</span>
+    <span class="Statement">endfunction</span>
+
+    <span class="Statement">constraint</span> l1 <span class="Special">{</span>
+        y <span class="Special">==</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Special">}</span>
+
+    <span class="Statement">constraint</span> l1
+    <span class="Special">{</span>
+        y <span class="Special">==</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Special">}</span>
+
+<span class="Statement">endclass</span> <span class="Special">:</span> a
+
+<span class="Statement">extern</span> module counter <span class="Special">(</span><span class="Statement">input</span> clk<span class="Special">,</span>enable<span class="Special">,</span>reset<span class="Special">,</span>
+    <span class="Statement">output</span> <span class="Statement">logic</span> <span class="Special">[</span><span class="Constant">3</span><span class="Special">:</span><span class="Constant">0</span><span class="Special">]</span> data<span class="Special">);</span>
+
+<span class="Statement">extern</span> module counter2<span class="Special">;</span>
+
+<span class="Statement">class</span> a <span class="Statement">implements</span>
+    b<span class="Special">,</span>
+    c<span class="Special">,</span>
+    d<span class="Special">;</span>
+
+    <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">function_with_multiline_proto</span><span class="Special">(</span>
+        object_type object<span class="Special">);</span>
+        <span class="Identifier">indent</span><span class="Special">();</span>
+    <span class="Statement">endfunction</span>
+
+    <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">function_with_multiline_proto</span><span class="Special">(</span>
+        object_type object0<span class="Special">,</span>
+        object_type object1<span class="Special">,</span>
+        object_type object2<span class="Special">,</span>
+        object_type object3
+    <span class="Special">);</span>
+        <span class="Identifier">indent</span><span class="Special">();</span>
+    <span class="Statement">endfunction</span>
+
+<span class="Statement">endclass</span>
+
+<span class="Statement">covergroup</span> c1_cg <span class="Special">(</span><span class="Statement">ref</span> <span class="Statement">bit</span> x<span class="Special">);</span>
+    <span class="Type">option</span><span class="Special">.</span>per_instance <span class="Special">=</span> <span class="Constant">1</span><span class="Special">;</span>
+    <span class="Type">type_option</span><span class="Special">.</span>merge_instances <span class="Special">=</span> <span class="Constant">1</span><span class="Special">;</span>
+
+    <span class="Special">x</span> <span class="Special">:</span> <span class="Statement">coverpoint</span> x <span class="Special">{</span>
+        <span class="Statement">bins</span> <span class="Constant">_0</span> <span class="Special">=</span> <span class="Special">{</span><span class="Constant">1'h0</span><span class="Special">};</span>
+        <span class="Statement">bins</span> <span class="Constant">_1</span> <span class="Special">=</span> <span class="Special">{</span><span class="Constant">1'h1</span><span class="Special">};</span>
+    <span class="Special">}</span>
+
+<span class="Statement">endgroup</span>
+
+<span class="Statement">package</span> a<span class="Special">;</span>
+
+    <span class="Statement">class</span> b<span class="Special">;</span>
+    <span class="Statement">endclass</span>
+
+    <span class="Statement">class</span> c<span class="Special">;</span>
+    <span class="Statement">endclass</span>
+
+    <span class="Statement">class</span> d<span class="Special">;</span>
+    <span class="Statement">endclass</span>
+
+<span class="Statement">endpackage</span>
+
+<span class="Statement">sequence</span> acknowledge
+    <span class="Special">##[</span><span class="Constant">1</span><span class="Special">:</span><span class="Constant">2</span><span class="Special">]</span> Ack<span class="Special">;</span>
+<span class="Statement">endsequence</span>
+
+<span class="Statement">property</span> handshake<span class="Special">;</span>
+    <span class="Special">@(</span><span class="Statement">posedge</span> Clock<span class="Special">)</span>
+    request <span class="Special">|-&gt;</span> acknowledge<span class="Special">;</span>
+<span class="Statement">endproperty</span>
+
+<span class="Statement">always</span>
+    <span class="Statement">if</span><span class="Special">(</span><span class="Constant">1</span><span class="Special">)</span> <span class="Statement">begin</span>
+    <span class="Statement">end</span>
+    <span class="Comment">// comment</span>
+    <span class="Statement">else</span>
+        <span class="Special">{</span>var0<span class="Special">,</span> var1<span class="Special">}</span> <span class="Special">&lt;=</span> <span class="Constant">2'b00</span><span class="Special">;</span>
+
+<span class="Statement">always</span>
+    <span class="Statement">if</span> <span class="Special">(</span><span class="Constant">0</span><span class="Special">)</span> <span class="Statement">begin</span>
+        var0 <span class="Special">&lt;=</span> <span class="Constant">1'b0</span><span class="Special">;</span>
+    <span class="Statement">end</span> <span class="Statement">else</span> <span class="Statement">if</span><span class="Special">(</span><span class="Constant">0</span><span class="Special">)</span> <span class="Statement">begin</span>
+        var0 <span class="Special">&lt;=</span> <span class="Constant">1'b1</span><span class="Special">;</span>
+    <span class="Statement">end</span>
+
+<span class="Comment">// comment</span>
+
+<span class="Statement">virtual</span> <span class="Statement">class</span> <span class="Identifier">DataTypes_packer</span><span class="Special">#(</span><span class="Statement">type</span> <span class="Constant">T</span><span class="Special">,</span> <span class="Statement">int</span> <span class="Constant">L</span><span class="Special">,</span> <span class="Statement">int</span> <span class="Constant">W</span><span class="Special">,</span> <span class="Statement">int</span> <span class="Constant">I</span><span class="Special">);</span>
+
+    <span class="Statement">extern</span> <span class="Statement">static</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">unpack</span><span class="Special">(</span><span class="Statement">const</span> <span class="Statement">ref</span> <span class="Statement">bit</span> <span class="Special">[</span><span class="Constant">L</span><span class="Special">-</span><span class="Constant">1</span><span class="Special">:</span><span class="Constant">0</span><span class="Special">]</span> in<span class="Special">,</span> <span class="Statement">ref</span> <span class="Constant">T</span> out<span class="Special">[]);</span>
+    <span class="Statement">extern</span> <span class="Statement">static</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">unpack5</span><span class="Special">(</span><span class="Statement">const</span> <span class="Statement">ref</span> <span class="Statement">bit</span> <span class="Special">[</span><span class="Constant">L</span><span class="Special">-</span><span class="Constant">1</span><span class="Special">:</span><span class="Constant">0</span><span class="Special">]</span> in<span class="Special">,</span> <span class="Statement">ref</span> <span class="Identifier">t5</span><span class="Special">#(</span><span class="Constant">W</span><span class="Special">,</span><span class="Constant">I</span><span class="Special">)</span> out<span class="Special">[],</span> <span class="Statement">input</span> <span class="Statement">int</span> n_MSB2ignore<span class="Special">=</span><span class="Constant">0</span><span class="Special">);</span>
+
+    <span class="Comment">/*</span>
+<span class="Comment">    // packing functions</span>
+<span class="Comment">    extern static function void pack(const ref T in[], ref bit [L-1:0] out);</span>
+<span class="Comment">    extern static function void pack2(const ref t2#(W,I) in[], ref bit [L-1:0] out);</span>
+<span class="Comment">    */</span>
+
+    <span class="Comment">// unpack functions:</span>
+    <span class="Statement">extern</span> <span class="Statement">static</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">unpack</span><span class="Special">(</span><span class="Statement">const</span> <span class="Statement">ref</span> <span class="Statement">bit</span> <span class="Special">[</span><span class="Constant">L</span><span class="Special">-</span><span class="Constant">1</span><span class="Special">:</span><span class="Constant">0</span><span class="Special">]</span> in<span class="Special">,</span> <span class="Statement">ref</span> <span class="Constant">T</span> out<span class="Special">[]);</span>
+    <span class="Statement">extern</span> <span class="Statement">static</span> <span class="Statement">function</span> <span class="Statement">void</span> <span class="Identifier">unpack5</span><span class="Special">(</span><span class="Statement">const</span> <span class="Statement">ref</span> <span class="Statement">bit</span> <span class="Special">[</span><span class="Constant">L</span><span class="Special">-</span><span class="Constant">1</span><span class="Special">:</span><span class="Constant">0</span><span class="Special">]</span> in<span class="Special">,</span> <span class="Statement">ref</span> <span class="Identifier">t5</span><span class="Special">#(</span><span class="Constant">W</span><span class="Special">,</span><span class="Constant">I</span><span class="Special">)</span> out<span class="Special">[],</span> <span class="Statement">input</span> <span class="Statement">int</span> n_MSB2ignore<span class="Special">=</span><span class="Constant">0</span><span class="Special">);</span>
+
+<span class="Statement">endclass</span>
+
+<span class="Statement">fork</span>
+    <span class="Statement">begin</span>
+
+        <span class="Statement">for</span><span class="Special">(</span><span class="Statement">int</span> i<span class="Special">=</span><span class="Constant">0</span><span class="Special">;</span>i<span class="Special">&lt;</span><span class="Constant">5</span><span class="Special">;</span>i<span class="Special">++)</span> <span class="Statement">begin</span>
+            <span class="Statement">automatic</span> <span class="Statement">int</span> idx<span class="Special">=</span>i<span class="Special">;</span>
+            <span class="Statement">fork</span>
+                <span class="Statement">begin</span>
+                    <span class="PreProc">$display</span><span class="Special">(</span><span class="Constant">&quot;%fns: %0d start&quot;</span><span class="Special">,</span><span class="PreProc">$realtime</span><span class="Special">/</span><span class="Constant">1ns</span><span class="Special">,</span>idx<span class="Special">);</span>
+                    my_seq<span class="Special">[</span>idx<span class="Special">].</span><span class="Identifier">go</span><span class="Special">();</span>
+                <span class="Statement">end</span>
+            <span class="Statement">join_none</span>
+        <span class="Statement">end</span>
+
+        <span class="Comment">// wait for all forks to end</span>
+        <span class="Statement">wait</span> <span class="Statement">fork</span><span class="Special">;</span>
+        <span class="PreProc">$display</span><span class="Special">(</span><span class="Constant">&quot;%fns: all done&quot;</span><span class="Special">,</span><span class="PreProc">$realtime</span><span class="Special">/</span><span class="Constant">1ns</span><span class="Special">);</span>
+    <span class="Statement">end</span>
+<span class="Statement">join</span>
+
+<span class="PreProc">$display</span><span class="Special">(</span><span class="Constant">&quot;hi&quot;</span><span class="Special">);</span>
+
+<span class="Special">assert_value</span><span class="Special">:</span> <span class="Statement">assert</span> <span class="Statement">property</span> <span class="Special">(@(</span><span class="Statement">posedge</span> clk<span class="Special">)</span> <span class="Statement">disable</span> <span class="Statement">iff</span> <span class="Special">(~</span>reset_n<span class="Special">)</span>
+    var0 <span class="Special">|-&gt;</span> var1 <span class="Special">==</span> var2
+<span class="Special">);</span>
+
+<span class="PreProc">`ifdef</span> <span class="Constant">NOTHING</span>
+<span class="PreProc">`endif</span>
+
+<span class="Statement">wire</span> signal <span class="Special">=</span>
+    <span class="Special">!</span>var0 <span class="Special">&amp;&amp;</span> <span class="Special">(</span>
+        var2
+    <span class="Special">);</span>
+
+<span class="Statement">task</span> <span class="Identifier">run_phase</span><span class="Special">(</span>uvm_phase phase<span class="Special">);</span>
+    <span class="Statement">int</span> var0 <span class="Special">=</span> var1 <span class="Special">+</span>
+               var2 <span class="Special">*</span>
+               var3<span class="Special">;</span>
+
+    <span class="Statement">int</span> var0 <span class="Special">=</span>
+        var1<span class="Special">;</span>
+
+    <span class="Statement">if</span> <span class="Special">(</span><span class="Type">map</span><span class="Special">.</span><span class="Identifier">first</span><span class="Special">(</span>s<span class="Special">))</span>
+        <span class="Statement">do</span>
+            <span class="PreProc">$display</span><span class="Special">(</span><span class="Constant">&quot;%s : %d</span><span class="Special">\n</span><span class="Constant">&quot;</span><span class="Special">,</span> s<span class="Special">,</span> map<span class="Special">[</span>s<span class="Special">]);</span>
+        <span class="Statement">while</span> <span class="Special">(</span><span class="Type">map</span><span class="Special">.</span><span class="Identifier">next</span><span class="Special">(</span>s<span class="Special">));</span>
+
+    <span class="Special">label</span> <span class="Special">:</span> <span class="Statement">assert</span><span class="Special">(</span><span class="Type">my_seq</span><span class="Special">.</span><span class="Statement">randomize</span><span class="Special">());</span>
+    <span class="Type">my_seq</span><span class="Special">.</span><span class="Identifier">start</span><span class="Special">(</span>low_sequencer_h<span class="Special">);</span>
+
+    <span class="Statement">assert</span><span class="Special">(</span><span class="Type">my_seq</span><span class="Special">.</span><span class="Statement">randomize</span><span class="Special">()</span> <span class="Statement">with</span> <span class="Special">{</span>Nr<span class="Special">==</span><span class="Constant">6</span><span class="Special">;});</span>
+    <span class="Type">my_seq</span><span class="Special">.</span><span class="Identifier">start</span><span class="Special">(</span>low_sequencer_h<span class="Special">);</span>
+
+    <span class="Special">label</span> <span class="Special">:</span> <span class="Statement">assert</span><span class="Special">(</span><span class="Type">my_seq</span><span class="Special">.</span><span class="Statement">randomize</span><span class="Special">()</span> <span class="Statement">with</span>
+        <span class="Special">{</span>Nr<span class="Special">==</span><span class="Constant">6</span><span class="Special">;</span> Time<span class="Special">==</span><span class="Constant">8</span><span class="Special">;});</span>
+    <span class="Type">my_seq</span><span class="Special">.</span><span class="Identifier">start</span><span class="Special">(</span>low_sequencer_h<span class="Special">);</span>
+
+    <span class="Statement">assert</span><span class="Special">(</span>
+        <span class="Type">my_seq</span><span class="Special">.</span><span class="Statement">randomize</span><span class="Special">()</span> <span class="Statement">with</span>
+    <span class="Special">);</span>
+
+    <span class="Comment">//task</span>
+<span class="Statement">endtask</span>
+
+<span class="Statement">function</span> <span class="Statement">void</span> <span class="Type">sink_driver</span><span class="Special">::</span><span class="Identifier">build_phase</span><span class="Special">(</span>uvm_phase phase<span class="Special">);</span>
+
+    <span class="Statement">assert</span> <span class="Statement">property</span> <span class="Special">(</span>prop1<span class="Special">)</span>
+    <span class="Statement">else</span> <span class="PreProc">`uvm_fatal</span><span class="Special">(</span><span class="Constant">&quot;TAG&quot;</span><span class="Special">,</span> <span class="Constant">&quot;Assertion failed.&quot;</span><span class="Special">)</span>
+
+    <span class="Identifier">do_something</span><span class="Special">();</span>
+
+    <span class="Statement">assert</span> <span class="Statement">property</span> <span class="Special">(</span>prop1<span class="Special">)</span>
+    <span class="Statement">else</span>
+        <span class="PreProc">`uvm_fatal</span><span class="Special">(</span><span class="Constant">&quot;TAG&quot;</span><span class="Special">,</span> <span class="Constant">&quot;Assertion failed.&quot;</span><span class="Special">)</span>
+
+    <span class="Identifier">do_something</span><span class="Special">();</span>
+
+    <span class="Statement">if</span> <span class="Special">(</span>condition<span class="Special">)</span>
+        <span class="Identifier">something</span><span class="Special">();</span>
+    <span class="Statement">else</span> <span class="PreProc">`uvm_fatal</span><span class="Special">(</span><span class="Constant">&quot;TAG&quot;</span><span class="Special">,</span> <span class="Constant">&quot;This is invalid.&quot;</span><span class="Special">)</span>
+
+    <span class="Identifier">do_something</span><span class="Special">();</span>
+
+    <span class="Statement">if</span> <span class="Special">(</span>condition<span class="Special">)</span>
+        <span class="Identifier">something</span><span class="Special">();</span>
+    <span class="Statement">else</span>
+        <span class="PreProc">`uvm_fatal</span><span class="Special">(</span><span class="Constant">&quot;TAG&quot;</span><span class="Special">,</span> <span class="Constant">&quot;This is invalid.&quot;</span><span class="Special">)</span>
+
+    <span class="Identifier">do_something</span><span class="Special">();</span>
+<span class="Statement">endfunction</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/51">https://github.com/vhda/verilog_systemverilog.vim/issues/51</a></span>
+<span class="Statement">case</span> <span class="Special">(</span>XfrState<span class="Special">)</span>
+    One_XFR <span class="Special">:</span> XfrState_str <span class="Special">=</span> <span class="Constant">&quot;One&quot;</span><span class="Special">;</span>
+    Two_XFR <span class="Special">:</span> XfrState_str <span class="Special">=</span> <span class="Constant">&quot;Two&quot;</span><span class="Special">;</span>
+    End_XFR <span class="Special">:</span> XfrState_str <span class="Special">=</span> <span class="Constant">&quot;End&quot;</span><span class="Special">;</span>
+    <span class="Statement">default</span> <span class="Special">:</span> XfrState_str <span class="Special">=</span> <span class="Constant">&quot;N/A&quot;</span><span class="Special">;</span>
+<span class="Statement">endcase</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Statement">interface</span> rx_if<span class="Special">;</span>
+    <span class="Statement">logic</span>        trans<span class="Special">;</span>
+    <span class="Statement">logic</span> <span class="Special">[</span><span class="Constant">31</span><span class="Special">:</span><span class="Constant">0</span><span class="Special">]</span> data <span class="Special">;</span>
+    <span class="Statement">logic</span> <span class="Special">[</span><span class="Constant">31</span><span class="Special">:</span><span class="Constant">0</span><span class="Special">]</span> addr <span class="Special">;</span>
+<span class="Statement">endinterface</span>
+
+<span class="Statement">generate</span>
+    <span class="Statement">for</span> <span class="Special">(</span><span class="Statement">int</span> i <span class="Special">=</span> <span class="Constant">0</span><span class="Special">;</span> i <span class="Special">&lt;</span> <span class="Constant">9</span><span class="Special">;</span> <span class="Special">++</span>i<span class="Special">)</span> <span class="Statement">begin</span> <span class="Special">:</span> <span class="Special">gen_loop</span>
+        dut <span class="Identifier">u_dut</span><span class="Special">(.</span>in<span class="Special">(</span>i<span class="Special">));</span>
+    <span class="Statement">end</span>
+<span class="Statement">endgenerate</span>
+
+<span class="Statement">program</span> u_prg<span class="Special">;</span>
+    <span class="Statement">logic</span> clk<span class="Special">;</span>
+<span class="Statement">endprogram</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/71">https://github.com/vhda/verilog_systemverilog.vim/issues/71</a></span>
+<span class="Statement">wire</span> a <span class="Special">=</span> c <span class="Special">&lt;=</span> d <span class="Special">&amp;</span>
+         e <span class="Special">=</span> f<span class="Special">;</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/72">https://github.com/vhda/verilog_systemverilog.vim/issues/72</a></span>
+<span class="Statement">function</span> <span class="Statement">bit</span> <span class="Identifier">return_something</span><span class="Special">();</span>
+    <span class="Statement">return</span> a <span class="Special">&amp;</span>
+           b <span class="Special">|</span>
+           c<span class="Special">;</span>
+<span class="Statement">endfunction</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/80">https://github.com/vhda/verilog_systemverilog.vim/issues/80</a></span>
+<span class="Comment">/*</span>
+<span class="Comment">* function text</span>
+<span class="Comment">* text</span>
+<span class="Comment">*/</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/51">https://github.com/vhda/verilog_systemverilog.vim/issues/51</a></span>
+<span class="Statement">module</span> dut_wrapper <span class="Special">(</span>
+    <span class="Statement">interface</span> source_IF<span class="Special">,</span>
+    <span class="Statement">interface</span> sink_IF<span class="Special">,</span>
+    <span class="Statement">interface</span> ctrl_IF
+<span class="Special">);</span>
+
+<span class="Statement">endmodule</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/81">https://github.com/vhda/verilog_systemverilog.vim/issues/81</a></span>
+<span class="Statement">cover</span> <span class="Statement">property</span> <span class="Special">(</span>
+    a <span class="Special">&amp;&amp;</span>
+    b <span class="Special">&amp;&amp;</span>
+    c
+<span class="Special">);</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/167">https://github.com/vhda/verilog_systemverilog.vim/issues/167</a></span>
+<span class="Special">co__ack_and_req</span> <span class="Special">:</span> <span class="Statement">cover</span> <span class="Statement">sequence</span> <span class="Special">(</span>
+    req <span class="Special">&amp;&amp;</span> ack
+<span class="Special">);</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/84">https://github.com/vhda/verilog_systemverilog.vim/issues/84</a></span>
+<span class="Statement">assign</span> out <span class="Special">=</span> cond0 <span class="Special">?</span> a <span class="Special">:</span>
+             cond1 <span class="Special">?</span> b <span class="Special">:</span>
+                     c <span class="Special">;</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/85">https://github.com/vhda/verilog_systemverilog.vim/issues/85</a></span>
+<span class="Special">assert_label</span><span class="Special">:</span> <span class="Statement">assert</span> <span class="Statement">property</span> <span class="Special">(</span>
+    precondition <span class="Special">|-&gt;</span> a <span class="Special">&amp;&amp;</span>
+                     b <span class="Special">&amp;&amp;</span>
+                     c
+<span class="Special">);</span>
+<span class="Special">assert_label</span><span class="Special">:</span> <span class="Statement">assert</span> <span class="Statement">property</span> <span class="Special">(</span>
+    precondition <span class="Special">|=&gt;</span> a <span class="Special">&amp;&amp;</span>
+                     b <span class="Special">&amp;&amp;</span>
+                     c
+<span class="Special">);</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Comment">// Code from: // <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/113">https://github.com/vhda/verilog_systemverilog.vim/issues/113</a></span>
+<span class="Statement">assign</span> a <span class="Special">=</span> b <span class="Special">&lt;=</span> c <span class="Special">&amp;&amp;</span>
+           d <span class="Special">&lt;=</span> e <span class="Special">&amp;&amp;</span>
+           f <span class="Special">&lt;=</span> g <span class="Special">&amp;&amp;</span>
+           h <span class="Special">&lt;=</span> i<span class="Special">;</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Comment">// Code from: // <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/129">https://github.com/vhda/verilog_systemverilog.vim/issues/129</a></span>
+<span class="Statement">if</span> <span class="Special">(</span>cond<span class="Special">)</span> <span class="Statement">begin</span> do_something<span class="Special">;</span> <span class="Statement">end</span>
+do_something_else<span class="Special">;</span>
+
+<span class="Comment">// Code from: // <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/120">https://github.com/vhda/verilog_systemverilog.vim/issues/120</a></span>
+<span class="Statement">package</span> <span class="Statement">automatic</span> regmodel_dpi_pkg<span class="Special">;</span>
+    <span class="Statement">export</span> <span class="Constant">&quot;DPI-SC&quot;</span> <span class="Statement">task</span> check_reg<span class="Special">;</span>
+    <span class="Statement">task</span> <span class="Identifier">check_reg</span><span class="Special">(</span><span class="Statement">string</span> mystring<span class="Special">,</span> <span class="Statement">output</span> <span class="Statement">bit</span> <span class="Special">[</span><span class="Constant">63</span><span class="Special">:</span><span class="Constant">0</span><span class="Special">]</span> o1<span class="Special">);</span>
+    <span class="Statement">endtask</span>
+<span class="Statement">endpackage</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Comment">// vi&#0058; set expandtab softtabstop=4 shiftwidth=4:</span>
+</pre>
+</body>

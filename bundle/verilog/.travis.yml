@@ -1,0 +1,14 @@
+language: c
+
+sudo: false
+
+os:
+  - linux
+
+script:
+  - make all
+
+after_failure:
+  - cat test-efm.log
+  - cat test-syntax.log
+  - cat test/syntax.sv.new.html

@@ -202,27 +202,28 @@ CONTENTS                                                   *SpaceVim-contents*
       109. lang#v.....................................|SpaceVim-layers-lang-v|
       110. lang#vala...............................|SpaceVim-layers-lang-vala|
       111. lang#vbnet.............................|SpaceVim-layers-lang-vbnet|
-      112. lang#vim.................................|SpaceVim-layers-lang-vim|
-      113. lang#vue.................................|SpaceVim-layers-lang-vue|
-      114. lang#wdl.................................|SpaceVim-layers-lang-wdl|
-      115. lang#wolfram.........................|SpaceVim-layers-lang-wolfram|
-      116. lang#xml.................................|SpaceVim-layers-lang-xml|
-      117. lang#xquery...........................|SpaceVim-layers-lang-xquery|
-      118. lang#zig.................................|SpaceVim-layers-lang-zig|
-      119. language server protocol......................|SpaceVim-layers-lsp|
-      120. leaderf...................................|SpaceVim-layers-leaderf|
-      121. mail.........................................|SpaceVim-layers-mail|
-      122. operator.................................|SpaceVim-layers-operator|
-      123. shell.......................................|SpaceVim-layers-shell|
-      124. ssh...........................................|SpaceVim-layers-ssh|
-      125. test.........................................|SpaceVim-layers-test|
-      126. tmux.........................................|SpaceVim-layers-tmux|
-      127. tools#dash.............................|SpaceVim-layers-tools-dash|
-      128. tools#mpv...............................|SpaceVim-layers-tools-mpv|
-      129. tools#zeal.............................|SpaceVim-layers-tools-zeal|
-      130. treesitter.............................|SpaceVim-layers-treesitter|
-      131. ui.............................................|SpaceVim-layers-ui|
-      132. unite.......................................|SpaceVim-layers-unite|
+      112. lang#verilog.........................|SpaceVim-layers-lang-verilog|
+      113. lang#vim.................................|SpaceVim-layers-lang-vim|
+      114. lang#vue.................................|SpaceVim-layers-lang-vue|
+      115. lang#wdl.................................|SpaceVim-layers-lang-wdl|
+      116. lang#wolfram.........................|SpaceVim-layers-lang-wolfram|
+      117. lang#xml.................................|SpaceVim-layers-lang-xml|
+      118. lang#xquery...........................|SpaceVim-layers-lang-xquery|
+      119. lang#zig.................................|SpaceVim-layers-lang-zig|
+      120. language server protocol......................|SpaceVim-layers-lsp|
+      121. leaderf...................................|SpaceVim-layers-leaderf|
+      122. mail.........................................|SpaceVim-layers-mail|
+      123. operator.................................|SpaceVim-layers-operator|
+      124. shell.......................................|SpaceVim-layers-shell|
+      125. ssh...........................................|SpaceVim-layers-ssh|
+      126. test.........................................|SpaceVim-layers-test|
+      127. tmux.........................................|SpaceVim-layers-tmux|
+      128. tools#dash.............................|SpaceVim-layers-tools-dash|
+      129. tools#mpv...............................|SpaceVim-layers-tools-mpv|
+      130. tools#zeal.............................|SpaceVim-layers-tools-zeal|
+      131. treesitter.............................|SpaceVim-layers-treesitter|
+      132. ui.............................................|SpaceVim-layers-ui|
+      133. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. alternate file........................|SpaceVim-usage-alternate-file|
       2. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
@@ -4956,6 +4957,16 @@ KEY BINDINGS
   normal          SPC l r         run current file
 <
 
+
+==============================================================================
+LANG#VERILOG                                    *SpaceVim-layers-lang-verilog*
+
+This layer is for verilog development, disabled by default, to enable this
+layer, add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#verilog'
+<
 
 ==============================================================================
 LANG#VIM                                            *SpaceVim-layers-lang-vim*
