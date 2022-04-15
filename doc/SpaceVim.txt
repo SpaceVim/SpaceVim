@@ -246,20 +246,21 @@ CONTENTS                                                   *SpaceVim-contents*
       4. data#list....................................|SpaceVim-api-data-list|
       5. data#number................................|SpaceVim-api-data-number|
       6. data#string................................|SpaceVim-api-data-string|
-      7. job................................................|SpaceVim-api-job|
-      8. logger..........................................|SpaceVim-api-logger|
-      9. notify..........................................|SpaceVim-api-notify|
-      10. password.....................................|SpaceVim-api-password|
-      11. prompt.........................................|SpaceVim-api-prompt|
-      12. sid...........................................|SpaceVim-api-vim-sid|
-      13. system.........................................|SpaceVim-api-system|
-      14. time.............................................|SpaceVim-api-time|
-      15. unicode#box...............................|SpaceVim-api-unicode-box|
-      16. vim#buffer.................................|SpaceVim-api-vim-buffer|
-      17. vim#command...............................|SpaceVim-api-vim-command|
-      18. vim#compatible.........................|SpaceVim-api-vim-compatible|
-      19. vim#message...............................|SpaceVim-api-vim-message|
-      20. vim#window.................................|SpaceVim-api-vim-window|
+      7. file..............................................|SpaceVim-api-file|
+      8. job................................................|SpaceVim-api-job|
+      9. logger..........................................|SpaceVim-api-logger|
+      10. notify.........................................|SpaceVim-api-notify|
+      11. password.....................................|SpaceVim-api-password|
+      12. prompt.........................................|SpaceVim-api-prompt|
+      13. sid...........................................|SpaceVim-api-vim-sid|
+      14. system.........................................|SpaceVim-api-system|
+      15. time.............................................|SpaceVim-api-time|
+      16. unicode#box...............................|SpaceVim-api-unicode-box|
+      17. vim#buffer.................................|SpaceVim-api-vim-buffer|
+      18. vim#command...............................|SpaceVim-api-vim-command|
+      19. vim#compatible.........................|SpaceVim-api-vim-compatible|
+      20. vim#message...............................|SpaceVim-api-vim-message|
+      21. vim#window.................................|SpaceVim-api-vim-window|
   10. Development...............................................|SpaceVim-dev|
       1. commit-style-guide..................|SpaceVim-dev-commit-style-guide|
   11. FAQ.......................................................|SpaceVim-faq|
@@ -6024,6 +6025,28 @@ trim(str)
 fill(str, length[, char])
 
   fill string to length with {char}, if {char} is omnit, a space is used.
+
+==============================================================================
+FILE                                                       *SpaceVim-api-file*
+
+The `file` api provides basic functions to manage file. The following
+functions can be used:
+
+`fticon(path)`: get the filetype icon of path
+`write(msg, fname)`: append msg to fname.
+`override(msg, fname)`: override fname with msg.
+`read(fname)`: read the context of fname.
+`ls(dir, if_file_only)`: list files and directories in dir
+`updatefiles(files)`: update all files
+`unify_path(path, ...)`: unify the format of path
+`path_to_fname(path)`: get unify string of a path.
+`findfile(pattern, dir)`: find path match pattern in dir.
+`finddir(pattern, dir)`: find directory match pattern in dir
+
+Example:
+>
+  let s:FILE = SpaceVim#api#import('file')
+<
 
 ==============================================================================
 JOB                                                         *SpaceVim-api-job*
