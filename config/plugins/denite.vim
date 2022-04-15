@@ -186,7 +186,10 @@ function! s:denite_filter_my_settings() abort
   call s:clear_imap('<C-g>%')
   imap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
   imap <silent><buffer> <C-g> <Plug>(denite_filter_quit):q<Cr>
-  if exists('*nvim_win_get_cursor') && exists('*nvim_win_set_cursor')
+  if exists('*nvim_win_get_cursor')
+        \ && exists('*nvim_win_set_cursor')
+        \ && exists('*nvim_buf_line_count')
+        \ && exists('*nvim_win_get_buf')
     inoremap <silent><buffer><expr> <Tab> <SID>denite_next()
     inoremap <silent><buffer><expr> <S-Tab> <SID>denite_prev()
     inoremap <silent><buffer><expr> <C-j> <SID>denite_next()
@@ -212,13 +215,23 @@ endfunction
 
 function! s:denite_next() abort
   let win_cursor = nvim_win_get_cursor(s:denite_winid)
-  call nvim_win_set_cursor(s:denite_winid, [win_cursor[0] + 1, win_cursor[1]])
+  let line = nvim_buf_line_count(nvim_win_get_buf(s:denite_winid))
+  if win_cursor[0] < line
+    call nvim_win_set_cursor(s:denite_winid, [win_cursor[0] + 1, win_cursor[1]])
+  else
+    call nvim_win_set_cursor(s:denite_winid, [1, win_cursor[1]])
+  endif
   return ''
 endfunction
 
 function! s:denite_prev() abort
   let win_cursor = nvim_win_get_cursor(s:denite_winid)
-  call nvim_win_set_cursor(s:denite_winid, [win_cursor[0] - 1, win_cursor[1]])
+  if win_cursor[0] > 1
+    call nvim_win_set_cursor(s:denite_winid, [win_cursor[0] - 1, win_cursor[1]])
+  else
+    let line = nvim_buf_line_count(nvim_win_get_buf(s:denite_winid))
+    call nvim_win_set_cursor(s:denite_winid, [line, win_cursor[1]])
+  endif
   return ''
 endfunction
 
