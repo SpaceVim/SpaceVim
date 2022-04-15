@@ -12,6 +12,7 @@ let s:denite_options = {
       \ 'quit' : 1,
       \ 'highlight_matched_char' : 'MoreMsg',
       \ 'highlight_matched_range' : 'MoreMsg',
+      \ 'match_highlight' : has('patch-7.4.1154') ? v:true : 1,
       \ 'direction': 'rightbelow',
       \ 'statusline' : has('patch-7.4.1154') ? v:false : 0,
       \ 'prompt' : g:spacevim_commandline_prompt,
