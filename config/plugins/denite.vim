@@ -158,6 +158,7 @@ augroup spacevim_layer_denite
 augroup END
 
 function! s:denite_my_settings() abort
+  let s:denite_winid = win_getid()
   nnoremap <silent><buffer><expr> i
         \ denite#do_map('open_filter_buffer')
   nnoremap <silent><buffer><expr> '
@@ -185,14 +186,21 @@ function! s:denite_filter_my_settings() abort
   call s:clear_imap('<C-g>%')
   imap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
   imap <silent><buffer> <C-g> <Plug>(denite_filter_quit):q<Cr>
-  inoremap <silent><buffer> <Tab>
-        \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
-  inoremap <silent><buffer> <S-Tab>
-        \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
-  inoremap <silent><buffer> <C-j>
-        \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
-  inoremap <silent><buffer> <C-k>
-        \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+  if exists('*nvim_win_get_cursor') && exists('*nvim_win_set_cursor')
+    inoremap <silent><buffer><expr> <Tab> <SID>denite_next()
+    inoremap <silent><buffer><expr> <S-Tab> <SID>denite_prev()
+    inoremap <silent><buffer><expr> <C-j> <SID>denite_next()
+    inoremap <silent><buffer><expr> <C-k> <SID>denite_prev()
+  else
+    inoremap <silent><buffer> <Tab>
+          \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
+    inoremap <silent><buffer> <S-Tab>
+          \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+    inoremap <silent><buffer> <C-j>
+          \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
+    inoremap <silent><buffer> <C-k>
+          \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+  endif
   inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
   " @fixme use this key binding only for sources which has delete action
   inoremap <silent><buffer><expr> <C-d>
@@ -200,6 +208,18 @@ function! s:denite_filter_my_settings() abort
   if exists('*deoplete#custom#buffer_option')
     call deoplete#custom#buffer_option('auto_complete', v:false)
   endif
+endfunction
+
+function! s:denite_next() abort
+  let win_cursor = nvim_win_get_cursor(s:denite_winid)
+  call nvim_win_set_cursor(s:denite_winid, [win_cursor[0] + 1, win_cursor[1]])
+  return ''
+endfunction
+
+function! s:denite_prev() abort
+  let win_cursor = nvim_win_get_cursor(s:denite_winid)
+  call nvim_win_set_cursor(s:denite_winid, [win_cursor[0] - 1, win_cursor[1]])
+  return ''
 endfunction
 
 
