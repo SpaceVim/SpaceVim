@@ -45,6 +45,7 @@ endif
 
 let s:JOB = SpaceVim#api#import('job')
 let s:NUM = SpaceVim#api#import('data#number')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 
 function! SpaceVim#layers#tools#mpv#config() abort
@@ -90,7 +91,7 @@ function! SpaceVim#layers#tools#mpv#play(fpath) abort
 endfunction
 
 function! s:load_musics() abort
-  let musics = SpaceVim#util#globpath(s:musics_directory, '*.mp3')
+  let musics = s:CMP.globpath(s:musics_directory, '*.mp3')
   let g:unite_source_menu_menus.MpvPlayer.command_candidates = []
   for m in musics
     call add(g:unite_source_menu_menus.MpvPlayer.command_candidates,

@@ -10,6 +10,7 @@ scriptencoding utf-8
 
 let s:FILE = SpaceVim#api#import('file')
 let s:SYS = SpaceVim#api#import('system')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 
 
@@ -73,7 +74,7 @@ function! s:generate_content_cn() abort
 endfunction
 
 function! s:generate_docker_content() abort
-  let layers = SpaceVim#util#globpath('~/.SpaceVim/', 'docs/cn/layers/**/*.md')
+  let layers = s:CMP.globpath('~/.SpaceVim/', 'docs/cn/layers/**/*.md')
   let list = [
         \ ]
   call remove(layers, index(layers, '/home/wsdjeg/.SpaceVim/docs/cn/layers/index.md'))
@@ -90,7 +91,7 @@ function! s:generate_docker_content() abort
 endfunction
 
 function! s:layer_list() abort
-  let layers = SpaceVim#util#globpath('~/.SpaceVim/', 'docs/layers/**/*.md')
+  let layers = s:CMP.globpath('~/.SpaceVim/', 'docs/layers/**/*.md')
   let list = [
         \ '| Name | Description |',
         \ '| ---------- | ------------ |'
@@ -115,7 +116,7 @@ function! s:layer_list() abort
 endfunction
 
 function! s:layer_list_cn() abort
-  let layers = SpaceVim#util#globpath('~/.SpaceVim/', 'docs/cn/layers/**/*.md')
+  let layers = s:CMP.globpath('~/.SpaceVim/', 'docs/cn/layers/**/*.md')
   let list = [
         \ '| 名称 | 描述 |',
         \ '| ---------- | ------------ |'

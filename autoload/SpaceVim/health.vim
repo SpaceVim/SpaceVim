@@ -6,8 +6,11 @@
 " License: GPLv3
 "=============================================================================
 
+let s:CMP = SpaceVim#api#import('vim#compatible')
+
+
 function! SpaceVim#health#report() abort
-  let items = map(SpaceVim#util#globpath(&rtp,'autoload/SpaceVim/health/*'), "fnamemodify(v:val,':t:r')")
+  let items = map(s:CMP.globpath(&rtp,'autoload/SpaceVim/health/*'), "fnamemodify(v:val,':t:r')")
   let report = []
   for item in items
     try
