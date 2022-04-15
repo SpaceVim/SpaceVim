@@ -91,6 +91,9 @@ endfunction
 
 function! s:on_exit_show_branch(id, data, event) abort
   let pwd = get(s:job_pwds, 'jobid' . a:id, '')
+  if !has_key(s:branch_info, pwd)
+    let s:branch_info[pwd] = {}
+  endif
   call extend(s:branch_info[pwd], {
         \ 'last_update_done' : localtime(),
         \ })
