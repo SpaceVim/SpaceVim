@@ -9,7 +9,7 @@ set cpo-=C
 
 " Append UVM errorformat if enabled
 if (exists("g:verilog_efm_uvm_lst"))
-  let verilog_efm_uvm = verilog_systemverilog#VariableGetValue('verilog_efm_uvm_lst')
+  let verilog_efm_uvm = verilog#VariableGetValue('verilog_efm_uvm_lst')
   if (index(verilog_efm_uvm, 'all') >= 0 || index(verilog_efm_uvm, 'info') >= 0)
     CompilerSet errorformat+=UVM_%tNFO\ %f(%l)\ %m
   endif

@@ -618,7 +618,7 @@ endfunction
 "------------------------------------------------------------------------
 " External functions
 " {{{
-function verilog_systemverilog#GotoInstanceStart(line, column)
+function verilog#GotoInstanceStart(line, column)
   let values = s:GetInstanceInfo(a:line, col('$'))
   if values[2] != ""
     call cursor(values[2], a:column)
@@ -635,7 +635,7 @@ function verilog#FollowInstanceTag(line, column)
   endif
 endfunction
 
-function verilog_systemverilog#ReturnFromInstanceTag()
+function verilog#ReturnFromInstanceTag()
   if winnr('$') > 1 && exists("g:verilog_navigate_split")
     if exists("g:verilog_navigate_split_close")
       exec g:verilog_navigate_split_close
@@ -647,7 +647,7 @@ function verilog_systemverilog#ReturnFromInstanceTag()
   endif
 endfunction
 
-function verilog_systemverilog#FollowInstanceSearchWord(line, column)
+function verilog#FollowInstanceSearchWord(line, column)
   let @/='\<'.expand("<cword>").'\>'
   call verilog#FollowInstanceTag(a:line, a:column)
   exec "normal!" . @/
@@ -658,7 +658,7 @@ endfunction
 "------------------------------------------------------------------------
 " Command to control errorformat and compiler
 " {{{
-function! verilog_systemverilog#VerilogErrorFormat(...)
+function! verilog#VerilogErrorFormat(...)
   " Choose tool
   if (a:0 == 0)
     let l:tool = inputlist([

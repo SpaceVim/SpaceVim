@@ -10,7 +10,7 @@ endif
 setlocal include=^\\s*`include
 
 " Set omni completion function
-setlocal omnifunc=verilog_systemverilog#Complete
+setlocal omnifunc=verilog#Complete
 
 " Store cpoptions
 let oldcpo=&cpoptions

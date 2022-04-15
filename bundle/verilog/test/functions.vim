@@ -139,7 +139,7 @@ function! TestEfm(tool, mode, search_uvm)
     endif
 
     " Setup 'errorformat' and 'makeprg'
-    call verilog_systemverilog#VerilogErrorFormat(a:tool, a:mode)
+    call verilog#VerilogErrorFormat(a:tool, a:mode)
     setlocal makeprg=cat\ %
 
     " Populate quickfix window
