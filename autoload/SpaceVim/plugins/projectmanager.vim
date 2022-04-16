@@ -358,6 +358,18 @@ else
     if !empty(rootdir)
       call s:change_dir(rootdir)
       call SpaceVim#plugins#projectmanager#RootchandgeCallback()
+    else
+      if g:spacevim_project_non_root ==# 'current'
+        let dir = fnamemodify(expand('%'), ':p:h')
+        if isdirectory(dir)
+          call s:change_dir(dir)
+        endif
+      elseif g:spacevim_project_non_root ==# 'home' && filereadable(expand('%')) 
+        let dir = fnamemodify(expand('~'), ':p')
+        if isdirectory(dir)
+          call s:change_dir(dir)
+        endif
+      endif
     endif
     return rootdir
   endfunction
