@@ -603,7 +603,8 @@ function! s:active() abort
   let fname = s:buffer_name()
   let tag = s:current_tag()
   return s:STATUSLINE.build(lsec, rsec, s:lsep, s:rsep, fname, tag,
-        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', winwidth(winnr()))
+        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z',
+        \ &laststatus ==# 3 ? &columns : winwidth(winnr()))
 endfunction
 
 function! s:inactive() abort
