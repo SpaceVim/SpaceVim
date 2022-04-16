@@ -351,13 +351,14 @@ else
     let rootdir = getbufvar('%', 'rootDir', '')
     if empty(rootdir)
       let rootdir = s:find_root_directory()
-      if empty(rootdir)
-        let rootdir = s:FILE.unify_path(getcwd())
+      if !empty(rootdir)
+        call setbufvar('%', 'rootDir', rootdir)
       endif
-      call setbufvar('%', 'rootDir', rootdir)
     endif
-    call s:change_dir(rootdir)
-    call SpaceVim#plugins#projectmanager#RootchandgeCallback()
+    if !empty(rootdir)
+      call s:change_dir(rootdir)
+      call SpaceVim#plugins#projectmanager#RootchandgeCallback()
+    endif
     return rootdir
   endfunction
   function! SpaceVim#plugins#projectmanager#kill_project() abort
