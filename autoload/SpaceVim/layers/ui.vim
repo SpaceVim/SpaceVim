@@ -171,7 +171,7 @@ function! SpaceVim#layers#ui#config() abort
   augroup spacevim_layer_ui
     autocmd!
     if s:enable_scrollbar && has('nvim')
-      autocmd BufEnter,CursorMoved,VimResized,FocusGained
+      autocmd BufEnter,CursorMoved,VimResized,FocusGained,CursorHold
             \ * call SpaceVim#plugins#scrollbar#show()
       autocmd BufLeave,FocusLost,QuitPre
             \ * call SpaceVim#plugins#scrollbar#clear()
