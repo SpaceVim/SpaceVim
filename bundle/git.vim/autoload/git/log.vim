@@ -61,7 +61,7 @@ endfunction
 
 let s:show_commit_buffer = -1
 function! s:show_commit() abort
-    let commit = matchstr(getline('.'), '\(^*\s\+\)\@<=[a-z0-9A-Z]*')
+    let commit = matchstr(getline('.'), '^[* |\\\/_]\+\zs[a-z0-9A-Z]\+')
     if empty(commit)
         return
     endif
