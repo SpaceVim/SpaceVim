@@ -170,9 +170,10 @@ function! SpaceVim#layers#ui#config() abort
   " this options only support neovim now.
   augroup spacevim_layer_ui
     autocmd!
+    let events = join(filter( ['BufEnter', 'CursorMoved', 'VimResized', 'FocusGained', 'CursorHold', 'WinScrolled' ], 'exists("##" . v:val)'), ',')
     if s:enable_scrollbar && has('nvim')
-      autocmd BufEnter,CursorMoved,VimResized,FocusGained,CursorHold
-            \ * call SpaceVim#plugins#scrollbar#show()
+      exe printf('autocmd %s * call SpaceVim#plugins#scrollbar#show()',
+            \ events)
       autocmd BufLeave,FocusLost,QuitPre
             \ * call SpaceVim#plugins#scrollbar#clear()
       " why this autocmd is needed?
