@@ -46,7 +46,7 @@ endfunction
 
 function! s:self.get_sid_from_path(path) abort
   let path = self._file.unify_path(a:path)
-  let scriptnames = s:self._data_dict.swap(self.scriptnames())
+  let scriptnames = self._data_dict.swap(self.scriptnames())
   if has_key(scriptnames, path)
     return scriptnames[path]
   else
