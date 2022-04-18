@@ -44,8 +44,7 @@ endfunction
 augroup spacevim_api_vim_tab
   autocmd!
   autocmd TabLeave * let s:previous_tabpagenr = tabpagenr()
-  if exists('#TabClosed')
-    " TabClosed event is added in patch-7.4.2027
+  if exists('##TabClosed')
     autocmd TabClosed * call <SID>tab_closed_handle()
   endif
 augroup END

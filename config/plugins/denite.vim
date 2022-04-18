@@ -194,6 +194,7 @@ function! s:denite_filter_my_settings() abort
     inoremap <silent><buffer><expr> <S-Tab> <SID>denite_prev()
     inoremap <silent><buffer><expr> <C-j> <SID>denite_next()
     inoremap <silent><buffer><expr> <C-k> <SID>denite_prev()
+    imap <silent><buffer><expr> <Bs> <SID>denite_backspace()
   else
     inoremap <silent><buffer> <Tab>
           \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
@@ -235,6 +236,13 @@ function! s:denite_prev() abort
   return ''
 endfunction
 
+function! s:denite_backspace() abort
+  if col('.') ==# 1
+    return ''
+  else
+    return "\<Plug>(denite_filter_backspace)"
+  endif
+endfunction
 
 function! s:delete_action() abort
   if SpaceVim#layers#core#statusline#denite_status("sources") =~# '^buffer'

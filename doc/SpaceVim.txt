@@ -62,31 +62,32 @@ CONTENTS                                                   *SpaceVim-contents*
       42. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
       43. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
       44. project_auto_root...............|SpaceVim-options-project_auto_root|
-      45. project_rooter_outermost.|SpaceVim-options-project_rooter_outermost|
-      46. project_rooter_patterns...|SpaceVim-options-project_rooter_patterns|
-      47. projects_cache_num.............|SpaceVim-options-projects_cache_num|
-      48. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      49. relativenumber.....................|SpaceVim-options-relativenumber|
-      50. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      51. search_tools.........................|SpaceVim-options-search_tools|
-      52. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      53. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      54. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      55. statusline_left...................|SpaceVim-options-statusline_left|
-      56. statusline_right.................|SpaceVim-options-statusline_right|
-      57. statusline_separator.........|SpaceVim-options-statusline_separator|
-      58. statusline_unicode.............|SpaceVim-options-statusline_unicode|
-      59. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      60. todo_labels...........................|SpaceVim-options-todo_labels|
-      61. todo_prefix...........................|SpaceVim-options-todo_prefix|
-      62. vim_help_language...............|SpaceVim-options-vim_help_language|
-      63. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      64. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      65. wildignore.............................|SpaceVim-options-wildignore|
-      66. windisk_encoding.................|SpaceVim-options-windisk_encoding|
-      67. windows_index_type.............|SpaceVim-options-windows_index_type|
-      68. windows_leader.....................|SpaceVim-options-windows_leader|
-      69. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      45. project_non_root.................|SpaceVim-options-project_non_root|
+      46. project_rooter_outermost.|SpaceVim-options-project_rooter_outermost|
+      47. project_rooter_patterns...|SpaceVim-options-project_rooter_patterns|
+      48. projects_cache_num.............|SpaceVim-options-projects_cache_num|
+      49. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      50. relativenumber.....................|SpaceVim-options-relativenumber|
+      51. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      52. search_tools.........................|SpaceVim-options-search_tools|
+      53. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      54. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      55. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      56. statusline_left...................|SpaceVim-options-statusline_left|
+      57. statusline_right.................|SpaceVim-options-statusline_right|
+      58. statusline_separator.........|SpaceVim-options-statusline_separator|
+      59. statusline_unicode.............|SpaceVim-options-statusline_unicode|
+      60. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      61. todo_labels...........................|SpaceVim-options-todo_labels|
+      62. todo_prefix...........................|SpaceVim-options-todo_prefix|
+      63. vim_help_language...............|SpaceVim-options-vim_help_language|
+      64. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      65. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      66. wildignore.............................|SpaceVim-options-wildignore|
+      67. windisk_encoding.................|SpaceVim-options-windisk_encoding|
+      68. windows_index_type.............|SpaceVim-options-windows_index_type|
+      69. windows_leader.....................|SpaceVim-options-windows_leader|
+      70. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Public functions.....................................|SpaceVim-functions|
@@ -667,6 +668,14 @@ option. To disable this feature:
 <
 NOTE: *g:spacevim_project_rooter_automatically* and
 *SpaceVim-options-project_rooter_automatically* are deprecated.
+
+==============================================================================
+PROJECT_NON_ROOT                           *SpaceVim-options-project_non_root*
+
+This option set the default behavior for non-project files.
+`current`: change to file's dir, like `autochdir`
+`''`: do not change directory
+`home`: change to home directory
 
 ==============================================================================
 PROJECT_ROOTER_OUTERMOST           *SpaceVim-options-project_rooter_outermost*

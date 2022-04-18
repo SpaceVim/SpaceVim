@@ -1145,6 +1145,19 @@ let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'find
 "   ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
 " <
 let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+
+
+""
+" @section project_non_root, options-project_non_root
+" @parentsection options
+" This option set the default behavior for non-project files.
+" - `current`: change to file's dir, like `autochdir`
+" - `''`: do not change directory
+" - `home`: change to home directory
+
+let g:spacevim_project_non_root = ''
+
+
 ""
 " @section enable_projects_cache, options-enable_projects_cache
 " @parentsection options

@@ -63,6 +63,31 @@ function! s:self.echon(hl, msg) abort
   endtry
 endfunction
 
+if exists('*nvim_echo')
+  function! s:self.nvim_echo(chunk, history, opt) abort
+    return nvim_echo(a:chunk, a:history, a:opt)
+  endfunction
+else
+  function! s:self.nvim_echo(chunk, history, opt) abort
+    let msg = ''
+    for item in a:chunk
+      try
+        execute 'echohl' item[1]
+        echon item[0]
+        let msg .= item[0]
+      catch 
+      finally
+        echohl None
+      endtry
+    endfor
+    if a:history
+      for line in split(msg, "\n")
+        echom line
+      endfor
+    endif
+  endfunction
+endif
+
 function! s:self.echomsg(hl, msg) abort
   execute 'echohl' a:hl
   try
