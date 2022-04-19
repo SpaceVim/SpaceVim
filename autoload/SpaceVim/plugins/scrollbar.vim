@@ -14,6 +14,7 @@ if has('nvim')
 else
   let s:FLOAT = SpaceVim#api#import('vim#floating')
 endif
+let s:HI = SpaceVim#api#import('vim#highlight')
 
 scriptencoding utf-8
 
@@ -41,7 +42,7 @@ augroup END
 
 function! SpaceVim#plugins#scrollbar#usable() abort
 
-  return has('nvim')
+  return 1
 
 endfunction
 
@@ -59,8 +60,22 @@ function! s:get(key) abort
 endfunction
 
 
-let s:ns_id = nvim_create_namespace('scrollbar')
+" this is only supported in neovim
+if exists('*nvim_create_namespace')
+  let s:ns_id = nvim_create_namespace('scrollbar')
+  function! s:add_highlight(bufnr, size) abort
+    let highlight = s:get('highlight')
+    call nvim_buf_add_highlight(a:bufnr, s:ns_id, highlight.head, 0, 0, -1)
+    for i in range(1, a:size - 2)
+      call nvim_buf_add_highlight(a:bufnr, s:ns_id, highlight.body, i, 0, -1)
+    endfor
+    call nvim_buf_add_highlight(a:bufnr, s:ns_id, highlight.tail, a:size - 1, 0, -1)
+  endfunction
+else
 
+  function! s:add_highlight(bufnr, size) abort
+  endfunction
+endif
 
 function! s:gen_bar_lines(size) abort
   let shape = s:get('shape')
@@ -78,24 +93,6 @@ function! s:fix_size(size) abort
 endfunction
 
 
-function! s:buf_get_var(bufnr, name) abort
-  try
-    let var = nvim_buf_get_var(a:bufnr, a:name)
-    return var
-  catch
-
-  endtry
-endfunction
-
-function! s:add_highlight(bufnr, size) abort
-  let highlight = s:get('highlight')
-  call nvim_buf_add_highlight(a:bufnr, s:ns_id, highlight.head, 0, 0, -1)
-  for i in range(1, a:size - 2)
-    call nvim_buf_add_highlight(a:bufnr, s:ns_id, highlight.body, i, 0, -1)
-  endfor
-  call nvim_buf_add_highlight(a:bufnr, s:ns_id, highlight.tail, a:size - 1, 0, -1)
-endfunction
-
 let s:next_index = 0
 function! s:next_buf_index() abort
   let s:next_index += 1
@@ -103,13 +100,15 @@ function! s:next_buf_index() abort
 endfunction
 
 function! s:create_buf(size, lines) abort
-  noautocmd let bufnr = s:BUF.create_buf(0, 1)
-  noautocmd call nvim_buf_set_option(bufnr, 'filetype', 'scrollbar')
-  " noautocmd call nvim_buf_set_option(bufnr, 'bufhidden', 'wipe')
-  noautocmd call nvim_buf_set_name(bufnr, 'scrollbar_' . s:next_buf_index())
-  noautocmd call nvim_buf_set_lines(bufnr, 0, a:size, 0, a:lines)
+  let name = 'scrollbar_' . s:next_buf_index()
+  noautocmd let bufnr = s:BUF.bufadd(name)
+  call setbufvar(bufnr, '&buflisted', 0)
+  call setbufvar(bufnr, '&swapfile', 0)
+  call setbufvar(bufnr, '&bufhidden', 'hide')
+  call setbufvar(bufnr, '&buftype', 'nofile')
+  noautocmd call setbufvar(bufnr, '&filetype', 'scrollbar')
+  noautocmd call s:BUF.buf_set_lines(bufnr, 0, a:size, 0, a:lines)
   call s:add_highlight(bufnr, a:size)
-  " exe printf('au spacevim_scrollbar BufDelete <buffer=%s>  call SpaceVim#plugins#scrollbar#clear()', bufnr)
   return bufnr
 endfunction
 
@@ -151,7 +150,7 @@ function! SpaceVim#plugins#scrollbar#show() abort
         \  'focusable' : 0,
         \ }
   let [bar_winnr, bar_bufnr] = [0, 0]
-  let state = s:buf_get_var(bufnr, 'scrollbar_state')
+  let state = getbufvar(bufnr, 'scrollbar_state')
   if !empty(state)
     let bar_bufnr = state.bufnr
     if has_key(state, 'winnr') && win_id2win(state.winnr) > 0
@@ -187,12 +186,12 @@ endfunction
 
 function! SpaceVim#plugins#scrollbar#clear(...) abort
   let bufnr = get(a:000, 0, 0)
-  let state = s:buf_get_var(bufnr, 'scrollbar_state')
+  let state = getbufvar(bufnr, 'scrollbar_state')
   if !empty(state) && has_key(state, 'winnr')
     if win_id2win(state.winnr) > 0
-      noautocmd call nvim_win_close(state.winnr, 1)
+      noautocmd call s:FLOAT.win_close(state.winnr, 1)
     endif
-    noautocmd call nvim_buf_set_var(bufnr, 'scrollbar_state', {
+    noautocmd call setbufvar(bufnr, 'scrollbar_state', {
           \ 'size' : state.size,
           \ 'bufnr' : state.bufnr,
           \ })
