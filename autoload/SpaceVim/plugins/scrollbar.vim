@@ -107,15 +107,19 @@ function! s:create_scrollbar_buffer(size, lines) abort
 endfunction
 
 function! SpaceVim#plugins#scrollbar#show() abort
+  let saved_ei = &eventignore
+  let &ei = 'all'
   let [winnr, bufnr, winid] = [winnr(), bufnr(), win_getid()]
   if s:WIN.is_float(winid)
     call SpaceVim#plugins#scrollbar#clear()
+    let &ei = saved_ei
     return
   endif
 
   let excluded_filetypes = s:get('excluded_filetypes')
   if &filetype == '' || index(excluded_filetypes, &filetype) !=# -1
     call SpaceVim#plugins#scrollbar#clear()
+    let &ei = saved_ei
     return
   endif
 
@@ -123,6 +127,7 @@ function! SpaceVim#plugins#scrollbar#show() abort
   let height = winheight(winnr)
   if total <= height
     call SpaceVim#plugins#scrollbar#clear()
+    let &ei = saved_ei
     return
   endif
 
@@ -161,6 +166,7 @@ function! SpaceVim#plugins#scrollbar#show() abort
       call setwinvar(win_id2win(s:scrollbar_winid), '&winhighlight', 'Normal:ScrollbarWinHighlight')
     endif
   endif
+  let &ei = saved_ei
 endfunction
 
 " the first argument is buffer number
