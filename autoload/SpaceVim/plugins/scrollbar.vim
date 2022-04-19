@@ -39,6 +39,11 @@ augroup spacevim_scrollbar
   autocmd!
 augroup END
 
+function! SpaceVim#plugins#scrollbar#usable() abort
+
+  return has('nvim')
+
+endfunction
 
 " vim script do not support metatable function
 
