@@ -168,14 +168,8 @@ endfunction
 " the first argument is buffer number
 
 function! SpaceVim#plugins#scrollbar#clear(...) abort
-  try
-    noautocmd call s:FLOAT.win_close(s:scrollbar_winid, 1)
-    noautocmd call setbufvar(bufnr, 'scrollbar_state', {
-          \ 'size' : state.size,
-          \ 'bufnr' : state.bufnr,
-          \ })
-  catch
-
-  endtry
+  if s:WIN.is_float(win_id2win(s:scrollbar_winid))
+    call s:FLOAT.win_close(s:scrollbar_winid, 1)
+  endif
 endfunction
 
