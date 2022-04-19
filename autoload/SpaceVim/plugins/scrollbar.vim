@@ -43,6 +43,7 @@ augroup END
 
 let s:scrollbar_bufnr = -1
 let s:scrollbar_winid = -1
+let s:scrollbar_size = -1
 
 function! SpaceVim#plugins#scrollbar#usable() abort
 
@@ -93,7 +94,7 @@ endfunction
 
 
 function! s:fix_size(size) abort
-  return max([s:get('min_size'), min([s:get('max_size'), a:size])])
+  return float2nr(max([s:get('min_size'), min([s:get('max_size'), a:size])]))
 endfunction
 
 function! s:create_scrollbar_buffer(size, lines) abort
@@ -108,11 +109,13 @@ endfunction
 function! SpaceVim#plugins#scrollbar#show() abort
   let [winnr, bufnr, winid] = [winnr(), bufnr(), win_getid()]
   if s:WIN.is_float(winid)
+    call SpaceVim#plugins#scrollbar#clear()
     return
   endif
 
   let excluded_filetypes = s:get('excluded_filetypes')
   if &filetype == '' || index(excluded_filetypes, &filetype) !=# -1
+    call SpaceVim#plugins#scrollbar#clear()
     return
   endif
 
@@ -125,8 +128,7 @@ function! SpaceVim#plugins#scrollbar#show() abort
 
   let pos = getpos('.')
   let curr_line = pos[1]
-  let bar_size = height * height / total
-  let bar_size = s:fix_size(bar_size)
+  let bar_size = s:fix_size(height * height / total)
 
   let width = winwidth(winnr)
   let col = width - s:get('width') - s:get('right_offset')
@@ -137,20 +139,21 @@ function! SpaceVim#plugins#scrollbar#show() abort
         \  'relative' : 'win',
         \  'win' : winid,
         \  'width' : s:get('width'),
-        \  'height' : float2nr(bar_size),
+        \  'height' : bar_size,
         \  'row' : float2nr(row),
         \  'col' : float2nr(col),
         \  'focusable' : 0,
         \ }
-  let state = getbufvar(bufnr, 'scrollbar_state')
-  if !empty(state) && s:WIN.is_float(s:scrollbar_winid)
-    if state.size !=# bar_size
+  if s:WIN.is_float(s:scrollbar_winid)
+    if bar_size !=# s:scrollbar_size
+      let s:scrollbar_size = bar_size
       let bar_lines = s:gen_bar_lines(bar_size)
       call s:BUF.buf_set_lines(s:scrollbar_bufnr, 0, -1, 0, bar_lines)
       call s:add_highlight(s:scrollbar_bufnr, bar_size)
     endif
     noautocmd call s:FLOAT.win_config(s:scrollbar_winid, opts)
   else
+    let s:scrollbar_size = bar_size
     let bar_lines = s:gen_bar_lines(bar_size)
     let s:scrollbar_bufnr = s:create_scrollbar_buffer(bar_size, bar_lines)
     let s:scrollbar_winid = s:FLOAT.open_win(s:scrollbar_bufnr, 0, opts)
@@ -158,11 +161,6 @@ function! SpaceVim#plugins#scrollbar#show() abort
       call setwinvar(win_id2win(s:scrollbar_winid), '&winhighlight', 'Normal:ScrollbarWinHighlight')
     endif
   endif
-  call setbufvar(bufnr, 'scrollbar_state', {
-        \ 'wind' : s:scrollbar_winid,
-        \ 'bufnr' : s:scrollbar_bufnr,
-        \ 'size'  : bar_size,
-        \ })
 endfunction
 
 " the first argument is buffer number
