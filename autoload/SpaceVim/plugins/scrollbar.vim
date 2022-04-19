@@ -42,7 +42,7 @@ augroup END
 
 function! SpaceVim#plugins#scrollbar#usable() abort
 
-  return 1
+  return s:FLOAT.exists()
 
 endfunction
 
