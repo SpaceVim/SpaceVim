@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Can be used as a pre-push hook
+# Just symlink this file to .git/hooks/pre-push
+
+echo "Running linter..."
+luacheck .
+
+echo "Checking formatting..."
+stylua --check .

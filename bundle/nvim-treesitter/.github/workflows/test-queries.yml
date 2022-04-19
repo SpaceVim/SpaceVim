@@ -1,0 +1,92 @@
+name: Test queries
+
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - 'master'
+
+# Cancel any in-progress CI runs for a PR if it is updated
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  check_compilation:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-latest]
+        cc: [ gcc, clang ]
+        nvim_tag: [ stable ]
+        exclude:
+          - os: ubuntu-latest
+            cc: clang
+            nvim_tag: stable
+
+          - os: macos-latest
+            cc: gcc
+            nvim_tag: stable
+
+          - os: windows-2022
+            cc: clang
+            nvim_tag: stable
+
+        include:
+          - os: windows-2022
+            cc: cl
+            nvim_tag: stable
+
+          - os: ubuntu-latest
+            cc: gcc
+            nvim_tag: nightly
+
+    name: Parser compilation
+    runs-on: ${{ matrix.os }}
+    env:
+      CC: ${{ matrix.cc }}
+      NVIM: ${{ matrix.os == 'windows-2022' && 'Neovim\\bin\\nvim.exe' || 'nvim' }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ilammy/msvc-dev-cmd@v1
+      - uses: actions/setup-node@v2
+
+      - name: Install and prepare Neovim
+        env:
+          NVIM_TAG: ${{ matrix.nvim_tag }}
+          TREE_SITTER_CLI_TAG: v0.20.4
+        run: |
+          bash ./scripts/ci-install-${{ matrix.os }}.sh
+
+      - name: Setup Parsers Cache
+        id: parsers-cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./parser/
+            ~/AppData/Local/nvim/pack/nvim-treesitter/start/nvim-treesitter/parser/
+          key: ${{ matrix.os }}-${{ matrix.cc }}-${{ matrix.nvim_tag }}-parsers-v1-${{ hashFiles('./lockfile.json', './lua/nvim-treesitter/parsers.lua', './lua/nvim-treesitter/install.lua', './lua/nvim-treesitter/shell_selectors.lua') }}
+
+      - name: Compile parsers
+        run: $NVIM --headless -c "lua require'nvim-treesitter.install'.prefer_git=false" -c "TSInstallSync all" -c "q"
+
+      - name: Post compile Windows
+        if: matrix.os == 'windows-2022'
+        run: cp -r ~/AppData/Local/nvim/pack/nvim-treesitter/start/nvim-treesitter/parser/* parser
+
+       # NOTE: this is a temporary workaround to skip swift tests on ubuntu
+       # stable and should be removed once neovim 0.7 is released.
+      - if: matrix.os == 'ubuntu-latest' && matrix.nvim_tag == 'stable'
+        run: echo "SKIP_SWIFT_CHECK=TRUE" >> $GITHUB_ENV
+
+      - name: Check query files
+        env:
+          SKIP_SWIFT_CHECK: ${{ env.SKIP_SWIFT_CHECK }}
+        run: $NVIM --headless -c "luafile ./scripts/check-queries.lua" -c "q"

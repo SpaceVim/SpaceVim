@@ -1,0 +1,397 @@
+<body>
+<pre>
+<span class="Statement">module</span> <span class="Special">#(</span>
+    <span class="Statement">parameter</span> <span class="Constant">TEST1</span> <span class="Special">=</span> <span class="PreProc">$clog</span><span class="Special">(</span><span class="Constant">0</span><span class="Special">),</span>
+    <span class="Statement">parameter</span> <span class="Constant">TEST2</span> <span class="Special">=</span> <span class="PreProc">$clog</span><span class="Special">(</span><span class="Constant">1</span><span class="Special">),</span>
+    <span class="Statement">parameter</span> <span class="Constant">TEST3</span> <span class="Special">=</span> <span class="PreProc">$clog</span><span class="Special">(</span><span class="Constant">2</span><span class="Special">)</span>
+<span class="Special">)</span> <span class="Identifier">mymodule</span><span class="Special">(</span>
+    <span class="Statement">input</span>  <span class="Statement">wire</span> a<span class="Special">,</span>
+    <span class="Statement">input</span>  <span class="Statement">wire</span> b<span class="Special">,</span>
+    <span class="PreProc">`ifdef</span> <span class="Constant">MACRO</span>
+    <span class="Statement">input</span>  <span class="Statement">wire</span> c<span class="Special">,</span>
+    <span class="PreProc">`endif</span>
+    <span class="Statement">output</span> <span class="Statement">wire</span> y
+<span class="Special">);</span>
+
+    othermodule <span class="Special">#(.</span>something <span class="Special">(</span>a<span class="Special">),</span>
+      <span class="Special">.</span>somethingelse<span class="Special">(</span>b<span class="Special">)</span>
+    <span class="Special">)</span> <span class="Identifier">inst</span><span class="Special">(.</span>p1<span class="Special">(),</span> <span class="Special">.</span>p2<span class="Special">(),</span> <span class="Special">.</span>p3 <span class="Special">(),</span>
+        <span class="Special">.</span>p4<span class="Special">(),</span>
+        <span class="Special">.</span>p5<span class="Special">(),</span> <span class="Special">.</span>p6<span class="Special">(),</span> <span class="Special">.</span>p7<span class="Special">(),</span>
+        <span class="Special">.</span>p8 <span class="Special">()</span>
+        <span class="Special">.</span>p9 <span class="Special">(</span>a<span class="Special">)</span>
+    <span class="Special">);</span>
+
+    mymod <span class="Identifier">MOD</span><span class="Special">(.</span><span class="Constant">IN1</span><span class="Special">(),</span> <span class="Special">.</span><span class="Constant">IN2</span><span class="Special">(),</span> <span class="Special">.</span><span class="Constant">OP</span><span class="Special">(),</span>
+    <span class="Special">.</span><span class="Constant">OUT</span><span class="Special">());</span>
+
+<span class="Statement">endmodule</span>
+
+<span class="PreProc">`define</span> <span class="Constant">DEF_WITH_EQ</span> <span class="Special">=</span> <span class="Constant">1'b0</span>
+<span class="PreProc">`define</span> <span class="Constant">DEF_MULTI_LINE</span> <span class="Identifier">cond</span><span class="Special">(</span>a<span class="Special">,</span>b<span class="Special">,</span>c<span class="Special">)</span> <span class="Special">\</span>
+    a <span class="Special">?</span> b <span class="Special">:</span> c
+
+<span class="PreProc">`ifdef</span> <span class="Constant">SYSTEM_VERILOG_KEYWORDS</span>
+<span class="Statement">accept_on</span>
+<span class="Statement">alias</span>
+<span class="Statement">always</span>
+<span class="Statement">always_comb</span>
+<span class="Statement">always_ff</span>
+<span class="Statement">always_latch</span>
+<span class="Statement">and</span>
+<span class="Statement">assert</span>
+<span class="Statement">assign</span>
+<span class="Statement">assume</span>
+<span class="Statement">automatic</span>
+<span class="Statement">before</span>
+<span class="Statement">begin</span>
+<span class="Statement">end</span>
+<span class="Statement">bind</span>
+<span class="Statement">bins</span>
+<span class="Statement">binsof</span>
+<span class="Statement">bit</span>
+<span class="Statement">break</span>
+<span class="Statement">buf</span>
+<span class="Statement">bufif0</span>
+<span class="Statement">bufif1</span>
+<span class="Statement">byte</span>
+<span class="Statement">case</span>
+<span class="Statement">casex</span>
+<span class="Statement">casez</span>
+<span class="Statement">cell</span>
+<span class="Statement">chandle</span>
+<span class="Statement">checker</span>
+<span class="Statement">cmos</span>
+<span class="Statement">config</span>
+<span class="Statement">const</span>
+<span class="Statement">constraint</span>
+<span class="Statement">context</span>
+<span class="Statement">continue</span>
+<span class="Statement">cover</span>
+<span class="Statement">coverpoint</span>
+<span class="Statement">cross</span>
+<span class="Statement">deassign</span>
+<span class="Statement">default</span>
+<span class="Statement">defparam</span>
+<span class="Statement">design</span>
+<span class="Statement">disable</span>
+<span class="Statement">dist</span>
+<span class="Statement">do</span>
+<span class="Statement">edge</span>
+<span class="Statement">else</span>
+<span class="Statement">endcase</span>
+<span class="Statement">endchecker</span>
+<span class="Statement">endconfig</span>
+<span class="Statement">endgenerate</span>
+<span class="Statement">endpackage</span>
+<span class="Statement">endprimitive</span>
+<span class="Statement">endprogram</span>
+<span class="Statement">endtable</span>
+<span class="Type">enum</span>
+<span class="Statement">event</span>
+<span class="Statement">eventually</span>
+<span class="Statement">expect</span>
+<span class="Statement">export</span> <span class="Constant">&quot;DPI-SC&quot;</span> <span class="Statement">task</span> exported_task<span class="Special">;</span>
+<span class="Statement">extends</span>
+<span class="Statement">extern</span>
+<span class="Statement">final</span>
+<span class="Statement">first_match</span>
+<span class="Statement">for</span>
+<span class="Statement">force</span>
+<span class="Statement">foreach</span>
+<span class="Statement">forever</span>
+<span class="Statement">fork</span>
+<span class="Statement">forkjoin</span>
+<span class="Statement">generate</span>
+<span class="Statement">genvar</span>
+<span class="Statement">global</span>
+<span class="Statement">highz0</span>
+<span class="Statement">highz1</span>
+<span class="Statement">if</span>
+<span class="Statement">iff</span>
+<span class="Statement">ifnone</span>
+<span class="Statement">ignore_bins</span>
+<span class="Statement">illegal_bins</span>
+<span class="Statement">implements</span>
+<span class="Statement">implies</span>
+<span class="Statement">import</span>
+<span class="Statement">incdir</span>
+<span class="Statement">include</span>
+<span class="Statement">initial</span>
+<span class="Statement">inout</span>
+<span class="Statement">input</span>
+<span class="Statement">inside</span>
+<span class="Statement">instance</span>
+<span class="Statement">int</span>
+<span class="Statement">integer</span>
+<span class="Statement">interconnect</span>
+<span class="Statement">intersect</span>
+<span class="Statement">join</span>
+<span class="Statement">join_any</span>
+<span class="Statement">join_none</span>
+<span class="Statement">large</span>
+<span class="Statement">let</span>
+<span class="Statement">liblist</span>
+<span class="Statement">library</span>
+<span class="Statement">local</span>
+<span class="Statement">localparam</span>
+<span class="Statement">logic</span>
+<span class="Statement">longint</span>
+<span class="Statement">macromodule</span>
+<span class="Statement">mailbox</span>
+<span class="Statement">matches</span>
+<span class="Statement">medium</span>
+<span class="Statement">modport</span>
+<span class="Statement">nand</span>
+<span class="Statement">negedge</span>
+<span class="Statement">nettype</span>
+<span class="Identifier">new</span>
+<span class="Statement">nexttime</span>
+<span class="Statement">nmos</span>
+<span class="Statement">nor</span>
+<span class="Statement">noshowcancelled</span>
+<span class="Statement">not</span>
+<span class="Statement">notif0</span>
+<span class="Statement">notif1</span>
+<span class="Type">null</span>
+<span class="Statement">or</span>
+<span class="Statement">output</span>
+<span class="Statement">package</span>
+<span class="Statement">packed</span>
+<span class="Statement">parameter</span>
+<span class="Statement">pmos</span>
+<span class="Statement">posedge</span>
+<span class="Statement">primitive</span>
+<span class="Statement">priority</span>
+<span class="Statement">program</span>
+<span class="Statement">protected</span>
+<span class="Statement">pull0</span>
+<span class="Statement">pull1</span>
+<span class="Statement">pulldown</span>
+<span class="Statement">pullup</span>
+<span class="Statement">pulsestyle_ondetect</span>
+<span class="Statement">pulsestyle_onevent</span>
+<span class="Statement">pure</span>
+<span class="Statement">rand</span>
+<span class="Statement">randc</span>
+<span class="Statement">randcase</span>
+<span class="Statement">randsequence</span>
+<span class="Statement">rcmos</span>
+<span class="Statement">real</span>
+<span class="Statement">realtime</span>
+<span class="Statement">ref</span>
+<span class="Statement">reg</span>
+<span class="Statement">reject_on</span>
+<span class="Statement">release</span>
+<span class="Statement">repeat</span>
+<span class="Statement">restrict</span>
+<span class="Statement">return</span>
+<span class="Statement">rnmos</span>
+<span class="Statement">rpmos</span>
+<span class="Statement">rtran</span>
+<span class="Statement">rtranif0</span>
+<span class="Statement">rtranif1</span>
+<span class="Statement">s_always</span>
+<span class="Statement">s_eventually</span>
+<span class="Statement">s_nexttime</span>
+<span class="Statement">s_until</span>
+<span class="Statement">s_until_with</span>
+<span class="Statement">scalared</span>
+<span class="Statement">semaphore</span>
+<span class="Statement">shortint</span>
+<span class="Statement">shortreal</span>
+<span class="Statement">showcancelled</span>
+<span class="Statement">signed</span>
+<span class="Statement">small</span>
+<span class="Statement">soft</span>
+<span class="Statement">solve</span>
+<span class="Statement">specparam</span>
+<span class="Statement">static</span>
+<span class="Statement">string</span>
+<span class="Statement">strong</span>
+<span class="Statement">strong0</span>
+<span class="Statement">strong1</span>
+<span class="Statement">struct</span>
+<span class="Type">super</span>
+<span class="Statement">supply0</span>
+<span class="Statement">supply1</span>
+<span class="Statement">sync_accept_on</span>
+<span class="Statement">sync_reject_on</span>
+<span class="Statement">table</span>
+<span class="Statement">tagged</span>
+<span class="Type">this</span>
+<span class="Statement">throughout</span>
+<span class="Statement">time</span>
+<span class="Statement">timeprecision</span>
+<span class="Statement">timeunit</span>
+<span class="Statement">tran</span>
+<span class="Statement">tranif0</span>
+<span class="Statement">tranif1</span>
+<span class="Statement">tri</span>
+<span class="Statement">tri0</span>
+<span class="Statement">tri1</span>
+<span class="Statement">triand</span>
+<span class="Statement">trior</span>
+<span class="Statement">trireg</span>
+<span class="Statement">type</span>
+<span class="Statement">union</span>
+<span class="Statement">unique</span>
+<span class="Statement">unique0</span>
+<span class="Statement">unsigned</span>
+<span class="Statement">until</span>
+<span class="Statement">until_with</span>
+<span class="Statement">untyped</span>
+<span class="Statement">use</span>
+<span class="Statement">uwire</span>
+<span class="Statement">var</span>
+<span class="Statement">vectored</span>
+<span class="Statement">virtual</span>
+<span class="Statement">void</span>
+<span class="Statement">wait</span>
+<span class="Statement">wait_order</span>
+<span class="Statement">wand</span>
+<span class="Statement">weak</span>
+<span class="Statement">weak0</span>
+<span class="Statement">weak1</span>
+<span class="Statement">while</span>
+<span class="Statement">wildcard</span>
+<span class="Statement">wire</span>
+<span class="Statement">with</span>
+<span class="Statement">within</span>
+<span class="Statement">wor</span>
+<span class="Statement">xnor</span>
+<span class="Statement">xor</span>
+<span class="Comment">// Syntax regions</span>
+<span class="Type">typedef</span><span class="Special">;</span>
+<span class="Statement">class</span>
+<span class="Statement">endclass</span>
+<span class="Statement">clocking</span>
+<span class="Statement">endclocking</span>
+<span class="Statement">covergroup</span>
+<span class="Statement">endgroup</span>
+<span class="Statement">function</span>
+<span class="Statement">endfunction</span>
+<span class="Statement">interface</span>
+<span class="Statement">endinterface</span>
+<span class="Statement">module</span>
+<span class="Statement">endmodule</span>
+<span class="Statement">property</span>
+<span class="Statement">endproperty</span>
+<span class="Statement">sequence</span>
+<span class="Statement">endsequence</span>
+<span class="Statement">specify</span>
+<span class="Statement">endspecify</span>
+<span class="Statement">task</span>
+<span class="Statement">endtask</span>
+<span class="PreProc">`endif</span>
+<span class="PreProc">`ifdef</span> <span class="Constant">COMPLEX_STATEMENTS</span>
+<span class="Type">typedef</span> <span class="Statement">class</span> c<span class="Special">;</span>
+<span class="PreProc">`endif</span>
+<span class="PreProc">`ifdef</span> <span class="Constant">TIME</span>
+<span class="Constant">10ns</span>
+<span class="Constant">100ns</span>
+<span class="Constant">1ps</span>
+<span class="Constant">2_0ps</span>
+<span class="Constant">3_000_000s</span>
+<span class="Constant">1.23ns</span>
+<span class="Constant">1_000.123ns</span>
+<span class="Constant">10_000.123ns</span>
+<span class="Constant">100_000.123ns</span>
+<span class="Constant">1_000_000.123ns</span>
+<span class="Constant">1.2</span><span class="Special">.</span><span class="Constant">3ns</span>  <span class="Comment">// Second to should not be part of number syntax</span>
+<span class="Constant">1step</span>
+<span class="PreProc">`endif</span>
+<span class="PreProc">`ifdef</span> <span class="Constant">NUMBERS</span>
+<span class="Constant">4'h0</span>
+<span class="Constant">4'h1</span>
+<span class="Constant">4'h2</span>
+<span class="Constant">4'h3</span>
+<span class="Constant">4'h4</span>
+<span class="Constant">4'h5</span>
+<span class="Constant">4'h6</span>
+<span class="Constant">4'h7</span>
+<span class="Constant">4'h8</span>
+<span class="Constant">4'h9</span>
+<span class="Constant">4'ha</span>
+<span class="Constant">4'hb</span>
+<span class="Constant">4'hc</span>
+<span class="Constant">4'hd</span>
+<span class="Constant">4'he</span>
+<span class="Constant">4'hf</span>
+<span class="Constant">4'hA</span>
+<span class="Constant">4'hB</span>
+<span class="Constant">4'hC</span>
+<span class="Constant">4'hD</span>
+<span class="Constant">4'hE</span>
+<span class="Constant">4'hF</span>
+<span class="Constant">4</span>'hg <span class="Comment">// Invalid value for hexadecimal number</span>
+<span class="Constant">4</span>'hG <span class="Comment">// Invalid value for hexadecimal number</span>
+<span class="Constant">3'o0</span>
+<span class="Constant">3'o1</span>
+<span class="Constant">3'o2</span>
+<span class="Constant">3'o3</span>
+<span class="Constant">3'o4</span>
+<span class="Constant">3'o5</span>
+<span class="Constant">3'o6</span>
+<span class="Constant">3'o7</span>
+<span class="Constant">3</span>'o8 <span class="Comment">// Invalid value for octal number</span>
+<span class="Constant">3'b0_01</span>
+<span class="Constant">3'b001</span>
+<span class="Constant">3'b_01</span>
+<span class="Constant">3'b1</span>20 <span class="Comment">// Invalid value for binary number</span>
+<span class="Constant">'d10000</span>
+<span class="Constant">'d_000_000</span>
+<span class="Constant">'d_x00_000</span>
+<span class="Constant">4'b0?x0</span>
+<span class="Constant">4'b010?</span>
+<span class="Constant">4'b010?</span> <span class="Special">?</span> <span class="Constant">4'b????</span><span class="Special">;</span> <span class="Comment">// Conditional '?' and ';' should not be part of number syntax</span>
+<span class="PreProc">`endif</span>
+<span class="Special">// synopsys</span>
+
+<span class="Special">/* synopsys dc_script_begin</span>
+<span class="Special">*  set_size_only {U1}</span>
+<span class="Special">*  synopsys dc_script_end</span>
+<span class="Special">*/</span>
+
+<span class="Special">// synopsys dc_script_begin</span>
+<span class="Special">// set_size_only {U1}</span>
+<span class="Special">// synopsys dc_script_end</span>
+
+<span class="Comment">// </span><span class="Todo">TODO</span><span class="Comment"> todo check</span>
+
+<span class="Comment">/*</span>
+<span class="Comment">* </span><span class="Todo">TODO</span><span class="Comment"> todo check</span>
+<span class="Comment">*/</span>
+
+<span class="Comment">/*//my comment */</span>
+
+<span class="Comment">//my /*comment*/</span>
+
+<span class="Comment">// Code from: <a href="https://github.com/vhda/verilog_systemverilog.vim/issues/186">https://github.com/vhda/verilog_systemverilog.vim/issues/186</a></span>
+<span class="Statement">string</span> foo <span class="Special">=</span> <span class="Constant">&quot;bar, baz&quot;</span><span class="Special">;</span>
+<span class="Statement">int</span> foo2 <span class="Special">=</span> <span class="Constant">0</span><span class="Special">;</span>
+<span class="Comment">// End of copied code</span>
+
+<span class="Comment">// Comment with DEFINE-ML</span>
+
+<span class="Statement">always</span><span class="Special">@(</span><span class="Statement">posedge</span> clk <span class="Statement">or</span> <span class="Statement">posedge</span> rst<span class="Special">)</span>
+<span class="Statement">begin</span>
+  <span class="Statement">priority</span> <span class="Statement">if</span> <span class="Special">(</span>rst<span class="Special">)</span>
+    state <span class="Special">&lt;=</span> <span class="Constant">IDLE</span><span class="Special">;</span>
+  <span class="Statement">else</span>
+    state <span class="Special">&lt;=</span> <span class="Constant">NS</span><span class="Special">;</span>
+<span class="Statement">end</span>
+
+<span class="Statement">always</span> <span class="Special">@(*)</span> <span class="Statement">begin</span> <span class="Special">:</span> <span class="Special">label</span>
+  <span class="Statement">if</span> <span class="Special">(</span>a<span class="Special">)</span> <span class="Statement">begin</span>
+    y <span class="Special">=</span> c<span class="Special">,</span> z <span class="Special">=</span> a<span class="Special">;</span>
+  <span class="Statement">end</span> <span class="Statement">else</span> <span class="Statement">begin</span>
+    y <span class="Special">=</span> d<span class="Special">,</span> z <span class="Special">=</span> b<span class="Special">;</span>
+  <span class="Statement">end</span>
+<span class="Statement">end</span>
+
+<span class="Statement">assign</span> a <span class="Special">=</span> <span class="Identifier">myfunc</span><span class="Special">(</span><span class="Type">this</span><span class="Special">);</span>
+
+<span class="Comment">// vi&#0058; set expandtab softtabstop=4 shiftwidth=4:</span>
+</pre>
+</body>

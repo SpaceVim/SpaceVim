@@ -1,0 +1,765 @@
+*verilog_systemverilog.txt*                     Verilog/SystemVerilog Syntax
+
+Author:         Vitor Antunes <vitor.hda@gmail.com>
+Licence:        Vim licence, see |license|
+Homepage:       http://vhda.github.com/verilog_systemverilog.vim/
+Version:        3.0
+
+==============================================================================
+Contents                                *verilog_systemverilog* *verilog-contents*
+
+         1. About .................................... |verilog-about|
+         2. Requirements ............................. |verilog-requirements|
+         3. Installation ............................. |verilog-installation|
+         4. Usage .................................... |verilog-usage|
+              Omni-completion ........................ |verilog-omni|
+              Syntax folding ......................... |verilog-fold|
+              Verilog error formats .................. |verilog-efm|
+              Verilog navigation ..................... |verilog-navigate|
+              Commands ............................... |verilog-commands|
+              Key mappings ........................... |verilog-keys|
+         5. Configuration ............................ |verilog-config|
+              Indent configuration ................... |verilog-config-indent|
+              Syntax configuration ................... |verilog-config-syntax|
+              General configuration .................. |verilog-config-general|
+         6. Frequently Asked Questions ............... |verilog-faq|
+         7. History .................................. |verilog-history|
+         8. Credits .................................. |verilog-credits|
+
+==============================================================================
+1. About                                                       *verilog-about*
+
+Besides some bug corrections, the following features were added to this set of
+scripts:
+
+    - Omni completion.
+    - Configurable syntax folding.
+    - Context based indentation.
+    - Matchit settings to support Verilog 2001 and SystemVerilog.
+    - Error format definitions for common Verilog tools.
+    - Commands for code navigation.
+
+==============================================================================
+2. Requirements                                         *verilog-requirements*
+
+The following requirements have to be met in order to be able to use tagbar:
+
+  - Exuberant ctags 5.5 or higher. Ctags is the program that generates the
+    tag information that Tagbar uses. It is shipped with most Linux
+    distributions, otherwise it can be downloaded from the following
+    website:
+
+        http://ctags.sourceforge.net/
+
+    The user is responsible for the generation of the |tags| file.
+  - Universal ctags is recommended, in particular for SystemVerilog
+    environments. Most of the omni completion features require this fork of
+    Exuberant ctags. This program is available at:
+
+        https://ctags.io/
+        https://github.com/universal-ctags/ctags
+
+  - File type detection must be turned on in vim. This can be done with the
+    following command in your |vimrc|:
+>
+        filetype on
+<
+    See |filetype| for more information.
+  - Some functionalities will not work in |restricted-mode| or with
+    'compatible' set.
+
+==============================================================================
+3. Installation                                         *verilog-installation*
+
+------------------------------------------------------------------------------
+vim-plug
+
+1. Add the following to your |vimrc|:
+>
+   Plug 'vhda/verilog_systemverilog.vim'
+<
+2. Run:
+>
+    $ vim +PlugInstall +qall
+<
+------------------------------------------------------------------------------
+Vundle
+
+1. Add the following to your `vimrc`:
+>
+   Plugin 'vhda/verilog_systemverilog.vim'
+<
+2. Run:
+>
+   $ vim +PluginInstall +qall
+<
+------------------------------------------------------------------------------
+Pathogen
+>
+    $ cd ~/.vim/bundle
+    $ git clone https://github.com/vhda/verilog_systemverilog.vim
+<
+==============================================================================
+4. Usage                                                       *verilog-usage*
+
+After installation every Verilog file should automatically be detected as
+`verilog_systemverilog` filetype. Use the following command after opening a
+Verilog or SystemVerilog file to confirm that its |filetype| is properly
+defined:
+>
+    :set filetype?
+<
+------------------------------------------------------------------------------
+OMNI COMPLETION                                                 *verilog-omni*
+
+This plugin implements an omni completion function that will offer completion
+suggestions depending on the current context. This will only work if a `.`
+character is found in the keyword behind the cursor. At the moment the
+following contexts are supported:
+
+1. Module instantiation port names.
+2. Function/task arguments.
+3. Object methods and attributes.
+
+In order to use omni completion a tags file must be generated using the
+following arguments:
+
+* `--extra=+q` - Enable hierarchy qualified tags extraction.
+* `--fields=+i` - Enable class inheritance extraction.
+* `-n` - (Optional) Use line number instead of Ex: patterns to identify
+  declaration (generates smaller tags file).
+
+No alternative to Universal ctags was tested, but any tag generation software
+should work seemingly as long as it is able to generate a standard class
+qualified tags file.
+For more information on using omni completion please see help page of
+|`i_CTRL-X_CTRL-O| (the required option |'omnifunc'| is automatically defined
+for the supported file extensions).
+
+    Note: Proper SystemVerilog tag generation requires development version of
+    Universal ctags.
+
+------------------------------------------------------------------------------
+SYNTAX FOLDING                                                  *verilog-fold*
+
+To enable syntax folding set the following option:
+
+>
+    set foldmethod=syntax
+<
+
+Take into account that all folding is disabled by default and the list of
+items to be folded must be configured using |g:verilog_syntax_fold_lst|.
+
+------------------------------------------------------------------------------
+VERILOG ERROR FORMATS                                            *verilog-efm*
+
+This plugin includes the |:compiler| definitions for the following Verilog
+tools:
+
+* Synopsys VCS (`vcs`)
+* Mentor Modelsim (`msim`)
+* Icarus Verilog (`iverilog`)
+* GPL Cver (`cver`)
+* Synopsys Leda (`leda`)
+* Verilator (`verilator`)
+* NCVerilog (`ncverilog`)
+* SpyGlass (`spyglass`)
+
+The |:compiler| or |:compiler|! commands can be used to enable these
+definitions on the current buffer or all buffers, respectively.
+Example for `iverilog`:
+
+>
+    :compiler! iverilog
+<
+
+The command |:VerilogErrorFormat| allows the interactive selection of these
+configurations. In some cases it is also possible to ignore lint and/or
+warning level messages.
+
+A specific tool can be directly selected calling this command with some
+arguments. Below is an example for `VCS`:
+
+>
+    :VerilogErrorFormat vcs 2
+<
+
+In this example the second argument disables the detection of lint messages.
+This argument can take the following values:
+
+1. All messages are detected.
+2. Ignore lint messages.
+3. Ignore lint and warning messages.
+
+    Note: The |:compiler| definitions only configure the |'errorformat'|
+    option, so it is always necessary to also setup |'makeprg'| before running
+    |:make| to execute the selected tool.
+
+After doing this Vim will be able to detect error messages displayed by the
+selected tool. Vim will also automatically open the files with errors and
+place the cursor on the error position. To navigate the error list use the
+commands |:cnext| and |:cprevious|.
+
+For more information check the help page for the |quickfix| vim feature.
+
+------------------------------------------------------------------------------
+VERILOG NAVIGATION                                          *verilog-navigate*
+
+Following an Instance~
+
+A framework is provided to follow a module instance to its module declaration
+as long as its respective entry exists in the tags file. To do so simply
+execute |:VerilogFollowInstance| within the instance to follow it to its
+declaration.
+
+Alternatively, if the cursor is placed over a port of the instance the command
+|:VerilogFollowPort| can be used to navigate to the module declaration and
+immediately searching for that port.
+
+The navigation is implemented using tags, so normal |'tagstack'| related
+commands can be used to return from the module declaration. Alternatively, the
+command |:VerilogReturnInstance| can be used for this purpose.
+
+When |g:verilog_navigate_split| is defined these commands will use Vim window
+splits instead of navigating in the same window.
+
+These commands can be mapped as following:
+
+>
+    nnoremap <leader>i :VerilogFollowInstance<CR>
+    nnoremap <leader>o :VerilogReturnInstance<CR>
+    nnoremap <leader>I :VerilogFollowPort<CR>
+<
+
+Jump to start of current instance~
+
+The command |:VerilogGotoInstanceStart| is provided to move the cursor to the
+start of the first module instantiation that precedes the current cursor
+location.
+
+This command can be mapped as following:
+
+>
+    nnoremap <leader>u :VerilogGotoInstanceStart<CR>
+<
+
+------------------------------------------------------------------------------
+COMMANDS                                                    *verilog-commands*
+
+:VerilogGotoInstanceStart                          *:VerilogGotoInstanceStart*
+    Move cursor to start of instance.
+
+    Cursor position moves to the start of instance declaration if called when
+    the cursor is within an instance declaration.
+
+:VerilogFollowInstance                                *:VerilogFollowInstance*
+    Jump to module declaration of current instance.
+
+    The instance is searched for starting from the current cursor position.
+    After that, the module is searched for in the |tags| file and, if found,
+    jumps to its defintion using |:tag|.
+
+:VerilogReturnInstance                                *:VerilogReturnInstance*
+    Jump from module declaration back to previously followed instance.
+
+    Uses |'tagstack'| through |pop| function to return from previously
+    followed instance.
+
+:VerilogFollowPort                                        *:VerilogFollowPort*
+    Jump to module declaration of current port and search for it.
+
+    Works as |:VerilogFollowInstance| but searches for keyword under cursor
+    after jumping to the module definition.
+
+:VerilogErrorFormat [{tool} [{level}]]                   *:VerilogErrorFormat*
+    Configure |'errorformat'| for the selected tool.
+
+    If called without arguments it will interactively ask for the tool name
+    and, if the tool supports it, the level of error messages to identify in
+    the log. This commands then configures |g:verilog_efm_level| accordingly
+    and executes |:compiler|! with the selected tool.
+
+    Values supported for {tool}:
+      vcs       - Synopsys VCS
+      msim      - Mentor Modelsim
+      iverilog  - Icarus Verilog
+      cver      - GPL Cver
+      leda      - Synopsys Leda
+      verilator - Verilator
+      ncverilog - Cadence NCVerilog
+      spyglass  - Synopsys SpyGlass
+
+    Values supported for {level}:
+      1 - Mark all messages
+      2 - Ignore lint messages
+      3 - Ignore lint and warning messages
+
+    Usage example:
+>
+        :VerilogErrorFormat vcs 2
+<
+    Note: It is necessary to properly setup |'makeprg'| such that the
+    configured tool is executed with |:make|. For more information check the
+    |quickfix| help page.
+
+:VerilogFoldingAdd                                        *:VerilogFoldingAdd*
+:VerilogFoldingRemove                                  *:VerilogFoldingRemove*
+    Commands with auto-completion to simplify maintenance of
+    |g:verilog_syntax_fold_lst|.
+
+    If |c_CTRL-D| is used after these commands a list of valid values is
+    suggested. When adding new values only valid and not already enabled
+    options are suggested. When removing values only currently enabled values
+    are suggested.
+
+:VerilogDisableIndentAdd                            *:VerilogDisableIndentAdd*
+:VerilogDisableIndentRemove                      *:VerilogDisableIndentRemove*
+    Commands with auto-completion to simplify maintenance of
+    |g:verilog_disable_indent|.
+
+    If |c_CTRL-D| is used after these commands a list of valid values is
+    suggested. When adding new values only valid and not already enabled
+    options are suggested. When removing values only currently enabled values
+    are suggested.
+
+------------------------------------------------------------------------------
+KEY MAPPINGS                                                    *verilog-keys*
+
+Key mappings are not defined automatically, but it is suggested that the
+following mappings are added to your |vimrc|.
+>
+    nnoremap <leader>u :VerilogGotoInstanceStart<CR>
+    nnoremap <leader>i :VerilogFollowInstance<CR>
+    nnoremap <leader>o :VerilogReturnInstance<CR>
+    nnoremap <leader>I :VerilogFollowPort<CR>
+<
+==============================================================================
+5. Configuration                                              *verilog-config*
+
+------------------------------------------------------------------------------
+INDENT CONFIGURATION                                   *verilog-config-indent*
+
+                               *b:verilog_indent_width* *g:verilog_indent_width*
+b:verilog_indent_width~
+g:verilog_indent_width~
+Default: undefined
+
+    Override normal |'shiftwidth'|.
+
+Example:
+>
+    let b:verilog_indent_width = 8
+<
+
+                     *b:verilog_indent_assign_fix* *g:verilog_indent_assign_fix*
+b:verilog_indent_assign_fix~
+g:verilog_indent_assign_fix~
+Default: undefined
+
+    Always indent lines following an assignment by a fixed amount.
+    By default, the indentation script tries to be smart and aligns the lines
+    following the assignment with the start of assigned value, if existing:
+>
+        assign y =
+            a && b;
+        assign z = c &&
+                   d;
+<
+    This behavior is disabled when this option is enabled:
+>
+        assign y =
+            a && b;
+        assign z = c &&
+            d;
+<
+
+Example:
+
+>
+    let b:verilog_indent_assign_fix = 1
+<
+
+                   *b:verilog_disable_indent_lst* *g:verilog_disable_indent_lst*
+b:verilog_disable_indent_lst~
+g:verilog_disable_indent_lst~
+Default: "eos"
+
+    Disables indent for specific Verilog/SystemVerilog contexts.
+    The following contexts are supported:
+        - `module`
+        - `interface`
+        - `class`
+        - `package`
+        - `covergroup`
+        - `program`
+        - `generate`
+        - `sequence`
+        - `property`
+        - `method`
+        - `preproc`
+        - `conditional`
+        - `eos`
+
+Example:
+
+>
+    let g:verilog_disable_indent_lst = "module,class,interface"
+<
+    Disabling indentation of `conditional` will change the following:
+>
+    // Default indent
+    assign a = cond ? b :
+                      c ;
+    // Disabling 'conditional'
+    assign a = cond ? b :
+               c ;
+<
+
+    Disabling indentation of `eos` will affect how the closing parentheses of
+    modules, functions, tasks, etc. are indented.
+    By default:
+>
+        module mod(
+            input wire a,
+            input wire b,
+            );
+<
+    When disabled:
+>
+        module mod(
+            input wire a,
+            input wire b,
+        );
+<
+
+    Note: The commands |:VerilogIndentAdd| and |:VerilogIndentRemove| are
+    provided to allow an easier management of this variable.
+
+------------------------------------------------------------------------------
+SYNTAX CONFIGURATION                                   *verilog-config-syntax*
+
+                         *b:verilog_syntax_fold_lst* *g:verilog_syntax_fold_lst*
+b:verilog_syntax_fold_lst~
+g:verilog_syntax_fold_lst~
+Default: undefined
+
+    Enables syntax folding according to the configured values.
+    This configuration is a comma-separated string of one or more of the
+    following:
+        - `class`
+        - `function`
+        - `task`
+        - `specify`
+        - `interface`
+        - `clocking`
+        - `covergroup`
+        - `sequence`
+        - `property`
+        - `block` (`begin`, `end`)
+          - `block_nested` (like "block", but allows nesting)
+          - `block_named` (like "block", but allows nesting and only folds if `begin` is labelled)
+        - `comment` (`/*..*/`)
+        - `define` (preprocessor conditional statement)
+        - `instance`
+        - `all` (enables all above options)
+    Set to an empty string to disable syntax folding.
+
+Example:
+
+>
+    let g:verilog_syntax_fold_lst = "function,task"
+<
+
+    Note: The commands |:VerilogFoldingAdd| and |:VerilogFoldingRemove| are
+    provided to allow an easier management of this variable.
+
+
+                             *b:verilog_syntax_custom* *g:verilog_syntax_custom*
+b:verilog_syntax_custom~
+g:verilog_syntax_custom~
+Default: undefined
+
+    Dictionary containing custom syntax declarations.
+    Each dictionary key is a list of syntax definitions that is a dictionary
+    with the following keys:
+        - `keyword`      - Space separated list of keywords for a |:syn-keyword| entry.
+        - `match`        - Match expression for a |:syn-match| entry.
+        - `match_start`  - Match start expression for a |:syn-region| entry.
+        - `match_end`    - Match end expression for a |:syn-region| entry.
+        - `cluster`      - Value to be used in "contains=" in a |:syn-cluster| entry.
+        - `highlight`    - Highlight to be used on as |:syn-matchgroup|.
+        - `syn_argument` - Other optional |:syn-arguments|.
+
+Examples:
+
+>
+    " Fold on SpyGlass pragmas
+    let g:verilog_syntax_custom = {
+        \ 'spyglass' : [{
+            \ 'match_start' : '\/\/\s*spyglass\s\+disable_block\s\+\z(\(\w\|-\)\+\(\s\+\(\w\|-\)\+\)*\)',
+            \ 'match_end'   : '\/\/\s*spyglass\s\+enable_block\s\+\z1',
+            \ 'syn_argument': 'transparent keepend',
+            \ }],
+        \ }
+
+    " Fold on consecutive line comments
+    let g:verilog_syntax_custom = {
+        \ 'comment' : [{
+            \ 'match_start' : '^\s*//',
+            \ 'match_end'   : '^\%(\s*//\)\@!',
+            \ 'syn_argument': 'contains=verilogTodo,verilogDirective,@Spell keepend extend'
+            \ }],
+        \ }
+<
+
+                                                      *g:verilog_disable_constant_highlight*
+g:verilog_disable_constant_highlight~
+Default: undefined
+
+    Disables constants highlight.
+    This is useful when coding guidelines require keywords starting in
+    uppercase that are not constants.
+
+
+                                                      *g:verilog_quick_syntax*
+g:verilog_quick_syntax~
+Default: undefined
+
+    When enabled, syntax regions will not be defined with Vim's 'syntax'
+    command. This can help performance if you are using an old machine or
+    viewing a large file such as a netlist. This can be useful if you don't
+    care about automatic indentation but still wish to have syntax coloring.
+
+    WARNING: Enabling this will change the behaviour of indentation as the
+    indentation script uses the syntax regions to determine the nested
+    context.
+
+------------------------------------------------------------------------------
+ERROR FORMAT CONFIGURATION                                *verilog-config-efm*
+
+                                                         *g:verilog_efm_level*
+g:verilog_efm_level~
+Default: undefined
+
+    Determines which types of messages are added to |'errorformat'| for
+    detection. When undefined, all messages are detected. The following values
+    are supported:
+        - `error`   - Only Error level messages are detected.
+        - `warning` - Error and Warning level messages are detected.
+        - `lint`    - All messages are detected.
+
+Example:
+
+>
+    let g:verilog_efm_level = "error"
+<
+
+                                                       *g:verilog_efm_uvm_lst*
+g:verilog_efm_uvm_lst~
+Default: undefined
+
+    When enabled, appends UVM message formats to |'errorformat'|.
+    This configuration is a comma-separated string of one or more of the
+    following:
+        - `fatal`
+        - `error`
+        - `warning`
+        - `info`
+        - `all` (enables all above options)
+
+Example:
+
+>
+    let g:verilog_efm_uvm_lst = "all"
+    let g:verilog_efm_uvm_lst = "fatal,error,warning"
+<
+
+    Note: The commands |:VerilogErrorUVMAdd| and |:VerilogErrorUVMRemove| are
+    provided to allow an easier management of this variable.
+
+                                                *g:verilog_efm_quickfix_clean*
+g:verilog_efm_quickfix_clean~
+Default: undefined
+
+    When enabled, appends global matching string to |'errorformat'| such that
+    any message that does not match any preceding rule will not appear in the
+    |quickfix| window. This will result in a clean quickfix window, where only
+    parsed messages are shown.
+
+Example:
+
+>
+    let g:verilog_efm_quickfix_clean = 1
+<
+
+                                                        *g:verilog_efm_custom*
+g:verilog_efm_custom~
+Default: undefined
+
+    Allows appending custom |'errorformat'| rules.
+
+Example:
+
+>
+    let g:verilog_efm_custom = %t:\ %m
+<
+
+------------------------------------------------------------------------------
+NAVIGATION CONFIGURATION                           *verilog-config-navigation*
+
+                                                    *g:verilog_navigate_split*
+g:verilog_navigate_split~
+Default: undefined
+
+    Opens a split when following an instance.
+    Makes use of |:wincmd| and supports the same arguments. In particular:
+        - undefined - Split not opened when following instances
+        - `"s"`       - Opens horizontal split
+        - `"v"`       - Opens vertical split
+
+Example:
+
+>
+    let g:verilog_navigate_split = 1
+<
+
+                                              *g:verilog_navigate_split_close*
+g:verilog_navigate_split_close~
+Default: undefined
+
+    Command to execute when returning from an instance, when split is enabled.
+    The command |:quit| is used by default when this variable is undefined.
+
+Example:
+
+>
+    let g:verilog_navigate_split_close = "bdel"
+<
+
+------------------------------------------------------------------------------
+GENERAL CONFIGURATION                                 *verilog-config-general*
+
+                                         *b:verilog_verbose* *g:verilog_verbose*
+b:verilog_verbose~
+g:verilog_verbose~
+Default: undefined
+
+    Enable verbose messaging of the various components of this plugin.
+    Messages can be reviewed using |:messages|.
+
+Example:
+
+>
+    let g:verilog_verbose = 1
+<
+
+==============================================================================
+6. Frequently Asked Questions                                    *verilog-faq*
+
+------------------------------------------------------------------------------
+How to configure certain features only on some files?
+
+Many configurations support both buffer local and global variables, allowing
+using default configurations together with local expections. This provides the
+simplicity of using global variables that do not require |:autocmd| for users
+that do not require exceptions, together with the versatily of buffer local
+variables for those that need it.
+
+The following example allows using different settings for Verilog and
+SystemVerilog files:
+
+>
+    let g:verilog_indent_width=2
+    augroup verilog_indent_width
+        autocmd!
+        autocmd BufNewFile,BufRead *.sv let b:verilog_indent_width=4
+    augroup END
+<
+Another example that uses a different configuration for files inside a
+specific folder:
+>
+    let g:verilog_indent_width=2
+    augroup verilog_indent_width
+        autocmd!
+        autocmd BufNewFile,BufRead */test/*.sv let b:verilog_indent_width=4
+    augroup END
+<
+For more information regarding supported patterns check |autocmd-patterns|.
+
+------------------------------------------------------------------------------
+Why is opening Verilog/SystemVerilog files so slow?
+
+If you are working with files which are over thousands of lines in length,
+then having folding enabled can significantly slow down opening these files. A
+workaround is to add the following to your |.vimrc| (adjust variables as you
+see fit):
+>
+    augroup systemverilog_settings_2
+        au!
+        " Enable folding for normal size files. Folding is really slow for large files.
+        au Filetype verilog_systemverilog if line('$') < 2000
+        au Filetype verilog_systemverilog     let g:verilog_syntax_fold_lst = "all"
+        au Filetype verilog_systemverilog     syntax enable "Trigger fold calculation
+        au Filetype verilog_systemverilog else
+        au Filetype verilog_systemverilog     let g:verilog_syntax_fold_lst = ""
+        au Filetype verilog_systemverilog endif
+    augroup END
+<
+
+==============================================================================
+7. History                                                   *verilog-history*
+
+3.0 (2016-05-17)
+    - Reimplementation of indentation script (Lewis Russell)
+    - Various improvements to omni-completion scripts
+    - Add function to control errorformat configuration
+    - Add first functions for code navigation
+    - Replace assertion with generic label highlight
+    - Big revamp of syntax folding
+    - Add automatic testing for folding and indentation
+    - Add Travis support for automatic regression checking
+    - Add vim help
+
+2.0 (2015-01-07)
+    - Add matchit configuration
+    - Implement initial omni-completion
+    - Add syntax folding support
+    - Highlight to objects and methods
+    - Small updates to indentation script
+    - Add first test files
+
+1.2 (2010-10-18)
+    - Added new highlight group for SVA Assertions
+    - Fixed conflicting function names in indentation script
+
+1.1 (2006-06-28)
+    - Added indentation script
+
+1.0 (2006-06-26)
+    - Initial release
+
+==============================================================================
+8. Credits                                                   *verilog-credits*
+
+The plugin verilog_systemverilog was originally created by Amit Sethi, with
+the original indent script created by Chih-Tsun Huang. The original plugin is
+available at the following location:
+
+http://www.vim.org/scripts/script.php?script_id=1586
+
+No license was included with the original files, as such it was assumed it was
+released under the Vim |license|.
+
+This plugin is maintained by Vitor Antunes and released under the Vim
+|license|.
+
+Thanks to the following people for code contributions, feature suggestions, etc:
+Lewis Russell
+Greg Hilton
+decrement
+Kit Monisit
+Leo Butlero
+
+==============================================================================
+ vim: tw=78 ts=8 sw=4 sts=4 et ft=help

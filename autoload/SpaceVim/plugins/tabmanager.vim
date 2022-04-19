@@ -7,6 +7,35 @@
 "=============================================================================
 
 scriptencoding utf-8
+
+""
+" @section tab manager, plugins-tabmanager
+" @parentsection plugins
+" The `tabmanager` plugin provides tab manager support for SpaceVim.
+" 
+" @subsection Key bindings
+" >
+"   Key binding     Description
+"   SPC t t         open tab manager windows
+" <
+"
+" In the tab manager windows, the following key bindings can be used:
+" >
+"   Key binding     Description
+"   ---------------------------
+"   q               close tab manager
+"   o               toggle tab
+"   r               rename tabpage
+"   n               create new named tabpage
+"   N               create new unamed tabpage
+"   x               delete tabpage
+"   yy              copy tabpage
+"   p               paste tabpage
+"   Ctrl-Shift-Up   move tabpage backward
+"   Ctrl-Shift-Down move tabpage forward
+" <
+
+
 " APIs
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:TABs = SpaceVim#api#import('vim#tab')

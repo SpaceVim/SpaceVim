@@ -6,16 +6,43 @@
 " License: GPLv3
 "=============================================================================
 scriptencoding utf-8
-let s:file = {}
-let s:system = SpaceVim#api#import('system')
-let s:vim_comp = SpaceVim#api#import('vim#compatible')
+if exists('s:self')
+  finish
+endif
 
-if s:system.isWindows
-  let s:file['separator'] = '\'
-  let s:file['pathSeparator'] = ';'
+""
+" @section file, api-file
+" @parentsection api
+" The `file` api provides basic functions to manage file. The following
+" functions can be used:
+"
+" - `fticon(path)`: get the filetype icon of path
+" - `write(msg, fname)`: append msg to fname.
+" - `override(msg, fname)`: override fname with msg.
+" - `read(fname)`: read the context of fname.
+" - `ls(dir, if_file_only)`: list files and directories in dir
+" - `updatefiles(files)`: update all files
+" - `unify_path(path, ...)`: unify the format of path
+" - `path_to_fname(path)`: get unify string of a path.
+" - `findfile(pattern, dir)`: find path match pattern in dir.
+" - `finddir(pattern, dir)`: find directory match pattern in dir
+"
+" Example:
+" >
+"   let s:FILE = SpaceVim#api#import('file')
+" <
+
+
+let s:self = {}
+let s:self.__system = SpaceVim#api#import('system')
+let s:self.__cmp = SpaceVim#api#import('vim#compatible')
+
+if s:self.__system.isWindows
+  let s:self.separator = '\'
+  let s:self.pathSeparator = ';'
 else
-  let s:file['separator'] = '/'
-  let s:file['pathSeparator'] = ':'
+  let s:self.separator = '/'
+  let s:self.pathSeparator = ':'
 endif
 
 let s:file_node_extensions = {
@@ -145,7 +172,7 @@ let s:file_node_pattern_matches = {
       \}
 
 
-function! s:filetypeIcon(path) abort
+function! s:self.fticon(path) abort
   let file = fnamemodify(a:path, ':t')
   if has_key(s:file_node_exact_matches, file)
     return s:file_node_exact_matches[file]
@@ -165,23 +192,17 @@ function! s:filetypeIcon(path) abort
 
 endfunction
 
-let s:file['fticon'] = function('s:filetypeIcon')
-
-function! s:write(msg, fname) abort
+function! s:self.write(msg, fname) abort
   let flags = filewritable(a:fname) ? 'a' : ''
   call writefile([a:msg], a:fname, flags)
 endfunction
 
-let s:file['write'] = function('s:write')
-
-function! s:override(msg, fname) abort
+function! s:self.override(msg, fname) abort
   let flags = filewritable(a:fname) ? 'b' : ''
   call writefile([a:msg], a:fname, flags)
 endfunction
 
-let s:file['override'] = function('s:override')
-
-function! s:read(fname) abort       
+function! s:self.read(fname) abort       
   if filereadable(a:fname)
     return readfile(a:fname, '')
   else
@@ -189,17 +210,13 @@ function! s:read(fname) abort
   endif
 endfunction
 
-let s:file['read'] = function('s:read')
-
-function! s:ls(dir, if_file_only) abort
+function! s:self.ls(dir, if_file_only) abort
   let items = s:vim_comp.globpath(a:dir, '*')
   if a:if_file_only
     let items = filter(items, '!isdirectory(v:val)')
   endif
   return map(items, "fnamemodify(v:val, ':t')")
 endfunction
-
-let s:file['ls'] = function('s:ls')
 
 "
 " {
@@ -208,7 +225,7 @@ let s:file['ls'] = function('s:ls')
 "                 line2 : content,
 "              } 
 " }
-function! s:updatefiles(files) abort
+function! s:self.updatefiles(files) abort
   let failed = []
   for fname in keys(a:files)
     let buffer = readfile(fname)
@@ -225,14 +242,12 @@ function! s:updatefiles(files) abort
 endfunction
 
 
-let s:file['updateFiles'] = function('s:updatefiles')
-
 " this function should return a unify path
 " CHANGED: This function will not run resolve
 " 1. the sep is /
 " 2. if it is a dir, end with /
 " 3. if a:path end with /, then return path also end with /
-function! s:unify_path(path, ...) abort
+function! s:self.unify_path(path, ...) abort
   if empty(a:path)
     return ''
   endif
@@ -247,14 +262,10 @@ function! s:unify_path(path, ...) abort
   endif
 endfunction
 
-let s:file['unify_path'] = function('s:unify_path')
-
-function! s:path_to_fname(path, ...) abort
+function! s:self.path_to_fname(path, ...) abort
   let sep = get(a:000, 0, '_')
-  return substitute(s:unify_path(a:path), '[\\/:;.]', sep, 'g')
+  return substitute(self.unify_path(a:path), '[\\/:;.]', sep, 'g')
 endfunction
-
-let s:file['path_to_fname'] = function('s:path_to_fname')
 
 
 " Both findfile() and finddir() do not has same logic between latest
@@ -262,7 +273,7 @@ let s:file['path_to_fname'] = function('s:path_to_fname')
 " issue. But I have change the logic of these functions.
 " Now it should works same as in vim8 and old vim.
 
-function! s:findfile(what, where, ...) abort
+function! s:self.findfile(what, where, ...) abort
   let old_suffixesadd = &suffixesadd
   let &suffixesadd = ''
   let l:count = get(a:000, 0, 0)
@@ -285,9 +296,7 @@ function! s:findfile(what, where, ...) abort
   return file
 endfunction
 
-let s:file['findfile'] = function('s:findfile')
-
-function! s:finddir(what, where, ...) abort
+function! s:self.finddir(what, where, ...) abort
   let old_suffixesadd = &suffixesadd
   let &suffixesadd = ''
   let l:count = get(a:000, 0, 0)
@@ -308,10 +317,8 @@ function! s:finddir(what, where, ...) abort
   let &suffixesadd = old_suffixesadd
   return file
 endfunction
-
-let s:file['finddir'] = function('s:finddir')
 function! SpaceVim#api#file#get() abort
-  return deepcopy(s:file)
+  return deepcopy(s:self)
 endfunction
 
 " vim:set et sw=2:

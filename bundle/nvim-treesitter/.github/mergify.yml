@@ -1,0 +1,37 @@
+pull_request_rules:
+  - name: Merge lockfile updates
+    conditions:
+      - "title=Update lockfile.json"
+    actions:
+      review:
+        type: APPROVE
+        message: Automatically approving lockfile updates
+      merge:
+        method: merge
+
+  - name: Prepare for merge
+    conditions:
+      - and:
+        - "-draft"
+        - "#approved-reviews-by=1"
+        - "#review-requested=0"
+    actions:
+      comment:
+        message: |
+          This PR is ready to be merged, and will be in 1 day if nothing happens before.
+          If you want other people to review your PR, request their reviews.
+          If you don't want this PR to be merged now, mark it as a Draft.
+
+  - name: Merge on approval
+    conditions:
+      - and:
+        - or:
+          - "#approved-reviews-by>=2"
+          - and:
+            - "#approved-reviews-by=1"
+            - "updated-at>=1 day ago"
+        - "-draft"
+        - "#review-requested=0"
+    actions:
+      merge:
+        method: rebase

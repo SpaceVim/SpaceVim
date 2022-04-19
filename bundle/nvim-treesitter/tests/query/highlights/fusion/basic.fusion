@@ -1,0 +1,60 @@
+include: SomeFile.fusion
+//<- include
+//       ^text.uri
+
+namespace: ns = Neos.Fusion.Space
+//<- keyword
+//         ^namespace
+//            ^operator
+//              ^namespace
+
+prototype(MyType) < prototype(ns:SuperType) {
+//<-keyword
+//       ^punctuation.bracket
+//        ^type
+//              ^punctuation.bracket
+//                ^operator
+//                            ^namespace
+//                                ^type
+
+  deleteProp >
+  //         ^operator
+
+  string = 'value'
+  //<- property
+  //     ^operator
+  //        ^string
+
+  number = 10.2
+  //       ^number
+
+  null = null
+  //     ^constant.builtin
+
+  boolean = true
+  //        ^boolean
+
+  property.inner = "value"
+  //<- property
+  //       ^property
+
+  property.@meta = "value"
+  //<- property
+  //       ^attribute
+
+  property.type = SomeType
+  //<- property
+  //              ^type
+
+  property.aliasedType = ns:SomeType
+  //<- property
+  //                     ^namespace
+  //                        ^type
+
+  property.fullQualifiedType = SomeNamespace:SomeType
+  //<- property
+  //                           ^namespace
+  //                                         ^type
+
+}
+

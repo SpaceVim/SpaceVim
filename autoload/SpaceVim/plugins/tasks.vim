@@ -6,13 +6,179 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:is_loaded')
+  finish
+else
+  let s:is_loaded = 1
+endif
+
+
 " this plugin is based on vscode task Scheme
 " https://code.visualstudio.com/docs/editor/tasks-appendix
 
 ""
 " @section tasks, usage-tasks
 " @parentsection usage
-" general guide for tasks manager in SpaceVim.
+" To integrate with external tools, SpaceVim introduced a task manager system,
+" which is similar to VSCode's tasks-manager.
+" There are two kinds of task configurations file:
+"
+" - `~/.SpaceVim.d/tasks.toml`: global tasks configuration
+" - `.SpaceVim.d/tasks.toml`: project local tasks configuration
+"
+" The tasks defined in the global tasks configuration can be overrided by
+" project local tasks configuration.
+"
+" @subsection Key bindings
+" >
+"   Key binding     Description
+"   SPC p t l       list all available tasks
+"   SPC p t e       edit project tesk
+"   SPC p t r       pick tesk to run
+"   SPC p t c       clear tasks
+" <
+"
+" @subsection custom task
+" This is a basic task configuration for running `echo hello world`,
+" and print the results to the runner window.
+" >
+"   [my-task]
+"     command = 'echo'
+"     args = ['hello world']
+" <
+"
+" To run the task in the background, you need to set `isBackground` to `true`:
+" >
+"   [my-task]
+"     command = 'echo'
+"     args = ['hello world']
+"     isBackground = true
+" <
+"
+" The following task properties are available:
+"
+" 1. `command`:  The actual command to execute.
+" 2. `args`: The arguments passed to the command, it should be a list of strings and may be omitted.
+" 3. `options`: Override the defaults for `cwd`,`env` or `shell`.
+" 4. `isBackground`: Specifies whether the task should run in the background. by default, it is `false`.
+" 5. `description`: Short description of the task
+" 6. `problemMatcher`: Problems matcher of the task
+"
+" Note: When a new task is executed, it will kill the previous task.
+" If you want to keep the task, run it in background by setting
+" `isBackground` to `true`.
+"
+" SpaceVim supports variable substitution in the task properties,
+" The following predefined variables are supported:
+"
+" - `{workspaceFolder}`: The project's root directory
+" - `{workspaceFolderBasename}`: The name of current project's root directory
+" - `{file}`: The path of current file
+" - `{relativeFile}`: The current file relative to project root
+" - `{relativeFileDirname}`: The current file's dirname relative to workspaceFolder
+" - `{fileBasename}`: The current file's basename
+" - `{fileBasenameNoExtension}`: The current file's basename without file extension
+" - `{fileDirname}`: The current file's dirname
+" - `{fileExtname}`: The current file's extension
+" - `{cwd}`: The task runner's current working directory on startup
+" - `{lineNumber}`: The current selected line number in the active file
+"
+" For example: Supposing that you have the following requirements:
+"
+" A file located at `/home/your-username/your-project/folder/file.ext` opened in your editor;
+" The directory `/home/your-username/your-project` opened as your root workspace.
+" So you will have the following values for each variable:
+"
+" - `{workspaceFolder}`: `/home/your-username/your-project/`
+" - `{workspaceFolderBasename}`: `your-project`
+" - `{file}`: `/home/your-username/your-project/folder/file.ext`
+" - `{relativeFile}`: `folder/file.ext`
+" - `{relativeFileDirname}`: `folder/`
+" - `{fileBasename}`: `file.ext`
+" - `{fileBasenameNoExtension}`: `file`
+" - `{fileDirname}`: `/home/your-username/your-project/folder/`
+" - `{fileExtname}`: `.ext`
+" - `{lineNumber}`: line number of the cursor
+"
+" @subsection Task Problems Matcher
+"
+" Problem matcher is used to capture the message in the task output
+" and show a corresponding problem in quickfix windows.
+"
+" `problemMatcher` supports `errorformat` and `pattern` properties.
+"
+" If the `errorformat` property is not defined, the `&errorformat` option will be used.
+" >
+"   [test_problemMatcher]
+"     command = "echo"
+"     args = ['.SpaceVim.d/tasks.toml:6:1 test error message']
+"     isBackground = true
+"   [test_problemMatcher.problemMatcher]
+"     useStdout = true
+"     errorformat = '%f:%l:%c\ %m'
+" <
+"
+" If `pattern` is defined, the `errorformat` option will be ignored.
+" Here is an example:
+" >
+"   [test_regexp]
+"     command = "echo"
+"     args = ['.SpaceVim.d/tasks.toml:12:1 test error message']
+"     isBackground = true
+"   [test_regexp.problemMatcher]
+"     useStdout = true
+"   [test_regexp.problemMatcher.pattern]
+"     regexp = '\(.*\):\(\d\+\):\(\d\+\)\s\(\S.*\)'
+"     file = 1
+"     line = 2
+"     column = 3
+"     #severity = 4
+"     message = 4
+" <
+"
+" @subsection Task auto-detection
+"
+" Currently, SpaceVim can auto-detect tasks for npm.
+" the tasks manager will parse the `package.json` file for npm packages.
+"
+" @subsection Task provider
+"
+" Some tasks can be automatically detected by the task provider. For example,
+" a Task Provider could check if there is a specific build file, such as `package.json`,
+" and create npm tasks.
+"
+" To build a task provider, you need to use the Bootstrap function.
+" The task provider should be a vim function that returns a task object.
+"
+" here is an example for building a task provider.
+"
+" >
+"    function! s:make_tasks() abort
+"      if filereadable('Makefile')
+"        let subcmds = filter(readfile('Makefile', ''), "v:val=~#'^.PHONY'")
+"        let conf = {}
+"        for subcmd in subcmds
+"          let commands = split(subcmd)[1:]
+"          for cmd in commands
+"            call extend(conf, {
+"                  \ cmd : {
+"                    \ 'command': 'make',
+"                    \ 'args' : [cmd],
+"                    \ 'isDetected' : 1,
+"                    \ 'detectedName' : 'make:'
+"                    \ }
+"                    \ })
+"          endfor
+"        endfor
+"        return conf
+"      else
+"        return {}
+"      endif
+"    endfunction
+"    call SpaceVim#plugins#tasks#reg_provider(function('s:make_tasks'))
+" <
+"
+" With the above configuration, you will see the following tasks in the SpaceVim repo:
 
 let s:TOML = SpaceVim#api#import('data#toml')
 let s:JSON = SpaceVim#api#import('data#json')

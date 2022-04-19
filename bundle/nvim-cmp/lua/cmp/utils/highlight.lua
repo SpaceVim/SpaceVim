@@ -10,7 +10,7 @@ highlight.keys = {
 }
 
 highlight.inherit = function(name, source, override)
-  local cmd = ('highlight! default %s'):format(name)
+  local cmd = ('highlight default %s'):format(name)
   for _, key in ipairs(highlight.keys) do
     if override[key] then
       cmd = cmd .. (' %s=%s'):format(key, override[key])

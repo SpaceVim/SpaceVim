@@ -17,17 +17,33 @@ end
 cmp.lsp = require('cmp.types.lsp')
 cmp.vim = require('cmp.types.vim')
 
----Export default config presets.
+---Expose event
+cmp.event = cmp.core.event
+
+---Export mapping for special case
+cmp.mapping = require('cmp.config.mapping')
+
+---Export default config presets
 cmp.config = {}
 cmp.config.disable = misc.none
 cmp.config.compare = require('cmp.config.compare')
 cmp.config.sources = require('cmp.config.sources')
+cmp.config.mapping = require('cmp.config.mapping')
 
----Expose event
-cmp.event = cmp.core.event
+---Sync asynchronous process.
+cmp.sync = function(callback)
+  return function(...)
+    cmp.core.filter:sync(1000)
+    if callback then
+      return callback(...)
+    end
+  end
+end
 
----Export mapping
-cmp.mapping = require('cmp.config.mapping')
+---Suspend completion.
+cmp.suspend = function()
+  return cmp.core:suspend()
+end
 
 ---Register completion sources
 ---@param name string
@@ -52,28 +68,41 @@ cmp.get_config = function()
 end
 
 ---Invoke completion manually
-cmp.complete = function()
-  cmp.core:complete(cmp.core:get_context({ reason = cmp.ContextReason.Manual }))
+---@param option cmp.CompleteParams
+cmp.complete = cmp.sync(function(option)
+  option = option or {}
+  config.set_onetime(option.config)
+  cmp.core:complete(cmp.core:get_context({ reason = option.reason or cmp.ContextReason.Manual }))
   return true
-end
+end)
+
+---Complete common string in current entries.
+cmp.complete_common_string = cmp.sync(function()
+  return cmp.core:complete_common_string()
+end)
 
 ---Return view is visible or not.
-cmp.visible = function()
+cmp.visible = cmp.sync(function()
   return cmp.core.view:visible() or vim.fn.pumvisible() == 1
-end
+end)
 
 ---Get current selected entry or nil
-cmp.get_selected_entry = function()
+cmp.get_selected_entry = cmp.sync(function()
   return cmp.core.view:get_selected_entry()
-end
+end)
 
 ---Get current active entry or nil
-cmp.get_active_entry = function()
+cmp.get_active_entry = cmp.sync(function()
   return cmp.core.view:get_active_entry()
-end
+end)
+
+---Get current all entries
+cmp.get_entries = cmp.sync(function()
+  return cmp.core.view:get_entries()
+end)
 
 ---Close current completion
-cmp.close = function()
+cmp.close = cmp.sync(function()
   if cmp.core.view:visible() then
     local release = cmp.core:suspend()
     cmp.core.view:close()
@@ -83,10 +112,10 @@ cmp.close = function()
   else
     return false
   end
-end
+end)
 
 ---Abort current completion
-cmp.abort = function()
+cmp.abort = cmp.sync(function()
   if cmp.core.view:visible() then
     local release = cmp.core:suspend()
     cmp.core.view:abort()
@@ -95,21 +124,11 @@ cmp.abort = function()
   else
     return false
   end
-end
-
----Suspend completion.
-cmp.suspend = function()
-  return cmp.core:suspend()
-end
+end)
 
 ---Select next item if possible
-cmp.select_next_item = function(option)
+cmp.select_next_item = cmp.sync(function(option)
   option = option or {}
-
-  -- Hack: Ignore when executing macro.
-  if vim.fn.reg_executing() ~= '' then
-    return true
-  end
 
   if cmp.core.view:visible() then
     local release = cmp.core:suspend()
@@ -117,24 +136,20 @@ cmp.select_next_item = function(option)
     vim.schedule(release)
     return true
   elseif vim.fn.pumvisible() == 1 then
+    -- Special handling for native pum. Required to facilitate key mapping processing.
     if (option.behavior or cmp.SelectBehavior.Insert) == cmp.SelectBehavior.Insert then
-      feedkeys.call(keymap.t('<C-n>'), 'n')
+      feedkeys.call(keymap.t('<C-n>'), 'in')
     else
-      feedkeys.call(keymap.t('<Down>'), 'n')
+      feedkeys.call(keymap.t('<Down>'), 'in')
     end
     return true
   end
   return false
-end
+end)
 
 ---Select prev item if possible
-cmp.select_prev_item = function(option)
+cmp.select_prev_item = cmp.sync(function(option)
   option = option or {}
-
-  -- Hack: Ignore when executing macro.
-  if vim.fn.reg_executing() ~= '' then
-    return true
-  end
 
   if cmp.core.view:visible() then
     local release = cmp.core:suspend()
@@ -142,35 +157,31 @@ cmp.select_prev_item = function(option)
     vim.schedule(release)
     return true
   elseif vim.fn.pumvisible() == 1 then
+    -- Special handling for native pum. Required to facilitate key mapping processing.
     if (option.behavior or cmp.SelectBehavior.Insert) == cmp.SelectBehavior.Insert then
-      feedkeys.call(keymap.t('<C-p>'), 'n')
+      feedkeys.call(keymap.t('<C-p>'), 'in')
     else
-      feedkeys.call(keymap.t('<Up>'), 'n')
+      feedkeys.call(keymap.t('<Up>'), 'in')
     end
     return true
   end
   return false
-end
+end)
 
 ---Scrolling documentation window if possible
-cmp.scroll_docs = function(delta)
+cmp.scroll_docs = cmp.sync(function(delta)
   if cmp.core.view:visible() then
     cmp.core.view:scroll_docs(delta)
     return true
   else
     return false
   end
-end
+end)
 
 ---Confirm completion
-cmp.confirm = function(option, callback)
+cmp.confirm = cmp.sync(function(option, callback)
   option = option or {}
   callback = callback or function() end
-
-  -- Hack: Ignore when executing macro.
-  if vim.fn.reg_executing() ~= '' then
-    return true
-  end
 
   local e = cmp.core.view:get_selected_entry() or (option.select and cmp.core.view:get_first_entry() or nil)
   if e then
@@ -182,13 +193,14 @@ cmp.confirm = function(option, callback)
     end)
     return true
   else
+    -- Special handling for native puma. Required to facilitate key mapping processing.
     if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
-      feedkeys.call(keymap.t('<C-y>'), 'n')
+      feedkeys.call(keymap.t('<C-y>'), 'in')
       return true
     end
     return false
   end
-end
+end)
 
 ---Show status
 cmp.status = function()
@@ -255,6 +267,9 @@ cmp.setup = setmetatable({
   global = function(c)
     config.set_global(c)
   end,
+  filetype = function(filetype, c)
+    config.set_filetype(c, filetype)
+  end,
   buffer = function(c)
     config.set_buffer(c, vim.api.nvim_get_current_buf())
   end,
@@ -302,11 +317,29 @@ end)
 autocmd.subscribe('CursorMoved', function()
   if config.enabled() then
     cmp.core:on_moved()
+  else
+    cmp.core:reset()
+    cmp.core.view:close()
   end
 end)
 
-cmp.event:on('confirm_done', function(e)
-  cmp.config.compare.recently_used:add_entry(e)
+autocmd.subscribe('InsertEnter', function()
+  cmp.config.compare.scopes:update()
+  cmp.config.compare.locality:update()
+end)
+
+cmp.event:on('complete_done', function(evt)
+  if evt.entry then
+    cmp.config.compare.recently_used:add_entry(evt.entry)
+  end
+  cmp.config.compare.scopes:update()
+  cmp.config.compare.locality:update()
+end)
+
+cmp.event:on('confirm_done', function(evt)
+  if evt.entry then
+    cmp.config.compare.recently_used:add_entry(evt.entry)
+  end
 end)
 
 return cmp

@@ -51,6 +51,7 @@ let s:layers_vars = {}
 
 
 let s:SYS = SpaceVim#api#import('system')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 ""
 " Load the {layer} you want. For all the layers SpaceVim supports, see @section(layers).
@@ -120,7 +121,7 @@ function! s:list_layers() abort
 endfunction
 
 function! s:find_layers() abort
-  let layers = SpaceVim#util#globpath(&rtp, 'autoload/SpaceVim/layers/**/*.vim')
+  let layers = s:CMP.globpath(&rtp, 'autoload/SpaceVim/layers/**/*.vim')
   let pattern = s:SYS.isWindows ? '\\autoload\\SpaceVim\\layers\\' : '/autoload/SpaceVim/layers/'
   let rst = []
   for layer in layers
@@ -179,7 +180,7 @@ endfunction
 
 function! SpaceVim#layers#list() abort
 
-  let files = SpaceVim#util#globpath('.', 'autoload/SpaceVim/layers/**/*.vim')
+  let files = s:CMP.globpath('.', 'autoload/SpaceVim/layers/**/*.vim')
   let pattern = s:SYS.isWindows ? '\\autoload\\SpaceVim\\layers\\' : '/autoload/SpaceVim/layers/'
   let layers = []
   for file in files

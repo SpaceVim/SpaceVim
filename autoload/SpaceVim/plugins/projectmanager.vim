@@ -351,13 +351,26 @@ else
     let rootdir = getbufvar('%', 'rootDir', '')
     if empty(rootdir)
       let rootdir = s:find_root_directory()
-      if empty(rootdir)
-        let rootdir = s:FILE.unify_path(getcwd())
+      if !empty(rootdir)
+        call setbufvar('%', 'rootDir', rootdir)
       endif
-      call setbufvar('%', 'rootDir', rootdir)
     endif
-    call s:change_dir(rootdir)
-    call SpaceVim#plugins#projectmanager#RootchandgeCallback()
+    if !empty(rootdir)
+      call s:change_dir(rootdir)
+      call SpaceVim#plugins#projectmanager#RootchandgeCallback()
+    else
+      if g:spacevim_project_non_root ==# 'current'
+        let dir = fnamemodify(expand('%'), ':p:h')
+        if isdirectory(dir)
+          call s:change_dir(dir)
+        endif
+      elseif g:spacevim_project_non_root ==# 'home' && filereadable(expand('%')) 
+        let dir = fnamemodify(expand('~'), ':p')
+        if isdirectory(dir)
+          call s:change_dir(dir)
+        endif
+      endif
+    endif
     return rootdir
   endfunction
   function! SpaceVim#plugins#projectmanager#kill_project() abort

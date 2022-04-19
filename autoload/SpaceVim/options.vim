@@ -5,7 +5,7 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
-let s:CPT = SpaceVim#api#import('vim#compatible')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#options#list() abort
   let list = []
@@ -15,7 +15,7 @@ function! SpaceVim#options#list() abort
     endfor
   else
     redraw
-    for var in filter(map(split(s:CPT.execute('let g:'), "\n"), "matchstr(v:val, '\\S\\+')"), "v:val =~# '^spacevim_'")
+    for var in filter(map(split(s:CMP.execute('let g:'), "\n"), "matchstr(v:val, '\\S\\+')"), "v:val =~# '^spacevim_'")
       call add(list, '  ' . var[11:] . ' = ' . string(get(g:, var , '')))
     endfor
   endif

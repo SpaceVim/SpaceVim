@@ -15,12 +15,13 @@ local char = require('cmp.utils.char')
 ---@field public source any
 ---@field public cache cmp.Cache
 ---@field public revision number
----@field public context cmp.Context
 ---@field public incomplete boolean
 ---@field public is_triggered_by_symbol boolean
 ---@field public entries cmp.Entry[]
 ---@field public offset number
 ---@field public request_offset number
+---@field public context cmp.Context
+---@field public completion_context lsp.CompletionContext|nil
 ---@field public status cmp.SourceStatus
 ---@field public complete_dedup function
 local source = {}
@@ -50,19 +51,26 @@ source.reset = function(self)
   self.cache:clear()
   self.revision = self.revision + 1
   self.context = context.empty()
-  self.request_offset = -1
   self.is_triggered_by_symbol = false
   self.incomplete = false
   self.entries = {}
   self.offset = -1
+  self.request_offset = -1
+  self.completion_context = nil
   self.status = source.SourceStatus.WAITING
   self.complete_dedup(function() end)
 end
 
----Return source option
+---Return source config
 ---@return cmp.SourceConfig
-source.get_config = function(self)
+source.get_source_config = function(self)
   return config.get_source_config(self.name) or {}
+end
+
+---Return matching config
+---@return cmp.MatchingConfig
+source.get_matching_config = function()
+  return config.get().matching
 end
 
 ---Get fetching time
@@ -101,7 +109,7 @@ source.get_entries = function(self, ctx)
       inputs[o] = string.sub(ctx.cursor_before_line, o)
     end
 
-    local match = e:match(inputs[o])
+    local match = e:match(inputs[o], self:get_matching_config())
     e.score = match.score
     e.exact = false
     if e.score >= 1 then
@@ -112,7 +120,7 @@ source.get_entries = function(self, ctx)
   end
   self.cache:set({ 'get_entries', self.revision, ctx.cursor_before_line }, entries)
 
-  local max_item_count = self:get_config().max_item_count or 200
+  local max_item_count = self:get_source_config().max_item_count or 200
   local limited_entries = {}
   for _, e in ipairs(entries) do
     table.insert(limited_entries, e)
@@ -183,17 +191,33 @@ source.is_available = function(self)
   return true
 end
 
+---Get trigger_characters
+---@return string[]
+source.get_trigger_characters = function(self)
+  local c = self:get_source_config()
+  if c.trigger_characters then
+    return c.trigger_characters
+  end
+
+  local trigger_characters = {}
+  if self.source.get_trigger_characters then
+    trigger_characters = self.source:get_trigger_characters(misc.copy(c)) or {}
+  end
+  if config.get().completion.get_trigger_characters then
+    return config.get().completion.get_trigger_characters(trigger_characters)
+  end
+  return trigger_characters
+end
+
 ---Get keyword_pattern
 ---@return string
 source.get_keyword_pattern = function(self)
-  local c = self:get_config()
+  local c = self:get_source_config()
   if c.keyword_pattern then
     return c.keyword_pattern
   end
   if self.source.get_keyword_pattern then
-    return self.source:get_keyword_pattern({
-      option = self:get_config().opts,
-    })
+    return self.source:get_keyword_pattern(misc.copy(c))
   end
   return config.get().completion.keyword_pattern
 end
@@ -201,26 +225,11 @@ end
 ---Get keyword_length
 ---@return number
 source.get_keyword_length = function(self)
-  local c = self:get_config()
+  local c = self:get_source_config()
   if c.keyword_length then
     return c.keyword_length
   end
   return config.get().completion.keyword_length or 1
-end
-
----Get trigger_characters
----@return string[]
-source.get_trigger_characters = function(self)
-  local trigger_characters = {}
-  if self.source.get_trigger_characters then
-    trigger_characters = self.source:get_trigger_characters({
-      option = self:get_config().opts,
-    }) or {}
-  end
-  if config.get().completion.get_trigger_characters then
-    return config.get().completion.get_trigger_characters(trigger_characters)
-  end
-  return trigger_characters
 end
 
 ---Invoke completion
@@ -229,19 +238,14 @@ end
 ---@return boolean Return true if not trigger completion.
 source.complete = function(self, ctx, callback)
   local offset = ctx:get_offset(self:get_keyword_pattern())
-  if ctx.cursor.col <= offset then
-    self:reset()
-  end
 
+  -- NOTE: This implementation is nvim-cmp specific.
+  -- We trigger new completion after core.confirm but we check only the symbol trigger_character in this case.
   local before_char = string.sub(ctx.cursor_before_line, -1)
-  local before_char_iw = string.match(ctx.cursor_before_line, '(.)%s*$') or before_char
-
   if ctx:get_reason() == types.cmp.ContextReason.TriggerOnly then
-    if string.match(before_char, '^%a+$') then
+    before_char = string.match(ctx.cursor_before_line, '(.)%s*$')
+    if not before_char or not char.is_symbol(string.byte(before_char)) then
       before_char = ''
-    end
-    if string.match(before_char_iw, '^%a+$') then
-      before_char_iw = ''
     end
   end
 
@@ -250,39 +254,31 @@ source.complete = function(self, ctx, callback)
     completion_context = {
       triggerKind = types.lsp.CompletionTriggerKind.Invoked,
     }
-  else
-    if vim.tbl_contains(self:get_trigger_characters(), before_char) then
-      completion_context = {
-        triggerKind = types.lsp.CompletionTriggerKind.TriggerCharacter,
-        triggerCharacter = before_char,
-      }
-    elseif vim.tbl_contains(self:get_trigger_characters(), before_char_iw) then
-      completion_context = {
-        triggerKind = types.lsp.CompletionTriggerKind.TriggerCharacter,
-        triggerCharacter = before_char_iw,
-      }
-    elseif ctx:get_reason() ~= types.cmp.ContextReason.TriggerOnly then
-      if self:get_keyword_length() <= (ctx.cursor.col - offset) then
-        if self.incomplete and self.context.cursor.col ~= ctx.cursor.col then
-          completion_context = {
-            triggerKind = types.lsp.CompletionTriggerKind.TriggerForIncompleteCompletions,
-          }
-        elseif not vim.tbl_contains({ self.request_offset, self.offset }, offset) then
-          completion_context = {
-            triggerKind = types.lsp.CompletionTriggerKind.Invoked,
-          }
-        end
+  elseif vim.tbl_contains(self:get_trigger_characters(), before_char) then
+    completion_context = {
+      triggerKind = types.lsp.CompletionTriggerKind.TriggerCharacter,
+      triggerCharacter = before_char,
+    }
+  elseif ctx:get_reason() ~= types.cmp.ContextReason.TriggerOnly then
+    if self:get_keyword_length() <= (ctx.cursor.col - offset) then
+      if self.incomplete and self.context.cursor.col ~= ctx.cursor.col and self.status ~= source.SourceStatus.FETCHING then
+        completion_context = {
+          triggerKind = types.lsp.CompletionTriggerKind.TriggerForIncompleteCompletions,
+        }
+      elseif not vim.tbl_contains({ self.request_offset, self.offset }, offset) then
+        completion_context = {
+          triggerKind = types.lsp.CompletionTriggerKind.Invoked,
+        }
       end
     else
-      self:reset()
+      self:reset() -- Should clear current completion if the TriggerKind isn't TriggerCharacter or Manual and keyword length does not enough.
     end
+  else
+    self:reset() -- Should clear current completion if ContextReason is TriggerOnly and the triggerCharacter isn't matched
   end
 
+  -- Does not perform completions.
   if not completion_context then
-    if ctx:get_reason() == types.cmp.ContextReason.TriggerOnly then
-      self:reset()
-    end
-    debug.log(self:get_debug_name(), 'skip completion')
     return
   end
 
@@ -293,16 +289,16 @@ source.complete = function(self, ctx, callback)
   debug.log(self:get_debug_name(), 'request', offset, vim.inspect(completion_context))
   local prev_status = self.status
   self.status = source.SourceStatus.FETCHING
-  self.request_offset = offset
   self.offset = offset
+  self.request_offset = offset
   self.context = ctx
+  self.completion_context = completion_context
   self.source:complete(
-    {
-      context = ctx,
+    vim.tbl_extend('keep', misc.copy(self:get_source_config()), {
       offset = self.offset,
-      option = self:get_config().opts,
+      context = ctx,
       completion_context = completion_context,
-    },
+    }),
     self.complete_dedup(vim.schedule_wrap(function(response)
       response = response or {}
 
@@ -329,8 +325,9 @@ source.complete = function(self, ctx, callback)
           self.revision = self.revision + 1
         end
       else
-        debug.log(self:get_debug_name(), 'continue', 'nil')
-        if completion_context.triggerKind == types.lsp.CompletionTriggerKind.TriggerCharacter then
+        -- The completion will be invoked when pressing <CR> if the trigger characters contain the <Space>.
+        -- If the server returns an empty response in such a case, should invoke the keyword completion on the next keypress.
+        if offset == ctx.cursor.col then
           self:reset()
         end
         self.status = prev_status

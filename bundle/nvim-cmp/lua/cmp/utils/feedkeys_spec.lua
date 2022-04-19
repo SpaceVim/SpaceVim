@@ -23,15 +23,6 @@ describe('feedkeys', function()
     })
   end)
 
-  it('autoindent', function()
-    vim.cmd([[setlocal indentkeys+==end]])
-    feedkeys.call(keymap.t('iif<CR><Tab>end') .. keymap.autoindent(), 'nx')
-    assert.are.same(vim.api.nvim_buf_get_lines(0, 0, -1, false), {
-      'if',
-      'end',
-    })
-  end)
-
   it('testability', function()
     feedkeys.call('i', 'n', function()
       feedkeys.call('', 'n', function()

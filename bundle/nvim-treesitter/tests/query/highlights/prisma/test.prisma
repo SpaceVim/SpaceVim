@@ -1,0 +1,56 @@
+generator client {
+// ^ keyword
+  provider = "go run github.com/prisma/prisma-client-go"
+  // ^ variable
+}
+
+datasource db {
+  provider = "postgresql"
+  //           ^ string
+  url      = env("DATABASE_URL")
+  //          ^ function
+}
+
+model User {
+  email      String
+  //          ^ type
+  username   String   @id
+  //                  ^ operator
+  password   String
+  fullName   String   @map("full_name")
+  //                    ^ function
+  avatarUrl  String   @map("avatar_url")
+  about      String?
+  //               ^ type
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("user")
+}
+
+model Reaction {
+  //           ^ punctuation.bracket
+  id        Int      @id @default(autoincrement())
+  //                             ^ punctuation.bracket
+  postId    Int      @map("post_id")
+  userId    String   @map("user_id")
+  type      ReactionType
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  post      Post     @relation(fields: [postId], references: [id])
+  //                             ^ property
+  user      User     @relation(fields: [userId], references: [username])
+  //                                   ^ punctuation.bracket
+
+  @@map("reaction")
+}
+
+enum ReactionType {
+// ^ keyword
+  LIKE
+  HAHA
+  SAD
+  ANGRY
+  // ^ constant
+}

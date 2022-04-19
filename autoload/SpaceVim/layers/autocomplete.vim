@@ -102,6 +102,11 @@ function! SpaceVim#layers#autocomplete#plugins() abort
           \ 'merged' : 0,
           \ 'loadconf' : 1,
           \ }])
+    if g:spacevim_snippet_engine ==# 'neosnippet'
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-neosnippet', {
+            \ 'merged' : 0,
+            \ }])
+    endif
   elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
     call add(plugins, ['prabirshrestha/asyncomplete.vim', {
           \ 'loadconf' : 1,

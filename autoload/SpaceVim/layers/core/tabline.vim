@@ -111,6 +111,8 @@ function! s:tabname(bufnr) abort
   let name = bufname(a:bufnr)
   if name ==# '\[Vader\]'
     let fn = '[Vader]'
+  elseif name =~# 'term://.*'
+    let fn = 'Terminal'
   else
     let fn = fnamemodify(name, ':t')
   endif
