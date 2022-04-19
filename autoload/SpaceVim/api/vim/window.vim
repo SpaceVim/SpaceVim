@@ -25,7 +25,7 @@
 " 
 "   Sets the cursor position to {pos} in the window {winid}.
 "
-" is_float({winnr})
+" is_float({winid})
 "
 "   Check if the window is a floating windows, return `v:true` if the window
 "   is a floating window.
@@ -73,25 +73,22 @@ else
 endif
 
 if has('nvim')
-  function! s:self.is_float(winnr) abort
-    let id = win_getid(a:winnr)
-    if id > 0 && exists('*nvim_win_get_config')
-      return has_key(nvim_win_get_config(id), 'col')
+  function! s:self.is_float(winid) abort
+    if a:winid > 0 && exists('*nvim_win_get_config')
+      try
+        return has_key(nvim_win_get_config(a:winid), 'col')
+      catch
+        return 0
+      endtry
     else
       return 0
     endif
   endfunction
 else
-  function! s:self.is_float(winnr) abort
-    " vim without win_getid() is old, which do not support floating window.
-    " so if_float always return 0
-    if !exists('*win_getid')
-      return 0
-    endif
-    let id = win_getid(a:winnr)
-    if id > 0 && exists('*popup_getoptions')
+  function! s:self.is_float(winid) abort
+    if a:winid > 0 && exists('*popup_getoptions')
       try
-        return has_key(popup_getoptions(id), 'col')
+        return has_key(popup_getoptions(a:winid), 'col')
       catch /^Vim\%((\a\+)\)\=:E993/
         return 0
       endtry
