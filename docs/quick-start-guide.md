@@ -74,7 +74,7 @@ and a C compiler (like `gcc`) to build the dll (see issue [#435](https://github.
 
 ### Windows
 
-The easiest way is to download and run [install.ps1](../install.ps1). The script installs or updates SpaceVim for Vim and Neovim (if it exists).
+The easiest way is to download and run [install.cmd](../install.cmd). The script installs or updates SpaceVim (if it exists) for Vim and Neovim.
 
 ## Run in docker
 

@@ -1,10 +1,4 @@
-#=============================================================================
-# install.ps1 --- bootstrap script for SpaceVim
-# Copyright (c) 2016-2021 Shidong Wang & Contributors
-# Author: Shidong Wang < wsdjeg@outlook.com >
-# URL: https://spacevim.org
-# License: GPLv3
-#=============================================================================
+@PowerShell -ExecutionPolicy Bypass -Command Invoke-Expression $('$args=@(^&{$args} %*);'+[String]::Join(';',(Get-Content '%~f0') -notmatch '^^@PowerShell.*EOF$')) & goto :EOF
 
 Push-Location ~
 
@@ -12,7 +6,7 @@ $app_name = "SpaceVim"
 $repo_url = "https://github.com/SpaceVim/SpaceVim.git"
 $repo_name = "SpaceVim"
 $repo_path = "$HOME\.SpaceVim"
-$version='2.0.0-dev'
+$version= "2.0.0-dev"
 
 echo ""
 echo "        /######                                     /##    /##/##             "
@@ -32,8 +26,7 @@ Function Pause ($Message = "Press any key to continue . . . ") {
     if ((Test-Path variable:psISE) -and $psISE) {
         $Shell = New-Object -ComObject "WScript.Shell"
         $Button = $Shell.Popup("Click OK to continue.", 0, "Script Paused", 0)
-    }
-    else {
+    } else {
         Write-Host -NoNewline $Message
         [void][System.Console]::ReadKey($true)
         Write-Host
@@ -51,8 +44,7 @@ if (Get-Command "git" -ErrorAction SilentlyContinue) {
     git version
     echo "[OK] Test successfully. Moving to next..."
     sleep 1
-}
-else {
+} else {
     echo ""
     echo "[ERROR] Unable to find 'git.exe' in your PATH"
     echo ">>> Ready to Exit......"
@@ -67,8 +59,7 @@ if (Get-Command "vim" -ErrorAction SilentlyContinue) {
     echo ($(vim --version) -split '\n')[0]
     echo "[OK] Test successfully. Moving to next..."
     sleep 1
-}
-else {
+} else {
     echo ""
     echo "[ERROR] Unable to find 'vim.exe' in your PATH"
     echo "Please install vim later or make your PATH correctly set!"
@@ -86,8 +77,7 @@ if (!(Test-Path $HOME\.SpaceVim)) {
     echo "==> Trying to clone $app_name"
     git clone $repo_url $repo_path
     echo "<== $app_name cloned"
-}
-else {
+} else {
     echo "==> Trying to update $app_name"
     Push-Location $repo_path
     git pull origin master
@@ -105,8 +95,7 @@ echo "==> Trying to install $app_name for Vim"
 if (!(Test-Path $HOME\vimfiles)) {
   cmd /c mklink /J $HOME\vimfiles $repo_path
   echo "[OK] vimfiles created"
-}
-else {
+} else {
     echo "Backing up vimfiles"
     if (Test-Path $HOME\vimfiles_back) {
         cmd /c rmdir /s /q $HOME\vimfiles_back
@@ -124,8 +113,7 @@ if (Get-Command "nvim" -ErrorAction SilentlyContinue) {
   if (!(Test-Path $HOME\AppData\Local\nvim)) {
     cmd /c mklink /J "$HOME\AppData\Local\nvim" $repo_path
     echo "[OK] nvim created"
-}
-  else {
+} else {
     if (Test-Path $HOME\AppData\Local\nvim_back) {
       cmd /c rmdir /s /q $HOME\AppData\Local\nvim_back
     }
