@@ -15,6 +15,7 @@ else
   let s:FLOAT = SpaceVim#api#import('vim#floating')
 endif
 let s:HI = SpaceVim#api#import('vim#highlight')
+let s:LOG = SpaceVim#logger#derive('scrollbar')
 
 scriptencoding utf-8
 
@@ -178,15 +179,14 @@ endfunction
 " the first argument is buffer number
 
 function! SpaceVim#plugins#scrollbar#clear(...) abort
-  let bufnr = get(a:000, 0, 0)
-  let state = getbufvar(bufnr, 'scrollbar_state')
-  if !empty(state) && has_key(state, 'winid')
-    noautocmd call s:FLOAT.win_close(state.winid, 1)
+  try
+    noautocmd call s:FLOAT.win_close(s:scrollbar_winid, 1)
     noautocmd call setbufvar(bufnr, 'scrollbar_state', {
           \ 'size' : state.size,
           \ 'bufnr' : state.bufnr,
           \ })
-  endif
+  catch
 
+  endtry
 endfunction
 
