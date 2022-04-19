@@ -40,6 +40,9 @@ augroup spacevim_scrollbar
   autocmd!
 augroup END
 
+let s:scrollbar_bufnr = -1
+let s:scrollbar_winid = -1
+
 function! SpaceVim#plugins#scrollbar#usable() abort
 
   return s:FLOAT.exists()
@@ -149,37 +152,27 @@ function! SpaceVim#plugins#scrollbar#show() abort
         \  'col' : float2nr(col),
         \  'focusable' : 0,
         \ }
-  let [bar_winid, bar_bufnr] = [0, 0]
   let state = getbufvar(bufnr, 'scrollbar_state')
-  if !empty(state)
-    let bar_bufnr = state.bufnr
-    if has_key(state, 'winid') && state.winid > 0
-      let bar_winid = state.winid
-    else
-      noautocmd let bar_winid = s:FLOAT.open_win(bar_bufnr, 0, opts)
-    endif
+  if !empty(state) && s:WIN.is_float(win_id2win(s:scrollbar_winid))
     if state.size !=# bar_size
-      noautocmd call s:BUF.buf_set_lines(bar_bufnr, 0, -1, 0, [])
       let bar_lines = s:gen_bar_lines(bar_size)
-      noautocmd call s:BUF.buf_set_lines(bar_bufnr, 0, bar_size, 0, bar_lines)
-      noautocmd call s:add_highlight(bar_bufnr, bar_size)
+      call s:BUF.buf_set_lines(s:scrollbar_bufnr, 0, -1, 0, bar_lines)
+      call s:add_highlight(s:scrollbar_bufnr, bar_size)
     endif
-    noautocmd call s:FLOAT.win_config(bar_winid, opts)
+    noautocmd call s:FLOAT.win_config(s:scrollbar_winid, opts)
   else
     let bar_lines = s:gen_bar_lines(bar_size)
-    let bar_bufnr = s:create_buf(bar_size, bar_lines)
-    let bar_winid = s:FLOAT.open_win(bar_bufnr, 0, opts)
+    let s:scrollbar_bufnr = s:create_buf(bar_size, bar_lines)
+    let s:scrollbar_winid = s:FLOAT.open_win(s:scrollbar_bufnr, 0, opts)
     if exists('&winhighlight')
-      call setwinvar(win_id2win(bar_winid), '&winhighlight', 'Normal:ScrollbarWinHighlight')
+      call setwinvar(win_id2win(s:scrollbar_winid), '&winhighlight', 'Normal:ScrollbarWinHighlight')
     endif
   endif
   call setbufvar(bufnr, 'scrollbar_state', {
-        \ 'wind' : bar_winid,
-        \ 'bufnr' : bar_bufnr,
+        \ 'wind' : s:scrollbar_winid,
+        \ 'bufnr' : s:scrollbar_bufnr,
         \ 'size'  : bar_size,
         \ })
-  return [bar_winid, bar_bufnr]
-
 endfunction
 
 " the first argument is buffer number
