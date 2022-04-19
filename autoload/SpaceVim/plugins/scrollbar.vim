@@ -149,14 +149,14 @@ function! SpaceVim#plugins#scrollbar#show() abort
         \  'col' : float2nr(col),
         \  'focusable' : 0,
         \ }
-  let [bar_winnr, bar_bufnr] = [0, 0]
+  let [bar_winid, bar_bufnr] = [0, 0]
   let state = getbufvar(bufnr, 'scrollbar_state')
   if !empty(state)
     let bar_bufnr = state.bufnr
-    if has_key(state, 'winnr') && win_id2win(state.winnr) > 0
-      let bar_winnr = state.winnr
+    if has_key(state, 'winid') && state.winid > 0
+      let bar_winid = state.winid
     else
-      noautocmd let bar_winnr = s:FLOAT.open_win(bar_bufnr, 0, opts)
+      noautocmd let bar_winid = s:FLOAT.open_win(bar_bufnr, 0, opts)
     endif
     if state.size !=# bar_size
       noautocmd call s:BUF.buf_set_lines(bar_bufnr, 0, -1, 0, [])
@@ -164,21 +164,21 @@ function! SpaceVim#plugins#scrollbar#show() abort
       noautocmd call s:BUF.buf_set_lines(bar_bufnr, 0, bar_size, 0, bar_lines)
       noautocmd call s:add_highlight(bar_bufnr, bar_size)
     endif
-    noautocmd call s:FLOAT.win_config(bar_winnr, opts)
+    noautocmd call s:FLOAT.win_config(bar_winid, opts)
   else
     let bar_lines = s:gen_bar_lines(bar_size)
     let bar_bufnr = s:create_buf(bar_size, bar_lines)
-    let bar_winnr = s:FLOAT.open_win(bar_bufnr, 0, opts)
+    let bar_winid = s:FLOAT.open_win(bar_bufnr, 0, opts)
     if exists('&winhighlight')
-      call setwinvar(bar_winnr, '&winhighlight', 'Normal:ScrollbarWinHighlight')
+      call setwinvar(win_id2win(bar_winid), '&winhighlight', 'Normal:ScrollbarWinHighlight')
     endif
   endif
   call setbufvar(bufnr, 'scrollbar_state', {
-        \ 'winnr' : bar_winnr,
+        \ 'wind' : bar_winid,
         \ 'bufnr' : bar_bufnr,
         \ 'size'  : bar_size,
         \ })
-  return [bar_winnr, bar_bufnr]
+  return [bar_winid, bar_bufnr]
 
 endfunction
 
@@ -187,10 +187,8 @@ endfunction
 function! SpaceVim#plugins#scrollbar#clear(...) abort
   let bufnr = get(a:000, 0, 0)
   let state = getbufvar(bufnr, 'scrollbar_state')
-  if !empty(state) && has_key(state, 'winnr')
-    if win_id2win(state.winnr) > 0
-      noautocmd call s:FLOAT.win_close(state.winnr, 1)
-    endif
+  if !empty(state) && has_key(state, 'winid')
+    noautocmd call s:FLOAT.win_close(state.winid, 1)
     noautocmd call setbufvar(bufnr, 'scrollbar_state', {
           \ 'size' : state.size,
           \ 'bufnr' : state.bufnr,
