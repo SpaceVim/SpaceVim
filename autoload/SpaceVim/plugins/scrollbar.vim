@@ -144,9 +144,9 @@ function! SpaceVim#plugins#scrollbar#show() abort
         \  'relative' : 'win',
         \  'win' : winid,
         \  'width' : s:get('width'),
-        \  'height' : bar_size,
-        \  'row' : row,
-        \  'col' : col,
+        \  'height' : float2nr(bar_size),
+        \  'row' : float2nr(row),
+        \  'col' : float2nr(col),
         \  'focusable' : 0,
         \ }
   let [bar_winnr, bar_bufnr] = [0, 0]
