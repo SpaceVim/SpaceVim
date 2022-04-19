@@ -678,7 +678,7 @@ if exists('*nvim_open_win') && exists('*nvim_win_set_buf')
     let linenr = str2nr(matchstr(line, ':\d\+:')[1:-2])
     noautocmd let bufnr = s:BUFFER.bufadd(filename)
     call bufload(bufnr)
-    if s:Window.is_float(win_id2win(s:preview_win_id))
+    if s:Window.is_float(s:preview_win_id)
       call nvim_win_set_buf(s:preview_win_id, bufnr)
     else
       let flygrep_win_height = 16
@@ -699,7 +699,7 @@ if exists('*nvim_open_win') && exists('*nvim_win_set_buf')
     call s:MPT._build_prompt()
   endfunction
   function! s:close_preview_win() abort
-    if s:Window.is_float(win_id2win(s:preview_win_id))
+    if s:Window.is_float(s:preview_win_id)
       call s:FLOATING.win_close(s:preview_win_id, 1)
     endif
   endfunction
@@ -943,7 +943,7 @@ function! s:update_statusline() abort
     return
   endif
 
-  if s:SL.support_float() && win_id2tabwin(s:flygrep_win_id)[0] ==# tabpagenr() && s:Window.is_float(win_id2win(s:flygrep_win_id))
+  if s:SL.support_float() && win_id2tabwin(s:flygrep_win_id)[0] ==# tabpagenr() && s:Window.is_float(s:flygrep_win_id)
     noautocmd call s:SL.open_float([
           \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
           \ [' ', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],

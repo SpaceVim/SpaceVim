@@ -371,7 +371,7 @@ fu! SpaceVim#mapping#SmartClose() abort
       let num = num - 1
     elseif getwinvar(i, '&previewwindow') == 1 && winnr() !=# i
       let num = num - 1
-    elseif s:WIN.is_float(i)
+    elseif s:WIN.is_float(win_getid(i))
       let num = num - 1
     endif
   endfor

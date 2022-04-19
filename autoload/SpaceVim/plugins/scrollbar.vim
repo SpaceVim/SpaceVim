@@ -107,7 +107,7 @@ endfunction
 
 function! SpaceVim#plugins#scrollbar#show() abort
   let [winnr, bufnr, winid] = [winnr(), bufnr(), win_getid()]
-  if s:WIN.is_float(winnr)
+  if s:WIN.is_float(winid)
     return
   endif
 
@@ -143,7 +143,7 @@ function! SpaceVim#plugins#scrollbar#show() abort
         \  'focusable' : 0,
         \ }
   let state = getbufvar(bufnr, 'scrollbar_state')
-  if !empty(state) && s:WIN.is_float(win_id2win(s:scrollbar_winid))
+  if !empty(state) && s:WIN.is_float(s:scrollbar_winid)
     if state.size !=# bar_size
       let bar_lines = s:gen_bar_lines(bar_size)
       call s:BUF.buf_set_lines(s:scrollbar_bufnr, 0, -1, 0, bar_lines)
@@ -168,7 +168,7 @@ endfunction
 " the first argument is buffer number
 
 function! SpaceVim#plugins#scrollbar#clear(...) abort
-  if s:WIN.is_float(win_id2win(s:scrollbar_winid))
+  if s:WIN.is_float(s:scrollbar_winid)
     call s:FLOAT.win_close(s:scrollbar_winid, 1)
   endif
 endfunction
