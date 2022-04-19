@@ -75,7 +75,11 @@ endif
 if has('nvim')
   function! s:self.is_float(winid) abort
     if a:winid > 0 && exists('*nvim_win_get_config')
-      return has_key(nvim_win_get_config(a:winid), 'col')
+      try
+        return has_key(nvim_win_get_config(a:winid), 'col')
+      catch
+        return 0
+      endtry
     else
       return 0
     endif
