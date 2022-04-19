@@ -96,24 +96,13 @@ function! s:fix_size(size) abort
   return max([s:get('min_size'), min([s:get('max_size'), a:size])])
 endfunction
 
-
-let s:next_index = 0
-function! s:next_buf_index() abort
-  let s:next_index += 1
-  return s:next_index - 1
-endfunction
-
-function! s:create_buf(size, lines) abort
-  let name = 'scrollbar_' . s:next_buf_index()
-  noautocmd let bufnr = s:BUF.bufadd(name)
-  call setbufvar(bufnr, '&buflisted', 0)
-  call setbufvar(bufnr, '&swapfile', 0)
-  call setbufvar(bufnr, '&bufhidden', 'hide')
-  call setbufvar(bufnr, '&buftype', 'nofile')
-  noautocmd call setbufvar(bufnr, '&filetype', 'scrollbar')
-  noautocmd call s:BUF.buf_set_lines(bufnr, 0, a:size, 0, a:lines)
-  call s:add_highlight(bufnr, a:size)
-  return bufnr
+function! s:create_scrollbar_buffer(size, lines) abort
+  if !bufexists(s:scrollbar_bufnr)
+    let s:scrollbar_bufnr = s:BUF.create_buf(0, 1)
+  endif
+  call s:BUF.buf_set_lines(s:scrollbar_bufnr, 0, -1, 0, a:lines)
+  call s:add_highlight(s:scrollbar_bufnr, a:size)
+  return s:scrollbar_bufnr
 endfunction
 
 function! SpaceVim#plugins#scrollbar#show() abort
@@ -163,7 +152,7 @@ function! SpaceVim#plugins#scrollbar#show() abort
     noautocmd call s:FLOAT.win_config(s:scrollbar_winid, opts)
   else
     let bar_lines = s:gen_bar_lines(bar_size)
-    let s:scrollbar_bufnr = s:create_buf(bar_size, bar_lines)
+    let s:scrollbar_bufnr = s:create_scrollbar_buffer(bar_size, bar_lines)
     let s:scrollbar_winid = s:FLOAT.open_win(s:scrollbar_bufnr, 0, opts)
     if exists('&winhighlight')
       call setwinvar(win_id2win(s:scrollbar_winid), '&winhighlight', 'Normal:ScrollbarWinHighlight')
