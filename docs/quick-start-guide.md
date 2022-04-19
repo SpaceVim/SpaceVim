@@ -11,10 +11,11 @@ configure, and use SpaceVim. It also lists a series of resources for learning Sp
 If you've never heard of SpaceVim, this is the best place to start.
 It will give you a good idea of what SpaceVim is like.
 
+
 <!-- vim-markdown-toc GFM -->
 
 - [Installation](#installation)
-  - [Linux and macOS](#linux-and-macos)
+- [Linux and macOS](#linux-and-macos)
   - [Windows](#windows)
 - [Run in docker](#run-in-docker)
 - [Configuration](#configuration)
@@ -32,7 +33,7 @@ which are needed for downloading plugins and fonts.
 
 If you are using a terminal emulator, you will need to set the font in the terminal configuration.
 
-### Linux and macOS
+## Linux and macOS
 
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash
@@ -66,7 +67,7 @@ and a C compiler (like `gcc`) to build the dll (see issue [#435](https://github.
 
 ### Windows
 
-The easiest way is to download [install.cmd](../install.cmd) and run it as administrator, or install SpaceVim manually.
+The easiest way is to download and run [install.cmd](../install.cmd) or install [SpaceVim manually](../faq.md#how-to-perform-manual-installation). The script installs or updates SpaceVim (if it exists) for Vim and Neovim.
 
 ## Run in docker
 
