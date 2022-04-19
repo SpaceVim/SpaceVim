@@ -171,7 +171,7 @@ function! SpaceVim#layers#ui#config() abort
   augroup spacevim_layer_ui
     autocmd!
     let events = join(filter( ['BufEnter','WinEnter', 'QuitPre', 'CursorMoved', 'VimResized', 'FocusGained', 'WinScrolled' ], 'exists("##" . v:val)'), ',')
-    if s:enable_scrollbar && has('nvim')
+    if s:enable_scrollbar && SpaceVim#plugins#scrollbar#usable()
       exe printf('autocmd %s * call SpaceVim#plugins#scrollbar#show()',
             \ events)
       autocmd WinLeave,BufLeave,BufWinLeave,FocusLost
