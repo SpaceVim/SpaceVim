@@ -98,6 +98,14 @@ else
   endfunction
 endif
 
+function! s:self.win_count() abort
+  if has('nvim') && exists('*nvim_win_get_config')
+    return len(filter(range(1, winnr('$')), '!has_key(nvim_win_get_config(win_getid(v:val)), "col")'))
+  else
+    return winnr('$')
+  endif
+endfunction
+
 function! s:self.winexists(winid) abort
   if !exists('win_id2tabwin')
     return 0

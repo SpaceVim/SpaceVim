@@ -37,7 +37,8 @@ let s:LANG = SpaceVim#api#import('language')
 
 let s:JSON = SpaceVim#api#import('data#json')
 
-let s:VIM =  SpaceVim#api#import('vim')
+let s:VIM = SpaceVim#api#import('vim')
+let s:WIN = SpaceVim#api#import('vim#window')
 
 
 " init
@@ -834,7 +835,7 @@ function! SpaceVim#layers#core#statusline#ctrlp_status(str) abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#jump(i) abort
-  if winnr('$') >= a:i
+  if s:WIN.win_count() >= a:i
     exe a:i . 'wincmd w'
   endif
 endfunction
