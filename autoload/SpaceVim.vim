@@ -1582,27 +1582,29 @@ endfunction
 " argc() return number of files
 " argv() return a list of files/directories
 function! s:parser_argv() abort
-  if  !exists('v:argv')
-        \ || (len(v:argv) >=# 3 && index(v:argv, '--embed') ==# -1)
-    " or do not support v:argv
-    return [0, get(v:, 'argv', ['failed to get v:argv'])]
-  elseif len(v:argv) ==# 1 || index(v:argv, '--embed') !=# -1
-    " if there is no arguments
-    " or use embed nvim
-    return [0]
-  elseif v:argv[1] =~# '/$'
-    let f = fnamemodify(expand(v:argv[1]), ':p')
-    if isdirectory(f)
-      return [1, f]
-    else
+  if exists('v:argv')
+    " if use embed nvim
+    " for exmaple: neovim-qt
+    if index(v:argv, '--dembed') !=# -1
+      return [0]
+    elseif v:argv[1] =~# '/$'
+      let f = fnamemodify(expand(v:argv[1]), ':p')
+      if isdirectory(f)
+        return [1, f]
+      else
+        return [1, getcwd()]
+      endif
+    elseif v:argv[1] ==# '.'
       return [1, getcwd()]
+    elseif isdirectory(expand(v:argv[1]))
+      return [1, fnamemodify(expand(v:argv[1]), ':p')]
+    else
+      return [2, get(v:, 'argv', ['failed to get v:argv'])]
     endif
-  elseif v:argv[1] ==# '.'
-    return [1, getcwd()]
-  elseif isdirectory(expand(v:argv[1]))
-    return [1, fnamemodify(expand(v:argv[1]), ':p')]
   else
-    return [2, get(v:, 'argv', ['failed to get v:argv'])]
+    if !argc() && line2byte('$') == -1
+      return [0]
+    endif
   endif
 endfunction
 
