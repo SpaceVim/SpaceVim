@@ -22,72 +22,73 @@ CONTENTS                                                   *SpaceVim-contents*
       2. autocomplete_parens............|SpaceVim-options-autocomplete_parens|
       3. bootstrap_after....................|SpaceVim-options-bootstrap_after|
       4. bootstrap_before..................|SpaceVim-options-bootstrap_before|
-      5. buffer_index_type................|SpaceVim-options-buffer_index_type|
-      6. checkinstall..........................|SpaceVim-options-checkinstall|
-      7. code_runner_focus................|SpaceVim-options-code_runner_focus|
-      8. colorscheme............................|SpaceVim-options-colorscheme|
-      9. colorscheme_bg......................|SpaceVim-options-colorscheme_bg|
-      10. commandline_prompt.............|SpaceVim-options-commandline_prompt|
-      11. data_dir.................................|SpaceVim-options-data_dir|
-      12. default_custom_leader.......|SpaceVim-options-default_custom_leader|
-      13. default_indent.....................|SpaceVim-options-default_indent|
-      14. enable_bepo_layout.............|SpaceVim-options-enable_bepo_layout|
-      15. enable_cursorcolumn...........|SpaceVim-options-enable_cursorcolumn|
-      16. enable_cursorline...............|SpaceVim-options-enable_cursorline|
-      17. enable_debug.........................|SpaceVim-options-enable_debug|
-      18. enable_googlesuggest.........|SpaceVim-options-enable_googlesuggest|
-      19. enable_guicolors.................|SpaceVim-options-enable_guicolors|
-      20. enable_key_frequency.........|SpaceVim-options-enable_key_frequency|
-      21. enable_projects_cache.......|SpaceVim-options-enable_projects_cache|
-      22. enable_statusline_bfpath.|SpaceVim-options-enable_statusline_bfpath|
-      23. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
-      24. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
-      25. enable_tabline_ft_icon.....|SpaceVim-options-enable_tabline_ft_icon|
-      26. enable_vimfiler_welcome...|SpaceVim-options-enable_vimfiler_welcome|
-      27. enable_ycm.............................|SpaceVim-options-enable_ycm|
-      28. error_symbol.........................|SpaceVim-options-error_symbol|
-      29. escape_key_binding.............|SpaceVim-options-escape_key_binding|
-      30. expand_tab.............................|SpaceVim-options-expand_tab|
-      31. file_searching_tools.........|SpaceVim-options-file_searching_tools|
-      32. filemanager...........................|SpaceVim-options-filemanager|
-      33. filetree_direction.............|SpaceVim-options-filetree_direction|
-      34. guifont...................................|SpaceVim-options-guifont|
-      35. home_files_number...............|SpaceVim-options-home_files_number|
-      36. info_symbol...........................|SpaceVim-options-info_symbol|
-      37. keep_server_alive...............|SpaceVim-options-keep_server_alive|
-      38. language.................................|SpaceVim-options-language|
-      39. lint_engine...........................|SpaceVim-options-lint_engine|
-      40. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
-      41. max_column.............................|SpaceVim-options-max_column|
-      42. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
-      43. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
-      44. project_auto_root...............|SpaceVim-options-project_auto_root|
-      45. project_non_root.................|SpaceVim-options-project_non_root|
-      46. project_rooter_outermost.|SpaceVim-options-project_rooter_outermost|
-      47. project_rooter_patterns...|SpaceVim-options-project_rooter_patterns|
-      48. projects_cache_num.............|SpaceVim-options-projects_cache_num|
-      49. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
-      50. relativenumber.....................|SpaceVim-options-relativenumber|
-      51. retry_cnt...............................|SpaceVim-options-retry_cnt|
-      52. search_tools.........................|SpaceVim-options-search_tools|
-      53. sidebar_width.......................|SpaceVim-options-sidebar_width|
-      54. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      55. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      56. statusline_left...................|SpaceVim-options-statusline_left|
-      57. statusline_right.................|SpaceVim-options-statusline_right|
-      58. statusline_separator.........|SpaceVim-options-statusline_separator|
-      59. statusline_unicode.............|SpaceVim-options-statusline_unicode|
-      60. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      61. todo_labels...........................|SpaceVim-options-todo_labels|
-      62. todo_prefix...........................|SpaceVim-options-todo_prefix|
-      63. vim_help_language...............|SpaceVim-options-vim_help_language|
-      64. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      65. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      66. wildignore.............................|SpaceVim-options-wildignore|
-      67. windisk_encoding.................|SpaceVim-options-windisk_encoding|
-      68. windows_index_type.............|SpaceVim-options-windows_index_type|
-      69. windows_leader.....................|SpaceVim-options-windows_leader|
-      70. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      5. bootstrap_script..................|SpaceVim-options-bootstrap_script|
+      6. buffer_index_type................|SpaceVim-options-buffer_index_type|
+      7. checkinstall..........................|SpaceVim-options-checkinstall|
+      8. code_runner_focus................|SpaceVim-options-code_runner_focus|
+      9. colorscheme............................|SpaceVim-options-colorscheme|
+      10. colorscheme_bg.....................|SpaceVim-options-colorscheme_bg|
+      11. commandline_prompt.............|SpaceVim-options-commandline_prompt|
+      12. data_dir.................................|SpaceVim-options-data_dir|
+      13. default_custom_leader.......|SpaceVim-options-default_custom_leader|
+      14. default_indent.....................|SpaceVim-options-default_indent|
+      15. enable_bepo_layout.............|SpaceVim-options-enable_bepo_layout|
+      16. enable_cursorcolumn...........|SpaceVim-options-enable_cursorcolumn|
+      17. enable_cursorline...............|SpaceVim-options-enable_cursorline|
+      18. enable_debug.........................|SpaceVim-options-enable_debug|
+      19. enable_googlesuggest.........|SpaceVim-options-enable_googlesuggest|
+      20. enable_guicolors.................|SpaceVim-options-enable_guicolors|
+      21. enable_key_frequency.........|SpaceVim-options-enable_key_frequency|
+      22. enable_projects_cache.......|SpaceVim-options-enable_projects_cache|
+      23. enable_statusline_bfpath.|SpaceVim-options-enable_statusline_bfpath|
+      24. enable_statusline_mode.....|SpaceVim-options-enable_statusline_mode|
+      25. enable_statusline_tag.......|SpaceVim-options-enable_statusline_tag|
+      26. enable_tabline_ft_icon.....|SpaceVim-options-enable_tabline_ft_icon|
+      27. enable_vimfiler_welcome...|SpaceVim-options-enable_vimfiler_welcome|
+      28. enable_ycm.............................|SpaceVim-options-enable_ycm|
+      29. error_symbol.........................|SpaceVim-options-error_symbol|
+      30. escape_key_binding.............|SpaceVim-options-escape_key_binding|
+      31. expand_tab.............................|SpaceVim-options-expand_tab|
+      32. file_searching_tools.........|SpaceVim-options-file_searching_tools|
+      33. filemanager...........................|SpaceVim-options-filemanager|
+      34. filetree_direction.............|SpaceVim-options-filetree_direction|
+      35. guifont...................................|SpaceVim-options-guifont|
+      36. home_files_number...............|SpaceVim-options-home_files_number|
+      37. info_symbol...........................|SpaceVim-options-info_symbol|
+      38. keep_server_alive...............|SpaceVim-options-keep_server_alive|
+      39. language.................................|SpaceVim-options-language|
+      40. lint_engine...........................|SpaceVim-options-lint_engine|
+      41. lint_on_the_fly...................|SpaceVim-options-lint_on_the_fly|
+      42. max_column.............................|SpaceVim-options-max_column|
+      43. plugin_bundle_dir...............|SpaceVim-options-plugin_bundle_dir|
+      44. plugin_manager_processes.|SpaceVim-options-plugin_manager_processes|
+      45. project_auto_root...............|SpaceVim-options-project_auto_root|
+      46. project_non_root.................|SpaceVim-options-project_non_root|
+      47. project_rooter_outermost.|SpaceVim-options-project_rooter_outermost|
+      48. project_rooter_patterns...|SpaceVim-options-project_rooter_patterns|
+      49. projects_cache_num.............|SpaceVim-options-projects_cache_num|
+      50. realtime_leader_guide.......|SpaceVim-options-realtime_leader_guide|
+      51. relativenumber.....................|SpaceVim-options-relativenumber|
+      52. retry_cnt...............................|SpaceVim-options-retry_cnt|
+      53. search_tools.........................|SpaceVim-options-search_tools|
+      54. sidebar_width.......................|SpaceVim-options-sidebar_width|
+      55. snippet_engine.....................|SpaceVim-options-snippet_engine|
+      56. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      57. statusline_left...................|SpaceVim-options-statusline_left|
+      58. statusline_right.................|SpaceVim-options-statusline_right|
+      59. statusline_separator.........|SpaceVim-options-statusline_separator|
+      60. statusline_unicode.............|SpaceVim-options-statusline_unicode|
+      61. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      62. todo_labels...........................|SpaceVim-options-todo_labels|
+      63. todo_prefix...........................|SpaceVim-options-todo_prefix|
+      64. vim_help_language...............|SpaceVim-options-vim_help_language|
+      65. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      66. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      67. wildignore.............................|SpaceVim-options-wildignore|
+      68. windisk_encoding.................|SpaceVim-options-windisk_encoding|
+      69. windows_index_type.............|SpaceVim-options-windows_index_type|
+      70. windows_leader.....................|SpaceVim-options-windows_leader|
+      71. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Public functions.....................................|SpaceVim-functions|
@@ -339,6 +340,19 @@ custom configuration file. for example:
 >
   [options]
     bootstrap_before = 'myspacevim#before'
+<
+
+==============================================================================
+BOOTSTRAP_SCRIPT                           *SpaceVim-options-bootstrap_script*
+
+set the bootstrap_script string, this string will be called via `nvim_exec`,
+that means this option only can be used in neovim.
+>
+  [options]
+    bootstrap_script = '''
+  let g:foo_test = 1
+  let g:zff_test = 1
+  '''
 <
 
 ==============================================================================

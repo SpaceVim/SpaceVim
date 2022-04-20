@@ -201,6 +201,26 @@ function! s:apply(config, type) abort
     " <
 
     let g:_spacevim_bootstrap_after = get(options, 'bootstrap_after', '')
+
+    ""
+    " @section bootstrap_script, options-bootstrap_script
+    " @parentsection options
+    " set the bootstrap_script string, this string will be called via
+    " `nvim_exec`, that means this option only can be used in neovim.
+    " >
+    "   [options]
+    "     bootstrap_script = '''
+    "   let g:foo_test = 1
+    "   let g:zff_test = 1
+    "   '''
+    " <
+
+    let bootstrap_script = get(options, 'bootstrap_script', '')
+
+    if !empty(bootstrap_script) && exists('*nvim_exec')
+      call nvim_exec(bootstrap_script, 0)
+    endif
+
     if !empty(bootstrap_before)
       try
         call call(bootstrap_before, [])
