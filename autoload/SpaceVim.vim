@@ -1585,7 +1585,7 @@ function! s:parser_argv() abort
   if exists('v:argv')
     " if use embed nvim
     " for exmaple: neovim-qt
-    if index(v:argv, '--dembed') !=# -1
+    if index(v:argv, '--embed') !=# -1
       return [0]
     elseif v:argv[1] =~# '/$'
       let f = fnamemodify(expand(v:argv[1]), ':p')
