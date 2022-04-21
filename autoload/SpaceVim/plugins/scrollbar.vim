@@ -131,13 +131,13 @@ function! SpaceVim#plugins#scrollbar#show() abort
     return
   endif
 
-  let pos = getpos('.')
-  let curr_line = pos[1]
+  " the position should be based on first line of current screen.
+  let curr_line = line('w0')
   let bar_size = s:fix_size(height * height / total)
 
   let width = winwidth(winnr)
   let col = width - s:get('width') - s:get('right_offset')
-  let row = (height - bar_size) * (curr_line * 1.0  / total)
+  let row = (height - bar_size) * (curr_line * 1.0  / (total - height))
 
   let opts = {
         \  'style' : 'minimal',
@@ -176,4 +176,3 @@ function! SpaceVim#plugins#scrollbar#clear(...) abort
     call s:FLOAT.win_close(s:scrollbar_winid, 1)
   endif
 endfunction
-
