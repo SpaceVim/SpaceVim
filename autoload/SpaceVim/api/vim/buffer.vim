@@ -100,8 +100,11 @@ if exists('*nvim_create_buf')
 else
   function! s:self.create_buf(listed, scratch) abort
     let bufnr = self.bufadd('')
-    " in vim, a:listed must be number
-    " why can not use v:true and v:false
+    if exists('*bufloaded')
+          \ && exists('*bufload')
+          \ && !bufloaded(bufnr)
+      call bufload(bufnr)
+    endif
     call setbufvar(bufnr, '&buflisted', a:listed ? 1 : 0)
     if a:scratch
       call setbufvar(bufnr, '&swapfile', 0)
