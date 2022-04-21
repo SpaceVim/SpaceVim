@@ -492,7 +492,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     catch
     endtry
     let st = '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# startify %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+          \ . '%#SpaceVim_statusline_b# startify %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
     if index(g:spacevim_statusline_left, 'vcs') != -1
       let st .= '%#SpaceVim_statusline_c#' .  call(s:registed_sections['vcs'], [])
             \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
