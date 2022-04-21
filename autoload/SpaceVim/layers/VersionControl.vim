@@ -90,19 +90,11 @@ function! s:git_branch() abort
     catch
     endtry
   elseif exists('g:loaded_git')
-    try
-      let head = git#branch#current()
-      if g:spacevim_statusline_unicode == 1
-        return empty(head) ? '' : '  '.head . ' ' . s:gtm_status()
-      else
-        return empty(head) ? '' : ' '.head . ' ' . s:gtm_status()
-      endif
-    catch
-    endtry
+      let prefix = g:spacevim_statusline_unicode ? '' : ''
+      return printf('%%{git#branch#current("%s")}', prefix)
   endif
   return ''
 endfunction
-
 
 function! s:gtm_status() abort
   if s:enable_gtm_status

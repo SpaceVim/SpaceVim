@@ -99,13 +99,19 @@ function! s:on_exit_show_branch(id, data, event) abort
         \ })
 endfunction
 
-function! git#branch#current() abort
+function! git#branch#current(...) abort
   let pwd = getcwd()
   let branch = get(s:branch_info, pwd, {})
   if empty(branch)
     call s:update_branch_name(pwd)
   endif
-  return get(branch, 'name', '')
+  let branch_name = get(branch, 'name', '')
+  let prefix = get(a:000, 0 , '')
+  if !empty(branch_name)
+    return ' ' . prefix . ' ' . branch_name . ' '
+  else
+    return ''
+  endif
 endfunction
 
 function! git#branch#detect() abort
