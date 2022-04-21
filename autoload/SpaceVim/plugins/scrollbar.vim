@@ -141,7 +141,11 @@ function! SpaceVim#plugins#scrollbar#show() abort
   let precision = height - bar_size
   let each_line = (total - height) * 1.0 / precision
   let visble_line = min([curr_line, total - height + 1])
-  let row = float2nr(visble_line / each_line)
+  if each_line >= 1
+    let row = float2nr(visble_line / each_line)
+  else
+    let row = float2nr(visble_line / each_line - 1 / each_line)
+  endif
 
   let opts = {
         \  'style' : 'minimal',
