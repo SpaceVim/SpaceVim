@@ -159,6 +159,11 @@ function! s:open_default_shell(open_with_file_cwd) abort
     endif
   else
     let path = SpaceVim#plugins#projectmanager#current_root()
+    " if the current file is not in a project, the projectmanager return empty
+    " string. Then use current directory as default cwd.
+    if empty(path)
+      let path  = getcwd()
+    endif
   endif
 
   " look for already opened terminal windows
