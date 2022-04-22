@@ -199,6 +199,10 @@ endfunction
 if has('nvim')
   function! s:self.getchar(...) abort
     if !empty(get(g:, '_spacevim_input_list', []))
+      let input_timeout = get(g:, '_spacevim_input_timeout', 0)
+      if input_timeout > 0
+        exe printf('sleep %dm', input_timeout)
+      endif
       return remove(g:_spacevim_input_list, 0)
     endif
     try
@@ -211,6 +215,10 @@ if has('nvim')
 else
   function! s:self.getchar(...) abort
     if !empty(get(g:, '_spacevim_input_list', []))
+      let input_timeout = get(g:, '_spacevim_input_timeout', 0)
+      if input_timeout > 0
+        exe printf('sleep %dm', input_timeout)
+      endif
       return remove(g:_spacevim_input_list, 0)
     endif
     try
