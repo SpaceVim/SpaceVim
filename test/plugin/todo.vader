@@ -1,0 +1,3 @@
+Execute ( SpaceVim plugin: todo.vim ):
+  call SpaceVim#plugins#todo#list()
+
