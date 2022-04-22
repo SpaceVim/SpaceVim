@@ -394,7 +394,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
             \ . ( has('patch-8.0.1384') 
             \ ? ((getqflist({'title' : 0}).title ==# ':setqflist()') ? '' : 
             \ '%#SpaceVim_statusline_c#'
-            \ . getqflist({'title' : 0}).title
+            \ . ' ' . getqflist({'title' : 0}).title
             \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
             \ ) : '')
     else
@@ -408,7 +408,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
             \ ? ((getloclist(winnr(),{'title' : 0}).title ==# ':setloclist()')
             \ ? '' : 
             \ '%#SpaceVim_statusline_c#'
-            \ . getloclist(winnr(),{'title' : 0}).title
+            \ . ' ' . getloclist(winnr(),{'title' : 0}).title
             \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
             \ ) : '')
 
