@@ -41,6 +41,7 @@ endif
 " <
 
 let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
+let s:FILE = SpaceVim#api#import('file')
 let s:enabled_clients = []
 
 function! SpaceVim#layers#lsp#health() abort
@@ -258,7 +259,7 @@ function! SpaceVim#layers#lsp#set_variable(var) abort
   if !empty(override)
     call extend(s:lsp_servers, override, 'force')
   endif
-  let l:cwd = getcwd()
+  let l:cwd = s:FILE.path_to_fname(getcwd())
   for ft in get(a:var, 'filetypes', [])
     let l:cmds = get(s:lsp_servers, ft, [''])
     let l:exec = l:cmds[0]
