@@ -56,7 +56,10 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-yarp',  {'merged': 0}])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-hug-neovim-rpc',  {'merged': 0}])
   endif
-  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-smoothie',  {'merged': 0}])
+  if has('timers') && has('float')
+    " vim-smoothie needs +timers and +float
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-smoothie',  {'merged': 0}])
+  endif
   if g:spacevim_filemanager ==# 'nerdtree'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nerdtree', { 'merged' : 0,
           \ 'loadconf' : 1}])
