@@ -33,7 +33,7 @@ which are needed for downloading plugins and fonts.
 
 If you are using a terminal emulator, you will need to set the font in the terminal configuration.
 
-## Linux and macOS
+### Linux and macOS
 
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash
@@ -67,7 +67,7 @@ and a C compiler (like `gcc`) to build the dll (see issue [#435](https://github.
 
 ### Windows
 
-The easiest way is to download and run [install.cmd](../install.cmd) or install [SpaceVim manually](../faq.md#how-to-perform-manual-installation). The script installs or updates SpaceVim (if it exists) for Vim and Neovim.
+The easiest way is to download and run [install.cmd](../install.cmd) or install [SpaceVim manually](https://spacevim.org/faq/#how-to-perform-manual-installation). The script installs or updates SpaceVim (if it exists) for Vim and Neovim.
 
 ## Run in docker
 
