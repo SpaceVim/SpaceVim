@@ -81,13 +81,18 @@ func! s:self._handle_input(...) abort
       call call(self._function_key[char], [])
       continue
     endif
-    if self._c_r_mode ==# 1 && char =~# '[a-zA-Z0-9"+:/]'
-      let reg = '@' . char
-      let paste = get(split(eval(reg), "\n"), 0, '')
-      let self._prompt.begin = self._prompt.begin . paste
-      let self._prompt.cursor = matchstr(self._prompt.end, '.$')
-      let self._c_r_mode = 0
-      call self._build_prompt()
+    if self._c_r_mode ==# 1
+      if char =~# '^[a-zA-Z0-9"+:/]$'
+        let reg = '@' . char
+        let paste = get(split(eval(reg), "\n"), 0, '')
+        let self._prompt.begin = self._prompt.begin . paste
+        let self._prompt.cursor = matchstr(self._prompt.end, '.$')
+        let self._c_r_mode = 0
+        call self._build_prompt()
+      else
+        let self._c_r_mode = 0
+        continue
+      endif
     elseif char ==# "\<C-r>"
       let self._c_r_mode = 1
       call timer_start(2000, self._c_r_mode_off)
