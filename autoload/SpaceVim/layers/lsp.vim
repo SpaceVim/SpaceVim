@@ -41,6 +41,7 @@ endif
 " <
 
 let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
+let s:FILE = SpaceVim#api#import('file')
 let s:enabled_clients = []
 
 function! SpaceVim#layers#lsp#health() abort
@@ -258,15 +259,23 @@ function! SpaceVim#layers#lsp#set_variable(var) abort
   if !empty(override)
     call extend(s:lsp_servers, override, 'force')
   endif
+  let l:cwd = s:FILE.path_to_fname(getcwd())
   for ft in get(a:var, 'filetypes', [])
-    let cmd = get(s:lsp_servers, ft, [''])[0]
-    if empty(cmd)
+    let l:cmds = get(s:lsp_servers, ft, [''])
+    let l:exec = l:cmds[0]
+    if empty(l:exec)
       call SpaceVim#logger#warn('Failed to find the lsp server command for ' . ft)
     else
-      if executable(cmd)
+      if executable(l:exec)
         call add(s:enabled_fts, ft)
+        let l:newcmds = []
+        for l:cmd in l:cmds
+          let l:newcmd = substitute(l:cmd, '#{cwd}', l:cwd, 'g')
+          call add(l:newcmds, l:newcmd)
+        endfor
+        let s:lsp_servers[ft] = l:newcmds
       else
-        call SpaceVim#logger#warn('Failed to enable lsp for ' . ft . ', ' . cmd . ' is not executable!')
+        call SpaceVim#logger#warn('Failed to enable lsp for ' . ft . ', ' . l:exec . ' is not executable!')
       endif
     endif
   endfor

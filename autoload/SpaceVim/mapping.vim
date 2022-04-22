@@ -347,24 +347,8 @@ endfunction
 fu! SpaceVim#mapping#SmartClose() abort
   let ignorewin = get(g:,'spacevim_smartcloseignorewin',[])
   let ignoreft = get(g:, 'spacevim_smartcloseignoreft',[])
-  " in vim winnr('$') do not include popup.
-  " so we need to check the popuplist
-  " ref: https://github.com/vim/vim/issues/6474
-  if !has('nvim') 
-        \ && exists('*popup_list')
-        \ && exists('*popup_getoptions')
-        \ && exists('*popup_getpos')
-    let win_count =  len(
-          \ filter(
-          \ map(
-          \ filter(popup_list(), 'popup_getpos(v:val).visible'),
-          \ 'popup_getoptions(v:val).tabpage'),
-          \ 'v:val == -1 || v:val ==0'))
-  else
-    let win_count = winnr('$')
-  endif
-  let num = win_count
-  for i in range(1,win_count)
+  let num = winnr('$')
+  for i in range(1,num)
     if index(ignorewin , bufname(winbufnr(i))) != -1 || index(ignoreft, getbufvar(bufname(winbufnr(i)),'&filetype')) != -1
       let num = num - 1
     elseif getbufvar(winbufnr(i),'&buftype') ==# 'quickfix'
@@ -372,6 +356,7 @@ fu! SpaceVim#mapping#SmartClose() abort
     elseif getwinvar(i, '&previewwindow') == 1 && winnr() !=# i
       let num = num - 1
     elseif s:WIN.is_float(win_getid(i))
+      " in vim winnr('$') do not include popup.
       let num = num - 1
     endif
   endfor

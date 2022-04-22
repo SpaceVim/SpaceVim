@@ -11,6 +11,7 @@ scriptencoding utf-8
 let s:SYS = SpaceVim#api#import('system')
 let s:FILE = SpaceVim#api#import('file')
 let s:VCOP = SpaceVim#api#import('vim#compatible')
+let s:WIN = SpaceVim#api#import('vim#window')
 
 if g:spacevim_filetree_direction ==# 'right'
   let s:direction = 'rightbelow'
@@ -61,18 +62,10 @@ augroup vfinit
   autocmd FileType defx call s:defx_init()
   " auto close last defx windows
   autocmd BufEnter * nested if
-        \ (!has('vim_starting') && s:win_count() == 1  && g:_spacevim_autoclose_filetree
+        \ (!has('vim_starting') && s:WIN.win_count() == 1  && g:_spacevim_autoclose_filetree
         \ && &filetype ==# 'defx') |
         \ call s:close_last_vimfiler_windows() | endif
 augroup END
-
-function! s:win_count() abort
-  if has('nvim') && exists('*nvim_win_get_config')
-    return len(filter(range(1, winnr('$')), '!has_key(nvim_win_get_config(win_getid(v:val)), "col")'))
-  else
-    return winnr('$')
-  endif
-endfunction
 
 " in this function, we should check if shell terminal still exists,
 " then close the terminal job before close vimfiler

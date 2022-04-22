@@ -27,3 +27,9 @@ function! SpaceVim#layers#treesitter#health() abort
   call SpaceVim#layers#treesitter#plugins()
   return 1
 endfunction
+
+function! SpaceVim#layers#treesitter#loadable() abort
+
+  return has('nvim')
+
+endfunction

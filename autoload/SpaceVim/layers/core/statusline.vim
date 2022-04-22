@@ -37,7 +37,8 @@ let s:LANG = SpaceVim#api#import('language')
 
 let s:JSON = SpaceVim#api#import('data#json')
 
-let s:VIM =  SpaceVim#api#import('vim')
+let s:VIM = SpaceVim#api#import('vim')
+let s:WIN = SpaceVim#api#import('vim#window')
 
 
 " init
@@ -393,7 +394,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
             \ . ( has('patch-8.0.1384') 
             \ ? ((getqflist({'title' : 0}).title ==# ':setqflist()') ? '' : 
             \ '%#SpaceVim_statusline_c#'
-            \ . getqflist({'title' : 0}).title
+            \ . ' ' . getqflist({'title' : 0}).title
             \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
             \ ) : '')
     else
@@ -407,7 +408,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
             \ ? ((getloclist(winnr(),{'title' : 0}).title ==# ':setloclist()')
             \ ? '' : 
             \ '%#SpaceVim_statusline_c#'
-            \ . getloclist(winnr(),{'title' : 0}).title
+            \ . ' ' . getloclist(winnr(),{'title' : 0}).title
             \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
             \ ) : '')
 
@@ -491,7 +492,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     catch
     endtry
     let st = '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# startify %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+          \ . '%#SpaceVim_statusline_b# startify %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
     if index(g:spacevim_statusline_left, 'vcs') != -1
       let st .= '%#SpaceVim_statusline_c#' .  call(s:registed_sections['vcs'], [])
             \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
@@ -834,7 +835,7 @@ function! SpaceVim#layers#core#statusline#ctrlp_status(str) abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#jump(i) abort
-  if winnr('$') >= a:i
+  if s:WIN.win_count() >= a:i
     exe a:i . 'wincmd w'
   endif
 endfunction

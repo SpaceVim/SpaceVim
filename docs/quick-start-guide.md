@@ -33,7 +33,7 @@ which are needed for downloading plugins and fonts.
 
 If you are using a terminal emulator, you will need to set the font in the terminal configuration.
 
-### Linux and macOS
+## Linux and macOS
 
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash

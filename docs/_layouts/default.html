@@ -10,12 +10,15 @@
     <title>{{ page.title }} | SpaceVim</title>
     <meta name="baidu-site-verification" content="AN14j6xQVd" />
     <!-- This is for google search console -->
-    <meta name="google-site-verification" content="2QrXyd7Wz5_ahXqefiYC_4-HvynQrefWDWORb7EjLCU" />
+    <meta
+      name="google-site-verification"
+      content="2QrXyd7Wz5_ahXqefiYC_4-HvynQrefWDWORb7EjLCU"
+    />
     <meta name="yandex-verification" content="8de09d07572b8dcc" />
     <meta name="author" content="Shidong Wang" />
     <meta name="description" content="{{ page.description }}" />
     {% if page.type %}
-    <meta property="og:type" content="{{ page.type }}"/>
+    <meta property="og:type" content="{{ page.type }}" />
     {% else %}
     <meta property="og:type" content="webpage" />
     {% endif %}
@@ -42,13 +45,13 @@
     {% if page.lang == "zh" %}
     <script>
       ((window.gitter = {}).chat = {}).options = {
-        room: "SpaceVim/cn"
+        room: "SpaceVim/cn",
       };
     </script>
     {% else %}
     <script>
       ((window.gitter = {}).chat = {}).options = {
-        room: "SpaceVim/SpaceVim"
+        room: "SpaceVim/SpaceVim",
       };
     </script>
     {% endif %}
@@ -66,7 +69,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     {% endif %}
     <script src="{{ '/assets/js/respond.js' | relative_url }}"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
 
   <body>
@@ -78,14 +81,21 @@
         width="100"
         height="100"
         viewBox="0 0 250 250"
-        style="fill:#64CEAA; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+        style="
+          fill: #64ceaa;
+          color: #fff;
+          position: absolute;
+          top: 0;
+          border: 0;
+          right: 0;
+        "
         aria-hidden="true"
       >
         <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
         <path
           d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
           fill="currentColor"
-          style="transform-origin: 130px 106px;"
+          style="transform-origin: 130px 106px"
           class="octo-arm"
         ></path>
         <path
@@ -172,8 +182,8 @@
             repo: "SpaceVim-comments",
             oauth: {
               client_id: "{{ site.gitment_client_id }}",
-              client_secret: "{{ site.gitment_client_secret }}"
-            }
+              client_secret: "{{ site.gitment_client_secret }}",
+            },
           });
           gitment.render("container");
         </script>
@@ -183,22 +193,19 @@
     </div>
 
     {% if site.google_analytics %}
-    <script type="text/javascript">
-      var gaJsHost =
-        "https:" == document.location.protocol ? "https://ssl." : "http://www.";
-      document.write(
-        unescape(
-          "%3Cscript src='" +
-            gaJsHost +
-            "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"
-        )
-      );
-    </script>
-    <script type="text/javascript">
-      try {
-        var pageTracker = _gat._getTracker("{{ site.google_analytics }}");
-        pageTracker._trackPageview();
-      } catch (err) {}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "{{ site.google_analytics }}");
     </script>
     {% endif %}
     <script
@@ -216,7 +223,7 @@
           >帮助改进本页面</a
         >
       </span>
-      <br>
+      <br />
       <input
         id="textbox"
         type="text"
@@ -233,7 +240,7 @@
           >Help improve this page</a
         >
       </span>
-      <br>
+      <br />
       <input
         id="textbox"
         type="text"

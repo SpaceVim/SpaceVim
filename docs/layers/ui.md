@@ -21,16 +21,16 @@ and this layer is enabled by default with following options:
 ```toml
 [[layers]]
   name = "ui"
-    enable_sidebar = false
-    enable_scrollbar = false
-    enable_indentline = true
-    enable_cursorword = false
-    indentline_char = '|'
-    conceallevel = 0
-    concealcursor = ''
-    cursorword_delay = 50
-    cursorword_exclude_filetype = []
-    indentline_exclude_filetype = []
+  enable_sidebar = false
+  enable_scrollbar = false
+  enable_indentline = true
+  enable_cursorword = false
+  indentline_char = '|'
+  conceallevel = 0
+  concealcursor = ''
+  cursorword_delay = 50
+  cursorword_exclude_filetype = []
+  indentline_exclude_filetype = []
 ```
 
 ## Install
