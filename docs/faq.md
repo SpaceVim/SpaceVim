@@ -45,7 +45,7 @@ curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
 
 ### How to perform manual installation?
 
-Clone the SpaceVim Github repository to `~/.SpaceVim` and link Vim and Neovim user folder `~/.SpaceVim`. Delete `~/.vimrc`.
+Clone the SpaceVim Github repository to `~/.SpaceVim` and link Vim and Neovim user folder `~/.SpaceVim`. Delete `~/.vimrc`. On Linux use the following commands.
 
 ```
 git clone https://github.com/SpaceVim/SpaceVim.git ~/.SpaceVim
