@@ -50,7 +50,7 @@ function! s:open_win() abort
   endif
   botright split __todo_manager__
   " @todo add win_getid api
-  let s:winid = win_getid(winnr('#'))
+  let s:winnr = winnr('#')
   let lines = &lines * 30 / 100
   exe 'resize ' . lines
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
@@ -66,7 +66,7 @@ endfunction
 
 function! s:WinEnter() abort
   " @todo add win_getid api
-  let s:winid = win_getid(winnr('#'))
+  let s:winnr = winnr('#')
 endfunction
 
 " @todo Improve todo manager
@@ -170,8 +170,7 @@ function! s:open_todo() abort
     close
   catch
   endtry
-  " @todo add win_gotoid api
-  call win_gotoid(s:winid)
+  exe s:winnr .  'wincmd w'
   exe 'e ' . todo.file
   call cursor(todo.line, todo.column)
   noautocmd normal! :
