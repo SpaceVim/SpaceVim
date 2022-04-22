@@ -44,6 +44,16 @@ function! s:close_flygrep_win() abort
   endif
 endfunction
 
+if has('timers')
+  function! s:timer_start(...) abort
+    return call('timer_start', a:000)
+  endfunction
+  function! s:timer_stop(...) abort
+    return call('timer_stop', a:000)
+  endfunction
+else
+endif
+
 " Init local options: {{{
 let s:grep_expr = ''
 let [
@@ -203,8 +213,8 @@ function! s:flygrep(expr) abort
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
-  call timer_stop(s:grep_timer_id)
-  let s:grep_timer_id = timer_start(200, function('s:grep_timer'), {'repeat' : 1})
+  call s:timer_stop(s:grep_timer_id)
+  let s:grep_timer_id = s:timer_start(200, function('s:grep_timer'), {'repeat' : 1})
 endfunction
 
 " }}}
@@ -244,7 +254,7 @@ function! s:filter(expr) abort
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
-  let s:grep_timer_id = timer_start(200, function('s:filter_timer'), {'repeat' : 1})
+  let s:grep_timer_id = s:timer_start(200, function('s:filter_timer'), {'repeat' : 1})
 endfunction
 
 " @vimlint(EVL103, 1, a:timer)
@@ -343,8 +353,8 @@ function! s:close_buffer() abort
   if s:grepid > 0
     call s:JOB.stop(s:grepid)
   endif
-  call timer_stop(s:grep_timer_id)
-  call timer_stop(s:preview_timer_id)
+  call s:timer_stop(s:grep_timer_id)
+  call s:timer_stop(s:preview_timer_id)
   if s:preview_able == 1
     for id in s:previewd_bufnrs
       try
@@ -370,8 +380,8 @@ function! s:close_grep_job() abort
     endtry
     let s:std_line = 0
   endif
-  call timer_stop(s:grep_timer_id)
-  call timer_stop(s:preview_timer_id)
+  call s:timer_stop(s:grep_timer_id)
+  call s:timer_stop(s:preview_timer_id)
   noautocmd normal! gg"_dG
   call s:update_statusline()
   let s:complete_input_history_num = [0,0]
@@ -729,8 +739,8 @@ endif
 
 
 function! s:preview() abort
-  call timer_stop(s:preview_timer_id)
-  let s:preview_timer_id = timer_start(200, function('s:preview_timer'), {'repeat' : 1})
+  call s:timer_stop(s:preview_timer_id)
+  let s:preview_timer_id = s:timer_start(200, function('s:preview_timer'), {'repeat' : 1})
 endfunction
 
 let s:grep_mode = 'expr'
