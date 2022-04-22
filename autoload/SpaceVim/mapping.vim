@@ -355,7 +355,7 @@ fu! SpaceVim#mapping#SmartClose() abort
       let num = num - 1
     elseif getwinvar(i, '&previewwindow') == 1 && winnr() !=# i
       let num = num - 1
-    elseif s:WIN.is_float(win_getid(i))
+    elseif exist('*win_getid') && s:WIN.is_float(win_getid(i))
       " in vim winnr('$') do not include popup.
       let num = num - 1
     endif
