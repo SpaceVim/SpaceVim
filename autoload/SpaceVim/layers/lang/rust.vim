@@ -108,9 +108,8 @@ else
 endif
 
 function! SpaceVim#layers#lang#rust#plugins() abort
-  let plugins = [
-        \ ['rust-lang/rust.vim',   { 'on_ft' : 'rust', 'merged' : 0 }],
-        \ ]
+  let plugins = []
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/rust.vim', {'merged' : 0}])
   if !SpaceVim#layers#lsp#check_filetype('rust')
     call add(plugins, ['racer-rust/vim-racer', {'merged' : 0}])
   endif
