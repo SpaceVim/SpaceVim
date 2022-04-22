@@ -26,6 +26,7 @@ description: "General documentation about how to use SpaceVim, including the qui
   - [Colorschemes](#colorschemes)
   - [Font](#font)
   - [Mouse](#mouse)
+  - [Scrollbar](#scrollbar)
   - [UI Toggles](#ui-toggles)
   - [Statusline](#statusline)
   - [Tabline](#tabline)
@@ -569,6 +570,17 @@ endfunction
 ```
 
 Read `:h 'mouse'` for more info.
+
+### Scrollbar
+
+The scrollbar is disabled by default. To enable the scrollbar,
+you need to change `enable_scrollbar` option in [ui layer](../layers/ui/).
+
+```
+[[layers]]
+  name = "ui"
+  enable_scrollbar = true
+```
 
 ### UI Toggles
 
