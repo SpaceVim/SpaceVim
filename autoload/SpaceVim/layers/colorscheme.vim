@@ -28,7 +28,9 @@
 let s:JSON = SpaceVim#api#import('data#json')
 
 function! SpaceVim#layers#colorscheme#plugins() abort
-  return [
+
+
+  let plugins = [
         \ ['Gabirel/molokai', { 'merged' : 0 }],
         \ ['joshdick/onedark.vim', { 'merged' : 0 }],
         \ ['nanotech/jellybeans.vim', { 'merged' : 0 }],
@@ -40,6 +42,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
         \ ['srcery-colors/srcery-vim', { 'merged' : 0}],
         \ [ 'drewtempelmeyer/palenight.vim', {'merged': 0 }],
         \ ]
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/dracula', {'merged' : 0}])
   "
   " TODO:
   " \ ['mhartington/oceanic-next', { 'merged' : 0 }],
@@ -48,7 +51,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
   " \ ['KeitaNakamura/neodark.vim', { 'merged' : 0 }],
   " \ ['NLKNguyen/papercolor-theme', { 'merged' : 0 }],
   " \ ['SpaceVim/FlatColor', { 'merged' : 0 }],
-
+  return plugins
 endfunction
 
 let s:cs = [
