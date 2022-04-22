@@ -44,16 +44,6 @@ function! s:close_flygrep_win() abort
   endif
 endfunction
 
-if has('timers')
-  function! s:timer_start(...) abort
-    return call('timer_start', a:000)
-  endfunction
-  function! s:timer_stop(...) abort
-    return call('timer_stop', a:000)
-  endfunction
-else
-endif
-
 " Init local options: {{{
 let s:grep_expr = ''
 let [
@@ -97,7 +87,7 @@ let s:complete_input_history_num = [0,0]
 " grep local funcs:{{{
 " @vimlint(EVL103, 1, a:timer)
 let s:current_grep_pattern = ''
-function! s:grep_timer(timer) abort
+function! s:grep_timer(...) abort
   if s:grep_mode ==# 'expr'
     let s:current_grep_pattern = join(split(s:grep_expr), '.*')
   else
@@ -213,8 +203,12 @@ function! s:flygrep(expr) abort
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
-  call s:timer_stop(s:grep_timer_id)
-  let s:grep_timer_id = s:timer_start(200, function('s:grep_timer'), {'repeat' : 1})
+  if has('timers')
+    call timer_stop(s:grep_timer_id)
+    let s:grep_timer_id = timer_start(200, function('s:grep_timer'), {'repeat' : 1})
+  else
+    call s:grep_timer()
+  endif
 endfunction
 
 " }}}
@@ -254,11 +248,15 @@ function! s:filter(expr) abort
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
-  let s:grep_timer_id = s:timer_start(200, function('s:filter_timer'), {'repeat' : 1})
+  if has('timers')
+    let s:grep_timer_id = timer_start(200, function('s:filter_timer'), {'repeat' : 1})
+  else
+    call s:filter_timer()
+  endif
 endfunction
 
 " @vimlint(EVL103, 1, a:timer)
-function! s:filter_timer(timer) abort
+function! s:filter_timer(...) abort
   let cmd = s:get_filter_cmd(join(split(s:grep_expr), '.*'))
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
@@ -353,8 +351,10 @@ function! s:close_buffer() abort
   if s:grepid > 0
     call s:JOB.stop(s:grepid)
   endif
-  call s:timer_stop(s:grep_timer_id)
-  call s:timer_stop(s:preview_timer_id)
+  if has('timers')
+    call timer_stop(s:grep_timer_id)
+    call timer_stop(s:preview_timer_id)
+  endif
   if s:preview_able == 1
     for id in s:previewd_bufnrs
       try
@@ -380,8 +380,10 @@ function! s:close_grep_job() abort
     endtry
     let s:std_line = 0
   endif
-  call s:timer_stop(s:grep_timer_id)
-  call s:timer_stop(s:preview_timer_id)
+  if has('timers')
+    call timer_stop(s:grep_timer_id)
+    call timer_stop(s:preview_timer_id)
+  endif
   noautocmd normal! gg"_dG
   call s:update_statusline()
   let s:complete_input_history_num = [0,0]
@@ -714,7 +716,7 @@ if exists('*nvim_open_win') && exists('*nvim_win_set_buf')
     endif
   endfunction
 else
-  function! s:preview_timer(timer) abort
+  function! s:preview_timer(...) abort
     for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
       exe 'silent bd ' . id
     endfor
@@ -738,10 +740,16 @@ endif
 " @vimlint(EVL103, 0, a:timer)
 
 
-function! s:preview() abort
-  call s:timer_stop(s:preview_timer_id)
-  let s:preview_timer_id = s:timer_start(200, function('s:preview_timer'), {'repeat' : 1})
-endfunction
+if has('timers')
+  function! s:preview() abort
+    call timer_stop(s:preview_timer_id)
+    let s:preview_timer_id = timer_start(200, function('s:preview_timer'), {'repeat' : 1})
+  endfunction
+else
+  function! s:preview() abort
+    call s:preview_timer()
+  endfunction
+endif
 
 let s:grep_mode = 'expr'
 function! s:toggle_expr_mode() abort
