@@ -83,9 +83,11 @@ function! s:on_stdout_show_branch(id, data, event) abort
   let b = s:STR.trim(join(a:data, ''))
   if !empty(b)
     let pwd = get(s:job_pwds, 'jobid' . a:id, '')
-    let s:branch_info[pwd] = {
-          \ 'name' : b,
-          \ }
+    if !empty(pwd)
+      let s:branch_info[pwd] = {
+            \ 'name' : b,
+            \ }
+    endif
   endif
 endfunction
 
