@@ -66,10 +66,10 @@ endf
 func! s:self._handle_input(...) abort
   let begin = get(a:000, 0, '')
   if !empty(begin)
-    if self._oninputpro !=# ''
+    if type(self._oninputpro) ==# 2
       call call(self._oninputpro, [])
     endif
-    if self._handle_fly !=# ''
+    if type(self._handle_fly) ==# 2
       call call(self._handle_fly, [self._prompt.begin . self._prompt.cursor . self._prompt.end])
     endif
     call self._build_prompt()
@@ -147,10 +147,10 @@ func! s:self._handle_input(...) abort
       let self._prompt.begin .= char
       call self._build_prompt()
     endif
-    if self._oninputpro !=# ''
+    if type(self._oninputpro) ==# 2
       call call(self._oninputpro, [])
     endif
-    if self._handle_fly !=# ''
+    if type(self._handle_fly) ==# 2
       call call(self._handle_fly, [self._prompt.begin . self._prompt.cursor . self._prompt.end])
     endif
   endwhile
@@ -179,7 +179,7 @@ function! s:self._clear_prompt() abort
 endfunction
 
 function! s:self.close() abort
-  if self._onclose !=# ''
+  if type(self._onclose) ==# 2
     call call(self._onclose, [])
   endif
   call self._clear_prompt()
