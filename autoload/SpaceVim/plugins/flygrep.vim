@@ -863,7 +863,11 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
             \ })
   else
     noautocmd botright split __flygrep__
-    let s:flygrep_win_id = win_getid()
+    if has('patch-7.4.1557')
+      let s:flygrep_win_id = win_getid()
+    else
+      let s:flygrep_win_id = winnr()
+    endif
     let s:buffer_id = bufnr('__flygrep__')
   endif
   if exists('&winhighlight')
