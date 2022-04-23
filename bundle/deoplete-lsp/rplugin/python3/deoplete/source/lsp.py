@@ -100,15 +100,18 @@ class Source(Base):
         vars['deoplete#source#lsp#_complete_position'] = context[
             'complete_position']
 
-        params = self.vim.call(
-            'luaeval',
-            'vim.lsp.util.make_position_params()')
+        # Note: request_candidates() may be failed
+        try:
+            params = self.vim.call(
+                'luaeval',
+                'vim.lsp.util.make_position_params()')
 
-        self.vim.call(
-            'luaeval', 'require("candidates").request_candidates('
-            '_A.arguments)',
-            {'arguments': params})
-
+            self.vim.call(
+                'luaeval', 'require("candidates").request_candidates('
+                '_A.arguments)',
+                {'arguments': params})
+        except Exception:
+            pass
         return []
 
     def process_candidates(self):
