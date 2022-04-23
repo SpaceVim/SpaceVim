@@ -310,6 +310,7 @@ function! s:toggle_syntax_checker() abort
   elseif g:spacevim_lint_engine ==# 'ale'
     ALEToggle
   endif
+  return 1
 endfunction
 
 

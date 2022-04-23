@@ -701,17 +701,20 @@ endfunction
 " This func is used to toggle major mode in statusline
 
 function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
-  if index(s:loaded_modes, a:name) != -1
-    call remove(s:loaded_modes, index(s:loaded_modes, a:name))
-  else
-    call add(s:loaded_modes, a:name)
-  endif
   let mode = get(s:modes, a:name, {})
   call SpaceVim#logger#info('try to call func of mode:' . a:name)
   if has_key(mode, 'func')
-    call call(mode.func, [])
+    let done = call(mode.func, [])
   else
+    let done = 1
     call SpaceVim#logger#info('no func found for mode:' . a:name)
+  endif
+  if index(s:loaded_modes, a:name) != -1
+    call remove(s:loaded_modes, index(s:loaded_modes, a:name))
+  else
+    if done
+      call add(s:loaded_modes, a:name)
+    endif
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
   call s:update_conf()

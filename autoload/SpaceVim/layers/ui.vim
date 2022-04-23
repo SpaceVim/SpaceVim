@@ -432,13 +432,21 @@ function! s:toggle_spell_check() abort
   if &l:spell
     let &l:spell = 0
   else
-    let &l:spell = 1
+    let v:errmsg = ''
+    silent! let &l:spell = 1
   endif
-  if &l:spell == 1
-    echo 'spell-checking enabled.'
+  if v:errmsg !=# ''
+    echo 'failed to enable spell check'
+    silent! let &l:spell = 0
+    return 0
   else
-    echo 'spell-checking disabled.'
+    if &l:spell == 1
+      echo 'spell-checking enabled.'
+    else
+      echo 'spell-checking disabled.'
+    endif
   endif
+  return 1
 endfunction
 
 function! s:toggle_paste() abort
@@ -452,6 +460,7 @@ function! s:toggle_paste() abort
   else
     echo 'paste-mode disabled.'
   endif
+  return 1
 endfunction
 
 let s:whitespace_enable = 0
