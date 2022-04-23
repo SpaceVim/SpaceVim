@@ -22,10 +22,10 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
   - [Contributing a layer](#contributing-a-layer)
     - [File header](#file-header)
     - [Author of a new layer](#author-of-a-new-layer)
-    - [Contributor to an existing layer](#contributor-to-an-existing-layer)
-    - [Contributing a keybinding](#contributing-a-keybinding)
-      - [Language specified key bindings](#language-specified-key-bindings)
-    - [Contributing a banner](#contributing-a-banner)
+  - [Contributor to an existing layer](#contributor-to-an-existing-layer)
+  - [Contributing a keybinding](#contributing-a-keybinding)
+    - [Language specified key bindings](#language-specified-key-bindings)
+  - [Contributing a banner](#contributing-a-banner)
 - [Build with SpaceVim](#build-with-spacevim)
 - [Newsletters](#newsletters)
 - [Changelog](#changelog)
@@ -177,7 +177,6 @@ therefore it is optional and only used when a commit requires a bit of explanati
 
 The footer is optional and is used to reference issue tracker IDs.
 
-
 **Breaking change**
 
 Breaking changes must be indicated by "!" after the type/scope, and
@@ -192,7 +191,7 @@ also on FreeDesktop's XDG.
 
 ### Pull Request
 
-#### Prefix of title 
+#### Prefix of title
 
 The title of a pull request should contain one of the following prefixes::
 
@@ -344,22 +343,26 @@ endfunction
 5. Open `docs/layers/index.md`, and run `:call SpaceVim#dev#layers#update()` to update the layers list.
 6. Send a PR to SpaceVim.
 
-#### Contributor to an existing layer
+### Contributor to an existing layer
 
 If you want to contribute to an already existing layer, you should not modify any header file.
 
-#### Contributing a keybinding
+### Contributing a keybinding
 
 Mappings are an important part of SpaceVim.
 
-First if you want to have some personal mappings. This can be done in your bootstrap function.
+First if you want to have some personal mappings.
+This can be done in your bootstrap function.
 
-If you think it is worth contributing new mappings, be sure to read the documentation to find the best mappings, then create a Pull-Request with your mappings.
+If you think it is worth contributing new mappings,
+be sure to read the documentation to find the best mappings,
+then create a Pull-Request with your mappings.
 
-ALWAYS document your new mappings or mapping changes inside the relevant documentation file.
+ALWAYS document your new mappings or mapping changes inside
+the relevant documentation file.
 It should be the layername.md and the [documentation](../documentation/).
 
-##### Language specified key bindings
+#### Language specified key bindings
 
 All language specified key bindings have the prefix `SPC l`.
 
@@ -379,17 +382,21 @@ We recommend you to use the common language specified key bindings for the same 
 
 All above key bindings are just recommended as default, but they are also based on the language layer itself.
 
-#### Contributing a banner
+### Contributing a banner
 
-The startup banner is by default the SpaceVim logo but there are also ASCII banners available in the core/banner layer.
+The startup banner is the SpaceVim logo by default.
+but there are also ASCII banners available in the [core/banner layer](../layers/core/banner/).
 
 If you have some ASCII skills you can submit your artwork!
 
-You are free to choose a reasonable height size but the width size should be around 75 characters.
+You are free to choose a reasonable height size.
+but the width size should be around 75 characters.
 
 ## Build with SpaceVim
 
-SpaceVim provides a lot of public [APIs](../api/), you can create plugins based on these APIs. Also you can add a badge to the README.md of your plugin.
+SpaceVim provides a lot of public [APIs](../api/),
+you can create plugins based on these APIs.
+Also you can add a badge to the README.md of your plugin.
 
 ![](https://img.shields.io/badge/build%20with-SpaceVim-ff69b4.svg)
 
