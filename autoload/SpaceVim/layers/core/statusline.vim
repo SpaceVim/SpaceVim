@@ -97,6 +97,11 @@ let s:modes = {
         \ 'icon_asc' : 'w',
         \ 'desc' : 'whitespace mode',
         \ },
+        \ 'wrapline' :{
+        \ 'icon' : s:MESSLETTERS.circled_letter('W'),
+        \ 'icon_asc' : 'W',
+        \ 'desc' : 'wrap line mode',
+        \ },
         \ }
 
 if SpaceVim#layers#isLoaded('checkers')

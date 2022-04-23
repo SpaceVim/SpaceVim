@@ -275,7 +275,8 @@ function! SpaceVim#layers#ui#config() abort
 
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'l'], 'setlocal list!',
         \ 'toggle-hidden-listchars', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'W'], 'setlocal wrap!',
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'W'], 'call call('
+        \ . string(s:_function('s:toggle_wrap_line')) . ', [])',
         \ 'toggle-wrap-line', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'], 'call call('
         \ . string(s:_function('s:toggle_whitespace')) . ', [])',
@@ -474,6 +475,11 @@ function! s:toggle_whitespace() abort
   endif
   call SpaceVim#layers#core#statusline#toggle_section('whitespace')
   call SpaceVim#layers#core#statusline#toggle_mode('whitespace')
+endfunction
+
+function! s:toggle_wrap_line() abort
+  setlocal wrap!
+  call SpaceVim#layers#core#statusline#toggle_mode('wrapline')
 endfunction
 
 function! s:toggle_conceallevel() abort

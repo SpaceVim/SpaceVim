@@ -723,6 +723,7 @@ The letters displayed in the statusline correspond to the key bindings used to t
 | `SPC t s`    | ⓢ       | s     | syntax checking (neomake)                       |
 | `SPC t S`    | Ⓢ       | S     | enabled in spell checking                       |
 | `SPC t w`    | ⓦ       | w     | whitespace mode (highlight trailing whitespace) |
+| `SPC t W`    | Ⓦ       | W     | wrap line mode                                  |
 
 **colorscheme of statusline:**
 
