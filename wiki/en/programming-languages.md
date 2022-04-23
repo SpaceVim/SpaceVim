@@ -186,7 +186,6 @@ Before adding these languages, we need to know:
 | EGL                           |           |        |
 | EXEC                          |           |        |
 | Emacs Lisp                    |           |        |
-| Erlang                        |           |        |
 | Etoys                         |           |        |
 | Euphoria                      |           |        |
 | F#                            |           |        |
@@ -210,7 +209,6 @@ Before adding these languages, we need to know:
 | Game Maker Language           |           |        |
 | HPL                           |           |        |
 | HTML                          |           |        |
-| Haskell                       |           |        |
 | Haxe                          |           |        |
 | HaxeFoundation/haxe           |           |        |
 | Heron                         |           |        |
@@ -218,7 +216,6 @@ Before adding these languages, we need to know:
 | ICI                           |           |        |
 | IDL                           |           |        |
 | INTERCAL                      |           |        |
-| IO                            |           |        |
 | Icon                          |           |        |
 | Inform                        |           |        |
 | Informix-4GL                  |           |        |
@@ -393,7 +390,6 @@ Before adding these languages, we need to know:
 | XBase++                       |           |        |
 | XHTML                         |           |        |
 | XL                            |           |        |
-| XML                           |           |        |
 | XOTcl                         |           |        |
 | XPL                           |           |        |
 | XQuery                        |           |        |
