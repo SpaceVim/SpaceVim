@@ -209,8 +209,6 @@ Before adding these languages, we need to know:
 | Game Maker Language           |           |        |
 | HPL                           |           |        |
 | HTML                          |           |        |
-| Haxe                          |           |        |
-| HaxeFoundation/haxe           |           |        |
 | Heron                         |           |        |
 | HyperTalk                     |           |        |
 | ICI                           |           |        |
