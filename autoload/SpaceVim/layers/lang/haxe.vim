@@ -51,13 +51,13 @@ let s:haxe_interpreter = 'haxe'
 
 function! SpaceVim#layers#lang#haxe#plugins() abort
   let plugins = []
-  call add(plugins, ['jdonaldson/vaxe', { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-haxe', {'merged' : 0}])
   return plugins
 endfunction
 
 function! SpaceVim#layers#lang#haxe#config() abort
   call SpaceVim#plugins#repl#reg('haxe', s:haxe_interpreter)
-  call SpaceVim#plugins#runner#reg_runner('haxe', s:haxe_interpreter . ' %s')
+  call SpaceVim#plugins#runner#reg_runner('haxe', s:haxe_interpreter . ' --main %s --interp')
   call SpaceVim#mapping#space#regesit_lang_mappings('haxe', function('s:language_specified_mappings'))
 endfunction
 

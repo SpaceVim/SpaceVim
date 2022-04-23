@@ -1,0 +1,29 @@
+snippet meta
+	<meta title="${1:NmeProject}" package="${2:com.example.app}" version="${3:1.0.0}" company="${4}" />
+snippet app
+	<app file="${1:Main}" main="${2:Main}" path="${3:bin}" />
+snippet assets
+	<assets path="${1}" rename="${2}" include="${3}" exclude="${4}"/>
+snippet graphics
+	<assets path="${1:assets/graphics}" rename="${2:gfx}" include="${3:*.png|*.jpg}" />
+snippet audio
+	<assets path="${1:assets/audio}" rename="${2:sfx}" include="${3:*.mp3} if="flash" />
+	<assets path="${1}" rename="${2}" include="${4:*.wav|*.ogg}" unless="flash" />
+snippet font
+	<assets path="${1:assets/font}" rename="${2:font}" include="${3:*.ttf}" />
+snippet source
+	<source path="${1:src}" />
+snippet lib
+	<haxelib name="${1:nme}" />
+snippet fps
+	<window fps="${1:30}" orientation="${2:portrait}" background="${3:0x333333}" />
+snippet fullscren
+	<window fullscreen="${1:true}" ${2:if="mobile"} />
+snippet window
+	<window width="${1:640}" height="${2:480}" resizable="${3:true}" ${4:unless="mobile"} />
+snippet haxeflag
+	<haxeflag name="${1:--dead-code-elimination}" if="${2:html5}" />
+snippet ndll
+	<ndll name="${1:nme}" ${2:haxelib="nme"} />
+snippet icon
+	<icon path="${1:assets/nme.svg}" />
