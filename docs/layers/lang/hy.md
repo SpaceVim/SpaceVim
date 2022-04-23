@@ -1,9 +1,9 @@
 ---
-title: "SpaceVim lang#teal layer"
-description: "This layer is for teal development, provides syntax checking, code runner and repl support for teal files."
+title: "SpaceVim lang#hy layer"
+description: "This layer is for hy development, provides syntax checking, code runner and repl support for hy files."
 ---
 
-# [Available Layers](../../) >> lang#teal
+# [Available Layers](../../) >> lang#hy
 
 <!-- vim-markdown-toc GFM -->
 
@@ -19,7 +19,7 @@ description: "This layer is for teal development, provides syntax checking, code
 
 ## Description
 
-`lang#teal` layer provides syntax highlighting, code runner and repl support for [teal language](https://github.com/teal-language/tl).
+`lang#hy` layer provides syntax highlighting, code runner and repl support for [hy language](http://hylang.org/).
 
 ## Install
 
@@ -28,7 +28,7 @@ To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
-  name = "lang#teal"
+  name = "lang#hy"
 ```
 ## Features
 
@@ -39,19 +39,19 @@ To use this configuration layer, update your custom configuration file with:
 ## Layer options
 
 
-- `teal_interpreter`: Set the path of `tl` command.
+- `hy_interpreter`: Set the path of `hy` command.
 
 
 ## Key bindings
 
 ### Running current script
 
-To run a teal file, you can press `SPC l r` to run the current file without losing focus,
+To run a hy file, you can press `SPC l r` to run the current file without losing focus,
 and the result will be shown in a runner buffer.
 
 ### Inferior REPL process
 
-Start a `tl` inferior REPL process with `SPC l s i`.
+Start a `hy` inferior REPL process with `SPC l s i`.
 
 Send code to inferior process commands:
 
