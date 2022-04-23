@@ -48,6 +48,7 @@ if exists('s:haxe_interpreter')
 endif
 
 let s:haxe_interpreter = 'haxe'
+let s:haxe_repl = 'haxe-repl'
 
 function! SpaceVim#layers#lang#haxe#plugins() abort
   let plugins = []
@@ -56,7 +57,7 @@ function! SpaceVim#layers#lang#haxe#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#haxe#config() abort
-  call SpaceVim#plugins#repl#reg('haxe', s:haxe_interpreter)
+  call SpaceVim#plugins#repl#reg('haxe', s:haxe_repl)
   call SpaceVim#plugins#runner#reg_runner('haxe', s:haxe_interpreter . ' --main %s --interp')
   call SpaceVim#mapping#space#regesit_lang_mappings('haxe', function('s:language_specified_mappings'))
 endfunction
