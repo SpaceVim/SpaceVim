@@ -22,3 +22,4 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 - [deoplete-lsp](https://github.com/deoplete-plugins/deoplete-lsp/tree/6299a22bedfb4f814d95cb0010291501472f8fd0)
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp/tree/3192a0c57837c1ec5bf298e4f3ec984c7d2d60c0)
 - [coc-neosnippet](https://github.com/notomo/cmp-neosnippet/tree/2d14526af3f02dcea738b4cea520e6ce55c09979)
+- [deoplete](https://github.com/Shougo/deoplete.nvim/tree/1c40f648d2b00e70beb4c473b7c0e32b633bd9ae)

@@ -4,12 +4,13 @@
 # License: MIT license
 # ============================================================================
 
+from pynvim import Nvim
 import re
 import typing
 
 from deoplete.base.filter import Base
 from deoplete.util import getlines
-from deoplete.util import Nvim, UserContext, Candidates, Candidate
+from deoplete.util import UserContext, Candidates, Candidate
 
 
 LINES_MAX = 150
@@ -39,11 +40,15 @@ class Filter(Base):
     def filter(self, context: UserContext) -> Candidates:
         complete_str = context['complete_str'].lower()
         linenr = context['position'][1]
+        recently_used = self.vim.vars['deoplete#_recently_used']
 
         def compare(x: Candidate) -> int:
             word = x['word']
-            matched = int(complete_str in word.lower())
+            lower = x['word'].lower()
+            matched = int(complete_str in lower)
             score = -matched * 40
+            if [x for x in recently_used if lower.startswith(x)]:
+                score -= 1000
             if word in self._cache:
                 mru = min([abs(x - linenr) for x in self._cache[word]])
                 mru -= LINES_MAX

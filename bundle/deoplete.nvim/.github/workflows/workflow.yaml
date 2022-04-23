@@ -1,0 +1,64 @@
+name: Lint, Test & Coverage
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Python ${{ matrix.python-version }} - Neovim (${{ matrix.build }})
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version:
+          - 3.7
+          - 3.8
+          - 3.9
+        build:
+          - nightly
+          - stable
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f test/requirements.txt ]; then pip install -r test/requirements.txt; fi
+      - name: Initialize Neovim
+        uses: rhysd/action-setup-vim@v1
+        id: vim
+        with:
+          neovim: true
+          version: ${{ matrix.build }}
+      - name: Clone vim-themis
+        uses: actions/checkout@v2
+        with:
+          repository: thinca/vim-themis
+          path: vim-themis
+      - name: Run Lint & Test
+        run: make --keep-going THEMIS_VIM=${{ steps.vim.outputs.executable }} test lint
+
+  coverage:
+    name: Generate Codecav Report
+
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f test/requirements.txt ]; then pip install -r test/requirements.txt; fi
+      - name: Generate Report
+        run: pytest --cov=./rplugin/python3/deoplete --cov=./test --cov-report=xml
+      - uses: codecov/codecov-action@v1
+        with:
+          files: ./coverage.xml
+          functionalities: coveragepy, fix, gcov, search, xcode

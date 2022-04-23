@@ -4,9 +4,9 @@
 # License: MIT license
 # ============================================================================
 
-# For backward compatibility
+from pynvim import Nvim
+
 from deoplete.base.filter import Base as _Base
-from deoplete.util import Nvim
 
 
 class Base(_Base):

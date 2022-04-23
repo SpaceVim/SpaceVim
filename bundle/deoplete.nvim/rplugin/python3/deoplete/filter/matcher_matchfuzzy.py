@@ -1,5 +1,5 @@
 # ============================================================================
-# FILE: matcher_length.py
+# FILE: matcher_matchfuzzy.py
 # AUTHOR: Shougo Matsushita <Shougo.Matsu at gmail.com>
 # License: MIT license
 # ============================================================================
@@ -15,10 +15,14 @@ class Filter(Base):
     def __init__(self, vim: Nvim) -> None:
         super().__init__(vim)
 
-        self.name = 'matcher_length'
-        self.description = 'length matcher'
+        self.name = 'matcher_matchfuzzy'
+        self.description = 'matchfuzzy() matcher'
 
     def filter(self, context: UserContext) -> Candidates:
-        input_len = len(context['complete_str'])
-        return [x for x in context['candidates']
-                if len(x['word']) > input_len]
+        if not self.vim.call('exists', '*matchfuzzy'):
+            return []
+
+        return list(self.vim.call(
+                        'matchfuzzy', context['candidates'],
+                        context['complete_str'], {'key': 'word'}
+                ))

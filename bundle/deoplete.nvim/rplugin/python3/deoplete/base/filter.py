@@ -4,11 +4,12 @@
 # License: MIT license
 # ============================================================================
 
+from pynvim import Nvim
 import typing
 
 from abc import abstractmethod
 from deoplete.logger import LoggingMixin
-from deoplete.util import error_vim, Nvim, UserContext, Candidates
+from deoplete.util import error_vim, UserContext, Candidates
 
 
 class Base(LoggingMixin):
@@ -22,14 +23,14 @@ class Base(LoggingMixin):
     def on_event(self, context: UserContext) -> None:
         pass
 
-    def get_var(self, var_name: str) -> typing.Optional[typing.Any]:
+    def get_var(self, var_name: str) -> typing.Any:
         custom_vars = self.vim.call(
             'deoplete#custom#_get_filter', self.name)
         if var_name in custom_vars:
             return custom_vars[var_name]
         if var_name in self.vars:
             return self.vars[var_name]
-        return None
+        return ''
 
     @abstractmethod
     def filter(self, context: UserContext) -> Candidates:

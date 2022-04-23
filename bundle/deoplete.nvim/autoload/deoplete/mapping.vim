@@ -10,6 +10,12 @@ function! deoplete#mapping#_init() abort
         \ deoplete#mapping#_dummy('deoplete#mapping#_complete')
   inoremap <expr><silent> <Plug>+
         \ deoplete#mapping#_dummy('deoplete#mapping#_prev_complete')
+
+  " Note: The dummy mappings may be inserted on other modes.
+  cnoremap <silent> <Plug>_  <Nop>
+  cnoremap <silent> <Plug>+  <Nop>
+  noremap  <silent> <Plug>_  <Nop>
+  noremap  <silent> <Plug>+  <Nop>
 endfunction
 function! deoplete#mapping#_dummy(func) abort
   return "\<C-r>=".a:func."()\<CR>"
@@ -35,14 +41,39 @@ function! s:check_completion_info(candidates) abort
   endif
   return 0
 
-  let old_candidates = sort(map(copy(info.items), 'v:val.word'))
-  return sort(map(copy(a:candidates), 'v:val.word')) ==# old_candidates
+  let old_candidates = sort(map(copy(info.items), { _, val -> val.word }))
+  return sort(map(copy(a:candidates),
+        \ { _, val -> val.word })) ==# old_candidates
+endfunction
+function! deoplete#mapping#_can_complete() abort
+  let context = get(g:, 'deoplete#_context', {})
+  return has_key(context, 'candidates') && has_key(context, 'event')
+        \ && has_key(context, 'input')
+        \ && !s:check_completion_info(context.candidates)
+        \ && &modifiable
 endfunction
 function! deoplete#mapping#_complete() abort
-  if !has_key(g:deoplete#_context, 'candidates')
-        \ || s:check_completion_info(g:deoplete#_context.candidates)
-        \ || !&modifiable
+  if !deoplete#mapping#_can_complete()
+    let g:deoplete#_context.candidates = []
     return ''
+  endif
+
+  if deoplete#util#get_input(g:deoplete#_context.event)
+        \     !=# g:deoplete#_context.input
+    " Use prev completion instead
+    if deoplete#handler#_check_prev_completion(g:deoplete#_context.event)
+      call feedkeys("\<Plug>+", 'i')
+    endif
+
+    return ''
+  endif
+
+  let auto_popup = deoplete#custom#_get_option(
+        \ 'auto_complete_popup') !=# 'manual'
+
+  if auto_popup
+    " Note: completeopt must be changed before complete()
+    call deoplete#mapping#_set_completeopt(g:deoplete#_context.is_async)
   endif
 
   " echomsg string(g:deoplete#_context)
@@ -62,20 +93,34 @@ function! deoplete#mapping#_prev_complete() abort
     return ''
   endif
 
+  let auto_popup = deoplete#custom#_get_option(
+        \ 'auto_complete_popup') !=# 'manual'
+
+  if auto_popup
+    " Note: completeopt must be changed before complete()
+    call deoplete#mapping#_set_completeopt(v:false)
+  endif
+
   call complete(g:deoplete#_filtered_prev.complete_position + 1,
         \ g:deoplete#_filtered_prev.candidates)
 
   return ''
 endfunction
-function! deoplete#mapping#_set_completeopt() abort
-  if exists('g:deoplete#_saved_completeopt')
+function! deoplete#mapping#_set_completeopt(is_async) abort
+  if !deoplete#custom#_get_option('overwrite_completeopt')
     return
   endif
-  let g:deoplete#_saved_completeopt = &completeopt
+
+  if !exists('g:deoplete#_saved_completeopt')
+    let g:deoplete#_saved_completeopt = &completeopt
+  endif
   set completeopt-=longest
   set completeopt+=menuone
   set completeopt-=menu
-  if &completeopt !~# 'noinsert\|noselect'
+  if &completeopt !~# 'noinsert\|noselect' || a:is_async
+    " Note: If is_async, noselect is needed to prevent without confirmation
+    " problem
+    set completeopt-=noinsert
     set completeopt+=noselect
   endif
 endfunction
@@ -117,16 +162,9 @@ function! deoplete#mapping#_complete_common_string() abort
     return ''
   endif
 
-  let complete_str = prev.input[prev.complete_position :]
-  let candidates = filter(copy(prev.candidates),
-        \ 'stridx(tolower(v:val.word), tolower(complete_str)) == 0')
-
-  if empty(candidates) || complete_str ==# ''
-    return ''
-  endif
-
-  let common_str = candidates[0].word
-  for candidate in candidates[1:]
+  let complete_str = deoplete#util#get_input('')[prev.complete_position :]
+  let common_str = prev.candidates[0].word
+  for candidate in prev.candidates[1:]
     while stridx(tolower(candidate.word), tolower(common_str)) != 0
       let common_str = common_str[: -2]
     endwhile

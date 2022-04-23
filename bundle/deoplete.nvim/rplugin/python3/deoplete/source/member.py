@@ -4,13 +4,14 @@
 # License: MIT license
 # ============================================================================
 
+from pynvim import Nvim
 import re
 import typing
 
 from deoplete.base.source import Base
 from deoplete.util import (
     convert2list, parse_buffer_pattern, set_pattern, getlines)
-from deoplete.util import Nvim, UserContext, Candidates
+from deoplete.util import UserContext, Candidates
 
 
 class Source(Base):

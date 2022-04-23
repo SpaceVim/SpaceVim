@@ -4,19 +4,19 @@
 # License: MIT license
 # ============================================================================
 
+from importlib.util import find_spec
+from pynvim import Nvim
 import typing
 
-from importlib.util import find_spec
 from deoplete.deoplete import Deoplete
-from deoplete.util import Nvim
 
-
-if find_spec('yarp'):
+try:
+    # For Vim8
     import vim
-elif find_spec('pynvim'):
+except ModuleNotFoundError:
+    # For neovim
+    # Note: neovim cannot import vim module
     import pynvim as vim
-else:
-    import neovim as vim
 
 Context = typing.Dict[str, typing.Any]
 
@@ -26,8 +26,8 @@ if hasattr(vim, 'plugin'):
     @vim.plugin
     class DeopleteHandlers(object):
 
-        def __init__(self, vim: Nvim):
-            self._vim = vim
+        def __init__(self, _vim: Nvim):
+            self._vim = _vim
 
         @vim.function('_deoplete_init', sync=False)  # type: ignore
         def init_channel(self,

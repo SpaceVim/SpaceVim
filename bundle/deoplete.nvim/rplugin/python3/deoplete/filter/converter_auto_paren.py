@@ -4,10 +4,11 @@
 # License: MIT license
 # ============================================================================
 
+from pynvim import Nvim
 import re
 
 from deoplete.base.filter import Base
-from deoplete.util import Nvim, UserContext, Candidates
+from deoplete.util import UserContext, Candidates
 
 
 class Filter(Base):
@@ -26,4 +27,4 @@ class Filter(Base):
                 (('abbr' in x and p2.search(x['abbr'])) or
                  ('info' in x and p2.search(x['info'])))]:
             candidate['word'] += '('
-        return context['candidates']  # type: ignore
+        return list(context['candidates'])

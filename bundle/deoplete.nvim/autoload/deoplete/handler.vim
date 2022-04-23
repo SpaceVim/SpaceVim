@@ -14,7 +14,7 @@ function! deoplete#handler#_init() abort
   for event in [
         \ 'InsertEnter', 'InsertLeave',
         \ 'BufReadPost', 'BufWritePost',
-        \ 'VimLeavePre',
+        \ 'VimLeavePre', 'FileType',
         \ ]
     call s:define_on_event(event)
   endfor
@@ -26,11 +26,7 @@ function! deoplete#handler#_init() abort
     call s:define_completion_via_timer('InsertEnter')
   endif
   if deoplete#custom#_get_option('refresh_always')
-    if exists('##TextChangedP')
-      call s:define_completion_via_timer('TextChangedP')
-    else
-      call s:define_completion_via_timer('InsertCharPre')
-    endif
+    call s:define_completion_via_timer('TextChangedP')
   endif
 
   " Note: Vim 8 GUI(MacVim and Win32) is broken
@@ -51,11 +47,7 @@ function! deoplete#handler#_do_complete() abort
   let context = g:deoplete#_context
   let event = get(context, 'event', '')
   if s:is_exiting() || v:insertmode !=# 'i' || s:check_input_method()
-    return
-  endif
-
-  if !has_key(context, 'candidates')
-        \ || deoplete#util#get_input(context.event) !=# context.input
+        \ || !has_key(context, 'candidates')
     return
   endif
 
@@ -65,6 +57,11 @@ function! deoplete#handler#_do_complete() abort
   let prev.candidates = context.candidates
   let prev.complete_position = context.complete_position
   let prev.linenr = line('.')
+  let prev.time = context.time
+
+  if context.event ==# 'Manual'
+    let context.event = ''
+  endif
 
   let auto_popup = deoplete#custom#_get_option(
         \ 'auto_complete_popup') !=# 'manual'
@@ -74,13 +71,10 @@ function! deoplete#handler#_do_complete() abort
     let auto_popup = v:true
   endif
 
-  if context.event ==# 'Manual'
-    let context.event = ''
-  elseif !exists('g:deoplete#_saved_completeopt') && auto_popup
-    call deoplete#mapping#_set_completeopt()
-  endif
-
   if auto_popup
+    " Note: completeopt must be changed before complete() and feedkeys()
+    call deoplete#mapping#_set_completeopt(g:deoplete#_context.is_async)
+
     call feedkeys("\<Plug>_", 'i')
   endif
 endfunction
@@ -108,16 +102,8 @@ function! deoplete#handler#_check_omnifunc(context) abort
         let prev.input = a:context.input
         let prev.candidates = []
 
-        if &completeopt =~# 'noselect'
-          call deoplete#mapping#_set_completeopt()
-          call feedkeys("\<C-x>\<C-o>", 'in')
-        else
-          call deoplete#util#print_error(
-                \ 'omni_patterns feature is disabled.')
-          call deoplete#util#print_error(
-                \ 'You need to set "noselect" in completeopt option.')
-        endif
-        return 1
+        call deoplete#mapping#_set_completeopt(v:true)
+        call feedkeys("\<C-x>\<C-o>", 'in')
       endif
     endfor
   endfor
@@ -145,7 +131,7 @@ function! s:completion_timer_stop() abort
   unlet s:completion_timer
 endfunction
 
-function! s:check_prev_completion(event) abort
+function! deoplete#handler#_check_prev_completion(event) abort
   let prev = g:deoplete#_prev_completion
   if a:event ==# 'Async' || a:event ==# 'Update' || mode() !=# 'i'
         \ || empty(get(prev, 'candidates', []))
@@ -160,8 +146,6 @@ function! s:check_prev_completion(event) abort
     return
   endif
 
-  call deoplete#mapping#_set_completeopt()
-
   let mode = deoplete#custom#_get_option('prev_completion_mode')
   let candidates = copy(prev.candidates)
 
@@ -169,9 +153,9 @@ function! s:check_prev_completion(event) abort
     let input = input[prev.complete_position :]
     let escaped_input = escape(input, '~\.^$[]*')
     let pattern = substitute(escaped_input, '\w', '\\w*\0', 'g')
-    call filter(candidates, 'v:val.word =~? pattern')
+    call filter(candidates, { _, val -> val.word =~? pattern })
     if mode ==# 'length'
-      call filter(candidates, 'len(v:val.word) > len(input)')
+      call filter(candidates, { _, val -> len(val.word) > len(input) })
     endif
   elseif mode ==# 'mirror'
     " pass
@@ -183,7 +167,7 @@ function! s:check_prev_completion(event) abort
         \ 'complete_position': prev.complete_position,
         \ 'candidates': candidates,
         \ }
-  call feedkeys("\<Plug>+", 'i')
+  return 1
 endfunction
 
 function! deoplete#handler#_async_timer_start() abort
@@ -198,12 +182,26 @@ endfunction
 function! deoplete#handler#_completion_begin(event) abort
   call deoplete#custom#_update_cache()
 
-  if s:is_skip(a:event)
+  let auto_popup = deoplete#custom#_get_option(
+        \ 'auto_complete_popup') !=# 'manual'
+  let prev_input = get(g:deoplete#_context, 'input', '')
+  let cur_input = deoplete#util#get_input(a:event)
+
+  let check_back_space = auto_popup
+        \ && cur_input !=# prev_input
+        \ && len(cur_input) + 1 ==# len(prev_input)
+        \ && stridx(prev_input, cur_input) == 0
+  let refresh_backspace = deoplete#custom#_get_option('refresh_backspace')
+
+  if s:is_skip(a:event) || (check_back_space && !refresh_backspace)
     let g:deoplete#_context.candidates = []
+    let g:deoplete#_context.input = cur_input
     return
   endif
 
-  call s:check_prev_completion(a:event)
+  if auto_popup && deoplete#handler#_check_prev_completion(a:event)
+    call feedkeys("\<Plug>+", 'i')
+  endif
 
   if a:event !=# 'Update' && a:event !=# 'Async'
     call deoplete#init#_prev_completion()
@@ -211,6 +209,11 @@ function! deoplete#handler#_completion_begin(event) abort
 
   call deoplete#util#rpcnotify(
         \ 'deoplete_auto_completion_begin', {'event': a:event})
+
+  " For <BS> popup flicker
+  if check_back_space && empty(v:completed_item)
+    call feedkeys("\<Plug>_", 'i')
+  endif
 endfunction
 function! s:is_skip(event) abort
   if a:event ==# 'TextChangedP' && !empty(v:completed_item)
@@ -231,11 +234,19 @@ function! s:is_skip(event) abort
     return 1
   endif
 
+  " Check nofile buffers
+  if &l:buftype =~# 'nofile' && bufname('%') !=# '[Command Line]'
+    let nofile_complete_filetypes = deoplete#custom#_get_option(
+          \ 'nofile_complete_filetypes')
+    if index(nofile_complete_filetypes, &l:filetype) < 0
+      return 1
+    endif
+  endif
+
   let auto_complete = deoplete#custom#_get_option('auto_complete')
 
   if &paste
         \ || (a:event !=# 'Manual' && a:event !=# 'Update' && !auto_complete)
-        \ || (&l:completefunc !=# '' && &l:buftype =~# 'nofile')
         \ || v:insertmode !=# 'i'
     return 1
   endif
@@ -266,6 +277,11 @@ function! s:is_skip_prev_text(event) abort
 endfunction
 function! s:is_skip_text(event) abort
   let input = deoplete#util#get_input(a:event)
+  if !has('nvim') && iconv(iconv(input, 'utf-8', 'utf-16'),
+        \ 'utf-16', 'utf-8') !=# input
+    " In Vim8, invalid bytes brokes nvim-yarp.
+    return 1
+  endif
 
   let lastchar = matchstr(input, '.$')
   let skip_multibyte = deoplete#custom#_get_option('skip_multibyte')
@@ -280,10 +296,15 @@ function! s:is_skip_text(event) abort
         \     && displaywidth >= &l:textwidth
     if &l:formatoptions =~# '[ta]'
           \ || !empty(filter(deoplete#util#get_syn_names(),
-          \                  "v:val ==# 'Comment'"))
+          \                  { _, val -> val ==# 'Comment' }))
           \ || is_virtual
       return 1
     endif
+  endif
+
+  if a:event =~# '^TextChanged' && s:matched_indentkeys(input) !=# ''
+    call deoplete#util#indent_current_line()
+    return 1
   endif
 
   let skip_chars = deoplete#custom#_get_option('skip_chars')
@@ -293,6 +314,32 @@ function! s:is_skip_text(event) abort
 endfunction
 function! s:check_input_method() abort
   return exists('*getimstatus') && getimstatus()
+endfunction
+function! s:matched_indentkeys(input) abort
+  if &l:indentexpr ==# ''
+    " Disable auto indent
+    return ''
+  endif
+
+  " Note: check the last word
+  let checkstr = matchstr(a:input, '\w\+$')
+
+  for word in filter(map(split(&l:indentkeys, ','),
+        \ { _, val -> matchstr(val, 'e\|=\zs.*') }),
+        \ { _, val -> val !=# '' && val =~# '\h\w*' })
+
+    if word ==# 'e'
+      let word = 'else'
+    endif
+
+    let lastpos = len(a:input) - len(word)
+    if checkstr ==# word || (word =~# '^\W\+$' &&
+          \ lastpos >= 0 && strridx(a:input, word) == lastpos)
+      return word
+    endif
+  endfor
+
+  return ''
 endfunction
 
 function! s:define_on_event(event) abort
@@ -325,10 +372,26 @@ endfunction
 
 function! s:on_complete_done() abort
   if get(v:completed_item, 'word', '') ==# ''
+        \ || !has_key(g:deoplete#_context, 'complete_str')
     return
   endif
 
   call deoplete#handler#_skip_next_completion()
+
+  let max_used = 100
+  let g:deoplete#_recently_used = insert(
+        \ g:deoplete#_recently_used,
+        \ tolower(v:completed_item.word),
+        \ )
+  let min_pattern_length = deoplete#custom#_get_option('min_pattern_length')
+  if len(g:deoplete#_context['complete_str']) > min_pattern_length
+    let g:deoplete#_recently_used = insert(
+          \ g:deoplete#_recently_used,
+          \ tolower(g:deoplete#_context['complete_str']),
+          \ )
+  endif
+  let g:deoplete#_recently_used = deoplete#util#uniq(
+        \ g:deoplete#_recently_used)[: max_used]
 
   let user_data = get(v:completed_item, 'user_data', '')
   if type(user_data) !=# v:t_string || user_data ==# ''
