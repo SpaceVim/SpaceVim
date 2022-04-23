@@ -926,7 +926,7 @@ function! s:maximize_minimize_win() abort
     if exists('*win_getid')
       let s:_maximize_previous_winid = win_getid()
     endif
-    tabedit %
+    tab split
     let t:_maximize_previous_win = tabpagenr()
   endif
 
