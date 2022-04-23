@@ -42,7 +42,8 @@ function! SpaceVim#plugins#todo#list() abort
   call s:open_win()
 endfunction
 
-let s:bufnr = 0
+let s:bufnr = -1
+let s:todo_jobid = -1
 
 function! s:open_win() abort
   if s:bufnr != 0 && bufexists(s:bufnr)
@@ -155,7 +156,6 @@ function! s:exit(id, data, event ) abort
         \ .  "v:val.title"
   let lines = map(deepcopy(s:todos),expr)
   call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, lines)
-  let g:wsd = s:todos
 endfunction
 
 function! s:compare_todo(a, b) abort

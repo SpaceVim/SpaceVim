@@ -24,7 +24,6 @@ func! s:send(msg) abort
 				\ }
 	" run command curl -XPOST -H 'Content-Type: application/json'  -d '{"text":"test","username":"randomuser","gateway":"gateway1"}' http://localhost:4242/api/message
 	let cmd = ['curl', '-XPOST', '-H', 'Content-Type: application/json', '-d', s:JSON.json_encode(msg), 'http://localhost:' . s:port . '/api/message']
-let g:wsd = cmd
 	call s:JOB.start(cmd)
 endf
 
