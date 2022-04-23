@@ -15,3 +15,13 @@ here is an gif shown how we can run code within SpaceVim. the first line is show
 ![async code runner](https://user-images.githubusercontent.com/13142418/80607131-b9b2f880-8a67-11ea-84ad-047ed8dd18b1.gif)
 
 as wrote in old blog, we can also use this feature for java, c, php, JavaScript, etc.
+
+Instead of running whole current file, you can also execute a piece of code in a markdown file:
+
+```python
+a = 1
+b = 2
+print(a + b)
+```
+
+![image](https://user-images.githubusercontent.com/13142418/164871528-433cbaa8-8e38-4c61-9473-db42ec0b8c61.png)
