@@ -1359,45 +1359,45 @@ Every window has a number displayed at the start of the statusline and can be qu
 
 Windows manipulation commands (start with `w`):
 
-| Key Bindings          | Descriptions                                                                                                  |
-| --------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `SPC w .`             | windows transient state                                                                                       |
-| `SPC w <Tab>`         | switch to alternate window in the current frame (switch back and forth)                                       |
-| `SPC w =`             | balance split windows                                                                                         |
-| `SPC w b`             | force the focus back to the minibuffer (TODO)                                                                 |
-| `SPC w c`             | Distraction-free reading current window (tools layer)                                                         |
-| `SPC w C`             | Distraction-free reading other windows via vim-choosewin (tools layer)                                        |
-| `SPC w d`             | delete a window                                                                                               |
-| `SPC u SPC w d`       | delete a window and its current buffer (does not delete the file) (TODO)                                      |
-| `SPC w D`             | delete another window using vim-choosewin                                                                     |
-| `SPC u SPC w D`       | delete another window and its current buffer using vim-choosewin (TODO)                                       |
-| `SPC w t`             | toggle window dedication (dedicated window cannot be reused by a mode) (TODO)                                 |
-| `SPC w f`             | toggle follow mode                                                                                            |
-| `SPC w F`             | create new tab                                                                                                |
-| `SPC w h`             | move to window on the left                                                                                    |
-| `SPC w H`             | move window to the left                                                                                       |
-| `SPC w j`             | move to window below                                                                                          |
-| `SPC w J`             | move window to the bottom                                                                                     |
-| `SPC w k`             | move to window above                                                                                          |
-| `SPC w K`             | move window to the top                                                                                        |
-| `SPC w l`             | move to window on the right                                                                                   |
-| `SPC w L`             | move window to the right                                                                                      |
-| `SPC w m`             | maximize/minimize a window (maximize is equivalent to delete other windows) (TODO, now only support maximize) |
-| `SPC w M`             | swap windows using vim-choosewin                                                                              |
-| `SPC w o`             | cycle and focus between tabs                                                                                  |
-| `SPC w p m`           | open messages buffer in a popup window (TODO)                                                                 |
-| `SPC w p p`           | close the current sticky popup window (TODO)                                                                  |
-| `SPC w r`             | rotate windows forward                                                                                        |
-| `SPC w R`             | rotate windows backward                                                                                       |
-| `SPC w s` / `SPC w -` | horizontal split                                                                                              |
-| `SPC w S`             | horizontal split and focus new window                                                                         |
-| `SPC w u`             | undo window layout                                                                                            |
-| `SPC w U`             | redo window layout                                                                                            |
-| `SPC w v` / `SPC w /` | vertical split                                                                                                |
-| `SPC w V`             | vertical split and focus new window                                                                           |
-| `SPC w w`             | cycle and focus between windows                                                                               |
-| `SPC w W`             | select window using vim-choosewin                                                                             |
-| `SPC w x`             | exchange current window with next one                                                                         |
+| Key Bindings          | Descriptions                                                                  |
+| --------------------- | ----------------------------------------------------------------------------- |
+| `SPC w .`             | windows transient state                                                       |
+| `SPC w <Tab>`         | switch to alternate window in the current frame (switch back and forth)       |
+| `SPC w =`             | balance split windows                                                         |
+| `SPC w b`             | force the focus back to the minibuffer (TODO)                                 |
+| `SPC w c`             | Distraction-free reading current window (tools layer)                         |
+| `SPC w C`             | Distraction-free reading other windows via vim-choosewin (tools layer)        |
+| `SPC w d`             | delete a window                                                               |
+| `SPC u SPC w d`       | delete a window and its current buffer (does not delete the file) (TODO)      |
+| `SPC w D`             | delete another window using vim-choosewin                                     |
+| `SPC u SPC w D`       | delete another window and its current buffer using vim-choosewin (TODO)       |
+| `SPC w t`             | toggle window dedication (dedicated window cannot be reused by a mode) (TODO) |
+| `SPC w f`             | toggle follow mode                                                            |
+| `SPC w F`             | create new tab                                                                |
+| `SPC w h`             | move to window on the left                                                    |
+| `SPC w H`             | move window to the left                                                       |
+| `SPC w j`             | move to window below                                                          |
+| `SPC w J`             | move window to the bottom                                                     |
+| `SPC w k`             | move to window above                                                          |
+| `SPC w K`             | move window to the top                                                        |
+| `SPC w l`             | move to window on the right                                                   |
+| `SPC w L`             | move window to the right                                                      |
+| `SPC w m`             | maximize/minimize a window                                                    |
+| `SPC w M`             | swap windows using vim-choosewin                                              |
+| `SPC w o`             | cycle and focus between tabs                                                  |
+| `SPC w p m`           | open messages buffer in a popup window (TODO)                                 |
+| `SPC w p p`           | close the current sticky popup window (TODO)                                  |
+| `SPC w r`             | rotate windows forward                                                        |
+| `SPC w R`             | rotate windows backward                                                       |
+| `SPC w s` / `SPC w -` | horizontal split                                                              |
+| `SPC w S`             | horizontal split and focus new window                                         |
+| `SPC w u`             | undo window layout                                                            |
+| `SPC w U`             | redo window layout                                                            |
+| `SPC w v` / `SPC w /` | vertical split                                                                |
+| `SPC w V`             | vertical split and focus new window                                           |
+| `SPC w w`             | cycle and focus between windows                                               |
+| `SPC w W`             | select window using vim-choosewin                                             |
+| `SPC w x`             | exchange current window with next one                                         |
 
 ### Buffers and Files
 

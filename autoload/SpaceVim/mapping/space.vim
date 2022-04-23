@@ -8,6 +8,7 @@
 
 let s:BUF = SpaceVim#api#import('vim#buffer')
 let s:TIME = SpaceVim#api#import('time')
+let s:WIN = SpaceVim#api#import('vim#window')
 
 let s:file = expand('<sfile>:~')
 let s:funcbeginline =  expand('<slnum>') + 1
@@ -64,276 +65,278 @@ function! SpaceVim#mapping#space#init() abort
         \ . string(s:_function('s:windows_transient_state')) . ', [])',
         \ ['buffer-transient-state',
         \ [
-        \ '[SPC w .] is to open the buffer transient state',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w .] is to open the buffer transient state',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'd'], 'close',
         \ ['close-current-windows',
         \ [
-        \ '[SPC w d] is to close current windows',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w d] is to close current windows',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'f'], 'setlocal scrollbind!',
         \ ['toggle-follow-mode',
         \ [
-        \ '[SPC w f] is to toggle follow mode',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w f] is to toggle follow mode',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'D'], 'ChooseWin | close | wincmd w',
         \ ['delete-window-(other-windows)',
         \ [
-        \ '[SPC w D] is to select a windows to close',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w D] is to select a windows to close',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'tabnew',
         \ ['create-new-tab',
         \ [
-        \ '[SPC w F] is to create new tab',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
-"  let s:lnum = expand('<slnum>') + s:funcbeginline
-"  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'call call('
-"        \ . string(function('s:create_new_named_tab'))
-"        \ . ', [])',
-"        \ ['create-new-named-tab',
-"        \ [
-"        \ '[SPC w F] is to create new named tab',
-"        \ '',
-"        \ 'Definition: ' . s:file . ':' . s:lnum,
-"        \ ]
-"        \ ]
-"        \ , 1)
+          \ '[SPC w F] is to create new tab',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
+  "  let s:lnum = expand('<slnum>') + s:funcbeginline
+  "  call SpaceVim#mapping#space#def('nnoremap', ['w', 'F'], 'call call('
+  "        \ . string(function('s:create_new_named_tab'))
+  "        \ . ', [])',
+  "        \ ['create-new-named-tab',
+  "        \ [
+  "        \ '[SPC w F] is to create new named tab',
+  "        \ '',
+  "        \ 'Definition: ' . s:file . ':' . s:lnum,
+  "        \ ]
+  "        \ ]
+  "        \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'h'], 'wincmd h',
         \ ['window-left',
         \ [
-        \ '[SPC w h] is to jump to the left window',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w h] is to jump to the left window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'j'], 'wincmd j',
         \ ['window-down',
         \ [
-        \ '[SPC w j] is to jump to the window below current windows',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w j] is to jump to the window below current windows',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'x'], 'wincmd x',
         \ ['window-switch-placement',
         \ [
-        \ '[SPC w x] is to jump to exchange current window with next one.',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w x] is to jump to exchange current window with next one.',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'k'], 'wincmd k',
         \ ['window-up',
         \ [
-        \ '[SPC w k] is to jump to the window above current windows',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w k] is to jump to the window above current windows',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'l'], 'wincmd l',
         \ ['window-right',
         \ [
-        \ '[SPC w l] is to jump to the right window',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w l] is to jump to the right window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'H'], 'wincmd H',
         \ ['window-far-left',
         \ [
-        \ '[SPC w H] is to jump to the far left window',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w H] is to jump to the far left window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'J'], 'wincmd J',
         \ ['window-far-down',
         \ [
-        \ '[SPC w J] is to jump to the far down window',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w J] is to jump to the far down window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'K'], 'wincmd K',
         \ ['window-far-up',
         \ [
-        \ '[SPC w K] is to jump to the far up window',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w K] is to jump to the far up window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'L'], 'wincmd L',
         \ ['window-far-right',
         \ [
-        \ '[SPC w L] is to jump to the far right window',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w L] is to jump to the far right window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
-  call SpaceVim#mapping#space#def('nnoremap', ['w', 'm'], 'only',
+  call SpaceVim#mapping#space#def('nnoremap', ['w', 'm'], 'call call('
+        \ . string(function('s:maximize_minimize_win'))
+        \ . ', [])',
         \ ['maximize/minimize window',
         \ [
-        \ '[SPC w m] is to maximize/minimize window',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w m] is to maximize/minimize window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'M'],
         \ "execute eval(\"winnr('$')<=2 ? 'wincmd x' : 'ChooseWinSwap'\")",
         \ ['swap window',
         \ [
-        \ '[SPC w M] is to swap window',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w M] is to swap window',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'o'], 'tabnext',
         \ ['other-tabs',
         \ [
-        \ '[SPC w o] is to switch to next tabs',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w o] is to switch to next tabs',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', '/'], 'belowright vsplit | wincmd w',
         \ ['split-windows-right',
         \ [
-        \ '[SPC w /] is to split windows on the right',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w /] is to split windows on the right',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'v'], 'belowright vsplit | wincmd w',
         \ ['split-windows-right',
         \ [
-        \ '[SPC w v] is to split windows on the right',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w v] is to split windows on the right',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', '-'], 'bel split | wincmd w',
         \ ['split-windows-below',
         \ [
-        \ '[SPC w -] is to split windows below',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w -] is to split windows below',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 's'], 'bel split | wincmd w',
         \ ['split-windows-below',
         \ [
-        \ '[SPC w s] is to split windows below',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w s] is to split windows below',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'S'], 'bel split',
         \ ['split-focus-windows-below',
         \ [
-        \ '[SPC w S] is to split windows below and focus on new windows',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w S] is to split windows below and focus on new windows',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', '2'], 'silent only | vs | wincmd w',
         \ ['layout-double-columns',
         \ [
-        \ '[SPC w 2] is to change current windows layout to double columns',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w 2] is to change current windows layout to double columns',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', '3'], 'silent only | vs | vs | wincmd H',
         \ ['layout-three-columns',
         \ [
-        \ '[SPC w 3] is to change current windows layout to three columns',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w 3] is to change current windows layout to three columns',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'V'],
         \ 'bel vs',
         \ ['split-window-right-focus',
         \ [
-        \ '[SPC w V] is to split window on the right',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC w V] is to split window on the right',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['w', '='],
         \ 'wincmd =',
         \ ['balance-windows',
         \ [
-        \ '[SPC w =] is to balance all the windows in current tab',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ], 1)
+          \ '[SPC w =] is to balance all the windows in current tab',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'w'],
         \ 'wincmd w', 'cycle and focus between windows', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'W'],
@@ -345,14 +348,14 @@ function! SpaceVim#mapping#space#init() abort
         \ . string(function('s:next_buffer'))
         \ . ', [])', ['next-buffer',
         \ [
-        \ '[SPC b n] is running :bnext, jump to next buffer',
-        \ 'which is a vim build in command',
-        \ 'It is bound to SPC b n, ] b,',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ '[SPC b n] is running :bnext, jump to next buffer',
+          \ 'which is a vim build in command',
+          \ 'It is bound to SPC b n, ] b,',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['b', 's'], 
         \ 'call call('
         \ . string(function('s:switch_scratch_buffer'))
@@ -362,14 +365,14 @@ function! SpaceVim#mapping#space#init() abort
         \ . string(function('s:previous_buffer'))
         \ . ', [])', ['previous-buffer',
         \ [
-        \ 'SPC b p is running :bp, jump to previous buffer',
-        \ 'which is a vim build in command',
-        \ 'It is bound to SPC b p, [ b,',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ 'SPC b p is running :bp, jump to previous buffer',
+          \ 'which is a vim build in command',
+          \ 'It is bound to SPC b p, [ b,',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
 
   let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
   let g:_spacevim_mappings_space.B = {'name' : '+Global buffers'}
@@ -392,13 +395,13 @@ function! SpaceVim#mapping#space#init() abort
         \ . ')',
         \ ['grep-in-current-buffer',
         \ [
-        \ 'SPC s s will search text in current buffer, an input promot will be opened.',
-        \ 'The default searching tool is based on search_tools option',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ 'SPC s s will search text in current buffer, an input promot will be opened.',
+          \ 'The default searching tool is based on search_tools option',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
 
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'S'],
@@ -407,13 +410,13 @@ function! SpaceVim#mapping#space#init() abort
         \ . ')',
         \ ['grep-cword-in-current-buffer',
         \ [
-        \ 'SPC s S will search the word under cursor within current buffer, an input promot will be opened.',
-        \ 'The default searching tool is based on search_tools option',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ 'SPC s S will search the word under cursor within current buffer, an input promot will be opened.',
+          \ 'The default searching tool is based on search_tools option',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   " Searching in all loaded buffers
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'b'],
@@ -422,13 +425,13 @@ function! SpaceVim#mapping#space#init() abort
         \ . ')',
         \ ['grep-in-all-buffers',
         \ [
-        \ 'SPC s b will search text in all loaded buffers, an input promot will be opened.',
-        \ 'The default searching tool is based on search_tools option',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ 'SPC s b will search text in all loaded buffers, an input promot will be opened.',
+          \ 'The default searching tool is based on search_tools option',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
 
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'B'],
@@ -437,13 +440,13 @@ function! SpaceVim#mapping#space#init() abort
         \ . ')',
         \ ['grep-cword-in-all-buffers',
         \ [
-        \ 'SPC s B will search cursor word in all loaded buffers, an input promot will be opened.',
-        \ 'The default searching tool is based on search_tools option',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ 'SPC s B will search cursor word in all loaded buffers, an input promot will be opened.',
+          \ 'The default searching tool is based on search_tools option',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   " Searching in buffer directory
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'd'],
@@ -452,13 +455,13 @@ function! SpaceVim#mapping#space#init() abort
         \ . ')',
         \ ['grep-in-buffer-directory',
         \ [
-        \ 'SPC s d will search text in buffer directory, an input promot will be opened.',
-        \ 'The default searching tool is based on search_tools option',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ 'SPC s d will search text in buffer directory, an input promot will be opened.',
+          \ 'The default searching tool is based on search_tools option',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'D'],
         \ 'call SpaceVim#plugins#flygrep#open('
@@ -466,13 +469,13 @@ function! SpaceVim#mapping#space#init() abort
         \ . ')',
         \ ['grep-cword-in-buffer-directory',
         \ [
-        \ 'SPC s d will search cursor word in buffer directory, an input promot will be opened.',
-        \ 'The default searching tool is based on search_tools option',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ 'SPC s d will search cursor word in buffer directory, an input promot will be opened.',
+          \ 'The default searching tool is based on search_tools option',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   " Searching in files in an arbitrary directory
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'f'],
@@ -481,13 +484,13 @@ function! SpaceVim#mapping#space#init() abort
         \ . ')',
         \ ['grep-in-arbitrary-directory',
         \ [
-        \ 'SPC s f will search text in arbitrary directory, an input promot will be opened.',
-        \ 'The default searching tool is based on search_tools option',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ 'SPC s f will search text in arbitrary directory, an input promot will be opened.',
+          \ 'The default searching tool is based on search_tools option',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   let s:lnum = expand('<slnum>') + s:funcbeginline
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'F'],
         \ 'call SpaceVim#plugins#flygrep#open('
@@ -495,13 +498,13 @@ function! SpaceVim#mapping#space#init() abort
         \ . ')',
         \ ['grep-cword-in-arbitrary-directory',
         \ [
-        \ 'SPC s F will search cursor world in arbitrary directory, an input promot will be opened.',
-        \ 'The default searching tool is based on search_tools option',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ 'SPC s F will search cursor world in arbitrary directory, an input promot will be opened.',
+          \ 'The default searching tool is based on search_tools option',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   " Searching in project
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'p'],
         \ 'call SpaceVim#plugins#flygrep#open(' .
@@ -680,12 +683,12 @@ function! SpaceVim#mapping#space#init() abort
         \ . string(function('s:describe_current_time'))
         \ . ', [])', ['describe-current-time',
         \ [
-        \ 'SPC h d t is to display current time.',
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ]
-        \ , 1)
+          \ 'SPC h d t is to display current time.',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#plugins#todo#list()', 'open-todo-manager', 1)
 endfunction
 
@@ -870,20 +873,20 @@ function! s:windows_transient_state() abort
   call state.set_title('Buffer Selection Transient State')
   call state.defind_keys(
         \ {
-        \ 'layout' : 'vertical split',
-        \ 'left' : [
-        \ ],
-        \ 'right' : [
-        \ {
-        \ 'key' : 'n',
-        \ 'desc' : 'next buffer',
-        \ 'func' : '',
-        \ 'cmd' : 'bnext',
-        \ 'exit' : 0,
-        \ },
-        \ ],
-        \ }
-        \ )
+          \ 'layout' : 'vertical split',
+          \ 'left' : [
+            \ ],
+            \ 'right' : [
+              \ {
+                \ 'key' : 'n',
+                \ 'desc' : 'next buffer',
+                \ 'func' : '',
+                \ 'cmd' : 'bnext',
+                \ 'exit' : 0,
+                \ },
+                \ ],
+                \ }
+                \ )
   call state.open()
 endfunction
 
@@ -905,6 +908,28 @@ function! s:previous_buffer() abort
     echo 'no listed buffer'
     echohl None
   endtry
+endfunction
+
+function! s:maximize_minimize_win() abort
+  if s:WIN.win_count() == 1
+        \ && get(t:, '_maximize_previous_win', 0)
+        \ && tabpagenr('$') > 1
+    tabclose
+    if exists('*win_getid')
+      call win_gotoid(s:_maximize_previous_winid)
+    else
+      if tabpagenr('$') > 1 && tabpagenr() !=# tabpagenr('$')
+        tabprevious
+      endif
+    endif
+  else
+    if exists('*win_getid')
+      let s:_maximize_previous_winid = win_getid()
+    endif
+    tabedit %
+    let t:_maximize_previous_win = tabpagenr()
+  endif
+
 endfunction
 
 function! s:describe_current_time() abort
