@@ -199,33 +199,34 @@ CONTENTS                                                   *SpaceVim-contents*
       104. lang#swig..............................|SpaceVim-layers-lang-swift|
       105. lang#swig...............................|SpaceVim-layers-lang-swig|
       106. lang#tcl.................................|SpaceVim-layers-lang-tcl|
-      107. lang#toml...............................|SpaceVim-layers-lang-toml|
-      108. lang#typescript...................|SpaceVim-layers-lang-typescript|
-      109. lang#v.....................................|SpaceVim-layers-lang-v|
-      110. lang#vala...............................|SpaceVim-layers-lang-vala|
-      111. lang#vbnet.............................|SpaceVim-layers-lang-vbnet|
-      112. lang#verilog.........................|SpaceVim-layers-lang-verilog|
-      113. lang#vim.................................|SpaceVim-layers-lang-vim|
-      114. lang#vue.................................|SpaceVim-layers-lang-vue|
-      115. lang#wdl.................................|SpaceVim-layers-lang-wdl|
-      116. lang#wolfram.........................|SpaceVim-layers-lang-wolfram|
-      117. lang#xml.................................|SpaceVim-layers-lang-xml|
-      118. lang#xquery...........................|SpaceVim-layers-lang-xquery|
-      119. lang#zig.................................|SpaceVim-layers-lang-zig|
-      120. language server protocol......................|SpaceVim-layers-lsp|
-      121. leaderf...................................|SpaceVim-layers-leaderf|
-      122. mail.........................................|SpaceVim-layers-mail|
-      123. operator.................................|SpaceVim-layers-operator|
-      124. shell.......................................|SpaceVim-layers-shell|
-      125. ssh...........................................|SpaceVim-layers-ssh|
-      126. test.........................................|SpaceVim-layers-test|
-      127. tmux.........................................|SpaceVim-layers-tmux|
-      128. tools#dash.............................|SpaceVim-layers-tools-dash|
-      129. tools#mpv...............................|SpaceVim-layers-tools-mpv|
-      130. tools#zeal.............................|SpaceVim-layers-tools-zeal|
-      131. treesitter.............................|SpaceVim-layers-treesitter|
-      132. ui.............................................|SpaceVim-layers-ui|
-      133. unite.......................................|SpaceVim-layers-unite|
+      107. lang#teal...............................|SpaceVim-layers-lang-teal|
+      108. lang#toml...............................|SpaceVim-layers-lang-toml|
+      109. lang#typescript...................|SpaceVim-layers-lang-typescript|
+      110. lang#v.....................................|SpaceVim-layers-lang-v|
+      111. lang#vala...............................|SpaceVim-layers-lang-vala|
+      112. lang#vbnet.............................|SpaceVim-layers-lang-vbnet|
+      113. lang#verilog.........................|SpaceVim-layers-lang-verilog|
+      114. lang#vim.................................|SpaceVim-layers-lang-vim|
+      115. lang#vue.................................|SpaceVim-layers-lang-vue|
+      116. lang#wdl.................................|SpaceVim-layers-lang-wdl|
+      117. lang#wolfram.........................|SpaceVim-layers-lang-wolfram|
+      118. lang#xml.................................|SpaceVim-layers-lang-xml|
+      119. lang#xquery...........................|SpaceVim-layers-lang-xquery|
+      120. lang#zig.................................|SpaceVim-layers-lang-zig|
+      121. language server protocol......................|SpaceVim-layers-lsp|
+      122. leaderf...................................|SpaceVim-layers-leaderf|
+      123. mail.........................................|SpaceVim-layers-mail|
+      124. operator.................................|SpaceVim-layers-operator|
+      125. shell.......................................|SpaceVim-layers-shell|
+      126. ssh...........................................|SpaceVim-layers-ssh|
+      127. test.........................................|SpaceVim-layers-test|
+      128. tmux.........................................|SpaceVim-layers-tmux|
+      129. tools#dash.............................|SpaceVim-layers-tools-dash|
+      130. tools#mpv...............................|SpaceVim-layers-tools-mpv|
+      131. tools#zeal.............................|SpaceVim-layers-tools-zeal|
+      132. treesitter.............................|SpaceVim-layers-treesitter|
+      133. ui.............................................|SpaceVim-layers-ui|
+      134. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. alternate file........................|SpaceVim-usage-alternate-file|
       2. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
@@ -4839,6 +4840,45 @@ KEY BINDINGS
 <
 
 This layer also provides REPL support for tcl, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
+LANG#TEAL                                          *SpaceVim-layers-lang-teal*
+
+This layer is for teal development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#teal'
+<
+
+LAYER OPTIONS
+
+  1. `teal_interpreter`: Set the teal interpreter, by default, it is `tl`
+
+>
+  [[layers]]
+    name = 'lang#teal'
+    teal_interpreter = 'path/to/tl'
+<
+
+KEY BINDINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l r         run current file
+<
+
+This layer also provides REPL support for teal, the key bindings are:
 >
   Key             Function
   ---------------------------------------------
