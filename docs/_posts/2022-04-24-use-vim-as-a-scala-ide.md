@@ -70,5 +70,8 @@ you can send code to `scala` process via key bindings:
 ### code format
 
 The code formation feature is provided by `format` layer, and this layer is enabled by default.
-The default format engine is `neoformat`, it will run `scalafmt` asynchronously on current file.
+The default format engine is `neoformat`, it will run `scalafmt` or `scalariform`
+asynchronously on current file.
 
+To use scalariform, you need to install [`scalariform`](https://github.com/scala-ide/scalariform).
+and set `scalariform_jar` option to the path of the scalariform jar.

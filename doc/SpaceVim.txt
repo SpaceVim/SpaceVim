@@ -4708,7 +4708,7 @@ CODE FORMATTING
 
   1. To make neoformat support scala file, you should install scalariform.
     [`scalariform`](https://github.com/scala-ide/scalariform) and set
-    'g:spacevim_layer_lang_scala_formatter' to the path of the jar.
+    `scalariform_jar` option to the path of the jar.
 
   2. If lsp
     [`metals-vim`](https://scalameta.org/metals/docs/editors/overview.html) is
