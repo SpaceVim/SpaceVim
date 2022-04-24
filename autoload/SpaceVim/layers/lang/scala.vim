@@ -144,9 +144,8 @@ endif
 let s:scalariform_jar = ''
 
 function! SpaceVim#layers#lang#scala#plugins() abort
-  let plugins = [ 
-        \ ['derekwyatt/vim-scala', {'on_ft': 'scala'}],
-        \ ]
+  let plugins = []
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-scala', {'merged' : 0}])
   if has('python3') || has('python')
     call add(plugins, ['ensime/ensime-vim', {'on_ft': 'scala'}])
   endif
