@@ -1,4 +1,5 @@
 Execute ( SpaceVim plugin: code runner ):
   call SpaceVim#plugins#tasks#list()
-  exe "normal jjjj\<Cr>"
+  exe "normal! /regexp\<cr>"
+  exe "normal \<cr>"
 
