@@ -314,6 +314,8 @@ function! s:language_specified_mappings() abort
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i'],
           \ 'call SpaceVim#lsp#go_to_impl()', 'implementation', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'g'],
+          \ 'call SpaceVim#lsp#go_to_def()', 'definition', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'],
           \ 'call SpaceVim#lsp#go_to_typedef()', 'type definition', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'R'],
