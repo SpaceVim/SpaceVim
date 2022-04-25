@@ -259,10 +259,15 @@ endfunction
 
 function! s:self.stop(id) abort dict
   if self.nvim_job
+    let done = 0
     if has_key(self.jobs, a:id)
-      call jobstop(a:id)
+      try
+        let done = jobstop(a:id)
+      catch
+      endtry
       call remove(self.jobs, a:id)
     endif
+    return done
   elseif self.vim_job
     if has_key(self.jobs, a:id)
       call job_stop(get(self.jobs, a:id))
