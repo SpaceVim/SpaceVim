@@ -65,10 +65,12 @@
 " `clang_std` layer option.
 "
 " @subsection Key bindings
+"
 " >
-"   Mode            Key             Function
-"   ---------------------------------------------
-"   normal          SPC l r         run current file
+"   Key             Function
+"   --------------------------------
+"   SPC l r         run current file
+"   g d             jump to definition
 " <
 "
 " This layer also provides REPL support for c, the key bindings are:
@@ -79,6 +81,22 @@
 "   SPC l s b       send whole buffer
 "   SPC l s l       send current line
 "   SPC l s s       send selection text
+" <
+"
+" If the lsp layer is enabled for c/c++, the following key bindings can
+" be used:
+" >
+"   key binding     Description
+"   --------------------------------
+"   g D             jump to declaration
+"   SPC l e         rename symbol
+"   SPC l x         show references
+"   SPC l h         show line diagnostics
+"   SPC l d         show document
+"   K               show document
+"   SPC l w l       list workspace folder
+"   SPC l w a       add workspace folder
+"   SPC l w r       remove workspace folder
 " <
 "
 " Known issue:
@@ -301,25 +319,26 @@ function! s:language_specified_mappings() abort
         \ 'call SpaceVim#plugins#runner#open()',
         \ 'execute current file', 1)
   if SpaceVim#layers#lsp#check_filetype('c')
+        \ || SpaceVim#layers#lsp#check_server('clangd')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
           \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f'],
-          \ 'call SpaceVim#lsp#references()', 'references', 1)
-
-    " these work for now with coc.nvim only
-
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
+          \ 'call SpaceVim#lsp#references()', 'show-references', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i'],
           \ 'call SpaceVim#lsp#go_to_impl()', 'implementation', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'],
-          \ 'call SpaceVim#lsp#go_to_typedef()', 'type definition', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'R'],
-          \ 'call SpaceVim#lsp#refactor()', 'refactor', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'D'],
-          \ 'call SpaceVim#lsp#go_to_declaration()', 'declaration', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'h'],
+          \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
+    let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],
+          \ 'call SpaceVim#lsp#list_workspace_folder()', 'list-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'a'],
+          \ 'call SpaceVim#lsp#add_workspace_folder()', 'add-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'r'],
+          \ 'call SpaceVim#lsp#remove_workspace_folder()', 'remove-workspace-folder', 1)
 
   endif
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
@@ -463,6 +482,7 @@ endfunction
 " local function: go_to_declaration {{{
 function! s:go_to_declaration() abort
   if !SpaceVim#layers#lsp#check_filetype(&ft)
+        \ && !SpaceVim#layers#lsp#check_server('clangd')
     try
       exe 'ts' expand('<cword>')
     catch /^Vim\%((\a\+)\)\=:E426/
@@ -479,6 +499,7 @@ endfunction
 " local function: go_to_def {{{
 function! s:go_to_def() abort
   if !SpaceVim#layers#lsp#check_filetype(&ft)
+        \ && !SpaceVim#layers#lsp#check_server('clangd')
     try
       exe 'ts' expand('<cword>')
     catch /^Vim\%((\a\+)\)\=:E426/

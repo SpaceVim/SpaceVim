@@ -12,6 +12,10 @@ description: "C/C++/Object-C language support for SpaceVim, including code compl
 - [Features](#features)
 - [Configuration](#configuration)
 - [Key bindings](#key-bindings)
+  - [Jump to definition](#jump-to-definition)
+  - [Running current script](#running-current-script)
+  - [Inferior REPL process](#inferior-repl-process)
+  - [LSP key Bindings](#lsp-key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -55,10 +59,10 @@ A dict containing the standards you want to use. The default is:
 
 ```json
 {
-    "c": "c11",
-    "cpp": "c++1z",
-    "objc": "c11",
-    "objcpp": "c++1z",
+  "c": "c11",
+  "cpp": "c++1z",
+  "objc": "c11",
+  "objcpp": "c++1z"
 }
 ```
 
@@ -95,18 +99,51 @@ Note: If `.clang` file contains std configuration, it will override
 
 `format_on_save`: Enable/disable file formatting when saving current file. By default,
 it is disabled, to enable it:
+
 ```toml
 [[layers]]
     name = 'lang#c'
     format_on_save = true
-  ```
+```
 
 ## Key bindings
 
-| key bindings | Descriptions                     |
-| ------------ | -------------------------------- |
-| `SPC l d`    | show documentation               |
-| `SPC l e`    | rename symbol                    |
-| `SPC l f`    | references                       |
-| `SPC l r`    | compile and run the current file |
-| `g d`        | defintion preview                |
+### Jump to definition
+
+| Mode   | Key Bindings | Description                                      |
+| ------ | ------------ | ------------------------------------------------ |
+| normal | `g d`        | Jump to the definition position of cursor symbol |
+
+### Running current script
+
+To run current file, you can press `SPC l r` to run the current file without losing focus,
+and the result will be shown in a runner buffer.
+
+### Inferior REPL process
+
+Start a `igcc` inferior REPL process with `SPC l s i`.
+
+Send code to inferior process commands:
+
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC l s b`  | send buffer and keep code buffer focused         |
+| `SPC l s l`  | send line and keep code buffer focused           |
+| `SPC l s s`  | send selection text and keep code buffer focused |
+
+### LSP key Bindings
+
+If the lsp layer is enabled for C/C++, the following key bindings can
+be used:
+
+| key binding | Description             |
+| ----------- | ----------------------- |
+| `g D`       | jump to declaration     |
+| `SPC l e`   | rename symbol           |
+| `SPC l x`   | show references         |
+| `SPC l s`   | show line diagnostics   |
+| `SPC l d`   | show document           |
+| `K`         | show document           |
+| `SPC l w l` | list workspace folder   |
+| `SPC l w a` | add workspace folder    |
+| `SPC l w r` | remove workspace folder |
