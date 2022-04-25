@@ -370,9 +370,12 @@ We recommend you to use the common language specified key bindings for the same 
 
 | Key Binding | Description                                      |
 | ----------- | ------------------------------------------------ |
+| `g d`       | jump to definition                               |
+| `g D`       | jump to type definition                               |
 | `SPC l r`   | start a runner for current file                  |
 | `SPC l e`   | rename symbol                                    |
 | `SPC l d`   | show doc                                         |
+| `K`         | show doc                                         |
 | `SPC l i r` | remove unused imports                            |
 | `SPC l i s` | sort imports with isort                          |
 | `SPC l s i` | Start a language specified inferior REPL process |
