@@ -247,9 +247,22 @@ function! s:path_to_fname(path) abort
 endfunction
 
 function! SpaceVim#custom#load() abort
-  call SpaceVim#logger#info('start loading global config >>>')
   call s:load_glob_conf()
-  " if file .SpaceVim.d/init.toml exist
+  if getcwd() !=# expand('~')
+    call s:load_local_conf()
+  else
+    call SpaceVim#logger#info('current directory is $HOME, skip local config')
+  endif
+  if g:spacevim_enable_ycm && g:spacevim_snippet_engine !=# 'ultisnips'
+    call SpaceVim#logger#info(
+          \ 'YCM only support ultisnips')
+    let g:spacevim_snippet_engine = 'ultisnips'
+  endif
+endfunction
+
+
+function! s:load_local_conf() abort
+  call SpaceVim#logger#info('start loading local config >>>')
   if filereadable('.SpaceVim.d/init.toml')
     let local_dir = s:FILE.unify_path(
           \ s:CMP.resolve(fnamemodify('.SpaceVim.d/', ':p:h')))
@@ -286,15 +299,10 @@ function! SpaceVim#custom#load() abort
   endif
 
 
-  if g:spacevim_enable_ycm && g:spacevim_snippet_engine !=# 'ultisnips'
-    call SpaceVim#logger#info(
-          \ 'YCM only support ultisnips')
-    let g:spacevim_snippet_engine = 'ultisnips'
-  endif
 endfunction
 
-
 function! s:load_glob_conf() abort
+  call SpaceVim#logger#info('start loading global config >>>')
   let global_dir = s:global_dir()
   call SpaceVim#logger#info('global_dir is: ' . global_dir)
   if filereadable(global_dir . 'init.toml')
