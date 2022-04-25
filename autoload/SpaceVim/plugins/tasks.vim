@@ -340,9 +340,8 @@ function! s:open_task() abort
     if line =~# '^\[.*\]\s\+detected'
       let task = split(task, ':')[1]
     endif
-    let task = s:expand_task(s:task_config[task])
     call SpaceVim#mapping#SmartClose()
-    call SpaceVim#plugins#runner#run_task(task)
+    call SpaceVim#plugins#runner#run_task(s:expand_task(s:task_config[task]))
   else
     " not on a task
   endif
