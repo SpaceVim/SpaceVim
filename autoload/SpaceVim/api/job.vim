@@ -159,6 +159,9 @@ function! s:self.warp_nvim(argv, opts) abort dict
   if has_key(a:opts, 'cwd')
     call extend(obj.opts, {'cwd' : a:opts.cwd})
   endif
+  if has_key(a:opts, 'env')
+    call extend(obj.opts, {'env' : a:opts.env})
+  endif
   return obj
 endfunction
 

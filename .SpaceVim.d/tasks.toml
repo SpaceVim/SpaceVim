@@ -1,3 +1,9 @@
+[vader-test]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-test.options.env]
+    VIM_BIN = 'nvim'
 [generate-vim-doc]
     command = "python"
     args = ['-m', 'vimdoc', '.']
