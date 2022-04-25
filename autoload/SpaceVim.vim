@@ -1606,6 +1606,19 @@ function! s:parser_argv() abort
   else
     if !argc() && line2byte('$') == -1
       return [0]
+    elseif argv()[0] =~# '/$'
+      let f = fnamemodify(expand(argv()[0]), ':p')
+      if isdirectory(f)
+        return [1, f]
+      else
+        return [1, getcwd()]
+      endif
+    elseif argv()[0] ==# '.'
+      return [1, getcwd()]
+    elseif isdirectory(expand(argv()[0]))
+      return [1, fnamemodify(expand(argv()[0]), ':p')]
+    else
+      return [2, string(argv())]
     endif
   endif
 endfunction
