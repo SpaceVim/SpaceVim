@@ -108,5 +108,6 @@ it is disabled, to enable it:
 | `SPC l d`    | show documentation               |
 | `SPC l e`    | rename symbol                    |
 | `SPC l f`    | references                       |
+| `SPC l g`    | go to definition                 |
 | `SPC l r`    | compile and run the current file |
 | `g d`        | defintion preview                |
