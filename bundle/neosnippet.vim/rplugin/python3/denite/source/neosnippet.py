@@ -19,7 +19,7 @@ class Source(Base):
 
     def on_init(self, context):
         self._snippets = self.vim.eval(
-            'values(neosnippet#helpers#get_completion_snippets())')
+            'neosnippet#helpers#get_completion_snippets()')
 
     def gather_candidates(self, context):
         candidates = []
