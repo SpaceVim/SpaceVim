@@ -52,7 +52,7 @@ RUN curl https://raw.githubusercontent.com/SpaceVim/SpaceVim/master/docker/init.
 
 RUN curl -sLf https://spacevim.org/install.sh | bash
 
-RUN nvim --headless +'call dein#install()' +qall
+RUN nvim --headless +'call dein#install#_update([], "install", v:false)' +qall
 
 RUN rm $HOME/.SpaceVim.d/init.toml
 
