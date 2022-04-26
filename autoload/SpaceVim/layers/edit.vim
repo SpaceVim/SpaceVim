@@ -338,8 +338,8 @@ function! SpaceVim#layers#edit#config() abort
   if has('nvim-0.6.0')
     call SpaceVim#mapping#space#def('nmap', ['j', 'j'], 'HopChar1', 'jump-or-select-to-a-character', 1, 1)
     call SpaceVim#mapping#space#def('nmap', ['j', 'J'], 'HopChar2', 'jump-to-suite-of-two-characters', 1, 1)
-    call SpaceVim#mapping#space#def('nmap', ['j', 'l'], 'HopLine', 'jump-or-select-to-a-line', 0, 1)
-    call SpaceVim#mapping#space#def('nmap', ['j', 'w'], 'HopWord', 'jump-to-a-word', 0, 1)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'l'], 'HopLine', 'jump-or-select-to-a-line', 1, 1)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'w'], 'HopWord', 'jump-to-a-word', 1, 1)
   else
     " call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
     call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(better-easymotion-overwin-f)', 'jump-or-select-to-a-character', 0, 1)
