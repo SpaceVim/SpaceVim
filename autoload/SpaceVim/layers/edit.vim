@@ -85,13 +85,17 @@ function! SpaceVim#layers#edit#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/vim-table-mode'],
         \ [g:_spacevim_root_dir . 'bundle/vim-textobj-entire'],
         \ [g:_spacevim_root_dir . 'bundle/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
-        \ [g:_spacevim_root_dir . 'bundle/vim-easymotion'],
-        \ [g:_spacevim_root_dir . 'bundle/vim-easyoperator-line'],
         \ [g:_spacevim_root_dir . 'bundle/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
         \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
         \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
         \ ['andrewradev/splitjoin.vim',{ 'on_cmd':['SplitjoinJoin', 'SplitjoinSplit'],'merged' : 0, 'loadconf' : 1}],
         \ ]
+  if has('nvim-0.6.0')
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/hop.nvim',        { 'merged' : 0}])
+  else
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-easymotion',        { 'merged' : 0}])
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-easyoperator-line',        { 'merged' : 0}])
+  endif
   if executable('fcitx')
     call add(plugins,[g:_spacevim_root_dir . 'bundle/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
   endif
@@ -329,6 +333,28 @@ function! SpaceVim#layers#edit#config() abort
         \ 'SplitjoinJoin', 'join into a single-line statement', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'm'],
         \ 'SplitjoinSplit', 'split a one-liner into multiple lines', 1)
+
+  " call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(better-easymotion-overwin-f)', 'jump-or-select-to-a-character', 0, 1)
+  nnoremap <silent> <Plug>(better-easymotion-overwin-f) :call <SID>better_easymotion_overwin_f(0)<Cr>
+  xnoremap <silent> <Plug>(better-easymotion-overwin-f) :<C-U>call <SID>better_easymotion_overwin_f(1)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump-to-suite-of-two-characters', 0)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'goto-next-line-and-indent', 0)
+  " call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(better-easymotion-overwin-line)', 'jump-or-select-to-a-line', 0, 1)
+  nnoremap <silent> <Plug>(better-easymotion-overwin-line) :call <SID>better_easymotion_overwin_line(0)<Cr>
+  xnoremap <silent> <Plug>(better-easymotion-overwin-line) :<C-U>call <SID>better_easymotion_overwin_line(1)<Cr>
+  call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-overwin-line)', 'jump-to-a-line', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-overwin-w)', 'jump-to-a-word', 0)
+  call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-overwin-line)', 'jump-to-a-line', 0)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'u'], 'call call('
+        \ . string(s:_function('s:jump_to_url')) . ', [])',
+        \ 'jump-to-url', 1)
+endfunction
+
+function! s:jump_to_url() abort
+  let g:EasyMotion_re_anywhere = 'http[s]*://'
+  call feedkeys("\<Plug>(easymotion-jumptoanywhere)")
 endfunction
 
 function! s:transpose_with_previous(type) abort
@@ -379,6 +405,51 @@ function! s:transpose_with_next(type) abort
     endif
   endif
   let @" = l:save_register
+endfunction
+
+function! s:better_easymotion_overwin_line(is_visual) abort
+  let current_line = line('.')
+  try
+    if a:is_visual
+      call EasyMotion#Sol(0, 2)
+    else
+      call EasyMotion#overwin#line()
+    endif
+    " clear cmd line
+    noautocmd normal! :
+    if a:is_visual
+      let last_line = line('.')
+      exe current_line
+      if last_line > current_line
+        exe 'normal! V' . (last_line - current_line) . 'j'
+      else
+        exe 'normal! V' . (current_line - last_line) . 'k'
+      endif
+    endif
+  catch /^Vim\%((\a\+)\)\=:E117/
+
+  endtry
+endfunction
+
+function! s:better_easymotion_overwin_f(is_visual) abort
+  let [current_line, current_col] = getpos('.')[1:2]
+  try
+    call EasyMotion#OverwinF(1)
+    " clear cmd line
+    noautocmd normal! :
+    if a:is_visual
+      let last_line = line('.')
+      let [last_line, last_col] = getpos('.')[1:2]
+      call cursor(current_line, current_col)
+      if last_line > current_line        
+        exe 'normal! v' . (last_line - current_line) . 'j0' . last_col . '|'
+      else
+        exe 'normal! v' . (current_line - last_line) . 'k0' . last_col . '|' 
+      endif
+    endif
+  catch /^Vim\%((\a\+)\)\=:E117/
+
+  endtry
 endfunction
 
 function! s:move_text_down_transient_state() abort   

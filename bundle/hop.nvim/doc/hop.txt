@@ -1,0 +1,887 @@
+*hop.txt*    For Neovim version 0.5                  Last change: 2021 Nov 02
+
+                                 __
+                                / /_  ____  ____
+                               / __ \/ __ \/ __ \
+                              / / / / /_/ / /_/ /
+                             /_/ /_/\____/ .___/
+                                        /_/
+                         · Neovim motions on speed! ·
+
+==============================================================================
+CONTENTS                                                          *hop-contents*
+
+  Introduction ·············································· |hop-introduction|
+  Requirements ·············································· |hop-requirements|
+  Usage ···························································· |hop-usage|
+    Commands ···················································· |hop-commands|
+    Lua API ······················································ |hop-lua-api|
+    Jump target API ······································ |hop-jump-target-api|
+  Configuration ··················································· |hop-config|
+  Extension ···················································· |hop-extension|
+  Highlights ·················································· |hop-highlights|
+  License ························································ |hop-license|
+
+==============================================================================
+INTRODUCTION                                              *hop* *hop-introduction*
+
+Hop is an “EasyMotion” like plugin allowing you to jump anywhere in a document
+with as few keystrokes as possible. It does so by annotating text in your
+buffer with |hints|, short string sequences for which each character represents
+a key to type to jump to the annotated text. Most of the time, those
+sequences’ lengths will be between 1 to 3 characters, making every jump target
+in your document reachable in a few keystrokes.
+
+Hop is a complete from-scratch rewrite of EasyMotion, a famous plugin to
+enhance the native motions of Vim. Even though EasyMotion is usable in
+Neovim, it suffers from a few drawbacks making it not comfortable to use with
+Neovim version >0.5 – at least at the time of writing these lines:
+
+- EasyMotion uses an old trick to annotate jump targets by saving the
+  contents of the buffer, replacing it with the highlighted annotations and
+  then restoring the initial buffer after jump. This trick is dangerous as it
+  will change the contents of your buffer. A UI plugin should never do anything
+  to existing buffers’ contents.
+- Because the contents of buffers will temporarily change, other parts of the
+  editor and/or plugins relying on buffer change events will react and will go
+  mad. An example is the internal LSP client implementation of Neovim >0.5 or
+  its treesitter native implementation. For LSP, it means that the connected
+  LSP server will receive a buffer with the jump target annotations… not
+  ideal.
+
+==============================================================================
+REQUIREMENTS                                                  *hop-requirements*
+
+Hop works only with Neovim and was written with Neovim-0.5, so it is highly
+recommended to use Neovim version 0.5+.
+
+Especially, hop uses |api-extended-marks|, which are not available before
+Neovim-0.5.
+
+==============================================================================
+USAGE                                                                *hop-usage*
+
+Before doing anything else, you have to setup the plugin. If you are not using
+a package manager or environment doing that automatically for you, you need to
+call the |hop.setup| function to correctly initialize the plugin.
+
+For a minimal setup:
+
+    For people using init.lua~
+        In your `init.lua`, add:
+>
+            require'hop'.setup()
+<
+    For people using init.vim~
+        In your `init.vim`, add:
+>
+            lua << EOF
+            require'hop'.setup()
+            EOF
+<
+You can pass an optional argument to `setup(opts)` in order to pass {opts}.
+Have a look at |hop.setup| for further details.
+
+                                                                    *hop-health*
+Healthcheck~
+
+Hop has support for |:checkhealth|. If you find yourself in a situation where
+something looks odd or incorrect, do not forget to run this command before
+opening an issue.
+
+                                                                  *hop-commands*
+Commands~
+
+You can try those commands by typing them in your command line. By default,
+they will use the default options for the configuration of Hop. If you want to
+customize how those commands work, have a look at |hop.setup|. Also, something
+pretty important to know is that those are Vim commands. Hop tries to expose
+as many features as possible via the Vim commands but ultimately, you will
+have access to more features by using the Lua API directly. Have a look at
+|hop-lua-api| for more documentation.
+
+Some of the commands have a suffix, such as `BC`, `AC` and `MW`. Those are
+variations of the commands without the suffix, applying to the visible part of
+the buffer before and after the cursor, and multiple windows, respectively.
+Another kind of suffix (that can be mixed with `BC` and `AC`) is `CurrentLine`. This
+creates a variant of the command that will only run for the current line.
+
+`:HopWord`                                                              *:HopWord*
+`:HopWordBC`                                                          *:HopWordBC*
+`:HopWordAC`                                                          *:HopWordAC*
+`:HopWordCurrentLine`                                        *:HopWordCurrentLine*
+`:HopWordCurrentLineBC`                                    *:HopWordCurrentLineBC*
+`:HopWordCurrentLineAC`                                    *:HopWordCurrentLineAC*
+`:HopWordMW`                                                          *:HopWordMW*
+    Annotate all |word|s with key sequences. Typing a first key will visually
+    filter the sequences and reduce them. Continue typing key sequences until
+    you reduce a sequence completely, which will bring your cursor at that
+    position.
+
+    This is akin to calling the |hop.hint_words| Lua function.
+
+`:HopPattern`                                                        *:HopPattern*
+`:HopPatternBC`                                                    *:HopPatternBC*
+`:HopPatternAC`                                                    *:HopPatternAC*
+`:HopPatternCurrentLine`                                  *:HopPatternCurrentLine*
+`:HopPatternCurrentLineBC`                              *:HopPatternCurrentLineBC*
+`:HopPatternCurrentLineAC`                              *:HopPatternCurrentLineAC*
+`:HopPatternMW`                                                    *:HopPatternMW*
+    Ask the user for a pattern and hint the document with it.
+
+    This is akin to calling the |hop.hint_patterns| Lua function
+    with no explicit pattern.
+
+`:HopChar1`                                                            *:HopChar1*
+`:HopChar1BC`                                                        *:HopChar1BC*
+`:HopChar1AC`                                                        *:HopChar1AC*
+`:HopChar1CurrentLine`                                      *:HopChar1CurrentLine*
+`:HopChar1CurrentLineBC`                                  *:HopChar1CurrentLineBC*
+`:HopChar1CurrentLineAC`                                  *:HopChar1CurrentLineAC*
+`:HopChar1MW`                                                        *:HopChar1MW*
+    Type a key and immediately hint the document for this key.
+
+    This is akin to calling the |hop.hint_char1| Lua Function
+
+`:HopChar2`                                                            *:HopChar2*
+`:HopChar2BC`                                                        *:HopChar2BC*
+`:HopChar2AC`                                                        *:HopChar2AC*
+`:HopChar2CurrentLine`                                      *:HopChar2CurrentLine*
+`:HopChar2CurrentLineBC`                                  *:HopChar2CurrentLineBC*
+`:HopChar2CurrentLineAC`                                  *:HopChar2CurrentLineAC*
+`:HopChar2MW`                                                        *:HopChar2MW*
+    Type two keys and immediately hint the document for this bigram.
+
+    This is akin to calling the |hop.hint_char2| Lua Function
+
+`:HopLine`                                                              *:HopLine*
+`:HopLineBC`                                                          *:HopLineBC*
+`:HopLineAC`                                                          *:HopLineAC*
+`:HopLineCurrentLine`                                        *:HopLineCurrentLine*
+`:HopLineCurrentLineBC`                                    *:HopLineCurrentLineBC*
+`:HopLineCurrentLineAC`                                    *:HopLineCurrentLineAC*
+`:HopLineMW`                                                          *:HopLineMW*
+    Jump to the beginning of the line of your choice inside your buffer.
+
+    This is akin to calling the |hop.hint_lines| Lua function.
+
+`:HopLineStart`                                                    *:HopLineStart*
+`:HopLineStartBC`                                                *:HopLineStartBC*
+`:HopLineStartAC`                                                *:HopLineStartAC*
+`:HopLineStartCurrentLine`                              *:HopLineStartCurrentLine*
+`:HopLineStartCurrentLineBC`                          *:HopLineStartCurrentLineBC*
+`:HopLineStartCurrentLineAC`                          *:HopLineStartCurrentLineAC*
+`:HopLineStartMW`                                                *:HopLineStartMW*
+    Like `HopLine` but skips leading whitespace on every line. Blank lines are
+    skipped over.
+
+    This is akin to calling the |hop.hint_lines_skip_whitespace| Lua function.
+
+`:HopAnywhere`                                                      *:HopAnywhere*
+`:HopAnywhereBC`                                                  *:HopAnywhereBC*
+`:HopAnywhereAC`                                                  *:HopAnywhereAC*
+`:HopAnywhereCurrentLine`                                *:HopAnywhereCurrentLine*
+`:HopAnywhereCurrentLineBC`                            *:HopAnywhereCurrentLineBC*
+`:HopAnywhereCurrentLineAC`                            *:HopAnywhereCurrentLineAC*
+`:HopAnywhereMW`                                                  *:HopAnywhereMW*
+    Annotate anywhere with key sequences.
+
+    This is akin to calling the |hop.hint_anywhere| Lua function.
+
+                                                                   *hop-lua-api*
+Lua API~
+
+The Lua API comprises several modules. Even though those modules might have
+more public functions than described here, you are only supposed to use the
+functions in this help page. Using one that is not listed here is considered
+unstable.
+
+`hop`             Entry point and main interface. If you just want to use
+                Hop from within Lua via keybindings, you shouldn’t need to
+                read any other modules.
+`hop.defaults`    Default options.
+`hop.hint`        Various functions to create, update and reduce hints.
+`hop.highlight`   Highlight functions (creation / autocommands / etc.).
+`hop.jump_target` Core module used to create jump targets.
+`hop.perm`        Permutation functions. Permutations are used as labels for
+                the hints.
+
+Main API~
+
+Most of the functions and values you need to know about are in `hop`.
+
+`hop.setup(`{opts}`)`                                                    *hop.setup*
+    Setup the library with options.
+
+    This function will setup the Lua API and commands in a way that respects
+    the options you pass. It is mandatory to call that function at some time
+    if you want to be able to use Hop.
+
+    Note:
+	Some plugins will automatically call the `setup` public function of a
+	plugin if declared, which is the case with Hop. With such plugins, you
+	shouldn’t have to care too much about `setup` but focus more on the
+	{opts} you can pass it.
+
+    Arguments:~
+        {opts}  List of options. See the |hop-config| section.
+
+`hop.hint_with(`{jump_target_gtr}`,` {opts}`)`                         *hop.hint_with*
+    Main entry-point of Hop, this function expects a jump target generator and
+    will call it with {opts} to get a list of jump targets. This function will
+    take care of reducing the hints for you automatically and will perform the
+    actual jumps.
+
+    If you would like to use a more general version to implement different
+    kind of actions instead of jumping, have a look at
+    |hop.hint_with_callback|.
+
+    Arguments:~
+        {jump_target_gtr} Jump target generator. See |hop-jump-target-api| for
+                          further information.
+        {opts}            User options.
+
+`hop.hint_with_callback(`                                 *hop.hint_with_callback*
+  {jump_target_gtr}`,`
+  {opts}`,`
+  {callback}
+`)`
+    Main entry-point of Hop, this function expects a jump target generator and
+    will call it with {opts} to get a list of jump targets. This function will
+    take care of reducing the hints for you automatically. Once a jump target
+    is reduced completely, this function will call the {callback} with the
+    selected jump target.
+
+    Arguments:~
+        {jump_target_gtr} Jump target generator. See |hop-jump-target-api| for
+                          further information.
+        {opts}            User options.
+
+
+`hop.hint_words(`{opts}`)`                                          *hop.hint_words*
+    Annotate all words in the current window with key sequences. Typing a
+    first key will visually filter the sequences and reduce them. Continue
+    typing key sequences until you reduce a sequence completely, which will
+    bring your cursor at that position. See |hop-config| for a complete list
+    of the options you can pass as arguments.
+
+    Arguments:~
+        {opts}  Hop options.
+
+`hop.hint_patterns(`{opts}`,` {pattern}`)`                         *hop.hint_patterns*
+    Annotate all matched patterns in the current window with key sequences.
+
+    Arguments:~
+        {opts}     Hop options.
+        {pattern}  (optional) The pattern to search for.
+                   If not set, the user is prompted for the pattern to search.
+
+`hop.hint_char1(`{opts}`)`                                          *hop.hint_char1*
+    Let the user type a key and immediately hint all of its occurrences.
+
+    Arguments:~
+        {opts}  Hop options.
+
+`hop.hint_char2(`{opts}`)`                                          *hop.hint_char2*
+    Let the user type a bigram (two concatenated keys) and immediately hint
+    all of its occurrences.
+
+    This function can behave like |hop.hint_char1| in some cases. See
+    |hop-config-char2_fallback_key|.
+
+    Arguments:~
+        {opts}  Hop options.
+
+`hop.hint_lines(`{opts}`)`                                          *hop.hint_lines*
+    Hint the beginning of each lines currently visible in the buffer view and
+    allow to jump to them.
+
+    This works with empty lines as well.
+
+    Arguments:~
+        {opts}  Hop options.
+
+`hop.hint_lines_skip_whitespace(`{opts}`)`          *hop.hint_lines_skip_whitespace*
+    Hint the first non-whitespace character of each lines currently visible in
+    the buffer view and allow to jump to them.
+
+    This works with empty lines as well.
+
+    Arguments:~
+        {opts}  Hop options.
+
+`hop.hint_anywhere(`{opts}`)`                                   *hop.hint_anywhere*
+    Annotate anywhere in the current window with key sequences.
+
+    Arguments:~
+        {opts}  Hop options.
+
+Hint API~
+
+The hint API provide the `HintDirection` and `HintPosition`
+
+`hop.hint.HintDirection`                                  *hop.hint.HintDirection*
+    Enumeration for hinting direction.
+
+    Use this table as a value for |hop-config-direction|. Setting it to {nil}
+    makes the command / function act on the whole visible part of the buffer.
+
+    Enumeration variants:~
+        {BEFORE_CURSOR} Create and apply hints before the cursor.
+        {AFTER_CURSOR}  Create and apply hints after the cursor.
+
+`hop.hint.HintPosition`                                    *hop.hint.HintPosition*
+    Enumeration for hinting position in match.
+
+    Use this table as a value for |hop-config-hint_posititon|.
+
+    Enumeration variants:~
+        {BEGIN}  Create and apply hints at the beginning of the match.
+        {MIDDLE} Create and apply hints at the middle of the match.
+        {END}    Create and apply hints at the end of the match.
+
+                                                           *hop-jump-target-api*
+Jump target API~
+
+The jump target API is probably the most core API of all. It provides some
+helper functions to help you extend Hop by providing your own jump targets.
+Most importantly, you will want to read this documentation section to know
+exactly which kind of format Hop expects for the jump targets when
+implementing your own.
+
+Jump targets are locations in buffers where users might jump to. They are
+wrapped in a table and provide the required information so that Hop can
+associate labels and display the hints. Such a table must have the following
+form:
+>
+    {
+      jump_targets = {},
+      indirect_jump_targets = {},
+    }
+>
+The `jump_targets` field is a list-table of jump targets. A single jump target
+is simply a location in a given window. Actually, the location will be set on
+the buffer that is being displayed by that window. So you can picture a jump
+target as a triple (line, column, window).
+>
+    {
+      line = 0,
+      column = 0,
+      window = 0,
+    }
+<
+`indirect_jump_targets` is an optional yet highly recommended table. They
+provide an indirect access to `jump_targets` to re-order them. They are for
+instance used to be able to distribute hints according to their distance to
+the current location of the cursor. Not providing that table (`nil`) will
+result in the jump targets being considered fully ordered and will be assigned
+sequences based on their index in `jump_targets`.
+
+Indirect jump targets are encoded as a flat list-table of pairs
+(index, score). This table allows to quickly score and sort jump targets.
+>
+    {
+      index = 0,
+      score = 0,
+    }
+<
+The `index` field gives the index in the `jump_targets` list. The `score` is any
+number. The rule is that the lower the score is, the less prioritized the
+jump target will be.
+
+So for instance, for two jump targets, a jump target generator must return
+such a table:
+>
+    {
+      jump_targets = {
+        { line = 1, column = 14, window = 0 },
+        { line = 2, column = 1, window = 0 },
+      },
+
+      indirect_jump_targets = {
+        { index = 0, score = 14 },
+        { index = 1, score = 7 },
+      },
+    }
+<
+
+If you don’t need to change the score, or if the scores are always ascending
+with the indices ascending, you can completely omit the
+`indirect_jump_targets` table:
+>
+    {
+      jump_targets = {
+        { line = 1, column = 14, window = 0 },
+        { line = 2, column = 1, window = 0 },
+      },
+    }
+<
+This module provides several functions, named `jump_targets_*`, which are
+called jump target generators. Such functions are to be passed to
+|hop.hint_with| or |hop.hint_with_callback|. Most of the Vim commands are already
+doing that for you.
+
+`hop.jump_target.jump_targets_by_scanning_line(` *hop.jump_target.jump_targets_by_scanning_line*
+  {regex}
+`)`
+    Jump target generator that scans lines of the currently visible buffer and
+    create the jump targets by using the input {regex}.
+
+    Arguments:~
+        {regex} Regex-like table to apply to each line. See the various
+                `hop.jump_target.regex*` functions below for a list of available
+                options.
+
+                If you want to create your own regex-like table, you need to
+                provide a table with two fields: `oneshot`, a boolean value,
+                that is to be set to `true` if the regex should be applied
+                only once to each line, and `match`, which is the actual
+                matcher that returns the beginning / end
+                (inclusive / exclusive) byte indices of the match. You are
+                advised to use |vim.regex|.
+
+`hop.jump_target.jump_targets_for_current_line(` *hop.jump_target.jump_targets_for_current_line*
+  {regex}
+`)`
+    Jump target generator that applies {regex} only to the current line of the
+    currently active window.
+
+    Arguments:~
+        {regex} Regex-like table to apply to each line. See the various
+                `hop.jump_target.regex*` functions below for a list of available
+                options.
+
+                If you want to create your own regex-like table, you need to
+                provide a table with two fields: `oneshot`, a boolean value,
+                that is to be set to `true` if the regex should be applied to
+                each line only once, and `match`, which is the actual matcher
+                that returns the beginning / end (inclusive / exclusive) byte
+                indices of the match. You are advised to use |vim.regex|.
+
+
+`hop.jump_target.sort_indirect_jump_targets(` *hop.jump_target.sort_indirect_jump_targets*
+  {indirect_jump_targets}`,`
+  {opts}
+`)`
+    Sort {indirect_jump_targets} according to their scores.
+
+    Arguments:~
+        {indirect_jump_targets} Indirect jump targets to sort.
+        {opts}                  User options.
+
+`hop.jump_target.regex_by_searching(`         *hop.jump_target.regex_by_searching*
+  {pat}`,`
+  {plain_search}
+`)`
+    Buffer-line based |pattern| hint mode. This mode will highlight the
+    beginnings of a pattern you will be prompted for in the document and
+    will make the cursor jump to the one fully reduced.
+
+    Arguments:~
+        {pat}          Pattern to search.
+        {plain_search} Should the pattern by plain-text.
+
+`hop.jump_target.regex_by_case_searching(` *hop.jump_target.regex_by_case_searching*
+  {pat}`,`
+  {plain_search}`,`
+  {opts}
+`)`
+    Similar to |hop.jump_target.regex_by_searching|, but respects the user case
+    sensitivity set by 'smartcase' and |hop-config-case_insensitive|.
+
+    Arguments:~
+        {pat}          Pattern to search.
+        {plain_search} Should the pattern by plain-text.
+        {opts}         User options.
+
+`hop.jump_target.regex_by_word_start()`      *hop.jump_target.regex_by_word_start*
+    Buffer-line based |word| hint mode. This mode will highlight the beginnings
+    of all the words in the window and will make the cursor jump to the one
+    fully reduced.
+
+`hop.jump_target.regex_by_line_start()`      *hop.jump_target.regex_by_line_start*
+    Highlight the beginning of each line in the current window.
+
+`hop.jump_target.regex_by_line_start_skip_whitespace()` *hop.jump_target.regex_by_line_start_skip_whitespace*
+    Highlight the non-whitespace character of each line in the current window.
+
+`hop.jump_target.regex_by_anywhere()`          *hop.jump_target.regex_by_anywhere*
+    Highlight the anywhere in the current window.
+
+`hop.jump_target.manh_dist(`                           *hop.jump_target.manh_dist*
+  {a}`,`
+  {b}`,`
+  {x_bias}
+`)`
+    Manhattan distance between two buffer positions. Both {a} and {b} must be
+    tables containing two values: the first one for the line and the second one
+    for the column.
+
+    {x_bias} is to be used to skew the Manhattan distance in terms of lines.
+
+    Arguments:~
+        {a}      First position.
+        {b}      Second position.
+        {x_bias} Optional bias applied to the line distance. Defaults to 10.
+
+Highlight API~
+
+The highlight API gives two functions to manipulate the highlights Hop uses:
+
+`hop.highlight.insert_highlights()`              *hop.highlight.insert_highlights*
+    Manually insert the highlights by calling the `highlight default` command.
+    See |hop-highlights| for further details about the list of highlights
+    currently available.
+
+`hop.highlight.create_autocmd`                      *hop.highlight.create_autocmd*
+    Register autocommands for the `ColorScheme` event, calling
+    |hop.highlight.insert_highlights|. This is called when you require Hop and
+    you shouldn’t need to call this function by yourself.
+
+Permutation API~
+
+The permutation API is the core part of the algorithm used in Hop.
+Permutations in Hop are made out of a source sequence of characters, called
+a key set and represented with {keys}. A good choice of key set is important
+to yield short and concise permutations, allowing to jump to targets with
+fewer keystrokes.
+
+`hop.perm.permutations(`{keys}`,` {n}`,` {opts}`)`               *hop.perm.permutations*
+    Get the first {n} permutations out of {keys}.
+
+    Arguments:~
+        {keys}  Input key set to use to create permutations.
+        {n}     Number of permutations to generate.
+        {opts}  Hop options.
+
+    Return:~
+        The {n} first permutations for the given {keys} and
+        |hop-config-perm_method| set in {opts}.
+
+==============================================================================
+CONFIGURATION                                                       *hop-config*
+
+The configuration can be provided in two different ways:
+
+- Either by explicitly passing an {opts} table to the various Lua
+  functions.
+- Or by passing an {opts} table to the Lua |hop.setup| function.
+
+Not providing any of the two above will use the default values, as described
+below.
+
+`keys`                                                           *hop-config-keys*
+    A string representing all the keys that can be part of a permutation.
+    Every character (key) used in the string will be used as part of a
+    permutation. The shortest permutation is a permutation of a single
+    character, and, depending on the content of your buffer, you might end up
+    with 3-character (or more) permutations in worst situations.
+
+    However, it is important to notice that if you decide to provide `keys`,
+    you have to ensure to use enough characters in the string, otherwise you
+    might get very long sequences and a not so pleasant experience.
+
+    Note:
+	This is only for the old permutation algorithm only, which is to get
+	deprecated soon.
+
+	Another important aspect is that the order of the characters you put
+        in your `keys` is important. Depending on the value you use in
+    	|hop-config-term_seq_bias|, the keys will be split in two and the first
+    	part of it will be used for terminal keys and the second part for
+        sequence keys.
+
+    Defaults:~
+        `keys = 'asdghklqwertyuiopzxcvbnmfj'`
+
+`quit_key`                                                   *hop-config-quit_key*
+    A string representing a key that will quit Hop mode without also feeding
+    that key into Neovim to be treated as a normal key press.
+
+    It is possible to quit hopping by pressing any key that is not present in
+    |hop-config-keys|; however, when you do this, the key normal function is
+    also performed. For example if, hopping in |visual-mode|, pressing <Esc>
+    will quit hopping and also exit |visual-mode|.
+
+    If the user presses `quit_key`, Hop will be quit without the key normal
+    function being performed. For example if hopping in |visual-mode| with
+    `quit_key` set to '<Esc>', pressing <Esc> will quit hopping without
+    quitting |visual-mode|.
+
+    If you don't want to use a `quit_key`, set `quit_key` to an empty string.
+
+    Note:~
+        `quit_key` should only contain a single key or be an empty string.
+
+    Note:~
+        `quit_key` should not contain a key that is also present in
+        |hop-config-keys|.
+
+    Defaults:~
+        `quit_key = '<Esc>'`
+
+`perm_method`                                             *hop-config-perm_method*
+    Permutation method to use.
+
+    Permutation methods allow to change the way permutations (i.e. hints
+    sequence labels) are generated internally. There are currently two
+    possible options:
+
+    Possible algorithms~
+        `TermSeqBias`
+            This algorithm splits your input key set (|hop-config-keys|) into
+            two separate sets, a terminal key set and a sequence key set.
+            Terminal keys will always be at the end of a sequence and then
+            typing them will always jump somewhere in your buffer, while
+            sequence keys will always be part of a prefix sequence before a
+            terminal key.
+
+            Additionally to |hop-config-keys|, this algorithm uses the
+            |hop-config-term_seq_bias| option to determine how to split
+            |hop-config-keys|. A good default value is `0.5` or `3 / 4` but
+            feel free to experiment with values between (exclusive) `0` and
+            `1`.
+
+	    Note:
+		This algorithm will be deprecated very soon. You are strongly
+		advised to switch to `TrieBacktrackFilling` if you haven’t
+		yet.
+
+        `TrieBacktrackFilling`
+            Permutation algorithm based on tries and backtrack filling.
+
+            This algorithm uses the full potential of |hop-config-keys| by
+            using them all to saturate a trie, representing all the
+            permutations. Once a layer is saturated, this algorithm will
+            backtrack (from the end of the trie, deepest first) and create a
+            new layer in the trie, ensuring that the first permutations will
+            be shorter than the last ones.
+
+            Because of the last, deepest trie insertion mechanism and trie
+            saturation, this algorithm yields a much better distribution
+            accross your buffer, and you should get 1-sequences and
+            2-sequences most of the time. Each dimension grows
+            exponentially, so you get `keys_length²` 2-sequence keys,
+            `keys_length³` 3-sequence keys, etc in the worst cases.
+
+    Default value~
+        `perm_method = require'hop.perm'.TrieBacktrackFilling`
+
+`reverse_distribution`                           *hop-config-reverse_distribution*
+    The default behavior for key sequence distribution in your buffer is to
+    concentrate shorter sequences near the cursor, grouping 1-character
+    sequences around. As hints get further from the cursor, the dimension of
+    the sequences will grow, making the furthest sequences the longest ones
+    to type.
+
+    Set this option to `true` to reverse the density and concentrate the
+    shortest sequences (1-character) around the furthest words and the longest
+    sequences around the cursor.
+
+    Defaults:~
+        `reverse_distribution = false`
+
+`teasing`                                                     *hop-config-teasing*
+    Boolean value stating whether Hop should tease you when you do something
+    you are not supposed to.
+
+    If you find this setting annoying, feel free to turn it to `false`.
+
+    Defaults:~
+        `teasing = true`
+
+`jump_on_sole_occurrence`                     *hop-config-jump_on_sole_occurrence*
+    Immediately jump without displaying hints if only one occurrence exists.
+
+    Defaults:~
+        `jump_on_sole_occurrence = true`
+
+`case_insensitive`                                   *hop-config-case_insensitive*
+    Use case-insensitive matching by default for commands requiring user
+    input.
+
+    Defaults:~
+        `case_insensitive = true`
+
+`create_hl_autocmd`                                 *hop-config-create_hl_autocmd*
+    Create and set highlight autocommands to automatically apply highlights.
+    You will want this if you use a theme that clears all highlights before
+    applying its colorscheme.
+
+    Defaults:~
+        `create_hl_autocmd = true`
+
+`direction`                                                 *hop-config-direction*
+    Direction in which to hint. See |hop.hint.HintDirection| for further
+    details.
+
+    Setting this in the user configuration will make all commands default to
+    that direction, unless overriden.
+
+    Defaults:~
+        `direction = nil`
+
+`hint_position`                                         *hop-config-hint_position*
+    Position of hint in match. See |hop.hint.HintPosition| for further
+    details.
+
+    Defaults:~
+        `hint_position = require'hop.hint'.HintPosition.BEGIN`
+
+`current_line_only`                                 *hop-config-current_line_only*
+    Apply Hop commands only to the current line.
+
+    Note:
+        Trying to use this option along with |hop-config-multi_windows| is
+        unsound.
+
+    Defaults:~
+        `current_line_only = false`
+
+`inclusive_jump`                                       *hop-config-inclusive_jump*
+    Make all motions inclusive; i.e. jumping to a jump target will actually
+    jump one display cell right to the jump target. Set this option to `true`
+    if you would like to have the same behavior as with the |f| motion. Set it
+    to `false` if you would like to have the same behavior as with the |t|
+    motion.
+
+    There is one important limitation if you use `inclusive_jump = true`: if
+    the jump target you would like to jump to is the last character on a
+    line, it will not do what you expect; for instance, deleting or yanking
+    with `d` / `y` will not include the last character by default, unless you
+    set |virtualedit| to `onemore`.
+
+    Defaults:~
+        `inclusive_jump = false`
+
+`uppercase_labels`                                   *hop-config-uppercase_labels*
+    Display labels as uppercase. This option only affects the displayed
+    labels; you still select them by typing the keys on your keyboard.
+
+    Defaults:~
+        `uppercase_labels = false`
+
+`char2_fallback_key`                               *hop-config-char2_fallback_key*
+    Enable a special key that breaks |hop.hint_char2| if only one key is
+    pressed, falling back to the same behavior as |hop.hint_char1|. It is
+    recommended that, if you set this option, you not use a key that is in
+    your |hop-config-keys| (because it would make those keys unreachable), and
+    not a character that you might jump to. A good fallback key could be
+    `<esc>` or `<cr>`, for instance.
+
+    Defaults:~
+        `char2_fallback_key = nil`
+
+`extensions`                                               *hop-config-extensions*
+    List-table of extensions to enable (names). As described in |hop-extension|,
+    extensions for which the name in that list must have a `register(opts)`
+    function in their public API for Hop to correctly initialized them.
+
+    Defaults:~
+        `extensions = nil`
+
+`multi_windows`                                         *hop-config-multi_windows*
+    Enable cross-windows support and hint all the currently visible windows.
+    This behavior allows you to jump around any position in any buffer
+    currently visible in a window. Although a powerful a feature, remember
+    that enabling this will also generate many more sequence combinations, so
+    you could get deeper sequences to type (most of the time it should be good
+    if you have enough keys in |hop-config-keys|).
+
+    Defaults:~
+        `multi_windows = false`
+
+==============================================================================
+EXTENSION                                                        *hop-extension*
+
+Hop supports extensions, that can provide ad hoc jump targets that are not
+part of the core of Hop. If you want to write a Hop extension, this section
+should provide all the required informations.
+
+The first important part is to know how to generate jump targets. You will
+then first want to read the |hop-jump-target-api|, that describes this process
+in terms of Lua protocol.
+
+The second part is that because you will depend on the Hop API, you need to be
+sure that Hop is completely setup before initiating your Hop extension plugin.
+In order to do so, your users will have to read the user guide of the package
+manager they are using to mark Hop as a dependency of your plugin when
+installing. You should ensure such instructions are easily accessible to them,
+for instance in your help pages and README.
+
+Finally, Hop extension plugins do not get initialized via the regular `setup`
+function — well, it’s up to you to still provide that function, but keep in
+mind that Hop should not be assumed ready if you do so, so really keep setting
+up things unrelated to Hop in your `setup` function. In order to setup a Hop
+extension plugin, your plugin must provide the `register(opts)` function, that
+takes the same {opts} arguments as `setup(opts)`. This function will be called
+by Hop automatically.
+
+Once a user has installed both Hop and the extension plugin, they can simply
+modify the configuration of Hop and pass the name of your plugin in the
+`extensions` user configuration. See |hop-config-extensions| for further
+details about that.
+
+==============================================================================
+HIGHLIGHTS                                                      *hop-highlights*
+
+Anywhere in the hint buffer that doesn’t contain a hint, the |hl-EndOfBuffer|
+highlight is used. For the rest:
+
+`HopNextKey`                                                   *hop-hl-HopNextkey*
+    Highlight used for the mono-sequence keys (i.e. sequence of 1).
+
+`HopNextKey1`                                                 *hop-hl-HopNextKey1*
+    Highlight used for the first key in a sequence.
+
+`HopNextKey2`                                                 *hop-hl-HopNextKey2*
+    Highlight used for the second and remaining keys in a sequence.
+
+`HopUnmatched`                                               *hop-hl-HopUnmatched*
+    Highlight used for unmatched part of the buffer when running a Hop command
+    / Lua functions.
+
+`HopCursor`                                                     *hop-hl-HopCursor*
+    Highlight used for the fake cursor visible when running a Hop command /
+    Lua functions.
+
+Highlights are inserted in an augroup, `HopInitHighlight`, and an autocommand
+is automatically set when initializing the plugin, unless you set
+|hop-config-create_hl_autocmd| to `false`.
+
+==============================================================================
+LICENSE                                                            *hop-license*
+
+Copyright (c) 2021-2022, Dimitri Sabadie <dimitri.sabadie@gmail.com>
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above
+      copyright notice, this list of conditions and the following
+      disclaimer in the documentation and/or other materials provided
+      with the distribution.
+
+    * Neither the name of Dimitri Sabadie <dimitri.sabadie@gmail.com> nor the
+      names of other contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+==============================================================================
+vim:tw=78:sw=4:ts=8:ft=help:norl:
