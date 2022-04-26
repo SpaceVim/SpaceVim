@@ -48,6 +48,9 @@
 " >
 "   autosave_location/path+=to+=filename.ext.backup
 " <
+" 5. `enable_hop`: by default, spacevim use easymotion plugin. and if you are
+" using neovim 0.6.0 or above, hop.nvim will be enabled. You can disabled this
+" plugin and still using easymotion.
 
 scriptencoding utf-8
 if exists('s:autosave_timeout')
@@ -66,6 +69,7 @@ let s:autosave_timeout = 0
 let s:autosave_events = []
 let s:autosave_all_buffers = 0
 let s:autosave_location = ''
+let s:enable_hop = 1
 
 function! SpaceVim#layers#edit#health() abort
   call SpaceVim#layers#edit#plugins()
@@ -115,6 +119,7 @@ function! SpaceVim#layers#edit#set_variable(var) abort
   let s:autosave_events = get(a:var, 'autosave_events', s:autosave_events)
   let s:autosave_all_buffers = get(a:var, 'autosave_all_buffers', s:autosave_all_buffers)
   let s:autosave_location = get(a:var, 'autosave_location', s:autosave_location)
+  let s:enable_hop = get(a:var, 'enable_hop', s:enable_hop)
 endfunction
 
 function! SpaceVim#layers#edit#get_options() abort
@@ -335,7 +340,7 @@ function! SpaceVim#layers#edit#config() abort
         \ 'SplitjoinSplit', 'split a one-liner into multiple lines', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'goto-next-line-and-indent', 0)
 
-  if has('nvim-0.6.0')
+  if has('nvim-0.6.0') && s:enable_hop
     call SpaceVim#mapping#space#def('nmap', ['j', 'j'], 'HopChar1', 'jump-or-select-to-a-character', 1, 1)
     call SpaceVim#mapping#space#def('nmap', ['j', 'J'], 'HopChar2', 'jump-to-suite-of-two-characters', 1, 1)
     call SpaceVim#mapping#space#def('nmap', ['j', 'l'], 'HopLine', 'jump-or-select-to-a-line', 1, 1)

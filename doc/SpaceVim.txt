@@ -1977,6 +1977,9 @@ automatically. and the format is:
 >
   autosave_location/path+=to+=filename.ext.backup
 <
+  5. `enable_hop`: by default, spacevim use easymotion plugin. and if you are
+using neovim 0.6.0 or above, hop.nvim will be enabled. You can disabled this
+plugin and still using easymotion.
 
 ==============================================================================
 EXPRFOLD                                            *SpaceVim-layers-exprfold*
