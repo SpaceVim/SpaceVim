@@ -307,13 +307,14 @@ function! s:load_glob_conf() abort
   call SpaceVim#logger#info('global_dir is: ' . global_dir)
   if filereadable(global_dir . 'init.toml')
     let g:_spacevim_global_config_path = global_dir . 'init.toml'
-    let local_conf = global_dir . 'init.toml'
-    let local_conf_cache = s:FILE.unify_path(expand(g:spacevim_data_dir
-          \ . 'SpaceVim/conf/' . fnamemodify(resolve(local_conf), ':t:r')
+    let global_config = global_dir . 'init.toml'
+    call SpaceVim#logger#info('find global config: ' . global_config)
+    let global_config_cache = s:FILE.unify_path(expand(g:spacevim_data_dir
+          \ . 'SpaceVim/conf/' . fnamemodify(resolve(global_config), ':t:r')
           \ . '.json'))
     let &rtp = global_dir . ',' . &rtp . ',' . global_dir . 'after'
-    if getftime(resolve(local_conf)) < getftime(resolve(local_conf_cache))
-      let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
+    if getftime(resolve(global_config)) < getftime(resolve(global_config_cache))
+      let conf = s:JSON.json_decode(join(readfile(global_config_cache, ''), ''))
       call s:apply(conf, 'glob')
     else
       let dir = s:FILE.unify_path(expand(g:spacevim_data_dir
@@ -321,8 +322,8 @@ function! s:load_glob_conf() abort
       if !isdirectory(dir)
         call mkdir(dir, 'p')
       endif
-      let conf = s:TOML.parse_file(local_conf)
-      call writefile([s:JSON.json_encode(conf)], local_conf_cache)
+      let conf = s:TOML.parse_file(global_config)
+      call writefile([s:JSON.json_encode(conf)], global_config_cache)
       call s:apply(conf, 'glob')
     endif
   elseif filereadable(global_dir . 'init.vim')
