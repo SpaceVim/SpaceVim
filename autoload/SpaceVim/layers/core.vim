@@ -632,10 +632,11 @@ function! s:ToggleWinDiskManager() abort
 endfunction
 
 function! s:open_message_buffer() abort
-  vertical topleft edit __Message_Buffer__
+  edit __Message_Buffer__
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonumber norelativenumber
   setf SpaceVimMessageBuffer
-  normal! ggdG
+  setlocal modifiable
+  noautocmd normal! gg"_dG
   silent put=s:CMP.execute(':message')
   normal! G
   setlocal nomodifiable
