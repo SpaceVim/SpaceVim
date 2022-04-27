@@ -358,16 +358,48 @@ function! SpaceVim#layers#edit#config() abort
     call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-overwin-line)', 'jump-to-a-line', 0)
     call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-overwin-w)', 'jump-to-a-word', 0)
     call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-overwin-line)', 'jump-to-a-line', 0)
-    call SpaceVim#mapping#space#def('nnoremap', ['j', 'u'], 'call call('
-          \ . string(s:_function('s:jump_to_url')) . ', [])',
-          \ 'jump-to-url', 1)
   endif
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'u'], 'call call('
+        \ . string(s:_function('s:jump_to_url')) . ', [])',
+        \ 'jump-to-url', 1)
 endfunction
 
+if has('nvim-0.6.0')
+" Hop
+lua << EOF
+-- Like hop.jump_target.regex_by_line_start_skip_whitespace() except it also
+-- marks empty or whitespace only lines
+function regexLines()
+  return {
+    oneshot = true,
+    match = function(str)
+      return vim.regex("http[s]*://"):match_str(str) or 0, 1
+    end
+  }
+end
+
+-- Like :HopLineStart except it also jumps to empty or whitespace only lines
+function hintLines(opts)
+  -- Taken from override_opts()
+  opts = setmetatable(opts or {}, {__index = require'hop'.opts})
+
+  local gen = require'hop.jump_target'.jump_targets_by_scanning_lines
+  require'hop'.hint_with(gen(regexLines()), opts)
+end
+EOF
+
+
+" See `:h forced-motion` for these operator-pending mappings
+function! s:jump_to_url() abort
+  lua hintLines()
+endfunction
+else
 function! s:jump_to_url() abort
   let g:EasyMotion_re_anywhere = 'http[s]*://'
   call feedkeys("\<Plug>(easymotion-jumptoanywhere)")
 endfunction
+
+endif
 
 function! s:transpose_with_previous(type) abort
   let l:save_register = @"
