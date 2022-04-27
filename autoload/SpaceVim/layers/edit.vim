@@ -95,7 +95,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ ['andrewradev/splitjoin.vim',{ 'on_cmd':['SplitjoinJoin', 'SplitjoinSplit'],'merged' : 0, 'loadconf' : 1}],
         \ ]
   if has('nvim-0.6.0')
-    call add(plugins,[g:_spacevim_root_dir . 'bundle/hop.nvim',        { 'merged' : 0}])
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/hop.nvim',        { 'merged' : 0, 'loadconf' : 1}])
   else
     call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-easymotion',        { 'merged' : 0}])
     call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-easyoperator-line',        { 'merged' : 0}])
