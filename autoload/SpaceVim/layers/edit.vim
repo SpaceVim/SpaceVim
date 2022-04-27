@@ -51,6 +51,14 @@
 " 5. `enable_hop`: by default, spacevim use easymotion plugin. and if you are
 " using neovim 0.6.0 or above, hop.nvim will be enabled. You can disabled this
 " plugin and still using easymotion.
+"
+" @subsection key bindings
+"
+" The `edit` layer also provides many key bindings:
+" >
+"   key binding       description
+"   SPC x c           count in the selection region
+" <
 
 scriptencoding utf-8
 if exists('s:autosave_timeout')

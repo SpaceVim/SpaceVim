@@ -11,7 +11,7 @@ jobs:
     - name: Install dependencies
       run: |
           sudo apt-get update
-          sudo apt-get git
+          sudo apt-get install git
     - name: Run vint with reviewdog
       uses: reviewdog/action-vint@v1.0.1
       with:

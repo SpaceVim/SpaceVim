@@ -1981,6 +1981,14 @@ automatically. and the format is:
 using neovim 0.6.0 or above, hop.nvim will be enabled. You can disabled this
 plugin and still using easymotion.
 
+KEY BINDINGS
+
+The `edit` layer also provides many key bindings:
+>
+  key binding       description
+  SPC x c           count in the selection region
+<
+
 ==============================================================================
 EXPRFOLD                                            *SpaceVim-layers-exprfold*
 
