@@ -373,7 +373,7 @@ function regexLines()
   return {
     oneshot = true,
     match = function(str)
-      return vim.regex("http[s]*://"):match_str(str) or 0, 1
+      return vim.regex("http[s]*://"):match_str(str)
     end
   }
 end
@@ -389,16 +389,15 @@ end
 EOF
 
 
-" See `:h forced-motion` for these operator-pending mappings
-function! s:jump_to_url() abort
-  lua hintLines()
-endfunction
+  " See `:h forced-motion` for these operator-pending mappings
+  function! s:jump_to_url() abort
+    lua hintLines()
+  endfunction
 else
-function! s:jump_to_url() abort
-  let g:EasyMotion_re_anywhere = 'http[s]*://'
-  call feedkeys("\<Plug>(easymotion-jumptoanywhere)")
-endfunction
-
+  function! s:jump_to_url() abort
+    let g:EasyMotion_re_anywhere = 'http[s]*://'
+    call feedkeys("\<Plug>(easymotion-jumptoanywhere)")
+  endfunction
 endif
 
 function! s:transpose_with_previous(type) abort
