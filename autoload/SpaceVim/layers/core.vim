@@ -188,19 +188,6 @@ function! SpaceVim#layers#core#config() abort
         \ . string(s:_function('s:explore_current_dir')) . ', [1])',
         \ 'split-explore-current-directory', 1)
 
-  " call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(better-easymotion-overwin-f)', 'jump-or-select-to-a-character', 0, 1)
-  nnoremap <silent> <Plug>(better-easymotion-overwin-f) :call <SID>better_easymotion_overwin_f(0)<Cr>
-  xnoremap <silent> <Plug>(better-easymotion-overwin-f) :<C-U>call <SID>better_easymotion_overwin_f(1)<Cr>
-  call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump-to-suite-of-two-characters', 0)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'goto-next-line-and-indent', 0)
-  " call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(better-easymotion-overwin-line)', 'jump-or-select-to-a-line', 0, 1)
-  nnoremap <silent> <Plug>(better-easymotion-overwin-line) :call <SID>better_easymotion_overwin_line(0)<Cr>
-  xnoremap <silent> <Plug>(better-easymotion-overwin-line) :<C-U>call <SID>better_easymotion_overwin_line(1)<Cr>
-  call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-overwin-line)', 'jump-to-a-line', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-overwin-w)', 'jump-to-a-word', 0)
-  call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-overwin-line)', 'jump-to-a-line', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'n'], "i\<cr>\<esc>", 'sp-newline', 0)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'c'], 'call call('
         \ . string(s:_function('s:jump_last_change')) . ', [])',
@@ -220,9 +207,6 @@ function! SpaceVim#layers#core#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['w', 'R'], 'call call('
         \ . string(s:_function('s:previous_window')) . ', [])',
         \ 'rotate-windows-backward', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'u'], 'call call('
-        \ . string(s:_function('s:jump_to_url')) . ', [])',
-        \ 'jump-to-url', 1)
   call SpaceVim#mapping#def('nnoremap <silent>', '<S-Tab>', ':wincmd p<CR>', 'Switch to previous window or tab','wincmd p')
   call SpaceVim#mapping#space#def('nnoremap', ['<Tab>'], 'try | b# | catch | endtry', 'last-buffer', 1)
   let lnum = expand('<slnum>') + s:lnum - 1
@@ -610,11 +594,6 @@ else
   endfunction
 endif
 
-function! s:jump_to_url() abort
-  let g:EasyMotion_re_anywhere = 'http[s]*://'
-  call feedkeys("\<Plug>(easymotion-jumptoanywhere)")
-endfunction
-
 function! s:safe_erase_buffer() abort
   if s:MESSAGE.confirm('Erase content of buffer ' . expand('%:t'))
     normal! ggdG
@@ -857,50 +836,6 @@ function! s:comment_invert_yank(visual) range abort
   call feedkeys("\<Plug>NERDCommenterInvert")
 endfunction
 
-function! s:better_easymotion_overwin_line(is_visual) abort
-  let current_line = line('.')
-  try
-    if a:is_visual
-      call EasyMotion#Sol(0, 2)
-    else
-      call EasyMotion#overwin#line()
-    endif
-    " clear cmd line
-    noautocmd normal! :
-    if a:is_visual
-      let last_line = line('.')
-      exe current_line
-      if last_line > current_line
-        exe 'normal! V' . (last_line - current_line) . 'j'
-      else
-        exe 'normal! V' . (current_line - last_line) . 'k'
-      endif
-    endif
-  catch /^Vim\%((\a\+)\)\=:E117/
-
-  endtry
-endfunction
-
-function! s:better_easymotion_overwin_f(is_visual) abort
-  let [current_line, current_col] = getpos('.')[1:2]
-  try
-    call EasyMotion#OverwinF(1)
-    " clear cmd line
-    noautocmd normal! :
-    if a:is_visual
-      let last_line = line('.')
-      let [last_line, last_col] = getpos('.')[1:2]
-      call cursor(current_line, current_col)
-      if last_line > current_line        
-        exe 'normal! v' . (last_line - current_line) . 'j0' . last_col . '|'
-      else
-        exe 'normal! v' . (current_line - last_line) . 'k0' . last_col . '|' 
-      endif
-    endif
-  catch /^Vim\%((\a\+)\)\=:E117/
-
-  endtry
-endfunction
 
 function! s:comment_paragraphs(invert) abort
   if a:invert

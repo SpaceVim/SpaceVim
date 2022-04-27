@@ -48,6 +48,29 @@
 " >
 "   autosave_location/path+=to+=filename.ext.backup
 " <
+" 5. `enable_hop`: by default, spacevim use easymotion plugin. and if you are
+" using neovim 0.6.0 or above, hop.nvim will be enabled. You can disabled this
+" plugin and still using easymotion.
+"
+" @subsection key bindings
+"
+" The `edit` layer also provides many key bindings:
+" >
+"   key binding       description
+"   SPC x c           count in the selection region
+" <
+"
+" The following key binding is to jump to targets. The default plugin is
+" `easymotion`, and if you are using neovim 0.6.0 or above. The `hop.nvim` will
+" be used.
+" >
+"   key binding       description
+"   SPC j j           jump or select a character
+"   SPC j J           jump to suite of two characters
+"   SPC j l           jump or select to a line
+"   SPC j w           jump to a word
+"   SPC j u           jump to a url
+" <
 
 scriptencoding utf-8
 if exists('s:autosave_timeout')
@@ -66,6 +89,7 @@ let s:autosave_timeout = 0
 let s:autosave_events = []
 let s:autosave_all_buffers = 0
 let s:autosave_location = ''
+let s:enable_hop = 1
 
 function! SpaceVim#layers#edit#health() abort
   call SpaceVim#layers#edit#plugins()
@@ -85,13 +109,17 @@ function! SpaceVim#layers#edit#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/vim-table-mode'],
         \ [g:_spacevim_root_dir . 'bundle/vim-textobj-entire'],
         \ [g:_spacevim_root_dir . 'bundle/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
-        \ [g:_spacevim_root_dir . 'bundle/vim-easymotion'],
-        \ [g:_spacevim_root_dir . 'bundle/vim-easyoperator-line'],
         \ [g:_spacevim_root_dir . 'bundle/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
         \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
         \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
         \ ['andrewradev/splitjoin.vim',{ 'on_cmd':['SplitjoinJoin', 'SplitjoinSplit'],'merged' : 0, 'loadconf' : 1}],
         \ ]
+  if has('nvim-0.6.0')
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/hop.nvim',        { 'merged' : 0, 'loadconf' : 1}])
+  else
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-easymotion',        { 'merged' : 0}])
+    call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-easyoperator-line',        { 'merged' : 0}])
+  endif
   if executable('fcitx')
     call add(plugins,[g:_spacevim_root_dir . 'bundle/fcitx.vim',        { 'on_event' : 'InsertEnter'}])
   endif
@@ -111,6 +139,7 @@ function! SpaceVim#layers#edit#set_variable(var) abort
   let s:autosave_events = get(a:var, 'autosave_events', s:autosave_events)
   let s:autosave_all_buffers = get(a:var, 'autosave_all_buffers', s:autosave_all_buffers)
   let s:autosave_location = get(a:var, 'autosave_location', s:autosave_location)
+  let s:enable_hop = get(a:var, 'enable_hop', s:enable_hop)
 endfunction
 
 function! SpaceVim#layers#edit#get_options() abort
@@ -329,7 +358,67 @@ function! SpaceVim#layers#edit#config() abort
         \ 'SplitjoinJoin', 'join into a single-line statement', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['j', 'm'],
         \ 'SplitjoinSplit', 'split a one-liner into multiple lines', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'k'], 'j==', 'goto-next-line-and-indent', 0)
+
+  if has('nvim-0.6.0') && s:enable_hop
+    call SpaceVim#mapping#space#def('nmap', ['j', 'j'], 'HopChar1', 'jump-or-select-to-a-character', 1, 1)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'J'], 'HopChar2', 'jump-to-suite-of-two-characters', 1, 1)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'l'], 'HopLine', 'jump-or-select-to-a-line', 1, 1)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'w'], 'HopWord', 'jump-to-a-word', 1, 1)
+  else
+    " call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(easymotion-overwin-f)', 'jump to a character', 0)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'j'], '<Plug>(better-easymotion-overwin-f)', 'jump-or-select-to-a-character', 0, 1)
+    nnoremap <silent> <Plug>(better-easymotion-overwin-f) :call <SID>better_easymotion_overwin_f(0)<Cr>
+    xnoremap <silent> <Plug>(better-easymotion-overwin-f) :<C-U>call <SID>better_easymotion_overwin_f(1)<Cr>
+    call SpaceVim#mapping#space#def('nmap', ['j', 'J'], '<Plug>(easymotion-overwin-f2)', 'jump-to-suite-of-two-characters', 0)
+    " call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(easymotion-overwin-line)', 'jump to a line', 0)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'l'], '<Plug>(better-easymotion-overwin-line)', 'jump-or-select-to-a-line', 0, 1)
+    nnoremap <silent> <Plug>(better-easymotion-overwin-line) :call <SID>better_easymotion_overwin_line(0)<Cr>
+    xnoremap <silent> <Plug>(better-easymotion-overwin-line) :<C-U>call <SID>better_easymotion_overwin_line(1)<Cr>
+    call SpaceVim#mapping#space#def('nmap', ['j', 'v'], '<Plug>(easymotion-overwin-line)', 'jump-to-a-line', 0)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'w'], '<Plug>(easymotion-overwin-w)', 'jump-to-a-word', 0)
+    call SpaceVim#mapping#space#def('nmap', ['j', 'q'], '<Plug>(easymotion-overwin-line)', 'jump-to-a-line', 0)
+  endif
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'u'], 'call call('
+        \ . string(s:_function('s:jump_to_url')) . ', [])',
+        \ 'jump-to-url', 1)
 endfunction
+
+if has('nvim-0.6.0')
+" Hop
+lua << EOF
+-- Like hop.jump_target.regex_by_line_start_skip_whitespace() except it also
+-- marks empty or whitespace only lines
+function regexLines()
+  return {
+    oneshot = true,
+    match = function(str)
+      return vim.regex("http[s]*://"):match_str(str)
+    end
+  }
+end
+
+-- Like :HopLineStart except it also jumps to empty or whitespace only lines
+function hintLines(opts)
+  -- Taken from override_opts()
+  opts = setmetatable(opts or {}, {__index = require'hop'.opts})
+
+  local gen = require'hop.jump_target'.jump_targets_by_scanning_lines
+  require'hop'.hint_with(gen(regexLines()), opts)
+end
+EOF
+
+
+  " See `:h forced-motion` for these operator-pending mappings
+  function! s:jump_to_url() abort
+    lua hintLines()
+  endfunction
+else
+  function! s:jump_to_url() abort
+    let g:EasyMotion_re_anywhere = 'http[s]*://'
+    call feedkeys("\<Plug>(easymotion-jumptoanywhere)")
+  endfunction
+endif
 
 function! s:transpose_with_previous(type) abort
   let l:save_register = @"
@@ -379,6 +468,51 @@ function! s:transpose_with_next(type) abort
     endif
   endif
   let @" = l:save_register
+endfunction
+
+function! s:better_easymotion_overwin_line(is_visual) abort
+  let current_line = line('.')
+  try
+    if a:is_visual
+      call EasyMotion#Sol(0, 2)
+    else
+      call EasyMotion#overwin#line()
+    endif
+    " clear cmd line
+    noautocmd normal! :
+    if a:is_visual
+      let last_line = line('.')
+      exe current_line
+      if last_line > current_line
+        exe 'normal! V' . (last_line - current_line) . 'j'
+      else
+        exe 'normal! V' . (current_line - last_line) . 'k'
+      endif
+    endif
+  catch /^Vim\%((\a\+)\)\=:E117/
+
+  endtry
+endfunction
+
+function! s:better_easymotion_overwin_f(is_visual) abort
+  let [current_line, current_col] = getpos('.')[1:2]
+  try
+    call EasyMotion#OverwinF(1)
+    " clear cmd line
+    noautocmd normal! :
+    if a:is_visual
+      let last_line = line('.')
+      let [last_line, last_col] = getpos('.')[1:2]
+      call cursor(current_line, current_col)
+      if last_line > current_line        
+        exe 'normal! v' . (last_line - current_line) . 'j0' . last_col . '|'
+      else
+        exe 'normal! v' . (current_line - last_line) . 'k0' . last_col . '|' 
+      endif
+    endif
+  catch /^Vim\%((\a\+)\)\=:E117/
+
+  endtry
 endfunction
 
 function! s:move_text_down_transient_state() abort   

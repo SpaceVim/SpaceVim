@@ -1977,6 +1977,29 @@ automatically. and the format is:
 >
   autosave_location/path+=to+=filename.ext.backup
 <
+  5. `enable_hop`: by default, spacevim use easymotion plugin. and if you are
+using neovim 0.6.0 or above, hop.nvim will be enabled. You can disabled this
+plugin and still using easymotion.
+
+KEY BINDINGS
+
+The `edit` layer also provides many key bindings:
+>
+  key binding       description
+  SPC x c           count in the selection region
+<
+
+The following key binding is to jump to targets. The default plugin is
+`easymotion`, and if you are using neovim 0.6.0 or above. The `hop.nvim` will
+be used.
+>
+  key binding       description
+  SPC j j           jump or select a character
+  SPC j J           jump to suite of two characters
+  SPC j l           jump or select to a line
+  SPC j w           jump to a word
+  SPC j u           jump to a url
+<
 
 ==============================================================================
 EXPRFOLD                                            *SpaceVim-layers-exprfold*
