@@ -59,6 +59,18 @@
 "   key binding       description
 "   SPC x c           count in the selection region
 " <
+"
+" The following key binding is to jump to targets. The default plugin is
+" `easymotion`, and if you are using neovim 0.6.0 or above. The `hop.nvim` will
+" be used.
+" >
+"   key binding       description
+"   SPC j j           jump or select a character
+"   SPC j J           jump to suite of two characters
+"   SPC j l           jump or select to a line
+"   SPC j w           jump to a word
+"   SPC j u           jump to a url
+" <
 
 scriptencoding utf-8
 if exists('s:autosave_timeout')
