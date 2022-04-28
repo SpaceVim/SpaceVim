@@ -60,5 +60,8 @@ endfunction
 
 function! s:gitter_exit(id, data, event) abort
   call s:LOG.debug(a:data)
+endfunction
 
+function! chat#gitter#send(msg) abort
+  
 endfunction
