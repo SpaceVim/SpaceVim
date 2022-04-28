@@ -1483,9 +1483,6 @@ Twitter.
 jaxbot/github-issues.vim {{{ Disable completion by github-issues.vim. Because
 github-complete.vim provides more powerful completion.
 
-                                                          *g:github_dashboard*
-junegunn/vim-github-dashboard {{{
-
                                                                   *g:dash_map*
 rizzatti/dash.vim {{{ Allows configuration of mappings between Vim filetypes
 and Dash's docsets.
@@ -2133,14 +2130,14 @@ This layer provides GitHub integration for SpaceVim
 MAPPINGS
 
 >
-  Mode      Key           Function
+  Key           Function
   -------------------------------------------------------------
-  normal    SPC g h i     show issues
-  normal    SPC g h a     show activities
-  normal    SPC g h d     show dashboard
-  normal    SPC g h f     show current file in browser
-  normal    SPC g h I     show issues in browser
-  normal    SPC g h p     show PRs in browser
+  SPC g h i     show issues
+  SPC g h a     show activities
+  SPC g h d     show dashboard
+  SPC g h f     show current file in browser
+  SPC g h I     show issues in browser
+  SPC g h p     show PRs in browser
 <
 
 NOTE: If you are using python2, you may get error:
