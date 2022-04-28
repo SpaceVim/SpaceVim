@@ -6,5 +6,16 @@
 " License: GPLv3
 "=============================================================================
 
+function! chat#windows#is_opened() abort
 
+endfunction
 
+" a disc
+"
+" user: string
+" room: string
+" msg: string
+
+function! chat#windows#push(msg) abort
+  
+endfunction

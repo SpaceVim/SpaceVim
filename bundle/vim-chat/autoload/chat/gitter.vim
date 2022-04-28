@@ -10,7 +10,10 @@ let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:LOG = SpaceVim#logger#derive('gitter')
 
+let s:room = ''
+
 function! chat#gitter#start() abort
+  let s:room = 'SpaceVim'
   call s:JOB.start(g:gitter_char_command, {
         \ 'on_stdout' : function('s:gitter_stdout'),
         \ 'on_stderr' : function('s:gitter_stderr'),
@@ -48,7 +51,15 @@ function! s:gitter_stdout(id, data, event) abort
   endfor
   let message = join(a:data, '') 
   let msg = s:JSON.json_decode(message)
-  call chat#notify#noti(msg.fromUser.displayName . ': ' . msg.text)
+  if chat#windows#is_opened()
+    call chat#windows#push({
+          \ 'user' : msg.fromUser.displayName,
+          \ 'room' : s:room,
+          \ 'msg' : msg.text,
+          \ })
+  else
+    call chat#notify#noti(msg.fromUser.displayName . ': ' . msg.text)
+  endif
 endfunction
 
 function! s:gitter_stderr(id, data, event) abort
