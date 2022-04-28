@@ -1,0 +1,1008 @@
+*github.txt*	Implement Github API via viml
+Wang Shidong                                                          *github*
+
+==============================================================================
+CONTENTS                                                     *github-contents*
+  1. Configuration.............................................|github-config|
+  2. Functions..............................................|github-functions|
+
+==============================================================================
+CONFIGURATION                                                  *github-config*
+
+                                                        *g:githubapi_root_url*
+Github api root url:
+
+default : https://api.github.com/
+
+                                                         *g:githubapi_verbose*
+set githubapi verbose when run shell command. By default it is 0.
+
+                                                        *g:githubapi_curl_exe*
+Specific the path for curl, by default it is 'curl', in windows you can use
+>
+  let g:githubapi_curl_exe = 'D:\Program Files\Neovim\bin\curl.exe'
+<
+
+==============================================================================
+FUNCTIONS                                                   *github-functions*
+
+github#ListAllOrgs({since})                             *github#ListAllOrgs()*
+  List all orgs in github,{since} is the integer ID of the last Organization
+  that you've seen.
+
+  Github API : GET /organizations
+
+github#api#activity#List_events()          *github#api#activity#List_events()*
+  List public events
+
+  Github API : GET /events
+
+github#api#activity#List_repo_events({owner}, {repo})
+                                      *github#api#activity#List_repo_events()*
+  List repository events
+
+  Github API : GET /repos/:owner/:repo/events
+
+github#api#activity#List_net_events({owner}, {repo})
+                                       *github#api#activity#List_net_events()*
+  List public events for a network of repositories
+
+  Github API : GET /networks/:owner/:repo/events
+
+github#api#activity#List_org_events({org})
+                                       *github#api#activity#List_org_events()*
+  List public events for an organization
+
+  Github API : GET /orgs/:org/events
+
+github#api#activity#List_user_events({user})
+                                      *github#api#activity#List_user_events()*
+  List events that a user has received
+
+  These are events that you've received by watching repos and following users.
+  If you are authenticated as the given user, you will see private events.
+  Otherwise, you'll only see public events.
+
+  Github API : GET /users/:username/received_events
+
+github#api#activity#List_public_user_events({user})
+                               *github#api#activity#List_public_user_events()*
+  List public events that a user has received
+
+  Github API : GET /users/:username/received_events/public
+
+github#api#activity#Performed_events({user})
+                                      *github#api#activity#Performed_events()*
+  List events performed by a user
+
+  If you are authenticated as the given user, you will see your private
+  events. Otherwise, you'll only see public events.
+
+  Github API : GET /users/:username/events
+
+github#api#activity#Performed_public_events({user})
+                               *github#api#activity#Performed_public_events()*
+  List public events performed by a user
+
+  Github API : GET /users/:username/events/public
+
+github#api#activity#List_user_org_events({user}, {org}, {password})
+                                  *github#api#activity#List_user_org_events()*
+  List events for an organization
+
+  NOTE:This is the user's organization dashboard. You must be authenticated as
+  the user to view this.
+
+  Github API : GET /users/:username/events/orgs/:org
+
+github#api#activity#List_notifications({user}, {password})
+                                    *github#api#activity#List_notifications()*
+  List your notifications
+
+  Github API : /notifications
+
+github#api#activity#List_notifications_for_repo({onwer}, {repo}, {user},
+  {password})              *github#api#activity#List_notifications_for_repo()*
+  List your notifications in a repository
+
+  Github API : GET /repos/:owner/:repo/notifications
+
+github#api#activity#Mark_All_as_read({user}, {password}, {last_read_at})
+                                      *github#api#activity#Mark_All_as_read()*
+  Mark as read,you need use {last_read_at} as args. This is a timestamp in ISO
+  8601 format: YYYY-MM-DDTHH:MM:SSZ. Default: Time.now
+
+  Github API : PUT /notifications
+
+github#api#activity#Mark_All_as_read_for_repo({owner}, {repo}, {user},
+  {password}, {last_read_at})
+                             *github#api#activity#Mark_All_as_read_for_repo()*
+  Mark notifications as read in a repository
+
+  Github API : PUT /repos/:owner/:repo/notifications
+
+github#api#activity#Get_thread({id}, {user}, {password})
+                                            *github#api#activity#Get_thread()*
+  View a single thread
+
+  Github API : GET /notifications/threads/:id
+
+github#api#activity#Mark_thread({id}, {user}, {password})
+                                           *github#api#activity#Mark_thread()*
+  Mark a thread as read
+
+  Github API : PATCH /notifications/threads/:id
+
+github#api#activity#Get_thread_sub({id}, {user}, {password})
+                                        *github#api#activity#Get_thread_sub()*
+  Get a Thread Subscription
+
+  Github API : GET /notifications/threads/:id/subscription
+
+github#api#activity#Set_thread_sub({id}, {user}, {password}, {subscribed},
+  {ignored})                            *github#api#activity#Set_thread_sub()*
+  Set a Thread Subscription
+
+  This lets you subscribe or unsubscribe from a conversation. Unsubscribing
+  from a conversation mutes all future notifications (until you comment or get
+  @mentioned once more).
+
+  Github API : PUT /notifications/threads/:id/subscription
+
+github#api#activity#Del_thread_sub({id}, {user}, {password})
+                                        *github#api#activity#Del_thread_sub()*
+  Delete a Thread Subscription
+
+  Github API : DELETE /notifications/threads/:id/subscription
+
+github#api#activity#List_stargazers({owner}, {repo})
+                                       *github#api#activity#List_stargazers()*
+  List stargazers of the repo
+
+  Github API : GET /repos/:owner/:repo/stargazers
+
+github#api#activity#List_all_stargazers({owner}, {repo})
+                                   *github#api#activity#List_all_stargazers()*
+  List all stargazers of the repo
+
+  Github API : GET /repos/:owner/:repo/stargazers
+
+github#api#activity#CheckStarred({owner}, {repo}, {user}, {password})
+                                          *github#api#activity#CheckStarred()*
+  Check starred
+
+  Github API : GET /user/starred/:owner/:repo
+
+github#api#activity#Star({owner}, {repo}, {user}, {password})
+                                                  *github#api#activity#Star()*
+  Star a repository
+
+  Github API : PUT /user/starred/:owner/:repo
+
+github#api#activity#Unstar({owner}, {repo}, {user}, {password})
+                                                *github#api#activity#Unstar()*
+  Unstar a repository
+
+  Github API : DELETE /user/starred/:owner/:repo
+
+github#api#activity#List_watchers({owner}, {repo})
+                                         *github#api#activity#List_watchers()*
+  List watchers
+
+  Github API : GET /repos/:owner/:repo/subscribers
+
+github#api#activity#List_watched_repo({user})
+                                     *github#api#activity#List_watched_repo()*
+  List repositories being watched by a user.
+
+  Github API : GET /users/:username/subscriptions
+
+github#api#activity#List_auth_watched_repo({user}, {password})
+                                *github#api#activity#List_auth_watched_repo()*
+  List repositories being watched by the authenticated user.
+
+  Github API : GET /user/subscriptions
+
+github#api#activity#Check_repo_Sub({owner}, {repo}, {user}, {password})
+                                        *github#api#activity#Check_repo_Sub()*
+  Get a Repository Subscription
+
+  Github API : GET /repos/:owner/:repo/subscription
+
+github#api#activity#Set_repo_sub({owner}, {repo}, {user}, {password}, {sub},
+  {ignore})                               *github#api#activity#Set_repo_sub()*
+  Set a Repository Subscription
+
+  If you would like to watch a repository, set {sub} to 1. If you would like
+  to ignore notifications made within a repository, set {ignore} to 1. If you
+  would like to stop watching a repository, delete the repository's
+  subscription completely.
+
+  Github API : PUT /repos/:owner/:repo/subscription
+
+github#api#activity#Del_repo_sub({owner}, {repo}, {user}, {password})
+                                          *github#api#activity#Del_repo_sub()*
+  Delete a Repository Subscription
+
+  Github API : DELETE /repos/:owner/:repo/subscription
+
+github#api#gist#List({user})                          *github#api#gist#List()*
+  List public gists for the specified user:
+
+  GET /users/:username/gists
+
+github#api#gist#ListAll({user}, {password})        *github#api#gist#ListAll()*
+  List the authenticated user's gists or if called anonymously, this will
+  return all public gists:
+
+  GET /gists
+
+github#api#gist#ListPublic({since})             *github#api#gist#ListPublic()*
+  List all public gists
+
+  Get /gists/public
+
+github#api#gist#ListStarred({user}, {password}, {since})
+                                               *github#api#gist#ListStarred()*
+  List starred gists,{since}A timestamp in ISO 8601 format:
+  YYYY-MM-DDTHH:MM:SSZ. Only gists updated at or after this time are returned.
+
+  GET /gists/starred
+
+github#api#gist#GetSingle({id})                  *github#api#gist#GetSingle()*
+  Get a single gist
+
+  Github API : GET /gists/:id
+
+github#api#gist#GetSingleSha({id}, {sha})     *github#api#gist#GetSingleSha()*
+  Get a specific revision of a gist
+
+  Github API : GET /gists/:id/:sha
+
+github#api#gist#Create({desc}, {filename}, {content}, {public}, {user},
+  {password})                                       *github#api#gist#Create()*
+  Create a gist
+
+  Input:
+>
+     {
+       "description": "the description for this gist",
+       "public": true,
+       "files": {
+         "file1.txt": {
+           "content": "String file contents"
+         }
+       }
+     }
+<
+  POST : /gists
+
+github#api#gist#Edit({desc}, {filename}, {content}, {public}, {user},
+  {password}, {id})                                   *github#api#gist#Edit()*
+  Edit a gist
+
+  Input:
+>
+     {
+       "description": "the description for this gist",
+       "files": {
+         "file1.txt": {
+           "content": "updated file contents"
+         },
+         "old_name.txt": {
+           "filename": "new_name.txt",
+           "content": "modified contents"
+         },
+         "new_file.txt": {
+           "content": "a new file"
+         },
+         "delete_this_file.txt": null
+       }
+     }
+<
+  PATCH : /gists/:id Note: All files from the previous version of the gist are
+  carried over by default if not included in the object. Deletes can be
+  performed by including the filename with a null object.
+
+github#api#gist#ListCommits({id})              *github#api#gist#ListCommits()*
+  List gist commits
+
+  Github API : GET /gists/:id/commits
+
+github#api#gist#Star({user}, {password}, {id})        *github#api#gist#Star()*
+  Star a gist
+
+  Github API : PUT /gists/:id/star
+
+github#api#gist#Unstar({user}, {password}, {id})    *github#api#gist#Unstar()*
+  Unstar a gist
+
+  Github API : DELETE /gists/:id/star
+
+github#api#gist#CheckStar({user}, {password}, {id})
+                                                 *github#api#gist#CheckStar()*
+  Check if a gist is starred
+
+  Github API : GET /gists/:id/star
+
+github#api#gist#Fork({user}, {password}, {id})        *github#api#gist#Fork()*
+  Fork a gist
+
+  Github API : POST /gists/:id/forks
+
+github#api#gist#ListFork({user}, {password}, {id})
+                                                  *github#api#gist#ListFork()*
+  List Fork of a gist
+
+  Github API : GET /gists/:id/forks
+
+github#api#gist#Del({user}, {password}, {id})          *github#api#gist#Del()*
+  Delete a gist
+
+  Github API : DELETE /gists/:id
+
+github#api#gist#ListComments({id})            *github#api#gist#ListComments()*
+  List comments on a gist
+
+  Github API : GET /gists/:gist_id/comments
+
+github#api#gist#GetComment({gistid}, {commentid})
+                                                *github#api#gist#GetComment()*
+  Get a single comment
+
+  Github API : GET /gists/:gist_id/comments/:id
+
+github#api#gist#CreateComment({id}, {user}, {password}, {body})
+                                             *github#api#gist#CreateComment()*
+  Create a comment
+
+  Github API : POST /gists/:gist_id/comments
+
+github#api#gist#EditComment({id}, {user}, {password}, {body})
+                                               *github#api#gist#EditComment()*
+  Edit a comment
+
+  Github API : PATCH /gists/:gist_id/comments
+
+github#api#gist#DelComment({gistid}, {id}, {user}, {password})
+                                                *github#api#gist#DelComment()*
+  Delete a comment
+
+  Github API : DELETE /gists/:gist_id/comments/:id
+
+github#api#issues#List_All({user}, {password})  *github#api#issues#List_All()*
+  List issues List all issues assigned to the authenticated user across all
+  visible repositories including owned repositories, member repositories, and
+  organization repositories:
+
+  Github API : GET /issues
+
+github#api#issues#List_All_for_User({user}, {password})
+                                       *github#api#issues#List_All_for_User()*
+  List all issues across owned and member repositories assigned to the
+  authenticated user:
+
+  Github API : GET /user/issues
+
+github#api#issues#List_All_for_User_In_Org({org}, {user}, {password})
+                                *github#api#issues#List_All_for_User_In_Org()*
+  List all issues for a given organization assigned to the authenticated user:
+
+  Github API : GET /orgs/:org/issues
+
+github#api#issues#Get_issue({owner}, {repo}, {num})
+                                               *github#api#issues#Get_issue()*
+  Get a single issue GET /repos/:owner/:repo/issues/:number
+
+github#api#issues#Create({owner}, {repo}, {user}, {password}, {issue})
+                                                  *github#api#issues#Create()*
+  Create an issue
+
+  Input:
+>
+    {
+     "title": "Found a bug",
+     "body": "I'm having a problem with this.",
+     "assignee": "octocat",
+     "milestone": 1,
+     "labels": [
+       "bug"
+     ]
+    }
+<
+  Github API : POST /repos/:owner/:repo/issues
+
+github#api#issues#Lock({owner}, {repo}, {num}, {user}, {password})
+                                                    *github#api#issues#Lock()*
+  Lock an issue
+
+  Github APi : PUT /repos/:owner/:repo/issues/:number/lock
+
+github#api#issues#Unlock({owner}, {repo}, {num}, {user}, {password})
+                                                  *github#api#issues#Unlock()*
+  Unlock an issue
+
+  Github API : DELETE /repos/:owner/:repo/issues/:number/lock
+
+github#api#issues#List_assignees({owner}, {repo})
+                                          *github#api#issues#List_assignees()*
+  Lists all the available assignees to which issues may be assigned.
+
+  Github API : GET /repos/:owner/:repo/assignees
+
+github#api#issues#Check_assignee({owner}, {repo}, {assignee})
+                                          *github#api#issues#Check_assignee()*
+  Check assignee
+
+  Github API : GET /repos/:owner/:repo/assignees/:assignee
+
+github#api#issues#Addassignee({owner}, {repo}, {num}, {assignees}, {user},
+  {password})                                *github#api#issues#Addassignee()*
+  Add assignees to an Issue
+
+  Input:
+>
+    {
+     "assignees": [
+       "hubot",
+       "other_assignee"
+     ]
+    }
+<
+  Github API : POST /repos/:owner/:repo/issues/:number/assignees
+
+  NOTE: need `Accep:application/vnd.github.cerberus-preview+json`
+
+github#api#issues#Removeassignee({owner}, {repo}, {num}, {assignees}, {user},
+  {password})                             *github#api#issues#Removeassignee()*
+  Remove assignees from an Issue
+
+  Input:
+>
+    {
+     "assignees": [
+       "hubot",
+       "other_assignee"
+     ]
+    }
+<
+  DELETE /repos/:owner/:repo/issues/:number/assignees
+
+  NOTE: need `Accep:application/vnd.github.cerberus-preview+json`
+
+github#api#issues#List_comments({owner}, {repo}, {num}, {since})
+                                           *github#api#issues#List_comments()*
+  List comments on an issue, updated at or after {since} . {since} :
+  YYYY-MM-DDTHH:MM:SSZ
+
+  Github API : GET /repos/:owner/:repo/issues/:number/comments
+
+github#api#issues#List_All_comments({owner}, {repo}, {sort}, {desc}, {since})
+                                       *github#api#issues#List_All_comments()*
+  List comments in a repository
+
+  Github API : GET /repos/:owner/:repo/issues/comments
+
+github#api#issues#Get_comment({owner}, {repo}, {id})
+                                             *github#api#issues#Get_comment()*
+  Get a single comment
+
+  Github API : GET /repos/:owner/:repo/issues/comments/:id
+
+github#api#issues#Create_comment({owner}, {repo}, {num}, {json}, {user},
+  {password})                             *github#api#issues#Create_comment()*
+  Create a comment
+
+  Input:
+>
+    {
+        "body": "Me too"
+    }
+<
+  Github API : POST /repos/:owner/:repo/issues/:number/comments
+
+github#api#issues#Edit_comment({owner}, {repo}, {id}, {json}, {user},
+  {password})                               *github#api#issues#Edit_comment()*
+  Edit a comment
+
+  Input:
+>
+    {
+        "body": "Me too"
+    }
+<
+  Github API : PATCH /repos/:owner/:repo/issues/comments/:id
+
+github#api#issues#Delete_comment({owner}, {repo}, {id}, {user}, {password})
+                                          *github#api#issues#Delete_comment()*
+  Delete a comment
+
+  Github API : ELETE /repos/:owner/:repo/issues/comments/:id
+
+github#api#issues#List_events({owner}, {repo}, {num})
+                                             *github#api#issues#List_events()*
+  List events for an issue Github API : GET
+  /repos/:owner/:repo/issues/:issue_number/events
+
+github#api#issues#List_events_for_repo({owner}, {repo})
+                                    *github#api#issues#List_events_for_repo()*
+  List events for a repository
+
+  Github API : GET /repos/:owner/:repo/issues/events
+
+github#api#issues#Get_event({owner}, {repo}, {id})
+                                               *github#api#issues#Get_event()*
+  Get a single event
+
+  Github API : GET /repos/:owner/:repo/issues/events/:id
+
+github#api#issues#ListAllMilestones({owner}, {repo}, {state}, {sort},
+  {direction})                         *github#api#issues#ListAllMilestones()*
+  List milestones for a repository
+
+  Github API : GET /repos/:owner/:repo/milestones Parameters
+>
+    Name      Type      Description
+    state     string The state of the milestone. Either open, closed, or all.
+                     Default: open
+    sort      string What to sort results by. Either due_on or completeness.
+                     Default: due_on
+    direction string The direction of the sort. Either asc or desc.
+                     Default: asc
+<
+
+github#api#issues#GetSingleMilestone({owner}, {repo}, {num})
+                                      *github#api#issues#GetSingleMilestone()*
+  Get a single milestone
+
+  Github API : GET /repos/:owner/:repo/milestones/:number
+
+github#api#issues#CreateMilestone({owner}, {repo}, {milestone}, {user},
+  {password})                            *github#api#issues#CreateMilestone()*
+  Create a milestone
+
+  Input
+>
+     {
+       "title": "v1.0",
+       "state": "open",
+       "description": "Tracking milestone for version 1.0",
+       "due_on": "2012-10-09T23:39:01Z"
+     }
+<
+  Github API : POST /repos/:owner/:repo/milestones
+
+github#api#issues#UpdateMilestone({owner}, {repo}, {num}, {milestone}, {user},
+  {password})                            *github#api#issues#UpdateMilestone()*
+  Update a milestone
+
+  Github API : PATCH /repos/:owner/:repo/milestones/:number
+
+github#api#issues#DeleteMilestone({owner}, {repo}, {num}, {user}, {password})
+                                         *github#api#issues#DeleteMilestone()*
+  Delete a milestone
+
+  Github API : DELETE /repos/:owner/:repo/milestones/:number
+
+github#api#labels#GetAll({owner}, {repo})         *github#api#labels#GetAll()*
+  List all labels for this repository
+
+  Github API : GET /repos/:owner/:repo/labels
+
+github#api#labels#Get({owner}, {repo}, {name})       *github#api#labels#Get()*
+  Get a single label
+
+  Github API : GET /repos/:owner/:repo/labels/:name
+
+github#api#labels#Create({owner}, {repo}, {user}, {password}, {label})
+                                                  *github#api#labels#Create()*
+  Create a label
+
+  Input:
+>
+    {
+        "name": "bug",
+        "color": "f29513"
+    }
+<
+  Github API : POST /repos/:owner/:repo/labels
+
+github#api#labels#Update({owner}, {repo}, {user}, {password}, {label})
+                                                  *github#api#labels#Update()*
+  Update a label
+
+  Input:
+>
+    {
+        "name": "bug",
+        "color": "f29513"
+    }
+<
+  Github API : PATCH /repos/:owner/:repo/labels/:name
+
+github#api#labels#Delete({owner}, {repo}, {name}, {user}, {password})
+                                                  *github#api#labels#Delete()*
+  Delete a label
+
+  Github API : DELETE /repos/:owner/:repo/labels/:name
+
+github#api#labels#List({owner}, {repo}, {num})      *github#api#labels#List()*
+  List labels on an issue
+
+  Github API : GET /repos/:owner/:repo/issues/:number/labels
+
+github#api#labels#Add({owner}, {repo}, {num}, {labels}, {user}, {password})
+                                                     *github#api#labels#Add()*
+  Add labels to an issue
+
+  Input:
+>
+    [
+        "Label1",
+        "Label2"
+    ]
+<
+  Github API : POST /repos/:owner/:repo/issues/:number/labels
+
+github#api#labels#Remove({owner}, {repo}, {num}, {name}, {user}, {password})
+                                                  *github#api#labels#Remove()*
+  Remove a label from an issue
+
+  Github API : DELETE /repos/:owner/:repo/issues/:number/labels/:name
+
+github#api#labels#Replace({owner}, {repo}, {num}, {labels}, {user},
+  {password})                                    *github#api#labels#Replace()*
+  Replace all labels for an issue
+
+  Input:
+>
+    [
+        "Label1",
+        "Label2"
+    ]
+<
+  Github API : PUT /repos/:owner/:repo/issues/:number/labels
+
+github#api#labels#RemoveAll({owner}, {repo}, {num}, {user}, {password})
+                                               *github#api#labels#RemoveAll()*
+  Remove all label from an issue
+
+  Github API : DELETE /repos/:owner/:repo/issues/:number/labels
+
+github#api#labels#ListAllinMilestone({owner}, {repo}, {num})
+                                      *github#api#labels#ListAllinMilestone()*
+  Get labels for every issue in a milestone
+
+  Github API : GET /repos/:owner/:repo/milestones/:number/labels
+
+github#api#orgs#Get({org})                             *github#api#orgs#Get()*
+  Get an organization
+
+  Github API : GET /orgs/:org
+
+github#api#orgs#Edit({org}, {orgdata}, {user}, {password})
+                                                      *github#api#orgs#Edit()*
+  Edit an organization
+
+  Input:
+>
+     {
+       "billing_email": "support@github.com",
+       "blog": "https://github.com/blog",
+       "company": "GitHub",
+       "email": "support@github.com",
+       "location": "San Francisco",
+       "name": "github",
+       "description": "GitHub, the company."
+     }
+<
+  Github API : PATCH /orgs/:org
+
+github#api#orgs#ListMembers({org}, {filter}, {role})
+                                               *github#api#orgs#ListMembers()*
+  List all users who are members of an organization.
+
+    {filter}Filter members returned in the list. Can be one of:
+    * 2fa_disabled: Members without two-factor authentication enabled.
+      Available for organization owners.
+    * all: All members the authenticated user can see.
+    * Default: all.
+
+    {role}Filter members returned by their role. Can be one of:
+    * all: All members of the organization, regardless of role.
+    * admin: Organization owners.
+    * member: Non-owner organization members.
+    * Default: all.
+
+  Github API : GET /orgs/:org/members
+
+github#api#orgs#CheckMembership({org}, {username}, {user}, {password})
+                                           *github#api#orgs#CheckMembership()*
+  Check if a user is, publicly or privately, a member of the organization.
+
+  Status:
+
+    * 204: requester is an organization member and user is a member
+    * 404: requester is an organization member and user is not a member,
+      requester is not an organization member and is inquiring about
+      themselves
+    * 302: requester is not an organization member
+
+  Github API : GET /orgs/:org/members/:username
+
+github#api#orgs#DeleteMember({org}, {username}, {user}, {password})
+                                              *github#api#orgs#DeleteMember()*
+  Remove a member
+
+  Github API : DELETE /orgs/:org/members/:username
+
+github#api#orgs#ListPublicMembers({org}) *github#api#orgs#ListPublicMembers()*
+  List public members of an org
+
+  Github API : GET /orgs/:org/public_members
+
+github#api#orgs#CheckPublicMembership({org}, {username})
+                                     *github#api#orgs#CheckPublicMembership()*
+  Check public membership
+
+  Github API : GET /orgs/:org/public_members/:username
+
+github#api#orgs#Publicize({org}, {user}, {password})
+                                                 *github#api#orgs#Publicize()*
+  Publicize a user's membership The user can publicize their own membership.
+  (A user cannot publicize the membership for another user.)
+
+  Github API : PUT /orgs/:org/public_members/:username
+
+github#api#orgs#ConcealUser({org}, {user}, {password})
+                                               *github#api#orgs#ConcealUser()*
+  Conceal a user's membership
+
+  Github API : DELETE /orgs/:org/public_members/:username
+
+github#api#orgs#GetMemberships({org}, {username}, {user}, {password})
+                                            *github#api#orgs#GetMemberships()*
+  Get organization membership
+
+  Github API : GET /orgs/:org/memberships/:username
+
+github#api#orgs#UpdateMembership({org}, {username}, {user}, {password},
+  {role})                                 *github#api#orgs#UpdateMembership()*
+  Add or update organization membership,use admin or member for {role}
+
+  Github API : PUT /orgs/:org/memberships/:username
+
+github#api#orgs#RemoveMembership({org}, {username}, {user}, {password})
+                                          *github#api#orgs#RemoveMembership()*
+  Remove organization membership
+
+  Github API : DELETE /orgs/:org/memberships/:username
+
+github#api#pulls#ListAllPRs({owner}, {repo})   *github#api#pulls#ListAllPRs()*
+  List all the PRs of a repo.
+
+  Github API : GET /repos/:owner/:repo/pulls
+
+github#api#pulls#Get({owner}, {repo}, {number})       *github#api#pulls#Get()*
+  Get a single pull request
+
+  Github API : GET /repos/:owner/:repo/pulls/:number
+
+github#api#pulls#create({owner}, {repo}, {user}, {password}, {pull})
+                                                   *github#api#pulls#create()*
+  Create a pull request
+
+  Input:
+>
+     {
+       "title": "Amazing new feature",
+       "body": "Please pull this in!",
+       "head": "octocat:new-feature",
+       "base": "master"
+     }
+<
+  or:
+>
+     {
+       "issue": 5,
+       "head": "octocat:new-feature",
+       "base": "master"
+     }
+<
+  Github API : POST /repos/:owner/:repo/pulls
+
+github#api#pulls#update({owner}, {repo}, {number}, {pull}, {user}, {password})
+                                                   *github#api#pulls#update()*
+  Update a pull request
+
+  Input:
+>
+     {
+       "title": "new title",
+       "body": "updated body",
+       "state": "open"
+     }
+<
+  Github API : PATCH /repos/:owner/:repo/pulls/:number
+
+github#api#pulls#ListCommits({owner}, {repo}, {number})
+                                              *github#api#pulls#ListCommits()*
+  List commits on a pull request
+
+  Github API : GET /repos/:owner/:repo/pulls/:number/commits
+
+github#api#pulls#ListFiles({owner}, {repo}, {number})
+                                                *github#api#pulls#ListFiles()*
+  List pull requests files
+
+  Github API : GET /repos/:owner/:repo/pulls/:number/files
+
+github#api#pulls#CheckMerged({owner}, {repo}, {number})
+                                              *github#api#pulls#CheckMerged()*
+  Get if a pull request has been merged
+
+  Github API : GET /repos/:owner/:repo/pulls/:number/merge
+
+github#api#pulls#Merge({owner}, {repo}, {number}, {msg}, {user}, {password})
+                                                    *github#api#pulls#Merge()*
+  Merge a pull request (Merge Button)
+
+  Github API : PUT /repos/:owner/:repo/pulls/:number/merge
+
+github#api#repos#get_repo({owner}, {repo})       *github#api#repos#get_repo()*
+  Get a single repository GET /repos/:owner/:repo
+
+github#api#repos#releases#Create({owner}, {repo}, {user}, {password},
+  {release})                              *github#api#repos#releases#Create()*
+  Create an release
+
+  Input:
+>
+<
+  {  "tag_name": "v1.0.0",  "target_commitish": "master",  "name": "v1.0.0",
+  "body": "Description of the release",  "draft": false,  "prerelease": false
+  } < Github API: POST /repos/:owner/:repo/releases
+
+github#api#repos#releases#latest({owner}, {repo})
+                                          *github#api#repos#releases#latest()*
+  Get the latest release
+
+  Github API: GET /repos/:owner/:repo/releases/latest
+
+github#api#repos#releases#list_assets({owner}, {repo}, {release_id})
+                                     *github#api#repos#releases#list_assets()*
+  List assets for a release
+
+  Github API: GET /repos/:owner/:repo/releases/:id/assets
+
+github#api#search#SearchRepos({q}, {sort}, {order})
+                                             *github#api#search#SearchRepos()*
+  Search for repos, for how to {sort} result, you can use `stars`,`forks` and
+  `updated`. and for {order} you can use `asc` and `desc`.for {q} see: Input:
+>
+                  {
+                  'in'       : 'name,description',
+                  'size'     : '',
+                  'forks'    : '',
+                  'fork'     : '',
+                  'created'  : '',
+                  'pushed'   : '',
+                  'user'     : '',
+                  'language' : '',
+                  'stars'    : '',
+                  'keywords' : ''
+                  }
+<
+
+  Github API : GET /search/repositories
+
+github#api#user#GetFollowers({user}, {password})
+                                              *github#api#user#GetFollowers()*
+  List the authenticated user's followers:
+
+  Github API : GET /user/followers
+
+github#api#user#CheckFollowing({username}, {user}, {password})
+                                            *github#api#user#CheckFollowing()*
+  Check if you are following a user
+
+  Github API : GET /user/following/:username
+
+github#api#user#Follow({username}, {user}, {password})
+                                                    *github#api#user#Follow()*
+  follow a user
+
+  Github API :  PUT /user/following/:username
+
+github#api#user#ListOrgs({auth})                  *github#api#user#ListOrgs()*
+  List all orgs for the auth user.
+
+  Github API : GET /user/orgs
+
+github#api#user#GetOrgMembership({user}, {password}, {org})
+                                          *github#api#user#GetOrgMembership()*
+  Get your organization membership
+
+  Github API : GET /user/memberships/orgs/:org
+
+github#api#user#EditOrgMembership({org}, {state}, {user}, {password})
+                                         *github#api#user#EditOrgMembership()*
+  Edit your organization membership
+
+  Input:
+>
+     {
+       "state": "active"
+     }
+<
+  Github API : PATCH /user/memberships/orgs/:org
+
+github#api#user#UpdateUser({data}, {user}, {password})
+                                                *github#api#user#UpdateUser()*
+  Update the authenticated user
+
+  Input
+>
+     {
+     "name": "monalisa octocat",
+     "email": "octocat@github.com",
+     "blog": "https://github.com/blog",
+     "company": "GitHub",
+     "location": "San Francisco",
+     "hireable": true,
+     "bio": "There once..."
+     }
+<
+  Github API : PATCH /user
+
+github#api#user#ListEmails({user}, {password})  *github#api#user#ListEmails()*
+  List emails for a user
+
+  Github API : GET /user/emails
+
+github#api#user#AddEmails({user}, {password}, {emails})
+                                                 *github#api#user#AddEmails()*
+  Add email address(es)
+
+  Github API : POST /user/emails
+
+github#api#user#DeleteEmails({user}, {password}, {emails})
+                                              *github#api#user#DeleteEmails()*
+  Delete email address(es)
+
+  Github API : DELETE /user/emails
+
+github#api#user#UnFollow({username}, {user}, {password})
+                                                  *github#api#user#UnFollow()*
+  Unfollow a user
+
+  Github API : DELETE /user/following/:username
+
+github#api#users#GetAllUsers()                *github#api#users#GetAllUsers()*
+  Get all users
+
+  Github API : GET /users
+
+github#api#users#ListAllOrgs({user})          *github#api#users#ListAllOrgs()*
+  List orgs of a specified user.
+
+  Github API : /users/:username/orgs
+
+github#api#users#CheckTargetFollow({username}, {target})
+                                        *github#api#users#CheckTargetFollow()*
+  Check if one user follows another
+
+  Github API : GET /users/:username/following/:target_user
+
+github#api#util#Get_current_time()        *github#api#util#Get_current_time()*
+  Get current time in a timestamp in ISO 8601 format: YYYY-MM-DDTHH:MM:SSZ
+
+github#api#util#GetLog()                            *github#api#util#GetLog()*
+  view the log of API
+
+github#api#util#CleanLog()                        *github#api#util#CleanLog()*
+
+  Clean up the log of the API
+
+
+vim:tw=78:ts=8:ft=help:norl:

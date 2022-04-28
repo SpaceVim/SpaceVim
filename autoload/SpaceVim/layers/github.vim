@@ -41,7 +41,7 @@ function! SpaceVim#layers#github#plugins() abort
         \ 'depends': 'open-browser.vim',
         \ 'on_cmd': ['OpenGithubFile', 'OpenGithubIssue', 'OpenGithubPullReq'],
         \ }],
-        \ ['wsdjeg/GitHub-api.vim', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/github.com', {'merged' : 0}],
         \ ['lambdalisue/vim-gista', {'merged' : 0}],
         \ ]
 endfunction

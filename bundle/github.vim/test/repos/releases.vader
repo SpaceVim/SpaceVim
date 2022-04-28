@@ -1,0 +1,2 @@
+Execute ( repos/releases: Get the latest release ):
+  AssertEqual github#api#repos#releases#latest('SpaceVim', 'SpaceVim').tag_name, '0.5.0'

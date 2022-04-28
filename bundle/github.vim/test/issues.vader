@@ -1,0 +1,17 @@
+Execute ( issues: Get a single issue ):
+  AssertEqual github#api#issues#Get_issue('wsdjeg', 'Github.vim', 2).title, 'How to remove new lines?'
+
+Execute ( issues: Lists all the available assignees ):
+  AssertEqual github#api#issues#List_assignees('wsdjeg', 'Github.vim')[0].login, 'wsdjeg'
+
+Execute ( issues: Check assignee ):
+  AssertEqual github#api#issues#Check_assignee('wsdjeg', 'Github.vim', 'wsdjeg'), 1
+
+Execute ( issues: List issues for a repository ):
+  let g:last_time = github#api#repos#releases#latest('wsdjeg', 'Github.vim').created_at
+  AssertEqual github#api#issues#List_All_for_Repo('wsdjeg', 'Github.vim', 
+      \ {
+      \ 'since' : g:last_time,
+      \ 'state' : 'all'
+      \ }
+      \ )[-1].number, github#api#issues#Get_issue('wsdjeg', 'Github.vim', 13).number
