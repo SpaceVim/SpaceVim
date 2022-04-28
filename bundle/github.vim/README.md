@@ -1,4 +1,5 @@
 # GitHub.vim
+
 > Another github v3 api implemented in viml
 
 [![Build Status](https://travis-ci.org/wsdjeg/GitHub.vim.svg?branch=master)](https://travis-ci.org/wsdjeg/GitHub.vim)
@@ -10,16 +11,10 @@
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20github-orange.svg?style=flat-square)](doc/github.txt)
 
 ## Intro
+
 This is a viml library to access the Github API v3. With it, you can manage
 Github resources (repositories, user profiles, organizations, etc.) from viml
 scripts.
-
-It is WIP, it will covers the full API.
-
-[![Throughput Graph](https://graphs.waffle.io/wsdjeg/GitHub.vim/throughput.svg)](https://waffle.io/wsdjeg/GitHub.vim/metrics/throughput)
-
-If you have any question, any remark, or if you find a bug, or if there is
-something you can do with the API but not with Github-api.vim, please open an issue.
 
 ## Install
 
@@ -57,4 +52,3 @@ func! s:body()
     return 'Testting Github.vim...'
 endf
 ```
-
