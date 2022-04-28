@@ -84,6 +84,8 @@ elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplet
   call SpaceVim#logger#info('lsp client: coc.nvim')
   let s:coc_language_servers = {}
   let s:coc_language_servers_key_id_map = {}
+  function! SpaceVim#lsp#buf_server_ready() abort
+  endfunction
   function! SpaceVim#lsp#reg_server(ft, cmds) abort
     " coc.nvim doesn't support key values containing dots
     " See https://github.com/neoclide/coc.nvim/issues/323
@@ -162,6 +164,8 @@ elseif SpaceVim#layers#isLoaded('autocomplete') && get(g:, 'spacevim_autocomplet
   endfunction
 elseif has('nvim-0.4.3') && $ENABLE_NVIM043LSP
   call SpaceVim#logger#info('lsp client: nvim-lspext')
+  function! SpaceVim#lsp#buf_server_ready() abort
+  endfunction
   function! SpaceVim#lsp#show_doc() abort
     lua require('lsp.plugin')
           \ .client.request('textDocument/hover',
@@ -241,6 +245,8 @@ elseif has('nvim')
 
   function! SpaceVim#lsp#refactor() abort
     " @todo languageclient do not support refactor
+  endfunction
+  function! SpaceVim#lsp#buf_server_ready() abort
   endfunction
 else
   " use vim-lsp
