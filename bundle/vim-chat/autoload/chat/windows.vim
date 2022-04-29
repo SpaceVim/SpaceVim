@@ -219,12 +219,14 @@ function! s:enter() abort
     let s:c_end = ''
     let s:c_char = ''
     let s:c_begin = ''
+    call s:update_msg_screen()
     return
   elseif s:c_begin . s:c_char . s:c_end =~# '/set_channel\s*'
     let s:current_channel = matchstr(s:c_begin . s:c_char . s:c_end, '/set_channel\s*\zs.*')
     let s:c_end = ''
     let s:c_char = ''
     let s:c_begin = ''
+    call s:update_msg_screen()
     return
   endif
   call add(s:enter_history, s:c_begin . s:c_char . s:c_end)
