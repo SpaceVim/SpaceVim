@@ -75,7 +75,7 @@ function! chat#windows#open() abort
       let s:c_end = substitute(s:c_end, '^.', '', 'g')
     elseif nr == 21                                                         " ctrl+u clean the message
       let s:c_begin = ''
-    elseif nr == 9                                                          " use <tab> complete str
+    elseif nr == "\<Tab>"                                                          " use <tab> complete str
       if s:complete_num == 0
         let complete_base = s:c_begin
       else
@@ -140,7 +140,7 @@ function! chat#windows#open() abort
       let s:complete_input_history_num[1] += 1
       let s:c_begin = s:complete_input_history(complete_input_history_base, s:complete_input_history_num)
     else
-      let s:c_begin .= nr2char(nr)
+      let s:c_begin .= nr
     endif
     call s:echon()
   endwhile
@@ -337,7 +337,8 @@ endfunction
 function! chat#windows#status() abort
 
   return {
-        \ 'channel' : s:current_channel
+        \ 'channel' : s:current_channel,
+        \ 'protocol' : s:protocol,
         \ }
 
 endfunction
