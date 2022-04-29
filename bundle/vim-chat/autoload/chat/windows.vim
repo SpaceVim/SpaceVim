@@ -60,22 +60,25 @@ function! chat#windows#open() abort
   call s:update_statusline()
   call s:echon()
   while get(s:, 'quit_chating_win', 0) == 0
-    let nr = s:VIM.getchar()
-    if nr !=# "\<Up>" && nr !=# "\<Down>"
+    let char = s:VIM.getchar()
+    if char !=# "\<Up>" && char !=# "\<Down>"
       let s:complete_input_history_num = [0,0]
     endif
-    if nr != 9
+    if char != "\<Tab>"
       let s:complete_num = 0
     endif
-    if nr == 13
+    if char == "\<Enter>"
       call s:enter()
-    elseif nr ==# "\<Right>" || nr == 6                                     "<Right> 向右移动光标
+    elseif char ==# "\<Right>"
+      "<Right> 向右移动光标
       let s:c_begin = s:c_begin . s:c_char
       let s:c_char = matchstr(s:c_end, '^.')
       let s:c_end = substitute(s:c_end, '^.', '', 'g')
-    elseif nr == 21                                                         " ctrl+u clean the message
+    elseif char ==# "\<C-u>"
+      " ctrl+u clean the message
       let s:c_begin = ''
-    elseif nr == "\<Tab>"                                                          " use <tab> complete str
+    elseif char == "\<Tab>"
+      " use <tab> complete str
       if s:complete_num == 0
         let complete_base = s:c_begin
       else
@@ -83,43 +86,48 @@ function! chat#windows#open() abort
       endif
       let s:c_begin = s:complete(complete_base, s:complete_num)
       let s:complete_num += 1
-    elseif nr == 11                                                         " ctrl+k delete the chars from cursor to the end
+    elseif char ==# "\<C-k>"
+      " ctrl+k delete the chars from cursor to the end
       let s:c_char = ''
       let s:c_end = ''
-    elseif nr ==# "\<M-Left>" || nr ==# "\<M-h>"
+    elseif char ==# "\<M-Left>" || char ==# "\<M-h>"
       "<Alt>+<Left> 移动到左边一个聊天窗口
       call s:previous_channel()
-    elseif nr ==# "\<M-Right>" || nr ==# "\<M-l>"
+    elseif char ==# "\<M-Right>" || char ==# "\<M-l>"
       "<Alt>+<Right> 移动到右边一个聊天窗口
       call s:next_channel()
-    elseif nr ==# "\<Left>"  || nr == 2                                     "<Left> 向左移动光标
+    elseif char ==# "\<Left>"
+      "<Left> 向左移动光标
       if s:c_begin !=# ''
         let s:c_end = s:c_char . s:c_end
         let s:c_char = matchstr(s:c_begin, '.$')
         let s:c_begin = substitute(s:c_begin, '.$', '', 'g')
       endif
-    elseif nr ==# "\<PageUp>"
+    elseif char ==# "\<PageUp>"
       let l = line('.') - winheight('$')
       if l < 0
         exe 0
       else
         exe l
       endif
-    elseif nr ==# "\<PageDown>"
+    elseif char ==# "\<PageDown>"
       exe line('.') + winheight('$')
-    elseif nr ==# "\<Home>" || nr == 1                                     "<Home> 或 <ctrl> + a 将光标移动到行首
+    elseif char ==# "\<Home>" || char ==# "\<C-k>"
+      "<Home> 或 <ctrl> + a 将光标移动到行首
       let s:c_end = substitute(s:c_begin . s:c_char . s:c_end, '^.', '', 'g')
       let s:c_char = matchstr(s:c_begin, '^.')
       let s:c_begin = ''
-    elseif nr ==# "\<End>"  || nr == 5                                     "<End> 或 <ctrl> + e 将光标移动到行末
+    elseif char ==# "\<End>"  || char == "\<C-e>"
+      "<End> 或 <ctrl> + e 将光标移动到行末
       let s:c_begin = s:c_begin . s:c_char . s:c_end
       let s:c_char = ''
       let s:c_end = ''
-    elseif index(s:close_windows_char, nr) !=# -1
+    elseif index(s:close_windows_char, char) !=# -1
       let s:quit_chating_win = 1
-    elseif nr == 8 || nr ==# "\<bs>"                                        " ctrl+h or <bs> delete last char
+    elseif char ==# "\<C-h>" || char ==# "\<bs>"
+      " ctrl+h or <bs> delete last char
       let s:c_begin = substitute(s:c_begin,'.$','','g')
-    elseif nr ==# "\<Up>"
+    elseif char ==# "\<Up>"
       if s:complete_input_history_num == [0,0]
         let complete_input_history_base = s:c_begin
         let s:c_char = ''
@@ -129,7 +137,7 @@ function! chat#windows#open() abort
       endif
       let s:complete_input_history_num[0] += 1
       let s:c_begin = s:complete_input_history(complete_input_history_base, s:complete_input_history_num)
-    elseif nr ==# "\<Down>"
+    elseif char ==# "\<Down>"
       if s:complete_input_history_num == [0,0]
         let complete_input_history_base = s:c_begin
         let s:c_char = ''
@@ -140,7 +148,7 @@ function! chat#windows#open() abort
       let s:complete_input_history_num[1] += 1
       let s:c_begin = s:complete_input_history(complete_input_history_base, s:complete_input_history_num)
     else
-      let s:c_begin .= nr
+      let s:c_begin .= char
     endif
     call s:echon()
   endwhile
@@ -292,7 +300,7 @@ function! s:init_hi() abort
   endif
 endfunction
 function! s:update_statusline() abort
-  redrawstatus
+  let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction
 
 function! s:previous_channel() abort
