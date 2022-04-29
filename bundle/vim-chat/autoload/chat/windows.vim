@@ -7,6 +7,8 @@
 "=============================================================================
 scriptencoding utf-8
 
+let s:VIM = SpaceVim#api#import('vim')
+
 function! chat#windows#is_opened() abort
   return s:msg_win_opened
 endfunction
@@ -34,7 +36,7 @@ let s:last_channel = ''
 let s:current_channel  = ''
 let s:opened_channels = []
 let s:messages = []
-let s:close_windows_char = ''
+let s:close_windows_char = ["\<Esc>", "\<C-c>"]
 let s:protocol = ''
 let s:chatting_commands = ['/set_protocol', '/set_channel']
 function! chat#windows#open() abort
@@ -58,7 +60,7 @@ function! chat#windows#open() abort
   call s:update_statusline()
   call s:echon()
   while get(s:, 'quit_chating_win', 0) == 0
-    let nr = getchar()
+    let nr = s:VIM.getchar()
     if nr !=# "\<Up>" && nr !=# "\<Down>"
       let s:complete_input_history_num = [0,0]
     endif
@@ -113,7 +115,7 @@ function! chat#windows#open() abort
       let s:c_begin = s:c_begin . s:c_char . s:c_end
       let s:c_char = ''
       let s:c_end = ''
-    elseif nr ==# s:close_windows_char || nr ==# char2nr(s:close_windows_char)
+    elseif index(s:close_windows_char, nr) !=# -1
       let s:quit_chating_win = 1
     elseif nr == 8 || nr ==# "\<bs>"                                        " ctrl+h or <bs> delete last char
       let s:c_begin = substitute(s:c_begin,'.$','','g')
@@ -290,52 +292,7 @@ function! s:init_hi() abort
   endif
 endfunction
 function! s:update_statusline() abort
-  let st = ''
-  for ch in s:opened_channels
-    let ch = substitute(ch, ' ', '\ ', 'g')
-    if ch == s:current_channel
-      if has_key(s:unread_msg_num, s:current_channel)
-        call remove(s:unread_msg_num, s:current_channel)
-      endif
-      let st .= '%#ChattingHI1#[' . ch . ']'
-      if index(s:opened_channels, ch) == len(s:opened_channels) - 1
-        let st .= '%#ChattingHI5#' . s:st_sep
-      elseif get(s:unread_msg_num, s:opened_channels[index(s:opened_channels, ch) + 1], 0) > 0
-        let st .= '%#ChattingHI6#' . s:st_sep
-      else
-        let st .= '%#ChattingHI7#' . s:st_sep
-      endif
-    else
-      let n = get(s:unread_msg_num, ch, 0)
-      if n > 0
-        let st .= '%#ChattingHI2#[' . ch . '(' . n . 'new)]'
-        if index(s:opened_channels, ch) == len(s:opened_channels) - 1
-          let st .= '%#ChattingHI8#' . s:st_sep
-        elseif get(s:unread_msg_num, s:opened_channels[index(s:opened_channels, ch) + 1], 0) > 0
-              \ && s:opened_channels[index(s:opened_channels, ch) + 1] !=# s:current_channel
-          let st .= '%#ChattingHI11#' . s:st_sep
-        elseif s:opened_channels[index(s:opened_channels, ch) + 1] ==# s:current_channel
-          let st .= '%#ChattingHI9#' . s:st_sep
-        else
-          let st .= '%#ChattingHI10#' . s:st_sep
-        endif
-      else
-        let st .= '%#ChattingHI3#[' . ch . ']'
-        if index(s:opened_channels, ch) == len(s:opened_channels) - 1
-          let st .= '%#ChattingHI12#' . s:st_sep
-        elseif get(s:unread_msg_num, s:opened_channels[index(s:opened_channels, ch) + 1], 0) > 0
-              \ && s:opened_channels[index(s:opened_channels, ch) + 1] !=# s:current_channel
-          let st .= '%#ChattingHI14#' . s:st_sep
-        elseif s:opened_channels[index(s:opened_channels, ch) + 1] ==# s:current_channel
-          let st .= '%#ChattingHI15#' . s:st_sep
-        else
-          let st .= '%#ChattingHI13#' . s:st_sep
-        endif
-      endif
-    endif
-  endfor
-  let st .= '%#ChattingHI4# '
-  exe 'set statusline=' . st
+  redrawstatus
 endfunction
 
 function! s:previous_channel() abort

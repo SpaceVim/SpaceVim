@@ -56,11 +56,15 @@ function! s:gitter_stdout(id, data, event) abort
           \ 'user' : msg.fromUser.displayName,
           \ 'room' : s:room,
           \ 'msg' : msg.text,
-          \ 'time': msg.sent,
+          \ 'time': s:format_time(msg.sent),
           \ })
   else
     call chat#notify#noti(msg.fromUser.displayName . ': ' . msg.text)
   endif
+endfunction
+
+function! s:format_time(t) abort
+  return matchstr(a:t, '\d\d\d\d-\d\d-\d\d') . ' ' . matchstr(a:t, '\d\d:\d\d')
 endfunction
 
 function! s:gitter_stderr(id, data, event) abort
