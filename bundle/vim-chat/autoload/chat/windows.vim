@@ -374,3 +374,11 @@ function! s:send(msg) abort
     call ch_sendraw(s:channel, a:msg ."\n")
   endif
 endfunction
+
+function! chat#windows#status() abort
+
+  return {
+        \ 'channel' : s:current_channel
+        \ }
+
+endfunction
