@@ -29,7 +29,9 @@ let s:c_end = ''
 let s:msg_win_opened = 0
 let s:last_channel = ''
 let s:current_channel  = ''
+let s:opened_channels = []
 let s:messages = []
+let s:close_windows_char = ''
 function! chat#windows#open() abort
   if bufwinnr(s:name) < 0
     if bufnr(s:name) != -1
