@@ -53,7 +53,7 @@ function! SpaceVim#layers#chat#config() abort
   let g:chatting_server_ip = s:chat_address
   let g:chatting_server_port = s:chat_port
   let g:chatting_server_lib = s:chat_client_jar
-  call SpaceVim#mapping#space#def('nnoremap', ['a', 'h'], 'call chat#OpenMsgWin()', 'open-chat-window', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['a', 'h'], 'call chat#windows#open()', 'open-chat-window', 1)
 endfunction
 
 function! SpaceVim#layers#chat#health() abort

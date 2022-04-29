@@ -7,8 +7,8 @@
 " hi link vimChatTime		String
 " hi link vimChatMe		Type
 " syn match vimChatMsg 	/^\[\d\d\(:\d\d\)\{0,2\}][^>]*/	contains=vimChatTime,vimChatNick
-syn match VimChatTime /\[\d\d\:\d\d:\d\d]/
-syn match VimChatNick /\[\d\d\:\d\d:\d\d]\s<[^>]*>/ contains=VimChatTime
+syn match VimChatTime /\[\d\d\d\d-\d\d-\d\d\s\d\d\:\d\d]/
+syn match VimChatNick /\[\d\d\d\d-\d\d-\d\d\s\d\d\:\d\d]\s<[^>]*>/ contains=VimChatTime
 " hi def link vimChatMsg	Comment
 hi def link VimChatTime String
 hi def link VimChatNick Type
