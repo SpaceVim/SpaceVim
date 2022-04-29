@@ -219,6 +219,10 @@ function! s:enter() abort
     let s:c_end = ''
     let s:c_char = ''
     let s:c_begin = ''
+    try
+      call chat#{s:protocol}#start()
+    catch
+    endtry
     call s:update_msg_screen()
     return
   elseif s:c_begin . s:c_char . s:c_end =~# '/set_channel\s*'

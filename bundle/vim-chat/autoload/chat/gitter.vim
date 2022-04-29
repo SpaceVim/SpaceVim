@@ -11,18 +11,22 @@ let s:JSON = SpaceVim#api#import('data#json')
 let s:LOG = SpaceVim#logger#derive('gitter')
 
 let s:room = ''
+let s:jobid = -1
 
 function! chat#gitter#start() abort
-  let s:room = 'SpaceVim'
-  call s:JOB.start(g:gitter_char_command, {
-        \ 'on_stdout' : function('s:gitter_stdout'),
-        \ 'on_stderr' : function('s:gitter_stderr'),
-        \ 'on_exit' : function('s:gitter_exit'),
-        \ })
+  if s:jobid <= 0
+    let s:room = 'SpaceVim'
+    call s:fetch()
+    let s:jobid = s:JOB.start(g:gitter_char_command, {
+          \ 'on_stdout' : function('s:gitter_stdout'),
+          \ 'on_stderr' : function('s:gitter_stderr'),
+          \ 'on_exit' : function('s:gitter_exit'),
+          \ })
+  endif
 endfunction
 
 
-function! chat#gitter#fetch() abort
+function! s:fetch() abort
   let s:fetch_response = []
   call s:JOB.start(g:gitter_fetch_command, {
         \ 'on_stdout' : function('s:gitter_fetch_stdout'),
