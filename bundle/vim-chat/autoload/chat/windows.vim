@@ -16,6 +16,8 @@ endfunction
 " user: string
 " room: string
 " msg: string
+" type: group_message or user_message
+" time: 2022-02-02 24:00
 
 function! chat#windows#push(msg) abort
   
@@ -148,24 +150,13 @@ endfunction
 
 function! s:update_msg_screen() abort
   if s:msg_win_opened
-    normal! ggdG
+    normal! gg"_dG
     for msg in s:messages
-      if msg['type'] ==# 'group_message' && msg['group_name'] ==# s:current_channel
-        call append(line('$'), '[' . msg['time'] . '] < ' . msg['sendder'] . ' > ' . msg['context'])
-      elseif msg['type'] ==# 'info_message' && msg['context'] !~# '^join channel :'
-        call append(line('$'), '[' . msg['time'] . '] ' . msg['context'])
-      elseif msg['type'] ==# 'user_message' 
-            \ && (
-            \ msg['sendder'] ==# s:current_channel 
-            \ || 
-            \ (msg['sendder'] ==# s:login_user && msg['receiver'] ==# s:current_channel)
-            \ )
-        call append(line('$'), '[' . msg['time'] . '] < ' . msg['sendder'] . ' > ' . msg['context'])
+      if msg['group_name'] ==# s:current_channel
+        call append(line('$'), '[' . msg['time'] . '] < ' . msg['user'] . ' > ' . msg['msg'])
       endif
     endfor
-    normal! gg
-    delete
-    normal! G
+    normal! gg"_ddG
     redraw
     call s:echon()
   endif
