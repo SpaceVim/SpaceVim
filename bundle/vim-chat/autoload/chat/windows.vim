@@ -227,14 +227,8 @@ function! s:enter() abort
     let s:c_begin = ''
     return
   endif
-  if has('nvim')
-    if s:client_job_id != 0
-      call jobsend(s:client_job_id, [s:c_begin . s:c_char . s:c_end, ''])
-    endif
-  else
-    call ch_sendraw(s:channel, s:c_begin . s:c_char . s:c_end ."\n")
-  endif
   call add(s:enter_history, s:c_begin . s:c_char . s:c_end)
+  call s:send(s:c_begin . s:c_char . s:c_end)
   let s:c_end = ''
   let s:c_char = ''
   let s:c_begin = ''
@@ -338,7 +332,7 @@ endfunction
 
 function! s:send(msg) abort
   if !empty(s:protocol)
-    call chat#{s:protocol}send(a:msg)
+    call chat#{s:protocol}#send(a:msg)
   endif
 endfunction
 

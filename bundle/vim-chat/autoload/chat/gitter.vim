@@ -22,6 +22,16 @@ function! chat#gitter#start() abort
 endfunction
 
 
+function! chat#gitter#fetch() abort
+  let s:fetch_response = []
+  call s:JOB.start(g:gitter_fetch_command, {
+        \ 'on_stdout' : function('s:gitter_fetch_stdout'),
+        \ 'on_stderr' : function('s:gitter_fetch_stderr'),
+        \ 'on_exit' : function('s:gitter_fetch_exit'),
+        \ })
+endfunction
+
+
 " {
 "   "id": "626ab3bd9db19366b2035690",
 "   "text": "we are going to add a gitter client for spacevim.",
@@ -78,6 +88,33 @@ function! s:gitter_exit(id, data, event) abort
   call s:LOG.debug(a:data)
 endfunction
 
+function! s:gitter_fetch_stdout(id, data, event) abort
+  for line in a:data
+    call s:LOG.debug(line)
+  endfor
+  let s:fetch_response = s:fetch_response + a:data
+endfunction
+
+function! s:gitter_fetch_stderr(id, data, event) abort
+  for line in a:data
+    call s:LOG.debug(line)
+  endfor
+
+endfunction
+
+function! s:gitter_fetch_exit(id, data, event) abort
+  call s:LOG.debug(a:data)
+  let messages = s:JSON.json_decode(join(s:fetch_response, ''))
+  for msg in messages
+    call chat#windows#push({
+          \ 'user' : msg.fromUser.displayName,
+          \ 'room' : s:room,
+          \ 'msg' : msg.text,
+          \ 'time': s:format_time(msg.sent),
+          \ })
+  endfor
+endfunction
+
 function! chat#gitter#send(msg) abort
-  
+  call s:JOB.start(printf(g:gitter_send_command, substitute(a:msg, '"', '\\\"', 'g')))
 endfunction
