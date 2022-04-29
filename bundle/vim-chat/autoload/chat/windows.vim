@@ -8,7 +8,7 @@
 scriptencoding utf-8
 
 function! chat#windows#is_opened() abort
-
+  return s:msg_win_opened
 endfunction
 
 " a disc
@@ -20,7 +20,8 @@ endfunction
 " time: 2022-02-02 24:00
 
 function! chat#windows#push(msg) abort
-  
+  call add(s:messages, a:msg)
+  call s:update_msg_screen()
 endfunction
 
 let s:name = '__Chatting__'
@@ -34,6 +35,8 @@ let s:current_channel  = ''
 let s:opened_channels = []
 let s:messages = []
 let s:close_windows_char = ''
+let s:protocol = ''
+let s:chatting_commands = ['/set_protocol', '/set_channel']
 function! chat#windows#open() abort
   if bufwinnr(s:name) < 0
     if bufnr(s:name) != -1
@@ -152,7 +155,7 @@ function! s:update_msg_screen() abort
   if s:msg_win_opened
     normal! gg"_dG
     for msg in s:messages
-      if msg['group_name'] ==# s:current_channel
+      if msg['room'] ==# s:current_channel
         call append(line('$'), '[' . msg['time'] . '] < ' . msg['user'] . ' > ' . msg['msg'])
       endif
     endfor
@@ -197,6 +200,18 @@ let s:enter_history = []
 function! s:enter() abort
   if s:c_begin . s:c_char . s:c_end =~# '/quit\s*'
     let s:quit_chating_win = 1
+    let s:c_end = ''
+    let s:c_char = ''
+    let s:c_begin = ''
+    return
+  elseif s:c_begin . s:c_char . s:c_end =~# '/set_protocol\s*'
+    let s:protocol = matchstr(s:c_begin . s:c_char . s:c_end, '/set_protocol\s*\zs.*')
+    let s:c_end = ''
+    let s:c_char = ''
+    let s:c_begin = ''
+    return
+  elseif s:c_begin . s:c_char . s:c_end =~# '/set_channel\s*'
+    let s:current_channel = matchstr(s:c_begin . s:c_char . s:c_end, '/set_channel\s*\zs.*')
     let s:c_end = ''
     let s:c_char = ''
     let s:c_begin = ''
@@ -357,12 +372,8 @@ function! s:next_channel() abort
 endfunction
 
 function! s:send(msg) abort
-  if has('nvim')
-    if s:client_job_id != 0
-      call jobsend(s:client_job_id, [a:msg, ''])
-    endif
-  else
-    call ch_sendraw(s:channel, a:msg ."\n")
+  if !empty(s:protocol)
+    call chat#{s:protocol}send(a:msg)
   endif
 endfunction
 

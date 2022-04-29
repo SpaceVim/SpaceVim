@@ -56,6 +56,7 @@ function! s:gitter_stdout(id, data, event) abort
           \ 'user' : msg.fromUser.displayName,
           \ 'room' : s:room,
           \ 'msg' : msg.text,
+          \ 'time': msg.sent,
           \ })
   else
     call chat#notify#noti(msg.fromUser.displayName . ': ' . msg.text)
