@@ -27,7 +27,19 @@ let s:c_begin = ''
 let s:c_char = ''
 let s:c_end = ''
 let s:msg_win_opened = 0
-function! chat#OpenMsgWin() abort
+let s:last_channel = ''
+let s:current_channel  = ''
+let s:messages = []
+function! chat#windows#open() abort
+  if bufwinnr(s:name) < 0
+    if bufnr(s:name) != -1
+      exe 'silent! botright split ' . '+b' . bufnr(s:name)
+    else
+      exe 'silent! botright split ' . s:name
+    endif
+  else
+    exec bufwinnr(s:name) . 'wincmd w'
+  endif
   call s:windowsinit()
   call s:init_hi()
   setl modifiable
