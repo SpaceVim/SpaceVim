@@ -6,6 +6,22 @@
 " License: GPLv3
 "=============================================================================
 
+" Ensures that SpaceVim only initializes once.
+"
+" SpaceVim can be installed as a Vim package, in which case the entry point is
+" inside the 'plugin' directory and sources this script.
+"
+" SpaceVim can also be installed using the provided Vim entry point files (e.g.
+" vimrc, init.vim), which will source this script. However, the file inside of
+" the 'plugin' directory will still be executed and would run this twice if we
+" don't have this gate.
+"
+if exists('g:_spacevim_init')
+  finish
+else
+  let g:_spacevim_init = 1
+endif
+
 " set default encoding to utf-8
 " Let Vim use utf-8 internally, because many scripts require this
 set encoding=utf-8
