@@ -227,7 +227,12 @@ function! s:enter() abort
     call s:update_msg_screen()
     return
   elseif s:c_begin . s:c_char . s:c_end =~# '/set_channel\s*'
-    let s:current_channel = matchstr(s:c_begin . s:c_char . s:c_end, '/set_channel\s*\zs.*')
+    if !empty(s:protocol)
+      let s:current_channel = matchstr(s:c_begin . s:c_char . s:c_end, '/set_channel\s*\zs.*')
+      if !empty(s:current_channel)
+        call chat#{s:protocol}#enter_room(s:current_channel)
+      endif
+    endif
     let s:c_end = ''
     let s:c_char = ''
     let s:c_begin = ''
@@ -259,7 +264,7 @@ function! s:complete(base,num) abort
       let channels = chat#{s:protocol}#get_channels()
     catch
     endtry
-    let rsl = filter(copy(channels), "v:val =~# matchstr(a:base, '\w*$') .'[^\ .]*'")
+    let rsl = filter(copy(channels), "v:val =~# '^' . matchstr(a:base, '\\w*$')")
     if len(rsl) > 0
       return matchstr(a:base, '^/set_channel\s*') . rsl[a:num % len(rsl)]
     endif
@@ -353,8 +358,8 @@ function! s:next_channel() abort
 endfunction
 
 function! s:send(msg) abort
-  if !empty(s:protocol)
-    call chat#{s:protocol}#send(a:msg)
+  if !empty(s:protocol) && !empty(s:current_channel)
+    call chat#{s:protocol}#send(s:current_channel, a:msg)
   endif
 endfunction
 
