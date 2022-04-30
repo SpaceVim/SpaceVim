@@ -13,6 +13,8 @@ let s:LOG = SpaceVim#logger#derive('gitter')
 let s:room = ''
 let s:jobid = -1
 
+let g:chat_gitter_token = get(g:, 'chat_gitter_token', '')
+
 function! chat#gitter#start() abort
   if s:jobid <= 0
     let s:room = 'SpaceVim'
@@ -119,9 +121,39 @@ function! s:gitter_fetch_exit(id, data, event) abort
   endfor
 endfunction
 
-let s:channels = ['SpaceVim']
+let s:channels = []
 function! chat#gitter#get_channels() abort
-  return s:channels
+  if empty(s:channels)
+    call s:get_all_channels()
+    return []
+  else
+    let rooms = filter(deepcopy(s:channels), 'has_key(v:val, "uri")')
+    return map(rooms, 'v:val.uri')
+  endif
+endfunction
+
+
+let s:list_all_channels_jobid = -1
+let s:list_all_channels_result = []
+function! s:get_all_channels() abort
+  if s:list_all_channels_jobid <= 0
+    let cmd = printf('curl -s -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms"', g:chat_gitter_token)
+    let s:list_all_channels_jobid =  s:JOB.start(cmd, {
+          \ 'on_stdout' : function('s:get_all_channels_stdout'),
+          \ 'on_stderr' : function('s:get_all_channels_stderr'),
+          \ 'on_exit' : function('s:get_all_channels_exit'),
+          \ })
+  endif
+endfunction
+
+function! s:get_all_channels_stdout(id, data, event) abort
+  let s:list_all_channels_result = s:list_all_channels_result + a:data
+endfunction
+function! s:get_all_channels_stderr(id, data, event) abort
+
+endfunction
+function! s:get_all_channels_exit(id, data, event) abort
+  let s:channels = s:JSON.json_decode(join(s:list_all_channels_result, ''))
 endfunction
 
 function! chat#gitter#send(msg) abort
