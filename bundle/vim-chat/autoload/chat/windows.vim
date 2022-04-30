@@ -162,12 +162,53 @@ function! chat#windows#open() abort
   normal! :
 endfunction
 
+function! s:get_str_with_width(str,width) abort
+    let str = a:str
+    let result = ''
+    let tmp = ''
+    for i in range(strchars(str))
+        let tmp .= matchstr(str, '^.')
+        if strwidth(tmp) > a:width
+            return result
+        else
+            let result = tmp
+        endif
+        let str = substitute(str, '^.', '', 'g')
+    endfor
+    return result
+endfunction
+
+function! s:get_lines_with_width(str, width) abort
+    let str = a:str
+    let lines = []
+    let line = ''
+    let tmp = ''
+    for i in range(strchars(str))
+        let tmp .= matchstr(str, '^.')
+        if strwidth(tmp) > a:width
+            call add(lines, line)
+            let tmp = matchstr(str, '^.')
+        endif
+        let line = tmp
+        let str = substitute(str, '^.', '', 'g')
+    endfor
+    call add(lines, line)
+    return lines
+endfunction
+
 function! s:update_msg_screen() abort
   if s:msg_win_opened
     normal! gg"_dG
-    for msg in s:messages
-      if msg['room'] ==# s:current_channel
-        call append(line('$'), '[' . msg['time'] . '] < ' . msg['user'] . ' > ' . msg['msg'])
+    let msgs = filter(deepcopy(s:messages), 'v:val["room"] ==# s:current_channel')
+    for msg in msgs
+      let name = s:get_str_with_width(msg['user'], 13)
+      let message = s:get_lines_with_width(msg['msg'], winwidth('$') - 36)
+      let first_line = '[' . msg['time'] . '] ' . nr2char(9474) . repeat(' ', 13 - strwidth(name)) . name . ' ' . nr2char(9474) . ' ' . message[0]
+      call append(line('$'), first_line)
+      if len(message) > 1
+        for l in message[1:]
+          call append(line('$'), repeat(' ', 18) . ' ' . nr2char(9474) . ' ' .repeat(' ', 12) . ' ' . nr2char(9474) . ' ' . l)
+        endfor
       endif
     endfor
     normal! gg"_ddG
