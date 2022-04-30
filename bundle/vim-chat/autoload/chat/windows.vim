@@ -242,7 +242,7 @@ endfunction
 
 let s:complete_num = 0
 function! s:complete(base,num) abort
-  if a:base =~# '^/[a-z]*$'
+  if a:base =~# '^/[a-z_A-Z]*$'
     let rsl = filter(copy(s:chatting_commands), "v:val =~# a:base .'[^\ .]*'")
     if len(rsl) > 0
       return rsl[a:num % len(rsl)] . ' '
