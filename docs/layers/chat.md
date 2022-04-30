@@ -10,6 +10,7 @@ description: "SpaceVim chatting layer provides chatting with weixin in vim."
 
 - [Description](#description)
 - [Install](#install)
+- [Layer options](#layer-options)
 - [Key Mappings](#key-mappings)
 
 <!-- vim-markdown-toc -->
@@ -28,6 +29,10 @@ To use this configuration layer, add the following snippet to your custom config
 [[layers]]
   name = "chat"
 ```
+
+## Layer options
+
+1. `gitter_token`: set the token to your gitter account.
 
 ## Key Mappings
 

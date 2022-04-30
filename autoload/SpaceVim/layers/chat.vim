@@ -30,6 +30,7 @@ endif
 let s:chat_address = '127.0.0.1'
 let s:chat_port = 8080
 let s:chat_client_jar = fnamemodify(expand('<sfile>:p:h:h:h:h') . '/bundle/Chatting-server/target/Chatting-1.0-SNAPSHOT.jar', ':gs?[\\/]?/?')
+let s:gitter_token = ''
 
 function! SpaceVim#layers#chat#plugins() abort
   return [
@@ -41,6 +42,7 @@ function! SpaceVim#layers#chat#set_variable(opt) abort
   let s:chat_address = get(a:opt, 'chat_address', s:chat_address)
   let s:chat_port = get(a:opt, 'chat_port', s:chat_port)
   let s:chat_client_jar = get(a:opt, 'chat_client_jar', s:chat_client_jar)
+  let s:gitter_token = get(a:opt, 'gitter_token', s:gitter_token)
 endfunction
 
 function! SpaceVim#layers#chat#get_options() abort
@@ -53,6 +55,7 @@ function! SpaceVim#layers#chat#config() abort
   let g:chatting_server_ip = s:chat_address
   let g:chatting_server_port = s:chat_port
   let g:chatting_server_lib = s:chat_client_jar
+  let g:chat_gitter_token = s:gitter_token
   call SpaceVim#mapping#space#def('nnoremap', ['a', 'h'], 'call chat#windows#open()', 'open-chat-window', 1)
 endfunction
 
