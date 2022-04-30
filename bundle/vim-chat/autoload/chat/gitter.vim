@@ -29,6 +29,15 @@ function! chat#gitter#enter_room(room) abort
   endif
 endfunction
 
+function! s:get_roomid(room) abort
+    let room = filter(deepcopy(s:channels), 'has_key(v:val, "uri") && v:val.uri ==# a:room')
+    if !empty(room)
+      return room[0].id
+    else
+      return ''
+    endif
+endfunction
+
 
 function! s:fetch(roomid) abort
   let s:fetch_response = []
