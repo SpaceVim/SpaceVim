@@ -49,6 +49,9 @@ endfunction
 
 
 function! s:gitter_stdout(id, data, event) abort
+  for line in a:data
+    call s:LOG.debug(line)
+  endfor
   for room in keys(s:room_jobs)
     if s:room_jobs[room] ==# a:id
       let message = join(a:data, '') 
@@ -163,18 +166,20 @@ function! s:get_all_channels() abort
 endfunction
 
 function! s:get_all_channels_stdout(id, data, event) abort
+  for line in a:data
+    call s:LOG.debug(line)
+  endfor
   let s:list_all_channels_result = s:list_all_channels_result + a:data
 endfunction
 function! s:get_all_channels_stderr(id, data, event) abort
+  for line in a:data
+    call s:LOG.debug(line)
+  endfor
 
 endfunction
 function! s:get_all_channels_exit(id, data, event) abort
+  call s:LOG.debug(a:data)
   let s:channels = s:JSON.json_decode(join(s:list_all_channels_result, ''))
-  if type(s:channels) !=# type([])
-    " this is for bad request
-    " the result is {'error' : 'Bad Request'}
-    let s:channels = []
-  endif
 endfunction
 
 function! Test(str) abort
