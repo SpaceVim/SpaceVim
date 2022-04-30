@@ -163,37 +163,43 @@ function! chat#windows#open() abort
 endfunction
 
 function! s:get_str_with_width(str,width) abort
-    let str = a:str
-    let result = ''
-    let tmp = ''
-    for i in range(strchars(str))
-        let tmp .= matchstr(str, '^.')
-        if strwidth(tmp) > a:width
-            return result
-        else
-            let result = tmp
-        endif
-        let str = substitute(str, '^.', '', 'g')
-    endfor
-    return result
+  let str = a:str
+  let result = ''
+  let tmp = ''
+  for i in range(strchars(str))
+    let tmp .= matchstr(str, '^.')
+    if strwidth(tmp) > a:width
+      return result
+    else
+      let result = tmp
+    endif
+    let str = substitute(str, '^.', '', 'g')
+  endfor
+  return result
 endfunction
 
 function! s:get_lines_with_width(str, width) abort
-    let str = a:str
-    let lines = []
-    let line = ''
-    let tmp = ''
-    for i in range(strchars(str))
-        let tmp .= matchstr(str, '^.')
-        if strwidth(tmp) > a:width
-            call add(lines, line)
-            let tmp = matchstr(str, '^.')
-        endif
-        let line = tmp
-        let str = substitute(str, '^.', '', 'g')
-    endfor
+  let str = a:str
+  let lines = []
+  let line = ''
+  let tmp = ''
+  for i in range(strchars(str))
+    let char = matchstr(str, '^.')
+    if char ==# "\n"
+      call add(lines, line)
+      let line = ''
+    elseif strwidth(line . char) > a:width
+      call add(lines, line)
+      let line = char
+    else
+      let line = line . char
+    endif
+    let str = substitute(str, '^.', '', 'g')
+  endfor
+  if !empty(line)
     call add(lines, line)
-    return lines
+  endif
+  return lines
 endfunction
 
 function! s:update_msg_screen() abort
