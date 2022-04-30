@@ -191,6 +191,11 @@ endfunction
 
 function! chat#gitter#send(room, msg) abort
   let roomid = s:room_to_roomid(a:room)
-  let cmd = printf('curl -X POST -i -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms/%s/chatMessages" -d "{\"text\":\"%s\"}"', g:chat_gitter_token, roomid, substitute(a:msg, '"', '\\\"', 'g'))
+  let cmd = ['curl', '-X', 'POST', '-H', 'Content-Type: application/json', '-H', 'Accept: application/json',
+        \ '-H', 'Authorization: Bearer ' . g:chat_gitter_token,
+        \ printf('https://api.gitter.im/v1/rooms/%s/chatMessages', roomid),
+        \ '-d',
+        \ s:JSON.json_encode({'text' : a:msg})
+        \ ]
   call s:JOB.start(cmd)
 endfunction
