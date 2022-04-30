@@ -39,6 +39,7 @@ let s:messages = []
 let s:close_windows_char = ["\<Esc>", "\<C-c>"]
 let s:protocol = ''
 let s:chatting_commands = ['/set_protocol', '/set_channel']
+let s:all_protocols = ['gitter']
 function! chat#windows#open() abort
   if bufwinnr(s:name) < 0
     if bufnr(s:name) != -1
@@ -245,7 +246,12 @@ function! s:complete(base,num) abort
   if a:base =~# '^/[a-z_A-Z]*$'
     let rsl = filter(copy(s:chatting_commands), "v:val =~# a:base .'[^\ .]*'")
     if len(rsl) > 0
-      return rsl[a:num % len(rsl)] . ' '
+      return rsl[a:num % len(rsl)]
+    endif
+  elseif a:base =~# '^/set_protocol\s*\w*$'
+    let rsl = filter(copy(s:all_protocols), "v:val =~# matchstr(a:base, '\w*$') .'[^\ .]*'")
+    if len(rsl) > 0
+      return matchstr(a:base, '^/set_protocol\s*') . rsl[a:num % len(rsl)]
     endif
   endif
 
