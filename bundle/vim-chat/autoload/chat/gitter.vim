@@ -60,14 +60,13 @@ function! s:gitter_stdout(id, data, event) abort
         return
       endif
       let msg = s:JSON.json_decode(message)
-      if chat#windows#is_opened()
-        call chat#windows#push({
-              \ 'user' : msg.fromUser.displayName,
-              \ 'room' : room,
-              \ 'msg' : msg.text,
-              \ 'time': s:format_time(msg.sent),
-              \ })
-      else
+      call chat#windows#push({
+            \ 'user' : msg.fromUser.displayName,
+            \ 'room' : room,
+            \ 'msg' : msg.text,
+            \ 'time': s:format_time(msg.sent),
+            \ })
+      if !chat#windows#is_opened()
         call chat#notify#noti(msg.fromUser.displayName . ': ' . msg.text)
       endif
       return
