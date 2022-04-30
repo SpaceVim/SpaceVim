@@ -67,11 +67,21 @@ function! s:gitter_stdout(id, data, event) abort
             \ 'time': s:format_time(msg.sent),
             \ })
       if !chat#windows#is_opened()
+            \ && s:enable_notify(room)
         call chat#notify#noti(msg.fromUser.displayName . ': ' . msg.text)
       endif
       return
     endif
   endfor
+endfunction
+
+function! s:enable_notify(room) abort
+  let room = filter(deepcopy(s:channels), 'has_key(v:val, "uri") && v:val.uri ==# a:room && has_key(v:val, "lurk")')
+  if !empty(room)
+    return room[0].lurk
+  else
+    return 0
+  endif
 endfunction
 
 function! s:format_time(t) abort
