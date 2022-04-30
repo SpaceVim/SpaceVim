@@ -191,7 +191,14 @@ endfunction
 
 function! chat#gitter#send(room, msg) abort
   let roomid = s:room_to_roomid(a:room)
-  let cmd = ['curl', '-X', 'POST', '-H', 'Content-Type: application/json', '-H', 'Accept: application/json',
+  " the win 11 curl in system32/ directory do not support unicode, use
+  " neovim's curl
+  if has('nvim') && exists('v:progpath') && (has('win64') || has('win32'))
+    let curl = fnamemodify(v:progpath, ':h') . '\curl.exe'
+  else
+    let curl = 'curl'
+  endif
+  let cmd = [curl, '-X', 'POST', '-H', 'Content-Type: application/json', '-H', 'Accept: application/json',
         \ '-H', 'Authorization: Bearer ' . g:chat_gitter_token,
         \ printf('https://api.gitter.im/v1/rooms/%s/chatMessages', roomid),
         \ '-d',
