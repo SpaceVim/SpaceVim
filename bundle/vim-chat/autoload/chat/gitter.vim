@@ -17,7 +17,7 @@ let g:chat_gitter_token = get(g:, 'chat_gitter_token', '')
 let s:room_jobs = {}
 function! chat#gitter#enter_room(room) abort
   if !has_key(s:room_jobs, a:room)
-    let roomid = s:get_roomid(a:room)
+    let roomid = s:room_to_roomid(a:room)
     call s:fetch(roomid)
     let cmd = printf('curl -s -H "Accept: application/json" -H "Authorization: Bearer %s" "https://stream.gitter.im/v1/rooms/%s/chatMessages"',token , roomid)
     let jobid = s:JOB.start(cmd, {
@@ -29,23 +29,39 @@ function! chat#gitter#enter_room(room) abort
   endif
 endfunction
 
-function! s:get_roomid(room) abort
-    let room = filter(deepcopy(s:channels), 'has_key(v:val, "uri") && v:val.uri ==# a:room')
-    if !empty(room)
-      return room[0].id
-    else
-      return ''
-    endif
+function! s:room_to_roomid(room) abort
+  let room = filter(deepcopy(s:channels), 'has_key(v:val, "uri") && v:val.uri ==# a:room')
+  if !empty(room)
+    return room[0].id
+  else
+    return ''
+  endif
+endfunction
+
+function! s:roomid_to_room(roomid) abort
+  let room = filter(deepcopy(s:channels), 'has_key(v:val, "id") && has_key(v:val, "uri")  && v:val.id ==# a:roomid')
+  if !empty(room)
+    return room[0].uri
+  else
+    return ''
+  endif
 endfunction
 
 
+let s:fetch_response = {}
 function! s:fetch(roomid) abort
-  let s:fetch_response = []
-  call s:JOB.start(g:gitter_fetch_command, {
-        \ 'on_stdout' : function('s:gitter_fetch_stdout'),
-        \ 'on_stderr' : function('s:gitter_fetch_stderr'),
-        \ 'on_exit' : function('s:gitter_fetch_exit'),
-        \ })
+  let room = s:roomid_to_room(a:roomid)
+  if !has_key(s:fetch_response, room)
+    let jobid = s:JOB.start(g:gitter_fetch_command, {
+          \ 'on_stdout' : function('s:gitter_fetch_stdout'),
+          \ 'on_stderr' : function('s:gitter_fetch_stderr'),
+          \ 'on_exit' : function('s:gitter_fetch_exit'),
+          \ })
+    let s:fetch_response[room] = {
+          \ 'jobid' : jobid,
+          \ 'response' : [],
+          \ }
+  endif
 endfunction
 
 function! s:gitter_stdout(id, data, event) abort
@@ -85,7 +101,12 @@ function! s:gitter_fetch_stdout(id, data, event) abort
   for line in a:data
     call s:LOG.debug(line)
   endfor
-  let s:fetch_response = s:fetch_response + a:data
+  for room in keys(s:fetch_response)
+    if s:fetch_response[room].jobid ==# a:id
+      let s:fetch_response[room].response += a:data
+      break
+    endif
+  endfor
 endfunction
 
 function! s:gitter_fetch_stderr(id, data, event) abort
@@ -95,21 +116,21 @@ function! s:gitter_fetch_stderr(id, data, event) abort
 
 endfunction
 
-function! s:get_room_from_fetch_jobid(jobid) abort
-  
-endfunction
-
 function! s:gitter_fetch_exit(id, data, event) abort
   call s:LOG.debug(a:data)
-  let messages = s:JSON.json_decode(join(s:fetch_response, ''))
-  let room = s:get_room_from_fetch_jobid(a:id)
-  for msg in messages
-    call chat#windows#push({
-          \ 'user' : msg.fromUser.displayName,
-          \ 'room' : room,
-          \ 'msg' : msg.text,
-          \ 'time': s:format_time(msg.sent),
-          \ })
+  for room in keys(s:fetch_response)
+    if s:fetch_response[room].jobid ==# a:id
+      let messages = s:JSON.json_decode(join(s:fetch_response[room].response, ''))
+      for msg in messages
+        call chat#windows#push({
+              \ 'user' : msg.fromUser.displayName,
+              \ 'room' : room,
+              \ 'msg' : msg.text,
+              \ 'time': s:format_time(msg.sent),
+              \ })
+      endfor
+      break
+    endif
   endfor
 endfunction
 
