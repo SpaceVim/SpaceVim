@@ -227,7 +227,12 @@ function! s:enter() abort
     call s:update_msg_screen()
     return
   elseif s:c_begin . s:c_char . s:c_end =~# '/set_channel\s*'
-    let s:current_channel = matchstr(s:c_begin . s:c_char . s:c_end, '/set_channel\s*\zs.*')
+    if !empty(s:protocol)
+      let s:current_channel = matchstr(s:c_begin . s:c_char . s:c_end, '/set_channel\s*\zs.*')
+      if !empty(s:current_channel)
+        call chat#{s:protocol}#enter_room(s:current_channel)
+      endif
+    endif
     let s:c_end = ''
     let s:c_char = ''
     let s:c_begin = ''
