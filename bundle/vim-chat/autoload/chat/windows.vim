@@ -153,7 +153,7 @@ function! chat#windows#open() abort
     call s:echon()
   endwhile
   setl nomodifiable
-  exe 'bd ' . bufnr(s:name)
+  close
   let s:quit_chating_win = 0
   let s:last_channel = s:current_channel
   let s:current_channel = ''
