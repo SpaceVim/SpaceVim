@@ -119,6 +119,11 @@ function! s:gitter_fetch_exit(id, data, event) abort
   endfor
 endfunction
 
+let s:channels = ['SpaceVim']
+function! chat#gitter#get_channels() abort
+  return s:channels
+endfunction
+
 function! chat#gitter#send(msg) abort
   call s:JOB.start(printf(g:gitter_send_command, substitute(a:msg, '"', '\\\"', 'g')))
 endfunction
