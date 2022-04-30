@@ -170,6 +170,15 @@ function! s:get_all_channels_stderr(id, data, event) abort
 endfunction
 function! s:get_all_channels_exit(id, data, event) abort
   let s:channels = s:JSON.json_decode(join(s:list_all_channels_result, ''))
+  if type(s:channels) !=# type([])
+    " this is for bad request
+    " the result is {'error' : 'Bad Request'}
+    let s:channels = []
+  endif
+endfunction
+
+function! Test(str) abort
+  exe a:str
 endfunction
 
 function! chat#gitter#send(msg) abort
