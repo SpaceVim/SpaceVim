@@ -95,13 +95,18 @@ function! s:gitter_fetch_stderr(id, data, event) abort
 
 endfunction
 
+function! s:get_room_from_fetch_jobid(jobid) abort
+  
+endfunction
+
 function! s:gitter_fetch_exit(id, data, event) abort
   call s:LOG.debug(a:data)
   let messages = s:JSON.json_decode(join(s:fetch_response, ''))
+  let room = s:get_room_from_fetch_jobid(a:id)
   for msg in messages
     call chat#windows#push({
           \ 'user' : msg.fromUser.displayName,
-          \ 'room' : s:room,
+          \ 'room' : room,
           \ 'msg' : msg.text,
           \ 'time': s:format_time(msg.sent),
           \ })
