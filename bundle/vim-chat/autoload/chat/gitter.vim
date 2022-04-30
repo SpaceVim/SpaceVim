@@ -52,7 +52,8 @@ let s:fetch_response = {}
 function! s:fetch(roomid) abort
   let room = s:roomid_to_room(a:roomid)
   if !has_key(s:fetch_response, room)
-    let jobid = s:JOB.start(g:gitter_fetch_command, {
+    let cmd = printf( 'curl -s -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms/%s/chatMessages?limit=50"',token , a:roomid)
+    let jobid = s:JOB.start(cmd, {
           \ 'on_stdout' : function('s:gitter_fetch_stdout'),
           \ 'on_stderr' : function('s:gitter_fetch_stderr'),
           \ 'on_exit' : function('s:gitter_fetch_exit'),
