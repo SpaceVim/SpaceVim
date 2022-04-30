@@ -48,39 +48,24 @@ function! s:roomid_to_room(roomid) abort
 endfunction
 
 
-let s:fetch_response = {}
-function! s:fetch(roomid) abort
-  let room = s:roomid_to_room(a:roomid)
-  if !has_key(s:fetch_response, room)
-    let cmd = printf( 'curl -s -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms/%s/chatMessages?limit=50"',token , a:roomid)
-    let jobid = s:JOB.start(cmd, {
-          \ 'on_stdout' : function('s:gitter_fetch_stdout'),
-          \ 'on_stderr' : function('s:gitter_fetch_stderr'),
-          \ 'on_exit' : function('s:gitter_fetch_exit'),
-          \ })
-    let s:fetch_response[room] = {
-          \ 'jobid' : jobid,
-          \ 'response' : [],
-          \ }
-  endif
-endfunction
-
 function! s:gitter_stdout(id, data, event) abort
-  for line in a:data
-    call s:LOG.debug(line)
+  for room in keys(s:room_jobs)
+    if s:room_jobs[room] ==# a:id
+      let message = join(a:data, '') 
+      let msg = s:JSON.json_decode(message)
+      if chat#windows#is_opened()
+        call chat#windows#push({
+              \ 'user' : msg.fromUser.displayName,
+              \ 'room' : room,
+              \ 'msg' : msg.text,
+              \ 'time': s:format_time(msg.sent),
+              \ })
+      else
+        call chat#notify#noti(msg.fromUser.displayName . ': ' . msg.text)
+      endif
+      break
+    endif
   endfor
-  let message = join(a:data, '') 
-  let msg = s:JSON.json_decode(message)
-  if chat#windows#is_opened()
-    call chat#windows#push({
-          \ 'user' : msg.fromUser.displayName,
-          \ 'room' : s:room,
-          \ 'msg' : msg.text,
-          \ 'time': s:format_time(msg.sent),
-          \ })
-  else
-    call chat#notify#noti(msg.fromUser.displayName . ': ' . msg.text)
-  endif
 endfunction
 
 function! s:format_time(t) abort
@@ -96,6 +81,23 @@ endfunction
 
 function! s:gitter_exit(id, data, event) abort
   call s:LOG.debug(a:data)
+endfunction
+
+let s:fetch_response = {}
+function! s:fetch(roomid) abort
+  let room = s:roomid_to_room(a:roomid)
+  if !has_key(s:fetch_response, room)
+    let cmd = printf( 'curl -s -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms/%s/chatMessages?limit=50"',token , a:roomid)
+    let jobid = s:JOB.start(cmd, {
+          \ 'on_stdout' : function('s:gitter_fetch_stdout'),
+          \ 'on_stderr' : function('s:gitter_fetch_stderr'),
+          \ 'on_exit' : function('s:gitter_fetch_exit'),
+          \ })
+    let s:fetch_response[room] = {
+          \ 'jobid' : jobid,
+          \ 'response' : [],
+          \ }
+  endif
 endfunction
 
 function! s:gitter_fetch_stdout(id, data, event) abort
