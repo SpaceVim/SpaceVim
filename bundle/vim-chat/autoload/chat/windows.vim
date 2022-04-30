@@ -252,6 +252,8 @@ function! s:windowsinit() abort
   setl nofoldenable
   setl cursorline
   setl filetype=vimchat
+  setl concealcursor=nivc
+  setl conceallevel=2
 endfunction
 
 let s:enter_history = []
