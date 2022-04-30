@@ -221,7 +221,7 @@ function! s:enter() abort
     let s:c_char = ''
     let s:c_begin = ''
     try
-      call chat#{s:protocol}#start()
+      call chat#{s:protocol}#get_channels()
     catch
     endtry
     call s:update_msg_screen()

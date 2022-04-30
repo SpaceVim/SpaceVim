@@ -11,24 +11,26 @@ let s:JSON = SpaceVim#api#import('data#json')
 let s:LOG = SpaceVim#logger#derive('gitter')
 
 let s:room = ''
-let s:jobid = -1
 
 let g:chat_gitter_token = get(g:, 'chat_gitter_token', '')
 
-function! chat#gitter#start() abort
-  if s:jobid <= 0
-    let s:room = 'SpaceVim'
-    call s:fetch()
-    let s:jobid = s:JOB.start(g:gitter_char_command, {
+let s:room_jobs = {}
+function! chat#gitter#enter_room(room) abort
+  if !has_key(s:room_jobs, a:room)
+    let roomid = s:get_roomid(a:room)
+    call s:fetch(roomid)
+    let cmd = printf('curl -s -H "Accept: application/json" -H "Authorization: Bearer %s" "https://stream.gitter.im/v1/rooms/%s/chatMessages"',token , roomid)
+    let jobid = s:JOB.start(cmd, {
           \ 'on_stdout' : function('s:gitter_stdout'),
           \ 'on_stderr' : function('s:gitter_stderr'),
           \ 'on_exit' : function('s:gitter_exit'),
           \ })
+    let s:room_jobs[a:room] = jobid
   endif
 endfunction
 
 
-function! s:fetch() abort
+function! s:fetch(roomid) abort
   let s:fetch_response = []
   call s:JOB.start(g:gitter_fetch_command, {
         \ 'on_stdout' : function('s:gitter_fetch_stdout'),
@@ -37,30 +39,6 @@ function! s:fetch() abort
         \ })
 endfunction
 
-
-" {
-"   "id": "626ab3bd9db19366b2035690",
-"   "text": "we are going to add a gitter client for spacevim.",
-"   "html": "we are going to add a gitter client for spacevim.",
-"   "sent": "2022-04-28T15:33:17.0 09Z",
-"   "readBy": 0,
-"   "urls": [],
-"   "mentions": [],
-"   "issues": [],
-"   "meta": [],
-"   "v": 1,
-"   "fromUser": {
-"     "id": "55f95b9b0fc9f982beb0dbb5",
-"     "username": "wsdjeg",
-"     "displayName": "Wang Shidong",
-"     "url": "/wsdjeg",
-"     "av atarUrl": "https://avatars-05.gitter.im/gh/uv/4/wsdjeg",
-"     "avatarUrlSmall": "https://avatars2.githubusercontent.com/u/13142418?v=4&s=60",
-"     "avatarUrlMedium": "https://avatars2.githubuserc ontent.com/u/13142418?v=4&s=128",
-"     "v": 338,
-"     "gv": "4"
-"   }
-" }
 function! s:gitter_stdout(id, data, event) abort
   for line in a:data
     call s:LOG.debug(line)
