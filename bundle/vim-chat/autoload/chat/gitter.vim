@@ -55,7 +55,8 @@ function! s:gitter_stdout(id, data, event) abort
   for room in keys(s:room_jobs)
     if s:room_jobs[room] ==# a:id
       let message = join(a:data, '') 
-      if empty(message)
+      if message =~# '^\s*$'
+        " skip empty string or space
         return
       endif
       let msg = s:JSON.json_decode(message)
