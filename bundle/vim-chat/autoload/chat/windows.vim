@@ -334,7 +334,7 @@ function! s:previous_channel() abort
   if !empty(s:protocol) && has_key(s:opened_channels, s:protocol) && index(s:opened_channels[s:protocol], s:current_channel) !=# -1
     let index = index(s:opened_channels[s:protocol], s:current_channel)
     let index -=1
-    let s:current_channel = s:current_channel[s:protocol][index]
+    let s:current_channel = s:opened_channels[s:protocol][index]
     call chat#{s:protocol}#enter_room(s:current_channel)
     call s:update_msg_screen()
     call s:update_statusline()
@@ -348,7 +348,7 @@ function! s:next_channel() abort
     if index ==# len(s:opened_channels[s:protocol])
       let index = 0
     endif
-    let s:current_channel = s:current_channel[s:protocol][index]
+    let s:current_channel = s:opened_channels[s:protocol][index]
     call chat#{s:protocol}#enter_room(s:current_channel)
     call s:update_msg_screen()
     call s:update_statusline()
