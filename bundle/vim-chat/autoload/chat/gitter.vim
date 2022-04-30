@@ -55,6 +55,9 @@ function! s:gitter_stdout(id, data, event) abort
   for room in keys(s:room_jobs)
     if s:room_jobs[room] ==# a:id
       let message = join(a:data, '') 
+      if empty(message)
+        return
+      endif
       let msg = s:JSON.json_decode(message)
       if chat#windows#is_opened()
         call chat#windows#push({
@@ -66,7 +69,7 @@ function! s:gitter_stdout(id, data, event) abort
       else
         call chat#notify#noti(msg.fromUser.displayName . ': ' . msg.text)
       endif
-      break
+      return
     endif
   endfor
 endfunction
