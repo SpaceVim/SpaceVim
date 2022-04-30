@@ -181,6 +181,8 @@ function! Test(str) abort
   exe a:str
 endfunction
 
-function! chat#gitter#send(msg) abort
-  call s:JOB.start(printf(g:gitter_send_command, substitute(a:msg, '"', '\\\"', 'g')))
+function! chat#gitter#send(room, msg) abort
+  let roomid = s:room_to_roomid(a:room)
+  let cmd = printf('curl -X POST -i -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms/%s/chatMessages" -d "{\"text\":\"%s\"}"', g:chat_gitter_token, roomid, substitute(a:msg, '"', '\\\"', 'g'))
+  call s:JOB.start(cmd)
 endfunction

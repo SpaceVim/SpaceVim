@@ -353,8 +353,8 @@ function! s:next_channel() abort
 endfunction
 
 function! s:send(msg) abort
-  if !empty(s:protocol)
-    call chat#{s:protocol}#send(a:msg)
+  if !empty(s:protocol) && !empty(s:current_channel)
+    call chat#{s:protocol}#send(s:current_channel, a:msg)
   endif
 endfunction
 
