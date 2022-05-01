@@ -259,6 +259,7 @@ function! s:update_msg_screen() abort
 endfunction
 
 function! s:echon() abort
+  redraw
   normal! :
   echohl Comment | echon s:c_base
   echohl None | echon s:c_begin
