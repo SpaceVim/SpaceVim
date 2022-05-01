@@ -50,7 +50,9 @@ endfunction
 
 function! s:gitter_stdout(id, data, event) abort
   for line in a:data
-    call s:LOG.debug(line)
+    if line !~# '^\s*$'
+      call s:LOG.debug(line)
+    endif
   endfor
   for room in keys(s:room_jobs)
     if s:room_jobs[room] ==# a:id
