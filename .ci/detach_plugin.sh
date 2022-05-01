@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
-_detect () {
+_detact () {
     cp -f ../../$1 $1
+}
+
+_detact_bundle () {
+    cp -f ../../bundle/$1/$2 $2
 }
 
 _checkdir () {
@@ -32,32 +36,32 @@ main () {
             _checkdir autoload/SpaceVim/api/data
             _checkdir autoload/SpaceVim/mapping
             _checkdir autoload/SpaceVim/plugins
-            _detect autoload/SpaceVim/plugins/flygrep.vim
-            _detect autoload/SpaceVim/api.vim
-            _detect autoload/SpaceVim/api/logger.vim
-            _detect autoload/SpaceVim/api/vim/buffer.vim
-            _detect autoload/SpaceVim/api/vim/regex.vim
-            _detect autoload/SpaceVim/api/vim/compatible.vim
-            _detect autoload/SpaceVim/api/vim/floating.vim
-            _detect autoload/SpaceVim/api/vim/highlight.vim
-            _detect autoload/SpaceVim/api/vim/statusline.vim
-            _detect autoload/SpaceVim/api/vim/window.vim
-            _detect autoload/SpaceVim/api/neovim/floating.vim
-            _detect autoload/SpaceVim/api/data/dict.vim
-            _detect autoload/SpaceVim/api/data/list.vim
-            _detect autoload/SpaceVim/api/data/json.vim
-            _detect autoload/SpaceVim/api/data/string.vim
-            _detect autoload/SpaceVim/api/prompt.vim
-            _detect autoload/SpaceVim/api/job.vim
-            _detect autoload/SpaceVim/api/vim.vim
-            _detect autoload/SpaceVim/api/file.vim
-            _detect autoload/SpaceVim/api/system.vim
-            _detect autoload/SpaceVim/api/time.vim
-            _detect autoload/SpaceVim/mapping/search.vim
-            _detect autoload/SpaceVim/logger.vim
-            _detect syntax/SpaceVimFlyGrep.vim
+            _detact autoload/SpaceVim/plugins/flygrep.vim
+            _detact autoload/SpaceVim/api.vim
+            _detact autoload/SpaceVim/api/logger.vim
+            _detact autoload/SpaceVim/api/vim/buffer.vim
+            _detact autoload/SpaceVim/api/vim/regex.vim
+            _detact autoload/SpaceVim/api/vim/compatible.vim
+            _detact autoload/SpaceVim/api/vim/floating.vim
+            _detact autoload/SpaceVim/api/vim/highlight.vim
+            _detact autoload/SpaceVim/api/vim/statusline.vim
+            _detact autoload/SpaceVim/api/vim/window.vim
+            _detact autoload/SpaceVim/api/neovim/floating.vim
+            _detact autoload/SpaceVim/api/data/dict.vim
+            _detact autoload/SpaceVim/api/data/list.vim
+            _detact autoload/SpaceVim/api/data/json.vim
+            _detact autoload/SpaceVim/api/data/string.vim
+            _detact autoload/SpaceVim/api/prompt.vim
+            _detact autoload/SpaceVim/api/job.vim
+            _detact autoload/SpaceVim/api/vim.vim
+            _detact autoload/SpaceVim/api/file.vim
+            _detact autoload/SpaceVim/api/system.vim
+            _detact autoload/SpaceVim/api/time.vim
+            _detact autoload/SpaceVim/mapping/search.vim
+            _detact autoload/SpaceVim/logger.vim
+            _detact syntax/SpaceVimFlyGrep.vim
             _default_readme "FlyGrep.vim" "Grep on the fly in Vim/Neovim"
-            _detect LICENSE
+            _detact LICENSE
             _checkdir plugin
             cat <<EOT > plugin/FlyGrep.vim
 "=============================================================================
@@ -122,16 +126,16 @@ EOT
             _checkdir autoload/SpaceVim/api/vim
             _checkdir autoload/SpaceVim/mapping
             _checkdir autoload/SpaceVim/plugins
-            _detect autoload/SpaceVim/plugins/manager.vim
-            _detect autoload/SpaceVim/api.vim
-            _detect autoload/SpaceVim/commands.vim
-            _detect autoload/SpaceVim/logger.vim
-            _detect autoload/SpaceVim/api/job.vim
-            _detect autoload/SpaceVim/api/system.vim
-            _detect autoload/SpaceVim/api/data/list.vim
-            _detect autoload/SpaceVim/api/vim/compatible.vim
-            _detect syntax/SpaceVimPlugManager.vim
-            _detect LICENSE
+            _detact autoload/SpaceVim/plugins/manager.vim
+            _detact autoload/SpaceVim/api.vim
+            _detact autoload/SpaceVim/commands.vim
+            _detact autoload/SpaceVim/logger.vim
+            _detact autoload/SpaceVim/api/job.vim
+            _detact autoload/SpaceVim/api/system.vim
+            _detact autoload/SpaceVim/api/data/list.vim
+            _detact autoload/SpaceVim/api/vim/compatible.vim
+            _detact syntax/SpaceVimPlugManager.vim
+            _detact LICENSE
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
@@ -148,11 +152,11 @@ EOT
             _checkdir autoload/SpaceVim/api/vim
             _checkdir autoload/SpaceVim/api/data
             _checkdir autoload/SpaceVim/plugins
-            _detect autoload/SpaceVim/api.vim
-            _detect autoload/SpaceVim/api/vim/compatible.vim
-            _detect autoload/SpaceVim/api/vim/highlight.vim
-            _detect autoload/SpaceVim/api/data/string.vim
-            _detect autoload/SpaceVim/plugins/iedit.vim
+            _detact autoload/SpaceVim/api.vim
+            _detact autoload/SpaceVim/api/vim/compatible.vim
+            _detact autoload/SpaceVim/api/vim/highlight.vim
+            _detact autoload/SpaceVim/api/data/string.vim
+            _detact autoload/SpaceVim/plugins/iedit.vim
             _checkdir autoload/plugin
             cat <<EOT > autoload/plugin/iedit.vim
 "=============================================================================
@@ -174,7 +178,7 @@ EOT
 
 command! -nargs=0 Iedit call SpaceVim#plugins#iedit#start()
 EOT
-            _detect LICENSE
+            _detact LICENSE
             _default_readme "iedit.vim" "multiple cussor support for Vim/Neovim"
             git add .
             git config user.email "wsdjeg@qq.com"
@@ -190,23 +194,23 @@ EOT
             git clone https://github.com/wsdjeg/vim-todo.git detach/$1
             cd detach/$1
             _checkdir syntax/
-            _detect syntax/SpaceVimTodoManager.vim
+            _detact syntax/SpaceVimTodoManager.vim
             _checkdir autoload/SpaceVim/api/vim
             _checkdir autoload/SpaceVim/api/data
             _checkdir autoload/SpaceVim/plugins
             _checkdir autoload/SpaceVim/mapping
-            _detect autoload/SpaceVim/api.vim
-            _detect autoload/SpaceVim/api/logger.vim
-            _detect autoload/SpaceVim/api/job.vim
-            _detect autoload/SpaceVim/api/system.vim
-            _detect autoload/SpaceVim/api/data/string.vim
-            _detect autoload/SpaceVim/api/file.vim
-            _detect autoload/SpaceVim/api/vim/buffer.vim
-            _detect autoload/SpaceVim/api/vim/regex.vim
-            _detect autoload/SpaceVim/api/vim/compatible.vim
-            _detect autoload/SpaceVim/logger.vim
-            _detect autoload/SpaceVim/mapping/search.vim
-            _detect autoload/SpaceVim/plugins/todo.vim
+            _detact autoload/SpaceVim/api.vim
+            _detact autoload/SpaceVim/api/logger.vim
+            _detact autoload/SpaceVim/api/job.vim
+            _detact autoload/SpaceVim/api/system.vim
+            _detact autoload/SpaceVim/api/data/string.vim
+            _detact autoload/SpaceVim/api/file.vim
+            _detact autoload/SpaceVim/api/vim/buffer.vim
+            _detact autoload/SpaceVim/api/vim/regex.vim
+            _detact autoload/SpaceVim/api/vim/compatible.vim
+            _detact autoload/SpaceVim/logger.vim
+            _detact autoload/SpaceVim/mapping/search.vim
+            _detact autoload/SpaceVim/plugins/todo.vim
             _checkdir plugin
             cat <<EOT > plugin/todo.vim
 "=============================================================================
@@ -219,7 +223,7 @@ EOT
 
 command! OpenTodo call todo#open()
 EOT
-            _detect LICENSE
+            _detact LICENSE
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
@@ -230,18 +234,37 @@ EOT
             rm -rf detach/$1
             exit 0
             ;;
+        vim-chat)
+            git clone https://github.com/wsdjeg/vim-chat.git detach/$1
+            cd detach/$1
+            _checkdir syntax/
+            _detact autoload/SpaceVim/api.vim
+            _detact autoload/SpaceVim/api/job.vim
+            _detact_bundle vim-chat autoload/chat.vim
+            _detact_bundle vim-chat autoload/chat/windows.vim
+            _detact LICENSE
+            git add .
+            git config user.email "wsdjeg@qq.com"
+            git config user.name  "SpaceVimBot"
+            git commit -m "Auto Update"
+            git remote add wsdjeg_vim_chat https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/vim-chat.git
+            git push wsdjeg_vim_chat master 
+            cd -
+            rm -rf detach/$1
+            exit 0
+            ;;
         scrollbar.vim)
             git clone https://github.com/wsdjeg/scrollbar.vim.git detach/$1
             cd detach/$1
             _checkdir autoload/SpaceVim/api/
             _checkdir autoload/SpaceVim/api/vim
-            _detect autoload/SpaceVim/api.vim
-            _detect autoload/SpaceVim/api/vim.vim
-            _detect autoload/SpaceVim/api/vim/buffer.vim
-            _detect autoload/SpaceVim/api/vim/window.vim
+            _detact autoload/SpaceVim/api.vim
+            _detact autoload/SpaceVim/api/vim.vim
+            _detact autoload/SpaceVim/api/vim/buffer.vim
+            _detact autoload/SpaceVim/api/vim/window.vim
             _checkdir autoload/SpaceVim/plugins/
-            _detect autoload/SpaceVim/plugins/scrollbar.vim
-            _detect LICENSE
+            _detact autoload/SpaceVim/plugins/scrollbar.vim
+            _detact LICENSE
             _default_readme "scrollbar.vim" "floating scrollbar support for neovim/vim[wip]"
             git add .
             git config user.email "wsdjeg@qq.com"
