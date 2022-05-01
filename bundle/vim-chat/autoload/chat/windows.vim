@@ -119,6 +119,12 @@ function! chat#windows#open() abort
       endif
     elseif char ==# "\<PageDown>"
       exe line('.') + winheight('$')
+    elseif char ==# "\<ScrollWheelUp>"
+      let l = line('w0') - 3
+      exe max([1, l])
+    elseif char ==# "\<ScrollWheelDown>"
+      let l = line('w$') + 3
+      exe min([line('$'), l])
     elseif char ==# "\<Home>" || char ==# "\<C-k>"
       "<Home> 或 <ctrl> + a 将光标移动到行首
       let s:c_end = substitute(s:c_begin . s:c_char . s:c_end, '^.', '', 'g')
