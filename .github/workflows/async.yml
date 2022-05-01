@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        detachPlugin: ["flygrep", "dein-ui", "vim-todo", "iedit", "scrollbar.vim"]
+        detachPlugin: ["flygrep", "dein-ui", "vim-todo", "iedit", "scrollbar.vim", "vim-chat"]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
