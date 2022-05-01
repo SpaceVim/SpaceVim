@@ -91,6 +91,8 @@ function! chat#windows#open() abort
       " ctrl+k delete the chars from cursor to the end
       let s:c_char = ''
       let s:c_end = ''
+    elseif char ==# "\<C-w>"
+      let s:c_begin = substitute(s:c_begin,'[^\ .*]\+\s*$','','g')
     elseif char ==# "\<M-Left>" || char ==# "\<M-h>"
       "<Alt>+<Left> 移动到左边一个聊天窗口
       call s:previous_channel()
