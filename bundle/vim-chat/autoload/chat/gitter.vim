@@ -62,6 +62,7 @@ function! s:gitter_stdout(id, data, event) abort
       let msg = s:JSON.json_decode(message)
       call chat#windows#push({
             \ 'user' : msg.fromUser.displayName,
+            \ 'username' : msg.fromUser.username,
             \ 'room' : room,
             \ 'msg' : msg.text,
             \ 'time': s:format_time(msg.sent),
@@ -144,6 +145,7 @@ function! s:gitter_fetch_exit(id, data, event) abort
       for msg in messages
         call add(msgs, {
               \ 'user' : msg.fromUser.displayName,
+              \ 'username' : msg.fromUser.username,
               \ 'room' : room,
               \ 'msg' : msg.text,
               \ 'time': s:format_time(msg.sent),

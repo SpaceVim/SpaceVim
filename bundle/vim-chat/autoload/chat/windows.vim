@@ -323,6 +323,12 @@ function! s:complete(base,num) abort
     if len(rsl) > 0
       return rsl[a:num % len(rsl)]
     endif
+  elseif a:base =~# '@\S*$'
+    let nicks = uniq(map(filter(deepcopy(s:messages), 'v:val["room"] ==# s:current_channel'), '"@" . v:val.username'))
+    let rsl = filter(nicks, "v:val =~# '^' . matchstr(a:base, '@\\S*$')")
+    if len(rsl) > 0
+      return substitute(a:base, '@\S*$', rsl[a:num % len(rsl)], '')
+    endif
   elseif a:base =~# '^/set_protocol\s*\w*$'
     let rsl = filter(copy(s:all_protocols), "v:val =~# matchstr(a:base, '\\w*$') .'[^\ .]*'")
     if len(rsl) > 0
