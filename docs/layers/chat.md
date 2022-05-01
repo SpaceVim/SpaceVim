@@ -36,12 +36,12 @@ To use this configuration layer, add the following snippet to your custom config
 
 ## Key Mappings
 
-`Alt + w` : open chatting buffer for weixin.
-Note: The web-qq has stopped providing service.
+The default key binding to open chat windows is `SPC a h`.
 
-within chatting buffer:
+Whith the chat windows. The following key binding can be use:
 
-`Alt + Left/Right` : switch between buffers.
-`Alt + 1-9` : jump to the specified channel.
+- `Alt + Left/H`: switch to previous channel
+- `Alt + Right/L`: switch to next channel
+- `Ctrl-w`: delete word before cursor
 
 for more mappings in chatting buffer, please read <kbd>:h vim-chat</kbd>.

@@ -6,6 +6,13 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section Introduction, intro
+" @library
+" @order intro options config layers api faq changelog
+" vim-chat is a simple plugin for chatting in vim and neovim.
+" This plugin requires SpaceVim API and |job| support.
+
 
 scriptencoding utf-8
 let s:server_lib = get(g:, 'chatting_server_lib', '~/jars/Chatting-1.0-SNAPSHOT.jar')

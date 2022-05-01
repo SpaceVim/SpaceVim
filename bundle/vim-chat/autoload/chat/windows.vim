@@ -22,7 +22,11 @@ endfunction
 " time: 2022-02-02 24:00
 
 function! chat#windows#push(msg) abort
-  call add(s:messages, a:msg)
+  if type(a:msg) == type([])
+    let s:messages = s:messages + a:msg
+  elseif type(a:msg) ==# type({})
+    call add(s:messages, a:msg)
+  endif
   call s:update_msg_screen()
 endfunction
 

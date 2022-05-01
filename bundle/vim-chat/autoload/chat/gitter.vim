@@ -140,14 +140,16 @@ function! s:gitter_fetch_exit(id, data, event) abort
   for room in keys(s:fetch_response)
     if s:fetch_response[room].jobid ==# a:id
       let messages = s:JSON.json_decode(join(s:fetch_response[room].response, ''))
+      let msgs = []
       for msg in messages
-        call chat#windows#push({
+        call add(msgs, {
               \ 'user' : msg.fromUser.displayName,
               \ 'room' : room,
               \ 'msg' : msg.text,
               \ 'time': s:format_time(msg.sent),
               \ })
       endfor
+      call chat#windows#push(msgs)
       break
     endif
   endfor
