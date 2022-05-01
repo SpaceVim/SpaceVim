@@ -280,7 +280,7 @@ function! s:enter() abort
     let s:c_begin = ''
     return
   elseif s:c_begin . s:c_char . s:c_end =~# '/set_protocol\s*'
-    let s:protocol = matchstr(s:c_begin . s:c_char . s:c_end, '/set_protocol\s*\zs.*')
+    let s:protocol = matchstr(s:c_begin . s:c_char . s:c_end, '/set_protocol\s*\zs\S*')
     let s:c_end = ''
     let s:c_char = ''
     let s:c_begin = ''
@@ -295,7 +295,7 @@ function! s:enter() abort
     return
   elseif s:c_begin . s:c_char . s:c_end =~# '/set_channel\s*'
     if !empty(s:protocol)
-      let s:current_channel = matchstr(s:c_begin . s:c_char . s:c_end, '/set_channel\s*\zs.*')
+      let s:current_channel = matchstr(s:c_begin . s:c_char . s:c_end, '/set_channel\s*\zs\S*')
       if !empty(s:current_channel)
         call chat#{s:protocol}#enter_room(s:current_channel)
         if index(s:opened_channels[s:protocol], s:current_channel) ==# -1
