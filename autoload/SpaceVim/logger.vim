@@ -96,10 +96,8 @@ else
     let info .= s:LOGGER.view(s:LOGGER.level)
     tabnew +setl\ nobuflisted
     nnoremap <buffer><silent> q :tabclose!<CR>
-    for msg in split(info, "\n")
-      call append(line('$'), msg)
-    endfor
-    normal! "_dd
+    call setline(1, split(info, "\n"))
+    normal! G
     setl nomodifiable
     setl buftype=nofile
     setl filetype=SpaceVimLog
