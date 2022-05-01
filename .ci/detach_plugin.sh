@@ -5,7 +5,7 @@ _detact () {
 }
 
 _detact_bundle () {
-    cp -f ../../bundle/$1/* .
+    cp -f ../../bundle/$1/$2 $2
 }
 
 _checkdir () {
@@ -238,10 +238,20 @@ EOT
             git clone https://github.com/wsdjeg/vim-chat.git detach/$1
             cd detach/$1
             _checkdir syntax/
+            _checkdir doc/
             _detact autoload/SpaceVim/api.vim
             _detact autoload/SpaceVim/api/job.vim
-            _detact_bundle vim-chat
             _detact LICENSE
+            _detact_bundle vim-chat autoload/chat.vim
+            _detact_bundle vim-chat autoload/chat/gitter.vim
+            _detact_bundle vim-chat autoload/chat/logger.vim
+            _detact_bundle vim-chat autoload/chat/notify.vim
+            _detact_bundle vim-chat autoload/chat/qq.vim
+            _detact_bundle vim-chat autoload/chat/weixin.vim
+            _detact_bundle vim-chat doc/vim-chat.txt
+            _detact_bundle vim-chat syntax/vimchat.vim
+            _detact_bundle vim-chat addon-info.json
+            _detact_bundle vim-chat README.md
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
