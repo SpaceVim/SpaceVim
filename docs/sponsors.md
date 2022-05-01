@@ -40,6 +40,7 @@ These are the companies or individuals contributing a monthly amount to help sus
 | 2017-03-18   | ¥ 20     | z\*t                     |
 | 2017-03-30   | ¥ 20     | l\*n                     |
 | 2017-04-07   | ¥ 20     | \*酱                     |
+| 2017-06-07   | \$ 10    | imobach                  |
 | 2017-06-20   | \$ 2.57  | Шепелев Григорий         |
 | 2017-06-24   | \$ 14.04 | Vowell Jason             |
 | 2017-06-24   | \$ 2.57  | Senaud Nicolas           |
@@ -97,6 +98,7 @@ These are the companies or individuals contributing a monthly amount to help sus
 | 2019-01-03   | \$ 5.44  | DywanChristian           |
 | 2019-01-07   | \$ 2.57  | Administrateur           |
 | 2019-04-08   | \$ 8.3   | Mateusz Grzeliński       |
+| 2019-08-09   | \$ 540   | songz                    |
 | 2018-12-04   | ¥ 30     | 兵焦                     |
 | 2018-12-17   | ¥ 1      | \*歌                     |
 | 2018-12-17   | ¥ 100    | 涛                       |
@@ -137,15 +139,22 @@ These are the companies or individuals contributing a monthly amount to help sus
 | 2020-04-16   | ¥ 50     | N\*L                     |
 | 2020-04-17   | \$2.57   | 小林大                   |
 | 2020-04-18   | ¥ 5      | \*流                     |
+| 2020-05-19   | \$ 90    | michael-wojcik           |
 | 2020-05-24   | \$ 10    | Ryein Goddard            |
 | 2020-05-30   | ¥ 1      | l\*t                     |
 | 2020-05-31   | ¥ 30     | \*刚                     |
 | 2020-07-24   | ¥ 5      | P\*e                     |
 | 2020-07-26   | \$19.78  | GliraPhilipp             |
+| 2020-08-06   | ¥ 5      | \*间                     |
 | 2020-08-07   | \$5.44   | GillinMitchell           |
+| 2020-08-16   | ¥ 10     | \*灵                     |
 | 2020-08-28   | \$11.17  | LeeAndrew                |
+| 2020-08-31   | ¥ 10     | \*富                     |
+| 2020-10-05   | \$ 20    | Eisiem                   |
+| 2020-10-21   | ¥ 30     | \*淋                     |
 | 2020-10-24   | \$ 2.57  | GoodallDouglas           |
 | 2020-11-25   | \$ 8.30  | NunesVitor               |
+| 2020-12-08   | ¥ 92     | 匿名                     |
 | 2020-12-15   | \$ 8.30  | Lázár József             |
 | 2020-12-27   | \$ 5.44  | YeagerShawn              |
 | 2021-01-10   | \$ 5.44  | PlatekPeter              |
@@ -153,19 +162,55 @@ These are the companies or individuals contributing a monthly amount to help sus
 | 2021-01-14   | \$ 47.50 | weissbrodpeter           |
 | 2021-03-06   | \$ 9.26  | PehnackAndreas           |
 | 2021-03-25   | \$ 10    | Gene Chulkov             |
+| 2021-04-20   | ¥ 50     | \*才                     |
+| 2021-04-21   | ¥ 500    | 泡泡糖                   |
 | 2021-05-13   | \$ 95.30 | weissbrodpeter           |
 | 2021-05-14   | \$ 14.04 | Randhawajagbir           |
 | 2021-06-05   | \$ 2.57  | CardinDaniel             |
 | 2021-07-29   | \$ 5     | Daniel Maricic           |
 | 2021-08-18   | \$ 5     | Alex Narayan             |
 | 2021-09-02   | \$ 5     | Daniel Maricic           |
+| 2021-09-23   | ¥ 72     | \*庭                     |
+| 2021-09-27   | ¥ 100    | \*L                      |
+| 2021-09-30   | ¥ 79     | \*6                      |
 | 2021-10-02   | \$ 5     | Daniel Maricic           |
+| 2021-10-11   | ¥ 90     | \*店                     |
+| 2021-10-21   | ¥ 40     | \*猫                     |
 | 2021-10-24   | \$ 9.26  | LiuZongyu                |
 | 2021-11-02   | \$ 5     | Daniel Maricic           |
+| 2021-11-06   | ¥ 50     | \*n                      |
 | 2021-11-06   | \$ 5.44  | ПлаксинДмитрий           |
+| 2021-11-16   | ¥ 5      | \*正                     |
+| 2021-12-01   | ¥ 10     | \*雨                     |
 | 2021-12-01   | \$ 5     | Daniel Maricic           |
+| 2021-12-08   | ¥ 100    | \*体                     |
+| 2021-12-18   | ¥ 5      | s\*t                     |
 | 2021-12-19   | \$ 50    | CHUNG TSAI               |
-| 2021-12-19   | \$ 50    | anonymous                |
+| 2021-12-27   | \$ 50    | anonymous                |
+| 2022-01-05   | \$ 20    | anonymous                |
+| 2022-01-06   | \$ 20    | anonymous                |
+| 2022-01-15   | \$ 5     | Daniel Maricic           |
+| 2022-01-21   | \$ 5     | Pau                      |
+| 2022-01-27   | \$ 20    | anonymous                |
+| 2022-01-29   | ¥ 23     | \*念                     |
+| 2022-02-04   | \$ 5     | Daniel Maricic           |
+| 2022-02-05   | \$ 19    | anonymous                |
+| 2022-02-12   | ¥ 5      | 匿名                     |
+| 2022-02-17   | \$ 22    | anonymous                |
+| 2022-02-20   | ¥ 20     | \*然                     |
+| 2022-03-01   | \$ 5     | Pau                      |
+| 2022-03-02   | \$ 5     | Daniel Maricic           |
+| 2022-03-04   | \$ 23    | anonymous                |
+| 2022-04-01   | \$ 5     | Pau                      |
+| 2022-04-02   | \$ 5     | Daniel Maricic           |
+| 2022-04-05   | ¥ 5      | ye                       |
+| 2022-04-06   | ¥ 200    | ware                     |
+| 2022-04-06   | \$ 9.26  | ONeill JrPeter           |
+| 2022-04-08   | ¥ 5      | 匿名                     |
+| 2022-04-22   | ¥ 20     | Sooner or later          |
+| 2022-04-25   | \$ 5     | alisinabh                |
+| 2022-04-26   | \$ 4.48  | potstar                  |
+| 2022-05-01   | \$ 5     | Pau                      |
 
 ## Historical Spending
 
