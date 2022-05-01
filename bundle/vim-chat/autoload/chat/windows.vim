@@ -35,6 +35,7 @@ let s:c_base = '>>> '
 let s:c_begin = ''
 let s:c_char = ''
 let s:c_end = ''
+let s:c_r_mode = 0
 let s:msg_win_opened = 0
 let s:last_channel = ''
 let s:current_channel  = ''
@@ -72,7 +73,14 @@ function! chat#windows#open() abort
     if char != "\<Tab>"
       let s:complete_num = 0
     endif
-    if char == "\<Enter>"
+    if s:c_r_mode
+      if char =~# '^[a-zA-Z0-9"+:/]$'
+        let reg = '@' . char
+        let paste = get(split(eval(reg), "\n"), 0, '')
+        let s:c_begin = s:c_begin . paste
+      endif
+      let s:c_r_mode = 0
+    elseif char == "\<Enter>"
       call s:enter()
     elseif char ==# "\<Right>"
       "<Right> 向右移动光标
@@ -82,6 +90,9 @@ function! chat#windows#open() abort
     elseif char ==# "\<C-u>"
       " ctrl+u clean the message
       let s:c_begin = ''
+    elseif char ==# "\<C-r>"
+      call timer_start(2000, function('s:disable_r_mode'))
+      let s:c_r_mode = 1
     elseif char == "\<Tab>"
       " use <tab> complete str
       if s:complete_num == 0
@@ -188,6 +199,10 @@ function! s:get_str_with_width(str,width) abort
     let str = substitute(str, '^.', '', 'g')
   endfor
   return result
+endfunction
+
+function! s:disable_r_mode(timer) abort
+  let s:c_r_mode = 0
 endfunction
 
 function! s:get_lines_with_width(str, width) abort
