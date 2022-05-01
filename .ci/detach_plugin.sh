@@ -5,7 +5,7 @@ _detact () {
 }
 
 _detact_bundle () {
-    cp -f ../../bundle/$1/$2 $2
+    cp -f ../../bundle/$1/* .
 }
 
 _checkdir () {
@@ -240,8 +240,7 @@ EOT
             _checkdir syntax/
             _detact autoload/SpaceVim/api.vim
             _detact autoload/SpaceVim/api/job.vim
-            _detact_bundle vim-chat autoload/chat.vim
-            _detact_bundle vim-chat autoload/chat/windows.vim
+            _detact_bundle vim-chat
             _detact LICENSE
             git add .
             git config user.email "wsdjeg@qq.com"
