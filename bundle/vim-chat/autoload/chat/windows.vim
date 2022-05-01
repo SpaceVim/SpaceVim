@@ -171,6 +171,12 @@ function! chat#windows#open() abort
       endif
       let s:complete_input_history_num[1] += 1
       let s:c_begin = s:complete_input_history(complete_input_history_base, s:complete_input_history_num)
+    elseif char ==# "\<FocusLost>" || char ==# "\<FocusGained>" || char2nr(char) == 128
+      " @fixme \x80 should not be completely ignored
+      if char ==# "\<S-Space>"
+        " shift-space should return space in insert mode
+        let s:c_begin .= ' '
+      endif
     else
       let s:c_begin .= char
     endif
