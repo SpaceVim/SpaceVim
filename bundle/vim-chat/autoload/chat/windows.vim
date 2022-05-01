@@ -205,19 +205,21 @@ endfunction
 function! s:update_msg_screen() abort
   if s:msg_win_opened
     normal! gg"_dG
+    let buffer = []
     let msgs = filter(deepcopy(s:messages), 'v:val["room"] ==# s:current_channel')
     for msg in msgs
       let name = s:get_str_with_width(msg['user'], 13)
       let message = s:get_lines_with_width(msg['msg'], winwidth('$') - 36)
       let first_line = '[' . msg['time'] . '] ' . nr2char(9474) . repeat(' ', 13 - strwidth(name)) . name . ' ' . nr2char(9474) . ' ' . message[0]
-      call append(line('$'), first_line)
+      call add(buffer, first_line)
       if len(message) > 1
         for l in message[1:]
-          call append(line('$'), repeat(' ', 18) . ' ' . nr2char(9474) . ' ' .repeat(' ', 12) . ' ' . nr2char(9474) . ' ' . l)
+          call add(buffer, repeat(' ', 18) . ' ' . nr2char(9474) . ' ' .repeat(' ', 12) . ' ' . nr2char(9474) . ' ' . l )
         endfor
       endif
     endfor
-    normal! gg"_ddG
+    call setline(1, buffer)
+    normal! G
     redraw
     call s:echon()
   endif
@@ -254,6 +256,7 @@ function! s:windowsinit() abort
   setl filetype=vimchat
   setl concealcursor=nivc
   setl conceallevel=2
+  setl nocursorline
 endfunction
 
 let s:enter_history = []
