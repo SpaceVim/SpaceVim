@@ -448,9 +448,9 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     return st
   elseif &filetype ==# 'vimchat'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# Chat %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+          \ . '%#SpaceVim_statusline_b# Chat %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
           \ . '%#SpaceVim_statusline_c# '
-          \ . '%{chat#windows#status().protocol}' . ' %#SpaceVim_statusline_c_SpaceVim_statusline_b#' . s:lsep . ' '
+          \ . '%{chat#windows#status().protocol}' . ' %#SpaceVim_statusline_c_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# '
           \ . '%{chat#windows#status().channel}' . ' %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
   elseif &filetype ==# 'git-status'

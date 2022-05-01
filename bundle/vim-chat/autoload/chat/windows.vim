@@ -362,7 +362,7 @@ function! s:complete(base,num) abort
       let channels = chat#{s:protocol}#get_channels()
     catch
     endtry
-    let rsl = filter(copy(channels), "v:val =~ '^' . matchstr(a:base, '\\w*$')")
+    let rsl = filter(copy(channels), "v:val =~? '^' . matchstr(a:base, '\\w*$')")
     if len(rsl) > 0
       return matchstr(a:base, '^/set_channel\s*') . rsl[a:num % len(rsl)]
     endif

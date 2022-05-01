@@ -196,7 +196,9 @@ function! s:get_all_channels_stderr(id, data, event) abort
 endfunction
 function! s:get_all_channels_exit(id, data, event) abort
   call s:LOG.debug(a:data)
-  let s:channels = s:JSON.json_decode(join(s:list_all_channels_result, ''))
+  if a:data ==# 0
+    let s:channels = s:JSON.json_decode(join(s:list_all_channels_result, ''))
+  endif
 endfunction
 
 function! Test(str) abort
