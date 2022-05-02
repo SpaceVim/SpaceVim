@@ -224,3 +224,13 @@ function! chat#gitter#send(room, msg) abort
         \ ]
   call s:JOB.start(cmd)
 endfunction
+
+function! chat#gitter#get_user_count(room) abort
+  let room = filter(deepcopy(s:channels), 'has_key(v:val, "uri") && v:val.uri ==# a:room')
+  if !empty(room)
+    return room[0].userCount . ' PEOPLE'
+  else
+    return ''
+  endif
+
+endfunction

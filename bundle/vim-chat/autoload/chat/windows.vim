@@ -456,10 +456,16 @@ function! s:send(msg) abort
 endfunction
 
 function! chat#windows#status() abort
+  let c = ''
+  try
+    let c = chat#{s:protocol}#get_user_count(s:current_channel)
+  catch
+  endtry
 
   return {
         \ 'channel' : s:current_channel,
         \ 'protocol' : s:protocol,
+        \ 'usercount' : c,
         \ }
 
 endfunction
