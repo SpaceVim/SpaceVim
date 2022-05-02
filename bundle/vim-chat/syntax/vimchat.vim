@@ -6,6 +6,16 @@
 " hi link vimChatTime		String
 " hi link vimChatMe		Type
 " syn match vimChatMsg 	/^\[\d\d\(:\d\d\)\{0,2\}][^>]*/	contains=vimChatTime,vimChatNick
+if !exists("main_syntax")
+  if version < 600
+    syntax clear
+  elseif exists("b:current_syntax")
+    finish
+  endif
+  let main_syntax = 'vimchat'
+endif
+
+syntax sync fromstart
 syn match VimChatTime /\[\d\d\d\d-\d\d-\d\d\s\d\d\:\d\d]/
 syn match VimChatVert /│/
 syn match VimChatNick /\[\d\d\d\d-\d\d-\d\d\s\d\d\:\d\d]\s│[^│]*│/ contains=VimChatTime,VimChatVert
@@ -26,3 +36,8 @@ hi def link VimChatRemoteNick Todo
 hi def link VimChatPing ModeMsg
 hi def link VimChatCodeBlock String
 hi def link VimChatCodeBlockLines String
+
+let b:current_syntax = "vimchat"
+if main_syntax == 'vimchat'
+  unlet main_syntax
+endif
