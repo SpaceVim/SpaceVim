@@ -15,6 +15,7 @@ syntax match VimChatRemoteNickL /\*\*`/ conceal
 syntax match VimChatRemoteNickR /`\*\*/ conceal
 syntax match VimChatRemoteNick /**`[^`]*`\*\*/ contains=VimChatRemoteNickR,VimChatRemoteNickL
 syntax match VimChatPing /\s\zs@\S*/
+syn region VimChatCodeBlockLines start="│\s*````*.*$" end="│\s*````*\ze\s*$" contains=VimChatTime,VimChatVert,VimChatNick keepend
 " hi def link vimChatMsg	Comment
 hi def link VimChatTime Comment
 hi def link VimChatNick Type
@@ -22,3 +23,4 @@ hi def link VimChatVert VertSplit
 hi def link VimChatRemoteNick Todo
 hi def link VimChatPing ModeMsg
 hi def link VimChatCodeBlock String
+hi def link VimChatCodeBlockLines String
