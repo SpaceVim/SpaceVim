@@ -7,6 +7,10 @@
 "=============================================================================
 scriptencoding utf-8
 
+if exists('s:CMP')
+  finish
+endif
+
 let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
@@ -95,9 +99,7 @@ function! chat#windows#open() abort
     elseif char ==# "\<LeftRelease>"
       let mouse_left_release_lnum = v:mouse_lnum
       let mouse_left_relsese_col = v:mouse_col
-      if mouse_left_lnum !=# mouse_left_release_lnum && mouse_left_col !=# mouse_left_relsese_col
-        let @+= s:high_pso(mouse_left_lnum, mouse_left_col, mouse_left_release_lnum, mouse_left_relsese_col)
-      endif
+      call s:high_pso(mouse_left_lnum, mouse_left_col, mouse_left_release_lnum, mouse_left_relsese_col)
     elseif char ==# "\<Right>"
       "<Right> 向右移动光标
       let s:c_begin = s:c_begin . s:c_char
@@ -207,29 +209,6 @@ function! chat#windows#open() abort
   normal! :
 endfunction
 
-function! s:high_pso(l, c, rl, rc) abort
-  let [l, c, rl, rc] = [a:l, a:c, a:rl, a:rc]
-  call clearmatches()
-  if l ==# rl && c == rc
-    return ''
-  endif
-  " start_col is based s:update_msg_screen 
-  let start_col = 38
-  if rl > l
-    call s:CMP.matchaddpos('Visual', [[l, c, strlen(getline(l)) - c]])
-    " if there are more than two lines
-    if rl - l >= 2
-      for line in range(l + 1, rl - 1)
-        call s:CMP.matchaddpos('Visual', [[line, start_col, strlen(getline(line)) - start_col]])
-      endfor
-    endif
-    call s:CMP.matchaddpos('Visual', [[rl, start_col, rc - start_col]])
-  else
-  endif
-  redraw
-endfunction
-
-
 function! s:get_str_with_width(str,width) abort
   let str = a:str
   let result = ''
@@ -248,6 +227,59 @@ endfunction
 
 function! s:disable_r_mode(timer) abort
   let s:c_r_mode = 0
+endfunction
+
+function! s:high_pso(l, c, rl, rc) abort
+    let l = a:l
+    let rl = a:rl
+    let c = strlen(strcharpart(getline(l), 0, a:c)) + 1
+    let rc = strlen(strcharpart(getline(rl), 0, a:rc)) + 1
+    call clearmatches()
+    if l ==# rl && c == rc
+        return ''
+    endif
+    " start_col is based s:update_msg_screen 
+    let start_col = 41
+    if rl > l
+        if c < strlen(getline(l))
+            call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c]])
+        endif
+        " if there are more than two lines
+        if rl - l >= 2
+            for line in range(l + 1, rl - 1)
+                call s:CMP.matchaddpos('Visual', [[line, start_col, strlen(getline(line)) - start_col + 2]])
+            endfor
+        endif
+        if rc > start_col
+            call s:CMP.matchaddpos('Visual', [[rl, start_col, rc - start_col]])
+        endif
+    elseif rl == l
+        if max([c, rc]) > start_col
+            let begin = max([start_col, min([c, rc])])
+            call s:CMP.matchaddpos('Visual', [[l, begin - 1, max([c, rc]) - begin + 1]])
+        endif
+    else
+        " let _l = rl
+        " let rl = l
+        " let l = _l
+        " let _c = rc
+        " let rc = c
+        " let c = _c
+        let [l, c, rl, rc] = [rl, rc, l, c]
+        if c < strlen(getline(l))
+            call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c]])
+        endif
+        " if there are more than two lines
+        if rl - l >= 2
+            for line in range(l + 1, rl - 1)
+                call s:CMP.matchaddpos('Visual', [[line, start_col, strlen(getline(line)) - start_col + 2]])
+            endfor
+        endif
+        if rc > start_col
+            call s:CMP.matchaddpos('Visual', [[rl, start_col, rc - start_col]])
+        endif
+    endif
+    redraw
 endfunction
 
 function! s:get_lines_with_width(str, width) abort
