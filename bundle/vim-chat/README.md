@@ -7,7 +7,7 @@ The chatting client for vim and neovim. This plugin is based on [SpaceVim](https
 <!-- vim-markdown-toc GFM -->
 
 - [Usage](#usage)
-- [Feedback & Contribut](#feedback--contribut)
+- [Feedback & Contribute](#feedback--contribute)
 
 <!-- vim-markdown-toc -->
 
@@ -34,6 +34,6 @@ and create your own key binding:
 nnoremap <silent> <Leader>h :call chat#windows#open()<Cr>
 ```
 
-## Feedback & Contribut
+## Feedback & Contribute
 
 The development of vim-chat is in SpaceVim repository, including the SpaceVim api and [bundle/vim-chat](https://github.com/SpaceVim/SpaceVim/tree/master/bundle/vim-chat)
