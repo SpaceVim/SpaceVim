@@ -242,7 +242,7 @@ function! s:high_pso(l, c, rl, rc) abort
     let start_col = 41
     if rl > l
         if c < strlen(getline(l))
-            call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c]])
+            call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c + 2]])
         endif
         " if there are more than two lines
         if rl - l >= 2
@@ -267,7 +267,7 @@ function! s:high_pso(l, c, rl, rc) abort
         " let c = _c
         let [l, c, rl, rc] = [rl, rc, l, c]
         if c < strlen(getline(l))
-            call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c]])
+            call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c + 2]])
         endif
         " if there are more than two lines
         if rl - l >= 2
