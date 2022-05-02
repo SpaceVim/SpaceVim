@@ -8,6 +8,7 @@
 scriptencoding utf-8
 
 let s:VIM = SpaceVim#api#import('vim')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! chat#windows#is_opened() abort
   return s:msg_win_opened
@@ -67,6 +68,10 @@ function! chat#windows#open() abort
   call s:update_msg_screen()
   call s:update_statusline()
   call s:echon()
+  let mouse_left_lnum = 0
+  let mouse_left_col = 0
+  let mouse_left_release_lnum = 0
+  let mouse_left_relsese_col = 0
   while get(s:, 'quit_chating_win', 0) == 0
     let char = s:VIM.getchar()
     if char !=# "\<Up>" && char !=# "\<Down>"
@@ -84,6 +89,15 @@ function! chat#windows#open() abort
       let s:c_r_mode = 0
     elseif char == "\<Enter>"
       call s:enter()
+    elseif char ==# "\<LeftMouse>"
+      let mouse_left_lnum = v:mouse_lnum
+      let mouse_left_col = v:mouse_col
+    elseif char ==# "\<LeftRelease>"
+      let mouse_left_release_lnum = v:mouse_lnum
+      let mouse_left_relsese_col = v:mouse_col
+      if mouse_left_lnum !=# mouse_left_release_lnum && mouse_left_col !=# mouse_left_relsese_col
+        let @+= s:high_pso(mouse_left_lnum, mouse_left_col, mouse_left_release_lnum, mouse_left_relsese_col)
+      endif
     elseif char ==# "\<Right>"
       "<Right> 向右移动光标
       let s:c_begin = s:c_begin . s:c_char
@@ -192,6 +206,29 @@ function! chat#windows#open() abort
   let s:msg_win_opened = 0
   normal! :
 endfunction
+
+function! s:high_pso(l, c, rl, rc) abort
+  let [l, c, rl, rc] = [a:l, a:c, a:rl, a:rc]
+  call clearmatches()
+  if l ==# rl && c == rc
+    return ''
+  endif
+  " start_col is based s:update_msg_screen 
+  let start_col = 38
+  if rl > l
+    call s:CMP.matchaddpos('Visual', [[l, c, strlen(getline(l)) - c]])
+    " if there are more than two lines
+    if rl - l >= 2
+      for line in range(l + 1, rl - 1)
+        call s:CMP.matchaddpos('Visual', [[line, start_col, strlen(getline(line)) - start_col]])
+      endfor
+    endif
+    call s:CMP.matchaddpos('Visual', [[rl, start_col, rc - start_col]])
+  else
+  endif
+  redraw
+endfunction
+
 
 function! s:get_str_with_width(str,width) abort
   let str = a:str

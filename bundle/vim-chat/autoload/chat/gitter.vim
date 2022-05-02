@@ -6,11 +6,14 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:room_jobs')
+  finish
+endif
+
+
 let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:LOG = SpaceVim#logger#derive('gitter')
-
-let s:room = ''
 
 let g:chat_gitter_token = get(g:, 'chat_gitter_token', '')
 
