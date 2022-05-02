@@ -46,14 +46,16 @@ let s:protocol = ''
 let s:chatting_commands = ['/set_protocol', '/set_channel']
 let s:all_protocols = ['gitter']
 function! chat#windows#open() abort
+  " "\<Plug>(_incsearch-nohlsearch)" will be send to vim on CursorMoved event,
+  " so use noautocmd to avoid this issue
   if bufwinnr(s:name) < 0
     if bufnr(s:name) != -1
-      exe 'silent! botright split ' . '+b' . bufnr(s:name)
+      exe 'silent! noautocmd botright split ' . '+b' . bufnr(s:name)
     else
-      exe 'silent! botright split ' . s:name
+      exe 'silent! noautocmd botright split ' . s:name
     endif
   else
-    exec bufwinnr(s:name) . 'wincmd w'
+    noautocmd exec bufwinnr(s:name) . 'wincmd w'
   endif
   call s:windowsinit()
   call s:init_hi()
