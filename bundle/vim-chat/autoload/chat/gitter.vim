@@ -124,8 +124,9 @@ endfunction
 
 function! s:gitter_fetch_stdout(id, data, event) abort
   for line in a:data
-    call s:LOG.debug(line)
+    call s:LOG.debug('fetch_stdout :' . line)
   endfor
+  call s:LOG.debug('s:fetch_response keys :' . string(keys(s:fetch_response)))
   for room in keys(s:fetch_response)
     if s:fetch_response[room].jobid ==# a:id
       let s:fetch_response[room].response += a:data
@@ -203,6 +204,9 @@ function! s:get_all_channels_exit(id, data, event) abort
   call s:LOG.debug(a:data)
   if a:data ==# 0
     let s:channels = s:JSON.json_decode(join(s:list_all_channels_result, ''))
+  endif
+  if !chat#windows#is_opened()
+    call chat#notify#noti('gitter protocol channels updated!')
   endif
 endfunction
 
