@@ -195,6 +195,14 @@ let s:list_all_channels_jobid = -1
 let s:list_all_channels_result = []
 function! s:get_all_channels() abort
   if s:list_all_channels_jobid <= 0
+    call chat#windows#push({
+          \ 'user' : '--->',
+          \ 'username' : '--->',
+          \ 'room' : '',
+          \ 'protocol' : 'gitter',
+          \ 'msg' : 'listing gitter channels',
+          \ 'time': strftime("%Y-%m-%d %H:%M"),
+          \ })
     let cmd = printf('curl -s -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms"', g:chat_gitter_token)
     let s:list_all_channels_jobid =  s:JOB.start(cmd, {
           \ 'on_stdout' : function('s:get_all_channels_stdout'),
@@ -223,6 +231,15 @@ function! s:get_all_channels_exit(id, data, event) abort
   endif
   if !chat#windows#is_opened()
     call chat#notify#noti('gitter protocol channels updated!')
+  else
+    call chat#windows#push({
+          \ 'user' : '--->',
+          \ 'username' : '--->',
+          \ 'room' : '',
+          \ 'protocol' : 'gitter',
+          \ 'msg' : 'list channels done!',
+          \ 'time': strftime("%Y-%m-%d %H:%M"),
+          \ })
   endif
 endfunction
 

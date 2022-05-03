@@ -316,7 +316,7 @@ function! s:update_msg_screen() abort
   if s:msg_win_opened
     normal! gg"_dG
     let buffer = []
-    let msgs = filter(deepcopy(s:messages), 'v:val["room"] ==# s:current_channel')
+    let msgs = filter(deepcopy(s:messages), 'v:val["room"] ==# s:current_channel || (empty(v:val["room"]) && v:val["protocol"] ==# s:protocol)')
     for msg in msgs
       let name = s:get_str_with_width(msg['user'], 13)
       let message = s:get_lines_with_width(msg['msg'], winwidth('$') - 36)
