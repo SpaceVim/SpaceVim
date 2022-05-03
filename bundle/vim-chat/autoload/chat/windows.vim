@@ -131,7 +131,7 @@ function! chat#windows#open() abort
       let s:c_char = ''
       let s:c_end = ''
     elseif char ==# "\<C-w>"
-      let s:c_begin = substitute(s:c_begin,'[^\ .*]\+\s*$','','g')
+      let s:c_begin = substitute(s:c_begin,'\S*\s*$','','g')
     elseif char ==# "\<M-Left>" || char ==# "\<M-h>"
       "<Alt>+<Left> 移动到左边一个聊天窗口
       call s:previous_channel()

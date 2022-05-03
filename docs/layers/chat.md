@@ -42,6 +42,6 @@ Whith the chat windows. The following key binding can be use:
 
 - `Alt + Left/H`: switch to previous channel
 - `Alt + Right/L`: switch to next channel
-- `Ctrl-w`: delete word before cursor
+- `Ctrl-w`: delete characters until next space before cursor
 
 for more mappings in chatting buffer, please read <kbd>:h vim-chat</kbd>.
