@@ -260,6 +260,9 @@ SpaceVim also supports project specific configuration files.
 The init file is `.SpaceVim.d/init.toml` in the root of your project.
 The local `.SpaceVim.d/` will also be added to the `&runtimepath`.
 
+Please be aware that if there are errors in your `init.toml`, the setting will not be applied. See [FAQ](../faq/#why-are-the-options-in-toml-file-not-applied). 
+
+
 All SpaceVim options can be found in `:h SpaceVim-options`,
 the key is the same as the option name without the `g:spacevim_` prefix.
 
@@ -316,7 +319,8 @@ For adding multiple custom plugins:
 **disable existing plugins**
 
 If you want to disable plugins which are added by SpaceVim,
-you can use SpaceVim `disabled_plugins` options:
+you can use SpaceVim `disabled_plugins` in the `[options]` section of your configuration file.
+options:
 
 ```toml
 [options]
@@ -330,8 +334,7 @@ SpaceVim provides two kinds of bootstrap functions
 for custom configurations and key bindings,
 namely `bootstrap_before` and `bootstrap_after`.
 
-To enable them you need to add the following into
-`~/.SpaceVim.d/init.toml`.
+To enable them you need to add the following into lines to the `[options]` section of your configuration file.
 
 ```toml
 [options]
@@ -411,8 +414,8 @@ The different key bindings between SpaceVim and vim are shown as below.
   ```
 
 - In vim the `,` key repeats the last last `f`, `F`, `t` and `T`, but in SpaceVim it is the language specific Leader key.
-  To disable this feature, set the option `enable_language_specific_leader` to `false`.
-
+  To disable this feature, set the option `enable_language_specific_leader` to `false` in in the `[options]` section of your configuration file.
+  
   ```toml
   [options]
       enable_language_specific_leader = false
@@ -440,10 +443,11 @@ The different key bindings between SpaceVim and vim are shown as below.
 - In SpaceVim the `Ctrl-f` binding on the command line is mapped to `<Right>`, which will move cursor to the right.
 
 SpaceVim provides a vimcompatible mode, in vimcompatible mode, all the differences above will disappear.
-You can enable the vimcompatible mode by adding `vimcompatible = true` to the `[options]` section.
+You can enable the vimcompatible mode by adding `vimcompatible = true` to the `[options]` section of your configuration file.
 
 If you want to disable any differences above, use the relevant options.
-For example, in order to disable language specific leader, you may add the following lines to your configuration file:
+For example, in order to disable language specific leader, you may add the following lines to the `[options]` section of
+`~/.SpaceVim.d/init.toml`:
 
 ```toml
 [options]
@@ -517,7 +521,7 @@ There are two variants of this colorscheme, dark and light. Some aspects
 of these colorschemes can be customized in the custom configuration file, read `:h gruvbox`.
 
 It is possible to change the colorscheme in `~/.SpaceVim.d/init.toml` with
-the variable `colorscheme`. For instance, to specify `desert`:
+the variable `colorscheme`. For instance, to specify `desert` add the following to the `[options]` section:
 
 ```toml
 [options]
@@ -691,7 +695,7 @@ All the colors are based on the current colorscheme.
 
 **Statusline separators:**
 
-It is possible to easily customize the statusline separator by setting the `statusline_separator` variable in your custom configuration file and then redraw the statusline. For instance, if you want to set the separator back to the well-known arrow separator, add the following snippet to your configuration file:
+It is possible to easily customize the statusline separator by setting the `statusline_separator` variable in your custom configuration file and then redraw the statusline. For instance, if you want to set the separator back to the well-known arrow separator, add the following snippet to the `[options]` section of your configuration file:
 
 ```toml
 [options]
@@ -769,7 +773,7 @@ endfunction
 
 This example is the gruvbox colorscheme, if you want to use same colors when
 switching between different colorschemes, you may need to set
-`custom_color_palette` in your custom configuration file. For example:
+`custom_color_palette` in the `[options]` section of your custom configuration file. For example:
 
 ```toml
 [options]
@@ -859,7 +863,7 @@ Key bindings within the tab manager window:
 SpaceVim uses `nerdtree` as the default file tree, the default key binding is `<F3>`.
 SpaceVim also provides `SPC f t` and `SPC f T` to open the file tree.
 
-To change the filemanager plugin:
+To change the filemanager plugin insert the following to the `[options]` section of your configuration file. 
 
 ```toml
 [options]
@@ -877,7 +881,7 @@ to your custom configuration file. Here is a picture of this feature:
 
 ![file-tree](https://user-images.githubusercontent.com/13142418/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
 
-There is also an option to configure show/hide the file tree, default to show. To hide the file tree by default, you can use the `enable_vimfiler_welcome` option:
+There is also an option to configure show/hide the file tree, default to show. To hide the file tree by default, you can use the `enable_vimfiler_welcome` in the `[options]` section:
 
 ```toml
 [options]
@@ -1072,7 +1076,7 @@ Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` t
 #### Code indentation
 
 The default indentation of code is 2, which is controlled by the option `default_indent`.
-If you prefer to use 4 as code indentation. Just add the following snippet to SpaceVim's
+If you prefer to use 4 as code indentation. Just add the following snippet to the `[options]` section in the SpaceVim's
 configuration file:
 
 ```toml
@@ -1082,7 +1086,7 @@ configuration file:
 
 The `default_indent` option will be applied to vim's `&tabstop`, `&softtabstop` and
 `&shiftwidth` options. By default, when the user inserts a `<Tab>`, it will be expanded
-to spaces. This feature can be disabled by `expand_tab` option.
+to spaces. This feature can be disabled by `expand_tab` option the `[options]` section:
 
 ```toml
 [options]
@@ -1308,7 +1312,7 @@ write
 ### Window manager
 
 Window manager key bindings can only be used in normal mode. The default leader `[WIN]` is `s`, you
-can change it via `windows_leader` option:
+can change it via `windows_leader` in the `[options]` section:
 
 ```toml
 [options]
@@ -1483,7 +1487,7 @@ By default, `find` is the default tool, you can use `ctrl-e` to switch tools.
 
 ![find](https://user-images.githubusercontent.com/13142418/97999590-79717000-1e26-11eb-91b1-458ab30d6254.gif)
 
-To change the default file searching tool, you can use `file_searching_tools` option.
+To change the default file searching tool, you can use `file_searching_tools` in the `[options]` section. 
 It is `[]` by default.
 
 ```toml
@@ -1929,7 +1933,7 @@ which contains short descriptions of all the mappings starting with `z`.
 
 When you open a file, SpaceVim will change the current directory to the root
 directory of the project that contains this file. The project's root directory detection
-is based on the `project_rooter_patterns` option, and the default value is:
+is based on the `project_rooter_patterns` in the `[options]` section, and the default value is:
 
 ```toml
 [options]
