@@ -18,6 +18,7 @@ and usage.
   - [Can I try SpaceVim without overwriting my vimrc?](#can-i-try-spacevim-without-overwriting-my-vimrc)
   - [Why use toml as the default configuration file format?](#why-use-toml-as-the-default-configuration-file-format)
   - [Where should I put my configuration?](#where-should-i-put-my-configuration)
+  - [Why the option in toml file does not applied?](#why-the-option-in-toml-file-does-not-applied)
   - [E492: Not an editor command: ^M](#e492-not-an-editor-command-m)
   - [Why SpaceVim can not display default colorscheme?](#why-spacevim-can-not-display-default-colorscheme)
   - [Why can't I update plugins?](#why-cant-i-update-plugins)
@@ -108,6 +109,29 @@ drawbacks we found with the other choices considered:
 
 SpaceVim loads custom global configuration from `~/.SpaceVim.d/init.toml`. It also supports project specific configuration.
 That means it will load `.SpaceVim.d/init.toml` from the root of your project.
+
+### Why the option in toml file does not applied?
+
+Many people have encountered the same problem. the option has been added in init.toml. but SpaceVim do not use it.
+One possibility is that there is a syntax error in tomL. For example:
+
+```
+[options]
+    enable_statusline_mode = true
+    enable_tabline_filetype_icon = true
+    enable_os_fileformat_icon = true
+    statusline_unicode_symbols = true
+    line_on_the_fly = false
+[[layers]]
+    name = 'core'
+    enable_filetree_gitstatus = true
+    enable_filetree_filetypeicon = true
+
+[options]
+    bootstrap_before = 'myspacevim#before'
+```
+
+In this example, only `bootstrap_before` option will be used. So there should only one `[options]` section in toml file.
 
 ### E492: Not an editor command: ^M
 
