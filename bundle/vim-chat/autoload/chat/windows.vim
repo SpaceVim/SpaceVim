@@ -379,6 +379,7 @@ function! s:enter() abort
     let s:c_begin = ''
     return
   elseif s:c_begin . s:c_char . s:c_end =~# '/set_protocol\s*'
+    let saved_protocal = s:protocol
     let s:protocol = matchstr(s:c_begin . s:c_char . s:c_end, '/set_protocol\s*\zs\S*')
     let s:c_end = ''
     let s:c_char = ''
@@ -389,6 +390,15 @@ function! s:enter() abort
         let s:opened_channels[s:protocol] = []
       endif
     catch
+      call chat#windows#push({
+            \ 'user' : '--->',
+            \ 'username' : '--->',
+            \ 'room' : '',
+            \ 'protocol' : s:protocol,
+            \ 'msg' : 'protocal does not exists: ' . s:current_channel,
+            \ 'time': strftime("%Y-%m-%d %H:%M"),
+            \ })
+      let s:protocol = saved_protocal
     endtry
     call s:update_msg_screen()
     return
@@ -410,7 +420,7 @@ function! s:enter() abort
                 \ 'username' : '--->',
                 \ 'room' : saved_channel,
                 \ 'protocol' : s:protocol,
-                \ 'msg' : 'can not find channel:' . s:current_channel,
+                \ 'msg' : 'channel does not exists: ' . s:current_channel,
                 \ 'time': strftime("%Y-%m-%d %H:%M"),
                 \ })
           let s:current_channel = saved_channel
