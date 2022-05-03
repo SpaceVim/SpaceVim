@@ -62,6 +62,12 @@ function! chat#windows#open() abort
   else
     noautocmd exec bufwinnr(s:name) . 'wincmd w'
   endif
+  " scrollbar will not be closed if use noautocmd to open split.
+  try
+    call SpaceVim#plugins#scrollbar#clear()
+  catch
+    
+  endtry
   call s:windowsinit()
   call s:init_hi()
   setl modifiable
