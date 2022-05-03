@@ -339,6 +339,20 @@ function! s:update_msg_screen() abort
 endfunction
 
 function! s:echon() abort
+  let context = s:c_base . s:c_begin . s:c_char . s:c_end
+  if context =~# "\n"
+    let h = len(split(context, "\n"))
+    let end = context =~# "\n$" ? 1 : 0
+    let saved_cmdheight = &cmdheight
+    try
+      " here maybe cause E36
+      let &cmdheight = h + end
+    catch
+      let &cmdheight = saved_cmdheight
+    endtry
+  else
+    let &cmdheight = 1
+  endif
   redraw
   normal! :
   echohl Comment | echon s:c_base
