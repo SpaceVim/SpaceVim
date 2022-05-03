@@ -200,6 +200,9 @@ function! chat#windows#open() abort
       if char ==# "\<S-Space>"
         " shift-space should return space in insert mode
         let s:c_begin .= ' '
+      elseif char ==# "\<S-Enter>"
+        " shift-enter should add new line
+        let s:c_begin .= "\n"
       endif
     else
       let s:c_begin .= char
