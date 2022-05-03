@@ -13,6 +13,7 @@ endif
 
 let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:HI = SpaceVim#api#import('vim#highlight')
 
 function! chat#windows#is_opened() abort
   return s:msg_win_opened
@@ -77,6 +78,19 @@ function! chat#windows#open() abort
   endif
   call s:update_msg_screen()
   call s:update_statusline()
+  let save_tve = &t_ve
+  setlocal t_ve=
+  let cursor_hi = {}
+  let cursor_hi = s:HI.group2dict('Cursor')
+  let lcursor_hi = s:HI.group2dict('lCursor')
+  let guicursor = &guicursor
+  call s:HI.hide_in_normal('Cursor')
+  call s:HI.hide_in_normal('lCursor')
+  " hi Cursor ctermbg=16 ctermfg=16 guifg=#282c34 guibg=#282c34
+  " hi lCursor ctermbg=16 ctermfg=16 guifg=#282c34 guibg=#282c34
+  if has('nvim')
+    set guicursor+=a:Cursor/lCursor
+  endif
   call s:echon()
   let mouse_left_lnum = 0
   let mouse_left_col = 0
@@ -216,6 +230,10 @@ function! chat#windows#open() abort
   let s:current_channel = ''
   let s:msg_win_opened = 0
   normal! :
+  let &t_ve = save_tve
+  call s:HI.hi(cursor_hi)
+  call s:HI.hi(lcursor_hi)
+  let &guicursor = guicursor
 endfunction
 
 function! s:get_str_with_width(str,width) abort
@@ -359,6 +377,9 @@ function! s:echon() abort
   echohl None | echon s:c_begin
   echohl Wildmenu | echon s:c_char
   echohl None | echon s:c_end
+  if empty(s:c_char) && (has('nvim-0.5.0') || !has('nvim'))
+    echohl Comment | echon '_' | echohl None
+  endif
 endfunction
 
 function! s:windowsinit() abort
