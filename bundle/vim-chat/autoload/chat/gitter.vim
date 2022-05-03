@@ -119,6 +119,13 @@ function! s:fetch(roomid) abort
           \ 'jobid' : jobid,
           \ 'response' : [],
           \ }
+    call chat#windows#push({
+          \ 'user' : '--->',
+          \ 'username' : '--->',
+          \ 'room' : room,
+          \ 'msg' : 'fetching channel messages',
+          \ 'time': strftime("%Y-%m-%d %H:%M"),
+          \ })
   endif
 endfunction
 
