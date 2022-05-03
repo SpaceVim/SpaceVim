@@ -21,6 +21,9 @@ let s:room_jobs = {}
 function! chat#gitter#enter_room(room) abort
   if !has_key(s:room_jobs, a:room)
     let roomid = s:room_to_roomid(a:room)
+    if empty(roomid)
+      return 0
+    endif
     call s:fetch(roomid)
     let cmd = printf('curl -s -N -H "Accept: application/json" -H "Authorization: Bearer %s" "https://stream.gitter.im/v1/rooms/%s/chatMessages"',g:chat_gitter_token , roomid)
     let jobid = s:JOB.start(cmd, {
@@ -30,6 +33,7 @@ function! chat#gitter#enter_room(room) abort
           \ })
     let s:room_jobs[a:room] = jobid
   endif
+  return 1
 endfunction
 
 function! s:room_to_roomid(room) abort

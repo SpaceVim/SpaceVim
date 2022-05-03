@@ -66,7 +66,7 @@ function! chat#windows#open() abort
   try
     call SpaceVim#plugins#scrollbar#clear()
   catch
-    
+
   endtry
   call s:windowsinit()
   call s:init_hi()
@@ -236,56 +236,56 @@ function! s:disable_r_mode(timer) abort
 endfunction
 
 function! s:high_pso(l, c, rl, rc) abort
-    let l = a:l
-    let rl = a:rl
-    let c = strlen(strcharpart(getline(l), 0, a:c)) + 1
-    let rc = strlen(strcharpart(getline(rl), 0, a:rc)) + 1
-    call clearmatches()
-    if l ==# rl && c == rc
-        return ''
+  let l = a:l
+  let rl = a:rl
+  let c = strlen(strcharpart(getline(l), 0, a:c)) + 1
+  let rc = strlen(strcharpart(getline(rl), 0, a:rc)) + 1
+  call clearmatches()
+  if l ==# rl && c == rc
+    return ''
+  endif
+  " start_col is based s:update_msg_screen 
+  let start_col = 41
+  if rl > l
+    if c < strlen(getline(l))
+      call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c + 2]])
     endif
-    " start_col is based s:update_msg_screen 
-    let start_col = 41
-    if rl > l
-        if c < strlen(getline(l))
-            call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c + 2]])
-        endif
-        " if there are more than two lines
-        if rl - l >= 2
-            for line in range(l + 1, rl - 1)
-                call s:CMP.matchaddpos('Visual', [[line, start_col, strlen(getline(line)) - start_col + 2]])
-            endfor
-        endif
-        if rc > start_col
-            call s:CMP.matchaddpos('Visual', [[rl, start_col, rc - start_col]])
-        endif
-    elseif rl == l
-        if max([c, rc]) > start_col
-            let begin = max([start_col, min([c, rc])])
-            call s:CMP.matchaddpos('Visual', [[l, begin - 1, max([c, rc]) - begin + 1]])
-        endif
-    else
-        " let _l = rl
-        " let rl = l
-        " let l = _l
-        " let _c = rc
-        " let rc = c
-        " let c = _c
-        let [l, c, rl, rc] = [rl, rc, l, c]
-        if c < strlen(getline(l))
-            call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c + 2]])
-        endif
-        " if there are more than two lines
-        if rl - l >= 2
-            for line in range(l + 1, rl - 1)
-                call s:CMP.matchaddpos('Visual', [[line, start_col, strlen(getline(line)) - start_col + 2]])
-            endfor
-        endif
-        if rc > start_col
-            call s:CMP.matchaddpos('Visual', [[rl, start_col, rc - start_col]])
-        endif
+    " if there are more than two lines
+    if rl - l >= 2
+      for line in range(l + 1, rl - 1)
+        call s:CMP.matchaddpos('Visual', [[line, start_col, strlen(getline(line)) - start_col + 2]])
+      endfor
     endif
-    redraw
+    if rc > start_col
+      call s:CMP.matchaddpos('Visual', [[rl, start_col, rc - start_col]])
+    endif
+  elseif rl == l
+    if max([c, rc]) > start_col
+      let begin = max([start_col, min([c, rc])])
+      call s:CMP.matchaddpos('Visual', [[l, begin - 1, max([c, rc]) - begin + 1]])
+    endif
+  else
+    " let _l = rl
+    " let rl = l
+    " let l = _l
+    " let _c = rc
+    " let rc = c
+    " let c = _c
+    let [l, c, rl, rc] = [rl, rc, l, c]
+    if c < strlen(getline(l))
+      call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c + 2]])
+    endif
+    " if there are more than two lines
+    if rl - l >= 2
+      for line in range(l + 1, rl - 1)
+        call s:CMP.matchaddpos('Visual', [[line, start_col, strlen(getline(line)) - start_col + 2]])
+      endfor
+    endif
+    if rc > start_col
+      call s:CMP.matchaddpos('Visual', [[rl, start_col, rc - start_col]])
+    endif
+  endif
+  redraw
 endfunction
 
 function! s:get_lines_with_width(str, width) abort
@@ -394,11 +394,26 @@ function! s:enter() abort
     return
   elseif s:c_begin . s:c_char . s:c_end =~# '/set_channel\s*'
     if !empty(s:protocol)
+      " check if the channel does not exists, notify user
+      let saved_channel = s:current_channel
       let s:current_channel = matchstr(s:c_begin . s:c_char . s:c_end, '/set_channel\s*\zs\S*')
       if !empty(s:current_channel)
-        call chat#{s:protocol}#enter_room(s:current_channel)
-        if index(s:opened_channels[s:protocol], s:current_channel) ==# -1
-          call add(s:opened_channels[s:protocol], s:current_channel)
+        if chat#{s:protocol}#enter_room(s:current_channel)
+          " succeed to enter channel
+          if index(s:opened_channels[s:protocol], s:current_channel) ==# -1
+            call add(s:opened_channels[s:protocol], s:current_channel)
+          endif
+        else
+          " failed to switch channel
+          call chat#windows#push({
+                \ 'user' : '--->',
+                \ 'username' : '--->',
+                \ 'room' : saved_channel,
+                \ 'protocol' : s:protocol,
+                \ 'msg' : 'can not find channel:' . s:current_channel,
+                \ 'time': strftime("%Y-%m-%d %H:%M"),
+                \ })
+          let s:current_channel = saved_channel
         endif
       endif
     endif
