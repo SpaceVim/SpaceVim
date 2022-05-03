@@ -110,15 +110,15 @@ function! s:fetch(roomid) abort
   let room = s:roomid_to_room(a:roomid)
   if !has_key(s:fetch_response, room)
     let cmd = printf( 'curl -s -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms/%s/chatMessages?limit=50"', g:chat_gitter_token, a:roomid)
-    let jobid = s:JOB.start(cmd, {
-          \ 'on_stdout' : function('s:gitter_fetch_stdout'),
-          \ 'on_stderr' : function('s:gitter_fetch_stderr'),
-          \ 'on_exit' : function('s:gitter_fetch_exit'),
-          \ })
     let s:fetch_response[room] = {
-          \ 'jobid' : jobid,
           \ 'response' : [],
-          \ }
+          \ 'jobid' : s:JOB.start(cmd,
+          \ {
+            \ 'on_stdout' : function('s:gitter_fetch_stdout'),
+            \ 'on_stderr' : function('s:gitter_fetch_stderr'),
+            \ 'on_exit' : function('s:gitter_fetch_exit'),
+            \ })
+            \ }
     call chat#windows#push({
           \ 'user' : '--->',
           \ 'username' : '--->',
@@ -150,7 +150,7 @@ function! s:gitter_fetch_stderr(id, data, event) abort
 endfunction
 
 function! s:gitter_fetch_exit(id, data, event) abort
-  call s:LOG.debug(a:data)
+  call s:LOG.debug('fetch job exit code' . a:data)
   for room in keys(s:fetch_response)
     if s:fetch_response[room].jobid ==# a:id
       let messages = s:JSON.json_decode(join(s:fetch_response[room].response, ''))
@@ -165,6 +165,15 @@ function! s:gitter_fetch_exit(id, data, event) abort
               \ })
       endfor
       call chat#windows#push(msgs)
+      if a:data ==# 0
+        call chat#windows#push({
+              \ 'user' : '--->',
+              \ 'username' : '--->',
+              \ 'room' : room,
+              \ 'msg' : 'fetch channel message done!',
+              \ 'time': strftime("%Y-%m-%d %H:%M"),
+              \ })
+      endif
       break
     endif
   endfor
