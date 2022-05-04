@@ -119,7 +119,7 @@ function! chat#windows#open() abort
     elseif char ==# "\<LeftRelease>" || char ==# "\x80\xfd-"
       let mouse_left_release_lnum = v:mouse_lnum
       let mouse_left_relsese_col = getmousepos().column
-      let selected_text = s:high_pso(mouse_left_lnum, mouse_left_col, mouse_left_release_lnum, mouse_left_relsese_col)
+      let selected_text = s:high_pos(mouse_left_lnum, mouse_left_col, mouse_left_release_lnum, mouse_left_relsese_col)
     elseif char ==# "\<C-c>"
       " copy select text
       if exists('selected_text') && !empty(selected_text)
@@ -267,11 +267,31 @@ function! s:disable_r_mode(timer) abort
   let s:c_r_mode = 0
 endfunction
 
-function! s:high_pso(l, c, rl, rc) abort
+function! s:has_conceal(l) abort
+  return getline(a:l) =~# '**`[^`]*`\*\*'
+endfunction
+
+function! s:get_really_col(c, l) abort
+  let [str, conceal_begin, conceal_end] = matchstrpos(getline(a:l), '**`[^`]*`\*\*')
+  if a:c > conceal_end - 6
+    return a:c + 6
+  elseif a:c > conceal_begin
+    return a:c + 3
+  endif
+  return a:c
+endfunction
+
+function! s:high_pos(l, c, rl, rc) abort
   let l = a:l
-  let rl = a:rl
   let c = strlen(strpart(getline(l), 0, a:c)) + 1
+  if s:has_conceal(l)
+    let c = s:get_really_col(c, l)
+  endif
+  let rl = a:rl
   let rc = strlen(strpart(getline(rl), 0, a:rc)) + 1
+  if s:has_conceal(rl)
+    let rc = s:get_really_col(rc, rl)
+  endif
   call clearmatches()
   let selected_text = []
   if l ==# rl && c == rc

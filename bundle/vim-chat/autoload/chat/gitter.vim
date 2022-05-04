@@ -25,7 +25,7 @@ function! chat#gitter#enter_room(room) abort
       return 0
     endif
     call s:fetch(roomid)
-    let cmd = printf('curl -s -N -H "Accept: application/json" -H "Authorization: Bearer %s" "https://stream.gitter.im/v1/rooms/%s/chatMessages"',g:chat_gitter_token , roomid)
+    let cmd = printf('curl -s --show-error --fail -N -H "Accept: application/json" -H "Authorization: Bearer %s" "https://stream.gitter.im/v1/rooms/%s/chatMessages"',g:chat_gitter_token , roomid)
     let jobid = s:JOB.start(cmd, {
           \ 'on_stdout' : function('s:gitter_stdout'),
           \ 'on_stderr' : function('s:gitter_stderr'),
@@ -113,7 +113,7 @@ let s:fetch_response = {}
 function! s:fetch(roomid) abort
   let room = s:roomid_to_room(a:roomid)
   if !has_key(s:fetch_response, room)
-    let cmd = printf( 'curl -s -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms/%s/chatMessages?limit=50"', g:chat_gitter_token, a:roomid)
+    let cmd = printf( 'curl  -s --show-error --fail  -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms/%s/chatMessages?limit=50"', g:chat_gitter_token, a:roomid)
     let s:fetch_response[room] = {
           \ 'response' : [],
           \ 'jobid' : s:JOB.start(cmd,
@@ -208,7 +208,7 @@ function! s:get_all_channels() abort
           \ 'msg' : 'listing gitter channels',
           \ 'time': strftime("%Y-%m-%d %H:%M"),
           \ })
-    let cmd = printf('curl -s -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms"', g:chat_gitter_token)
+    let cmd = printf('curl -s --show-error --fail -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms"', g:chat_gitter_token)
     let s:list_all_channels_jobid =  s:JOB.start(cmd, {
           \ 'on_stdout' : function('s:get_all_channels_stdout'),
           \ 'on_stderr' : function('s:get_all_channels_stderr'),
