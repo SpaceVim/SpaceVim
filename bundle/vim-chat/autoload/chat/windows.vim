@@ -272,7 +272,13 @@ function! s:has_conceal(l) abort
 endfunction
 
 function! s:get_really_col(c, l) abort
-  return w#fuck(a:c, a:l)
+  let [str, conceal_begin, conceal_end] = matchstrpos(getline(a:l), '**`[^`]*`\*\*')
+  if a:c > conceal_end - 6
+    return a:c + 6
+  elseif a:c > conceal_begin
+    return a:c + 3
+  endif
+  return a:c
 endfunction
 
 function! s:high_pos(l, c, rl, rc) abort
