@@ -25,7 +25,7 @@ function! chat#gitter#enter_room(room) abort
       return 0
     endif
     call s:fetch(roomid)
-    let cmd = printf('curl -s -N -H "Accept: application/json" -H "Authorization: Bearer %s" "https://stream.gitter.im/v1/rooms/%s/chatMessages"',g:chat_gitter_token , roomid)
+    let cmd = printf('curl -s --show-error --fail -N -H "Accept: application/json" -H "Authorization: Bearer %s" "https://stream.gitter.im/v1/rooms/%s/chatMessages"',g:chat_gitter_token , roomid)
     let jobid = s:JOB.start(cmd, {
           \ 'on_stdout' : function('s:gitter_stdout'),
           \ 'on_stderr' : function('s:gitter_stderr'),
@@ -113,7 +113,7 @@ let s:fetch_response = {}
 function! s:fetch(roomid) abort
   let room = s:roomid_to_room(a:roomid)
   if !has_key(s:fetch_response, room)
-    let cmd = printf( 'curl -s -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms/%s/chatMessages?limit=50"', g:chat_gitter_token, a:roomid)
+    let cmd = printf( 'curl  -s --show-error --fail  -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms/%s/chatMessages?limit=50"', g:chat_gitter_token, a:roomid)
     let s:fetch_response[room] = {
           \ 'response' : [],
           \ 'jobid' : s:JOB.start(cmd,
@@ -148,9 +148,8 @@ endfunction
 
 function! s:gitter_fetch_stderr(id, data, event) abort
   for line in a:data
-    call s:LOG.debug(line)
+    call s:LOG.debug('fetch_stderr :' . line)
   endfor
-
 endfunction
 
 function! s:gitter_fetch_exit(id, data, event) abort
@@ -165,6 +164,7 @@ function! s:gitter_fetch_exit(id, data, event) abort
               \ 'username' : msg.fromUser.username,
               \ 'room' : room,
               \ 'msg' : msg.text,
+              \ 'replyCounts' : get(msg, 'threadMessageCount', 0),
               \ 'time': s:format_time(msg.sent),
               \ })
       endfor
@@ -196,7 +196,8 @@ endfunction
 
 
 let s:list_all_channels_jobid = -1
-let s:list_all_channels_result = []
+let s:list_all_channels_stdout = []
+let s:list_all_channels_stderr = []
 function! s:get_all_channels() abort
   if s:list_all_channels_jobid <= 0
     call chat#windows#push({
@@ -207,7 +208,7 @@ function! s:get_all_channels() abort
           \ 'msg' : 'listing gitter channels',
           \ 'time': strftime("%Y-%m-%d %H:%M"),
           \ })
-    let cmd = printf('curl -s -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms"', g:chat_gitter_token)
+    let cmd = printf('curl -s --show-error --fail -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms"', g:chat_gitter_token)
     let s:list_all_channels_jobid =  s:JOB.start(cmd, {
           \ 'on_stdout' : function('s:get_all_channels_stdout'),
           \ 'on_stderr' : function('s:get_all_channels_stderr'),
@@ -218,32 +219,31 @@ endfunction
 
 function! s:get_all_channels_stdout(id, data, event) abort
   for line in a:data
-    call s:LOG.debug(line)
+    call s:LOG.debug('get_all_channels_stdout: ' . line)
   endfor
-  let s:list_all_channels_result = s:list_all_channels_result + a:data
+  let s:list_all_channels_stdout = s:list_all_channels_stdout + a:data
 endfunction
 function! s:get_all_channels_stderr(id, data, event) abort
   for line in a:data
-    call s:LOG.debug(line)
+    call s:LOG.debug('get_all_channels_stderr: ' . line)
   endfor
-
+  let s:list_all_channels_stderr = s:list_all_channels_stderr + a:data
 endfunction
 function! s:get_all_channels_exit(id, data, event) abort
-  call s:LOG.debug(a:data)
-  if a:data ==# 0
-    let s:channels = s:JSON.json_decode(join(s:list_all_channels_result, ''))
+  call s:LOG.debug('get_all_channels_exit code: ' . a:data)
+  if a:data ==# 0 && !empty(s:list_all_channels_stdout)
+    let s:channels = s:JSON.json_decode(join(s:list_all_channels_stdout, ''))
   endif
+  call chat#windows#push({
+        \ 'user' : '--->',
+        \ 'username' : '--->',
+        \ 'room' : '',
+        \ 'protocol' : 'gitter',
+        \ 'msg' : 'list channels done!',
+        \ 'time': strftime("%Y-%m-%d %H:%M"),
+        \ })
   if !chat#windows#is_opened()
     call chat#notify#noti('gitter protocol channels updated!')
-  else
-    call chat#windows#push({
-          \ 'user' : '--->',
-          \ 'username' : '--->',
-          \ 'room' : '',
-          \ 'protocol' : 'gitter',
-          \ 'msg' : 'list channels done!',
-          \ 'time': strftime("%Y-%m-%d %H:%M"),
-          \ })
   endif
 endfunction
 

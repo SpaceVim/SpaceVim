@@ -13,6 +13,7 @@ endif
 
 let s:VIM = SpaceVim#api#import('vim')
 let s:CMP = SpaceVim#api#import('vim#compatible')
+let s:HI = SpaceVim#api#import('vim#highlight')
 
 function! chat#windows#is_opened() abort
   return s:msg_win_opened
@@ -46,7 +47,7 @@ let s:last_channel = ''
 let s:current_channel  = ''
 let s:opened_channels = {}
 let s:messages = []
-let s:close_windows_char = ["\<Esc>", "\<C-c>"]
+let s:close_windows_char = ["\<Esc>"]
 let s:protocol = ''
 let s:chatting_commands = ['/set_protocol', '/set_channel']
 let s:all_protocols = ['gitter']
@@ -77,6 +78,19 @@ function! chat#windows#open() abort
   endif
   call s:update_msg_screen()
   call s:update_statusline()
+  let save_tve = &t_ve
+  setlocal t_ve=
+  let cursor_hi = {}
+  let cursor_hi = s:HI.group2dict('Cursor')
+  let lcursor_hi = s:HI.group2dict('lCursor')
+  let guicursor = &guicursor
+  call s:HI.hide_in_normal('Cursor')
+  call s:HI.hide_in_normal('lCursor')
+  " hi Cursor ctermbg=16 ctermfg=16 guifg=#282c34 guibg=#282c34
+  " hi lCursor ctermbg=16 ctermfg=16 guifg=#282c34 guibg=#282c34
+  if has('nvim')
+    set guicursor+=a:Cursor/lCursor
+  endif
   call s:echon()
   let mouse_left_lnum = 0
   let mouse_left_col = 0
@@ -101,11 +115,22 @@ function! chat#windows#open() abort
       call s:enter()
     elseif char ==# "\<LeftMouse>"
       let mouse_left_lnum = v:mouse_lnum
-      let mouse_left_col = v:mouse_col
-    elseif char ==# "\<LeftRelease>"
+      let mouse_left_col = getmousepos().column
+    elseif char ==# "\<LeftRelease>" || char ==# "\x80\xfd-"
       let mouse_left_release_lnum = v:mouse_lnum
-      let mouse_left_relsese_col = v:mouse_col
-      call s:high_pso(mouse_left_lnum, mouse_left_col, mouse_left_release_lnum, mouse_left_relsese_col)
+      let mouse_left_relsese_col = getmousepos().column
+      let selected_text = s:high_pos(mouse_left_lnum, mouse_left_col, mouse_left_release_lnum, mouse_left_relsese_col)
+    elseif char ==# "\<C-c>"
+      " copy select text
+      if exists('selected_text') && !empty(selected_text)
+        try
+          let @+ = selected_text
+        catch
+          " fall back to register "
+          let @" = selected_text
+        endtry
+      endif
+      call clearmatches()
     elseif char ==# "\<Right>"
       "<Right> 向右移动光标
       let s:c_begin = s:c_begin . s:c_char
@@ -216,6 +241,10 @@ function! chat#windows#open() abort
   let s:current_channel = ''
   let s:msg_win_opened = 0
   normal! :
+  let &t_ve = save_tve
+  call s:HI.hi(cursor_hi)
+  call s:HI.hi(lcursor_hi)
+  let &guicursor = guicursor
 endfunction
 
 function! s:get_str_with_width(str,width) abort
@@ -238,12 +267,33 @@ function! s:disable_r_mode(timer) abort
   let s:c_r_mode = 0
 endfunction
 
-function! s:high_pso(l, c, rl, rc) abort
+function! s:has_conceal(l) abort
+  return getline(a:l) =~# '**`[^`]*`\*\*'
+endfunction
+
+function! s:get_really_col(c, l) abort
+  let [str, conceal_begin, conceal_end] = matchstrpos(getline(a:l), '**`[^`]*`\*\*')
+  if a:c > conceal_end - 6
+    return a:c + 6
+  elseif a:c > conceal_begin
+    return a:c + 3
+  endif
+  return a:c
+endfunction
+
+function! s:high_pos(l, c, rl, rc) abort
   let l = a:l
+  let c = strlen(strpart(getline(l), 0, a:c)) + 1
+  if s:has_conceal(l)
+    let c = s:get_really_col(c, l)
+  endif
   let rl = a:rl
-  let c = strlen(strcharpart(getline(l), 0, a:c)) + 1
-  let rc = strlen(strcharpart(getline(rl), 0, a:rc)) + 1
+  let rc = strlen(strpart(getline(rl), 0, a:rc)) + 1
+  if s:has_conceal(rl)
+    let rc = s:get_really_col(rc, rl)
+  endif
   call clearmatches()
+  let selected_text = []
   if l ==# rl && c == rc
     return ''
   endif
@@ -252,20 +302,24 @@ function! s:high_pso(l, c, rl, rc) abort
   if rl > l
     if c < strlen(getline(l))
       call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c + 2]])
+      call add(selected_text, strpart(getline(l), max([c - 1, start_col]), strlen(getline(l)) - c + 2))
     endif
     " if there are more than two lines
     if rl - l >= 2
       for line in range(l + 1, rl - 1)
         call s:CMP.matchaddpos('Visual', [[line, start_col, strlen(getline(line)) - start_col + 2]])
+        call add(selected_text, strpart(getline(line), start_col, strlen(getline(line)) - start_col + 2))
       endfor
     endif
     if rc > start_col
       call s:CMP.matchaddpos('Visual', [[rl, start_col, rc - start_col]])
+      call add(selected_text, strpart(getline(rl), start_col, rc - start_col))
     endif
   elseif rl == l
     if max([c, rc]) > start_col
       let begin = max([start_col, min([c, rc])])
       call s:CMP.matchaddpos('Visual', [[l, begin - 1, max([c, rc]) - begin + 1]])
+      call add(selected_text, strpart(getline(l), begin - 1, max([c, rc]) - begin + 1))
     endif
   else
     " let _l = rl
@@ -277,18 +331,22 @@ function! s:high_pso(l, c, rl, rc) abort
     let [l, c, rl, rc] = [rl, rc, l, c]
     if c < strlen(getline(l))
       call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c + 2]])
+      call add(selected_text, strpart(getline(l), max([c - 1, start_col]), strlen(getline(l)) - c + 2))
     endif
     " if there are more than two lines
     if rl - l >= 2
       for line in range(l + 1, rl - 1)
         call s:CMP.matchaddpos('Visual', [[line, start_col, strlen(getline(line)) - start_col + 2]])
+        call add(selected_text, strpart(getline(line), start_col, strlen(getline(line)) - start_col + 2))
       endfor
     endif
     if rc > start_col
       call s:CMP.matchaddpos('Visual', [[rl, start_col, rc - start_col]])
+      call add(selected_text, strpart(getline(rl), start_col, rc - start_col))
     endif
   endif
   redraw
+  return join(selected_text, "\n")
 endfunction
 
 function! s:get_lines_with_width(str, width) abort
@@ -330,6 +388,13 @@ function! s:update_msg_screen() abort
           call add(buffer, repeat(' ', 18) . ' ' . nr2char(9474) . ' ' .repeat(' ', 12) . ' ' . nr2char(9474) . ' ' . l )
         endfor
       endif
+      if has_key(msg, 'replyCounts') && msg.replyCounts > 0
+        if msg.replyCounts > 1
+          call add(buffer, repeat(' ', 18) . ' ' . nr2char(9474) . ' ' .repeat(' ', 12) . ' ' . nr2char(9474) . ' ' . printf('-> %s replies', msg.replyCounts))
+        else
+          call add(buffer, repeat(' ', 18) . ' ' . nr2char(9474) . ' ' .repeat(' ', 12) . ' ' . nr2char(9474) . ' -> 1 reply')
+        endif
+      endif
     endfor
     call setline(1, buffer)
     normal! G
@@ -339,12 +404,29 @@ function! s:update_msg_screen() abort
 endfunction
 
 function! s:echon() abort
+  let context = s:c_base . s:c_begin . s:c_char . s:c_end
+  if context =~# "\n"
+    let h = len(split(context, "\n"))
+    let end = context =~# "\n$" ? 1 : 0
+    let saved_cmdheight = &cmdheight
+    try
+      " here maybe cause E36
+      let &cmdheight = h + end
+    catch
+      let &cmdheight = saved_cmdheight
+    endtry
+  else
+    let &cmdheight = 1
+  endif
   redraw
   normal! :
   echohl Comment | echon s:c_base
   echohl None | echon s:c_begin
   echohl Wildmenu | echon s:c_char
   echohl None | echon s:c_end
+  if empty(s:c_char) && (has('nvim-0.5.0') || !has('nvim'))
+    echohl Comment | echon '_' | echohl None
+  endif
 endfunction
 
 function! s:windowsinit() abort
