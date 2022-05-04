@@ -27,7 +27,7 @@ syntax match VimChatRemoteNick /**`[^`]*`\*\*/ contains=VimChatRemoteNickR,VimCh
 syntax match VimChatPing /\s\zs@\S*/
 syntax match VimChatQuoteMsg /.*│\s>\s.*/ contains=VimChatTime,VimChatVert,VimChatNick
 syn region VimChatCodeBlockLines start=".*│\s*````*.*$" end="│\s*````*\ze\s*$" contains=VimChatTime,VimChatVert,VimChatNick keepend
-syntax match VimChatReplayCounts /.*│\s->\s\d*\sreplays/ contains=VimChatTime,VimChatVert,VimChatNick
+syntax match VimChatReplayCounts /.*│\s->\s\d*\s\(reply\|replies\)/ contains=VimChatTime,VimChatVert,VimChatNick
 " hi def link vimChatMsg	Comment
 hi def link VimChatTime Comment
 hi def link VimChatQuoteMsg Comment

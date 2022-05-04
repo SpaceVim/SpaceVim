@@ -368,8 +368,12 @@ function! s:update_msg_screen() abort
           call add(buffer, repeat(' ', 18) . ' ' . nr2char(9474) . ' ' .repeat(' ', 12) . ' ' . nr2char(9474) . ' ' . l )
         endfor
       endif
-      if has_key(msg, 'replays') && msg.replays > 0
-          call add(buffer, repeat(' ', 18) . ' ' . nr2char(9474) . ' ' .repeat(' ', 12) . ' ' . nr2char(9474) . ' ' . printf('-> %s replays', msg.replays))
+      if has_key(msg, 'replyCounts') && msg.replyCounts > 0
+        if msg.replyCounts > 1
+          call add(buffer, repeat(' ', 18) . ' ' . nr2char(9474) . ' ' .repeat(' ', 12) . ' ' . nr2char(9474) . ' ' . printf('-> %s replies', msg.replyCounts))
+        else
+          call add(buffer, repeat(' ', 18) . ' ' . nr2char(9474) . ' ' .repeat(' ', 12) . ' ' . nr2char(9474) . ' -> 1 reply')
+        endif
       endif
     endfor
     call setline(1, buffer)
