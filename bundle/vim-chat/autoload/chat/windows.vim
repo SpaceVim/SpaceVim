@@ -47,7 +47,7 @@ let s:last_channel = ''
 let s:current_channel  = ''
 let s:opened_channels = {}
 let s:messages = []
-let s:close_windows_char = ["\<Esc>", "\<C-c>"]
+let s:close_windows_char = ["\<Esc>"]
 let s:protocol = ''
 let s:chatting_commands = ['/set_protocol', '/set_channel']
 let s:all_protocols = ['gitter']
@@ -119,7 +119,18 @@ function! chat#windows#open() abort
     elseif char ==# "\<LeftRelease>" || char ==# "\x80\xfd-"
       let mouse_left_release_lnum = v:mouse_lnum
       let mouse_left_relsese_col = v:mouse_col
-      call s:high_pso(mouse_left_lnum, mouse_left_col, mouse_left_release_lnum, mouse_left_relsese_col)
+      let selected_text = s:high_pso(mouse_left_lnum, mouse_left_col, mouse_left_release_lnum, mouse_left_relsese_col)
+    elseif char ==# "\<C-c>"
+      " copy select text
+      if exists('selected_text') && !empty(selected_text)
+        try
+          let @+ = selected_text
+        catch
+          " fall back to register "
+          let @" = selected_text
+        endtry
+      endif
+      call clearmatches()
     elseif char ==# "\<Right>"
       "<Right> 向右移动光标
       let s:c_begin = s:c_begin . s:c_char
@@ -262,6 +273,7 @@ function! s:high_pso(l, c, rl, rc) abort
   let c = strlen(strcharpart(getline(l), 0, a:c)) + 1
   let rc = strlen(strcharpart(getline(rl), 0, a:rc)) + 1
   call clearmatches()
+  let selected_text = []
   if l ==# rl && c == rc
     return ''
   endif
@@ -270,20 +282,24 @@ function! s:high_pso(l, c, rl, rc) abort
   if rl > l
     if c < strlen(getline(l))
       call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c + 2]])
+      call add(selected_text, strpart(getline(l), max([c - 1, start_col]), strlen(getline(l)) - c + 2))
     endif
     " if there are more than two lines
     if rl - l >= 2
       for line in range(l + 1, rl - 1)
         call s:CMP.matchaddpos('Visual', [[line, start_col, strlen(getline(line)) - start_col + 2]])
+        call add(selected_text, strpart(getline(line), start_col, strlen(getline(line)) - start_col + 2))
       endfor
     endif
     if rc > start_col
       call s:CMP.matchaddpos('Visual', [[rl, start_col, rc - start_col]])
+      call add(selected_text, strpart(getline(rl), start_col, rc - start_col))
     endif
   elseif rl == l
     if max([c, rc]) > start_col
       let begin = max([start_col, min([c, rc])])
       call s:CMP.matchaddpos('Visual', [[l, begin - 1, max([c, rc]) - begin + 1]])
+      call add(selected_text, strpart(getline(l), begin - 1, max([c, rc]) - begin + 1))
     endif
   else
     " let _l = rl
@@ -295,18 +311,22 @@ function! s:high_pso(l, c, rl, rc) abort
     let [l, c, rl, rc] = [rl, rc, l, c]
     if c < strlen(getline(l))
       call s:CMP.matchaddpos('Visual', [[l, max([c - 1, start_col]), strlen(getline(l)) - c + 2]])
+      call add(selected_text, strpart(getline(l), max([c - 1, start_col]), strlen(getline(l)) - c + 2))
     endif
     " if there are more than two lines
     if rl - l >= 2
       for line in range(l + 1, rl - 1)
         call s:CMP.matchaddpos('Visual', [[line, start_col, strlen(getline(line)) - start_col + 2]])
+        call add(selected_text, strpart(getline(line), start_col, strlen(getline(line)) - start_col + 2))
       endfor
     endif
     if rc > start_col
       call s:CMP.matchaddpos('Visual', [[rl, start_col, rc - start_col]])
+      call add(selected_text, strpart(getline(rl), start_col, rc - start_col))
     endif
   endif
   redraw
+  return join(selected_text, "\n")
 endfunction
 
 function! s:get_lines_with_width(str, width) abort
