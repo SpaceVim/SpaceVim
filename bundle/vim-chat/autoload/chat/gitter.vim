@@ -196,7 +196,8 @@ endfunction
 
 
 let s:list_all_channels_jobid = -1
-let s:list_all_channels_result = []
+let s:list_all_channels_stdout = []
+let s:list_all_channels_stderr = []
 function! s:get_all_channels() abort
   if s:list_all_channels_jobid <= 0
     call chat#windows#push({
@@ -218,32 +219,31 @@ endfunction
 
 function! s:get_all_channels_stdout(id, data, event) abort
   for line in a:data
-    call s:LOG.debug(line)
+    call s:LOG.debug('get_all_channels_stdout: ' . line)
   endfor
-  let s:list_all_channels_result = s:list_all_channels_result + a:data
+  let s:list_all_channels_stdout = s:list_all_channels_stdout + a:data
 endfunction
 function! s:get_all_channels_stderr(id, data, event) abort
   for line in a:data
-    call s:LOG.debug(line)
+    call s:LOG.debug('get_all_channels_stderr: ' . line)
   endfor
-
+  let s:list_all_channels_stderr = s:list_all_channels_stderr + a:data
 endfunction
 function! s:get_all_channels_exit(id, data, event) abort
-  call s:LOG.debug(a:data)
-  if a:data ==# 0
-    let s:channels = s:JSON.json_decode(join(s:list_all_channels_result, ''))
+  call s:LOG.debug('get_all_channels_exit code: ' . a:data)
+  if a:data ==# 0 && !empty(s:list_all_channels_stdout)
+    let s:channels = s:JSON.json_decode(join(s:list_all_channels_stdout, ''))
   endif
+  call chat#windows#push({
+        \ 'user' : '--->',
+        \ 'username' : '--->',
+        \ 'room' : '',
+        \ 'protocol' : 'gitter',
+        \ 'msg' : 'list channels done!',
+        \ 'time': strftime("%Y-%m-%d %H:%M"),
+        \ })
   if !chat#windows#is_opened()
     call chat#notify#noti('gitter protocol channels updated!')
-  else
-    call chat#windows#push({
-          \ 'user' : '--->',
-          \ 'username' : '--->',
-          \ 'room' : '',
-          \ 'protocol' : 'gitter',
-          \ 'msg' : 'list channels done!',
-          \ 'time': strftime("%Y-%m-%d %H:%M"),
-          \ })
   endif
 endfunction
 
