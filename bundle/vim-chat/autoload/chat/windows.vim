@@ -116,7 +116,7 @@ function! chat#windows#open() abort
     elseif char ==# "\<LeftMouse>"
       let mouse_left_lnum = v:mouse_lnum
       let mouse_left_col = v:mouse_col
-    elseif char ==# "\<LeftRelease>"
+    elseif char ==# "\<LeftRelease>" || char ==# "\x80\xfd-"
       let mouse_left_release_lnum = v:mouse_lnum
       let mouse_left_relsese_col = v:mouse_col
       call s:high_pso(mouse_left_lnum, mouse_left_col, mouse_left_release_lnum, mouse_left_relsese_col)
