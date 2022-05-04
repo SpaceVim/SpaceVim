@@ -148,9 +148,8 @@ endfunction
 
 function! s:gitter_fetch_stderr(id, data, event) abort
   for line in a:data
-    call s:LOG.debug(line)
+    call s:LOG.debug('fetch_stderr :' . line)
   endfor
-
 endfunction
 
 function! s:gitter_fetch_exit(id, data, event) abort
