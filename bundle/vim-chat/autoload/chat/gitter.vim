@@ -164,6 +164,7 @@ function! s:gitter_fetch_exit(id, data, event) abort
               \ 'username' : msg.fromUser.username,
               \ 'room' : room,
               \ 'msg' : msg.text,
+              \ 'replays' : get(msg, 'threadMessageCount', 0),
               \ 'time': s:format_time(msg.sent),
               \ })
       endfor

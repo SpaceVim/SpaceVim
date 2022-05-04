@@ -368,6 +368,9 @@ function! s:update_msg_screen() abort
           call add(buffer, repeat(' ', 18) . ' ' . nr2char(9474) . ' ' .repeat(' ', 12) . ' ' . nr2char(9474) . ' ' . l )
         endfor
       endif
+      if has_key(msg, 'replays') && msg.replays > 0
+          call add(buffer, repeat(' ', 18) . ' ' . nr2char(9474) . ' ' .repeat(' ', 12) . ' ' . nr2char(9474) . ' ' . printf('-> %s replays', msg.replays))
+      endif
     endfor
     call setline(1, buffer)
     normal! G
