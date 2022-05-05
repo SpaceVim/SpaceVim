@@ -26,12 +26,18 @@ function! chat#gitter#enter_room(room) abort
     endif
     call s:fetch(roomid)
     let cmd = printf('curl -s --show-error --fail -N -H "Accept: application/json" -H "Authorization: Bearer %s" "https://stream.gitter.im/v1/rooms/%s/chatMessages"',g:chat_gitter_token , roomid)
-    let jobid = s:JOB.start(cmd, {
-          \ 'on_stdout' : function('s:gitter_stdout'),
-          \ 'on_stderr' : function('s:gitter_stderr'),
-          \ 'on_exit' : function('s:gitter_exit'),
+    let s:room_jobs[a:room] = s:JOB.start(cmd, {
+          \ 'on_stdout' : function('s:gitter_stream_stdout'),
+          \ 'on_stderr' : function('s:gitter_stream_stderr'),
+          \ 'on_exit' : function('s:gitter_stream_exit'),
           \ })
-    let s:room_jobs[a:room] = jobid
+    call chat#windows#push({
+          \ 'user' : '--->',
+          \ 'username' : '--->',
+          \ 'room' : a:room,
+          \ 'msg' : 'connected to channel!',
+          \ 'time': strftime("%Y-%m-%d %H:%M"),
+          \ })
   endif
   return 1
 endfunction
@@ -55,10 +61,10 @@ function! s:roomid_to_room(roomid) abort
 endfunction
 
 
-function! s:gitter_stdout(id, data, event) abort
+function! s:gitter_stream_stdout(id, data, event) abort
   for line in a:data
     if line !~# '^\s*$'
-      call s:LOG.debug(line)
+      call s:LOG.debug('gitter_stream_stdout :' . line)
     endif
   endfor
   for room in keys(s:room_jobs)
@@ -98,15 +104,32 @@ function! s:format_time(t) abort
   return matchstr(a:t, '\d\d\d\d-\d\d-\d\d') . ' ' . matchstr(a:t, '\d\d:\d\d')
 endfunction
 
-function! s:gitter_stderr(id, data, event) abort
+function! s:gitter_stream_stderr(id, data, event) abort
   for line in a:data
-    call s:LOG.debug(line)
+    call s:LOG.debug('gitter_stream_stderr :' . line)
   endfor
 
 endfunction
 
-function! s:gitter_exit(id, data, event) abort
-  call s:LOG.debug(a:data)
+function! s:gitter_stream_exit(id, data, event) abort
+  call s:LOG.debug('gitter_stream_exit :' . a:data)
+  for room in keys(s:room_jobs)
+    if s:room_jobs[room] ==# a:id
+      call chat#windows#push({
+            \ 'user' : '--->',
+            \ 'username' : '--->',
+            \ 'room' : room,
+            \ 'msg' : 'The channel is disconnected.',
+            \ 'time': strftime("%Y-%m-%d %H:%M"),
+            \ })
+      if !chat#windows#is_opened()
+            \ && s:enable_notify(room)
+        call chat#notify#noti('The ' . room . ' channel is disconnected.')
+      endif
+      unlet s:room_jobs[room]
+      return
+    endif
+  endfor
 endfunction
 
 let s:fetch_response = {}
