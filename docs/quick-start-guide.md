@@ -132,6 +132,8 @@ an example for basic usage of SpaceVim. For more info, please check out [documen
 If you want to use vim script to configure SpaceVim, please check out the
 [bootstrap function](../documentation/#bootstrap-functions) section.
 
+If there are errors in your `init.toml`, the setting will not be applied. See [FAQ](../faq/#why-are-the-options-in-toml-file-not-applied). There should be only one `[options]` section in `init.toml`.
+
 ## Online tutorials
 
 This is a list of online tutorials for using SpaceVim as a general IDE and programming language support:
