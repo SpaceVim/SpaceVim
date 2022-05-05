@@ -54,15 +54,19 @@ if (Get-Command "git" -ErrorAction SilentlyContinue) {
 
 echo ""
 
-echo "==> Testing Vim"
+echo "==> Testing Vim/Neovim"
 if (Get-Command "vim" -ErrorAction SilentlyContinue) {
     echo ($(vim --version) -split '\n')[0]
     echo "[OK] Test successfully. Moving to next..."
     sleep 1
+} elseif (Get-Command "nvim" -ErrorAction SilentlyContinue) {
+    echo ($(nvim --version) -split '\n')[0]
+    echo "[OK] Test successfully. Moving to next..."
+    sleep 1
 } else {
     echo ""
-    echo "[ERROR] Unable to find 'vim.exe' in your PATH"
-    echo "Please install vim later or make your PATH correctly set!"
+    echo "[ERROR] Unable to find 'vim.exe' or 'nvim.exe' in your PATH"
+    echo "Please install neovim/vim later or make your PATH correctly set!"
     echo ">>> Ready to Exit......"
     Pause
     exit
