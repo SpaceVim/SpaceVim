@@ -229,21 +229,35 @@ function! s:get_all_channels_stderr(id, data, event) abort
   endfor
   let s:list_all_channels_stderr = s:list_all_channels_stderr + a:data
 endfunction
+" I am not sure if this is a bug. sometimes the exit data is 0, but there no
+" stdout, all responses are sent to stderr.
 function! s:get_all_channels_exit(id, data, event) abort
   call s:LOG.debug('get_all_channels_exit code: ' . a:data)
   if a:data ==# 0 && !empty(s:list_all_channels_stdout)
     let s:channels = s:JSON.json_decode(join(s:list_all_channels_stdout, ''))
-  endif
-  call chat#windows#push({
-        \ 'user' : '--->',
-        \ 'username' : '--->',
-        \ 'room' : '',
-        \ 'protocol' : 'gitter',
-        \ 'msg' : 'list channels done!',
-        \ 'time': strftime("%Y-%m-%d %H:%M"),
-        \ })
-  if !chat#windows#is_opened()
-    call chat#notify#noti('gitter protocol channels updated!')
+    call chat#windows#push({
+          \ 'user' : '--->',
+          \ 'username' : '--->',
+          \ 'room' : '',
+          \ 'protocol' : 'gitter',
+          \ 'msg' : 'list channels done!',
+          \ 'time': strftime("%Y-%m-%d %H:%M"),
+          \ })
+    if !chat#windows#is_opened()
+      call chat#notify#noti('gitter protocol channels updated!')
+    endif
+  else
+    call chat#windows#push({
+          \ 'user' : '--->',
+          \ 'username' : '--->',
+          \ 'room' : '',
+          \ 'protocol' : 'gitter',
+          \ 'msg' : 'failed to list channels of gitter protocol!',
+          \ 'time': strftime("%Y-%m-%d %H:%M"),
+          \ })
+    if !chat#windows#is_opened()
+      call chat#notify#noti('failed to list channels of gitter protocol!')
+    endif
   endif
 endfunction
 
