@@ -14,12 +14,11 @@ let s:LOG = SpaceVim#logger#derive('irc')
 let s:JOB = SpaceVim#api#import('job')
 
 function! chat#irc#send(room, msg) abort
-
+  call chat#irc#send_raw(printf('PRIVMSG %s %s', a:room, a:msg))
 endfunction
 
 function! chat#irc#enter_room(room) abort
-
-
+  call chat#irc#send_raw('JOIN ' . a:room)
   return 1
 endfunction
 
@@ -30,12 +29,14 @@ function! chat#irc#send_raw(msg) abort
   call s:JOB.send(s:irc_channel_id, a:msg)
 endfunction
 
-function! chat#irc#get_channles() abort
+function! chat#irc#get_channels() abort
   if s:irc_channel_id <= 0
     let s:irc_channel_id = s:JOB.start(['java', '-cp', s:server_lib, 'com.wsdjeg.chat.Client', g:chat_irc_server_address, g:char_irc_server_port],{
           \ 'on_stdout' : function('s:on_data'),
           \ 'on_exit' : function('s:on_exit'),
           \ })
+    call chat#irc#send_raw('NICK wsdjeg2')
+    call chat#irc#send_raw('USER wsdjeg2 - - wsdjeg2')
   endif
   return []
 endfunction
@@ -43,6 +44,18 @@ endfunction
 function! s:on_data(id, data, name) abort
   for line in a:data
     call s:LOG.debug(line)
+    if line =~# 'PRIVMSG'
+      let user = matchstr(line, '^:[^!]*')
+      let room = matchstr(line, 'PRIVMSG\s\zs#\S*')
+      let msg = matchstr(line, 'PRIVMSG\s\zs#\S*')
+      call chat#windows#push({
+            \ 'user' : user,
+            \ 'username' : user,
+            \ 'room' : room,
+            \ 'msg' : msg,
+            \ 'time': strftime("%Y-%m-%d %H:%M"),
+            \ })
+    endif
   endfor
 endfunction
 
