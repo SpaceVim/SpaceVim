@@ -15,6 +15,13 @@ let s:JOB = SpaceVim#api#import('job')
 
 function! chat#irc#send(room, msg) abort
   call chat#irc#send_raw(printf('PRIVMSG %s %s', a:room, a:msg))
+  call chat#windows#push({
+        \ 'user' : 'wsdjeg2',
+        \ 'username' : 'wsdjeg2',
+        \ 'room' : a:room,
+        \ 'msg' : a:msg,
+        \ 'time': strftime("%Y-%m-%d %H:%M"),
+        \ })
 endfunction
 
 function! chat#irc#enter_room(room) abort
@@ -43,11 +50,12 @@ endfunction
 
 function! s:on_data(id, data, name) abort
   for line in a:data
+    let line = substitute(line, '\r', '', 'g')
     call s:LOG.debug(line)
     if line =~# 'PRIVMSG'
-      let user = matchstr(line, '^:[^!]*')
+      let user = matchstr(line, '^:\zs[^!]*')
       let room = matchstr(line, 'PRIVMSG\s\zs#\S*')
-      let msg = matchstr(line, 'PRIVMSG\s#\S*')
+      let msg = matchstr(line, 'PRIVMSG\s#\S*\s:\zs.*')
       call chat#windows#push({
             \ 'user' : user,
             \ 'username' : user,
