@@ -475,6 +475,8 @@ function! s:enter() abort
         let s:opened_channels[protocol] = []
       endif
       let s:protocol = protocol
+      " after switch protocol, the current_channel should be cleared
+      let s:current_channel = ''
     catch
       call chat#windows#push({
             \ 'user' : '--->',
