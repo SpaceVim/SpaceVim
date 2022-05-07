@@ -47,7 +47,7 @@ function! s:on_data(id, data, name) abort
     if line =~# 'PRIVMSG'
       let user = matchstr(line, '^:[^!]*')
       let room = matchstr(line, 'PRIVMSG\s\zs#\S*')
-      let msg = matchstr(line, 'PRIVMSG\s\zs#\S*')
+      let msg = matchstr(line, 'PRIVMSG\s#\S*')
       call chat#windows#push({
             \ 'user' : user,
             \ 'username' : user,
