@@ -50,7 +50,7 @@ let s:messages = []
 let s:close_windows_char = ["\<Esc>"]
 let s:protocol = ''
 let s:chatting_commands = ['/set_protocol', '/set_channel']
-let s:all_protocols = ['gitter']
+let s:all_protocols = ['gitter', 'irc']
 function! chat#windows#open() abort
   " "\<Plug>(_incsearch-nohlsearch)" will be send to vim on CursorMoved event,
   " so use noautocmd to avoid this issue
@@ -377,7 +377,8 @@ function! s:update_msg_screen() abort
   if s:msg_win_opened
     normal! gg"_dG
     let buffer = []
-    let msgs = filter(deepcopy(s:messages), 'v:val["room"] ==# s:current_channel || (empty(v:val["room"]) && v:val["protocol"] ==# s:protocol)')
+    let msgs = filter(deepcopy(s:messages), '(!empty(v:val["room"]) && v:val["room"] ==# s:current_channel) ||' 
+          \ . ' (empty(v:val["room"]) && has_key(v:val, "protocol") && v:val["protocol"] ==# s:protocol)')
     for msg in msgs
       let name = s:get_str_with_width(msg['user'], 13)
       let message = s:get_lines_with_width(msg['msg'], winwidth('$') - 36)
