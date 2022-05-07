@@ -34,6 +34,7 @@ function! chat#irc#get_channles() abort
   if s:irc_channel_id <= 0
     let s:irc_channel_id = s:JOB.start(['java', '-cp', s:server_lib, 'com.wsdjeg.chat.Client', g:chat_irc_server_address, g:char_irc_server_port],{
           \ 'on_stdout' : function('s:on_data'),
+          \ 'on_exit' : function('s:on_exit'),
           \ })
   endif
   return []
@@ -43,6 +44,10 @@ function! s:on_data(id, data, name) abort
   for line in a:data
     call s:LOG.debug(line)
   endfor
+endfunction
+
+function! s:on_exit(...) abort
+  let s:irc_channel_id = 0
 endfunction
 
 function! s:on_vim_data(channel, data) abort
