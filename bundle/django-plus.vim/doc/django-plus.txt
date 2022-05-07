@@ -1,0 +1,208 @@
+*django-plus.txt* *django-plus*
+
+             $$\                                                             ~
+             $$ |                                              $$\           ~
+        $$$$$$$ |$$\  $$$$$$\  $$$$$$$\   $$$$$$\   $$$$$$\    $$ |          ~
+       $$  __$$ |\__| \____$$\ $$  __$$\ $$  __$$\ $$  __$$\$$$$$$$$\        ~
+       $$ /  $$ |$$\  $$$$$$$ |$$ |  $$ |$$ /  $$ |$$ /  $$ \__$$  __|       ~
+       $$ |  $$ |$$ |$$  __$$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |  $$ |          ~
+       \$$$$$$$ |$$ |\$$$$$$$ |$$ |  $$ |\$$$$$$$ |\$$$$$$  |  \__|          ~
+        \_______|$$ | \_______|\__|  \__| \____$$ | \______/                 ~
+           $$\   $$ |                    $$\   $$ |                          ~
+           \$$$$$$  |                    \$$$$$$  |                          ~
+            \______/                      \______/                           ~
+
+==============================================================================
+CONTENTS                                                 *django-plus-contents*
+
+  Intro                     |django-plus-intro|
+  Settings                  |django-plus-settings|
+  Completions               |django-plus-completions|
+  Python Improvements       |django-plus-python|
+  HTML Improvements         |django-plus-html|
+  Useful Plugins            |django-plus-plugins|
+  License                   |django-plus-license|
+
+==============================================================================
+INTRO                                                       *django-plus-intro*
+
+This plugin can be found on Github:
+https://github.com/tweekmonster/django-plus.vim
+
+The following variables are set when a file within a Django project is
+detected:
+
+                                                                  *b:is_django*
+b:is_django		Set for any opened file that's within a Django
+			project.
+
+                                                         *b:is_django_settings*
+b:is_django_settings	Set for any opened file that ends with `settings.py`
+			or is a file that's within a directory that contains
+			`settings.py`
+
+
+==============================================================================
+SETTINGS                                                 *django-plus-settings*
+
+                                                      *g:django_max_scan_depth*
+g:django_max_scan_depth
+			The maximum number of parent directories to scan
+			for a Django project.  The default is `10` which is a
+			pretty reasonable depth.  If your directory
+			structure goes deeper for files you are actually
+			editing, you might want to think about restructuring.
+
+                                                           *g:django_filetypes*
+g:django_filetypes	A list of filename patterns.  Each pattern must be a
+			|wildcard| pattern. If a file matches, the 'filetype'
+			will be updated to include `.django`
+
+			For example: Matching `*.xml` will set the 'filetype'
+			to `xml.django`
+
+			Note: Look at `$VIMRUNTIME/syntax/django.vim`.
+			The `django` filetype is for templates, NOT python
+			scripts.  Things may not work the way you expect if
+			you use `python.django` as a filetype for Python
+			scripts.  Snippet plugins are treating the `django`
+			filetype incorrectly.  You could say that the built in
+			syntax script got it wrong, but it was wrong first.
+
+							*g:django_impsort_top*
+g:django_impsort_top	If enabled, configures |impsort| to sort Django
+			imports to the top of import groups.  Since this is
+			configured as an ftplugin and sets up buffer
+			variables, you must restart Vim for this to take
+			effect.
+
+			Requires `impsort.vim` to be installed.  
+			See: |django-plus-plugins|
+
+			Default: `1`
+
+
+==============================================================================
+COMPLETIONS                                           *django-plus-completions*
+
+Completions are found by running an external Python script the first time
+completions are used.  If you are using Neovim, a completion source for
+`deoplete.nvim` is included.
+
+Default settings and template tags & filters will be available for completion.
+In files related to settings, no prefix is needed to get completions.  In all
+other files, you need to type `settings.` to trigger completions.
+
+QuerySet completions will be displayed after `.` (periods) since it's not easy
+to determine if a variable is a QuerySet object.  The default completions are
+displayed before QuerySet completions.  If `.objects.` appears before the
+cursor, QuerySet comletions will be displayed exclusively.
+
+In `htmldjango` files, completions for template tags will be displayed after
+`{%` and filters will be displayed after `|` (pipe character).  These
+completions will only complete words, not entire tag/filter.  Expanding the
+`%%` snippet will give you an easy way to create block tags.
+
+If `manage.py` is found during a scan, it will be used to get your project's
+settings, and template tags & filters.  Django's app registry will be
+populated to get tags & filters.  For settings, all Python scripts found in
+the same directory as `settings.py` will be scanned for uppercase variable
+names.
+
+
+==============================================================================
+PYTHON IMPROVEMENTS                                        *django-plus-python*
+
+* Completions for Django settings when `b:is_django_settings` is present.
+* Completions for `settings.` when `b:is_django` is present in a `.py` file.
+* QuerySets could be lurking anywhere.  That's why QuerySet completions will
+  be included for basically anything after a period.
+* If you are using `Ultisnips`, Django snippets are enabled and
+  `UltiSnips#FileTypeChanged()` is called to ensure that `:UltiSnipsEdit` opens
+  `django.snippets` by default instead of `python.snippets`.
+
+
+==============================================================================
+HTML IMPROVEMENTS                                            *django-plus-html*
+
+* The filetype is set to `htmldjango` when editing HTML files.
+* Basic completions for template tags and filters.
+* Django tags are indented correctly, including custom tags.
+* `matchit` configuration for Django tags, including custom tags.
+  Additionally, the cursor is placed at the beginning of the tag name.
+* Tag and variable blocks are highlighted within script tags, style tags, and
+  HTML attributes.
+* If you are using Ultisnips, HTML snippets are enabled and
+  `UltiSnips#FileTypeChanged()` is called to ensure that `:UltiSnipsEdit` opens
+  `htmldjango.snippets` by default instead of `html.snippets`.
+
+
+==============================================================================
+PLUGINS                                                   *django-plus-plugins*
+
+This is a list of plugins that are useful for getting the most out of Django+
+or making Django development a little more pleasant.
+
+
+{vim-jedi} - Provides accurate completions as well as other productivity
+related features.
+
+URL: https://github.com/davidhalter/jedi-vim
+
+
+{UltiSnips} - A snippet engine for Vim.  You will need to install/create
+snippets.
+
+URL: https://github.com/SirVer/ultisnips
+
+
+{vim-snippets} - A good source for pre-made snippets.
+
+URL: https://github.com/honza/vim-snippets
+
+
+{impsort.vim} - Sort your import lines.
+
+URL: https://github.com/tweekmonster/impsort.vim
+
+
+If you are using Neovim:
+
+{deoplete.nvim} - An excellent asynchronous completion engine.
+
+URL: https://github.com/Shougo/deoplete.nvim
+
+
+{deoplete-jedi} - Uses Jedi to get Python completions.  It is exceptionally
+fast, but is _only_ a completion source.  {vim-jedi} will still be useful, but
+its completions need to be disabled.
+
+URL: https://github.com/zchee/deoplete-jedi
+
+
+==============================================================================
+LICENSE                                                   *django-plus-license*
+
+The MIT License
+Copyright (c) 2016 Tommy Allen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+vim:tw=78:ts=8:noet:ft=help:norl:
