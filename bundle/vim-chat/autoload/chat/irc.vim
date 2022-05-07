@@ -27,6 +27,8 @@ let s:irc_channel_id = 0
 function! chat#irc#get_channles() abort
   if s:irc_channel_id <= 0
     if exists('*sockconnect')
+      " what the fuck? 
+      " connection refused
       let s:irc_channel_id = sockconnect('tcp', join([g:chat_irc_server_address, g:char_irc_server_port], ':'), {
             \ 'on_data' : function('s:on_data')
             \ })
