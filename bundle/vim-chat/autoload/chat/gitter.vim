@@ -281,6 +281,7 @@ function! s:get_all_channels_exit(id, data, event) abort
     if !chat#windows#is_opened()
       call chat#notify#noti('failed to list channels of gitter protocol!')
     endif
+    let s:list_all_channels_jobid = -1
   endif
 endfunction
 
