@@ -8,8 +8,10 @@
 
 let g:chat_irc_server_address = 'irc.libera.chat'
 let g:char_irc_server_port = '6667'
+let s:server_lib = g:_spacevim_root_dir . 'bundle/Chatting-server/target'
 
 let s:LOG = SpaceVim#logger#derive('irc')
+let s:JOB = SpaceVim#api#import('job')
 
 function! chat#irc#send(room, msg) abort
 
@@ -26,17 +28,9 @@ let s:irc_channel_id = 0
 
 function! chat#irc#get_channles() abort
   if s:irc_channel_id <= 0
-    if exists('*sockconnect')
-      " what the fuck? 
-      " connection refused
-      let s:irc_channel_id = sockconnect('tcp', join([g:chat_irc_server_address, g:char_irc_server_port], ':'), {
-            \ 'on_data' : function('s:on_data')
-            \ })
-    else
-      let s:irc_channel_id = ch_open(join([g:chat_irc_server_address, g:char_irc_server_port], ':'), {
-            \ 'callback' : function('s:on_vim_data')
-            \ })
-    endif
+    let s:irc_channel_id = s:JOB.start(['java', '-cp', s:server_lib, 'com.wsdjeg.chat.Client', g:chat_irc_server_address, g:char_irc_server_port],{
+          \ 'on_stdout' : function('s:on_data'),
+          \ })
   endif
   return []
 endfunction
@@ -49,7 +43,7 @@ function! s:on_data(id, data, name) abort
 endfunction
 
 function! s:on_vim_data(channel, data) abort
-    call s:LOG.debug(a:data)
+  call s:LOG.debug(a:data)
 endfunction
 
 function! chat#irc#get_user_count(room) abort
