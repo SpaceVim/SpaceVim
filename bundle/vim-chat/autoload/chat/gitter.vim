@@ -19,12 +19,14 @@ let g:chat_gitter_token = get(g:, 'chat_gitter_token', '')
 
 let s:room_jobs = {}
 function! chat#gitter#enter_room(room) abort
-  if !has_key(s:room_jobs, a:room)
-    let roomid = s:room_to_roomid(a:room)
-    if empty(roomid)
-      return 0
-    endif
+  let roomid = s:room_to_roomid(a:room)
+  if empty(roomid)
+    return 0
+  endif
+  if !has_key(s:fetch_response, a:room)
     call s:fetch(roomid)
+  endif
+  if !has_key(s:room_jobs, a:room)
     let cmd = printf('curl -s --show-error --fail -N -H "Accept: application/json" -H "Authorization: Bearer %s" "https://stream.gitter.im/v1/rooms/%s/chatMessages"',g:chat_gitter_token , roomid)
     let s:room_jobs[a:room] = s:JOB.start(cmd, {
           \ 'on_stdout' : function('s:gitter_stream_stdout'),
@@ -138,7 +140,8 @@ function! s:fetch(roomid) abort
   if !has_key(s:fetch_response, room)
     let cmd = printf( 'curl  -s --show-error --fail  -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms/%s/chatMessages?limit=50"', g:chat_gitter_token, a:roomid)
     let s:fetch_response[room] = {
-          \ 'response' : [],
+          \ 'stdout' : [],
+          \ 'stderr' : [],
           \ 'jobid' : s:JOB.start(cmd,
           \ {
             \ 'on_stdout' : function('s:gitter_fetch_stdout'),
@@ -163,7 +166,7 @@ function! s:gitter_fetch_stdout(id, data, event) abort
   call s:LOG.debug('s:fetch_response keys :' . string(keys(s:fetch_response)))
   for room in keys(s:fetch_response)
     if s:fetch_response[room].jobid ==# a:id
-      let s:fetch_response[room].response += a:data
+      let s:fetch_response[room].stdout += a:data
       break
     endif
   endfor
@@ -173,26 +176,32 @@ function! s:gitter_fetch_stderr(id, data, event) abort
   for line in a:data
     call s:LOG.debug('fetch_stderr :' . line)
   endfor
+  for room in keys(s:fetch_response)
+    if s:fetch_response[room].jobid ==# a:id
+      let s:fetch_response[room].stderr += a:data
+      break
+    endif
+  endfor
 endfunction
 
 function! s:gitter_fetch_exit(id, data, event) abort
-  call s:LOG.debug('fetch job exit code' . a:data)
+  call s:LOG.debug('fetch job exit code :' . a:data)
   for room in keys(s:fetch_response)
     if s:fetch_response[room].jobid ==# a:id
-      let messages = s:JSON.json_decode(join(s:fetch_response[room].response, ''))
-      let msgs = []
-      for msg in messages
-        call add(msgs, {
-              \ 'user' : msg.fromUser.displayName,
-              \ 'username' : msg.fromUser.username,
-              \ 'room' : room,
-              \ 'msg' : msg.text,
-              \ 'replyCounts' : get(msg, 'threadMessageCount', 0),
-              \ 'time': s:format_time(msg.sent),
-              \ })
-      endfor
-      call chat#windows#push(msgs)
-      if a:data ==# 0
+      if !empty(s:fetch_response[room].stdout)
+        let messages = s:JSON.json_decode(join(s:fetch_response[room].stdout, ''))
+        let msgs = []
+        for msg in messages
+          call add(msgs, {
+                \ 'user' : msg.fromUser.displayName,
+                \ 'username' : msg.fromUser.username,
+                \ 'room' : room,
+                \ 'msg' : msg.text,
+                \ 'replyCounts' : get(msg, 'threadMessageCount', 0),
+                \ 'time': s:format_time(msg.sent),
+                \ })
+        endfor
+        call chat#windows#push(msgs)
         call chat#windows#push({
               \ 'user' : '--->',
               \ 'username' : '--->',
@@ -200,8 +209,18 @@ function! s:gitter_fetch_exit(id, data, event) abort
               \ 'msg' : 'fetch channel message done!',
               \ 'time': strftime("%Y-%m-%d %H:%M"),
               \ })
+        return
+      else
+        call chat#windows#push({
+              \ 'user' : '--->',
+              \ 'username' : '--->',
+              \ 'room' : room,
+              \ 'msg' : 'failed to fetch message.',
+              \ 'time': strftime("%Y-%m-%d %H:%M"),
+              \ })
+        unlet s:fetch_response[room]
       endif
-      break
+      return
     endif
   endfor
 endfunction
