@@ -26,6 +26,10 @@ endfunction
 
 let s:irc_channel_id = 0
 
+function! chat#irc#send_raw(msg) abort
+  call s:JOB.send(s:irc_channel_id, a:msg)
+endfunction
+
 function! chat#irc#get_channles() abort
   if s:irc_channel_id <= 0
     let s:irc_channel_id = s:JOB.start(['java', '-cp', s:server_lib, 'com.wsdjeg.chat.Client', g:chat_irc_server_address, g:char_irc_server_port],{
@@ -34,7 +38,6 @@ function! chat#irc#get_channles() abort
   endif
   return []
 endfunction
-
 
 function! s:on_data(id, data, name) abort
   for line in a:data
