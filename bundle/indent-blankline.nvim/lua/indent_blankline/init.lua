@@ -80,7 +80,7 @@ M.setup = function(options)
         options.filetype_exclude,
         vim.g.indent_blankline_filetype_exclude,
         vim.g.indentLine_fileTypeExclude,
-        { "lspinfo", "packer", "checkhealth", "help", "" }
+        { "lspinfo", "packer", "checkhealth", "help", "man", "" }
     )
     vim.g.indent_blankline_bufname_exclude = o(
         options.bufname_exclude,
@@ -90,7 +90,8 @@ M.setup = function(options)
     vim.g.indent_blankline_buftype_exclude = o(
         options.buftype_exclude,
         vim.g.indent_blankline_buftype_exclude,
-        vim.g.indentLine_bufTypeExclude
+        vim.g.indentLine_bufTypeExclude,
+        { "terminal", "nofile", "quickfix" }
     )
     vim.g.indent_blankline_viewport_buffer = o(options.viewport_buffer, vim.g.indent_blankline_viewport_buffer, 10)
     vim.g.indent_blankline_use_treesitter = o(options.use_treesitter, vim.g.indent_blankline_use_treesitter, false)
