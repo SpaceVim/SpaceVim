@@ -215,21 +215,22 @@ CONTENTS                                                   *SpaceVim-contents*
       120. lang#wolfram.........................|SpaceVim-layers-lang-wolfram|
       121. lang#xml.................................|SpaceVim-layers-lang-xml|
       122. lang#xquery...........................|SpaceVim-layers-lang-xquery|
-      123. lang#zig.................................|SpaceVim-layers-lang-zig|
-      124. language server protocol......................|SpaceVim-layers-lsp|
-      125. leaderf...................................|SpaceVim-layers-leaderf|
-      126. mail.........................................|SpaceVim-layers-mail|
-      127. operator.................................|SpaceVim-layers-operator|
-      128. shell.......................................|SpaceVim-layers-shell|
-      129. ssh...........................................|SpaceVim-layers-ssh|
-      130. test.........................................|SpaceVim-layers-test|
-      131. tmux.........................................|SpaceVim-layers-tmux|
-      132. tools#dash.............................|SpaceVim-layers-tools-dash|
-      133. tools#mpv...............................|SpaceVim-layers-tools-mpv|
-      134. tools#zeal.............................|SpaceVim-layers-tools-zeal|
-      135. treesitter.............................|SpaceVim-layers-treesitter|
-      136. ui.............................................|SpaceVim-layers-ui|
-      137. unite.......................................|SpaceVim-layers-unite|
+      123. lang#yang...............................|SpaceVim-layers-lang-yang|
+      124. lang#zig.................................|SpaceVim-layers-lang-zig|
+      125. language server protocol......................|SpaceVim-layers-lsp|
+      126. leaderf...................................|SpaceVim-layers-leaderf|
+      127. mail.........................................|SpaceVim-layers-mail|
+      128. operator.................................|SpaceVim-layers-operator|
+      129. shell.......................................|SpaceVim-layers-shell|
+      130. ssh...........................................|SpaceVim-layers-ssh|
+      131. test.........................................|SpaceVim-layers-test|
+      132. tmux.........................................|SpaceVim-layers-tmux|
+      133. tools#dash.............................|SpaceVim-layers-tools-dash|
+      134. tools#mpv...............................|SpaceVim-layers-tools-mpv|
+      135. tools#zeal.............................|SpaceVim-layers-tools-zeal|
+      136. treesitter.............................|SpaceVim-layers-treesitter|
+      137. ui.............................................|SpaceVim-layers-ui|
+      138. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. alternate file........................|SpaceVim-usage-alternate-file|
       2. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
@@ -5249,6 +5250,18 @@ disabled by default, to enable this layer, add following snippet to  your
   [[layers]]
     name = 'lang#xquery'
 <
+
+==============================================================================
+LANG#YANG                                          *SpaceVim-layers-lang-yang*
+
+This layer adds syntax highlighting for the YANG data file. It is disabled by
+default, to enable this layer, add following snippet to your SpaceVim
+configuration file.
+>
+  [[layers]]
+    name = 'lang#yang'
+<
+
 
 ==============================================================================
 LANG#ZIG                                            *SpaceVim-layers-lang-zig*
