@@ -242,10 +242,11 @@ CONTENTS                                                   *SpaceVim-contents*
       8. undo-tree...................................|SpaceVim-usage-undotree|
       9. windows-and-tabs....................|SpaceVim-usage-windows-and-tabs|
   8. Plugins................................................|SpaceVim-plugins|
-      1. iedit........................................|SpaceVim-plugins-iedit|
-      2. runner......................................|SpaceVim-plugins-runner|
-      3. tab manager.............................|SpaceVim-plugins-tabmanager|
-      4. todo manager...........................|SpaceVim-plugins-todomanager|
+      1. autosave..................................|SpaceVim-plugins-autosave|
+      2. iedit........................................|SpaceVim-plugins-iedit|
+      3. runner......................................|SpaceVim-plugins-runner|
+      4. tab manager.............................|SpaceVim-plugins-tabmanager|
+      5. todo manager...........................|SpaceVim-plugins-todomanager|
   9. API........................................................|SpaceVim-api|
       1. clock............................................|SpaceVim-api-clock|
       2. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
@@ -5978,6 +5979,12 @@ The following key bindings can be used to manager vim windows and tabs.
 PLUGINS                                                     *SpaceVim-plugins*
 
 This is a list of buildin plugins.
+
+==============================================================================
+AUTOSAVE                                           *SpaceVim-plugins-autosave*
+
+The `autosave` plugin will save your work automatically, and this plugin has
+been used in `edit` layer, checkout |SpaceVim-layers-edit| for more info.
 
 ==============================================================================
 IEDIT                                                 *SpaceVim-plugins-iedit*

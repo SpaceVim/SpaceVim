@@ -15,6 +15,15 @@
 " https://github.com/chrisbra/vim-autosave
 " This plugin uses timers to automatically save your work as temporary files.
 
+if exists('s:autosave_timer')
+  finish
+endif
+
+""
+" @section autosave, plugins-autosave
+" @parentsection plugins
+" The `autosave` plugin will save your work automatically, and this plugin has
+" been used in `edit` layer, checkout @section(layers-edit) for more info.
 
 let s:default_opt = {
       \ 'timeoutlen' : 60*5*1000,
