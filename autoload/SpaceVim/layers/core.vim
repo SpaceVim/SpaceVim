@@ -316,6 +316,10 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `stridx(expand('%:p'), getcwd()) < 0? expand('%:p:h'): getcwd()`", 'open-file-tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'exe "Defx -no-toggle " . fnameescape(expand("%:p:h"))', 'show-file-tree-at-buffer-dir', 1)
   elseif g:spacevim_filemanager ==# 'nvim-tree'
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'NvimTreeToggle', 'toggle-file-tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'NvimTree', 'show-file-tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "NvimTreeFindFile", 'open-file-tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'exe "NvimTreeOpen " . fnameescape(expand("%:p:h"))', 'show-file-tree-at-buffer-dir', 1)
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call SpaceVim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
   nnoremap <silent> <Plug>YankGitRemoteURL :call SpaceVim#util#CopyToClipboard(2)<Cr>
