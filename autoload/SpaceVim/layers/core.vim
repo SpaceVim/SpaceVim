@@ -84,6 +84,8 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-git',{'merged' : 0, 'loadconf' : 1}])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-icons',{'merged' : 0}])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-sftp',{'merged' : 0}])
+  elseif g:spacevim_filemanager ==# 'nvim-tree'
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-tree.lua',{'merged' : 0, 'loadconf' : 1}])
   endif
 
   if !g:spacevim_vimcompatible
@@ -313,6 +315,7 @@ function! SpaceVim#layers#core#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show-file-tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `stridx(expand('%:p'), getcwd()) < 0? expand('%:p:h'): getcwd()`", 'open-file-tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'exe "Defx -no-toggle " . fnameescape(expand("%:p:h"))', 'show-file-tree-at-buffer-dir', 1)
+  elseif g:spacevim_filemanager ==# 'nvim-tree'
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'y'], 'call SpaceVim#util#CopyToClipboard()', 'show-and-copy-buffer-filename', 1)
   nnoremap <silent> <Plug>YankGitRemoteURL :call SpaceVim#util#CopyToClipboard(2)<Cr>
