@@ -15,6 +15,14 @@ let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:LOG = SpaceVim#logger#derive('gitter')
 
+" the win 11 curl in system32/ directory do not support unicode, use
+" neovim's curl
+if has('nvim') && exists('v:progpath') && (has('win64') || has('win32'))
+  let s:curl = fnamemodify(v:progpath, ':h') . '\curl.exe'
+else
+  let s:curl = 'curl'
+endif
+
 let g:chat_gitter_token = get(g:, 'chat_gitter_token', '')
 
 let s:room_jobs = {}
@@ -27,7 +35,11 @@ function! chat#gitter#enter_room(room) abort
     call s:fetch(roomid)
   endif
   if !has_key(s:room_jobs, a:room)
-    let cmd = printf('curl -s --show-error --fail -N -H "Accept: application/json" -H "Authorization: Bearer %s" "https://stream.gitter.im/v1/rooms/%s/chatMessages"',g:chat_gitter_token , roomid)
+    let cmd = [s:curl, '-s', '--show-error', '--fail', '-N',
+          \ '-H', 'Accept: application/json',
+          \ '-H', printf('Authorization: Bearer %s', g:chat_gitter_token),
+          \ printf('https://stream.gitter.im/v1/rooms/%s/chatMessages', roomid)
+          \ ]
     let s:room_jobs[a:room] = s:JOB.start(cmd, {
           \ 'on_stdout' : function('s:gitter_stream_stdout'),
           \ 'on_stderr' : function('s:gitter_stream_stderr'),
@@ -138,7 +150,11 @@ let s:fetch_response = {}
 function! s:fetch(roomid) abort
   let room = s:roomid_to_room(a:roomid)
   if !has_key(s:fetch_response, room)
-    let cmd = printf( 'curl  -s --show-error --fail  -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms/%s/chatMessages?limit=50"', g:chat_gitter_token, a:roomid)
+    let cmd = [s:curl, '-s', '--show-error', '--fail',
+          \ '-H', 'Accept: application/json',
+          \ '-H', printf('Authorization: Bearer %s', g:chat_gitter_token),
+          \ printf('https://api.gitter.im/v1/rooms/%s/chatMessages?limit=50', a:roomid)
+          \ ]
     let s:fetch_response[room] = {
           \ 'stdout' : [],
           \ 'stderr' : [],
@@ -250,7 +266,11 @@ function! s:get_all_channels() abort
           \ 'msg' : 'listing gitter channels',
           \ 'time': strftime("%Y-%m-%d %H:%M"),
           \ })
-    let cmd = printf('curl -s --show-error --fail -H "Accept: application/json" -H "Authorization: Bearer %s" "https://api.gitter.im/v1/rooms"', g:chat_gitter_token)
+    let cmd = [s:curl, '-s', '--show-error', '--fail',
+          \ '-H', 'Accept: application/json',
+          \ '-H', printf('Authorization: Bearer %s', g:chat_gitter_token),
+          \ 'https://api.gitter.im/v1/rooms',
+          \ ]
     let s:list_all_channels_jobid =  s:JOB.start(cmd, {
           \ 'on_stdout' : function('s:get_all_channels_stdout'),
           \ 'on_stderr' : function('s:get_all_channels_stderr'),
@@ -310,14 +330,7 @@ endfunction
 
 function! chat#gitter#send(room, msg) abort
   let roomid = s:room_to_roomid(a:room)
-  " the win 11 curl in system32/ directory do not support unicode, use
-  " neovim's curl
-  if has('nvim') && exists('v:progpath') && (has('win64') || has('win32'))
-    let curl = fnamemodify(v:progpath, ':h') . '\curl.exe'
-  else
-    let curl = 'curl'
-  endif
-  let cmd = [curl, '-X', 'POST', '-H', 'Content-Type: application/json', '-H', 'Accept: application/json',
+  let cmd = [s:curl, '-X', 'POST', '-H', 'Content-Type: application/json', '-H', 'Accept: application/json',
         \ '-H', 'Authorization: Bearer ' . g:chat_gitter_token,
         \ printf('https://api.gitter.im/v1/rooms/%s/chatMessages', roomid),
         \ '-d',
