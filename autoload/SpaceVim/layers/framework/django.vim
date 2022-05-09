@@ -22,3 +22,9 @@ function! SpaceVim#layers#framework#django#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/django-plus.vim', {'merged' : 0}])
   return plugins
 endfunction
+
+
+function! SpaceVim#layers#framework#django#health() abort
+  call SpaceVim#layers#framework#django#plugins()
+  return 1
+endfunction

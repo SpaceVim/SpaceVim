@@ -23,3 +23,8 @@ function! SpaceVim#layers#lang#jsonnet#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-jsonnet', {'merged' : 0}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#jsonnet#health() abort
+  call SpaceVim#layers#lang#jsonnet#plugins()
+  return 1
+endfunction

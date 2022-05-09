@@ -24,3 +24,7 @@ function! SpaceVim#layers#lang#yang#plugins() abort
   return plugins
 endfunction
 
+function! SpaceVim#layers#lang#yang#health() abort
+  call SpaceVim#layers#lang#yang#plugins()
+  return 1
+endfunction
