@@ -2,18 +2,20 @@ function install_vim($ver)
 {
   if ($ver -eq "nightly")
   {
-    $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v8.2.3361/gvim_8.2.3361_x86.zip'
+    $url = 'https://github.com/vim/vim-win32-installer/releases/download/v8.2.3361/gvim_8.2.3361_x86.zip'
   }
   else
   {
     $ver = $ver -replace "^v", ""
-    $url1 = 'https://github.com/vim/vim-win32-installer/releases/download/v' + $ver + '/gvim_' + $ver + '_x86.zip'
+    $url = 'https://github.com/vim/vim-win32-installer/releases/download/v' + $ver + '/gvim_' + $ver + '_x86.zip'
   }
   $Env:VIM_BIN = $Env:DEPS + '\vim\vim82\vim.exe'
-  $zip1 = $Env:DEPS + '\vim.zip'
-  (New-Object Net.WebClient).DownloadFile($url1, $zip1)
+  $zip = $Env:DEPS + '\vim.zip'
+  echo "download: $url"
+  echo "path: $zip"
+  (New-Object Net.WebClient).DownloadFile($url, $zip)
   [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem') > $null
-  [System.IO.Compression.ZipFile]::ExtractToDirectory($zip1, $Env:DEPS)
+  [System.IO.Compression.ZipFile]::ExtractToDirectory($zip, $Env:DEPS)
 }
 
 function install_nvim($ver)
