@@ -1307,6 +1307,7 @@ let g:spacevim_smartcloseignoreft      = [
       \ 'tagbar',
       \ 'vimfiler',
       \ 'defx',
+      \ 'NvimTree',
       \ 'SpaceVimRunner',
       \ 'SpaceVimREPL',
       \ 'SpaceVimQuickFix',
@@ -1734,6 +1735,9 @@ function! SpaceVim#welcome() abort
       wincmd p
     elseif exists(':NvimTreeOpen') == 2
       NvimTreeOpen
+      " the statusline of nvimtree is not udpated when open nvim tree in
+      " welcome function
+      doautocmd WinEnter
       wincmd p
     endif
   endif
