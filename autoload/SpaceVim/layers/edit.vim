@@ -268,7 +268,7 @@ function! SpaceVim#layers#edit#config() abort
   " word
   let g:_spacevim_mappings_space.x.w = {'name' : '+Word'}
   call SpaceVim#mapping#space#def('vnoremap', ['x', 'w', 'c'], 'normal! ' . ":'<,'>s/\\\w\\+//gn" . "\<cr>", 'count the words in the select region', 1)
-  let g:_spacevim_mappings_space.x.s = {'name' : '+String'}
+  let g:_spacevim_mappings_space.x.s = {'name' : '+String/Snippet'}
   call SpaceVim#mapping#space#def('nnoremap', ['x', 's', 'j'], 'call call('
         \ . string(s:_function('s:join_string_with')) . ', [])',
         \ 'join-string-with', 1)
