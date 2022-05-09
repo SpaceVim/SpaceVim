@@ -380,7 +380,7 @@ function! s:update_msg_screen() abort
     let msgs = filter(deepcopy(s:messages), '(!empty(v:val["room"]) && v:val["room"] ==# s:current_channel) ||' 
           \ . ' (empty(v:val["room"]) && has_key(v:val, "protocol") && v:val["protocol"] ==# s:protocol)')
     for msg in msgs
-      let name = s:get_str_with_width(msg['user'], 13)
+      let name = s:get_str_with_width(msg['username'], 13)
       let message = s:get_lines_with_width(msg['msg'], winwidth('$') - 36)
       let first_line = '[' . msg['time'] . '] ' . nr2char(9474) . repeat(' ', 13 - strwidth(name)) . name . ' ' . nr2char(9474) . ' ' . message[0]
       call add(buffer, first_line)
