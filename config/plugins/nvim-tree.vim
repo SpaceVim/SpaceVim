@@ -32,7 +32,7 @@ require'nvim-tree'.setup {
     relativenumber = false,
     signcolumn = "yes",
     mappings = {
-      custom_only = false,
+      custom_only = true,
       list = {
         -- user mappings go here
       },
