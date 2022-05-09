@@ -1732,6 +1732,9 @@ function! SpaceVim#welcome() abort
     elseif exists(':NERDTree') == 2
       NERDTree
       wincmd p
+    elseif exists(':NvimTreeOpen') == 2
+      NvimTreeOpen
+      wincmd p
     endif
   endif
 endfunction
