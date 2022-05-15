@@ -132,6 +132,12 @@ function! SpaceVim#layers#telescope#config() abort
 
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
   call s:defind_fuzzy_finder()
+
+  augroup spacevim_telescope_layer
+    autocmd!
+    " https://github.com/nvim-telescope/telescope.nvim/issues/161
+    autocmd FileType TelescopePrompt call deoplete#custom#buffer_option('auto_complete', v:false)
+  augroup END
 endfunction
 
 function! s:get_help_with_cursor_symbol() abort
