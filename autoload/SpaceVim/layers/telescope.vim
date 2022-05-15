@@ -148,10 +148,7 @@ function! s:get_help_with_cursor_symbol() abort
 endfunction
 
 function! s:get_help(word) abort
-  let save_ctrlp_default_input = get(g:, 'ctrlp_default_input', '')
-  let g:ctrlp_default_input = a:word
-  CtrlPHelp
-  let g:ctrlp_default_input = save_ctrlp_default_input
+  call v:lua.require('telescope.builtin').help_tags({ 'default_text' : a:word}) 
 endfunction
 
 function! s:get_menu(menu, input) abort
