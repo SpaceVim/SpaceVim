@@ -115,8 +115,7 @@ function! SpaceVim#layers#telescope#config() abort
         \ ]
         \ , 1)
 
-  " This is definded in plugin config
-  " nnoremap <silent> <C-p> :Ctrlp<cr>
+  nnoremap <silent> <C-p> :<C-u>Telescope find_files<cr>
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'call call('
