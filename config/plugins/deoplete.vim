@@ -15,7 +15,7 @@ call deoplete#custom#option({
       \ 'smart_case'          :  get(g:, 'deoplete#enable_smart_case', 1),
       \ 'camel_case'          :  get(g:, 'deoplete#enable_camel_case', 1),
       \ 'refresh_always'      :  get(g:, 'deoplete#enable_refresh_always', 1),
-      \ 'nofile_complete_filetypes' : ['TelescopePrompt', 'denite-filter'],
+      \ 'nofile_complete_filetypes' : ['denite-filter'],
       \ })
 
 " java && jsp
