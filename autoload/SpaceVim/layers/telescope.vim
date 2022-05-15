@@ -81,7 +81,7 @@ function! SpaceVim#layers#telescope#config() abort
 
   "@fixme ctrlp colorschemes support
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'CtrlPColorscheme',
+  call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Telescope colorscheme',
         \ ['fuzzy-find-colorschemes',
         \ [
         \ 'SPC T s is to fuzzy find colorschemes',
