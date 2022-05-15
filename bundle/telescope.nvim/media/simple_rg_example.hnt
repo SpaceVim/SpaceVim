@@ -1,0 +1,34 @@
+### Simple demo to show the rg stuff
+## key_delay 1
+## feed_full
+
+:e! ./scratch/simple_rg.lua\<CR>
+:set foldlevel=100\<CR>
+:luafile %\<CR>
+
+## pause
+## key_delay 80
+
+Finder
+
+## key_delay 150
+
+\<c-n>
+
+## pause
+\<c-n>
+
+## pause
+\<c-n>
+
+## pause
+\<cr>
+
+## pause
+\<esc>
+:" Went to the file!\<esc>
+
+## pause
+
+## feed_full
+:qa!\<CR>

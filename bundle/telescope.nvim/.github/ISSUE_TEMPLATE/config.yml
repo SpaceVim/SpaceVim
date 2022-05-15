@@ -1,0 +1,6 @@
+blank_issues_enabled: false
+contact_links:
+   - name: Question
+     url: https://gitter.im/nvim-telescope/community
+     about: Usage questions and support requests are answered in the Telescope Gitter
+
