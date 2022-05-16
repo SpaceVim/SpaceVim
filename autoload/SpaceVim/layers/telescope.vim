@@ -6,6 +6,33 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section telescope, layers-telescope
+" @parentsection layers
+" This layer provides fuzzy finder feature which is based on |telescope|, and this
+" This layer is not loaded by default. To use this layer:
+" >
+"   [[layers]]
+"     name = 'telescope'
+" <
+" @subsection Key bindings
+"
+" The following key bindings will be enabled when this layer is loaded:
+" >
+"   Key bindings      Description
+"   SPC p f / Ctrl-p  search files in current directory
+"   <Leader> f SPC    Fuzzy find menu:CustomKeyMaps
+"   <Leader> f e      Fuzzy find register
+"   <Leader> f h      Fuzzy find history/yank
+"   <Leader> f j      Fuzzy find jump, change
+"   <Leader> f l      Fuzzy find location list
+"   <Leader> f m      Fuzzy find output messages
+"   <Leader> f o      Fuzzy find functions
+"   <Leader> f t      Fuzzy find tags
+"   <Leader> f q      Fuzzy find quick fix
+"   <Leader> f r      Resumes Unite window
+" <
+
 function! SpaceVim#layers#telescope#plugins() abort
   let plugins = []
   call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope.nvim', {'merged' : 0, 'loadconf' : 1}])
@@ -164,9 +191,9 @@ function! s:defind_fuzzy_finder() abort
 
 
   nnoremap <silent> <Leader>fe
-        \ :<C-u>CtrlPRegister<CR>
+        \ :<C-u>Telescope registers<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.e = ['CtrlPRegister',
+  let g:_spacevim_mappings.f.e = ['Telescope registers',
         \ 'fuzzy find registers',
         \ [
         \ '[Leader f r ] is to resume ctrlp window',
