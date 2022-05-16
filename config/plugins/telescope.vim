@@ -17,7 +17,7 @@ require("telescope").setup{
     },
   sorting_strategy = "ascending",
     layout_config = {
-      prompt_position = "top"
+      prompt_position = "bottom"
     }
   }
 }
