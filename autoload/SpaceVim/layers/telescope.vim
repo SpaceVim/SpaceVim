@@ -105,10 +105,6 @@ function! SpaceVim#layers#telescope#config() abort
         \ ],
         \ 1)
 
-  "@todo add resume support for ctrlp: SPC r l
-
-
-  "@fixme ctrlp colorschemes support
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Telescope colorscheme',
         \ ['fuzzy-find-colorschemes',
@@ -193,7 +189,7 @@ function! s:defind_fuzzy_finder() abort
   let g:_spacevim_mappings.f.e = ['Telescope registers',
         \ 'fuzzy find registers',
         \ [
-        \ '[Leader f r ] is to resume ctrlp window',
+        \ '[Leader f e ] is to fuzzy find registers',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
@@ -232,12 +228,22 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
 
- "@todo add Leader f l for ctrlp location list
+  nnoremap <silent> <Leader>fl
+        \ :<C-u>Telescope loclist<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.l = ['Telescope loclist',
+        \ 'fuzzy find local list',
+        \ [
+        \ '[Leader f q] is to fuzzy find local list',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
 
   nnoremap <silent> <Leader>fm
-        \ :<C-u>CtrlPMessage<CR>
+        \ :<C-u>Telescope messages<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.m = ['CtrlPMessage',
+  let g:_spacevim_mappings.f.m = ['Telescope messages',
         \ 'fuzzy find and yank message history',
         \ [
         \ '[Leader f m] is to fuzzy find and yank message history',
