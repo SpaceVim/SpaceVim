@@ -7,7 +7,10 @@ require("telescope").setup{
       i = {
         -- the default key binding should same as other fuzzy finder layer
         -- tab move to next
-        ["<C-j>"] = actions.cycle_previewers_next,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<Esc>"] = actions.close,
+        ["<C-h>"] = "which_key"
       },
     },
   }

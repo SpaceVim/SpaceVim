@@ -8,7 +8,7 @@
 
 function! SpaceVim#layers#telescope#plugins() abort
   let plugins = []
-  call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope.nvim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope.nvim', {'merged' : 0, 'loadconf' : 1}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/plenary.nvim', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope-menu', {'merged' : 0}])
   return plugins
