@@ -187,10 +187,6 @@ let s:file = expand('<sfile>:~')
 let s:unite_lnum = expand('<slnum>') + 3
 function! s:defind_fuzzy_finder() abort
 
-
-  "@todo add Leader f r for resume ctrlp
-
-
   nnoremap <silent> <Leader>fe
         \ :<C-u>Telescope registers<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
@@ -198,6 +194,17 @@ function! s:defind_fuzzy_finder() abort
         \ 'fuzzy find registers',
         \ [
         \ '[Leader f r ] is to resume ctrlp window',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . lnum,
+        \ ]
+        \ ]
+  nnoremap <silent> <Leader>fr
+        \ :<C-u>Telescope resume<CR>
+  let lnum = expand('<slnum>') + s:unite_lnum - 4
+  let g:_spacevim_mappings.f.r = ['Telescope resume',
+        \ 'resume telescope window',
+        \ [
+        \ '[Leader f r ] is to resume telescope window',
         \ '',
         \ 'Definition: ' . s:file . ':' . lnum,
         \ ]
