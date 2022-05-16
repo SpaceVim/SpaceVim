@@ -247,9 +247,9 @@ function! s:defind_fuzzy_finder() abort
         \ ]
 
   nnoremap <silent> <Leader>fq
-        \ :<C-u>CtrlPQuickfix<CR>
+        \ :<C-u>Telescope quickfix<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.q = ['CtrlPQuickfix',
+  let g:_spacevim_mappings.f.q = ['Telescope quickfix',
         \ 'fuzzy find quickfix list',
         \ [
         \ '[Leader f q] is to fuzzy find quickfix list',
