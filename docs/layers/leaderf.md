@@ -20,7 +20,7 @@ To use this configuration layer, update your custom configuration file with:
 
 ## Configuration
 
-SpaceVim uses `f` as the default customized key binding prefix for denite layer.
+SpaceVim uses `f` as the default customized key binding prefix for leaderf layer.
 
 ## Key bindings
 
