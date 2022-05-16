@@ -14,7 +14,8 @@ call deoplete#custom#option({
       \ 'ignore_case'         :  get(g:, 'deoplete#enable_ignore_case', 1),
       \ 'smart_case'          :  get(g:, 'deoplete#enable_smart_case', 1),
       \ 'camel_case'          :  get(g:, 'deoplete#enable_camel_case', 1),
-      \ 'refresh_always'      :  get(g:, 'deoplete#enable_refresh_always', 1)
+      \ 'refresh_always'      :  get(g:, 'deoplete#enable_refresh_always', 1),
+      \ 'nofile_complete_filetypes' : ['denite-filter'],
       \ })
 
 " java && jsp

@@ -1,0 +1,10 @@
+build/
+data/
+lua/luassert
+lua/plenary/profile.lua
+lua/plenary/profile/
+lua/plenary/bit.lua
+lua/say.lua
+scratch/
+scripts/
+
