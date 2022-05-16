@@ -38,6 +38,7 @@ function! SpaceVim#layers#telescope#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope.nvim', {'merged' : 0, 'loadconf' : 1}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/plenary.nvim', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope-menu', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope-ctags-outline.nvim', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -83,7 +84,7 @@ function! SpaceVim#layers#telescope#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'CtrlPMRU',
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Telescope oldfiles',
         \ ['open-recent-file',
         \ [
         \ 'SPC f r is to open recent file list',
@@ -250,9 +251,9 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
 
-  nnoremap <silent> <Leader>fo  :<C-u>CtrlPBufTag<CR>
+  nnoremap <silent> <Leader>fo  :<C-u>Telescope ctags_outline outline<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.o = ['CtrlPBufTag',
+  let g:_spacevim_mappings.f.o = ['Telescope ctags_outline outline',
         \ 'fuzzy find outline',
         \ [
         \ '[Leader f o] is to fuzzy find outline',
