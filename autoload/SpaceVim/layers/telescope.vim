@@ -95,7 +95,7 @@ function! SpaceVim#layers#telescope#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'CtrlPBufTag',
+  call SpaceVim#mapping#space#def('nnoremap', ['j', 'i'], 'Telescope ctags_outline outline',
         \ ['jump-to-definition-in-buffer',
         \ [
         \ 'SPC j i is to jump to a definition in buffer',
