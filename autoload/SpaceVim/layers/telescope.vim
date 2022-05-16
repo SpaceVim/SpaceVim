@@ -213,9 +213,9 @@ function! s:defind_fuzzy_finder() abort
         \ ]
         \ ]
   nnoremap <silent> <Leader>fj
-        \ :<C-u>CtrlPJump<CR>
+        \ :<C-u>Telescope jumplist<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.j = ['CtrlPJump',
+  let g:_spacevim_mappings.f.j = ['Telescope jumplist',
         \ 'fuzzy find jump list',
         \ [
         \ '[Leader f j] is to fuzzy find jump list',
