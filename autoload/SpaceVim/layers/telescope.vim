@@ -118,7 +118,7 @@ function! SpaceVim#layers#telescope#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'f'],
-        \ "exe 'CtrlP ' . fnamemodify(bufname('%'), ':h')",
+        \ "exe 'Telescope find_files cwd=' . fnamemodify(bufname('%'), ':p:h')",
         \ ['find-files-in-buffer-directory',
         \ [
         \ '[SPC f f] is to find files in the directory of the current buffer',
