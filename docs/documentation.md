@@ -1501,10 +1501,11 @@ The first item is the name of the tool, the second one is the default searching 
 
 Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
 
-| Key Bindings | Descriptions                            |
-| ------------ | --------------------------------------- |
-| `SPC f v v`  | display and copy SpaceVim version       |
-| `SPC f v d`  | open SpaceVim custom configuration file |
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC f v v`  | display and copy SpaceVim version                |
+| `SPC f v d`  | open SpaceVim custom configuration file          |
+| `SPC f v s`  | list all loaded vim scripts, like `:scriptnames` |
 
 ### Available layers
 
