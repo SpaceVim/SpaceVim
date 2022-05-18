@@ -1,0 +1,11 @@
+cmdargs:
+  # Checking more strictly
+  severity: style_problem
+
+policies:
+  ProhibitImplicitScopeVariable:
+    enabled: false
+  ProhibitAbbreviationOption:
+    enabled: false
+  ProhibitSetNoCompatible:
+    enabled: false
