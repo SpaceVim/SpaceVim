@@ -6,6 +6,10 @@
 " License: GPLv3
 "=============================================================================
 
+if exists('s:file')
+  finish
+endif
+
 ""
 " @section telescope, layers-telescope
 " @parentsection layers
@@ -32,6 +36,12 @@
 "   <Leader> f q      Fuzzy find quick fix
 "   <Leader> f r      Resumes Unite window
 " <
+
+function! SpaceVim#layers#telescope#loadable() abort
+
+  return has('nvim-0.7.0')
+
+endfunction
 
 function! SpaceVim#layers#telescope#plugins() abort
   let plugins = []

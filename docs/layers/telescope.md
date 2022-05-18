@@ -8,6 +8,8 @@ description: "This layer provides a heavily customized telescope centric workflo
 ## Description
 
 This layer is a heavily customized wrapper for [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) and it's sources.
+The `telescope` layer is only for nvim 0.7 or above.
+
 
 ## Install
 
