@@ -1,0 +1,164 @@
+Describe gina#custom
+  Before all
+    let scheme = 'status'
+    let pattern = '/\%(branch\|tag\)'
+  End
+
+  After all
+    %bwipeout!
+    call gina#custom#clear()
+  End
+
+  Before
+    %bwipeout!
+    call gina#custom#clear()
+  End
+
+  Describe #preference({scheme} [, {readonly}])
+    It returns a preference for {scheme} as readonly (copied)
+      let preference = gina#custom#preference(scheme)
+      Assert Equals(preference, {
+            \ 'action': {
+            \   'aliases': [],
+            \   'shortens': [],
+            \ },
+            \ 'mapping': {
+            \   'mappings': [],
+            \ },
+            \ 'command': {
+            \   'options': [],
+            \   'origin': scheme,
+            \   'raw': 0,
+            \ },
+            \ 'executes': [],
+            \})
+      " Overwrite
+      let preference.action = {}
+      let preference.mapping = ['foo']
+      " Nothing should be changed
+      let preference = gina#custom#preference(scheme)
+      Assert Equals(preference, {
+            \ 'action': {
+            \   'aliases': [],
+            \   'shortens': [],
+            \ },
+            \ 'mapping': {
+            \   'mappings': [],
+            \ },
+            \ 'command': {
+            \   'options': [],
+            \   'origin': scheme,
+            \   'raw': 0,
+            \ },
+            \ 'executes': [],
+            \})
+    End
+
+    It returns a preference for {scheme}
+      let preference = gina#custom#preference(scheme, 0)
+      Assert Equals(preference, {
+            \ 'action': {
+            \   'aliases': [],
+            \   'shortens': [],
+            \ },
+            \ 'mapping': {
+            \   'mappings': [],
+            \ },
+            \ 'command': {
+            \   'options': [],
+            \   'origin': scheme,
+            \   'raw': 0,
+            \ },
+            \ 'executes': [],
+            \})
+      " Overwrite
+      let preference.action = {}
+      let preference.mapping = ['foo']
+      " Should be changed
+      let preference = gina#custom#preference(scheme)
+      Assert Equals(preference, {
+            \ 'action': {},
+            \ 'mapping': ['foo'],
+            \ 'command': {
+            \   'options': [],
+            \   'origin': scheme,
+            \   'raw': 0,
+            \ },
+            \ 'executes': [],
+            \})
+    End
+  End
+
+  Describe #preferences({scheme})
+    It returns preferences for {scheme}
+      Assert Equals(gina#custom#preferences(scheme), [{
+            \ 'action': {
+            \   'aliases': [],
+            \   'shortens': [],
+            \ },
+            \ 'mapping': {
+            \   'mappings': [],
+            \ },
+            \ 'command': {
+            \   'options': [],
+            \   'origin': scheme,
+            \   'raw': 0,
+            \ },
+            \ 'executes': [],
+            \}])
+      let preferences = gina#custom#preferences('status')
+      Assert Equals(len(preferences), 1)
+      let preferences = gina#custom#preferences('branch')
+      Assert Equals(len(preferences), 1)
+      let preferences = gina#custom#preferences('tag')
+      Assert Equals(len(preferences), 1)
+
+      let preference = gina#custom#preference(scheme, 0)
+      let preference.__remarks = scheme
+      let preference = gina#custom#preference(pattern, 0)
+      let preference.__remarks = pattern
+
+      let preferences = gina#custom#preferences('status')
+      Assert Equals(len(preferences), 1)
+      Assert Equals(preferences[0].__remarks, scheme)
+      let preferences = gina#custom#preferences('branch')
+      Assert Equals(len(preferences), 2)
+      Assert Equals(preferences[0].__remarks, pattern)
+      let preferences = gina#custom#preferences('tag')
+      Assert Equals(len(preferences), 2)
+      Assert Equals(preferences[0].__remarks, pattern)
+    End
+  End
+
+  Describe #execute({scheme}, {expr})
+    It executes {expr} on a {scheme} buffer
+      call gina#custom#execute(scheme, 'setlocal winfixwidth')
+      setlocal winfixwidth&
+      GinaSync branch
+      Assert Equals(&winfixwidth, 0)
+      %bwipeout!
+      setlocal winfixwidth&
+      GinaSync status
+      Assert Equals(&winfixwidth, 1)
+      %bwipeout!
+      setlocal winfixwidth&
+      GinaSync tag
+      Assert Equals(&winfixwidth, 0)
+    End
+
+    It executes {expr} on buffers which matches with {scheme}
+      call gina#custom#execute(pattern, 'setlocal winfixwidth')
+      setlocal winfixwidth&
+      GinaSync branch
+      Assert Equals(&winfixwidth, 1)
+      %bwipeout!
+      setlocal winfixwidth&
+      GinaSync status
+      Assert Equals(&winfixwidth, 0)
+      %bwipeout!
+      setlocal winfixwidth&
+      GinaSync tag
+      Assert Equals(&winfixwidth, 1)
+    End
+  End
+End

@@ -62,7 +62,7 @@ function! SpaceVim#layers#git#plugins() abort
         \ ]
   call add(plugins, ['airblade/vim-gitgutter',   { 'merged' : 0}])
   if s:git_plugin ==# 'gina'
-    call add(plugins, ['lambdalisue/gina.vim', { 'on_cmd' : 'Gina'}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/gina.vim', { 'merged' : 0}])
   elseif s:git_plugin ==# 'fugitive'
     call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
     call add(plugins, ['tpope/vim-dispatch', { 'merged' : 0}])
@@ -89,6 +89,11 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gina blame', 'view-git-blame', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'Gina log %', 'git-log-of-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'Gina log', 'git-log-of-current-repo', 1)
+    augroup spacevim_git_layer_gina
+      autocmd!
+      autocmd FileType gina-log setlocal concealcursor=nvic
+      autocmd FileType gina-log setlocal conceallevel=3
+    augroup END
   elseif s:git_plugin ==# 'fugitive'
     call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Git', 'git-status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Git add %', 'stage-current-file', 1)

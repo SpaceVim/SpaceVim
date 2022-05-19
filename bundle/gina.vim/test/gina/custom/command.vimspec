@@ -1,0 +1,93 @@
+Describe gina#custom#command
+  Before all
+    let scheme = 'status'
+    let pattern = '/\%(branch\|tag\)'
+  End
+
+  After all
+    %bwipeout!
+    call gina#custom#clear()
+  End
+
+  Before
+    %bwipeout!
+    call gina#custom#clear()
+  End
+
+  Describe #option({scheme}, {query} [, {value}])
+    It define {query} option for a {scheme} command
+      call gina#custom#command#option(scheme, '--ignore-submodule')
+      let args = gina#core#args#new('status')
+      Assert Equals(args.raw, [
+            \ 'status',
+            \ '--ignore-submodule',
+            \])
+
+      call gina#custom#command#option(scheme, '--untracked-files', 'all')
+      let args = gina#core#args#new('status')
+      Assert Equals(args.raw, [
+            \ 'status',
+            \ '--ignore-submodule',
+            \ '--untracked-files=all',
+            \])
+
+      let args = gina#core#args#new('status --no-ignore-submodule')
+      Assert Equals(args.raw, [
+            \ 'status',
+            \ '--untracked-files=all',
+            \])
+
+      let args = gina#core#args#new('status --untracked-files=none')
+      Assert Equals(args.raw, [
+            \ 'status',
+            \ '--untracked-files=none',
+            \ '--ignore-submodule',
+            \])
+    End
+
+    It define {query} option for commands which match with {pattern}
+      call gina#custom#command#option(pattern, '--opener=vsplit')
+      let args = gina#core#args#new('status')
+      Assert Equals(args.raw, [
+            \ 'status',
+            \])
+
+      let args = gina#core#args#new('branch')
+      Assert Equals(args.raw, [
+            \ 'branch',
+            \ '--opener=vsplit',
+            \])
+
+      let args = gina#core#args#new('tag')
+      Assert Equals(args.raw, [
+            \ 'tag',
+            \ '--opener=vsplit',
+            \])
+    End
+  End
+
+  Describe #alias({scheme}, {alias} [, {raw}])
+    It define an alias of {scheme} command to {alias}
+      let args = gina#core#args#new('st')
+      Assert Equals(args.raw, ['st'])
+
+      call gina#custom#command#alias('status', 'st')
+      let args = gina#core#args#new('st')
+      Assert Equals(args.raw, ['status'])
+
+      call gina#custom#command#alias('status', 'st', 1)
+      let args = gina#core#args#new('st')
+      Assert Equals(args.raw, ['_raw', 'status'])
+    End
+
+    It 's namespace for options are distinct from an original command
+      call gina#custom#command#option('status', '--ignore-submodule')
+      call gina#custom#command#alias('status', 'st')
+
+      let args = gina#core#args#new('status')
+      Assert Equals(args.raw, ['status', '--ignore-submodule'])
+      let args = gina#core#args#new('st')
+      Assert Equals(args.raw, ['status'])
+    End
+  End
+End

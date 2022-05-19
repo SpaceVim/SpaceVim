@@ -1,0 +1,330 @@
+*Vital/Argument.txt*			An argument manipulation library
+
+Version: 0.1.0-dev
+Author : Alisue <lambdalisue@hashnote.net>
+License: MIT license
+Support: Vim 7.4.2137 and above
+Support: Neovim 0.1.7 and above
+
+
+=============================================================================
+CONTENTS					*Vital.Argument-content*
+
+INTRODUCTION					|Vital.Argument-introduction|
+USAGE						|Vital.Argument-usage|
+  DEFINITION					|Vital.Argument-definition|
+INTERFACE					|Vital.Argument-interface|
+  FUNCTIONS					|Vital.Argument-functions|
+  INSTANCE					|Vital.Argument-instance|
+
+
+=============================================================================
+INTRODUCTION					*Vital.Argument-introduction*
+
+*Vital.Argument* is a |Vital| module used for parsing a command-line argument.
+
+See also:
+
+  Vital.OptionParser
+  https://github.com/vim-jp/vital.vim
+
+  Vital.ArgumentParser
+  https://github.com/lambdalisue/vital-ArgumentParser
+
+
+=============================================================================
+USAGE						*Vital.Argument-usage*
+>
+      let args = Argument.new('grep gina HEAD')
+      let pattern = args.pop(1, '')
+      echo pattern
+      " -> 'gina'
+      echo args.raw
+      " -> ['grep', 'HEAD']
+
+      let commit = args.pop(1, '')
+      echo pattern
+      " -> 'HEAD'
+      echo args.raw
+      " -> ['grep']
+
+      call args.set('--line-number', 1)
+      echo args.raw
+      " -> ['grep', '--line-number']
+
+      call args.set('--color', 'always')
+      echo args.raw
+      " -> ['grep', '--line-number', '--color=always']
+
+      call args.set(1, pattern)
+      echo args.raw
+      " -> ['grep', '--line-number', '--color=always', 'gina']
+
+      call args.set(2, commit)
+      echo args.raw
+      " -> ['grep', '--line-number', '--color=always', 'gina', 'HEAD']
+<
+
+-----------------------------------------------------------------------------
+DEFINITION					*Vital.Argument-definition*
+
+The followings are the definition of the words used in this library.
+
+Name		Definition~
+term		Individual item of the argument
+effective	Terms before "--"
+residual	Terms after "--"
+optional	Terms which starts from -\w or --\w in "effective"
+positional	Terms which does not starts from -\w nor --\w in "effective"
+>
+In short, each names are defined as the following scheme:
+>
+                 effective                   residual
+                     ▲                           ▲
+        ┌────────────┴───────────┐    ┌──────────┴──────────┐
+        │                        │    │                     │
+	-f  mayuri --foo christina -- -h  rukako  steins;gate
+	┈┈  ┈┈┈┈┈  ┈┈┈┈┈ ┈┈┈┈┈┈┈┈┈    ┈┈  ┈┈┈┈┈┈  ┈┈┈┈┈┈┈┈┈┈┈ ─▶ term
+	 │    │      │         │ 
+	 └─┬──│──────┘         │ 
+           ▼  └────────┬───────┘ 
+        optional       ▼
+                   positional
+<
+=============================================================================
+INTERFACE					*Vital.Argument-interface*
+
+-----------------------------------------------------------------------------
+FUNCTIONS       				*Vital.Argument-functions*
+
+						*Vital.Argument.parse()*
+parse({cmdline})
+	Parses a {cmdline} and returns a term list.
+>
+	echo Argument.parse('foo')
+	" -> ['foo']
+	echo Argument.parse('foo bar')
+	" -> ['foo', 'bar']
+	echo Argument.parse('"foo foo" "bar bar"')
+	" -> ['foo foo', 'bar bar']
+	echo Argument.parse('foo "bar bar" hoge')
+	" -> ['foo', 'bar bar', 'hoge']
+	echo Argument.parse('--foo="foo" -b"bar"')
+	" -> ['--foo=foo', '-bbar']
+	echo Argument.parse('foo\ bar\ hoge')
+	" -> ['foo\ bar\ hoge']
+<
+						*Vital.Argument.norm()*
+norm({terms})
+	Normalize a {terms} list and return.
+>
+	echo Argument.norm(['foo'])
+	" -> ['foo']
+	echo Argument.norm(['foo', 'bar'])
+	" -> ['foo', 'bar']
+	echo Argument.norm(['"foo foo"', '"bar bar"'])
+	" -> ['foo foo', 'bar bar']
+	echo Argument.norm(['foo', '"bar bar"', 'hoge'])
+	" -> ['foo', 'bar bar', 'hoge']
+	echo Argument.norm(['--foo="foo"', '-b"bar"'])
+	" -> ['--foo=foo', '-bbar']
+	echo Argument.norm(['foo\ bar\ hoge'])
+	" -> ['foo\ bar\ hoge']
+<
+						*Vital.Argument.new()*
+new([{init}])
+	Returns a new args instance which has initialized with {init}.
+	When |List| is specified to {init}, the list is used as a term list
+	after normalize by |Vital.Argument.norm()|.
+	When |String| is specified to {init}, the string is parsed by
+	|Vital.Argument.parse()| and a result list is used as a term list.
+	See |Vital.Argument-instance| for the instance detail.
+
+
+-----------------------------------------------------------------------------
+INSTANCE					*Vital.Argument-instance*
+
+					*Vital.Argument-args.raw*
+args.raw
+	A raw list. When a complex operation is required, modify this list
+	directly.
+
+					*Vital.Argument-args.hash()*
+args.hash()
+	Return a unique |sha256| string of the instance.
+
+					*Vital.Argument-args.lock()*
+args.lock()
+	Locks the instance by |:lockvar|.
+
+					*Vital.Argument-args.clone()*
+args.clone()
+	Copies and return a new instance from the instance.
+	It automatically unlock the instance.
+	Note that user defined attributes are not copied so use |deepcopy()|
+	instead if you need that.
+
+					*Vital.Argument-args.index()*
+args.index({pattern})
+args.index({query})
+args.index({index})
+	Return an index of
+	1. A term which match with a {pattern} string
+	2. An optional term which follow a {query} string
+	3. ({index} + 1)th positional term
+
+	When {pattern} matches '^--\?\S\+\%(|--\?\S\+\)', the argument is
+	assumed as a {query}.
+	When {pattern} is a number, the argument is assumed as {index}.
+
+	It returns -1 when no term is found and it throws an exception when a
+	negative value is specified to the {index}.
+>
+	let args = Argument.new([
+	      \ '--foo', 'foo',
+	      \ '--bar', 'bar',
+	      \ '--',
+	      \ '--wow', 'wow',
+	      \])
+
+	" index({pattern})
+	echo args.index('^--foo$')
+	" -> 0
+	echo args.index('^foo$')
+	" -> 1
+	echo args.index('^--wow$')
+	" -> -1
+
+	" index({query})
+	echo args.index('-f|--foo')
+	" -> 0
+	echo args.index('-b|--bar')
+	" -> 2
+	echo args.index('-w|--wow')
+	" -> -1
+
+	" index({index})
+	echo args.index(0)
+	" -> 1
+	echo args.index(1)
+	" -> 3
+	echo args.index(2)
+	" -> -1
+<
+					*Vital.Argument-args.has()*
+args.has({pattern})
+args.has({query})
+args.has({index})
+	Returns 1 if a term is found. Otherwise 0.
+	See |Vital.Argument-args.index()| for how the term is searched.
+
+					*Vital.Argument-args.get()*
+args.get({pattern} [, {term}])
+args.get({query} [, {value}])
+args.get({index} [, {term}])
+	Returns a term or a value or a term found.
+	It returns {term} or {value} if no corresponding term is found.
+	The default value of {term} and {value} are '' and 0 respectively.
+	See |Vital.Argument-args.index()| for how the term is searched.
+>
+	let args = Argument.new([
+	      \ '--foo', 'foo',
+	      \ '--bar=bar',
+	      \ '--',
+	      \ '--wow', 'wow',
+	      \])
+	" args.get({pattern} [, {term}])
+	echo args.get('^--foo$')
+	" -> '--foo'
+	echo args.get('^foo$')
+	" -> 'foo'
+	echo args.get('^--wow$')
+	" -> ''
+	echo args.get('^--wow$', 'default')
+	" -> 'default'
+
+	" args.get({query} [, {value}])
+	echo args.get('-f|--foo')
+	" -> 1
+	echo args.get('-b|--bar')
+	" -> 'bar'
+	echo args.get('-w|--wow')
+	" -> 0
+	echo args.get('-w|--wow', '')
+	" -> ''
+
+	" args.get({index} [, {term}])
+	echo args.get(0)
+	" -> 'foo'
+	echo args.get(1)
+	" -> ''
+	echo args.get(1, 0)
+	" -> 0
+<
+					*Vital.Argument-args.pop()*
+args.pop({pattern} [, {term}])
+args.pop({query} [, {value}])
+args.pop({index} [, {term}])
+	Returns a term or a value or a term found and remove the term.
+	It returns {term} or {value} if no corresponding term is found.
+	The default value of {term} and {value} are '' and 0 respectively.
+	See |Vital.Argument-args.index()| for how the term is searched.
+>
+	let args = Argument.new(['--foo', '-f', '--bar=bar', '-bBAR'])
+	echo args.pop('-b|--bar')
+	" -> 'bar'
+	echo args.raw
+	" -> ['--foo', '-f', '-bBAR']
+<
+					*Vital.Argument-args.set()*
+args.set({pattern}, {term})
+args.set({query}, {value})
+args.set({index}, {term})
+args.set({index}, [{term}...])
+	Sets a {term} or {value} of a term to a term found. When a list is
+	specified in case of {index}, the list content is flatten into the
+	term found.
+	It returns an instance itself (method chain).
+	Note that it automatically add missing positional terms when not
+	enough positional terms exist for the {index}.
+>
+	let args = Argument.new(['--foo', '-f', 'bar', '-bbar'])
+
+	" set({pattern}, {term})
+	call args.set('^--foo$', '--FOO')
+	echo args.raw
+	" -> ['--FOO', '-f', 'bar', '-bbar']
+
+	" set({query}, {value})
+	call args.set('-f|--foo', 'FOO')
+	echo args.raw
+	" -> ['--FOO', '-fFOO', 'bar', '-bbar']
+
+	" set({index}, {term})
+	call args.set(0, 'FOO')
+	echo args.raw
+	" -> ['--FOO', '-FOOf', 'FOO', '-bbar']
+
+	" set({index}, [{term}...])
+	call args.set(0, ['BAR', 'HOGE'])
+	echo args.raw
+	" -> ['--FOO', '-FOOf', 'BAR', 'HOGE', '-bbar']
+<
+				*Vital.Argument-args.split()*
+args.split()
+	Splits arguments into "effective" and "residual" part and return a
+	[{effective}, {residual}] list.
+
+				*Vital.Argument-args.effective()*
+args.effective([{replace}])
+	Without {replace}, it returns an "effective" part of the argument.
+	Otherwise it replaces "effective" part of the argument to {replace}.
+
+				*Vital.Argument-args.residual()*
+args.residual([{replace}])
+	Without {replace}, it returns an "residual" part of the argument.
+	Otherwise it replaces "residual" part of the argument to {replace}.
+
+
+=============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

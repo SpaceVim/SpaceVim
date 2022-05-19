@@ -1,0 +1,240 @@
+Describe gina#command#qrep
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit1 = Slit(tempname(), 1)
+    call slit1.write('A/foo.txt', ['a', 'b', 'c', 'd', 'e'])
+    call slit1.write('B/foo.txt', ['A', 'B', 'C', 'D', 'E'])
+    call slit1.write('C/foo.txt', ['aa', 'bb', 'cc', 'dd', 'ee'])
+    call slit1.execute('add .')
+    call slit1.execute('commit --quiet -am "First"')
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+  End
+
+  Describe Use cases
+    It might be called with {pattern}
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync qrep a
+      Assert Equals(winnr('$'), 1)
+      if has('patch-8.0.1782')
+        Assert Equals(getqflist(), [
+              \ {
+              \   'lnum': 1,
+              \   'bufnr': bufnr(slit1.path('A/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'a',
+              \   'module': '',
+              \ },
+              \ {
+              \   'lnum': 1,
+              \   'bufnr': bufnr(slit1.path('C/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'aa',
+              \   'module': '',
+              \ }
+              \])
+      else
+        Assert Equals(getqflist(), [
+              \ {
+              \   'lnum': 1,
+              \   'bufnr': bufnr(slit1.path('A/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'a'
+              \ },
+              \ {
+              \   'lnum': 1,
+              \   'bufnr': bufnr(slit1.path('C/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'aa'
+              \ }
+              \])
+      endif
+    End
+
+    It might be called with -e{pattern} --or -e{pattern}
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync qrep -ea --or -eb
+      Assert Equals(winnr('$'), 1)
+      if has('patch-8.0.1782')
+        Assert Equals(getqflist(), [
+              \ {
+              \   'lnum': 1,
+              \   'bufnr': bufnr(slit1.path('A/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'a',
+              \   'module': '',
+              \ },
+              \ {
+              \   'lnum': 2,
+              \   'bufnr': bufnr(slit1.path('A/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'b',
+              \   'module': '',
+              \ },
+              \ {
+              \   'lnum': 1,
+              \   'bufnr': bufnr(slit1.path('C/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'aa',
+              \   'module': '',
+              \ },
+              \ {
+              \   'lnum': 2,
+              \   'bufnr': bufnr(slit1.path('C/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'bb',
+              \   'module': '',
+              \ }
+              \])
+      else
+        Assert Equals(getqflist(), [
+              \ {
+              \   'lnum': 1,
+              \   'bufnr': bufnr(slit1.path('A/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'a'
+              \ },
+              \ {
+              \   'lnum': 2,
+              \   'bufnr': bufnr(slit1.path('A/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'b'
+              \ },
+              \ {
+              \   'lnum': 1,
+              \   'bufnr': bufnr(slit1.path('C/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'aa'
+              \ },
+              \ {
+              \   'lnum': 2,
+              \   'bufnr': bufnr(slit1.path('C/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'bb'
+              \ }
+              \])
+      endif
+    End
+
+    It might be called with {pattern} -- A/*.txt
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync qrep a -- A/*.txt
+      Assert Equals(winnr('$'), 1)
+      if has('patch-8.0.1782')
+        Assert Equals(getqflist(), [
+              \ {
+              \   'lnum': 1,
+              \   'bufnr': bufnr(slit1.path('A/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'a',
+              \   'module': '',
+              \ },
+              \])
+      else
+        Assert Equals(getqflist(), [
+              \ {
+              \   'lnum': 1,
+              \   'bufnr': bufnr(slit1.path('A/foo.txt')),
+              \   'col': 1,
+              \   'valid': 1,
+              \   'vcol': 0,
+              \   'nr': 0,
+              \   'type': '',
+              \   'pattern': '',
+              \   'text': 'a'
+              \ },
+              \])
+      endif
+    End
+
+    It might be called with ! (bang)
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      let original_cursor_position = getcurpos()
+      let original_buffer = bufnr('%')
+      GinaSync qrep! a
+      Assert Equals(getcurpos(), original_cursor_position)
+      Assert Equals(bufnr('%'), original_buffer)
+    End
+
+    It might be called without ! (bang)
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync qrep a
+      let cursor_position = getcurpos()
+      let qf_entry = getqflist()[0]
+      Assert Equals(bufnr('%'), qf_entry['bufnr'])
+      Assert Equals(cursor_position[1], qf_entry['lnum'])
+      Assert Equals(cursor_position[2], qf_entry['col'])
+    End
+  End
+End

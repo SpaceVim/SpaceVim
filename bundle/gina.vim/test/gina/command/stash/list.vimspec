@@ -1,0 +1,36 @@
+Describe gina#command#stash#list
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit1 = Slit(tempname(), 1)
+    call slit1.write('A/foo.txt', [])
+    call slit1.write('B/foo.txt', [])
+    call slit1.write('C/foo.txt', [])
+
+    call slit1.execute('add %s', slit1.path('A/foo.txt'))
+    call slit1.execute('commit -m First')
+    call slit1.execute('add %s', slit1.path('B/foo.txt'))
+    call slit1.execute('stash')
+    call slit1.execute('add %s', slit1.path('C/foo.txt'))
+    call slit1.execute('stash')
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+    execute 'edit' fnameescape(Path.join(slit1.worktree, 'A', 'foo.txt'))
+  End
+
+  Describe Use cases
+    It might be called without arguments
+      GinaSync stash list
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:stash', slit1.refname))
+      Assert Match(getline(1), 'stash@{0}: WIP on master: [0-9a-f]\{7} First')
+      Assert Match(getline(2), 'stash@{1}: WIP on master: [0-9a-f]\{7} First')
+      Assert Equals(line('$'), 2)
+    End
+  End
+End

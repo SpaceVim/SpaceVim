@@ -1,0 +1,1081 @@
+Describe gina#core#diffjump
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit1 = Slit(tempname(), 1)
+    call slit1.write('A/foo.txt', [])
+    call slit1.write('B/foo.txt', [])
+    call slit1.write('C/foo.txt', [])
+    call slit1.execute('add %s', slit1.path('A/foo.txt'))
+
+    call slit1.write('A/foo.txt', ['Hello', 'People'])
+    call slit1.execute('commit --quiet -am "First"')
+
+    call slit1.write('A/foo.txt', ['Hello', 'World'])
+    call slit1.execute('add A/foo.txt')
+
+    call slit1.write('A/foo.txt', ['Hello', 'Goodbye'])
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+  End
+
+  Describe #jump([{opener}])
+    Context on diff comparing the index (a) and the work tree (b)
+      Before
+        execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+        GinaSync diff :
+        Assert Equals(getline(3, '$'), [
+              \ '--- a/A/foo.txt',
+              \ '+++ b/A/foo.txt',
+              \ '@@ -1,2 +1,2 @@',
+              \ ' Hello',
+              \ '-World',
+              \ '+Goodbye',
+              \])
+      End
+
+      It does nothing and returns 1 when the cursor is on non context line
+        for lnum in range(1, 5)
+          call cursor(lnum, 1)
+          Assert Equals(gina#core#diffjump#jump(), 1)
+          Assert Equals(line('.'), lnum)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:diff/:A/foo.txt:$', slit1.refname),
+                \)
+        endfor
+      End
+
+      It opens a modified file when the cursor is on a context line
+        call cursor(6, 1)
+        Assert Equals(gina#core#diffjump#jump(), 0)
+        Assert Equals(line('.'), 1)
+        Assert Equals(
+              \ bufname('%'),
+              \ slit1.path('A/foo.txt'),
+              \)
+      End
+
+      It opens an original file when the cursor is on a removed line
+        call cursor(7, 1)
+        Assert Equals(gina#core#diffjump#jump(), 0)
+        Assert Equals(line('.'), 2)
+        Assert Equals(
+              \ bufname('%'),
+              \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+              \)
+      End
+
+      It opens a modified file when the cursor is on an added line
+        call cursor(8, 1)
+        Assert Equals(gina#core#diffjump#jump(), 0)
+        Assert Equals(line('.'), 2)
+        Assert Equals(
+              \ bufname('%'),
+              \ slit1.path('A/foo.txt'),
+              \)
+      End
+    End
+
+    Context on diff comparing a commit (a) and the work tree (b)
+      Before
+        execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+        GinaSync diff HEAD:
+        Assert Equals(getline(3, '$'), [
+              \ '--- a/A/foo.txt',
+              \ '+++ b/A/foo.txt',
+              \ '@@ -1,2 +1,2 @@',
+              \ ' Hello',
+              \ '-People',
+              \ '+Goodbye',
+              \])
+      End
+
+      It does nothing and returns 1 when the cursor is on non context line
+        for lnum in range(1, 5)
+          call cursor(lnum, 1)
+          Assert Equals(gina#core#diffjump#jump(), 1)
+          Assert Equals(line('.'), lnum)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:diff/HEAD:A/foo.txt:$', slit1.refname),
+                \)
+        endfor
+      End
+
+      It opens a modified file when the cursor is on a context line
+        call cursor(6, 1)
+        Assert Equals(gina#core#diffjump#jump(), 0)
+        Assert Equals(line('.'), 1)
+        Assert Equals(
+              \ bufname('%'),
+              \ slit1.path('A/foo.txt'),
+              \)
+      End
+
+      It opens an original file when the cursor is on a removed line
+        call cursor(7, 1)
+        Assert Equals(gina#core#diffjump#jump(), 0)
+        Assert Equals(line('.'), 2)
+        Assert Equals(
+              \ bufname('%'),
+              \ printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname),
+              \)
+      End
+
+      It opens a modified file when the cursor is on an added line
+        call cursor(8, 1)
+        Assert Equals(gina#core#diffjump#jump(), 0)
+        Assert Equals(line('.'), 2)
+        Assert Equals(
+              \ bufname('%'),
+              \ slit1.path('A/foo.txt'),
+              \)
+      End
+    End
+
+    Context on diff comparing a commit (a) and the index (b)
+      Before
+        execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+        GinaSync diff --cached :
+        Assert Equals(getline(3, '$'), [
+              \ '--- a/A/foo.txt',
+              \ '+++ b/A/foo.txt',
+              \ '@@ -1,2 +1,2 @@',
+              \ ' Hello',
+              \ '-People',
+              \ '+World',
+              \])
+      End
+
+      It does nothing and returns 1 when the cursor is on non context line
+        for lnum in range(1, 5)
+          call cursor(lnum, 1)
+          Assert Equals(gina#core#diffjump#jump(), 1)
+          Assert Equals(line('.'), lnum)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:diff:cached/:A/foo.txt:$', slit1.refname),
+                \)
+        endfor
+      End
+
+      It opens a modified file when the cursor is on a context line
+        call cursor(6, 1)
+        Assert Equals(gina#core#diffjump#jump(), 0)
+        Assert Equals(line('.'), 1)
+        Assert Equals(
+              \ bufname('%'),
+              \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+              \)
+      End
+
+      It opens an original file when the cursor is on a removed line
+        call cursor(7, 1)
+        Assert Equals(gina#core#diffjump#jump(), 0)
+        Assert Equals(line('.'), 2)
+        Assert Equals(
+              \ bufname('%'),
+              \ printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname),
+              \)
+      End
+
+      It opens a modified file when the cursor is on an added line
+        call cursor(8, 1)
+        Assert Equals(gina#core#diffjump#jump(), 0)
+        Assert Equals(line('.'), 2)
+        Assert Equals(
+              \ bufname('%'),
+              \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+              \)
+      End
+    End
+
+    Context with 'diff.mnemonicPrefix'
+      Before all
+        call slit1.execute('config diff.mnemonicPrefix true')
+      End
+
+      After all
+        call slit1.execute('config --unset diff.mnemonicPrefix')
+      End
+
+      Context on diff comparing the index (i) and the work tree (w)
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff :
+          Assert Equals(getline(3, '$'), [
+                \ '--- i/A/foo.txt',
+                \ '+++ w/A/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-World',
+                \ '+Goodbye',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff/:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+      End
+
+      Context on diff comparing a commit (c) and the work tree (w)
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff HEAD:
+          Assert Equals(getline(3, '$'), [
+                \ '--- c/A/foo.txt',
+                \ '+++ w/A/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-People',
+                \ '+Goodbye',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff/HEAD:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+      End
+
+      Context on diff comparing a commit (c) and the index (i)
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff --cached :
+          Assert Equals(getline(3, '$'), [
+                \ '--- c/A/foo.txt',
+                \ '+++ i/A/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-People',
+                \ '+World',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff:cached/:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+      End
+    End
+
+    Context with 'diff.noprefix'
+      Before all
+        call slit1.execute('config diff.noprefix true')
+      End
+
+      After all
+        call slit1.execute('config --unset diff.noprefix')
+      End
+
+      Context on diff comparing the index () and the work tree ()
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff :
+          Assert Equals(getline(3, '$'), [
+                \ '--- A/foo.txt',
+                \ '+++ A/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-World',
+                \ '+Goodbye',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff/:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+      End
+
+      Context on diff comparing a commit () and the work tree ()
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff HEAD:
+          Assert Equals(getline(3, '$'), [
+                \ '--- A/foo.txt',
+                \ '+++ A/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-People',
+                \ '+Goodbye',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff/HEAD:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+      End
+
+      Context on diff comparing a commit () and the index ()
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff --cached :
+          Assert Equals(getline(3, '$'), [
+                \ '--- A/foo.txt',
+                \ '+++ A/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-People',
+                \ '+World',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff:cached/:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+      End
+    End
+
+    Context with '--no-prefix' (show/diff)
+      Context on diff comparing the index () and the work tree ()
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff --no-prefix :
+          Assert Equals(getline(3, '$'), [
+                \ '--- A/foo.txt',
+                \ '+++ A/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-World',
+                \ '+Goodbye',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff/:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+      End
+
+      Context on diff comparing a commit () and the work tree ()
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff --no-prefix HEAD:
+          Assert Equals(getline(3, '$'), [
+                \ '--- A/foo.txt',
+                \ '+++ A/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-People',
+                \ '+Goodbye',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff/HEAD:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+      End
+
+      Context on diff comparing a commit () and the index ()
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff --no-prefix --cached :
+          Assert Equals(getline(3, '$'), [
+                \ '--- A/foo.txt',
+                \ '+++ A/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-People',
+                \ '+World',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff:cached/:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+      End
+    End
+
+    Context with '--src-prefix=PREFIX' (show/diff)
+      Context on diff comparing the index () and the work tree ()
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff --src-prefix=PREFIX :
+          Assert Equals(getline(3, '$'), [
+                \ '--- PREFIXA/foo.txt',
+                \ '+++ b/A/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-World',
+                \ '+Goodbye',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff/:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+      End
+
+      Context on diff comparing a commit () and the work tree ()
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff --src-prefix=PREFIX HEAD:
+          Assert Equals(getline(3, '$'), [
+                \ '--- PREFIXA/foo.txt',
+                \ '+++ b/A/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-People',
+                \ '+Goodbye',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff/HEAD:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+      End
+
+      Context on diff comparing a commit () and the index ()
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff --src-prefix=PREFIX --cached :
+          Assert Equals(getline(3, '$'), [
+                \ '--- PREFIXA/foo.txt',
+                \ '+++ b/A/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-People',
+                \ '+World',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff:cached/:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+      End
+    End
+
+    Context with '--dst-prefix=PREFIX' (show/diff)
+      Context on diff comparing the index () and the work tree ()
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff --dst-prefix=PREFIX :
+          Assert Equals(getline(3, '$'), [
+                \ '--- a/A/foo.txt',
+                \ '+++ PREFIXA/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-World',
+                \ '+Goodbye',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff/:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+      End
+
+      Context on diff comparing a commit () and the work tree ()
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff --dst-prefix=PREFIX HEAD:
+          Assert Equals(getline(3, '$'), [
+                \ '--- a/A/foo.txt',
+                \ '+++ PREFIXA/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-People',
+                \ '+Goodbye',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff/HEAD:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ slit1.path('A/foo.txt'),
+                \)
+        End
+      End
+
+      Context on diff comparing a commit () and the index ()
+        Before
+          execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+          GinaSync diff --dst-prefix=PREFIX --cached :
+          Assert Equals(getline(3, '$'), [
+                \ '--- a/A/foo.txt',
+                \ '+++ PREFIXA/foo.txt',
+                \ '@@ -1,2 +1,2 @@',
+                \ ' Hello',
+                \ '-People',
+                \ '+World',
+                \])
+        End
+
+        It does nothing and returns 1 when the cursor is on non context line
+          for lnum in range(1, 5)
+            call cursor(lnum, 1)
+            Assert Equals(gina#core#diffjump#jump(), 1)
+            Assert Equals(line('.'), lnum)
+            Assert Equals(
+                  \ bufname('%'),
+                  \ printf('gina://%s:diff:cached/:A/foo.txt:$', slit1.refname),
+                  \)
+          endfor
+        End
+
+        It opens a modified file when the cursor is on a context line
+          call cursor(6, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 1)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens an original file when the cursor is on a removed line
+          call cursor(7, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname),
+                \)
+        End
+
+        It opens a modified file when the cursor is on an added line
+          call cursor(8, 1)
+          Assert Equals(gina#core#diffjump#jump(), 0)
+          Assert Equals(line('.'), 2)
+          Assert Equals(
+                \ bufname('%'),
+                \ printf('gina://%s:show/:A/foo.txt', slit1.refname),
+                \)
+        End
+      End
+    End
+  End
+End
+

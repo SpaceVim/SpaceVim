@@ -1,0 +1,584 @@
+Describe Argument
+  Before all
+    let Guard = vital#gina#import('Vim.Guard')
+    let Path = vital#gina#import('System.Filepath')
+    let sf = themis#helper('scope').funcs(
+          \ Path.realpath('autoload/vital/__gina__/Argument.vim')
+          \)
+  End
+
+  Before
+    let Argument = vital#gina#import('Argument')
+    let guard = Guard.store(['&iskeyword'])
+  End
+
+  After
+    call guard.restore()
+  End
+
+  Describe .parse({cmdline})
+    It splits {cmdline} by a whitespace
+      Assert Equals(Argument.parse('foo'), ['foo'])
+      Assert Equals(Argument.parse('foo bar'), ['foo', 'bar'])
+      Assert Equals(Argument.parse('foo bar hoge'), ['foo', 'bar', 'hoge'])
+    End
+
+    It does not split {cmdline} by a single quoted whitespace
+      Assert Equals(Argument.parse('''foo bar'''), ['foo bar'])
+      Assert Equals(Argument.parse('-f''foo bar'''), ['-ffoo bar'])
+      Assert Equals(Argument.parse('--foo=''foo bar'''), ['--foo=foo bar'])
+    End
+
+    It does not split {cmdline} by a double quoted whitespace
+      Assert Equals(Argument.parse('"foo bar"'), ['foo bar'])
+      Assert Equals(Argument.parse('-f"foo bar"'), ['-ffoo bar'])
+      Assert Equals(Argument.parse('--foo="foo bar"'), ['--foo=foo bar'])
+    End
+  End
+
+  Describe .norm({terms})
+    It does nothing for non quoted term in {terms}
+      let terms = ['foo', '-ffoo', '--foo=foo']
+      Assert Equals(Argument.norm(terms), [
+            \ 'foo',
+            \ '-ffoo',
+            \ '--foo=foo',
+            \])
+    End
+
+    It removes single quotes of each term in {terms}
+      let terms = ['''foo bar''', '-f''foo bar''', '--foo=''foo bar''']
+      Assert Equals(Argument.norm(terms), [
+            \ 'foo bar',
+            \ '-ffoo bar',
+            \ '--foo=foo bar',
+            \])
+    End
+
+    It removes double quotes of each term in {terms}
+      let terms = ['"foo bar"', '-f"foo bar"', '--foo="foo bar"']
+      Assert Equals(Argument.norm(terms), [
+            \ 'foo bar',
+            \ '-ffoo bar',
+            \ '--foo=foo bar',
+            \])
+    End
+  End
+
+  Describe .new([{cmdline_or_terms}])
+    It returns a new empty args instance
+      let args = Argument.new()
+      Assert KeyExists(args, 'hash')
+      Assert KeyExists(args, 'lock')
+      Assert KeyExists(args, 'clone')
+      Assert KeyExists(args, 'index')
+      Assert KeyExists(args, 'has')
+      Assert KeyExists(args, 'get')
+      Assert KeyExists(args, 'pop')
+      Assert KeyExists(args, 'set')
+      Assert IsFunction(args.hash)
+      Assert IsFunction(args.lock)
+      Assert IsFunction(args.clone)
+      Assert IsFunction(args.index)
+      Assert IsFunction(args.has)
+      Assert IsFunction(args.get)
+      Assert IsFunction(args.pop)
+      Assert IsFunction(args.set)
+
+      Assert Equals(args.raw, [])
+    End
+
+    It parses {cmdline_or_terms} and return a new args instance
+      let args = Argument.new('-a --b c -dd --e=e f -- -g --h i -jj --k=k l')
+      Assert KeyExists(args, 'hash')
+      Assert KeyExists(args, 'lock')
+      Assert KeyExists(args, 'clone')
+      Assert KeyExists(args, 'index')
+      Assert KeyExists(args, 'has')
+      Assert KeyExists(args, 'get')
+      Assert KeyExists(args, 'pop')
+      Assert KeyExists(args, 'set')
+      Assert IsFunction(args.hash)
+      Assert IsFunction(args.lock)
+      Assert IsFunction(args.clone)
+      Assert IsFunction(args.index)
+      Assert IsFunction(args.has)
+      Assert IsFunction(args.get)
+      Assert IsFunction(args.pop)
+      Assert IsFunction(args.set)
+
+      Assert Equals(args.raw, [
+            \ '-a', '--b', 'c',
+            \ '-dd', '--e=e', 'f',
+            \ '--',
+            \ '-g', '--h', 'i',
+            \ '-jj', '--k=k', 'l',
+            \])
+    End
+
+    It norms {cmdline_or_terms} and return a new args instance
+      let args = Argument.new([
+            \ '''-a''', '''--b''', '''c''',
+            \ '"-dd"', '"--e=e"', '"f"',
+            \ '--',
+            \ '''-g''', '''--h''', '''i''',
+            \ '"-jj"', '"--k=k"', '"l"',
+            \])
+      Assert KeyExists(args, 'hash')
+      Assert KeyExists(args, 'lock')
+      Assert KeyExists(args, 'clone')
+      Assert KeyExists(args, 'index')
+      Assert KeyExists(args, 'has')
+      Assert KeyExists(args, 'get')
+      Assert KeyExists(args, 'pop')
+      Assert KeyExists(args, 'set')
+      Assert IsFunction(args.hash)
+      Assert IsFunction(args.lock)
+      Assert IsFunction(args.clone)
+      Assert IsFunction(args.index)
+      Assert IsFunction(args.has)
+      Assert IsFunction(args.get)
+      Assert IsFunction(args.pop)
+      Assert IsFunction(args.set)
+
+      Assert Equals(args.raw, [
+            \ '-a', '--b', 'c',
+            \ '-dd', '--e=e', 'f',
+            \ '--',
+            \ '-g', '--h', 'i',
+            \ '-jj', '--k=k', 'l',
+            \])
+    End
+  End
+
+  Describe {args} instance
+    Describe .hash()
+      It returns an unique string for each args instance
+        let args1 = Argument.new('a')
+        let args2 = Argument.new('b')
+        Assert Equals(args1, Argument.new('a'))
+        Assert Equals(args2, Argument.new('b'))
+        Assert NotEquals(args1, args2)
+      End
+    End
+
+    Describe .lock()
+      It locks args instance
+        let args = Argument.new('a')
+        call args.set('--foo', 1)
+        call args.lock()
+        Throws /locked/ args.set('--bar', 1)
+        Assert Equals(args.raw, ['a', '--foo'])
+      End
+    End
+
+    Describe .clone()
+      It clones an args instance
+        let args1 = Argument.new('a')
+        let args2 = args1.clone()
+        Assert Equals(args1, args2)
+        Assert NotSame(args1, args2)
+      End
+
+      It returns an unlocked clone instance
+        let args1 = Argument.new('a')
+        call args1.lock()
+        let args2 = args1.clone()
+        Throws /locked/ args1.set('--foo', 1)
+        call args2.set('--foo', 1)
+        Assert Equals(args1.raw, ['a'])
+        Assert Equals(args2.raw, ['a', '--foo'])
+      End
+    End
+
+    Describe .index({query})
+      It returns an index of a term which match with a string {query}
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.index('^-f$'), 0)
+        Assert Equals(args.index('^bar$'), 1)
+        Assert Equals(args.index('^--foo$'), 2)
+        Assert Equals(args.index('^BAR$'), 3)
+        Assert Equals(args.index('^--hoge='), 4)
+        Assert Equals(args.index('^-h'), -1)
+      End
+
+      It returns an index of an optional term which match with a string {query}
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.index('-f'), 0)
+        Assert Equals(args.index('--foo'), 2)
+        Assert Equals(args.index('-h|--hoge'), 4)
+        Assert Equals(args.index('-h'), -1)
+
+        let args = Argument.new('bar -f BAR --foo --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.index('-f'), 1)
+        Assert Equals(args.index('--foo'), 3)
+        Assert Equals(args.index('-h|--hoge'), 4)
+        Assert Equals(args.index('-h'), -1)
+
+        let args = Argument.new('bar -f BAR --foo-bar --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.index('-f'), 1)
+        Assert Equals(args.index('--foo'), -1)
+        Assert Equals(args.index('--foo-bar'), 3)
+        Assert Equals(args.index('-h|--hoge'), 4)
+        Assert Equals(args.index('-h'), -1)
+      End
+
+      It returns an index of a ({query} + 1)-th positional term
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.index(0), 1)
+        Assert Equals(args.index(1), 3)
+        Assert Equals(args.index(2), -1)
+
+        let args = Argument.new('bar -f BAR --foo --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.index(0), 0)
+        Assert Equals(args.index(1), 2)
+        Assert Equals(args.index(2), -1)
+      End
+
+      It throws an exception when {query} is a number and is not a positive
+        let args = Argument.new()
+        Throws /requires to be positive/ args.index(-1)
+      End
+
+      It returns an index of an optional term which match with a string {query} with custom 'iskeyword'
+        " Add '=' to 'iskeyword' which would affect \> pattern
+        setlocal iskeyword+==
+
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.index('-f'), 0)
+        Assert Equals(args.index('--foo'), 2)
+        Assert Equals(args.index('-h|--hoge'), 4)
+        Assert Equals(args.index('-h'), -1)
+
+        let args = Argument.new('bar -f BAR --foo --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.index('-f'), 1)
+        Assert Equals(args.index('--foo'), 3)
+        Assert Equals(args.index('-h|--hoge'), 4)
+        Assert Equals(args.index('-h'), -1)
+      End
+    End
+
+    Describe .has({query})
+      It returns boolean (0/1) whether an optional term which match with a string {query} exist
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert True(args.has('-f'))
+        Assert True(args.has('--foo'))
+        Assert True(args.has('-h|--hoge'))
+        Assert False(args.has('-h'))
+      End
+
+      It returns boolean (0/1) whether a ({query} + 1)-th positional term exist
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert True(args.has(0))
+        Assert True(args.has(1))
+        Assert False(args.has(2))
+      End
+    End
+
+    Describe .get({query} [, {default}])
+      It returns a value of an optional term which match with a string {query}
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.get('-f'), 1)
+        Assert Equals(args.get('--foo'), 1)
+        Assert Equals(args.get('-h|--hoge'), 'hoge')
+        Assert Equals(args.get('-h'), 0)
+        Assert Equals(args.get('-h', 'default'), 'default')
+      End
+
+      It returns a value of a ({query} + 1)-th positional term
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.get(0), 'bar')
+        Assert Equals(args.get(1), 'BAR')
+        Assert Equals(args.get(2), '')
+        Assert Equals(args.get(2, 'default'), 'default')
+      End
+
+      It returns a correct value for '--opener'
+        let args = Argument.new('show --opener=split :')
+        Assert Equals(args.raw, ['show', '--opener=split', ':'])
+        Assert Equals(args.get('--opener'), 'split')
+      End
+    End
+
+    Describe .pop({query} [, {default}])
+      It returns a value of an optional term which match with a string {query} and remove
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.pop('-f'), 1)
+        Assert False(args.has('-f'))
+        Assert Equals(args.pop('--foo'), 1)
+        Assert False(args.has('--foo'))
+        Assert Equals(args.pop('-h|--hoge'), 'hoge')
+        Assert False(args.has('--hoge'))
+        Assert Equals(args.pop('-h'), 0)
+        Assert Equals(args.pop('-h', 'default'), 'default')
+      End
+
+      It returns a value of a ({query} + 1)-th positional term
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.pop(0), 'bar')
+        Assert False(args.has(1))
+        Assert Equals(args.pop(0), 'BAR')
+        Assert False(args.has(1))
+        Assert Equals(args.pop(0), '')
+        Assert Equals(args.pop(0, 'default'), 'default')
+      End
+    End
+
+    Describe .set({query}, {value})
+      It changes a value of an optional term which match with a string {query}
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.set('-f', 'foo').get('-f'), 'foo')
+        Assert Equals(args.set('--foo', 'foo').get('--foo'), 'foo')
+        Assert Equals(args.set('--hoge', 'foo').get('--hoge'), 'foo')
+        Assert Equals(args.raw, [
+              \ '-ffoo', 'bar', '--foo=foo', 'BAR', '--hoge=foo',
+              \ '--', '-hHOGE', 'hoge',
+              \])
+      End
+
+      It appends an optional term when no optional term which match with a string {query} is found
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.set('-h', 'foo').get('-h'), 'foo')
+        Assert Equals(args.set('-i', 'foo').get('-i'), 'foo')
+        Assert Equals(args.set('-j', 'foo').get('-j'), 'foo')
+        Assert Equals(args.raw, [
+              \ '-f', 'bar', '--foo', 'BAR', '--hoge=hoge',
+              \ '-hfoo', '-ifoo', '-jfoo',
+              \ '--', '-hHOGE', 'hoge',
+              \])
+
+      End
+
+      It changes a value of a ({query} + 1)-th positional term
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.set(0, 'foo').get(0), 'foo')
+        Assert Equals(args.set(1, 'FOO').get(1), 'FOO')
+        Assert Equals(args.raw, [
+              \ '-f', 'foo', '--foo', 'FOO', '--hoge=hoge',
+              \ '--', '-hHOGE', 'hoge',
+              \])
+
+        Assert Equals(args.set(1, ['BAR', 'HOGE']).get(1), 'BAR')
+        Assert Equals(args.raw, [
+              \ '-f', 'foo', '--foo', 'BAR', 'HOGE', '--hoge=hoge',
+              \ '--', '-hHOGE', 'hoge',
+              \])
+      End
+
+      It appends positonal terms when no enough positional terms exist for {query}-th
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.set(2, 'foo').get(2), 'foo')
+        Assert Equals(args.set(4, 'FOO').get(4), 'FOO')
+        Assert Equals(args.set(9, ['HOGE', 'PIYO']).get(9), 'HOGE')
+        Assert Equals(args.raw, [
+              \ '-f', 'bar', '--foo', 'BAR', '--hoge=hoge', 'foo', '', 'FOO',
+              \ '', '', '', '', 'HOGE', 'PIYO',
+              \ '--', '-hHOGE', 'hoge',
+              \])
+      End
+    End
+
+    Describe .split()
+      It splits argument into "effective" and "residual" part
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge')
+        Assert Equals(args.split(), [
+              \ ['-f', 'bar', '--foo', 'BAR', '--hoge=hoge'],
+              \ [],
+              \])
+
+        let args = Argument.new('-- -hHOGE hoge')
+        Assert Equals(args.split(), [
+              \ [],
+              \ ['-hHOGE', 'hoge'],
+              \])
+
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.split(), [
+              \ ['-f', 'bar', '--foo', 'BAR', '--hoge=hoge'],
+              \ ['-hHOGE', 'hoge'],
+              \])
+      End
+    End
+
+    Describe .effective([{replace}])
+      It returns an "effective" part when no {replace} has specified
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge')
+        Assert Equals(args.effective(), [
+              \ '-f', 'bar', '--foo', 'BAR', '--hoge=hoge',
+              \])
+
+        let args = Argument.new('-- -hHOGE hoge')
+        Assert Equals(args.effective(), [])
+
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Equals(args.effective(), [
+              \ '-f', 'bar', '--foo', 'BAR', '--hoge=hoge',
+              \])
+      End
+
+      It replaces an "effective" part to {replace} and return self
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge')
+        Assert Same(args.effective(['-a']), args)
+        Assert Equals(args.raw, ['-a'])
+
+        let args = Argument.new('-- -hHOGE hoge')
+        Assert Same(args.effective(['-a']), args)
+        Assert Equals(args.raw, ['-a', '--', '-hHOGE', 'hoge'])
+
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Same(args.effective(['-a']), args)
+        Assert Equals(args.raw, ['-a', '--', '-hHOGE', 'hoge'])
+      End
+    End
+
+    Describe .residual([{replace}])
+      It returns a "residual" part when no {replace} has specified
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge')
+        Assert Equals(args.residual(), [])
+      End
+
+      It replaces an "residual" part to {replace} and return self
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge')
+        Assert Same(args.residual(['-a']), args)
+        Assert Equals(args.raw, [
+              \ '-f', 'bar', '--foo', 'BAR', '--hoge=hoge',
+              \ '--',
+              \ '-a',
+              \])
+
+        let args = Argument.new('-- -hHOGE hoge')
+        Assert Same(args.residual(['-a']), args)
+        Assert Equals(args.raw, [
+              \ '--',
+              \ '-a',
+              \])
+
+        let args = Argument.new('-f bar --foo BAR --hoge=hoge -- -hHOGE hoge')
+        Assert Same(args.residual(['-a']), args)
+        Assert Equals(args.raw, [
+              \ '-f', 'bar', '--foo', 'BAR', '--hoge=hoge',
+              \ '--',
+              \ '-a',
+              \])
+      End
+    End
+  End
+
+  Context Document sample
+    It Vital.Argument-usage
+      let args = Argument.new('grep gina HEAD')
+      let pattern = args.pop(1, '')
+      Assert Equals(pattern, 'gina')
+      Assert Equals(args.raw, ['grep', 'HEAD'])
+      let commit = args.pop(1, '')
+      Assert Equals(commit, 'HEAD')
+      Assert Equals(args.raw, ['grep'])
+      call args.set('--line-number', 1)
+      Assert Equals(args.raw, ['grep', '--line-number'])
+      call args.set('--color', 'always')
+      Assert Equals(args.raw, ['grep', '--line-number', '--color=always'])
+      call args.set(1, pattern)
+      Assert Equals(args.raw, [
+            \ 'grep', '--line-number', '--color=always',
+            \ 'gina',
+            \])
+      call args.set(2, commit)
+      Assert Equals(args.raw, [
+            \ 'grep', '--line-number', '--color=always',
+            \ 'gina', 'HEAD',
+            \])
+    End
+
+    It Vital.Argument.parse()
+      Assert Equals(Argument.parse('foo'), ['foo'])
+      Assert Equals(Argument.parse('foo bar'), ['foo', 'bar'])
+      Assert Equals(Argument.parse('"foo foo" "bar bar"'), ['foo foo', 'bar bar'])
+      Assert Equals(Argument.parse('foo "bar bar" hoge'), ['foo', 'bar bar', 'hoge'])
+      Assert Equals(Argument.parse('--foo="foo" -b"bar"'), ['--foo=foo', '-bbar'])
+      Assert Equals(Argument.parse('foo\ bar\ hoge'), ['foo\ bar\ hoge'])
+    End
+
+    It Vital.Argument.norm()
+      Assert Equals(Argument.norm(['foo']), ['foo'])
+      Assert Equals(Argument.norm(['foo', 'bar']), ['foo', 'bar'])
+      Assert Equals(Argument.norm(['"foo foo"', '"bar bar"']), ['foo foo', 'bar bar'])
+      Assert Equals(Argument.norm(['foo', '"bar bar"', 'hoge']), ['foo', 'bar bar', 'hoge'])
+      Assert Equals(Argument.norm(['--foo="foo"', '-b"bar"']), ['--foo=foo', '-bbar'])
+      Assert Equals(Argument.norm(['foo\ bar\ hoge']), ['foo\ bar\ hoge'])
+    End
+
+    It Vital.Argument-args.index()
+      let args = Argument.new([
+            \ '--foo', 'foo',
+            \ '--bar', 'bar',
+            \ '--',
+            \ '--wow', 'wow',
+            \])
+      " index({pattern})
+      Assert Equals(args.index('^--foo$'), 0)
+      Assert Equals(args.index('^foo$'), 1)
+      Assert Equals(args.index('^--wow$'), -1)
+
+      " index({query})
+      Assert Equals(args.index('-f|--foo'), 0)
+      Assert Equals(args.index('-b|--bar'), 2)
+      Assert Equals(args.index('-w|--wow'), -1)
+
+      " index({index})
+      Assert Equals(args.index(0), 1)
+      Assert Equals(args.index(1), 3)
+      Assert Equals(args.index(2), -1)
+    End
+
+    It Vital.Argument-args.get()
+      let args = Argument.new([
+            \ '--foo', 'foo',
+            \ '--bar=bar',
+            \ '--',
+            \ '--wow', 'wow',
+            \])
+      " args.get({pattern} [, {term}])
+      Assert Equals(args.get('^--foo$'), '--foo')
+      Assert Equals(args.get('^foo$'), 'foo')
+      Assert Equals(args.get('^--wow$'), '')
+      Assert Equals(args.get('^--wow$', 'default'), 'default')
+
+      " args.get({query} [, {value}])
+      Assert Equals(args.get('-f|--foo'), 1)
+      Assert Equals(args.get('-b|--bar'), 'bar')
+      Assert Equals(args.get('-w|--wow'), 0)
+      Assert Equals(args.get('-w|--wow', ''), '')
+
+      " args.get({index} [, {term}])
+      Assert Equals(args.get(0), 'foo')
+      Assert Equals(args.get(1), '')
+      Assert Equals(args.get(1, 0), 0)
+    End
+
+    It Vital.Argument-args.pop()
+      let args = Argument.new(['--foo', '-f', '--bar=bar', '-bBAR'])
+      Assert Equals(args.pop('-b|--bar'), 'bar')
+      Assert Equals(args.raw, ['--foo', '-f', '-bBAR'])
+    End
+
+    It Vital.Argument-args.set()
+      let args = Argument.new(['--foo', '-f', 'bar', '-bbar'])
+
+      " set({pattern}, {term})
+      call args.set('^--foo$', '--FOO')
+      Assert Equals(args.raw, ['--FOO', '-f', 'bar', '-bbar'])
+
+      " set({query}, {value})
+      call args.set('-f|--foo', 'FOO')
+      Assert Equals(args.raw, ['--FOO', '-fFOO', 'bar', '-bbar'])
+
+      " set({index}, {term})
+      call args.set(0, 'FOO')
+      Assert Equals(args.raw, ['--FOO', '-fFOO', 'FOO', '-bbar'])
+
+      " set({index}, {terms})
+      call args.set(0, ['BAR', 'HOGE'])
+      Assert Equals(args.raw, ['--FOO', '-fFOO', 'BAR', 'HOGE', '-bbar'])
+    End
+  End
+End

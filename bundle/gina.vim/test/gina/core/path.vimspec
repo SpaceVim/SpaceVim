@@ -1,0 +1,87 @@
+Describe gina#core#path
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit1 = Slit(tempname(), 1)
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+  End
+
+  Describe #expand({expr})
+    It returns a empty string when {expr} is an empty string
+      Assert Equals(gina#core#path#expand(''), '')
+    End
+
+    It returns a Unix-like path of {expr} when {expr} starts from ':'
+      let expr = Path.realpath(':/foo/bar.txt')
+      Assert Equals(gina#core#path#expand(expr), ':/foo/bar.txt')
+    End
+
+    It returns an Unix-like absolute path of {expr} when {expr} starts from 'gina://'
+      let git = gina#core#get_or_fail({'expr': slit1.worktree})
+      let expr = printf(
+            \ 'gina://%s:show/:A/foo/bar.txt',
+            \ slit1.refname,
+            \)
+      Assert Equals(gina#core#path#expand(expr), Path.unixpath(
+            \ Path.join(git.worktree, 'A', 'foo', 'bar.txt')
+            \))
+    End
+
+    It returns an expanded Unix-like path of {expr} when {expr} is '%'
+      execute 'edit' Path.realpath('foo/bar.txt')
+      let expr = '%'
+      Assert Equals(gina#core#path#expand(expr), 'foo/bar.txt')
+
+      let git = gina#core#get_or_fail({'expr': slit1.worktree})
+      execute 'edit' fnameescape(printf(
+            \ 'gina://%s:show/:A/foo/bar.txt',
+            \ slit1.refname,
+            \))
+      let expr = '%'
+      Assert Equals(gina#core#path#expand(expr), Path.unixpath(
+            \ Path.join(git.worktree, 'A', 'foo', 'bar.txt')
+            \))
+    End
+
+    It does not expand pathspec such as $HOME or *.vim
+      let expr = 'autoload/gina/*.vim'
+      Assert Equals(gina#core#path#expand(expr), expr)
+
+      let expr = '$HOME'
+      Assert Equals(gina#core#path#expand(expr), '$HOME')
+
+      let expr = 'master'
+      Assert Equals(gina#core#path#expand(expr), 'master')
+    End
+  End
+
+  Describe #abspath({expr} [, {root}])
+    It returns a Unix-like path of {expr} when {expr} starts from ':'
+      let expr = Path.realpath(':/foo/bar.txt')
+      Assert Equals(gina#core#path#abspath(expr), ':/foo/bar.txt')
+    End
+
+    It does not expand <Plug>_
+      let expect = Path.unixpath(getcwd() . '/<Plug>_')
+      Assert Equals(gina#core#path#abspath('<Plug>_'), expect)
+    End
+  End
+
+  Describe #relpath({expr} [, {root}])
+    It returns a Unix-like path of {expr} when {expr} starts from ':'
+      let expr = Path.realpath(':/foo/bar.txt')
+      Assert Equals(gina#core#path#relpath(expr), ':/foo/bar.txt')
+    End
+
+    It does not expand <Plug>_
+      let expect = Path.unixpath('<Plug>_')
+      Assert Equals(gina#core#path#relpath('<Plug>_'), expect)
+    End
+  End
+End

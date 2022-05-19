@@ -1,0 +1,42 @@
+Describe gina#command#cd
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit1 = Slit(tempname(), 1)
+    call slit1.write('A/foo/bar.txt', [])
+    let saved_cwd = getcwd()
+  End
+
+  After all
+    %bwipeout!
+    execute 'cd' fnameescape(saved_cwd)
+  End
+
+  Before
+    %bwipeout!
+    execute 'cd' fnameescape(saved_cwd)
+    edit foo
+    execute 'new' fnameescape(Path.join(slit1.worktree, 'A', 'foo.txt'))
+  End
+
+  Describe Use cases
+    It might be called without arguments
+      GinaSync cd
+      Assert Equals(getcwd(), slit1.worktree)
+      silent wincmd p
+      Assert Equals(getcwd(), slit1.worktree)
+    End
+
+    It might be called with 'A/foo'
+      GinaSync cd A/foo
+      Assert Equals(
+            \ getcwd(),
+            \ Path.join(slit1.worktree, 'A', 'foo')
+            \)
+      silent wincmd p
+      Assert Equals(
+            \ getcwd(),
+            \ Path.join(slit1.worktree, 'A', 'foo')
+            \)
+    End
+  End
+End

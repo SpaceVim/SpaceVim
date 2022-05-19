@@ -1,0 +1,126 @@
+Describe gina#command#changes
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit1 = Slit(tempname(), 1)
+    call slit1.write('A/foo.txt', [])
+    call slit1.write('B/foo.txt', [])
+    call slit1.write('C/foo.txt', [])
+    call slit1.execute('add %s', slit1.path('A/foo.txt'))
+    call slit1.execute('commit --quiet -m "First"')
+    call slit1.execute('checkout -b develop')
+    call slit1.execute('add %s', slit1.path('B/foo.txt'))
+    call slit1.execute('commit --quiet -m "Second"')
+    call slit1.execute('checkout master')
+    call slit1.execute('add %s', slit1.path('C/foo.txt'))
+    call slit1.execute('commit --quiet -m "Thrid"')
+
+    call slit1.write('A/foo.txt', ['changes'])
+    call slit1.execute('add %s', slit1.path('A/foo.txt'))
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+    execute 'edit' fnameescape(Path.join(slit1.worktree, 'A', 'foo.txt'))
+  End
+
+  Describe Use cases
+    It might be called without arguments
+      GinaSync changes
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:changes', slit1.refname))
+      Assert Equals(getline(1, '$'), [''])
+    End
+
+    It might be called with --cached
+      GinaSync changes --cached
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:changes:cached', slit1.refname))
+      Assert Equals(getline(1, '$'), [
+            \ "1\t0\tA/foo.txt",
+            \])
+      Assert Equals(gina#action#candidates(1, line('$')), [
+            \ {
+            \   '__lnum': 1,
+            \   'residual': [],
+            \   'word': "1\t0\tA/foo.txt",
+            \   'path': 'A/foo.txt',
+            \   'added': '1',
+            \   'removed': '0',
+            \   'rev': '',
+            \ },
+            \])
+    End
+
+    It might be called with develop...
+      GinaSync changes develop...
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:changes/develop...', slit1.refname))
+      Assert Equals(getline(1, '$'), [
+            \ "0\t0\tC/foo.txt",
+            \])
+      Assert Equals(gina#action#candidates(1, line('$')), [
+            \ {
+            \   '__lnum': 1,
+            \   'residual': [],
+            \   'word': "0\t0\tC/foo.txt",
+            \   'path': 'C/foo.txt',
+            \   'added': '0',
+            \   'removed': '0',
+            \   'rev': 'develop...',
+            \ },
+            \])
+    End
+
+    It might be called on gina://valid1:show/develop...:A/foo.txt
+      GinaSync show develop...:A/foo.txt
+      GinaSync changes
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:changes/develop...', slit1.refname))
+      Assert Equals(getline(1, '$'), [
+            \ "0\t0\tC/foo.txt",
+            \])
+      Assert Equals(gina#action#candidates(1, line('$')), [
+            \ {
+            \   '__lnum': 1,
+            \   'residual': [],
+            \   'word': "0\t0\tC/foo.txt",
+            \   'path': 'C/foo.txt',
+            \   'added': '0',
+            \   'removed': '0',
+            \   'rev': 'develop...',
+            \ },
+            \])
+    End
+
+    It might be called with --cached -- A/*.txt
+      GinaSync changes --cached -- A/*.txt
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:changes:cached:--', slit1.refname))
+      Assert Equals(getline(1, '$'), [
+            \ "1\t0\tA/foo.txt",
+            \])
+      Assert Equals(gina#action#candidates(1, line('$')), [
+            \ {
+            \   '__lnum': 1,
+            \   'residual': ['A/*.txt'],
+            \   'word': "1\t0\tA/foo.txt",
+            \   'path': 'A/foo.txt',
+            \   'added': '1',
+            \   'removed': '0',
+            \   'rev': '',
+            \ },
+            \])
+    End
+
+    It might be called with --cached -- A/*.vim
+      GinaSync changes --cached -- A/*.vim
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:changes:cached:--', slit1.refname))
+      Assert Equals(getline(1, '$'), [''])
+    End
+  End
+End

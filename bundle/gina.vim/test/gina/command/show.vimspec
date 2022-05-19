@@ -1,0 +1,405 @@
+scriptencoding utf8
+
+Describe gina#command#show
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let File = vital#gina#import('System.File')
+    let slit1 = Slit(tempname(), 1)
+    let encodings = {}
+    let encoding_dir = 'test/gina/_testdata'
+    for filename in glob(Path.realpath(encoding_dir . '/*-encoding.txt'), 1, 1)
+      let name = matchstr(fnamemodify(filename, ':t'), '.*\ze-encoding.txt')
+      let encodings[name] = {
+            \ 'name': name,
+            \ 'filename': fnamemodify(filename, ':t'),
+            \}
+      call File.copy(
+            \ filename,
+            \ Path.join(slit1.worktree, fnamemodify(filename, ':t')),
+            \)
+    endfor
+    call slit1.execute('add .')
+    call slit1.execute('commit --quiet -am "First"')
+
+    call slit1.write('A/foo.txt', ['Stashed'])
+    call slit1.execute('add %s', slit1.path('A/foo.txt'))
+    call slit1.execute('stash')
+
+    call slit1.write('A/foo.txt', [])
+    call slit1.execute('add %s', slit1.path('A/foo.txt'))
+
+    call slit1.write('A/foo.txt', ['1'])
+    call slit1.execute('commit --quiet -am "Second"')
+
+    call slit1.write('A/foo.txt', ['2'])
+    call slit1.execute('commit --quiet -am "Third"')
+
+    call slit1.write('A/foo.txt', ['3'])
+    call slit1.execute('add %s', slit1.path('A/foo.txt'))
+
+    call slit1.write('A/foo.txt', ['4'])
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+  End
+
+  Describe Use cases (without {path})
+    It might be called without arguments
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync show
+      Assert Equals(&filetype, 'git')
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:show', slit1.refname))
+      Assert Equals(getline(4, 7) + getline(9, '$'), [
+            \ '',
+            \ '    Third',
+            \ '',
+            \ 'diff --git a/A/foo.txt b/A/foo.txt',
+            \ '--- a/A/foo.txt',
+            \ '+++ b/A/foo.txt',
+            \ '@@ -1 +1 @@',
+            \ '-1',
+            \ '+2',
+            \])
+    End
+
+    It might be called with HEAD~
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync show HEAD~
+      Assert Equals(&filetype, 'git')
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:show/HEAD~', slit1.refname))
+      Assert Equals(getline(4, 6), [
+            \ '',
+            \ '    Second',
+            \ '',
+            \])
+    End
+
+    It might be called with -- A/*.txt
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync show -- A/*.txt
+      Assert Equals(&filetype, 'git')
+      Assert Equals(&bufhidden, 'wipe')
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:show:--', slit1.refname))
+      Assert Equals(getline(4, 7) + getline(9, '$'), [
+            \ '',
+            \ '    Third',
+            \ '',
+            \ 'diff --git a/A/foo.txt b/A/foo.txt',
+            \ '--- a/A/foo.txt',
+            \ '+++ b/A/foo.txt',
+            \ '@@ -1 +1 @@',
+            \ '-1',
+            \ '+2',
+            \])
+    End
+
+    It might be called with -- A/*.vim
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync show -- A/*.vim
+      Assert Equals(&filetype, 'git')
+      Assert Equals(&bufhidden, 'wipe')
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:show:--', slit1.refname))
+      Assert Equals(getline(1, '$'), [''])
+    End
+  End
+
+  Describe Use cases (with {path})
+    It might be called without arguments
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync show :
+      Assert Equals(winnr('$'), 1)
+      " Focused buffer
+      Assert Equals(bufname('%'), printf('gina://%s:show/:A/foo.txt', slit1.refname))
+      Assert Equals(getline(1, '$'), ['3'])
+    End
+
+    It might be called with HEAD
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync show HEAD:
+      Assert Equals(winnr('$'), 1)
+      " Focused buffer
+      Assert Equals(bufname('%'), printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname))
+      Assert Equals(getline(1, '$'), ['2'])
+    End
+
+    It might be called with HEAD~
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync show HEAD~:
+      Assert Equals(winnr('$'), 1)
+      " Focused buffer
+      Assert Equals(bufname('%'), printf('gina://%s:show/HEAD~:A/foo.txt', slit1.refname))
+      Assert Equals(getline(1, '$'), ['1'])
+    End
+
+    It might be called with stash@{0}:
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync show stash@{0}:
+      Assert Equals(winnr('$'), 1)
+      " Focused buffer
+      Assert Equals(bufname('%'), printf('gina://%s:show/stash@{0}:A/foo.txt', slit1.refname))
+      Assert Equals(getline(1, '$'), ['Stashed'])
+    End
+  End
+
+  Describe Behavior
+    Context jumps
+      Before
+        if !exists(':clearjumps')
+          Skip This Vim does not have :clearjumps so skip.
+        endif
+      End
+
+      It respects a native Vim's behavior for jumps for ':edit'
+        let opener = 'edit'
+        clearjumps
+        execute opener 'README.md'
+        let expect = split(execute('jumps'), '\r\?\n')
+        %bwipeout! | clearjumps
+        execute printf('Gina show --opener=%s :README.md', opener)
+        Assert Equals(split(execute('jumps'), '\r\?\n'), expect)
+      End
+
+      It respects a native Vim's behavior for jumps for ':new'
+        let opener = 'new'
+        clearjumps
+        execute opener 'README.md'
+        let expect = split(execute('jumps'), '\r\?\n')
+        %bwipeout! | clearjumps
+        execute printf('Gina show --opener=%s :README.md', opener)
+        Assert Equals(split(execute('jumps'), '\r\?\n'), expect)
+      End
+
+      It respects a native Vim's behavior for jumps for ':pedit'
+        let opener = 'pedit'
+        clearjumps
+        execute opener 'README.md'
+        let expect = split(execute('jumps'), '\r\?\n')
+        %bwipeout! | clearjumps
+        execute printf('Gina show --opener=%s :README.md', opener)
+        Assert Equals(split(execute('jumps'), '\r\?\n'), expect)
+      End
+
+      It respects a native Vim's behavior for jumps for ':tabedit'
+        let opener = 'tabedit'
+        clearjumps
+        execute opener 'README.md'
+        let expect = split(execute('jumps'), '\r\?\n')
+        %bwipeout! | clearjumps
+        execute printf('Gina show --opener=%s :README.md', opener)
+        Assert Equals(split(execute('jumps'), '\r\?\n'), expect)
+      End
+    End
+
+    Context jumps without python
+      Before
+        if !exists(':clearjumps')
+          Skip This Vim does not have :clearjumps so skip.
+        endif
+        let g:gina#core#writer#use_python = 0
+        let g:gina#core#writer#use_python3 = 0
+      End
+
+      After
+        let g:gina#core#writer#use_python = 1
+        let g:gina#core#writer#use_python3 = 1
+      End
+
+      It respects a native Vim's behavior for jumps for ':edit'
+        let opener = 'edit'
+        clearjumps
+        execute opener 'README.md'
+        let expect = split(execute('jumps'), '\r\?\n')
+        %bwipeout! | clearjumps
+        execute printf('Gina show --opener=%s :README.md', opener)
+        Assert Equals(split(execute('jumps'), '\r\?\n'), expect)
+      End
+
+      It respects a native Vim's behavior for jumps for ':new'
+        let opener = 'new'
+        clearjumps
+        execute opener 'README.md'
+        let expect = split(execute('jumps'), '\r\?\n')
+        %bwipeout! | clearjumps
+        execute printf('Gina show --opener=%s :README.md', opener)
+        Assert Equals(split(execute('jumps'), '\r\?\n'), expect)
+      End
+
+      It respects a native Vim's behavior for jumps for ':pedit'
+        let opener = 'pedit'
+        clearjumps
+        execute opener 'README.md'
+        let expect = split(execute('jumps'), '\r\?\n')
+        %bwipeout! | clearjumps
+        execute printf('Gina show --opener=%s :README.md', opener)
+        Assert Equals(split(execute('jumps'), '\r\?\n'), expect)
+      End
+
+      It respects a native Vim's behavior for jumps for ':tabedit'
+        let opener = 'tabedit'
+        clearjumps
+        execute opener 'README.md'
+        let expect = split(execute('jumps'), '\r\?\n')
+        %bwipeout! | clearjumps
+        execute printf('Gina show --opener=%s :README.md', opener)
+        Assert Equals(split(execute('jumps'), '\r\?\n'), expect)
+      End
+    End
+
+    Context +cmd
+      Before
+        let filename = ':test/gina/_testdata/pluscmd.txt'
+      End
+
+      It starts at thel last line with "+"
+        execute 'Gina show +' filename
+        Assert Equals(line('.'), line('$'))
+      End
+
+      It starts at line {num} with "+{num}"
+        execute 'Gina show +10' filename
+        Assert Equals(line('.'), 10)
+      End
+
+      It starts at first line containig {pat} with "+/{pat}"
+        execute 'Gina show +/The\ following\ is' filename
+        Assert Equals(line('.'), 6)
+      End
+
+      It execute {command} after opening the new file with +{command}
+        execute 'Gina show +setlocal\ filetype=vim' filename
+        Assert Equals(&filetype, 'vim')
+      End
+
+      It is overwritten by --line option
+        execute 'Gina show +10 --line=20' filename
+        Assert Equals(line('.'), 20)
+      End
+    End
+
+    Context ++enc
+      It might be called with ++enc=utf-8
+        let encoding = encodings['utf-8']
+        execute 'edit' fnameescape(slit1.path(encoding.filename))
+        execute printf('GinaSync show ++enc=%s :', encoding.name)
+        Assert Equals(winnr('$'), 1)
+        " Focused buffer
+        Assert Equals(bufname('%'), printf('gina://%s:show/:%s', slit1.refname, encoding.filename))
+        Assert Equals(gina#core#meta#get('args').params.cmdarg, printf('++enc=%s ', encoding.name))
+        Assert Equals(&fileencoding, encoding.name)
+        Assert Equals(getline(1, '$'), [
+              \ 'Unix EOL',
+              \ 'árvíztűrő tükörfúrógép',
+              \ 'ÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP',
+              \])
+
+        GinaSync show :
+        Assert Equals(getline(1, '$'), [
+              \ 'Unix EOL',
+              \ 'árvíztűrő tükörfúrógép',
+              \ 'ÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP',
+              \])
+      End
+
+      It might be called with ++enc=euc-jp
+        let encoding = encodings['euc-jp']
+        execute 'edit' fnameescape(slit1.path(encoding.filename))
+        execute printf('GinaSync show ++enc=%s :', encoding.name)
+        Assert Equals(winnr('$'), 1)
+        " Focused buffer
+        Assert Equals(bufname('%'), printf('gina://%s:show/:%s', slit1.refname, encoding.filename))
+        Assert Equals(gina#core#meta#get('args').params.cmdarg, printf('++enc=%s ', encoding.name))
+        Assert Equals(&fileencoding, encoding.name)
+        Assert Equals(getline(1, '$'), [
+              \ 'Unix EOL',
+              \ 'こんにちわ コンニチワ',
+              \ '今日和 ｺﾝﾆﾁﾜ',
+              \])
+
+        GinaSync show :
+        Assert Equals(getline(1, '$'), [
+              \ 'Unix EOL',
+              \ 'こんにちわ コンニチワ',
+              \ '今日和 ｺﾝﾆﾁﾜ',
+              \])
+      End
+
+      It might be called with ++enc=sjis
+        let encoding = encodings['sjis']
+        execute 'edit' fnameescape(slit1.path(encoding.filename))
+        execute printf('GinaSync show ++enc=%s :', encoding.name)
+        Assert Equals(winnr('$'), 1)
+        " Focused buffer
+        Assert Equals(bufname('%'), printf('gina://%s:show/:%s', slit1.refname, encoding.filename))
+        Assert Equals(gina#core#meta#get('args').params.cmdarg, printf('++enc=%s ', encoding.name))
+        Assert Equals(&fileencoding, encoding.name)
+        Assert Equals(getline(1, '$'), [
+              \ 'Unix EOL',
+              \ 'こんにちわ コンニチワ',
+              \ '今日和 ｺﾝﾆﾁﾜ',
+              \])
+
+        GinaSync show :
+        Assert Equals(getline(1, '$'), [
+              \ 'Unix EOL',
+              \ 'こんにちわ コンニチワ',
+              \ '今日和 ｺﾝﾆﾁﾜ',
+              \])
+      End
+
+      It might be called with ++enc=cp932
+        let encoding = encodings['cp932']
+        execute 'edit' fnameescape(slit1.path(encoding.filename))
+        execute printf('GinaSync show ++enc=%s :', encoding.name)
+        Assert Equals(winnr('$'), 1)
+        " Focused buffer
+        Assert Equals(bufname('%'), printf('gina://%s:show/:%s', slit1.refname, encoding.filename))
+        Assert Equals(gina#core#meta#get('args').params.cmdarg, printf('++enc=%s ', encoding.name))
+        Assert Equals(&fileencoding, encoding.name)
+        Assert Equals(getline(1, '$'), [
+              \ 'Unix EOL',
+              \ 'こんにちわ コンニチワ',
+              \ '今日和 ｺﾝﾆﾁﾜ',
+              \])
+
+        GinaSync show :
+        Assert Equals(getline(1, '$'), [
+              \ 'Unix EOL',
+              \ 'こんにちわ コンニチワ',
+              \ '今日和 ｺﾝﾆﾁﾜ',
+              \])
+      End
+
+      It might be called with ++enc=cp1250
+        let encoding = encodings['cp1250']
+        execute 'edit' fnameescape(slit1.path(encoding.filename))
+        execute printf('GinaSync show ++enc=%s :', encoding.name)
+        Assert Equals(winnr('$'), 1)
+        " Focused buffer
+        Assert Equals(bufname('%'), printf('gina://%s:show/:%s', slit1.refname, encoding.filename))
+        Assert Equals(gina#core#meta#get('args').params.cmdarg, printf('++enc=%s ', encoding.name))
+        Assert Equals(&fileencoding, encoding.name)
+        Assert Equals(getline(1, '$'), [
+              \ 'Unix EOL',
+              \ 'árvíztűrő tükörfúrógép',
+              \ 'ÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP',
+              \])
+
+        GinaSync show :
+        Assert Equals(getline(1, '$'), [
+              \ 'Unix EOL',
+              \ 'árvíztűrő tükörfúrógép',
+              \ 'ÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP',
+              \])
+      End
+    End
+  End
+End

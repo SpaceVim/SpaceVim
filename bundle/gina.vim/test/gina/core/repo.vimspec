@@ -1,0 +1,26 @@
+Describe gina#core#repo
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit1 = Slit(tempname(), 1)
+    call slit1.execute('config core.commentChar $')
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+  End
+
+  Describe #config({git})
+    It returns a config dictionary of {git} repository
+      execute 'edit' fnameescape(slit1.worktree)
+
+      let git = gina#core#get()
+      let config = gina#core#repo#config(git)
+      Assert KeyExists(config, 'core.commentchar')
+      Assert Equals(config['core.commentchar'], '$')
+    End
+  End
+End

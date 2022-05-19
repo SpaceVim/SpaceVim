@@ -1,0 +1,224 @@
+Describe Vim.Highlight
+  Before all
+    let Highlight = vital#gina#import('Vim.Highlight')
+
+    highlight VitalVimHighlightCase1 ctermfg=0 guifg=#000000
+    highlight VitalVimHighlightCase2 cterm=reverse ctermfg=100 gui=reverse guifg=#333333
+    highlight link VitalVimHighlightCase3 VitalVimHighlightCase1
+    highlight clear VitalVimHighlightCase4
+  End
+
+  After all
+    highlight clear VitalVimHighlightCase1
+    highlight clear VitalVimHighlightCase2
+    highlight clear VitalVimHighlightCase3
+    highlight clear VitalVimHighlightCase4
+    highlight clear VitalVimHighlightCase5
+    highlight clear VitalVimHighlightCase6
+  End
+
+  Describe .get([{name}])
+    It throws an exception when {name} highlight is not found
+      Throws /E411/ Highlight.get('VitalVimHighlightCaseMissing')
+    End
+
+    It returns a highlight instance for the {name} highlight
+      let highlight = Highlight.get('VitalVimHighlightCase1')
+      Assert Equals(highlight, {
+            \ 'name': 'VitalVimHighlightCase1',
+            \ 'attrs': {
+            \   'ctermfg': '0',
+            \   'guifg': '#000000'
+            \ },
+            \})
+    End
+
+    It returns a highlight instance list of all highlights
+      let highlight = Highlight.get()
+      call filter(highlight, 'v:val.name =~# ''^VitalVimHighlight''')
+      Assert Equals(highlight, [
+            \ {
+            \   'name': 'VitalVimHighlightCase1',
+            \   'attrs': {
+            \     'ctermfg': '0',
+            \     'guifg': '#000000'
+            \   },
+            \ },
+            \ {
+            \   'name': 'VitalVimHighlightCase2',
+            \   'attrs': {
+            \     'cterm': 'reverse',
+            \     'ctermfg': '100',
+            \     'gui': 'reverse',
+            \     'guifg': '#333333'
+            \   },
+            \ },
+            \ {
+            \   'name': 'VitalVimHighlightCase3',
+            \   'attrs': {
+            \     'link': 'VitalVimHighlightCase1',
+            \   },
+            \ },
+            \ {
+            \   'name': 'VitalVimHighlightCase4',
+            \   'attrs': {
+            \     'cleared': 1,
+            \   },
+            \ },
+            \])
+    End
+  End
+
+  Describe .set({highlight} [, {options}])
+    It create a new highlight by {highlight}
+      let highlight = {
+            \ 'name': 'VitalVimHighlightCase5',
+            \ 'attrs': {
+            \   'cterm': 'reverse',
+            \   'ctermfg': '100',
+            \   'gui': 'reverse',
+            \   'guifg': '#333333',
+            \ }
+            \}
+      Throws /E411/ Highlight.get('VitalVimHighlightCase5')
+      call Highlight.set(highlight)
+      Assert Equals(Highlight.get('VitalVimHighlightCase5'), highlight)
+    End
+
+    It overwrite an existing highlight by {highlight}
+      call Highlight.set({
+            \ 'name': 'VitalVimHighlightCase5',
+            \ 'attrs': {
+            \   'cterm': 'reverse',
+            \   'ctermfg': '100',
+            \   'gui': 'reverse',
+            \   'guifg': '#333333',
+            \ }
+            \})
+      let highlight = {
+            \ 'name': 'VitalVimHighlightCase5',
+            \ 'attrs': {
+            \   'cterm': 'NONE',
+            \   'gui': 'bold',
+            \ }
+            \}
+      let expect = {
+            \ 'name': 'VitalVimHighlightCase5',
+            \ 'attrs': {
+            \   'ctermfg': '100',
+            \   'gui': 'bold',
+            \   'guifg': '#333333',
+            \ }
+            \}
+      Assert NotEquals(Highlight.get('VitalVimHighlightCase5'), expect)
+      call Highlight.set(highlight)
+      Assert Equals(Highlight.get('VitalVimHighlightCase5'), expect)
+    End
+
+    It does not overwrite an existing highlight when {options.default} is specified
+      call Highlight.set({
+            \ 'name': 'VitalVimHighlightCase5',
+            \ 'attrs': {
+            \   'cterm': 'reverse',
+            \   'ctermfg': '100',
+            \   'gui': 'reverse',
+            \   'guifg': '#333333',
+            \ }
+            \})
+      let highlight = {
+            \ 'name': 'VitalVimHighlightCase5',
+            \ 'attrs': {
+            \   'cterm': 'NONE',
+            \   'gui': 'bold',
+            \ }
+            \}
+      let expect = {
+            \ 'name': 'VitalVimHighlightCase5',
+            \ 'attrs': {
+            \   'ctermfg': '100',
+            \   'gui': 'bold',
+            \   'guifg': '#333333',
+            \ }
+            \}
+      Assert NotEquals(Highlight.get('VitalVimHighlightCase5'), expect)
+      call Highlight.set(highlight, {'default': 1})
+      Assert NotEquals(Highlight.get('VitalVimHighlightCase5'), expect)
+      call Highlight.set(highlight, {'default': 0})
+      Assert Equals(Highlight.get('VitalVimHighlightCase5'), expect)
+    End
+
+    Context link
+      It create a new highlight link by {highlight}
+        let highlight = {
+              \ 'name': 'VitalVimHighlightCase6',
+              \ 'attrs': {
+              \   'link': 'VitalVimHighlightCase1',
+              \ }
+              \}
+        Throws /E411/ Highlight.get('VitalVimHighlightCase6')
+        call Highlight.set(highlight)
+        Assert Equals(Highlight.get('VitalVimHighlightCase6'), highlight)
+      End
+
+      It overwrite an existing highlight link by {highlight}
+        call Highlight.set({
+              \ 'name': 'VitalVimHighlightCase6',
+              \ 'attrs': {
+              \   'link': 'VitalVimHighlightCase1',
+              \ }
+              \})
+        let highlight = {
+              \ 'name': 'VitalVimHighlightCase6',
+              \ 'attrs': {
+              \   'link': 'VitalVimHighlightCase3',
+              \ }
+              \}
+        Assert NotEquals(Highlight.get('VitalVimHighlightCase6'), highlight)
+        call Highlight.set(highlight)
+        Assert Equals(Highlight.get('VitalVimHighlightCase6'), highlight)
+      End
+
+      It does not overwrite an existing highlight link when {options.default} is specified
+        call Highlight.set({
+              \ 'name': 'VitalVimHighlightCase6',
+              \ 'attrs': {
+              \   'link': 'VitalVimHighlightCase1',
+              \ }
+              \})
+        let highlight = {
+              \ 'name': 'VitalVimHighlightCase6',
+              \ 'attrs': {
+              \   'link': 'VitalVimHighlightCase3',
+              \ }
+              \}
+        Assert NotEquals(Highlight.get('VitalVimHighlightCase6'), highlight)
+        call Highlight.set(highlight, {'default': 1})
+        Assert NotEquals(Highlight.get('VitalVimHighlightCase6'), highlight)
+        call Highlight.set(highlight, {'default': 0})
+        Assert Equals(Highlight.get('VitalVimHighlightCase6'), highlight)
+      End
+
+      It fails silently to create a highlight link on an existing highlight
+        let highlight = {
+              \ 'name': 'VitalVimHighlightCase2',
+              \ 'attrs': {
+              \   'link': 'VitalVimHighlightCase1',
+              \ }
+              \}
+        call Highlight.set(highlight)
+        Assert NotEquals(Highlight.get('VitalVimHighlightCase2'), highlight)
+      End
+
+      It create a highlight link on an existing highlight when {options.force} is specified
+        let highlight = {
+              \ 'name': 'VitalVimHighlightCase2',
+              \ 'attrs': {
+              \   'link': 'VitalVimHighlightCase1',
+              \ }
+              \}
+        call Highlight.set(highlight, {'force': 1})
+        Assert NotEquals(Highlight.get('VitalVimHighlightCase2'), highlight)
+      End
+    End
+  End
+End

@@ -1,0 +1,35 @@
+#!/usr/bin/env osascript
+#---------------------------------------------------------------------------------------
+# git askpass via AppleScript (For macOS)
+#
+# Author:	lambdalisue <lambdalisue@hashnote.net>
+# License:	MIT License
+#
+# Usage:
+#	git config --global core.askpass={path to this script}
+#
+# Reference:
+# 	http://blog.thefrontiergroup.com.au/2008/12/prompting-for-a-password-with-applescript/
+# 	http://stackoverflow.com/questions/15605288/print-to-stdout-with-applescript
+# 	https://github.com/git/git/blob/35f6318d44379452d8d33e880d8df0267b4a0cd0/prompt.c#L7
+#---------------------------------------------------------------------------------------
+on run argv
+	set prompt to (item 1 of argv)
+	if prompt contains "Username"
+		set input to display dialog prompt ¬
+			with title "Username" ¬
+			with icon caution ¬
+			default answer "" ¬
+			buttons {"Cancel", "OK"} default button 2 ¬
+			giving up after 295
+	else
+		set input to display dialog prompt ¬
+			with title "Password" ¬
+			with icon caution ¬
+			default answer "" ¬
+			buttons {"Cancel", "OK"} default button 2 ¬
+			giving up after 295 ¬
+			with hidden answer
+	end if
+	return the text returned of the input
+end run

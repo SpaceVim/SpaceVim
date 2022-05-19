@@ -1,0 +1,83 @@
+Describe gina#core#meta
+  Before
+    %bwipeout!
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Describe #get()
+    It returns a default value when {name} does not exist
+      Assert Equals(gina#core#meta#get('foo'), '')
+      Assert Equals(gina#core#meta#get('foo', 0), 0)
+    End
+
+    It returns a {value} of {name} when exists
+      call gina#core#meta#set('foo', 'bar')
+      Assert Equals(gina#core#meta#get('foo'), 'bar')
+    End
+  End
+
+  Describe #set()
+    It sets a {value} with {name}
+      call gina#core#meta#set('foo', 'bar')
+      Assert Equals(gina#core#meta#get('foo'), 'bar')
+    End
+  End
+
+  Describe #has()
+    It returns 0 when {name} does not exist
+      Assert Equals(gina#core#meta#has('foo'), 0)
+    End
+
+    It returns 1 when {name} exists
+      call gina#core#meta#set('foo', 'bar')
+      Assert Equals(gina#core#meta#has('foo'), 1)
+    End
+  End
+
+  Describe #remove()
+    It does nothing when {name} does not exist
+      call gina#core#meta#set('foo', 'foo')
+      call gina#core#meta#remove('bar')
+      Assert Equals(gina#core#meta#get('foo'), 'foo')
+      Assert Equals(gina#core#meta#get('bar'), '')
+    End
+
+    It removes {name} when exists
+      call gina#core#meta#set('foo', 'foo')
+      call gina#core#meta#set('bar', 'bar')
+      call gina#core#meta#remove('bar')
+      Assert Equals(gina#core#meta#get('foo'), 'foo')
+      Assert Equals(gina#core#meta#get('bar'), '')
+    End
+  End
+
+  Describe #clear()
+    It does nothing when no entry exist
+      call gina#core#meta#clear()
+      Assert Equals(gina#core#meta#get('foo'), '')
+      Assert Equals(gina#core#meta#get('bar'), '')
+    End
+
+    It removes all entries
+      call gina#core#meta#set('foo', 'foo')
+      call gina#core#meta#set('bar', 'bar')
+      call gina#core#meta#clear()
+      Assert Equals(gina#core#meta#get('foo'), '')
+      Assert Equals(gina#core#meta#get('bar'), '')
+    End
+  End
+
+  Describe #get_or_fail()
+    It returns a {value} of {name} when {name} exist
+      call gina#core#meta#set('foo', 'bar')
+      Assert Equals(gina#core#meta#get_or_fail('foo'), 'bar')
+    End
+
+    It throws an exception when {name} does not exist
+      Throws /A required meta value/ gina#core#meta#get_or_fail('foo')
+    End
+  End
+End

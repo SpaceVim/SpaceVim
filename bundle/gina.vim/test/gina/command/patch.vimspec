@@ -1,0 +1,85 @@
+Describe gina#command#patch
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit1 = Slit(tempname(), 1)
+    let filename1 = slit1.path('A/foo.txt')
+    call slit1.write('A/foo.txt', [])
+    call slit1.execute('add %s', slit1.path('A/foo.txt'))
+
+    call slit1.write('A/foo.txt', ['1'])
+    call slit1.execute('commit --quiet -am "First"')
+    call slit1.write('A/foo.txt', ['2'])
+    call slit1.execute('add %s', slit1.path('A/foo.txt'))
+    call slit1.write('A/foo.txt', ['3'])
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+  End
+
+  Describe Use cases
+    It might be called without arguments
+      execute 'edit' fnameescape(filename1)
+      GinaSync patch
+      Assert Equals(tabpagenr('$'), 2)
+      Assert Equals(winnr('$'), 3)
+      " Focused buffer
+      Assert Equals(bufname('%'), printf('gina://%s:show/:A/foo.txt', slit1.refname))
+      Assert Equals(getline(1, '$'), [
+            \ '2',
+            \])
+      " topleft
+      let bufnr = winbufnr(1)
+      Assert Equals(bufname(bufnr), printf('gina://%s:show/HEAD:A/foo.txt', slit1.refname))
+      Assert Equals(getbufline(bufnr, 1, '$'), [
+            \ '1',
+            \])
+      " center
+      let bufnr = winbufnr(2)
+      Assert Equals(bufname('%'), printf('gina://%s:show/:A/foo.txt', slit1.refname))
+      Assert Equals(getbufline(bufnr, 1, '$'), [
+            \ '2',
+            \])
+      " botright
+      let bufnr = winbufnr(3)
+      Assert Equals(bufname(bufnr), filename1)
+      Assert Equals(getbufline(bufnr, 1, '$'), [
+            \ '3',
+            \])
+
+      " Patch should fail
+      Assert Equals(split(execute('write'), '\r\?\n'), [
+            \ '[gina] No difference between index and buffer',
+            \])
+      Assert Equals(slit1.execute('status --porcelain'), [
+            \ 'MM A/foo.txt',
+            \])
+
+      " dor obtain changes from right
+      normal dor
+      Assert Equals(getline(1, '$'), [
+            \ '3',
+            \])
+      " Patch should be able to perform and status become clear.
+      Assert Equals(split(execute('write'), '\r\?\n'), [])
+      Assert Equals(slit1.execute('status --porcelain'), [
+            \ 'M  A/foo.txt',
+            \])
+
+      " dol obtain changes from left
+      normal dol
+      Assert Equals(getline(1, '$'), [
+            \ '1',
+            \])
+      " Patch should be able to perform and status become clear.
+      Assert Equals(split(execute('write'), '\r\?\n'), [])
+      Assert Equals(slit1.execute('status --porcelain'), [
+            \ ' M A/foo.txt',
+            \])
+    End
+  End
+End

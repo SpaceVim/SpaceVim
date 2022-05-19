@@ -1,0 +1,144 @@
+let s:is_windows = has('win32') || has('win64')
+
+Describe gina#core
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit1 = Slit(tempname(), 1)
+    let slit2 = Slit(tempname(), 1)
+    let slit3 = Slit(tempname())
+    call slit1.write('A/foo.txt', [])
+    call slit1.write('B/foo.txt', [])
+    call slit1.write('C/foo.txt', [])
+    call slit2.write('A/foo.txt', [])
+    call slit2.write('B/foo.txt', [])
+    call slit2.write('C/foo.txt', [])
+    call slit3.write('A/foo.txt', [])
+    call slit3.write('B/foo.txt', [])
+    call slit3.write('C/foo.txt', [])
+
+    call slit1.execute('add %s', slit1.path('A/foo.txt'))
+    call slit1.execute('commit --quiet -m "First"')
+    call slit1.execute('checkout -b develop')
+    call slit1.execute('add %s', slit1.path('B/foo.txt'))
+    call slit1.execute('commit --quiet -m "Second"')
+    call slit1.execute('checkout master')
+    call slit1.execute('add %s', slit1.path('C/foo.txt'))
+    call slit1.execute('commit --quiet -m "Thrid"')
+
+    call slit2.execute('add %s', slit2.path('A/foo.txt'))
+    call slit2.execute('commit --quiet -m "Forth"')
+
+    call slit1.execute('remote add ext %s', slit2.worktree)
+    call slit1.execute('fetch ext')
+    call slit1.execute('checkout -track -b ext/master remotes/ext/master')
+    call slit1.execute('checkout master')
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+  End
+
+  Describe #get()
+    It returns an empty dictionary for a non git working-tree directory
+      execute 'edit' fnameescape(slit3.worktree)
+      let git = gina#core#get()
+      Assert Equals(git, {})
+    End
+
+    It returns a git instance for a git working-tree directory
+      execute 'edit' fnameescape(slit1.worktree)
+      let git = gina#core#get()
+      Assert Equals(git.refname, slit1.refname)
+      Assert Equals(git.worktree, slit1.worktree)
+      Assert Equals(git.repository, slit1.repository)
+      Assert Equals(git.commondir, '')
+    End
+
+    It returns a git instance for a git worktree directory
+      if !g:git_support_worktree
+        Skip This git does not support 'worktree' feature.
+      endif
+
+      let dirpath = Path.join(tempname(), 'valid-worktree')
+      call slit1.execute('worktree add %s develop', dirpath)
+
+      execute 'edit' fnameescape(dirpath)
+      let git = gina#core#get()
+      Assert Equals(git.refname, 'valid-worktree')
+      Assert Equals(git.worktree, dirpath)
+      Assert Equals(git.repository, Path.join(
+            \ slit1.repository, 'worktrees', 'valid-worktree'
+            \))
+      Assert Equals(git.commondir, slit1.repository)
+    End
+
+    if !s:is_windows
+      Context symbolic link
+        Before all
+          function! Link(src, dst) abort
+            call system(printf(
+                  \ 'ln -s %s %s',
+                  \ shellescape(a:src),
+                  \ shellescape(a:dst),
+                  \))
+          endfunction
+
+          let symlink1 = Path.join(slit1.worktree, 'symlink_to_invalid')
+          let symlink2 = Path.join(slit1.worktree, 'symlink_to_external')
+          let symlink3 = Path.join(slit3.worktree, 'symlink_to_valid')
+          call Link(Path.join(slit3.worktree, 'A', 'foo.txt'), symlink1)
+          call Link(Path.join(slit2.worktree, 'A', 'foo.txt'), symlink2)
+          call Link(Path.join(slit1.worktree, 'A', 'foo.txt'), symlink3)
+        End
+
+        It returns a git instance which the symlink file belongs
+          " NOTE: The symlink1 points a file in invalid
+          execute 'edit' fnameescape(symlink1)
+          let git = gina#core#get()
+          Assert Equals(git.refname, slit1.refname)
+          Assert Equals(git.worktree, slit1.worktree)
+          Assert Equals(git.repository, slit1.repository)
+          Assert Equals(git.commondir, '')
+
+          " NOTE: The symlink2 points a file in external
+          execute 'edit' fnameescape(symlink2)
+          let git = gina#core#get()
+          Assert Equals(git.refname, slit1.refname)
+          Assert Equals(git.worktree, slit1.worktree)
+          Assert Equals(git.repository, slit1.repository)
+          Assert Equals(git.commondir, '')
+        End
+
+        It returns a git instance which the original file belogns if the symlink file does not belong
+          " NOTE: The symlink3 points a file in valid1
+          execute 'edit' fnameescape(symlink3)
+          let git = gina#core#get()
+          Assert Equals(git.refname, slit1.refname)
+          Assert Equals(git.worktree, slit1.worktree)
+          Assert Equals(git.repository, slit1.repository)
+          Assert Equals(git.commondir, '')
+        End
+      End
+    endif
+  End
+
+  Describe #get_or_fail()
+    It throws an exception for a non git working-tree directory
+      execute 'edit' fnameescape(slit3.worktree)
+      Throws /No git repository/ gina#core#get_or_fail()
+    End
+
+    It returns a git instance for a git working-tree directory
+      execute 'edit' fnameescape(slit1.worktree)
+      let git = gina#core#get_or_fail()
+      Assert Equals(git.refname, slit1.refname)
+      Assert Equals(git.worktree, slit1.worktree)
+      Assert Equals(git.repository, slit1.repository)
+      Assert Equals(git.commondir, '')
+    End
+  End
+End

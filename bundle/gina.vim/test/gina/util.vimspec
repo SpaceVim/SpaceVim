@@ -1,0 +1,260 @@
+let s:is_windows = has('win32') || has('win64')
+
+Describe gina#util
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let Scope = themis#helper('scope')
+    let sfile = Path.realpath('autoload/gina/util.vim')
+    execute 'source' fnameescape(sfile)
+  End
+
+  Describe #contain_direction({mods})
+    It returns 1 if {mods} contains 'leftabove'
+      Assert True(gina#util#contain_direction('leftabove'))
+      Assert True(gina#util#contain_direction('lefta'))
+      Assert True(gina#util#contain_direction('verbose leftabove'))
+      Assert True(gina#util#contain_direction('verbose lefta'))
+      Assert True(gina#util#contain_direction('leftabove vertical'))
+      Assert True(gina#util#contain_direction('lefta vertical'))
+    End
+
+    It returns 1 if {mods} contains 'aboveleft'
+      Assert True(gina#util#contain_direction('aboveleft'))
+      Assert True(gina#util#contain_direction('above'))
+      Assert True(gina#util#contain_direction('abo'))
+      Assert True(gina#util#contain_direction('verbose aboveleft'))
+      Assert True(gina#util#contain_direction('verbose above'))
+      Assert True(gina#util#contain_direction('verbose abo'))
+      Assert True(gina#util#contain_direction('aboveleft vertical'))
+      Assert True(gina#util#contain_direction('above vertical'))
+      Assert True(gina#util#contain_direction('abo vertical'))
+    End
+
+    It returns 1 if {mods} contains 'rightbelow'
+      Assert True(gina#util#contain_direction('rightbelow'))
+      Assert True(gina#util#contain_direction('rightb'))
+      Assert True(gina#util#contain_direction('verbose rightbelow'))
+      Assert True(gina#util#contain_direction('verbose rightb'))
+      Assert True(gina#util#contain_direction('rightbelow vertical'))
+      Assert True(gina#util#contain_direction('rightb vertical'))
+    End
+
+    It returns 1 if {mods} contains 'belowright'
+      Assert True(gina#util#contain_direction('belowright'))
+      Assert True(gina#util#contain_direction('below'))
+      Assert True(gina#util#contain_direction('bel'))
+      Assert True(gina#util#contain_direction('verbose belowright'))
+      Assert True(gina#util#contain_direction('verbose below'))
+      Assert True(gina#util#contain_direction('verbose bel'))
+      Assert True(gina#util#contain_direction('belowright vertical'))
+      Assert True(gina#util#contain_direction('below vertical'))
+      Assert True(gina#util#contain_direction('bel vertical'))
+    End
+
+    It returns 1 if {mods} contains 'topleft'
+      Assert True(gina#util#contain_direction('topleft'))
+      Assert True(gina#util#contain_direction('top'))
+      Assert True(gina#util#contain_direction('to'))
+      Assert True(gina#util#contain_direction('verbose topleft'))
+      Assert True(gina#util#contain_direction('verbose top'))
+      Assert True(gina#util#contain_direction('verbose to'))
+      Assert True(gina#util#contain_direction('topleft vertical'))
+      Assert True(gina#util#contain_direction('top vertical'))
+      Assert True(gina#util#contain_direction('to vertical'))
+    End
+
+    It returns 1 if {mods} contains 'botright'
+      Assert True(gina#util#contain_direction('botright'))
+      Assert True(gina#util#contain_direction('bot'))
+      Assert True(gina#util#contain_direction('bo'))
+      Assert True(gina#util#contain_direction('verbose botright'))
+      Assert True(gina#util#contain_direction('verbose bot'))
+      Assert True(gina#util#contain_direction('verbose bo'))
+      Assert True(gina#util#contain_direction('botright vertical'))
+      Assert True(gina#util#contain_direction('bot vertical'))
+      Assert True(gina#util#contain_direction('bo vertical'))
+    End
+
+    It returns 0 if {mods} does not contain above keywords
+      Assert False(gina#util#contain_direction('verbose'))
+      Assert False(gina#util#contain_direction('verbose vertical'))
+    End
+  End
+
+  Describe #yank({value})
+    It assigns {value} to v:register
+      call gina#util#yank('foobar')
+      let result = getreg(v:register)
+      Assert Equals(result, 'foobar')
+    End
+  End
+
+  Describe #open({uri})
+    Before
+      let vars = Scope.vars(sfile)
+      let vars.File._open_called_with = []
+
+      function! vars.File.open(...) abort
+        let self._open_called_with = a:000
+      endfunction
+    End
+
+    It calls "System.File.open()" to open {uri} with a system browser
+      call gina#util#open('https://github.com/lambdalisue/gina.vim')
+      Assert Equals(
+            \ vars.File._open_called_with,
+            \ ['https://github.com/lambdalisue/gina.vim']
+            \)
+    End
+  End
+
+  Describe #filter({arglead} {candidates}[, {hidden_pattern}])
+    Before
+      let candidates = [
+            \ 'f',
+            \ 'fo',
+            \ 'foo',
+            \ 'foobar',
+            \ 'bar',
+            \ 'hoge',
+            \]
+    End
+
+    It returns {candidates}
+      let result = gina#util#filter('', candidates)
+      Assert Equals(result, candidates)
+    End
+
+    It returns {candidates} except items which match with {hidden_pattern}
+      let result = gina#util#filter('', candidates, 'bar')
+      Assert Equals(result, [
+            \ 'f',
+            \ 'fo',
+            \ 'foo',
+            \ 'hoge',
+            \])
+    End
+
+    It returns a partial {candidates} start from {arglead}
+      let result = gina#util#filter('foo', candidates)
+      Assert Equals(result, ['foo', 'foobar'])
+
+      let result = gina#util#filter('b', candidates)
+      Assert Equals(result, ['bar'])
+    End
+
+    It returns a partial {candidates} start {arglead}, ignore {hidden_pattern}
+      let result = gina#util#filter('foo', candidates, 'bar')
+      Assert Equals(result, ['foo', 'foobar'])
+    End
+  End
+
+  Describe #shellescape({value}[, {prefix}])
+    It returns an empty string for an empty {value}
+      let result = gina#util#shellescape('')
+      Assert Equals(result, '')
+
+      let result = gina#util#shellescape('', '--prefix=')
+      Assert Equals(result, '')
+    End
+
+    It returns a shellescaped {value} with {prefix}
+      if s:is_windows
+        let result = gina#util#shellescape('v a l u e')
+        Assert Equals(result, '"v a l u e"')
+
+        let result = gina#util#shellescape('v a l u e', '--prefix=')
+        Assert Equals(result, '--prefix="v a l u e"')
+      else
+        let result = gina#util#shellescape('v a l u e')
+        Assert Equals(result, '''v a l u e''')
+
+        let result = gina#util#shellescape('v a l u e', '--prefix=')
+        Assert Equals(result, '--prefix=''v a l u e''')
+      endif
+    End
+  End
+
+  Describe #fnameescape({value}[, {prefix}])
+    It returns an empty string for an empty {value}
+      let result = gina#util#fnameescape('')
+      Assert Equals(result, '')
+
+      let result = gina#util#fnameescape('', '--prefix=')
+      Assert Equals(result, '')
+    End
+
+    It returns a fnameescaped {value} with {prefix}
+      let result = gina#util#fnameescape('v a l u e')
+      Assert Equals(result, 'v\ a\ l\ u\ e')
+
+      let result = gina#util#fnameescape('v a l u e', '--prefix=')
+      Assert Equals(result, '--prefix=v\ a\ l\ u\ e')
+    End
+  End
+
+  Describe #doautocmd({name}[, {pattern})
+    After
+      augroup gina_test_util_doautocmd
+        autocmd! *
+      augroup END
+      silent! unlet g:gina_test_util_doautocmd
+    End
+
+    It calls {name} autocmd
+      augroup gina_test_util_doautocmd
+        autocmd! *
+        autocmd BufReadPre * let g:gina_test_util_doautocmd = 1
+      augroup END
+      Assert False(exists('g:gina_test_util_doautocmd'))
+      call gina#util#doautocmd('BufReadPre')
+      Assert True(g:gina_test_util_doautocmd)
+    End
+
+    It calls {name} autocmd with {pattern}
+      augroup gina_test_util_doautocmd
+        autocmd! *
+        autocmd User gina_test_util_doautocmd let g:gina_test_util_doautocmd = 1
+      augroup END
+      Assert False(exists('g:gina_test_util_doautocmd'))
+      call gina#util#doautocmd('User', 'gina_test_util_doautocmd')
+      Assert True(g:gina_test_util_doautocmd)
+    End
+
+    It does not show 'No matching autocommands' warning even the {name} autocmd is not registered
+      augroup gina_test_util_doautocmd
+        autocmd! *
+        autocmd BufReadPre foo:* let g:gina_test_util_doautocmd = 1
+      augroup END
+      " exists('#BufReadPre') returns 1 while BufReadPre foo:* is registered
+      Assert True(exists('#BufReadPre'))
+      if !has('nvim-0.4.0')
+        " But a builtin doautocmd shows 'No matching autocommands' warning while
+        " a current buffer does not match with the registered pattern.
+        try
+          redir => content
+          doautocmd BufReadPre
+        finally
+          redir END
+        endtry
+        Assert Equals(split(content, "\n"), ['No matching autocommands'])
+      endif
+      " But gina#util#doautocmd does not call autocmd in this case
+      try
+        redir => content
+        call gina#util#doautocmd('BufReadPre')
+      finally
+        redir END
+      endtry
+      Assert Equals(split(content, "\n"), [])
+      " The registered autocmd should not be called
+      Assert False(exists('g:gina_test_util_doautocmd'))
+    End
+  End
+
+  Describe #syncbind()
+    It calls a "syncbind" command a bit later
+      " NO TEST
+    End
+  End
+End

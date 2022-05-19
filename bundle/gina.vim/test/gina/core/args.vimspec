@@ -1,0 +1,13 @@
+Describe gina#core#args
+  Describe #extend_treeish({git}, {args}, {treeish})
+    It extends {args.params} with {rev, path, treeish} dictionary
+      let git = gina#core#get_or_fail()
+      let args = gina#core#args#new('show HEAD:README.md')
+      let args.params = {}
+      call gina#core#args#extend_treeish(git, args, args.pop(1))
+      Assert Equals(args.params.rev, 'HEAD')
+      Assert Equals(args.params.path, 'README.md')
+      Assert Equals(args.params.treeish, 'HEAD:README.md')
+    End
+  End
+End
