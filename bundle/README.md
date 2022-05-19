@@ -25,5 +25,6 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 - [deoplete](https://github.com/Shougo/deoplete.nvim/tree/1c40f648d2b00e70beb4c473b7c0e32b633bd9ae)
 - [vim-scala@7657218](https://github.com/derekwyatt/vim-scala/tree/7657218f14837395a4e6759f15289bad6febd1b4)
 - [neosnippet.vim@5973e80](https://github.com/Shougo/neosnippet.vim/tree/5973e801e7ad38a01e888cb794d74e076a35ea9b)
+- [nvim-tree.lua](https://github.com/kyazdani42/nvim-tree.lua/tree/9049f364cc3ceaff07ab130e1d35aec9e4124563)
 - [telescope.nvim@39b12d8](https://github.com/nvim-telescope/telescope.nvim/tree/39b12d84e86f5054e2ed98829b367598ae53ab41)
 - [telescope-ctags-outline.nvim](https://github.com/fcying/telescope-ctags-outline.nvim)
