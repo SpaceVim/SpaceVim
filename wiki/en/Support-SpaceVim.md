@@ -1,6 +1,6 @@
 The best way to support SpaceVim is to contribute to it either by reporting bugs, helping the community on the Gitter Chat or sending pull requests.
 
-If you want to show your support financially you can contribute to [Bountysource](https://salt.bountysource.com/teams/spacevim) or [opencollective](https://opencollective.com/spacevim)
+If you want to show your support financially you can contribute to [opencollective](https://opencollective.com/spacevim)
 
 or buy a drink for the maintainer by clicking following icon.
 
