@@ -132,7 +132,7 @@ jobs:
                 vimtag: v0.4.2
               - vimbin: nvim
                 vimtag: v0.3.8
-    runs-on: windows-2019
+    runs-on: windows-latest
     env:
         VIM_BIN: ${{ matrix.vimbin }}
         VIM_TAG: ${{ matrix.vimtag }}
