@@ -1,0 +1,26 @@
++-------------------------------------------------------------------+
+|  Picker:find()--------------------+    +------>Picker             |
+|   |        ^                      |    |                          |
+|   |        |                      v    |                          |
+|   |  +----------------+   +----------------+                      |
+|   +->|     Finder     +   |     Sorter     |                      |
+|      +----------------+   +----------------+                      |
+|                   [1]                                             |
+|                                                                   |
+|                                                                   |
+|                                                                   |
+|                                                                   |
+|                                                                   |
+|                                                                   |
++-------------------------------------------------------------------+
+
+Picker starts a `finder`.
+    Finder returns a list of `entries` to Picker.
+    Picker can optionally sort w/ `Sorter`.
+    Picker can optionally preview selected with `Previewer`
+
+    Then you can map stuff in the picker to decide what to do next.
+
+
+
+

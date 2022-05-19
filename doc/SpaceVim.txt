@@ -223,14 +223,15 @@ CONTENTS                                                   *SpaceVim-contents*
       128. operator.................................|SpaceVim-layers-operator|
       129. shell.......................................|SpaceVim-layers-shell|
       130. ssh...........................................|SpaceVim-layers-ssh|
-      131. test.........................................|SpaceVim-layers-test|
-      132. tmux.........................................|SpaceVim-layers-tmux|
-      133. tools#dash.............................|SpaceVim-layers-tools-dash|
-      134. tools#mpv...............................|SpaceVim-layers-tools-mpv|
-      135. tools#zeal.............................|SpaceVim-layers-tools-zeal|
-      136. treesitter.............................|SpaceVim-layers-treesitter|
-      137. ui.............................................|SpaceVim-layers-ui|
-      138. unite.......................................|SpaceVim-layers-unite|
+      131. telescope...............................|SpaceVim-layers-telescope|
+      132. test.........................................|SpaceVim-layers-test|
+      133. tmux.........................................|SpaceVim-layers-tmux|
+      134. tools#dash.............................|SpaceVim-layers-tools-dash|
+      135. tools#mpv...............................|SpaceVim-layers-tools-mpv|
+      136. tools#zeal.............................|SpaceVim-layers-tools-zeal|
+      137. treesitter.............................|SpaceVim-layers-treesitter|
+      138. ui.............................................|SpaceVim-layers-ui|
+      139. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. alternate file........................|SpaceVim-usage-alternate-file|
       2. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
@@ -3647,11 +3648,11 @@ This layer also provides REPL support for julia, the key bindings are:
 To format julia code, you need to install `JuliaFormatter`, and the key
 binding is `SPC b f`
 
-If the lsp layer is enabled for python, the following key bindings can be
-used:
+If the lsp layer is enabled for julia, the following key bindings can be used:
 >
   key binding     Description
   g D             jump to type definition
+  g d             jump to definition
   SPC l e         rename symbol
   SPC l x         show references
   SPC l h         show line diagnostics
@@ -5415,6 +5416,33 @@ KEY BINDINGS
 >
   Key Bingding    Description
   SPC S o         connect to ssh server
+<
+
+==============================================================================
+TELESCOPE                                          *SpaceVim-layers-telescope*
+
+This layer provides fuzzy finder feature which is based on |telescope|, and
+this This layer is not loaded by default. To use this layer:
+>
+  [[layers]]
+    name = 'telescope'
+<
+KEY BINDINGS
+
+The following key bindings will be enabled when this layer is loaded:
+>
+  Key bindings      Description
+  SPC p f / Ctrl-p  search files in current directory
+  <Leader> f SPC    Fuzzy find menu:CustomKeyMaps
+  <Leader> f e      Fuzzy find register
+  <Leader> f h      Fuzzy find history/yank
+  <Leader> f j      Fuzzy find jump, change
+  <Leader> f l      Fuzzy find location list
+  <Leader> f m      Fuzzy find output messages
+  <Leader> f o      Fuzzy find functions
+  <Leader> f t      Fuzzy find tags
+  <Leader> f q      Fuzzy find quick fix
+  <Leader> f r      Resumes Unite window
 <
 
 ==============================================================================

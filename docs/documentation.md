@@ -1501,10 +1501,11 @@ The first item is the name of the tool, the second one is the default searching 
 
 Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
 
-| Key Bindings | Descriptions                            |
-| ------------ | --------------------------------------- |
-| `SPC f v v`  | display and copy SpaceVim version       |
-| `SPC f v d`  | open SpaceVim custom configuration file |
+| Key Bindings | Descriptions                                     |
+| ------------ | ------------------------------------------------ |
+| `SPC f v v`  | display and copy SpaceVim version                |
+| `SPC f v d`  | open SpaceVim custom configuration file          |
+| `SPC f v s`  | list all loaded vim scripts, like `:scriptnames` |
 
 ### Available layers
 
@@ -1520,8 +1521,14 @@ Fuzzy finder provides a variety of efficient content searching key bindings,
 including file searching, outline searching, vim messages searching and register
 content searching.
 
-SpaceVim provides five fuzzy find tools, each of them is configured in a layer
-([`unite`](../layers/unite/), `denite`, `leaderf`, `ctrlp` and `fzf` layer).
+Currently, there are six fuzzy finder layers:
+
+- [`unite`](../layers/unite/) layer: based on `Shougo/unite.vim`
+- [`denite`](../layers/denite/) layer: based on `Shougo/denite.nvim`
+- [`leaderf`](../layers/leaderf/) layer: based on `Yggdroot/LeaderF`
+- [`ctrlp`](../layers/ctrlp/) layer: based on `ctrlpvim/ctrlp.vim`
+- [`fzf`](../layers/fzf/) layer: based on fzf
+- [`telescope`](../layers/telescope) layer: based on telescope.nvim
 
 These layers have the same key bindings and features. But they need different dependencies.
 

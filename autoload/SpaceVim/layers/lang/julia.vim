@@ -36,11 +36,12 @@
 " To format julia code, you need to install `JuliaFormatter`, and the key
 " binding is `SPC b f`
 "
-" If the lsp layer is enabled for python, the following key bindings can
+" If the lsp layer is enabled for julia, the following key bindings can
 " be used:
 " >
 "   key binding     Description
 "   g D             jump to type definition
+"   g d             jump to definition
 "   SPC l e         rename symbol
 "   SPC l x         show references
 "   SPC l h         show line diagnostics
@@ -105,6 +106,7 @@ function! s:language_specified_mappings() abort
         \ || SpaceVim#layers#lsp#check_server('julials')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
     nnoremap <silent><buffer> gD :<C-u>call SpaceVim#lsp#go_to_typedef()<Cr>
+    nnoremap <silent><buffer> gd :<C-u>call SpaceVim#lsp#go_to_def()<Cr>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
           \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)

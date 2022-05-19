@@ -18,7 +18,7 @@
 
 function! SpaceVim#layers#lang#autohotkey#plugins() abort
   let plugins = []
-  call add(plugins, ['wsdjeg/vim-autohotkey', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-autohotkey', {'merged' : 0}])
   return plugins
 endfunction
 
