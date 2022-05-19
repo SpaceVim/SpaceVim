@@ -283,6 +283,8 @@ else
       FzfMenu Projects
     elseif SpaceVim#layers#isLoaded('leaderf')
       call SpaceVim#layers#leaderf#run_menu('Projects')
+    elseif SpaceVim#layers#isLoaded('telescope')
+      Telescope project
     else
       call SpaceVim#logger#warn('fuzzy find layer is needed to find project!')
     endif

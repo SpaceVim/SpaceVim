@@ -1,5 +1,6 @@
 lua require('telescope').load_extension('menu')
 lua require('telescope').load_extension('messages')
+lua require('telescope').load_extension('project')
 lua require('telescope').load_extension('scriptnames')
 lua <<EOF
 local actions = require("telescope.actions")
