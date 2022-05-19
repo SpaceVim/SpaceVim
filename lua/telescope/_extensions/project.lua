@@ -17,6 +17,24 @@ end
 
 local function show_changes(opts)
   opts = opts or {}
+--    local displayer = entry_display.create({
+--        separator = ' ',
+--        items = {
+--            { width = 4 },
+--            { remaining = true },
+--            { remaining = true },
+--        },
+--    })
+--    local function make_display(entry)
+--        return displayer({
+--            { entry.value.type, 'TelescopeResultsVariable' },
+--            { entry.value.name, 'TelescopeResultsFunction' },
+--            { '[' .. entry.value.line .. ']', 'TelescopeResultsComment' },
+--        })
+--    end
+--  local function make_display(v)
+--      
+--  end
   pickers.new(opts, {
     prompt_title = "Projects",
     finder = finders.new_table {
@@ -24,8 +42,9 @@ local function show_changes(opts)
       entry_maker = function(entry)
         return {
           value = entry,
-          display = entry[1],
           command = entry[2],
+          display = entry[1],
+          ordinal = entry[1]
         }
       end
     },
@@ -34,7 +53,7 @@ local function show_changes(opts)
       actions.select_default:replace(function()
         local entry = action_state.get_selected_entry()
         actions.close(prompt_bufnr)
-        print(entry.display, entry.command)
+        vim.cmd(entry.command)
       end)
       return true
     end,
