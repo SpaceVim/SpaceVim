@@ -129,7 +129,7 @@ else
     for key in s:sort_by_opened_time()
       let desc = '[' . s:project_paths[key].name . '] ' . s:project_paths[key].path . ' <' . strftime('%Y-%m-%d %T', s:project_paths[key].opened_time) . '>'
       let cmd = "call SpaceVim#plugins#projectmanager#open('" . s:project_paths[key].path . "')"
-      call add(g:unite_source_menu_menus.Projects.command_candidates, [desc,cmd])
+      call add(g:unite_source_menu_menus.Projects.command_candidates, [desc, cmd, s:project_paths[key]])
     endfor
     if g:spacevim_enable_projects_cache
       call s:cache()

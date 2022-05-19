@@ -70,6 +70,11 @@ you need to change `project_rooter_outermost` to `false`.
     project_rooter_outermost = false
 ```
 
+If you want to list all recent opened project, you need to load a fuzzy finder layer.
+for example `telescope` layer, the the key binding `SPC p p` is available for you.
+
+![image](https://user-images.githubusercontent.com/13142418/169195419-329a1b58-850d-40a8-ba02-d0e1f9367305.png)
+
 ### Fuzzy finder
 
 SpaceVim provides 5 fuzzy finder layer, they are unite, denite, fzf, leaderf and ctrlp.
