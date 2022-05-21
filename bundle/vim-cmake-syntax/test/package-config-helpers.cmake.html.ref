@@ -1,0 +1,26 @@
+<body>
+<pre id='vimCodeElement'>
+<span class="Identifier">write_basic_package_version_file</span>(file1
+    <span class="ModeMsg">VERSION</span> 3.2.1
+    <span class="ModeMsg">COMPATIBILITY</span> <span class="Constant">AnyNewerVersion</span>)
+
+<span class="Identifier">write_basic_package_version_file</span>(file2
+    <span class="ModeMsg">VERSION</span> 3.2.1
+    <span class="ModeMsg">COMPATIBILITY</span> <span class="Constant">SameMajorVersion</span>)
+
+<span class="Identifier">write_basic_package_version_file</span>(file3
+    <span class="ModeMsg">VERSION</span> 3.2.1
+    <span class="ModeMsg">COMPATIBILITY</span> <span class="Constant">SameMinorVersion</span>)
+
+<span class="Identifier">write_basic_package_version_file</span>(file4
+    <span class="ModeMsg">VERSION</span> 3.2.1
+    <span class="ModeMsg">COMPATIBILITY</span> <span class="Constant">ExactVersion</span>)
+
+<span class="Identifier">configure_package_config_file</span>(input output
+    <span class="ModeMsg">INSTALL_DESTINATION</span> path/to
+    <span class="ModeMsg">PATH_VARS</span> <span class="Type">${var1}</span> <span class="Type">${var1}</span>
+    <span class="ModeMsg">NO_SET_AND_CHECK_MACRO</span>
+    <span class="ModeMsg">NO_CHECK_REQUIRED_COMPONENTS_MACRO</span>
+    <span class="ModeMsg">INSTALL_PREFIX</span> path/to)
+</pre>
+</body>

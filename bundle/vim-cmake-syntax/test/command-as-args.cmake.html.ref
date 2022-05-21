@@ -1,0 +1,5 @@
+<body>
+<pre id='vimCodeElement'>
+<span class="Identifier">add_custom_command</span>(add_custom_command) <span class="Comment"># inner add_custom_command should not be highlighted</span>
+</pre>
+</body>

@@ -1,0 +1,53 @@
+<body>
+<pre id='vimCodeElement'>
+<span class="Identifier">message</span>(<span class="ModeMsg">FATAL_ERROR</span> <span class="Constant">[[</span>
+<span class="Constant">This is the first line in a bracket argument with bracket length 1.</span>
+<span class="Constant">No \-escape sequences or ${variable} references are evaluated.</span>
+<span class="Constant">This is always one argument even though it contains a ; character.</span>
+<span class="Constant">It does end in a closing bracket of length 1.</span>
+<span class="Constant">]]</span>)
+
+<span class="Identifier">message</span>(<span class="ModeMsg">FATAL_ERROR</span> <span class="Constant">[=[</span>
+<span class="Constant">This is the first line in a bracket argument with bracket length 1.</span>
+<span class="Constant">No \-escape sequences or ${variable} references are evaluated.</span>
+<span class="Constant">This is always one argument even though it contains a ; character.</span>
+<span class="Constant">The text does not end on a closing bracket of length 0 like ]].</span>
+<span class="Constant">It does end in a closing bracket of length 1.</span>
+<span class="Constant">]=]</span>)
+
+<span class="Identifier">message</span>(<span class="ModeMsg">FATAL_ERROR</span> <span class="Constant">[=123[</span>
+<span class="Constant">This is the first line in a bracket argument with bracket length 1.</span>
+<span class="Constant">No \-escape sequences or ${variable} references are evaluated.</span>
+<span class="Constant">This is always one argument even though it contains a ; character.</span>
+<span class="Constant">The text does not end on a closing bracket of length 0 like ]].</span>
+<span class="Constant">It does end in a closing bracket of length 1.</span>
+<span class="Constant">]=123]</span>)
+
+<span class="Constant">[[ # this will make a cmake-error but defines a bracket-arguemnt</span>
+<span class="Constant">cmake_minimum_required(VERSION 4.0 FATAL_ERROR) # Should be string-colored</span>
+<span class="Constant">]]</span>
+
+<span class="Comment">#[[</span>
+<span class="Comment">cmake_minimum_required(VERSION 4.0 FATAL_ERROR) # Should be greyed out</span>
+<span class="Comment">]]</span> <span class="Identifier">target_link_libraries</span>(t lib)
+
+<span class="Comment">#[[</span>
+<span class="Comment">cmake_minimum_required(VERSION 4.0 FATAL_ERROR) # Should be greyed out</span>
+<span class="Comment">#]]</span> <span class="Identifier">target_link_libraries</span>(t lib)
+
+<span class="Comment"># commented bracket-comment</span>
+<span class="Comment">##[[</span>
+<span class="Identifier">cmake_minimum_required</span>(<span class="ModeMsg">VERSION</span> 4.0 <span class="ModeMsg">FATAL_ERROR</span>) <span class="Comment"># Should not be greyed out</span>
+<span class="Comment">#]]</span>
+
+<span class="Comment">#[[This is a bracket comment.</span>
+<span class="Comment">It runs until the close bracket.]]</span>
+
+<span class="Identifier">message</span>(<span class="Constant">&quot;First Argument</span><span class="Special">\n</span><span class="Constant">&quot;</span> <span class="Comment">#[[Bracket Comment]]</span> <span class="Constant">&quot;Second Argument&quot;</span>)
+
+<span class="Comment">#[=12[</span>
+<span class="Comment">comment</span>
+<span class="Comment">]=12]</span>
+
+</pre>
+</body>
