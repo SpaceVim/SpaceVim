@@ -775,6 +775,6 @@ hi def link postscrGSMathOperator  postscrError
 endif
 
 
-let b:current_syntax = "postscr"
+let b:current_syntax = "postscript"
 
 " vim: ts=8
