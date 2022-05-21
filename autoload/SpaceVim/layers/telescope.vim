@@ -49,6 +49,7 @@ function! SpaceVim#layers#telescope#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/plenary.nvim', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope-menu', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope-ctags-outline.nvim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neoyank.vim',        { 'merged' : 0}])
   return plugins
 endfunction
 
@@ -215,9 +216,9 @@ function! s:defind_fuzzy_finder() abort
           \ ]
           \ ]
   nnoremap <silent> <Leader>fh
-        \ :<C-u>CtrlPNeoyank<CR>
+        \ :<C-u>Telescope neoyank<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.h = ['CtrlPNeoyank',
+  let g:_spacevim_mappings.f.h = ['Telescope neoyank',
         \ 'fuzzy find yank history',
         \ [
           \ '[Leader f h] is to fuzzy find history and yank content',
