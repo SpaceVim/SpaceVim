@@ -19,7 +19,7 @@ local function show_menu(opts)
     opts = opts or {}
     local menu = opts.menu or ''
     pickers.new(opts, {
-        prompt_title = "Menu",
+        prompt_title = "Menu:" .. menu,
         finder = finders.new_table {
             results = prepare_menu(menu),
             entry_maker = function(entry)

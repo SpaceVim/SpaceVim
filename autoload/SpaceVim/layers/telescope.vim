@@ -57,8 +57,7 @@ let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#telescope#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['?'], 'call call('
-        \ . string(s:_function('s:get_menu')) . ', ["CustomKeyMaps", "[SPC]"])',
+  call SpaceVim#mapping#space#def('nnoremap', ['?'], 'Telescope menu menu=CustomKeyMaps default_text=[SPC]',
         \ ['show-mappings',
         \ [
           \ 'SPC ? is to show mappings',
@@ -285,9 +284,9 @@ function! s:defind_fuzzy_finder() abort
           \ ]
           \ ]
 
-  nnoremap <silent> <Leader>f<Space> :CtrlPMenu CustomKeyMaps<CR>
+  nnoremap <silent> <Leader>f<Space> :Telescope menu menu=CustomKeyMaps<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f['[SPC]'] = ['CtrlPMenu CustomKeyMaps',
+  let g:_spacevim_mappings.f['[SPC]'] = ['Telescope menu menu=CustomKeyMaps',
         \ 'fuzzy find custom key bindings',
         \ [
           \ '[Leader f SPC] is to fuzzy find custom key bindings',
@@ -296,9 +295,9 @@ function! s:defind_fuzzy_finder() abort
           \ ]
           \ ]
 
-  nnoremap <silent> <Leader>fp  :<C-u>CtrlPMenu AddedPlugins<CR>
+  nnoremap <silent> <Leader>fp  :<C-u>Telescope menu menu=AddedPlugins<CR>
   let lnum = expand('<slnum>') + s:unite_lnum - 4
-  let g:_spacevim_mappings.f.p = ['CtrlPMenu AddedPlugins',
+  let g:_spacevim_mappings.f.p = ['Telescope menu menu=AddedPlugins',
         \ 'fuzzy find vim packages',
         \ [
           \ '[Leader f p] is to fuzzy find vim packages installed in SpaceVim',
