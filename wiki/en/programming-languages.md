@@ -42,6 +42,7 @@ This is a list of programming languages supported in SpaceVim:
 | Hack                                                      | [lang#hack](https://spacevim.org/layers/lang/hack/)                 |                                                                                                               |
 | Haskell                                                   | [lang#haskell](https://spacevim.org/layers/lang/haskell/)           |                                                                                                               |
 | html                                                      | [lang#html](https://spacevim.org/layers/lang/html/)                 |                                                                                                               |
+| PostScript                                                | [lang#postscript](https://spacevim.org/layers/lang/postscript/)     |                                                                                                               |
 | Hy                                                        | [lang#hy](https://spacevim.org/layers/lang/hy/)                     |                                                                                                               |
 | Idris                                                     | [lang#idris](https://spacevim.org/layers/lang/idris/)               |                                                                                                               |
 | Io                                                        | [lang#io](https://spacevim.org/layers/lang/io/)                     |                                                                                                               |
@@ -75,8 +76,8 @@ This is a list of programming languages supported in SpaceVim:
 | Red                                                       | [lang#red](https://spacevim.org/layers/lang/red/)                   |                                                                                                               |
 | Ring                                                      | [lang#ring](https://spacevim.org/layers/lang/ring)                  |                                                                                                               |
 | Ruby                                                      | [lang#ruby](https://spacevim.org/layers/lang/ruby/)                 |                                                                                                               |
-| Reason                                                    | [lang#reason](https://spacevim.org/layers/lang/reason/)               |                                                                                                               |
-| ReScript                                                  | [lang#rescript](https://spacevim.org/layers/lang/rescript/)             |                                                                                                               |
+| Reason                                                    | [lang#reason](https://spacevim.org/layers/lang/reason/)             |                                                                                                               |
+| ReScript                                                  | [lang#rescript](https://spacevim.org/layers/lang/rescript/)         |                                                                                                               |
 | Rust                                                      | [lang#rust](https://spacevim.org/layers/lang/rust/)                 |                                                                                                               |
 | Scala                                                     | [lang#scala](https://spacevim.org/layers/lang/scala/)               |                                                                                                               |
 | Scheme                                                    | [lang#scheme](https://spacevim.org/layers/lang/scheme/)             |                                                                                                               |
@@ -313,7 +314,6 @@ Before adding these languages, we need to know:
 | Pike                          |           |        |
 | Pliant                        |           |        |
 | Poplog                        |           |        |
-| PostScript                    |           |        |
 | PowerBasic                    |           |        |
 | PowerScript                   |           |        |
 | Prograph                      |           |        |
