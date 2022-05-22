@@ -1,12 +1,13 @@
 scriptencoding utf-8
 " 1 open list and move cursor 2 open list without move cursor
+
+let s:lint_option = SpaceVim#layers#checkers#get_lint_option()
 let s:neomake_automake_events = {}
-if s:lint_on_the_fly || get(g:, 'spacevim_lint_on_the_fly', 0)
+if s:lint_option.lint_on_the_fly
   let s:neomake_automake_events['TextChanged'] = {'delay': 750}
   let s:neomake_automake_events['TextChangedI'] = {'delay': 750}
 endif
-if s:lint_on_save || get(g:, 'spacevim_lint_on_save', 0)
-
+if s:lint_option.lint_on_save
   let s:neomake_automake_events['BufWritePost'] = {'delay': 0}
 endif
 if !empty(s:neomake_automake_events)

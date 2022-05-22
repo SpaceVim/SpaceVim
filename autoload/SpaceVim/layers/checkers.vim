@@ -82,6 +82,7 @@ function! SpaceVim#layers#checkers#get_lint_option() abort
 
   return {
         \ 'lint_on_the_fly' : s:lint_on_the_fly,
+        \ 'lint_on_save' : s:lint_on_save,
         \ }
 
 endfunction
