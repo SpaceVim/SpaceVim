@@ -36,6 +36,8 @@ else
 endif
 
 let s:lint_exclude_filetype = []
+let s:lint_on_the_fly = 0
+let s:lint_on_save = 1
 
 let s:SIG = SpaceVim#api#import('vim#signatures')
 let s:STRING = SpaceVim#api#import('data#string')

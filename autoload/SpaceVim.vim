@@ -1112,6 +1112,8 @@ let g:spacevim_enable_powerline_fonts  = 1
 " >
 "   let g:spacevim_lint_on_save = 0
 " <
+" NOTE: the `lint_on_save` option has been deprecated. Please use layer option
+" of @section(layers-checkers) layer.
 let g:spacevim_lint_on_save            = 1
 ""
 " @section search_tools, options-search_tools
@@ -1248,6 +1250,8 @@ let g:spacevim_todo_prefix = '@'
 " >
 "   lint_on_the_fly = false
 " <
+" NOTE: the `lint_on_the_fly` option has been deprecated. Please use layer option
+" of @section(layers-checkers) layer.
 
 ""
 " Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
