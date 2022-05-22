@@ -4,7 +4,7 @@ ENV DEBIAN_URL "http://ftp.us.debian.org/debian"
 
 RUN echo "deb $DEBIAN_URL testing main contrib non-free" >> /etc/apt/sources.list \
   && apt-get update                                             \
-  && apt-get install -y --allow-unauthenticated                 \
+  && apt-get install -y                                         \
     autoconf                                                    \
     automake                                                    \
     cmake                                                       \
@@ -20,9 +20,6 @@ RUN echo "deb $DEBIAN_URL testing main contrib non-free" >> /etc/apt/sources.lis
     unzip                                                       \
     xclip                                                       \
     xfonts-utils                                                \
-    libssl1.0.0                                                 \
-    libssl-dev                                                  \
-    exuberant-ctags                                             \
   && apt-get clean all
 
 RUN cd /usr/src                                                 \
