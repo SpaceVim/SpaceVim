@@ -656,6 +656,8 @@ Enable/Disable lint on the fly feature of SpaceVim's maker. Default is true.
 >
   lint_on_the_fly = false
 <
+NOTE: the `lint_on_the_fly` option has been deprecated. Please use layer
+option of |SpaceVim-layers-checkers| layer.
 
 ==============================================================================
 MAX_COLUMN                                       *SpaceVim-options-max_column*
@@ -1422,6 +1424,8 @@ Enable/Disable lint on save feature of SpaceVim's maker. Default is 1.
 >
   let g:spacevim_lint_on_save = 0
 <
+NOTE: the `lint_on_save` option has been deprecated. Please use layer option
+of |SpaceVim-layers-checkers| layer.
 
                                                      *g:spacevim_search_tools*
 Default search tools supported by flygrep. The default order is ['rg', 'ag',
