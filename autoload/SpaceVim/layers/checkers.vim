@@ -62,7 +62,8 @@ endfunction
 function! SpaceVim#layers#checkers#set_variable(var) abort
 
   let s:show_cursor_error = get(a:var, 'show_cursor_error', 1)
-  let s:lint_on_the_fly =  get(a:var, 'lint_on_the_fly', 1)
+  let s:lint_on_the_fly =  get(a:var, 'lint_on_the_fly', 0)
+  let s:lint_on_save = get(a:var, 'lint_on_save', 1)
   let s:lint_exclude_filetype =  get(a:var, 'lint_exclude_filetype', [])
 
   if s:show_cursor_error && !has('timers')
@@ -74,6 +75,14 @@ endfunction
 function! SpaceVim#layers#checkers#get_options() abort
 
   return ['show_cursor_error']
+
+endfunction
+
+function! SpaceVim#layers#checkers#get_lint_option() abort
+
+  return {
+        \ 'lint_on_the_fly' : s:lint_on_the_fly,
+        \ }
 
 endfunction
 
@@ -89,6 +98,7 @@ function! SpaceVim#layers#checkers#config() abort
     for ft in s:lint_exclude_filetype
       let g:neomake_{ft}_enabled_makers = []
     endfor
+
 
   elseif g:spacevim_lint_engine ==# 'ale'
     let g:ale_echo_delay = get(g:, 'ale_echo_delay', 300)
