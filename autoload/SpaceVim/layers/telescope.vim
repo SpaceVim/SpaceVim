@@ -334,3 +334,10 @@ else
     return function(substitute(a:fstr, 's:', s:_s, 'g'))
   endfunction
 endif
+
+
+function! SpaceVim#layers#telescope#health() abort
+
+  return 1
+
+endfunction
