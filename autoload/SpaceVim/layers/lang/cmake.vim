@@ -6,6 +6,17 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#cmake, layers-lang-cmake
+" @parentsection layers
+" This layer is for cmake development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#cmake'
+" <
+"
+
 function! SpaceVim#layers#lang#cmake#plugins() abort
   let plugins = []
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-cmake-syntax',        { 'merged' : 0}])
