@@ -56,3 +56,10 @@ function! s:on_ft() abort
           \ 'call SpaceVim#lsp#remove_workspace_folder()', 'remove-workspace-folder', 1)
   endif
 endfunction
+
+function! SpaceVim#layers#lang#cmake#health() abort
+  call SpaceVim#layers#lang#cmake#config()
+  call SpaceVim#layers#lang#cmake#plugins()
+  return 1
+
+endfunction
