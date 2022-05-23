@@ -3,7 +3,7 @@ FROM debian:stable
 MAINTAINER Shidong Wang <wsdjeg@outlook.com>
 
 RUN apt-get update && \
-    apt-get install -y neovim curl python lua5.3 git exuberant-ctags silversearcher-ag && \
+    apt-get install -y neovim curl python3 python3-pip lua5.3 git exuberant-ctags silversearcher-ag && \
     apt-get clean
 
 ENV HOME /home/spacevim
