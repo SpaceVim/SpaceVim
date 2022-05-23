@@ -26,7 +26,7 @@ You can build using the supplied `Makefile`:
 
 or call the command manually using:
 
-    docker build -t nvim -f Dockerfile.nvim-python3 .
+    docker build -t nvim -f Dockerfile .
 
 ### Run
 
