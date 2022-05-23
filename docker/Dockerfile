@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:stable
 
 MAINTAINER Shidong Wang <wsdjeg@outlook.com>
 
