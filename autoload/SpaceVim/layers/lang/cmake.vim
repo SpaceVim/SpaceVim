@@ -20,6 +20,7 @@
 function! SpaceVim#layers#lang#cmake#plugins() abort
   let plugins = []
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-cmake-syntax',        { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-cmake',        { 'merged' : 0}])
   return plugins
 endfunction
 
