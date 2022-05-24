@@ -10,6 +10,7 @@ description: "This layer is for cmake script, provides syntax highlighting and l
 - [Description](#description)
 - [Install](#install)
 - [Features](#features)
+- [Command](#command)
 
 <!-- vim-markdown-toc -->
 
@@ -29,3 +30,8 @@ To use this configuration layer, update your custom configuration file with:
 ## Features
 
 - syntax highlighting
+
+## Command
+
+This layer also provides a `:Cmake` command, which is same as `cmake` in command line.
+The command will be executed asynchronously in code runner.
