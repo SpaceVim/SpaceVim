@@ -75,6 +75,7 @@ lsp 模块默认使用 `kotlin-language-server` 作为 Kotlin 的语言服务器
 在 Window 系统下，可以使用 [scoop](https://github.com/lukesampson/scoop) 安装 ktlint：
 
 ```
+scoop bucket add extras
 scoop install ktlint
 ```
 
