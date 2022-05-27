@@ -197,7 +197,7 @@ function! s:async_run(runner, ...) abort
         call s:JOB.chanclose(s:runner_jobid, 'stdin')
       endif
     else
-      call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , -1, 0, [exe . ' is not executable, make sure ' . exe . ' is in your PATH'])
+      call s:BUFFER.buf_set_lines(s:code_runner_bufnr, s:runner_lines , -1, 0, [exe[0] . ' is not executable, make sure ' . exe[0] . ' is in your PATH'])
     endif
   endif
   if s:runner_jobid > 0
