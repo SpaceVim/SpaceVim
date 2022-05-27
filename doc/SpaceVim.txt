@@ -4580,7 +4580,29 @@ This layer also provides REPL support for ruby, the key bindings are:
   SPC l s l       send current line
   SPC l s s       send selection text
 <
-
+To enable lsp support for ruby, you need to instal solargraph.
+>
+  gem install --user-install solargraph
+<
+Enable the lsp layer for ruby:
+>
+  [[layers]]
+    name = 'lsp'
+    enabled_clients = ['solargraph']
+<
+If the lsp layer is enabled for ruby, the following key bindings can be used:
+>
+  key binding     Description
+  g D             jump to type definition
+  SPC l e         rename symbol
+  SPC l x         show references
+  SPC l h         show line diagnostics
+  SPC l d         show document
+  K               show document
+  SPC l w l       list workspace folder
+  SPC l w a       add workspace folder
+  SPC l w r       remove workspace folder
+<
 
 ==============================================================================
 LANG#RUST                                          *SpaceVim-layers-lang-rust*
