@@ -127,6 +127,7 @@ endfunction
 function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'r'], 'call SpaceVim#plugins#runner#open()', 'execute current file', 1)
   if SpaceVim#layers#lsp#check_filetype('ruby')
+        \ || SpaceVim#layers#lsp#check_server('solargraph')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
@@ -151,6 +152,7 @@ endfunction
 
 function! s:go_to_def() abort
   if !SpaceVim#layers#lsp#check_filetype('ruby')
+        \ && !SpaceVim#layers#lsp#check_server('solargraph')
     normal! gd
   else
     call SpaceVim#lsp#go_to_def()
