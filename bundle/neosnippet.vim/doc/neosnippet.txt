@@ -40,11 +40,9 @@ Default snippets files are available in neosnippet-snippets.
 https://github.com/Shougo/neosnippet-snippets
 
 Note: Installing the default snippets is optional. If you choose not to
-install them, you must set |g:neosnippet#disable_runtime_snippets|. >
-them, you must set |g:neosnippet#disable_runtime_snippets|. >
-		let g:neosnippet#disable_runtime_snippets = {
-		\   '_' : 1,
-		\ }
+install them, you must set |g:neosnippet#disable_runtime_snippets| like so:
+>
+	let g:neosnippet#disable_runtime_snippets = {'_' : 1}
 
 Extra snippets files are also available. e.g.:
 https://github.com/honza/vim-snippets
@@ -218,15 +216,16 @@ g:neosnippet#enable_conceal_markers
 g:neosnippet#enable_completed_snippet
 		If this variable is not 0, neosnippet can expand the function
 		prototype.
+		Note: It supports |vim-lsp| or |nvim-lsp| snippets.
 
 		The default value is 0.
 
 					*g:neosnippet#enable_complete_done*
 g:neosnippet#enable_complete_done
 		If this variable is not 0, neosnippet can expand on
-		|CompleteDone|.
+		|CompleteDone| or |PumCompleteDone|for |pum.vim|.
 		Note: If the feature is enabled, you cannot expand snippet
-		trigger manually when |pumvisible()|to prevent conflicts with
+		trigger manually when |pumvisible()| to prevent conflicts with
 		|CompleteDone| expand.
 
 		The default value is 0.
@@ -443,9 +442,9 @@ Example:
 	alias      [aliases]
 	regexp     [pattern]
 	options    [options]
-	   if ${1:condition}
-	     ${2}
-	   endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 
 The snippet syntax is close to the one of |snipMate|. Each snippet starts with
 some keywords that define the name and modify the expansion and treatment of
@@ -480,19 +479,12 @@ Snippet Keywords:
 
 	A pattern can be defined via a regular expression. The snippet expands
 	only when the expression pattern is matched.
+	Note: [pattern] must be quoted by "'" or '"'.
+	Note: It does not mean auto expand feature.
 
 	Example
-
 >
 	regexp '^% '
-<
-	This snippet works same as "options head".
->
-	snippet     if
-	regexp     '^\s*'
-	  if ${1:condition}
-	     ${2}
-	  endif
 <
 - options [options] (Optional)
 
@@ -515,9 +507,9 @@ Snippet Keywords:
 >
 	snippet     if
 	options     head
-	  if ${1:condition}
-	     ${2}
-	  endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 <
 
 	+ indent The horizontal position of the snippet will be adjusted
@@ -545,9 +537,9 @@ The structure of a placeholder can be:
 
 >
 	snippet     if
-	   if ${1:condition}
-	     ${2}
-	   endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 <
 
 - ${number:#:optional placeholder text}
@@ -560,9 +552,9 @@ The structure of a placeholder can be:
 
 >
 	snippet if
-	   if ${1:#:condition}
-	     ${2}
-	   endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 <
 
 - ${number:TARGET}
@@ -581,9 +573,9 @@ The structure of a placeholder can be:
 
 >
 	snippet if
-	   if ${1:#:condition}
-	     ${2:TARGET}
-	   endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 <
 
 - ${number}
@@ -596,11 +588,11 @@ The structure of a placeholder can be:
 
 >
 	snippet     if
-	   if ${1:#:condition}
-	     ${2:do}
-	   endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 
-	   ${3}
+	    ${3}
 <
 
 - $number
@@ -808,7 +800,16 @@ neosnippet				*neosnippet-unite-action-neosnippet*
 	expand		Expand snippet (default action)
 	edit		Edit snippet
 	preview		View snippet definition
+
+==============================================================================
 FAQ						*neosnippet-faq*
+
+Q: How to donate money to you?
+
+A: I have started github sponsorship to spend more time for Vim/neovim
+plugins.  You can donate money to help me!
+
+https://github.com/sponsors/Shougo
 
 Q: What if I want to expand a snippet trigger after (, [, " etc...:
 
@@ -876,10 +877,25 @@ Note: It works in "func(arg1, arg2, ...)" prototypes only.
 Note: It is experiental feature.
 Note: |v:completed_item| feature is needed.
 
-Q: I want to auto complete with parameters.
+Q: I want to expand auto completed parameters.
+Q: I want to use |vim-lsp| or |nvim-lsp| snippets with neosnippet.
 
 A: >
 	let g:neosnippet#enable_completed_snippet = 1
 	let g:neosnippet#enable_complete_done = 1
+
+Q. How to enable neosnippet the completion in ddc.vim?
+
+A. >
+
+	call ddc#custom#patch_global('sources', ['neosnippet'])
+	call ddc#custom#patch_global('sourceOptions', {
+	    \ '_': {
+	    \   'matchers': ['matcher_head'],
+	    \   'sorters': ['sorter_rank']
+	    \ },
+	    \ 'neosnippet': {'mark': 'ns', 'dup': v:true},
+	    \ })
+<
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:

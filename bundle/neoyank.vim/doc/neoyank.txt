@@ -1,0 +1,120 @@
+*neoyank.txt*	Saves yank history includes unite.vim/denite.nvim source.
+
+Version: 1.0
+Author : Shougo <Shougo.Matsu at gmail.com>
+License: MIT license
+
+CONTENTS					*neoyank-contents*
+
+Usage			|neoyank-usage|
+Install			|neoyank-install|
+Configuration Examples	|neoyank-examples|
+Interface		|neoyank-interface|
+  Variables		  |neoyank-variables|
+  Functions		  |neoyank-functions|
+  Sources		  |neoyank-sources|
+FAQ			|neoyank-faq|
+
+==============================================================================
+USAGE						*neoyank-usage*
+
+	To browse a history of yank registers.
+>
+	:Unite history/yank
+<
+	Or
+>
+	:Denite neoyank
+<
+==============================================================================
+INSTALL						*neoyank-install*
+
+Requirements: unite.vim or denite.nvim
+
+https://github.com/Shougo/unite.vim
+https://github.com/Shougo/denite.nvim
+
+==============================================================================
+INTERFACE					*neoyank-interface*
+
+------------------------------------------------------------------------------
+VARIABLES 					*neoyank-variables*
+
+						*g:neoyank#limit*
+g:neoyank#limit
+		The maximum number of |unite-source-history/yank| to save.
+
+
+		The default value is 100.
+
+						*g:neoyank#length*
+g:neoyank#length
+		The maximum length of register.
+
+
+		The default value is 10000.
+
+						*g:neoyank#file*
+g:neoyank#file
+		Specify the file to write the information of yank history.
+		If this variable is empty, saving history is disabled.
+
+
+		The default value is |g:unite_data_directory|; '/history_yank'
+		If you want to use another value than what's defined in
+		|g:unite_data_directory| you have to specify the full path.
+
+		Example:
+>
+		let g:neoyank#file = $HOME.'/.vim/yankring.txt'
+<
+						*g:neoyank#save_registers*
+g:neoyank#save_registers
+		Specify the save registers to yank history.
+
+
+		The default value is ['"'].
+
+						*g:neoyank#disable_write*
+g:neoyank#disable_write
+		Set to some nonzero value to prohibit neoyank from saving to
+		the yank history. Intended to prevent leaks from encrypted
+		files to the unencrypted yank history.
+
+		Note: This variable is global. Local variables would not work
+		as the yank history is shared by all buffers.
+
+		Example:
+		autocmd BufWinEnter \(*.asc\|*.gpg\) let g:neoyank_disable = 1
+
+------------------------------------------------------------------------------
+FUNCTIONS 					*neoyank-functions*
+
+						*neoyank#update()*
+neoyank#update()
+		Update neoyank cache file manually.
+
+------------------------------------------------------------------------------
+SOURCES						*neoyank-sources*
+
+						*unite-source-history/yank*
+history/yank	Nominates yanked words.
+		Note: Ignores yanked words which are too long.
+
+		Source arguments:
+		1. register names
+
+						*denite-source-neoyank*
+neoyank		Nominates yanked words.
+
+==============================================================================
+FAQ						*neoyank-faq*
+
+How can I configure the yankring paste position?
+
+  You can either pass the insert or append option.
+  e.g.: >
+	:Unite history/yank -default-action=append<CR>
+<
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:

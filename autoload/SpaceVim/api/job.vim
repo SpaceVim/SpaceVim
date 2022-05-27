@@ -1,7 +1,7 @@
 "=============================================================================
 " job.vim --- job api
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -114,6 +114,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
         let self._eof = a:data[-1]
       elseif len(a:data) ==# 1 && a:data[-1] ==# '' && !empty(self._eof)
         call self._opts.on_stdout(a:id, [self._eof], 'stdout')
+        let self._eof = ''
       elseif len(a:data) ==# 1 && a:data[-1] !=# ''
         let self._eof .= a:data[-1]
       endif
@@ -130,6 +131,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
         let self._eof = a:data[-1]
       elseif len(a:data) ==# 1 && a:data[-1] ==# '' && !empty(self._eof)
         call self._opts.on_stderr(a:id, [self._eof], 'stderr')
+        let self._eof = ''
       elseif len(a:data) ==# 1 && a:data[-1] !=# ''
         let self._eof .= a:data[-1]
       endif
@@ -156,6 +158,9 @@ function! s:self.warp_nvim(argv, opts) abort dict
         \ }
   if has_key(a:opts, 'cwd')
     call extend(obj.opts, {'cwd' : a:opts.cwd})
+  endif
+  if has_key(a:opts, 'env')
+    call extend(obj.opts, {'env' : a:opts.env})
   endif
   return obj
 endfunction
@@ -257,10 +262,15 @@ endfunction
 
 function! s:self.stop(id) abort dict
   if self.nvim_job
+    let done = 0
     if has_key(self.jobs, a:id)
-      call jobstop(a:id)
+      try
+        let done = jobstop(a:id)
+      catch
+      endtry
       call remove(self.jobs, a:id)
     endif
+    return done
   elseif self.vim_job
     if has_key(self.jobs, a:id)
       call job_stop(get(self.jobs, a:id))

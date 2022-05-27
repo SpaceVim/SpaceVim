@@ -1,12 +1,15 @@
 local M = {}
 
-M.refresh = function(bang)
+M.refresh = function(bang, scroll)
+    scroll = scroll or false
     if bang then
         local win = vim.api.nvim_get_current_win()
-        vim.cmd [[windo call indent_blankline#Refresh()]]
-        vim.api.nvim_set_current_win(win)
+        vim.cmd(string.format([[noautocmd windo lua require("indent_blankline").refresh(%s)]], tostring(scroll)))
+        if vim.api.nvim_win_is_valid(win) then
+            vim.api.nvim_set_current_win(win)
+        end
     else
-        vim.cmd [[call indent_blankline#Refresh()]]
+        require("indent_blankline").refresh(scroll)
     end
 end
 
@@ -14,11 +17,11 @@ M.enable = function(bang)
     if bang then
         vim.g.indent_blankline_enabled = true
         local win = vim.api.nvim_get_current_win()
-        vim.cmd [[windo call indent_blankline#Refresh()]]
+        vim.cmd [[noautocmd windo lua require("indent_blankline").refresh(false)]]
         vim.api.nvim_set_current_win(win)
     else
         vim.b.indent_blankline_enabled = true
-        vim.cmd [[call indent_blankline#Refresh()]]
+        require("indent_blankline").refresh(false)
     end
 end
 

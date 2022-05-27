@@ -54,6 +54,7 @@ and the default lint command is [ktlint](https://github.com/pinterest/ktlint).
 In the Windows system, `ktlint` can be installed using [scoop](https://github.com/lukesampson/scoop):
 
 ```
+scoop bucket add extras
 scoop install ktlint
 ```
 

@@ -19,7 +19,7 @@ class Source(Base):
 
     def on_event(self, context):
         self.__cache[context['filetype']] = self.vim.eval(
-            'values(neosnippet#helpers#get_completion_snippets())')
+            'neosnippet#helpers#get_completion_snippets()')
         for candidate in self.__cache[context['filetype']]:
             candidate['dup'] = 1
             candidate['menu'] = candidate['menu_abbr']

@@ -1,0 +1,401 @@
+*gina-develop.txt*			A document of gina.vim for developer
+
+Author:  Alisue <lambdalisue@hashnote.net>
+License: MIT license
+
+=============================================================================
+CONTENTS					*gina-dev-contents*     
+
+FUNCTIONS		|gina-dev-functions|
+EVENTS			|gina-dev-events|
+
+Note:
+This document is mainly for memo and not complete.
+You should check source code for the correct information.
+
+=============================================================================
+FUNCTIONS					*gina-dev-functions*
+
+				*gina#core#get()*
+gina#core#get([{options}])
+	It returns a {git} instance of a current buffer or a specified
+	buffer by "expr" attribute on {options}.
+
+	It returns an empty dictionary if the buffer does not belongs to any
+	git repository.
+
+	The {git} instance is cached in "b:gina" until
+
+	1. The bufname has not changed
+	2. The 'buftype' has not changed
+	3. Current working directory of the buffer has not changed
+
+	When this function is called with 'verbose' option, extra information
+	about cache are shown as debug information.
+
+	Developers can control this cache behavior with "cache" attribute on
+	{options} dictionary as
+
+	"never"		It always search ".git"
+	"truth"		Use cache when the buffer belongs to a git repository
+	"always"	Use cache even when the buffer does not belogs to a
+			git repository
+
+	The default value of "cache" attribute is "always".
+
+				*gina#core#get_or_fail()*
+gina#core#get_or_fail({options})
+	Similar to |gina#core#get()| but it throws an exception when no git
+	repository is found.
+	The exception is thrown by |gina#core#revelator#warning()| so the
+	exception is automatically catched and shown as |hl-WarningMsg| when
+	this function is called by |gina#core#revelator#call()|.
+
+	While this function is used when a {git} instance is critical for an
+	operation, a default value of "cache" attribute of {options} is
+	"truth" instead of "always".
+
+				*gina#core#buffer#parse()*
+gina#core#buffer#parse({expr})
+	Parse a pseudo buffer name and return a parameter dictionary.
+	It returns an empty dictionary if the {expr} does not starts from
+	"gina:".
+
+	The parameter dictionary contains
+	
+	"repo"		A git repository name
+	"scheme"	A command scheme (e.g. "show")
+	"params"	A parameter list separated by ":"
+	"treeish"	A treeish string
+	"rev"		A rev string of the "treeish"
+	"path"		A relative path of the "treeish"
+>
+	echo gina#core#buffer#parse('gina://foobar:log')
+	" {
+        " 'repo': 'foo',
+        " 'scheme': 'log',
+        " 'params': [],
+        " 'treeish': '',
+        " 'rev': '',
+        " 'path': '',
+	" }
+
+	echo gina#core#buffer#parse('gina://foobar:commit:amend')
+	" {
+        " 'repo': 'foo',
+        " 'scheme': 'commit',
+        " 'params': ['amend'],
+        " 'treeish': '',
+        " 'rev': '',
+        " 'path': '',
+	" }
+
+	echo gina#core#buffer#params('gina://foobar:show/HEAD:README.md')
+	" {
+        " 'repo': 'foo',
+        " 'scheme': 'show',
+        " 'params': [],
+        " 'treeish': 'HEAD:README.md',
+        " 'rev': 'HEAD',
+        " 'path': 'README.md',
+	" }
+<
+				*gina#core#buffer#open()*
+gina#core#buffer#open({bufname} [, {options}])
+	Open or focus a {bufname} with specified {options}.
+	The following attributes are allowed in {options}.
+
+	"mods"		A modifier string (e.g. "vertical", "botright")
+	"group"		A group name. If there is a buffer which belongs to a
+			same group, a new buffer is opened in that window
+			instead of a new window.
+	"opener"	A opener string like "edit" or "botright split"
+ 	"cmdarg"	A |cmdarg| used for "++enc" or "++ff"
+ 	"line"		A line number where the cursor should locate
+ 	"col"		A column number where the cursor should locate
+ 	"callback"	A callback dictionary which has
+	    "fn"	A funcref which is called prior to |BufReadCmd|.
+	    "args"	An argument list passed to "fn"
+
+ 	The "callback" attribute is used to pass a variable into the buffer
+ 	while
+
+	1. Vim's autocmd cannot take attribute so it is difficult to know what
+	   kind of attribute has passed to the command in |BufReadCmd|
+	2. An opened buffer may not be focused while the buffer may be opened
+	   in a |previewwindow|.
+
+	So gina.vim use this callback to save a specified argument into a meta
+	dictionary like (see autoload/gina/command/status.vim)
+>
+	function! gina#command#status#call(range, args, mods) abort
+	  " ...
+	  call gina#core#buffer#open(bufname, {
+	        \ 'mods': a:mods,
+	        \ 'group': args.params.group,
+	        \ 'opener': args.params.opener,
+	        \ 'cmdarg': args.params.cmdarg,
+	        \ 'callback': {
+	        \   'fn': function('s:init'),
+	        \   'args': [args],
+	        \ }
+	        \})
+	endfunction
+
+	function! s:init(args) abort
+	  call gina#core#meta#set('args', a:args)
+	
+	  " ...
+	endfunction
+<
+				*gina#core#buffer#focus()*
+gina#core#buffer#focus({expr})
+	Focus a buffer specified by {expr} and return a guard instance to
+	restore the focus.
+	It returns |v:null| when no corresponding buffer of {expr} is
+	available.
+>
+	let guard = gina#core#buffer#focus('foo')
+	" A buffer "foo" is focused
+	call guard.restore()
+	" Focus is backed to the previous one
+<
+				*gina#core#emitter#emit()*
+gina#core#emitter#emit({name} [, {arg}...])
+	Emit a {name} event with specified arguments.
+	Use |gina#core#emitter#subscribe()| to subscrite the event.
+
+				*gina#core#emitter#subscribe()*
+gina#core#emitter#subscribe({name}, {listener} [, {instance}])
+	Subscribe a {name} event with {listener}.
+	If an {instance} is specified, the {listener} funcref is called with
+	that {instance}.
+
+				*gina#core#emitter#unsubscribe()*
+gina#core#emitter#unsubscribe({name}, {listener} [, {instance}])
+	Unsubscribe a {name} event with {listener}.
+
+				*gina#core#revelator#info()*
+gina#core#revelator#info({msg})
+	Return an exception message which will be handled by a default
+	exception handler.
+	The message is shown as an information message and |v:throwpoint|
+	will be shown when |verbose| has specified.
+	The message is assigned to |v:statusmsg| as well.
+
+				*gina#core#revelator#warning()*
+gina#core#revelator#warning({msg})
+	Return an exception message which will be handled by a default
+	exception handler.
+	The message is shown as a warning message and |v:throwpoint|
+	will be shown when |verbose| has specified.
+	The message is assigned to |v:warningmsg| as well.
+
+				*gina#core#revelator#error()*
+gina#core#revelator#error({msg})
+	Return an exception message which will be handled by a default
+	exception handler.
+	The message is shown as an error message and |v:throwpoint|
+	will be shown when |verbose| has specified.
+	The message is assigned to |v:errmsg| as well.
+
+				*gina#core#revelator#critical()*
+gina#core#revelator#critical({msg})
+	Return an exception message which will be handled by a default
+	exception handler.
+	The message and |v:throwpoint| are shown as error messages.
+	The message is assigned to |v:errmsg| as well.
+
+				*gina#core#revelator#call()*
+gina#core#revelator#call({funcref}, {args} [, {instance}])
+	Similar to |call()| but exception occured in {funcref} will be handled
+	by registered exception handlers.
+	Use the following to create a special exception message to throw.
+
+	|gina#core#revelator#info()|
+	|gina#core#revelator#warning()|
+	|gina#core#revelator#error()|
+	|gina#core#revelator#critical()|
+
+	Usage example:
+>
+	function! s:foo() abort
+	  throw gina#core#revelator#info('An information')
+	endfunction
+
+	call gina#core#revelator#call(function('s:foo'), [])
+	" -> "An information"
+<
+				*gina#core#meta#get()*
+gina#core#meta#get({name} [, {default}])
+	Return a value of a {name} entry in a meta dictionary of the current
+	buffer. It returns {default} if no {name} is found.
+
+				*gina#core#meta#get_or_fail()*
+gina#core#meta#get_or_fail({name})
+	Similar to |gina#core#meta#get()| but it throws an exception when
+	there is no {name} found in a meta dictionary of the current buffer.
+
+				*gina#core#meta#set()*
+gina#core#meta#set({name}, {value})
+	Set a value of a {name} entry in a meta dictionary of the current
+	buffer to {value}.
+
+				*gina#core#meta#has()*
+gina#core#meta#has({name})
+	Return 1 if {name} is found in a meta dictionary of the current
+	buffer.
+
+				*gina#core#meta#remove()*
+gina#core#meta#remove({name})
+	Remove a {name} entry in a meta dictionary of the current buffer.
+
+				*gina#core#meta#clear()*
+gina#core#meta#clear()
+	Clear a meta dictionary of the current buffer.
+
+				*gina#process#open()*
+gina#process#open({git}, {args} [, {options}])
+	A low-level API to execute a process.
+	Start a new job process with {git} and {args} (Vital.Argument) and
+	return a Vital.System.Job instance.
+	Developers can confirm an exact argument by executing this function
+	with |verbose|.
+	The prefix of the actual argument is |g:gina#process#command|.
+
+	See documents about Vital.System.Job (lambdalisue/vital-System-Job)
+	and Vital.Argument (self-vital of gina.vim currently).
+
+				*gina#process#call()*
+gina#process#call({git}, {args} [, {options}])
+	Similar to |gina#process#open()| but it wait until the process
+	has terminate and return a result instance which has
+
+	"args"		An actual argument used to start the process
+	"status"	An exit status
+	"stdout"	A stdout content list
+	"stderr"	A stderr content list
+	"content"	A mixture of stdout/stderr list
+
+				*gina#process#call_or_fail()*
+gina#process#call_or_fail({git}, {args} [, {options}])
+	Similar to |gina#process#call()| but it throws an exception when the
+	process fail.
+
+				*gina#process#inform()*
+gina#process#inform({result})
+	Echo the {result.content}.
+	It also shows {result.args} when the {result.status} is not 0.
+
+				*gina#process#errormsg()*
+gina#process#errormsg({result})
+	It return an exception message of {result} built by
+	|gina#core#revelator#error()|.
+
+				*gina#core#repo#expand()*
+gina#core#repo#expand({expr})
+	Expand {expr} based on a buffer name. It is used to get a
+	corresponding existing filename of a pseudo buffer.
+>
+	echo gina#core#repo#expand('gina://foo:show/HEAD:README.md')
+	" -> README.md
+
+	edit gina://foo:show/HEAD:README.md
+	echo gina#core#repo#expand('%')
+	" -> README.md
+<
+=============================================================================
+EVENTS						*gina-dev-events*
+
+Gina will emit an event when something has happend.
+The following events are used internally.
+
+modified
+	Emitted when a status of a git repository seems to be modified.
+	This event is used to update the buffer content and caches internally.
+	Users should NOT emit this event directly, use "modified:delay"
+	instead.
+
+modified:delay
+	Used to squash sequential modified event into a single "modified"
+	event.
+	It emits "modified" event few milliseconds after the event emitted and
+	ignore all previous "modified:delay" events emitted within that time.
+	Users should NOT subscribe this event directly, use "modifihed"
+	instead.
+
+command:called {scheme}
+	Emitted when a gina's command (|:Gina|) has called and the initial
+	process has terminated.
+	A listener will be called with {scheme} which indicate what command
+	has called.
+	Note that a command which requires an additional step (e.g. commit,
+	patch) will emit this event when the command get ready and will emit
+	"command:called:complete" after the actual command has terminated
+	(e.g. A commit message was comitted. A patch was saved into an index)
+
+command:called:raw {scheme}
+	Emitted when a raw git command (|:Gina!|) has called and the process
+	has terminated.
+	A listener will be called with {scheme} which indicate what command
+	has called.
+	Note that it is NOT called for an internal process. It is called only
+	for a command invoked by |:Gina!| or |:Gina| with missing command.
+
+command:called:commit
+	Emitted when an actual commit has performed.
+
+command:called:patch
+	Emitted when an actual patch has performed.
+
+For example, if users want to do something when a commit message has comitted,
+use a combination of "command:called:raw" and "command:called:commit" like
+>
+	function! s:on_commit(...) abort
+	  if get(a:000, 0, 'commit') !=# 'commit'
+            return
+          endif
+          " Do more useful thing
+          echomsg "Committed!"
+	endfunction
+
+	" Subscribe 'command:called:raw' event for :Gina commit -m{message}
+	" which invoke a git raw command internally
+	call gina#core#emitter#subscribe(
+	      \ 'command:called:raw',
+	      \ function('s:on_commit')
+	      \)
+	" Subscribe 'command:called:commit' event for an actual commit
+	" event which may invoked by closing gina-commit window
+	call gina#core#emitter#subscribe(
+	      \ 'command:called:commit',
+	      \ function('s:on_commit')
+	      \)
+<
+Another for example is already used in ftplugin/gina-grep.vim. If user want to
+update a quickfix candidates with gina-grep candidates automatically, use
+"command:called" event like:
+>
+	" NOTE: Already written in ftplugin/gina-grep.vim
+	function! s:on_grep(scheme) abort
+	  if a:scheme !=# 'grep'
+	    return 
+	  endif
+	  " Find a corresponding buffer and focus
+	  let focus = gina#core#buffer#focus(bufnr('gina://*:grep*'))
+	  if empty(focus)
+	    return
+	  endif
+	  " Export entire candidates into a quickfic and restore the focus
+	  try
+	    call gina#action#call(
+	          \ 'export:quickfix',
+	          \ 1, line('$')
+	          \)
+	  finally
+	    call focus.restore()
+	  endtry
+	endfunction
+<
+=============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

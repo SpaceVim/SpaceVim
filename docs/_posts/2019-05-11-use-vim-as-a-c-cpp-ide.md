@@ -78,6 +78,14 @@ lsp 模块默认使用 `clangd` 作为 C/C++ 的语言服务器后台命令。
     c = ["clangd"]
 ```
 
+如果使用的是 `nvim(>=0.5.0)`，则需要指定 `enabled_clients` 选项：
+
+```toml
+[[layers]]
+  name = 'lsp'
+  enabled_clients = ['clangd']
+```
+
 ### 语法检查
 
 `checkers` 模块为 SpaceVim 提供了语法检查的功能，该模块默认已经载入。该模块默认使用 [neomake](https://github.com/neomake/neomake)
@@ -133,7 +141,7 @@ C/C++ 代码格式化，主要依赖 `format` 模块，快捷键为 `SPC b f`，
 
 ### 交互式编程
 
-在编辑 C/C++ 文件时，可通过快捷键 `SPC l s i` 启动 `php -a` 交互窗口，
+在编辑 C/C++ 文件时，可通过快捷键 `SPC l s i` 启动 `igcc` 交互窗口，
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
 

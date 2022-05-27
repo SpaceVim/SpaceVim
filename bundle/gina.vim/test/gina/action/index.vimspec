@@ -1,0 +1,87 @@
+Describe gina#action#index
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit = Slit(tempname(), 1)
+    call slit.write('A/foo.txt', ['foo'])
+    call slit.write('B/foo.txt', ['foo'])
+    call slit.write('C/foo.txt', ['foo'])
+    call slit.write('D/foo.txt', ['foo'])
+    call slit.write('E/foo.txt', ['foo'])
+    call slit.write('F/foo.txt', ['foo'])
+    if !has('win32') && !has('win64')
+      call slit.write('G/<Plug>_', ['foo'])
+    endif
+
+    call slit.execute('add %s', slit.path('A/foo.txt'))
+    call slit.execute('commit --quiet -m "First"')
+    call slit.execute('add %s', slit.path('B/foo.txt'))
+    call slit.execute('commit --quiet -m "Second"')
+    call slit.execute('add %s', slit.path('C/foo.txt'))
+    call slit.execute('commit --quiet -m "Thrid"')
+    " Edit C/foo.txt
+    call slit.write('C/foo.txt', ['foobar'])
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+    execute 'edit' fnameescape(slit.worktree)
+    call gina#action#attach([])
+    call gina#action#include('index')
+  End
+
+  Describe 'discard' action
+    It checkouts and overwrite the modification on tracked files
+      Assert Equals(readfile(slit.path('C/foo.txt')), ['foobar'])
+      call gina#action#call('index:discard:force', [
+            \ { 'path': slit.path('C/foo.txt'), 'sign': ' M' },
+            \])
+      call gina#process#wait()
+      Assert Equals(readfile(slit.path('C/foo.txt')), ['foo'])
+    End
+
+    It deletes untracked files
+      Assert True(filereadable(slit.path('D/foo.txt')))
+      call gina#action#call('index:discard:force', [
+            \ { 'path': slit.path('D/foo.txt'), 'sign': '!!' },
+            \])
+      Assert False(filereadable(slit.path('D/foo.txt')))
+    End
+
+    It cannot delete directories for safety
+      Assert True(isdirectory(slit.path('E')))
+      call gina#action#call('index:discard:force', [
+            \ { 'path': slit.path('E'), 'sign': '!!' },
+            \])
+      Assert True(isdirectory(slit.path('E')))
+    End
+
+    It can delete directories if g:gina#action#index#discard_directories = 1
+      let g:gina#action#index#discard_directories = 1
+      Assert True(isdirectory(slit.path('F')))
+      call gina#action#call('index:discard:force', [
+            \ { 'path': slit.path('F'), 'sign': '!!' },
+            \])
+      Assert False(isdirectory(slit.path('F')))
+      unlet g:gina#action#index#discard_directories
+    End
+
+    It can handle <Plug>_ correctly (Issue #133)
+      if has('win32') || has('win64')
+        Skip Windows filesystem does not allow < or > in path
+      endif
+      Assert True(filereadable(slit.path('G/<Plug>_')))
+      call gina#action#call('index:discard:force', [
+            \ { 'path': slit.path('G/<Plug>_'), 'sign': '!!' },
+            \])
+      Assert False(filereadable(slit.path('G/<Plug>_')))
+      Assert True(filereadable(slit.path('A/foo.txt')))
+      Assert True(filereadable(slit.path('B/foo.txt')))
+      Assert True(filereadable(slit.path('C/foo.txt')))
+    End
+  End
+End
+

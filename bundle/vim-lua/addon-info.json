@@ -1,0 +1,5 @@
+{
+  "name": "vim-lua",
+  "description": "lua development plugin for Vim",
+  "author": "SpaceVim"
+}

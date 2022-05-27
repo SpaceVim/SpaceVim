@@ -1,0 +1,71 @@
+language: python
+sudo: false
+
+notifications:
+  slack:
+    on_success: never
+    on_failure: never
+  email:
+    on_success: never # default: change
+    on_failure: never # default: always
+
+cache:
+  pip: true
+
+env:
+  global:
+    - DEPS=$HOME/deps
+    - PATH=$DEPS/bin:$PATH
+  matrix:
+    - LINT=vimlint-errors
+    - LINT=vimlint
+    - LINT=vint-errors
+    - LINT=vint
+    - LINT=vader
+
+matrix:
+  allow_failures:
+    - env: LINT=vimlint
+    - env: LINT=vint
+
+install:
+  - |
+    set -e
+    if [ "${LINT#vimlint}" != "$LINT" ]; then
+      git clone --depth=1 https://github.com/syngan/vim-vimlint /tmp/vimlint
+      git clone --depth=1 https://github.com/ynkdir/vim-vimlparser /tmp/vimlparser
+    elif [ "${LINT#vint}" != "$LINT" ]; then
+      virtualenv /tmp/vint && source /tmp/vint/bin/activate && pip install vim-vint
+    elif [ "${LINT#vader}" != "$LINT" ]; then
+      git clone --depth=1 https://github.com/Shougo/dein.vim.git ~/.cache/vimfiles/repos/github.com/Shougo/dein.vim
+      C_OPTS="--prefix=$DEPS --with-features=huge --disable-gui --enable-pythoninterp"
+      (git clone --depth 1 https://github.com/vim/vim /tmp/vim &&
+       cd /tmp/vim &&
+       ./configure $C_OPTS &&
+       make install)
+    fi
+script:
+  - |
+    set -ex
+    if [ "$LINT" = "vimlint" ]; then
+      for file in $(git diff --name-only HEAD dev | grep .vim$);
+      do
+        sh /tmp/vimlint/bin/vimlint.sh -l /tmp/vimlint -p /tmp/vimlparser $file;
+      done
+    elif [ "$LINT" = "vimlint-errors" ]; then
+      for file in $(git diff --name-only HEAD dev | grep .vim$);
+      do
+        sh /tmp/vimlint/bin/vimlint.sh -E -l /tmp/vimlint -p /tmp/vimlparser $file;
+      done
+    elif [ "$LINT" = "vint" ]; then
+      vint .
+    elif [ "$LINT" = "vint-errors" ]; then
+      vint --error .
+    elif [ "$LINT" = "vader" ]; then
+      pip install covimerage
+      make test_coverage
+      covimerage -vv xml --omit 'build/*'
+      pip install codecov
+      codecov -X search gcov pycov -f coverage.xml
+    fi
+    set +x

@@ -1,13 +1,13 @@
 "=============================================================================
-" pascal.vim --- vlang language support in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" v.vim --- vlang language support in SpaceVim
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#v, layer-lang-v
+" @section lang#v, layers-lang-v
 " @parentsection layers
 " This layer is for v development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

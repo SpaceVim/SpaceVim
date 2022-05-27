@@ -1,13 +1,13 @@
 "=============================================================================
 " r.vim --- lang#r layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#ring, layer-lang-r
+" @section lang#ring, layers-lang-r
 " @parentsection layers
 " This layer is for r development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

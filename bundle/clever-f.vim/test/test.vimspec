@@ -12,6 +12,22 @@ function! CursorPos()
     return [line('.'), col('.'), getline('.')[col('.')-1]]
 endfunction
 
+function! Highlights() abort
+    return filter(getmatches(), 'v:val.group==#"CleverFChar"')
+endfunction
+
+function! WaitUntil(ms, pred) abort
+    let remaining = a:ms
+    while remaining > 0
+        sleep 10m
+        let remaining -= 10
+        if a:pred()
+            return 1
+        endif
+    endwhile
+    return 0
+endfunction
+
 Describe default config
     It should load plugin
         Assert g:loaded_clever_f
@@ -274,7 +290,7 @@ Describe f, F, t and T mappings
         Assert Equals(getline('.'), "piyo poyo")
         Assert Equals(CursorPos(), [l, 2, 'i'])
 
-        normal! dfp
+        normal dfp
         Assert Equals(getline('.'), "poyo")
         Assert Equals(CursorPos(), [l, 2, 'o'])
     End
@@ -311,9 +327,50 @@ Describe f, F, t and T mappings
         normal fo
         Assert Equals(CursorPos(), [l,14,'o'])
     End
+
+    It should work while running in macro
+        for _ in range(10)
+            call AddLine('poge huga hiyo poyo')
+        endfor
+        normal! gg0
+
+        " Macro to change the line from 'poge huga hiyo poyo' to 'poge'
+        let @a = 'thDj'
+        normal 10@a
+
+        for l in range(2, 10)
+            Assert Equals(getline(l), 'poge')
+        endfor
+    End
+
+    It should not repeat previous character while running in macro (#59)
+        call AddLine('1a 2a 3a 4a 5a')
+        normal! gg0
+        let @a = 'fax'
+        normal 5@a
+        Assert Equals(getline('.'), '1 2 3 4 5')
+    End
+
+    It should share its state among mappings
+        normal! 0
+        let l = line('.')
+        let left = [l, 6, 'h']
+        let right = [l, 11, 'h']
+
+        normal fh
+        Assert Equals(CursorPos(), left)
+        normal f
+        Assert Equals(CursorPos(), right)
+        normal F
+        Assert Equals(CursorPos(), left)
+        normal t
+        Assert Equals(CursorPos(), right)
+        normal T
+        Assert Equals(CursorPos(), left)
+    End
 End
 
-Describe f and F mappings' contexts
+Describe clever_f#reset()
     Before
         new
         call clever_f#reset()
@@ -324,18 +381,32 @@ Describe f and F mappings' contexts
         close!
     End
 
-    It should be shared
+    It should reset current target character
         normal! 0
         let l = line('.')
-
         normal fh
         Assert Equals(CursorPos(), [l,6,'h'])
-        normal f
-        Assert Equals(CursorPos(), [l,11,'h'])
-        normal F
+        call clever_f#reset()
+        normal to
+        Assert Equals(CursorPos(), [l,13,'y'])
+    End
+
+    It should be called on <Plug>(clever-f-reset)
+        normal! 0
+        let l = line('.')
+        normal fh
         Assert Equals(CursorPos(), [l,6,'h'])
-        normal f
-        Assert Equals(CursorPos(), [l,11,'h'])
+        execute 'normal' "\<Plug>(clever-f-reset)"
+        normal to
+        Assert Equals(CursorPos(), [l,13,'y'])
+    End
+
+    It should remove target highlights
+        normal! 0
+        normal fhff
+        Assert NotEquals(Highlights(), [])
+        call clever_f#reset()
+        Assert Equals(Highlights(), [])
     End
 End
 
@@ -499,7 +570,7 @@ Context Multibyte characters
     End
 End
 
-describe g:clever_f_ignore_case
+Describe g:clever_f_ignore_case
     Before
         new
         let g:clever_f_ignore_case = 1
@@ -557,7 +628,7 @@ End
 
 Describe clever_f#find_with()
     It should raise an error when invalid map is given
-        Throws /Error: Invalid mapping/ clever_f#find_with('x')
+        Throws /^clever-f: Invalid mapping/ clever_f#find_with('x')
     End
 End
 
@@ -746,6 +817,15 @@ Describe <Esc>
             execute 'normal' "f\<Esc>"
             Assert Equals(len(filter(getmatches(), 'v:val.group==#"CleverFDirect"')), 0)
         End
+
+        It does nothing on empty line (#55)
+            call AddLine('')
+            normal! G0
+            Assert Equals(getline('.'), '')
+            Assert Equals(col('.'), 1)
+            normal fa
+            Assert Equals(col('.'), 1)
+        End
     End
 End
 
@@ -931,6 +1011,7 @@ End
 Describe g:clever_f_mark_char
     Before
         new
+        let saved_mark_char = g:clever_f_mark_char
         let g:clever_f_mark_char = 1
         call clever_f#reset()
         call AddLine('poge huga hiyo poyo')
@@ -941,30 +1022,31 @@ Describe g:clever_f_mark_char
     After
         close!
         let g:clever_f_across_no_line = old_across_no_line
+        let g:clever_f_mark_char = saved_mark_char
     End
 
     It should highlight the target characters automatically
         normal! gg0
         normal fh
-        Assert NotEquals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+        Assert NotEquals(Highlights(), [])
         normal f
-        Assert NotEquals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+        Assert NotEquals(Highlights(), [])
     End
 
-    It should update the highlight if the cursor moves to another line
+    It should update the highlight when the cursor moves to another line
         call AddLine('oh huh')
         normal! gg0
         let l = line('.')
         normal fhff
-        Assert NotEquals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+        Assert NotEquals(Highlights(), [])
         Assert NotEquals(stridx(getmatches()[0].pattern, l), -1)
         Assert Equals(len(getmatches()), 1)
         normal f
-        Assert NotEquals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+        Assert NotEquals(Highlights(), [])
         Assert NotEquals(stridx(getmatches()[0].pattern, l+1), -1)
         Assert Equals(len(getmatches()), 1)
         normal f
-        Assert NotEquals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+        Assert NotEquals(Highlights(), [])
         Assert NotEquals(stridx(getmatches()[0].pattern, l+1), -1)
         Assert Equals(len(getmatches()), 1)
     End
@@ -978,7 +1060,7 @@ Describe g:clever_f_mark_char
         " XXX: Hack! While running test, CursorMoved is not fired
         " automatically. To test the event, we need to cause it manually.
         doautocmd CursorMoved
-        Assert Equals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+        Assert Equals(Highlights(), [])
     End
 
     It should remove highlights when entering insert mode
@@ -989,19 +1071,16 @@ Describe g:clever_f_mark_char
         " XXX: Hack! While running test, InsertEnter is not fired
         " automatically. To test the event, we need to cause it manually.
         doautocmd InsertEnter
-        Assert Equals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
+        Assert Equals(Highlights(), [])
     End
 
-    Describe clever_f#reset()
-        It should remove target highlights
-            call AddLine('oh huh')
-            normal! gg0
-            let l = line('.')
-            normal fhff
-            Assert NotEquals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
-            call clever_f#reset()
-            Assert Equals(filter(getmatches(), 'v:val.group==#"CleverFChar"'), [])
-        End
+    It should not highlight target character when set to 0
+        let g:clever_f_mark_char = 0
+        normal! gg0
+        normal fh
+        Assert Equals(Highlights(), [])
+        normal f
+        Assert Equals(Highlights(), [])
     End
 End
 
@@ -1294,4 +1373,128 @@ Describe g:clever_f_mark_direct
         Assert Equals(len(filter(getmatches(), 'v:val.group ==# "CleverFDirect"')), 0)
     End
 End
-" vim:foldmethod=marker
+
+Describe g:clever_f_highlight_timeout_ms
+    Before
+        new
+        let g:clever_f_mark_char = 1
+        let g:clever_f_highlight_timeout_ms = 100
+        call clever_f#reset()
+        call AddLine('pOge huga Hiyo poyooooooooooooooooooooooooooooooooooooooooooooooooooo')
+        normal! gg0
+    End
+
+    After
+        close!
+        let g:clever_f_highlight_timeout_ms = 0
+    End
+
+    It should remove highlights after specified timeout
+        let start = reltime()
+        normal fo
+        Assert NotEquals(Highlights(), [])
+        sleep 10m
+        Assert NotEquals(Highlights(), [])
+        Assert WaitUntil(100, { -> Highlights() == [] })
+        let duration = reltimefloat(reltime(start))
+        Assert Truthy(duration > 0.1, string(duration) . ' should be greater than 0.1')
+    End
+
+    It should not remove highlights while repeating search
+        let start = reltime()
+        normal fo
+        " After 500ms highlights are not removed since 'f' resets timer
+        for _ in range(10)
+            sleep 50m
+            Assert NotEquals(Highlights(), [])
+            normal f
+        endfor
+        " Spending 100ms without 'f' expires the timer
+        Assert WaitUntil(120, { -> Highlights() == [] })
+    End
+
+    It should restore highlights after timeout removed it
+        normal fo
+        Assert NotEquals(Highlights(), [])
+
+        " Wait until highlights are removed due to timeout
+        Assert WaitUntil(200, { -> Highlights() == [] })
+
+        " repeat f
+        normal f
+
+        " Highlights are restored
+        Assert NotEquals(Highlights(), [])
+
+        " Finally highlights are removed again
+        Assert WaitUntil(200, { -> Highlights() == [] })
+    End
+End
+
+Describe .
+    Before each
+        new
+        call AddLine('hoge fuge piye poye')
+        normal! gg0
+    End
+
+    After each
+        close!
+    End
+
+    It should repeat 'f' mapping
+        normal dfe
+        Assert Equals(getline('.'), ' fuge piye poye')
+
+        normal! .
+        Assert Equals(getline('.'), ' piye poye')
+
+        normal! .
+        Assert Equals(getline('.'), ' poye')
+
+        normal! .
+        Assert Equals(getline('.'), '')
+    End
+
+    It should repeat 't' mapping
+        normal dte
+        Assert Equals(getline('.'), 'e fuge piye poye')
+
+        normal! .
+        Assert Equals(getline('.'), 'e piye poye')
+
+        normal! .
+        Assert Equals(getline('.'), 'e poye')
+
+        normal! .
+        Assert Equals(getline('.'), 'e')
+    End
+
+    It should repeat 'F' mapping
+        normal! $
+
+        normal dFe
+        Assert Equals(getline('.'), 'hoge fuge piye')
+
+        normal .
+        Assert Equals(getline('.'), 'hoge fuge')
+
+        normal .
+        Assert Equals(getline('.'), 'hoge')
+    End
+
+    It should repeat 'T' mapping
+        normal! $
+
+        normal dTe
+        Assert Equals(getline('.'), 'hoge fuge piyee')
+
+        normal .
+        Assert Equals(getline('.'), 'hoge fugee')
+
+        normal .
+        Assert Equals(getline('.'), 'hogee')
+    End
+End
+
+" vim: set ft=vim foldmethod=marker:

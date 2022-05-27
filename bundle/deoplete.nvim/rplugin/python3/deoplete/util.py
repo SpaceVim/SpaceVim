@@ -4,21 +4,17 @@
 # License: MIT license
 # ============================================================================
 
-import os
-import re
-import sys
+from os.path import expandvars
+from pathlib import Path
+from pynvim import Nvim
+from pynvim.api import Buffer
 import glob
 import importlib.util
+import re
+import sys
 import traceback
 import typing
 import unicodedata
-
-if importlib.util.find_spec('pynvim'):
-    from pynvim import Nvim
-    from pynvim.api import Buffer
-else:
-    from neovim import Nvim
-    from neovim.api import Buffer
 
 UserContext = typing.Dict[str, typing.Any]
 Candidate = typing.Dict[str, typing.Any]
@@ -61,17 +57,19 @@ def import_plugin(path: str, source: str,
 
     If the class exists, add its directory to sys.path.
     """
-    name = os.path.splitext(os.path.basename(path))[0]
+    name = str(Path(path).name)[: -3]
     module_name = 'deoplete.%s.%s' % (source, name)
 
     spec = importlib.util.spec_from_file_location(module_name, path)
+    if not spec:
+        return None
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)  # type: ignore
     cls = getattr(module, classname, None)
     if not cls:
         return None
 
-    dirname = os.path.dirname(path)
+    dirname = str(Path(path).parent)
     if dirname not in sys.path:
         sys.path.insert(0, dirname)
     return cls
@@ -96,7 +94,7 @@ def error_tb(vim: Nvim, msg: str) -> None:
     t, v, tb = sys.exc_info()
     if t and v and tb:
         lines += traceback.format_exc().splitlines()
-    lines += ['%s.  Use :messages / see above for error details.' % msg]
+    lines += ['%s  Use :messages / see above for error details.' % msg]
     if hasattr(vim, 'err_write'):
         vim.err_write('[deoplete] %s\n' % '\n'.join(lines))
     else:
@@ -141,8 +139,8 @@ def get_custom(custom: typing.Dict[str, typing.Any],
         return default
 
 
-def get_syn_names(vim: Nvim) -> str:
-    return str(vim.call('deoplete#util#get_syn_names'))
+def get_syn_names(vim: Nvim) -> typing.List[str]:
+    return list(vim.call('deoplete#util#get_syn_names'))
 
 
 def parse_file_pattern(f: typing.Iterable[str],
@@ -169,8 +167,8 @@ def fuzzy_escape(string: str, camelcase: bool) -> str:
 
 
 def load_external_module(base: str, module: str) -> None:
-    current = os.path.dirname(os.path.abspath(base))
-    module_dir = os.path.join(os.path.dirname(current), module)
+    current = Path(base).parent.resolve()
+    module_dir = str(current.parent.joinpath(module))
     if module_dir not in sys.path:
         sys.path.insert(0, module_dir)
 
@@ -219,7 +217,20 @@ def charwidth(c: str) -> int:
 
 
 def expand(path: str) -> str:
-    return os.path.expanduser(os.path.expandvars(path))
+    if path.startswith('~'):
+        try:
+            path = str(Path(path).expanduser())
+        except Exception:
+            pass
+    return expandvars(path)
+
+
+def exists_path(path: str) -> bool:
+    try:
+        return Path(path).exists()
+    except Exception:
+        pass
+    return False
 
 
 def getlines(vim: Nvim, start: int = 1,
@@ -230,7 +241,9 @@ def getlines(vim: Nvim, start: int = 1,
     lines: typing.List[str] = []
     current = start
     while current <= int(end):
-        lines += vim.call('getline', current, current + max_len)
+        # Skip very long lines
+        lines += [x for x in vim.call('getline', current, current + max_len)
+                  if len(x) < 300]
         current += max_len + 1
     return lines
 

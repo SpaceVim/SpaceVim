@@ -1,0 +1,100 @@
+*vim-jsonnet.txt* Jsonnet development plugin
+*vim-jsonnet*
+
+====================================================================================
+  #     # ### #     #             #  #####  ####### #     # #     # ####### #######
+  #     #  #  ##   ##             # #     # #     # ##    # ##    # #          #
+  #     #  #  # # # #             # #       #     # # #   # # #   # #          #
+  #     #  #  #  #  # #####       #  #####  #     # #  #  # #  #  # #####      #
+   #   #   #  #     #       #     #       # #     # #   # # #   # # #          #
+    # #    #  #     #       #     # #     # #     # #    ## #    ## #          #
+     #    ### #     #        #####   #####  ####### #     # #     # #######    #
+====================================================================================
+CONTENTS                                                         *jsonnet-contents*
+
+  1. Intro........................................|jsonnet-intro|
+  2. Install......................................|jsonnet-install|
+  3. Commands.....................................|jsonnet-commands|
+  4. Mappings.....................................|jsonnet-mappings|
+  6. Functions....................................|jsonnet-functions|
+  7. Settings.....................................|jsonnet-settings|
+  8. Troubleshooting..............................|jsonnet-troubleshooting|
+  9. Credits......................................|jsonnet-credits|
+
+==============================================================================
+INTRO                                                               *jsonnet-intro*
+
+==============================================================================
+INSTALL                                                           *jsonnet-install*
+
+==============================================================================
+COMMANDS                                                         *jsonnet-commands*
+
+                                                                      *:JsonnetFmt*
+:JsonnetFmt
+
+Filter the current Jsonnet buffer through `jsonnetfmt`.  It tries to
+preserve cursor position and avoids replacing the buffer with stderr
+output.
+
+==============================================================================
+MAPPINGS                                                        *jsonnet-mappings*
+
+==============================================================================
+FUNCTIONS                                                       *jsonnet-functions*
+
+                                                                 *jsonnet#Format()*
+
+Filter the current Jsonnet buffer through `jsonnetfmt`.  It tries to
+preserve cursor position and avoids replacing the buffer with stderr
+output.
+
+==============================================================================
+SETTINGS                                                        *jsonnet-settings*
+
+                                                         *'g:jsonnet_fmt_on_save'*
+
+Use this option to auto |:JsonnetFmt| on save. By default it's enabled >
+
+  let g:jsonnet_fmt_on_save = 1
+<
+                                                             *'g:jsonnet_command'*
+
+Use this option to define which tool is used to fotmat. By default `jsonnet` is
+used >
+
+  let g:jsonnet_command = "jsonnet"
+<
+                                                         *'g:jsonnet_fmt_command'*
+
+Use this option to define which <cmd> parameter is used with *g:jsonnet_command* tool.
+By default `fmt` is used >
+
+  let g:jsonnet_fmt_command = "fmt"
+<
+                                                         *'g:jsonnet_fmt_options'*
+
+Use this option to add additional options to the
+|'g:jsonnet_command'| + |'g:jsonnet_fmt_command'|. Default is empty. >
+
+  let g:jsonnet_fmt_options = ''
+<
+                                                   *'g:jsonnet_fmt_fail_silently'*
+
+Use this option to enable processing of
+|'g:jsonnet_command'| + |'g:jsonnet_fmt_command'| command if it fails. By default
+it is turned off. By default the error output from the
+|'g:jsonnet_command'| + |'g:jsonnet_fmt_command'| command is ignored.
+FixMe: The processing of the |'g:jsonnet_command'| + |'g:jsonnet_fmt_command'|
+is not implemented yet. So clearing this option would not do anything at this time. >
+
+  let g:jsonnet_fmt_fail_silently = 1
+<
+
+==============================================================================
+TROUBLESHOOTING                                         *jsonnet-troubleshooting*
+
+==============================================================================
+CREDITS                                                         *jsonnet-credits*
+
+

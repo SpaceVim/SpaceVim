@@ -10,7 +10,6 @@ description: "This layer adds Nix language support to SpaceVim."
 - [Description](#description)
 - [Features](#features)
 - [Install](#install)
-- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -21,6 +20,9 @@ This layer adds [Nix](https://nixos.org/nix/manual/) language support to SpaceVi
 ## Features
 
 - syntax highlighting
+- symbol renaming (LSP)
+- go to definition (LSP)
+- syntax checking (LSP)
 
 ## Install
 

@@ -4,24 +4,24 @@
 # License: MIT license
 # ============================================================================
 
+from collections import defaultdict
+from pathlib import Path
+from pynvim import Nvim
 import copy
-import os.path
+import msgpack
 import re
 import sys
 import time
-import msgpack
 import typing
-
-from collections import defaultdict
 
 from deoplete import logger
 from deoplete.exceptions import SourceInitError
 from deoplete.util import (bytepos2charpos, charpos2bytepos, error, error_tb,
                            import_plugin, get_custom, get_syn_names,
-                           convert2candidates, uniq_list_dict, Nvim)
+                           convert2candidates, uniq_list_dict)
 
 UserContext = typing.Dict[str, typing.Any]
-Candidates = typing.Dict[str, typing.Any]
+Candidates = typing.List[typing.Dict[str, typing.Any]]
 Result = typing.Dict[str, typing.Any]
 
 
@@ -75,7 +75,8 @@ class Child(logger.LoggingMixin):
                     self._vim.call('deoplete#auto_complete', 'Update')
 
     def main(self, name: str, args: typing.List[typing.Any],
-             queue_id: typing.Optional[int]) -> typing.Optional[Candidates]:
+             queue_id: typing.Optional[int]) -> typing.Optional[
+                typing.Dict[str, typing.Any]]:
         ret = None
         if name == 'enable_logging':
             self._enable_logging()
@@ -103,6 +104,9 @@ class Child(logger.LoggingMixin):
         self.is_debug_enabled = True
 
     def _add_source(self, path: str) -> None:
+        # Resolve symbolic link
+        path = str(Path(path).resolve())
+
         source = None
         try:
             Source = import_plugin(path, 'source', 'Source')
@@ -110,14 +114,15 @@ class Child(logger.LoggingMixin):
                 return
 
             source = Source(self._vim)
-            name = os.path.splitext(os.path.basename(path))[0]
+            name = Path(path).stem
             source.name = getattr(source, 'name', name)
             source.path = path
-            if source.name in self._loaded_sources:
+            loaded_path = self._loaded_sources.get(source.name, '')
+            if source.name in self._loaded_sources and path != loaded_path:
                 # Duplicated name
                 error_tb(self._vim, 'Duplicated source: %s' % source.name)
                 error_tb(self._vim, 'path: "%s" "%s"' %
-                         (path, self._loaded_sources[source.name]))
+                         (path, loaded_path))
                 source = None
         except Exception:
             error_tb(self._vim, 'Could not load source: %s' % path)
@@ -129,6 +134,9 @@ class Child(logger.LoggingMixin):
                     f'Loaded Source: {source.name} ({path})')
 
     def _add_filter(self, path: str) -> None:
+        # Resolve symbolic link
+        path = str(Path(path).resolve())
+
         f = None
         try:
             Filter = import_plugin(path, 'filter', 'Filter')
@@ -136,14 +144,15 @@ class Child(logger.LoggingMixin):
                 return
 
             f = Filter(self._vim)
-            name = os.path.splitext(os.path.basename(path))[0]
+            name = Path(path).stem
             f.name = getattr(f, 'name', name)
             f.path = path
-            if f.name in self._loaded_filters:
+            loaded_path = self._loaded_filters.get(f.name, '')
+            if f.name in self._loaded_filters and path != loaded_path:
                 # Duplicated name
                 error_tb(self._vim, 'Duplicated filter: %s' % f.name)
                 error_tb(self._vim, 'path: "%s" "%s"' %
-                         (path, self._loaded_filters[f.name]))
+                         (path, loaded_path))
                 f = None
         except Exception:
             # Exception occurred when loading a filter.  Log stack trace.
@@ -230,6 +239,8 @@ class Child(logger.LoggingMixin):
                     source.is_volatile, source.is_async)):
             return self._prev_results[source.name]
 
+        ctx['bufpath'] = context['bufpath']
+        ctx['cwd'] = context['cwd']
         ctx['is_async'] = False
         ctx['is_refresh'] = True
         ctx['max_abbr_width'] = min(source.max_abbr_width,
@@ -247,6 +258,8 @@ class Child(logger.LoggingMixin):
             ctx['max_info_width'] = max(10, ctx['max_info_width'])
         if ctx['max_menu_width'] > 0:
             ctx['max_menu_width'] = max(10, ctx['max_menu_width'])
+
+        self._set_context_case(source, ctx)
 
         # Gathering
         self._profile_start(ctx, source.name)
@@ -289,6 +302,19 @@ class Child(logger.LoggingMixin):
         except Exception as exc:
             self._handle_source_exception(source, exc)
 
+    def _set_context_case(self, source: typing.Any,
+                          context: UserContext) -> None:
+        case = source.smart_case or source.camel_case
+        ignorecase = source.ignore_case
+        if case:
+            if re.search(r'[A-Z]', context['complete_str']):
+                ignorecase = False
+            else:
+                ignorecase = True
+        context['camelcase'] = source.camel_case
+        context['ignorecase'] = ignorecase
+        context['smartcase'] = source.smart_case
+
     def _handle_source_exception(self,
                                  source: typing.Any, exc: Exception) -> None:
         if isinstance(exc, SourceInitError):
@@ -330,8 +356,7 @@ class Child(logger.LoggingMixin):
             error_tb(self._vim, 'Errors from: %s' % f)
 
     def _get_candidates(self, result: Result,
-                        context_input: str, next_input: str
-                        ) -> typing.Optional[Candidates]:
+                        context_input: str, next_input: str) -> Candidates:
         source = result['source']
 
         # Gather async results
@@ -339,7 +364,7 @@ class Child(logger.LoggingMixin):
             self._gather_async_results(result, source)
 
         if not result['candidates']:
-            return None
+            return []
 
         # Source context
         ctx = copy.copy(result['context'])
@@ -349,14 +374,7 @@ class Child(logger.LoggingMixin):
         ctx['complete_str'] = context_input[ctx['char_position']:]
         ctx['is_sorted'] = False
 
-        # Set ignorecase
-        case = ctx['smartcase'] or ctx['camelcase']
-        if case:
-            if re.search(r'[A-Z]', ctx['complete_str']):
-                ctx['ignorecase'] = False
-            else:
-                ctx['ignorecase'] = True
-        ignorecase = ctx['ignorecase']
+        self._set_context_case(source, ctx)
 
         # Match
         matchers = [self._filters[x] for x
@@ -397,13 +415,18 @@ class Child(logger.LoggingMixin):
             for candidates in sorted_candidates:
                 ctx['candidates'] += candidates
 
-        ctx['ignorecase'] = ignorecase
-
         # On post filter
         if hasattr(source, 'on_post_filter'):
             ctx['candidates'] = source.on_post_filter(ctx)
 
         mark = source.mark + ' '
+
+        # Check user mark set
+        user_mark = self._vim.call(
+            'deoplete#custom#_get_source', source.name).get('mark', '')
+        if user_mark == '':
+            user_mark = self._vim.call(
+                'deoplete#custom#_get_source', '_').get('mark', mark)
 
         refresh = False
         refresh_always = self._vim.call(
@@ -418,10 +441,13 @@ class Child(logger.LoggingMixin):
         for candidate in ctx['candidates']:
             candidate['icase'] = 1
             candidate['equal'] = refresh
+            candidate['source'] = source.name
 
             # Set default menu
-            if (mark != ' ' and
-                    candidate.get('menu', '').find(mark) != 0):
+            if user_mark == '':
+                # Disable menu
+                candidate['menu'] = ''
+            elif mark != ' ' and candidate.get('menu', '').find(mark) != 0:
                 candidate['menu'] = mark + candidate.get('menu', '')
 
             if source.dup:
@@ -431,7 +457,7 @@ class Child(logger.LoggingMixin):
             # Remove duplicates
             ctx['candidates'] = uniq_list_dict(ctx['candidates'])
 
-        return ctx['candidates']  # type: ignore
+        return list(ctx['candidates'])
 
     def _itersource(self, context: UserContext
                     ) -> typing.Generator[typing.Any, None, None]:
@@ -443,7 +469,9 @@ class Child(logger.LoggingMixin):
                                'ignore_sources', ft, []))
 
         for source_name, source in self._get_sources().items():
-            if source.filetypes is None or source_name in ignore_sources:
+            if source.filetypes is None or (
+                    source_name in ignore_sources and
+                    context['event'] != 'Manual'):
                 continue
             if context['sources'] and source_name not in context['sources']:
                 continue
@@ -509,10 +537,10 @@ class Child(logger.LoggingMixin):
                         context['input'].find(result['prev_input']) == 0)
 
     def _is_skip(self, context: UserContext, source: typing.Any) -> bool:
-        if 'syntax_names' in context and source.disabled_syntaxes:
-            p = re.compile('(' + '|'.join(source.disabled_syntaxes) + ')$')
-            if next(filter(p.search, context['syntax_names']), None):
-                return True
+        if (context.get('syntax_names', []) and source.disabled_syntaxes
+                and len(set(context['syntax_names']) &
+                        set(source.disabled_syntaxes)) > 0):
+            return True
 
         iminsert = self._vim.call('getbufvar', '%', '&iminsert')
         if iminsert == 1 and source.is_skip_langmap:
@@ -536,11 +564,14 @@ class Child(logger.LoggingMixin):
         Each item in `attrs` is the attribute name.
         """
         attrs = (
+            'camel_case',
             'converters',
             'disabled_syntaxes',
             'dup',
             'filetypes',
+            'ignore_case',
             'input_pattern',
+            'input_patterns',
             'is_debug_enabled',
             'is_silent',
             'is_volatile',
@@ -553,6 +584,7 @@ class Child(logger.LoggingMixin):
             'max_menu_width',
             'max_pattern_length',
             'min_pattern_length',
+            'smart_case',
             'sorters',
         )
 

@@ -1,7 +1,7 @@
 "=============================================================================
 " message.vim --- SpaceVim message API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -11,11 +11,37 @@
 " @parentsection api
 " `vim#message` API provide functions for generating colored message in vim's
 " command line.
+" >
+"   let s:MSG = SpaceVim#api#import('vim#message')
+"   call s:MSG.echo('WarningMsg', 'hello world!')
+" <
+" @subsection functions
 "
 " echo({hi}, {msg})
 "
-"   print message with {hi} highlight group.
-
+"   print message with {hi} highlight group. The {msg} starts on a new line.
+"
+" echon({hi}, {msg})
+"
+"   print message with {hi} highlight group. The {msg} will be displayed
+"   without anything added.
+"
+" echomsg({hi}, {msg})
+"
+"   print message with {hi} highlight group. The {msg} starts on a new line.
+"   The {msg} also will be added to `:messages` history.
+"
+" error({msg})
+"
+"   same as `echomsg('Error', {msg})`
+"
+" warn({msg})
+"
+"   same as `echomsg('WarningMsg', {msg})`
+"
+" confirm({msg})
+"   
+"   promote a confirm message, accept user input `y/n`.
 
 let s:self = {}
 
@@ -36,6 +62,31 @@ function! s:self.echon(hl, msg) abort
     echohl None
   endtry
 endfunction
+
+if exists('*nvim_echo')
+  function! s:self.nvim_echo(chunk, history, opt) abort
+    return nvim_echo(a:chunk, a:history, a:opt)
+  endfunction
+else
+  function! s:self.nvim_echo(chunk, history, opt) abort
+    let msg = ''
+    for item in a:chunk
+      try
+        execute 'echohl' item[1]
+        echon item[0]
+        let msg .= item[0]
+      catch 
+      finally
+        echohl None
+      endtry
+    endfor
+    if a:history
+      for line in split(msg, "\n")
+        echom line
+      endfor
+    endif
+  endfunction
+endif
 
 function! s:self.echomsg(hl, msg) abort
   execute 'echohl' a:hl

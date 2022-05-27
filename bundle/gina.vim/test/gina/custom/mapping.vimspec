@@ -1,0 +1,38 @@
+Describe gina#custom#mapping
+  Before all
+    let scheme = 'status'
+    let pattern = '/\%(branch\|tag\)'
+  End
+
+  After all
+    %bwipeout!
+    call gina#custom#clear()
+  End
+
+  Before
+    %bwipeout!
+    call gina#custom#clear()
+  End
+
+  Describe #map({scheme}, {lhs}, {rhs} [, {options}])
+    It define {lhs} to {rhs} mapping in a {scheme} buffer
+      call gina#custom#mapping#map(scheme, 'H', '<Plug>(gina-action-builtin-help-all)')
+      GinaSync status
+      Assert Equals(maparg('H'), '<Plug>(gina-action-builtin-help-all)')
+      GinaSync branch
+      Assert Equals(maparg('H'), '')
+      GinaSync tag
+      Assert Equals(maparg('H'), '')
+    End
+
+    It define {lhs} to {rhs} mapping in buffers which match with {pattern}
+      call gina#custom#mapping#map(pattern, 'H', '<Plug>(gina-action-builtin-help-all)')
+      GinaSync status
+      Assert Equals(maparg('H'), '')
+      GinaSync branch
+      Assert Equals(maparg('H'), '<Plug>(gina-action-builtin-help-all)')
+      GinaSync tag
+      Assert Equals(maparg('H'), '<Plug>(gina-action-builtin-help-all)')
+    End
+  End
+End

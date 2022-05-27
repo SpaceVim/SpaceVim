@@ -1,0 +1,30 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "selene-error",
+      "severity": "error",
+      "pattern": [
+        {
+          "regexp": "^([^:]+):(\\d+):(\\d+):\\serror(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "message": 4
+        }
+      ]
+    },
+    {
+      "owner": "selene-warning",
+      "severity": "warning",
+      "pattern": [
+        {
+          "regexp": "^([^:]+):(\\d+):(\\d+):\\swarning(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "message": 4
+        }
+      ]
+    }
+  ]
+}

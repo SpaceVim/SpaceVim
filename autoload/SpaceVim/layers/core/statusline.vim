@@ -1,13 +1,13 @@
 "=============================================================================
 " statusline.vim --- SpaceVim statusline
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section core#statusline, layer-core-statusline
+" @section core#statusline, layers-core-statusline
 " @parentsection layers
 " This layer provides default statusline for SpaceVim
 " If you want to use airline's statusline, just disable this layer
@@ -37,7 +37,8 @@ let s:LANG = SpaceVim#api#import('language')
 
 let s:JSON = SpaceVim#api#import('data#json')
 
-let s:VIM =  SpaceVim#api#import('vim')
+let s:VIM = SpaceVim#api#import('vim')
+let s:WIN = SpaceVim#api#import('vim#window')
 
 
 " init
@@ -62,41 +63,46 @@ let s:i_separators = {
 let s:loaded_modes = []
 let s:modes = {
       \ 'center-cursor': {
-      \ 'icon' : '⊝',
-      \ 'icon_asc' : '-',
-      \ 'desc' : 'centered-cursor mode',
-      \ },
-      \ 'hi-characters-for-long-lines' :{
-      \ 'icon' : '⑧',
-      \ 'icon_asc' : '8',
-      \ 'desc' : 'toggle highlight of characters for long lines',
-      \ },
-      \ 'fill-column-indicator' :{
-      \ 'icon' : s:MESSLETTERS.circled_letter('f'),
-      \ 'icon_asc' : 'f',
-      \ 'desc' : 'fill-column-indicator mode',
-      \ },
-      \ 'syntax-checking' :{
-      \ 'icon' : s:MESSLETTERS.circled_letter('s'),
-      \ 'icon_asc' : 's',
-      \ 'desc' : 'syntax-checking mode',
-      \ },
-      \ 'spell-checking' :{
-      \ 'icon' : s:MESSLETTERS.circled_letter('S'),
-      \ 'icon_asc' : 'S',
-      \ 'desc' : 'spell-checking mode',
-      \ },
-      \ 'paste-mode' :{
-      \ 'icon' : s:MESSLETTERS.circled_letter('p'),
-      \ 'icon_asc' : 'p',
-      \ 'desc' : 'paste mode',
-      \ },
-      \ 'whitespace' :{
-      \ 'icon' : s:MESSLETTERS.circled_letter('w'),
-      \ 'icon_asc' : 'w',
-      \ 'desc' : 'whitespace mode',
-      \ },
-      \ }
+        \ 'icon' : '⊝',
+        \ 'icon_asc' : '-',
+        \ 'desc' : 'centered-cursor mode',
+        \ },
+        \ 'hi-characters-for-long-lines' :{
+        \ 'icon' : '⑧',
+        \ 'icon_asc' : '8',
+        \ 'desc' : 'toggle highlight of characters for long lines',
+        \ },
+        \ 'fill-column-indicator' :{
+        \ 'icon' : s:MESSLETTERS.circled_letter('f'),
+        \ 'icon_asc' : 'f',
+        \ 'desc' : 'fill-column-indicator mode',
+        \ },
+        \ 'syntax-checking' :{
+        \ 'icon' : s:MESSLETTERS.circled_letter('s'),
+        \ 'icon_asc' : 's',
+        \ 'desc' : 'syntax-checking mode',
+        \ },
+        \ 'spell-checking' :{
+        \ 'icon' : s:MESSLETTERS.circled_letter('S'),
+        \ 'icon_asc' : 'S',
+        \ 'desc' : 'spell-checking mode',
+        \ },
+        \ 'paste-mode' :{
+        \ 'icon' : s:MESSLETTERS.circled_letter('p'),
+        \ 'icon_asc' : 'p',
+        \ 'desc' : 'paste mode',
+        \ },
+        \ 'whitespace' :{
+        \ 'icon' : s:MESSLETTERS.circled_letter('w'),
+        \ 'icon_asc' : 'w',
+        \ 'desc' : 'whitespace mode',
+        \ },
+        \ 'wrapline' :{
+        \ 'icon' : s:MESSLETTERS.circled_letter('W'),
+        \ 'icon_asc' : 'W',
+        \ 'desc' : 'wrap line mode',
+        \ },
+        \ }
 
 if SpaceVim#layers#isLoaded('checkers')
   call add(s:loaded_modes, 'syntax-checking')
@@ -107,7 +113,7 @@ endif
 if &cc ==# '80'
   call add(s:loaded_modes, 'fill-column-indicator')
 endif
-if index(g:spacevim_statusline_right_sections, 'whitespace') != -1
+if index(g:spacevim_statusline_right, 'whitespace') != -1
   call add(s:loaded_modes, 'whitespace')
 endif
 " build in sections for SpaceVim statusline
@@ -142,7 +148,7 @@ function! s:filename() abort
 endfunction
 
 function! s:fileformat() abort
-  if g:spacevim_statusline_unicode_symbols == 1
+  if g:spacevim_statusline_unicode == 1
     let g:_spacevim_statusline_fileformat = s:SYSTEM.fileformat()
   else
     let g:_spacevim_statusline_fileformat = &ff
@@ -156,13 +162,13 @@ function! s:major_mode() abort
 endfunction
 
 function! s:modes() abort
-  if g:spacevim_statusline_unicode_symbols
+  if g:spacevim_statusline_unicode
     let m = ' ❖ '
   else
     let m = ' # '
   endif
   for mode in s:loaded_modes
-    if g:spacevim_statusline_unicode_symbols
+    if g:spacevim_statusline_unicode
       let m .= s:modes[mode].icon . ' '
     else
       let m .= s:modes[mode].icon_asc . ' '
@@ -171,6 +177,9 @@ function! s:modes() abort
   return m . ' '
 endfunction
 
+function! s:totallines() abort
+  return ' %L '
+endfunction
 
 function! s:percentage() abort
   return ' %P '
@@ -202,14 +211,14 @@ endfunction
 function! s:battery_status() abort
   if executable('acpi')
     let battery = split(system('acpi'))[-1][:-2]
-    if g:spacevim_statusline_unicode_symbols
+    if g:spacevim_statusline_unicode
       return ' ' . s:ICON.battery_status(battery) . '  '
     else
       return ' ⚡' . battery . ' '
     endif
   elseif executable('pmset')
     let battery = matchstr(system('pmset -g batt'), '\d\+%')[:-2]
-    if g:spacevim_statusline_unicode_symbols
+    if g:spacevim_statusline_unicode
       return ' ' . s:ICON.battery_status(battery) . '  '
     else
       return ' ⚡' . battery . ' '
@@ -233,8 +242,8 @@ function! s:input_method() abort
 endfunction
 
 
-if g:spacevim_lint_engine ==# 'neomake'
-  function! s:syntax_checking() abort
+function! s:syntax_checking() abort
+  if g:spacevim_lint_engine ==# 'neomake'
     if !exists('g:loaded_neomake')
       return ''
     endif
@@ -244,9 +253,7 @@ if g:spacevim_lint_engine ==# 'neomake'
     let l =  warnings ? '%#SpaceVim_statusline_warn# ● ' . warnings . ' ' : ''
     let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#● ' . errors  . ' ' : ''
     return l
-  endfunction
-elseif g:spacevim_lint_engine ==# 'ale'
-  function! s:syntax_checking() abort
+  elseif g:spacevim_lint_engine ==# 'ale'
     if !exists('g:ale_enabled')
       return ''
     endif
@@ -256,9 +263,7 @@ elseif g:spacevim_lint_engine ==# 'ale'
     let l =  warnings ? '%#SpaceVim_statusline_warn# ● ' . warnings . ' ' : ''
     let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#● ' . errors  . ' ' : ''
     return l
-  endfunction
-else
-  function! s:syntax_checking() abort
+  else
     if !exists(':SyntasticCheck')
       return ''
     endif
@@ -268,8 +273,8 @@ else
     else
       return ''
     endif
-  endfunction
-endif
+  endif
+endfunction
 
 function! s:search_status() abort
   let save_cursor = getpos('.')
@@ -287,7 +292,11 @@ function! s:search_status() abort
   " errmsg in this function should be ignored, otherwise SPC f s will always
   " print errmsg.
   let v:errmsg = ''
-  return ' ' . (str2nr(tt) - str2nr(ct) + 1) . '/' . tt . ' '
+  if tt ==# 0
+    return ''
+  else
+    return ' ' . (str2nr(tt) - str2nr(ct) + 1) . '/' . tt . ' '
+  endif
 endfunction
 
 
@@ -304,6 +313,7 @@ let s:registed_sections = {
       \ 'minor mode lighters' : function('s:modes'),
       \ 'cursorpos' : function('s:cursorpos'),
       \ 'percentage' : function('s:percentage'),
+      \ 'totallines' : function('s:totallines'),
       \ 'time' : function('s:time'),
       \ 'date' : function('s:date'),
       \ 'whitespace' : function('s:whitespace'),
@@ -389,7 +399,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
             \ . ( has('patch-8.0.1384') 
             \ ? ((getqflist({'title' : 0}).title ==# ':setqflist()') ? '' : 
             \ '%#SpaceVim_statusline_c#'
-            \ . getqflist({'title' : 0}).title
+            \ . ' ' . getqflist({'title' : 0}).title
             \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
             \ ) : '')
     else
@@ -403,7 +413,7 @@ function! SpaceVim#layers#core#statusline#get(...) abort
             \ ? ((getloclist(winnr(),{'title' : 0}).title ==# ':setloclist()')
             \ ? '' : 
             \ '%#SpaceVim_statusline_c#'
-            \ . getloclist(winnr(),{'title' : 0}).title
+            \ . ' ' . getloclist(winnr(),{'title' : 0}).title
             \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
             \ ) : '')
 
@@ -413,6 +423,13 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b#'
           \ . ' defx '
+          \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+          \ . s:lsep . ' '
+  elseif &filetype ==# 'NvimTree'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1)
+          \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b#'
+          \ . ' NvimTree '
           \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c#'
           \ . s:lsep . ' '
   elseif &filetype ==# 'Fuzzy'
@@ -430,16 +447,29 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#'
           \ . s:lsep
           \ . '%#SpaceVim_statusline_b# Terminal %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+          \ . '%#SpaceVim_statusline_c# '
+          \ . matchstr(bufname(), '\d\+:\zs.*')
     if !empty(get(b:, '_spacevim_shell', ''))
       let st .= '%#SpaceVim_statusline_c# %{b:_spacevim_shell} %#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
     endif
     return st
+  elseif &filetype ==# 'vimchat'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Chat %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+          \ . '%#SpaceVim_statusline_c# '
+          \ . '%{chat#windows#status().protocol}' . ' %#SpaceVim_statusline_c_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# '
+          \ . '%{chat#windows#status().channel}' . ' %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+          \ . '%#SpaceVim_statusline_c# '
+          \ . '%{chat#windows#status().usercount}'
   elseif &filetype ==# 'git-status'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Git status %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'git-commit'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Git commit %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+          \ . '%#SpaceVim_statusline_c# '
+          \ . getcwd()
   elseif &filetype ==# 'git-rebase'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Git rebase %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
@@ -485,8 +515,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     catch
     endtry
     let st = '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# startify %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
-    if index(g:spacevim_statusline_left_sections, 'vcs') != -1
+          \ . '%#SpaceVim_statusline_b# startify %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+    if index(g:spacevim_statusline_left, 'vcs') != -1
       let st .= '%#SpaceVim_statusline_c#' .  call(s:registed_sections['vcs'], [])
             \ . '%#SpaceVim_statusline_c_SpaceVim_statusline_z#' . s:lsep
     endif
@@ -501,6 +531,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     return '%#SpaceVim_statusline_a# Git log popup %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'respones.idris'
     return '%#SpaceVim_statusline_a# Idris Response %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+  elseif &filetype ==# 'markdown.lspdoc'
+    return '%#SpaceVim_statusline_a# LSP hover info %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'SpaceVimWinDiskManager'
     return '%#SpaceVim_statusline_a# WinDisk %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'SpaceVimTodoManager'
@@ -541,6 +573,10 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_b# %{SpaceVim#plugins#flygrep#lineNr()} %#SpaceVim_statusline_b_SpaceVim_statusline_z#' . s:lsep . ' '
   elseif &filetype ==# 'TransientState'
     return '%#SpaceVim_statusline_a# Transient State %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+  elseif &filetype ==# 'SpaceVimLog'
+    return '%#SpaceVim_statusline_a# SpaceVim Runtime log %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+  elseif &filetype ==# 'SpaceVimTomlViewer'
+    return '%#SpaceVim_statusline_a# Toml Json Viewer %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'vimcalc'
     return '%#SpaceVim_statusline_a#' . s:winnr() . ' VimCalc %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'HelpDescribe'
@@ -577,13 +613,13 @@ endfunction
 
 function! s:active() abort
   let lsec = []
-  for section in g:spacevim_statusline_left_sections
+  for section in g:spacevim_statusline_left
     if has_key(s:registed_sections, section)
       call add(lsec, call(s:registed_sections[section], []))
     endif
   endfor
   let rsec = []
-  for section in g:spacevim_statusline_right_sections
+  for section in g:spacevim_statusline_right
     if has_key(s:registed_sections, section)
       call add(rsec, call(s:registed_sections[section], []))
     endif
@@ -591,7 +627,8 @@ function! s:active() abort
   let fname = s:buffer_name()
   let tag = s:current_tag()
   return s:STATUSLINE.build(lsec, rsec, s:lsep, s:rsep, fname, tag,
-        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z', winwidth(winnr()))
+        \ 'SpaceVim_statusline_a', 'SpaceVim_statusline_b', 'SpaceVim_statusline_c', 'SpaceVim_statusline_z',
+        \ &laststatus ==# 3 ? &columns : winwidth(winnr()))
 endfunction
 
 function! s:inactive() abort
@@ -682,18 +719,25 @@ function! SpaceVim#layers#core#statusline#register_mode(mode) abort
   endif
 endfunction
 
+
+
+" This func is used to toggle major mode in statusline
+
 function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
+  let mode = get(s:modes, a:name, {})
+  call SpaceVim#logger#info('try to call func of mode:' . a:name)
+  if has_key(mode, 'func')
+    let done = call(mode.func, [])
+  else
+    let done = 1
+    call SpaceVim#logger#info('no func found for mode:' . a:name)
+  endif
   if index(s:loaded_modes, a:name) != -1
     call remove(s:loaded_modes, index(s:loaded_modes, a:name))
   else
-    call add(s:loaded_modes, a:name)
-  endif
-  let mode = s:modes[a:name]
-  call SpaceVim#logger#info('try to call func of mode:' . a:name)
-  if has_key(mode, 'func')
-    call call(mode.func, [])
-  else
-    call SpaceVim#logger#info('no func found for mode:' . a:name)
+    if done
+      call add(s:loaded_modes, a:name)
+    endif
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
   call s:update_conf()
@@ -703,25 +747,25 @@ let s:section_old_pos = {
       \ }
 
 function! SpaceVim#layers#core#statusline#toggle_section(name) abort
-  if index(g:spacevim_statusline_left_sections, a:name) == -1
-        \ && index(g:spacevim_statusline_right_sections, a:name) == -1
+  if index(g:spacevim_statusline_left, a:name) == -1
+        \ && index(g:spacevim_statusline_right, a:name) == -1
         \ && !has_key(s:section_old_pos, a:name)
     if a:name ==# 'search status'
-      call insert(g:spacevim_statusline_left_sections, a:name, 2)
+      call insert(g:spacevim_statusline_left, a:name, 2)
     else
-      call add(g:spacevim_statusline_right_sections, a:name)
+      call add(g:spacevim_statusline_right, a:name)
     endif
-  elseif index(g:spacevim_statusline_right_sections, a:name) != -1
-    let s:section_old_pos[a:name] = ['r', index(g:spacevim_statusline_right_sections, a:name)]
-    call remove(g:spacevim_statusline_right_sections, index(g:spacevim_statusline_right_sections, a:name))
-  elseif index(g:spacevim_statusline_left_sections, a:name) != -1
-    let s:section_old_pos[a:name] = ['l', index(g:spacevim_statusline_left_sections, a:name)]
-    call remove(g:spacevim_statusline_left_sections, index(g:spacevim_statusline_left_sections, a:name))
+  elseif index(g:spacevim_statusline_right, a:name) != -1
+    let s:section_old_pos[a:name] = ['r', index(g:spacevim_statusline_right, a:name)]
+    call remove(g:spacevim_statusline_right, index(g:spacevim_statusline_right, a:name))
+  elseif index(g:spacevim_statusline_left, a:name) != -1
+    let s:section_old_pos[a:name] = ['l', index(g:spacevim_statusline_left, a:name)]
+    call remove(g:spacevim_statusline_left, index(g:spacevim_statusline_left, a:name))
   elseif has_key(s:section_old_pos, a:name)
     if s:section_old_pos[a:name][0] ==# 'r'
-      call insert(g:spacevim_statusline_right_sections, a:name, s:section_old_pos[a:name][1])
+      call insert(g:spacevim_statusline_right, a:name, s:section_old_pos[a:name][1])
     else
-      call insert(g:spacevim_statusline_left_sections, a:name, s:section_old_pos[a:name][1])
+      call insert(g:spacevim_statusline_left, a:name, s:section_old_pos[a:name][1])
     endif
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
@@ -762,8 +806,8 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'main': 'SpaceVim#layers#core#statusline#ctrlp',
         \ 'prog': 'SpaceVim#layers#core#statusline#ctrlp_status',
         \ }
-  if filereadable(expand('~/.cache/SpaceVim/major_mode.json'))
-    let conf = s:JSON.json_decode(join(readfile(expand('~/.cache/SpaceVim/major_mode.json'), ''), ''))
+  if filereadable(expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'))
+    let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'), ''), ''))
     for key in keys(conf)
       if conf[key]
         " this function should be called silent.
@@ -778,7 +822,7 @@ function! s:update_conf() abort
   for key in keys(s:modes)
     call extend(conf, {key : (index(s:loaded_modes, key) > -1 ? 1 : 0)})
   endfor
-  call writefile([s:JSON.json_encode(conf)], expand('~/.cache/SpaceVim/major_mode.json'))
+  call writefile([s:JSON.json_encode(conf)], expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'))
 endfunction
 
 " Arguments:
@@ -817,7 +861,7 @@ function! SpaceVim#layers#core#statusline#ctrlp_status(str) abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#jump(i) abort
-  if winnr('$') >= a:i
+  if s:WIN.win_count() >= a:i
     exe a:i . 'wincmd w'
   endif
 endfunction
@@ -853,34 +897,37 @@ function! SpaceVim#layers#core#statusline#mode(mode) abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#mode_text(mode) abort
+  let past_mode = &paste ? 'Paste ' . s:ilsep . ' ' : ''
+  let mode_text = ''
   let iedit_mode = get(w:, 'spacevim_iedit_mode', '')
   if a:mode ==# 'n'
     if !empty(iedit_mode)
       if iedit_mode ==# 'n'
-        return 'IEDIT-NORMAL'
-      else
-        return 'IEDIT-INSERT'
+        let mode_text = 'IEDIT-NORMAL'
+      elseif iedit_mode ==# 'i'
+        let mode_text = 'IEDIT-INSERT'
       endif
+    else
+      let mode_text = 'NORMAL'
     endif
-    return 'NORMAL'
   elseif a:mode ==# 'i'
-    return 'INSERT'
+    let mode_text = 'INSERT'
   elseif a:mode ==# 'R'
-    return 'REPLACE'
+    let mode_text = 'REPLACE'
   elseif a:mode ==# 'v'
-    return 'VISUAL'
+    let mode_text = 'VISUAL'
   elseif a:mode ==# 'V'
-    return 'V-LINE'
+    let mode_text = 'V-LINE'
   elseif a:mode ==# ''
-    return 'V-BLOCK'
+    let mode_text = 'V-BLOCK'
   elseif a:mode ==# 'c'
-    return 'COMMAND'
+    let mode_text = 'COMMAND'
   elseif a:mode ==# 't'
-    return 'TERMINAL'
+    let mode_text = 'TERMINAL'
   elseif a:mode ==# 'v' || a:mode ==# 'V' || a:mode ==# '^V' || a:mode ==# 's' || a:mode ==# 'S' || a:mode ==# '^S'
-    return 'VISUAL'
+    let mode_text = 'VISUAL'
   endif
-  return ' '
+  return past_mode . mode_text
 endfunction
 
 
@@ -950,16 +997,16 @@ function! SpaceVim#layers#core#statusline#register_sections(name, func) abort
 endfunction
 
 function! SpaceVim#layers#core#statusline#check_section(name) abort
-  return (index(g:spacevim_statusline_left_sections, a:name) != -1
-        \ || index(g:spacevim_statusline_right_sections, a:name) != -1)
+  return (index(g:spacevim_statusline_left, a:name) != -1
+        \ || index(g:spacevim_statusline_right, a:name) != -1)
 endfunction
 
 function! SpaceVim#layers#core#statusline#remove_section(name) abort
-  if index(g:spacevim_statusline_left_sections, a:name) != -1
-    call remove(g:spacevim_statusline_left_sections, index(g:spacevim_statusline_left_sections, a:name))
+  if index(g:spacevim_statusline_left, a:name) != -1
+    call remove(g:spacevim_statusline_left, index(g:spacevim_statusline_left, a:name))
   endif
-  if index(g:spacevim_statusline_right_sections, a:name) != -1
-    call remove(g:spacevim_statusline_right_sections, index(g:spacevim_statusline_left_sections, a:name))
+  if index(g:spacevim_statusline_right, a:name) != -1
+    call remove(g:spacevim_statusline_right, index(g:spacevim_statusline_left, a:name))
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction

@@ -1,0 +1,696 @@
+*nvim-cmp* *cmp*
+
+A completion plugin for neovim coded in Lua.
+
+==============================================================================
+CONTENTS                                                          *cmp-contents*
+
+Abstract                                                          |cmp-abstract|
+Concept                                                            |cmp-concept|
+Usage                                                                |cmp-usage|
+Function                                                          |cmp-function|
+Mapping                                                            |cmp-mapping|
+Command                                                            |cmp-command|
+Highlight                                                        |cmp-highlight|
+Autocmd                                                            |cmp-autocmd|
+Config                                                              |cmp-config|
+Develop                                                            |cmp-develop|
+FAQ                                                                    |cmp-faq|
+
+
+
+==============================================================================
+Abstract                                                          *cmp-abstract*
+
+This is nvim-cmp's document.
+
+1. This docs uses the type definition notation like `{lsp,cmp,vim}.*`
+  - You can find it `../lua/cmp/types/init.lua`.
+2. The advanced configuration is noted in wiki.
+  - https://github.com/hrsh7th/nvim-cmp/wiki
+
+
+
+==============================================================================
+Concept                                                            *cmp-concept*
+
+- Full support for LSP completion related capabilities
+- Powerful customizability via Lua functions
+- Smart handling of key mapping
+- No flicker
+
+
+
+==============================================================================
+Usage                                                                *cmp-usage*
+
+The recommendation configurations are the below.
+
+NOTE:
+  1. You must setup `snippet.expand` function.
+  2. The `cmp.setup.cmdline` won't work if you are using `native` completion menu. 
+  3. You can disable the `default` options via specifying `cmp.config.disable` value.
+>
+  call plug#begin(s:plug_dir)
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'hrsh7th/cmp-cmdline'
+  Plug 'hrsh7th/nvim-cmp'
+
+  " For vsnip users.
+  Plug 'hrsh7th/cmp-vsnip'
+  Plug 'hrsh7th/vim-vsnip'
+
+  " For luasnip users.
+  " Plug 'L3MON4D3/LuaSnip'
+  " Plug 'saadparwaiz1/cmp_luasnip'
+
+  " For snippy users.
+  " Plug 'dcampos/nvim-snippy'
+  " Plug 'dcampos/cmp-snippy'
+
+  " For ultisnips users.
+  " Plug 'SirVer/ultisnips'
+  " Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+
+  call plug#end()
+
+  set completeopt=menu,menuone,noselect
+
+  lua <<EOF
+    local cmp = require'cmp'
+
+    -- Global setup.
+    cmp.setup({
+      snippet = {
+        expand = function(args)
+          vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+          -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+          -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
+          -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        end,
+      },
+      mapping = {
+        ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        ['<C-e>'] = cmp.mapping({
+          i = cmp.mapping.abort(),
+          c = cmp.mapping.close(),
+        }),
+        -- Accept currently selected item. If none selected, `select` first item.
+        -- Set `select` to `false` to only confirm explicitly selected items.
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      },
+      sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        { name = 'vsnip' }, -- For vsnip users.
+        -- { name = 'luasnip' }, -- For luasnip users.
+        -- { name = 'snippy' }, -- For snippy users.
+        -- { name = 'ultisnips' }, -- For ultisnips users.
+      }, {
+        { name = 'buffer' },
+      })
+    })
+
+    -- `/` cmdline setup.
+    cmp.setup.cmdline('/', {
+      sources = {
+        { name = 'buffer' }
+      }
+    })
+
+    -- `:` cmdline setup.
+    cmp.setup.cmdline(':', {
+      sources = cmp.config.sources({
+        { name = 'path' }
+      }, {
+        { name = 'cmdline' }
+      })
+    })
+
+    -- Setup lspconfig.
+    local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    require('lspconfig')[%YOUR_LSP_SERVER%].setup {
+      capabilities = capabilities
+    }
+  EOF
+<
+
+
+==============================================================================
+Function                                                          *cmp-function*
+
+NOTE: You can call these functions in mapping via `<Cmd>lua require('cmp').complete()<CR>`.
+
+*cmp.setup* (config: cmp.ConfigSchema)
+  Setup global configuration. See configuration option.
+
+*cmp.setup.filetype* (filetype: string, config: cmp.ConfigSchema)
+  Setup filetype configuration to the specific filetype.
+
+*cmp.setup.buffer* (config: cmp.ConfigSchema)
+  Setup buffer configuration to the current buffer.
+
+*cmp.setup.cmdline* (cmdtype: string, config: cmp.ConfigSchema)
+  Setup cmdline configuration to the specific cmdtype.
+  See |getcmdtype()|
+  NOTE: nvim-cmp does not support the `=` cmdtype.
+
+*cmp.visible* ()
+  Return the completion menu is visible or not.
+
+*cmp.get_entries* ()
+  Return current all entries.
+
+*cmp.get_selected_entry* ()
+  Return current selected entry. (contains preselected)
+
+*cmp.get_active_entry* ()
+  Return current selected entry. (without preselected)
+
+*cmp.close* ()
+  Just close the completion menu.
+
+*cmp.abort* ()
+  Closes the completion menu and restore the current line to the state when it was started current completion.
+
+*cmp.select_next_item* (option: { behavior = cmp.SelectBehavior })
+  Select next item.
+
+*cmp.select_prev_item* (option: { behavior = cmp.SelectBehavior })*
+  Select prev item.
+
+*cmp.scroll_docs* (delta: number)
+  Scroll docs if it visible.
+
+*cmp.complete* (option: { reason = cmp.ContextReason, config = cmp.ConfigSchema })
+  Invoke completion.
+
+  The following configurations defines the key mapping to invoke only snippet completion.
+>
+  cmp.setup {
+    mapping = {
+      ['<C-s>'] = cmp.mapping.complete({
+        config = {
+          sources = {
+            { name = 'vsnip' }
+          }
+        }
+      })
+    }
+  }
+< >
+  inoremap <C-S> <Cmd>lua require('cmp').complete({ config = { sources = { { name = 'vsnip' } } } })<CR>
+<
+  NOTE: The `config` means a temporary setting, but the `config.mapping` remains permanent.
+
+*cmp.complete_common_string* ()
+  Complete common string as like as shell completion behavior.
+>
+  cmp.setup {
+    mapping = {
+      ['<C-l>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          return cmp.complete_common_string()
+        end
+        fallback()
+      end, { 'i', 'c' }),
+    }
+  }
+<
+*cmp.confirm* (option: cmp.ConfirmOption, callback: function)
+  Accept current selected completion item.
+  If you didn't select any items and specified the `{ select = true }` for
+  this, nvim-cmp will automatically select the first item.
+
+*cmp.event:on* ('%EVENT_NAME%, callback)
+  Subscribe nvim-cmp's events below.
+
+  - `complete_done`: emit after current completion is done.
+  - `confirm_done`: emit after confirmation is done.
+
+
+
+==============================================================================
+Mapping                                                            *cmp-mapping*
+
+The nvim-cmp's mapping mechanism is complex but flexible and user-friendly.
+
+You can specify the mapping as function that receives the `fallback` function as arguments.
+The `fallback` function can be used to call an existing mapping.
+
+For example, typical pair-wise plugins automatically defines a mapping for `<CR>` or `(`.
+The nvim-cmp will overwrite it but you can fallback to the original mapping via invoking the `fallback` function.
+>
+  cmp.setup {
+    mapping = {
+      ['<CR>'] = function(fallback)
+        if cmp.visible() then
+          cmp.confirm()
+        else
+          fallback() -- If you are using vim-endwise, this fallback function will be behaive as the vim-endwise.
+        end
+      end
+    }
+  }
+<
+And you can specify the mapping modes.
+>
+  cmp.setup {
+    mapping = {
+      ['<CR>'] = cmp.mapping(your_mapping_function, { 'i', 'c' })
+    }
+  }
+<
+And you can specify the different mapping function for each modes.
+>
+  cmp.setup {
+    mapping = {
+      ['<CR>'] = cmp.mapping({
+        i = your_mapping_function_a,
+        c = your_mapping_function_b,
+      })
+    }
+  }
+<
+You can also use built-in mapping helpers.
+
+  *cmp.mapping.close* ()
+    Same as |cmp.close|
+
+  *cmp.mapping.abort* ()
+    Same as |cmp.abort|
+
+  *cmp.mapping.select_next_item* (option: { behavior = cmp.SelectBehavior })
+    Same as |cmp.select_next_item|
+
+  *cmp.mapping.select_prev_item* (option: { behavior = cmp.SelectBehavior })
+    Same as |cmp.select_prev_item|
+
+  *cmp.mapping.scroll_docs* (delta: number)
+    Same as |cmp.scroll_docs|
+
+  *cmp.mapping.complete* (option: cmp.CompleteParams)
+    Same as |cmp.complete|
+
+  *cmp.mapping.complete_common_string* ()
+    Same as |cmp.complete_common_string|
+
+  *cmp.mapping.confirm* (option: cmp.ConfirmOption)
+    Same as |cmp.confirm|
+
+The built-in mapping helper is only available as a configuration option.
+If you want to call the nvim-cmp features directly, please use |cmp-function| instead.
+
+
+
+==============================================================================
+Command                                                            *cmp-command*
+
+*CmpStatus*
+  Prints source statuses for the current buffer and states.
+  Sometimes `unknown` source will be printed but it isn't problem. (e.g. `cmp-nvim-lsp`)
+  That the reason is the `cmp-nvim-lsp` will registered on the InsertEnter autocmd.
+
+
+
+==============================================================================
+Highlight                                                        *cmp-highlight*
+
+*CmpItemAbbr*
+  The abbr field's highlight group.
+
+*CmpItemAbbrDeprecated*
+  The abbr field's highlight group that only used for deprecated item.
+
+*CmpItemAbbrMatch*
+  The matched character's highlight group.
+
+*CmpItemAbbrMatchFuzzy*
+  The fuzzy matched character's highlight group.
+
+*CmpItemKind*
+  The kind field's highlight group.
+
+*CmpItemKind%KIND_NAME%*
+  The kind field's highlight group for specific `lsp.CompletionItemKind`.
+  If you want to overwrite only the method kind's highlight group, you can do this.
+>
+    highlight CmpItemKindMethod guibg=NONE guifg=Orange
+<
+*CmpItemMenu*
+  The menu field's highlight group.
+
+
+
+==============================================================================
+Autocmd                                                            *cmp-autocmd*
+
+You can create custom autocommands for certain nvim-cmp events by defining
+autocommands for the User event with the following patterns.
+
+*CmpReady*
+  Invoked when nvim-cmp gets sourced from `plugin/cmp.lua`.
+
+
+
+==============================================================================
+Config                                                              *cmp-config*
+
+You can specify the following configuration option via `cmp.setup { ... }` call.
+
+                                                            *cmp-config.enabled*
+enabled~
+  `boolean | fun(): boolean`
+  You can control nvim-cmp should work or not via this option.
+
+                                                          *cmp-config.preselect*
+preselect~
+  `cmp.PreselectMode`
+
+  1. `cmp.PreselectMode.Item`
+    nvim-cmp will pre-select the item that the source specified.
+  2. `cmp.PreselectMode.None`
+    nvim-cmp wouldn't pre-select any item.
+
+                                                            *cmp-config.mapping*
+mapping~
+  `table<string, fun(fallback: function)`
+  See |cmp-mapping| section.
+
+                                                     *cmp-config.snippet.expand*
+snippet.expand~
+  `fun(option: cmp.SnippetExpansionParams)`
+  The snippet expansion function. You must integrate your snippet engine plugin via this.
+
+                                          *cmp-config.completion.keyword_length*
+completion.keyword_length~
+  `number`
+  The number of characters needed to trigger auto-completion.
+
+                                         *cmp-config.completion.keyword_pattern*
+completion.keyword_pattern~
+  `string`
+  The default keyword pattern.
+
+                                            *cmp-config.completion.autocomplete*
+completion.autocomplete~
+  `cmp.TriggerEvent[] | false`
+  The auto-completion trigger events. If you specify this value to false, the
+  nvim-cmp does not completion automatically but you can still use the manual
+  completion though.
+
+                                             *cmp-config.completion.completeopt*
+completion.completeopt~
+  `string`
+  The vim's completeopt like setting. See 'completeopt'.
+  Besically, You don't need to modify this.
+
+                                                  *cmp-config.formatting.fields*
+formatting.fields~
+  `cmp.ItemField[]`
+  The array of completion menu field to specify the order of them.
+
+                                                  *cmp-config.formatting.format*
+formatting.format~
+  `fun(entry: cmp.Entry, vim_item: vim.CompletedItem): vim.CompletedItem`
+  The function to customize the completion menu appearance. See |complete-items|.
+  This value also can be used to modify `dup` property. 
+  NOTE: The `vim.CompletedItem` can have special properties `abbr_hl_group`,
+  `kind_hl_group` and `menu_hl_group`.
+
+                                   *cmp-config.matching.disallow_fuzzy_matching*
+matching.disallow_fuzzy_matching~
+  `boolean`
+  Specify disallow or allow fuzzy matching.
+
+                                 *cmp-config.matching.disallow_partial_matching*
+matching.disallow_partial_matching~
+  `boolean`
+  Specify disallow or allow partial matching.
+
+                                *cmp-config.matching.disallow_prefix_unmatching*
+matching.disallow_prefix_unmatching~
+  `boolean`
+  Specify disallow or allow prefix unmatching.
+
+                                            *cmp-config.sorting.priority_weight*
+sorting.priority_weight~
+  `number`
+  Specifically, each item's original priority (given by its corresponding source) will be
+  increased by `#sources - (source_index - 1)` multiplied by `priority_weight`.
+  That is, the final priority is calculated by the following formula:
+>
+  final_score = orig_score + ((#sources - (source_index - 1)) * sorting.priority_weight)
+<
+                                                *cmp-config.sorting.comparators*
+sorting.comparators~
+  `(fun(entry1: cmp.Entry, entry2: cmp.Entry): boolean | nil)[]`
+  The function to customize the sorting behavior.
+  You can use built-in comparators via `cmp.config.compare.*`.
+
+                                                            *cmp-config.sources*
+sources~
+  `cmp.SourceConfig[]`
+  Array of the source configuration to use.
+  The order will be used to the completion menu's sort order.
+
+                                                    *cmp-config.sources[n].name*
+sources[n].name~
+  `string`
+  The source name.
+
+                                                  *cmp-config.sources[n].option*
+sources[n].option~
+  `table`
+  The source specific custom option that defined by the source.
+
+                                          *cmp-config.sources[n].keyword_length*
+sources[n].keyword_length~
+  `number`
+  The source specific keyword length to trigger auto completion.
+
+                                         *cmp-config.sources[n].keyword_pattern*
+sources[n].keyword_pattern~
+  `number`
+  The source specific keyword pattern.
+
+                                      *cmp-config.sources[n].trigger_characters*
+sources[n].trigger_characters~
+  `string[]`
+  The source specific keyword pattern.
+
+                                                *cmp-config.sources[n].priority*
+sources[n].priority~
+  `number`
+  The source specific priority value.
+
+                                          *cmp-config.sources[n].max_item_count*
+sources[n].max_item_count~
+  `number`
+  The source specific item count.
+
+                                             *cmp-config.sources[n].group_index*
+sources[n].group_index~
+  `number`
+  The source group index.
+
+  For example, You can specify the `buffer` source group index to bigger number
+  if you don't want to see the buffer source items when the nvim-lsp source is available.
+>
+    cmp.setup {
+      sources = {
+        { name = 'nvim_lsp', group_index = 1 },
+        { name = 'buffer', group_index = 2 },
+      }
+    }
+<
+  You can specify this via the built-in configuration helper like this.
+>
+    cmp.setup {
+      sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+      }, {
+        { name = 'buffer' },
+      })
+    }
+<
+                                                               *cmp-config.view*
+view~
+  `{ entries: cmp.EntriesConfig|string }`
+  Specify the view class to customize appearance.
+  Currently, the possible configurations are:
+
+                                            *cmp-config.experimental.ghost_text*
+experimental.ghost_text~
+  `boolean | { hl_group = string }`
+  The boolean value to enable or disable the ghost_text feature.
+
+
+
+==============================================================================
+Develop                                                            *cmp-develop*
+
+Create custom source~
+
+NOTE:
+  1. The `complete` method is required. Others can be ommited.
+  2. The `callback` argument must always be called.
+  3. You can use only `require('cmp')` in custom source.
+  4. If the LSP spec was changed, nvim-cmp will follow it without any announcement.
+  5. You should read ./lua/cmp/types and https://microsoft.github.io/language-server-protocol/specifications/specification-current
+  6. Please add the `nvim-cmp` topic for github repo.
+
+You can create custom source like the following example.
+
+>
+  local source = {}
+
+  ---Return this source is available in current context or not. (Optional)
+  ---@return boolean
+  function source:is_available()
+    return true
+  end
+
+  ---Return the debug name of this source. (Optional)
+  ---@return string
+  function source:get_debug_name()
+    return 'debug name'
+  end
+
+  ---Return keyword pattern for triggering completion. (Optional)
+  ---If this is ommited, nvim-cmp will use default keyword pattern. See |cmp-config.completion.keyword_pattern|
+  ---@return string
+  function source:get_keyword_pattern()
+    return [[\k\+]]
+  end
+
+  ---Return trigger characters for triggering completion. (Optional)
+  function source:get_trigger_characters()
+    return { '.' }
+  end
+
+  ---Invoke completion. (Required)
+  ---@param params cmp.SourceCompletionApiParams
+  ---@param callback fun(response: lsp.CompletionResponse|nil)
+  function source:complete(params, callback)
+    callback({
+      { label = 'January' },
+      { label = 'February' },
+      { label = 'March' },
+      { label = 'April' },
+      { label = 'May' },
+      { label = 'June' },
+      { label = 'July' },
+      { label = 'August' },
+      { label = 'September' },
+      { label = 'October' },
+      { label = 'November' },
+      { label = 'December' },
+    })
+  end
+
+  ---Resolve completion item. (Optional)
+  ---@param completion_item lsp.CompletionItem
+  ---@param callback fun(completion_item: lsp.CompletionItem|nil)
+  function source:resolve(completion_item, callback)
+    callback(completion_item)
+  end
+
+  ---Execute command after item was accepted.
+  ---@param completion_item lsp.CompletionItem
+  ---@param callback fun(completion_item: lsp.CompletionItem|nil)
+  function source:execute(completion_item, callback)
+    callback(completion_item)
+  end
+
+  ---Register custom source to nvim-cmp.
+  require('cmp').register_source('month', source.new())
+<
+
+
+==============================================================================
+FAQ                                                                    *cmp-faq*
+
+Why does cmp automatically select a particular item? ~
+How to disable the preselect feature? ~
+
+  The nvim-cmp respects LSP(Language Server Protocol) specification.
+  The LSP spec defines the `preselect` feature for completion. 
+
+  You can disable the `preselect` feature like the following. 
+>
+  cmp.setup {
+    preselect = cmp.PreselectMode.None
+  }
+<
+
+
+How to disable auto-completion?~
+How to use nvim-cmp as like omnifunc?~
+
+  You can disable auto-completion like this.
+>
+  cmp.setup {
+    ...
+    completion = {
+      autocomplete = false
+    }
+    ...
+  }
+<
+  And you can invoke completion manually.
+>
+  inoremap <C-x><C-o> <Cmd>lua require('cmp').complete()<CR>
+<
+
+How to disable nvim-cmp on the specific buffer?~
+How to setup on the specific buffer?~
+
+  You can setup buffer specific configuration like this.
+>
+  cmp.setup.filetype({ 'markdown', 'help' }, {
+    sources = {
+      { name = 'path' },
+      { name = 'buffer' },
+    }
+  })
+<
+
+How to integrate with copilot.vim?~
+
+  The copilot.vim and nvim-cmp both have a `key-mapping fallback` mechanism.
+  Therefore, You should manage those plugins by yourself.
+
+  Fortunately, the copilot.vim has the feature that disables the fallback mechanism.
+>
+  let g:copilot_no_tab_map = v:true
+  imap <expr> <Plug>(vimrc:copilot-dummy-map) copilot#Accept("\<Tab>")
+<
+  You can manage copilot.vim's accept feature with nvim-cmp' key-mapping configuration. 
+>
+  cmp.setup {
+    mapping = {
+      ['<C-g>'] = cmp.mapping(function(fallback)
+        vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
+      end)
+    },
+    experimental = {
+      ghost_text = false -- this feature conflict to the copilot.vim's preview.
+    }
+  }
+<
+
+
+How to customize menu appearance?~
+
+  You can see the nvim-cmp wiki (https://github.com/hrsh7th/nvim-cmp/wiki).
+
+
+
+==============================================================================
+ vim:tw=78:ts=4:et:ft=help:norl:
+

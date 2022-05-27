@@ -71,6 +71,7 @@ function! s:initialize_others() abort
 
   if g:neosnippet#enable_complete_done
     autocmd neosnippet CompleteDone * call neosnippet#complete_done()
+    autocmd neosnippet User PumCompleteDone call neosnippet#complete_done()
   endif
 
   if g:neosnippet#enable_snipmate_compatibility

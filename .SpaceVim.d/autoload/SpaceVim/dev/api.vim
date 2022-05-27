@@ -1,7 +1,7 @@
 "=============================================================================
 " api.vim --- Develop script for update api index
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -10,6 +10,7 @@ scriptencoding utf-8
 
 let s:FILE = SpaceVim#api#import('file')
 let s:SYS = SpaceVim#api#import('system')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 
 let s:AUTODOC = SpaceVim#api#import('dev#autodoc')
@@ -45,7 +46,7 @@ function! s:generate_content() abort
 endfunction
 
 function! s:api_list() abort
-  let layers = SpaceVim#util#globpath('~/.SpaceVim/', 'docs/api/**/*.md')
+  let layers = s:CMP.globpath('~/.SpaceVim/', 'docs/api/**/*.md')
   let list = [
         \ '| Name | Description |',
         \ '| ---------- | ------------ |'
@@ -70,7 +71,7 @@ function! s:api_list() abort
 endfunction
 
 function! s:api_list_cn() abort
-  let layers = SpaceVim#util#globpath('~/.SpaceVim/', 'docs/cn/api/**/*.md')
+  let layers = s:CMP.globpath('~/.SpaceVim/', 'docs/cn/api/**/*.md')
   let list = [
         \ '| 名称 | 描述 |',
         \ '| ---------- | ------------ |'

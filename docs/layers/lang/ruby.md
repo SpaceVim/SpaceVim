@@ -53,7 +53,7 @@ gem install rubocop
 
   ```toml
   [[layers]]
-    name = "lang#python"
+    name = "lang#ruby"
     ruby_file_head = [
         '#!/usr/bin/ruby -w',
         '# -*- coding: utf-8 -*-',

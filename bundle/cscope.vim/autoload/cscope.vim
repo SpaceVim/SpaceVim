@@ -45,18 +45,17 @@ set cpo&vim
 
 " where to store cscope file?
 
-function! s:echo(msg) abort
-  echon a:msg
-endfunction
-
+let s:logger = SpaceVim#logger#derive('cscope')
+let s:notify = SpaceVim#api#import('notify')
+let s:notify.timeout = 5000
+let s:box = SpaceVim#api#import('unicode#box')
+let s:box.box_width = 40
 let s:FILE = SpaceVim#api#import('file')
+let s:JOB = SpaceVim#api#import('job')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:cscope_cache_dir = s:FILE.unify_path('~/.cache/SpaceVim/cscope/')
 let s:cscope_db_index = s:cscope_cache_dir.'index'
 let s:dbs = {}
-
-
-
 
 ""
 " search your {word} with {action} in the database suitable for current
@@ -65,7 +64,7 @@ function! cscope#find(action, word) abort
   let dirtyDirs = []
   for d in keys(s:dbs)
     if s:dbs[d]['dirty'] == 1
-      call add(dirtyDirs, s:dbs[d].root)
+      call add(dirtyDirs, d)
     endif
   endfor
   if len(dirtyDirs) > 0
@@ -79,8 +78,14 @@ function! cscope#find(action, word) abort
         lw
       endif
     catch
-      echohl WarningMsg | echo 'Can not find '.a:word.' with querytype as '.a:action.'.' | echohl None
+      let message = 'Can not find '.a:word.' with querytype as '.a:action.'.'
+      let s:notify.notify_max_width = strwidth(message) + 10
+      call s:notify.notify(message, 'WarningMsg')
     endtry
+  elseif dbl == 2 " the database does not init, the process has been started.
+      let message = 'start to init database, please try later!'
+      let s:notify.notify_max_width = strwidth(message) + 10
+      call s:notify.notify(message, 'WarningMsg')
   endif
 endfunction
 
@@ -93,8 +98,8 @@ endfunction
 
 
 function! s:CheckNewFile(dir, newfile) abort
+  let id = s:dbs[a:dir]['id']
   let dir = s:FILE.path_to_fname(a:dir)
-  let id = s:dbs[dir]['id']
   let cscope_files = s:cscope_cache_dir. dir .'/cscope.files'
   let files = readfile(cscope_files)
   " @todo support threshold
@@ -117,41 +122,52 @@ function! s:FlushIndex() abort
 endfunction
 
 
-function! s:ListFiles(dir) abort
-  let d = []
-  let f = []
-  let cwd = a:dir
-  try
-    while cwd != ''
-      let a = split(globpath(cwd, '*'), "\n")
-      for fn in a
-        if getftype(fn) ==# 'dir'
-          if !exists('g:cscope_ignored_dir') || fn !~? g:cscope_ignored_dir
-            call add(d, fn)
-          endif
-        elseif getftype(fn) !=# 'file'
-          continue
-        else
-          if stridx(fn, ' ') !=# -1
-            let fn = '"'.fn.'"'
-          endif
-          call add(f, fn)
-        endif
-      endfor
-      let cwd = len(d) ? remove(d, 0) : ''
-    endwhile
-  catch /^Vim:Interrupt$/
-  catch
-    echo 'caught' v:exception
-  endtry
-  return f
+function! s:on_list_file_exit(id, date, event) abort
+
+endfunction
+
+
+let s:list_files_process = {}
+
+function! s:list_files_stdout(id, data, event) abort
+  call extend(s:list_files_process['jobid' . a:id].cscope_files, a:data)
+endfunction
+
+function! s:list_files_exit(id, date, event) abort
+  if a:date == 0
+    call writefile(s:list_files_process['jobid' . a:id].cscope_files,
+          \ s:list_files_process['jobid' . a:id].cscope_files_path
+          \ )
+    call s:run_create_database_job(s:list_files_process['jobid' . a:id].dir,
+          \ s:list_files_process['jobid' . a:id].cscope_files_path,
+          \ s:list_files_process['jobid' . a:id].cscope_db,
+          \ s:list_files_process['jobid' . a:id].load,
+          \ )
+  else
+    call s:logger.warn('failed to list files in dir:' . s:list_files_process['jobid' . a:id].dir)
+  endif
+endfunction
+
+function! s:list_project_files(dir, cscope_files, cscope_db, load) abort
+  let jobid = s:JOB.start(['rg', '--color=never', '--files', a:dir], {
+        \ 'on_stdout' : function('s:list_files_stdout'),
+        \ 'on_exit' : function('s:list_files_exit')
+        \ })
+  let s:list_files_process['jobid' . jobid] = {
+        \ 'jobid' : jobid,
+        \ 'dir' : a:dir,
+        \ 'cscope_files' : [],
+        \ 'cscope_db' : a:cscope_db,
+        \ 'load' : a:load,
+        \ 'cscope_files_path' : a:cscope_files
+        \ }
 endfunction
 
 ""
 " update all existing cscope databases in case that you disable cscope database
 " auto update.
 function! cscope#update_databeses() abort
-  call s:updateDBs(map(keys(s:dbs), 's:dbs[v:val].root'))
+  call s:updateDBs(keys(s:dbs))
 endfunction
 
 
@@ -159,12 +175,13 @@ endfunction
 " Create databases for current project
 function! cscope#create_databeses() abort
   let dir = SpaceVim#plugins#projectmanager#current_root()
-  call s:InitDB(dir)
+  call s:init_database(dir, 0)
 endfunction
 
 
 " 0 -- loaded
 " 1 -- cancelled
+" 2 -- init db
 function! s:AutoloadDB(dir) abort
   let ret = 0
   let m_dir = s:GetBestPath(a:dir)
@@ -173,8 +190,8 @@ function! s:AutoloadDB(dir) abort
     let m_dir = input('', a:dir, 'dir')
     if m_dir !=# ''
       let m_dir = s:CheckAbsolutePath(m_dir, a:dir)
-      call s:InitDB(m_dir)
-      call s:LoadDB(m_dir)
+      call s:init_database(m_dir, 1)
+      let ret = 2
     else
       let ret = 1
     endif
@@ -189,9 +206,8 @@ endfunction
 
 function! s:updateDBs(dirs) abort
   for d in a:dirs
-    call s:CreateDB(d, 0)
+    call s:create_database(d, 0, 0)
   endfor
-  call s:FlushIndex()
 endfunction
 
 
@@ -201,21 +217,24 @@ function! cscope#clear_databases(...) abort
   silent cs kill -1
   if a:0 == 0
     let s:dbs = {}
+    call s:notify.notify('All databases cleared!', 'String')
     call s:RmDBfiles()
   else
     let dir = s:FILE.path_to_fname(a:1)
-    let id = s:dbs[dir]['id']
     call delete(s:cscope_cache_dir. dir . '/cscope.files')
     call delete(s:cscope_cache_dir. dir . '/cscope.db')
-    unlet s:dbs[dir]
-    call s:echo('database cleared: ' . s:cscope_cache_dir. dir .'/cscope.db')
+    unlet s:dbs[a:1]
+    let message = 'databases cleared:' . a:1
+    let s:notify.notify_max_width = strwidth(message) + 10
+    call s:notify.notify(message, 'WarningMsg')
+    call s:logger.info('database cleared: ' . s:cscope_cache_dir. dir .'/cscope.db')
     call s:FlushIndex()
   endif
 endfunction
 
 " complete function for command :CscopeClear
 function! cscope#listDirs(A,L,P) abort
-  return map(keys(s:dbs), 's:dbs[v:val].root')
+  return keys(s:dbs)
 endfunction
 
 function! ToggleLocationList() abort
@@ -234,11 +253,11 @@ function! ToggleLocationList() abort
 endfunction
 
 function! s:GetBestPath(dir) abort
-  let f = s:FILE.path_to_fname(a:dir)
+  let f = a:dir
   let bestDir = ''
   for d in keys(s:dbs)
     if stridx(f, d) == 0 && len(d) > len(bestDir)
-      return s:dbs[d].root
+      return d
     endif
   endfor
   return ''
@@ -268,24 +287,27 @@ endfunction
 " 2. loadtimes:
 " 3. dirty:
 " 4. root: path of the project
+"
+" the argv: dir, load?
+"
+" if load == 1, the database will be loaded after init
 
-function! s:InitDB(dir) abort
+function! s:init_database(dir, load) abort
+  call s:logger.debug('start to init database for:' . a:dir)
   let id = localtime()
-  let dir = s:FILE.path_to_fname(a:dir)
-  let s:dbs[dir] = {}
-  let s:dbs[dir]['id'] = id
-  let s:dbs[dir]['loadtimes'] = 0
-  let s:dbs[dir]['dirty'] = 0
-  let s:dbs[dir]['root'] = a:dir
-  call s:CreateDB(a:dir, 1)
-  call s:FlushIndex()
+  let s:dbs[a:dir] = {}
+  let s:dbs[a:dir]['id'] = id
+  let s:dbs[a:dir]['loadtimes'] = 0
+  let s:dbs[a:dir]['dirty'] = 0
+  let s:dbs[a:dir]['root'] = a:dir
+  call s:create_database(a:dir, 1, a:load)
 endfunction
 
 
 function! s:add_databases(db) abort
   exe 'silent cs add ' . a:db
   if cscope_connection(2, a:db) == 1
-    call s:echo('cscope added: ' . a:db)
+    call s:logger.info('cscope added: ' . a:db)
     return 0
   else
     return 1
@@ -296,26 +318,35 @@ function! s:LoadDB(dir) abort
   let dir = s:FILE.path_to_fname(a:dir)
   silent cs kill -1
   call s:add_databases(s:cscope_cache_dir . dir .'/cscope.db')
-  let s:dbs[dir]['loadtimes'] = s:dbs[dir]['loadtimes'] + 1
+  let s:dbs[a:dir]['loadtimes'] = s:dbs[a:dir]['loadtimes'] + 1
   call s:FlushIndex()
 endfunction
 
 function! cscope#list_databases() abort
   let dirs = keys(s:dbs)
+  let databases = []
   if len(dirs) == 0
-    echo 'You have no cscope dbs now.'
+    call s:notify.notify('no cscope dbs now.', 'WarningMsg')
+    call s:notify.notify('Press SPC m c i to init.', 'WarningMsg')
   else
-    let s = ['  PROJECT_ROOT                   LOADTIMES']
     for d in dirs
       let id = s:dbs[d]['id']
       if cscope_connection(2, s:cscope_cache_dir. d . '/cscope.db') == 1
-        let l = printf('* %s                   %d', s:dbs[d].root, s:dbs[d]['loadtimes'])
+        " let l = printf('* %s                   %d', s:dbs[d].root, )
+        let l = {
+              \ 'project' : '* ' .d,
+              \ 'loadtimes' : s:dbs[d]['loadtimes']
+              \ }
       else
-        let l = printf('  %s                   %d', s:dbs[d].root, s:dbs[d]['loadtimes'])
+        let l = {
+              \ 'project' : ' ' .d,
+              \ 'loadtimes' : s:dbs[d]['loadtimes']
+              \ }
       endif
-      call add(s, l)
+      call add(databases, l)
     endfor
-    echo join(s, "\n")
+    let table = s:box.drawing_table(s:JSON.json_encode(databases), ['project', 'loadtimes'])
+    echo join(table, "\n")
   endif
 endfunction
 
@@ -336,9 +367,8 @@ function! cscope#preloadDB() abort
     let m_dir = s:CheckAbsolutePath(m_dir, m_dir)
     let m_key = s:FILE.path_to_fname(m_dir)
     if !has_key(s:dbs, m_key)
-      call s:InitDB(m_dir)
+      call s:init_database(m_dir, 1)
     endif
-    call s:LoadDB(m_dir)
   endfor
 endfunction
 
@@ -364,33 +394,62 @@ function! cscope#onChange() abort
   endif
 endfunction
 
-function! s:CreateDB(dir, init) abort
+function! s:on_create_db_exit(id, data, event) abort
+  let d = s:create_db_process['jobid' . a:id].dir
+  if a:data !=# 0
+    echohl WarningMsg | echo 'Failed to create cscope database for ' . d | echohl None
+  else
+    let s:dbs[d]['dirty'] = 0
+    let message = 'database created for: ' . d
+    let s:notify.notify_max_width = strwidth(message) + 10
+    call s:notify.notify(message, 'WarningMsg')
+    if s:create_db_process['jobid' . a:id].load
+      call s:LoadDB(d)
+    else
+      call s:FlushIndex()
+    endif
+  endif
+endfunction
+
+
+let s:create_db_process = {}
+
+
+" argvs:
+" dir: the path of project
+" init: init database?
+" load: load after init
+function! s:create_database(dir, init, load) abort
   let dir = s:FILE.path_to_fname(a:dir)
-  let id = s:dbs[dir]['id']
   let cscope_files = s:cscope_cache_dir . dir . '/cscope.files'
   let cscope_db = s:cscope_cache_dir . dir . '/cscope.db'
-  if ! isdirectory(s:cscope_cache_dir . dir)
-    call mkdir(s:cscope_cache_dir . dir)
-  endif
-  if !filereadable(cscope_files) || a:init
-    let files = s:ListFiles(a:dir)
-    call writefile(files, cscope_files)
-  endif
   try
     exec 'silent cs kill '.cscope_db
   catch
   endtry
-  let save_x = @x
-  redir @x
-  exec 'silent !'.g:cscope_cmd.' -b -i '.cscope_files.' -f'.cscope_db
-  redi END
-  if @x =~# "\nCommand terminated\n"
-    echohl WarningMsg | echo 'Failed to create cscope database for ' . a:dir | echohl None
-  else
-    let s:dbs[dir]['dirty'] = 0
-    call s:echo('database created: ' . cscope_db)
+  if !isdirectory(s:cscope_cache_dir . dir)
+    call mkdir(s:cscope_cache_dir . dir)
   endif
-  let @x = save_x
+  if !filereadable(cscope_files) || a:init
+    call s:list_project_files(a:dir, cscope_files, cscope_db, a:load)
+  endif
+endfunction
+
+function! s:run_create_database_job(dir, cscope_files, cscope_db, load) abort
+  if !executable(g:cscope_cmd)
+      call s:notify.notify('''cscope'' is not executable!', 'WarningMsg')
+      return
+  endif
+  let jobid = s:JOB.start([g:cscope_cmd, '-b', '-i', a:cscope_files, '-f', a:cscope_db], {
+        \ 'on_exit' : function('s:on_create_db_exit')
+        \ })
+  let s:create_db_process['jobid' . jobid] = {
+        \ 'jobid' : jobid,
+        \ 'dir' : a:dir,
+        \ 'load' : a:load,
+        \ 'cscope_db' : a:cscope_db,
+        \ }
+
 endfunction
 
 ""

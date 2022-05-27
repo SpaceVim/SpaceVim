@@ -1,0 +1,34 @@
+After:
+  bwipeout
+
+Execute (:Lookup jumps to autoload variable):
+  edit fixture/plugin/auto.vim
+  normal! 5G^3w
+  call lookup#lookup()
+  AssertEqual 'fixture/autoload/auto/foo.vim', expand('%')
+  AssertEqual [5, 5], [line('.'), col('.')]
+  call lookup#pop()
+  normal! k
+  AssertEqual 'fixture/plugin/auto.vim', expand('%')
+  call lookup#lookup()
+  AssertEqual 'fixture/autoload/auto/foo.vim', expand('%')
+  AssertEqual [5, 5], [line('.'), col('.')]
+
+Execute (:Lookup jumps to autoload function):
+  edit fixture/plugin/auto.vim
+  normal! 8G^3w
+  call lookup#lookup()
+  AssertEqual 'fixture/autoload/auto/foo.vim', expand('%')
+  AssertEqual [1, 11], [line('.'), col('.')]
+  call lookup#pop()
+  normal! k
+  AssertEqual 'fixture/plugin/auto.vim', expand('%')
+  call lookup#lookup()
+  AssertEqual 'fixture/autoload/auto/foo.vim', expand('%')
+  AssertEqual [1, 11], [line('.'), col('.')]
+  call lookup#pop()
+  normal! 10G23|
+  AssertEqual 'fixture/plugin/auto.vim', expand('%')
+  call lookup#lookup()
+  AssertEqual 'fixture/autoload/auto/foo.vim', expand('%')
+  AssertEqual [1, 11], [line('.'), col('.')]

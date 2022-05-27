@@ -1,13 +1,13 @@
 "=============================================================================
 " json.vim --- lang#json layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#json, layer-lang-json
+" @section lang#json, layers-lang-json
 " @parentsection layers
 " This layer provides syntax highlighting for json file. To enable this layer:
 " >

@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: snippets.vim
+" FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================

@@ -9,15 +9,44 @@ lang: zh
 这里根据社区反馈的情况，罗列了一些大家经常会问的问题，如果有需要补充的，欢迎使用
 使用 SpaceVim 中文社区频道参与讨论，也可以直接编辑本页并提交 PR 。
 
-
 <!-- vim-markdown-toc GFM -->
 
-- [为什么选择 Toml 作为默认配置格式？](#为什么选择-toml-作为默认配置格式)
-- [为什么 SpaceVim 颜色主题和官网不一致？](#为什么-spacevim-颜色主题和官网不一致)
-- [如何增加自定义快捷键？](#如何增加自定义快捷键)
-- [按下 Ctrl-s 后，Vim 为什么会卡死？](#按下-ctrl-s-后vim-为什么会卡死)
+- [安装](#安装)
+  - [如何手动安装 SpaceVim？](#如何手动安装-spacevim)
+- [配置](#配置)
+  - [为什么选择 Toml 作为默认配置格式？](#为什么选择-toml-作为默认配置格式)
+  - [为什么 SpaceVim 颜色主题和官网不一致？](#为什么-spacevim-颜色主题和官网不一致)
+  - [如何增加自定义快捷键？](#如何增加自定义快捷键)
+  - [按下 Ctrl-s 后，Vim 为什么会卡死？](#按下-ctrl-s-后vim-为什么会卡死)
 
 <!-- vim-markdown-toc -->
+
+## 安装
+
+### 如何手动安装 SpaceVim？
+
+首先，需要将 SpaceVim 仓库克隆至：`~/.SpaceVim`.
+
+```
+git clone https://github.com/SpaceVim/SpaceVim.git ~/.SpaceVim
+```
+
+备份原来的 Vim/Neovim 配置文件：
+
+```
+mv ~/.vimrc ~/.vimrc_back
+mv ~/.vim ~/.vim_back
+mv ~/.config/nvim ~/.config/nvim_back
+```
+
+创建 `~/.SpaceVim` 的超链接，分别链接至 Vim 和 Neovim 的默认用户配置文件目录：
+
+```
+ln -s ~/.SpaceVim ~/.vim
+ln -s ~/.SpaceVim ~/.config/nvim
+```
+
+## 配置
 
 ### 为什么选择 Toml 作为默认配置格式？
 
@@ -34,7 +63,7 @@ lang: zh
 1. yaml 依赖缩进，配置转移时易出错，不予考虑
 2. xml 缺少 Vim 解析库，不予考虑
 3. json 时一个比较好的配置信息传输格式，并且 Vim 有一个解析的函数，但是 json 格式
-不支持注释，手写编辑时，可读性太差，不予考虑。
+   不支持注释，手写编辑时，可读性太差，不予考虑。
 
 因此，我们选择了 Toml 作为默认的配置格式，并且解析后缓存为 json 文件。
 SpaceVim 在启动时直接读取缓存的 json 文件，效率更高。
@@ -58,6 +87,7 @@ SpaceVim 在启动时直接读取缓存的 json 文件，效率更高。
 我需要修改配置文件，并指定一个载入时需要调用的方法：
 
 在`~/.SpaceVim.d/init.toml`的[options]片断中加入 `bootstrap_before` 选项：
+
 ```toml
 [options]
     bootstrap_before = "myspacevim#init"

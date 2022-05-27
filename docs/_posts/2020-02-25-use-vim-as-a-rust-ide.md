@@ -17,6 +17,7 @@ Each of the following sections will be covered:
 
 - [Enable language layer](#enable-language-layer)
 - [Code completion](#code-completion)
+- [class outline viewer](#class-outline-viewer)
 - [Syntax linting](#syntax-linting)
 - [Jump to test file](#jump-to-test-file)
 - [Code formatting](#code-formatting)
@@ -65,6 +66,12 @@ Add following snippet to SpaceVim config file:
   [layers.override_cmd]
     rust = ["rls"]
 ```
+
+### class outline viewer
+
+By default we use tagbar as default outline viewer. To use tagbar with rust, you need to install [universal-ctags](https://github.com/universal-ctags/ctags).
+
+![image](https://user-images.githubusercontent.com/13142418/164651688-88f59d3e-9bd7-46e7-bbc0-3e2657dfa8f1.png)
 
 ### Syntax linting
 

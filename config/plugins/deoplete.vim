@@ -1,6 +1,6 @@
 "=============================================================================
 " deoplete.vim --- deoplete default config in spacevim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -14,7 +14,8 @@ call deoplete#custom#option({
       \ 'ignore_case'         :  get(g:, 'deoplete#enable_ignore_case', 1),
       \ 'smart_case'          :  get(g:, 'deoplete#enable_smart_case', 1),
       \ 'camel_case'          :  get(g:, 'deoplete#enable_camel_case', 1),
-      \ 'refresh_always'      :  get(g:, 'deoplete#enable_refresh_always', 1)
+      \ 'refresh_always'      :  get(g:, 'deoplete#enable_refresh_always', 1),
+      \ 'nofile_complete_filetypes' : ['denite-filter'],
       \ })
 
 " java && jsp
@@ -86,9 +87,7 @@ call deoplete#custom#var('omni', 'input_patterns', {
 call deoplete#custom#option('ignore_sources', {'gitcommit': ['neosnippet']})
 
 " lua
-call deoplete#custom#var('omni', 'input_patterns', {
-      \ 'lua': '.',
-      \})
+call deoplete#custom#option('ignore_sources', {'lua': ['omni']})
 
 " c c++
 call deoplete#custom#source('clang2', 'mark', '')

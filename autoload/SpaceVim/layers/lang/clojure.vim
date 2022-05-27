@@ -1,13 +1,13 @@
 "=============================================================================
 " clojure.vim --- SpaceVim lang#clojure layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#clojure, layer-lang-clojure
+" @section lang#clojure, layers-lang-clojure
 " @parentsection layers
 " This layer provides clojure language support in SpaceVim. Including syntax
 " highlighting, code indent, code runner and REPL. This layer is not enabled

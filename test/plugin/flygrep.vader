@@ -1,0 +1,17 @@
+Execute ( SpaceVim plugin: flygrep ):
+  edit Makefile
+  let g:_spacevim_input_list = ["\<C-u>", 'C', 'O', 'V', 'I', 'M', 'E', 'R', 'A', 'G', 'E', "\<Enter>"]
+  let g:_spacevim_input_timeout = 400
+  exe 'call SpaceVim#plugins#flygrep#open('
+        \ . '{"input" : expand("<cword>"), "files": bufname("%")}'
+        \ . ')'
+  let g:_spacevim_input_timeout = 0
+  let lnr = 0
+  for line in readfile('Makefile')
+    let lnr += 1
+    if line =~# 'COVIMERAGE'
+      break
+    endif
+  endfor
+  AssertEqual lnr, 4
+  unlet lnr line

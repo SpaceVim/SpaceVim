@@ -1,3 +1,6 @@
+" Set global flag to allow checking in custom user config
+let g:neoformat = 1
+
 function! neoformat#Neoformat(bang, user_input, start_line, end_line) abort
     let view = winsaveview()
     let search = @/
@@ -141,10 +144,10 @@ function! s:neoformat(bang, user_input, start_line, end_line) abort
         endif
     endfor
     if len(formatters_failed) > 0
-        call neoformat#utils#msg('formatters ' . join(formatters_failed, ', ') . ' failed to run')
+        call neoformat#utils#msg('formatters ' . join(formatters_failed, ", ") . ' failed to run')
     endif
     if len(formatters_changed) > 0
-        call neoformat#utils#msg(join(formatters_changed, ', ') . ' formatted buffer')
+        call neoformat#utils#msg(join(formatters_changed, ", ") . ' formatted buffer')
     elseif len(formatters_failed) == 0
         call neoformat#utils#msg('no change necessary')
     endif
@@ -196,7 +199,7 @@ function! neoformat#CompleteFormatters(ArgLead, CmdLine, CursorPos) abort
                     \ "fnamemodify(v:val, ':t:r')"))),
                     \ "v:val =~? '^" . a:ArgLead . "'")
     endif
-    if a:ArgLead =~# '[^A-Za-z0-9]'
+    if a:ArgLead =~ '[^A-Za-z0-9]'
         return []
     endif
     let filetype = s:split_filetypes(&filetype)
@@ -220,6 +223,15 @@ function! s:split_filetypes(filetype) abort
     return split(a:filetype, '\.')[0]
 endfunction
 
+function! s:get_node_exe(exe) abort
+    let node_exe = findfile('node_modules/.bin/' . a:exe, getcwd() . ';')
+    if !empty(node_exe) && executable(node_exe)
+        return node_exe
+    endif
+
+    return a:exe
+endfunction
+
 function! s:generate_cmd(definition, filetype) abort
     let executable = get(a:definition, 'exe', '')
     if executable == ''
@@ -227,8 +239,14 @@ function! s:generate_cmd(definition, filetype) abort
         return {}
     endif
 
-    if &shell =~# '\v%(powershell|pwsh)'
-        if system('[bool](Get-Command ' . executable . ' -ErrorAction SilentlyContinue)') !~# 'True'
+    if exists('g:neoformat_try_node_exe')
+                \ && g:neoformat_try_node_exe
+                \ && get(a:definition, 'try_node_exe', 0)
+        let executable = s:get_node_exe(executable)
+    endif
+
+    if &shell =~ '\v%(powershell|pwsh)'
+        if system('[bool](Get-Command ' . executable . ' -ErrorAction SilentlyContinue)') !~ 'True'
             call neoformat#utils#log('executable: ' . executable . ' is not a cmdlet, function, script file, or an executable program')
             return {}
         endif
@@ -250,8 +268,8 @@ function! s:generate_cmd(definition, filetype) abort
 
     let filename = expand('%:t')
 
-    let tmp_dir = has('win32') ? expand('$TEMP/neoformat', 1) :
-                \ exists('$TMPDIR') ? expand('$TMPDIR/neoformat', 1) :
+    let tmp_dir = has('win32') ? expand('$TEMP/neoformat') :
+                \ exists('$TMPDIR') ? expand('$TMPDIR/neoformat') :
                 \ '/tmp/neoformat'
 
     if !isdirectory(tmp_dir)
@@ -259,7 +277,7 @@ function! s:generate_cmd(definition, filetype) abort
     endif
 
     if get(a:definition, 'replace', 0)
-        let path = !using_stdin ? expand(tmp_dir . '/' . fnameescape(filename), 1) : ''
+        let path = !using_stdin ? expand(tmp_dir . '/' . fnameescape(filename)) : ''
     else
         let path = !using_stdin ? tempname() : ''
     endif

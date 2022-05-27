@@ -1,7 +1,7 @@
 "=============================================================================
 " transient_state.vim --- SpaceVim transient_state API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -66,12 +66,12 @@ function! s:self.open() abort
       noautocmd wincmd p
     endif
     if self._clear_cmdline
-      normal! :
+      exe "normal! :\<C-C>"
     else
       let self._clear_cmdline = 1
     endif
     redraw
-    let char = self._getchar()
+    let char = self.__vim.getchar()
     if char ==# "\<FocusLost>" || char ==# "\<FocusGained>" || char2nr(char) == 128
       continue
     endif
@@ -98,18 +98,11 @@ function! s:self.open() abort
     endif
   endif
   if self._clear_cmdline
-    normal! :
+    exe "normal! :\<C-C>"
   else
     let self._clear_cmdline = 1
   endif
   redraw
-endfunction
-
-
-
-function! s:self._getchar(...) abort
-  let ret = call('getchar', a:000)
-  return (type(ret) == type(0) ? nr2char(ret) : ret)
 endfunction
 
 function! s:self.defind_keys(dict) abort
@@ -320,7 +313,7 @@ function! s:self._update_content() abort
       let [line, hls] = self._key_obj_to_hl_line(left, right, i)
       call append(line('$'), line)
       for hl in hls
-        call call(self.highlight_keys, hl)
+        call self.highlight_keys(hl[0], hl[1], hl[2], hl[3])
       endfor
     endfor
   endif

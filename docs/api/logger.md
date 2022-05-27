@@ -17,13 +17,18 @@ description: "logger API provides some basic functions for log message when crea
 
 `logger` API provides some functions to create logger for plugin.
 
-
 ## Functions
 
-| name            | description                    |
-| --------------- | ------------------------------ |
-| `set_name(str)` | set the name of current logger |
-
+| name                  | description                       |
+| --------------------- | --------------------------------- |
+| `set_name(string)`    | set the name of current logger    |
+| `set_silent(0 or 1)`  | enable/disable silent mode        |
+| `set_verbose(number)` | set the verbose level             |
+| `set_level(number)`   | set the logger level              |
+| `error(string)`       | log error message                 |
+| `warn(string)`        | log string only when `level <= 2` |
+| `info(string)`        | log string only when `level <= 1` |
+| `debug(string)`       | log string only when `level <= 0` |
 
 ## Usage
 

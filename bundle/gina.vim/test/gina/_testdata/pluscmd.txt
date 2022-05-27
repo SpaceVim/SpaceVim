@@ -1,0 +1,24 @@
+!!! WARNING: THIS FILE SHOULD NOT BE MODIFIED !!!
+!!! WARNING: THIS FILE SHOULD NOT BE MODIFIED !!!
+!!! WARNING: THIS FILE SHOULD NOT BE MODIFIED !!!
+
+This file exists for testing +cmd supports.
+The following is a description of what +cmd copied from Vim's doc
+
+> The [+cmd] argument can be used to position the cursor in the newly opened
+> file, or execute any other command:
+> 	+		Start at the last line.
+> 	+{num}		Start at line {num}.
+> 	+/{pat}		Start at first line containing {pat}.
+> 	+{command}	Execute {command} after opening the new file.
+> 			{command} is any Ex command.
+> To include a white space in the {pat} or {command}, precede it with a
+> backslash.  Double the number of backslashes. >
+> 	:edit  +/The\ book	     file
+> 	:edit  +/dir\ dirname\\      file
+> 	:edit  +set\ dir=c:\\\\temp  file
+> Note that in the last example the number of backslashes is halved twice: Once
+> for the "+cmd" argument and once for the ":set" command.
+
+While +cmd support +/{pat}, the test rely on the content. So this file should
+not be modified.

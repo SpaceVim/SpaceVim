@@ -1,7 +1,7 @@
 "=============================================================================
 " string.vim --- SpaceVim string API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -153,10 +153,11 @@ function! s:self.strAllIndex(str, need, use_expr) abort
     return rst
   else
     let rst = []
-    let idx = match(a:str, "\\<" . a:need . "\\>")
+    let pattern = '\<\V' . a:need . '\ze\W\|\<\V' . a:need . '\ze\$'
+    let idx = match(a:str, pattern)
     while idx != -1
       call add(rst, [idx, idx+len(a:need)])
-      let idx = match(a:str, "\\<" . a:need . "\\>", idx + 1 + len(a:need))
+      let idx = match(a:str, pattern, idx + 1 + len(a:need))
     endwhile
     return rst
   endif

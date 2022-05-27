@@ -1,0 +1,6 @@
+<body>
+<pre id='vimCodeElement'>
+<span class="Comment"># not the same highlighting for PUBLIC if simple argument or in generator expression</span>
+<span class="Identifier">target_include_directories</span>(target <span class="ModeMsg">PUBLIC</span> <span class="Type">${</span><span class="Identifier">CMAKE_CURRENT_BINARY_DIR</span><span class="Type">}</span> <span class="WarningMsg">$&lt;GENERATOR_EXP </span><span class="Constant">PUBLIC</span><span class="WarningMsg">&gt;</span>)
+</pre>
+</body>

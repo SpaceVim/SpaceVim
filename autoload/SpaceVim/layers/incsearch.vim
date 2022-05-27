@@ -1,33 +1,32 @@
 "=============================================================================
 " incsearch.vim --- SpaceVim incsearch layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 
 ""
-" @section incsearch, layer-incsearch
+" @section incsearch, layers-incsearch
 " @parentsection layers
 " This layer improved incremental searching for neovim/vim
 "
-" mappings
+" @subsection key bindings
+"
+" The following key bindings will be defined when this layer is loaded.
 " >
-"   key         mode        description
-"   /           n/v         incsearch forward
-"   ?           n/v         incsearch backward
-"   g/          n/v         incsearch stay
-"   n           n           nohlsearch n
-"   N           n           nohlsearch N
-"   *           n           nohlsearch *
-"   g*          n           nohlsearch g*
-"   #           n           nohlsearch #
-"   g#          n           nohlsearch g#
-"   z/          n           incsearch fuzzy /
-"   z?          n           incsearch fuzzy ?
-"   zg?         n           incsearch fuzzy g?
-"   <Space>/    n           incsearch easymotion
+"   key binding     description
+"   /               incsearch forward
+"   ?               incsearch backward
+"   g/              incsearch stay
+"   n               nohlsearch n
+"   N               nohlsearch N
+"   *               nohlsearch *
+"   #               nohlsearch #
+"   g*              nohlsearch g*
+"   g#              nohlsearch g#
+"   SPC b /         fuzzy find word
 " <
 
 let s:filename = expand('<sfile>:~')
@@ -84,9 +83,9 @@ function! SpaceVim#layers#incsearch#config() abort
           \ }), get(a:, 1, {}))
   endfunction
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nmap', ['b', '/'], '<Plug>(incsearch-fuzzyword-/)', ['fuzzy find word',
+  call SpaceVim#mapping#space#def('nmap', ['b', '/'], '<Plug>(incsearch-fuzzyword-/)', ['fuzzy-find-word',
         \ [
-        \ '[SPC b /] is fuzzy find word in current buffer',
+        \ '[SPC b /] is to fuzzy find word in current buffer',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]

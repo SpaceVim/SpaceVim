@@ -1,0 +1,4 @@
+doc/tags
+.luacheckcache
+/tags
+nvim.appimage

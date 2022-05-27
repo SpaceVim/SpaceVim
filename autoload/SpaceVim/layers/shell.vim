@@ -1,29 +1,32 @@
 "=============================================================================
 " shell.vim --- SpaceVim shell layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section shell, layer-shell
+" @section shell, layers-shell
 " @parentsection layers
 " SpaceVim uses deol.nvim for shell support in neovim and uses vimshell for
 " vim. For more info, read |deol| and |vimshell|.
 "
-" @subsection variable
+" @subsection layer options
 "
-" default_shell: config the default shell to be used by shell layer.
+" 1. `default_shell`: config the default shell to be used by shell layer.
 "
 " @subsection key bindings
 " >
-"   SPC '   Open or switch to terminal windows
-"   q       Hide terminal windows in normal mode
+"   Key bindings    Description
+"   SPC '           Open or switch to terminal windows
+"   q               Hide terminal windows in normal mode
+"   ctrl-`          Hide terminal window in terminal mode
 " <
 
 let s:SYSTEM = SpaceVim#api#import('system')
 let s:FLOAT = SpaceVim#api#import('neovim#floating')
+let s:WIN = SpaceVim#api#import('vim#window')
 
 function! SpaceVim#layers#shell#plugins() abort
   let plugins = []
@@ -41,20 +44,20 @@ function! SpaceVim#layers#shell#config() abort
         \ . string(function('s:open_default_shell')) . ', [0])',
         \ ['open-shell',
         \ [
-        \ "[SPC '] is to open or jump to default shell window",
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ], 1)
+          \ "[SPC '] is to open or jump to default shell window",
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ], 1)
   call SpaceVim#mapping#space#def('nnoremap', ["\""], 'call call('
         \ . string(function('s:open_default_shell')) . ', [1])',
         \ ['open-shell-in-buffer-dir',
         \ [
-        \ "[SPC \"] is to open or jump to default shell window with the current file's pwd",
-        \ '',
-        \ 'Definition: ' . s:file . ':' . s:lnum,
-        \ ]
-        \ ], 1)
+          \ "[SPC \"] is to open or jump to default shell window with the current file's pwd",
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ], 1)
 
   if has('nvim') || exists(':tnoremap') == 2
     exe 'tnoremap <silent><C-Right> <C-\><C-n>:<C-u>wincmd l<CR>'
@@ -63,7 +66,7 @@ function! SpaceVim#layers#shell#config() abort
     exe 'tnoremap <silent><C-Down>  <C-\><C-n>:<C-u>wincmd j<CR>'
     exe 'tnoremap <silent><M-Left>  <C-\><C-n>:<C-u>bprev<CR>'
     exe 'tnoremap <silent><M-Right>  <C-\><C-n>:<C-u>bnext<CR>'
-    exe 'tnoremap <silent><esc>     <C-\><C-n>'
+    exe 'tnoremap <silent><C-`>     <C-\><C-n>:q<Cr>'
     if s:SYSTEM.isWindows
       exe 'tnoremap <expr><silent><C-d>  SpaceVim#layers#shell#terminal()'
       exe 'tnoremap <expr><silent><C-u>  SpaceVim#layers#shell#ctrl_u()'
@@ -76,6 +79,7 @@ function! SpaceVim#layers#shell#config() abort
     augroup spacevim_layer_shell
       au!
       au WinEnter,BufWinEnter term://* startinsert
+      au TermOpen * call s:on_term_open()
       if has('timers')
         au TermClose * let g:_spacevim_termclose_abuf = expand('<abuf>') | call timer_start(5, 'SpaceVim#mapping#close_term_buffer')
       else
@@ -84,6 +88,12 @@ function! SpaceVim#layers#shell#config() abort
     augroup END
   endif
 
+endfunction
+
+
+function! s:on_term_open() abort
+  startinsert
+  let &l:statusline = SpaceVim#layers#core#statusline#get(1)
 endfunction
 
 " FIXME: 
@@ -149,6 +159,11 @@ function! s:open_default_shell(open_with_file_cwd) abort
     endif
   else
     let path = SpaceVim#plugins#projectmanager#current_root()
+    " if the current file is not in a project, the projectmanager return empty
+    " string. Then use current directory as default cwd.
+    if empty(path)
+      let path  = getcwd()
+    endif
   endif
 
   " look for already opened terminal windows
@@ -177,12 +192,12 @@ function! s:open_default_shell(open_with_file_cwd) abort
   if s:default_position ==# 'float' && exists('*nvim_open_win')
     let s:term_win_id =  s:FLOAT.open_win(bufnr('%'), v:true,
           \ {
-          \ 'relative': 'editor',
-          \ 'width'   : &columns, 
-          \ 'height'  : &lines * s:default_height / 100,
-          \ 'row': 0,
-          \ 'col': &lines - (&lines * s:default_height / 100) - 2
-          \ })
+            \ 'relative': 'editor',
+            \ 'width'   : &columns, 
+            \ 'height'  : &lines * s:default_height / 100,
+            \ 'row': 0,
+            \ 'col': &lines - (&lines * s:default_height / 100) - 2
+            \ })
 
     exe win_id2win(s:term_win_id) .  'wincmd w'
   else

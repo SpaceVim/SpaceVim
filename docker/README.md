@@ -2,7 +2,7 @@
 
 ![Docker Automated build](https://img.shields.io/docker/automated/spacevim/spacevim)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/spacevim/spacevim?sort=date)
-![Docker Pulls](https://img.shields.io/docker/pulls/spacevim/spacevim)
+[![Docker Pulls](https://img.shields.io/docker/pulls/spacevim/spacevim)](https://hub.docker.com/r/spacevim/spacevim)
 
 This Dockerfile builds neovim `HEAD` and installs the latest available version of SpaceVim. You might want to use this for several reasons:
 
@@ -26,7 +26,7 @@ You can build using the supplied `Makefile`:
 
 or call the command manually using:
 
-    docker build -t nvim -f Dockerfile.nvim-python3 .
+    docker build -t nvim -f Dockerfile .
 
 ### Run
 

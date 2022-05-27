@@ -1,0 +1,107 @@
+*plantuml-previewer.txt*		plugin for preview PlantUML
+
+Version: 1.5.1
+Author:  Weirong Xu <weirongxu.raidou@gmail.com>
+License: MIT License
+
+==============================================================================
+CONTENTS				*plantuml-previewer-contents*
+
+Introduction		|plantuml-previewer-introduction|
+Install			|plantuml-previewer-install|
+Usage			|plantuml-previewer-usage|
+Interface		|plantuml-previewer-interface|
+  Commands		  |plantuml-previewer-interface-commands|
+  Variables		  |plantuml-previewer-interface-variables|
+
+==============================================================================
+INTRODUCTION				*plantuml-previewer-introduction*
+
+plantuml-previewer is a plugin to preview PlantUML
+
+==============================================================================
+INSTALL					*plantuml-previewer-install*
+
+Dependencies
+- Java
+- Graphviz : https://www.graphviz.org/download/
+  - Mac >
+    brew install graphviz
+<
+  - Ubuntu >
+    apt-get install graphviz
+<
+  - Other
+    https://www.graphviz.org/download/
+- open-browser.vim https://github.com/tyru/open-browser.vim
+- aklt/plantuml-syntax https://github.com/aklt/plantuml-syntax (vim syntax file for plantuml)
+
+==============================================================================
+USAGE					*plantuml-previewer-usage*
+
+1. Start editing plantuml file in Vim
+2. Run |:PlantumlOpen| to open previewer webpage in browser
+3. Saving plantuml file in Vim, then previewer webpage will refresh
+
+==============================================================================
+INTERFACE				*plantuml-previewer-interface*
+
+-----------------------------------------------------------------------------
+COMMANDS					*plantuml-previewer-interface-commands*
+
+						*:PlantumlOpen*
+:PlantumlOpen
+	Open previewer webpage in browser, and watch current buffer
+
+						*:PlantumlStart*
+:PlantumlStart
+	Like |PlantumlOpen|, but won't open in browser
+
+						*:PlantumlStop*
+:PlantumlStop
+	Stop watch buffers
+
+						*:PlantumlToggle*
+:PlantumlToggle
+	|PlantumlOpen| or |PlantumlStop|
+
+						*:PlantumlSave*
+:PlantumlSave [{filepath}] [{format}]
+	Export uml diagram
+	If {filepath} is missing, the {filepath} using the same file path as
+	plant uml, and default extension guessed by |g:plantuml_previewer#save_format|
+	If {format} is missing, the {format} will be guessed by {filepath}
+	extension.
+
+	Available formats: >
+	png, svg, eps, pdf, vdx, xmi,
+	scxml, html, txt, utxt, latex
+<
+	Example: >
+	:e diagram.puml
+
+	:PlantumlSave
+	:PlantumlSave diagram.png
+	:PlantumlSave diagram.svg
+<
+-----------------------------------------------------------------------------
+VARIABLES				*plantuml-previewer-interface-variables*
+
+				*g:plantuml_previewer#plantuml_jar_path*
+g:plantuml_previewer#plantuml_jar_path
+	plantuml.jar path
+	Default: "lib/plantuml.jar"
+
+				*g:plantuml_previewer#save_format*
+g:plantuml_previewer#save_format
+	|:PlantumlSave| default format
+	Default: "png"
+
+				*g:plantuml_previewer#viewer_path*
+g:plantuml_previewer#viewer_path
+	Custom plantuml viewer path
+	The plugin will copy viewer to here if the directory does not exist
+	And `tmp.puml` and `tmp.svg` will output to here
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:

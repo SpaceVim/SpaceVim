@@ -35,10 +35,6 @@ function! deoplete#util#get_input(event) abort
         \         '^.*\%' . (mode ==# 'i' ? col('.') : col('.') - 1)
         \         . 'c' . (mode ==# 'i' ? '' : '.'))
 
-  if a:event ==# 'InsertCharPre'
-    let input .= v:char
-  endif
-
   return input
 endfunction
 function! deoplete#util#get_next_input(event) abort
@@ -88,7 +84,7 @@ function! s:vimoption2python(option) abort
 endfunction
 
 function! deoplete#util#uniq(list) abort
-  let list = map(copy(a:list), '[v:val, v:val]')
+  let list = map(copy(a:list), { _, val -> [val, val] })
   let i = 0
   let seen = {}
   while i < len(list)
@@ -100,7 +96,7 @@ function! deoplete#util#uniq(list) abort
       let i += 1
     endif
   endwhile
-  return map(list, 'v:val[0]')
+  return map(list, { _, val -> val[0] })
 endfunction
 
 function! deoplete#util#get_syn_names() abort
@@ -183,8 +179,8 @@ endfunction
 " >0 if a > b
 " 0 if versions are equal.
 function! deoplete#util#versioncmp(a, b) abort
-  let a = map(split(a:a, '\.'), 'str2nr(v:val)')
-  let b = map(split(a:b, '\.'), 'str2nr(v:val)')
+  let a = map(split(a:a, '\.'), { _, val -> str2nr(val) })
+  let b = map(split(a:b, '\.'), { _, val -> str2nr(val) })
   let l = min([len(a), len(b)])
   let d = 0
 
@@ -212,4 +208,18 @@ endfunction
 
 function! deoplete#util#check_popup() abort
   return exists('*complete_info') && complete_info().mode ==# 'eval'
+endfunction
+
+function! deoplete#util#indent_current_line() abort
+  let pos = getpos('.')
+  let len = len(getline('.'))
+  let equalprg = &l:equalprg
+  try
+    setlocal equalprg=
+    silent normal! ==
+  finally
+    let &l:equalprg = equalprg
+    let pos[2] += len(getline('.')) - len
+    call setpos('.', pos)
+  endtry
 endfunction

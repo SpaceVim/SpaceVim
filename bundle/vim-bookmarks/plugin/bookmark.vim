@@ -177,14 +177,18 @@ function! BookmarkShowAll()
       exec ":Unite vim_bookmarks"
     elseif exists(':CtrlP') == 2 && g:bookmark_disable_ctrlp == 0
       exec ":CtrlPBookmark"
+    elseif exists(':Leaderf')
+      exe ':Leaderf bookmarks'
     else
       let oldformat = &errorformat    " backup original format
       let &errorformat = "%f:%l:%m"   " custom format for bookmarks
       if g:bookmark_location_list
         lgetexpr bm#location_list()
+        call setloclist(0, [], 'r', {'title': 'Bookmarks'})
         belowright lopen
       else
         cgetexpr bm#location_list()
+        call setqflist([], 'r', {'title': 'Bookmarks'})
         belowright copen
       endif
       augroup BM_AutoCloseCommand

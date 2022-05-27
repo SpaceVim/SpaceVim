@@ -40,7 +40,7 @@ endfunction
 
 
 function! s:openDiffBuffer() abort
-    10split git://diff
+    exe printf('%s git://diff', get(g:, 'git_diff_position', '10split'))
     normal! "_dd
     setl nobuflisted
     setl nomodifiable

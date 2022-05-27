@@ -1,15 +1,43 @@
 "=============================================================================
 " mpv.vim --- mpv layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
+""
+" @section tools#mpv, layers-tools-mpv
+" @parentsection layers
+" The `tools#mpv` layer provides mpv integration for SpaceVim.
+" this layer is disabled by default, to enable this layer, add following
+" snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'tools#mpv'
+" <
+"
+" @subsection layer options
+"
+" The following options can be used with this layer:
+"
+" 1. `mpv_interpreter`: set the path of `mpv`.
+" 2. `musics_directory`: set the path of directory where to store musics. The
+" default directory is `~/Music`
+"
+" @subsection Key bindings
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   SPC m m l       fuzzy find musics
+"   SPC m m n       next music
+"   SPC m m s       stop mpv
+" <
+
 if exists('s:musics_directory')
   finish
 else
-  let s:musics_directory = '~/Musics'
+  let s:musics_directory = '~/Music'
   let s:mpv_interpreter = 'mpv'
   let s:loop_mode = 'random'
   let s:stop_mpv = 0
@@ -17,6 +45,7 @@ endif
 
 let s:JOB = SpaceVim#api#import('job')
 let s:NUM = SpaceVim#api#import('data#number')
+let s:CMP = SpaceVim#api#import('vim#compatible')
 
 
 function! SpaceVim#layers#tools#mpv#config() abort
@@ -62,7 +91,7 @@ function! SpaceVim#layers#tools#mpv#play(fpath) abort
 endfunction
 
 function! s:load_musics() abort
-  let musics = SpaceVim#util#globpath(s:musics_directory, '*.mp3')
+  let musics = s:CMP.globpath(s:musics_directory, '*.mp3')
   let g:unite_source_menu_menus.MpvPlayer.command_candidates = []
   for m in musics
     call add(g:unite_source_menu_menus.MpvPlayer.command_candidates,

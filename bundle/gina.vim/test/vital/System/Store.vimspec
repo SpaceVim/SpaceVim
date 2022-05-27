@@ -1,0 +1,162 @@
+Describe System.Store
+  Before all
+    let File = vital#gina#import('System.File')
+    let Path = vital#gina#import('System.Filepath')
+  End
+
+  Before
+    let Store = vital#gina#import('System.Store')
+  End
+
+  Describe .hash({pathlist})
+    It returns an unique sha256 string of {pathlist}
+      let hash1 = Store.hash(['a', 'b', 'c'])
+      let hash2 = Store.hash(['a', 'b', 'c'])
+      let hash3 = Store.hash(['b', 'a', 'c'])
+      let hash4 = Store.hash(['a', 'a', 'a'])
+      Assert Equals(hash1, hash2)
+      Assert Equals(hash1, hash3)
+      Assert NotEquals(hash1, hash4)
+    End
+  End
+
+  Describe .get_slug_expr()
+    Before
+      function! s:VitalSystemStoreGetSlugExpr(Store) abort
+        let expr = a:Store.get_slug_expr()
+        return eval(expr)
+      endfunction
+    End
+
+    It returns a slug expression of the function
+      let slug = s:VitalSystemStoreGetSlugExpr(Store)
+      Assert Match(slug, '^<SNR>\d\+_VitalSystemStoreGetSlugExpr$')
+    End
+  End
+
+  Describe .of({pathlist})
+    It returns a store instance of {pathlist}
+      let store1 = Store.of(['a', 'b', 'c'])
+      let store2 = Store.of(['b', 'a', 'c'])
+      Assert KeyExists(store1, 'is_expired')
+      Assert KeyExists(store1, 'get')
+      Assert KeyExists(store1, 'set')
+      Assert KeyExists(store1, 'remove')
+      Assert KeyExists(store1, 'clear')
+      Assert IsFunction(store1.is_expired)
+      Assert IsFunction(store1.get)
+      Assert IsFunction(store1.set)
+      Assert IsFunction(store1.remove)
+      Assert IsFunction(store1.clear)
+      Assert Same(store1, store2)
+    End
+  End
+
+  Describe .remove({pathlist})
+    It removes a cached store instance of {pathlist}
+      let store1 = Store.of(['a', 'b', 'c'])
+      let store2 = Store.of(['b', 'a', 'c'])
+      call Store.remove(['a', 'b', 'c'])
+      let store3 = Store.of(['a', 'b', 'c'])
+      Assert Same(store1, store2)
+      Assert NotSame(store1, store3)
+    End
+  End
+
+  Describe store instance
+    Before
+      let root = resolve(tempname())
+      let store = Store.of(map(
+            \ ['a', 'b', 'c'],
+            \ 'Path.join(root, v:val)'
+            \))
+      call mkdir(root, 'p')
+      for path in store.pathlist
+        call writefile([], path)
+      endfor
+    End
+
+    After
+      call File.rmdir(root, 'r')
+    End
+
+    Describe store.is_expired({name})
+      It returns 1 if {name} is not cached in the instance
+        Assert Equals(store.is_expired('foo'), 1)
+      End
+
+      It returns 0 if {name} is cached and no files are updated
+        call store.set('foo', 'foo')
+        Assert Equals(store.is_expired('foo'), 0)
+      End
+
+      It returns 1 if {name} is cached but files are updated
+        call store.set('foo', 'foo')
+        sleep 1
+        call writefile(['updated'], store.pathlist[0])
+        Assert Equals(store.is_expired('foo'), 1)
+      End
+    End
+
+    Describe store.has({name})
+      It returns 1 if {name} cache exist
+        call store.set('foo', 'foo')
+        Assert Equals(store.has('foo'), 1)
+        Assert Equals(store.has('bar'), 0)
+      End
+    End
+
+    Describe store.get({name} [, {default}])
+      It returns {default} if {name} is not cached in the instance
+        Assert Equals(store.get('foo'), 0)
+        Assert Equals(store.get('foo', 'default'), 'default')
+      End
+
+      It returns a cached content if {name} is cached and no files are updated
+        call store.set('foo', 'foo')
+        Assert Equals(store.get('foo'), 'foo')
+      End
+
+      It returns {default} if {name} is cached but files are updated
+        call store.set('foo', 'foo')
+        sleep 1
+        call writefile(['updated'], store.pathlist[0])
+        Assert Equals(store.get('foo'), 0)
+        Assert Equals(store.get('foo', 'default'), 'default')
+      End
+    End
+
+    Describe store.set({name}, {value})
+      It stores {value} as {name} and return the instance (method chain)
+        Assert Same(store.set('foo', 'foo'), store)
+        Assert Equals(store.set('foo', 'foo').get('foo'), 'foo')
+        Assert Equals(store.set('bar', 'bar').get('bar'), 'bar')
+        Assert Equals(store.set('foo', 'bar').get('foo'), 'bar')
+      End
+    End
+
+    Describe store.remove({name})
+      It remove a {name} cache and return the instance (method chain)
+        call store.set('foo', 'foo')
+        call store.set('bar', 'bar')
+        Assert Same(store.remove('foo'), store)
+        Assert Equals(store.has('foo'), 0)
+        Assert Equals(store.remove('bar').has('bar'), 0)
+      End
+
+      It won't throw exceptin even no {name} cache exist
+        Assert Same(store.remove('helloworld'), store)
+      End
+    End
+
+    Describe store.clear()
+      It clears all caches and return the instance (method chain)
+        call store.set('foo', 'foo')
+        call store.set('bar', 'bar')
+        Assert Same(store.clear(), store)
+        Assert Equals(store.has('foo'), 0)
+        Assert Equals(store.has('bar'), 0)
+      End
+    End
+  End
+End

@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim chat layer"
-description: "SpaceVim chatting layer provides chatting with qq and weixin in vim."
+description: "SpaceVim chatting layer provides chatting with weixin in vim."
 ---
 
 # [Available Layers](../) >> chat
@@ -10,6 +10,7 @@ description: "SpaceVim chatting layer provides chatting with qq and weixin in vi
 
 - [Description](#description)
 - [Install](#install)
+- [Layer options](#layer-options)
 - [Key Mappings](#key-mappings)
 
 <!-- vim-markdown-toc -->
@@ -17,6 +18,8 @@ description: "SpaceVim chatting layer provides chatting with qq and weixin in vi
 ## Description
 
 SpaceVim chatting layer provides chatting feature in vim.
+
+![vim-chat](https://user-images.githubusercontent.com/13142418/166000148-4cdbe294-7d61-40e1-b503-63c70ddaf592.png)
 
 ## Install
 
@@ -27,14 +30,18 @@ To use this configuration layer, add the following snippet to your custom config
   name = "chat"
 ```
 
+## Layer options
+
+1. `gitter_token`: set the token to your gitter account.
+
 ## Key Mappings
 
-`Alt + x` : open chatting buffer for qq.
-`Alt + w` : open chatting buffer for weixin.
+The default key binding to open chat windows is `SPC a h`.
 
-within chatting buffer:
+Whith the chat windows. The following key binding can be use:
 
-`Alt + Left/Right` : switch between buffers.
-`Alt + 1-9` : jump to the specified channel.
+- `Alt + Left/H`: switch to previous channel
+- `Alt + Right/L`: switch to next channel
+- `Ctrl-w`: delete characters until next space before cursor
 
 for more mappings in chatting buffer, please read <kbd>:h vim-chat</kbd>.

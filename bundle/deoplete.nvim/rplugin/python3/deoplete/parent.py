@@ -4,20 +4,20 @@
 # License: MIT license
 # ============================================================================
 
-import time
-import os
-import msgpack
-import subprocess
-import sys
-import typing
 from abc import abstractmethod
 from functools import partial
 from pathlib import Path
+from pynvim import Nvim
 from queue import Queue
+import msgpack
+import subprocess
+import sys
+import time
+import typing
 
 from deoplete import logger
 from deoplete.process import Process
-from deoplete.util import error_tb, error, Nvim
+from deoplete.util import error_tb, error
 
 UserContext = typing.Dict[str, typing.Any]
 
@@ -91,7 +91,7 @@ class AsyncParent(_Parent):
         Taken from jedi.api.environment._try_get_same_env.
         """
         exe = sys.executable
-        if not os.path.basename(exe).lower().startswith('python'):
+        if not Path(exe).name.lower().startswith('python'):
             checks: typing.Tuple[typing.Any, ...]
             if sys.platform == 'win32':
                 checks = (r'Scripts\python.exe', 'python.exe')
@@ -103,8 +103,8 @@ class AsyncParent(_Parent):
                     'bin/python',
                 )
             for check in checks:
-                guess = os.path.join(sys.exec_prefix, check)
-                if os.path.isfile(str(guess)):
+                guess = Path(sys.exec_prefix).joinpath(check)
+                if guess.is_file():
                     return str(guess)
             if 'python3_host_prog' not in self._vim.vars:
                 return 'python3'

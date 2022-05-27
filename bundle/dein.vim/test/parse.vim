@@ -6,7 +6,7 @@ let s:assert = themis#helper('assert')
 let s:path = tempname()
 
 function! s:suite.before_each() abort
-  call dein#_init()
+  call dein#min#_init()
 endfunction
 
 function! s:suite.after_each() abort
@@ -41,7 +41,7 @@ function! s:suite.parse_dict() abort
 endfunction
 
 function! s:suite.name_conversion() abort
-  let g:dein#enable_name_conversion = 1
+  let g:dein#enable_name_conversion = v:true
 
   let plugin = dein#parse#_dict(
         \ {'repo': 'https://github.com/Shougo/dein.vim.git'})
@@ -60,7 +60,7 @@ function! s:suite.name_conversion() abort
         \  'name': 'vim-qt-syntax'})
   call s:assert.equals(plugin.name, 'vim-qt-syntax')
 
-  let g:dein#enable_name_conversion = 0
+  let g:dein#enable_name_conversion = v:false
 endfunction
 
 function! s:suite.load_toml() abort
@@ -78,7 +78,6 @@ function! s:suite.load_toml() abort
         \ "on_map = '<Plug>'",
         \ '[[plugins]]',
         \ "repo = 'Shougo/neosnippet.vim'",
-        \ 'on_i = 1',
         \ "on_ft = 'snippet'",
         \ "hook_add = '''",
         \ '"echo',
@@ -92,6 +91,9 @@ function! s:suite.load_toml() abort
         \ "'''",
         \ '[plugins.ftplugin]',
         \ 'c = "let g:bar = 0"',
+        \ '[[multiple_plugins]]',
+        \ "plugins = ['foo', 'bar']",
+        \ "hook_add = 'foo'",
         \ ], toml)
 
   call dein#begin(s:path)
@@ -101,11 +103,13 @@ function! s:suite.load_toml() abort
   call s:assert.equals(g:dein#_hook_add, "\nlet g:foo = 0")
   call s:assert.equals(g:dein#_ftplugin,
         \ {'c': "let g:bar = 0\nlet g:bar = 0"})
+  call s:assert.equals(g:dein#_multiple_plugins, [
+        \ {'plugins': ['foo', 'bar'], 'hook_add': 'foo'},
+        \ ])
   call dein#end()
 
-  call s:assert.equals(dein#get('neosnippet.vim').on_i, 1)
   call s:assert.equals(dein#get('neosnippet.vim').hook_add,
-        \ "\necho\n")
+        \ "\"echo\n\"comment\necho\n")
   call s:assert.equals(dein#get('neosnippet.vim').hook_source,
         \ "echo\necho\n")
 endfunction
@@ -118,7 +122,6 @@ function! s:suite.error_toml() abort
         \ '# repository name is required.',
         \ "on_map = '<Plug>'",
         \ '[[plugins]]',
-        \ 'on_i = 1',
         \ "on_ft = 'snippet'",
         \ ], toml)
 
@@ -158,29 +161,29 @@ function! s:suite.config() abort
         \ 'Shougo/denite.nvim': {}
         \ })
   let g:dein#name = 'denite.nvim'
-  call dein#config({'on_i': 1})
+  call dein#config({'on_event': ['InsertEnter']})
   call dein#end()
-  call dein#config('unite', {'on_i': 0})
+  call dein#config('unite', {'on_event': ['InsertEnter']})
 
-  call s:assert.equals(dein#get('denite.nvim').on_i, 1)
+  call s:assert.equals(dein#get('denite.nvim').on_event, ['InsertEnter'])
 endfunction
 
 function! s:suite.skip_overwrite() abort
   call dein#begin(s:path)
-  call dein#add('Shougo/denite.nvim', {'on_i': 0})
-  call dein#add('Shougo/denite.nvim', {'on_i': 1})
+  call dein#add('Shougo/denite.nvim', {'on_event': []})
+  call dein#add('Shougo/denite.nvim', {'on_event': ['InsertEnter']})
   call dein#end()
 
-  call s:assert.equals(dein#get('denite.nvim').on_i, 0)
+  call s:assert.equals(dein#get('denite.nvim').on_event, [])
 endfunction
 
 function! s:suite.overwrite() abort
   call dein#begin(s:path)
-  call dein#add('Shougo/denite.nvim', {'on_i': 0})
-  call dein#add('Shougo/denite.nvim', {'on_i': 1, 'overwrite': 1})
+  call dein#add('Shougo/denite.nvim', {'on_event': []})
+  call dein#add('Shougo/denite.nvim', {'on_event': ['InsertEnter'], 'overwrite': 1})
   call dein#end()
 
-  call s:assert.equals(dein#get('denite.nvim').on_i, 1)
+  call s:assert.equals(dein#get('denite.nvim').on_event, ['InsertEnter'])
 endfunction
 
 function! s:suite.plugins2toml() abort

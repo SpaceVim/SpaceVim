@@ -1,0 +1,51 @@
+name: integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: nightly
+        default: true
+        override: true
+
+    - name: Setup neovim
+      uses: rhysd/action-setup-vim@v1
+      with:
+        version: nightly
+        neovim: true
+
+    - name: Setup lua
+      uses: leafo/gh-actions-lua@v8
+      with:
+        luaVersion: "luajit-2.1.0-beta3"
+
+    - name: Setup luarocks
+      uses: leafo/gh-actions-luarocks@v4
+
+    - name: Setup tools
+      shell: bash
+      run: |
+        sudo apt install -y curl unzip --no-install-recommends
+        bash ./utils/install_stylua.sh
+        luarocks install luacheck
+        luarocks install vusted
+
+    - name: Run tests
+      shell: bash
+      run: make integration
+

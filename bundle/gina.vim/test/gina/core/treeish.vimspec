@@ -1,0 +1,378 @@
+Describe gina#core#treeish
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit1 = Slit(tempname(), 1)
+    let slit2 = Slit(tempname(), 1)
+    call slit1.write('A/foo.txt', [])
+    call slit1.write('B/foo.txt', [])
+    call slit1.write('C/foo.txt', [])
+
+    call slit1.execute('add %s', slit1.path('A/foo.txt'))
+    call slit1.execute('commit --quiet -m "First"')
+    call slit1.execute('checkout -b develop')
+    call slit1.execute('add %s', slit1.path('B/foo.txt'))
+    call slit1.execute('commit --quiet -m "Second"')
+    call slit1.execute('checkout master')
+    call slit1.execute('add %s', slit1.path('C/foo.txt'))
+    call slit1.execute('commit --quiet -m "Thrid"')
+
+    call slit2.write('A/foo.txt', [])
+    call slit2.write('B/foo.txt', [])
+    call slit2.write('C/foo.txt', [])
+
+    call slit2.execute('add %s', slit2.path('A/foo.txt'))
+    call slit2.execute('commit --quiet -m "First"')
+    call slit2.execute('checkout -b develop')
+    call slit2.execute('add %s', slit2.path('B/foo.txt'))
+    call slit2.execute('commit --quiet -m "Second"')
+    call slit2.execute('checkout master')
+    call slit2.execute('add %s', slit2.path('C/foo.txt'))
+    call slit2.execute('commit --quiet -m "Thrid"')
+    " Call git gc to remove traditional refs
+    call slit2.execute('gc')
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+  End
+
+  Describe #parse({treeish})
+    " NOTE:
+    " The spec follows https://git-scm.com/docs/gitrevisions
+    It parses <sha1> and returns [<rev>, v:null]
+      let rev = 'dae86e1950b1277e545cee180551750029cfe735'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+
+      let rev = 'dae86e'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses <describeOutput> and return [<rev>, v:null]
+      let rev = 'v1.7.4.2-679-g3bee7fb'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses <refname> and return [<rev>, v:null]
+      let rev = 'master'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+
+      let rev = 'heads/master'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+
+      let rev = 'refs/heads/master'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses @ and return [<rev>, v:null]
+      let rev = '@'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses <refname>@{<date>} and return [<rev>, v:null]
+      let rev = 'master@{yesterday}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+
+      let rev = 'HEAD@{5 minutes ago}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses <refname>@{<n>} and return [<rev>, v:null]
+      let rev = 'master@{1}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses @{<n>} and return [<rev>, v:null]
+      let rev = '@{1}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses @{-<n>} and return [<rev>, v:null]
+      let rev = '@{-1}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses <branchname>@{upstream} and return [<rev>, v:null]
+      let rev = 'master@{upstream}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+
+      let rev = '@{u}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses <branchname>@{push} and return [<rev>, v:null]
+      let rev = 'master@{push}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+
+      let rev = '@{push}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses <rev>^ and return [<rev>, v:null]
+      let rev = 'HEAD^'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+
+      let rev = 'v1.5.1^0'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses <rev>~<n> and return [<rev>, v:null]
+      let rev = 'master~3'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses <rev>^{<type>} and return [<rev>, v:null]
+      let rev = 'v0.99.8^{commit}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses <rev>^{} and return [<rev>, v:null]
+      let rev = 'v0.99.8^{}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses <rev>^{/<text>} and return [<rev>, v:null]
+      let rev = 'HEAD^{/fix nasty bug}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+
+      let rev = 'HEAD^{/Warning: Something}'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses :/<text> and return [<rev>, v:null]
+      let rev = ':/fix nasty bug'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+
+      let rev = ':/Warning: Something'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+
+    It parses <rev>:<path> and return [<rev>, <path>]
+      let rev = 'HEAD:README'
+      Assert Equals(gina#core#treeish#parse(rev), ['HEAD', 'README'])
+
+      let rev = ':README'
+      Assert Equals(gina#core#treeish#parse(rev), ['', 'README'])
+
+      let rev = 'master:./README'
+      Assert Equals(gina#core#treeish#parse(rev), ['master', './README'])
+
+      let rev = 'master:'
+      Assert Equals(gina#core#treeish#parse(rev), ['master', ''])
+    End
+
+    It parses :<n>:<path> and return [<rev>, <path>]
+      let rev = ':0:README'
+      Assert Equals(gina#core#treeish#parse(rev), [':0', 'README'])
+
+      let rev = ':0:'
+      Assert Equals(gina#core#treeish#parse(rev), [':0', ''])
+    End
+
+    It parses :<n> and return [<rev>, v:null]
+      let rev = ':0'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, ''])
+
+      let rev = ':1'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, ''])
+
+      let rev = ':2'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, ''])
+
+      let rev = ':3'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, ''])
+    End
+
+    It fails to parse :<abspath> while it conflicts with :/<text>
+      let rev = '/some/absolute/path'
+      Assert Equals(gina#core#treeish#parse(rev), [rev, v:null])
+    End
+  End
+
+  Describe #build({rev}, {path})
+    It builds a treeish from {rev} and v:null and return {rev}
+      let rev = 'master'
+      Assert Equals(gina#core#treeish#build(rev, v:null), rev)
+    End
+
+    It builds a treeish from {rev} and {path} and return {rev}:{path}
+      Assert Equals(gina#core#treeish#build('master', 'README'), 'master:README')
+      Assert Equals(gina#core#treeish#build('', 'README'), ':README')
+      Assert Equals(gina#core#treeish#build('master', ''), 'master:')
+    End
+
+    It builds a treeish from v:null and {path} and return :0:{path}
+      Assert Equals(gina#core#treeish#build(v:null, 'README'), ':0:README')
+      Assert Equals(gina#core#treeish#build(v:null, ''), ':0:')
+    End
+
+    It builds a treeish from v:null and v:null and return :0
+      Assert Equals(gina#core#treeish#build(v:null, v:null), ':0')
+    End
+
+    It translate a {path} to an Unix-style path and return
+      Assert Equals(gina#core#treeish#build(v:null, 'foo/bar'), ':0:foo/bar')
+      Assert Equals(gina#core#treeish#build(v:null, 'foo\bar'), ':0:foo/bar')
+    End
+  End
+
+  Describe #sha1({git}, {rev})
+    Before
+      let git = gina#core#get({
+            \ 'expr': slit1.worktree,
+            \})
+    End
+
+    It returns <sha1> of 'HEAD'
+      Assert Match(gina#core#treeish#sha1(git, 'HEAD'), '^\w\{40}$')
+    End
+
+    It returns <sha1> of 'heads/master'
+      Assert Match(gina#core#treeish#sha1(git, 'heads/master'), '^\w\{40}$')
+    End
+
+    It returns <sha1> of 'HEAD@{2 lays ago}'
+      Assert Match(gina#core#treeish#sha1(git, 'HEAD@{2 days ago}'), '^\w\{40}$')
+      Assert Match(gina#core#treeish#sha1(git, 'HEAD@{2.days.ago}'), '^\w\{40}$')
+    End
+  End
+
+  Describe #split({rev})
+    It splits 'HEAD' into ['HEAD', '']
+      let revs = gina#core#treeish#split('HEAD')
+      Assert Equals(revs[0], 'HEAD')
+      Assert Equals(revs[1], '')
+    End
+
+    It splits 'HEAD@{2.days.ago}' into ['HEAD@{2.days.ago}', '']
+      let revs = gina#core#treeish#split('HEAD@{2.days.ago}')
+      Assert Equals(revs[0], 'HEAD@{2.days.ago}')
+      Assert Equals(revs[1], '')
+    End
+
+    It splits 'HEAD..HEAD~' into ['HEAD', 'HEAD~']
+      let revs = gina#core#treeish#split('HEAD..HEAD~')
+      Assert Equals(revs[0], 'HEAD')
+      Assert Equals(revs[1], 'HEAD~')
+    End
+
+    It splits 'HEAD...HEAD~' into ['HEAD...HEAD~', 'HEAD~']
+      let revs = gina#core#treeish#split('HEAD...HEAD~')
+      Assert Equals(revs[0], 'HEAD...HEAD~')
+      Assert Equals(revs[1], 'HEAD~')
+    End
+
+    It splits '..' into ['HEAD', 'HEAD']
+      let revs = gina#core#treeish#split('..')
+      Assert Equals(revs[0], 'HEAD')
+      Assert Equals(revs[1], 'HEAD')
+    End
+
+    It splits '...' into ['HEAD...HEAD', 'HEAD']
+      let revs = gina#core#treeish#split('...')
+      Assert Equals(revs[0], 'HEAD...HEAD')
+      Assert Equals(revs[1], 'HEAD')
+    End
+  End
+
+  Describe #resolve({git}, {rev})
+    Context with traditional refs
+      Before
+        let git = gina#core#get({
+              \ 'expr': slit1.worktree,
+              \})
+      End
+
+      It resolves 'HEAD' to 'HEAD'
+        let rev = gina#core#treeish#resolve(git, 'HEAD')
+        Assert Equals(rev, 'HEAD')
+      End
+
+      It resolves 'HEAD@{2.days.ago}' to 'HEAD@{2.days.ago}'
+        let rev = gina#core#treeish#resolve(git, 'HEAD@{2.days.ago}')
+        Assert Equals(rev, 'HEAD@{2.days.ago}')
+      End
+
+      It resolves 'HEAD..HEAD~' to 'HEAD'
+        let rev = gina#core#treeish#resolve(git, 'HEAD..HEAD~')
+        Assert Equals(rev, 'HEAD')
+      End
+
+      It resolves 'HEAD...HEAD~' to <common ancestor>
+        let rev = gina#core#treeish#resolve(git, 'HEAD...HEAD~')
+        Assert Match(rev, '^\w\{40}$')
+      End
+
+      It resolves '..' to 'HEAD'
+        let rev = gina#core#treeish#resolve(git, '..')
+        Assert Equals(rev, 'HEAD')
+      End
+
+      It resolves '...' to <common ancestor>
+        let rev = gina#core#treeish#resolve(git, '...')
+        Assert Match(rev, '^\w\{40}$')
+      End
+
+      It resolves 'HEAD' to 'master' when aggressive is 1
+        let rev = gina#core#treeish#resolve(git, 'HEAD', 1)
+        Assert Equals(rev, 'master')
+      End
+
+      It resolves 'master' to 'master' when aggressive is 1
+        let rev = gina#core#treeish#resolve(git, 'master', 1)
+        Assert Equals(rev, 'master')
+      End
+    End
+
+    Context with packed refs
+      Before
+        let git = gina#core#get({
+              \ 'expr': slit2.worktree,
+              \})
+      End
+
+      It resolves 'HEAD' to 'HEAD'
+        let rev = gina#core#treeish#resolve(git, 'HEAD')
+        Assert Equals(rev, 'HEAD')
+      End
+
+      It resolves 'HEAD@{2.days.ago}' to 'HEAD@{2.days.ago}'
+        let rev = gina#core#treeish#resolve(git, 'HEAD@{2.days.ago}')
+        Assert Equals(rev, 'HEAD@{2.days.ago}')
+      End
+
+      It resolves 'HEAD..HEAD~' to 'HEAD'
+        let rev = gina#core#treeish#resolve(git, 'HEAD..HEAD~')
+        Assert Equals(rev, 'HEAD')
+      End
+
+      It resolves 'HEAD...HEAD~' to <common ancestor>
+        let rev = gina#core#treeish#resolve(git, 'HEAD...HEAD~')
+        Assert Match(rev, '^\w\{40}$')
+      End
+
+      It resolves '..' to 'HEAD'
+        let rev = gina#core#treeish#resolve(git, '..')
+        Assert Equals(rev, 'HEAD')
+      End
+
+      It resolves '...' to <common ancestor>
+        let rev = gina#core#treeish#resolve(git, '...')
+        Assert Match(rev, '^\w\{40}$')
+      End
+
+      It resolves 'HEAD' to 'master' when aggressive is 1
+        let rev = gina#core#treeish#resolve(git, 'HEAD', 1)
+        Assert Equals(rev, 'master')
+      End
+
+      It resolves 'master' to 'master' when aggressive is 1
+        let rev = gina#core#treeish#resolve(git, 'master', 1)
+        Assert Equals(rev, 'master')
+      End
+    End
+  End
+End

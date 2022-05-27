@@ -1,13 +1,13 @@
 "=============================================================================
 " operator.vim --- SpaceVim operator layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section operator, layer-operator
+" @section operator, layers-operator
 " @parentsection layers
 " With this layer, you can confirm that text is yanked correctly and see
 " yanked text by highlighting.

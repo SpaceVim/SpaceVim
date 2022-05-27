@@ -1,0 +1,3 @@
+@Nothing
+public class Testo {
+}

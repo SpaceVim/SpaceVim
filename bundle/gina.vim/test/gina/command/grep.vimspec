@@ -1,0 +1,243 @@
+Describe gina#command#grep
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit1 = Slit(tempname(), 1)
+    call slit1.write('A/foo.txt', ['a', 'b', 'c', 'd', 'e'])
+    call slit1.write('B/foo.txt', ['A', 'B', 'C', 'D', 'E'])
+    call slit1.write('C/foo.txt', ['aa', 'bb', 'cc', 'dd', 'ee'])
+    call slit1.write('D/foo.txt', ['--color-text'])
+    call slit1.execute('add .')
+    call slit1.execute('commit --quiet -am "First"')
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+  End
+
+  Describe Use cases
+    It might be called with {pattern}
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync grep a
+      Assert Equals(winnr('$'), 1)
+      " Focused buffer
+      Assert Equals(bufname('%'), printf('gina://%s:grep', slit1.refname))
+      Assert Equals(getline(1, '$'), [
+            \ 'A/foo.txt[36m:[m1[36m:[m[1;31ma[m',
+            \ 'C/foo.txt[36m:[m1[36m:[m[1;31ma[m[1;31ma[m',
+            \])
+      Assert Equals(gina#action#candidates(1, line('$')), [
+            \ {
+            \   '__lnum': 1,
+            \   'word': 'a',
+            \   'col': 1,
+            \   'residual': [],
+            \   'path': 'A/foo.txt',
+            \   'rev': '',
+            \   'line': 1,
+            \   'abbr': 'A/foo.txt[36m:[m1[36m:[m[1;31ma[m'
+            \ },
+            \ {
+            \   '__lnum': 2,
+            \   'word': 'aa',
+            \   'col': 1,
+            \   'residual': [],
+            \   'path': 'C/foo.txt',
+            \   'rev': '',
+            \   'line': 1,
+            \   'abbr': 'C/foo.txt[36m:[m1[36m:[m[1;31ma[m[1;31ma[m',
+            \ },
+            \])
+    End
+
+    It might be called with -e --color-text
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync grep -e --color-text
+      Assert Equals(winnr('$'), 1)
+      " Focused buffer
+      Assert Equals(bufname('%'), printf('gina://%s:grep', slit1.refname))
+      Assert Equals(getline(1, '$'), [
+            \ "D/foo.txt\e[36m:\e[m1\e[36m:\e[m\e[1;31m--color-text\e[m",
+            \])
+      Assert Equals(gina#action#candidates(1, line('$')), [
+            \ {
+            \   '__lnum': 1,
+            \   'word': '--color-text',
+            \   'col': 1,
+            \   'residual': [],
+            \   'path': 'D/foo.txt',
+            \   'rev': '',
+            \   'line': 1,
+            \   'abbr': "D/foo.txt\e[36m:\e[m1\e[36m:\e[m\e[1;31m--color-text\e[m",
+            \ },
+            \])
+    End
+
+    It might be called with -e{pattern} --or -e{pattern}
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync grep -ea --or -eb
+      Assert Equals(winnr('$'), 1)
+      " Focused buffer
+      Assert Equals(bufname('%'), printf('gina://%s:grep', slit1.refname))
+      Assert Equals(getline(1, '$'), [
+            \ 'A/foo.txt[36m:[m1[36m:[m[1;31ma[m',
+            \ 'A/foo.txt[36m:[m2[36m:[m[1;31mb[m',
+            \ 'C/foo.txt[36m:[m1[36m:[m[1;31ma[m[1;31ma[m',
+            \ 'C/foo.txt[36m:[m2[36m:[m[1;31mb[m[1;31mb[m',
+            \])
+      Assert Equals(gina#action#candidates(1, line('$')), [
+            \ {
+            \   '__lnum': 1,
+            \   'word': 'a',
+            \   'col': 1,
+            \   'residual': [],
+            \   'path': 'A/foo.txt',
+            \   'rev': '',
+            \   'line': 1,
+            \   'abbr': 'A/foo.txt[36m:[m1[36m:[m[1;31ma[m'
+            \ },
+            \ {
+            \   '__lnum': 2,
+            \   'word': 'b',
+            \   'col': 1,
+            \   'residual': [],
+            \   'path': 'A/foo.txt',
+            \   'rev': '',
+            \   'line': 2,
+            \   'abbr': 'A/foo.txt[36m:[m2[36m:[m[1;31mb[m'
+            \ },
+            \ {
+            \   '__lnum': 3,
+            \   'word': 'aa',
+            \   'col': 1,
+            \   'residual': [],
+            \   'path': 'C/foo.txt',
+            \   'rev': '',
+            \   'line': 1,
+            \   'abbr': 'C/foo.txt[36m:[m1[36m:[m[1;31ma[m[1;31ma[m'
+            \ },
+            \ {
+            \   '__lnum': 4,
+            \   'word': 'bb',
+            \   'col': 1,
+            \   'residual': [],
+            \   'path': 'C/foo.txt',
+            \   'rev': '',
+            \   'line': 2,
+            \   'abbr': 'C/foo.txt[36m:[m2[36m:[m[1;31mb[m[1;31mb[m'
+            \ },
+            \])
+    End
+
+    It might be called with -e {pattern} --or -e {pattern}
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync grep -ea --or -eb
+      Assert Equals(winnr('$'), 1)
+      " Focused buffer
+      Assert Equals(bufname('%'), printf('gina://%s:grep', slit1.refname))
+      Assert Equals(getline(1, '$'), [
+            \ 'A/foo.txt[36m:[m1[36m:[m[1;31ma[m',
+            \ 'A/foo.txt[36m:[m2[36m:[m[1;31mb[m',
+            \ 'C/foo.txt[36m:[m1[36m:[m[1;31ma[m[1;31ma[m',
+            \ 'C/foo.txt[36m:[m2[36m:[m[1;31mb[m[1;31mb[m',
+            \])
+      Assert Equals(gina#action#candidates(1, line('$')), [
+            \ {
+            \   '__lnum': 1,
+            \   'word': 'a',
+            \   'col': 1,
+            \   'residual': [],
+            \   'path': 'A/foo.txt',
+            \   'rev': '',
+            \   'line': 1,
+            \   'abbr': 'A/foo.txt[36m:[m1[36m:[m[1;31ma[m'
+            \ },
+            \ {
+            \   '__lnum': 2,
+            \   'word': 'b',
+            \   'col': 1,
+            \   'residual': [],
+            \   'path': 'A/foo.txt',
+            \   'rev': '',
+            \   'line': 2,
+            \   'abbr': 'A/foo.txt[36m:[m2[36m:[m[1;31mb[m'
+            \ },
+            \ {
+            \   '__lnum': 3,
+            \   'word': 'aa',
+            \   'col': 1,
+            \   'residual': [],
+            \   'path': 'C/foo.txt',
+            \   'rev': '',
+            \   'line': 1,
+            \   'abbr': 'C/foo.txt[36m:[m1[36m:[m[1;31ma[m[1;31ma[m'
+            \ },
+            \ {
+            \   '__lnum': 4,
+            \   'word': 'bb',
+            \   'col': 1,
+            \   'residual': [],
+            \   'path': 'C/foo.txt',
+            \   'rev': '',
+            \   'line': 2,
+            \   'abbr': 'C/foo.txt[36m:[m2[36m:[m[1;31mb[m[1;31mb[m'
+            \ },
+            \])
+    End
+
+    It might be called with {pattern} -- A/*.txt
+      execute 'edit' fnameescape(slit1.path('A/foo.txt'))
+      GinaSync grep a -- A/*.txt
+      Assert Equals(winnr('$'), 1)
+      " Focused buffer
+      Assert Equals(bufname('%'), printf('gina://%s:grep:--', slit1.refname))
+      Assert Equals(getline(1, '$'), [
+            \ 'A/foo.txt[36m:[m1[36m:[m[1;31ma[m',
+            \])
+      Assert Equals(gina#action#candidates(1, line('$')), [
+            \ {
+            \   '__lnum': 1,
+            \   'word': 'a',
+            \   'col': 1,
+            \   'residual': ['A/*.txt'],
+            \   'path': 'A/foo.txt',
+            \   'rev': '',
+            \   'line': 1,
+            \   'abbr': 'A/foo.txt[36m:[m1[36m:[m[1;31ma[m'
+            \ },
+            \])
+    End
+  End
+
+  Describe #_is_column_supported()
+    It returns 1 for version 3.0, 3.0.0, ...
+      Assert True(gina#command#grep#_is_column_supported('3.0'))
+      Assert True(gina#command#grep#_is_column_supported('3.0.0'))
+      Assert True(gina#command#grep#_is_column_supported('4.0'))
+      Assert True(gina#command#grep#_is_column_supported('5'))
+    End
+
+    It returns 1 for version 2.20, 2.20.0, ...
+      Assert True(gina#command#grep#_is_column_supported('2.20'))
+      Assert True(gina#command#grep#_is_column_supported('2.20.0'))
+      Assert True(gina#command#grep#_is_column_supported('2.3'))
+    End
+
+    It returns 1 for version 2.19, 2.19.1, ...
+      Assert True(gina#command#grep#_is_column_supported('2.19'))
+      Assert True(gina#command#grep#_is_column_supported('2.19.1'))
+      Assert True(gina#command#grep#_is_column_supported('2.190'))
+    End
+
+    It returns 0 for version 2.18, 2.0, ...
+      Assert False(gina#command#grep#_is_column_supported('2.18'))
+      Assert False(gina#command#grep#_is_column_supported('2.18.1'))
+      Assert False(gina#command#grep#_is_column_supported('2.0'))
+      Assert False(gina#command#grep#_is_column_supported('1.0'))
+      Assert False(gina#command#grep#_is_column_supported('0.1'))
+    End
+  End
+End

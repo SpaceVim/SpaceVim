@@ -1,13 +1,13 @@
 "=============================================================================
 " assembly.vim --- lang#assembly layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#assembly, layer-lang-assembly
+" @section lang#assembly, layers-lang-assembly
 " @parentsection layers
 " This layer provides syntax highlighting for assembly. To enable this
 " layer:
@@ -18,7 +18,7 @@
 
 function! SpaceVim#layers#lang#assembly#plugins() abort
   let plugins = []
-  call add(plugins, ['wsdjeg/vim-assembly', { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-assembly', { 'merged' : 0}])
   return plugins
 endfunction
 

@@ -13,7 +13,8 @@ endfunction
 function! neoformat#formatters#css#csscomb() abort
     return {
             \ 'exe': 'csscomb',
-            \ 'replace': 1
+            \ 'replace': 1,
+            \ 'try_node_exe': 1,
             \ }
 endfunction
 
@@ -34,6 +35,7 @@ function! neoformat#formatters#css#stylefmt() abort
     return {
         \ 'exe': 'stylefmt',
         \ 'stdin': 1,
+        \ 'try_node_exe': 1,
         \ }
 endfunction
 
@@ -41,7 +43,8 @@ function! neoformat#formatters#css#prettier() abort
     return {
         \ 'exe': 'prettier',
         \ 'args': ['--stdin-filepath', '"%:p"', '--parser', 'css'],
-        \ 'stdin': 1
+        \ 'stdin': 1,
+        \ 'try_node_exe': 1,
         \ }
 endfunction
 
@@ -50,5 +53,6 @@ function! neoformat#formatters#css#stylelint() abort
             \ 'exe': 'stylelint',
             \ 'args': ['--fix', '--stdin-filename', '"%:t"'],
             \ 'stdin': 1,
+            \ 'try_node_exe': 1,
             \ }
 endfunction

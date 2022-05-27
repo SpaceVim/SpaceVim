@@ -1,7 +1,7 @@
 "=============================================================================
 " sid.vim --- SpaceVim SID API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -46,7 +46,7 @@ endfunction
 
 function! s:self.get_sid_from_path(path) abort
   let path = self._file.unify_path(a:path)
-  let scriptnames = s:self._data_dict.swap(self.scriptnames())
+  let scriptnames = self._data_dict.swap(self.scriptnames())
   if has_key(scriptnames, path)
     return scriptnames[path]
   else

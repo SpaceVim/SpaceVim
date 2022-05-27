@@ -1,0 +1,445 @@
+Describe Action
+  Before all
+    let Action = vital#gina#import('Action')
+
+    function! s:_vital_action_test(...) abort
+      let b:_vital_action_test_called_with = a:000
+    endfunction
+
+    let Funcref = function('s:_vital_action_test')
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+  End
+
+  Describe .get()
+    It returns an attached action binder instance
+      let binder1 = Action.attach([])
+      let binder2 = Action.get()
+      Assert Same(binder1, binder2)
+    End
+
+    It returns v:null if no action binder has attached
+      let binder = Action.get()
+      Assert True(binder is# v:null)
+    End
+  End
+
+  Describe .attach({candidates} [, {options}])
+    It returns an instance of action binder
+      let binder = Action.attach([])
+      Assert KeyExists(binder, 'define')
+      Assert KeyExists(binder, 'alias')
+      Assert KeyExists(binder, 'action')
+      Assert KeyExists(binder, 'call')
+      Assert IsFunction(binder.define)
+      Assert IsFunction(binder.alias)
+      Assert IsFunction(binder.action)
+      Assert IsFunction(binder.call)
+    End
+
+    It defines builtin actions
+      let binder = Action.attach([])
+      Assert Equals(sort(keys(binder.actions)), sort([
+            \ 'builtin:echo',
+            \ 'builtin:help',
+            \ 'builtin:help:all',
+            \ 'builtin:choice',
+            \ 'builtin:repeat',
+            \]))
+
+      let binder = Action.attach([], {'markable': 1})
+      Assert Equals(sort(keys(binder.actions)), sort([
+            \ 'builtin:echo',
+            \ 'builtin:help',
+            \ 'builtin:help:all',
+            \ 'builtin:choice',
+            \ 'builtin:repeat',
+            \ 'builtin:mark',
+            \ 'builtin:mark:set',
+            \ 'builtin:mark:unset',
+            \ 'builtin:mark:unall',
+            \]))
+    End
+
+    It defines default aliases
+      let binder = Action.attach([])
+      Assert Equals(sort(keys(binder.aliases)), sort([
+            \ 'echo',
+            \ 'help',
+            \ 'help:all',
+            \]))
+
+      let binder = Action.attach([], {'markable': 1})
+      Assert Equals(sort(keys(binder.aliases)), sort([
+            \ 'echo',
+            \ 'help',
+            \ 'help:all',
+            \ 'mark',
+            \ 'mark:unall',
+            \]))
+    End
+
+    It defines default mappings
+      call Action.attach([])
+      Assert Equals(mapcheck('?', 'n'), '<Plug>(action-builtin-help)')
+      Assert Equals(mapcheck('a', 'n'), '<Plug>(action-builtin-choice)')
+      Assert Equals(mapcheck('a', 'v'), '<Plug>(action-builtin-choice)')
+      Assert Equals(mapcheck('a', 'i'), '<Plug>(action-builtin-choice)')
+      Assert Equals(mapcheck('.', 'n'), '<Plug>(action-builtin-repeat)')
+      Assert Equals(mapcheck('.', 'v'), '<Plug>(action-builtin-repeat)')
+      Assert Equals(mapcheck('.', 'i'), '<Plug>(action-builtin-repeat)')
+
+      call Action.attach([], {'markable': 1})
+      Assert Equals(mapcheck('?', 'n'), '<Plug>(action-builtin-help)')
+      Assert Equals(mapcheck('a', 'n'), '<Plug>(action-builtin-choice)')
+      Assert Equals(mapcheck('a', 'v'), '<Plug>(action-builtin-choice)')
+      Assert Equals(mapcheck('a', 'i'), '<Plug>(action-builtin-choice)')
+      Assert Equals(mapcheck('.', 'n'), '<Plug>(action-builtin-repeat)')
+      Assert Equals(mapcheck('.', 'v'), '<Plug>(action-builtin-repeat)')
+      Assert Equals(mapcheck('.', 'i'), '<Plug>(action-builtin-repeat)')
+      Assert Equals(mapcheck('mm', 'n'), '<Plug>(action-builtin-mark)')
+      Assert Equals(mapcheck('mm', 'v'), '<Plug>(action-builtin-mark)')
+      Assert Equals(mapcheck('m+', 'n'), '<Plug>(action-builtin-mark-set)')
+      Assert Equals(mapcheck('m+', 'v'), '<Plug>(action-builtin-mark-set)')
+      Assert Equals(mapcheck('m-', 'n'), '<Plug>(action-builtin-mark-unset)')
+      Assert Equals(mapcheck('m-', 'v'), '<Plug>(action-builtin-mark-unset)')
+      Assert Equals(mapcheck('m*', 'n'), '<Plug>(action-builtin-mark-unall)')
+      Assert Equals(mapcheck('<C-j>', 'n'), '<Plug>(action-builtin-mark)j')
+      Assert Equals(mapcheck('<C-k>', 'n'), 'k<Plug>(action-builtin-mark)')
+    End
+  End
+
+  Describe binder instance
+    Describe .define({name}, {callback} [, {options}])
+      It defines a new action with {name} and {callback}
+        let binder = Action.attach([])
+        call binder.define('test', Funcref)
+        Assert Equals(binder.actions['test'], {
+              \ 'callback': Funcref,
+              \ 'name': 'test',
+              \ 'description': '',
+              \ 'mapping': '<Plug>(action-test)',
+              \ 'mapping_mode': '',
+              \ 'requirements': [],
+              \ 'options': {},
+              \ 'hidden': 0,
+              \ 'repeatable': 1,
+              \ 'use_marks': 1,
+              \ 'clear_marks': 1,
+              \})
+      End
+
+      It defines <Plug> mappings of the action
+        let binder = Action.attach([])
+        call binder.define('test', Funcref, {
+              \ 'mapping_mode': 'nvi',
+              \})
+        Assert Match(
+              \ mapcheck('<Plug>(action-test)', 'n'),
+              \ ':<C-U>call <SNR>\d\+__call_for_mapping(''test'')<CR>'
+              \)
+        Assert Match(
+              \ mapcheck('<Plug>(action-test)', 'v'),
+              \ ':call <SNR>\d\+__call_for_mapping(''test'')<CR>'
+              \)
+        Assert Match(
+              \ mapcheck('<Plug>(action-test)', 'i'),
+              \ '<Esc>:<C-U>call <SNR>\d\+__call_for_mapping(''test'')<CR>'
+              \)
+      End
+    End
+
+    Describe .alias({alias}, {expr} [, {options}])
+      It defines an alias to {expr}
+        let binder = Action.attach([])
+        call binder.define('test', Funcref)
+        call binder.alias('t', 'test')
+        Assert Equals(binder.aliases['t'], {
+              \ 'name': 'test',
+              \ 'expr': 'test',
+              \ 'alias': 't',
+              \})
+
+        call binder.alias('tv', 'verbose test')
+        Assert Equals(binder.aliases['tv'], {
+              \ 'name': 'test',
+              \ 'expr': 'verbose test',
+              \ 'alias': 'tv',
+              \})
+      End
+    End
+
+    Describe .action({expr})
+      It returns [{mods}, {action}] for an existing action
+        let binder = Action.attach([])
+        call binder.define('test', Funcref)
+        let [mods, action] = binder.action('test')
+        Assert Equals(mods, '')
+        Assert Equals(action.name, 'test')
+
+        let [mods, action] = binder.action('verbose test')
+        Assert Equals(mods, 'verbose ')
+        Assert Equals(action.name, 'test')
+
+        let [mods, action] = binder.action('verbose topleft test')
+        Assert Equals(mods, 'verbose topleft ')
+        Assert Equals(action.name, 'test')
+      End
+
+      It returns [{mods}, {action}] for an existing alias
+        let binder = Action.attach([])
+        call binder.define('test', Funcref)
+        call binder.alias('t', 'test')
+        let [mods, action] = binder.action('t')
+        Assert Equals(mods, '')
+        Assert Equals(action.name, 'test')
+
+        let [mods, action] = binder.action('verbose t')
+        Assert Equals(mods, 'verbose ')
+        Assert Equals(action.name, 'test')
+
+        let [mods, action] = binder.action('verbose topleft t')
+        Assert Equals(mods, 'verbose topleft ')
+        Assert Equals(action.name, 'test')
+      End
+
+      It returns [{mods}, {action}] for an existing alias with mods
+        let binder = Action.attach([])
+        call binder.define('test', Funcref)
+        call binder.alias('t', 'silent test')
+        let [mods, action] = binder.action('t')
+        Assert Equals(mods, 'silent ')
+        Assert Equals(action.name, 'test')
+
+        let [mods, action] = binder.action('verbose t')
+        Assert Equals(mods, 'verbose silent ')
+        Assert Equals(action.name, 'test')
+
+        let [mods, action] = binder.action('verbose topleft t')
+        Assert Equals(mods, 'verbose topleft silent ')
+        Assert Equals(action.name, 'test')
+      End
+
+      It returns [{mods}, {action}] for an existing action which start from {expr}
+        let binder = Action.attach([])
+        call binder.define('test', Funcref)
+        let [mods, action] = binder.action('tes')
+        Assert Equals(mods, '')
+        Assert Equals(action.name, 'test')
+
+        let [mods, action] = binder.action('verbose tes')
+        Assert Equals(mods, 'verbose ')
+        Assert Equals(action.name, 'test')
+
+        let [mods, action] = binder.action('verbose topleft tes')
+        Assert Equals(mods, 'verbose topleft ')
+        Assert Equals(action.name, 'test')
+      End
+
+      It returns [{mods}, {action}] for an existing alias which start from {expr}
+        let binder = Action.attach([])
+        call binder.define('test', Funcref)
+        call binder.alias('foo', 'test')
+        let [mods, action] = binder.action('fo')
+        Assert Equals(mods, '')
+        Assert Equals(action.name, 'test')
+
+        let [mods, action] = binder.action('verbose fo')
+        Assert Equals(mods, 'verbose ')
+        Assert Equals(action.name, 'test')
+
+        let [mods, action] = binder.action('verbose topleft fo')
+        Assert Equals(mods, 'verbose topleft ')
+        Assert Equals(action.name, 'test')
+      End
+
+      It returns [{mods}, {action}] for an existing alias with mods which start from {expr}
+        let binder = Action.attach([])
+        call binder.define('test', Funcref)
+        call binder.alias('foo', 'silent test')
+        let [mods, action] = binder.action('fo')
+        Assert Equals(mods, 'silent ')
+        Assert Equals(action.name, 'test')
+
+        let [mods, action] = binder.action('verbose fo')
+        Assert Equals(mods, 'verbose silent ')
+        Assert Equals(action.name, 'test')
+
+        let [mods, action] = binder.action('verbose topleft fo')
+        Assert Equals(mods, 'verbose topleft silent ')
+        Assert Equals(action.name, 'test')
+      End
+
+      It returns [{mods}, {action}] for the first shortest action matched when multiple action/alias are found for {expr}
+        let binder = Action.attach([])
+        call binder.define('test', Funcref)
+        call binder.define('test:foo', Funcref)
+        let [mods, action] = binder.action('te')
+        Assert Equals(mods, '')
+        Assert Equals(action.name, 'test')
+      End
+
+      It throws an exception when no action/alias is found for {expr}
+        let binder = Action.attach([])
+        call binder.define('test', Funcref)
+        Throws /No corresponding action/ binder.action('fo')
+      End
+    End
+
+    Describe .call({expr} [, ...])
+      It filters {candidates} by {action.requirements} before call
+        let binder = Action.attach([])
+        call binder.define('test', Funcref, {
+              \ 'requirements': ['path'],
+              \})
+        call binder.alias('t', 'silent test')
+
+        let [mods, action] = binder.call('test', [
+              \ {'word': 'foo'},
+              \ {'word': 'bar'},
+              \ {'word': 'hoge', 'path': 1},
+              \])
+        Assert Equals(mods, '')
+        Assert Equals(action.name, 'test')
+        Assert Equals(b:_vital_action_test_called_with, [
+              \ [{'word': 'hoge', 'path': 1}],
+              \ {'mods': ''},
+              \])
+
+        let [mods, action] = binder.call('verbose test', [
+              \ {'word': 'foo'},
+              \ {'word': 'bar'},
+              \ {'word': 'hoge', 'path': 1},
+              \])
+        Assert Equals(mods, 'verbose ')
+        Assert Equals(action.name, 'test')
+        Assert Equals(b:_vital_action_test_called_with, [
+              \ [{'word': 'hoge', 'path': 1}],
+              \ {'mods': 'verbose '},
+              \])
+
+        let [mods, action] = binder.call('verbose t', [
+              \ {'word': 'foo'},
+              \ {'word': 'bar'},
+              \ {'word': 'hoge', 'path': 1},
+              \])
+        Assert Equals(mods, 'verbose silent ')
+        Assert Equals(action.name, 'test')
+        Assert Equals(b:_vital_action_test_called_with, [
+              \ [{'word': 'hoge', 'path': 1}],
+              \ {'mods': 'verbose silent '},
+              \])
+      End
+
+      Describe .call({expr} [, {fline} [, {lline}]])
+        It calls an action/alias of {expr} with a candidate of the current line and returns [{mods}, {action}]
+          let binder = Action.attach([
+                \ {'word': 'a'},
+                \ {'word': 'b'},
+                \ {'word': 'c'},
+                \])
+          call binder.define('test', Funcref)
+          call setline(1, ['a', 'b', 'c'])
+          call setpos('.', [0, 2, 1, 0])
+
+          let [mods, action] = binder.call('test')
+          Assert Equals(mods, '')
+          Assert Equals(action.name, 'test')
+          Assert Equals(b:_vital_action_test_called_with, [
+                \ [{'word': 'b', '__lnum': 2}],
+                \ {'mods': ''},
+                \])
+        End
+
+        It calls an action/alias of {expr} with a candidate of {fline} and returns [{mods}, {action}]
+          let binder = Action.attach([
+                \ {'word': 'a'},
+                \ {'word': 'b'},
+                \ {'word': 'c'},
+                \])
+          call binder.define('test', Funcref)
+          call setline(1, ['a', 'b', 'c'])
+          call setpos('.', [0, 2, 1, 0])
+
+          let [mods, action] = binder.call('test', 3)
+          Assert Equals(mods, '')
+          Assert Equals(action.name, 'test')
+          Assert Equals(b:_vital_action_test_called_with, [
+                \ [{'word': 'c', '__lnum': 3}],
+                \ {'mods': ''},
+                \])
+        End
+
+        It calls an action/alias of {expr} with candidates from {fline} to {lline} and returns [{mods}, {action}]
+          let binder = Action.attach([
+                \ {'word': 'a'},
+                \ {'word': 'b'},
+                \ {'word': 'c'},
+                \])
+          call binder.define('test', Funcref)
+          call setline(1, ['a', 'b', 'c'])
+          call setpos('.', [0, 2, 1, 0])
+
+          let [mods, action] = binder.call('test', 1, 3)
+          Assert Equals(mods, '')
+          Assert Equals(action.name, 'test')
+          Assert Equals(b:_vital_action_test_called_with, [
+                \ [
+                \   {'word': 'a', '__lnum': 1},
+                \   {'word': 'b', '__lnum': 2},
+                \   {'word': 'c', '__lnum': 3},
+                \ ],
+                \ {'mods': ''},
+                \])
+        End
+      End
+
+      Describe .call({expr}, {candidates})
+        It calls an action/alias of {expr} with {candidates} and returns [{mods}, {action}]
+          let binder = Action.attach([])
+          call binder.define('test', Funcref)
+          call binder.alias('t', 'silent test')
+
+          let [mods, action] = binder.call('test', [
+                \ {'word': 'foo'},
+                \ {'word': 'bar'},
+                \])
+          Assert Equals(mods, '')
+          Assert Equals(action.name, 'test')
+          Assert Equals(b:_vital_action_test_called_with, [
+                \ [{'word': 'foo'}, {'word': 'bar'}],
+                \ {'mods': ''},
+                \])
+
+          let [mods, action] = binder.call('verbose test', [
+                \ {'word': 'foo'},
+                \ {'word': 'bar'},
+                \])
+          Assert Equals(mods, 'verbose ')
+          Assert Equals(action.name, 'test')
+          Assert Equals(b:_vital_action_test_called_with, [
+                \ [{'word': 'foo'}, {'word': 'bar'}],
+                \ {'mods': 'verbose '},
+                \])
+
+          let [mods, action] = binder.call('verbose t', [
+                \ {'word': 'foo'},
+                \ {'word': 'bar'},
+                \])
+          Assert Equals(mods, 'verbose silent ')
+          Assert Equals(action.name, 'test')
+          Assert Equals(b:_vital_action_test_called_with, [
+                \ [{'word': 'foo'}, {'word': 'bar'}],
+                \ {'mods': 'verbose silent '},
+                \])
+        End
+      End
+    End
+  End
+End

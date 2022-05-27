@@ -1,7 +1,7 @@
 "=============================================================================
 " tools.vim --- SpaceVim tools layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -17,7 +17,7 @@ function! SpaceVim#layers#tools#plugins() abort
   call add(plugins, ['tpope/vim-scriptease',             { 'merged' : 0}])
   call add(plugins, ['lymslive/vimloo',                  { 'merged' : 0}])
   call add(plugins, ['lymslive/vnote',                   { 'merged' : 0}])
-  call add(plugins, ['junegunn/rainbow_parentheses.vim', { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/rainbow', { 'merged' : 0}])
   call add(plugins, ['mbbill/fencview',                  { 'on_cmd' : 'FencAutoDetect'}])
   call add(plugins, ['wsdjeg/vim-cheat',                 { 'on_cmd' : 'Cheat'}])
   call add(plugins, ['wsdjeg/Mysql.vim',                 { 'on_cmd' : 'SQLGetConnection'}])
@@ -28,10 +28,10 @@ function! SpaceVim#layers#tools#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-bookmarks',
         \ {'merged': 0,
         \ 'loadconf_before' : 1}])
-  if s:CMP.has('python')
-    call add(plugins, ['gregsexton/VimCalc', {'on_cmd' : 'Calc'}])
-  elseif s:CMP.has('python3')
+  if s:CMP.has('python3')
     call add(plugins, ['fedorenchik/VimCalc3', {'on_cmd' : 'Calc'}])
+  elseif s:CMP.has('python')
+    call add(plugins, ['gregsexton/VimCalc', {'on_cmd' : 'Calc'}])
   endif
 
   return plugins
@@ -55,16 +55,6 @@ function! SpaceVim#layers#tools#config() abort
   nnoremap <silent> ma :<C-u>BookmarkShowAll<Cr>
   nnoremap <silent> mn :<C-u>BookmarkNext<Cr>
   nnoremap <silent> mp :<C-u>BookmarkPrev<Cr>
-  augroup rainbow_lisp
-    autocmd!
-    autocmd FileType lisp,clojure,scheme,racket,java RainbowParentheses
-    autocmd FileType vimcalc setlocal nonu nornu nofoldenable | inoremap <silent> <buffer> <c-d> <c-[>:q<cr>
-          \ | nnoremap <silent> <buffer> q :bdelete<cr>
-  augroup END
-  let g:rainbow#max_level = 16
-  let g:rainbow#pairs = [['(', ')'], ['[', ']'],['{','}']]
-  " List of colors that you do not want. ANSI code or #RRGGBB
-  let g:rainbow#blacklist = [233, 234]
   if maparg('<C-_>', 'v') ==# ''
     vnoremap <silent> <C-_> <Esc>:Ydv<CR>
   endif

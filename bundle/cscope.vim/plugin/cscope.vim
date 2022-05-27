@@ -1,14 +1,12 @@
 "=============================================================================
 " cscope.vim --- cscope layer plugin
 " Copyright (c) 2016-2017 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 if !exists('g:cscope_silent')
-  ""
-  " Silent or not when run cscope command. by default it is 1.
   let g:cscope_silent = 1
 endif
 
@@ -41,7 +39,7 @@ com! -nargs=? -complete=customlist,cscope#listDirs CscopeClear call cscope#clear
 " List all the cscope databases.
 com! -nargs=0 CscopeList call cscope#list_databases()
 
-if exists('g:cscope_preload_path')
+if exists('g:cscope_preload_path') && !empty(g:cscope_preload_path)
   call cscope#preloadDB()
 endif
 

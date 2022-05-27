@@ -1,21 +1,21 @@
 scriptencoding utf-8
+" 1 open list and move cursor 2 open list without move cursor
+
+let s:lint_option = SpaceVim#layers#checkers#get_lint_option()
 let s:neomake_automake_events = {}
-if get(g:, 'spacevim_lint_on_save', 0)
-    let s:neomake_automake_events['BufWritePost'] = {'delay': 0}
+if s:lint_option.lint_on_the_fly
+  let s:neomake_automake_events['TextChanged'] = {'delay': 750}
+  let s:neomake_automake_events['TextChangedI'] = {'delay': 750}
 endif
-
-if get(g:, 'spacevim_lint_on_the_fly', 0)
-    let s:neomake_automake_events['TextChanged'] = {'delay': 750}
-    let s:neomake_automake_events['TextChangedI'] = {'delay': 750}
+if s:lint_option.lint_on_save
+  let s:neomake_automake_events['BufWritePost'] = {'delay': 0}
 endif
-
 if !empty(s:neomake_automake_events)
   try
     call neomake#configure#automake(s:neomake_automake_events)
   catch /^Vim\%((\a\+)\)\=:E117/
   endtry
 endif
-" 1 open list and move cursor 2 open list without move cursor
 let g:neomake_open_list = get(g:, 'neomake_open_list', 2)
 let g:neomake_verbose = get(g:, 'neomake_verbose', 0)
 let g:neomake_java_javac_delete_output = get(g:, 'neomake_java_javac_delete_output', 0)

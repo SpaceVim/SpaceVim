@@ -1,5 +1,14 @@
 function! neoformat#formatters#ruby#enabled() abort
-   return ['rufo', 'rubybeautify', 'rubocop']
+   return ['prettier', 'rufo', 'rubybeautify', 'rubocop']
+endfunction
+
+function! neoformat#formatters#ruby#prettier() abort
+     return {
+        \ 'exe': 'prettier',
+        \ 'args': ['--stdin-filepath', '"%:p"'],
+        \ 'stdin': 1,
+        \ 'try_node_exe': 1,
+        \ }
 endfunction
 
 function! neoformat#formatters#ruby#rufo() abort

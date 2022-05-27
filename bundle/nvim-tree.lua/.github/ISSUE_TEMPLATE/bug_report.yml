@@ -1,0 +1,71 @@
+name: Bug report
+description: Report a problem with nvim-tree
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before reporting: search [existing issues](https://github.com/kyazdani42/nvim-tree.lua/issues) and make sure that nvim-tree is updated to the latest version. If you are experiencing performance issues, please [enable profiling](https://github.com/kyazdani42/nvim-tree.lua#performance-issues) and attach the logs.
+  - type: textarea
+    attributes:
+      label: "Description"
+      description: "A short description of the problem you are reporting."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Neovim version"
+      description: "Output of `nvim --version`. Please see nvim-tree.lua [minimum required version](https://github.com/kyazdani42/nvim-tree.lua#notice)."
+      placeholder: |
+        NVIM v0.6.1
+        Build type&#58 Release
+        LuaJIT 2.1.0-beta3
+      render: text
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: "Operating system and version"
+      placeholder: "Linux 5.16.11-arch1-1, macOS 11.5, Windows 10"
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: "nvim-tree version"
+      description: "`cd <your-package-directory>/nvim-tree.lua ; git log --format='%h' -n 1`"
+      placeholder: |
+        nvim-tree branch, commit or tag number
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Minimal config"
+      description: "Minimal(!) configuration necessary to reproduce the issue.
+
+        (Right click) save [nvt-min.lua](https://raw.githubusercontent.com/kyazdani42/nvim-tree.lua/master/.github/ISSUE_TEMPLATE/nvt-min.lua) to `/tmp` and run using `nvim -nu /tmp/nvt-min.lua`
+
+        If _absolutely_ necessary, add plugins and modify the nvim-tree setup at the indicated lines.
+
+        Paste the contents of your `/tmp/nvt-min.lua` here."
+      render: lua
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Steps to reproduce"
+      description: "Steps to reproduce using the minimal config provided below."
+      placeholder: |
+        1. nvim -nu /tmp/nvt-min.lua
+        2. :NvimTreeOpen
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Expected behavior"
+      description: "A description of the behavior you expected:"
+  - type: textarea
+    attributes:
+      label: "Actual behavior"
+      description: "Observed behavior (may optionally include images, videos or a screencast)."
+ 

@@ -1,14 +1,14 @@
 "=============================================================================
 " git.vim --- SpaceVim git layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 
 ""
-" @section git, layer-git
+" @section git, layers-git
 " @parentsection layers
 " `git` layer provides git integration for SpaceVim.
 "
@@ -22,7 +22,31 @@
 "     name = 'git'
 "     git_plugin = 'git'
 " <
+" `git_diff_position`: set the default command to split diff windows, by
+" default it is `10split`. Example:
+" >
+"   [[layers]]
+"     name = 'git'
+"     git_diff_position = 'vsplit'
+" <
+" @subsection Key bindings
 "
+" The following key bindings will be definded when the `git` layer is loaded.
+" >
+"   Key Binding   Description
+"   SPC g s       view git status
+"   SPC g S       stage current file
+"   SPC g U       unstage current file
+"   SPC g c       edit git commit
+"   SPC g p       git push
+"   SPC g m       git branch manager
+"   SPC g d       view git diff
+"   SPC g A       stage all files
+"   SPC g b       open git blame windows
+"   SPC g h a     stage current hunk
+"   SPC g h r     undo cursor hunk
+"   SPC g h v     preview cursor hunk
+" <
 
 
 if exists('s:git_plugin')
@@ -38,7 +62,7 @@ function! SpaceVim#layers#git#plugins() abort
         \ ]
   call add(plugins, ['airblade/vim-gitgutter',   { 'merged' : 0}])
   if s:git_plugin ==# 'gina'
-    call add(plugins, ['lambdalisue/gina.vim', { 'on_cmd' : 'Gina'}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/gina.vim', { 'merged' : 0}])
   elseif s:git_plugin ==# 'fugitive'
     call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
     call add(plugins, ['tpope/vim-dispatch', { 'merged' : 0}])
@@ -47,16 +71,13 @@ function! SpaceVim#layers#git#plugins() abort
   else
     call add(plugins, [g:_spacevim_root_dir . 'bundle/git.vim', { 'merged' : 0}])
   endif
-  if g:spacevim_filemanager ==# 'nerdtree'
-    call add(plugins, ['Xuyuanp/nerdtree-git-plugin', {'merged' : 0}])
-  endif
   return plugins
 endfunction
 
 
 function! SpaceVim#layers#git#config() abort
   let g:signify_vcs_list = ['hg']
-  let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VersionControl/git'})
+  let g:_spacevim_mappings_space.g = get(g:_spacevim_mappings_space, 'g',  {'name' : '+VCS/git'})
   if s:git_plugin ==# 'gina'
     call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gina status --opener=10split', 'git-status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Gina add %', 'stage-current-file', 1)
@@ -68,17 +89,22 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gina blame', 'view-git-blame', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'Gina log %', 'git-log-of-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'Gina log', 'git-log-of-current-repo', 1)
+    augroup spacevim_git_layer_gina
+      autocmd!
+      autocmd FileType gina-log setlocal concealcursor=nvic
+      autocmd FileType gina-log setlocal conceallevel=3
+    augroup END
   elseif s:git_plugin ==# 'fugitive'
     call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Git', 'git-status', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'S'], 'Git add %', 'stage-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'U'], 'Git reset -q %', 'unstage-current-file', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Git commit', 'edit-git-commit', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Git push', 'git-push', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gdiff', 'view-git-diff', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gdiffsplit', 'view-git-diff', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Git add .', 'stage-all-files', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Git blame', 'view-git-blame', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'Glog -- %', 'git-log-of-current-file', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'Glog --', 'git-log-of-current-repo', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'Gclog -- %', 'git-log-of-current-file', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'Gclog --', 'git-log-of-current-repo', 1)
   elseif s:git_plugin ==# 'gita'
     let g:gita#suppress_warning = 1
     call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gita status', 'git-status', 1)
@@ -138,6 +164,7 @@ function! SpaceVim#layers#git#set_variable(var) abort
         \ get(a:var,
         \ 'git-plugin',
         \ s:git_plugin))
+  let g:git_diff_position = get(a:var, 'git_diff_position', '10split')
 
 endfunction
 

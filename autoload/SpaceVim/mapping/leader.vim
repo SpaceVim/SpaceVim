@@ -1,7 +1,7 @@
 "=============================================================================
 " leader.vim --- mapping leader definition file for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -199,6 +199,7 @@ function! SpaceVim#mapping#leader#getName(key) abort
 endfunction
 
 function! SpaceVim#mapping#leader#defindKEYs() abort
+  call SpaceVim#logger#debug('defind SPC h k prefixs')
   let g:_spacevim_mappings_prefixs = {}
   if !g:spacevim_vimcompatible && !empty(g:spacevim_windows_leader)
     let g:_spacevim_mappings_prefixs[g:spacevim_windows_leader] = {'name' : '+Window prefix'}

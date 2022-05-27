@@ -1,0 +1,3 @@
+[
+  (rule_set)
+] @fold

@@ -1,13 +1,13 @@
 "=============================================================================
 " asciidoc.vim --- lang#asciidoc layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#asciidoc, layer-lang-asciidoc
+" @section lang#asciidoc, layers-lang-asciidoc
 " @parentsection layers
 " This layer provides syntax highlighting for asciidoc. To enable this
 " layer:
@@ -56,6 +56,13 @@ function! s:language_specified_mappings() abort
         \ 'call call('
         \ . string(function('s:compile_to_html')) . ', [])',
         \ 'compile-to-html', 1)
+endfunction
+
+function! s:compile_to_html() abort
+  let input = expand('%')
+  let target = fnamemodify(input, ':r') . '.html'
+  let cmd = printf('asciidoc -o %s %s', target, input)
+  call system(cmd)
 endfunction
 
 function! SpaceVim#layers#lang#asciidoc#health() abort

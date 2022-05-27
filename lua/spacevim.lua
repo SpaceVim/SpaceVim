@@ -1,18 +1,6 @@
 local M = {}
 
 
-local options = require('spacevim.opt')
-local layers = require('spacevim.layer')
-
-
-
-function M.bootstrap()
-
-    options.init()
-    layers.init()
-
-end
-
 function M.eval(l)
     if vim.api ~= nil then
         return vim.api.nvim_eval(l)
@@ -99,6 +87,14 @@ M.vim_options = setmetatable({}, {
 -- this function is only for vim
 function M.has(feature)
     return M.eval('float2nr(has("' .. feature .. '"))')
+end
+
+function M.echo(msg)
+    if vim.api ~= nil then
+        vim.api.nvim_echo({{msg}}, false, {})
+    else
+        vim.command('echo ' .. build_argv({msg}))
+    end
 end
 
 return M

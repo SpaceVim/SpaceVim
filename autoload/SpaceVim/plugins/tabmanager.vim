@@ -1,12 +1,41 @@
 "=============================================================================
 " tabmanager.vim --- tab manager for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 scriptencoding utf-8
+
+""
+" @section tab manager, plugins-tabmanager
+" @parentsection plugins
+" The `tabmanager` plugin provides tab manager support for SpaceVim.
+" 
+" @subsection Key bindings
+" >
+"   Key binding     Description
+"   SPC t t         open tab manager windows
+" <
+"
+" In the tab manager windows, the following key bindings can be used:
+" >
+"   Key binding     Description
+"   ---------------------------
+"   q               close tab manager
+"   o               toggle tab
+"   r               rename tabpage
+"   n               create new named tabpage
+"   N               create new unamed tabpage
+"   x               delete tabpage
+"   yy              copy tabpage
+"   p               paste tabpage
+"   Ctrl-Shift-Up   move tabpage backward
+"   Ctrl-Shift-Down move tabpage forward
+" <
+
+
 " APIs
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
 let s:TABs = SpaceVim#api#import('vim#tab')
@@ -69,6 +98,17 @@ function! s:init_buffer() abort
   augroup END
 endfunction
 
+function! s:workspace_directory(tabnr) abort
+  if exists(':tcd')
+    return getcwd(-1, str2nr(a:tabnr))
+  elseif exists('*win_getid')
+    return getcwd(win_getid(tabpagewinnr(a:tabnr)))
+  elseif exists(':lcd')
+    let bufnr = tabpagebuflist(a:tabnr)[tabpagewinnr(a:tabnr) - 1]
+    return getbufvar('%', 'rootDir', '')
+  endif
+endfunction
+
 function! s:update_context() abort
   setl modifiable
   silent! normal! gg"_dG
@@ -79,7 +119,7 @@ function! s:update_context() abort
       call add(ctx,
             \ '▼ ' . (page == tabpagenr() ? '*' : ' ')
             \ . 'Tab ' . page 
-            \ . ' ' . gettabvar(page, '_spacevim_tab_name', bufname(tabpagebuflist(page)[tabpagewinnr(page) - 1]))
+            \ . ' ' . gettabvar(page, '_spacevim_tab_name', fnamemodify(s:workspace_directory(page), ':t'))
             \ )
       let winid = 1
       for _buf in tree[page]
@@ -94,7 +134,7 @@ function! s:update_context() abort
       call add(ctx,
             \ '▷ ' . (page == tabpagenr() ? '*' : ' ')
             \ . 'Tab ' . page 
-            \ . ' ' . gettabvar(page, '_spacevim_tab_name', bufname(tabpagebuflist(page)[tabpagewinnr(page) - 1]))
+            \ . ' ' . gettabvar(page, '_spacevim_tab_name', fnamemodify(s:workspace_directory(page), ':t'))
             \ )
     endif
   endfor
@@ -228,7 +268,7 @@ function! s:copy_tab() abort
   let s:copy_tab_name = gettabvar(cursor_tab, '_spacevim_tab_name', '')
   exe 'tabnext ' . cursor_tab
   let save_sessionopts = &sessionoptions
-  let tabsession = g:spacevim_data_dir.'/SpaceVim/tabmanager_session.vim'
+  let tabsession = g:spacevim_data_dir.'SpaceVim/tabmanager_session.vim'
   let &sessionoptions = 'winsize'
   exe 'mksession! ' . tabsession
   exe 'tabnext ' . current_tab
@@ -251,7 +291,7 @@ function! s:paste_tab() abort
   let current_tab = tabpagenr()
   let tabid = s:get_cursor_tabnr()
   silent! exe tabid . 'tabnew '
-  silent! exe 'so '.g:spacevim_data_dir.'/SpaceVim/tabmanager_session.vim'
+  silent! exe 'so '.g:spacevim_data_dir.'SpaceVim/tabmanager_session.vim'
   call settabvar(tabpagenr(),
         \ 'spacevim_tabman_expandable',
         \ s:copy_tab_expand_status)

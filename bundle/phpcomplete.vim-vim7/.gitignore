@@ -1,0 +1,4 @@
+misc/dist_builtin.vim
+tests/log.txt-*
+**/DBG
+bin/tags

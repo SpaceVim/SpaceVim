@@ -1,7 +1,7 @@
 "=============================================================================
 " tab.vim --- SpaceVim tab API
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -44,8 +44,7 @@ endfunction
 augroup spacevim_api_vim_tab
   autocmd!
   autocmd TabLeave * let s:previous_tabpagenr = tabpagenr()
-  if exists('#TabClosed')
-    " TabClosed event is added in patch-7.4.2027
+  if exists('##TabClosed')
     autocmd TabClosed * call <SID>tab_closed_handle()
   endif
 augroup END

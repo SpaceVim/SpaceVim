@@ -1,7 +1,7 @@
 "=============================================================================
 " manager.vim --- plugin manager for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3 license
 "=============================================================================
@@ -231,7 +231,7 @@ function! s:on_pull_exit(id, data, event) abort
     if name ==# 'SpaceVim'
       let repo = {
             \ 'name' : 'SpaceVim',
-            \ 'path' : expand('~/.SpaceVim')
+            \ 'path' : g:_spacevim_root_dir
             \ }
     elseif g:spacevim_plugin_manager ==# 'dein'
       let repo = dein#get(name)
@@ -380,7 +380,7 @@ function! s:pull(repo) abort
       if name ==# 'SpaceVim'
         let repo = {
               \ 'name' : 'SpaceVim',
-              \ 'path' : expand('~/.SpaceVim')
+              \ 'path' : g:_spacevim_root_dir
               \ }
       elseif g:spacevim_plugin_manager ==# 'dein'
         let repo = dein#get(name)

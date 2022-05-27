@@ -1,0 +1,500 @@
+*vaxe.txt* A plugin for working with the Haxe language. For Vim version 7.3
+
+==============================================================================
+Author:  Justin Donaldson <jdonaldson@gmail.com>              *vaxe-author*
+License: WTFPL (see |vaxe-license|)
+==============================================================================
+CONTENTS                                        *vaxe-contents*
+
+|vaxe-introduction|                   Introduction and Feature Summary
+|vaxe-commands|                       Commands
+|vaxe-functions|                      Functions
+|vaxe-settings|                       Settings
+|compiler-vaxe|                       Compiler
+
+{Incompatible with Vi}
+
+==============================================================================
+
+INTRODUCTION                                    *vaxe*
+                                                *vaxe-introduction*
+
+This plugin adds basic support for Haxe syntax, indenting, and compiling.  In
+addition, it provides functions and features for advanced vim features such as
+|omnifunc|, |makeprg|, and |ctags|, as well as supporting useful bundles such
+as |tagbar|, |neocomplcache|, |snipmate|, and |powerline|. Also included is
+syntax and support for Hxml.
+
+Vaxe uses the Haxe compiler extensively to determine code completions, and
+generate various metadata.  The compiler, in turn, uses sequences of compiler
+directives in "hxml" files in order to specify build and output options,
+similar to gnu makefiles.  To trigger completions manually, use CTRL-X CTRL-O
+after the period following a field or module.  This will trigger the |omnifunc|.
+
+Vaxe has two different "build modes" that designate how to find the hxml
+file, as well as how to set up the |makeprg|.  If you're working with simple
+projects, then the default mode will work just fine.  If you have a complex
+project structure with many different sub-builds, then you may want to consider
+using |vaxe-project-mode|.  You can set up an autocommand to set the project
+hxml:
+
+>
+:autocmd BufNewFile,BufRead /project/* vaxe#ProjectHxml("/project/project.hxml")
+<
+
+Keep in mind that the project mode will persist throughout your entire session.
+If you wish to exit project mode, use the DefaultHxml command, or
+vaxe#DefaultHxml function.  Also, the quickfix list and related compiler
+information will always be in relation to the working directory at compilation
+time.  It is a good idea to keep an hxml file in the root of your working
+directory, and use vaxe to invoke the compiler there.
+
+If you need to change the name of the hxml file often, it may be a good idea
+to print the name of the build file in your statusline, to remind you which
+file is being used for "make" and completions:
+
+>
+:autocmd BufNewFile,BufRead *.hx set statusline+=\ build:\ %{vaxe#CurrentBuild()}
+<
+
+==============================================================================
+BUILD MODES                                     *vaxe-build*
+
+Default                                         *vaxe-default-mode*
+                        This mode is used automatically any time a *.hx file
+                        is opened.  It can be retriggered by calling
+                        |vaxe#DefaultHxml|. Vaxe will search the project
+                        path for the preferred file indicated by
+                        |g:vaxe_default_parent_search_glob|.
+
+                        If it finds a preferred build file in the parent
+                        directories of the currently edited file, it will set
+                        a b:vaxe_hxml variable for the current buffer.
+                        It sets a |makeprg| that has the following behavior:
+                        It will cd to the discovered hxml directory, call the
+                        compiler with the hxml, and redirect errors to
+                        standard out.
+
+Project                                         *vaxe-project-mode*
+                        This mode is used when |vaxe#ProjectHxml| is called.
+                        It will set a g:vaxe_hxml variable that will
+                        override any b:vaxe_hxml variables set by the default
+                        method.  It also sets a |makeprg| that simply executes
+                        the haxe compiler in the working directory,
+                        and redirects errors to standard out.  Project mode
+                        assumes that you will keep the same working directory
+                        throughout your vim session.
+
+
+Lime Project                                    *vaxe-lime-mode*
+                        This mode is used when |vaxe#lime#ProjectLime| is
+                        called, or if an lime file is detected on startup.  it
+                        will set a g:vaxe_lime variable that will override any
+                        b:vaxe_lime variables set by the default method.  it
+                        also sets a |makeprg| that simply executes the lime
+                        command in the working directory, and redirects errors
+                        to standard out.  Lime mode assumes that you will keep
+                        the same working directory throughout your vim session.
+                        when this mode is active, an hxml file is generated
+                        that contains information used for completions.  it
+                        will be named the same as the selectd lime file, and be
+                        located in the same directory, but will have an hxml
+                        extension.
+
+Flow Project                                    *vaxe-flow-mode*
+                        This mode is used when |vaxe#flow#ProjectFlow| is
+                        called, or if an flow file is detected on startup.  it
+                        will set a g:vaxe_flow variable that will override any
+                        b:vaxe_flow variables set by the default method.  it
+                        also sets a |makeprg| that simply executes the flow
+                        command in the working directory, and redirects errors
+                        to standard out.  Flow mode assumes that you will keep
+                        the same working directory throughout your vim session.
+                        when this mode is active, an hxml file is generated
+                        that contains information used for completions.  it
+                        will be named the same as the selectd flow file, and be
+                        located in the same directory, but will have an hxml
+                        extension.
+
+==============================================================================
+
+COMPILATION CACHE SERVER SUPPORT                *vaxe-cache-server*
+
+Set |g:vaxe_cache_server| to 1 in order to enable a cache server for
+compilation.  The haxe compiler will cache unchanged modules, which will
+greatly speed up the compilation of larger projects. It is currently only
+supported on unix/darwin targets.
+
+Currently, it only supports unix-based systems, and is only used during
+compiler-based completion requests (not for builds).
+
+The server will be killed upon exiting vim.  You can also kill it with
+|KillHaxeCompletionServer|, and start it again with |StartHaxeCompletionServer|.
+
+==============================================================================
+
+HAXE COMMANDS                                    *vaxe-commands*
+
+|DefaultHXML|           Call the |vaxe#DefaultHxml| function.  Accepts an
+                        optional single argument that will specify the hxml,
+                        lime or flow project file to use.
+
+|ProjectHXML|           Call the |vaxe#ProjectHxml| function. Accepts an
+                        optional single argument that will specify the hxml to
+                        use.
+
+                        use.
+
+|VaxeCtags|             Call the |vaxe#Ctags| function
+
+|VaxeToggleLogging|     Turns vaxe logging on/off (logs to :message)
+
+
+|VaxeStartCompletionServer|
+                        Starts the Haxe completion server
+
+|VaxeStopCompletionServer|
+                        Stops the Haxe completion server
+
+==============================================================================
+
+LIME COMMANDS                                 *vaxe-lime-commands*
+There's a number of lime-specific commands that closely match the command
+line counterparts.  LimeTarget,Clean,Update all accept an optional target
+argument.  The argument can be tab-completed.  If a target is not specified
+with LimeTarget, one will be chosen from an input list.
+
+|ProjectLime|            Call the |vaxe#ProjectLime| function.  Accepts an
+                         optional single argument that will specify the lime to
+                         use
+
+|LimeTarget|             Call the |vaxe#lime#Target| function.
+
+|LimeClean|              Call the |vaxe#lime#Clean| function.
+
+|LimeUpdate|             Call the |vaxe#lime#Update| function.
+
+|LimeRebuildHxml|        Call the |vaxe#lime#RebuildHxml| function.
+
+==============================================================================
+
+FLOW COMMANDS                                 *vaxe-flow-commands*
+There's a number of flow-specific commands that closely match the command
+line counterparts.  FlowTarget,Clean all accept an optional target
+argument.  The argument can be tab-completed.  If a target is not specified
+with FlowTarget, one will be chosen from an input list.
+
+|ProjectFlow|            Call the |vaxe#ProjectFlow| function.  Accepts an
+                         optional single argument that will specify the flow to
+                         use
+
+|FlowTarget|             Call the |vaxe#flow#Target| function.
+
+|FlowClean|              Call the |vaxe#flow#Clean| function.
+
+|FlowRebuildHxml|        Call the |vaxe#flow#RebuildHxml| function.
+
+==============================================================================
+
+VAXE COMPLETION SERVER COMMANDS         *vaxe-completion-server-commands*
+These are commands for starting and stopping the completion server.  If you
+wish to set defaults for the completion server, check |cache server settings|.
+
+|VaxeStartServer|       Starts the completion server
+|VaxeStopServer|        Stops the completion server
+
+==============================================================================
+
+FUNCTIONS                                        *vaxe-functions*
+
+*vaxe#CompilerClassPaths*
+                        Retrieve the class paths for the current build target.
+
+*vaxe#Ctags*            Generate a ctags file for the current build target.
+                        This function will use the compiler class paths for the
+                        current build, which will include all standard
+                        libraries, as well as libraries from included haxelibs.
+                        vaxe also provides a tag description file that can
+                        be used with |tagbar| if it is installed.
+
+*vaxe#CurrentBuild*     Returns the current active project build file if it
+                        is specified, else it will return the default build
+                        file name if it exists. Accepts a single argument that
+                        will specify the hxml to use.
+
+
+*vaxe#DefaultHxml*      Find the preferred build file recursively in the
+                        parents of the working directory. This function is
+                        called automatically whenever any hx file is opened.
+                        Accepts a single optional argument that will specify
+                        the hxml (or lime/flow project) to use.
+
+*vaxe#HaxeComplete*     The |omnifunc| provided for vaxe.
+
+*vaxe#OpenHxml*         Open the current build file specified with
+                        |vaxe#DefaultHxml|, or |vaxe#ProjectHxml|. You can
+                        easily add this function to a trigger:
+                        >
+                            map <leader>oh :call vaxe#OpenHxml()<CR>
+                        <
+
+*vaxe#ProjectHxml*      Find and select hxml files in the working directory.
+                        Selecting a file with this method will enter
+                        |vaxe-project-mode|.  If you have installed |tlib|,
+                        then it will use |tlib#input#List| to select hxml
+                        candidates. If you call this often, it makes sense to
+                        map it to a leader action:
+                        >
+                            map <leader>ph : call vaxe#ProjectHxml()<CR>
+                        <
+
+
+*vaxe#ImportClass*      Calling this function on a given line will try to
+                        import any classes that are given for the line.  E.g.
+                        for this line:
+                        >
+                            var l = new haxe.FastList<Int>();
+                        <
+                        vaxe#ImportClass() will try to find the FastList
+                        definition, and import it:
+                        >
+                            import haxe.FastList;
+                            ...
+                            var l = new FastList<Int>();
+                        <
+                        If you're missing the initial package prefix, vaxe
+                        will try to find package definitions for the given
+                        class name using ctags.  So, if ctags are generated,
+                        it is also possible to resolve the import for this
+                        line:
+                        >
+                            var l = new FastList<Int>();
+                        >
+
+
+*vaxe#lime#Target*    Calling this function will select a new lime target to
+                        use for builds and completions.
+
+*vaxe#lime#Targets*   Calling this function will return a list of all lime
+                        targets supported by vaxe.
+
+*vaxe#lime#Update*    Calling this function will update the boilerplate code
+                        for the current target, or the target specified by the
+                        (optional) argument.
+
+*vaxe#lime#Clean*     Calling this function will clean the boilerplate code
+                        for the current target, or the target specified by the
+                        (optional) argument.
+
+*vaxe#lime#RebuildHxml*  Calling this function rebuilds the associated hxml
+                        used for completions, etc.
+
+*vaxe#flow#Target*    Calling this function will select a new flow target to
+                        use for builds and completions.
+
+*vaxe#flow#Targets*   Calling this function will return a list of all flow
+                        targets supported by vaxe.
+
+*vaxe#flow#Clean*     Calling this function will clean the boilerplate code
+                        for the current target, or the target specified by the
+                        (optional) argument.
+
+*vaxe#flow#RebuildHxml*  Calling this function rebuilds the associated hxml
+                        used for completions, etc.
+
+==============================================================================
+
+ACTIVE TARGET                                      *omnifunc-active-target*
+
+In some cases, an hxml file may specify multiple targets via a "--next"
+directive.  The specified behavior for the compiler may be very different
+betwen --next sections.
+
+vaxe will use the first section it finds in order to generate completions.
+It is possible to specify a different target by inserting a line like this into
+your hxml:
+>
+    # display completions
+<
+The target that vaxe uses is called the "active" target.  This target is used
+for generating completions, as well as for determining current compiler class
+paths, and for generating ctags.
+
+==============================================================================
+
+SETTINGS                                        *vaxe-settings*
+
+
+*g:vaxe_prefer_hxml*    The name of the hxml file/glob to search for and use
+                        automatically.  The default is "build.hxml".
+
+*g:vaxe_prefer_lime*    The name of the lime file/glob to search for and use
+                        automatically.  The default is "*.lime".
+
+*g:vaxe_prefer_flow*    The name of the flow file/glob to search for and use
+                        automatically.  The default is "*.flow".
+
+*g:vaxe_prefer_openfl*  The name of the openfl file/glob to search for and use
+                        automatically.  The default is "project.xml".
+                        NOTE: this is a legacy file type that lime can still
+                        handle, it is recommended to use a *.lime file where
+                        possible.
+
+*g:vaxe_prefer_first_in_directory*
+                        When vaxe finds more than one build file in a directory,
+                        setting this variable to 1 will make vaxe always choose
+                        the first one.  If it is set to 0, then it will present
+                        a list of options.  The default is 1.
+
+*g:vaxe_lime_target*    If you commonly work with a single target, this option
+                        allows you to set a default target for lime to use when
+                        compiling.
+
+*g:vaxe_flow_target*    If you commonly work with a single target, this option
+                        allows you to set a default target for flow to use when
+                        compiling.
+
+*g:vaxe_default_parent_search_patterns*
+                        This is a list of |glob| patterns that vaxe uses to
+                        determine which hxml (or lime/flow) file to use on startup.
+                        The default is:
+                        >
+                        [g:vaxe_prefer_lime, g:vaxe_prefer_flow, g:vaxe_prefer_hxml, '*.hxml']
+                        <
+
+                        Note that vaxe will search recursively through
+                        each parent directory, and stop at the first file that
+                        matches the pattern.  E.g., by default, vaxe will
+                        recursively look for *any* lime file, or one called
+                        'build.hxml'.  It will give precedence to the lime file,
+                        since it occurs before the hxml file in the search
+                        pattern list. Finally, if none of those options are
+                        available, it will fall back to using any hxml file
+                        it can find.
+
+*g:vaxe_hxml*           A variable that indicates the |vaxe-project-mode|
+                        build file.  It will override the |vaxe-default-mode|
+                        setting if present.
+
+*g:vaxe_skip_hxml*      Setting this variable will skip checks for a valid hxml
+                        file.  Use this if you wish to use an alternative build
+                        system and are willing to forgo completion support.
+
+*g:vaxe_completion_alter_signature*
+                        Changes the method signatures in autocompletions to a
+                        syntax form, instead of a type signature. This is
+                        enabled by default
+>
+    # type signature:
+    some_method [f] arg1 : Int -> arg2 : String -> Bool
+    # syntax form:
+    some_method [f] (arg1 : Int, arg2 : String) : Bool
+<
+
+*g:vaxe_completion_write_compiler_ouput*
+                        Determines whether or not vaxe should let the compiler
+                        write the output generated from a completion request.
+                        Defaults to 0 (equivalent to always adding --no-output
+                        in the hxml).
+
+*g:vaxe_completion_prevent_bufwrite_events*
+                        Vaxe uses the compiler to make completions.  This can
+                        happen frequently, and causes the buffer to be written.
+                        This can in turn interfere with other scripts that
+                        handle bufwrite events, triggering them excessively.
+                        The default is "1" which prevents events that happen
+                        as the result of completion activity.
+
+*g:vaxe_completeopt_menuone*
+                        It's nice if Vaxe can use "simple" completions for
+                        haxe, since these can be used for contextual info
+                        messages.  The default here is to add "menuone"
+                        to the list of completeopts.  However, this option
+                        is global, so it may cause a conflict.  If this
+                        causes a problem then set this variable to 0.
+
+
+*g:vaxe_cache_server*                               *cache server settings*
+                        Vaxe will enable the usage of a haxe compilation cache
+                        server, which currently is used only for completions,
+                        and defaults to 0.
+
+*g:vaxe_cache_server_port*
+                        The port that the cache server will use (defaults to
+                        6878)
+
+*g:vaxe_cache_server_autostart*
+                        Whether the server should be autostarted with vim
+                        (defaults to 1).
+
+*g:vaxe_completion_require_autowrite*
+                        This setting requires autowrite to be enabled for
+                        completions. It defaults to 1.  If |autowrite| or
+                        |autowriteall| is not set, then Vaxe will display an
+                        error message instead of any completion results.  If
+                        set to 0, the completion will be tried normally, and
+                        the user will be expected to save each time before
+                        triggering a completion.
+
+*g:vaxe_completion_disable_optimizations*
+                        This setting adds "-D no-copt" to hxml, which will
+                        disable certain optimizations the haxe compiler uses
+                        to determine completions. There's still a few cases
+                        where optimization causes problems, so optimizations are
+                        disabled by default.
+
+*g:vaxe_trace_absolute_path*
+                        This setting adds "-D absolute_path" to hxml, which
+                        will enable the output of absolute path in trace
+                        messages, etc. This enables the quickfix list to jump
+                        to files more easily, so by default, this is 1.
+
+                                                    *third party settings*
+*g:vaxe_enable_airline_defaults*
+                        Vaxe provides support for vim-airline by changing the
+                        filename display to also include the current hxml build
+                        file (defaults to 1).
+
+*g:vaxe_enable_ycm_defaults*
+                        Vaxe provides support for YouCompleteMe by providing a
+                        filetype and completion trigger character configuration
+                        (defaults to 1). Note: It is recommended to use only
+                        one autocompletion plugin.
+
+*g:vaxe_enable_acp_defaults*
+                        Vaxe provides support for AutoComplPop by providing a
+                        filetype and completion trigger character configuration
+                        (defaults to 1). Note: It is recommended to use only
+                        one autocompletion plugin.
+
+=============================================================================
+
+MISC                                            *vaxe-misc*
+
+Vaxe will change the errrorformat syntax if it finds "-D absolute_path" in the
+current hxml.  This -D compiler switch adds the full path for files in trace
+output, making it possible to jump to trace declarations in the quickfix
+window.
+
+
+LICENSE                                         *vaxe-license*
+
+Copyright (C) 2012 Justin Donaldson <jdonaldson@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

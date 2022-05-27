@@ -1,0 +1,130 @@
+" Vim syntax file
+" Program:      CMake - Cross-Platform Makefile Generator
+" Version:      @VERSION@
+" Language:     CMake
+" Author:       Andy Cedilnik <andy.cedilnik@kitware.com>,
+"               Nicholas Hutchinson <nshutchinson@gmail.com>,
+"               Patrick Boettcher <patrick.boettcher@posteo.de>
+" Maintainer:   Dimitri Merejkowsky <d.merej@gmail.com>
+" Former Maintainer: Karthik Krishnan <karthik.krishnan@kitware.com>
+" Last Change:  @DATE@
+"
+" Licence:      The CMake license applies to this file. See
+"               https://cmake.org/licensing
+"               This implies that distribution with Vim is allowed
+
+if exists("b:current_syntax")
+  finish
+endif
+let s:keepcpo= &cpo
+set cpo&vim
+
+syn region cmakeBracketArgument start="\[\z(=\?\|=[0-9]*\)\[" end="\]\z1\]" contains=cmakeTodo,@Spell
+
+syn region cmakeComment start="#" end="$" contains=cmakeTodo,@Spell
+syn region cmakeBracketComment start="#\[\z(=\?\|=[0-9]*\)\[" end="\]\z1\]" contains=cmakeTodo,@Spell
+
+syn match cmakeEscaped /\(\\\\\|\\"\|\\n\|\\t\)/ contained
+syn region cmakeRegistry start="\[" end="]" contained oneline contains=cmakeTodo,cmakeEscaped
+
+syn region cmakeGeneratorExpression start="$<" end=">" contained oneline contains=cmakeVariableValue,cmakeProperty,cmakeGeneratorExpressions,cmakeTodo
+
+syn region cmakeString start='"' end='"' contained contains=cmakeTodo,cmakeVariableValue,cmakeEscaped
+
+syn region cmakeVariableValue start="${" end="}" contained oneline contains=cmakeVariable,cmakeTodo,cmakeVariableValue
+
+syn region cmakeEnvironment start="$ENV{" end="}" contained oneline contains=cmakeTodo
+
+syn region cmakeArguments start="(" end=")" contains=ALLBUT,cmakeGeneratorExpressions,cmakeCommand,cmakeCommandConditional,cmakeCommandRepeat,cmakeCommandDeprecated,cmakeCommandManuallyAdded,cmakeArguments,cmakeTodo
+
+syn case match
+
+syn keyword cmakeProperty contained
+@PROPERTIES@
+
+syn keyword cmakeVariable contained
+@VARIABLE_LIST@
+
+syn keyword cmakeModule contained
+@MODULES@
+
+@KEYWORDS@
+
+syn keyword cmakeGeneratorExpressions contained
+@GENERATOR_EXPRESSIONS@
+
+syn case ignore
+
+syn keyword cmakeCommand
+@COMMAND_LIST@
+            \ nextgroup=cmakeArguments
+
+syn keyword cmakeCommandConditional
+@CONDITIONALS@
+            \ nextgroup=cmakeArguments
+
+syn keyword cmakeCommandRepeat
+@LOOPS@
+            \ nextgroup=cmakeArguments
+
+syn keyword cmakeCommandDeprecated
+@DEPRECATED@
+            \ nextgroup=cmakeArguments
+
+syn case match
+
+syn keyword cmakeTodo
+            \ TODO FIXME XXX
+            \ contained
+
+hi def link cmakeBracketArgument String
+hi def link cmakeBracketComment Comment
+hi def link cmakeCommand Function
+hi def link cmakeCommandConditional Conditional
+hi def link cmakeCommandDeprecated WarningMsg
+hi def link cmakeCommandRepeat Repeat
+hi def link cmakeComment Comment
+hi def link cmakeEnvironment Special
+hi def link cmakeEscaped Special
+hi def link cmakeGeneratorExpression WarningMsg
+hi def link cmakeGeneratorExpressions Constant
+hi def link cmakeModule Include
+hi def link cmakeProperty Constant
+hi def link cmakeRegistry Underlined
+hi def link cmakeString String
+hi def link cmakeTodo TODO
+hi def link cmakeVariableValue Type
+hi def link cmakeVariable Identifier
+
+@KEYWORDS_HIGHLIGHT@
+
+" Manually added - difficult to parse out of documentation
+syn case ignore
+
+syn keyword cmakeCommandManuallyAdded
+            \ configure_package_config_file write_basic_package_version_file
+            \ nextgroup=cmakeArguments
+
+syn case match
+
+syn keyword cmakeKWconfigure_package_config_file contained
+            \ INSTALL_DESTINATION PATH_VARS NO_SET_AND_CHECK_MACRO NO_CHECK_REQUIRED_COMPONENTS_MACRO INSTALL_PREFIX
+
+syn keyword cmakeKWconfigure_package_config_file_constants contained
+            \ AnyNewerVersion SameMajorVersion SameMinorVersion ExactVersion
+
+syn keyword cmakeKWwrite_basic_package_version_file contained
+            \ VERSION COMPATIBILITY
+
+hi def link cmakeCommandManuallyAdded Function
+
+hi def link cmakeKWconfigure_package_config_file ModeMsg
+hi def link cmakeKWwrite_basic_package_version_file ModeMsg
+hi def link cmakeKWconfigure_package_config_file_constants Constant
+
+let b:current_syntax = "cmake"
+
+let &cpo = s:keepcpo
+unlet s:keepcpo
+
+" vim: set nowrap:

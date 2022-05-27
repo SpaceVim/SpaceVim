@@ -1,7 +1,7 @@
 "=============================================================================
 " vim.vim --- vim api for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -199,17 +199,33 @@ endfunction
 if has('nvim')
   function! s:self.getchar(...) abort
     if !empty(get(g:, '_spacevim_input_list', []))
+      let input_timeout = get(g:, '_spacevim_input_timeout', 0)
+      if input_timeout > 0
+        exe printf('sleep %dm', input_timeout)
+      endif
       return remove(g:_spacevim_input_list, 0)
     endif
-    let ret = call('getchar', a:000)
+    try
+      let ret = call('getchar', a:000)
+    catch /^Vim:Interrupt$/
+      let ret = 3
+    endtry
     return (type(ret) == type(0) ? nr2char(ret) : ret)
   endfunction
 else
   function! s:self.getchar(...) abort
     if !empty(get(g:, '_spacevim_input_list', []))
+      let input_timeout = get(g:, '_spacevim_input_timeout', 0)
+      if input_timeout > 0
+        exe printf('sleep %dm', input_timeout)
+      endif
       return remove(g:_spacevim_input_list, 0)
     endif
-    let ret = call('getchar', a:000)
+    try
+      let ret = call('getchar', a:000)
+    catch /^Vim:Interrupt$/
+      let ret = 3
+    endtry
     while ret ==# "\x80\xfd\d"
       let ret = call('getchar', a:000)
     endwhile

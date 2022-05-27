@@ -1,13 +1,13 @@
 "=============================================================================
 " dart.vim --- SpaceVim lang#dart layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#dart, layer-lang-dart
+" @section lang#dart, layers-lang-dart
 " @parentsection layers
 " @subsection Intro
 "

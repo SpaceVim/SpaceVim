@@ -12,6 +12,7 @@ let s:denite_options = {
       \ 'quit' : 1,
       \ 'highlight_matched_char' : 'MoreMsg',
       \ 'highlight_matched_range' : 'MoreMsg',
+      \ 'match_highlight' : has('patch-7.4.1154') ? v:true : 1,
       \ 'direction': 'rightbelow',
       \ 'statusline' : has('patch-7.4.1154') ? v:false : 0,
       \ 'prompt' : g:spacevim_commandline_prompt,
@@ -157,6 +158,7 @@ augroup spacevim_layer_denite
 augroup END
 
 function! s:denite_my_settings() abort
+  let s:denite_winid = win_getid()
   nnoremap <silent><buffer><expr> i
         \ denite#do_map('open_filter_buffer')
   nnoremap <silent><buffer><expr> '
@@ -184,10 +186,25 @@ function! s:denite_filter_my_settings() abort
   call s:clear_imap('<C-g>%')
   imap <silent><buffer> <Esc> <Plug>(denite_filter_quit)
   imap <silent><buffer> <C-g> <Plug>(denite_filter_quit):q<Cr>
-  inoremap <silent><buffer> <Tab>
-        \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
-  inoremap <silent><buffer> <S-Tab>
-        \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+  if exists('*nvim_win_get_cursor')
+        \ && exists('*nvim_win_set_cursor')
+        \ && exists('*nvim_buf_line_count')
+        \ && exists('*nvim_win_get_buf')
+    inoremap <silent><buffer><expr> <Tab> <SID>denite_next()
+    inoremap <silent><buffer><expr> <S-Tab> <SID>denite_prev()
+    inoremap <silent><buffer><expr> <C-j> <SID>denite_next()
+    inoremap <silent><buffer><expr> <C-k> <SID>denite_prev()
+    imap <silent><buffer><expr> <Bs> <SID>denite_backspace()
+  else
+    inoremap <silent><buffer> <Tab>
+          \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
+    inoremap <silent><buffer> <S-Tab>
+          \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+    inoremap <silent><buffer> <C-j>
+          \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
+    inoremap <silent><buffer> <C-k>
+          \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+  endif
   inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
   " @fixme use this key binding only for sources which has delete action
   inoremap <silent><buffer><expr> <C-d>
@@ -197,6 +214,35 @@ function! s:denite_filter_my_settings() abort
   endif
 endfunction
 
+function! s:denite_next() abort
+  let win_cursor = nvim_win_get_cursor(s:denite_winid)
+  let line = nvim_buf_line_count(nvim_win_get_buf(s:denite_winid))
+  if win_cursor[0] < line
+    call nvim_win_set_cursor(s:denite_winid, [win_cursor[0] + 1, win_cursor[1]])
+  else
+    call nvim_win_set_cursor(s:denite_winid, [1, win_cursor[1]])
+  endif
+  return ''
+endfunction
+
+function! s:denite_prev() abort
+  let win_cursor = nvim_win_get_cursor(s:denite_winid)
+  if win_cursor[0] > 1
+    call nvim_win_set_cursor(s:denite_winid, [win_cursor[0] - 1, win_cursor[1]])
+  else
+    let line = nvim_buf_line_count(nvim_win_get_buf(s:denite_winid))
+    call nvim_win_set_cursor(s:denite_winid, [line, win_cursor[1]])
+  endif
+  return ''
+endfunction
+
+function! s:denite_backspace() abort
+  if col('.') ==# 1
+    return ''
+  else
+    return "\<Plug>(denite_filter_backspace)"
+  endif
+endfunction
 
 function! s:delete_action() abort
   if SpaceVim#layers#core#statusline#denite_status("sources") =~# '^buffer'

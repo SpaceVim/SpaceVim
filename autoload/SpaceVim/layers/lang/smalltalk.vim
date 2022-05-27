@@ -6,6 +6,16 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section lang#smalltalk, layers-lang-smalltalk
+" @parentsection layers
+" This layer is for smalltalk development, disabled by default, to enable this
+" layer, add following snippet to your SpaceVim configuration file.
+" >
+"   [[layers]]
+"     name = 'lang#smalltalk'
+" <
+"
 
 function! SpaceVim#layers#lang#smalltalk#plugins() abort
   let plugins = []

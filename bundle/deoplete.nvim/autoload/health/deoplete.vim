@@ -59,11 +59,11 @@ function! s:still_have_issues() abort
   let indentation = '        '
   call health#report_info("If you're still having problems, " .
         \ "try the following commands:\n" .
-        \ indentation . "$ export NVIM_PYTHON_LOG_FILE=/tmp/log\n" .
-        \ indentation . "$ export NVIM_PYTHON_LOG_LEVEL=DEBUG\n" .
-        \ indentation . "$ nvim\n" .
-        \ indentation . "$ cat /tmp/log_{PID}\n" .
-        \ indentation . ' and then create an issue on github'
+        \ indentation . "- $ export NVIM_PYTHON_LOG_FILE=/tmp/log\n" .
+        \ indentation . "- $ export NVIM_PYTHON_LOG_LEVEL=DEBUG\n" .
+        \ indentation . "- $ nvim\n" .
+        \ indentation . "- $ cat /tmp/log_{PID}\n" .
+        \ indentation . '- and then create an issue on github'
         \ )
 endfunction
 

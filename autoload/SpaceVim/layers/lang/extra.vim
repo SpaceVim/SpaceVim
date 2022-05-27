@@ -1,13 +1,13 @@
 "=============================================================================
 " extra.vim --- lang#extra layer for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#extra, layer-lang-extra
+" @section lang#extra, layers-lang-extra
 " @parentsection layers
 " @subsection Intro
 "

@@ -1,15 +1,28 @@
 "=============================================================================
 " checkers.vim --- SpaceVim checkers layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section checkers, layer-checkers
+" @section checkers, layers-checkers
 " @parentsection layers
-" SpaceVim uses neomake as default syntax checker.
+" The `checkers` layer provides syntax lint feature. The default lint engine
+" is |neomake|, this can be changed by `lint_engine` option:
+" >
+"   [options]
+"     lint_engine = 'ale'
+" <
+"
+" @subsection options
+"
+" - `lint_on_the_fly`: Syntax checking on the fly feature, disabled by default.
+" - `lint_on_save`: Run syntax checking when saving a file.
+" - `show_cursor_error`: Enable/Disable displaying error below current line.
+" - `lint_exclude_filetype`: Set the filetypes which does not enable syntax
+"   checking.
 
 
 if exists('s:show_cursor_error')
@@ -21,6 +34,10 @@ if has('timers')
 else
   let s:show_cursor_error = 0
 endif
+
+let s:lint_exclude_filetype = []
+let s:lint_on_the_fly = 0
+let s:lint_on_save = 1
 
 let s:SIG = SpaceVim#api#import('vim#signatures')
 let s:STRING = SpaceVim#api#import('data#string')
@@ -47,7 +64,9 @@ endfunction
 function! SpaceVim#layers#checkers#set_variable(var) abort
 
   let s:show_cursor_error = get(a:var, 'show_cursor_error', 1)
-  let s:lint_on_the_fly =  get(a:var, 'lint_on_the_fly', 1)
+  let s:lint_on_the_fly =  get(a:var, 'lint_on_the_fly', 0)
+  let s:lint_on_save = get(a:var, 'lint_on_save', 1)
+  let s:lint_exclude_filetype =  get(a:var, 'lint_exclude_filetype', [])
 
   if s:show_cursor_error && !has('timers')
     call SpaceVim#logger#warn('show_cursor_error in checkers layer needs timers feature')
@@ -61,6 +80,15 @@ function! SpaceVim#layers#checkers#get_options() abort
 
 endfunction
 
+function! SpaceVim#layers#checkers#get_lint_option() abort
+
+  return {
+        \ 'lint_on_the_fly' : s:lint_on_the_fly,
+        \ 'lint_on_save' : s:lint_on_save,
+        \ }
+
+endfunction
+
 
 function! SpaceVim#layers#checkers#config() abort
   " neomake config
@@ -68,6 +96,12 @@ function! SpaceVim#layers#checkers#config() abort
     let g:neomake_echo_current_error = get(g:, 'neomake_echo_current_error', !s:show_cursor_error)
     let g:neomake_cursormoved_delay = get(g:, 'neomake_cursormoved_delay', 300)
     let g:neomake_virtualtext_current_error = get(g:, 'neomake_virtualtext_current_error', !s:show_cursor_error)
+
+    " exclude filetypes:
+    for ft in s:lint_exclude_filetype
+      let g:neomake_{ft}_enabled_makers = []
+    endfor
+
 
   elseif g:spacevim_lint_engine ==# 'ale'
     let g:ale_echo_delay = get(g:, 'ale_echo_delay', 300)
@@ -158,70 +192,87 @@ function! s:neomake_cursor_move_delay() abort
 endfunction
 
 function! s:toggle_show_error(...) abort
-  let llist = getloclist(0, {'size' : 1, 'winid' : 1})
-  let qlist = getqflist({'size' : 1, 'winid' : 1})
-  if llist.size == 0 && qlist.size == 0
-    echohl WarningMsg
-    echon 'There is no errors!'
-    echohl None
-    return
-  endif
-  if llist.winid > 0
-    lclose
-  elseif qlist.winid > 0
-    cclose
-  elseif llist.size > 0
-    botright lopen
-  elseif qlist.size > 0
-    botright copen
-  endif
-  if a:1 == 1
-    wincmd w
+  if SpaceVim#lsp#buf_server_ready()
+    call SpaceVim#lsp#diagnostic_set_loclist()
+  else
+    " if buf_server_ready return false, the language server loclist
+    " should be cleared.
+    if get(getloclist(0, {'title': 0}), 'title', '') ==# 'Language Server'
+      call setloclist(0, [], 'r')
+    endif
+    let llist = getloclist(0, {'size' : 1, 'winid' : 1})
+    let qlist = getqflist({'size' : 1, 'winid' : 1})
+    if llist.size == 0 && qlist.size == 0
+      echohl WarningMsg
+      echon 'There is no errors!'
+      echohl None
+      return
+    endif
+    if llist.winid > 0
+      lclose
+    elseif qlist.winid > 0
+      cclose
+    elseif llist.size > 0
+      botright lopen
+    elseif qlist.size > 0
+      botright copen
+    endif
+    if a:1 == 1
+      wincmd w
+    endif
   endif
 endfunction
 
 function! s:jump_to_next_error() abort
-  try
-    lnext
-  catch
+  if SpaceVim#lsp#buf_server_ready()
+    call SpaceVim#lsp#diagnostic_goto_next()
+  else
     try
-      ll
+      lnext
     catch
       try
-        cnext
+        ll
       catch
         try
-          cc
+          cnext
         catch
-          echohl WarningMsg
-          echon 'There is no errors!'
-          echohl None
+          try
+            cc
+          catch
+            echohl WarningMsg
+            echon 'There is no errors!'
+            echohl None
+          endtry
         endtry
       endtry
     endtry
-  endtry
+  endif
 endfunction
 
 function! s:jump_to_previous_error() abort
-  try
-    lprevious
-  catch
+  if SpaceVim#lsp#buf_server_ready()
+    call SpaceVim#lsp#diagnostic_goto_prev()
+  else
     try
-      ll
+      lprevious
     catch
       try
-        cprevious
+        ll
       catch
         try
-          cc
+          cprevious
         catch
-          echohl WarningMsg
-          echon 'There is no errors!'
-          echohl None
+          try
+            cc
+          catch
+            echohl WarningMsg
+            echon 'There is no errors!'
+            echohl None
+          endtry
         endtry
       endtry
     endtry
-  endtry
+  endif
 endfunction
 
 let s:last_echoed_error = ''
@@ -272,6 +323,7 @@ function! s:toggle_syntax_checker() abort
   elseif g:spacevim_lint_engine ==# 'ale'
     ALEToggle
   endif
+  return 1
 endfunction
 
 
@@ -363,5 +415,12 @@ endif
 
 " TODO clear errors
 function! s:clear_errors() abort
-  sign unplace *
+  if SpaceVim#lsp#buf_server_ready()
+    call SpaceVim#lsp#diagnostic_clear()
+    if get(getloclist(0, {'title': 0}), 'title', '') ==# 'Language Server'
+      call setloclist(0, [], 'r')
+    endif
+  else
+    sign unplace *
+  endif
 endfunction

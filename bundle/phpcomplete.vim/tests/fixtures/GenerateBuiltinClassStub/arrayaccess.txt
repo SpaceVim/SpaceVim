@@ -1,0 +1,30 @@
+interface ArrayAccess {
+	/**
+	 * offsetSet
+	 *
+	 * @return void
+	 */
+	public function offsetSet(mixed $offset, mixed $value | void){
+	}
+	/**
+	 * offsetUnset
+	 *
+	 * @return void
+	 */
+	public function offsetUnset(mixed $offset | void){
+	}
+	/**
+	 * offsetExists
+	 *
+	 * @return boolean
+	 */
+	public function offsetExists(mixed $offset | boolean){
+	}
+	/**
+	 * offsetGet
+	 *
+	 * @return mixed
+	 */
+	public function offsetGet(mixed $offset | mixed){
+	}
+}

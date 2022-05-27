@@ -1,0 +1,173 @@
+let s:repository_root = expand('<sfile>:p:h:h:h')
+
+Describe gina#command#browse
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let Guard = vital#gina#import('Vim.Guard')
+    let Scope = themis#helper('scope')
+    let sfile = Path.realpath('autoload/gina/command/browse.vim')
+    let sfile_util = Path.realpath('autoload/gina/util.vim')
+    execute 'source' fnameescape(sfile)
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    let funcs = Scope.funcs(sfile)
+    let vars = Scope.vars(sfile_util)
+    let vars.File._called_with = ''
+    function! vars.File.open(uri) abort
+      let self._called_with = a:uri
+    endfunction
+
+    %bwipeout!
+    execute 'edit' fnameescape('autoload/gina.vim')
+
+    let current_branch = gina#core#treeish#resolve(gina#core#get(), 'HEAD', 1)
+  End
+
+  Describe Use cases
+    It might be called without argument
+      GinaSync browse
+      Assert Equals(
+            \ vars.File._called_with,
+            \ printf('https://github.com/lambdalisue/gina.vim/tree/%s/', current_branch),
+            \)
+    End
+
+    It might be called with ':'
+      GinaSync browse :
+      Assert Equals(
+            \ vars.File._called_with,
+            \ printf('https://github.com/lambdalisue/gina.vim/blob/%s/autoload/gina.vim', current_branch),
+            \)
+    End
+
+    It might be called with 'HEAD@{2.days.ago}'
+      GinaSync browse HEAD@{2.days.ago}
+      Assert Equals(
+            \ vars.File._called_with,
+            \ 'https://github.com/lambdalisue/gina.vim/tree/HEAD@{2.days.ago}/'
+            \)
+    End
+
+    It might be called with 'HEAD@{2.days.ago}:'
+      GinaSync browse HEAD@{2.days.ago}:
+      Assert Equals(
+            \ vars.File._called_with,
+            \ 'https://github.com/lambdalisue/gina.vim/blob/HEAD@{2.days.ago}/autoload/gina.vim'
+            \)
+    End
+
+    It might be calle with 'origin/HEAD...'
+      if !empty($CI)
+        Skip CI may checkout a single PR branch with --depth 1 so skip this test.
+      endif
+      GinaSync browse origin/HEAD...
+      Assert Match(
+            \ vars.File._called_with,
+            \ 'https://github\.com/lambdalisue/gina.vim/tree/[0-9a-z]\{40}'
+            \)
+    End
+
+    It might be calle with 'origin/HEAD...:'
+      if !empty($CI)
+        Skip CI may checkout a single PR branch with --depth 1 so skip this test.
+      endif
+      GinaSync browse origin/HEAD...:
+      Assert Match(
+            \ vars.File._called_with,
+            \ 'https://github\.com/lambdalisue/gina.vim/blob/[0-9a-z]\{40}/autoload/gina\.vim'
+            \)
+    End
+
+    It might be calle with --exact
+      GinaSync browse --exact :
+      Assert Match(
+            \ vars.File._called_with,
+            \ 'https://github\.com/lambdalisue/gina.vim/blob/[0-9a-z]\{40}/autoload/gina\.vim'
+            \)
+    End
+
+    It might be calle with --scheme=blame
+      GinaSync browse --scheme=blame :
+      Assert Equals(
+            \ vars.File._called_with,
+            \ printf('https://github.com/lambdalisue/gina.vim/blame/%s/autoload/gina.vim', current_branch),
+            \)
+    End
+
+    It might be calle with 3,3 prefix
+      3,3GinaSync browse :
+      Assert Equals(
+            \ vars.File._called_with,
+            \ printf('https://github.com/lambdalisue/gina.vim/blob/%s/autoload/gina.vim#L3-L3', current_branch),
+            \)
+    End
+
+    It might be calle with 3,5 prefix
+      3,5GinaSync browse :
+      Assert Equals(
+            \ vars.File._called_with,
+            \ printf('https://github.com/lambdalisue/gina.vim/blob/%s/autoload/gina.vim#L3-L5', current_branch),
+            \)
+    End
+
+    It might be calle with :README.md
+      GinaSync browse :README.md
+      Assert Equals(
+            \ vars.File._called_with,
+            \ printf('https://github.com/lambdalisue/gina.vim/blob/%s/README.md', current_branch),
+            \)
+    End
+
+    It might be calle with --yank
+      GinaSync browse --yank :
+      Assert Equals(vars.File._called_with, '')
+      Assert Equals(
+            \ getreg(),
+            \ printf('https://github.com/lambdalisue/gina.vim/blob/%s/autoload/gina.vim', current_branch),
+            \)
+    End
+  End
+
+  Describe s:build_base_url({remote_url}, {scheme})
+    Before
+      let _build_base_url_guard = Guard.store([
+            \ g:gina#command#browse#translation_patterns,
+            \])
+      let g:gina#command#browse#translation_patterns = {
+            \ 'bitbucket.org': [
+            \   [
+            \     '\vhttps?://(%domain)/(.{-})/(.{-})%(\.git)?$',
+            \     '\vgit://(%domain)/(.{-})/(.{-})%(\.git)?$',
+            \     '\vgit\@(%domain):(.{-})/(.{-})%(\.git)?$',
+            \     '\vssh://git\@(%domain)/(.{-})/(.{-})%(\.git)?$',
+            \   ], {
+            \     '_': 'https://\1/\2/\3/src/%r0/%pt%{#cl-|}ls',
+            \     'root': 'https://\1/\2/\3/branch/%r0',
+            \     'blame': 'https://\1/\2/\3/annotate/%r0/%pt',
+            \     'compare': 'https://\1/\2/\3/diff/%pt?diff1=%h1&diff2=%h2',
+            \   },
+            \ ],
+            \}
+    End
+
+    After
+      call _build_base_url_guard.restore()
+    End
+
+    It should not substitute '&' in {pattern}
+      let base_url = funcs.build_base_url(
+            \ 'ssh://git@bitbucket.org/foo/bar',
+            \ 'compare',
+            \)
+      Assert Equals(
+            \ base_url,
+            \ 'https://bitbucket.org/foo/bar/diff/%pt?diff1=%h1&diff2=%h2'
+            \)
+    End
+  End
+End

@@ -4,8 +4,10 @@
 # License: MIT license
 # ============================================================================
 
+from pynvim import Nvim
+
 from deoplete.base.filter import Base
-from deoplete.util import Nvim, UserContext, Candidates
+from deoplete.util import UserContext, Candidates
 
 
 class Filter(Base):
@@ -18,4 +20,4 @@ class Filter(Base):
 
     def filter(self, context: UserContext) -> Candidates:
         return sorted(context['candidates'],
-                      key=lambda x: x['word'].swapcase())
+                      key=lambda x: str(x['word'].swapcase()))

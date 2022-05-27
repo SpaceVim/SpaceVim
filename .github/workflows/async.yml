@@ -7,12 +7,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        detachPlugin: ["flygrep", "dein-ui", "vim-todo", "iedit", "scrollbar.vim"]
+        detachPlugin: ["flygrep", "dein-ui", "vim-todo", "iedit", "scrollbar.vim", "vim-chat"]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@master
     - name: Detach ${{ matrix.detachPlugin }}
       env:
-        BOTSECRET: ${{ secrets.BOTSECRET }}
+        BOTSECRET: ${{ secrets.BOTSECRET_GITHUB }}
       run: .ci/detach_plugin.sh ${{ matrix.detachPlugin }}

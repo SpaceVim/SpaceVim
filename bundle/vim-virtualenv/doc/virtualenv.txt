@@ -1,0 +1,58 @@
+*virtualenv.txt*  Activate a python virtualenv within Vim
+
+Author:  Jeremy Cantrell <jmcantrell@gmail.com>  *virtualenv-author*
+License: Same terms as Vim itself (see |license|)
+
+INTRODUCTION                                     *virtualenv* *virtualenv.vim*
+
+The virtualenv plugin allows you to activate and deactivate a virtualenv
+within a live Vim session.
+
+COMMANDS                                         *virtualenv-commands*
+
+:VirtualEnvList                                  *:VirtualEnvList*
+    List all available virtualenvs.
+
+:VirtualEnvDeactivate                            *:VirtualEnvDeactivate*
+    Deactivate the current virtualenv.
+
+:VirtualEnvActivate [name]                       *:VirtualEnvActivate*
+    Activate a virtualenv. The name of the virtualenv can be completed with
+    <tab> at the command line.
+
+    If name is not specified, and you have $PROJECT_HOME set, the name will be
+    guessed based on the current filename.
+
+CONFIGURATION                                    *virtualenv-configuration*
+
+g:virtualenv_loaded                              *g:virtualenv_loaded*
+    If set in your |vimrc|, virtualenv.vim is not loaded.
+
+g:virtualenv_directory                           *g:virtualenv_directory*
+    The directory that contains the virtualenvs. If you're a virtualenvwrapper
+    user and you have $WORKON_HOME set, it will default to this. Otherwise it
+    will default to ~/.virtualenvs.
+
+g:virtualenv_auto_activate                       *g:virtualenv_auto_activate*
+    If set, an attempt will be made to detect any active virtualenv, and
+    activate it.
+
+Example: >
+    let g:virtualenv_directory = '/path/to/virtualenvs'
+<
+g:virtualenv_stl_format                          *g:virtualenv_stl_format*
+    Format string for the statusline function.
+
+Example: >
+    let g:virtualenv_stl_format = '[%n]'
+<
+To use the statusline flag, this must appear in your |'statusline'| setting: >
+    %{virtualenv#statusline()}
+<
+The content is derived from the |g:virtualenv_stl_format| variable.
+
+Powerline users can see their statuslines too. After configuring powerline
+according to its documentation to support a virtualenv segment, Powerline will
+read the value of $VIRTUAL_ENV and display it.
+
+vim:tw=78:et:ft=help:norl:

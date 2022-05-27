@@ -38,7 +38,7 @@ function! deoplete#init#_channel() abort
     return 1
   endif
 
-  let python3 = get(g:, 'python3_host_prog', 'python3')
+  let python3 = expand(get(g:, 'python3_host_prog', 'python3'), 1)
   if !executable(python3)
     call deoplete#util#print_error(
           \ string(python3) . ' is not executable.')
@@ -49,8 +49,8 @@ function! deoplete#init#_channel() abort
     call deoplete#util#print_error('deoplete requires nvim 0.3.0+.')
     return 1
   endif
-  if !has('nvim') && v:version < 800
-    call deoplete#util#print_error('deoplete requires Vim 8.0+.')
+  if !has('nvim') && v:version < 801
+    call deoplete#util#print_error('deoplete requires Vim 8.1+.')
     return 1
   endif
 
@@ -112,6 +112,7 @@ function! s:init_internal_variables() abort
   call deoplete#init#_prev_completion()
 
   let g:deoplete#_context = {}
+  let g:deoplete#_recently_used = []
 
   if !exists('g:deoplete#_logging')
     let g:deoplete#_logging = {}
@@ -136,7 +137,7 @@ function! s:init_internal_variables() abort
 
     if deoplete#util#has_yarp()
       " Dummy call is needed to check exists()
-      call neovim_rpc#serveraddr()
+      silent! call neovim_rpc#serveraddr()
       if !exists('*neovim_rpc#serveraddr')
         call deoplete#util#print_error(
               \ 'deoplete requires vim-hug-neovim-rpc plugin in Vim.')
@@ -220,7 +221,8 @@ function! s:check_custom_var(source_name, old_var, new_var) abort
 
   call deoplete#util#print_error(
         \ printf('%s is deprecated variable.  '.
-        \ 'Please use deoplete#custom#var() instead.', a:old_var))
+        \ 'Please use deoplete#custom#var("%s", "%s", {value}) instead.',
+        \ a:old_var, a:source_name, a:new_var))
   call deoplete#custom#var(a:source_name, a:new_var, eval(a:old_var))
 endfunction
 function! s:check_custom_option(old_var, new_var) abort
@@ -230,36 +232,36 @@ function! s:check_custom_option(old_var, new_var) abort
 
   call deoplete#util#print_error(
         \ printf('%s is deprecated variable.  '.
-        \ 'Please use deoplete#custom#option() instead.', a:old_var))
+        \ 'Please use deoplete#custom#option("%s", {value}) instead.',
+        \ a:old_var, a:new_var))
   call deoplete#custom#option(a:new_var, eval(a:old_var))
 endfunction
 
 function! deoplete#init#_option() abort
-  " Note: HTML omni func use search().
   return {
         \ 'auto_complete': v:true,
         \ 'auto_complete_delay': 0,
         \ 'auto_complete_popup': 'auto',
-        \ 'auto_refresh_delay': 100,
-        \ 'camel_case': v:false,
+        \ 'auto_refresh_delay': 20,
         \ 'candidate_marks': [],
+        \ 'overwrite_completeopt': v:true,
         \ 'check_stderr': v:true,
         \ 'complete_suffix': v:true,
-        \ 'ignore_case': &ignorecase,
         \ 'ignore_sources': {},
         \ 'keyword_patterns': {'_': '[a-zA-Z_]\k*'},
         \ 'max_list': 500,
         \ 'min_pattern_length': 2,
-        \ 'num_processes': 4,
+        \ 'num_processes': 1,
+        \ 'nofile_complete_filetypes': ['denite-filter'],
         \ 'omni_patterns': {},
         \ 'on_insert_enter': v:true,
         \ 'on_text_changed_i': v:true,
-        \ 'prev_completion_mode': '',
+        \ 'prev_completion_mode': 'filter',
         \ 'profile': v:false,
         \ 'refresh_always': v:true,
+        \ 'refresh_backspace': v:true,
         \ 'skip_chars': ['(', ')'],
         \ 'skip_multibyte': v:false,
-        \ 'smart_case': &smartcase,
         \ 'sources': {},
         \ 'trigger_key': v:char,
         \ 'yarp': v:false,
@@ -272,6 +274,7 @@ function! deoplete#init#_prev_completion() abort
         \ 'linenr': -1,
         \ 'candidates': [],
         \ 'complete_position': -1,
+        \ 'time': reltime(),
         \ }
 endfunction
 

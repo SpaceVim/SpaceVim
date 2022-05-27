@@ -1,0 +1,55 @@
+name: Update lockfile
+
+on:
+  schedule:
+    - cron: '30 6 * * *'
+  push:
+    branches:
+      - master
+
+jobs:
+  update-lockfile:
+    name: Update lockfile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+
+      - name: Prepare
+        env:
+          NVIM_TAG: stable
+        run: |
+          wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+          mv ./jq-linux64 /tmp/jq
+          chmod +x /tmp/jq
+          wget https://github.com/neovim/neovim/releases/download/${NVIM_TAG}/nvim.appimage
+          chmod u+x nvim.appimage
+          mkdir -p ~/.local/share/nvim/site/pack/nvim-treesitter/start
+          ln -s $(pwd) ~/.local/share/nvim/site/pack/nvim-treesitter/start
+
+      - name: Update parsers
+        env:
+          SKIP_LOCKFILE_UPDATE_FOR_LANGS: verilog,gleam,nix
+        run: |
+          ./nvim.appimage --headless -c "luafile ./scripts/write-lockfile.lua" -c "q"
+          # Pretty print
+          cp lockfile.json /tmp/lockfile.json
+          cat /tmp/lockfile.json | /tmp/jq --sort-keys > lockfile.json
+
+      - name: Commit changes
+        run: |
+          git config user.name "GitHub"
+          git config user.email "noreply@github.com"
+          git add lockfile.json
+          git commit -m "Update lockfile.json" || echo 'No commit necessary!'
+          git clean -xf
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: Update lockfile.json
+          title: Update lockfile.json
+          branch: update-lockfile-pr
+          base: ${{ github.head_ref }}
+          draft: true

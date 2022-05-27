@@ -1,7 +1,7 @@
 "=============================================================================
 " mkdir.vim --- auto mkdir when saving file
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -10,9 +10,8 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! SpaceVim#plugins#mkdir#CreateCurrent() abort
-
-  call s:CreateDirectory(expand('%:p:h'))
-
+  let file = fnamemodify( expand('<afile>'), ':p:h')
+  call s:CreateDirectory(file)
 endfunction
 
 fun! s:Mkdirp(dir) abort

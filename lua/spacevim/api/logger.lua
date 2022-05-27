@@ -1,9 +1,12 @@
-local fn = nil
-if vim.fn == nil then
-    fn = require('spacevim').fn
-else
-    fn = vim.fn
-end
+--=============================================================================
+-- logger.lua --- logger api implemented in lua
+-- Copyright (c) 2016-2019 Wang Shidong & Contributors
+-- Author: Wang Shidong < wsdjeg@outlook.com >
+-- URL: https://spacevim.org
+-- License: GPLv3
+--=============================================================================
+
+local fn = vim.fn or require('spacevim').fn
 
 local cmd = require('spacevim').cmd
 
@@ -16,7 +19,13 @@ local M = {
     ['temp'] = {},
 }
 
-local levels = {'Info', 'Warn', 'Error'}
+
+-- 0 : log debug, info, warn, error messages
+-- 1 : log info, warn, error messages
+-- 2 : log warn, error messages
+-- 3 : log error messages
+M.levels = {'Info ', 'Warn ', 'Error', 'Debug'}
+M.clock = fn.reltime()
 
 function M.set_silent(sl)
     M.silent = sl
@@ -30,9 +39,32 @@ function M.set_level(l)
     M.level = l
 end
 
-function M.error(msg)
+function M._build_msg(msg, l)
+    msg = msg or ''
     local time = fn.strftime('%H:%M:%S')
-    local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. levels[1] .. ' ] ' .. msg
+    -- error(string.format("Tried to call API function with vim.fn: use vim.api.%s instead", key))
+    -- local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[l] .. '] ' .. msg
+    local log = string.format('[ %s ] [%s] [%00.3f] [ %s ] %s',
+        M.name,
+        time,
+        fn.reltimefloat(fn.reltime(M.clock)),
+        M.levels[l],
+        msg)
+    return log
+end
+
+function M.debug(msg)
+    if M.level <= 0 then
+        local log = M._build_msg(msg, 4)
+        if M.silent == 0 and M.verbose >= 4 then
+            cmd('echom "' .. log .. '"')
+        end
+        M.write(log)
+    end
+end
+
+function M.error(msg)
+    local log = M._build_msg(msg, 3)
     if M.silent == 0 and M.verbose >= 1 then
         cmd('echohl Error')
         cmd('echom "' .. log .. '"')
@@ -58,8 +90,7 @@ end
 
 function M.warn(msg, ...)
     if M.level <= 2 then
-        local time = fn.strftime('%H:%M:%S')
-        local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. levels[1] .. ' ] ' .. msg
+        local log = M._build_msg(msg, 2)
         if (M.silent == 0 and M.verbose >= 2) or select(1, ...) == 1 then
             cmd('echohl WarningMsg')
             cmd('echom "' .. log .. '"')
@@ -67,17 +98,46 @@ function M.warn(msg, ...)
         end
         M.write(log)
     end
-
 end
 
 function M.info(msg)
     if M.level <= 1 then
-        local time = fn.strftime('%H:%M:%S')
-        local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. levels[1] .. ' ] ' .. msg
+        local log = M._build_msg(msg, 1)
         if M.silent == 0 and M.verbose >= 3 then
             cmd('echom "' .. log .. '"')
         end
         M.write(log)
+    end
+end
+
+function M.view(l)
+    local info = ''
+    local logs = ''
+    if fn.filereadable(M.file) == 1 then
+        logs = fn.readfile(M.file, '')
+        info = info .. fn.join(fn.filter(logs, 'self._comp(v:val, a:l)'), "\n")
+    else
+        info = info .. '[ ' .. M.name .. ' ] : logger file ' .. M.file
+        .. ' does not exists, only log for current process will be shown!'
+        ..  "\n"
+        for key, value in pairs(M.temp) do
+            if M._comp(value, l) == 1 then
+                info = info .. value .. "\n"
+            end
+        end
+    end
+    return info
+
+end
+
+function M._comp(msg, l)
+    -- if a:msg =~# '\[ ' . self.name . ' \] \[\d\d\:\d\d\:\d\d\] \[ '
+    if string.find(msg, M.levels[2]) ~= nil then
+        return 1
+    elseif string.find(msg, M.levels[1]) ~= nil then
+        if l > 2 then return 0 else return 1 end
+    else
+        if l > 1 then return 0 else return 1 end
     end
 end
 

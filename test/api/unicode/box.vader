@@ -1,9 +1,16 @@
 Execute ( SpaceVim api: unicode#tree ):
   let box = SpaceVim#api#import('unicode#box')
-  AssertEqual box.drawing_box([1,2,3] , 1, 3, 5),
-    \ [
-    \ '╭─────┬─────┬─────╮',
-    \ '│  1  │  2  │  3  │',
-    \ '╰─────┴─────┴─────╯'
-    \ ]
+  if &encoding ==# 'utf-8'
+    AssertEqual box.drawing_box([1,2,3] , 1, 3, 5),
+      \ [
+      \ '╭─────┬─────┬─────╮',
+      \ '│  1  │  2  │  3  │',
+      \ '╰─────┴─────┴─────╯'
+      \ ]
+  else
+    AssertEqual box.drawing_box([1,2,3] , 1, 3, 5),
+      \ ['*-----*-----*-----*',
+      \ '|  1  |  2  |  3  |',
+      \ '*-----*-----*-----*']
+  end
 

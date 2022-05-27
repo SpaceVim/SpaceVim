@@ -1,0 +1,1 @@
+git subtree push --prefix=syntax --squash vimsyntax master

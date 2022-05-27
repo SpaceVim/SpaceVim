@@ -1,0 +1,79 @@
+if &encoding ==# 'latin1'
+  set encoding=utf-8
+endif
+
+" Force English interface
+try
+  language message C
+catch
+endtry
+set helplang=en
+
+let s:assert = themis#helper('assert')
+call themis#option('recursive', 1)
+call themis#option('reporter', 'dot')
+call themis#helper('command').with(s:assert)
+
+call themis#log(substitute(execute('version'), '^\%(\r\?\n\)*', '', ''))
+call themis#log('-----------------------------------------------------------')
+call themis#log('has("lua"):     ' . has('lua'))
+call themis#log('has("python"):  ' . has('python'))
+call themis#log('has("python3"): ' . has('python3'))
+call themis#log('$LANG:          ' . $LANG)
+call themis#log('&encoding:      ' . &encoding)
+call themis#log('&termencoding:  ' . &termencoding)
+call themis#log('&fileencodings: ' . &fileencodings)
+call themis#log('&fileformats:   ' . &fileformats)
+call themis#log('&shellslash:    ' . (exists('&shellslash') ? &shellslash : 'DISABLED'))
+call themis#log('&hidden:        ' . &hidden)
+call themis#log('&autoread:      ' . &autoread)
+call themis#log('&autowrite:     ' . &autowrite)
+call themis#log('&autowriteall:  ' . &autowriteall)
+call themis#log('&runtimepath:')
+for s:runtimepath in split(&runtimepath, ',')
+  call themis#log('  ' . s:runtimepath)
+endfor
+call themis#log('-----------------------------------------------------------')
+
+" Decrease timeout to speed-up tests
+let s:timeout = 5000
+let g:gina#process#timeout = s:timeout
+
+" Synchronous Gina command for test
+function! s:GinaSync(bang, range, args, mods) abort
+  call call('gina#command#call', [a:bang, a:range, a:args, a:mods])
+  if gina#process#wait(s:timeout) == -1
+    call themis#log(printf(
+          \ 'WARNING: ":%s%sGina%s %s" did not finish within %d ms',
+          \ empty(a:mods) ? '' : a:mods . ' ',
+          \ join(a:range, ','),
+          \ a:bang,
+          \ a:args,
+          \ s:timeout,
+          \))
+    call themis#log('Remaining running process:')
+    for [process, _] in gina#process#runnings()
+      call themis#log('  ' . string(process))
+    endfor
+  endif
+endfunction
+
+command! -nargs=* -range=% -bang
+      \ -complete=customlist,gina#command#complete
+      \ GinaSync
+      \ call s:GinaSync(<q-bang>, [<line1>, <line2>], <q-args>, <q-mods>)
+
+
+" Git ----------------------------------------------------------------------
+let s:is_windows = has('win32') || has('win64')
+let s:scriptroot = expand('<sfile>:p:h')
+let s:separator = s:is_windows ? '\' : '/'
+execute 'source' fnameescape(s:scriptroot . s:separator . 'slit.vim')
+
+call themis#log('git version:     ' . g:git_version)
+call themis#log('  worktree:      ' . g:git_support_worktree)
+call themis#log('git config:')
+for record in split(system('git config --list'), '\r\?\n')
+  call themis#log('  ' . record)
+endfor
+call themis#log('***********************************************************')

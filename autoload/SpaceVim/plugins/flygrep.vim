@@ -1,7 +1,7 @@
 "=============================================================================
 " flygrep.vim --- Grep on the fly in SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -31,6 +31,19 @@ let s:grepid = 0
 
 let s:filename_pattern = '[^:]*:\d\+:\d\+:'
 
+" if win_getid does not existing, use winnr instead
+let s:previous_winid = 0
+
+function! s:close_flygrep_win() abort
+  noautocmd q
+  " this function requires vim 7.4.1557
+  if has('patch-7.4.1557')
+    call win_gotoid(s:previous_winid)
+  else
+    exe s:previous_winid .  'wincmd w'
+  endif
+endfunction
+
 " Init local options: {{{
 let s:grep_expr = ''
 let [
@@ -46,8 +59,8 @@ let s:grep_timer_id = -1
 let s:preview_timer_id = -1
 let s:grepid = 0
 function! s:read_histroy() abort
-  if filereadable(expand(g:spacevim_data_dir.'/SpaceVim/flygrep_history'))
-    let _his = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'/SpaceVim/flygrep_history'), ''), ''))
+  if filereadable(expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'))
+    let _his = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'), ''), ''))
     if type(_his) ==# type([])
       return _his
     else
@@ -62,10 +75,10 @@ function! s:update_history() abort
     call remove(s:grep_history, index(s:grep_history, s:grep_expr))
   endif
   call add(s:grep_history, s:grep_expr)
-  if !isdirectory(expand(g:spacevim_data_dir.'/SpaceVim'))
-    call mkdir(expand(g:spacevim_data_dir.'/SpaceVim'))
+  if !isdirectory(expand(g:spacevim_data_dir.'SpaceVim'))
+    call mkdir(expand(g:spacevim_data_dir.'SpaceVim'))
   endif
-  call writefile([s:JSON.json_encode(s:grep_history)], expand(g:spacevim_data_dir.'/SpaceVim/flygrep_history'))
+  call writefile([s:JSON.json_encode(s:grep_history)], expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'))
 endfunction
 let s:grep_history = s:read_histroy()
 let s:complete_input_history_num = [0,0]
@@ -74,7 +87,7 @@ let s:complete_input_history_num = [0,0]
 " grep local funcs:{{{
 " @vimlint(EVL103, 1, a:timer)
 let s:current_grep_pattern = ''
-function! s:grep_timer(timer) abort
+function! s:grep_timer(...) abort
   if s:grep_mode ==# 'expr'
     let s:current_grep_pattern = join(split(s:grep_expr), '.*')
   else
@@ -123,8 +136,8 @@ function! s:get_search_cmd(expr) abort
     " if grep dir is empty, grep files is empty, which means searhing in
     " current directory.
     let cmd += [a:expr] 
-    " in window, when using rg, ag, need to add '.' at the end.
-    if s:SYS.isWindows && (s:grep_exe ==# 'rg' || s:grep_exe ==# 'ag' || s:grep_exe ==# 'pt' )
+    " when using rg, ag, need to add '.' at the end.
+    if s:grep_exe ==# 'rg' || s:grep_exe ==# 'ag' || s:grep_exe ==# 'pt'
       let cmd += ['.']
     endif
     let cmd += s:grep_ropt
@@ -190,8 +203,12 @@ function! s:flygrep(expr) abort
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
-  call timer_stop(s:grep_timer_id)
-  let s:grep_timer_id = timer_start(200, function('s:grep_timer'), {'repeat' : 1})
+  if has('timers')
+    call timer_stop(s:grep_timer_id)
+    let s:grep_timer_id = timer_start(200, function('s:grep_timer'), {'repeat' : 1})
+  else
+    call s:grep_timer()
+  endif
 endfunction
 
 " }}}
@@ -231,11 +248,15 @@ function! s:filter(expr) abort
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
-  let s:grep_timer_id = timer_start(200, function('s:filter_timer'), {'repeat' : 1})
+  if has('timers')
+    let s:grep_timer_id = timer_start(200, function('s:filter_timer'), {'repeat' : 1})
+  else
+    call s:filter_timer()
+  endif
 endfunction
 
 " @vimlint(EVL103, 1, a:timer)
-function! s:filter_timer(timer) abort
+function! s:filter_timer(...) abort
   let cmd = s:get_filter_cmd(join(split(s:grep_expr), '.*'))
   let s:grepid =  s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:grep_stdout'),
@@ -279,7 +300,13 @@ function! s:flygrep_result_to_files() abort
   for line in getbufline(s:flygrep_buffer_id, 1, '$')
     let filename = fnameescape(split(line, ':\d\+:')[0])
     let linenr = matchstr(line, ':\d\+:')[1:-2]
-    let str = matchstr(line, '\(:\d\+:\d\+:\)\@<=.*')
+    " if the search command is grep, the searching result is
+    " helloworld.vim:12: echo 'hello'
+    " echo matchstr("helloworld.vim:12: echo 'hello'", '\(:\d\+\)\+:\zs.*')
+    " ` echo 'hello'`
+    " echo matchstr("helloworld.vim:1:12: echo 'hello'", '\(:\d\+\)\+:\zs.*')
+    " ` echo 'hello'`
+    let str = matchstr(line, '\(:\d\+\)\+:\zs.*')
     call add(files, [filename, linenr, str])
   endfor
   return files
@@ -324,8 +351,10 @@ function! s:close_buffer() abort
   if s:grepid > 0
     call s:JOB.stop(s:grepid)
   endif
-  call timer_stop(s:grep_timer_id)
-  call timer_stop(s:preview_timer_id)
+  if has('timers')
+    call timer_stop(s:grep_timer_id)
+    call timer_stop(s:preview_timer_id)
+  endif
   if s:preview_able == 1
     for id in s:previewd_bufnrs
       try
@@ -336,7 +365,7 @@ function! s:close_buffer() abort
     noautocmd call s:close_preview_win()
     let s:preview_able = 0
   endif
-  noautocmd q
+  call s:close_flygrep_win()
 endfunction
 let s:MPT._onclose = function('s:close_buffer')
 " }}}
@@ -351,9 +380,11 @@ function! s:close_grep_job() abort
     endtry
     let s:std_line = 0
   endif
-  call timer_stop(s:grep_timer_id)
-  call timer_stop(s:preview_timer_id)
-  noautocmd normal! "_ggdG
+  if has('timers')
+    call timer_stop(s:grep_timer_id)
+    call timer_stop(s:preview_timer_id)
+  endif
+  noautocmd normal! gg"_dG
   call s:update_statusline()
   let s:complete_input_history_num = [0,0]
 endfunction
@@ -496,7 +527,7 @@ function! s:open_item() abort
       call s:close_preview_win()
     endif
     let s:preview_able = 0
-    noautocmd q
+    call s:close_flygrep_win()
     call s:update_history()
     call s:BUFFER.open_pos('edit', filename, linenr, colum)
     noautocmd normal! :
@@ -517,7 +548,7 @@ function! s:open_item_in_tab() abort
       call s:close_preview_win()
     endif
     let s:preview_able = 0
-    noautocmd q
+    call s:close_flygrep_win()
     call s:update_history()
     call s:BUFFER.open_pos('tabedit', filename, linenr, colum)
     noautocmd normal! :
@@ -538,7 +569,7 @@ function! s:open_item_vertically() abort
       call s:close_preview_win()
     endif
     let s:preview_able = 0
-    noautocmd q
+    call s:close_flygrep_win()
     call s:update_history()
     call s:BUFFER.open_pos('vsplit', filename, linenr, colum)
     noautocmd normal! :
@@ -559,7 +590,7 @@ function! s:open_item_horizontally() abort
       call s:close_preview_win()
     endif
     let s:preview_able = 0
-    noautocmd q
+    call s:close_flygrep_win()
     call s:update_history()
     call s:BUFFER.open_pos('split', filename, linenr, colum)
     noautocmd normal! :
@@ -567,10 +598,10 @@ function! s:open_item_horizontally() abort
 endfunction
 
 function! s:get_file_pos(line) abort
-    let filename = fnameescape(split(a:line, ':\d\+:')[0])
-    let linenr = str2nr(matchstr(a:line, ':\d\+:')[1:-2])
-    let colum = str2nr(matchstr(a:line, '\(:\d\+\)\@<=:\d\+:')[1:-2])
-    return [filename, linenr, colum]
+  let filename = fnameescape(split(a:line, ':\d\+:')[0])
+  let linenr = str2nr(matchstr(a:line, ':\d\+:')[1:-2])
+  let colum = str2nr(matchstr(a:line, '\(:\d\+\)\@<=:\d\+:')[1:-2])
+  return [filename, linenr, colum]
 endfunction
 
 function! s:apply_to_quickfix() abort
@@ -585,7 +616,7 @@ function! s:apply_to_quickfix() abort
     endif
     let s:preview_able = 0
     let searching_result = s:BUFFER.buf_get_lines(s:buffer_id, 0, -1, 0)
-    noautocmd q
+    call s:close_flygrep_win()
     call s:update_history()
     if !empty(searching_result)
       cgetexpr join(searching_result, "\n")
@@ -659,18 +690,18 @@ if exists('*nvim_open_win') && exists('*nvim_win_set_buf')
     let linenr = str2nr(matchstr(line, ':\d\+:')[1:-2])
     noautocmd let bufnr = s:BUFFER.bufadd(filename)
     call bufload(bufnr)
-    if s:Window.is_float(win_id2win(s:preview_win_id))
+    if s:Window.is_float(s:preview_win_id)
       call nvim_win_set_buf(s:preview_win_id, bufnr)
     else
       let flygrep_win_height = 16
       noautocmd let s:preview_win_id = s:FLOATING.open_win(bufnr, v:false,
             \ {
-            \ 'relative': 'editor',
-            \ 'width'   : &columns, 
-            \ 'height'  : 5,
-            \ 'row': &lines - flygrep_win_height - 2 - 5,
-            \ 'col': 0
-            \ })
+              \ 'relative': 'editor',
+              \ 'width'   : &columns, 
+              \ 'height'  : 5,
+              \ 'row': &lines - flygrep_win_height - 2 - 5,
+              \ 'col': 0
+              \ })
 
     endif
     noautocmd call s:Window.set_cursor(s:preview_win_id, [linenr, 1])
@@ -680,12 +711,12 @@ if exists('*nvim_open_win') && exists('*nvim_win_set_buf')
     call s:MPT._build_prompt()
   endfunction
   function! s:close_preview_win() abort
-    if s:Window.is_float(win_id2win(s:preview_win_id))
+    if s:Window.is_float(s:preview_win_id)
       call s:FLOATING.win_close(s:preview_win_id, 1)
     endif
   endfunction
 else
-  function! s:preview_timer(timer) abort
+  function! s:preview_timer(...) abort
     for id in filter(s:previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')
       exe 'silent bd ' . id
     endfor
@@ -709,10 +740,16 @@ endif
 " @vimlint(EVL103, 0, a:timer)
 
 
-function! s:preview() abort
-  call timer_stop(s:preview_timer_id)
-  let s:preview_timer_id = timer_start(200, function('s:preview_timer'), {'repeat' : 1})
-endfunction
+if has('timers')
+  function! s:preview() abort
+    call timer_stop(s:preview_timer_id)
+    let s:preview_timer_id = timer_start(200, function('s:preview_timer'), {'repeat' : 1})
+  endfunction
+else
+  function! s:preview() abort
+    call s:preview_timer()
+  endfunction
+endif
 
 let s:grep_mode = 'expr'
 function! s:toggle_expr_mode() abort
@@ -734,7 +771,7 @@ function! s:previous_match_history() abort
   endif
   let s:complete_input_history_num[0] += 1
   let s:MPT._prompt.begin = s:complete_input_history(s:complete_input_history_base, s:complete_input_history_num)
-  noautocmd normal! "_ggdG
+  noautocmd normal! gg"_dG
   call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
 endfunction
 
@@ -746,7 +783,7 @@ function! s:next_match_history() abort
   endif
   let s:complete_input_history_num[1] += 1
   let s:MPT._prompt.begin = s:complete_input_history(s:complete_input_history_base, s:complete_input_history_num)
-  noautocmd normal! "_ggdG
+  noautocmd normal! gg"_dG
   call s:MPT._handle_fly(s:MPT._prompt.begin . s:MPT._prompt.cursor .s:MPT._prompt.end)
 endfunction
 
@@ -798,16 +835,16 @@ let s:MPT._function_key = {
 if has('nvim')
   call extend(s:MPT._function_key, 
         \ {
-        \ "\x80\xfdJ" : function('s:previous_item'),
-        \ "\x80\xfc \x80\xfdJ" : function('s:previous_item'),
-        \ "\x80\xfc@\x80\xfdJ" : function('s:previous_item'),
-        \ "\x80\xfc`\x80\xfdJ" : function('s:previous_item'),
-        \ "\x80\xfdK" : function('s:next_item'),
-        \ "\x80\xfc \x80\xfdK" : function('s:next_item'),
-        \ "\x80\xfc@\x80\xfdK" : function('s:next_item'),
-        \ "\x80\xfc`\x80\xfdK" : function('s:next_item'),
-        \ }
-        \ )
+          \ "\x80\xfdK" : function('s:previous_item'),
+          \ "\x80\xfc \x80\xfdK" : function('s:previous_item'),
+          \ "\x80\xfc@\x80\xfdK" : function('s:previous_item'),
+          \ "\x80\xfc`\x80\xfdK" : function('s:previous_item'),
+          \ "\x80\xfdL" : function('s:next_item'),
+          \ "\x80\xfc \x80\xfdL" : function('s:next_item'),
+          \ "\x80\xfc@\x80\xfdL" : function('s:next_item'),
+          \ "\x80\xfc`\x80\xfdL" : function('s:next_item'),
+          \ }
+          \ )
 endif
 
 let s:MPT._keys.close = ["\<Esc>", "\<C-c>"]
@@ -819,6 +856,11 @@ let s:MPT._keys.close = ["\<Esc>", "\<C-c>"]
 " files: files for grep, @buffers means listed buffer.
 " dir: specific a directory for grep
 function! SpaceVim#plugins#flygrep#open(argv) abort
+  if has('patch-7.4.1557')
+    let s:previous_winid = win_getid()
+  else
+    let s:previous_winid = winnr()
+  endif
   if empty(s:grep_default_exe)
     call s:LOGGER.warn(' [flygrep] make sure you have one search tool in your PATH', 1)
     return
@@ -831,15 +873,19 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
     let flygrep_win_height = 16
     noautocmd let s:flygrep_win_id =  s:FLOATING.open_win(s:buffer_id, v:true,
           \ {
-          \ 'relative': 'editor',
-          \ 'width'   : &columns, 
-          \ 'height'  : flygrep_win_height,
-          \ 'row': &lines - flygrep_win_height - 2,
-          \ 'col': 0
-          \ })
+            \ 'relative': 'editor',
+            \ 'width'   : &columns, 
+            \ 'height'  : flygrep_win_height,
+            \ 'row': &lines - flygrep_win_height - 2,
+            \ 'col': 0
+            \ })
   else
     noautocmd botright split __flygrep__
-    let s:flygrep_win_id = win_getid()
+    if has('patch-7.4.1557')
+      let s:flygrep_win_id = win_getid()
+    else
+      let s:flygrep_win_id = winnr()
+    endif
     let s:buffer_id = bufnr('__flygrep__')
   endif
   if exists('&winhighlight')
@@ -850,9 +896,15 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   let save_tve = &t_ve
   setlocal t_ve=
   let cursor_hi = {}
-  if has('gui_running')
-    let cursor_hi = s:HI.group2dict('Cursor')
-    call s:HI.hide_in_normal('Cursor')
+  let cursor_hi = s:HI.group2dict('Cursor')
+  let lcursor_hi = s:HI.group2dict('lCursor')
+  let guicursor = &guicursor
+  call s:HI.hide_in_normal('Cursor')
+  call s:HI.hide_in_normal('lCursor')
+  " hi Cursor ctermbg=16 ctermfg=16 guifg=#282c34 guibg=#282c34
+  " hi lCursor ctermbg=16 ctermfg=16 guifg=#282c34 guibg=#282c34
+  if has('nvim')
+    set guicursor+=a:Cursor/lCursor
   endif
   " setlocal nomodifiable
   setf SpaceVimFlyGrep
@@ -902,9 +954,9 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
   endif
   call s:LOGGER.info('FlyGrep ending    ===========================')
   let &t_ve = save_tve
-  if has('gui_running')
-    call s:HI.hi(cursor_hi)
-  endif
+  call s:HI.hi(cursor_hi)
+  call s:HI.hi(lcursor_hi)
+  let &guicursor = guicursor
 endfunction
 " }}}
 
@@ -913,7 +965,7 @@ function! s:update_statusline() abort
     return
   endif
 
-  if s:SL.support_float() && win_id2tabwin(s:flygrep_win_id)[0] ==# tabpagenr() && s:Window.is_float(win_id2win(s:flygrep_win_id))
+  if s:SL.support_float() && win_id2tabwin(s:flygrep_win_id)[0] ==# tabpagenr() && s:Window.is_float(s:flygrep_win_id)
     noautocmd call s:SL.open_float([
           \ ['FlyGrep ', 'SpaceVim_statusline_a_bold'],
           \ [' ', 'SpaceVim_statusline_a_SpaceVim_statusline_b'],

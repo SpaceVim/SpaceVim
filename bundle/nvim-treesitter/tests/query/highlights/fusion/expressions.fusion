@@ -1,0 +1,82 @@
+string = ${'foo'}
+//          ^string
+
+string = ${'foo \'bar\' baz'}
+//                ^string
+
+string = ${"foo"}
+//          ^string
+
+string = ${"foo ${test}"}
+//               ^string
+
+boolean = ${true}
+//          ^boolean
+
+number = ${1}
+//         ^number
+
+number = ${1.2}
+//         ^number
+
+propertyPath = ${property.path}
+//               ^variable
+//                        ^variable
+
+thisorProps = ${this.path}
+//              ^variable.builtin
+//                   ^variable
+
+thisorProps = ${props.path}
+//              ^variable.builtin
+//                    ^variable
+
+array = ${[]}
+//        ^punctuation.bracket
+
+array = ${[true, 'string', 1, [true]]}
+//        ^punctuation.bracket
+//         ^boolean
+//                ^string
+//                         ^number
+//                            ^punctuation.bracket
+//                             ^boolean
+
+object = ${{}}
+//         ^punctuation.bracket
+
+object = ${{first: 'value', second: true, third: [], fourth: object.path }}
+//          ^property
+//                  ^string
+//                          ^property
+//                                  ^boolean
+//                                        ^property
+//                                               ^punctuation.bracket
+//                                                   ^property
+//                                                                  ^variable
+
+result = ${methodCall()}
+//         ^function
+
+result = ${Some.methodCall(param, param)}
+//              ^function
+//                         ^variable
+//                                ^variable
+
+arrowFunction =  ${map(foo, (bar, buz) => bar * buz)}
+//                 ^function
+//                           ^variable
+//                                ^variable
+
+logic = ${!foo && !(bar || baz) and not 'string'}
+//        ^operator
+//             ^operator
+//                ^operator
+//                      ^operator
+//                              ^operator
+
+ternary = ${ check ? true : false}
+//                 ^punctuation.delimiter
+//                        ^punctuation.delimiter
+
+

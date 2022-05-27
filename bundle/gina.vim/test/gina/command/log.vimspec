@@ -1,0 +1,83 @@
+Describe gina#command#log
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let slit1 = Slit(tempname(), 1)
+    call slit1.write('A/foo.txt', [])
+    call slit1.write('B/foo.txt', [])
+    call slit1.write('C/foo.txt', [])
+
+    call slit1.execute('add %s', slit1.path('A/foo.txt'))
+    call slit1.execute('commit --quiet -m "First"')
+    call slit1.execute('checkout -b develop')
+    call slit1.execute('add %s', slit1.path('B/foo.txt'))
+    call slit1.execute('commit --quiet -m "Second"')
+    call slit1.execute('checkout master')
+    call slit1.execute('add %s', slit1.path('C/foo.txt'))
+    call slit1.execute('commit --quiet -m "Thrid"')
+  End
+
+  After all
+    %bwipeout!
+  End
+
+  Before
+    %bwipeout!
+    execute 'edit' fnameescape(Path.join(slit1.worktree, 'A', 'foo.txt'))
+  End
+
+  Describe Use cases (without {path})
+    It might be called without arguments
+      GinaSync log --graph
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:log', slit1.refname))
+      Assert Match(
+            \ getline(1),
+            \ '\* [32m\w\{7}[m Thrid [33;1m\d\+ seconds\? ago[m [35;1m<.*>[m[36;1m (.*)[m'
+            \)
+      Assert Match(
+            \ getline(2),
+            \ '\* [32m\w\{7}[m First [33;1m\d\+ seconds\? ago[m [35;1m<.*>[m[36;1m[m'
+            \)
+      Assert Equals(line('$'), 2)
+    End
+
+    It might be called with -- %
+      GinaSync log --graph -- %
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:log:--', slit1.refname))
+      Assert Match(
+            \ getline(1),
+            \ '\* [32m\w\{7}[m First [33;1m\d\+ seconds\? ago[m [35;1m<.*>[m[36;1m[m'
+            \)
+      Assert Equals(line('$'), 1)
+    End
+
+    It might be called with -- :/
+      GinaSync log --graph -- :/
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:log:--', slit1.refname))
+      Assert Match(
+            \ getline(1),
+            \ '\* [32m\w\{7}[m Thrid [33;1m\d\+ seconds\? ago[m [35;1m<.*>[m[36;1m (.*)[m'
+            \)
+      Assert Match(
+            \ getline(2),
+            \ '\* [32m\w\{7}[m First [33;1m\d\+ seconds\? ago[m [35;1m<.*>[m[36;1m[m'
+            \)
+      Assert Equals(line('$'), 2)
+    End
+  End
+
+  Describe Use cases (with {path})
+    It might be called with :%
+      GinaSync log --graph :%
+      Assert Equals(winnr('$'), 1)
+      Assert Equals(bufname('%'), printf('gina://%s:log/:A/foo.txt:$', slit1.refname))
+      Assert Match(
+            \ getline(1),
+            \ '\* [32m\w\{7}[m First [33;1m\d\+ seconds\? ago[m [35;1m<.*>[m[36;1m[m'
+            \)
+      Assert Equals(line('$'), 1)
+    End
+  End
+End

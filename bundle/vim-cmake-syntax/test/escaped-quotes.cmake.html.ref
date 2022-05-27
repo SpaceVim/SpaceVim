@@ -1,0 +1,5 @@
+<body>
+<pre id='vimCodeElement'>
+<span class="Identifier">string</span>(<span class="ModeMsg">REPLACE</span> <span class="Constant">&quot;</span><span class="Special">\&quot;</span><span class="Constant">&quot;</span> <span class="Constant">&quot;'&quot;</span> <span class="Type">${FOO}</span> <span class="Type">${BAR}</span>) <span class="Comment"># a comment</span>
+</pre>
+</body>

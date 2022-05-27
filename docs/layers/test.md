@@ -48,6 +48,14 @@ let test#java#gradletest#executable = "./gradlew test"
 
 In essence, it replaces `_` with `#` and prepends `test#` to the keys inside `override_config`.
 
+To use ultest, set the configuration:
+
+```toml
+[[layers]]
+  name = "test"
+  use_ultest = true
+```
+
 ## Key bindings
 
 | Key Binding | Description                                                                                                                                                                                                                                                                             |
@@ -58,3 +66,19 @@ In essence, it replaces `_` with `#` and prepends `test#` to the keys inside `ov
 | `SPC k l`   | Runs the last test                                                                                                                                                                                                                                                                      |
 | `SPC k v`   | Visits the test file from which you last run your tests (useful when you're trying to make a test pass, and you dive deep into application code and close your test buffer to make more space, and once you've made it pass you want to go back to the test file to write more tests)   |
 
+**Additional bindings with ultest**
+
+| Key Binding | Description                                                    |
+| ----------- | ---------------------------------------------------------------|
+| `SPC k u`   | Jump to summary                                                |
+| `SPC k U`   | Open summary                                                   |
+| `SPC k k`   | Stop nearest                                                   |
+| `SPC k K`   | Stop                                                           |
+| `SPC k a`   | Attach                                                         |
+| `SPC k c`   | Clear                                                          |
+| `SPC k d`   | Debug nearest                                                  |
+| `SPC k D`   | Debug                                                          |
+| `SPC k j`   | Jump to next failed test                                       |
+| `SPC k k`   | Jump to previous failed test                                   |
+| `SPC k o`   | Show output                                                    |
+| `SPC k O`   | Jump to output                                                 |

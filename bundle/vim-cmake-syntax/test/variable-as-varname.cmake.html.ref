@@ -1,0 +1,11 @@
+<body>
+<pre id='vimCodeElement'>
+
+
+<span class="Identifier">set</span>(HOST <span class="Constant">&quot;Linux&quot;</span>)
+<span class="Identifier">set</span>(<span class="ModeMsg">CPU</span> <span class="Constant">&quot;x86_64&quot;</span>)
+<span class="Identifier">set</span>(Linux_x86_64 <span class="Constant">&quot;Hello&quot;</span>)
+
+<span class="Identifier">message</span>(<span class="ModeMsg">STATUS</span> <span class="Type">${${HOST}_${CPU}}</span>)
+</pre>
+</body>

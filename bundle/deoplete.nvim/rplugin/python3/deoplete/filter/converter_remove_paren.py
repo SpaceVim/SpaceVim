@@ -4,10 +4,11 @@
 # License: MIT license
 # ============================================================================
 
+from pynvim import Nvim
 import re
 
 from deoplete.base.filter import Base
-from deoplete.util import Nvim, UserContext, Candidates
+from deoplete.util import UserContext, Candidates
 
 
 class Filter(Base):
@@ -22,4 +23,4 @@ class Filter(Base):
                           if '(' in x['word']]:
             candidate['word'] = re.sub(r'\(.*\)(\$\d+)?', '',
                                        candidate['word'])
-        return context['candidates']  # type: ignore
+        return list(context['candidates'])

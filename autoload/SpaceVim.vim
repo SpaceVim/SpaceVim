@@ -1,7 +1,7 @@
 "=============================================================================
 " SpaceVim.vim --- Initialization and core files for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Shidong Wang < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
@@ -11,7 +11,7 @@ scriptencoding utf-8
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro options config layers usage api faq changelog
+" @order intro options config functions layers usage plugins api dev faq changelog
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "
@@ -36,8 +36,14 @@ scriptencoding utf-8
 ""
 " @section Configuration, config
 " If you still want to use `~/.SpaceVim.d/init.vim` as configuration file,
-" please take a look at the following options.
-"
+" please take a look at the following options add @section(functions)
+
+
+""
+" @section Public functions, functions
+" All of these functions can be used in `~/.SpaceVim.d/init.vim` and bootstrap
+" functions.
+
 
 let s:SYSTEM = SpaceVim#api#import('system')
 
@@ -45,7 +51,7 @@ let s:SYSTEM = SpaceVim#api#import('system')
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '1.8.0-dev'
+let g:spacevim_version = '2.0.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -62,6 +68,11 @@ lockvar g:spacevim_version
 "   let g:spacevim_default_indent = 2
 " <
 let g:spacevim_default_indent          = 2
+""
+" @section expand_tab, options-expand_tab
+" @parentsection options
+" In Insert mode: Use the appropriate number of spaces to insert a <Tab>
+
 ""
 " In Insert mode: Use the appropriate number of spaces to insert a <Tab>
 let g:spacevim_expand_tab              = 1
@@ -110,6 +121,15 @@ let g:spacevim_enable_bepo_layout  = 0
 " <
 let g:spacevim_max_column              = 120
 
+""
+" @section windisk_encoding, options-windisk_encoding
+" @parentsection options
+" Setting the encoding of windisk info. by default it is `cp936`.
+" >
+"   windisk_encoding = 'cp936'
+" <
+
+let g:spacevim_windisk_encoding = 'cp936'
 
 ""
 " @section default_custom_leader, options-default_custom_leader
@@ -140,7 +160,19 @@ let g:spacevim_default_custom_leader = '<Space>'
 "   let g:spacevim_home_files_number = 6
 " <
 let g:spacevim_home_files_number        = 6
+""
+" @section code_runner_focus, options-code_runner_focus
+" @parentsection options
+" enable/disable code runner window focus mode, by default this option is
+" `false`, to enable this mode, set this option to `true`.
+" >
+"   code_runner_focus = true
+" <
 
+""
+" enable/disable code runner window focus mode, by default this option is 0,
+" to enable this mode, set this option to 1.
+let g:spacevim_code_runner_focus = 0
 
 ""
 " @section enable_guicolors, options-enable_guicolors
@@ -257,7 +289,7 @@ endif
 ""
 " Set the cache directory of plugins. Default is `$data_dir/vimfiles`.
 " >
-"   let g:spacevim_plugin_bundle_dir = g:spacevim_data_dir.'/vimplugs'
+"   let g:spacevim_plugin_bundle_dir = g:spacevim_data_dir.'vimplugs'
 " <
 let g:spacevim_plugin_bundle_dir
       \ = g:spacevim_data_dir . join(['vimfiles', ''],
@@ -318,6 +350,8 @@ if (has('python3')
   " <
   "
   " and you can alse set this option to coc, then coc.nvim will be used.
+  " If you are using neovim, you can also set this option to `nvim-cmp`, then
+  " nvim-cmp will be used.
 
   ""
   " Set the autocomplete engine of spacevim, the default logic is:
@@ -403,11 +437,11 @@ let g:spacevim_enable_ycm              = 0
 " @section sidebar_width, options-sidebar_width
 " @parentsection options
 " Set the width of the SpaceVim sidebar. Default is 30.
-" This value will be used by tagbar and vimfiler.
+" This value will be used by tagbar and filetree.
 
 ""
 " Set the width of the SpaceVim sidebar. Default is 30.
-" This value will be used by tagbar and vimfiler.
+" This value will be used by tagbar and filetree.
 let g:spacevim_sidebar_width           = 30
 
 ""
@@ -536,11 +570,11 @@ let g:spacevim_enable_statusline_bfpath = 0
 " Enable/Disable showing current tag on statusline
 let g:spacevim_enable_statusline_tag = 1
 ""
-" @section statusline_left_sections, options-statusline_left_sections
+" @section statusline_left, options-statusline_left
 " @parentsection options
 " Define the left section of statusline in active windows. By default:
 " >
-"   statusline_left_sections = [
+"   statusline_left = [
 "     'winnr',
 "     'filename',
 "     'major mode',
@@ -548,11 +582,12 @@ let g:spacevim_enable_statusline_tag = 1
 "     'version control info'
 "     ]
 " <
+" `statusline_left_sections` is deprecated, use `statusline_left` instead. 
 
 ""
 " Define the left section of statusline in active windows. By default:
 " >
-"   let g:spacevim_statusline_left_sections =
+"   let g:spacevim_statusline_left =
 "     \ [
 "     \ 'winnr',
 "     \ 'filename',
@@ -561,38 +596,63 @@ let g:spacevim_enable_statusline_tag = 1
 "     \ 'version control info'
 "     \ ]
 " <
-let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
+" `g:spacevim_statusline_left_sections` is deprecated,
+" use `g:spacevim_statusline_left` instead. 
+let g:spacevim_statusline_left = ['winnr', 'filename', 'major mode',
       \ 'search count',
       \ 'syntax checking', 'minor mode lighters',
       \ ]
 ""
+" @section statusline_right, options-statusline_right
+" @parentsection options
 " Define the right section of statusline in active windows. By default:
 " >
-"   g:spacevim_statusline_right_sections =
+"   statusline_right = [
+"     'fileformat',
+"     'cursorpos',
+"     'percentage'
+"     ]
+" <
+"
+" The following sections can be used in this option:
+" - fileformat: the format of current file
+" - cursorpos: the corsur position
+" - percentage: the percent of current page
+" - totallines: the total lines of current buffer
+"
+" `statusline_right_sections` is deprecated, use `statusline_right` instead. 
+
+""
+" Define the right section of statusline in active windows. By default:
+" >
+"   g:spacevim_statusline_right =
 "     \ [
 "     \ 'fileformat',
 "     \ 'cursorpos',
 "     \ 'percentage'
 "     \ ]
 " <
-let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos', 'percentage']
+"
+" `g:spacevim_statusline_right_sections` is deprecated,
+" use `g:spacevim_statusline_right` instead. 
+let g:spacevim_statusline_right = ['fileformat', 'cursorpos', 'percentage']
 
 ""
-" @section statusline_unicode_symbols, options-statusline_unicode_symbols
+" @section statusline_unicode, options-statusline_unicode
 " @parentsection options
 " Enable/Disable unicode symbols in statusline, includes the mode icons and
 " fileformat icons. This option is enabled by default, to disable it:
 " >
-"   statusline_unicode_symbols = false
+"   statusline_unicode = false
 " <
 
 ""
 " Enable/Disable unicode symbols in statusline, includes the mode icons and
 " fileformat icons. This option is enabled by default, to disable it:
 " >
-"   let g:spacevim_statusline_unicode_symbols = 0
+"   let g:spacevim_statusline_unicode = 0
 " <
-let g:spacevim_statusline_unicode_symbols = 1
+let g:spacevim_statusline_unicode = 1
 ""
 " Enable/Disable language specific leader, by default you can use `,` ket
 " instead of `SPC` `l`.
@@ -789,13 +849,13 @@ let g:spacevim_colorscheme_default     = 'desert'
 ""
 " @section filemanager, options-filemanager
 " @parentsection options
-" The default file manager of SpaceVim. Default is 'vimfiler'.
-" you can also use nerdtree or defx
+" The default file manager of SpaceVim. Default is 'nerdtree'.
+" you can also use defx or vimfiler
 
 ""
-" The default file manager of SpaceVim. Default is 'vimfiler'.
-" you can also use nerdtree or defx
-let g:spacevim_filemanager             = 'vimfiler'
+" The default file manager of SpaceVim. Default is 'nerdtree'.
+" you can also use defx or vimfiler
+let g:spacevim_filemanager             = 'nerdtree'
 ""
 " @section filetree_direction, options-filetree_direction
 " @parentsection options
@@ -1004,10 +1064,21 @@ let g:spacevim_disabled_plugins        = []
 ""
 " @section custom_plugins, usage-custom_plugins
 " @parentsection usage
-" Add custom plugins.
+" If you want to add custom plugin, use `custom_plugins` section. For example:
+" if you want to add https://github.com/vimwiki/vimwiki, add following code
+" into your configuration file.
 " >
 "   [[custom_plugins]]
 "     repo = 'vimwiki/vimwiki'
+"     merged = false
+" <
+" Use one custom_plugins for each plugin, example:
+" >
+"   [[custom_plugins]]
+"     repo = 'vimwiki/vimwiki'
+"     merged = false
+"   [[custom_plugins]]
+"     repo = 'wsdjeg/vim-j'
 "     merged = false
 " <
 
@@ -1041,6 +1112,8 @@ let g:spacevim_enable_powerline_fonts  = 1
 " >
 "   let g:spacevim_lint_on_save = 0
 " <
+" NOTE: the `lint_on_save` option has been deprecated. Please use layer option
+" of @section(layers-checkers) layer.
 let g:spacevim_lint_on_save            = 1
 ""
 " @section search_tools, options-search_tools
@@ -1074,6 +1147,19 @@ let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'find
 "   ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
 " <
 let g:spacevim_project_rooter_patterns = ['.git/', '_darcs/', '.hg/', '.bzr/', '.svn/']
+
+
+""
+" @section project_non_root, options-project_non_root
+" @parentsection options
+" This option set the default behavior for non-project files.
+" - `current`: change to file's dir, like `autochdir`
+" - `''`: do not change directory
+" - `home`: change to home directory
+
+let g:spacevim_project_non_root = ''
+
+
 ""
 " @section enable_projects_cache, options-enable_projects_cache
 " @parentsection options
@@ -1091,19 +1177,21 @@ let g:spacevim_enable_projects_cache = 1
 " Setting the numbers of cached projects, by default it is 20.
 let g:spacevim_projects_cache_num = 20
 ""
-" @section project_rooter_automatically, options-project_rooter_automatically
+" @section project_auto_root, options-project_auto_root
 " @parentsection options
 " Enable/Disable project root detection. By default, SpaceVim will change the
 " directory to the project root directory based on `project_rooter_patterns`
 " option. To disable this feature:
 " >
 "   [options]
-"     project_rooter_automatically = false
+"     project_auto_root = false
 " <
+" NOTE: *g:spacevim_project_rooter_automatically* and
+" *SpaceVim-options-project_rooter_automatically* are deprecated.
 
 ""
 " Enable/Disable changing directory automatically. Enabled by default.
-let g:spacevim_project_rooter_automatically = 1
+let g:spacevim_project_auto_root = 1
 ""
 " @section project_rooter_outermost, options-project_rooter_outermost
 " @parentsection options
@@ -1125,14 +1213,35 @@ let g:spacevim_project_rooter_automatically = 1
 "   let g:spacevim_project_rooter_outermost = 0
 " <
 let g:spacevim_project_rooter_outermost = 1
+""
+" @section commandline_prompt, options-commandline_prompt
+" @parentsection options
+" Config the command line prompt for flygrep and denite etc.
+" Default is `>`, for example:
+" >
+"   commandline_prompt = '➭'
+" <
 
 ""
 " Config the command line prompt for flygrep and denite etc.
-let g:spacevim_commandline_prompt = '➭'
+let g:spacevim_commandline_prompt = '>'
+
+""
+" @section todo_labels, options-todo_labels
+" @parentsection options
+" Option for setting todo labels in current project.
 
 ""
 " Option for setting todo labels in current project.
-let g:spacevim_todo_labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v:val')
+let g:spacevim_todo_labels = ['fixme', 'question', 'todo', 'idea']
+
+""
+" @section todo_prefix, options-todo_prefix
+" @parentsection options
+" Option for setting todo prefix in current project.
+" The default is `@`
+
+let g:spacevim_todo_prefix = '@'
 
 ""
 " @section lint_on_the_fly, options-lint_on_the_fly
@@ -1141,6 +1250,8 @@ let g:spacevim_todo_labels = map(['fixme', 'question', 'todo', 'idea'], '"@" . v
 " >
 "   lint_on_the_fly = false
 " <
+" NOTE: the `lint_on_the_fly` option has been deprecated. Please use layer option
+" of @section(layers-checkers) layer.
 
 ""
 " Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
@@ -1195,17 +1306,12 @@ let g:spacevim_enable_vimfiler_welcome = 1
 ""
 " Enable/Disable autocompletion of parentheses, default is 1 (enabled).
 let g:spacevim_autocomplete_parens = 1
-""
-" Enable/Disable gitstatus column in vimfiler buffer, default is 0.
-let g:spacevim_enable_vimfiler_gitstatus = 0
-""
-" Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
-let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
 let g:spacevim_smartcloseignoreft      = [
       \ 'tagbar',
       \ 'vimfiler',
       \ 'defx',
+      \ 'NvimTree',
       \ 'SpaceVimRunner',
       \ 'SpaceVimREPL',
       \ 'SpaceVimQuickFix',
@@ -1222,10 +1328,16 @@ let g:spacevim_src_root                = 'E:\sources\'
 " Google and Twitter.
 let g:spacevim_hosts_url
       \ = 'https://raw.githubusercontent.com/racaljk/hosts/master/hosts'
+""
+" @section wildignore, options-wildignore
+" @parentsection options
+" A list of file patterns when file match it will be ignored.
+" >
+"   wildignore =  '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,*.ttf,*.TTF,*.png,*/target/*,.git,.svn,.hg,.DS_Store,*.svg'
+" <
+
 let g:spacevim_wildignore
-      \ = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
-      \*.ttf,*.TTF,*.png,*/target/*,
-      \.git,.svn,.hg,.DS_Store,*.svg'
+      \ = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,*.ttf,*.TTF,*.png,*/target/*,.git,.svn,.hg,.DS_Store,*.svg'
 
 " }}}
 
@@ -1235,7 +1347,7 @@ let g:_spacevim_mappings = {}
 let g:_spacevim_mappings_space_custom = []
 let g:_spacevim_mappings_space_custom_group_name = []
 let g:_spacevim_mappings_language_specified_space_custom = {}
-let g:_spacevim_mappings_language_specified_space_custom_group_name = {}
+let g:_spacevim_mappings_lang_group_name = {}
 let g:_spacevim_neobundle_installed     = 0
 let g:_spacevim_dein_installed          = 0
 let g:_spacevim_vim_plug_installed      = 0
@@ -1302,8 +1414,8 @@ endif
 " }}}
 
 
-command -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <args>)
-command -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
+command! -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <args>)
+command! -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
 function! SpaceVim#end() abort
   if g:spacevim_vimcompatible
@@ -1356,7 +1468,6 @@ function! SpaceVim#end() abort
   elseif g:spacevim_vim_help_language ==# 'ja'
     let &helplang = 'jp'
   endif
-  ""
   " generate tags for SpaceVim
   let help = fnamemodify(g:_spacevim_root_dir, ':p:h') . '/doc'
   try
@@ -1364,8 +1475,6 @@ function! SpaceVim#end() abort
   catch
     call SpaceVim#logger#warn('Failed to generate helptags for SpaceVim')
   endtry
-
-  ""
   " set language
   if !empty(g:spacevim_language)
     silent exec 'lan ' . g:spacevim_language
@@ -1424,6 +1533,9 @@ function! SpaceVim#end() abort
       set guicolors
     endif
   endif
+
+  call SpaceVim#autocmds#init()
+
   if g:spacevim_colorscheme !=# '' "{{{
     try
       exec 'set background=' . g:spacevim_colorscheme_bg
@@ -1445,10 +1557,6 @@ function! SpaceVim#end() abort
     endif
   endif
 
-
-
-  call SpaceVim#autocmds#init()
-
   if !has('nvim-0.2.0') && !has('nvim')
     " In old version of neovim, &guicursor do not support cursor shape
     " setting.
@@ -1464,6 +1572,7 @@ function! SpaceVim#end() abort
       " enable blinking mode-sensitive cursor
       set guicursor=n-v-c:block-blinkon10,i-ci-ve:ver25-blinkon10,r-cr:hor20,o:hor50
     endif
+    set guicursor+=a:Cursor/lCursor
   endif
   filetype plugin indent on
   syntax on
@@ -1473,23 +1582,49 @@ endfunction
 " return [status, dir]
 " status: 0 : no argv
 "         1 : dir
-"         2 : filename
+"         2 : default arguments
+"
+" argc() return number of files
+" argv() return a list of files/directories
 function! s:parser_argv() abort
-  if !argc()
-    return [0]
-  elseif argv(0) =~# '/$'
-    let f = fnamemodify(expand(argv(0)), ':p')
-    if isdirectory(f)
-      return [1, f]
-    else
+  if exists('v:argv')
+    " if use embed nvim
+    " for exmaple: neovim-qt
+    " or only run vim/neovim without argvs
+    if index(v:argv, '--embed') !=# -1
+          \ || len(v:argv) == 1
+      return [0]
+    elseif v:argv[1] =~# '/$'
+      let f = fnamemodify(expand(v:argv[1]), ':p')
+      if isdirectory(f)
+        return [1, f]
+      else
+        return [1, getcwd()]
+      endif
+    elseif v:argv[1] ==# '.'
       return [1, getcwd()]
+    elseif isdirectory(expand(v:argv[1]))
+      return [1, fnamemodify(expand(v:argv[1]), ':p')]
+    else
+      return [2, get(v:, 'argv', ['failed to get v:argv'])]
     endif
-  elseif argv(0) ==# '.'
-    return [1, getcwd()]
-  elseif isdirectory(expand(argv(0)))
-    return [1, fnamemodify(expand(argv(0)), ':p')]
   else
-    return [2, argv()]
+    if !argc() && line2byte('$') == -1
+      return [0]
+    elseif argv()[0] =~# '/$'
+      let f = fnamemodify(expand(argv()[0]), ':p')
+      if isdirectory(f)
+        return [1, f]
+      else
+        return [1, getcwd()]
+      endif
+    elseif argv()[0] ==# '.'
+      return [1, getcwd()]
+    elseif isdirectory(expand(argv()[0]))
+      return [1, fnamemodify(expand(argv()[0]), ':p')]
+    else
+      return [2, string(argv())]
+    endif
   endif
 endfunction
 
@@ -1520,6 +1655,8 @@ function! SpaceVim#begin() abort
     endif
   catch /^Vim\%((\a\+)\)\=:E197/
     call SpaceVim#logger#error('Can not set language to en_US.utf8')
+  catch /^Vim\%((\a\+)\)\=:E319/
+    call SpaceVim#logger#error('Can not set language to en_US.utf8, language not implemented in this Vim build')
   endtry
 
   " try to set encoding to utf-8
@@ -1600,6 +1737,12 @@ function! SpaceVim#welcome() abort
     elseif exists(':NERDTree') == 2
       NERDTree
       wincmd p
+    elseif exists(':NvimTreeOpen') == 2
+      NvimTreeOpen
+      " the statusline of nvimtree is not udpated when open nvim tree in
+      " welcome function
+      doautocmd WinEnter
+      wincmd p
     endif
   endif
 endfunction
@@ -1609,6 +1752,120 @@ endfunction
 "   General guide for using SpaceVim. Including layer configuration, bootstrap
 "   function.
 
+""
+" @section undo-tree, usage-undotree
+" @parentsection usage
+" Undo tree visualizes the undo history and makes it easier to browse and
+" switch between different undo branches.The default key binding is `F7`.
+" If `+python` or `+python3` is enabled, `vim-mundo` will be used,
+" otherwise `undotree` will be used.
+" 
+" Key bindings within undo tree windows:
+" >
+"    key bindings     description
+"    `G`              move bottom
+"    `J`              move older write
+"    `K`              move newer write
+"    `N`              previous match
+"    `P`              play to
+"    `<2-LeftMouse>`  mouse click
+"    `/`              search
+"    `<CR>`           preview
+"    `d`              diff
+"    `<down>`         move older
+"    `<up>`           move newer
+"    `i`              toggle inline
+"    `j`              move older
+"    `k`              move newer
+"    `n`              next match
+"    `o`              preview
+"    `p`              diff current buffer
+"    `q`              quit
+"    `r`              diff
+"    `gg`             move top
+"    `?`              toggle help
+" <
+
+""
+" @section windows-and-tabs, usage-windows-and-tabs
+" @parentsection usage
+" @subsection Windows related key bindings
+" Window manager key bindings can only be used in normal mode.
+" The default leader `[WIN]` is `s`, you can change it via `windows_leader`
+" option:
+" >
+"   [options]
+"     windows_leader = "s"
+" <
+" The following key bindings can be used to manager vim windows and tabs.
+" >
+"     Key Bindings | Descriptions
+"     ------------ | --------------------------------------------------
+"     q            | Smart buffer close
+"     WIN v        | :split
+"     WIN V        | Split with previous buffer
+"     WIN g        | :vsplit
+"     WIN G        | Vertically split with previous buffer
+"     WIN t        | Open new tab (:tabnew)
+"     WIN o        | Close other windows (:only)
+"     WIN x        | Remove buffer, leave blank window
+"     WIN q        | Remove current buffer
+"     WIN Q        | Close current buffer (:close)
+"     Shift-Tab    | Switch to alternate window (switch back and forth)
+" <
+
+""
+" @section search-and-replace, usage-search-and-replace
+" @parentsection usage
+" This section document how to find and replace text in SpaceVim.
+"
+" @subsection Searching with  an external tool
+"
+" SpaceVim can be interfaced with different searching tools like:
+" 1. rg - ripgrep
+" 2. ag - the silver searcher
+" 3. pt - the platinum searcher
+" 4. ack
+" 5. grep
+" The search commands in SpaceVim are organized under the `SPC s` prefix
+" with the next key being the tool to use and the last key is the scope.
+" For instance, `SPC s a b` will search in all opened buffers using `ag`.
+" 
+" If the `<scope>` is uppercase then the current word under the cursor
+" is used as default input for the search.
+" For instance, `SPC s a B` will search for the word under the cursor.
+" 
+" If the tool key is omitted then a default tool will be automatically
+" selected for the search. This tool corresponds to the first tool found
+" on the system from the list `search_tools`, the default order is
+" `['rg', 'ag', 'pt', 'ack', 'grep', 'findstr', 'git']`.
+" For instance `SPC s b` will search in the opened buffers using
+" `pt` if `rg` and `ag` have not been found on the system.
+" 
+" The tool keys are:
+" >
+"     Tool     | Key
+"     ---------|-----
+"     ag       | a
+"     grep     | g
+"     git grep | G
+"     ack      | k
+"     rg       | r
+"     pt       | t
+" <
+" The available scopes and corresponding keys are:
+" >
+"     Scope                      | Key
+"     ---------------------------|-----
+"     opened buffers             | b
+"     buffer directory           | d
+"     files in a given directory | f
+"     current project            | p
+" <
+" Instead of using flygrep to search text. SpaceVim also provides a general
+" async searcher. The key binding is `SPC s j`, an input promote will be
+" opened. After inserting text and press enter. searching results will be
+" displayed in quickfix window.
 
 ""
 " @section buffers-and-files, usage-buffers-and-files
@@ -1626,6 +1883,97 @@ endfunction
 " <
 
 
+""
+" @section command-line-mode, usage-command-line-mode
+" @parentsection usage
+" After pressing `:`, you can switch to command line mode, here is a list
+" of key bindings can be used in command line mode:
+" >
+"   Key bindings    Descriptions
+"   Ctrl-a          move cursor to beginning
+"   Ctrl-b          Move cursor backward in command line
+"   Ctrl-f          Move cursor forward in command line
+"   Ctrl-w          delete a whole word
+"   Ctrl-u          remove all text before cursor
+"   Ctrl-k          remove all text after cursor
+"   Ctrl-c/Esc      cancel command line mode
+"   Tab             next item in popup menu
+"   Shift-Tab       previous item in popup menu
+" <
+
+""
+" @section Development, dev
+"
+" SpaceVim is a joint effort of all contributors.
+" We encourage you to participate in SpaceVim's development.
+" We have some guidelines that we need all contributors to follow.
+
+
+""
+" @section commit-style-guide, dev-commit-style-guide
+" @parentsection dev
+" A git commit message consists a three distinct parts separated by black line.
+" >
+"   Type (scope): Subject
+" 
+"   body
+"
+"   footer
+" <
+" types:
+"
+" - `feat`: a new feature
+" - `fix`: a bug fix
+" - `change`: no backward compatible changes
+" - `docs`: changes to documentation
+" - `style`: formatting, missing semi colons, etc; no code change
+" - `refactor`: refactoring production code
+" - `test`: adding tests, refactoring test; no production code change
+" - `chore`: updating build tasks, package manager configs, etc; no production code change
+"
+" scopes:
+"
+" - `api`: files in `autoload/SpaceVim/api/` and `docs/api/` directory
+" - `layer`: files in `autoload/SpaceVim/layers/` and `docs/layers/` directory
+" - `plugin`: files in `autoload/SpaceVim/plugins/` directory
+" - `bundle`: files in `bundle/` directory
+" - `core`: other files in this repository
+"
+" subject:
+"
+" Subjects should be no greater than 50 characters,
+" should begin with a capital letter and do not end with a period.
+"
+" Use an imperative tone to describe what a commit does,
+" rather than what it did. For example, use change; not changed or changes.
+"
+" body:
+"
+" Not all commits are complex enough to warrant a body,
+" therefore it is optional and only used when a commit requires a bit of explanation and context.
+"
+" footer:
+"
+" The footer is optional and is used to reference issue tracker IDs.
+
+""
+" @section alternate file, usage-alternate-file
+" @parentsection usage
+" SpaceVim provides a built-in alternate file manager, the command is `:A`.
+"
+" To use this feature, you can create a `.project_alt.json` file in the root
+" of your project. for example:
+" >
+"    {
+"      "autoload/SpaceVim/layers/lang/*.vim" :
+"          {
+"             "doc" : "docs/layers/lang/{}.md"
+"          },
+"    }
+" <
+" after adding this configuration, when edit the source file 
+" `autoload/SpaceVim/layers/lang/java.vim`,
+" you can use `:A doc` switch to `docs/layers/lang/java.md`
 
 ""
 " @section FAQ, faq
@@ -1696,9 +2044,29 @@ endfunction
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v1.4.0
+" Following HEAD: changes in master branch since last release v1.9.0
 "
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+"
+" 2021-06-16: v1.9.0
+"
+" https://spacevim.org/SpaceVim-release-v1.9.0/
+"
+" 2021-06-16: v1.8.0
+"
+" https://spacevim.org/SpaceVim-release-v1.8.0/
+"
+" 2021-06-16: v1.7.0
+"
+" https://spacevim.org/SpaceVim-release-v1.7.0/
+"
+" 2020-12-31: v1.6.0
+"
+" https://spacevim.org/SpaceVim-release-v1.6.0/
+"
+" 2020-08-01: v1.5.0
+"
+" https://spacevim.org/SpaceVim-release-v1.5.0/
 "
 " 2020-04-05: v1.4.0
 "

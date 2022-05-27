@@ -1,0 +1,368 @@
+Describe Git
+  Before all
+    let Path = vital#gina#import('System.Filepath')
+    let profile = s:new_profile()
+  End
+
+  Before
+    let Git = vital#gina#import('Git')
+  End
+
+  Describe .new({path})
+    Context A normal git working tree
+      It returns a git instance of {path}
+        let git = Git.new(profile.valid1)
+        " Attributes
+        Assert KeyExists(git, 'worktree')
+        Assert KeyExists(git, 'repository')
+        Assert KeyExists(git, 'commondir')
+        Assert True(islocked('git.worktree'))
+        Assert True(islocked('git.repository'))
+        Assert True(islocked('git.commondir'))
+        Assert Equals(git.worktree, profile.valid1)
+        Assert Equals(git.repository, Path.join(profile.valid1, '.git'))
+        Assert Equals(git.commondir, '')
+      End
+
+      It returns a git instance of {path} which ends with path separator
+        let git = Git.new(fnamemodify(profile.valid1, ':p'))
+        " Attributes
+        Assert KeyExists(git, 'worktree')
+        Assert KeyExists(git, 'repository')
+        Assert KeyExists(git, 'commondir')
+        Assert True(islocked('git.worktree'))
+        Assert True(islocked('git.repository'))
+        Assert True(islocked('git.commondir'))
+        Assert Equals(git.worktree, profile.valid1)
+        Assert Equals(git.repository, Path.join(profile.valid1, '.git'))
+        Assert Equals(git.commondir, '')
+      End
+
+      It returns a git instance of a worktree which {path} belongs
+        let path1 = Path.join(profile.valid1, 'A', 'foo', 'bar.txt')
+        let path2 = Path.join(profile.valid1, 'B', 'foo', 'bar.txt')
+        let path3 = Path.join(profile.valid1, 'C', 'foo')
+
+        let git1 = Git.new(path1)
+        let git2 = Git.new(path2)
+        let git3 = Git.new(path3)
+        Assert Equals(git1.worktree, profile.valid1)
+        Assert Equals(git1.repository, Path.join(profile.valid1, '.git'))
+        Assert Equals(git1.commondir, '')
+        Assert Equals(git1, git2)
+        Assert Equals(git1, git3)
+      End
+    End
+
+    Context A git working tree by 'git worktree'
+      It returns a git instance of {path}
+        if !profile.git_support_worktree
+          Skip This git does not support 'git worktree' feature
+        endif
+
+        let git = Git.new(profile.valid2)
+        " Attributes
+        Assert KeyExists(git, 'worktree')
+        Assert KeyExists(git, 'repository')
+        Assert KeyExists(git, 'commondir')
+        Assert True(islocked('git.worktree'))
+        Assert True(islocked('git.repository'))
+        Assert True(islocked('git.commondir'))
+        Assert Equals(git.worktree, profile.valid2)
+        Assert Equals(git.repository, Path.join(
+              \ profile.valid1, '.git', 'worktrees', 'valid2'
+              \))
+        Assert Equals(git.commondir, Path.join(profile.valid1, '.git'))
+      End
+
+      It returns a git instance of {path} which ends with path separator
+        if !profile.git_support_worktree
+          Skip This git does not support 'git worktree' feature
+        endif
+
+        let git = Git.new(fnamemodify(profile.valid2, ':p'))
+        " Attributes
+        Assert KeyExists(git, 'worktree')
+        Assert KeyExists(git, 'repository')
+        Assert KeyExists(git, 'commondir')
+        Assert True(islocked('git.worktree'))
+        Assert True(islocked('git.repository'))
+        Assert True(islocked('git.commondir'))
+        Assert Equals(git.worktree, profile.valid2)
+        Assert Equals(git.repository, Path.join(
+              \ profile.valid1, '.git', 'worktrees', 'valid2'
+              \))
+        Assert Equals(git.commondir, Path.join(profile.valid1, '.git'))
+      End
+
+      It returns a git instance of a worktree which {path} belongs
+        if !profile.git_support_worktree
+          Skip This git does not support 'git worktree' feature
+        endif
+
+        let path1 = Path.join(profile.valid2, 'A', 'foo', 'bar.txt')
+        let path2 = Path.join(profile.valid2, 'B', 'foo', 'bar.txt')
+        let path3 = Path.join(profile.valid2, 'C', 'foo')
+
+        let git1 = Git.new(path1)
+        let git2 = Git.new(path2)
+        let git3 = Git.new(path3)
+        Assert Equals(git1.worktree, profile.valid2)
+        Assert Equals(git1.repository, Path.join(
+              \ profile.valid1, '.git', 'worktrees', 'valid2'
+              \))
+        Assert Equals(git1.commondir, Path.join(profile.valid1, '.git'))
+        Assert Equals(git1, git2)
+        Assert Equals(git1, git3)
+      End
+    End
+
+    Context A non git repository
+      It returns an empty dictionary of {path}
+        let git = Git.new(profile.invalid)
+        Assert Equals(git, {})
+
+        let git = Git.new(fnamemodify(profile.invalid, ':p'))
+        Assert Equals(git, {})
+
+        let git = Git.new(Path.join(profile.invalid, 'A', 'foo', 'bar.txt'))
+        Assert Equals(git, {})
+
+        let git = Git.new(Path.join(profile.invalid, 'B', 'foo', 'bar.txt'))
+        Assert Equals(git, {})
+
+        let git = Git.new(Path.join(profile.invalid, 'C', 'foo'))
+        Assert Equals(git, {})
+      End
+    End
+  End
+
+  Describe .relpath({git}, {path})
+    It returns a relative path of {path} in {git} repository
+      let git = Git.new(profile.valid1)
+      let abspath = Path.join(profile.valid1, 'A', 'foo', 'bar.txt')
+      let relpath = Path.join('A', 'foo', 'bar.txt')
+      Assert Equals(Git.relpath(git, abspath), relpath)
+    End
+
+    It returns {path} if {path} is already a relative path
+      let git = Git.new(profile.valid1)
+      let relpath = Path.join('A', 'foo', 'bar.txt')
+      Assert Equals(Git.relpath(git, relpath), relpath)
+      Assert Same(Git.relpath(git, relpath), relpath)
+    End
+  End
+
+  Describe .abspath({git}, {path})
+    It returns an absolute path of {path} in {git} repository
+      let git = Git.new(profile.valid1)
+      let abspath = Path.join(profile.valid1, 'A', 'foo', 'bar.txt')
+      let relpath = Path.join('A', 'foo', 'bar.txt')
+      Assert Equals(Git.abspath(git, relpath), abspath)
+    End
+
+    It returns {path} if {path} is already an absolute path
+      let git = Git.new(profile.valid1)
+      let abspath = Path.join(profile.valid1, 'A', 'foo', 'bar.txt')
+      Assert Equals(Git.abspath(git, abspath), abspath)
+      Assert Same(Git.abspath(git, abspath), abspath)
+    End
+  End
+
+  Describe .resolve({git}, {path})
+    It returns an absolute path of {path} in a .git directory
+      let git = Git.new(profile.valid1)
+      let path = Git.resolve(git, 'HEAD')
+      Assert Equals(path, Path.join(git.repository, 'HEAD'))
+    End
+  End
+
+  Describe .ref({git}, {refname})
+    Context with traditional ref
+      Before
+        let git = Git.new(profile.valid1)
+      End
+
+      It returns a ref (e.g. refs/heads/master) of {refname} (e.g. master)
+        let cmd = printf('git -C %s rev-parse %%s', shellescape(git.worktree))
+        let hash = matchstr(system(printf(cmd, 'master')), '^\w\+')
+        let ref = Git.ref(git, 'master')
+        Assert Equals(ref, {
+              \ 'path': 'refs/heads/master',
+              \ 'name': 'master',
+              \ 'hash': hash,
+              \})
+        let ref = Git.ref(git, 'refs/heads/master')
+        Assert Equals(ref, {
+              \ 'path': 'refs/heads/master',
+              \ 'name': 'master',
+              \ 'hash': hash,
+              \})
+        let ref = Git.ref(git, 'HEAD')
+        Assert Equals(ref, {
+              \ 'path': 'refs/heads/master',
+              \ 'name': 'master',
+              \ 'hash': hash,
+              \})
+
+        let hash = matchstr(system(printf(cmd, 'develop')), '^\w\+')
+        let ref = Git.ref(git, 'develop')
+        Assert Equals(ref, {
+              \ 'path': 'refs/heads/develop',
+              \ 'name': 'develop',
+              \ 'hash': hash,
+              \})
+        let ref = Git.ref(git, 'refs/heads/develop')
+        Assert Equals(ref, {
+              \ 'path': 'refs/heads/develop',
+              \ 'name': 'develop',
+              \ 'hash': hash,
+              \})
+
+        let ref = Git.ref(git, 'unknown')
+        Assert Equals(ref, {})
+      End
+    End
+
+    Context with packed ref
+      Before
+        let git = Git.new(profile.valid4)
+      End
+
+      It returns a ref (e.g. refs/heads/master) of {refname} (e.g. master)
+        let cmd = printf('git -C %s rev-parse %%s', shellescape(git.worktree))
+        let hash = matchstr(system(printf(cmd, 'master')), '^\w\+')
+        let ref = Git.ref(git, 'master')
+        Assert Equals(ref, {
+              \ 'path': 'refs/heads/master',
+              \ 'name': 'master',
+              \ 'hash': hash,
+              \})
+        let ref = Git.ref(git, 'refs/heads/master')
+        Assert Equals(ref, {
+              \ 'path': 'refs/heads/master',
+              \ 'name': 'master',
+              \ 'hash': hash,
+              \})
+        let ref = Git.ref(git, 'HEAD')
+        Assert Equals(ref, {
+              \ 'path': 'refs/heads/master',
+              \ 'name': 'master',
+              \ 'hash': hash,
+              \})
+
+        let hash = matchstr(system(printf(cmd, 'develop')), '^\w\+')
+        let ref = Git.ref(git, 'develop')
+        Assert Equals(ref, {
+              \ 'path': 'refs/heads/develop',
+              \ 'name': 'develop',
+              \ 'hash': hash,
+              \})
+        let ref = Git.ref(git, 'refs/heads/develop')
+        Assert Equals(ref, {
+              \ 'path': 'refs/heads/develop',
+              \ 'name': 'develop',
+              \ 'hash': hash,
+              \})
+
+        let ref = Git.ref(git, 'unknown')
+        Assert Equals(ref, {})
+      End
+    End
+  End
+End
+
+
+" Test profile ---------------------------------------------------------------
+function! s:new_profile() abort
+  let Path = vital#gina#import('System.Filepath')
+  let root = resolve(tempname())
+  let valid1 = Path.join(root, 'valid1')  " Normal
+  let valid2 = Path.join(root, 'valid2')  " Worktree (git worktree)
+  let valid3 = Path.join(root, 'valid3')  " For external remote
+  let valid4 = Path.join(root, 'valid4')  " Normal with packed-ref
+  let invalid = Path.join(root, 'invalid')
+
+  " Build files and directories
+  for path in [valid1, valid3, valid4, invalid]
+    call mkdir(Path.join(path, 'A', 'foo'), 'p')
+    call mkdir(Path.join(path, 'B', 'foo'), 'p')
+    call mkdir(Path.join(path, 'C', 'foo'), 'p')
+    call writefile(['A'], Path.join(path, 'A', 'foo', 'bar.txt'))
+    call writefile(['B'], Path.join(path, 'B', 'foo', 'bar.txt'))
+    call writefile(['C'], Path.join(path, 'C', 'foo', 'bar.txt'))
+  endfor
+
+  " Configure git repository
+  let git = {}
+  let git_version = matchstr(system('git --version'), '\%(\d\+\.\)\+\d')
+  let git_support_worktree = git_version !~# '^\%([01]\..*\|2\.4\..*\)$'
+
+  function! git.execute(...) abort
+    let command = a:0 == 1 ? a:1 : call('printf', a:000)
+    let args = [
+          \ 'git',
+          \ '-c color.ui=false',
+          \ '-c core.editor=false',
+          \ '--no-pager',
+          \]
+    if !empty(get(self, 'worktree'))
+      let args += ['-C', fnameescape(self.worktree)]
+    endif
+    return system(join(args + [command]))
+  endfunction
+
+  let git.worktree = valid1
+  call git.execute('init')
+  call git.execute('add %s', fnameescape(Path.realpath('A/foo/bar.txt')))
+  call git.execute('commit --quiet -m "First"')
+  call git.execute('checkout --track -b develop')
+  call git.execute('add %s', fnameescape(Path.realpath('B/foo/bar.txt')))
+  call git.execute('commit --quiet -m "Second"')
+  call git.execute('checkout master')
+  call git.execute('add %s', fnameescape(Path.realpath('C/foo/bar.txt')))
+  call git.execute('commit --quiet -m "Third"')
+
+  if git_support_worktree
+    call git.execute('worktree add %s develop', fnameescape(valid2))
+  endif
+
+  let git.worktree = valid3
+  call git.execute('init')
+  call git.execute('add %s', fnameescape(Path.realpath('A/foo/bar.txt')))
+  call git.execute('commit --quiet -m "Fourth"')
+
+  let git.worktree = valid1
+  call git.execute('remote add ext %s', fnameescape(valid3))
+  call git.execute('fetch ext')
+  call git.execute('checkout --track -b ext/master remotes/ext/master')
+  call git.execute('checkout master')
+
+  let git.worktree = valid4
+  call git.execute('init')
+  call git.execute('add %s', fnameescape(Path.realpath('A/foo/bar.txt')))
+  call git.execute('commit --quiet -m "First"')
+  call git.execute('checkout --track -b develop')
+  call git.execute('add %s', fnameescape(Path.realpath('B/foo/bar.txt')))
+  call git.execute('commit --quiet -m "Second"')
+  call git.execute('checkout master')
+  call git.execute('add %s', fnameescape(Path.realpath('C/foo/bar.txt')))
+  call git.execute('commit --quiet -m "Third"')
+
+  call git.execute('remote add ext %s', fnameescape(valid3))
+  call git.execute('fetch ext')
+  call git.execute('checkout --track -b ext/master remotes/ext/master')
+  call git.execute('checkout master')
+  call git.execute('gc')
+
+  return {
+        \ 'root': root,
+        \ 'valid1': valid1,
+        \ 'valid2': valid2,
+        \ 'valid3': valid3,
+        \ 'valid4': valid4,
+        \ 'invalid': invalid,
+        \ 'git_version': git_version,
+        \ 'git_support_worktree': git_support_worktree,
+        \}
+endfunction

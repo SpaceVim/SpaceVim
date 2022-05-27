@@ -161,3 +161,8 @@ function! neosnippet#util#uniq(list) abort
   endwhile
   return list
 endfunction
+
+function! neosnippet#util#get_completed_item() abort
+  return exists('g:pum#completed_item')?
+        \ g:pum#completed_item : get(v:, 'completed_item', {})
+endfunction

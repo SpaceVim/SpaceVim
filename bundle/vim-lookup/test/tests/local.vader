@@ -1,0 +1,38 @@
+Given vim:
+  function! s:func(a, b)
+  endfunc
+  let s:var = 'foo'
+  execute 'let s:var = "bar"'
+  echomsg s:var
+  let s:var = 'foo'
+  function! s:func(a, b)
+  endfunc
+  let foo = function('s:func')
+  let foo = function("s:func")
+
+Execute (:call lookup#lookup() cycles through script-local variables):
+  normal! 3GwE
+  AssertEqual [3, 9], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [3, 7], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [6, 7], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [4, 16], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [3, 7], [line('.'), col('.')]
+
+Execute (:call lookup#lookup() cycles through script-local functions):
+  normal! 9G7w
+  AssertEqual [9, 23], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [7, 13], [line('.'), col('.')]
+  call lookup#pop()
+  normal! j
+  AssertEqual [10, 23], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [7, 13], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [1, 13], [line('.'), col('.')]
+  call lookup#lookup()
+  AssertEqual [7, 13], [line('.'), col('.')]

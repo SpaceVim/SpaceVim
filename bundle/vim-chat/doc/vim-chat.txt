@@ -1,0 +1,15 @@
+*vim-chat.txt*	chat client for neovim and vim
+Wang Shidong                                                        *vim-chat*
+
+==============================================================================
+CONTENTS                                                   *vim-chat-contents*
+  1. Introduction.............................................|vim-chat-intro|
+
+==============================================================================
+INTRODUCTION                                                  *vim-chat-intro*
+
+vim-chat is a simple plugin for chatting in vim and neovim. This plugin
+requires SpaceVim API and |job| support.
+
+
+vim:tw=78:ts=8:ft=help:norl:

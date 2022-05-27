@@ -1,0 +1,7 @@
+-- some
+-- comment
+
+--[[
+  another
+  comment
+--]]

@@ -1,0 +1,38 @@
+### iverilog E=5, W=0
+path/file.v:5: syntax error
+path/file.v:5: error: Invalid module instantiation
+path/file.v:18: syntax error
+path/file.v:15: error: Syntax error in instance port expression(s).
+path/file.v:47: error: Invalid module instantiation
+
+### verilator E=2, W=3
+%Warning-ASSIGNDLY: test.v:1: Unsupported: Ignoring delay on this assignment/primitive.
+%Warning-DECLFILENAME: test.v:2: Filename 'test' does not match MODULE name: something
+%Warning-IMPLICIT: test.v:3: Signal definition not found, creating implicitly: something
+%Error: test.v:4: Pin not found: something
+%Error: test.v:3:9: syntax error, unexpected or, expecting ',' or ';'
+
+### ncverilog E=6, W=1
+        rcounter <= 10'b11111111111;
+                                  |
+ncvlog: *W,INTOVF (test.v,17|34): bit overflow during conversion from text [2.5(IEEE)] (10 bits).
+  assignn out = rcounter;
+              |
+ncvlog: *E,EXPLPA (test.v,23|14): expecting a left parenthesis ('(') [12.1.2][7.1(IEEE)].
+ncsim: *E,ASRTST (filename.sv,769): (time 0 FS) Assertion assertionname has failed
+ncsim: *E,TRNULLID: NULL pointer dereference.
+File: filename.sv, line = 62, pos = 36
+ncsim: *E,ASRTST (filename.sv,769): (time 0 FS) Assertion assertion_name has failed 
+ncsim: *E,SOMECADENCEERRORCODE: Message
+ncsim: *E,ASRTST (filename.sv,123|12): Reason
+ncsim: irun 11.11-s111: Started on May 11, 1111 at 11:11:11 IST
+
+### spyglass E=1, W=1
+STX_VE_481   Syntax     path/file.v   1    Syntax error near ( } )
+[66]     UndrivenNUnloaded-ML    WARNING      Warning     path/file.v    1      2    UndrivenNUnloaded-ML : Detected undriven and unloaded(unconnected) net
+
+### UVM E=2, W=1, L=1
+UVM_FATAL /path/file.sv(5) @ 1000: text
+UVM_ERROR /path/file.sv(5) @ 1000: text
+UVM_WARNING /path/file.sv(5) @ 1000: text
+UVM_INFO /path/file.sv(5) @ 1000: text

@@ -1,0 +1,17 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	Development	//
+Baz2	namespaced_foo2.php	/^class Baz2 {$/;"	c	namespace:NS2
+Foo	namespaced_foo.php	/^class Foo {$/;"	c	namespace:NS1
+Foo2	namespaced_foo2.php	/^class Foo2 {$/;"	c	namespace:NS2
+NS1	namespaced_foo.php	/^<?php$/;"	n
+NS2	namespaced_foo2.php	/^<?php$/;"	n
+baz	namespaced_foo.php	/^	public function baz() {$/;"	f	class:NS1::Foo	access:public	signature:()
+f2	namespaced_foo.php	/^$f2->returnBaz2()->returnFoo2();$/;"	v	namespace:NS1
+f2	namespaced_foo.php	/^get_foo()->baz();$/;"	v	namespace:NS1
+get_foo	namespaced_foo.php	/^function get_foo() {$/;"	f	namespace:NS1	signature:()
+returnBaz2	namespaced_foo2.php	/^	public function returnBaz2() {$/;"	f	class:NS2::Foo2	access:public	signature:()
+returnFoo2	namespaced_foo2.php	/^	public function returnFoo2() {$/;"	f	class:NS2::Baz2	access:public	signature:()

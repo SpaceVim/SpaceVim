@@ -4,9 +4,11 @@
 # License: MIT license
 # ============================================================================
 
+from pynvim import Nvim
 import re
+
 from deoplete.base.filter import Base
-from deoplete.util import fuzzy_escape, Nvim, UserContext, Candidates
+from deoplete.util import fuzzy_escape, UserContext, Candidates
 
 
 class Filter(Base):

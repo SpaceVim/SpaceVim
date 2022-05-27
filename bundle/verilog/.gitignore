@@ -1,0 +1,13 @@
+test-efm.log
+test-syntax.log
+test/syntax.sv.all.html
+test/syntax.sv.all_block_named.html
+test/syntax.sv.all_block_nested.html
+test/syntax.sv.all_instance.html
+test/syntax.sv.default.html
+test/folding.v.all.html
+test/folding.v.all_block_named.html
+test/folding.v.all_block_nested.html
+test/folding.v.all_instance.html
+test/folding.v.default.html
+

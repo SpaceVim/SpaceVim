@@ -29,6 +29,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: docker/Dockerfile.nvim-python3
+          file: docker/Dockerfile
           push: true
           tags: spacevim/spacevim:latest

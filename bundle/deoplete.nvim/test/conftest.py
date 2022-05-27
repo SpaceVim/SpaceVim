@@ -1,5 +1,5 @@
-import os
+from pathlib import Path
 import sys
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-sys.path.insert(0, os.path.join(BASE_DIR, 'rplugin/python3'))
+BASE_DIR = Path(__file__).parent.parent
+sys.path.insert(0, str(Path(BASE_DIR).joinpath('rplugin/python3')))

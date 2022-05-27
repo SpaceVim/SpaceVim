@@ -1,0 +1,8 @@
+[
+  (list)
+] @indent
+
+[
+  "["
+  "]"
+] @branch

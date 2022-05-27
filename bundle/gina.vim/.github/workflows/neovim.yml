@@ -1,0 +1,52 @@
+name: neovim
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - windows-latest
+          - ubuntu-latest
+        version:
+          - nightly
+          - stable
+          - v0.4.3
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Neovim
+        uses: rhysd/action-setup-vim@v1
+        id: vim
+        with:
+          neovim: true
+          version: ${{ matrix.version }}
+      - name: Download test runner
+        uses: actions/checkout@v2
+        with:
+          repository: thinca/vim-themis
+          path: vim-themis
+      - name: Prepare environment
+        run: |
+          git config --global user.name "github-action"
+          git config --global user.email "github-action@example.com"
+      - name: Run tests
+        env:
+          CI: 1
+          THEMIS_VIM: ${{ steps.vim.outputs.executable }}
+          # XXX:
+          # Overwrite %TMP% to point a correct temp directory.
+          # Note that %TMP% only affects value of 'tempname()' in Windows.
+          # https://github.community/t5/GitHub-Actions/TEMP-is-broken-on-Windows/m-p/30432#M427
+          TMP: 'C:\Users\runneradmin\AppData\Local\Temp'
+        run: |
+          ./vim-themis/bin/themis

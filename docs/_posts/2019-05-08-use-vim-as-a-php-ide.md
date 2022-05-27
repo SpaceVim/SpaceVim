@@ -10,7 +10,7 @@ commentsID: "Use Vim as a PHP IDE"
 
 # [Blogs](../blog/) >> Use Vim as a PHP IDE
 
-This is a general guide for using SpaceVim as a PHP IDE, including layer configuration and usage. 
+This is a general guide for using SpaceVim as a PHP IDE, including layer configuration and usage.
 Each of the following sections will be covered:
 
 <!-- vim-markdown-toc GFM -->
@@ -18,6 +18,7 @@ Each of the following sections will be covered:
 - [Enable language layer](#enable-language-layer)
 - [Code completion](#code-completion)
 - [Syntax linting](#syntax-linting)
+- [Enable LSP support](#enable-lsp-support)
 - [Ctags integration](#ctags-integration)
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)
@@ -56,6 +57,49 @@ To install psalm, you may need to run:
 composer require --dev vimeo/psalm
 ```
 
+### Enable LSP support
+
+To enable language server protocol(LSP) support for php,
+you need to enable [lsp](../layers/language-server-protocol/) layer for php.
+
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = ["php"]
+```
+
+The default language server command of php is:
+
+```
+['php', g:spacevim_plugin_bundle_dir . 'repos/github.com/phpactor/phpactor/bin/phpactor', 'language-server']
+```
+
+If you want to use `intelephense`, install intelephense from command line:
+
+```
+npm install -g intelephense
+```
+
+To override the server command, you may need to use `override_cmd` option:
+
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [ "php" ]
+  [layers.override_cmd]
+    php = ["intelephense", "--stdio"]
+```
+
+If you are using `nvim(>=0.5.0)`, you do not need to use `filetypes` and `override_cmd` option. 
+You just need to use `enabled_clients` to specific the language servers.
+for example:
+
+```toml
+[[layers]]
+    name = 'lsp'
+    enabled_clients = ['intelephense']
+```
+
 ### Ctags integration
 
 The `gtags` layer provides `ctags` integration for your project. It will create the index file for
@@ -69,8 +113,6 @@ each of your project. To enable `gtags` layer:
 With this layer, you can jump to method and class definitions easily (using `ctrl + ]` by default).
 Read [gtags](../layers/gtags/) layer for more info.
 
-
-
 ### Jump to test file
 
 To manage the alternate file for a project, you may need to create a `.project_alt.json` file in the root of your
@@ -80,8 +122,8 @@ for exmaple, add following content into the `.project_alt.json` file:
 
 ```json
 {
-  "src/*.php": {"alternate": "test/{}.php"},
-  "test/*.php": {"alternate": "src/{}.php"}
+  "src/*.php": { "alternate": "test/{}.php" },
+  "test/*.php": { "alternate": "src/{}.php" }
 }
 ```
 
@@ -112,5 +154,3 @@ send code to inferior process. All key bindings prefix with `SPC l s`, including
 send whole buffer.
 
 ![phprepl](https://user-images.githubusercontent.com/13142418/57497156-0ce8e400-7309-11e9-8628-da42d6f8432e.gif)
-
-

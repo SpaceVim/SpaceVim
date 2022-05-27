@@ -31,36 +31,36 @@ lang: zh
 
 ## 模块配置
 
-默认会在光标的下一行显示当前行错误的详细信息，如果需要禁用这一特性，可以在载入模块
-时指定 `show_cursor_error` 的值为 false。
+`checkers` 模块默认已经加载了，与该模块相关的选项有两种，一个是全局选项，一个是模块选项：
+
+**全局选项:**
+
+所有的 SpaceVim 全局选项需要写在`[options]`下方：
+
+| 选项名称      | 默认值    | 功能描述               |
+| ------------- | --------- | ---------------------- |
+| `lint_engine` | `neomake` | 设置默认的语法检查插件 |
+
+默认的语法检查插件是 `neomake`，你也可以设置成 `ale` 或者 `syntastic`。
+
+如果需要设置 neomake 选项，需要使用启动函数。在启动函数里面可以使用 vim 脚本。具体如何配置 neomake 可以阅读`:h neomake`。
+
+**模块选项：**
+
+默认情况下，语法错误将在当前行下方展示，如果需要禁用这个功能，可以将`show_cursor_error`模块选项设置成`false`。
+
+| 选项名称                | 默认值  | 功能描述                                 |
+| ----------------------- | ------- | ---------------------------------------- |
+| `lint_on_the_fly`       | `false` | 设置语法实时检查，默认已禁用             |
+| `lint_on_save`          | `true`  | 设置保存文件时进行语法检查，默认已启用   |
+| `show_cursor_error`     | `true`  | 设置在当前行下方展示语法错误，默认已启用 |
+| `lint_exclude_filetype` | `[]`    | 设置禁用语法检查的文件类型列表           |
 
 ```toml
 [[layers]]
   name = "checkers"
   show_cursor_error = false
 ```
-
-SpaceVim 选项：
-
-| 选项名称          | 默认值 | 描述                                |
-| ----------------- | ------ | ----------------------------------- |
-| `enable_neomake`  | true   | 使用 [neomake](https://github.com/neomake/neomake) 作为默认的语法检查插件 |
-| `enable_ale`      | false  | 使用 Ale 作为默认语法检查插件       |
-| `lint_on_the_fly` | false  | 启用实时语法检查                    |
-
-Neomake 的设置需要使用启动函数，在启动函数里，可以使用 Vim 脚本，
-关于 neomake 所有的配置相关信息，可以查阅 `:h neomake`。
-
-
-**NOTE:** 如果你需要使用 Ale 作为默认检查工具，SpaceVim 选项需要加入：
-
-```toml
-[options]
-  enable_neomake = false
-  enable_ale = true
-```
-
-如果需要使用 syntastic，将两者都设置为 false。
 
 ## 快捷键
 

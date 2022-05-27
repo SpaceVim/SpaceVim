@@ -1,6 +1,6 @@
 "=============================================================================
 " reason.vim --- Reason programming language layer
-" Copyright (c) 2016-2021 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -12,7 +12,7 @@ if exists('s:JSON')
 endif
 
 ""
-" @section lang#reason, layer-lang-reason
+" @section lang#reason, layers-lang-reason
 " @parentsection layers
 " This layer is for reason development, disabled by default, to enable this
 " layer, add following snippet to your @section(options) file.

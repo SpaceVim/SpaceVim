@@ -12,10 +12,13 @@ and usage.
 
 - [Installation](#installation)
   - [Where is my old vim configuration?](#where-is-my-old-vim-configuration)
+  - [How to uninstall SpaceVim?](#how-to-uninstall-spacevim)
+  - [How to install SpaceVim manually?](#how-to-install-spacevim-manually)
 - [Configuration](#configuration)
   - [Can I try SpaceVim without overwriting my vimrc?](#can-i-try-spacevim-without-overwriting-my-vimrc)
   - [Why use toml as the default configuration file format?](#why-use-toml-as-the-default-configuration-file-format)
   - [Where should I put my configuration?](#where-should-i-put-my-configuration)
+  - [Why are the options in toml file not applied?](#why-are-the-options-in-toml-file-not-applied)
   - [E492: Not an editor command: ^M](#e492-not-an-editor-command-m)
   - [Why SpaceVim can not display default colorscheme?](#why-spacevim-can-not-display-default-colorscheme)
   - [Why can't I update plugins?](#why-cant-i-update-plugins)
@@ -31,6 +34,41 @@ and usage.
 
 In Linux/MacOS, the old vim configuration file `~/.vimrc` will be renamed to `~/.vimrc_back`,
 and the directory `~/.vim` also will be renamed to `~/.vim_back`.
+
+### How to uninstall SpaceVim?
+
+The installation script does not remove your vimrc, it just changes the name from `~/.vim` to `~/.vim_back`.
+and if you uninstalll SpaceVim, your vimrc will come back. you can run:
+
+```
+curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
+```
+
+### How to install SpaceVim manually?
+
+The following section will document how to install SpaceVim manually on Linux.
+First, you need to clone the repository to `~/.SpaceVim`.
+
+```
+git clone https://github.com/SpaceVim/SpaceVim.git ~/.SpaceVim
+```
+
+Then, backup your old Neovim/Vim configuration file:
+
+```
+mv ~/.vimrc ~/.vimrc_back
+mv ~/.vim ~/.vim_back
+mv ~/.config/nvim ~/.config/nvim_back
+```
+
+Link `~/.SpaceVim` to Vim and Neovim user folder:
+
+```
+ln -s ~/.SpaceVim ~/.vim
+ln -s ~/.SpaceVim ~/.config/nvim
+```
+
+
 
 ## Configuration
 
@@ -71,6 +109,31 @@ drawbacks we found with the other choices considered:
 
 SpaceVim loads custom global configuration from `~/.SpaceVim.d/init.toml`. It also supports project specific configuration.
 That means it will load `.SpaceVim.d/init.toml` from the root of your project.
+
+### Why are the options in toml file not applied?
+
+Many people have encountered the same problem. The options have been added to `init.toml` but SpaceVim do not use it.
+One possibility is that there is a syntax error in toml. For example:
+
+```
+[options]
+    enable_statusline_mode = true
+    enable_tabline_filetype_icon = true
+    enable_os_fileformat_icon = true
+    statusline_unicode_symbols = true
+    line_on_the_fly = false
+[[layers]]
+    name = 'core'
+    enable_filetree_gitstatus = true
+    enable_filetree_filetypeicon = true
+
+[options]
+    bootstrap_before = 'myspacevim#before'
+```
+
+In this example, only `bootstrap_before` option will be used. 
+
+In SpaceVim should have only one `[options]` section in toml file. In the example above, the `bootstrap_before` line should be moved before `[[layers]]`.
 
 ### E492: Not an editor command: ^M
 

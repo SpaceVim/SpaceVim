@@ -1,13 +1,13 @@
 "=============================================================================
 " moonscript.vim --- moonscript support for SpaceVim
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section lang#moonscript, layer-lang-moonscript
+" @section lang#moonscript, layers-lang-moonscript
 " @parentsection layers
 " This layer is for moonscript development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

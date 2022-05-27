@@ -1,13 +1,13 @@
 "=============================================================================
 " colorscheme.vim --- SpaceVim colorscheme layer
-" Copyright (c) 2016-2020 Wang Shidong & Contributors
-" Author: Wang Shidong < wsdjeg at 163.com >
+" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
 
 ""
-" @section colorscheme, colorscheme
+" @section colorscheme, layers-colorscheme
 " @parentsection layers
 " The ldefault colorscheme for SpaceVim is gruvbox. The colorscheme can be
 " changed with the `g:spacevim_colorscheme` option by adding the following
@@ -28,7 +28,9 @@
 let s:JSON = SpaceVim#api#import('data#json')
 
 function! SpaceVim#layers#colorscheme#plugins() abort
-  return [
+
+
+  let plugins = [
         \ ['Gabirel/molokai', { 'merged' : 0 }],
         \ ['joshdick/onedark.vim', { 'merged' : 0 }],
         \ ['nanotech/jellybeans.vim', { 'merged' : 0 }],
@@ -40,6 +42,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
         \ ['srcery-colors/srcery-vim', { 'merged' : 0}],
         \ [ 'drewtempelmeyer/palenight.vim', {'merged': 0 }],
         \ ]
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/dracula', {'merged' : 0}])
   "
   " TODO:
   " \ ['mhartington/oceanic-next', { 'merged' : 0 }],
@@ -48,7 +51,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
   " \ ['KeitaNakamura/neodark.vim', { 'merged' : 0 }],
   " \ ['NLKNguyen/papercolor-theme', { 'merged' : 0 }],
   " \ ['SpaceVim/FlatColor', { 'merged' : 0 }],
-
+  return plugins
 endfunction
 
 let s:cs = [
@@ -91,8 +94,8 @@ function! SpaceVim#layers#colorscheme#config() abort
     " {"frequency" : "dalily", "last" : 000000, 'theme' : 'one'}
     " FIXME: when global config cache is updated, check the cache also should
     " be updated
-    if filereadable(expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequency.json'))
-      let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequency.json'), ''), ''))
+    if filereadable(expand(g:spacevim_data_dir.'SpaceVim/colorscheme_frequency.json'))
+      let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir.'SpaceVim/colorscheme_frequency.json'), ''), ''))
       if s:random_frequency !=# '' && !empty(conf)
         let ctime = localtime()
         if index(s:random_candidates, get(conf, 'theme', '')) == -1 ||
@@ -124,7 +127,7 @@ function! s:update_conf() abort
         \ 'last' : localtime(),
         \ 'theme' : g:spacevim_colorscheme
         \ }
-  call writefile([s:JSON.json_encode(conf)], expand(g:spacevim_data_dir.'/SpaceVim/colorscheme_frequency.json'))
+  call writefile([s:JSON.json_encode(conf)], expand(g:spacevim_data_dir.'SpaceVim/colorscheme_frequency.json'))
 endfunction
 
 
