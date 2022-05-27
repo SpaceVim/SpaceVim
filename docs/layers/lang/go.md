@@ -45,36 +45,36 @@ go install github.com/jstemmer/gotags@latest
 
 ## Layer options
 
-1. `enabled_linters`: set a list of enabled lint for golang. by default this
-   option is `['golint']`. The available linters includes: `go`, `gometalinter`
-2. go_file_head: the default file head for golang source code.
+- `enabled_linters`: set a list of enabled lint for golang. by default this
+  option is `['golint']`. The available linters includes: `go`, `gometalinter`
+- `go_file_head`: the default file head for golang source code.
 
-```
-[[layers]]
-    name = "lang#go"
-    go_file_head = [
-        '#!/usr/bin/python3',
-        '# -*- coding : utf-8 -*-'
-        ''
-]
-```
+  ```
+  [[layers]]
+      name = "lang#go"
+      go_file_head = [
+          '#!/usr/bin/python3',
+          '# -*- coding : utf-8 -*-'
+          ''
+  ]
+  ```
 
-3. `go_interpreter`: Set the interpreter of go.
+- `go_interpreter`: Set the interpreter of go.
 
-```
-[[layers]]
-    name = 'lang#go'
-    go_interpreter = '~/download/bin/go'
-```
+  ```
+  [[layers]]
+      name = 'lang#go'
+      go_interpreter = '~/download/bin/go'
+  ```
 
-4. format_on_save: enable/disable code formation when save go file. This
-   options is disabled by default, to enable it:
+- `format_on_save`: enable/disable code formation when save go file. This
+  options is disabled by default, to enable it:
 
-```
-[[layers]]
-    name = 'lang#go'
-    format_on_save = true
-```
+  ```
+  [[layers]]
+      name = 'lang#go'
+      format_on_save = true
+  ```
 
 ## Key bindings
 

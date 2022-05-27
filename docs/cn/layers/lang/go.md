@@ -9,15 +9,23 @@ lang: zh
 <!-- vim-markdown-toc GFM -->
 
 - [模块简介](#模块简介)
-- [启用模块](#启用模块)
 - [功能特性](#功能特性)
+- [启用模块](#启用模块)
+- [模块选项](#模块选项)
 - [快捷键](#快捷键)
 
 <!-- vim-markdown-toc -->
 
 ## 模块简介
 
-该模块为 SpaceVim 提供了 Golang 开发支持，包括代码补全，格式化，语法检查等特性。同时提供诸多语言专属快捷键。
+该模块为 SpaceVim 提供了 [Golang](https://go.dev/) 开发支持，包括代码补全，格式化，语法检查等特性。同时提供诸多语言专属快捷键。
+
+## 功能特性
+
+- 代码补全
+- 语法检查
+- 跳转定义处
+- 查询函数引用
 
 ## 启用模块
 
@@ -34,12 +42,37 @@ lang: zh
 go get -u github.com/jstemmer/gotags
 ```
 
-## 功能特性
+## 模块选项
 
-- 代码补全
-- 语法检查
-- 跳转定义处
-- 查询函数引用
+- `enabled_linters`: 设置 Golang 语言的语法检查的工具列表，默认模式值是`['golint']`。
+  可用的值包括：`go`, `gometalinter`
+- `go_file_head`: 设置默认的 Golang 源文件头模板。
+
+  ```
+  [[layers]]
+      name = "lang#go"
+      go_file_head = [
+          '#!/usr/bin/python3',
+          '# -*- coding : utf-8 -*-'
+          ''
+  ]
+  ```
+
+- `go_interpreter`: 设置 Golang 的可执行文件路径。
+
+  ```
+  [[layers]]
+      name = 'lang#go'
+      go_interpreter = '~/download/bin/go'
+  ```
+
+- `format_on_save`: 设置是否启用 Golang 源文件保存时的语法检查，默认该选项已禁用。
+
+  ```
+  [[layers]]
+      name = 'lang#go'
+      format_on_save = true
+  ```
 
 ## 快捷键
 
@@ -63,7 +96,7 @@ go get -u github.com/jstemmer/gotags
 | `SPC l l` | list declarations in file |
 | `SPC l m` | format improts            |
 | `SPC l M` | add import                |
-| `SPC l r` | go run              |
+| `SPC l r` | go run                    |
 | `SPC l s` | fill struct               |
 | `SPC l t` | go test                   |
 | `SPC l v` | freevars                  |
