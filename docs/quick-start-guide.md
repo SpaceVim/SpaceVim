@@ -63,7 +63,7 @@ If you got a vimproc error like this:
 ```
 
 Please read `:help vimproc` and make it, you may need to install make (from `build-essential`)
-and a C compiler (like `gcc`) to build the dll (see issue [#435](https://github.com/SpaceVim/SpaceVim/issues/435) and [#544](https://github.com/SpaceVim/SpaceVim/issues/544)).
+and a C compiler (like `gcc`) to build the dll.
 
 ### Windows
 
