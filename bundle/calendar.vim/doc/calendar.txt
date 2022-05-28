@@ -1,0 +1,1093 @@
+*calendar.txt*	A calendar application for Vim
+
+Version: 0.0
+Author: itchyny (https://github.com/itchyny)
+License: MIT License
+Repository: https://github.com/itchyny/calendar.vim
+Last Change: 2020/12/31 01:59:11.
+
+CONTENTS					*calendar-contents*
+
+Introduction				|calendar-introduction|
+Concept					|calendar-concept|
+Vim application				|calendar-vim-application|
+Commands				|calendar-commands|
+Options					|calendar-options|
+View					|calendar-view|
+Key Mappings				|calendar-key-mappings|
+Marks					|calendar-marks|
+Input Format				|calendar-input-format|
+Troubleshooting				|calendar-troubleshooting|
+Changelog				|calendar-changelog|
+
+==============================================================================
+INTRODUCTION					*calendar-introduction*
+
+The *calendar.vim* is a modern and ultimate *calendar* application for Vim.
+
+The mattn's |calendar.vim| plugin was a great plugin.
+(http://www.vim.org/scripts/script.php?script_id=52)
+The plugin provides a calendar window within Vim, with a diary feature, both
+vertical/horizontal view and printing week number. The plugin has, as you
+guess from the fact that its script id is 52, played an important role to show
+the potential of Vim script in its early stage. The only problem is that the
+source codes of the plugin are not so clean and hard to modify. Couldn't be
+helped. Remember that it was written without using dictionary and list.
+
+My |calendar.vim| plugin basically provides what is provided by mattn's
+plugin: calendar of the nearest months, both horizontal and vertical view, and
+large-size calendar. Also, this plugin provides many key mappings to move
+around the calendar. The default key mappings are carefully designed to match
+the default key mappings of Vim itself. Of course, users can freely configure
+key mappings in |calendar| buffers.
+
+This |calendar| plugin also supports importing events from Google Calendar.
+Once the user connects this plugin to Google Calendar, you can freely edit,
+create, and delete events in Vim. The events are automatically synchronized
+with Google Calendar.
+
+Moreover, the Julian calendar is supported in this plugin. Basically in the
+history of calendars, there are two kinds of calendars: the Julian calendar
+and the Gregorian calendar. In most countries (for example, Holy Rome Empire,
+France and Spain) the Julian calendar was replaced with the Gregorian in
+October of 1582, so the |calendar| adopts this boundary date by default.
+However, in the British Empire, it was switched in 1752, and in Russia, in
+1918. The |calendar| plugin provides a way to configure the date in which the
+Julian calendar is switched to the Gregorian calendar. The plugin also
+provides a way to view the Julian calendar in the present day, and vice versa.
+
+------------------------------------------------------------------------------
+CONCEPT						*Calendar-Concept*
+This is a calendar which is ...
+
+	Comfortable >
+	The key mappings are designed to match the default mappings of Vim.
+<
+	Powerful >
+	The application can be connected to Google Calendar and used in your
+	life.
+<
+	Elegant >
+	The appearance is carefully designed, dropping any unnecessary
+	information.
+<
+	Interesting >
+	You can choose the calendar in Julian calendar or in Gregorian
+	calendar.
+<
+	Useful >
+	To conclude, very useful.
+<
+------------------------------------------------------------------------------
+VIM APPLICATION					*calendar-vim-application*
+There are lots of Vim plugins. We can classify them as the following groups.
+	- colorscheme plugins >
+	  (e.g. wombat)
+<	- syntax plugins >
+	  (e.g. vim-json, syntaxm4.vim)
+<	- edit assistance plugins >
+	  (e.g. completion plugins, comment plugins)
+<	- special buffer plugins >
+	  (e.g. VimFiler, TweetVim, gmail.vim)
+<	- plugins extending the function of a plugin >
+	  (e.g. some unite sources)
+<	- plugins supporting other plugins with some low-layer features >
+	  (e.g. vital.vim, vimproc, webapi-vim)
+<A special buffer plugin creates a special buffer and provides a characteristic
+features. For example, file manipulations or interfaces to Twitter. This
+|calendar| plugin is one of them.
+
+Now, I'd like to define a new group: Vim application, a subset of special
+buffer plugins. A Vim application should:
+	- be a special buffer plugin >
+	  (create a special buffer and provides some features inside it)
+<	- use a buffer as a display for the state of the plugin >
+	  (do not get information from the buffer, redraw entirely every time)
+<	- provide a rich interface >
+	  (for example, window layers composition)
+<	- be coded with loose coupling >
+	  (any two files do not have common code)
+<	- be independent to any other plugins >
+	  (all the requirements are included)
+<The |calendar| plugin is the first Vim application. So now, it's time to put
+up a slogan for the new age of Vim.
+						*calendar-slogan-vaap*
+
+	Vim as an application platform ~
+
+------------------------------------------------------------------------------
+COMMANDS					*calendar-commands*
+
+:Calendar [{options}] [day month year]
+						*:Calendar*
+		Opens a new buffer and views a calendar.
+		The order of day, month and year varies according to
+		|calendar-options-date_endian|. For example, the argument will
+		be judged as [year month day] in Japan (|v:lang| is ja_JP):
+		:Calendar 2000		year: 2000,      month: 1, day: 1
+		:Calendar 8		year: this year, month: 8, day: 1
+		:Calendar 8 5		year: this year, month: 8, day: 5
+		:Calendar 2000 8 5	year: 2000,      month: 8, day: 5
+		In order to avoid ambiguity, you can use >
+		:Calendar -year={num} -month={num} -day={num}
+< 		See |calendar-options-year|, |calendar-options-month| and
+		|calendar-options-day| for more information.
+
+------------------------------------------------------------------------------
+OPTIONS						*calendar-options*
+
+You can use the following options to change the location of the |calendar|
+buffer.
+
+						*calendar-options-split*
+		-split={horizontal/vertical}
+		Open the calendar buffer in a horizontally/vertically opened
+		buffer.
+
+						*calendar-options-position*
+		-position={below/tab/here/left/right/topleft/topright}
+		-position=below
+			Open the buffer below.
+		-position=tab
+			Open the buffer in a new tab.
+		-position=here[!]
+			Open the buffer at the same window of the current
+			buffer. If some changes exist in the current buffer,
+			this option is ignored. An '!' is added to discard
+			any changes in the current buffer.
+		-position=left
+			Open the buffer on the left hand side.
+		-position=right
+			Open the buffer on the right hand side.
+		-position=topleft
+			Open the buffer on the left hand side, with full
+			height of Vim.
+		-position=topright
+			Open the buffer on the right hand side, with full
+			height of Vim.
+
+You can use the following options to change the size of the |calendar| buffer.
+
+						*calendar-options-height*
+		-height={num}
+		Open the calendar buffer with the specified height. This
+		option is effective with -split=horizontal.
+
+						*calendar-options-width*
+		-width={num}
+		Open the calendar buffer with the specified width. This
+		option is effective with -split=vertical.
+
+You can explicitly give the date with arguments.
+
+						*calendar-options-year*
+		-year={num}
+						*calendar-options-month*
+		-month={num}
+						*calendar-options-day*
+		-day={num}
+		Open the calendar with the specified date.
+
+The following options change the appearance of the calendar.
+
+						*calendar-options-locale*
+						*g:calendar_locale*
+		-locale={default/en/ja}
+		let g:calendar_locale = "{default/en/ja}"
+		Specify the locale of the messages in the calendar buffer.
+		The default value is "default", which detects the value of
+		|v:lang|.
+
+						*calendar-options-first_day*
+						*g:calendar_first_day*
+		-first_day={sunday/monday/tuesday/wednesday/thursday/friday/saturday}
+		let g:calendar_first_day = "{sunday/monday/...}"
+		Specify the first day of the calendars.
+		The default value is based on |v:lang|.
+			"sunday": United States, Canada, Japan, Israel
+			"monday": Other countries
+
+						*calendar-options-time_zone*
+						*g:calendar_time_zone*
+		-time_zone={[-+]hhmm}
+		let g:calendar_time_zone = "{[-+]hhmm}"
+		Specify the time zone from UTC.
+		The default value is strftime('%z').
+
+						*calendar-options-date_endian*
+						*g:calendar_date_endian*
+		-date_endian={little/big/middle}
+		let g:calendar_date_endian = "{little/big/middle}"
+		The format of dates.
+		-date_endian=little :	day/month/year
+		-date_endian=big :	year/month/day
+		-date_endian=middle :	month/day/year
+		The default value is based on |v:lang|
+			big :		Japan, China, Korea, Hungary,
+					Lithuania, Mongolia
+			middle :	United States
+			little :	Other countries
+
+						*calendar-options-date_separator*
+						*g:calendar_date_separator*
+		-date_separator={ / - . " " }
+		let g:calendar_date_separator={"/" "-" "." " "}
+		The separator of dates.
+		The default value is based on |v:lang|.
+			'.' :	Armenia, Austria, Azerbaijan, Belarus, Bulgaria,
+				Croatia, Czech Republic, Estonia, Finland,
+				Georgia, Germany, Hungary, Iceland,
+				Kazakhstan, Kyrgyzstan, Latvia, Mongolia,
+				Norway, Romania, Russia, Slovakia,
+				Switzerland, Turkmenistan, Ukraine
+			'-' :	Bangladesh, China, Denmark, France, India,
+				Ireland, Lithuania, Netherlands, Sweden,
+				Taiwan
+			'/' :	Other countries
+
+						*calendar-options-date_month_name*
+						*g:calendar_date_month_name*
+		-date_month_name[!]
+		let g:calendar_date_month_name={0/1}
+		If on, a date string uses month names. In order to disable
+		this option with the argument, add the trailing '!'.
+		The default value is 0.
+
+						*calendar-options-date_full_month_name*
+						*g:calendar_date_full_month_name*
+		-date_full_month_name[!]
+		let g:calendar_date_full_month_name={0/1}
+		If on, a date string uses the full month names. In order to
+		disable this option with the argument, add the trailing '!'.
+		The default value is 0.
+
+						*calendar-options-week_number*
+						*g:calendar_week_number*
+		-week_number[!]
+		let g:calendar_week_number={0/1}
+		If on, it shows the week numbers. In order to disable
+		this option with the argument, add the trailing '!'.
+		The default value is 0.
+
+						*calendar-options-task*
+						*g:calendar_task*
+		-task[!]
+		let g:calendar_task={0/1}
+		If on, the app shows the task list on its startup. You can
+		toggle the task list with the T key, which is mapped to
+		|<Plug>(calendar_task)|. If you want to disable the visibility
+		of the task list after you set the global variable on, add the
+		trailing '!'.
+		The default value is 0.
+
+						*calendar-options-event_start_time*
+						*g:calendar_event_start_time*
+		-event_start_time[!]
+		let g:calendar_event_start_time={0/1}
+		If on, it shows the starting time of the events in the
+		month/days views. In order to disable this option from
+		the argument, add the trailing '!'.
+		The default value is 1.
+
+						*calendar-options-event_start_time_minwidth*
+						*g:calendar_event_start_time_minwidth*
+		-event_start_time_minwidth=[num]
+		let g:calendar_event_start_time_minwidth=[num]
+		The minimum width for showing the starting time of the events.
+		If the width of the each day is larger than or equals to this
+		value, it shows the starting time of the events.
+		The default value is 16.
+
+						*calendar-options-clock_12hour*
+						*g:calendar_clock_12hour*
+		-clock_12hour[!]
+		let g:calendar_clock_12hour={0/1}
+		If on, times are displayed in 12-hour clock style. In order to
+		disable this option with the argument, add the trailing '!'.
+		The default value is 0.
+
+						*calendar-options-frame*
+						*g:calendar_frame*
+		-frame={default/unicode/space/unicode_bold/unicode_round/unicode_double}
+		let g:calendar_frame = "{default/unicode/...}"
+		The format of frames. The unicode-prefix values are available
+		when |'enc'| is 'utf-8' and |'fenc'| is 'utf-8'.
+		The default value is:
+			"unicode": If |'enc'| is 'utf-8' and |'fenc'| is 'utf-8'
+			"default": In other cases
+
+						*calendar-options-task_width*
+						*g:calendar_task_width*
+		-task_width={number}
+		let g:calendar_task_width = {number}
+		The width of the task list window.
+		The default value is 1/6 of the window width.
+
+						*calendar-options-message_prefix*
+						*g:calendar_message_prefix*
+		-message_prefix="{string}"
+		let g:calendar_message_prefix = "{string}"
+		The prefix of the messages.
+		The default value is: "[calendar] ".
+
+This application has some different views. You can switch views with |<| and
+|>| keys. You can change the initial view.
+
+						*calendar-options-view*
+						*g:calendar_view*
+		-view={year/month/week/days/day/clock/event/agenda}
+		let g:calendar_view = "{year/month/week/days/day/clock/event/agenda}"
+		Specify the view of the calendar on starting the buffer.
+		The default value is "month".
+
+						*g:calendar_views*
+		let g:calendar_views = ['year', 'month', ... ]
+		Specify the views in an array.
+		The default value is: >
+			['year', 'month', 'week', 'day_4', 'day', 'clock']
+<		The available views are: >
+			'year', 'month', 'week', 'weekday',
+			'day_7', 'day_6', 'day_5', 'day_4',
+			'day_3', 'day_2', 'day_1', 'day',
+			'clock', 'event', 'agenda'
+<
+						*calendar-options-cyclic_view*
+						*g:calendar_cyclic_view*
+		-cyclic_view[!]
+		let g:calendar_cyclic_view = {0/1}
+		If this value is 1 or the argument is given, the keys |<| and
+		|>| do not stop at the leftmost/rightmost views, but change
+		the view cyclically.
+		The default value is 0.
+
+In order to connect this application to Google, you should use the following
+options.
+						*calendar-options-google_calendar*
+						*g:calendar_google_calendar*
+		-google_calendar[!]
+		let g:calendar_google_calendar = {0/1}
+		If the value is 1 or the argument is given, this application
+		will download the calendars from Google Calendar, with your
+		permission. In order to disable this option with the argument,
+		add the trailing '!'.
+		The default value is 0.
+
+						*calendar-options-google_task*
+						*g:calendar_google_task*
+		-google_task[!]
+		let g:calendar_google_task = {0/1}
+		If the value is 1 or the argument is given, this application
+		will download the tasks from Google Task, with your permission.
+		In order to disable this option with the argument, add the
+		trailing '!'.
+		The default value is 0.
+
+Other miscellaneous options.
+
+						*calendar-options-calendar*
+						*g:calendar_calendar*
+		-calendar={default/gregorian/julian}
+			{austria/austriastyria/british/bulgaria/canada}
+			{estonia/france/germany/germanyprussia/greece}
+			{holland/hungary/italy/japan/poland/portugal}
+			{russia/spain/turkey/us}
+		let g:calendar_calendar = "{default/gregorian/julian/...}"
+		The date switching to Gregorian calendar varies.
+		The default value is "default", the switching date is
+		15/10/1582.
+			Calendar		Switching date (day month year)
+			default			15	10	1582
+			italy			15	10	1582
+			poland			15	10	1582
+			portugal		15	10	1582
+			spain			15	10	1582
+			france			20	12	1582
+			holland			 1	 1	1583
+			germany			11	 1	1583
+			austria			16	10	1583
+			austriastyria		25	12	1583
+			hungary			 1	11	1587
+			germanyprussia		 2	 9	1610
+			british			14	 9	1752
+			canada			14	 9	1752
+			us			14	 9	1752
+			japan			 1	 1	1873
+			bulgaria		14	 4	1916
+			estonia			14	 2	1918
+			russia			14	 2	1918
+			greece			 1	 3	1923
+			turkey			 1	 1	1927
+
+						*calendar-options-calendar_candidates*
+						*g:calendar_calendar_candidates*
+		-calendar_candidates=pattern1,pattern2,pattern3
+		let g:calendar_calendar_candidates = ["pattern1", "pattern2", "pattern3"]
+		Specify the calendar candidates on inserting and moving a
+		calendar event. Note that the values are matched against the
+		summary of the calendars.
+
+						*calendar-options-updatetime*
+						*g:calendar_updatetime*
+		-updatetime=[num]
+		let g:calendar_updatetime = [num]
+		Specify the updatetime (in msec) in the calendar buffer. This
+		value is used for asynchronous web queries and the clock view.
+		The default value is 200.
+
+						*calendar-options-skip_event_delete_confirm*
+						*g:calendar_skip_event_delete_confirm*
+		-skip_event_delete_confirm[!]
+		let g:calendar_skip_event_delete_confirm = {0/1}
+		If the value is 1, the application skips confirmation on
+		deleting an event.
+		The default value is 0.
+
+						*calendar-options-skip_task_delete_confirm*
+						*g:calendar_skip_task_delete_confirm*
+		-skip_task_delete_confirm[!]
+		let g:calendar_skip_task_delete_confirm = {0/1}
+		If the value is 1, the application skips confirmation on
+		deleting a task.
+		The default value is 0.
+
+						*calendar-options-skip_task_clear_completed_confirm*
+						*g:calendar_skip_task_clear_completed_confirm*
+		-skip_task_clear_completed_confirm[!]
+		let g:calendar_skip_task_clear_completed_confirm = {0/1}
+		If the value is 1, the application skips confirmation on
+		completing a task.
+		The default value is 0.
+
+						*calendar-options-yank_deleting*
+						*g:calendar_yank_deleting*
+		-yank_deleting[!]
+		let g:calendar_yank_deleting = {0/1}
+		If the value is 1 or the argument is given, the application
+		yanks the text when you delete an event or a task.
+		The default value is 1.
+
+						*calendar-options-task_delete*
+						*g:calendar_task_delete*
+		-task_delete[!]
+		let g:calendar_task_delete = {0/1}
+		If the value is 1 or the argument is given, the application
+		deletes the selected task directly without completing.
+		The default value is 0.
+
+						*calendar-options-cache_directory*
+						*g:calendar_cache_directory*
+		-cache_directory=[dir]
+		let g:calendar_cache_directory = [dir]
+		Specify the cache directory for this plugin.
+		The default value is ~/.cache/calendar.vim/.
+
+						*calendar-options-debug*
+						*g:calendar_debug*
+		-debug[!]
+		let g:calendar_debug = {0/1}
+		If the value is 1 or the argument is given, the application
+		runs in debug mode. In debug mode:
+			1. It does not delete all the downloaded files.
+		The default value is 0.
+
+------------------------------------------------------------------------------
+VIEW						*calendar-view*
+
+This application has some different views. You can switch views with |>| and
+|<| keys. Refer to |g:calendar_views| for the default views.
+
+1. Year view					*calendar-view-year*
+	This view shows the months. If the window is not wide enough to view
+	all the months in the year, it shows the nearest 3 or 5 months.
+	The name of the year view is 'year'.
+
+2. Month view					*calendar-view-month*
+	This view shows one month. This is the initial view on default.
+	The name of the month view is 'month'.
+
+3. Week view					*calendar-view-week*
+	This view shows 7 days.
+	The name of the week view is 'week'.
+
+4. Days view					*calendar-view-days*
+	This view shows 4 days on default.
+	The available days views are: 'day_7', 'day_6', 'day_5', 'day_4',
+	'day_3', 'day_2', 'day_1' and 'weekday'.
+
+
+5. Day view					*calendar-view-day*
+	This view shows 1 day.
+	The name of the day view is 'day'.
+
+6. Clock view					*calendar-view-clock*
+	This view shows a digital clock.
+	The name of the clock view is 'clock'.
+
+7. Event view					*calendar-view-event*
+	This view shows a event list. There are two available event views:
+	'event' and 'agenda'.
+
+------------------------------------------------------------------------------
+KEY MAPPINGS					*calendar-key-mappings*
+
+This application provides a global mapping.
+<Plug>(calendar)				*<Plug>(calendar)*
+	Open a calendar buffer. This mapping calls the |:Calendar| command
+	with no argument.
+
+In the calendar buffer, a lot of mappings are provided.
+This application has many views. Thus pressing j triggers various actions
+based on the active window. For example, go to 7 days after in the month view,
+go to the below month in the year view, 1 hour after in the week and day views,
+and the next task in the task window. So the following mappings change its
+behavior conformably in each views.
+
+Normal mode key mappings.
+
+Mappings for moving around.
+<Plug>(calendar_left)				*<Plug>(calendar_left)*
+<Plug>(calendar_right)				*<Plug>(calendar_right)*
+<Plug>(calendar_down)				*<Plug>(calendar_down)*
+<Plug>(calendar_up)				*<Plug>(calendar_up)*
+<Plug>(calendar_prev)				*<Plug>(calendar_prev)*
+<Plug>(calendar_next)				*<Plug>(calendar_next)*
+<Plug>(calendar_move_down)			*<Plug>(calendar_move_down)*
+<Plug>(calendar_move_up)			*<Plug>(calendar_move_up)*
+<Plug>(calendar_move_event)			*<Plug>(calendar_move_event)*
+<Plug>(calendar_down_big)			*<Plug>(calendar_down_big)*
+<Plug>(calendar_up_big)				*<Plug>(calendar_up_big)*
+<Plug>(calendar_down_large)			*<Plug>(calendar_down_large)*
+<Plug>(calendar_up_large)			*<Plug>(calendar_up_large)*
+<Plug>(calendar_line_head)			*<Plug>(calendar_line_head)*
+<Plug>(calendar_line_middle)			*<Plug>(calendar_line_middle)*
+<Plug>(calendar_line_last)			*<Plug>(calendar_line_last)*
+<Plug>(calendar_bar)				*<Plug>(calendar_bar)*
+<Plug>(calendar_first_line)			*<Plug>(calendar_first_line)*
+<Plug>(calendar_last_line)			*<Plug>(calendar_last_line)*
+<Plug>(calendar_first_line_head)		*<Plug>(calendar_first_line_head)*
+<Plug>(calendar_last_line_last)			*<Plug>(calendar_last_line_last)*
+
+Mappings for scrolling
+<Plug>(calendar_scroll_down)			*<Plug>(calendar_scroll_down)*
+<Plug>(calendar_scroll_up)			*<Plug>(calendar_scroll_up)*
+<Plug>(calendar_scroll_top_head)		*<Plug>(calendar_scroll_top_head)*
+<Plug>(calendar_scroll_top)			*<Plug>(calendar_scroll_top)*
+<Plug>(calendar_scroll_center_head)		*<Plug>(calendar_scroll_center_head)*
+<Plug>(calendar_scroll_center)			*<Plug>(calendar_scroll_center)*
+<Plug>(calendar_scroll_bottom_head)		*<Plug>(calendar_scroll_bottom_head)*
+<Plug>(calendar_scroll_bottom)			*<Plug>(calendar_scroll_bottom)*
+
+Utility
+<Plug>(calendar_add)				*<Plug>(calendar_add)*
+<Plug>(calendar_subtract)			*<Plug>(calendar_subtract)*
+<Plug>(calendar_status)				*<Plug>(calendar_status)*
+<Plug>(calendar_plus)				*<Plug>(calendar_plus)*
+<Plug>(calendar_minus)				*<Plug>(calendar_minus)*
+<Plug>(calendar_task)				*<Plug>(calendar_task)*
+<Plug>(calendar_event)				*<Plug>(calendar_event)*
+<Plug>(calendar_close_task)			*<Plug>(calendar_close_task)*
+<Plug>(calendar_close_event)			*<Plug>(calendar_close_event)*
+<Plug>(calendar_delete)				*<Plug>(calendar_delete)*
+<Plug>(calendar_delete_line)			*<Plug>(calendar_delete_line)*
+<Plug>(calendar_yank)				*<Plug>(calendar_yank)*
+<Plug>(calendar_yank_line)			*<Plug>(calendar_yank_line)*
+<Plug>(calendar_change)				*<Plug>(calendar_change)*
+<Plug>(calendar_change_line)			*<Plug>(calendar_change_line)*
+<Plug>(calendar_undo)				*<Plug>(calendar_undo)*
+<Plug>(calendar_undo_line)			*<Plug>(calendar_undo_line)*
+<Plug>(calendar_tab)				*<Plug>(calendar_tab)*
+<Plug>(calendar_shift_tab)			*<Plug>(calendar_shift_tab)*
+<Plug>(calendar_next_match)			*<Plug>(calendar_next_match)*
+<Plug>(calendar_prev_match)			*<Plug>(calendar_prev_match)*
+<Plug>(calendar_today)				*<Plug>(calendar_today)*
+<Plug>(calendar_enter)				*<Plug>(calendar_enter)*
+<Plug>(calendar_view_left)			*<Plug>(calendar_view_left)*
+<Plug>(calendar_view_right)			*<Plug>(calendar_view_right)*
+<Plug>(calendar_redraw)				*<Plug>(calendar_redraw)*
+<Plug>(calendar_clear)				*<Plug>(calendar_clear)*
+<Plug>(calendar_help)				*<Plug>(calendar_help)*
+<Plug>(calendar_escape)				*<Plug>(calendar_escape)*
+<Plug>(calendar_hide)				*<Plug>(calendar_hide)*
+<Plug>(calendar_exit)				*<Plug>(calendar_exit)*
+
+Insert mode
+<Plug>(calendar_start_insert)			*<Plug>(calendar_start_insert)*
+<Plug>(calendar_start_insert_append)		*<Plug>(calendar_start_insert_append)*
+<Plug>(calendar_start_insert_head)		*<Plug>(calendar_start_insert_head)*
+<Plug>(calendar_start_insert_last)		*<Plug>(calendar_start_insert_last)*
+<Plug>(calendar_start_insert_prev_line)		*<Plug>(calendar_start_insert_prev_line)*
+<Plug>(calendar_start_insert_next_line)		*<Plug>(calendar_start_insert_next_line)*
+<Plug>(calendar_start_insert_quick)		*<Plug>(calendar_start_insert_quick)*
+
+Visual mode
+<Plug>(calendar_visual)				*<Plug>(calendar_visual)*
+<Plug>(calendar_visual_line)			*<Plug>(calendar_visual_line)*
+<Plug>(calendar_visual_block)			*<Plug>(calendar_visual_block)*
+<Plug>(calendar_exit_visual)			*<Plug>(calendar_exit_visual)*
+
+Normal mode default mappings.
+{lhs}		{rhs}
+--------	---------------------------------------
+h		|<Plug>(calendar_left)|
+l		|<Plug>(calendar_right)|
+j		|<Plug>(calendar_down)|
+k		|<Plug>(calendar_up)|
+<Left>		|<Plug>(calendar_left)|
+<Right>		|<Plug>(calendar_right)|
+<Down>		|<Plug>(calendar_down)|
+<Up>		|<Plug>(calendar_up)|
+<BS>		same as h
+<C-h>		same as h
+gh		same as h
+gl		same as l
+gj		same as j
+gk		same as k
+g<Left>		same as <Left>
+g<Right>	same as <Right>
+g<Down>		same as <Down>
+g<Up>		same as <Up>
+<S-Down>	same as <Down>
+<S-Up>		same as <Up>
+<C-j>		|<Plug>(calendar_move_down)|
+<C-k>		|<Plug>(calendar_move_up)|
+<C-S-Down>	|<Plug>(calendar_move_down)|
+<C-S-Up>	|<Plug>(calendar_move_up)|
+M		|<Plug>(calendar_move_event)|
+w		|<Plug>(calendar_next)|
+W		same as w
+e		same as w
+<S-Right>	same as w
+<C-Right>	same as w
+b		|<Plug>(calendar_prev)|
+B		same as b
+ge		same as b
+gE		same as b
+<S-Left>	same as b
+<C-Left>	same as b
+<C-n>		|<Plug>(calendar_down)|
+<C-p>		|<Plug>(calendar_up)|
+<C-d>		|<Plug>(calendar_down_big)|
+<C-e>		same as <C-d>
+<C-u>		|<Plug>(calendar_up_big)|
+<C-y>		same as <C-u>
+<C-f>		|<Plug>(calendar_down_large)|
+<C-b>		|<Plug>(calendar_up_large)|
+<PageDown>	same as <C-f>
+<PageUp>	same as <C-b>
+0		|<Plug>(calendar_line_head)|
+^		same as 0
+g0		same as 0
+<Home>		same as 0
+g<Home>		same as 0
+g^		same as ^
+gm		|<Plug>(calendar_line_middle)|
+$		|<Plug>(calendar_line_last)|
+g$		same as $
+g_		same as $
+<End>		same as $
+g<End>		same as $
+gg		|<Plug>(calendar_first_line)|
+<C-Home>	same as gg
+(		|<Plug>(calendar_first_line)|
+{		same as (
+[[		same as (
+[]		same as [[
+G		|<Plug>(calendar_last_line)|
+)		|<Plug>(calendar_last_line)|
+}		same as )
+]]		same as )
+][		same as ]]
+<C-End>		|<Plug>(calendar_last_line_last)|
+<Bar>		|<Plug>(calendar_bar)|
+<C-e>		|<Plug>(calendar_scroll_down)|
+<C-y>		|<Plug>(calendar_scroll_up)|
+z<CR>		|<Plug>(calendar_scroll_top_head)|
+zt		|<Plug>(calendar_scroll_top)|
+z.		|<Plug>(calendar_scroll_center_head)|
+zz		|<Plug>(calendar_scroll_center)|
+z-		|<Plug>(calendar_scroll_bottom_head)|
+zb		|<Plug>(calendar_scroll_bottom)|
+d		|<Plug>(calendar_delete)|
+D		|<Plug>(calendar_delete_line)|
+y		|<Plug>(calendar_yank)|
+Y		|<Plug>(calendar_yank_line)|
+c		|<Plug>(calendar_change)|
+C		|<Plug>(calendar_change_line)|
+<Undo>		|<Plug>(calendar_undo)|
+u		|<Plug>(calendar_undo)|
+U		|<Plug>(calendar_undo_line)|
+<TAB>		|<Plug>(calendar_tab)|
+<S-Tab>		|<Plug>(calendar_shift_tab)|
+n		|<Plug>(calendar_next_match)|
+N		|<Plug>(calendar_prev_match)|
+t		|<Plug>(calendar_today)|
+<CR>		|<Plug>(calendar_enter)|
+<C-a>		|<Plug>(calendar_add)|
+<C-x>		|<Plug>(calendar_subtract)|
+<C-g>		|<Plug>(calendar_status)|
++		|<Plug>(calendar_plus)|
+-		|<Plug>(calendar_minus)|
+T		|<Plug>(calendar_task)|
+E		|<Plug>(calendar_event)|
+<		|<Plug>(calendar_view_left)|
+>		|<Plug>(calendar_view_right)|
+<Space>		|<Plug>(calendar_space)|
+<C-l>		|<Plug>(calendar_redraw)|
+<C-r>		|<Plug>(calendar_redraw)|
+L		|<Plug>(calendar_clear)|
+?		|<Plug>(calendar_help)|
+q		|<Plug>(calendar_hide)|
+Q		|<Plug>(calendar_exit)|
+i		|<Plug>(calendar_start_insert)|
+a		|<Plug>(calendar_start_insert_append)|
+I		|<Plug>(calendar_start_insert_head)|
+A		|<Plug>(calendar_start_insert_last)|
+O		|<Plug>(calendar_start_insert_prev_line)|
+o		|<Plug>(calendar_start_insert_next_line)|
+v		|<Plug>(calendar_visual)|
+V		|<Plug>(calendar_visual_line)|
+<C-v>		|<Plug>(calendar_visual_block)|
+gh		same as v
+gH		same as V
+g<C-h>		same as <C-v>
+<ESC>		|<Plug>(calendar_escape)|
+
+You can configure the mappings in the calendar buffers.
+Example configuration: >
+	augroup calendar-mappings
+		autocmd!
+
+		" diamond cursor
+		autocmd FileType calendar nmap <buffer> i <Plug>(calendar_up)
+		autocmd FileType calendar nmap <buffer> j <Plug>(calendar_left)
+		autocmd FileType calendar nmap <buffer> k <Plug>(calendar_down)
+		autocmd FileType calendar nmap <buffer> l <Plug>(calendar_right)
+
+		" swap v and V
+		autocmd FileType calendar nmap <buffer> V <Plug>(calendar_visual)
+		autocmd FileType calendar nmap <buffer> v <Plug>(calendar_visual_line)
+
+		" unmap <C-n>, <C-p> for other plugins
+		autocmd FileType calendar nunmap <buffer> <C-n>
+		autocmd FileType calendar nunmap <buffer> <C-p>
+	augroup END
+<
+------------------------------------------------------------------------------
+MARKS						*calendar-marks*
+In the |calendar| buffer, you can use |mark|s.
+
+m{a-z}			Set mark {a-z} at the selected day and time.
+:ma[rk] {a-z}		Set mark {a-z} at the selected day and time.
+:k{a-z}			Same as :mark.
+'{a-z}   `{a-z}		Jump to the mark {a-z}.
+g'{a-z}  g`{a-z}	Jump to the mark {a-z}.
+''   ``			Jump to the latest mark.
+:marks			List all the marks.
+:delm[arks] {mark}	Delete the specified mark.
+:delm[arks]!		Delete all the marks.
+
+------------------------------------------------------------------------------
+INPUT FORMAT					*calendar-input-format*
+This application has some special format for user's input of events and tasks.
+
+Calendar:
+	Day event:
+		EVENT: [event-title]
+
+	Few hours event:
+		EVENT: HH:MM - HH:MM [event-title]
+		EVENT: HH:MM:ss - HH:MM:ss [event-title]
+
+		Example:
+		EVENT: 12:00 - 14:00 [event-title]
+		EVENT: 12:00:30 - 14:00:20 [event-title]
+
+	Few days event:
+		EVENT: mm/dd [event-title] (all day event)
+		EVENT: mm/dd - mm/dd [event-title]
+		EVENT: yyyy/mm/dd - yyyy/mm/dd [event-title] (big endian)
+		EVENT: mm/dd/yyyy - mm/dd/yyyy [event-title] (middle endian)
+		EVENT: dd/mm/yyyy - dd/mm/yyyy [event-title] (little endian)
+		EVENT: yyyy-mm-dd - yyyy-mm-dd [event-title] (big endian, "-" separator)
+
+		Example:
+		EVENT: 10/23 [event-title] (all day event)
+		EVENT: 10/23 - 10/25 [event-title]
+		EVENT: 2014/10/23 - 2014/10/25 [event-title] (big endian)
+		EVENT: 10/23/2014 - 10/25/2014 [event-title] (middle endian)
+		EVENT: 23/10/2014 - 25/10/2014 [event-title] (little endian)
+		EVENT: 2014-10-23 - 2014-10-25 [event-title] (big endian, "-" separator)
+
+	Days and hours event:
+		EVENT: mm/dd HH:MM - mm/dd HH:MM [event-title]
+		EVENT: yyyy/mm/dd HH:MM - yyyy/mm/dd HH:MM [event-title]
+		EVENT: dd/mm/yyyy HH:MM - dd/mm/yyyy HH:MM [event-title] (little endian)
+		EVENT: dd-mm-yyyy HH:MM - dd-mm-yyyy HH:MM [event-title] (little endian, "-" separator)
+
+		Example:
+		EVENT: 10/23 19:00 - 10/25 21:00 [event-title]
+		EVENT: 2014/10/23 19:00 - 2014/10/25 21:00 [event-title]
+		EVENT: 23-10-2014 10:00 - 25-10-2014 21:00 [event-title] (little endian, "-" separator)
+
+Task:
+	Simple task:
+		TASK: [task-title]
+
+	Task with note:
+		TASK: [task-title] note: [task-note]
+
+	Task with due date:
+		TASK: mm/dd [task-title]
+		TASK: mm-dd [task-title]
+		TASK: yyyy/mm/dd [task-title]
+		TASK: yyyy-mm-dd [task-title]
+
+		Example:
+		TASK: 10/23 [task-title]
+		TASK: 10-23 [task-title]
+		TASK: 2014/10/23 [task-title]
+		TASK: 2014-10-23 [task-title]
+
+	Task with due date and note:
+		TASK: yyyy/mm/dd [task-title] note: [task-note]
+		TASK: yyyy-mm-dd [task-title] note: [task-note]
+
+		Example:
+		TASK: 2014/10/23 [task-title] note: [task-note]
+		TASK: 2014-10-23 [task-title] note: [task-note]
+
+------------------------------------------------------------------------------
+TROUBLESHOOTING					*calendar-troubleshooting*
+
+Problem 1:				|calendar-problem-1|
+	How to install this application.
+
+Problem 2:				|calendar-problem-2|
+	How to update this application.
+
+Problem 3:				|calendar-problem-3|
+	How to uninstall this application.
+
+Problem 4:				|calendar-problem-4|
+	How to change key-mapping settings for calendar buffers.
+
+Problem 5:				|calendar-problem-5|
+	The frame collapses (on Ubuntu).
+
+Problem 6:				|calendar-problem-6|
+	The clock is invisible / The calendar is not colorful.
+
+Problem 7:				|calendar-problem-7|
+	How to change the cache directory.
+
+Problem 8:				|calendar-problem-8|
+	The clock stops to update after the cursor gets out of the window.
+
+Problem 9:				|calendar-problem-9|
+	How to connect to Google Calendar / Google Task.
+	How to disconnect my Google account.
+
+Problem 10:				|calendar-problem-10|
+	Authorization to Google fails again and again.
+
+Problem 11:				|calendar-problem-11|
+	Which should we use, arguments or global variables.
+
+Problem 12:				|calendar-problem-12|
+	Found a bug of this application.
+	Got many errors while using this application.
+	Vim hangs up while using this application.
+	Need a new mapping.
+	Want this application to be more configurable.
+	This troubleshooting is not helpful.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Problem 1:					*calendar-problem-1*
+	How to install this application.
+
+		If you are to install this application manually:
+
+			1. Put all the files under $VIM.
+
+		If you are using |vim-pathogen|, install this application with the
+		following command.
+>
+			git clone https://github.com/itchyny/calendar.vim \
+			    ~/.vim/bundle/calendar.vim
+<
+		If you are to install this application using |Vundle|:
+
+			1. Add the following configuration to your vimrc.
+>
+			Plugin 'itchyny/calendar.vim'
+<
+			2. Install with |:PluginInstall|.
+
+		If you are to install this application using |NeoBundle|:
+
+			1. Add the following configuration to your vimrc.
+>
+			NeoBundle 'itchyny/calendar.vim'
+<
+			2. Install with |:NeoBundleInstall|.
+
+Problem 2:					*calendar-problem-2*
+	How to update this application.
+
+		If you have installed this application manually:
+
+			1. Access https://github.com/itchyny/calendar.vim .
+			2. Download the latest scripts.
+			3. Place the scripts as written in Problem 1.
+
+		If you have installed this application with git clone command:
+
+			1. Update the application with git pull.
+
+		If you have installed this application using Vundle:
+
+			1. Execute |:PluginInstall!|. Or try git pull in the
+			directory of this application.
+
+		If you have installed this application using NeoBundle:
+
+			1. Execute |:NeoBundleInstall!|. Or try git pull in
+			the directory of this application.
+
+Problem 3:					*calendar-problem-3*
+	How to uninstall this application.
+
+		If you have installed this application manually or git clone
+		commend:
+
+			1. Remove all the related files under $VIM.
+
+		If you have installed this application using Vundle:
+
+			1. Remove the :Plugin 'itchyny/calendar.vim'
+			configuration from your vimrc.
+			2. Update with |:PluginClean|.
+
+		If you have installed this application using NeoBundle:
+
+			1. Remove the :NeoBundle 'itchyny/calendar.vim'
+			configuration from your vimrc.
+			2. Update with |:NeoBundleClean|.
+
+Problem 4:					*calendar-problem-4*
+	How to change key-mapping settings for calendar buffers.
+
+		Add the following configuration to your vimrc. >
+		augroup calendar-mappings
+			autocmd!
+			autocmd FileType calendar nmap <buffer> {key}
+				\ <Plug>(calendar_...)
+			autocmd FileType calendar nunmap <buffer> {key}
+		augroup END
+<
+		Example configuration: >
+		augroup calendar-mappings
+			autocmd!
+
+			" diamond cursor
+			autocmd FileType calendar nmap <buffer> i <Plug>(calendar_up)
+			autocmd FileType calendar nmap <buffer> j <Plug>(calendar_left)
+			autocmd FileType calendar nmap <buffer> k <Plug>(calendar_down)
+			autocmd FileType calendar nmap <buffer> l <Plug>(calendar_right)
+
+			" swap v and V
+			autocmd FileType calendar nmap <buffer> V <Plug>(calendar_visual)
+			autocmd FileType calendar nmap <buffer> v <Plug>(calendar_visual_line)
+
+			" unmap <C-n>, <C-p> for other plugins
+			autocmd FileType calendar nunmap <buffer> <C-n>
+			autocmd FileType calendar nunmap <buffer> <C-p>
+		augroup END
+<
+Problem 5:					*calendar-problem-5*
+	The frame collapses (on Ubuntu).
+
+		Add the following configuration to your vimrc. >
+		let g:calendar_frame = 'default'
+
+Problem 6:					*calendar-problem-6*
+	The clock is invisible / The calendar is not colorful.
+
+		Add the following configuration to your *shrc (e.g. zshrc) >
+			export TERM=xterm-256color
+<		and add the following configuration to your vimrc. >
+			if !has('gui_running')
+			  set t_Co=256
+			endif
+<
+Problem 7:					*calendar-problem-7*
+	How to change the cache directory.
+
+		For example, add the following configuration to your vimrc. >
+		let g:calendar_cache_directory = expand('~/.vim/cache/calendar.vim/')
+<		See |g:calendar_cache_directory|.
+
+Problem 8:					*calendar-problem-8*
+	The clock stops to update after the cursor gets out of the window.
+
+		It is feature. Updating a specific buffer from other window
+		causes many problems.
+
+Problem 9:					*calendar-problem-9*
+	How to connect to Google Calendar / Google Task.
+	How to disconnect my Google account.
+
+		Add the following configuration to your vimrc. >
+		let g:calendar_google_calendar = 1
+		let g:calendar_google_task = 1
+<		See |g:calendar_google_calendar|, |g:calendar_google_task|.
+
+		To disconnect, remove the cache directory. On default, the
+		cache directory is ~/.cache/calendar.vim/. So execute the
+		following command. >
+		rm -rf ~/.cache/calendar.vim/google/
+<		See |g:calendar_cache_directory|.
+
+Problem 10:					*calendar-problem-10*
+	Authorization to Google fails again and again.
+
+		Remove the cache directory and reauthorize to Google. >
+		rm -rf ~/.cache/calendar.vim/google/
+<		See |g:calendar_cache_directory|.
+
+Problem 11:					*calendar-problem-11*
+	Which should we use, arguments or global variables.
+
+		Arguments have priority over global variables. For example, if
+		you write >
+		let g:calendar_first_day = 'monday'
+<		the calendar opens with Monday as the first day. However, in
+		this situation, if you open the calendar with >
+		:Calendar -first_day=sunday
+<		Sunday is the first day. So you can write the comfortable
+		settings in your vimrc file and give the arguments in order to
+		overwrite the settings.
+
+Problem 12:					*calendar-problem-12*
+	Found a bug of this application.
+	Got many errors while using this application.
+	Vim hangs up while using this application.
+	Need a new mapping.
+	Want this application to be more configurable.
+	This troubleshooting is not helpful.
+
+		Report/Request the issue/feature at
+		https://github.com/itchyny/calendar.vim/issues
+
+==============================================================================
+CHANGELOG					*calendar-changelog*
+
+0.0	2014-01-05, ...
+	- Initial commit and implementation.
+
+	2013-06-22, ...
+	- Research and implementation.
+
+==============================================================================
+vim:tw=78:sw=4:ts=8:ft=help:norl:noet:

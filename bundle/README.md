@@ -32,3 +32,4 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 - [vim-assembly@2b1994a](https://github.com/wsdjeg/vim-assembly/tree/2b1994a5d23c90651754b4c75750100f63074d8b)
 - [vim-autohotkey@6bf1e71](https://github.com/wsdjeg/vim-autohotkey/tree/6bf1e718c73cad22caad3ecd8c4db96db05b37f7)
 - [vim-cmake-syntax@bcc3a97a](https://github.com/pboettch/vim-cmake-syntax/tree/bcc3a97ab934f03e112becd4ce79286793152b47)
+- [itchyny/calendar.vim@896360bfd](https://github.com/itchyny/calendar.vim/tree/896360bfd9d5347b2726dd247df2d2cbdb8cf1d6)
