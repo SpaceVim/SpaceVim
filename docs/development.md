@@ -58,31 +58,27 @@ Besides, you can also [chat with us](../community/#chat)
 
 If you run into a bug, please follow the guidelines below to give feedback.
 
-- Check that no duplicate issue in [issue tracker](https://github.com/SpaceVim/SpaceVim/issues)
-- Check that the issue has not been fixed in latest version of SpaceVim,
-  please update your SpaceVim, and try to reproduce the bug here.
-- Use a clear title with `bug reporting` issue template
+- Update the SpaceVim to the latest version. And make sure the can be reproduced in latest version of spacevim.
+- Use a clear title with `[bug]` prefix, and follow the `bug reporting` issue template.
 
 ```
-<!-- bug reporting without issue template will be closed automatically -->
 ## Expected behavior, english is required
 
 ## The reproduce ways from Vim starting (Required!)
 
 ## Debug info
-<!-- Please press SPC h I, debug info will be put into clipboard, -->
-<!-- then paste all content below. -->
+
+Please press SPC h I, debug info will be put into clipboard,
+then paste all content below.
 
 ## Screenshots
-<!-- If you have any screenshots for this issue, -->
-<!-- please upload here. -->
-<!-- BTW you can use https://asciinema.org/ for recording video in terminal. -->
+
+If you have any screenshots, add to mail Attachment.
 ```
 
-## Requesting new feature
+- send the email to [spacevim@googlegroups.com](mailto:spacevim@googlegroups.com)
 
-If you want a new feature, use the [github issue tracker](https://github.com/SpaceVim/SpaceVim/issues) to file a new issue.
-You need to choose a concise title and refine the content in the issue template:
+## Requesting new feature
 
 ```
 **Is your feature request related to a problem? Please describe.**

@@ -92,9 +92,6 @@ description: "General documentation about how to use SpaceVim, including the qui
   - [Error handling](#error-handling)
   - [EditorConfig](#editorconfig)
   - [Vim Server](#vim-server)
-- [Achievements](#achievements)
-  - [issues](#issues)
-  - [Stars, forks and watchers](#stars-forks-and-watchers)
 
 <!-- vim-markdown-toc -->
 
@@ -154,8 +151,6 @@ Neovim on iTerm2 using the SpaceVim color scheme _base16-solarized-dark_
 Depicts a common frontend development scenario with JavaScript (jQuery), SASS, and PHP buffers.
 
 Non-code buffers show a Neovim terminal, a TagBar window, a Vimfiler window and a TernJS definition window.
-
-To get more screenshots, see: [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
 
 ## Concepts
 
@@ -2453,37 +2448,5 @@ export PATH=$PATH:$HOME/.SpaceVim/bin
 Use `svc` to open a file in the existing Vim server, or use `nsvc` to open a file in the existing Neovim server.
 
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
-
-<!-- SpaceVim Achievements start -->
-
-## Achievements
-
-### issues
-
-| Achievements                                                          | Account                                             |
-| --------------------------------------------------------------------- | --------------------------------------------------- |
-| [100th issue(issue)](https://github.com/SpaceVim/SpaceVim/issues/100) | [BenBergman](https://github.com/BenBergman)         |
-| [1000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/1000)  | [sei40kr](https://github.com/sei40kr)               |
-| [2000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/2000)  | [nikolaussucher](https://github.com/nikolaussucher) |
-| [3000th issue(PR)](https://github.com/SpaceVim/SpaceVim/issues/3000)  | [nahuef](https://github.com/nahuef)                 |
-
-### Stars, forks and watchers
-
-| Achievements       | Account                                             |
-| ------------------ | --------------------------------------------------- |
-| First stargazers   | [monkeydterry](https://github.com/monkeydterry)     |
-| 100th stargazers   | [robertofarrell](https://github.com/robertofarrell) |
-| 1000th stargazers  | [mohebifar](https://github.com/mohebifar)           |
-| 2000th stargazers  | [myakove](https://github.com/myakove)               |
-| 3000th stargazers  | [adrian-spataru](https://github.com/adrian-spataru) |
-| 4000th stargazers  | [seungdols](https://github.com/seungdols)           |
-| 5000th stargazers  | [shiningdracon](https://github.com/shiningdracon)   |
-| 6000th stargazers  | [SummerMagic](https://github.com/SummerMagic)       |
-| 7000th stargazers  | [Murderlon](https://github.com/Murderlon)           |
-| 8000th stargazers  | [dbdr](https://github.com/dbdr)                     |
-| 9000th stargazers  | [Ruyka](https://github.com/Ruyka)                   |
-| 10000th stargazers | [royge](https://github.com/royge)                   |
-
-<!-- SpaceVim Achievements end -->
 
 <!-- vim:set nowrap: -->
