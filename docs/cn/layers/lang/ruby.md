@@ -10,6 +10,7 @@ lang: zh
 
 - [模块描述](#模块描述)
 - [依赖安装及启用模块](#依赖安装及启用模块)
+  - [设置 RubyGems 镜像](#设置-rubygems-镜像)
   - [依赖安装](#依赖安装)
   - [启用模块](#启用模块)
 - [模块选项](#模块选项)
@@ -24,6 +25,17 @@ lang: zh
 这一模块为 SpaceVim 提供了 Ruby 开发支持，包括代码补全、语法检查以及代码格式化等特性。
 
 ## 依赖安装及启用模块
+
+### 设置 RubyGems 镜像
+
+因为在国内访问[RubyGems](http://rubygems.org/) 非常慢，推荐使用 [ruby-china 的镜像](https://gems.ruby-china.com)：
+
+```
+$ gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
+$ gem sources -l
+https://gems.ruby-china.com
+# 确保只有 gems.ruby-china.com
+```
 
 ### 依赖安装
 
