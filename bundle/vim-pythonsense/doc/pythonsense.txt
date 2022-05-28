@@ -1,0 +1,147 @@
+*pythonsense.txt*	For Vim version 7.3	Last change: 2018 May 31
+
+===============================================================================
+                                                                     *pythonsense*
+
+Pythonsense provides text selection and motion objects for Python classes,
+methods, functions, and doc strings.
+
+-------------------------------------------------------------------------------
+                                                     *pythonsense-object-select*
+
+The following text objects are provided (see |pythonsense-custom-key-maps|
+to use your own custom key maps):
+
+ac          "a class" text object. This includes the entire class, including
+            the header (class name declaration) and decorators, the class body,
+            as well as a blank line if this is given after the class
+            definition.
+ic          "inner class" text object. This is the class body only, thus
+            excluding the class name declaration line and any blank lines after
+            the class definition.
+af          "a function" (or method) text object. This includes the entire
+            function, including the header (function name declaration) and
+            decorators, the function body, as well as a blank line if this is
+            given after the function definition.
+if          "inner function" (or method) text object. This is the function
+            body only, thus excluding the function name declaration line and
+            any blank lines after the function definition.
+ad          "a docstring" text object; includes triple quotes as well as
+            docstring body.
+id          "inner docstring" text object; includes docstring body only, and
+            excludes triple quotes.
+
+-------------------------------------------------------------------------------
+                                                     *pythonsense-object-motion*
+
+The following motions are provided (see pythonsense-alternate-motion-keymaps|
+to use an alternate set of mappings that do not override the native Vim ones,
+or |pythonsense-custom-key-maps| to use your own custom key maps):
+
+{count}]]   Move (forward) to the beginning of the next Python class.
+{count}][   Move (forward) to the end of the current Python class.
+{count}[[   Move (backward) to beginning of the current Python class
+            (or beginning of the previous Python class if not currently in a
+            class or already at the beginning of a class).
+{count}[]   Move (backward) to end of the previous Python class.
+
+{count}]m   Move (forward) to the beginning of the next Python method or
+            function.
+{count}]M   Move (forward) to the end of the current Python method or
+            function.
+{count}[m   Move (backward) to the beginning of the current Python method or
+            function (or to the beginning of the previous method or function if
+            not currently in a method/function or already at the beginning of a
+            method/function).
+{count}[M   Move (backward) to the end of the previous Python method or
+            function.
+
+-------------------------------------------------------------------------------
+                                              *pythonsense-object-information*
+
+The following information key maps are also provided:
+
+g:          Echo information about the current semantic Python location.
+
+-------------------------------------------------------------------------------
+                                                           *pythonsense-options*
+
+g:is_pythonsense_suppress_object_keymaps
+    Specify this in your '~/.vimrc' to disable the object selection key mappings: >
+        let g:is_pythonsense_suppress_object_keymaps = 1
+<
+
+g:is_pythonsense_suppress_motion_keymaps
+    Specify this in your '~/.vimrc' to disable the motion key mappings: >
+        let g:is_pythonsense_suppress_motion_keymaps = 1
+<
+
+g:is_pythonsense_suppress_location_keymaps
+    Specify this in your '~/.vimrc' to disable the information key mappings: >
+        let g:is_pythonsense_suppress_location_keymaps = 1
+<
+
+g:is_pythonsense_alternate_motion_keymaps *pythonsense-alternate-motion-keymaps*
+    Specify this in your '~/.vimrc' to activate an alternate set of key mappings for object motions: >
+        let g:is_pythonsense_alternate_motion_keymaps = 1
+<
+    The above option will result in the following motion mappings as opposed to the
+    ones described above:
+
+    {count}]k   Move (forward) to the beginning of the next Python class.
+    {count}]K   Move (forward) to the end of the current Python class.
+    {count}[k   Move (backward) to beginning of the current Python class
+                (or beginning of the previous Python class if not currently in a
+                class or already at the beginning of a class).
+    {count}[K   Move (backward) to end of the previous Python class.
+
+    {count}]f   Move (forward) to the beginning of the next Python method or
+                function.
+    {count}]F   Move (forward) to the end of the current Python method or
+                function.
+    {count}[f   Move (backward) to the beginning of the current Python method
+                or function (or to the beginning of the previous method or
+                function if not currently in a method/function or already at
+                the beginning of a method/function).
+    {count}[F   Move (backward) to the end of the previous Python method or
+                function.
+
+-------------------------------------------------------------------------------
+                                                   *pythonsense-custom-key-maps*
+
+If you are unhappy with the default key-mappings you can define your own which
+will individually override the default ones. However, instead of doing so in
+your "~/.vimrc", you need to do so in a file located in your
+"~/.vim/ftplugin/python/" directory, so that this key mappings are only enabled
+when editing a Python file. Furthermore, you should make sure that you limit
+the key mapping to the buffer scope. For example, to override yet
+replicate the default mappings you would define, the following in
+"~/.vim/ftplugin/python/pythonsense-custom.vim": >
+
+    map <buffer> ac <Plug>(PythonsenseOuterClassTextObject)
+    map <buffer> ic <Plug>(PythonsenseInnerClassTextObject)
+    map <buffer> af <Plug>(PythonsenseOuterFunctionTextObject)
+    map <buffer> if <Plug>(PythonsenseInnerFunctionTextObject)
+    map <buffer> ad <Plug>(PythonsenseOuterDocStringTextObject)
+    map <buffer> id <Plug>(PythonsenseInnerDocStringTextObject)
+
+    map <buffer> ]] <Plug>(PythonsenseStartOfNextPythonClass)
+    map <buffer> ][ <Plug>(PythonsenseEndOfPythonClass)
+    map <buffer> [[ <Plug>(PythonsenseStartOfPythonClass)
+    map <buffer> [] <Plug>(PythonsenseEndOfPreviousPythonClass)
+    map <buffer> ]m <Plug>(PythonsenseStartOfNextPythonFunction)
+    map <buffer> ]M <Plug>(PythonsenseEndOfPythonFunction)
+    map <buffer> [m <Plug>(PythonsenseStartOfPythonFunction)
+    map <buffer> [M <Plug>(PythonsenseEndOfPreviousPythonFunction)
+
+    map <buffer> g: <Plug>(PythonsensePyWhere)
+<
+
+You do not need to specify all the key mappings if you just want to
+customize a few. Simply provide your own key mapping to each of the
+"<Plug>" mappings you want to override, and these will be respected, while
+any "<Plug>" maps that are not so explicitly bound will be assigned to the
+default key maps.
+
+ vim:tw=78:ts=8:ft=help:norl:
+

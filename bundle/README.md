@@ -2,6 +2,15 @@
 
 In `bundle/` directory, there are two kinds of plugins: forked plugins without changes and forked plugins which have been changed.
 
+<!-- vim-markdown-toc GFM -->
+
+- [Changed plugin:](#changed-plugin)
+- [No changed plugins](#no-changed-plugins)
+  - [`lang#ruby` layer](#langruby-layer)
+  - [`lang#python` layer](#langpython-layer)
+
+<!-- vim-markdown-toc -->
+
 ### Changed plugin:
 
 - `vim-bookmarks`: based on [`MattesGroeger/vim-bookmarks@3adeae1`](https://github.com/MattesGroeger/vim-bookmarks/commit/3adeae10639edcba29ea80dafa1c58cf545cb80e)
@@ -33,4 +42,13 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 - [vim-autohotkey@6bf1e71](https://github.com/wsdjeg/vim-autohotkey/tree/6bf1e718c73cad22caad3ecd8c4db96db05b37f7)
 - [vim-cmake-syntax@bcc3a97a](https://github.com/pboettch/vim-cmake-syntax/tree/bcc3a97ab934f03e112becd4ce79286793152b47)
 - [itchyny/calendar.vim@896360bfd](https://github.com/itchyny/calendar.vim/tree/896360bfd9d5347b2726dd247df2d2cbdb8cf1d6)
+
+#### `lang#ruby` layer
+
 - [vim-ruby@55335f261](https://github.com/vim-ruby/vim-ruby/tree/55335f2614f914b117f02995340886f409eddc02)
+
+#### `lang#python` layer
+
+- [jeetsukumaran/vim-pythonsense@9200a57](https://github.com/jeetsukumaran/vim-pythonsense/tree/9200a57629c904ed2ab8c9b2e8c5649d311794ba)
+- [alfredodeza/coveragepy.vim@afcef30](https://github.com/alfredodeza/coveragepy.vim/tree/afcef301b723048c25250d2d539b9473a8e4f747)
+- [Vimjas/vim-python-pep8-indent@60ba5e](https://github.com/Vimjas/vim-python-pep8-indent/tree/60ba5e11a61618c0344e2db190210145083c91f8)

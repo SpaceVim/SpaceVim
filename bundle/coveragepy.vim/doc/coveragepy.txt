@@ -1,0 +1,121 @@
+*coveragepy.txt*   Runs coverage.py within vim and displays and interactive
+buffer that allows to mark missing statements.
+
+==============================================================================
+CONTENTS                                                 *Coveragepy-contents*
+
+    1. Intro ............................ |CoveragepyIntro|
+    2. Usage ............................ |CoveragepyUsage|
+    3. report .......................... |CoveragepyReport|
+    4. Session .................................. |Session|
+    5. Show .................................. |ShowNoshow|
+    6. License ........................ |CoveragepyLicense|
+    7. Bugs .............................. |CoveragepyBugs|
+    8. Credits ........................ |CoveragepyCredits|
+
+==============================================================================
+1. Intro                                                     *CoveragepyIntro*
+
+A Vim plugin to help integrate Ned Batchelder's excellent ``coverage.py`` (see:
+http://nedbatchelder.com/code/coverage/) tool into the editor.
+
+Allows you to bring up a buffer with detailed information from a coverage
+report command and mark each line in your source that is not being covered.
+
+You can also use that buffer to navigate into files that have reported missing
+statements and display the missed lines.
+
+Optionally, you can also hide or display the marks as you make progress.
+
+==============================================================================
+2. Usage                                                     *CoveragepyUsage*
+
+This plugin provides a single command::
+
+    Coveragepy
+
+All arguments are able to be tab-completed.
+
+For running tests the plugin provides 3 arguments with an optional one.
+These arguments are::
+
+    report
+    session
+    show
+    version
+
+==============================================================================
+3. Report                                                   *CoveragepyReport*
+
+The main action is performed with this command (same as with ``coverage.py``)
+and when it runs it calls ``coverage.py`` and loads the information into
+a split buffer.
+
+It also collects all the information needed to be able to mark all lines from
+files that have reported missing coverage statements. To run this command do::
+
+    :Coveragepy report
+
+==============================================================================
+4. Session                                                           *Session*
+
+This argument toggles the reporting buffer (closes it is open or opens if it is
+not already there). Makes sense to map it directly as a shortcut as it is
+completely toggable.
+
+A big plus on this session buffer is that you can navigate through the list of
+reported paths (it actually circles through!) with the arrow keys or j and k.
+
+If you want to navigate to a reported path that has missing lines just hit
+Enter (or Return) and the plugin will go to the previous window and open that
+selected file and then display the missing lines.
+
+==============================================================================
+5. Show                                                                 *Show*
+
+Shows or hides the actual Vim `sign` marks that display which lines are missing
+coverage.
+The ``show`` command is implemented as a toggable argument, so whenever you
+call it and the signs are showing it will hide them, if they are not it will
+show them.
+
+It is useful to be able to hide these if you are already aware about the lines
+that need to be covered and do not want to be visually disturbed by the signs.
+
+==============================================================================
+5. License                                                 *CoveragepyLicense*
+
+MIT
+Copyright (c) 2011 Alfredo Deza <alfredodeza [at] gmail [dot] com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+==============================================================================
+6. Bugs                                                       *CoveragepyBugs*
+
+If you find a bug please post it on the issue tracker:
+https://github.com/alfredodeza/coveragepy.vim/issues
+
+==============================================================================
+7. Credits                                                 *CoveragepyCredits*
+
+Thanks to Ned Batchelder for the awesome ``coverage.py`` tool, continuously
+making a huge difference in my day to day testing.
+
+==============================================================================

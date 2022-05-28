@@ -110,11 +110,11 @@ function! SpaceVim#layers#lang#python#plugins() abort
   endif
   call add(plugins, ['heavenshell/vim-pydocstring',
         \ { 'on_cmd' : 'Pydocstring'}])
-  call add(plugins, ['Vimjas/vim-python-pep8-indent', 
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-python-pep8-indent', 
         \ { 'on_ft' : 'python'}])
-  call add(plugins, ['jeetsukumaran/vim-pythonsense', 
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-pythonsense', 
         \ { 'on_ft' : 'python'}])
-  call add(plugins, ['alfredodeza/coveragepy.vim', 
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/coveragepy.vim', 
         \ { 'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-virtualenv', 
         \ { 'merged' : 0}])

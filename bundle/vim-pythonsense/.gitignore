@@ -1,0 +1,32 @@
+# svn crud
+.svn*
+
+# OS X / Darwin
+.DS_Store*
+
+# IDE/Editor Project Files
+tags
+
+# Python
+*.py[cod]
+*.so
+*.egg
+pip-log.txt
+nosetests.xml
+setup.cfg
+*.mo
+.installed.cfg
+.coverage
+.tox
+*.egg-info/*
+dist/*
+build/*
+eggs
+parts
+var
+sdist/*
+develop-eggs
+lib
+lib64
+__pycache__
+setuptools-*.egg
