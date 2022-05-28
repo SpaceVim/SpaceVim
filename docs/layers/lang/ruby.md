@@ -19,7 +19,12 @@ description: "This layer is for Ruby development, provides autocompletion, synta
 
 ## Description
 
-This layer is for Ruby development.
+This layer is for Ruby development. Including following features:
+
+- code completion for ruby, requires `+ruby`
+- syntax highlight
+- syntax linter
+- language server protocol
 
 ## Install
 
@@ -40,7 +45,7 @@ gem install ruby-lint
 
 The default code formatter is [rubocop](https://github.com/bbatsov/rubocop).
 
-```sh
+```
 gem install rubocop
 ```
 
@@ -63,6 +68,7 @@ gem install rubocop
   ```
 
 - `repl_command`: Set the REPL command for ruby.
+
   ```toml
   [[layers]]
     name = 'lang#ruby'
@@ -71,6 +77,7 @@ gem install rubocop
 
 - `format_on_save`: Enable/disable code formatting when saving ruby file. Default is `false`.
   To enable this feature:
+
   ```toml
   [[layers]]
       name = 'lang#ruby'

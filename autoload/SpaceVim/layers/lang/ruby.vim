@@ -101,7 +101,7 @@ endif
 
 function! SpaceVim#layers#lang#ruby#plugins() abort
   return [
-        \ ['vim-ruby/vim-ruby', { 'on_ft' : 'ruby' }]
+        \ [g:_spacevim_root_dir . 'bundle/vim-ruby', {'merged' : 0}]
         \ ]
 endfunction
 
