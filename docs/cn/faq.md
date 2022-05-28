@@ -31,6 +31,12 @@ lang: zh
 git clone https://github.com/SpaceVim/SpaceVim.git ~/.SpaceVim
 ```
 
+如果 Github 访问速度太慢，可以使用 gitee 进行克隆：
+
+```
+git clone https://gitee.com/spacevim/SpaceVim.git ~/.SpaceVim
+```
+
 备份原来的 Vim/Neovim 配置文件：
 
 ```
