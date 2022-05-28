@@ -485,6 +485,9 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   elseif &filetype ==# 'git-log'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Git log %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
+  elseif &filetype ==# 'calendar'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# Calendar %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
   elseif &filetype ==# 'vader-result'
     return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# Vader result %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
