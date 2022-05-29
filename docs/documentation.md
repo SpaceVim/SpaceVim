@@ -561,6 +561,8 @@ Also note that changing this value has no effect if you are running Vim/Neovim i
 | ------------ | ------------------------- |
 | `SPC z .`    | open font transient state |
 
+![font transient state](https://user-images.githubusercontent.com/13142418/170854166-bbcd5448-47d3-4fb5-ab7a-97540140d975.png)
+
 In font transient state:
 
 | Key Bindings  | Descriptions              |
@@ -568,6 +570,7 @@ In font transient state:
 | `+`           | increase the font size    |
 | `-`           | decrease the font size    |
 | Any other key | leave the transient state |
+
 
 ### Mouse
 
