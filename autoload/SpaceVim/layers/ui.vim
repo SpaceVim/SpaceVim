@@ -508,71 +508,62 @@ endfunction
 function! s:win_resize_transient_state() abort
   let state = SpaceVim#api#import('transient_state')
   call state.set_title('Windows Resize Transient State')
-  call state.defind_keys(
-        \ {
-          \ 'layout' : 'vertical split',
-          \ 'left' : [
-            \ {
-              \ 'key' : 'H',
-              \ 'desc' : 'left',
-              \ 'func' : '',
-              \ 'cmd' : 'wincmd h',
-              \ 'exit' : 0,
-              \ },
-              \ {
-                \ 'key' : 'J',
-                \ 'desc' : 'below',
-                \ 'func' : '',
-                \ 'cmd' : 'wincmd j',
-                \ 'exit' : 0,
-                \ },
-                \ {
-                  \ 'key' : 'K',
-                  \ 'desc' : 'up',
-                  \ 'func' : '',
-                  \ 'cmd' : 'wincmd k',
-                  \ 'exit' : 0,
-                  \ },
-                  \ {
-                    \ 'key' : 'L',
-                    \ 'desc' : 'right',
-                    \ 'func' : '',
-                    \ 'cmd' : 'wincmd l',
-                    \ 'exit' : 0,
-                    \ },
-                    \ ],
-                    \ 'right' : [
-                      \ {
-                        \ 'key' : 'h',
-                        \ 'desc' : 'decrease width',
-                        \ 'func' : '',
-                        \ 'cmd' : 'vertical resize -1',
-                        \ 'exit' : 0,
-                        \ },
-                        \ {
-                          \ 'key' : 'l',
-                          \ 'desc' : 'increase width',
-                          \ 'func' : '',
-                          \ 'cmd' : 'vertical resize +1',
-                          \ 'exit' : 0,
-                          \ },
-                          \ {
-                            \ 'key' : 'j',
-                            \ 'desc' : 'decrease height',
-                            \ 'func' : '',
-                            \ 'cmd' : 'resize -1',
-                            \ 'exit' : 0,
-                            \ },
-                            \ {
-                              \ 'key' : 'k',
-                              \ 'desc' : 'increase height',
-                              \ 'func' : '',
-                              \ 'cmd' : 'resize +1',
-                              \ 'exit' : 0,
-                              \ },
-                              \ ],
-                              \ }
-                              \ )
+  call state.defind_keys({
+        \ 'layout' : 'vertical split',
+        \ 'left' : [{
+        \   'key' : 'H',
+        \   'desc' : 'left',
+        \   'func' : '',
+        \   'cmd' : 'wincmd h',
+        \   'exit' : 0,
+        \ },{
+        \   'key' : 'J',
+        \   'desc' : 'below',
+        \   'func' : '',
+        \   'cmd' : 'wincmd j',
+        \   'exit' : 0,
+        \ },{
+        \   'key' : 'K',
+        \   'desc' : 'up',
+        \   'func' : '',
+        \   'cmd' : 'wincmd k',
+        \   'exit' : 0,
+        \ },{
+        \   'key' : 'L',
+        \   'desc' : 'right',
+        \   'func' : '',
+        \   'cmd' : 'wincmd l',
+        \   'exit' : 0,
+        \ },
+        \ ],
+        \ 'right' : [{
+        \   'key' : 'h',
+        \   'desc' : 'decrease width',
+        \   'func' : '',
+        \   'cmd' : 'vertical resize -1',
+        \   'exit' : 0,
+        \ },{
+        \   'key' : 'l',
+        \   'desc' : 'increase width',
+        \   'func' : '',
+        \   'cmd' : 'vertical resize +1',
+        \   'exit' : 0,
+        \ },{
+        \   'key' : 'j',
+        \   'desc' : 'decrease height',
+        \   'func' : '',
+        \   'cmd' : 'resize -1',
+        \   'exit' : 0,
+        \ },{
+        \   'key' : 'k',
+        \   'desc' : 'increase height',
+        \   'func' : '',
+        \   'cmd' : 'resize +1',
+        \   'exit' : 0,
+        \ },
+        \ ],
+        \ }
+        \ )
   call state.open()
 endfunction
 
@@ -648,32 +639,28 @@ function! s:fonts_transient_state() abort
   endif
   let state = SpaceVim#api#import('transient_state') 
   call state.set_title('Fonts Transient State')
-  call state.defind_keys(
-        \ {
-        \    'layout' : 'vertical split',
-        \    'left' : [
-        \ {
-        \ 'key' : '+',
-        \ 'desc' : 'increase the font',
-        \ 'func' : '',
-        \ 'exit' : 0,
-        \ 'cmd' : 'call call(' . string(s:_function('s:increase_font')) . ', [])',
-        \ },
-        \ {
-        \ 'key' : '0',
-        \ 'desc' : 'reset the font size',
-        \ 'func' : '',
-        \ 'exit' : 0,
-        \ 'cmd' : 'call call(' . string(s:_function('s:reset_font_size')) . ', [])',
+  call state.defind_keys({
+        \ 'layout' : 'vertical split',
+        \ 'left' : [{
+        \   'key' : '+',
+        \   'desc' : 'increase the font',
+        \   'func' : '',
+        \   'exit' : 0,
+        \   'cmd' : 'call call(' . string(s:_function('s:increase_font')) . ', [])',
+        \ },{
+        \   'key' : '0',
+        \   'desc' : 'reset the font size',
+        \   'func' : '',
+        \   'exit' : 0,
+        \   'cmd' : 'call call(' . string(s:_function('s:reset_font_size')) . ', [])',
         \ },
         \ ],
-        \ 'right' : [
-        \ {
-        \ 'key' : '-',
-        \ 'desc' : 'reduce the font',
-        \ 'func' : '',
-        \ 'exit' : 0,
-        \ 'cmd' : 'call call(' . string(s:_function('s:reduce_font')) . ', [])',
+        \ 'right' : [{
+        \   'key' : '-',
+        \   'desc' : 'reduce the font',
+        \   'func' : '',
+        \   'exit' : 0,
+        \   'cmd' : 'call call(' . string(s:_function('s:reduce_font')) . ', [])',
         \ },
         \ ],
         \ }
