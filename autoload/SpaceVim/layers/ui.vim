@@ -675,10 +675,12 @@ function! s:increase_font() abort
   let font_size = str2nr(matchstr(matchstr(&guifont, ':h\d\+'), '\d\+'))
   let font_size += 1
   let &guifont = substitute(&guifont, ':h\d\+', ':h' . font_size, '')
+  sleep 100m
 endfunction
 
 function! s:reduce_font() abort
   let font_size = str2nr(matchstr(matchstr(&guifont, ':h\d\+'), '\d\+'))
   let font_size -= 1
   let &guifont = substitute(&guifont, ':h\d\+', ':h' . font_size, '')
+  sleep 100m
 endfunction
