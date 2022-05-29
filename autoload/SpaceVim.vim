@@ -1549,12 +1549,15 @@ function! SpaceVim#end() abort
   if g:spacevim_hiddenfileinfo == 1 && has('patch-7.4.1570')
     set shortmess+=F
   endif
-  if has('gui_running') && !empty(g:spacevim_guifont)
-    if has('gui_vimr')
-      " VimR has removed support for guifont
-    else
+  if !empty(g:spacevim_guifont)
+    try
       let &guifont = g:spacevim_guifont
-    endif
+    catch
+      call SpaceVim#logger#error('failed to set guifont to: '
+            \ . g:spacevim_guifont)
+      call SpaceVim#logger#error('       exception: ' . v:exception)
+      call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
+    endtry
   endif
 
   if !has('nvim-0.2.0') && !has('nvim')
