@@ -45,7 +45,7 @@ let s:enable_tmux_clipboard = 0
 
 function! SpaceVim#layers#tmux#plugins() abort
   let plugins = [
-        \ ['christoomey/vim-tmux-navigator', { 'on_cmd': [
+        \ [g:_spacevim_root_dir . 'bundle/vim-tmux-navigator', { 'on_cmd': [
           \ 'TmuxNavigateLeft', 'TmuxNavigateDown', 'TmuxNavigateUp',
           \ 'TmuxNavigateRight'] }],
           \ ]

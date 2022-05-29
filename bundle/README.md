@@ -8,6 +8,7 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 - [No changed plugins](#no-changed-plugins)
   - [`lang#ruby` layer](#langruby-layer)
   - [`lang#python` layer](#langpython-layer)
+  - [`tmux` layer](#tmux-layer)
 
 <!-- vim-markdown-toc -->
 
@@ -52,3 +53,7 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 - [jeetsukumaran/vim-pythonsense@9200a57](https://github.com/jeetsukumaran/vim-pythonsense/tree/9200a57629c904ed2ab8c9b2e8c5649d311794ba)
 - [alfredodeza/coveragepy.vim@afcef30](https://github.com/alfredodeza/coveragepy.vim/tree/afcef301b723048c25250d2d539b9473a8e4f747)
 - [Vimjas/vim-python-pep8-indent@60ba5e](https://github.com/Vimjas/vim-python-pep8-indent/tree/60ba5e11a61618c0344e2db190210145083c91f8)
+
+#### `tmux` layer
+
+- [christoomey/vim-tmux-navigator@9ca5bfe5b](https://github.com/christoomey/vim-tmux-navigator/tree/9ca5bfe5bd274051b5dd796cc150348afc993b80)

@@ -1,0 +1,39 @@
+*tmux-navigator.txt* Plugin to allow seamless navigation between tmux and vim
+
+==============================================================================
+CONTENTS                               *tmux-navigator-contents*
+
+
+==============================================================================
+INTRODUCTION                           *tmux-navigator*
+
+Vim-tmux-navigator is a little plugin which enables seamless navigation
+between tmux panes and vim splits. This plugin is a repackaging of Mislav
+Marohinc's tmux=navigator configuration. When combined with a set of tmux key
+bindings, the plugin will allow you to navigate seamlessly between vim and
+tmux splits using a consistent set of hotkeys.
+
+NOTE: This requires tmux v1.8 or higher.
+
+==============================================================================
+CONFIGURATION                             *tmux-navigator-configuration*
+
+* Activate autoupdate on exit
+ let g:tmux_navigator_save_on_switch = 1
+
+* Disable vim->tmux navigation when the Vim pane is zoomed in tmux
+ let g:tmux_navigator_disable_when_zoomed = 1
+
+* If the Vim pane is zoomed, stay zoomed when moving to another tmux pane
+ let g:tmux_navigator_preserve_zoom = 1
+
+* Custom Key Bindings
+ let g:tmux_navigator_no_mappings = 1
+
+ nnoremap <silent> {Left-mapping} :TmuxNavigateLeft<cr>
+ nnoremap <silent> {Down-Mapping} :TmuxNavigateDown<cr>
+ nnoremap <silent> {Up-Mapping} :TmuxNavigateUp<cr>
+ nnoremap <silent> {Right-Mapping} :TmuxNavigateRight<cr>
+ nnoremap <silent> {Previous-Mapping} :TmuxNavigatePrevious<cr>
+
+ vim:tw=78:ts=8:ft=help:norl:
