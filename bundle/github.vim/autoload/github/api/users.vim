@@ -8,9 +8,14 @@ function! github#api#users#GetAllUsers() abort
 endfunction
 
 
-function! github#api#users#starred(user,page) abort
-  return json_decode(join(systemlist('curl -s https://api.github.com/users/' .
-        \a:user . '/starred' . '?page=' . a:page ),"\n"))
+function! github#api#users#starred(user, page) abort
+  let result = system('curl -s https://api.github.com/users/' .
+        \ a:user . '/starred' . '?page=' . a:page)
+  if !v:shell_error
+    return json_decode(result)
+  endif
+  " if the command run failed, return empty list
+  return []
 endfunction
 
 function! github#api#users#starred_pages(user) abort
