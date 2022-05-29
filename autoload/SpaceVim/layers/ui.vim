@@ -283,6 +283,10 @@ function! SpaceVim#layers#ui#config() abort
         \ 'toggle-highlight-tail-spaces', 1)
 
   nnoremap <silent> <F11> :call <SID>toggle_full_screen()<Cr>
+  let g:_spacevim_mappings_space.z = get(g:_spacevim_mappings_space, 'z',  {'name' : '+Fonts'})
+  call SpaceVim#mapping#space#def('nnoremap', ['z', '.'], 'call call('
+        \ . string(s:_function('s:fonts_transient_state')) . ', [])',
+        \ 'font-transient-state', 1)
 endfunction
 
 let s:fullscreen_flag = 0
@@ -636,4 +640,45 @@ function! SpaceVim#layers#ui#get_options() abort
         \ 'indentline_char',
         \ 'cursorword_exclude_filetypes']
 
+endfunction
+
+function! s:fonts_transient_state() abort
+  let state = SpaceVim#api#import('transient_state') 
+  call state.set_title('Fonts Transient State')
+  call state.defind_keys(
+        \ {
+        \    'layout' : 'vertical split',
+        \    'left' : [
+        \ {
+        \ 'key' : '+',
+        \ 'desc' : 'increase the font',
+        \ 'func' : '',
+        \ 'exit' : 0,
+        \ 'cmd' : 'call call(' . string(s:_function('s:increase_font')) . ', [])',
+        \ },
+        \ ],
+        \ 'right' : [
+        \ {
+        \ 'key' : '-',
+        \ 'desc' : 'reduce the font',
+        \ 'func' : '',
+        \ 'exit' : 0,
+        \ 'cmd' : 'call call(' . string(s:_function('s:reduce_font')) . ', [])',
+        \ },
+        \ ],
+        \ }
+        \ )
+  call state.open()
+endfunction
+
+function! s:increase_font() abort
+  let font_size = str2nr(matchstr(matchstr(&guifont, ':h\d\+'), '\d\+'))
+  let font_size += 1
+  let &guifont = substitute(&guifont, ':h\d\+', ':h' . font_size, '')
+endfunction
+
+function! s:reduce_font() abort
+  let font_size = str2nr(matchstr(matchstr(&guifont, ':h\d\+'), '\d\+'))
+  let font_size -= 1
+  let &guifont = substitute(&guifont, ':h\d\+', ':h' . font_size, '')
 endfunction

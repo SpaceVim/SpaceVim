@@ -555,6 +555,20 @@ guifont = "SourceCodePro Nerd Font Mono:h11"
 If the specified font is not found, the fallback one will be used (depends on your system).
 Also note that changing this value has no effect if you are running Vim/Neovim in terminal.
 
+**Increase/Decrease fonts**
+
+| Key Bindings | Descriptions              |
+| ------------ | ------------------------- |
+| `SPC z .`    | open font transient state |
+
+In font transient state:
+
+| Key Bindings  | Descriptions              |
+| ------------- | ------------------------- |
+| `+`           | increase the font size    |
+| `-`           | decrease the font size    |
+| Any other key | leave the transient state |
+
 ### Mouse
 
 Mouse support is enabled in Normal mode and Visual mode by default.
