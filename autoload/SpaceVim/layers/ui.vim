@@ -643,6 +643,9 @@ function! SpaceVim#layers#ui#get_options() abort
 endfunction
 
 function! s:fonts_transient_state() abort
+  if !exists('s:guifont')
+    let s:guifont = &guifont
+  endif
   let state = SpaceVim#api#import('transient_state') 
   call state.set_title('Fonts Transient State')
   call state.defind_keys(
@@ -655,6 +658,13 @@ function! s:fonts_transient_state() abort
         \ 'func' : '',
         \ 'exit' : 0,
         \ 'cmd' : 'call call(' . string(s:_function('s:increase_font')) . ', [])',
+        \ },
+        \ {
+        \ 'key' : '0',
+        \ 'desc' : 'reset the font size',
+        \ 'func' : '',
+        \ 'exit' : 0,
+        \ 'cmd' : 'call call(' . string(s:_function('s:reset_font_size')) . ', [])',
         \ },
         \ ],
         \ 'right' : [
@@ -669,6 +679,11 @@ function! s:fonts_transient_state() abort
         \ }
         \ )
   call state.open()
+endfunction
+
+function! s:reset_font_size() abort
+  let &guifont = s:guifont
+  sleep 100m
 endfunction
 
 function! s:increase_font() abort
