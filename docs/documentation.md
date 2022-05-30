@@ -33,6 +33,7 @@ description: "General documentation about how to use SpaceVim, including the qui
   - [File tree](#file-tree)
     - [File tree navigation](#file-tree-navigation)
     - [Open file with file tree.](#open-file-with-file-tree)
+    - [Override filetree key bindings](#override-filetree-key-bindings)
 - [General usage](#general-usage)
   - [Native functions](#native-functions)
   - [Command line mode key bindings](#command-line-mode-key-bindings)
@@ -953,6 +954,25 @@ If only one file buffer is opened, a file is opened in the active window, otherw
 | `l` / `<Enter>` | open file in one window                  |
 | `s g`           | open file in a vertically split window   |
 | `s v`           | open file in a horizontally split window |
+
+
+#### Override filetree key bindings
+
+If you want to override the default key bindings in filetree windows. You can use User autocmd in bootstrap function. for examples:
+
+```vim
+function! myspacevim#before() abort
+    autocmd User NerdTreeInit
+        \ nnoremap <silent><buffer> <CR> :<C-u>call
+        \ g:NERDTreeKeyMap.Invoke('o')<CR>
+endfunction
+```
+
+Here is all the autocmd for filetree:
+
+- nerdtree: `User NerdTreeInit`
+- defx: `User DefxInit`
+- vimfiler: `User VimfilerInit`
 
 ## General usage
 

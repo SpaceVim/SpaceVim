@@ -173,6 +173,7 @@ function! s:defx_init()
         \ defx#get_context().winwidth + 10)
   nnoremap <silent><buffer><expr> < defx#do_action('resize',
         \ defx#get_context().winwidth - 10)
+  doautocmd User DefxInit
 endf
 
 " in this function we should vim-choosewin if possible

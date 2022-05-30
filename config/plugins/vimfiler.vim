@@ -108,6 +108,7 @@ function! s:vimfilerinit()
   nmap <buffer> <Left>  <Plug>(vimfiler_smart_h)
   nmap <buffer> <Right> <Plug>(vimfiler_smart_l)
   nmap <buffer> <2-LeftMouse> <Plug>(vimfiler_expand_or_edit)
+  doautocmd User VimfilerInit
 endf
 
 function! s:vimfiler_vsplit() abort

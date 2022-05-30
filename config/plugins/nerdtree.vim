@@ -38,6 +38,7 @@ function! s:nerdtreeinit() abort
   " nnoremap <silent><buffer> <CR> :<C-u>silent! exe 'NERDTree' g:NERDTreeFileNode.GetSelected().path.str()<CR>
   nnoremap <silent><buffer> <Home> :call cursor(2, 1)<cr>
   nnoremap <silent><buffer> <End>  :call cursor(line('$'), 1)<cr>
+  doautocmd User NerdTreeInit
 endfunction
 
 function! s:paste_to_file_manager() abort
