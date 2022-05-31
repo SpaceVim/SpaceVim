@@ -1,3 +1,6 @@
+let s:HTTP = SpaceVim#api#import('web#http')
+
+
 ""
 " @public
 " Get all users
@@ -9,19 +12,19 @@ endfunction
 
 
 function! github#api#users#starred(user, page) abort
-  let result = system('curl -s https://api.github.com/users/' .
+  let result = s:HTTP.get('https://api.github.com/users/' .
         \ a:user . '/starred' . '?page=' . a:page)
-  if !v:shell_error
-    return json_decode(result)
+  if result.status ==# 200
+    return json_decode(result.content)
   endif
   " if the command run failed, return empty list
   return []
 endfunction
 
 function! github#api#users#starred_pages(user) abort
-  let result = system('curl -si https://api.github.com/users/' . a:user . '/starred')
-  if !v:shell_error
-    let i = filter(split(result, "\n"), 'v:val =~# "^Link"')[0]
+  let result = s:HTTP.get('https://api.github.com/users/' . a:user . '/starred')
+  if result.status ==# 200
+    let i = filter(result.header, 'v:val =~# "^Link"')[0]
     return split(matchstr(i,'=\d\+',0,2),'=')[0]
   endif
   return 0
