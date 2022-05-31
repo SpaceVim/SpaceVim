@@ -97,7 +97,7 @@ function! SpaceVim#layers#github#config() abort
         \ 'OpenGithubIssue', 'show issues in browser', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'h', 'p'],
         \ 'OpenGithubPullReq', 'show PRs in browser', 1)
-  "" }}}
+  command! UpdateStartedRepos call s:update_stared_repo_list()
 endfunction
 
 function! SpaceVim#layers#github#health() abort
