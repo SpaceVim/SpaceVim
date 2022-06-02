@@ -50,6 +50,7 @@ function! SpaceVim#layers#telescope#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope-menu', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope-ctags-outline.nvim', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/neoyank.vim',        { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope-fzf-native.nvim',        { 'merged' : 0}])
   return plugins
 endfunction
 

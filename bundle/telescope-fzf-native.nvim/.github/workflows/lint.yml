@@ -1,0 +1,42 @@
+name: Linting and style checking
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Prepare
+        run: |
+          sudo apt-get update
+          sudo apt-get install luarocks
+          sudo luarocks install luacheck
+
+      - name: Lint
+        run: make lint
+
+  clangformat:
+    name: clangformat
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Prepare clang-format
+        run: |
+          sudo apt-get update
+          sudo apt-get install clang-format
+      - name: Format
+        run: make format
+
+  stylua:
+    name: stylua
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: JohnnyMorganz/stylua-action@1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # CLI arguments
+          args: --color always --check lua/
