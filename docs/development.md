@@ -80,7 +80,7 @@ If you have any screenshots, add to mail Attachment.
 
 ## Requesting new feature
 
-If you want to a new feature or have an idea to improve spacevim, please follow the guidelines to give feedback.
+If you want a new feature or have an idea to improve spacevim, please follow the guidelines to give feedback.
 
 - Use a clear title with `[feature]` prefix, add follow the `feature request` mail template:
 
