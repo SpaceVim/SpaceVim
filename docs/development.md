@@ -59,7 +59,7 @@ Besides, you can also [chat with us](../community/#chat)
 If you run into a bug, please follow the guidelines below to give feedback.
 
 - Update the SpaceVim to the latest version. And make sure the can be reproduced in latest version of spacevim.
-- Use a clear title with `[bug]` prefix, and follow the `bug reporting` issue template.
+- Use a clear title with `[bug]` prefix, and follow the `bug reporting` mail template.
 
 ```
 ## Expected behavior, english is required
@@ -80,19 +80,33 @@ If you have any screenshots, add to mail Attachment.
 
 ## Requesting new feature
 
+If you want to a new feature or have an idea to improve spacevim, please follow the guidelines to give feedback.
+
+- Use a clear title with `[feature]` prefix, add follow the `feature request` mail template:
+
 ```
-**Is your feature request related to a problem? Please describe.**
-<!-- A clear and concise description of what the problem is. Ex. I'm always frustrated when [...] -->
+## Is your feature request related to a problem? Please describe.**
 
-**Describe the solution you'd like**
-<!-- A clear and concise description of what you want to happen. -->
+A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
-**Describe alternatives you've considered**
-<!-- A clear and concise description of any alternative solutions or features you've considered. -->
+## Describe the solution you'd like.
 
-**Additional context**
-<!-- Add any other context or screenshots about the feature request here. -->
+A clear and concise description of what you want to happen.
+
+## Describe alternatives you've considered.
+
+A clear and concise description of any alternative solutions or features you've considered.
+
+## Additional context
+
+Add any other context about the feature request here.
+
+## Screenshots
+
+If you have any screenshots, add to mail Attachment.
 ```
+
+- send the email to [spacevim@googlegroups.com](mailto:spacevim@googlegroups.com)
 
 ## Contributing code
 
