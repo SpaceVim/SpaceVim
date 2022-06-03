@@ -142,6 +142,7 @@ function! s:apply(config, type) abort
       endif
       exe 'let g:spacevim_' . name . ' = value'
       if name ==# 'project_rooter_patterns'
+            \ || name ==# 'project_rooter_outermost'
         " clear rooter cache
         call SpaceVim#plugins#projectmanager#current_root()
       endif
