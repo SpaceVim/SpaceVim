@@ -114,13 +114,9 @@ lint for C/C++ is `gcc`/`g++`. These commands also read configuration in `.clang
 
 ### code format
 
-The format layer use neoformat as default tool to format code, it will format current file.
-And the default key binding is `SPC b f`.
-
-```toml
-[[layers]]
-  name = "format"
-```
+In order to be able to format C/C++ files, you need to install `uncrustify`, `clangformat` or `astyle`.
+The key binding `SPC b f` is defineded in [format](../layers/format/) layer which is loaded by default.
+In this layer, the default format engine is `neoformat`.
 
 ### REPL support
 
