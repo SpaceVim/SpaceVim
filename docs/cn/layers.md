@@ -104,6 +104,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#c](lang/c/)                                     | 这一模块为 SpaceVim 提供了 C/C++/Object-C 的开发支持，包括代码补全、语法检查等特性。                                                |
 | [lang#chapel](lang/chapel/)                           | 这一模块为 chapel 开发提供支持，包括交互式编程、一键运行等特性。                                                                    |
 | [lang#clojure](lang/clojure/)                         | 这一模块为 SpaceVim 提供了 Clojure 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                           |
+| [lang#cmake](lang/cmake/)                             | 这一模块为 cmake 脚本语言提供了语法高亮等功能。                                                                                     |
 | [lang#coffeescript](lang/coffeescript/)               | 这一模块为 CoffeeScript 开发提供支持，包括交互式编程、一键运行等特性。                                                              |
 | [lang#crystal](lang/crystal/)                         | 这一模块为 crystal 开发提供支持，包括交互式编程、一键运行等特性。                                                                   |
 | [lang#csharp](lang/csharp/)                           | 这一模块为 SpaceVim 提供了 CSharp 的开发支持，包括代码高亮、对齐、补全等特性。                                                      |
@@ -176,6 +177,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#typescript](lang/typescript/)                   | 这一模块为 SpaceVim 提供了 TypeScript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                        |
 | [lang#v](lang/v/)                                     | 这一模块为 v 开发提供支持，包括交互式编程、一键运行等特性。                                                                         |
 | [lang#vbnet](lang/vbnet/)                             | 这一模块为 Visual Basic .NET 开发提供支持，包括交互式编程、一键运行等特性。                                                         |
+| [lang#verilog](lang/verilog/)                         | 这一模块为 verilog 开发提供支持，包括交互式编程、一键运行等特性。                                                                   |
 | [lang#vim](lang/vim/)                                 | 这一模块为 SpaceVim 提供了 Vimscript 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                         |
 | [lang#vue](lang/vue/)                                 | 这一模块为 SpaceVim 提供了 Vue 的的开发支持，包括代码补全、语法检查、代码格式化等特性。                                             |
 | [lang#WebAssembly](lang/WebAssembly/)                 | 这一模块为 SpaceVim 提供了 WebAssembly 的开发支持。                                                                                 |
@@ -185,12 +187,14 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [language-server-protocol](language-server-protocol/) | 这一模块为 SpaceVim 提供了 language server protocol 的支持，提供更多语言相关服务。                                                  |
 | [leaderf](leaderf/)                                   | 这一模块为 SpaceVim 提供了以 leaderf 为核心的异步模糊查找机制，支持模糊搜索文件、历史记录、函数列表等。                             |
 | [shell](shell/)                                       | 这一模块为 SpaceVim 提供了终端集成特性，优化内置终端的使用体验。                                                                    |
+| [ssh](ssh/)                                           | ssh 模块为 SpaceVim 提供了一个简易的 ssh 客户端                                                                                     |
 | [sudo](sudo/)                                         | 这一模块为 SpaceVim 提供了以管理员身份读写文件的功能。                                                                              |
 | [test](test/)                                         | 这一模块为 SpaceVim 提供了一个测试框架，支持快速运行多种语言的单元测试。                                                            |
 | [tmux](tmux/)                                         | 这一模块为 SpaceVim 提供了一些在 Vim 内操作 tmux 的功能，使得在 tmux 窗口之间跳转更加便捷。                                         |
 | [tools#dash](tools/dash/)                             | 这一模块为 SpaceVim 提供了 Dash 支持，可快速查找光标位置的单词。                                                                    |
 | [tools#mpv](tools/mpv/)                               | 这一模块为 SpaceVim 提供了 mpv 支持，可快速查找光标位置的单词。                                                                     |
 | [tools](tools/)                                       | 这一模块为 SpaceVim 提供了多种常用工具，包括日历、计算器等多种工具类插件，并针对 Vim8 以及 Neovim 提供了更好的插件选择。            |
+| [treesitter](treesitter/)                             | 这一模块为 SpaceVim 提供了一些在 Vim 内操作 treesitter 的功能                                                                       |
 | [ui](ui/)                                             | 这一模块为 SpaceVim 提供了 IDE-like 的界面，包括状态栏、文件树、语法树等等特性。                                                    |
 | [unite](unite/)                                       | 这一模块为 SpaceVim 提供以 Unite 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                     |
 | [VersionControl](VersionControl/)                     | 这一模块为 SpaceVim 提供了通用的代码版本控制支持，该模块支持 Git、Mercurial、Bazaar、SVN 等等多种后台工具。                         |
