@@ -32,5 +32,15 @@ lang: zh
 
 ## 即时聊天
 
+以下几个频道作为 SpaceVim 中文用户交流平台，之间消息实现了互通，请选择任意合适的频道参与交流。
+也可以在网页右下角点击加入聊天，进群后，请不要发布无意义的内容，在你提问前，
+请务必要阅读[《提问的智慧》](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md)。
+
 - <i class="fab fa-gitter"></i> [`SpaceVim/cn` Gitter 聊天室](https://gitter.im/SpaceVim/cn)
+- <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim_cn` telegram 聊天室](https://t.me/joinchat/1TvSIDrsaq0zMjZl)
+- <i class="fab fa-rocketchat"></i> [`#spacevim-cn:matrix.org` Matrix 聊天室](https://app.element.io/#/room/#spacevim-cn:matrix.org)
+- <i class="fab fa-slack-hash"></i> [`#spacevim` slack 聊天室](https://join.slack.com/t/spacevim/shared_invite/zt-74w64lg5-bT~~2~zEhtIy1zow53tHJg)
+- <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)
+
+以上为同步聊天群，同时SpaceVim有对应的QQ群：[970953433](https://jq.qq.com/?_wv=1027&k=XYqDdQTM)
 
