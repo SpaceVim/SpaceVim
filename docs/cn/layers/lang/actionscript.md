@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#actionscript 模块"
-description: "这一模块为 actionscript 提供语法高亮"
+description: "提供 ActionScript 脚本语言支持，包括语法高亮"
 lang: zh
 ---
 

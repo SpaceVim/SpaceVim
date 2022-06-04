@@ -1,6 +1,6 @@
 ---
 title: "SpaceVim lang#c 模块"
-description: "这一模块为 SpaceVim 提供了 C/C++/Object-C 的开发支持，包括代码补全、语法检查等特性。"
+description: "提供 C/C++/Object-C 等语言开发支持，包括语法高亮、代码补全、语法检查、格式化等特性。"
 lang: zh
 ---
 

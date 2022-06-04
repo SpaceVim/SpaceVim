@@ -94,14 +94,14 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [github](github/)                                     | 这一模块为 SpaceVim 提供了 Github 数据管理功能，包括问题列表、动态等管理。                                                          |
 | [gtags](gtags/)                                       | 这一模块为 SpaceVim 提供了全局的 gtags 索引管理，提供快速检索定义和引用的功能。                                                     |
 | [japanese](japanese/)                                 | 这一模块为 SpaceVim 的日文用户提供了日文的 Vim 帮助文档，同时提供部分插件的日文帮助文档。                                           |
-| [lang#actionscript](lang/actionscript/)               | 这一模块为 actionscript 提供语法高亮                                                                                                |
-| [lang#agda](lang/agda/)                               | 这一模块为 SpaceVim 提供了 Agda 的开发支持，主要包括语法高亮及一键运行。                                                            |
+| [lang#actionscript](lang/actionscript/)               | 提供 ActionScript 脚本语言支持，包括语法高亮                                                                                        |
+| [lang#agda](lang/agda/)                               | 提供 Agda 语言的开发支持，包括语法高亮、一键运行等功能。                                                                            |
 | [lang#asciidoc](lang/asciidoc/)                       | 这一模块为 SpaceVim 提供了 AsciiDoc 的编辑支持，包括格式化、自动生成文章目录、代码块等特性。                                        |
 | [lang#aspectj](lang/aspectj/)                         | 这一模块为 SpaceVim 提供了 AsepctJ 的编辑支持，包括代码高亮。                                                                       |
 | [lang#assembly](lang/assembly/)                       | 该模块为 SpaceVim 提供了 Assembly 语言开发支持，包括语法高亮。                                                                      |
 | [lang#autohotkey](lang/autohotkey/)                   | 这一模块为 SpaceVim 提供了 Autohotkey 的开发支持，包括语法高亮和自动补全等功能。                                                    |
 | [lang#batch](lang/batch/)                             | 这一模块为 batch 开发提供支持，包括交互式编程、一键运行等特性。                                                                     |
-| [lang#c](lang/c/)                                     | 这一模块为 SpaceVim 提供了 C/C++/Object-C 的开发支持，包括代码补全、语法检查等特性。                                                |
+| [lang#c](lang/c/)                                     | 提供 C/C++/Object-C 等语言开发支持，包括语法高亮、代码补全、语法检查、格式化等特性。                                                |
 | [lang#chapel](lang/chapel/)                           | 这一模块为 chapel 开发提供支持，包括交互式编程、一键运行等特性。                                                                    |
 | [lang#clojure](lang/clojure/)                         | 这一模块为 SpaceVim 提供了 Clojure 的开发支持，包括代码补全、语法检查、代码格式化等特性。                                           |
 | [lang#cmake](lang/cmake/)                             | 这一模块为 cmake 脚本语言提供了语法高亮等功能。                                                                                     |
