@@ -28,16 +28,21 @@ if exists('s:ssh')
   finish
 endif
 
+let s:JOB = SpaceVim#api#import('job')
+let s:NOT = SpaceVim#api#import('notify')
+
 let s:ssh = 'ssh'
 let s:user = 'root'
 let s:ip = '127.0.0.1'
 let s:port = '20'
+let s:pass = ''
 
 function! SpaceVim#layers#ssh#config() abort
   let g:_spacevim_mappings_space.S = {'name' : '+SSH'}
   call SpaceVim#mapping#space#langSPC('nmap', ['S','o'],
         \ 'call SpaceVim#layers#ssh#connect()',
         \ 'connect-to-ssh-server', 1)
+  command! -nargs=* SSHCommand call s:run(<q-args>)
 endfunction
 
 function! SpaceVim#layers#ssh#set_variable(opt) abort
@@ -45,6 +50,7 @@ function! SpaceVim#layers#ssh#set_variable(opt) abort
   let s:user = get(a:opt, 'ssh_user', s:user)
   let s:ip = get(a:opt, 'ssh_address', s:ip)
   let s:port = get(a:opt, 'ssh_port', s:port)
+  let s:pass = get(a:opt, 'ssh_password', s:pass)
 endfunction
 
 function! SpaceVim#layers#ssh#connect() abort
@@ -61,11 +67,34 @@ endfunction
 
 function! SpaceVim#layers#ssh#get_options() abort
 
-  return ['ssh_port', 'ssh_user', 'ssh_address', 'ssh_command']
+  return ['ssh_port', 'ssh_user', 'ssh_address', 'ssh_command', 'ssh_password']
 
 endfunction
 
 function! SpaceVim#layers#ssh#health() abort
   call SpaceVim#layers#ssh#config()
   return 1
+endfunction
+
+function! s:run(cmd) abort
+  let s:NOT.notify_max_width = &columns * 0.70
+  let s:NOT.timeout = 5000
+  call s:JOB.start(['plink', s:user . '@' . s:ip, '-P', s:port, '-pw', s:pass, a:cmd . ' 2>&1'], 
+        \ {
+          \ 'on_stdout' : function('s:on_stdout'),
+          \ 'on_stderr' : function('s:on_stderr')
+          \ })
+endfunction
+
+
+function! s:on_stdout(id, data, event) abort
+  for line in a:data
+    call s:NOT.notify(line)
+  endfor
+endfunction
+
+function! s:on_stderr(id, data, event) abort
+  for line in a:data
+    call s:NOT.notify(line, 'WarningMsg')
+  endfor
 endfunction

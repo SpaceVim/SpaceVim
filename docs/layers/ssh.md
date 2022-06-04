@@ -10,6 +10,7 @@ description: "This layer provides ssh support in SpaceVim"
 - [Intro](#intro)
 - [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
+- [Commands](#commands)
 
 <!-- vim-markdown-toc -->
 
@@ -46,3 +47,12 @@ Example:
 | Key Binding | Description                 |
 | ----------- | --------------------------- |
 | `SPC S o`   | open ssh connection windows |
+
+## Commands
+
+- `:SSHCommand`: run comamnd in ssh client.
+
+   for example:
+   ```
+   :SSHCommand nvim --version
+   ```
