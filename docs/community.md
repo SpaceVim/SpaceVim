@@ -36,4 +36,4 @@ Join on one of them to chat with us:
 - <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim` on telegram](https://t.me/joinchat/CN0HPvvrVKg4MzY9)
 - <i class="fab fa-rocketchat"></i> [`#spacevim:matrix.org` on Matrix](https://app.element.io/#/room/#spacevim:matrix.org)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` on slack](https://join.slack.com/t/spacevim/shared_invite/zt-74w64lg5-bT~~2~zEhtIy1zow53tHJg)
-- <i class="fab fa-discord"></i> [`#spacevim` on discord](https://discord.gg/g3MGdNB)
+- <i class="fab fa-discord"></i> [`#spacevim` on discord](https://discord.gg/xcRQnF8)
