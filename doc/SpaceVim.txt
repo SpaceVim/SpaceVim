@@ -1863,6 +1863,17 @@ The layer option can be used when loading the `cscope` layer, for example:
   2. `cscope_command`: set the command or path of `cscope` executable.
   3. `open_location`: enable/disable open location list after searching.
   4. `preload_path`: set the proload paths.
+  5. `list_files_command`: set the command to list all files which should be
+    involed to create cscope database, By default it is:
+
+    `['rg', '--color=never', '--files']`
+
+    To specific filetypes, use custom command, for example:
+>
+    [[layers]]
+      name = 'cscope'
+      list_files_command = ['rg', '--color=never', '--files', '--type', 'c']
+<
 
 KEY BINDINGS
 

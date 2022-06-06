@@ -54,6 +54,16 @@ scoop install cscope
 - `auto_update`: 启用/禁用数据库自动更新，若启用，则在保存文件时自动更新数据库。
 - `open_location`: 启用/禁用自动打开搜索结果列表。
 - `preload_path`: 设置预加载的数据量路径。
+- `list_files_command`: 设置列出项目内需要生成cscope数据库的所有文件的命令，默认是：
+  ```
+  ['rg', '--color=never', '--files']
+  ```
+  如果需要指定哪些文件需要生成数据库，可以参考如下设置：
+  ```
+  [[layers]]
+      name = 'cscope'
+      list_files_command = ['rg', '--color=never', '--files', '--type', 'c']
+  ```
 
 ## 快捷键
 

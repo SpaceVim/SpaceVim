@@ -51,7 +51,17 @@ To use this configuration layer, add it to your configuration file.
 - `auto_update`: enable/disable auto udpate when saving files.
 - `open_location`: enable/disable open location list after searching.
 - `preload_path`: set the proload paths.
-
+- `list_files_command`: set the command to list all files which should be
+  involed to create cscope database, By default it is:
+  ```
+  ['rg', '--color=never', '--files']
+  ```
+  To specific filetypes, use custom command, for example:
+  ```
+  [[layers]]
+      name = 'cscope'
+      list_files_command = ['rg', '--color=never', '--files', '--type', 'c']
+  ```
 
 ## Key bindings
 

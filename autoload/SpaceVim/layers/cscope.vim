@@ -29,6 +29,17 @@ scriptencoding utf-8
 " 2. `cscope_command`: set the command or path of `cscope` executable.
 " 3. `open_location`: enable/disable open location list after searching.
 " 4. `preload_path`: set the proload paths.
+" 5. `list_files_command`: set the command to list all files which should
+"     be involed to create cscope database, By default it is:
+"    
+"     `['rg', '--color=never', '--files']`
+"
+"     To specific filetypes, use custom command, for example:
+" >
+"     [[layers]]
+"       name = 'cscope'
+"       list_files_command = ['rg', '--color=never', '--files', '--type', 'c']
+" <
 "
 " @subsection key bindings
 " 
@@ -57,6 +68,7 @@ endif
 
 let s:cscope_command = 'cscope'
 let s:auto_update = 1
+let s:list_files_command = ['rg', '--color=never', '--files']
 
 function! SpaceVim#layers#cscope#plugins() abort
   let plugins = [
@@ -109,6 +121,9 @@ function! SpaceVim#layers#cscope#set_variable(var) abort
   let g:cscope_preload_path = get(a:var,
         \ 'preload_path',
         \ '')
+  let g:cscope_list_files_command = get(a:ver,
+        \ 'list_files_command',
+        \ s:list_files_command)
 
 endfunction
 
