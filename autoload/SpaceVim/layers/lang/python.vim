@@ -99,6 +99,7 @@ function! SpaceVim#layers#lang#python#plugins() abort
   " python
   if !SpaceVim#layers#lsp#check_filetype('python')
         \ && !SpaceVim#layers#lsp#check_server('pyright')
+        \ && !SpaceVim#layers#lsp#check_server('pylsp')
     if has('nvim')
       call add(plugins, ['zchee/deoplete-jedi', { 'on_ft' : 'python'}])
       " in neovim, we can use deoplete-jedi together with jedi-vim,
@@ -161,7 +162,9 @@ function! SpaceVim#layers#lang#python#config() abort
   elseif executable('python3')
     call SpaceVim#plugins#repl#reg('python', ['python3', '-i'])
   endif
-  if SpaceVim#layers#lsp#check_server('pyright') || SpaceVim#layers#lsp#check_filetype('python')
+  if SpaceVim#layers#lsp#check_server('pyright')
+        \ || SpaceVim#layers#lsp#check_server('pylsp')
+        \ || SpaceVim#layers#lsp#check_filetype('python')
     let g:neomake_python_enabled_makers = []
   else
     let g:neomake_python_enabled_makers = s:enabled_linters
@@ -223,6 +226,7 @@ function! s:language_specified_mappings() abort
 
   if SpaceVim#layers#lsp#check_filetype('python')
         \ || SpaceVim#layers#lsp#check_server('pyright')
+        \ || SpaceVim#layers#lsp#check_server('pylsp')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
     nnoremap <silent><buffer> gD :<C-u>call SpaceVim#lsp#go_to_typedef()<Cr>
 
@@ -278,6 +282,7 @@ endf
 function! s:go_to_def() abort
   if SpaceVim#layers#lsp#check_filetype('python')
         \ || SpaceVim#layers#lsp#check_server('pyright')
+        \ || SpaceVim#layers#lsp#check_server('pylsp')
     call SpaceVim#lsp#go_to_def()
   else
     call jedi#goto()

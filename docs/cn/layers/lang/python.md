@@ -106,6 +106,36 @@ pip install --user isort
 pip install --user coverage
 ```
 
+**语言服务器：**
+
+如果需要为 Python 语言启用 `lsp` 模块，你需要安装 `pyright` 或者 `python-lsp-server`：
+
+```
+npm install -g pyright
+```
+
+或者
+
+```
+pip install python-lsp-server
+```
+
+同时，需要启用 `lsp` 模块，以及 `pyright` 服务：
+
+```
+[[layers]]
+  name = 'lsp'
+  enabled_clients = ['pyright']
+```
+
+如果想要使用 `python-lsp-server`，可以使用如下配置：
+
+```
+[[layers]]
+  name = 'lsp'
+  enabled_clients = ['pylsp']
+```
+
 ## 模块设置
 
 - `python_file_head`: 设置默认的 Python 文件头信息模板。
@@ -134,6 +164,7 @@ pip install --user coverage
 
 - `format_on_save`: 启用或者禁用文件保存时的自动格式化，默认为禁用状态，
   若想启用这一功能，可以使用如下配置：
+
   ```toml
   [[layers]]
       name = 'lang#python'
@@ -142,6 +173,7 @@ pip install --user coverage
 
 - `python_interpreter`: 设置 python 的可执行命令路劲，默认值为 `python3`，该选项的值将被应用于
   `g:neomake_python_python_exe` 和代码快速运行器。
+
   ```toml
   [[layers]]
       name = 'lang#python'
@@ -172,8 +204,8 @@ pip install --user coverage
 
 ### 测试覆盖
 
-| 模式   | 快捷键      | 功能描述          |
-| ------ | ----------- | ----------------- |
+| 模式   | 快捷键      | 功能描述         |
+| ------ | ----------- | ---------------- |
 | normal | `SPC l c r` | coverage report  |
 | normal | `SPC l c s` | coverage show    |
 | normal | `SPC l c e` | coverage session |

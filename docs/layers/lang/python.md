@@ -102,18 +102,28 @@ you need to add following snippet into your spacevim configuration file.
 
 - **language server**
 
-  To enable python support of `lsp` layer. You may need to install `pyright`:
+  To enable python support of `lsp` layer. You may need to install `pyright` or `python-lsp-server`:
 
   ```
   npm install -g pyright
   ```
+  or
+  ```
+  pip install python-lsp-server
+  ```
 
-  Also you need enable `lsp` layer with pyright client:
+  Also you need enable `lsp` layer with `pyright` client:
 
   ```
   [[layers]]
     name = 'lsp'
     enabled_clients = ['pyright']
+  ```
+  If you want to use `python-lsp-server`, use following config:
+  ```
+  [[layers]]
+    name = 'lsp'
+    enabled_clients = ['pylsp']
   ```
 
 ## Layer options
