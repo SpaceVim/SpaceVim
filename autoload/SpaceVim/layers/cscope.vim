@@ -121,7 +121,7 @@ function! SpaceVim#layers#cscope#set_variable(var) abort
   let g:cscope_preload_path = get(a:var,
         \ 'preload_path',
         \ '')
-  let g:cscope_list_files_command = get(a:ver,
+  let g:cscope_list_files_command = get(a:var,
         \ 'list_files_command',
         \ s:list_files_command)
 
