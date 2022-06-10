@@ -161,24 +161,13 @@ endfunction
 
 function! SpaceVim#default#keyBindings() abort
   call SpaceVim#logger#debug('init default key bindings.')
-  " yank and paste
-  if has('unnamedplus')
-    xnoremap <Leader>y "+y
-    nnoremap <Leader>p "+p
-    let g:_spacevim_mappings.p = ['normal! "+p', 'paste after here']
-    nnoremap <Leader>P "+P
-    let g:_spacevim_mappings.P = ['normal! "+P', 'paste before here']
-    xnoremap <Leader>p "+p
-    xnoremap <Leader>P "+P
-  else
-    xnoremap <Leader>y "*y
-    nnoremap <Leader>p "*p
-    let g:_spacevim_mappings.p = ['normal! "*p', 'paste after here']
-    nnoremap <Leader>P "*P
-    let g:_spacevim_mappings.P = ['normal! "*P', 'paste before here']
-    xnoremap <Leader>p "*p
-    xnoremap <Leader>P "*P
-  endif
+  xnoremap <expr> <Leader>y clipboard#yank()
+  nnoremap <expr> <Leader>p clipboard#paste('p')
+  nnoremap <expr> <Leader>P clipboard#paste('P')
+  xnoremap <expr> <Leader>p clipboard#paste('p')
+  xnoremap <expr> <Leader>P clipboard#paste('P')
+  let g:_spacevim_mappings.p = ['normal! "+p', 'paste after here']
+  let g:_spacevim_mappings.P = ['normal! "+P', 'paste before here']
 
   xnoremap <silent><Leader>Y :<C-u>call SpaceVim#plugins#pastebin#paste()<CR>
   " call SpaceVim#mapping#guide#register_displayname(':call SpaceVim#plugins#pastebin#paste()<CR>', 'copy to pastebin')
@@ -311,42 +300,42 @@ fu! s:tobur(num) abort
       endif
     endif
   endif
-endf
+  endf
 
-function! SpaceVim#default#UseSimpleMode() abort
+  function! SpaceVim#default#UseSimpleMode() abort
 
-endfunction
+  endfunction
 
-function! SpaceVim#default#Customfoldtext() abort
-  "get first non-blank line
-  let fs = v:foldstart
-  while getline(fs) =~# '^\s*$' | let fs = nextnonblank(fs + 1)
-  endwhile
-  if fs > v:foldend
-    let line = getline(v:foldstart)
-  else
-    let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
-  endif
+  function! SpaceVim#default#Customfoldtext() abort
+    "get first non-blank line
+    let fs = v:foldstart
+    while getline(fs) =~# '^\s*$' | let fs = nextnonblank(fs + 1)
+    endwhile
+    if fs > v:foldend
+      let line = getline(v:foldstart)
+    else
+      let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+    endif
 
-  let foldsymbol='+'
-  let repeatsymbol='-'
-  let prefix = foldsymbol . ' '
+    let foldsymbol='+'
+    let repeatsymbol='-'
+    let prefix = foldsymbol . ' '
 
-  let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
-  let foldSize = 1 + v:foldend - v:foldstart
-  let foldSizeStr = ' ' . foldSize . ' lines '
-  let foldLevelStr = repeat('+--', v:foldlevel)
-  let lineCount = line('$')
-  let foldPercentage = printf('[%.1f', (foldSize*1.0)/lineCount*100) . '%] '
-  let expansionString = repeat(repeatsymbol, w - strwidth(prefix.foldSizeStr.line.foldLevelStr.foldPercentage))
-  return prefix . line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
-endfunction
+    let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+    let foldSize = 1 + v:foldend - v:foldstart
+    let foldSizeStr = ' ' . foldSize . ' lines '
+    let foldLevelStr = repeat('+--', v:foldlevel)
+    let lineCount = line('$')
+    let foldPercentage = printf('[%.1f', (foldSize*1.0)/lineCount*100) . '%] '
+    let expansionString = repeat(repeatsymbol, w - strwidth(prefix.foldSizeStr.line.foldLevelStr.foldPercentage))
+    return prefix . line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
+  endfunction
 
-function! s:switch_tabs() abort
-  let previous_tab = s:TAB.previous_tabpagenr()
-  if previous_tab > 0
-    exe 'tabnext ' . previous_tab
-  endif
-endfunction
+  function! s:switch_tabs() abort
+    let previous_tab = s:TAB.previous_tabpagenr()
+    if previous_tab > 0
+      exe 'tabnext ' . previous_tab
+    endif
+  endfunction
 
-" vim:set et sw=2:
+  " vim:set et sw=2:
