@@ -21,6 +21,7 @@ It will give you a good idea of what SpaceVim is like.
 - [Configuration](#configuration)
 - [Online tutorials](#online-tutorials)
 - [Learning SpaceVim](#learning-spacevim)
+- [User experiences](#user-experiences)
 
 <!-- vim-markdown-toc -->
 
@@ -156,3 +157,9 @@ A list of guides for programming language support:
   The SpaceVim Documentation will introduce you to the main topics important to using SpaceVim.
   The book is the primary official document of SpaceVim.
 - [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim). Teaches you how to hack SpaceVim.
+
+## User experiences
+
+Here is a list of User experiences about using SpaceVim:
+
+- [Vim as an IDE, not the text editor](https://blog.ghaiklor.com/2019/10/12/vim-as-an-ide-not-the-text-editor/) - Eugene Obrezkov
