@@ -1,0 +1,131 @@
+scriptencoding utf-8
+Describe visual
+
+    Before all
+        let lines = [
+        \     '1.asterisk 2.asterisk 3.asterisk'
+        \   , '4.Asterisk 5.AsteRisK 6.Asterisk'
+        \   , ''
+        \   , '7.アスタリスク 8.アスタリスクです 9.アスタリスク?'
+        \   , '.* .* .*'
+        \   , '.* asterisk asterisk'
+        \   , '".*" ".*" ''asterisk'' ''asterisk'''
+        \   , '"''.*" "''.*" "aste"risk" "aste"risk"'
+        \   , "asterisk\r"
+        \ ]
+        call g:Add_lines(lines)
+    End
+
+    Before each
+        call cursor([1, 1])
+        normal! 2l
+        let @/ = ''
+    End
+
+    After all
+        :1,$ delete
+    End
+
+    Context *
+        It search forward with \<\>
+            normal viw*
+            Assert Equals(@/, '\V\<asterisk\>')
+        End
+        It search forward only with \<
+            normal ve5h*
+            Assert Equals(@/, '\V\<ast')
+        End
+        It search forward only with \>
+            normal 2lve*
+            Assert Equals(@/, '\Vterisk\>')
+        End
+    End
+
+    Context #
+        It search backward and jump to next matchecd pattern
+            normal $viw2#
+            Assert Equals(@/, '\V\<asterisk\>')
+            Assert Equals(col('.'), 3)
+        End
+    End
+
+    Context multibyte *
+        It handle left keyword
+            normal 3jve3h*
+            Assert Equals(@/, '\V\<アスタ')
+        End
+        It handle right keyword
+            normal 3j3lve*
+            Assert Equals(@/, '\Vリスク\>')
+        End
+        It handle left and right keyword
+            normal 3jve*
+            Assert Equals(@/, '\V\<アスタリスク\>')
+        End
+        It is irrelabant with keyword
+            normal 3j1lve2h*
+            Assert Equals(@/, '\Vスタリ')
+        End
+        It handle one character selection
+            normal 3jve5h*
+            Assert Equals(@/, '\V\<ア')
+        End
+    End
+
+    Context regular expression handling
+        It correctly escape regex
+          normal! 4j0
+          normal viW*
+          Assert Equals(@/, '\V.*')
+        End
+    End
+
+    Context handling quotes
+        It correctly handle double quotes with z*
+          normal! 6j0
+          normal viWz*
+          Assert Equals(@/, '\V".*"')
+        End
+        It correctly handle double quotes with *
+          normal! 6j0
+          normal viW*
+          Assert Equals(@/, '\V".*"')
+        End
+        It correctly handle single quotes with z*
+          normal! 6j02W
+          normal viWz*
+          Assert Equals(@/, '\V''asterisk''')
+        End
+    End
+
+    Context no cursor movement
+        It get character under cursor with v
+            normal v*
+            Assert Equals(@/, '\V\<a')
+        End
+        It get character under cursor with <C-v>
+            silent! execute 'normal' "\<C-v>*"
+            Assert Equals(@/, '\V\<a')
+        End
+        It get line with <C-v>
+            normal V*
+            Assert Equals(@/, '\V\<1.asterisk 2.asterisk 3.asterisk\n')
+        End
+    End
+
+    Context <C-v>*
+        It search forward with \<\>
+            silent! execute 'normal' "\<C-v>ej*"
+            Assert Equals(@/, '\V\<asterisk\nAsterisk\>')
+        End
+    End
+
+    Context contains \r
+      It handles correctly
+        normal 8j$v*
+        Assert Equals(@/, '\V\r')
+      End
+    End
+
+
+End

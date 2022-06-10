@@ -114,7 +114,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
         \ ['andrewradev/splitjoin.vim',{ 'on_cmd':['SplitjoinJoin', 'SplitjoinSplit'],'merged' : 0, 'loadconf' : 1}],
         \ ]
-  if has('nvim-0.6.0')
+  if has('nvim-0.6.0') && s:enable_hop
     call add(plugins,[g:_spacevim_root_dir . 'bundle/hop.nvim',        { 'merged' : 0, 'loadconf' : 1}])
   else
     call add(plugins,[g:_spacevim_root_dir . 'bundle/vim-easymotion',        { 'merged' : 0}])

@@ -1,0 +1,62 @@
+scriptencoding utf-8
+Describe zstar
+
+    Before all
+        let lines = [
+        \     '1.asterisk 2.asterisk 3.asterisk'
+        \   , '4.Asterisk 5.AsteRisK 6.Asterisk'
+        \   , ''
+        \   , '7.アスタリスク 8.アスタリスクです 9.アスタリスク?'
+        \ ]
+        call g:Add_lines(lines)
+    End
+
+    Before each
+        call cursor([1, 1])
+        normal! 2l
+        let @/ = ''
+    End
+
+    After all
+        :1,$ delete
+    End
+
+    Context z*
+        It set search registar with \<\>
+            normal z*
+            Assert Equals(@/, '\<asterisk\>')
+        End
+        It add search history with \<\>
+            call histadd('/', ' ')
+            Assert Equals(histget('/', -1), ' ')
+            normal z*
+            Assert Equals(histget('/', -1), '\<asterisk\>')
+        End
+        It set v:searchforward to 1
+            let v:searchforward = 0
+            normal z*
+            Assert Equals(v:searchforward, 1)
+        End
+        It doesn't move cursor
+            Assert Equals(g:Get_pos_char(), 'a')
+            normal z*
+            Assert Equals(g:Get_pos_char(), 'a')
+            normal! 2h
+            Assert Equals(g:Get_pos_char(), '1')
+        End
+        It handle 'selection' value
+          :1,$ delete
+          call g:Add_lines(['NeoBundle "kannokanno/previm"'])
+          let save = &selection
+          for v in ['inclusive', 'old', 'exclusive']
+            call cursor([1, 1])
+            Assert Equals(g:Get_pos_char(), 'N')
+            let &selection=v
+            normal ve6ho*
+            Assert Equals(histget('/', -1), '\V\<Neo')
+          endfor
+          let &selection = save
+        End
+    End
+
+End

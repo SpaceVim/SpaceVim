@@ -1,0 +1,236 @@
+*over.txt*	highlighter for |:s|
+
+==============================================================================
+CONTENTS                                                     *over-contents*
+
+Overview                                                 |over-introduction|
+Interface                                                   |over-interface|
+Commands	                                             |over-commands|
+Settings                                                      |over-setting|
+Variables                                                   |over-variables|
+Highlight settings                             |over-command_line-highlight|
+Key mappings                                |over-command_line-key-mappings|
+autocmd                                          |over-command_line-autocmd|
+Change log                                                  |over-changelog|
+
+
+==============================================================================
+OVERVIEW                                                *over-introduction*
+
+*over.vim* is a plug-in that highlights the {pattern} parameter 
+from |:substitute| {pattern}. 
+
+Alternatively you can switch to the command line with |:OverCommandLine|.
+Here, you can directly type your {pattern} and it will be automatically 
+highlighted and the {string} replacement will be previewed.
+
+Requirements:
+  Vim 7.3 or above.
+    |strchars()| and |+conceal|
+
+
+==============================================================================
+INTERFACE                                                 *over-interface*
+
+------------------------------------------------------------------------------
+COMMANDS                                                   *over-commands*
+
+:OverCommandLine [{input}]	                        *:OverCommandLine*
+  |over.vim| standalone command line mode emulating |:substitute|.
+  It will highlight your {pattern} and the {string} replacement will be 
+  previewed.
+
+  While in command line mode, only a subset of key mappings are available see
+  |over-command_line-key-mappings| for details.
+  
+  {input} pre-feed the command line with the given input.
+
+:OverCommandLineNoremap {lhs} {rhs}		 *:OverCommandLineNoremap*
+  It is the same as :OverCommandLine but with a specified key remap.
+  {lhs} will be substitued by {rhs}.
+  You can only substitute one key or one key with at most one modifier.
+  You can set it up in |g:over_command_line_key_mappings|.
+Example: >
+    OverCommandLineNoremap <A-b> <C-b>
+    OverCommandLineNoremap <A-f> <C-f>
+<
+
+==============================================================================
+SETTINGS                                                     *over-setting*
+
+------------------------------------------------------------------------------
+VARIABLES                                                  *over-variables*
+
+g:over_enable_auto_nohlsearch	            *g:over_enable_auto_nohlsearch*
+  set to 1 to enable the highlighting from the command line automatically
+Default: >
+    let g:over_enable_auto_nohlsearch = 1
+<
+
+g:over_enable_cmd_window		         *g:over_enable_cmd_window*
+  set to 1 in order to enable the command line
+
+Default: >
+    let g:over_enable_cmd_window = 1
+<
+
+g:over_command_line_prompt	               *g:over_command_line_prompt*
+  sets the |:OverCommandLine| prompt.
+Default: >
+  let g:over_command_line_prompt = "> "
+<
+
+g:over_command_line_key_mappings         *g:over_command_line_key_mappings*
+  Sets the key mapping used on the command line. 
+  You can only substitute one key or one key with at most one modifier.
+Example: >
+    " <C-l> assigned to <C-f>
+    " <C-h> assigned to <C-b>
+    let g:over_command_line_key_mappings = {
+    \	"\<C-l>" : "\<C-f>",
+    \	"\<C-h>" : "\<C-b>",
+    \}
+<
+                              *g:over#command_line#search#enable_incsearch*
+g:over#command_line#search#enable_incsearch
+  Set to 1 if you want to highlight :/ or :? searches.
+Default: >
+    let g:over#command_line#search#enable_incsearch = 1
+<
+                            *g:over#command_line#search#enable_move_cursor*
+g:over#command_line#search#enable_move_cursor
+  Set to 1 the pattern highlight will follow the cursor on the 
+  :/ or :? command.
+Default: >
+    let g:over#command_line#search#enable_move_cursor = 0
+<
+                                   *g:over#command_line#paste_escape_chars*
+g:over#command_line#paste_escape_chars
+  Sets the set of characters to be automatically escaped when a buffer is
+  pasted on the command line with <C-v>.
+Example: >
+    " If you paste $foo.bar / 2 + 1
+    " \$foo\.bar \/ 2 + 1 will be generated on the command line
+    let g:over#command_line#paste_escape_chars = '/.*$^~'
+<
+
+g:over#command_line#paste_filters	*g:over#command_line#paste_filters*
+  This is a generic way of remplacing the content of the paste buffer 
+  when you paste on the command line with <C-v>.
+Default: >
+    " This will escape "\n" and "\r" automatically.
+    let g:over#command_line#paste_filters = {
+    \	"\n" : '\\n',
+    \	"\r" : '\\r',
+    \}
+<
+g:over#command_line#substitute#replace_pattern_visually
+*g:over#command_line#substitute#replace_pattern_visually*
+  Instead of previewing the replacement next to the replaced pattern, it
+  visually replaces the pattern instead.
+Default:
+  Not enabled. To enable, set it to 1.
+Example: >
+  The wolf jumps over the sheep.
+       /\
+       || --- You want to replace 'wolf' with 'bear'.
+
+  The [wolf][bear] jumps over the sheep.
+       /\
+       || --- Here is how vim-over will show you the preview normally.
+
+  The [bear] jumps over the sheep.
+       /\
+       || --- Here is how vim-over will show you the preview with this
+              option enabled.
+<
+
+
+==============================================================================
+HIGHLIGHT SETTINGS                            *over-command_line-highlight*
+
+|:highlight| color settings are used by |over.vim|.
+
+OverCommandLineCursor                               *OverCommandLineCursor*
+  This is the highlight color of the current cursor position.
+  The default value is |hl-Cursor|. 
+
+OverCommandLineCursorInsert                   *OverCommandLineCursorInsert*
+  This is the highlight color of the current cursor position in insert mode.
+  The default value is |hl-Cursor| with |underline| set.
+
+
+==============================================================================
+KEY MAPPINGS                               *over-command_line-key-mappings*
+
+This is the key mapping that can be used on the command line.
+It is specified by setting |g:over_command_line_key_map|.
+
+Key                     Action~
+-----------		-------------------------------
+<CR>			Executes the command
+<Esc>			Exits from the command line
+<C-v>			Yank into the command line
+<BS> or <C-h>		Deletes the character the cursor is on
+<C-w>			Deletes the previous character
+<Right> or <C-f>        Moves the cursor to the right
+<Left> or <C-b>		Moves the cursor to the left
+<Del> or <C-d>		Deletes the character the cursor is on
+<Home> or <C-a>		Moves the cursor at the beginning on the line
+<End> or <C-e>		Moves the cursor at the end of the line
+<Up> or <C-p>		Moves up in the command history
+<Down> or <C-n>		Moves down in the command history
+<C-r><C-f>		Inserts the name of the current file
+<C-r><C-w>		Inserts word from under the cursor
+<C-r><C-r>		Inserts WORD from under the cursor
+<Tab>			Autocomplete from the words in the file
+<C-r>{0-9a-z"%#:-.*=}	Insert the specified register or named register
+
+
+You can also specify those specific mapping that can be
+assigned from |OverCommandLineNoremap|.
+
+Key						Action
+-----------                                     --------
+<Plug>(over-cmdline-substitute-jump-pattern)	Move the cursor to the next 
+                                                |:substitute| {pattern}
+<Plug>(over-cmdline-substitute-jump-string)	Move the cursor to the next 
+                                                |:substitute| {string}
+<Plug>(over-cmdline-scroll-y)			|CTRL-y| equivalent
+<Plug>(over-cmdline-scroll-u)			|CTRL-u| equivalent
+<Plug>(over-cmdline-scroll-f)			|CTRL-f| equivalent
+<Plug>(over-cmdline-scroll-e)			|CTRL-e| equivalent
+<Plug>(over-cmdline-scroll-d)			|CTRL-d| equivalent
+<Plug>(over-cmdline-scroll-b)			|CTRL-b| equivalent
+
+Example: >
+    OverCommandLineNoremap <A-s> <Plug>(over-cmdline-substitute-jump-string)
+    OverCommandLineNoremap <A-p> <Plug>(over-cmdline-substitute-jump-pattern)
+<
+
+==============================================================================
+AUTOCMD                                         *over-command_line-autocmd*
+
+|:OverCommandLine| triggers those following |User| |autocmd|.
+
+Function		Event
+OverCmdLineEnter	triggered when you enter the command line mode
+OverCmdLineLeave	triggered when you leave the command line mode
+OverCmdLineExecutePre   triggered before a command execution
+OverCmdLineExecute	triggered after a command execution
+OverCmdLineCharPre      triggered before every character insertion
+OverCmdLineChar	        triggered after every character insertion
+OverCmdLineCancel	triggered when you exit without running the line
+
+
+==============================================================================
+CHANGE LOG                                                 *over-changelog*
+
+2.0
+  - Refactoring
+  - Change cursor highlight
+  - Add highlighting :/ and :%g/
+  - No input special keys(e.g. <BS>, <C->)
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

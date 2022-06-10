@@ -34,10 +34,10 @@ let s:filename = expand('<sfile>:~')
 function! SpaceVim#layers#incsearch#plugins() abort
   let plugins = []
   call add(plugins, [g:_spacevim_root_dir . 'bundle/incsearch.vim', {'merged' : 0}])
-  call add(plugins, ['haya14busa/incsearch-fuzzy.vim', {'merged' : 0}])
-  call add(plugins, ['haya14busa/vim-asterisk', {'merged' : 0}])
-  call add(plugins, ['osyo-manga/vim-over', {'merged' : 0}])
-  call add(plugins, ['haya14busa/incsearch-easymotion.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/incsearch-fuzzy.vim', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-asterisk', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-over', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/incsearch-easymotion.vim', {'merged' : 0}])
   return plugins
 endfunction
 
@@ -82,10 +82,20 @@ function! SpaceVim#layers#incsearch#config() abort
           \   'is_stay': 1
           \ }), get(a:, 1, {}))
   endfunction
+  noremap <silent><expr> <Plug>(incsearch-fuzzymotion) incsearch#go(<SID>config_easyfuzzymotion())
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nmap', ['b', '/'], '<Plug>(incsearch-fuzzyword-/)', ['fuzzy-find-word',
         \ [
         \ '[SPC b /] is to fuzzy find word in current buffer',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum,
+        \ ]
+        \ ]
+        \ , 0)
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nmap', ['/'], '<Plug>(incsearch-fuzzymotion)', ['fuzzy-easymotion',
+        \ [
+        \ '[SPC /] is to run fuzzy easymotion',
         \ '',
         \ 'Definition: ' . s:filename . ':' . lnum,
         \ ]

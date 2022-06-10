@@ -10,6 +10,7 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
   - [`lang#python` layer](#langpython-layer)
   - [`lang#liquid` layer](#langliquid-layer)
   - [`tmux` layer](#tmux-layer)
+  - [`incsearch` layer](#incsearch-layer)
 
 <!-- vim-markdown-toc -->
 
@@ -62,3 +63,11 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 #### `tmux` layer
 
 - [christoomey/vim-tmux-navigator@9ca5bfe5b](https://github.com/christoomey/vim-tmux-navigator/tree/9ca5bfe5bd274051b5dd796cc150348afc993b80)
+
+#### `incsearch` layer
+
+- [incsearch.vim@c83de6d1](https://github.com/haya14busa/incsearch.vim/tree/c83de6d1ac31d173d7c3ffee0ad61dc643ee4f08)
+- [incsearch-fuzzy.vim@b08fa8fb](https://github.com/haya14busa/incsearch-fuzzy.vim/tree/b08fa8fbfd633e2f756fde42bfb5251d655f5403)
+- [vim-asterisk@77e9706](https://github.com/haya14busa/vim-asterisk/tree/77e97061d6691637a034258cc415d98670698459)
+- [vim-over@878f83b](https://github.com/osyo-manga/vim-over/tree/878f83bdac0cda308f599d319f45c7877d5274a9)
+- [incsearch-easymotion.vim@fcdd3ae](https://github.com/haya14busa/incsearch-easymotion.vim/tree/fcdd3aee6f4c0eef1a515727199ece8d6c6041b5)

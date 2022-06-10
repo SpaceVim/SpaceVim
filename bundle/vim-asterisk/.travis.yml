@@ -1,0 +1,10 @@
+language: viml
+install:
+  - git clone https://github.com/thinca/vim-themis --branch v1.5 --single-branch --depth 1 /tmp/vim-themis
+  - git clone https://github.com/syngan/vim-vimlint /tmp/vim-vimlint
+  - git clone https://github.com/ynkdir/vim-vimlparser /tmp/vim-vimlparser
+before_script:
+  - vim --version
+script:
+  - /tmp/vim-themis/bin/themis --reporter spec
+  - sh /tmp/vim-vimlint/bin/vimlint.sh -l /tmp/vim-vimlint -p /tmp/vim-vimlparser -e EVL102.l:_=1 -c func_abort=1 plugin autoload

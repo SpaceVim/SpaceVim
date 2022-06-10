@@ -1,0 +1,47 @@
+call themis#option('recursive', 1)
+
+let g:Expect = themis#helper('expect')
+call themis#helper('command').with(themis#helper('assert')).with({'Expect': g:Expect})
+
+
+" NOTE: basic specs should pass regardless &selection value except selection
+" specific specs
+" TODO: Automate testing with other values
+set selection=exclusive
+
+language C
+set encoding=utf-8 "Sets the character encoding used inside Vim
+set termencoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8,cp932,euc-jp "A list of character encodings
+set fileformats=unix,dos,mac "This gives the end-of-line (<EOL>) formats
+
+" Mapping:
+map *   <Plug>(asterisk-*)
+map #   <Plug>(asterisk-#)
+map g*  <Plug>(asterisk-g*)
+map g#  <Plug>(asterisk-g#)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+map z#  <Plug>(asterisk-z#)
+map gz# <Plug>(asterisk-gz#)
+
+" Default:
+noremap <Leader>*   *
+noremap <Leader>#   #
+noremap <Leader>g   g
+noremap <Leader>g#  g#
+noremap <Leader>z   z
+noremap <Leader>gz  gz
+noremap <Leader>z#  z#
+noremap <Leader>gz# gz#
+
+" Helper Functions:
+function! g:Add_lines(lines)
+    for line in reverse(a:lines)
+        put! =line
+    endfor
+endfunction
+function! g:Get_pos_char()
+    return matchstr(getline('.'), '.', col('.') - 1)
+endfunction

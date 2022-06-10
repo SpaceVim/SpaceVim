@@ -1,0 +1,297 @@
+*over.txt*	|:s| のパターンをハイライトするプラグイン
+
+==============================================================================
+目次						*over-contents*
+
+概要				|over-introduction|
+インターフェース		|over-interface|
+  コマンド			  |over-commands|
+設定				|over-setting|
+  over の変数			  |over-variables|
+over のコマンドラインのハイライト	|over-command_line-highlight|
+over のコマンドラインのキーマッピング	|over-command_line-key-mappings|
+over のコマンドラインの autocmd |over-command_line-autocmd|
+
+
+==============================================================================
+概要						*over-introduction*
+
+*over.vim* は |:substitute| の {pattern} をハイライトするプラグインです。
+この機能を使用する場合、コマンドラインではなくてコマンドラインウィンドウから
+|:substitute| を行う必要があります。
+また、この場合は {pattern} のみがハイライトされます。
+
+|:OverCommandLine| を使用すると {pattern} がハイライトされ、{string} のプレ
+ビューも行われます。
+
+Requirements:
+  Vim 7.3 or above.
+    |strchars()| and |+conceal|
+
+
+==============================================================================
+インターフェース				*over-interface*
+
+------------------------------------------------------------------------------
+コマンド					*over-commands*
+
+:OverCommandLine [{input}]			*:OverCommandLine*
+	|over.vim| 独自のコマンドラインを使用して |:substitute| を行います。
+	このコマンドラインを使用すると {pattern} のハイライトを行い、{string}
+	のプレビューも行われます。
+	ただし、独自のコマンドラインなので特定のキーマッピングのみ使用できま
+	す。
+	使用できるキーマッピングは |over-command_line-key-mappings| を参照して
+	下さい。
+	{input} を渡すとその文字列が入力された状態で開始されます。
+
+:OverCommandLineNoremap {lhs} {rhs}		*:OverCommandLineNoremap*
+	コマンドラインで使用するキーを設定します。
+	{lhs} のキーが {rhs} に割り当てられます。
+	また、再マップは行われません。
+	この設定は |g:over_command_line_key_mappings| に反映されます。
+Example: >
+	OverCommandLineNoremap <A-b> <C-b>
+	OverCommandLineNoremap <A-f> <C-f>
+<
+
+:OverCommandLineMap {lhs} {rhs}			*:OverCommandLineMap*
+	|:OverCommandLineNoremap| と同等ですが再マップされます。
+
+:OverCommandLineUnmap {lhs}			*:OverCommandLineUnmap*
+	{lhs} に設定されているキーマッピングを削除します。
+	
+
+==============================================================================
+設定						*over-setting*
+
+------------------------------------------------------------------------------
+over の変数					*over-variables*
+
+g:over_enable_auto_nohlsearch			*g:over_enable_auto_nohlsearch*
+	1 が設定されていればコマンドラインウィンドウで |:s| した後に自動的に
+	|nohlsearch| を呼び出します。
+Default: >
+	let g:over_enable_auto_nohlsearch = 1
+<
+
+g:over_enable_cmd_window			*g:over_enable_cmd_window*
+	1 が設定されていればコマンドラインウィンドウで |:s| 時にパターン箇所の
+	ハイライトを行います。
+Default: >
+	let g:over_enable_cmd_window = 1
+<
+
+g:over_command_line_prompt			*g:over_command_line_prompt*
+	|:OverCommandLine| のプロンプトです。
+Default: >
+	let g:over_command_line_prompt = "> "
+<
+
+g:over_command_line_key_mappings	*g:over_command_line_key_mappings*
+	コマンドラインで使用されるキーマッピングを設定します。
+	{lhs} に複数のキーを設定することもできます。
+Example: >
+	" <C-l> を <C-f> に
+	" <C-h> を <C-b> に割り当てる
+	" <C-x><C-x> でコマンドラインを抜ける
+	let g:over_command_line_key_mappings = {
+	\	"\<C-l>" : "\<C-f>",
+	\	"\<C-h>" : "\<C-b>",
+	\	"\<C-x>\<C-c>" : "\<Esc>",
+	\}
+<
+	また、以下のようにして式を展開することも出います。
+Example: >
+	" <A-p> を入力すると "expand('%')" を評価した値が挿入される
+	let g:over_command_line_key_mappings = {
+	\	"\<A-p>" : {
+	\		"expr" : 1,
+	\		"key" : "expand('%')",
+	\	}
+	\}
+<
+
+				*g:over#command_line#search#enable_incsearch*
+g:over#command_line#search#enable_incsearch
+	0 以外が設定されていれば :/ or :? 時にそのパータンをハイライトする。
+Default: >
+	let g:over#command_line#search#enable_incsearch = 1
+<
+				*g:over#command_line#search#enable_move_cursor*
+g:over#command_line#search#enable_move_cursor
+	0 以外が設定されていれば :/ or :? 時にそのパータンへカーソルを移動す
+	る。
+Default: >
+	let g:over#command_line#search#enable_move_cursor = 0
+<
+				*g:over#command_line#paste_escape_chars*
+g:over#command_line#paste_escape_chars
+	<C-v> 時に挿入するテキストを \ でエスケープする文字を設定する。
+Example: >
+	" $foo.bar / 2 + 1 を挿入すると
+	" \$foo\.bar \/ 2 + 1 が挿入される
+	let g:over#command_line#paste_escape_chars = '/.*$^~'
+<
+
+g:over#command_line#paste_filters	*g:over#command_line#paste_filters*
+	<C-v> 時に挿入するテキストを任意の文字で置換える設定をする。
+Default: >
+	" 改行コードを "\n" や "\r" に置き換えて挿入する
+	let g:over#command_line#paste_filters = {
+	\	"\n" : '\\n',
+	\	"\r" : '\\r',
+	\}
+<
+
+			*g:over#command_line#substitute#highlight_pattern*
+g:over#command_line#substitute#highlight_pattern
+	|:substitute| の {pattern} をハイライトするグループ名です。
+
+Default: >
+	let g:over#command_line#substitute#highlight_pattern = "Search"
+<
+			*g:over#command_line#substitute#highlight_string*
+g:over#command_line#substitute#highlight_string
+	|:substitute| の {string} をハイライトするグループ名です。
+
+Default: >
+	let g:over#command_line#substitute#highlight_string = "Error"
+<
+					*g:over#command_line#enable_Digraphs*
+g:over#command_line#enable_Digraphs
+	0 が設定されている場合 |Digraphs| が無効になります。
+Default: >
+	le g:over#command_line#enable_Digraphs = 1
+<
+	NONE:|Digraphs| を有効にすると GUI 版の Vim で起動時にちらつく問題が
+	あるので、それを抑制したい場合はこの設定を利用してください。
+	https://github.com/osyo-manga/vital-over/issues
+
+			*g:over#command_line#enable_import_commandline_map*
+g:over#command_line#enable_import_commandline_map
+	0 が設定されている場合、|:cmap| |:cnoremap| の設定が反映されなくな
+	ります。
+	|:cmap| |:cnoremap| の設定が競合してしまう場合は 0 を設定してく
+	ださい。
+
+
+==============================================================================
+over のコマンドラインのハイライト		*over-command_line-highlight*
+
+|over.vim| で使用される |:highlight| です。
+
+OverCommandLineCursor				*OverCommandLineCursor*
+	カーソル位置のハイライトです。
+	コマンドラインの末尾で使用されます。
+	デフォルトでは |hl-Cursor| が使用されます。
+
+OverCommandLineCursorInsert			*OverCommandLineCursorInsert*
+	カーソル位置のハイライトです。
+	コマンドラインの文字上で使用されます。
+	デフォルトでは |hl-Cursor| を使用し、|underline| が設定されます。
+	
+
+
+==============================================================================
+over のコマンドラインのキーマッピング	*over-command_line-key-mappings*
+
+コマンドラインで使用できるキーマッピングです。
+このキーマッピングは |g:over_command_line_key_map| で変更することが可能で
+す。
+また、|:cmap| |:cnoremap| で設定したキーマッピングも反映されます。
+|:cmap| |:cnoremap| よりも |g:over_command_line_key_map| 等で設定した
+キーマッピングが優先されることに注意してください。
+
+
+キー			処理~
+-----------		-------------------------------
+<CR>			コマンドの実行
+<Esc>			コマンドラインから抜ける
+<C-v>			最後にヤンクしたテキストを挿入する
+<BS> or <C-h>		1文字削除
+<C-w>			カーソルの前にある単語を削除
+<Right> or <C-f>	カーソルを右に移動
+<Left> or <C-b>		カーソルを左に移動
+<Del> or <C-d>		カーソル上の文字を削除
+<Home> or <C-a>		カーソルを先頭へ移動
+<End> or <C-e>		カーソルを末尾へ移動
+<Up> or <C-p>		1つ前のコマンド履歴を挿入
+<Down> or <C-n>		1つ後のコマンド履歴を挿入
+<C-r><C-f>		カーソル下のファイル名を挿入
+<C-r><C-w>		カーソル下の word を挿入
+<C-r><C-r>		カーソル下の WORD を挿入
+<Tab>			バッファ上のワードで補完を行う
+<C-r>{0-9a-z"%#:-.*=}	番号/名前付きレジスタの挿入 
+<C-q>			次に打ち込まれた非数字文字をその通りに挿入
+
+
+以下は特殊なマッピングです。
+使用する場合は |OverCommandLineNoremap| で任意のキーに割り当てて下さい。
+
+キー						処理~
+<Plug>(over-cmdline-substitute-jump-pattern)	|:substitute| の {pattenr} へ
+						カーソルを移動
+<Plug>(over-cmdline-substitute-jump-string)	|:substitute| の {string} へ
+						カーソルを移動
+<Plug>(over-cmdline-scroll-y)			|CTRL-y| 相当
+<Plug>(over-cmdline-scroll-u)			|CTRL-u| 相当
+<Plug>(over-cmdline-scroll-f)			|CTRL-f| 相当
+<Plug>(over-cmdline-scroll-e)			|CTRL-e| 相当
+<Plug>(over-cmdline-scroll-d)			|CTRL-d| 相当
+<Plug>(over-cmdline-scroll-b)			|CTRL-b| 相当
+
+Example: >
+    OverCommandLineNoremap <A-s> <Plug>(over-cmdline-substitute-jump-string)
+    OverCommandLineNoremap <A-p> <Plug>(over-cmdline-substitute-jump-pattern)
+<
+
+
+==============================================================================
+over のコマンドラインの autocmd			*over-command_line-autocmd*
+
+|:OverCommandLine| から発行される |autocmd| |User| です。
+
+名前			発生するとき~
+OverCmdLineEnter	コマンドラインが開始された時
+OverCmdLineLeave	コマンドラインが終了した時
+OverCmdLineExecutePre	コマンドが実行される直前
+OverCmdLineExecute	コマンドが実行された後
+OverCmdLineCharPre	いずれかのキーが入力された時
+			コマンドラインにキーが追加される前
+OverCmdLineChar		いずれかのキーが入力されてコマンドラインに追加された後
+OverCmdLineCancel	コマンドラインを実行しないで終了した時
+
+
+==============================================================================
+FAQ						*over-command_line-faq*
+
+Q. <C-v> 時に特殊文字を挿入したい
+
+A. 次のマッピングを追加してください
+
+>
+	OverCommandLineMap <C-v> <C-q>
+<
+
+
+==============================================================================
+更新履歴						*over-changelog*
+
+3.0  (2015/04/01)
+	- cmap/cnoremap の設定のインポート
+	- <C-w> 時に正規表現を考慮した単語を削除
+	- digraph の対応
+	- <C-q> (<C-v> )機能の追加
+	- キーマッピング時の lhs に複数キーの割り当に対応
+	- <expr> の対応
+
+2.0
+	- リファクタリング
+	- カーソルのハイライトを変更
+	- |:/|,:%g/ 時のハイライトを追加
+	- 特殊キー（CTRL + 文字等）が入力されないように変更
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

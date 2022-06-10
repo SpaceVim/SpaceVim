@@ -1,0 +1,106 @@
+scriptencoding utf-8
+Describe basic_asterisk
+
+  Before all
+    let lines = [
+    \     '1.asterisk 2.asterisk 3.asterisk'
+    \   , '4.Asterisk 5.AsteRisK 6.Asterisk'
+    \   , ''
+    \   , '7.アスタリスク 8.アスタリスクです 9.アスタリスク?'
+    \ ]
+    call g:Add_lines(lines)
+    let g:asterisk#keeppos = 1
+  End
+
+  Before each
+    call cursor([1, 1])
+    normal! 2l
+  End
+
+  After all
+    :1,$ delete
+    let g:asterisk#keeppos = 0
+  End
+
+  Describe keeppos *
+    It search forward with \<\> keeping cursor position
+      normal! 3l
+      normal *
+      Assert Equals(histget('/', -1), '\<asterisk\>/s+3')
+    End
+    It keep cursor position without offset
+      normal *
+      Assert Equals(histget('/', -1), '\<asterisk\>')
+    End
+    It doesn't keep cursor position if the char under cursor is not keyword
+      normal 1h
+      normal *
+      Assert Equals(histget('/', -1), '\<asterisk\>')
+    End
+    It handles multibyte
+      normal! 3j2l
+      normal *
+      Assert Equals(histget('/', -1), '\<アスタリスク\>/s+2')
+    End
+  End
+
+  Describe keeppos g*
+    It search forward keeping cursor position
+      normal! 3l
+      normal g*
+      Assert Equals(histget('/', -1), 'asterisk/s+3')
+    End
+    It keep cursor position without offset
+      normal g*
+      Assert Equals(histget('/', -1), 'asterisk')
+    End
+    It doesn't keep cursor position if the char under cursor is not keyword
+      normal 1h
+      normal g*
+      Assert Equals(histget('/', -1), 'asterisk')
+    End
+  End
+
+  Describe keeppos #
+    It search backward with \<\> keeping cursor position
+      normal! 3l
+      normal #
+      Assert Equals(histget('/', -1), '\<asterisk\>?s+3')
+    End
+    It search backward and correct count at the end of word
+      normal! $
+      normal #
+      Assert Equals(histget('/', -1), '\<asterisk\>?s+7')
+      normal! 9h
+      Assert Equals(g:Get_pos_char(), '2')
+    End
+    It keep cursor position without offset
+      normal #
+      Assert Equals(histget('/', -1), '\<asterisk\>')
+    End
+    It doesn't keep cursor position if the char under cursor is not keyword
+      normal 1h
+      normal #
+      Assert Equals(histget('/', -1), '\<asterisk\>')
+    End
+  End
+
+  Describe keeppos g#
+    It search forward keeping cursor position
+      normal! 3l
+      normal g#
+      Assert Equals(histget('/', -1), 'asterisk?s+3')
+    End
+    It keep cursor position without offset
+      normal g#
+      Assert Equals(histget('/', -1), 'asterisk')
+    End
+    It doesn't keep cursor position if the char under cursor is not keyword
+      normal 1h
+      normal g#
+      Assert Equals(histget('/', -1), 'asterisk')
+    End
+  End
+
+
+End
