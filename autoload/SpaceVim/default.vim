@@ -161,7 +161,7 @@ endfunction
 
 function! SpaceVim#default#keyBindings() abort
   call SpaceVim#logger#debug('init default key bindings.')
-  xnoremap <expr> <Leader>y clipboard#yank()
+  xnoremap <silent> <Leader>y :<C-u>call clipboard#yank()<cr>
   nnoremap <expr> <Leader>p clipboard#paste('p')
   nnoremap <expr> <Leader>P clipboard#paste('P')
   xnoremap <expr> <Leader>p clipboard#paste('p')
