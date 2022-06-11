@@ -49,8 +49,10 @@ function! s:set_command() abort
   return [yank, paste]
 endfunction
 
+" yank to system clipboard
 function! clipboard#yank() abort
-  call system(s:yank_cmd, GetSelectedText())
+  call system(s:yank_cmd, s:get_selection_text())
+  return ''
 endfunction
 
 
@@ -62,9 +64,11 @@ function! clipboard#paste(mode) abort
 endfunction
 
 
-function! GetSelectedText()
+function! s:get_selection_text()
+  let save_x = @x
   normal gv"xy
-  let result = getreg("x")
+  let result = @x
+  let @x = save_x
   return result
 endfunction
 
