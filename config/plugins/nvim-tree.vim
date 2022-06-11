@@ -26,7 +26,7 @@ require'nvim-tree'.setup {
     width = vim.api.nvim_eval('g:spacevim_sidebar_width'),
     height = 30,
     hide_root_folder = false,
-    side = "right",
+    side = vim.api.nvim_eval('g:spacevim_filetree_direction'),
     preserve_window_proportions = false,
     number = false,
     relativenumber = false,
