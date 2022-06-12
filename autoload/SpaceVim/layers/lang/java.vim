@@ -157,6 +157,7 @@ function! SpaceVim#layers#lang#java#config() abort
       autocmd FileType java setlocal omnifunc=javacomplete#Complete
     endif
     autocmd FileType jsp call <SID>JspFileTypeInit()
+    autocmd FileType java set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
   augroup END
   let g:neoformat_enabled_java = get(g:, 'neoformat_enabled_java', ['googlefmt'])
   let g:neoformat_java_googlefmt = {

@@ -43,7 +43,6 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufWinEnter * if(exists('b:_winview')) | call winrestview(b:_winview) | endif
     autocmd BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
     autocmd BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
-    autocmd FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
     autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
     autocmd Filetype qf setlocal nobuflisted
     au StdinReadPost * call s:disable_welcome()
