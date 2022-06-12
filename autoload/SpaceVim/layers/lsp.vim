@@ -92,9 +92,13 @@ end
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local override_client_cmds = require('spacevim').eval('s:override_client_cmds')
-for client, override_cmd in ipairs(override_client_cmds) do
+for client, override_cmd in pairs(override_client_cmds) do
   nvim_lsp[client].setup {
     cmd = override_cmd,
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+      }
     }
 end
 local servers = require('spacevim').eval('s:enabled_clients')
