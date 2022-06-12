@@ -25,6 +25,7 @@ and usage.
   - [How to reload `init.toml`?](#how-to-reload-inittoml)
   - [How to enable +py and +py3 in Neovim?](#how-to-enable-py-and-py3-in-neovim)
   - [Why does Vim freeze after pressing Ctrl-s?](#why-does-vim-freeze-after-pressing-ctrl-s)
+  - [How to use telescope layer only for nvim?](#how-to-use-telescope-layer-only-for-nvim)
 
 <!-- vim-markdown-toc -->
 
@@ -180,3 +181,18 @@ this feature you need the following in either `~/.bash_profile` or `~/.bashrc`:
 ```sh
 stty -ixon
 ```
+
+### How to use telescope layer only for nvim?
+
+If you use both Nvim and Vim, you can use following configuration to select corresponding layer.
+
+```toml
+[[layers]]
+    name = 'telescope'
+    enable = 'has("nvim")'
+[[layers]]
+    name = 'leaderf'
+    enable = '!has("nvim")'
+```
+
+
