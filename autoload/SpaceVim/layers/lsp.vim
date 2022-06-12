@@ -43,6 +43,7 @@ endif
 let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
 let s:FILE = SpaceVim#api#import('file')
 let s:enabled_clients = []
+let s:override_client_cmds = {}
 
 function! SpaceVim#layers#lsp#health() abort
   call SpaceVim#layers#lsp#plugins()
@@ -90,6 +91,12 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
+local override_client_cmds = require('spacevim').eval('s:override_client_cmds')
+for client, override_cmd in ipairs(override_client_cmds) do
+  nvim_lsp[client].setup {
+    cmd = override_cmd,
+    }
+end
 local servers = require('spacevim').eval('s:enabled_clients')
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
@@ -256,6 +263,7 @@ let s:lsp_servers = {
 function! SpaceVim#layers#lsp#set_variable(var) abort
   let s:enabled_clients = get(a:var, 'enabled_clients', s:enabled_clients)
   let override = get(a:var, 'override_cmd', {})
+  let s:override_client_cmds = get(a:var, 'override_client_cmds', {})
   if !empty(override)
     call extend(s:lsp_servers, override, 'force')
   endif
