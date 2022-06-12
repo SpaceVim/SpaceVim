@@ -59,6 +59,11 @@ function! SpaceVim#layers#lang#coffeescript#config() abort
   call SpaceVim#plugins#repl#reg('coffee', [s:coffee_interpreter, '-i'])
   call SpaceVim#mapping#space#regesit_lang_mappings('coffee', function('s:language_specified_mappings'))
 
+  augroup spacevim_layer_lang_coffeescript
+    autocmd!
+    autocmd FileType coffee call SpaceVim#util#check_if_expand_tab()
+  augroup END
+
 endfunction
 
 function! s:language_specified_mappings() abort
