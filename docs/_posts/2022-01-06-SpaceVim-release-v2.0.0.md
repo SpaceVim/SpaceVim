@@ -28,6 +28,7 @@ So let's take a look at what happened since last relase.
 
 ## What's New
 
+```
 - build(docker): fix dockerfile 
 - build(docker): use debian stable image 
 - chore(bundle): update bundle `clever-f` 
@@ -595,3 +596,4 @@ So let's take a look at what happened since last relase.
 - test(telescope): add layer health function 
 - test(todo): add test for todo.vim 
 - test(vint): enable `ProhibitEqualTildeOperator` policy 
+```
