@@ -198,7 +198,13 @@ function! SpaceVim#autocmds#VimEnter() abort
 
   if !filereadable('.SpaceVim.d/init.toml') && filereadable('.SpaceVim.d/init.vim')
     call SpaceVim#logger#info('loading local conf: .SpaceVim.d/init.vim')
-    exe 'source .SpaceVim.d/init.vim'
+    try
+      exe 'source .SpaceVim.d/init.vim'
+    catch
+      call SpaceVim#logger#error('Error occurred while loading the local configuration')
+      call SpaceVim#logger#error('       exception: ' . v:exception)
+      call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
+    endtry
     call SpaceVim#logger#info('finished loading local conf')
   endif
 endfunction
