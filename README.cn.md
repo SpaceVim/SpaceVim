@@ -1,17 +1,18 @@
-[![SpaceVim](docs/logo.png)](https://spacevim.org/cn/)
+<h1 align="center">
+  <a href="https://spacevim.org/cn/">
+  <img src="https://spacevim.org/logo.png" width="600" alt="SpaceVim"/>
+  </a>
+</h1>
 
-[维基](https://gitee.com/spacevim/SpaceVim/wikis) \|
-[中文社区](https://spacevim.org/cn/community/) \|
-[捐助](https://spacevim.org/cn/sponsors/) \|
-[推特](https://twitter.com/SpaceVim) \|
-[中文官网](https://spacevim.org/cn/)
+[即使聊天](https://app.element.io/#/room/#spacevim-cn:matrix.org) \|
+[入门指南](https://spacevim.org/cn/quick-start-guide/) \|
+[推特](https://twitter.com/SpaceVim)
 
-[![Gitter](https://img.shields.io/gitter/room/SpaceVim/SpaceVim?color=%2364CEAA)](https://gitter.im/SpaceVim/cn)
 [![build](https://img.shields.io/github/workflow/status/SpaceVim/SpaceVim/test)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
-[![Version](https://img.shields.io/badge/version-2.0.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Release](https://img.shields.io/badge/Release-1.9.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v1.9.0/)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
-[![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg)](doc/SpaceVim.txt)
+[![Docker Pulls](https://img.shields.io/docker/pulls/spacevim/spacevim)](https://hub.docker.com/r/spacevim/spacevim)
 
 ![welcome page](https://user-images.githubusercontent.com/13142418/148374827-5f7aeaaa-e69b-441e-b872-408b47f4da04.png)
 
@@ -22,12 +23,6 @@
 
 当前最新的稳定版为[v1.9.0](https://spacevim.org/SpaceVim-release-v1.9.0/)，[following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) 页面罗列了
 master 分支最新的更新以及变动。
-
-**推荐阅读:**
-
-- [入门指南](https://spacevim.org/cn/quick-start-guide/)
-- [用户文档](https://spacevim.org/cn/documentation/)
-- [可用模块](https://spacevim.org/cn/layers/)
 
 ## 支持 SpaceVim
 

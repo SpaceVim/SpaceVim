@@ -1,4 +1,4 @@
-如果在安装、配置或者使用 SpaceVim 过程中遇到了问题，可以进入 [SpaceVim 中文聊天室](https://gitter.im/SpaceVim/cn)跟大家一起交流。
+如果在安装、配置或者使用 SpaceVim 过程中遇到了问题，可以进入 [SpaceVim 中文聊天室](https://app.element.io/#/room/#spacevim-cn:matrix.org)跟大家一起交流。
 
 这是一篇关入如何快速获取帮助的指南，在提问之前，建议先阅读《[常见问题](https://spacevim.org/faq/)》，或许从中可以找到你问题的答案。
 
