@@ -66,7 +66,7 @@ main () {
             cat <<EOT > plugin/FlyGrep.vim
 "=============================================================================
 " FlyGrep.vim --- Fly grep in vim
-" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Copyright (c) 2016-2022 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://github.com/wsdjeg/FlyGrep.vim
 " License: MIT license
@@ -161,7 +161,7 @@ EOT
             cat <<EOT > autoload/plugin/iedit.vim
 "=============================================================================
 " iedit.vim --- multiple cursor support for neovim and vim
-" Copyright (c) 2016-2021 Shidong Wang & Contributors
+" Copyright (c) 2016-2022 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://github.com/wsdjeg/iedit.vim
 " License: MIT license

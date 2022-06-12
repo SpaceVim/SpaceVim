@@ -198,7 +198,7 @@ Vim 脚本的文件头，应该采用下面的格式：
 ```vim
 "=============================================================================
 " FILENAME --- NAME layer file for SpaceVim
-" Copyright (c) 2012-2016 Shidong Wang & Contributors
+" Copyright (c) 2012-2022 Shidong Wang & Contributors
 " Author: YOUR NAME <YOUR EMAIL>
 " URL: https://spacevim.org
 " License: GPLv3
@@ -220,7 +220,7 @@ Vim 脚本的文件头，应该采用下面的格式：
 ```vim
 "=============================================================================
 " foo.vim --- foo Layer file for SpaceVim
-" Copyright (c) 2012-2016 Shidong Wang & Contributors
+" Copyright (c) 2012-2022 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3

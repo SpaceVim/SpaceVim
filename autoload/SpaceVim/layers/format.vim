@@ -1,6 +1,6 @@
 "=============================================================================
 " format.vim --- format Layer file for SpaceVim
-" Copyright (c) 2012-2019 Shidong Wang & Contributors
+" Copyright (c) 2012-2022 Shidong Wang & Contributors
 " Author: Shidong Wang < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
