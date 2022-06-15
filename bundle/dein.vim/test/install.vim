@@ -702,7 +702,7 @@ function! s:suite.ftplugin() abort
   call dein#recache_runtimepath()
 
   call s:assert.equals(
-        \ readfile(dein#util#_get_runtime_path() . '/ftplugin.vim'),
+        \ readfile(dein#util#_get_runtime_path() . '/after/ftplugin.vim'),
         \ dein#install#_get_default_ftplugin() + [
         \ 'function! s:after_ftplugin()',
         \ ] + split(get(g:dein#_ftplugin, '_', []), '\n') + ['endfunction'])

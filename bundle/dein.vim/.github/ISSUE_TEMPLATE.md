@@ -1,19 +1,17 @@
-**Warning:  I will close the bug issue without the minimal init.vim and the reproduce ways.**
+**Warning: I will close the bug issue without the minimal init.vim and the
+reproduce ways.**
 
 # Problems summary
 
-
 ## Expected
-
 
 ## Environment Information (Required!)
 
- * dein.vim version(SHA1):
+- dein.vim version(SHA1):
 
- * OS:
+- OS:
 
- * Vim/neovim version:
-
+- Vim/neovim version:
 
 ## Provide a minimal .vimrc with less than 50 lines (Required!)
 
@@ -24,15 +22,12 @@ call dein#begin(path)
 call dein#end()
 ```
 
-
 ## The reproduce ways from Vim starting (Required!)
 
- 1. foo
- 2. bar
- 3. baz
-
+1. foo
+2. bar
+3. baz
 
 ## Screen shot (if possible)
-
 
 ## Upload the log messages by `:redir` and `:message` (if errored)

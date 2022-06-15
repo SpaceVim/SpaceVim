@@ -1,9 +1,3 @@
-"=============================================================================
-" FILE: dein.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
-" License: MIT license
-"=============================================================================
-
 function! dein#load_cache_raw(vimrcs) abort
   return dein#min#_load_cache_raw(a:vimrcs)
 endfunction
@@ -114,6 +108,9 @@ endfunction
 function! dein#get_progress() abort
   return dein#install#_get_progress()
 endfunction
+function! dein#get_failed_plugins() abort
+  return dein#install#_get_failed_plugins()
+endfunction
 function! dein#each(command, ...) abort
   return dein#install#_each(a:command, (a:0 ? a:1 : []))
 endfunction
@@ -144,4 +141,14 @@ function! dein#clear_state() abort
     call dein#util#_notify(
           \ 'call dein#recache_runtimepath() is needed for ftplugin feature')
   endif
+endfunction
+function! dein#deno_cache(...) abort
+  call dein#install#_deno_cache(get(a:000, 0, []))
+endfunction
+function! dein#post_sync(plugins) abort
+  call dein#install#_post_sync(a:plugins)
+endfunction
+function! dein#get_updated_plugins(...) abort
+  return dein#install#_get_updated_plugins(
+        \ get(a:000, 0, []), dein#install#_is_async())
 endfunction

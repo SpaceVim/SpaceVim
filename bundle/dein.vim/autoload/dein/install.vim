@@ -1,14 +1,10 @@
-"=============================================================================
-" FILE: install.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
-" License: MIT license
-"=============================================================================
-
 " Variables
 let s:global_context = {}
 let s:log = []
 let s:updates_log = []
 let s:progress = ''
+let s:failed_plugins = []
+let s:progress_winid = -1
 
 " Global options definition.
 let g:dein#install_max_processes =
@@ -28,6 +24,11 @@ let g:dein#install_curl_command =
       \ get(g:, 'dein#install_curl_command', 'curl')
 let g:dein#install_check_diff =
       \ get(g:, 'dein#install_check_diff', v:false)
+let g:dein#install_check_remote_threshold =
+      \ get(g:, 'dein#install_check_remote_threshold', 0)
+let g:dein#install_copy_vim =
+      \ get(g:, 'dein#install_copy_vim',
+      \     has('nvim') && !dein#util#_is_windows())
 
 function! s:get_job() abort
   if !exists('s:Job')
@@ -105,26 +106,26 @@ function! s:update_loop(context) abort
   return errored
 endfunction
 
-function! dein#install#_check_update(plugins, force, async) abort
+function! dein#install#_get_updated_plugins(plugins, async) abort
   if g:dein#install_github_api_token ==# ''
     call s:error('You need to set g:dein#install_github_api_token' .
           \ ' for the feature.')
-    return
+    return []
   endif
   if !executable(g:dein#install_curl_command)
     call s:error('curl must be executable for the feature.')
-    return
+    return []
   endif
 
-  let s:global_context.progress_type = 'echo'
+  let context = s:init_context(a:plugins, 'check_update', 0)
+  call s:init_variables(context)
 
   let query_max = 100
   let plugins = dein#util#_get_plugins(a:plugins)
   let processes = []
   for index in range(0, len(plugins) - 1, query_max)
-    redraw
     call s:print_progress_message(
-         \s:get_progress_message('', index, len(plugins)))
+          \ s:get_progress_message('send query', index, len(plugins)))
 
     let query = ''
     for plug_index in range(index,
@@ -205,32 +206,66 @@ function! dein#install#_check_update(plugins, force, async) abort
 
   " Compare with .git directory updated time.
   let updated = []
+  let index = 1
   for plugin in plugins
     if !has_key(check_pushed, plugin.repo)
+      let index += 1
       continue
     endif
+
+    call s:print_progress_message(
+          \ s:get_progress_message('compare plugin', index, len(plugins)))
 
     let git_path = plugin.path . '/.git'
     let repo_time = isdirectory(plugin.path) ? getftime(git_path) : -1
 
-    if min([repo_time, rollback_time]) < check_pushed[plugin.repo]
+    call s:log(printf('%s: pushed_time=%d, repo_time=%d, rollback_time=%d',
+          \ plugin.name, check_pushed[plugin.repo], repo_time, rollback_time))
+
+    let local_update = min([repo_time, rollback_time])
+    if local_update < check_pushed[plugin.repo]
       call add(updated, plugin)
+    elseif abs(local_update - check_pushed[plugin.repo]) <
+          \ g:dein#install_check_remote_threshold
+      " Note: github Graph QL API may use cached value
+      " If the repository is updated recently, use "git ls-remote" instead.
+      let remote = matchstr(s:system_cd(
+            \ ['git', 'ls-remote', 'origin', 'HEAD'], plugin.path), '^\x\+')
+      let local = s:get_revision_number(plugin)
+      call s:log(printf('%s: remote=%s, local=%s',
+            \ plugin.name, remote, local))
+      if remote !=# '' && local !=# remote
+        call add(updated, plugin)
+      endif
     endif
+
+    let index += 1
   endfor
 
   redraw | echo ''
 
+  if s:progress_winid > 0
+    call timer_start(1000, { -> s:close_progress_popup() })
+  endif
+
   " Clear global context
   let s:global_context = {}
 
+  return updated
+endfunction
+function! dein#install#_check_update(plugins, force, async) abort
+  let updated = dein#install#_get_updated_plugins(a:plugins, a:async)
   if empty(updated)
     call s:notify(strftime('Done: (%Y/%m/%d %H:%M:%S)'))
     return
   endif
 
-  " Note: Use echo to display it in confirm
-  call s:echo('Updated plugins: ' .
-        \ string(map(copy(updated), { _, val -> val.name })), 'echo')
+  let updated_msg = 'Updated plugins: ' .
+        \ string(map(copy(updated), { _, val -> val.name }))
+  call s:log(updated_msg)
+
+  " Note: Use echomsg to display it in confirm
+  call s:echo(updated_msg, 'echomsg')
   if !a:force && confirm(
         \ 'Updated plugins are exists. Update now?', "yes\nNo", 2) != 1
     return
@@ -353,7 +388,9 @@ function! dein#install#_recache_runtimepath() abort
   call s:merge_files(merge_ftdetect_plugins, 'ftdetect')
   call s:merge_files(merge_ftdetect_plugins, 'after/ftdetect')
 
-  silent call dein#remote_plugins()
+  if get(g:, 'dein#auto_remote_plugins', v:true)
+    silent call dein#remote_plugins()
+  endif
 
   call dein#call_hook('post_source')
 
@@ -390,7 +427,7 @@ function! s:helptags() abort
     let tags = dein#util#_get_runtime_path() . '/doc'
     call dein#util#_safe_mkdir(tags)
     call s:copy_files(filter(values(dein#get()),
-          \ { _, val -> !val.merged }), 'doc')
+          \ { _, val -> !val.merged && !get(val, 'local', v:false) }), 'doc')
     silent execute 'helptags' fnameescape(tags)
   catch /^Vim(helptags):E151:/
     " Ignore an error that occurs when there is no help file
@@ -411,18 +448,27 @@ function! s:copy_files(plugins, directory) abort
   endfor
 endfunction
 function! s:merge_files(plugins, directory) abort
-  let files = []
+  let vimfiles = []
+  let luafiles = []
   for plugin in a:plugins
     for file in filter(globpath(
-          \ plugin.rtp, a:directory.'/**', v:true, v:true),
+          \ plugin.rtp, a:directory.'/**/*', v:true, v:true),
           \ { _, val -> !isdirectory(val) })
-      let files += readfile(file, ':t')
+      if fnamemodify(file, ':e') ==# 'vim'
+        let vimfiles += readfile(file, ':t')
+      elseif fnamemodify(file, ':e') ==# 'lua'
+        let luafiles += readfile(file, ':t')
+      endif
     endfor
   endfor
 
-  if !empty(files)
-    call dein#util#_cache_writefile(files,
+  if !empty(vimfiles)
+    call dein#util#_cache_writefile(vimfiles,
           \ printf('.dein/%s/%s.vim', a:directory, a:directory))
+  endif
+  if !empty(luafiles)
+    call dein#util#_cache_writefile(luafiles,
+          \ printf('.dein/%s/%s.lua', a:directory, a:directory))
   endif
 endfunction
 function! dein#install#_save_rollback(rollbackfile, plugins) abort
@@ -475,12 +521,13 @@ endfunction
 
 function! dein#install#_get_default_ftplugin() abort
   return [
-        \ 'if exists("g:did_load_ftplugin")',
+        \ 'if exists("g:did_load_after_ftplugin")',
         \ '  finish',
         \ 'endif',
-        \ 'let g:did_load_ftplugin = 1',
+        \ 'let g:did_load_after_ftplugin = 1',
         \ '',
         \ 'augroup filetypeplugin',
+        \ '  autocmd!',
         \ '  autocmd FileType * call s:ftplugin()',
         \ 'augroup END',
         \ '',
@@ -542,7 +589,7 @@ function! s:generate_ftplugin() abort
         \ dein#install#_get_default_ftplugin() + [
         \ 'function! s:after_ftplugin()',
         \ ] + get(ftplugin, '_', []) + ['endfunction'],
-        \ dein#util#_get_runtime_path() . '/ftplugin.vim')
+        \ dein#util#_get_runtime_path() . '/after/ftplugin.vim')
 
   " Generate after/ftplugin
   for [filetype, list] in filter(items(ftplugin),
@@ -586,8 +633,13 @@ function! dein#install#_remote_plugins() abort
   endif
 
   " Load not loaded neovim remote plugins
-  let remote_plugins = filter(values(dein#get()),
-        \ { _, val -> isdirectory(val.rtp . '/rplugin') && !val.sourced })
+  let remote_plugins = filter(values(dein#get()), { _, val ->
+        \  isdirectory(val.rtp . '/rplugin') && !val.sourced &&
+        \  !empty(glob(val.rtp . '/rplugin/*/*/__init__.py', 1, 1))
+        \ })
+  if empty(remote_plugins)
+    return
+  endif
 
   call dein#autoload#_source(remote_plugins)
 
@@ -653,6 +705,9 @@ function! dein#install#_get_context() abort
 endfunction
 function! dein#install#_get_progress() abort
   return s:progress
+endfunction
+function! dein#install#_get_failed_plugins() abort
+  return s:failed_plugins
 endfunction
 
 function! s:get_progress_message(name, number, max) abort
@@ -766,9 +821,9 @@ function! s:lock_revision(process, context) abort
   endif
 endfunction
 function! s:get_updated_message(context, plugins) abort
-  if empty(a:plugins)
-    return ''
-  endif
+  "if empty(a:plugins)
+  "  return ''
+  "endif
 
   " Diff check
   if g:dein#install_check_diff
@@ -801,6 +856,7 @@ function! s:get_errored_message(plugins) abort
 
   return msg
 endfunction
+
 function! s:check_diff(plugins) abort
   for plugin in a:plugins
     let type = dein#util#_get_type(plugin.type)
@@ -808,14 +864,37 @@ function! s:check_diff(plugins) abort
       continue
     endif
 
-    let diff = s:system_cd(
-          \ type.get_diff_command(plugin, plugin.old_rev, plugin.new_rev),
-          \ plugin.path)
-    if diff !=# ''
-      echo printf("%s: The documentation is updated\n%s\n\n",
-            \ plugin.name, diff)
-    endif
+    " Note: execute diff command in background
+    let cmd = type.get_diff_command(plugin, plugin.old_rev, plugin.new_rev)
+    let cwd = getcwd()
+    try
+      call dein#install#_cd(plugin.path)
+      call s:get_job().start(
+            \ s:convert_args(cmd), {
+            \   'on_stdout': function('s:check_diff_on_out')
+            \ })
+    finally
+      call dein#install#_cd(cwd)
+    endtry
   endfor
+endfunction
+function! s:check_diff_on_out(data) abort
+  let bufname = 'dein-diff'
+  if !bufexists(bufname)
+    let bufnr = bufadd(bufname)
+  else
+    let bufnr = bufnr(bufname)
+  endif
+
+  if bufwinnr(bufnr) < 0
+    let cmd = 'setlocal bufhidden=wipe filetype=diff buftype=nofile nolist'
+          \ . '| syntax enable'
+    execute printf('sbuffer +%s', escape(cmd, ' ')) bufnr
+  endif
+
+  let current = getbufline(bufnr, '$')[0]
+  call setbufline(bufnr, '$', current . a:data[0])
+  call appendbufline(bufnr, '$', a:data[1:])
 endfunction
 
 
@@ -854,7 +933,6 @@ function! s:job_system.system(cmd) abort
   let job = s:get_job().start(
         \ s:convert_args(a:cmd),
         \ {'on_stdout': self.on_out})
-
   let s:job_system.status = job.wait(
         \ g:dein#install_process_timeout * 1000)
   return join(s:job_system.candidates, "\n")
@@ -928,6 +1006,11 @@ endfunction
 function! dein#install#_copy_directories(srcs, dest) abort
   if empty(a:srcs)
     return 0
+  endif
+
+  if g:dein#install_copy_vim
+    " Note: For neovim, vim.loop.fs_{sym}link is faster
+    return dein#install#_copy_directories_vim(a:srcs, a:dest)
   endif
 
   if dein#util#_is_windows() && has('python3')
@@ -1048,6 +1131,82 @@ vim.vars['dein#_python_version_check'] = (
 EOF
   return get(g:, 'dein#_python_version_check', 0)
 endfunction
+function! dein#install#_copy_directories_vim(srcs, dest) abort
+  for src in a:srcs
+    for srcpath in glob(src . '/**/*', 1, 1)
+      let destpath = substitute(srcpath,
+            \ dein#util#escape_match(src),
+            \ dein#util#escape_match(a:dest), '')
+      let parent = fnamemodify(destpath, ':p:h')
+      if !isdirectory(parent)
+        call mkdir(parent, 'p')
+      endif
+
+      if isdirectory(srcpath)
+        call mkdir(destpath, 'p')
+      elseif srcpath !~# 'tags\%(-\w*\)\?$'
+        " Ignore tags
+        call dein#install#_copy_file_vim(srcpath, destpath)
+      endif
+    endfor
+  endfor
+endfunction
+function! dein#install#_copy_file_vim(src, dest) abort
+  " Note: In Windows, v:lua.vim.loop.fs_symlink does not work.
+  if has('nvim')
+    if dein#util#_is_windows()
+      call v:lua.vim.loop.fs_link(a:src, a:dest)
+    else
+      call v:lua.vim.loop.fs_symlink(a:src, a:dest)
+    endif
+  else
+    let raw = readfile(a:src, 'b')
+    call writefile(raw, a:dest, 'b')
+  endif
+endfunction
+
+function! dein#install#_deno_cache(...) abort
+  if !executable('deno')
+    return
+  endif
+
+  let plugins = dein#util#_get_plugins(get(a:000, 0, []))
+
+  for plugin in plugins
+    if !isdirectory(plugin.rtp . '/denops')
+      continue
+    endif
+
+    call dein#install#_system(
+          \ ['deno', 'cache', '--no-check'] +
+          \ glob(plugin.rtp . '/denops/**/*.ts', 1, 1))
+  endfor
+endfunction
+
+function! dein#install#_post_sync(plugins) abort
+  if empty(a:plugins)
+    return
+  endif
+
+  call dein#install#_recache_runtimepath()
+
+  call dein#install#_deno_cache(a:plugins)
+
+  call dein#source(a:plugins)
+
+  " Execute done_update hooks
+  let done_update_plugins = filter(dein#util#_get_plugins(a:plugins),
+        \ { _, val -> has_key(val, 'hook_done_update') })
+  if !empty(done_update_plugins)
+    if has('vim_starting')
+      let s:done_updated_plugins = done_update_plugins
+      autocmd dein VimEnter * call s:call_done_update_hooks(
+            \ s:done_updated_plugins)
+    else
+      call s:call_done_update_hooks(done_update_plugins)
+    endif
+  endif
+endfunction
 
 function! s:install_blocking(context) abort
   try
@@ -1159,43 +1318,39 @@ endfunction
 function! s:start() abort
   call s:notify(strftime('Update started: (%Y/%m/%d %H:%M:%S)'))
 endfunction
+function! s:close_progress_popup() abort
+  if winbufnr(s:progress_winid) < 0
+    return
+  endif
+
+  if has('nvim')
+    silent! call nvim_win_close(s:progress_winid, v:true)
+  else
+    silent! call popup_close(s:progress_winid)
+  endif
+  let s:progress_winid = -1
+endfunction
 function! s:done(context) abort
   call s:restore_view(a:context)
+
+  let s:failed_plugins = map(copy(a:context.errored_plugins),
+        \ { _, val -> val.name })
+
+  if !empty(a:context.synced_plugins)
+    let names = map(copy(a:context.synced_plugins), { _, val -> val.name })
+    call dein#install#_post_sync(names)
+  endif
 
   if !has('vim_starting')
     call s:notify(s:get_updated_message(a:context, a:context.synced_plugins))
     call s:notify(s:get_errored_message(a:context.errored_plugins))
   endif
 
-  if !empty(a:context.synced_plugins)
-    call dein#install#_recache_runtimepath()
-
-    call dein#source(map(copy(a:context.synced_plugins),
-          \ { _, val -> val.name }))
-
-    " Execute done_update hooks
-    let done_update_plugins = filter(copy(a:context.synced_plugins),
-          \ { _, val -> has_key(val, 'hook_done_update') })
-    if !empty(done_update_plugins)
-      if has('vim_starting')
-        let s:done_updated_plugins = done_update_plugins
-        autocmd dein VimEnter * call s:call_done_update_hooks(
-              \ s:done_updated_plugins)
-      else
-        " Reload plugins to execute hooks
-        runtime! plugin/**/*.vim
-
-        if has('nvim')
-          " Neovim loads lua files at startup
-          runtime! plugin/**/*.lua
-        endif
-
-        call s:call_done_update_hooks(done_update_plugins)
-      endif
-    endif
-  endif
-
   redraw | echo ''
+
+  if s:progress_winid > 0
+    call timer_start(1000, { -> s:close_progress_popup() })
+  endif
 
   call s:notify(strftime('Done: (%Y/%m/%d %H:%M:%S)'))
 
@@ -1489,20 +1644,65 @@ function! s:print_progress_message(msg) abort
     return
   endif
 
+  redraw
+
   let progress_type = context.progress_type
+  let lines = join(msg, "\n")
   if progress_type ==# 'tabline'
     set showtabline=2
-    let &g:tabline = join(msg, "\n")
+    let &g:tabline = lines
   elseif progress_type ==# 'title'
     set title
-    let &g:titlestring = join(msg, "\n")
+    let &g:titlestring = lines
+  elseif progress_type ==# 'floating'
+    if s:progress_winid <= 0
+      let s:progress_winid = s:new_progress_window()
+    endif
+
+    let bufnr = winbufnr(s:progress_winid)
+    if getbufline(bufnr, 1) ==# ['']
+      call setbufline(bufnr, 1, msg)
+    else
+      call appendbufline(bufnr, '$', msg)
+    endif
+    call win_execute(s:progress_winid, "call cursor('$', 0) | redraw")
   elseif progress_type ==# 'echo'
     call s:echo(msg, 'echo')
   endif
 
   call s:log(msg)
 
-  let s:progress = join(msg, "\n")
+  let s:progress = lines
+endfunction
+function! s:new_progress_window() abort
+  let winrow = 0
+  let wincol = &columns / 4
+  let winwidth = 80
+  let winheight = 20
+
+  if has('nvim')
+    let winid = nvim_open_win(nvim_create_buf(v:false, v:true), v:true, {
+          \ 'relative': 'editor',
+          \ 'row': winrow,
+          \ 'col': wincol,
+          \ 'focusable': v:false,
+          \ 'noautocmd': v:true,
+          \ 'style': 'minimal',
+          \ 'width': winwidth,
+          \ 'height': winheight,
+          \})
+  else
+    let winid = popup_create([], {
+          \ 'pos': 'topleft',
+          \ 'line': winrow + 1,
+          \ 'col': wincol + 1,
+          \ 'minwidth': winwidth,
+          \ 'minheight': winheight,
+          \ 'wrap': 0,
+          \ })
+  endif
+
+  return winid
 endfunction
 function! s:error(msg) abort
   let msg = dein#util#_convert2list(a:msg)

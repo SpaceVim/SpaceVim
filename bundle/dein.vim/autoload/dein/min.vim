@@ -15,6 +15,7 @@ function! dein#min#_init() abort
   let g:dein#_vimrcs = []
   let g:dein#_block_level = 0
   let g:dein#_event_plugins = {}
+  let g:dein#_on_lua_plugins = {}
   let g:dein#_is_sudo = $SUDO_USER !=# '' && $USER !=# $SUDO_USER
         \ && $HOME !=# expand('~'.$USER)
         \ && $HOME ==# expand('~'.$SUDO_USER)
@@ -49,7 +50,7 @@ function! dein#min#_init() abort
     lua <<END
 table.insert(package.loaders, 1, (function()
   return function(mod_name)
-    if string.find(mod_name, '^vim.') == nil then
+    if vim.g['dein#_on_lua_plugins'][mod_name] then
       vim.fn['dein#autoload#_on_lua'](mod_name)
     end
     return nil

@@ -1,9 +1,3 @@
-"=============================================================================
-" FILE: util.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
-" License: MIT license
-"=============================================================================
-
 let s:is_windows = has('win32') || has('win64')
 let s:merged_length = 3
 
@@ -45,15 +39,16 @@ function! dein#util#_get_cache_path() abort
     return g:dein#_cache_path
   endif
 
-  let g:dein#_cache_path = get(g:,
-        \ 'dein#cache_directory', g:dein#_base_path)
-        \ . '/.cache/' . fnamemodify(dein#util#_get_myvimrc(), ':t')
+  let g:dein#_cache_path = dein#util#_substitute_path(
+        \ get(g:, 'dein#cache_directory', g:dein#_base_path)
+        \ . '/.cache/' . fnamemodify(dein#util#_get_myvimrc(), ':t'))
   call dein#util#_safe_mkdir(g:dein#_cache_path)
   return g:dein#_cache_path
 endfunction
 function! dein#util#_get_vimrcs(vimrcs) abort
   return !empty(a:vimrcs) ?
-        \ map(dein#util#_convert2list(a:vimrcs), { _, val -> expand(val) }) :
+        \ map(dein#util#_convert2list(a:vimrcs),
+        \     { _, val -> dein#util#_substitute_path(expand(val)) }) :
         \ [dein#util#_get_myvimrc()]
 endfunction
 function! dein#util#_get_myvimrc() abort
@@ -74,7 +69,7 @@ function! dein#util#_notify(msg) abort
   call dein#util#_set_default(
         \ 'g:dein#notification_icon', '')
   call dein#util#_set_default(
-        \ 'g:dein#notification_time', 2)
+        \ 'g:dein#notification_time', 2000)
 
   if !g:dein#enable_notification || a:msg ==# ''
     call dein#util#_error(a:msg)
@@ -83,44 +78,31 @@ function! dein#util#_notify(msg) abort
 
   let title = '[dein]'
 
-  if has('nvim') && dein#util#_luacheck('notify')
-    " Use nvim-notify plugin
-    call luaeval('require("notify")(_A.msg, "info", {'.
-          \ 'timeout=vim.g["dein#notification_time"] * 1000,'.
-          \ 'title=_A.title })',
-          \ { 'msg': a:msg, 'title': title })
-    return
-  endif
-
-  if has('vim_starting') && !has('gui_running')
-    call dein#util#_error(a:msg)
-    return
-  endif
-
-  let icon = dein#util#_expand(g:dein#notification_icon)
-
-  let cmd = []
-  if executable('notify-send')
-    let cmd = ['notify-send', '-t', g:dein#notification_time * 1000]
-    if icon !=# ''
-      let cmd += ['-i', icon]
-    endif
-    let cmd += [title, a:msg]
-  elseif dein#util#_is_mac()
-    let cmd = []
-    if executable('terminal-notifier')
-      let cmd += ['terminal-notifier', '-title', 'title', '-message', a:msg]
-      if icon !=# ''
-        let cmd += ['-appIcon', icon]
-      endif
+  if has('nvim')
+    if dein#util#_luacheck('notify')
+      " Use nvim-notify plugin
+      call luaeval('require("notify")(_A.msg, "info", {'.
+            \ 'timeout=vim.g["dein#notification_time"],'.
+            \ 'title=_A.title })',
+            \ { 'msg': a:msg, 'title': title })
     else
-      let cmd += ['osascript', '-e', 'display notification '
-            \ . printf('"%s" with title "%s"', a:msg, title)]
+      call nvim_notify(a:msg, 1, {})
     endif
-  endif
-
-  if !empty(cmd)
-    call dein#install#_system_bg(cmd)
+  else
+    if dein#is_available('vim-notification') ||
+        \ exists('g:loaded_notification')
+      " Use vim-notification plugin
+      call notification#show({
+            \ 'text': a:msg,
+            \ 'title': title,
+            \ 'wait': g:dein#notification_time,
+            \ })
+    else
+      call popup_notification(a:msg, {
+            \ 'title': title,
+            \ 'time': g:dein#notification_time,
+            \ })
+    endif
   endif
 endfunction
 function! dein#util#_luacheck(module) abort
@@ -284,14 +266,15 @@ function! dein#util#_save_state(is_starting) abort
         \ 'if g:dein#_cache_version !=# ' . g:dein#_cache_version . ' || ' .
         \ 'g:dein#_init_runtimepath !=# ' . string(g:dein#_init_runtimepath) .
         \      ' | throw ''Cache loading error'' | endif',
-        \ 'let [plugins, ftplugin] = dein#min#_load_cache_raw('.
+        \ 'let [s:plugins, s:ftplugin] = dein#min#_load_cache_raw('.
         \      string(g:dein#_vimrcs) .')',
-        \ "if empty(plugins) | throw 'Cache loading error' | endif",
-        \ 'let g:dein#_plugins = plugins',
-        \ 'let g:dein#_ftplugin = ftplugin',
+        \ "if empty(s:plugins) | throw 'Cache loading error' | endif",
+        \ 'let g:dein#_plugins = s:plugins',
+        \ 'let g:dein#_ftplugin = s:ftplugin',
         \ 'let g:dein#_base_path = ' . string(g:dein#_base_path),
         \ 'let g:dein#_runtime_path = ' . string(g:dein#_runtime_path),
         \ 'let g:dein#_cache_path = ' . string(g:dein#_cache_path),
+        \ 'let g:dein#_on_lua_plugins = ' . string(g:dein#_on_lua_plugins),
         \ 'let &runtimepath = ' . string(&runtimepath),
         \ ]
 
@@ -316,7 +299,10 @@ function! dein#util#_save_state(is_starting) abort
   if !empty(g:dein#_hook_add)
     let lines += s:skipempty(g:dein#_hook_add)
   endif
-  for plugin in dein#util#_tsort(values(dein#get()))
+  for plugin in filter(dein#util#_tsort(values(dein#get())),
+        \ { _, val ->
+        \   isdirectory(val.path) && (!has_key(val, 'if') || eval(val.if))
+        \ })
     if has_key(plugin, 'hook_add') && type(plugin.hook_add) == v:t_string
       let lines += s:skipempty(plugin.hook_add)
     endif
@@ -383,7 +369,8 @@ function! dein#util#_begin(path, vimrcs) abort
 
   if has('vim_starting')
     " Filetype off
-    if exists('g:did_load_filetypes') || has('nvim')
+    if (!has('nvim') && get(g:, 'did_load_filetypes', v:false))
+          \ || (has('nvim') && !get(g:, 'do_filetype_lua', v:false))
       let g:dein#_off1 = 'filetype off'
       execute g:dein#_off1
     endif
@@ -398,7 +385,7 @@ function! dein#util#_begin(path, vimrcs) abort
 
   " Insert dein runtimepath to the head in 'runtimepath'.
   let rtps = dein#util#_split_rtp(&runtimepath)
-  let idx = index(rtps, $VIMRUNTIME)
+  let idx = index(rtps, dein#util#_substitute_path($VIMRUNTIME))
   if idx < 0
     call dein#util#_error('Invalid runtimepath.')
     return 1
@@ -516,7 +503,7 @@ function! dein#util#_call_hook(hook_name, ...) abort
         \    ((a:hook_name !=# 'source'
         \      && a:hook_name !=# 'post_source') || val.sourced)
         \    && has_key(val, hook) && isdirectory(val.path)
-        \    && (!has_key(v:val, 'if') || eval(v:val.if))
+        \    && (!has_key(val, 'if') || eval(val.if))
         \ })
   for plugin in plugins
     call dein#util#_execute_hook(plugin, plugin[hook])
@@ -578,11 +565,13 @@ endfunction
 
 function! dein#util#_split_rtp(runtimepath) abort
   if stridx(a:runtimepath, '\,') < 0
-    return split(a:runtimepath, ',')
+    let rtps = split(a:runtimepath, ',')
+  else
+    let split = split(a:runtimepath, '\\\@<!\%(\\\\\)*\zs,')
+    let rtps = map(split,
+          \ { _, val -> substitute(val, '\\\([\\,]\)', '\1', 'g') })
   endif
-
-  let split = split(a:runtimepath, '\\\@<!\%(\\\\\)*\zs,')
-  return map(split, { _, val -> substitute(val, '\\\([\\,]\)', '\1', 'g') })
+  return map(rtps, { _, val -> dein#util#_substitute_path(val) })
 endfunction
 function! dein#util#_join_rtp(list, runtimepath, rtp) abort
   return (stridx(a:runtimepath, '\,') < 0 && stridx(a:rtp, ',') < 0) ?
@@ -591,7 +580,7 @@ function! dein#util#_join_rtp(list, runtimepath, rtp) abort
 endfunction
 
 function! dein#util#_add_after(rtps, path) abort
-  let idx = index(a:rtps, $VIMRUNTIME)
+  let idx = index(a:rtps, dein#util#_substitute_path($VIMRUNTIME))
   call insert(a:rtps, a:path, (idx <= 0 ? -1 : idx + 1))
 endfunction
 
@@ -739,6 +728,9 @@ endfunction
 function! s:escape(path) abort
   " Escape a path for runtimepath.
   return substitute(a:path, ',\|\\,\@=', '\\\0', 'g')
+endfunction
+function! dein#util#escape_match(str) abort
+  return escape(a:str, '~\.^$[]')
 endfunction
 
 function! s:execute(expr) abort
