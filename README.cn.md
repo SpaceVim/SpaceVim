@@ -4,7 +4,7 @@
   </a>
 </h1>
 
-[即使聊天](https://app.element.io/#/room/#spacevim-cn:matrix.org) \|
+[即时聊天](https://app.element.io/#/room/#spacevim-cn:matrix.org) \|
 [入门指南](https://spacevim.org/cn/quick-start-guide/) \|
 [推特](https://twitter.com/SpaceVim)
 
