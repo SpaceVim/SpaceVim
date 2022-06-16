@@ -28,5 +28,24 @@ function M.isLoaded(layer)
     return sp.call('SpaceVim#layers#isLoaded', layer) == 1
 end
 
+local function list_layers()
+    vim.cmd('tabnew SpaceVimLayers')
+    vim.cmd('nnoremap <buffer> q :q<cr>')
+    vim.cmd('setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell')
+    vim.cmd('setf SpaceVimLayerManager')
+    vim.cmd('nnoremap <silent> <buffer> q :bd<CR>')
+    local info = {'SpaceVim layers:', ''}
+  -- call setline(1,info + s:find_layers())
+    vim.cmd('setl nomodifiable')
+end
+
+
+function M.load(layer, ...)
+    if layer == '-l' then
+        list_layers()
+        return
+    end
+end
+
 
 return M
