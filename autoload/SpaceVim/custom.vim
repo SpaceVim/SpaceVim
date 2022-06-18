@@ -338,6 +338,11 @@ function! s:load_glob_conf() abort
     let custom_glob_conf = global_dir . 'init.vim'
     let &rtp = global_dir . ',' . &rtp . ',' . global_dir . 'after'
     exe 'source ' . custom_glob_conf
+  elseif filereadable(global_dir . 'init.lua')
+    let g:_spacevim_global_config_path = global_dir . 'init.lua'
+    let custom_glob_conf = global_dir . 'init.lua'
+    let &rtp = global_dir . ',' . &rtp . ',' . global_dir . 'after'
+    exe 'luafile ' . custom_glob_conf
   else
     if has('timers')
       " if there is no custom config auto generate it.
