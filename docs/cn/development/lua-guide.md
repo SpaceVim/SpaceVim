@@ -27,7 +27,7 @@ Lua 脚本的执行速度比 Vim 脚本速度快很多，因此在 SpaceVim 中�
 
 function! myspacevim#start()
 lua <<EOF
-    local opt = require('spacevim.options')
+    local opt = require('spacevim.opt')
     opt.colorscheme = 'one'
 EOF
 endf
