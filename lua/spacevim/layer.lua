@@ -30,10 +30,12 @@ function M.isLoaded(layer)
 end
 
 local function find_layers()
-    local files = sp.fn.globpath(sp.vim_options.runtimepath, 'autoload/SpaceVim/layers/**/*.vim', 0, 1)
+    local layers = sp.fn.globpath(sp.vim_options.runtimepath, 'autoload/SpaceVim/layers/**/*.vim', 0, 1)
     local pattern = '/autoload/SpaceVim/layers/'
     local rst = {}
     for _, layer in pairs(layers) do
+        local name = layer:gsub('.+SpaceVim[\\/]layers[\\/]', ''):gsub('.vim$', ''):gsub('[\\/]', '#')
+        table.insert(rst, name)
     end
     return rst
 end
