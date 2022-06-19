@@ -34,8 +34,28 @@ local function find_layers()
     local pattern = '/autoload/SpaceVim/layers/'
     local rst = {}
     for _, layer in pairs(layers) do
-        local name = layer:gsub('.+SpaceVim[\\/]layers[\\/]', ''):gsub('.vim$', ''):gsub('[\\/]', '#')
-        table.insert(rst, name)
+        local name = layer:gsub('.+SpaceVim[\\/]layers[\\/]', ''):gsub('.vim$', ''):gsub('[\\/]', '/')
+        if M.isLoaded(name) then
+            local status = 'loaded'
+        else
+            local status = 'not loaded'
+        end
+        if name == 'lsp' then
+            local url = 'language-server-protocol'
+        else
+            local url = name
+        end
+        if sp.fn.filereadable(sp.fn.expand('~/.SpaceVim/docs/layers/' .. url .. '.md')) then
+            local website = 'https://spacevim.org/layers/' .. url .. '/'
+        else
+            local website = 'no exists'
+        end
+        local name = sp.fn.substitute(name, '/', '#','g')
+        if status == 'loaded' then
+            table.insert(rst, '+ ' .. name .. ':' .. sp.fn.repeat(' ', 25 - sp.fn.len(name)) .. status .. sp.fn.repeat(' ', 10) .. website)
+        else
+            table.insert(rst, '- ' .. name .. ':' .. sp.fn.repeat(' ', 25 - sp.fn.len(name)) .. status .. sp.fn.repeat(' ', 10) .. website)
+        end
     end
     return rst
 end
