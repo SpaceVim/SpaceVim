@@ -48,7 +48,7 @@ local function find_layers()
         else
             url = name
         end
-        if sp.fn.filereadable(sp.fn.expand('~/.SpaceVim/docs/layers/' .. url .. '.md')) then
+        if sp.fn.filereadable(sp.fn.expand('~/.SpaceVim/docs/layers/' .. url .. '.md')) == 1 then
             website = 'https://spacevim.org/layers/' .. url .. '/'
         else
             website = 'no exists'
@@ -57,7 +57,7 @@ local function find_layers()
         if status == 'loaded' then
             table.insert(rst, '+ ' .. name .. ':' .. sp.fn['repeat'](' ', 25 - sp.fn.len(name)) .. status .. sp.fn['repeat'](' ', 10) .. website)
         else
-            table.insert(rst, '- ' .. name .. ':' .. sp.fn['repeat'](' ', 25 - sp.fn.len(name)) .. status .. sp.fn['repeat'](' ', 10) .. website)
+            table.insert(rst, '- ' .. name .. ':' .. sp.fn['repeat'](' ', 21 - sp.fn.len(name)) .. status .. sp.fn['repeat'](' ', 10) .. website)
         end
     end
     return rst
