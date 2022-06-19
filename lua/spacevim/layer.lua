@@ -35,26 +35,29 @@ local function find_layers()
     local rst = {}
     for _, layer in pairs(layers) do
         local name = layer:gsub('.+SpaceVim[\\/]layers[\\/]', ''):gsub('.vim$', ''):gsub('[\\/]', '/')
+        local status = ''
+        local url = ''
+        local website = ''
         if M.isLoaded(name) then
-            local status = 'loaded'
+            status = 'loaded'
         else
-            local status = 'not loaded'
+            status = 'not loaded'
         end
         if name == 'lsp' then
-            local url = 'language-server-protocol'
+            url = 'language-server-protocol'
         else
-            local url = name
+            url = name
         end
         if sp.fn.filereadable(sp.fn.expand('~/.SpaceVim/docs/layers/' .. url .. '.md')) then
-            local website = 'https://spacevim.org/layers/' .. url .. '/'
+            website = 'https://spacevim.org/layers/' .. url .. '/'
         else
-            local website = 'no exists'
+            website = 'no exists'
         end
-        local name = sp.fn.substitute(name, '/', '#','g')
+        name = sp.fn.substitute(name, '/', '#','g')
         if status == 'loaded' then
-            table.insert(rst, '+ ' .. name .. ':' .. sp.fn.repeat(' ', 25 - sp.fn.len(name)) .. status .. sp.fn.repeat(' ', 10) .. website)
+            table.insert(rst, '+ ' .. name .. ':' .. sp.fn['repeat'](' ', 25 - sp.fn.len(name)) .. status .. sp.fn['repeat'](' ', 10) .. website)
         else
-            table.insert(rst, '- ' .. name .. ':' .. sp.fn.repeat(' ', 25 - sp.fn.len(name)) .. status .. sp.fn.repeat(' ', 10) .. website)
+            table.insert(rst, '- ' .. name .. ':' .. sp.fn['repeat'](' ', 25 - sp.fn.len(name)) .. status .. sp.fn['repeat'](' ', 10) .. website)
         end
     end
     return rst
