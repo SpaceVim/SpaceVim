@@ -50,6 +50,19 @@ function M.print( tbl , level, filteDefault)
 end
 
 
+function M.make(d)
+    
+end
+
+function M.swap(d)
+    
+end
+
+function M.make_index(list, ...)
+    
+end
+
+
 
 
 return M
