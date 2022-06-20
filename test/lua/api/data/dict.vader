@@ -1,0 +1,7 @@
+Execute ( SpaceVim lua api: data.dict ):
+  if get(g:, 'spacevim_use_lua', 0)
+    let cmp = SpaceVim#api#import('vim#compatible')
+    lua spacevim_dict = require('spacevim.api').import('data.dict')
+    AssertEqual cmp.luaeval('spacevim_dict.make({"a" , "b", "h"}, {"c", "d"}, "m")'), {'a' : 'c', 'b' : 'd', 'h' : 'm'}
+  endif
+
