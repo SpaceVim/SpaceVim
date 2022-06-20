@@ -33,3 +33,24 @@ EOF
 endf
 ```
 
+可变参数的调用：
+
+```viml
+function! s:test(a, ...)
+    " 获取参数个数
+    echo a:0
+    echo get(a:000, 0, 'abc')
+endf
+```
+
+使用 lua 可以这样写：
+
+```lua
+local function test(a, ...)
+    local arg = {...}
+    print(#arg)
+    print(arg[1] or 'abc')
+end
+
+test(1, 2, 3)
+```
