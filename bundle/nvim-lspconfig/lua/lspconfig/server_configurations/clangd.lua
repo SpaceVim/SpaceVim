@@ -21,28 +21,30 @@ local function switch_source_header(bufnr)
   end
 end
 
-local root_pattern = util.root_pattern('compile_commands.json', 'compile_flags.txt', '.git')
+local root_files = {
+  '.clangd',
+  '.clang-tidy',
+  '.clang-format',
+  'compile_commands.json',
+  'compile_flags.txt',
+  'configure.ac', -- AutoTools
+}
 
-local default_capabilities = vim.tbl_deep_extend(
-  'force',
-  util.default_config.capabilities or vim.lsp.protocol.make_client_capabilities(),
-  {
-    textDocument = {
-      completion = {
-        editsNearCursor = true,
-      },
+local default_capabilities = {
+  textDocument = {
+    completion = {
+      editsNearCursor = true,
     },
-    offsetEncoding = { 'utf-8', 'utf-16' },
-  }
-)
+  },
+  offsetEncoding = { 'utf-8', 'utf-16' },
+}
 
 return {
   default_config = {
     cmd = { 'clangd' },
-    filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+    filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
     root_dir = function(fname)
-      local filename = util.path.is_absolute(fname) and fname or util.path.join(vim.loop.cwd(), fname)
-      return root_pattern(filename)
+      return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
     end,
     single_file_support = true,
     capabilities = default_capabilities,
@@ -59,14 +61,27 @@ return {
     description = [[
 https://clangd.llvm.org/installation.html
 
-**NOTE:** Clang >= 9 is recommended! See [this issue for more](https://github.com/neovim/nvim-lsp/issues/23).
-
-clangd relies on a [JSON compilation database](https://clang.llvm.org/docs/JSONCompilationDatabase.html) specified
-as compile_commands.json or, for simpler projects, a compile_flags.txt.
-For details on how to automatically generate one using CMake look [here](https://cmake.org/cmake/help/latest/variable/CMAKE_EXPORT_COMPILE_COMMANDS.html). Alternatively, you can use [Bear](https://github.com/rizsotto/Bear).
+- **NOTE:** Clang >= 11 is recommended! See [#23](https://github.com/neovim/nvim-lsp/issues/23).
+- If `compile_commands.json` lives in a build directory, you should
+  symlink it to the root of your source tree.
+  ```
+  ln -s /path/to/myproject/build/compile_commands.json /path/to/myproject/
+  ```
+- clangd relies on a [JSON compilation database](https://clang.llvm.org/docs/JSONCompilationDatabase.html)
+  specified as compile_commands.json, see https://clangd.llvm.org/installation#compile_commandsjson
 ]],
     default_config = {
-      root_dir = [[root_pattern("compile_commands.json", "compile_flags.txt", ".git") or dirname]],
+      root_dir = [[
+        root_pattern(
+          '.clangd',
+          '.clang-tidy',
+          '.clang-format',
+          'compile_commands.json',
+          'compile_flags.txt',
+          'configure.ac',
+          '.git'
+        )
+      ]],
       capabilities = [[default capabilities, with offsetEncoding utf-8]],
     },
   },

@@ -14,6 +14,7 @@ M.default_config = {
   init_options = vim.empty_dict(),
   handlers = {},
   autostart = true,
+  capabilities = lsp.protocol.make_client_capabilities(),
 }
 
 -- global on_setup hook
@@ -206,6 +207,8 @@ M.path = (function()
     return dir == root
   end
 
+  local path_separator = is_windows and ';' or ':'
+
   return {
     is_dir = is_dir,
     is_file = is_file,
@@ -217,12 +220,13 @@ M.path = (function()
     traverse_parents = traverse_parents,
     iterate_parents = iterate_parents,
     is_descendant = is_descendant,
+    path_separator = path_separator,
   }
 end)()
 
 -- Returns a function(root_dir), which, when called with a root_dir it hasn't
 -- seen before, will call make_config(root_dir) and start a new client.
-function M.server_per_root_dir_manager(_make_config)
+function M.server_per_root_dir_manager(make_config)
   local clients = {}
   local single_file_clients = {}
   local manager = {}
@@ -242,7 +246,7 @@ function M.server_per_root_dir_manager(_make_config)
 
     -- Check if we have a client already or start and store it.
     if not client_id then
-      local new_config = _make_config(root_dir)
+      local new_config = make_config(root_dir)
       -- do nothing if the client is not enabled
       if new_config.enabled == false then
         return
@@ -291,9 +295,10 @@ function M.server_per_root_dir_manager(_make_config)
     return client_id
   end
 
-  function manager.clients()
+  function manager.clients(single_file)
     local res = {}
-    for _, id in pairs(clients) do
+    local client_list = single_file and single_file_clients or clients
+    for _, id in pairs(client_list) do
       local client = lsp.get_client_by_id(id)
       if client then
         table.insert(res, client)
@@ -418,6 +423,7 @@ function M.get_managed_clients()
   for _, config in pairs(configs) do
     if config.manager then
       vim.list_extend(clients, config.manager.clients())
+      vim.list_extend(clients, config.manager.clients(true))
     end
   end
   return clients

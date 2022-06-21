@@ -2,7 +2,6 @@ local util = require 'lspconfig.util'
 
 return {
   default_config = {
-    cmd = { 'arduino-language-server' },
     filetypes = { 'arduino' },
     root_dir = util.root_pattern '*.ino',
   },
@@ -13,38 +12,52 @@ https://github.com/arduino/arduino-language-server
 Language server for Arduino
 
 The `arduino-language-server` can be installed by running:
-	go get -u github.com/arduino/arduino-language-server
 
-The `arduino-cli` tools must also be installed. Follow these instructions for your distro:
-	https://arduino.github.io/arduino-cli/latest/installation/
+```
+go install github.com/arduino/arduino-language-server@latest
+```
 
-After installing the `arduino-cli` tools, follow these instructions for generating
-a configuration file:
-	https://arduino.github.io/arduino-cli/latest/getting-started/#create-a-configuration-file
-and make sure you install any relevant platforms libraries:
-	https://arduino.github.io/arduino-cli/latest/getting-started/#install-the-core-for-your-board
+The `arduino-cli` tool must also be installed. Follow [these
+installation instructions](https://arduino.github.io/arduino-cli/latest/installation/) for
+your platform.
 
-The language server also requires `clangd` be installed. It will look for `clangd` by default but
-the binary path can be overridden if need be.
+After installing `arduino-cli`, follow [these
+instructions](https://arduino.github.io/arduino-cli/latest/getting-started/#create-a-configuration-file)
+for generating a configuration file if you haven't done so already, and make
+sure you [install any relevant platforms
+libraries](https://arduino.github.io/arduino-cli/latest/getting-started/#install-the-core-for-your-board).
+Make sure to save the full path to the created `arduino-cli.yaml` file for later.
 
-After all dependencies are installed you'll need to override the lspconfig command for the
-language server in your setup function with the necessary configurations:
+The language server also requires `clangd` to be installed. Follow [these
+installation instructions](https://clangd.llvm.org/installation) for your
+platform.
+
+Next, you will need to decide which FQBN to use.
+To identify the available FQBNs for boards you currently have connected, you may use the `arduino-cli` command, like so:
+
+```sh
+$ arduino-cli board list
+Port         Protocol Type              Board Name  FQBN            Core
+/dev/ttyACM0 serial   Serial Port (USB) Arduino Uno arduino:avr:uno arduino:avr
+                                                    ^^^^^^^^^^^^^^^
+```
+
+After all dependencies are installed you'll need to set the command for the
+language server in your setup:
 
 ```lua
-lspconfig.arduino_language_server.setup({
-	cmd =  {
-		-- Required
-		"arduino-language-server",
-		"-cli-config", "/path/to/arduino-cli.yaml",
-		-- Optional
-		"-cli", "/path/to/arduino-cli",
-		"-clangd", "/path/to/clangd"
-	}
-})
+require'lspconfig'.arduino_language_server.setup {
+  cmd = {
+    "arduino-language-server",
+    "-cli-config", "/path/to/arduino-cli.yaml",
+    "-fqbn", "arduino:avr:uno",
+    "-cli", "arduino-cli",
+    "-clangd", "clangd"
+  }
+}
 ```
 
 For further instruction about configuration options, run `arduino-language-server --help`.
-
 ]],
   },
 }

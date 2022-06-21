@@ -74,11 +74,10 @@ local lsp_section_template = [[
 ```lua
 require'lspconfig'.{{template_name}}.setup{}
 ```
+{{commands}}
 
-**Commands and default values:**
-```lua
-{{body}}
-```
+**Default values:**
+{{default_values}}
 
 ]]
 
@@ -101,53 +100,41 @@ local function make_lsp_sections()
       local params = {
         template_name = template_name,
         preamble = '',
-        body = '',
+        commands = '',
+        default_values = '',
       }
 
-      params.body = make_section(2, '\n\n', {
+      params.commands = make_section(0, '\n\n', {
         function()
-          if not template_def.commands then
+          if not template_def.commands or #vim.tbl_keys(template_def.commands) == 0 then
             return
           end
-          return make_section(0, '\n', {
-            'Commands:',
-            sorted_map_table(template_def.commands, function(name, def)
-              if def.description then
-                return string.format('- %s: %s', name, def.description)
-              end
-              return string.format('- %s', name)
-            end),
-          })
+          return '**Commands:**\n'
+            .. make_section(0, '\n', {
+              sorted_map_table(template_def.commands, function(name, def)
+                if def.description then
+                  return string.format('- %s: %s', name, def.description)
+                end
+                return string.format('- %s', name)
+              end),
+            })
         end,
+      })
+
+      params.default_values = make_section(2, '\n\n', {
         function()
           if not template_def.default_config then
             return
           end
           return make_section(0, '\n', {
-            'Default Values:',
             sorted_map_table(template_def.default_config, function(k, v)
               local description = ((docs or {}).default_config or {})[k]
               if description and type(description) ~= 'string' then
                 description = inspect(description)
               elseif not description and type(v) == 'function' then
-                local info = debug.getinfo(v)
-                local file = io.open(string.sub(info.source, 2), 'r')
-
-                local fileContent = {}
-                for line in file:lines() do
-                  table.insert(fileContent, line)
-                end
-                io.close(file)
-
-                local root_dir = {}
-                for i = info.linedefined, info.lastlinedefined do
-                  table.insert(root_dir, fileContent[i])
-                end
-
-                description = table.concat(root_dir, '\n')
-                description = string.gsub(description, '.*function', 'function')
+                description = 'see source file'
               end
-              return indent(2, string.format('%s = %s', k, description or inspect(v)))
+              return string.format('- `%s` : \n```lua\n%s\n```', k, description or inspect(v))
             end),
           })
         end,

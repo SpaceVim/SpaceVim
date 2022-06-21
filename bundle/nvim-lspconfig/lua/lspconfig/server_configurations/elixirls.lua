@@ -2,7 +2,7 @@ local util = require 'lspconfig.util'
 
 return {
   default_config = {
-    filetypes = { 'elixir', 'eelixir' },
+    filetypes = { 'elixir', 'eelixir', 'heex' },
     root_dir = function(fname)
       return util.root_pattern('mix.exs', '.git')(fname) or vim.loop.os_homedir()
     end,

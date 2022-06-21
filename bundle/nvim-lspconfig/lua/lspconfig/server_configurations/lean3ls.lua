@@ -48,7 +48,7 @@ that plugin fully handles the setup of the Lean language server,
 and you shouldn't set up `lean3ls` both with it and `lspconfig`.
     ]],
     default_config = {
-      root_dir = [[root_pattern("leanpkg.toml") or root_pattern(".git") or path.dirname]],
+      root_dir = [[root_pattern("leanpkg.toml") or root_pattern(".git")]],
     },
   },
 }
