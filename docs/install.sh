@@ -425,7 +425,6 @@ main () {
                 fetch_repo
                 install_vim
                 install_neovim
-                install_fonts
                 install_done
                 exit 0
                 ;;
