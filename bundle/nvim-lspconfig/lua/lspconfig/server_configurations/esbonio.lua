@@ -49,7 +49,7 @@ require'lspconfig'.esbonio.setup {
 }
 ```
 
-A full list and explanation of the available options can be found [here](https://swyddfa.github.io/esbonio/docs/lsp/editors/index.html)
+A full list and explanation of the available options can be found [here](https://swyddfa.github.io/esbonio/docs/latest/en/lsp/getting-started.html#configuration)
 ]],
   },
 }

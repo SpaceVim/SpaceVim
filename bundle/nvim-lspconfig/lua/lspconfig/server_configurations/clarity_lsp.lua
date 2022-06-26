@@ -1,13 +1,8 @@
 local util = require 'lspconfig.util'
 
-local bin_name = 'clarity-lsp'
-if vim.fn.has 'win32' == 1 then
-  bin_name = bin_name .. '.cmd'
-end
-
 return {
   default_config = {
-    cmd = { bin_name },
+    cmd = { 'clarity-lsp' },
     filetypes = { 'clar', 'clarity' },
     root_dir = util.root_pattern '.git',
   },

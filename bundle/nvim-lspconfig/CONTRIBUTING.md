@@ -44,35 +44,62 @@ Additionally, the following options are often added:
 * `init_options`: a table sent during initialization, corresponding to initializationOptions sent in [initializeParams](https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#initializeParams) as part of the first request sent from client to server during startup.
 * `settings`: a table sent during [`workspace/didChangeConfiguration`](https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#didChangeConfigurationParams) shortly after server initialization. This is an undocumented convention for most language servers. There is often some duplication with initOptions.
 
-A minimal example for adding a new language server is shown below for `pyright`, a python language server included in lspconfig:
+An example for adding a new language server is shown below for `pyright`, a python language server included in lspconfig:
 
 ```lua
--- Only `configs` must be required, util is optional if you are using the root resolver functions, which is usually the case.
-local configs = require 'lspconfig.configs'
 local util = require 'lspconfig.util'
 
--- Having server name defined here is the convention, this is often times also the first entry in the `cmd` table.
-local server_name = 'pyright'
+local bin_name = 'pyright-langserver'
+local cmd = { bin_name, '--stdio' }
 
-configs[server_name] = {
+if vim.fn.has 'win32' == 1 then
+  cmd = { 'cmd.exe', '/C', bin_name, '--stdio' }
+end
+
+local root_files = {
+  'pyproject.toml',
+  'setup.py',
+  'setup.cfg',
+  'requirements.txt',
+  'Pipfile',
+  'pyrightconfig.json',
+}
+
+local function organize_imports()
+  local params = {
+    command = 'pyright.organizeimports',
+    arguments = { vim.uri_from_bufnr(0) },
+  }
+  vim.lsp.buf.execute_command(params)
+end
+
+return {
   default_config = {
-    -- This should be executable on the command line, arguments (such as `--stdio`) are additional entries in the list.
-    cmd = { 'pyright-langserver' },
-    -- These are the filetypes that the server will either attach or start in response to opening. The user must have a filetype plugin matching the filetype, either via the built-in runtime files or installed via plugin.
+    cmd = cmd,
     filetypes = { 'python' },
-    -- The root directory that lspconfig uses to determine if it should start a new language server, or attach the current buffer to a previously running language server.
-    root_dir = util.find_git_ancestor
-    end,
+    root_dir = util.root_pattern(unpack(root_files)),
+    single_file_support = true,
+    settings = {
+      python = {
+        analysis = {
+          autoSearchPaths = true,
+          useLibraryCodeForTypes = true,
+          diagnosticMode = 'workspace',
+        },
+      },
+    },
+  },
+  commands = {
+    PyrightOrganizeImports = {
+      organize_imports,
+      description = 'Organize Imports',
+    },
   },
   docs = {
-    -- The description should include at minimum the link to the github project, and ideally the steps to install the language server.
     description = [[
 https://github.com/microsoft/pyright
 
 `pyright`, a static type checker and language server for python
-
-`pyright` can be installed via `npm`
-`npm install -g pyright`
 ]],
   },
 }
@@ -98,7 +125,7 @@ PRs are checked with [luacheck](https://github.com/mpeterv/luacheck), [StyLua](h
 
 ## Generating docs
 
-Github Actions automatically generates `server_configurations.md`. Only modify `scripts/README_template.md` or the `docs` table in the server config (the lua file). Do not modify `server_configurations.md` directly.
+Github Actions automatically generates `server_configurations.md`. Only modify `scripts/README_template.md` or the `docs` table in the server config Lua file. Do not modify `server_configurations.md` directly.
 
 To preview the generated `server_configurations.md` locally, run `scripts/docgen.lua` from
 `nvim` (from the project root):

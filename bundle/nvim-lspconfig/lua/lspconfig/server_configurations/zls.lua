@@ -9,12 +9,12 @@ return {
   },
   docs = {
     description = [[
-           https://github.com/zigtools/zls
+https://github.com/zigtools/zls
 
-           `Zig LSP implementation + Zig Language Server`.
+Zig LSP implementation + Zig Language Server
         ]],
     default_config = {
-      root_dir = [[util.root_pattern("zls.json", ".git") or current_file_dirname]],
+      root_dir = [[util.root_pattern("zls.json", ".git")]],
     },
   },
 }
