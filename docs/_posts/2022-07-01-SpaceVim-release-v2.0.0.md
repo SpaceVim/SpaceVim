@@ -62,6 +62,8 @@ Since last release, the following layers have been added:
 new key bindings:
 
 - `SPC b ctrl-shift-d`: kill buffer by regexp
+- `ctrl-shift-left/right`: move current tabpage
+- `SPC x s s`: edit current snippet
 
 ### Enhancements
 
