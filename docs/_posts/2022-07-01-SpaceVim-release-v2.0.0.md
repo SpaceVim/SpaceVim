@@ -42,6 +42,11 @@ Since last release, the following layers have been added:
 - `lang#jsonnet` layer
 - `lang#octave` layer
 - `lang#yang` layer
+- `lang#haxe` layer
+- `lang#postscript` layer
+- `lang#teal` layer
+- `lang#verilog` layer
+- `framework#django` layer
 - `telescope` layer
 
 ### New feature
