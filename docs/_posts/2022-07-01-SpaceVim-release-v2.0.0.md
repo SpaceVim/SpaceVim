@@ -35,21 +35,24 @@ So let's take a look at what happened since last relase.
 
 ### New layers
 
-Since last release, there are 5 new layers have been added:
+Since last release, the following layers have been added:
 
 - `lang#cmake` layer
 - `lang#jr` layer
 - `lang#jsonnet` layer
 - `lang#octave` layer
 - `lang#yang` layer
+- `telescope` layer
 
 ### New feature
 
-1. The [chat](../layers/chat/) layer supports gitter and IRC now.
+- The [chat](../layers/chat/) layer supports gitter and IRC now.
 
 ![chat](https://user-images.githubusercontent.com/13142418/176914163-ec4dcfd6-65d3-45d0-beea-9faec397e6f3.png)
 
 ## Improvements
+
+- add `b`, `e`, `w` key bindings for iedit mode
 
 ## Bug fix
 
