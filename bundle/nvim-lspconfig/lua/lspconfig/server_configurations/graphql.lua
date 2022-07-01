@@ -27,7 +27,7 @@ npm install -g graphql-language-service-cli
 Note that you must also have [the graphql package](https://github.com/graphql/graphql-js) installed and create a [GraphQL config file](https://www.graphql-config.com/docs/user/user-introduction).
 ]],
     default_config = {
-      root_dir = [[root_pattern('.git', '.graphqlrc*', '.graphql.config.*')]],
+      root_dir = [[util.root_pattern('.git', '.graphqlrc*', '.graphql.config.*', 'graphql.config.*')]],
     },
   },
 }

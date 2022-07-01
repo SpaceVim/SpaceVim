@@ -1,9 +1,3 @@
-"=============================================================================
-" FILE: dein.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
-" License: MIT license
-"=============================================================================
-
 function! unite#sources#dein#define() abort
   return s:source
 endfunction

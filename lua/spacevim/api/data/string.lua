@@ -1,10 +1,3 @@
-
-
-local str = {}
-
-
-function str.trim(str)
-=======
 --=============================================================================
 -- string.lua --- spacevim data#string api
 -- Copyright (c) 2016-2019 Wang Shidong & Contributors
@@ -22,17 +15,6 @@ function M.trim(str)
     return str:match( "^%s*(.-)%s*$" )
 end
 
-
-
-function str.fill(str, length, ...)
-    if string.len(str) > length then
-    end
-    
-end
-
-
-return str
-=======
 function M.fill(str, length, ...)
     local v = ''
     if string.len(str) <= length then

@@ -98,6 +98,7 @@ function! SpaceVim#layers#core#plugins() abort
   endif
   call add(plugins, [g:_spacevim_root_dir . 'bundle/gruvbox', {'loadconf' : 1, 'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-clipboard', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-if-lua-compat', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/open-browser.vim', {
         \ 'merged' : 0, 'loadconf' : 1,
         \}])
@@ -365,7 +366,16 @@ function! SpaceVim#layers#core#config() abort
   let g:vimproc#download_windows_dll = 1
   " call SpaceVim#mapping#space#def('nnoremap', ['p', 't'], 'call SpaceVim#plugins#projectmanager#current_root()', 'find-project-root', 1)
   let g:_spacevim_mappings_space.p.t = {'name' : '+Tasks'}
-  call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'e'], 'call SpaceVim#plugins#tasks#edit()', 'edit-project-task', 1)
+  let lnum = expand('<slnum>') + s:lnum - 1
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'e'],
+        \ 'call SpaceVim#plugins#tasks#edit()',
+        \ ['edit-project-task',
+        \ ['[SPC p t e] is to edit the task configuration file of current project,',
+        \ 'the default task file is `.SpaceVim.d/tasks.toml`',
+        \ '',
+        \ 'Definition: ' . s:filename . ':' . lnum]
+        \ ]
+        \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'l'], 'call SpaceVim#plugins#tasks#list()', 'list-tasks', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'c'], 'call SpaceVim#plugins#runner#clear_tasks()', 'clear-tasks', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'r'],

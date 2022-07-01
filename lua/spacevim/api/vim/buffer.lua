@@ -1,3 +1,11 @@
+--=============================================================================
+-- buffer.lua --- public buffer apis
+-- Copyright (c) 2016-2019 Wang Shidong & Contributors
+-- Author: Wang Shidong < wsdjeg@outlook.com >
+-- URL: https://spacevim.org
+-- License: GPLv3
+--=============================================================================
+
 local M = {}
 
 function M.set_lines(bufnr, startindex, endindex, replacement)
@@ -33,6 +41,12 @@ function M.set_lines(bufnr, startindex, endindex, replacement)
         end
 
     end
+end
+
+function M.resize(size, ...)
+    local arg = {...}
+    local cmd = arg[1] or 'vertical'
+    vim.cmd(cmd .. ' resize ' .. size)
 end
 
 return M

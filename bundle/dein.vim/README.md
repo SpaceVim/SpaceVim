@@ -16,7 +16,6 @@ Dein.vim is a dark powered Vim/Neovim plugin manager.
 
 <!-- vim-markdown-toc -->
 
-
 ## Requirements
 
 - Vim 8.2 or above or NeoVim(0.5.0+).
@@ -29,16 +28,14 @@ instead.
 If you need vim-plug like install UI, you can use dein-ui.vim.
 https://github.com/wsdjeg/dein-ui.vim
 
-
 ## Quick start
 
-**Note**: You must define the installation directory before to use dein.  The
+**Note**: You must define the installation directory before to use dein. The
 directory that you will want to use depends on your usage.
 
 For example, `~/.vim/bundles` or `~/.cache/dein` or `~/.local/share/dein`.
-dein.vim does not define a default installation directory.
-You must **not** set the installation directory as `~/.vim/plugin` or
-`~/.config/nvim/plugin`.
+dein.vim does not define a default installation directory. You must **not** set
+the installation directory as `~/.vim/plugin` or `~/.config/nvim/plugin`.
 
 1. Run below script.
 
@@ -106,7 +103,6 @@ syntax enable
 "endif
 ```
 
-
 ## Features
 
 - Faster than NeoBundle
@@ -129,13 +125,11 @@ syntax enable
 
 - Merge the plugins directories automatically to avoid long 'runtimepath'
 
-
 ## Future works (TODO)
 
 - Other types support (zip, svn, hg, ...)
 
 - Metadata repository support
-
 
 ### Options
 

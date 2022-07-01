@@ -1,9 +1,3 @@
-"=============================================================================
-" FILE: parse.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
-" License: MIT license
-"=============================================================================
-
 " Global options definition."
 let g:dein#enable_name_conversion =
       \ get(g:, 'dein#enable_name_conversion', v:false)
@@ -88,7 +82,7 @@ function! dein#parse#_dict(plugin) abort
   if !has_key(plugin, 'normalized_name')
     let plugin.normalized_name = substitute(
           \ fnamemodify(plugin.name, ':r'),
-          \ '\c^\%(n\?vim\|dps\)[_-]\|[_-]n\?vim$', '', 'g')
+          \ '\c^\%(n\?vim\|dps\|denops\)[_-]\|[_-]n\?vim$', '', 'g')
   endif
 
   if !has_key(a:plugin, 'name') && g:dein#enable_name_conversion
@@ -330,6 +324,12 @@ function! s:parse_lazy(plugin) abort
   endif
   if has_key(a:plugin, 'on_map')
     call s:generate_dummy_mappings(a:plugin)
+  endif
+
+  if has_key(a:plugin, 'on_lua')
+    for mod in a:plugin.on_lua
+      let g:dein#_on_lua_plugins[mod] = v:true
+    endfor
   endif
 endfunction
 function! s:generate_dummy_commands(plugin) abort

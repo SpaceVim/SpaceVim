@@ -1,0 +1,7 @@
+Execute ( SpaceVim lua layer: lang#java ):
+  if has('nvim-0.5.0') || has('+lua')
+    lua require('spacevim.layer.lang.java').set_variable({['format_on_save'] = false})
+    lua format_on_save = require('spacevim.layer.lang.java').get_variable()
+    AssertEqual cmp.luaeval('format_on_save'), v:false
+  endif
+

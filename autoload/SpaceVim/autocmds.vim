@@ -43,10 +43,8 @@ function! SpaceVim#autocmds#init() abort
     autocmd BufWinEnter * if(exists('b:_winview')) | call winrestview(b:_winview) | endif
     autocmd BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
     autocmd BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
-    autocmd FileType c,cpp,java,javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
     autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
     autocmd Filetype qf setlocal nobuflisted
-    autocmd FileType coffee call SpaceVim#util#check_if_expand_tab()
     au StdinReadPost * call s:disable_welcome()
     if !has('nvim-0.5.0')
       autocmd InsertEnter * call s:fixindentline()
@@ -199,7 +197,13 @@ function! SpaceVim#autocmds#VimEnter() abort
 
   if !filereadable('.SpaceVim.d/init.toml') && filereadable('.SpaceVim.d/init.vim')
     call SpaceVim#logger#info('loading local conf: .SpaceVim.d/init.vim')
-    exe 'source .SpaceVim.d/init.vim'
+    try
+      exe 'source .SpaceVim.d/init.vim'
+    catch
+      call SpaceVim#logger#error('Error occurred while loading the local configuration')
+      call SpaceVim#logger#error('       exception: ' . v:exception)
+      call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
+    endtry
     call SpaceVim#logger#info('finished loading local conf')
   endif
 endfunction

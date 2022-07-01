@@ -1,9 +1,3 @@
-# ============================================================================
-# FILE: dein.py
-# AUTHOR: Shougo Matsushita <Shougo.Matsu at gmail.com>
-# License: MIT license
-# ============================================================================
-
 from .base import Base
 import re
 import os

@@ -1,9 +1,3 @@
-"=============================================================================
-" FILE: dein.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" License: MIT license
-"=============================================================================
-
 function! unite#kinds#dein#define() abort
   return s:kind
 endfunction

@@ -1,9 +1,3 @@
-"=============================================================================
-" FILE: autoload.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
-" License: MIT license
-"=============================================================================
-
 function! dein#autoload#_source(...) abort
   let plugins = empty(a:000) ? values(g:dein#_plugins) :
         \ dein#util#_convert2list(a:1)
@@ -41,10 +35,9 @@ function! dein#autoload#_source(...) abort
           \ { _, val -> isdirectory(plugin.rtp . '/' . val) }),
           \ { _, val -> plugin.rtp . '/' . val })
       if directory =~# 'ftdetect'
-        if get(plugin, 'merge_ftdetect')
-          continue
+        if !get(plugin, 'merge_ftdetect')
+          execute 'augroup filetypedetect'
         endif
-        execute 'augroup filetypedetect'
       endif
       let files = glob(directory . '/**/*.vim', v:true, v:true)
       if has('nvim')
@@ -73,14 +66,17 @@ function! dein#autoload#_source(...) abort
 
       " Register for lazy loaded denops plugin
       if isdirectory(plugin.rtp . '/denops')
-            \ && exists('*denops#plugin#is_loaded')
         for name in filter(map(globpath(plugin.rtp,
               \ 'denops/*/main.ts', v:true, v:true),
               \ { _, val -> fnamemodify(val, ':h:t')}),
               \ { _, val -> !denops#plugin#is_loaded(val) })
-          " Note: denops#plugin#register() may be failed
-          silent! call denops#plugin#register(name, { 'mode': 'skip' })
+
+          if denops#server#status() ==# 'running'
+            " Note: denops#plugin#register() may be failed
+            silent! call denops#plugin#register(name, { 'mode': 'skip' })
+          endif
           call denops#plugin#wait(name)
+          redraw
         endfor
       endif
     endif
@@ -174,7 +170,6 @@ function! dein#autoload#_on_func(name) abort
   let function_prefix = substitute(a:name, '[^#]*$', '', '')
   if function_prefix =~# '^dein#'
         \ || function_prefix =~# '^vital#'
-        \ || has('vim_starting')
     return
   endif
 
@@ -253,7 +248,7 @@ function! dein#autoload#_on_map(mapping, name, mode) abort
   if a:mode ==# 'o' && v:operator ==# 'c'
     " Note: This is the dirty hack.
     execute matchstr(s:mapargrec(a:mapping . input, a:mode),
-          \ ':<C-U>\zs.*\ze<CR>')
+          \ ':<C-u>\zs.*\ze<CR>')
   else
     let mapping = a:mapping
     while mapping =~# '<[[:alnum:]_-]\+>'
@@ -281,11 +276,6 @@ function! dein#autoload#_dummy_complete(arglead, cmdline, cursorpos) abort
   " Load plugins
   call dein#autoload#_on_pre_cmd(tolower(command))
 
-  if exists(':'.command) == 2
-    " Print the candidates
-    call feedkeys("\<C-d>", 'n')
-  endif
-
   return [a:arglead]
 endfunction
 
@@ -295,9 +285,17 @@ function! s:source_plugin(rtps, index, plugin, sourced) abort
     return
   endif
 
-  call add(a:sourced, a:plugin)
+  call insert(a:sourced, a:plugin)
 
   let index = a:index
+
+  " Note: on_source must sourced after depends
+  for on_source in filter(dein#util#_get_lazy_plugins(),
+        \ { _, val -> index(get(val, 'on_source', []), a:plugin.name) >= 0 })
+    if s:source_plugin(a:rtps, index, on_source, a:sourced)
+      let index += 1
+    endif
+  endfor
 
   " Load dependencies
   for name in get(a:plugin, 'depends', [])
@@ -320,13 +318,6 @@ function! s:source_plugin(rtps, index, plugin, sourced) abort
   endfor
 
   let a:plugin.sourced = 1
-
-  for on_source in filter(dein#util#_get_lazy_plugins(),
-        \ { _, val -> index(get(val, 'on_source', []), a:plugin.name) >= 0 })
-    if s:source_plugin(a:rtps, index, on_source, a:sourced)
-      let index += 1
-    endif
-  endfor
 
   if has_key(a:plugin, 'dummy_commands')
     for command in a:plugin.dummy_commands

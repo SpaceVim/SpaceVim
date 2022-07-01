@@ -11,10 +11,10 @@ return {
   default_config = {
     cmd = cmd,
     filetypes = { 'vim' },
-    root_dir = function(fname)
-      return util.find_git_ancestor(fname) or vim.fn.getcwd()
-    end,
+    root_dir = util.find_git_ancestor,
+    single_file_support = true,
     init_options = {
+      isNeovim = true,
       iskeyword = '@,48-57,_,192-255,-#',
       vimruntime = '',
       runtimepath = '',

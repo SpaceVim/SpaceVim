@@ -14,7 +14,7 @@ https://github.com/elbywan/crystalline
 Crystal language server.
 ]],
     default_config = {
-      root_dir = [[root_pattern('shard.yml', '.git') or dirname]],
+      root_dir = [[root_pattern('shard.yml', '.git')]],
     },
   },
 }

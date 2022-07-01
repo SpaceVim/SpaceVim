@@ -2,7 +2,7 @@
 
 #=============================================================================
 # install.sh --- bootstrap script for SpaceVim
-# Copyright (c) 2016-2021 Shidong Wang & Contributors
+# Copyright (c) 2016-2022 Shidong Wang & Contributors
 # Author: Shidong Wang < wsdjeg@outlook.com >
 # URL: https://spacevim.org
 # License: GPLv3
@@ -425,7 +425,6 @@ main () {
                 fetch_repo
                 install_vim
                 install_neovim
-                install_fonts
                 install_done
                 exit 0
                 ;;

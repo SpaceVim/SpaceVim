@@ -277,6 +277,14 @@ function! s:syntax_checking() abort
 endfunction
 
 function! s:search_status() abort
+  if exists('*searchcount')
+    let result = searchcount(#{maxcount: 0})
+    if result.total ==# 0
+      return ''
+    else
+      return ' ' . result.current . '/' . result.total . ' '
+    endif
+  endif
   let save_cursor = getpos('.')
   let ct = 0
   let tt = 0

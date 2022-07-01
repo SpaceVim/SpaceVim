@@ -1,6 +1,6 @@
 local util = require 'lspconfig.util'
 
-local bin_name = 'unofficial-grammarly-language-server'
+local bin_name = 'grammarly-languageserver'
 local cmd = { bin_name, '--stdio' }
 
 if vim.fn.has 'win32' == 1 then
@@ -21,12 +21,12 @@ return {
   },
   docs = {
     description = [[
-https://github.com/emacs-grammarly/unofficial-grammarly-language-server
+https://github.com/znck/grammarly
 
-`unofficial-grammarly-language-server` can be installed via `npm`:
+`grammarly-languageserver` can be installed via `npm`:
 
 ```sh
-npm i -g @emacs-grammarly/unofficial-grammarly-language-server
+npm i -g grammarly-languageserver
 ```
 
 WARNING: Since this language server uses Grammarly's API, any document you open with it running is shared with them. Please evaluate their [privacy policy](https://www.grammarly.com/privacy-policy) before using this.

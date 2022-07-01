@@ -66,16 +66,16 @@ let s:format_on_save = 0
 function! SpaceVim#layers#lang#javascript#plugins() abort
   let plugins = [
         \ ['Galooshi/vim-import-js', {
-        \ 'on_ft': 'javascript', 'build' : 'npm install -g import-js' }],
-        \ ['heavenshell/vim-jsdoc', { 'on_cmd': 'JsDoc' }],
-        \ ['maksimr/vim-jsbeautify', { 'on_ft': 'javascript' }],
-        \ ['mmalecki/vim-node.js', { 'on_ft': 'javascript' }],
-        \ ['moll/vim-node', { 'on_ft': 'javascript' }],
-        \ ['neoclide/vim-jsx-improve', { 'on_ft': 'javascript' }],
-        \ ['othree/es.next.syntax.vim', { 'on_ft': 'javascript' }],
-        \ ['othree/javascript-libraries-syntax.vim', {
-        \ 'on_ft': ['javascript', 'coffee', 'ls', 'typescript'] }],
-        \ ]
+          \ 'on_ft': 'javascript', 'build' : 'npm install -g import-js' }],
+          \ ['heavenshell/vim-jsdoc', { 'on_cmd': 'JsDoc' }],
+          \ ['maksimr/vim-jsbeautify', { 'on_ft': 'javascript' }],
+          \ ['mmalecki/vim-node.js', { 'on_ft': 'javascript' }],
+          \ ['moll/vim-node', { 'on_ft': 'javascript' }],
+          \ ['neoclide/vim-jsx-improve', { 'on_ft': 'javascript' }],
+          \ ['othree/es.next.syntax.vim', { 'on_ft': 'javascript' }],
+          \ ['othree/javascript-libraries-syntax.vim', {
+            \ 'on_ft': ['javascript', 'coffee', 'ls', 'typescript'] }],
+            \ ]
 
   if s:enable_flow_syntax
     call add(plugins, ['flowtype/vim-flow', { 'on_ft': 'javascript' }])
@@ -141,14 +141,15 @@ function! SpaceVim#layers#lang#javascript#config() abort
   endif
   " Only use eslint
 
-  if s:auto_fix
-    augroup SpaceVim_lang_javascript
-      autocmd!
+  augroup SpaceVim_lang_javascript
+    autocmd!
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType javascript set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
+    if s:auto_fix
       autocmd User NeomakeFinished call <SID>checktime_if_javascript()
-      autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
       autocmd FocusGained * call <SID>checktime_if_javascript()
-    augroup END
-  endif
+    endif
+  augroup END
   " just add a note here, when using `node -`, the Buffered stdout will not
   " be flushed by sender.
   " Use node -i will show the output of repl command.

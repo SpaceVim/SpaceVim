@@ -1,9 +1,3 @@
-"=============================================================================
-" FILE: raw.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
-" License: MIT license
-"=============================================================================
-
 function! dein#types#raw#define() abort
   return s:type
 endfunction

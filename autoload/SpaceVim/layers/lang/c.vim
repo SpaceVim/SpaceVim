@@ -225,6 +225,7 @@ function! SpaceVim#layers#lang#c#config() abort
       auto FileType c,cpp  call s:highlight()
     endif
     au BufRead,BufNewFile *.m set filetype=objc
+    autocmd FileType c,cpp set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,://
   augroup END
   call add(g:spacevim_project_rooter_patterns, '.clang')
   if has('nvim')

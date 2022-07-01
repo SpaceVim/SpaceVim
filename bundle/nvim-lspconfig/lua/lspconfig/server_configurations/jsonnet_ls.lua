@@ -17,9 +17,12 @@ return {
       return util.root_pattern 'jsonnetfile.json'(fname) or util.find_git_ancestor(fname)
     end,
     on_new_config = function(new_config, root_dir)
-      new_config.cmd_env = {
-        JSONNET_PATH = jsonnet_path(root_dir),
-      }
+      if not new_config.cmd_env then
+        new_config.cmd_env = {}
+      end
+      if not new_config.cmd_env.JSONNET_PATH then
+        new_config.cmd_env.JSONNET_PATH = jsonnet_path(root_dir)
+      end
     end,
   },
   docs = {

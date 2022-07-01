@@ -101,8 +101,8 @@ Now configure your bundles. (Refer to |dein-examples|)
 
 Call |dein#update()| function to install your plugins.
 >
-If you need vim-plug like install UI, you can use dein-ui.vim.
-https://github.com/wsdjeg/dein-ui.vim
+If you need vim-plug like install UI, you can use ddu-source-dein_update.
+https://github.com/matsui54/ddu-source-dein_update
 
 
 ==============================================================================
@@ -173,7 +173,7 @@ dein#check_lazy_plugins()
 dein#check_update([{force}[, {plugins}]])
 		Check updated {plugins} by github GraphQL API.
 		https://docs.github.com/en/graphql
-		If {force} is |v:true|, it call |dein#update()|after updated
+		If {force} is |v:true|, it call |dein#update()| after updated
 		check.
 		{plugins} are the plugins name list or the plugin name to
 		check.
@@ -186,6 +186,8 @@ dein#check_update([{force}[, {plugins}]])
 		solution.  If "git" command change ".git" directory status(for
 		example: "git reset"), it cannot detect the update properly.
 		And github API cannot detect upstream changes immediately.
+		If you set |g:dein#install_check_remote_threshold|, the check
+		is more strict but slower.
 
 							*dein#check_clean()*
 dein#check_clean()
@@ -214,6 +216,13 @@ dein#config({options})
 	\ 'lazy' : 1, 'on_event' : 'InsertEnter',
 	\ })
 <
+							*dein#deno_cache()*
+dein#deno_cache({plugins})
+		Update {plugins} deno cache.
+		If you omit {plugins}, all plugins cache is updated.
+		It is executed automatically when plugins are updated.
+		Note: "deno" must be executable in your "$PATH".
+
 						*dein#direct_install()*
 dein#direct_install({repo}[, {options}])
 		Direct install a plugin without editing the configuration.
@@ -231,6 +240,9 @@ dein#disable({plugins})
 		{plugins} is the plugins name list.
 		Note: This command must be executed before dein loads
 		the plugins.
+		Note: The plugins must be disabled |dein-options-merged|.
+		Because merged plugins are moved to plugins directory and
+		loaded automatically.
 		Note: Disabled plugins are removed from dein's plugin list.
 		You cannot get disabled plugins from dein.
 
@@ -258,6 +270,20 @@ dein#get([{plugin-name}])
 					*dein#get_direct_plugins_path()*
 dein#get_direct_plugins_path()
 		Get the direct installed plugins script path.
+
+						*dein#get_failed_plugins()*
+dein#get_failed_plugins()
+		Get the previous installation failed plugins.
+
+						*dein#get_updated_plugins()*
+dein#get_updated_plugins([, {plugins}])
+		Get updated {plugins} by github GraphQL API.
+		https://docs.github.com/en/graphql
+		{plugins} are the plugins name list or the plugin name to
+		check.
+		Note: You can use it for github plugins.
+		Note: You need to set |g:dein#install_github_api_token| to use
+		the feature.
 
 							*dein#get_log()*
 dein#get_log()
@@ -380,6 +406,12 @@ dein#plugins2toml({plugins})
 		Returns the toml configurations for {plugins}
 		{plugins} is the plugins dictionary from |dein#get()|.
 
+							*dein#post_sync()*
+dein#post_sync({plugins})
+		Execute an process needed after the plugins are updated.
+		It can be used to create third-party dein upgrader.
+		{plugins} is the plugins name list that was updated.
+
 							*dein#reinstall()*
 dein#reinstall({plugins})
 		Reinstall the plugins.
@@ -451,11 +483,18 @@ VARIABLES						*dein-variables*
 
 						*g:dein#auto_recache*
 g:dein#auto_recache
-		If you set it to 1, call |dein#recache_runtimepath()|
+		If you set it to |v:true|, call |dein#recache_runtimepath()|
 		automatically in |dein#save_state()|.
 		Note: It is slow especially Windows.
 
 		Default: v:false
+
+						*g:dein#auto_remote_plugins*
+g:dein#auto_remote_plugins
+		If you set it to |v:true|, call |dein#remote_plugins()|
+		automatically in |dein#recache_runtimepath()|.
+
+		Default: v:true
 
 						*g:dein#cache_directory*
 g:dein#cache_directory
@@ -488,21 +527,12 @@ g:dein#enable_name_conversion
 						*g:dein#enable_notification*
 g:dein#enable_notification
 		If you set it to 1, dein uses the notification feature.
-		You need the following commands to use it.
 
-		In neovim: "nvim-notify"
+		In neovim: Use "nvim-notify" or |nvim_notify()| API
 		https://github.com/rcarriga/nvim-notify
-		Note: This is experimental.
 
-		In Windows: "notify-send for Windows"
-		http://vaskovsky.net/notify-send/
-		https://github.com/vaskovsky/notify-send
-
-		In Mac: "terminal-notifier" or "osascript" command
-		https://github.com/julienXX/terminal-notifier
-		Note: "reattach-to-user-namespace" command is needed in tmux.
-
-		In Linux: "notify-send" command
+		In Vim: Use "vim-notification" or |popup_notification()| API
+		https://github.com/mattn/vim-notification
 
 		Defaults: v:false
 
@@ -519,8 +549,27 @@ g:dein#inline_vimrcs
 					*g:dein#install_check_diff*
 g:dein#install_check_diff
 		It checks plugins documentation diff when updated plugins.
+		Note: Dein outputs the diff to new buffer in the background.
 
 		Defaults: v:false
+
+					*g:dein#install_check_remote_threshold*
+g:dein#install_check_remote_threshold
+		If the repository is updated newer than the threshold, use
+		strict "git ls-remote" check when |dein#check_update()|.
+		The unit is second.
+
+		Defaults: 0
+>
+		" Strict check updated plugins yesterday
+		let g:dein#install_check_remote_threshold = 24 * 60 * 60
+<
+					*g:dein#install_copy_vim*
+g:dein#install_copy_vim
+		It use Vim script copy routine when
+		|dein#recache_runtimepath()|.
+
+		Defaults: v:true if neovim and not Windows
 
 					*g:dein#install_github_api_token*
 g:dein#install_github_api_token
@@ -547,7 +596,7 @@ g:dein#install_process_timeout
 g:dein#install_progress_type
 		The output type of the progress bar in the installer.
 		Note: If you want to display the progress in the 'statusline',
-		you should use |dein#get_progress()| .
+		you should use |dein#get_progress()|.
 
 		"none":
 			Disabled.
@@ -558,6 +607,8 @@ g:dein#install_progress_type
 		"title":
 			Displayed in the 'titlestring'.
 			Note: It is neovim only support
+		"floating":
+			Displayed in the floating/popup window.
 
 		Defaults: "echo"
 
@@ -601,9 +652,9 @@ g:dein#notification_icon
 						*g:dein#notification_time*
 g:dein#notification_time
 		This is the time the notification should be displayed in
-		seconds.  For Linux and Windows only.
+		milli seconds.
 
-		Default: 2
+		Default: 2000
 
 							*g:dein#plugin*
 g:dein#plugin
@@ -715,6 +766,8 @@ merged		(Bool)
 		If set to v:false, dein doesn't merge the plugin directory.
 		It is useful for the plugin files conflicts.
 
+		Default: See |dein-merge|.
+
 						*dein-options-merge_ftdetect*
 merge_ftdetect	(Bool)
 		If set to v:true, dein merge the plugin "ftdetect" directory.
@@ -744,6 +797,8 @@ normalized_name	(String)
 		denite.nvim       denite
 		dein.vim          dein
 		vim-quickrun      quickrun
+		dps-dial          dial
+		denops-foo        foo
 <
 							*dein-options-on_cmd*
 on_cmd		(List) or (String)
@@ -783,7 +838,11 @@ on_lua		(List) or (String)
 		If it is matched to the required lua module root, dein will
 		call |dein#source()|.
 		Note: It is for neovim only.
-		Note: It does not work for neovim standard modules.
+		Note: It does not work for neovim standard modules and require
+		in |vim.loop| modules.
+		Note: You cannot require on_lua plugins in
+		|dein-options-hook_add|.  Because the plugins are not
+		initialized.
 
 							*dein-options-on_map*
 on_map		(Dictionary) or (List) or (String)
@@ -953,9 +1012,7 @@ hook_add	(String) or (Function)
 <
 					*dein-options-hook_done_update*
 hook_done_update (String) or (Function)
-		It is executed after are updated and before
-		|dein-options-build|.
-		Note: The plugin may not be sourced.
+		It is executed after plugins are sourced and updated.
 
 					*dein-options-hook_post_source*
 hook_post_source (String) or (Function)
@@ -968,7 +1025,9 @@ hook_post_source (String) or (Function)
 <
 					*dein-options-hook_post_update*
 hook_post_update (String) or (Function)
-		It is executed after plugins are sourced and updated.
+		It is executed after are updated and before
+		|dein-options-build|.
+		Note: The plugin may not be sourced.
 
 						*dein-options-hook_source*
 hook_source	(String) or (Function)
@@ -1067,6 +1126,13 @@ TOML							*dein-toml*
 		plugins = ['foo', 'bar']
 		hook_add = ''
 		'''
+
+==============================================================================
+DDU SOURCES						*dein-ddu-sources*
+
+						*dein-ddu-source-dein*
+dein
+		Nominates dein plugins as candidates.
 
 ==============================================================================
 UNITE SOURCES						*dein-unite-sources*
@@ -1410,6 +1476,9 @@ A: >
 
 ==============================================================================
 COMPATIBILITY						*dein-compatibility*
+
+2022.04.20
+* Use Vim/neovim standard API for notification instead of commands.
 
 2021.09.20
 * Remove "dein-options-on_i".

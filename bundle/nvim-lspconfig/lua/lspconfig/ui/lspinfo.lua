@@ -5,6 +5,12 @@ local util = require 'lspconfig.util'
 local error_messages = {
   cmd_not_found = 'Unable to find executable. Please check your path and ensure the server is installed',
   no_filetype_defined = 'No filetypes defined, Please define filetypes in setup()',
+  root_dir_not_found = 'Not found.',
+}
+
+local helptags = {
+  [error_messages.no_filetype_defined] = { 'lspconfig-setup' },
+  [error_messages.root_dir_not_found] = { 'lspconfig-root-detection' },
 }
 
 local function trim_blankspace(cmd)
@@ -33,6 +39,7 @@ end
 local function make_config_info(config)
   local config_info = {}
   config_info.name = config.name
+  config_info.helptags = {}
   if config.cmd then
     config_info.cmd = remove_newlines(config.cmd)
     if vim.fn.executable(config.cmd[1]) == 1 then
@@ -46,7 +53,21 @@ local function make_config_info(config)
   end
 
   local buffer_dir = vim.fn.expand '%:p:h'
-  config_info.root_dir = config.get_root_dir(buffer_dir) or 'NA'
+  local root_dir = config.get_root_dir(buffer_dir)
+  if root_dir then
+    config_info.root_dir = root_dir
+  else
+    config_info.root_dir = error_messages.root_dir_not_found
+    vim.list_extend(config_info.helptags, helptags[error_messages.root_dir_not_found])
+    local root_dir_pattern = vim.tbl_get(config, 'document_config', 'docs', 'default_config', 'root_dir')
+    if root_dir_pattern then
+      config_info.root_dir = config_info.root_dir
+        .. ' Searched for: '
+        .. remove_newlines(vim.split(root_dir_pattern, '\n'))
+        .. '.'
+    end
+  end
+
   config_info.autostart = (config.autostart and 'true') or 'false'
   config_info.handlers = table.concat(vim.tbl_keys(config.handlers), ', ')
   config_info.filetypes = table.concat(config.filetypes or {}, ', ')
@@ -63,6 +84,15 @@ local function make_config_info(config)
     'autostart:         ' .. config_info.autostart,
     'custom handlers:   ' .. config_info.handlers,
   }
+
+  if vim.tbl_count(config_info.helptags) > 0 then
+    local help = vim.tbl_map(function(helptag)
+      return string.format(':h %s', helptag)
+    end, config_info.helptags)
+    info_lines = vim.list_extend({
+      'Refer to ' .. table.concat(help, ', ') .. ' for help.',
+    }, info_lines)
+  end
 
   vim.list_extend(lines, indent_lines(info_lines, '\t'))
 
@@ -209,8 +239,14 @@ return function()
 
   vim.fn.matchadd(
     'Error',
-    error_messages.no_filetype_defined .. '.\\|' .. 'cmd not defined\\|' .. error_messages.cmd_not_found
+    error_messages.no_filetype_defined
+      .. '.\\|'
+      .. 'cmd not defined\\|'
+      .. error_messages.cmd_not_found
+      .. '\\|'
+      .. error_messages.root_dir_not_found
   )
+
   vim.cmd 'let m=matchadd("string", "true")'
   vim.cmd 'let m=matchadd("error", "false")'
   for _, config in pairs(configs) do

@@ -50,6 +50,27 @@ function M.print( tbl , level, filteDefault)
 end
 
 
+function M.make(keys, values, ...)
+    local dict = {}
+    local arg = {...}
+    local fill = arg[1] or 0
+    for i = 1, #keys do
+        local key = tostring(keys[i])
+        if key == '' then return {} end
+        dict[key] = values[i] or fill
+    end
+    return dict
+end
+
+function M.swap(d)
+    
+end
+
+function M.make_index(list, ...)
+    
+end
+
+
 
 
 return M
