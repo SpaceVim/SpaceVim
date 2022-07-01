@@ -15,8 +15,6 @@ comments: true
 - [What's New](#whats-new)
   - [New layers](#new-layers)
   - [New feature](#new-feature)
-- [Improvements](#improvements)
-- [Bug fix](#bug-fix)
   - [Git Commits](#git-commits)
 
 <!-- vim-markdown-toc -->
@@ -55,11 +53,7 @@ Since last release, the following layers have been added:
 
 ![chat](https://user-images.githubusercontent.com/13142418/176914163-ec4dcfd6-65d3-45d0-beea-9faec397e6f3.png)
 
-## Improvements
-
 - add `b`, `e`, `w` key bindings for iedit mode
-
-## Bug fix
 
 ### Git Commits
 
