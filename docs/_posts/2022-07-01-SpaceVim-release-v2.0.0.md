@@ -13,6 +13,8 @@ comments: true
 <!-- vim-markdown-toc GFM -->
 
 - [What's New](#whats-new)
+  - [Inproments](#inproments)
+  - [Git Commits](#git-commits)
 
 <!-- vim-markdown-toc -->
 
@@ -28,609 +30,623 @@ So let's take a look at what happened since last relase.
 
 ## What's New
 
+Since last release, there are 5 new layers have been added:
+
+- `lang#cmake` layer
+- `lang#jr` layer
+- `lang#jsonnet` layer
+- `lang#octave` layer
+- `lang#yang` layer
+
+
+
+### Inproments
+
+### Git Commits
+
 ```
-- build(docker): fix dockerfile (wsdjeg 6 weeks ago)
-- build(docker): use debian stable image (wsdjeg 6 weeks ago)
-- chore(bundle): update bundle `clever-f` (wsdjeg 3 months ago)
-- chore(bundle): update bundle dein.vim (wsdjeg 2 weeks ago)
-- chore(bundle): update bundle indent-blankline.nvim (wsdjeg 8 weeks ago)
-- chore(bundle): use bundle `JavaUnit.vim` (wsdjeg 3 months ago)
-- chore(bundle): use bundle java plugins (wsdjeg 3 months ago)
-- chore(bundle): use bundle vim-assembly (wsdjeg 6 weeks ago)
-- chore(bundle): use bundle vim-lookup (wsdjeg 3 months ago)
-- chore(calendar): use bundle calendar.vim (wsdjeg 5 weeks ago)
-- chore(config): add log info for loading custom configuration file (wsdjeg 9 weeks ago)
-- chore(copyright): update copyright (wsdjeg 3 weeks ago)
-- chore(copyright): update copyright (wsdjeg 5 months ago)
-- chore(copyright): update email (wsdjeg 3 months ago)
-- chore(dein-ui): make info clearly (wsdjeg 3 weeks ago)
-- chore(dev): update development doc (wsdjeg 3 months ago)
-- chore(dict): add dict function (wsdjeg 12 days ago)
-- chore(dict): add lua data.dict.make (wsdjeg 11 days ago)
-- chore(editorconfig): fix typos in .editorconfig (zeertzjq 3 months ago)
-- chore(github): use bundle github.vim (wsdjeg 9 weeks ago)
-- chore(gitignore): ignore `.cache` directory (wsdjeg 3 months ago)
-- chore(lang#python): use bundle python plugins (wsdjeg 5 weeks ago)
-- chore(license): add file head (wsdjeg 3 months ago)
-- chore(lsp): add log for lsp client (wsdjeg 3 months ago)
-- chore(lspconfig): update bundle lspconfig (wsdjeg 10 days ago)
-- chore(lua): add comment about lua package path (wsdjeg 3 months ago)
-- chore(scala): use bundle vim-scala (wsdjeg 10 weeks ago)
-- chore(sponsors): update sponsors page (wsdjeg 5 months ago)
-- chore(treesitter): use bundle treesitter (wsdjeg 3 months ago)
-- chore(typo): fix typo in smartclose function (wsdjeg 2 months ago)
-- chore(version): update to 2.0.0-dev (wsdjeg 6 months ago)
-- chore(website): use gtag.js (wsdjeg 2 months ago)
-- ci(action): use `windows-latest` Virtual Environments (wsdjeg 6 weeks ago)
-- ci(codecov): update target (wsdjeg 3 months ago)
-- ci(vim): add test for vim 8.2.2434 and 8.2.3995 (wsdjeg 3 months ago)
-- docs(.gitattributes): add `.gitattributes` (wsdjeg 5 weeks ago)
-- docs(404): add request path (wsdjeg 4 weeks ago)
-- docs(404): display page url (wsdjeg 4 weeks ago)
-- docs(C/C++): fix typos in vim as C/C++ IDE (tiwe0 3 months ago)
-- docs(README): add link to FAQ page (wsdjeg 3 months ago)
-- docs(WebAssembly): add `:h SpaceVim-layers-lang-WebAssembly` (wsdjeg 3 months ago)
-- docs(align): fix table align (wsdjeg 5 months ago)
-- docs(alternate): add `:h SpaceVim-usage-alternate-file` (wsdjeg 3 months ago)
-- docs(api): add `:h SpaceVim-api-clock` (wsdjeg 3 months ago)
-- docs(autosave): add `:h SpaceVim-plugins-autosave` (wsdjeg 8 weeks ago)
-- docs(bundle): update bundle readme (wsdjeg 5 weeks ago)
-- docs(c/c++): update c/c++ tutorial (wsdjeg 4 weeks ago)
-- docs(chat): add image for chat layer (wsdjeg 9 weeks ago)
-- docs(chat): remove bridged room (wsdjeg 8 weeks ago)
-- docs(chat): update chat room link (wsdjeg 3 weeks ago)
-- docs(chat): update doc for `chat` layer (Jedsek 5 months ago)
-- docs(chat): update vim-chat readme (wsdjeg 9 weeks ago)
-- docs(clojure): typo in clojure doc (Elliott Crifasi 4 months ago)
-- docs(cmake): add doc for `:Cmake ` command (wsdjeg 5 weeks ago)
-- docs(cmdlinemenu): add usage example (wsdjeg 3 months ago)
-- docs(community): add chatting rooms (wsdjeg 4 weeks ago)
-- docs(community): add irc channel (wsdjeg 4 weeks ago)
-- docs(complete): update doc of autocomplete_method (wsdjeg 3 months ago)
-- docs(contributing): translate  CONTRIBUTING.cn.md (ShenMian 3 months ago)
-- docs(core): update docs to clarify location of settings (Kristof Ostir 8 weeks ago)
-- docs(cscope): update `:h SpaceVim-layers-cscope` (wsdjeg 3 months ago)
-- docs(custom_plugins): add doc for adding multiple plugins (wsdjeg 3 months ago)
-- docs(debug): add keybinds doc for vimspector (Grafcube 5 months ago)
-- docs(development): update development page (wsdjeg 10 weeks ago)
-- docs(development): update development page (wsdjeg 5 weeks ago)
-- docs(development): update language specified key bindings (wsdjeg 10 weeks ago)
-- docs(discord): update discord link (wsdjeg 4 weeks ago)
-- docs(docker): add link to docker hub (wsdjeg 6 weeks ago)
-- docs(docs): update feature request guidelines (wsdjeg 4 weeks ago)
-- docs(document): update documentation (wsdjeg 3 weeks ago)
-- docs(documentation): update doc about code runner and repl (wsdjeg 8 weeks ago)
-- docs(documentation): update fuzzy finder list (wsdjeg 6 weeks ago)
-- docs(documentation): update mouse and scrollbar section (wsdjeg 10 weeks ago)
-- docs(edit): fix typo in edit page (wsdjeg 5 months ago)
-- docs(edit): update cn edit page (wsdjeg 5 months ago)
-- docs(eslint): update ESLint in JS as IDE docs (Mike Barberry 6 months ago)
-- docs(experience): add user experiences (wsdjeg 3 weeks ago)
-- docs(faq): add doc for uninstall SpaceVim (wsdjeg 5 months ago)
-- docs(faq): add extra repo for spacevim (wsdjeg 5 weeks ago)
-- docs(faq): add faq about init.toml format (wsdjeg 8 weeks ago)
-- docs(faq): add faq about using corresponding layer (wsdjeg 3 weeks ago)
-- docs(faq): add guide for manual installation (wsdjeg 2 months ago)
-- docs(faq): update doc for manual installation (Kristof Ostir 2 months ago)
-- docs(faq): update faq page (wsdjeg 9 weeks ago)
-- docs(feedback): disable github issue (wsdjeg 5 weeks ago)
-- docs(filetree): update filetree doc (wsdjeg 5 weeks ago)
-- docs(foldsearch): add `:h SpaceVim-layers-foldsearch` (wsdjeg 3 months ago)
-- docs(font): add font transient state image (wsdjeg 5 weeks ago)
-- docs(format): format documentation text (wsdjeg 5 weeks ago)
-- docs(fzf): add `:h SpaceVim-layers-fzf` (wsdjeg 5 months ago)
-- docs(github): update github readme (wsdjeg 4 weeks ago)
-- docs(github): update readme of github.vim (wsdjeg 9 weeks ago)
-- docs(gitter): add doc for `gitter_token` (wsdjeg 9 weeks ago)
-- docs(go): update `lang#go` layer page (wsdjeg 5 weeks ago)
-- docs(go): update golang doc (wsdjeg 5 weeks ago)
-- docs(gtags): document ctags_bin gtags layer option (Sébastien Santoro 3 months ago)
-- docs(guide): Add vim basic guide (Wang Shidong 6 months ago)
-- docs(guide): Add vim script guide (Wang Shidong 6 months ago)
-- docs(guide): add lua guide (wsdjeg 2 weeks ago)
-- docs(guide): mention SPC == space (jtagcat 5 months ago)
-- docs(guide): update lua guide (wsdjeg 12 days ago)
-- docs(haxe): add page for `lang#haxe` layer (wsdjeg 10 weeks ago)
-- docs(help): add `:h SpaceVim-options-expand_tab` (wsdjeg 3 months ago)
-- docs(help): add help description for `SPC p t e` (wsdjeg 3 weeks ago)
-- docs(iedit): add `:h SpaceVim-plugins-iedit` (wsdjeg 3 months ago)
-- docs(iedit): add article for iedit (Wang Shidong 3 months ago)
-- docs(iedit): update doc for iedit function (wsdjeg 3 months ago)
-- docs(iedit): update documentation page (wsdjeg 3 months ago)
-- docs(javaunite): add `:h JavaUnit.vim` (wsdjeg 3 months ago)
-- docs(kotlin): update doc for `kotlin` layer (Russell 3 months ago)
-- docs(kotlin): update kotlin guide (wsdjeg 5 weeks ago)
-- docs(lang#autohotkey): update doc of lang#autohotkey layer (wsdjeg 6 weeks ago)
-- docs(lang#fennel): add layer page for `lang#fennel` layer (wsdjeg 4 weeks ago)
-- docs(layers): update layers page (wsdjeg 4 weeks ago)
-- docs(link): fix links (wsdjeg 3 months ago)
-- docs(lsp): add description for nvim(>=0.5.0) (sisynb 3 months ago)
-- docs(lsp): update language-server-protocol.md (sisrnb 5 months ago)
-- docs(lua): update lua guide (wsdjeg 13 days ago)
-- docs(mail): add doc for `mail` layer (wsdjeg 3 months ago)
-- docs(option): add `:h SpaceVim-options-commandline_prompt` (wsdjeg 3 months ago)
-- docs(php): update doc for php lsp support (wsdjeg 3 months ago)
-- docs(php): update doc of `lang#php` layer (wsdjeg 3 months ago)
-- docs(python): add doc for enable `+py3` (Wang Shidong 5 months ago)
-- docs(python2): add @bug todo info about python2 (wsdjeg 3 months ago)
-- docs(python2): add doc about github-issues.vim (wsdjeg 3 months ago)
-- docs(quick-guide): add doc for switch to specific version (wsdjeg 3 months ago)
-- docs(ruby): add rubygems mirror (wsdjeg 5 weeks ago)
-- docs(runner): add `:h SpaceVim-plugins-runner` (wsdjeg 3 months ago)
-- docs(runner): update code runner doc (wsdjeg 10 weeks ago)
-- docs(scala): add post about using vim as scala ide (Wang Shidong 10 weeks ago)
-- docs(scala): update scala post (wsdjeg 10 weeks ago)
-- docs(scrollbar): add doc about scrollbar (wsdjeg 2 months ago)
-- docs(searcher): add doc about `SPC s j` (wsdjeg 3 months ago)
-- docs(sponsors): remove salt.bountysource.com (wsdjeg 6 weeks ago)
-- docs(sponsors): update sponsorship (wsdjeg 9 weeks ago)
-- docs(ssh): add cn page for ssh layer (wsdjeg 4 weeks ago)
-- docs(tabmanager): add `:h SpaceVim-plugins-tabmanager` (wsdjeg 3 months ago)
-- docs(tasks): update `:h SpaceVim-usage-tasks` (wsdjeg 3 months ago)
-- docs(teal): add page for lang#teal layer (wsdjeg 10 weeks ago)
-- docs(telescope): add telescope loadable function (wsdjeg 6 weeks ago)
-- docs(test): update doc for `test` layer (wsdjeg 3 months ago)
-- docs(todomanager): add `:h SpaceVim-plugins-todomanager` (wsdjeg 3 months ago)
-- docs(tools): update tools page (wsdjeg 5 weeks ago)
-- docs(tutorial): update vim script guide (wsdjeg 3 months ago)
-- docs(typo): fix typo (wsdjeg 2 weeks ago)
-- docs(typo): fix typo (wsdjeg 4 weeks ago)
-- docs(usage): add `:h SpaceVim-usage-undotree` (wsdjeg 5 months ago)
-- docs(vcs): add `:h SpaceVim-layers-VersionControl` (wsdjeg 3 months ago)
-- docs(video): add link to `Getting Started With SpaceVim` (wsdjeg 3 months ago)
-- docs(wdl): add `:h SpaceVim-layers-lang-wdl` (wsdjeg 3 months ago)
-- docs(website): fix type in `edit` layer page (wsdjeg 5 months ago)
-- docs(website): update `edit` layer doc (wsdjeg 5 months ago)
-- docs(website): update index page (Musa Ahmed 3 days ago)
-- docs(weibo): remove link to weibo (wsdjeg 6 weeks ago)
-- docs(weisite): update website documentation (wsdjeg 3 months ago)
-- docs(wiki): update following HEAD page (wsdjeg 3 months ago)
-- docs(wiki): update languages list (wsdjeg 10 weeks ago)
-- docs(wiki): update languages list (wsdjeg 6 weeks ago)
-- docs(wiki): update programming languages (wsdjeg 10 weeks ago)
-- docs(wiki): update project layout page (wsdjeg 3 months ago)
-- docs(wildignore): add `:h SpaceVim-options-wildignore` (wsdjeg 3 months ago)
-- feat(action): enable detach action for vim-chat (wsdjeg 9 weeks ago)
-- feat(api): add message.nvim_echo api (wsdjeg 3 months ago)
-- feat(api): add resize function in lua api (wsdjeg 2 days ago)
-- feat(api): improve `SpaceVim#api#register` function (wsdjeg 3 months ago)
-- feat(autohotkey): use bundle vim-autohotkey (wsdjeg 6 weeks ago)
-- feat(autosave): add autosave plugin (Wang Shidong 5 months ago)
-- feat(autosave): add autosave_location option (wsdjeg 5 months ago)
-- feat(autosave): re-implement autosave plugin (wsdjeg 5 months ago)
-- feat(bookmarks): add leaderf support for vim-bookmarks (wsdjeg 3 months ago)
-- feat(bookmarks): add title to quickfix list and localist (wsdjeg 3 months ago)
-- feat(buffer): add `SPC b ctrl-shift-d` to kill buffer by regexp (wsdjeg 5 months ago)
-- feat(bundle): add bundle nvim-if-lua-compat (wsdjeg 3 weeks ago)
-- feat(bundle): update bundle tagbar (wsdjeg 6 months ago)
-- feat(bundle): use bundle `github_dashboard` (wsdjeg 3 months ago)
-- feat(calendar): add calendar statusline (wsdjeg 5 weeks ago)
-- feat(chat): complete build-in protocol (wsdjeg 9 weeks ago)
-- feat(chat): complete channel with ignorecase (wsdjeg 9 weeks ago)
-- feat(chat): complete channels (wsdjeg 9 weeks ago)
-- feat(chat): complete channels regardless of case (wsdjeg 9 weeks ago)
-- feat(chat): complete username after `@` (wsdjeg 9 weeks ago)
-- feat(chat): highlight VimChatPing (wsdjeg 9 weeks ago)
-- feat(chat): improve gitter support (Wang Shidong 9 weeks ago)
-- feat(chat): improve vimchat ui (wsdjeg 9 weeks ago)
-- feat(chat): make shift-enter same as ctrl-j (wsdjeg 8 weeks ago)
-- feat(chat): make shift-space return space in insert mode (wsdjeg 9 weeks ago)
-- feat(chat): redraw screen in while loop (wsdjeg 9 weeks ago)
-- feat(chat): remove redraw to avoid flickering the screen (wsdjeg 9 weeks ago)
-- feat(chat): support ScrollWheelDown and ScrollWheelUp (wsdjeg 9 weeks ago)
-- feat(chat): support `ctrl-w` to delete word (wsdjeg 9 weeks ago)
-- feat(chat): support irc protocol (Wang Shidong 8 weeks ago)
-- feat(chat): support paste from register (wsdjeg 9 weeks ago)
-- feat(chat): support push multiple messages (wsdjeg 9 weeks ago)
-- feat(chat): switch to next/previous channel (wsdjeg 9 weeks ago)
-- feat(checkers): add `lint_exclude_filetype` option (wsdjeg 3 months ago)
-- feat(checkers): fix checkers layer option (Wang Shidong 6 weeks ago)
-- feat(clever-f): hide cursor for neovim (wsdjeg 3 months ago)
-- feat(clipboard): add vim-clipboard plugin (wsdjeg 3 weeks ago)
-- feat(clipboard): support other clipboard command (wsdjeg 3 weeks ago)
-- feat(cmake): add `:Cmake` command (wsdjeg 5 weeks ago)
-- feat(colorscheme): add dracula (wsdjeg 2 months ago)
-- feat(core): Load local config after global config (Grafcube 5 months ago)
-- feat(cscope): add `list_files_command` layer option (wsdjeg 4 weeks ago)
-- feat(ctags): use `-G` option when generate tags (wsdjeg 3 months ago)
-- feat(ctrlg): add `ctrl-g` key binding to display project info (wsdjeg 3 months ago)
-- feat(defx): add bundle defx-sftp (wsdjeg 3 months ago)
-- feat(defx): use `p` to toggle preview windows (wsdjeg 3 months ago)
-- feat(detach): detach vim-chat automatically (wsdjeg 9 weeks ago)
-- feat(edit): add reverse-lines key binding (Kun Lin 4 months ago)
-- feat(filetree): add nvim-tree.lua (Wang Shidong 6 weeks ago)
-- feat(filetree): add user autocmd to override key binding (wsdjeg 5 weeks ago)
-- feat(flygrep): hide guicursor (wsdjeg 3 months ago)
-- feat(font): add `SPC z .` key binding (wsdjeg 5 weeks ago)
-- feat(font): add key binding to reset guifont (wsdjeg 5 weeks ago)
-- feat(format): add `silent_format` to format layer (Grafcube 5 months ago)
-- feat(fzf): add bundle telescope fzf extension (wsdjeg 4 weeks ago)
-- feat(git): add `git_diff_position` option (wsdjeg 3 months ago)
-- feat(git): change git log regexp (wsdjeg 3 months ago)
-- feat(git): use notify api to display error (wsdjeg 6 weeks ago)
-- feat(github): add UpdateStartedRepos command (wsdjeg 4 weeks ago)
-- feat(github): enable github-dashboard only when `has('ruby')` (wsdjeg 9 weeks ago)
-- feat(github): update github plugin (wsdjeg 5 weeks ago)
-- feat(github.vim): use `web#http` api (wsdjeg 4 weeks ago)
-- feat(githubissues): use bundle github-issues & fix python command (wsdjeg 3 months ago)
-- feat(gitter): add gitter client (Wang Shidong 9 weeks ago)
-- feat(gitter): check notification setting of a room (wsdjeg 9 weeks ago)
-- feat(gitter): complete gitter rooms (wsdjeg 9 weeks ago)
-- feat(gitter): display more message about connection process (wsdjeg 8 weeks ago)
-- feat(gitter): highlight remote nick (wsdjeg 9 weeks ago)
-- feat(gitter): notify channel list done (wsdjeg 9 weeks ago)
-- feat(gitter): use list instead of string (wsdjeg 9 weeks ago)
-- feat(golang): improve `lang#go` layer (wsdjeg 3 months ago)
-- feat(gtags): add `ctags_bin` option (wsdjeg 3 months ago)
-- feat(guicursor): enable cursor color (wsdjeg 3 months ago)
-- feat(haxe): add repl support for haxe (wsdjeg 10 weeks ago)
-- feat(health): check layer health (wsdjeg 3 months ago)
-- feat(hop): add hop.nvim for neovim v0.6.0 (Wang Shidong 9 weeks ago)
-- feat(iconv): add codecs 950/932 (wsdjeg 5 weeks ago)
-- feat(iconv): add cp949 (wsdjeg 5 weeks ago)
-- feat(iconv): add euc_jp codecs (wsdjeg 5 weeks ago)
-- feat(iedit): add `b` key binding for iedit (wsdjeg 3 months ago)
-- feat(iedit): add `e` key binding in iedit-normal mode (wsdjeg 3 months ago)
-- feat(iedit): add `w` key binding for iedit-normal mode (wsdjeg 3 months ago)
-- feat(iedit): hide cursor in iedit mode (wsdjeg 3 months ago)
-- feat(iedit): improve iedit mode (#4615) (Wang Shidong 3 months ago)
-- feat(incsearch): update incsearch layer (wsdjeg 3 weeks ago)
-- feat(julia): add `g d` key binding (wsdjeg 7 weeks ago)
-- feat(lang#c): update lsp key binding for `lang#c` layer (wsdjeg 10 weeks ago)
-- feat(lang#haxe): add `lang#haxe` layer (wsdjeg 10 weeks ago)
-- feat(lang#nix): Add additional LSP command bindings (Sven Tennie 5 months ago)
-- feat(lang#postscript): add `lang#postscript` layer (wsdjeg 6 weeks ago)
-- feat(lang#ruby): support `solargraph` client (wsdjeg 5 weeks ago)
-- feat(lang#ruby): update lsp configuration for ruby (wsdjeg 5 weeks ago)
-- feat(lang#ruby): use bundle vim-ruby (wsdjeg 5 weeks ago)
-- feat(lang#teal): add `lang#teal` layer (wsdjeg 10 weeks ago)
-- feat(layer#git): update git commands for fugitive (Michał Kuczaj 5 months ago)
-- feat(layer): Add cargo-clippy to Rust layer (Grafcube 5 months ago)
-- feat(layer): add `lang#cmake` layer (Wang Shidong 6 weeks ago)
-- feat(layer): add `lang#jr` layer (wsdjeg 3 months ago)
-- feat(layer): add `lang#jsonnet` layer (wsdjeg 8 weeks ago)
-- feat(layer): add `lang#octave` layer (wsdjeg 3 months ago)
-- feat(layer): add `lang#yang` layer (wsdjeg 8 weeks ago)
-- feat(layer): add framework#django layer (Wang Shidong 8 weeks ago)
-- feat(layer): add telescope layer (Wang Shidong 7 weeks ago)
-- feat(layer): fix find_layers (wsdjeg 12 days ago)
-- feat(liquid): add liquid template support (wsdjeg 4 weeks ago)
-- feat(lsp): add override_client_cmds (wsdjeg 3 weeks ago)
-- feat(lsp): support `#{cwd}` for the current working directory (Alessio Linares 2 months ago)
-- feat(lua): add iconv api (Wang Shidong 5 weeks ago)
-- feat(lua): add lua `data#string` api (Wang Shidong 5 months ago)
-- feat(lua): add lua layer list (wsdjeg 12 days ago)
-- feat(lua): add lua layer modular (wsdjeg 2 weeks ago)
-- feat(lua): fix layer list (wsdjeg 12 days ago)
-- feat(lua): support `~/.SpaceVim.d/init.lua` (wsdjeg 13 days ago)
-- feat(major_mode): add wrap line major mode icon (wsdjeg 10 weeks ago)
-- feat(mapping): add `SPC b <C-D>` (Wang Shidong 5 months ago)
-- feat(mapping): add `SPC b o` to kill all buffers and windows (wsdjeg 3 months ago)
-- feat(mapping): add `SPC f R` to rename current file (wsdjeg 3 months ago)
-- feat(mapping): add `SPC f v s` to view scriptnames (wsdjeg 6 weeks ago)
-- feat(mapping): add `gD` to go to declaration (sisynb 4 months ago)
-- feat(mapping): add help description for `SPC s S` (wsdjeg 5 months ago)
-- feat(mapping): add help description for `SPC s b` (wsdjeg 5 months ago)
-- feat(mapping): add help guide for `SPC s B` (wsdjeg 5 months ago)
-- feat(mapping): add help guide for `SPC s d/D` (wsdjeg 5 months ago)
-- feat(mapping): add help guide for `SPC s f/F` (wsdjeg 5 months ago)
-- feat(mapping): add help guide for `SPC s s` (wsdjeg 6 months ago)
-- feat(mapping): improve `SPC w m` key binding (wsdjeg 10 weeks ago)
-- feat(mapping): make `SPC b d` skip startify and defx buffer (wsdjeg 3 months ago)
-- feat(markdown): add a new key binding for RemoveToc (Kun Lin 3 months ago)
-- feat(mkdir): add lua mkdir plugin (wsdjeg 4 hours ago)
-- feat(mkdir): make automkdir plugin support `:w foo/test.vim` (wsdjeg 3 months ago)
-- feat(neoformat): Use forked version of neoformat (wsdjeg 3 months ago)
-- feat(netrw): add option to enable/disable netrw (wsdjeg 3 months ago)
-- feat(notify): add `winblend` option (wsdjeg 3 months ago)
-- feat(nvim-lspconfig): update bundle nvim-lspconfig (wsdjeg 3 months ago)
-- feat(option): add `bootstrap_script` option (wsdjeg 2 months ago)
-- feat(org): improve lang#org layer (Wang Shidong 6 months ago)
-- feat(plantuml): add `java_command` option (Wang Shidong 4 months ago)
-- feat(project): add `SPC p p` for telescope layer (wsdjeg 6 weeks ago)
-- feat(projectmanager): improve Telescope project extension (wsdjeg 6 weeks ago)
-- feat(pylsp): add support for pylsp (wsdjeg 3 weeks ago)
-- feat(python): add virtualenv support (Wang Shidong 3 months ago)
-- feat(rainbow): change rainbow plugin (wsdjeg 6 weeks ago)
-- feat(ruby): add prettier formatter (Tobias Amft 8 weeks ago)
-- feat(rust): use bundle rust.vim (wsdjeg 2 months ago)
-- feat(scrollbar): add scrollbar support for vim (Wang Shidong 2 months ago)
-- feat(scrollbar): update scrollbar on `CursorHold` autocmd (wsdjeg 3 months ago)
-- feat(snippet): add `SPC x s s` to edit snippet (wsdjeg 8 weeks ago)
-- feat(snippet): add bundle cmp-neosnippet (wsdjeg 3 months ago)
-- feat(ssh): add `:SSHCommand` command (wsdjeg 4 weeks ago)
-- feat(statusline): add `&paste` mode support (wsdjeg 3 months ago)
-- feat(statusline): add `totallines` section (wsdjeg 3 months ago)
-- feat(statusline): clear searching status for no exist pattern (wsdjeg 3 months ago)
-- feat(statusline): support global statusline (wsdjeg 3 months ago)
-- feat(tabline): add `ctrl-shift-left/right` key binding (wsdjeg 3 months ago)
-- feat(telescope): add `Telescope neoyank` extension (wsdjeg 6 weeks ago)
-- feat(telescope): fix message extensions (wsdjeg 6 weeks ago)
-- feat(telescope): implement `:Telescope menu` extension (wsdjeg 6 weeks ago)
-- feat(test): add vim ultest (Grafcube 4 months ago)
-- feat(tmux): use bundle vim-tmux-navigator (wsdjeg 5 weeks ago)
-- feat(todomanager): add `todo_prefix` option (wsdjeg 3 months ago)
-- feat(verilog): add `lang#verilog` layer (wsdjeg 3 months ago)
-- feat(verilog): add code runner for verilog (wsdjeg 6 weeks ago)
-- feat(vimchat): add `VimChatReplayCounts` highlight (wsdjeg 8 weeks ago)
-- feat(vimchat): add codeblocklines highlight (wsdjeg 9 weeks ago)
-- feat(vimchat): display user count on statusline (wsdjeg 9 weeks ago)
-- feat(vimchat): hide cursor highlight (wsdjeg 8 weeks ago)
-- feat(vimchat): highlight mouse range (wsdjeg 9 weeks ago)
-- feat(vimchat): support channel info message (wsdjeg 8 weeks ago)
-- feat(vimchat): support mouse left click (wsdjeg 9 weeks ago)
-- feat(vimchat): support replays counts (wsdjeg 8 weeks ago)
-- feat(vimchat): update syntax highlight for message (wsdjeg 9 weeks ago)
-- feat(vimchat): use ctrl-c to copy selected text (wsdjeg 8 weeks ago)
-- feat(windisk): add windisk.lua (wsdjeg 12 days ago)
-- feat(windows): fix link of nightly neovim release (wsdjeg 3 months ago)
-- fix(E5601): close all notify windows on QuitPre (wsdjeg 3 months ago)
-- fix(E725): fix vim error E725 (wsdjeg 3 months ago)
-- fix(Ex mode): fix highlight plugin for Ex mode (wsdjeg 3 months ago)
-- fix(LeaderGuide): fix command definition (wsdjeg 3 months ago)
-- fix(ale): file ale config (wsdjeg 3 months ago)
-- fix(api): fix `transient_state` api (wsdjeg 3 months ago)
-- fix(autosave): fix location_path function (wsdjeg 5 months ago)
-- fix(autosave): use checktime to avoid warning (wsdjeg 5 months ago)
-- fix(bootstrap_script): use try/catch for bootstrap_script (wsdjeg 4 weeks ago)
-- fix(branch): fix on_exit_show_branch function (wsdjeg 2 months ago)
-- fix(branch): fix statusline branch info (wsdjeg 2 months ago)
-- fix(bundle): update bundle nvim-cmp (wsdjeg 3 months ago)
-- fix(chat): clear current_channel (wsdjeg 8 weeks ago)
-- fix(chat): display username instead (wsdjeg 8 weeks ago)
-- fix(chat): fix command completion (wsdjeg 9 weeks ago)
-- fix(chat): fix detach script for vim-chat (wsdjeg 9 weeks ago)
-- fix(chat): fix next/previous channel (wsdjeg 9 weeks ago)
-- fix(chat): skip spaces after server commands (wsdjeg 9 weeks ago)
-- fix(chat): use `:close` to quit (wsdjeg 9 weeks ago)
-- fix(chinese): fix convert Chinese number to digits (Kun Lin 3 months ago)
-- fix(clipboard): fix `leader y` key binding (wsdjeg 3 weeks ago)
-- fix(clipboard): fix clipboard support for vim8 (wsdjeg 3 weeks ago)
-- fix(clipboard): return empty string (wsdjeg 3 weeks ago)
-- fix(cmdheight): update cmdheight when send multiple line message (wsdjeg 8 weeks ago)
-- fix(command): fix `SPLayer` command (wsdjeg 12 days ago)
-- fix(commit): disable `cindent` for git commit buffer (wsdjeg 3 months ago)
-- fix(config): handle error in local config (wsdjeg 3 weeks ago)
-- fix(config): skip local config for $HOME (wsdjeg 10 weeks ago)
-- fix(core): add spacevim root dir to rtp (wsdjeg 6 months ago)
-- fix(core): fix Windows install script && update faq (Kristof Ostir 2 months ago)
-- fix(core): fix `get_options` function (wsdjeg 3 months ago)
-- fix(core): fix parser_argv function (wsdjeg 2 months ago)
-- fix(core): load open-browser by default (wsdjeg 3 months ago)
-- fix(core): typo in parser_argv function (wsdjeg 2 months ago)
-- fix(cscope): check cscope executable (wsdjeg 3 months ago)
-- fix(ctrlg): hide sep if project_name is empty (wsdjeg 3 months ago)
-- fix(curl): use bundle curl instead of windows's (wsdjeg 9 weeks ago)
-- fix(curl): use neovim's curl instead (wsdjeg 8 weeks ago)
-- fix(defx): autoclose filetree && skip floating windows (wsdjeg 3 months ago)
-- fix(defx): fix `s:win_count()` function (wsdjeg 3 months ago)
-- fix(defx_icons): fix defx_icons colors (wsdjeg 3 months ago)
-- fix(dein-ui): fix reference root directory var during plugin update (Theodore Ni 9 weeks ago)
-- fix(denite): do not switch denite buffer when press `<Bs>` (wsdjeg 3 months ago)
-- fix(denite): enable `match_highlight` by default (wsdjeg 3 months ago)
-- fix(denite): fix `SPC i s` in denite layer (wsdjeg 5 months ago)
-- fix(denite): fix denite key binding (wsdjeg 3 months ago)
-- fix(denite): fix denite_next/prev function (wsdjeg 3 months ago)
-- fix(detach): fix detach script for scrollbar.vim (wsdjeg 3 months ago)
-- fix(docker): add `--allow-unauthenticated` (wsdjeg 6 weeks ago)
-- fix(docker): add exuberant-ctags (Hamidreza Hosseinkhani 3 months ago)
-- fix(docker): add libssl (wsdjeg 8 weeks ago)
-- fix(docker): add python and lua5.3 (wsdjeg 6 weeks ago)
-- fix(docker): fix docker configuration (wsdjeg 6 weeks ago)
-- fix(docker): fix docker entrypoint (wsdjeg 5 weeks ago)
-- fix(docker): keep all plugins (wsdjeg 10 weeks ago)
-- fix(docker): use python3 and python3-pip (wsdjeg 6 weeks ago)
-- fix(edit): add missing command `ReverseLines` (wsdjeg 3 months ago)
-- fix(edit): improve the reverse_lines function (Kun Lin 3 months ago)
-- fix(fetch): use stderr prefix of stderr log (wsdjeg 8 weeks ago)
-- fix(fileformat): change autosave &ff to unix (wsdjeg 5 months ago)
-- fix(filetree): fixed filetree_direction not working for nvim-tree.vim (chenwen(陈文) 3 weeks ago)
-- fix(fillchars): fix `fillchars` option (wsdjeg 3 months ago)
-- fix(flygrep): check has('timers') (wsdjeg 2 months ago)
-- fix(flygrep): fix `<ScrollWheelDown>` and `<ScrollWheelUp>` (wsdjeg 3 months ago)
-- fix(flygrep): fix `ctrl-c` key binding in flygrep (wsdjeg 3 months ago)
-- fix(flygrep): fix delete text command (wsdjeg 3 months ago)
-- fix(flygrep): include `time` api when detaching FlyGrep (blankname 3 months ago)
-- fix(fonts): download `Sauce Code Pro Nerd Font` automatically (wsdjeg 3 months ago)
-- fix(gina): use bundle gina & fix conceal setting (wsdjeg 6 weeks ago)
-- fix(git): fix branch info (wsdjeg 2 months ago)
-- fix(git): fix git branch info (wsdjeg 3 months ago)
-- fix(git): improve branch detection (wsdjeg 3 months ago)
-- fix(git): use on_stdout callback instead of on_exit (wsdjeg 6 weeks ago)
-- fix(github.vim): handle curl command error (wsdjeg 5 weeks ago)
-- fix(gitter): add info about stream process (wsdjeg 8 weeks ago)
-- fix(gitter): debug function for listing channels (wsdjeg 8 weeks ago)
-- fix(gitter): define response before run fetch job (wsdjeg 8 weeks ago)
-- fix(gitter): improve fetch logic (wsdjeg 8 weeks ago)
-- fix(gitter): notify wrong channel (wsdjeg 8 weeks ago)
-- fix(gitter): reset jobid for failed job (wsdjeg 8 weeks ago)
-- fix(gitter): skip space when debug (wsdjeg 9 weeks ago)
-- fix(gitter): support multiple line message (wsdjeg 9 weeks ago)
-- fix(gitter): support other gitter room (wsdjeg 9 weeks ago)
-- fix(gtags): clear autocmd when check health (wsdjeg 3 months ago)
-- fix(guicursor): fix guicursor color (wsdjeg 3 months ago)
-- fix(guide): use `-` instead of empty string (wsdjeg 9 weeks ago)
-- fix(guide.vim): handle ctrl-c when using `getchar()` (wsdjeg 3 months ago)
-- fix(guifont): always set guifont (wsdjeg 5 weeks ago)
-- fix(haxe): fix haxe code runner (wsdjeg 10 weeks ago)
-- fix(health): fix environment checking (wsdjeg 3 months ago)
-- fix(highlight): fix `Tab` key binding (wsdjeg 3 months ago)
-- fix(highlight): update highlight after toggle_item (wsdjeg 3 months ago)
-- fix(highlight): use v:argv instead of mode() (wsdjeg 3 months ago)
-- fix(highlight.vim): fix highlight plugin (wsdjeg 3 months ago)
-- fix(highlight.vim): fix list index out of range (wsdjeg 3 months ago)
-- fix(iedit): fix `Ctrl-p` key binding of iedit (wsdjeg 3 months ago)
-- fix(iedit): fix `e` key binding in iedit mode (wsdjeg 3 months ago)
-- fix(iedit): fix cursor_stack index checking (wsdjeg 3 months ago)
-- fix(iedit): fix iedit matching pattern (wsdjeg 3 months ago)
-- fix(iedit): fix iedit statusline (wsdjeg 3 months ago)
-- fix(iedit): handle empty cursor_stack (wsdjeg 3 months ago)
-- fix(iedit): remove deepcopy (wsdjeg 3 months ago)
-- fix(iedit): skip empty character when start iedit (wsdjeg 3 months ago)
-- fix(incsearch): fix incsearch layer (kz2013 5 days ago)
-- fix(incsearch): use noautocmd to avoid incsearch_nohlsearch key (wsdjeg 9 weeks ago)
-- fix(indent): fix indent (wsdjeg 9 weeks ago)
-- fix(indentline): disable indentline for defx buffer (wsdjeg 3 months ago)
-- fix(indentline): fix indentline setting (wsdjeg 3 months ago)
-- fix(install): fix install script (wsdjeg 3 months ago)
-- fix(install): fix install.cmd (wsdjeg 8 weeks ago)
-- fix(install): remove install_fonts (Marouane Skandaji 5 days ago)
-- fix(java_getset): fix mapping warning message (wsdjeg 3 months ago)
-- fix(job): make job api support env option (wsdjeg 10 weeks ago)
-- fix(key): fix `SPC T F` key binding (wsdjeg 3 months ago)
-- fix(lang#c): fix `g d` key binding (wsdjeg 3 months ago)
-- fix(lang#markdown): use `--force` instead (wsdjeg 3 months ago)
-- fix(lang#php)!: change `g D` key binding (wsdjeg 3 months ago)
-- fix(lang#php): use old phpcomplete (wsdjeg 5 months ago)
-- fix(layer): fix layer.lua (wsdjeg 12 days ago)
-- fix(lint): add debug info (wsdjeg 8 weeks ago)
-- fix(lint): fix layer vader test (wsdjeg 8 weeks ago)
-- fix(lisp): fix vlime support (Palash Bauri 3 months ago)
-- fix(logger): format time (wsdjeg 5 weeks ago)
-- fix(lsp): add spacevim.diagnostic function (wsdjeg 6 months ago)
-- fix(lsp): disable jedi when pyright enabled (wsdjeg 3 months ago)
-- fix(lsp): fix lsp command setting (wsdjeg 3 weeks ago)
-- fix(lsp): fix neovim lsp compatibility (wsdjeg 3 months ago)
-- fix(lsp): fix override_client_cmds (wsdjeg 3 weeks ago)
-- fix(lsp): fix unknown function in nvim 0.4.3 (wsdjeg 9 weeks ago)
-- fix(lsp): use path_to_fname (wsdjeg 2 months ago)
-- fix(mapping): fix `SPC b d` (wsdjeg 3 months ago)
-- fix(mapping): fix smartclose function for vim (wsdjeg 2 months ago)
-- fix(mapping): fix unknown function win_getid (wsdjeg 2 months ago)
-- fix(mapping): use `tab split` instead of `tabedit %` to avoid E499 (wsdjeg 10 weeks ago)
-- fix(message): fix `SPC b m` key bidding (wsdjeg 9 weeks ago)
-- fix(notify): check `win_is_open` before close notify (wsdjeg 3 months ago)
-- fix(notify): check function exists (wsdjeg 3 months ago)
-- fix(notify): fix E488 Trailing characters (wsdjeg 3 months ago)
-- fix(notify): fix `win_is_open` function (wsdjeg 3 months ago)
-- fix(notify): set notify_max_width based on current &columns (wsdjeg 3 months ago)
-- fix(notify): use `nvim_win_set_option` instead (wsdjeg 3 months ago)
-- fix(notify): use noautocmd to avoid changing statusline (wsdjeg 3 months ago)
-- fix(number): fix the pattern of Chinese Number (Kun Lin 4 months ago)
-- fix(page): update post date (wsdjeg 3 months ago)
-- fix(php): fix php `gd` key binding (wsdjeg 3 months ago)
-- fix(postscript): use postscript instead (wsdjeg 6 weeks ago)
-- fix(project): fix `:Telescope project` (wsdjeg 6 weeks ago)
-- fix(project): handle project_rooter_outermost option (wsdjeg 4 weeks ago)
-- fix(projectmanager): add `project_non_root` option (wsdjeg 3 months ago)
-- fix(prompt): check type instead of compare with string (wsdjeg 2 months ago)
-- fix(prompt): fix ctrl-r mode (wsdjeg 2 months ago)
-- fix(prompt): fix prompt api version checking (wsdjeg 3 months ago)
-- fix(protocal): keep protocal when fail to switch (wsdjeg 8 weeks ago)
-- fix(rooter): clear `b:rootDir` for none project (wsdjeg 3 months ago)
-- fix(runner): check executable before run command (wsdjeg 3 months ago)
-- fix(runner): fix `async_run` function (wsdjeg 3 months ago)
-- fix(runner): fix code runner (wsdjeg 3 months ago)
-- fix(runner): fix code runner (wsdjeg 5 weeks ago)
-- fix(runner): fix on_stdout function (wsdjeg 10 weeks ago)
-- fix(scrollbar): add WinScrolled event if supported (wsdjeg 3 months ago)
-- fix(scrollbar): check each_line (wsdjeg 2 months ago)
-- fix(scrollbar): close scrollbar after opening vimchat (wsdjeg 8 weeks ago)
-- fix(scrollbar): disable scrollbar in leaderf buffer (wsdjeg 3 months ago)
-- fix(scrollbar): fix `noautocmd bd` (wsdjeg 2 months ago)
-- fix(scrollbar): fix position of scrollbar (wsdjeg 2 months ago)
-- fix(scrollbar): fix scrollbar on SPC number key binding (wsdjeg 2 months ago)
-- fix(scrollbar): fix scrollbar on `WIN o` key binding (wsdjeg 2 months ago)
-- fix(scrollbar): fix scrollbar position (wsdjeg 2 months ago)
-- fix(shell): fix default cwd of terminal (wsdjeg 2 months ago)
-- fix(smoothie): fix smoothie requirements (wsdjeg 2 months ago)
-- fix(snippet): fix key binding `SPC i s` (wsdjeg 5 months ago)
-- fix(spell): handle error of `SPC t S` (wsdjeg 10 weeks ago)
-- fix(startup): fix `parser_argv` function (wsdjeg 10 weeks ago)
-- fix(startup): fix `parser_argv` function (wsdjeg 3 months ago)
-- fix(statusline): backward compatibility (wsdjeg 3 months ago)
-- fix(statusline): fix `syntax_checking` function (wsdjeg 3 months ago)
-- fix(statusline): fix normal mode statusline (wsdjeg 3 months ago)
-- fix(string): fix string.lua (wsdjeg 12 days ago)
-- fix(tab): fix event checking (wsdjeg 3 months ago)
-- fix(tasks): do not tesk local vader (wsdjeg 10 weeks ago)
-- fix(tasks.vim): fix Variable type mismatch (wsdjeg 3 months ago)
-- fix(telescope): fix `SPC f f` key binding for telescope layer (wsdjeg 6 weeks ago)
-- fix(telescope): fix telescope layer key binding (wsdjeg 6 weeks ago)
-- fix(test): fix `org` layer test (wsdjeg 3 months ago)
-- fix(test): fix test for `a.vim` and `a.lua` (wsdjeg 3 months ago)
-- fix(test): switch to `windows-2019` (wsdjeg 3 months ago)
-- fix(test): update Makefile (wsdjeg 3 months ago)
-- fix(timers): fix timers checking (wsdjeg 2 months ago)
-- fix(todo): fix todo.vim for vim74 (wsdjeg 2 months ago)
-- fix(todo.vim): remove win_getid function (wsdjeg 2 months ago)
-- fix(tools): check `python3` first (wsdjeg 3 months ago)
-- fix(transient_state): fix `transient_state` api (wsdjeg 3 months ago)
-- fix(treesitter): add loadable function (wsdjeg 2 months ago)
-- fix(typo): fix typo in cscope layer (wsdjeg 3 weeks ago)
-- fix(typo): fix typo in doc (wsdjeg 13 days ago)
-- fix(ui): fix `indentline_exclude_filetype` option (wsdjeg 3 months ago)
-- fix(ui): update screen after font changed (wsdjeg 5 weeks ago)
-- fix(unite): fix `SPC i s` key binding (wsdjeg 5 months ago)
-- fix(util): fix `SPC f Y` key binding (wsdjeg 3 months ago)
-- fix(util): fix if_expand_tab function (wsdjeg 3 months ago)
-- fix(vader): fix vader test for vim (Wang Shidong 3 months ago)
-- fix(verilog): change verilog related functions (wsdjeg 3 months ago)
-- fix(vim#buffer): fix create_buf function (wsdjeg 2 months ago)
-- fix(vim): avoid E706 (wsdjeg 10 weeks ago)
-- fix(vim): fix index out of range error (wsdjeg 2 months ago)
-- fix(vim): fix vim supporting (wsdjeg 3 months ago)
-- fix(vim-chat): detach all files in bundle vim-chat (wsdjeg 9 weeks ago)
-- fix(vimchat): add more log about channel list (wsdjeg 8 weeks ago)
-- fix(vimchat): enable syntax sync fromstart (wsdjeg 9 weeks ago)
-- fix(vimchat): fix `ctrl-w` key binding (wsdjeg 8 weeks ago)
-- fix(vimchat): fix codeblocklines highlights (wsdjeg 9 weeks ago)
-- fix(vimchat): fix cursor highlight position (Wang Shidong 8 weeks ago)
-- fix(vimchat): fix highlight firstline (wsdjeg 9 weeks ago)
-- fix(vimchat): fix mouse position (wsdjeg 8 weeks ago)
-- fix(vimchat): fix typo in message (wsdjeg 8 weeks ago)
-- fix(vimchat): fix windows flickr (wsdjeg 8 weeks ago)
-- fix(vimchat): highlight selection on the fly (wsdjeg 8 weeks ago)
-- fix(vimdoc): fix vimdoc generation (wsdjeg 3 months ago)
-- pref(bundle): update bundle deoplete (wsdjeg 10 weeks ago)
-- pref(bundle): update bundle deoplete-lsp (wsdjeg 10 weeks ago)
-- pref(chat): disable cursorline & update buffer content once (wsdjeg 9 weeks ago)
-- pref(chat): fix vimchat ui syntax highlight (wsdjeg 9 weeks ago)
-- pref(denite): improve denite key binding (wsdjeg 3 months ago)
-- pref(git): display working directory on commit statusline (wsdjeg 10 weeks ago)
-- pref(git): use stdout/stdin instead of .git\COMMIT_EDITMSG (wsdjeg 10 weeks ago)
-- pref(indentline): update bundle indent-blankline.nvim (wsdjeg 3 months ago)
-- pref(job): catch error from old jobstop (wsdjeg 10 weeks ago)
-- pref(log): move to last line when view runtime log (wsdjeg 9 weeks ago)
-- pref(markdown): use bundle vim-markdown-toc (wsdjeg 10 weeks ago)
-- pref(neosnippet): update bundle neosnippet (wsdjeg 10 weeks ago)
-- pref(options)!: rename statusline options (wsdjeg 3 months ago)
-- pref(runner): remove `\r` at the end of line (wsdjeg 3 months ago)
-- pref(scrollbar): set eventignore=all when update scrollbar (wsdjeg 2 months ago)
-- pref(statusline): add extra space before qf title (wsdjeg 2 months ago)
-- pref(statusline): remove extra space (wsdjeg 2 months ago)
-- pref(terminal): improve terminal support (wsdjeg 3 months ago)
-- pref(vimchat): support quote message highlight (wsdjeg 9 weeks ago)
-- refactor(api): remove `SpaceVim#util#globpath` function (wsdjeg 3 months ago)
-- refactor(bundle): use bundle neomru (wsdjeg 5 months ago)
-- refactor(comments): move comments autocmd to layer (wsdjeg 3 weeks ago)
-- refactor(debug): add debug log for iedit (wsdjeg 3 months ago)
-- refactor(file): refactor the `file` api (wsdjeg 3 months ago)
-- refactor(format): format dictionary (wsdjeg 3 months ago)
-- refactor(lang#coffeescript): move coffeescript autocmds to layer (wsdjeg 3 weeks ago)
-- refactor(lang#puppet): move autocmd to lang#puppet layer (wsdjeg 6 months ago)
-- refactor(lang#vim): move viml autocmd to `lang#vim` layer (wsdjeg 3 months ago)
-- refactor(lua): add back iconv files (wsdjeg 3 weeks ago)
-- refactor(manpage): move `SPC h m` to fuzzy finder layer (wsdjeg 5 months ago)
-- refactor(neoyank): use bundle neoyank.vim (wsdjeg 5 months ago)
-- refactor(org): use bundle org plugin (wsdjeg 6 months ago)
-- refactor(python): move python autocmd to `lang#python` layer (wsdjeg 3 months ago)
-- refactor(vim#highlight): add `is_string()` function (wsdjeg 3 months ago)
-- release v2.0.0 (wsdjeg 3 weeks ago)
-- revert(highlight.vim): revert E725 (wsdjeg 3 months ago)
-- style(viml): format code (wsdjeg 5 weeks ago)
-- style(z): format key binding guide for `z` (wsdjeg 3 months ago)
-- test(Makefile): use `-Es` mode (wsdjeg 3 months ago)
-- test(check.yml): add more test (wsdjeg 3 months ago)
-- test(cmake): add layer health function (wsdjeg 6 weeks ago)
-- test(flygrep): add test for flygrep (wsdjeg 2 months ago)
-- test(flygrep): check vim patch 7.4.1557 (wsdjeg 2 months ago)
-- test(iedit): add test for iedit (Wang Shidong 5 months ago)
-- test(lua): add java lua layer (wsdjeg 13 days ago)
-- test(mkdir): add test for mkdir plugin (wsdjeg 3 months ago)
-- test(nvim): add test for neovim (wsdjeg 3 months ago)
-- test(nvim): remove windows test for nvim v0.4.0 (wsdjeg 3 months ago)
-- test(telescope): add layer health function (wsdjeg 6 weeks ago)
-- test(todo): add test for todo.vim (wsdjeg 2 months ago)
-- test(vint): enable `ProhibitEqualTildeOperator` policy (wsdjeg 3 months ago)
+- build(docker): fix dockerfile 
+- build(docker): use debian stable image 
+- chore(bundle): update bundle `clever-f` 
+- chore(bundle): update bundle dein.vim 
+- chore(bundle): update bundle indent-blankline.nvim 
+- chore(bundle): use bundle `JavaUnit.vim` 
+- chore(bundle): use bundle java plugins 
+- chore(bundle): use bundle vim-assembly 
+- chore(bundle): use bundle vim-lookup 
+- chore(calendar): use bundle calendar.vim 
+- chore(config): add log info for loading custom configuration file 
+- chore(copyright): update copyright 
+- chore(copyright): update copyright 
+- chore(copyright): update email 
+- chore(dein-ui): make info clearly 
+- chore(dev): update development doc 
+- chore(dict): add dict function 
+- chore(dict): add lua data.dict.make 
+- chore(editorconfig): fix typos in .editorconfig 
+- chore(github): use bundle github.vim 
+- chore(gitignore): ignore `.cache` directory 
+- chore(lang#python): use bundle python plugins 
+- chore(license): add file head 
+- chore(lsp): add log for lsp client 
+- chore(lspconfig): update bundle lspconfig 
+- chore(lua): add comment about lua package path 
+- chore(scala): use bundle vim-scala 
+- chore(sponsors): update sponsors page 
+- chore(treesitter): use bundle treesitter 
+- chore(typo): fix typo in smartclose function 
+- chore(version): update to 2.0.0-dev 
+- chore(website): use gtag.js 
+- ci(action): use `windows-latest` Virtual Environments 
+- ci(codecov): update target 
+- ci(vim): add test for vim 8.2.2434 and 8.2.3995 
+- docs(.gitattributes): add `.gitattributes` 
+- docs(404): add request path 
+- docs(404): display page url 
+- docs(C/C++): fix typos in vim as C/C++ IDE 
+- docs(README): add link to FAQ page 
+- docs(WebAssembly): add `:h SpaceVim-layers-lang-WebAssembly` 
+- docs(align): fix table align 
+- docs(alternate): add `:h SpaceVim-usage-alternate-file` 
+- docs(api): add `:h SpaceVim-api-clock` 
+- docs(autosave): add `:h SpaceVim-plugins-autosave` 
+- docs(bundle): update bundle readme 
+- docs(c/c++): update c/c++ tutorial 
+- docs(chat): add image for chat layer 
+- docs(chat): remove bridged room 
+- docs(chat): update chat room link 
+- docs(chat): update doc for `chat` layer 
+- docs(chat): update vim-chat readme 
+- docs(clojure): typo in clojure doc 
+- docs(cmake): add doc for `:Cmake ` command 
+- docs(cmdlinemenu): add usage example 
+- docs(community): add chatting rooms 
+- docs(community): add irc channel 
+- docs(complete): update doc of autocomplete_method 
+- docs(contributing): translate  CONTRIBUTING.cn.md 
+- docs(core): update docs to clarify location of settings 
+- docs(cscope): update `:h SpaceVim-layers-cscope` 
+- docs(custom_plugins): add doc for adding multiple plugins 
+- docs(debug): add keybinds doc for vimspector 
+- docs(development): update development page 
+- docs(development): update development page 
+- docs(development): update language specified key bindings 
+- docs(discord): update discord link 
+- docs(docker): add link to docker hub 
+- docs(docs): update feature request guidelines 
+- docs(document): update documentation 
+- docs(documentation): update doc about code runner and repl 
+- docs(documentation): update fuzzy finder list 
+- docs(documentation): update mouse and scrollbar section 
+- docs(edit): fix typo in edit page 
+- docs(edit): update cn edit page 
+- docs(eslint): update ESLint in JS as IDE docs 
+- docs(experience): add user experiences 
+- docs(faq): add doc for uninstall SpaceVim 
+- docs(faq): add extra repo for spacevim 
+- docs(faq): add faq about init.toml format 
+- docs(faq): add faq about using corresponding layer 
+- docs(faq): add guide for manual installation 
+- docs(faq): update doc for manual installation 
+- docs(faq): update faq page 
+- docs(feedback): disable github issue 
+- docs(filetree): update filetree doc 
+- docs(foldsearch): add `:h SpaceVim-layers-foldsearch` 
+- docs(font): add font transient state image 
+- docs(format): format documentation text 
+- docs(fzf): add `:h SpaceVim-layers-fzf` 
+- docs(github): update github readme 
+- docs(github): update readme of github.vim 
+- docs(gitter): add doc for `gitter_token` 
+- docs(go): update `lang#go` layer page 
+- docs(go): update golang doc 
+- docs(gtags): document ctags_bin gtags layer option 
+- docs(guide): Add vim basic guide 
+- docs(guide): Add vim script guide 
+- docs(guide): add lua guide 
+- docs(guide): mention SPC == space 
+- docs(guide): update lua guide 
+- docs(haxe): add page for `lang#haxe` layer 
+- docs(help): add `:h SpaceVim-options-expand_tab` 
+- docs(help): add help description for `SPC p t e` 
+- docs(iedit): add `:h SpaceVim-plugins-iedit` 
+- docs(iedit): add article for iedit 
+- docs(iedit): update doc for iedit function 
+- docs(iedit): update documentation page 
+- docs(javaunite): add `:h JavaUnit.vim` 
+- docs(kotlin): update doc for `kotlin` layer 
+- docs(kotlin): update kotlin guide 
+- docs(lang#autohotkey): update doc of lang#autohotkey layer 
+- docs(lang#fennel): add layer page for `lang#fennel` layer 
+- docs(layers): update layers page 
+- docs(link): fix links 
+- docs(lsp): add description for nvim(>=0.5.0) 
+- docs(lsp): update language-server-protocol.md 
+- docs(lua): update lua guide 
+- docs(mail): add doc for `mail` layer 
+- docs(option): add `:h SpaceVim-options-commandline_prompt` 
+- docs(php): update doc for php lsp support 
+- docs(php): update doc of `lang#php` layer 
+- docs(python): add doc for enable `+py3` 
+- docs(python2): add @bug todo info about python2 
+- docs(python2): add doc about github-issues.vim 
+- docs(quick-guide): add doc for switch to specific version 
+- docs(ruby): add rubygems mirror 
+- docs(runner): add `:h SpaceVim-plugins-runner` 
+- docs(runner): update code runner doc 
+- docs(scala): add post about using vim as scala ide 
+- docs(scala): update scala post 
+- docs(scrollbar): add doc about scrollbar 
+- docs(searcher): add doc about `SPC s j` 
+- docs(sponsors): remove salt.bountysource.com 
+- docs(sponsors): update sponsorship 
+- docs(ssh): add cn page for ssh layer 
+- docs(tabmanager): add `:h SpaceVim-plugins-tabmanager` 
+- docs(tasks): update `:h SpaceVim-usage-tasks` 
+- docs(teal): add page for lang#teal layer 
+- docs(telescope): add telescope loadable function 
+- docs(test): update doc for `test` layer 
+- docs(todomanager): add `:h SpaceVim-plugins-todomanager` 
+- docs(tools): update tools page 
+- docs(tutorial): update vim script guide 
+- docs(typo): fix typo 
+- docs(typo): fix typo 
+- docs(usage): add `:h SpaceVim-usage-undotree` 
+- docs(vcs): add `:h SpaceVim-layers-VersionControl` 
+- docs(video): add link to `Getting Started With SpaceVim` 
+- docs(wdl): add `:h SpaceVim-layers-lang-wdl` 
+- docs(website): fix type in `edit` layer page 
+- docs(website): update `edit` layer doc 
+- docs(website): update index page 
+- docs(weibo): remove link to weibo 
+- docs(weisite): update website documentation 
+- docs(wiki): update following HEAD page 
+- docs(wiki): update languages list 
+- docs(wiki): update languages list 
+- docs(wiki): update programming languages 
+- docs(wiki): update project layout page 
+- docs(wildignore): add `:h SpaceVim-options-wildignore` 
+- feat(action): enable detach action for vim-chat 
+- feat(api): add message.nvim_echo api 
+- feat(api): add resize function in lua api 
+- feat(api): improve `SpaceVim#api#register` function 
+- feat(autohotkey): use bundle vim-autohotkey 
+- feat(autosave): add autosave plugin 
+- feat(autosave): add autosave_location option 
+- feat(autosave): re-implement autosave plugin 
+- feat(bookmarks): add leaderf support for vim-bookmarks 
+- feat(bookmarks): add title to quickfix list and localist 
+- feat(buffer): add `SPC b ctrl-shift-d` to kill buffer by regexp 
+- feat(bundle): add bundle nvim-if-lua-compat 
+- feat(bundle): update bundle tagbar 
+- feat(bundle): use bundle `github_dashboard` 
+- feat(calendar): add calendar statusline 
+- feat(chat): complete build-in protocol 
+- feat(chat): complete channel with ignorecase 
+- feat(chat): complete channels 
+- feat(chat): complete channels regardless of case 
+- feat(chat): complete username after `@` 
+- feat(chat): highlight VimChatPing 
+- feat(chat): improve gitter support 
+- feat(chat): improve vimchat ui 
+- feat(chat): make shift-enter same as ctrl-j 
+- feat(chat): make shift-space return space in insert mode 
+- feat(chat): redraw screen in while loop 
+- feat(chat): remove redraw to avoid flickering the screen 
+- feat(chat): support ScrollWheelDown and ScrollWheelUp 
+- feat(chat): support `ctrl-w` to delete word 
+- feat(chat): support irc protocol 
+- feat(chat): support paste from register 
+- feat(chat): support push multiple messages 
+- feat(chat): switch to next/previous channel 
+- feat(checkers): add `lint_exclude_filetype` option 
+- feat(checkers): fix checkers layer option 
+- feat(clever-f): hide cursor for neovim 
+- feat(clipboard): add vim-clipboard plugin 
+- feat(clipboard): support other clipboard command 
+- feat(cmake): add `:Cmake` command 
+- feat(colorscheme): add dracula 
+- feat(core): Load local config after global config 
+- feat(cscope): add `list_files_command` layer option 
+- feat(ctags): use `-G` option when generate tags 
+- feat(ctrlg): add `ctrl-g` key binding to display project info 
+- feat(defx): add bundle defx-sftp 
+- feat(defx): use `p` to toggle preview windows 
+- feat(detach): detach vim-chat automatically 
+- feat(edit): add reverse-lines key binding 
+- feat(filetree): add nvim-tree.lua 
+- feat(filetree): add user autocmd to override key binding 
+- feat(flygrep): hide guicursor 
+- feat(font): add `SPC z .` key binding 
+- feat(font): add key binding to reset guifont 
+- feat(format): add `silent_format` to format layer 
+- feat(fzf): add bundle telescope fzf extension 
+- feat(git): add `git_diff_position` option 
+- feat(git): change git log regexp 
+- feat(git): use notify api to display error 
+- feat(github): add UpdateStartedRepos command 
+- feat(github): enable github-dashboard only when `has('ruby')` 
+- feat(github): update github plugin 
+- feat(github.vim): use `web#http` api 
+- feat(githubissues): use bundle github-issues & fix python command 
+- feat(gitter): add gitter client 
+- feat(gitter): check notification setting of a room 
+- feat(gitter): complete gitter rooms 
+- feat(gitter): display more message about connection process 
+- feat(gitter): highlight remote nick 
+- feat(gitter): notify channel list done 
+- feat(gitter): use list instead of string 
+- feat(golang): improve `lang#go` layer 
+- feat(gtags): add `ctags_bin` option 
+- feat(guicursor): enable cursor color 
+- feat(haxe): add repl support for haxe 
+- feat(health): check layer health 
+- feat(hop): add hop.nvim for neovim v0.6.0 
+- feat(iconv): add codecs 950/932 
+- feat(iconv): add cp949 
+- feat(iconv): add euc_jp codecs 
+- feat(iedit): add `b` key binding for iedit 
+- feat(iedit): add `e` key binding in iedit-normal mode 
+- feat(iedit): add `w` key binding for iedit-normal mode 
+- feat(iedit): hide cursor in iedit mode 
+- feat(iedit): improve iedit mode (#4615) 
+- feat(incsearch): update incsearch layer 
+- feat(julia): add `g d` key binding 
+- feat(lang#c): update lsp key binding for `lang#c` layer 
+- feat(lang#haxe): add `lang#haxe` layer 
+- feat(lang#nix): Add additional LSP command bindings 
+- feat(lang#postscript): add `lang#postscript` layer 
+- feat(lang#ruby): support `solargraph` client 
+- feat(lang#ruby): update lsp configuration for ruby 
+- feat(lang#ruby): use bundle vim-ruby 
+- feat(lang#teal): add `lang#teal` layer 
+- feat(layer#git): update git commands for fugitive 
+- feat(layer): Add cargo-clippy to Rust layer 
+- feat(layer): add `lang#cmake` layer 
+- feat(layer): add `lang#jr` layer 
+- feat(layer): add `lang#jsonnet` layer 
+- feat(layer): add `lang#octave` layer 
+- feat(layer): add `lang#yang` layer 
+- feat(layer): add framework#django layer 
+- feat(layer): add telescope layer 
+- feat(layer): fix find_layers 
+- feat(liquid): add liquid template support 
+- feat(lsp): add override_client_cmds 
+- feat(lsp): support `#{cwd}` for the current working directory 
+- feat(lua): add iconv api 
+- feat(lua): add lua `data#string` api 
+- feat(lua): add lua layer list 
+- feat(lua): add lua layer modular 
+- feat(lua): fix layer list 
+- feat(lua): support `~/.SpaceVim.d/init.lua` 
+- feat(major_mode): add wrap line major mode icon 
+- feat(mapping): add `SPC b <C-D>` 
+- feat(mapping): add `SPC b o` to kill all buffers and windows 
+- feat(mapping): add `SPC f R` to rename current file 
+- feat(mapping): add `SPC f v s` to view scriptnames 
+- feat(mapping): add `gD` to go to declaration 
+- feat(mapping): add help description for `SPC s S` 
+- feat(mapping): add help description for `SPC s b` 
+- feat(mapping): add help guide for `SPC s B` 
+- feat(mapping): add help guide for `SPC s d/D` 
+- feat(mapping): add help guide for `SPC s f/F` 
+- feat(mapping): add help guide for `SPC s s` 
+- feat(mapping): improve `SPC w m` key binding 
+- feat(mapping): make `SPC b d` skip startify and defx buffer 
+- feat(markdown): add a new key binding for RemoveToc 
+- feat(mkdir): add lua mkdir plugin 
+- feat(mkdir): make automkdir plugin support `:w foo/test.vim` 
+- feat(neoformat): Use forked version of neoformat 
+- feat(netrw): add option to enable/disable netrw 
+- feat(notify): add `winblend` option 
+- feat(nvim-lspconfig): update bundle nvim-lspconfig 
+- feat(option): add `bootstrap_script` option 
+- feat(org): improve lang#org layer 
+- feat(plantuml): add `java_command` option 
+- feat(project): add `SPC p p` for telescope layer 
+- feat(projectmanager): improve Telescope project extension 
+- feat(pylsp): add support for pylsp 
+- feat(python): add virtualenv support 
+- feat(rainbow): change rainbow plugin 
+- feat(ruby): add prettier formatter 
+- feat(rust): use bundle rust.vim 
+- feat(scrollbar): add scrollbar support for vim 
+- feat(scrollbar): update scrollbar on `CursorHold` autocmd 
+- feat(snippet): add `SPC x s s` to edit snippet 
+- feat(snippet): add bundle cmp-neosnippet 
+- feat(ssh): add `:SSHCommand` command 
+- feat(statusline): add `&paste` mode support 
+- feat(statusline): add `totallines` section 
+- feat(statusline): clear searching status for no exist pattern 
+- feat(statusline): support global statusline 
+- feat(tabline): add `ctrl-shift-left/right` key binding 
+- feat(telescope): add `Telescope neoyank` extension 
+- feat(telescope): fix message extensions 
+- feat(telescope): implement `:Telescope menu` extension 
+- feat(test): add vim ultest 
+- feat(tmux): use bundle vim-tmux-navigator 
+- feat(todomanager): add `todo_prefix` option 
+- feat(verilog): add `lang#verilog` layer 
+- feat(verilog): add code runner for verilog 
+- feat(vimchat): add `VimChatReplayCounts` highlight 
+- feat(vimchat): add codeblocklines highlight 
+- feat(vimchat): display user count on statusline 
+- feat(vimchat): hide cursor highlight 
+- feat(vimchat): highlight mouse range 
+- feat(vimchat): support channel info message 
+- feat(vimchat): support mouse left click 
+- feat(vimchat): support replays counts 
+- feat(vimchat): update syntax highlight for message 
+- feat(vimchat): use ctrl-c to copy selected text 
+- feat(windisk): add windisk.lua 
+- feat(windows): fix link of nightly neovim release 
+- fix(E5601): close all notify windows on QuitPre 
+- fix(E725): fix vim error E725 
+- fix(Ex mode): fix highlight plugin for Ex mode 
+- fix(LeaderGuide): fix command definition 
+- fix(ale): file ale config 
+- fix(api): fix `transient_state` api 
+- fix(autosave): fix location_path function 
+- fix(autosave): use checktime to avoid warning 
+- fix(bootstrap_script): use try/catch for bootstrap_script 
+- fix(branch): fix on_exit_show_branch function 
+- fix(branch): fix statusline branch info 
+- fix(bundle): update bundle nvim-cmp 
+- fix(chat): clear current_channel 
+- fix(chat): display username instead 
+- fix(chat): fix command completion 
+- fix(chat): fix detach script for vim-chat 
+- fix(chat): fix next/previous channel 
+- fix(chat): skip spaces after server commands 
+- fix(chat): use `:close` to quit 
+- fix(chinese): fix convert Chinese number to digits 
+- fix(clipboard): fix `leader y` key binding 
+- fix(clipboard): fix clipboard support for vim8 
+- fix(clipboard): return empty string 
+- fix(cmdheight): update cmdheight when send multiple line message 
+- fix(command): fix `SPLayer` command 
+- fix(commit): disable `cindent` for git commit buffer 
+- fix(config): handle error in local config 
+- fix(config): skip local config for $HOME 
+- fix(core): add spacevim root dir to rtp 
+- fix(core): fix Windows install script && update faq 
+- fix(core): fix `get_options` function 
+- fix(core): fix parser_argv function 
+- fix(core): load open-browser by default 
+- fix(core): typo in parser_argv function 
+- fix(cscope): check cscope executable 
+- fix(ctrlg): hide sep if project_name is empty 
+- fix(curl): use bundle curl instead of windows's 
+- fix(curl): use neovim's curl instead 
+- fix(defx): autoclose filetree && skip floating windows 
+- fix(defx): fix `s:win_count()` function 
+- fix(defx_icons): fix defx_icons colors 
+- fix(dein-ui): fix reference root directory var during plugin update 
+- fix(denite): do not switch denite buffer when press `<Bs>` 
+- fix(denite): enable `match_highlight` by default 
+- fix(denite): fix `SPC i s` in denite layer 
+- fix(denite): fix denite key binding 
+- fix(denite): fix denite_next/prev function 
+- fix(detach): fix detach script for scrollbar.vim 
+- fix(docker): add `--allow-unauthenticated` 
+- fix(docker): add exuberant-ctags 
+- fix(docker): add libssl 
+- fix(docker): add python and lua5.3 
+- fix(docker): fix docker configuration 
+- fix(docker): fix docker entrypoint 
+- fix(docker): keep all plugins 
+- fix(docker): use python3 and python3-pip 
+- fix(edit): add missing command `ReverseLines` 
+- fix(edit): improve the reverse_lines function 
+- fix(fetch): use stderr prefix of stderr log 
+- fix(fileformat): change autosave &ff to unix 
+- fix(filetree): fixed filetree_direction not working for nvim-tree.vim (chenwen
+- fix(fillchars): fix `fillchars` option 
+- fix(flygrep): check has('timers') 
+- fix(flygrep): fix `<ScrollWheelDown>` and `<ScrollWheelUp>` 
+- fix(flygrep): fix `ctrl-c` key binding in flygrep 
+- fix(flygrep): fix delete text command 
+- fix(flygrep): include `time` api when detaching FlyGrep 
+- fix(fonts): download `Sauce Code Pro Nerd Font` automatically 
+- fix(gina): use bundle gina & fix conceal setting 
+- fix(git): fix branch info 
+- fix(git): fix git branch info 
+- fix(git): improve branch detection 
+- fix(git): use on_stdout callback instead of on_exit 
+- fix(github.vim): handle curl command error 
+- fix(gitter): add info about stream process 
+- fix(gitter): debug function for listing channels 
+- fix(gitter): define response before run fetch job 
+- fix(gitter): improve fetch logic 
+- fix(gitter): notify wrong channel 
+- fix(gitter): reset jobid for failed job 
+- fix(gitter): skip space when debug 
+- fix(gitter): support multiple line message 
+- fix(gitter): support other gitter room 
+- fix(gtags): clear autocmd when check health 
+- fix(guicursor): fix guicursor color 
+- fix(guide): use `-` instead of empty string 
+- fix(guide.vim): handle ctrl-c when using `getchar()` 
+- fix(guifont): always set guifont 
+- fix(haxe): fix haxe code runner 
+- fix(health): fix environment checking 
+- fix(highlight): fix `Tab` key binding 
+- fix(highlight): update highlight after toggle_item 
+- fix(highlight): use v:argv instead of mode() 
+- fix(highlight.vim): fix highlight plugin 
+- fix(highlight.vim): fix list index out of range 
+- fix(iedit): fix `Ctrl-p` key binding of iedit 
+- fix(iedit): fix `e` key binding in iedit mode 
+- fix(iedit): fix cursor_stack index checking 
+- fix(iedit): fix iedit matching pattern 
+- fix(iedit): fix iedit statusline 
+- fix(iedit): handle empty cursor_stack 
+- fix(iedit): remove deepcopy 
+- fix(iedit): skip empty character when start iedit 
+- fix(incsearch): fix incsearch layer 
+- fix(incsearch): use noautocmd to avoid incsearch_nohlsearch key 
+- fix(indent): fix indent 
+- fix(indentline): disable indentline for defx buffer 
+- fix(indentline): fix indentline setting 
+- fix(install): fix install script 
+- fix(install): fix install.cmd 
+- fix(install): remove install_fonts 
+- fix(java_getset): fix mapping warning message 
+- fix(job): make job api support env option 
+- fix(key): fix `SPC T F` key binding 
+- fix(lang#c): fix `g d` key binding 
+- fix(lang#markdown): use `--force` instead 
+- fix(lang#php)!: change `g D` key binding 
+- fix(lang#php): use old phpcomplete 
+- fix(layer): fix layer.lua 
+- fix(lint): add debug info 
+- fix(lint): fix layer vader test 
+- fix(lisp): fix vlime support 
+- fix(logger): format time 
+- fix(lsp): add spacevim.diagnostic function 
+- fix(lsp): disable jedi when pyright enabled 
+- fix(lsp): fix lsp command setting 
+- fix(lsp): fix neovim lsp compatibility 
+- fix(lsp): fix override_client_cmds 
+- fix(lsp): fix unknown function in nvim 0.4.3 
+- fix(lsp): use path_to_fname 
+- fix(mapping): fix `SPC b d` 
+- fix(mapping): fix smartclose function for vim 
+- fix(mapping): fix unknown function win_getid 
+- fix(mapping): use `tab split` instead of `tabedit %` to avoid E499 
+- fix(message): fix `SPC b m` key bidding 
+- fix(notify): check `win_is_open` before close notify 
+- fix(notify): check function exists 
+- fix(notify): fix E488 Trailing characters 
+- fix(notify): fix `win_is_open` function 
+- fix(notify): set notify_max_width based on current &columns 
+- fix(notify): use `nvim_win_set_option` instead 
+- fix(notify): use noautocmd to avoid changing statusline 
+- fix(number): fix the pattern of Chinese Number 
+- fix(page): update post date 
+- fix(php): fix php `gd` key binding 
+- fix(postscript): use postscript instead 
+- fix(project): fix `:Telescope project` 
+- fix(project): handle project_rooter_outermost option 
+- fix(projectmanager): add `project_non_root` option 
+- fix(prompt): check type instead of compare with string 
+- fix(prompt): fix ctrl-r mode 
+- fix(prompt): fix prompt api version checking 
+- fix(protocal): keep protocal when fail to switch 
+- fix(rooter): clear `b:rootDir` for none project 
+- fix(runner): check executable before run command 
+- fix(runner): fix `async_run` function 
+- fix(runner): fix code runner 
+- fix(runner): fix code runner 
+- fix(runner): fix on_stdout function 
+- fix(scrollbar): add WinScrolled event if supported 
+- fix(scrollbar): check each_line 
+- fix(scrollbar): close scrollbar after opening vimchat 
+- fix(scrollbar): disable scrollbar in leaderf buffer 
+- fix(scrollbar): fix `noautocmd bd` 
+- fix(scrollbar): fix position of scrollbar 
+- fix(scrollbar): fix scrollbar on SPC number key binding 
+- fix(scrollbar): fix scrollbar on `WIN o` key binding 
+- fix(scrollbar): fix scrollbar position 
+- fix(shell): fix default cwd of terminal 
+- fix(smoothie): fix smoothie requirements 
+- fix(snippet): fix key binding `SPC i s` 
+- fix(spell): handle error of `SPC t S` 
+- fix(startup): fix `parser_argv` function 
+- fix(startup): fix `parser_argv` function 
+- fix(statusline): backward compatibility 
+- fix(statusline): fix `syntax_checking` function 
+- fix(statusline): fix normal mode statusline 
+- fix(string): fix string.lua 
+- fix(tab): fix event checking 
+- fix(tasks): do not tesk local vader 
+- fix(tasks.vim): fix Variable type mismatch 
+- fix(telescope): fix `SPC f f` key binding for telescope layer 
+- fix(telescope): fix telescope layer key binding 
+- fix(test): fix `org` layer test 
+- fix(test): fix test for `a.vim` and `a.lua` 
+- fix(test): switch to `windows-2019` 
+- fix(test): update Makefile 
+- fix(timers): fix timers checking 
+- fix(todo): fix todo.vim for vim74 
+- fix(todo.vim): remove win_getid function 
+- fix(tools): check `python3` first 
+- fix(transient_state): fix `transient_state` api 
+- fix(treesitter): add loadable function 
+- fix(typo): fix typo in cscope layer 
+- fix(typo): fix typo in doc 
+- fix(ui): fix `indentline_exclude_filetype` option 
+- fix(ui): update screen after font changed 
+- fix(unite): fix `SPC i s` key binding 
+- fix(util): fix `SPC f Y` key binding 
+- fix(util): fix if_expand_tab function 
+- fix(vader): fix vader test for vim 
+- fix(verilog): change verilog related functions 
+- fix(vim#buffer): fix create_buf function 
+- fix(vim): avoid E706 
+- fix(vim): fix index out of range error 
+- fix(vim): fix vim supporting 
+- fix(vim-chat): detach all files in bundle vim-chat 
+- fix(vimchat): add more log about channel list 
+- fix(vimchat): enable syntax sync fromstart 
+- fix(vimchat): fix `ctrl-w` key binding 
+- fix(vimchat): fix codeblocklines highlights 
+- fix(vimchat): fix cursor highlight position 
+- fix(vimchat): fix highlight firstline 
+- fix(vimchat): fix mouse position 
+- fix(vimchat): fix typo in message 
+- fix(vimchat): fix windows flickr 
+- fix(vimchat): highlight selection on the fly 
+- fix(vimdoc): fix vimdoc generation 
+- pref(bundle): update bundle deoplete 
+- pref(bundle): update bundle deoplete-lsp 
+- pref(chat): disable cursorline & update buffer content once 
+- pref(chat): fix vimchat ui syntax highlight 
+- pref(denite): improve denite key binding 
+- pref(git): display working directory on commit statusline 
+- pref(git): use stdout/stdin instead of .git\COMMIT_EDITMSG 
+- pref(indentline): update bundle indent-blankline.nvim 
+- pref(job): catch error from old jobstop 
+- pref(log): move to last line when view runtime log 
+- pref(markdown): use bundle vim-markdown-toc 
+- pref(neosnippet): update bundle neosnippet 
+- pref(options)!: rename statusline options 
+- pref(runner): remove `\r` at the end of line 
+- pref(scrollbar): set eventignore=all when update scrollbar 
+- pref(statusline): add extra space before qf title 
+- pref(statusline): remove extra space 
+- pref(terminal): improve terminal support 
+- pref(vimchat): support quote message highlight 
+- refactor(api): remove `SpaceVim#util#globpath` function 
+- refactor(bundle): use bundle neomru 
+- refactor(comments): move comments autocmd to layer 
+- refactor(debug): add debug log for iedit 
+- refactor(file): refactor the `file` api 
+- refactor(format): format dictionary 
+- refactor(lang#coffeescript): move coffeescript autocmds to layer 
+- refactor(lang#puppet): move autocmd to lang#puppet layer 
+- refactor(lang#vim): move viml autocmd to `lang#vim` layer 
+- refactor(lua): add back iconv files 
+- refactor(manpage): move `SPC h m` to fuzzy finder layer 
+- refactor(neoyank): use bundle neoyank.vim 
+- refactor(org): use bundle org plugin 
+- refactor(python): move python autocmd to `lang#python` layer 
+- refactor(vim#highlight): add `is_string()` function 
+- release v2.0.0 
+- revert(highlight.vim): revert E725 
+- style(viml): format code 
+- style(z): format key binding guide for `z` 
+- test(Makefile): use `-Es` mode 
+- test(check.yml): add more test 
+- test(cmake): add layer health function 
+- test(flygrep): add test for flygrep 
+- test(flygrep): check vim patch 7.4.1557 
+- test(iedit): add test for iedit 
+- test(lua): add java lua layer 
+- test(mkdir): add test for mkdir plugin 
+- test(nvim): add test for neovim 
+- test(nvim): remove windows test for nvim v0.4.0 
+- test(telescope): add layer health function 
+- test(todo): add test for todo.vim 
+- test(vint): enable `ProhibitEqualTildeOperator` policy 
 ```
