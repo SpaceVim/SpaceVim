@@ -15,6 +15,7 @@ comments: true
 - [What's New](#whats-new)
   - [New layers](#new-layers)
   - [New feature](#new-feature)
+  - [Enhancements](#enhancements)
   - [Git Commits](#git-commits)
 
 <!-- vim-markdown-toc -->
@@ -54,8 +55,27 @@ Since last release, the following layers have been added:
 ![chat](https://user-images.githubusercontent.com/13142418/176914163-ec4dcfd6-65d3-45d0-beea-9faec397e6f3.png)
 
 - add `b`, `e`, `w` key bindings for iedit mode
+- implement `autosave` plugin
+- add leaderf support for vim-bookmarks
+- add clipboard support for vim8
+
+new key bindings:
+
+- `SPC b ctrl-shift-d`: kill buffer by regexp
+
+### Enhancements
+
+- scrollbar: the logic and speed of scrollbar have been improved.
+- notify: some issues with notify api have been fixed.
 
 ### Git Commits
+
+If you want to view all the git commits,
+use following command in your terminal.
+
+```
+git -C ~/.SpaceVim log v1.9.0..v2.0.0
+```
 
 ```
 - build(docker): fix dockerfile
@@ -528,13 +548,6 @@ Since last release, the following layers have been added:
 - fix(mapping): fix unknown function win_getid
 - fix(mapping): use `tab split` instead of `tabedit %` to avoid E499
 - fix(message): fix `SPC b m` key bidding
-- fix(notify): check `win_is_open` before close notify
-- fix(notify): check function exists
-- fix(notify): fix E488 Trailing characters
-- fix(notify): fix `win_is_open` function
-- fix(notify): set notify_max_width based on current &columns
-- fix(notify): use `nvim_win_set_option` instead
-- fix(notify): use noautocmd to avoid changing statusline
 - fix(number): fix the pattern of Chinese Number
 - fix(page): update post date
 - fix(php): fix php `gd` key binding
@@ -552,15 +565,6 @@ Since last release, the following layers have been added:
 - fix(runner): fix code runner
 - fix(runner): fix code runner
 - fix(runner): fix on_stdout function
-- fix(scrollbar): add WinScrolled event if supported
-- fix(scrollbar): check each_line
-- fix(scrollbar): close scrollbar after opening vimchat
-- fix(scrollbar): disable scrollbar in leaderf buffer
-- fix(scrollbar): fix `noautocmd bd`
-- fix(scrollbar): fix position of scrollbar
-- fix(scrollbar): fix scrollbar on SPC number key binding
-- fix(scrollbar): fix scrollbar on `WIN o` key binding
-- fix(scrollbar): fix scrollbar position
 - fix(shell): fix default cwd of terminal
 - fix(smoothie): fix smoothie requirements
 - fix(snippet): fix key binding `SPC i s`
