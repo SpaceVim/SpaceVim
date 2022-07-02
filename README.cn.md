@@ -21,7 +21,7 @@
 语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱
 即用的 Vim-IDE。
 
-当前最新的稳定版为[v1.9.0](https://spacevim.org/SpaceVim-release-v1.9.0/)，[following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) 页面罗列了
+当前最新的稳定版为[v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/)，发布于2022年7月2日，[following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) 页面罗列了
 master 分支最新的更新以及变动。
 
 ## 支持 SpaceVim

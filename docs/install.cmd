@@ -6,7 +6,7 @@ $app_name = "SpaceVim"
 $repo_url = "https://github.com/SpaceVim/SpaceVim.git"
 $repo_name = "SpaceVim"
 $repo_path = "$HOME\.SpaceVim"
-$version= "2.0.0"
+$version= "2.1.0-dev"
 
 echo ""
 echo "        /######                                     /##    /##/##             "

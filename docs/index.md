@@ -6,7 +6,7 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 [![Gitter](https://img.shields.io/gitter/room/SpaceVim/SpaceVim?color=%2364CEAA)](https://gitter.im/SpaceVim/SpaceVim)
 [![build](https://img.shields.io/github/workflow/status/SpaceVim/SpaceVim/test)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
-[![Version](https://img.shields.io/badge/version-2.0.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-2.1.0--dev-8700FF.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
 ![welcome page](https://user-images.githubusercontent.com/13142418/176910121-8e7ca78f-8434-4ac7-9b02-08c4d15f8ad9.png)
@@ -26,7 +26,7 @@ appreciation while providing us motivation to continue working on this project.
 - [Documentation](documentation/): the primary official documentation of SpaceVim
 - [Available layers](layers/): a list of available layers which can be used in SpaceVim
 
-The latest release [v1.9.0](https://spacevim.org/SpaceVim-release-v1.9.0/) was released at 2022-01-06, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The latest release [v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/) was released at 2022-07-02, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## New features
 
