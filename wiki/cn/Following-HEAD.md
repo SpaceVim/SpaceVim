@@ -2,7 +2,7 @@
 
 ## 下一个版本
 
-下一个版本号为 v2.0.0
+下一个版本号为 v2.1.0
 
 <!-- call SpaceVim#dev#followHEAD#update('cn') -->
 <!-- SpaceVim follow HEAD en start -->
@@ -20,6 +20,6 @@
 
 ## 上一个版本
 
-SpaceVim 于 2022-01-06 发布 v1.9.0 版本，可查阅版本发布文章：
+SpaceVim 于 2022-07-02 发布 v2.0.0 版本，可查阅版本发布文章：
 
-- [SpaceVim 发布 v1.9.0 版本](https://spacevim.org/SpaceVim-release-v1.9.0/)
+- [SpaceVim 发布 v2.0.0 版本](https://spacevim.org/SpaceVim-release-v2.0.0/)

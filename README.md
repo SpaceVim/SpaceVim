@@ -10,11 +10,11 @@
 
 [![build](https://img.shields.io/github/workflow/status/SpaceVim/SpaceVim/test)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
-[![Release](https://img.shields.io/badge/Release-1.9.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v1.9.0/)
+[![Release](https://img.shields.io/badge/Release-2.0.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.0.0/)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/spacevim/spacevim)](https://hub.docker.com/r/spacevim/spacevim)
 
-![welcome page](https://user-images.githubusercontent.com/13142418/148374827-5f7aeaaa-e69b-441e-b872-408b47f4da04.png)
+![welcome page](https://user-images.githubusercontent.com/13142418/176910121-8e7ca78f-8434-4ac7-9b02-08c4d15f8ad9.png)
 
 SpaceVim is a community-driven modular Vim/Neovim distribution. It manages collections
 of plugins in layers, which help to collect related packages together to provide IDE-like features.
