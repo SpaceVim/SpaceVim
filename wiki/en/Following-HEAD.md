@@ -25,6 +25,6 @@ The next release is v2.1.0:
 
 ## Latest Release
 
-SpaceVim releases v2.0.0 at 2022-07-01, please check the release page:
+SpaceVim releases v2.0.0 at 2022-07-02, please check the release page:
 
 - [SpaceVim releases v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/) for all the details
