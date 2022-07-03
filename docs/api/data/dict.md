@@ -22,6 +22,13 @@ let s:DICT = SpaceVim#api#import('data#dict')
 
 ## functions
 
-| name        | description                    |
-| ----------- | ------------------------------ |
-| `make(str)` | make dict from keys and values |
+| name                      | description                    |
+| ------------------------- | ------------------------------ |
+| `make(keys, values, ...)` | make dict from keys and values |
+| `swap(dict)`              | swap keys and values of a dict |
+| `make_index(list, ...)`   | make a index dict from a list  |
+| `omit(dict, keys)`        | remove keys in a dict          |
+| `clear(dict)`             | clear a dict                   |
+| `pick(dict, keys)`        | pick keys from a dict          |
+| `max_by(dict, expr)`      | get max entry based on expr    |
+| `min_by(dict, expr)`      | get min entry based on expr    |
