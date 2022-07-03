@@ -106,9 +106,7 @@ local function _keys(val)
     return new_keys
 end
 local function _comp(a, b)
-    if (string.match(a, '*') == '*'
-            and string.match(b, '*') == '*')
-        then
+    if (string.match(a, '*') == '*' and string.match(b, '*') == '*') then
         return #a < #b
     elseif string.match(a, '*') == '*' then
         return true
@@ -128,7 +126,6 @@ local function parse(alt_config_json)
     local keys = _keys(alt_config_json.config)
     table.sort(keys, _comp)
     for _, key in pairs(keys) do
-        logger.debug('start parse key:' .. key)
         local searchpath = key
         if string.match(searchpath, '*') == '*' then
             searchpath = string.gsub(searchpath, '*', '**/*')
@@ -136,7 +133,6 @@ local function parse(alt_config_json)
         logger.debug('run globpath for: '.. searchpath)
         for _,file in pairs(cmp.globpath('.', searchpath)) do
             file = sp_file.unify_path(file, ':.')
-            logger.debug(file)
             project_config[alt_config_json.root][file] = {}
             if alt_config_json.config[file] ~= nil then
                 for alt_type, type_v in pairs(alt_config_json.config[file]) do
@@ -148,10 +144,10 @@ local function parse(alt_config_json)
                     if #begin_end == 2 then
                         project_config[alt_config_json.root][file][a_type] =
                         get_type_path(
-                            begin_end,
-                            file,
-                            alt_config_json.config[key][a_type]
-                            )
+                        begin_end,
+                        file,
+                        alt_config_json.config[key][a_type]
+                        )
                     end
                 end
             end
@@ -164,8 +160,8 @@ end
 local function is_config_changed(conf_path)
     if fn.getftime(conf_path) > fn.getftime(cache_path) then
         logger.info('alt config file('
-            .. conf_path
-            .. ')')
+        .. conf_path
+        .. ')')
         return 1
     end
 end
