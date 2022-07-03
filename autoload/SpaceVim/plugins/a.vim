@@ -11,7 +11,7 @@ set cpo&vim
 scriptencoding utf-8
 
 
-if $SPACEVIM_LUA && has('nvim-0.5.0')
+if has('lua') || has('nvim-0.5.0')
   function! SpaceVim#plugins#a#alt(request_parse, ...) abort
     lua require("spacevim.plugin.a").alt(
           \ require("spacevim").eval("a:request_parse"),
