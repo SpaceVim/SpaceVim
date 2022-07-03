@@ -1,4 +1,12 @@
+--=============================================================================
+-- opt.lua --- The global option of spacevim
+-- Copyright (c) 2016-2022 Wang Shidong & Contributors
+-- Author: Wang Shidong < wsdjeg@outlook.com >
+-- URL: https://spacevim.org
+-- License: GPLv3
+--=============================================================================
 local M = {}
+
 local sp = require('spacevim')
 
 local mt = {
