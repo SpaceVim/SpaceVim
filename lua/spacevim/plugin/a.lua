@@ -15,6 +15,7 @@ local sp_file = require('spacevim.api').import('file')
 local sp_opt = require('spacevim.opt')
 local sp_json = require('spacevim.api').import('data.json')
 local logger = require('spacevim.logger').derive('a.vim')
+local fn = vim.fn or require('spacevim').fn
 
 local alternate_conf = {}
 alternate_conf['_'] = '.project_alt.json'
