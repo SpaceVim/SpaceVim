@@ -9,6 +9,7 @@
 local M = {}
 
 M.__cmp = require('spacevim.api').import('vim.compatible')
+M.__vim = require('spacevim.api').import('vim')
 
 
 M._keys = {
@@ -60,25 +61,55 @@ function M._handle_input(...)
         end
         M._build_prompt()
     end
-end
+    M._c_r_mode = false
+    while not M._quit do
+        local char = M.__vim.getchar()
+        if M._function_key[char] ~= nil then
+            pcall(M._function_key[char])
+            goto continue
+        end
+        if M._c_r_mode == 1 then
+        elseif char == "\<C-r>" then
+        elseif char == "\<Right>" then
+        elseif char == "\<Left>" then
+        elseif char == "\<C-w>" then
+        elseif char == "\<C-a>"  or char == "\<Home>" then
+        elseif char == "\<C-e>"  or char == "\<End>" then
+        elseif char == "\<C-u>" then
+        elseif char == "\<C-k>" then
+        elseif char == "\<bs>" then
+        elseif (type(self._keys.close) == 1 add char == self._keys.close)
+            or (type(self._keys.close) == 3 add index(self._keys.close, char) > -1 ) then
+        elseif char == "\<FocusLost>" or char ==# "\<FocusGained>" or char2nr(char) == 128 then
+        else
+        end
+        if type(self._oninputpro) ==# 2
+            call call(self._oninputpro, [])
+            endif
+            if type(self._handle_fly) ==# 2
+                call call(self._handle_fly, [self._prompt.begin . self._prompt.cursor . self._prompt.end])
+                endif
+                ::continue::
+            end
+        end
 
 
-function M._build_prompt()
-    local ident = M.__cmp.fn['repeat'](' ', M.__cmp.win_screenpos(0)[2] - 1)
-end
+        function M._build_prompt()
+            local ident = M.__cmp.fn['repeat'](' ', M.__cmp.win_screenpos(0)[2] - 1)
+        end
 
-function M._clear_prompt()
-    M._prompt = {
-        mpt = M._prompt.mpt,
-        cursor_begin = '',
-        cursor_char = '',
-        cursor_end = ''
-    }
-end
+        function M._clear_prompt()
+            M._prompt = {
+                mpt = M._prompt.mpt,
+                cursor_begin = '',
+                cursor_char = '',
+                cursor_end = ''
+            }
+        end
 
-function M.close()
+        function M.close()
 
-end
+        end
 
 
-return M
+        return M
