@@ -9,7 +9,6 @@
 local M = {}
 
 M.__cmp = require('spacevim.api').import('vim.compatible')
-M.__vim = require('spacevim.api').import('vim')
 
 
 M._keys = {
@@ -18,9 +17,9 @@ M._keys = {
 
 M._prompt = {
     mpt = '==>',
-    begin = '',
-    cursor = '',
-    ['end'] = '',
+    cursor_begin = '',
+    cursor_char = '',
+    cursor_end = '',
 }
 
 M._function_key = {}
@@ -36,8 +35,8 @@ M._oninputpro = ''
 function M.open()
     M._quit = false
     M._build_prompt()
-    if M.__cmp.fn.empty(M._prompt.begin) == 0 then
-        M._handle_input(M._prompt.begin)
+    if M.__cmp.fn.empty(M._prompt.cursor_begin) == 0 then
+        M._handle_input(M._prompt.cursor_begin)
     else
         M._handle_input()
     end
@@ -50,10 +49,10 @@ end
 function M._handle_input(...)
     local argv = {...}
     local begin = argv[1] or ''
-    if M.__cmp.fn.empty(begin) == 0 then
-        if M.__cmp.fn['type'](M._oninputpro) == 2 then
+    if begin == '' then
+        if type(M._oninputpro) == 'function' then
         end
-        if M.__cmp.fn['type'](M._handle_fly) == 2 then
+        if type(M._handle_fly) == 'function' then
         end
         M._build_prompt()
     end
@@ -67,9 +66,9 @@ end
 function M._clear_prompt()
     M._prompt = {
         mpt = M._prompt.mpt,
-        begin = '',
-        cursor = '',
-        ['end'] = ''
+        cursor_begin = '',
+        cursor_char = '',
+        cursor_end = ''
     }
 end
 
