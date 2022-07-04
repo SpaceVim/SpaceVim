@@ -51,8 +51,12 @@ function M._handle_input(...)
     local begin = argv[1] or ''
     if begin == '' then
         if type(M._oninputpro) == 'function' then
+            M._oninputpro()
         end
         if type(M._handle_fly) == 'function' then
+            M._handle_fly(M._prompt.cursor_begin
+            .. M._prompt.cursor_char
+            .. M._prompt.cursor_end)
         end
         M._build_prompt()
     end
@@ -73,7 +77,7 @@ function M._clear_prompt()
 end
 
 function M.close()
-    
+
 end
 
 
