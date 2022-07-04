@@ -63,13 +63,14 @@ function M._handle_input(...)
     end
     M._c_r_mode = false
     while not M._quit do
-        local char = M.__vim.getchar()
+        local char = M.__vim.getchar2nr()
         if M._function_key[char] ~= nil then
             pcall(M._function_key[char])
             goto continue
         end
         if M._c_r_mode == 1 then
-        elseif char == "\<C-r>" then
+        elseif char == 18 then
+            -- char is "\<C-r>" 
         elseif char == "\<Right>" then
         elseif char == "\<Left>" then
         elseif char == "\<C-w>" then
