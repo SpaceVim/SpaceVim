@@ -6,6 +6,8 @@
 -- License: GPLv3
 --=============================================================================
 
+local Key = require('spacevim.api').import('vim.keys')
+
 local M = {}
 
 M.__cmp = require('spacevim.api').import('vim.compatible')
@@ -63,15 +65,19 @@ function M._handle_input(...)
     end
     M._c_r_mode = false
     while not M._quit do
-        local char = M.__vim.getchar2nr()
+        local char = M.__vim.getchar()
         if M._function_key[char] ~= nil then
             pcall(M._function_key[char])
             goto continue
         end
         if M._c_r_mode == 1 then
-        elseif char == 18 then
-            -- char is "\<C-r>" 
-        elseif char == "\<Right>" then
+        elseif char == Key.t('<c-r>') then
+        elseif char == Key.t('<right>') then
+            M._prompt.cursor_begin = M._prompt.cursor_begin .. M._prompt.cursor_char
+            M._prompt.cursor_char = M.__cmp.fn.matchstr(M._prompt.cursor_begin, '^.')
+            M._prompt.cursor_end = M.__cmp.fn.substitute(M._prompt.cursor_end, '^.', '', 'g')
+            M._build_prompt()
+            goto continue
         elseif char == "\<Left>" then
         elseif char == "\<C-w>" then
         elseif char == "\<C-a>"  or char == "\<Home>" then
