@@ -8,7 +8,7 @@ function M.t(str)
         local ret = vim.api.nvim_replace_termcodes(str, false, true, true):gsub("\128\254X", "\128")
         return ret
     else
-        local ret = vim.fn.execute('echo \\' .. str)
+        local ret = vim.fn.execute('echon "\\' .. str .. '"')
         ret = ret:gsub('<80>', '\128')
         return ret
     end
