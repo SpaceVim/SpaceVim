@@ -66,10 +66,10 @@ You can check the value of `autocomplete_method` via `:SPSet autocomplete_method
 
 ### alternate file jumping
 
-To manage the alternate file for a project, you may need to create a `.project_alt.json` file in the root of your
+To manage alternate files for a project, you may need to create a `.project_alt.json` file in the root of your
 project.
 
-for exmaple, add following content into the `.project_alt.json` file:
+For example, add the following content into the `.project_alt.json` file:
 
 ```json
 {
@@ -78,7 +78,7 @@ for exmaple, add following content into the `.project_alt.json` file:
 }
 ```
 
-with this configuration, you can jump between the alternate file via command `:A`
+With this configuration, you can jump between alternate files via command `:A`
 
 
 ### code running
