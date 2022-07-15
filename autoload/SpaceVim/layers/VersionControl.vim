@@ -77,10 +77,10 @@ endfunction
 function! s:git_branch() abort
   if exists('g:loaded_fugitive')
     try
-      let head = fugitive#head()
+      let head = exists("*FugitiveHead") ? FugitiveHead() : fugitive#Head()
       if empty(head)
-        call fugitive#detect(getcwd())
-        let head = fugitive#head()
+        call FugitiveDetect(getcwd())
+        let head = exists("*FugitiveHead") ? FugitiveHead() : fugitive#Head()
       endif
       if g:spacevim_statusline_unicode == 1
         return empty(head) ? '' : '  '.head . ' ' . s:gtm_status()
