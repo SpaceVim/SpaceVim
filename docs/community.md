@@ -33,7 +33,7 @@ All messages in these channels are bridged together.
 Join on one of them to chat with us:
 
 - <i class="fab fa-gitter"></i> [`SpaceVim/SpaceVim` on Gitter](https://gitter.im/SpaceVim/SpaceVim)
-- <i class="fab fa-rocketchat"></i> [`#spacevim:matrix.org` on Matrix](https://app.element.io/#/room/#spacevim:matrix.org)
+- <i class="fab fa-rocketchat"></i> [`#spacevim:matrix.org` on Matrix](https://chat.mozilla.org/#/room/#spacevim:matrix.org)
 - <i class="fas fa-comments"></i> [`#spacevim` on libera.chat](https://web.libera.chat/#spacevim)
 - <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim` on telegram](https://t.me/joinchat/CN0HPvvrVKg4MzY9)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` on slack](https://join.slack.com/t/spacevim/shared_invite/zt-74w64lg5-bT~~2~zEhtIy1zow53tHJg)
