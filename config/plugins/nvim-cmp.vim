@@ -3,7 +3,7 @@ lua <<EOF
   local cmp = require'cmp'
 
   cmp.setup({
-    mapping = {
+    mapping = cmp.mapping.preset.insert({
       ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
       ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
@@ -13,7 +13,7 @@ lua <<EOF
         c = cmp.mapping.close(),
       }),
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    },
+    }),
     formatting = {
       format = require("lspkind").cmp_format({with_text = true, menu = ({
           buffer = "[Buffer]",
