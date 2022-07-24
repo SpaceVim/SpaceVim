@@ -1,20 +1,10 @@
 local util = require 'lspconfig.util'
 local lsp = vim.lsp
 
-local get_eslint_client = function()
-  local active_clients = lsp.get_active_clients()
-  for _, client in ipairs(active_clients) do
-    if client.name == 'eslint' then
-      return client
-    end
-  end
-  return nil
-end
-
 local function fix_all(opts)
   opts = opts or {}
 
-  local eslint_lsp_client = get_eslint_client()
+  local eslint_lsp_client = util.get_active_client_by_name(opts.bufnr, 'eslint')
   if eslint_lsp_client == nil then
     return
   end
@@ -108,6 +98,13 @@ return {
         uri = new_root_dir,
         name = vim.fn.fnamemodify(new_root_dir, ':t'),
       }
+
+      -- Support Yarn2 (PnP) projects
+      local pnp_cjs = util.path.join(new_root_dir, '.pnp.cjs')
+      local pnp_js = util.path.join(new_root_dir, '.pnp.js')
+      if util.path.exists(pnp_cjs) or util.path.exists(pnp_js) then
+        config.cmd = vim.list_extend({ 'yarn', 'exec' }, cmd)
+      end
     end,
     handlers = {
       ['eslint/openDoc'] = function(_, result)

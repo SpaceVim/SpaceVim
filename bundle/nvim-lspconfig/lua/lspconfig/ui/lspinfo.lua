@@ -36,7 +36,7 @@ local function remove_newlines(cmd)
   return cmd
 end
 
-local function make_config_info(config)
+local function make_config_info(config, bufnr)
   local config_info = {}
   config_info.name = config.name
   config_info.helptags = {}
@@ -52,7 +52,9 @@ local function make_config_info(config)
     config_info.cmd_is_executable = 'NA'
   end
 
-  local buffer_dir = vim.fn.expand '%:p:h'
+  local buffer_dir = vim.api.nvim_buf_call(bufnr, function()
+    return vim.fn.expand '%:p:h'
+  end)
   local root_dir = config.get_root_dir(buffer_dir)
   if root_dir then
     config_info.root_dir = root_dir
@@ -148,16 +150,12 @@ return function()
   local buf_clients = vim.lsp.buf_get_clients()
   local clients = vim.lsp.get_active_clients()
   local buffer_filetype = vim.bo.filetype
+  local original_bufnr = vim.api.nvim_get_current_buf()
 
   local win_info = windows.percentage_range_window(0.8, 0.7)
   local bufnr, win_id = win_info.bufnr, win_info.win_id
 
   local buf_lines = {}
-
-  local buf_client_names = {}
-  for _, client in pairs(buf_clients) do
-    table.insert(buf_client_names, client.name)
-  end
 
   local buf_client_ids = {}
   for _, client in pairs(buf_clients) do
@@ -165,12 +163,10 @@ return function()
   end
 
   local other_active_clients = {}
-  local client_names = {}
   for _, client in pairs(clients) do
     if not vim.tbl_contains(buf_client_ids, client.id) then
       table.insert(other_active_clients, client)
     end
-    table.insert(client_names, client.name)
   end
 
   local header = {
@@ -214,7 +210,7 @@ return function()
   if not vim.tbl_isempty(other_matching_configs) then
     vim.list_extend(buf_lines, other_matching_configs_header)
     for _, config in pairs(other_matching_configs) do
-      vim.list_extend(buf_lines, make_config_info(config))
+      vim.list_extend(buf_lines, make_config_info(config, original_bufnr))
     end
   end
 

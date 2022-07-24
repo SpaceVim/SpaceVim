@@ -20,6 +20,12 @@ return {
       return util.root_pattern(unpack(root_files))(fname) or util.root_pattern(unpack(fallback_root_files))(fname)
     end,
     cmd = { bin_name },
+    -- gradle-language-server expects init_options.settings to be defined
+    init_options = {
+      settings = {
+        gradleWrapperEnabled = true,
+      },
+    },
   },
   docs = {
     description = [[
@@ -32,6 +38,11 @@ If you're setting this up manually, build vscode-gradle using `./gradlew install
     default_config = {
       root_dir = [[root_pattern("settings.gradle")]],
       cmd = { 'gradle-language-server' },
+      init_options = {
+        settings = {
+          gradleWrapperEnabled = true,
+        },
+      },
     },
   },
 }

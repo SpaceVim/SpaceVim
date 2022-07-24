@@ -352,6 +352,14 @@ function M.find_git_ancestor(startpath)
     end
   end)
 end
+function M.find_mercurial_ancestor(startpath)
+  return M.search_ancestors(startpath, function(path)
+    -- Support Mercurial directories
+    if M.path.is_dir(M.path.join(path, '.hg')) then
+      return path
+    end
+  end)
+end
 function M.find_node_modules_ancestor(startpath)
   return M.search_ancestors(startpath, function(path)
     if M.path.is_dir(M.path.join(path, 'node_modules')) then

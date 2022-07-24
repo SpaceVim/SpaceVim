@@ -10,41 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v2
-
-      - name: Setup luacheck
-        run: |
-          sudo apt update
-          sudo apt install -y lua5.1 luarocks
-          sudo luarocks install luacheck
-
-      - name: Setup selene
-        run: |
-          wget "https://github.com/Kampfkarren/selene/releases/download/$VERSION/selene-$VERSION-linux.zip"
-          echo "$SHA256_CHECKSUM  selene-$VERSION-linux.zip" > "selene-$VERSION-linux.zip.checksum"
-          sha256sum --check "selene-$VERSION-linux.zip.checksum"
-          unzip "selene-$VERSION-linux.zip"
-          install -Dp selene "$HOME/.local/bin/selene"
-
-          echo "::add-matcher::.github/workflows/problem_matchers/selene.json"
-        env:
-          VERSION: "0.15.0"
-          SHA256_CHECKSUM: "8ff9272170158fbd9c1af38206ecadc894dc456665dc9bd9f0d43a26e5e8f1af"
-
-      - name: Add $HOME/.local/bin to $PATH
-        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+        uses: actions/checkout@v3
 
       - name: Run luacheck
-        run: luacheck lua/* test/*
+        uses: lunarmodules/luacheck@v0
+        with:
+          args: lua/* test/*
 
       - name: Run selene
-        run: selene --display-style=quiet .
+        uses: NTBBloodbath/selene-action@v1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --display-style=quiet .
 
   style-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Lint with stylua
         uses: JohnnyMorganz/stylua-action@1.0.0

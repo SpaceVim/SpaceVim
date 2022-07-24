@@ -44,9 +44,7 @@ lspconfig.ccls.setup {
 
 ]],
     default_config = {
-      root_dir = function(fname)
-        return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
-      end,
+      root_dir = [[root_pattern('compile_commands.json', '.ccls', '.git')]],
     },
   },
 }

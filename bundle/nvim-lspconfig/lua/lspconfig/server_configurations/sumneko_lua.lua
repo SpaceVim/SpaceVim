@@ -4,6 +4,7 @@ local root_files = {
   '.luarc.json',
   '.luacheckrc',
   '.stylua.toml',
+  'stylua.toml',
   'selene.toml',
 }
 return {
@@ -66,7 +67,7 @@ See `lua-language-server`'s [documentation](https://github.com/sumneko/lua-langu
 
 ]],
     default_config = {
-      root_dir = [[root_pattern(".luarc.json", ".luacheckrc", ".stylua.toml", "selene.toml", ".git")]],
+      root_dir = [[root_pattern(".luarc.json", ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", ".git")]],
     },
   },
 }

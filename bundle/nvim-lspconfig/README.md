@@ -10,7 +10,7 @@ See also `:help lspconfig`.
 
 ## Install
 
-* Requires [Neovim 0.7](https://github.com/neovim/neovim/releases/tag/v0.6.1) or [Nightly](https://github.com/neovim/neovim/releases/tag/nightly). Update Nvim and nvim-lspconfig before reporting an issue.
+* Requires [Neovim latest stable release](https://github.com/neovim/neovim/releases/latest) or [Nightly](https://github.com/neovim/neovim/releases/tag/nightly). Update Nvim and nvim-lspconfig before reporting an issue.
 * Install nvim-lspconfig like any other Vim plugin, e.g. with [packer.nvim](https://github.com/wbthomason/packer.nvim):
   ```lua
   local use = require('packer').use
@@ -35,7 +35,7 @@ See also `:help lspconfig`.
    nvim main.py
    ```
 4. Run `:LspInfo` to see the status or to troubleshoot.
-5. See [Keybindings and completion](#Keybindings-and-completion) to setup common mappings and omnifunc completion.
+5. See [Suggested configuration](#Suggested-configuration) to setup common mappings and omnifunc completion.
 
 See [server_configurations.md](doc/server_configurations.md) (`:help lspconfig-all` from Nvim) for the full list of configs, including installation instructions and additional, optional, customization suggestions for each language server. For servers that are not on your system path (e.g., `jdtls`, `elixirls`), you must manually add `cmd` to the `setup` parameter. Most language servers can be installed in less than a minute.
 

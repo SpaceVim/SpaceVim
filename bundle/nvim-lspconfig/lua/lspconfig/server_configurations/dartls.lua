@@ -1,8 +1,12 @@
 local util = require 'lspconfig.util'
 
+local cmd = (vim.fn.has 'win32' == 1
+  and { 'cmd.exe', '/C', 'dart', 'language-server', '--protocol=lsp' }
+  or { 'dart', 'language-server', '--protocol=lsp' })
+
 return {
   default_config = {
-    cmd = { 'dart', 'language-server', '--protocol=lsp' },
+    cmd = cmd,
     filetypes = { 'dart' },
     root_dir = util.root_pattern 'pubspec.yaml',
     init_options = {
