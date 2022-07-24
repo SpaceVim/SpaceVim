@@ -20,11 +20,11 @@ lua <<EOF
         })}),
     },
     sources = cmp.config.sources({
-      { name = 'path' },
+      { name = 'nvim_lsp' },
     }, {
       { name = 'buffer' },
     }, {
-      { name = 'nvim_lsp' },
+      { name = 'path' },
     })
   })
 -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
