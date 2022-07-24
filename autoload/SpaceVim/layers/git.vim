@@ -64,8 +64,8 @@ function! SpaceVim#layers#git#plugins() abort
   if s:git_plugin ==# 'gina'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/gina.vim', { 'merged' : 0}])
   elseif s:git_plugin ==# 'fugitive'
-    call add(plugins, ['tpope/vim-fugitive',   { 'merged' : 0}])
-    call add(plugins, ['tpope/vim-dispatch', { 'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-fugitive', { 'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-dispatch', { 'merged' : 0}])
   elseif s:git_plugin ==# 'gita'
     call add(plugins, ['lambdalisue/vim-gita', { 'on_cmd' : 'Gita'}])
   else
