@@ -74,16 +74,26 @@ Contribute code, report bugs and request features on [GitHub](https://github.com
   SpaceVim has been tested in [github action](https://github.com/SpaceVim/SpaceVim/actions) with following
   versions of neovim and vim:
 
-  | Program | Version | Windows | Linux |
-  | ------- | ------- | ------- | ----- |
-  | neovim  | v0.6.1  | √       | √     |
-  | neovim  | v0.6.0  | √       | √     |
-  | neovim  | v0.5.1  | √       | √     |
-  | neovim  | v0.5.0  | √       | √     |
-  | neovim  | v0.4.4  | √       | √     |
-  | neovim  | v0.4.3  | √       | √     |
-  | neovim  | v0.4.2  | √       | √     |
-  | neovim  | v0.3.8  | √       | √     |
+  | Program | Version    | Windows | Linux |
+  | ------- | ---------- | ------- | ----- |
+  | vim     | v8.2.3995  | √       | √     |
+  | vim     | v8.2.2434  | √       | √     |
+  | vim     | v8.1.2669  | √       | √     |
+  | vim     | v7.0.1453  | √       | √     |
+  | vim     | v7.0.0184  | √       | √     |
+  | vim     | v7.0.0183  | √       | √     |
+  | vim     | v8.0.027   | √       | √     |
+  | vim     | v7.4.1689  | √       | √     |
+  | vim     | v7.4.629   | √       | √     |
+  | vim     | v7.4.052   | √       | √     |
+  | neovim  | v0.6.1     | √       | √     |
+  | neovim  | v0.6.0     | √       | √     |
+  | neovim  | v0.5.1     | √       | √     |
+  | neovim  | v0.5.0     | √       | √     |
+  | neovim  | v0.4.4     | √       | √     |
+  | neovim  | v0.4.3     | √       | √     |
+  | neovim  | v0.4.2     | √       | √     |
+  | neovim  | v0.3.8     | √       | √     |
 
 For more general questions, please read the SpaceVim [FAQ](faq/).
 
