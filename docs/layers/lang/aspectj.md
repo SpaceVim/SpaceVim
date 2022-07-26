@@ -1,9 +1,9 @@
 ---
-title: "SpaceVim lang#asepctj layer"
+title: "SpaceVim lang#aspectj layer"
 description: "AsepctJ language support, including syntax highlighting."
 ---
 
-# [Available Layers](../../) >> lang#asepctj
+# [Available Layers](../../) >> lang#aspectj
 
 <!-- vim-markdown-toc GFM -->
 
@@ -22,6 +22,6 @@ To use this configuration layer, update your custom configuration file with:
 
 ```toml
 [[layers]]
-  name = "lang#asepctj"
+  name = "lang#aspectj"
 ```
 
