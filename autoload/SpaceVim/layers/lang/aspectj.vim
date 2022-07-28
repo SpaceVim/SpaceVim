@@ -1,5 +1,5 @@
 "=============================================================================
-" asepctj.vim --- asepctj language support in SpaceVim
+" aspectj.vim --- aspectj language support in SpaceVim
 " Copyright (c) 2016-2022 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
@@ -7,18 +7,18 @@
 "=============================================================================
 
 ""
-" @section lang#asepctj, layers-lang-asepctj
+" @section lang#aspectj, layers-lang-aspectj
 " @parentsection layers
-" This layer provides syntax highlighting for asepctj. To enable this
+" This layer provides syntax highlighting for aspectj. To enable this
 " layer:
 " >
 "   [layers]
-"     name = "lang#asepctj"
+"     name = "lang#aspectj"
 " <
 
 function! SpaceVim#layers#lang#aspectj#plugins() abort
   let plugins = []
-  call add(plugins, ['wsdjeg/vim-asepctj', { 'merged' : 0}])
+  call add(plugins, ['wsdjeg/vim-aspectj', { 'merged' : 0}])
   return plugins
 endfunction
 

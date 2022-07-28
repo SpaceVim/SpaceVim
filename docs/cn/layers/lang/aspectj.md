@@ -1,10 +1,10 @@
 ---
-title: "SpaceVim lang#asepctj layer"
+title: "SpaceVim lang#aspectj layer"
 description: "这一模块为 SpaceVim 提供了 AsepctJ 的编辑支持，包括代码高亮。"
 lang: zh
 ---
 
-# [Available Layers](../../) >> lang#asepctj
+# [Available Layers](../../) >> lang#aspectj
 
 <!-- vim-markdown-toc GFM -->
 
@@ -23,7 +23,7 @@ lang: zh
 
 ```toml
 [[layers]]
-  name = "lang#asepctj"
+  name = "lang#aspectj"
 ```
 
 

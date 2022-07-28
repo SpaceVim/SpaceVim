@@ -14,7 +14,7 @@ This is a list of programming languages supported in SpaceVim:
 | Agda                                                      | [lang#agda](https://spacevim.org/layers/lang/agda/)                 |      |
 | ActionScript                                              | [lang#actionscript](https://spacevim.org/layers/lang/actionscript/) |      |
 | Assembly                                                  | lang#assemble                                                       |      |
-| AspectJ                                                   | [lang#asepctj](https://spacevim.org/layers/lang/aspectj/)           |      |
+| AspectJ                                                   | [lang#aspectj](https://spacevim.org/layers/lang/aspectj/)           |      |
 | AutoHotkey                                                | [lang#autohotkey](https://spacevim.org/layers/lang/autohotkey/)     |      |
 | Bash, Fish, zsh                                           | [lang#sh](https://spacevim.org/layers/lang/sh/)                     |      |
 | C#                                                        | [lang#csharp](https://spacevim.org/layers/lang/csharp/)             |      |

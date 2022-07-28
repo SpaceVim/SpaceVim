@@ -120,7 +120,7 @@ CONTENTS                                                   *SpaceVim-contents*
       25. lang#actionscript................|SpaceVim-layers-lang-actionscript|
       26. lang#agda................................|SpaceVim-layers-lang-agda|
       27. lang#asciidoc........................|SpaceVim-layers-lang-asciidoc|
-      28. lang#asepctj..........................|SpaceVim-layers-lang-asepctj|
+      28. lang#aspectj..........................|SpaceVim-layers-lang-aspectj|
       29. lang#assembly........................|SpaceVim-layers-lang-assembly|
       30. lang#autohotkey....................|SpaceVim-layers-lang-autohotkey|
       31. lang#autoit............................|SpaceVim-layers-lang-autoit|
@@ -2319,12 +2319,12 @@ This layer provides syntax highlighting for asciidoc. To enable this layer:
 <
 
 ==============================================================================
-LANG#ASEPCTJ                                    *SpaceVim-layers-lang-asepctj*
+LANG#ASEPCTJ                                    *SpaceVim-layers-lang-aspectj*
 
-This layer provides syntax highlighting for asepctj. To enable this layer:
+This layer provides syntax highlighting for aspectj. To enable this layer:
 >
   [layers]
-    name = "lang#asepctj"
+    name = "lang#aspectj"
 <
 
 ==============================================================================
