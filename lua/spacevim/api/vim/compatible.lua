@@ -60,37 +60,37 @@ end
 
 -- this is for Vim and old neovim
 M.fn = setmetatable({}, {
-        __index = function(t, key)
-            local _fn
-            if vim.api ~= nil and vim.api[key] ~= nil then
-                _fn = function()
-                    error(string.format("Tried to call API function with vim.fn: use vim.api.%s instead", key))
-                end
-            else
-                _fn = function(...)
-                    return M.call(key, ...)
-                end
+    __index = function(t, key)
+        local _fn
+        if vim.api ~= nil and vim.api[key] ~= nil then
+            _fn = function()
+                error(string.format("Tried to call API function with vim.fn: use vim.api.%s instead", key))
             end
-            t[key] = _fn
-            return _fn
+        else
+            _fn = function(...)
+                return M.call(key, ...)
+            end
         end
-    })
+        t[key] = _fn
+        return _fn
+    end
+})
 
 -- This is for vim and old neovim to use vim.o
 M.vim_options = setmetatable({}, {
-        __index = function(t, key)
-            local _fn
-            if vim.api ~= nil then
-                -- for neovim
-                return vim.api.nvim_get_option(key)
-            else
-                -- for vim
-                _fn = M.eval('&' .. key)
-            end
-            t[key] = _fn
-            return _fn
+    __index = function(t, key)
+        local _fn
+        if vim.api ~= nil then
+            -- for neovim
+            return vim.api.nvim_get_option(key)
+        else
+            -- for vim
+            _fn = M.eval('&' .. key)
         end
-    })
+        t[key] = _fn
+        return _fn
+    end
+})
 
 function M.echo(msg)
     if vim.api ~= nil then
@@ -118,6 +118,10 @@ else
     function M.globpath(dir, expr)
         return M.fn.split(fn.globpath(dir, expr), "\n")
     end
+end
+
+function M.execute(cmd, silent)
+    return  M.fn.execute(cmd, silent)
 end
 
 return M

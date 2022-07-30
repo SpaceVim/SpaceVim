@@ -3,6 +3,10 @@
 
 local M = {}
 
+-- load apis
+
+local cmp = require('spacevim.api').import('vim.compatible')
+
 local desc_lookup = {}
 
 local cached_dicts = {}
@@ -60,6 +64,16 @@ end
 
 local function winclose()
     
+end
+
+local function start_parser(key, dict)
+    if key == '[KEYs]' then
+        return ''
+    end
+
+    if key == ' ' then key = '<Space>' end
+
+    local readmap = cmp.execute('map ' .. key, 'silent')
 end
 
 
