@@ -1,9 +1,25 @@
 --!/usr/bin/lua
 
 
+local M = {}
+
 local desc_lookup = {}
 
 local cached_dicts = {}
+
+local winid = -1
+
+local bufnr = -1
+
+local prefix_key_inp = {}
+
+local lmap = {}
+
+local undo_history = {}
+
+function M.has_configuration()
+    return desc_lookup ~= nil
+end
 
 
 -- the flag for guide help mode, the default is false
