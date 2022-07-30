@@ -66,6 +66,10 @@ local function winclose()
     
 end
 
+local function format_displaystring(map)
+    
+end
+
 local function start_parser(key, dict)
     if key == '[KEYs]' then
         return ''
@@ -76,6 +80,28 @@ local function start_parser(key, dict)
     local readmap = cmp.execute('map ' .. key, 'silent')
 
     for _, line in ipairs(cmp.fn.split(readmap, "\n")) do
+        local mapd = cmp.fn.maparg(
+        cmp.split(
+        string.sub(line, 3, string.len(line))
+        )[1], string.sub(line, 1, 1), 0, 1)
+        if mapd.lhs == "\\" then
+            mapd.feedkeyargs = ''
+        elseif mapd.noremap == 1 then
+            mapd.feedkeyargs = 'nt'
+        else
+            mapd.feedkeyargs = 'mt'
+        end
+        if mapd.lhs == '<Plug>.*' or mapd.lhs == '<SNR>.*' then
+            goto continue
+        end
+        mapd.display = format_displaystring(mapd.rhs)
+        mapd.lhs = cmp.fn.substitute(mapd.lhs, key, '', '')
+        mapd.lhs = cmp.fn.substitute(mapd.lhs, '<Space>', ' ', 'g')
+        mapd.lhs = cmp.fn.substitute(mapd.lhs, '<Tab>', '<C-I>', 'g')
+        mapd.rhs = cmp.fn.substitute(mapd.rhs, '<SID>', '<SNR>' .. mapd['sid'] .. '_', 'g')
+        if mapd.lhs ~= '' and mapd.display ~= 'LeaderGuide.*' then
+        end
+        ::continue::
     end
 end
 
