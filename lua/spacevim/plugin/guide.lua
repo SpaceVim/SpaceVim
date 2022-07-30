@@ -74,6 +74,9 @@ local function start_parser(key, dict)
     if key == ' ' then key = '<Space>' end
 
     local readmap = cmp.execute('map ' .. key, 'silent')
+
+    for _, line in ipairs(cmp.fn.split(readmap, "\n")) do
+    end
 end
 
 
