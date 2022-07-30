@@ -22,6 +22,11 @@ function M.has_configuration()
 end
 
 
+function M.register_prefix_descriptions(key, dictname)
+    
+end
+
+
 -- the flag for guide help mode, the default is false
 local guide_help_mode = false
 
