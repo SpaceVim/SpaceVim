@@ -77,7 +77,7 @@ end
 local mt = {}
 function mt:__index(k)
   if configs[k] == nil then
-    local success, config = pcall(require, 'lspconfig.server_configurations.' .. k)
+    local success, config = pcall(require, 'lspconfig.server_configurations.' .. tostring(k))
     if success then
       configs[k] = config
     else
