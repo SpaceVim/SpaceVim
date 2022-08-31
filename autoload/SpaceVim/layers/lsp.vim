@@ -102,13 +102,15 @@ for _, lsp in ipairs(servers) do
 end
 local override_client_cmds = require('spacevim').eval('s:override_client_cmds')
 for client, override_cmd in pairs(override_client_cmds) do
-  nvim_lsp[client].setup {
-    cmd = override_cmd,
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
+  if type(client) == "string" then
+    nvim_lsp[client].setup {
+      cmd = override_cmd,
+      on_attach = on_attach,
+      flags = {
+        debounce_text_changes = 150,
+        }
       }
-    }
+  end
 end
 EOF
 endfunction
