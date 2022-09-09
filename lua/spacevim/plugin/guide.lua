@@ -44,6 +44,14 @@ local function create_target_dict(key)
     
 end
 
+local function merge(dict_t, dict_o)
+    
+end
+
+function M.populate_dictionary(key, dictname)
+    start_parser(key, cached_dicts[key])
+end
+
 
 local function build_mpt(mpt)
     
