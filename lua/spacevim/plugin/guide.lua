@@ -125,10 +125,64 @@ local function get_key_number(key)
     
 end
 
+local function compare_key(i1, i2)
+    
+end
+
+
+local function create_string(layout)
+    
+end
+
+local function highlight_cursor()
+    
+end
+
+local function remove_cursor_highlight()
+    
+end
+
+local function start_buffer()
+    
+end
+
+local function handle_input(input)
+    
+end
+
+local function wait_for_input()
+    
+end
+
 
 local function build_mpt(mpt)
     
 end
+
+local function winopen()
+    
+end
+
+local function updateStatusline()
+    
+end
+
+local function close_float_statusline()
+    
+end
+
+local function guide_help_msg(escape)
+    
+end
+
+local function toggle_hide_cursor()
+    
+end
+
+local function winclose()
+    
+end
+
 
 local function page_down()
     
@@ -142,10 +196,6 @@ local function page_up()
     
 end
 
-
-local function winclose()
-    
-end
 
 
 local function handle_submode_mapping(cmd)
@@ -171,7 +221,23 @@ local function submode_mappings(key)
     handle_submode_mapping(key)
 end
 
+local function mapmaparg(maparg)
+    
+end
+
 
 local function get_register()
+    
+end
+
+function M.start_by_prefix(vis, key)
+    
+end
+
+function M.start(vis, dict)
+    
+end
+
+function M.register_displayname(lhs, name)
     
 end
