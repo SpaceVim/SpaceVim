@@ -52,29 +52,7 @@ function M.populate_dictionary(key, dictname)
     start_parser(key, cached_dicts[key])
 end
 
-
-local function build_mpt(mpt)
-    
-end
-
-local function page_down()
-    
-end
-
-local function page_undo()
-    
-end
-
-local function page_up()
-    
-end
-
-
-local function winclose()
-    
-end
-
-local function format_displaystring(map)
+function M.parse_mappings()
     
 end
 
@@ -111,6 +89,62 @@ local function start_parser(key, dict)
         end
         ::continue::
     end
+end
+
+
+local function add_map_to_dict(map, level, dict)
+    
+end
+
+local function format_displaystring(map)
+    
+end
+
+local function flattenmap(dict, str)
+    
+end
+
+local function escape_mappings(mapping)
+    
+end
+
+local function string_to_keys(input)
+    
+end
+
+local function escape_keys(inp)
+    
+end
+
+
+local function calc_layout()
+    
+end
+
+local function get_key_number(key)
+    
+end
+
+
+local function build_mpt(mpt)
+    
+end
+
+local function page_down()
+    
+end
+
+local function page_undo()
+    
+end
+
+local function page_up()
+    
+end
+
+
+local function winclose()
+    
 end
 
 
