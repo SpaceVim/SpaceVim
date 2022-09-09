@@ -169,6 +169,8 @@ local function start_buffer()
 end
 
 local function handle_input(input)
+    winclose()
+    
     
 end
 
