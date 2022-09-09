@@ -113,7 +113,8 @@ local function string_to_keys(input)
 end
 
 local function escape_keys(inp)
-    
+    local ret = cmp.fn.substitute(inp, '<', '<lt>', '')
+    return cmp.fn.substitute(ret, '|', '<Bar>', '')
 end
 
 
@@ -122,11 +123,24 @@ local function calc_layout()
 end
 
 local function get_key_number(key)
-    
+    if key == '[SPC]' then
+        return 32
+    elseif key == '<Tab>' then
+        return 9
+    else
+        return cmp.fn.char2nr(key)
+    end
 end
 
 local function compare_key(i1, i2)
-    
+    local a = get_key_number(i1)
+    local b = get_key_number(i2)
+    if a - b == 32 and a >= 97 and a <= 122 then
+        return -1
+    elseif b - a == 32 and b >= 97 and b <= 122 then
+        return 1
+
+    end
 end
 
 
