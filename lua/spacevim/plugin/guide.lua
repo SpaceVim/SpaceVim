@@ -139,8 +139,16 @@ local function compare_key(i1, i2)
         return -1
     elseif b - a == 32 and b >= 97 and b <= 122 then
         return 1
-
+    elseif a >= 97 and a <= 122 and b >= 97 and b <= 122 then
+        if a == b then return 0 elseif a > b then return 1 else return -1 end
+    elseif a >= 65 and a <= 90 and b >= 65 and b <= 90 then
+        if a == b then return 0 elseif a > b then return 1 else return -1 end
+    elseif a >= 97 and a <= 122 and b >= 65 and b <= 90 then
+        return compare_key(cmp.fn.nr2char(a), cmp.fn.nr2char(b + 32))
+    elseif a >= 65 and a <= 90 and b >= 97 and b <= 122 then
+        return compare_key(cmp.fn.nr2char(a), cmp.fn.nr2char(b - 32))
     end
+    if a == b then return 0 elseif a > b then return 1 else return -1 end
 end
 
 
