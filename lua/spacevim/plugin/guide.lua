@@ -255,6 +255,17 @@ end
 
 local function build_mpt(mpt)
 
+    vim.fn.execute('normal! :')
+
+    vim.fn.execute('echohl Comment')
+
+    if type(mpt) == 'string' then
+        print(mpt)
+    else
+    end
+
+    vim.fn.execute('echohl NONE')
+
 end
 
 local function winopen()
