@@ -188,34 +188,43 @@ function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement)
     " patch-8.1.0037 appendbufline()
     " patch-8.0.1039 setbufline()
     " patch-8.1.1610 bufadd() bufload()
+
+    " in vim, setbufline will not load buffer automatically
+    " but in neovim, nvim_buf_set_lines will do it.
+    " @fixme vim issue #5044
+    " https://github.com/vim/vim/issues/5044
+    if !bufloaded(a:buffer)
+      call bufload(a:buffer)
+    endif
+
     let lct = self.line_count(a:buffer)
-    if a:start > lct
-      return
-    elseif a:start >= 0 && a:end > a:start
-      " in vim, setbufline will not load buffer automatically
-      " but in neovim, nvim_buf_set_lines will do it.
-      " @fixme vim issue #5044
-      " https://github.com/vim/vim/issues/5044
-      if !bufloaded(a:buffer)
-        call bufload(a:buffer)
-      endif
-      " 0, 1 len = 1 a:replacement = 4
-      if len(a:replacement) == a:end - a:start
-        for i in range(a:start, a:end - 1)
-          call setbufline(a:buffer, i + 1, a:replacement[i - a:start])
-        endfor
+    let start = a:start + (a:start < 0 ? lct + 1 : 0)
+    let end = a:end + (a:end < 0 ? lct + 1 : 0)
+
+    if start < 0 || end < 0 || start > lct || end > lct
+      if a:strict_indexing
+      " @fixme raise an error
+        return
       else
-        let endtext = a:end >= lct ? [] : getbufline(a:buffer, a:end + 1, '$')
-        let replacement = a:replacement + endtext
-        for i in range(a:start, len(replacement) + a:start - 1)
-          call setbufline(a:buffer, i + 1, replacement[i - a:start])
-        endfor
-        call deletebufline(a:buffer,len(replacement) + a:start + 1, '$')
+        let start = start < 0 ? 0 : start > lct ? lct : start
+        let end = end < 0 ? 0 : end > lct ? lct : end
       endif
-    elseif a:start >= 0 && a:end < 0 && lct + a:end >= a:start
-      call self.buf_set_lines(a:buffer, a:start, lct + a:end + 1, a:strict_indexing, a:replacement)
-    elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
-      call self.buf_set_lines(a:buffer, lct + a:start + 1, lct + a:end + 2, a:strict_indexing, a:replacement)
+    endif
+    if start > end
+      " @fixme raise an error
+      return
+    endif
+
+    " in neovim, indexing is zero-based, end-exclusive
+    " but in vim, indexing is one-based, end-inclusive
+    let tochange = min([len(a:replacement), end - start])
+    if tochange > 0
+      call setbufline(a:buffer, start + 1, a:replacement[:tochange-1])
+    endif
+    if end > start + tochange
+      call deletebufline(a:buffer, start + 1 + tochange, end)
+    else
+      call appendbufline(a:buffer, start + tochange, a:replacement[tochange:])
     endif
   elseif has('python')
 py << EOF
