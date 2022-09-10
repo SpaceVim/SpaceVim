@@ -2319,7 +2319,7 @@ This layer provides syntax highlighting for asciidoc. To enable this layer:
 <
 
 ==============================================================================
-LANG#ASEPCTJ                                    *SpaceVim-layers-lang-aspectj*
+LANG#ASPECTJ                                    *SpaceVim-layers-lang-aspectj*
 
 This layer provides syntax highlighting for aspectj. To enable this layer:
 >

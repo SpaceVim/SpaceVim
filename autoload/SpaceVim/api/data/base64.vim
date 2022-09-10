@@ -10,7 +10,8 @@ let s:self = {}
 
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
-if s:CMP.has('python')
+if s:CMP.has('python') && !has('nvim-0.7')
+  " https://github.com/neovim/neovim/pull/17222
   " @vimlint(EVL103, 1, a:text)
   function! s:self.encode(text) abort
     py import vim
