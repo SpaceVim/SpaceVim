@@ -156,17 +156,20 @@ function! s:self.filter_do(expr) abort
   endfor
 endfunction
 
-if exists('*nvim_buf_line_count')
+" define self.line_count(buf)
+" use nvim_buf_line_count if possible
+if exists('*nvim_buf_line_count') " {{{
   function! s:self.line_count(buf) abort
     return nvim_buf_line_count(a:buf)
-  endfunction
-elseif get(g:, '_spacevim_if_lua', 0)
+  endfunction " }}}
+" if +lua is enabled.
+elseif get(g:, '_spacevim_if_lua', 0) " {{{
   " @vimlint(EVL103, 1, a:buf)
   function! s:self.line_count(buf) abort
     " lua numbers are floats, so use float2nr
     return float2nr(luaeval('#vim.buffer(vim.eval("a:buf"))'))
   endfunction
-  " @vimlint(EVL103, 0, a:buf)
+  " @vimlint(EVL103, 0, a:buf) }}}
 else
   function! s:self.line_count(buf) abort
     return len(getbufline(a:buf, 1, '$'))
@@ -174,15 +177,19 @@ else
 endif
 
 
-" just same as nvim_buf_set_lines
+" buffer.buf_set_lines(buffer, start, end, strict_indexing, replacement)
+"
+" this function is just same as nvim_buf_set_lines.
 function! s:self.buf_set_lines(buffer, start, end, strict_indexing, replacement) abort
   if !bufexists(a:buffer)
     return
   endif
   let ma = getbufvar(a:buffer, '&ma')
   call setbufvar(a:buffer,'&ma', 1)
-  if exists('*nvim_buf_set_lines')
+  " if the function `nvim_buf_set_lines` exists
+  if exists('*nvim_buf_set_lines') " {{{
     call nvim_buf_set_lines(a:buffer, a:start, a:end, a:strict_indexing, a:replacement)
+    " }}}
   elseif exists('*deletebufline') && exists('*bufload')
     " patch-8.1.0039 deletebufline()
     " patch-8.1.0037 appendbufline()
