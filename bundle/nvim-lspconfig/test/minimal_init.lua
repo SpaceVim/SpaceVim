@@ -29,11 +29,9 @@ local function load_plugins()
   }
 end
 
-_G.load_config = function()
+local load_config = function()
   vim.lsp.set_log_level 'trace'
-  if vim.fn.has 'nvim-0.5.1' == 1 then
-    require('vim.lsp.log').set_format_func(vim.inspect)
-  end
+  require('vim.lsp.log').set_format_func(vim.inspect)
   local nvim_lsp = require 'lspconfig'
   local on_attach = function(_, bufnr)
     local function buf_set_option(...)
@@ -86,9 +84,13 @@ if vim.fn.isdirectory(install_path) == 0 then
   vim.fn.system { 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path }
   load_plugins()
   require('packer').sync()
-  vim.cmd [[autocmd User PackerComplete ++once lua load_config()]]
+  local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
+  vim.api.nvim_create_autocmd(
+    'User',
+    { pattern = 'PackerComplete', callback = load_config, group = packer_group, once = true }
+  )
 else
   load_plugins()
   require('packer').sync()
-  _G.load_config()
+  load_config()
 end

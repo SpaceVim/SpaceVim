@@ -40,14 +40,14 @@ return {
       end
       local cargo_workspace_dir = nil
       if cm == 0 then
-        cargo_workspace_dir = vim.fn.json_decode(cargo_metadata)['workspace_root']
+        cargo_workspace_dir = vim.json.decode(cargo_metadata)['workspace_root']
       else
         vim.notify(
           string.format('[lspconfig] cmd (%q) failed:\n%s', table.concat(cmd, ' '), cargo_metadata_err),
           vim.log.levels.WARN
         )
       end
-      return cargo_workspace_dir
+      return util.path.sanitize(cargo_workspace_dir)
         or cargo_crate_dir
         or util.root_pattern 'rust-project.json'(fname)
         or util.find_git_ancestor(fname)

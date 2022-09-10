@@ -8,7 +8,7 @@ return {
   },
   docs = {
     description = [[
-https://github.com/snoe/clojure-lsp
+https://github.com/clojure-lsp/clojure-lsp
 
 Clojure Language Server
 ]],

@@ -1,4 +1,4 @@
-local util = require 'lspconfig/util'
+local util = require 'lspconfig.util'
 
 local root_files = {
   'pyproject.toml',

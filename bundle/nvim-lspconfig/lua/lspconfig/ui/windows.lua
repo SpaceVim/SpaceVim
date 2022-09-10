@@ -1,6 +1,8 @@
 -- The following is extracted and modified from plenary.vnim by
 -- TJ Devries. It is not a stable API, and is expected to change
 --
+local api = vim.api
+
 local function apply_defaults(original, defaults)
   if original == nil then
     original = {}
@@ -19,18 +21,15 @@ end
 
 local win_float = {}
 
-win_float.default_options = {
-  winblend = 15,
-  percentage = 0.9,
-}
+win_float.default_options = {}
 
 function win_float.default_opts(options)
-  options = apply_defaults(options, win_float.default_options)
+  options = apply_defaults(options, { percentage = 0.9 })
 
   local width = math.floor(vim.o.columns * options.percentage)
   local height = math.floor(vim.o.lines * options.percentage)
 
-  local top = math.floor(((vim.o.lines - height) / 2) - 1)
+  local top = math.floor(((vim.o.lines - height) / 2))
   local left = math.floor((vim.o.columns - width) / 2)
 
   local opts = {
@@ -51,6 +50,8 @@ function win_float.default_opts(options)
       { ' ', 'NormalFloat' },
     },
   }
+
+  opts.border = options.border and options.border
 
   return opts
 end
@@ -75,7 +76,7 @@ function win_float.percentage_range_window(col_range, row_range, options)
     assert(row_range <= 1)
     assert(row_range > 0)
     height_percentage = row_range
-    row_start_percentage = (1 - height_percentage) / 2
+    row_start_percentage = (1 - height_percentage) / 3
   elseif type(row_range) == 'table' then
     height_percentage = row_range[2] - row_range[1]
     row_start_percentage = row_range[1]
@@ -85,6 +86,7 @@ function win_float.percentage_range_window(col_range, row_range, options)
 
   win_opts.height = math.ceil(vim.o.lines * height_percentage)
   win_opts.row = math.ceil(vim.o.lines * row_start_percentage)
+  win_opts.border = options.border or 'none'
 
   local width_percentage, col_start_percentage
   if type(col_range) == 'number' then
@@ -102,11 +104,21 @@ function win_float.percentage_range_window(col_range, row_range, options)
   win_opts.col = math.floor(vim.o.columns * col_start_percentage)
   win_opts.width = math.floor(vim.o.columns * width_percentage)
 
-  local bufnr = options.bufnr or vim.api.nvim_create_buf(false, true)
-  local win_id = vim.api.nvim_open_win(bufnr, true, win_opts)
-  vim.api.nvim_win_set_buf(win_id, bufnr)
+  local bufnr = options.bufnr or api.nvim_create_buf(false, true)
+  local win_id = api.nvim_open_win(bufnr, true, win_opts)
+  api.nvim_win_set_option(win_id, 'winhl', 'FloatBorder:LspInfoBorder')
 
-  vim.cmd 'setlocal nocursorcolumn ts=2 sw=2'
+  for k, v in pairs(win_float.default_options) do
+    if k ~= 'border' then
+      vim.opt_local[k] = v
+    end
+  end
+
+  api.nvim_win_set_buf(win_id, bufnr)
+
+  api.nvim_win_set_option(win_id, 'cursorcolumn', false)
+  api.nvim_buf_set_option(bufnr, 'tabstop', 2)
+  api.nvim_buf_set_option(bufnr, 'shiftwidth', 2)
 
   return {
     bufnr = bufnr,

@@ -11,7 +11,7 @@ return {
   },
   docs = {
     description = [[
-https://taplo.tamasfe.dev/lsp/
+https://taplo.tamasfe.dev/cli/usage/language-server.html
 
 Language server for Taplo, a TOML toolkit.
 
