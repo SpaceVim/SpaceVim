@@ -55,7 +55,7 @@ jobs:
                 vimtag: v0.4.0
               - vimbin: nvim
                 vimtag: v0.3.8
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     env:
         VIM_BIN: ${{ matrix.vimbin }}
         VIM_TAG: ${{ matrix.vimtag }}
