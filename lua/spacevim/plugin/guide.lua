@@ -74,11 +74,11 @@ local function create_target_dict(key)
     end
     return tardict
 
-    
+
 end
 
 local function merge(dict_t, dict_o)
-    
+
 end
 
 function M.populate_dictionary(key, dictname)
@@ -86,7 +86,7 @@ function M.populate_dictionary(key, dictname)
 end
 
 function M.parse_mappings()
-    
+
 end
 
 local function start_parser(key, dict)
@@ -126,23 +126,23 @@ end
 
 
 local function add_map_to_dict(map, level, dict)
-    
+
 end
 
 local function format_displaystring(map)
-    
+
 end
 
 local function flattenmap(dict, str)
-    
+
 end
 
 local function escape_mappings(mapping)
-    
+
 end
 
 local function string_to_keys(input)
-    
+
 end
 
 local function escape_keys(inp)
@@ -152,7 +152,7 @@ end
 
 
 local function calc_layout()
-    
+
 end
 
 local function get_key_number(key)
@@ -186,15 +186,15 @@ end
 
 
 local function create_string(layout)
-    
+
 end
 
 local function highlight_cursor()
-    
+
 end
 
 local function remove_cursor_highlight()
-    
+
 end
 
 local function start_buffer()
@@ -224,7 +224,7 @@ local function start_buffer()
     -- radraw!
 
     wait_for_input()
-    
+
 end
 
 local function handle_input(input)
@@ -238,60 +238,60 @@ local function handle_input(input)
 
         --- redraw!
 
-    -- try
-      -- unsilent execute a:input[0]
-    -- catch
-      -- unsilent echom v:exception
-    -- endtry
+        local ok, errors = pcall(vim.fn.execute, input[1])
+        if not ok then
+            print(vim.v.exception)
+        end
+
     end
-    
-    
+
+
 end
 
 local function wait_for_input()
-    
+
 end
 
 
 local function build_mpt(mpt)
-    
+
 end
 
 local function winopen()
-    
+
 end
 
 local function updateStatusline()
-    
+
 end
 
 local function close_float_statusline()
-    
+
 end
 
 local function guide_help_msg(escape)
-    
+
 end
 
 local function toggle_hide_cursor()
-    
+
 end
 
 local function winclose()
-    
+
 end
 
 
 local function page_down()
-    
+
 end
 
 local function page_undo()
-    
+
 end
 
 local function page_up()
-    
+
 end
 
 
@@ -311,7 +311,7 @@ local function handle_submode_mapping(cmd)
     else
         winclose()
     end
-    
+
 end
 
 
@@ -320,24 +320,24 @@ local function submode_mappings(key)
 end
 
 local function mapmaparg(maparg)
-    
+
 end
 
 
 local function get_register()
-    
+
 end
 
 function M.start_by_prefix(vis, key)
-    
+
 end
 
 function M.start(vis, dict)
-    
+
 end
 
 function M.register_displayname(lhs, name)
-    
+
 end
 
 return M
