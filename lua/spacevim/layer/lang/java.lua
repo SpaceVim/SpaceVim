@@ -29,7 +29,7 @@ end
 
 function M.get_variable()
     return {
-        'format_on_save' = format_on_save
+        format_on_save = format_on_save
     }
 end
 
