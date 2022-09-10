@@ -22,8 +22,9 @@ end
 
 
 function M.set_variable(var)
-    format_on_save = var.format_on_save or format_on_save
-
+    if var.format_on_save ~= nil then
+        format_on_save = var.format_on_save
+    end
 end
 
 
