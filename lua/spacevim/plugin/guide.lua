@@ -36,7 +36,7 @@ function M.register_prefix_descriptions(key, dictname)
     if cmp.fn.strlen(key) == 0 then
         desc_lookup['top'] = dictname
     else
-        if cmp.fn.has_key(desc_lookup, key) == 0 then
+        if desc_lookup[key] == nil then
             desc_lookup[key] = dictname
         end
     end
