@@ -24,11 +24,10 @@ lang: zh
 
 ## 问题反馈
 
-在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以发送邮件至：
+在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以通过 Github 或者码云的问题列表来提交。
 
-[spacevim-cn@googlegroups.com](mailto:spacevim-cn@googlegroups.com)
-
-如需订阅该邮件组，可以发送任意邮件至：[spacevim+subscribe@googlegroups.com](mailto:spacevim+subscribe@googlegroups.com)
+- [码云](https://gitee.com/spacevim/SpaceVim/issues) -（中文）
+- [GitHub](https://github.com/SpaceVim/SpaceVim) -（英文）
 
 ## 即时聊天
 
