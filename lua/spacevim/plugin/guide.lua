@@ -229,6 +229,21 @@ end
 
 local function handle_input(input)
     winclose()
+    if type(input) == 'table' then
+        lmap = input
+        start_buffer()
+    else
+        prefix_key_inp = {}
+        cmp.fn.feedkeys(vis .. reg .. count, 'ti')
+
+        --- redraw!
+
+    -- try
+      -- unsilent execute a:input[0]
+    -- catch
+      -- unsilent echom v:exception
+    -- endtry
+    end
     
     
 end
