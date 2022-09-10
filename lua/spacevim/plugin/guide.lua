@@ -53,6 +53,26 @@ local function create_cache()
 end
 
 local function create_target_dict(key)
+    local toplevel = {}
+    local tardict = {}
+    local mapdict = {}
+    if desc_lookup['top'] ~= nil then
+        toplevel = cmp.fn.deepcopy({desc_lookup['top']})
+        if toplevel then
+            tardict = toplevel
+        else
+            tardict = toplevel[key] or {}
+        end
+        mapdict = cached_dicts[key]
+        merge(tardict, mapdict)
+    elseif desc_lookup[key] ~= nil then
+        tardict = cmp.fn.deepcopy({desc_lookup[key]})
+        mapdict = cached_dicts[key]
+    else
+        tardict = cached_dicts[key]
+    end
+    return tardict
+
     
 end
 
@@ -277,3 +297,5 @@ end
 function M.register_displayname(lhs, name)
     
 end
+
+return M
