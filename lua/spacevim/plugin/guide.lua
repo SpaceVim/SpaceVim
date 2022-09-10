@@ -6,6 +6,7 @@ local M = {}
 -- load apis
 
 local cmp = require('spacevim.api').import('vim.compatible')
+local buffer = require('spacevim.api').import('vim.buffer')
 
 local desc_lookup = {}
 
@@ -197,6 +198,32 @@ local function remove_cursor_highlight()
 end
 
 local function start_buffer()
+    local winv = cmp.fn.winsaveview()
+    local winnr = cmp.fn.winnr()
+    local winres = cmp.fn.winrestcmd()
+    local winid = 0
+    local bufnr = 0
+    winid, bufnr = winopen()
+    local layout = calc_layout()
+    local text = create_string(layout)
+    if vim.g.leaderGuide_max_size then
+        layout.win_dim = cmp.fn.min({vim.g.leaderGuide_max_size, layout.win_dim})
+    end
+    cmp.fn.setbufvar(bufnr, '&modifiable', 1)
+    if floating.exists() then
+    else
+        if vim.g.leaderGuide_vertical then
+        else
+        end
+    end
+    if floating.exists() then
+    else
+    end
+    cmp.fn.setbufvar(bufnr, '&modifiable', 0)
+
+    -- radraw!
+
+    wait_for_input()
     
 end
 
