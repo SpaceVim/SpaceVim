@@ -27,7 +27,19 @@ end
 
 
 function M.register_prefix_descriptions(key, dictname)
-    
+    if key == '<Space>' then
+        key = ' '
+    end
+    if desc_lookup == nil then
+        create_cache()
+    end
+    if cmp.fn.strlen(key) == 0 then
+        desc_lookup['top'] = dictname
+    else
+        if cmp.fn.has_key(desc_lookup, key) == 0 then
+            desc_lookup[key] = dictname
+        end
+    end
 end
 
 
