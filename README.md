@@ -4,8 +4,7 @@
   </a>
 </h1>
 
-[Chat](https://chat.mozilla.org/#/room/#spacevim:matrix.org) \|
-[Forum](https://groups.google.com/g/spacevim) \|
+[Chat](https://gitter.im/SpaceVim/SpaceVim) \|
 [Quick Start Guide](https://spacevim.org/quick-start-guide/) \|
 [Twitter](https://twitter.com/SpaceVim)
 
