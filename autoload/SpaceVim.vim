@@ -1708,7 +1708,7 @@ function! SpaceVim#begin() abort
   else
     call SpaceVim#logger#info('Startup with argv: ' . string(s:status[1]) )
   endif
-  if has('nvim-0.7') && 0
+  if has('nvim-0.7')
     lua require('spacevim.default').options()
   else
     call SpaceVim#default#options()
