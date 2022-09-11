@@ -106,7 +106,9 @@ function M.populate_dictionary(key, dictname)
 end
 
 function M.parse_mappings()
-
+    for k, v in ipairs(cached_dicts) do
+        start_parser(k, v)
+    end
 end
 
 local function start_parser(key, dict)
