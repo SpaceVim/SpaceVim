@@ -9,6 +9,12 @@
 
 local M = {}
 
+local SYSTEM = require('spacevim.api').import('system')
+local guifont = ''
+local function set_font(font)
+    vim.o.guifont = font
+end
+
 function M.options()
 
     if vim.fn.has('gui_running') == 1 then
@@ -22,13 +28,25 @@ function M.options()
             'e', -- hide tab
         }
         )
+        if SYSTEM.isWindows then
+            guifont = 'DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT'
+        elseif SYSTEM.isOSX then
+            guifont = 'DejaVu Sans Mono for Powerline:h11'
+        else
+            guifont = 'DejaVu Sans Mono for Powerline 11'
+        end
+        local ok, errors = pcall(set_font, guifont)
+
+        if not ok then
+            print(errors)
+        end
     end
 
     --  indent use backspace delete indent, eol use backspace delete line at
     --  begining start delete the char you just typed in if you do not use set
     --  nocompatible ,you need this
     vim.o.backspace = 'indent,eol,start'
-    vim.o.nrformats:remove({'octal'})
+    vim.opt.nrformats:remove({'octal'})
     vim.o.listchars = 'tab:→ ,eol:↵,trail:·,extends:↷,precedes:↶'
     vim.o.fillchars = 'vert:│,fold:·'
     vim.o.laststatus = 2
@@ -104,15 +122,15 @@ function M.options()
     vim.o.showmode = true
 
 
-    vim.o.completeopt = {'menu', 'menuone', 'longest'}
+    vim.o.completeopt = 'menu,menuone,longest'
 
-    vim.o.complete = {'.', 'w', 'b', 'u', 't'}
+    vim.o.complete = '.,w,b,u,t'
 
     vim.o.pumheight = 15
 
     vim.o.scrolloff = 1
     vim.o.sidescrolloff = 5
-    vim.o.display = vim.o.display + {'lastline'}
+    vim.opt.display = vim.opt.display + {'lastline'}
     vim.o.incsearch = true
     vim.o.hlsearch = true
     vim.o.wildignorecase = true
@@ -122,9 +140,9 @@ function M.options()
     vim.o.ttimeoutlen = 50
     if vim.fn.has('patch-7.4.314') == 1 then
         -- don't give ins-completion-menu messages.
-        vim.o.shortmess:append({'c'})
+        vim.opt.shortmess:append({'c'})
     end
-    vim.o.shortmess:append({'s'})
+    vim.opt.shortmess:append({'s'})
     -- Do not wrap lone lines
     vim.o.wrap = false
 
