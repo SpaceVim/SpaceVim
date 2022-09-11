@@ -27,11 +27,11 @@ local project_config = {}
 
 local function cache()
     logger.debug('write cache into file:' .. cache_path)
-    local rst = fn.writefile({sp_json.json_encode(project_config)}, cache_path)
-    if rst == 0 then
-        logger.debug('cache succeeded!')
-    else
+    local ok, errors = pcall(fn.writefile, {sp_json.json_encode(project_config)}, cache_path)
+    if not ok then
         logger.debug('cache failed!')
+    else
+        logger.debug('cache succeeded!')
     end
 end
 
