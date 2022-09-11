@@ -140,9 +140,9 @@ function M.options()
     vim.o.ttimeoutlen = 50
     if vim.fn.has('patch-7.4.314') == 1 then
         -- don't give ins-completion-menu messages.
-        vim.opt.shortmess:append({'c'})
+        vim.opt.shortmess:append('c')
     end
-    vim.opt.shortmess:append({'s'})
+    vim.opt.shortmess:append('s')
     -- Do not wrap lone lines
     vim.o.wrap = false
 
