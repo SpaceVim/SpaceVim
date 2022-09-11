@@ -78,7 +78,27 @@ local function create_target_dict(key)
 end
 
 local function merge(dict_t, dict_o)
-
+    local target = dict_t
+    local other = dict_o
+    for k, v in ipairs(target) do
+        if vim.fn.type(target[k]) == 4 and vim.fn.has_key(other, k) then
+            if vim.fn.type(other[k]) == 4 then
+                if vim.fn.has_key(target[k], 'name') then
+                    other[k].name = target[k].name
+                end
+                merge(target[k], other[k])
+            elseif vim.fn.type(other[k]) == 3 then
+                if vim.g.leaderGuide_flatten == 0 or vim.fn.type(target[k]) == 4 then
+                    target[k .. 'm'] = target[k]
+                end
+                target[k] = other[k]
+                if vim.fn.has_key(other, k .. 'm') and vim.fn.type(other[k .. 'm']) == 4 then
+                    merge(target[k .. 'm'], other[k .. 'm'])
+                end
+            end
+        end
+    end
+    vim.fn.extend(target, other, 'keep')
 end
 
 function M.populate_dictionary(key, dictname)
