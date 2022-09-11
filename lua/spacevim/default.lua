@@ -11,6 +11,19 @@ local M = {}
 
 function M.options()
 
+    if vim.fn.has('gui_running') == 1 then
+        vim.opt.guioptions:remove(
+        {
+            'm', -- hide menu bar
+            'T', -- hide toolbar
+            'L', -- hide left-hand scrollbar
+            'r', -- hide right-hand scrollbar
+            'b', -- hide bottom scrollbar
+            'e', -- hide tab
+        }
+        )
+    end
+
     vim.o.laststatus = 2
 
     vim.o.showcmd = false
