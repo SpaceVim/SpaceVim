@@ -174,7 +174,35 @@ end
 
 
 local function calc_layout()
+    local ret = {}
 
+    local smap = vim.fn.filter(vim.fn.copy(lmap), 'v:key !=# "name"')
+    ret.n_items = vim.fn.len(smap)
+    local length = vim.fn.values(vim.fn.map(smap, 'strdisplaywidth("[".v:key."]".(type(v:val) == type({}) ? v:val["name"] : v:val[1]))'))
+    local maxlength = vim.fn.max(length) + vim.g.leaderGuide_hspace
+
+    if vim.g.leaderGuide_vertical == 1 then
+        ret.n_rows = vim.fn.winheight(0) - 2
+        ret.n_cols = ret.n_items / ret.n_rows
+        if ret.n_items ~= ret.n_rows then
+            ret.n_cols = ret.n_cols + 1
+        end
+        ret.col_width = maxlength
+        ret.win_dim = ret.n_cols * ret.col_width
+    else
+        if vim.fn.winwidth(winid) >= maxlength then
+            ret.n_cols = vim.fn.winwidth(winid) / maxlength
+        else
+            ret.n_cols = 1
+        end
+        ret.col_width = vim.fn.winwidth(winid) / ret.n_cols
+        ret.n_rows = ret.n_items / ret.n_cols
+        if vim.fn.fmod(ret.n_items, ret.n_cols) > 0 then
+            ret.n_rows = ret.n_rows + 1
+        end
+        ret.win_dim = ret.n_rows
+    end
+    return ret
 end
 
 local function get_key_number(key)
