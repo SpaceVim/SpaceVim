@@ -11,7 +11,7 @@ set cpo&vim
 scriptencoding utf-8
 
 
-if has('lua') || has('nvim-0.5.0')
+if has('nvim-0.5.0')
   function! SpaceVim#plugins#a#alt(request_parse, ...) abort
     lua require("spacevim.plugin.a").alt(
           \ require("spacevim").eval("a:request_parse"),
@@ -68,7 +68,7 @@ else
   " saving cache
 
   function! s:cache() abort
-    call writefile([s:JSON.json_encode(s:project_config)], s:FILE.unify_path(s:cache_path, ':p'))
+    silent call writefile([s:JSON.json_encode(s:project_config)], s:FILE.unify_path(s:cache_path, ':p'))
   endfunction
 
   function! s:load_cache() abort

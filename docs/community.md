@@ -22,10 +22,7 @@ The news about spacevim will be post on twitter, feel free to follow them:
 
 ## Feedback
 
-If you run into a bug or want a new feature.
-Please send email to the mailing list to report any bugs or file feature requests.
-
-[spacevim@googlegroups.com](mailto:spacevim@googlegroups.com)
+If you run into a bug or want a new feature. Please use the [issue tracker](https://github.com/SpaceVim/SpaceVim/issues) to report any bugs or file feature requests.
 
 ## Chat
 

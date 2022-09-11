@@ -40,7 +40,7 @@ Use whatever plug-in manager to pull the master branch.
     * Saved changes are marked as `s` and the big `S` indicates the most recent saved change.
  1. Press `?` in undotree window for quick help.
  1. Persistent undo
-    * Usually I would like to store the undo files in a seperate place like below.
+    * Usually I would like to store the undo files in a separate place like below.
 
 ```
 if has("persistent_undo")

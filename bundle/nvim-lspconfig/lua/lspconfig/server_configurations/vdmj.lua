@@ -1,6 +1,13 @@
 local util = require 'lspconfig.util'
 
-local mavenrepo = util.path.join(vim.env.HOME, '.m2', 'repository', 'com', 'fujitsu')
+local function get_default_mavenrepo()
+  local repo = util.path.join(vim.env.HOME, '.m2', 'repository', 'dk', 'au', 'ece', 'vdmj')
+  if util.path.exists(repo) then
+    return repo
+  else
+    return util.path.join(vim.env.HOME, '.m2', 'repository', 'com', 'fujitsu')
+  end
+end
 
 local function get_jar_path(config, package, version)
   return util.path.join(config.options.mavenrepo, package, version, package .. '-' .. version .. '.jar')
@@ -44,8 +51,7 @@ return {
       java = vim.env.JAVA_HOME and util.path.join(vim.env.JAVA_HOME, 'bin', 'java') or 'java',
       java_opts = { '-Xmx3000m', '-Xss1m' },
       annotation_paths = {},
-      mavenrepo = mavenrepo,
-      version = get_latest_installed_version(mavenrepo),
+      mavenrepo = get_default_mavenrepo(),
       logfile = util.path.join(vim.fn.stdpath 'cache', 'vdm-lsp.log'),
       debugger_port = -1,
       high_precision = false,
@@ -80,7 +86,7 @@ by neovim.
         java = '$JAVA_HOME/bin/java',
         java_opts = { '-Xmx3000m', '-Xss1m' },
         annotation_paths = {},
-        mavenrepo = '$HOME/.m2/repository/com/fujitsu',
+        mavenrepo = '$HOME/.m2/repository/dk/au/ece/vdmj',
         version = 'The latest version installed in `mavenrepo`',
         logfile = "path.join(vim.fn.stdpath 'cache', 'vdm-lsp.log')",
         debugger_port = -1,

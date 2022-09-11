@@ -76,9 +76,11 @@ function! s:update_history() abort
   endif
   call add(s:grep_history, s:grep_expr)
   if !isdirectory(expand(g:spacevim_data_dir.'SpaceVim'))
-    call mkdir(expand(g:spacevim_data_dir.'SpaceVim'))
+    silent call mkdir(expand(g:spacevim_data_dir.'SpaceVim'))
   endif
-  call writefile([s:JSON.json_encode(s:grep_history)], expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'))
+  if filewritable(expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'))
+    call writefile([s:JSON.json_encode(s:grep_history)], expand(g:spacevim_data_dir.'SpaceVim/flygrep_history'))
+  endif
 endfunction
 let s:grep_history = s:read_histroy()
 let s:complete_input_history_num = [0,0]

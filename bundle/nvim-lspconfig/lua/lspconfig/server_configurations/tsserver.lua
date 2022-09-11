@@ -33,7 +33,7 @@ https://github.com/theia-ide/typescript-language-server
 npm install -g typescript typescript-language-server
 ```
 
-To configure type language server, add a
+To configure typescript language server, add a
 [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) or
 [`jsconfig.json`](https://code.visualstudio.com/docs/languages/jsconfig) to the root of your
 project.

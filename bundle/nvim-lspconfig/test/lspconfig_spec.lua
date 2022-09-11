@@ -18,6 +18,22 @@ end)
 describe('lspconfig', function()
   describe('util', function()
     describe('path', function()
+      describe('escape_wildcards', function()
+        it('doesnt escape if not needed', function()
+          ok(exec_lua [[
+            local lspconfig = require("lspconfig")
+
+            return lspconfig.util.path.escape_wildcards('/usr/local/test/fname.lua') == '/usr/local/test/fname.lua'
+          ]])
+        end)
+        it('escapes if needed', function()
+          ok(exec_lua [[
+            local lspconfig = require("lspconfig")
+
+            return lspconfig.util.path.escape_wildcards('/usr/local/test/[sq brackets] fname?*.lua') == '/usr/local/test/\\[sq brackets\\] fname\\?\\*.lua'
+          ]])
+        end)
+      end)
       describe('exists', function()
         it('is present directory', function()
           ok(exec_lua [[
@@ -32,7 +48,7 @@ describe('lspconfig', function()
           ok(exec_lua [[
             local lspconfig = require("lspconfig")
 
-            local not_exist_dir = vim.fn.getcwd().."/not/exsts"
+            local not_exist_dir = vim.fn.getcwd().."/not/exists"
             return lspconfig.util.path.exists(not_exist_dir) == false
           ]])
         end)
@@ -76,7 +92,7 @@ describe('lspconfig', function()
           ok(exec_lua [[
             local lspconfig = require("lspconfig")
 
-            local not_exist_dir = vim.fn.getcwd().."/not/exsts"
+            local not_exist_dir = vim.fn.getcwd().."/not/exists"
             return not lspconfig.util.path.is_dir(not_exist_dir)
           ]])
         end)
@@ -190,7 +206,66 @@ describe('lspconfig', function()
         ]])
       end)
     end)
+
+    describe('strip_archive_subpath', function()
+      it('strips zipfile subpaths', function()
+        ok(exec_lua [[
+          local lspconfig = require("lspconfig")
+          return lspconfig.util.strip_archive_subpath("zipfile:///one/two.zip::three/four") == "/one/two.zip"
+        ]])
+      end)
+
+      it('strips tarfile subpaths', function()
+        ok(exec_lua [[
+          local lspconfig = require("lspconfig")
+          return lspconfig.util.strip_archive_subpath("tarfile:/one/two.tgz::three/four") == "/one/two.tgz"
+        ]])
+      end)
+
+      it('returns non-archive paths as-is', function()
+        ok(exec_lua [[
+          local lspconfig = require("lspconfig")
+          return lspconfig.util.strip_archive_subpath("/one/two.zip") == "/one/two.zip"
+        ]])
+      end)
+    end)
+
+    describe('user commands', function()
+      it('should translate command definition to nvim_create_user_command options', function()
+        eq(
+          {
+            nargs = '*',
+            complete = 'custom,v:lua.some_global',
+          },
+          exec_lua [[
+            local util = require("lspconfig.util")
+            return util._parse_user_command_options({
+              function () end,
+              "-nargs=* -complete=custom,v:lua.some_global"
+            })
+          ]]
+        )
+
+        eq(
+          {
+            desc = 'My awesome description.',
+            nargs = '*',
+            complete = 'custom,v:lua.another_global',
+          },
+          exec_lua [[
+            local util = require("lspconfig.util")
+            return util._parse_user_command_options({
+              function () end,
+              ["-nargs"] = "*",
+              "-complete=custom,v:lua.another_global",
+              description = "My awesome description."
+            })
+          ]]
+        )
+      end)
+    end)
   end)
+
   describe('config', function()
     it('normalizes user, server, and base default configs', function()
       eq(
@@ -248,6 +323,38 @@ describe('lspconfig', function()
             baz = 'baz',
           },
           name = 'test',
+        }
+      )
+    end)
+
+    it("excludes indexed server configs that haven't been set up", function()
+      eq(
+        exec_lua [[
+        local lspconfig = require("lspconfig")
+        local actual = nil
+        local _ = lspconfig.sumneko_lua
+        local _ = lspconfig.tsserver
+        lspconfig.rust_analyzer.setup {}
+        return require("lspconfig.util").available_servers()
+      ]],
+        { 'rust_analyzer' }
+      )
+    end)
+
+    it('provides user_config to the on_setup hook', function()
+      eq(
+        exec_lua [[
+        local lspconfig = require "lspconfig"
+        local util = require "lspconfig.util"
+        local user_config
+        util.on_setup = function (_, _user_config)
+          user_config = _user_config
+        end
+        lspconfig.rust_analyzer.setup { custom_user_config = "custom" }
+        return user_config
+      ]],
+        {
+          custom_user_config = 'custom',
         }
       )
     end)

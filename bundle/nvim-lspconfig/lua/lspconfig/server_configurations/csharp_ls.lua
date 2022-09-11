@@ -3,7 +3,7 @@ local util = require 'lspconfig.util'
 return {
   default_config = {
     cmd = { 'csharp-ls' },
-    root_dir = util.root_pattern('*.sln', '*.csproj', '.git'),
+    root_dir = util.root_pattern('*.sln', '*.csproj', '*.fsproj', '.git'),
     filetypes = { 'cs' },
     init_options = {
       AutomaticWorkspaceInit = true,

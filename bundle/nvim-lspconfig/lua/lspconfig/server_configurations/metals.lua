@@ -13,6 +13,11 @@ return {
         snippetAutoIndent = false,
       },
     },
+    capabilities = {
+      workspace = {
+        configuration = false,
+      },
+    },
   },
   docs = {
     description = [[

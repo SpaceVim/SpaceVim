@@ -20,7 +20,6 @@ function! SpaceVim#default#options() abort
     set guioptions-=L " Hide left-hand scrollbar
     set guioptions-=r " Hide right-hand scrollbar
     set guioptions-=b " Hide bottom scrollbar
-    set showtabline=0 " Hide tabline
     set guioptions-=e " Hide tab
     try
       if s:SYSTEM.isWindows

@@ -36,7 +36,7 @@ let s:commit_types = [
         \ 'menu' : 'A code change that neither fixes a bug nor adds a feature'
         \ },
       \ {
-        \ 'word' : 'pref',
+        \ 'word' : 'perf',
         \ 'menu' : 'A code change that improves performance'
         \ },
       \ {

@@ -1,3 +1,4 @@
+local api = vim.api
 local configs = require 'lspconfig.configs'
 local windows = require 'lspconfig.ui.windows'
 local util = require 'lspconfig.util'
@@ -52,7 +53,7 @@ local function make_config_info(config, bufnr)
     config_info.cmd_is_executable = 'NA'
   end
 
-  local buffer_dir = vim.api.nvim_buf_call(bufnr, function()
+  local buffer_dir = api.nvim_buf_call(bufnr, function()
     return vim.fn.expand '%:p:h'
   end)
   local root_dir = config.get_root_dir(buffer_dir)
@@ -150,7 +151,12 @@ return function()
   local buf_clients = vim.lsp.buf_get_clients()
   local clients = vim.lsp.get_active_clients()
   local buffer_filetype = vim.bo.filetype
-  local original_bufnr = vim.api.nvim_get_current_buf()
+  local original_bufnr = api.nvim_get_current_buf()
+
+  windows.default_options.wrap = true
+  windows.default_options.breakindent = true
+  windows.default_options.breakindentopt = 'shift:25'
+  windows.default_options.showbreak = 'NONE'
 
   local win_info = windows.percentage_range_window(0.8, 0.7)
   local bufnr, win_id = win_info.bufnr, win_info.win_id
@@ -168,6 +174,9 @@ return function()
       table.insert(other_active_clients, client)
     end
   end
+
+  -- insert the tips at the top of window
+  table.insert(buf_lines, 'Use [q] or [Esc] to quit the window')
 
   local header = {
     '',
@@ -216,22 +225,39 @@ return function()
 
   local matching_config_header = {
     '',
-    'Configured servers list: ' .. table.concat(vim.tbl_keys(configs), ', '),
+    'Configured servers list: ' .. table.concat(util.available_servers(), ', '),
   }
+
   vim.list_extend(buf_lines, matching_config_header)
 
   local fmt_buf_lines = indent_lines(buf_lines, ' ')
 
   fmt_buf_lines = vim.lsp.util._trim(fmt_buf_lines, {})
 
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, true, fmt_buf_lines)
-  vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
-  vim.api.nvim_buf_set_option(bufnr, 'filetype', 'lspinfo')
+  api.nvim_buf_set_lines(bufnr, 0, -1, true, fmt_buf_lines)
+  api.nvim_buf_set_option(bufnr, 'modifiable', false)
+  api.nvim_buf_set_option(bufnr, 'filetype', 'lspinfo')
 
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<esc>', '<cmd>bd<CR>', { noremap = true })
-  vim.api.nvim_command(
-    string.format('autocmd BufHidden,BufLeave <buffer> ++once lua pcall(vim.api.nvim_win_close, %d, true)', win_id)
-  )
+  local augroup = api.nvim_create_augroup('lspinfo', { clear = false })
+
+  local function close()
+    api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
+    if api.nvim_buf_is_valid(bufnr) then
+      api.nvim_buf_delete(bufnr, { force = true })
+    end
+    if api.nvim_win_is_valid(win_id) then
+      api.nvim_win_close(win_id, true)
+    end
+  end
+
+  vim.keymap.set('n', '<ESC>', close, { buffer = bufnr, nowait = true })
+  vim.keymap.set('n', 'q', close, { buffer = bufnr, nowait = true })
+  api.nvim_create_autocmd({ 'BufDelete', 'BufLeave', 'BufHidden' }, {
+    once = true,
+    buffer = bufnr,
+    callback = close,
+    group = augroup,
+  })
 
   vim.fn.matchadd(
     'Error',
@@ -246,12 +272,14 @@ return function()
   vim.cmd 'let m=matchadd("string", "true")'
   vim.cmd 'let m=matchadd("error", "false")'
   for _, config in pairs(configs) do
-    vim.fn.matchadd('Title', '\\%(Client\\|Config\\):.*\\zs' .. config.name .. '\\ze')
-    vim.fn.matchadd('Visual', 'list:.*\\zs' .. config.name .. '\\ze')
+    vim.fn.matchadd('LspInfoTitle', '\\%(Client\\|Config\\):.*\\zs' .. config.name .. '\\ze')
+    vim.fn.matchadd('LspInfoList', 'list:.*\\zs' .. config.name .. '\\ze')
     if config.filetypes then
       for _, ft in pairs(config.filetypes) do
-        vim.fn.matchadd('Type', '\\%(filetypes\\|filetype\\):.*\\zs' .. ft .. '\\ze')
+        vim.fn.matchadd('LspInfoFiletype', '\\%(filetypes\\|filetype\\):.*\\zs' .. ft .. '\\ze')
       end
     end
   end
+
+  api.nvim_buf_add_highlight(bufnr, 0, 'LspInfoTip', 0, 0, -1)
 end

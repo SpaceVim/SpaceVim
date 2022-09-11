@@ -7,12 +7,24 @@ local root_files = {
   'stylua.toml',
   'selene.toml',
 }
+
+local bin_name = 'lua-language-server'
+local cmd = { bin_name }
+
+if vim.fn.has 'win32' == 1 then
+  cmd = { 'cmd.exe', '/C', bin_name }
+end
+
 return {
   default_config = {
-    cmd = { 'lua-language-server' },
+    cmd = cmd,
     filetypes = { 'lua' },
     root_dir = function(fname)
-      return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+      local root = util.root_pattern(unpack(root_files))(fname)
+      if root and root ~= vim.env.HOME then
+        return root
+      end
+      return util.find_git_ancestor(fname)
     end,
     single_file_support = true,
     log_level = vim.lsp.protocol.MessageType.Warning,
