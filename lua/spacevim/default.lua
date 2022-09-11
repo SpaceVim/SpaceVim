@@ -24,6 +24,13 @@ function M.options()
         )
     end
 
+    --  indent use backspace delete indent, eol use backspace delete line at
+    --  begining start delete the char you just typed in if you do not use set
+    --  nocompatible ,you need this
+    vim.o.backspace = 'indent,eol,start'
+    vim.o.nrformats:remove({'octal'})
+    vim.o.listchars = 'tab:→ ,eol:↵,trail:·,extends:↷,precedes:↶'
+    vim.o.fillchars = 'vert:│,fold:·'
     vim.o.laststatus = 2
 
     vim.o.showcmd = false
@@ -117,7 +124,7 @@ function M.options()
         -- don't give ins-completion-menu messages.
         vim.o.shortmess:append({'c'})
     end
-        vim.o.shortmess:append({'s'})
+    vim.o.shortmess:append({'s'})
     -- Do not wrap lone lines
     vim.o.wrap = false
 
