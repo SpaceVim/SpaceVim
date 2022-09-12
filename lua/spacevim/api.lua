@@ -8,8 +8,14 @@
 
 local M = {}
 
+
+-- local logger = require('spacevim.logger')
+
 function M.import(name)
- return require('spacevim.api.' .. name)   
+    local ok, rst = pcall(require, 'spacevim.api.' .. name)
+    if ok then
+        return rst
+    end
 end
 
 return M

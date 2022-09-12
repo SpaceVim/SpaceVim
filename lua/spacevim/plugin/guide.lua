@@ -8,6 +8,7 @@ local M = {}
 local cmp = require('spacevim.api').import('vim.compatible')
 local buffer = require('spacevim.api').import('vim.buffer')
 local VIM = require('spacevim.api').import('vim')
+local SL = require('spacevim.api').import('vim.statusline')
 
 local desc_lookup = {}
 
@@ -430,8 +431,16 @@ local function winopen()
 
 end
 
-local function updateStatusline()
 
+local updateStatusline
+
+
+if SL.support_float() then
+    updateStatusline = function()
+    end
+else
+    updateStatusline = function()
+    end
 end
 
 local function close_float_statusline()
