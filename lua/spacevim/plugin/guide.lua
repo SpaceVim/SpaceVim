@@ -236,7 +236,71 @@ end
 
 
 local function create_string(layout)
+    local l = layout
 
+    l.capacity = l.n_rows * l.n_cols
+
+    local overcap = l.capacity - l.n_cols
+
+    local overh = l.n_cols - overcap
+
+    local n_rows = l.n_rows - 1
+    
+    local rows = {}
+
+    local row = 0
+
+    local col = 0
+
+    local smap vim.fn.sort(vim.fn.filter(vim.fn.keys(lmap), 'v:val !=# "name"'), compare_key)
+
+    for k,_ in ipairs(smap) do
+        local desc = ''
+        if vim.fn.type(lmap[k]) == 4 then
+            desc = lmap[k].name
+        else
+            desc = lmap[k][2]
+        end
+        local displaystring = '[' .. k .. ']' .. desc
+        local crow = vim.fn.get(rows, row, {})
+
+        if vim.fn.empty(crow) == 1 then
+            vim.fn.add(rows, crow)
+        end
+        vim.fn.add(crow, displaystring)
+        vim.fn.add(crow, vim.fn['repeat'](' ', l.col_width - vim.fn.strdisplaywidth(displaystring)))
+        if vim.g.leaderGuide_sort_horizontal == 0 then
+            if overh >= n_rows - 1 then
+                if overh > 0 and row < n_rows then
+                    overh = overh - 1
+                    row = row + 1
+                else
+                    row = 0
+                    col = col + 1
+                end
+            else
+                row = row + 1
+            end
+        else
+            if col == l.n_cols - 1 then
+                row = row + 1
+                col = 0
+            else
+                col = col + 1
+            end
+        end
+    end
+    local r = {}
+    local mlen = 0
+    for _, ro in ipairs(rows) do
+        local line = vim.fn.join(ro, '')
+        vim.fn.add(r, line)
+        if vim.fn.strdisplaywidth(line) > mlen then
+            mlen = vim.fn.strdisplaywidth(line)
+        end
+    end
+    local output = vim.fn.join(r, "\n")
+    return output
 end
 
 local function highlight_cursor()
