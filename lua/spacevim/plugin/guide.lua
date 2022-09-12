@@ -246,7 +246,7 @@ local function create_string(layout)
     local overh = l.n_cols - overcap
 
     local n_rows = l.n_rows - 1
-    
+
     local rows = {}
 
     local row = 0
@@ -439,6 +439,17 @@ local function close_float_statusline()
 end
 
 local function guide_help_msg(escape)
+    local msg = ''
+    if guide_help_mode then
+        msg = ' n -> next-page, p -> previous-page, u -> undo-key'
+    else
+        msg = ' [C-h paging/help]'
+    end
+    if escape then
+        return vim.fn.substitute(msg, ' ', '\\ ', 'g')
+    else
+        return msg
+    end
 
 end
 
