@@ -596,7 +596,25 @@ local function submode_mappings(key)
 end
 
 local function mapmaparg(maparg)
+    local map = ''
+    local buffer = ''
+    local silent = ''
+    local nowait = ''
 
+    if maparg.noremap == 1 then
+        map = 'noremap'
+    else
+        map = 'map'
+    end
+
+    if maparg.buffer == 1 then
+        buffer = '<buffer>'
+    end
+
+    if maparg.silent == 1 then silent = '<silent>' end
+    if maparg.nowait == 1 then nowait = '<nowait>' end
+    local st = maparg.mode .. '' .. map .. ' ' .. nowait .. silent .. buffer .. '' .. maparg.lhs .. ' ' .. maparg.rhs
+    vim.execute(st)
 end
 
 
