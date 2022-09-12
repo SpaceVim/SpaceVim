@@ -524,12 +524,42 @@ local function toggle_hide_cursor()
 end
 
 local function winclose()
+    toggle_hide_cursor()
+    if FLOATING.exists() then
+        FLOATING.win_close(winid, 1)
+        if SL.support_float() then
+            close_float_statusline()
+        end
+    else
+        vim.cmd('noautocmd execute ' .. winid ..'wincmd w')
+        if winid == vim.fn.winnr() then
+            vim.cmd('noautocmd close')
+            -- redraw!
+
+            vim.execute(winres)
+
+            winid = -1
+            vim.cmd('noautocmd execute ' .. winnr .. 'wincmd w')
+            vim.fn.winrestview(winv)
+            if vim.fn.exists('*nvim_open_win') then
+                vim.cmd('doautocmd WinEnter')
+            end
+        end
+    end
+    remove_cursor_highlight()
 
 end
 
 
 local function page_down()
-
+    winclose()
+    if vim.fn.len(prefix_key_inp) > 0 then
+        vim.fn.remove(prefix_key_inp, -1)
+    end
+    if vim.fn.len(undo_history) > 0 then
+        lmap = vim.fn.remove(undo_history, -1)
+    end
+    start_buffer()
 end
 
 local function page_undo()
