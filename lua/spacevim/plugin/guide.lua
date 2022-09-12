@@ -619,7 +619,13 @@ end
 
 
 local function get_register()
-
+    if vim.fn.match(vim.o.clipboard, 'unnamedplus') >= 0 then
+        return '+'
+    elseif vim.fn.match(vim.o.clipboard, 'unnamed') >= 0 then
+        return '*'
+    else
+        return '"'
+    end
 end
 
 function M.start_by_prefix(vis, key)
