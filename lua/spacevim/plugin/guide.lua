@@ -164,6 +164,20 @@ end
 
 local function flattenmap(dict, str)
 
+    local ret = {}
+
+    for kv, _ in ipairs(dict) do
+        if vim.fn.type(dict[kv]) == 3 then
+            local toret = {}
+            toret[str .. kv] = dict[kv]
+            return toret
+        elseif vim.fn.type(dict[kv]) == 4 then
+            vim.fn.extend(ret, flattenmap(dict[kv], str .. kv))
+        end
+    end
+
+    return ret
+
 end
 
 local function escape_mappings(mapping)
