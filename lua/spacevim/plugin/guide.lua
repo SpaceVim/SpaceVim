@@ -154,6 +154,11 @@ local function add_map_to_dict(map, level, dict)
 end
 
 local function format_displaystring(map)
+    for _, f in ipairs(map) do
+        pcall(f)
+    end
+
+    return vim.g['leaderGuide#displayname'] or ''
 
 end
 
