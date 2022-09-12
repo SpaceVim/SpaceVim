@@ -10,12 +10,14 @@
 local M = {}
 
 local SYSTEM = require('spacevim.api').import('system')
+local logger = require('spacevim.logger')
 local guifont = ''
 local function set_font(font)
     vim.o.guifont = font
 end
 
 function M.options()
+    logger.info('init default vim options')
 
     if vim.fn.has('gui_running') == 1 then
         vim.opt.guioptions:remove(
@@ -148,7 +150,7 @@ function M.options()
 
     vim.o.foldtext = 'SpaceVim#default#Customfoldtext()'
 
-
+    logger.info('options init done')
 end
 
 return M
