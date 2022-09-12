@@ -181,6 +181,11 @@ local function flattenmap(dict, str)
 end
 
 local function escape_mappings(mapping)
+  local rstring = vim.fn.substitute(mapping.rhs, '\\', '\\\\\\\\', 'g')
+  rstring = vim.fn.substitute(rstring, '<\\([^<>]*\\)>', '\\\\<\\1>', 'g')
+  rstring = vim.fn.substitute(rstring, '"', '\\\\"', 'g')
+  rstring = 'call feedkeys("' .. rstring .. '", "' .. mapping.feedkeyargs .. '")'
+  return rstring
 
 end
 
