@@ -552,6 +552,10 @@ end
 
 
 local function page_down()
+end
+
+local function page_undo()
+
     winclose()
     if vim.fn.len(prefix_key_inp) > 0 then
         vim.fn.remove(prefix_key_inp, -1)
@@ -560,10 +564,6 @@ local function page_down()
         lmap = vim.fn.remove(undo_history, -1)
     end
     start_buffer()
-end
-
-local function page_undo()
-
 end
 
 local function page_up()
