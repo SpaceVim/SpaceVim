@@ -191,6 +191,39 @@ end
 
 local function string_to_keys(input)
 
+    local retlist = {}
+
+    if vim.fn.match(input, [[<.\+>]]) ~= -1 then
+        local si = 0
+        local go = true
+        while si < vim.fn.len(input) do
+            if go then
+                if input[si] == ' ' then
+                    vim.fn.add(retlist, '[SPC]')
+                else
+                    vim.fn.add(retlist, input[si])
+                end
+            else
+                retlist[-1] = retlist[-1] .. input[si]
+            end
+            if input[si] == '<' then
+                go = false
+            else
+                go = true
+            end
+            si = si + 1
+        end
+    else
+        for _, it in ipairs(vim.fn.split(input, [[\zs]])) do
+            if it == ' ' then
+                vim.fn.add(retlist, '[SPC]')
+            else
+                vim.fn.add(retlist, it)
+            end
+        end
+    end
+    return retlist
+
 end
 
 local function escape_keys(inp)
