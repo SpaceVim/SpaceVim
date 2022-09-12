@@ -7,6 +7,7 @@ local M = {}
 
 local cmp = require('spacevim.api').import('vim.compatible')
 local buffer = require('spacevim.api').import('vim.buffer')
+local VIM = require('spacevim.api').import('vim')
 
 local desc_lookup = {}
 
@@ -363,6 +364,49 @@ local function handle_input(input)
 end
 
 local function wait_for_input()
+    local t = vim.api.nvim_replace_termcodes
+    local inp = VIM.getchar()
+    if inp == t('<Esc') then
+        prefix_key_inp = {}
+        undo_history = {}
+        guide_help_mode = false
+        winclose()
+        vim.cmd('doautocmd WinEnter')
+    elseif guide_help_mode then
+        submode_mappings(inp)
+        guide_help_mode = false
+    elseif inp == t('<C-h>') then
+        guide_help_mode = true
+        updateStatusline()
+        -- redraw!
+        wait_for_input()
+    else
+        if inp == ' ' then
+            inp = '[SPC]'
+        else
+            inp = KEY.char2name(inp)
+        end
+        local fsel = vim.fn.get(lmap, inp)
+        if vim.fn.empty(fsel) == 1 then
+            vim.fn.add(prefix_key_inp, inp)
+            vim.fn.add(undo_history, lmap)
+            handle_input(fsel)
+        else
+            winclose()
+            vim.cmd('doautocmd WinEnter')
+            local keys = prefix_key_inp
+            local name = M.getName(prefix_key)
+            local _keys = vim.fn.join(keys, '-')
+            if vim.fn.empty(_keys) == 1 then
+                build_mpt({'Key bindings is not defined: ', name .. '-' .. inp})
+            else
+                build_mpt({'key bindings is not defined: ', name .. '-' .. _keys .. '-' .. inp})
+            end
+            prefix_key_inp = {}
+            guide_help_mode = false
+        end
+    end
+
 
 end
 
