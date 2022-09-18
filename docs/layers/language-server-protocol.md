@@ -31,7 +31,7 @@ By default, this layer use following language server client implementations:
 - Code completion (provided by [autocomplete](https://spacevim.org/layers/autocomplete/) layer)
 - Lint on the fly
 - Rename symbol
-- Hover/Get identifer info.
+- Hover/Get identifier info.
 - Goto definition.
 - Goto reference locations.
 - Workspace/Document symbols query.
