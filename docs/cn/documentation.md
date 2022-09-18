@@ -296,7 +296,7 @@ git -C ~/.SpaceVim pull
     merged = false
 ```
 
-`one_cmd` 选项使得这个插件延迟加载。
+`on_cmd` 选项使得这个插件延迟加载。
 该插件会在第一次执行 `ColorHighlight` 或者 `ColorToggle`
 命令时被加载。
 
