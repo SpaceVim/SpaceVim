@@ -628,7 +628,38 @@ local function get_register()
     end
 end
 
-function M.start_by_prefix(vis, key)
+function M.start_by_prefix(_vis, _key)
+
+    if _key == ' ' and vim.fn.exists('b:spacevim_lang_specified_mappings') == 1 then
+        vim.g._spacevim_mappings_space.l = vim.b.spacevim_lang_specified_mappings
+    end
+    guide_help_mode = false
+    if _vis then
+        vis = 'gv'
+    else
+        vis = ''
+    end
+
+    if vim.v.count ~= 0 then
+        count = vim.v.count
+    else
+        count = ''
+    end
+
+    if _key == ' ' then toplevel = true else toplevel = false end
+    prefix_key = _key
+    guide_group = {}
+    
+    if vim.v.register ~= get_register() then
+        reg = '"' .. vim.v.register
+    else
+        reg = ''
+    end
+
+
+
+
+
 
 end
 
