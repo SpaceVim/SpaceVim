@@ -632,8 +632,14 @@ function M.start_by_prefix(vis, key)
 
 end
 
-function M.start(vis, dict)
-
+function M.start(_vis, _dict)
+    if _vis == 'gv' then
+        vis = 'gv'
+    else
+        vis = 0
+    end
+    lmap = _dict
+    start_buffer()
 end
 
 function M.register_displayname(lhs, name)
