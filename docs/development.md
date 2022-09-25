@@ -59,59 +59,15 @@ Besides, you can also [chat with us](../community/#chat)
 If you run into a bug, please follow the guidelines below to give feedback.
 
 - Update the SpaceVim to the latest version. And make sure the can be reproduced in latest version of spacevim.
-- Use a clear title with `[bug]` prefix, and follow the `bug reporting` mail template.
-
-```
-## Expected behavior, english is required
-
-## The reproduce ways from Vim starting (Required!)
-
-## Debug info
-
-Please press SPC h I, debug info will be put into clipboard,
-then paste all content below.
-
-## Screenshots
-
-If you have any screenshots, add to mail Attachment.
-```
-
-- send the email to [spacevim@googlegroups.com](mailto:spacevim@googlegroups.com)
+- [Open new issue on github](https://github.com/SpaceVim/SpaceVim/issues/new?assignees=&labels=&template=bug_report.md&title=), and follow the `bug reporting` template.
 
 ## Requesting new feature
 
-If you want a new feature or have an idea to improve spacevim, please follow the guidelines to give feedback.
-
-- Use a clear title with `[feature]` prefix, add follow the `feature request` mail template:
-
-```
-## Is your feature request related to a problem? Please describe.**
-
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
-
-## Describe the solution you'd like.
-
-A clear and concise description of what you want to happen.
-
-## Describe alternatives you've considered.
-
-A clear and concise description of any alternative solutions or features you've considered.
-
-## Additional context
-
-Add any other context about the feature request here.
-
-## Screenshots
-
-If you have any screenshots, add to mail Attachment.
-```
-
-- send the email to [spacevim@googlegroups.com](mailto:spacevim@googlegroups.com)
+If you want a new feature or have an idea to improve spacevim, feel free to [open new issue](https://github.com/SpaceVim/SpaceVim/issues/new?assignees=&labels=feature+request&template=feature_request.md&title=) for feature requesting.
 
 ## Contributing code
 
-Code and documentation contributions of any kind are welcome.
-Please read the following sections carefully.
+Code and documentation contributions of any kind are welcome. 
 In any case, feel free to [chat with us](../community/#chat) to ask questions about contributing!
 
 ### License
