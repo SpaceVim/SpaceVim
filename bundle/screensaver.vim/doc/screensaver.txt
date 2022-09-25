@@ -1,0 +1,104 @@
+*screensaver.txt*	ScreenSavers for Vim
+
+Version: 0.2
+Author: itchyny (https://github.com/itchyny)
+License: MIT License
+Repository: https://github.com/itchyny/screensaver.vim
+Last Change: 2015/05/08 07:34:50.
+
+CONTENTS					*screensaver-contents*
+
+Introduction				|screensaver-introduction|
+Commands				|screensaver-commands|
+Password				|screensaver-password|
+Options					|screensaver-options|
+Key Mappings				|screensaver-key-mappings|
+Changelog				|screensaver-changelog|
+
+==============================================================================
+INTRODUCTION					*screensaver-introduction*
+
+The *screensaver.vim* provides a framework to create a *screensaver* for Vim.
+
+------------------------------------------------------------------------------
+COMMANDS					*screensaver-commands*
+
+:ScreenSaver [{name}]
+						*:ScreenSaver*
+		Starts the screensaver.
+		You can specify the name of the screensaver.
+		The following screensavers are bundled.
+			clock:		A moving clock.
+			largeclock	A large clock.
+			helloworld	A hello world screensaver.
+			password	Password lock.
+		If you omit the argument, it starts the clock screensaver.
+
+------------------------------------------------------------------------------
+PASSWORD					*screensaver-password*
+
+You can use the screensaver to lock the Vim.
+In order to use this feature, |sha256()| function is required.
+Note that this feature is just a toy. Do not use for confidential matters.
+
+In order to use password lock, add the following configuration to your vimrc.
+
+	let g:screensaver_password = 1
+
+Then, start the screensaver with :ScreenSaver command.
+You are required to enter the password to exit the screensaver.
+By default, the password is not set so just press <Enter>.
+
+You can set your own password by the following function.
+
+	screensaver#source#password#set({string})
+						*screensaver#source#password#set()*
+
+Note that the argument is not the raw password.
+The argument is sha256({string}).
+
+For example, if you want to use the password 'vim':
+
+	call screensaver#source#password#set(sha256('vim'))
+
+However, if you write the password directly, it is not secure.
+So when you write your vimrc, write the SHA256 checksum directly.
+
+	call screensaver#source#password#set('0f2ed9e33d29ff4f3b0f664ca1e1dc3df1f8b9b315b2af284c6e0e3dc52be290')
+
+You can insert the checksum by the following key sequences in the insert mode.
+
+	<C-r>=sha256('vim')<CR>
+
+------------------------------------------------------------------------------
+OPTIONS						*screensaver-options*
+
+						*g:screensaver_password*
+	let g:screensaver_password = {0/1}
+	When the variable is 1, you are required to input the password to exit
+	the screensaver.
+	The default value is 0.
+
+------------------------------------------------------------------------------
+KEY MAPPINGS					*screensaver-key-mappings*
+
+<Plug>(screensaver)				*<Plug>(screensaver)*
+	Starts the clock screensaver.
+
+------------------------------------------------------------------------------
+CHANGELOG					*screensaver-changelog*
+
+0.2	2015-01-24, 02-11, 05-08
+	- Set colorcolumn=
+	- Set norelativenumber
+	- use &guicursor and &t_ve to hide the cursor
+
+0.1	2015-01-21
+	- Improve g:loaded_screensaver check
+	- Support coompatible mode
+
+0.0	2014-05-27,..., 2014-06-02
+	- Implementation and initial commit.
+
+==============================================================================
+vim:tw=78:sw=4:ts=8:ft=help:norl:noet:

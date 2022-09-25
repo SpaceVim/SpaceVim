@@ -231,10 +231,11 @@ CONTENTS                                                   *SpaceVim-contents*
       136. tmux.........................................|SpaceVim-layers-tmux|
       137. tools#dash.............................|SpaceVim-layers-tools-dash|
       138. tools#mpv...............................|SpaceVim-layers-tools-mpv|
-      139. tools#zeal.............................|SpaceVim-layers-tools-zeal|
-      140. treesitter.............................|SpaceVim-layers-treesitter|
-      141. ui.............................................|SpaceVim-layers-ui|
-      142. unite.......................................|SpaceVim-layers-unite|
+      139. tools#screensaver...............|SpaceVim-layers-tools-screensaver|
+      140. tools#zeal.............................|SpaceVim-layers-tools-zeal|
+      141. treesitter.............................|SpaceVim-layers-treesitter|
+      142. ui.............................................|SpaceVim-layers-ui|
+      143. unite.......................................|SpaceVim-layers-unite|
   7. Usage....................................................|SpaceVim-usage|
       1. alternate file........................|SpaceVim-usage-alternate-file|
       2. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
@@ -5601,6 +5602,16 @@ KEY BINDINGS
   SPC m m n       next music
   SPC m m s       stop mpv
 <
+
+==============================================================================
+TOOLS#SCREENSAVER                          *SpaceVim-layers-tools-screensaver*
+
+This layer provides a screensaver feature.
+>
+  [[layers]]
+    name = 'tools#screensaver'
+<
+
 
 ==============================================================================
 TOOLS#ZEAL                                        *SpaceVim-layers-tools-zeal*

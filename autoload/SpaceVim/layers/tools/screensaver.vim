@@ -6,10 +6,20 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section tools#screensaver, layers-tools-screensaver
+" @parentsection layers
+" This layer provides a screensaver feature.
+" >
+"   [[layers]]
+"     name = 'tools#screensaver'
+" <
+"
+
 function! SpaceVim#layers#tools#screensaver#plugins() abort
-    let plugins = []
-    call add(plugins, ['itchyny/screensaver.vim', {'merged' : 0}])
-    return plugins
+  let plugins = []
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/screensaver.vim', {'merged' : 0}])
+  return plugins
 endfunction
 
 function! SpaceVim#layers#tools#screensaver#health() abort
