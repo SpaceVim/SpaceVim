@@ -61,7 +61,7 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 ## 贡献代码
 
-我们非常期待您的贡献。在此之前，请您认真阅读下面的内容。在任何情况下，都可以轻松的加入我们[gitter chat](https://gitter.im/SpaceVim/SpaceVim)进行提问和贡献代码。
+我们非常期待您的贡献。在此之前，请您认真阅读下面的内容。在任何情况下，都可以轻松的加入我们[gitter chat](https://gitter.im/SpaceVim/cn)进行提问和贡献代码。
 
 ### 项目代码结构
 
@@ -181,9 +181,6 @@ Further paragraphs come after blank lines.
 
     - Use a hanging indent
 ```
-
-[Gita] provides Vim mode for Git commit messages, which helps you comply with these guidelines.
-
 
 ### 贡献一个模块
 
