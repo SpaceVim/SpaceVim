@@ -29,8 +29,8 @@
 
 function! SpaceVim#layers#lang#fsharp#plugins() abort
   let plugins = []
-  call add(plugins, ['wsdjeg/vim-fsharp', {'on_ft' : 'fsharp'}])
-  call add(plugins, ['wsdjeg/deoplete-fsharp', {'on_ft' : 'fsharp', 'make' : 'bash install.bash'}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-fsharp', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete-fsharp', {'merged' : 0}])
   return plugins
 endfunction
 
