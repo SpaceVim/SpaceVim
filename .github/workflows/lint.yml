@@ -1,19 +1,13 @@
-name: Vint
+name: reviewdog
 on: [pull_request]
 jobs:
   vint:
-    strategy:
-      fail-fast: false
+    name: runner / vint
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
-    - name: Install dependencies
-      run: |
-          sudo apt-get update
-          sudo apt-get install git
-    - name: Run vint with reviewdog
-      uses: reviewdog/action-vint@v1.0.1
-      with:
-        github_token: ${{ secrets.github_token }}
-        reporter: github-pr-review
+      - uses: actions/checkout@v3
+      - name: vint
+        uses: reviewdog/action-vint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review # Change reporter.
