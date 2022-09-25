@@ -79,8 +79,17 @@ function! s:write_to_config(config) abort
   let dir = expand(fnamemodify(cf, ':p:h'))
   if !isdirectory(dir)
     call mkdir(dir, 'p')
+    let success = mkdir(dir, 'p', 0700)
+    if !success
+      call SpaceVim#logger#info('failed to create dir:' . dir)
+      return
+    endif
   endif
-  call writefile(a:config, cf, '')
+  let result = writefile(a:config, cf, '')
+  if result == -1
+    " failed to writefile
+    call SpaceVim#logger#info('failed to write config to file:' . cf)
+  endif
 endfunction
 
 
