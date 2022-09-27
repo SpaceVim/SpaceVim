@@ -56,7 +56,7 @@ local function save_buffer(bufnr)
         vim.fn.filewritable(vim.fn.bufname(bufnr)) == 1 and
         vim.fn.empty(vim.fn.bufname(bufnr)) == 0 then
         local lines = vim.fn.getbufline(bufnr, 1, '$')
-        vim.fn.writefile(lines, location_path(vim.fn.bufname(bufnr)))
+        pcall(vim.fn.writefile, {lines, location_path(vim.fn.bufname(bufnr))})
         if vim.fn.empty(default_opt.backupdir) == 1 then
             vim.fn.setbufvar(bufnr, '&modified', 0)
             vim.cmd('silent checktime ' .. bufnr)
