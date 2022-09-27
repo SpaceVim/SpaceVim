@@ -39,3 +39,4 @@ Join on one of them to chat with us:
 ## Others
 
 - [Reddit](https://www.reddit.com/r/SpaceVim/)
+- [Facebook](https://www.facebook.com/SpaceVim/)
