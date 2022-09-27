@@ -153,7 +153,12 @@ function! SpaceVim#layers#edit#config() abort
         \ 'backupdir' : s:autosave_location,
         \ 'event' : s:autosave_events,
         \ }
-  call SpaceVim#plugins#autosave#config(autosave_opt)
+  
+  if has('nvim-0.7.0')
+    lua require('spacevim.plugin.autosave').config(vim.api.nvim_eval('autosave_opt'))
+  else
+    call SpaceVim#plugins#autosave#config(autosave_opt)
+  endif
 
 
   let g:multi_cursor_next_key=get(g:, 'multi_cursor_next_key', '<C-n>')
