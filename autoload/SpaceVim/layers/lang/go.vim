@@ -100,9 +100,10 @@ let s:go_file_head = [
 let s:go_interpreter = 'python3'
 
 function! SpaceVim#layers#lang#go#plugins() abort
-  let plugins = [['fatih/vim-go', { 'on_ft' : 'go', 'loadconf_before' : 1}]]
+  let plugins = []
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-go', {'merged' : 0, 'loadconf_before' : 1}])
   if has('nvim') && g:spacevim_autocomplete_method ==# 'deoplete'
-    call add(plugins, ['zchee/deoplete-go', {'on_ft' : 'go', 'build': 'make'}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete-go', {'on_ft' : 'go', 'build': 'make'}])
   endif
   return plugins
 endfunction

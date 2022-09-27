@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "Ignore", "type": "func(sig ...os.Signal)"}, {"class": "func", "name": "Notify", "type": "func(c chan<- os.Signal, sig ...os.Signal)"}, {"class": "func", "name": "Reset", "type": "func(sig ...os.Signal)"}, {"class": "func", "name": "Stop", "type": "func(c chan<- os.Signal)"}]]

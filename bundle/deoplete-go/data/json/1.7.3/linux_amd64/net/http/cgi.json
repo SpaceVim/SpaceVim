@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "Request", "type": "func() (*http.Request, error)"}, {"class": "func", "name": "RequestFromMap", "type": "func(params map[string]string) (*http.Request, error)"}, {"class": "func", "name": "Serve", "type": "func(handler http.Handler) error"}, {"class": "type", "name": "Handler", "type": "struct"}]]

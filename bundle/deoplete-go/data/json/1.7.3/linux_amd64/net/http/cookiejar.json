@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "New", "type": "func(o *cookiejar.Options) (*cookiejar.Jar, error)"}, {"class": "type", "name": "Jar", "type": "struct"}, {"class": "type", "name": "Options", "type": "struct"}, {"class": "type", "name": "PublicSuffixList", "type": "interface"}]]

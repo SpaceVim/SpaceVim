@@ -1,0 +1,1 @@
+[0, [{"class": "type", "name": "BinaryMarshaler", "type": "interface"}, {"class": "type", "name": "BinaryUnmarshaler", "type": "interface"}, {"class": "type", "name": "TextMarshaler", "type": "interface"}, {"class": "type", "name": "TextUnmarshaler", "type": "interface"}]]

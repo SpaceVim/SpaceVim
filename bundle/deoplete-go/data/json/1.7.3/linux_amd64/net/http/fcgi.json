@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "Serve", "type": "func(l net.Listener, handler http.Handler) error"}, {"class": "var", "name": "ErrConnClosed", "type": "error"}, {"class": "var", "name": "ErrRequestAborted", "type": "error"}]]

@@ -1,0 +1,29 @@
+# http://flake8.readthedocs.org/en/latest/config.html
+[flake8]
+# comma-separated filename and glob patterns
+#   default: .svn,CVS,.bzr,.hg,.git,__pycache
+exclude = .svn,CVS,.bzr,.hg,.git,__pycache,tests/*
+
+# comma-separatedd filename and glob patterns
+#   default: *.py
+filename = *.py
+
+# select errors and warnings tot enable which are off by default
+# select =
+
+# skip errers ror warnings.
+# If the `ignore` option is blank, ignore the error codes are
+#   - E123/E133
+#   - E226
+#   - E241/E242
+ignore = D100,D101,D102,D103,D104,D201D201,D202,D203,D204,E402,E123/E133,E226,E241/E242,H101,H301,H304,I100,I201
+
+# set maximum allowed line length
+#   default: 79
+max-line-length = 99
+
+# set the error format
+# format =
+
+# McCable complexity threshold
+max-complexity = 10

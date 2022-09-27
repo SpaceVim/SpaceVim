@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "Start", "type": "func(w io.Writer) error"}, {"class": "func", "name": "Stop", "type": "func()"}]]

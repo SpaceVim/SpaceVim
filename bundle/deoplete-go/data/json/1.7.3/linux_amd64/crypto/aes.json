@@ -1,0 +1,1 @@
+[0, [{"class": "const", "name": "BlockSize", "type": ""}, {"class": "func", "name": "NewCipher", "type": "func(key []byte) (cipher.Block, error)"}, {"class": "type", "name": "KeySizeError", "type": "int"}]]

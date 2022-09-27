@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "Node", "type": "func(dst io.Writer, fset *token.FileSet, node interface{}) error"}, {"class": "func", "name": "Source", "type": "func(src []byte) ([]byte, error)"}]]

@@ -1,0 +1,1 @@
+[0, [{"class": "const", "name": "LSB", "type": ""}, {"class": "const", "name": "MSB", "type": ""}, {"class": "func", "name": "NewReader", "type": "func(r io.Reader, order lzw.Order, litWidth int) io.ReadCloser"}, {"class": "func", "name": "NewWriter", "type": "func(w io.Writer, order lzw.Order, litWidth int) io.WriteCloser"}, {"class": "type", "name": "Order", "type": "int"}]]

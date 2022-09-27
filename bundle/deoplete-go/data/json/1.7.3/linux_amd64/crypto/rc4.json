@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "NewCipher", "type": "func(key []byte) (*rc4.Cipher, error)"}, {"class": "type", "name": "Cipher", "type": "struct"}, {"class": "type", "name": "KeySizeError", "type": "int"}]]

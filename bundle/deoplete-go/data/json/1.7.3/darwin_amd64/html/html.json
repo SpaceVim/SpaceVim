@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "EscapeString", "type": "func(s string) string"}, {"class": "func", "name": "UnescapeString", "type": "func(s string) string"}]]

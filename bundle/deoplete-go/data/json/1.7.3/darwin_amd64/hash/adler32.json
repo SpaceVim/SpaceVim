@@ -1,0 +1,1 @@
+[0, [{"class": "const", "name": "Size", "type": ""}, {"class": "func", "name": "Checksum", "type": "func(data []byte) uint32"}, {"class": "func", "name": "New", "type": "func() hash.Hash32"}]]

@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "Default", "type": "func() types.Importer"}, {"class": "func", "name": "For", "type": "func(compiler string, lookup importer.Lookup) types.Importer"}, {"class": "type", "name": "Lookup", "type": "func(path string) (io.ReadCloser, error)"}]]

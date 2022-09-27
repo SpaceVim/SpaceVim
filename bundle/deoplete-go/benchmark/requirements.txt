@@ -1,0 +1,4 @@
+git+https://github.com/simplejson/simplejson
+git+https://github.com/esnme/ultrajson
+# git+https://github.com/hhatto/pyrapidjson
+git+https://github.com/kenrobbins/python-rapidjson

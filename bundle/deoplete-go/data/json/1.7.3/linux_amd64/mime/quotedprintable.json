@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "NewReader", "type": "func(r io.Reader) *quotedprintable.Reader"}, {"class": "func", "name": "NewWriter", "type": "func(w io.Writer) *quotedprintable.Writer"}, {"class": "type", "name": "Reader", "type": "struct"}, {"class": "type", "name": "Writer", "type": "struct"}]]

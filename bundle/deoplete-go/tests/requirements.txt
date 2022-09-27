@@ -1,0 +1,7 @@
+# flake8 family (dev)
+git+https://github.com/PyCQA/flake8.git
+git+https://github.com/PyCQA/flake8-docstrings
+git+https://github.com/PyCQA/flake8-import-order
+
+# strict linting (dev)
+git+https://github.com/openstack-dev/hacking.git

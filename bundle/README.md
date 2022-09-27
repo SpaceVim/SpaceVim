@@ -9,6 +9,7 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
   - [`lang#ruby` layer](#langruby-layer)
   - [`lang#python` layer](#langpython-layer)
   - [`lang#liquid` layer](#langliquid-layer)
+  - [`lang#go` layer](#langgo-layer)
   - [`tmux` layer](#tmux-layer)
   - [`incsearch` layer](#incsearch-layer)
 
@@ -59,6 +60,11 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 #### `lang#liquid` layer
 
 - [tpope/vim-liquid@fd2f001](https://github.com/tpope/vim-liquid/tree/fd2f0017fbc50f214db2f57c207c34cda3aa1522)
+
+#### `lang#go` layer
+
+- [vim-go](https://github.com/fatih/vim-go/tree/22b2273cfe562ac1c1af976ce77f18a3b1776f3c)
+- [deoplete-go](https://github.com/deoplete-plugins/deoplete-go/tree/4eac2e6f127f2e2601dee415db2f826e2c9ef16c)
 
 #### `tmux` layer
 

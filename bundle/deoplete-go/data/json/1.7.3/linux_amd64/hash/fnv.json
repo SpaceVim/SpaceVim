@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "New32", "type": "func() hash.Hash32"}, {"class": "func", "name": "New32a", "type": "func() hash.Hash32"}, {"class": "func", "name": "New64", "type": "func() hash.Hash64"}, {"class": "func", "name": "New64a", "type": "func() hash.Hash64"}]]

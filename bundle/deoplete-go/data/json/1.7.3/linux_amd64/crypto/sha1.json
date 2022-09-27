@@ -1,0 +1,1 @@
+[0, [{"class": "const", "name": "BlockSize", "type": ""}, {"class": "const", "name": "Size", "type": ""}, {"class": "func", "name": "New", "type": "func() hash.Hash"}, {"class": "func", "name": "Sum", "type": "func(data []byte) [20]byte"}]]

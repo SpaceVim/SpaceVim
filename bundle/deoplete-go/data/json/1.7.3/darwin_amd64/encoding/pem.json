@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "Decode", "type": "func(data []byte) (p *pem.Block, rest []byte)"}, {"class": "func", "name": "Encode", "type": "func(out io.Writer, b *pem.Block) error"}, {"class": "func", "name": "EncodeToMemory", "type": "func(b *pem.Block) []byte"}, {"class": "type", "name": "Block", "type": "struct"}]]

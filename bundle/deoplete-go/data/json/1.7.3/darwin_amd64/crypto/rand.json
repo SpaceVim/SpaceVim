@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "Int", "type": "func(rand io.Reader, max *big.Int) (n *big.Int, err error)"}, {"class": "func", "name": "Prime", "type": "func(rand io.Reader, bits int) (p *big.Int, err error)"}, {"class": "func", "name": "Read", "type": "func(b []byte) (n int, err error)"}, {"class": "var", "name": "Reader", "type": "io.Reader"}]]

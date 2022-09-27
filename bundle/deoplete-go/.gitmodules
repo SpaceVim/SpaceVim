@@ -1,0 +1,6 @@
+[submodule "rplugin/python3/deoplete/ujson"]
+	path = rplugin/python3/deoplete/ujson
+	url = https://github.com/esnme/ultrajson.git
+[submodule "rplugin/python3/deoplete/clang"]
+	path = rplugin/python3/deoplete/clang
+	url = https://github.com/zchee/libclang-python3

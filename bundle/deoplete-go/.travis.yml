@@ -1,0 +1,37 @@
+language: python
+
+cache:
+  directories:
+  - "$HOME/.cache/pip"
+
+matrix:
+  include:
+  - sudo: required
+    os: linux
+    dist: trusty
+    compiler: clang
+    python: '3.5'
+  - sudo: required
+    os: linux
+    dist: trusty
+    compiler: clang
+    python: 'nightly'
+
+before_install:
+  - uname -a
+  - cat /etc/lsb-release
+
+install:
+  - make
+  - make lint/install_modules
+
+script:
+  - make test
+
+notifications:
+  email: false
+  slack:
+    on_success: never
+    on_failure: always
+    rooms:
+      secure: k1IlC3Q62cHSK5ZSabxe+CzLe5cG1yQmBW/n1ML5FfDBY5nwUHaJ609r/GA1wJjCHj2vZGP6pfH+VqO6+gsXMcVklOGo+ojKKG6+1Qkrv0hNJc31TT6iEvVOMZbKaYgqjHCv5hSIxyEP7o+Gxy1zPx2o9c+dv0EzmhFynQ4v7NoOuhZtols3V8uOTOdBN9NqbZ9AJJKreAws1Bf1XCVrDyKQsE0E7PtE1KQGrxlWcbmj/z0E/CuNYWlbCOm6IOzagaZbWvS1aVxKgYyyxt9j4Yg+S5MLIDTB0+omfJUT7VviglIP650b26AGOj0v6T76a2a+mP9diBUNtQilH43BMygSuRlvO1zPZtOFazgQ72Ggh1ygSlXJE9tWo8A0GbOe/KDsOvn22geln0jSOiYFVVmuUgvEUsAmAy9lTdXKEWaPXmC9TJJ2Rk5Pmv6XSi04w3tghdhPNvKvFC8w7X9Mo26rAKwLGVnOfwYACDSBKeXAufHaK2RtrjLPdV3P8r7jKZUmJ/XsenVwlmfU8MYAFPOfOVq1CG8cCNVFQrWU3nCD2RKkUZHnf7Wf16o5v79aPN2XNF7RI/gvPHwA4Z/J7sKyLFKBDGFwo7159CHtWI0D5luMQT0jyH0QG6Q3qgRLctx8poB5ckZYnEqUvNm8XlNWXVA3jdPKmreMqQfeiEE=

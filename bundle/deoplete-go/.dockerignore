@@ -1,0 +1,15 @@
+# directories
+benchmark
+build
+images
+plugin
+data
+
+# files
+.DS_Store
+*.tags
+*.tar.gz
+Dockerfile
+
+!data/gen_json.py
+!data/template.go

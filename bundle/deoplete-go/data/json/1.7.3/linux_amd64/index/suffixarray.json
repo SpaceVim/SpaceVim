@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "New", "type": "func(data []byte) *suffixarray.Index"}, {"class": "type", "name": "Index", "type": "struct"}]]

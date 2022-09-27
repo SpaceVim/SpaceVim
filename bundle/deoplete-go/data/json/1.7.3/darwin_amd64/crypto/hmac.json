@@ -1,0 +1,1 @@
+[0, [{"class": "func", "name": "Equal", "type": "func(mac1 []byte, mac2 []byte) bool"}, {"class": "func", "name": "New", "type": "func(h func() hash.Hash, key []byte) hash.Hash"}]]
