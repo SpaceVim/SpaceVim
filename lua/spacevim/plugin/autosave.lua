@@ -26,7 +26,6 @@ local autosave_timer = -1
 
 local M = {}
 
-
 function M.config(opt)
     for option, value in ipairs(default_opt) do
         if opt[option] ~= nil then
@@ -46,7 +45,9 @@ local function location_path(bufname)
     if vim.fn.empty(default_opt.backupdir) == 1 then
         return bufname
     else
-        return default_opt.backupdir .. '/' .. f.path_to_fname(bufname, '+=') .. '.backup'
+        local pth = f.unify_path(default_opt.backupdir, ':p') .. f.path_to_fname(bufname, '+=') .. '.backup'
+        logger.info('backup path is:' .. pth)
+        return pth
     end
 end
 
@@ -56,10 +57,16 @@ local function save_buffer(bufnr)
         vim.fn.filewritable(vim.fn.bufname(bufnr)) == 1 and
         vim.fn.empty(vim.fn.bufname(bufnr)) == 0 then
         local lines = vim.fn.getbufline(bufnr, 1, '$')
-        pcall(vim.fn.writefile, {lines, location_path(vim.fn.bufname(bufnr))})
+        local f = location_path(vim.fn.bufname(bufnr))
+        local ok, rst = pcall(vim.fn.writefile, lines, f)
+        if not ok then
+            logger.info('failed to autosave file:' .. f)
+            logger.warn(rst)
+        end
         if vim.fn.empty(default_opt.backupdir) == 1 then
             vim.fn.setbufvar(bufnr, '&modified', 0)
             vim.cmd('silent checktime ' .. bufnr)
+
         end
     end
 
@@ -70,6 +77,7 @@ local function auto_dosave(...)
         for _, nr in ipairs(vim.fn.range(1, vim.fn.bufnr('$'))) do
             save_buffer(nr)
         end
+
     else
         save_buffer(vim.fn.bufnr('%'))
     end
