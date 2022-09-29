@@ -49,11 +49,19 @@ local function load_plugins()
 end
 
 local function getLayerPlugins(layer)
-    
+    local ok, l = pcall(require, 'spacevim.layer.' .. layer)
+    if ok and l.plugins ~= nil then
+        return l.plugins()
+    end
+    return {}
 end
 
 local function loadLayerConfig(layer)
-    
+    logger.debug('load ' .. layer .. ' layer config')
+    local ok, l = pcall(require, 'spacevim.layer.' .. layer)
+    if ok and l.config ~= nil then
+        l.config()
+    end
 end
 
 local plugins_argv = {'-update', '-openurl'}
