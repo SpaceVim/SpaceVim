@@ -61,5 +61,28 @@ function M.circled_num(num, t)
     end
 end
 
+function M.index_num(num)
+    local nums = {8304, 185, 178, 179, 8308, 8309, 8310, 8311, 8312, 8313}
+    if vim.fn.index(vim.fn.range(1, 10), num) ~= -1 then
+        return vim.fn.nr2char(nums[num + 1])
+    end
+    return ''
+end
+
+function M.parenthesized_num(num)
+    if vim.fn.index(vim.fn.range(1, 20), num) ~= -1 then
+        return vim.fn.nr2char(9331 + num)
+    else
+        return ''
+    end
+end
+
+function M.num_period(num)
+    if vim.fn.index(vim.fn.range(1, 20), num) ~= -1 then
+        return vim.fn.nr2char(9351 + num)
+    else
+        return ''
+    end
+end
 
 return M
