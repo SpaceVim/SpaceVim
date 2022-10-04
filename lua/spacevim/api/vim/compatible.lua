@@ -124,4 +124,8 @@ function M.execute(cmd, silent)
     return  M.fn.execute(cmd, silent)
 end
 
+function M.win_screenpos(nr)
+    return vim.fn.win_screenpos(nr)
+end
+
 return M

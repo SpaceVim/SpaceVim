@@ -15,7 +15,7 @@ M.__vim = require('spacevim.api').import('vim')
 
 
 M._keys = {
-    close = "<Esc>"
+    close = Key.t('<Esc>')
 }
 
 M._prompt = {
@@ -78,22 +78,24 @@ function M._handle_input(...)
             M._prompt.cursor_end = M.__cmp.fn.substitute(M._prompt.cursor_end, '^.', '', 'g')
             M._build_prompt()
             goto continue
-        elseif char == key.t('<left>') then
-        elseif char == ket.t('<C-w>') then
-        elseif char == ket.t('<C-a>')  or char == ket.t('<Home>') then
-        elseif char == ket.t('<C-e>')  or char == ket.t('<End>') then
-        elseif char == ket.t('<C-u>') then
-        elseif char == ket.t('<C-k>') then
-        elseif char == ket.t('<bs>') then
-        elseif (type(self._keys.close) == 1 and char == self._keys.close)
-            or (type(self._keys.close) == 3 and index(self._keys.close, char) > -1 ) then
-        elseif char == key.t('<FocusLost>') or char == key.t('<FocusGained>')or char2nr(char) == 128 then
+        elseif char == Key.t('<left>') then
+        elseif char == Key.t('<C-w>') then
+        elseif char == Key.t('<C-a>')  or char == Key.t('<Home>') then
+        elseif char == Key.t('<C-e>')  or char == Key.t('<End>') then
+        elseif char == Key.t('<C-u>') then
+        elseif char == Key.t('<C-k>') then
+        elseif char == Key.t('<bs>') then
+        elseif (type(M._keys.close) == 'string' and char == M._keys.close)
+            or (type(M._keys.close) == 'table' and vim.fn.index(M._keys.close, char) > -1 ) then
+            M.close()
+            break
+        elseif char == Key.t('<FocusLost>') or char == Key.t('<FocusGained>') or vim.fn.char2nr(char) == 128 then
         else
         end
-        if type(self._oninputpro) == 'function' then
-            self._oninputpro()
+        if type(M._oninputpro) == 'function' then
+            M._oninputpro()
         end
-        if type(self._handle_fly) == 'function' then
+        if type(M._handle_fly) == 'function' then
             M._handle_fly(M._prompt.cursor_begin
             .. M._prompt.cursor_char
             .. M._prompt.cursor_end)
@@ -117,7 +119,11 @@ function M._clear_prompt()
 end
 
 function M.close()
-
+    if type(M._onclose) == 'function' then
+        M._onclose()
+    end
+    M._clear_prompt()
+    M._quit = true
 end
 
 
