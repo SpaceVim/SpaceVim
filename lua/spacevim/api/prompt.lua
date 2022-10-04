@@ -85,12 +85,16 @@ function M._handle_input(...)
         elseif char == Key.t('<C-u>') then
         elseif char == Key.t('<C-k>') then
         elseif char == Key.t('<bs>') then
+            M._prompt.cursor_begin = vim.fn.substitute(M._prompt.cursor_begin, '.$', '', 'g')
+            M._build_prompt()
         elseif (type(M._keys.close) == 'string' and char == M._keys.close)
             or (type(M._keys.close) == 'table' and vim.fn.index(M._keys.close, char) > -1 ) then
             M.close()
             break
         elseif char == Key.t('<FocusLost>') or char == Key.t('<FocusGained>') or vim.fn.char2nr(char) == 128 then
         else
+            M._prompt.cursor_begin = M._prompt.cursor_begin .. char
+            M._build_prompt()
         end
         if type(M._oninputpro) == 'function' then
             M._oninputpro()
@@ -107,6 +111,14 @@ end
 
 function M._build_prompt()
     local ident = M.__cmp.fn['repeat'](' ', M.__cmp.win_screenpos(0)[2] - 1)
+    vim.cmd('redraw')
+    vim.api.nvim_echo({
+        {ident .. M._prompt.mpt, 'Comment'},
+        {M._prompt.cursor_begin, 'None'},
+        {M._prompt.cursor_char, 'Wildmenu'},
+        {M._prompt.cursor_end, 'None'},
+        {'_', 'Comment'}
+    }, false, {})
 end
 
 function M._clear_prompt()
