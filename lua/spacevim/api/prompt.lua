@@ -85,8 +85,8 @@ function M._handle_input(...)
         elseif char == ket.t('<C-u>') then
         elseif char == ket.t('<C-k>') then
         elseif char == ket.t('<bs>') then
-        elseif (type(self._keys.close) == 1 add char == self._keys.close)
-            or (type(self._keys.close) == 3 add index(self._keys.close, char) > -1 ) then
+        elseif (type(self._keys.close) == 1 and char == self._keys.close)
+            or (type(self._keys.close) == 3 and index(self._keys.close, char) > -1 ) then
         elseif char == key.t('<FocusLost>') or char == key.t('<FocusGained>')or char2nr(char) == 128 then
         else
         end
