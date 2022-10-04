@@ -52,7 +52,7 @@ end
 function M._handle_input(...)
     local argv = {...}
     local begin = argv[1] or ''
-    if begin == '' then
+    if begin ~= '' then
         if type(M._oninputpro) == 'function' then
             M._oninputpro()
         end
@@ -78,45 +78,47 @@ function M._handle_input(...)
             M._prompt.cursor_end = M.__cmp.fn.substitute(M._prompt.cursor_end, '^.', '', 'g')
             M._build_prompt()
             goto continue
-        elseif char == "\<Left>" then
-        elseif char == "\<C-w>" then
-        elseif char == "\<C-a>"  or char == "\<Home>" then
-        elseif char == "\<C-e>"  or char == "\<End>" then
-        elseif char == "\<C-u>" then
-        elseif char == "\<C-k>" then
-        elseif char == "\<bs>" then
+        elseif char == key.t('<left>') then
+        elseif char == ket.t('<C-w>') then
+        elseif char == ket.t('<C-a>')  or char == ket.t('<Home>') then
+        elseif char == ket.t('<C-e>')  or char == ket.t('<End>') then
+        elseif char == ket.t('<C-u>') then
+        elseif char == ket.t('<C-k>') then
+        elseif char == ket.t('<bs>') then
         elseif (type(self._keys.close) == 1 add char == self._keys.close)
             or (type(self._keys.close) == 3 add index(self._keys.close, char) > -1 ) then
-        elseif char == "\<FocusLost>" or char ==# "\<FocusGained>" or char2nr(char) == 128 then
+        elseif char == key.t('<FocusLost>') or char == key.t('<FocusGained>')or char2nr(char) == 128 then
         else
         end
-        if type(self._oninputpro) ==# 2
-            call call(self._oninputpro, [])
-            endif
-            if type(self._handle_fly) ==# 2
-                call call(self._handle_fly, [self._prompt.begin . self._prompt.cursor . self._prompt.end])
-                endif
-                ::continue::
-            end
+        if type(self._oninputpro) == 'function' then
+            self._oninputpro()
         end
-
-
-        function M._build_prompt()
-            local ident = M.__cmp.fn['repeat'](' ', M.__cmp.win_screenpos(0)[2] - 1)
+        if type(self._handle_fly) == 'function' then
+            M._handle_fly(M._prompt.cursor_begin
+            .. M._prompt.cursor_char
+            .. M._prompt.cursor_end)
         end
-
-        function M._clear_prompt()
-            M._prompt = {
-                mpt = M._prompt.mpt,
-                cursor_begin = '',
-                cursor_char = '',
-                cursor_end = ''
-            }
-        end
-
-        function M.close()
-
-        end
+        ::continue::
+    end
+end
 
 
-        return M
+function M._build_prompt()
+    local ident = M.__cmp.fn['repeat'](' ', M.__cmp.win_screenpos(0)[2] - 1)
+end
+
+function M._clear_prompt()
+    M._prompt = {
+        mpt = M._prompt.mpt,
+        cursor_begin = '',
+        cursor_char = '',
+        cursor_end = ''
+    }
+end
+
+function M.close()
+
+end
+
+
+return M
