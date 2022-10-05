@@ -71,7 +71,7 @@ function M._handle_input(...)
             goto continue
         end
         if M._c_r_mode then
-            if char == '[a-zA-Z0-9"+:/]$' then
+            if char:match('^[%w":+/]$') then
                 local reg = '@' .. char
                 local paste = vim.fn.get(vim.fn.split(vim.fn.eval(reg), "\n"), 0, '')
                 M._prompt.cursor_begin = M._prompt.cursor_begin .. paste
