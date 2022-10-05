@@ -70,7 +70,18 @@ function M._handle_input(...)
             pcall(M._function_key[char])
             goto continue
         end
-        if M._c_r_mode == 1 then
+        if M._c_r_mode then
+            if char == '[a-zA-Z0-9"+:/]$' then
+                local reg = '@' .. char
+                local paste = vim.fn.get(vim.fn.split(vim.fn.eval(reg), "\n"), 0, '')
+                M._prompt.cursor_begin = M._prompt.cursor_begin .. paste
+                M._prompt.cursor_char = vim.fn.matchstr(M._prompt.cursor_end, '.$')
+                M._c_r_mode = false
+                M._build_prompt()
+            else
+                M._c_r_mode = false
+                goto continue
+            end
         elseif char == Key.t('<c-r>') then
             M._c_r_mode = true
             vim.fn.timer_start(2000, M._c_r_mode_off)
@@ -88,10 +99,27 @@ function M._handle_input(...)
             end
             goto continue
         elseif char == Key.t('<C-w>') then
+            M._prompt.cursor_begin = M.__cmp.fn.substitute(M._prompt.cursor_begin, [[[^\ .*]\+\s*$]],'','g')
+            M._build_prompt()
         elseif char == Key.t('<C-a>')  or char == Key.t('<Home>') then
+            M._prompt.cursor_end = M.__cmp.fn.substitute(M._prompt.cursor_begin .. M._prompt.cursor_char .. M._prompt.cursor_end, '^.', '', 'g')
+            M._prompt.cursor_char = M.__cmp.matchstr(M._prompt.cursor_begin, '^.')
+            M._prompt.cursor_begin = ''
+            M._build_prompt()
+            goto continue
         elseif char == Key.t('<C-e>')  or char == Key.t('<End>') then
+            M._prompt.cursor_begin = M._prompt.cursor_begin .. M._prompt.cursor_char .. M._prompt.cursor_end
+            M._prompt.cursor_char = ''
+            M._prompt.cursor_end = ''
+            M._build_prompt()
+            goto continue
         elseif char == Key.t('<C-u>') then
+            M._prompt.cursor_begin = ''
+            M._build_prompt()
         elseif char == Key.t('<C-k>') then
+            M._prompt.cursor_char = ''
+            M._prompt.cursor_end = ''
+            M._build_prompt()
         elseif char == Key.t('<bs>') then
             M._prompt.cursor_begin = vim.fn.substitute(M._prompt.cursor_begin, '.$', '', 'g')
             M._build_prompt()
@@ -100,6 +128,7 @@ function M._handle_input(...)
             M.close()
             break
         elseif char == Key.t('<FocusLost>') or char == Key.t('<FocusGained>') or vim.fn.char2nr(char) == 128 then
+            goto continue
         else
             M._prompt.cursor_begin = M._prompt.cursor_begin .. char
             M._build_prompt()
