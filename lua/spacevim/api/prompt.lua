@@ -72,6 +72,10 @@ function M._handle_input(...)
         end
         if M._c_r_mode == 1 then
         elseif char == Key.t('<c-r>') then
+            M._c_r_mode = true
+            vim.fn.timer_start(2000, M._c_r_mode_off)
+            M._build_prompt()
+            goto continue
         elseif char == Key.t('<right>') then
             M._prompt.cursor_begin = M._prompt.cursor_begin .. M._prompt.cursor_char
             M._prompt.cursor_char = M.__cmp.fn.matchstr(M._prompt.cursor_begin, '^.')
@@ -79,6 +83,10 @@ function M._handle_input(...)
             M._build_prompt()
             goto continue
         elseif char == Key.t('<left>') then
+            if M._prompt.cursor_begin ~= '' then
+                M._prompt.cursor_end = M._prompt.cursor_char .. M._prompt.cursor_end
+            end
+            goto continue
         elseif char == Key.t('<C-w>') then
         elseif char == Key.t('<C-a>')  or char == Key.t('<Home>') then
         elseif char == Key.t('<C-e>')  or char == Key.t('<End>') then
