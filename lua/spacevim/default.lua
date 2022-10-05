@@ -90,19 +90,19 @@ function M.options()
     vim.g.conf_dir = vim.g.data_dir .. 'conf'
 
     if vim.fn.finddir(vim.g.data_dir) == '' then
-        pcall(vim.fn.mkdir, vim.g.data_dir, 'p', 0700)
+        pcall(vim.fn.mkdir, vim.g.data_dir, 'p', '0700')
     end
     if vim.fn.finddir(vim.g.backup_dir) == '' then
-        pcall(vim.fn.mkdir, vim.g.backup_dir, 'p', 0700)
+        pcall(vim.fn.mkdir, vim.g.backup_dir, 'p', '0700')
     end
     if vim.fn.finddir(vim.g.swap_dir) == '' then
-        pcall(vim.fn.mkdir, vim.g.swap_dir, 'p', 0700)
+        pcall(vim.fn.mkdir, vim.g.swap_dir, 'p', '0700')
     end
     if vim.fn.finddir(vim.g.undo_dir) == '' then
-        pcall(vim.fn.mkdir, vim.g.undo_dir, 'p', 0700)
+        pcall(vim.fn.mkdir, vim.g.undo_dir, 'p', '0700')
     end
     if vim.fn.finddir(vim.g.conf_dir) == '' then
-        pcall(vim.fn.mkdir, vim.g.conf_dir, 'p', 0700)
+        pcall(vim.fn.mkdir, vim.g.conf_dir, 'p', '0700')
     end
     vim.o.undodir = vim.g.undo_dir
     vim.o.backupdir = vim.g.backup_dir
