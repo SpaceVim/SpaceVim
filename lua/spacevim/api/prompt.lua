@@ -89,13 +89,16 @@ function M._handle_input(...)
             goto continue
         elseif char == Key.t('<right>') then
             M._prompt.cursor_begin = M._prompt.cursor_begin .. M._prompt.cursor_char
-            M._prompt.cursor_char = M.__cmp.fn.matchstr(M._prompt.cursor_begin, '^.')
+            M._prompt.cursor_char = M.__cmp.fn.matchstr(M._prompt.cursor_end, '^.')
             M._prompt.cursor_end = M.__cmp.fn.substitute(M._prompt.cursor_end, '^.', '', 'g')
             M._build_prompt()
             goto continue
         elseif char == Key.t('<left>') then
             if M._prompt.cursor_begin ~= '' then
                 M._prompt.cursor_end = M._prompt.cursor_char .. M._prompt.cursor_end
+                M._prompt.cursor_char = vim.fn.matchstr(M._prompt.cursor_begin, '.$')
+                M._prompt.cursor_begin = vim.fn.substitute(M._prompt.cursor_begin, '.$', '', 'g')
+                M._build_prompt()
             end
             goto continue
         elseif char == Key.t('<C-w>') then
