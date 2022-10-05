@@ -23,6 +23,8 @@ local jobid = -1
 local grep_cmd = {}
 local previous_winid = -1
 
+local grep_default_exe
+
 -- The available options are:
 -- - input: string, the default input pattern
 -- - files: a list of string or `@buffers`
