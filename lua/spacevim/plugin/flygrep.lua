@@ -73,6 +73,26 @@ local complete_input_history_num = {0, 0}
 -- - smart_case: boolean
 -- - expr_opt: 
 
+local current_grep_pattern = ''
+local function grep_timer(...)
+    if grep_mode == 'expr' then
+        current_grep_pattern = vim.fn.join(vim.fn.split(grep_expr), '.*')
+    else
+        current_grep_pattern = grep_expr
+    end
+    local cmd = get_search_cmd(current_grep_pattern)
+    grepid = jobstart(cmd, {
+        on_stdout = grep_stdout,
+        on_stderr = grep_stderr,
+        on_exit = grep_exit,
+    })
+end
+
+local function get_search_cmd(expr)
+   local cmd = {grep_exe} + grep_opt 
+end
+
+
 function flygrep.open(argv)
 
     previous_winid = vim.fn.win_getid()
