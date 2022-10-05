@@ -8,12 +8,20 @@ local jobsend = vim.fn.jobsend
 local jobstop = vim.fn.jobstop
 
 
+-- compatibility functions
+
+local function empty(expr)
+    return vim.fn.empty(expr) == 1
+end
+
 local timer_start = vim.fn.timer_start
 local timer_stop = vim.fn.timer_stop
 
 
+-- the script local values, same as s: in vim script
 local jobid = -1
 local grep_cmd = {}
+local previous_winid = -1
 
 -- The available options are:
 -- - input: string, the default input pattern
@@ -25,7 +33,9 @@ local grep_cmd = {}
 -- - smart_case: boolean
 -- - expr_opt: 
 
-function flygrep.open(opt)
+function flygrep.open(argv)
+
+    previous_winid = vim.fn.win_getid()
 
 end
 
