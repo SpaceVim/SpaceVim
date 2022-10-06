@@ -91,7 +91,7 @@ local function get_search_cmd(expr)
     end
     local cmd = {grep_exe}
     setmetatable(cmd, mt)
-    local cmd = cmd + grep_opt 
+    cmd = cmd + grep_opt 
     if vim.o.ignorecase then
         cmd = cmd + grep_ignore_case
     end
