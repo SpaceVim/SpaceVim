@@ -245,6 +245,40 @@ end
 
 mpt._oninputpro = close_grep_job
 
+mpt._function_key = {
+    [Ket.t('<Tab>')] = next_item,
+    [Ket.t('<C-j>')] = next_item,
+    [Ket.t('<ScrollWheelDown>')] = next_item,
+    [Ket.t('<S-tab>')] = previous_item,
+    [Ket.t('<C-k>')] = previous_item,
+    [Ket.t('<ScrollWheelUp>')] = previous_item,
+    [Ket.t('<Return>')] = open_item,
+    [Ket.t('<C-t>')] = open_item_in_tab,
+    [Ket.t('<LeftMouse>')] = move_cursor,
+    [Ket.t('<2-LeftMouse>')] = double_click,
+    [Ket.t('<C-f>')] = start_filter,
+    [Ket.t('<C-v>')] = open_item_vertically,
+    [Ket.t('<C-s>')] = open_item_horizontally,
+    [Ket.t('<C-q>')] = apply_to_quickfix,
+    [Ket.t('<M-r>')] = start_replace,
+    [Ket.t('<C-p>')] = toggle_preview,
+    [Ket.t('<C-e>')] = toggle_expr_mode,
+    [Ket.t('<Up>')] = previous_match_history,
+    [Ket.t('<Down>')] = next_match_history,
+    [Ket.t('<PageDown>')] = page_down,
+    [Ket.t('<PageUp>')] = page_up,
+    [Ket.t('<C-End>')] = page_end,
+    [Ket.t('<C-Home>')] = page_home,
+    [Ket.t('x80\xfdK')] = previous_item,
+    [Ket.t('x80\xfc \x80\xfdK')] = previous_item,
+    [Ket.t('x80\xfc@\x80\xfdK')] = previous_item,
+    [Ket.t('x80\xfc`\x80\xfdK')] = previous_item,
+    [Ket.t('x80\xfdL')] = next_item,
+    [Ket.t('x80\xfc \x80\xfdL')] = next_item,
+    [Ket.t('x80\xfc@\x80\xfdL')] = next_item,
+    [Ket.t('x80\xfc`\x80\xfdL')] = next_item,
+}
+
 function M.open(argv)
 
     previous_winid = vim.fn.win_getid()
