@@ -201,8 +201,8 @@ local function flygrep(t)
     end
     pcall(vim.fn.matchdelete, hi_id)
     vim.cmd('hi def link FlyGrepPattern MoreMsg')
-    hi_id = matchadd('FlyGrepPattern', expr_to_pattern(expr), 2)
-    grep_expr = expr
+    hi_id = matchadd('FlyGrepPattern', expr_to_pattern(t), 2)
+    grep_expr = t
     timer_stop(grep_timer_id)
     grep_timer_id = timer_start(200, grep_timer, {['repeat'] = 1})
 end
