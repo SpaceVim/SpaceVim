@@ -127,8 +127,11 @@ local function grep_stdout(id, data, event)
     if id ~= grepid then return end
     local datas = vim.fn.filter(data, '!empty(v:val)')
     --  let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
-    -- buffer_id
-    vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, datas)
+    if vim.fn.getbufline(buffer_id, 1) == '' then
+        vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, datas)
+    else
+        vim.api.nvim_buf_set_lines(buffer_id, -1, -1, false, datas)
+    end
 end
 
 local function grep_stderr(id, data, event)
@@ -139,6 +142,10 @@ end
 
 local function grep_exit(id, data, event)
     logger.info('grep exit:' .. data)
+    update_statusline()
+    vim.cmd('redraw')
+    mpt._build_prompt()
+    grepid = 0
 end
 
 -- The available options are:
