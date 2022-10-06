@@ -37,6 +37,12 @@ local buffer_id = -1
 local flygrep_win_id = -1
 local grep_files = {}
 local grep_dir = ''
+local grep_exe = ''
+local grep_opt = {}
+local grep_ropt = {}
+local grep_ignore_case = {}
+local grep_smart_case = {}
+local grep_expr_opt = {}
 
 
 
@@ -65,7 +71,7 @@ local function update_history()
     if vim.fn.filereadable(vim.fn.expand(vim.g.spacevim_data_dir .. 'SpaceVim/flygrep_history')) == 1 then
         vim.fn.writefile({vim.fn.json_encode(grep_history)}, vim.fn.expand(vim.g.spacevim_data_dir .. 'SpaceVim/flygrep_history'))
     end
-    
+
 end
 
 local grep_history = read_histroy()
@@ -97,35 +103,43 @@ local function grep_timer(...)
 end
 
 local function get_search_cmd(expr)
-   local cmd = {grep_exe} + grep_opt 
-   if vim.o.ignorecase then
-       cmd = cmd + grep_ignore_case
-   end
-   if vim.o.smartcase then
-       cmd = cmd + grep_smart_case
-   end
-   if grep_mode == 'string' then
-       cmd = cmd + grep_default_fix_string_opt
-   end
-   cmd = cmd + grep_expr_opt
-   if not empty(grep_files) and vim.fn.type(grep_files) == 3 then
-       cmd = cmd + {expr} + grep_files
-   elseif not empty(grep_files) and vim.fn.type(grep_files) == 1 then
-       cmd = cmd + {expr} + {grep_files}
-   elseif not empty(grep_dir) then
-       if grep_exe == 'findstr' then
-           cmd = cmd + {grep_dir} + {expr} + {[[%CD%\*]]}
-       else
-           cmd = cmd + {expr} + {grep_dir}
-       end
-   else
-       cmd = cmd + {expr}
-       if grep_exe == 'rg' or grep_exe == 'ag' or grep_exe == 'pt' then
-           cmd = cmd + {'.'}
-       end
-       cmd = cmd + grep_ropt
-   end
-   return cmd
+    local cmd = {grep_exe} + grep_opt 
+    if vim.o.ignorecase then
+        cmd = cmd + grep_ignore_case
+    end
+    if vim.o.smartcase then
+        cmd = cmd + grep_smart_case
+    end
+    if grep_mode == 'string' then
+        cmd = cmd + grep_default_fix_string_opt
+    end
+    cmd = cmd + grep_expr_opt
+    if not empty(grep_files) and vim.fn.type(grep_files) == 3 then
+        cmd = cmd + {expr} + grep_files
+    elseif not empty(grep_files) and vim.fn.type(grep_files) == 1 then
+        cmd = cmd + {expr} + {grep_files}
+    elseif not empty(grep_dir) then
+        if grep_exe == 'findstr' then
+            cmd = cmd + {grep_dir} + {expr} + {[[%CD%\*]]}
+        else
+            cmd = cmd + {expr} + {grep_dir}
+        end
+    else
+        cmd = cmd + {expr}
+        if grep_exe == 'rg' or grep_exe == 'ag' or grep_exe == 'pt' then
+            cmd = cmd + {'.'}
+        end
+        cmd = cmd + grep_ropt
+    end
+    return cmd
+end
+
+local function update_statusline()
+    
+end
+
+local function matchadd(group, pattern, p)
+    
 end
 
 function M.open(argv)
@@ -182,10 +196,29 @@ function M.open(argv)
     else
         grep_dir = ''
     end
-
-
+    grep_exe = argv.cmd or grep_default_exe
+    if empty(grep_dir) and empty(grep_files) and grep_exe == 'findstr' then
+        grep_files = '*.*'
+    elseif grep_exe == 'findstr' and not empty(grep_dir) then
+        grep_dir = '/D:' .. grep_dir
+    end
+    grep_opt = argv.opt or grep_default_opt
+    grep_ropt = argv.ropt or grep_default_ropt
+    grep_ignore_case = argv.ignore_case or grep_default_ignore_case
+    grep_smart_case = argv.smart_case or grep_default_smart_case
+    grep_expr_opt = argv.expr_opt or grep_default_expr_opt
+    logger.info('FlyGrep startting ===========================')
+    logger.info('   executable    : ' .. grep_exe)
+    logger.info('   option        : ' .. vim.fn.string(grep_opt))
+    logger.info('   r_option      : ' .. vim.fn.string(grep_ropt))
+    logger.info('   files         : ' .. vim.fn.string(grep_files))
+    logger.info('   dir           : ' .. vim.fn.string(grep_dir))
+    logger.info('   ignore_case   : ' .. vim.fn.string(grep_ignore_case))
+    logger.info('   smart_case    : ' .. vim.fn.string(grep_smart_case))
+    logger.info('   expr opt      : ' .. vim.fn.string(grep_expr_opt))
 
 end
+
 
 local function flygrep(t)
 

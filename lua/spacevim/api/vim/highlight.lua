@@ -29,5 +29,9 @@ M.group2dict = function (name)
     return rst
 end
 
+M.hide_in_normal = function (name)
+    
+end
+
 
 return M
