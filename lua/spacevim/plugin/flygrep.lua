@@ -140,6 +140,10 @@ local function grep_stderr(id, data, event)
     end
 end
 
+local function update_statusline()
+
+end
+
 local function grep_exit(id, data, event)
     logger.info('grep exit:' .. data)
     update_statusline()
@@ -175,10 +179,6 @@ local function grep_timer(...)
     logger.info('flygrep job id is:' .. grepid)
 end
 
-
-local function update_statusline()
-
-end
 
 local function matchadd(group, pattern, p)
 
