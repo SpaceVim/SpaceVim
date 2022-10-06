@@ -216,6 +216,12 @@ function M.open(argv)
     logger.info('   ignore_case   : ' .. vim.fn.string(grep_ignore_case))
     logger.info('   smart_case    : ' .. vim.fn.string(grep_smart_case))
     logger.info('   expr opt      : ' .. vim.fn.string(grep_expr_opt))
+    mpt.open()
+    logger.info('FlyGrep ending  =====================')
+    vim.o.t_ve = save_tve
+    hi.hi(cursor_hi)
+    hi.hi(lcursor_hi)
+    vim.o.guicursor = guicursor
 
 end
 
