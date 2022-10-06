@@ -43,6 +43,7 @@ local grep_ropt = {}
 local grep_ignore_case = {}
 local grep_smart_case = {}
 local grep_expr_opt = {}
+local hi_id = -1
 
 
 
@@ -142,6 +143,24 @@ local function matchadd(group, pattern, p)
     
 end
 
+local function flygrep_stdout(id, data, event)
+
+end
+
+local function flygrep(t)
+    mpt._build_prompt()
+    if t == '' then
+        vim.cmd('redrawstatus')
+        return
+    end
+    pcall(vim.fn.matchdelete, hi_id)
+    vim.cmd('hi def link FlyGrepPattern MoreMsg')
+    hi_id = matchadd('FlyGrepPattern', expr_to_pattern(expr), 2)
+    grep_expr = expr
+    timer_stop(grep_timer_id)
+    grep_timer_id = timer_start(200, grep_timer, {['repeat'] = 1})
+end
+
 function M.open(argv)
 
     previous_winid = vim.fn.win_getid()
@@ -222,20 +241,6 @@ function M.open(argv)
     hi.hi(cursor_hi)
     hi.hi(lcursor_hi)
     vim.o.guicursor = guicursor
-
-end
-
-
-local function flygrep(t)
-
-    jobid = jobstart(grep_cmd, {
-        on_stdout = flygrep_stdout,
-    })
-
-end
-
-
-function flygrep_stdout(id, data, event)
 
 end
 
