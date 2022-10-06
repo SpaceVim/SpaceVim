@@ -2,6 +2,7 @@ local M = {}
 
 local logger = require('spacevim.logger').derive('flygrep')
 local mpt = require('spacevim.api').import('prompt')
+local hi = require('spacevim.api').import('vim.highlight')
 
 -- the job functions
 local jobstart = vim.fn.jobstart
@@ -146,6 +147,23 @@ function M.open(argv)
     if vim.fn.exists('&winhighlight') == 1 then
         vim.cmd('set winhighlight=Normal:Pmenu,EndOfBuffer:Pmenu,CursorLine:PmenuSel')
     end
+    vim.cmd('setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber')
+    local save_tve = vim.o.t_ve
+    vim.cmd('setlocal t_ve=')
+    local cursor_hi = {}
+    cursor_hi = hi.group2dict('Cursor')
+    local lcursor_hi = {}
+    lcursor_hi = hi.group2dict('lCursor')
+    local guicursor = vim.o.guicursor
+    hi.hide_in_normal('Cursor')
+    hi.hide_in_normal('lCursor')
+    if vim.fn.has('nvim') == 1 then
+        vim.cmd('set guicursor+=a:Cursor/lCursor')
+    end
+    vim.cmd('setf SpaceVimFlyGrep')
+    update_statusline()
+    matchadd('FileName', filename_pattern, 3)
+    mpt._prompt.cursor_begin = argv.input or ''
 
 
 
