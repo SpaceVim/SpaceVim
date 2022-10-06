@@ -46,6 +46,7 @@ local grep_smart_case = {}
 local grep_expr_opt = {}
 local hi_id = -1
 local grep_mode = 'expr'
+local filename_pattern = [[[^:]*:\d\+:\d\+:]]
 
 
 
@@ -135,7 +136,7 @@ local function grep_stderr(id, data, event)
 end
 
 local function grep_exit(id, data, event)
-    logger.info('grep exit:' .. date)
+    logger.info('grep exit:' .. data)
 end
 
 -- The available options are:
