@@ -209,6 +209,22 @@ local function flygrep(t)
     grep_timer_id = timer_start(200, grep_timer, {['repeat'] = 1})
 end
 
+local function close_flygrep_win()
+    vim.cmd('noautocmd q')
+    vim.fn.win_gotoid(previous_winid)
+end
+
+local function close_buffer()
+    if grepid > 0 then
+        jobstop(grepid)
+    end
+    timer_stop(grep_timer_id)
+    timer_stop(preview_timer_id)
+    close_flygrep_win()
+end
+
+mpt._onclose = close_buffer
+
 function M.open(argv)
 
     previous_winid = vim.fn.win_getid()
