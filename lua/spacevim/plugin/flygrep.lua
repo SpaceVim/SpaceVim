@@ -4,6 +4,7 @@ local logger = require('spacevim.logger').derive('flygrep')
 local mpt = require('spacevim.api').import('prompt')
 local hi = require('spacevim.api').import('vim.highlight')
 local regex = require('spacevim.api').import('vim.regex')
+local Key = require('spacevim.api').import('vim.keys')
 
 -- compatibility functions
 local jobstart = vim.fn.jobstart
