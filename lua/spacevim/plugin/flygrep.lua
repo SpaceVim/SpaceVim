@@ -3,6 +3,7 @@ local M = {}
 local logger = require('spacevim.logger').derive('flygrep')
 local mpt = require('spacevim.api').import('prompt')
 local hi = require('spacevim.api').import('vim.highlight')
+local regex = require('spacevim.api').import('vim.regex')
 
 -- compatibility functions
 local jobstart = vim.fn.jobstart
@@ -145,6 +146,24 @@ end
 
 local function flygrep_stdout(id, data, event)
 
+end
+
+local function expr_to_pattern(expr)
+    if grep_mode == 'expr' then
+        local items = vim.fn.split(expr)
+        local pattern = vim.fn.join(items, '.*')
+        local ignorecase = ''
+        if vim.o.ignore_case then
+            ignorecase = [[\c]]
+        else
+            ignorecase = [[\C]]
+        end
+        pattern = filename_pattern .. [[.*\zs]] .. ignorecase .. regex.parser(pattern, 0)
+        logger.info('matchadd pattern: ' .. pattern)
+        return pattern
+    else
+        return expr
+    end
 end
 
 local function flygrep(t)
