@@ -45,6 +45,7 @@ local grep_ignore_case = {}
 local grep_smart_case = {}
 local grep_expr_opt = {}
 local hi_id = -1
+local grep_mode = 'expr'
 
 
 
@@ -178,7 +179,7 @@ local function expr_to_pattern(expr)
         local items = vim.fn.split(expr)
         local pattern = vim.fn.join(items, '.*')
         local ignorecase = ''
-        if vim.o.ignore_case then
+        if vim.o.ignorecase then
             ignorecase = [[\c]]
         else
             ignorecase = [[\C]]
