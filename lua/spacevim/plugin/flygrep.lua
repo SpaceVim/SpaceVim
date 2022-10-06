@@ -77,7 +77,21 @@ local function update_history()
 end
 
 local function get_search_cmd(expr)
-    local cmd = {grep_exe} + grep_opt 
+    local mt = {}
+    --定义mt.__add元方法（其实就是元表中一个特殊的索引值）为将两个表的元素合并后返回一个新表
+    mt.__add = function(t1,t2)
+        local temp = {}
+        for _,v in pairs(t1) do
+            table.insert(temp,v)
+        end
+        for _,v in pairs(t2) do
+            table.insert(temp,v)
+        end
+        return temp
+    end
+    local cmd = {grep_exe}
+    setmetatable(cmd, mt)
+    local cmd = cmd + grep_opt 
     if vim.o.ignorecase then
         cmd = cmd + grep_ignore_case
     end
@@ -138,11 +152,11 @@ end
 
 
 local function update_statusline()
-    
+
 end
 
 local function matchadd(group, pattern, p)
-    
+
 end
 
 local function flygrep_stdout(id, data, event)
