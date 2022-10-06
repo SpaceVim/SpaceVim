@@ -123,6 +123,8 @@ local grep_history = read_histroy()
 local complete_input_history_num = {0, 0}
 
 local function grep_stdout(id, data, event)
+    -- ignore previous result
+    if id ~= grepid then return end
     local datas = vim.fn.filter(data, '!empty(v:val)')
     --  let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
     -- buffer_id
