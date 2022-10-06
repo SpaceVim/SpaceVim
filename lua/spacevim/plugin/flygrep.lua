@@ -247,11 +247,27 @@ end
 mpt._oninputpro = close_grep_job
 
 local function next_item()
-    
+    local cursor = vim.api.nvim_win_get_cursor(flygrep_win_id)
+    if cursor[1] >= vim.api.nvim_buf_line_count(buffer_id) then
+        cursor[1] = 1
+    else
+        cursor[1] = cursor[1] + 1
+    end
+    vim.api.nvim_win_set_cursor(flygrep_win_id, cursor)
+    vim.cmd('redraw')
+    mpt._build_prompt()
 end
 
 local function previous_item()
-    
+    local cursor = vim.api.nvim_win_get_cursor(flygrep_win_id)
+    if cursor[1] == 1 then
+        cursor[1] = vim.api.nvim_buf_line_count(buffer_id)
+    else
+        cursor[1] = cursor[1] - 1
+    end
+    vim.api.nvim_win_set_cursor(flygrep_win_id, cursor)
+    vim.cmd('redraw')
+    mpt._build_prompt()
 end
 
 mpt._function_key = {
