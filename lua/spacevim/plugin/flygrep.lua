@@ -143,6 +143,11 @@ function M.open(argv)
         col = 0
     })
 
+    if vim.fn.exists('&winhighlight') == 1 then
+        vim.cmd('set winhighlight=Normal:Pmenu,EndOfBuffer:Pmenu,CursorLine:PmenuSel')
+    end
+
+
 
 end
 
