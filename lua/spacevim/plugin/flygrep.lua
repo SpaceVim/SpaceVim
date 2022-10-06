@@ -4,18 +4,16 @@ local logger = require('spacevim.logger').derive('flygrep')
 local mpt = require('spacevim.api').import('prompt')
 local hi = require('spacevim.api').import('vim.highlight')
 
--- the job functions
+-- compatibility functions
 local jobstart = vim.fn.jobstart
 local jobsend = vim.fn.jobsend
 local jobstop = vim.fn.jobstop
-
-
--- compatibility functions
-
 local function empty(expr)
     return vim.fn.empty(expr) == 1
 end
-
+local function isdirectory(dir)
+    return vim.fn.isdirectory(dir) == 1
+end
 local timer_start = vim.fn.timer_start
 local timer_stop = vim.fn.timer_stop
 
@@ -34,6 +32,14 @@ grep_default_smart_case = require('spacevim.plugin.search').default_tool()
 local grep_timer_id = -1
 local preview_timer_id = -1
 local grepid = 0
+local mode = ''
+local buffer_id = -1
+local flygrep_win_id = -1
+local grep_files = {}
+local grep_dir = ''
+
+
+
 
 local function read_histroy()
     if vim.fn.filereadable(vim.fn.expand(vim.g.spacevim_data_dir .. 'SpaceVim/flygrep_history')) == 1 then
@@ -122,10 +128,6 @@ local function get_search_cmd(expr)
    return cmd
 end
 
-local mode = ''
-local buffer_id = -1
-local flygrep_win_id = -1
-
 function M.open(argv)
 
     previous_winid = vim.fn.win_getid()
@@ -164,6 +166,22 @@ function M.open(argv)
     update_statusline()
     matchadd('FileName', filename_pattern, 3)
     mpt._prompt.cursor_begin = argv.input or ''
+    local fs = argv.files or ''
+    if fs == '@buffers' then
+        grep_files = vim.fn.map(buffer.listed_buffers(), 'bufname(v:val)')
+    elseif not empty(fs) then
+        grep_files = fs
+    else
+        grep_files = ''
+    end
+
+    local dir = vim.fn.expand(argv.dir or '')
+
+    if not empty(dir) and isdirectory(dir) then
+        grep_dir = dir
+    else
+        grep_dir = ''
+    end
 
 
 
