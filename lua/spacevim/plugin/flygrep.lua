@@ -120,6 +120,18 @@ end
 local grep_history = read_histroy()
 local complete_input_history_num = {0, 0}
 
+local function grep_stdout(id, data, event)
+
+end
+
+local function grep_stderr(id, data, event)
+
+end
+
+local function grep_exit(id, data, event)
+
+end
+
 -- The available options are:
 -- - input: string, the default input pattern
 -- - files: a list of string or `@buffers`
@@ -151,10 +163,6 @@ local function update_statusline()
 end
 
 local function matchadd(group, pattern, p)
-
-end
-
-local function flygrep_stdout(id, data, event)
 
 end
 
