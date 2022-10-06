@@ -184,7 +184,7 @@ local function expr_to_pattern(expr)
         else
             ignorecase = [[\C]]
         end
-        pattern = filename_pattern .. [[.*\zs]] .. ignorecase .. regex.parser(pattern, 0)
+        pattern = filename_pattern .. [[.*\zs]] .. ignorecase .. regex.parser(pattern, false)
         logger.info('matchadd pattern: ' .. pattern)
         return pattern
     else
