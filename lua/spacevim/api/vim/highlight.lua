@@ -1,7 +1,7 @@
 local M = {}
 
 M.group2dict = function (name)
-    local id = vim.fn.hiID(name)
+    local id = vim.fn.hlID(name)
     if id == 0 then
         return {
             name = '',
@@ -23,8 +23,8 @@ M.group2dict = function (name)
         italic = vim.fn.synIDattr(id, 'italic'),
         reverse = vim.fn.synIDattr(id, 'reverse'),
         underline = vim.fn.synIDattr(id, 'underline'),
-        guibg = vim.fn.tolower(synIDattr(id, 'bg#', 'gui')),
-        guifg = vim.fn.tolower(synIDattr(id, 'fg#', 'gui')),
+        guibg = vim.fn.tolower(vim.fn.synIDattr(id, 'bg#', 'gui')),
+        guifg = vim.fn.tolower(vim.fn.synIDattr(id, 'fg#', 'gui')),
     }
     return rst
 end
