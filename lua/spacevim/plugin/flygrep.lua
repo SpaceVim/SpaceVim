@@ -246,6 +246,14 @@ end
 
 mpt._oninputpro = close_grep_job
 
+local function next_item()
+    
+end
+
+local function previous_item()
+    
+end
+
 mpt._function_key = {
     [Key.t('<Tab>')] = next_item,
     [Key.t('<C-j>')] = next_item,
