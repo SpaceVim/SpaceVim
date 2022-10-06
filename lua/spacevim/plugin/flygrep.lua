@@ -232,6 +232,19 @@ end
 
 mpt._onclose = close_buffer
 
+local function close_grep_job()
+    if grepid > 0 then
+        pcall(jobstop, grepid)
+    end
+    timer_stop(grep_timer_id)
+    timer_stop(preview_timer_id)
+    vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, {})
+    update_statusline()
+    complete_input_history_num = {0,0}
+end
+
+mpt._oninputpro = close_grep_job
+
 function M.open(argv)
 
     previous_winid = vim.fn.win_getid()
