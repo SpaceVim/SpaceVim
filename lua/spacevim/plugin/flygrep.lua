@@ -76,48 +76,43 @@ local function update_history()
 
 end
 
-local function get_search_cmd(expr)
-    local mt = {}
-    --定义mt.__add元方法（其实就是元表中一个特殊的索引值）为将两个表的元素合并后返回一个新表
-    mt.__add = function(t1,t2)
-        local temp = {}
-        for _,v in pairs(t1) do
-            table.insert(temp,v)
-        end
-        for _,v in pairs(t2) do
-            table.insert(temp,v)
-        end
-        return temp
+local function append(t1, t2)
+    for _,v in pairs(t2) do
+        table.insert(t1, v)
     end
+end
+
+local function get_search_cmd(expr)
     local cmd = {grep_exe}
-    setmetatable(cmd, mt)
-    cmd = cmd + grep_opt 
+    append(cmd, grep_opt)
     if vim.o.ignorecase then
-        cmd = cmd + grep_ignore_case
+        append(cmd, grep_ignore_case)
     end
     if vim.o.smartcase then
-        cmd = cmd + grep_smart_case
+        append(cmd, grep_smart_case)
     end
     if grep_mode == 'string' then
-        cmd = cmd + grep_default_fix_string_opt
+        append(cmd, grep_default_fix_string_opt)
     end
-    cmd = cmd + grep_expr_opt
+    append(cmd, grep_expr_opt)
     if not empty(grep_files) and vim.fn.type(grep_files) == 3 then
-        cmd = cmd + {expr} + grep_files
+        append(cmd, {expr})
+        append(cmd, grep_files)
     elseif not empty(grep_files) and vim.fn.type(grep_files) == 1 then
-        cmd = cmd + {expr} + {grep_files}
+        append(cmd, {expr})
+        append(cmd, {grep_files})
     elseif not empty(grep_dir) then
         if grep_exe == 'findstr' then
-            cmd = cmd + {grep_dir} + {expr} + {[[%CD%\*]]}
+            append(cmd, {grep_dir, expr, [[%CD%\*]]})
         else
-            cmd = cmd + {expr} + {grep_dir}
+            append(cmd, {expr, grep_dir})
         end
     else
-        cmd = cmd + {expr}
+        append(cmd, {expr})
         if grep_exe == 'rg' or grep_exe == 'ag' or grep_exe == 'pt' then
-            cmd = cmd + {'.'}
+            append(cmd, {'.'})
         end
-        cmd = cmd + grep_ropt
+        append(cmd, grep_ropt)
     end
     return cmd
 end
