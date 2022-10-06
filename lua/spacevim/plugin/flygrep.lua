@@ -76,34 +76,6 @@ local function update_history()
 
 end
 
-local grep_history = read_histroy()
-local complete_input_history_num = {0, 0}
-
--- The available options are:
--- - input: string, the default input pattern
--- - files: a list of string or `@buffers`
--- - cmd: list
--- - opt: list
--- - ropt: list
--- - ignore_case: boolean
--- - smart_case: boolean
--- - expr_opt: 
-
-local current_grep_pattern = ''
-local function grep_timer(...)
-    if grep_mode == 'expr' then
-        current_grep_pattern = vim.fn.join(vim.fn.split(grep_expr), '.*')
-    else
-        current_grep_pattern = grep_expr
-    end
-    local cmd = get_search_cmd(current_grep_pattern)
-    grepid = jobstart(cmd, {
-        on_stdout = grep_stdout,
-        on_stderr = grep_stderr,
-        on_exit = grep_exit,
-    })
-end
-
 local function get_search_cmd(expr)
     local cmd = {grep_exe} + grep_opt 
     if vim.o.ignorecase then
@@ -135,6 +107,35 @@ local function get_search_cmd(expr)
     end
     return cmd
 end
+
+local grep_history = read_histroy()
+local complete_input_history_num = {0, 0}
+
+-- The available options are:
+-- - input: string, the default input pattern
+-- - files: a list of string or `@buffers`
+-- - cmd: list
+-- - opt: list
+-- - ropt: list
+-- - ignore_case: boolean
+-- - smart_case: boolean
+-- - expr_opt: 
+
+local current_grep_pattern = ''
+local function grep_timer(...)
+    if grep_mode == 'expr' then
+        current_grep_pattern = vim.fn.join(vim.fn.split(grep_expr), '.*')
+    else
+        current_grep_pattern = grep_expr
+    end
+    local cmd = get_search_cmd(current_grep_pattern)
+    grepid = jobstart(cmd, {
+        on_stdout = grep_stdout,
+        on_stderr = grep_stderr,
+        on_exit = grep_exit,
+    })
+end
+
 
 local function update_statusline()
     
