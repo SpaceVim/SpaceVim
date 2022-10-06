@@ -121,18 +121,20 @@ local grep_history = read_histroy()
 local complete_input_history_num = {0, 0}
 
 local function grep_stdout(id, data, event)
-  local datas = vim.fn.filter(data, '!empty(v:val)')
-  --  let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
-  -- buffer_id
-  vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, datas)
+    local datas = vim.fn.filter(data, '!empty(v:val)')
+    --  let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
+    -- buffer_id
+    vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, datas)
 end
 
 local function grep_stderr(id, data, event)
-
+    for _,d in pairs(data) do
+        logger.info('grep stderr:' .. d)
+    end
 end
 
 local function grep_exit(id, data, event)
-
+    logger.info('grep exit:' .. date)
 end
 
 -- The available options are:
