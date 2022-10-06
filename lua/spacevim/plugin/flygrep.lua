@@ -1,4 +1,4 @@
-local flygrep = {}
+local M = {}
 
 local logger = require('spacevim.logger').derive('flygrep')
 local mpt = require('spacevim.api').import('prompt')
@@ -125,7 +125,7 @@ local mode = ''
 local buffer_id = -1
 local flygrep_win_id = -1
 
-function flygrep.open(argv)
+function M.open(argv)
 
     previous_winid = vim.fn.win_getid()
     if empty(grep_default_exe) then
@@ -160,4 +160,4 @@ function flygrep_stdout(id, data, event)
 end
 
 
-return flygrep
+return M
