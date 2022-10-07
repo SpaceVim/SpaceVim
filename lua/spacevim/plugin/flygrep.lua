@@ -315,6 +315,14 @@ local function open_item_in_tab()
     open_item('tabedit')
 end
 
+local function open_item_vertically()
+    open_item('vsplit')
+end
+
+local function open_item_horizontally()
+    open_item('split')
+end
+
 
 local function move_cursor()
     if vim.v.mouse_winid == flygrep_win_id then
