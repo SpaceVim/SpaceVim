@@ -285,7 +285,9 @@ local function get_file_pos(line)
   return filename, linenr, colum
 end
 
-local function open_item()
+local function open_item(...)
+    local argv = {...}
+    local edit_command = argv[1] or 'edit'
     mpt._handle_fly = flygrep
     local cursor = vim.api.nvim_win_get_cursor(flygrep_win_id)
     local line = vim.api.nvim_buf_get_lines(buffer_id, cursor[1] - 1, cursor[1], false)[1]
@@ -303,9 +305,14 @@ local function open_item()
         previous_able = false
         close_flygrep_win()
         update_history()
-        buffer.open_pos('edit', filename, liner, colum)
+        buffer.open_pos(edit_command, filename, liner, colum)
         vim.cmd('noautocmd normal! :')
     end
+end
+
+
+local function open_item_in_tab()
+    open_item('tabedit')
 end
 
 mpt._function_key = {
