@@ -303,7 +303,7 @@ local function open_item()
         previous_able = false
         close_flygrep_win()
         update_history()
-        buffer.open_pos('edit', filename, linenr, colum)
+        buffer.open_pos('edit', filename, liner, colum)
         vim.cmd('noautocmd normal! :')
     end
 end
