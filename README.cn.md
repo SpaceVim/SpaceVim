@@ -31,9 +31,6 @@ master 分支最新的更新以及变动。
 
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 
-支持 SpaceVim 最好的方法是通过报告 bug 来完善SpaceVim，或者在[Gitter 聊天室](https://gitter.im/SpaceVim/cn)上帮助社区其他用户
-或者直接提交拉取请求。
-
 想要了解更多信息，请查看我们的[开发者手册](https://spacevim.org/cn/development/)。
 
 如果你在日常工作中使用 SpaceVim，觉得它让你更轻松，
