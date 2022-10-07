@@ -2,7 +2,7 @@
 title: "Home"
 description: "SpaceVim is a community-driven vim distribution that seeks to provide layer feature."
 ---
-
+[![matrix](https://img.shields.io/matrix/spacevim:matrix.org?color=green&label=%23spacevim%3Amatrix.org&logo=matrix)](https://chat.mozilla.org/#/room/#spacevim:matrix.org)
 [![build](https://img.shields.io/github/workflow/status/SpaceVim/SpaceVim/test)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
 [![Release](https://img.shields.io/badge/Release-2.0.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.0.0/)
