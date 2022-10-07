@@ -315,6 +315,14 @@ local function open_item_in_tab()
     open_item('tabedit')
 end
 
+
+local function move_cursor()
+    if vim.v.mouse_winid == flygrep_win_id then
+        vim.api.nvim_win_set_cursor(flygrep_win_id, {vim.v.mouse_lnum, 0})
+    end
+    mpt._build_prompt()
+end
+
 mpt._function_key = {
     [Key.t('<Tab>')] = next_item,
     [Key.t('<C-j>')] = next_item,
