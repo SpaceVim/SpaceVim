@@ -49,6 +49,11 @@ function M.resize(size, ...)
     vim.cmd(cmd .. ' resize ' .. size)
 end
 
+function M.open_pos(cmd, filename, line, col)
+    vim.cmd('silent ' .. cmd .. ' ' .. filename)
+    vim.fn.cursor(line, col)
+end
+
 return M
 
 

@@ -5,6 +5,7 @@ local mpt = require('spacevim.api').import('prompt')
 local hi = require('spacevim.api').import('vim.highlight')
 local regex = require('spacevim.api').import('vim.regex')
 local Key = require('spacevim.api').import('vim.keys')
+local buffer = require('spacevim.api').import('vim.buffer')
 
 -- compatibility functions
 local jobstart = vim.fn.jobstart
@@ -48,6 +49,8 @@ local grep_expr_opt = {}
 local hi_id = -1
 local grep_mode = 'expr'
 local filename_pattern = [[[^:]*:\d\+:\d\+:]]
+local previous_able = false
+local grep_history = {}
 
 
 
@@ -64,6 +67,8 @@ local function read_histroy()
         return {}
     end
 end
+grep_history = read_histroy()
+
 
 local function update_history()
     if vim.fn.index(grep_history, grep_expr) >= 0 then
@@ -120,7 +125,6 @@ local function get_search_cmd(expr)
     return cmd
 end
 
-local grep_history = read_histroy()
 local complete_input_history_num = {0, 0}
 
 local function grep_stdout(id, data, event)
@@ -270,6 +274,40 @@ local function previous_item()
     mpt._build_prompt()
 end
 
+local function close_preview_win()
+    
+end
+
+local function get_file_pos(line)
+  local filename = vim.fn.fnameescape(vim.fn.split(line, [[:\d\+:]])[1])
+  local linenr = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[:\d\+:]]), 2, -2))
+  local colum = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[\(:\d\+\)\@<=:\d\+:]]), 2, -2))
+  return filename, linenr, colum
+end
+
+local function open_item()
+    mpt._handle_fly = flygrep
+    local cursor = vim.api.nvim_win_get_cursor(flygrep_win_id)
+    local line = vim.api.nvim_buf_get_lines(buffer_id, cursor[1] - 1, cursor[1], false)[1]
+    -- print(vim.inspect(line))
+    if line ~= '' then
+        if grepid ~= 0 then
+            jobstop(grepid)
+        end
+        mpt._clear_prompt()
+        mpt._quit = 1
+        local filename, liner, colum = get_file_pos(line)
+        if previous_able then
+            close_preview_win()
+        end
+        previous_able = false
+        close_flygrep_win()
+        update_history()
+        buffer.open_pos('edit', filename, linenr, colum)
+        vim.cmd('noautocmd normal! :')
+    end
+end
+
 mpt._function_key = {
     [Key.t('<Tab>')] = next_item,
     [Key.t('<C-j>')] = next_item,
@@ -386,6 +424,5 @@ function M.open(argv)
     vim.o.guicursor = guicursor
 
 end
-
 
 return M
