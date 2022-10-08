@@ -6,6 +6,7 @@ local hi = require('spacevim.api').import('vim.highlight')
 local regex = require('spacevim.api').import('vim.regex')
 local Key = require('spacevim.api').import('vim.keys')
 local buffer = require('spacevim.api').import('vim.buffer')
+local sl = require('spacevim.api').import('vim.statusline')
 
 -- compatibility functions
 local jobstart = vim.fn.jobstart
@@ -146,7 +147,23 @@ local function grep_stderr(id, data, event)
 end
 
 local function update_statusline()
+    if sl.support_float() and vim.fn.win_id2tabwin(flygrep_win_id)[1] == vim.fn.tabpagenr() then
+        sl.open_float({
+            {'FlyGrep ', 'SpaceVim_statusline_a_bold'},
+            {' ', 'SpaceVim_statusline_a_SpaceVim_statusline_b'},
+            {M.mode() .. ' ', 'SpaceVim_statusline_b'},
+            {' ', 'SpaceVim_statusline_b_SpaceVim_statusline_c'},
+            {vim.fn.getcwd() .. ' ', 'SpaceVim_statusline_c'},
+            {' ', 'SpaceVim_statusline_c_SpaceVim_statusline_b'},
+            {M.lineNr() .. ' ', 'SpaceVim_statusline_b'},
+            {' ', 'SpaceVim_statusline_b_SpaceVim_statusline_z'},
+            {vim.fn['repeat'](' ', vim.o.columns - 11), 'SpaceVim_statusline_z'},
+        })
+    end
+end
 
+local function close_statusline()
+    sl.close_float()
 end
 
 local function grep_exit(id, data, event)
@@ -258,6 +275,7 @@ local function next_item()
         cursor[1] = cursor[1] + 1
     end
     vim.api.nvim_win_set_cursor(flygrep_win_id, cursor)
+    update_statusline()
     vim.cmd('redraw')
     mpt._build_prompt()
 end
@@ -270,19 +288,20 @@ local function previous_item()
         cursor[1] = cursor[1] - 1
     end
     vim.api.nvim_win_set_cursor(flygrep_win_id, cursor)
+    update_statusline()
     vim.cmd('redraw')
     mpt._build_prompt()
 end
 
 local function close_preview_win()
-    
+
 end
 
 local function get_file_pos(line)
-  local filename = vim.fn.fnameescape(vim.fn.split(line, [[:\d\+:]])[1])
-  local linenr = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[:\d\+:]]), 2, -2))
-  local colum = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[\(:\d\+\)\@<=:\d\+:]]), 2, -2))
-  return filename, linenr, colum
+    local filename = vim.fn.fnameescape(vim.fn.split(line, [[:\d\+:]])[1])
+    local linenr = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[:\d\+:]]), 2, -2))
+    local colum = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[\(:\d\+\)\@<=:\d\+:]]), 2, -2))
+    return filename, linenr, colum
 end
 
 local function open_item(...)
@@ -372,6 +391,24 @@ mpt._function_key = {
     [Key.t('x80\xfc`\x80\xfdL')] = next_item,
 }
 
+function M.mode()
+    if mode == '' then
+        return grep_mode
+    else
+        return grep_mode .. '(' .. mode .. ')'
+    end
+end
+
+function M.lineNr()
+    if vim.fn.getbufline(buffer_id, 1)[1] == '' then
+        return 'no result'
+    else
+        local current = vim.api.nvim_win_get_cursor(flygrep_win_id)[1]
+        local total = vim.api.nvim_buf_line_count(buffer_id)
+        return current .. '/' .. total
+    end
+end
+
 function M.open(argv)
 
     previous_winid = vim.fn.win_getid()
@@ -447,6 +484,9 @@ function M.open(argv)
     logger.info('   smart_case    : ' .. vim.fn.string(grep_smart_case))
     logger.info('   expr opt      : ' .. vim.fn.string(grep_expr_opt))
     mpt.open()
+    if sl.support_float() then
+        close_statusline()
+    end
     logger.info('FlyGrep ending  =====================')
     vim.o.t_ve = save_tve
     hi.hi(cursor_hi)
