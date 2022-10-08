@@ -389,6 +389,24 @@ mpt._function_key = {
     [Key.t('x80\xfc`\x80\xfdL')] = next_item,
 }
 
+function M.mode()
+    if mode == '' then
+        return grep_mode
+    else
+        return grep_mode .. '(' .. mode .. ')'
+    end
+end
+
+function M.lineNr()
+    if vim.fn.getbufline(buffer_id, 1)[1] == '' then
+        return 'no result'
+    else
+        local current = vim.api.nvim_win_get_cursor(flygrep_win_id)[1]
+        local total = vim.api.nvim_buf_line_count(buffer_id)
+        return current .. '/' .. total
+    end
+end
+
 function M.open(argv)
 
     previous_winid = vim.fn.win_getid()
