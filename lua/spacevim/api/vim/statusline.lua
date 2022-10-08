@@ -17,18 +17,19 @@ function M.open_float(sl)
             relative = 'editor',
             width = vim.o.columns,
             height = 1,
-            highlight = 'SpaceVim_statusline_a_bold',
+            -- highlight = 'SpaceVim_statusline_a_bold',
             row = vim.o.lines - 2,
             col = 0
         })
     end
+    vim.fn.setwinvar(M.__winid, '&winhighlight', 'Normal:SpaceVim_statusline_a_bold')
     vim.fn.setbufvar(M.__bufnr, '&relativenumber', 0)
     vim.fn.setbufvar(M.__bufnr, '&number', 0)
     vim.fn.setbufvar(M.__bufnr, '&bufhidden', 'wipe')
     vim.fn.setbufvar(M.__bufnr, '&cursorline', 0)
     vim.fn.setbufvar(M.__bufnr, '&modifiable', 1)
     vim.fn.setwinvar(vim.fn.win_id2win(M.__winid), '&cursorline', 0)
-    vim.api.nvim_buf_set_virtual_text( M.__bufnr, -1, 0, st, {})
+    vim.api.nvim_buf_set_virtual_text( M.__bufnr, -1, 0, sl, {})
     vim.fn.setbufvar(M.__bufnr, '&modifiable', 0)
     return M.__winid
 end
