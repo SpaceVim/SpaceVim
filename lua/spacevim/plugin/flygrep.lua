@@ -275,6 +275,7 @@ local function next_item()
         cursor[1] = cursor[1] + 1
     end
     vim.api.nvim_win_set_cursor(flygrep_win_id, cursor)
+    update_statusline()
     vim.cmd('redraw')
     mpt._build_prompt()
 end
@@ -287,6 +288,7 @@ local function previous_item()
         cursor[1] = cursor[1] - 1
     end
     vim.api.nvim_win_set_cursor(flygrep_win_id, cursor)
+    update_statusline()
     vim.cmd('redraw')
     mpt._build_prompt()
 end
