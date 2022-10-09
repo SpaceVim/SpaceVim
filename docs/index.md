@@ -2,6 +2,7 @@
 title: "Home"
 description: "SpaceVim is a community-driven vim distribution that seeks to provide layer feature."
 ---
+
 [![matrix](https://img.shields.io/matrix/spacevim:matrix.org?color=green&label=%23spacevim%3Amatrix.org&logo=matrix)](https://chat.mozilla.org/#/room/#spacevim:matrix.org)
 [![build](https://img.shields.io/github/workflow/status/SpaceVim/SpaceVim/test)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
@@ -11,16 +12,12 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 
 ![welcome page](https://user-images.githubusercontent.com/13142418/176910121-8e7ca78f-8434-4ac7-9b02-08c4d15f8ad9.png)
 
-# SpaceVim - Modern Vim distribution
-
-SpaceVim is a distribution of the Vim editor that's inspired by spacemacs.
-It manages collections of plugins in layers, which help to collect related
-packages together to provide features. This approach helps keep the
-configuration organized and reduces overhead for the user by keeping them
-from having to think about what packages to install.
-
-If you like SpaceVim, please feel free to star the project on [github](https://github.com/SpaceVim/SpaceVim). It is a great way to show your
-appreciation while providing us motivation to continue working on this project.
+SpaceVim is a community-driven distribution of Vim and Neovim.
+It's inspired by spacemacs. It manages collections of plugins in layers,
+which help to collect related packages together to provide features.
+This approach helps keep the configuration organized and reduces
+overhead for the user by keeping them from having to think about
+what packages to install.
 
 - [Quick start guide](quick-start-guide/): installation, configuration, and learning resources for SpaceVim
 - [Documentation](documentation/): the primary official documentation of SpaceVim
@@ -47,7 +44,7 @@ Follow our twitter: [@SpaceVim](https://twitter.com/SpaceVim)
 
 ## Participating
 
-Discuss the project at [gitter.im/SpaceVim](https://gitter.im/SpaceVim/SpaceVim) or [/r/SpaceVim](https://www.reddit.com/r/SpaceVim/)
+Discuss the project at [#spacevim:matrix.org](https://chat.mozilla.org/#/room/#spacevim:matrix.org) or [/r/SpaceVim](https://www.reddit.com/r/SpaceVim/)
 
 Contribute code, report bugs and request features on [GitHub](https://github.com/SpaceVim/SpaceVim).
 
@@ -74,26 +71,26 @@ Contribute code, report bugs and request features on [GitHub](https://github.com
   SpaceVim has been tested in [github action](https://github.com/SpaceVim/SpaceVim/actions) with following
   versions of neovim and vim:
 
-  | Program | Version    | Windows | Linux |
-  | ------- | ---------- | ------- | ----- |
-  | vim     | v8.2.3995  | √       | √     |
-  | vim     | v8.2.2434  | √       | √     |
-  | vim     | v8.1.2669  | √       | √     |
-  | vim     | v7.0.1453  | √       | √     |
-  | vim     | v7.0.0184  | √       | √     |
-  | vim     | v7.0.0183  | √       | √     |
-  | vim     | v8.0.027   | √       | √     |
-  | vim     | v7.4.1689  | √       | √     |
-  | vim     | v7.4.629   | √       | √     |
-  | vim     | v7.4.052   | √       | √     |
-  | neovim  | v0.6.1     | √       | √     |
-  | neovim  | v0.6.0     | √       | √     |
-  | neovim  | v0.5.1     | √       | √     |
-  | neovim  | v0.5.0     | √       | √     |
-  | neovim  | v0.4.4     | √       | √     |
-  | neovim  | v0.4.3     | √       | √     |
-  | neovim  | v0.4.2     | √       | √     |
-  | neovim  | v0.3.8     | √       | √     |
+  | Program | Version   | Windows | Linux |
+  | ------- | --------- | ------- | ----- |
+  | vim     | v8.2.3995 | √       | √     |
+  | vim     | v8.2.2434 | √       | √     |
+  | vim     | v8.1.2669 | √       | √     |
+  | vim     | v7.0.1453 | √       | √     |
+  | vim     | v7.0.0184 | √       | √     |
+  | vim     | v7.0.0183 | √       | √     |
+  | vim     | v8.0.027  | √       | √     |
+  | vim     | v7.4.1689 | √       | √     |
+  | vim     | v7.4.629  | √       | √     |
+  | vim     | v7.4.052  | √       | √     |
+  | neovim  | v0.6.1    | √       | √     |
+  | neovim  | v0.6.0    | √       | √     |
+  | neovim  | v0.5.1    | √       | √     |
+  | neovim  | v0.5.0    | √       | √     |
+  | neovim  | v0.4.4    | √       | √     |
+  | neovim  | v0.4.3    | √       | √     |
+  | neovim  | v0.4.2    | √       | √     |
+  | neovim  | v0.3.8    | √       | √     |
 
 For more general questions, please read the SpaceVim [FAQ](faq/).
 
