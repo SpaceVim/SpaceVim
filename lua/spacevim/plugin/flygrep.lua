@@ -316,7 +316,7 @@ local function open_item(...)
             jobstop(grepid)
         end
         mpt._clear_prompt()
-        mpt._quit = 1
+        mpt._quit = true
         local filename, liner, colum = get_file_pos(line)
         if previous_able then
             close_preview_win()
@@ -367,6 +367,39 @@ local function toggle_expr_mode()
     mpt._handle_fly(mpt._prompt.cursor_begin
     .. mpt._prompt.cursor_char
     .. mpt._prompt.cursor_end)
+end
+
+local function apply_to_quickfix()
+    mpt._handle_fly = flygrep
+    if vim.fn.getbufline(buffer_id, 1)[1] ~= '' then
+        if grepid ~= 0 then
+            jobstop(grepid)
+        end
+        mpt._quit = true
+        if previous_able then
+            close_preview_win()
+        end
+        previous_able = false
+        local searching_result = vim.api.nvim_buf_get_lines(buffer_id, 0, -1, false)
+        close_flygrep_win()
+        update_history()
+        if vim.fn.empty(searching_result) == 0 then
+            -- vim.cmd('cgetexpr '  .. vim.fn.join(searching_result, "\n"))
+            -- vim.cmd([[
+                    -- cgetexpr join(luaeval(searching_result), "\n")
+            -- ]])
+            -- vim.fn.setqflist({})
+            vim.fn.setqflist({}, 'r', {
+                title = 'FlyGrep partten:' .. mpt._prompt.cursor_begin .. mpt._prompt.cursor_char .. mpt._prompt.cursor_end,
+                lines = searching_result
+            })
+            mpt._clear_prompt()
+            vim.cmd('copen')
+        end
+        vim.cmd('noautocmd normal! :')
+
+
+    end
 end
 
 mpt._function_key = {
