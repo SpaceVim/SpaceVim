@@ -357,6 +357,18 @@ local function double_click()
     open_item()
 end
 
+local function toggle_expr_mode()
+    if grep_mode == 'expr' then
+        grep_mode = 'string'
+    else
+        grep_mode = 'expr'
+    end
+    mpt._oninputpro()
+    mpt._handle_fly(mpt._prompt.cursor_begin
+    .. mpt._prompt.cursor_char
+    .. mpt._prompt.cursor_end)
+end
+
 mpt._function_key = {
     [Key.t('<Tab>')] = next_item,
     [Key.t('<C-j>')] = next_item,
