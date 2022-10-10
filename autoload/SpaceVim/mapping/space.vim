@@ -514,8 +514,13 @@ function! SpaceVim#mapping#space#init() abort
         \ "call SpaceVim#plugins#flygrep#open({'input' : expand(\"<cword>\"), 'dir' : get(b:, \"rootDir\", getcwd())})",
         \ 'grep-cword-in-project', 1)
   " Searching background
-  call SpaceVim#mapping#space#def('nnoremap', ['s', 'j'],
-        \ 'call SpaceVim#plugins#searcher#find("", SpaceVim#mapping#search#default_tool()[0])', 'background-search-in-project', 1)
+  if has('nvim-0.7.0')
+    call SpaceVim#mapping#space#def('nnoremap', ['s', 'j'],
+          \ "lua require('spacevim.plugin.searcher').find('', require('spacevim.plugin.search').default_tool())", 'background-search-in-project', 1)
+  else
+    call SpaceVim#mapping#space#def('nnoremap', ['s', 'j'],
+          \ 'call SpaceVim#plugins#searcher#find("", SpaceVim#mapping#search#default_tool()[0])', 'background-search-in-project', 1)
+  endif
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'J'],
         \ 'call SpaceVim#plugins#searcher#find(expand("<cword>"),SpaceVim#mapping#search#default_tool()[0])',
         \ 'background-search-cwords-in-project', 1)
