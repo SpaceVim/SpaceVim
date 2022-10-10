@@ -206,7 +206,7 @@ end
 
 
 local function matchadd(group, pattern, p)
-
+    pcall(vim.fn.matchadd, group, pattern, p)
 end
 
 local function expr_to_pattern(expr)
