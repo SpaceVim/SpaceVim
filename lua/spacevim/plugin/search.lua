@@ -129,5 +129,10 @@ function M.default_tool()
 
 end
 
+function M.getFopt(exe)
+    local key = search_tools.namespace[exe]
+    return search_tools[key]['default_fopts']
+end
+
 
 return M

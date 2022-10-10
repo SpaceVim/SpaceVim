@@ -55,6 +55,7 @@ local preview_able = false
 local grep_history = {}
 local previewd_bufnrs = {}
 local preview_win_id = -1
+local filter_file = ''
 
 
 
@@ -460,6 +461,47 @@ local function toggle_preview()
         preview_able = false
     end
     vim.cmd('redraw')
+    mpt._build_prompt()
+end
+
+local function get_filter_cmd(expr)
+    local cmd = {grep_exe}
+    append(cmd, require('spacevim.plugin.search').getFopt(grep_exe))
+    append(cmd, {expr, filter_file})
+    return cmd
+end
+
+local function filter_timer(...)
+    local cmd = get_filter_cmd(vim.fn.join(vim.fn.split(grep_expr), '.*'))
+    grepid = jobstart(cmd, {
+        on_stdout = grep_stdout,
+        on_exit = grep_exit
+    })
+end
+
+local function filter(expr)
+    mpt._build_prompt()
+    if expr == '' then
+        return
+    end
+    pcall(vim.fn.matchdelete, hi_id)
+    vim.cmd('hi def link FlyGrepPattern MoreMsg')
+    hi_id = matchadd('FlyGrepPattern', expr_to_pattern(expr), 2)
+    grep_expr = expr
+    grep_timer_id = timer_start(200, filter_timer, {['repeat'] = 1})
+end
+
+local function start_filter()
+    mode = 'f'
+    update_statusline()
+    mpt._handle_fly = filter
+    mpt._clear_prompt()
+    filter_file = vim.fn.tempname()
+    local context = vim.api.nvim_buf_get_lines(buffer_id, 0, -1, false)
+    local ok, rst = pcall(vim.fn.writefile, context, filter_file, 'b')
+    if not ok then
+        logger.info('Failed to write filter content to temp file')
+    end
     mpt._build_prompt()
 end
 
