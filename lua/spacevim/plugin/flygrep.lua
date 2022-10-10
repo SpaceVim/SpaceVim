@@ -457,6 +457,7 @@ local function toggle_preview()
         preview()
     else
         close_preview_win()
+        preview_able = false
     end
     vim.cmd('redraw')
     mpt._build_prompt()
