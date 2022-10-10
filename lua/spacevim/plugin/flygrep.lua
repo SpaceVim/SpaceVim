@@ -308,6 +308,7 @@ local function close_buffer()
         preview_able = false
     end
     close_flygrep_win()
+    vim.cmd('noautocmd normal :')
 end
 
 mpt._onclose = close_buffer
