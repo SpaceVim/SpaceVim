@@ -565,6 +565,7 @@ function M.open(argv)
         logger.warn(' [flygrep] make sure you have one search tool in your PATH')
         return
     end
+    mode = ''
     mpt._handle_fly = flygrep
     buffer_id = vim.api.nvim_create_buf(false, true)
     local flygrep_win_height = 16
