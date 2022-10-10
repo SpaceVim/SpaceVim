@@ -6,6 +6,7 @@ local hi = require('spacevim.api').import('vim.highlight')
 local regex = require('spacevim.api').import('vim.regex')
 local Key = require('spacevim.api').import('vim.keys')
 local buffer = require('spacevim.api').import('vim.buffer')
+local window = require('spacevim.api').import('vim.window')
 local sl = require('spacevim.api').import('vim.statusline')
 
 -- compatibility functions
@@ -50,8 +51,10 @@ local grep_expr_opt = {}
 local hi_id = -1
 local grep_mode = 'expr'
 local filename_pattern = [[[^:]*:\d\+:\d\+:]]
-local previous_able = false
+local preview_able = false
 local grep_history = {}
+local previewd_bufnrs = {}
+local preview_win_id = -1
 
 
 
@@ -243,12 +246,66 @@ local function close_flygrep_win()
     vim.fn.win_gotoid(previous_winid)
 end
 
+local function get_file_pos(line)
+    local filename = vim.fn.fnameescape(vim.fn.split(line, [[:\d\+:]])[1])
+    local linenr = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[:\d\+:]]), 2, -2))
+    local colum = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[\(:\d\+\)\@<=:\d\+:]]), 2, -2))
+    return filename, linenr, colum
+end
+
+local function preview_timer(t)
+    local cursor = vim.api.nvim_win_get_cursor(flygrep_win_id)
+    local line = vim.api.nvim_buf_get_lines(buffer_id, cursor[1] - 1, cursor[1], false)[1]
+    if line == '' then return end
+    for id in ipairs(vim.fn.filter(previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')) do
+        vim.cmd('silent bd ' .. id)
+    end
+    local br = vim.fn.bufnr('$')
+    local filename, liner, colum = get_file_pos(line)
+    local bufnr = vim.fn.bufadd(filename)
+    vim.fn.bufload(bufnr)
+    local flygrep_win_height = 16
+    if window.is_float(preview_win_id) then
+        vim.api.nvim_win_set_buf(preview_win_id, bufnr)
+    else
+        preview_win_id = vim.api.nvim_open_win(bufnr, false,{
+            relative = 'editor',
+            width = vim.o.columns,
+            height = 5,
+            row = vim.o.lines - flygrep_win_height - 2 - 5,
+            col = 0
+        })
+    end
+    vim.api.nvim_win_set_cursor(preview_win_id, {liner, 1})
+    if bufnr > br then
+        table.insert(previewd_bufnrs, bufnr)
+    end
+    mpt._build_prompt()
+end
+
+local function preview()
+    timer_stop(preview_timer_id)
+    preview_timer_id = timer_start(200, preview_timer, {['repeat'] = 1})
+end
+
+local function close_preview_win()
+    pcall(vim.api.nvim_win_close, preview_win_id, true)
+end
+
+
 local function close_buffer()
     if grepid > 0 then
         jobstop(grepid)
     end
     timer_stop(grep_timer_id)
     timer_stop(preview_timer_id)
+    if preview_able then
+        for id in ipairs(vim.fn.filter(previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')) do
+            vim.cmd('silent bd ' .. id)
+        end
+        close_preview_win()
+        preview_able = false
+    end
     close_flygrep_win()
 end
 
@@ -275,6 +332,9 @@ local function next_item()
         cursor[1] = cursor[1] + 1
     end
     vim.api.nvim_win_set_cursor(flygrep_win_id, cursor)
+    if preview_able then
+        preview()
+    end
     update_statusline()
     vim.cmd('redraw')
     mpt._build_prompt()
@@ -293,17 +353,6 @@ local function previous_item()
     mpt._build_prompt()
 end
 
-local function close_preview_win()
-
-end
-
-local function get_file_pos(line)
-    local filename = vim.fn.fnameescape(vim.fn.split(line, [[:\d\+:]])[1])
-    local linenr = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[:\d\+:]]), 2, -2))
-    local colum = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[\(:\d\+\)\@<=:\d\+:]]), 2, -2))
-    return filename, linenr, colum
-end
-
 local function open_item(...)
     local argv = {...}
     local edit_command = argv[1] or 'edit'
@@ -318,10 +367,10 @@ local function open_item(...)
         mpt._clear_prompt()
         mpt._quit = true
         local filename, liner, colum = get_file_pos(line)
-        if previous_able then
+        if preview_able then
             close_preview_win()
         end
-        previous_able = false
+        preview_able = false
         close_flygrep_win()
         update_history()
         buffer.open_pos(edit_command, filename, liner, colum)
@@ -376,17 +425,17 @@ local function apply_to_quickfix()
             jobstop(grepid)
         end
         mpt._quit = true
-        if previous_able then
+        if preview_able then
             close_preview_win()
         end
-        previous_able = false
+        preview_able = false
         local searching_result = vim.api.nvim_buf_get_lines(buffer_id, 0, -1, false)
         close_flygrep_win()
         update_history()
         if vim.fn.empty(searching_result) == 0 then
             -- vim.cmd('cgetexpr '  .. vim.fn.join(searching_result, "\n"))
             -- vim.cmd([[
-                    -- cgetexpr join(luaeval(searching_result), "\n")
+            -- cgetexpr join(luaeval(searching_result), "\n")
             -- ]])
             -- vim.fn.setqflist({})
             vim.fn.setqflist({}, 'r', {
@@ -400,6 +449,17 @@ local function apply_to_quickfix()
 
 
     end
+end
+
+local function toggle_preview()
+    if not preview_able then
+        preview_able = true
+        preview()
+    else
+        close_preview_win()
+    end
+    vim.cmd('redraw')
+    mpt._build_prompt()
 end
 
 mpt._function_key = {

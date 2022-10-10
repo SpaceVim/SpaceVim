@@ -745,7 +745,8 @@ endif
 if has('timers')
   function! s:preview() abort
     call timer_stop(s:preview_timer_id)
-    let s:preview_timer_id = timer_start(200, function('s:preview_timer'), {'repeat' : 1})
+    let s:preview_timer_id = timer_start(200,
+          \ function('s:preview_timer'), {'repeat' : 1})
   endfunction
 else
   function! s:preview() abort
