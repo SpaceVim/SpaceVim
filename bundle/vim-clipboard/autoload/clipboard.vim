@@ -6,7 +6,10 @@
 " License: GPLv3
 "=============================================================================
 
+let s:LOGGER =SpaceVim#logger#derive('FlyGrep')
+
 " This script is based on kamilkrz (Kamil Krześ)'s idea about using clipboard.
+
 function! s:set_command() abort
   let yank = ''
   let paste = ''
@@ -91,5 +94,6 @@ function! s:get_selection_text()
   endif
   return join(lines, "\n") . lastchar . (visualmode() ==# 'V' ? "\n" : '')
 endfunction
-
 let [s:yank_cmd, s:paste_cmd] = s:set_command()
+call s:LOGGER.info('yank_cmd is:' . string(s:yank_cmd))
+call s:LOGGER.info('paste_cmd is:' . string(s:paste_cmd))
