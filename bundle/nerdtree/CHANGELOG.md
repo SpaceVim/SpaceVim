@@ -4,6 +4,38 @@
      version in an unordered list.  The format is:
         - **.PATCH**: Pull Request Title (PR Author) [PR Number](Link to PR)
 -->
+#### 6.10
+- **.16**: Fix documentation errors. (lifecrisis) [#1269](https://github.com/preservim/nerdtree/pull/1269)
+- **.15**: Ensure backward compatible testing of types. (lifecrisis) [#1266](https://github.com/preservim/nerdtree/pull/1266)
+- **.14**: Replace trim() with a version-compatible alternative. (PhilRunninger) [#1265](https://github.com/preservim/nerdtree/pull/1265)
+- **.13**: Change highlighting of bookmarks in the tree. (PhilRunninger) [#1261](https://github.com/preservim/nerdtree/pull/1261)
+- **.12**: Answer the question about accessing files over scp or ftp. (PhilRunninger) [#1259](https://github.com/preservim/nerdtree/pull/1259)
+- **.11**: Trim filenames created via the fs_menu (elanorigby) [#1243](https://github.com/preservim/nerdtree/pull/1243)
+- **.10**: Improve F.A.Q. Answers and Issue Templates (PhilRunninger) [#1249](https://github.com/preservim/nerdtree/pull/1249)
+- **.9**: `go` on a bookmark directory will NERDTreeFind it. (PhilRunninger) [#1236](https://github.com/preservim/nerdtree/pull/1236)
+- **.8**: Put `Callback` function variables in local scope. (PhilRunninger) [#1230](https://github.com/preservim/nerdtree/pull/1230)
+- **.7**: Fix mouse-clicking a file to open it. (PhilRunninger) [#1225](https://github.com/preservim/nerdtree/pull/1225)
+- **.6**: Restore the default behavior of the `<CR>` key. (PhilRunninger) [#1221](https://github.com/preservim/nerdtree/pull/1221)
+- **.5**: Fix `{'keepopen':0}` in NERDTreeCustomOpenArgs (PhilRunninger) [#1217](https://github.com/preservim/nerdtree/pull/1217)
+- **.4**: Removed directory separator from sort key (Daniel E) [#1219](https://github.com/preservim/nerdtree/pull/1219)
+- **.3**: Add new FAQ and answer: How to prevent buffers replacing NERDTree. (PhilRunninger) [#1215](https://github.com/preservim/nerdtree/pull/1215)
+- **.2**: New menu command: Run a system command in this directory. (PhilRunninger) [#1214](https://github.com/preservim/nerdtree/pull/1214)
+- **.1**: Escape quotation marks so they can be used in key mappings. (PhilRunninger) [#1213](https://github.com/preservim/nerdtree/pull/1213)
+- **.0**: Enable full path specifications for NERDTreeIgnore (PhilRunninger) [#1207](https://github.com/preservim/nerdtree/pull/1207)
+#### 6.9
+- **.12**: Respect NERDTreeCustomOpenArgs when opening bookmark (przepompownia) [#1200](https://github.com/preservim/nerdtree/pull/1200)
+- **.11**: Revamp the README. (buncis, PhilRunninger) [#1192](https://github.com/preservim/nerdtree/pull/1192), [#1193](https://github.com/preservim/nerdtree/pull/1193)
+- **.10**: Open a mirrored NERDTree with correct width (PhilRunninger) [#1177](https://github.com/preservim/nerdtree/pull/1177)
+- **.9**: Updated Readme, removed typo (H3RSKO) [#1167](https://github.com/preservim/nerdtree/pull/1167)
+- **.8**: Refactor sort comparison functions, removing redundancy (PhilRunninger) [#1166](https://github.com/preservim/nerdtree/pull/1166)
+- **.7**: Fix argument of `exists()` function calls checking for autocommands. (PhilRunninger) [#1165](https://github.com/preservim/nerdtree/pull/1165)
+- **.6**: Don't use silent when raising User events (PhilRunninger) [#1164](https://github.com/preservim/nerdtree/pull/1164)
+- **.5**: Fix highlight for file node.  (pirey) [#1157](https://github.com/preservim/nerdtree/pull/1157)
+- **.4**: Make sure symbolic links' flags are highlighted correctly.  (PhilRunninger) [#1156](https://github.com/preservim/nerdtree/pull/1156)
+- **.3**: Fix new NERDTrees' width when previous one was in the only window. (PhilRunninger) [#1153](https://github.com/preservim/nerdtree/pull/1153)
+- **.2**: Fix the scope of several key mappings (lifecrisis, PhilRunninger) [#1151](https://github.com/preservim/nerdtree/pull/1151)
+- **.1**: Respect user's `&shellslash` setting in CopyNode and RemoveNode functions (PhilRunninger) [#1150](https://github.com/preservim/nerdtree/pull/1150)
+- **.0**: Enable opening bookmarks in split windows. (PhilRunninger) [#1144](https://github.com/preservim/nerdtree/pull/1144)
 #### 6.8
 - **.0**: Allow concealed characters to show another character. (PhilRunninger) [#1138](https://github.com/preservim/nerdtree/pull/1138)
 #### 6.7
