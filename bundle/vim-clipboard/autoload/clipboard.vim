@@ -97,3 +97,11 @@ endfunction
 let [s:yank_cmd, s:paste_cmd] = s:set_command()
 call s:LOGGER.info('yank_cmd is:' . string(s:yank_cmd))
 call s:LOGGER.info('paste_cmd is:' . string(s:paste_cmd))
+
+
+function! clipboard#set(yank, past) abort
+  let s:yank_cmd = a:yank
+  let s:paste_cmd = a:past
+  call s:LOGGER.info('yank_cmd is:' . string(s:yank_cmd))
+  call s:LOGGER.info('paste_cmd is:' . string(s:paste_cmd))
+endfunction

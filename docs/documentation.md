@@ -1255,6 +1255,22 @@ Read `:h registers` for more info about other registers.
 | `<Leader> P` | Paste text from system clipboard before here |
 | `<Leader> Y` | Copy selected text to pastebin               |
 
+To change the command of clipboard, you nned to use bootstrap after function:
+
+```viml
+" for example, to use tmux clipboard:
+function! myspacevim#after() abort
+    call clipboard#set('tmux load-buffer -', 'tmux save-buffer -')
+endfunction
+```
+
+within the runtime log (`SPC h L`), the clipboard command will be displayed:
+
+```
+[ clipboard ] [11:00:35] [670.246] [ Info  ] yank_cmd is:'tmux load-buffer -'
+[ clipboard ] [11:00:35] [670.246] [ Info  ] paste_cmd is:'tmux save-buffer -'
+```
+
 The `<Leader> Y` key binding will copy selected text to a pastebin server. It requires `curl` in your `$PATH`.
 The default command is:
 
