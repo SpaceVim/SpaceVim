@@ -47,6 +47,16 @@ local iedit_hi_info = {
     },
 }
 
+
+local function fixstack(idxs)
+    local change = 0
+    for _, i in vim.fn.range(1, #idxs) do
+        cursor_stack[idxs[i][1]].col = cursor_stack[idxs[i][1]].col + change
+        change  = change + idxs[i][2] - cursor_stack[idxs[i][1]].len
+        cursor_stack[idxs[i][1]].len = idxs[i][0]
+    end
+end
+
 local function highlight_cursor()
     hi.hi(iedit_cursor_hi_info)
     for _,i in vim.fn.range(1, #cursor_stack) do
