@@ -60,6 +60,11 @@ let s:i_separators = {
       \ 'bar' : ['|', '|'],
       \ 'nil' : ['', ''],
       \ }
+
+let [s:lsep , s:rsep] = ['', '']
+
+let [s:ilsep , s:irsep] = ['', '']
+
 let s:loaded_modes = []
 let s:modes = {
       \ 'center-cursor': {
