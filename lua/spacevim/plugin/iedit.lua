@@ -90,6 +90,23 @@ local function remove_cursor_highlight()
     vim.fn.clearmatches()
 end
 
+local function handle_f_char(char)
+    remove_cursor_highlight()
+    if char >= 32 and char <= 126 then
+        Operator = ''
+        for _, i in vim.fn.range(1, #cursor_stack) do
+            local matchedstr = vim.fn.matchstr(cursor_stack[i].cursor_end, vim.fn.printf('[^%s]', vim.fn.nr2char(char)))
+            cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char .. matchedstr
+            cursor_stack[i].cursor_end   = vim.fn.matchstr(cursor_stack[i].cursor_end, vim.fn.printf([[[%s]\zs.*]], vim.fn.nr2char(char)))
+            cursor_stack[i].cursor_char  = vim.fn.nr2char(char)
+        end
+    end
+    highlight_cursor()
+    return cursor_stack[1].cursor_begin
+        .. cursor_stack[1].cursor_char
+        .. cursor_stack[1].cursor_end
+end
+
 local function handle(mode, char)
     if mode == 'n' and Operator == 'f' then
         handle_f_char(char)
