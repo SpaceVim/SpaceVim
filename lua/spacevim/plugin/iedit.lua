@@ -23,127 +23,127 @@ local logger = require('spacevim.logger').derive('iedit')
 local cursor_stack = {}
 
 local iedit_hi_info = {
-    {
-        name = 'IeditPurpleBold',
-        guibg = '#3c3836',
-        guifg = '#d3869b',
-        ctermbg = '',
-        ctermfg = 175,
-        bold = 1,
-    },{
-        name = 'IeditBlueBold',
-        guibg = '#3c3836',
-        guifg = '#83a598',
-        ctermbg = '',
-        ctermfg = 109,
-        bold = 1,
-    },{
-        name = 'IeditInactive',
-        guibg = '#3c3836',
-        guifg = '#abb2bf',
-        ctermbg = '',
-        ctermfg = 145,
-        bold = 1,
-    },
+  {
+    name = 'IeditPurpleBold',
+    guibg = '#3c3836',
+    guifg = '#d3869b',
+    ctermbg = '',
+    ctermfg = 175,
+    bold = 1,
+  },{
+    name = 'IeditBlueBold',
+    guibg = '#3c3836',
+    guifg = '#83a598',
+    ctermbg = '',
+    ctermfg = 109,
+    bold = 1,
+  },{
+    name = 'IeditInactive',
+    guibg = '#3c3836',
+    guifg = '#abb2bf',
+    ctermbg = '',
+    ctermfg = 145,
+    bold = 1,
+  },
 }
 
 
 local function fixstack(idxs)
-    local change = 0
-    for _, i in vim.fn.range(1, #idxs) do
-        cursor_stack[idxs[i][1]].col = cursor_stack[idxs[i][1]].col + change
-        change  = change + idxs[i][2] - cursor_stack[idxs[i][1]].len
-        cursor_stack[idxs[i][1]].len = idxs[i][0]
-    end
+  local change = 0
+  for _, i in vim.fn.range(1, #idxs) do
+    cursor_stack[idxs[i][1]].col = cursor_stack[idxs[i][1]].col + change
+    change  = change + idxs[i][2] - cursor_stack[idxs[i][1]].len
+    cursor_stack[idxs[i][1]].len = idxs[i][0]
+  end
 end
 
 local function highlight_cursor()
-    hi.hi(iedit_cursor_hi_info)
-    for _,i in vim.fn.range(1, #cursor_stack) do
-        if cursor_stack[i].active then
-            if i == index then
-                vim.fn.matchaddpos('IeditPurpleBold',{
-                    {
-                        cursor_stack[i].lnum,
-                        cursor_stack[i].col,
-                        cursor_stack[i].len,
-                    }
-                })
-            else
-                vim.fn.matchaddpos('IeditBlueBold',{
-                    {
-                        cursor_stack[i].lnum,
-                        cursor_stack[i].col,
-                        cursor_stack[i].len,
-                    }
-                })
-            end
-            vim.fn.matchadd('SpaceVimGuideCursor', [[\%]]
-            .. cursor_stack[i].lnum
-            .. [[l\%]]
-            .. (cursor_stack[i].col + vim.fn.len(cursor_stack[i].begin))
-            .. 'c',
-            99999)
-        else
-            vim.fn.matchaddpos('IeditInactive',{
-                {
-                    cursor_stack[i].lnum,
-                    cursor_stack[i].col,
-                    cursor_stack[i].len,
-                }
-            })
-        end
+  hi.hi(iedit_cursor_hi_info)
+  for _,i in vim.fn.range(1, #cursor_stack) do
+    if cursor_stack[i].active then
+      if i == index then
+        vim.fn.matchaddpos('IeditPurpleBold',{
+          {
+            cursor_stack[i].lnum,
+            cursor_stack[i].col,
+            cursor_stack[i].len,
+          }
+        })
+      else
+        vim.fn.matchaddpos('IeditBlueBold',{
+          {
+            cursor_stack[i].lnum,
+            cursor_stack[i].col,
+            cursor_stack[i].len,
+          }
+        })
+      end
+      vim.fn.matchadd('SpaceVimGuideCursor', [[\%]]
+      .. cursor_stack[i].lnum
+      .. [[l\%]]
+      .. (cursor_stack[i].col + vim.fn.len(cursor_stack[i].begin))
+      .. 'c',
+      99999)
+    else
+      vim.fn.matchaddpos('IeditInactive',{
+        {
+          cursor_stack[i].lnum,
+          cursor_stack[i].col,
+          cursor_stack[i].len,
+        }
+      })
     end
+  end
 end
 
 local function remove_cursor_highlight()
-    vim.fn.clearmatches()
+  vim.fn.clearmatches()
 end
 
 local function handle_f_char(char)
-    remove_cursor_highlight()
-    if char >= 32 and char <= 126 then
-        Operator = ''
-        for _, i in vim.fn.range(1, #cursor_stack) do
-            local matchedstr = vim.fn.matchstr(cursor_stack[i].cursor_end, vim.fn.printf('[^%s]', vim.fn.nr2char(char)))
-            cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char .. matchedstr
-            cursor_stack[i].cursor_end   = vim.fn.matchstr(cursor_stack[i].cursor_end, vim.fn.printf([[[%s]\zs.*]], vim.fn.nr2char(char)))
-            cursor_stack[i].cursor_char  = vim.fn.nr2char(char)
-        end
+  remove_cursor_highlight()
+  if char >= 32 and char <= 126 then
+    Operator = ''
+    for _, i in vim.fn.range(1, #cursor_stack) do
+      local matchedstr = vim.fn.matchstr(cursor_stack[i].cursor_end, vim.fn.printf('[^%s]', vim.fn.nr2char(char)))
+      cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char .. matchedstr
+      cursor_stack[i].cursor_end   = vim.fn.matchstr(cursor_stack[i].cursor_end, vim.fn.printf([[[%s]\zs.*]], vim.fn.nr2char(char)))
+      cursor_stack[i].cursor_char  = vim.fn.nr2char(char)
     end
-    highlight_cursor()
-    return cursor_stack[1].cursor_begin
-        .. cursor_stack[1].cursor_char
-        .. cursor_stack[1].cursor_end
+  end
+  highlight_cursor()
+  return cursor_stack[1].cursor_begin
+  .. cursor_stack[1].cursor_char
+  .. cursor_stack[1].cursor_end
 end
 
 local function handle_register(char)
-    local char = vim.fn.nr2char(char)
-    if char:match('[a-zA-Z0-9"%+:/]') then
-        remove_cursor_highlight()
-        Operator = ''
-        local reg = '@' .. char
-        local paste = vim.fn.split(vim.fn.eval(reg), '\n')[1] or ''
-        for _, i in vim.fn.range(1, #cursor_stack) do
-            cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. paste
-        end
-        replace_symbol()
-        highlight_cursor()
+  local char = vim.fn.nr2char(char)
+  if char:match('[a-zA-Z0-9"%+:/]') then
+    remove_cursor_highlight()
+    Operator = ''
+    local reg = '@' .. char
+    local paste = vim.fn.split(vim.fn.eval(reg), '\n')[1] or ''
+    for _, i in vim.fn.range(1, #cursor_stack) do
+      cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. paste
     end
-    return cursor_stack[1].cursor_begin
-        .. cursor_stack[1].cursor_char
-        .. cursor_stack[1].cursor_end
+    replace_symbol()
+    highlight_cursor()
+  end
+  return cursor_stack[1].cursor_begin
+  .. cursor_stack[1].cursor_char
+  .. cursor_stack[1].cursor_end
 end
 
 local function handle(mode, char)
-    if mode == 'n' and Operator == 'f' then
-        handle_f_char(char)
-    elseif mode == 'n' then
-        handle_normal(char)
-    elseif mode == 'r' and Operator == 'r' then
-        handle_register(char)
-    elseif mode == 'i' then
-        handle_insert(char)
-    end
+  if mode == 'n' and Operator == 'f' then
+    handle_f_char(char)
+  elseif mode == 'n' then
+    handle_normal(char)
+  elseif mode == 'r' and Operator == 'r' then
+    handle_register(char)
+  elseif mode == 'i' then
+    handle_insert(char)
+  end
 end
 
