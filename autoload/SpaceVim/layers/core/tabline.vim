@@ -65,6 +65,10 @@ let s:i_separators = {
       \ 'nil' : ['', ''],
       \ }
 
+let [s:lsep , s:rsep] = ['', '']
+
+let [s:ilsep , s:irsep] = ['', '']
+
 let s:enable_default_mappings = 1
 
 function! s:get_no_empty(a, b) abort
