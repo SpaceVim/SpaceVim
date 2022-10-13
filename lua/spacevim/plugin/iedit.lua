@@ -46,3 +46,58 @@ local iedit_hi_info = {
         bold = 1,
     },
 }
+
+local function highlight_cursor()
+    hi.hi(iedit_cursor_hi_info)
+    for _,i in vim.fn.range(1, #cursor_stack) do
+        if cursor_stack[i].active then
+            if i == index then
+                vim.fn.matchaddpos('IeditPurpleBold',{
+                    {
+                        cursor_stack[i].lnum,
+                        cursor_stack[i].col,
+                        cursor_stack[i].len,
+                    }
+                })
+            else
+                vim.fn.matchaddpos('IeditBlueBold',{
+                    {
+                        cursor_stack[i].lnum,
+                        cursor_stack[i].col,
+                        cursor_stack[i].len,
+                    }
+                })
+            end
+            vim.fn.matchadd('SpaceVimGuideCursor', [[\%]]
+            .. cursor_stack[i].lnum
+            .. [[l\%]]
+            .. (cursor_stack[i].col + vim.fn.len(cursor_stack[i].begin))
+            .. 'c',
+            99999)
+        else
+            vim.fn.matchaddpos('IeditInactive',{
+                {
+                    cursor_stack[i].lnum,
+                    cursor_stack[i].col,
+                    cursor_stack[i].len,
+                }
+            })
+        end
+    end
+end
+
+local function remove_cursor_highlight()
+    vim.fn.clearmatches()
+end
+
+local function handle(mode, char)
+    if mode == 'n' and Operator == 'f' then
+        handle_f_char(char)
+    elseif mode == 'n' then
+        handle_normal(char)
+    elseif mode == 'r' and Operator == 'r' then
+        handle_register(char)
+    elseif mode == 'i' then
+        handle_insert(char)
+    end
+end
