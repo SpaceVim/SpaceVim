@@ -107,6 +107,24 @@ local function handle_f_char(char)
         .. cursor_stack[1].cursor_end
 end
 
+local function handle_register(char)
+    local char = vim.fn.nr2char(char)
+    if char:match('[a-zA-Z0-9"%+:/]') then
+        remove_cursor_highlight()
+        Operator = ''
+        local reg = '@' .. char
+        local paste = vim.fn.split(vim.fn.eval(reg), '\n')[1] or ''
+        for _, i in vim.fn.range(1, #cursor_stack) do
+            cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. paste
+        end
+        replace_symbol()
+        highlight_cursor()
+    end
+    return cursor_stack[1].cursor_begin
+        .. cursor_stack[1].cursor_char
+        .. cursor_stack[1].cursor_end
+end
+
 local function handle(mode, char)
     if mode == 'n' and Operator == 'f' then
         handle_f_char(char)
@@ -118,3 +136,4 @@ local function handle(mode, char)
         handle_insert(char)
     end
 end
+
