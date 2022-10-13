@@ -57,6 +57,14 @@ local function fixstack(idxs)
   end
 end
 
+local function reset_Operator(...)
+  Operator = ''
+end
+
+local function timeout()
+  timer_start(1000, reset_Operator)
+end
+
 local function highlight_cursor()
   hi.hi(iedit_cursor_hi_info)
   for _,i in vim.fn.range(1, #cursor_stack) do
@@ -98,6 +106,19 @@ end
 
 local function remove_cursor_highlight()
   vim.fn.clearmatches()
+end
+
+local function handle_normal(char)
+  
+end
+
+local function handle_insert(char)
+  
+end
+
+local function parse_symbol(_begin, _end, symbol, use_expr, selectall)
+  local len = #symbol
+  local cursor = {vim.fn.line('.'), vim.fn.col('.')}
 end
 
 local function handle_f_char(char)
