@@ -115,7 +115,66 @@ local function remove_cursor_highlight()
 end
 
 local function handle_normal(char)
-  
+  remove_cursor_highlight()
+  if char == 'i' then
+    mode = 'i'
+    vim.w.spacevim_iedit_mode = mode
+    vim.w.spacevim_statusline_mode = 'ii'
+    vim.cmd('redrawstatus!')
+  elseif char == 'I' then
+    mode = 'i'
+    vim.w.spacevim_iedit_mode = mode
+    vim.w.spacevim_statusline_mode = 'ii'
+    for _, i in vim.fn.range(1, #cursor_stack) do
+      if cursor_stack[i].active then
+        local old_cursor_char = cursor_stack[i].cursor_char
+        cursor_stack[i].cursor_char = vim.fn.matchstr(
+        cursor_stack[i].cursor_begin ..
+        cursor_stack[i].cursor_char ..
+        cursor_stack[i].cursor_end,
+        '^.'
+        )
+        cursor_stack[i].cursor_end = vim.fn.substitute(
+        cursor_stack[i].cursor_begin ..
+        old_cursor_char ..
+        cursor_stack[i].cursor_end,
+        '^.', '', 'g'
+        )
+        cursor_stack[i].cursor_begin = ''
+      end
+    end
+    vim.cmd('redrawstatus!')
+  elseif char == '<tab>' then
+  elseif char == 'a' then
+  elseif char == 'A' then
+  elseif char == 'C' then
+  elseif char == '~' then
+  elseif char == 'f' then
+  elseif char == 's' then
+  elseif char == 'x' then
+  elseif char == 'X' then
+  elseif char == '<left>' then
+  elseif char == '<right>' then
+  elseif char == 'e' then
+  elseif char == 'b' then
+  elseif char == 'w' then
+  elseif char == '0' or char == '<home>' then
+  elseif char == '$' or char == '<end>' then
+  elseif char == 'D' then
+  elseif char == 'p' then
+  elseif char == 'S' then
+  elseif char == 'G' then
+  elseif char == 'g' then
+  elseif char == '<c-n>' then
+  elseif char == '<C-x>' then
+  elseif char == '<C-p>' then
+  elseif char == 'n' then
+  elseif char == 'N' then
+  end
+  highlight_cursor()
+  return cursor_stack[1].cursor_begin
+  .. cursor_stack[1].cursor_char
+  .. cursor_stack[1].cursor_end
 end
 
 local function handle_insert(char)
