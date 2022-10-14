@@ -203,6 +203,8 @@ local function handle_normal(char) -- handle normal key bindings {{{
     end
     replace_symbol()
   elseif char == 'f' then
+    Operator = 'f'
+    timeout()
   elseif char == 's' then
   elseif char == 'x' then
   elseif char == 'X' then
