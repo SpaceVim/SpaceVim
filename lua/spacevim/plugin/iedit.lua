@@ -6,6 +6,12 @@
 -- License: GPLv3
 --=============================================================================
 
+local M = {}
+local modname = 'spacevim.plugin.iedit'
+_G[modname] = M
+package.loaded[modname] = M  --return modname
+setmetatable(M, {__index = _G})
+
 local index = -1
 local cursor_col = -1
 local mode = ''
