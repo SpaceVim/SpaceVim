@@ -122,6 +122,7 @@ local function handle_normal(char)
     vim.w.spacevim_statusline_mode = 'ii'
     vim.cmd('redrawstatus!')
   elseif char == 'I' then
+    -- {{{
     mode = 'i'
     vim.w.spacevim_iedit_mode = mode
     vim.w.spacevim_statusline_mode = 'ii'
@@ -144,7 +145,11 @@ local function handle_normal(char)
       end
     end
     vim.cmd('redrawstatus!')
+    -- }}}
   elseif char == '<tab>' then
+    -- {{{
+    cursor_stack[index].active = not cursor_stack[index].active
+    --}}}
   elseif char == 'a' then
   elseif char == 'A' then
   elseif char == 'C' then
@@ -259,3 +264,4 @@ local function handle(mode, char)
   end
 end
 
+-- vim:set et sw=2 cc=80 foldmethod=marker foldmarker={{{,}}}:
