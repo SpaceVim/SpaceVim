@@ -152,11 +152,10 @@ local function handle_normal(char) -- handle normal key bindings {{{
     end
     vim.cmd('redrawstatus!')
     -- }}}
-  elseif char == '<tab>' then
-    -- {{{
+  elseif char == '<tab>' then  -- {{{
     cursor_stack[index].active = not cursor_stack[index].active
     --}}}
-  elseif char == 'a' then
+  elseif char == 'a' then -- {{{
     mode = 'i'
     vim.w.spacevim_iedit_mode = mode
     vim.w.spacevim_statusline_mode = 'ii'
@@ -170,7 +169,20 @@ local function handle_normal(char) -- handle normal key bindings {{{
     end
     vim.cmd('redrawstatus!')
     -- }}}
-  elseif char == 'A' then
+  elseif char == 'A' then -- {{{
+    mode = 'i'
+    vim.w.spacevim_iedit_mode = mode
+    vim.w.spacevim_statusline_mode = 'ii'
+    for _, i in vim.fn.range(1, #cursor_stack) do
+      if cursor_stack[i].active then
+        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin ..
+        cursor_stack[i].cursor_char .. cursor_stack[i].cursor_end
+        cursor_stack[i].cursor_char = ''
+        cursor_stack[i].cursor_end = ''
+      end
+    end
+    vim.cmd('redrawstatus!')
+    -- }}}
   elseif char == 'C' then
   elseif char == '~' then
   elseif char == 'f' then
