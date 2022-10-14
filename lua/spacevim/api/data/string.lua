@@ -78,11 +78,24 @@ function M.string2chars(str)
 end
 
 function M.matchstrpos(str, need, ...)
-    
+  return vim.fn.matchstrpos(str, need, ...)
 end
 
 function M.strAllIndex(str, need, use_expr)
-    
+  local rst = {}
+  if use_expr then
+    local idx = M.matchstrpos(str, need)
+    while idx[2] ~= -1 do
+      table.insert(rst, {idx[2], idx[3]})
+    end
+  else
+    local pattern = [[\<\V]] .. need .. [[\ze\W\|\<\V]] .. need .. [[\ze\$]]
+    local idx = vim.fn.match(str, pattern)
+    while idx ~= -1 do
+      table.insert(rst, {idx, idx + vim.fn.len(need)})
+    end
+  end
+  return rst
 end
 
 function M.strQ2B(str)
