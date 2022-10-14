@@ -205,9 +205,34 @@ local function handle_normal(char) -- handle normal key bindings {{{
   elseif char == 'f' then
     Operator = 'f'
     timeout()
-  elseif char == 's' then
-  elseif char == 'x' then
+  elseif char == 's' then -- {{{
+    mode = 'i'
+    vim.w.spacevim_iedit_mode = mode
+    vim.w.spacevim_statusline_mode = 'ii'
+    for _, i in vim.fn.range(1, #cursor_stack) do
+      if cursor_stack[i].active then
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+      end
+    end
+    replace_symbol()
+    -- }}}
+  elseif char == 'x' then -- {{{
+    for _, i in vim.fn.range(1, #cursor_stack) do
+      if cursor_stack[i].active then
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+      end
+    end
+    replace_symbol()
+    -- }}}
   elseif char == 'X' then
+    for _, i in vim.fn.range(1, #cursor_stack) do
+      if cursor_stack[i].active then
+        cursor_stack[i].cursor_begin = vim.fn.substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
+      end
+    end
+    replace_symbol()
   elseif char == '<left>' then
   elseif char == '<right>' then
   elseif char == 'e' then
