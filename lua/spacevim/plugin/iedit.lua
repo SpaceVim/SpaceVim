@@ -12,12 +12,6 @@ _G[modname] = M
 package.loaded[modname] = M  --return modname
 setmetatable(M, {__index = _G})
 
-local index = -1
-local cursor_col = -1
-local mode = ''
-local hi_id = ''
-local Operator = ''
-local iedit_cursor_hi_info = {}
 
 -- Local spacevim APIs {{{
 local hi = require('spacevim.api').import('vim.highlight')
@@ -26,8 +20,16 @@ local cmp = require('spacevim.api').import('vim.compatible')
 local v = require('spacevim.api').import('vim')
 -- }}}
 
+-- Local Variable {{{
+
 local logger = require('spacevim.logger').derive('iedit')
 
+local index = -1
+local cursor_col = -1
+local mode = ''
+local hi_id = ''
+local Operator = ''
+local iedit_cursor_hi_info = {}
 local cursor_stack = {}
 
 local iedit_hi_info = {
@@ -54,6 +56,8 @@ local iedit_hi_info = {
     bold = 1,
   },
 }
+
+-- }}}
 
 
 local function fixstack(idxs)
@@ -219,7 +223,7 @@ local function parse_symbol(_begin, _end, symbol, use_expr, selectall)
   end
 end
 
-local function handle_f_char(char)
+local function handle_f_char(char) -- {{{
   remove_cursor_highlight()
   if char >= 32 and char <= 126 then
     Operator = ''
@@ -235,6 +239,7 @@ local function handle_f_char(char)
   .. cursor_stack[1].cursor_char
   .. cursor_stack[1].cursor_end
 end
+-- }}}
 
 local function handle_register(char)
   local char = vim.fn.nr2char(char)
