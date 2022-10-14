@@ -19,10 +19,12 @@ local hi_id = ''
 local Operator = ''
 local iedit_cursor_hi_info = {}
 
+-- Local spacevim APIs {{{
 local hi = require('spacevim.api').import('vim.highlight')
 local str = require('spacevim.api').import('data.string')
 local cmp = require('spacevim.api').import('vim.compatible')
 local v = require('spacevim.api').import('vim')
+-- }}}
 
 local logger = require('spacevim.logger').derive('iedit')
 
