@@ -119,6 +119,8 @@ end
 local function parse_symbol(_begin, _end, symbol, use_expr, selectall)
   local len = #symbol
   local cursor = {vim.fn.line('.'), vim.fn.col('.')}
+  for _, l in vim.fn.range(_begin, _end) do
+  end
 end
 
 local function handle_f_char(char)
