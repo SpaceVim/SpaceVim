@@ -120,6 +120,19 @@ local function parse_symbol(_begin, _end, symbol, use_expr, selectall)
   local len = #symbol
   local cursor = {vim.fn.line('.'), vim.fn.col('.')}
   for _, l in vim.fn.range(_begin, _end) do
+    local line = vim.fn.getline(l)
+    local idx = str.strAllIndex(line, symbol, use_expr)
+    for pos_a, pos_b in idx do
+      table.insert(cursor_stack, {
+        cursor_begin = string.sub(line, pos_a, pos_b - 2),
+        cursor_char = string.sub(line, pos_b - 1, pos_b - 1),
+        cursor_end = '',
+        active = selectall,
+        lnum = l,
+        col = pos_a + 1,
+        len = pos_b - pos_a
+      })
+    end
   end
 end
 
@@ -142,6 +155,7 @@ end
 
 local function handle_register(char)
   local char = vim.fn.nr2char(char)
+  -- same as char =~# '[a-zA-Z0-9"+:/]' in vim script
   if char:match('[a-zA-Z0-9"%+:/]') then
     remove_cursor_highlight()
     Operator = ''
