@@ -189,11 +189,12 @@ local function handle_normal(char) -- handle normal key bindings {{{
 end
 -- }}}
 
-local function handle_insert(char)
+local function handle_insert(char) -- {{{
   
 end
+--- }}}
 
-local function parse_symbol(_begin, _end, symbol, use_expr, selectall)
+local function parse_symbol(_begin, _end, symbol, use_expr, selectall) -- {{{
   local len = #symbol
   local cursor = {vim.fn.line('.'), vim.fn.col('.')}
   for _, l in vim.fn.range(_begin, _end) do
@@ -222,6 +223,7 @@ local function parse_symbol(_begin, _end, symbol, use_expr, selectall)
     cursor_stack[index].active = true
   end
 end
+-- }}}
 
 local function handle_f_char(char) -- {{{
   remove_cursor_highlight()
