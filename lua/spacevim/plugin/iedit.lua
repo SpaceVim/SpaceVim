@@ -157,6 +157,19 @@ local function handle_normal(char) -- handle normal key bindings {{{
     cursor_stack[index].active = not cursor_stack[index].active
     --}}}
   elseif char == 'a' then
+    mode = 'i'
+    vim.w.spacevim_iedit_mode = mode
+    vim.w.spacevim_statusline_mode = 'ii'
+    for _, i in vim.fn.range(1, #cursor_stack) do
+      if cursor_stack[i].active then
+        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin ..
+        cursor_stack[i].cursor_char
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+      end
+    end
+    vim.cmd('redrawstatus!')
+    -- }}}
   elseif char == 'A' then
   elseif char == 'C' then
   elseif char == '~' then
