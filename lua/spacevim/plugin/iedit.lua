@@ -114,7 +114,7 @@ local function remove_cursor_highlight()
   vim.fn.clearmatches()
 end
 
-local function handle_normal(char)
+local function handle_normal(char) -- handle normal key bindings {{{
   remove_cursor_highlight()
   if char == 'i' then
     mode = 'i'
@@ -181,6 +181,7 @@ local function handle_normal(char)
   .. cursor_stack[1].cursor_char
   .. cursor_stack[1].cursor_end
 end
+-- }}}
 
 local function handle_insert(char)
   
