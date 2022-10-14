@@ -241,7 +241,7 @@ local function handle_f_char(char) -- {{{
 end
 -- }}}
 
-local function handle_register(char)
+local function handle_register(char) -- {{{
   local char = vim.fn.nr2char(char)
   -- same as char =~# '[a-zA-Z0-9"+:/]' in vim script
   if char:match('[a-zA-Z0-9"%+:/]') then
@@ -259,8 +259,10 @@ local function handle_register(char)
   .. cursor_stack[1].cursor_char
   .. cursor_stack[1].cursor_end
 end
+-- }}}
 
-local function handle(mode, char)
+local function handle(mode, char) -- {{{
+
   if mode == 'n' and Operator == 'f' then
     handle_f_char(char)
   elseif mode == 'n' then
@@ -271,5 +273,6 @@ local function handle(mode, char)
     handle_insert(char)
   end
 end
+-- }}}
 
 -- vim:set et sw=2 cc=80 foldmethod=marker foldmarker={{{,}}}:
