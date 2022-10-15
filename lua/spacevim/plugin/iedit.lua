@@ -59,6 +59,16 @@ local iedit_hi_info = {
 
 -- }}}
 
+--- basic functions{{{
+local function empty(expr) -- {{{
+  return vim.fn.empty(expr) == 1
+end
+-- }}}
+
+local matchstr = vim.fn.matchstr
+local substitute = vim.fn.substitute
+local range = vim.fn.range
+---}}}
 
 local function fixstack(idxs)
   local change = 0
@@ -389,5 +399,20 @@ local function handle(mode, char) -- {{{
   end
 end
 -- }}}
+
+function M.start(...) -- {{{
+  local args = {...}
+  argv = args[1] or ''
+  local selectall = true
+  if empty(argv) and (
+    matchstr(getline('.'), '\\%' .. vim.fn.col('.') .. 'c.') == '' or
+    matchstr(getline('.'), '\\%' .. vim.fn.col('.') .. 'c.') == ' '
+    ) then
+  end
+
+end
+-- }}}
+
+return M
 
 -- vim:set et sw=2 cc=80 foldmethod=marker foldmarker={{{,}}}:
