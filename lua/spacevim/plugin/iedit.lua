@@ -77,7 +77,7 @@ end
 
 ---}}}
 
-local function fixstack(idxs)
+local function fixstack(idxs) -- {{{
   local change = 0
   for _, i in vim.fn.range(1, #idxs) do
     cursor_stack[idxs[i][1]].col = cursor_stack[idxs[i][1]].col + change
@@ -85,6 +85,7 @@ local function fixstack(idxs)
     cursor_stack[idxs[i][1]].len = idxs[i][0]
   end
 end
+-- }}}
 
 local function reset_Operator(...)
   Operator = ''
