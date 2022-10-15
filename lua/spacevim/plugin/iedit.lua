@@ -445,8 +445,6 @@ local function parse_symbol(_begin, _end, symbol, use_expr, selectall) -- {{{
     vim.fn.cursor(cursor_stack[1].lnum, cursor_stack[1].col)
   end
   if vim.fn.empty(cursor_stack) == 0 then
-    print(vim.inspect(cursor_stack))
-    print(index)
     cursor_stack[index].active = true
   end
 end
