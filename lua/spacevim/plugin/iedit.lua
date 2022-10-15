@@ -422,6 +422,23 @@ function M.start(...) -- {{{
     ) then
     echo('no pattern found under cursor')
   end
+  local save_tve = vim.o.t_ve
+  local save_cl = vim.o.cursorline
+  vim.o.cursorline = false
+  vim.o.t_ve = ''
+  hi.hi(iedit_hi_info[1])
+  hi.hi(iedit_hi_info[2])
+  hi.hi(iedit_hi_info[3])
+  local cursor_hi = hi.group2dict('Cursor')
+  iedit_cursor_hi_info = vim.fn.deepcopy(cursor_hi)
+  iedit_cursor_hi_info.name = 'SpaceVimGuideCursor'
+  lcursor_hi = hi.group2dict('lCursor')
+  local guicursor = vim.o.guicursor
+  hi.hide_in_normal('Cursor')
+  hi.hide_in_normal('lCursor')
+  if vim.api ~= nil then
+    vim.o.guicursor = 'a:Cursor/lCursor'
+  end
 
 end
 -- }}}
