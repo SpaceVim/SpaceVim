@@ -439,7 +439,40 @@ function M.start(...) -- {{{
   if vim.api ~= nil then
     vim.cmd('set guicursor+=a:Cursor/lCursor')
   end
-
+  mode = 'n'
+  vim.w.spacevim_iedit_mode = mode
+  vim.w.spacevim_statusline_mode = 'in'
+  if #cursor_stack == 0 then
+  end
+  highlight_cursor()
+  vim.cmd('redrawstatus!')
+  while mode ~= '' and #cursor_stack > 0 do
+    vim.cmd('redraw!')
+    local char = v.getchar()
+    if mode == 'n' and char == '<Esc>' then
+      mode = ''
+    else
+      local symbol = handle(mode, char)
+    end
+  end
+  if #cursor_stack == 0 then
+    vim.cmd('normal! :')
+    echo('Pattern not found:' .. symbol)
+  end
+  cursor_stack = {}
+  index = -1
+  mode = ''
+  vim.w.spacevim_iedit_mode = mode
+  vim.w.spacevim_statusline_mode = 'in'
+  vim.o.t_ve = save_tve
+  hi.hi(cursor_hi)
+  hi.hi(lcursor_hi)
+  vim.o.guicursor = guicursor
+  vim.cmd('normal! :')
+  pcall(vim.fn.matchdelete, hi_id)
+  hi_id = ''
+  vim.bo.cursorline = save_cl
+  return symbol
 end
 -- }}}
 
