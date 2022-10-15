@@ -87,15 +87,17 @@ local function fixstack(idxs) -- {{{
 end
 -- }}}
 
-local function reset_Operator(...)
+local function reset_Operator(...) -- {{{
   Operator = ''
 end
+-- }}}
 
-local function timeout()
+local function timeout() -- {{{
   timer_start(1000, reset_Operator)
 end
+-- }}}
 
-local function highlight_cursor()
+local function highlight_cursor() -- {{{
   hi.hi(iedit_cursor_hi_info)
   for _,i in vim.fn.range(1, #cursor_stack) do
     if cursor_stack[i].active then
@@ -133,10 +135,12 @@ local function highlight_cursor()
     end
   end
 end
+-- }}}
 
-local function remove_cursor_highlight()
+local function remove_cursor_highlight() -- {{{
   vim.fn.clearmatches()
 end
+-- }}}
 
 local function handle_normal(char) -- handle normal key bindings {{{
   remove_cursor_highlight()
