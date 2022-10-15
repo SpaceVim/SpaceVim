@@ -91,9 +91,47 @@ end
 
 local function replace_symbol() -- {{{
   local line = 0
+  local begin = ''
   local pre = ''
+  local _end = ''
   local idxs = {}
   for i = 1, #cursor_stack, 1 do
+    if cursor_stack[i].lnum ~= line then
+      if not empty(idxs) then
+        _end = string.sub(
+          vim.fn.getline(line),
+          cursor_stack[i - 1].col + cursor_stack[i - 1].len - 1,
+          -1
+        )
+        pre = pre .. _end
+      end
+      fixstack(idsx)
+      vim.fn.setline(line, pre)
+      idxs = {}
+      line = cursor_stack[i].lnum
+      if cursor_stack[i].col ~= 1 then
+        begin = string.sub(vim.fn.getline(line), 1, cursor_stack[i].col - 2)
+      else
+        begin = ''
+      end
+      pre = begin
+        .. cursor_stack[i].cursor_begin
+        .. cursor_stack[i].cursor_char
+        .. cursor_stack[i].cursor_end
+    else
+      line = cursor_stack[i].lnum
+      if i == 1 then
+      else
+      end
+    end
+    table.insert(idxs, {
+      i,
+      vim.fn.len(
+        cursor_stack[i].cursor_begin
+          .. cursor_stack[i].cursor_char
+          .. cursor_stack[i].cursor_end
+      ),
+    })
   end
   if not empty(idxs) then
   end
