@@ -91,12 +91,14 @@ function M.strAllIndex(str, need, use_expr)
     local idx = M.matchstrpos(str, need)
     while idx[2] ~= -1 do
       table.insert(rst, {idx[2], idx[3]})
+      idx = M.matchstrpos(str, need, idx[3])
     end
   else
     local pattern = [[\<\V]] .. need .. [[\ze\W\|\<\V]] .. need .. [[\ze\$]]
     local idx = vim.fn.match(str, pattern)
     while idx ~= -1 do
       table.insert(rst, {idx, idx + vim.fn.len(need)})
+      idx = vim.fn.match(str, pattern, idx + 1 + vim.fn.len(need))
     end
   end
   return rst
