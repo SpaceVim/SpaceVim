@@ -89,6 +89,19 @@ local function fixstack(idxs) -- {{{
 end
 -- }}}
 
+local function replace_symbol() -- {{{
+  local line = 0
+  local pre = ''
+  local idxs = {}
+  for i = 1, #cursor_stack, 1 do
+  end
+  if not empty(idxs) then
+  end
+  fixstack(idxs)
+  vim.fn.setline(line, pre)
+end
+-- }}}
+
 local function reset_Operator(...) -- {{{
   Operator = ''
 end
