@@ -30,7 +30,18 @@ M.group2dict = function (name)
 end
 
 M.hide_in_normal = function (name)
-    
+  local group = M.group2dict(name)
+  if vim.fn.empty(group) == 1 then
+    return
+  end
+  local normal = M.group2dict('Normal')
+  local guibg = normal.guibg or ''
+  local ctermbg = normal.ctermbg or ''
+  group.guifg = guibg
+  group.guibg = guibg
+  group.ctermfg = ctermbg
+  group.ctermbg = ctermbg
+  M.hi(group)
 end
 
 
