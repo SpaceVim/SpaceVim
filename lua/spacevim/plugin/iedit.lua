@@ -374,7 +374,7 @@ local function handle_insert(char) -- {{{
       .. cursor_stack[1].cursor_char
       .. cursor_stack[1].cursor_end
   else
-    for _, i in ipairs(1, vim.fn.range(#cursor_stack)) do
+    for i = 1, #cursor_stack, 1 do
       if cursor_stack[i].active then
         cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. char
       end
