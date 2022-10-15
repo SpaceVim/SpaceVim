@@ -508,6 +508,7 @@ function M.start(...) -- {{{
 	hi.hi(lcursor_hi)
 	vim.o.guicursor = guicursor
 	vim.cmd("normal! :")
+  remove_cursor_highlight()
 	pcall(vim.fn.matchdelete, hi_id)
 	hi_id = ""
 	vim.wo.cursorline = save_cl
