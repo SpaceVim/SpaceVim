@@ -437,7 +437,7 @@ function M.start(...) -- {{{
   hi.hide_in_normal('Cursor')
   hi.hide_in_normal('lCursor')
   if vim.api ~= nil then
-    vim.o.guicursor = 'a:Cursor/lCursor'
+    vim.cmd('set guicursor+=a:Cursor/lCursor')
   end
 
 end
