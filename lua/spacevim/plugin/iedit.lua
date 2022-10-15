@@ -18,6 +18,7 @@ local hi = require('spacevim.api').import('vim.highlight')
 local str = require('spacevim.api').import('data.string')
 local cmp = require('spacevim.api').import('vim.compatible')
 local v = require('spacevim.api').import('vim')
+local k = require('spacevim.api').import('vim.keys')
 -- }}}
 
 -- Local Variable {{{
@@ -335,7 +336,7 @@ local cursor = {vim.fn.line('.'), vim.fn.col('.')}
 for _, l in ipairs(vim.fn.range(_begin, _end)) do
   local line = vim.fn.getline(l)
   local idx = str.strAllIndex(line, symbol, use_expr)
-  for pos_a, pos_b in idx do
+  for pos_a, pos_b in ipairs(idx) do
     table.insert(cursor_stack, {
       cursor_begin = string.sub(line, pos_a, pos_b - 2),
       cursor_char = string.sub(line, pos_b - 1, pos_b - 1),
@@ -476,7 +477,7 @@ function M.start(...) -- {{{
   while mode ~= '' and #cursor_stack > 0 do
     vim.cmd('redraw!')
     local char = v.getchar()
-    if mode == 'n' and char == '<Esc>' then
+    if mode == 'n' and char == k.t('<Esc>') then
       mode = ''
     else
       local symbol = handle(mode, char)
