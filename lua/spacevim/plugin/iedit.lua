@@ -79,7 +79,7 @@ end
 
 local function fixstack(idxs) -- {{{
 local change = 0
-for _, i in vim.fn.range(1, #idxs) do
+for _, i in ipairs(vim.fn.range(1, #idxs)) do
   cursor_stack[idxs[i][1]].col = cursor_stack[idxs[i][1]].col + change
   change  = change + idxs[i][2] - cursor_stack[idxs[i][1]].len
   cursor_stack[idxs[i][1]].len = idxs[i][0]
@@ -99,7 +99,7 @@ end
 
 local function highlight_cursor() -- {{{
 hi.hi(iedit_cursor_hi_info)
-for _,i in vim.fn.range(1, #cursor_stack) do
+for _,i in ipairs(vim.fn.range(1, #cursor_stack)) do
   if cursor_stack[i].active then
     if i == index then
       vim.fn.matchaddpos('IeditPurpleBold',{
@@ -154,7 +154,7 @@ elseif char == 'I' then -- {{{
   mode = 'i'
   vim.w.spacevim_iedit_mode = mode
   vim.w.spacevim_statusline_mode = 'ii'
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       local old_cursor_char = cursor_stack[i].cursor_char
       cursor_stack[i].cursor_char = vim.fn.matchstr(
@@ -181,7 +181,7 @@ elseif char == 'a' then -- {{{
   mode = 'i'
   vim.w.spacevim_iedit_mode = mode
   vim.w.spacevim_statusline_mode = 'ii'
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin ..
       cursor_stack[i].cursor_char
@@ -195,7 +195,7 @@ elseif char == 'A' then -- {{{
   mode = 'i'
   vim.w.spacevim_iedit_mode = mode
   vim.w.spacevim_statusline_mode = 'ii'
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin ..
       cursor_stack[i].cursor_char .. cursor_stack[i].cursor_end
@@ -209,7 +209,7 @@ elseif char == 'C' then -- {{{
   mode = 'i'
   vim.w.spacevim_iedit_mode = mode
   vim.w.spacevim_statusline_mode = 'ii'
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       cursor_stack[i].cursor_char = ''
       cursor_stack[i].cursor_end = ''
@@ -218,7 +218,7 @@ elseif char == 'C' then -- {{{
   replace_symbol()
   -- }}}
 elseif char == '~' then -- toggle the case of cursor char {{{
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       cursor_stack[i].cursor_char = str.toggle_case(cursor_stack[i].cursor_char)
     end
@@ -233,7 +233,7 @@ elseif char == 's' then -- {{{
   mode = 'i'
   vim.w.spacevim_iedit_mode = mode
   vim.w.spacevim_statusline_mode = 'ii'
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
       cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
@@ -242,7 +242,7 @@ elseif char == 's' then -- {{{
   replace_symbol()
   -- }}}
 elseif char == 'x' then -- {{{
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
       cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
@@ -251,7 +251,7 @@ elseif char == 'x' then -- {{{
   replace_symbol()
   -- }}}
 elseif char == 'X' then -- {{{
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       cursor_stack[i].cursor_begin = vim.fn.substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
     end
@@ -259,7 +259,7 @@ elseif char == 'X' then -- {{{
   replace_symbol()
   -- }}}
 elseif char == '<left>' or char == 'h' then -- {{{
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       cursor_stack[i].cursor_end = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_end
       cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_begin, '.$')
@@ -268,7 +268,7 @@ elseif char == '<left>' or char == 'h' then -- {{{
   end
   -- }}}
 elseif char == '<right>' or char == 'l' then
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char
       cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
@@ -276,7 +276,7 @@ elseif char == '<right>' or char == 'l' then
     end
   end
 elseif char == 'e' then
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       local word = vim.fn.matchstr(cursor_stack[i].cursor_end, [[^\s*\S*]])
       cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char .. word
@@ -285,7 +285,7 @@ elseif char == 'e' then
     end
   end
 elseif char == 'b' then
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       local word = vim.fn.matchstr(cursor_stack[i].cursor_begin, [[\S*\s*$]])
       cursor_stack[i].cursor_end = word .. cursor_stack[i].cursor_char .. cursor_stack[i].cursor_end
@@ -295,7 +295,7 @@ elseif char == 'b' then
     end
   end
 elseif char == 'w' then
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     if cursor_stack[i].active then
       local word = vim.fn.matchstr(cursor_stack[i].cursor_end, [[\S*\s*$]])
       cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char .. word
@@ -332,7 +332,7 @@ end
 local function parse_symbol(_begin, _end, symbol, use_expr, selectall) -- {{{
 local len = #symbol
 local cursor = {vim.fn.line('.'), vim.fn.col('.')}
-for _, l in vim.fn.range(_begin, _end) do
+for _, l in ipairs(vim.fn.range(_begin, _end)) do
   local line = vim.fn.getline(l)
   local idx = str.strAllIndex(line, symbol, use_expr)
   for pos_a, pos_b in idx do
@@ -364,7 +364,7 @@ local function handle_f_char(char) -- {{{
 remove_cursor_highlight()
 if char >= 32 and char <= 126 then
   Operator = ''
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     local matchedstr = vim.fn.matchstr(cursor_stack[i].cursor_end, vim.fn.printf('[^%s]', vim.fn.nr2char(char)))
     cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char .. matchedstr
     cursor_stack[i].cursor_end   = vim.fn.matchstr(cursor_stack[i].cursor_end, vim.fn.printf([[[%s]\zs.*]], vim.fn.nr2char(char)))
@@ -386,7 +386,7 @@ if char:match('[a-zA-Z0-9"%+:/]') then
   Operator = ''
   local reg = '@' .. char
   local paste = vim.fn.split(vim.fn.eval(reg), '\n')[1] or ''
-  for _, i in vim.fn.range(1, #cursor_stack) do
+  for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
     cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. paste
   end
   replace_symbol()
@@ -416,6 +416,7 @@ function M.start(...) -- {{{
   local args = {...}
   argv = args[1] or ''
   local selectall = true
+  local use_expr = false
   if empty(argv) and (
     matchstr(getline('.'), '\\%' .. vim.fn.col('.') .. 'c.') == '' or
     matchstr(getline('.'), '\\%' .. vim.fn.col('.') .. 'c.') == ' '
@@ -445,7 +446,6 @@ function M.start(...) -- {{{
   if #cursor_stack == 0 then
     local curpos = vim.fn.getpos('.')
     local save_reg_k = vim.api.nvim_eval('@"')
-    local use_expr = false
     if not empty(argv) and vim.fn.type(argv) == 4 then
       selectall = argv.selectall or selectall
       if argv.expr ~= nil then
@@ -467,7 +467,7 @@ function M.start(...) -- {{{
   local _begin = args[2] or 1
   local _end = args[3] or vim.fn.line('$')
   logger.debug('iedit symbol:>' .. symbol .. '<')
-  logger.debug('iedit use_expr:' .. use_expr)
+  logger.debug('iedit use_expr:' .. vim.fn.string(use_expr))
   logger.debug('iedit begin:' .. _begin)
   logger.debug('iedit end:' .. _end)
   parse_symbol(_begin, _end, symbol, 1, selectall)
