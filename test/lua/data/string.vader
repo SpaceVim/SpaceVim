@@ -6,4 +6,5 @@ Execute ( SpaceVim lua api: data#string ):
   Log 'test trim()'
   lua sp_str = require('spacevim.api').import('data.string')
   AssertEqual cmp.luaeval("sp_str.trim(' s b ')"), 's b'
+  AssertEqual cmp.luaeval("sp_str.strAllIndex('hello spacevim hello', 'hello', 0)"),  [[0, 5], [15, 20]]
 
