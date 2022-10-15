@@ -273,6 +273,15 @@ local function handle_normal(char) -- handle normal key bindings {{{
       end
     end
   elseif char == 'w' then
+    for _, i in vim.fn.range(1, #cursor_stack) do
+      if cursor_stack[i].active then
+        local word = vim.fn.matchstr(cursor_stack[i].cursor_end, [[\S*\s*$]])
+        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char .. word
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, [[^\S*\s*]], '', 'g')
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+      end
+    end
   elseif char == '0' or char == '<home>' then
   elseif char == '$' or char == '<end>' then
   elseif char == 'D' then
