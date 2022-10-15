@@ -122,13 +122,13 @@ end
 
 local function handle_normal(char) -- handle normal key bindings {{{
   remove_cursor_highlight()
-  if char == 'i' then
+  if char == 'i' then -- {{{
     mode = 'i'
     vim.w.spacevim_iedit_mode = mode
     vim.w.spacevim_statusline_mode = 'ii'
     vim.cmd('redrawstatus!')
-  elseif char == 'I' then
-    -- {{{
+    -- }}}
+  elseif char == 'I' then -- {{{
     mode = 'i'
     vim.w.spacevim_iedit_mode = mode
     vim.w.spacevim_statusline_mode = 'ii'
@@ -195,16 +195,18 @@ local function handle_normal(char) -- handle normal key bindings {{{
     end
     replace_symbol()
     -- }}}
-  elseif char == '~' then
+  elseif char == '~' then -- toggle the case of cursor char {{{
     for _, i in vim.fn.range(1, #cursor_stack) do
       if cursor_stack[i].active then
         cursor_stack[i].cursor_char = str.toggle_case(cursor_stack[i].cursor_char)
       end
     end
     replace_symbol()
-  elseif char == 'f' then
+    --}}}
+  elseif char == 'f' then -- string find mode               {{{
     Operator = 'f'
     timeout()
+    -- }}}
   elseif char == 's' then -- {{{
     mode = 'i'
     vim.w.spacevim_iedit_mode = mode
@@ -226,14 +228,15 @@ local function handle_normal(char) -- handle normal key bindings {{{
     end
     replace_symbol()
     -- }}}
-  elseif char == 'X' then
+  elseif char == 'X' then -- {{{
     for _, i in vim.fn.range(1, #cursor_stack) do
       if cursor_stack[i].active then
         cursor_stack[i].cursor_begin = vim.fn.substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
       end
     end
     replace_symbol()
-  elseif char == '<left>' or char == 'h' then
+    -- }}}
+  elseif char == '<left>' or char == 'h' then -- {{{
     for _, i in vim.fn.range(1, #cursor_stack) do
       if cursor_stack[i].active then
         cursor_stack[i].cursor_end = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_end
@@ -241,6 +244,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
         cursor_stack[i].cursor_begin = vim.fn.substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
       end
     end
+    -- }}}
   elseif char == '<right>' or char == 'l' then
     for _, i in vim.fn.range(1, #cursor_stack) do
       if cursor_stack[i].active then
@@ -250,7 +254,24 @@ local function handle_normal(char) -- handle normal key bindings {{{
       end
     end
   elseif char == 'e' then
+    for _, i in vim.fn.range(1, #cursor_stack) do
+      if cursor_stack[i].active then
+        local word = vim.fn.matchstr(cursor_stack[i].cursor_end, [[^\s*\S*]])
+        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char .. word
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_begin, '.$')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, [[^\s*\S*]], '', 'g')
+      end
+    end
   elseif char == 'b' then
+    for _, i in vim.fn.range(1, #cursor_stack) do
+      if cursor_stack[i].active then
+        local word = vim.fn.matchstr(cursor_stack[i].cursor_begin, [[\S*\s*$]])
+        cursor_stack[i].cursor_end = word .. cursor_stack[i].cursor_char .. cursor_stack[i].cursor_end
+        cursor_stack[i].cursor_begin = vim.fn.substitute(cursor_stack[i].cursor_begin, [[\S*\s*$]], '', 'g')
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+      end
+    end
   elseif char == 'w' then
   elseif char == '0' or char == '<home>' then
   elseif char == '$' or char == '<end>' then
