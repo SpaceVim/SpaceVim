@@ -373,7 +373,20 @@ local function handle_insert(char) -- {{{
     return cursor_stack[1].cursor_begin
       .. cursor_stack[1].cursor_char
       .. cursor_stack[1].cursor_end
+  else
+    for _, i in ipairs(1, vim.fn.range(#cursor_stack)) do
+      if cursor_stack[i].active then
+        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. char
+      end
+    end
   end
+  if not is_movement then
+    replace_symbol()
+  end
+  highlight_cursor()
+  return cursor_stack[1].cursor_begin
+    .. cursor_stack[1].cursor_char
+    .. cursor_stack[1].cursor_end
 end
 --- }}}
 
