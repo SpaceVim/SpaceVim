@@ -241,7 +241,14 @@ local function handle_normal(char) -- handle normal key bindings {{{
         cursor_stack[i].cursor_begin = vim.fn.substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
       end
     end
-  elseif char == '<right>' then
+  elseif char == '<right>' or char == 'l' then
+    for _, i in vim.fn.range(1, #cursor_stack) do
+      if cursor_stack[i].active then
+        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+      end
+    end
   elseif char == 'e' then
   elseif char == 'b' then
   elseif char == 'w' then
