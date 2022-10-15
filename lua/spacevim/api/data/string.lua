@@ -78,7 +78,11 @@ function M.string2chars(str)
 end
 
 function M.matchstrpos(str, need, ...)
-  return vim.fn.matchstrpos(str, need, ...)
+  local matchedstr = vim.fn.matchstr(str, need, ...)
+  local matchbegin = vim.fn.match(str, need, ...)
+  local matchend = vim.fn.matchend(str, need, ...)
+  return {matchedstr, matchbegin, matchend}
+  -- return vim.fn.matchstrpos(str, need, ...)
 end
 
 function M.strAllIndex(str, need, use_expr)
