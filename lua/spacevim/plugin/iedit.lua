@@ -122,7 +122,7 @@ for _,i in ipairs(vim.fn.range(1, #cursor_stack)) do
     vim.fn.matchadd('SpaceVimGuideCursor', [[\%]]
     .. cursor_stack[i].lnum
     .. [[l\%]]
-    .. (cursor_stack[i].col + vim.fn.len(cursor_stack[i].begin))
+    .. (cursor_stack[i].col + vim.fn.len(cursor_stack[i].cursor_begin))
     .. 'c',
     99999)
   else
