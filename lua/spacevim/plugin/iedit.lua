@@ -425,8 +425,8 @@ function M.start(...) -- {{{
 		echo("no pattern found under cursor")
 	end
 	local save_tve = vim.o.t_ve
-	local save_cl = vim.o.cursorline
-	vim.o.cursorline = false
+	local save_cl = vim.wo.cursorline
+	vim.wo.cursorline = false
 	vim.o.t_ve = ""
 	hi.hi(iedit_hi_info[1])
 	hi.hi(iedit_hi_info[2])
@@ -499,7 +499,7 @@ function M.start(...) -- {{{
 	vim.cmd("normal! :")
 	pcall(vim.fn.matchdelete, hi_id)
 	hi_id = ""
-	vim.bo.cursorline = save_cl
+	vim.wo.cursorline = save_cl
 	return symbol
 end
 -- }}}
