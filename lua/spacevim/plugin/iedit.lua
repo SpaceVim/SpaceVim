@@ -326,6 +326,17 @@ end
 -- }}}
 
 local function handle_insert(char) -- {{{
+	remove_cursor_highlight()
+	local is_movement = false
+	if char == k.t("<Esc>") or char == k.t("<C-g>") then
+		mode = "n"
+		vim.w.spacevim_iedit_mode = mode
+		vim.w.spacevim_statusline_mode = "in"
+		highlight_cursor()
+		vim.cmd("redraw!")
+		vim.cmd("redrawstatus!")
+		return cursor_stack[1].cursor_begin .. cursor_stack[1].cursor_char .. cursor_stack[1].cursor_end
+	end
 end
 --- }}}
 
