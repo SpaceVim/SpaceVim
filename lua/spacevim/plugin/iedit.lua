@@ -359,15 +359,17 @@ local function parse_symbol(_begin, _end, symbol, use_expr, selectall) -- {{{
 				len = pos_b - pos_a,
 			})
 			if l == cursor[1] and pos_a + 1 <= cursor[2] and pos_b >= cursor[2] then
-				index = #cursor_stack - 1
+				index = #cursor_stack
 			end
 		end
 	end
 	if index == -1 and vim.fn.empty(cursor_stack) == 0 then
-		index = 0
+		index = 1
 		vim.fn.cursor(cursor_stack[1].lnum, cursor_stack[1].col)
 	end
 	if vim.fn.empty(cursor_stack) == 0 then
+    print(vim.inspect(cursor_stack))
+    print(index)
 		cursor_stack[index].active = true
 	end
 end
