@@ -68,6 +68,13 @@ end
 local matchstr = vim.fn.matchstr
 local substitute = vim.fn.substitute
 local range = vim.fn.range
+local getline = vim.fn.getline
+
+local function echo(msg) -- {{{
+  vim.api.nvim_echo({{msg}}, false, {})
+end
+-- }}}
+
 ---}}}
 
 local function fixstack(idxs)
@@ -408,6 +415,7 @@ function M.start(...) -- {{{
     matchstr(getline('.'), '\\%' .. vim.fn.col('.') .. 'c.') == '' or
     matchstr(getline('.'), '\\%' .. vim.fn.col('.') .. 'c.') == ' '
     ) then
+    echo('no pattern found under cursor')
   end
 
 end
