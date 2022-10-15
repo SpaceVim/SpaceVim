@@ -336,7 +336,9 @@ local cursor = {vim.fn.line('.'), vim.fn.col('.')}
 for _, l in ipairs(vim.fn.range(_begin, _end)) do
   local line = vim.fn.getline(l)
   local idx = str.strAllIndex(line, symbol, use_expr)
-  for pos_a, pos_b in ipairs(idx) do
+  for _, v in ipairs(idx) do
+    local pos_a = v[1]
+    local pos_b = v[2]
     table.insert(cursor_stack, {
       cursor_begin = string.sub(line, pos_a, pos_b - 2),
       cursor_char = string.sub(line, pos_b - 1, pos_b - 1),
