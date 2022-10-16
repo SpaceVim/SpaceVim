@@ -512,8 +512,8 @@ local function parse_symbol(_begin, _end, symbol, use_expr, selectall) -- {{{
       local pos_a = v[1]
       local pos_b = v[2]
       table.insert(cursor_stack, {
-        cursor_begin = string.sub(line, pos_a, pos_b - 2),
-        cursor_char = string.sub(line, pos_b - 1, pos_b - 1),
+        cursor_begin = string.sub(line, pos_a + 1, pos_b - 1),
+        cursor_char = string.sub(line, pos_b, pos_b),
         cursor_end = '',
         active = selectall,
         lnum = l,
