@@ -98,13 +98,9 @@ local function replace_symbol() -- {{{
   for i = 1, #cursor_stack, 1 do
     if cursor_stack[i].lnum ~= line then
       if not empty(idxs) then
-        logger.debug('i is:' .. i)
-        logger.debug(
-          'cursor_stack[i -1] is' .. vim.inspect(cursor_stack[i - 1])
-        )
         _end = string.sub(
           vim.fn.getline(line),
-          cursor_stack[i - 1].col + cursor_stack[i - 1].len - 1,
+          cursor_stack[i - 1].col + cursor_stack[i - 1].len,
           -1
         )
         pre = pre .. _end
@@ -114,7 +110,7 @@ local function replace_symbol() -- {{{
       idxs = {}
       line = cursor_stack[i].lnum
       if cursor_stack[i].col ~= 1 then
-        begin = string.sub(vim.fn.getline(line), 1, cursor_stack[i].col - 2)
+        begin = string.sub(vim.fn.getline(line), 1, cursor_stack[i].col - 1)
       else
         begin = ''
       end
@@ -128,14 +124,14 @@ local function replace_symbol() -- {{{
         if cursor_stack[i].col == 1 then
           pre = ''
         else
-          pre = string.sub(vim.fn.getline(line), 1, cursor_stack[i].col - 2)
+          pre = string.sub(vim.fn.getline(line), 1, cursor_stack[i].col - 1)
             .. cursor_stack[i].cursor_begin
             .. cursor_stack[i].cursor_char
             .. cursor_stack[i].cursor_end
         end
       else
-        local a = cursor_stack[i - 1].col + cursor_stack[i - 1].len - 1
-        local b = cursor_stack[i].col - 2
+        local a = cursor_stack[i - 1].col + cursor_stack[i - 1].len
+        local b = cursor_stack[i].col - 1
         local next = ''
         if a > b then
           next = ''
@@ -159,6 +155,12 @@ local function replace_symbol() -- {{{
     })
   end
   if not empty(idxs) then
+    _end = string.sub(
+      vim.fn.getline(line),
+      cursor_stack[#cursor_stack].col + cursor_stack[#cursor_stack].len,
+      -1
+    )
+    pre = pre .. _end
   end
   fixstack(idxs)
   vim.fn.setline(line, pre)
@@ -230,7 +232,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
     vim.w.spacevim_iedit_mode = mode
     vim.w.spacevim_statusline_mode = 'ii'
     vim.cmd('redrawstatus!')
-  -- }}}
+    -- }}}
   elseif char == 'I' then -- {{{
     mode = 'i'
     vim.w.spacevim_iedit_mode = mode
@@ -256,10 +258,10 @@ local function handle_normal(char) -- handle normal key bindings {{{
       end
     end
     vim.cmd('redrawstatus!')
-  -- }}}
+    -- }}}
   elseif char == '<tab>' then -- {{{
     cursor_stack[index].active = not cursor_stack[index].active
-  --}}}
+    --}}}
   elseif char == 'a' then -- {{{
     mode = 'i'
     vim.w.spacevim_iedit_mode = mode
@@ -275,7 +277,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
       end
     end
     vim.cmd('redrawstatus!')
-  -- }}}
+    -- }}}
   elseif char == 'A' then -- {{{
     mode = 'i'
     vim.w.spacevim_iedit_mode = mode
@@ -290,7 +292,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
       end
     end
     vim.cmd('redrawstatus!')
-  -- }}}
+    -- }}}
   elseif char == 'C' then -- {{{
     mode = 'i'
     vim.w.spacevim_iedit_mode = mode
@@ -302,7 +304,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
       end
     end
     replace_symbol()
-  -- }}}
+    -- }}}
   elseif char == '~' then -- toggle the case of cursor char {{{
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
@@ -311,11 +313,11 @@ local function handle_normal(char) -- handle normal key bindings {{{
       end
     end
     replace_symbol()
-  --}}}
+    --}}}
   elseif char == 'f' then -- string find mode               {{{
     Operator = 'f'
     timeout()
-  -- }}}
+    -- }}}
   elseif char == 's' then -- {{{
     mode = 'i'
     vim.w.spacevim_iedit_mode = mode
@@ -329,7 +331,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
       end
     end
     replace_symbol()
-  -- }}}
+    -- }}}
   elseif char == 'x' then -- {{{
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
@@ -340,7 +342,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
       end
     end
     replace_symbol()
-  -- }}}
+    -- }}}
   elseif char == 'X' then -- {{{
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
@@ -349,7 +351,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
       end
     end
     replace_symbol()
-  -- }}}
+    -- }}}
   elseif char == '<left>' or char == 'h' then -- {{{
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
@@ -361,7 +363,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
           vim.fn.substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
       end
     end
-  -- }}}
+    -- }}}
   elseif char == '<right>' or char == 'l' then
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
