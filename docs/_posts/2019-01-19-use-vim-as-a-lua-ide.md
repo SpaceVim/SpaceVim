@@ -76,10 +76,16 @@ It is running asynchronously, and will not block your vim.
 ### Code formatting
 
 The format layer is also enabled by default, with this layer you can use key binding `SPC b f` to format current buffer.
-Before using this feature, please install luaformatter.
+Before using this feature, please install [luaformatter](https://github.com/Koihik/LuaFormatter) or [stylua](https://github.com/JohnnyMorganz/StyLua).
 
 ```sh
 luarocks install formatter
+```
+
+Install stylua in windows:
+
+```
+scoop install stylua
 ```
 
 ### REPL support

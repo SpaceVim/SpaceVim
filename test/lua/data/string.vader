@@ -1,9 +1,10 @@
 Execute ( SpaceVim lua api: data#string ):
-  if !has('lua') && !has('nvim-0.5.0')
+  if !has('nvim-0.5.0')
     finish
   endif
   let cmp = SpaceVim#api#import('vim#compatible')
   Log 'test trim()'
   lua sp_str = require('spacevim.api').import('data.string')
   AssertEqual cmp.luaeval("sp_str.trim(' s b ')"), 's b'
+  AssertEqual cmp.luaeval("sp_str.strAllIndex('hello spacevim hello', 'hello', 0)"),  [[0, 5], [15, 20]]
 
