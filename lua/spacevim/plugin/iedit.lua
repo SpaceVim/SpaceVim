@@ -81,10 +81,10 @@ end
 
 local function fixstack(idxs) -- {{{
   local change = 0
-  for _, i in ipairs(vim.fn.range(1, #idxs)) do
+  for i = 1, #idxs, 1 do
     cursor_stack[idxs[i][1]].col = cursor_stack[idxs[i][1]].col + change
     change = change + idxs[i][2] - cursor_stack[idxs[i][1]].len
-    cursor_stack[idxs[i][1]].len = idxs[i][0]
+    cursor_stack[idxs[i][1]].len = idxs[i][2]
   end
 end
 -- }}}
@@ -99,7 +99,9 @@ local function replace_symbol() -- {{{
     if cursor_stack[i].lnum ~= line then
       if not empty(idxs) then
         logger.debug('i is:' .. i)
-        logger.debug('cursor_stack[i -1] is' .. vim.inspect(cursor_stack[i-1]))
+        logger.debug(
+          'cursor_stack[i -1] is' .. vim.inspect(cursor_stack[i - 1])
+        )
         _end = string.sub(
           vim.fn.getline(line),
           cursor_stack[i - 1].col + cursor_stack[i - 1].len - 1,
