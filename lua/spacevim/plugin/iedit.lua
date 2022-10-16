@@ -457,20 +457,20 @@ local function handle_insert(char) -- {{{
       end
     end
   elseif char == k.t('<C-u>') then
-    for i = i, #cursor_stack, 1 do
+    for i = 1, #cursor_stack, 1 do
       if cursor_stack[i].active then
         cursor_stack[i].cursor_begin = ''
       end
     end
   elseif char == k.t('<C-k>') then
-    for i = i, #cursor_stack, 1 do
+    for i = 1, #cursor_stack, 1 do
       if cursor_stack[i].active then
         cursor_stack[i].cursor_char = ''
         cursor_stack[i].cursor_end = ''
       end
     end
   elseif char == k.t('<bs>') or char == k.t('<C-h>') then
-    for i = i, #cursor_stack, 1 do
+    for i = 1, #cursor_stack, 1 do
       if cursor_stack[i].active then
         cursor_stack[i].cursor_begin =
           substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
