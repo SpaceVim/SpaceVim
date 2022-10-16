@@ -476,6 +476,15 @@ local function handle_insert(char) -- {{{
           substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
       end
     end
+  elseif char == k.t('<Delete>') or char == k.t('<C-?>') then
+    for i = 1, #cursor_stack, 1 do
+      if cursor_stack[i].active then
+        cursor_stack[i].cursor_begin =
+          matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end =
+          substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+      end
+    end
   else
     for i = 1, #cursor_stack, 1 do
       if cursor_stack[i].active then
