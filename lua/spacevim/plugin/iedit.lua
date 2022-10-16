@@ -421,10 +421,48 @@ local function handle_normal(char) -- handle normal key bindings {{{
   elseif char == '0' or char == '<home>' then
   elseif char == '$' or char == '<end>' then
   elseif char == 'D' then
+    for i = 1, #cursor_stack, 1 do
+      if cursor_stack[i].active then
+        cursor_stack[i].cursor_begin = ''
+        cursor_stack[i].cursor_char = ''
+        cursor_stack[i].cursor_end = ''
+      end
+    end
+    replace_symbol()
   elseif char == 'p' then
+    for i = 1, #cursor_stack, 1 do
+      if cursor_stack[i].active then
+        cursor_stack[i].cursor_begin = vim.fn.getreg('"', 1, true)[1] or ''
+        cursor_stack[i].cursor_char = ''
+        cursor_stack[i].cursor_end = ''
+      end
+    end
+    replace_symbol()
   elseif char == 'S' then
+    for i = 1, #cursor_stack, 1 do
+      if cursor_stack[i].active then
+        cursor_stack[i].cursor_begin = ''
+        cursor_stack[i].cursor_char = ''
+        cursor_stack[i].cursor_end = ''
+      end
+    end
+    mode = 'i'
+    vim.w.spacevim_iedit_mode = mode
+    vim.w.spacevim_statusline_mode = 'ii'
+    vim.cmd('redrawstatus!')
+    replace_symbol()
   elseif char == 'G' then
+    vim.cmd(cursor_stack[#cursor_stack].lnum)
+    index = #cursor_stack
   elseif char == 'g' then
+    if Operator == 'g' then
+      vim.cmd(cursor_stack[1].lnum)
+      Operator = ''
+      index = 1
+    else
+      Operator = 'g'
+      timeout()
+    end
   elseif char == '<c-n>' then
   elseif char == '<C-x>' then
   elseif char == '<C-p>' then
