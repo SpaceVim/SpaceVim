@@ -121,7 +121,28 @@ local function replace_symbol() -- {{{
     else
       line = cursor_stack[i].lnum
       if i == 1 then
+        if cursor_stack[i].col == 1 then
+          pre = ''
+        else
+          pre = string.sub(vim.fn.getline(line), 1, cursor_stack[i].col - 2)
+            .. cursor_stack[i].cursor_begin
+            .. cursor_stack[i].cursor_char
+            .. cursor_stack[i].cursor_end
+        end
       else
+        local a = cursor_stack[i - 1].col + cursor_stack[i - 1].len - 1
+        local b = cursor_stack[i].col - 2
+        local next = ''
+        if a > b then
+          next = ''
+        else
+          next = string.sub(vim.fn.getline(line), a, b)
+        end
+        pre = pre
+          .. next
+          .. cursor_stack[i].cursor_begin
+          .. cursor_stack[i].cursor_char
+          .. cursor_stack[i].cursor_end
       end
     end
     table.insert(idxs, {
