@@ -569,9 +569,8 @@ local function handle_register(char) -- {{{
   if char:match('[a-zA-Z0-9"%+:/]') then
     remove_cursor_highlight()
     Operator = ''
-    local reg = '@' .. char
-    local paste = vim.fn.split(vim.fn.eval(reg), '\n')[1] or ''
-    for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
+    local paste = vim.fn.getreg(char, 1, true)[1] or ''
+    for i = i, #cursor_stack, 1 do
       cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. paste
     end
     replace_symbol()
