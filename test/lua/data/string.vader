@@ -1,5 +1,5 @@
 Execute ( SpaceVim lua api: data#string ):
-  if !has('lua') && !has('nvim-0.5.0')
+  if !has('nvim-0.5.0')
     finish
   endif
   let cmp = SpaceVim#api#import('vim#compatible')
