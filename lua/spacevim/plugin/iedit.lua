@@ -105,7 +105,7 @@ local function replace_symbol() -- {{{
         )
         pre = pre .. _end
       end
-      fixstack(idsx)
+      fixstack(idxs)
       vim.fn.setline(line, pre)
       idxs = {}
       line = cursor_stack[i].lnum
