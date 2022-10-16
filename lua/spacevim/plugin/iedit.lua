@@ -98,6 +98,8 @@ local function replace_symbol() -- {{{
   for i = 1, #cursor_stack, 1 do
     if cursor_stack[i].lnum ~= line then
       if not empty(idxs) then
+        logger.debug('i is:' .. i)
+        logger.debug('cursor_stack[i -1] is' .. vim.inspect(cursor_stack[i-1]))
         _end = string.sub(
           vim.fn.getline(line),
           cursor_stack[i - 1].col + cursor_stack[i - 1].len - 1,
