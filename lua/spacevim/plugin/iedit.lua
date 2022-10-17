@@ -544,6 +544,34 @@ local function handle_insert(char) -- {{{
           substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
       end
     end
+  elseif char == k.t('<C-b>') or char == k.t('<Left>') then
+    is_movement = true
+    for i = 1, #cursor_stack, 1 do
+      if cursor_stack[i].active then
+        if not empty(cursor_stack[i].cursor_begin) then
+          cursor_stack[i].cursor_end = cursor_stack[i].cursor_char
+            .. cursor_stack[i].cursor_end
+          cursor_stack[i].cursor_char =
+            matchstr(cursor_stack[i].cursor_begin, '.$')
+          cursor_stack[i].cursor_begin =
+            substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
+        end
+      end
+    end
+  elseif char == k.t('<C-f>') or char == k.t('<Right>') then
+    is_movement = true
+    for i = 1, #cursor_stack, 1 do
+      if cursor_stack[i].active then
+        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin
+          .. cursor_stack[i].cursor_char
+        cursor_stack[i].cursor_char = matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end =
+          substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+      end
+    end
+  elseif char == k.t('<C-r>') then
+    Operator = 'r'
+    timeout()
   else
     for i = 1, #cursor_stack, 1 do
       if cursor_stack[i].active then
