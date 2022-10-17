@@ -467,6 +467,25 @@ local function handle_normal(char) -- handle normal key bindings {{{
   elseif char == '<C-x>' then
   elseif char == '<C-p>' then
   elseif char == 'n' then
+    local origin_index = index
+    if index == #cursor_stack then
+      index = 1
+    else
+      index = index + 1
+    end
+    while not cursor_stack[index].active do
+      index = index + 1
+      if index == #cursor_stack + 1 then
+        index = 1
+      end
+      if index == origin_index then
+        break
+      end
+    end
+    vim.fn.cursor(
+      cursor_stack[index].lnum,
+      cursor_stack[index].col + vim.fn.len(cursor_stack[index].cursor_begin)
+    )
   elseif char == 'N' then
   end
   highlight_cursor()
