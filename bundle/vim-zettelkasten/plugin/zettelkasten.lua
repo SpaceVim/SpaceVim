@@ -15,6 +15,9 @@ _G.zettelkasten = {
     zknew = function()
         vim.cmd([[new | setlocal filetype=markdown]])
         if s_config.zettel_dir ~= "" then
+            if vim.fn.isdirectory(s_config.zettel_dir) == 0 then
+              vim.fn.mkdir(vim.fn.expand(s_config.zettel_dir), 'p', '0700')
+            end
             vim.cmd("lcd " .. s_config.zettel_dir)
         end
 
