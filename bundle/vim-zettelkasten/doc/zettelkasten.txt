@@ -1,0 +1,256 @@
+*zettelkasten.txt*  vim-zettelkasten
+
+Origin Author:  Furkan Uzumcu
+Maintainer:  Shidong Wang <wsdjeg@outlook.com>
+
+INTRODUCTION                                  *vim-zettelkasten* *zettelkasten*
+================================================================================
+
+`vim-zettelkasten` is forked from `zettelkasten.nvim`. The goal of this plugin
+is to make it easier to use the Zettelkasten note taking system:
+https://zettelkasten.de/introduction/
+
+It is meant to provide the following features in a way that is consistent with
+Vim's own features:
+
+1. Note ID completion
+2. ID generation
+3. Jumping to references
+4. Jumping to tags
+5. Listing tags
+
+All relevant options are set automatically if they have not been set before.
+If they were set, these are the options that you can use to get the best
+experience. These options may change, make sure the check the filetype file: >
+
+    setlocal tagfunc=v:lua.zettelkasten.tagfunc
+    setlocal isfname+=-,:
+    setlocal iskeyword+=:,-
+    setlocal suffixesadd+=.md
+    setlocal keywordprg=:ZkHover
+    setlocal completefunc=v:lua.zettelkasten.completefunc
+
+ZETTELKASTEN.NVIM 101                                     *zettelkasten.nvim-101*
+================================================================================
+
+The plugin does not introduce any new syntax for note taking. You can take
+advantage of the markdown syntax with headers, tags, and links. You can refer
+to a note by wrapping the note ID (i.e. the file name) with double angle
+brackets.
+
+>
+    This note refers to [[2022-02-27-06-05-03]] which was created using
+    :ZkNew.
+    It can also refer to an [[existing_note]]. With this approach, you won't
+    be able to use `:help CTRL-]` to jump to the file buy you can still use
+    `:help gf`
+
+`zettelkasten.nvim` also assumes a single folder where all the notes reside.
+If you need to organize things you can use `#tags` to group them or create a
+note that will be used as a reference for other notes.
+
+PHILOSOPHY                                              *zettelkasten-philosophy*
+================================================================================
+
+`zettelkasten.nvim` embraces Vim by trying its hardest to not create new
+commands or mappings. Everything this plugin provides should ideally be
+useable with existing Vim options, mappings, and commands.
+
+Where possible, Lua API should be exposed so others can extend this plugin's
+functionality or create their own plugins on top of this one (e.g. telescope
+pickers.).
+
+PREVIEWING NOTES                                     *zettelkasten-preview-notes*
+================================================================================
+
+To review a note, you can either use |K| mapping to execute |keywordprg| or
+use any of the preview window tag mappings to open the note in a preview
+window. Note that when the preview window commands are used (e.g |CTRL-W }|),
+|preview-window| is used. If you want to customize the preview window, use
+`preview_command` when setting up the plugin and rely on |K| command.
+
+    include ~
+
+    |include| commands can be used to see the references as well. You can use
+    `[I` to display all the lines that contain the reference under the cursor.
+
+MAPS                                                          *zettelkasten-maps*
+================================================================================
+
+Buffer Local ~
+
+                                                                *zettelkasten-[I*
+[I      Lists the notes that reference the note ID under the cursor. Available
+        in markdown buffers and plugin specific buffers.
+
+COMMANDS                                                  *zettelkasten-commands*
+================================================================================
+
+Global ~
+
+ZkNew                                                                    *:ZkNew*
+
+    Creates a new buffer with a markdown file type. If {notes_path} option was
+    set with |zettelkasten-setup|, it'll change the working directory.
+
+
+ZkHover {-preview} {-return-lines} {note_id}                           *:ZkHover*
+
+    Implements |keywordprg|. This command is set to |keywordprg| option if
+    |keywordprg| is not already set.
+
+    If `-preview` is passed to the command, a preview window will be used to
+    show the note contents.
+
+    If `-return-lines` can only be used when `-preview` is used. When this
+    argument is passed, this command will return the note content in a list
+    instead of using `preview_command`.
+
+    Example: >
+        setlocal keywordprg=:ZkHover\ -preview
+        setlocal keywordprg=:ZkHover\ -preview\ -return-lines
+
+ZkBrowse                                                              *:ZkBrowse*
+
+    Just a command that runs `edit zk://browser`.
+    In this buffer, you can use the same short cuts that you use to navigate
+    and open notes as in the markdown files.
+
+LUA                                                            *zettelkasten-lua*
+================================================================================
+
+setup({opts})                                                *zettelkasten-setup*
+
+    Initialize the plugin.
+
+    Parameters: ~
+        {opts} (optional, table)
+            - {notes_path} (optional, string): Defaults to an empty string. If
+              provided, |:ZkNew| uses the notes path to set the working
+              directory. If this is not set. you need to make sure that your
+              working directory is your notes directory. Otherwise some
+              features may not work.
+            - {preview_command} (optional, string): The command to use to
+              preview a note. This will be used with |:ZkHover -preview|
+              command. The command must take one string argument as the name
+              of the note file. This can be used to configure
+              zettelkasten.nvim so the hover previews are (for example) shown
+              in a hover window.
+            - {browseformat} (optional, string): Used to format each line when
+              browsing the notes. Here's the supported values:
+                  field     meaning ~
+                  %f        File name of the note.
+                  %h        Note's header.
+                  %b        Number of references to this note.
+                  %r        Number of notes this file references.
+                  %t        Tags in the note.
+                  %d        Note ID.
+              Default value is: `%f - %h [%r Refs] [%b B-Refs] %t`
+
+keyword_expr({cword}, {opts})                         *zettelkasten-keyword-expr*
+
+    Returns a table that contains the context for the note with the given ID
+    {cword}.
+
+    Parameters: ~
+        {cword} (string): The word under the cursor. If a note with the given
+        ID cannot be found, returns an empty table.
+        {opts} (optional, table)
+            - {preview_note} (optional, boolean): If set to true,
+              `preview_command` will be used to preview the note.
+            - {return_lines} (optional, boolean): Only used when
+              `preview_note` is set to `true`. When set, instead of using
+              `preview_command`, it returns the note contents from the
+              command.
+
+    Returns: ~
+        {table}
+
+tagfunc({pattern}, {flags}, {info})                        *zettelkasten-tagfunc*
+
+    Implements a |tagfunc|. This function is automatically set to the
+    |tagfunc| option by the plugin.
+
+    Returns: ~
+        {table}
+
+set_note_id({bufnr})                                  *zettelkasten-set-note-id*
+
+    Prepends a note ID to the first line of the current buffer. It expects to
+    find a markdown header in the first line.
+
+    Parameters: ~
+        {bufnr} (number): Current buffer, or another note buffer.
+
+completefunc({base})                                  *zettelkasten-completefunc*
+
+    Implements a |complete-function|. Given a {base} note ID or title, returns
+    a list of notes matching notes.
+
+    Parameters: ~
+        {base} (string): Note ID or title.
+
+show_back_references({cword}, {use_loclist})  *zettelkasten-show_back_references*
+
+    Presents the list of notes that reference the note with {cword} ID.
+    If {use_loclist} set to true, location list will be used instead of
+    quickfix list.
+
+get_back_references({note_id})                 *zettelkasten-get_back_references*
+
+    Returns a list containg an item each describing a note that references
+    {note_id}.
+
+    Each item in the return table contains these values:
+
+        - {id} (string): The note ID that references {note_id}
+        - {linenr} (number): The line where the reference is found.
+        - {title} (string): The title of the note with {id}
+        - {file_name} (string): The file name of the note with {id}
+
+get_toc({note_id}, {format})                               *zettelkasten-get_toc*
+
+    Returns a table that contains a list of notes that refer to {note_id}
+    formatted according to {format}.
+
+    You can use this function to insert all the notes that refer to a master
+    note.
+
+    Parameters: ~
+        {note_id} (string): Note ID.
+        {format} (optional, string)
+            The default format is `- [%h](%d)`. Only these format options are
+            supported.
+
+            field     meaning ~
+            %f        File name of the note.
+            %h        Note's header.
+            %d        Note ID.
+
+    Returns: ~
+        {table}
+
+    Example: ~
+        Insert Table of Contents with a Command: >
+
+        vim.api.nvim_buf_add_user_command(0, "ZkInsertTOC", function(opts)
+            vim.api.nvim_buf_set_lines(
+                vim.api.nvim_get_current_buf(),
+                opts.line1,
+                opts.line2,
+                true,
+                require("zettelkasten").get_toc(opts.args)
+            )
+        end, {
+            nargs = 1,
+            range = true,
+        })
+
+ABOUT                                                        *zettelkasten-about*
+================================================================================
+
+Grab the latest version or report a bug on GitHub:
+
+https://github.com/Furkanzmc/zettelkasten.nvim
+
+vim:tw=80:colorcolumn=81:et:ft=help:norl:
