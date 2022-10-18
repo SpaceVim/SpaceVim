@@ -18,7 +18,11 @@
 
 SpaceVim is a vim configuration inspired by [spacemacs](https://github.com/syl20bnr/spacemacs), it is compatible with [Vim](https://github.com/vim/vim) and [Neovim](https://github.com/neovim/neovim).
 
-Check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+- [Quick start guide](https://spacevim.org/quick-start-guide/): installation, configuration, and learning resources for SpaceVim
+- [Documentation](https://spacevim.org/documentation/): the primary official documentation of SpaceVim
+- [Available layers](https://spacevim.org/layers/): a list of available layers which can be used in SpaceVim
+
+The latest release [v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/) was released at 2022-07-02, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## Support SpaceVim
 
