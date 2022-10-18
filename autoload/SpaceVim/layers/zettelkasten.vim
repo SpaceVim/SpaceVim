@@ -4,6 +4,7 @@
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
+"=============================================================================
 
 function! SpaceVim#layers#zettelkasten#plugins() abort
   let plugins = []
@@ -29,4 +30,9 @@ function! SpaceVim#layers#zettelkasten#config() abort
   let g:_spacevim_mappings_space.m.g = {'name' : '+zettelkasten'}
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'z', 'n'], 'ZkNew', 'create-new-zettel-note', 1)
 endfunction
-"=============================================================================
+
+function! SpaceVim#layers#zettelkasten#set_variable(var) abort
+  let g:zettelkasten_directory = get(a:var,
+        \ 'zettel_dir',
+        \ '')
+endfunction

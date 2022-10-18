@@ -8,7 +8,11 @@
 local M = {}
 
 
-M.zettel_dir = vim.g.zettelkasten_directory or '~/.zettelkasten/'
+if vim.g.zettelkasten_directory and vim.g.zettelkasten_directory ~= '' then
+  M.zettel_dir = vim.g.zettelkasten_directory 
+else
+  M.zettel_dir =  '~/.zettelkasten/'
+end
 
 local s_config = {
     notes_path = "",
