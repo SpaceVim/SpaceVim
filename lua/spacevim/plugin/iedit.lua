@@ -71,6 +71,7 @@ local matchstr = vim.fn.matchstr
 local substitute = vim.fn.substitute
 local range = vim.fn.range
 local getline = vim.fn.getline
+local timer_start = vim.fn.timer_start
 
 local function echo(msg) -- {{{
   vim.api.nvim_echo({ { msg } }, false, {})
@@ -649,13 +650,13 @@ end
 -- }}}
 
 local function handle_register(char) -- {{{
-  local char = vim.fn.nr2char(char)
+  -- local char = vim.fn.nr2char(char)
   -- same as char =~# '[a-zA-Z0-9"+:/]' in vim script
   if char:match('[a-zA-Z0-9"%+:/]') then
     remove_cursor_highlight()
     Operator = ''
     local paste = vim.fn.getreg(char, 1, true)[1] or ''
-    for i = i, #cursor_stack, 1 do
+    for i = 1, #cursor_stack, 1 do
       cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. paste
     end
     replace_symbol()
@@ -672,7 +673,7 @@ local function handle(mode, char) -- {{{
     handle_f_char(char)
   elseif mode == 'n' then
     handle_normal(char)
-  elseif mode == 'r' and Operator == 'r' then
+  elseif mode == 'i' and Operator == 'r' then
     handle_register(char)
   elseif mode == 'i' then
     handle_insert(char)
