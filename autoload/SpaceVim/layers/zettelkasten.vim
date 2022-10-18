@@ -36,3 +36,9 @@ function! SpaceVim#layers#zettelkasten#set_variable(var) abort
         \ 'zettel_dir',
         \ '')
 endfunction
+
+function! SpaceVim#layers#zettelkasten#get_options() abort
+
+  return ['zettel_dir']
+
+endfunction
