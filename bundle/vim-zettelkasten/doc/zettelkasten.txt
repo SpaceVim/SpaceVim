@@ -3,7 +3,7 @@
 Origin Author:  Furkan Uzumcu
 Maintainer:  Shidong Wang <wsdjeg@outlook.com>
 
-INTRODUCTION                                                      *zettelkasten*
+INTRODUCTION                                  *vim-zettelkasten* *zettelkasten*
 ================================================================================
 
 `vim-zettelkasten` is forked from `zettelkasten.nvim`. The goal of this plugin
