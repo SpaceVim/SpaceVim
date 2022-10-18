@@ -10,6 +10,7 @@ description: "This layers adds extensive support for zettelkasten"
 - [Description](#description)
 - [Install](#install)
 - [Layer options](#layer-options)
+- [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -30,3 +31,8 @@ To use this configuration layer, update your custom configuration file with:
 
 - `zettel_dir`: set the default zettelkasten directory
 
+## Key bindings
+
+| Key bindings | description     |
+| ------------ | --------------- |
+| `SPC m z n`  | create new note |
