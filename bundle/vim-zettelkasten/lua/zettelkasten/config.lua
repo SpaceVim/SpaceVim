@@ -1,4 +1,15 @@
+--=============================================================================
+-- config.lua --- the config module for zettelkasten
+-- Copyright (c) 2016-2022 Wang Shidong & Contributors
+-- Author: Wang Shidong < wsdjeg@outlook.com >
+-- URL: https://spacevim.org
+-- License: GPLv3
+--=============================================================================
 local M = {}
+
+
+M.zettel_dir = vim.g.zettelkasten_directory or '~/.zettelkasten/'
+
 local s_config = {
     notes_path = "",
     preview_command = "pedit",

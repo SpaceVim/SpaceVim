@@ -14,9 +14,8 @@ _G.zettelkasten = {
     completefunc = require("zettelkasten").completefunc,
     zknew = function()
         vim.cmd([[new | setlocal filetype=markdown]])
-        local config = s_config.get()
-        if config.notes_path ~= "" then
-            vim.cmd("lcd " .. config.notes_path)
+        if s_config.zettel_dir ~= "" then
+            vim.cmd("lcd " .. s_config.zettel_dir)
         end
 
         vim.cmd("normal ggI# New Note")
