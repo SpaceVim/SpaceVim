@@ -9,11 +9,14 @@ SpaceVim is a project exist thanks to all the people who contribute,
 we are thankful for all the contributions from community.
 We have a few guidelines, which we ask all contributors to follow.
 
-Code contributions are welcome,
-Please read our [development guidelines](https://spacevim.org/development/)
-before your first contribution to get to know them.
+## Asking for help
 
-In any case, feel free to join us on the [gitter room](https://gitter.im/SpaceVim/SpaceVim)
+If you want to ask an usage question, be sure to look first into these place where maybe hold the answer.
+
+- [FAQ](https://spacevim.org/faq/): the frequently asked questions about SpaceVim.
+- [Documentation](spacevim.org/documentation/): the general documentation of SpaceVim.
+
+In any case, feel free to join us on the [matrix room](https://chat.mozilla.org/#/room/#spacevim:matrix.org)
 to ask questions about contributing.
 
 ## Pull Request
