@@ -1,0 +1,8 @@
+Execute ( SpaceVim lua api: data.list ):
+  if get(g:, 'spacevim_use_lua', 0)
+    let cmp = SpaceVim#api#import('vim#compatible')
+    lua spacevim_list = require('spacevim.api').import('data.list')
+    lua context = {"java", "hello world"}
+    AssertEqual cmp.luaeval('spacevim_list.pop(context)'), 'hello world'
+  endif
+

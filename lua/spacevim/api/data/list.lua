@@ -4,7 +4,7 @@ local list = {}
 
 
 function list.pop(l)
-    
+  return table.remove(l)
 end
 
 
