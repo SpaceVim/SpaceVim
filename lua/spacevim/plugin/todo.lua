@@ -153,7 +153,7 @@ local function update_todo_content() -- {{{
     extend(argv, { '.' })
   end
   extend(argv, grep_default_ropt)
-  logger.info('cmd:' .. tostring(argv))
+  logger.info('cmd:' .. vim.inspect(argv))
   logger.info('   labels_partten: ' .. labels_partten)
   todo_jobid = jobstart(argv, {
     on_stdout = stdout,
