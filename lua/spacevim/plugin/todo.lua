@@ -6,6 +6,8 @@
 -- License: GPLv3
 --=============================================================================
 
+local M = {}
+
 local bufnr = -1
 local todo_jobid = -1
 local todos = {}
@@ -155,3 +157,10 @@ local function open_win() -- {{{
   update_todo_content()
 end
 -- }}}
+
+function M.list() -- {{{
+  open_win()
+end
+-- }}}
+
+return M
