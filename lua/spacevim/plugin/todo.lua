@@ -11,12 +11,30 @@ local todo_jobid = -1
 local todos = {}
 local winnr = -1
 
+local logger = require('spacevim.logger').derive('todo')
 
-local function update_todo_content() -- {{{
+local function stderr(id, data, event) -- {{{
+  if id ~= todo_jobid then
+    return
+  end
+  for _, d in ipairs(data) do
+    logger.info('stderr: ' .. d)
+  end
+end
+-- }}}
+
+function exit(id, data, event) -- {{{
+  if id ~= todo_jobid then
+    return
+  end
+  logger.info('todomanager job exit with:' .. data)
   
 end
 -- }}}
 
+local function update_todo_content() -- {{{
+end
+-- }}}
 
 local function open_win() -- {{{
   if bufnr ~= 0 and vim.fn.bufexists(bufnr) then
