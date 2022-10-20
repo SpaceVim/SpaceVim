@@ -10,6 +10,8 @@ local bufnr = -1
 local todo_jobid = -1
 local todos = {}
 local winnr = -1
+-- set the default labels for todo manager.
+local labels = { 'fixme', 'question', 'todo', 'idea' }
 
 local logger = require('spacevim.logger').derive('todo')
 
@@ -23,13 +25,33 @@ local function stderr(id, data, event) -- {{{
 end
 -- }}}
 
+local function indexof(t, v) -- {{{
+  for i, x in ipairs(t) do
+    if x == v then
+      return i
+    end
+    return -1
+  end
+end
+-- }}}
+
+local function compare_todo(a, b) -- {{{
+  local i = indexof(labels, a)
+  local j = indexof(labels, b)
+  if i < j then
+    return true
+  else
+    return false
+  end
+end
+-- }}}
+
 function exit(id, data, event) -- {{{
   if id ~= todo_jobid then
     return
   end
   logger.info('todomanager job exit with:' .. data)
   todos = table.sort(todos, compare_todo)
-  
 end
 -- }}}
 
