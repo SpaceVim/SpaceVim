@@ -28,6 +28,7 @@ function exit(id, data, event) -- {{{
     return
   end
   logger.info('todomanager job exit with:' .. data)
+  todos = table.sort(todos, compare_todo)
   
 end
 -- }}}
