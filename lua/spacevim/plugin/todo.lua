@@ -77,7 +77,6 @@ end
 -- }}}
 
 local function get_labels_regex() -- {{{
-  
 end
 -- }}}
 
@@ -92,13 +91,19 @@ local function update_todo_content() -- {{{
   local labels_regex = get_labels_regex()
   local argv = { grep_default_exe }
   extend(argv, grep_default_opt)
-  extend(argv, {labels_regex})
-  if sys.isWindows and (grep_default_exe == 'rg' or grep_default_exe == 'ag' or grep_default_exe == 'pt') then
-    extend(argv, {'.'})
+  extend(argv, { labels_regex })
+  if
+    sys.isWindows
+    and (
+      grep_default_exe == 'rg'
+      or grep_default_exe == 'ag'
+      or grep_default_exe == 'pt'
+    )
+  then
+    extend(argv, { '.' })
   elseif sys.isWindows and grep_default_exe == 'findstr' then
-    extend(argv, {'.'})
+    extend(argv, { '.' })
   end
-
 end
 -- }}}
 
