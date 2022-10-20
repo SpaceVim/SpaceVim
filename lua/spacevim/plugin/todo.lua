@@ -20,6 +20,8 @@ local grep_default_exe, grep_default_opt, grep_default_ropt, grep_default_expr_o
 
 local logger = require('spacevim.logger').derive('todo')
 
+local jobstart = vim.fn.jobstart
+
 local function stderr(id, data, event) -- {{{
   if id ~= todo_jobid then
     return
@@ -94,16 +96,23 @@ local function update_todo_content() -- {{{
   extend(argv, { labels_regex })
   if
     sys.isWindows
-    and (
-      grep_default_exe == 'rg'
-      or grep_default_exe == 'ag'
-      or grep_default_exe == 'pt'
-    )
+    and (grep_default_exe == 'rg' or grep_default_exe == 'ag' or grep_default_exe == 'pt')
   then
     extend(argv, { '.' })
   elseif sys.isWindows and grep_default_exe == 'findstr' then
+    extend(argv, { '*.*' })
+  elseif not sys.isWindows and grep_default_exe == 'rg' then
     extend(argv, { '.' })
   end
+  extend(argv, grep_default_ropt)
+  logger.info('cmd:' .. tostring(argv))
+  logger.info('   labels_partten: ' .. labels_partten)
+  todo_jobid = jobstart(argv, {
+    on_stdout = stdout,
+    on_stderr = stderr,
+    on_exit = exit,
+  })
+  logger.info('jobid:' .. todo_jobid)
 end
 -- }}}
 
