@@ -59,7 +59,7 @@ local function stdout(id, data, event) -- {{{
       local label = vim.fn.matchstr(d, labels_partten)
       local title = vim.fn.get(vim.fn.split(d, label), 1, '')
       table.insert(todos, {
-        fille = f,
+        file = f,
         line = line,
         column = column,
         title = title,
@@ -120,7 +120,10 @@ function exit(id, data, event) -- {{{
       v.label .. '    ' .. v.file .. v.title
     )
   end
+  local ma = vim.fn.getbufvar(bufnr, '&ma')
+  vim.fn.setbufvar(bufnr,'&ma', 1)
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+  vim.fn.setbufvar(bufnr,'&ma', ma)
 end
 -- }}}
 
