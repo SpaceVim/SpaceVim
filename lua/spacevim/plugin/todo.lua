@@ -109,6 +109,24 @@ end
 -- }}}
 
 local function get_labels_regex() -- {{{
+  local sep = ''
+  if grep_default_exe == 'rg' then
+    sep = '|'
+  elseif grep_default_exe == 'grep' then
+    sep = '\\|'
+  else
+    sep = '|'
+  end
+  local rst = ''
+  local i = 1
+  for _, v in ipairs(labels) do
+    rst = rst .. prefix .. v .. [[\\b]]
+    if i ~= #labels then
+      rst = rst .. sep
+    end
+    i = i + 1
+  end
+  return rst
 end
 -- }}}
 
