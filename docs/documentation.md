@@ -88,7 +88,7 @@ description: "General documentation about how to use SpaceVim, including the qui
   - [Replace text with iedit](#replace-text-with-iedit)
     - [iedit states key bindings](#iedit-states-key-bindings)
   - [Code runner](#code-runner)
-  - [Read Eval Print Loop](#read-eval-print-loop)
+  - [REPL(read eval print loop)](#replread-eval-print-loop)
   - [Highlight current symbol](#highlight-current-symbol)
   - [Error handling](#error-handling)
   - [EditorConfig](#editorconfig)
@@ -571,7 +571,6 @@ In font transient state:
 | `-`           | decrease the font size    |
 | Any other key | leave the transient state |
 
-
 ### Mouse
 
 Mouse support is enabled in Normal mode and Visual mode by default.
@@ -953,7 +952,6 @@ If only one file buffer is opened, a file is opened in the active window, otherw
 | `l` / `<Enter>` | open file in one window                  |
 | `s g`           | open file in a vertically split window   |
 | `s v`           | open file in a horizontally split window |
-
 
 #### Override filetree key bindings
 
@@ -2400,11 +2398,17 @@ Key bindings within code runner buffer:
 | `ctrl-c`    | stop code runner            |
 | `i`         | open promote to insert text |
 
-### Read Eval Print Loop
+### REPL(read eval print loop)
 
 The REPL(Read Eval Print Loop) plugin provides a framework to run REPL command asynchronously.
 
 For different language, you need to checkout the doc of language layer. The repl key bindings are defined in language layer.
+
+Key bindings within repl buffer:
+
+| key binding | description                 |
+| ----------- | --------------------------- |
+| `i`         | open promote to insert text |
 
 ### Highlight current symbol
 

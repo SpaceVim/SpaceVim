@@ -202,6 +202,7 @@ function! s:open_windows() abort
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
   set filetype=SpaceVimREPL
   nnoremap <silent><buffer> q :call <SID>close()<cr>
+  nnoremap <silent><buffer> i :call <SID>insert()<cr>
   augroup spacevim_repl
     autocmd!
     autocmd BufWipeout <buffer> call <SID>close_repl()
@@ -209,4 +210,14 @@ function! s:open_windows() abort
   let s:bufnr = bufnr('%')
   let s:winid = win_getid(winnr())
   wincmd p
+endfunction
+
+function! s:insert() abort
+  call inputsave()
+  let input = input('input >')
+  if !empty(input) && s:status.is_running == 1
+    call s:JOB.send(s:job_id, input)
+  endif
+  normal! :
+  call inputrestore()
 endfunction
