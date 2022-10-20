@@ -57,7 +57,7 @@ local function stdout(id, data, event) -- {{{
       local i, j = string.find(d, ':%d+:')
       local line = string.sub(d, i + 1, j - 1)
       local column = string.sub(vim.fn.matchstr(d, [[\(:\d\+\)\@<=:\d\+:]]), 1, -2)
-      local label = vim.fn.matchstr(d, labels_partten)
+      local label = string.sub(vim.fn.matchstr(d, labels_partten), #prefix + 1, -1)
       local title = vim.fn.get(vim.fn.split(d, label), 1, '')
       table.insert(todos, {
         file = f,
@@ -85,8 +85,8 @@ local function indexof(t, v) -- {{{
     if x == v then
       return i
     end
-    return -1
   end
+  return -1
 end
 -- }}}
 
@@ -96,10 +96,9 @@ local function extend(t1, t2) -- {{{
   end
 end
 -- }}}
-
 local function compare_todo(a, b) -- {{{
-  local i = indexof(labels, a)
-  local j = indexof(labels, b)
+  local i = indexof(labels, a.label)
+  local j = indexof(labels, b.label)
   if i < j then
     return true
   else
@@ -119,7 +118,7 @@ function exit(id, data, event) -- {{{
   local lines = {}
   for _, v in ipairs(todos) do
     table.insert(lines, 
-      v.label .. string.rep(' ', lw - #v.label) .. v.file .. string.rep(' ', fw - #v.file) .. v.title
+      prefix .. v.label .. string.rep(' ', lw - #v.label) .. v.file .. string.rep(' ', fw - #v.file) .. v.title
     )
   end
   local ma = vim.fn.getbufvar(bufnr, '&ma')
