@@ -50,8 +50,8 @@ local function stdout(id, data, event) -- {{{
     return
   end
   for _, d in ipairs(data) do
-    logger.info('stdout:' .. d)
     if not empty(d) then
+      logger.info('stdout:' .. d)
       local f = vim.split(d, ':%d+:')[1]
       local i, j = string.find(d, ':%d+:')
       local line = string.sub(d, i + 1, j - 1)
@@ -112,6 +112,15 @@ function exit(id, data, event) -- {{{
   end
   logger.info('todomanager job exit with:' .. data)
   todos = table.sort(todos, compare_todo)
+  local lw = 10
+  local fw = 30
+  local lines = {}
+  for _, v in ipairs(todos) do
+    table.insert(lines, 
+      v.label .. '    ' .. v.file .. v.title
+    )
+  end
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
 end
 -- }}}
 
