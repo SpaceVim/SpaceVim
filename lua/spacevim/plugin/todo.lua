@@ -9,9 +9,14 @@
 local bufnr = -1
 local todo_jobid = -1
 local todos = {}
+local todo = {}
 local winnr = -1
 -- set the default labels for todo manager.
 local labels = { 'fixme', 'question', 'todo', 'idea' }
+local prefix = '@'
+
+local grep_default_exe, grep_default_opt, grep_default_ropt, grep_default_expr_opt, grep_default_fix_string_opt, grep_default_ignore_case, grep_default_smart_case =
+  require('spacevim.plugin.search').default_tool()
 
 local logger = require('spacevim.logger').derive('todo')
 
@@ -44,6 +49,13 @@ local function indexof(t, v) -- {{{
 end
 -- }}}
 
+local function extend(t1, t2) -- {{{
+  for _, v in ipairs(t2) do
+    table.insert(t1, v)
+  end
+end
+-- }}}
+
 local function compare_todo(a, b) -- {{{
   local i = indexof(labels, a)
   local j = indexof(labels, b)
@@ -64,7 +76,29 @@ function exit(id, data, event) -- {{{
 end
 -- }}}
 
+local function get_labels_regex() -- {{{
+  
+end
+-- }}}
+
 local function update_todo_content() -- {{{
+  if vim.g.spacevim_todo_labels ~= nil then
+    labels = vim.g.spacevim_todo_labels
+  end
+  if vim.g.spacevim_todo_prefix ~= nil then
+    prefix = vim.g.spacevim_todo_prefix
+  end
+  todos = {}
+  local labels_regex = get_labels_regex()
+  local argv = { grep_default_exe }
+  extend(argv, grep_default_opt)
+  extend(argv, {labels_regex})
+  if sys.isWindows and (grep_default_exe == 'rg' or grep_default_exe == 'ag' or grep_default_exe == 'pt') then
+    extend(argv, {'.'})
+  elseif sys.isWindows and grep_default_exe == 'findstr' then
+    extend(argv, {'.'})
+  end
+
 end
 -- }}}
 
