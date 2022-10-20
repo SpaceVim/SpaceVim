@@ -72,10 +72,11 @@ end
 -- }}}
 local function open_todo() -- {{{
   local t = todos[vim.fn.line('.')]
-  close_todo_win()
+  vim.cmd('close')
+  vim.cmd(winnr .. 'wincmd w')
   vim.cmd('e ' .. t.file)
   vim.fn.cursor(t.line, t.column)
-  vim.cmd('noautocmd! normal! :')
+  vim.cmd('noautocmd normal! :')
 end
 -- }}}
 
@@ -204,6 +205,9 @@ local function open_win() -- {{{
   ]])
   bufnr = vim.fn.bufnr('%')
   update_todo_content()
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Enter>', '', {
+    callback = open_todo
+  } )
 end
 -- }}}
 
