@@ -25,6 +25,15 @@ local function stderr(id, data, event) -- {{{
 end
 -- }}}
 
+local function open_todo() -- {{{
+  local t = todos[vim.fn.line('.')]
+  close_todo_win()
+  vim.cmd('e ' .. t.file)
+  vim.fn.cursor(t.line, t.column)
+  vim.cmd('noautocmd! normal! :')
+end
+-- }}}
+
 local function indexof(t, v) -- {{{
   for i, x in ipairs(t) do
     if x == v then
