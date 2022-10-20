@@ -29,6 +29,13 @@ local jobstart = vim.fn.jobstart
 local labels_partten = ''
 local labels_regex = ''
 
+local function empty(d) -- {{{
+  if type(d) == 'string' then
+    return d == ''
+  end
+end
+-- }}}
+
 local function stderr(id, data, event) -- {{{
   if id ~= todo_jobid then
     return
