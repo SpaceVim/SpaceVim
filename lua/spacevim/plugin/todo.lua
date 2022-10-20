@@ -31,7 +31,30 @@ local function stderr(id, data, event) -- {{{
   end
 end
 -- }}}
-
+local function stdout(id, data, event) -- {{{
+  if id ~= todo_jobid then
+    return
+  end
+  for _, d in ipairs(data) do
+    logger.info('stdout:' .. d)
+    if not empty(d) then
+      local f = vim.split(d, ':%d+:')[1]
+      local i, j = string.find(d, ':%d+:')
+      local line = string.sub(d, i + 1, j - 1)
+      local column = string.sub(vim.fn.matchstr(d, [[\(:\d\+\)\@<=:\d\+:]]), 1, -2)
+      local label = vim.fn.matchstr(d, labels_partten)
+      local title = vim.fn.get(vim.fn.split(d, label), 1, '')
+      table.insert(todos, {
+        fille = f,
+        line = line,
+        column = column,
+        title = title,
+        label = label,
+      })
+    end
+  end
+end
+-- }}}
 local function open_todo() -- {{{
   local t = todos[vim.fn.line('.')]
   close_todo_win()
