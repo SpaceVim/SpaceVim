@@ -699,7 +699,11 @@ function! SpaceVim#mapping#space#init() abort
           \ ]
           \ ]
           \ , 1)
-  call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#plugins#todo#list()', 'open-todo-manager', 1)
+  if has('nvim-0.7.0')
+    call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'lua require("spacevim.plugin.todo").list()', 'open-todo-manager', 1)
+  else
+    call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#plugins#todo#list()', 'open-todo-manager', 1)
+  endif
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
