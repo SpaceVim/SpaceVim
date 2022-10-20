@@ -142,7 +142,7 @@ end
 -- }}}
 
 local function open_win() -- {{{
-  if bufnr ~= 0 and vim.fn.bufexists(bufnr) then
+  if bufnr ~= 0 and vim.fn.bufexists(bufnr) == 1 then
     vim.cmd('bd ' .. bufnr)
   end
   vim.cmd('botright split __todo_manager__')
