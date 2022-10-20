@@ -8,6 +8,8 @@
 
 local M = {}
 
+local sys = require('spacevim.api').import('system')
+
 local bufnr = -1
 local todo_jobid = -1
 local todos = {}
