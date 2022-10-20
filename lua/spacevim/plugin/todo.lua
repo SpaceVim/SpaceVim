@@ -9,6 +9,7 @@
 local M = {}
 
 local sys = require('spacevim.api').import('system')
+local reg = require('spacevim.api').import('vim.regex')
 
 local bufnr = -1
 local todo_jobid = -1
@@ -149,6 +150,11 @@ local function get_labels_regex() -- {{{
 end
 -- }}}
 
+local function get_labels_partten() -- {{{
+  return reg.parser(get_labels_regex(), false)
+end
+-- }}}
+
 local function update_todo_content() -- {{{
   if vim.g.spacevim_todo_labels ~= nil then
     labels = vim.g.spacevim_todo_labels
@@ -158,6 +164,7 @@ local function update_todo_content() -- {{{
   end
   todos = {}
   labels_regex = get_labels_regex()
+  labels_partten = get_labels_partten()
   local argv = { grep_default_exe }
   extend(argv, grep_default_opt)
   extend(argv, { labels_regex })
