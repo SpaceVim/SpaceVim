@@ -26,6 +26,9 @@ local logger = require('spacevim.logger').derive('todo')
 
 local jobstart = vim.fn.jobstart
 
+local labels_partten = ''
+local labels_regex = ''
+
 local function stderr(id, data, event) -- {{{
   if id ~= todo_jobid then
     return
@@ -117,7 +120,7 @@ local function update_todo_content() -- {{{
     prefix = vim.g.spacevim_todo_prefix
   end
   todos = {}
-  local labels_regex = get_labels_regex()
+  labels_regex = get_labels_regex()
   local argv = { grep_default_exe }
   extend(argv, grep_default_opt)
   extend(argv, { labels_regex })
