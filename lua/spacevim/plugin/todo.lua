@@ -113,12 +113,12 @@ function exit(id, data, event) -- {{{
   end
   logger.info('todomanager job exit with:' .. data)
   table.sort(todos, compare_todo)
-  local lw = 10
-  local fw = 30
+  local lw = 15
+  local fw = 50
   local lines = {}
   for _, v in ipairs(todos) do
     table.insert(lines, 
-      v.label .. '    ' .. v.file .. v.title
+      v.label .. string.rep(' ', lw - #v.label) .. v.file .. string.rep(' ', fw - #v.file) .. v.title
     )
   end
   local ma = vim.fn.getbufvar(bufnr, '&ma')
