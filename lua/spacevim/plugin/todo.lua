@@ -127,7 +127,7 @@ local function get_labels_regex() -- {{{
   local rst = ''
   local i = 1
   for _, v in ipairs(labels) do
-    rst = rst .. prefix .. v .. [[\\b]]
+    rst = rst .. prefix .. v .. [[\b]]
     if i ~= #labels then
       rst = rst .. sep
     end
