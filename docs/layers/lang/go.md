@@ -80,29 +80,29 @@ go install github.com/jstemmer/gotags@latest
 
 **Import key bindings:**
 
-| Key Bindings | Descriptions              |
-| ------------ | ------------------------- |
-| `SPC l a`    | go alternate              |
-| `SPC l b`    | go build                  |
-| `SPC l c`    | go coverage               |
-| `SPC l d`    | go doc                    |
-| `SPC l D`    | go doc vertical           |
-| `SPC l e`    | go rename                 |
-| `SPC l g`    | go definition             |
-| `SPC l G`    | go generate               |
-| `SPC l h`    | go info                   |
-| `SPC l i`    | go implements             |
-| `SPC l I`    | implement stubs           |
-| `SPC l k`    | add tags                  |
-| `SPC l K`    | remove tags               |
-| `SPC l l`    | list declarations in file |
-| `SPC l m`    | format imports            |
-| `SPC l M`    | add import                |
-| `SPC l r`    | go run                    |
-| `SPC l s`    | fill struct               |
-| `SPC l t`    | go test                   |
-| `SPC l v`    | freevars                  |
-| `SPC l x`    | go referrers              |
+| Key Bindings | Descriptions                                   |
+| ------------ | ---------------------------------------------- |
+| `SPC l a`    | go alternate                                   |
+| `SPC l b`    | go build                                       |
+| `SPC l c`    | go coverage                                    |
+| `SPC l d`    | go doc                                         |
+| `SPC l D`    | go doc vertical                                |
+| `SPC l e`    | go rename                                      |
+| `SPC l g`    | go definition                                  |
+| `SPC l G`    | go generate                                    |
+| `SPC l h`    | go info                                        |
+| `SPC l i`    | go implements                                  |
+| `SPC l I`    | implement stubs                                |
+| `SPC l k`    | add tags                                       |
+| `SPC l K`    | remove tags                                    |
+| `SPC l l`    | list declarations, need `ctrlp` or `fzf` layer |
+| `SPC l m`    | format imports                                 |
+| `SPC l M`    | add import                                     |
+| `SPC l r`    | go run                                         |
+| `SPC l s`    | fill struct                                    |
+| `SPC l t`    | go test                                        |
+| `SPC l v`    | freevars                                       |
+| `SPC l x`    | go referrers                                   |
 
 **Code formatting:**
 
