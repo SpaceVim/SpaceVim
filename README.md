@@ -1,11 +1,11 @@
 <h1 align="center">
   <a href="https://spacevim.org/">
-  <img src="https://spacevim.org/logo.png" width="600" alt="SpaceVim"/>
+  <img src="https://spacevim.org/logo.png" width="440" alt="SpaceVim"/>
   </a>
 </h1>
 
-[Chat](https://chat.mozilla.org/#/room/#spacevim:matrix.org) \|
 [Quick Start Guide](https://spacevim.org/quick-start-guide/) \|
+[Chat](https://chat.mozilla.org/#/room/#spacevim:matrix.org) \|
 [Twitter](https://twitter.com/SpaceVim)
 
 [![build](https://img.shields.io/github/workflow/status/SpaceVim/SpaceVim/test)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
@@ -14,7 +14,7 @@
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/spacevim/spacevim)](https://hub.docker.com/r/spacevim/spacevim)
 
-![welcome page](https://user-images.githubusercontent.com/13142418/176910121-8e7ca78f-8434-4ac7-9b02-08c4d15f8ad9.png)
+<!-- ![welcome page](https://user-images.githubusercontent.com/13142418/176910121-8e7ca78f-8434-4ac7-9b02-08c4d15f8ad9.png) -->
 
 SpaceVim is a vim configuration inspired by [spacemacs](https://github.com/syl20bnr/spacemacs), it is compatible with [Vim](https://github.com/vim/vim) and [Neovim](https://github.com/neovim/neovim).
 
@@ -24,7 +24,9 @@ SpaceVim is a vim configuration inspired by [spacemacs](https://github.com/syl20
 
 The latest release [v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/) was released at 2022-07-02, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
-## Support SpaceVim
+## Features
+
+## Contribute
 
 This project wouldn't exist without all the people who [contributed](CONTRIBUTING.md),
 We are thankful for any contributions from the community.
@@ -34,7 +36,7 @@ We are thankful for any contributions from the community.
 If you use SpaceVim in your daily work and feel that it has made your life easier,
 please consider checking out [sponsors page](https://spacevim.org/sponsors/).
 
-## Credits & Thanks
+## Credits
 
 - [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim) by [@Gabirel](https://github.com/Gabirel)
 - [SpaceVimTutorial](https://everettjf.gitbooks.io/spacevimtutorial/content/) by [@everettjf](https://github.com/everettjf)
