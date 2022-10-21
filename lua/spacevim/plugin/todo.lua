@@ -107,14 +107,23 @@ local function compare_todo(a, b) -- {{{
 end
 -- }}}
 
+local function max_len(t, k) -- {{{
+  local l = 0
+  for _, v in ipairs(t) do
+    l = math.max(#v[k], l) 
+  end
+  return l
+end
+-- }}}
+
 function exit(id, data, event) -- {{{
   if id ~= todo_jobid then
     return
   end
   logger.info('todomanager job exit with:' .. data)
   table.sort(todos, compare_todo)
-  local lw = 15
-  local fw = 50
+  local lw = max_len(todos, 'label') + 1
+  local fw = max_len(todos, 'file') + 1
   local lines = {}
   for _, v in ipairs(todos) do
     table.insert(lines, 
