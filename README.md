@@ -34,6 +34,28 @@ The latest release [v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/) was r
 - **Batteries included:** discover hundreds of ready-to-use packages nicely organised in configuration layers following a set of [conventions](http://spacevim.org/conventions/).
 - **Consistent experience:** consistent experience between Vim and NeoVim
 
+## Project Layout
+
+```txt
+├─ .ci/                           build automation
+├─ .github/                       issue/PR templates
+├─ .SpaceVim.d/                   project specific configuration
+├─ after/                         overrule or add to the distributed defaults
+├─ autoload/SpaceVim.vim          SpaceVim core file
+├─ autoload/SpaceVim/api/         Public APIs
+├─ autoload/SpaceVim/layers/      available layers
+├─ autoload/SpaceVim/plugins/     buildin plugins
+├─ autoload/SpaceVim/mapping/     mapping guide
+├─ colors/                        default colorscheme
+├─ docker/                        docker image generator
+├─ bundle/                        bundle plugins
+├─ doc/                           help(cn/en)
+├─ docs/                          website(cn/en)
+├─ wiki/                          wiki(cn/en)
+├─ bin/                           executable
+└─ test/                          tests
+```
+
 ## Contribute
 
 This project wouldn't exist without all the people who [contributed](CONTRIBUTING.md),
