@@ -1,11 +1,11 @@
 <h1 align="center">
-  <a href="https://spacevim.org/">
+  <a href="https://github.com/SpaceVim/SpaceVim#readme">
   <img src="https://spacevim.org/logo.png" width="600" alt="SpaceVim"/>
   </a>
 </h1>
 
-[Chat](https://chat.mozilla.org/#/room/#spacevim:matrix.org) \|
 [Quick Start Guide](https://spacevim.org/quick-start-guide/) \|
+[Chat](https://chat.mozilla.org/#/room/#spacevim:matrix.org) \|
 [Twitter](https://twitter.com/SpaceVim)
 
 [![build](https://img.shields.io/github/workflow/status/SpaceVim/SpaceVim/test)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
@@ -16,23 +16,19 @@
 
 ![welcome page](https://user-images.githubusercontent.com/13142418/176910121-8e7ca78f-8434-4ac7-9b02-08c4d15f8ad9.png)
 
-SpaceVim is a vim configuration inspired by [spacemacs](https://github.com/syl20bnr/spacemacs), it is compatible with [Vim](https://github.com/vim/vim) and [Neovim](https://github.com/neovim/neovim).
+[SpaceVim](https://spacevim.org/) is a vim configuration inspired by [spacemacs](https://github.com/syl20bnr/spacemacs), it is compatible with [Vim](https://github.com/vim/vim) and [Neovim](https://github.com/neovim/neovim).
 
-- [Quick start guide](https://spacevim.org/quick-start-guide/): installation, configuration, and learning resources for SpaceVim
 - [Documentation](https://spacevim.org/documentation/): the primary official documentation of SpaceVim
 - [Available layers](https://spacevim.org/layers/): a list of available layers which can be used in SpaceVim
 
 The latest release [v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/) was released at 2022-07-02, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
-## Support SpaceVim
+## Contribute
 
 This project wouldn't exist without all the people who [contributed](CONTRIBUTING.md),
 We are thankful for any contributions from the community.
 
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
-
-If you use SpaceVim in your daily work and feel that it has made your life easier,
-please consider checking out [sponsors page](https://spacevim.org/sponsors/).
 
 ## Credits & Thanks
 
