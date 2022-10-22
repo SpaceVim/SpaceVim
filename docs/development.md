@@ -5,11 +5,15 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
 
 # Development
 
+SpaceVim is a joint effort of all contributors.
+We encourage you to participate in SpaceVim's development.
+This page describes the entire development process of SpaceVim.
+
+We have some guidelines that we need all contributors to follow.
+You can only think about reading the part that is relevant to what you are going to do:
+
 <!-- vim-markdown-toc GFM -->
 
-- [Asking for help](#asking-for-help)
-- [Reporting bugs](#reporting-bugs)
-- [Requesting new feature](#requesting-new-feature)
 - [Contributing code](#contributing-code)
   - [License](#license)
   - [Conventions](#conventions)
@@ -32,38 +36,6 @@ description: "General contributing guidelines and changelog of SpaceVim, includi
 
 <!-- vim-markdown-toc -->
 
-SpaceVim is a joint effort of all contributors.
-We encourage you to participate in SpaceVim's development.
-This page describes the entire development process of SpaceVim.
-
-We have some guidelines that we need all contributors to follow.
-You can only think about reading the part that is relevant to what you are going to do:
-
-- [Asking for help](#asking-for-help): if you are about to open an issue to ask a question.
-- [Requesting new feature](#requesting-new-feature): if you want a new feature.
-- [Reporting bugs](#reporting-bugs): if you run into a bug.
-- [Contributing code](#contributing-code): if you are about to send a pull-request.
-
-## Asking for help
-
-If you have any questions about using SpaceVim,
-check out the following context first, which may contain the answers:
-
-- `:h SpaceVim-faq`: Some of the most frequently asked questions are answered there.
-- [SpaceVim documentation](https://spacevim.org/documentation/): It is the general documentation of SpaceVim.
-
-Besides, you can also [chat with us](../community/#chat)
-
-## Reporting bugs
-
-If you run into a bug, please follow the guidelines below to give feedback.
-
-- Update the SpaceVim to the latest version. And make sure the can be reproduced in latest version of spacevim.
-- [Open new issue on github](https://github.com/SpaceVim/SpaceVim/issues/new?assignees=&labels=&template=bug_report.md&title=), and follow the `bug reporting` template.
-
-## Requesting new feature
-
-If you want a new feature or have an idea to improve spacevim, feel free to [open new issue](https://github.com/SpaceVim/SpaceVim/issues/new?assignees=&labels=feature+request&template=feature_request.md&title=) for feature requesting.
 
 ## Contributing code
 
