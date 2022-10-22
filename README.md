@@ -24,12 +24,11 @@ The latest release [v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/) was r
 ## Features
 
 - **Great documentation:** access documentation in SpaceVim with `:h SpaceVim`.
-- **nice UI:** you'll love the awesome UI and its useful features.
+- **Beautiful UI:** you'll love the awesome UI and its useful features.
 - **Mnemonic key bindings:** key binding guide will be displayed automatically
 - **Fast boot time:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
 - **Lower the risk of RSI:** by heavily using the space bar instead of modifiers.
-- **Batteries included:** discover hundreds of ready-to-use packages nicely organised in configuration layers following a set of [conventions](http://spacevim.org/conventions/).
-- **Consistent experience:** consistent experience between Vim and NeoVim
+- **Consistent experience:** consistent experience between terminal and gui
 
 ## Screenshots
 
