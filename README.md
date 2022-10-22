@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://spacevim.org/">
+<a href="https://github.com/SpaceVim/SpaceVim#readme">
   <img src="https://spacevim.org/logo.png" width="440" alt="SpaceVim"/>
   </a>
 </h1>
@@ -14,10 +14,8 @@
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/spacevim/spacevim)](https://hub.docker.com/r/spacevim/spacevim)
 
+[SpaceVim](https://spacevim.org/) is a vim configuration inspired by [spacemacs](https://github.com/syl20bnr/spacemacs), it is compatible with [Vim](https://github.com/vim/vim) and [Neovim](https://github.com/neovim/neovim).
 
-SpaceVim is a vim configuration inspired by [spacemacs](https://github.com/syl20bnr/spacemacs), it is compatible with [Vim](https://github.com/vim/vim) and [Neovim](https://github.com/neovim/neovim).
-
-- [Quick start guide](https://spacevim.org/quick-start-guide/): installation, configuration, and learning resources for SpaceVim
 - [Documentation](https://spacevim.org/documentation/): the primary official documentation of SpaceVim
 - [Available layers](https://spacevim.org/layers/): a list of available layers which can be used in SpaceVim
 
@@ -65,9 +63,6 @@ This project wouldn't exist without all the people who [contributed](CONTRIBUTIN
 We are thankful for any contributions from the community.
 
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
-
-If you use SpaceVim in your daily work and feel that it has made your life easier,
-please consider checking out [sponsors page](https://spacevim.org/sponsors/).
 
 ## Credits
 

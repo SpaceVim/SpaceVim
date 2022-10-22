@@ -67,9 +67,13 @@ function! SpaceVim#layers#gtags#config() abort
       " gtags#update() function only exist when gtags is available
       if executable('gtags')
         au BufWritePost * call gtags#update(1)
+      else
+        call SpaceVim#logger#warn('gtags is not executable, the gtags database will not be updated automatically')
       endif
       if executable('ctags')
         au BufWritePost * call ctags#update()
+      else
+        call SpaceVim#logger#warn('ctags is not executable, the ctags database will not be updated automatically')
       endif
     augroup END
   endif

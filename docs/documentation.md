@@ -88,6 +88,7 @@ description: "General documentation about how to use SpaceVim, including the qui
   - [Replace text with iedit](#replace-text-with-iedit)
     - [iedit states key bindings](#iedit-states-key-bindings)
   - [Code runner](#code-runner)
+    - [Custom runner](#custom-runner)
   - [REPL(read eval print loop)](#replread-eval-print-loop)
   - [Highlight current symbol](#highlight-current-symbol)
   - [Error handling](#error-handling)
@@ -2397,6 +2398,20 @@ Key bindings within code runner buffer:
 | ----------- | --------------------------- |
 | `ctrl-c`    | stop code runner            |
 | `i`         | open promote to insert text |
+
+#### Custom runner
+
+If you want to set custom code runner for specific language. You need to use `SpaceVim#plugins#runner#reg_runner(ft, runner)` api in bootstrap function.
+
+example:
+
+```vim
+call SpaceVim#plugins#runner#reg_runner('lua', {
+      \ 'exe' : 'lua',
+      \ 'opt' : ['-'],
+      \ 'usestdin' : 1,
+      \ })
+```
 
 ### REPL(read eval print loop)
 
