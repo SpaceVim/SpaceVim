@@ -49,6 +49,7 @@ The latest release [v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/) was r
 ├─ colors/                        default colorscheme
 ├─ docker/                        docker image generator
 ├─ bundle/                        bundle plugins
+├─ lua/spacevim/plugin            buildin plugins(lua)
 ├─ doc/                           help(cn/en)
 ├─ docs/                          website(cn/en)
 ├─ wiki/                          wiki(cn/en)
