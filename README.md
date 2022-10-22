@@ -23,6 +23,8 @@ The latest release [v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/) was r
 
 ## Features
 
+- **Modularization**: Plugins and functions are organized in layer.
+- **Compatible api**: A series of [compatible APIs](https://spacevim.org/api/) for Vim/Neovim.
 - **Great documentation:** access documentation in SpaceVim with `:h SpaceVim`.
 - **Beautiful UI:** you'll love the awesome UI and its useful features.
 - **Mnemonic key bindings:** key binding guide will be displayed automatically
