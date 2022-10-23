@@ -223,6 +223,8 @@ function! SpaceVim#default#keyBindings() abort
     nnoremap <silent> <c-g> :<c-u>call SpaceVim#plugins#ctrlg#display()<cr>
   endif
 
+  nnoremap <silent> <C-`> :<c-u>call SpaceVim#plugins#runner#close()<Cr>
+
 
   " Improve scroll, credits: https://github.com/Shougo
   nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?

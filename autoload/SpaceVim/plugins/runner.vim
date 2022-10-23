@@ -356,6 +356,13 @@ function! s:stop_runner() abort
   endif
 endfunction
 
+
+function! SpaceVim#plugins#runner#close() abort
+
+ call s:close() 
+
+endfunction
+
 function! SpaceVim#plugins#runner#select_file() abort
   let s:runner_lines = 0
   let s:runner_status = {

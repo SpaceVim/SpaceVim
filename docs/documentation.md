@@ -2385,6 +2385,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 SpaceVim provides an asynchronous code runner plugin. In most language layers,
 the key binding `SPC l r` is defined for running the current buffer.
+To close the code runner windows, you can use ``Ctrl-` `` key binding.
 If you need to add new commands, you can use the bootstrap function. For example:
 Use `F5` to build the project asynchronously.
 
@@ -2398,6 +2399,7 @@ Key bindings within code runner buffer:
 | ----------- | --------------------------- |
 | `ctrl-c`    | stop code runner            |
 | `i`         | open promote to insert text |
+
 
 #### Custom runner
 
