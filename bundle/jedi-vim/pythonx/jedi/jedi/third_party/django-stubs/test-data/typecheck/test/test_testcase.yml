@@ -1,0 +1,12 @@
+-   case: testcase_client_attr
+    main: |
+      from django.test.testcases import TestCase
+
+      class ExampleTestCase(TestCase):
+          def test_method(self) -> None:
+              reveal_type(self.client)  # N: Revealed type is 'django.test.client.Client'
+              resp = self.client.post('/url', {'doit': 'srs'}, 'application/json', False, True, extra='value')
+              reveal_type(resp.status_code)   # N: Revealed type is 'builtins.int'
+              # Attributes monkey-patched by test Client class:
+              resp.json()
+              reveal_type(resp.wsgi_request)  # N: Revealed type is 'django.core.handlers.wsgi.WSGIRequest'

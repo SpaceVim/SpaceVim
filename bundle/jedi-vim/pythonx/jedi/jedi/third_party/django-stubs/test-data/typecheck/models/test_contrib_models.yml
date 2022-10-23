@@ -1,0 +1,28 @@
+-   case: contrib_auth_model_fields
+    main: |
+        from django.contrib.auth.models import User
+        reveal_type(User().username)  # N: Revealed type is 'builtins.str*'
+        reveal_type(User().password)  # N: Revealed type is 'builtins.str*'
+        reveal_type(User().first_name)  # N: Revealed type is 'builtins.str*'
+        reveal_type(User().last_name)  # N: Revealed type is 'builtins.str*'
+        reveal_type(User().email)  # N: Revealed type is 'builtins.str*'
+        reveal_type(User().is_staff)  # N: Revealed type is 'builtins.bool*'
+        reveal_type(User().is_active)  # N: Revealed type is 'builtins.bool*'
+        reveal_type(User().date_joined)  # N: Revealed type is 'datetime.datetime*'
+        reveal_type(User().last_login)  # N: Revealed type is 'Union[datetime.datetime, None]'
+        reveal_type(User().is_authenticated)  # N: Revealed type is 'Literal[True]'
+        reveal_type(User().is_anonymous)  # N: Revealed type is 'Literal[False]'
+
+        from django.contrib.auth.models import AnonymousUser
+        reveal_type(AnonymousUser().is_authenticated)  # N: Revealed type is 'Literal[False]'
+        reveal_type(AnonymousUser().is_anonymous)  # N: Revealed type is 'Literal[True]'
+
+        from django.contrib.auth.models import Permission
+        reveal_type(Permission().name)  # N: Revealed type is 'builtins.str*'
+        reveal_type(Permission().codename)  # N: Revealed type is 'builtins.str*'
+
+        from django.contrib.auth.models import PermissionsMixin
+        reveal_type(PermissionsMixin().is_superuser)  # N: Revealed type is 'builtins.bool*'
+
+        from django.contrib.auth.models import Group
+        reveal_type(Group().name)  # N: Revealed type is 'builtins.str*'

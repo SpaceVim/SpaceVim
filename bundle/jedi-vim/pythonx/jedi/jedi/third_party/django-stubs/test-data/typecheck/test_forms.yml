@@ -1,0 +1,58 @@
+-   case: no_incompatible_meta_nested_class_false_positive
+    main: |
+        from django import forms
+        from myapp.models import Article, Category
+        class ArticleForm(forms.ModelForm):
+            class Meta:
+                model = Article
+                fields = '__all__'
+        class CategoryForm(forms.ModelForm):
+            class Meta:
+                model = Category
+                fields = '__all__'
+        class CompositeForm(ArticleForm, CategoryForm):
+            pass
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                from django import forms
+
+                class Article(models.Model):
+                    pass
+                class Category(models.Model):
+                    pass
+
+-   case: formview_methods_on_forms_return_proper_types
+    main: |
+        from typing import Any
+        from django import forms
+        from django.views.generic.edit import FormView
+
+        class MyForm(forms.ModelForm):
+            pass
+        class MyForm2(forms.ModelForm):
+            pass
+        class MyView(FormView):
+            form_class = MyForm
+            def post(self, request, *args: Any, **kwds: Any):
+                form_class = self.get_form_class()
+                reveal_type(form_class)  # N: Revealed type is 'Type[main.MyForm]'
+                reveal_type(self.get_form(None))  # N: Revealed type is 'main.MyForm'
+                reveal_type(self.get_form())  # N: Revealed type is 'main.MyForm'
+                reveal_type(self.get_form(form_class))  # N: Revealed type is 'main.MyForm'
+                reveal_type(self.get_form(MyForm2))  # N: Revealed type is 'main.MyForm2'
+
+-   case: successmessagemixin_compatible_with_formmixin
+    main: |
+        from django.views.generic.edit import FormMixin
+        from django.contrib.messages.views import SuccessMessageMixin
+
+        class FormFirstView(FormMixin, SuccessMessageMixin):
+            pass
+
+        class SuccessMessageFirstView(FormMixin, SuccessMessageMixin):
+            pass

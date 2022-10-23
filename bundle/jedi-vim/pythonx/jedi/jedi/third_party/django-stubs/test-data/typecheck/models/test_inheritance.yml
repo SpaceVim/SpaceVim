@@ -1,0 +1,115 @@
+-   case: test_meta_nested_class_allows_subclassing_in_multiple_inheritance
+    main: |
+        from typing import Any
+        from django.db import models
+        class Mixin1(models.Model):
+            class Meta:
+                abstract = True
+        class Mixin2(models.Model):
+            class Meta:
+                abstract = True
+        class User(Mixin1, Mixin2):
+            pass
+
+-   case: test_inheritance_from_abstract_model_does_not_fail_if_field_with_id_exists
+    main: |
+        from django.db import models
+        class Abstract(models.Model):
+            class Meta:
+                abstract = True
+        class User(Abstract):
+            id = models.AutoField(primary_key=True)
+
+-   case: test_typechecking_for_model_subclasses
+    main: |
+        from myapp.models import A, B, C
+        def service(a: A) -> int:
+            pass
+        b_instance = B()
+        service(b_instance)  # E: Argument 1 to "service" has incompatible type "B"; expected "A"
+        a_instance = A()
+        c_instance = C()
+        service(a_instance)
+        service(c_instance)
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class A(models.Model):
+                    pass
+                class B(models.Model):
+                    b_attr = 1
+                    pass
+                class C(A):
+                    pass
+
+-   case: fail_if_no_such_attribute_on_model
+    main: |
+        from myapp.models import B
+        b_instance = B()
+        reveal_type(b_instance.b_attr) # N: Revealed type is 'builtins.int'
+
+        reveal_type(b_instance.non_existent_attribute)
+        b_instance.non_existent_attribute = 2
+    out: |
+        main:5: note: Revealed type is 'Any'
+        main:5: error: "B" has no attribute "non_existent_attribute"
+        main:6: error: "B" has no attribute "non_existent_attribute"
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class B(models.Model):
+                    b_attr = 1
+                    pass
+
+
+-   case: fields_recognized_if_base_model_is_subclass_of_models_model
+    main: |
+        from myapp.models import User
+        reveal_type(User().username)  # N: Revealed type is 'builtins.str*'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                from myapp.utils import MyBaseModel
+                class User(MyBaseModel):
+                    username = models.CharField(max_length=100)
+        -   path: myapp/utils.py
+            content: |
+                from django.db.models import Model
+                class MyBaseModel(Model):
+                    pass
+
+
+-   case: django_contrib_gis_base_model_mixin_inheritance
+    main: |
+        from myapp.models import User
+        reveal_type(User().name)  # N: Revealed type is 'builtins.str*'
+        reveal_type(User().updated_at)  # N: Revealed type is 'datetime.datetime*'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                from django.contrib.gis.db import models as gis_models
+                class Mixin1(gis_models.Model):
+                    class Meta:
+                        abstract = True
+                class Mixin2(gis_models.Model):
+                    updated_at = models.DateTimeField(auto_now=True)
+                    class Meta:
+                        abstract = True
+                class User(Mixin1, Mixin2):
+                    name = models.TextField()

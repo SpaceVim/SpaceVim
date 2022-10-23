@@ -1,0 +1,50 @@
+-   case: settings_loaded_from_different_files
+    disable_cache: true
+    main: |
+        from django.conf import settings
+        # standard settings
+        reveal_type(settings.AUTH_USER_MODEL)  # N: Revealed type is 'builtins.str'
+        reveal_type(settings.ROOT_DIR)  # N: Revealed type is 'builtins.str'
+        reveal_type(settings.APPS_DIR)  # N: Revealed type is 'pathlib.Path*'
+        reveal_type(settings.NUMBERS)  # N: Revealed type is 'builtins.list[builtins.str*]'
+        reveal_type(settings.DICT)  # N: Revealed type is 'builtins.dict[Any, Any]'
+    custom_settings: |
+        from base import *
+        SECRET_KEY = 112233
+        NUMBERS = ['one', 'two']
+        DICT = {}  # type: ignore
+    files:
+        -   path: base.py
+            content: |
+                from pathlib import Path
+                ROOT_DIR = '/etc'
+                APPS_DIR = Path(ROOT_DIR)
+
+-   case: global_settings_are_always_loaded
+    main: |
+        from django.conf import settings
+        reveal_type(settings.AUTH_USER_MODEL)  # N: Revealed type is 'builtins.str'
+        reveal_type(settings.AUTHENTICATION_BACKENDS)  # N: Revealed type is 'typing.Sequence[builtins.str]'
+    installed_apps: []
+
+-   case: fail_if_there_is_no_setting
+    main: |
+        from django.conf import settings
+        reveal_type(settings.NOT_EXISTING)
+    out: |
+        main:2: note: Revealed type is 'Any'
+        main:2: error: 'Settings' object has no attribute 'NOT_EXISTING'
+
+-   case: override_default_setting_with_different_type_in_the_different_module
+    custom_settings: |
+        from settings.basic_settings import *
+    main: |
+        from django.conf import settings
+        reveal_type(settings.MEDIA_ROOT)  # N: Revealed type is 'pathlib.Path*'
+        reveal_type(settings.MEDIA_ROOT / 'part')  # N: Revealed type is 'pathlib.Path*'
+    files:
+        -   path: settings/__init__.py
+        -   path: settings/basic_settings.py
+            content: |
+                from pathlib import Path
+                MEDIA_ROOT = Path()

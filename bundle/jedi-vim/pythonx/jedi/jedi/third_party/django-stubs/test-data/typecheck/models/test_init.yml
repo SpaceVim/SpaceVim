@@ -1,0 +1,257 @@
+-   case: arguments_to_init_unexpected_attributes
+    main: |
+        from myapp.models import MyUser
+        user = MyUser(name=1, age=12)
+    out: |
+        main:2: error: Unexpected attribute "name" for model "MyUser"
+        main:2: error: Unexpected attribute "age" for model "MyUser"
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+
+                class MyUser(models.Model):
+                    pass
+
+-   case: plain_function_which_returns_model
+    main: |
+        from myapp.models import MyUser
+        def func(i: int) -> MyUser:
+            pass
+        func("hello")  # E: Argument 1 to "func" has incompatible type "str"; expected "int"
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyUser(models.Model):
+                    pass
+
+-   case: arguments_to_init_from_class_incompatible_type
+    main: |
+        from myapp.models import MyUser
+        user = MyUser(name='hello', age=[])
+    out: |
+        main:2: error: Incompatible type for "age" of "MyUser" (got "List[Any]", expected "Union[float, int, str, Combinable]")
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+
+                class MyUser(models.Model):
+                    name = models.CharField(max_length=100)
+                    age = models.IntegerField()
+
+-   case: arguments_to_init_combined_from_base_classes
+    main: |
+        from myapp.models import BaseUser, ChildUser
+        user = ChildUser(name='Max', age=12, lastname='Lastname')
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+
+                class BaseUser(models.Model):
+                    name = models.CharField(max_length=100)
+                    age = models.IntegerField()
+                class ChildUser(BaseUser):
+                    lastname = models.CharField(max_length=100)
+
+-   case: fields_from_abstract_user_propagate_to_init
+    main: |
+        from myapp.models import MyUser
+        user = MyUser(name='Maxim')
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class AbstractUser(models.Model):
+                    class Meta:
+                        abstract = True
+                    name = models.CharField(max_length=100)
+                class MyUser(AbstractUser):
+                    pass
+
+-   case: pk_refers_to_primary_key_and_could_be_passed_to_init
+    main: |
+        from myapp.models import MyUser1, MyUser2
+        user2 = MyUser1(pk='hello')
+        user3 = MyUser2(pk=1, name='maxim')
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+
+                class MyUser1(models.Model):
+                    mypk = models.CharField(primary_key=True)
+                class MyUser2(models.Model):
+                    name = models.CharField(max_length=100)
+
+-   case: typechecking_of_pk
+    main: |
+        from myapp.models import MyUser1
+        user = MyUser1(pk=[])  # E: Incompatible type for "pk" of "MyUser1" (got "List[Any]", expected "Union[float, int, str, Combinable, None]")
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+
+                class MyUser1(models.Model):
+                    mypk = models.IntegerField(primary_key=True)
+
+-   case: set_foreign_key_by_its_primary_key
+    main: |
+        from datetime import datetime
+        now = datetime.now()
+
+        from myapp.models import Publisher, PublisherDatetime, Book
+        Book(publisher_id=1, publisher_dt_id=now)
+        Book(publisher_id=[], publisher_dt_id=now)  # E: Incompatible type for "publisher_id" of "Book" (got "List[Any]", expected "Union[Combinable, int, str, None]")
+        Book(publisher_id=1, publisher_dt_id=1)  # E: Incompatible type for "publisher_dt_id" of "Book" (got "int", expected "Union[str, date, Combinable, None]")
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+
+                class Publisher(models.Model):
+                    pass
+                class PublisherDatetime(models.Model):
+                    dt_pk = models.DateTimeField(primary_key=True)
+                class Book(models.Model):
+                    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+                    publisher_dt = models.ForeignKey(PublisherDatetime, on_delete=models.CASCADE)
+
+-   case: setting_value_to_an_array_of_ints
+    main: |
+        from typing import List, Tuple
+        from myapp.models import MyModel
+        array_val: Tuple[int, ...] = (1,)
+        MyModel(array=array_val)
+        array_val2: List[int] = [1]
+        MyModel(array=array_val2)
+        class NotAValid:
+            pass
+        array_val3: List[NotAValid] = [NotAValid()]
+        MyModel(array=array_val3)  # E: Incompatible type for "array" of "MyModel" (got "List[NotAValid]", expected "Union[Sequence[Union[float, int, str, Combinable]], Combinable]")
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from typing import List, Tuple
+
+                from django.db import models
+                from django.contrib.postgres.fields import ArrayField
+
+                class MyModel(models.Model):
+                    array = ArrayField(base_field=models.IntegerField())
+
+-   case: if_no_explicit_primary_key_id_can_be_passed
+    main: |
+        from myapp.models import MyModel
+        MyModel(id=1, name='maxim')
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyModel(models.Model):
+                    name = models.CharField(max_length=100)
+
+-   case: arguments_can_be_passed_as_positionals
+    main: |
+        from myapp.models import MyModel, MyModel2
+        MyModel(1)
+        MyModel2(1, 12)
+        MyModel2(1, [])  # E: Incompatible type for "name" of "MyModel2" (got "List[Any]", expected "Union[float, int, str, Combinable]")
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyModel(models.Model):
+                    pass
+                class MyModel2(models.Model):
+                    name = models.IntegerField()
+
+-   case: charfield_with_integer_choices
+    main: |
+        from myapp.models import MyModel
+        MyModel(day=1)
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyModel(models.Model):
+                    day = models.CharField(max_length=3, choices=((1, 'Fri'), (2, 'Sat')))
+
+-   case: optional_id_fields_allowed_in_init
+    main: |
+        from myapp.models import Book, Publisher
+        Book(id=None)
+        Book(publisher=None)
+        Book(publisher_id=None)
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class Publisher(models.Model):
+                    name = models.CharField(primary_key=True, max_length=100)
+                class Book(models.Model):
+                    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+
+
+-   case: init_in_abstract_model_classmethod_should_not_throw_error_for_valid_fields
+    main: |
+        from myapp.models import MyModel
+        MyModel.base_init()
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class AbstractModel(models.Model):
+                    class Meta:
+                        abstract = True
+                    text = models.CharField(max_length=100)
+                    @classmethod
+                    def base_init(cls) -> 'AbstractModel':
+                        return cls(text='mytext')
+                class MyModel(AbstractModel):
+                    pass

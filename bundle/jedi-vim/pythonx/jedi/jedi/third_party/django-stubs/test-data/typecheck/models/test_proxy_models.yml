@@ -1,0 +1,21 @@
+-   case: foreign_key_to_proxy_model_accepts_first_non_proxy_model
+    main: |
+        from myapp.models import Blog, Publisher, PublisherProxy
+        Blog(publisher=Publisher())
+        Blog.objects.create(publisher=Publisher())
+        Blog().publisher = Publisher()
+        reveal_type(Blog().publisher)  # N: Revealed type is 'myapp.models.PublisherProxy*'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class Publisher(models.Model):
+                    pass
+                class PublisherProxy(Publisher):
+                    class Meta:
+                        proxy = True
+                class Blog(models.Model):
+                    publisher = models.ForeignKey(to=PublisherProxy, on_delete=models.CASCADE)

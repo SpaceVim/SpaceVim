@@ -1,0 +1,14 @@
+*.egg-info
+__pycache__/
+out/
+/test_sqlite.py
+/django
+.idea/
+.mypy_cache/
+build/
+dist/
+pip-wheel-metadata/
+.pytest_cache/
+/.envrc
+/.direnv
+django-sources/

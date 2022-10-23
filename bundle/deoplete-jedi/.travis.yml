@@ -1,0 +1,20 @@
+dist: xenial
+
+language: python
+
+python:
+  - '3.7'
+
+cache: pip
+
+install:
+  - pip3 install -q -U -r ./tests/requirements.txt
+
+script:
+  - make test
+
+notifications:
+  email: false
+  slack:
+    rooms:
+      secure: Kjl0kgnF4qcnW/wjk++HnmLGD0FeQLHeaFHAlmeN1Iql7z+I7cBaW35I4P0W0sgZPzF4y6LSReGlxtmEFlqNmmYll6SPw4n2BvNv2Ir+sSl6r61plQdTQsh6RlnW4lRQMZ8JSgP/E6jci3cuchCFWnN7miYP08vmJmKTh3MlW5TjksPpNx6B+zC0zr0JqjXNXZwaSXpQYrA0hwKt0pZOQbgPxEeRnUYEAqiJxR30GmSTZ8OxWHNupNWKtSxaYV1e8/6vcaq3iae6fsP6qceVmNZzPc/IUVXA8NNmu+TKZUaQEQAKWkIm8QJVY7cnHMBdfG56L/NgX7lwmv3cRq+1mDOxEGWtOfnQwQIeV3wRKK8yactQ5cCD32WE2cioAUnvwryjOjRG5Vt8aBuFINoxdz7KTcQye1JqrjDU14ob6JAQnLafClLDhTXht+/W6/UeUr9ZOAX1nVWuuLvIJsU1SP1Uvv/PvuLk+XDrBCunDZwWssRwn1q8pBnEubhe6vbOO134hAeF0/SMnWXKuL/knTL5aqICLQOhj+ooNpb+hU3D3phlHIddhufz8cAWSxR/eqnwQ4LkKfZa2L4DMW02dou8HMl973ft/g/DCdFXFGz53VYqD7V8Mpb2DQ7nkvqmsokSDNNs99cMIDV9LVI3QJGW8OR88wUgIlONl+795a0=

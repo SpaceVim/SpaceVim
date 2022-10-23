@@ -1,0 +1,14 @@
+-   case: state_attribute_has_a_type_of_model_state
+    main: |
+        from myapp.models import MyUser
+        user = MyUser(pk=1)
+        reveal_type(user._state)  # N: Revealed type is 'django.db.models.base.ModelState'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyUser(models.Model):
+                    pass

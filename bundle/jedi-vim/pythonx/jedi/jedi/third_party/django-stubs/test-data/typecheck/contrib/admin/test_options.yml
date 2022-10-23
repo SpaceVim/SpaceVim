@@ -1,0 +1,126 @@
+# "Happy path" test for model admin, trying to cover as many valid
+# configurations as possible.
+-   case: test_full_admin
+    main: |
+      from django.contrib import admin
+      from django.forms import Form, Textarea
+      from django.db import models
+      from django.core.paginator import Paginator
+      from django.contrib.admin.sites import AdminSite
+      from django.db.models.options import Options
+      from django.http.request import HttpRequest
+      from django.db.models.query import QuerySet
+
+      def an_action(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet) -> None:
+          pass
+
+      class A(admin.ModelAdmin):
+          # BaseModelAdmin
+          autocomplete_fields = ("strs",)
+          raw_id_fields = ["strs"]
+          fields = (
+              "a field",
+              ["a", "list of", "fields"],
+          )
+          exclude = ("a", "b")
+          fieldsets = [
+              (None, {"fields": ["a", "b"]}),
+              ("group", {"fields": ("c",), "classes": ("a",), "description": "foo"}),
+          ]
+          form = Form
+          filter_vertical = ("fields",)
+          filter_horizontal = ("plenty", "of", "fields")
+          radio_fields = {
+              "some_field": admin.VERTICAL,
+              "another_field": admin.HORIZONTAL,
+          }
+          prepopulated_fields = {"slug": ("title",)}
+          formfield_overrides = {models.TextField: {"widget": Textarea}}
+          readonly_fields = ("date_modified",)
+          ordering = ("-pk", "date_modified")
+          sortable_by = ["pk"]
+          view_on_site = True
+          show_full_result_count = False
+
+          # ModelAdmin
+          list_display = ("pk",)
+          list_display_links = ("str",)
+          list_filter = ("str", admin.SimpleListFilter, ("str", admin.SimpleListFilter))
+          list_select_related = True
+          list_per_page = 1
+          list_max_show_all = 2
+          list_editable = ("a", "b")
+          search_fields = ("c", "d")
+          date_hirearchy = "f"
+          save_as = False
+          save_as_continue = True
+          save_on_top = False
+          paginator = Paginator
+          presserve_filters = False
+          inlines = (admin.TabularInline, admin.StackedInline)
+          add_form_template = "template"
+          change_form_template = "template"
+          change_list_template = "template"
+          delete_confirmation_template = "template"
+          delete_selected_confirmation_template = "template"
+          object_history_template = "template"
+          popup_response_template = "template"
+          actions = (an_action,)
+          actions_on_top = True
+          actions_on_bottom = False
+          actions_selection_counter = True
+          admin_site = AdminSite()
+# This test is here to make sure we're not running into a mypy issue which is
+# worked around using a somewhat complicated _ListOrTuple union type. Once the
+# issue is solved upstream this test should pass even with the workaround
+# replaced by a simpler Sequence type.
+# https://github.com/python/mypy/issues/8921
+-   case: test_fieldset_workaround_regression
+    main: |
+      from django.contrib import admin
+
+      class A(admin.ModelAdmin):
+          fieldsets = (
+              (None, {
+                  'fields': ('name',),
+              }),
+          )
+-   case: errors_on_omitting_fields_from_fieldset_opts
+    main: |
+      from django.contrib import admin
+
+      class A(admin.ModelAdmin):
+          fieldsets = [  # type: ignore
+              (None, {}),  # E: Key 'fields' missing for TypedDict "_FieldOpts"
+          ]
+-   case: errors_on_invalid_radio_fields
+    main: |
+      from django.contrib import admin
+
+      class A(admin.ModelAdmin):
+          radio_fields = {"some_field": 0}  # E: Dict entry 0 has incompatible type "str": "Literal[0]"; expected "str": "Union[Literal[1], Literal[2]]"
+
+      class B(admin.ModelAdmin):
+          radio_fields = {1: admin.VERTICAL}  # E: Dict entry 0 has incompatible type "int": "Literal[2]"; expected "str": "Union[Literal[1], Literal[2]]"
+-   case: errors_for_invalid_formfield_overrides
+    main: |
+      from django.contrib import admin
+      from django.forms import Textarea
+
+      class A(admin.ModelAdmin):
+          formfield_overrides = {
+              "not a field": {  # E: Dict entry 0 has incompatible type "str": "Dict[str, Any]"; expected "Type[Field[Any, Any]]": "Mapping[str, Any]"
+                  "widget": Textarea
+              }
+          }
+-   case: errors_for_invalid_action_signature
+    main: |
+      from django.contrib import admin
+      from django.http.request import HttpRequest
+      from django.db.models.query import QuerySet
+
+      def an_action(modeladmin: None) -> None:
+          pass
+
+      class A(admin.ModelAdmin):
+          actions = [an_action]  # E: List item 0 has incompatible type "Callable[[None], None]"; expected "Callable[[ModelAdmin, HttpRequest, QuerySet[Any]], None]"

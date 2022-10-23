@@ -1,0 +1,29 @@
+-   case: request_object_has_user_of_type_auth_user_model
+    disable_cache: true
+    main: |
+        from django.http.request import HttpRequest
+        reveal_type(HttpRequest().user)  # N: Revealed type is 'Union[myapp.models.MyUser, django.contrib.auth.models.AnonymousUser]'
+        # check that other fields work ok
+        reveal_type(HttpRequest().method)  # N: Revealed type is 'Union[builtins.str, None]'
+    custom_settings: |
+        INSTALLED_APPS = ('django.contrib.contenttypes', 'django.contrib.auth', 'myapp')
+        AUTH_USER_MODEL='myapp.MyUser'
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyUser(models.Model):
+                    pass
+-   case: request_object_user_can_be_descriminated
+    disable_cache: true
+    main: |
+        from django.http.request import HttpRequest
+        request = HttpRequest()
+        reveal_type(request.user) # N: Revealed type is 'Union[django.contrib.auth.models.User, django.contrib.auth.models.AnonymousUser]'
+        if not request.user.is_anonymous:
+            reveal_type(request.user) # N: Revealed type is 'django.contrib.auth.models.User'
+        if request.user.is_authenticated:
+            reveal_type(request.user) # N: Revealed type is 'django.contrib.auth.models.User'
+    custom_settings: |
+        INSTALLED_APPS = ('django.contrib.contenttypes', 'django.contrib.auth')

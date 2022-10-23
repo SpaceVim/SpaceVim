@@ -1,0 +1,243 @@
+-   case: values_list_simple_field_returns_queryset_of_tuples
+    main: |
+        from myapp.models import MyUser
+        reveal_type(MyUser.objects.values_list('name').get())  # N: Revealed type is 'Tuple[builtins.str]'
+        reveal_type(MyUser.objects.values_list('id', 'name').get())  # N: Revealed type is 'Tuple[builtins.int, builtins.str]'
+
+        values_tuple = MyUser.objects.values_list('name', 'age').get()
+        reveal_type(values_tuple[0])  # N: Revealed type is 'builtins.str'
+        reveal_type(values_tuple[1])  # N: Revealed type is 'builtins.int'
+
+        # no fields specified return all fields
+        all_values_tuple = MyUser.objects.values_list().get()
+        reveal_type(all_values_tuple)  # N: Revealed type is 'Tuple[builtins.int, builtins.str, builtins.int]'
+
+        # pk as field
+        pk_values = MyUser.objects.values_list('pk').get()
+        reveal_type(pk_values)  # N: # N: Revealed type is 'Tuple[builtins.int]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyUser(models.Model):
+                    name = models.CharField(max_length=100)
+                    age = models.IntegerField()
+
+-   case: values_list_related_model_fields
+    main: |
+        from myapp.models import Post, Blog
+        values_tuple = Post.objects.values_list('blog', 'blog__num_posts', 'blog__publisher', 'blog__publisher__name').get()
+        reveal_type(values_tuple[0])  # N: Revealed type is 'myapp.models.Blog'
+        reveal_type(values_tuple[1])  # N: Revealed type is 'builtins.int'
+        reveal_type(values_tuple[2])  # N: Revealed type is 'myapp.models.Publisher'
+        reveal_type(values_tuple[3])  # N: Revealed type is 'builtins.str'
+
+        reverse_fields_list = Blog.objects.values_list('post__text').get()
+        reveal_type(reverse_fields_list)  # N: Revealed type is 'Tuple[builtins.str]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class Publisher(models.Model):
+                    name = models.CharField(max_length=100)
+                class Blog(models.Model):
+                    num_posts = models.IntegerField()
+                    publisher = models.ForeignKey(to=Publisher, on_delete=models.CASCADE)
+                class Post(models.Model):
+                    text = models.CharField(max_length=100)
+                    blog = models.ForeignKey(to=Blog, on_delete=models.CASCADE)
+
+-   case: values_list_flat_true_methods
+    main: |
+        from myapp.models import MyUser, MyUser2
+        reveal_type(MyUser.objects.values_list('name', flat=True).get())  # N: Revealed type is 'builtins.str*'
+        reveal_type(MyUser.objects.values_list('name', 'age', flat=True).get())
+
+        # flat=True without specified fields returns primary key values
+        reveal_type(MyUser.objects.values_list(flat=True)[0])  # N: Revealed type is 'builtins.int*'
+        reveal_type(MyUser2.objects.values_list(flat=True)[0])  # N: Revealed type is 'builtins.str*'
+    out: |
+        main:3: error: 'flat' is not valid when 'values_list' is called with more than one field
+        main:3: note: Revealed type is 'Any'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyUser(models.Model):
+                    name = models.CharField(max_length=100)
+                    age = models.IntegerField()
+                class MyUser2(models.Model):
+                    name = models.CharField(max_length=100, primary_key=True)
+
+-   case: values_list_named_true
+    main: |
+        from myapp.models import MyUser
+        values_named_tuple = MyUser.objects.values_list('name', 'age', named=True).get()
+        reveal_type(values_named_tuple)  # N: Revealed type is 'Tuple[builtins.str, builtins.int, fallback=main.Row]'
+        reveal_type(values_named_tuple.name)  # N: Revealed type is 'builtins.str'
+        reveal_type(values_named_tuple.age)  # N: Revealed type is 'builtins.int'
+
+        # no fields specified, returns all fields namedtuple
+        all_values_named_tuple = MyUser.objects.values_list(named=True).get()
+        reveal_type(all_values_named_tuple.id)  # N: Revealed type is 'builtins.int'
+        reveal_type(all_values_named_tuple.name)  # N: Revealed type is 'builtins.str'
+        reveal_type(all_values_named_tuple.age)  # N: Revealed type is 'builtins.int'
+        reveal_type(all_values_named_tuple.is_admin)  # N: Revealed type is 'builtins.bool'
+
+        # pk as field
+        pk_values = MyUser.objects.values_list('pk', named=True).get()
+        reveal_type(pk_values)  # N: Revealed type is 'Tuple[builtins.int, fallback=main.Row2]'
+        reveal_type(pk_values.pk)  # N: # N: Revealed type is 'builtins.int'
+
+        # values_list(named=True) inside function
+        def func() -> None:
+            from myapp.models import MyUser
+            reveal_type(MyUser.objects.values_list('name', named=True).get())  # N: Revealed type is 'Tuple[builtins.str, fallback=main.Row3]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyUser(models.Model):
+                    name = models.CharField(max_length=100)
+                    age = models.IntegerField()
+                    is_admin = models.BooleanField()
+
+-   case: values_list_flat_true_named_true_error
+    main: |
+        from myapp.models import MyUser
+        reveal_type(MyUser.objects.values_list('name', flat=True, named=True).get())
+    out: |
+        main:2: error: 'flat' and 'named' can't be used together
+        main:2: note: Revealed type is 'Any'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyUser(models.Model):
+                    name = models.CharField(max_length=100)
+
+-   case: invalid_lookups
+    main: |
+        from myapp.models import Blog
+        reveal_type(Blog.objects.values_list('unknown').get())
+        reveal_type(Blog.objects.values_list('unknown', flat=True).get())
+        reveal_type(Blog.objects.values_list('unknown', named=True).get())
+        reveal_type(Blog.objects.values_list('publisher__unknown').get())
+    out: |
+        main:2: error: Cannot resolve keyword 'unknown' into field. Choices are: id, publisher, publisher_id
+        main:2: note: Revealed type is 'Any'
+        main:3: error: Cannot resolve keyword 'unknown' into field. Choices are: id, publisher, publisher_id
+        main:3: note: Revealed type is 'Any'
+        main:4: error: Cannot resolve keyword 'unknown' into field. Choices are: id, publisher, publisher_id
+        main:4: note: Revealed type is 'Any'
+        main:5: note: Revealed type is 'Tuple[Any]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class Publisher(models.Model):
+                    pass
+                class Blog(models.Model):
+                    publisher = models.ForeignKey(to=Publisher, on_delete=models.CASCADE)
+
+-   case: named_true_with_related_model_fields
+    main: |
+        from myapp.models import Entry, Blog
+        values = Entry.objects.values_list('blog__num_articles', 'blog__publisher__name', named=True).get()
+        reveal_type(values.blog__num_articles)  # N: Revealed type is 'builtins.int'
+        reveal_type(values.blog__publisher__name)  # N: Revealed type is 'builtins.str'
+
+        pk_values = Entry.objects.values_list('blog__pk', 'blog__publisher__pk', named=True).get()
+        reveal_type(pk_values.blog__pk)  # N: Revealed type is 'builtins.int'
+        reveal_type(pk_values.blog__publisher__pk)  # N: Revealed type is 'builtins.int'
+
+        # reverse relation
+        reverse_values = Blog.objects.values_list('entry__text', named=True).get()
+        reveal_type(reverse_values.entry__text)  # N: Revealed type is 'builtins.str'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class Publisher(models.Model):
+                    name = models.CharField(max_length=100)
+                class Blog(models.Model):
+                    num_articles = models.IntegerField()
+                    publisher = models.ForeignKey(to=Publisher, on_delete=models.CASCADE)
+                class Entry(models.Model):
+                    text = models.CharField(max_length=100)
+                    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+
+-   case: values_list_flat_true_with_ids
+    main: |
+        from myapp.models import Blog, Publisher
+        reveal_type(Blog.objects.values_list('id', flat=True))  # N: Revealed type is 'django.db.models.query.ValuesQuerySet[myapp.models.Blog, builtins.int]'
+        reveal_type(Blog.objects.values_list('publisher_id', flat=True))  # N: Revealed type is 'django.db.models.query.ValuesQuerySet[myapp.models.Blog, builtins.int]'
+        # is Iterable[int]
+        reveal_type(list(Blog.objects.values_list('id', flat=True)))  # N: Revealed type is 'builtins.list[builtins.int*]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class Publisher(models.Model):
+                    pass
+                class Blog(models.Model):
+                    publisher = models.ForeignKey(to=Publisher, on_delete=models.CASCADE)
+
+-   case: subclass_of_queryset_has_proper_typings_on_methods
+    main: |
+        from myapp.models import TransactionQuerySet
+        reveal_type(TransactionQuerySet())  # N: Revealed type is 'myapp.models.TransactionQuerySet'
+        reveal_type(TransactionQuerySet().values())  # N: Revealed type is 'django.db.models.query.ValuesQuerySet[myapp.models.Transaction, TypedDict({'id': builtins.int, 'total': builtins.int})]'
+        reveal_type(TransactionQuerySet().values_list())  # N: Revealed type is 'django.db.models.query.ValuesQuerySet[myapp.models.Transaction, Tuple[builtins.int, builtins.int]]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class TransactionQuerySet(models.QuerySet['Transaction']):
+                    pass
+                class Transaction(models.Model):
+                    total = models.IntegerField()
+
+-   case: values_list_of_many_to_many_field
+    main: |
+        from myapp.models import Author, Book
+        reveal_type(Book.objects.values_list('authors'))  # N: Revealed type is 'django.db.models.query.ValuesQuerySet[myapp.models.Book, Tuple[builtins.int]]'
+        reveal_type(Author.objects.values_list('books'))  # N: Revealed type is 'django.db.models.query.ValuesQuerySet[myapp.models.Author, Tuple[builtins.int]]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class Author(models.Model):
+                    pass
+                class Book(models.Model):
+                    authors = models.ManyToManyField(Author, related_name='books')

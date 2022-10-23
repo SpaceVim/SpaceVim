@@ -1,0 +1,47 @@
+-   case: queryset_basic_methods_return_type
+    main: |
+        from myapp.models import Blog
+
+        qs = Blog.objects.all()
+        reveal_type(qs) # N: Revealed type is 'django.db.models.manager.Manager[myapp.models.Blog]'
+        reveal_type(qs.get(id=1)) # N: Revealed type is 'myapp.models.Blog*'
+        reveal_type(iter(qs)) # N: Revealed type is 'typing.Iterator[myapp.models.Blog*]'
+        reveal_type(qs.iterator()) # N: Revealed type is 'typing.Iterator[myapp.models.Blog*]'
+        reveal_type(qs.first()) # N: Revealed type is 'Union[myapp.models.Blog*, None]'
+        reveal_type(qs.earliest()) # N: Revealed type is 'myapp.models.Blog*'
+        reveal_type(qs[0]) # N: Revealed type is 'myapp.models.Blog*'
+        reveal_type(qs[:9]) # N: Revealed type is 'django.db.models.manager.Manager[myapp.models.Blog]'
+        reveal_type(qs.in_bulk()) # N: Revealed type is 'builtins.dict[Any, myapp.models.Blog*]'
+
+        # .dates / .datetimes
+        reveal_type(Blog.objects.dates("created_at", "day")) # N: Revealed type is 'django.db.models.query.ValuesQuerySet[myapp.models.Blog*, datetime.date]'
+        reveal_type(Blog.objects.datetimes("created_at", "day")) # N: Revealed type is 'django.db.models.query.ValuesQuerySet[myapp.models.Blog*, datetime.datetime]'
+
+        # AND-ing QuerySets
+        reveal_type(Blog.objects.all() & Blog.objects.all()) # N: Revealed type is 'django.db.models.manager.Manager[myapp.models.Blog]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+
+                class Blog(models.Model):
+                    created_at = models.DateTimeField()
+
+
+-   case: queryset_missing_method
+    main: |
+        from myapp.models import User
+        reveal_type(User.objects)  # N: Revealed type is 'django.db.models.manager.Manager[myapp.models.User]'
+        User.objects.not_existing_method()  # E: "Manager[User]" has no attribute "not_existing_method"
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class User(models.Model):
+                    pass

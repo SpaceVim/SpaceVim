@@ -1,0 +1,56 @@
+-   case: if_field_has_choices_set_model_has_get_FIELDNAME_display_method
+    main: |
+        from myapp.models import MyUser
+        user = MyUser(name='user', gender='M')
+        user.get_name_display()  # E: "MyUser" has no attribute "get_name_display"; maybe "get_gender_display"?
+        reveal_type(user.get_gender_display())  # N: Revealed type is 'builtins.str'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                GENDER_CHOICES = (
+                    ('M', 'Male'),
+                    ('F', 'Female'),
+                )
+                class MyUser(models.Model):
+                    name = models.CharField(max_length=100)
+                    gender = models.CharField(max_length=100, choices=GENDER_CHOICES)
+
+-   case: date_datetime_fields_have_get_next_by_get_previous_by
+    main: |
+        from myapp.models import MyUser
+        reveal_type(MyUser().get_next_by_date())  # N: Revealed type is 'myapp.models.MyUser'
+        reveal_type(MyUser().get_next_by_datetime())  # N: Revealed type is 'myapp.models.MyUser'
+        reveal_type(MyUser().get_previous_by_date())  # N: Revealed type is 'myapp.models.MyUser'
+        reveal_type(MyUser().get_previous_by_datetime())  # N: Revealed type is 'myapp.models.MyUser'
+
+        # accept arbitrary kwargs
+        MyUser().get_next_by_date(arg1=1, arg2=2)
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyUser(models.Model):
+                    date = models.DateField()
+                    datetime = models.DateTimeField()
+
+-   case: get_next_by_get_previous_by_absent_if_null_true
+    main: |
+        from myapp.models import MyUser
+        MyUser().get_next_by_date()  # E: "MyUser" has no attribute "get_next_by_date"
+        MyUser().get_previous_by_date()  # E: "MyUser" has no attribute "get_previous_by_date"
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyUser(models.Model):
+                    date = models.DateField(null=True)

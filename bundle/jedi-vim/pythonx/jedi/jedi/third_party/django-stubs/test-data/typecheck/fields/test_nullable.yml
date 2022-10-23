@@ -1,0 +1,70 @@
+-   case: nullable_field_with_strict_optional_true
+    main: |
+        from myapp.models import MyModel
+        reveal_type(MyModel().text)  # N: Revealed type is 'builtins.str*'
+        reveal_type(MyModel().text_nullable)  # N: Revealed type is 'Union[builtins.str, None]'
+        MyModel().text = None  # E: Incompatible types in assignment (expression has type "None", variable has type "Union[str, int, Combinable]")
+        MyModel().text_nullable = None
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyModel(models.Model):
+                    text_nullable = models.CharField(max_length=100, null=True)
+                    text = models.CharField(max_length=100)
+
+-   case: nullable_array_field
+    main: |
+        from myapp.models import MyModel
+        reveal_type(MyModel().lst)  # N: Revealed type is 'Union[builtins.list[builtins.str], None]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                from django.contrib.postgres.fields import ArrayField
+
+                class MyModel(models.Model):
+                    lst = ArrayField(base_field=models.CharField(max_length=100), null=True)
+
+-   case: nullable_foreign_key
+    main: |
+        from myapp.models import Publisher, Book
+        reveal_type(Book().publisher)  # N: Revealed type is 'Union[myapp.models.Publisher, None]'
+        Book().publisher = 11  # E: Incompatible types in assignment (expression has type "int", variable has type "Union[Publisher, Combinable, None]")
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+
+                class Publisher(models.Model):
+                    pass
+                class Book(models.Model):
+                    publisher = models.ForeignKey(to=Publisher, on_delete=models.CASCADE, null=True)
+
+-   case: nullable_self_foreign_key
+    main: |
+        from myapp.models import Inventory
+        parent = Inventory()
+        core = Inventory(parent_id=parent.id)
+        reveal_type(core.parent_id)  # N: Revealed type is 'Union[builtins.int, None]'
+        reveal_type(core.parent)  # N: Revealed type is 'Union[myapp.models.Inventory, None]'
+        Inventory(parent=None)
+        Inventory(parent_id=None)
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class Inventory(models.Model):
+                    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True)

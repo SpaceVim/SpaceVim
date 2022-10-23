@@ -1,0 +1,18 @@
+-   case: cached_property_class_vs_instance_attributes
+    main: |
+      from django.utils.functional import cached_property
+      from typing import List
+
+      class Foo:
+          @cached_property
+          def attr(self) -> List[str]: ...
+
+          reveal_type(attr)      # N: Revealed type is 'django.utils.functional.cached_property[builtins.list*[builtins.str]]'
+          reveal_type(attr.name) # N: Revealed type is 'builtins.str'
+
+      reveal_type(Foo.attr)      # N: Revealed type is 'django.utils.functional.cached_property[builtins.list*[builtins.str]]'
+      reveal_type(Foo.attr.func) # N: Revealed type is 'def (*Any, **Any) -> builtins.list*[builtins.str]'
+
+      f = Foo()
+      reveal_type(f.attr)        # N: Revealed type is 'builtins.list*[builtins.str]'
+      f.attr.name                # E: "List[str]" has no attribute "name"

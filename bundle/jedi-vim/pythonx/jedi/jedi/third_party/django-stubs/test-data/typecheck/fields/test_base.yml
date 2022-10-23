@@ -1,0 +1,153 @@
+-   case: test_model_fields_classes_present_as_primitives
+    main: |
+        from myapp.models import User
+        user = User(small_int=1, name='user', slug='user', text='user')
+        reveal_type(user.id)  # N: Revealed type is 'builtins.int*'
+        reveal_type(user.small_int)  # N: Revealed type is 'builtins.int*'
+        reveal_type(user.name)  # N: Revealed type is 'builtins.str*'
+        reveal_type(user.slug)  # N: Revealed type is 'builtins.str*'
+        reveal_type(user.text)  # N: Revealed type is 'builtins.str*'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class User(models.Model):
+                    id = models.AutoField(primary_key=True)
+                    small_int = models.SmallIntegerField()
+                    name = models.CharField(max_length=255)
+                    slug = models.SlugField(max_length=255)
+                    text = models.TextField()
+
+-   case: test_model_field_classes_from_existing_locations
+    main: |
+        from myapp.models import Booking
+        booking = Booking()
+        reveal_type(booking.id)  # N: Revealed type is 'builtins.int*'
+        reveal_type(booking.time_range)  # N: Revealed type is 'Any'
+        reveal_type(booking.some_decimal)  # N: Revealed type is 'decimal.Decimal*'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                from django.contrib.postgres import fields as pg_fields
+                from decimal import Decimal
+
+                class Booking(models.Model):
+                    id = models.AutoField(primary_key=True)
+                    time_range = pg_fields.DateTimeRangeField(null=False)
+                    some_decimal = models.DecimalField(max_digits=10, decimal_places=5)
+
+-   case: test_add_id_field_if_no_primary_key_defined
+    disable_cache: true
+    main: |
+        from myapp.models import User
+        reveal_type(User().id)  # N: Revealed type is 'builtins.int*'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class User(models.Model):
+                    pass
+
+-   case: test_do_not_add_id_if_field_with_primary_key_True_defined
+    disable_cache: true
+    main: |
+        from myapp.models import User
+        reveal_type(User().my_pk)  # N: Revealed type is 'builtins.int*'
+        reveal_type(User().id)
+    out: |
+        main:3: note: Revealed type is 'Any'
+        main:3: error: "User" has no attribute "id"
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class User(models.Model):
+                    my_pk = models.IntegerField(primary_key=True)
+
+-   case: blank_and_null_char_field_allows_none
+    main: |
+        from myapp.models import MyModel
+        MyModel(nulltext="")
+        MyModel(nulltext=None)
+        MyModel().nulltext=None
+        reveal_type(MyModel().nulltext)  # N: Revealed type is 'Union[builtins.str, None]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyModel(models.Model):
+                    nulltext=models.CharField(max_length=1, blank=True, null=True)
+
+-   case: blank_and_not_null_charfield_does_not_allow_none
+    main: |
+        from myapp.models import MyModel
+        MyModel(notnulltext=None)  # Should allow None in constructor
+        MyModel(notnulltext="")
+        MyModel().notnulltext = None  # E: Incompatible types in assignment (expression has type "None", variable has type "Union[str, int, Combinable]")
+        reveal_type(MyModel().notnulltext)  # N: Revealed type is 'builtins.str*'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyModel(models.Model):
+                    notnulltext=models.CharField(max_length=1, blank=True, null=False)
+
+-   case: if_field_called_on_class_return_field_itself
+    main: |
+        from myapp.models import MyUser
+        reveal_type(MyUser.name)  # N: Revealed type is 'django.db.models.fields.CharField[Union[builtins.str, builtins.int, django.db.models.expressions.Combinable], builtins.str]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyUser(models.Model):
+                    name = models.CharField(max_length=100)
+
+-   case: fields_on_non_model_classes_resolve_to_field_type
+    main: |
+        from django.db import models
+        class MyClass:
+            myfield: models.IntegerField[int, int]
+        reveal_type(MyClass.myfield)  # N: Revealed type is 'django.db.models.fields.IntegerField[builtins.int, builtins.int]'
+        reveal_type(MyClass().myfield)  # N: Revealed type is 'django.db.models.fields.IntegerField[builtins.int, builtins.int]'
+
+-   case: fields_inside_mixins_used_in_model_subclasses_resolved_as_primitives
+    main: |
+        from myapp.models import MyModel, AuthMixin
+        reveal_type(MyModel().username)  # N: Revealed type is 'builtins.str*'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class AuthMixin(models.Model):
+                    class Meta:
+                        abstract = True
+                    username = models.CharField(max_length=100)
+
+                class MyModel(AuthMixin, models.Model):
+                    pass

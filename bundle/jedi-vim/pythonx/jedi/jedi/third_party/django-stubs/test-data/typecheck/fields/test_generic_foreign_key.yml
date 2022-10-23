@@ -1,0 +1,21 @@
+-   case: generic_foreign_key_could_point_to_any_model_and_is_always_optional
+    main: |
+        from myapp.models import Tag, User
+        myuser = User()
+        Tag(content_object=None)
+        Tag(content_object=myuser)
+        Tag.objects.create(content_object=None)
+        Tag.objects.create(content_object=myuser)
+        reveal_type(Tag().content_object)  # N: Revealed type is 'Union[Any, None]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                from django.contrib.contenttypes import fields
+                class User(models.Model):
+                    pass
+                class Tag(models.Model):
+                    content_object = fields.GenericForeignKey()

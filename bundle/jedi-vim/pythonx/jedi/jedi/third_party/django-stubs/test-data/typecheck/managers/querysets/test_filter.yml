@@ -1,0 +1,256 @@
+-   case: filtering_with_proper_types
+    main: |
+        from myapp.models import User
+        User.objects.filter(username='maksim')
+        User.objects.get(username='maksim')
+        User.objects.exclude(username='maksim')
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class User(models.Model):
+                    username = models.CharField(max_length=100)
+
+
+-   case: no_such_field_for_filter
+    main: |
+        from myapp.models import User
+        User.objects.filter(unknown_field=True)  # E: Cannot resolve keyword 'unknown_field' into field. Choices are: id
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class User(models.Model):
+                    pass
+
+
+-   case: filter_with_invalid_type
+    main: |
+        from myapp.models import User
+        User.objects.filter(age=User())  # E: Incompatible type for lookup 'age': (got "User", expected "Union[str, int]")
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                from django.db import models
+                class User(models.Model):
+                    age = models.IntegerField()
+
+
+-   case: filter_with_multiple_fields
+    main: |
+        from myapp.models import User
+        User.objects.filter(age=User(), gender=User())
+    installed_apps:
+        - myapp
+    out: |
+        main:2: error: Incompatible type for lookup 'age': (got "User", expected "Union[str, int]")
+        main:2: error: Incompatible type for lookup 'gender': (got "User", expected "Union[str, int]")
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class User(models.Model):
+                    age = models.IntegerField()
+                    gender = models.IntegerField()
+
+
+-   case: valid_filter_with_lookup
+    main: |
+        from myapp.models import User
+        User.objects.filter(username__contains='hello')
+        User.objects.filter(age__gt=1)
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class User(models.Model):
+                    username = models.CharField(max_length=100)
+                    age = models.IntegerField()
+
+
+-   case: invalid_filter_with_lookup
+    main: |
+        from myapp.models import User
+        User.objects.filter(username__contains=1)  # E: Incompatible type for lookup 'username__contains': (got "int", expected "str")
+        User.objects.filter(username__icontains=1)  # E: Incompatible type for lookup 'username__icontains': (got "int", expected "str")
+        User.objects.filter(username__isnull=1)  # E: Incompatible type for lookup 'username__isnull': (got "int", expected "bool")
+
+        User.objects.filter(created_at=User())  # E: Incompatible type for lookup 'created_at': (got "User", expected "Union[str, datetime]")
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class User(models.Model):
+                    username = models.CharField(max_length=100)
+                    age = models.IntegerField()
+                    created_at = models.DateTimeField()
+
+-   case: strings_are_allowed_for_exact_for_dates
+    main: |
+        from myapp.models import User
+        User.objects.filter(created_at='2018')
+        User.objects.filter(created_at__exact='2018')
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class User(models.Model):
+                    created_at = models.DateTimeField()
+
+
+-   case: related_model_foreign_key_lookups
+    main: |
+        from myapp.models import Blog, Publisher
+        blog = Blog()
+        publisher = Publisher()
+        Blog.objects.filter(publisher=publisher)
+        Blog.objects.filter(publisher_id=1)
+        Blog.objects.filter(publisher__id=1)
+
+        Blog.objects.filter(publisher=blog)  # E: Incompatible type for lookup 'publisher': (got "Blog", expected "Union[Publisher, int, None]")
+        Blog.objects.filter(publisher_id=blog)  # E: Incompatible type for lookup 'publisher_id': (got "Blog", expected "Union[str, int]")
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class Publisher(models.Model):
+                    pass
+                class Blog(models.Model):
+                    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, related_name='blogs')
+
+
+-   case: related_model_reverse_foreign_key_lookup
+    main: |
+        from myapp.models import Blog, Publisher
+        blog = Blog()
+        publisher = Publisher()
+        Publisher.objects.filter(blogs=Blog())
+        Publisher.objects.filter(blogs__id=1)
+
+        Publisher.objects.filter(blogs=publisher)  # E: Incompatible type for lookup 'blogs': (got "Publisher", expected "Union[Blog, int, None]")
+        Publisher.objects.filter(blogs__id=publisher)  # E: Incompatible type for lookup 'blogs__id': (got "Publisher", expected "Union[str, int]")
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class Publisher(models.Model):
+                    pass
+                class Blog(models.Model):
+                    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, related_name='blogs')
+
+
+-   case: many_to_many_lookups
+    main: |
+        from myapp.models import Book, Author
+        book = Book()
+        author = Author()
+
+        Book.objects.filter(authors=author)
+        Book.objects.filter(authors=book)  # E: Incompatible type for lookup 'authors': (got "Book", expected "Union[Author, int, None]")
+        Book.objects.filter(authors='hello')  # E: Incompatible type for lookup 'authors': (got "str", expected "Union[Author, int, None]")
+
+        Author.objects.filter(books=book)
+        Author.objects.filter(books=author)  # E: Incompatible type for lookup 'books': (got "Author", expected "Union[Book, int, None]")
+        Author.objects.filter(books='hello')  # E: Incompatible type for lookup 'books': (got "str", expected "Union[Book, int, None]")
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class Book(models.Model):
+                    pass
+                class Author(models.Model):
+                    books = models.ManyToManyField(Book, related_name='authors')
+
+
+-   case: one_to_one_lookups
+    main: |
+        from myapp.models import User, Profile
+        user = User()
+        profile = Profile()
+        User.objects.filter(profile=profile)
+        User.objects.filter(profile=user)  # E: Incompatible type for lookup 'profile': (got "User", expected "Union[Profile, int, None]")
+        User.objects.filter(profile='hello')  # E: Incompatible type for lookup 'profile': (got "str", expected "Union[Profile, int, None]")
+        Profile.objects.filter(user=user)
+        Profile.objects.filter(user=profile)  # E: Incompatible type for lookup 'user': (got "Profile", expected "Union[User, int, None]")
+        Profile.objects.filter(user='hello')  # E: Incompatible type for lookup 'user': (got "str", expected "Union[User, int, None]")
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class User(models.Model):
+                    pass
+                class Profile(models.Model):
+                    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+
+
+# TODO
+-   case: f_expression_simple_case
+    main: |
+        from myapp.models import User
+        from django.db import models
+        User.objects.filter(username=models.F('username2'))
+        User.objects.filter(username=models.F('age'))
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+
+                class User(models.Model):
+                    username = models.TextField()
+                    username2 = models.TextField()
+
+                    age = models.IntegerField()
+
+
+# TODO
+-   case: f_expression_with_expression_math_is_not_supported
+    main: |
+        from myapp.models import User
+        from django.db import models
+        User.objects.filter(username=models.F('username2') + 'hello')
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class User(models.Model):
+                    username = models.TextField()
+                    username2 = models.TextField()
+                    age = models.IntegerField()

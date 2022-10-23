@@ -1,0 +1,61 @@
+language: python
+cache: pip
+dist: xenial
+sudo: required
+jobs:
+  include:
+    - name: Run plugin test suite with python 3.8
+      python: 3.8
+      script: 'pytest'
+
+    - name: Run plugin test suite with python 3.7
+      python: 3.7
+      script: 'pytest'
+
+    - name: Typecheck Django 3.0 test suite with python 3.8
+      python: 3.8
+      script: |
+        python ./scripts/typecheck_tests.py --django_version=3.0
+
+    - name: Typecheck Django 3.0 test suite with python 3.7
+      python: 3.7
+      script: |
+        python ./scripts/typecheck_tests.py --django_version=3.0
+
+    - name: Typecheck Django 3.0 test suite with python 3.6
+      python: 3.6
+      script: |
+        python ./scripts/typecheck_tests.py --django_version=3.0
+
+    - name: Typecheck Django 2.2 test suite with python 3.7
+      python: 3.7
+      script: |
+        python ./scripts/typecheck_tests.py --django_version=2.2
+
+    - name: Mypy for plugin code
+      python: 3.7
+      script: 'mypy ./mypy_django_plugin'
+
+    - name: Lint with black
+      python: 3.7
+      script: 'black --check django-stubs/'
+
+    - name: Lint plugin code with flake8
+      python: 3.7
+      script: 'flake8'
+
+    - name: Lint stubs with flake8-pyi and check for unused imports
+      python: 3.7
+      script: 'flake8 --config flake8-pyi.ini'
+
+    - name: Lint plugin code with isort
+      python: 3.7
+      script: 'isort --check --diff'
+
+before_install: |
+  sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable -y
+  sudo apt-get update
+  sudo apt-get install -y binutils libproj-dev gdal-bin
+  pip install -U pip setuptools wheel
+install: |
+  pip install -r ./dev-requirements.txt

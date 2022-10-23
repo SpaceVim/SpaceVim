@@ -1,0 +1,35 @@
+-   case: array_field_descriptor_access
+    main: |
+        from myapp.models import User
+        user = User(array=[])
+        reveal_type(user.array)  # N: Revealed type is 'builtins.list*[Any]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                from django.contrib.postgres.fields import ArrayField
+
+                class User(models.Model):
+                    array = ArrayField(base_field=models.Field())
+
+-   case: array_field_base_field_parsed_into_generic_typevar
+    main: |
+        from myapp.models import User
+        user = User()
+        reveal_type(user.members)  # N: Revealed type is 'builtins.list*[builtins.int]'
+        reveal_type(user.members_as_text)  # N: Revealed type is 'builtins.list*[builtins.str]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                from django.contrib.postgres.fields import ArrayField
+
+                class User(models.Model):
+                    members = ArrayField(base_field=models.IntegerField())
+                    members_as_text = ArrayField(base_field=models.CharField(max_length=255))

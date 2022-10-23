@@ -1,0 +1,58 @@
+-   case: meta_attribute_has_a_type_of_current_model
+    main: |
+        from myapp.models import MyUser
+        reveal_type(MyUser._meta)  # N: Revealed type is 'django.db.models.options.Options[myapp.models.MyUser]'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyUser(models.Model):
+                    pass
+
+-   case: get_field_returns_proper_field_type
+    main: |
+        from myapp.models import MyUser
+        reveal_type(MyUser._meta.get_field('base_name'))  # N: Revealed type is 'django.db.models.fields.CharField[Any, Any]'
+        reveal_type(MyUser._meta.get_field('name'))  # N: Revealed type is 'django.db.models.fields.CharField[Any, Any]'
+        reveal_type(MyUser._meta.get_field('age'))  # N: Revealed type is 'django.db.models.fields.IntegerField[Any, Any]'
+        reveal_type(MyUser._meta.get_field('unknown'))
+        reveal_type(MyUser._meta.get_field('to_user'))  # N: Revealed type is 'django.db.models.fields.related.ForeignKey[Any, Any]'
+    out: |
+        main:5: note: Revealed type is 'Any'
+        main:5: error: MyUser has no field named 'unknown'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                class MyBaseUser(models.Model):
+                    base_name = models.CharField(max_length=100)
+                class MyUser(MyBaseUser):
+                    name = models.CharField(max_length=100)
+                    age = models.IntegerField()
+                    to_user = models.ForeignKey('self', on_delete=models.SET_NULL)
+
+-   case: get_field_with_abstract_inheritance
+    main: |
+        from myapp.models import AbstractModel
+        class MyModel(AbstractModel):
+            pass
+        reveal_type(MyModel._meta.get_field('field'))  # N: Revealed type is 'Any'
+    installed_apps:
+        - myapp
+    files:
+        -   path: myapp/__init__.py
+        -   path: myapp/models.py
+            content: |
+                from django.db import models
+                from django.contrib.postgres.fields import ArrayField
+                class AbstractModel(models.Model):
+                    class Meta:
+                        abstract = True
+                class MyModel(AbstractModel):
+                    field = ArrayField(models.IntegerField(), default=[])

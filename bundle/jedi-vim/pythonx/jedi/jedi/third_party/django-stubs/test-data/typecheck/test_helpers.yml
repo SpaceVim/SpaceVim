@@ -1,0 +1,62 @@
+-   case: transaction_atomic_contextmanager
+    main: |
+        from django.db import transaction
+        with transaction.atomic():
+            pass
+        with transaction.atomic(using="mydb"):
+            pass
+        with transaction.atomic(using="mydb", savepoint=False):
+            pass
+
+-   case: transaction_atomic_decorator
+    main: |
+        from django.db import transaction
+
+        @transaction.atomic()
+        def decorated_func(param1: str, param2: int) -> bool:
+            pass
+        # Ensure that the function's type is preserved
+        reveal_type(decorated_func)  # N: Revealed type is 'def (param1: builtins.str, param2: builtins.int) -> builtins.bool'
+
+        @transaction.atomic(using="mydb")
+        def decorated_func_using(param1: str, param2: int) -> bool:
+            pass
+        # Ensure that the function's type is preserved
+        reveal_type(decorated_func_using)  # N: Revealed type is 'def (param1: builtins.str, param2: builtins.int) -> builtins.bool'
+
+        class ClassWithAtomicMethod:
+            # Bare decorator
+            @transaction.atomic
+            def atomic_method1(self, abc: int) -> str:
+                pass
+            @transaction.atomic(savepoint=True)
+            def atomic_method2(self):
+                pass
+            @transaction.atomic(using="db", savepoint=True)
+            def atomic_method3(self, myparam: str) -> int:
+                pass
+        ClassWithAtomicMethod().atomic_method1("abc") # E: Argument 1 to "atomic_method1" of "ClassWithAtomicMethod" has incompatible type "str"; expected "int"
+        # Ensure that the method's type is preserved
+        reveal_type(ClassWithAtomicMethod().atomic_method1) # N: Revealed type is 'def (abc: builtins.int) -> builtins.str'
+        # Ensure that the method's type is preserved
+        reveal_type(ClassWithAtomicMethod().atomic_method3) # N: Revealed type is 'def (myparam: builtins.str) -> builtins.int'
+
+
+-   case: mark_safe_decorator_and_function
+    main: |
+        from django.utils.safestring import mark_safe
+        s = 'hello'
+        reveal_type(mark_safe(s))  # N: Revealed type is 'django.utils.safestring.SafeText'
+        reveal_type(mark_safe(s) + mark_safe(s))  # N: Revealed type is 'django.utils.safestring.SafeText'
+        reveal_type(s + mark_safe(s))  # N: Revealed type is 'builtins.str'
+
+        s += mark_safe(s)
+        reveal_type(s)  # N: Revealed type is 'builtins.str'
+        ms = mark_safe(s)
+        ms += mark_safe(s)
+        reveal_type(ms)  # N: Revealed type is 'django.utils.safestring.SafeText'
+
+        @mark_safe
+        def func(s: str) -> str:
+            pass
+        reveal_type(func)  # N: Revealed type is 'def (s: builtins.str) -> builtins.str'
