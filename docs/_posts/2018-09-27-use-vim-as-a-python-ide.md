@@ -3,6 +3,7 @@ title: "Use Vim as a Python IDE"
 categories: [tutorials, blog]
 description: "A general guide for using SpaceVim as Python IDE, including layer configuration, requiems installation and usage."
 type: article
+image: https://user-images.githubusercontent.com/13142418/197381840-821cc059-0aad-42fd-bc39-d5fa16a824f7.png
 comments: true
 commentsID: "Use Vim as a Python IDE"
 ---
@@ -11,6 +12,8 @@ commentsID: "Use Vim as a Python IDE"
 
 This tutorial introduces you to SpaceVim as a Python environment,
 by using the `lang#python` layer, you make SpaceVim into a great lightweight Python IDE.
+
+![python-ide](https://user-images.githubusercontent.com/13142418/197381840-821cc059-0aad-42fd-bc39-d5fa16a824f7.png)
 
 Each of the following sections will be covered:
 
@@ -30,7 +33,7 @@ Each of the following sections will be covered:
 
 This tutorial is not intended to teach you Python itself.
 
-If you have any problems, feel free to join the [SpaceVim gitter chatting room](https://gitter.im/SpaceVim/SpaceVim) for general discussion.
+If you have any problems, feel free to join the [chatting room](https://chat.mozilla.org/#/room/#spacevim:matrix.org) for general discussion.
 
 
 ### Enable language layer
