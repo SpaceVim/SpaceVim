@@ -1,0 +1,12 @@
+#!/usr/bin/python
+
+import sys
+sys.path[0:0] = [
+    '/usr/lib/python3.8/site-packages',
+    '/tmp/.buildout/eggs/important_package.egg'
+]
+
+import important_package
+
+if __name__ == '__main__':
+    sys.exit(important_package.main())

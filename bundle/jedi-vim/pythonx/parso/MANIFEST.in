@@ -1,0 +1,11 @@
+include README.rst
+include CHANGELOG.rst
+include LICENSE.txt
+include AUTHORS.txt
+include .coveragerc
+include conftest.py
+include pytest.ini
+include parso/python/grammar*.txt
+recursive-include test *
+recursive-include docs *
+recursive-exclude * *.pyc

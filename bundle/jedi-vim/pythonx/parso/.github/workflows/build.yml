@@ -1,0 +1,68 @@
+name: Build
+
+on: [push, pull_request]
+
+env:
+  PYTEST_ADDOPTS: --color=yes
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        pip install .[qa]
+    - name: Run Flake8
+      # Ignore F401, which are unused imports. flake8 is a primitive tool and is sometimes wrong.
+      run: flake8 --extend-ignore F401 parso test/*.py setup.py scripts/
+    - name: Run Mypy
+      run: mypy parso
+  test:
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.6', '3.7', '3.8', '3.9']
+        experimental: [false]
+        # include:
+        #   - python-version: '3.10-dev'
+        #     experimental: true
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        pip install .[testing]
+    - name: Run pytest
+      run: pytest
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools wheel
+        pip install .[testing] coverage coveralls
+    - name: Run pytest with coverage
+      run: |
+        coverage run -m pytest
+        coverage report
+    - name: Upload coverage report to Coveralls
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: coveralls --service=github

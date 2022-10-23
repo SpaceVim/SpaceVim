@@ -1,0 +1,16 @@
+*~
+*.sw?
+*.pyc
+.ropeproject
+.coveralls.yml
+.coverage
+.idea
+/build/
+/docs/_build/
+/dist/
+jedi.egg-info/
+record.json
+/.cache/
+/.pytest_cache
+/.mypy_cache
+/venv/

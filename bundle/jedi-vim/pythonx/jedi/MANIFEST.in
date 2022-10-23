@@ -1,0 +1,15 @@
+include README.rst
+include CHANGELOG.rst
+include LICENSE.txt
+include AUTHORS.txt
+include .coveragerc
+include sith.py
+include conftest.py
+include pytest.ini
+recursive-include jedi/third_party *.pyi
+include jedi/third_party/typeshed/LICENSE
+include jedi/third_party/django-stubs/LICENSE.txt
+include jedi/third_party/typeshed/README
+recursive-include test *
+recursive-include docs *
+recursive-exclude * *.pyc

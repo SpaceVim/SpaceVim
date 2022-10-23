@@ -106,7 +106,7 @@ function! SpaceVim#layers#lang#python#plugins() abort
       " but we need to disable the completions of jedi-vim.
       let g:jedi#completions_enabled = 0
     endif
-    call add(plugins, ['davidhalter/jedi-vim', { 'on_ft' : 'python',
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/jedi-vim', { 'on_ft' : 'python',
           \ 'if' : has('python') || has('python3')}])
   endif
   call add(plugins, ['heavenshell/vim-pydocstring',

@@ -1,0 +1,168 @@
+A list of syntax/indentation errors I've encountered in CPython.
+
+# Python/compile.c
+    "'continue' not properly in loop"
+    "'continue' not supported inside 'finally' clause"  # Until loop
+    "default 'except:' must be last"
+    "from __future__ imports must occur at the beginning of the file"
+    "'return' outside function"
+    "'return' with value in async generator"
+    "'break' outside loop"
+    "two starred expressions in assignment"
+    "asynchronous comprehension outside of an asynchronous function"
+    "'yield' outside function"  # For both yield and yield from
+    "'yield from' inside async function"
+    "'await' outside function"
+    "'await' outside async function"
+    "starred assignment target must be in a list or tuple"
+    "can't use starred expression here"
+    "too many statically nested blocks"  # Max. 20
+    # This is one of the few places in the cpython code base that I really
+    # don't understand. It feels a bit hacky if you look at the implementation
+    # of UNPACK_EX.
+    "too many expressions in star-unpacking assignment"
+
+    # Just ignore this one, newer versions will not be affected anymore and
+    # it's a limit of 2^16 - 1.
+
+# Python/ast.c
+    # used with_item exprlist expr_stmt
+    "can't %s %s" % ("assign to" or "delete",
+            "lambda"
+            "function call"  # foo()
+            "generator expression"
+            "list comprehension"
+            "set comprehension"
+            "dict comprehension"
+            "keyword"
+            "Ellipsis"
+            "comparison"
+        Dict: Set: Num: Str: Bytes: JoinedStr: FormattedValue:
+            "literal"
+        BoolOp: BinOp: UnaryOp:
+            "operator"
+        Yield: YieldFrom:
+            "yield expression"
+        Await:
+            "await expression"
+        IfExp:
+            "conditional expression"
+    "assignment to keyword"  # (keywords + __debug__)  # None = 2
+    "named arguments must follow bare *"  # def foo(*): pass
+    "non-default argument follows default argument" # def f(x=3, y): pass
+    "iterable unpacking cannot be used in comprehension"  # [*[] for a in [1]]
+    "dict unpacking cannot be used in dict comprehension"  # {**{} for a in [1]}
+    "Generator expression must be parenthesized if not sole argument"  # foo(x for x in [], b)
+    "positional argument follows keyword argument unpacking" # f(**x, y)
+    "positional argument follows keyword argument"  # f(x=2, y)
+    "iterable argument unpacking follows keyword argument unpacking" # foo(**kwargs, *args)
+    "lambda cannot contain assignment"  # f(lambda: 1=1)
+    "keyword can't be an expression" # f(+x=1)
+    "keyword argument repeated"  # f(x=1, x=2)
+    "illegal expression for augmented assignment"  # x, y += 1
+    "only single target (not list) can be annotated" # [x, y]: int
+    "only single target (not tuple) can be annotated" # x, y: str
+    "illegal target for annotation" # True: 1`
+    "trailing comma not allowed without surrounding parentheses" # from foo import a,
+    "bytes can only contain ASCII literal characters." # b'ä'  # prob. only python 3
+    "cannot mix bytes and nonbytes literals" # 's' b''
+    "assignment to yield expression not possible"  # x = yield 1 = 3
+
+    "f-string: empty expression not allowed"  # f'{}'
+    "f-string: single '}' is not allowed"  # f'}'
+    "f-string: expressions nested too deeply"  # f'{1:{5:{3}}}'
+    "f-string expression part cannot include a backslash"  # f'{"\"}' or f'{"\\"}'
+    "f-string expression part cannot include '#'"  # f'{#}'
+    "f-string: unterminated string"  # f'{"}'
+    "f-string: mismatched '(', '{', or '['"
+    "f-string: invalid conversion character: expected 's', 'r', or 'a'" # f'{1!b}'
+    "f-string: unexpected end of string"  # Doesn't really happen?!
+    "f-string: expecting '}'"  # f'{'
+    "(unicode error) unknown error
+    "(value error) unknown error
+    "(unicode error) MESSAGE
+        MESSAGES = {
+            "\\ at end of string"
+            "truncated \\xXX escape"
+            "truncated \\uXXXX escape"
+            "truncated \\UXXXXXXXX escape"
+            "illegal Unicode character"       # '\Uffffffff'
+            "malformed \\N character escape"  # '\N{}'
+            "unknown Unicode character name"  # '\N{foo}'
+        }
+    "(value error) MESSAGE  # bytes
+        MESSAGES = {
+            "Trailing \\ in string"
+            "invalid \\x escape at position %d"
+        }
+
+    "invalid escape sequence \\%c"  # Only happens when used in `python -W error`
+    "unexpected node"  # Probably irrelevant
+    "Unexpected node-type in from-import"  # Irrelevant, doesn't happen.
+    "malformed 'try' statement"  # Irrelevant, doesn't happen.
+
+# Python/symtable.c
+    "duplicate argument '%U' in function definition"
+    "name '%U' is assigned to before global declaration"
+    "name '%U' is assigned to before nonlocal declaration"
+    "name '%U' is used prior to global declaration"
+    "name '%U' is used prior to nonlocal declaration"
+    "annotated name '%U' can't be global"
+    "annotated name '%U' can't be nonlocal"
+    "import * only allowed at module level"
+
+    "name '%U' is parameter and global",
+    "name '%U' is nonlocal and global",
+    "name '%U' is parameter and nonlocal",
+
+    "nonlocal declaration not allowed at module level");
+    "no binding for nonlocal '%U' found",
+    # RecursionError. Not handled. For all human written code, this is probably
+    # not an issue. eval("()"*x) with x>=2998 for example fails, but that's
+    # more than 2000 executions on one line.
+    "maximum recursion depth exceeded during compilation");
+
+# Python/future.c
+    "not a chance"
+    "future feature %.100s is not defined"
+    "from __future__ imports must occur at the beginning of the file"  # Also in compile.c
+
+# Parser/tokenizer.c
+    # All the following issues seem to be irrelevant for parso, because the
+    # encoding stuff is done before it reaches the tokenizer. It's already
+    # unicode at that point.
+    "encoding problem: %s"
+    "encoding problem: %s with BOM"
+    "Non-UTF-8 code starting with '\\x%.2x' in file %U on line %i, but no encoding declared; see http://python.org/dev/peps/pep-0263/ for details"
+
+# Parser/pythonrun.c
+    E_SYNTAX: "invalid syntax"
+    E_LINECONT: "unexpected character after line continuation character"
+    E_IDENTIFIER: "invalid character in identifier"
+    # Also just use 'invalid syntax'. Happens mostly with stuff like `(`. This
+    # message doesn't really help the user, because it only appears very
+    # randomly, e.g. `(or` wouldn't yield this error.
+    E_EOF: "unexpected EOF while parsing"
+    # Even in 3.6 this is implemented kind of shaky. Not implemented, I think
+    # cPython needs to fix this one first.
+    # e.g. `ast.parse('def x():\n\t if 1:\n \t \tpass')` works :/
+    E_TABSPACE: "inconsistent use of tabs and spaces in indentation"
+    # Ignored, just shown as "invalid syntax". The error has mostly to do with
+    # numbers like 0b2 everywhere or 1.6_ in Python3.6.
+    E_TOKEN: "invalid token"
+    E_EOFS: "EOF while scanning triple-quoted string literal"
+    E_EOLS: "EOL while scanning string literal"
+
+    # IndentationError
+    E_DEDENT: "unindent does not match any outer indentation level"
+    E_TOODEEP: "too many levels of indentation"  # 100 levels
+    E_SYNTAX: "expected an indented block"
+              "unexpected indent"
+              # I don't think this actually ever happens.
+              "unexpected unindent"
+
+
+    # Irrelevant for parso for now.
+    E_OVERFLOW: "expression too long"
+    E_DECODE: "unknown decode error"
+    E_BADSINGLE: "multiple statements found while compiling a single statement"

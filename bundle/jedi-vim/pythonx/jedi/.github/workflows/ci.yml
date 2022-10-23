@@ -1,0 +1,73 @@
+name: ci
+on: [push, pull_request]
+
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-20.04, windows-2019]
+        python-version: ["3.10", "3.9", "3.8", "3.7", "3.6"]
+        environment: ['3.8', '3.10', '3.9', '3.7', '3.6', 'interpreter']
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-python@v2
+        if: ${{ matrix.environment != 'interpreter' }}
+        with:
+          python-version: ${{ matrix.environment }}
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: 'pip install .[testing]'
+
+      - name: Run tests
+        run: python -m pytest
+        env:
+          JEDI_TEST_ENVIRONMENT: ${{ matrix.environment }}
+
+  code-quality:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: 'pip install .[qa]'
+
+      - name: Run tests
+        run: |
+          python -m flake8 jedi setup.py
+          python -m mypy jedi sith.py
+
+  coverage:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: 'pip install .[testing] coverage'
+
+      - name: Run tests
+        run: |
+          python -m coverage run --source jedi -m pytest
+          python -m coverage report
+
+      - name: Upload coverage data
+        run: |
+          pip install --quiet codecov coveralls
+          python -m coverage xml
+          python -m coverage report -m
+          bash <(curl -s https://codecov.io/bash) -X gcov -X coveragepy -X search -X fix -X xcode -f coverage.xml

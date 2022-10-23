@@ -1,0 +1,10 @@
+# all end-of-lines are normalized to LF when written to the repository
+# https://git-scm.com/docs/gitattributes#_text
+* text=auto
+
+# force all text files on the working dir to have LF line endings
+# https://git-scm.com/docs/gitattributes#_eol
+* text eol=lf
+
+# PNGs are not text and should not be normalized
+*.png -text
