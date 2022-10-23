@@ -100,11 +100,11 @@ endfunction
 function! s:self.increase_window(...) abort
   " let self.notification_width = self.__floating.get_width(self.winid)
   if self.notification_width <= self.notify_max_width && self.win_is_open()
-    let self.notification_width += min([float2nr((self.notify_max_width - self.notification_width) * 1 / 10), float2nr(self.notify_max_width)])
+    let self.notification_width += min([float2nr((self.notify_max_width - self.notification_width) * 1 / 20), float2nr(self.notify_max_width)])
     call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
           \ self.draw_border(self.title, self.notification_width, len(self.message)))
     call self.redraw_windows()
-    call timer_start(30, self.increase_window, {'repeat' : 1})
+    call timer_start(10, self.increase_window, {'repeat' : 1})
   endif
 endfunction
 
