@@ -1353,6 +1353,8 @@ let g:spacevim_wildignore
 let g:_spacevim_mappings = {}
 let g:_spacevim_mappings_space_custom = []
 let g:_spacevim_mappings_space_custom_group_name = []
+let g:_spacevim_mappings_leader_custom = []
+let g:_spacevim_mappings_leader_custom_group_name = []
 let g:_spacevim_mappings_language_specified_space_custom = {}
 let g:_spacevim_mappings_lang_group_name = {}
 let g:_spacevim_neobundle_installed     = 0

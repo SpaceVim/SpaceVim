@@ -1593,7 +1593,14 @@ SpaceVim#custom#SPC({m}, {keys}, {cmd}, {desc}, {is_cmd})
   binding.
 
 SpaceVim#custom#SPCGroupName({keys}, {name})  *SpaceVim#custom#SPCGroupName()*
-  Set the group name of custom key bindings.
+  Set the group name of custom SPC key bindings.
+
+SpaceVim#custom#leader({type}, {key}, {value})      *SpaceVim#custom#leader()*
+  function for adding custom leader key bindings
+
+SpaceVim#custom#LeaderGroupName({keys}, {name})
+                                           *SpaceVim#custom#LeaderGroupName()*
+  Set the group name of custom Leader key bindings.
 
 SpaceVim#custom#LangSPC({ft}, {m}, {keys}, {cmd}, {desc}, {is_cmd})
                                                    *SpaceVim#custom#LangSPC()*

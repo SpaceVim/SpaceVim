@@ -140,8 +140,7 @@ function! s:fix_colorschem_in_SpaceVim() abort
   hi SpaceVimLeaderGuiderGroupName cterm=bold ctermfg=175 gui=bold guifg=#d3869b
 endfunction
 
-function! SpaceVim#autocmds#VimEnter() abort
-  call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
+function! s:apply_custom_space_keybindings() abort
   for argv in g:_spacevim_mappings_space_custom_group_name
     if len(argv[0]) == 1
       if !has_key(g:_spacevim_mappings_space, argv[0][0])
@@ -162,6 +161,36 @@ function! SpaceVim#autocmds#VimEnter() abort
   for argv in g:_spacevim_mappings_space_custom
     call call('SpaceVim#mapping#space#def', argv)
   endfor
+endfunction
+
+
+function! s:apply_custom_leader_keybindings() abort
+  for argv in g:_spacevim_mappings_leader_custom_group_name
+    if len(argv[0]) == 1
+      if !has_key(g:_spacevim_mappings, argv[0][0])
+        let g:_spacevim_mappings[argv[0][0]] = {'name' : argv[1]}
+      endif
+    elseif len(argv[0]) == 2
+      if !has_key(g:_spacevim_mappings, argv[0][0])
+        let g:_spacevim_mappings[argv[0][0]] = {'name' : '+Unnamed',
+              \ argv[0][1] : { 'name' : argv[1]},
+              \ }
+      else
+        if !has_key(g:_spacevim_mappings[argv[0][0]], argv[0][1])
+          let g:_spacevim_mappings[argv[0][0]][argv[0][1]] = {'name' : argv[1]}
+        endif
+      endif
+    endif
+  endfor
+  for argv in g:_spacevim_mappings_leader_custom
+    call call('SpaceVim#mapping#def', argv)
+  endfor
+endfunction
+
+function! SpaceVim#autocmds#VimEnter() abort
+  call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
+  call s:apply_custom_space_keybindings()
+  call s:apply_custom_leader_keybindings()
   if SpaceVim#layers#isLoaded('core#statusline')
     set laststatus=2
     call SpaceVim#layers#core#statusline#def_colors()
