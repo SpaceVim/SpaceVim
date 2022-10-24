@@ -12,6 +12,8 @@ description: "This layers provides language server protocol for vim and neovim"
 - [Install](#install)
   - [Install language server](#install-language-server)
 - [Configuration](#configuration)
+  - [neovim(`>=0.5.0`)](#neovim050)
+  - [vim or neovim(`<0.5.0`)](#vim-or-neovim050)
 - [Key bindings](#key-bindings)
 
 <!-- vim-markdown-toc -->
@@ -126,6 +128,29 @@ npm install -g vim-language-server
 
 ## Configuration
 
+### neovim(`>=0.5.0`)
+
+If you are using `nvim(>=0.5.0)`. You need to use `enabled_clients` to specific the language servers.
+for example:
+
+```toml
+[[layers]]
+    name = 'lsp'
+    enabled_clients = ['vimls', 'clangd']
+```
+
+To override the command of client, you may need to use `override_client_cmds` option:
+
+```toml
+[[layers]]
+  name = "lsp"
+  enabled_clients = ['vimls', 'clangd']
+  [layers.override_client_cmds]
+    vimls = ["vim-language-server", "--stdio"]
+```
+
+### vim or neovim(`<0.5.0`)
+
 To enable lsp support for a specified filetype, you may need to load this layer with `filetypes` option, for example:
 
 ```toml
@@ -179,15 +204,6 @@ To override the server command, you may need to use `override_cmd` option:
   ]
   [layers.override_cmd]
     rust = ["rustup", "run", "nightly", "rls"]
-```
-
-If you are using `nvim(>=0.5.0)`. You need to use `enabled_clients` to specific the language servers.
-for example:
-
-```toml
-[[layers]]
-    name = 'lsp'
-    enabled_clients = ['vimls', 'clangd']
 ```
 
 ## Key bindings

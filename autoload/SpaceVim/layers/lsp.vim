@@ -53,66 +53,10 @@ endfunction
 
 
 function! SpaceVim#layers#lsp#setup() abort
-  lua << EOF
-  local nvim_lsp = require('lspconfig')
-
-  -- Use an on_attach function to only map the following keys
-  -- after the language server attaches to the current buffer
-  local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  -- Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  -- local opts = { noremap=true, silent=true }
-
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  -- buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  -- buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  -- buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  -- buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  -- buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  -- buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  -- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  -- buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  -- buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  -- buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  -- buf_set_keymap('n', '<space>e', '<cmd>lua require("spacevim.diagnostic").show_line_diagnostics()<CR>', opts)
-  -- buf_set_keymap('n', '[d', '<cmd>lua require("spacevim.diagnostic").goto_prev()<CR>', opts)
-  -- buf_set_keymap('n', ']d', '<cmd>lua require("spacevim.diagnostic").goto_next()<CR>', opts)
-  -- buf_set_keymap('n', '<space>q', '<cmd>lua require("spacevim.diagnostic").set_loclist()<CR>', opts)
-  -- buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-
-end
-
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = require('spacevim').eval('s:enabled_clients')
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-      }
-    }
-end
-local override_client_cmds = require('spacevim').eval('s:override_client_cmds')
-for client, override_cmd in pairs(override_client_cmds) do
-  if type(client) == "string" then
-    nvim_lsp[client].setup {
-      cmd = override_cmd,
-      on_attach = on_attach,
-      flags = {
-        debounce_text_changes = 150,
-        }
-      }
-  end
-end
-EOF
+  lua require("spacevim.lsp").setup(
+        \ require("spacevim").eval("s:enabled_clients"),
+        \ require("spacevim").eval("s:override_client_cmds")
+        \ )
 endfunction
 
 function! SpaceVim#layers#lsp#plugins() abort
@@ -144,9 +88,14 @@ function! SpaceVim#layers#lsp#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lsp#config() abort
-  for ft in s:enabled_fts
-    call SpaceVim#lsp#reg_server(ft, s:lsp_servers[ft])
-  endfor
+  " if nvim-lspconfig is using, do not check enabled_fts
+  if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
+  else
+
+    for ft in s:enabled_fts
+      call SpaceVim#lsp#reg_server(ft, s:lsp_servers[ft])
+    endfor
+  endif
   " SpaceVim/LanguageClient-neovim {{{
   let g:LanguageClient_diagnosticsDisplay = {
         \ 1: {
@@ -267,32 +216,35 @@ let s:lsp_servers = {
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort
-  let s:enabled_clients = get(a:var, 'enabled_clients', s:enabled_clients)
-  let override = get(a:var, 'override_cmd', {})
-  let s:override_client_cmds = get(a:var, 'override_client_cmds', {})
-  if !empty(override)
-    call extend(s:lsp_servers, override, 'force')
-  endif
-  let l:cwd = s:FILE.path_to_fname(getcwd())
-  for ft in get(a:var, 'filetypes', [])
-    let l:cmds = get(s:lsp_servers, ft, [''])
-    let l:exec = l:cmds[0]
-    if empty(l:exec)
-      call SpaceVim#logger#warn('Failed to find the lsp server command for ' . ft)
-    else
-      if executable(l:exec)
-        call add(s:enabled_fts, ft)
-        let l:newcmds = []
-        for l:cmd in l:cmds
-          let l:newcmd = substitute(l:cmd, '#{cwd}', l:cwd, 'g')
-          call add(l:newcmds, l:newcmd)
-        endfor
-        let s:lsp_servers[ft] = l:newcmds
-      else
-        call SpaceVim#logger#warn('Failed to enable lsp for ' . ft . ', ' . l:exec . ' is not executable!')
-      endif
+  if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
+    let s:enabled_clients = get(a:var, 'enabled_clients', s:enabled_clients)
+    let s:override_client_cmds = get(a:var, 'override_client_cmds', {})
+  else
+    let override = get(a:var, 'override_cmd', {})
+    if !empty(override)
+      call extend(s:lsp_servers, override, 'force')
     endif
-  endfor
+    let l:cwd = s:FILE.path_to_fname(getcwd())
+    for ft in get(a:var, 'filetypes', [])
+      let l:cmds = get(s:lsp_servers, ft, [''])
+      let l:exec = l:cmds[0]
+      if empty(l:exec)
+        call SpaceVim#logger#warn('Failed to find the lsp server command for ' . ft)
+      else
+        if executable(l:exec)
+          call add(s:enabled_fts, ft)
+          let l:newcmds = []
+          for l:cmd in l:cmds
+            let l:newcmd = substitute(l:cmd, '#{cwd}', l:cwd, 'g')
+            call add(l:newcmds, l:newcmd)
+          endfor
+          let s:lsp_servers[ft] = l:newcmds
+        else
+          call SpaceVim#logger#warn('Failed to enable lsp for ' . ft . ', ' . l:exec . ' is not executable!')
+        endif
+      endif
+    endfor
+  endif
 endfunction
 
 function! SpaceVim#layers#lsp#check_filetype(ft) abort
