@@ -167,7 +167,7 @@ function M.keyword_expr(word, opts)
 
   local lines = {}
   if opts.preview_note and not opts.return_lines then
-    vim.cmd(config.get().preview_command .. ' ' .. note.file_name)
+    vim.cmd(config.preview_command .. ' ' .. note.file_name)
   elseif opts.preview_note and opts.return_lines then
     vim.list_extend(lines, read_note(note.file_name))
   else
@@ -275,7 +275,7 @@ function M.get_note_browser_content()
     })
   end
 
-  return formatter.format(lines, config.get().browseformat)
+  return formatter.format(lines, config.browseformat)
 end
 
 function M.add_hover_command()
