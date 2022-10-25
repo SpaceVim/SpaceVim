@@ -80,7 +80,7 @@ function M.completefunc(find_start, base)
 
   local notes = vim.tbl_filter(function(note)
     -- here the note sometimes do not have title, then it is nil
-    return string.match(note.title or '', base)
+    return string.match(note.title, base)
   end, browser.get_notes())
 
   local words = {}
