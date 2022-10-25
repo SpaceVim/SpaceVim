@@ -20,11 +20,16 @@ This layer adds support for zettelkasten in neovim.
 
 ## Install
 
-To use this configuration layer, update your custom configuration file with:
+This layer also requires `telescope` layer, so to use this configuration layer,
+update your custom configuration file with:
 
 ```toml
+# load the zettelkasten layer
 [[layers]]
   name = "zettelkasten"
+# load the fuzzy finder layer: telescope
+[[layers]]
+  name = "telescope"
 ```
 
 ## Layer options
@@ -38,3 +43,10 @@ To use this configuration layer, update your custom configuration file with:
 | ------------ | ----------------------------- |
 | `SPC m z n`  | create new note               |
 | `SPC m z t`  | create new note with template |
+| `SPC m z b`  | open zettelkasten browse      |
+
+In the zettelkasten browse buffer:
+
+| key bindings | description      |
+| ------------ | ---------------- |
+| `K`          | preview the note |
