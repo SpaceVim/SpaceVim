@@ -1,5 +1,6 @@
 local channel = require("plenary.async.control").channel
-
+local actions = require "telescope.actions"
+local sorters = require "telescope.sorters"
 local conf = require("telescope.config").values
 local finders = require "telescope.finders"
 local make_entry = require "telescope.make_entry"
@@ -24,7 +25,7 @@ lsp.references = function(opts)
     local locations = {}
     if result then
       local results = vim.lsp.util.locations_to_items(result, vim.lsp.get_client_by_id(ctx.client_id).offset_encoding)
-      if include_current_line then
+      if not include_current_line then
         locations = vim.tbl_filter(function(v)
           -- Remove current line from result
           return not (v.filename == filepath and v.lnum == lnum)
@@ -38,22 +39,111 @@ lsp.references = function(opts)
       return
     end
 
-    pickers.new(opts, {
-      prompt_title = "LSP References",
-      finder = finders.new_table {
-        results = locations,
-        entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
-      },
-      previewer = conf.qflist_previewer(opts),
-      sorter = conf.generic_sorter(opts),
-      push_cursor_on_edit = true,
-    }):find()
+    pickers
+      .new(opts, {
+        prompt_title = "LSP References",
+        finder = finders.new_table {
+          results = locations,
+          entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
+        },
+        previewer = conf.qflist_previewer(opts),
+        sorter = conf.generic_sorter(opts),
+        push_cursor_on_edit = true,
+        push_tagstack_on_edit = true,
+      })
+      :find()
   end)
 end
 
-local function list_or_jump(action, title, opts)
-  opts = opts or {}
+local function call_hierarchy(opts, method, title, direction, item)
+  vim.lsp.buf_request(opts.bufnr, method, { item = item }, function(err, result)
+    if err then
+      vim.api.nvim_err_writeln("Error handling " .. title .. ": " .. err.message)
+      return
+    end
 
+    if not result or vim.tbl_isempty(result) then
+      return
+    end
+
+    local locations = {}
+    for _, ch_call in pairs(result) do
+      local ch_item = ch_call[direction]
+      for _, range in pairs(ch_call.fromRanges) do
+        table.insert(locations, {
+          filename = vim.uri_to_fname(ch_item.uri),
+          text = ch_item.name,
+          lnum = range.start.line + 1,
+          col = range.start.character + 1,
+        })
+      end
+    end
+
+    pickers
+      .new(opts, {
+        prompt_title = title,
+        finder = finders.new_table {
+          results = locations,
+          entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
+        },
+        previewer = conf.qflist_previewer(opts),
+        sorter = conf.generic_sorter(opts),
+        push_cursor_on_edit = true,
+        push_tagstack_on_edit = true,
+      })
+      :find()
+  end)
+end
+
+local function pick_call_hierarchy_item(call_hierarchy_items)
+  if not call_hierarchy_items then
+    return
+  end
+  if #call_hierarchy_items == 1 then
+    return call_hierarchy_items[1]
+  end
+  local items = {}
+  for i, item in pairs(call_hierarchy_items) do
+    local entry = item.detail or item.name
+    table.insert(items, string.format("%d. %s", i, entry))
+  end
+  local choice = vim.fn.inputlist(items)
+  if choice < 1 or choice > #items then
+    return
+  end
+  return choice
+end
+
+local function calls(opts, direction)
+  local params = vim.lsp.util.make_position_params()
+  vim.lsp.buf_request(opts.bufnr, "textDocument/prepareCallHierarchy", params, function(err, result)
+    if err then
+      vim.api.nvim_err_writeln("Error when preparing call hierarchy: " .. err)
+      return
+    end
+
+    local call_hierarchy_item = pick_call_hierarchy_item(result)
+    if not call_hierarchy_item then
+      return
+    end
+
+    if direction == "from" then
+      call_hierarchy(opts, "callHierarchy/incomingCalls", "LSP Incoming Calls", direction, call_hierarchy_item)
+    else
+      call_hierarchy(opts, "callHierarchy/outgoingCalls", "LSP Outgoing Calls", direction, call_hierarchy_item)
+    end
+  end)
+end
+
+lsp.incoming_calls = function(opts)
+  calls(opts, "from")
+end
+
+lsp.outgoing_calls = function(opts)
+  calls(opts, "to")
+end
+
+local function list_or_jump(action, title, opts)
   local params = vim.lsp.util.make_position_params(opts.winnr)
   vim.lsp.buf_request(opts.bufnr, action, params, function(err, result, ctx, _)
     if err then
@@ -85,15 +175,19 @@ local function list_or_jump(action, title, opts)
       vim.lsp.util.jump_to_location(flattened_results[1], offset_encoding)
     else
       local locations = vim.lsp.util.locations_to_items(flattened_results, offset_encoding)
-      pickers.new(opts, {
-        prompt_title = title,
-        finder = finders.new_table {
-          results = locations,
-          entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
-        },
-        previewer = conf.qflist_previewer(opts),
-        sorter = conf.generic_sorter(opts),
-      }):find()
+      pickers
+        .new(opts, {
+          prompt_title = title,
+          finder = finders.new_table {
+            results = locations,
+            entry_maker = opts.entry_maker or make_entry.gen_from_quickfix(opts),
+          },
+          previewer = conf.qflist_previewer(opts),
+          sorter = conf.generic_sorter(opts),
+          push_cursor_on_edit = true,
+          push_tagstack_on_edit = true,
+        })
+        :find()
     end
   end)
 end
@@ -141,20 +235,23 @@ lsp.document_symbols = function(opts)
       return
     end
 
-    opts.ignore_filename = opts.ignore_filename or true
-    pickers.new(opts, {
-      prompt_title = "LSP Document Symbols",
-      finder = finders.new_table {
-        results = locations,
-        entry_maker = opts.entry_maker or make_entry.gen_from_lsp_symbols(opts),
-      },
-      previewer = conf.qflist_previewer(opts),
-      sorter = conf.prefilter_sorter {
-        tag = "symbol_type",
-        sorter = conf.generic_sorter(opts),
-      },
-      push_cursor_on_edit = true,
-    }):find()
+    opts.path_display = { "hidden" }
+    pickers
+      .new(opts, {
+        prompt_title = "LSP Document Symbols",
+        finder = finders.new_table {
+          results = locations,
+          entry_maker = opts.entry_maker or make_entry.gen_from_lsp_symbols(opts),
+        },
+        previewer = conf.qflist_previewer(opts),
+        sorter = conf.prefilter_sorter {
+          tag = "symbol_type",
+          sorter = conf.generic_sorter(opts),
+        },
+        push_cursor_on_edit = true,
+        push_tagstack_on_edit = true,
+      })
+      :find()
   end)
 end
 
@@ -182,20 +279,22 @@ lsp.workspace_symbols = function(opts)
       return
     end
 
-    opts.ignore_filename = utils.get_default(opts.ignore_filename, false)
+    opts.ignore_filename = vim.F.if_nil(opts.ignore_filename, false)
 
-    pickers.new(opts, {
-      prompt_title = "LSP Workspace Symbols",
-      finder = finders.new_table {
-        results = locations,
-        entry_maker = opts.entry_maker or make_entry.gen_from_lsp_symbols(opts),
-      },
-      previewer = conf.qflist_previewer(opts),
-      sorter = conf.prefilter_sorter {
-        tag = "symbol_type",
-        sorter = conf.generic_sorter(opts),
-      },
-    }):find()
+    pickers
+      .new(opts, {
+        prompt_title = "LSP Workspace Symbols",
+        finder = finders.new_table {
+          results = locations,
+          entry_maker = opts.entry_maker or make_entry.gen_from_lsp_symbols(opts),
+        },
+        previewer = conf.qflist_previewer(opts),
+        sorter = conf.prefilter_sorter {
+          tag = "symbol_type",
+          sorter = conf.generic_sorter(opts),
+        },
+      })
+      :find()
   end)
 end
 
@@ -220,15 +319,21 @@ local function get_workspace_symbols_requester(bufnr, opts)
 end
 
 lsp.dynamic_workspace_symbols = function(opts)
-  pickers.new(opts, {
-    prompt_title = "LSP Dynamic Workspace Symbols",
-    finder = finders.new_dynamic {
-      entry_maker = opts.entry_maker or make_entry.gen_from_lsp_symbols(opts),
-      fn = get_workspace_symbols_requester(opts.bufnr, opts),
-    },
-    previewer = conf.qflist_previewer(opts),
-    sorter = conf.generic_sorter(opts),
-  }):find()
+  pickers
+    .new(opts, {
+      prompt_title = "LSP Dynamic Workspace Symbols",
+      finder = finders.new_dynamic {
+        entry_maker = opts.entry_maker or make_entry.gen_from_lsp_symbols(opts),
+        fn = get_workspace_symbols_requester(opts.bufnr, opts),
+      },
+      previewer = conf.qflist_previewer(opts),
+      sorter = sorters.highlighter_only(opts),
+      attach_mappings = function(_, map)
+        map("i", "<c-space>", actions.to_fuzzy_refine)
+        return true
+      end,
+    })
+    :find()
 end
 
 local function check_capabilities(feature, bufnr)
@@ -267,6 +372,8 @@ local feature_map = {
   ["type_definitions"] = "typeDefinitionProvider",
   ["implementations"] = "implementationProvider",
   ["workspace_symbols"] = "workspaceSymbolProvider",
+  ["incoming_calls"] = "callHierarchyProvider",
+  ["outgoing_calls"] = "callHierarchyProvider",
 }
 
 local function apply_checks(mod)

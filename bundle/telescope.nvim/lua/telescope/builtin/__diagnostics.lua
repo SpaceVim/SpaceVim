@@ -122,18 +122,20 @@ diagnostics.get = function(opts)
   end
 
   opts.path_display = vim.F.if_nil(opts.path_display, "hidden")
-  pickers.new(opts, {
-    prompt_title = opts.bufnr == nil and "Workspace Diagnostics" or "Document Diagnostics",
-    finder = finders.new_table {
-      results = locations,
-      entry_maker = opts.entry_maker or make_entry.gen_from_diagnostics(opts),
-    },
-    previewer = conf.qflist_previewer(opts),
-    sorter = conf.prefilter_sorter {
-      tag = "type",
-      sorter = conf.generic_sorter(opts),
-    },
-  }):find()
+  pickers
+    .new(opts, {
+      prompt_title = opts.bufnr == nil and "Workspace Diagnostics" or "Document Diagnostics",
+      finder = finders.new_table {
+        results = locations,
+        entry_maker = opts.entry_maker or make_entry.gen_from_diagnostics(opts),
+      },
+      previewer = conf.qflist_previewer(opts),
+      sorter = conf.prefilter_sorter {
+        tag = "type",
+        sorter = conf.generic_sorter(opts),
+      },
+    })
+    :find()
 end
 
 local function apply_checks(mod)

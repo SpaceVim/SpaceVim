@@ -1,4 +1,4 @@
-local health = require "health"
+local health = vim.health or require "health"
 local extension_module = require "telescope._extensions"
 local extension_info = require("telescope").extensions
 local is_win = vim.api.nvim_call_function("has", { "win32" }) == 1

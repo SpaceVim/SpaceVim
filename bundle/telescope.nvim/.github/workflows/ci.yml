@@ -13,19 +13,19 @@ jobs:
           - os: ubuntu-20.04
             url: https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
             manager: sudo apt-get
-            packages: -y fd-find
+            packages: -y ripgrep
           - os: ubuntu-20.04
             url: https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.tar.gz
             manager: sudo apt-get
-            packages: -y fd-find
+            packages: -y ripgrep
           - os: macos-10.15
             url: https://github.com/neovim/neovim/releases/download/nightly/nvim-macos.tar.gz
             manager: brew
-            packages: fd
+            packages: ripgrep
           - os: macos-10.15
             url: https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-macos.tar.gz
             manager: brew
-            packages: fd
+            packages: ripgrep
     steps:
       - uses: actions/checkout@v2
       - run: date +%F > todays-date

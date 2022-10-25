@@ -14,18 +14,17 @@ else
   M.zettel_dir =  '~/.zettelkasten/'
 end
 
-local s_config = {
-    notes_path = "",
-    preview_command = "pedit",
-    browseformat = "%f - %h [%r Refs] [%b B-Refs] %t",
-}
-
-M.get = function()
-    return s_config
+if vim.g.zettelkasten_template_directory and vim.g.zettelkasten_template_directory ~= '' then
+  M.templete_dir = vim.g.zettelkasten_template_directory 
+else
+  M.templete_dir =  '~/.zettelkasten_template'
 end
 
-M._set = function(new_config)
-    s_config = vim.tbl_extend("force", s_config, new_config)
+M.browseformat = "%f - %h [%r Refs] [%b B-Refs] %t"
+M.preview_command = "pedit"
+
+M.get = function()
+    return nil
 end
 
 return M

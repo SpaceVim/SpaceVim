@@ -488,7 +488,7 @@ describe("actions", function()
       eq("replaced:vnew", actions.file_vsplit())
     end)
 
-    it("handles backwards compat with select and edit files", function()
+    pending("handles backwards compat with select and edit files", function()
       -- Reproduce steps:
       --  In config, we have { ["<CR>"] = actions.select, ... }
       --  In caller, we have actions._goto:replace(...)

@@ -6,7 +6,7 @@ local log = require "telescope.log"
 
 return function(opts)
   log.trace("Creating async_job:", opts)
-  local entry_maker = opts.entry_maker or make_entry.gen_from_string()
+  local entry_maker = opts.entry_maker or make_entry.gen_from_string(opts)
 
   local fn_command = function(prompt)
     local command_list = opts.command_generator(prompt)

@@ -1,8 +1,12 @@
-local api = vim.api
-local s_config = require("zettelkasten.config")
-
+--=============================================================================
+-- zettelkasten.lua --- init plugin for zk
+-- Copyright (c) 2016-2022 Wang Shidong & Contributors
+-- Author: Wang Shidong < wsdjeg@outlook.com >
+-- URL: https://spacevim.org
+-- License: GPLv3
+--=============================================================================
 if vim.fn.exists(":ZkNew") == 0 then
-    vim.cmd([[command ZkNew :lua _G.zettelkasten.zknew()]])
+    vim.api.nvim_create_user_command("ZkNew", ":lua require('zettelkasten').zknew({})", {})
 end
 
 if vim.fn.exists(":ZkBrowse") == 0 then
@@ -12,19 +16,7 @@ end
 _G.zettelkasten = {
     tagfunc = require("zettelkasten").tagfunc,
     completefunc = require("zettelkasten").completefunc,
-    zknew = function()
-        vim.cmd([[new | setlocal filetype=markdown]])
-        if s_config.zettel_dir ~= "" then
-            if vim.fn.isdirectory(s_config.zettel_dir) == 0 then
-              vim.fn.mkdir(vim.fn.expand(s_config.zettel_dir), 'p', '0700')
-            end
-            vim.cmd("lcd " .. s_config.zettel_dir)
-        end
-
-        vim.cmd("normal ggI# New Note")
-        require("zettelkasten").set_note_id(vim.api.nvim_get_current_buf())
-        vim.cmd("normal $")
-    end,
+    zknew = require("zettelkasten").zknew,
     zkbrowse = function()
         vim.cmd("edit zk://browser")
     end,

@@ -1,5 +1,5 @@
 ---@tag telescope.actions.generate
----@config { ["module"] = "telescope.actions.generate" }
+---@config { ["module"] = "telescope.actions.generate", ["name"] = "ACTIONS_GENERATE" }
 
 ---@brief [[
 --- Module for convenience to override defaults of corresponding |telescope.actions| at |telescope.setup()|.
@@ -24,6 +24,10 @@
 ---@brief ]]
 
 local actions = require "telescope.actions"
+local config = require "telescope.config"
+local action_state = require "telescope.actions.state"
+local finders = require "telescope.finders"
+
 local action_generate = {}
 
 --- Display the keymaps of registered actions similar to which-key.nvim.<br>
@@ -52,6 +56,62 @@ action_generate.which_key = function(opts)
   return function(prompt_bufnr)
     actions.which_key(prompt_bufnr, opts)
   end
+end
+
+action_generate.refine = function(prompt_bufnr, opts)
+  opts = opts or {}
+  opts.prompt_to_prefix = vim.F.if_nil(opts.prompt_to_prefix, false)
+  opts.prefix_hl_group = vim.F.if_nil(opts.prompt_hl_group, "TelescopePromptPrefix")
+  opts.prompt_prefix = vim.F.if_nil(opts.promt_prefix, config.values.prompt_prefix)
+  opts.reset_multi_selection = vim.F.if_nil(opts.reset_multi_selection, false)
+  opts.reset_prompt = vim.F.if_nil(opts.reset_prompt, true)
+  opts.sorter = vim.F.if_nil(opts.sorter, config.values.generic_sorter {})
+  local push_history = vim.F.if_nil(opts.push_history, true)
+
+  local current_picker = action_state.get_current_picker(prompt_bufnr)
+  local current_line = action_state.get_current_line()
+  if push_history then
+    action_state.get_current_history():append(current_line, current_picker)
+  end
+
+  -- title
+  if opts.prompt_title then
+    current_picker.prompt_border:change_title(opts.prompt_title)
+  end
+
+  if opts.results_title then
+    current_picker.results_border:change_title(opts.results_title)
+  end
+
+  local results = {}
+  for entry in current_picker.manager:iter() do
+    table.insert(results, entry)
+  end
+
+  -- if opts.sorter == false, keep older sorter
+  if opts.sorter then
+    current_picker.sorter:_destroy()
+    current_picker.sorter = opts.sorter
+    current_picker.sorter:_init()
+  end
+
+  local new_finder = finders.new_table {
+    results = results,
+    entry_maker = function(x)
+      return x
+    end,
+  }
+
+  if not opts.reset_multi_selection and current_line ~= "" then
+    opts.multi = current_picker._multi
+  end
+
+  if opts.prompt_to_prefix then
+    local current_prefix = current_picker.prompt_prefix
+    local suffix = current_prefix ~= opts.prompt_prefix and current_prefix or ""
+    opts.new_prefix = suffix .. current_line .. " " .. opts.prompt_prefix
+  end
+  current_picker:refresh(new_finder, opts)
 end
 
 return action_generate

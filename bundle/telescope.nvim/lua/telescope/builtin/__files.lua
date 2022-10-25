@@ -1,5 +1,6 @@
 local action_state = require "telescope.actions.state"
 local action_set = require "telescope.actions.set"
+local actions = require "telescope.actions"
 local finders = require "telescope.finders"
 local make_entry = require "telescope.make_entry"
 local pickers = require "telescope.pickers"
@@ -35,6 +36,29 @@ local escape_chars = function(string)
   })
 end
 
+local get_open_filelist = function(grep_open_files, cwd)
+  if not grep_open_files then
+    return nil
+  end
+
+  local bufnrs = filter(function(b)
+    if 1 ~= vim.fn.buflisted(b) then
+      return false
+    end
+    return true
+  end, vim.api.nvim_list_bufs())
+  if not next(bufnrs) then
+    return
+  end
+
+  local filelist = {}
+  for _, bufnr in ipairs(bufnrs) do
+    local file = vim.api.nvim_buf_get_name(bufnr)
+    table.insert(filelist, Path:new(file):make_relative(cwd))
+  end
+  return filelist
+end
+
 -- Special keys:
 --  opts.search_dirs -- list of directory to search in
 --  opts.grep_open_files -- boolean to restrict search to open files
@@ -44,40 +68,32 @@ files.live_grep = function(opts)
   local grep_open_files = opts.grep_open_files
   opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or vim.loop.cwd()
 
-  local filelist = {}
-
-  if grep_open_files then
-    local bufnrs = filter(function(b)
-      if 1 ~= vim.fn.buflisted(b) then
-        return false
-      end
-      return true
-    end, vim.api.nvim_list_bufs())
-    if not next(bufnrs) then
-      return
-    end
-
-    for _, bufnr in ipairs(bufnrs) do
-      local file = vim.api.nvim_buf_get_name(bufnr)
-      table.insert(filelist, Path:new(file):make_relative(opts.cwd))
-    end
-  elseif search_dirs then
+  local filelist = get_open_filelist(grep_open_files, opts.cwd)
+  if search_dirs then
     for i, path in ipairs(search_dirs) do
       search_dirs[i] = vim.fn.expand(path)
     end
   end
 
   local additional_args = {}
-  if opts.additional_args ~= nil and type(opts.additional_args) == "function" then
-    additional_args = opts.additional_args(opts)
+  if opts.additional_args ~= nil then
+    if type(opts.additional_args) == "function" then
+      additional_args = opts.additional_args(opts)
+    elseif type(opts.additional_args) == "table" then
+      additional_args = opts.additional_args
+    end
   end
 
   if opts.type_filter then
     additional_args[#additional_args + 1] = "--type=" .. opts.type_filter
   end
 
-  if opts.glob_pattern then
+  if type(opts.glob_pattern) == "string" then
     additional_args[#additional_args + 1] = "--glob=" .. opts.glob_pattern
+  elseif type(opts.glob_pattern) == "table" then
+    for i = 1, #opts.glob_pattern do
+      additional_args[#additional_args + 1] = "--glob=" .. opts.glob_pattern[i]
+    end
   end
 
   local live_grepper = finders.new_job(function(prompt)
@@ -89,80 +105,95 @@ files.live_grep = function(opts)
 
     local search_list = {}
 
-    if search_dirs then
-      table.insert(search_list, search_dirs)
-    end
-
     if grep_open_files then
       search_list = filelist
+    elseif search_dirs then
+      search_list = search_dirs
     end
 
     return flatten { vimgrep_arguments, additional_args, "--", prompt, search_list }
   end, opts.entry_maker or make_entry.gen_from_vimgrep(opts), opts.max_results, opts.cwd)
 
-  pickers.new(opts, {
-    prompt_title = "Live Grep",
-    finder = live_grepper,
-    previewer = conf.grep_previewer(opts),
-    -- TODO: It would be cool to use `--json` output for this
-    -- and then we could get the highlight positions directly.
-    sorter = sorters.highlighter_only(opts),
-  }):find()
+  pickers
+    .new(opts, {
+      prompt_title = "Live Grep",
+      finder = live_grepper,
+      previewer = conf.grep_previewer(opts),
+      -- TODO: It would be cool to use `--json` output for this
+      -- and then we could get the highlight positions directly.
+      sorter = sorters.highlighter_only(opts),
+      attach_mappings = function(_, map)
+        map("i", "<c-space>", actions.to_fuzzy_refine)
+        return true
+      end,
+    })
+    :find()
 end
 
--- Special keys:
---  opts.search -- the string to search.
---  opts.search_dirs -- list of directory to search in
---  opts.use_regex -- special characters won't be escaped
 files.grep_string = function(opts)
   -- TODO: This should probably check your visual selection as well, if you've got one
-
-  local vimgrep_arguments = opts.vimgrep_arguments or conf.vimgrep_arguments
-  local search_dirs = opts.search_dirs
-  local word = opts.search or vim.fn.expand "<cword>"
+  opts.cwd = opts.cwd and vim.fn.expand(opts.cwd) or vim.loop.cwd()
+  local vimgrep_arguments = vim.F.if_nil(opts.vimgrep_arguments, conf.vimgrep_arguments)
+  local word = vim.F.if_nil(opts.search, vim.fn.expand "<cword>")
   local search = opts.use_regex and word or escape_chars(word)
-  local word_match = opts.word_match
-  opts.entry_maker = opts.entry_maker or make_entry.gen_from_vimgrep(opts)
 
   local additional_args = {}
-  if opts.additional_args ~= nil and type(opts.additional_args) == "function" then
-    additional_args = opts.additional_args(opts)
+  if opts.additional_args ~= nil then
+    if type(opts.additional_args) == "function" then
+      additional_args = opts.additional_args(opts)
+    elseif type(opts.additional_args) == "table" then
+      additional_args = opts.additional_args
+    end
+  end
+
+  if search == "" then
+    search = { "-v", "--", "^[[:space:]]*$" }
+    opts.__inverted = true
+  else
+    search = { "--", search }
   end
 
   local args = flatten {
     vimgrep_arguments,
     additional_args,
-    word_match,
-    "--",
+    opts.word_match,
     search,
   }
 
-  if search_dirs then
-    for _, path in ipairs(search_dirs) do
+  if opts.grep_open_files then
+    for _, file in ipairs(get_open_filelist(opts.grep_open_files, opts.cwd)) do
+      table.insert(args, file)
+    end
+  elseif opts.search_dirs then
+    for _, path in ipairs(opts.search_dirs) do
       table.insert(args, vim.fn.expand(path))
     end
   end
 
-  pickers.new(opts, {
-    prompt_title = "Find Word (" .. word .. ")",
-    finder = finders.new_oneshot_job(args, opts),
-    previewer = conf.grep_previewer(opts),
-    sorter = conf.generic_sorter(opts),
-  }):find()
+  opts.entry_maker = opts.entry_maker or make_entry.gen_from_vimgrep(opts)
+  pickers
+    .new(opts, {
+      prompt_title = "Find Word (" .. word:gsub("\n", "\\n") .. ")",
+      finder = finders.new_oneshot_job(args, opts),
+      previewer = conf.grep_previewer(opts),
+      sorter = conf.generic_sorter(opts),
+    })
+    :find()
 end
 
--- TODO: Maybe just change this to `find`.
--- TODO: Support `find` and maybe let people do other stuff with it as well.
 files.find_files = function(opts)
   local find_command = (function()
     if opts.find_command then
+      if type(opts.find_command) == "function" then
+        return opts.find_command(opts)
+      end
       return opts.find_command
-    elseif 1 == vim.fn.executable "fd" then
-      return { "fd", "--type", "f" }
-    elseif 1 == vim.fn.executable "fdfind" then
-      return { "fdfind", "--type", "f" }
     elseif 1 == vim.fn.executable "rg" then
-      return { "rg", "--files" }
+      return { "rg", "--files", "--color", "never" }
+    elseif 1 == vim.fn.executable "fd" then
+      return { "fd", "--type", "f", "--color", "never" }
+    elseif 1 == vim.fn.executable "fdfind" then
+      return { "fdfind", "--type", "f", "--color", "never" }
     elseif 1 == vim.fn.executable "find" and vim.fn.has "win32" == 0 then
       return { "find", ".", "-type", "f" }
     elseif 1 == vim.fn.executable "where" then
@@ -181,8 +212,10 @@ files.find_files = function(opts)
   local command = find_command[1]
   local hidden = opts.hidden
   local no_ignore = opts.no_ignore
+  local no_ignore_parent = opts.no_ignore_parent
   local follow = opts.follow
   local search_dirs = opts.search_dirs
+  local search_file = opts.search_file
 
   if search_dirs then
     for k, v in pairs(search_dirs) do
@@ -192,21 +225,30 @@ files.find_files = function(opts)
 
   if command == "fd" or command == "fdfind" or command == "rg" then
     if hidden then
-      table.insert(find_command, "--hidden")
+      find_command[#find_command + 1] = "--hidden"
     end
     if no_ignore then
-      table.insert(find_command, "--no-ignore")
+      find_command[#find_command + 1] = "--no-ignore"
+    end
+    if no_ignore_parent then
+      find_command[#find_command + 1] = "--no-ignore-parent"
     end
     if follow then
-      table.insert(find_command, "-L")
+      find_command[#find_command + 1] = "-L"
+    end
+    if search_file then
+      if command == "rg" then
+        find_command[#find_command + 1] = "-g"
+        find_command[#find_command + 1] = "*" .. search_file .. "*"
+      else
+        find_command[#find_command + 1] = search_file
+      end
     end
     if search_dirs then
-      if command ~= "rg" then
-        table.insert(find_command, ".")
+      if command ~= "rg" and not search_file then
+        find_command[#find_command + 1] = "."
       end
-      for _, v in pairs(search_dirs) do
-        table.insert(find_command, v)
-      end
+      vim.list_extend(find_command, search_dirs)
     end
   elseif command == "find" then
     if not hidden then
@@ -216,8 +258,15 @@ files.find_files = function(opts)
     if no_ignore ~= nil then
       log.warn "The `no_ignore` key is not available for the `find` command in `find_files`."
     end
+    if no_ignore_parent ~= nil then
+      log.warn "The `no_ignore_parent` key is not available for the `find` command in `find_files`."
+    end
     if follow then
       table.insert(find_command, 2, "-L")
+    end
+    if search_file then
+      table.insert(find_command, "-name")
+      table.insert(find_command, "*" .. search_file .. "*")
     end
     if search_dirs then
       table.remove(find_command, 2)
@@ -232,11 +281,17 @@ files.find_files = function(opts)
     if no_ignore ~= nil then
       log.warn "The `no_ignore` key is not available for the Windows `where` command in `find_files`."
     end
+    if no_ignore_parent ~= nil then
+      log.warn "The `no_ignore_parent` key is not available for the Windows `where` command in `find_files`."
+    end
     if follow ~= nil then
       log.warn "The `follow` key is not available for the Windows `where` command in `find_files`."
     end
     if search_dirs ~= nil then
       log.warn "The `search_dirs` key is not available for the Windows `where` command in `find_files`."
+    end
+    if search_file ~= nil then
+      log.warn "The `search_file` key is not available for the Windows `where` command in `find_files`."
     end
   end
 
@@ -246,12 +301,14 @@ files.find_files = function(opts)
 
   opts.entry_maker = opts.entry_maker or make_entry.gen_from_file(opts)
 
-  pickers.new(opts, {
-    prompt_title = "Find Files",
-    finder = finders.new_oneshot_job(find_command, opts),
-    previewer = conf.file_previewer(opts),
-    sorter = conf.file_sorter(opts),
-  }):find()
+  pickers
+    .new(opts, {
+      prompt_title = "Find Files",
+      finder = finders.new_oneshot_job(find_command, opts),
+      previewer = conf.file_previewer(opts),
+      sorter = conf.file_sorter(opts),
+    })
+    :find()
 end
 
 local function prepare_match(entry, kind)
@@ -270,7 +327,7 @@ end
 
 --  TODO: finish docs for opts.show_line
 files.treesitter = function(opts)
-  opts.show_line = utils.get_default(opts.show_line, true)
+  opts.show_line = vim.F.if_nil(opts.show_line, true)
 
   local has_nvim_treesitter, _ = pcall(require, "nvim-treesitter")
   if not has_nvim_treesitter then
@@ -304,18 +361,20 @@ files.treesitter = function(opts)
     return
   end
 
-  pickers.new(opts, {
-    prompt_title = "Treesitter Symbols",
-    finder = finders.new_table {
-      results = results,
-      entry_maker = opts.entry_maker or make_entry.gen_from_treesitter(opts),
-    },
-    previewer = conf.grep_previewer(opts),
-    sorter = conf.prefilter_sorter {
-      tag = "kind",
-      sorter = conf.generic_sorter(opts),
-    },
-  }):find()
+  pickers
+    .new(opts, {
+      prompt_title = "Treesitter Symbols",
+      finder = finders.new_table {
+        results = results,
+        entry_maker = opts.entry_maker or make_entry.gen_from_treesitter(opts),
+      },
+      previewer = conf.grep_previewer(opts),
+      sorter = conf.prefilter_sorter {
+        tag = "kind",
+        sorter = conf.generic_sorter(opts),
+      },
+    })
+    :find()
 end
 
 files.current_buffer_fuzzy_find = function(opts)
@@ -356,8 +415,12 @@ files.current_buffer_fuzzy_find = function(opts)
         return obj
       end,
     })
+
+    -- update to changes on Neovim master, see https://github.com/neovim/neovim/pull/19931
+    -- TODO(clason): remove when dropping support for Neovim 0.7
+    local on_nvim_master = vim.fn.has "nvim-0.8" == 1
     for id, node in query:iter_captures(root, opts.bufnr, 0, -1) do
-      local hl = highlighter_query:_get_hl_from_capture(id)
+      local hl = on_nvim_master and query.captures[id] or highlighter_query:_get_hl_from_capture(id)
       if hl and type(hl) ~= "number" then
         local row1, col1, row2, col2 = node:range()
 
@@ -387,29 +450,34 @@ files.current_buffer_fuzzy_find = function(opts)
     opts.line_highlights = line_highlights
   end
 
-  pickers.new(opts, {
-    prompt_title = "Current Buffer Fuzzy",
-    finder = finders.new_table {
-      results = lines_with_numbers,
-      entry_maker = opts.entry_maker or make_entry.gen_from_buffer_lines(opts),
-    },
-    sorter = conf.generic_sorter(opts),
-    previewer = conf.grep_previewer(opts),
-    attach_mappings = function()
-      action_set.select:enhance {
-        post = function()
-          local selection = action_state.get_selected_entry()
-          vim.api.nvim_win_set_cursor(0, { selection.lnum, 0 })
-        end,
-      }
+  pickers
+    .new(opts, {
+      prompt_title = "Current Buffer Fuzzy",
+      finder = finders.new_table {
+        results = lines_with_numbers,
+        entry_maker = opts.entry_maker or make_entry.gen_from_buffer_lines(opts),
+      },
+      sorter = conf.generic_sorter(opts),
+      previewer = conf.grep_previewer(opts),
+      attach_mappings = function()
+        action_set.select:enhance {
+          post = function()
+            local selection = action_state.get_selected_entry()
+            vim.api.nvim_win_set_cursor(0, { selection.lnum, 0 })
+          end,
+        }
 
-      return true
-    end,
-  }):find()
+        return true
+      end,
+    })
+    :find()
 end
 
 files.tags = function(opts)
   local tagfiles = opts.ctags_file and { opts.ctags_file } or vim.fn.tagfiles()
+  for i, ctags_file in ipairs(tagfiles) do
+    tagfiles[i] = vim.fn.expand(ctags_file, true)
+  end
   if vim.tbl_isempty(tagfiles) then
     utils.notify("builtin.tags", {
       msg = "No tags file found. Create one with ctags -R",
@@ -417,46 +485,42 @@ files.tags = function(opts)
     })
     return
   end
+  opts.entry_maker = vim.F.if_nil(opts.entry_maker, make_entry.gen_from_ctags(opts))
 
-  local results = {}
-  for _, ctags_file in ipairs(tagfiles) do
-    for line in Path:new(vim.fn.expand(ctags_file, true)):iter() do
-      results[#results + 1] = line
-    end
-  end
+  pickers
+    .new(opts, {
+      prompt_title = "Tags",
+      finder = finders.new_oneshot_job(flatten { "cat", tagfiles }, opts),
+      previewer = previewers.ctags.new(opts),
+      sorter = conf.generic_sorter(opts),
+      attach_mappings = function()
+        action_set.select:enhance {
+          post = function()
+            local selection = action_state.get_selected_entry()
+            if not selection then
+              return
+            end
 
-  pickers.new(opts, {
-    prompt_title = "Tags",
-    finder = finders.new_table {
-      results = results,
-      entry_maker = opts.entry_maker or make_entry.gen_from_ctags(opts),
-    },
-    previewer = previewers.ctags.new(opts),
-    sorter = conf.generic_sorter(opts),
-    attach_mappings = function()
-      action_set.select:enhance {
-        post = function()
-          local selection = action_state.get_selected_entry()
+            if selection.scode then
+              -- un-escape / then escape required
+              -- special chars for vim.fn.search()
+              -- ] ~ *
+              local scode = selection.scode:gsub([[\/]], "/"):gsub("[%]~*]", function(x)
+                return "\\" .. x
+              end)
 
-          if selection.scode then
-            -- un-escape / then escape required
-            -- special chars for vim.fn.search()
-            -- ] ~ *
-            local scode = selection.scode:gsub([[\/]], "/"):gsub("[%]~*]", function(x)
-              return "\\" .. x
-            end)
-
-            vim.cmd "norm! gg"
-            vim.fn.search(scode)
-            vim.cmd "norm! zz"
-          else
-            vim.api.nvim_win_set_cursor(0, { selection.lnum, 0 })
-          end
-        end,
-      }
-      return true
-    end,
-  }):find()
+              vim.cmd "norm! gg"
+              vim.fn.search(scode)
+              vim.cmd "norm! zz"
+            else
+              vim.api.nvim_win_set_cursor(0, { selection.lnum, 0 })
+            end
+          end,
+        }
+        return true
+      end,
+    })
+    :find()
 end
 
 files.current_buffer_tags = function(opts)

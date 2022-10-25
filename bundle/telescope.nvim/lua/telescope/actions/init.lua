@@ -54,7 +54,7 @@
 
 local a = vim.api
 
-local config = require "telescope.config"
+local conf = require("telescope.config").values
 local state = require "telescope.state"
 local utils = require "telescope.utils"
 local popup = require "plenary.popup"
@@ -242,10 +242,9 @@ end
 ---@param prompt_bufnr number: The prompt bufnr
 actions.select_default = {
   pre = function(prompt_bufnr)
-    action_state.get_current_history():append(
-      action_state.get_current_line(),
-      action_state.get_current_picker(prompt_bufnr)
-    )
+    action_state
+      .get_current_history()
+      :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
   end,
   action = function(prompt_bufnr)
     return action_set.select(prompt_bufnr, "default")
@@ -259,10 +258,9 @@ actions.select_default = {
 ---@param prompt_bufnr number: The prompt bufnr
 actions.select_horizontal = {
   pre = function(prompt_bufnr)
-    action_state.get_current_history():append(
-      action_state.get_current_line(),
-      action_state.get_current_picker(prompt_bufnr)
-    )
+    action_state
+      .get_current_history()
+      :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
   end,
   action = function(prompt_bufnr)
     return action_set.select(prompt_bufnr, "horizontal")
@@ -276,10 +274,9 @@ actions.select_horizontal = {
 ---@param prompt_bufnr number: The prompt bufnr
 actions.select_vertical = {
   pre = function(prompt_bufnr)
-    action_state.get_current_history():append(
-      action_state.get_current_line(),
-      action_state.get_current_picker(prompt_bufnr)
-    )
+    action_state
+      .get_current_history()
+      :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
   end,
   action = function(prompt_bufnr)
     return action_set.select(prompt_bufnr, "vertical")
@@ -293,13 +290,44 @@ actions.select_vertical = {
 ---@param prompt_bufnr number: The prompt bufnr
 actions.select_tab = {
   pre = function(prompt_bufnr)
-    action_state.get_current_history():append(
-      action_state.get_current_line(),
-      action_state.get_current_picker(prompt_bufnr)
-    )
+    action_state
+      .get_current_history()
+      :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
   end,
   action = function(prompt_bufnr)
     return action_set.select(prompt_bufnr, "tab")
+  end,
+}
+
+--- Perform 'drop' action on selection, usually something like<br>
+---`:drop <selection>`
+---
+--- i.e. open the selection in a window
+---@param prompt_bufnr number: The prompt bufnr
+actions.select_drop = {
+  pre = function(prompt_bufnr)
+    action_state
+      .get_current_history()
+      :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
+  end,
+  action = function(prompt_bufnr)
+    return action_set.select(prompt_bufnr, "drop")
+  end,
+}
+
+--- Perform 'tab drop' action on selection, usually something like<br>
+---`:tab drop <selection>`
+---
+--- i.e. open the selection in a new tab
+---@param prompt_bufnr number: The prompt bufnr
+actions.select_tab_drop = {
+  pre = function(prompt_bufnr)
+    action_state
+      .get_current_history()
+      :append(action_state.get_current_line(), action_state.get_current_picker(prompt_bufnr))
+  end,
+  action = function(prompt_bufnr)
+    return action_set.select(prompt_bufnr, "tab drop")
   end,
 }
 
@@ -343,14 +371,17 @@ end
 --- Close the Telescope window, usually used within an action
 ---@param prompt_bufnr number: The prompt bufnr
 actions.close = function(prompt_bufnr)
-  action_state.get_current_history():reset()
   local picker = action_state.get_current_picker(prompt_bufnr)
   local original_win_id = picker.original_win_id
+  local cursor_valid, original_cursor = pcall(a.nvim_win_get_cursor, original_win_id)
 
   actions.close_pum(prompt_bufnr)
 
   require("telescope.pickers").on_close_prompt(prompt_bufnr)
   pcall(a.nvim_set_current_win, original_win_id)
+  if cursor_valid and a.nvim_get_mode().mode == "i" and picker._original_mode ~= "i" then
+    pcall(a.nvim_win_set_cursor, original_win_id, { original_cursor[1], original_cursor[2] + 1 })
+  end
 end
 
 --- Close the Telescope window, usually used within an action<br>
@@ -428,6 +459,8 @@ actions.edit_register = function(prompt_bufnr)
 end
 
 --- Paste the selected register into the buffer
+---
+--- Note: only meant to be used inside builtin.registers
 ---@param prompt_bufnr number: The prompt bufnr
 actions.paste_register = function(prompt_bufnr)
   local selection = action_state.get_selected_entry()
@@ -559,6 +592,7 @@ actions.git_checkout = function(prompt_bufnr)
       msg = string.format("Checked out: %s", selection.value),
       level = "INFO",
     })
+    vim.cmd "checktime"
   else
     utils.notify("actions.git_checkout", {
       msg = string.format(
@@ -601,7 +635,7 @@ actions.git_switch_branch = function(prompt_bufnr)
         selection.value,
         table.concat(stderr, " ")
       ),
-      level = "ERORR",
+      level = "ERROR",
     })
   end
 end
@@ -748,6 +782,7 @@ actions.git_checkout_current_buffer = function(prompt_bufnr)
   end
   actions.close(prompt_bufnr)
   utils.get_os_command_output({ "git", "checkout", selection.value, "--", selection.file }, cwd)
+  vim.cmd "checktime"
 end
 
 --- Stage/unstage selected file
@@ -1017,7 +1052,9 @@ end
 actions.delete_buffer = function(prompt_bufnr)
   local current_picker = action_state.get_current_picker(prompt_bufnr)
   current_picker:delete_selection(function(selection)
-    vim.api.nvim_buf_delete(selection.bufnr, { force = false })
+    local force = vim.api.nvim_buf_get_option(selection.bufnr, "buftype") == "terminal"
+    local ok = pcall(vim.api.nvim_buf_delete, selection.bufnr, { force = force })
+    return ok
   end)
 end
 
@@ -1056,22 +1093,22 @@ end
 ---@param prompt_bufnr number: The prompt bufnr
 actions.which_key = function(prompt_bufnr, opts)
   opts = opts or {}
-  opts.max_height = utils.get_default(opts.max_height, 0.4)
-  opts.only_show_current_mode = utils.get_default(opts.only_show_current_mode, true)
-  opts.mode_width = utils.get_default(opts.mode_width, 1)
-  opts.keybind_width = utils.get_default(opts.keybind_width, 7)
-  opts.name_width = utils.get_default(opts.name_width, 30)
-  opts.line_padding = utils.get_default(opts.line_padding, 1)
-  opts.separator = utils.get_default(opts.separator, " -> ")
-  opts.close_with_action = utils.get_default(opts.close_with_action, true)
-  opts.normal_hl = utils.get_default(opts.normal_hl, "TelescopePrompt")
-  opts.border_hl = utils.get_default(opts.border_hl, "TelescopePromptBorder")
-  opts.winblend = utils.get_default(opts.winblend, config.values.winblend)
-  opts.column_padding = utils.get_default(opts.column_padding, "  ")
+  opts.max_height = vim.F.if_nil(opts.max_height, 0.4)
+  opts.only_show_current_mode = vim.F.if_nil(opts.only_show_current_mode, true)
+  opts.mode_width = vim.F.if_nil(opts.mode_width, 1)
+  opts.keybind_width = vim.F.if_nil(opts.keybind_width, 7)
+  opts.name_width = vim.F.if_nil(opts.name_width, 30)
+  opts.line_padding = vim.F.if_nil(opts.line_padding, 1)
+  opts.separator = vim.F.if_nil(opts.separator, " -> ")
+  opts.close_with_action = vim.F.if_nil(opts.close_with_action, true)
+  opts.normal_hl = vim.F.if_nil(opts.normal_hl, "TelescopePrompt")
+  opts.border_hl = vim.F.if_nil(opts.border_hl, "TelescopePromptBorder")
+  opts.winblend = vim.F.if_nil(opts.winblend, conf.winblend)
+  opts.column_padding = vim.F.if_nil(opts.column_padding, "  ")
 
   -- Assigning into 'opts.column_indent' would override a number with a string and
   -- cause issues with subsequent calls, keep a local copy of the string instead
-  local column_indent = table.concat(utils.repeated_table(utils.get_default(opts.column_indent, 4), " "))
+  local column_indent = table.concat(utils.repeated_table(vim.F.if_nil(opts.column_indent, 4), " "))
 
   -- close on repeated keypress
   local km_bufs = (function()
@@ -1100,7 +1137,7 @@ actions.which_key = function(prompt_bufnr, opts)
   local displayer = entry_display.create {
     separator = opts.separator,
     items = {
-      { width = opts.mode_with },
+      { width = opts.mode_width },
       { width = opts.keybind_width },
       { width = opts.name_width },
     },
@@ -1108,9 +1145,9 @@ actions.which_key = function(prompt_bufnr, opts)
 
   local make_display = function(mapping)
     return displayer {
-      { mapping.mode, utils.get_default(opts.mode_hl, "TelescopeResultsConstant") },
-      { mapping.keybind, utils.get_default(opts.keybind_hl, "TelescopeResultsVariable") },
-      { mapping.name, utils.get_default(opts.name_hl, "TelescopeResultsFunction") },
+      { mapping.mode, vim.F.if_nil(opts.mode_hl, "TelescopeResultsConstant") },
+      { mapping.keybind, vim.F.if_nil(opts.keybind_hl, "TelescopeResultsVariable") },
+      { mapping.name, vim.F.if_nil(opts.name_hl, "TelescopeResultsFunction") },
     }
   end
 
@@ -1125,7 +1162,7 @@ actions.which_key = function(prompt_bufnr, opts)
           name = name == "" and action or name .. " + " .. action
         end
       end
-      if name and name ~= "which_key" then
+      if name and name ~= "which_key" and name ~= "nop" then
         if not opts.only_show_current_mode or mode == v.mode then
           table.insert(mappings, { mode = v.mode, keybind = v.keybind, name = name })
         end
@@ -1168,10 +1205,8 @@ actions.which_key = function(prompt_bufnr, opts)
     + opts.name_width
     + (3 * #opts.separator)
   local num_total_columns = math.floor((vim.o.columns - #column_indent) / entry_width)
-  opts.num_rows = math.min(
-    math.ceil(#mappings / num_total_columns),
-    resolver.resolve_height(opts.max_height)(_, _, vim.o.lines)
-  )
+  opts.num_rows =
+    math.min(math.ceil(#mappings / num_total_columns), resolver.resolve_height(opts.max_height)(_, _, vim.o.lines))
   local total_available_entries = opts.num_rows * num_total_columns
   local winheight = opts.num_rows + 2 * opts.line_padding
 
@@ -1265,6 +1300,30 @@ actions.which_key = function(prompt_bufnr, opts)
     end)
   end
 end
+
+--- Move from a none fuzzy search to a fuzzy one<br>
+--- This action is meant to be used in live_grep and lsp_dynamic_workspace_symbols
+---@param prompt_bufnr number: The prompt bufnr
+actions.to_fuzzy_refine = function(prompt_bufnr)
+  local line = action_state.get_current_line()
+  local prefix = (function()
+    local title = action_state.get_current_picker(prompt_bufnr).prompt_title
+    if title == "Live Grep" then
+      return "Find Word"
+    elseif title == "LSP Dynamic Workspace Symbols" then
+      return "LSP Workspace Symbols"
+    else
+      return "Fuzzy over"
+    end
+  end)()
+
+  require("telescope.actions.generate").refine(prompt_bufnr, {
+    prompt_title = string.format("%s (%s)", prefix, line),
+    sorter = conf.generic_sorter {},
+  })
+end
+
+actions.nop = function(_) end
 
 -- ==================================================
 -- Transforms modules and sets the correct metatables.

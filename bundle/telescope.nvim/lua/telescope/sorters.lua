@@ -291,17 +291,17 @@ sorters.get_fuzzy_file = function(opts)
       end
 
       local denominator = (
-          (10 * match_count / #prompt_lower_ngrams)
-          -- biases for shorter strings
-          + 3 * match_count * ngram_len / #line
-          + consecutive_matches
-          + N / (contains_string or (2 * #line))
-          -- + 30/(c1 or 2*N)
-          -- TODO: It might be possible that this too strongly correlates,
-          --          but it's unlikely for people to type capital letters without actually
-          --          wanting to do something with a capital letter in it.
-          + uppers_matching
-        ) * tail_modifier
+        (10 * match_count / #prompt_lower_ngrams)
+        -- biases for shorter strings
+        + 3 * match_count * ngram_len / #line
+        + consecutive_matches
+        + N / (contains_string or (2 * #line))
+        -- + 30/(c1 or 2*N)
+        -- TODO: It might be possible that this too strongly correlates,
+        --          but it's unlikely for people to type capital letters without actually
+        --          wanting to do something with a capital letter in it.
+        + uppers_matching
+      ) * tail_modifier
 
       if denominator == 0 or denominator ~= denominator then
         return -1
@@ -430,6 +430,7 @@ sorters.fuzzy_with_index_bias = function(opts)
         return math.min(math.pow(entry.index, 0.25), 2) * base_score
       end
     end,
+    highlighter = fuzzy_sorter.highlighter,
   }
 end
 
@@ -602,7 +603,7 @@ end
 
 sorters.prefilter = function(opts)
   local sorter = opts.sorter
-  opts.delimiter = util.get_default(opts.delimiter, ":")
+  opts.delimiter = vim.F.if_nil(opts.delimiter, ":")
   sorter._delimiter = opts.delimiter
   sorter.tags = create_tag_set(opts.tag)
   sorter.filter_function = filter_function(opts)

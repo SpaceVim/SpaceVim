@@ -1,3 +1,40 @@
+---@tag telescope.make_entry
+
+---@brief [[
+---
+--- Each picker has a finder made up of two parts, the results which are the
+--- data to be displayed, and the entry_maker. These entry_makers are functions
+--- returned from make_entry functions. These will be referrd to as
+--- entry_makers in the following documentation.
+---
+--- Every entry maker returns a function which accepts the data to be used for
+--- an entry. This function will return an entry table (or nil, meaning skip
+--- this entry) which contains of the - following important keys:
+--- - value any: value key can be anything but still required
+--- - valid bool: is an optional key because it defaults to true but if the key
+---   is set to false it will not be displayed by the picker. (optional)
+--- - ordinal string: is the text that is used for filtering (required)
+--- - display string|function: is either a string of the text that is being
+---   displayed or a function receiving the entry at a later stage, when the entry
+---   is actually being displayed. A function can be useful here if complex
+---   calculation have to be done. `make_entry` can also return a second value
+---   a highlight array which will then apply to the line. Highlight entry in
+---   this array has the following signature `{ { start_col, end_col }, hl_group }`
+---   (required).
+--- - filename string: will be interpreted by the default `<cr>` action as
+---   open this file (optional)
+--- - bufnr number: will be interpreted by the default `<cr>` action as open
+---   this buffer (optional)
+--- - lnum number: lnum value which will be interpreted by the default `<cr>`
+---   action as a jump to this line (optional)
+--- - col number: col value which will be interpreted by the default `<cr>`
+---   action as a jump to this column (optional)
+---
+--- More information on easier displaying, see |telescope.pickers.entry_display|
+---
+--- TODO: Document something we call `entry_index`
+---@brief ]]
+
 local entry_display = require "telescope.pickers.entry_display"
 local utils = require "telescope.utils"
 local strings = require "plenary.strings"
@@ -26,7 +63,54 @@ local lsp_type_highlight = {
   ["Variable"] = "TelescopeResultsVariable",
 }
 
+local get_filename_fn = function()
+  local bufnr_name_cache = {}
+  return function(bufnr)
+    bufnr = vim.F.if_nil(bufnr, 0)
+    local c = bufnr_name_cache[bufnr]
+    if c then
+      return c
+    end
+
+    local n = vim.api.nvim_buf_get_name(bufnr)
+    bufnr_name_cache[bufnr] = n
+    return n
+  end
+end
+
+local handle_entry_index = function(opts, t, k)
+  local override = ((opts or {}).entry_index or {})[k]
+  if not override then
+    return
+  end
+
+  local val, save = override(t, opts)
+  if save then
+    rawset(t, k, val)
+  end
+  return val
+end
+
 local make_entry = {}
+
+make_entry.set_default_entry_mt = function(tbl, opts)
+  return setmetatable({}, {
+    __index = function(t, k)
+      local override = handle_entry_index(opts, t, k)
+      if override then
+        return override
+      end
+
+      -- Only hit tbl once
+      local val = tbl[k]
+      if val then
+        rawset(t, k, val)
+      end
+
+      return val
+    end,
+  })
+end
 
 do
   local lookup_keys = {
@@ -35,13 +119,18 @@ do
     value = 1,
   }
 
-  local mt_string_entry = {
-    __index = function(t, k)
-      return rawget(t, rawget(lookup_keys, k))
-    end,
-  }
+  function make_entry.gen_from_string(opts)
+    local mt_string_entry = {
+      __index = function(t, k)
+        local override = handle_entry_index(opts, t, k)
+        if override then
+          return override
+        end
 
-  function make_entry.gen_from_string()
+        return rawget(t, rawget(lookup_keys, k))
+      end,
+    }
+
     return function(line)
       return setmetatable({
         line,
@@ -82,6 +171,11 @@ do
     end
 
     mt_file_entry.__index = function(t, k)
+      local override = handle_entry_index(opts, t, k)
+      if override then
+        return override
+      end
+
       local raw = rawget(mt_file_entry, k)
       if raw then
         return raw
@@ -111,7 +205,7 @@ do
   }
 
   -- Gets called only once to parse everything out for the vimgrep, after that looks up directly.
-  local parse = function(t)
+  local parse_with_col = function(t)
     local _, _, filename, lnum, col, text = string.find(t.value, [[(..-):(%d+):(%d+):(.*)]])
 
     local ok
@@ -133,13 +227,31 @@ do
     return { filename, lnum, col, text }
   end
 
-  --- Special options:
-  ---  - disable_coordinates: Don't show the line & row numbers
-  ---  - only_sort_text: Only sort via the text. Ignore filename and other items
-  function make_entry.gen_from_vimgrep(opts)
-    local mt_vimgrep_entry
+  local parse_without_col = function(t)
+    local _, _, filename, lnum, text = string.find(t.value, [[(..-):(%d+):(.*)]])
 
+    local ok
+    ok, lnum = pcall(tonumber, lnum)
+    if not ok then
+      lnum = nil
+    end
+
+    t.filename = filename
+    t.lnum = lnum
+    t.col = nil
+    t.text = text
+
+    return { filename, lnum, nil, text }
+  end
+
+  function make_entry.gen_from_vimgrep(opts)
     opts = opts or {}
+
+    local mt_vimgrep_entry
+    local parse = parse_with_col
+    if opts.__inverted == true then
+      parse = parse_without_col
+    end
 
     local disable_devicons = opts.disable_devicons
     local disable_coordinates = opts.disable_coordinates
@@ -188,7 +300,11 @@ do
 
         local coordinates = ""
         if not disable_coordinates then
-          coordinates = string.format("%s:%s:", entry.lnum, entry.col)
+          if entry.col then
+            coordinates = string.format("%s:%s:", entry.lnum, entry.col)
+          else
+            coordinates = string.format("%s:", entry.lnum)
+          end
         end
 
         local display, hl_group = utils.transform_devicons(
@@ -205,6 +321,11 @@ do
       end,
 
       __index = function(t, k)
+        local override = handle_entry_index(opts, t, k)
+        if override then
+          return override
+        end
+
         local raw = rawget(mt_vimgrep_entry, k)
         if raw then
           return raw
@@ -257,13 +378,13 @@ function make_entry.gen_from_git_stash(opts)
     local _, branch_name = string.match(splitted[2], "^([WIP on|On]+) (.+)")
     local commit_info = splitted[3]
 
-    return {
+    return make_entry.set_default_entry_mt({
       value = stash_idx,
       ordinal = commit_info,
       branch_name = branch_name,
       commit_info = commit_info,
       display = make_display,
-    }
+    }, opts)
   end
 end
 
@@ -297,52 +418,61 @@ function make_entry.gen_from_git_commits(opts)
       msg = "<empty commit message>"
     end
 
-    return {
+    return make_entry.set_default_entry_mt({
       value = sha,
       ordinal = sha .. " " .. msg,
       msg = msg,
       display = make_display,
       current_file = opts.current_file,
-    }
+    }, opts)
   end
 end
 
 function make_entry.gen_from_quickfix(opts)
   opts = opts or {}
+  local show_line = vim.F.if_nil(opts.show_line, true)
 
-  local displayer = entry_display.create {
-    separator = "▏",
-    items = {
-      { width = 8 },
-      { width = 0.45 },
-      { remaining = true },
-    },
+  local hidden = utils.is_path_hidden(opts)
+  local items = {
+    { width = vim.F.if_nil(opts.fname_width, 30) },
+    { remaining = true },
   }
-
-  local make_display = function(entry)
-    local filename = utils.transform_path(opts, entry.filename)
-
-    local line_info = { table.concat({ entry.lnum, entry.col }, ":"), "TelescopeResultsLineNr" }
-
-    if opts.trim_text then
-      entry.text = entry.text:gsub("^%s*(.-)%s*$", "%1")
-    end
-
-    return displayer {
-      line_info,
-      entry.text:gsub(".* | ", ""),
-      filename,
-    }
+  if hidden then
+    items[1] = { width = 8 }
+  end
+  if not show_line then
+    table.remove(items, 1)
   end
 
+  local displayer = entry_display.create { separator = "▏", items = items }
+
+  local make_display = function(entry)
+    local input = {}
+    if not hidden then
+      table.insert(input, string.format("%s:%d:%d", utils.transform_path(opts, entry.filename), entry.lnum, entry.col))
+    else
+      table.insert(input, string.format("%4d:%2d", entry.lnum, entry.col))
+    end
+
+    if show_line then
+      local text = entry.text
+      if opts.trim_text then
+        text = text:gsub("^%s*(.-)%s*$", "%1")
+      end
+      text = text:gsub(".* | ", "")
+      table.insert(input, text)
+    end
+
+    return displayer(input)
+  end
+
+  local get_filename = get_filename_fn()
   return function(entry)
-    local filename = entry.filename or vim.api.nvim_buf_get_name(entry.bufnr)
+    local filename = vim.F.if_nil(entry.filename, get_filename(entry.bufnr))
 
-    return {
-      valid = true,
-
+    return make_entry.set_default_entry_mt({
       value = entry,
-      ordinal = (not opts.ignore_filename and filename or "") .. " " .. entry.text,
+      ordinal = (not hidden and filename or "") .. " " .. entry.text,
       display = make_display,
 
       bufnr = entry.bufnr,
@@ -352,7 +482,7 @@ function make_entry.gen_from_quickfix(opts)
       text = entry.text,
       start = entry.start,
       finish = entry.finish,
-    }
+    }, opts)
   end
 end
 
@@ -361,14 +491,22 @@ function make_entry.gen_from_lsp_symbols(opts)
 
   local bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
 
+  -- Default we have two columns, symbol and type(unbound)
+  -- If path is not hidden then its, filepath, symbol and type(still unbound)
+  -- If show_line is also set, type is bound to len 8
   local display_items = {
-    { width = opts.symbol_width or 25 }, -- symbol
-    { width = opts.symbol_type_width or 8 }, -- symbol type
-    { remaining = true }, -- filename{:optional_lnum+col} OR content preview
+    { width = opts.symbol_width or 25 },
+    { remaining = true },
   }
 
-  if opts.ignore_filename and opts.show_line then
-    table.insert(display_items, 2, { width = 6 })
+  local hidden = utils.is_path_hidden(opts)
+  if not hidden then
+    table.insert(display_items, 1, { width = vim.F.if_nil(opts.fname_width, 30) })
+  end
+
+  if opts.show_line then
+    -- bound type to len 8 or custom
+    table.insert(display_items, #display_items, { width = opts.symbol_type_width or 8 })
   end
 
   local displayer = entry_display.create {
@@ -376,51 +514,42 @@ function make_entry.gen_from_lsp_symbols(opts)
     hl_chars = { ["["] = "TelescopeBorder", ["]"] = "TelescopeBorder" },
     items = display_items,
   }
+  local type_highlight = vim.F.if_nil(opts.symbol_highlights or lsp_type_highlight)
 
   local make_display = function(entry)
     local msg
 
-    -- what to show in the last column: filename or symbol information
-    if opts.ignore_filename then -- ignore the filename and show line preview instead
-      -- TODO: fixme - if ignore_filename is set for workspace, bufnr will be incorrect
-      msg = vim.api.nvim_buf_get_lines(bufnr, entry.lnum - 1, entry.lnum, false)[1] or ""
-      msg = vim.trim(msg)
+    if opts.show_line then
+      msg = vim.trim(vim.F.if_nil(vim.api.nvim_buf_get_lines(bufnr, entry.lnum - 1, entry.lnum, false)[1], ""))
+    end
+
+    if hidden then
+      return displayer {
+        entry.symbol_name,
+        { entry.symbol_type:lower(), type_highlight[entry.symbol_type] },
+        msg,
+      }
     else
-      local filename = utils.transform_path(opts, entry.filename)
-
-      if opts.show_line then -- show inline line info
-        filename = filename .. " [" .. entry.lnum .. ":" .. entry.col .. "]"
-      end
-      msg = filename
+      return displayer {
+        utils.transform_path(opts, entry.filename),
+        entry.symbol_name,
+        { entry.symbol_type:lower(), type_highlight[entry.symbol_type] },
+        msg,
+      }
     end
-
-    local type_highlight = opts.symbol_highlights or lsp_type_highlight
-    local display_columns = {
-      entry.symbol_name,
-      { entry.symbol_type:lower(), type_highlight[entry.symbol_type], type_highlight[entry.symbol_type] },
-      msg,
-    }
-
-    if opts.ignore_filename and opts.show_line then
-      table.insert(display_columns, 2, { entry.lnum .. ":" .. entry.col, "TelescopeResultsLineNr" })
-    end
-
-    return displayer(display_columns)
   end
 
+  local get_filename = get_filename_fn()
   return function(entry)
-    local filename = entry.filename or vim.api.nvim_buf_get_name(entry.bufnr)
+    local filename = vim.F.if_nil(entry.filename, get_filename(entry.bufnr))
     local symbol_msg = entry.text
     local symbol_type, symbol_name = symbol_msg:match "%[(.+)%]%s+(.*)"
-
     local ordinal = ""
-    if not opts.ignore_filename and filename then
+    if not hidden and filename then
       ordinal = filename .. " "
     end
     ordinal = ordinal .. symbol_name .. " " .. (symbol_type or "unknown")
-    return {
-      valid = true,
-
+    return make_entry.set_default_entry_mt({
       value = entry,
       ordinal = ordinal,
       display = make_display,
@@ -432,7 +561,7 @@ function make_entry.gen_from_lsp_symbols(opts)
       symbol_type = symbol_type,
       start = entry.start,
       finish = entry.finish,
-    }
+    }, opts)
   end
 end
 
@@ -460,8 +589,9 @@ function make_entry.gen_from_buffer(opts)
   local cwd = vim.fn.expand(opts.cwd or vim.loop.cwd())
 
   local make_display = function(entry)
+    -- bufnr_width + modes + icon + 3 spaces + : + lnum
+    opts.__prefix = opts.bufnr_width + 4 + icon_width + 3 + 1 + #tostring(entry.lnum)
     local display_bufname = utils.transform_path(opts, entry.filename)
-
     local icon, hl_group = utils.get_devicons(entry.filename, disable_devicons)
 
     return displayer {
@@ -483,9 +613,7 @@ function make_entry.gen_from_buffer(opts)
     local indicator = entry.flag .. hidden .. readonly .. changed
     local line_count = vim.api.nvim_buf_line_count(entry.bufnr)
 
-    return {
-      valid = true,
-
+    return make_entry.set_default_entry_mt({
       value = bufname,
       ordinal = entry.bufnr .. " : " .. bufname,
       display = make_display,
@@ -495,7 +623,7 @@ function make_entry.gen_from_buffer(opts)
       -- account for potentially stale lnum as getbufinfo might not be updated or from resuming buffers picker
       lnum = entry.info.lnum ~= 0 and math.max(math.min(entry.info.lnum, line_count), 1) or 1,
       indicator = indicator,
-    }
+    }, opts)
   end
 end
 
@@ -537,13 +665,12 @@ function make_entry.gen_from_treesitter(opts)
     return displayer(display_columns)
   end
 
+  local get_filename = get_filename_fn()
   return function(entry)
     local ts_utils = require "nvim-treesitter.ts_utils"
     local start_row, start_col, end_row, _ = ts_utils.get_node_range(entry.node)
     local node_text = vim.treesitter.get_node_text(entry.node, bufnr)
-    return {
-      valid = true,
-
+    return make_entry.set_default_entry_mt({
       value = entry.node,
       kind = entry.kind,
       ordinal = node_text .. " " .. (entry.kind or "unknown"),
@@ -551,14 +678,14 @@ function make_entry.gen_from_treesitter(opts)
 
       node_text = node_text,
 
-      filename = vim.api.nvim_buf_get_name(bufnr),
+      filename = get_filename(bufnr),
       -- need to add one since the previewer substacts one
       lnum = start_row + 1,
       col = start_col,
       text = node_text,
       start = start_row,
       finish = end_row,
-    }
+    }, opts)
   end
 end
 
@@ -573,14 +700,12 @@ function make_entry.gen_from_packages(opts)
   end
 
   return function(module_name)
-    local entry = {
+    return make_entry.set_default_entry_mt({
       valid = module_name ~= "",
       value = module_name,
       ordinal = module_name,
-    }
-    entry.display = make_display(module_name)
-
-    return entry
+      display = make_display(module_name),
+    }, opts)
   end
 end
 
@@ -622,38 +747,33 @@ function make_entry.gen_from_apropos(opts)
     cmd = vim.split(cmd, ",")[1]
     return keyword
         and sections[section]
-        and {
+        and make_entry.set_default_entry_mt({
           value = cmd,
           description = desc,
           ordinal = cmd,
           display = make_display,
           section = section,
           keyword = keyword,
-        }
+        }, opts)
       or nil
   end
 end
 
-function make_entry.gen_from_marks(_)
-  return function(line)
-    local split_value = utils.max_split(line, "%s+", 4)
-
-    local mark_value = split_value[1]
-    local cursor_position = vim.fn.getpos("'" .. mark_value)
-
-    return {
-      value = line,
-      ordinal = line,
-      display = line,
-      lnum = cursor_position[2],
-      col = cursor_position[3],
-      start = cursor_position[2],
-      filename = vim.api.nvim_buf_get_name(cursor_position[1]),
-    }
+function make_entry.gen_from_marks(opts)
+  return function(item)
+    return make_entry.set_default_entry_mt({
+      value = item.line,
+      ordinal = item.line,
+      display = item.line,
+      lnum = item.lnum,
+      col = item.col,
+      start = item.lnum,
+      filename = item.filename,
+    }, opts)
   end
 end
 
-function make_entry.gen_from_registers(_)
+function make_entry.gen_from_registers(opts)
   local displayer = entry_display.create {
     separator = " ",
     hl_chars = { ["["] = "TelescopeBorder", ["]"] = "TelescopeBorder" },
@@ -672,13 +792,13 @@ function make_entry.gen_from_registers(_)
   end
 
   return function(entry)
-    return {
-      valid = true,
+    local contents = vim.fn.getreg(entry)
+    return make_entry.set_default_entry_mt({
       value = entry,
-      ordinal = entry,
-      content = vim.fn.getreg(entry),
+      ordinal = string.format("%s %s", entry, contents),
+      content = contents,
       display = make_display,
-    }
+    }, opts)
   end
 end
 
@@ -711,7 +831,7 @@ function make_entry.gen_from_keymaps(opts)
   end
 
   return function(entry)
-    return {
+    return make_entry.set_default_entry_mt({
       mode = entry.mode,
       lhs = get_lhs(entry),
       desc = get_desc(entry),
@@ -720,22 +840,22 @@ function make_entry.gen_from_keymaps(opts)
       value = entry,
       ordinal = entry.mode .. " " .. get_lhs(entry) .. " " .. get_desc(entry),
       display = make_display,
-    }
+    }, opts)
   end
 end
 
-function make_entry.gen_from_highlights()
+function make_entry.gen_from_highlights(opts)
   local make_display = function(entry)
     local display = entry.value
     return display, { { { 0, #display }, display } }
   end
 
   return function(entry)
-    return {
+    return make_entry.set_default_entry_mt({
       value = entry,
       display = make_display,
       ordinal = entry,
-    }
+    }, opts)
   end
 end
 
@@ -756,12 +876,12 @@ function make_entry.gen_from_picker(opts)
   end
 
   return function(entry)
-    return {
+    return make_entry.set_default_entry_mt({
       value = entry,
       text = entry.prompt_title,
-      ordinal = string.format("%s %s", entry.prompt_title, utils.get_default(entry.default_text, "")),
+      ordinal = string.format("%s %s", entry.prompt_title, vim.F.if_nil(entry.default_text, "")),
       display = make_display,
-    }
+    }, opts)
   end
 end
 
@@ -804,117 +924,61 @@ function make_entry.gen_from_buffer_lines(opts)
       return
     end
 
-    return {
-      valid = true,
+    return make_entry.set_default_entry_mt({
       ordinal = entry.text,
       display = make_display,
       filename = entry.filename,
       lnum = entry.lnum,
       text = entry.text,
-    }
+    }, opts)
   end
 end
 
-function make_entry.gen_from_vimoptions()
-  local process_one_opt = function(o)
-    local ok, value_origin
-
-    local option = {
-      name = "",
-      description = "",
-      current_value = "",
-      default_value = "",
-      value_type = "",
-      set_by_user = false,
-      last_set_from = "",
-    }
-
-    local is_global = false
-    for _, v in ipairs(o.scope) do
-      if v == "global" then
-        is_global = true
-      end
-    end
-
-    if not is_global then
-      return
-    end
-
-    if is_global then
-      option.name = o.full_name
-
-      ok, option.current_value = pcall(vim.api.nvim_get_option, o.full_name)
-      if not ok then
-        return
-      end
-
-      local str_funcname = o.short_desc()
-      option.description = assert(loadstring(str_funcname))()
-      -- if #option.description > opts.desc_col_length then
-      --   opts.desc_col_length = #option.description
-      -- end
-
-      if o.defaults ~= nil then
-        option.default_value = o.defaults.if_true.vim or o.defaults.if_true.vi
-      end
-
-      if type(option.default_value) == "function" then
-        option.default_value = "Macro: " .. option.default_value()
-      end
-
-      option.value_type = (type(option.current_value) == "boolean" and "bool" or type(option.current_value))
-
-      if option.current_value ~= option.default_value then
-        option.set_by_user = true
-        value_origin = vim.fn.execute("verbose set " .. o.full_name .. "?")
-        if string.match(value_origin, "Last set from") then
-          -- TODO: parse file and line number as separate items
-          option.last_set_from = value_origin:gsub("^.*Last set from ", "")
-        end
-      end
-
-      return option
-    end
-  end
-
+function make_entry.gen_from_vimoptions(opts)
   local displayer = entry_display.create {
     separator = "",
     hl_chars = { ["["] = "TelescopeBorder", ["]"] = "TelescopeBorder" },
     items = {
       { width = 25 },
       { width = 12 },
+      { width = 11 },
       { remaining = true },
     },
   }
 
   local make_display = function(entry)
     return displayer {
-      { entry.name, "Keyword" },
-      { "[" .. entry.value_type .. "]", "Type" },
-      utils.display_termcodes(tostring(entry.current_value)),
-      entry.description,
+      { entry.value.name, "Keyword" },
+      { "[" .. entry.value.type .. "]", "Type" },
+      { "[" .. entry.value.scope .. "]", "Identifier" },
+      utils.display_termcodes(tostring(entry.value.value)),
     }
   end
 
-  return function(line)
-    local entry = process_one_opt(line)
-    if not entry then
-      return
+  return function(o)
+    local entry = {
+      display = make_display,
+      value = {
+        name = o.name,
+        value = o.default,
+        type = o.type,
+        scope = o.scope,
+      },
+      ordinal = string.format("%s %s %s", o.name, o.type, o.scope),
+    }
+
+    local ok, value = pcall(vim.api.nvim_get_option, o.name)
+    if ok then
+      entry.value.value = value
+      entry.ordinal = entry.ordinal .. " " .. utils.display_termcodes(tostring(value))
+    else
+      entry.ordinal = entry.ordinal .. " " .. utils.display_termcodes(tostring(o.default))
     end
 
-    entry.valid = true
-    entry.display = make_display
-    entry.value = line
-    entry.ordinal = line.full_name
-    -- entry.raw_value = d.raw_value
-    -- entry.last_set_from = d.last_set_from
-
-    return entry
+    return make_entry.set_default_entry_mt(entry, opts)
   end
 end
 
---- Special options:
----  - only_sort_tags: Only sort via tag name. Ignore filename and other items
 function make_entry.gen_from_ctags(opts)
   opts = opts or {}
 
@@ -965,6 +1029,11 @@ function make_entry.gen_from_ctags(opts)
 
   local mt = {}
   mt.__index = function(t, k)
+    local override = handle_entry_index(opts, t, k)
+    if override then
+      return override
+    end
+
     if k == "path" then
       local retpath = Path:new({ t.filename }):absolute()
       if not vim.loop.fs_access(retpath, "R", nil) then
@@ -974,6 +1043,7 @@ function make_entry.gen_from_ctags(opts)
     end
   end
 
+  local current_file_cache = {}
   return function(line)
     if line == "" or line:sub(1, 1) == "!" then
       return nil
@@ -991,8 +1061,14 @@ function make_entry.gen_from_ctags(opts)
       file = string.gsub(file, "/", "\\")
     end
 
-    if opts.only_current_file and file ~= current_file then
-      return nil
+    if opts.only_current_file then
+      if current_file_cache[file] == nil then
+        current_file_cache[file] = Path:new(file):normalize(cwd) == current_file
+      end
+
+      if current_file_cache[file] == false then
+        return nil
+      end
     end
 
     local tag_entry = {}
@@ -1036,11 +1112,12 @@ function make_entry.gen_from_diagnostics(opts)
   end)()
 
   local display_items = {
-    { width = utils.if_nil(signs, 8, 10) },
+    { width = signs ~= nil and 10 or 8 },
     { remaining = true },
   }
   local line_width = vim.F.if_nil(opts.line_width, 0.5)
-  if not utils.is_path_hidden(opts) then
+  local hidden = utils.is_path_hidden(opts)
+  if not hidden then
     table.insert(display_items, 2, { width = line_width })
   end
   local displayer = entry_display.create {
@@ -1055,13 +1132,9 @@ function make_entry.gen_from_diagnostics(opts)
     local pos = string.format("%4d:%2d", entry.lnum, entry.col)
     local line_info = {
       (signs and signs[entry.type] .. " " or "") .. pos,
-      "Diagnostic" .. entry.type,
+      "DiagnosticSign" .. entry.type,
     }
 
-    --TODO(conni2461): I dont like that this is symbol lnum:col | msg | filename
-    --                 i want: symbol filename:lnum:col | msg
-    --                 or    : symbol lnum:col | msg
-    --                 I think this is more natural
     return displayer {
       line_info,
       entry.text,
@@ -1070,20 +1143,20 @@ function make_entry.gen_from_diagnostics(opts)
   end
 
   return function(entry)
-    return {
+    return make_entry.set_default_entry_mt({
       value = entry,
-      ordinal = ("%s %s"):format(not opts.ignore_filename and entry.filename or "", entry.text),
+      ordinal = ("%s %s"):format(not hidden and entry.filename or "", entry.text),
       display = make_display,
       filename = entry.filename,
       type = entry.type,
       lnum = entry.lnum,
       col = entry.col,
       text = entry.text,
-    }
+    }, opts)
   end
 end
 
-function make_entry.gen_from_autocommands(_)
+function make_entry.gen_from_autocommands(opts)
   local displayer = entry_display.create {
     separator = "▏",
     items = {
@@ -1096,32 +1169,37 @@ function make_entry.gen_from_autocommands(_)
 
   local make_display = function(entry)
     return displayer {
-      { entry.event, "vimAutoEvent" },
-      { entry.group, "vimAugroup" },
-      { entry.ft_pattern, "vimAutoCmdSfxList" },
-      entry.command,
+      { entry.value.event, "vimAutoEvent" },
+      { entry.value.group_name, "vimAugroup" },
+      { entry.value.pattern, "vimAutoCmdSfxList" },
+      entry.value.command,
     }
   end
 
-  -- TODO: <action> dump current filtered items to buffer
   return function(entry)
-    return {
-      event = entry.event,
-      group = entry.group,
-      ft_pattern = entry.ft_pattern,
-      command = entry.command,
-      value = string.format("+%d %s", entry.source_lnum, entry.source_file),
-      source_file = entry.source_file,
-      source_lnum = entry.source_lnum,
+    local group_name = vim.F.if_nil(entry.group_name, "<anonymous>")
+    local command = entry.command
+    if entry.desc and (entry.callback or vim.startswith(command, "<lua: ")) then
+      command = entry.desc
+    end
+    if command == nil or command == "" then
+      command = "<lua function>"
+    end
+    return make_entry.set_default_entry_mt({
+      value = {
+        event = entry.event,
+        group_name = group_name,
+        pattern = entry.pattern,
+        command = command,
+      },
       --
-      valid = true,
-      ordinal = entry.event .. " " .. entry.group .. " " .. entry.ft_pattern .. " " .. entry.command,
+      ordinal = entry.event .. " " .. group_name .. " " .. entry.pattern .. " " .. entry.command,
       display = make_display,
-    }
+    }, opts)
   end
 end
 
-function make_entry.gen_from_commands(_)
+function make_entry.gen_from_commands(opts)
   local displayer = entry_display.create {
     separator = "▏",
     items = {
@@ -1154,7 +1232,7 @@ function make_entry.gen_from_commands(_)
   end
 
   return function(entry)
-    return {
+    return make_entry.set_default_entry_mt({
       name = entry.name,
       bang = entry.bang,
       nargs = entry.nargs,
@@ -1162,10 +1240,9 @@ function make_entry.gen_from_commands(_)
       definition = entry.definition,
       --
       value = entry,
-      valid = true,
       ordinal = entry.name,
       display = make_display,
-    }
+    }, opts)
   end
 end
 
@@ -1224,13 +1301,13 @@ function make_entry.gen_from_git_status(opts)
     end
     local mod, file = string.match(entry, "(..).*%s[->%s]?(.+)")
 
-    return {
+    return setmetatable({
       value = file,
       status = mod,
       ordinal = entry,
       display = make_display,
       path = Path:new({ opts.cwd, file }):absolute(),
-    }
+    }, opts)
   end
 end
 
