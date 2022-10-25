@@ -452,6 +452,8 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     return '%#SpaceVim_statusline_a_bold# Find %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'rst' && bufname('%') == '__doc__'
     return '%#SpaceVim_statusline_a_bold# Python Doc %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+  elseif bufname('%') == '__cheat_output__'
+    return '%#SpaceVim_statusline_a_bold# Vim Cheat %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'gista-list'
     return '%#SpaceVim_statusline_ia#'
           \ . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#'

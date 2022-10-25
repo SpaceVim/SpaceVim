@@ -1,0 +1,19 @@
+*vim-cheat.txt*	chect plugin for neovim and vim
+Wang Shidong                                                       *vim-cheat*
+
+==============================================================================
+CONTENTS                                                  *vim-cheat-contents*
+  1. Configuration..........................................|vim-cheat-config|
+
+==============================================================================
+CONFIGURATION                                               *vim-cheat-config*
+
+                                                                *g:cheats_dir*
+Set the path to the cheat sheets cache file, can be overriden from .vimrc
+with:
+>
+  let g:cheats_dir = '/path/to/your/cache/file'
+<
+
+
+vim:tw=78:ts=8:ft=help:norl:

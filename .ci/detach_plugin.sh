@@ -280,6 +280,8 @@ EOT
             _detact_bundle vim-cheat README.md
             _detact_bundle vim-cheat .travis.yml
             _detact_bundle vim-cheat .vintrc.yaml
+            _checkdir doc/
+            _detact_bundle vim-cheat doc/vim-cheat.txt
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"

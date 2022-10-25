@@ -1,8 +1,10 @@
-" vim-cheat
-"
-" Maintainer:   Wang Shidong <wsdjeg@outlook.com>
-" License:      MIT
-" Version:      0.1.0
+"=============================================================================
+" cheat.vim --- cheat plugin
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 
 function! s:_update_git() abort
     echom "Update git"
