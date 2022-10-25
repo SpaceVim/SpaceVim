@@ -4,7 +4,7 @@ end
 
 vim.opt_local.cursorline = true
 vim.opt_local.modifiable = true
-vim.opt_local.buflisted = true
+vim.opt_local.buflisted = false
 vim.opt_local.syntax = 'zkbrowser'
 vim.opt_local.buftype = 'nofile'
 vim.opt_local.swapfile = false
@@ -45,9 +45,9 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
     vim.opt_local.syntax = ''
     vim.api.nvim_buf_set_lines(
       0,
-      vim.fn.line('$') - 1,
+      0,
       -1,
-      true,
+      false,
       require('zettelkasten').get_note_browser_content()
     )
     vim.opt_local.syntax = 'zkbrowser'
