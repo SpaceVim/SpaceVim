@@ -14,6 +14,12 @@ else
   M.zettel_dir =  '~/.zettelkasten/'
 end
 
+if vim.g.zettelkasten_template_directory and vim.g.zettelkasten_template_directory ~= '' then
+  M.templete_dir = vim.g.zettelkasten_template_directory 
+else
+  M.templete_dir =  '~/.zettelkasten_template'
+end
+
 local s_config = {
     notes_path = "",
     preview_command = "pedit",

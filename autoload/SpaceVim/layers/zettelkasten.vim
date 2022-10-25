@@ -35,6 +35,9 @@ function! SpaceVim#layers#zettelkasten#set_variable(var) abort
   let g:zettelkasten_directory = get(a:var,
         \ 'zettel_dir',
         \ '')
+  let g:zettelkasten_template_directory = get(a:var,
+        \ 'zettel_template_dir',
+        \ '')
 endfunction
 
 function! SpaceVim#layers#zettelkasten#get_options() abort

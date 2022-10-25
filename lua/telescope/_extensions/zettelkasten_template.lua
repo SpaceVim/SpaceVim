@@ -9,10 +9,10 @@ local zk_config = require("zettelkasten.config")
 
 local function prepare_output_table()
     local lines = {}
-    local scripts = vim.api.nvim_command_output("scriptnames")
+    local result = vim.split(vim.fn.globpath(zk_config.templete_dir, '**/*'), "\n")
 
-    for script in scripts:gmatch("[^\r\n]+") do
-        table.insert(lines, script)
+    for templete in ipairs(result) do
+      table.insert(lines, templete)
     end
     return lines
 end
@@ -45,6 +45,6 @@ end
 return require("telescope").register_extension({
     exports = {
         -- Default when to argument is given, i.e. :Telescope scriptnames
-        scriptnames = run,
+        zettelkasten_template = run,
     },
 })
