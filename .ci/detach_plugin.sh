@@ -282,7 +282,7 @@ EOT
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
             git commit -m "Auto Update"
-            git remote add wsdjeg_vim_chat https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/vim-chat.git
+            git remote add wsdjeg_vim_chat https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/vim-cheat.git
             git push wsdjeg_vim_chat master 
             cd -
             rm -rf detach/$1
