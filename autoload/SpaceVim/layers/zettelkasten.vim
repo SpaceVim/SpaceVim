@@ -30,6 +30,7 @@ function! SpaceVim#layers#zettelkasten#config() abort
   let g:_spacevim_mappings_space.m.z = {'name' : '+zettelkasten'}
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'z', 'n'], 'ZkNew', 'create-new-zettel-note', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'z', 't'], 'Telescope zettelkasten_template', 'zettel-template', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'z', 'b'], 'ZKBrowse', 'open-zettelkasten-browse', 1)
 endfunction
 
 function! SpaceVim#layers#zettelkasten#set_variable(var) abort
