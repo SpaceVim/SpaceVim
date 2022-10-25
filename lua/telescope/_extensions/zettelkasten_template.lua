@@ -33,6 +33,8 @@ local function show_script_names(opts)
         vim.cmd('ZkNew')
         local templete_context = vim.fn.readfile(entry.value, '')
         vim.api.nvim_buf_set_lines(0, 0, -1, false, templete_context)
+        -- maybe this is a bug, the mode is insert mode.
+        vim.cmd('stopinsert')
       end)
       return true
     end,
