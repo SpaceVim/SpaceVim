@@ -144,8 +144,10 @@ local function get_note_information(file_path)
         ::continue::
     end
 
-    s_note_cache_with_file_path[file_path] = info
-    s_note_cache_with_id[info.id] = info
+    if info.id ~= nil then
+      s_note_cache_with_file_path[file_path] = info
+      s_note_cache_with_id[info.id] = info
+    end
     return info
 end
 
