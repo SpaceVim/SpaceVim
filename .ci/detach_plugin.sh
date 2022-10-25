@@ -242,25 +242,27 @@ EOT
         vim-chat)
             git clone https://github.com/wsdjeg/vim-chat.git detach/$1
             cd detach/$1
-            _checkdir syntax/
-            _checkdir doc/
+            _detact LICENSE
+            _checkdir autoload/SpaceVim/api
             _detact autoload/SpaceVim/api.vim
             _detact autoload/SpaceVim/api/job.vim
-            _detact LICENSE
+            _checkdir autoload/chat/
             _detact_bundle vim-chat autoload/chat.vim
             _detact_bundle vim-chat autoload/chat/gitter.vim
             _detact_bundle vim-chat autoload/chat/logger.vim
             _detact_bundle vim-chat autoload/chat/notify.vim
             _detact_bundle vim-chat autoload/chat/qq.vim
             _detact_bundle vim-chat autoload/chat/weixin.vim
+            _checkdir doc/
             _detact_bundle vim-chat doc/vim-chat.txt
+            _checkdir syntax/
             _detact_bundle vim-chat syntax/vimchat.vim
             _detact_bundle vim-chat addon-info.json
             _detact_bundle vim-chat README.md
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
-            git commit -m "Auto Update"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
             git remote add wsdjeg_vim_chat https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/vim-chat.git
             git push wsdjeg_vim_chat master 
             cd -
@@ -281,7 +283,7 @@ EOT
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
-            git commit -m "Auto Update"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
             git remote add wsdjeg_vim_chat https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/vim-cheat.git
             git push wsdjeg_vim_chat master 
             cd -
@@ -304,7 +306,7 @@ EOT
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
-            git commit -m "Auto Update"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
             git remote add wsdjeg_scrollbar https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/scrollbar.vim.git
             git push wsdjeg_scrollbar master 
             cd -
