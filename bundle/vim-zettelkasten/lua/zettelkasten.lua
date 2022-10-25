@@ -1,3 +1,10 @@
+--=============================================================================
+-- zettelkasten.lua --- zk plugin
+-- Copyright (c) 2016-2022 Wang Shidong & Contributors
+-- Author: Wang Shidong < wsdjeg@outlook.com >
+-- URL: https://spacevim.org
+-- License: GPLv3
+--=============================================================================
 local M = {}
 local api = vim.api
 local fn = vim.fn
@@ -304,13 +311,13 @@ function M._internal_execute_hover_cmd(args)
     end
 end
 
-function M.newzk(opt) -- {{{
+function M.zknew(opt) -- {{{
     vim.cmd([[new | setlocal filetype=markdown]])
-    if s_config.zettel_dir ~= "" then
-        if vim.fn.isdirectory(s_config.zettel_dir) == 0 then
-            vim.fn.mkdir(vim.fn.expand(s_config.zettel_dir), "p", "0700")
+    if config.zettel_dir ~= "" then
+        if vim.fn.isdirectory(config.zettel_dir) == 0 then
+            vim.fn.mkdir(vim.fn.expand(config.zettel_dir), "p", "0700")
         end
-        vim.cmd("lcd " .. s_config.zettel_dir)
+        vim.cmd("lcd " .. config.zettel_dir)
     end
 
     vim.cmd("normal ggI# New Note")
