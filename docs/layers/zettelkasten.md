@@ -33,6 +33,7 @@ To use this configuration layer, update your custom configuration file with:
 
 ## Key bindings
 
-| Key bindings | description     |
-| ------------ | --------------- |
-| `SPC m z n`  | create new note |
+| Key bindings | description                   |
+| ------------ | ----------------------------- |
+| `SPC m z n`  | create new note               |
+| `SPC m z t`  | create new note with template |
