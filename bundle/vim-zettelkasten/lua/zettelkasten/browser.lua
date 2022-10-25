@@ -128,7 +128,7 @@ local function get_note_information(file_path)
     if info.id == '' then
       local id_title = extract_id_and_title(line)
       if id_title then
-        info = vim.tbl_extend('error', info, id_title)
+        info = vim.tbl_extend('force', info, id_title)
         goto continue
       end
     end
