@@ -267,6 +267,27 @@ EOT
             rm -rf detach/$1
             exit 0
             ;;
+        vim-cheat)
+            git clone https://github.com/wsdjeg/vim-cheat.git detach/$1
+            cd detach/$1
+            _checkdir plugin/
+            _checkdir autoload/
+            _detact LICENSE
+            _detact_bundle vim-cheat autoload/cheat.vim
+            _detact_bundle vim-cheat plugin/cheat.vim
+            _detact_bundle vim-cheat README.md
+            _detact_bundle vim-cheat .travis.yml
+            _detact_bundle vim-cheat .vintrc.yaml
+            git add .
+            git config user.email "wsdjeg@qq.com"
+            git config user.name  "SpaceVimBot"
+            git commit -m "Auto Update"
+            git remote add wsdjeg_vim_chat https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/vim-chat.git
+            git push wsdjeg_vim_chat master 
+            cd -
+            rm -rf detach/$1
+            exit 0
+            ;;
         scrollbar.vim)
             git clone https://github.com/wsdjeg/scrollbar.vim.git detach/$1
             cd detach/$1
