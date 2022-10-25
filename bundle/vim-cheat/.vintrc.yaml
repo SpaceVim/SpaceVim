@@ -1,0 +1,10 @@
+cmdargs:
+  # Checking more strictly
+  severity: style_problem
+
+  # Enable coloring
+  color: true
+
+policies:
+  ProhibitImplicitScopeVariable:
+    enabled: false
