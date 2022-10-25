@@ -3,7 +3,7 @@ if vim.b.did_ftp == true then
 end
 
 vim.opt_local.cursorline = true
-vim.opt_local.modifiable = true
+vim.opt_local.modifiable = false
 vim.opt_local.buflisted = false
 vim.opt_local.syntax = 'zkbrowser'
 vim.opt_local.buftype = 'nofile'
@@ -31,6 +31,13 @@ if vim.fn.mapcheck('[I', 'n') == '' then
     '<CMD>lua require("zettelkasten").show_back_references(vim.fn.expand("<cword>"))<CR>',
     { noremap = true, silent = true, nowait = true }
   )
+  vim.api.nvim_buf_set_keymap(
+    0,
+    'n',
+    'q',
+    ':bd!<cr>',
+    { noremap = true, silent = true, nowait = true }
+  )
 end
 
 local config = require('zettelkasten.config')
@@ -43,13 +50,9 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   buffer = vim.api.nvim_get_current_buf(),
   callback = function(opts)
     vim.opt_local.syntax = ''
-    vim.api.nvim_buf_set_lines(
-      0,
-      0,
-      -1,
-      false,
-      require('zettelkasten').get_note_browser_content()
-    )
+    vim.opt_local.modifiable = true
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, require('zettelkasten').get_note_browser_content())
     vim.opt_local.syntax = 'zkbrowser'
+    vim.opt_local.modifiable = false
   end,
 })
