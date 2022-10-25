@@ -5,12 +5,12 @@
 -- URL: https://spacevim.org
 -- License: GPLv3
 --=============================================================================
-if vim.fn.exists(":ZkNew") == 0 then
+if vim.fn.exists(":ZKNew") == 0 then
     vim.api.nvim_create_user_command("ZKNew", ":lua require('zettelkasten').zknew({})", {})
 end
 
-if vim.fn.exists(":ZkBrowse") == 0 then
-    vim.cmd([[command ZkBrowse :lua _G.zettelkasten.zkbrowse()]])
+if vim.fn.exists(":ZKBrowse") == 0 then
+    vim.cmd([[command ZKBrowse :lua _G.zettelkasten.zkbrowse()]])
 end
 
 _G.zettelkasten = {
