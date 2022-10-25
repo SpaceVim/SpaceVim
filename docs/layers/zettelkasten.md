@@ -29,7 +29,8 @@ To use this configuration layer, update your custom configuration file with:
 
 ## Layer options
 
-- `zettel_dir`: set the default zettelkasten directory
+- `zettel_dir`: set the zettelkasten directory, default is `~/.zettelkasten/`
+- `zettel_template_dir`: set the zettelkasten template directory, default is `~/.zettelkasten_template`
 
 ## Key bindings
 
