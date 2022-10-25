@@ -79,7 +79,7 @@ function M.completefunc(find_start, base)
   end
 
   local notes = vim.tbl_filter(function(note)
-    return string.match(note.title, base)
+    return string.match(note.title or '', base)
   end, browser.get_notes())
 
   local words = {}
