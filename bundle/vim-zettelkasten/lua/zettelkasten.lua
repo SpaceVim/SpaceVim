@@ -250,7 +250,7 @@ function M.get_toc(note_id, format)
 end
 
 function M.get_note_browser_content()
-    if config.get().notes_path == "" then
+    if config.zettel_dir == "" then
         log.notify("'notes_path' option is required for note browsing.", log_levels.WARN, {})
         return {}
     end
