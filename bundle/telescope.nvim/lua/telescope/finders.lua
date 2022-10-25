@@ -44,7 +44,7 @@ function JobFinder:new(opts)
   assert(not opts.static, "`static` should be used with finder.new_oneshot_job")
 
   local obj = setmetatable({
-    entry_maker = opts.entry_maker or make_entry.gen_from_string,
+    entry_maker = opts.entry_maker or make_entry.gen_from_string(opts),
     fn_command = opts.fn_command,
     cwd = opts.cwd,
     writer = opts.writer,
@@ -122,7 +122,7 @@ function DynamicFinder:new(opts)
   local obj = setmetatable({
     curr_buf = opts.curr_buf,
     fn = opts.fn,
-    entry_maker = opts.entry_maker or make_entry.gen_from_string,
+    entry_maker = opts.entry_maker or make_entry.gen_from_string(opts),
   }, self)
 
   return obj
@@ -180,7 +180,7 @@ finders.new_oneshot_job = function(command_list, opts)
   local command = table.remove(command_list, 1)
 
   return async_oneshot_finder {
-    entry_maker = opts.entry_maker or make_entry.gen_from_string(),
+    entry_maker = opts.entry_maker or make_entry.gen_from_string(opts),
 
     cwd = opts.cwd,
     maximum_results = opts.maximum_results,

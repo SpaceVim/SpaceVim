@@ -75,6 +75,14 @@ describe("telescope.config.resolve", function()
       end
     end)
 
+    it("should handle percentages with min/max boundary", function()
+      eq(20, resolve.resolve_width { 0.1, min = 20 }(nil, 40, 120))
+      eq(30, resolve.resolve_height { 0.1, min = 20 }(nil, 40, 300))
+
+      eq(24, resolve.resolve_width { 0.4, max = 80 }(nil, 60, 60))
+      eq(80, resolve.resolve_height { 0.4, max = 80 }(nil, 60, 300))
+    end)
+
     it("should handle fixed size", function()
       local fixed = { 5, 8, 13, 21, 34 }
       for _, s in ipairs(test_sizes) do

@@ -82,7 +82,6 @@ local highlights = {
   TelescopeResultsNumber = { default = true, link = "Number" },
   TelescopeResultsComment = { default = true, link = "Comment" },
   TelescopeResultsSpecialComment = { default = true, link = "SpecialComment" },
-  TelescopeResultsFileIcon = { default = true, link = "Normal" },
 
   -- Used for git status Results highlighting
   TelescopeResultsDiffChange = { default = true, link = "DiffChange" },

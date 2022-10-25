@@ -192,12 +192,12 @@ previewers.new_termopen_previewer = function(opts)
     local prev_bufnr = get_bufnr_by_bufentry(self, entry)
     if prev_bufnr then
       self.state.termopen_bufnr = prev_bufnr
-      vim.api.nvim_win_set_buf(status.preview_win, self.state.termopen_bufnr)
+      utils.win_set_buf_noautocmd(status.preview_win, self.state.termopen_bufnr)
       self.state.termopen_id = term_ids[self.state.termopen_bufnr]
     else
       local bufnr = vim.api.nvim_create_buf(false, true)
       set_bufnr(self, bufnr)
-      vim.api.nvim_win_set_buf(status.preview_win, bufnr)
+      utils.win_set_buf_noautocmd(status.preview_win, bufnr)
 
       local term_opts = {
         cwd = opts.cwd or vim.loop.cwd(),
@@ -250,11 +250,11 @@ previewers.cat = defaulter(function(opts)
   return previewers.new_termopen_previewer {
     title = "File Preview",
     dyn_title = function(_, entry)
-      return Path:new(from_entry.path(entry, true)):normalize(cwd)
+      return Path:new(from_entry.path(entry, false, false)):normalize(cwd)
     end,
 
     get_command = function(entry)
-      local p = from_entry.path(entry, true)
+      local p = from_entry.path(entry, true, false)
       if p == nil or p == "" then
         return
       end
@@ -273,14 +273,14 @@ previewers.vimgrep = defaulter(function(opts)
   return previewers.new_termopen_previewer {
     title = "Grep Preview",
     dyn_title = function(_, entry)
-      return Path:new(from_entry.path(entry, true)):normalize(cwd)
+      return Path:new(from_entry.path(entry, false, false)):normalize(cwd)
     end,
 
     get_command = function(entry, status)
       local win_id = status.preview_win
       local height = vim.api.nvim_win_get_height(win_id)
 
-      local p = from_entry.path(entry, true)
+      local p = from_entry.path(entry, true, false)
       if p == nil or p == "" then
         return
       end
@@ -308,14 +308,14 @@ previewers.qflist = defaulter(function(opts)
   return previewers.new_termopen_previewer {
     title = "Grep Preview",
     dyn_title = function(_, entry)
-      return Path:new(from_entry.path(entry, true)):normalize(cwd)
+      return Path:new(from_entry.path(entry, false, false)):normalize(cwd)
     end,
 
     get_command = function(entry, status)
       local win_id = status.preview_win
       local height = vim.api.nvim_win_get_height(win_id)
 
-      local p = from_entry.path(entry, true)
+      local p = from_entry.path(entry, true, false)
       if p == nil or p == "" then
         return
       end

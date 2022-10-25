@@ -53,7 +53,6 @@
 
 local resolve = require "telescope.config.resolve"
 local p_window = require "telescope.pickers.window"
-local if_nil = vim.F.if_nil
 
 local get_border_size = function(opts)
   if opts.window.border == false then
@@ -125,7 +124,7 @@ local function validate_layout_config(strategy_name, configuration, values, defa
   local valid_configuration_keys = get_valid_configuration_keys(configuration)
 
   -- If no default_layout_config provided, check Telescope's config values
-  default_layout_config = if_nil(default_layout_config, require("telescope.config").values.layout_config)
+  default_layout_config = vim.F.if_nil(default_layout_config, require("telescope.config").values.layout_config)
 
   local result = {}
   local get_value = function(k)
@@ -263,7 +262,7 @@ local function make_documented_layout(name, layout_config, layout)
       validate_layout_config(
         name,
         layout_config,
-        vim.tbl_deep_extend("keep", if_nil(override_layout, {}), if_nil(self.layout_config, {}))
+        vim.tbl_deep_extend("keep", vim.F.if_nil(override_layout, {}), vim.F.if_nil(self.layout_config, {}))
       )
     )
   end
@@ -320,7 +319,7 @@ layout_strategies.horizontal = make_documented_layout(
       -- Cap over/undersized width (with previewer)
       width, w_space = calc_size_and_spacing(width, max_columns, bs, 2, 4, 1)
 
-      preview.width = resolve.resolve_width(if_nil(layout_config.preview_width, function(_, cols)
+      preview.width = resolve.resolve_width(vim.F.if_nil(layout_config.preview_width, function(_, cols)
         if cols < 150 then
           return math.floor(cols * 0.4)
         elseif cols < 200 then
@@ -588,7 +587,7 @@ layout_strategies.cursor = make_documented_layout(
       -- Cap over/undersized width (with preview)
       width, w_space = calc_size_and_spacing(width, max_columns, bs, 2, 4, 0)
 
-      preview.width = resolve.resolve_width(if_nil(layout_config.preview_width, 2 / 3))(self, width, max_lines)
+      preview.width = resolve.resolve_width(vim.F.if_nil(layout_config.preview_width, 2 / 3))(self, width, max_lines)
       prompt.width = width - preview.width - w_space
       results.width = prompt.width
     else
@@ -601,8 +600,14 @@ layout_strategies.cursor = make_documented_layout(
     end
 
     local position = vim.api.nvim_win_get_position(0)
+    local winbar = (function()
+      if vim.fn.exists "&winbar" == 1 then
+        return vim.o.winbar == "" and 0 or 1
+      end
+      return 0
+    end)()
     local top_left = {
-      line = vim.fn.winline() + position[1] + bs,
+      line = vim.fn.winline() + position[1] + bs + winbar,
       col = vim.fn.wincol() + position[2],
     }
     local bot_right = {
@@ -694,7 +699,8 @@ layout_strategies.vertical = make_documented_layout(
       -- Cap over/undersized height (with previewer)
       height, h_space = calc_size_and_spacing(height, max_lines, bs, 3, 6, 2)
 
-      preview.height = resolve.resolve_height(if_nil(layout_config.preview_height, 0.5))(self, max_columns, height)
+      preview.height =
+        resolve.resolve_height(vim.F.if_nil(layout_config.preview_height, 0.5))(self, max_columns, height)
     else
       -- Cap over/undersized height (without previewer)
       height, h_space = calc_size_and_spacing(height, max_lines, bs, 2, 4, 1)
@@ -764,8 +770,8 @@ layout_strategies.flex = make_documented_layout(
     horizontal = "Options to pass when switching to horizontal layout",
   }),
   function(self, max_columns, max_lines, layout_config)
-    local flip_columns = if_nil(layout_config.flip_columns, 100)
-    local flip_lines = if_nil(layout_config.flip_lines, 20)
+    local flip_columns = vim.F.if_nil(layout_config.flip_columns, 100)
+    local flip_lines = vim.F.if_nil(layout_config.flip_lines, 20)
 
     if max_columns < flip_columns and max_lines > flip_lines then
       self.__flex_strategy = "vertical"
@@ -851,7 +857,7 @@ layout_strategies.bottom_pane = make_documented_layout(
     local tbln
     max_lines, tbln = calc_tabline(max_lines)
 
-    local height = if_nil(resolve.resolve_height(layout_config.height)(self, max_columns, max_lines), 25)
+    local height = vim.F.if_nil(resolve.resolve_height(layout_config.height)(self, max_columns, max_lines), 25)
     if type(layout_config.height) == "table" and type(layout_config.height.padding) == "number" then
       -- Since bottom_pane only has padding at the top, we only need half as much padding in total
       -- This doesn't match the vim help for `resolve.resolve_height`, but it matches expectations
@@ -874,7 +880,7 @@ layout_strategies.bottom_pane = make_documented_layout(
       -- Cap over/undersized width (with preview)
       local width, w_space = calc_size_and_spacing(max_columns, max_columns, bs, 2, 4, 0)
 
-      preview.width = resolve.resolve_width(if_nil(layout_config.preview_width, 0.5))(self, width, max_lines)
+      preview.width = resolve.resolve_width(vim.F.if_nil(layout_config.preview_width, 0.5))(self, width, max_lines)
       results.width = width - preview.width - w_space
     else
       results.width = prompt.width

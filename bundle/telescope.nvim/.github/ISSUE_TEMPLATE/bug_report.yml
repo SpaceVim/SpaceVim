@@ -29,6 +29,12 @@ body:
       placeholder: "macOS 11.5"
     validations:
       required: true
+  - type: input
+    attributes:
+      label: "Telescope version / branch / rev"
+      placeholder: "telescope 0.1.0"
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: "checkhealth telescope"

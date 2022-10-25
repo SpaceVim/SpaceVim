@@ -9,7 +9,7 @@ local await_count = 1000
 return function(opts)
   opts = opts or {}
 
-  local entry_maker = opts.entry_maker or make_entry.gen_from_string
+  local entry_maker = opts.entry_maker or make_entry.gen_from_string(opts)
   local cwd = opts.cwd
   local env = opts.env
   local fn_command = assert(opts.fn_command, "Must pass `fn_command`")
@@ -30,6 +30,7 @@ return function(opts)
       end
     end,
     results = results,
+    entry_maker = entry_maker,
   }, {
     __call = function(_, prompt, process_result, process_complete)
       if not job_started then

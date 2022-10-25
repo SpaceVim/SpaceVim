@@ -9,6 +9,7 @@
   - [Oneshot job](#oneshot-job)
   - [Previewer](#previewer)
   - [More examples](#more-examples)
+  - [Bundling as Extension](#bundling-as-extension)
 - [Technical](#technical)
   - [picker](#picker)
   - [finders](#finders)
@@ -163,7 +164,7 @@ needs to return either `true` or `false`. If it returns false it means that only
 the actions defined in the function should be attached. In this case it would
 remove the default actions to move the selected item in the picker,
 `move_selection_{next,previous}`. So in most cases you'll want to return `true`.
-If the function does not return anything then an error is thrown. 
+If the function does not return anything then an error is thrown.
 
 The `attach_mappings` function has two parameters, `prompt_bufnr` is the buffer number
 of the prompt buffer, which we can use to get the pickers object and `map` is a function
@@ -228,7 +229,7 @@ where `tbl` is the table returned by `entry_maker`. So in this example `tbl` wou
 give our `display` function access to `value` and `ordinal`.
 
 If our picker will have a lot of values it's suggested to use a function for `display`,
-especially if you are modifying the text to display. This way the function will only be executed 
+especially if you are modifying the text to display. This way the function will only be executed
 for the entries being displayed. For an example of an entry maker take a look at
 `lua/telescope/make_entry.lua`.
 
@@ -238,7 +239,7 @@ function `gen_from_git_commits` in `make_entry.lua`.
 
 The `ordinal` is also required, which is used for sorting. As already mentioned
 this allows us to have different display and sorting values. This allows `display`
-to be more complex with icons and special indicators but `ordinal` could be a simpler 
+to be more complex with icons and special indicators but `ordinal` could be a simpler
 sorting key.
 
 There are other important keys which can be set, but do not make sense in the
@@ -250,7 +251,7 @@ current context as we are not dealing with files:
 
 ### Previewer
 
-We will not write a previewer for this picker because it isn't required for 
+We will not write a previewer for this picker because it isn't required for
 basic colors and is a more advanced topic. It's already well documented in `:help
 telescope.previewers` so you can read this section if you want to write your
 own `previewer`. If you want a file previewer without columns you should
@@ -263,7 +264,7 @@ find results and call `entry_maker` for each entry. An example usage would be
 `find`.
 
 ```lua
-finder = finders.new_oneshot_job { "find", opts },
+finder = finders.new_oneshot_job({ "find" }, opts ),
 ```
 
 ### More examples
@@ -277,6 +278,51 @@ If you still have any questions after reading this guide please feel free to ask
 more information on [gitter](https://gitter.im/nvim-telescope/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 and we will happily answer your questions and hopefully allow us to improve this guide. You can also
 help us to improve this guide by sending a PR.
+
+### Bundling as extension
+
+If you now want to bundle your picker as extension, so it is available as
+picker via the `:Telescope` command, the following has to be done.
+
+Structure your plugin as follows, so it can be found by telescope:
+
+```
+.
+└── lua
+    ├── plugin_name             # Your actual plugin code
+    │   ├── init.lua
+    │   └── some_file.lua
+    └── telescope
+        └── _extensions         # The underscore is significant
+            └─ plugin_name.lua  # Init and register your extension
+```
+
+The `lua/telescope/_extensions/plugin_name.lua` file needs to return the
+following: (see `:help telescope.register_extension`)
+
+```lua
+return require("telescope").register_extension {
+  setup = function(ext_config, config)
+    -- access extension config and user config
+  end,
+  exports = {
+    stuff = require("plugin_name").stuff
+  },
+}
+```
+
+The setup function can be used to access the extension config and setup
+extension specific global configuration. You also have access to the user
+telescope default config, so you can override specific internal function. For
+example sorters if you have an extension that provides a replacement sorter,
+like
+[telescope-fzf-native](https://github.com/nvim-telescope/telescope-fzf-native.nvim).
+
+The exports table declares the exported pickers that can then be accessed via
+`Telescope plugin_name stuff`. If you only provide one export it is suggested
+that you name the key like the plugin, so you can access it with `Telescope
+plugin_name`.
+
 
 ## Technical
 

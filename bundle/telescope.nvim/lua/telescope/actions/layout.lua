@@ -1,5 +1,5 @@
 ---@tag telescope.actions.layout
----@config { ["module"] = "telescope.actions.layout" }
+---@config { ["module"] = "telescope.actions.layout", ["name"] = "ACTIONS_LAYOUT" }
 
 ---@brief [[
 --- The layout actions are actions to be used to change the layout of a picker.

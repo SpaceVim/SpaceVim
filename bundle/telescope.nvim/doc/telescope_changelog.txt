@@ -195,5 +195,64 @@ https://github.com/stevearc/dressing.nvim which has support for multiple
 different backends including telescope.
 
 
+                                                    *telescope.changelog-1945*
+
+Date: July 01, 2022
+PR: https://github.com/nvim-telescope/telescope.nvim/pull/1945
+
+This is our dev branch which contains a lot of PRs, a lot of fixes,
+refactoring and general quality of life improvements. It also contains new
+features, the most noteworthy are the following (mostly developed by the
+community):
+- feat: none strategy & control attachment (#1867)
+- feat: force buffer delete for terminal and improvements for
+  Picker:delete_selection (#1943)
+- feat(tags): process tagfiles on the fly (#1989)
+- feat(builtin.lsp): implement builtin handlers for
+  lsp.(incoming|outgoing)_calls (#1484)
+- feat: clear previewer if no item is selected (#2004)
+- feat: add min max boundary to width, height resolver (#2002)
+- feat: Add entry_index for entry_makers (#1850)
+- feat: refine with new_table (#1115)
+
+The last one is one of the most exciting new features, because it allows you
+to go from live_grep into a fuzzy environment with the following mapping
+`<C-Space>`. It's a general interface we now implemented for `live_grep` and
+`lsp_dynamic_workspace_symbols` but it could also be easily implemented for
+other builtins, by us or the user. It's now available for extension developers.
+We will add documentation in the next couple of days and improve it by adding
+more options to configure it after the initial 0.1 release.
+
+But as with all longer development phases, there are also some breaking
+changes. This is the main reason we moved development to a separate branch, for
+the past two months. We can't promise that there won't be more breaking
+changes, but it is the plan that this is the last set of breaking changes prior
+to the 0.1 release on July, 12. We are deeply sorry for the inconvenience. The
+following breaking changes are included in this PR:
+- break(git_files): change `show_untracked` default to false. Can be changed
+  back with `:Telescope git_files show_untracked=true`
+- break: deprecate `utils.get_default` `utils.if_nil`, will be removed prior
+  to 0.1, so if you use it in your config, please move to `vim.F.if_nil`
+- break: drops `ignore_filename` option, use `path_display= { "hidden" }`
+  instead
+- break: prefix internal interfaces with __ so
+  `require("telescope.builtin.files").find_files` will show a notify error but
+  still works for now. The error will be removed prior to 0.1! You should use
+  `require("telescope.builtin").find_files` because we wrap all the functions
+  that are exposed in this module.
+- break: defaults.preview.treesitter rework that allows you to either enable a
+  list of languages, or enable all and disable some. Please read
+  `:help telescope.defaults.preview` for more information.
+  Something like this is now possible:
+    >
+    treesitter = {
+      enable = false,
+      -- or
+      enable = { "c" },
+      -- disable can be set if enable isn't set
+      disable = { "perl", "javascript" },
+    },
+<
+
 
  vim:tw=78:ts=8:ft=help:norl:

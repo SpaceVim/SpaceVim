@@ -91,8 +91,6 @@ That's the next step to scrolling.
 
 --]]
 
-local get_default = require("telescope.utils").get_default
-
 local resolver = {}
 local _resolve_map = {}
 
@@ -129,9 +127,6 @@ end] = function(selector, val)
   end
 end
 
--- Tables TODO:
--- ... {70, max}
-
 -- function:
 --    Function must have same signature as get_window_layout
 --        function(self, max_columns, max_lines): number
@@ -142,6 +137,26 @@ _resolve_map[function(val)
 end] = function(_, val)
   return val
 end
+
+_resolve_map[function(val)
+  return type(val) == "table" and val["max"] ~= nil and val[1] ~= nil and val[1] >= 0 and val[1] < 1
+end] =
+  function(selector, val)
+    return function(...)
+      local selected = select(selector, ...)
+      return math.min(math.floor(val[1] * selected), val["max"])
+    end
+  end
+
+_resolve_map[function(val)
+  return type(val) == "table" and val["min"] ~= nil and val[1] ~= nil and val[1] >= 0 and val[1] < 1
+end] =
+  function(selector, val)
+    return function(...)
+      local selected = select(selector, ...)
+      return math.max(math.floor(val[1] * selected), val["min"])
+    end
+  end
 
 -- Add padding option
 _resolve_map[function(val)
@@ -164,7 +179,7 @@ end] = function(selector, val)
 end
 
 --- Converts input to a function that returns the height.
---- The input must take one of four forms:
+--- The input must take one of five forms:
 --- 1. 0 <= number < 1 <br>
 ---     This means total height as a percentage.
 --- 2. 1 <= number <br>
@@ -172,7 +187,10 @@ end
 --- 3. function <br>
 ---     Must have signature:
 ---       function(self, max_columns, max_lines): number
---- 4. table of the form: {padding = `foo`} <br>
+--- 4. table of the form: { val, max = ..., min = ... } <br>
+---     val has to be in the first form 0 <= val < 1 and only one is given,
+---     `min` or `max` as fixed number
+--- 5. table of the form: {padding = `foo`} <br>
 ---     where `foo` has one of the previous three forms. <br>
 ---     The height is then set to be the remaining space after padding.
 ---     For example, if the window has height 50, and the input is {padding = 5},
@@ -190,7 +208,7 @@ resolver.resolve_height = function(val)
 end
 
 --- Converts input to a function that returns the width.
---- The input must take one of four forms:
+--- The input must take one of five forms:
 --- 1. 0 <= number < 1 <br>
 ---     This means total width as a percentage.
 --- 2. 1 <= number <br>
@@ -198,7 +216,10 @@ end
 --- 3. function <br>
 ---     Must have signature:
 ---       function(self, max_columns, max_lines): number
---- 4. table of the form: {padding = `foo`} <br>
+--- 4. table of the form: { val, max = ..., min = ... } <br>
+---     val has to be in the first form 0 <= val < 1 and only one is given,
+---     `min` or `max` as fixed number
+--- 5. table of the form: {padding = `foo`} <br>
 ---     where `foo` has one of the previous three forms. <br>
 ---     The width is then set to be the remaining space after padding.
 ---     For example, if the window has width 100, and the input is {padding = 5},
@@ -286,9 +307,9 @@ resolver.win_option = function(val, default)
     end
 
     return {
-      preview = get_default(val.preview, val_to_set),
-      results = get_default(val.results, val_to_set),
-      prompt = get_default(val.prompt, val_to_set),
+      preview = vim.F.if_nil(val.preview, val_to_set),
+      results = vim.F.if_nil(val.results, val_to_set),
+      prompt = vim.F.if_nil(val.prompt, val_to_set),
     }
   end
 end

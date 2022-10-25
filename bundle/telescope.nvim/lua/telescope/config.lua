@@ -1,7 +1,6 @@
 local strings = require "plenary.strings"
 local deprecated = require "telescope.deprecated"
 local sorters = require "telescope.sorters"
-local if_nil = vim.F.if_nil
 local os_sep = require("plenary.path").path.sep
 local has_win = vim.fn.has "win32" == 1
 
@@ -69,7 +68,7 @@ config.descriptions = {}
 config.pickers = _TelescopeConfigurationPickers
 
 function config.set_pickers(pickers)
-  pickers = if_nil(pickers, {})
+  pickers = vim.F.if_nil(pickers, {})
 
   for k, v in pairs(pickers) do
     config.pickers[k] = v
@@ -154,25 +153,6 @@ append(
 )
 
 append(
-  "tiebreak",
-  function(current_entry, existing_entry, _)
-    return #current_entry.ordinal < #existing_entry.ordinal
-  end,
-  [[
-  A function that determines how to break a tie when two entries have
-  the same score.
-  Having a function that always returns false would keep the entries in
-  the order they are found, so existing_entry before current_entry.
-  Vice versa always returning true would place the current_entry
-  before the existing_entry.
-
-  Signature: function(current_entry, existing_entry, prompt) -> boolean
-
-  Default: function that breaks the tie based on the length of the
-           entry's ordinal]]
-)
-
-append(
   "selection_strategy",
   "reset",
   [[
@@ -182,7 +162,8 @@ append(
   - "reset" (default)
   - "follow"
   - "row"
-  - "closest"]]
+  - "closest"
+  - "none"]]
 )
 
 append(
@@ -443,6 +424,28 @@ append(
 )
 
 append(
+  "mappings",
+  {},
+  [[
+  Your mappings to override telescope's default mappings.
+
+  See: ~
+      |telescope.mappings|
+  ]]
+)
+
+append(
+  "default_mappings",
+  nil,
+  [[
+  Not recommended to use except for advanced users.
+
+  Will allow you to completely remove all of telescope's default maps
+  and use your own.
+  ]]
+)
+
+append(
   "history",
   {
     path = vim.fn.stdpath "data" .. os_sep .. "telescope_history",
@@ -593,8 +596,17 @@ append(
                           highlighting, which falls back to regex-based highlighting.
                           `true`: treesitter highlighting for all available filetypes
                           `false`: regex-based highlighting for all filetypes
-                          `table`: table of filetypes for which to attach treesitter
-                          highlighting
+                          `table`: following nvim-treesitters highlighting options:
+                            It contains two keys:
+                              - enable boolean|table: if boolean, enable all ts
+                                                      highlighing with that flag,
+                                                      disable still considered.
+                                                      Containing a list of filetypes,
+                                                      that are enabled, disabled
+                                                      ignored because it doesnt make
+                                                      any sense in this case.
+                              - disable table: containing a list of filetypes
+                                               that are disabled
                           Default: true
       - msg_bg_fillchar:  Character to fill background of unpreviewable buffers with
                           Default: "╱"
@@ -653,89 +665,10 @@ append(
   true,
   [[
   Boolean if devicons should be enabled or not. If set to false, the
-  "TelescopeResultsFileIcon" highlight group is used.
+  text highlight group is used.
   Hint: Coloring only works if |termguicolors| is enabled.
 
   Default: true]]
-)
-
-append(
-  "mappings",
-  {},
-  [[
-  Your mappings to override telescope's default mappings.
-
-  Format is:
-  {
-    mode = { ..keys }
-  }
-
-  where {mode} is the one character letter for a mode
-  ('i' for insert, 'n' for normal).
-
-  For example:
-
-  mappings = {
-    i = {
-      ["<esc>"] = require('telescope.actions').close,
-    },
-  }
-
-
-  To disable a keymap, put [map] = false
-    So, to not map "<C-n>", just put
-
-      ...,
-      ["<C-n>"] = false,
-      ...,
-
-    Into your config.
-
-
-  otherwise, just set the mapping to the function that you want it to
-  be.
-
-      ...,
-      ["<C-i>"] = require('telescope.actions').select_default,
-      ...,
-
-  If the function you want is part of `telescope.actions`, then you can
-  simply give a string.
-    For example, the previous option is equivalent to:
-
-      ...,
-      ["<C-i>"] = "select_default",
-      ...,
-
-  You can also add other mappings using tables with `type = "command"`.
-    For example:
-
-      ...,
-      ["jj"] = { "<esc>", type = "command" },
-      ["kk"] = { "<cmd>echo \"Hello, World!\"<cr>", type = "command" },)
-      ...,
-
-  You can also add additional options for mappings of any type
-  ("action" and "command"). For example:
-
-      ...,
-      ["<C-j>"] = {
-        action = actions.move_selection_next,
-        opts = { nowait = true, silent = true }
-      },
-      ...,
-  ]]
-)
-
-append(
-  "default_mappings",
-  nil,
-  [[
-  Not recommended to use except for advanced users.
-
-  Will allow you to completely remove all of telescope's default maps
-  and use your own.
-  ]]
 )
 
 append(
@@ -775,6 +708,25 @@ append(
 )
 
 append(
+  "tiebreak",
+  function(current_entry, existing_entry, _)
+    return #current_entry.ordinal < #existing_entry.ordinal
+  end,
+  [[
+  A function that determines how to break a tie when two entries have
+  the same score.
+  Having a function that always returns false would keep the entries in
+  the order they are found, so existing_entry before current_entry.
+  Vice versa always returning true would place the current_entry
+  before the existing_entry.
+
+  Signature: function(current_entry, existing_entry, prompt) -> boolean
+
+  Default: function that breaks the tie based on the length of the
+           entry's ordinal]]
+)
+
+append(
   "file_ignore_patterns",
   nil,
   [[
@@ -783,8 +735,33 @@ append(
   Example: { "%.npz" } -- ignore all npz files
   See: https://www.lua.org/manual/5.1/manual.html#5.4.1 for more
   information about lua regex
+  Note: `file_ignore_patterns` will be used in all pickers that have a
+  file associated. This might lead to the problem that lsp_ pickers
+  aren't displaying results because they might be ignored by
+  `file_ignore_patterns`. For example, setting up node_modules as ignored
+  will never show node_modules in any results, even if you are
+  interested in lsp_ results.
+
+  If you only want `file_ignore_patterns` for `find_files` and
+  `grep_string`/`live_grep` it is suggested that you setup `gitignore`
+  and have fd and or ripgrep installed because both tools will not show
+  `gitignore`d files on default.
 
   Default: nil]]
+)
+
+append(
+  "get_selection_window",
+  function()
+    return 0
+  end,
+  [[
+    Function that takes function(picker, entry) and returns a window id.
+    The window ID will be used to decide what window the chosen file will
+    be opened in and the cursor placed in upon leaving the picker.
+
+    Default: `function() return 0 end`
+  ]]
 )
 
 append(
@@ -851,8 +828,8 @@ append(
 -- @param tele_defaults table: (optional) a table containing all of the defaults
 --    for telescope [defaults to `telescope_defaults`]
 function config.set_defaults(user_defaults, tele_defaults)
-  user_defaults = if_nil(user_defaults, {})
-  tele_defaults = if_nil(tele_defaults, telescope_defaults)
+  user_defaults = vim.F.if_nil(user_defaults, {})
+  tele_defaults = vim.F.if_nil(tele_defaults, telescope_defaults)
 
   -- Check if using layout keywords outside of `layout_config`
   deprecated.options(user_defaults)
@@ -860,18 +837,21 @@ function config.set_defaults(user_defaults, tele_defaults)
   local function get(name, default_val)
     if name == "layout_config" then
       return smarter_depth_2_extend(
-        if_nil(user_defaults[name], {}),
-        vim.tbl_deep_extend("keep", if_nil(config.values[name], {}), if_nil(default_val, {}))
+        vim.F.if_nil(user_defaults[name], {}),
+        vim.tbl_deep_extend("keep", vim.F.if_nil(config.values[name], {}), vim.F.if_nil(default_val, {}))
       )
     end
     if name == "history" or name == "cache_picker" or name == "preview" then
       if user_defaults[name] == false or config.values[name] == false then
         return false
       end
+      if user_defaults[name] == true then
+        return vim.F.if_nil(config.values[name], {})
+      end
 
       return smarter_depth_2_extend(
-        if_nil(user_defaults[name], {}),
-        vim.tbl_deep_extend("keep", if_nil(config.values[name], {}), if_nil(default_val, {}))
+        vim.F.if_nil(user_defaults[name], {}),
+        vim.tbl_deep_extend("keep", vim.F.if_nil(config.values[name], {}), vim.F.if_nil(default_val, {}))
       )
     end
     return first_non_null(user_defaults[name], config.values[name], default_val)
@@ -881,9 +861,7 @@ function config.set_defaults(user_defaults, tele_defaults)
     assert(description, "Config values must always have a description")
 
     config.values[name] = get(name, default_val)
-    if description then
-      config.descriptions[name] = strings.dedent(description)
-    end
+    config.descriptions[name] = strings.dedent(description)
   end
 
   for key, info in pairs(tele_defaults) do

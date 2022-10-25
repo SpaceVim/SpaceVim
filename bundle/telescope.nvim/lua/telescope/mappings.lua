@@ -1,4 +1,125 @@
--- TODO: Customize keymap
+---@tag telescope.mappings
+
+---@brief [[
+--- |telescope.mappings| is used to configure the keybindings within
+--- a telescope picker. These keybinds are only local to the picker window
+--- and will be cleared once you exit the picker.
+---
+--- We provide multiple different ways of configuring, as described below,
+--- to provide an easy to use experience for changing the default behavior
+--- of telescope or extending for your own purposes.
+---
+--- To see many of the builtin actions that you can use as values for this
+--- table, see |telescope.actions|
+---
+--- Format is:
+--- <code>
+---   {
+---     mode = { ..keys }
+---   }
+--- </code>
+---
+---  where {mode} is the one character letter for a mode ('i' for insert, 'n' for normal).
+---
+---  For example:
+--- <code>
+---   mappings = {
+---     i = {
+---       ["<esc>"] = require('telescope.actions').close,
+---     },
+---   }
+--- </code>
+---
+--- To disable a keymap, put `[map] = false`<br>
+--- For example:
+--- <code>
+---   {
+---     ...,
+---     ["<C-n>"] = false,
+---     ...,
+---   }
+--- </code>
+---    Into your config.
+---
+--- To override behavior of a key, simply set the value
+--- to be a function (either by requiring an action or by writing
+--- your own function)
+--- <code>
+---   {
+---     ...,
+---     ["<C-i>"] = require('telescope.actions').select_default,
+---     ...,
+---   }
+--- </code>
+---
+---  If the function you want is part of `telescope.actions`, then you can
+---  simply give a string.
+---    For example, the previous option is equivalent to:
+--- <code>
+---   {
+---     ...,
+---     ["<C-i>"] = "select_default",
+---     ...,
+---   }
+--- </code>
+---
+---  You can also add other mappings using tables with `type = "command"`.
+---    For example:
+--- <code>
+---   {
+---     ...,
+---     ["jj"] = { "<esc>", type = "command" },
+---     ["kk"] = { "<cmd>echo \"Hello, World!\"<cr>", type = "command" },)
+---     ...,
+---   }
+--- </code>
+---
+--- You can also add additional options for mappings of any type ("action" and "command").
+---   For example:
+--- <code>
+---   {
+---     ...,
+---     ["<C-j>"] = {
+---       actions.move_selection_next, type = "action",
+---       opts = { nowait = true, silent = true }
+---     },
+---     ...,
+---   }
+--- </code>
+---
+--- There are three main places you can configure |telescope.mappings|. These are
+--- ordered from the lowest priority to the highest priority.
+---
+--- 1. |telescope.defaults.mappings|
+--- 2. In the |telescope.setup()| table, inside a picker with a given name, use the `mappings` key
+--- <code>
+---   require("telescope").setup {
+---     pickers = {
+---       find_files = {
+---         mappings = {
+---           n = {
+---             ["kj"] = "close",
+---           },
+---         },
+---       },
+---     },
+---   }
+--- </code>
+--- 3. `attach_mappings` function for a particular picker.
+--- <code>
+---   require("telescope.builtin").find_files {
+---     attach_mappings = function(_, map)
+---       map("i", "asdf", function(_prompt_bufnr)
+---         print "You typed asdf"
+---       end)
+---       -- needs to return true if you want to map default_mappings and
+---       -- false if not
+---       return true
+---     end,
+---   }
+--- </code>
+---@brief ]]
+
 local a = vim.api
 
 local actions = require "telescope.actions"
@@ -33,8 +154,12 @@ mappings.default_mappings = config.values.default_mappings
       ["<C-q>"] = actions.send_to_qflist + actions.open_qflist,
       ["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
       ["<C-l>"] = actions.complete_tag,
+      ["<C-/>"] = actions.which_key,
       ["<C-_>"] = actions.which_key, -- keys from pressing <C-/>
       ["<C-w>"] = { "<c-s-w>", type = "command" },
+
+      -- disable c-j because we dont want to allow new lines #2123
+      ["<C-j>"] = actions.nop,
     },
 
     n = {
@@ -95,25 +220,6 @@ local assign_function = function(prompt_bufnr, func)
   return func_id
 end
 
---[[
-Usage:
-
-mappings.apply_keymap(42, <function>, {
-  n = {
-    ["<leader>x"] = "just do this string",
-
-    ["<CR>"] = function(picker, prompt_bufnr)
-      actions.close_prompt()
-
->     local filename = ...
-      vim.cmd(string.format(":e %s", filename))
-    end,
-  },
-
-  i = {
-  }
-})
---]]
 local telescope_map = function(prompt_bufnr, mode, key_bind, key_func, opts)
   if not key_func then
     return
@@ -147,11 +253,8 @@ local telescope_map = function(prompt_bufnr, mode, key_bind, key_func, opts)
 
   local map_string
   if opts.expr then
-    map_string = string.format(
-      [[luaeval("require('telescope.mappings').execute_keymap(%s, %s)")]],
-      prompt_bufnr,
-      key_id
-    )
+    map_string =
+      string.format([[luaeval("require('telescope.mappings').execute_keymap(%s, %s)")]], prompt_bufnr, key_id)
   else
     if mode == "i" and not opts.expr then
       prefix = "<cmd>"
@@ -161,12 +264,8 @@ local telescope_map = function(prompt_bufnr, mode, key_bind, key_func, opts)
       prefix = ":"
     end
 
-    map_string = string.format(
-      "%slua require('telescope.mappings').execute_keymap(%s, %s)<CR>",
-      prefix,
-      prompt_bufnr,
-      key_id
-    )
+    map_string =
+      string.format("%slua require('telescope.mappings').execute_keymap(%s, %s)<CR>", prefix, prompt_bufnr, key_id)
   end
 
   a.nvim_buf_set_keymap(prompt_bufnr, mode, key_bind, map_string, opts)

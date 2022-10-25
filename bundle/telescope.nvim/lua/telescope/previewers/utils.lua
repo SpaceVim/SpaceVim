@@ -45,28 +45,26 @@ utils.job_maker = function(cmd, bufnr, opts)
       end
     end)()
 
-    Job
-      :new({
-        command = command,
-        args = cmd,
-        env = opts.env,
-        cwd = opts.cwd,
-        writer = writer,
-        on_exit = vim.schedule_wrap(function(j)
-          if not vim.api.nvim_buf_is_valid(bufnr) then
-            return
-          end
-          if opts.mode == "append" then
-            vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, j:result())
-          elseif opts.mode == "insert" then
-            vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, j:result())
-          end
-          if opts.callback then
-            opts.callback(bufnr, j:result())
-          end
-        end),
-      })
-      :start()
+    Job:new({
+      command = command,
+      args = cmd,
+      env = opts.env,
+      cwd = opts.cwd,
+      writer = writer,
+      on_exit = vim.schedule_wrap(function(j)
+        if not vim.api.nvim_buf_is_valid(bufnr) then
+          return
+        end
+        if opts.mode == "append" then
+          vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, j:result())
+        elseif opts.mode == "insert" then
+          vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, j:result())
+        end
+        if opts.callback then
+          opts.callback(bufnr, j:result())
+        end
+      end),
+    }):start()
   else
     if opts.callback then
       opts.callback(bufnr)
@@ -80,14 +78,41 @@ end
 
 --- Attach default highlighter which will choose between regex and ts
 utils.highlighter = function(bufnr, ft, opts)
-  opts = opts or {}
-  opts.preview = opts.preview or {}
-  opts.preview.treesitter = vim.F.if_nil(
-    opts.preview.treesitter,
-    type(conf.preview) == "table" and conf.preview.treesitter
-  )
-  local ts_highlighting = opts.preview.treesitter == true
-    or type(opts.preview.treesitter) == "table" and vim.tbl_contains(opts.preview.treesitter, ft)
+  opts = vim.F.if_nil(opts, {})
+  opts.preview = vim.F.if_nil(opts.preview, {})
+  opts.preview.treesitter = (function()
+    if type(opts.preview) == "table" and opts.preview.treesitter then
+      return opts.preview.treesitter
+    end
+    if type(conf.preview) == "table" and conf.preview.treesitter then
+      return conf.preview.treesitter
+    end
+    if type(conf.preview) == "boolean" then
+      return conf.preview
+    end
+    -- We should never get here
+    return false
+  end)()
+
+  if type(opts.preview.treesitter) == "boolean" then
+    local temp = { enable = opts.preview.treesitter }
+    opts.preview.treesitter = temp
+  end
+
+  local ts_highlighting = (function()
+    if type(opts.preview.treesitter.enable) == "table" then
+      if vim.tbl_contains(opts.preview.treesitter.enable, ft) then
+        return true
+      end
+      return false
+    end
+
+    if vim.tbl_contains(vim.F.if_nil(opts.preview.treesitter.disable, {}), ft) then
+      return false
+    end
+
+    return opts.preview.treesitter.enable == nil or opts.preview.treesitter.enable == true
+  end)()
 
   local ts_success
   if ts_highlighting then
@@ -114,9 +139,6 @@ local treesitter_attach = function(bufnr, ft)
   end
 
   local config = ts_configs.get_module "highlight"
-  for k, v in pairs(config.custom_captures) do
-    vim.treesitter.highlighter.hl_map[k] = v
-  end
   vim.treesitter.highlighter.new(ts_parsers.get_parser(bufnr, lang))
   local is_table = type(config.additional_vim_regex_highlighting) == "table"
   if
