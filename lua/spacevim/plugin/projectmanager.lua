@@ -362,7 +362,12 @@ end
 
 function M.current_root()
   local bufname = fn.bufname('%')
-  if bufname:match('%[denite%]') or bufname:match('denite-filter') or bufname:match('%[defx%]') then
+  if
+    bufname:match('%[denite%]')
+    or bufname:match('denite-filter')
+    or bufname:match('%[defx%]')
+    or bufname:match('^git://') -- this is for git.vim
+  then
     return
   end
   if
