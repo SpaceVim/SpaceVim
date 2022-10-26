@@ -18,12 +18,14 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 
 ### Changed plugin:
 
+This plugins are changed based on a specific version of origin plugin.
+
 - `vim-bookmarks`: based on [`MattesGroeger/vim-bookmarks@3adeae1`](https://github.com/MattesGroeger/vim-bookmarks/commit/3adeae10639edcba29ea80dafa1c58cf545cb80e)
 - `delimitMate`: based on [`Raimondi/delimitMate@537a1da`](https://github.com/Raimondi/delimitMate/tree/537a1da0fa5eeb88640425c37e545af933c56e1b)
-- `vim-toml`: based on [cespare/vim-toml@717bd87ef9](https://github.com/cespare/vim-toml/tree/717bd87ef928293e0cc6cfc12ebf2e007cb25311)
-- `neoformat`: based on [neoformat](https://github.com/sbdchd/neoformat/tree/f1b6cd506b72be0a2aaf529105320ec929683920)
-- `github-issues.vim`: based on [github-issues.vim](https://github.com/jaxbot/github-issues.vim/tree/46f1922d3d225ed659f3dda1c95e35001c9f41f4)
-- `vim-virtualenv`: based on [vim-virtualenv](https://github.com/jmcantrell/vim-virtualenv/tree/b1150223cd876f155ed7a3b2e285ed33f6f93873)
+- `vim-toml`: based on [`cespare/vim-toml@717bd87ef9`](https://github.com/cespare/vim-toml/tree/717bd87ef928293e0cc6cfc12ebf2e007cb25311)
+- `neoformat`: based on [`neoformat@f1b6cd50`](https://github.com/sbdchd/neoformat/tree/f1b6cd506b72be0a2aaf529105320ec929683920)
+- `github-issues.vim`: based on [`github-issues.vim@46f1922d`](https://github.com/jaxbot/github-issues.vim/tree/46f1922d3d225ed659f3dda1c95e35001c9f41f4)
+- `vim-virtualenv`: based on [`vim-virtualenv@b1150223`](https://github.com/jmcantrell/vim-virtualenv/tree/b1150223cd876f155ed7a3b2e285ed33f6f93873)
 - `clever-f.vim`: based on [`clever-f.vim@fd370f2`](https://github.com/rhysd/clever-f.vim/tree/fd370f27cca93918184a8043220cef1aa440a1fd)
 - `verilog`: based on [`vhda/verilog_systemverilog.vim@0b88f2c`](https://github.com/vhda/verilog_systemverilog.vim/tree/0b88f2ccf81983944bf00d15ec810dd807053d19)
 - `rainbow`: based on [`luochen1990/rainbow@c18071e5`](https://github.com/luochen1990/rainbow/tree/c18071e5c7790928b763c2e88c487dfc93d84a15)

@@ -95,8 +95,13 @@ function! s:neoformat(bang, user_input, start_line, end_line) abort
             let stdout = split(system(cmd.exe, stdin_str), '\n')
         else
             call neoformat#utils#log('using tmp file')
-            call writefile(stdin, cmd.tmp_file_path)
-            let stdout = split(system(cmd.exe), '\n')
+            if empty(cmd.tmp_file_path)
+                call neoformat#utils#log('tmp file name is empty, skipped!')
+                return
+            else
+                call writefile(stdin, cmd.tmp_file_path)
+                let stdout = split(system(cmd.exe), '\n')
+            endif
         endif
 
         " read from /tmp file if formatter replaces file on format
