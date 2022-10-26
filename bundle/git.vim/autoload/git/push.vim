@@ -11,6 +11,10 @@ let s:NOTI = SpaceVim#api#import('notify')
 function! git#push#run(...) abort
 
   let s:NOTI.notify_max_width = float2nr( &columns * 0.3)
+  let s:std_data = {
+        \ 'stderr' : [],
+        \ 'stdout' : [],
+        \ }
   let cmd = ['git', 'push']
   if len(a:1) > 0
     let cmd += a:1
@@ -51,10 +55,6 @@ endfunction
 "
 " why git push normal info to stderr
 
-let s:std_data = {
-      \ 'stderr' : [],
-      \ 'stdout' : [],
-      \ }
 function! s:on_stderr(id, data, event) abort
   call extend(s:std_data.stderr, a:data)
 endfunction
