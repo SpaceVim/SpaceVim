@@ -2012,6 +2012,26 @@ For example, to ignore the `node_packages/` directory:
     project_rooter_outermost = false
 ```
 
+There are three options for non-project files/directories:
+
+- Don't change directory (default).
+
+```
+project_non_root = ''
+```
+
+- Change to file's directory (similar to 'autochdir').
+
+```
+project_non_root = 'current'
+```
+
+- Change to home directory.
+
+```
+project_non_root = 'home'
+```
+
 You can also disable project root detection completely (i.e. vim will set the
 root directory to the present working directory):
 
@@ -2385,7 +2405,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 SpaceVim provides an asynchronous code runner plugin. In most language layers,
 the key binding `SPC l r` is defined for running the current buffer.
-To close the code runner windows, you can use ``Ctrl-` `` key binding.
+To close the code runner windows, you can use `` Ctrl-`  `` key binding.
 If you need to add new commands, you can use the bootstrap function. For example:
 Use `F5` to build the project asynchronously.
 
@@ -2399,7 +2419,6 @@ Key bindings within code runner buffer:
 | ----------- | --------------------------- |
 | `ctrl-c`    | stop code runner            |
 | `i`         | open promote to insert text |
-
 
 #### Custom runner
 

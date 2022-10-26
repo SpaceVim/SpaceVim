@@ -383,12 +383,29 @@ function M.current_root()
   if rootdir == '' then
     rootdir = find_root_directory()
     if rootdir == nil or rootdir == '' then
-      rootdir = sp_file.unify_path(fn.getcwd())
+      -- for no project
+      if vim.g.spacevim_project_non_root == '' then
+        rootdir = sp_file.unify_path(fn.getcwd())
+      elseif vim.g.spacevim_project_non_root == 'home' and filereadable(bufname) then
+        rootdir = sp_file.unify_path(fn.expand('~'))
+      elseif vim.g.spacevim_project_non_root == 'current' then
+        local dir = sp_file.unify_path(bufname, ':p:h')
+        if isdirectory(dir) then
+          rootdir = dir
+        else
+          rootdir = sp_file.unify_path(fn.getcwd())
+        end
+      else
+        -- maybe log error
+      end
+      change_dir(rootdir)
+    else
+      -- for project
+      if change_dir(rootdir) then
+        M.RootchandgeCallback()
+      end
     end
     fn.setbufvar('%', 'rootDir', rootdir)
-  end
-  if change_dir(rootdir) then
-    M.RootchandgeCallback()
   end
   return rootdir
 end
