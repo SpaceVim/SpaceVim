@@ -301,6 +301,16 @@ function! s:change_options(key) abort
       else
         let s:git_log_options[a:key].option = '--author='
       endif
+    elseif a:key ==# 'g'
+      " change search text
+      " change author
+      let origin_grep = matchstr(s:git_log_options[a:key].option, '\("\)\@<=[^"]*')
+      let grep = input('--grep=', origin_grep)
+      if !empty(grep)
+        let s:git_log_options[a:key].option = '--grep="' . grep . '"'
+      else
+        let s:git_log_options[a:key].option = '--grep='
+      endif
     elseif a:key ==# 'n'
       let orig_nr = matchstr(s:git_log_options[a:key].option, '\("\)\@<=[^"]*')
       let nr = str2nr(input('-n', orig_nr))
