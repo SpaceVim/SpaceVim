@@ -1,7 +1,16 @@
+"=============================================================================
+" utils.vim --- utils function for neoformat
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
+let s:LOGGER =SpaceVim#logger#derive('neoformat')
+
 function! neoformat#utils#log(msg) abort
-    if neoformat#utils#should_be_verbose()
-        return s:better_echo(a:msg)
-    endif
+    call s:LOGGER.info(a:msg)
 endfunction
 
 function! neoformat#utils#log_file_content(path) abort
@@ -11,7 +20,7 @@ function! neoformat#utils#log_file_content(path) abort
 endfunction
 
 function! neoformat#utils#warn(msg) abort
-    echohl WarningMsg | call s:better_echo(a:msg) | echohl NONE
+    call s:LOGGER.warn(a:msg)
 endfunction
 
 function! neoformat#utils#msg(msg) abort
