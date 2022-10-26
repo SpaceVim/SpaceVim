@@ -229,7 +229,9 @@ function! s:self._key_obj_to_hl_line(left, right, line) abort
       call extend(self._handle_inputs, {handles[0] : handles[1]})
     endfor
     if a:left.exit
-      call extend(self._is_quit, keys(a:left.key))
+      for handles in a:left.key.handles
+        call add(self._is_quit, handles[0])
+      endfor
       " TODO: need to fixed
       " if has_key(left, 'exit_cmd') && !empty(left.exit_cmd)
       "   call extend(self._handle_quit, {left.key : left.exit_cmd})
@@ -288,7 +290,9 @@ function! s:self._key_obj_to_hl_line(left, right, line) abort
       call extend(self._handle_inputs, {handles[0] : handles[1]})
     endfor
     if a:right.exit
-      call extend(self._is_quit, keys(a:right.key))
+      for handles in a:right.key.handles
+        call add(self._is_quit, handles[0])
+      endfor
       " TODO: need fix
       " if has_key(right, 'exit_cmd') && !empty(right.exit_cmd)
       "   call extend(self._handle_quit, {right.key : right.exit_cmd})

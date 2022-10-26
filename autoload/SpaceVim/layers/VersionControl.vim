@@ -379,11 +379,10 @@ function! s:show_diff_of_unstaged_hunks() abort
 endfunction
 
 function! s:fetch_repo() abort
-
 endfunction
 
 function! s:pull_repo() abort
-
+  Git pull
 endfunction
 
 function! s:push_repo() abort
