@@ -10,6 +10,7 @@ let s:NOTI = SpaceVim#api#import('notify')
 
 function! git#push#run(...) abort
 
+  let s:NOTI.notify_max_width = float2nr( &columns * 0.3)
   let cmd = ['git', 'push']
   if len(a:1) > 0
     let cmd += a:1
@@ -23,14 +24,15 @@ function! git#push#run(...) abort
 
 endfunction
 
-function! s:on_exit(...) abort
-  let data = get(a:000, 2)
-  if data != 0
+function! s:on_exit(id, data, event) abort
+  if a:data != 0
     for line in s:std_data.stderr
+      let s:NOTI.notify_max_width = max([strwidth(line) + 5, s:NOTI.notify_max_width])
       call s:NOTI.notify(line, 'WarningMsg')
     endfor
   else
     for line in s:std_data.stderr
+      let s:NOTI.notify_max_width = max([strwidth(line) + 5, s:NOTI.notify_max_width])
       call s:NOTI.notify(line)
     endfor
   endif
@@ -39,6 +41,7 @@ endfunction
 
 function! s:on_stdout(id, data, event) abort
   for line in filter(a:data, '!empty(v:val)')
+    let s:NOTI.notify_max_width = max([strwidth(line) + 5, s:NOTI.notify_max_width])
     call s:NOTI.notify(line, 'Normal')
   endfor
 endfunction
