@@ -27,9 +27,9 @@ endfunction
 function! s:on_exit(...) abort
     let data = get(a:000, 2)
     if data != 0
-        echo 'failed!'
+        call s:NOTI.notify('Git push failed!', 'WarningMsg')
     else
-        echo 'done!'
+        call s:NOTI.notify('Git push done!')
     endif
 endfunction
 
