@@ -386,15 +386,15 @@ function! s:pull_repo() abort
 endfunction
 
 function! s:push_repo() abort
-
+  Git push
 endfunction
 
 function! s:commit_popup() abort
-
+  Git commit -m update
 endfunction
 
 function! s:commit() abort
-
+  Git commit
 endfunction
 
 function! s:revert_hunk() abort
