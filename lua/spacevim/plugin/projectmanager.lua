@@ -139,11 +139,11 @@ end
 local function change_dir(dir)
   if dir == sp_file.unify_path(fn.getcwd()) then
     logger.debug('same as current directory, no need to change.')
+    return false
   else
-    if dir ~= nil then
-      logger.info('change to root: ' .. dir)
-      sp.cmd(cd .. ' ' .. sp.fn.fnameescape(sp.fn.fnamemodify(dir, ':p')))
-    end
+    logger.info('change to root: ' .. dir)
+    sp.cmd(cd .. ' ' .. sp.fn.fnameescape(sp.fn.fnamemodify(dir, ':p')))
+    return true
   end
 end
 
@@ -170,14 +170,14 @@ end
 
 local function find_root_directory()
   local fd = fn.bufname('%')
-  if fn == '' then
-    logger.debug('bufname is empty')
+  if fd == '' then
+    logger.debug('bufname is empty, use current directory instead!')
     fd = fn.getcwd()
   end
   logger.debug('start to find root for: ' .. fd)
   local dirs = {}
+  logger.debug('searching rooter_patterns:' .. vim.inspect(project_rooter_patterns))
   for _, pattern in pairs(project_rooter_patterns) do
-    logger.debug('searching rooter_patterns:' .. pattern)
     local find_path = ''
     if string.sub(pattern, -1) == '/' then
       if sp_opt.project_rooter_outermost == 1 then
@@ -245,10 +245,10 @@ if sp_opt.enable_projects_cache == 1 then
 end
 
 sp.cmd([[
-  let g:unite_source_menu_menus = get(g:,'unite_source_menu_menus',{})
-  let g:unite_source_menu_menus.Projects = {'description': 'Custom mapped keyboard shortcuts                   [SPC] p p'}
-  let g:unite_source_menu_menus.Projects.command_candidates = get(g:unite_source_menu_menus.Projects,'command_candidates', [])
-    ]])
+let g:unite_source_menu_menus = get(g:,'unite_source_menu_menus',{})
+let g:unite_source_menu_menus.Projects = {'description': 'Custom mapped keyboard shortcuts                   [SPC] p p'}
+let g:unite_source_menu_menus.Projects.command_candidates = get(g:unite_source_menu_menus.Projects,'command_candidates', [])
+]])
 
 if sp_opt.project_auto_root == 1 then
   sp.cmd('augroup spacevim_project_rooter')
@@ -382,8 +382,9 @@ function M.current_root()
     end
     fn.setbufvar('%', 'rootDir', rootdir)
   end
-  change_dir(rootdir)
-  M.RootchandgeCallback()
+  if change_dir(rootdir) then
+    M.RootchandgeCallback()
+  end
   return rootdir
 end
 

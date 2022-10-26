@@ -200,6 +200,7 @@ function! SpaceVim#autocmds#VimEnter() abort
     call SpaceVim#layers#core#tabline#def_colors()
     set showtabline=2
   endif
+  call SpaceVim#logger#info('run root changed callback on VimEnter!')
   call SpaceVim#plugins#projectmanager#RootchandgeCallback()
   if !empty(get(g:, '_spacevim_bootstrap_after', ''))
     try
