@@ -131,7 +131,7 @@ endfunction
 
 function! s:current_repo() abort
   if executable('git')
-    let repo_home = fnamemodify(s:findDirInParent('.git', expand('%:p')), ':p:h:h')
+    let repo_home = s:find_repo_home(expand('%:p'))
     if repo_home !=# '' || !isdirectory(repo_home)
       let remotes = filter(systemlist('git -C '. repo_home. ' remote -v'),"match(v:val,'^origin') >= 0 && match(v:val,'fetch') > 0")
       if len(remotes) > 0
@@ -149,10 +149,17 @@ function! s:current_repo() abort
     endif
   endif
 endfunction
-fu! s:findDirInParent(what, where) abort " {{{2
+fu! s:find_repo_home(path) abort " {{{2
+  if filereadable(a:path)
+    let where = fnamemodify(a:path, ':p:h')
+  elseif isdirectory(a:path)
+    let where = a:path
+  else
+    let where = getcwd()
+  endif
   let old_suffixesadd = &suffixesadd
   let &suffixesadd = ''
-  let dir = finddir(a:what, escape(a:where, ' ') . ';')
+  let dir = finddir('.git', escape(where, ' ') . ';')
   let &suffixesadd = old_suffixesadd
   return dir
 endf " }}}2
@@ -176,4 +183,9 @@ function! s:list_callback(user, repo, data) abort
       call extend(s:pr_cache[a:user . '_' . a:repo], {pr.number : pr})
     endif
   endfor
+endfunction
+
+
+function! Test(str) abort
+  exe a:str
 endfunction
