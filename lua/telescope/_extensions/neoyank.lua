@@ -52,7 +52,12 @@ local function show_yank_history(opts)
                 actions.close(prompt_bufnr)
                 local reg = vim.fn.getreg('"')
                 vim.fn.setreg('"', entry.value[1])
-                vim.cmd("normal! p")
+                local ok, rst = pcall(vim.cmd, 'normal! p')
+                if not ok then
+                  vim.g._spacevim_temp_err = rst
+                  -- @todo implement lua notify api
+                  local notify = vim.api.nvim_eval('SpaceVim#api#notify#get().notify(g:_spacevim_temp_err, "WarningMsg")')
+                end
                 vim.fn.setreg('"', reg)
             end)
             return true
