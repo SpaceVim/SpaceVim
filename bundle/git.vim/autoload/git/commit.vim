@@ -1,5 +1,6 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:NOTI = SpaceVim#api#import('notify')
 
 let s:commit_bufnr = -1
 
@@ -43,11 +44,11 @@ function! git#commit#run(...) abort
   endif
   let s:commit_jobid = s:JOB.start(cmd,
         \ {
-        \ 'on_stderr' : function('s:on_stderr'),
-        \ 'on_stdout' : function('s:on_stdout'),
-        \ 'on_exit' : function('s:on_exit'),
-        \ }
-        \ )
+          \ 'on_stderr' : function('s:on_stderr'),
+          \ 'on_stdout' : function('s:on_stdout'),
+          \ 'on_exit' : function('s:on_exit'),
+          \ }
+          \ )
 endfunction
 
 function! s:on_stdout(id, data, event) abort
@@ -79,9 +80,9 @@ function! s:on_exit(id, data, event) abort
   call git#logger#info('git-exit exit data:' . string(a:data))
   if s:commit_bufnr == -1
     if a:data ==# 0
-      echo 'commit done!'
+      call s:NOTI.notify('commit done!')
     else
-      echo 'commit failed!'
+      call s:NOTI.notify('commit failed!' , 'WarningMsg')
     endif
   else
     call s:BUFFER.buf_set_lines(s:commit_bufnr, 0 , -1, 0, s:commit_context)
@@ -130,9 +131,9 @@ function! s:WinLeave() abort
     let cmd = ['git', 'commit', '-F', '-']
     let id = s:JOB.start(cmd,
           \ {
-          \ 'on_exit' : function('s:on_commit_exit'),
-          \ }
-          \ )
+            \ 'on_exit' : function('s:on_commit_exit'),
+            \ }
+            \ )
     " line start with # should be ignored
     call s:JOB.send(id, filter(s:commit_context, 'v:val !~# "^\s*#"'))
     call s:JOB.chanclose(id, 'stdin')
@@ -142,8 +143,8 @@ endfunction
 function! s:on_commit_exit(id, data, event) abort
   call git#logger#info('git-commit exit data:' . string(a:data))
   if a:data ==# 0
-    echo 'done!'
+    call s:NOTI.notify('commit done!')
   else
-    echo 'failed!'
+    call s:NOTI.notify('commit failed!' , 'WarningMsg')
   endif
 endfunction
