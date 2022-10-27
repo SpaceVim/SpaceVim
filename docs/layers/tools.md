@@ -32,6 +32,7 @@ To use this configuration layer, update your custom configuration file with:
 - `:Scriptnames`: same as `:scriptnames`, but show results in quickfix list.
 - `:SourceCounter`: source counter for vim
 - `:Calendar`: open vim calendar
+- `:UnstackFromText`: Call unstack with text as input.
 
 This layer also includes `vim-bookmarks`, the following key binding can be used:
 

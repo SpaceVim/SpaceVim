@@ -1,0 +1,216 @@
+*unstack.txt* Extract/Open lines from stack traces
+*unstack*
+
+Author: Matthew Boehm <http://github.com/mattboehm>
+
+==============================================================================
+CONTENTS                                         *unstack_contents*
+
+  ╓ Introduction ─────────────────────────────── |unstack_intro|
+  ║                                                                           
+  ╠ Commands ─────────────────────────────────── |unstack_commands|
+  ║  ├ UnstackFromText.......................... |:UnstackFromText|
+  ║  ├ UnstackFromClipboard..................... |:UnstackFromClipboard|
+  ║  ├ UnstackFromTmux.......................... |:UnstackFromTmux|
+  ║  ├ UnstackFromSelection..................... |:UnstackFromSelection|
+  ║                                                                           
+  ╠ Options ──────────────────────────────────── |unstack_options|
+  ║  ├ mapkey................................... |unstack_mapkey|
+  ║  ├ showsigns................................ |unstack_showsigns|
+  ║  ├ layout................................... |unstack_layout|
+  ║  ├ vertical_alignment....................... |unstack_vertical_alignment|
+  ║  ├ scrolloff................................ |unstack_scrolloff|
+  ║  ├ populate_quickfix........................ |unstack_populate_quickfix|
+  ║  ├ open_tab................................. |unstack_open_tab|
+  ║  └ extractors............................... |unstack_extractors|
+  ║                                                                           
+  ╠ Extractors ───────────────────────────────── |unstack_extraction_engines|
+  ║  └ Regex Extractors......................... |unstack_regex_extractors|
+  ║                                                                           
+  ╙ Limitations ──────────────────────────────── |unstack_limitations|
+
+==============================================================================
+INTRODUCTION                                     *unstack_intro*
+
+Feed all or part of a stacktrace into this plugin and it will open a new tab
+with each level of the stacktrace in a new vsplit. This can be useful for
+seeing more context around an exception or to quickly edit offending files.
+
+Unstack also supports opening lines from the quickfix list.
+
+The basic usage is to highlight a block of text and type <leader>s. Not sure
+what <leader> is? It defaults to \ but to be sure, run `:echo mapleader`.
+
+You can also copy a stack trace to your system clipboard from any program and
+then run |:UnstackFromClipboard|. If you use this a lot, you may want to map
+it to a hotkey like this:
+>
+  nnoremap <F10> :UnstackFromClipboard<CR>
+<
+This allows you to copy from an external program and hit <F10> in vim to open
+the stack trace.
+
+Tmux users can call |:UnstackFromTmux| instead to load a stack trace from the
+tmux paste buffer. That is particularly useful when working on remote machines
+that don't have a running x server.
+
+When you launch unstack, it opens the files from the stack trace in a new tab.
+When you're done with the stack trace, run `:tabclose` to close the tab and 
+return vim to the state it was in before you ran Unstack. If you are 
+unfamiliar with tabs, read `:help |tabpage|` to learn more.
+==============================================================================
+COMMANDS                                         *unstack_commands*
+
+*:UnstackFromText* <text>  Call unstack with text as input. Text can be:
+>
+  :UnstackFromText g:foo           "a variable
+  :UnstackFromText @a              "register a
+  :UnstackFromText "some text"     "literal text escaped with quotes
+<
+
+*:UnstackFromClipboard*    Call unstack with the contents of the clipboard
+                         Note: this is identical to `:UnstackFromText @+`
+
+*:UnstackFromTmux*         Call unstack with the contents of the tmux paste
+                         buffer
+
+*:UnstackFromSelection*    Call unstack with the contents of the X selection
+                         clipboard
+                         Note: this is identical to `:UnstackFromText @*`
+
+==============================================================================
+OPTIONS                                          *unstack_options*
+
+|unstack_mapkey|      shortcut to launch unstack default <leader>s
+|unstack_showsigns|   whether or not to show signs on stacktrace lines
+|unstack_extractors|  regexes for finding files/lines
+
+------------------------------------------------------------------------------
+let g:unstack_mapkey="<leader>s"                 *unstack_mapkey*
+
+Press this combination with a visual selection (or in normal mode followed by
+a motion) to edit. To not define any key mapping, assign an empty string to
+this variable.
+------------------------------------------------------------------------------
+let g:unstack_showsigns=1                        *unstack_showsigns*
+
+If this is set to 1, unstack will put a |sign| on lines in the stacktrace.
+These signs will be visible in any window in the current vim session showing
+that file. Set to 0 to disable this.
+------------------------------------------------------------------------------
+let g:unstack_layout="landscape"                 *unstack_layout*
+
+Determines how to layout windows when opening a stack trace
+* "landscape": open vsplits
+* "portrait": open hsplits
+------------------------------------------------------------------------------
+let g:unstack_vertical_alignment="middle"        *unstack_vertical_alignment*
+
+Options: "top", "middle", "bottom"
+
+Where the line from the stack trace should be on the screen.
+If the line is too close to the beginning or end of the file, its position may
+differ slightly.
+------------------------------------------------------------------------------
+let g:unstack_scrolloff=0                        *unstack_scrolloff*
+
+The value for 'scrolloff' while unstack is opening files. This determines how
+many lines above the highlighted line are shown. The benefit of scrolloff is
+that it provides more context above the line being called, but the main issue
+is that it can cause highlighted lines to be at differing heights if the lines
+are near the top of the file.
+------------------------------------------------------------------------------
+let g:unstack_populate_quickfix=0                *unstack_populate_quickfix*
+
+If true, puts lines from stack trace in quickfix list
+------------------------------------------------------------------------------
+let g:unstack_open_tab=1                         *unstack_open_tab*
+
+If true, opens the stack trace in vsplits in a new tab
+
+This is the default behavior, and should remain true unless you only want
+unstack to populate the quickfix via |unstack_populate_quickfix|.
+------------------------------------------------------------------------------
+                                                 *unstack_extractors*
+let g:unstack_extractors=unstack#extractors#GetDefaults()
+Format: [extractor1, extractor2... ]
+
+This is the list of |unstack_extraction_engines| that will be evaluated in order to
+extract a stack trace from the selected block of text. Setting this list wipes
+out any default extractors. If you want to keep the defaults but add an
+extractor to the list:
+* get the defaults by calling unstack#extractors#GetDefaults()
+* add your extractors to the defaults
+* set g:unstack_extractors to the combined list
+
+==============================================================================
+EXTRACTORS                                       *unstack_extraction_engines*
+
+Extractors are dicts with an extract method that takes in text and returns a 
+stack trace in the form [[filea, linea], [fileb, lineb]... ] by writing your
+own extractors, you can extend Unstack to handle parse stack traces with new
+formats!
+
+If your extractor does not find any files, it should return an empty list
+If you can't extract line numbers, just use 0 for all line numbers
+
+To make an extractor, do something like this:
+
+let my_extractor = {}
+function my_extractor.extract(text) dict
+  "convert text to a "stack" or return empty list if text format invalid
+endfunction
+
+
+------------------------------------------------------------------------------
+REGEX EXTRACTORS                                 *unstack#extractors#regex*
+                                                 *unstack_regex_extractors*
+
+If you want to write an extractor for a format where file path and line number
+can be extracted with regular expressions, there's a built-in factory to help
+you.
+
+For instance, in python, stack traces look like this:
+
+  File "foo.py", line 10, in my_function
+    divide(1, 0)
+  File "math.py", line 6, in divide
+    return  a / b
+
+First we want to form a regex that only matches valid lines with files:
+        '\v^ *File "([^"]+)", line ([0-9]+).+'
+
+Replacing this with the thing in the first perens (\1) yields the file path.
+you can test this by putting your cursor on the first line of the stack trace
+and running:
+        :s/'\v^ *File "([^"]+)", line ([0-9]+).+'/\1/
+
+running this should yield foo.py
+
+repeating the process with \2 should yield the line number (10)
+
+We now have all the necessary pieces. We can make our extractor by calling:
+
+unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2')
+
+To use this extractor, you'd do one of the following:
+"Use only this extractor
+let g:unstack_extractors = [unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2')]
+"Add this extractor to the list of defaults
+let g:unstack_extractors = unstack#extractors#GetDefaults() + [unstack#extractors#Regex('\v^ *File "([^"]+)", line ([0-9]+).+', '\1', '\2')]
+
+unstack#extractors#Regex takes an optional argument that can be set to 1 to
+reverse the stack order (the default order is from top to bottom). For example
+for valgrind traces (which are in reversed order) you could use:
+
+unstack#extractors#Regex('\v^\=\=\d+\=\=[ \t]*%(at|by).*\((.+):(\d+)\)$', '\1', '\2', 1)
+
+==============================================================================
+LIMITATIONS                                      *unstack_limitations*
+
+1. Unstack only recognizes stack trace styles listed in README.markdown,
+   but this can be extended via the |unstack_extractors| setting.
+2. If a stack trace contains relative paths, they must be relative to Vim's
+   current working directory.
+
+ vim:tw=78:et:ft=help:norl:
