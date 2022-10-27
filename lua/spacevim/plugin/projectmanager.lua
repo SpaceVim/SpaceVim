@@ -174,6 +174,7 @@ local function find_root_directory()
     logger.debug('bufname is empty, use current directory instead!')
     fd = fn.getcwd()
   end
+  fd = fn.fnamemodify(fd, ':p')
   logger.debug('start to find root for: ' .. fd)
   local dirs = {}
   logger.debug('searching rooter_patterns:' .. vim.inspect(project_rooter_patterns))
