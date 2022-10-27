@@ -164,9 +164,9 @@ endfunction
 
 function! s:self.notify(msg, ...) abort
   if self.notify_max_width ==# 0
-    let self.notify_max_width = &columns * 0.3
+    let self.notify_max_width = &columns * 0.35
   endif
-  call add(self.message, a:msg)
+  call extend(self.message, split(a:msg, "\n"))
   let self.notification_color = get(a:000, 0, 'Normal')
   let options = get(a:000, 1, {}) 
   let self.winblend = get(options, 'winblend', self.winblend)
@@ -184,7 +184,7 @@ function! s:self.notify(msg, ...) abort
   call setbufvar(self.border.bufnr, '&bufhidden', 'wipe')
   call extend(s:notifications, {self.hashkey : self})
   call self.increase_window()
-  call timer_start(self.timeout, self.close, {'repeat' : 1})
+  call timer_start(self.timeout, self.close, {'repeat' : len(split(a:msg, "\n"))})
 endfunction
 
 function! s:self.redraw_windows() abort
