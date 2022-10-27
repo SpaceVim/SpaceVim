@@ -79,7 +79,7 @@ endif
 
 " gitcommit
 call deoplete#custom#var('omni', 'input_patterns', {
-      \ 'gitcommit': [
+      \ 'git-commit': [
       \       '[ ]#[ 0-9a-zA-Z]*',
       \ ],
       \})
