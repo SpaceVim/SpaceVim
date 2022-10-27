@@ -407,6 +407,8 @@ function M.current_root()
       end
     end
     fn.setbufvar('%', 'rootDir', rootdir)
+  elseif change_dir(rootdir) then
+    M.RootchandgeCallback()
   end
   return rootdir
 end
