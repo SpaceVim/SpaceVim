@@ -29,6 +29,7 @@ This plugins are changed based on a specific version of origin plugin.
 - `clever-f.vim`: based on [`clever-f.vim@fd370f2`](https://github.com/rhysd/clever-f.vim/tree/fd370f27cca93918184a8043220cef1aa440a1fd)
 - `verilog`: based on [`vhda/verilog_systemverilog.vim@0b88f2c`](https://github.com/vhda/verilog_systemverilog.vim/tree/0b88f2ccf81983944bf00d15ec810dd807053d19)
 - `rainbow`: based on [`luochen1990/rainbow@c18071e5`](https://github.com/luochen1990/rainbow/tree/c18071e5c7790928b763c2e88c487dfc93d84a15)
+- `jedi-vim`: based on [`jedi-vim@e82d07`](https://github.com/davidhalter/jedi-vim/tree/e82d07faa17c3b3fe04b4fa6ab074e8e8601a596)
 
 ### No changed plugins
 

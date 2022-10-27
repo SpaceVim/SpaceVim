@@ -479,7 +479,7 @@ def validate_line_column(func):
         elif line_string.endswith('\n'):
             line_len -= 1
 
-        column = line_len if column is None else column
+        column = min(line_len, line_len if column is None else column)
         if not (0 <= column <= line_len):
             raise ValueError('`column` parameter (%d) is not in a valid range '
                              '(0-%d) for line %d (%r).' % (
