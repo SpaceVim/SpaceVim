@@ -24,6 +24,8 @@ lang: zh
 | --------------------------- | ---------------------------- |
 | `notify(string)`            | 使用默认的颜色弹出通知消息   |
 | `notify(string, highlight)` | 使用自定义的颜色弹出通知消息 |
+| `notify.notify_max_width`   | 设置通知窗口的宽度           |
+| `notify.timeout`            | 设置通知窗口关闭的延迟时间   |
 
 ## 使用示例
 
@@ -31,5 +33,7 @@ lang: zh
 
 ```vim
 let s:NOTIFY = SpaceVim#api#import('notify')
+let s:NOTIFY.notify_max_width = 40
+let s:NOTIFY.timeout = 3000
 call s:NOTIFY.notify('This is a simple notification!')
 ```
