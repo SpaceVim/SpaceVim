@@ -138,10 +138,8 @@ local function compare_time(d1, d2)
 end
 local function change_dir(dir)
   if dir == sp_file.unify_path(fn.getcwd()) then
-    logger.debug('same as current directory, no need to change.')
     return false
   else
-    logger.info('change to root: ' .. dir)
     sp.cmd(cd .. ' ' .. sp.fn.fnameescape(sp.fn.fnamemodify(dir, ':p')))
     return true
   end
@@ -297,10 +295,11 @@ function M.current_name()
 end
 
 function M.RootchandgeCallback()
+  -- this function only will be called when switch to other project.
   local path = sp_file.unify_path(fn.getcwd(), ':p')
   local name = fn.fnamemodify(path, ':h:t')
-  logger.debug('project name is:' .. name)
-  logger.debug('project path is:' .. path)
+  logger.info('switch to project:[' .. name .. ']')
+  logger.info('       rootdir is:' .. path)
   local project = {
     ['path'] = path,
     ['name'] = name,
@@ -314,7 +313,7 @@ function M.RootchandgeCallback()
   -- let b:_spacevim_project_name = g:_spacevim_project_name
   fn.setbufvar('%', '_spacevim_project_name', project.name)
   for _, Callback in pairs(project_callback) do
-    logger.debug('run callback:' .. Callback)
+    logger.debug('     run callback:' .. Callback)
     fn.call(Callback, {})
   end
 end
