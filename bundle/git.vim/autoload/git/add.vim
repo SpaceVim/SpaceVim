@@ -8,6 +8,7 @@
 " <
 
 let s:JOB = SpaceVim#api#import('job')
+let s:NOTI = SpaceVim#api#import('notify')
 
 function! s:replace_argvs(argvs) abort
   let argvs = []
@@ -38,9 +39,9 @@ function! s:on_exit(id, data, event) abort
     if exists(':GitGutter')
       GitGutter
     endif
-    echo 'done!'
+    call s:NOTI.notify('stage files done!')
   else
-    echo 'failed!'
+    call s:NOTI.notify('stage files failed!')
   endif
 endfunction
 
