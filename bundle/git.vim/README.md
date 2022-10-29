@@ -4,7 +4,7 @@
 
 Use git in SpaceVim
 
-
+This plugin adds extensive support for [git](https://git-scm.com/). 
 
 <!-- vim-markdown-toc GFM -->
 

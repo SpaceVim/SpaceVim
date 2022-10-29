@@ -477,9 +477,9 @@ function! gtags#update(single_update) abort
   call s:JOB.start(cmd, {'on_exit' : funcref('s:on_update_exit')})
 endfunction
 
-function! s:on_update_exit(...) abort
-  if str2nr(a:2) > 0 && !g:gtags_silent
-    call s:LOGGER.warn('failed to update gtags, exit data: ' . a:2)
+function! s:on_update_exit(id, data, event) abort
+  if a:data > 0 && !g:gtags_silent
+    call s:LOGGER.warn('failed to update gtags, exit data: ' . a:data)
   endif
 endfunction
 
