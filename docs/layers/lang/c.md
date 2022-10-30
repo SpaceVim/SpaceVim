@@ -32,6 +32,12 @@ To use this configuration layer, update the custom configuration file with:
   name = "lang#c"
 ```
 
+for windows users, if you want to install llvm without vs build tools, you can install [mingw-winlibs-llvm](https://winlibs.com/):
+
+```
+scoop install mingw-winlibs-llvm
+```
+
 ## Features
 
 - code completion
