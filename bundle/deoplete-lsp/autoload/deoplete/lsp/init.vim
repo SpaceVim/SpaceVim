@@ -4,7 +4,7 @@
 "=============================================================================
 
 if !exists('g:deoplete#lsp#handler_enabled')
-  let g:deoplete#lsp#handler_enabled = v:true
+  let g:deoplete#lsp#handler_enabled = v:false
 endif
 
 if !exists('s:is_handler_enabled')

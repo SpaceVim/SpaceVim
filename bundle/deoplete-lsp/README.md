@@ -13,7 +13,7 @@ https://github.com/neovim/nvim-lsp
 
 ## Configuration
 
-* `g:deoplete#lsp#handler_enabled`: If you set it to v:false, you can disable
+* `g:deoplete#lsp#handler_enabled`: If you set it to v:true, you can disable
   hover handler.
 
 * `g:deoplete#lsp#use_icons_for_candidates`: Set to v:true to enable icons for
