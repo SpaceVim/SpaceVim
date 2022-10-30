@@ -134,7 +134,9 @@ let s:CPT = SpaceVim#api#import('vim#compatible')
 " plugins {{{
 function! SpaceVim#layers#lang#c#plugins() abort
   let plugins = []
-  if !SpaceVim#layers#lsp#check_filetype('c') && !SpaceVim#layers#lsp#check_filetype('cpp')
+  if !SpaceVim#layers#lsp#check_filetype('c')
+        \ && !SpaceVim#layers#lsp#check_filetype('cpp')
+        \ && !SpaceVim#layers#lsp#check_server('clangd')
     if g:spacevim_autocomplete_method ==# 'deoplete'
       call add(plugins, ['Shougo/deoplete-clangx', {'merged' : 0}])
     elseif g:spacevim_autocomplete_method ==# 'ycm'
