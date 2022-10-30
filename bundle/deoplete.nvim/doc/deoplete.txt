@@ -45,8 +45,8 @@ Improvements in deoplete in comparison to neocomplete:
 ==============================================================================
 INSTALL							*deoplete-install*
 
-Note: deoplete requires Neovim (0.3.0+) or Vim8.1+ (latest is recommended)
-with Python 3.6.1+ and |+timers| enabled.
+Note: deoplete requires Neovim (0.3.0+) or Vim8.2.1978+ (latest is
+recommended) with Python 3.6.1+ and |+timers| enabled.
 
 Please install/upgrade msgpack package (1.0.0+).
 https://github.com/msgpack/msgpack-python
@@ -604,7 +604,7 @@ EXAMPLES						*deoplete-examples*
 	call deoplete#custom#source('_', 'smart_case', v:true)
 
 	" <CR>: close popup and save indent.
-	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+	inoremap <silent> <CR> <Cmd>call <SID>my_cr_function()<CR>
 	function! s:my_cr_function() abort
 	  return deoplete#close_popup() . "\<CR>"
 	endfunction
@@ -1638,6 +1638,17 @@ A: It is the feature of deoplete.  The default insertion is disabled to enable
 completion asynchronously.  If you don't like the behavior, you should use
 other auto completion plugin.
 
+Q: deoplete does not work on macVim environment.
+
+A:
+https://github.com/Shougo/deoplete.nvim/issues/1196
+
+The homebrew version of macVim is distributed with python included. Thus, when
+you try to install "pynvim" from the command line it will likely be installed
+in the wrong library location. This results in the headline error. The
+solution is to set the python path in the .vimrc file and use homebrew to link
+to the python version installed by macVim.
+
 							*deoplete-faq-config*
 2. Configuration~
 
@@ -1690,7 +1701,7 @@ Q: When I press enter, neovim closes the popup instead of inserting new line.
 A: It is Vim/neovim's default behavior (feature.)  If you want to insert the
    new line, you should map <CR>. >
 
-	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+	inoremap <silent> <CR> <Cmd>call <SID>my_cr_function()<CR>
 	function! s:my_cr_function() abort
 	  return deoplete#close_popup() . "\<CR>"
 	endfunction
@@ -1794,6 +1805,20 @@ Q: I want to use floating preview window feature with deoplete.
 
 A: Please install float-preview.nvim plugin.
 https://github.com/ncm2/float-preview.nvim
+Note: You need to use sources with description like "deoplete-lsp".
+>
+	set runtimepath+=~/src/deoplete.nvim/
+	set runtimepath+=~/src/deoplete-lsp
+	set runtimepath+=~/src/nvim-lspconfig
+	set runtimepath+=~/src/float-preview.nvim
+	
+	let g:deoplete#enable_at_startup = 1
+	let g:float_preview#docked = 0
+	
+	lua <<END
+	  require'lspconfig'.gopls.setup{}
+	  require'lspconfig'.pylsp.setup{}
+	END
 
 Q: I want to complete from 'tags'.
 

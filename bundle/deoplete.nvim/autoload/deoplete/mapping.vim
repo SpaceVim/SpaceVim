@@ -18,7 +18,9 @@ function! deoplete#mapping#_init() abort
   noremap  <silent> <Plug>+  <Nop>
 endfunction
 function! deoplete#mapping#_dummy(func) abort
-  return "\<C-r>=".a:func."()\<CR>"
+  " NOTE: silent call is needed for `set noshowcmd`
+  " https://github.com/Shougo/deoplete.nvim/pull/1199
+  return "\<Cmd>silent call ".a:func."()\<CR>"
 endfunction
 function! s:check_completion_info(candidates) abort
   if !exists('*complete_info')
