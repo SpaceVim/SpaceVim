@@ -24,6 +24,7 @@ local function show_taskconfig(opts)
     separator = ' ',
     items = {
       { width = 25 },
+      { width = 10 },
       { width = 15 },
       { remaining = true },
     },
@@ -43,9 +44,15 @@ local function show_taskconfig(opts)
     elseif entry.value.task.isDetected == 1 then
       task_type = 'detected'
     end
+    -- @todo the text maybe changed
+    local background = 'no-background'
+    if entry.value.task.isBackground == 1 then
+      background = 'background'
+    end
     return displayer({
       { '[' .. entry.value.name .. ']', 'TelescopeResultsVariable' },
       { '[' .. task_type .. ']', 'TelescopeResultsNumber' },
+      { '[' .. background .. ']', 'TelescopeResultsNumber' },
       { desc, 'TelescopeResultsComment' },
     })
   end
