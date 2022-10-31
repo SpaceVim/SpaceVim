@@ -366,7 +366,7 @@ function! s:update_tasks_win_context() abort
   call s:BUF.buf_set_lines(s:task_viewer_bufnr, 0, -1, 0, sort(lines))
 endfunction
 
-function! SpaceVim#plugins#tasks#get_tesk_name() abort
+function! SpaceVim#plugins#tasks#get_tasks() abort
   call s:load()
   for Provider in s:providers
     call extend(s:task_config, call(Provider, []))
