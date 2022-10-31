@@ -24,6 +24,7 @@ local function show_taskconfig(opts)
     separator = ' ',
     items = {
       { width = 25 },
+      { width = 15 },
       { remaining = true },
     },
   })
@@ -33,12 +34,19 @@ local function show_taskconfig(opts)
     if desc == nil then
       desc = entry.value.task.command
       if entry.value.task.args ~= nil then
-        desc = desc .. table.concat(entry.value.task.args, ' ')
+        desc = desc .. ' ' .. table.concat(entry.value.task.args, ' ')
       end
     end
+    local task_type = 'local'
+    if entry.value.task.isGlobal == 1 then
+      task_type = 'global'
+    elseif entry.value.task.isDetected == 1 then
+      task_type = 'detected'
+    end
     return displayer({
-      { '[' .. entry.value.name .. ']', 'TelescopeResultsComment' },
-      { desc, 'TelescopeResultsFunction' },
+      { '[' .. entry.value.name .. ']', 'TelescopeResultsVariable' },
+      { '[' .. task_type .. ']', 'TelescopeResultsNumber' },
+      { desc, 'TelescopeResultsComment' },
     })
   end
   pickers
@@ -61,6 +69,7 @@ local function show_taskconfig(opts)
           actions.close(prompt_bufnr)
           -- vim.fn.setreg('"', entry.value[1])
           local task = entry.value.task
+          vim.fn['SpaceVim#plugins#runner#run_task'](task)
         end)
         return true
       end,

@@ -165,6 +165,8 @@ function! SpaceVim#layers#telescope#config() abort
           \ ],
           \ 1)
 
+  call SpaceVim#mapping#space#def('nnoremap', ['p', 't', 'f'],
+        \ 'Telescope task', 'fuzzy-find-tasks', 1)
   let g:_spacevim_mappings.f = {'name' : '+Fuzzy Finder'}
   call s:defind_fuzzy_finder()
 
