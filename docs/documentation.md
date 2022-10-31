@@ -2165,6 +2165,8 @@ The `SPC p t l` will open the tasks manager windows, in the tasks manager window
 
 If the `telescope` layer is loaded, you can also use `SPC p t f` to fuzzy find specific task, and run the select task.
 
+![fuzzy-task](https://user-images.githubusercontent.com/13142418/199057483-d5cce17c-2f06-436d-bf7d-24a78d0eeb11.png)
+
 #### Custom tasks
 
 This is a basic task configuration for running `echo hello world`,
