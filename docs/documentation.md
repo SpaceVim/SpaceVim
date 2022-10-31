@@ -2152,13 +2152,20 @@ which is similar to VSCode's tasks-manager. There are two kinds of task configur
 The tasks defined in the global tasks configuration can be overrided by project local
 tasks configuration.
 
-| Key Bindings | Descriptions                  |
-| ------------ | ----------------------------- |
-| `SPC p t e`  | edit tasks configuration file |
-| `SPC p t r`  | select task to run            |
-| `SPC p t l`  | list all available tasks      |
+| Key Bindings | Descriptions                              |
+| ------------ | ----------------------------------------- |
+| `SPC p t e`  | edit tasks configuration file             |
+| `SPC p t r`  | select task to run                        |
+| `SPC p t l`  | list all available tasks                  |
+| `SPC p t f`  | fuzzy find tasks(require telescope layer) |
+
+The `SPC p t l` will open the tasks manager windows, in the tasks manager windows, you can use `Enter` to run task under the cursor.
 
 ![task_manager](https://user-images.githubusercontent.com/13142418/94822603-69d0c700-0435-11eb-95a7-b0b4fef91be5.png)
+
+If the `telescope` layer is loaded, you can also use `SPC p t f` to fuzzy find specific task, and run the select task.
+
+![fuzzy-task](https://user-images.githubusercontent.com/13142418/199057483-d5cce17c-2f06-436d-bf7d-24a78d0eeb11.png)
 
 #### Custom tasks
 
