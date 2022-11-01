@@ -1,3 +1,6 @@
+let s:NOTI = SpaceVim#api#import('notify')
+
+
 function! javacomplete#classpath#gradle#IfGradle()
   if !empty(g:JavaComplete_GradleExecutable)
     if executable(g:JavaComplete_GradleExecutable) && g:JavaComplete_GradlePath != ""
@@ -48,7 +51,7 @@ function! javacomplete#classpath#gradle#BuildClasspathHandler(data, event)
 
       echomsg "Gradle classpath built successfully"
     else
-      echohl WarningMsg | echomsg "Failed to build gradle classpath" | echohl None
+      call s:NOTI.notify('Failed to build gradle classpath', 'WarningMsg')
     endif
 
     call delete(s:temporaryGradleFile)
@@ -58,7 +61,7 @@ function! javacomplete#classpath#gradle#BuildClasspathHandler(data, event)
     unlet s:gradlePath
 
   elseif a:event == 'stdout'
-    for data in filter(a:data,'v:val !~ "^\\s*$"')
+    for data in filter(a:data,'v:val !~ "^\\s*\\r\\?\\n*$"')
       if g:JavaComplete_ShowExternalCommandsOutput
         echomsg data
       endif
@@ -67,8 +70,11 @@ function! javacomplete#classpath#gradle#BuildClasspathHandler(data, event)
       call extend(s:gradleOutput, a:data)
     endif
   elseif a:event == 'stderr'
-    for data in filter(a:data,'v:val !~ "^\\s*$"')
-      echoerr data
+    for data in filter(a:data,'v:val !~ "^\\s*\\r\\?\\n*$"')
+      " echoerr data
+      " we should not use echoerr, which will block vim
+      "
+      call javacomplete#logger#warn(data)
     endfor
   endif
 endfunction

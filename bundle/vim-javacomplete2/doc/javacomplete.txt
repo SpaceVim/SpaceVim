@@ -153,7 +153,7 @@ You can use `vim-javacomplete2` just like other omni-completion plugin. Many
 samples of input context are gived in the following section.
 
 See |javacomplete-faq| in time if some problem occurs. When meeting other
-problems not described in FAQ, you can contact with the auther by the
+problems not described in FAQ, you can contact with the author by the
 following e-mail: ashaihullin@gmail.com
 
 
@@ -465,7 +465,6 @@ Use fully qualified name in description:
   let g:JavaComplete_UseFQN = 1
 <
 By default this option is disabled (0).
-
 
                                         *g:JavaComplete_EnableDefaultMappings*
 Enable or disable default key mappings, by default this option is 1, and
