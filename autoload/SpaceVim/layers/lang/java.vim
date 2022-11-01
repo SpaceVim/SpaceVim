@@ -145,6 +145,10 @@ function! SpaceVim#layers#lang#java#config() abort
   call SpaceVim#plugins#repl#reg('java', 'jshell')
   call add(g:spacevim_project_rooter_patterns, 'pom.xml')
 
+  " for neomake 
+  "
+  let g:neomake_java_javac_options = ['-J-Duser.language=en'] 
+
   if SpaceVim#layers#lsp#check_filetype('java')
     call SpaceVim#mapping#gd#add('java', function('SpaceVim#lsp#go_to_def'))
   else
