@@ -708,8 +708,8 @@ function! SpaceVim#layers#core#statusline#def_colors() abort
   exe 'hi! SpaceVim_statusline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
   exe 'hi! SpaceVim_statusline_c ctermbg=' . t[2][2] . ' ctermfg=' . t[2][3] . ' guibg=' . t[2][1] . ' guifg=' . t[2][0]
   exe 'hi! SpaceVim_statusline_z ctermbg=' . t[3][1] . ' ctermfg=' . t[2][2] . ' guibg=' . t[3][0] . ' guifg=' . t[2][0]
-  hi! SpaceVim_statusline_error ctermbg=003 ctermfg=Black guibg=#504945 guifg=#fb4934 gui=bold
-  hi! SpaceVim_statusline_warn ctermbg=003 ctermfg=Black guibg=#504945 guifg=#fabd2f gui=bold
+  exe 'hi! SpaceVim_statusline_error ctermbg=' . t[1][2] . ' ctermfg=Black guibg=' . t[1][1] . ' guifg=#fb4934 gui=bold'
+  exe 'hi! SpaceVim_statusline_warn ctermbg=' . t[1][2] . ' ctermfg=Black guibg=' . t[1][1] . ' guifg=#fabd2f gui=bold'
   call s:HI.hi_separator('SpaceVim_statusline_a', 'SpaceVim_statusline_b')
   call s:HI.hi_separator('SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b')
   call s:HI.hi_separator('SpaceVim_statusline_ia', 'SpaceVim_statusline_b')
