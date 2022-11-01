@@ -131,9 +131,11 @@ let s:java_file_head = [
 let s:java_interpreter = 'java'
 
 function! SpaceVim#layers#lang#java#plugins() abort
-  let plugins = [
-        \ [g:_spacevim_root_dir . 'bundle/vim-javacomplete2', { 'on_ft' : ['java','jsp'], 'loadconf' : 1}],
-        \ ]
+  let plugins = []
+  if !SpaceVim#layers#lsp#check_filetype('java')
+        \ && !SpaceVim#layers#lsp#check_server('jdtls')
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-javacomplete2', { 'on_ft' : ['java','jsp'], 'loadconf' : 1}])
+  endif
   call add(plugins, [g:_spacevim_root_dir . 'bundle/JavaUnit.vim', {'on_ft' : 'java'}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/java_getset.vim', {'on_ft' : 'java'}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-dict', {'on_ft' : 'java'}])
