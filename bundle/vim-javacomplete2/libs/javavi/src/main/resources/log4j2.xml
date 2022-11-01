@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" name="Javavi" packages="kg.ash.javavi">
+    <Properties>
+        <Property name="daemon.port">0</Property>
+        <Property name="log.level">off</Property>
+        <Property name="log.directory">/tmp/javavi_log</Property>
+        <Property name="log.time_id">${date:yyMMddHHmm}</Property>
+    </Properties>
+    <Appenders>
+        <Console name="CONSOLE-OUT" target="SYSTEM_OUT">
+            <PatternLayout pattern=" [%c] %m%xEx%n"/>
+        </Console>
+
+        <File name="Javavi" fileName="${sys:log.directory}/${log.time_id}-${sys:daemon.port}.log"
+            immediateFlush="true" append="true">
+            <PatternLayout>
+                <Pattern>%d{MMdd HH:mm:ss.SSS} %p{length=1} [%t] %m [%c{-3}]%n</Pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="${sys:log.level}">
+            <AppenderRef ref="CONSOLE-OUT" />
+            <AppenderRef ref="Javavi"/>
+        </Root>
+    </Loggers>
+</Configuration>

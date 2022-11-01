@@ -1,0 +1,60 @@
+task classpath {
+  doLast {
+    HashSet<String> classpathFiles = new HashSet<String>()
+    for (project in allprojects) {
+      if (project.hasProperty('android')) {
+        project.android.getBootClasspath().each {
+          classpathFiles += it
+        }
+        if (project.android.hasProperty('applicationVariants')) {
+          project.android.applicationVariants.all { variant ->
+
+            def variantBase = variant.baseName.replaceAll("-", File.separator)
+
+            def buildClasses = project.getBuildDir().absolutePath +
+              File.separator + "intermediates" +
+              File.separator + "classes" +
+              File.separator + variantBase
+
+            classpathFiles += buildClasses
+
+            def userClasses = project.getBuildDir().absolutePath +
+              File.separator + "intermediates" +
+              File.separator + "javac" +
+              File.separator + variant.baseName.replaceAll("-", File.separator) +
+              File.separator + "compile" + variantBase.capitalize() + "JavaWithJavac" + File.separator + "classes"
+
+            classpathFiles += userClasses
+
+            variant.getCompileClasspath().each {
+              classpathFiles += it
+            }
+          }
+        }
+      } else {
+        // Print the list of all dependencies jar files.
+        project.configurations.findAll {
+          it.metaClass.respondsTo(it, "isCanBeResolved") ? it.isCanBeResolved() : false
+        }.each {
+          it.resolve().each {
+            if (it.inspect().endsWith("jar")) {
+              classpathFiles += it
+            } else if (it.inspect().endsWith("aar")) {
+              // If the dependency is an AAR file we try to determine the location
+              // of the classes.jar file in the exploded aar folder.
+              def splitted = it.inspect().split("/")
+              def namespace = splitted[-5]
+              def name = splitted[-4]
+              def version = splitted[-3]
+              def explodedPath = "$project.buildDir/intermediates/exploded-aar/$namespace/$name/$version/jars/classes.jar"
+              classpathFiles += explodedPath
+            }
+          }
+        }
+      }
+    }
+    def classpath = classpathFiles.join(File.pathSeparator)
+    println "CLASSPATH:" + classpath
+    println "END CLASSPATH GENERATION"
+  }
+}

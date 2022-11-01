@@ -13,6 +13,7 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
   - [`lang#go` layer](#langgo-layer)
   - [`tmux` layer](#tmux-layer)
   - [`incsearch` layer](#incsearch-layer)
+  - [`lang#java` layer](#langjava-layer)
 
 <!-- vim-markdown-toc -->
 
@@ -86,3 +87,7 @@ This plugins are changed based on a specific version of origin plugin.
 - [vim-asterisk@77e9706](https://github.com/haya14busa/vim-asterisk/tree/77e97061d6691637a034258cc415d98670698459)
 - [vim-over@878f83b](https://github.com/osyo-manga/vim-over/tree/878f83bdac0cda308f599d319f45c7877d5274a9)
 - [incsearch-easymotion.vim@fcdd3ae](https://github.com/haya14busa/incsearch-easymotion.vim/tree/fcdd3aee6f4c0eef1a515727199ece8d6c6041b5)
+
+#### `lang#java` layer
+
+- `vim-javacomplete2` based on `https://github.com/artur-shaik/vim-javacomplete2/tree/a716e32bbe36daaed6ebc9aae76525aad9536245`

@@ -132,7 +132,7 @@ let s:java_interpreter = 'java'
 
 function! SpaceVim#layers#lang#java#plugins() abort
   let plugins = [
-        \ ['artur-shaik/vim-javacomplete2', { 'on_ft' : ['java','jsp'], 'loadconf' : 1}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-javacomplete2', { 'on_ft' : ['java','jsp'], 'loadconf' : 1}],
         \ ]
   call add(plugins, [g:_spacevim_root_dir . 'bundle/JavaUnit.vim', {'on_ft' : 'java'}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/java_getset.vim', {'on_ft' : 'java'}])
