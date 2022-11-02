@@ -50,9 +50,12 @@ function! s:BuildClassPath(force)
     endif
   endif
 
-  let g:JavaComplete_LibsPath .= s:FindClassPath(a:force)
-
+  let found_classpath = s:FindClassPath(a:force)
+  if found_classpath != '.' || g:JavaComplete_LibsPath != '.'
+    let g:JavaComplete_LibsPath .= found_classpath 
+  endif
   call s:Log("libs found: ". g:JavaComplete_LibsPath)
+
 endfunction
 
 function! s:ReadClassPathFile(classpathFile)
