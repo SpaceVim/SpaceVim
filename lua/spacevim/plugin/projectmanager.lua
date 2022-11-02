@@ -145,24 +145,37 @@ local function change_dir(dir)
   end
 end
 
+local function compare(d1, d2)
+  local al = #vim.split(d1, '/')
+  local bl = #vim.split(d2, '/')
+  -- logger.debug('al is ' .. al)
+  -- logger.debug('bl is ' .. bl)
+  -- the project_rooter_outermost is 0/false or 1 true
+  if sp_opt.project_rooter_outermost == 0
+    or sp_opt.project_rooter_outermost == false then
+    if bl > al then
+      return false
+    else
+      return true
+    end
+  else
+    if al > bl then
+      return false
+    else
+      return true
+    end
+  end
+end
+
 local function sort_dirs(dirs)
   table.sort(dirs, compare)
   local dir = dirs[1]
+  -- logger.debug(vim.inspect(dirs))
   local bufdir = fn.getbufvar('%', 'rootDir', '')
   if bufdir == dir then
     return ''
   else
     return dir
-  end
-end
-
-local function compare(d1, d2)
-  local _, al = string.gsub(d1, '/', '')
-  local _, bl = string.gsub(d2, '/', '')
-  if sp_opt.project_rooter_outermost == 0 then
-    return bl - al
-  else
-    return al - bl
   end
 end
 
