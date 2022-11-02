@@ -184,6 +184,14 @@ function! SpaceVim#layers#lang#java#config() abort
           \ })
   endif
   call SpaceVim#layers#edit#add_ft_head_tamplate('java', s:java_file_head)
+  call SpaceVim#plugins#projectmanager#reg_callback(function('s:handle_java_project_changed'))
+endfunction
+
+function! s:handle_java_project_changed() abort
+  try
+    call javacomplete#classpath#classpath#BuildClassPath()
+  catch
+  endtry
 endfunction
 
 function! s:JspFileTypeInit() abort
