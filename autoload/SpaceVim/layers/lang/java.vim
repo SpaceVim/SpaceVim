@@ -186,6 +186,18 @@ function! SpaceVim#layers#lang#java#config() abort
   endif
   call SpaceVim#layers#edit#add_ft_head_tamplate('java', s:java_file_head)
   call SpaceVim#plugins#projectmanager#reg_callback(function('s:handle_java_project_changed'))
+  call SpaceVim#plugins#tasks#reg_provider(function('s:maven_tasks'))
+endfunction
+
+function! s:maven_tasks() abort
+  let detect_task = {}
+  let conf = {}
+  if filereadable('pom.xml')
+    call extend(detect_task, {
+          \ 'compile' : {'command' : 'mvn', 'args' : ['compile'], 'isDetected' : 1, 'detectedName' : 'mvn:'}
+          \ })
+  endif
+  return detect_task
 endfunction
 
 function! s:handle_java_project_changed() abort

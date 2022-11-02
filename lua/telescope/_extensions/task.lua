@@ -38,11 +38,13 @@ local function show_taskconfig(opts)
         desc = desc .. ' ' .. table.concat(entry.value.task.args, ' ')
       end
     end
+    local task_name = entry.value.name
     local task_type = 'local'
     if entry.value.task.isGlobal == 1 then
       task_type = 'global'
     elseif entry.value.task.isDetected == 1 then
       task_type = 'detected'
+      task_name = (entry.value.task.detectedName or '') .. task_name
     end
     -- @todo the text maybe changed
     local background = 'no-background'
@@ -50,7 +52,7 @@ local function show_taskconfig(opts)
       background = 'background'
     end
     return displayer({
-      { '[' .. entry.value.name .. ']', 'TelescopeResultsVariable' },
+      { '[' .. task_name .. ']', 'TelescopeResultsVariable' },
       { '[' .. task_type .. ']', 'TelescopeResultsNumber' },
       { '[' .. background .. ']', 'TelescopeResultsNumber' },
       { desc, 'TelescopeResultsComment' },
