@@ -53,7 +53,7 @@ function M.set_config_name(path, name)
 end
 
 function M.alt(request_parse, ...)
-  local argvs = {...}
+  local argv = {...}
   local alt_type = argv[1] or 'alternate'
   local alt = nil
   if fn.exists('b:alternate_file_config') ~= 1 then
