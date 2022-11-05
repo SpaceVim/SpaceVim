@@ -64,20 +64,20 @@ function M.alt(request_parse, ...)
     local file = sp_file.unify_path(fn.bufname('%'), ':.')
     alt = M.get_alt(file, conf_file_path, request_parse, alt_type)
   end
-  logger.debug('alt is:' .. alt)
+  logger.info('  > found alternate file: ' .. alt)
   if alt ~= nil and alt ~= '' then
     cmd('e ' .. alt)
   else
-    print('failed to find alternate file!')
+    vim.api.nvim_eval(
+      'SpaceVim#api#notify#get().notify("failed to find alternate file!", "WarningMsg")'
+    )
   end
 end
 
 local function get_project_config(conf_file)
-  logger.info('read context from:' .. conf_file)
   local context = fn.join(fn.readfile(conf_file), '\n')
   local conf = sp_json.json_decode(context)
-  logger.debug(context)
-  if type(conf) ~= type({}) then
+  if type(conf) ~= 'table' then
     conf = {}
   end
   local root = sp_file.unify_path(conf_file, ':p:h')
@@ -112,7 +112,7 @@ local function _comp(a, b)
 end
 
 local function parse(alt_config_json)
-  logger.info('Start to parse alternate file for:' .. alt_config_json.root)
+  logger.info('parse alternate file for:' .. alt_config_json.root)
   project_config[alt_config_json.root] = {}
   local keys = _keys(alt_config_json.config)
   table.sort(keys, _comp)
@@ -144,8 +144,9 @@ end
 
 local function is_config_changed(conf_path)
   if fn.getftime(conf_path) > fn.getftime(cache_path) then
-    logger.info('alt config file(' .. conf_path .. ')')
-    return 1
+    return true
+  else
+    return false
   end
 end
 
@@ -157,7 +158,7 @@ function M.get_alt(file, conf_path, request_parse, a_type)
   alt_config_json = get_project_config(conf_path)
   if
     project_config[alt_config_json.root] == nil
-    and is_config_changed(conf_path) == 0
+    and not is_config_changed(conf_path)
     and request_parse == 0
   then
     load_cache()
