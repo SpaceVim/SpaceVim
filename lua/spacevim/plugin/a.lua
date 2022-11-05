@@ -36,14 +36,9 @@ local function cache()
 end
 
 local function get_type_path(a, f, b)
-    logger.debug('run get_type_path function')
-    logger.debug(fn.string(a))
-    logger.debug(f)
-    logger.debug(b)
     local begin_len = fn.strlen(a[1])
     local end_len = fn.strlen(a[2])
     local r = fn.substitute(b, '{}', string.sub(f, begin_len + 1,  (end_len+1) * -1), 'g')
-    logger.debug(r)
     return r
 end
 
@@ -130,7 +125,6 @@ local function parse(alt_config_json)
         if string.match(searchpath, '*') == '*' then
             searchpath = string.gsub(searchpath, '*', '**/*')
         end
-        logger.debug('run globpath for: '.. searchpath)
         for _,file in pairs(cmp.globpath('.', searchpath)) do
             file = sp_file.unify_path(file, ':.')
             project_config[alt_config_json.root][file] = {}
@@ -153,7 +147,6 @@ local function parse(alt_config_json)
             end
         end
     end
-    logger.info('Paser done, try to cache alternate info')
     cache()
 end
 
