@@ -37,6 +37,7 @@ local function update_rooter_patterns()
       table.insert(project_rooter_ignores, string.sub(v, 2, -1))
     end
   end
+  logger.debug('project rooter patterns:' .. vim.inspect(project_rooter_patterns))
 end
 
 local function is_ignored_dir(dir)
@@ -182,13 +183,20 @@ end
 local function find_root_directory()
   local fd = fn.bufname('%')
   if fd == '' then
-    logger.debug('bufname is empty, use current directory instead!')
+    -- for empty name buffer, check previous buffer dir
+    local previous_bufnr = vim.fn.bufnr('#')
+    if previous_bufnr == -1 then
+      logger.debug('previous buffer does not exist, use current directory instead!')
+    elseif fn.getbufvar('#', 'rootDir', '') == '' then
+      logger.debug('previous buffer rootDir is empty, use current directory instead!')
+    else
+      return fn.getbufvar('#', 'rootDir', '')
+    end
     fd = fn.getcwd()
   end
   fd = fn.fnamemodify(fd, ':p')
   logger.debug('start to find root for: ' .. fd)
   local dirs = {}
-  logger.debug('searching rooter_patterns:' .. vim.inspect(project_rooter_patterns))
   for _, pattern in pairs(project_rooter_patterns) do
     local find_path = ''
     if string.sub(pattern, -1) == '/' then
