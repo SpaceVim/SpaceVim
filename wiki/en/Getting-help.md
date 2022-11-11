@@ -1,9 +1,5 @@
-If you need help, ask your question in the [chat room](https://app.element.io/#/room/#spacevim:matrix.org),
+If you need help, ask your question in the [matrix room](https://chat.mozilla.org/#/room/#spacevim:matrix.org),
 a member of the community will help you out.
-
-Here is a simple guide for how to get help with SpaceVim. Before asking
-questions, please read the [FAQ](https://spacevim.org/faq/), the answer
-to your question may be listed there. 
 
 ### Transitioning to init.toml
 
