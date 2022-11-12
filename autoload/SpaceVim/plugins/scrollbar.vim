@@ -24,18 +24,18 @@ let s:default = {
       \    'min_size' : 3,
       \    'width' : 1,
       \    'right_offset' : 1,
-      \    'excluded_filetypes' : ['startify', 'leaderf', 'NvimTree', 'tagbar', 'defx'],
+      \    'excluded_filetypes' : ['startify', 'git-commit','leaderf', 'NvimTree', 'tagbar', 'defx'],
       \    'shape' : {
-        \        'head' : '▲',
-        \        'body' : '█',
-        \        'tail' : '▼',
-        \    },
-        \    'highlight' : {
-          \        'head' : 'Normal',
-          \        'body' : 'Normal',
-          \        'tail' : 'Normal',
-          \    }
-          \ }
+      \        'head' : '▲',
+      \        'body' : '█',
+      \        'tail' : '▼',
+      \    },
+      \    'highlight' : {
+      \        'head' : 'Normal',
+      \        'body' : 'Normal',
+      \        'tail' : 'Normal',
+      \    }
+      \ }
 
 augroup spacevim_scrollbar
   autocmd!
