@@ -29,6 +29,12 @@ On Windows, the easiest way to install Neovim is to download
 [Neovim.zip](https://github.com/neovim/neovim/releases/download/nightly/nvim-win32.zip)
 from neovim release page. and extract it into `C:\Neovim`. You can also add `C:\Neovim\bin` to your `PATH`.
 
+You can also use [scoop](https://scoop.sh/) to install neovim.
+
+```
+scoop install neovim
+```
+
 ### Linux
 
 You can install neovim or vim with default package manager.

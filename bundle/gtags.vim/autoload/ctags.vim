@@ -52,14 +52,16 @@ endfunction
 
 function! ctags#update(...) abort
   if !s:version_checked
+    call s:LOGGER.info('start to check ctags version')
     call s:JOB.start([g:gtags_ctags_bin, '--version'], {
           \ 'on_stdout': function('s:version_std_out'),
           \ 'on_exit': function('s:version_exit'),
           \ })
     return
+  else
+    call s:LOGGER.info('update ctags database for ' . project_root)
   endif
   let project_root = getcwd()
-  call s:LOGGER.info('update ctags database for ' . project_root)
   let dir = s:FILE.unify_path(g:tags_cache_dir) 
         \ . s:FILE.path_to_fname(project_root)
   let cmd = [g:gtags_ctags_bin]
