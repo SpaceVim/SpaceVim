@@ -129,13 +129,15 @@ packages tuned by power users and bugs are fixed quickly.
 
 ## Highlighted features
 
-- **Great documentation:** access documentation in SpaceVim with `:h SpaceVim`.
-- **nice UI:** you'll love the awesome UI and its useful features.
+- **Modularization:** plugins and functions are organized in [layers](https://spacevim.org/layers/).
+- **Compatible api:** a series of [compatible APIs](https://spacevim.org/api/) for Vim/Neovim.
+- **Great documentation:** online [documentation](https://spacevim.org/documentation/) and `:h SpaceVim`.
+- **Better experience:** rewrite core plugins using lua
+- **Beautiful UI:** you'll love the awesome UI and its useful features.
 - **Mnemonic key bindings:** key binding guide will be displayed automatically
 - **Fast boot time:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
 - **Lower the risk of RSI:** by heavily using the space bar instead of modifiers.
-- **Batteries included:** discover hundreds of ready-to-use packages nicely organised in configuration layers following a set of [conventions](http://spacevim.org/conventions/).
-- **Consistent experience:** consistent experience between Vim and NeoVim
+- **Consistent experience:** consistent experience between terminal and gui
 
 ## Screenshots
 
@@ -589,8 +591,8 @@ Read `:h 'mouse'` for more info.
 
 ### Scrollbar
 
-The scrollbar is disabled by default. To enable the scrollbar,
-you need to change `enable_scrollbar` option in [ui layer](../layers/ui/).
+The scrollbar requires floating window of neovim or popup of vim8. It is disabled by default.
+To enable the scrollbar, you need to change `enable_scrollbar` option in [ui layer](../layers/ui/).
 
 ```
 [[layers]]
