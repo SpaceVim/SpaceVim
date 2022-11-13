@@ -2331,7 +2331,7 @@ LANG#ASCIIDOC                                  *SpaceVim-layers-lang-asciidoc*
 
 This layer provides syntax highlighting for asciidoc. To enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#asciidoc"
 <
 
@@ -2340,7 +2340,7 @@ LANG#ASPECTJ                                    *SpaceVim-layers-lang-aspectj*
 
 This layer provides syntax highlighting for aspectj. To enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#aspectj"
 <
 
@@ -2349,7 +2349,7 @@ LANG#ASSEMBLY                                  *SpaceVim-layers-lang-assembly*
 
 This layer provides syntax highlighting for assembly. To enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#assembly"
 <
 
@@ -2358,7 +2358,7 @@ LANG#AUTOHOTKEY                              *SpaceVim-layers-lang-autohotkey*
 
 This layer provides syntax highlighting for autohotkey. To enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#autohotkey"
 <
 
@@ -2367,7 +2367,7 @@ LANG#AUTOIT                                      *SpaceVim-layers-lang-autoit*
 
 This layer provides syntax highlighting for autoit. To enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#autoit"
 <
 
@@ -2530,7 +2530,7 @@ This layer provides clojure language support in SpaceVim. Including syntax
 highlighting, code indent, code runner and REPL. This layer is not enabled by
 default, To enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#clojure"
 <
 
@@ -2610,7 +2610,7 @@ INTRO
 The lang#crystal layer provides crystal filetype detection and syntax
 highlight, crystal tool and crystal spec integration. To enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#crystal"
 <
 
@@ -2640,7 +2640,7 @@ INTRO
 This layer includes utilities and language-specific mappings for csharp
 development. By default it is disabled, to enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#csharp"
 <
 
@@ -2702,7 +2702,7 @@ The lang#dart layer provides code completion, documentation lookup, jump to
 definition, dart_repl integration for dart. It uses neomake as default syntax
 checker which is loaded in |SpaceVim-layer-checkers|. To enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#dart"
 <
 
@@ -2748,7 +2748,7 @@ INTRO
 This layer includes utilities and language-specific mappings for e
 development. By default it is disabled, to enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#e"
 <
 
@@ -3004,7 +3004,7 @@ option is `['golint']`. The available linters includes: `go`, `gometalinter`
   2. go_file_head: the default file head for golang source code.
 
 >
-  [layers]
+  [[layers]]
     name = "lang#go"
     go_file_head = [
       '#!/usr/bin/python3',
@@ -3124,7 +3124,7 @@ INTRO
 The lang#graphql layer provides syntax highlighting indent for graphql. To
 enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#graphql"
 <
 
@@ -3272,7 +3272,7 @@ LANG#HTML                                          *SpaceVim-layers-lang-html*
 This layer is for html development, disabled by default, to enable this layer,
 add following snippet to your SpaceVim configuration file.
 >
-  [layers]
+  [[layers]]
     name = "lang#html"
 <
 
@@ -3282,7 +3282,7 @@ OPTIONS
 `emmet_filetyps`: Set the filetypes for enabling emmet
 
 >
-  [layers]
+  [[layers]]
     name = "lang#html"
     emmet_leader_key = "<C-e>"
     emmet_filetyps = ['html']
@@ -3566,7 +3566,7 @@ LANG#JAVASCRIPT                              *SpaceVim-layers-lang-javascript*
 This layer is for JavaScript development, includes syntax lint, code
 completion etc. To enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#javascript"
 <
 The code linter is eslint, install eslint via:
@@ -3578,7 +3578,7 @@ LAYER OPTION
   1. auto_fix: If this option is true, --fix will be added to neomake eslint
 maker.
 >
-  [layers]
+  [[layers]]
     name = "lang#javascript"
     auto_fix = true
 <
@@ -3634,7 +3634,7 @@ LANG#JSON                                          *SpaceVim-layers-lang-json*
 
 This layer provides syntax highlighting for json file. To enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#json"
 <
 
@@ -3646,7 +3646,7 @@ OPTIONS
 
 
 >
-  [layers]
+  [[layers]]
     name = 'lang#json'
     conceal = false
     concealcursor = ''
@@ -3782,7 +3782,7 @@ LANG#LIQUID                                      *SpaceVim-layers-lang-liquid*
 
 This layer provides syntax highlighting for liquid. To enable this layer:
 >
-  [layers]
+  [[layers]]
     name = "lang#liquid"
 <
 
@@ -3859,7 +3859,7 @@ LAYER OPTIONS
   1. lua_file_head: the default file head for lua source code.
 
 >
-  [layers]
+  [[layers]]
     name = "lang#lua"
     ruby_file_head = [
       '--!/usr/bin/lua',
@@ -4365,7 +4365,7 @@ OPTIONS
   1. python_file_head: the default file head for python source code.
 
 >
-  [layers]
+  [[layers]]
     name = "lang#python"
     python_file_head = [
       '#!/usr/bin/python3',
@@ -4537,7 +4537,7 @@ OPTIONS
   1. ring_repl: Set the path of ring repl.
 
 >
-  [layers]
+  [[layers]]
     name = "lang#ring"
     ring_repl = "/path/to/repl.ring"
 <
@@ -4577,7 +4577,7 @@ OPTIONS
   1. ruby_file_head: the default file head for ruby source code.
 
 >
-  [layers]
+  [[layers]]
     name = "lang#ruby"
     ruby_file_head = [
       '#!/usr/bin/ruby -w',
@@ -4982,7 +4982,7 @@ LANG#SWIG                                         *SpaceVim-layers-lang-swift*
 This layer is for swift development, including syntax highlighting and indent.
 To enable it:
 >
-  [layers]
+  [[layers]]
     name = "lang#swift"
 <
 MAPPINGS
@@ -5010,7 +5010,7 @@ LANG#SWIG                                          *SpaceVim-layers-lang-swig*
 This layer is for swig development, including syntax highlighting and indent.
 To enable it:
 >
-  [layers]
+  [[layers]]
     name = "lang#swig"
 <
 
@@ -5087,7 +5087,7 @@ LANG#TOML                                          *SpaceVim-layers-lang-toml*
 
 This layer provides basic syntax highlighting for toml. To enable it:
 >
-  [layers]
+  [[layers]]
     name = "lang#toml"
 <
 
@@ -5097,7 +5097,7 @@ LANG#TYPESCRIPT                              *SpaceVim-layers-lang-typescript*
 This layer provides typescript development support for SpaceVim. To enable
 this layer, add following sinippet into SpaceVim configuration file.
 >
-  [layers]
+  [[layers]]
       name = 'lang#typescript'
 <
 KEY BINDINGS
