@@ -8,7 +8,7 @@ SpaceVim's repository has too many files, which are structured as follows:
 ├─ autoload/SpaceVim.vim          SpaceVim core file
 ├─ autoload/SpaceVim/api/         Public APIs
 ├─ autoload/SpaceVim/layers/      available layers
-├─ autoload/SpaceVim/plugins/     buildin plugins
+├─ autoload/SpaceVim/plugins/     builtin plugins
 ├─ autoload/SpaceVim/mapping/     mapping guide
 ├─ colors/                        default colorscheme
 ├─ docker/                        docker image generator

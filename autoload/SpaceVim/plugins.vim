@@ -11,7 +11,7 @@ scriptencoding utf-8
 
 ""
 " @section Plugins, plugins
-" This is a list of buildin plugins.
+" This is a list of builtin plugins.
 
 
 function! SpaceVim#plugins#load() abort

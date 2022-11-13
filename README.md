@@ -44,12 +44,12 @@ The latest release [v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/) was r
 ├─ autoload/SpaceVim.vim          SpaceVim core file
 ├─ autoload/SpaceVim/api/         Public APIs
 ├─ autoload/SpaceVim/layers/      available layers
-├─ autoload/SpaceVim/plugins/     buildin plugins
+├─ autoload/SpaceVim/plugins/     builtin plugins
 ├─ autoload/SpaceVim/mapping/     mapping guide
 ├─ colors/                        default colorscheme
 ├─ docker/                        docker image generator
 ├─ bundle/                        bundle plugins
-├─ lua/spacevim/plugin            buildin plugins(lua)
+├─ lua/spacevim/plugin            builtin plugins(lua)
 ├─ doc/                           help(cn/en)
 ├─ docs/                          website(cn/en)
 ├─ wiki/                          wiki(cn/en)

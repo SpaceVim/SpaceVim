@@ -6104,7 +6104,7 @@ The following key bindings can be used to manager vim windows and tabs.
 ==============================================================================
 PLUGINS                                                     *SpaceVim-plugins*
 
-This is a list of buildin plugins.
+This is a list of builtin plugins.
 
 ==============================================================================
 AUTOSAVE                                           *SpaceVim-plugins-autosave*
