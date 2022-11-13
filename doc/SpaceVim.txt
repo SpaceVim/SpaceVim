@@ -4492,7 +4492,7 @@ layer, add following snippet to your |SpaceVim-options| file.
 <
 
 ==============================================================================
-LANG#RING                                             *SpaceVim-layers-lang-r*
+LANG#R                                                *SpaceVim-layers-lang-r*
 
 This layer is for r development, disabled by default, to enable this layer,
 add following snippet to your SpaceVim configuration file.
@@ -4977,7 +4977,7 @@ Here is an example how to use above options:
 <
 
 ==============================================================================
-LANG#SWIG                                         *SpaceVim-layers-lang-swift*
+LANG#SWIFT                                        *SpaceVim-layers-lang-swift*
 
 This layer is for swift development, including syntax highlighting and indent.
 To enable it:
