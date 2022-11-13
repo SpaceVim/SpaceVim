@@ -47,10 +47,11 @@ function M._build_msg(msg, l)
     -- change the format to 
     -- [ name ] [00:00:00:000] [level] msg
     local clock = fn.reltimefloat(fn.reltime(M.clock))
-    local h = clock / 60 / 60
-    local m = clock / 60
-    local s = clock % 60
-    local c = string.format('%s:%s:%s:%s', h, m, s, c)
+    local h = fn.float2nr(clock / 60 / 60)
+    local m = fn.float2nr(clock / 60)
+    local s = fn.float2nr(clock) % 60
+    local mic = string.format('%00.3f', clock - fn.float2nr(clock))
+    local c = string.format('%02d:%02d:%02d:%s', h, m, s, string.sub(mic, 3, -1))
     local log = string.format('[ %s ] [%s] [ %s ] %s',
         M.name,
         c,
