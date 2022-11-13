@@ -30,18 +30,13 @@ endfunction
 
 
 function! s:check_layers() abort
-  let report = []
+  let report = ['Checking SpaceVim layer health:']
   for layer in SpaceVim#layers#get()
     try
-      call extend(report, [layer . ' layer health:', ''])
-      let result = SpaceVim#layers#{layer}#health() ? ['ok', ''] : ['failed', '']
-      call extend(report,result)
+      let result = SpaceVim#layers#{layer}#health() ? 'ok' : 'failed'
+      call extend(report, ['  - `'   . layer . '`:' . result])
     catch /^Vim\%((\a\+)\)\=:E117/
-      call extend(report,[
-            \ '',
-            \ '    There is no function: SpaceVim#layers#' . layer . '#health()',
-            \ '',
-            \ ])
+      call extend(report, ['  - `'   . layer . '`: can not find function: SpaceVim#layers#' . layer . '#health()'])
     endtry
   endfor
   return report
