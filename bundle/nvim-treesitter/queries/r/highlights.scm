@@ -10,10 +10,7 @@
 (string) @string
 (string (escape_sequence) @string.escape)
 
-(comment) @comment @spell
-
-((program . (comment) @preproc)
-  (#match? @preproc "^#!/"))
+(comment) @comment
 
 (identifier) @variable
 

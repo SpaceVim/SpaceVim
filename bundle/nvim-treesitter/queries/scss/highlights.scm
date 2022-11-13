@@ -4,10 +4,7 @@
   "@mixin"
   "@media"
   "@include"
-  "@function"
 ] @keyword
-
-("@return") @keyword.return
 
 [
   "@while"
@@ -30,10 +27,6 @@
 
 (mixin_statement (name) @function)
 (mixin_statement (parameters (parameter) @parameter))
-
-(function_statement (name) @function)
-(function_statement (parameters (parameter) @parameter))
-
 (plain_value) @string
 (keyword_query) @function
 (identifier) @variable

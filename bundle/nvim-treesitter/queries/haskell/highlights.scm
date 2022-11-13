@@ -81,7 +81,6 @@
   "in"
   "class"
   "instance"
-  "pattern"
   "data"
   "newtype"
   "family"
@@ -117,9 +116,8 @@
 
 (exp_infix (variable) @operator)  ; consider infix functions as operators
 
-(exp_infix (exp_name) @function.call (#set! "priority" 101))
-(exp_apply . (exp_name (variable) @function.call))
-(exp_apply . (exp_name (qualified_variable (variable) @function.call)))
+(exp_apply . (exp_name (variable) @function))
+(exp_apply . (exp_name (qualified_variable (variable) @function)))
 
 
 ;; ----------------------------------------------------------------------------
@@ -137,12 +135,5 @@
 ;; ----------------------------------------------------------------------------
 ;; Quasi-quotes
 
-(quoter) @function.call
+(quoter) @function
 ; Highlighting of quasiquote_body is handled by injections.scm
-
-;; ----------------------------------------------------------------------------
-;; Spell checking
-
-(string) @spell
-(comment) @spell
-

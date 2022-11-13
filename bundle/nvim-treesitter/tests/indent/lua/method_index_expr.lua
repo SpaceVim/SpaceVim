@@ -1,3 +1,0 @@
-Node.new()
-  :call()
-  :build()

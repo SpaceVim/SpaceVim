@@ -35,15 +35,6 @@ local function extract_captures()
   return captures
 end
 
-local function list_any(list, predicate)
-  for _, v in pairs(list) do
-    if predicate(v) then
-      return true
-    end
-  end
-  return false
-end
-
 local function do_check()
   local timings = {}
   local parsers = require("nvim-treesitter.info").installed_parsers()
@@ -56,30 +47,32 @@ local function do_check()
   io_print "::group::Check parsers"
 
   for _, lang in pairs(parsers) do
-    timings[lang] = {}
-    for _, query_type in pairs(query_types) do
-      local before = vim.loop.hrtime()
-      local ok, query = pcall(queries.get_query, lang, query_type)
-      local after = vim.loop.hrtime()
-      local duration = after - before
-      table.insert(timings, { duration = duration, lang = lang, query_type = query_type })
-      io_print("Checking " .. lang .. " " .. query_type .. string.format(" (%.02fms)", duration * 1e-6))
-      if not ok then
-        vim.api.nvim_err_writeln(query)
-        last_error = query
-      else
-        if query then
-          for _, capture in ipairs(query.captures) do
-            local is_valid = (
-              vim.startswith(capture, "_") -- Helpers.
-              or list_any(captures[query_type], function(documented_capture)
-                return vim.startswith(documented_capture, capture)
-              end)
-            )
-            if not is_valid then
-              local error = string.format("(x) Invalid capture @%s in %s for %s.", capture, query_type, lang)
-              io_print(error)
-              last_error = error
+    -- NOTE: this is a temporary workaround to skip swift tests on ubuntu
+    -- stable and should be removed once neovim 0.7 is released.
+    if vim.fn.getenv "SKIP_SWIFT_CHECK" == vim.NIL or lang ~= "swift" then
+      timings[lang] = {}
+      for _, query_type in pairs(query_types) do
+        local before = vim.loop.hrtime()
+        local ok, query = pcall(queries.get_query, lang, query_type)
+        local after = vim.loop.hrtime()
+        local duration = after - before
+        table.insert(timings, { duration = duration, lang = lang, query_type = query_type })
+        io_print("Checking " .. lang .. " " .. query_type .. string.format(" (%.02fms)", duration * 1e-6))
+        if not ok then
+          vim.api.nvim_err_writeln(query)
+          last_error = query
+        else
+          if query then
+            for _, capture in ipairs(query.captures) do
+              local is_valid = (
+                vim.startswith(capture, "_") -- Helpers.
+                or vim.tbl_contains(captures[query_type], capture)
+              )
+              if not is_valid then
+                local error = string.format("(x) Invalid capture @%s in %s for %s.", capture, query_type, lang)
+                io_print(error)
+                last_error = error
+              end
             end
           end
         end

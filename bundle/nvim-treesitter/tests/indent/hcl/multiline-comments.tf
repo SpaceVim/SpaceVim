@@ -1,7 +1,0 @@
-test {
-  /*
-    foo
-    bar
-    baz
-  */
-}

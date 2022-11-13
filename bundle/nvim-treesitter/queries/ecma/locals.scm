@@ -23,11 +23,7 @@
   (identifier) @definition.import)
 
 (function_declaration
-  ((identifier) @definition.function)
-   (#set! definition.var.scope parent))
-
-(method_definition
-  ((property_identifier) @definition.function)
+  ((identifier) @definition.var)
    (#set! definition.var.scope parent))
 
 ; References

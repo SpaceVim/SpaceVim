@@ -31,6 +31,3 @@
 (formal_parameters
   (assignment_pattern
     left: (identifier) @parameter))
-
-;; punctuation
-(optional_chain) @punctuation.delimiter

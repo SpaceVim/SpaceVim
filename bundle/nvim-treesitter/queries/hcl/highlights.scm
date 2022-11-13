@@ -63,8 +63,8 @@
 ] @string
 
 [
-  (heredoc_identifier) ; END
-  (heredoc_start) ; << or <<-
+  (heredoc_identifier) ; <<END
+  (heredoc_start) ; END
 ] @punctuation.delimiter
 
 [

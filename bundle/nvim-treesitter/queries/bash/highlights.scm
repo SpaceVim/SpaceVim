@@ -43,9 +43,8 @@
 [
  (string)
  (raw_string)
- (ansi_c_string)
  (heredoc_body)
-] @string @spell
+] @string
 
 (variable_assignment (word) @string)
 
@@ -79,14 +78,13 @@
 
 (special_variable_name) @constant
 
-; trap -l
 ((word) @constant.builtin
- (#match? @constant.builtin "^SIG(HUP|INT|QUIT|ILL|TRAP|ABRT|BUS|FPE|KILL|USR[12]|SEGV|PIPE|ALRM|TERM|STKFLT|CHLD|CONT|STOP|TSTP|TT(IN|OU)|URG|XCPU|XFSZ|VTALRM|PROF|WINCH|IO|PWR|SYS|RTMIN([+]([1-9]|1[0-5]))?|RTMAX(-([1-9]|1[0-4]))?)$"))
+ (#match? @constant.builtin "^SIG(INT|TERM|QUIT|TIN|TOU|STP|HUP)$"))
 
 ((word) @boolean
   (#match? @boolean "^(true|false)$"))
 
-(comment) @comment @spell
+(comment) @comment
 (test_operator) @string
 
 (command_substitution
@@ -99,7 +97,7 @@
 (function_definition
   name: (word) @function)
 
-(command_name (word) @function.call)
+(command_name (word) @function)
 
 ((command_name (word) @function.builtin)
  (#any-of? @function.builtin
@@ -131,6 +129,3 @@
   value: (word) @parameter)
 
 (regex) @string.regex
-
-((program . (comment) @preproc)
-  (#match? @preproc "^#!/"))

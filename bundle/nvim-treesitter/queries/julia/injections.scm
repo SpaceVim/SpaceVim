@@ -3,6 +3,6 @@
 ;   (#offset! @markdown 0 3 0 -3))
 
 [
-  (line_comment)
+  (comment)
   (block_comment)
 ] @comment

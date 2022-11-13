@@ -1,5 +1,0 @@
-test {
-  nest {
-    x = "bar"
-  }
-}

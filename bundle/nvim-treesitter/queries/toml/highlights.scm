@@ -8,7 +8,7 @@
 ;---------
 
 (boolean) @boolean
-(comment) @comment @spell
+(comment) @comment
 (string) @string
 (integer) @number
 (float) @float

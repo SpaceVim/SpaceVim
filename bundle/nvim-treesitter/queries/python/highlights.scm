@@ -56,11 +56,11 @@
  (#match? @function "^([A-Z])@!.*$"))
 
 (call
-  function: (identifier) @function.call)
+  function: (identifier) @function)
 
 (call
   function: (attribute
-              attribute: (identifier) @method.call))
+              attribute: (identifier) @method))
 
 ((call
    function: (identifier) @constructor)
@@ -134,26 +134,17 @@
 [(true) (false)] @boolean
 ((identifier) @variable.builtin
  (#eq? @variable.builtin "self"))
-((identifier) @variable.builtin
- (#eq? @variable.builtin "cls"))
 
 (integer) @number
 (float) @float
 
-(comment) @comment @spell
-
-((module . (comment) @preproc)
-  (#match? @preproc "^#!/"))
-
+(comment) @comment
 (string) @string
 [
   (escape_sequence)
   "{{"
   "}}"
 ] @string.escape
-
-; doc-strings
-(expression_statement (string) @spell)
 
 ; Tokens
 
@@ -233,7 +224,6 @@
 ] @keyword.return
 (yield "from" @keyword.return)
 
-(future_import_statement "from" @include "__future__" @constant.builtin)
 (import_from_statement "from" @include)
 "import" @include
 
@@ -246,12 +236,9 @@
 [
   "try"
   "except"
-  "except*"
   "raise"
   "finally"
 ] @exception
-
-(raise_statement "from" @exception)
 
 (try_statement
   (else_clause
@@ -297,6 +284,16 @@
     (function_definition
       name: (identifier) @constructor)))
  (#any-of? @constructor "__new__" "__init__"))
+
+; First parameter of a classmethod is cls.
+((class_definition
+  body: (block
+          (decorated_definition
+            (decorator (identifier) @_decorator)
+            definition: (function_definition
+              parameters: (parameters . (identifier) @variable.builtin)))))
+ (#eq? @variable.builtin "cls")
+ (#eq? @_decorator "classmethod"))
 
 ;; Error
 (ERROR) @error

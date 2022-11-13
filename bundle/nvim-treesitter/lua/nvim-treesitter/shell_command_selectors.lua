@@ -49,7 +49,6 @@ function M.select_rm_file_cmd(file, info_msg)
   end
 end
 
----@return string|nil
 function M.select_executable(executables)
   return vim.tbl_filter(function(c)
     return c ~= vim.NIL and fn.executable(c) == 1
@@ -179,16 +178,11 @@ function M.select_download_commands(repo, project_name, cache_folder, revision, 
     local path_sep = utils.get_path_sep()
     local url = repo.url:gsub(".git$", "")
 
-    local folder_rev = revision
-    if is_github and revision:match "^v%d" then
-      folder_rev = revision:sub(2)
-    end
-
     return {
       M.select_install_rm_cmd(cache_folder, project_name .. "-tmp"),
       {
         cmd = "curl",
-        info = "Downloading " .. project_name .. "...",
+        info = "Downloading...",
         err = "Error during download, please verify your internet connection",
         opts = {
           args = {
@@ -205,7 +199,7 @@ function M.select_download_commands(repo, project_name, cache_folder, revision, 
       M.select_mkdir_cmd(project_name .. "-tmp", cache_folder, "Creating temporary directory"),
       {
         cmd = "tar",
-        info = "Extracting " .. project_name .. "...",
+        info = "Extracting...",
         err = "Error during tarball extraction.",
         opts = {
           args = {
@@ -219,7 +213,7 @@ function M.select_download_commands(repo, project_name, cache_folder, revision, 
       },
       M.select_rm_file_cmd(cache_folder .. path_sep .. project_name .. ".tar.gz"),
       M.select_mv_cmd(
-        utils.join_path(project_name .. "-tmp", url:match "[^/]-$" .. "-" .. folder_rev),
+        utils.join_path(project_name .. "-tmp", url:match "[^/]-$" .. "-" .. revision),
         project_name,
         cache_folder
       ),
@@ -232,7 +226,7 @@ function M.select_download_commands(repo, project_name, cache_folder, revision, 
     return {
       {
         cmd = "git",
-        info = "Downloading " .. project_name .. "...",
+        info = "Downloading...",
         err = clone_error,
         opts = {
           args = {

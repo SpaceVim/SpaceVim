@@ -1,28 +1,28 @@
 # H1
-<!-- <- punctuation.special -->
+<!-- <- TSPunctSpecial -->
 
 ## H2
-<!-- <- punctuation.special -->
+<!-- <- TSPunctSpecial -->
 
 - Item 1
 - Item 2
-<!-- <- punctuation.special -->
+<!-- <- TSPunctSpecial -->
 
 1. Item 1
 2. Item 2
-<!-- <- punctuation.special -->
+<!-- <- TSPunctSpecial -->
 
 ----![image_description](https://example.com/image.jpg "awesome image title")
-<!--  ^ text.reference                                                    -->
-<!--                              ^ text.uri                              -->
-<!--                                                      ^ text.literal  -->
-<!--^ punctuation.delimiter                                               -->
-<!-- ^ punctuation.delimiter                                              -->
-<!--                                                                      //TODO: currently disabled punctuation.delimiter -->
+<!--  ^ TSTextReference                                                   -->
+<!--                              ^ TSURI                                 -->
+<!--                                                          ^ TSLiteral -->
+<!--^ TSPunctDelimiter                                                    -->
+<!-- ^ TSPunctDelimiter                                                   -->
+<!--                                                                      //TODO: currently disabled TSPunctDelimiter -->
 
 [link_text](#local_reference "link go brr...")
-<!-- ^ text.reference                                                     -->
-<!--                 ^ text.uri                                           -->
-<!--                            ^ text.literal                            -->
-<!-- <- punctuation.delimiter                                             -->
-<!--                                                                      //TODO: currently disabled punctuation.delimiter -->
+<!-- ^ TSTextReference                                                    --> 
+<!--                 ^ TSURI                                              -->
+<!--                            ^ TSLiteral                               -->
+<!-- <- TSPunctDelimiter                                                  -->
+<!--                                         //TODO: currently disabled TSPunctDelimiter           -->

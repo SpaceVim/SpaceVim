@@ -6,8 +6,7 @@
 (character) @character
 (boolean) @boolean
 (string) @string
-[(comment)
- (block_comment)] @comment
+(comment) @comment
 
 ;; highlight for datum comment
 ;; copied from ../clojure/highlights.scm
@@ -43,7 +42,7 @@
  .
  (list
    (symbol) @variable)
- (#any-of? @_f "lambda" "λ"))
+ (#eq? @_f "lambda"))
 
 (list
  .
@@ -65,7 +64,7 @@
 
 ((symbol) @keyword
  (#any-of? @keyword
-  "define" "lambda" "λ" "begin" "do" "define-syntax"
+  "define" "lambda" "begin" "do" "define-syntax"
   "and" "or"
   "if" "cond" "case" "when" "unless" "else" "=>"
   "let" "let*" "let-syntax" "let-values" "let*-values" "letrec" "letrec*" "letrec-syntax"
@@ -81,7 +80,7 @@
 
 ;; quote
 
-(quote
+(abbreviation
  "'"
  (symbol)) @symbol
 

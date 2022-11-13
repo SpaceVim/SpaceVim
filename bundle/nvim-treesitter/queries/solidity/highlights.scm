@@ -59,10 +59,10 @@
 (modifier_invocation (identifier) @function)
 
 ; Handles expressions like structVariable.g();
-(call_expression . (member_expression (property_identifier) @method.call))
+(call_expression . (member_expression (property_identifier) @method))
 
 ; Handles expressions like g();
-(call_expression . (identifier) @function.call)
+(call_expression . (identifier) @function)
 (function_definition
  function_name: (identifier) @function)
 
@@ -74,7 +74,7 @@
 (parameter name: (identifier) @parameter)
 
 ; Yul functions
-(yul_function_call function: (yul_identifier) @function.call)
+(yul_function_call function: (yul_identifier) @function)
 
 ; Yul function parameters
 (yul_function_definition . (yul_identifier) @function (yul_identifier) @parameter)

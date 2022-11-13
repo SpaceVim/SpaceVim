@@ -30,11 +30,9 @@
 
 ; Comments
 (comment) @comment
-(comment) @spell
 
 ; Strings
 (string) @string
-(string) @spell
 
 ; Modules
 (alias) @type
@@ -86,13 +84,13 @@
 (stab_clause operator: _ @operator)
 
 ; Local Function Calls
-(call target: (identifier) @function.call)
+(call target: (identifier) @function)
 
 ; Remote Function Calls
 (call target: (dot left: [
   (atom) @type
   (_)
-] right: (identifier) @function.call) (arguments))
+] right: (identifier) @function) (arguments))
 
 ; Definition Function Calls
 (call target: ((identifier) @keyword.function (#any-of? @keyword.function

@@ -65,18 +65,18 @@
 
 
 (call_expression
-  function: (identifier) @function.call)
+  function: (identifier) @function)
 
 (call_expression
   function: (field_expression
-    field: (identifier) @method.call))
+    field: (identifier) @method))
 
 ((call_expression
    function: (identifier) @constructor)
  (#lua-match? @constructor "^[A-Z]"))
 
 (generic_function
-  function: (identifier) @function.call)
+  function: (identifier) @function)
 
 (
   (identifier) @function.builtin
@@ -196,7 +196,7 @@
 
 "return" @keyword.return
 
-(comment) @comment @spell
+(comment) @comment
 
 ;; `case` is a conditional keyword in case_block
 

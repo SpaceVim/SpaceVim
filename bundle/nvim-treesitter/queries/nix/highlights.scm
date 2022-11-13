@@ -22,10 +22,10 @@
 (comment) @comment
 
 ; strings
-[ (string_expression) (indented_string_expression) ] @string
+[ (string) (indented_string) ] @string
 
 ; paths and URLs
-[ (path_expression) (spath_expression) (uri_expression) ] @string.special
+[ (path) (spath) (uri) ] @string.special
 
 ; escape sequences
 (escape_sequence) @string.escape
@@ -55,18 +55,16 @@
 (ellipses) @punctuation.special
 
 ; `:` in `x: y`, used to separate function argument from body (see above)
-(function_expression ":" @punctuation.special)
+(function ":" @punctuation.special)
 
 ; basic identifiers
-(variable_expression) @variable
+(identifier) @variable
 
 ; builtin functions
 ((identifier) @_i (#match? @_i "^(builtins|baseNameOf|dirOf|fetchTarball|map|removeAttrs|toString)$")) @variable.builtin
 
 ; display entire builtins path as builtin (ex. `builtins.filter` is highlighted as one long builtin)
-(select_expression
-  expression: ((variable_expression) @_i (#eq? @_i "builtins"))
-  attrpath: (attrpath attr: (identifier) @variable.builtin)) @variable.builtin
+(select ((identifier) @_i (#eq? @_i "builtins")) (attrpath (attr_identifier) @variable.builtin)) @variable.builtin
 
 ; import
 ((identifier) @_i (#eq? @_i "import")) @include
@@ -84,23 +82,39 @@
 (interpolation "${" @punctuation.special (_) "}" @punctuation.special) @none
 
 ; fields (the `.` in `a.b = c;` isn't included)
-(attrset_expression (binding_set (binding . (attrpath (identifier) @field))))
-(rec_attrset_expression (binding_set (binding . (attrpath (identifier) @field))))
+(attrset (bind . (attrpath (attr_identifier) @field)))
+(rec_attrset (bind . (attrpath (attr_identifier) @field)))
 
 ; unary operators
-(unary_expression operator: _ @operator)
+(unary "-" @operator)
+(unary "!" @operator)
 
 ; binary operators
-(binary_expression operator: _ @operator)
+(binary "?" @operator)
+(binary "++" @operator)
+(binary "*" @operator)
+(binary "/" @operator)
+(binary "+" @operator)
+(binary "-" @operator)
+(binary "//" @operator)
+(binary "<" @operator)
+(binary "<=" @operator)
+(binary ">" @operator)
+(binary ">=" @operator)
+(binary "==" @operator)
+(binary "!=" @operator)
+(binary "&&" @operator)
+(binary "||" @operator)
+(binary "->" @operator)
 
 ; integers, also highlight a unary -
 [
-  (unary_expression "-" (integer_expression))
-  (integer_expression)
+  (unary "-" (integer))
+  (integer)
 ] @number
 
 ; floats, also highlight a unary -
 [
-  (unary_expression "-" (float_expression))
-  (float_expression)
+  (unary "-" (float))
+  (float)
 ] @float

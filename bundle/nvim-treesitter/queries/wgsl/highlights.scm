@@ -18,7 +18,7 @@
 	(struct_member (variable_identifier_declaration (identifier) @field)))
 
 (type_constructor_or_function_call_expression
-    (type_declaration) @function.call)
+    (type_declaration) @function)
 
 [
     "struct"

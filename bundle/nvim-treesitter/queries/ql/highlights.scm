@@ -109,7 +109,8 @@
 (datatype name: (className) @type)
 (typeExpr name: (className) @type)
 
-(importModuleExpr qualName: (simpleId) @variable)
+(importModuleExpr name: (simpleId) @variable)
+(qualModuleExpr name: (simpleId) @variable)
 (varName) @variable
 
 (integer) @number

@@ -1,13 +1,13 @@
 local a = { 1, 2, 3, 4, 5 }
---          ^ number      ^ punctuation.bracket
---    ^ variable
+--          ^ TSNumber    ^ TSPunctBracket
+--    ^ TSVariable
 
 local _ = next(a)
---          ^ function.builtin
--- ^ keyword
+--          ^ TSFuncBuiltin
+-- ^ TSKeyword
 
 _ = next(a)
---   ^ function.builtin
+--   ^ TSFuncBuiltin
 
 next(a)
--- ^ function.builtin
+-- ^ TSFuncBuiltin

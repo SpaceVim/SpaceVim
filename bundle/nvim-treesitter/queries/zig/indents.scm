@@ -5,8 +5,6 @@
   (InitList)
 ] @indent
 
-(Block "}" @indent_end)
-
 [
   "("
   ")"

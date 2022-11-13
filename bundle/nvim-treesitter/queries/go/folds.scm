@@ -9,8 +9,5 @@
  (method_declaration)
  (type_declaration)
  (var_declaration)
- (composite_literal)
- (literal_element)
- (block)
 ] @fold
 

@@ -1,4 +1,0 @@
-import "lib.tih"
-/* <- keyword */
-/*      ^ string.special */
-/* vim: set ft=tiger: */

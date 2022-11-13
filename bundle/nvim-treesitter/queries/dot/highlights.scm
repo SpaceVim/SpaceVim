@@ -1,14 +1,5 @@
 (identifier) @type
-
-[
-  "strict"
-  "graph"
-  "digraph"
-  "subgraph"
-  "node"
-  "edge"
-] @keyword
-
+(keyword) @keyword
 (string_literal) @string
 (number_literal) @number
 
@@ -46,10 +37,9 @@
     (identifier) @constant)
 )
 
-(comment) @comment
-
-(preproc) @preproc
-
-(comment) @spell
+[
+(comment)
+(preproc)
+] @comment
 
 (ERROR) @error

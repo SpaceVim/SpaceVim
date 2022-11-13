@@ -2,7 +2,7 @@
   (container_doc_comment)
   (doc_comment)
   (line_comment)
-] @comment @spell
+] @comment
 
 ((line_comment) @text.note
   (#match? @text.note "^// *zig fmt: (on|off) *$")
@@ -51,7 +51,7 @@ parameter: (IDENTIFIER) @parameter
 [
   function_call: (IDENTIFIER)
   function: (IDENTIFIER)
-] @function.call
+] @function
 
 exception: "!" @exception
 
@@ -84,7 +84,7 @@ field_constant: (IDENTIFIER) @constant
 [
   (LINESTRING)
   (STRINGLITERALSINGLE)
-] @string @spell
+] @string
 
 (CHAR_LITERAL) @character
 (EscapeSequence) @string.escape

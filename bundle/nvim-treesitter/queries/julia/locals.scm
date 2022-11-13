@@ -1,79 +1,59 @@
-;;; Variables
-(assignment_expression
-  (identifier) @definition.var)
-(assignment_expression
-  (tuple_expression
-    (identifier) @definition.var))
 
-;;; let/const bindings
+(import_statement
+ (identifier) @definition.import)
 (variable_declaration
  (identifier) @definition.var)
 (variable_declaration
  (tuple_expression
   (identifier) @definition.var))
-
-
-;;; For bindings
 (for_binding
-  (identifier) @definition.var)
+ (identifier) @definition.var)
 (for_binding
-  (tuple_expression
-    (identifier) @definition.var))
+ (tuple_expression
+  (identifier) @definition.var))
 
-
-;;; Types
-
-(struct_definition
-  name: (identifier) @definition.type)
-(abstract_definition
-  name: (identifier) @definition.type)
-(abstract_definition
-  name: (identifier) @definition.type)
+(assignment_expression
+ (tuple_expression
+  (identifier) @definition.var))
+(assignment_expression
+ (bare_tuple_expression
+  (identifier) @definition.var))
+(assignment_expression
+ (identifier) @definition.var)
 
 (type_parameter_list
   (identifier) @definition.type)
-
-;;; Module imports
-
-(import_statement
-  (identifier) @definition.import)
-
-
-;;; Parameters
+(type_argument_list
+  (identifier) @definition.type)
+(struct_definition
+  name: (identifier) @definition.type)
 
 (parameter_list
-  (identifier) @definition.parameter)
-(optional_parameter .
-  (identifier) @definition.parameter)
-(slurp_parameter
-  (identifier) @definition.parameter)
-
+ (identifier) @definition.parameter)
 (typed_parameter
-  parameter: (identifier) @definition.parameter
-  (_))
-
+ (identifier) @definition.parameter
+ (identifier))
 (function_expression
- . (identifier) @definition.parameter) ;; Single parameter arrow function
-
-
-;;; Function/macro definitions
+ . (identifier) @definition.parameter)
+(argument_list
+ (typed_expression
+  (identifier) @definition.parameter
+  (identifier)))
+(spread_parameter
+ (identifier) @definition.parameter)
 
 (function_definition
-  name: (identifier) @definition.function) @scope
-(short_function_definition
-  name: (identifier) @definition.function) @scope
+ name: (identifier) @definition.function) @scope
 (macro_definition 
-  name: (identifier) @definition.macro) @scope
+ name: (identifier) @definition.macro) @scope
 
 (identifier) @reference
 
 [
-  (for_statement)
-  (while_statement)
   (try_statement)
-  (catch_clause)
   (finally_clause)
-  (let_statement)
   (quote_statement)
-  (do_clause)
+  (let_statement)
+  (compound_expression)
+  (for_statement)
 ] @scope

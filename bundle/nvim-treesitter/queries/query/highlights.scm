@@ -6,7 +6,7 @@
 (named_node name: (identifier) @variable)
 (field_definition name: (identifier) @property)
 (negated_field "!" @operator (identifier) @property)
-(comment) @comment @spell
+(comment) @comment
 
 (quantifier) @operator
 (predicate_type) @punctuation.special
@@ -29,6 +29,3 @@
 
 ((program . (comment) @include)
  (#match? @include "^;\ +inherits\ *:"))
-
-((program . (comment) @preproc)
- (#match? @preproc "^; +extends"))

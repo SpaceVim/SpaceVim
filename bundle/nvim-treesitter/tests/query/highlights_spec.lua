@@ -1,3 +1,4 @@
+require "nvim-treesitter.highlight" -- yes, this is necessary to set the hlmap
 local highlighter = require "vim.treesitter.highlighter"
 local ts_utils = require "nvim-treesitter.ts_utils"
 local parsers = require "nvim-treesitter.parsers"
@@ -69,9 +70,10 @@ local function check_assertions(file)
         assert.is.number(col)
         if hl and ts_utils.is_in_node_range(node, row, col) then
           local c = query._query.captures[capture] -- name of the capture in the query
-          if c ~= nil and c ~= "spell" and c ~= "conceal" then
+          if c ~= nil then
             captures[c] = true
-            highlights[c] = true
+            local general_hl = query:_get_hl_from_capture(capture)
+            highlights[general_hl] = true
           end
         end
       end

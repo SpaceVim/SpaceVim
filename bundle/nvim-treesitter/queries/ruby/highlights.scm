@@ -1,6 +1,5 @@
 ; Variables
 (identifier) @variable
-(global_variable) @variable.global
 
 ; Keywords
 
@@ -15,11 +14,9 @@
  "ensure"
  "module"
  "next"
- "redo"
  "rescue"
  "retry"
  "then"
- "undef"
  ] @keyword
 
 [
@@ -71,7 +68,7 @@
    method: [
             (identifier)
             (constant)
-            ] @function.call
+            ] @function
    )
 
 (program
@@ -163,8 +160,6 @@
  ] @boolean
 
 (comment) @comment
-(comment) @spell
-(string_content) @spell
 
 ; Operators
 

@@ -25,6 +25,7 @@
 
 (self) @variable.builtin
 
+(lifetime   ["'" (identifier)] @label)
 (loop_label ["'" (identifier)] @label)
 
 
@@ -38,22 +39,22 @@
 
 ; Function calls
 (call_expression
-  function: (identifier) @function.call)
+  function: (identifier) @function)
 (call_expression
   function: (scoped_identifier
-              (identifier) @function.call .))
+              (identifier) @function .))
 (call_expression
   function: (field_expression
-    field: (field_identifier) @function.call))
+    field: (field_identifier) @function))
 
 (generic_function
-  function: (identifier) @function.call)
+  function: (identifier) @function)
 (generic_function
   function: (scoped_identifier
-    name: (identifier) @function.call))
+    name: (identifier) @function))
 (generic_function
   function: (field_expression
-    field: (field_identifier) @function.call))
+    field: (field_identifier) @function))
 
 ; Assume other uppercase names are enum constructors
 ((field_identifier) @constant
@@ -70,9 +71,6 @@
   name: (identifier) @namespace))
 (scoped_type_identifier
   path: (identifier) @namespace)
-(scoped_type_identifier
-  path: (identifier) @type
-  (#lua-match? @type "^[A-Z]"))
 (scoped_type_identifier
  (scoped_identifier
   name: (identifier) @namespace))
@@ -123,14 +121,14 @@
 (macro_definition "macro_rules!" @function.macro)
 
 ;; Attribute macros
-(attribute_item (attribute (identifier) @function.macro))
-(attribute (scoped_identifier (identifier) @function.macro .))
+(attribute_item (meta_item (identifier) @function.macro))
+(meta_item (scoped_identifier (identifier) @function.macro .))
 
 ;; Derive macros (assume all arguments are types)
-; (attribute
-;   (identifier) @_name
-;   arguments: (attribute (attribute (identifier) @type))
-;   (#eq? @_name "derive"))
+(meta_item
+  (identifier) @_name
+  arguments: (meta_arguments (meta_item (identifier) @type))
+  (#eq? @_name "derive"))
 
 ;; Function-like macros
 (macro_invocation
@@ -146,7 +144,7 @@
 [
   (line_comment)
   (block_comment)
-] @comment @spell
+] @comment
 
 (boolean_literal) @boolean
 (integer_literal) @number
@@ -171,6 +169,7 @@
 [
   "async"
   "await"
+  "const"
   "default"
   "dyn"
   "enum"
@@ -180,25 +179,16 @@
   "match"
   "move"
   "pub"
+  "ref"
+  "static"
   "struct"
   "trait"
   "type"
   "union"
   "unsafe"
   "where"
+  (mutable_specifier)
 ] @keyword
-
-[
- "ref"
- (mutable_specifier)
-] @type.qualifier
-
-[
- "const"
- "static"
-] @storageclass
-
-(lifetime ["'" (identifier)] @storageclass.lifetime)
 
 "fn" @keyword.function
 [
@@ -211,8 +201,7 @@
 
 (use_list (self) @keyword)
 (scoped_use_list (self) @keyword)
-(scoped_identifier [(crate) (super) (self)] @keyword)
-(visibility_modifier [(crate) (super) (self)] @keyword)
+(scoped_identifier (self) @keyword)
 
 [
   "else"
@@ -222,14 +211,13 @@
 [
   "break"
   "continue"
+  "for"
   "in"
   "loop"
   "while"
 ] @repeat
 
-"for" @keyword
-(for_expression
-  "for" @repeat)
+
 
 ;;; Operators & Punctuation
 
@@ -276,8 +264,6 @@
 (closure_parameters "|"    @punctuation.bracket)
 (type_arguments  ["<" ">"] @punctuation.bracket)
 (type_parameters ["<" ">"] @punctuation.bracket)
-(bracketed_type ["<" ">"] @punctuation.bracket)
-(for_lifetimes ["<" ">"] @punctuation.bracket)
 
 ["," "." ":" "::" ";"] @punctuation.delimiter
 
@@ -285,8 +271,3 @@
 (inner_attribute_item ["!" "#"] @punctuation.special)
 (macro_invocation "!" @function.macro)
 (empty_type "!" @type.builtin)
-
-(macro_invocation macro: (identifier) @_ident @exception "!" @exception
- (#eq? @_ident "panic"))
-(macro_invocation macro: (identifier) @_ident @exception "!" @exception
- (#contains? @_ident "assert"))

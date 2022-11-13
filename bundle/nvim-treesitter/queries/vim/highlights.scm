@@ -25,8 +25,6 @@
   "in"
   "while"
   "endwhile"
-  "break"
-  "continue"
 ] @repeat
 
 [
@@ -40,7 +38,7 @@
 (parameters (identifier) @parameter)
 (default_parameter (identifier) @parameter)
 
-[ (bang) (spread) ] @punctuation.special
+[ (bang) (spread) (at) ] @punctuation.special
 
 [ (no_option) (inv_option) (default_option) (option_name) ] @variable.builtin
 [
@@ -54,31 +52,23 @@
 [
   "let"
   "unlet"
-  "const"
   "call"
   "execute"
   "normal"
   "set"
-  "setfiletype"
   "setlocal"
   "silent"
   "echo"
-  "echon"
-  "echohl"
   "echomsg"
-  "echoerr"
   "autocmd"
   "augroup"
   "return"
   "syntax"
-  "filetype"
-  "source"
   "lua"
   "ruby"
   "perl"
   "python"
   "highlight"
-  "command"
   "delcommand"
   "comclear"
   "colorscheme"
@@ -87,36 +77,9 @@
   "global"
   "runtime"
   "wincmd"
-  "cnext"
-  "cprevious"
-  "cNext"
-  "vertical"
-  "leftabove"
-  "aboveleft"
-  "rightbelow"
-  "belowright"
-  "topleft"
-  "botright"
-  (unknown_command_name)
-  "edit"
-  "enew"
-  "find"
-  "ex"
-  "visual"
-  "view"
 ] @keyword
 (map_statement cmd: _ @keyword)
 (command_name) @function.macro
-
-;; Filetype command
-
-(filetype_statement [
-  "detect"
-  "plugin"
-  "indent"
-  "on"
-  "off"
-] @keyword)
 
 ;; Syntax command
 
@@ -134,8 +97,6 @@
   "match"
   "cluster"
   "region"
-  "clear"
-  "include"
 ] @keyword)
 
 (syntax_argument name: _ @keyword)
@@ -149,6 +110,11 @@
   "<unique>"
 ] @constant.builtin
 
+(hl_attribute
+  key: _ @property
+  val: _ @constant)
+
+(hl_group) @variable
 (augroup_name) @namespace
 
 (au_event) @constant
@@ -156,32 +122,11 @@
 
 ;; Highlight command
 
-(hl_attribute
-  key: _ @property
-  val: _ @constant)
-
-(hl_group) @type
-
 (highlight_statement [
   "default"
   "link"
   "clear"
 ] @keyword)
-
-;; Command command
-
-(command) @string
-
-(command_attribute
-  name: _ @property
-  val: (behavior
-    name: _ @constant
-    val: (identifier)? @function)?)
-
-;; Edit command
-(plus_plus_opt
-  val: _? @constant) @property
-(plus_cmd "+" @property) @property
 
 ;; Runtime command
 
@@ -196,12 +141,10 @@
 (string_literal) @string
 (integer_literal) @number
 (float_literal) @float
-(comment) @comment @spell
+(comment) @comment
 (pattern) @string.special
 (pattern_multi) @string.regex
 (filename) @string
-(heredoc (body) @string)
-((heredoc (parameter) @keyword))
 ((scoped_identifier
   (scope) @_scope . (identifier) @boolean)
  (#eq? @_scope "v:")
@@ -236,7 +179,6 @@
   "/="
   "%="
   ".="
-  "..="
 ] @operator
 
 ; Some characters have different meanings based on the context

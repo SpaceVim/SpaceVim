@@ -157,17 +157,7 @@
 
 (title) @text.title
 
-(comment) @comment @spell
+(comment) @comment
 (comment "..") @comment
-
-(directive
-    name: (type) @_directive
-    body: (body
-        (content) @spell
-        (#not-any-of? @_directive "code" "code-block" "sourcecode")
-    )
-)
-
-(paragraph) @spell
 
 (ERROR) @error

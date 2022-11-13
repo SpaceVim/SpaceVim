@@ -42,16 +42,16 @@
   name: (name) @method)
 
 (function_call_expression
-  function: (qualified_name (name)) @function.call)
+  function: (qualified_name (name)) @function)
 
 (function_call_expression
-  (name) @function.call)
+  (name) @function)
 
 (scoped_call_expression
-  name: (name) @function.call)
+  name: (name) @function)
 
 (member_call_expression
-  name: (name) @method.call)
+  name: (name) @method)
 
 (function_definition
   name: (name) @function)
@@ -103,27 +103,22 @@
 (namespace_definition
   name: (namespace_name) @namespace)
 
-; Attributes
-(attribute_list) @attribute
-
 ; Conditions ( ? : )
 (conditional_expression) @conditional
 ; Basic tokens
 
 [
  (string)
- (encapsed_string)
- (heredoc_body)
- (nowdoc_body)
+ (heredoc)
  (shell_command_expression) ; backtick operator: `ls -la`
- ] @string @spell
-(escape_sequence) @string.escape
+ ] @string
+(encapsed_string (escape_sequence) @string.escape)
 
 (boolean) @boolean
 (null) @constant.builtin
 (integer) @number
 (float) @float
-(comment) @comment @spell
+(comment) @comment
 
 (named_label_statement) @label
 ; Keywords
@@ -165,7 +160,6 @@
  "private"
  "protected"
  "public"
- "readonly"
  "static"
  "trait"
  "unset"
@@ -228,7 +222,6 @@
  "]"
  "{"
  "}"
- "#["
  ] @punctuation.bracket
 
 [

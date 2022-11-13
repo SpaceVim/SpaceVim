@@ -1,5 +1,3 @@
-(_) @spell
-
 [
  "("
  ")"
@@ -8,12 +6,6 @@
 ":" @punctuation.delimiter
 
 (tag (name) @text.note (user)? @constant)
-
-((tag ((name) @text.note))
- (#any-of? @text.note "NOTE"))
-
-("text" @text.note
- (#any-of? @text.note "NOTE"))
 
 ((tag ((name) @text.warning))
  (#any-of? @text.warning "TODO" "HACK" "WARNING"))

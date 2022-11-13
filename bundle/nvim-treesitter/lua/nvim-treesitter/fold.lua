@@ -39,13 +39,8 @@ local folds_levels = tsutils.memoize_by_buf_tick(function(bufnr)
 
   local min_fold_lines = api.nvim_win_get_option(0, "foldminlines")
 
-  for _, match in ipairs(matches) do
-    local start, stop, stop_col
-    if match.metadata and match.metadata.range then
-      start, _, stop, stop_col = unpack(match.metadata.range)
-    else
-      start, _, stop, stop_col = match.node:range()
-    end
+  for _, node in ipairs(matches) do
+    local start, _, stop, stop_col = node.node:range()
 
     if stop_col == 0 then
       stop = stop - 1
@@ -102,8 +97,6 @@ local folds_levels = tsutils.memoize_by_buf_tick(function(bufnr)
   return levels
 end)
 
----@param lnum integer
----@return string
 function M.get_fold_indic(lnum)
   if not parsers.has_parser() or not lnum then
     return "0"

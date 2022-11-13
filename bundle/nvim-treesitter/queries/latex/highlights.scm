@@ -1,7 +1,7 @@
 ;; General syntax
 (ERROR) @error
 
-(command_name) @function
+(generic_command) @function
 (caption
   command: _ @function)
 
@@ -14,9 +14,6 @@
  (block_comment)
  (comment_environment)
 ] @comment
-
-((line_comment) @preproc
-  (#lua-match? @preproc "^%% !TeX"))
 
 [
  (brack_group)
@@ -35,11 +32,35 @@
 ;; General environments
 (begin
  command: _ @text.environment
- name: (curly_group_text (text) @text.environment.name))
+ name: (curly_group_text
+         (text) @text.environment.name)
+  (#not-any-of? @text.environment.name
+      "displaymath" "displaymath*"
+      "equation" "equation*"
+      "multline" "multline*"
+      "eqnarray" "eqnarray*"
+      "align" "align*"
+      "array" "array*"
+      "split" "split*"
+      "alignat" "alignat*"
+      "gather" "gather*"
+      "flalign" "flalign*"))
 
 (end
  command: _ @text.environment
- name: (curly_group_text (text) @text.environment.name))
+ name: (curly_group_text
+         (text) @text.environment.name)
+  (#not-any-of? @text.environment.name
+      "displaymath" "displaymath*"
+      "equation" "equation*"
+      "multline" "multline*"
+      "eqnarray" "eqnarray*"
+      "align" "align*"
+      "array" "array*"
+      "split" "split*"
+      "alignat" "alignat*"
+      "gather" "gather*"
+      "flalign" "flalign*"))
 
 ;; Definitions and references
 (new_command_definition
@@ -52,17 +73,9 @@
  command: _ @function.macro
  declaration: (_) @function)
 
-(environment_definition
- command: _ @function.macro
- name: (curly_group_text (_) @text.reference))
-
 (theorem_definition
  command: _ @function.macro
  name: (curly_group_text (_) @text.environment.name))
-
-(paired_delimiter_definition
- command: _ @function.macro
- declaration: (curly_group_command_name (_) @function))
 
 (label_definition
  command: _ @function.macro
@@ -110,64 +123,67 @@
  (inline_formula)
 ] @text.math
 
-(math_environment
+((generic_environment
   (begin
    command: _ @text.math
-   name: (curly_group_text (text) @text.math)))
-
-(math_environment
-  (text) @text.math)
-
-(math_environment
+   name: (curly_group_text
+           (text) @_env))) @text.math
+   (#any-of? @_env
+      "displaymath" "displaymath*"
+      "equation" "equation*"
+      "multline" "multline*"
+      "eqnarray" "eqnarray*"
+      "align" "align*"
+      "array" "array*"
+      "split" "split*"
+      "alignat" "alignat*"
+      "gather" "gather*"
+      "flalign" "flalign*"))
+((generic_environment
   (end
    command: _ @text.math
-   name: (curly_group_text (text) @text.math)))
+   name: (curly_group_text
+           (text) @_env))) @text.math
+   (#any-of? @_env
+      "displaymath" "displaymath*"
+      "equation" "equation*"
+      "multline" "multline*"
+      "eqnarray" "eqnarray*"
+      "align" "align*"
+      "array" "array*"
+      "split" "split*"
+      "alignat" "alignat*"
+      "gather" "gather*"
+      "flalign" "flalign*"))
 
 ;; Sectioning
-(title_declaration
-  command: _ @namespace
-  options: (brack_group (_) @text.title)?
-  text: (curly_group (_) @text.title))
-
-(author_declaration
-  command: _ @namespace
-  authors: (curly_group_author_list
-             ((author)+ @text.title)))
-
 (chapter
   command: _ @namespace
-  toc: (brack_group (_) @text.title)?
-  text: (curly_group (_) @text.title))
+  text: (curly_group) @text.title)
 
 (part
   command: _ @namespace
-  toc: (brack_group (_) @text.title)?
-  text: (curly_group (_) @text.title))
+  text: (curly_group) @text.title)
 
 (section
   command: _ @namespace
-  toc: (brack_group (_) @text.title)?
-  text: (curly_group (_) @text.title))
+  text: (curly_group) @text.title)
 
 (subsection
   command: _ @namespace
-  toc: (brack_group (_) @text.title)?
-  text: (curly_group (_) @text.title))
+  text: (curly_group) @text.title)
 
 (subsubsection
   command: _ @namespace
-  toc: (brack_group (_) @text.title)?
-  text: (curly_group (_) @text.title))
+  text: (curly_group) @text.title)
 
 (paragraph
   command: _ @namespace
-  toc: (brack_group (_) @text.title)?
-  text: (curly_group (_) @text.title))
+  text: (curly_group) @text.title)
 
 (subparagraph
   command: _ @namespace
-  toc: (brack_group (_) @text.title)?
-  text: (curly_group (_) @text.title))
+  text: (curly_group) @text.title)
 
 ;; Beamer frames
 (generic_environment
@@ -237,10 +253,3 @@
   command: _ @include
   paths: (curly_group_path_list) @string)
 
-(
-    (text) @spell
-    (#not-has-parent? @spell
-        inline_formula
-        displayed_equation
-    )
-)

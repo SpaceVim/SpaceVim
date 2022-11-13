@@ -75,7 +75,7 @@
   "endcase"
 ] @conditional
 
-(comment) @comment @spell
+(comment) @comment
 
 (include_compiler_directive) @constant.macro
 (package_import_declaration
@@ -174,7 +174,7 @@
 [
   (double_quoted_string)
   (string_literal)
-] @string @spell
+] @string
 
 [
   (include_compiler_directive)

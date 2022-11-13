@@ -15,17 +15,20 @@
 ((identifier) @constant
  (#eq? @constant "_"))
 
+((identifier) @constant
+ (#vim-match? @constant "^[A-Z][A-Z\\d_]+$"))
+
 (const_spec
   name: (identifier) @constant)
 
 ; Function calls
 
 (call_expression
-  function: (identifier) @function.call)
+  function: (identifier) @function)
 
 (call_expression
   function: (selector_expression
-    field: (field_identifier) @method.call))
+    field: (field_identifier) @method))
 
 ; Function definitions
 
@@ -34,9 +37,6 @@
 
 (method_declaration
   name: (field_identifier) @method)
-
-(method_spec 
-  name: (field_identifier) @method) 
 
 ; Operators
 
@@ -123,7 +123,6 @@
 
 ((type_identifier) @type.builtin
  (#any-of? @type.builtin
-           "any"
            "bool"
            "byte"
            "complex128"
@@ -185,7 +184,7 @@
 ; Literals
 
 (interpreted_string_literal) @string
-(raw_string_literal) @string @spell
+(raw_string_literal) @string
 (rune_literal) @string
 (escape_sequence) @string.escape
 
@@ -197,16 +196,6 @@
 (false) @boolean
 (nil) @constant.builtin
 
-(keyed_element
-  . (literal_element (identifier) @field))
-(field_declaration name: (field_identifier) @field)
-
-(comment) @comment @spell
+(comment) @comment
 
 (ERROR) @error
-
-((interpreted_string_literal) @spell
-	(#not-has-parent? @spell
-		import_spec
-	)
-)
