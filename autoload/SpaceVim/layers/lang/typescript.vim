@@ -20,7 +20,7 @@
 "
 " The following key bindings works well in both vim and neovim.
 " >
-"   Ket binding          Description
+"   Key binding          Description
 "   ----------------------------------------
 "   g D                  jump to type definition
 "   SPC l d              show document
@@ -29,7 +29,7 @@
 " <
 " The following key bindings only work in neovim.
 " >
-"   Ket binding          Description
+"   Key binding          Description
 "   ----------------------------------------
 "   SPC l f              run code fix
 "   SPC l p              preview definition
@@ -41,7 +41,7 @@
 " <
 " The following key bindings only work in vim.
 " >
-"   Ket binding          Description
+"   Key binding          Description
 "   ----------------------------------------
 "   SPC l m              interface implementations
 " <
