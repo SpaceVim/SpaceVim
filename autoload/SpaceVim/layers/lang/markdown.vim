@@ -68,7 +68,7 @@ endfunction
 
 function! SpaceVim#layers#lang#markdown#plugins() abort
   let plugins = []
-  call add(plugins, ['SpaceVim/vim-markdown',{ 'on_ft' : 'markdown'}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-markdown',{ 'on_ft' : 'markdown'}])
   call add(plugins, ['joker1007/vim-markdown-quote-syntax',{ 'on_ft' : 'markdown'}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-markdown-toc', {'merged' : 0}])
   call add(plugins, ['iamcco/mathjax-support-for-mkdp',{ 'on_ft' : 'markdown'}])
