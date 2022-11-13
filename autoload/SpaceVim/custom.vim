@@ -21,7 +21,7 @@ endfunction
 
 function! s:set(key,val) abort
   if !exists('g:spacevim_' . a:key)
-    call SpaceVim#logger#warn('unsupported option: ' . a:key)
+    call SpaceVim#logger#warn('unsupported option: ' . a:key, 0)
   else
     exe 'let ' . 'g:spacevim_' . a:key . '=' . a:val
   endif
@@ -73,7 +73,7 @@ function! s:write_to_config(config) abort
   let g:_spacevim_global_config_path = global_dir . 'init.toml'
   let cf = global_dir . 'init.toml'
   if filereadable(cf)
-    call SpaceVim#logger#warn('The file already exists:' . cf)
+    call SpaceVim#logger#warn('The file already exists:' . cf, 0)
     return
   endif
   let dir = expand(fnamemodify(cf, ':p:h'))
@@ -112,8 +112,8 @@ endfunction
 ""
 " function for adding custom leader key bindings
 function! SpaceVim#custom#leader(type, key, value, ...) abort
-    call add(g:_spacevim_mappings_leader_custom,
-          \ [a:type, a:key, a:value] + a:000)
+  call add(g:_spacevim_mappings_leader_custom,
+        \ [a:type, a:key, a:value] + a:000)
 endfunction
 
 ""
@@ -196,7 +196,7 @@ function! s:apply(config, type) abort
       elseif has_key(plugin, 'name')
         call add(g:spacevim_custom_plugins, [plugin.name, plugin])
       else
-        call SpaceVim#logger#warn('custom_plugins should contains repo key!')
+        call SpaceVim#logger#warn('custom_plugins should contains repo key!', 0)
         call SpaceVim#logger#info(string(plugin))
       endif
     endfor
@@ -306,15 +306,19 @@ function! s:load_local_conf() abort
       let conf = s:JSON.json_decode(join(readfile(local_conf_cache, ''), ''))
       call s:apply(conf, 'local')
     else
-      let conf = s:TOML.parse_file(local_conf)
-      let dir = s:FILE.unify_path(expand(g:spacevim_data_dir
-            \ . 'SpaceVim/conf/'))
-      if !isdirectory(dir)
-        call mkdir(dir, 'p')
-      endif
-      call SpaceVim#logger#info('generate local conf: ' . local_conf_cache)
-      call writefile([s:JSON.json_encode(conf)], local_conf_cache)
-      call s:apply(conf, 'local')
+      try
+        let conf = s:TOML.parse_file(local_conf)
+        let dir = s:FILE.unify_path(expand(g:spacevim_data_dir
+              \ . 'SpaceVim/conf/'))
+        if !isdirectory(dir)
+          call mkdir(dir, 'p')
+        endif
+        call SpaceVim#logger#info('generate local conf: ' . local_conf_cache)
+        call writefile([s:JSON.json_encode(conf)], local_conf_cache)
+        call s:apply(conf, 'local')
+      catch
+        call SpaceVim#logger#warn('failed to load local config:' . v:errmsg, 0)
+      endtry
     endif
   elseif filereadable('.SpaceVim.d/init.vim')
     let local_dir = s:FILE.unify_path(
@@ -351,9 +355,13 @@ function! s:load_glob_conf() abort
       if !isdirectory(dir)
         call mkdir(dir, 'p')
       endif
-      let conf = s:TOML.parse_file(global_config)
-      call writefile([s:JSON.json_encode(conf)], global_config_cache)
-      call s:apply(conf, 'glob')
+      try
+        let conf = s:TOML.parse_file(global_config)
+        call writefile([s:JSON.json_encode(conf)], global_config_cache)
+        call s:apply(conf, 'glob')
+      catch
+        call SpaceVim#logger#warn('failed to load global config:' . v:errmsg, 0)
+      endtry
     endif
   elseif filereadable(global_dir . 'init.vim')
     let g:_spacevim_global_config_path = global_dir . 'init.vim'
