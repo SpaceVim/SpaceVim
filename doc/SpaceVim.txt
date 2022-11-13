@@ -5095,7 +5095,7 @@ This layer provides basic syntax highlighting for toml. To enable it:
 LANG#TYPESCRIPT                              *SpaceVim-layers-lang-typescript*
 
 This layer provides typescript development support for SpaceVim. To enable
-this layer, add following sinippet into SpaceVim configuration file.
+this layer, add following snippet into SpaceVim configuration file.
 >
   [layers]
       name = 'lang#typescript'
