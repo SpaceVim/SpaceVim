@@ -89,143 +89,179 @@ effect on highlighting. We will work on improving highlighting in the near futur
 
 #### Misc
 
-```
-@comment
-@debug
-@error for error `ERROR` nodes.
-@none to disable completely the highlight
-@preproc
-@punctuation.delimiter for `;` `.` `,`
-@punctuation.bracket for `()` or `{}`
-@punctuation.special for symbols with special meaning like `{}` in string interpolation.
+```scheme
+@comment  ; line and block comments
+@error    ; syntax/parser errors
+@none     ; completely disable the highlight
+@preproc  ; various preprocessor directives & shebangs
+@define   ; preprocessor definition directives
+@operator ; symbolic operators (e.g. `+` / `*`)
 ```
 
-#### Constants
+#### Punctuation
 
+```scheme
+@punctuation.delimiter ; delimiters (e.g. `;` / `.` / `,`)
+@punctuation.bracket   ; brackets (e.g. `()` / `{}` / `[]`)
+@punctuation.special   ; special symbols (e.g. `{}` in string interpolation)
 ```
-@constant
-@constant.builtin
-@constant.macro
-@string
-@string.regex
-@string.escape
-@string.special
-@character
-@character.special
-@number
-@boolean
-@float
+
+#### Literals
+
+```scheme
+@string            ; string literals
+@string.regex      ; regular expressions
+@string.escape     ; escape sequences
+@string.special    ; other special strings (e.g. dates)
+
+@character         ; character literals
+@character.special ; special characters (e.g. wildcards)
+
+@boolean           ; boolean literals
+@number            ; numeric literals
+@float             ; floating-point number literals
 ```
 
 #### Functions
 
-```
-@function
-@function.builtin
-@function.macro
-@parameter
+```scheme
+@function         ; function definitions
+@function.builtin ; built-in functions
+@function.call    ; function calls
+@function.macro   ; preprocessor macros
 
-@method
-@field
-@property
+@method           ; method definitions
+@method.call      ; method calls
 
-@constructor
+@constructor      ; constructor calls and definitions
+@parameter        ; parameters of a function
 ```
 
 #### Keywords
 
-```
-@conditional (e.g. `if`, `else`)
-@repeat (e.g. `for`, `while`)
-@label for C/Lua-like labels
-@keyword
-@keyword.function (keyword to define a function, e.g. `func` in Go, `def` in Python)
-@keyword.operator (for operators that are English words, e.g. `and`, `or`)
-@keyword.return
-@operator (for symbolic operators, e.g. `+`, `*`)
-@exception (e.g. `throw`, `catch`)
-@include keywords for including modules (e.g. import/from in Python)
-@storageclass
+```scheme
+@keyword          ; various keywords
+@keyword.function ; keywords that define a function (e.g. `func` in Go, `def` in Python)
+@keyword.operator ; operators that are English words (e.g. `and` / `or`)
+@keyword.return   ; keywords like `return` and `yield`
 
-@type
-@type.builtin
-@type.definition
-@type.qualifier
-@namespace for identifiers referring to namespaces
-@symbol for identifiers referring to symbols
-@attribute for e.g. Python decorators
+@conditional      ; keywords related to conditionals (e.g. `if` / `else`)
+@repeat           ; keywords related to loops (e.g. `for` / `while`)
+@debug            ; keywords related to debugging
+@label            ; GOTO and other labels (e.g. `label:` in C)
+@include          ; keywords for including modules (e.g. `import` / `from` in Python)
+@exception        ; keywords related to exceptions (e.g. `throw` / `catch`)
 ```
 
-@conceal followed by `(#set! conceal "")` for captures that are not used for highlights but only for concealing.
+#### Types
 
-#### Variables
+```scheme
+@type                  ; type or class definitions and annotations
+@type.builtin          ; built-in types
+@type.definition       ; type definitions (e.g. `typedef` in C)
+@type.qualifier        ; type qualifiers (e.g. `const`)
 
+@storageclass          ; visibility/life-time modifiers
+@storageclass.lifetime ; life-time modifiers (e.g. `static`)
+@attribute             ; attribute annotations (e.g. Python decorators)
+@field                 ; object and struct fields
+@property              ; similar to `@field`
 ```
-@variable
-@variable.builtin
+
+#### Identifiers
+
+```scheme
+@variable         ; various variable names
+@variable.builtin ; built-in variable names (e.g. `this`)
+
+@constant          ; constant identifiers
+@constant.builtin  ; built-in constant values
+@constant.macro    ; constants defined by the preprocessor
+
+@namespace        ; modules or namespaces
+@symbol           ; symbols or atoms
 ```
 
 #### Text
 
 Mainly for markup languages.
 
-```
-@text
-@text.strong
-@text.emphasis
-@text.underline
-@text.strike
-@text.title
-@text.literal
-@text.uri
-@text.math (e.g. for LaTeX math environments)
-@text.environment (e.g. for text environments of markup languages)
-@text.environment.name (e.g. for the name/the string indicating the type of text environment)
-@text.reference (for footnotes, text references, citations)
+```scheme
+@text                  ; non-structured text
+@text.strong           ; bold text
+@text.emphasis         ; text with emphasis
+@text.underline        ; underlined text
+@text.strike           ; strikethrough text
+@text.title            ; text that is part of a title
+@text.literal          ; literal or verbatim text
+@text.uri              ; URIs (e.g. hyperlinks)
+@text.math             ; math environments (e.g. `$ ... $` in LaTeX)
+@text.environment      ; text environments of markup languages
+@text.environment.name ; text indicating the type of an environment
+@text.reference        ; text references, footnotes, citations, etc.
 
-@text.note
-@text.warning
-@text.danger
+@text.todo             ; todo notes
+@text.note             ; info notes
+@text.warning          ; warning notes
+@text.danger           ; danger/error notes
 
-@todo
+@text.diff.add         ; added text (for diff files)
+@text.diff.delete      ; deleted text (for diff files)
 ```
 
 #### Tags
 
-Used for xml-like tags
+Used for XML-like tags.
 
-```
-@tag
-@tag.attribute
-@tag.delimiter
+```scheme
+@tag           ; XML tag names
+@tag.attribute ; XML tag attributes
+@tag.delimiter ; XML tag delimiters
 ```
 
 #### Conceal
 
-@conceal followed by `(#set! conceal "")` for captures that are not used for highlights but only for concealing.
+
+```scheme
+@conceal ; for captures that are only used for concealing
+```
+
+`@conceal` must be followed by `(#set! conceal "")`.
+
+#### Spell
+
+```scheme
+@spell ; for defining regions to be spellchecked
+```
+
+#### Non-standard
+
+These captures are used by some languages but don't have any default highlights.
+They fall back to the parent capture if they are not manually defined.
+
+```scheme
+@variable.global
+```
 
 ### Locals
 
-```
-@definition for various definitions
-@definition.constant
-@definition.function
-@definition.method
-@definition.var
-@definition.parameter
-@definition.macro
-@definition.type
-@definition.field
-@definition.enum
-@definition.namespace for modules or C++ namespaces
-@definition.import for imported names
+```scheme
+@definition            ; various definitions
+@definition.constant   ; constants
+@definition.function   ; functions
+@definition.method     ; methods
+@definition.var        ; variables
+@definition.parameter  ; parameters
+@definition.macro      ; preprocessor macros
+@definition.type       ; types or classes
+@definition.field      ; fields or properties
+@definition.enum       ; enumerations
+@definition.namespace  ; modules or namespaces
+@definition.import     ; imported names
+@definition.associated ; the associated type of a variable
 
-@definition.associated to determine the type of a variable
-@definition.doc for documentation adjacent to a definition. E.g.
-
-@scope
-@reference
-@constructor
+@scope                 ; scope block
+@reference             ; identifier reference
 ```
 
 
@@ -259,8 +295,8 @@ Possible scope values are:
 
 You can define folds for a given language by adding a `folds.scm` query :
 
-```
-@fold
+```scheme
+@fold ; fold this node
 ```
 
 If the `fold.scm` query is not present, this will fallback to the `@scope` captures in the `locals`
@@ -274,25 +310,25 @@ You can directly use the name of the language that you want to inject (e.g. `@ht
 If you want to dynamically detect the language (e.g. for Markdown blocks) use the `@language` to capture
 the node describing the language and `@content` to describe the injection region.
 
-```
-@{language} ; e.g. @html to describe a html region
+```scheme
+@{lang}   ; e.g. @html to describe a html region
 
-@language ; dynamic detection of the injection language (i.e. the text of the captured node describes the language).
-@content ; region for the dynamically detected language.
-@combined ; This will combine all matches of a pattern as one single block of content.
+@language ; dynamic detection of the injection language (i.e. the text of the captured node describes the language)
+@content  ; region for the dynamically detected language
+@combined ; combine all matches of a pattern as one single block of content
 ```
 
 ### Indents
 
-```
-@indent         ; Indent children when matching this node
-@indent_end     ; Marks the end of indented block
-@aligned_indent ; Behaves like python aligned/hanging indent
-@dedent         ; Dedent children when matching this node
-@branch         ; Dedent itself when matching this node
-@ignore         ; Do not indent in this node
-@auto           ; Behaves like 'autoindent' buffer option
-@zero_indent    ; Sets this node at position 0 (no indent)
+```scheme
+@indent         ; indent children when matching this node
+@indent_end     ; marks the end of indented block
+@aligned_indent ; behaves like python aligned/hanging indent
+@dedent         ; dedent children when matching this node
+@branch         ; dedent itself when matching this node
+@ignore         ; do not indent in this node
+@auto           ; behaves like 'autoindent' buffer option
+@zero_indent    ; sets this node at position 0 (no indent)
 ```
 
 [Zulip]: https://nvim-treesitter.zulipchat.com

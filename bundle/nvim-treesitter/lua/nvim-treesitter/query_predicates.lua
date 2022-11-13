@@ -128,3 +128,61 @@ query.add_directive("downcase!", function(match, _, bufnr, pred, metadata)
     metadata[key] = string.lower(text)
   end
 end)
+
+query.add_directive("exclude_children!", function(match, _pattern, _bufnr, pred, metadata)
+  local capture_id = pred[2]
+  local node = match[capture_id]
+  local start_row, start_col, end_row, end_col = node:range()
+  local ranges = {}
+  for i = 0, node:named_child_count() - 1 do
+    local child = node:named_child(i)
+    local child_start_row, child_start_col, child_end_row, child_end_col = child:range()
+    if child_start_row > start_row or child_start_col > start_col then
+      table.insert(ranges, {
+        start_row,
+        start_col,
+        child_start_row,
+        child_start_col,
+      })
+    end
+    start_row = child_end_row
+    start_col = child_end_col
+  end
+  if end_row > start_row or end_col > start_col then
+    table.insert(ranges, { start_row, start_col, end_row, end_col })
+  end
+  metadata.content = ranges
+end)
+
+-- Trim blank lines from end of the region
+-- Arguments are the captures to trim.
+query.add_directive("trim!", function(match, _, bufnr, pred, metadata)
+  for _, id in ipairs { select(2, unpack(pred)) } do
+    local node = match[id]
+    local start_row, start_col, end_row, end_col = node:range()
+
+    -- Don't trim if region ends in middle of a line
+    if end_col ~= 0 then
+      return
+    end
+
+    while true do
+      -- As we only care when end_col == 0, always inspect one line above end_row.
+      local end_line = vim.api.nvim_buf_get_lines(bufnr, end_row - 1, end_row, true)[1]
+
+      if end_line ~= "" then
+        break
+      end
+
+      end_row = end_row - 1
+    end
+
+    -- If this produces an invalid range, we just skip it.
+    if start_row < end_row or (start_row == end_row and start_col <= end_col) then
+      if not metadata[id] then
+        metadata[id] = {}
+      end
+      metadata[id].range = { start_row, start_col, end_row, end_col }
+    end
+  end
+end)

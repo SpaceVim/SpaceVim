@@ -4,6 +4,7 @@
 
 local queries = require "nvim-treesitter.query"
 local ts_utils = require "nvim-treesitter.ts_utils"
+local ts_query = vim.treesitter.query
 local api = vim.api
 
 local M = {}
@@ -162,7 +163,7 @@ M.get_definitions_lookup_table = ts_utils.memoize_by_buf_tick(function(bufnr)
       local scopes = M.get_definition_scopes(node_entry.node, bufnr, node_entry.scope)
       -- Always use the highest valid scope
       local scope = scopes[#scopes]
-      local node_text = ts_utils.get_node_text(node_entry.node, bufnr)[1]
+      local node_text = ts_query.get_node_text(node_entry.node, bufnr)
       local id = M.get_definition_id(scope, node_text)
 
       result[id] = node_entry
@@ -210,7 +211,7 @@ end
 
 function M.find_definition(node, bufnr)
   local def_lookup = M.get_definitions_lookup_table(bufnr)
-  local node_text = ts_utils.get_node_text(node, bufnr)[1]
+  local node_text = ts_query.get_node_text(node, bufnr)
 
   for scope in M.iter_scope_tree(node, bufnr) do
     local id = M.get_definition_id(scope, node_text)
@@ -231,7 +232,7 @@ end
 -- @returns a list of nodes
 function M.find_usages(node, scope_node, bufnr)
   local bufnr = bufnr or api.nvim_get_current_buf()
-  local node_text = ts_utils.get_node_text(node, bufnr)[1]
+  local node_text = ts_query.get_node_text(node, bufnr)
 
   if not node_text or #node_text < 1 then
     return {}
@@ -244,7 +245,7 @@ function M.find_usages(node, scope_node, bufnr)
     if
       match.reference
       and match.reference.node
-      and ts_utils.get_node_text(match.reference.node, bufnr)[1] == node_text
+      and ts_query.get_node_text(match.reference.node, bufnr) == node_text
     then
       local def_node, _, kind = M.find_definition(match.reference.node, bufnr)
 

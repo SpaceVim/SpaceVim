@@ -1,0 +1,6 @@
+/* This is /* a nested */ comment */
+/* <- comment
+            ^ comment
+                                ^ comment
+ */
+/* vim: set ft=tiger: */

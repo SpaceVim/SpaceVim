@@ -18,6 +18,13 @@
 
 [(constructor_name) (tag)] @constructor
 
+; Variables
+;----------
+
+[(value_name) (type_variable)] @variable
+
+(value_pattern) @parameter
+
 ; Functions
 ;----------
 
@@ -34,13 +41,6 @@
 (external (value_name) @function)
 
 (method_name) @method
-
-; Variables
-;----------
-
-[(value_name) (type_variable)] @variable
-
-(value_pattern) @parameter
 
 ; Application
 ;------------
@@ -71,7 +71,8 @@
 ; Constants
 ;----------
 
-(unit) @constant.builtin
+; Don't let normal parens take priority over this
+((unit) @constant.builtin (#set! "priority" 105))
 
 (boolean) @boolean
 

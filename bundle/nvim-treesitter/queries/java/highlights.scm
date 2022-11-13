@@ -9,7 +9,7 @@
 (method_declaration
   name: (identifier) @method)
 (method_invocation
-  name: (identifier) @method)
+  name: (identifier) @method.call)
 
 (super) @function.builtin
 
@@ -143,13 +143,13 @@
 ] @float
 
 (character_literal) @character
-(string_literal) @string
+[(string_literal) (text_block)] @string
 (null_literal) @constant.builtin
 
 [
   (line_comment)
   (block_comment)
-] @comment
+] @comment @spell
 
 [
 (true)
@@ -178,11 +178,14 @@
 "open"
 "opens"
 "package"
+"permits"
 "private"
 "protected"
 "provides"
 "public"
 "requires"
+"sealed"
+"non-sealed"
 "static"
 "strictfp"
 "synchronized"

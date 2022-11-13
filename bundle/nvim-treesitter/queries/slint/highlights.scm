@@ -16,6 +16,7 @@
 (comment) @comment
 
 (value) @number
+(int_number) @number
 (string) @string
 
 [
@@ -84,6 +85,8 @@
 [
 ","
 "."
+";"
+":"
 ] @punctuation.delimiter
 
 ; Brackets
@@ -95,6 +98,8 @@
 "{"
 "}"
 ] @punctuation.bracket
+
+(property_definition ["<" ">"] @punctuation.bracket)
 
 [
 "angle"
@@ -113,3 +118,29 @@
 "string"
 ] @type.builtin
 
+[
+ ":="
+ "<=>"
+ "!"
+ "-"
+ "+"
+ "*"
+ "/"
+ "&&"
+ "||"
+ ">"
+ "<"
+ ">="
+ "<="
+ "="
+ ":"
+ "+="
+ "-="
+ "*="
+ "/="
+ "?"
+
+ "=>"
+ ] @operator
+
+(ternary_expression [":" "?"] @conditional)

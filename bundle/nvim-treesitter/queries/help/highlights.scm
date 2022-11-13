@@ -1,14 +1,25 @@
-(headline) @text.title
+(h1) @text.title
+(h2) @text.title
+(h3) @text.title
 (column_heading) @text.title
+(column_heading
+   "~" @conceal (#set! conceal ""))
 (tag
    "*" @conceal (#set! conceal "")
-   name: (_) @label)
-(option
-   "'" @conceal (#set! conceal "")
-   name: (_) @text.literal)
-(hotlink
+   text: (_) @label)
+(taglink
    "|" @conceal (#set! conceal "")
-   destination: (_) @text.uri)
-(backtick
+   text: (_) @text.reference)
+(optionlink
+   text: (_) @text.reference)
+(codespan
    "`" @conceal (#set! conceal "")
-   content: (_) @string)
+   text: (_) @text.literal)
+(codeblock) @text.literal
+(codeblock
+   ">" @conceal (#set! conceal ""))
+(block
+   "<" @conceal (#set! conceal ""))
+(argument) @parameter
+(keycode) @string.special
+(url) @text.uri

@@ -1,5 +1,4 @@
 local Runner = require("tests.indent.common").Runner
-local XFAIL = require("tests.indent.common").XFAIL
 
 local run = Runner:new(it, "tests/indent/php", {
   tabstop = 4,
@@ -11,9 +10,7 @@ local run = Runner:new(it, "tests/indent/php", {
 describe("indent PHP:", function()
   describe("whole file:", function()
     run:whole_file(".", {
-      expected_failures = {
-        "./unfinished-call.php",
-      },
+      expected_failures = {},
     })
   end)
 
@@ -24,6 +21,8 @@ describe("indent PHP:", function()
       { on_line = 5, text = "indendation with `enter` in insert mode is not correct", indent = 4 }
     )
     run:new_line("issue-2497.php", { on_line = 5, text = "$a =", indent = 4 })
-    run:new_line("unfinished-call.php", { on_line = 6, text = "$a =", indent = 4 }, "shouldn't be 0", XFAIL)
+    run:new_line("unfinished-call.php", { on_line = 6, text = "$a =", indent = 0 })
+    run:new_line("issue-3591.php", { on_line = 4, text = "$a =", indent = 8 })
+    run:new_line("enum-indent.php", { on_line = 4, text = "case", indent = 4 })
   end)
 end)

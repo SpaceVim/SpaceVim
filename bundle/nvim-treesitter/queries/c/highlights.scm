@@ -1,4 +1,5 @@
-(identifier) @variable
+; Lower priority to prefer @parameter when identifier appears in parameter_declaration.
+((identifier) @variable (#set! "priority" 95))
 
 [
   "const"
@@ -42,9 +43,15 @@
   "#elif"
   "#endif"
   (preproc_directive)
-] @keyword
+] @preproc
 
 "#include" @include
+
+[ ";" ":" "," ] @punctuation.delimiter
+
+"..." @punctuation.special
+
+[ "(" ")" "[" "]" "{" "}"] @punctuation.bracket
 
 [
   "="
@@ -63,6 +70,7 @@
   ">>"
 
   "->"
+  "."
 
   "<"
   "<="
@@ -89,19 +97,16 @@
   "++"
 ] @operator
 
+;; Make sure the comma operator is given a highlight group after the comma
+;; punctuator so the operator is highlighted properly.
+(comma_expression [ "," ] @operator)
+
 [
  (true)
  (false)
 ] @boolean
 
-[ "." ";" ":" "," ] @punctuation.delimiter
-
-"..." @punctuation.special
-
 (conditional_expression [ "?" ":" ] @conditional)
-
-
-[ "(" ")" "[" "]" "{" "}"] @punctuation.bracket
 
 (string_literal) @string
 (system_lib_string) @string
@@ -120,6 +125,7 @@
      (field_identifier) @property)) @_parent
  (#not-has-parent? @_parent template_method function_declarator call_expression))
 
+(field_designator) @property
 (((field_identifier) @property)
  (#has-ancestor? @property field_declaration)
  (#not-has-ancestor? @property function_declarator))
@@ -142,6 +148,9 @@
 (case_statement
   value: (identifier) @constant)
 
+((identifier) @constant.builtin
+    (#any-of? @constant.builtin "stderr" "stdin" "stdout"))
+
 ;; Preproc def / undef
 (preproc_def
   name: (_) @constant)
@@ -151,16 +160,16 @@
   (#eq? @_u "#undef"))
 
 (call_expression
-  function: (identifier) @function)
+  function: (identifier) @function.call)
 (call_expression
   function: (field_expression
-    field: (field_identifier) @function))
+    field: (field_identifier) @function.call))
 (function_declarator
   declarator: (identifier) @function)
 (preproc_function_def
   name: (identifier) @function.macro)
 
-(comment) @comment
+(comment) @comment @spell
 
 ;; Parameters
 (parameter_declaration
@@ -182,6 +191,7 @@
   "_unaligned"
   "__unaligned"
   "__declspec"
+  (attribute_declaration)
 ] @attribute
 
 (ERROR) @error

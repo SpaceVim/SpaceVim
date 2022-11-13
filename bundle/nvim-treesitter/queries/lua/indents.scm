@@ -3,9 +3,11 @@
   (function_declaration)
   (field)
   (do_statement)
+  (method_index_expression)
   (while_statement)
   (repeat_statement)
   (if_statement)
+  "then"
   (for_statement)
   (return_statement)
   (table_constructor)

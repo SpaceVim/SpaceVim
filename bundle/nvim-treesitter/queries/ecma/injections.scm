@@ -1,4 +1,6 @@
-(comment) @jsdoc
+(((comment) @_jsdoc_comment
+  (#match? @_jsdoc_comment "^/\\*\\*[^\\*].*\\*/")) @jsdoc)
+
 (comment) @comment
 
 (call_expression
@@ -17,6 +19,8 @@
    (#eq? @_name "hbs"))
  arguments: ((template_string) @glimmer
    (#offset! @glimmer 0 1 0 -1)))
+
+((glimmer_template) @glimmer)
 
 ; styled.div`<css>`
 (call_expression
@@ -56,3 +60,10 @@
    (#offset! @css 0 1 0 -1)))
 
 (regex_pattern) @regex
+
+((comment) @_gql_comment
+  (#eq? @_gql_comment "/* GraphQL */")
+  (template_string) @graphql)
+
+(((template_string) @_template_string
+ (#match? @_template_string "^`#graphql")) @graphql)

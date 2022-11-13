@@ -106,7 +106,7 @@
 (command_substitution_dollar "$" @punctuation.bracket)
 
 ; non-bultin command names
-(command name: (word) @function)
+(command name: (word) @function.call)
 
 ; derived from builtin -n (fish 3.2.2)
 (command
@@ -149,10 +149,14 @@
 
 [(integer) (float)] @number
 (comment) @comment
+(comment) @spell
 (test_option) @string
 
 ((word) @boolean
 (#any-of? @boolean "true" "false"))
+
+((program . (comment) @preproc)
+  (#match? @preproc "^#!/"))
 
 ;; Error
 

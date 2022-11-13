@@ -3,10 +3,10 @@
 int main()                                                                
 {                                                                         
   B::foo();                                                                 
-  //  ^ @function
+  //  ^ @function.call
   Foo::A::foo();                                                            
-  //       ^ @function
+  //       ^ @function.call
   Foo::a::A::foo();                                                            
-  //          ^ @function
+  //          ^ @function.call
   return 0;                                                                 
 }    

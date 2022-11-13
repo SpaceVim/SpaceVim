@@ -1,0 +1,5 @@
+test {
+  nest {
+    x = "bar"
+  }
+}

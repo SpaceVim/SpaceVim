@@ -1,6 +1,6 @@
 require "nvim-treesitter.highlight" -- yes, this is necessary to set the hlmap
 local highlighter = require "vim.treesitter.highlighter"
-local utils = require "nvim-treesitter.utils"
+local configs = require "nvim-treesitter.configs"
 local ts_utils = require "nvim-treesitter.ts_utils"
 local parsers = require "nvim-treesitter.parsers"
 
@@ -16,7 +16,7 @@ local function check_assertions(file)
   )
   local assertions = vim.fn.json_decode(
     vim.fn.system(
-      "highlight-assertions -p '" .. utils.get_parser_install_dir() .. "/" .. lang .. ".so'" .. " -s '" .. file .. "'"
+      "highlight-assertions -p '" .. configs.get_parser_install_dir() .. "/" .. lang .. ".so'" .. " -s '" .. file .. "'"
     )
   )
   local parser = parsers.get_parser(buf, lang)

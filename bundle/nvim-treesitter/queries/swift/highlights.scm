@@ -3,7 +3,6 @@
 
 ; Identifiers
 (attribute) @variable
-(simple_identifier) @variable
 (type_identifier) @type
 (self_expression) @variable.builtin
 
@@ -21,36 +20,49 @@
 (function_declaration (simple_identifier) @method)
 (function_declaration ["init" @constructor])
 (throws) @keyword
-(async) @keyword
+"async" @keyword
 (where_keyword) @keyword
 (parameter external_name: (simple_identifier) @parameter)
 (parameter name: (simple_identifier) @parameter)
 (type_parameter (type_identifier) @parameter)
 (inheritance_constraint (identifier (simple_identifier) @parameter))
 (equality_constraint (identifier (simple_identifier) @parameter))
+(pattern bound_identifier: (simple_identifier)) @variable
 
 [
   "typealias"
   "struct"
   "class"
+  "actor"
   "enum"
   "protocol"
   "extension"
   "indirect"
+  "nonisolated"
+  "override"
+  "convenience"
+  "required"
+  "some"
 ] @keyword
 
-(class_body (property_declaration (value_binding_pattern (non_binding_pattern (simple_identifier) @property))))
-(protocol_property_declaration (value_binding_pattern (non_binding_pattern (simple_identifier) @property)))
+[
+  (getter_specifier)
+  (setter_specifier)
+  (modify_specifier)
+] @keyword
+
+(class_body (property_declaration (pattern (simple_identifier) @property)))
+(protocol_property_declaration (pattern (simple_identifier) @property))
 
 (import_declaration ["import" @include])
 
 (enum_entry ["case" @keyword])
 
 ; Function calls
-(call_expression (simple_identifier) @function) ; foo()
+(call_expression (simple_identifier) @function.call) ; foo()
 (call_expression ; foo.bar.baz(): highlight the baz()
   (navigation_expression
-    (navigation_suffix (simple_identifier) @function)))
+    (navigation_suffix (simple_identifier) @function.call)))
 ((navigation_expression
    (simple_identifier) @type) ; SomeType.method(): highlight SomeType as a type
    (#lua-match? @type "^[A-Z]"))
@@ -61,14 +73,13 @@
 ; Statements
 (for_statement ["for" @repeat])
 (for_statement ["in" @repeat])
-(for_statement item: (simple_identifier) @variable)
+(for_statement (pattern) @variable)
 (else) @keyword
 (as_operator) @keyword
 
 ["while" "repeat" "continue" "break"] @repeat
 
 ["let" "var"] @keyword
-(non_binding_pattern (simple_identifier) @variable)
 
 (guard_statement ["guard" @conditional])
 (if_statement ["if" @conditional])
@@ -85,8 +96,10 @@
 (statement_label) @label
 
 ; Comments
-(comment) @comment
-(multiline_comment) @comment
+[
+ (comment)
+ (multiline_comment)
+] @comment @spell
 
 ; String literals
 (line_str_text) @string
@@ -110,6 +123,9 @@
 (real_literal) @float
 (boolean_literal) @boolean
 "nil" @variable.builtin
+
+; Regex literals
+(regex_literal) @string.regex
 
 ; Operators
 (custom_operator) @operator

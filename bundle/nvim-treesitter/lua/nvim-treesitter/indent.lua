@@ -149,12 +149,19 @@ function M.get_indent(lnum)
     end
 
     -- do not indent for nodes that starts-and-ends on same line and starts on target line (lnum)
+    local should_process = not is_processed_by_row[srow]
+    local is_in_err = false
+    if should_process then
+      local parent = node:parent()
+      is_in_err = parent and parent:has_error()
+    end
     if
-      not is_processed_by_row[srow]
-      -- Dear stylua, please don't change the semantics of this statement!
-      -- stylua: ignore start
-      and (q.indent[node:id()] and srow ~= erow and ((srow ~= lnum - 1) or q.indent[node:id()].start_at_same_line))
-      -- stylua: ignore end
+      should_process
+      and (
+        q.indent[node:id()]
+        and (srow ~= erow or is_in_err)
+        and (srow ~= lnum - 1 or q.indent[node:id()].start_at_same_line)
+      )
     then
       indent = indent + indent_size
       is_processed = true
@@ -195,7 +202,6 @@ local indent_funcs = {}
 function M.attach(bufnr)
   indent_funcs[bufnr] = vim.bo.indentexpr
   vim.bo.indentexpr = "nvim_treesitter#indent()"
-  vim.api.nvim_command("au Filetype " .. vim.bo.filetype .. " setlocal indentexpr=nvim_treesitter#indent()")
 end
 
 function M.detach(bufnr)

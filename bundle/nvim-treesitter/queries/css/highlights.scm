@@ -11,7 +11,7 @@
  (important)
  ] @keyword
 
-(comment) @comment
+(comment) @comment @spell
 
 [
  (tag_name)
@@ -42,7 +42,7 @@
 
 
 (attribute_selector (plain_value) @string)
-(pseudo_element_selector (tag_name) @property)
+(pseudo_element_selector "::" (tag_name) @property)
 (pseudo_class_selector (class_name) @property)
 
 [

@@ -38,7 +38,7 @@ final xhp class a_post extends x\element {
       'document.getElementById("'.$id.'").submit(); return false;',
     );
     $anchor->setAttribute('href', '#');
-    //        ^ method
+    //        ^ method.call
 
     return $form;
   }

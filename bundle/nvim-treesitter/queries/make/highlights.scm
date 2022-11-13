@@ -1,4 +1,4 @@
-(comment) @comment
+(comment) @comment @spell
 
 (conditional
  (_ [
@@ -79,6 +79,7 @@
  )
 
 (function_call ["$" "(" ")"] @operator)
+(substitution_reference ["$" "(" ")"] @operator)
 
 (function_call [
  "subst"

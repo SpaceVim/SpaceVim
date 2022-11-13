@@ -120,17 +120,33 @@ function M.node_decremental()
   ts_utils.update_selection(buf, node)
 end
 
+local FUNCTION_DESCRIPTIONS = {
+  init_selection = "Start selecting nodes with nvim-treesitter",
+  node_incremental = "Increment selection to named node",
+  scope_incremental = "Increment selection to surrounding scope",
+  node_decremental = "Shrink selection to previous named node",
+}
+
 function M.attach(bufnr)
   local config = configs.get_module "incremental_selection"
   for funcname, mapping in pairs(config.keymaps) do
     local mode
+    local rhs
     if funcname == "init_selection" then
       mode = "n"
+      rhs = M[funcname]
     else
       mode = "x"
+      -- We need to move to command mode to access marks '< (visual area start) and '> (visual area end) which are not
+      -- properly accessible in visual mode.
+      rhs = string.format(":lua require'nvim-treesitter.incremental_selection'.%s()<CR>", funcname)
     end
-    local cmd = string.format(":lua require'nvim-treesitter.incremental_selection'.%s()<CR>", funcname)
-    api.nvim_buf_set_keymap(bufnr, mode, mapping, cmd, { silent = true, noremap = true })
+    vim.keymap.set(
+      mode,
+      mapping,
+      rhs,
+      { buffer = bufnr, silent = true, noremap = true, desc = FUNCTION_DESCRIPTIONS[funcname] }
+    )
   end
 end
 
@@ -138,9 +154,9 @@ function M.detach(bufnr)
   local config = configs.get_module "incremental_selection"
   for f, mapping in pairs(config.keymaps) do
     if f == "init_selection" then
-      api.nvim_buf_del_keymap(bufnr, "n", mapping)
+      vim.keymap.del("n", mapping, { buffer = bufnr })
     else
-      api.nvim_buf_del_keymap(bufnr, "x", mapping)
+      vim.keymap.del("x", mapping, { buffer = bufnr })
     end
   end
 end

@@ -1,28 +1,28 @@
 # H1
-<!-- <- TSPunctSpecial -->
+<!-- <- punctuation.special -->
 
 ## H2
-<!-- <- TSPunctSpecial -->
+<!-- <- punctuation.special -->
 
 - Item 1
 - Item 2
-<!-- <- TSPunctSpecial -->
+<!-- <- punctuation.special -->
 
 1. Item 1
 2. Item 2
-<!-- <- TSPunctSpecial -->
+<!-- <- punctuation.special -->
 
 ----![image_description](https://example.com/image.jpg "awesome image title")
-<!--  ^ TSTextReference                                                   -->
-<!--                              ^ TSURI                                 -->
-<!--                                                          ^ TSLiteral -->
-<!--^ TSPunctDelimiter                                                    -->
-<!-- ^ TSPunctDelimiter                                                   -->
-<!--                                                                      //TODO: currently disabled TSPunctDelimiter -->
+<!--  ^ text.reference                                                    -->
+<!--                              ^ text.uri                              -->
+<!--                                                      ^ text.literal  -->
+<!--^ punctuation.delimiter                                               -->
+<!-- ^ punctuation.delimiter                                              -->
+<!--                                                                      //TODO: currently disabled punctuation.delimiter -->
 
 [link_text](#local_reference "link go brr...")
-<!-- ^ TSTextReference                                                    --> 
-<!--                 ^ TSURI                                              -->
-<!--                            ^ TSLiteral                               -->
-<!-- <- TSPunctDelimiter                                                  -->
-<!--                                         //TODO: currently disabled TSPunctDelimiter           -->
+<!-- ^ text.reference                                                     -->
+<!--                 ^ text.uri                                           -->
+<!--                            ^ text.literal                            -->
+<!-- <- punctuation.delimiter                                             -->
+<!--                                                                      //TODO: currently disabled punctuation.delimiter -->

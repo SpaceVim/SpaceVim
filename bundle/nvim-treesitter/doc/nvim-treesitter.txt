@@ -39,11 +39,20 @@ To enable supported features, put this in your `init.lua` file:
 
 >
   require'nvim-treesitter.configs'.setup {
+    -- A directory to install the parsers into.
+    -- If this is excluded or nil parsers are installed
+    -- to either the package dir, or the "site" dir.
+    -- If a custom path is used (not nil) it must be added to the runtimepath.
+    parser_install_dir = "/some/path/to/store/parsers",
+
     -- A list of parser names, or "all"
     ensure_installed = { "c", "lua", "rust" },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
+
+    -- Automatically install missing parsers when entering buffer
+    auto_install = false,
 
     -- List of parsers to ignore installing (for "all")
     ignore_install = { "javascript" },
@@ -62,6 +71,7 @@ To enable supported features, put this in your `init.lua` file:
       additional_vim_regex_highlighting = false,
     },
   }
+  vim.opt.runtimepath:append("/some/path/to/store/parsers")
 <
 
 See |nvim-treesitter-modules| for a list of all available modules and its options.
@@ -341,11 +351,6 @@ get_node_at_cursor(winnr)~
 `winnr` will be 0 if nil.
 Returns the node under the cursor.
 
-						      *ts_utils.get_node_text*
-get_node_text(node, bufnr)~
-
-Returns the text content of a `node`.
-
 							  *ts_utils.is_parent*
 is_parent(dest, source)~
 
@@ -470,299 +475,6 @@ This will respect your 'foldminlines' and 'foldnestmax' settings.
 Note: This is highly experimental, and folding can break on some types of
       edits. If you encounter such breakage, hiting `zx` should fix folding.
       In any case, feel free to open an issue with the reproducing steps.
-
-==============================================================================
-HIGHLIGHTS                                        *nvim-treesitter-highlights*
-
-The following is a list of highlights groups, the syntactic elements they
-apply to, and some examples.
-
-							      *hl-TSAttribute*
-`TSAttribute`
-Annotations that can be attached to the code to denote some kind of meta
-information. e.g. C++/Dart attributes.
-
-								*hl-TSBoolean*
-`TSBoolean`
-Boolean literals: `True` and `False` in Python.
-
-							      *hl-TSCharacter*
-`TSCharacter`
-Character literals: `'a'` in C.
-
-						       *hl-TSCharacterSpecial*
-`TSCharacterSpecial`
-Special characters.
-
-								*hl-TSComment*
-`TSComment`
-Line comments and block comments.
-
-							    *hl-TSConditional*
-`TSConditional`
-Keywords related to conditionals: `if`, `when`, `cond`, etc.
-
-							       *hl-TSConstant*
-`TSConstant`
-Constants identifiers. These might not be semantically constant.
-E.g. uppercase variables in Python.
-
-							   *hl-TSConstBuiltin*
-`TSConstBuiltin`
-Built-in constant values: `nil` in Lua.
-
-							     *hl-TSConstMacro*
-`TSConstMacro`
-Constants defined by macros: `NULL` in C.
-
-							    *hl-TSConstructor*
-`TSConstructor`
-Constructor calls and definitions: `{}` in Lua, and Java constructors.
-
-								  *hl-TSDebug*
-`TSDebug`
-Debugging statements.
-
-								 *hl-TSDefine*
-`TSDefine`
-Preprocessor #define statements.
-
-								  *hl-TSError*
-`TSError`
-Syntax/parser errors. This might highlight large sections of code while the
-user is typing still incomplete code, use a sensible highlight.
-
-							      *hl-TSException*
-`TSException`
-Exception related keywords: `try`, `except`, `finally` in Python.
-
-								  *hl-TSField*
-`TSField`
-Object and struct fields.
-
-								  *hl-TSFloat*
-`TSFloat`
-Floating-point number literals.
-
-							       *hl-TSFunction*
-`TSFunction`
-Function calls and definitions.
-
-							    *hl-TSFuncBuiltin*
-`TSFuncBuiltin`
-Built-in functions: `print` in Lua.
-
-							      *hl-TSFuncMacro*
-`TSFuncMacro`
-Macro defined functions (calls and definitions): each `macro_rules` in
-Rust.
-
-								*hl-TSInclude*
-`TSInclude`
-File or module inclusion keywords: `#include` in C, `use` or `extern crate` in
-Rust.
-
-								*hl-TSKeyword*
-`TSKeyword`
-Keywords that don't fit into other categories.
-
-							*hl-TSKeywordFunction*
-`TSKeywordFunction`
-Keywords used to define a function: `function` in Lua, `def` and `lambda` in
-Python.
-
-							*hl-TSKeywordOperator*
-`TSKeywordOperator`
-Unary and binary operators that are English words: `and`, `or` in Python;
-`sizeof` in C.
-
-							  *hl-TSKeywordReturn*
-`TSKeywordReturn`
-Keywords like `return` and `yield`.
-
-								  *hl-TSLabel*
-`TSLabel`
-GOTO labels: `label:` in C, and `::label::` in Lua.
-
-								 *hl-TSMethod*
-`TSMethod`
-Method calls and definitions.
-
-							      *hl-TSNamespace*
-`TSNamespace`
-Identifiers referring to modules and namespaces.
-
-								     *hl-None*
-`TSNone`
-No highlighting (sets all highlight arguments to `NONE`). this group is used
-to clear certain ranges, for example, string interpolations. Don't change the
-values of this highlight group.
-
-								 *hl-TSNumber*
-`TSNumber`
-Numeric literals that don't fit into other categories.
-
-							       *hl-TSOperator*
-`TSOperator`
-Binary or unary operators: `+`, and also `->` and `*` in C.
-
-							      *hl-TSParameter*
-`TSParameter`
-Parameters of a function.
-
-						     *hl-TSParameterReference*
-`TSParameterReference`
-References to parameters of a function.
-
-								*hl-TSPreProc*
-`TSPreProc`
-Preprocessor #if, #else, #endif, etc.
-
-							       *hl-TSProperty*
-`TSProperty`
-Same as `TSField`.
-
-							 *hl-TSPunctDelimiter*
-`TSPunctDelimiter`
-Punctuation delimiters: Periods, commas, semicolons, etc.
-
-							   *hl-TSPunctBracket*
-`TSPunctBracket`
-Brackets, braces, parentheses, etc.
-
-							   *hl-TSPunctSpecial*
-`TSPunctSpecial`
-Special punctuation that doesn't fit into the previous categories.
-
-								 *hl-TSRepeat*
-`TSRepeat`
-Keywords related to loops: `for`, `while`, etc.
-
-							     *hl-StorageClass*
-`TSStorageClass`
-Keywords that affect how a variable is stored: `static`, `comptime`, `extern`,
-etc.
-
-								 *hl-TSString*
-`TSString`
-String literals.
-
-							    *hl-TSStringRegex*
-`TSStringRegex`
-Regular expression literals.
-
-							   *hl-TSStringEscape*
-`TSStringEscape`
-Escape characters within a string: `\n`, `\t`, etc.
-
-							  *hl-TSStringSpecial*
-`TSStringSpecial`
-Strings with special meaning that don't fit into the previous categories.
-
-								 *hl-TSSymbol*
-`TSSymbol`
-Identifiers referring to symbols or atoms.
-
-								    *hl-TSTag*
-`TSTag`
-Tags like HTML tag names.
-
-							   *hl-TSTagAttribute*
-`TSTagAttribute`
-HTML tag attributes.
-
-							   *hl-TSTagDelimiter*
-`TSTagDelimiter`
-Tag delimiters like `<` `>` `/`.
-
-								   *hl-TSText*
-`TSText`
-Non-structured text. Like text in a markup language.
-
-								 *hl-TSSTrong*
-`TSStrong`
-Text to be represented in bold.
-
-							       *hl-TSEmphasis*
-`TSEmphasis`
-Text to be represented with emphasis.
-
-							      *hl-TSUnderline*
-`TSUnderline`
-Text to be represented with an underline.
-
-								 *hl-TSStrike*
-`TSStrike`
-Strikethrough text.
-
-								  *hl-TSTitle*
-`TSTitle`
-Text that is part of a title.
-
-								*hl-TSLiteral*
-`TSLiteral`
-Literal or verbatim text.
-
-								    *hl-TSURI*
-`TSURI`
-URIs like hyperlinks or email addresses.
-
-								   *hl-TSMath*
-`TSMath`
-Math environments like LaTeX's `$ ... $`
-
-							  *hl-TSTextReference*
-`TSTextReference`
-Footnotes, text references, citations, etc.
-
-							     *hl-TSEnvironment*
-`TSEnvironment`
-Text environments of markup languages.
-
-							 *hl-TSEnvironmentName*
-`TSEnvironmentName`
-Text/string indicating the type of text environment. Like the name of a
-`\begin` block in LaTeX.
-
-								   *hl-TSNote*
-`TSNote`
-Text representation of an informational note.
-
-								   *TSWarning*
-`TSWarning`
-Text representation of a warning note.
-
-								    *TSDanger*
-`TSDanger`
-Text representation of a danger note.
-
-								   *hl-TSTodo*
-`TSTodo`
-Anything that needs extra attention, such as keywords like TODO or FIXME.
-
-								   *hl-TSType*
-`TSType`
-Type (and class) definitions and annotations.
-
-							    *hl-TSTypeBuiltin*
-`TSTypeBuiltin`
-Built-in types: `i32` in Rust.
-
-							  *hl-TSTypeQualifier*
-`TSTypeQualifier`
-Qualifiers on types, e.g. `const` or `volatile` in C or `mut` in Rust.
-
-							 *hl-TSTypeDefinition*
-`TSTypeDefinition`
-Type definitions, e.g. `typedef` in C.
-
-							       *hl-TSVariable*
-`TSVariable`
-Variable names that don't fit into other categories.
-
-							*hl-TSVariableBuiltin*
-`TSVariableBuiltin`
-Variable names defined by the language: `this` or `self` in Javascript.
 
 ==============================================================================
 PERFORMANCE                                      *nvim-treesitter-performance*

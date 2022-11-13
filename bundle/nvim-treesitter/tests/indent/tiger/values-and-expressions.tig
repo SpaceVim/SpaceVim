@@ -1,0 +1,30 @@
+let
+  type array_of_int = array of int
+
+  type record = {
+    a: int,
+    b: string,
+    c: type
+  }
+
+  var a :=
+    "a string"
+in
+  array[
+    12
+  ]
+  ;
+
+  array_of_int[
+    27
+  ]
+  of
+    42
+  ;
+
+  record {
+    a = 1,
+    b = "2",
+    c = nil
+  }
+end

@@ -14,11 +14,13 @@ local function install_info()
 
   local parser_list = parsers.available_parsers()
   table.sort(parser_list)
-  for _, ft in pairs(parser_list) do
-    local is_installed = #api.nvim_get_runtime_file("parser/" .. ft .. ".so", false) > 0
-    api.nvim_out_write(ft .. string.rep(" ", max_len - #ft + 1))
+  for _, lang in pairs(parser_list) do
+    local is_installed = #api.nvim_get_runtime_file("parser/" .. lang .. ".so", false) > 0
+    api.nvim_out_write(lang .. string.rep(" ", max_len - #lang + 1))
     if is_installed then
       api.nvim_out_write "[✓] installed\n"
+    elseif pcall(vim.treesitter.inspect_lang, lang) then
+      api.nvim_out_write "[✗] not installed (but still loaded. Restart Neovim!)\n"
     else
       api.nvim_out_write "[✗] not installed\n"
     end
@@ -115,21 +117,24 @@ local function print_info_modules(parserlist, module)
 
   api.nvim_buf_set_option(curbuf, "modified", false)
   api.nvim_buf_set_option(curbuf, "buftype", "nofile")
-  api.nvim_exec(
-    [[
-    syntax match TSModuleInfoGood      /✓/
-    syntax match TSModuleInfoBad       /✗/
-    syntax match TSModuleInfoHeader    /^>>.*$/ contains=TSModuleInfoNamespace
-    syntax match TSModuleInfoNamespace /^>> \w*/ contained
-    syntax match TSModuleInfoParser    /^[^> ]*\ze /
-    highlight default TSModuleInfoGood guifg=LightGreen gui=bold
-    highlight default TSModuleInfoBad  guifg=Crimson
-    highlight default link TSModuleInfoHeader    Type
-    highlight default link TSModuleInfoNamespace Statement
-    highlight default link TSModuleInfoParser    Identifier
-  ]],
-    false
-  )
+  vim.cmd [[
+  syntax match TSModuleInfoGood      /✓/
+  syntax match TSModuleInfoBad       /✗/
+  syntax match TSModuleInfoHeader    /^>>.*$/ contains=TSModuleInfoNamespace
+  syntax match TSModuleInfoNamespace /^>> \w*/ contained
+  syntax match TSModuleInfoParser    /^[^> ]*\ze /
+  ]]
+
+  local highlights = {
+    TSModuleInfoGood = { fg = "LightGreen", bold = true, default = true },
+    TSModuleInfoBad = { fg = "Crimson", default = true },
+    TSModuleInfoHeader = { link = "Type", default = true },
+    TSModuleInfoNamespace = { link = "Statement", default = true },
+    TSModuleInfoParser = { link = "Identifier", default = true },
+  }
+  for k, v in pairs(highlights) do
+    api.nvim_set_hl(0, k, v)
+  end
 end
 
 local function module_info(module)

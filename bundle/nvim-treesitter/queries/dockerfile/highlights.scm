@@ -26,7 +26,7 @@
   "@"
 ] @operator
 
-(comment) @comment
+(comment) @comment @spell
 
 (image_spec
   (image_tag
@@ -47,4 +47,17 @@
 ((variable) @constant
   (#lua-match? @constant "^[A-Z][A-Z_0-9]*$"))
 
+(arg_instruction
+  . (unquoted_string) @property)
 
+(env_instruction
+  (env_pair . (unquoted_string) @property))
+
+(expose_instruction
+  (expose_port) @number)
+
+((stopsignal_instruction) @number
+  (#match? @number "[0-9][0-9]?$"))
+
+((stopsignal_instruction) @constant.builtin
+  (#match? @constant.builtin "SIG(ABRT|HUP|INT|KILL|QUIT|STOP|TERM|TSTP)$"))

@@ -1,3 +1,3 @@
 ; inherits: json
 
-(comment) @comment
+(comment) @comment @spell

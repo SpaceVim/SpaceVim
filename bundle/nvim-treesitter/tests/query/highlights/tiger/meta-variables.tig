@@ -1,0 +1,14 @@
+let
+  _chunks(42)
+  /* <- keyword */
+
+in
+  _lvalue(12) : _namety(42) := _cast("I'm So Meta Even This Acronym", string);
+  /* <- keyword */
+  /*            ^ keyword */
+  /*                           ^ keyword */
+
+  _exp(42)
+  /* <- keyword */
+end
+/* vim: set ft=tiger: */

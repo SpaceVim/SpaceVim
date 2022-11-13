@@ -11,7 +11,7 @@
   (quote_statement)
 
   (do_clause)
-  (compound_expression)
+  (compound_statement)
 
   (assignment_expression)
   (binary_expression)
@@ -35,8 +35,7 @@
 ] @branch
 
 [
-  (comment)
+  (line_comment)
   (block_comment)
-  (triple_string)
 ] @ignore
 

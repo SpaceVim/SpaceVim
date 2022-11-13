@@ -12,6 +12,6 @@
   (quote_statement)
 
   (do_clause)
-  (compound_expression)
+  (compound_statement)
 ] @fold
 

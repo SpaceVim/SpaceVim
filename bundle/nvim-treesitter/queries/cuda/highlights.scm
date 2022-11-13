@@ -11,4 +11,5 @@
   "__forceinline__"
   "__restrict__"
   "__launch_bounds__"
+  "__grid_constant__"
 ] @keyword

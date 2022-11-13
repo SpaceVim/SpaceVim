@@ -16,7 +16,7 @@
 ["*" "**" "?"] @string.special
 
 (command argument: (bareword) @parameter)
-(command head: (identifier) @function)
+(command head: (identifier) @function.call)
 ((command head: (identifier) @keyword.return)
  (#eq? @keyword.return "return"))
 ((command (identifier) @keyword.operator)
@@ -24,7 +24,7 @@
 [
  "+" "-" "*" "/" "%" "<" "<=""==" "!=" ">"
  ">=" "<s" "<=s" "==s" "!=s" ">s" ">=s"
-] @function
+] @function.builtin
 
 [">" "<" ">>" "<>" "|"] @operator
 

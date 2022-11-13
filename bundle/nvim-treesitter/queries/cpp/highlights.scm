@@ -66,21 +66,21 @@
 
 (call_expression
   function: (qualified_identifier
-              name: (identifier) @function))
+              name: (identifier) @function.call))
 (call_expression
   function: (qualified_identifier
               name: (qualified_identifier
-                      name: (identifier) @function)))
+                      name: (identifier) @function.call)))
 (call_expression
   function:
       (qualified_identifier
         name: (qualified_identifier
               name: (qualified_identifier
-                      name: (identifier) @function))))
+                      name: (identifier) @function.call))))
 
 (call_expression
   function: (field_expression
-              field: (field_identifier) @function))
+              field: (field_identifier) @function.call))
 
 ((call_expression
   function: (identifier) @constructor)
@@ -158,27 +158,21 @@
  "new"
  "delete"
 
- ;; these keywords are not supported by the parser
- ;"eq"
- ;"not_eq"
- ;
- ;"compl"
- ;"and"
- ;"or"
- ;
- ;"bitand"
- ;"bitand_eq"
- ;"bitor"
- ;"bitor_eq"
- ;"xor"
- ;"xor_eq"
+ "xor"
+ "bitand"
+ "bitor"
+ "compl"
+ "not"
+ "xor_eq"
+ "and_eq"
+ "or_eq"
+ "not_eq"
+ "and"
+ "or"
 ] @keyword.operator
 
-[
-  "<=>"
-  "::"
-] @operator
+"<=>" @operator
 
-(attribute_declaration) @attribute
+"::" @punctuation.delimiter
 
 (literal_suffix) @operator

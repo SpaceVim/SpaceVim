@@ -14,7 +14,6 @@
  (for_expression)
  (while_expression)
  (if_expression)
- (if_let_expression)
  (match_expression)
  (call_expression)
 

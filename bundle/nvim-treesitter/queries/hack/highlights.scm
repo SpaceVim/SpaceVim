@@ -177,14 +177,14 @@
   (variable) @parameter)
 
 (call_expression
-  function: (qualified_identifier (identifier) @function .))
+  function: (qualified_identifier (identifier) @function.call .))
 
 (call_expression
-  function: (scoped_identifier (identifier)  @function .))
+  function: (scoped_identifier (identifier)  @function.call .))
 
 (call_expression
   function: (selection_expression
-              (qualified_identifier (identifier) @method .)))
+              (qualified_identifier (identifier) @method.call .)))
 
 (qualified_identifier
   (_) @namespace .

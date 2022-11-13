@@ -5,12 +5,8 @@ local utils = require "nvim-treesitter.utils"
 
 local M = {}
 
---- Gets the actual text content of a node
--- @param node the node to get the text from
--- @param bufnr the buffer containing the node
--- @return list of lines of text of the node
-function M.get_node_text(node, bufnr)
-  local bufnr = bufnr or api.nvim_get_current_buf()
+local function get_node_text(node, bufnr)
+  bufnr = bufnr or api.nvim_get_current_buf()
   if not node then
     return {}
   end
@@ -20,6 +16,9 @@ function M.get_node_text(node, bufnr)
 
   if start_row ~= end_row then
     local lines = api.nvim_buf_get_lines(bufnr, start_row, end_row + 1, false)
+    if next(lines) == nil then
+      return {}
+    end
     lines[1] = string.sub(lines[1], start_col + 1)
     -- end_row might be just after the last line. In this case the last line is not truncated.
     if #lines == end_row - start_row + 1 then
@@ -31,6 +30,37 @@ function M.get_node_text(node, bufnr)
     -- If line is nil then the line is empty
     return line and { string.sub(line, start_col + 1, end_col) } or {}
   end
+end
+
+---@private
+function M._get_line_for_node(node, type_patterns, transform_fn, bufnr)
+  local node_type = node:type()
+  local is_valid = false
+  for _, rgx in ipairs(type_patterns) do
+    if node_type:find(rgx) then
+      is_valid = true
+      break
+    end
+  end
+  if not is_valid then
+    return ""
+  end
+  local line = transform_fn(vim.trim(get_node_text(node, bufnr)[1] or ""))
+  -- Escape % to avoid statusline to evaluate content as expression
+  return line:gsub("%%", "%%%%")
+end
+
+--- Gets the actual text content of a node
+-- @deprecated Use vim.treesitter.query.get_node_text
+-- @param node the node to get the text from
+-- @param bufnr the buffer containing the node
+-- @return list of lines of text of the node
+function M.get_node_text(node, bufnr)
+  vim.notify_once(
+    "nvim-treesitter.ts_utils.get_node_text is deprecated: use vim.treesitter.query.get_node_text",
+    vim.log.levels.WARN
+  )
+  return get_node_text(node, bufnr)
 end
 
 --- Determines whether a node is the parent of another
@@ -124,7 +154,7 @@ function M.get_named_children(node)
   return nodes
 end
 
-function M.get_node_at_cursor(winnr)
+function M.get_node_at_cursor(winnr, ignore_injected_langs)
   winnr = winnr or 0
   local cursor = api.nvim_win_get_cursor(winnr)
   local cursor_range = { cursor[1] - 1, cursor[2] }
@@ -134,7 +164,19 @@ function M.get_node_at_cursor(winnr)
   if not root_lang_tree then
     return
   end
-  local root = M.get_root_for_position(cursor_range[1], cursor_range[2], root_lang_tree)
+
+  local root
+  if ignore_injected_langs then
+    for _, tree in ipairs(root_lang_tree:trees()) do
+      local tree_root = tree:root()
+      if tree_root and M.is_in_node_range(tree_root, cursor_range[1], cursor_range[2]) then
+        root = tree_root
+        break
+      end
+    end
+  else
+    root = M.get_root_for_position(cursor_range[1], cursor_range[2], root_lang_tree)
+  end
 
   if not root then
     return
@@ -220,14 +262,14 @@ function M.update_selection(buf, node, selection_mode)
   selection_mode = selection_mode or "charwise"
   local start_row, start_col, end_row, end_col = M.get_vim_range({ M.get_node_range(node) }, buf)
 
-  vim.fn.setpos(".", { buf, start_row, start_col, 0 })
-
   -- Start visual selection in appropriate mode
   local v_table = { charwise = "v", linewise = "V", blockwise = "<C-v>" }
   ---- Call to `nvim_replace_termcodes()` is needed for sending appropriate
   ---- command to enter blockwise mode
   local mode_string = vim.api.nvim_replace_termcodes(v_table[selection_mode] or selection_mode, true, true, true)
   vim.cmd("normal! " .. mode_string)
+  vim.fn.setpos(".", { buf, start_row, start_col, 0 })
+  vim.cmd "normal! o"
   vim.fn.setpos(".", { buf, end_row, end_col, 0 })
 end
 
@@ -326,8 +368,8 @@ function M.swap_nodes(node_or_range1, node_or_range2, bufnr, cursor_to_second)
   local range1 = M.node_to_lsp_range(node_or_range1)
   local range2 = M.node_to_lsp_range(node_or_range2)
 
-  local text1 = M.get_node_text(node_or_range1)
-  local text2 = M.get_node_text(node_or_range2)
+  local text1 = get_node_text(node_or_range1, bufnr)
+  local text2 = get_node_text(node_or_range2, bufnr)
 
   local edit1 = { range = range1, newText = table.concat(text2, "\n") }
   local edit2 = { range = range2, newText = table.concat(text1, "\n") }

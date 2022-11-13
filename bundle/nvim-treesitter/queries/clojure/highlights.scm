@@ -42,10 +42,10 @@
 ; General function calls
 (list_lit
  .
- (sym_lit) @function)
+ (sym_lit) @function.call)
 (anon_fn_lit
  .
- (sym_lit) @function)
+ (sym_lit) @function.call)
 
 ; Quoted symbols
 (quoting_lit
@@ -106,7 +106,10 @@
 
 ; Definition functions
 ((sym_lit) @keyword
- (#lua-match? @keyword "^def.*$"))
+ (#any-of? @keyword
+  "def" "defonce" "defrecord" "defmacro" "definline"
+  "defmulti" "defmethod" "defstruct" "defprotocol"
+  "deftype"))
 ((sym_lit) @keyword
  (#eq? @keyword "declare"))
 ((sym_lit) @keyword.function
@@ -278,19 +281,22 @@
 
 ;; >> Context based highlighting
 
-; def-likes
-; Correctly highlight docstrings
-(list_lit
- .
- (sym_lit) @_keyword ; Don't really want to highlight twice
- (#lua-match? @_keyword "^def.*")
- .
- (sym_lit)
- .
- ;; TODO: Add @comment highlight
- (str_lit)?
- .
- (_))
+;; def-likes
+;; Correctly highlight docstrings
+;(list_lit
+ ;.
+ ;(sym_lit) @_keyword ; Don't really want to highlight twice
+ ;(#any-of? @_keyword
+   ;"def" "defonce" "defrecord" "defmacro" "definline"
+   ;"defmulti" "defmethod" "defstruct" "defprotocol"
+   ;"deftype")
+ ;.
+ ;(sym_lit)
+ ;.
+ ;;; TODO: Add @comment highlight
+ ;(str_lit)?
+ ;.
+ ;(_))
 
 ; Function definitions
 (list_lit

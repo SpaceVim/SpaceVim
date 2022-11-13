@@ -20,12 +20,12 @@
 
 (invocation_expression
   (member_access_expression
-    name: (identifier) @method))
+    name: (identifier) @method.call))
 
 (invocation_expression
   function: (conditional_access_expression
     (member_binding_expression
-      name: (identifier) @method)))
+      name: (identifier) @method.call)))
 
 (namespace_declaration
   name: [(qualified_name) (identifier)] @namespace)
@@ -34,7 +34,7 @@
   (identifier) @type)
 
 (invocation_expression
-      (identifier) @method)
+      (identifier) @method.call)
 
 (field_declaration
   (variable_declaration
@@ -74,7 +74,7 @@
 
 (implicit_type) @keyword
 
-(comment) @comment
+(comment) @comment @spell
 
 (using_directive
   (identifier) @type)
@@ -141,7 +141,7 @@
 ; Generic Method invocation with generic type
 (invocation_expression
   function: (generic_name
-              . (identifier) @method))
+              . (identifier) @method.call))
 
 (invocation_expression
   (member_access_expression

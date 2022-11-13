@@ -40,3 +40,5 @@
   (tag_name) @_tag_name
   ["<" ">"] @keyword
   (#eq? @_tag_name "@author"))
+
+(text) @spell

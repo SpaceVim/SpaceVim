@@ -3,7 +3,6 @@
   (const_declaration)
   (var_declaration)
   (type_declaration)
-  (composite_literal)
   (func_literal)
   (literal_value)
   (expression_case)
@@ -11,12 +10,21 @@
   (block)
   (call_expression)
   (parameter_list)
+  (struct_type)
 ] @indent
 
 [
-  "case"
   "}"
 ] @branch
+
+(const_declaration ")" @branch)
+(import_spec_list ")" @branch)
+(var_declaration ")" @branch)
+
+[
+ "}"
+ ")"
+] @indent_end
 
 (parameter_list ")" @branch)
 
