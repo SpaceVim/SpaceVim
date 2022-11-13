@@ -44,10 +44,11 @@ function M._build_msg(msg, l)
     local time = fn.strftime('%H:%M:%S')
     -- error(string.format("Tried to call API function with vim.fn: use vim.api.%s instead", key))
     -- local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[l] .. '] ' .. msg
-    local log = string.format('[ %s ] [%s] [%00.3f] [ %s ] %s',
+    local clock = string.format('%00.3f', fn.reltimefloat(fn.reltime(M.clock)))
+    local log = string.format('[ %s ] [%s] [%8s] [ %s ] %s',
         M.name,
         time,
-        fn.reltimefloat(fn.reltime(M.clock)),
+        clock,
         M.levels[l],
         msg)
     return log
