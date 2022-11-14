@@ -13,7 +13,7 @@
 " highlighting, code indent, code runner and REPL. This layer is not enabled
 " by default, To enable this layer:
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#clojure"
 " <
 "

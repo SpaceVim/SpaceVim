@@ -14,7 +14,7 @@
 " The lang#graphql layer provides syntax highlighting indent for graphql. To
 " enable this layer:
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#graphql"
 " <
 "

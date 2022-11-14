@@ -44,7 +44,7 @@ npm install --global vscode-html-languageserver-bin
 - `emmet_filetyps`：设置启用 emmet 插件的文件类型列表。
 
   ```toml
-  [layers]
+  [[layers]]
     name = "lang#html"
     emmet_leader_key = "<C-e>"
     emmet_filetyps = ['html']

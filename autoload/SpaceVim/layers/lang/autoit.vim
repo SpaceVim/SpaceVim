@@ -12,7 +12,7 @@
 " This layer provides syntax highlighting for autoit. To enable this
 " layer:
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#autoit"
 " <
 "

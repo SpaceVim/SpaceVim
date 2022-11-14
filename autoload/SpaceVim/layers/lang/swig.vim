@@ -12,7 +12,7 @@
 " This layer is for swig development, including syntax highlighting and
 " indent. To enable it:
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#swig"
 " <
 

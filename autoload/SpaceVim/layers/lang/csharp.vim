@@ -14,7 +14,7 @@
 " This layer includes utilities and language-specific mappings for csharp development.
 " By default it is disabled, to enable this layer:
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#csharp"
 " <
 "

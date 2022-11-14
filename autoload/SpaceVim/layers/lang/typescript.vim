@@ -13,7 +13,7 @@
 " To enable this layer, add following snippet into SpaceVim configuration
 " file.
 " >
-"   [layers]
+"   [[layers]]
 "       name = 'lang#typescript'
 " <
 " @subsection key bindings

@@ -16,7 +16,7 @@
 " syntax checker which is loaded in @section(layer-checkers). To enable this
 " layer:
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#dart"
 " <
 "

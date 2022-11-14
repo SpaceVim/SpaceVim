@@ -14,7 +14,7 @@
 " The lang#crystal layer provides crystal filetype detection and syntax highlight,
 " crystal tool and crystal spec integration. To enable this layer:
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#crystal"
 " <
 "

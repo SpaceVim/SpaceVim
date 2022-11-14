@@ -20,7 +20,7 @@
 "
 " 1. ring_repl: Set the path of ring repl.
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#ring"
 "     ring_repl = "/path/to/repl.ring"
 " <

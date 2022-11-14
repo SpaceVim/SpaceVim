@@ -22,7 +22,7 @@
 "
 " 1. python_file_head: the default file head for python source code.
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#python"
 "     python_file_head = [      
 "       '#!/usr/bin/python3',

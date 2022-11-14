@@ -11,7 +11,7 @@
 " @parentsection layers
 " This layer provides syntax highlighting for json file. To enable this layer:
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#json"
 " <
 "
@@ -22,7 +22,7 @@
 " 2. concealcursor: Set the valuable for |g:vim_json_syntax_concealcursor|
 "
 " >
-"   [layers]
+"   [[layers]]
 "     name = 'lang#json'
 "     conceal = false
 "     concealcursor = ''

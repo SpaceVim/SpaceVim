@@ -19,7 +19,7 @@
 "
 " 1. lua_file_head: the default file head for lua source code.
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#lua"
 "     ruby_file_head = [      
 "       '--!/usr/bin/lua',

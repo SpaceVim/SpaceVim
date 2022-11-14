@@ -12,7 +12,7 @@
 " This layer is for swift development, including syntax highlighting and
 " indent. To enable it:
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#swift"
 " <
 " @subsection Mappings

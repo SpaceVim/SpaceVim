@@ -20,7 +20,7 @@
 "
 " 1. ruby_file_head: the default file head for ruby source code.
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#ruby"
 "     ruby_file_head = [      
 "       '#!/usr/bin/ruby -w',

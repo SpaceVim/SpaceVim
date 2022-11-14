@@ -12,7 +12,7 @@
 " This layer provides syntax highlighting for autohotkey. To enable this
 " layer:
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#autohotkey"
 " <
 

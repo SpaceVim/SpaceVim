@@ -21,7 +21,7 @@
 " `gometalinter`
 " 2. go_file_head: the default file head for golang source code.
 " >
-"   [layers]
+"   [[layers]]
 "     name = "lang#go"
 "     go_file_head = [      
 "       '#!/usr/bin/python3',
