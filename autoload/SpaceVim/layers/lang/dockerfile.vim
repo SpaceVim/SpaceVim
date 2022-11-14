@@ -12,6 +12,11 @@
 " @subsection Intro
 "
 " The lang#dockerfile layer provides syntax highlighting for dockerfile.
+" By default it is disabled, to enable this layer:
+" >
+  " [[layers]]
+    " name = "lang#dockerfile"
+" <
 
 function! SpaceVim#layers#lang#dockerfile#plugins() abort
   let plugins = []
