@@ -7,7 +7,7 @@
 "=============================================================================
 
 ""
-" @section lang#ring, layers-lang-r
+" @section lang#r, layers-lang-r
 " @parentsection layers
 " This layer is for r development, disabled by default, to enable this
 " layer, add following snippet to your SpaceVim configuration file.

@@ -191,10 +191,10 @@ CONTENTS                                                   *SpaceVim-contents*
       95. lang#puppet............................|SpaceVim-layers-lang-puppet|
       96. lang#purescript....................|SpaceVim-layers-lang-purescript|
       97. lang#python............................|SpaceVim-layers-lang-python|
-      98. lang#racket............................|SpaceVim-layers-lang-racket|
-      99. lang#racket...............................|SpaceVim-layers-lang-red|
-      100. lang#reason...........................|SpaceVim-layers-lang-reason|
-      101. lang#ring..................................|SpaceVim-layers-lang-r|
+      98. lang#r......................................|SpaceVim-layers-lang-r|
+      99. lang#racket............................|SpaceVim-layers-lang-racket|
+      100. lang#racket..............................|SpaceVim-layers-lang-red|
+      101. lang#reason...........................|SpaceVim-layers-lang-reason|
       102. lang#ring...............................|SpaceVim-layers-lang-ring|
       103. lang#ruby...............................|SpaceVim-layers-lang-ruby|
       104. lang#rust...............................|SpaceVim-layers-lang-rust|
@@ -203,7 +203,7 @@ CONTENTS                                                   *SpaceVim-contents*
       107. lang#sh...................................|SpaceVim-layers-lang-sh|
       108. lang#smalltalk.....................|SpaceVim-layers-lang-smalltalk|
       109. lang#sml.................................|SpaceVim-layers-lang-sml|
-      110. lang#swig..............................|SpaceVim-layers-lang-swift|
+      110. lang#swift.............................|SpaceVim-layers-lang-swift|
       111. lang#swig...............................|SpaceVim-layers-lang-swig|
       112. lang#tcl.................................|SpaceVim-layers-lang-tcl|
       113. lang#teal...............................|SpaceVim-layers-lang-teal|
@@ -4445,6 +4445,37 @@ used:
 <
 
 ==============================================================================
+LANG#R                                                *SpaceVim-layers-lang-r*
+
+This layer is for r development, disabled by default, to enable this layer,
+add following snippet to your SpaceVim configuration file.
+>
+  [[layers]]
+    name = 'lang#r'
+<
+
+KEY BINDINGS
+
+The command of code runner for R is `"R <%s"` `%s` will be replaced to the
+path of current R file.
+>
+  Key             Function
+  --------------------------------
+  SPC l r         run current file
+<
+
+This layer also provides REPL support for r, the key bindings are:
+>
+  Key             Function
+  ---------------------------------------------
+  SPC l s i       Start a inferior REPL process
+  SPC l s b       send whole buffer
+  SPC l s l       send current line
+  SPC l s s       send selection text
+<
+
+
+==============================================================================
 LANG#RACKET                                      *SpaceVim-layers-lang-racket*
 
 This layer is for racket development, disabled by default, to enable this
@@ -4511,37 +4542,6 @@ layer, add following snippet to your |SpaceVim-options| file.
   [[layers]]
     name = 'lang#reason'
 <
-
-==============================================================================
-LANG#RING                                             *SpaceVim-layers-lang-r*
-
-This layer is for r development, disabled by default, to enable this layer,
-add following snippet to your SpaceVim configuration file.
->
-  [[layers]]
-    name = 'lang#r'
-<
-
-KEY BINDINGS
-
-The command of code runner for R is `"R <%s"` `%s` will be replaced to the
-path of current R file.
->
-  Key             Function
-  --------------------------------
-  SPC l r         run current file
-<
-
-This layer also provides REPL support for r, the key bindings are:
->
-  Key             Function
-  ---------------------------------------------
-  SPC l s i       Start a inferior REPL process
-  SPC l s b       send whole buffer
-  SPC l s l       send current line
-  SPC l s s       send selection text
-<
-
 
 ==============================================================================
 LANG#RING                                          *SpaceVim-layers-lang-ring*
@@ -4998,7 +4998,7 @@ Here is an example how to use above options:
 <
 
 ==============================================================================
-LANG#SWIG                                         *SpaceVim-layers-lang-swift*
+LANG#SWIFT                                        *SpaceVim-layers-lang-swift*
 
 This layer is for swift development, including syntax highlighting and indent.
 To enable it:
