@@ -18,9 +18,25 @@
 "
 " The following colorschemes are include in SpaceVim. If the colorscheme you
 " want is not included in the list below, a PR is welcome.
-"
+" >
+"   | Name         | dark | light | term | gui | statusline |
+"   | ------------ | ---- | ----- | ---- | --- | ---------- |
+"   | molokai      | yes  | no    | yes  | yes | yes        |
+"   | srcery       | yes  | no    | yes  | yes | yes        |
+"   | onedark      | yes  | no    | yes  | yes | yes        |
+"   | jellybeans   | yes  | no    | yes  | yes | yes        |
+"   | palenight    | yes  | no    | yes  | yes | yes        |
+"   | one          | yes  | yes   | yes  | yes | yes        |
+"   | nord         | yes  | no    | yes  | yes | yes        |
+"   | gruvbox      | yes  | yes   | yes  | yes | yes        |
+"   | NeoSolarized | yes  | yes   | yes  | yes | yes        |
+"   | hybrid       | yes  | yes   | yes  | yes | yes        |
+"   | material     | yes  | yes   | yes  | yes | yes        |
+"   | dracula      | yes  | yes   | yes  | yes | yes        |
+"   | SpaceVim     | yes  | yes   | yes  | yes | yes        |
+" <
 " Also, there's one thing which everyone should know and pay attention to.
-" NOT all of below colorschemes support spell check very well. For example,
+" NOT all of above colorschemes support spell check very well. For example,
 " a colorscheme called atom doesn't support spell check very well.
 "
 " SpaceVim is not gonna fix them since these should be in charge of each author.
