@@ -2081,9 +2081,13 @@ endfunction
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v1.9.0
+" Following HEAD: changes in master branch since last release v2.0.0
 "
 " https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+"
+" 2022-07-02: v2.0.0
+"
+" https://spacevim.org/SpaceVim-release-v2.0.0/
 "
 " 2021-06-16: v1.9.0
 "
