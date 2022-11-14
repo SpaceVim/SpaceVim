@@ -101,7 +101,7 @@ you can also use a specific layer name or plugin name as a scope.
 **subject:**
 
 Subjects should be no greater than 50 characters,
-should begin with a capital letter and do not end with a period.
+should not begin with a capital letter and do not end with a period.
 
 Use an imperative tone to describe what a commit does,
 rather than what it did. For example, use change; not changed or changes.
