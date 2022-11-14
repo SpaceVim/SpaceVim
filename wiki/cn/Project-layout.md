@@ -24,7 +24,7 @@ SpaceVim 组织正常维护的仓库有如下这些，其中 `SpaceVim/SpaceVim`
 ├─ autoload/SpaceVim.vim          SpaceVim core file
 ├─ autoload/SpaceVim/api/         Public APIs
 ├─ autoload/SpaceVim/layers/      available layers
-├─ autoload/SpaceVim/plugins/     buildin plugins
+├─ autoload/SpaceVim/plugins/     builtin plugins
 ├─ autoload/SpaceVim/mapping/     mapping guide
 ├─ doc/                           help(cn/en)
 ├─ docs/                          website(cn/en)
