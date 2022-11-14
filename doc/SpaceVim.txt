@@ -2757,8 +2757,9 @@ INTRO
 The lang#dockerfile layer provides syntax highlighting for dockerfile. By
 default it is disabled, to enable this layer:
 >
+  [[layers]]
+    name = "lang#dockerfile"
 <
-[[layers]] name = "lang#dockerfile" <
 
 ==============================================================================
 LANG#E                                                *SpaceVim-layers-lang-e*
