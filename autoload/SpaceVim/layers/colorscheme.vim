@@ -9,11 +9,11 @@
 ""
 " @section colorscheme, layers-colorscheme
 " @parentsection layers
-" The default colorscheme for SpaceVim is gruvbox. The colorscheme can be
-" changed with the `g:spacevim_colorscheme` option by adding the following
-" line to your `~/.SpaceVim/init.vim`.
+" The default colorscheme of SpaceVim is gruvbox. It can be changed via
+" `colorscheme` option by adding the following code to @section(options) file:
 " >
-"   let g:spacevim_colorscheme = 'solarized'
+" [options]
+"   colorscheme = 'solarized'
 " <
 "
 " The following colorschemes are include in SpaceVim. If the colorscheme you
