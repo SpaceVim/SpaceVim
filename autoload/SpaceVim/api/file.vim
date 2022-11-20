@@ -61,6 +61,7 @@ let s:file_node_extensions = {
       \  'doc'      : '',
       \  'help'     : '',
       \  'txt'      : '',
+      \  'toml'     : '',
       \  'markdown' : '',
       \  'json'     : '',
       \  'js'       : '',
