@@ -23,6 +23,6 @@ if 1
             let g:_spacevim_if_lua = 1
         endif
     endif
-    execute 'source' fnamemodify(expand('<sfile>'), ':h').'/main.vim'
+    execute 'source' fnamemodify(expand('<sfile>'), ':h').'/init.vim'
 endif
 " vim:set et sw=2
