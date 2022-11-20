@@ -10,7 +10,7 @@ SpaceVim 这一项目的存在，得益于所有参与贡献的朋友，我们�
 
 ### 贡献代码
 
-我们非常欢迎开发者贡献代码，请仔细阅读以下内容。同时也可以加入我们的[中文聊天室](https://gitter.im/SpaceVim/cn)，
+我们非常欢迎开发者贡献代码，请仔细阅读以下内容。同时也可以加入我们的[中文聊天室](https://chat.mozilla.org/#/room/#spacevim-cn:matrix.org)，
 沟通交流。
 
 
