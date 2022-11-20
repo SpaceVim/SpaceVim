@@ -28,7 +28,7 @@ function! s:set_command() abort
     let yank = 'xclip -quiet -i -selection clipboard'
     let paste = 'xclip -o -selection clipboard'
   elseif !empty($DISPLAY) && executable('xsel')
-    let yank = 'xsel --nodetach -i -b'
+    let yank = 'xsel -i -b'
     let paste = 'xsel -o -b'
   elseif executable('lemonade')
     let yank = 'lemonade copy'
