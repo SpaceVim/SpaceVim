@@ -6,6 +6,14 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section git-branch, branch
+" @parentsection commands
+" This commands is to open branch manager.
+" >
+"   :Git branch
+" <
+
 let s:JOB = SpaceVim#api#import('job')
 let s:STR = SpaceVim#api#import('data#string')
 
@@ -102,7 +110,8 @@ function! s:on_exit_show_branch(id, data, event) abort
           \ })
   endif
 endfunction
-
+""
+" return the current branch info. this function can be used in statusline.
 function! git#branch#current(...) abort
   let pwd = getcwd()
   let branch = get(s:branch_info, pwd, {})
@@ -117,7 +126,8 @@ function! git#branch#current(...) abort
     return ''
   endif
 endfunction
-
+""
+" update the branch info manually.
 function! git#branch#detect() abort
   call s:update_branch_name(getcwd(), 1)
 endfunction
