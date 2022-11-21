@@ -264,7 +264,7 @@ let s:self._color_map = {
   \ '252' : '#d0d0d0',
   \ '253' : '#dadada',
   \ '254' : '#e4e4e4',
-  \ '255' : '#eeeeee',
+  \ '255' : '#eeeeee', 'fg': 'fg', 'bg': 'bg', 'NONE': 'NONE'
   \ }
 
 let s:self._deps = SpaceVim#api#import('data#dict')
