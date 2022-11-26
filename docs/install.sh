@@ -333,7 +333,7 @@ welcome () {
 
 # download_font {{{
 download_font () {
-    url="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/SourceCodePro/Regular/complete/${1// /%20}"
+    url="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/SourceCodePro/Regular/complete/${1// /%20}"
     path="$HOME/.local/share/fonts/$1"
     if [[ -f "$path" && ! -s "$path" ]]
     then
