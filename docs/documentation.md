@@ -1256,7 +1256,7 @@ Read `:h registers` for more info about other registers.
 | `<Leader> P` | Paste text from system clipboard before here |
 | `<Leader> Y` | Copy selected text to pastebin               |
 
-To change the command of clipboard, you nned to use bootstrap after function:
+To change the command of clipboard, you need to use bootstrap after function:
 
 ```viml
 " for example, to use tmux clipboard:
