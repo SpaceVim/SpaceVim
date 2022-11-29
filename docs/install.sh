@@ -87,7 +87,6 @@ On_IWhite='\033[0;107m'   # White
 Version='2.1.0-dev'
 #System name
 System="$(uname -s)"
-
 # }}}
 
 # need_cmd {{{
@@ -297,7 +296,6 @@ usage () {
 # }}}
 
 # install_done {{{
-
 install_done () {
     echo_with_color ${Yellow} ""
     echo_with_color ${Yellow} "Almost done!"
@@ -308,27 +306,23 @@ install_done () {
     echo_with_color ${Yellow} "That's it. Thanks for installing SpaceVim. Enjoy!"
     echo_with_color ${Yellow} ""
 }
-
 # }}}
 
 # welcome {{{
-
-
 welcome () {
     echo_with_color ${Yellow} "        /######                                     /##    /##/##             "
     echo_with_color ${Yellow} "       /##__  ##                                   | ##   | #|__/             "
-        echo_with_color ${Yellow} "      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### "
-        echo_with_color ${Yellow} "      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##"
-        echo_with_color ${Yellow} "       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##"
-        echo_with_color ${Yellow} "       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##"
-        echo_with_color ${Yellow} "      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##"
-        echo_with_color ${Yellow} "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/"
-        echo_with_color ${Yellow} "               | ##                                                           "
-        echo_with_color ${Yellow} "               | ##                                                           "
-        echo_with_color ${Yellow} "               |__/                                                           "
-            echo_with_color ${Yellow} "                      version : ${Version}      by : spacevim.org             "
-        }
-
+    echo_with_color ${Yellow} "      | ##  \__/ /######  /######  /####### /######| ##   | ##/##/######/#### "
+    echo_with_color ${Yellow} "      |  ###### /##__  ##|____  ##/##_____//##__  #|  ## / ##| #| ##_  ##_  ##"
+    echo_with_color ${Yellow} "       \____  #| ##  \ ## /######| ##     | ########\  ## ##/| #| ## \ ## \ ##"
+    echo_with_color ${Yellow} "       /##  \ #| ##  | ##/##__  #| ##     | ##_____/ \  ###/ | #| ## | ## | ##"
+    echo_with_color ${Yellow} "      |  ######| #######|  ######|  ######|  #######  \  #/  | #| ## | ## | ##"
+    echo_with_color ${Yellow} "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ |__/"
+    echo_with_color ${Yellow} "               | ##                                                           "
+    echo_with_color ${Yellow} "               | ##                                                           "
+    echo_with_color ${Yellow} "               |__/                                                           "
+    echo_with_color ${Yellow} "                      version : ${Version}      by : spacevim.org             "
+}
 # }}}
 
 # download_font {{{
@@ -348,7 +342,6 @@ download_font () {
         success "Downloaded $1"
     fi
 }
-
 # }}}
 
 # install_fonts {{{
@@ -370,7 +363,6 @@ install_fonts () {
     fi
     success "font cache done!"
 }
-
 # }}}
 
 ### main {{{
@@ -442,7 +434,6 @@ main () {
         install_done
     fi
 }
-
 # }}}
 
 main $@
