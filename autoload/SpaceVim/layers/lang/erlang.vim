@@ -33,42 +33,63 @@
 "   SPC l s s       send selection text
 " <
 "
+let s:is_erlang = SpaceVim#layers#lsp#check_filetype('erlang')
+      \ || SpaceVim#layers#lsp#check_server('erlang_ls')
+
 
 function! SpaceVim#layers#lang#erlang#plugins() abort
   let plugins = []
-  " call add(plugins, ['vim-erlang/vim-erlang-compiler', {'on_ft' : 'erlang'}])
+  call add(plugins, ['vim-erlang/vim-erlang-compiler', {'on_ft' : 'erlang'}])
   call add(plugins, ['vim-erlang/vim-erlang-omnicomplete', {'on_ft' : 'erlang'}])
   call add(plugins, ['vim-erlang/vim-erlang-runtime', {'on_ft' : 'erlang'}])
-  " call add(plugins, ['vim-erlang/vim-erlang-tags', {'on_ft' : 'erlang'}])
+  call add(plugins, ['vim-erlang/vim-erlang-tags', {'on_ft' : 'erlang'}])
   return plugins
 endfunction
 
 
 function! SpaceVim#layers#lang#erlang#config() abort
   call SpaceVim#plugins#repl#reg('erlang', 'erl')
-  " call SpaceVim#plugins#runner#reg_runner('erlang', ['erlc -o #TEMP# %s', 'erl -pa #TEMP#'])
+  call SpaceVim#plugins#runner#reg_runner('erlang', ['erlc -o #TEMP# %s', 'erl -pa #TEMP#'])
   call SpaceVim#mapping#space#regesit_lang_mappings('erlang', function('s:language_specified_mappings'))
-  " call SpaceVim#mapping#gd#add('erlang', function('s:go_to_def'))
-endfunction
-function! s:language_specified_mappings() abort
-  " call SpaceVim#mapping#space#langSPC('nmap', ['l','r'],
-        " \ 'call SpaceVim#plugins#runner#open()',
-        " \ 'execute current file', 1)
-  if SpaceVim#layers#lsp#check_filetype('erlang')
-    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+  call SpaceVim#mapping#gd#add('erlang', function('s:go_to_def'))
 
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
-          \ 'call SpaceVim#lsp#show_doc()', 'show_document', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
-          \ 'call SpaceVim#lsp#rename()', 'rename symbol', 1)
-  " else
-    " nnoremap <silent><buffer> K :call alchemist#exdoc()<CR>
-    " call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
-          " \ 'call alchemist#exdoc()', 'show_document', 1)
-    " call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'],
-          " \ 'call alchemist#jump_tag_stack()', 'jump to tag stack', 1)
+  if s:is_erlang
+    call SpaceVim#mapping#gd#add('erlang', function('SpaceVim#lsp#go_to_def'))
+  else
+    call SpaceVim#mapping#gd#add('erlang', function('s:go_to_def'))
   endif
+endfunction
+
+
+function! s:language_specified_mappings() abort
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l','r'],
+        \ 'call SpaceVim#plugins#runner#open()',
+        \ 'execute current file', 1)
+
+  if s:is_erlang
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+    nnoremap <silent><buffer> gD :<C-u>call SpaceVim#lsp#go_to_typedef()<Cr>
+  endif
+"
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+        \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
+        \ 'call SpaceVim#lsp#references()', 'show-references', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+        \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
+        \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
+
+  let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],
+        \ 'call SpaceVim#lsp#list_workspace_folder()', 'list-workspace-folder', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'a'],
+        \ 'call SpaceVim#lsp#add_workspace_folder()', 'add-workspace-folder', 1)
+  call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'r'],
+        \ 'call SpaceVim#lsp#remove_workspace_folder()', 'remove-workspace-folder', 1)
+
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
+
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("erlang")',
         \ 'start REPL process', 1)
@@ -83,13 +104,15 @@ function! s:language_specified_mappings() abort
         \ 'send selection and keep code buffer focused', 1)
 endfunction
 
+
 function! s:go_to_def() abort
-  if SpaceVim#layers#lsp#check_filetype('erlang')
+  if s:is_erlang
     call SpaceVim#lsp#go_to_def()
   else
     normal! gd
   endif
 endfunction
+
 
 function! SpaceVim#layers#lang#erlang#health() abort
   call SpaceVim#layers#lang#erlang#plugins()

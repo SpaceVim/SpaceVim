@@ -183,7 +183,7 @@ function! SpaceVim#layers#lsp#config() abort
   " }}}
 endfunction
 
-let s:enabled_fts = []
+let s:enabled_fts = ["erlang", "python", "go"]
 
 let s:lsp_servers = {
       \ 'ada' : ['ada_language_server'],
@@ -193,6 +193,7 @@ let s:lsp_servers = {
       \ 'css' : ['css-languageserver', '--stdio'],
       \ 'dart' : ['dart_language_server'],
       \ 'dockerfile' : ['docker-langserver', '--stdio'],
+      \ 'erlang' : ['erlang_ls'],
       \ 'go' : ['gopls'],
       \ 'haskell' : ['hie-wrapper', '--lsp'],
       \ 'html' : ['html-languageserver', '--stdio'],
