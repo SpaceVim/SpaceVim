@@ -233,6 +233,8 @@ function! SpaceVim#layers#lsp#set_variable(var) abort
         call SpaceVim#logger#warn('Failed to find the lsp server command for ' . ft)
       else
         if executable(l:exec)
+          call add(s:enabled_fts, ft)
+          let l:newcmds = []
           for l:cmd in l:cmds
             let l:newcmd = substitute(l:cmd, '#{cwd}', l:cwd, 'g')
             call add(l:newcmds, l:newcmd)
