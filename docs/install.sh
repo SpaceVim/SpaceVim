@@ -233,6 +233,12 @@ check_requirements () {
     else
         warn "Check Requirements : git"
     fi
+    if hash "mkfontscale" &>/dev/null; then
+        mkfontscale_version=$(mkfontscale -v)
+        success "Check Requirements: ${mkfontscale_version}"
+    else
+        warn "Check Requirements : mkfontscale"
+    fi
     if hash "vim" &>/dev/null; then
         is_vim8=$(vim --version | grep "Vi IMproved 8")
         is_vim74=$(vim --version | grep "Vi IMproved 7.4")
@@ -346,6 +352,8 @@ download_font () {
 
 # install_fonts {{{
 install_fonts () {
+    need_cmd 'mkfontdir'
+    need_cmd 'mkfontscale'
     if [[ ! -d "$HOME/.local/share/fonts" ]]; then
         mkdir -p $HOME/.local/share/fonts
     fi
