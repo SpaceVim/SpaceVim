@@ -89,6 +89,10 @@ Version='2.1.0-dev'
 System="$(uname -s)"
 # }}}
 
+XDGSpaceDir="${XDG_CONFIG_HOME:-${HOME}/.}${XDG_CONFIG_HOME:+/}SpaceVim"
+XDGvimDir="${XDG_CONFIG_HOME:-${HOME}/.}${XDG_CONFIG_HOME:+/}vim"
+XDGnvimDir="${XDG_CONFIG_HOME:-${HOME}/.}${XDG_CONFIG_HOME:+/}nvim"
+
 # need_cmd {{{
 need_cmd () {
     if ! hash "$1" &>/dev/null; then
@@ -130,7 +134,7 @@ echo_with_color () {
 # fetch_repo {{{
 fetch_repo () {
     need_cmd 'git'
-    if [[ -d "$HOME/.SpaceVim" ]]; then
+    if [[ -d "${XDGSpaceDir:-}" ]]; then
         info "Trying to update SpaceVim"
         (
             cd "${XDGSpaceDir:?}"
@@ -139,7 +143,7 @@ fetch_repo () {
         success "Successfully update SpaceVim"
     else
         info "Trying to clone SpaceVim"
-        git clone https://github.com/SpaceVim/SpaceVim.git "$HOME/.SpaceVim"
+        git clone https://github.com/SpaceVim/SpaceVim.git "${XDGSpaceDir:-}"
         if [ $? -eq 0 ]; then
             success "Successfully clone SpaceVim"
         else
@@ -157,51 +161,47 @@ install_vim () {
         success "Backup $HOME/.vimrc to $HOME/.vimrc_back"
     fi
 
-    if [[ -d "$HOME/.vim" ]]; then
-        if [[ "$(readlink $HOME/.vim)" =~ \.SpaceVim$ ]]; then
-            success "Installed SpaceVim for vim"
-        else
-            mv "$HOME/.vim" "$HOME/.vim_back"
-            success "BackUp $HOME/.vim to $HOME/.vim_back"
-            ln -s "$HOME/.SpaceVim" "$HOME/.vim"
-            success "Installed SpaceVim for vim"
+    if [[ -d "${XDGvimDir:-}" ]]; then
+        if [[ "$(readlink "${XDGvimDir:-}")" =~ \.?SpaceVim$ ]]; then
+            success "SpaceVim already installed in '${XDGvimDir:-}'"
+            return
         fi
-    else
-        ln -s "$HOME/.SpaceVim" "$HOME/.vim"
-        success "Installed SpaceVim for vim"
+
+        mv "${XDGvimDir:?}" "${XDGvimDir:-}_back"
+        success "BackUp '${XDGvimDir}' to '${XDGvimDir}_back'"
     fi
+
+    ln -s "${XDGSpaceDir:?}" "${XDGvimDir:?}"
+    success "Installed SpaceVim for vim in '${XDGvimDir}'"
 }
 # }}}
 
 # install_neovim {{{
 install_neovim () {
-    if [[ -d "$HOME/.config/nvim" ]]; then
-        if [[ "$(readlink $HOME/.config/nvim)" =~ \.SpaceVim$ ]]; then
-            success "Installed SpaceVim for neovim"
-        else
-            mv "$HOME/.config/nvim" "$HOME/.config/nvim_back"
-            success "BackUp $HOME/.config/nvim to $HOME/.config/nvim_back"
-            ln -s "$HOME/.SpaceVim" "$HOME/.config/nvim"
-            success "Installed SpaceVim for neovim"
+    if [[ -d "${XDGnvimDir:-}" ]]; then
+        if [[ "$(readlink "${XDGnvimDir:-}")" =~ \.?SpaceVim$ ]]; then
+            success "SpaceVim already installed in '${XDGnvimDir:-}'"
+            return
         fi
-    else
-        mkdir -p "$HOME/.config"
-        ln -s "$HOME/.SpaceVim" "$HOME/.config/nvim"
-        success "Installed SpaceVim for neovim"
+
+        mv "${XDGnvimDir:?}" "${XDGnvimDir:-}_back"
+        success "BackUp '${XDGnvimDir}' to '${XDGnvimDir}_back'"
     fi
+
+    ln -s "${XDGSpaceDir:?}" "${XDGnvimDir:?}"
+    success "Installed SpaceVim for nvim in '${XDGnvimDir}'"
 }
 # }}}
 
 # uninstall_vim {{{
 uninstall_vim () {
-    if [[ -d "$HOME/.vim" ]]; then
-        if [[ "$(readlink $HOME/.vim)" =~ \.SpaceVim$ ]]; then
-            rm "$HOME/.vim"
-            success "Uninstall SpaceVim for vim"
-            if [[ -d "$HOME/.vim_back" ]]; then
-                mv "$HOME/.vim_back" "$HOME/.vim"
-                success "Recover from $HOME/.vim_back"
-            fi
+    if [[ -d "${XDGvimDir:-}" ]] &&
+       [[ "$(readlink "${XDGvimDir:?}")" =~ \.?SpaceVim$ ]]; then
+        rm "${XDGvimDir:?}"
+        success "Uninstall SpaceVim for vim"
+        if [[ -d "${XDGvimDir}_back" ]]; then
+            mv "${XDGvimDir}_back" "${XDGvimDir}"
+            success "Recover from ${XDGvimDir}_back"
         fi
     fi
     if [[ -f "$HOME/.vimrc_back" ]]; then
@@ -213,14 +213,13 @@ uninstall_vim () {
 
 # uninstall_neovim {{{
 uninstall_neovim () {
-    if [[ -d "$HOME/.config/nvim" ]]; then
-        if [[ "$(readlink $HOME/.config/nvim)" =~ \.SpaceVim$ ]]; then
-            rm "$HOME/.config/nvim"
-            success "Uninstall SpaceVim for neovim"
-            if [[ -d "$HOME/.config/nvim_back" ]]; then
-                mv "$HOME/.config/nvim_back" "$HOME/.config/nvim"
-                success "Recover from $HOME/.config/nvim_back"
-            fi
+    if [[ -d "${XDGnvimDir:-}" ]] &&
+       [[ "$(readlink "${XDGnvimDir:?}")" =~ \.?SpaceVim$ ]]; then
+        rm "${XDGnvimDir:?}"
+        success "Uninstall SpaceVim for neovim"
+        if [[ -d "${XDGnvimDir}_back" ]]; then
+            mv "${XDGnvimDir}_back" "${XDGnvimDir}"
+            success "Recover from ${XDGnvimDir}_back"
         fi
     fi
 }
