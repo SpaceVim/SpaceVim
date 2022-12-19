@@ -129,6 +129,7 @@ echo_with_color () {
 
 # fetch_repo {{{
 fetch_repo () {
+    need_cmd 'git'
     if [[ -d "$HOME/.SpaceVim" ]]; then
         info "Trying to update SpaceVim"
         (
@@ -392,7 +393,6 @@ main () {
                 ;;
             --install|-i)
                 welcome
-                need_cmd 'git'
                 fetch_repo
                 if [ $# -eq 2 ]
                 then
@@ -422,7 +422,6 @@ main () {
                 ;;
             --no-fonts)
                 welcome
-                need_cmd 'git'
                 fetch_repo
                 install_vim
                 install_neovim
@@ -435,7 +434,6 @@ main () {
         esac
     else
         welcome
-        need_cmd 'git'
         fetch_repo
         install_vim
         install_neovim
