@@ -387,7 +387,7 @@ endfunction
 ```
 
 Similarly, if you want to add custom key bindings prefixed by language leader key,
-which is typically `,`, you can add them to the boostrap function. **Make sure** that the
+which is typically `,`, you can add them to the bootstrap function. **Make sure** that the
 key bindings are not used by SpaceVim.
 
 ```vim
