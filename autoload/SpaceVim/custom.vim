@@ -62,7 +62,11 @@ endfunction
 
 function! s:global_dir() abort
   if empty($SPACEVIMDIR)
-    return s:FILE.unify_path('~/.SpaceVim.d/')
+    if !empty($XDG_CONFIG_HOME)
+        return s:FILE.unify_path($XDG_CONFIG_HOME.'/SpaceVim.d/')
+    else
+        return s:FILE.unify_path($HOME.'/.SpaceVim.d/')
+    endif
   else
     return s:FILE.unify_path($SPACEVIMDIR)
   endif
