@@ -14,21 +14,27 @@ local guifont = ""
 local function set_font(font)
     vim.o.guifont = font
 end
+local function has_guioptions ()
+    vim.opt.guioptions:get()
+end
 
 function M.options()
     logger.info("init default vim options")
 
     if vim.fn.has("gui_running") == 1 then
-        vim.opt.guioptions:remove(
-            {
-                "m", -- hide menu bar
-                "T", -- hide toolbar
-                "L", -- hide left-hand scrollbar
-                "r", -- hide right-hand scrollbar
-                "b", -- hide bottom scrollbar
-                "e" -- hide tab
-            }
-        )
+        if pcall(has_guioptions) then
+            vim.opt.guioptions:remove(
+                {
+                    "m", -- hide menu bar
+                    "T", -- hide toolbar
+                    "L", -- hide left-hand scrollbar
+                    "r", -- hide right-hand scrollbar
+                    "b", -- hide bottom scrollbar
+                    "e" -- hide tab
+                }
+            )
+        end
+
         if SYSTEM.isWindows then
             guifont = "DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT"
         elseif SYSTEM.isOSX then
