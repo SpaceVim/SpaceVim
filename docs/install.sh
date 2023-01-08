@@ -353,8 +353,6 @@ download_font () {
 
 # install_fonts {{{
 install_fonts () {
-    need_cmd 'mkfontdir'
-    need_cmd 'mkfontscale'
     if [[ ! -d "$HOME/.local/share/fonts" ]]; then
         mkdir -p $HOME/.local/share/fonts
     fi
@@ -366,6 +364,8 @@ install_fonts () {
         fi
         cp $HOME/.local/share/fonts/* $HOME/Library/Fonts/
     else
+        need_cmd 'mkfontdir'
+        need_cmd 'mkfontscale'
         fc-cache -fv > /dev/null
         mkfontdir "$HOME/.local/share/fonts" > /dev/null
         mkfontscale "$HOME/.local/share/fonts" > /dev/null
