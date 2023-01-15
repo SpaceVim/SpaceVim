@@ -1734,7 +1734,7 @@ function! SpaceVim#begin() abort
       autocmd VimEnter * call SpaceVim#welcome()
     augroup END
   else
-    call SpaceVim#logger#info('Startup with argv: ' . string(s:status[1]) )
+    call SpaceVim#logger#info('Startup with argv: ' . string(s:status[0]) )
   endif
   if has('nvim-0.7')
     lua require('spacevim.default').options()
