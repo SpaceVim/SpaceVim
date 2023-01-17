@@ -6,36 +6,41 @@
 -- License: GPLv3
 --=============================================================================
 
-
 local M = {}
 
-local SYSTEM = require('spacevim.api').import('system')
-local logger = require('spacevim.logger')
-local guifont = ''
+local SYSTEM = require("spacevim.api").import("system")
+local logger = require("spacevim.logger")
+local guifont = ""
 local function set_font(font)
     vim.o.guifont = font
 end
+local function has_guioptions ()
+    vim.opt.guioptions:get()
+end
 
 function M.options()
-    logger.info('init default vim options')
+    logger.info("init default vim options")
 
-    if vim.fn.has('gui_running') == 1 then
-        vim.opt.guioptions:remove(
-        {
-            'm', -- hide menu bar
-            'T', -- hide toolbar
-            'L', -- hide left-hand scrollbar
-            'r', -- hide right-hand scrollbar
-            'b', -- hide bottom scrollbar
-            'e', -- hide tab
-        }
-        )
+    if vim.fn.has("gui_running") == 1 then
+        if pcall(has_guioptions) then
+            vim.opt.guioptions:remove(
+                {
+                    "m", -- hide menu bar
+                    "T", -- hide toolbar
+                    "L", -- hide left-hand scrollbar
+                    "r", -- hide right-hand scrollbar
+                    "b", -- hide bottom scrollbar
+                    "e" -- hide tab
+                }
+            )
+        end
+
         if SYSTEM.isWindows then
-            guifont = 'DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT'
+            guifont = "DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT"
         elseif SYSTEM.isOSX then
-            guifont = 'DejaVu Sans Mono for Powerline:h11'
+            guifont = "DejaVu Sans Mono for Powerline:h11"
         else
-            guifont = 'DejaVu Sans Mono for Powerline 11'
+            guifont = "DejaVu Sans Mono for Powerline 11"
         end
         local ok, errors = pcall(set_font, guifont)
 
@@ -47,10 +52,10 @@ function M.options()
     --  indent use backspace delete indent, eol use backspace delete line at
     --  begining start delete the char you just typed in if you do not use set
     --  nocompatible ,you need this
-    vim.o.backspace = 'indent,eol,start'
-    vim.opt.nrformats:remove({'octal'})
-    vim.o.listchars = 'tab:→ ,eol:↵,trail:·,extends:↷,precedes:↶'
-    vim.o.fillchars = 'vert:│,fold:·'
+    vim.o.backspace = "indent,eol,start"
+    vim.opt.nrformats:remove({"octal"})
+    vim.o.listchars = "tab:→ ,eol:↵,trail:·,extends:↷,precedes:↶"
+    vim.o.fillchars = "vert:│,fold:·"
     vim.o.laststatus = 2
 
     vim.o.showcmd = false
@@ -67,42 +72,37 @@ function M.options()
 
     vim.o.autoread = true
 
-
     vim.o.backup = true
 
     vim.o.undofile = true
 
     vim.o.undolevels = 1000
 
-    if vim.fn.has('nvim-0.5.0') == 1 then
-
-        vim.g.data_dir = vim.g.spacevim_data_dir .. 'SpaceVim/'
-
+    if vim.fn.has("nvim-0.5.0") == 1 then
+        vim.g.data_dir = vim.g.spacevim_data_dir .. "SpaceVim/"
     else
-
-        vim.g.data_dir = vim.g.spacevim_data_dir .. 'SpaceVim/old/'
-
+        vim.g.data_dir = vim.g.spacevim_data_dir .. "SpaceVim/old/"
     end
 
-    vim.g.backup_dir = vim.g.data_dir .. 'backup//'
-    vim.g.swap_dir = vim.g.data_dir .. 'swap//'
-    vim.g.undo_dir = vim.g.data_dir .. 'undofile//'
-    vim.g.conf_dir = vim.g.data_dir .. 'conf'
+    vim.g.backup_dir = vim.g.data_dir .. "backup//"
+    vim.g.swap_dir = vim.g.data_dir .. "swap//"
+    vim.g.undo_dir = vim.g.data_dir .. "undofile//"
+    vim.g.conf_dir = vim.g.data_dir .. "conf"
 
-    if vim.fn.finddir(vim.g.data_dir) == '' then
-        pcall(vim.fn.mkdir, vim.g.data_dir, 'p', '0700')
+    if vim.fn.finddir(vim.g.data_dir) == "" then
+        pcall(vim.fn.mkdir, vim.g.data_dir, "p", "0700")
     end
-    if vim.fn.finddir(vim.g.backup_dir) == '' then
-        pcall(vim.fn.mkdir, vim.g.backup_dir, 'p', '0700')
+    if vim.fn.finddir(vim.g.backup_dir) == "" then
+        pcall(vim.fn.mkdir, vim.g.backup_dir, "p", "0700")
     end
-    if vim.fn.finddir(vim.g.swap_dir) == '' then
-        pcall(vim.fn.mkdir, vim.g.swap_dir, 'p', '0700')
+    if vim.fn.finddir(vim.g.swap_dir) == "" then
+        pcall(vim.fn.mkdir, vim.g.swap_dir, "p", "0700")
     end
-    if vim.fn.finddir(vim.g.undo_dir) == '' then
-        pcall(vim.fn.mkdir, vim.g.undo_dir, 'p', '0700')
+    if vim.fn.finddir(vim.g.undo_dir) == "" then
+        pcall(vim.fn.mkdir, vim.g.undo_dir, "p", "0700")
     end
-    if vim.fn.finddir(vim.g.conf_dir) == '' then
-        pcall(vim.fn.mkdir, vim.g.conf_dir, 'p', '0700')
+    if vim.fn.finddir(vim.g.conf_dir) == "" then
+        pcall(vim.fn.mkdir, vim.g.conf_dir, "p", "0700")
     end
     vim.o.undodir = vim.g.undo_dir
     vim.o.backupdir = vim.g.backup_dir
@@ -123,34 +123,33 @@ function M.options()
 
     vim.o.showmode = true
 
+    vim.o.completeopt = "menu,menuone,longest"
 
-    vim.o.completeopt = 'menu,menuone,longest'
-
-    vim.o.complete = '.,w,b,u,t'
+    vim.o.complete = ".,w,b,u,t"
 
     vim.o.pumheight = 15
 
     vim.o.scrolloff = 1
     vim.o.sidescrolloff = 5
-    vim.opt.display = vim.opt.display + {'lastline'}
+    vim.opt.display = vim.opt.display + {"lastline"}
     vim.o.incsearch = true
     vim.o.hlsearch = true
     vim.o.wildignorecase = true
-    vim.o.mouse = 'nv'
+    vim.o.mouse = "nv"
     vim.o.hidden = true
     vim.o.ttimeout = true
     vim.o.ttimeoutlen = 50
-    if vim.fn.has('patch-7.4.314') == 1 then
+    if vim.fn.has("patch-7.4.314") == 1 then
         -- don't give ins-completion-menu messages.
-        vim.opt.shortmess:append('c')
+        vim.opt.shortmess:append("c")
     end
-    vim.opt.shortmess:append('s')
+    vim.opt.shortmess:append("s")
     -- Do not wrap lone lines
     vim.o.wrap = false
 
-    vim.o.foldtext = 'SpaceVim#default#Customfoldtext()'
+    vim.o.foldtext = "SpaceVim#default#Customfoldtext()"
 
-    logger.info('options init done')
+    logger.info("options init done")
 end
 
 return M
