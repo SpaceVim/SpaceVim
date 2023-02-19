@@ -8,7 +8,7 @@
 [Chat](https://chat.mozilla.org/#/room/#spacevim:matrix.org) \|
 [Twitter](https://twitter.com/SpaceVim)
 
-[![build](https://img.shields.io/github/workflow/status/SpaceVim/SpaceVim/test)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
+[![build](https://img.shields.io/github/actions/workflow/status/SpaceVim/SpaceVim/check.yml?branch=master)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
 [![Release](https://img.shields.io/badge/Release-2.0.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.0.0/)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
