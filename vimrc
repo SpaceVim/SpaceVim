@@ -16,6 +16,9 @@ if !empty($XDG_CONFIG_HOME)
     set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
 
     let g:netrw_home = $XDG_DATA_HOME."/vim"
+    if !isdirectory($XDG_DATA_HOME."/vim")
+      call mkdir($XDG_DATA_HOME."/vim", 'p')
+    endif
     call mkdir($XDG_DATA_HOME."/vim/spell", 'p')
 
     set backupdir=$XDG_STATE_HOME/vim/backup | call mkdir(&backupdir, 'p')
