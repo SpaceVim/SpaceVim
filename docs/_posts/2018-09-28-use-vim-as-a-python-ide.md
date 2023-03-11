@@ -37,7 +37,7 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
   name = "lang#python"
 ```
 
-启用 `lang#python` 模块后，在打开 Python 文件是，就可以使用语言专属快捷键，这些快捷键都是以 `SPC l` 为前缀的。
+启用 `lang#python` 模块后，在打开 Python 文件时，就可以使用语言专属快捷键，这些快捷键都是以 `SPC l` 为前缀的。
 
 ### 代码自动补全
 
