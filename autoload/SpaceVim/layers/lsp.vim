@@ -44,6 +44,7 @@ let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
 let s:FILE = SpaceVim#api#import('file')
 let s:enabled_clients = []
 let s:override_client_cmds = {}
+let s:use_nvim_lsp = (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
 
 function! SpaceVim#layers#lsp#health() abort
   call SpaceVim#layers#lsp#plugins()
@@ -62,7 +63,7 @@ endfunction
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
 
-  if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
+  if s:use_nvim_lsp
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-lspconfig', {'merged' : 0, 'loadconf' : 1}])
     if g:spacevim_autocomplete_method ==# 'deoplete'
       call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete-lsp', {'merged' : 0}])
@@ -88,10 +89,9 @@ function! SpaceVim#layers#lsp#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lsp#config() abort
-  " if nvim-lspconfig is using, do not check enabled_fts
-  if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
+  if s:use_nvim_lsp
+  " nvim-lspconfig is used, do not check enabled_fts
   else
-
     for ft in s:enabled_fts
       call SpaceVim#lsp#reg_server(ft, s:lsp_servers[ft])
     endfor
@@ -193,6 +193,7 @@ let s:lsp_servers = {
       \ 'css' : ['css-languageserver', '--stdio'],
       \ 'dart' : ['dart_language_server'],
       \ 'dockerfile' : ['docker-langserver', '--stdio'],
+      \ 'erlang' : ['erlang_ls'],
       \ 'go' : ['gopls'],
       \ 'haskell' : ['hie-wrapper', '--lsp'],
       \ 'html' : ['html-languageserver', '--stdio'],
@@ -216,7 +217,7 @@ let s:lsp_servers = {
       \ }
 
 function! SpaceVim#layers#lsp#set_variable(var) abort
-  if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
+  if s:use_nvim_lsp
     let s:enabled_clients = get(a:var, 'enabled_clients', s:enabled_clients)
     let s:override_client_cmds = get(a:var, 'override_client_cmds', {})
   else
@@ -248,7 +249,10 @@ function! SpaceVim#layers#lsp#set_variable(var) abort
 endfunction
 
 function! SpaceVim#layers#lsp#check_filetype(ft) abort
-  return index(s:enabled_fts, a:ft) != -1
+  if s:use_nvim_lsp
+    return 1
+  else
+    return index(s:enabled_fts, a:ft) != -1
 endfunction
 
 function! SpaceVim#layers#lsp#check_server(server) abort
