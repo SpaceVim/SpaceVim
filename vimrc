@@ -7,7 +7,7 @@
 "=============================================================================
 
 " Use XDG paths if available
-if !empty($XDG_CONFIG_HOME)
+if !empty($XDG_CONFIG_HOME) && !empty($XDG_DATA_HOME)
     set runtimepath^=$XDG_CONFIG_HOME/vim
     set runtimepath+=$XDG_DATA_HOME/vim
     set runtimepath+=$XDG_CONFIG_HOME/vim/after
