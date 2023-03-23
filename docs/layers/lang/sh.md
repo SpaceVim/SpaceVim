@@ -11,6 +11,7 @@ description: "Shell script development layer, provides autocompletion, syntax ch
 - [Features](#features)
 - [Install](#install)
   - [Layer](#layer)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
   - [Language specific key bindings](#language-specific-key-bindings)
 
@@ -41,6 +42,23 @@ To use this configuration layer, update your custom configuration file with:
 [[layers]]
   name = "lang#sh"
 ```
+
+## Layer options
+
+- `bash_file_head`: Default file head when create new sh file.
+
+  By default, when create a new sh file, SpaceVim will insert file head automatically.
+  to change the file head, use `bash_file_head` option:
+
+  ```toml
+  [[layers]]
+    name = "lang#sh"
+    bash_file_head = [
+        '#!/usr/bin/env bash',
+        '',
+        ''
+    ]
+  ```
 
 ## Key bindings
 
