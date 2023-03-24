@@ -33,6 +33,7 @@
 "   SPC l s s       send selection text
 " <
 "
+
 let s:is_erlang = SpaceVim#layers#lsp#check_filetype('erlang')
       \ || SpaceVim#layers#lsp#check_server('erlang_ls')
 
