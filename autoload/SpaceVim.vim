@@ -84,7 +84,7 @@ let g:spacevim_expand_tab              = 1
 
 ""
 " Enable/Disable list mode, by default it is disabled.
-let g:spacevim_enable_list_mode        = 1
+let g:spacevim_enable_list_mode        = 0
 
 ""
 " @section relativenumber, options-relativenumber
