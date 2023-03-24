@@ -35,6 +35,9 @@ To use defx, please add following snippet into your configuration file.
 
 - `filetree_show_hidden`: option for showing hidden file in filetree, disabled by default.
 - `enable_smooth_scrolling`: enable/disabled smooth scrolling key bindings, enabled by default.
+- `enable_filetree_gitstatus`: enable/disable git status column in filetree.
+- `enable_filetree_filetypeicon`: enable/disable filetype icons in filetree.
+- `enable_netrw`: enable/disable netrw, disabled by default.
 
 ```toml
 [[layers]]
