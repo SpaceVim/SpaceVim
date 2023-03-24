@@ -78,6 +78,15 @@ let g:spacevim_default_indent          = 2
 let g:spacevim_expand_tab              = 1
 
 ""
+" @section enable_list_mode, options-enable_list_mode
+" @parentsection options
+" Enable/Disable list mode, by default it is disabled.
+
+""
+" Enable/Disable list mode, by default it is disabled.
+let g:spacevim_enable_list_mode        = 1
+
+""
 " @section relativenumber, options-relativenumber
 " @parentsection options
 " Enable/Disable relativenumber, by default it is enabled.
@@ -1497,6 +1506,7 @@ function! SpaceVim#end() abort
   set smarttab
   let &expandtab = g:spacevim_expand_tab
   let &wrap = g:spacevim_wrap_line
+  let &list = g:spacevim_enable_list_mode
 
   if g:spacevim_default_indent > 0
     let &tabstop = g:spacevim_default_indent
