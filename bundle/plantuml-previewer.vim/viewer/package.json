@@ -11,7 +11,7 @@
   "devDependencies": {
     "file-loader": "^1.1.11",
     "node-sass": "^4.13.1",
-    "poi": "^10.1.9",
+    "poi": "^12.10.3",
     "sass-loader": "^7.0.1"
   },
   "scripts": {

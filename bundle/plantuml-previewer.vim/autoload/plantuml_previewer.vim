@@ -6,7 +6,11 @@ let s:base_path = fnameescape(expand("<sfile>:p:h")) . '/..'
 
 let s:default_jar_path = s:base_path . '/lib/plantuml.jar'
 
-let s:tmp_path = s:base_path . '/tmp'
+let s:default_java_path = 'java'
+
+let s:default_include_path = ''
+
+let s:tmp_path = (s:is_win ? s:base_path . '/tmp' : '/tmp/plantuml-previewer')
 
 let s:save_as_script_path = s:base_path . '/script/save-as' . (s:is_win ? '.cmd' : '.sh')
 
@@ -16,10 +20,8 @@ let s:watched_bufnr = 0
 
 let s:started = v:false
 
-let s:java = get(g:, 'plantuml_java_command', 'java')
-
 function! plantuml_previewer#start() "{{{
-  if !executable(s:java)
+  if !executable(s:java_path())
     echoerr 'require java command'
     return v:false
   endif
@@ -83,6 +85,7 @@ function! plantuml_previewer#copy_viewer_directory() "{{{
       call system('xcopy ' . default_viewer_path . ' ' . g:plantuml_previewer#viewer_path . ' /O /X /E /H /K')
     else
       call system('cp -r ' . default_viewer_path . ' ' . g:plantuml_previewer#viewer_path)
+      call system('chmod a=rwX ' . g:plantuml_previewer#viewer_path)
     endif
     echom 'copy ' . default_viewer_path . ' -> ' . viewer_path
   endif
@@ -113,9 +116,23 @@ function! s:viewer_html_path() "{{{
   return s:viewer_path() . '/index.html'
 endfunction "}}}
 
+function! s:is_debug_mode() "{{{
+  return get(g:, 'plantuml_previewer#debug_mode', 0)
+endfunction "}}}
+
+function! s:java_path() "{{{
+  let path = get(g:, 'plantuml_previewer#java_path', 0)
+  return s:is_zero(path) ? s:default_java_path : path
+endfunction "}}}
+
 function! s:jar_path() "{{{
   let path = get(g:, 'plantuml_previewer#plantuml_jar_path', 0)
   return s:is_zero(path) ? s:default_jar_path : path
+endfunction "}}}
+
+function! s:include_path() "{{{
+  let path = get(g:, 'plantuml_previewer#include_path', 0)
+  return s:is_zero(path) ? s:default_include_path : path
 endfunction "}}}
 
 function! s:save_format() "{{{
@@ -130,17 +147,39 @@ function! s:fmt_to_ext(fmt) "{{{
   return a:fmt == 'latex' ? 'tex' : a:fmt
 endfunction "}}}
 
+function! s:print_stdout(lines) "{{{
+  let msg = trim(join(a:lines))
+  if !empty(msg)
+    echomsg msg
+  endif
+endfunction "}}}
+
+function! s:print_stderr(lines) "{{{
+  let msg = trim(join(a:lines))
+  if !empty(msg)
+    echoerr msg
+  endif
+endfunction "}}}
+
 function! s:run_in_background(cmd) "{{{
-  if s:Job.is_available()
-    call s:Job.start(a:cmd)
+  if s:is_debug_mode()
+    if s:Job.is_available()
+      call s:Job.start(a:cmd, {'on_stdout': function('s:print_stdout'), 'on_stderr': function('s:print_stderr')})
+    else
+      call s:print_stdout(s:Process.execute(a:cmd))
+    endif
   else
-    try
-      call s:Process.execute(a:cmd, {
-            \ 'background': 1,
-            \})
-    catch
-      call s:Process.execute(a:cmd)
-    endtry
+    if s:Job.is_available()
+      call s:Job.start(a:cmd)
+    else
+      try
+        call s:Process.execute(a:cmd, {
+              \ 'background': 1,
+              \})
+      catch
+        call s:Process.execute(a:cmd)
+      endtry
+    endif
   endif
 endfunction "}}}
 
@@ -158,7 +197,7 @@ function! plantuml_previewer#refresh(bufnr) "{{{
   let finial_path = s:viewer_path() . '/tmp.' . image_ext
   let cmd = [
        \ s:update_viewer_script_path,
-       \ s:java,
+       \ s:java_path(),
        \ s:jar_path(),
        \ puml_src_path,
        \ s:normalize_path(output_dir_path),
@@ -167,12 +206,13 @@ function! plantuml_previewer#refresh(bufnr) "{{{
        \ image_type,
        \ localtime(),
        \ s:normalize_path(s:viewer_tmp_js_path()),
+       \ s:include_path(),
        \ ]
   call s:run_in_background(cmd)
 endfunction "}}}
 
 function! plantuml_previewer#save_as(...) "{{{
-  if !executable('java')
+  if !executable(s:java_path())
     echoerr 'require java command'
     return
   endif
@@ -198,13 +238,14 @@ function! plantuml_previewer#save_as(...) "{{{
   call mkdir(fnamemodify(save_path, ':p:h'), 'p')
   let cmd = [
         \ s:save_as_script_path,
-        \ s:java,
+        \ s:java_path(),
         \ s:jar_path(),
         \ puml_src_path,
         \ s:normalize_path(output_dir_path),
         \ s:normalize_path(output_path),
         \ s:normalize_path(save_path),
         \ image_type,
+        \ s:include_path(),
         \ ]
   call s:run_in_background(cmd)
 endfunction "}}}

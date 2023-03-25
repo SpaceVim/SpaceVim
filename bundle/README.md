@@ -97,4 +97,4 @@ This plugins are changed based on a specific version of origin plugin.
 
 - [`scrooloose/vim-slumlord@5c34739`](https://github.com/scrooloose/vim-slumlord/tree/5c34739a6ca71ef3617ed71491b3387bb2fb5620)
 - [`aklt/plantuml-syntax@845abb5`](https://github.com/aklt/plantuml-syntax/tree/845abb56dcd3f12afa6eb47684ef5ba3055802b8)
-- [`weirongxu/plantuml-previewer.vim`](https://github.com/weirongxu/plantuml-previewer.vim)
+- [`weirongxu/plantuml-previewer.vim@1dd4d0f`](https://github.com/weirongxu/plantuml-previewer.vim/tree/1dd4d0f2b09cd80a217f76d82f93830dbbe689b3)
