@@ -14,6 +14,7 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
   - [`tmux` layer](#tmux-layer)
   - [`incsearch` layer](#incsearch-layer)
   - [`lang#java` layer](#langjava-layer)
+  - [`lang#plantuml` layer](#langplantuml-layer)
 
 <!-- vim-markdown-toc -->
 
@@ -91,3 +92,9 @@ This plugins are changed based on a specific version of origin plugin.
 #### `lang#java` layer
 
 - `vim-javacomplete2` based on `https://github.com/artur-shaik/vim-javacomplete2/tree/a716e32bbe36daaed6ebc9aae76525aad9536245`
+
+#### `lang#plantuml` layer
+
+- [`scrooloose/vim-slumlord@5c34739`](https://github.com/scrooloose/vim-slumlord/tree/5c34739a6ca71ef3617ed71491b3387bb2fb5620)
+- [`aklt/plantuml-syntax@845abb5`](https://github.com/aklt/plantuml-syntax/tree/845abb56dcd3f12afa6eb47684ef5ba3055802b8)
+- [`weirongxu/plantuml-previewer.vim`](https://github.com/weirongxu/plantuml-previewer.vim)

@@ -43,8 +43,8 @@
 
 function! SpaceVim#layers#lang#plantuml#plugins() abort
   let plugins = []
-  call add(plugins, ['aklt/plantuml-syntax', {'on_ft' : 'plantuml'}])
-  call add(plugins, ['wsdjeg/vim-slumlord', {'on_ft' : 'plantuml'}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/plantuml-syntax', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-slumlord', {'on_ft' : 'plantuml'}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/plantuml-previewer.vim', {'merged':0}])
   return plugins
 endfunction
