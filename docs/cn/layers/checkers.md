@@ -55,6 +55,7 @@ lang: zh
 | `lint_on_save`          | `true`  | 设置保存文件时进行语法检查，默认已启用   |
 | `show_cursor_error`     | `true`  | 设置在当前行下方展示语法错误，默认已启用 |
 | `lint_exclude_filetype` | `[]`    | 设置禁用语法检查的文件类型列表           |
+| `open_error_list`       | `1/2/0` | 设置语法检查结果窗口打开方式，默认为 2   |
 
 ```toml
 [[layers]]

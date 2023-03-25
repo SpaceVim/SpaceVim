@@ -1,5 +1,4 @@
 scriptencoding utf-8
-" 1 open list and move cursor 2 open list without move cursor
 
 let s:lint_option = SpaceVim#layers#checkers#get_lint_option()
 let s:neomake_automake_events = {}
@@ -16,7 +15,6 @@ if !empty(s:neomake_automake_events)
   catch /^Vim\%((\a\+)\)\=:E117/
   endtry
 endif
-let g:neomake_open_list = get(g:, 'neomake_open_list', 2)
 let g:neomake_verbose = get(g:, 'neomake_verbose', 0)
 let g:neomake_java_javac_delete_output = get(g:, 'neomake_java_javac_delete_output', 0)
 let g:neomake_error_sign = get(g:, 'neomake_error_sign', {

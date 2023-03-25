@@ -1792,6 +1792,8 @@ OPTIONS
 `show_cursor_error`: Enable/Disable displaying error below current line.
 `lint_exclude_filetype`: Set the filetypes which does not enable syntax
   checking.
+`open_error_list`: Open the language checking windows. when set to 0, the
+  windows will not be opened automatically. Defaults to 2.
 
 ==============================================================================
 COLORSCHEME                                      *SpaceVim-layers-colorscheme*

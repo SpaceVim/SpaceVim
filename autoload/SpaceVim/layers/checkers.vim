@@ -23,6 +23,8 @@
 " - `show_cursor_error`: Enable/Disable displaying error below current line.
 " - `lint_exclude_filetype`: Set the filetypes which does not enable syntax
 "   checking.
+" - `open_error_list`: Open the language checking windows. when set to 0, the
+"   windows will not be opened automatically. Defaults to 2.
 
 
 if exists('s:show_cursor_error')
@@ -38,6 +40,7 @@ endif
 let s:lint_exclude_filetype = []
 let s:lint_on_the_fly = 0
 let s:lint_on_save = 1
+let s:open_error_list = 0
 
 let s:SIG = SpaceVim#api#import('vim#signatures')
 let s:STRING = SpaceVim#api#import('data#string')
@@ -72,6 +75,9 @@ function! SpaceVim#layers#checkers#set_variable(var) abort
     call SpaceVim#logger#warn('show_cursor_error in checkers layer needs timers feature')
     let s:show_cursor_error = 0
   endif
+
+
+  let s:open_error_list = get(a:var, 'open_error_list', s:open_error_list)
 endfunction
 
 function! SpaceVim#layers#checkers#get_options() abort
@@ -101,6 +107,8 @@ function! SpaceVim#layers#checkers#config() abort
     for ft in s:lint_exclude_filetype
       let g:neomake_{ft}_enabled_makers = []
     endfor
+
+    let g:neomake_open_list = s:open_error_list
 
 
   elseif g:spacevim_lint_engine ==# 'ale'

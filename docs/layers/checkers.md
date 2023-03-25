@@ -57,6 +57,7 @@ feature, you may need to load this layer with `show_cursor_error` to `false`.
 | `lint_on_save`          | `true`        | Run syntax checking when saving a file.                  |
 | `show_cursor_error`     | `true`        | Enable/Disable displaying error below current line.      |
 | `lint_exclude_filetype` | `[]`          | Set the filetypes which does not enable syntax checking. |
+| `open_error_list`       | `1/2/0`       | Open the language checking windows. Defaults to 2        |
 
 ```toml
 [[layers]]
