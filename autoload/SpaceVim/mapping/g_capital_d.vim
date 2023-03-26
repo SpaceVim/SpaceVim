@@ -1,6 +1,6 @@
 "=============================================================================
 " g_capital_d.vim --- gD key binding
-" Copyright (c) 2016-2022 Wang Shidong & Contributors
+" Copyright (c) 2016-2023 Wang Shidong & Contributors
 " Author: sisynb < bsixxxx at gmail.com >
 " URL: https://spacevim.org
 " License: GPLv3
