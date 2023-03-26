@@ -3683,6 +3683,7 @@ OPTIONS
     conceal = false
     concealcursor = ''
 <
+  3. enable_json5: Enable/Disable json5 support. Enabled by default.
 
 ==============================================================================
 LANG#JSONNET                                    *SpaceVim-layers-lang-jsonnet*
