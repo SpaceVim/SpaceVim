@@ -1,6 +1,6 @@
 if exists('b:did_ftplugin') | finish | endif
 
-if g:markdown_default_mappings
+if get(g:, 'markdown_default_mappings', 1)
     inoremap <buffer> <C-b> ****<Left><Left>
 endif
 
