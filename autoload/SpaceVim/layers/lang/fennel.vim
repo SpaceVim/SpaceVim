@@ -1,6 +1,6 @@
 "=============================================================================
 " fennel.vim --- fennel language support
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2023 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3

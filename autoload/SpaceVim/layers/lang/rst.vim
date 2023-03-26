@@ -1,6 +1,6 @@
 "=============================================================================
 " rst.vim --- rst language layer
-" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Copyright (c) 2016-2023 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
