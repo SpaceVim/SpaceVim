@@ -1634,7 +1634,7 @@ function! s:parser_argv() abort
       endif
     elseif index(v:argv, '-d') !=# -1
       " this is  diff mode
-      return [2]
+      return [2, 'diff mode, use default arguments:' . string(v:argv)]
     elseif v:argv[-1] =~# '/$'
       let f = fnamemodify(expand(v:argv[-1]), ':p')
       if isdirectory(f)
