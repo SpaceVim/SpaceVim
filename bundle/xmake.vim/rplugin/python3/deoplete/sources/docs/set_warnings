@@ -1,0 +1,7 @@
+set level of warning:
+
+* none	禁用所有警告
+* less	启用较少的警告
+* more	启用较多的警告
+* all	启用所有警告
+* error	将所有警告作为编译错误

@@ -1,0 +1,5 @@
+set target's type:
+
+* binary
+* static - static library
+* shared - shared library (dynamic library)

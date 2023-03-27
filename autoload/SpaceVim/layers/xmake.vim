@@ -18,6 +18,8 @@
 
 
 function! SpaceVim#layers#xmake#plugins() abort
-  
+  let plugins = []
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/xmake.vim', {'merged' : 0}])
+  return plugins
 endfunction
 
