@@ -23,3 +23,8 @@ function! SpaceVim#layers#xmake#plugins() abort
   return plugins
 endfunction
 
+function! SpaceVim#layers#cscope#config() abort
+  let g:_spacevim_mappings_space.m.x = {'name' : '+xmake'}
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'x', 'b'], 'call xmake#buildrun()', 'xmake-build-without-running', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'x', 'r'], 'call xmake#buildrun(1)', 'xmake-build-amd-running', 1)
+endfunction
