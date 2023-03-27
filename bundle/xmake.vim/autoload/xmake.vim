@@ -214,7 +214,7 @@ fun! xmake#load()
   let cmdline = ['xmake', 'lua', s:path . '/spy.lua', '-o', s:xmake_load_tempname, 'project']
   call xmake#log#info(cmdline)
   call s:JOB.start(cmdline, {
-        \ 'on_stdout' : function('s:s:xmake_load_stdout'),
+        \ 'on_stdout' : function('s:xmake_load_stdout'),
         \ 'on_exit' : function('s:xmake_load_exit')
         \ }
         \ )
