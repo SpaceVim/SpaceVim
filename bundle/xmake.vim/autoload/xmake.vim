@@ -17,6 +17,7 @@
 
 " load the spacevim APIs:
 let s:JOB = SpaceVim#api#import('job')
+let s:NOTI = SpaceVim#api#import('notify')
 
 let s:job = 0       " subprocess of xmake
 let s:run = 0       " run this command after building successfully
@@ -66,8 +67,8 @@ endfunction
 
 " If exists a xmake subprocess
 fun! s:isRunning()
-  if !empty(s:job) && job#status(s:job) == 'run'
-    echom 'a xmake task is running'
+  if !empty(s:job) && s:JOB.status(s:job) == 'run'
+    call s:NOTI.notify('a xmake task is running')
     return 1
   endif
 endfunction
@@ -76,7 +77,7 @@ fun! s:notLoaded()
   if exists('g:xmproj')
     return 0
   endif
-  echo 'No xmake-project loaded'
+  call s:NOTI.notify('No xmake-project loaded')
   return 1
 endfunction
 " Building by xmake
