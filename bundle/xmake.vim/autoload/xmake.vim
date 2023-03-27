@@ -169,13 +169,20 @@ fun! s:onload(...)
   endif
 endfunction
 
-au User XMakeLoaded call <SID>onload()
+augroup xmake_autoload
+  autocmd!
+  au User XMakeLoaded call <SID>onload()
+augroup END
+
 
 let s:path = expand('<sfile>:p:h')
-fun! xmake#load()
-  let cache = []
-  let tf = tempname()
-  fun! LoadXCfg(job, code, stream) closure
+let s:xmake_load_stdout_cache = []
+let s:xmake_load_tempname = ''
+function! s:xmake_load_stdout(id, data, event) abort
+  call add(s:xmake_load_stdout_cache, a:data)
+endfunction
+
+function! s:xmake_load_exit(id, data, event) abort
     call xmake#log#info('LoadXCfg entered.')
     let err = []
     if a:code
@@ -183,22 +190,29 @@ fun! xmake#load()
     endif
     let l = ''
     try
-      let l = readfile(tf)
+      let l = readfile(s:xmake_load_tempname)
       let g:xmproj = json_decode(l[0])
       do User XMakeLoaded
     catch
       let g:_xmake = {}
-      let g:_xmake.tmpfile = tf
+      let g:_xmake.tmpfile = s:xmake_load_tempname
       let g:_xmake.output = l
       cexpr ''
       call add(err, "XMake-Project loaded unsuccessfully:")
       cadde err | cadde cache | copen
     endtry
-  endfunction
-  let cmdline = ['xmake', 'lua', s:path . '/spy.lua', '-o', tf, 'project']
-  call log#(cmdline)
-  let Callback = {job, data, stream->add(cache, data)}
-  call log#('xmake job', job#start(cmdline, {'on_stdout': Callback, 'on_exit': funcref('LoadXCfg')}))
+endfunction
+
+fun! xmake#load()
+  let s:xmake_load_stdout_cache = []
+  let s:xmake_load_tempname = tempname()
+  let cmdline = ['xmake', 'lua', s:path . '/spy.lua', '-o', s:xmake_load_tempname, 'project']
+  call xmake#log#info(cmdline)
+  call s:JOB.start(cmdline, {
+        \ 'on_stdout' : function('s:s:xmake_load_stdout'),
+        \ 'on_exit' : function('s:xmake_load_exit')
+        \ }
+        \ )
 endfunction
 
 " vim:set et sw=2 cc=80:
