@@ -43,7 +43,7 @@ endf
 fun! s:xmake_complete(a, c, p)
     let args = split(strpart(a:c, 0, a:p), '\s\+')
     let op = len(args) > 1 ? args[1] : ''
-    let larg = args[-1][0] == '-' ? args[-1] : args[-2]
+    let larg = args[-1][0] == '-' ? args[-1] : len(args) > 1 ? args[-2] : ''
     let rets = []
     if op == 'run' || op == 'build'
         let rets = keys(g:xmproj['targets'])
