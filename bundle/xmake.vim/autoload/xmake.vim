@@ -1,10 +1,17 @@
-" =============================================================================
-" Filename:     autoload/xmake.vim
-" Author:       luzhlon
-" Function:     xmake's integeration
-" Depends:      job.vim
-" Last Change:  2017/7/20
-" =============================================================================
+"=============================================================================
+" xmake.vim --- xmake support for spacevim
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" Original Author: luzhlon
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+" This file is based on:
+" https://github.com/luzhlon/xmake.vim/tree/5b20e97f5d0b063a97be23451c730d0278eef927
+
+
+" load the spacevim APIs:
+let s:JOB = SpaceVim#api#import('job')
 
 let s:job = 0       " subprocess of xmake
 let s:run = 0       " run this command after building successfully
