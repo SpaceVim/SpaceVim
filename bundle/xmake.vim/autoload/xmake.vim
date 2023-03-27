@@ -1,6 +1,6 @@
 "=============================================================================
 " xmake.vim --- xmake support for spacevim
-" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Copyright (c) 2016-2023 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " Original Author: luzhlon
 " URL: https://spacevim.org
@@ -189,31 +189,27 @@ function! s:xmake_load_stdout(id, data, event) abort
 endfunction
 
 function! s:xmake_load_exit(id, data, event) abort
-    call xmake#log#info('LoadXCfg entered.')
-    let err = []
-    if a:code
-      call add(err, 'xmake returned ' . a:code)
-    endif
+  call xmake#log#info('LoadXCfg entered.')
+  if a:data
+    call s:NOTI.notify('XMake-Project loaded unsuccessfully.')
+    call s:NOTI.notify('xmake returned ' . a:data)
+  else
     let l = ''
     try
       let l = readfile(s:xmake_load_tempname)
       let g:xmproj = json_decode(l[0])
       do User XMakeLoaded
     catch
-      let g:_xmake = {}
-      let g:_xmake.tmpfile = s:xmake_load_tempname
-      let g:_xmake.output = l
-      cexpr ''
-      call add(err, "XMake-Project loaded unsuccessfully:")
-      cadde err | cadde cache | copen
+      call xmake#log#debug('xmake_load_tempname is:' . s:xmake_load_tempname)
     endtry
+  endif
 endfunction
 
 fun! xmake#load()
   let s:xmake_load_stdout_cache = []
   let s:xmake_load_tempname = tempname()
   let cmdline = ['xmake', 'lua', s:path . '/spy.lua', '-o', s:xmake_load_tempname, 'project']
-  call xmake#log#info(cmdline)
+  call xmake#log#info('cmdline is:' . string(cmdline))
   call s:JOB.start(cmdline, {
         \ 'on_stdout' : function('s:xmake_load_stdout'),
         \ 'on_exit' : function('s:xmake_load_exit')
