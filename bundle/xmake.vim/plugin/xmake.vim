@@ -76,8 +76,21 @@ fun! s:xmake_complete(a, c, p)
     else
         let rets = s:xmake_args
     endif
-    return viml#wildfilter(rets, a:a)
+    return s:wildfilter(rets, a:a)
 endf
+
+let s:patten = ''
+function! s:compare(a, b) abort
+  return match(a:a, s:patten) - match(a:b, s:patten)
+endfunction
+
+function! s:wildfilter(rets, patten) abort
+    let ret = filter(copy(a:rets), 'v:val =~ a:patten')
+    let s:patten = a:patten
+    call sort(ret, function('s:compare'))
+    return ret
+endfunction
+
 com! -complete=customlist,<SID>xmake_complete
             \ -nargs=* XMake call xmake#xmake(<f-args>)
 
