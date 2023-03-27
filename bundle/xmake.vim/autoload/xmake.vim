@@ -176,7 +176,7 @@ fun! xmake#load()
   let cache = []
   let tf = tempname()
   fun! LoadXCfg(job, code, stream) closure
-    call log#('LoadXCfg entered.')
+    call xmake#log#info('LoadXCfg entered.')
     let err = []
     if a:code
       call add(err, 'xmake returned ' . a:code)
