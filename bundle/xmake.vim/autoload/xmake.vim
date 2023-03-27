@@ -188,6 +188,13 @@ function! s:xmake_load_stdout(id, data, event) abort
   call add(s:xmake_load_stdout_cache, a:data)
 endfunction
 
+function! s:xmake_load_stderr(id, data, event) abort
+    for line in a:data
+      let s:NOTI.notify_max_width = max([strwidth(line) + 5, s:NOTI.notify_max_width])
+      call s:NOTI.notify(line, 'WarningMsg')
+    endfor
+endfunction
+
 function! s:xmake_load_exit(id, data, event) abort
   call xmake#log#info('LoadXCfg entered.')
   if a:data
@@ -212,6 +219,7 @@ fun! xmake#load()
   call xmake#log#info('cmdline is:' . string(cmdline))
   let jobid = s:JOB.start(cmdline, {
         \ 'on_stdout' : function('s:xmake_load_stdout'),
+        \ 'on_stderr' : function('s:xmake_load_stderr'),
         \ 'on_exit' : function('s:xmake_load_exit')
         \ }
         \ )
