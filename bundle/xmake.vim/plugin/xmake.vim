@@ -1,9 +1,20 @@
-" =============================================================================
-" Filename:     plugin/xmake.vim
-" Author:       luzhlon
-" Function:     commands about xmake
-" Last Change:  2017/7/20
-" =============================================================================
+"=============================================================================
+" xmake.vim --- xmake support for spacevim
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" Original Author: luzhlon
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+" This file is based on:
+" https://github.com/luzhlon/xmake.vim/tree/5b20e97f5d0b063a97be23451c730d0278eef927
+
+if exists('s:xmake_loaded')
+  finish
+endif
+
+let s:xmake_loaded = 1
+
 " Arguments of 'xmake'
 let s:xmake_args = [ 'run',
                    \ 'config', 'global',
@@ -126,3 +137,5 @@ endf
 
 au BufWritePost xmake.lua XMakeLoad
 au BufRead,BufNew xmake.lua call <sid>on_read()
+
+call SpaceVim#plugins#projectmanager#reg_callback(function('xmake#load'))
