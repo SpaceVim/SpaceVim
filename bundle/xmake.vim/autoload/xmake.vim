@@ -152,14 +152,10 @@ fun! s:onload(...)
       let t.sourcefiles = []
     endif
   endfor
-  " Change UI
-  echohl MoreMsg
-  echom "XMake-Project loaded successfully"
-  echohl
-  set title
+  " Support SpaceVim's tabmanager
+  call s:NOTI.notify('XMake-Project loaded successfully', 'MoreMsg')
   let config = g:xmproj.config
-  let &titlestring = join([g:xmproj['name'], config.mode, config.arch], ' - ')
-  redraw
+  let t:_spacevim_tab_name = join([g:xmproj['name'], config.mode, config.arch], ' - ')
   " Find compiler
   let cc = get(g:xmproj.config, 'cc', '')
   let cxx = get(g:xmproj.config, 'cxx', '')
@@ -189,10 +185,10 @@ function! s:xmake_load_stdout(id, data, event) abort
 endfunction
 
 function! s:xmake_load_stderr(id, data, event) abort
-    for line in a:data
-      let s:NOTI.notify_max_width = max([strwidth(line) + 5, s:NOTI.notify_max_width])
-      call s:NOTI.notify(line, 'WarningMsg')
-    endfor
+  for line in a:data
+    let s:NOTI.notify_max_width = max([strwidth(line) + 5, s:NOTI.notify_max_width])
+    call s:NOTI.notify(line, 'WarningMsg')
+  endfor
 endfunction
 
 function! s:xmake_load_exit(id, data, event) abort
@@ -227,9 +223,9 @@ endfunction
 
 
 function! xmake#on_project_changed() abort
-    if filereadable('xmake.lua')
-        call xmake#load()
-    endif
+  if filereadable('xmake.lua')
+    call xmake#load()
+  endif
 endfunction
 
 " vim:set et sw=2 cc=80:
