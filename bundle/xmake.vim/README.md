@@ -1,14 +1,8 @@
+# xmake.vim
 
-[XMake](https://github.com/tboox/xmake)的vim插件
+> Vim/Neovim plugin for [xmake](https://github.com/tboox/xmake)
 
-## Vim版本
-
-Vim8.0+ 或者 neovim
-
-## 依赖
-
-* x.vim     https://github.com/luzhlon/x.vim
-* qrun.vim  https://github.com/luzhlon/qrun.vim
+This plugin is inspired by [`luzhlon/xmake.vim`](https://github.com/luzhlon/xmake.vim/tree/5b20e97f5d0b063a97be23451c730d0278eef927)
 
 ## 功能
 

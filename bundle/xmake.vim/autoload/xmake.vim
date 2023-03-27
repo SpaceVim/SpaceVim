@@ -12,7 +12,7 @@
 ""
 " @section Introduction, intro
 " @library
-" xmake.vim is a simple plugin for using xmake in vim and neovim.
+" xmake.vim is a plugin for using xmake in vim and neovim.
 " This plugin requires SpaceVim API and |job| support.
 
 " load the spacevim APIs:

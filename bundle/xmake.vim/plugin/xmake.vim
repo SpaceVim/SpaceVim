@@ -102,7 +102,9 @@ function! s:wildfilter(rets, patten) abort
     return ret
 endfunction
 
-com! -complete=customlist,<SID>xmake_complete
+""
+" Run `xmake` command based on provided arguments.
+command! -complete=customlist,<SID>xmake_complete
             \ -nargs=* XMake call xmake#xmake(<f-args>)
 
 let s:path = expand('<sfile>:p:h')
