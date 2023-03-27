@@ -9,6 +9,11 @@
 " This file is based on:
 " https://github.com/luzhlon/xmake.vim/tree/5b20e97f5d0b063a97be23451c730d0278eef927
 
+""
+" @section Introduction, intro
+" @library
+" xmake.vim is a simple plugin for using xmake in vim and neovim.
+" This plugin requires SpaceVim API and |job| support.
 
 " load the spacevim APIs:
 let s:JOB = SpaceVim#api#import('job')
