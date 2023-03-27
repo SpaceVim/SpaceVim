@@ -140,4 +140,4 @@ endf
 au BufWritePost xmake.lua XMakeLoad
 au BufRead,BufNew xmake.lua call <sid>on_read()
 
-call SpaceVim#plugins#projectmanager#reg_callback(function('xmake#load'))
+call SpaceVim#plugins#projectmanager#reg_callback(function('xmake#on_project_changed'))

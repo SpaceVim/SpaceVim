@@ -210,11 +210,18 @@ fun! xmake#load()
   let s:xmake_load_tempname = tempname()
   let cmdline = ['xmake', 'lua', s:path . '/spy.lua', '-o', s:xmake_load_tempname, 'project']
   call xmake#log#info('cmdline is:' . string(cmdline))
-  call s:JOB.start(cmdline, {
+  let jobid = s:JOB.start(cmdline, {
         \ 'on_stdout' : function('s:xmake_load_stdout'),
         \ 'on_exit' : function('s:xmake_load_exit')
         \ }
         \ )
+endfunction
+
+
+function! xmake#on_project_changed() abort
+    if filereadable('xmake.lua')
+        call xmake#load()
+    endif
 endfunction
 
 " vim:set et sw=2 cc=80:
