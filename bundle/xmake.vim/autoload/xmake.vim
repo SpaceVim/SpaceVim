@@ -155,7 +155,8 @@ fun! s:onload(...)
   " Support SpaceVim's tabmanager
   call s:NOTI.notify('XMake-Project loaded successfully', 'MoreMsg')
   let config = g:xmproj.config
-  let t:_spacevim_tab_name = join([g:xmproj['name'], config.mode, config.arch], ' - ')
+  let t:_spacevim_tab_name = join(filter([g:xmproj['name'], get(config, 'mode', ''), get(config, 'arch', '')], '!empty(v:val)'), ' - ')
+  call xmake#log#info('change the project name to:' . t:_spacevim_tab_name)
   " Find compiler
   let cc = get(g:xmproj.config, 'cc', '')
   let cxx = get(g:xmproj.config, 'cxx', '')
@@ -203,7 +204,10 @@ function! s:xmake_load_exit(id, data, event) abort
       let g:xmproj = json_decode(l[0])
       do User XMakeLoaded
     catch
-      call xmake#log#debug('xmake_load_tempname is:' . s:xmake_load_tempname)
+      call xmake#log#debug('xmake_load_tempname is: ' . s:xmake_load_tempname)
+      call xmake#log#debug('failed to paser s:xmake_load_tempname')
+      call xmake#log#debug('       exception: ' . v:exception)
+      call xmake#log#debug('       throwpoint: ' . v:throwpoint)
     endtry
   endif
 endfunction
