@@ -95,11 +95,12 @@ Some layers are enabled by default. The following example shows how to disable `
 | [lang#asciidoc](lang/asciidoc/)                       | Edit AsciiDoc within vim, autopreview AsciiDoc in the default browser, with this layer you can also format AsciiDoc files.                                          |
 | [lang#aspectj](lang/aspectj/)                         | AsepctJ language support, including syntax highlighting.                                                                                                            |
 | [lang#assembly](lang/assembly/)                       | This layer adds Assembly language support to SpaceVim, including syntax highlighting.                                                                               |
-| [lang#autohotkey](lang/autohotkey/)                   | This layer adds AutohotKey language support to SpaceVim.                                                                                                            |
+| [lang#autohotkey](lang/autohotkey/)                   | AutohotKey language support for SpaceVim, including syntax highlighting and code completion                                                                         |
 | [lang#batch](lang/batch/)                             | This layer is for DOS batch file development, provides syntax highlighting, code runner and repl support for batch files.                                           |
 | [lang#c](lang/c/)                                     | C/C++/Object-C language support for SpaceVim, including code completion, jump to definition, and quick runner.                                                      |
 | [lang#chapel](lang/chapel/)                           | This layer is for chapel development. provides syntax checking, code runner and repl support for chapel files.                                                      |
 | [lang#clojure](lang/clojure/)                         | This layer is for Clojure development, provides autocompletion, syntax checking, code format for Clojure files.                                                     |
+| [lang#cmake](lang/cmake/)                             | This layer is for cmake script, provides syntax highlighting and language server protocol support.                                                                  |
 | [lang#coffeescript](lang/coffeescript/)               | This layer is for CoffeeScript development, provides autocompletion, syntax checking, code format for CoffeeScript files.                                           |
 | [lang#crystal](lang/crystal/)                         | This layer is for crystal development, provides syntax checking, code runner and repl support for crystal files.                                                    |
 | [lang#csharp](lang/csharp/)                           | csharp language layer, including syntax highlighting, asynchronous code runner.                                                                                     |
@@ -134,6 +135,7 @@ Some layers are enabled by default. The following example shows how to disable `
 | [lang#janet](lang/janet/)                             | This layer is for janet development, provides code runner and repl support for janet files.                                                                         |
 | [lang#java](lang/java/)                               | This layer is for Java development. All the features such as code completion, formatting, syntax checking, REPL and debug have be done in this layer.               |
 | [lang#javascript](lang/javascript/)                   | This layer provides JavaScript development support for SpaceVim, including code completion, syntax highlighting and syntax checking                                 |
+| [lang#json](lang/json/)                               | json and json5 language support, include syntax highlighting.                                                                                                       |
 | [lang#jsonnet](lang/jsonnet/)                         | jsonnet language support, include syntax highlighting.                                                                                                              |
 | [lang#julia](lang/julia/)                             | This layer is for Julia development, provides autocompletion, syntax checking and code formatting                                                                   |
 | [lang#kotlin](lang/kotlin/)                           | This layer adds Kotlin language support to SpaceVim, including syntax highlighting, code runner and REPL support.                                                   |
@@ -155,6 +157,7 @@ Some layers are enabled by default. The following example shows how to disable `
 | [lang#php](lang/php/)                                 | PHP language support, including code completion, syntax lint and code runner                                                                                        |
 | [lang#plantuml](lang/plantuml/)                       | This layer is for PlantUML development, provides syntax highlighting for PlantUML files.                                                                            |
 | [lang#pony](lang/pony/)                               | This layer is for pony development, provides syntax checking, code runner and repl support for pony files.                                                          |
+| [lang#postscript](lang/postscript/)                   | This layer is for postscript development, includes syntax highlighting for postscript file.                                                                         |
 | [lang#povray](lang/povray/)                           | This layer is for povray development, provides syntax highlighting, and viewing images.                                                                             |
 | [lang#powershell](lang/powershell/)                   | This layer is for powershell development, provides syntax checking, code runner and repl support for powershell files.                                              |
 | [lang#processing](lang/processing/)                   | This layer is for working on Processing sketches. It provides syntax checking and an app runner                                                                     |
@@ -208,6 +211,8 @@ Some layers are enabled by default. The following example shows how to disable `
 | [ui](ui/)                                             | Awesome UI layer for SpaceVim, provide IDE-like UI for neovim and vim in both TUI and GUI                                                                           |
 | [unite](unite/)                                       | This layer provides a heavily customized Unite centric workflow                                                                                                     |
 | [VersionControl](VersionControl/)                     | This layer provides general version control features for SpaceVim. It should work with all VC backends such as Git, Mercurial, Bazaar, SVN, etc                     |
+| [xmake](xmake/)                                       | xmake layer provides basic xmake client for SpaceVim.                                                                                                               |
+| [zettelkasten](zettelkasten/)                         | This layers adds extensive support for zettelkasten                                                                                                                 |
 
 <!-- SpaceVim layer list end -->
 
