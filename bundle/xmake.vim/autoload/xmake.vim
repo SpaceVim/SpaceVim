@@ -99,9 +99,9 @@ fun! xmake#buildrun(...)
       if run
         let t = get(get(g:xmproj['targets'], s:target, {}), 'targetfile')
         if empty(t)
-          call viml#echohl('Error', 'Target not exists:', s:target)
+          call s:NOTI.notify('Target not exists:' . s:target, 'Error')
         else
-          call qrun#exec(empty(s:target) ? ['xmake', 'run']: t)
+          call SpaceVim#plugins#runner#open(empty(s:target) ? 'xmake run': t)
         endif
       endif
     endif
