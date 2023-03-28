@@ -140,7 +140,11 @@ function! s:self.warp_nvim(argv, opts) abort dict
   endfunction
   function! obj.__on_exit(id, data, event) abort dict
     if has_key(self._opts, 'on_exit')
-      let self._jobs[a:id][1] = a:data ? 'failed' : 'dead'
+      if has_key(self._jobs, a:id)
+        " when run JOB.stop(id), it will be removed from _jobs before
+        " __on_exit function called.
+        let self._jobs[a:id][1] = a:data ? 'failed' : 'dead'
+      endif
       call self._opts.on_exit(a:id, a:data, 'exit')
     endif
   endfunction
