@@ -20,10 +20,37 @@ let s:JOB = SpaceVim#api#import('job')
 let s:NOTI = SpaceVim#api#import('notify')
 
 let s:job = 0       " subprocess of xmake
-let s:run = 0       " run this command after building successfully
+let s:xmake_need_to_run = 0       " run this command after building successfully
 let s:target = ''   " target to build, build ALL if empty
 let s:cb_cexpr = {j,d,s->vim#cadde(join(d, "\n"))}
 
+
+function! s:xmake_stdout(id, data, event) abort
+
+endfunction
+
+function! s:xmake_stderr(id, data, event) abort
+
+endfunction
+
+function! s:xmake_exit(id, data, event) abort
+  if a:data 
+    " copen
+    " if build failed, we need to display the error message
+    call s:NOTI.notify('build failed', 'Error')
+    call s:NOTI.notify('xmake returned ' . a:data, 'Error')
+  else
+    call s:NOTI.notify('build success' . s:target, 'MoreMsg')
+    if s:xmake_need_to_run
+      let t = get(get(g:xmproj['targets'], s:target, {}), 'targetfile')
+      if empty(t)
+        call s:NOTI.notify('Target not exists:' . s:target, 'Error')
+      else
+        call SpaceVim#plugins#runner#open(empty(s:target) ? 'xmake run': t)
+      endif
+    endif
+  endif
+endfunction
 " Get the bufnr about a target's sourcefiles and headerfiles
 func! s:targetbufs(target)
   let nrs = {}
@@ -86,37 +113,19 @@ fun! xmake#buildrun(...)
   if s:isRunning() | return | endif
   " call s:savefiles()          " save files about the target to build
   wall
-  let run = a:0 && a:1
+  let s:xmake_need_to_run = a:0 && a:1
   let color = $COLORTERM
-  fun! OnQuit(job, code, stream) closure
-    let $COLORTERM = color
-    if a:code               " open the quickfix if any errors
-      echohl Error | echo 'build failure' | echohl
-      cadde 'xmake returned ' . a:code
-      copen
-    else
-      echohl MoreMsg | echo 'build success' s:target | echohl
-      if run
-        let t = get(get(g:xmproj['targets'], s:target, {}), 'targetfile')
-        if empty(t)
-          call s:NOTI.notify('Target not exists:' . s:target, 'Error')
-        else
-          call SpaceVim#plugins#runner#open(empty(s:target) ? 'xmake run': t)
-        endif
-      endif
-    endif
-  endfunction
   cexpr ''
-  let $COLORTERM = 'nocolor'
-  " startup the xmake
   let cmd = empty(s:target) ? 'xmake': ['xmake', 'build', s:target]
   if has_key(g:xmproj, 'compiler')
     exe 'compiler' g:xmproj['compiler']
   endif
-  let s:job = job#start(cmd, {
-        \ 'on_stdout': s:cb_cexpr,
-        \ 'on_stderr': s:cb_cexpr,
-        \ 'on_exit': funcref('OnQuit')})
+  let s:job = s:JOB.start(cmd, {
+        \ 'on_stdout': function('s:xmake_stdout'),
+        \ 'on_stderr': function('s:xmake_stderr'),
+        \ 'on_exit': function('s:xmake_exit'),
+        \ 'env' : {'COLORTERM' : 'nocolor'}
+        \ })
 endfunction
 " Interpret XMake command
 fun! xmake#xmake(...)
