@@ -25,7 +25,7 @@ function! s:set_command() abort
     let yank = 'wl-copy --foreground --type text/plain'
     let paste = 'wl-paste --no-newline'
   elseif !empty($DISPLAY) && executable('xclip')
-    let yank = 'xclip -quiet -i -selection clipboard'
+    let yank = 'xclip -i -selection clipboard'
     let paste = 'xclip -o -selection clipboard'
   elseif !empty($DISPLAY) && executable('xsel')
     let yank = 'xsel -i -b'
