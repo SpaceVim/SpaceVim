@@ -117,6 +117,8 @@ function! SpaceVim#layers#lang#python#plugins() abort
         \ { 'on_ft' : 'python'}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/coveragepy.vim', 
         \ { 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/python-imports.vim', 
+        \ { 'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-virtualenv', 
         \ { 'merged' : 0}])
   return plugins
@@ -183,6 +185,9 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','i', 'r'],
         \ 'Neoformat autoflake',
         \ 'remove unused imports', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l','i', 'i'],
+        \ 'ImportName',
+        \ 'import name under cursor', 1)
   let g:_spacevim_mappings_space.l.s = {'name' : '+Send'}
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 'i'],
         \ 'call SpaceVim#plugins#repl#start("python")',

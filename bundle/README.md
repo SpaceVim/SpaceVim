@@ -67,6 +67,7 @@ This plugins are changed based on a specific version of origin plugin.
 - [jeetsukumaran/vim-pythonsense@9200a57](https://github.com/jeetsukumaran/vim-pythonsense/tree/9200a57629c904ed2ab8c9b2e8c5649d311794ba)
 - [alfredodeza/coveragepy.vim@afcef30](https://github.com/alfredodeza/coveragepy.vim/tree/afcef301b723048c25250d2d539b9473a8e4f747)
 - [Vimjas/vim-python-pep8-indent@60ba5e](https://github.com/Vimjas/vim-python-pep8-indent/tree/60ba5e11a61618c0344e2db190210145083c91f8)
+- [mgedmin/python-imports.vim@b33323a](https://github.com/mgedmin/python-imports.vim/tree/b33323aa8c21cf93b115ccbf85e6958b351b410d)
 
 #### `lang#liquid` layer
 

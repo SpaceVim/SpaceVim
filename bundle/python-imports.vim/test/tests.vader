@@ -1,0 +1,225 @@
+Execute (set up some fake tag locations):
+  let g:pythonImports['a'] = ''   " import a
+  let g:pythonImports['b'] = ''   " import b
+  let g:pythonImports['d'] = 'c'  " from c import d
+
+#
+# :ImportName
+#
+
+Given python (some Python code):
+  import a
+
+  def somefunc():
+      return a.x() + b.y()
+
+Do (position the cursor on 'b' and :ImportName):
+  /b\<CR>
+  :ImportName\<CR>
+
+Expect python (an import statement to be inserted at the top):
+  import a
+  import b
+
+  def somefunc():
+      return a.x() + b.y()
+
+#
+# :ImportNameHere
+#
+
+Given python (the same text in a buffer):
+  import a
+
+  def somefunc():
+      return a.x() + b.y()
+
+Do (position the cursor on 'b' and :ImportNameHere):
+  /b\<CR>
+  :ImportNameHere\<CR>
+
+Expect python (an import statement to be inserted on the line above):
+  import a
+
+  def somefunc():
+      import b
+      return a.x() + b.y()
+
+#
+# :ImportName with an argument
+#
+
+Given python (some Python code):
+  import a
+
+  def somefunc():
+      return a.x() + d()
+
+Execute (:ImportName d):
+  ImportName d
+
+Expect python (a from ... import statement to be inserted at the top):
+  import a
+  from c import d
+
+  def somefunc():
+      return a.x() + d()
+
+#
+# :ImportNameHere with an argument
+#
+
+Given python (some Python code):
+  import a
+
+  def somefunc():
+      return a.x() + b.y()
+
+Do (position the cursor on 'b' and :ImportNameHere d):
+  /b\<CR>
+  :ImportNameHere d\<CR>
+
+Expect python (a from ... import statement to be inserted on the line above):
+  import a
+
+  def somefunc():
+      from c import d
+      return a.x() + b.y()
+
+#
+# :ImportName skips docstring
+#
+
+Given python (a Python script with a docstring):
+  """
+  this is a docstring
+
+  it can have empty lines inside
+  """
+
+  def main():
+      pass
+
+Execute (:ImportName):
+  ImportName a
+
+Expect python (an import statement to be inserted after the docstring):
+  """
+  this is a docstring
+
+  it can have empty lines inside
+  """
+  import a
+
+  def main():
+      pass
+
+#
+# :ImportName skips comment
+#
+
+Given python (a Python script with a comment at the top):
+  #!/usr/bin/env python
+
+  def main():
+      pass
+
+Execute (:ImportName):
+  ImportName a
+
+Expect python (an import statement to be inserted after the comment):
+  #!/usr/bin/env python
+  import a
+
+  def main():
+      pass
+
+#
+# :ImportName at the very top
+#
+
+Given python (a Python script with no docstring/comment/other imports):
+  def main():
+      pass
+
+Execute (:ImportName):
+  ImportName a
+
+Expect python (an import statement to be inserted at the top):
+  import a
+  def main():
+      pass
+
+#
+# :ImportName with a parenthesized list
+#
+
+Given python (some code that uses a multiline from ... import statement):
+  from c import (
+     a,
+     b,
+  )
+
+Execute (:ImportName):
+  ImportName d
+
+Expect python (a new name to be inserted in the comma-separated multiline list):
+  from c import (
+     d,
+     a,
+     b,
+  )
+
+#
+# :ImportName with a parenthesized list, import already exists
+#
+
+Given python (some code that uses a multiline from ... import statement):
+  from c import (
+     a,
+     b,
+     d,
+  )
+
+Execute (:ImportName):
+  ImportName d
+
+Expect python (the code to remain unchanged):
+  from c import (
+     a,
+     b,
+     d,
+  )
+
+#
+# :ImportName with a parenthesized list, similar import already exists
+#
+
+Given python (some code that uses a multiline from ... import statement):
+  from c import (
+     a,
+     b,
+  )
+
+  things = [
+     a,
+     b,
+     d,
+  ]
+
+Do (position the cursor on 'd' and :ImportName):
+  /d\<CR>
+  :ImportName\<CR>
+
+Expect python (a new name to be inserted in the comma-separated multiline list):
+  from c import (
+     d,
+     a,
+     b,
+  )
+
+  things = [
+     a,
+     b,
+     d,
+  ]
