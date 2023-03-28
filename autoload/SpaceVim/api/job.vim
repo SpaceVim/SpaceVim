@@ -102,6 +102,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
   let obj = {}
   let obj._argv = a:argv
   let obj._opts = a:opts
+  let obj._jobs = self.jobs
   " @vimlint(EVL103, 1, a:job_id)
   " @vimlint(EVL103, 1, a:event)
   function! obj.__on_stdout(id, data, event) abort dict
@@ -137,9 +138,9 @@ function! s:self.warp_nvim(argv, opts) abort dict
       endif
     endif
   endfunction
-
   function! obj.__on_exit(id, data, event) abort dict
     if has_key(self._opts, 'on_exit')
+      let self._jobs[a:id][1] = a:data ? 'failed' : 'dead'
       call self._opts.on_exit(a:id, a:data, 'exit')
     endif
   endfunction
@@ -150,6 +151,7 @@ function! s:self.warp_nvim(argv, opts) abort dict
         \ 'argv': a:argv,
         \ 'opts': {
         \ '_opts': obj._opts,
+        \ '_jobs' : obj._jobs,
         \ '_eof': '',
         \ 'on_stdout': obj.__on_stdout,
         \ 'on_stderr': obj.__on_stderr,
