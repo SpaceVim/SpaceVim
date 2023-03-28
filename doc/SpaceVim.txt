@@ -4439,6 +4439,16 @@ KEY BINDINGS
   --------------------------------
   SPC l r         run current file
   g d             jump to definition
+  SPC l i s       format imports
+  SPC l i r       run autoflake on current buffer
+  SPC l i i       run :ImportName command
+  SPC l c r       coverage report
+  SPC l c s       coverage show
+  SPC l c e       coverage session
+  SPC l c f       coverage refresh
+  SPC l g d       generate docstring
+  SPC l v l       list all virtualenvs
+  SPC l v d       deactivate current virtualenv
 <
 
 This layer also provides REPL support for python, the key bindings are:
