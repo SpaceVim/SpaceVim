@@ -5,9 +5,9 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 <!-- vim-markdown-toc GFM -->
 
 - [Changed plugin:](#changed-plugin)
+  - [`edit` layer](#edit-layer)
 - [No changed plugins](#no-changed-plugins)
   - [`core` layer](#core-layer)
-- [`edit` layer](#edit-layer)
   - [`lang#ruby` layer](#langruby-layer)
   - [`lang#python` layer](#langpython-layer)
   - [`lang#liquid` layer](#langliquid-layer)
@@ -21,7 +21,7 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 
 ### Changed plugin:
 
-This plugins are changed based on a specific version of origin plugin.
+These plugins are changed based on a specific version of origin plugin.
 
 - `vim-bookmarks`: based on [`MattesGroeger/vim-bookmarks@3adeae1`](https://github.com/MattesGroeger/vim-bookmarks/commit/3adeae10639edcba29ea80dafa1c58cf545cb80e)
 - `delimitMate`: based on [`Raimondi/delimitMate@537a1da`](https://github.com/Raimondi/delimitMate/tree/537a1da0fa5eeb88640425c37e545af933c56e1b)
@@ -34,6 +34,11 @@ This plugins are changed based on a specific version of origin plugin.
 - `rainbow`: based on [`luochen1990/rainbow@c18071e5`](https://github.com/luochen1990/rainbow/tree/c18071e5c7790928b763c2e88c487dfc93d84a15)
 - `jedi-vim`: based on [`jedi-vim@e82d07`](https://github.com/davidhalter/jedi-vim/tree/e82d07faa17c3b3fe04b4fa6ab074e8e8601a596)
 - `vim-unstack`: based on [`vim-unstack@9b191419`](https://github.com/mattboehm/vim-unstack/tree/9b191419b4d3f26225a5ae3df5e409c62b426941)
+
+#### `edit` layer
+
+- `vim-grammarous`: based on [`rhysd/vim-grammarous@db46357`](https://github.com/rhysd/vim-grammarous/tree/db46357465ce587d5325e816235b5e92415f8c05)
+
 
 ### No changed plugins
 
@@ -58,10 +63,6 @@ This plugins are changed based on a specific version of origin plugin.
 #### `core` layer
 
 - [nerdtree@fc85a6f07](https://github.com/preservim/nerdtree/tree/fc85a6f07c2cd694be93496ffad75be126240068)
-
-### `edit` layer
-
-- [rhysd/vim-grammarous@db46357](https://github.com/rhysd/vim-grammarous/tree/db46357465ce587d5325e816235b5e92415f8c05)
 
 #### `lang#ruby` layer
 
