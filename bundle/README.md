@@ -7,6 +7,7 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 - [Changed plugin:](#changed-plugin)
 - [No changed plugins](#no-changed-plugins)
   - [`core` layer](#core-layer)
+- [`edit` layer](#edit-layer)
   - [`lang#ruby` layer](#langruby-layer)
   - [`lang#python` layer](#langpython-layer)
   - [`lang#liquid` layer](#langliquid-layer)
@@ -57,6 +58,10 @@ This plugins are changed based on a specific version of origin plugin.
 #### `core` layer
 
 - [nerdtree@fc85a6f07](https://github.com/preservim/nerdtree/tree/fc85a6f07c2cd694be93496ffad75be126240068)
+
+### `edit` layer
+
+- [rhysd/vim-grammarous@db46357](https://github.com/rhysd/vim-grammarous/tree/db46357465ce587d5325e816235b5e92415f8c05)
 
 #### `lang#ruby` layer
 

@@ -1,0 +1,71 @@
+*grammarous.txt*                                   A powerful grammar checker.
+
+Author : rhysd <lin90162@yahoo.co.jp>
+
+CONTENTS     *vim-grammarous-contents*
+
+Introduction |vim-grammarous-introduction|
+Usage        |vim-grammarous-usage|
+License      |vim-grammarous-license|
+
+
+==============================================================================
+INTRODUCTION                                       *vim-grammarous-introduction*
+
+*vim-grammarous* is a powerful grammar checker for Vim.  Simply do
+|:GrammarousCheck| to see the powerful checking. This plugin automatically
+downloads LanguageTool, which requires Java 8+.
+
+|vim-grammarous| uses job feature on Vim 8.0.27 (or later) or Neovim. You need
+not to wait until the check has done.
+
+
+==============================================================================
+USAGE                                                     *vim-grammarous-usage*
+
+*:GrammarousCheck* to check grammar in the buffer.
+
+:[range]GrammarousCheck [--lang={lang}] [--(no-)preview] [--(no-)comments-only]
+
+Execute the grammar checker for current buffer (when [range] is specified, the
+target is a text in the range).
+
+  1. It makes LanguageTool check grammar (It takes a while)
+  2. It highlights the locations of detected grammar errors
+  3. When you move the cursor on a location of error, it automatically shows
+     the error with the information window.
+
+Please do ":GrammarousCheck --help" to show more detail about the command.
+In information window, some local mappings are available.  Please enter "?" in
+the window to show the help.
+
+And *:GrammarousReset* resets the current check.
+
+If you want to customize something (e.g. define mappings, disable rules),
+please see https://github.com/rhysd/vim-grammarous for more detail.
+
+
+==============================================================================
+LICENSE                                                 *vim-grammarous-license*
+
+  Copyright (c) 2014 rhysd
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+  of the Software, and to permit persons to whom the Software is furnished to do so,
+  subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+  PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+  LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
+  THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+==============================================================================
+vim:tw=78:colorcolumn=78:ts=8:ft=help:norl:et:fen:fdl=0:
