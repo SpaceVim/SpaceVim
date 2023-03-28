@@ -1,0 +1,5 @@
+set target's language:
+
+ansi c89 gnu89 c99 gnu99 cxx98
+gnuxx98 cxx11 gnuxx11 cxx14
+gnuxx14 cxx1z gnuxx1z cxx17 gnuxx17

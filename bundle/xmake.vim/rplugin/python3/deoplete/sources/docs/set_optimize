@@ -1,0 +1,8 @@
+set the level of optimize:
+
+* none	禁用优化
+* fast	快速优化
+* faster	更快的优化
+* fastest	最快运行速度的优化
+* smallest	最小化代码优化
+* aggressive	过度优化

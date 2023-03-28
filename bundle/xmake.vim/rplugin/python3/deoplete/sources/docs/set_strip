@@ -1,0 +1,4 @@
+set the mode of strip:
+
+* debug - 链接的时候，strip掉调试符号
+* all - 链接的时候，strip掉所有符号，包括调试符号

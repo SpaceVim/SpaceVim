@@ -42,3 +42,4 @@ view/
 .vim-bookmarks
 # ignore cache
 .cache/
+.xmake/

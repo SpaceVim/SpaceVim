@@ -239,6 +239,7 @@ CONTENTS                                                   *SpaceVim-contents*
       142. treesitter.............................|SpaceVim-layers-treesitter|
       143. ui.............................................|SpaceVim-layers-ui|
       144. unite.......................................|SpaceVim-layers-unite|
+      145. xmake.......................................|SpaceVim-layers-xmake|
   7. Usage....................................................|SpaceVim-usage|
       1. alternate file........................|SpaceVim-usage-alternate-file|
       2. buffers-and-files..................|SpaceVim-usage-buffers-and-files|
@@ -5761,6 +5762,16 @@ KEY BINDINGS
   | `<Leader> f r`       | Resumes Unite window          |
 <
 
+
+==============================================================================
+XMAKE                                                  *SpaceVim-layers-xmake*
+
+The `xmake` layer provides basic function for xmake command. This layer is
+disabled by default, to use it:
+>
+  [[layers]]
+    name = 'xmake'
+<
 
 ==============================================================================
 USAGE                                                         *SpaceVim-usage*

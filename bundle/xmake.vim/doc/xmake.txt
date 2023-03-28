@@ -1,0 +1,22 @@
+*xmake.txt*	xmake support in vim
+Wang Shidong                                                           *xmake*
+
+==============================================================================
+CONTENTS                                                      *xmake-contents*
+  1. Introduction................................................|xmake-intro|
+  2. Commands.................................................|xmake-commands|
+
+==============================================================================
+INTRODUCTION                                                     *xmake-intro*
+
+xmake.vim is a plugin for using xmake in vim and neovim. This plugin requires
+SpaceVim API and |job| support.
+
+==============================================================================
+COMMANDS                                                      *xmake-commands*
+
+:XMake                                                                *:XMake*
+  Run `xmake` command based on provided arguments.
+
+
+vim:tw=78:ts=8:ft=help:norl:

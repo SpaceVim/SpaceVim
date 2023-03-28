@@ -1,0 +1,4 @@
+set target's symbols mode:
+
+* debug - 添加调试符号
+* hidden - 设置符号不可见

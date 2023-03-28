@@ -1,0 +1,56 @@
+
+snippet xmtmp "A template for xmake" b
+set_project '${1:project_name}'
+
+if is_mode 'debug' then
+	set_symbols("debug")
+	set_optimize("none")
+end
+if is_mode 'release' then
+	set_symbols("hidden")
+	set_optimize("fastest")
+	set_strip("all")
+end
+
+target '${2:target_name}'
+	set_kind '${3:target_kind}'
+endsnippet
+
+snippet xmproj "set_project ..."
+set_project '${1}'
+endsnippet
+
+snippet xmtarget "target ..."
+target '${1:name}'
+	set_kind '${2:binary|shared|static}'
+	add_files '${3:*.cpp}'
+endsnippet
+
+snippet xmincdirs "add_includedirs"
+add_includedirs '${1}'
+endsnippet
+
+snippet xmfiles "add_files"
+add_files '${1}'
+endsnippet
+
+snippet xmpackage "on_package ..." b
+on_package(function(target)
+	os.cp('${1:source-file}', '${2:dist-file}')${0}
+end)
+endsnippet
+
+snippet xmisdbg "if is_mode 'debug' then ..."
+if is_mode 'debug' then
+	set_symbols("debug")
+	set_optimize("none")
+end
+endsnippet
+
+snippet xmisrls "if is_mode 'release' then ..."
+if is_mode 'release' then
+	set_symbols("hidden")
+	set_optimize("fastest")
+	set_strip("all")
+end
+endsnippet
