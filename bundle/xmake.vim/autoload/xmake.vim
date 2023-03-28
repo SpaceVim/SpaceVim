@@ -142,12 +142,12 @@ fun! xmake#xmake(...)
     call xmake#buildrun()
   else                                " else xmake's commands
     if s:isRunning() | return | endif
-    cexpr ''
-    let opts = {'on_stdout': s:cb_cexpr, 'on_stderr': s:cb_cexpr}
-    if argv[0] == 'config' || argv[0] == 'f'
-      let opts.on_exit = {job, code -> code ? execute('copen'): xmake#load()}
-    endif
-    let s:job = job#start(['xmake'] + argv, opts)
+    let s:job = s:JOB.start(['xmake'] + argv, {
+          \ 'on_stdout': function('s:xmake_stdout'),
+          \ 'on_stderr': function('s:xmake_stderr'),
+          \ 'on_exit': function('s:xmake_exit'),
+          \ 'env' : {'COLORTERM' : 'nocolor'}
+          \ })
   endif
 endfunction
 
