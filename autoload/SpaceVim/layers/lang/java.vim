@@ -152,6 +152,12 @@ function! SpaceVim#layers#lang#java#config() abort
   "
   let g:neomake_java_javac_options = ['-J-Duser.language=en'] 
 
+  " defined JDTLS_HOME
+
+  if empty($JDTLS_HOME) && !empty($Scoop)
+    let $JDTLS_HOME = $Scoop . '/apps/jdtls/current' 
+  endif
+
   if SpaceVim#layers#lsp#check_filetype('java')
     call SpaceVim#mapping#gd#add('java', function('SpaceVim#lsp#go_to_def'))
   else

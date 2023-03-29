@@ -14,6 +14,8 @@ This article introduces you to SpaceVim as a Java environment.
 Before reading this article, I recommend reading [Use vim as IDE](../use-vim-as-ide/), which is for the general usage.
 With `lang#java` layer, spacevim can be built into a lightweight java integrated development environment.
 
+![java ide](https://user-images.githubusercontent.com/13142418/228426235-cd9c6fd8-8756-4586-8bfe-d62f51a8ec50.png)
+
 Each of the following sections will be covered:
 
 <!-- vim-markdown-toc GFM -->
