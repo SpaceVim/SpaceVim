@@ -33,6 +33,7 @@
 "       ''
 "     ]
 " <
+" 4. `enabled_linters`: Set the enabled linters for java, default is `['javac']`.
 " @subsection Mappings
 " >
 "   Import key bindings:
@@ -129,6 +130,7 @@ let s:java_file_head = [
       \ ''
       \ ]
 let s:java_interpreter = 'java'
+let s:enabled_linters = ['javac']
 
 function! SpaceVim#layers#lang#java#plugins() abort
   let plugins = []
@@ -149,8 +151,19 @@ function! SpaceVim#layers#lang#java#config() abort
   call add(g:spacevim_project_rooter_patterns, 'build.gradle')
 
   " for neomake 
-  "
-  let g:neomake_java_javac_options = ['-J-Duser.language=en'] 
+  " neomake will be disabled when lsp is enabled for java.
+  if SpaceVim#layers#lsp#check_filetype('java')
+        \ || SpaceVim#layers#lsp#check_server('jdtls')
+    let g:neomake_java_enabled_makers = []
+  else
+    if g:spacevim_lint_engine ==# 'neomake'
+      let g:neomake_java_javac_options = ['-J-Duser.language=en'] 
+      let g:neomake_java_enabled_makers = s:enabled_linters
+      for lint in g:neomake_java_enabled_makers
+        let g:neomake_java_{lint}_remove_invalid_entries = 1
+      endfor
+    endif
+  endif
 
   " defined JDTLS_HOME
 
@@ -159,6 +172,7 @@ function! SpaceVim#layers#lang#java#config() abort
   endif
 
   if SpaceVim#layers#lsp#check_filetype('java')
+        \ || SpaceVim#layers#lsp#check_server('jdtls')
     call SpaceVim#mapping#gd#add('java', function('SpaceVim#lsp#go_to_def'))
   else
     call SpaceVim#mapping#gd#add('java', function('s:go_to_def'))
@@ -332,6 +346,7 @@ function! s:language_specified_mappings() abort
         \ 'send selection and keep code buffer focused', 1)
 
   if SpaceVim#layers#lsp#check_filetype('java')
+        \ || SpaceVim#layers#lsp#check_server('jdtls')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
@@ -367,6 +382,7 @@ function! SpaceVim#layers#lang#java#set_variable(var) abort
   let s:java_formatter_jar = get(a:var,
         \ 'java_formatter_jar',
         \ s:java_formatter_jar)
+  let s:enabled_linters = get(a:var, 'enabled_linters', s:enabled_linters)
 endfunction
 
 " vim:set et sw=2 cc=80:

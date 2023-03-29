@@ -3513,6 +3513,8 @@ LAYER OPTIONS
       ''
     ]
 <
+  4. `enabled_linters`: Set the enabled linters for java, default is
+    `['javac']`.
 MAPPINGS
 
 >

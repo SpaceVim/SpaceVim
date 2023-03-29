@@ -267,7 +267,7 @@ endfunction
 
 function! SpaceVim#layers#lsp#check_filetype(ft) abort
   if s:use_nvim_lsp
-    return 1
+    return 0
   else
     return index(s:enabled_fts, a:ft) != -1
   endif
