@@ -166,6 +166,7 @@ function! SpaceVim#layers#lang#java#config() abort
   augroup SpaceVim_lang_java
     au!
     if !SpaceVim#layers#lsp#check_filetype('java')
+          \ && !SpaceVim#layers#lsp#check_server('jdtls')
       " omnifunc will be used only when no java lsp support
       autocmd FileType java setlocal omnifunc=javacomplete#Complete
     endif

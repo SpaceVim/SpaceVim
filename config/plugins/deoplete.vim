@@ -18,22 +18,25 @@ call deoplete#custom#option({
       \ 'nofile_complete_filetypes' : ['denite-filter'],
       \ })
 
-" java && jsp
-call deoplete#custom#var('omni', 'input_patterns', {
-      \ 'java': [
-      \           '[^. \t0-9]\.\w*',
-      \           '[^. \t0-9]\->\w*',
-      \           '[^. \t0-9]\::\w*',
-      \         ],
-      \ 'jsp':  ['[^. \t0-9]\.\w*'],
-      \})
-if g:spacevim_enable_javacomplete2_py
-  call deoplete#custom#option('ignore_sources', {'java': ['omni']})
-  call deoplete#custom#source('javacomplete2', 'mark', '')
-else
-  call deoplete#custom#option('ignore_sources', {'java': ['javacomplete2', 'around', 'member']})
-  call deoplete#custom#source('omni', 'mark', '')
-  call deoplete#custom#source('omni', 'rank', 9999)
+if !SpaceVim#layers#lsp#check_filetype('java')
+      \ && !SpaceVim#layers#lsp#check_server('jdtls')
+  " java && jsp
+  call deoplete#custom#var('omni', 'input_patterns', {
+        \ 'java': [
+          \           '[^. \t0-9]\.\w*',
+          \           '[^. \t0-9]\->\w*',
+          \           '[^. \t0-9]\::\w*',
+          \         ],
+          \ 'jsp':  ['[^. \t0-9]\.\w*'],
+          \})
+  if g:spacevim_enable_javacomplete2_py
+    call deoplete#custom#option('ignore_sources', {'java': ['omni']})
+    call deoplete#custom#source('javacomplete2', 'mark', '')
+  else
+    call deoplete#custom#option('ignore_sources', {'java': ['javacomplete2', 'around', 'member']})
+    call deoplete#custom#source('omni', 'mark', '')
+    call deoplete#custom#source('omni', 'rank', 9999)
+  endif
 endif
 
 " sh
@@ -50,11 +53,11 @@ call deoplete#custom#option('ignore_sources', {'markdown': ['tag']})
 " perl
 call deoplete#custom#var('omni', 'input_patterns', {
       \ 'perl': [
-      \           '[^. \t0-9]\.\w*',
-      \           '[^. \t0-9]\->\w*',
-      \           '[^. \t0-9]\::\w*',
-      \         ],
-      \})
+        \           '[^. \t0-9]\.\w*',
+        \           '[^. \t0-9]\->\w*',
+        \           '[^. \t0-9]\::\w*',
+        \         ],
+        \})
 
 " javascript
 call deoplete#custom#option('ignore_sources', {'javascript': ['omni']})
@@ -80,9 +83,9 @@ endif
 " gitcommit
 call deoplete#custom#var('omni', 'input_patterns', {
       \ 'git-commit': [
-      \       '[ ]#[ 0-9a-zA-Z]*',
-      \ ],
-      \})
+        \       '[ ]#[ 0-9a-zA-Z]*',
+        \ ],
+        \})
 
 call deoplete#custom#option('ignore_sources', {'gitcommit': ['neosnippet']})
 
@@ -114,9 +117,9 @@ call deoplete#custom#option('ignore_sources', {'ocaml': ['buffer', 'around', 'om
 " erlang
 call deoplete#custom#var('omni', 'input_patterns', {
       \ 'erlang': [
-      \   '[^. \t0-9]\.\w*',
-      \ ],
-      \})
+        \   '[^. \t0-9]\.\w*',
+        \ ],
+        \})
 
 " c#
 call deoplete#custom#option('sources', {'cs': ['omnisharp']})
