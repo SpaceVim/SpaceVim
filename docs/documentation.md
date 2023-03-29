@@ -101,7 +101,7 @@ description: "General documentation about how to use SpaceVim, including the qui
 
 Four core pillars: Mnemonic, Discoverable, Consistent and “Crowd-Configured”.
 
-If any of these core pillars are violated open an issue and we’ll try our best to fix it.
+If any of these core pillars are violated open an issue, and we’ll try our best to fix it.
 
 **Mnemonic**
 
@@ -245,14 +245,14 @@ The very first time SpaceVim starts up, it will ask you to
 choose a mode,
 [`basic mode`](https://github.com/SpaceVim/SpaceVim/blob/master/mode/basic.toml)
 or [`dark powered mode`](https://github.com/SpaceVim/SpaceVim/blob/master/mode/dark_powered.toml).
-then it will create a `SpaceVim.d/init.toml` in your
+Then it will create a `SpaceVim.d/init.toml` in your
 `HOME` directory. All the configuration files can be stored in the
 `~/.SpaceVim.d/` directory.
 
 `~/.SpaceVim.d/` will be added to `&runtimepath`.
 
 It is also possible to override the location of `~/.SpaceVim.d/`
-using the environment variable `SPACEVIMDIR`. Of course you can
+using the environment variable `SPACEVIMDIR`. Of course, you can
 also use symlinks to change the location of this directory.
 
 SpaceVim also supports project specific configuration files.
@@ -271,7 +271,7 @@ layer to be loaded.
 
 **Add custom plugins**
 
-If you want to add plugins from github, just add the repo name
+If you want to add plugins from GitHub, just add the repo name
 to the `custom_plugins` section:
 
 ```toml
@@ -318,7 +318,6 @@ For adding multiple custom plugins:
 
 If you want to disable plugins which are added by SpaceVim,
 you can use SpaceVim `disabled_plugins` in the `[options]` section of your configuration file.
-options:
 
 ```toml
 [options]
@@ -411,8 +410,8 @@ The different key bindings between SpaceVim and vim are shown as below.
       windows_leader = ''
   ```
 
-- In vim the `,` key repeats the last last `f`, `F`, `t` and `T`, but in SpaceVim it is the language specific Leader key.
-  To disable this feature, set the option `enable_language_specific_leader` to `false` in in the `[options]` section of your configuration file.
+- In vim the `,` key repeats the last `f`, `F`, `t` and `T`, but in SpaceVim it is the language specific Leader key.
+  To disable this feature, set the option `enable_language_specific_leader` to `false` in the `[options]` section of your configuration file.
 
   ```toml
   [options]
@@ -464,11 +463,15 @@ introduction to writing configuration layers can be found in
 
 **Purpose**
 
-Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion, syntax checking, and REPL support for python files. This approach helps keep configurations organized and reduces overhead for users by keeping them from having to think about what packages to install. To install all the `python` features users only need to add the `lang#python` layer to their custom configuration file.
+Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion,
+syntax checking, and REPL support for python files.
+This approach helps keep configurations organized and reduces overhead for users by keeping them from having to think about what packages to install.
+To install all the `python` features users only need to add the `lang#python` layer to their custom configuration file.
 
 **Structure**
 
-In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` layer, the file is `autoload/SpaceVim/layers/autocomplete.vim`, and there are three public functions:
+In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` layer, the file is `autoload/SpaceVim/layers/autocomplete.vim`,
+and there are three public functions:
 
 - `SpaceVim#layers#autocomplete#plugins()`: returns a list of the plugins used by this plugin
 - `SpaceVim#layers#autocomplete#config()`: The layer's configuration, such as key bindings and autocmds
