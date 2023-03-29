@@ -10,8 +10,9 @@ commentsID: "Use Vim as a Java IDE"
 
 # [Blogs](../blog/) >> Use Vim as a Java IDE
 
-This tutorial introduces you to SpaceVim as a Java environment,
-by using the `lang#java` layer, you make SpaceVim into a great lightweight Java IDE.
+This article introduces you to SpaceVim as a Java environment.
+Before reading this article, I recommend reading [Use vim as IDE](../use-vim-as-ide/), which is for the general usage.
+With `lang#java` layer, spacevim can be built into a lightweight java integrated development environment.
 
 Each of the following sections will be covered:
 
@@ -19,6 +20,8 @@ Each of the following sections will be covered:
 
 - [Enable language layer](#enable-language-layer)
 - [Language server](#language-server)
+  - [neovim(`>=0.5.0`)](#neovim050)
+  - [vim or neovim(`<0.5.0`)](#vim-or-neovim050)
 - [Code completion](#code-completion)
 - [Code outline](#code-outline)
 - [Rename symbol](#rename-symbol)
@@ -35,12 +38,12 @@ Each of the following sections will be covered:
 This tutorial is not intended to teach you Java itself.
 
 If you have any problems,
-feel free to join the [SpaceVim gitter chatting room](https://gitter.im/SpaceVim/SpaceVim)
+feel free to join the [SpaceVim matrix room](https://chat.mozilla.org/#/room/#spacevim:matrix.org)
 for general discussion.
 
 ### Enable language layer
 
-`lang#java` layer is not loaded by default in SpaceVim, to use SpaceVim for java,
+By default, the `lang#java` layer is not loaded in SpaceVim. To use SpaceVim for java,
 you need to enable this layer in SpaceVim configuration file.
 Press `SPC f v d` to open SpaceVim configuration file, and add following section:
 
@@ -50,6 +53,39 @@ Press `SPC f v d` to open SpaceVim configuration file, and add following section
 ```
 
 ### Language server
+
+There are two ways to configure the java language server protocol.
+
+#### neovim(`>=0.5.0`)
+
+If you are using `nvim(>=0.5.0)`. You need to use `enabled_clients` to specific the language servers.
+for example:
+
+```toml
+[[layers]]
+    name = 'lsp'
+    enabled_clients = ['jdtls', 'clangd']
+```
+
+To override the command of client, you may need to use `override_client_cmds` option:
+
+```toml
+[[layers]]
+  name = "lsp"
+  enabled_clients = ['jdtls', 'clangd']
+  [layers.override_client_cmds]
+    jdtls = ["jdtls", "-configuration", "/home/user/.cache/jdtls/config", "-data", "/home/user/.cache/jdtls/workspace"]
+```
+
+You can install `jdtls` via packages manager. For example:
+
+```
+scoop install jdtls
+```
+
+For manual installation you can download precompiled binaries from the [official downloads site](http://download.eclipse.org/jdtls/snapshots/?d) and ensure that the PATH variable contains the bin directory of the extracted archive.
+
+#### vim or neovim(`<0.5.0`)
 
 To enable language server protocol support, you may need to enable lsp layer.
 
