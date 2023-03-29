@@ -133,6 +133,9 @@ endfunction
 
 function! grammarous#info_win#open(e, bufnr)
     execute g:grammarous#info_win_direction g:grammarous#info_window_height . 'new' '[Grammarous]'
+    " why need this, the statusline is not update when open info win first
+    " time
+    doautocmd WinEnter
     let b:grammarous_preview_original_bufnr = a:bufnr
     let b:grammarous_preview_error = a:e
     call setline(1, s:get_info_buffer(a:e))
@@ -145,6 +148,8 @@ function! grammarous#info_win#open(e, bufnr)
     setlocal bufhidden=hide
     setlocal buftype=nofile
     setlocal readonly
+    setl winfixwidth
+    setl winfixheight
     setlocal nolist
     setlocal nobuflisted
     setlocal noswapfile
