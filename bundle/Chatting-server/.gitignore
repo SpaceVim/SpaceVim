@@ -1,2 +1,5 @@
 target/
 test.txt
+.settings/
+.classpath
+.project
