@@ -1,0 +1,21 @@
+name: "Close changes to config"
+on: [pull_request_target]
+jobs:
+  close-changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - run: |
+          if ! git diff origin/$GITHUB_BASE_REF...$(git branch --show-current) --exit-code -- doc/server_configurations.md doc/server_configurations.txt; then
+            gh pr close $PR_NUMBER
+            gh pr comment $PR_NUMBER --body "This pull request has been automatically closed. Changes to server_configurations.md aren't allowed - edit the lua source file instead. Consult https://github.com/neovim/nvim-lspconfig/blob/master/CONTRIBUTING.md#generating-docs."
+            exit 1
+          fi

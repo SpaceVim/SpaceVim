@@ -62,8 +62,25 @@ endfunction
 
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
-
-  if s:use_nvim_lsp
+  if has('nvim-0.8.0')
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-lspconfig-0.1.4', {'merged' : 0, 'loadconf' : 1}])
+    if g:spacevim_autocomplete_method ==# 'deoplete'
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete-lsp', {'merged' : 0}])
+    elseif g:spacevim_autocomplete_method ==# 'nvim-cmp'
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-nvim-lsp', {
+            \ 'merged' : 0,
+            \ }])
+    endif
+  elseif has('nvim-0.7.0')
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-lspconfig-0.1.3', {'merged' : 0, 'loadconf' : 1}])
+    if g:spacevim_autocomplete_method ==# 'deoplete'
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete-lsp', {'merged' : 0}])
+    elseif g:spacevim_autocomplete_method ==# 'nvim-cmp'
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-nvim-lsp', {
+            \ 'merged' : 0,
+            \ }])
+    endif
+  elseif s:use_nvim_lsp
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-lspconfig', {'merged' : 0, 'loadconf' : 1}])
     if g:spacevim_autocomplete_method ==# 'deoplete'
       call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete-lsp', {'merged' : 0}])
@@ -90,7 +107,7 @@ endfunction
 
 function! SpaceVim#layers#lsp#config() abort
   if s:use_nvim_lsp
-  " nvim-lspconfig is used, do not check enabled_fts
+    " nvim-lspconfig is used, do not check enabled_fts
   else
     for ft in s:enabled_fts
       call SpaceVim#lsp#reg_server(ft, s:lsp_servers[ft])
@@ -253,6 +270,7 @@ function! SpaceVim#layers#lsp#check_filetype(ft) abort
     return 1
   else
     return index(s:enabled_fts, a:ft) != -1
+  endif
 endfunction
 
 function! SpaceVim#layers#lsp#check_server(server) abort

@@ -209,10 +209,23 @@ function! SpaceVim#plugins#defind_hooks(bundle) abort
       call SpaceVim#util#loadConfig('plugins/' . split(a:bundle['name'],'\.')[0] . '.vim')
     endf
   elseif g:spacevim_plugin_manager ==# 'dein'
+     " call SpaceVim#logger#debug('plugin name is ' .  g:dein#name)
     call dein#config(g:dein#name, {
-          \ 'hook_source' : "call SpaceVim#util#loadConfig('plugins/" . split(g:dein#name,'\.')[0] . ".vim')"
+          \ 'hook_source' : "call SpaceVim#util#loadConfig('plugins/" . s:get_config_name(g:dein#name) . "')"
           \ })
   endif
+endfunction
+
+
+function! s:get_config_name(name) abort
+  if a:name =~# '\.vim$'
+    return a:name
+  elseif a:name =~# '\.nvim$'
+    return substitute(a:name, '\.nvim$', '.vim', 'g')
+  else
+    return a:name . '.vim'
+  endif
+  
 endfunction
 
 
