@@ -1,0 +1,1 @@
+Notice: CONFIG.md was moved to [doc/server_configurations.md](https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md). This notice will be removed after the release of neovim 0.6.

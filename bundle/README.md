@@ -8,6 +8,7 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
   - [`edit` layer](#edit-layer)
 - [No changed plugins](#no-changed-plugins)
   - [`core` layer](#core-layer)
+- [`lsp` layer](#lsp-layer)
   - [`lang#ruby` layer](#langruby-layer)
   - [`lang#python` layer](#langpython-layer)
   - [`lang#liquid` layer](#langliquid-layer)
@@ -45,7 +46,6 @@ These plugins are changed based on a specific version of origin plugin.
 - [defx.nvim](https://github.com/Shougo/defx.nvim/tree/df5e6ea6734dc002919ea41786668069fa0b497d)
 - [dein.vim](https://github.com/Shougo/dein.vim/tree/452b4a8b70be924d581c2724e5e218bfd2bcea14)
 - [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim/tree/045d9582094b27f5ae04d8b635c6da8e97e53f1d)
-- [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/tree/dcb7ebb36f0d2aafcc640f520bb1fc8a9cc1f7c8)
 - [deoplete-lsp](https://github.com/deoplete-plugins/deoplete-lsp/tree/c466c955e85d995984a8135e16da71463712e5e5)
 - [nvim-cmp](https://github.com/hrsh7th/nvim-cmp/tree/3192a0c57837c1ec5bf298e4f3ec984c7d2d60c0)
 - [cmp-neosnippet](https://github.com/notomo/cmp-neosnippet/tree/2d14526af3f02dcea738b4cea520e6ce55c09979)
@@ -63,6 +63,15 @@ These plugins are changed based on a specific version of origin plugin.
 #### `core` layer
 
 - [nerdtree@fc85a6f07](https://github.com/preservim/nerdtree/tree/fc85a6f07c2cd694be93496ffad75be126240068)
+
+
+### `lsp` layer
+
+- [nvim-lspconfig-0.1.4](https://github.com/neovim/nvim-lspconfig/tree/dcb7ebb36f0d2aafcc640f520bb1fc8a9cc1f7c8) for neovim(`>=0.8.0`)
+- [nvim-lspconfig-0.1.3](https://github.com/neovim/nvim-lspconfig/tree/dcb7ebb36f0d2aafcc640f520bb1fc8a9cc1f7c8) for neovim(`>=0.7.0`)
+- [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/tree/dcb7ebb36f0d2aafcc640f520bb1fc8a9cc1f7c8) for old neovim
+
+
 
 #### `lang#ruby` layer
 

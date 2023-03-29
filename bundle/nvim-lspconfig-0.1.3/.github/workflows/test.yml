@@ -1,0 +1,53 @@
+name: test
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v2
+    - name: Setup build dependencies
+      run: |
+        sudo apt update &&
+        sudo apt install -y ninja-build \
+          gettext \
+          libtool \
+          libtool-bin \
+          autoconf \
+          automake \
+          cmake \
+          g++ \
+          pkg-config \
+          unzip \
+          gperf \
+          libluajit-5.1-dev \
+          libunibilium-dev \
+          libmsgpack-dev \
+          libtermkey-dev \
+          libvterm-dev \
+          libjemalloc-dev \
+          lua5.1 \
+          lua-lpeg \
+          lua-mpack \
+          lua-bitop
+    - name: Run test with building Nvim
+      run: |
+        make test
+  macos:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v2
+    - name: Setup build dependencies
+      run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" &&
+        brew install ninja libtool automake pkg-config gettext
+    - name: Run test with building Nvim
+      run: |
+        make test
+
