@@ -302,7 +302,7 @@ EOT
             _detact_bundle xmake.vim autoload/xmake.vim
             _detact_bundle xmake.vim autoload/spy.lua
             _detact LICENSE
-            _detact README.md
+            _default_readme "xmake.vim" "xmake support for neovim/vim"
             _checkdir autoload/xmake/
             _detact_bundle xmake.vim autoload/xmake/log.vim
             _checkdir doc/
