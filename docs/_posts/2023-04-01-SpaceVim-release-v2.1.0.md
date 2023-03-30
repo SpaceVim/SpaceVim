@@ -15,7 +15,7 @@ comments: true
 - [What's New](#whats-new)
   - [New layers](#new-layers)
   - [New feature](#new-feature)
-  - [Enhancements](#enhancements)
+  - [Improvements](#improvements)
 - [Bug fixs](#bug-fixs)
 - [Git Commits](#git-commits)
 
@@ -37,13 +37,17 @@ So let's take a look at what happened since last release.
 
 Since last release, the following layers have been added:
 
-- `zettelkasten` layer:
+- `zettelkasten` layer
+- `xmake` layer
 
 
 ### New feature
 
+- add `:Git clean` command
 
-### Enhancements
+### Improvements
+
+This release is still focused on making the plugin run faster.
 
 1. implement `autosave` plugin in lua
 
