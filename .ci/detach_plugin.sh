@@ -296,11 +296,43 @@ EOT
             git clone https://github.com/wsdjeg/xmake.vim.git detach/$1
             cd detach/$1
             _checkdir plugin/
+            _detact_bundle xmake.vim plugin/xmake.vim
+            _detact_bundle xmake.vim plugin/xmgen.py
             _checkdir autoload/
+            _detact_bundle xmake.vim autoload/xmake.vim
+            _detact_bundle xmake.vim autoload/spy.lua
             _detact LICENSE
-            _detact_bundle xmake.vim autoload/cheat.vim
+            _detact README.md
+            _checkdir autoload/xmake/
+            _detact_bundle xmake.vim autoload/xmake/log.vim
             _checkdir doc/
             _detact_bundle xmake.vim doc/xmake.txt
+            _checkdir UltiSnips/
+            _detact_bundle xmake.vim UltiSnips/lua.snippets
+            _checkdir rplugin/python3/deoplete/sources/docs/
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/xmake.py
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_defines
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_defines                     
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_deps                        
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_files                       
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_headers                     
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_includedirs                 
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_linkdirs                    
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_links                       
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_subdirs                     
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/is_os                           
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/is_plat                         
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_basename                    
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_headerdir                   
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_kind                        
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_languages                   
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_objectdir                   
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_optimize                    
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_project                     
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_strip                       
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_symbols                     
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_targetdir                   
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_warnings 
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
