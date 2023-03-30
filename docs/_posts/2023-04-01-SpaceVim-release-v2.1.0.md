@@ -16,7 +16,8 @@ comments: true
   - [New layers](#new-layers)
   - [New feature](#new-feature)
   - [Enhancements](#enhancements)
-  - [Git Commits](#git-commits)
+- [Bug fixs](#bug-fixs)
+- [Git Commits](#git-commits)
 
 <!-- vim-markdown-toc -->
 
@@ -36,14 +37,23 @@ So let's take a look at what happened since last release.
 
 Since last release, the following layers have been added:
 
+- `zettelkasten` layer:
+
 
 ### New feature
 
 
 ### Enhancements
 
+1. implement `autosave` plugin in lua
 
-### Git Commits
+## Bug fixs
+
+
+
+
+
+## Git Commits
 
 If you want to view all the git commits,
 use following command in your terminal.
