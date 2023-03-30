@@ -71,6 +71,8 @@ function! ctags#update(...) abort
   if !isdirectory(dir)
     if !mkdir(dir, 'p')
       call s:LOGGER.warn('failed to create data databases dir:' . dir)
+      " if failed to create databases, then do not run ctags command.
+      return
     endif
   endif
   if isdirectory(dir)
