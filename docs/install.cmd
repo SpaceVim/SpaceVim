@@ -6,7 +6,6 @@ $app_name = "SpaceVim"
 $repo_url = "https://github.com/SpaceVim/SpaceVim.git"
 $repo_name = "SpaceVim"
 $repo_path = "$HOME\.SpaceVim"
-$version= "2.1.0-dev"
 
 echo ""
 echo "        /######                                     /##    /##/##             "
@@ -20,7 +19,7 @@ echo "       \______/| ##____/ \_______/\_______/\_______/   \_/   |__|__/ |__/ 
 echo "               | ##                                                           "
 echo "               | ##                                                           "
 echo "               |__/                                                           "
-echo "                      version : $version        by : spacevim.org             "
+echo "                      version : v2.1.0         by : spacevim.org              "
 
 Function Pause ($Message = "Press any key to continue . . . ") {
     if ((Test-Path variable:psISE) -and $psISE) {
