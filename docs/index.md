@@ -6,11 +6,11 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 [![matrix](https://img.shields.io/matrix/spacevim:matrix.org?color=green&label=%23spacevim%3Amatrix.org&logo=matrix)](https://chat.mozilla.org/#/room/#spacevim:matrix.org)
 [![build](https://img.shields.io/github/actions/workflow/status/SpaceVim/SpaceVim/check.yml?branch=master)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
-[![Release](https://img.shields.io/badge/Release-2.0.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.0.0/)
+[![Release](https://img.shields.io/badge/Release-2.1.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.1.0/)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/spacevim/spacevim)](https://hub.docker.com/r/spacevim/spacevim)
 
-![welcome page](https://user-images.githubusercontent.com/13142418/176910121-8e7ca78f-8434-4ac7-9b02-08c4d15f8ad9.png)
+![welcome page](https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png)
 
 SpaceVim is a community-driven distribution of Vim and Neovim.
 It's inspired by spacemacs. It manages collections of plugins in layers,
@@ -23,7 +23,7 @@ what packages to install.
 - [Documentation](documentation/): the primary official documentation of SpaceVim
 - [Available layers](layers/): a list of available layers which can be used in SpaceVim
 
-The latest release [v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/) was released at 2022-07-02, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The latest release [v2.1.0](https://spacevim.org/SpaceVim-release-v2.1.0/) was released at 2023-03-30, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## New features
 
