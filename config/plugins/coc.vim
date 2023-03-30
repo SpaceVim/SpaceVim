@@ -3,3 +3,5 @@ if !empty(g:_spacevim_key_sequence)
       \ && g:spacevim_escape_key_binding !=# g:_spacevim_key_sequence
 exe printf('imap <silent>%s <C-r>=coc#refresh()<CR>', g:_spacevim_key_sequence)
 endif
+
+call coc#config('suggest.noselect', v:true)
