@@ -286,8 +286,27 @@ EOT
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
             git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
-            git remote add wsdjeg_vim_chat https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/vim-cheat.git
-            git push wsdjeg_vim_chat master 
+            git remote add wsdjeg_vim_cheat https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/vim-cheat.git
+            git push wsdjeg_vim_cheat master 
+            cd -
+            rm -rf detach/$1
+            exit 0
+            ;;
+        xmake.vim)
+            git clone https://github.com/wsdjeg/xmake.vim.git detach/$1
+            cd detach/$1
+            _checkdir plugin/
+            _checkdir autoload/
+            _detact LICENSE
+            _detact_bundle xmake.vim autoload/cheat.vim
+            _checkdir doc/
+            _detact_bundle xmake.vim doc/xmake.txt
+            git add .
+            git config user.email "wsdjeg@qq.com"
+            git config user.name  "SpaceVimBot"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
+            git remote add wsdjeg_xmake_vim https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/xmake.vim.git
+            git push wsdjeg_xmake_vim master 
             cd -
             rm -rf detach/$1
             exit 0
