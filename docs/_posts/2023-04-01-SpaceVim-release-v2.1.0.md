@@ -3,7 +3,7 @@ title: SpaceVim release v2.1.0
 categories: [changelog, blog]
 description: "SpaceVim release v2.1.0"
 type: article
-image: https://user-images.githubusercontent.com/13142418/176910121-8e7ca78f-8434-4ac7-9b02-08c4d15f8ad9.png
+image: https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png
 commentsID: "SpaceVim release v2.1.0"
 comments: true
 ---
@@ -24,7 +24,7 @@ The last release is v2.0.0, After 9 months development.
 The v2.1.0 has been released.
 So let's take a look at what happened since last release.
 
-![welcome page](https://user-images.githubusercontent.com/13142418/176910121-8e7ca78f-8434-4ac7-9b02-08c4d15f8ad9.png)
+![welcome page](https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png)
 
 - [Quick start guide](../quick-start-guide/): installation, configuration, and resources of learning SpaceVim
 - [documentation](../documentation/): the primary official document of SpaceVim
