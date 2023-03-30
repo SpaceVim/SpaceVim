@@ -222,6 +222,8 @@ function! s:get_config_name(name) abort
     return a:name
   elseif a:name =~# '\.nvim$'
     return substitute(a:name, '\.nvim$', '.vim', 'g')
+  elseif a:name =~# '\.lua$'
+    return substitute(a:name, '\.lua$', '.vim', 'g')
   else
     return a:name . '.vim'
   endif
