@@ -10,7 +10,7 @@
 
 if has('nvim-0.5.0')
   function! SpaceVim#plugins#projectmanager#complete_project(ArgLead, CmdLine, CursorPos) abort
-    return luaeval('require("spacevim.plugin.projectmanager").complete('
+    return luaeval('require("spacevim.plugin.projectmanager").complete_project('
           \ .'require("spacevim").eval("a:ArgLead"),'
           \ .'require("spacevim").eval("a:CmdLine"),'
           \ .'require("spacevim").eval("a:CursorPos"))')
@@ -268,8 +268,11 @@ else
   endfunction
 
   function! SpaceVim#plugins#projectmanager#OpenProject(p) abort
-    let dir = get(g:, 'spacevim_src_root', '~') . a:p
-    exe 'CtrlP '. dir
+    let dir = get(g:, 'spacevim_src_root', '~')
+    let  project_root = s:FILE.unify_path(dir, ':p') . a:p
+    if isdirectory(project_root)
+      call execute('tabnew | cd ' . project_root . ' | Startify')
+    endif
   endfunction
   " this function will use fuzzy find layer, now only denite and unite are
   " supported.
