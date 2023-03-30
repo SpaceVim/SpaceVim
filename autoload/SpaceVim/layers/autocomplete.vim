@@ -79,7 +79,9 @@ function! SpaceVim#layers#autocomplete#plugins() abort
     if executable('yarn')
       call add(plugins, ['neoclide/coc.nvim',  {'loadconf': 1, 'merged': 0, 'build': 'yarn install --frozen-lockfile'}])
     else
-      call add(plugins, ['neoclide/coc.nvim',  {'loadconf': 1, 'merged': 0, 'rev': 'release'}])
+      " using https://github.com/neoclide/coc.nvim/tree/bbaa1d5d1ff3cbd9d26bb37cfda1a990494c4043
+      " the release branch push on 2022-03-30
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/coc.nvim-release',  {'loadconf': 1, 'merged': 0}])
     endif
   elseif g:spacevim_autocomplete_method ==# 'deoplete'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete.nvim', {
