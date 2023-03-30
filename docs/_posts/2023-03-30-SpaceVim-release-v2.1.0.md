@@ -1,7 +1,7 @@
 ---
 title: SpaceVim release v2.1.0
 categories: [changelog, blog]
-description: "SpaceVim release v2.1.0"
+description: "SpaceVim release v2.1.0 with more lua plugins and better experience."
 type: article
 image: https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png
 commentsID: "SpaceVim release v2.1.0"
