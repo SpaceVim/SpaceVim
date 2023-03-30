@@ -26,6 +26,8 @@ if g:spacevim_snippet_engine ==# 'neosnippet'
           \   && luaeval("require('cmp').visible()")
           \ )
       return "\<C-n>"
+    elseif g:spacevim_autocomplete_method ==# 'coc' && coc#pum#visible()
+      return coc#pum#next(1)
     elseif has('patch-7.4.774')
           \ && g:spacevim_autocomplete_method !=# 'nvim-cmp'
           \ && complete_parameter#jumpable(1)

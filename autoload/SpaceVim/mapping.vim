@@ -91,6 +91,9 @@ endfunction
 
 if get(g:, 'spacevim_snippet_engine', 'neosnippet') ==# 'neosnippet'
   function! SpaceVim#mapping#shift_tab() abort
+    if g:spacevim_autocomplete_method ==# 'coc' && coc#pum#visible()
+      return coc#pum#prev(1)
+    endif
     return pumvisible() ? "\<C-p>" : "\<Plug>delimitMateS-Tab"
   endfunction
 elseif get(g:, 'spacevim_snippet_engine', 'neosnippet') ==# 'ultisnips'
