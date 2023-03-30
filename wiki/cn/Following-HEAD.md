@@ -20,6 +20,6 @@
 
 ## 上一个版本
 
-SpaceVim 于 2023-04-01 发布 v2.1.0 版本，可查阅版本发布文章：
+SpaceVim 于 2023-03-30 发布 v2.1.0 版本，可查阅版本发布文章：
 
 - [SpaceVim 发布 v2.1.0 版本](https://spacevim.org/SpaceVim-release-v2.1.0/)

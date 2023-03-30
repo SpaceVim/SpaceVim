@@ -23,7 +23,7 @@ what packages to install.
 - [Documentation](documentation/): the primary official documentation of SpaceVim
 - [Available layers](layers/): a list of available layers which can be used in SpaceVim
 
-The latest release [v2.1.0](https://spacevim.org/SpaceVim-release-v2.1.0/) was released at 2023-04-01, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The latest release [v2.1.0](https://spacevim.org/SpaceVim-release-v2.1.0/) was released at 2023-03-30, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## New features
 

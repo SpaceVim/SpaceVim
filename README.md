@@ -16,7 +16,7 @@
 
 [SpaceVim](https://spacevim.org/) is a vim configuration inspired by [spacemacs](https://github.com/syl20bnr/spacemacs), it is compatible with [Vim](https://github.com/vim/vim) and [Neovim](https://github.com/neovim/neovim).
 
-The latest release [v2.1.0](https://spacevim.org/SpaceVim-release-v2.1.0/) was released at 2023-04-01, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
+The latest release [v2.1.0](https://spacevim.org/SpaceVim-release-v2.1.0/) was released at 2023-03-30, check out [following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) page for what happened since last release.
 
 ## Features
 
