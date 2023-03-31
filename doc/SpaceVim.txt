@@ -75,22 +75,23 @@ CONTENTS                                                   *SpaceVim-contents*
       55. search_tools.........................|SpaceVim-options-search_tools|
       56. sidebar_width.......................|SpaceVim-options-sidebar_width|
       57. snippet_engine.....................|SpaceVim-options-snippet_engine|
-      58. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
-      59. statusline_left...................|SpaceVim-options-statusline_left|
-      60. statusline_right.................|SpaceVim-options-statusline_right|
-      61. statusline_separator.........|SpaceVim-options-statusline_separator|
-      62. statusline_unicode.............|SpaceVim-options-statusline_unicode|
-      63. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      64. todo_labels...........................|SpaceVim-options-todo_labels|
-      65. todo_prefix...........................|SpaceVim-options-todo_prefix|
-      66. vim_help_language...............|SpaceVim-options-vim_help_language|
-      67. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      68. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      69. wildignore.............................|SpaceVim-options-wildignore|
-      70. windisk_encoding.................|SpaceVim-options-windisk_encoding|
-      71. windows_index_type.............|SpaceVim-options-windows_index_type|
-      72. windows_leader.....................|SpaceVim-options-windows_leader|
-      73. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      58. src_root.................................|SpaceVim-options-src_root|
+      59. statusline_iseparator.......|SpaceVim-options-statusline_iseparator|
+      60. statusline_left...................|SpaceVim-options-statusline_left|
+      61. statusline_right.................|SpaceVim-options-statusline_right|
+      62. statusline_separator.........|SpaceVim-options-statusline_separator|
+      63. statusline_unicode.............|SpaceVim-options-statusline_unicode|
+      64. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
+      65. todo_labels...........................|SpaceVim-options-todo_labels|
+      66. todo_prefix...........................|SpaceVim-options-todo_prefix|
+      67. vim_help_language...............|SpaceVim-options-vim_help_language|
+      68. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      69. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      70. wildignore.............................|SpaceVim-options-wildignore|
+      71. windisk_encoding.................|SpaceVim-options-windisk_encoding|
+      72. windows_index_type.............|SpaceVim-options-windows_index_type|
+      73. windows_leader.....................|SpaceVim-options-windows_leader|
+      74. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Public functions.....................................|SpaceVim-functions|
@@ -797,6 +798,14 @@ Set the snippet engine of SpaceVim, default is neosnippet. to enable
 ultisnips:
 >
   snippet_engine = "ultisnips"
+<
+
+==============================================================================
+SRC_ROOT                                           *SpaceVim-options-src_root*
+
+set default sources root of all your projects. default is `E:\sources\`.
+>
+  src_root = 'E:\sources\'
 <
 
 ==============================================================================
@@ -1563,6 +1572,9 @@ COMMANDS                                                   *SpaceVim-commands*
 
 :SPInstall                                                        *:SPInstall*
   Command for install plugins.
+
+:OpenProject                                                    *:OpenProject*
+  Open specific project in |SpaceVim-options-src_root|
 
 :A[!] {type}                                                              *:A*
   Switch to alternate file based on {type}.

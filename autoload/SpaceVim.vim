@@ -1338,6 +1338,14 @@ let g:spacevim_smartcloseignoreft      = [
       \ ]
 let g:_spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:spacevim_enable_javacomplete2_py = 0
+""
+" @section src_root, options-src_root
+" @parentsection options
+" set default sources root of all your projects. default is `E:\sources\`.
+" >
+"   src_root = 'E:\sources\'
+" <
+
 let g:spacevim_src_root                = 'E:\sources\'
 ""
 " The host file url. This option is for Chinese users who can not use

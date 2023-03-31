@@ -65,7 +65,8 @@ function! SpaceVim#commands#load() abort
   command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
         \ | wincmd p | diffthis
   command! -nargs=* -complete=custom,SpaceVim#plugins#complete_plugs Plugin :call SpaceVim#plugins#Plugin(<f-args>)
-  "command for open project
+  ""
+  " Open specific project in @section(options-src_root)
   command! -nargs=+ -complete=custom,SpaceVim#plugins#projectmanager#complete_project OpenProject :call SpaceVim#plugins#projectmanager#OpenProject(<f-args>)
 
   command! -nargs=* -complete=custom,SpaceVim#plugins#pmd#complete PMD :call SpaceVim#plugins#pmd#run(<f-args>)
