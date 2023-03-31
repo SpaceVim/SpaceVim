@@ -19,6 +19,22 @@
 "   q               close coder runner window
 "   i               insert text to background process
 " <
+"
+" @subsection defined a runner
+"
+" 1. The runner can be a string. which will be running directly.
+"
+" 2. The runner also can be a list with two items. each item has following
+" structure.
+"
+" >
+"   {
+"     "exe" : String,
+"     "opt" : a List of arguments,
+"     "targetopt" : String, the target option,
+"     "usestdin" : Bollean,
+"   }
+" <
 
 let s:runners = {}
 
