@@ -123,11 +123,19 @@ endfunction
 " Edit an issue
 " PATCH /repos/:owner/:repo/issues/:number
 function! github#api#issues#Edit(owner,repo,num,user,password,issue) abort
+  if empty(a:password) || empty(a:user)
     return github#api#util#Get('repos/' . a:owner . '/' . a:repo . '/issues/' . a:num,
                 \ ['-X', 'PATCH',
                 \ '-H', 'Accept: application/vnd.github.symmetra-preview+json',
                 \ '-d', json_encode(a:issue),
                 \ '-u', a:user . ':' . a:password])
+  else
+    return github#api#util#Get('repos/' . a:owner . '/' . a:repo . '/issues/' . a:num,
+                \ ['-X', 'PATCH',
+                \ '-H', 'Accept: application/vnd.github.symmetra-preview+json',
+                \ '-d', json_encode(a:issue)
+                \ ] + github#api#authorize())
+  endif
 endfunction
 
 ""
