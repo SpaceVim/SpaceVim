@@ -113,12 +113,16 @@ function! s:spacevim_version() abort
   let pwd = getcwd()
   try
     exe 'cd ' . fnamemodify(g:_spacevim_root_dir, ':p:h')
-    let status = s:CMP.system('git rev-parse --short HEAD')
+    let status = s:CMP.systemlist('git rev-parse --short HEAD')
   catch
     exe 'cd ~/.SpaceVim'
-    let status = s:CMP.system('git rev-parse --short HEAD')
+    let status = s:CMP.systemlist('git rev-parse --short HEAD')
   endtry
   exe 'cd ' . pwd
-  return s:STR.trim(status)
+  if type(status) == 3
+    return s:STR.trim(join(status))
+  else
+    return ''
+  endif
   
 endfunction
