@@ -107,10 +107,17 @@ endfunction
 " <
 " Github API : POST /repos/:owner/:repo/issues
 function! github#api#issues#Create(owner,repo,user,password,issue) abort
+  if empty(a:password) || empty(a:user)
     return github#api#util#Get('repos/' . a:owner . '/' . a:repo . '/issues',
-                \ ['-X', 'POST', '-d', json_encode(a:issue),
-                \ '-u', a:user . ':' . a:password])
+          \ ['-X', 'POST', '-d', json_encode(a:issue)
+          \ ] + github#api#authorize())
+  else
+    return github#api#util#Get('repos/' . a:owner . '/' . a:repo . '/issues',
+          \ ['-X', 'POST', '-d', json_encode(a:issue),
+          \ '-u', a:user . ':' . a:password])
+  endif
 endfunction
+
 
 ""
 " Edit an issue

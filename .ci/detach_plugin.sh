@@ -366,6 +366,27 @@ EOT
             rm -rf detach/$1
             exit 0
             ;;
+        github.vim)
+            git clone https://github.com/wsdjeg/GitHub.vim.git detach/$1
+            cd detach/$1
+            _checkdir plugin/
+            _checkdir autoload/
+            _detact LICENSE
+            _detact_bundle github.vim autoload/github.vim
+            _detact_bundle github.vim plugin/github.vim
+            _default_readme "GitHub.vim" "GitHub API support for neovim/vim[wip]"
+            _checkdir doc/
+            _detact_bundle github doc/github.txt
+            git add .
+            git config user.email "wsdjeg@qq.com"
+            git config user.name  "SpaceVimBot"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
+            git remote add wsdjeg_github_vim https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/GitHub.vim.git
+            git push wsdjeg_github_vim master 
+            cd -
+            rm -rf detach/$1
+            exit 0
+            ;;
         spacevim-theme)
             exit 0
     esac
