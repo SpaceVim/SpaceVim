@@ -44,6 +44,28 @@
 "   SPC l s s       send selection text
 " <
 "
+" If the lsp layer is enabled for clojure, the following key bindings can
+" be used:
+" >
+"   key binding     Description
+"   g D             jump to type definition
+"   SPC l e         rename symbol
+"   SPC l x         show references
+"   SPC l s         show line diagnostics
+"   SPC l d         show document
+"   K               show document
+"   SPC l w l       list workspace folder
+"   SPC l w a       add workspace folder
+"   SPC l w r       remove workspace folder
+" <
+"
+" @subsection Tasks
+" SpaceVim will detect lein project tasks automatically. If there is
+" `project.clj` file in the root directory of your project. Following tasks
+" will be detected:
+"
+" 1. `lein:test`
+" 2. `lein:run`
 
 if exists('s:clojure_interpreter')
   finish
@@ -53,14 +75,17 @@ let s:clojure_interpreter = 'clojure'
 
 function! SpaceVim#layers#lang#clojure#plugins() abort
   let plugins = []
-  " if has('nvim')
-  " call add(plugins, ['clojure-vim/acid.nvim', {'merged' : 0}])
-  " call add(plugins, ['clojure-vim/async-clj-highlight', {'merged' : 0}])
-  call add(plugins, ['clojure-vim/async-clj-omni', {'merged' : 0}])
-  " else
-  " for vim, use guns's clojure plugin guide
-  call add(plugins, ['guns/vim-clojure-static', {'merged' : 0}])
-  call add(plugins, ['guns/vim-clojure-highlight', {'merged' : 0}])
+  if !SpaceVim#layers#lsp#check_filetype('clojure')
+        \ && !SpaceVim#layers#lsp#check_server('clojure_lsp')
+    " if has('nvim')
+    " call add(plugins, ['clojure-vim/acid.nvim', {'merged' : 0}])
+    " call add(plugins, ['clojure-vim/async-clj-highlight', {'merged' : 0}])
+    call add(plugins, ['clojure-vim/async-clj-omni', {'merged' : 0}])
+    " else
+    " for vim, use guns's clojure plugin guide
+    call add(plugins, ['guns/vim-clojure-static', {'merged' : 0}])
+    call add(plugins, ['guns/vim-clojure-highlight', {'merged' : 0}])
+  endif
   " endif
   if g:spacevim_lint_engine ==# 'syntastic'
     call add(plugins, ['venantius/vim-eastwood', {'merged' : 0}])
@@ -98,6 +123,27 @@ function! s:language_specified_mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','s', 's'],
         \ 'call SpaceVim#plugins#repl#send("selection")',
         \ 'send selection and keep code buffer focused', 1)
+  if SpaceVim#layers#lsp#check_filetype('clojure')
+        \ || SpaceVim#layers#lsp#check_server('clojure_lsp')
+    nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
+    nnoremap <silent><buffer> gD :<C-u>call SpaceVim#lsp#go_to_typedef()<Cr>
+
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
+          \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'x'],
+          \ 'call SpaceVim#lsp#references()', 'show-references', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
+          \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
+          \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
+    let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],
+          \ 'call SpaceVim#lsp#list_workspace_folder()', 'list-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'a'],
+          \ 'call SpaceVim#lsp#add_workspace_folder()', 'add-workspace-folder', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'r'],
+          \ 'call SpaceVim#lsp#remove_workspace_folder()', 'remove-workspace-folder', 1)
+  endif
 endfunction
 
 function! s:lein_tasks() abort
