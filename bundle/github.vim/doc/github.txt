@@ -17,6 +17,9 @@ default : https://api.github.com/
                                                          *g:githubapi_verbose*
 set githubapi verbose when run shell command. By default it is 0.
 
+                                                           *g:githubapi_token*
+set the token of github api
+
                                                         *g:githubapi_curl_exe*
 Specific the path for curl, by default it is 'curl', in windows you can use
 >

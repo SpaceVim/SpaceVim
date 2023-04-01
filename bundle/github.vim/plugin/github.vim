@@ -14,7 +14,9 @@ let g:githubapi_root_url = 'https://api.github.com/'
 " set githubapi verbose when run shell command. By default it is 0.
 let g:githubapi_verbose = get(g:, 'githubapi_verbose', 0)
 
-let g:githubapi_token = ''
+""
+" set the token of github api
+let g:githubapi_token =  get(g:, 'githubapi_token', '')
 ""
 " Specific the path for curl, by default it is 'curl', in windows you can use
 " >
