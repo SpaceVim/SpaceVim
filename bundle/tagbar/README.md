@@ -16,7 +16,7 @@ the class they are defined in.
 Tagbar is not a general-purpose tool for managing `tags` files. It only
 creates the tags it needs on-the-fly in-memory without creating any files.
 `tags` file management is provided by other plugins, like for example
-[easytags](https://github.com/xolox/vim-easytags).
+[gutentags](https://github.com/ludovicchabant/vim-gutentags).
 
 ## Dependencies
 

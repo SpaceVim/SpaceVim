@@ -4,7 +4,7 @@
 " Author:      Jan Larres <jan@majutsushi.net>
 " Licence:     Vim licence
 " Website:     https://preservim.github.io/tagbar
-" Version:     3.0.0
+" Version:     3.1.1
 " Note:        This plugin was heavily inspired by the 'Taglist' plugin by
 "              Yegappan Lakshmanan and uses a small amount of code from it.
 "
@@ -85,6 +85,7 @@ function! s:setup_options() abort
     endif
     let options = [
         \ ['autoclose', 0],
+        \ ['autoclose_netrw', 0],
         \ ['autofocus', 0],
         \ ['autopreview', 0],
         \ ['autoshowtag', 0],
@@ -135,7 +136,7 @@ call s:setup_options()
 if !exists('g:tagbar_iconchars')
     if has('multi_byte') && has('unix') && &encoding ==# 'utf-8' &&
      \ (!exists('+termencoding') || empty(&termencoding) || &termencoding ==# 'utf-8')
-        let g:tagbar_iconchars = ['▶', '▼']
+        let g:tagbar_iconchars = ['▸', '▾']
     else
         let g:tagbar_iconchars = ['+', '-']
     endif

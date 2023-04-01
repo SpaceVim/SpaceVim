@@ -3,7 +3,7 @@
 Author:         Jan Larres <jan@majutsushi.net>
 Licence:        Vim licence, see |license|
 Homepage:       https://preservim.github.io/tagbar
-Version:        3.0.0
+Version:        3.1.1
 
 ==============================================================================
 Contents                                            *tagbar* *tagbar-contents*
@@ -660,6 +660,23 @@ Example:
         let g:tagbar_autoclose = 1
 <
 
+                                                    *g:tagbar_autoclose_netrw*
+g:tagbar_autoclose_netrw~
+Default: 0
+
+This option is used to control the behavior when tagbar is the last window
+open, but the netrw (or nerdtree) window is also open. If this value is set to
+1, that will indicate that vim should be closed if tagbar and netrw are the
+last windows open. If you set this to 0 and tagbar and the netrw (or nerdtree)
+windows are the only remaining windows, then it will still close the tagbar
+window, however it will leave vim open with the netrw (or nerdtree) window
+open.
+
+Example:
+>
+        let g:tagbar_autoclose_netrw = 1
+<
+
                                                           *g:tagbar_autofocus*
 g:tagbar_autofocus~
 Default: 0
@@ -1039,7 +1056,7 @@ default statusline:
         let g:tagbar_status_func = 'TagbarStatusFunc'
 <
                                                      *g:tagbar_no_status_line*
-g:no_status_line~
+g:tagbar_no_status_line~
 Default: undefined
 
 This option will prevent any status line updates being done by Tagbar. Use
@@ -1049,7 +1066,7 @@ called.
 
 Example:
 >
-       let g:no_status_line = 1
+       let g:tagbar_no_status_line = 1
 <
 
                                                            *g:tagbar_silent*
@@ -1464,7 +1481,7 @@ IGNORING SPECIFIC FILES                                        *tagbar-ignore*
 You can ignore specific files by setting the |buffer-variable|
 "b:tagbar_ignore" to 1. This is best done with an |autocommand|:
 >
-    autocmd BufNewFile,BufReadPost foo.cpp let b:tagbar_ignore = 1
+    autocmd BufNewFile,BufReadPre foo.cpp let b:tagbar_ignore = 1
 <
 Note that autocommands are order-sensitive, so make sure that this autocommand
 gets defined before the ones that Tagbar defines so the variable will get
@@ -1637,6 +1654,47 @@ ctagsargs: The arguments to be passed to the filetype-specific ctags program
 
            If special escaping is required for different OS shell types or if
            in doubt, then it is recommended to define ctagsargs with a List.
+ regex:    A list of regular expression arguments that will be provided to
+           ctags via a '--regex-<lang>=<regex>' option. Multiple regular
+           expressions can be provded to allow adding support for multiple new
+           tag regular expressions. The regex statement should be formatted as
+           documented in the ctags documentation.
+            https://docs.ctags.io/en/latest/optlib.html#regex-option-argument-flags
+           When adding a regex statement, the corresponding tag kind label
+           will need to be defined in the |kinds| definition in the structure
+           as well. An example for a 'TODO' label for the c language would be
+           as follows (note: use of the '{_anonymous=..}' option is not
+           strictly necessary, but does give a unique tag name for each match):
+>
+               let g:tagbar_type_c = {
+                   \ 'ctagstype'    : 'c',
+                   \ 'regex'        : [
+                       \ '/(TODO).*//T,ToDo,ToDo Messages/{_anonymous=todo_}',
+                   \ ],
+                   \ 'kinds'        : [
+                       \ 'h:header files:1:0',
+                       \ 'd:macros:1:0',
+                       \ 'p:prototypes:1:0',
+                       \ 'g:enums:0:1',
+                       \ 'e:enumerators:0:0',
+                       \ 't:typedefs:0:0',
+                       \ 's:structs:0:1',
+                       \ 'm:members:1:0',
+                       \ 'v:variables:0:0',
+                       \ 'f:functions:0:1',
+                       \ 'T:todo:0:0',
+                   \ ],
+                   \ 'sro'          : '::',
+                   \ 'kind2scope'	: {
+                        \ 'g' : 'enum',
+                        \ 's' : 'struct',
+                   \ },
+                   \ 'scope2kind'	: {
+                        \ 'enum'   : 'g',
+                        \ 'struct' : 's',
+                   \ }
+                \ }
+<
 
 
 You then have to assign this dictionary to a variable in your vimrc with the
@@ -1968,6 +2026,16 @@ Known issues~
 
 ==============================================================================
 8. History                                                    *tagbar-history*
+
+Note: All tagged releases are an accomodation to distribution packagers. The
+upstream developers of this plugin recommend using a plugin manager and
+tracking HEAD in the default branch rather than tagged releases.
+
+3.1.1 (2022-11-04)
+    - Periodic rollup, see `git log v3.0.0..v3.1.1`
+
+3.1.0 (2022-11-04)
+    - Periodic rollup (inclomplete merge, suggest 3.1.1)
 
 3.0.0 (2021-01-21)
     - Massive rollup with years of small changes, see `git log v2.7..v3.0.0`
