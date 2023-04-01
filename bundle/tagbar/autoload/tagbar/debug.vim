@@ -1,3 +1,9 @@
+" use SpaceVim's log api
+
+let s:LOGGER =SpaceVim#logger#derive('tagbar')
+
+
+
 function! tagbar#debug#start_debug(...) abort
     let filename = a:0 > 0 ? a:1 : ''
 
@@ -29,9 +35,7 @@ endfunction
 
 function! tagbar#debug#log(msg) abort
     if s:debug_enabled
-        execute 'redir >> ' . s:debug_file
-        silent echon s:gettime() . ': ' . a:msg . "\n"
-        redir END
+      call s:LOGGER.debug(a:msg)
     endif
 endfunction
 
