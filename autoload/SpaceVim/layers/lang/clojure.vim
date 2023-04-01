@@ -51,7 +51,7 @@
 "   g D             jump to type definition
 "   SPC l e         rename symbol
 "   SPC l x         show references
-"   SPC l s         show line diagnostics
+"   SPC l h         show line diagnostics
 "   SPC l d         show document
 "   K               show document
 "   SPC l w l       list workspace folder
@@ -134,7 +134,7 @@ function! s:language_specified_mappings() abort
           \ 'call SpaceVim#lsp#references()', 'show-references', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
           \ 'call SpaceVim#lsp#rename()', 'rename-symbol', 1)
-    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 's'],
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'h'],
           \ 'call SpaceVim#lsp#show_line_diagnostics()', 'show-line-diagnostics', 1)
     let g:_spacevim_mappings_space.l.w = {'name' : '+Workspace'}
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'w', 'l'],

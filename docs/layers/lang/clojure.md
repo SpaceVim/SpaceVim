@@ -14,6 +14,7 @@ description: "This layer is for Clojure development, provides autocompletion, sy
 - [Key bindings](#key-bindings)
   - [Running current script](#running-current-script)
   - [Inferior REPL process](#inferior-repl-process)
+  - [LSP key Bindings](#lsp-key-bindings)
 
 <!-- vim-markdown-toc -->
 
@@ -68,3 +69,19 @@ Send code to inferior process commands:
 | `SPC l s l`  | send line and keep code buffer focused           |
 | `SPC l s s`  | send selection text and keep code buffer focused |
 
+### LSP key Bindings
+
+If the lsp layer is enabled for python, the following key bindings can
+be used:
+
+| key binding | Description             |
+| ----------- | ----------------------- |
+| `g D`       | jump to type definition |
+| `SPC l e`   | rename symbol           |
+| `SPC l x`   | show references         |
+| `SPC l s`   | show line diagnostics   |
+| `SPC l d`   | show document           |
+| `K`         | show document           |
+| `SPC l w l` | list workspace folder   |
+| `SPC l w a` | add workspace folder    |
+| `SPC l w r` | remove workspace folder |

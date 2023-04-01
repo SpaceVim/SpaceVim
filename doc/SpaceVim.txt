@@ -2609,7 +2609,7 @@ used:
   g D             jump to type definition
   SPC l e         rename symbol
   SPC l x         show references
-  SPC l s         show line diagnostics
+  SPC l h         show line diagnostics
   SPC l d         show document
   K               show document
   SPC l w l       list workspace folder
