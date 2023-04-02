@@ -132,10 +132,10 @@ function M.derive(name)
       logger.set_name(self.origin_name)
     end
   end
-  function derive:start_debug(...)
+  function derive:start_debug()
     self._debug_mode = true
   end
-  function derive:stop_debug(...)
+  function derive:stop_debug()
     self._debug_mode = false
   end
   return derive
