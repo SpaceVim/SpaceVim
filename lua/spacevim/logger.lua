@@ -133,10 +133,10 @@ function M.derive(name)
     end
   end
   function derive.start_debug()
-    self._debug_mode = true
+    derive._debug_mode = true
   end
   function derive.stop_debug()
-    self._debug_mode = false
+    derive._debug_mode = false
   end
   return derive
 end
