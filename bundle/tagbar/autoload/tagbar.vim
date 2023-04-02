@@ -1476,7 +1476,6 @@ function! s:ExecuteCtagsOnFile(fname, realfname, typeinfo) abort
   endif
 
   call tagbar#log#debug('Ctags executed successfully')
-  call tagbar#log#debug_ctags_output(ctags_output)
 
   return ctags_output
 endfunction
