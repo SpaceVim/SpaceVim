@@ -14,12 +14,12 @@ let s:LOGGER =SpaceVim#logger#derive('tagbar')
 
 function! tagbar#log#start_debug(...) abort
   call s:LOGGER.info('enable debug mode!')
-  call s:LOGGER.set_level(0)
+  call s:LOGGER.start_debug()
 endfunction
 
 function! tagbar#log#stop_debug() abort
   call s:LOGGER.info('disable debug mode!')
-  call s:LOGGER.set_level(1)
+  call s:LOGGER.stop_debug()
 endfunction
 
 function! tagbar#log#debug(msg) abort
