@@ -107,37 +107,37 @@ function M.derive(name)
   local derive = {}
   derive['origin_name'] = logger.get_name()
   derive._debug_mode = false
+  derive['derive_name'] = fn.printf('%' .. fn.strdisplaywidth(logger.get_name()) .. 'S', name)
 
-  function derive.info(msg)
-    logger.set_name(derive.derive_name)
+  function derive:info(msg)
+    logger.set_name(self.derive_name)
     logger.info(msg)
-    logger.set_name(derive.origin_name)
+    logger.set_name(self.origin_name)
   end
-  function derive.warn(msg)
-    logger.set_name(derive.derive_name)
+  function derive:warn(msg)
+    logger.set_name(self.derive_name)
     logger.warn(msg)
-    logger.set_name(derive.origin_name)
+    logger.set_name(self.origin_name)
   end
-  function derive.error(msg)
-    logger.set_name(derive.derive_name)
+  function derive:error(msg)
+    logger.set_name(self.derive_name)
     logger.error(msg)
-    logger.set_name(derive.origin_name)
+    logger.set_name(self.origin_name)
   end
 
-  function derive.debug(msg)
-    if derive._debug_mode then
-      logger.set_name(derive.derive_name)
+  function derive:debug(msg)
+    if self._debug_mode then
+      logger.set_name(self.derive_name)
       logger.debug(msg)
-      logger.set_name(derive.origin_name)
+      logger.set_name(self.origin_name)
     end
   end
-  function derive.start_debug()
-    derive._debug_mode = true
+  function derive:start_debug(...)
+    self._debug_mode = true
   end
-  function derive.stop_debug()
-    derive._debug_mode = false
+  function derive:stop_debug(...)
+    self._debug_mode = false
   end
-  derive['derive_name'] = fn.printf('%' .. fn.strdisplaywidth(logger.get_name()) .. 'S', name)
   return derive
 end
 
