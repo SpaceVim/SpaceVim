@@ -104,10 +104,11 @@ function M.syntax_extra()
 end
 
 function M.derive(name)
-  local derive = {}
-  derive['origin_name'] = logger.get_name()
-  derive._debug_mode = false
-  derive['derive_name'] = fn.printf('%' .. fn.strdisplaywidth(logger.get_name()) .. 'S', name)
+  local derive = {
+    origin_name = logger.get_name(),
+    _debug_mode = false,
+    derive_name = fn.printf('%' .. fn.strdisplaywidth(logger.get_name()) .. 'S', name),
+  }
 
   function derive.info(msg)
     logger.set_name(derive.derive_name)
