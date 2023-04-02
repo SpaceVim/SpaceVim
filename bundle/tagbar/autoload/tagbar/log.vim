@@ -1,0 +1,31 @@
+"=============================================================================
+" log.vim --- logger for tagbar
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+if exists('s:debug_enabled')
+  finish
+endif
+
+let s:LOGGER =SpaceVim#logger#derive('tagbar')
+
+function! tagbar#log#start_debug(...) abort
+  call s:LOGGER.info('enable debug mode!')
+  call s:LOGGER.set_level(0)
+endfunction
+
+function! tagbar#log#stop_debug() abort
+  call s:LOGGER.info('disable debug mode!')
+  call s:LOGGER.set_level(1)
+endfunction
+
+function! tagbar#log#debug(msg) abort
+  call s:LOGGER.debug(a:msg)
+endfunction
+
+function! tagbar#log#info(msg) abort
+  call s:LOGGER.info(a:msg)
+endfunction
