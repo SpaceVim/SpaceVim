@@ -197,6 +197,7 @@ else
 
   let s:derive = {}
   let s:derive.origin_name = s:LOGGER.get_name()
+  let s:derive._debug_mode = v:false
 
   function! s:derive.info(msg) abort
     call s:LOGGER.set_name(self.derive_name)
@@ -217,9 +218,19 @@ else
   endfunction
 
   function! s:derive.debug(msg) abort
-    call s:LOGGER.set_name(self.derive_name)
-    call s:LOGGER.debug(a:msg)
-    call s:LOGGER.set_name(self.origin_name)
+    if self._debug_mode
+      call s:LOGGER.set_name(self.derive_name)
+      call s:LOGGER.debug(a:msg)
+      call s:LOGGER.set_name(self.origin_name)
+    endif
+  endfunction
+
+  function! s:derive.start_debug() abort
+    let self._debug_mode = v:true
+  endfunction
+
+  function! s:derive.stop_debug() abort
+    let self._debug_mode = v:false
   endfunction
 
   function! SpaceVim#logger#derive(name) abort
