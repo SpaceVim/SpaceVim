@@ -128,6 +128,7 @@ function M.derive(name)
 
   function derive.debug(msg)
     if derive._debug_mode then
+      print(msg)
       logger.set_name(derive.derive_name)
       logger.debug(msg)
       logger.set_name(derive.origin_name)
