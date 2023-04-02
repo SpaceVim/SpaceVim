@@ -66,6 +66,17 @@ if has('nvim-0.5.0')
   " 4. debug(msg): write debug message run SpaceVim runtime log
   " 5. start_debug(): enable debug mode of derived logger.
   " 6. stop_debug(): stop debug mode of derived logger.
+  "
+  " Example: >
+  "   let s:LOGGER = SpaceVim#logger#derive('myplug')
+  "
+  "   call s:LOGGER.info('hello world')
+  " <
+  "
+  " The this info message will be write to SpaceVim's runtime log:
+  " >
+  "   [  myplug ] [00:02:54:051] [ Info  ] hello world
+  " <
   function! SpaceVim#logger#derive(name) abort
     return luaeval('require("spacevim.logger").derive(require("spacevim").eval("a:name"))')
   endfunction

@@ -1658,6 +1658,18 @@ SpaceVim#logger#derive({name})                      *SpaceVim#logger#derive()*
     5. start_debug(): enable debug mode of derived logger.
     6. stop_debug(): stop debug mode of derived logger.
 
+  Example:
+>
+    let s:LOGGER = SpaceVim#logger#derive('myplug')
+
+    call s:LOGGER.info('hello world')
+<
+
+  The this info message will be write to SpaceVim's runtime log:
+>
+    [  myplug ] [00:02:54:051] [ Info  ] hello world
+<
+
 SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
   Set debug level of SpaceVim. Default is 1.
 
