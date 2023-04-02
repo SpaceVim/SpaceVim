@@ -7,6 +7,8 @@
 "=============================================================================
 
 if has('nvim-0.5.0')
+  ""
+  " write message to SpaceVim runtime log with `info` level.
   function! SpaceVim#logger#info(msg) abort
     lua require("spacevim.logger").info(
           \ require("spacevim").eval("a:msg")
@@ -55,7 +57,15 @@ if has('nvim-0.5.0')
   function! SpaceVim#logger#setOutput(file) abort
     lua require("spacevim.logger").setOutput(require("spacevim").eval("a:file"))
   endfunction
-
+  ""
+  " Derive a new logger based on SpaceVim's runtime logger. The new logger
+  " provides following functions:
+  " 1. info(msg): like |SpaceVim#logger#info|, but include the derive name.
+  " 2. warn(msg): like |SpaceVim#logger#warn|
+  " 3. error(msg): like |SpaceVim#logger#error|
+  " 4. debug(msg): write debug message run SpaceVim runtime log
+  " 5. start_debug(): enable debug mode of derived logger.
+  " 6. stop_debug(): stop debug mode of derived logger.
   function! SpaceVim#logger#derive(name) abort
     return luaeval('require("spacevim.logger").derive(require("spacevim").eval("a:name"))')
   endfunction

@@ -1645,6 +1645,19 @@ SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
       \ )
 <
 
+SpaceVim#logger#info({msg})                           *SpaceVim#logger#info()*
+  write message to SpaceVim runtime log with `info` level.
+
+SpaceVim#logger#derive({name})                      *SpaceVim#logger#derive()*
+  Derive a new logger based on SpaceVim's runtime logger. The new logger
+  provides following functions:
+    1. info(msg): like |SpaceVim#logger#info|, but include the derive name.
+    2. warn(msg): like |SpaceVim#logger#warn|
+    3. error(msg): like |SpaceVim#logger#error|
+    4. debug(msg): write debug message run SpaceVim runtime log
+    5. start_debug(): enable debug mode of derived logger.
+    6. stop_debug(): stop debug mode of derived logger.
+
 SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
   Set debug level of SpaceVim. Default is 1.
 
