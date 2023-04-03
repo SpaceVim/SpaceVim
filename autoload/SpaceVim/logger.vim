@@ -14,7 +14,8 @@ if has('nvim-0.5.0')
           \ require("spacevim").eval("a:msg")
           \ )
   endfunction
-
+  ""
+  " write warning message to spacevim runtime log.
   function! SpaceVim#logger#warn(msg, ...) abort
     let issilent = get(a:000, 0, 1)
     lua require("spacevim.logger").warn(
@@ -23,24 +24,30 @@ if has('nvim-0.5.0')
           \ )
   endfunction
 
-
+  ""
+  " write error message to spacevim runtime log.
   function! SpaceVim#logger#error(msg) abort
     lua require("spacevim.logger").error(
           \ require("spacevim").eval("a:msg")
           \ )
   endfunction
 
+  ""
+  " write debug message to spacevim runtime log.
   function! SpaceVim#logger#debug(msg) abort
     lua require("spacevim.logger").debug(
           \ require("spacevim").eval("a:msg")
           \ )
   endfunction
-
+  ""
+  " This a a function to view the spacevim runtime log. same as
+  " |:SPRuntimeLog| and `SPC h L`
   function! SpaceVim#logger#viewRuntimeLog() abort
     lua require("spacevim.logger").viewRuntimeLog()
   endfunction
 
-
+  ""
+  " Print the debug information of spacevim, same as |:SPDebugInfo|
   function! SpaceVim#logger#viewLog(...) abort
     if a:0 >= 1
       let bang = get(a:000, 0, 0)
@@ -49,11 +56,14 @@ if has('nvim-0.5.0')
       return luaeval('require("spacevim.logger").viewLog()')
     endif
   endfunction
-
+  ""
+  " change the logger level of spacevim runtime log.
   function! SpaceVim#logger#setLevel(level) abort
     lua require("spacevim.logger").setLevel(require("spacevim").eval("a:level"))
   endfunction
-
+  ""
+  " change the output file of spacevim runtime logger. default is empty
+  " string.
   function! SpaceVim#logger#setOutput(file) abort
     lua require("spacevim.logger").setOutput(require("spacevim").eval("a:file"))
   endfunction
@@ -66,6 +76,7 @@ if has('nvim-0.5.0')
   " 4. debug(msg): write debug message run SpaceVim runtime log
   " 5. start_debug(): enable debug mode of derived logger.
   " 6. stop_debug(): stop debug mode of derived logger.
+  " 7. debug_enabled(): return true or false.
   "
   " Example: >
   "   let s:LOGGER = SpaceVim#logger#derive('myplug')

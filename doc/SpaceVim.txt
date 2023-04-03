@@ -1648,6 +1648,28 @@ SpaceVim#layers#load({layer})                         *SpaceVim#layers#load()*
 SpaceVim#logger#info({msg})                           *SpaceVim#logger#info()*
   write message to SpaceVim runtime log with `info` level.
 
+SpaceVim#logger#warn({msg})                           *SpaceVim#logger#warn()*
+  write warning message to spacevim runtime log.
+
+SpaceVim#logger#error({msg})                         *SpaceVim#logger#error()*
+  write error message to spacevim runtime log.
+
+SpaceVim#logger#debug({msg})                         *SpaceVim#logger#debug()*
+  write debug message to spacevim runtime log.
+
+SpaceVim#logger#viewRuntimeLog()            *SpaceVim#logger#viewRuntimeLog()*
+  This a a function to view the spacevim runtime log. same as |:SPRuntimeLog|
+  and `SPC h L`
+
+SpaceVim#logger#viewLog()                          *SpaceVim#logger#viewLog()*
+  Print the debug information of spacevim, same as |:SPDebugInfo|
+
+SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
+  change the logger level of spacevim runtime log.
+
+SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
+  change the output file of spacevim runtime logger. default is empty string.
+
 SpaceVim#logger#derive({name})                      *SpaceVim#logger#derive()*
   Derive a new logger based on SpaceVim's runtime logger. The new logger
   provides following functions:
@@ -1657,6 +1679,7 @@ SpaceVim#logger#derive({name})                      *SpaceVim#logger#derive()*
     4. debug(msg): write debug message run SpaceVim runtime log
     5. start_debug(): enable debug mode of derived logger.
     6. stop_debug(): stop debug mode of derived logger.
+    7. debug_enabled(): return true or false.
 
   Example:
 >
