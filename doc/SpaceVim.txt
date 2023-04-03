@@ -1665,7 +1665,13 @@ SpaceVim#logger#viewLog()                          *SpaceVim#logger#viewLog()*
   Print the debug information of spacevim, same as |:SPDebugInfo|
 
 SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
-  change the logger level of spacevim runtime log.
+  Set debug level of SpaceVim. Default is 1.
+
+      1 : log all messages
+
+      2 : log warning and error messages
+
+      3 : log error messages only
 
 SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
   change the output file of spacevim runtime logger. default is empty string.
@@ -1692,18 +1698,6 @@ SpaceVim#logger#derive({name})                      *SpaceVim#logger#derive()*
 >
     [  myplug ] [00:02:54:051] [ Info  ] hello world
 <
-
-SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
-  Set debug level of SpaceVim. Default is 1.
-
-      1 : log all messages
-
-      2 : log warning and error messages
-
-      3 : log error messages only
-
-SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
-  Set the log output file of SpaceVim. Default is empty.
 
 SpaceVim#plugins#iedit#start([options], [firstline], [lastline])
                                               *SpaceVim#plugins#iedit#start()*

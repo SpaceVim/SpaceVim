@@ -57,7 +57,14 @@ if has('nvim-0.5.0')
     endif
   endfunction
   ""
-  " change the logger level of spacevim runtime log.
+  " @public
+  " Set debug level of SpaceVim. Default is 1.
+  "
+  "     1 : log all messages
+  "
+  "     2 : log warning and error messages
+  "
+  "     3 : log error messages only
   function! SpaceVim#logger#setLevel(level) abort
     lua require("spacevim.logger").setLevel(require("spacevim").eval("a:level"))
   endfunction
@@ -182,22 +189,10 @@ else
     call matchadd('WarningMsg','.*[\sWarn\s\].*')
   endfunction
 
-  ""
-  " @public
-  " Set debug level of SpaceVim. Default is 1.
-  "
-  "     1 : log all messages
-  "
-  "     2 : log warning and error messages
-  "
-  "     3 : log error messages only
   function! SpaceVim#logger#setLevel(level) abort
     call s:LOGGER.set_level(a:level)
   endfunction
 
-  ""
-  " @public
-  " Set the log output file of SpaceVim. Default is empty.
   function! SpaceVim#logger#setOutput(file) abort
     call s:LOGGER.set_file(a:file)
   endfunction
