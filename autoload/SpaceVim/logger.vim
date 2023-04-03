@@ -7,6 +7,8 @@
 "=============================================================================
 
 if has('nvim-0.5.0')
+  ""
+  " write message to SpaceVim runtime log with `info` level.
   function! SpaceVim#logger#info(msg) abort
     lua require("spacevim.logger").info(
           \ require("spacevim").eval("a:msg")
@@ -55,7 +57,26 @@ if has('nvim-0.5.0')
   function! SpaceVim#logger#setOutput(file) abort
     lua require("spacevim.logger").setOutput(require("spacevim").eval("a:file"))
   endfunction
-
+  ""
+  " Derive a new logger based on SpaceVim's runtime logger. The new logger
+  " provides following functions:
+  " 1. info(msg): like |SpaceVim#logger#info|, but include the derive name.
+  " 2. warn(msg): like |SpaceVim#logger#warn|
+  " 3. error(msg): like |SpaceVim#logger#error|
+  " 4. debug(msg): write debug message run SpaceVim runtime log
+  " 5. start_debug(): enable debug mode of derived logger.
+  " 6. stop_debug(): stop debug mode of derived logger.
+  "
+  " Example: >
+  "   let s:LOGGER = SpaceVim#logger#derive('myplug')
+  "
+  "   call s:LOGGER.info('hello world')
+  " <
+  "
+  " The this info message will be write to SpaceVim's runtime log:
+  " >
+  "   [  myplug ] [00:02:54:051] [ Info  ] hello world
+  " <
   function! SpaceVim#logger#derive(name) abort
     return luaeval('require("spacevim.logger").derive(require("spacevim").eval("a:name"))')
   endfunction
@@ -176,6 +197,8 @@ else
 
   let s:derive = {}
   let s:derive.origin_name = s:LOGGER.get_name()
+  " let s:derive._debug_mode = v:false
+  let s:derive._debug_mode = 0
 
   function! s:derive.info(msg) abort
     call s:LOGGER.set_name(self.derive_name)
@@ -196,9 +219,19 @@ else
   endfunction
 
   function! s:derive.debug(msg) abort
-    call s:LOGGER.set_name(self.derive_name)
-    call s:LOGGER.debug(a:msg)
-    call s:LOGGER.set_name(self.origin_name)
+    if self._debug_mode
+      call s:LOGGER.set_name(self.derive_name)
+      call s:LOGGER.debug(a:msg)
+      call s:LOGGER.set_name(self.origin_name)
+    endif
+  endfunction
+
+  function! s:derive.start_debug() abort
+    let self._debug_mode = 1
+  endfunction
+
+  function! s:derive.stop_debug() abort
+    let self._debug_mode = 0
   endfunction
 
   function! SpaceVim#logger#derive(name) abort

@@ -307,15 +307,13 @@ COMMANDS                                                     *tagbar-commands*
     makes sense to customize. See |tagbar-extend| for more information about
     type configurations.
 
-:TagbarDebug [logfile]                                          *:TagbarDebug*
-    Start debug mode. This will write debug messages to file [logfile] while
-    using Tagbar. If no argument is given "tagbardebug.log" in the current
-    directory is used. Note: an existing file will be overwritten!
-    Note also that it is usually necessary to call this command before loading
-    a file that creates problems in order to get all of the needed data.
+:TagbarDebug                                                  *:TagbarDebug*
+    Start debug mode. This will put debug message to SpaceVim runtime log.
+    which can be found via `SPC h L`
 
 :TagbarDebugEnd                                              *:TagbarDebugEnd*
-    End debug mode, debug messages will no longer be written to the logfile.
+    End debug mode, debug messages will no longer be written SpaceVim runtime
+    log.
 
 :TagbarForceUpdate                                        *:TagbarForceUpdate*
     Forcefully update a file even if it exceeds the |g:tagbar_file_size_limit|
