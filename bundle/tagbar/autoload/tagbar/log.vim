@@ -30,6 +30,6 @@ function! tagbar#log#info(msg) abort
   call s:LOGGER.info(a:msg)
 endfunction
 
-function! tagbar#debug#enabled() abort
-  return 1
+function! tagbar#log#enabled() abort
+  return s:LOGGER.enabled()
 endfunction
