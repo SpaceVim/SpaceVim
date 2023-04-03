@@ -1278,7 +1278,7 @@ function! s:ProcessFile(fname, ftype) abort
 
     let ctags_output = s:ExecuteCtagsOnFile(tempfile, a:fname, typeinfo)
 
-    if !tagbar#log#enabled()
+    if !tagbar#log#debug_enabled()
       call delete(tempfile)
     endif
   else
@@ -1404,7 +1404,7 @@ function! s:ExecuteCtagsOnFile(fname, realfname, typeinfo) abort
           \ ]
 
     " verbose if debug enabled
-    if tagbar#log#enabled()
+    if tagbar#log#debug_enabled()
       let ctags_args += [ '-V' ]
     endif
 
@@ -3155,7 +3155,7 @@ function! s:ExecuteCtags(ctags_cmd) abort
     set shellcmdflag=/s\ /c
   endif
 
-  if tagbar#log#enabled()
+  if tagbar#log#debug_enabled()
     silent 5verbose let ctags_output = system(a:ctags_cmd)
     call tagbar#log#debug(v:statusmsg)
     call tagbar#log#debug('Exit code: ' . v:shell_error)
@@ -4052,7 +4052,7 @@ endfunction
 
 " tagbar#printfileinfo() {{{2
 function! tagbar#printfileinfo() abort
-  if !tagbar#log#enabled()
+  if !tagbar#log#debug_enabled()
     echo 'Tagbar debug is disabled - unable to print fileinfo to tagbar log'
     return
   endif

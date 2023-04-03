@@ -234,6 +234,10 @@ else
     let self._debug_mode = 0
   endfunction
 
+  function! s:derive.debug_enabled() abort
+    return self._debug_mode
+  endfunction
+
   function! SpaceVim#logger#derive(name) abort
     let s:derive.derive_name = printf('%' . strdisplaywidth(s:LOGGER.get_name()) . 'S', a:name)
     return deepcopy(s:derive)

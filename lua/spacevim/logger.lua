@@ -139,7 +139,7 @@ function M.derive(name)
   function derive.stop_debug()
     derive._debug_mode = false
   end
-  function derive.enabled() -- {{{
+  function derive.debug_enabled() -- {{{
     return derive._debug_mode
   end
   -- }}}
