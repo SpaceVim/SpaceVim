@@ -15,6 +15,12 @@ install_vim() {
     mkdir -p $out
     git clone --depth 1 --single-branch $ext $URL $tmp
     cd $tmp
+
+    # Apply Vim patch v8.0.1635 to fix build with Python.
+    if grep -q _POSIX_THREADS src/if_python3.c; then
+      sed -i '/#ifdef _POSIX_THREADS/,+2 d' src/if_python3.c
+    fi
+
     ./configure \
         --with-features=huge \
         --enable-pythoninterp \
