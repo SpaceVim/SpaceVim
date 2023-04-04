@@ -6,6 +6,8 @@ Execute ( SpaceVim api: vim#buffer open ):
 
 Execute ( SpaceVim api: vim#buffer buf_set_lines):
   let buffer = SpaceVim#api#import('vim#buffer')
+  Log 'if_py:' . has('python')
+  Log 'if_py3:' .  has('python3')
   let nr = buffer.bufadd('')
   call setbufvar(nr, '&buftype', 'nofile')
   call setbufvar(nr, '&buflisted', 0)
