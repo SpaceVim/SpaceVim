@@ -168,7 +168,7 @@ jobs:
                 vimtag: v8.0.0184
               - vimbin: vim
                 vimtag: v8.0.1453
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     env:
         VIM_BIN: ${{ matrix.vimbin }}
         VIM_TAG: ${{ matrix.vimtag }}
