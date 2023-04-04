@@ -24,10 +24,11 @@ lang: zh
 
 ## 问题反馈
 
-在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以通过 Github 或者码云的问题列表来提交。
+在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以通过 [GitHub](https://github.com/SpaceVim/SpaceVim) 的问题列表来提交。
 
-- [码云](https://gitee.com/spacevim/SpaceVim/issues) -（中文）
-- [GitHub](https://github.com/SpaceVim/SpaceVim) -（英文）
+若访问 Github 困难，可以通过邮件列表进行，发送邮件至 [spacevim-cn@googlegroups.com](mailto:spacevim-cn@googlegroups.com)
+
+如需订阅该邮件组，可以发送任意邮件至：[spacevim-cn+subscribe@googlegroups.com](mailto:spacevim+subscribe@googlegroups.com)
 
 ## 即时聊天
 
@@ -40,5 +41,5 @@ lang: zh
 - <i class="fab fa-slack-hash"></i> [`#spacevim` slack 聊天室](https://join.slack.com/t/spacevim/shared_invite/zt-74w64lg5-bT~~2~zEhtIy1zow53tHJg)
 - <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)
 
-以上为同步聊天群，同时SpaceVim有对应的QQ群：[970953433](https://jq.qq.com/?_wv=1027&k=XYqDdQTM)
+
 
