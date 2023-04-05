@@ -19,12 +19,22 @@ function! telegram#api#getUpdates(token, callback) abort
 
 endfunction
 
+function! telegram#api#getChatMemberCount(token, chat_id, callback) abort
+  call s:request('getChatMemberCount', a:callback, {'chat_id' : a:chat_id})
+endfunction
+
 
 let s:JOB = SpaceVim#api#import('job')
 
 function! s:request(uri, callback, ...) abort
-  let cmd = ['curl', 'https://api.telegram.org/bot' . g:telegram_bot_token . a:uri]
+  let json = get(a:000, 0, {})
+  let cmd = ['curl','-s', '-X', 'POST', 'https://api.telegram.org/bot' . g:telegram_bot_token . a:uri,
+        \ '-H', 'Content-Type: application/json',
+        \ '-d', json_encode(json)
+        \ ]
   call s:JOB.start(cmd, {
         \ 'on_stdout' : a:callback,
+        \ 'on_stderr' : a:callback,
+        \ 'on_exit' : a:callback,
         \ })
 endfunction

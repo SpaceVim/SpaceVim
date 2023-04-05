@@ -12,8 +12,21 @@ function! chat#telegram#send(room, msg) abort
 
 endfunction
 
+let s:room_ids = {}
 
+function! s:get_user_count_callback(id, data, event) abort
+
+  echom string(a:data)
+  
+endfunction
 function! chat#telegram#get_user_count(room) abort
+
+  if !has_key(s:room_ids, a:room)
+    call telegram#api#getChatMemberCount(g:telegram_bot_token, a:room, function('s:get_user_count_callback'))
+    return 0
+  endif
+
+  return s:room_ids[a:room].userCount
   
 endfunction
 
