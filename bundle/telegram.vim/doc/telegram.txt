@@ -1,0 +1,21 @@
+*telegram.txt*	vim/neovim plugin for telegram
+wsdjeg                                                              *telegram*
+
+==============================================================================
+CONTENTS                                                   *telegram-contents*
+  1. Introduction.............................................|telegram-intro|
+  2. Configuration...........................................|telegram-config|
+
+==============================================================================
+INTRODUCTION                                                  *telegram-intro*
+
+telegram.vim is a neovim/vim plugin for telegram
+
+==============================================================================
+CONFIGURATION                                                *telegram-config*
+
+                                                        *g:telegram_bot_token*
+set the bot token
+
+
+vim:tw=78:ts=8:ft=help:norl:
