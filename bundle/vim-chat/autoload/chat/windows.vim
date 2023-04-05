@@ -50,7 +50,7 @@ let s:messages = []
 let s:close_windows_char = ["\<Esc>"]
 let s:protocol = ''
 let s:chatting_commands = ['/set_protocol', '/set_channel']
-let s:all_protocols = ['gitter', 'irc']
+let s:all_protocols = ['gitter', 'irc', 'telegram']
 function! chat#windows#open() abort
   " "\<Plug>(_incsearch-nohlsearch)" will be send to vim on CursorMoved event,
   " so use noautocmd to avoid this issue
