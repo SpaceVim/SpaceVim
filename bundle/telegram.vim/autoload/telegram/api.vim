@@ -29,7 +29,7 @@ endfunction
 let s:JOB = SpaceVim#api#import('job')
 
 function! s:request_stdout(id, data, event) abort
-  
+  call call(s:request_ids[a:id].callback, s:request_ids[a:id].request_data, a:data)
 endfunction
 
 function! s:request_stderr(id, data, event) abort
@@ -57,5 +57,5 @@ function! s:request(uri, callback, ...) abort
           \ 'http_proxy' : g:telegram_http_proxy,
           \ 'https_proxy' : g:telegram_http_proxy,
           \ }
-          \ }) : a:callback } )
+          \ }) : {'callback' : a:callback, 'request_data' : json } } )
 endfunction
