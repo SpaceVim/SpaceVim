@@ -28,19 +28,34 @@ endfunction
 
 let s:JOB = SpaceVim#api#import('job')
 
+function! s:request_stdout(id, data, event) abort
+  
+endfunction
+
+function! s:request_stderr(id, data, event) abort
+  
+endfunction
+
+function! s:request_exit(id, data, event) abort
+  
+endfunction
+
+
+" 每一次请求，都会有一个请求 ID，callback 函数针对这个请求ID进行回调。
+let s:request_ids = {}
 function! s:request(uri, callback, ...) abort
   let json = get(a:000, 0, {})
   let cmd = ['curl','-s', '-X', 'POST', 'https://api.telegram.org/bot' . g:telegram_bot_token . a:uri,
         \ '-H', 'Content-Type: application/json',
         \ '-d', json_encode(json)
         \ ]
-  call s:JOB.start(cmd, {
-        \ 'on_stdout' : a:callback,
-        \ 'on_stderr' : a:callback,
-        \ 'on_exit' : a:callback,
+  call extend(s:request_ids, { s:JOB.start(cmd, {
+        \ 'on_stdout' : function('s:request_stdout'),
+        \ 'on_stderr' : function('s:request_stderr'),
+        \ 'on_exit' : function('s:request_exit'),
         \ 'env' : {
           \ 'http_proxy' : g:telegram_http_proxy,
           \ 'https_proxy' : g:telegram_http_proxy,
           \ }
-        \ })
+          \ }) : a:callback } )
 endfunction
