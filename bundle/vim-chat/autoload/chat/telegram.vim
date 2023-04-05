@@ -14,7 +14,7 @@ endfunction
 
 let s:room_ids = {}
 
-function! s:get_user_count_callback(chat_id, result) abort
+function! s:get_user_count_callback(data, result) abort
   " echom a:chat_id
   " echom '------'
   " echom a:result
@@ -38,9 +38,25 @@ function! chat#telegram#get_user_count(room) abort
 endfunction
 
 
-let s:channels = []
-function! chat#telegram#get_channels() abort
+let s:channels = {}
 
+function! s:get_chat_callback(data, result) abort
+  " echom a:result
+  " return
+  let result = json_encode(a:result)
+
+  if result.ok
+  endif
+  
+  
+endfunction
+
+function! chat#telegram#get_channels() abort
+  for chat_id in g:telegram_default_groups
+    if !has_key(s:channels, chat_id)
+      call telegram#api#getChat(g:telegram_bot_token, chat_id, function('s:get_chat_callback'))
+    endif
+  endfor
 endfunction
 
 function! chat#telegram#enter_room(room) abort

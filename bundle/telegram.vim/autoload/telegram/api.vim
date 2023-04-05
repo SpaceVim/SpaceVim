@@ -22,7 +22,16 @@ endfunction
 " the callback will receive two argv:
 " callback(chat_id, result)
 function! telegram#api#getChatMemberCount(token, chat_id, callback) abort
+
   call s:request('/getChatMemberCount', a:callback, {'chat_id' : a:chat_id})
+
+endfunction
+
+
+function! telegram#api#getChat(token, chat_id, callback) abort
+
+  call s:request('/getChat', a:callback, {'chat_id' : a:chat_id})
+
 endfunction
 
 
