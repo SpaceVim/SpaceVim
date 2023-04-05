@@ -37,6 +37,8 @@ function! chat#telegram#get_user_count(room) abort
   
 endfunction
 
+
+let s:channels = []
 function! chat#telegram#get_channels() abort
 
 endfunction
