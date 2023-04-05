@@ -23,3 +23,7 @@ let g:telegram_http_proxy = ''
 "   let g:telegram_https_proxy = 'http://127.0.0.1:8787'
 " <
 let g:telegram_https_proxy = ''
+
+""
+" a list of default group ids
+let g:telegram_default_groups = []
