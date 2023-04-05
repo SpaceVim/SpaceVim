@@ -14,11 +14,12 @@ endfunction
 
 let s:room_ids = {}
 
-function! s:get_user_count_callback(id, data, event) abort
-
-  echom a:event . ':' . string(a:data)
-  
+function! s:get_user_count_callback(chat_id, result) abort
+  if a:result.ok
+    let s:room_ids[a:chat_id] = {'userCount' : a:result.result}
+  endif
 endfunction
+
 function! chat#telegram#get_user_count(room) abort
 
   if !has_key(s:room_ids, a:room)
