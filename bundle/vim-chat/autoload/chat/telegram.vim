@@ -16,7 +16,7 @@ let s:room_ids = {}
 
 function! s:get_user_count_callback(id, data, event) abort
 
-  echom string(a:data)
+  echom a:event . ':' . string(a:data)
   
 endfunction
 function! chat#telegram#get_user_count(room) abort

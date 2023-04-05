@@ -10,3 +10,16 @@
 ""
 " set the bot token
 let g:telegram_bot_token = get(g:, 'telegram_bot_token', '')
+
+""
+" set http proxy for example:
+" >
+"   let g:telegram_http_proxy = 'http://127.0.0.1:8787'
+" <
+let g:telegram_http_proxy = ''
+""
+" set https proxy for example:
+" >
+"   let g:telegram_https_proxy = 'http://127.0.0.1:8787'
+" <
+let g:telegram_https_proxy = ''

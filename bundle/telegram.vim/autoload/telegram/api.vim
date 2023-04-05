@@ -15,12 +15,12 @@ endfunction
 
 function! telegram#api#getUpdates(token, callback) abort
 
-  
+  call s:request('/getUpdates', a:callback, {'chat_id' : a:chat_id})
 
 endfunction
 
 function! telegram#api#getChatMemberCount(token, chat_id, callback) abort
-  call s:request('getChatMemberCount', a:callback, {'chat_id' : a:chat_id})
+  call s:request('/getChatMemberCount', a:callback, {'chat_id' : a:chat_id})
 endfunction
 
 
@@ -36,5 +36,9 @@ function! s:request(uri, callback, ...) abort
         \ 'on_stdout' : a:callback,
         \ 'on_stderr' : a:callback,
         \ 'on_exit' : a:callback,
+        \ 'env' : {
+          \ 'http_proxy' : g:telegram_http_proxy,
+          \ 'https_proxy' : g:telegram_http_proxy,
+          \ }
         \ })
 endfunction
