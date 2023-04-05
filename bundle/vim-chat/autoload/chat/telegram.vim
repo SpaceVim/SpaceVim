@@ -43,10 +43,11 @@ let s:channels = {}
 function! s:get_chat_callback(data, result) abort
   " echom a:result
   " return
-  let result = json_encode(a:result)
+  let result = json_decode(a:result)
+  let g:wsd = result
 
-  if !empty(result) && type(result[0]) == type({}) && result[0].ok
-    let s:channels[result[0].id] = result[0]
+  if !empty(result) && type(result) == type({}) && result.ok
+    let s:channels[result.result.id] = result.result
   endif
 
 
@@ -61,7 +62,7 @@ function! chat#telegram#get_channels() abort
     endfor
     return []
   else
-    let rooms = filter(deepcopy(s:channels), 'has_key(v:val, "title")')
+    let rooms = filter(values(s:channels), 'has_key(v:val, "title")')
     return map(rooms, 'v:val.title')
   endif
 endfunction
