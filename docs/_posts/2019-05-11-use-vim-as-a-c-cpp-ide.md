@@ -127,7 +127,7 @@ C/C++ 代码格式化，主要依赖 `format` 模块，快捷键为 `SPC b f`，
 ```toml
 [[layers]]
   name = "lang#c"
-  [layer.clang_std]
+  [layers.clang_std]
     cpp = "c11"
 ```
 

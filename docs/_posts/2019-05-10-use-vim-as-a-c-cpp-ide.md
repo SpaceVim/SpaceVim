@@ -94,7 +94,7 @@ If you want to use `c11`, you can change `clang_std` option to:
 ```toml
 [[layers]]
   name = "lang#c"
-  [layer.clang_std]
+  [layers.clang_std]
     cpp = "c11"
 ```
 

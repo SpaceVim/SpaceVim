@@ -84,7 +84,7 @@ Here is an example how to use above options:
   name = "lang#c"
   clang_executable = "/usr/bin/clang"
   clang_flag = ['-I/usr/include']
-  [layer.clang_std]
+  [layers.clang_std]
     c = "c11"
     cpp = "c++1z"
     objc = "c11"

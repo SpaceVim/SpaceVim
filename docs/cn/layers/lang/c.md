@@ -73,7 +73,7 @@ lang: zh
 [[layers]]
   name = "lang#c"
   clang_executable = "/usr/bin/clang"
-  [layer.clang_std]
+  [layers.clang_std]
     c = "c11"
     cpp = "c++1z"
     objc = "c11"
