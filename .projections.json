@@ -14,6 +14,7 @@
   "test/plugin/*.vader": { "alternate": "autoload/SpaceVim/plugins/{}.vim" },
   "test/lua/plugin/*.vader": { "alternate": "lua/spacevim/plugin/{}.lua" },
   "autoload/SpaceVim/layers/lang/*.vim": { "doc": "docs/layers/lang/{}.md" },
+  "autoload/SpaceVim/layers/*.vim": { "doc": "docs/layers/{}.md" },
   "test/api/*.vader": { "alternate": "autoload/SpaceVim/api/{}.vim" },
   "docs/layers/*.md": {
     "alternate": "docs/cn/layers/{}.md",
@@ -33,6 +34,7 @@
   "wiki/cn/Project-layout.md": { "alternate": "wiki/en/Project-layout.md" },
   "wiki/en/Following-HEAD.md": { "alternate": "wiki/cn/Following-HEAD.md" },
   "wiki/cn/Following-HEAD.md": { "alternate": "wiki/en/Following-HEAD.md" },
+  "autoload/SpaceVim/layers/lsp.vim": { "doc": "docs/layers/language-server-protocol.md" },
   "docs/_posts/2017-02-11-use-vim-as-a-java-ide.md": {
     "alternate": "docs/_posts/2018-09-19-use-vim-as-a-java-ide.md"
   },
