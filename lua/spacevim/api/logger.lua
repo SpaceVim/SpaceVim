@@ -99,7 +99,7 @@ end
 function M.warn(msg, ...)
   if M.level <= 2 then
     local log = M._build_msg(msg, 2)
-    if (M.silent == 0 and M.verbose >= 2) or select(1, ...) == 1 then
+    if (M.silent == 0 and M.verbose >= 2) or select(1, ...) == 0 then
       cmd('echohl WarningMsg')
       cmd('echom "' .. log .. '"')
       cmd('echohl None')

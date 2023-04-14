@@ -21,7 +21,7 @@ endfunction
 
 function! s:set(key,val) abort
   if !exists('g:spacevim_' . a:key)
-    call SpaceVim#logger#warn('unsupported option: ' . a:key, 0)
+    call SpaceVim#logger#warn('unsupported option: ' . a:key)
   else
     exe 'let ' . 'g:spacevim_' . a:key . '=' . a:val
   endif
@@ -77,7 +77,7 @@ function! s:write_to_config(config) abort
   let g:_spacevim_global_config_path = global_dir . 'init.toml'
   let cf = global_dir . 'init.toml'
   if filereadable(cf)
-    call SpaceVim#logger#warn('The file already exists:' . cf, 0)
+    call SpaceVim#logger#warn('The file already exists:' . cf)
     return
   endif
   let dir = expand(fnamemodify(cf, ':p:h'))
@@ -157,7 +157,7 @@ function! s:apply(config, type) abort
     for [name, value] in items(options)
       if name ==# 'filemanager'
         if value ==# 'defx' && !has('python3')
-          call SpaceVim#logger#warn('defx requires +python3!', 0)
+          call SpaceVim#logger#warn('defx requires +python3!')
           continue
         endif
         " keep backward compatibility
@@ -200,7 +200,7 @@ function! s:apply(config, type) abort
       elseif has_key(plugin, 'name')
         call add(g:spacevim_custom_plugins, [plugin.name, plugin])
       else
-        call SpaceVim#logger#warn('custom_plugins should contains repo key!', 0)
+        call SpaceVim#logger#warn('custom_plugins should contains repo key!')
         call SpaceVim#logger#info(string(plugin))
       endif
     endfor
@@ -321,7 +321,7 @@ function! s:load_local_conf() abort
         call writefile([s:JSON.json_encode(conf)], local_conf_cache)
         call s:apply(conf, 'local')
       catch
-        call SpaceVim#logger#warn('failed to load local config:' . v:errmsg, 0)
+        call SpaceVim#logger#warn('failed to load local config:' . v:errmsg)
       endtry
     endif
   elseif filereadable('.SpaceVim.d/init.vim')
@@ -364,7 +364,7 @@ function! s:load_glob_conf() abort
         call writefile([s:JSON.json_encode(conf)], global_config_cache)
         call s:apply(conf, 'glob')
       catch
-        call SpaceVim#logger#warn('failed to load global config:' . v:errmsg, 0)
+        call SpaceVim#logger#warn('failed to load global config:' . v:errmsg)
       endtry
     endif
   elseif filereadable(global_dir . 'init.vim')

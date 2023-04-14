@@ -1649,7 +1649,9 @@ SpaceVim#logger#info({msg})                           *SpaceVim#logger#info()*
   write message to SpaceVim runtime log with `info` level.
 
 SpaceVim#logger#warn({msg})                           *SpaceVim#logger#warn()*
-  write warning message to spacevim runtime log.
+  write warning message to spacevim runtime log. by default, the warning
+  message will not be printed in cmdline, if `silent` is set, and is `0`, the
+  warning message will be printed to cmdline.
 
 SpaceVim#logger#error({msg})                         *SpaceVim#logger#error()*
   write error message to spacevim runtime log.

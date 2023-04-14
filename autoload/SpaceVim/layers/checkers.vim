@@ -49,8 +49,8 @@ function! SpaceVim#layers#checkers#plugins() abort
   let plugins = []
 
   if exists('g:spacevim_enable_neomake') || exists('g:spacevim_enable_ale')
-    call SpaceVim#logger#warn('enable_neomake and enable_ale is duplecated', 0)
-    call SpaceVim#logger#warn('please read :h spacevim-options-lint_engine for more info!', 0)
+    call SpaceVim#logger#warn('enable_neomake and enable_ale is duplecated')
+    call SpaceVim#logger#warn('please read :h spacevim-options-lint_engine for more info!')
   endif
 
   if g:spacevim_lint_engine ==# 'neomake'

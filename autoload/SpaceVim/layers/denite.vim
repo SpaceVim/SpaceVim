@@ -307,7 +307,7 @@ function! SpaceVim#layers#denite#loadable()
   if s:CMP.has('python3')
     return 1
   else
-    call SpaceVim#logger#warn('denite layer requires +python3 enabled!', 0)
+    call SpaceVim#logger#warn('denite layer requires +python3 enabled!')
     if has('nvim')
       call SpaceVim#logger#info('   use `pip3 install pynvim` to enabled +python3 for neovim.')
     endif

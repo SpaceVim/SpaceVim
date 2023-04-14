@@ -312,7 +312,7 @@ function! s:self.add_highlight(bufnr, hl, line, col, long) abort
   if exists('*nvim_buf_add_highlight')
     call nvim_buf_add_highlight(a:bufnr, 0, a:hl, a:line, a:col, a:col + a:long)
   else
-    call SpaceVim#logger#warn('vim#buffer.add_highlight api only support neovim', 0)
+    call SpaceVim#logger#warn('vim#buffer.add_highlight api only support neovim')
   endif
 endfunction
 
