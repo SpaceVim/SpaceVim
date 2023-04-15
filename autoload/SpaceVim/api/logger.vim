@@ -90,7 +90,7 @@ function! s:self.warn(msg, ...) abort
     return
   endif
   let log = self._build_msg(a:msg, 2)
-  if (!self.silent && self.verbose >= 2) || get(a:000, 0, 0) == 1
+  if (!self.silent && self.verbose >= 2) || get(a:000, 0, 1) == 0
     echohl WarningMsg
     echom log
     echohl None

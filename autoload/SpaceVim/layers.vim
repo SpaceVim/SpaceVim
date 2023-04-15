@@ -86,7 +86,7 @@ function! SpaceVim#layers#load(layer, ...) abort
       call SpaceVim#logger#warn('Failed to load '
             \ . a:layer
             \ . ' layer, read :h SpaceVim-layer-' . a:layer 
-            \ . ' for more info!', 0)
+            \ . ' for more info!')
     endif
   endif
   if a:0 == 1 && type(a:1) == 4
