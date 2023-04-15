@@ -63,9 +63,9 @@ endfunction
 function! s:global_dir() abort
   if empty($SPACEVIMDIR)
     if !empty($XDG_CONFIG_HOME)
-        return s:FILE.unify_path($XDG_CONFIG_HOME.'/SpaceVim.d/')
+      return s:FILE.unify_path($XDG_CONFIG_HOME.'/SpaceVim.d/')
     else
-        return s:FILE.unify_path($HOME.'/.SpaceVim.d/')
+      return s:FILE.unify_path($HOME.'/.SpaceVim.d/')
     endif
   else
     return s:FILE.unify_path($SPACEVIMDIR)
@@ -161,6 +161,17 @@ function! s:apply(config, type) abort
           continue
         endif
         " keep backward compatibility
+      elseif name ==# 'autocomplete_method'
+        if value ==# 'deoplete' && !has('python3')
+          if (has('python3') 
+                \ && (SpaceVim#util#haspy3lib('neovim')
+                \ || SpaceVim#util#haspy3lib('pynvim'))) &&
+                \ (has('nvim') || (has('patch-8.0.0027')))
+          else
+            call SpaceVim#logger#warn('deoplete requires +python3!')
+            continue
+          endif
+        endif
       elseif name ==# 'statusline_right_sections'
         let name = 'statusline_right'
       elseif name ==# 'statusline_right_sections'
