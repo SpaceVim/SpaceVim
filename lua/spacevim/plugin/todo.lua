@@ -42,7 +42,7 @@ local function stderr(id, data, event) -- {{{
     return
   end
   for _, d in ipairs(data) do
-    logger.info('stderr: ' .. d)
+    logger.debug('stderr: ' .. d)
   end
 end
 -- }}}
@@ -52,7 +52,7 @@ local function stdout(id, data, event) -- {{{
   end
   for _, d in ipairs(data) do
     if not empty(d) then
-      logger.info('stdout:' .. d)
+      logger.debug('stdout:' .. d)
       local f = vim.split(d, ':%d+:')[1]
       local i, j = string.find(d, ':%d+:')
       local line = string.sub(d, i + 1, j - 1)
@@ -116,7 +116,7 @@ local function max_len(t, k) -- {{{
 end
 -- }}}
 
-function exit(id, data, event) -- {{{
+local function on_exit(id, data, event) -- {{{
   if id ~= todo_jobid then
     return
   end
@@ -132,7 +132,10 @@ function exit(id, data, event) -- {{{
   end
   local ma = vim.fn.getbufvar(bufnr, '&ma')
   vim.fn.setbufvar(bufnr,'&ma', 1)
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+  -- update the buffer only when the buffer exists.
+  if vim.fn.bufexists(bufnr) == 1 then
+    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+  end
   vim.fn.setbufvar(bufnr,'&ma', ma)
 end
 -- }}}
@@ -193,7 +196,7 @@ local function update_todo_content() -- {{{
   todo_jobid = jobstart(argv, {
     on_stdout = stdout,
     on_stderr = stderr,
-    on_exit = exit,
+    on_exit = on_exit,
   })
   logger.info('jobid:' .. todo_jobid)
 end
