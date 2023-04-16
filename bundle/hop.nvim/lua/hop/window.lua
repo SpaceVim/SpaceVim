@@ -4,6 +4,7 @@ local M = {}
 
 local function window_context(win_handle, cursor_pos)
   -- get a bunch of information about the window and the cursor
+  vim.api.nvim_set_current_win(win_handle)
   local win_info = vim.fn.getwininfo(win_handle)[1]
   local win_view = vim.fn.winsaveview()
   local top_line = win_info.topline - 1
@@ -52,9 +53,10 @@ function M.get_window_context(multi_windows)
   -- Generate contexts of windows
   local cur_hwin = vim.api.nvim_get_current_win()
   local cur_hbuf = vim.api.nvim_win_get_buf(cur_hwin)
+
   all_ctxs[#all_ctxs + 1] = {
     hbuf = cur_hbuf,
-    contexts = { window_context(cur_hwin, vim.api.nvim_win_get_cursor(cur_hwin)) },
+    contexts = { window_context(cur_hwin, {vim.fn.line('.'), vim.fn.charcol('.')} ) },
   }
 
   if not multi_windows then
@@ -131,7 +133,7 @@ end
 -- If the direction is HintDirection.AFTER_CURSOR, then everything before the cursor will be clipped.
 function M.clip_window_context(context, direction)
   if direction == hint.HintDirection.BEFORE_CURSOR then
-    context.bot_line = context.cursor_pos[1] - 1
+    context.bot_line = context.cursor_pos[1]
   elseif direction == hint.HintDirection.AFTER_CURSOR then
     context.top_line = context.cursor_pos[1] - 1
   end

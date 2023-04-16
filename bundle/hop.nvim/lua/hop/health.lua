@@ -5,7 +5,7 @@ local hop = require'hop'
 --
 -- This function will perform checks at initialization to ensure everything will work as expected.
 function M.check()
-  local health = require'health'
+  local health = vim.health or require'health'
 
   health.report_start('Ensuring keys are unique')
   local existing_keys = {}

@@ -7,7 +7,7 @@ end
 
 -- Get the next key of the input key in the input key set, if any, or return nil.
 local function next_key(keys, key)
-  local _, e = keys:find(key)
+  local _, e = keys:find(key, 1, true)
 
   if e == #keys then
     return nil

@@ -99,8 +99,10 @@ function M.set_hint_extmarks(hl_ns, hints, opts)
       label = label:upper()
     end
 
+    local col = hint.jump_target.column - 1
+
     if vim.fn.strdisplaywidth(label) == 1 then
-      vim.api.nvim_buf_set_extmark(hint.jump_target.buffer or 0, hl_ns, hint.jump_target.line, hint.jump_target.column - 1, {
+      vim.api.nvim_buf_set_extmark(hint.jump_target.buffer or 0, hl_ns, hint.jump_target.line, col, {
         virt_text = { { label, "HopNextKey" } },
         virt_text_pos = 'overlay',
         hl_mode = 'combine',
@@ -109,13 +111,25 @@ function M.set_hint_extmarks(hl_ns, hints, opts)
     else
       -- get the byte index of the second hint so that we can slice it correctly
       local snd_idx = vim.fn.byteidx(label, 1)
-      vim.api.nvim_buf_set_extmark(hint.jump_target.buffer or 0, hl_ns, hint.jump_target.line, hint.jump_target.column - 1, { -- HERE
+      vim.api.nvim_buf_set_extmark(hint.jump_target.buffer or 0, hl_ns, hint.jump_target.line, col, {
         virt_text = { { label:sub(1, snd_idx), "HopNextKey1" }, { label:sub(snd_idx + 1), "HopNextKey2" } },
         virt_text_pos = 'overlay',
         hl_mode = 'combine',
         priority = prio.HINT_PRIO
       })
     end
+  end
+end
+
+function M.set_hint_preview(hl_ns, jump_targets)
+  for _, jt in ipairs(jump_targets) do
+    vim.api.nvim_buf_set_extmark(jt.buffer, hl_ns, jt.line, jt.column - 1, {
+      end_row = jt.line,
+      end_col = jt.column - 1 + jt.length,
+      hl_group = 'HopPreview',
+      hl_eol = true,
+      priority = prio.HINT_PRIO
+    })
   end
 end
 

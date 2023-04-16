@@ -6,7 +6,17 @@
                                                      /_/
                                       · Neovim motions on speed! ·
 
-[![](https://img.shields.io/badge/matrix-join%20the%20speed!-blueviolet)](https://matrix.to/#/#hop.nvim:matrix.org)
+<p align="center">
+  <img src="https://img.shields.io/github/issues/phaazon/hop.nvim?color=cyan&style=for-the-badge"/>
+  <img src="https://img.shields.io/github/issues-pr/phaazon/hop.nvim?color=green&style=for-the-badge"/>
+  <img src="https://img.shields.io/github/contributors-anon/phaazon/hop.nvim?color=blue&style=for-the-badge"/>
+  <img src="https://img.shields.io/github/last-commit/phaazon/hop.nvim?style=for-the-badge"/>
+  <img src="https://img.shields.io/github/v/tag/phaazon/hop.nvim?color=pink&label=release&style=for-the-badge"/>
+</p>
+
+<p align="center">
+  <a href="#using-vim-plug">Install</a> · <a href="https://github.com/phaazon/hop.nvim/wiki">Wiki</a> · <a href="https://github.com/phaazon/hop.nvim/wiki/Screenshots">Screenshots</a> · <a href="https://matrix.to/#/#hop.nvim:matrix.org">Discuss</a>
+</p>
 
 **Hop** is an [EasyMotion]-like plugin allowing you to jump anywhere in a
 document with as few keystrokes as possible. It does so by annotating text in
@@ -15,19 +25,14 @@ represents a key to type to jump to the annotated text. Most of the time,
 those sequences’ lengths will be between 1 to 3 characters, making every jump
 target in your document reachable in a few keystrokes.
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/506592/176885253-5f618593-77c5-4843-9101-a9de30f0a022.png"/>
+</p>
+
 <!-- vim-markdown-toc GFM -->
 
 * [Motivation](#motivation)
 * [Features](#features)
-  * [Word mode (`:HopWord`)](#word-mode-hopword)
-  * [Line mode (`:HopLine`)](#line-mode-hopline)
-  * [1-char mode (`:HopChar1`)](#1-char-mode-hopchar1)
-  * [2-char mode (`:HopChar2`)](#2-char-mode-hopchar2)
-  * [Pattern mode (`:HopPattern`)](#pattern-mode-hoppattern)
-  * [Visual extend](#visual-extend)
-  * [Jump on sole occurrence](#jump-on-sole-occurrence)
-  * [Use as operator motion](#use-as-operator-motion)
-  * [Inclusive / exclusive motion](#inclusive--exclusive-motion)
 * [Getting started](#getting-started)
   * [Installation](#installation)
     * [Important note about versioning](#important-note-about-versioning)
@@ -36,8 +41,6 @@ target in your document reachable in a few keystrokes.
     * [Nightly users](#nightly-users)
 * [Usage](#usage)
 * [Keybindings](#keybindings)
-* [Configuration](#configuration)
-* [Extension](#extension)
 * [Chat](#chat)
 
 <!-- vim-markdown-toc -->
@@ -66,83 +69,18 @@ Neovim.
 
 # Features
 
-- [x] Go to any word in the current buffer.
-- [x] Go to any character in the current buffer.
-- [x] Go to any bigrams in the current buffer.
-- [x] Use Hop cross windows with multi-windows support.
-- [x] Make an arbitrary search akin to <kbd>/</kbd> and go to any occurrences.
-- [x] Go to any line.
-- [x] Visual extend mode, which allows you to extend a visual selection by hopping elsewhere in the document.
-- [x] Use it with commands like `d`, `c`, `y` to delete/change/yank up to your new cursor position.
-- [x] Support a wide variety of user configuration options, among the possibility to alter the behavior of commands
-      to hint only before or after the cursor, for the current line, change the dictionary keys to use for the labels,
-      jump on sole occurrence, etc.
-- [x] Extensible: provide your own jump targets and create Hop extensions!
-
-## Word mode (`:HopWord`)
-
-This mode highlights all the recognized words in the visible part of the buffer and allows you to jump to any.
-
-![](https://phaazon.net/media/uploads/hop_word_mode.gif)
-
-## Line mode (`:HopLine`)
-
-This mode highlights the beginnings of each line in the visible part of the buffer for quick line hopping.
-
-![](https://phaazon.net/media/uploads/hop_line_mode.gif)
-
-## 1-char mode (`:HopChar1`)
-
-This mode expects the user to type a single character. That character will then be highlighted in the visible part of
-the buffer, allowing to jump to any of its occurrence. This mode is especially useful to jump to operators, punctuations
-or any symbols not recognized as parts of words.
-
-![](https://phaazon.net/media/uploads/hop_char1_mode.gif)
-
-## 2-char mode (`:HopChar2`)
-
-A variant of the 1-char mode, this mode exacts the user to type two characters, representing a _bigram_ (they follow
-each other, in order). The bigram occurrences in the visible part of the buffer will then be highlighted for you to jump
-to any.
-
-![](https://phaazon.net/media/uploads/hop_char2_mode.gif)
-
-Note that it’s possible to _fallback to 1-char mode_ if you hit a special key as second key. This key can be controlled
-via the user configuration. `:h hop-config-char2_fallback_key`.
-
-## Pattern mode (`:HopPattern`)
-
-Akin to `/`, this mode prompts you for a pattern (regex) to search. Occurrences will be highlighted, allowing you to
-jump to any.
-
-![](https://phaazon.net/media/uploads/hop_pattern_mode.gif)
-
-## Visual extend
-
-If you call any Hop commands / Lua functions from one of the visual modes, the visual selection will be extended.
-
-![](https://phaazon.net/media/uploads/hop_visual_extend.gif)
-
-## Jump on sole occurrence
-
-If only a single occurrence is visible in the buffer, Hop will automatically jump to it without requiring pressing any
-extra key.
-
-![](https://phaazon.net/media/uploads/hop_sole_occurrence.gif)
-
-## Use as operator motion
-
-You can use Hop with any command that expects a motion, such as `d`, `y`, `c`, and it does what you would expect:
-Delete/yank/change the document up to the new cursor position.
-
-## Inclusive / exclusive motion
-
-By default, Hop will operate in exclusive mode, which is similar to what you get with `t`: deleting from the cursor
-position up to the next `)` (without deleting the `)`), which is normally done with `dt)`. However, if you want to be
-inclusive (i.e. delete the `)`, which is `df)` in vanilla), you can set the `inclusive_jump` option to `true`.
-
-Some limitations currently exist, requiring `virtualedit` special settings. `:h hop-config-inclusive_jump` for more
-information.
+- Go to any word in the current buffer (`:HopWord`).
+- Go to any character in the current buffer (`:HopChar1`).
+- Go to any bigrams in the current buffer (`:HopChar2`).
+- Make an arbitrary search akin to <kbd>/</kbd> and go to any occurrences (`:HopPattern`).
+- Go to any line and any line start (`:HopLine`, `:HopLineStart`).
+- Go to anywhere (`:HopAnywhere`).
+- Use Hop cross windows with multi-windows support (`:Hop*MW`).
+- Use it with commands like `v`, `d`, `c`, `y` to visually select/delete/change/yank up to your new cursor position.
+- Support a wide variety of user configuration options, among the possibility to alter the behavior of commands
+  to hint only before or after the cursor (`:Hop*BC`, `:Hop*AC`), for the current line (`:Hop*CurrentLine`),
+  change the dictionary keys to use for the labels, jump on sole occurrence, etc.
+- Extensible: provide your own jump targets and create Hop extensions!
 
 # Getting started
 
@@ -184,7 +122,7 @@ Plug 'phaazon/hop.nvim'
 ```lua
 use {
   'phaazon/hop.nvim',
-  branch = 'v1', -- optional but strongly recommended
+  branch = 'v2', -- optional but strongly recommended
   config = function()
     -- you can configure Hop the way you like here; see :h hop-config
     require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
@@ -199,29 +137,7 @@ the last one**. If you are not, then you are exposed to compatibility issues / b
 
 # Usage
 
-A bunch of vim commands are available to get your fingers wrapped around **Hop** quickly:
-
-- `:HopWord`: hop around by highlighting words.
-- `:HopPattern`: hop around by matching against a pattern (as with `/`).
-- `:HopChar1`: type a single key and hop to any occurrence of that key in the document.
-- `:HopChar2`: type a bigram (two keys) and hop to any occurrence of that bigram in the document.
-- `:HopLine`: jump to any visible line in your buffer.
-- `:HopLineStart`: jump to any visible first non-whitespace character of each line in your buffer.
-
-Most of these commands have variant to jump before / after the cursor, and on the current line. For instance,
-`:HopChar1CurrentLineAC` is a form of `f` (Vim native motion) using Hop.
-
-If you would rather use the Lua API, you can test it via the command prompt:
-
-```vim
-:lua require'hop'.hint_words()
-```
-
-For a more complete user guide and help pages:
-
-```vim
-:help hop
-```
+See the [wiki](https://github.com/phaazon/hop.nvim/wiki).
 
 # Keybindings
 
@@ -231,52 +147,21 @@ If you want to create a key binding from within Lua:
 
 ```lua
 -- place this in one of your configuration file(s)
-vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('n', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('o', 'f', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>", {})
-vim.api.nvim_set_keymap('o', 'F', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>", {})
-vim.api.nvim_set_keymap('', 't', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('', 'T', "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
-vim.api.nvim_set_keymap('n', '<leader>e', "<cmd> lua require'hop'.hint_words({ hint_position = require'hop.hint'.HintPosition.END })<cr>", {})
-vim.api.nvim_set_keymap('v', '<leader>e', "<cmd> lua require'hop'.hint_words({ hint_position = require'hop.hint'.HintPosition.END })<cr>", {})
-vim.api.nvim_set_keymap('o', '<leader>e', "<cmd> lua require'hop'.hint_words({ hint_position = require'hop.hint'.HintPosition.END, inclusive_jump = true })<cr>", {})
+local hop = require('hop')
+local directions = require('hop.hint').HintDirection
+vim.keymap.set('', 'f', function()
+  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+end, {remap=true})
+vim.keymap.set('', 'F', function()
+  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+end, {remap=true})
+vim.keymap.set('', 't', function()
+  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+end, {remap=true})
+vim.keymap.set('', 'T', function()
+  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+end, {remap=true})
 ```
-
-# Configuration
-
-You can configure Hop via several different mechanisms:
-
-- _Global configuration_ uses the Lua `setup` API (`:h hop.setup`). This allows you to setup global options that will be
-  used by all Hop Lua functions as well as the vim commands (e.g. `:HopWord`). This is the easiest way to configure Hop
-  on a global scale. You can do this in your `init.lua` or any `.vim` file by using the `lua` vim command.
-  Example:
-  ```vim
-  " init.vim
-  "
-  " Use better keys for the bépo keyboard layout and set
-  " a balanced distribution of terminal / sequence keys
-  lua require'hop'.setup { keys = 'etovxqpdygfblzhckisuran', jump_on_sole_occurrence = false }
-  ```
-- _Local configuration overrides_ are available only on the Lua API and are `{opts}` Lua tables passed to the various
-  Lua functions. Those options have precedence over global options, so they allow to locally override options. Useful if
-  you want to test a special option for a single Lua function, such as `require'hop'.hint_lines()`. You can test them
-  inside the command line, such as:
-  ```
-  :lua require'hop'.hint_words({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR })
-  ```
-- In the case of none of the above are provided, options are automatically read from the _default_ options. See `:h
-  hop-config` for a list of default values.
-
-# Extension
-
-It is possible to extend Hop by creating *Hop extension plugins*. For more info:
-
-```vim
-:h hop-extension
-```
-
-> Disclaimer: you may have written a nice Hop extension plugin. You can open an issue to merge it upstream but remember
-> that it’s unlikely to be merged as Hop should remain small and straight-to-the point.
 
 # Chat
 

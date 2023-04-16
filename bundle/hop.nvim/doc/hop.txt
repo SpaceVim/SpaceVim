@@ -1,4 +1,4 @@
-*hop.txt*    For Neovim version 0.5                  Last change: 2021 Nov 02
+*hop.txt*    For Neovim version 0.5                  Last change: 2022 Oct 09
 
                                  __
                                 / /_  ____  ____
@@ -7,6 +7,7 @@
                              /_/ /_/\____/ .___/
                                         /_/
                          · Neovim motions on speed! ·
+                                     v2.0.2
 
 ==============================================================================
 CONTENTS                                                          *hop-contents*
@@ -177,6 +178,14 @@ creates a variant of the command that will only run for the current line.
 
     This is akin to calling the |hop.hint_lines_skip_whitespace| Lua function.
 
+`:HopVertical`                                                      *:HopVertical*
+`:HopVerticalBC`                                                  *:HopVerticalBC*
+`:HopVerticalAC`                                                  *:HopVerticalAC*
+`:HopVerticalMW`                                                  *:HopVerticalMW*
+    Like `HopLine` but keeps the column position of the cursor.
+
+    This is akin to calling the |hop.hint_vertical| Lua function.
+
 `:HopAnywhere`                                                      *:HopAnywhere*
 `:HopAnywhereBC`                                                  *:HopAnywhereBC*
 `:HopAnywhereAC`                                                  *:HopAnywhereAC*
@@ -304,6 +313,16 @@ Most of the functions and values you need to know about are in `hop`.
 `hop.hint_lines_skip_whitespace(`{opts}`)`          *hop.hint_lines_skip_whitespace*
     Hint the first non-whitespace character of each lines currently visible in
     the buffer view and allow to jump to them.
+
+    This works with empty lines as well.
+
+    Arguments:~
+        {opts}  Hop options.
+
+`hop.hint_vertical(`{opts}`)`                                    *hop.hint_vertical*
+    Hint the cursor position of each lines currently visible in the buffer
+    view and allow to jump to them. If the line is shorter than the current
+    cursor column position, it will default to the end of the line.
 
     This works with empty lines as well.
 
@@ -499,7 +518,7 @@ doing that for you.
     of all the words in the window and will make the cursor jump to the one
     fully reduced.
 
-`hop.jump_target.regex_by_line_start()`      *hop.jump_target.regex_by_line_start*
+`hop.jump_target.by_line_start()`                  *hop.jump_target.by_line_start*
     Highlight the beginning of each line in the current window.
 
 `hop.jump_target.regex_by_line_start_skip_whitespace()` *hop.jump_target.regex_by_line_start_skip_whitespace*
@@ -728,6 +747,18 @@ below.
     Defaults:~
         `hint_position = require'hop.hint'.HintPosition.BEGIN`
 
+`hint_offset`                                             *hop-config-hint_offset*
+    Offset to apply to a jump location.
+
+    If it is non-zero, the jump target will be offset horizontally from the
+    selected jump position by `hint_offset` character(s).
+
+    This option can be used for emulating the motion commands |t| and |T| where
+    the cursor is positioned on/before the target position.
+
+    Defaults:~
+        `hint_offset = 0`
+
 `current_line_only`                                 *hop-config-current_line_only*
     Apply Hop commands only to the current line.
 
@@ -737,22 +768,6 @@ below.
 
     Defaults:~
         `current_line_only = false`
-
-`inclusive_jump`                                       *hop-config-inclusive_jump*
-    Make all motions inclusive; i.e. jumping to a jump target will actually
-    jump one display cell right to the jump target. Set this option to `true`
-    if you would like to have the same behavior as with the |f| motion. Set it
-    to `false` if you would like to have the same behavior as with the |t|
-    motion.
-
-    There is one important limitation if you use `inclusive_jump = true`: if
-    the jump target you would like to jump to is the last character on a
-    line, it will not do what you expect; for instance, deleting or yanking
-    with `d` / `y` will not include the last character by default, unless you
-    set |virtualedit| to `onemore`.
-
-    Defaults:~
-        `inclusive_jump = false`
 
 `uppercase_labels`                                   *hop-config-uppercase_labels*
     Display labels as uppercase. This option only affects the displayed
@@ -844,6 +859,9 @@ highlight is used. For the rest:
 `HopCursor`                                                     *hop-hl-HopCursor*
     Highlight used for the fake cursor visible when running a Hop command /
     Lua functions.
+
+`HopPreview`                                                   *hop-hl-HopPreview*
+    Highlight used for to preview the hint for HopPattern.
 
 Highlights are inserted in an augroup, `HopInitHighlight`, and an autocommand
 is automatically set when initializing the plugin, unless you set

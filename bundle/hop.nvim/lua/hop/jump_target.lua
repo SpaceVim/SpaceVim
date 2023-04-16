@@ -91,6 +91,13 @@ local function mark_jump_targets_line(buf_handle, win_handle, regex, line_contex
     if b == nil or (b == 0 and e == 0) then
       break
     end
+    -- Preview need a length to highlight the matched string. Zero means nothing to highlight.
+    local matched_length = e - b
+    -- As the make for jump target must be placed at a cell (but some pattern like '^' is
+    -- placed between cells), we should make sure e > b
+    if b == e then
+      e = e + 1
+    end
 
     local colp = col + b
     if hint_position == hint.HintPosition.MIDDLE then
@@ -99,10 +106,9 @@ local function mark_jump_targets_line(buf_handle, win_handle, regex, line_contex
       colp = col + e - 1
     end
     jump_targets[#jump_targets + 1] = {
-      line = line_nr,
-      column = math.max(1, colp + col_offset + col_bias),
       line = line_context.line_nr,
       column = math.max(1, colp + col_offset + col_bias),
+      length = math.max(0, matched_length),
       buffer = buf_handle,
       window = win_handle,
     }
@@ -342,10 +348,13 @@ function M.regex_by_searching(pat, plain_search)
   if plain_search then
     pat = vim.fn.escape(pat, '\\/.$^~[]')
   end
+
+  local regex = vim.regex(pat)
+
   return {
     oneshot = false,
     match = function(s)
-      return vim.regex(pat):match_str(s)
+      return regex:match_str(s)
     end
   }
 end
@@ -364,10 +373,12 @@ function M.regex_by_case_searching(pat, plain_search, opts)
     pat = '\\c' .. pat
   end
 
+  local regex = vim.regex(pat)
+
   return {
     oneshot = false,
     match = function(s)
-      return vim.regex(pat):match_str(s)
+      return regex:match_str(s)
     end
   }
 end
@@ -378,22 +389,42 @@ function M.regex_by_word_start()
 end
 
 -- Line regex.
-function M.regex_by_line_start()
+function M.by_line_start()
+  local c = vim.fn.winsaveview().leftcol
+
   return {
     oneshot = true,
-    match = function(_)
-      return 0, 1, false
+    match = function(s)
+      local l = vim.fn.strdisplaywidth(s)
+      if c > 0 and l == 0 then
+        return nil
+      end
+
+      return 0, 1
+    end
+  }
+end
+
+-- Line regex at cursor position.
+function M.regex_by_vertical()
+  local position = vim.api.nvim_win_get_cursor(0)[2]
+  local regex = vim.regex(string.format("^.\\{0,%d\\}\\(.\\|$\\)", position))
+  return {
+    oneshot = true,
+    match = function(s)
+      return regex:match_str(s)
     end
   }
 end
 
 -- Line regex skipping finding the first non-whitespace character on each line.
 function M.regex_by_line_start_skip_whitespace()
-  local pat = vim.regex("\\S")
+  local regex = vim.regex("\\S")
+
   return {
     oneshot = true,
     match = function(s)
-      return pat:match_str(s)
+      return regex:match_str(s)
     end
   }
 end
