@@ -38,11 +38,6 @@ local function find_layers()
         local status = ''
         local url = ''
         local website = ''
-        if M.isLoaded(name) then
-            status = 'loaded'
-        else
-            status = 'not loaded'
-        end
         if name == 'lsp' then
             url = 'language-server-protocol'
         else
@@ -54,6 +49,11 @@ local function find_layers()
             website = 'no exists'
         end
         name = sp.fn.substitute(name, '/', '#','g')
+        if M.isLoaded(name) then
+            status = 'loaded'
+        else
+            status = 'not loaded'
+        end
         if status == 'loaded' then
             table.insert(rst, '+ ' .. name .. ':' .. sp.fn['repeat'](' ', 25 - sp.fn.len(name)) .. status .. sp.fn['repeat'](' ', 10) .. website)
         else
