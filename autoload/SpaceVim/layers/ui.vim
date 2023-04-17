@@ -213,8 +213,7 @@ function! SpaceVim#layers#ui#config() abort
         \ 'toggle conceallevel', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 't'], 'call SpaceVim#plugins#tabmanager#open()',
         \ 'open-tabs-manager', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call call('
-        \ . string(s:_function('s:toggle_colorcolumn')) . ', [])',
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'f'], 'call SpaceVim#layers#core#statusline#toggle_mode("fill-column-indicator")',
         \ 'fill-column-indicator', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'h', 'h'], 'call call('
         \ . string(s:_function('s:toggle_cursorline')) . ', [])',
@@ -261,6 +260,12 @@ function! SpaceVim#layers#ui#config() abort
         \ {
           \ 'key' : 'hi-characters-for-long-lines',
           \ 'func' : s:_function('s:toggle_fill_column'),
+          \ }
+          \ )
+  call SpaceVim#layers#core#statusline#register_mode(
+        \ {
+          \ 'key' : 'fill-column-indicator',
+          \ 'func' : s:_function('s:toggle_colorcolumn'),
           \ }
           \ )
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'],
@@ -361,7 +366,7 @@ function! s:toggle_colorcolumn() abort
     set cc=
     let s:ccflag = 0
   endif
-  call SpaceVim#layers#core#statusline#toggle_mode('fill-column-indicator')
+  return 1
 endfunction
 
 let s:fcflag = 0
