@@ -378,6 +378,7 @@ function! s:toggle_fill_column() abort
     set cc=
     let s:fcflag = 0
   endif
+  return 1
 endfunction
 
 function! s:toggle_indentline() abort
