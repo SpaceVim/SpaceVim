@@ -1918,6 +1918,9 @@ airline's statusline, just disable this layer
     name = 'core#statusline'
     enable = false
 <
+LAYER OPTIONS
+
+`major_mode_cache`: Enable/disable major mode cache, enabled by default.
 
 ==============================================================================
 CORE#TABLINE                                    *SpaceVim-layers-core-tabline*

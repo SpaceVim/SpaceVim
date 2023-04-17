@@ -16,6 +16,9 @@
 "     name = 'core#statusline'
 "     enable = false
 " <
+" @subsection Layer options
+"
+" - `major_mode_cache`: Enable/disable major mode cache, enabled by default.
 
 scriptencoding utf-8
 
@@ -108,6 +111,10 @@ let s:modes = {
         \ 'desc' : 'wrap line mode',
         \ },
         \ }
+
+" the major_mode will be cached by default.
+
+let s:major_mode_cache = 1
 
 if SpaceVim#layers#isLoaded('checkers')
   call add(s:loaded_modes, 'syntax-checking')
@@ -764,7 +771,9 @@ function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
     endif
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
-  call s:update_conf()
+  if s:major_mode_cache
+    call s:update_conf()
+  endif
 endfunction
 
 let s:section_old_pos = {
@@ -799,6 +808,10 @@ function! SpaceVim#layers#core#statusline#rsep() abort
   return get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
 endfunction
 
+function! SpaceVim#layers#core#statusline#set_variable(var) abort
+  let s:major_mode_cache = get(a:var, 'major_mode_cache', s:major_mode_cache)
+endfunction
+
 function! SpaceVim#layers#core#statusline#config() abort
   let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
   let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, s:i_separators['arrow'])
@@ -830,7 +843,7 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'main': 'SpaceVim#layers#core#statusline#ctrlp',
         \ 'prog': 'SpaceVim#layers#core#statusline#ctrlp_status',
         \ }
-  if filereadable(expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'))
+  if filereadable(expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json')) && s:major_mode_cache
     " the major mode is cashed in: ~\.cache\SpaceVim\major_mode.json
     call SpaceVim#logger#debug('load cache from major_mode.json')
     let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'), ''), ''))
