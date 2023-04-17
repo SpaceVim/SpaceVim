@@ -829,6 +829,7 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'prog': 'SpaceVim#layers#core#statusline#ctrlp_status',
         \ }
   if filereadable(expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'))
+    " the major mode is cashed in: ~\.cache\SpaceVim\major_mode.json
     let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'), ''), ''))
     for key in keys(conf)
       if conf[key]

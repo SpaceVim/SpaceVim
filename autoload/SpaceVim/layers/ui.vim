@@ -195,8 +195,8 @@ function! SpaceVim#layers#ui#config() abort
           \ 'call SpaceVim#mapping#SmartClose()')
   endif
   " Ui toggles
-  call SpaceVim#mapping#space#def('nnoremap', ['t', '8'], 'call call('
-        \ . string(s:_function('s:toggle_fill_column')) . ', [])',
+  call SpaceVim#mapping#space#def('nnoremap', ['t', '8'],
+        \ 'call SpaceVim#layers#core#statusline#toggle_mode("hi-characters-for-long-lines")',
         \ 'highlight-long-lines', 1)
   if g:spacevim_autocomplete_method ==# 'deoplete'
     call SpaceVim#mapping#space#def('nnoremap', ['t', 'a'], 'call SpaceVim#layers#autocomplete#toggle_deoplete()',
@@ -255,6 +255,12 @@ function! SpaceVim#layers#ui#config() abort
         \ {
           \ 'key' : 'spell-checking',
           \ 'func' : s:_function('s:toggle_spell_check'),
+          \ }
+          \ )
+  call SpaceVim#layers#core#statusline#register_mode(
+        \ {
+          \ 'key' : 'hi-characters-for-long-lines',
+          \ 'func' : s:_function('s:toggle_fill_column'),
           \ }
           \ )
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'],
@@ -372,7 +378,6 @@ function! s:toggle_fill_column() abort
     set cc=
     let s:fcflag = 0
   endif
-  call SpaceVim#layers#core#statusline#toggle_mode('hi-characters-for-long-lines')
 endfunction
 
 function! s:toggle_indentline() abort
