@@ -248,6 +248,10 @@ lines = vim.eval("a:replacement")
 vim.buffers[bufnr][start_line:end_line] = lines
 EOF
   elseif has('python3')
+    " https://github.com/vim/vim/issues/3117
+    " https://github.com/Azure/WALinuxAgent/issues/2326
+    " https://github.com/powerline/powerline/issues/1925#issuecomment-402635097
+  silent! python3 1
 py3 << EOF
 import vim
 import string
