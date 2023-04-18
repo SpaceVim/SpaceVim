@@ -27,9 +27,6 @@ Defaults to 2.
 
 NOTE: when there is only one entry. the quickfix list will not be opened.
 
-                                                            *g:gtags_log_file*
-set the path to gtags log file.
-
 ==============================================================================
 COMMANDS                                                      *gtags-commands*
 
