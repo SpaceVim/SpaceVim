@@ -117,6 +117,8 @@ function! SpaceVim#layers#ui#plugins() abort
 
 endfunction
 
+let s:file = expand('<sfile>:~')
+let s:funcbeginline =  expand('<slnum>') + 1
 function! SpaceVim#layers#ui#config() abort
   if g:spacevim_colorscheme_bg ==# 'dark'
     let g:indentLine_color_term = get(g:, 'indentLine_color_term', 239)
@@ -268,6 +270,23 @@ function! SpaceVim#layers#ui#config() abort
           \ 'func' : s:_function('s:toggle_colorcolumn'),
           \ }
           \ )
+  call SpaceVim#layers#core#statusline#register_mode(
+        \ {
+          \ 'key' : 'whitespace',
+          \ 'func' : s:_function('s:toggle_whitespace'),
+          \ }
+          \ )
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'],
+        \ 'call SpaceVim#layers#core#statusline#toggle_mode("whitespace")',
+        \ ['toggle-highlight-tail-spaces',
+        \ [
+          \ '[SPC t w] will toggle white space highlighting',
+          \ '',
+          \ 'Definition: ' . s:file . ':' . s:lnum,
+          \ ]
+          \ ]
+          \ , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'S'],
         \ 'call SpaceVim#layers#core#statusline#toggle_mode("spell-checking")',
         \ 'toggle-spell-checker', 1)
@@ -289,9 +308,6 @@ function! SpaceVim#layers#ui#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'W'], 'call call('
         \ . string(s:_function('s:toggle_wrap_line')) . ', [])',
         \ 'toggle-wrap-line', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'w'], 'call call('
-        \ . string(s:_function('s:toggle_whitespace')) . ', [])',
-        \ 'toggle-highlight-tail-spaces', 1)
 
   nnoremap <silent> <F11> :call <SID>toggle_full_screen()<Cr>
   let g:_spacevim_mappings_space.z = get(g:_spacevim_mappings_space, 'z',  {'name' : '+Fonts'})
@@ -489,7 +505,7 @@ function! s:toggle_whitespace() abort
     let s:whitespace_enable = 1
   endif
   call SpaceVim#layers#core#statusline#toggle_section('whitespace')
-  call SpaceVim#layers#core#statusline#toggle_mode('whitespace')
+  return 1
 endfunction
 
 function! s:toggle_wrap_line() abort
