@@ -305,8 +305,14 @@ function! SpaceVim#layers#ui#config() abort
 
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'l'], 'setlocal list!',
         \ 'toggle-hidden-listchars', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['t', 'W'], 'call call('
-        \ . string(s:_function('s:toggle_wrap_line')) . ', [])',
+  call SpaceVim#layers#core#statusline#register_mode(
+        \ {
+          \ 'key' : 'wrapline',
+          \ 'func' : s:_function('s:toggle_wrap_line'),
+          \ }
+          \ )
+  call SpaceVim#mapping#space#def('nnoremap', ['t', 'W'],
+        \ 'call SpaceVim#layers#core#statusline#toggle_mode("wrapline")',
         \ 'toggle-wrap-line', 1)
 
   nnoremap <silent> <F11> :call <SID>toggle_full_screen()<Cr>
@@ -509,8 +515,8 @@ function! s:toggle_whitespace() abort
 endfunction
 
 function! s:toggle_wrap_line() abort
-  setlocal wrap!
-  call SpaceVim#layers#core#statusline#toggle_mode('wrapline')
+  set wrap!
+  return 1
 endfunction
 
 function! s:toggle_conceallevel() abort
