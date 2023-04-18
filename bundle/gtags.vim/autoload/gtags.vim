@@ -12,6 +12,7 @@ if exists('g:loaded_gtags')
 endif
 let s:JOB = SpaceVim#api#import('job')
 let s:FILE = SpaceVim#api#import('file')
+let s:NOTI = SpaceVim#api#import('notify')
 
 let g:loaded_gtags = 1
 let s:version = split(matchstr(split(system('gtags --version'), '\n')[0], '[0-9]\+\.[0-9]\+'), '\.')
@@ -124,9 +125,9 @@ endif
 " Display error message.
 "
 function! s:Error(msg) abort
-  echohl WarningMsg |
-        \ echomsg 'Error: ' . a:msg |
-        \ echohl None
+  " use notify to display error message
+  "
+  call s:NOTI.notify(a:msg, 'WarningMsg')
 endfunction
 "
 " Extract pattern or option string.
