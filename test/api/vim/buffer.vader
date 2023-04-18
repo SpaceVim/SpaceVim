@@ -9,6 +9,7 @@ Execute ( SpaceVim api: vim#buffer buf_set_lines):
   Log 'if_py:' . has('python')
   Log 'if_py3:' .  has('python3')
   let nr = buffer.bufadd('')
+  Log 'bufnr is ' . nr
   call setbufvar(nr, '&buftype', 'nofile')
   call setbufvar(nr, '&buflisted', 0)
   py3 import sys
