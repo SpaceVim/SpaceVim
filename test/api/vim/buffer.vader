@@ -9,38 +9,19 @@ Execute ( SpaceVim api: vim#buffer buf_set_lines):
   Log 'if_py:' . has('python')
   Log 'if_py3:' .  has('python3')
   let nr = buffer.bufadd('')
-  Log 'bufnr is ' . nr
   call setbufvar(nr, '&buftype', 'nofile')
   call setbufvar(nr, '&buflisted', 0)
   Log 'The value of g:_spacevim_if_lua is ' . get(g:, '_spacevim_if_lua', 0)
   call buffer.buf_set_lines(nr, 0, 1, 0, ['line 1', 'line 2', 'line 3', 'line 4'])
-  for line in split(v:errmsg, "\n")
-    Log line
-  endfor
   AssertEqual getbufline(nr, 1, '$'), ['line 1', 'line 2', 'line 3', 'line 4']
   call buffer.buf_set_lines(nr, 1, 3, 0, ['replace 1', 'replace 2', 'replace 3'])
-  for line in split(v:errmsg, "\n")
-    Log line
-  endfor
   AssertEqual getbufline(nr, 1, '$'), ['line 1', 'replace 1', 'replace 2', 'replace 3', 'line 4']
   call buffer.buf_set_lines(nr, -3, -1, 0, ['replace 1', 'replace 2', 'replace 3'])
-  for line in split(v:errmsg, "\n")
-    Log line
-  endfor
   AssertEqual getbufline(nr, 1, '$'), ['line 1', 'replace 1', 'replace 2', 'replace 1', 'replace 2', 'replace 3']
   call buffer.buf_set_lines(nr, 2, -2, 0, ['replace 1', 'replace 2', 'replace 3'])
-  for line in split(v:errmsg, "\n")
-    Log line
-  endfor
   AssertEqual getbufline(nr, 1, '$'), ['line 1', 'replace 1', 'replace 1', 'replace 2', 'replace 3', 'replace 3']
   call buffer.buf_set_lines(nr, 0, -1, 0, ['xx 1'])
-  for line in split(v:errmsg, "\n")
-    Log line
-  endfor
   AssertEqual getbufline(nr, 1, '$'), ['xx 1']
-  for line in split(v:errmsg, "\n")
-    Log line
-  endfor
   exe 'bd!' nr
   unlet nr
   unlet buffer
