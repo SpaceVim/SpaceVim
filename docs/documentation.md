@@ -639,7 +639,7 @@ The `core#statusline` layer provides a heavily customized powerline with the fol
 - show the index of search results
 - toggle syntax checking info
 - toggle battery info
-- toggle minor mode lighters
+- toggle major mode lighters
 - show VCS information (branch, hunk summary) (requires `git` and `VersionControl` layers)
 
 | Key Bindings | Descriptions                                 |
@@ -664,8 +664,8 @@ Some elements can be dynamically toggled:
 | `SPC t m b`  | toggle the battery status (need to install acpi)                    |
 | `SPC t m c`  | toggle the org task clock (available in org layer)(TODO)            |
 | `SPC t m i`  | toggle the input method                                             |
-| `SPC t m m`  | toggle the minor mode lighters                                      |
-| `SPC t m M`  | toggle the major mode                                               |
+| `SPC t m m`  | toggle the major mode lighters                                      |
+| `SPC t m M`  | toggle the filetype section                                         |
 | `SPC t m n`  | toggle the cat! (If colors layer is declared in your dotfile)(TODO) |
 | `SPC t m p`  | toggle the cursor position                                          |
 | `SPC t m t`  | toggle the time                                                     |
@@ -679,7 +679,7 @@ By default SpaceVim uses nerd-fonts, which can be downloaded from their [website
 
 **syntax checking integration:**
 
-When syntax checking minor mode is enabled, a new element appears showing the number of errors and warnings.
+When syntax checking major mode is enabled, a new element appears showing the number of errors and warnings.
 
 **Search index integration:**
 
@@ -729,9 +729,9 @@ Here is an exhaustive set of screenshots for all the available separators:
 | `nil`     | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)   |
 | `fire`    | ![separator-fire](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)  |
 
-**Minor Modes:**
+**major modes:**
 
-The minor mode area can be toggled on and off with `SPC t m m`.
+The major mode area can be toggled on and off with `SPC t m m`.
 
 Unicode symbols are displayed by default. Add `statusline_unicode = false` to your custom configuration file to use ASCII characters instead (may be useful in the terminal if you cannot set an appropriate font).
 
@@ -745,6 +745,15 @@ The letters displayed in the statusline correspond to the key bindings used to t
 | `SPC t S`    | Ⓢ       | S     | enabled in spell checking                       |
 | `SPC t w`    | ⓦ       | w     | whitespace mode (highlight trailing whitespace) |
 | `SPC t W`    | Ⓦ       | W     | wrap line mode                                  |
+
+The status of major mode will be cached, the cache will be loaded when spacevim startup.
+If you want to disable major mode cache, you need to charge the layer option of `core#statusline` layer.
+
+```toml
+[[layers]]
+  name = 'core#statusline'
+  major_mode_cache = false
+```
 
 **colorscheme of statusline:**
 
@@ -2552,5 +2561,3 @@ export PATH=$PATH:$HOME/.SpaceVim/bin
 Use `svc` to open a file in the existing Vim server, or use `nsvc` to open a file in the existing Neovim server.
 
 ![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
-
-<!-- vim:set nowrap: -->

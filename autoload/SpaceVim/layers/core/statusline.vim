@@ -16,6 +16,9 @@
 "     name = 'core#statusline'
 "     enable = false
 " <
+" @subsection Layer options
+"
+" - `major_mode_cache`: Enable/disable major mode cache, enabled by default.
 
 scriptencoding utf-8
 
@@ -108,6 +111,10 @@ let s:modes = {
         \ 'desc' : 'wrap line mode',
         \ },
         \ }
+
+" the major_mode will be cached by default.
+
+let s:major_mode_cache = 1
 
 if SpaceVim#layers#isLoaded('checkers')
   call add(s:loaded_modes, 'syntax-checking')
@@ -733,9 +740,9 @@ endfunction
 " \ 'desc' : 'centered-cursor mode',
 " \ },
 function! SpaceVim#layers#core#statusline#register_mode(mode) abort
-  if has_key(s:modes, a:mode.key)
+  if has_key(s:modes, a:mode.key) && has_key(a:mode, 'func')
     let s:modes[a:mode.key]['func'] = a:mode.func
-    call SpaceVim#logger#info('the func has been added to mode:' . a:mode.key)
+    call SpaceVim#logger#debug('register major mode function:' . a:mode.key)
   else
     let s:modes[a:mode.key] = a:mode
   endif
@@ -744,15 +751,17 @@ endfunction
 
 
 " This func is used to toggle major mode in statusline
-
 function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
+  call SpaceVim#logger#debug('toggle major mode: ' . a:name)
   let mode = get(s:modes, a:name, {})
-  call SpaceVim#logger#info('try to call func of mode:' . a:name)
+  if empty(mode)
+    call SpaceVim#logger#debug('can not find major mode: ' . a:name)
+    return
+  endif
   if has_key(mode, 'func')
     let done = call(mode.func, [])
   else
     let done = 1
-    call SpaceVim#logger#info('no func found for mode:' . a:name)
   endif
   if index(s:loaded_modes, a:name) != -1
     call remove(s:loaded_modes, index(s:loaded_modes, a:name))
@@ -762,7 +771,9 @@ function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
     endif
   endif
   let &l:statusline = SpaceVim#layers#core#statusline#get(1)
-  call s:update_conf()
+  if s:major_mode_cache
+    call s:update_conf()
+  endif
 endfunction
 
 let s:section_old_pos = {
@@ -797,6 +808,10 @@ function! SpaceVim#layers#core#statusline#rsep() abort
   return get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
 endfunction
 
+function! SpaceVim#layers#core#statusline#set_variable(var) abort
+  let s:major_mode_cache = get(a:var, 'major_mode_cache', s:major_mode_cache)
+endfunction
+
 function! SpaceVim#layers#core#statusline#config() abort
   let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
   let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, s:i_separators['arrow'])
@@ -828,11 +843,14 @@ function! SpaceVim#layers#core#statusline#config() abort
         \ 'main': 'SpaceVim#layers#core#statusline#ctrlp',
         \ 'prog': 'SpaceVim#layers#core#statusline#ctrlp_status',
         \ }
-  if filereadable(expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'))
+  if filereadable(expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json')) && s:major_mode_cache
+    " the major mode is cashed in: ~\.cache\SpaceVim\major_mode.json
+    call SpaceVim#logger#debug('load cache from major_mode.json')
     let conf = s:JSON.json_decode(join(readfile(expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'), ''), ''))
     for key in keys(conf)
       if conf[key]
         " this function should be called silent.
+        call SpaceVim#logger#debug('cached major mode: ' . key)
         silent! call SpaceVim#layers#core#statusline#toggle_mode(key)
       endif
     endfor
@@ -840,11 +858,16 @@ function! SpaceVim#layers#core#statusline#config() abort
 endfunction
 
 function! s:update_conf() abort
+  call SpaceVim#logger#debug('write major mode to major_mode.json')
   let conf = {}
   for key in keys(s:modes)
     call extend(conf, {key : (index(s:loaded_modes, key) > -1 ? 1 : 0)})
   endfor
-  call writefile([s:JSON.json_encode(conf)], expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json'))
+  if writefile([s:JSON.json_encode(conf)], expand(g:spacevim_data_dir . 'SpaceVim/major_mode.json')) == 0
+    call SpaceVim#logger#debug('update major_mode.json done')
+  else
+    call SpaceVim#logger#debug('failed to update major_mode.json')
+  endif
 endfunction
 
 " Arguments:
