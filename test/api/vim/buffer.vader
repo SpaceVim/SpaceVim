@@ -12,11 +12,6 @@ Execute ( SpaceVim api: vim#buffer buf_set_lines):
   Log 'bufnr is ' . nr
   call setbufvar(nr, '&buftype', 'nofile')
   call setbufvar(nr, '&buflisted', 0)
-  py3 import sys
-  py3 print(sys.version)
-  for line in split(v:errmsg, "\n")
-    Log line
-  endfor
   Log 'The value of g:_spacevim_if_lua is ' . get(g:, '_spacevim_if_lua', 0)
   call buffer.buf_set_lines(nr, 0, 1, 0, ['line 1', 'line 2', 'line 3', 'line 4'])
   for line in split(v:errmsg, "\n")
