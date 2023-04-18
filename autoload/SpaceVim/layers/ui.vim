@@ -142,7 +142,7 @@ function! SpaceVim#layers#ui#config() abort
   " enable/disable indentline
   let g:indentLine_enabled = s:enable_indentline
   " this var must be boolean, but v:true is added in vim 7.4.1154
-  let g:indent_blankline_enabled = 
+  let g:indent_blankline_enabled =
         \ s:enable_indentline ?
         \ get(v:, 'true', 1)
         \ :
@@ -154,6 +154,7 @@ function! SpaceVim#layers#ui#config() abort
   let g:indent_blankline_filetype_exclude = s:indentline_exclude_filetype
         \ + ['startify', 'gitcommit', 'defx']
 
+  " option for better-whitespace
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite',
         \ 'qf', 'help', 'markdown', 'leaderGuide',
         \ 'startify'
