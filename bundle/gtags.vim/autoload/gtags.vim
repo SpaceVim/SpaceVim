@@ -355,7 +355,7 @@ endfunction
 " RunGlobal()
 "
 function! gtags#global(line) abort
-  call gtags#logger#log('info', a:line)
+  call s:LOGGER.debug('info', a:line)
   let l:pattern = s:Extract(a:line, 'pattern')
 
   if l:pattern ==# '%'
