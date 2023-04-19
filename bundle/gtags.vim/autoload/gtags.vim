@@ -225,7 +225,13 @@ function! s:ExecGlobal(cmd) abort
     let l:restore_gtagsdbpath = 1
   endif
 
+  call s:LOGGER.debug('$GTAGSROOT is: ' . $GTAGSROOT)
+  call s:LOGGER.debug('$GTAGSDBPATH is: ' . $GTAGSDBPATH)
+  call s:LOGGER.debug('cmd is: ' . a:cmd)
   let l:result = system(a:cmd)
+  if v:shell_error !=# 0
+    call s:LOGGER.debug('failed to run, v:shell_error is ' . v:shell_error)
+  endif
 
   " restore $GTAGSROOT and $GTAGSDBPATH to make it possible to switch
   " between multiple projects or parent/child projects
@@ -278,7 +284,7 @@ function! s:ExecLoad(option, long_option, pattern) abort
     elseif v:shell_error == 3
       call s:Error('GTAGS not found.')
     else
-      call s:Error('global command failed. command line: ' . l:cmd)
+      call s:Error('global command failed.')
     endif
     return
   endif
