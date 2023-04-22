@@ -8,7 +8,14 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:NOTI = SpaceVim#api#import('notify')
 
+let s:push_jobid = 0
+
 function! git#push#run(...) abort
+
+  if s:push_jobid != 0
+    call s:NOTI.notify('previous push not finished')
+    return
+  endif
 
   let s:NOTI.notify_max_width = float2nr( &columns * 0.3)
   let s:std_data = {
@@ -19,12 +26,17 @@ function! git#push#run(...) abort
   if len(a:1) > 0
     let cmd += a:1
   endif
-  call s:JOB.start(cmd, {
+  let s:push_jobid = s:JOB.start(cmd, {
         \ 'on_stdout' : function('s:on_stdout'),
         \ 'on_stderr' : function('s:on_stderr'),
         \ 'on_exit' : function('s:on_exit'),
         \ }
         \ )
+
+  if s:push_jobid == -1
+    call s:NOTI.notify('`git` is not executable')
+    let s:push_jobid = 0
+  endif
 
 endfunction
 
@@ -40,6 +52,7 @@ function! s:on_exit(id, data, event) abort
       call s:NOTI.notify(line)
     endfor
   endif
+  let s:push_jobid = 0
 endfunction
 
 
