@@ -51,6 +51,10 @@ function! SpaceVim#layers#telescope#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope-ctags-outline.nvim', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/neoyank.vim',        { 'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope-fzf-native.nvim',        { 'merged' : 0}])
+  if g:spacevim_snippet_engine ==# 'ultisnips'
+    call add(plugins, ['fhill2/telescope-ultisnips.nvim', { 'merged' : 0}])
+  endif
+
   return plugins
 endfunction
 
@@ -309,6 +313,20 @@ function! s:defind_fuzzy_finder() abort
           \ 'Definition: ' . s:file . ':' . lnum,
           \ ]
           \ ]
+
+  if g:spacevim_snippet_engine ==# 'ultisnips'
+    nnoremap <silent> <Leader>fs  :<C-u>Telescope ultisnips<CR>
+    let lnum = expand('<slnum>') + s:unite_lnum - 4
+    let g:_spacevim_mappings.f.s = ['Telescope ultisnips',
+          \ 'fuzzy find ultisnips snippets',
+          \ [
+            \ '[Leader f s] is to fuzzy find ultisnips snippets',
+            \ '',
+            \ 'Definition: ' . s:file . ':' . lnum,
+            \ ]
+            \ ]
+  endif
+
 
   let lnum = expand('<slnum>') + s:unite_lnum - 4
   call SpaceVim#mapping#space#def('nnoremap', ['f', 'v', 's'], 'Telescope scriptnames',

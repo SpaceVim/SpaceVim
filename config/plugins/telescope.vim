@@ -11,6 +11,10 @@ if filereadable(g:_spacevim_root_dir . 'bundle/telescope-fzf-native.nvim/build/l
       \ || filereadable(g:_spacevim_root_dir . 'bundle/telescope-fzf-native.nvim/build/libfzf.dll')
   lua require('telescope').load_extension('fzf')
 endif
+if g:spacevim_snippet_engine ==# 'ultisnips'
+  lua require('telescope').load_extension('ultisnips')
+endif
+
 lua <<EOF
 local actions = require("telescope.actions")
 require("telescope").setup{
