@@ -38,3 +38,4 @@ SpaceVim uses `f` as the default customized key binding prefix for telescope lay
 | `<Leader> f t`       | Fuzzy find tags               |
 | `<Leader> f q`       | Fuzzy find quick fix          |
 | `<Leader> f r`       | Resumes telescope window      |
+| `<Leader> f s`       | Fuzzy find Ultisnips snippets (if `snippet_engine = "ultisnips"`) |
