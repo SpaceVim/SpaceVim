@@ -24,7 +24,7 @@ endfunction
 
 function! git#add#run(argvs) abort
   let cmd = ['git', 'add'] + s:replace_argvs(a:argvs)
-  call git#logger#info('git-add cmd:' . string(cmd))
+  call git#logger#debug('git-add cmd:' . string(cmd))
   call s:JOB.start(cmd,
         \ {
           \ 'on_exit' : function('s:on_exit'),
@@ -34,7 +34,7 @@ function! git#add#run(argvs) abort
 endfunction
 
 function! s:on_exit(id, data, event) abort
-  call git#logger#info('git-add exit data:' . string(a:data))
+  call git#logger#debug('git-add exit data:' . string(a:data))
   if a:data ==# 0
     if exists(':GitGutter')
       GitGutter

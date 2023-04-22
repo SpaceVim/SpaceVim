@@ -3,7 +3,7 @@ let s:JOB = SpaceVim#api#import('job')
 function! git#checkout#run(args)
 
     let cmd = ['git', 'checkout'] + a:args
-    call git#logger#info('git-checkout cmd:' . string(cmd))
+    call git#logger#debug('git-checkout cmd:' . string(cmd))
     call s:JOB.start(cmd,
                 \ {
                 \ 'on_exit' : function('s:on_exit'),
@@ -13,7 +13,7 @@ function! git#checkout#run(args)
 endfunction
 
 function! s:on_exit(id, data, event) abort
-    call git#logger#info('git-checkout exit data:' . string(a:data))
+    call git#logger#debug('git-checkout exit data:' . string(a:data))
     if a:data ==# 0
         silent! checktime
         echo 'checkout done'

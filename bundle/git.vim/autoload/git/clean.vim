@@ -12,7 +12,7 @@ let s:NOTI = SpaceVim#api#import('notify')
 function! git#clean#run(argvs) abort
 
   let cmd = ['git', 'clean'] + a:argvs
-  call git#logger#info('git-clean cmd:' . string(cmd))
+  call git#logger#debug('git-clean cmd:' . string(cmd))
   call s:JOB.start(cmd,
         \ {
           \ 'on_stdout' : function('s:on_stdout'),
@@ -31,7 +31,7 @@ function! s:on_stderr(id, data, event) abort
 endfunction
 
 function! s:on_exit(id, data, event) abort
-  call git#logger#info('git-clean exit data:' . string(a:data))
+  call git#logger#debug('git-clean exit data:' . string(a:data))
   if a:data ==# 0
     call s:NOTI.notify('stage files done!')
   else

@@ -57,7 +57,7 @@ function! s:on_stdout(id, data, event) abort
     return
   endif
   for data in a:data
-    call git#logger#info('git-commit stdout:' . data)
+    call git#logger#debug('git-commit stdout:' . data)
   endfor
   let s:commit_context += a:data
 endfunction
@@ -67,7 +67,7 @@ function! s:on_stderr(id, data, event) abort
     return
   endif
   for data in a:data
-    call git#logger#info('git-commit stderr:' . data)
+    call git#logger#debug('git-commit stderr:' . data)
   endfor
   " stderr should not be added to commit buffer
   " let s:commit_context += a:data
@@ -77,7 +77,7 @@ function! s:on_exit(id, data, event) abort
     " ignore previous git commit job
     return
   endif
-  call git#logger#info('git-exit exit data:' . string(a:data))
+  call git#logger#debug('git-exit exit data:' . string(a:data))
   if s:commit_bufnr == -1
     if a:data ==# 0
       call s:NOTI.notify('commit done!')
@@ -141,7 +141,7 @@ function! s:WinLeave() abort
 endfunction
 
 function! s:on_commit_exit(id, data, event) abort
-  call git#logger#info('git-commit exit data:' . string(a:data))
+  call git#logger#debug('git-commit exit data:' . string(a:data))
   if a:data ==# 0
     call s:NOTI.notify('commit done!')
   else

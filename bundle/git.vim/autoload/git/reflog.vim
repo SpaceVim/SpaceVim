@@ -5,7 +5,7 @@ function! git#reflog#run(args)
     let cmd = ['git', 'reflog'] + a:args
     let s:bufnr = s:openRefLogBuffer()
     let s:lines = []
-    call git#logger#info('git-reflog cmd:' . string(cmd))
+    call git#logger#debug('git-reflog cmd:' . string(cmd))
     call s:JOB.start(cmd,
                 \ {
                 \ 'on_stderr' : function('s:on_stderr'),
@@ -17,18 +17,18 @@ endfunction
 
 function! s:on_stdout(id, data, event) abort
     for data in a:data
-        call git#logger#info('git-reflog stdout:' . data)
+        call git#logger#debug('git-reflog stdout:' . data)
     endfor
     let s:lines += filter(a:data, '!empty(v:val)')
 endfunction
 function! s:on_stderr(id, data, event) abort
     for data in a:data
-        call git#logger#info('git-reflog stderr:' . data)
+        call git#logger#debug('git-reflog stderr:' . data)
     endfor
     let s:lines += a:data
 endfunction
 function! s:on_exit(id, data, event) abort
-    call git#logger#info('git-reflog exit data:' . string(a:data))
+    call git#logger#debug('git-reflog exit data:' . string(a:data))
     call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, s:lines)
 endfunction
 

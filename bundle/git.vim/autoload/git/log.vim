@@ -11,7 +11,7 @@ function! git#log#run(...) abort
   else
     let cmd = ['git', 'log', '--graph', '--date=relative', '--pretty=' . g:git_log_pretty] + a:1
   endif
-  call git#logger#info('git-log cmd:' . string(cmd))
+  call git#logger#debug('git-log cmd:' . string(cmd))
   call s:JOB.start(cmd,
         \ {
           \ 'on_stderr' : function('s:on_stderr'),
@@ -35,7 +35,7 @@ function! s:on_stderr(id, data, event) abort
   endfor
 endfunction
 function! s:on_exit(id, data, event) abort
-  call git#logger#info('git-log exit data:' . string(a:data))
+  call git#logger#debug('git-log exit data:' . string(a:data))
 endfunction
 
 function! s:openLogBuffer() abort
@@ -81,18 +81,18 @@ endfunction
 
 function! s:on_show_stdout(id, data, event) abort
   for data in a:data
-    call git#logger#info('git-show stdout:' . data)
+    call git#logger#debug('git-show stdout:' . data)
   endfor
   let s:show_lines += filter(a:data, '!empty(v:val)')
 endfunction
 function! s:on_show_stderr(id, data, event) abort
   for data in a:data
-    call git#logger#info('git-show stderr:' . data)
+    call git#logger#debug('git-show stderr:' . data)
   endfor
   let s:show_lines += filter(a:data, '!empty(v:val)')
 endfunction
 function! s:on_show_exit(id, data, event) abort
-  call git#logger#info('git-show exit data:' . string(a:data))
+  call git#logger#debug('git-show exit data:' . string(a:data))
   call s:BUFFER.buf_set_lines(s:show_commit_buffer, 0 , -1, 0, s:show_lines)
 endfunction
 function! s:openShowCommitBuffer() abort

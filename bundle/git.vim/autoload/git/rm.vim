@@ -16,7 +16,7 @@ function! git#rm#run(files) abort
     else
         let cmd = ['git', 'rm'] + a:files
     endif
-    call git#logger#info('git-rm cmd:' . string(cmd))
+    call git#logger#debug('git-rm cmd:' . string(cmd))
     call s:JOB.start(cmd,
                 \ {
                 \ 'on_exit' : function('s:on_exit'),
@@ -26,7 +26,7 @@ function! git#rm#run(files) abort
 endfunction
 
 function! s:on_exit(id, data, event) abort
-    call git#logger#info('git-rm exit data:' . string(a:data))
+    call git#logger#debug('git-rm exit data:' . string(a:data))
     if a:data ==# 0
         if exists(':GitGutter')
             GitGutter

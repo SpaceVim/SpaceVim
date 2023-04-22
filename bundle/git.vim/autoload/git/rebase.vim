@@ -14,7 +14,7 @@ function! git#rebase#run(...) abort
   else
     finish
   endif
-  call git#logger#info('git-rebase cmd:' . string(cmd))
+  call git#logger#debug('git-rebase cmd:' . string(cmd))
   call s:JOB.start(cmd,
         \ {
         \ 'on_stderr' : function('s:on_stderr'),
@@ -26,19 +26,19 @@ endfunction
 
 function! s:on_stdout(id, data, event) abort
   for data in a:data
-    call git#logger#info('git-rebase stdout:' . data)
+    call git#logger#debug('git-rebase stdout:' . data)
   endfor
   let s:lines += a:data
 endfunction
 function! s:on_stderr(id, data, event) abort
   for data in a:data
-    call git#logger#info('git-rebase stderr:' . data)
+    call git#logger#debug('git-rebase stderr:' . data)
   endfor
   " stderr should not be added to commit buffer
   " let s:lines += a:data
 endfunction
 function! s:on_exit(id, data, event) abort
-  call git#logger#info('git-rebase exit data:' . string(a:data))
+  call git#logger#debug('git-rebase exit data:' . string(a:data))
   call s:BUFFER.buf_set_lines(s:bufnr, 0 , -1, 0, s:lines)
 endfunction
 
@@ -83,7 +83,7 @@ endfunction
 function! s:WinLeave() abort
   if b:git_rebase_quitpre == 1
     let cmd = ['git', 'rebase', '--continue']
-    call git#logger#info('git-rebase cmd:' . string(cmd))
+    call git#logger#debug('git-rebase cmd:' . string(cmd))
     let id = s:JOB.start(cmd,
           \ {
           \ 'on_exit' : function('s:on_rebase_continue'),
@@ -94,7 +94,7 @@ function! s:WinLeave() abort
 endfunction
 
 function! s:on_rebase_continue(id, data, event) abort
-  call git#logger#info('git-rebase exit data:' . string(a:data))
+  call git#logger#debug('git-rebase exit data:' . string(a:data))
   if a:data ==# 0
     echo 'done!'
   else

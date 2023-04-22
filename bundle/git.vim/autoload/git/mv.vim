@@ -17,7 +17,7 @@ function! git#mv#run(args) abort
     let args[index] = expand('%')
   endif
   let cmd = ['git', 'mv'] + args
-  call git#logger#info('git-mv cmd:' . string(cmd))
+  call git#logger#debug('git-mv cmd:' . string(cmd))
   call s:JOB.start(cmd,
         \ {
           \ 'on_exit' : function('s:on_exit'),
@@ -27,7 +27,7 @@ function! git#mv#run(args) abort
 endfunction
 
 function! s:on_exit(id, data, event) abort
-  call git#logger#info('git-mv exit data:' . string(a:data))
+  call git#logger#debug('git-mv exit data:' . string(a:data))
   if a:data ==# 0
     if exists(':GitGutter')
       GitGutter

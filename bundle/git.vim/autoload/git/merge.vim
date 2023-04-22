@@ -6,7 +6,7 @@ function! git#merge#run(args)
     else
         let cmd = ['git', 'merge'] + a:args
     endif
-    call git#logger#info('git-merge cmd:' . string(cmd))
+    call git#logger#debug('git-merge cmd:' . string(cmd))
     let s:conflict_files = []
     call s:JOB.start(cmd,
                 \ {
@@ -19,7 +19,7 @@ function! git#merge#run(args)
 endfunction
 
 function! s:on_exit(id, data, event) abort
-    call git#logger#info('git-merge exit data:' . string(a:data))
+    call git#logger#debug('git-merge exit data:' . string(a:data))
     if a:data ==# 0
         echo 'merged done!'
     else
@@ -30,7 +30,7 @@ endfunction
 
 function! s:on_stdout(id, data, event) abort
     for data in a:data
-        call git#logger#info('git-merge stdout:' . data)
+        call git#logger#debug('git-merge stdout:' . data)
         if data =~# '^CONFLICT'
             " CONFLICT (content): Merge conflict in test.txt
             let file = data[38:]
@@ -41,7 +41,7 @@ endfunction
 
 function! s:on_stderr(id, data, event) abort
     for data in a:data
-        call git#logger#info('git-merge stderr:' . data)
+        call git#logger#debug('git-merge stderr:' . data)
     endfor
     " stderr should not be added to commit buffer
     " let s:lines += a:data

@@ -3,7 +3,7 @@ let s:JOB = SpaceVim#api#import('job')
 function! git#fetch#run(args)
 
     let cmd = ['git', 'fetch'] + a:args
-    call git#logger#info('git-fetch cmd:' . string(cmd))
+    call git#logger#debug('git-fetch cmd:' . string(cmd))
     call s:JOB.start(cmd,
                 \ {
                 \ 'on_exit' : function('s:on_exit'),
@@ -13,7 +13,7 @@ function! git#fetch#run(args)
 endfunction
 
 function! s:on_exit(id, data, event) abort
-    call git#logger#info('git-fetch exit data:' . string(a:data))
+    call git#logger#debug('git-fetch exit data:' . string(a:data))
     if a:data ==# 0
         echo 'fetch done!'
     else

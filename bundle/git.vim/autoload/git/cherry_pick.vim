@@ -14,7 +14,7 @@ function! git#cherry_pick#run(args) abort
   else
     let cmd = ['git', 'cherry-pick'] + a:args
   endif
-  call git#logger#info('git-cherry-pick cmd:' . string(cmd))
+  call git#logger#debug('git-cherry-pick cmd:' . string(cmd))
   let s:conflict_files = []
   call s:JOB.start(cmd,
         \ {
@@ -27,7 +27,7 @@ function! git#cherry_pick#run(args) abort
 endfunction
 
 function! s:on_exit(id, data, event) abort
-  call git#logger#info('git-cherry-pick exit data:' . string(a:data))
+  call git#logger#debug('git-cherry-pick exit data:' . string(a:data))
   if a:data ==# 0
     echo 'cherry-pick done!'
   else
@@ -41,7 +41,7 @@ endfunction
 
 function! s:on_stdout(id, data, event) abort
   for data in a:data
-    call git#logger#info('git-cherry-pick stdout:' . data)
+    call git#logger#debug('git-cherry-pick stdout:' . data)
     if data =~# '^CONFLICT'
       " CONFLICT (content): Merge conflict in test.txt
       let file = data[38:]
@@ -52,7 +52,7 @@ endfunction
 
 function! s:on_stderr(id, data, event) abort
   for data in a:data
-    call git#logger#info('git-cherry-pick stderr:' . data)
+    call git#logger#debug('git-cherry-pick stderr:' . data)
   endfor
   " stderr should not be added to commit buffer
   " let s:lines += a:data
