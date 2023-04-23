@@ -45,8 +45,10 @@ let s:FILE = SpaceVim#api#import('file')
 let s:VIM = SpaceVim#api#import('vim')
 let s:SYS = SpaceVim#api#import('system')
 let s:ICONV = SpaceVim#api#import('iconv')
+let s:NOTI = SpaceVim#api#import('notify')
 
 let s:LOGGER =SpaceVim#logger#derive('runner')
+call s:LOGGER.start_debug()
 
 " use code runner buffer for tab
 "
@@ -517,7 +519,7 @@ function! s:on_backgroud_exit(job_id, data, event) abort
   if !empty(task_problem_matcher) && !empty(output)
     call s:match_problems(output, task_problem_matcher)
   endif
-  echo 'task finished with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(end_time)) . ' seconds'
+  call s:NOTI.notify('task finished with code=' . a:data . ' in ' . s:STRING.trim(reltimestr(end_time)) . ' seconds')
 endfunction
 
 function! s:run_backgroud(cmd, ...) abort
@@ -526,7 +528,7 @@ function! s:run_backgroud(cmd, ...) abort
   " echo 'tasks: 1 running, 2 done'
   let running_nr = len(filter(values(s:task_status), 'v:val.is_running')) + 1
   let running_done = len(filter(values(s:task_status), '!v:val.is_running'))
-  echo printf('tasks: %s running, %s done', running_nr, running_done)
+  call s:NOTI.notify(printf('tasks: %s running, %s done', running_nr, running_done))
   let opts = get(a:000, 0, {})
   " this line can not be removed.
   let s:start_time = reltime()
