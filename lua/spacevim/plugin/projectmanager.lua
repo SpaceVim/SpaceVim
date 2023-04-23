@@ -7,6 +7,11 @@
 --=============================================================================
 
 local logger = require('spacevim.logger').derive('project')
+
+
+-- start debug mode
+logger.start_debug()
+
 local sp = require('spacevim')
 local sp_file = require('spacevim.api.file')
 local sp_json = require('spacevim.api.data.json')

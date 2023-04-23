@@ -61,6 +61,7 @@ else
   " the name projectmanager is too long
   " use rooter instead
   let s:LOGGER =SpaceVim#logger#derive('rooter')
+  call s:LOGGER.start_debug()
   let s:TIME = SpaceVim#api#import('time')
   let s:JSON = SpaceVim#api#import('data#json')
   let s:LIST = SpaceVim#api#import('data#list')
