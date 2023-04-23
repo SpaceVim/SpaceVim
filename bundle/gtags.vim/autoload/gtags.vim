@@ -1,6 +1,7 @@
 scriptencoding utf-8
 
-let s:LOGGER =SpaceVim#logger#derive('gtags')
+let s:LOGGER = SpaceVim#logger#derive('gtags')
+call s:LOGGER.start_debug()
 
 if !executable('gtags')
   call s:LOGGER.warn('gtags is not executable, you need to install gnu global!')
@@ -12,6 +13,7 @@ if exists('g:loaded_gtags')
 endif
 let s:JOB = SpaceVim#api#import('job')
 let s:FILE = SpaceVim#api#import('file')
+let s:NOTI = SpaceVim#api#import('notify')
 
 let g:loaded_gtags = 1
 let s:version = split(matchstr(split(system('gtags --version'), '\n')[0], '[0-9]\+\.[0-9]\+'), '\.')
@@ -124,9 +126,9 @@ endif
 " Display error message.
 "
 function! s:Error(msg) abort
-  echohl WarningMsg |
-        \ echomsg 'Error: ' . a:msg |
-        \ echohl None
+  " use notify to display error message
+  "
+  call s:NOTI.notify(a:msg, 'WarningMsg')
 endfunction
 "
 " Extract pattern or option string.
@@ -223,7 +225,13 @@ function! s:ExecGlobal(cmd) abort
     let l:restore_gtagsdbpath = 1
   endif
 
+  call s:LOGGER.debug('$GTAGSROOT is: ' . $GTAGSROOT)
+  call s:LOGGER.debug('$GTAGSDBPATH is: ' . $GTAGSDBPATH)
+  call s:LOGGER.debug('cmd is: ' . a:cmd)
   let l:result = system(a:cmd)
+  if v:shell_error !=# 0
+    call s:LOGGER.debug('failed to run, v:shell_error is ' . v:shell_error)
+  endif
 
   " restore $GTAGSROOT and $GTAGSDBPATH to make it possible to switch
   " between multiple projects or parent/child projects
@@ -276,7 +284,7 @@ function! s:ExecLoad(option, long_option, pattern) abort
     elseif v:shell_error == 3
       call s:Error('GTAGS not found.')
     else
-      call s:Error('global command failed. command line: ' . l:cmd)
+      call s:Error('global command failed.')
     endif
     return
   endif
@@ -353,7 +361,7 @@ endfunction
 " RunGlobal()
 "
 function! gtags#global(line) abort
-  call gtags#logger#log('info', a:line)
+  call s:LOGGER.debug('gtags global command: Gtags ' . a:line)
   let l:pattern = s:Extract(a:line, 'pattern')
 
   if l:pattern ==# '%'
@@ -459,8 +467,17 @@ endfunction
 
 
 function! gtags#update(single_update) abort
+  call s:LOGGER.debug('start to update gtags database')
   let dir = s:FILE.unify_path(g:tags_cache_dir) 
         \ . s:FILE.path_to_fname(SpaceVim#plugins#projectmanager#current_root())
+  call s:LOGGER.debug('            dir:' . dir)
+  call s:LOGGER.debug('         single:' . a:single_update)
+  if !isdirectory(dir)
+    if !mkdir(dir, 'p')
+      call s:LOGGER.debug('failed to create dir:' . dir)
+      return
+    endif
+  endif
   let cmd = ['gtags']
   if !empty(g:gtags_gtagslabel)
     let cmd += ['--gtagslabel=' . g:gtags_gtagslabel]
@@ -470,11 +487,9 @@ function! gtags#update(single_update) abort
   else
     let cmd += ['--skip-unreadable']
   endif
-  if !isdirectory(dir)
-    call mkdir(dir, 'p')
-  endif
   let cmd += ['-O', dir]
-  call s:JOB.start(cmd, {'on_exit' : funcref('s:on_update_exit')})
+  call s:LOGGER.debug('      gtags cmd:' . string(cmd))
+  call s:LOGGER.debug('   gtags job id:' . s:JOB.start(cmd, {'on_exit' : funcref('s:on_update_exit')}))
 endfunction
 
 function! s:on_update_exit(id, data, event) abort
