@@ -213,18 +213,6 @@ function! s:TrimOption(option) abort
 endfunction
 
 function! s:ExecGlobal(cmd) abort
-  let l:restore_gtagsroot = 0
-  if empty($GTAGSROOT)
-    let $GTAGSROOT = SpaceVim#plugins#projectmanager#current_root()
-    let l:restore_gtagsroot = 1
-  endif
-
-  let l:restore_gtagsdbpath = 0
-  if empty($GTAGSDBPATH)
-    let $GTAGSDBPATH = s:FILE.unify_path(g:tags_cache_dir) . s:FILE.path_to_fname($GTAGSROOT)
-    let l:restore_gtagsdbpath = 1
-  endif
-
   call s:LOGGER.debug('$GTAGSROOT is: ' . $GTAGSROOT)
   call s:LOGGER.debug('$GTAGSDBPATH is: ' . $GTAGSDBPATH)
   call s:LOGGER.debug('cmd is: ' . a:cmd)
@@ -232,17 +220,6 @@ function! s:ExecGlobal(cmd) abort
   if v:shell_error !=# 0
     call s:LOGGER.debug('failed to run, v:shell_error is ' . v:shell_error)
   endif
-
-  " restore $GTAGSROOT and $GTAGSDBPATH to make it possible to switch
-  " between multiple projects or parent/child projects
-  if l:restore_gtagsroot
-    let $GTAGSROOT = ''
-  endif
-
-  if l:restore_gtagsdbpath
-    let $GTAGSDBPATH = ''
-  endif
-
   return l:result
 endfunction
 

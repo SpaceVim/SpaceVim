@@ -40,7 +40,7 @@ let s:FILE = SpaceVim#api#import('file')
 
 let s:gtagslabel = ''
 let s:auto_update = 1
-let g:tags_cache_dir = g:spacevim_data_dir . 'SpaceVim/tags/'
+let g:tags_cache_dir = g:spacevim_data_dir . 'SpaceVim' . s:FILE.separator . 'tags' . s:FILE.separator
 let g:gtags_open_list = 2
 
 function! SpaceVim#layers#gtags#plugins() abort
@@ -61,6 +61,7 @@ function! SpaceVim#layers#gtags#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'f'], 'Gtags -f %', 'list of objects', 1)
   let g:gtags_gtagslabel = s:gtagslabel
   call SpaceVim#plugins#projectmanager#reg_callback(function('s:update_ctags_option'))
+  call SpaceVim#plugins#projectmanager#reg_callback(function('s:update_gtags_option'))
   if s:auto_update
     augroup spacevim_layer_gtags
       autocmd!
@@ -121,4 +122,9 @@ function! s:update_ctags_option() abort
   let tags = filter(split(&tags, ','), 'v:val !~# ".cache/SpaceVim/tags"')
   call add(tags, dir . '/tags')
   let &tags = join(tags, ',')
+endfunction
+
+function! s:update_gtags_option() abort
+    let $GTAGSROOT = getcwd()
+    let $GTAGSDBPATH = g:tags_cache_dir. s:FILE.path_to_fname($GTAGSROOT)
 endfunction
