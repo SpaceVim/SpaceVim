@@ -106,7 +106,7 @@ end
 function M.derive(name)
   local derive = {
     origin_name = logger.get_name(),
-    _debug_mode = false,
+    _debug_mode = true,
     derive_name = fn.printf('%' .. fn.strdisplaywidth(logger.get_name()) .. 'S', name),
   }
 

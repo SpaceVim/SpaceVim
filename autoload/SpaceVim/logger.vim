@@ -206,8 +206,7 @@ else
 
   let s:derive = {}
   let s:derive.origin_name = s:LOGGER.get_name()
-  " let s:derive._debug_mode = v:false
-  let s:derive._debug_mode = 0
+  let s:derive._debug_mode = 1
 
   function! s:derive.info(msg) abort
     call s:LOGGER.set_name(self.derive_name)
