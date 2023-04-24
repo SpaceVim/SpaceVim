@@ -57,7 +57,7 @@ endfunction
 
 
 function! s:on_stdout(id, data, event) abort
-  for line in filter(a:data, '!empty(v:val) && v:val !=# "^remote:"')
+  for line in filter(a:data, '!empty(v:val) && v:val !~# "^remote:"')
     let s:NOTI.notify_max_width = max([strwidth(line) + 5, s:NOTI.notify_max_width])
     call s:NOTI.notify(line, 'Normal')
   endfor
@@ -69,7 +69,7 @@ endfunction
 " why git push normal info to stderr
 
 function! s:on_stderr(id, data, event) abort
-  call extend(s:std_data.stderr, filter(a:data, '!empty(v:val) && v:val !=# "^remote:"'))
+  call extend(s:std_data.stderr, filter(a:data, '!empty(v:val) && v:val !~# "^remote:"'))
 endfunction
 
 function! s:options() abort
