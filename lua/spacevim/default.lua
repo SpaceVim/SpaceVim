@@ -35,9 +35,9 @@ function M.options()
             )
         end
 
-        if SYSTEM.isWindows then
+        if SYSTEM.isWindows == 1 then
             guifont = "DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT"
-        elseif SYSTEM.isOSX then
+        elseif SYSTEM.isOSX == 1 then
             guifont = "DejaVu Sans Mono for Powerline:h11"
         else
             guifont = "DejaVu Sans Mono for Powerline 11"
