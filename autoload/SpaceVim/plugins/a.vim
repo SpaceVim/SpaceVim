@@ -47,7 +47,8 @@ else
   let s:CMP = SpaceVim#api#import('vim#compatible')
   let s:JSON = SpaceVim#api#import('data#json')
   let s:FILE = SpaceVim#api#import('file')
-  let s:LOGGER =SpaceVim#logger#derive('a.vim')
+  let s:LOGGER = SpaceVim#logger#derive('a.vim')
+  let s:TOML = SpaceVim#api#import('data#toml')
 
 
   " local value
@@ -81,10 +82,15 @@ else
 
   " when this function is called, the project_config file name is changed, and
   " the project_config info is cleared.
+  " support toml file path
   function! s:get_project_config(conf_file) abort
     call s:LOGGER.info('read context from: '. a:conf_file)
-    let context = join(readfile(a:conf_file), "\n")
-    let conf = s:JSON.json_decode(context)
+    if a:conf_file =~# 'toml$'
+      let conf = s:TOML.parse_file(a:conf_file)
+    else
+      let context = join(readfile(a:conf_file), "\n")
+      let conf = s:JSON.json_decode(context)
+    endif
     if type(conf) !=# type({})
       " in Old vim we get E706
       " Variable type mismatch for conf, so we need to unlet conf first

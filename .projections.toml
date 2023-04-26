@@ -1,0 +1,3 @@
+[autoload/SpaceVim/api/*.vim]
+  doc = 'docs/api/{}.md'
+  alternate = "test/api/{}.vader"
