@@ -9,9 +9,6 @@
 
 local M = {}
 
-function! s:self.parse_file(filename) abort
-
-
 function M.parse(text) -- {{{
   
 end
