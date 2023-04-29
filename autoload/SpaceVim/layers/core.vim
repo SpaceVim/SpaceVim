@@ -48,6 +48,7 @@ let s:MESSAGE = SpaceVim#api#import('vim#message')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:NOTI = SpaceVim#api#import('notify')
 let s:HI = SpaceVim#api#import('vim#highlight')
+let s:CLOCK = SpaceVim#api#import('clock')
 
 
 function! SpaceVim#layers#core#plugins() abort
@@ -920,6 +921,7 @@ function! s:jump_transient_state() abort
 endfunction
 
 function! s:save_current_file() abort
+  call s:CLOCK.start()
   let v:errmsg = ''
   silent! write
   if v:errmsg !=# ''
@@ -928,7 +930,7 @@ function! s:save_current_file() abort
     echohl None
   else
     echohl Delimiter
-    echo  fnamemodify(bufname(), ':.:gs?[\\/]?/?') . ' written'
+    echo  fnamemodify(bufname(), ':.:gs?[\\/]?/?') . ' written ' . string(s:CLOCK.end()) . 's'
     echohl None
   endif
 endfunction
