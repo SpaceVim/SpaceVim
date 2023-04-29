@@ -288,6 +288,64 @@ EOT
             rm -rf detach/$1
             exit 0
             ;;
+        git.vim)
+            git clone https://github.com/wsdjeg/git.vim.git detach/$1
+            cd detach/$1
+            _checkdir autoload/SpaceVim/api
+            _detact autoload/SpaceVim/api.vim
+            _detact autoload/SpaceVim/api/job.vim
+            _detact_bundle git.vim LICENSE
+            _detact_bundle git.vim LICENSE
+            _detact_bundle git.vim README.md
+            _detact_bundle git.vim README.md
+            _detact_bundle git.vim addon-info.json
+            _checkdir autoload/git/branch
+            _detact_bundle git.vim autoload/git.vim
+            _detact_bundle git.vim autoload/git/add.vim
+            _detact_bundle git.vim autoload/git/blame.vim
+            _detact_bundle git.vim autoload/git/branch.vim
+            _detact_bundle git.vim autoload/git/branch/manager.vim
+            _detact_bundle git.vim autoload/git/checkout.vim
+            _detact_bundle git.vim autoload/git/cherry_pick.vim
+            _detact_bundle git.vim autoload/git/clean.vim
+            _detact_bundle git.vim autoload/git/commit.vim
+            _detact_bundle git.vim autoload/git/config.vim
+            _detact_bundle git.vim autoload/git/diff.vim
+            _detact_bundle git.vim autoload/git/fetch.vim
+            _detact_bundle git.vim autoload/git/log.vim
+            _detact_bundle git.vim autoload/git/logger.vim
+            _detact_bundle git.vim autoload/git/merge.vim
+            _detact_bundle git.vim autoload/git/mv.vim
+            _detact_bundle git.vim autoload/git/pull.vim
+            _detact_bundle git.vim autoload/git/push.vim
+            _detact_bundle git.vim autoload/git/rebase.vim
+            _detact_bundle git.vim autoload/git/reflog.vim
+            _detact_bundle git.vim autoload/git/remote.vim
+            _detact_bundle git.vim autoload/git/reset.vim
+            _detact_bundle git.vim autoload/git/rm.vim
+            _detact_bundle git.vim autoload/git/stash.vim
+            _detact_bundle git.vim autoload/git/status.vim
+            _checkdir doc
+            _detact_bundle git.vim doc/git.txt
+            _checkdir plugin
+            _detact_bundle git.vim plugin/git.vim
+            _checkdir syntax
+            _detact_bundle git.vim syntax/git-blame.vim
+            _detact_bundle git.vim syntax/git-commit.vim
+            _detact_bundle git.vim syntax/git-config.vim
+            _detact_bundle git.vim syntax/git-log.vim
+            _detact_bundle git.vim syntax/git-rebase.vim
+            _detact_bundle git.vim syntax/git-reflog.vim
+            git add .
+            git config user.email "wsdjeg@qq.com"
+            git config user.name  "SpaceVimBot"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
+            git remote add wsdjeg_git_vim https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/git.vim.git
+            git push wsdjeg_git_vim master 
+            cd -
+            rm -rf detach/$1
+            exit 0
+            ;;
         vim-cheat)
             git clone https://github.com/wsdjeg/vim-cheat.git detach/$1
             cd detach/$1

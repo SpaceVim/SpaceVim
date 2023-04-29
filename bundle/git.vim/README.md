@@ -56,8 +56,4 @@ This plugin adds extensive support for [git](https://git-scm.com/).
 
 ## Feedback
 
-This plugin is based on SpaceVim's API, make sure your SpaceVim is the latest version.
-
-To report bug or request new features about git.vim, please send me email.
-
-wsdjeg@outlook.com
+The development of this plugin is in [`SpaceVim/bundle/git.vim`](https://github.com/SpaceVim/SpaceVim/tree/master/bundle/git.vim) directory.
