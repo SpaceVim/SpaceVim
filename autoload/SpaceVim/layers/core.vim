@@ -922,6 +922,9 @@ endfunction
 
 function! s:save_current_file() abort
   call s:CLOCK.start()
+  profile start .profile.log
+  profile func *
+  profile file *
   let v:errmsg = ''
   silent! write
   if v:errmsg !=# ''
@@ -933,6 +936,7 @@ function! s:save_current_file() abort
     echo  fnamemodify(bufname(), ':.:gs?[\\/]?/?') . ' written ' . string(s:CLOCK.end()) . 's'
     echohl None
   endif
+  profile stop
 endfunction
 
 
