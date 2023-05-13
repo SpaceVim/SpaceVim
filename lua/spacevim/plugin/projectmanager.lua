@@ -159,7 +159,7 @@ local function compare(d1, d2)
   -- the project_rooter_outermost is 0/false or 1 true
   if sp_opt.project_rooter_outermost == 0
     or sp_opt.project_rooter_outermost == false then
-    if bl > al then
+    if bl >= al then
       return false
     else
       return true
