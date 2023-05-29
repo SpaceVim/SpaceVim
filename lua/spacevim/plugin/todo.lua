@@ -58,7 +58,7 @@ local function stdout(id, data, event) -- {{{
       local line = string.sub(d, i + 1, j - 1)
       local column = string.sub(vim.fn.matchstr(d, [[\(:\d\+\)\@<=:\d\+:]]), 1, -2)
       local label = string.sub(vim.fn.matchstr(d, labels_partten), #prefix + 1, -1)
-      local title = vim.fn.get(vim.fn.split(d, label), 1, '')
+      local title = vim.fn.get(vim.fn.split(d, prefix .. label), 1, '')
       table.insert(todos, {
         file = f,
         line = line,
