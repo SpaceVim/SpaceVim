@@ -1637,7 +1637,7 @@ function! s:parser_argv() abort
         return [1, fnamemodify(expand(v:argv[-1]), ':p')]
       elseif filereadable(v:argv[-1])
         return [2, get(v:, 'argv', ['failed to get v:argv'])]
-      elseif v:argv[-1] != '--embed'
+      elseif v:argv[-1] != '--embed' && get(v:argv, -2, '') != '--cmd'
         return [2, v:argv[-1]]
       else
         return [0]
@@ -1757,7 +1757,12 @@ function! SpaceVim#begin() abort
     call SpaceVim#logger#info('Startup with argv: ' . string(s:status[0]) )
   endif
   if has('nvim-0.7')
-    lua require('spacevim.default').options()
+    try
+      " @fixme unknown font error
+      lua require('spacevim.default').options()
+    catch
+      
+    endtry
   else
     call SpaceVim#default#options()
   endif
@@ -1795,7 +1800,12 @@ function! SpaceVim#welcome() abort
       NERDTree
       wincmd p
     elseif exists(':NvimTreeOpen') == 2
-      NvimTreeOpen
+      try
+        " @fixme there are some errors
+        NvimTreeOpen
+      catch
+        
+      endtry
       " the statusline of nvimtree is not udpated when open nvim tree in
       " welcome function
       doautocmd WinEnter
