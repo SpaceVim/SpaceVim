@@ -1761,7 +1761,7 @@ function! SpaceVim#begin() abort
       " @fixme unknown font error
       lua require('spacevim.default').options()
     catch
-      
+
     endtry
   else
     call SpaceVim#default#options()
@@ -1804,12 +1804,14 @@ function! SpaceVim#welcome() abort
         " @fixme there are some errors
         NvimTreeOpen
       catch
-        
+
       endtry
       " the statusline of nvimtree is not udpated when open nvim tree in
       " welcome function
       doautocmd WinEnter
       wincmd p
+    elseif exists(':Neotree') == 2
+      NeoTreeShow
     endif
   endif
 endfunction
