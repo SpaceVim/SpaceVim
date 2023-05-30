@@ -452,6 +452,13 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . ' NvimTree '
           \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c#'
           \ . s:lsep . ' '
+  elseif &filetype ==# 'neo-tree'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1)
+          \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b#'
+          \ . ' NeoTree '
+          \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+          \ . s:lsep . ' '
   elseif &filetype ==# 'Fuzzy'
     return '%#SpaceVim_statusline_a_bold# Fuzzy %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# %{fuzzy#statusline()} %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep 

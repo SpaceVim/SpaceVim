@@ -1,0 +1,122 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: luacheck
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get Cache Key
+        id: luver-cache-key
+        env:
+          CI_RUNNER_OS: ${{ runner.os }}
+          CI_SECRETS_CACHE_VERSION: ${{ secrets.CACHE_VERSION }}
+        run: |
+          echo "::set-output name=value::${CI_RUNNER_OS}-luver-${CI_SECRETS_CACHE_VERSION}-$(date -u +%Y-%m-%d)"
+        shell: bash
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.local/share/luver
+          key: ${{ steps.luver-cache-key.outputs.value }}
+      - name: Setup Lua
+        uses: MunifTanjim/luver-action@v1
+        with:
+          default: 5.1.5
+          lua_versions: 5.1.5
+          luarocks_versions: 5.1.5:3.8.0
+      - name: Setup luacheck
+        run: |
+          luarocks install luacheck
+      - name: Lint
+        run: ./scripts/lint.sh --no-cache
+
+  format:
+    name: stylua
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Check Format
+        uses: JohnnyMorganz/stylua-action@1.0.0
+        with:
+          version: 0.13.1
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --color always --check lua/
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get Cache Key
+        id: luver-cache-key
+        env:
+          CI_RUNNER_OS: ${{ runner.os }}
+          CI_SECRETS_CACHE_VERSION: ${{ secrets.CACHE_VERSION }}
+        run: |
+          echo "::set-output name=value::${CI_RUNNER_OS}-luver-${CI_SECRETS_CACHE_VERSION}-$(date -u +%Y-%m-%d)"
+        shell: bash
+      - name: Setup Cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.local/share/luver
+          key: ${{ steps.luver-cache-key.outputs.value }}
+      - name: Setup Lua
+        uses: MunifTanjim/luver-action@v1
+        with:
+          default: 5.1.5
+          lua_versions: 5.1.5
+          luarocks_versions: 5.1.5:3.8.0
+      - name: Setup luacov
+        run: |
+          luarocks install luacov
+      - name: Setup Neovim
+        uses: MunifTanjim/setup-neovim-action@v1
+        with:
+          tag: nightly
+      - name: Run Tests
+        run: |
+          nvim --version
+          ./scripts/test.sh
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          verbose: true
+
+  release:
+    name: release
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs:
+      - lint
+      - format
+      - test
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: simple
+          package-name: nui.nvim
+          bump-minor-pre-major: true
+          pull-request-title-pattern: "chore: release ${version}"
+          include-v-in-tag: false
+      - name: Trigger Publish
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ steps.release.outputs.tag_name }}
+        run: |
+          gh workflow run --repo ${GITHUB_REPOSITORY} publish.yml -f version=${TAG_NAME}

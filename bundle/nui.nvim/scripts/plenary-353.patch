@@ -1,0 +1,35 @@
+diff --git a/lua/plenary/busted.lua b/lua/plenary/busted.lua
+index 1b15fce..8363084 100644
+--- a/lua/plenary/busted.lua
++++ b/lua/plenary/busted.lua
+@@ -238,7 +238,7 @@ mod.run = function(file)
+     -- If nothing runs (empty file without top level describe)
+     if not results.pass then
+       if is_headless then
+-        return vim.cmd "0cq"
++        os.exit(0)
+       else
+         return
+       end
+@@ -259,7 +259,7 @@ mod.run = function(file)
+       end
+     else
+       if is_headless then
+-        return vim.cmd "0cq"
++        os.exit(0)
+       end
+     end
+   end)()
+diff --git a/lua/plenary/test_harness.lua b/lua/plenary/test_harness.lua
+index 394e28d..66cc6b4 100644
+--- a/lua/plenary/test_harness.lua
++++ b/lua/plenary/test_harness.lua
+@@ -169,7 +169,7 @@ function harness.test_directory(directory, opts)
+       return vim.cmd "1cq"
+     end
+ 
+-    return vim.cmd "0cq"
++    os.exit(0)
+   end
+ end
+ 
