@@ -14,9 +14,6 @@ local guifont = ""
 local function set_font(font)
     vim.o.guifont = font
 end
-local function has_guioptions ()
-    vim.opt.guioptions:get()
-end
 
 function M.options()
     logger.info("init default vim options")
@@ -33,19 +30,6 @@ function M.options()
                     "e" -- hide tab
                 }
             )
-        end
-
-        if SYSTEM.isWindows == 1 then
-            guifont = "DejaVu_Sans_Mono_for_Powerline:h11:cANSI:qDRAFT"
-        elseif SYSTEM.isOSX == 1 then
-            guifont = "DejaVu Sans Mono for Powerline:h11"
-        else
-            guifont = "DejaVu Sans Mono for Powerline 11"
-        end
-        local ok, errors = pcall(set_font, guifont)
-
-        if not ok then
-            print(errors)
         end
     end
 

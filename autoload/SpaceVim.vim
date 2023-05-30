@@ -425,7 +425,7 @@ let g:spacevim_lint_engine = 'neomake'
 " >
 "   let g:spacevim_guifont = "SauceCodePro Nerd Font Mono:h11"
 " <
-let g:spacevim_guifont                 = ''
+let g:spacevim_guifont                 = 'SauceCodePro Nerd Font Mono:h11'
 
 ""
 " @section enable_ycm, options-enable_ycm
