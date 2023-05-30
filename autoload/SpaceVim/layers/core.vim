@@ -89,6 +89,7 @@ function! SpaceVim#layers#core#plugins() abort
   elseif g:spacevim_filemanager ==# 'neo-tree'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/neo-tree.nvim',{'merged' : 0, 'loadconf' : 1}])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nui.nvim',{'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-web-devicons',{'merged' : 0}])
   endif
 
   if !g:spacevim_vimcompatible
