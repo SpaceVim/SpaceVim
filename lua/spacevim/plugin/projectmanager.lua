@@ -397,6 +397,8 @@ function M.current_root()
     or bufname:match('denite-filter')
     or bufname:match('%[defx%]')
     or bufname:match('^git://') -- this is for git.vim
+    or vim.fn.empty(bufname) == 1
+    -- or bufname:match('^neo-tree') -- this is for git.vim
   then
     return
   end
