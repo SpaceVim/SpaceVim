@@ -897,6 +897,7 @@ To change the filemanager plugin insert the following to the `[options]` section
     # - nerdtree (default)
     # - vimfiler: you need to build the vimproc.vim in bundle/vimproc.vim directory
     # - defx: requires +py3 feature
+    # - neo-tree: require neovim 0.7.0
     filemanager = "nerdtree"
 ```
 
@@ -955,7 +956,7 @@ Navigation is centered on the `hjkl` keys with the hope of providing a fast navi
 | `<`                   | decrease filetree screenwidth                     |
 | `<Home>`              | Jump to first line                                |
 | `<End>`               | Jump to last line                                 |
-| `Ctrl-Home`           | Switch to project root directory                  |
+| `Ctrl-h`              | Switch to project root directory                  |
 | `Ctrl-r`              | Redraw                                            |
 
 #### Open file with file tree.

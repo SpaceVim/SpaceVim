@@ -180,6 +180,9 @@ require("neo-tree").setup({
       mappings = {
         ["<bs>"] = "navigate_up",
         ["."] = "set_root",
+        ["<C-h>"] = function(state)
+                      vim.cmd('call SpaceVim#plugins#projectmanager#current_root()')
+                    end,
         ["H"] = "toggle_hidden",
         ["/"] = "fuzzy_finder",
         ["D"] = "fuzzy_finder_directory",
