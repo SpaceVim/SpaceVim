@@ -2356,6 +2356,22 @@ Example:
 
 ![todo manager](https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
 
+
+**Known bug:**
+
+If you are using windows, and `grep.exe` do not support searching in subdirectory. and the stderr will shown:
+
+```
+[     todo ] [00:00:03:107] [ Debug ] stderr: grep.exe: ./wiki: warning: recursive directory loop
+```
+
+To fix this issue, you need to install other searching tool, for example `rg`. and change the search_tools option:
+
+```
+[options]
+    search_tools = ["rg", "ag", "grep"]
+```
+
 ### Replace text with iedit
 
 SpaceVim uses a powerful iedit mode to quickly edit multiple occurrences of a symbol or selection.
