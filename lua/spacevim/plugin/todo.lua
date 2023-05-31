@@ -27,7 +27,9 @@ local logger = require('spacevim.logger').derive('todo')
 
 local jobstart = vim.fn.jobstart
 
+-- the labels_partten is used for viml function: matchstr etc
 local labels_partten = ''
+-- labels_regex is for command line argv
 local labels_regex = ''
 
 local function empty(d) -- {{{
@@ -156,6 +158,8 @@ local function on_exit(id, data, event) -- {{{
 end
 -- }}}
 
+
+-- labels to command line regex
 local function get_labels_regex() -- {{{
   local sep = ''
   if grep_default_exe == 'rg' then
@@ -178,8 +182,24 @@ local function get_labels_regex() -- {{{
 end
 -- }}}
 
+-- labels to vim searching partten
+-- [     todo ] [00:00:03:498] [ Info  ]    labels_partten: \v\@bug>|\@question>|\@fixme>|\@todo>
 local function get_labels_partten() -- {{{
-  return reg.parser(get_labels_regex(), false)
+  local sep = '|'
+  local rst = [[\v]]
+  local i = 1
+  local p = prefix
+  if prefix == '@' then
+    p = [[\@]]
+  end
+  for _, v in ipairs(labels) do
+    rst = rst .. p .. v .. [[>]]
+    if i ~= #labels then
+      rst = rst .. sep
+    end
+    i = i + 1
+  end
+  return rst
 end
 -- }}}
 
