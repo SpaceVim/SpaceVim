@@ -46,26 +46,36 @@ local function stderr(id, data, event) -- {{{
   end
 end
 -- }}}
+
+local function data_to_todo(d) -- {{{
+  logger.debug('stdout:' .. d)
+  local f = vim.split(d, ':%d+:')[1]
+  logger.debug('file is:' .. f)
+  local i, j = string.find(d, ':%d+:')
+  local line = string.sub(d, i + 1, j - 1)
+  logger.debug('line is:' .. line)
+  local column = string.sub(vim.fn.matchstr(d, [[\(:\d\+\)\@<=:\d\+:]]), 1, -2)
+  local label = string.sub(vim.fn.matchstr(d, labels_partten), #prefix + 1, -1)
+  logger.debug('label is:' .. label)
+  local title = vim.fn.get(vim.fn.split(d, prefix .. label), 1, '')
+  logger.debug('title is:' .. title)
+  return {
+    file = f,
+    line = line,
+    column = column,
+    title = title,
+    label = label,
+  }
+end
+-- }}}
+
 local function stdout(id, data, event) -- {{{
   if id ~= todo_jobid then
     return
   end
   for _, d in ipairs(data) do
     if not empty(d) then
-      logger.debug('stdout:' .. d)
-      local f = vim.split(d, ':%d+:')[1]
-      local i, j = string.find(d, ':%d+:')
-      local line = string.sub(d, i + 1, j - 1)
-      local column = string.sub(vim.fn.matchstr(d, [[\(:\d\+\)\@<=:\d\+:]]), 1, -2)
-      local label = string.sub(vim.fn.matchstr(d, labels_partten), #prefix + 1, -1)
-      local title = vim.fn.get(vim.fn.split(d, prefix .. label), 1, '')
-      table.insert(todos, {
-        file = f,
-        line = line,
-        column = column,
-        title = title,
-        label = label,
-      })
+      table.insert(todos, data_to_todo(d))
     end
   end
 end
@@ -110,7 +120,7 @@ end
 local function max_len(t, k) -- {{{
   local l = 0
   for _, v in ipairs(t) do
-    l = math.max(#v[k], l) 
+    l = math.max(#v[k], l)
   end
   return l
 end
@@ -126,17 +136,23 @@ local function on_exit(id, data, event) -- {{{
   local fw = max_len(todos, 'file') + 1
   local lines = {}
   for _, v in ipairs(todos) do
-    table.insert(lines, 
-      prefix .. v.label .. string.rep(' ', lw - #v.label) .. v.file .. string.rep(' ', fw - #v.file) .. v.title
+    table.insert(
+      lines,
+      prefix
+        .. v.label
+        .. string.rep(' ', lw - #v.label)
+        .. v.file
+        .. string.rep(' ', fw - #v.file)
+        .. v.title
     )
   end
   local ma = vim.fn.getbufvar(bufnr, '&ma')
-  vim.fn.setbufvar(bufnr,'&ma', 1)
+  vim.fn.setbufvar(bufnr, '&ma', 1)
   -- update the buffer only when the buffer exists.
   if vim.fn.bufexists(bufnr) == 1 then
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
   end
-  vim.fn.setbufvar(bufnr,'&ma', ma)
+  vim.fn.setbufvar(bufnr, '&ma', ma)
 end
 -- }}}
 
@@ -217,8 +233,8 @@ local function open_win() -- {{{
   bufnr = vim.fn.bufnr('%')
   update_todo_content()
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Enter>', '', {
-    callback = open_todo
-  } )
+    callback = open_todo,
+  })
 end
 -- }}}
 
