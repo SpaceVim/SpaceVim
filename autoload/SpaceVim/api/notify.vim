@@ -163,6 +163,11 @@ function! s:self.close_all() abort
 endfunction
 
 function! s:self.notify(msg, ...) abort
+  " check if neovim/vim support following windows
+  if !self.__floating.exists()
+    echo a:msg
+    return
+  endif
   if self.notify_max_width ==# 0
     let self.notify_max_width = &columns * 0.35
   endif
