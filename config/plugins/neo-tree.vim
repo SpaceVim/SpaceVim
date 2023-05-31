@@ -91,16 +91,15 @@ require("neo-tree").setup({
       nowait = true,
     },
     mappings = {
-      ["<space>"] = { 
-          "toggle_node", 
-          nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use 
-      },
+       -- ["<space>"] = { 
+       --     "toggle_node", 
+       --     nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use 
+       -- },
       ["<2-LeftMouse>"] = "open",
-      ["<cr>"] = "open",
+      ["o"] = "open",
       ["<esc>"] = "revert_preview",
       ["P"] = { "toggle_preview", config = { use_float = true } },
-      ["l"] = "focus_preview",
-      ["S"] = "open_split",
+      ["l"] = "open",
       ["s"] = "open_vsplit",
       -- ["S"] = "split_with_window_picker",
       -- ["s"] = "vsplit_with_window_picker",
@@ -109,7 +108,7 @@ require("neo-tree").setup({
       -- ["t"] = "open_tab_drop",
       ["w"] = "open_with_window_picker",
       --["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
-      ["C"] = "close_node",
+      ["h"] = "close_node",
       -- ['C'] = 'close_all_subnodes',
       ["z"] = "close_all_nodes",
       --["Z"] = "expand_all_nodes",
