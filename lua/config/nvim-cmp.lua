@@ -7,30 +7,26 @@ local feedkey = function(key, mode)
 end
 
 local function smart_tab(fallback) -- {{{
-  
 end
 
 local function expand_snippet(fallback) -- {{{
   if vim.g.spacevim_snippet_engine == 'neosnippet' then
-      if vim.fn['neosnippet#expandable']() == 1
-        then
-        feedkey('<plug>(neosnippet_expand)', '')
-      end
+    if vim.fn['neosnippet#expandable']() == 1 then
+      feedkey('<plug>(neosnippet_expand)', '')
+    end
   elseif vim.g.spacevim_snippet_engine == 'ultisnips' then
   end
-  
 end
 -- }}}
-
 
 -- }}}
 
 -- 1. `auto_completion_return_key_behavior` set the action to perform
-   -- when the `Return`/`Enter` key is pressed. the possible values are:
-   -- - `complete` completes with the current selection
-   -- - `smart` completes with current selection and expand snippet or argvs
-   -- - `nil`
-   -- By default it is `complete`.
+-- when the `Return`/`Enter` key is pressed. the possible values are:
+-- - `complete` completes with the current selection
+-- - `smart` completes with current selection and expand snippet or argvs
+-- - `nil`
+-- By default it is `complete`.
 
 cmp.setup({
   mapping = {
@@ -42,9 +38,10 @@ cmp.setup({
       c = cmp.mapping.close(),
     }),
     ['<Tab>'] = function(fallback)
-      if copt.auto_completion_return_key_behavior == 'smart' 
+      if
+        copt.auto_completion_return_key_behavior == 'smart'
         and vim.fn['neosnippet#expandable_or_jumpable']() == 1
-        then
+      then
         feedkey('<plug>(neosnippet_expand_or_jump)', '')
       elseif cmp.visible() then
         cmp.select_next_item()
@@ -70,7 +67,13 @@ cmp.setup({
     { name = 'buffer' },
   }),
 })
-
+-- `/` cmdline setup.
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' },
+  },
+})
 -- Setup lspconfig.
 local capabilities =
   require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())

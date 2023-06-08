@@ -100,6 +100,9 @@ function! SpaceVim#layers#autocomplete#plugins() abort
     call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-path', {
           \ 'merged' : 0,
           \ }])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-cmdline', {
+          \ 'merged' : 0,
+          \ }])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/lspkind-nvim', {
           \ 'merged' : 0,
           \ 'loadconf' : 1,
