@@ -1,5 +1,15 @@
 local cmp = require('cmp')
 
+local copt = vim.fn['SpaceVim#layers#autocomplete#get_variable']()
+
+
+-- 1. `auto_completion_return_key_behavior` set the action to perform
+   -- when the `Return`/`Enter` key is pressed. the possible values are:
+   -- - `complete` completes with the current selection
+   -- - `smart` completes with current selection and expand snippet or argvs
+   -- - `nil`
+   -- By default it is `complete`.
+
 local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
@@ -8,16 +18,17 @@ cmp.setup({
   mapping = {
     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
     ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ['<C-e>'] = cmp.mapping({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
     ['<Tab>'] = function(fallback)
-      if vim.fn['neosnippet#expandable_or_jumpable']() == 1 then
+      if copt.auto_completion_return_key_behavior == 'smart' 
+        and vim.fn['neosnippet#expandable_or_jumpable']() == 1
+        then
         feedkey('<plug>(neosnippet_expand_or_jump)', '')
-      elseif cmp.visible() then
+      elseif cmp.visible() and copt.auto_completion_return_key_behavior == 'complete' then
         cmp.select_next_item()
       else
         fallback()
