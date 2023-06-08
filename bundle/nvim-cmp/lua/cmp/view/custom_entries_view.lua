@@ -8,13 +8,11 @@ local keymap = require('cmp.utils.keymap')
 local misc = require('cmp.utils.misc')
 local api = require('cmp.utils.api')
 
-local SIDE_PADDING = 1
-
 local DEFAULT_HEIGHT = 10 -- @see https://github.com/vim/vim/blob/master/src/popupmenu.c#L45
 
 ---@class cmp.CustomEntriesView
 ---@field private entries_win cmp.Window
----@field private offset number
+---@field private offset integer
 ---@field private active boolean
 ---@field private entries cmp.Entry[]
 ---@field private column_width any
@@ -25,20 +23,21 @@ custom_entries_view.ns = vim.api.nvim_create_namespace('cmp.view.custom_entries_
 
 custom_entries_view.new = function()
   local self = setmetatable({}, { __index = custom_entries_view })
+
   self.entries_win = window.new()
   self.entries_win:option('conceallevel', 2)
   self.entries_win:option('concealcursor', 'n')
   self.entries_win:option('cursorlineopt', 'line')
   self.entries_win:option('foldenable', false)
   self.entries_win:option('wrap', false)
-  self.entries_win:option('scrolloff', 0)
-  self.entries_win:option('winhighlight', 'Normal:Pmenu,FloatBorder:Pmenu,CursorLine:PmenuSel,Search:None')
   -- This is done so that strdisplaywidth calculations for lines in the
   -- custom_entries_view window exactly match with what is really displayed,
   -- see comment in cmp.Entry.get_view. Setting tabstop to 1 makes all tabs be
   -- always rendered one column wide, which removes the unpredictability coming
   -- from variable width of the tab character.
   self.entries_win:buffer_option('tabstop', 1)
+  self.entries_win:buffer_option('filetype', 'cmp_menu')
+  self.entries_win:buffer_option('buftype', 'nofile')
   self.event = event.new()
   self.offset = -1
   self.active = false
@@ -65,7 +64,7 @@ custom_entries_view.new = function()
         local e = self.entries[i + 1]
         if e then
           local v = e:get_view(self.offset, buf)
-          local o = SIDE_PADDING
+          local o = config.get().window.completion.side_padding
           local a = 0
           for _, field in ipairs(fields) do
             if field == types.cmp.ItemField.Abbr then
@@ -118,17 +117,15 @@ custom_entries_view.is_direction_top_down = function(self)
 end
 
 custom_entries_view.open = function(self, offset, entries)
+  local completion = config.get().window.completion
   self.offset = offset
   self.entries = {}
   self.column_width = { abbr = 0, kind = 0, menu = 0 }
 
-  -- Apply window options (that might be changed) on the custom completion menu.
-  self.entries_win:option('winblend', vim.o.pumblend)
-
   local entries_buf = self.entries_win:get_buffer()
   local lines = {}
   local dedup = {}
-  local preselect = 0
+  local preselect_index = 0
   for _, e in ipairs(entries) do
     local view = e:get_view(offset, entries_buf)
     if view.dup == 1 or not dedup[e.completion_item.label] then
@@ -138,8 +135,8 @@ custom_entries_view.open = function(self, offset, entries)
       self.column_width.menu = math.max(self.column_width.menu, view.menu.width)
       table.insert(self.entries, e)
       table.insert(lines, ' ')
-      if preselect == 0 and e.completion_item.preselect then
-        preselect = #self.entries
+      if preselect_index == 0 and e.completion_item.preselect then
+        preselect_index = #self.entries
       end
     end
   end
@@ -157,18 +154,26 @@ custom_entries_view.open = function(self, offset, entries)
   height = math.min(height, #self.entries)
 
   local pos = api.get_screen_cursor()
-  local cursor = api.get_cursor()
-  local delta = cursor[2] + 1 - self.offset
-  local has_bottom_space = (vim.o.lines - pos[1]) >= DEFAULT_HEIGHT
+  local cursor_before_line = api.get_cursor_before_line()
+  local delta = vim.fn.strdisplaywidth(cursor_before_line:sub(self.offset))
   local row, col = pos[1], pos[2] - delta - 1
 
-  if not has_bottom_space and math.floor(vim.o.lines * 0.5) <= row and vim.o.lines - row <= height then
+  local border_info = window.get_border_info({ style = completion })
+  local border_offset_row = border_info.top + border_info.bottom
+  local border_offset_col = border_info.left + border_info.right
+  if math.floor(vim.o.lines * 0.5) <= row + border_offset_row and vim.o.lines - row - border_offset_row <= math.min(DEFAULT_HEIGHT, height) then
     height = math.min(height, row - 1)
-    row = row - height - 1
+    row = row - height - border_offset_row - 1
+    if row < 0 then
+      height = height + row
+    end
   end
-  if math.floor(vim.o.columns * 0.5) <= col and vim.o.columns - col <= width then
+  if math.floor(vim.o.columns * 0.5) <= col + border_offset_col and vim.o.columns - col - border_offset_col <= width then
     width = math.min(width, vim.o.columns - 1)
-    col = vim.o.columns - width - 1
+    col = vim.o.columns - width - border_offset_col - 1
+    if col < 0 then
+      width = width + col
+    end
   end
 
   if pos[1] > row then
@@ -182,35 +187,40 @@ custom_entries_view.open = function(self, offset, entries)
     for i = 1, math.floor(n / 2) do
       self.entries[i], self.entries[n - i + 1] = self.entries[n - i + 1], self.entries[i]
     end
-    if preselect ~= 0 then
-      preselect = #self.entries - preselect + 1
+    if preselect_index ~= 0 then
+      preselect_index = #self.entries - preselect_index + 1
     end
   end
 
+  -- Apply window options (that might be changed) on the custom completion menu.
+  self.entries_win:option('winblend', vim.o.pumblend)
+  self.entries_win:option('winhighlight', completion.winhighlight)
+  self.entries_win:option('scrolloff', completion.scrolloff)
   self.entries_win:open({
     relative = 'editor',
     style = 'minimal',
     row = math.max(0, row),
-    col = math.max(0, col),
+    col = math.max(0, col + completion.col_offset),
     width = width,
     height = height,
-    zindex = 1001,
+    border = completion.border,
+    zindex = completion.zindex or 1001,
   })
   -- always set cursor when starting. It will be adjusted on the call to _select
   vim.api.nvim_win_set_cursor(self.entries_win.win, { 1, 0 })
-  if preselect > 0 and config.get().preselect == types.cmp.PreselectMode.Item then
-    self:_select(preselect, { behavior = types.cmp.SelectBehavior.Select })
+  if preselect_index > 0 and config.get().preselect == types.cmp.PreselectMode.Item then
+    self:_select(preselect_index, { behavior = types.cmp.SelectBehavior.Select, active = false })
   elseif not string.match(config.get().completion.completeopt, 'noselect') then
     if self:is_direction_top_down() then
-      self:_select(1, { behavior = types.cmp.SelectBehavior.Select })
+      self:_select(1, { behavior = types.cmp.SelectBehavior.Select, active = false })
     else
-      self:_select(#self.entries - 1, { behavior = types.cmp.SelectBehavior.Select })
+      self:_select(#self.entries, { behavior = types.cmp.SelectBehavior.Select, active = false })
     end
   else
     if self:is_direction_top_down() then
-      self:_select(0, { behavior = types.cmp.SelectBehavior.Select })
+      self:_select(0, { behavior = types.cmp.SelectBehavior.Select, active = false })
     else
-      self:_select(#self.entries + 1, { behavior = types.cmp.SelectBehavior.Select })
+      self:_select(#self.entries + 1, { behavior = types.cmp.SelectBehavior.Select, active = false })
     end
   end
 end
@@ -245,12 +255,12 @@ custom_entries_view.draw = function(self)
     if e then
       local view = e:get_view(self.offset, entries_buf)
       local text = {}
-      table.insert(text, string.rep(' ', SIDE_PADDING))
+      table.insert(text, string.rep(' ', config.get().window.completion.side_padding))
       for _, field in ipairs(fields) do
         table.insert(text, view[field].text)
         table.insert(text, string.rep(' ', 1 + self.column_width[field] - view[field].width))
       end
-      table.insert(text, string.rep(' ', SIDE_PADDING))
+      table.insert(text, string.rep(' ', config.get().window.completion.side_padding))
       table.insert(texts, table.concat(text, ''))
     end
   end
@@ -275,34 +285,74 @@ end
 custom_entries_view.select_next_item = function(self, option)
   if self:visible() then
     local cursor = vim.api.nvim_win_get_cursor(self.entries_win.win)[1]
-    if self:is_direction_top_down() then
-      cursor = cursor + 1
-    else
-      cursor = cursor - 1
-    end
+    local is_top_down = self:is_direction_top_down()
+    local last = #self.entries
+
     if not self.entries_win:option('cursorline') then
-      cursor = (self:is_direction_top_down() and 1) or #self.entries
-    elseif #self.entries < cursor then
-      cursor = (not self:is_direction_top_down() and #self.entries + 1) or 0
+      cursor = (is_top_down and 1) or last
+    else
+      if is_top_down then
+        if cursor == last then
+          cursor = 0
+        else
+          cursor = cursor + option.count
+          if last < cursor then
+            cursor = last
+          end
+        end
+      else
+        if cursor == 0 then
+          cursor = last
+        else
+          cursor = cursor - option.count
+          if cursor < 0 then
+            cursor = 0
+          end
+        end
+      end
     end
-    self:_select(cursor, option)
+
+    self:_select(cursor, {
+      behavior = option.behavior or types.cmp.SelectBehavior.Insert,
+      active = true,
+    })
   end
 end
 
 custom_entries_view.select_prev_item = function(self, option)
   if self:visible() then
     local cursor = vim.api.nvim_win_get_cursor(self.entries_win.win)[1]
-    if self:is_direction_top_down() then
-      cursor = cursor - 1
-    else
-      cursor = cursor + 1
-    end
+    local is_top_down = self:is_direction_top_down()
+    local last = #self.entries
+
     if not self.entries_win:option('cursorline') then
-      cursor = (self:is_direction_top_down() and #self.entries) or 1
-    elseif #self.entries < cursor then
-      cursor = (not self:is_direction_top_down() and 0) or #self.entries + 1
+      cursor = (is_top_down and last) or 1
+    else
+      if is_top_down then
+        if cursor == 1 then
+          cursor = 0
+        else
+          cursor = cursor - option.count
+          if cursor < 0 then
+            cursor = 1
+          end
+        end
+      else
+        if cursor == last then
+          cursor = 0
+        else
+          cursor = cursor + option.count
+          if last < cursor then
+            cursor = last
+          end
+        end
+      end
     end
-    self:_select(cursor, option)
+
+    self:_select(cursor, {
+      behavior = option.behavior or types.cmp.SelectBehavior.Insert,
+      active = true,
+    })
   end
 end
 
@@ -343,10 +393,9 @@ custom_entries_view._select = function(self, cursor, option)
   if is_insert and not self.active then
     self.prefix = string.sub(api.get_current_line(), self.offset, api.get_cursor()[2]) or ''
   end
+  self.active = (0 < cursor and cursor <= #self.entries and option.active == true)
 
-  self.active = cursor > 0 and cursor <= #self.entries and is_insert
   self.entries_win:option('cursorline', cursor > 0 and cursor <= #self.entries)
-
   vim.api.nvim_win_set_cursor(self.entries_win.win, {
     math.max(math.min(cursor, #self.entries), 1),
     0,
@@ -368,7 +417,17 @@ custom_entries_view._insert = setmetatable({
     word = word or ''
     if api.is_cmdline_mode() then
       local cursor = api.get_cursor()
-      vim.api.nvim_feedkeys(keymap.backspace(string.sub(api.get_current_line(), self.offset, cursor[2])) .. word, 'int', true)
+      -- setcmdline() added in v0.8.0
+      if vim.fn.has('nvim-0.8') == 1 then
+        local current_line = api.get_current_line()
+        local before_line = current_line:sub(1, self.offset - 1)
+        local after_line = current_line:sub(cursor[2] + 1)
+        local pos = #before_line + #word + 1
+        vim.fn.setcmdline(before_line .. word .. after_line, pos)
+        vim.api.nvim_feedkeys(keymap.t('<Cmd>redraw<CR>'), 'ni', false)
+      else
+        vim.api.nvim_feedkeys(keymap.backspace(string.sub(api.get_current_line(), self.offset, cursor[2])) .. word, 'int', true)
+      end
     else
       if this.pending then
         return

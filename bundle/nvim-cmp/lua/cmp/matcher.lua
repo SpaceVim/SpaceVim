@@ -66,14 +66,20 @@ end
 --
 --     `candlesingle` -> candle#accept#single
 --      ^^^^^^~~~~~~     ^^^^^^        ~~~~~~
---
 --      * The `accept`'s `a` should not match to `candle`'s `a`
+--
+--   7. Avoid false positive matching
+--
+--     `,` -> print,
+--                 ~
+--      * Typically, the middle match with symbol characters only is false positive. should be ignored.
+--
 --
 ---Match entry
 ---@param input string
 ---@param word string
----@param option { synonyms: string[], disallow_fuzzy_matching: boolean, disallow_partial_matching: boolean, disallow_prefix_unmatching: boolean }
----@return number
+---@param option { synonyms: string[], disallow_fullfuzzy_matching: boolean, disallow_fuzzy_matching: boolean, disallow_partial_fuzzy_matching: boolean, disallow_partial_matching: boolean, disallow_prefix_unmatching: boolean }
+---@return integer
 matcher.match = function(input, word, option)
   option = option or {}
 
@@ -100,12 +106,14 @@ matcher.match = function(input, word, option)
   local input_end_index = 1
   local word_index = 1
   local word_bound_index = 1
+  local no_symbol_match = false
   while input_end_index <= #input and word_index <= #word do
     local m = matcher.find_match_region(input, input_start_index, input_end_index, word, word_index)
     if m and input_end_index <= m.input_match_end then
       m.index = word_bound_index
       input_start_index = m.input_match_start + 1
       input_end_index = m.input_match_end + 1
+      no_symbol_match = no_symbol_match or m.no_symbol_match
       word_index = char.get_next_semantic_index(word, m.word_match_end)
       table.insert(matches, m)
     else
@@ -120,6 +128,11 @@ matcher.match = function(input, word, option)
   end
 
   if #matches == 0 then
+    if not option.disallow_fuzzy_matching and not option.disallow_prefix_unmatching and not option.disallow_partial_fuzzy_matching then
+      if matcher.fuzzy(input, word, matches, option) then
+        return 1, matches
+      end
+    end
     return 0, {}
   end
 
@@ -146,6 +159,10 @@ matcher.match = function(input, word, option)
     end
   end
 
+  if no_symbol_match and not prefix then
+    return 0, {}
+  end
+
   -- Compute prefix match score
   local score = prefix and matcher.PREFIX_FACTOR or 0
   local offset = prefix and matches[1].index - 1 or 0
@@ -167,8 +184,10 @@ matcher.match = function(input, word, option)
   -- Check remaining input as fuzzy
   if matches[#matches].input_match_end < #input then
     if not option.disallow_fuzzy_matching then
-      if prefix and matcher.fuzzy(input, word, matches) then
-        return score, matches
+      if not option.disallow_partial_fuzzy_matching or prefix then
+        if matcher.fuzzy(input, word, matches, option) then
+          return score, matches
+        end
       end
     end
     return 0, {}
@@ -178,11 +197,10 @@ matcher.match = function(input, word, option)
 end
 
 --- fuzzy
-matcher.fuzzy = function(input, word, matches)
-  local last_match = matches[#matches]
+matcher.fuzzy = function(input, word, matches, option)
+  local input_index = matches[#matches] and (matches[#matches].input_match_end + 1) or 1
 
   -- Lately specified middle of text.
-  local input_index = last_match.input_match_end + 1
   for i = 1, #matches - 1 do
     local curr_match = matches[i]
     local next_match = matches[i + 1]
@@ -200,10 +218,9 @@ matcher.fuzzy = function(input, word, matches)
   end
 
   -- Remaining text fuzzy match.
-  local last_input_index = input_index
   local matched = false
   local word_offset = 0
-  local word_index = last_match.word_match_end + 1
+  local word_index = matches[#matches] and (matches[#matches].word_match_end + 1) or 1
   local input_match_start = -1
   local input_match_end = -1
   local word_match_start = -1
@@ -220,12 +237,26 @@ matcher.fuzzy = function(input, word, matches)
       input_index = input_index + 1
       strict_count = strict_count + (c1 == c2 and 1 or 0)
       match_count = match_count + 1
-    elseif matched then
-      input_index = last_input_index
-      input_match_end = input_index - 1
+    else
+      if option.disallow_fullfuzzy_matching then
+        break
+      else
+        if matched then
+          table.insert(matches, {
+            input_match_start = input_match_start,
+            input_match_end = input_index - 1,
+            word_match_start = word_match_start,
+            word_match_end = word_index + word_offset - 1,
+            strict_ratio = strict_count / match_count,
+            fuzzy = true,
+          })
+        end
+      end
+      matched = false
     end
     word_offset = word_offset + 1
   end
+
   if input_index > #input then
     table.insert(matches, {
       input_match_start = input_match_start,
@@ -260,6 +291,7 @@ matcher.find_match_region = function(input, input_start_index, input_end_index, 
   local word_offset = 0
   local strict_count = 0
   local match_count = 0
+  local no_symbol_match = false
   while input_index <= #input and word_index + word_offset <= #word do
     local c1 = string.byte(input, input_index)
     local c2 = string.byte(word, word_index + word_offset)
@@ -272,6 +304,7 @@ matcher.find_match_region = function(input, input_start_index, input_end_index, 
       strict_count = strict_count + (c1 == c2 and 1 or 0)
       match_count = match_count + 1
       word_offset = word_offset + 1
+      no_symbol_match = no_symbol_match or char.is_symbol(c1)
     else
       -- Match end (partial region)
       if input_match_start ~= -1 then
@@ -281,6 +314,7 @@ matcher.find_match_region = function(input, input_start_index, input_end_index, 
           word_match_start = word_index,
           word_match_end = word_index + word_offset - 1,
           strict_ratio = strict_count / match_count,
+          no_symbol_match = no_symbol_match,
           fuzzy = false,
         }
       else
@@ -298,6 +332,7 @@ matcher.find_match_region = function(input, input_start_index, input_end_index, 
       word_match_start = word_index,
       word_match_end = word_index + word_offset - 1,
       strict_ratio = strict_count / match_count,
+      no_symbol_match = no_symbol_match,
       fuzzy = false,
     }
   end

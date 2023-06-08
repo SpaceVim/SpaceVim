@@ -7,15 +7,15 @@ local types = require('cmp.types')
 local matcher = require('cmp.matcher')
 
 ---@class cmp.Entry
----@field public id number
+---@field public id integer
 ---@field public cache cmp.Cache
 ---@field public match_cache cmp.Cache
----@field public score number
+---@field public score integer
 ---@field public exact boolean
 ---@field public matches table
 ---@field public context cmp.Context
 ---@field public source cmp.Source
----@field public source_offset number
+---@field public source_offset integer
 ---@field public source_insert_range lsp.Range
 ---@field public source_replace_range lsp.Range
 ---@field public completion_item lsp.CompletionItem
@@ -29,8 +29,9 @@ local entry = {}
 ---@param ctx cmp.Context
 ---@param source cmp.Source
 ---@param completion_item lsp.CompletionItem
+---@param item_defaults? lsp.internal.CompletionItemDefaults
 ---@return cmp.Entry
-entry.new = function(ctx, source, completion_item)
+entry.new = function(ctx, source, completion_item, item_defaults)
   local self = setmetatable({}, { __index = entry })
   self.id = misc.id('entry.new')
   self.cache = cache.new()
@@ -43,7 +44,7 @@ entry.new = function(ctx, source, completion_item)
   self.source_offset = source.request_offset
   self.source_insert_range = source:get_default_insert_range()
   self.source_replace_range = source:get_default_replace_range()
-  self.completion_item = completion_item
+  self.completion_item = self:fill_defaults(completion_item, item_defaults)
   self.resolved_completion_item = nil
   self.resolved_callbacks = {}
   self.resolving = false
@@ -52,20 +53,23 @@ entry.new = function(ctx, source, completion_item)
 end
 
 ---Make offset value
----@return number
+---@return integer
 entry.get_offset = function(self)
-  return self.cache:ensure({ 'get_offset', self.resolved_completion_item and 1 or 0 }, function()
+  return self.cache:ensure('get_offset', function()
     local offset = self.source_offset
-    if misc.safe(self:get_completion_item().textEdit) then
-      local range = misc.safe(self:get_completion_item().textEdit.insert) or misc.safe(self:get_completion_item().textEdit.range)
+    if self:get_completion_item().textEdit then
+      local range = self:get_insert_range()
       if range then
-        local c = misc.to_vimindex(self.context.cursor_line, range.start.character)
-        for idx = c, self.source_offset do
-          if not char.is_white(string.byte(self.context.cursor_line, idx)) then
-            offset = idx
-            break
+        offset = self.context.cache:ensure('entry:' .. 'get_offset:' .. tostring(range.start.character), function()
+          local start = math.min(range.start.character + 1, offset)
+          for idx = start, self.source_offset do
+            local byte = string.byte(self.context.cursor_line, idx)
+            if byte == nil or not char.is_white(byte) then
+              return idx
+            end
           end
-        end
+          return offset
+        end)
       end
     else
       -- NOTE
@@ -101,14 +105,14 @@ end
 ---NOTE: This method doesn't clear the cache after completionItem/resolve.
 ---@return string
 entry.get_word = function(self)
-  return self.cache:ensure({ 'get_word' }, function()
+  return self.cache:ensure('get_word', function()
     --NOTE: This is nvim-cmp specific implementation.
-    if misc.safe(self:get_completion_item().word) then
+    if self:get_completion_item().word then
       return self:get_completion_item().word
     end
 
     local word
-    if misc.safe(self:get_completion_item().textEdit) and not misc.empty(self:get_completion_item().textEdit.newText) then
+    if self:get_completion_item().textEdit and not misc.empty(self:get_completion_item().textEdit.newText) then
       word = str.trim(self:get_completion_item().textEdit.newText)
       if self:get_completion_item().insertTextFormat == types.lsp.InsertTextFormat.Snippet then
         word = vim.lsp.util.parse_snippet(word)
@@ -126,20 +130,24 @@ entry.get_word = function(self)
       word = str.trim(self:get_completion_item().label)
     end
     return str.oneline(word)
-  end)
+  end) --[[@as string]]
 end
 
 ---Get overwrite information
----@return number, number
+---@return integer[]
 entry.get_overwrite = function(self)
-  return self.cache:ensure({ 'get_overwrite', self.resolved_completion_item and 1 or 0 }, function()
-    if misc.safe(self:get_completion_item().textEdit) then
-      local r = misc.safe(self:get_completion_item().textEdit.insert) or misc.safe(self:get_completion_item().textEdit.range)
-      local s = misc.to_vimindex(self.context.cursor_line, r.start.character)
-      local e = misc.to_vimindex(self.context.cursor_line, r['end'].character)
-      local before = self.context.cursor.col - s
-      local after = e - self.context.cursor.col
-      return { before, after }
+  return self.cache:ensure('get_overwrite', function()
+    if self:get_completion_item().textEdit then
+      local range = self:get_insert_range()
+      if range then
+        return self.context.cache:ensure('entry:' .. 'get_overwrite:' .. tostring(range.start.character) .. ':' .. tostring(range['end'].character), function()
+          local vim_start = range.start.character + 1
+          local vim_end = range['end'].character + 1
+          local before = self.context.cursor.col - vim_start
+          local after = vim_end - self.context.cursor.col
+          return { before, after }
+        end)
+      end
     end
     return { 0, 0 }
   end)
@@ -148,9 +156,9 @@ end
 ---Create filter text
 ---@return string
 entry.get_filter_text = function(self)
-  return self.cache:ensure({ 'get_filter_text', self.resolved_completion_item and 1 or 0 }, function()
+  return self.cache:ensure('get_filter_text', function()
     local word
-    if misc.safe(self:get_completion_item().filterText) then
+    if self:get_completion_item().filterText then
       word = self:get_completion_item().filterText
     else
       word = str.trim(self:get_completion_item().label)
@@ -162,14 +170,14 @@ end
 ---Get LSP's insert text
 ---@return string
 entry.get_insert_text = function(self)
-  return self.cache:ensure({ 'get_insert_text', self.resolved_completion_item and 1 or 0 }, function()
+  return self.cache:ensure('get_insert_text', function()
     local word
-    if misc.safe(self:get_completion_item().textEdit) then
+    if self:get_completion_item().textEdit then
       word = str.trim(self:get_completion_item().textEdit.newText)
       if self:get_completion_item().insertTextFormat == types.lsp.InsertTextFormat.Snippet then
         word = str.remove_suffix(str.remove_suffix(word, '$0'), '${0}')
       end
-    elseif misc.safe(self:get_completion_item().insertText) then
+    elseif self:get_completion_item().insertText then
       word = str.trim(self:get_completion_item().insertText)
       if self:get_completion_item().insertTextFormat == types.lsp.InsertTextFormat.Snippet then
         word = str.remove_suffix(str.remove_suffix(word, '$0'), '${0}')
@@ -188,12 +196,12 @@ entry.is_deprecated = function(self)
 end
 
 ---Return view information.
----@param suggest_offset number
----@param entries_buf number The buffer this entry will be rendered into.
----@return { abbr: { text: string, bytes: number, width: number, hl_group: string }, kind: { text: string, bytes: number, width: number, hl_group: string }, menu: { text: string, bytes: number, width: number, hl_group: string } }
+---@param suggest_offset integer
+---@param entries_buf integer The buffer this entry will be rendered into.
+---@return { abbr: { text: string, bytes: integer, width: integer, hl_group: string }, kind: { text: string, bytes: integer, width: integer, hl_group: string }, menu: { text: string, bytes: integer, width: integer, hl_group: string } }
 entry.get_view = function(self, suggest_offset, entries_buf)
   local item = self:get_vim_item(suggest_offset)
-  return self.cache:ensure({ 'get_view', self.resolved_completion_item and 1 or 0, entries_buf }, function()
+  return self.cache:ensure('get_view:' .. tostring(entries_buf), function()
     local view = {}
     -- The result of vim.fn.strdisplaywidth depends on which buffer it was
     -- called in because it reads the values of the option 'tabstop' when
@@ -221,24 +229,25 @@ entry.get_view = function(self, suggest_offset, entries_buf)
 end
 
 ---Make vim.CompletedItem
----@param suggest_offset number
+---@param suggest_offset integer
 ---@return vim.CompletedItem
 entry.get_vim_item = function(self, suggest_offset)
-  return self.cache:ensure({ 'get_vim_item', suggest_offset, self.resolved_completion_item and 1 or 0 }, function()
+  return self.cache:ensure('get_vim_item:' .. tostring(suggest_offset), function()
     local completion_item = self:get_completion_item()
     local word = self:get_word()
     local abbr = str.oneline(completion_item.label)
 
     -- ~ indicator
-    local is_snippet = false
-    if #(misc.safe(completion_item.additionalTextEdits) or {}) > 0 then
-      is_snippet = true
+    local is_expandable = false
+    local expandable_indicator = config.get().formatting.expandable_indicator
+    if #(completion_item.additionalTextEdits or {}) > 0 then
+      is_expandable = true
     elseif completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-      is_snippet = self:get_insert_text() ~= word
+      is_expandable = self:get_insert_text() ~= word
     elseif completion_item.kind == types.lsp.CompletionItemKind.Snippet then
-      is_snippet = true
+      is_expandable = true
     end
-    if is_snippet then
+    if expandable_indicator and is_expandable then
       abbr = abbr .. '~'
     end
 
@@ -249,19 +258,19 @@ entry.get_vim_item = function(self, suggest_offset)
 
     -- labelDetails.
     local menu = nil
-    if misc.safe(completion_item.labelDetails) then
+    if completion_item.labelDetails then
       menu = ''
-      if misc.safe(completion_item.labelDetails.detail) then
+      if completion_item.labelDetails.detail then
         menu = menu .. completion_item.labelDetails.detail
       end
-      if misc.safe(completion_item.labelDetails.description) then
+      if completion_item.labelDetails.description then
         menu = menu .. completion_item.labelDetails.description
       end
     end
 
     -- remove duplicated string.
     if self:get_offset() ~= self.context.cursor.col then
-      for i = 1, #word - 1 do
+      for i = 1, #word do
         if str.has_prefix(self.context.cursor_after_line, string.sub(word, i, #word)) then
           word = string.sub(word, 1, i - 1)
           break
@@ -269,10 +278,13 @@ entry.get_vim_item = function(self, suggest_offset)
       end
     end
 
+    local cmp_opts = self:get_completion_item().cmp or {}
+
     local vim_item = {
       word = word,
       abbr = abbr,
-      kind = types.lsp.CompletionItemKind[self:get_kind()] or types.lsp.CompletionItemKind[1],
+      kind = cmp_opts.kind_text or types.lsp.CompletionItemKind[self:get_kind()] or types.lsp.CompletionItemKind[1],
+      kind_hl_group = cmp_opts.kind_hl_group,
       menu = menu,
       dup = self:get_completion_item().dup or 1,
     }
@@ -293,24 +305,25 @@ end
 ---Get commit characters
 ---@return string[]
 entry.get_commit_characters = function(self)
-  return misc.safe(self:get_completion_item().commitCharacters) or {}
+  return self:get_completion_item().commitCharacters or {}
 end
 
 ---Return insert range
 ---@return lsp.Range|nil
 entry.get_insert_range = function(self)
   local insert_range
-  if misc.safe(self:get_completion_item().textEdit) then
-    if misc.safe(self:get_completion_item().textEdit.insert) then
+  if self:get_completion_item().textEdit then
+    if self:get_completion_item().textEdit.insert then
       insert_range = self:get_completion_item().textEdit.insert
     else
-      insert_range = self:get_completion_item().textEdit.range
+      insert_range = self:get_completion_item().textEdit.range --[[@as lsp.Range]]
     end
+    insert_range = self:convert_range_encoding(insert_range)
   else
     insert_range = {
       start = {
         line = self.context.cursor.row - 1,
-        character = math.min(misc.to_utfindex(self.context.cursor_line, self:get_offset()), self.source_insert_range.start.character),
+        character = self:get_offset() - 1,
       },
       ['end'] = self.source_insert_range['end'],
     }
@@ -321,15 +334,22 @@ end
 ---Return replace range
 ---@return lsp.Range|nil
 entry.get_replace_range = function(self)
-  return self.cache:ensure({ 'get_replace_range', self.resolved_completion_item and 1 or 0 }, function()
+  return self.cache:ensure('get_replace_range', function()
     local replace_range
-    if misc.safe(self:get_completion_item().textEdit) and misc.safe(self:get_completion_item().textEdit.replace) then
-      replace_range = self:get_completion_item().textEdit.replace
-    else
+    if self:get_completion_item().textEdit then
+      if self:get_completion_item().textEdit.replace then
+        replace_range = self:get_completion_item().textEdit.replace
+      else
+        replace_range = self:get_completion_item().textEdit.range --[[@as lsp.Range]]
+      end
+      replace_range = self:convert_range_encoding(replace_range)
+    end
+
+    if not replace_range or ((self.context.cursor.col - 1) == replace_range['end'].character) then
       replace_range = {
         start = {
           line = self.source_replace_range.start.line,
-          character = math.min(misc.to_utfindex(self.context.cursor_line, self:get_offset()), self.source_replace_range.start.character),
+          character = self:get_offset() - 1,
         },
         ['end'] = self.source_replace_range['end'],
       }
@@ -341,17 +361,12 @@ end
 ---Match line.
 ---@param input string
 ---@param matching_config cmp.MatchingConfig
----@return { score: number, matches: table[] }
+---@return { score: integer, matches: table[] }
 entry.match = function(self, input, matching_config)
-  return self.match_cache:ensure({
-    input,
-    self.resolved_completion_item and 1 or 0,
-    matching_config.disallow_fuzzy_matching and 1 or 0,
-    matching_config.disallow_partial_matching and 1 or 0,
-    matching_config.disallow_prefix_unmatching and 1 or 0,
-  }, function()
+  return self.match_cache:ensure(input .. ':' .. (self.resolved_completion_item and '1' or '0' .. ':') .. (matching_config.disallow_fuzzy_matching and '1' or '0') .. ':' .. (matching_config.disallow_partial_fuzzy_matching and '1' or '0') .. ':' .. (matching_config.disallow_partial_matching and '1' or '0') .. ':' .. (matching_config.disallow_prefix_unmatching and '1' or '0'), function()
     local option = {
       disallow_fuzzy_matching = matching_config.disallow_fuzzy_matching,
+      disallow_partial_fuzzy_matching = matching_config.disallow_partial_fuzzy_matching,
       disallow_partial_matching = matching_config.disallow_partial_matching,
       disallow_prefix_unmatching = matching_config.disallow_prefix_unmatching,
       synonyms = {
@@ -360,27 +375,42 @@ entry.match = function(self, input, matching_config)
       },
     }
 
-    local score, matches, _
-    score, matches = matcher.match(input, self:get_filter_text(), option)
+    local score, matches, filter_text, _
+    local checked = {} ---@type table<string, boolean>
+
+    filter_text = self:get_filter_text()
+    checked[filter_text] = true
+    score, matches = matcher.match(input, filter_text, option)
 
     -- Support the language server that doesn't respect VSCode's behaviors.
+    local prefix = ''
     if score == 0 then
-      if misc.safe(self:get_completion_item().textEdit) and not misc.empty(self:get_completion_item().textEdit.newText) then
+      if self:get_completion_item().textEdit and not misc.empty(self:get_completion_item().textEdit.newText) then
         local diff = self.source_offset - self:get_offset()
         if diff > 0 then
-          local prefix = string.sub(self.context.cursor_line, self:get_offset(), self:get_offset() + diff)
-          local accept = false
+          prefix = string.sub(self.context.cursor_line, self:get_offset(), self:get_offset() + diff)
+          local accept = nil
           accept = accept or string.match(prefix, '^[^%a]+$')
           accept = accept or string.find(self:get_completion_item().textEdit.newText, prefix, 1, true)
           if accept then
-            score, matches = matcher.match(input, prefix .. self:get_filter_text(), option)
+            filter_text = prefix .. self:get_filter_text()
+            if not checked[filter_text] then
+              checked[filter_text] = true
+              score, matches = matcher.match(input, filter_text, option)
+            end
           end
         end
       end
     end
 
-    if self:get_filter_text() ~= self:get_completion_item().label then
-      _, matches = matcher.match(input, self:get_completion_item().label, { self:get_word() })
+    -- Fix highlight if filterText is not the same to vim_item.abbr.
+    if score > 0 then
+      local vim_item = self:get_vim_item(self.source_offset)
+      filter_text = vim_item.abbr or vim_item.word
+      if not checked[filter_text] then
+        local diff = self.source_offset - self:get_offset()
+        _, matches = matcher.match(input:sub(1 + diff), filter_text, option)
+      end
     end
 
     return { score = score, matches = matches }
@@ -390,7 +420,7 @@ end
 ---Get resolved completion item if possible.
 ---@return lsp.CompletionItem
 entry.get_completion_item = function(self)
-  return self.cache:ensure({ 'get_completion_item', self.resolved_completion_item and 1 or 0 }, function()
+  return self.cache:ensure('get_completion_item', function()
     if self.resolved_completion_item then
       local completion_item = misc.copy(self.completion_item)
       for k, v in pairs(self.resolved_completion_item) do
@@ -410,7 +440,7 @@ entry.get_documentation = function(self)
   local documents = {}
 
   -- detail
-  if misc.safe(item.detail) and item.detail ~= '' then
+  if item.detail and item.detail ~= '' then
     local ft = self.context.filetype
     local dot_index = string.find(ft, '%.')
     if dot_index ~= nil then
@@ -422,13 +452,23 @@ entry.get_documentation = function(self)
     })
   end
 
-  if type(item.documentation) == 'string' and item.documentation ~= '' then
-    table.insert(documents, {
-      kind = types.lsp.MarkupKind.PlainText,
-      value = str.trim(item.documentation),
-    })
-  elseif type(item.documentation) == 'table' and item.documentation.value ~= '' then
-    table.insert(documents, item.documentation)
+  local documentation = item.documentation
+  if type(documentation) == 'string' and documentation ~= '' then
+    local value = str.trim(documentation)
+    if value ~= '' then
+      table.insert(documents, {
+        kind = types.lsp.MarkupKind.PlainText,
+        value = value,
+      })
+    end
+  elseif type(documentation) == 'table' and not misc.empty(documentation.value) then
+    local value = str.trim(documentation.value)
+    if value ~= '' then
+      table.insert(documents, {
+        kind = documentation.kind,
+        value = value,
+      })
+    end
   end
 
   return vim.lsp.util.convert_input_to_markdown_lines(documents)
@@ -437,7 +477,7 @@ end
 ---Get completion item kind
 ---@return lsp.CompletionItemKind
 entry.get_kind = function(self)
-  return misc.safe(self:get_completion_item().kind) or types.lsp.CompletionItemKind.Text
+  return self:get_completion_item().kind or types.lsp.CompletionItemKind.Text
 end
 
 ---Execute completion item's command.
@@ -457,12 +497,70 @@ entry.resolve = function(self, callback)
   if not self.resolving then
     self.resolving = true
     self.source:resolve(self.completion_item, function(completion_item)
-      self.resolved_completion_item = misc.safe(completion_item) or self.completion_item
+      self.resolving = false
+      if not completion_item then
+        return
+      end
+      self.resolved_completion_item = completion_item or self.completion_item
+      self.cache:clear()
       for _, c in ipairs(self.resolved_callbacks) do
         c()
       end
     end)
   end
+end
+
+---@param completion_item lsp.CompletionItem
+---@param defaults? lsp.internal.CompletionItemDefaults
+---@return lsp.CompletionItem
+entry.fill_defaults = function(_, completion_item, defaults)
+  defaults = defaults or {}
+
+  if defaults.data then
+    completion_item.data = completion_item.data or defaults.data
+  end
+
+  if defaults.commitCharacters then
+    completion_item.commitCharacters = completion_item.commitCharacters or defaults.commitCharacters
+  end
+
+  if defaults.insertTextFormat then
+    completion_item.insertTextFormat = completion_item.insertTextFormat or defaults.insertTextFormat
+  end
+
+  if defaults.insertTextMode then
+    completion_item.insertTextMode = completion_item.insertTextMode or defaults.insertTextMode
+  end
+
+  if defaults.editRange then
+    if not completion_item.textEdit then
+      if defaults.editRange.insert then
+        completion_item.textEdit = {
+          insert = defaults.editRange.insert,
+          replace = defaults.editRange.replace,
+          newText = completion_item.textEditText or completion_item.label,
+        }
+      else
+        completion_item.textEdit = {
+          range = defaults.editRange, --[[@as lsp.Range]]
+          newText = completion_item.textEditText or completion_item.label,
+        }
+      end
+    end
+  end
+
+  return completion_item
+end
+
+---Convert the oneline range encoding.
+entry.convert_range_encoding = function(self, range)
+  local from_encoding = self.source:get_position_encoding_kind()
+  return self.context.cache:ensure('entry.convert_range_encoding:' .. range.start.character .. ':' .. range['end'].character .. ':' .. from_encoding, function()
+    return {
+      start = types.lsp.Position.to_utf8(self.context.cursor_line, range.start, from_encoding),
+      ['end'] = types.lsp.Position.to_utf8(self.context.cursor_line, range['end'], from_encoding),
+    }
+  end)
 end
 
 return entry

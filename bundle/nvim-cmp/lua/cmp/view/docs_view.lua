@@ -15,7 +15,10 @@ docs_view.new = function()
   self.window:option('foldenable', false)
   self.window:option('linebreak', true)
   self.window:option('scrolloff', 0)
+  self.window:option('showbreak', 'NONE')
   self.window:option('wrap', true)
+  self.window:buffer_option('filetype', 'cmp_docs')
+  self.window:buffer_option('buftype', 'nofile')
   return self
 end
 
@@ -23,7 +26,7 @@ end
 ---@param e cmp.Entry
 ---@param view cmp.WindowStyle
 docs_view.open = function(self, e, view)
-  local documentation = config.get().documentation
+  local documentation = config.get().window.documentation
   if not documentation then
     return
   end
@@ -32,11 +35,12 @@ docs_view.open = function(self, e, view)
     return self:close()
   end
 
-  local right_space = vim.o.columns - (view.col + view.width) - 2
-  local left_space = view.col - 2
-  local maxwidth = math.min(documentation.maxwidth, math.max(left_space, right_space) - 1)
+  local border_info = window.get_border_info({ style = documentation })
+  local right_space = vim.o.columns - (view.col + view.width) - 1
+  local left_space = view.col - 1
+  local max_width = math.min(documentation.max_width, math.max(left_space, right_space))
 
-  -- update buffer content if needed.
+  -- Update buffer content if needed.
   if not self.entry or e.id ~= self.entry.id then
     local documents = e:get_documentation()
     if #documents == 0 then
@@ -46,24 +50,29 @@ docs_view.open = function(self, e, view)
     self.entry = e
     vim.api.nvim_buf_call(self.window:get_buffer(), function()
       vim.cmd([[syntax clear]])
+      vim.api.nvim_buf_set_lines(self.window:get_buffer(), 0, -1, false, {})
     end)
     vim.lsp.util.stylize_markdown(self.window:get_buffer(), documents, {
-      max_width = maxwidth,
-      max_height = documentation.maxheight,
+      max_width = max_width - border_info.horiz,
+      max_height = documentation.max_height,
     })
   end
 
+  -- Set buffer as not modified, so it can be removed without errors
+  vim.api.nvim_buf_set_option(self.window:get_buffer(), 'modified', false)
+
+  -- Calculate window size.
   local width, height = vim.lsp.util._make_floating_popup_size(vim.api.nvim_buf_get_lines(self.window:get_buffer(), 0, -1, false), {
-    max_width = maxwidth,
-    max_height = documentation.maxheight,
+    max_width = max_width - border_info.horiz,
+    max_height = documentation.max_height - border_info.vert,
   })
   if width <= 0 or height <= 0 then
     return self:close()
   end
 
+  -- Calculate window position.
   local right_col = view.col + view.width
-  local left_col = view.col - width - 2
-
+  local left_col = view.col - width - border_info.horiz
   local col, left
   if right_space >= width and left_space >= width then
     if right_space < left_space then
@@ -81,8 +90,10 @@ docs_view.open = function(self, e, view)
     return self:close()
   end
 
+  -- Render window.
+  self.window:option('winblend', vim.o.pumblend)
   self.window:option('winhighlight', documentation.winhighlight)
-  self.window:set_style({
+  local style = {
     relative = 'editor',
     style = 'minimal',
     width = width,
@@ -91,11 +102,14 @@ docs_view.open = function(self, e, view)
     col = col,
     border = documentation.border,
     zindex = documentation.zindex or 50,
-  })
-  if left and self.window:has_scrollbar() then
-    self.window.style.col = self.window.style.col - 1
+  }
+  self.window:open(style)
+
+  -- Correct left-col for scrollbar existence.
+  if left then
+    style.col = style.col - self.window:info().scrollbar_offset
+    self.window:open(style)
   end
-  self.window:open()
 end
 
 ---Close floating window

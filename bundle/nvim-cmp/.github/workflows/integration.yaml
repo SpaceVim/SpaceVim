@@ -16,13 +16,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Setup rust
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: nightly
-        default: true
-        override: true
-
     - name: Setup neovim
       uses: rhysd/action-setup-vim@v1
       with:
@@ -40,12 +33,9 @@ jobs:
     - name: Setup tools
       shell: bash
       run: |
-        sudo apt install -y curl unzip --no-install-recommends
-        bash ./utils/install_stylua.sh
         luarocks install luacheck
         luarocks install vusted
 
     - name: Run tests
       shell: bash
       run: make integration
-

@@ -17,6 +17,18 @@ describe('misc', function()
     assert.are.equal(merged.a.b, 1)
 
     merged = misc.merge({
+      a = {
+        i = 1,
+      },
+    }, {
+      a = {
+        c = 2,
+      },
+    })
+    assert.are.equal(merged.a.i, 1)
+    assert.are.equal(merged.a.c, 2)
+
+    merged = misc.merge({
       a = false,
     }, {
       a = {
