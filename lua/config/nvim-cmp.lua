@@ -1,5 +1,9 @@
 local cmp = require('cmp')
 
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
 cmp.setup({
   mapping = {
     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
@@ -11,7 +15,9 @@ cmp.setup({
       c = cmp.mapping.close(),
     }),
     ['<Tab>'] = function(fallback)
-      if cmp.visible() then
+      if vim.fn['neosnippet#expandable_or_jumpable']() == 1 then
+        feedkey('<plug>(neosnippet_expand_or_jump)', '')
+      elseif cmp.visible() then
         cmp.select_next_item()
       else
         fallback()
