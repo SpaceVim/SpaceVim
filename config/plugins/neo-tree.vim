@@ -191,6 +191,14 @@ require("neo-tree").setup({
         ["f"] = "filter_on_submit",
         ["<c-x>"] = "clear_filter",
         ["[g"] = "prev_git_modified",
+        ["N"] = { 
+          "add",
+          -- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
+          -- some commands may take optional config options, see `:h neo-tree-mappings` for details
+          config = {
+            show_path = "none" -- "none", "relative", "absolute"
+          }
+        },
         ["]g"] = "next_git_modified",
       },
       fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
