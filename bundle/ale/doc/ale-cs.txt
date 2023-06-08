@@ -7,6 +7,13 @@ with the OmniSharp plugin. See here: https://github.com/OmniSharp/omnisharp-vim
 
 
 ===============================================================================
+clang-format                                               *ale-cs-clangformat*
+
+See |ale-c-clangformat| for information about the available options.
+Note that the C options are also used for C#.
+
+
+===============================================================================
 csc                                                                *ale-cs-csc*
 
   The |ale-cs-csc| linter checks for semantic errors when files are opened or
@@ -89,6 +96,45 @@ g:ale_cs_csc_assemblies                               *g:ale_cs_csc_assemblies*
     \ 'path-to-unityproject/obj/Debug',
     \]
 <
+
+===============================================================================
+cspell                                                          *ale-cs-cspell*
+
+See |ale-cspell-options|
+
+
+===============================================================================
+dotnet-format                                            *ale-cs-dotnet-format*
+
+Installation
+-------------------------------------------------------------------------------
+
+Installing .NET SDK should probably ensure that `dotnet` is in your `$PATH`.
+For .NET 6 the `dotnet format` tool is already included in the .NET SDK. For
+.NET 5 or below you will have to manually install it using the instructions
+from listed in this repository: https://github.com/dotnet/format
+
+
+Options
+-------------------------------------------------------------------------------
+
+g:ale_cs_dotnet_format_executable           *g:ale_cs_dotnet_format_executable*
+                                            *b:ale_cs_dotnet_format_executable*
+  Type: |String|
+  Default: `'dotnet'`
+
+  This variable can be set to specify an absolute path to the
+  `dotnet` executable (or to specify an alternate executable).
+
+
+g:ale_cs_dotnet_format_options                 *g:ale_cs_dotnet_format_options*
+                                               *b:ale_cs_dotnet_format_options*
+  Type: |String|
+  Default: `''`
+
+  This variable can be set to pass additional options to the `dotnet format`
+  fixer.
+
 
 ===============================================================================
 mcs                                                                *ale-cs-mcs*

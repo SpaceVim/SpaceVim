@@ -203,6 +203,10 @@ function! ale#engine#SetResults(buffer, loclist) abort
         call ale#highlight#SetHighlights(a:buffer, a:loclist)
     endif
 
+    if g:ale_virtualtext_cursor is# 'all' || g:ale_virtualtext_cursor == 2
+        call ale#virtualtext#SetTexts(a:buffer, a:loclist)
+    endif
+
     if l:linting_is_done
         if g:ale_echo_cursor
             " Try and echo the warning now.
@@ -210,7 +214,7 @@ function! ale#engine#SetResults(buffer, loclist) abort
             call ale#cursor#EchoCursorWarning()
         endif
 
-        if g:ale_virtualtext_cursor
+        if g:ale_virtualtext_cursor is# 'current' || g:ale_virtualtext_cursor == 1
             " Try and show the warning now.
             " This will only do something meaningful if we're in normal mode.
             call ale#virtualtext#ShowCursorWarning()
@@ -347,6 +351,12 @@ function! ale#engine#FixLocList(buffer, linter_name, from_other_source, loclist)
 
         if has_key(l:old_item, 'end_lnum')
             let l:item.end_lnum = str2nr(l:old_item.end_lnum)
+
+            " When the error ends after the end of the file, put it at the
+            " end. This is only done for the current buffer.
+            if l:item.bufnr == a:buffer && l:item.end_lnum > l:last_line_number
+                let l:item.end_lnum = l:last_line_number
+            endif
         endif
 
         if has_key(l:old_item, 'sub_type')
@@ -413,6 +423,7 @@ function! s:RunJob(command, options) abort
         return 0
     endif
 
+    let l:cwd = a:options.cwd
     let l:executable = a:options.executable
     let l:buffer = a:options.buffer
     let l:linter = a:options.linter
@@ -425,6 +436,7 @@ function! s:RunJob(command, options) abort
     \   'executable': l:executable,
     \}])
     let l:result = ale#command#Run(l:buffer, l:command, l:Callback, {
+    \   'cwd': l:cwd,
     \   'output_stream': l:output_stream,
     \   'executable': l:executable,
     \   'read_buffer': l:read_buffer,
@@ -541,8 +553,22 @@ function! s:RunIfExecutable(buffer, linter, lint_file, executable) abort
         let l:job_type = a:lint_file ? 'file_linter' : 'linter'
         call setbufvar(a:buffer, 'ale_job_type', l:job_type)
 
+        " Get the cwd for the linter and set it before we call GetCommand.
+        " This will ensure that ale#command#Run uses it by default.
+        let l:cwd = ale#linter#GetCwd(a:buffer, a:linter)
+
+        if l:cwd isnot v:null
+            call ale#command#SetCwd(a:buffer, l:cwd)
+        endif
+
         let l:command = ale#linter#GetCommand(a:buffer, a:linter)
+
+        if l:cwd isnot v:null
+            call ale#command#ResetCwd(a:buffer)
+        endif
+
         let l:options = {
+        \   'cwd': l:cwd,
         \   'executable': a:executable,
         \   'buffer': a:buffer,
         \   'linter': a:linter,

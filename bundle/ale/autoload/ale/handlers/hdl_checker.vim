@@ -13,7 +13,7 @@ function! ale#handlers#hdl_checker#IsDotGit(path) abort
     return ! empty(a:path) && isdirectory(a:path)
 endfunction
 
-" Sould return (in order of preference)
+" Should return (in order of preference)
 " 1. Nearest config file
 " 2. Nearest .git directory
 " 3. The current path
@@ -32,6 +32,8 @@ function! ale#handlers#hdl_checker#GetProjectRoot(buffer) abort
     if ale#handlers#hdl_checker#IsDotGit(l:project_root)
         return fnamemodify(l:project_root, ':h:h')
     endif
+
+    return ''
 endfunction
 
 function! ale#handlers#hdl_checker#GetExecutable(buffer) abort

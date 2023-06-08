@@ -34,12 +34,11 @@ function! ale#test#RestoreDirectory() abort
     unlet! g:dir
 endfunction
 
-" Change the filename for the current buffer using a relative path to
-" the script without running autocmd commands.
+" Get a filename for the current buffer using a relative path to the script.
 "
 " If a g:dir variable is set, it will be used as the path to the directory
 " containing the test file.
-function! ale#test#SetFilename(path) abort
+function! ale#test#GetFilename(path) abort
     let l:dir = get(g:, 'dir', '')
 
     if empty(l:dir)
@@ -50,28 +49,47 @@ function! ale#test#SetFilename(path) abort
     \   ? a:path
     \   : l:dir . '/' . a:path
 
-    silent! noautocmd execute 'file ' . fnameescape(ale#path#Simplify(l:full_path))
+    return ale#path#Simplify(l:full_path)
 endfunction
 
-function! s:RemoveModule(results) abort
+" Change the filename for the current buffer using a relative path to
+" the script without running autocmd commands.
+"
+" If a g:dir variable is set, it will be used as the path to the directory
+" containing the test file.
+function! ale#test#SetFilename(path) abort
+    let l:full_path = ale#test#GetFilename(a:path)
+    silent! noautocmd execute 'file ' . fnameescape(l:full_path)
+endfunction
+
+function! RemoveNewerKeys(results) abort
     for l:item in a:results
         if has_key(l:item, 'module')
             call remove(l:item, 'module')
         endif
+
+        if has_key(l:item, 'end_col')
+            call remove(l:item, 'end_col')
+        endif
+
+        if has_key(l:item, 'end_lnum')
+            call remove(l:item, 'end_lnum')
+        endif
     endfor
 endfunction
 
-" Return loclist data without the module string, only in newer Vim versions.
-function! ale#test#GetLoclistWithoutModule() abort
+" Return loclist data with only the keys supported by the lowest Vim versions.
+function! ale#test#GetLoclistWithoutNewerKeys() abort
     let l:results = getloclist(0)
-    call s:RemoveModule(l:results)
+    call RemoveNewerKeys(l:results)
 
     return l:results
 endfunction
 
-function! ale#test#GetQflistWithoutModule() abort
+" Return quickfix data with only the keys supported by the lowest Vim versions.
+function! ale#test#GetQflistWithoutNewerKeys() abort
     let l:results = getqflist()
-    call s:RemoveModule(l:results)
+    call RemoveNewerKeys(l:results)
 
     return l:results
 endfunction

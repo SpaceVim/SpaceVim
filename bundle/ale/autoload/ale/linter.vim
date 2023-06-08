@@ -19,6 +19,7 @@ let s:default_ale_linter_aliases = {
 \   'rmd': 'r',
 \   'systemverilog': 'verilog',
 \   'typescriptreact': ['typescript', 'tsx'],
+\   'vader': ['vim', 'vader'],
 \   'verilog_systemverilog': ['verilog_systemverilog', 'verilog'],
 \   'vimwiki': 'markdown',
 \   'vue': ['vue', 'javascript'],
@@ -38,19 +39,27 @@ let s:default_ale_linter_aliases = {
 "
 " NOTE: Update the g:ale_linters documentation when modifying this.
 let s:default_ale_linters = {
+\   'apkbuild': ['apkbuild_lint', 'secfixes_check'],
 \   'csh': ['shell'],
 \   'elixir': ['credo', 'dialyxir', 'dogma'],
-\   'go': ['gofmt', 'golint', 'go vet'],
+\   'go': ['gofmt', 'golint', 'gopls', 'govet'],
 \   'hack': ['hack'],
 \   'help': [],
+\   'inko': ['inko'],
+\   'json': ['jsonlint', 'spectral', 'vscodejson'],
+\   'json5': [],
+\   'jsonc': [],
 \   'perl': ['perlcritic'],
 \   'perl6': [],
-\   'python': ['flake8', 'mypy', 'pylint', 'pyright'],
+\   'python': ['flake8', 'mypy', 'pylint', 'pyright', 'ruff'],
 \   'rust': ['cargo', 'rls'],
 \   'spec': [],
 \   'text': [],
+\   'vader': ['vimls'],
 \   'vue': ['eslint', 'vls'],
 \   'zsh': ['shell'],
+\   'v': ['v'],
+\   'yaml': ['spectral', 'yaml-language-server', 'yamllint'],
 \}
 
 " Testing/debugging helper to unload all linters.
@@ -149,8 +158,21 @@ function! ale#linter#PreProcess(filetype, linter) abort
         endif
 
         let l:obj.address = a:linter.address
+
+        if has_key(a:linter, 'cwd')
+            throw '`cwd` makes no sense for socket LSP connections'
+        endif
     else
         throw '`address` must be defined for getting the LSP address'
+    endif
+
+    if has_key(a:linter, 'cwd')
+        let l:obj.cwd = a:linter.cwd
+
+        if type(l:obj.cwd) isnot v:t_string
+        \&& type(l:obj.cwd) isnot v:t_func
+            throw '`cwd` must be a String or Function if defined'
+        endif
     endif
 
     if l:needs_lsp_details
@@ -159,7 +181,7 @@ function! ale#linter#PreProcess(filetype, linter) abort
 
         if type(l:obj.language) isnot v:t_string
         \&& type(l:obj.language) isnot v:t_func
-            throw '`language` must be a String or Funcref if defined'
+            throw '`language` must be a String or Function if defined'
         endif
 
         if has_key(a:linter, 'project_root')
@@ -411,6 +433,12 @@ function! ale#linter#GetExecutable(buffer, linter) abort
     return type(l:Executable) is v:t_func
     \   ? l:Executable(a:buffer)
     \   : l:Executable
+endfunction
+
+function! ale#linter#GetCwd(buffer, linter) abort
+    let l:Cwd = get(a:linter, 'cwd', v:null)
+
+    return type(l:Cwd) is v:t_func ? l:Cwd(a:buffer) : l:Cwd
 endfunction
 
 " Given a buffer and linter, get the command String for the linter.

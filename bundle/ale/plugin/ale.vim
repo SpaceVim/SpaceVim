@@ -24,8 +24,10 @@ endif
 if !s:has_features
     " Only output a warning if editing some special files.
     if index(['', 'gitcommit'], &filetype) == -1
-        execute 'echoerr ''ALE requires NeoVim >= 0.2.0 or Vim 8 with +timers +job +channel'''
-        execute 'echoerr ''Please update your editor appropriately.'''
+        " no-custom-checks
+        echoerr 'ALE requires NeoVim >= 0.2.0 or Vim 8 with +timers +job +channel'
+        " no-custom-checks
+        echoerr 'Please update your editor appropriately.'
     endif
 
     " Stop here, as it won't work.
@@ -87,8 +89,8 @@ let g:ale_lint_on_save = get(g:, 'ale_lint_on_save', 1)
 " This flag can be set to 1 to enable linting when the filetype is changed.
 let g:ale_lint_on_filetype_changed = get(g:, 'ale_lint_on_filetype_changed', 1)
 
-" This Dictionary configures the default LSP roots for various linters.
-let g:ale_lsp_root = get(g:, 'ale_lsp_root', {})
+" If set to 1, hints and suggestion from LSP servers and tsserver will be shown.
+let g:ale_lsp_suggestions = get(g:, 'ale_lsp_suggestions', 0)
 
 " This flag can be set to 1 to enable automatically fixing files on save.
 let g:ale_fix_on_save = get(g:, 'ale_fix_on_save', 0)
@@ -100,6 +102,9 @@ let g:ale_enabled = get(g:, 'ale_enabled', 1)
 " A Dictionary mapping linter or fixer names to Arrays of two-item Arrays
 " mapping filename paths from one system to another.
 let g:ale_filename_mappings = get(g:, 'ale_filename_mappings', {})
+
+" This Dictionary configures the default project roots for various linters.
+let g:ale_root = get(g:, 'ale_root', {})
 
 " These flags dictates if ale uses the quickfix or the loclist (loclist is the
 " default, quickfix overrides loclist).
@@ -122,8 +127,8 @@ let g:ale_echo_cursor = get(g:, 'ale_echo_cursor', 1)
 " This flag can be set to 1 to automatically show errors in the preview window.
 let g:ale_cursor_detail = get(g:, 'ale_cursor_detail', 0)
 
-" This flag can be set to 1 to enable virtual text when the cursor moves.
-let g:ale_virtualtext_cursor = get(g:, 'ale_virtualtext_cursor', 0)
+" This flag can be changed to disable/enable virtual text.
+let g:ale_virtualtext_cursor = get(g:, 'ale_virtualtext_cursor', (has('nvim-0.3.2') || has('patch-9.0.0297') && has('textprop') && has('popupwin')) ? 'all' : 'disabled')
 
 " This flag can be set to 1 to enable LSP hover messages at the cursor.
 let g:ale_hover_cursor = get(g:, 'ale_hover_cursor', 1)
@@ -137,6 +142,21 @@ let g:ale_set_balloons = get(g:, 'ale_set_balloons', has('balloon_eval') && has(
 
 " Use preview window for hover messages.
 let g:ale_hover_to_preview = get(g:, 'ale_hover_to_preview', 0)
+
+" Float preview windows in Neovim
+let g:ale_floating_preview = get(g:, 'ale_floating_preview', 0)
+
+" Hovers use floating windows in Neovim
+let g:ale_hover_to_floating_preview = get(g:, 'ale_hover_to_floating_preview', 0)
+
+" Detail uses floating windows in Neovim
+let g:ale_detail_to_floating_preview = get(g:, 'ale_detail_to_floating_preview', 0)
+
+" Border setting for floating preview windows
+" The elements in the list set the characters for the left, top, top-left,
+" top-right, bottom-right, bottom-left, right, and bottom of the border
+" respectively
+let g:ale_floating_window_border = get(g:, 'ale_floating_window_border', ['|', '-', '+', '+', '+', '+', '|', '-'])
 
 " This flag can be set to 0 to disable warnings for trailing whitespace
 let g:ale_warn_about_trailing_whitespace = get(g:, 'ale_warn_about_trailing_whitespace', 1)
@@ -155,8 +175,14 @@ let g:ale_completion_enabled = get(g:, 'ale_completion_enabled', 0)
 " Enable automatic detection of pipenv for Python linters.
 let g:ale_python_auto_pipenv = get(g:, 'ale_python_auto_pipenv', 0)
 
+" Enable automatic detection of poetry for Python linters.
+let g:ale_python_auto_poetry = get(g:, 'ale_python_auto_poetry', 0)
+
 " This variable can be overridden to set the GO111MODULE environment variable.
 let g:ale_go_go111module = get(g:, 'ale_go_go111module', '')
+
+" Default executable for deno, needed set before plugin start
+let g:ale_deno_executable = get(g:, 'ale_deno_executable', 'deno')
 
 " If 1, enable a popup menu for commands.
 let g:ale_popup_menu_enabled = get(g:, 'ale_popup_menu_enabled', has('gui_running'))
@@ -205,6 +231,10 @@ command! -bar ALELint :call ale#Queue(0, 'lint_file')
 " Stop current jobs when linting.
 command! -bar ALELintStop :call ale#engine#Stop(bufnr(''))
 
+" Commands to manually populate the quickfixes.
+command! -bar ALEPopulateQuickfix :call ale#list#ForcePopulateErrorList(1)
+command! -bar ALEPopulateLocList  :call ale#list#ForcePopulateErrorList(0)
+
 " Define a command to get information about current filetype.
 command! -bar ALEInfo :call ale#debugging#Info()
 " The same, but copy output to your clipboard.
@@ -222,6 +252,9 @@ command! -bar -nargs=* ALEGoToDefinition :call ale#definition#GoToCommandHandler
 
 " Go to type definition for tsserver and LSP
 command! -bar -nargs=* ALEGoToTypeDefinition :call ale#definition#GoToCommandHandler('type', <f-args>)
+
+" Go to implementation for tsserver and LSP
+command! -bar -nargs=* ALEGoToImplementation :call ale#definition#GoToCommandHandler('implementation', <f-args>)
 
 " Repeat a previous selection in the preview window
 command! -bar ALERepeatSelection :call ale#preview#RepeatSelection()
@@ -246,6 +279,9 @@ command! -bar ALEImport :call ale#completion#Import()
 
 " Rename symbols using tsserver and LSP
 command! -bar -bang ALERename :call ale#rename#Execute()
+
+" Rename file using tsserver
+command! -bar -bang ALEFileRename :call ale#filerename#Execute()
 
 " Apply code actions to a range.
 command! -bar -range ALECodeAction :call ale#codefix#Execute(<range>)
@@ -286,13 +322,18 @@ nnoremap <silent> <Plug>(ale_go_to_definition_in_vsplit) :ALEGoToDefinition -vsp
 nnoremap <silent> <Plug>(ale_go_to_type_definition) :ALEGoToTypeDefinition<Return>
 nnoremap <silent> <Plug>(ale_go_to_type_definition_in_tab) :ALEGoToTypeDefinition -tab<Return>
 nnoremap <silent> <Plug>(ale_go_to_type_definition_in_split) :ALEGoToTypeDefinition -split<Return>
-nnoremap <silent> <Plug>(ale_go_to_type_definition_in_vsplit) :ALEGoToTypeDefinitionIn -vsplit<Return>
+nnoremap <silent> <Plug>(ale_go_to_type_definition_in_vsplit) :ALEGoToTypeDefinition -vsplit<Return>
+nnoremap <silent> <Plug>(ale_go_to_implementation) :ALEGoToImplementation<Return>
+nnoremap <silent> <Plug>(ale_go_to_implementation_in_tab) :ALEGoToImplementation -tab<Return>
+nnoremap <silent> <Plug>(ale_go_to_implementation_in_split) :ALEGoToImplementation -split<Return>
+nnoremap <silent> <Plug>(ale_go_to_implementation_in_vsplit) :ALEGoToImplementation -vsplit<Return>
 nnoremap <silent> <Plug>(ale_find_references) :ALEFindReferences<Return>
 nnoremap <silent> <Plug>(ale_hover) :ALEHover<Return>
 nnoremap <silent> <Plug>(ale_documentation) :ALEDocumentation<Return>
 inoremap <silent> <Plug>(ale_complete) <C-\><C-O>:ALEComplete<Return>
 nnoremap <silent> <Plug>(ale_import) :ALEImport<Return>
 nnoremap <silent> <Plug>(ale_rename) :ALERename<Return>
+nnoremap <silent> <Plug>(ale_filerename) :ALEFileRename<Return>
 nnoremap <silent> <Plug>(ale_code_action) :ALECodeAction<Return>
 nnoremap <silent> <Plug>(ale_repeat_selection) :ALERepeatSelection<Return>
 
