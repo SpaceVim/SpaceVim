@@ -2,9 +2,27 @@ local cmp = require('cmp')
 
 local copt = vim.fn['SpaceVim#layers#autocomplete#get_variable']()
 
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
 local function smart_tab(fallback) -- {{{
   
 end
+
+local function expand_snippet(fallback) -- {{{
+  if vim.g.spacevim_snippet_engine == 'neosnippet' then
+      if vim.fn['neosnippet#expandable']() == 1
+        then
+        feedkey('<plug>(neosnippet_expand)', '')
+      end
+  elseif vim.g.spacevim_snippet_engine == 'ultisnips' then
+  end
+  
+end
+-- }}}
+
+
 -- }}}
 
 -- 1. `auto_completion_return_key_behavior` set the action to perform
@@ -13,10 +31,6 @@ end
    -- - `smart` completes with current selection and expand snippet or argvs
    -- - `nil`
    -- By default it is `complete`.
-
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
 
 cmp.setup({
   mapping = {
@@ -38,12 +52,7 @@ cmp.setup({
         fallback()
       end
     end,
-    ['<M-/>'] = function(fallback)
-      if vim.fn['neosnippet#expandable']() == 1
-        then
-        feedkey('<plug>(neosnippet_expand)', '')
-      end
-    end,
+    ['<M-/>'] = expand_snippet,
     ['<S-Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
