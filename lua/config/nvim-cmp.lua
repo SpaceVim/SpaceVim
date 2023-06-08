@@ -2,6 +2,10 @@ local cmp = require('cmp')
 
 local copt = vim.fn['SpaceVim#layers#autocomplete#get_variable']()
 
+local function smart_tab(fallback) -- {{{
+  
+end
+-- }}}
 
 -- 1. `auto_completion_return_key_behavior` set the action to perform
    -- when the `Return`/`Enter` key is pressed. the possible values are:
@@ -28,10 +32,16 @@ cmp.setup({
         and vim.fn['neosnippet#expandable_or_jumpable']() == 1
         then
         feedkey('<plug>(neosnippet_expand_or_jump)', '')
-      elseif cmp.visible() and copt.auto_completion_return_key_behavior == 'complete' then
+      elseif cmp.visible() then
         cmp.select_next_item()
       else
         fallback()
+      end
+    end,
+    ['<M-/>'] = function(fallback)
+      if vim.fn['neosnippet#expandable']() == 1
+        then
+        feedkey('<plug>(neosnippet_expand)', '')
       end
     end,
     ['<S-Tab>'] = function(fallback)
