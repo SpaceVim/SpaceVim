@@ -29,7 +29,6 @@ local function ctrl_n(f) -- {{{
   end
 end
 -- }}}
-
 local function expand_snippet(fallback) -- {{{
   if vim.g.spacevim_snippet_engine == 'neosnippet' then
     if vim.fn['neosnippet#expandable']() == 1 then
@@ -42,12 +41,19 @@ end
 
 -- }}}
 
--- 1. `auto_completion_return_key_behavior` set the action to perform
--- when the `Return`/`Enter` key is pressed. the possible values are:
--- - `complete` completes with the current selection
--- - `smart` completes with current selection and expand snippet or argvs
--- - `nil`
--- By default it is `complete`.
+--1. `auto_completion_return_key_behavior` set the action to perform
+--   when the `Return`/`Enter` key is pressed. the possible values are:
+--   - `complete` completes with the current selection
+--   - `smart` completes with current selection and expand snippet or argvs
+--   - `nil`
+--   By default it is `complete`.
+--2. `auto_completion_tab_key_behavior` set the action to
+--   perform when the `TAB` key is pressed, the possible values are:
+--   - `smart` cycle candidates, expand snippets, jump parameters
+--   - `complete` completes with the current selection
+--   - `cycle` completes the common prefix and cycle between candidates
+--   - `nil` insert a carriage return
+--   By default it is `complete`.
 
 cmp.setup({
   mapping = {

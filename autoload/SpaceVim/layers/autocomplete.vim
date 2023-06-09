@@ -264,6 +264,7 @@ function! SpaceVim#layers#autocomplete#get_variable() abort
   
   return {
         \ 'auto_completion_tab_key_behavior' : s:tab_key_behavior,
+        \ 'auto_completion_return_key_behavior' : s:return_key_behavior,
         \ }
   
 
