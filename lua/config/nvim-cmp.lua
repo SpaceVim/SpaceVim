@@ -6,7 +6,19 @@ local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
+
 local function smart_tab(fallback) -- {{{
+  if copt.auto_completion_tab_key_behavior == 'smart' then
+    if vim.fn['neosnippet#expandable_or_jumpable']() == 1 then
+      feedkey('<plug>(neosnippet_expand_or_jump)', '')
+    elseif cmp.visible() then
+      cmp.select_next_item()
+    else
+      fallback()
+    end
+  elseif copt.auto_completion_tab_key_behavior == 'complete' then
+    cmp.select_next_item()
+  end
 end
 
 local function expand_snippet(fallback) -- {{{
@@ -37,18 +49,7 @@ cmp.setup({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    ['<Tab>'] = function(fallback)
-      if
-        copt.auto_completion_return_key_behavior == 'smart'
-        and vim.fn['neosnippet#expandable_or_jumpable']() == 1
-      then
-        feedkey('<plug>(neosnippet_expand_or_jump)', '')
-      elseif cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end,
+    ['<Tab>'] = smart_tab,
     ['<M-/>'] = expand_snippet,
     ['<S-Tab>'] = function(fallback)
       if cmp.visible() then
