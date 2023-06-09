@@ -1,5 +1,5 @@
 " Author: kmarc <korondi.mark@gmail.com>
-" Description: This file adds support for using GNU awk with sripts.
+" Description: This file adds support for using GNU awk with scripts.
 
 call ale#Set('awk_gawk_executable', 'gawk')
 call ale#Set('awk_gawk_options', '')
@@ -9,8 +9,9 @@ function! ale_linters#awk#gawk#GetCommand(buffer) abort
     " gawk from attempting to execute the body of the script
     " it is linting.
     return '%e --source ' . ale#Escape('BEGIN { exit } END { exit 1 }')
+    \   . ' --lint'
     \   .  ale#Pad(ale#Var(a:buffer, 'awk_gawk_options'))
-    \   . ' -f %t --lint /dev/null'
+    \   . ' -f %t /dev/null'
 endfunction
 
 call ale#linter#Define('awk', {

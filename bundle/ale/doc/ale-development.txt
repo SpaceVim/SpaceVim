@@ -14,6 +14,8 @@ CONTENTS                                             *ale-development-contents*
     4.1. Writing Linter Tests.............|ale-development-linter-tests|
     4.2. Writing Fixer Tests..............|ale-development-fixer-tests|
     4.3. Running Tests in a Windows VM....|ale-development-windows-tests|
+  5. Contributing.........................|ale-development-contributing|
+    5.1. Preparing a Release..............|ale-development-release|
 
 ===============================================================================
 1. Introduction                                  *ale-development-introduction*
@@ -97,8 +99,8 @@ should also follow some additional rules designed to prevent mistakes. Some of
 these are reported with ALE's `custom-linting-rules` script. See
 |ale-development-tests|.
 
-* Don't leave stray `:echo` lines in code. Use `execute 'echo' ...` if you must
-  echo something.
+* Don't leave stray `:echo` lines in code. Write `" no-custom-checks` above
+  the line if you must echo something.
 * For strings use |is#| instead of |==#|, `is?` instead of `==?`, `isnot#`
   instead of `!=#`, and `isnot?` instead of `!=?`. This is because `'x' ==# 0`
   returns 1, while `'x' is# 0` returns 0, so you will experience fewer issues
@@ -148,14 +150,15 @@ Apply the following rules when writing Bash scripts.
 ===============================================================================
 4. Testing ALE              *ale-development-tests* *ale-dev-tests* *ale-tests*
 
-ALE is tested with a suite of tests executed in Travis CI and AppVeyor. ALE
-runs tests with the following versions of Vim in the following environments.
+ALE is tested with a suite of tests executed via GitHub Actions and AppVeyor.
+ALE runs tests with the following versions of Vim in the following
+environments.
 
-1. Vim 8.0.0027 on Linux via Travis CI.
-2. Vim 8.1.0519 on Linux via Travis CI.
-3. NeoVim 0.2.0 on Linux via Travis CI.
-4. NeoVim 0.3.5 on Linux via Travis CI.
-5. Vim 8 (stable builds) on Windows via AppVeyor.
+1. Vim 8.0.0027 on Linux via GitHub Actions.
+2. Vim 9.0.0133 on Linux via GitHub Actions.
+3. NeoVim 0.2.0 on Linux via GitHub Actions.
+4. NeoVim 0.8.0 on Linux via GitHub Actions.
+6. Vim 8 (stable builds) on Windows via AppVeyor.
 
 If you are developing ALE code on Linux, Mac OSX, or BSD, you can run ALEs
 tests by installing Docker and running the `run-tests` script. Follow the
@@ -180,19 +183,24 @@ Generally write tests for any changes you make. The following types of tests
 are recommended for the following types of code.
 
 * New/edited error handler callbacks -> Write tests in `test/handler`
-* New/edited command callbacks       -> Write tests in `test/command_callback`
+* New/edited linter definition       -> Write tests in `test/linter`
 * New/edited fixer functions         -> Write tests in `test/fixers`
 
 Look at existing tests in the codebase for examples of how to write tests.
 Refer to the Vader documentation for general information on how to write Vader
 tests: https://github.com/junegunn/vader.vim
 
+If you need to add any supporting files for tests, such as empty files present
+to test searching upwards through paths for configuration files, they can be
+added to the `test/test-files` directory.
+
 See |ale-development-linter-tests| for more information on how to write linter
 tests.
 
 When you add new linters or fixers, make sure to add them into the tables in
 supported-tools.md and |ale-supported-languages-and-tools.txt|. If you forget to
-keep them both in sync, you should see an error like the following in Travis CI.
+keep them both in sync, you should see an error like the following in the
+builds run for GitHub Actions.
 >
   ========================================
   diff supported-tools.md and doc/ale-supported-languages-and-tools.txt tables
@@ -272,8 +280,8 @@ be written like so. >
   \ '1:Something went wrong',
   \ ]
 <
-Tests for what ALE runs should go in the `test/command_callback` directory,
-and should be written like so. >
+Tests for what ALE runs should go in the `test/linter` directory, and should
+be written like so. >
 
   Before:
     " Load the linter and set up a series of commands, reset linter variables,
@@ -309,6 +317,7 @@ The full list of commands that will be temporarily defined for linter tests
 given the above setup are as follows.
 
 `GivenCommandOutput [...]`         - Define output for ale#command#Run.
+`AssertLinterCwd cwd`              - Check the `cwd` for the linter.
 `AssertLinter executable, command` - Check the executable and command.
 `AssertLinterNotExecuted`          - Check that linters will not be executed.
 `AssertLSPLanguage language`       - Check the language given to an LSP server.
@@ -316,7 +325,6 @@ given the above setup are as follows.
 `AssertLSPConfig config_dict`      - Check the config given to an LSP server.
 `AssertLSPProject project_root`    - Check the root given to an LSP server.
 `AssertLSPAddress address`         - Check the address to an LSP server.
-
 
 ===============================================================================
 4.2 Writing Fixer Tests                           *ale-development-fixer-tests*
@@ -355,9 +363,9 @@ The full list of commands that will be temporarily defined for fixer tests
 given the above setup are as follows.
 
 `GivenCommandOutput [...]`         - Define output for ale#command#Run.
+`AssertFixerCwd cwd`               - Check the `cwd` for the fixer.
 `AssertFixer results`              - Check the fixer results
 `AssertFixerNotExecuted`           - Check that fixers will not be executed.
-
 
 ===============================================================================
 4.3 Running Tests in a Windows VM               *ale-development-windows-tests*
@@ -434,6 +442,95 @@ It will probably take several minutes for all of the tests to run. Be patient.
 You can run a specific test by passing the filename as an argument to the
 batch file, for example: `run-tests test/test_c_flag_parsing.vader` . This will
 give you results much more quickly.
+
+===============================================================================
+5. Contributing                                  *ale-development-contributing*
+
+All integration of new code into ALE is done through GitHub pull requests.
+Using that tool streamlines the process and minimizes the time and effort
+required to e.g. ensure test suites are run for every change.
+
+As for any project hosted by GitHub, the choice of platform demands every
+contributor to take care to setup an account and configure it accordingly.
+
+Due to details of our process, a difference to many other GitHub hosted
+projects is that contributors who wish to keep the author fields for their
+commits unaltered need to configure a public email address in their account
+and profile settings. See: https://docs.github.com/en/account-and-profile/
+
+Unless configuring GitHub to expose contact details, commits will be rewritten
+to appear by `USERNAME <RANDOM_NUMBER+USERNAME@users.noreply.github.com>` .
+
+===============================================================================
+5.1 Preparing a Release                               *ale-development-release*
+
+ALE offers release packages through GitHub, for two reasons:
+
+1. Some users like to target specific release versions rather than simply
+   installing the plugin from `master`. This includes users who create Linux
+   distribution specific packages from GitHub releases.
+2. The releases provide a nice way to get an overview of what has changed in
+   ALE over time.
+
+ALE has no fixed release schedule. Release versions are created whenever the
+ALE developers feel the need to create one. ALE release versions follow the
+typical Semantic Versioning scheme. See: https://semver.org/
+
+Minor version releases for ALE should be the most common, followed by patch
+releases. Every minor version release should be followed by a `vA.B.x` branch
+such as `v2.0.x` for version `2.0.0` and every following patch version before
+`2.1.0`. The `git` branch strategy for patches is to first merge a bug fix to
+`master`, and then `git cherry-pick` a patch to a branch for a specific
+version. ALE developers do not generally support anything but `master` or the
+last minor version.
+
+Generally ALE releases hit a major version only when there are breaking
+changes to a public ALE setting or function. A "public" setting or function is
+defined as any setting or function documented in the `:help` |ale| text file.
+Major ALE versions ought to be so rare that they only come once a year at
+most. ALE should not typically introduce any breaking changes.
+
+If there are ever to be any breaking changes made for ALE, there should first
+come a minor version release for ALE documenting all of the coming breaking
+changes to ALE. It should be described how users can prepare for a breaking
+change that is coming before it is done.
+
+To create a release for ALE, you will need sufficient permissions in GitHub.
+Once you do, follow these steps.
+
+1. Create a new release draft, or edit an existing one. It helps to craft
+   drafts ahead of time and write the last commit ID checked for release notes
+   on the last update to a draft.
+   See the releases page: https://github.com/dense-analysis/ale/releases
+2. Examine `git log` and read changes made between the last ID checked, or the
+   git tag of the previous release, and the current commit in `master`.
+3. Write updates in separate sections (except where empty) for:
+  3.a. Breaking Changes
+  3.b. Deprecated Features
+  3.c. New Features
+  3.d. New Linters
+  3.e. New Fixers
+  3.f. Linter Enhancements
+  3.g. Fixer Enhancements
+  3.h. Bugs Fixed
+4. Once you've finished writing the draft for the release, bump
+   `s:current_ale_version` in `autoload/ale.vim` to the current version, and
+   add a line to `test/test_ale_has.vader` to test for the version. See
+   |ale#Has()| documentation for more information.
+5. Commit the changes after `./run-tests --fast -q` passes.
+6. Tag the release with `git tag vA.B.C`, replacing `A`, `B`, and `C` with the
+   version numbers. See `git tag --list` for examples.
+7. Run `git push` and `git push --tags` to push the commit and the tag.
+8. Edit the release draft in GitHub, select the tag you just pushed, and
+   publish the draft.
+9. If you're creating a new major or minor version: `git checkout -b vA.B.x`,
+   replacing `A` and `B` with the major and minor versions. `git push` the new
+   branch, and the GitHub branch protection settings should automatically
+   apply to the new release branch.
+10. You have already completed the last step.
+
+Have fun creating ALE releases. Drink responsibly, or not at all, which is the
+preference of w0rp.
 
 ===============================================================================
   vim:tw=78:ts=2:sts=2:sw=2:ft=help:norl:

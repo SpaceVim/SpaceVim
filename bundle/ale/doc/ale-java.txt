@@ -24,7 +24,7 @@ g:ale_java_checkstyle_executable             *g:ale_java_checkstyle_executable*
                                              *b:ale_java_checkstyle_executable*
 
   Type: |String|
-  Default: 'checkstyle'
+  Default: `'checkstyle'`
 
   This variable can be changed to modify the executable used for checkstyle.
 
@@ -39,6 +39,19 @@ g:ale_java_checkstyle_options                   *g:ale_java_checkstyle_options*
 
   If a configuration file is specified with `-c`, it will be used instead of
   configuration files set with |g:ale_java_checkstyle_config|.
+
+
+===============================================================================
+clang-format                                             *ale-java-clangformat*
+
+See |ale-c-clangformat| for information about the available options.
+Note that the C options are also used for Java.
+
+
+===============================================================================
+cspell                                                        *ale-java-cspell*
+
+See |ale-cspell-options|
 
 
 ===============================================================================
@@ -91,7 +104,6 @@ List type:
   \ ]
 <
 
-
 ===============================================================================
 google-java-format                                *ale-java-google-java-format*
 
@@ -119,8 +131,8 @@ pmd                                                              *ale-java-pmd*
 g:ale_java_pmd_options                                 *g:ale_java_pmd_options*
                                                        *b:ale_java_pmd_options*
 
-  Type: String
-  Default: '-R category/java/bestpractices'
+  Type: |String|
+  Default: `'-R category/java/bestpractices'`
 
   This variable can be changed to modify flags given to PMD. Do not specify -f
   and -d. They are added automatically.
@@ -168,7 +180,7 @@ g:ale_java_javalsp_config                           *g:ale_java_javalsp_config*
   Type: |Dictionary|
   Default: `{}`
 
-The javalsp linter automatically detects external depenencies for Maven and
+The javalsp linter automatically detects external dependencies for Maven and
 Gradle projects. In case the javalsp fails to detect some of them, you can
 specify them setting a dictionary to |g:ale_java_javalsp_config| variable.
 >
@@ -190,16 +202,17 @@ The Java language server will look for the dependencies you specify in
 `externalDependencies` array in your Maven and Gradle caches ~/.m2 and
 ~/.gradle.
 
+
 ===============================================================================
 eclipselsp                                                *ale-java-eclipselsp*
 
-To enable Eclipse LSP linter you need to clone and build the eclipse.jdt.ls
+To enable Eclipse JDT LSP linter you need to clone and build the eclipse.jdt.ls
 language server from https://github.com/eclipse/eclipse.jdt.ls. Simply
 clone the source code repo and then build the plugin:
 
    ./mvnw clean verify
 
-Note: currently, the build can only run when launched with JDK 8. JDK 9 or more
+Note: currently, the build can only run when launched with JDK 11. More
 recent versions can be used to run the server though.
 
 After build completes the files required to run the language server will be
@@ -218,8 +231,9 @@ g:ale_java_eclipselsp_path                         *g:ale_java_eclipselsp_path*
   Default: `'$HOME/eclipse.jdt.ls'`
 
   Absolute path to the location of the eclipse.jdt.ls repository folder. Or if
-  you have VSCode extension installed the absolute path to the VSCode extensions
-  folder (e.g. $HOME/.vscode/extensions/redhat.java-0.4x.0 in Linux).
+  you have VSCode extension installed the absolute path to the VSCode
+  extensions folder (e.g. $HOME/.vscode/extensions/redhat.java-0.4x.0 in
+  Linux).
 
 
 g:ale_java_eclipselsp_executable                *g:ale_java_eclipse_executable*
@@ -261,7 +275,8 @@ g:ale_java_eclipselsp_javaagent               *g:ale_java_eclipselsp_javaagent*
   Default: `''`
 
   A variable to add java agent for annotation processing such as Lombok.
-  If you have multiple java agent files, use space to separate them. For example:
+  If you have multiple java agent files, use space to separate them.
+  For example:
 >
   let g:ale_java_eclipselsp_javaagent='/eclipse/lombok.jar /eclipse/jacoco.jar'
 <
