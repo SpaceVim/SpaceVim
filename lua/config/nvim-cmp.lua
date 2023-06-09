@@ -48,6 +48,7 @@ local function enter(f) -- {{{
     expand_snippet(nil)
     if cmp.visible() then
       cmp.mapping.confirm({ select = false })
+      return cmp.close()
     else
       pcall(f)
     end
