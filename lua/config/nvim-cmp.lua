@@ -1,5 +1,10 @@
 local cmp = require('cmp')
 
+-- @fixme the tagbsearch opt need to be disabled
+-- E432
+--
+-- vim.o.tagbsearch = false
+
 local copt = vim.fn['SpaceVim#layers#autocomplete#get_variable']()
 
 local feedkey = function(key, mode)
