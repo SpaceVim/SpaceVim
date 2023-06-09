@@ -6,7 +6,6 @@ local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
-
 local function smart_tab(fallback) -- {{{
   if copt.auto_completion_tab_key_behavior == 'smart' then
     if vim.fn['neosnippet#expandable_or_jumpable']() == 1 then
@@ -20,6 +19,26 @@ local function smart_tab(fallback) -- {{{
     cmp.select_next_item()
   end
 end
+
+--1. `auto_completion_return_key_behavior` set the action to perform
+--   when the `Return`/`Enter` key is pressed. the possible values are:
+--   - `complete` completes with the current selection
+--   - `smart` completes with current selection and expand snippet or argvs
+--   - `nil`
+--   By default it is `complete`.
+
+local function enter(f) -- {{{
+  if copt.auto_completion_return_key_behavior == 'complete' then
+    cmp.mapping.confirm({ select = false })
+  elseif copt.auto_completion_return_key_behavior == 'smart' then
+    if cmp.visible() then
+      cmp.mapping.confirm({ select = false })
+    else
+      pcall(f)
+    end
+  end
+end
+-- }}}
 
 local function ctrl_n(f) -- {{{
   if cmp.visible() then
@@ -41,12 +60,6 @@ end
 
 -- }}}
 
---1. `auto_completion_return_key_behavior` set the action to perform
---   when the `Return`/`Enter` key is pressed. the possible values are:
---   - `complete` completes with the current selection
---   - `smart` completes with current selection and expand snippet or argvs
---   - `nil`
---   By default it is `complete`.
 --2. `auto_completion_tab_key_behavior` set the action to
 --   perform when the `TAB` key is pressed, the possible values are:
 --   - `smart` cycle candidates, expand snippets, jump parameters
@@ -74,7 +87,7 @@ cmp.setup({
       end
     end,
     ['<C-n'] = ctrl_n,
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<CR>'] = enter,
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
