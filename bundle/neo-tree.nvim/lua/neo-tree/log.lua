@@ -47,6 +47,11 @@ local notify = function(message, level_config)
   if type(vim.notify) == "table" then
     -- probably using nvim-notify
     vim.notify(message, level_config.level, { title = "Neo-tree" })
+  elseif vim.fn.exists("*SpaceVim#api#notify#get") == 1 then
+    local saved_v = vim.g._spacevim_temp_msg
+    vim.g._spacevim_temp_msg = message
+    vim.api.nvim_eval('SpaceVim#api#notify#get().notify(g:_spacevim_temp_msg, "None")')
+    vim.g._spacevim_temp_msg = saved_v
   else
     local nameupper = level_config.name:upper()
     local console_string = string.format("[Neo-tree %s] %s", nameupper, message)
