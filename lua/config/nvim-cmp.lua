@@ -1,5 +1,4 @@
 local cmp = require('cmp')
-
 -- @fixme the tagbsearch opt need to be disabled
 -- E432
 --
@@ -10,6 +9,16 @@ local copt = vim.fn['SpaceVim#layers#autocomplete#get_variable']()
 local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
+
+local function expand_snippet(fallback) -- {{{
+  if vim.g.spacevim_snippet_engine == 'neosnippet' then
+    if vim.fn['neosnippet#expandable']() == 1 then
+      feedkey('<plug>(neosnippet_expand)', '')
+    end
+  elseif vim.g.spacevim_snippet_engine == 'ultisnips' then
+  end
+end
+-- }}}
 
 local function smart_tab(fallback) -- {{{
   if copt.auto_completion_tab_key_behavior == 'smart' then
@@ -36,6 +45,7 @@ local function enter(f) -- {{{
   if copt.auto_completion_return_key_behavior == 'complete' then
     cmp.mapping.confirm({ select = false })
   elseif copt.auto_completion_return_key_behavior == 'smart' then
+    expand_snippet(nil)
     if cmp.visible() then
       cmp.mapping.confirm({ select = false })
     else
@@ -50,15 +60,6 @@ local function ctrl_n(f) -- {{{
     cmp.select_next_item()
   else
     pcall(f)
-  end
-end
--- }}}
-local function expand_snippet(fallback) -- {{{
-  if vim.g.spacevim_snippet_engine == 'neosnippet' then
-    if vim.fn['neosnippet#expandable']() == 1 then
-      feedkey('<plug>(neosnippet_expand)', '')
-    end
-  elseif vim.g.spacevim_snippet_engine == 'ultisnips' then
   end
 end
 -- }}}
