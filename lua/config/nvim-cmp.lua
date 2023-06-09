@@ -21,6 +21,15 @@ local function smart_tab(fallback) -- {{{
   end
 end
 
+local function ctrl_n(f) -- {{{
+  if cmp.visible() then
+    cmp.select_next_item()
+  else
+    pcall(f)
+  end
+end
+-- }}}
+
 local function expand_snippet(fallback) -- {{{
   if vim.g.spacevim_snippet_engine == 'neosnippet' then
     if vim.fn['neosnippet#expandable']() == 1 then
@@ -58,6 +67,7 @@ cmp.setup({
         fallback()
       end
     end,
+    ['<C-n'] = ctrl_n,
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   },
   sources = cmp.config.sources({
