@@ -1,18 +1,79 @@
 local cmp = require('cmp')
+-- @fixme the tagbsearch opt need to be disabled
+-- E432
+--
+vim.o.tagbsearch = false
 
 local copt = vim.fn['SpaceVim#layers#autocomplete#get_variable']()
-
-
--- 1. `auto_completion_return_key_behavior` set the action to perform
-   -- when the `Return`/`Enter` key is pressed. the possible values are:
-   -- - `complete` completes with the current selection
-   -- - `smart` completes with current selection and expand snippet or argvs
-   -- - `nil`
-   -- By default it is `complete`.
 
 local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
+
+local function expand_snippet(fallback) -- {{{
+  if vim.g.spacevim_snippet_engine == 'neosnippet' then
+    if vim.fn['neosnippet#expandable']() == 1 then
+      feedkey('<plug>(neosnippet_expand)', '')
+    end
+  elseif vim.g.spacevim_snippet_engine == 'ultisnips' then
+  end
+end
+-- }}}
+
+local function smart_tab(fallback) -- {{{
+  if copt.auto_completion_tab_key_behavior == 'smart' then
+    if vim.fn['neosnippet#expandable_or_jumpable']() == 1 then
+      feedkey('<plug>(neosnippet_expand_or_jump)', '')
+    elseif cmp.visible() then
+      cmp.select_next_item()
+    else
+      fallback()
+    end
+  elseif copt.auto_completion_tab_key_behavior == 'complete' then
+    cmp.select_next_item()
+  end
+end
+
+--1. `auto_completion_return_key_behavior` set the action to perform
+--   when the `Return`/`Enter` key is pressed. the possible values are:
+--   - `complete` completes with the current selection
+--   - `smart` completes with current selection and expand snippet or argvs
+--   - `nil`
+--   By default it is `complete`.
+
+local function enter(f) -- {{{
+  if copt.auto_completion_return_key_behavior == 'complete' then
+    cmp.mapping.confirm({ select = false })
+  elseif copt.auto_completion_return_key_behavior == 'smart' then
+    expand_snippet(nil)
+    if cmp.visible() then
+      cmp.mapping.confirm({ select = false })
+      return cmp.close()
+    else
+      pcall(f)
+    end
+  end
+end
+-- }}}
+
+local function ctrl_n(f) -- {{{
+  if cmp.visible() then
+    cmp.select_next_item()
+  else
+    pcall(f)
+  end
+end
+-- }}}
+
+-- }}}
+
+--2. `auto_completion_tab_key_behavior` set the action to
+--   perform when the `TAB` key is pressed, the possible values are:
+--   - `smart` cycle candidates, expand snippets, jump parameters
+--   - `complete` completes with the current selection
+--   - `cycle` completes the common prefix and cycle between candidates
+--   - `nil` insert a carriage return
+--   By default it is `complete`.
 
 cmp.setup({
   mapping = {
@@ -23,17 +84,8 @@ cmp.setup({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    ['<Tab>'] = function(fallback)
-      if copt.auto_completion_return_key_behavior == 'smart' 
-        and vim.fn['neosnippet#expandable_or_jumpable']() == 1
-        then
-        feedkey('<plug>(neosnippet_expand_or_jump)', '')
-      elseif cmp.visible() and copt.auto_completion_return_key_behavior == 'complete' then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end,
+    ['<Tab>'] = smart_tab,
+    ['<M-/>'] = expand_snippet,
     ['<S-Tab>'] = function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -41,7 +93,8 @@ cmp.setup({
         fallback()
       end
     end,
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<C-n'] = ctrl_n,
+    ['<CR>'] = enter,
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
@@ -51,7 +104,21 @@ cmp.setup({
     { name = 'buffer' },
   }),
 })
-
+-- `/` cmdline setup.
+-- cmp.setup.cmdline('/', {
+  -- mapping = cmp.mapping.preset.cmdline(),
+  -- sources = {
+    -- { name = 'buffer' },
+  -- },
+-- })
+-- `/` cmdline setup.
+-- cmp.setup.cmdline(':', {
+  -- mapping = cmp.mapping.preset.cmdline(),
+  -- sources = {
+    -- { name = 'buffer' },
+    -- { name = 'path' },
+  -- },
+-- })
 -- Setup lspconfig.
 local capabilities =
   require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
