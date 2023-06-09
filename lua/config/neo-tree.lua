@@ -172,6 +172,7 @@ require('neo-tree').setup({
         end,
         ['H'] = 'toggle_hidden',
         ['/'] = 'fuzzy_finder',
+        ['<Space>'] = 'none',
         ['D'] = 'fuzzy_finder_directory',
         ['#'] = 'fuzzy_sorter', -- fuzzy sorting using the fzy algorithm
         -- ["D"] = "fuzzy_sorter_directory",
