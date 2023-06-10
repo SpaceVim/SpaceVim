@@ -44,6 +44,8 @@ elseif g:spacevim_snippet_engine ==# 'ultisnips'
       return snippet
     elseif pumvisible()
       return "\<C-n>"
+    elseif g:spacevim_autocomplete_method ==# 'coc' && coc#pum#visible()
+      return coc#pum#next(1)
     else
       return "\<TAB>"
     endif
@@ -55,6 +57,5 @@ elseif g:spacevim_snippet_engine ==# 'ultisnips'
     return "\<C-R>=SpaceVim#mapping#tab#expandable()\<cr>"
   endfunction
 endif
-
 
 " vim:set et sw=2 cc=80:
