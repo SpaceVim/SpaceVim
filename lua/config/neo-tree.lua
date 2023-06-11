@@ -167,7 +167,15 @@ require('neo-tree').setup({
         ['<bs>'] = 'navigate_up',
         ['<Left>'] = 'close_node',
         ['h'] = 'close_node',
-        ['<Cr>'] = 'set_root',
+        ['<Cr>'] = function(state) -- {{{
+          local node = state.tree:get_node()
+          if node.type == 'directory' then
+            state.commands['set_root'](state)
+          else
+            state.commands['open'](state)
+          end
+        end,
+        -- }}}
         ['<C-h>'] = function(state)
           vim.cmd('call SpaceVim#plugins#projectmanager#current_root()')
         end,
