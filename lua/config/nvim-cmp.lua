@@ -98,6 +98,10 @@ cmp.setup({
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
+    {
+      name = 'dictionary',
+      keyword_length = 2,
+    },
     { name = 'path' },
     { name = 'neosnippet' },
   }, {
@@ -106,20 +110,51 @@ cmp.setup({
 })
 -- `/` cmdline setup.
 -- cmp.setup.cmdline('/', {
-  -- mapping = cmp.mapping.preset.cmdline(),
-  -- sources = {
-    -- { name = 'buffer' },
-  -- },
+-- mapping = cmp.mapping.preset.cmdline(),
+-- sources = {
+-- { name = 'buffer' },
+-- },
 -- })
 -- `/` cmdline setup.
 -- cmp.setup.cmdline(':', {
-  -- mapping = cmp.mapping.preset.cmdline(),
-  -- sources = {
-    -- { name = 'buffer' },
-    -- { name = 'path' },
-  -- },
+-- mapping = cmp.mapping.preset.cmdline(),
+-- sources = {
+-- { name = 'buffer' },
+-- { name = 'path' },
+-- },
 -- })
 -- Setup lspconfig.
 local capabilities =
   require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+
+-- for cmp dictionary
+local dict = require("cmp_dictionary")
+
+dict.setup({
+  -- The following are default values.
+  exact = 2,
+  first_case_insensitive = false,
+  document = false,
+  -- document_command = "wn %s -over",
+  async = true,
+  sqlite = false,
+  max_items = -1,
+  capacity = 5,
+  debug = false,
+})
+
+
+-- dict.switcher({
+  -- filetype = {
+    -- lua = "/path/to/lua.dict",
+    -- javascript = { "/path/to/js.dict", "/path/to/js2.dict" },
+  -- },
+  -- filepath = {
+    -- [".*xmake.lua"] = { "/path/to/xmake.dict", "/path/to/lua.dict" },
+    -- ["%.tmux.*%.conf"] = { "/path/to/js.dict", "/path/to/js2.dict" },
+  -- },
+  -- spelllang = {
+    -- en = "/path/to/english.dict",
+  -- },
+-- })
