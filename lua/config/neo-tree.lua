@@ -180,8 +180,31 @@ require('neo-tree').setup({
         ['f'] = 'filter_on_submit',
         ['<c-x>'] = 'clear_filter',
         ['[g'] = 'prev_git_modified',
-        ['<Right>'] = 'open',
-        ['l'] = 'open',
+        ['<Right>'] = function(state)
+          local node = state.tree:get_node()
+          if node.type == 'directory' then
+            if not node:is_expanded() then
+              require('neo-tree.sources.filesystem').toggle_directory(state, node)
+            elseif node:has_children() then
+              require('neo-tree.ui.renderer').focus_node(state, node:get_child_ids()[1])
+            end
+          else
+            state.commands['open'](state)
+          end
+        end,
+        -- make l same as defx's DefxSmartL
+        ['l'] = function(state)
+          local node = state.tree:get_node()
+          if node.type == 'directory' then
+            if not node:is_expanded() then
+              require('neo-tree.sources.filesystem').toggle_directory(state, node)
+            elseif node:has_children() then
+              require('neo-tree.ui.renderer').focus_node(state, node:get_child_ids()[1])
+            end
+          else
+            state.commands['open'](state)
+          end
+        end,
         ['N'] = {
           'add',
           -- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
