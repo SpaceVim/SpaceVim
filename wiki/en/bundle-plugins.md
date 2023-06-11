@@ -15,6 +15,7 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
   - [`lang#liquid` layer](#langliquid-layer)
   - [`lang#go` layer](#langgo-layer)
   - [`tmux` layer](#tmux-layer)
+  - [`ui` layer](#ui-layer)
   - [`incsearch` layer](#incsearch-layer)
   - [`lang#java` layer](#langjava-layer)
   - [`lang#plantuml` layer](#langplantuml-layer)
@@ -45,6 +46,7 @@ These plugins are changed based on a specific version of origin plugin.
 #### `edit` layer
 
 - `vim-grammarous`: based on [`rhysd/vim-grammarous@db46357`](https://github.com/rhysd/vim-grammarous/tree/db46357465ce587d5325e816235b5e92415f8c05)
+
 
 ### No changed plugins
 
@@ -98,6 +100,10 @@ These plugins are changed based on a specific version of origin plugin.
 #### `tmux` layer
 
 - [christoomey/vim-tmux-navigator@9ca5bfe5b](https://github.com/christoomey/vim-tmux-navigator/tree/9ca5bfe5bd274051b5dd796cc150348afc993b80)
+
+#### `ui` layer
+
+- [`mhinz/vim-startify@81e36c35`](https://github.com/mhinz/vim-startify/tree/81e36c352a8deea54df5ec1e2f4348685569bed2)
 
 #### `incsearch` layer
 
