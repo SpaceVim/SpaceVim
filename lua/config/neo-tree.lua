@@ -86,7 +86,6 @@ require('neo-tree').setup({
       ['o'] = 'open',
       ['<esc>'] = 'revert_preview',
       ['P'] = { 'toggle_preview', config = { use_float = true } },
-      ['l'] = 'open',
       ['s'] = 'open_vsplit',
       -- ["S"] = "split_with_window_picker",
       -- ["s"] = "vsplit_with_window_picker",
@@ -166,6 +165,8 @@ require('neo-tree').setup({
     window = {
       mappings = {
         ['<bs>'] = 'navigate_up',
+        ['<Left>'] = 'close_node',
+        ['h'] = 'close_node',
         ['<Cr>'] = 'set_root',
         ['<C-h>'] = function(state)
           vim.cmd('call SpaceVim#plugins#projectmanager#current_root()')
@@ -179,6 +180,8 @@ require('neo-tree').setup({
         ['f'] = 'filter_on_submit',
         ['<c-x>'] = 'clear_filter',
         ['[g'] = 'prev_git_modified',
+        ['<Right>'] = 'open',
+        ['l'] = 'open',
         ['N'] = {
           'add',
           -- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
