@@ -5,9 +5,10 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 <!-- vim-markdown-toc GFM -->
 
 - [Changed plugin:](#changed-plugin)
+  - [`core` layer](#core-layer)
   - [`edit` layer](#edit-layer)
 - [No changed plugins](#no-changed-plugins)
-  - [`core` layer](#core-layer)
+  - [`core` layer](#core-layer-1)
 - [`lsp` layer](#lsp-layer)
   - [`lang#ruby` layer](#langruby-layer)
   - [`lang#python` layer](#langpython-layer)
@@ -37,10 +38,13 @@ These plugins are changed based on a specific version of origin plugin.
 - `vim-unstack`: based on [`vim-unstack@9b191419`](https://github.com/mattboehm/vim-unstack/tree/9b191419b4d3f26225a5ae3df5e409c62b426941)
 - `tagbar`: based on [`tagbar@af3ce7c`](https://github.com/preservim/tagbar/tree/af3ce7c3cec81f2852bdb0a0651d2485fcd01214)
 
+#### `core` layer
+
+- `neo-tree`: based on [`neo-tree@e3b4ef0f`](https://github.com/nvim-neo-tree/neo-tree.nvim/tree/e3b4ef0fc05b0c99526ffb941abe23ef4fdc8e4e)
+
 #### `edit` layer
 
 - `vim-grammarous`: based on [`rhysd/vim-grammarous@db46357`](https://github.com/rhysd/vim-grammarous/tree/db46357465ce587d5325e816235b5e92415f8c05)
-
 
 ### No changed plugins
 
@@ -65,14 +69,11 @@ These plugins are changed based on a specific version of origin plugin.
 
 - [nerdtree@fc85a6f07](https://github.com/preservim/nerdtree/tree/fc85a6f07c2cd694be93496ffad75be126240068)
 
-
 ### `lsp` layer
 
 - [nvim-lspconfig-0.1.4](https://github.com/neovim/nvim-lspconfig/tree/dcb7ebb36f0d2aafcc640f520bb1fc8a9cc1f7c8) for neovim(`>=0.8.0`)
 - [nvim-lspconfig-0.1.3](https://github.com/neovim/nvim-lspconfig/tree/dcb7ebb36f0d2aafcc640f520bb1fc8a9cc1f7c8) for neovim(`>=0.7.0`)
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/tree/dcb7ebb36f0d2aafcc640f520bb1fc8a9cc1f7c8) for old neovim
-
-
 
 #### `lang#ruby` layer
 
