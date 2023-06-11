@@ -337,6 +337,12 @@ function! SpaceVim#mapping#clear_saved_buffers() abort
             \ 'do' : 'noautocmd bd %d'
             \ }
             \ )
+  " after update to neovim 0.9.1 the tabline does not redraw when clear
+  " buffers.
+  " https://github.com/neovim/neovim/issues/23989
+  if exists(':redrawtabline') == 2
+    redrawtabline
+  endif
 endfunction
 
 function! SpaceVim#mapping#format() abort
