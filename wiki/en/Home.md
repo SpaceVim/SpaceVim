@@ -22,6 +22,7 @@ a resources guideline for SpaceVim!
 - [programming languages](programming-languages): a list of programming languages
 - [Development guidelines](https://spacevim.org/development/)
 - [Development tips](development-tips)
+- [Bundle plugins](bundle-plugins)
 
 This wiki is generated from [`wiki/`](https://github.com/SpaceVim/SpaceVim/tree/master/wiki) directory
 automatically, if you want to contribute to the wiki, please send pull request to SpaceVim repo.
