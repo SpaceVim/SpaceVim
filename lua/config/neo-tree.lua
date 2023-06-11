@@ -166,11 +166,11 @@ require('neo-tree').setup({
     window = {
       mappings = {
         ['<bs>'] = 'navigate_up',
-        ['.'] = 'set_root',
+        ['<Cr>'] = 'set_root',
         ['<C-h>'] = function(state)
           vim.cmd('call SpaceVim#plugins#projectmanager#current_root()')
         end,
-        ['H'] = 'toggle_hidden',
+        ['.'] = 'toggle_hidden',
         ['/'] = 'fuzzy_finder',
         ['<Space>'] = 'none',
         ['D'] = 'fuzzy_finder_directory',
