@@ -32,6 +32,12 @@ function! tagbar#log#info(msg) abort
   call s:LOGGER.info(a:msg)
 endfunction
 
+function! tagbar#log#warn(msg) abort
+
+  call s:LOGGER.warn(a:msg)
+
+endfunction
+
 function! tagbar#log#debug_enabled() abort
   return s:LOGGER.debug_enabled()
 endfunction

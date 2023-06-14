@@ -27,18 +27,14 @@ endif
 " Basic init {{{1
 
 if v:version < 700
-    echohl WarningMsg
-    echomsg 'Tagbar: Vim version is too old, Tagbar requires at least 7.0'
-    echohl None
+    call tagbar#log#warn('Vim version is too old, Tagbar requires at least 7.0')
     finish
 endif
 
 if v:version == 700 && !has('patch167')
-    echohl WarningMsg
-    echomsg 'Tagbar: Vim versions lower than 7.0.167 have a bug'
-          \ 'that prevents this version of Tagbar from working.'
-          \ 'Please use the alternate version posted on the website.'
-    echohl None
+    call tagbar#log#warn('Vim versions lower than 7.0.167 have a bug')
+    call tagbar#log#warn('that prevents this version of Tagbar from working.')
+    call tagbar#log#warn('Please use the alternate version posted on the website.')
     finish
 endif
 
@@ -183,7 +179,6 @@ augroup TagbarSession
     autocmd SessionLoadPost * nested call tagbar#RestoreSession()
 augroup END
 
-" Commands {{{1
 command! -nargs=? Tagbar              call tagbar#ToggleWindow(<f-args>)
 command! -nargs=? TagbarToggle        call tagbar#ToggleWindow(<f-args>)
 command! -nargs=? TagbarOpen          call tagbar#OpenWindow(<f-args>)
@@ -200,7 +195,3 @@ command! -nargs=0 TagbarForceUpdate   call tagbar#ForceUpdate()
 command! -nargs=0 TagbarJump   call tagbar#jump()
 command! -nargs=0 TagbarJumpPrev      call tagbar#jumpToNearbyTag(-1)
 command! -nargs=0 TagbarJumpNext      call tagbar#jumpToNearbyTag(1)
-
-
-" Modeline {{{1
-" vim: ts=8 sw=4 sts=4 et foldenable foldmethod=marker foldcolumn=1
