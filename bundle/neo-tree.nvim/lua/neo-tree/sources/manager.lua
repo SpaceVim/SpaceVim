@@ -542,14 +542,20 @@ M.reveal_current_file = function(source_name, callback, force_cwd)
     end
   elseif not utils.is_subpath(cwd, path) then
     cwd, _ = utils.split_path(path)
-    inputs.confirm("File not in cwd. Change cwd to " .. cwd .. "?", function(response)
-      if response == true then
-        state.path = cwd
-        M.focus(source_name, path, callback)
-      else
-        M.focus(source_name, nil, callback)
-      end
-    end)
+    local nt = require("neo-tree")
+    if nt.config.force_change_cwd then
+      state.path = cwd
+      M.focus(source_name, path, callback)
+    else
+      inputs.confirm("File not in cwd. Change cwd to " .. cwd .. "?", function(response)
+        if response == true then
+          state.path = cwd
+          M.focus(source_name, path, callback)
+        else
+          M.focus(source_name, nil, callback)
+        end
+      end)
+    end
     return
   end
   if path then
