@@ -101,7 +101,7 @@ function M.options()
 
     vim.o.matchtime = 0
 
-    vim.o.ruler = true
+    vim.o.ruler = false
 
     vim.o.showmatch = true
 
