@@ -1,3 +1,8 @@
+---
+title: "Bundle Plugins"
+description: "A list of SpaceVim's bundle plugins"
+---
+
 ## Bundle plugins
 
 In `bundle/` directory, there are two kinds of plugins: forked plugins without changes and forked plugins which have been changed.

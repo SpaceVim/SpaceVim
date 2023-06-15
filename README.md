@@ -5,6 +5,7 @@
 </h1>
 
 [Quick Start Guide](https://spacevim.org/quick-start-guide/) \|
+[Documentation](https://spacevim.org/documentation/) \|
 [Chat](https://chat.mozilla.org/#/room/#spacevim:matrix.org) \|
 [Twitter](https://twitter.com/SpaceVim)
 
