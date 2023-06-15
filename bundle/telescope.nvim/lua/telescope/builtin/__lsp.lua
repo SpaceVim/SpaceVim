@@ -25,7 +25,7 @@ lsp.references = function(opts)
     local locations = {}
     if result then
       local results = vim.lsp.util.locations_to_items(result, vim.lsp.get_client_by_id(ctx.client_id).offset_encoding)
-      if not include_current_line then
+      if include_current_line then
         locations = vim.tbl_filter(function(v)
           -- Remove current line from result
           return not (v.filename == filepath and v.lnum == lnum)
@@ -165,12 +165,15 @@ local function list_or_jump(action, title, opts)
     if #flattened_results == 0 then
       return
     elseif #flattened_results == 1 and opts.jump_type ~= "never" then
-      if opts.jump_type == "tab" then
-        vim.cmd "tabedit"
-      elseif opts.jump_type == "split" then
-        vim.cmd "new"
-      elseif opts.jump_type == "vsplit" then
-        vim.cmd "vnew"
+      local uri = params.textDocument.uri
+      if uri ~= flattened_results[1].uri and uri ~= flattened_results[1].targetUri then
+        if opts.jump_type == "tab" then
+          vim.cmd "tabedit"
+        elseif opts.jump_type == "split" then
+          vim.cmd "new"
+        elseif opts.jump_type == "vsplit" then
+          vim.cmd "vnew"
+        end
       end
       vim.lsp.util.jump_to_location(flattened_results[1], offset_encoding)
     else

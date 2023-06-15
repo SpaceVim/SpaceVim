@@ -21,7 +21,7 @@ function AsyncJob.new(opts)
   self.stderr = opts.stderr or M.NullPipe()
 
   if opts.cwd and opts.cwd ~= "" then
-    self.uv_opts.cwd = vim.fn.expand(opts.cwd)
+    self.uv_opts.cwd = vim.fn.expand(vim.fn.escape(opts.cwd, "$"))
     -- this is a "illegal" hack for windows. E.g. If the git command returns `/` rather than `\` as delimiter,
     -- vim.fn.expand might just end up returning an empty string. Weird
     -- Because empty string is not allowed in libuv the job will not spawn. Solution is we just set it to opts.cwd

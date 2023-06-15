@@ -14,6 +14,10 @@ describe("builtin.find_files", function()
     tester.run_file "find_files__readme"
   end)
 
+  it("should handle cycling for full list", function()
+    tester.run_file "find_files__scrolling_descending_cycle"
+  end)
+
   for _, configuration in ipairs {
     { sorting_strategy = "descending" },
     { sorting_strategy = "ascending" },
@@ -107,12 +111,12 @@ describe("builtin.find_files", function()
 
   it("should be able to c-n the items", function()
     tester.run_string [[
-      runner.picker('find_files', 'fixtures/file<c-n>', {
+      runner.picker('find_files', 'fixtures/find_files/file<c-n>', {
         post_typed = {
           {
             {
-              "  lua/tests/fixtures/file_a.txt",
-              "> lua/tests/fixtures/file_abc.txt",
+              "  lua/tests/fixtures/find_files/file_a.txt",
+              "> lua/tests/fixtures/find_files/file_abc.txt",
             }, GetResults
           },
         },
@@ -129,9 +133,9 @@ describe("builtin.find_files", function()
 
   it("should be able to get the current selection", function()
     tester.run_string [[
-      runner.picker('find_files', 'fixtures/file_abc', {
+      runner.picker('find_files', 'fixtures/find_files/file_abc', {
         post_typed = {
-          { 'lua/tests/fixtures/file_abc.txt', GetSelectionValue },
+          { 'lua/tests/fixtures/find_files/file_abc.txt', GetSelectionValue },
         }
       })
     ]]

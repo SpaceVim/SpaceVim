@@ -62,6 +62,10 @@ internal.builtin = function(opts)
     end
   end
 
+  table.sort(objs, function(a, b)
+    return a.text < b.text
+  end)
+
   opts.bufnr = vim.api.nvim_get_current_buf()
   opts.winnr = vim.api.nvim_get_current_win()
   pickers
@@ -198,8 +202,7 @@ internal.pickers = function(opts)
           opts["initial_mode"] = cached_pickers[selection_index].initial_mode
           internal.resume(opts)
         end)
-        map("i", "<C-x>", actions.remove_selected_picker)
-        map("n", "<C-x>", actions.remove_selected_picker)
+        map({ "i", "n" }, "<C-x>", actions.remove_selected_picker)
         return true
       end,
     })
@@ -368,6 +371,7 @@ internal.commands = function(opts)
 
           if val.nargs == "0" then
             vim.cmd(cmd)
+            vim.fn.histadd("cmd", val.name)
           else
             vim.cmd [[stopinsert]]
             vim.fn.feedkeys(cmd, "n")
@@ -512,13 +516,14 @@ internal.oldfiles = function(opts)
   end
 
   for _, file in ipairs(vim.v.oldfiles) do
-    if vim.loop.fs_stat(file) and not vim.tbl_contains(results, file) and file ~= current_file then
+    local file_stat = vim.loop.fs_stat(file)
+    if file_stat and file_stat.type == "file" and not vim.tbl_contains(results, file) and file ~= current_file then
       table.insert(results, file)
     end
   end
 
   if opts.cwd_only then
-    local cwd = vim.loop.cwd()
+    local cwd = vim.loop.cwd() .. utils.get_separator()
     cwd = cwd:gsub([[\]], [[\\]])
     results = vim.tbl_filter(function(file)
       return vim.fn.matchstrpos(file, cwd)[2] ~= -1
@@ -556,10 +561,8 @@ internal.command_history = function(opts)
       sorter = conf.generic_sorter(opts),
 
       attach_mappings = function(_, map)
-        map("i", "<CR>", actions.set_command_line)
-        map("n", "<CR>", actions.set_command_line)
-        map("n", "<C-e>", actions.edit_command_line)
-        map("i", "<C-e>", actions.edit_command_line)
+        actions.select_default:replace(actions.set_command_line)
+        map({ "i", "n" }, "<C-e>", actions.edit_command_line)
 
         -- TODO: Find a way to insert the text... it seems hard.
         -- map('i', '<C-i>', actions.insert_value, { expr = true })
@@ -588,10 +591,8 @@ internal.search_history = function(opts)
       sorter = conf.generic_sorter(opts),
 
       attach_mappings = function(_, map)
-        map("i", "<CR>", actions.set_search_line)
-        map("n", "<CR>", actions.set_search_line)
-        map("n", "<C-e>", actions.edit_search_line)
-        map("i", "<C-e>", actions.edit_search_line)
+        actions.select_default:replace(actions.set_search_line)
+        map({ "i", "n" }, "<C-e>", actions.edit_search_line)
 
         -- TODO: Find a way to insert the text... it seems hard.
         -- map('i', '<C-i>', actions.insert_value, { expr = true })
@@ -755,8 +756,16 @@ internal.man_pages = function(opts)
   opts.sections = vim.F.if_nil(opts.sections, { "1" })
   assert(vim.tbl_islist(opts.sections), "sections should be a list")
   opts.man_cmd = utils.get_lazy_default(opts.man_cmd, function()
-    local is_darwin = vim.loop.os_uname().sysname == "Darwin"
-    return is_darwin and { "apropos", " " } or { "apropos", "" }
+    local uname = vim.loop.os_uname()
+    local sysname = string.lower(uname.sysname)
+    if sysname == "darwin" then
+      local major_version = tonumber(vim.fn.matchlist(uname.release, [[^\(\d\+\)\..*]])[2]) or 0
+      return major_version >= 22 and { "apropos", "." } or { "apropos", " " }
+    elseif sysname == "freebsd" then
+      return { "apropos", "." }
+    else
+      return { "apropos", "" }
+    end
   end)
   opts.entry_maker = opts.entry_maker or make_entry.gen_from_apropos(opts)
   opts.env = { PATH = vim.env.PATH, MANPATH = vim.env.MANPATH }
@@ -1069,7 +1078,7 @@ internal.marks = function(opts)
 end
 
 internal.registers = function(opts)
-  local registers_table = { '"', "_", "#", "=", "_", "/", "*", "+", ":", ".", "%" }
+  local registers_table = { '"', "-", "#", "=", "/", "*", "+", ":", ".", "%" }
 
   -- named
   for i = 0, 9 do
@@ -1091,7 +1100,7 @@ internal.registers = function(opts)
       sorter = conf.generic_sorter(opts),
       attach_mappings = function(_, map)
         actions.select_default:replace(actions.paste_register)
-        map("i", "<C-e>", actions.edit_register)
+        map({ "i", "n" }, "<C-e>", actions.edit_register)
 
         return true
       end,
@@ -1335,7 +1344,7 @@ internal.jumplist = function(opts)
   local sorted_jumplist = {}
   for i = #jumplist, 1, -1 do
     if vim.api.nvim_buf_is_valid(jumplist[i].bufnr) then
-      jumplist[i].text = vim.api.nvim_buf_get_lines(jumplist[i].bufnr, jumplist[i].lnum, jumplist[i].lnum + 1, false)[1]
+      jumplist[i].text = vim.api.nvim_buf_get_lines(jumplist[i].bufnr, jumplist[i].lnum - 1, jumplist[i].lnum, false)[1]
         or ""
       table.insert(sorted_jumplist, jumplist[i])
     end

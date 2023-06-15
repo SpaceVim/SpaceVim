@@ -70,9 +70,12 @@ return function(opts)
             async.util.scheduler()
           end
 
-          local v = entry_maker(line)
-          results[num_results] = v
-          process_result(v)
+          local entry = entry_maker(line)
+          if entry then
+            entry.index = num_results
+          end
+          results[num_results] = entry
+          process_result(entry)
         end
 
         process_complete()

@@ -62,7 +62,7 @@ action_generate.refine = function(prompt_bufnr, opts)
   opts = opts or {}
   opts.prompt_to_prefix = vim.F.if_nil(opts.prompt_to_prefix, false)
   opts.prefix_hl_group = vim.F.if_nil(opts.prompt_hl_group, "TelescopePromptPrefix")
-  opts.prompt_prefix = vim.F.if_nil(opts.promt_prefix, config.values.prompt_prefix)
+  opts.prompt_prefix = vim.F.if_nil(opts.prompt_prefix, config.values.prompt_prefix)
   opts.reset_multi_selection = vim.F.if_nil(opts.reset_multi_selection, false)
   opts.reset_prompt = vim.F.if_nil(opts.reset_prompt, true)
   opts.sorter = vim.F.if_nil(opts.sorter, config.values.generic_sorter {})
@@ -75,11 +75,11 @@ action_generate.refine = function(prompt_bufnr, opts)
   end
 
   -- title
-  if opts.prompt_title then
+  if opts.prompt_title and current_picker.prompt_border then
     current_picker.prompt_border:change_title(opts.prompt_title)
   end
 
-  if opts.results_title then
+  if opts.results_title and current_picker.results_border then
     current_picker.results_border:change_title(opts.results_title)
   end
 

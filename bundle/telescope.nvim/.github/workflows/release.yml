@@ -1,0 +1,29 @@
+name: "release"
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  luarocks-upload:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: LuaRocks Upload
+        uses: nvim-neorocks/luarocks-tag-release@v1.0.2
+        env:
+          LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
+        with:
+          summary: "Find, Filter, Preview, Pick. All lua, all the time."
+          detailed_description: |
+            A highly extendable fuzzy finder over lists. 
+            Built on the latest awesome features from neovim core. 
+            Telescope is centered around modularity, allowing for easy customization.
+          dependencies: |
+            plenary.nvim
+          copy_directories: |
+            doc
+            ftplugin
+            plugin
+            scripts
+            autoload
+            data

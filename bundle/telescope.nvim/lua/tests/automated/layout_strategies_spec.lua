@@ -1,4 +1,3 @@
--- local tester = require('telescope.pickers._test')
 local config = require "telescope.config"
 local resolve = require "telescope.config.resolve"
 local layout_strats = require "telescope.pickers.layout_strategies"
