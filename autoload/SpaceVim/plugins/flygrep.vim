@@ -8,6 +8,14 @@
 
 " Loading SpaceVim api {{{
 scriptencoding utf-8
+if has('nvim-0.7.0')
+  function! SpaceVim#plugins#flygrep#open(argv) abort
+    lua require("spacevim.plugin.flygrep").open(
+          \ require("spacevim").eval("a:argv")
+          \ )
+  endfunction
+  finish
+endif
 let s:MPT = SpaceVim#api#import('prompt')
 let s:JOB = SpaceVim#api#import('job')
 let s:SYS = SpaceVim#api#import('system')
@@ -201,7 +209,7 @@ function! s:flygrep(expr) abort
   try 
     call matchdelete(s:hi_id)
   catch
-  endtr
+  endtry
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
@@ -246,7 +254,7 @@ function! s:filter(expr) abort
   try 
     call matchdelete(s:hi_id)
   catch
-  endtr
+  endtry
   hi def link FlyGrepPattern MoreMsg
   let s:hi_id = s:matchadd('FlyGrepPattern', s:expr_to_pattern(a:expr), 2)
   let s:grep_expr = a:expr
@@ -280,7 +288,7 @@ function! s:start_replace() abort
   try 
     call matchdelete(s:hi_id)
   catch
-  endtr
+  endtry
   if s:grepid != 0
     call s:JOB.stop(s:grepid)
   endif
@@ -698,12 +706,12 @@ if exists('*nvim_open_win') && exists('*nvim_win_set_buf')
       let flygrep_win_height = 16
       noautocmd let s:preview_win_id = s:FLOATING.open_win(bufnr, v:false,
             \ {
-              \ 'relative': 'editor',
-              \ 'width'   : &columns, 
-              \ 'height'  : 5,
-              \ 'row': &lines - flygrep_win_height - 2 - 5,
-              \ 'col': 0
-              \ })
+            \ 'relative': 'editor',
+            \ 'width'   : &columns, 
+            \ 'height'  : 5,
+            \ 'row': &lines - flygrep_win_height - 2 - 5,
+            \ 'col': 0
+            \ })
 
     endif
     noautocmd call s:Window.set_cursor(s:preview_win_id, [linenr, 1])
@@ -838,16 +846,16 @@ let s:MPT._function_key = {
 if has('nvim')
   call extend(s:MPT._function_key, 
         \ {
-          \ "\x80\xfdK" : function('s:previous_item'),
-          \ "\x80\xfc \x80\xfdK" : function('s:previous_item'),
-          \ "\x80\xfc@\x80\xfdK" : function('s:previous_item'),
-          \ "\x80\xfc`\x80\xfdK" : function('s:previous_item'),
-          \ "\x80\xfdL" : function('s:next_item'),
-          \ "\x80\xfc \x80\xfdL" : function('s:next_item'),
-          \ "\x80\xfc@\x80\xfdL" : function('s:next_item'),
-          \ "\x80\xfc`\x80\xfdL" : function('s:next_item'),
-          \ }
-          \ )
+        \ "\x80\xfdK" : function('s:previous_item'),
+        \ "\x80\xfc \x80\xfdK" : function('s:previous_item'),
+        \ "\x80\xfc@\x80\xfdK" : function('s:previous_item'),
+        \ "\x80\xfc`\x80\xfdK" : function('s:previous_item'),
+        \ "\x80\xfdL" : function('s:next_item'),
+        \ "\x80\xfc \x80\xfdL" : function('s:next_item'),
+        \ "\x80\xfc@\x80\xfdL" : function('s:next_item'),
+        \ "\x80\xfc`\x80\xfdL" : function('s:next_item'),
+        \ }
+        \ )
 endif
 
 let s:MPT._keys.close = ["\<Esc>", "\<C-c>"]
@@ -876,12 +884,12 @@ function! SpaceVim#plugins#flygrep#open(argv) abort
     let flygrep_win_height = 16
     noautocmd let s:flygrep_win_id =  s:FLOATING.open_win(s:buffer_id, v:true,
           \ {
-            \ 'relative': 'editor',
-            \ 'width'   : &columns, 
-            \ 'height'  : flygrep_win_height,
-            \ 'row': &lines - flygrep_win_height - 2,
-            \ 'col': 0
-            \ })
+          \ 'relative': 'editor',
+          \ 'width'   : &columns, 
+          \ 'height'  : flygrep_win_height,
+          \ 'row': &lines - flygrep_win_height - 2,
+          \ 'col': 0
+          \ })
   else
     noautocmd botright split __flygrep__
     if has('patch-7.4.1557')
