@@ -286,18 +286,16 @@ local function preview_timer(t)
     preview_win_id = vim.api.nvim_open_win(preview_bufnr, false, {
       relative = 'editor',
       width = vim.o.columns,
-      height = 5,
-      row = vim.o.lines - flygrep_win_height - 2 - 5,
+      height = 8,
+      row = vim.o.lines - flygrep_win_height - 2 - 8,
       col = 0,
     })
   end
   vim.api.nvim_buf_set_lines(preview_bufnr, 0, -1, false, vim.fn.readfile(filename, ''))
   local ft = vim.filetype.match({ filename = filename })
-  vim.api.nvim_buf_set_option(
-    preview_bufnr,
-    'filetype',
-    ft
-  )
+  if ft then
+    vim.api.nvim_buf_set_option(preview_bufnr, 'syntax', ft)
+  end
   vim.api.nvim_win_set_cursor(preview_win_id, { liner, 1 })
   mpt._build_prompt()
 end
