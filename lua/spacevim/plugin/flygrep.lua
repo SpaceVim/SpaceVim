@@ -42,6 +42,7 @@ local grep_default_exe, grep_default_opt, grep_default_ropt, grep_default_expr_o
 
 local grep_timer_id = -1
 local preview_timer_id = -1
+local preview_bufnr = -1
 local grepid = 0
 local mode = ''
 local buffer_id = -1
@@ -276,18 +277,13 @@ local function preview_timer(t)
   if line == '' then
     return
   end
-  for id in ipairs(vim.fn.filter(previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')) do
-    vim.cmd('silent bd ' .. id)
-  end
-  local br = vim.fn.bufnr('$')
   local filename, liner, colum = get_file_pos(line)
-  local bufnr = vim.fn.bufadd(filename)
-  vim.fn.bufload(bufnr)
+  if vim.fn.bufexists(preview_bufnr) ~= 1 then
+    preview_bufnr = vim.api.nvim_create_buf(false, true)
+  end
   local flygrep_win_height = 16
-  if window.is_float(preview_win_id) then
-    vim.api.nvim_win_set_buf(preview_win_id, bufnr)
-  else
-    preview_win_id = vim.api.nvim_open_win(bufnr, false, {
+  if not window.is_float(preview_win_id) then
+    preview_win_id = vim.api.nvim_open_win(preview_bufnr, false, {
       relative = 'editor',
       width = vim.o.columns,
       height = 5,
@@ -295,10 +291,14 @@ local function preview_timer(t)
       col = 0,
     })
   end
+  vim.api.nvim_buf_set_lines(preview_bufnr, 0, -1, false, vim.fn.readfile(filename, ''))
+  local ft = vim.filetype.match({ filename = filename })
+  vim.api.nvim_buf_set_option(
+    preview_bufnr,
+    'filetype',
+    ft
+  )
   vim.api.nvim_win_set_cursor(preview_win_id, { liner, 1 })
-  if bufnr > br then
-    table.insert(previewd_bufnrs, bufnr)
-  end
   mpt._build_prompt()
 end
 
@@ -318,9 +318,6 @@ local function close_buffer()
   timer_stop(grep_timer_id)
   timer_stop(preview_timer_id)
   if preview_able then
-    for id in ipairs(vim.fn.filter(previewd_bufnrs, 'bufexists(v:val) && buflisted(v:val)')) do
-      vim.cmd('silent bd ' .. id)
-    end
     close_preview_win()
     preview_able = false
   end
