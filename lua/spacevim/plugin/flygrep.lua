@@ -17,6 +17,10 @@ local buffer = require('spacevim.api').import('vim.buffer')
 local window = require('spacevim.api').import('vim.window')
 local sl = require('spacevim.api').import('vim.statusline')
 
+-- set commandline mpt
+
+mpt._prompt.mpt = vim.g.spacevim_commandline_prompt .. ' '
+
 -- compatibility functions
 local jobstart = vim.fn.jobstart
 local jobsend = vim.fn.jobsend
