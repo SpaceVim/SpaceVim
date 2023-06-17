@@ -537,7 +537,7 @@ end
 local function complete_input_history(str, num) -- {{{
   -- logger.info(vim.inspect(grep_history))
   -- local results = vim.fn.filter(, "v:val =~# '^' . a:str")
-  local results = tbl_filter(function(note)
+  local results = tbl_filter(function(node)
     -- here the note sometimes do not have title, then it is nil
     if type(node) ~= 'string' then return false end
     return vim.startswith(node, str)
