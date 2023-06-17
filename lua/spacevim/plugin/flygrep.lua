@@ -575,7 +575,7 @@ local function previous_match_history()
   complete_input_history_num[1] = complete_input_history_num[1] + 1
   mpt._prompt.cursor_begin =
     complete_input_history(complete_input_history_base, complete_input_history_num)
-  vim.cmd('noautocmd normal! gg"_dG')
+  vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, {})
   mpt._handle_fly(mpt._prompt.cursor_begin .. mpt._prompt.cursor_char .. mpt._prompt.cursor_end)
 end
 
@@ -588,7 +588,7 @@ local function next_match_history()
   complete_input_history_num[2] = complete_input_history_num[2] + 1
   mpt._prompt.cursor_begin =
     complete_input_history(complete_input_history_base, complete_input_history_num)
-  vim.cmd('noautocmd normal! gg"_dG')
+  vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, {})
   mpt._handle_fly(mpt._prompt.cursor_begin .. mpt._prompt.cursor_char .. mpt._prompt.cursor_end)
 end
 
