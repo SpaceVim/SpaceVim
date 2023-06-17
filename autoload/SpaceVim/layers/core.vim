@@ -930,7 +930,7 @@ endfunction
 
 function! s:save_current_file() abort
   let v:errmsg = ''
-  silent! write
+  silent! update
   if v:errmsg !=# ''
     echohl ErrorMsg
     echo  v:errmsg
