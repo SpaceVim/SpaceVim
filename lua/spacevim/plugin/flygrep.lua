@@ -224,7 +224,8 @@ local function grep_timer(...)
 end
 
 local function matchadd(group, pattern, p)
-  pcall(vim.fn.matchadd, group, pattern, p)
+  local ok, id = pcall(vim.fn.matchadd, group, pattern, p)
+  return id
 end
 
 local function expr_to_pattern(expr)
@@ -493,10 +494,10 @@ end
 
 local function filter(expr)
   mpt._build_prompt()
+  pcall(vim.fn.matchdelete, hi_id)
   if expr == '' then
     return
   end
-  pcall(vim.fn.matchdelete, hi_id)
   vim.cmd('hi def link FlyGrepPattern MoreMsg')
   hi_id = matchadd('FlyGrepPattern', expr_to_pattern(expr), 2)
   grep_expr = expr
