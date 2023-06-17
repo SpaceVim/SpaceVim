@@ -190,6 +190,9 @@ local function close_statusline()
 end
 
 local function grep_exit(id, data, event)
+  if id ~= grepid then
+    return
+  end
   logger.info('grep exit:' .. data)
   update_statusline()
   vim.cmd('redraw')
