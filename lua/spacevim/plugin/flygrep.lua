@@ -535,6 +535,7 @@ end
 
 
 local function complete_input_history(str, num) -- {{{
+  str = 'f'
   grep_history = {"fuck", "hello"}
   -- logger.info(vim.inspect(grep_history))
   -- local results = vim.fn.filter(, "v:val =~# '^' . a:str")
