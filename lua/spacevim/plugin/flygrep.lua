@@ -253,9 +253,9 @@ end
 local function flygrep(t)
   -- if the insert text is empty, clear grepid
   grepid = 0
+  update_statusline()
   mpt._build_prompt()
   if t == '' then
-    update_statusline()
     return
   end
   pcall(vim.fn.matchdelete, search_hi_id)
