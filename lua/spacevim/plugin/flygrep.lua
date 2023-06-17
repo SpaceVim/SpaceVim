@@ -190,6 +190,9 @@ local function close_statusline()
 end
 
 local function grep_exit(id, data, event)
+  if id ~= grepid then
+    return
+  end
   logger.info('grep exit:' .. data)
   update_statusline()
   vim.cmd('redraw')
@@ -248,11 +251,11 @@ local function expr_to_pattern(expr)
 end
 
 local function flygrep(t)
+  -- if the insert text is empty, clear grepid
+  grepid = 0
+  update_statusline()
   mpt._build_prompt()
   if t == '' then
-    -- if the insert text is empty, clear grepid
-    grepid = 0
-    update_statusline()
     return
   end
   pcall(vim.fn.matchdelete, search_hi_id)
@@ -533,18 +536,21 @@ local function tbl_filter(func, t) -- {{{
 end
 -- }}}
 
-
 local function complete_input_history(str, num) -- {{{
   -- logger.info(vim.inspect(grep_history))
   -- local results = vim.fn.filter(, "v:val =~# '^' . a:str")
-  local results = tbl_filter(function(note)
+  local results = tbl_filter(function(node)
     -- here the note sometimes do not have title, then it is nil
-    if type(node) ~= 'string' then return false end
-    return string.match(node, '^' .. str)
+    if type(node) ~= 'string' then
+      return false
+    end
+    return vim.startswith(node, str)
   end, vim.deepcopy(grep_history))
+  logger.info(vim.inspect(results))
   local complete_items
   if not empty(results) and results[-1] ~= str then
-    complete_items = table.insert(results, str)
+    complete_items = results
+    table.insert(complete_items, str)
   elseif empty(results) then
     complete_items = { str }
   else
@@ -572,7 +578,7 @@ local function previous_match_history()
   complete_input_history_num[1] = complete_input_history_num[1] + 1
   mpt._prompt.cursor_begin =
     complete_input_history(complete_input_history_base, complete_input_history_num)
-  vim.cmd('noautocmd normal! gg"_dG')
+  vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, {})
   mpt._handle_fly(mpt._prompt.cursor_begin .. mpt._prompt.cursor_char .. mpt._prompt.cursor_end)
 end
 
@@ -585,7 +591,7 @@ local function next_match_history()
   complete_input_history_num[2] = complete_input_history_num[2] + 1
   mpt._prompt.cursor_begin =
     complete_input_history(complete_input_history_base, complete_input_history_num)
-  vim.cmd('noautocmd normal! gg"_dG')
+  vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, {})
   mpt._handle_fly(mpt._prompt.cursor_begin .. mpt._prompt.cursor_char .. mpt._prompt.cursor_end)
 end
 
