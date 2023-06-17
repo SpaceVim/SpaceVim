@@ -1,4 +1,5 @@
 let s:JOB = SpaceVim#api#import('job')
+let s:NOTI = SpaceVim#api#import('notify')
 
 function! git#pull#run(args)
     let cmd = ['git', 'pull'] + a:args
@@ -17,10 +18,10 @@ endfunction
 function! s:on_exit(id, data, event) abort
     call git#logger#debug('git-pull exit data:' . string(a:data))
     if a:data ==# 0
-        echo 'pulled done!'
+        call s:NOTI.notify('pulled done!')
     else
         call s:list_conflict_files()
-        echo 'pulled failed!'
+        call s:NOTI.notify('pulled failed!')
     endif
 endfunction
 
