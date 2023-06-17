@@ -1,3 +1,6 @@
+let s:JOB = SpaceVim#api#import('job')
+let s:NOTI = SpaceVim#api#import('notify')
+
 scriptencoding utf-8
 let s:support_ft = ['vim', 'java', 'c', 'py', 'md', 'txt']
 function! SourceCounter#View(bang, ...) abort
@@ -7,7 +10,8 @@ function! SourceCounter#View(bang, ...) abort
     else
         let fts = s:support_ft
     endif
-    echom string(fts)
+    call s:NOTI.notify('counting for: ' . join(fts, ', '))
+    " return
     for ft in fts
         let _rs = s:counter(ft)
         if !empty(_rs)
@@ -22,7 +26,7 @@ function! SourceCounter#View(bang, ...) abort
             call append(line('$'), line)
         endfor
     else
-        echo join(table, "\n")
+        call s:NOTI.notify(join(table, "\n"))
     endif
 endfunction
 
@@ -101,6 +105,14 @@ function! s:draw_table(rst) abort
     endfor
     let table[-1] = bottom_line
     return table
+endfunction
+
+function! s:list_files_stdout(id, data, event) abort
+  
+endfunction
+
+function! s:list_files_exit(id, data, event) abort
+  
 endfunction
 
 function! s:counter(ft) abort
