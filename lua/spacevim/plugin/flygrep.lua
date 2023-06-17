@@ -522,13 +522,26 @@ local function start_filter()
   mpt._build_prompt()
 end
 
+local function tbl_filter(func, t) -- {{{
+  local rettab = {}
+  for _, entry in pairs(t) do
+    if func(entry) then
+      table.insert(rettab, entry)
+    end
+  end
+  return rettab
+end
+-- }}}
+
+
 local function complete_input_history(str, num) -- {{{
   -- logger.info(vim.inspect(grep_history))
   -- local results = vim.fn.filter(, "v:val =~# '^' . a:str")
-  local results = vim.tbl_filter(function(note)
+  local results = tbl_filter(function(note)
     -- here the note sometimes do not have title, then it is nil
+    if type(node) ~= 'string' then return false end
     return string.match(node, '^' .. str)
-  end, vim.fn.copy(grep_history))
+  end, vim.deepcopy(grep_history))
   local complete_items
   if not empty(results) and results[-1] ~= str then
     complete_items = table.insert(results, str)
