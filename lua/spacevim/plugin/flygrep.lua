@@ -496,6 +496,11 @@ local function filter(expr)
   mpt._build_prompt()
   pcall(vim.fn.matchdelete, filter_hi_id)
   if expr == '' then
+    -- if the mpt is empty, put context in filter_file into flygrep buffer
+    if vim.fn.filereadable(filter_file) then
+      vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, vim.fn.readfile(filter_file, ''))
+      vim.cmd('redraw')
+    end
     return
   end
   filter_hi_id = matchadd('FlygrepFilterPattern', expr_to_pattern(expr), 2)
