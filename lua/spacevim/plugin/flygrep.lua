@@ -540,8 +540,9 @@ local function complete_input_history(str, num) -- {{{
   local results = tbl_filter(function(note)
     -- here the note sometimes do not have title, then it is nil
     if type(node) ~= 'string' then return false end
-    return string.match(node, '^' .. str)
+    return vim.startswith(node, str)
   end, vim.deepcopy(grep_history))
+  logger.info(vim.inspect(results))
   local complete_items
   if not empty(results) and results[-1] ~= str then
     complete_items = table.insert(results, str)
