@@ -6570,9 +6570,9 @@ The notification api for SpaceVim
 
 notify({msg} [, {Color}[, {option}]])
 
-Use floating windows to display notification {msg}. The {msg} should a no
-empty string. {Color} is the name of highlight ground defined in Vim. The
-{option} is a dictionary which support following key:
+Use floating windows to display notification {msg}. The {msg} can be a string
+or a list of string. {Color} is the name of highlight ground defined in Vim.
+The {option} is a dictionary which support following key:
 
 `winblend`: enable transparency for the notify windows. Valid values are in
   the range of 0 to 100. Default is 0.
