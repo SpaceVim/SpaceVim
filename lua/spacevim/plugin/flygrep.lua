@@ -522,6 +522,60 @@ local function start_filter()
   mpt._build_prompt()
 end
 
+local function complete_input_history(str, num) -- {{{
+  -- logger.info(vim.inspect(grep_history))
+  -- local results = vim.fn.filter(, "v:val =~# '^' . a:str")
+  local results = vim.tbl_filter(function(note)
+    -- here the note sometimes do not have title, then it is nil
+    return string.match(node, '^' .. str)
+  end, vim.fn.copy(grep_history))
+  local complete_items
+  if not empty(results) and results[-1] ~= str then
+    complete_items = table.insert(results, str)
+  elseif empty(results) then
+    complete_items = { str }
+  else
+    complete_items = results
+  end
+  --                   5                    0          6
+  local patch = (num[1] - num[2]) % vim.fn.len(complete_items)
+  local index
+  if patch >= 0 then
+    index = vim.fn.len(complete_items) - patch
+  else
+    index = vim.fn.abs(patch)
+  end
+  return complete_items[index]
+end
+-- }}}
+
+local complete_input_history_base = ''
+local function previous_match_history()
+  if complete_input_history_num[1] == 0 and complete_input_history_num[2] == 0 then
+    complete_input_history_base = mpt._prompt.cursor_begin
+    mpt._prompt.cursor_char = ''
+    mpt._prompt.cursor_end = ''
+  end
+  complete_input_history_num[1] = complete_input_history_num[1] + 1
+  mpt._prompt.cursor_begin =
+    complete_input_history(complete_input_history_base, complete_input_history_num)
+  vim.cmd('noautocmd normal! gg"_dG')
+  mpt._handle_fly(mpt._prompt.cursor_begin .. mpt._prompt.cursor_char .. mpt._prompt.cursor_end)
+end
+
+local function next_match_history()
+  if complete_input_history_num[1] == 0 and complete_input_history_num[2] == 0 then
+    complete_input_history_base = mpt._prompt.cursor_begin
+    mpt._prompt.cursor_char = ''
+    mpt._prompt.cursor_end = ''
+  end
+  complete_input_history_num[2] = complete_input_history_num[2] + 1
+  mpt._prompt.cursor_begin =
+    complete_input_history(complete_input_history_base, complete_input_history_num)
+  vim.cmd('noautocmd normal! gg"_dG')
+  mpt._handle_fly(mpt._prompt.cursor_begin .. mpt._prompt.cursor_char .. mpt._prompt.cursor_end)
+end
+
 mpt._function_key = {
   [Key.t('<Tab>')] = next_item,
   [Key.t('<C-j>')] = next_item,
