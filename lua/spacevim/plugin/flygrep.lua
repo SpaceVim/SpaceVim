@@ -262,7 +262,7 @@ local function flygrep(t)
 end
 
 local function close_flygrep_win()
-  vim.cmd('noautocmd q')
+  pcall(vim.api.nvim_win_close, flygrep_win_id, true)
   vim.fn.win_gotoid(previous_winid)
 end
 
