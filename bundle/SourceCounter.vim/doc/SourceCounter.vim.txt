@@ -1,0 +1,35 @@
+*SourceCounter.vim.txt*	Source counter in vim
+wsdjeg                                                     *SourceCounter.vim*
+
+==============================================================================
+CONTENTS                                          *SourceCounter.vim-contents*
+  1. Introduction....................................|SourceCounter.vim-intro|
+  2. Configuration..................................|SourceCounter.vim-config|
+  3. Commands.....................................|SourceCounter.vim-commands|
+
+==============================================================================
+INTRODUCTION                                         *SourceCounter.vim-intro*
+
+Sources counter for vim and neovim.
+
+USAGE:
+>
+  :SourceCounter! vim md java html
+<
+
+==============================================================================
+CONFIGURATION                                       *SourceCounter.vim-config*
+
+                                                       *g:source_counter_sort*
+specific the sort type of result, 'lines'  or 'files', default is 'files'.
+
+==============================================================================
+COMMANDS                                          *SourceCounter.vim-commands*
+
+:SourceCounter[!] [filetypes]                                 *:SourceCounter*
+  List lines count for specific [filetypes], or all supported filetypes.
+
+  [!] forces desplay result in new tab.
+
+
+vim:tw=78:ts=8:ft=help:norl:
