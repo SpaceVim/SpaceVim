@@ -55,7 +55,8 @@ local grep_ropt = {}
 local grep_ignore_case = {}
 local grep_smart_case = {}
 local grep_expr_opt = {}
-local hi_id = -1
+local search_hi_id = -1
+local filter_hi_id = -1
 local grep_mode = 'expr'
 local filename_pattern = [[[^:]*:\d\+:\d\+:]]
 local preview_able = false
@@ -254,9 +255,8 @@ local function flygrep(t)
     update_statusline()
     return
   end
-  pcall(vim.fn.matchdelete, hi_id)
-  vim.cmd('hi def link FlyGrepPattern MoreMsg')
-  hi_id = matchadd('FlyGrepPattern', expr_to_pattern(t), 2)
+  pcall(vim.fn.matchdelete, search_hi_id)
+  search_hi_id = matchadd('FlygrepSearchPattern', expr_to_pattern(t), 2)
   grep_expr = t
   timer_stop(grep_timer_id)
   grep_timer_id = timer_start(200, grep_timer, { ['repeat'] = 1 })
@@ -494,12 +494,11 @@ end
 
 local function filter(expr)
   mpt._build_prompt()
-  pcall(vim.fn.matchdelete, hi_id)
+  pcall(vim.fn.matchdelete, filter_hi_id)
   if expr == '' then
     return
   end
-  vim.cmd('hi def link FlyGrepPattern MoreMsg')
-  hi_id = matchadd('FlyGrepPattern', expr_to_pattern(expr), 2)
+  filter_hi_id = matchadd('FlygrepFilterPattern', expr_to_pattern(expr), 2)
   grep_expr = expr
   grep_timer_id = timer_start(200, filter_timer, { ['repeat'] = 1 })
 end
@@ -610,6 +609,8 @@ function M.open(argv)
   vim.cmd('setf SpaceVimFlyGrep')
   update_statusline()
   matchadd('FileName', filename_pattern, 3)
+  vim.cmd('hi def link FlygrepSearchPattern MoreMsg')
+  vim.cmd('hi def link FlygrepFilterPattern Question')
   mpt._prompt.cursor_begin = argv.input or ''
   local fs = argv.files or ''
   if fs == '@buffers' then
