@@ -545,7 +545,8 @@ local function complete_input_history(str, num) -- {{{
   logger.info(vim.inspect(results))
   local complete_items
   if not empty(results) and results[-1] ~= str then
-    table.insert(results, str)
+    complete_items = results
+    table.insert(complete_items, str)
   elseif empty(results) then
     complete_items = { str }
   else
