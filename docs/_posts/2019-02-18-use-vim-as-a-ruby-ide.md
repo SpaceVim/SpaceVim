@@ -45,6 +45,29 @@ The completion menu will be opened as you type.
 
 ![rubycomplete](https://user-images.githubusercontent.com/13142418/53355518-20202080-3964-11e9-92f3-476060f2761e.png)
 
+#### Solargraph
+
+If you want to use solargraph for a more advance code completion, you can do it through [coc]("https://github.com/neoclide/coc.nvim"). For use `coc`
+like your autocompletion engine, you must set the next variable:
+
+```
+[options]
+autocomplete_method = "coc"
+```
+
+Be sure to have solargraph installed:
+
+```
+gem install solargraph
+```
+
+Then install [coc-solargraph](https://github.com/neoclide/coc-solargraph) extension for `coc` to support solargraph with the next command:
+
+```
+:CocInstall coc-solargraph
+```
+
+
 ### Syntax linting
 
 The checkers layer is enabled by default. This layer provides asynchronous syntax linting via [neomake](https://github.com/neomake/neomake).
@@ -66,6 +89,15 @@ SpaceVim use built-in plugin to manager the files in a project, you can add a `.
 {
   "src/*.rb": {"alternate": "test/{}.rb"},
   "test/*.rb": {"alternate": "src/{}.rb"}
+}
+```
+
+For a Rails project with Minitest use this:
+
+```json
+{
+  "app/*.rb": {"alternate": "test/{}_test.rb"},
+  "test/*_test.rb": {"alternate": "app/{}.rb"}
 }
 ```
 
