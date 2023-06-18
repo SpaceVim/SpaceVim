@@ -91,7 +91,7 @@ local function update_history()
   if vim.fn.index(grep_history, grep_expr) >= 0 then
     vim.fn.remove(grep_history, vim.fn.index(grep_history, grep_expr))
   end
-  vim.fn.add(grep_history, grep_expr)
+  table.insert(grep_history, grep_expr)
   if vim.fn.isdirectory(vim.fn.expand(vim.g.spacevim_data_dir .. 'SpaceVim')) == 0 then
     vim.fn.mkdir(vim.fn.expand(vim.g.spacevim_data_dir .. 'SpaceVim'))
   end
