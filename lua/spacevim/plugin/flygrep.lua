@@ -368,6 +368,9 @@ local function previous_item()
     cursor[1] = cursor[1] - 1
   end
   vim.api.nvim_win_set_cursor(flygrep_win_id, cursor)
+  if preview_able then
+    preview()
+  end
   update_statusline()
   vim.cmd('redraw')
   mpt._build_prompt()
@@ -598,6 +601,31 @@ local function next_match_history()
     complete_input_history(complete_input_history_base, complete_input_history_num)
   vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, {})
   mpt._handle_fly(mpt._prompt.cursor_begin .. mpt._prompt.cursor_char .. mpt._prompt.cursor_end)
+end
+local function page_up()
+  -- exe "noautocmd normal! \<PageUp>"
+  vim.api.nvim_win_call(flygrep_win_id, function()
+    vim.api.nvim_feedkeys(Key.t('<PageUp>'), 'x', 'false')
+  end)
+  if preview_able then
+    preview()
+  end
+  update_statusline()
+  vim.cmd('redraw')
+  mpt._build_prompt()
+end
+
+local function page_down()
+  -- exe "noautocmd normal! \<PageUp>"
+  vim.api.nvim_win_call(flygrep_win_id, function()
+    vim.api.nvim_feedkeys(Key.t('<PageDown>'), 'x', 'false')
+  end)
+  if preview_able then
+    preview()
+  end
+  update_statusline()
+  vim.cmd('redraw')
+  mpt._build_prompt()
 end
 
 mpt._function_key = {
