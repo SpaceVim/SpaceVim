@@ -1,11 +1,11 @@
 [
   (array)
   (inline_table)
-] @indent
+] @indent.begin
 
 [
   "["
   "]"
   "{"
   "}"
-] @branch
+] @indent.branch

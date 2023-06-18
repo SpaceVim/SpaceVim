@@ -2,7 +2,7 @@
 template <class T, class U>
 concept Derived = std::is_base_of<U, T>::value;
 //  ^ keyword
-//       ^ type
+//       ^ type.definition
 
 template<typename T>
 concept Hashable = requires(T a) {

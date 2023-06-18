@@ -34,7 +34,7 @@
 (tuple_pattern
   (identifier) @definition.var) 
 
-(if_let_expression
+(let_condition
   pattern: (_
              (identifier) @definition.var))
 
@@ -93,7 +93,6 @@
  (for_expression)
  (loop_expression)
  (if_expression)
- (if_let_expression)
  (match_expression)
  (match_arm)
 

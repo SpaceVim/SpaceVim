@@ -1,10 +1,13 @@
-(comment) @comment
+[
+  (line_comment)
+  (multiline_comment)
+] @comment
 
 ; There are 3 ways to define a regex
 ;    - "[abc]?".toRegex()
 (call_expression
 	(navigation_expression
-		([(line_string_literal) (multi_line_string_literal)] @regex)
+		((string_literal) @regex)
 		(navigation_suffix
 			((simple_identifier) @_function
 			(#eq? @_function "toRegex")))))
@@ -16,7 +19,7 @@
 	(call_suffix
 		(value_arguments
 			(value_argument
-				[ (line_string_literal) (multi_line_string_literal) ] @regex))))
+				(string_literal) @regex))))
 
 ;    - Regex.fromLiteral("[abc]?")
 (call_expression
@@ -29,4 +32,4 @@
 	(call_suffix
 		(value_arguments
 			(value_argument
-				[ (line_string_literal) (multi_line_string_literal) ] @regex))))
+				(string_literal) @regex))))

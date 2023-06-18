@@ -1,6 +1,5 @@
 [
  "@media"
- "@import"
  "@charset"
  "@namespace"
  "@supports"
@@ -8,10 +7,11 @@
  (at_keyword)
  (to)
  (from)
- (important)
  ] @keyword
 
-(comment) @comment
+"@import" @include
+
+(comment) @comment @spell
 
 [
  (tag_name)
@@ -40,25 +40,26 @@
  "only"
  ] @operator
 
+(important) @type.qualifier
 
 (attribute_selector (plain_value) @string)
-(pseudo_element_selector (tag_name) @property)
+(pseudo_element_selector "::" (tag_name) @property)
 (pseudo_class_selector (class_name) @property)
 
 [
  (class_name)
  (id_name)
- (namespace_name)
  (property_name)
  (feature_name)
  (attribute_name)
  ] @property
 
+(namespace_name) @namespace
 
-((property_name) @type
-                 (#match? @type "^--"))
+((property_name) @type.definition
+  (#lua-match? @type.definition "^[-][-]"))
 ((plain_value) @type
-               (#match? @type "^--"))
+  (#lua-match? @type "^[-][-]"))
 
 [
  (string_value)

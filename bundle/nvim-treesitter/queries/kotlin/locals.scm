@@ -23,8 +23,9 @@
 ;;; Variables
 
 (function_declaration
-	(parameter
-		(simple_identifier) @definition.parameter))
+	(function_value_parameters
+		(parameter
+			(simple_identifier) @definition.parameter)))
 
 (lambda_literal
 	(lambda_parameters

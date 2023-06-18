@@ -1,14 +1,15 @@
 ; Properties
 ;-----------
 
-(bare_key) @property
+(bare_key) @type
 (quoted_key) @string
+(pair (bare_key)) @property
 
 ; Literals
 ;---------
 
 (boolean) @boolean
-(comment) @comment
+(comment) @comment @spell
 (string) @string
 (integer) @number
 (float) @float

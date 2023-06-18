@@ -1,0 +1,21 @@
+dictionary foo = {}
+# <- type
+half[] foo = [2, 1, 2]
+# <- type
+string foo = "something"
+# <- type
+timecode time = 1.0
+# <- type
+token[] purpose = ["default", "render"]
+# <- type
+
+rel material:binding:collection:Erasers = None
+# <- type
+#   ^ namespace
+#           ^ punctuation.delimiter
+#            ^ namespace
+#                   ^ punctuation.delimiter
+#                    ^ namespace
+#                              ^ punctuation.delimiter
+#                               ^ variable
+#                                         ^ constant.builtin

@@ -3,7 +3,7 @@ pub fn run() {
   // <- number
   |> add(_, 2)
   // <- operator
-  // ^ function
+  // ^^^ function.call
   //    ^ punctuation.bracket
   //     ^ comment
   //      ^ punctuation.delimiter
@@ -11,7 +11,7 @@ pub fn run() {
   //         ^ punctuation.bracket
   |> add(3)
   // <- operator
-  // ^ function
+  // ^^^ function.call
   //    ^ punctuation.bracket
   //     ^ number
   //      ^ punctuation.bracket

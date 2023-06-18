@@ -1,10 +1,11 @@
 ; inherits: c
 
 ((identifier) @field
- (#match? @field "(^_|^m_|_$)"))
+  (#lua-match? @field "^m?_.*$"))
 
 (parameter_declaration
   declarator: (reference_declarator) @parameter)
+
 ; function(Foo ...foo)
 (variadic_parameter_declaration
   declarator: (variadic_declarator
@@ -14,15 +15,13 @@
     declarator: (_) @parameter)
 
 ;(field_expression) @parameter ;; How to highlight this?
-(template_function
-  name: (identifier) @function)
-
-(template_method
-  name: (field_identifier) @method)
 
 (((field_expression
      (field_identifier) @method)) @_parent
- (#has-parent? @_parent template_method function_declarator call_expression))
+ (#has-parent? @_parent template_method function_declarator))
+
+(field_declaration
+  (field_identifier) @field)
 
 (field_initializer
  (field_identifier) @property)
@@ -31,81 +30,137 @@
   declarator: (field_identifier) @method)
 
 (concept_definition
-  name: (identifier) @type)
+  name: (identifier) @type.definition)
+
+(alias_declaration
+  name: (type_identifier) @type.definition)
+
+(auto) @type.builtin
 
 (namespace_identifier) @namespace
 ((namespace_identifier) @type
-                        (#lua-match? @type "^[A-Z]"))
-((namespace_identifier) @constant
-                        (#lua-match? @constant "^[A-Z][A-Z_0-9]*$"))
+  (#lua-match? @type "^[%u]"))
+
 (case_statement
   value: (qualified_identifier (identifier) @constant))
-(namespace_definition
-  name: (identifier) @namespace)
 
 (using_declaration . "using" . "namespace" . [(qualified_identifier) (identifier)] @namespace)
 
 (destructor_name
   (identifier) @method)
 
+; functions
 (function_declarator
-      declarator: (qualified_identifier
-        name: (identifier) @function))
+  (qualified_identifier
+    (identifier) @function))
 (function_declarator
-      declarator: (qualified_identifier
-        name: (qualified_identifier
-          name: (identifier) @function)))
-((function_declarator
-      declarator: (qualified_identifier
-        name: (identifier) @constructor))
- (#lua-match? @constructor "^[A-Z]"))
+  (qualified_identifier
+    (qualified_identifier
+      (identifier) @function)))
+(function_declarator
+  (qualified_identifier
+    (qualified_identifier
+      (qualified_identifier
+        (identifier) @function))))
+((qualified_identifier
+  (qualified_identifier
+    (qualified_identifier
+      (qualified_identifier
+        (identifier) @function)))) @_parent
+  (#has-ancestor? @_parent function_declarator))
+
+(function_declarator
+  (template_function
+    (identifier) @function))
 
 (operator_name) @function
 "operator" @function
 "static_assert" @function.builtin
 
 (call_expression
-  function: (qualified_identifier
-              name: (identifier) @function))
+  (qualified_identifier
+    (identifier) @function.call))
 (call_expression
-  function: (qualified_identifier
-              name: (qualified_identifier
-                      name: (identifier) @function)))
+  (qualified_identifier
+    (qualified_identifier
+      (identifier) @function.call)))
 (call_expression
-  function:
+  (qualified_identifier
+    (qualified_identifier
       (qualified_identifier
-        name: (qualified_identifier
-              name: (qualified_identifier
-                      name: (identifier) @function))))
+        (identifier) @function.call))))
+((qualified_identifier
+  (qualified_identifier
+    (qualified_identifier
+      (qualified_identifier
+        (identifier) @function.call)))) @_parent
+  (#has-ancestor? @_parent call_expression))
 
 (call_expression
-  function: (field_expression
-              field: (field_identifier) @function))
+  (template_function
+    (identifier) @function.call))
+(call_expression
+  (qualified_identifier
+    (template_function
+      (identifier) @function.call)))
+(call_expression
+  (qualified_identifier
+    (qualified_identifier
+      (template_function
+        (identifier) @function.call))))
+(call_expression
+  (qualified_identifier
+    (qualified_identifier
+      (qualified_identifier
+        (template_function
+          (identifier) @function.call)))))
+((qualified_identifier
+  (qualified_identifier
+    (qualified_identifier
+      (qualified_identifier
+        (template_function
+          (identifier) @function.call))))) @_parent
+  (#has-ancestor? @_parent call_expression))
+
+; methods
+(function_declarator
+  (template_method
+    (field_identifier) @method))
+(call_expression
+  (field_expression
+    (field_identifier) @method.call))
+
+; constructors
+
+((function_declarator
+  (qualified_identifier
+    (identifier) @constructor))
+  (#lua-match? @constructor "^%u"))
 
 ((call_expression
   function: (identifier) @constructor)
-(#lua-match? @constructor "^[A-Z]"))
+(#lua-match? @constructor "^%u"))
 ((call_expression
   function: (qualified_identifier
               name: (identifier) @constructor))
-(#lua-match? @constructor "^[A-Z]"))
+(#lua-match? @constructor "^%u"))
 
 ((call_expression
   function: (field_expression
               field: (field_identifier) @constructor))
-(#lua-match? @constructor "^[A-Z]"))
+(#lua-match? @constructor "^%u"))
 
 ;; constructing a type in an initializer list: Constructor ():  **SuperType (1)**
 ((field_initializer
   (field_identifier) @constructor
   (argument_list))
- (#lua-match? @constructor "^[A-Z]"))
+ (#lua-match? @constructor "^%u"))
 
 
 ; Constants
 
 (this) @variable.builtin
-(nullptr) @constant
+(nullptr) @constant.builtin
 
 (true) @boolean
 (false) @boolean
@@ -127,58 +182,59 @@
 [
  "class"
  "decltype"
- "constexpr"
  "explicit"
- "final"
  "friend"
- "mutable"
  "namespace"
  "override"
- "private"
- "protected"
- "public"
  "template"
  "typename"
  "using"
- "virtual"
- "co_await"
  "concept"
  "requires"
- "consteval"
- "constinit"
- (auto)
 ] @keyword
+
+[
+  "co_await"
+] @keyword.coroutine
 
 [
  "co_yield"
  "co_return"
-] @keyword.return
+] @keyword.coroutine.return
+
+[
+ "public"
+ "private"
+ "protected"
+ "virtual"
+ "final"
+] @type.qualifier
 
 [
  "new"
  "delete"
 
- ;; these keywords are not supported by the parser
- ;"eq"
- ;"not_eq"
- ;
- ;"compl"
- ;"and"
- ;"or"
- ;
- ;"bitand"
- ;"bitand_eq"
- ;"bitor"
- ;"bitor_eq"
- ;"xor"
- ;"xor_eq"
+ "xor"
+ "bitand"
+ "bitor"
+ "compl"
+ "not"
+ "xor_eq"
+ "and_eq"
+ "or_eq"
+ "not_eq"
+ "and"
+ "or"
 ] @keyword.operator
 
-[
-  "<=>"
-  "::"
-] @operator
+"<=>" @operator
 
-(attribute_declaration) @attribute
+"::" @punctuation.delimiter
+
+(template_argument_list
+  ["<" ">"] @punctuation.bracket)
+
+(template_parameter_list
+  ["<" ">"] @punctuation.bracket)
 
 (literal_suffix) @operator

@@ -1,16 +1,31 @@
 [
+    (block_comment)
     (comment)
     (note)
+    (test)
 ] @comment
 
 [
-    (date)
-    (interval)
     (quantity)
+    (negative_quantity)
 ] @number
 
+[
+    (date)
+    (effective_date)
+    (time)
+    (interval)
+] @string.special
+
+[
+    (commodity)
+    (option)
+    (option_value)
+    (check_in)
+    (check_out)
+] @text.literal
+
 ((account) @field)
-((commodity) @text.literal)
 
 "include" @include
 
@@ -20,6 +35,7 @@
     "assert"
     "check"
     "commodity"
+    "comment"
     "def"
     "default"
     "end"
@@ -28,7 +44,7 @@
     "nomarket"
     "note"
     "payee"
-    "check"
+    "test"
     "A"
     "Y"
     "N"

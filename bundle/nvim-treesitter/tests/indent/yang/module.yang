@@ -1,0 +1,58 @@
+module test-module {
+  yang-version 1.1;
+  namespace "http://example.com";
+  prefix test;
+
+  import ietf-inet-types { prefix inet; }
+  import tailf-ncs {
+    prefix ncs;
+  }
+
+  description "Multi-line strings has indentation
+               aligned with the first line.";
+
+  typedef foo {
+    type enumeration {
+      enum "foo";
+      enum "bar";
+    }
+  }
+
+  ncs:plan-outline test-nano-service {
+    description "Testing indentation of extension statements.";
+
+    ncs:component-type "ncs:self" {
+      ncs:state "ncs:init" {
+        ncs:create {
+          ncs:nano-callback;
+        }
+      }
+      ncs:state "ncs:ready";
+    }
+
+    ncs:component-type "alloc:resource-allocator" {
+      ncs:state "ncs:init";
+      ncs:state "alloc:resources-allocated";
+      ncs:state "ncs:ready";
+    }
+  }
+
+  container test {
+  }
+
+  augment /alloc:resource-allocator {
+    description "Augmentation for the resource allocator mock services.";
+
+    list test-nano-service {
+      key "id";
+
+      leaf id {
+        type string;
+        description
+          "I'm a multi-line string
+
+           Starting on the next line from the statement.";
+      }
+    }
+  }
+}

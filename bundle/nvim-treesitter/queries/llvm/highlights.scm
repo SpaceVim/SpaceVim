@@ -1,3 +1,8 @@
+[
+  (local_var)
+  (global_var)
+] @variable
+
 (type) @type
 (type_keyword) @type.builtin
 
@@ -5,6 +10,9 @@
     (local_var)
     (global_var)
   ] @type)
+
+(global_type
+  (local_var) @type.definition)
 
 (argument) @parameter
 
@@ -68,10 +76,6 @@
   "ifunc"
   "section"
   "comdat"
-  "thread_local"
-  "localdynamic"
-  "initialexec"
-  "localexec"
   "any"
   "exactmatch"
   "largest"
@@ -80,15 +84,26 @@
   "distinct"
   "attributes"
   "vscale"
-  "no_cfi"
 ] @keyword
 
-(linkage_aux) @keyword
-(dso_local) @keyword
-(visibility) @keyword
-(dll_storage_class) @keyword
-(unnamed_addr) @keyword
-(attribute_name) @keyword
+
+[
+  "no_cfi"
+  (dso_local)
+  (linkage_aux)
+  (visibility)
+] @type.qualifier
+
+[
+  "thread_local"
+  "localdynamic"
+  "initialexec"
+  "localexec"
+  (unnamed_addr)
+  (dll_storage_class)
+] @storageclass
+
+(attribute_name) @attribute
 
 (function_header [
     (linkage)
@@ -103,11 +118,6 @@
 (label) @label
 (_ inst_name: "ret" @keyword.return)
 (float) @float
-
-[
-  (local_var)
-  (global_var)
-] @variable
 
 [
   (struct_value)

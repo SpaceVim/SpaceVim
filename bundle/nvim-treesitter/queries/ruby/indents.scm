@@ -16,26 +16,28 @@
   (until)
   (for)
   (begin)
-] @indent
+  (unless)
+  (assignment)
+  (parenthesized_statements)
+] @indent.begin
 
 [
   "end"
   ")"
   "}"
   "]"
-] @indent_end
+] @indent.end
 
 [
-  "("
+  "end"
   ")"
-  "{"
   "}"
-  "["
   "]"
   (when)
   (elsif)
   (else)
-  "end"
-] @branch
+  (rescue)
+  (ensure)
+] @indent.branch
 
-(comment) @ignore
+(comment) @indent.ignore

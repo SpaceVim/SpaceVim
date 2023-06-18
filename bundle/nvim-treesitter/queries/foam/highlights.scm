@@ -23,16 +23,11 @@
     directive: (identifier)* @conditional
     argument: (identifier)* @namespace
 )
-(
-    (preproc_call
-        argument: (identifier)* @namespace
-    ) @conditional
-    (#match? @conditional "ifeq")
-)
-(
-    (preproc_call) @conditional
-    (#match? @conditional "(else|endif)")
-)
+((preproc_call
+  argument: (identifier)* @namespace) @conditional
+  (#eq? @conditional "ifeq"))
+((preproc_call) @conditional
+  (#any-of? @conditional "else" "endif"))
 
 ;; Literal numbers and strings
 (number_literal) @float
@@ -64,6 +59,7 @@
 ] @punctuation.delimiter
 
 ;; Special identifiers
-([(identifier) "on" "off" "true" "false" "yes" "no"] @constant.builtin
-(#match? @constant.builtin "^(uniform|non-uniform|and|or|on|off|true|false|yes|no)$")
-)
+[ "on" "off" "true" "false" "yes" "no" ] @constant.builtin
+
+((identifier) @constant.builtin
+  (#any-of? @constant.builtin "uniform" "non-uniform" "and" "or"))

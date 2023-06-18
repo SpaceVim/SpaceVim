@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+    <style> footer{ } </style>
+    <!--      ^ css  -->
+    <style title="Test Style without type attribute"> footer{ } </style>
+    <!--                                                ^ css  -->
+    <style type="text/css" title="test style with defined type attribute"> footer{ } </style>
+    <!--                                                                    ^ css  -->
+  </head>
+  <body>
+    <script> const x = 1 </script>
+           <!-- ^ javascript -->
+    <script defer> const x = 1 </script>
+                  <!-- ^ javascript -->
+    <script async defer> const x = 1 </script>
+                     <!-- ^ javascript -->
+    <script type="text/javascript"> const x = 1 </script>
+                                  <!-- ^ javascript -->
+    <script type="text/ecmascript"> const x = 1 </script>
+                                  <!-- ^ javascript -->
+    <script type="application/ecmascript"> const x = 1 </script>
+                                       <!-- ^ javascript -->
+    <script type="application/javascript"> const x = 1 </script>
+                                       <!-- ^ javascript -->
+    <script type="module"> import { foo } from "bar" </script>
+                                 <!-- ^ javascript -->
+    <script defer type="text/javascript"> const x = 1 </script>
+                                        <!-- ^ javascript -->
+    <script type="text/markdown">## Hello *World*!</script>
+                              <!-- ^ markdown -->
+    <script type="application/graphql">query OK { dokey }</script>
+                                      <!-- ^ graphql -->
+    <script type="application/typescript">type A = number;</script>
+                                      <!-- ^ typescript -->
+    <script type="application/json">{ "true": false }</script>
+                                      <!-- ^ json -->
+    <script type="importmap">{ "true": false }</script>
+                                  <!-- ^ json -->
+    <div style="height: 100%">
+               <!-- ^ css -->
+      Test div to test css injections for style attributes
+    </div>
+
+    <input pattern="[0-9]+">
+                  <!-- ^ regex -->
+    <input pattern=[0-9]+ type="tel">
+                <!-- ^ regex -->
+
+  </body>
+</html>

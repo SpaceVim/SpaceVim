@@ -1,0 +1,29 @@
+let
+  class A extends Object {}
+  /* <- keyword */
+  /*      ^ keyword */
+  /*              ^ type.builtin */
+
+  type B = class extends A {
+  /*       ^ keyword */
+  /*             ^ keyword */
+  /*                     ^ type */
+
+    var a := 12
+
+    method meth() : int = self.a
+    /* <- keyword.function */
+    /*     ^ method */
+    /*                    ^ variable.builtin */
+  }
+
+  var object := new B
+  /*            ^ keyword.operator */
+in
+  object.a := 27;
+  /*     ^ property */
+
+  object.meth()
+  /*     ^ method */
+end
+/* vim: set ft=tiger: */

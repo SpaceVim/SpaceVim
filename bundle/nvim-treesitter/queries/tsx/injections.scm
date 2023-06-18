@@ -1,1 +1,1 @@
-; inherits: ecma
+; inherits: ecma,jsx

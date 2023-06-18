@@ -1,9 +1,9 @@
 [
   (definition)
   (selection)
-] @indent
+] @indent.begin
 
 [
   "{"
   "}"
-] @branch
+] @indent.branch

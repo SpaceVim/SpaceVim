@@ -1,0 +1,14 @@
+WHILE &a
+  Step
+
+WHILE (sYmbol.EXIT(main))
+(
+  Step
+  Break
+)
+
+WHILE (FALSE())
+// comment
+(
+  ECHO "test"
+)

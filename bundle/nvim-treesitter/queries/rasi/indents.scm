@@ -1,5 +1,5 @@
-(rule_set) @indent
+(rule_set) @indent.begin
 
-(block "}" @branch)
+(block "}" @indent.branch)
 
-(comment) @ignore
+(comment) @indent.ignore

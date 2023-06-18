@@ -2,9 +2,9 @@
  (statement)
  (blank_node_property_list)
  (collection)
-] @indent
+] @indent.begin
 [
   "]"
   ")"
-] @branch
+] @indent.branch
 

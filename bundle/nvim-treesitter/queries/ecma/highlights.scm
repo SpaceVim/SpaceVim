@@ -20,20 +20,75 @@
 ; Special identifiers
 ;--------------------
 
-((identifier) @constructor
- (#lua-match? @constructor "^[A-Z]"))
+((identifier) @type
+ (#lua-match? @type "^[A-Z]"))
 
 ((identifier) @constant
- (#lua-match? @constant "^[A-Z_][A-Z%d_]+$"))
+ (#lua-match? @constant "^_*[A-Z][A-Z%d_]*$"))
 
 ((shorthand_property_identifier) @constant
- (#lua-match? @constant "^[A-Z_][A-Z%d_]+$"))
+ (#lua-match? @constant "^_*[A-Z][A-Z%d_]*$"))
 
 ((identifier) @variable.builtin
- (#vim-match? @variable.builtin "^(arguments|module|console|window|document)$"))
+ (#any-of? @variable.builtin
+           "arguments"
+           "module"
+           "console"
+           "window"
+           "document"))
+
+((identifier) @type.builtin
+ (#any-of? @type.builtin
+           "Object"
+           "Function"
+           "Boolean"
+           "Symbol"
+           "Number"
+           "Math"
+           "Date"
+           "String"
+           "RegExp"
+           "Map"
+           "Set"
+           "WeakMap"
+           "WeakSet"
+           "Promise"
+           "Array"
+           "Int8Array"
+           "Uint8Array"
+           "Uint8ClampedArray"
+           "Int16Array"
+           "Uint16Array"
+           "Int32Array"
+           "Uint32Array"
+           "Float32Array"
+           "Float64Array"
+           "ArrayBuffer"
+           "DataView"
+           "Error"
+           "EvalError"
+           "InternalError"
+           "RangeError"
+           "ReferenceError"
+           "SyntaxError"
+           "TypeError"
+           "URIError"))
+
+((identifier) @namespace.builtin
+ (#eq? @namespace.builtin "Intl"))
 
 ((identifier) @function.builtin
- (#eq? @function.builtin "require"))
+ (#any-of? @function.builtin
+           "eval"
+           "isFinite"
+           "isNaN"
+           "parseFloat"
+           "parseInt"
+           "decodeURI"
+           "decodeURIComponent"
+           "encodeURI"
+           "encodeURIComponent"
+           "require"))
 
 ; Function and method definitions
 ;--------------------------------
@@ -48,6 +103,9 @@
   name: (identifier) @function)
 (method_definition
   name: [(property_identifier) (private_property_identifier)] @method)
+(method_definition
+  name: (property_identifier) @constructor
+  (#eq? @constructor "constructor"))
 
 (pair
   key: (property_identifier) @method
@@ -83,11 +141,17 @@
 ;--------------------------
 
 (call_expression
-  function: (identifier) @function)
+  function: (identifier) @function.call)
 
 (call_expression
   function: (member_expression
-    property: [(property_identifier) (private_property_identifier)] @method))
+    property: [(property_identifier) (private_property_identifier)] @method.call))
+
+; Constructor
+;------------
+
+(new_expression
+  constructor: (identifier) @constructor)
 
 ; Variables
 ;----------
@@ -97,34 +161,51 @@
 ; Literals
 ;---------
 
-(this) @variable.builtin
-(super) @variable.builtin
-
-(true) @boolean
-(false) @boolean
-(null) @constant.builtin
 [
-(comment)
-(hash_bang_line)
-] @comment
-(string) @string
-(regex) @punctuation.delimiter
-(regex_pattern) @string.regex
+  (this)
+  (super)
+] @variable.builtin
+
+[
+  (true)
+  (false)
+] @boolean
+
+[
+  (null)
+  (undefined)
+] @constant.builtin
+
+(comment) @comment @spell
+
+((comment) @comment.documentation
+  (#lua-match? @comment.documentation "^/[*][*][^*].*[*]/$"))
+
+(hash_bang_line) @preproc
+
+((string_fragment) @preproc
+ (#eq? @preproc "use strict"))
+
+(string) @string @spell
 (template_string) @string
 (escape_sequence) @string.escape
+(regex_pattern) @string.regex
+(regex "/" @punctuation.bracket) ; Regex delimiters
+
 (number) @number
+((identifier) @number
+  (#any-of? @number "NaN" "Infinity"))
 
 ; Punctuation
 ;------------
 
-"..." @punctuation.special
-
 ";" @punctuation.delimiter
 "." @punctuation.delimiter
 "," @punctuation.delimiter
-"?." @punctuation.delimiter
 
 (pair ":" @punctuation.delimiter)
+(pair_pattern ":" @punctuation.delimiter)
+(switch_case ":" @punctuation.delimiter)
 
 [
   "--"
@@ -168,11 +249,13 @@
   "&&="
   "||="
   "??="
+  "..."
 ] @operator
 
 (binary_expression "/" @operator)
-(ternary_expression ["?" ":"] @conditional)
-(unary_expression ["!" "~" "-" "+" "delete" "void" "typeof"]  @operator)
+(ternary_expression ["?" ":"] @conditional.ternary)
+(unary_expression ["!" "~" "-" "+"] @operator)
+(unary_expression ["delete" "void"] @keyword.operator)
 
 [
   "("
@@ -189,67 +272,76 @@
 ;----------
 
 [
-"if"
-"else"
-"switch"
-"case"
-"default"
+  "if"
+  "else"
+  "switch"
+  "case"
 ] @conditional
 
 [
-"import"
-"from"
-"as"
+  "import"
+  "from"
 ] @include
 
+(export_specifier "as" @include)
+(import_specifier "as" @include)
+(namespace_export "as" @include)
+(namespace_import "as" @include)
+
 [
-"for"
-"of"
-"do"
-"while"
-"continue"
+  "for"
+  "of"
+  "do"
+  "while"
+  "continue"
 ] @repeat
 
 [
-"async"
-"await"
-"break"
-"class"
-"const"
-"debugger"
-"export"
-"extends"
-"get"
-"in"
-"instanceof"
-"let"
-"set"
-"static"
-"switch"
-"target"
-"typeof"
-"var"
-"void"
-"with"
+  "break"
+  "class"
+  "const"
+  "debugger"
+  "export"
+  "extends"
+  "get"
+  "let"
+  "set"
+  "static"
+  "target"
+  "var"
+  "with"
 ] @keyword
 
 [
-"return"
-"yield"
+  "async"
+  "await"
+] @keyword.coroutine
+
+[
+  "return"
+  "yield"
 ] @keyword.return
 
 [
- "function"
+  "function"
 ] @keyword.function
 
 [
- "new"
- "delete"
+  "new"
+  "delete"
+  "in"
+  "instanceof"
+  "typeof"
 ] @keyword.operator
 
 [
- "throw"
- "try"
- "catch"
- "finally"
+  "throw"
+  "try"
+  "catch"
+  "finally"
 ] @exception
+
+(export_statement
+  "default" @keyword)
+(switch_default
+  "default" @conditional)

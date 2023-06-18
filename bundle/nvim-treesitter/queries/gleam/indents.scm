@@ -1,5 +1,6 @@
 ; Gleam indents similar to Rust and JavaScript
 [
+  (anonymous_function)
   (assert)
   (case)
   (case_clause)
@@ -10,24 +11,19 @@
   (import)
   (let)
   (list)
-  (public_constant)
-  (public_external_function)
-  (public_function)
-  (public_opaque_type_definition)
-  (public_type_alias)
-  (public_type_definition)
-  (todo)
-  (try)
-  (tuple)
-  (type_alias)
+  (constant)
+  (function)
   (type_definition)
-] @indent
+  (type_alias)
+  (todo)
+  (tuple)
+] @indent.begin
 
 [
   ")"
   "]"
   "}"
-] @indent_end @branch
+] @indent.end @indent.branch
 
 ; Gleam pipelines are not indented, but other binary expression chains are
-((binary_expression operator: _ @_operator) @indent (#not-eq? @_operator "|>"))
+((binary_expression operator: _ @_operator) @indent.begin (#not-eq? @_operator "|>"))

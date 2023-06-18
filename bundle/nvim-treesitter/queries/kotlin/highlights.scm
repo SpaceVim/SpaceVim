@@ -47,6 +47,12 @@
 
 (type_identifier) @type
 
+; '?' operator, replacement for Java @Nullable
+(nullable_type) @punctuation.special
+
+(type_alias
+	(type_identifier) @type.definition)
+
 ((type_identifier) @type.builtin
 	(#any-of? @type.builtin
 		"Byte"
@@ -86,8 +92,8 @@
 		"MutableList"
 ))
 
-(package_header
-	. (identifier)) @namespace
+(package_header "package" @keyword
+	. (identifier (simple_identifier) @namespace))
 
 (import_header
 	"import" @include)
@@ -98,7 +104,7 @@
 	(identifier
 		(simple_identifier) @type @_import)
 	(import_alias
-		(type_identifier) @type)?
+		(type_identifier) @type.definition)?
 		(#lua-match? @_import "^[A-Z]"))
 
 (import_header
@@ -108,14 +114,14 @@
 		(type_identifier) @function)?
 		(#lua-match? @_import "^[a-z]"))
 
-; TODO: Seperate labeled returns/breaks/continue/super/this
+; TODO: Separate labeled returns/breaks/continue/super/this
 ;       Must be implemented in the parser first
 (label) @label
 
 ;;; Function definitions
 
 (function_declaration
-	. (simple_identifier) @function)
+	(simple_identifier) @function)
 
 (getter
 	("get") @function.builtin)
@@ -149,13 +155,17 @@
 
 ; function()
 (call_expression
-	. (simple_identifier) @function)
+	. (simple_identifier) @function.call)
+
+; ::function
+(callable_reference
+	. (simple_identifier) @function.call)
 
 ; object.function() or object.property.function()
 (call_expression
 	(navigation_expression
 		(navigation_suffix
-			(simple_identifier) @function) . ))
+			(simple_identifier) @function.call) . ))
 
 (call_expression
 	. (simple_identifier) @function.builtin
@@ -208,9 +218,14 @@
 ;;; Literals
 
 [
-	(comment)
-	(shebang_line)
-] @comment
+  (line_comment)
+  (multiline_comment)
+] @comment @spell
+
+((multiline_comment) @comment.documentation
+  (#lua-match? @comment.documentation "^/[*][*][^*].*[*]/$"))
+
+(shebang_line) @preproc
 
 (real_literal) @float
 [
@@ -228,19 +243,16 @@
 
 (character_literal) @character
 
-[
-	(line_string_literal)
-	(multi_line_string_literal)
-] @string
+(string_literal) @string
 
 ; NOTE: Escapes not allowed in multi-line strings
-(line_string_literal (character_escape_seq) @string.escape)
+(character_literal (character_escape_seq) @string.escape)
 
 ; There are 3 ways to define a regex
 ;    - "[abc]?".toRegex()
 (call_expression
 	(navigation_expression
-		([(line_string_literal) (multi_line_string_literal)] @string.regex)
+		((string_literal) @string.regex)
 		(navigation_suffix
 			((simple_identifier) @_function
 			(#eq? @_function "toRegex")))))
@@ -252,7 +264,7 @@
 	(call_suffix
 		(value_arguments
 			(value_argument
-				[ (line_string_literal) (multi_line_string_literal) ] @string.regex))))
+				(string_literal) @string.regex))))
 
 ;    - Regex.fromLiteral("[abc]?")
 (call_expression
@@ -265,11 +277,14 @@
 	(call_suffix
 		(value_arguments
 			(value_argument
-				[ (line_string_literal) (multi_line_string_literal) ] @string.regex))))
+				(string_literal) @string.regex))))
 
 ;;; Keywords
 
 (type_alias "typealias" @keyword)
+
+(companion_object "companion" @keyword)
+
 [
 	(class_modifier)
 	(member_modifier)
@@ -281,7 +296,7 @@
 	(visibility_modifier)
 	(reification_modifier)
 	(inheritance_modifier)
-]@keyword
+] @type.qualifier
 
 [
 	"val"
@@ -293,7 +308,13 @@
 ;	"typeof" ; NOTE: It is reserved for future use
 ] @keyword
 
-("fun") @keyword.function
+[
+  "suspend"
+] @keyword.coroutine
+
+[
+  "fun"
+] @keyword.function
 
 (jump_expression) @keyword.return
 
@@ -392,18 +413,10 @@
 ] @punctuation.delimiter
 
 ; NOTE: `interpolated_identifier`s can be highlighted in any way
-(line_string_literal
+(string_literal
 	"$" @punctuation.special
-	(interpolated_identifier) @none)
-(line_string_literal
-	"${" @punctuation.special
-	(interpolated_expression) @none
-	"}" @punctuation.special)
-
-(multi_line_string_literal
-    "$" @punctuation.special
-    (interpolated_identifier) @none)
-(multi_line_string_literal
+	(interpolated_identifier) @none @variable)
+(string_literal
 	"${" @punctuation.special
 	(interpolated_expression) @none
 	"}" @punctuation.special)

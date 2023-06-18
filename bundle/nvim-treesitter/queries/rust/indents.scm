@@ -9,7 +9,6 @@
   (tuple_expression)
   (match_arm)
   (match_block)
-  (if_let_expression)
   (call_expression)
   (assignment_expression)
   (arguments)
@@ -23,38 +22,39 @@
   (parameters)
   (token_tree)
   (macro_definition)
-] @indent
-(trait_item body: (_) @indent)
-(string_literal (escape_sequence)) @indent
+] @indent.begin
+(trait_item body: (_) @indent.begin)
+(string_literal (escape_sequence)) @indent.begin
 
-(block "}" @indent_end)
+(block "}" @indent.end)
 (enum_item
-  body: (enum_variant_list "}" @indent_end))
+  body: (enum_variant_list "}" @indent.end))
 (impl_item
-  body: (declaration_list "}" @indent_end))
+  body: (declaration_list "}" @indent.end))
 (match_expression
-  body: (match_block "}" @indent_end))
+  body: (match_block "}" @indent.end))
 (mod_item
-  body: (declaration_list "}" @indent_end))
+  body: (declaration_list "}" @indent.end))
 (struct_item
-  body: (field_declaration_list "}" @indent_end))
+  body: (field_declaration_list "}" @indent.end))
 (trait_item
-  body: (declaration_list "}" @indent_end))
+  body: (declaration_list "}" @indent.end))
 
-(impl_item (where_clause) @dedent)
+(impl_item (where_clause) @indent.dedent)
 
 [
   "where"
   ")"
   "]"
   "}"
-] @branch
-(impl_item (declaration_list) @branch)
+] @indent.branch
+(impl_item (declaration_list) @indent.branch)
 
 [
   (line_comment)
   (string_literal)
-] @ignore
+] @indent.ignore
 
 
-(raw_string_literal) @auto
+(raw_string_literal) @indent.auto
+

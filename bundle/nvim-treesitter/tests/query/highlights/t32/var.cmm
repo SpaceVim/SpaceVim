@@ -1,0 +1,27 @@
+Var.NEWGLOBAL char[4][32] \myarr
+; <- keyword
+;             ^ type
+;                          ^ variable.builtin
+LOCAL &i &data
+
+&data="zero|one|two|three"
+
+&i=0.
+WHILE &i<4
+(
+    PRIVATE &val
+    &val=STRing.SPLIT("&data","|",&i)
+    Var.Assign \myarr[&i]="&val"
+;              ^ variable.builtin
+    &i=&i+1.
+)
+
+Var.NEWLOCAL \x
+; <- keyword
+;             ^ variable.builtin
+Var.set \x=func3(5,3)
+;       ^ variable.builtin
+PRINT Var.VALUE(\x)
+;               ^ variable.builtin
+
+// vim: set ft=t32:

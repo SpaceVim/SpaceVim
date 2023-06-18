@@ -1,4 +1,9 @@
 -- Execute as `nvim --headless -c "luafile ./scripts/update-readme.lua"`
+
+---@class Parser
+---@field name string
+---@field parser ParserInfo
+
 local parsers = require("nvim-treesitter.parsers").get_parser_configs()
 local sorted_parsers = {}
 
@@ -6,12 +11,15 @@ for k, v in pairs(parsers) do
   table.insert(sorted_parsers, { name = k, parser = v })
 end
 
+---@param a Parser
+---@param b Parser
 table.sort(sorted_parsers, function(a, b)
   return a.name < b.name
 end)
 
 local generated_text = ""
 
+---@param v Parser
 for _, v in ipairs(sorted_parsers) do
   local link = "[" .. (v.parser.readme_name or v.name) .. "](" .. v.parser.install_info.url .. ")"
 
@@ -25,7 +33,7 @@ for _, v in ipairs(sorted_parsers) do
       .. table.concat(v.parser.maintainers, ", ")
       .. ")\n"
   else
-    generated_text = generated_text .. "- [ ] " .. link .. "\n"
+    generated_text = generated_text .. "- [ ] " .. link .. (v.parser.experimental and " (experimental)" or "") .. "\n"
   end
 end
 
@@ -41,7 +49,7 @@ local new_readme_text = string.gsub(
 )
 vim.fn.writefile(vim.fn.split(new_readme_text, "\n"), "README.md")
 
-if string.find(readme_text, generated_text, 1, "plain") then
+if string.find(readme_text, generated_text, 1, true) then
   print "README.md is up-to-date!"
   vim.cmd "q"
 else

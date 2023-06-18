@@ -22,6 +22,7 @@
     (array_type)
     (primitive_type)
     (named_type)
+    (optional_type)
   ] @type)
 (tag
   (description (text) @text))
@@ -40,3 +41,5 @@
   (tag_name) @_tag_name
   ["<" ">"] @keyword
   (#eq? @_tag_name "@author"))
+
+(text) @spell

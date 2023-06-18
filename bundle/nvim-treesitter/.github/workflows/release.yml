@@ -1,0 +1,17 @@
+name: "release"
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  luarocks-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: nvim-neorocks/luarocks-tag-release@v2.2.0
+        env:
+          LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
+        with:
+          detailed_description: |
+            The goal of nvim-treesitter is both to provide a simple and easy way to use the interface for tree-sitter in Neovim
+            and to provide some basic functionality such as highlighting based on it.
+          build_type: "make"

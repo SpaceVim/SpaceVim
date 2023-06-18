@@ -1,22 +1,31 @@
-
-(user_type_identifier) @type
-
-(var_identifier) @variable
-
-(state_identifier) @field
-
-(var_identifier
-  (post_identifier) @variable)
-
-(function_identifier) @function
-
-(reference_identifier) @keyword
-(visibility_modifier) @include
-
+(identifier) @variable
+(type_identifier) @type
 (comment) @comment
+(int_literal) @number
+(float_literal) @float
+(string_literal) @string
+(function_identifier) @function
+[
+(image_macro)
+(children_macro)
+(radial_grad_macro)
+(linear_grad_macro)
+] @function.macro
+(call_expression
+  function: (identifier) @function.call)
+(call_expression
+  function: (field_expression
+    field: (identifier) @function.call))
+(vis) @include
+(units) @type
+(array_literal
+  (identifier) @type)
+(transition_statement state: (identifier) @field)
+(state_expression state: (identifier) @field)
+(struct_block_definition
+  (identifier) @field)
 
-(value) @number
-(string) @string
+; (state_identifier) @field
 
 [
 "in"
@@ -26,7 +35,7 @@
 "@" @keyword
 
 [
-"import" 
+"import"
 "from"
 ] @include
 
@@ -38,7 +47,8 @@
 [
 "root"
 "parent"
-"this"
+"duration"
+"easing"
 ] @variable.builtin
 
 [
@@ -61,29 +71,33 @@
 ] @keyword
 
 [
- "black"
- "transparent"
- "blue"
- "ease"
- "ease_in"
- "ease-in"
- "ease_in_out"
- "ease-in-out"
- "ease_out"
- "ease-out"
- "end"
- "green"
- "red"
- "red"
- "start"
- "yellow"
- ] @constant.builtin
+"black"
+"transparent"
+"blue"
+"ease"
+"ease_in"
+"ease-in"
+"ease_in_out"
+"ease-in-out"
+"ease_out"
+"ease-out"
+"end"
+"green"
+"red"
+"red"
+"start"
+"yellow"
+"white"
+"gray"
+] @constant.builtin
 
 
 ; Punctuation
 [
 ","
 "."
+";"
+":"
 ] @punctuation.delimiter
 
 ; Brackets
@@ -96,13 +110,13 @@
 "}"
 ] @punctuation.bracket
 
+(define_property ["<" ">"] @punctuation.bracket)
+
 [
 "angle"
 "bool"
 "brush"
-; "color" // This causes problems
-"duration"
-"easing"
+"color"
 "float"
 "image"
 "int"
@@ -113,3 +127,28 @@
 "string"
 ] @type.builtin
 
+[
+ ":="
+ "<=>"
+ "!"
+ "-"
+ "+"
+ "*"
+ "/"
+ "&&"
+ "||"
+ ">"
+ "<"
+ ">="
+ "<="
+ "="
+ ":"
+ "+="
+ "-="
+ "*="
+ "/="
+ "?"
+ "=>"
+ ] @operator
+
+(ternary_expression [":" "?"] @conditional.ternary)

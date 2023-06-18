@@ -1,13 +1,13 @@
 pub fn main() {
   assert Ok(i) = parse_int("123")
   // <- exception
-  //     ^ type
+  //     ^^ constructor
   //       ^ punctuation.bracket
   //        ^ variable
   //         ^ punctuation.bracket
   //           ^ operator
-  //             ^ function
+  //             ^^^^^^^^^ function.call
   //                      ^ punctuation.bracket
-  //                       ^ string
+  //                       ^^^^^ string
   //                            ^ punctuation.bracket
 }

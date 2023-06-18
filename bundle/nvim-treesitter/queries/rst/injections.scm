@@ -36,7 +36,7 @@
 ((directive
    name: (type) @_type
    body: (body (arguments) @language (content) @content))
- (#any-of? @_type "code" "code-block"))
+ (#any-of? @_type "code" "code-block" "sourcecode"))
 
 ((directive
    name: (type) @_type

@@ -1,15 +1,15 @@
 ; let bindings
-(let (bind . (attrpath) @definition.var)) @scope
+(let_expression (binding_set (binding . (attrpath) @definition.var))) @scope
 
 ; rec attrsets
-(rec_attrset (bind . (attrpath) @definition.field)) @scope
+(rec_attrset_expression (binding_set (binding . (attrpath) @definition.field))) @scope
 
 ; functions and parameters
-(function . [
+(function_expression . [
     (identifier) @definition.parameter
     (formals (formal . (identifier) @definition.parameter))
 ]) @scope
 ((formals) "@" (identifier) @definition.parameter) ; I couldn't get this to work properly inside the (function)
 
-; some identifiers can't be references, but @reference doesn't seem to have an inverse like @none
-(identifier) @reference
+(variable_expression (identifier) @reference)
+(inherited_attrs attr: (identifier) @reference)

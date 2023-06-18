@@ -1,7 +1,7 @@
 import gleam/io
 // <- include
 //     ^ namespace
-//          ^ namespace
+//          ^ operator
 //           ^ namespace
 
 import cat as kitten
@@ -13,10 +13,10 @@ import cat as kitten
 import animal/cat.{Cat, stroke}
 // <- include
 //     ^ namespace
-//           ^ namespace
+//           ^ operator
 //               ^ punctuation.delimiter
 //                ^ punctuation.bracket
-//                 ^ type
+//                 ^^^ type
 //                    ^ punctuation.delimiter
-//                      ^ function
+//                      ^^^^^^ function
 //                            ^ punctuation.bracket

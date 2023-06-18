@@ -20,12 +20,12 @@
 
 (invocation_expression
   (member_access_expression
-    name: (identifier) @method))
+    name: (identifier) @method.call))
 
 (invocation_expression
   function: (conditional_access_expression
     (member_binding_expression
-      name: (identifier) @method)))
+      name: (identifier) @method.call)))
 
 (namespace_declaration
   name: [(qualified_name) (identifier)] @namespace)
@@ -34,7 +34,7 @@
   (identifier) @type)
 
 (invocation_expression
-      (identifier) @method)
+      (identifier) @method.call)
 
 (field_declaration
   (variable_declaration
@@ -69,15 +69,25 @@
 
 [
  (predefined_type)
- (void_keyword)
 ] @type.builtin
 
 (implicit_type) @keyword
 
-(comment) @comment
+(comment) @comment @spell
+
+((comment) @comment.documentation
+  (#lua-match? @comment.documentation "^/[*][*][^*].*[*]/$"))
+
+((comment) @comment.documentation
+  (#lua-match? @comment.documentation "^///[^/]"))
+((comment) @comment.documentation
+  (#lua-match? @comment.documentation "^///$"))
 
 (using_directive
   (identifier) @type)
+
+(using_directive
+  (name_equals (identifier) @type.definition))
 
 (property_declaration
   name: (identifier) @property)
@@ -141,7 +151,7 @@
 ; Generic Method invocation with generic type
 (invocation_expression
   function: (generic_name
-              . (identifier) @method))
+              . (identifier) @method.call))
 
 (invocation_expression
   (member_access_expression
@@ -273,9 +283,11 @@
  "|="
  "~"
  ">>"
+ ">>>"
  "<<"
  "<<="
  ">>="
+ ">>>="
  "=>"
 ] @operator
 
@@ -286,6 +298,8 @@
  ":"
 ] @punctuation.delimiter
 
+(conditional_expression ["?" ":"] @conditional.ternary)
+
 [
  "["
  "]"
@@ -293,9 +307,9 @@
  "}"
  "("
  ")"
- "<"
- ">"
 ] @punctuation.bracket
+
+(type_argument_list ["<" ">"] @punctuation.bracket)
 
 [
  (this_expression)
@@ -304,6 +318,7 @@
 
 [
  "using"
+ "as"
 ] @include
 
 (alias_qualified_name
@@ -313,10 +328,8 @@
  "with"
  "new"
  "typeof"
- "nameof"
  "sizeof"
  "is"
- "as"
  "and"
  "or"
  "not"
@@ -331,25 +344,9 @@
  "params"
  "operator"
  "default"
- "abstract"
- "const"
- "extern"
  "implicit"
  "explicit"
- "internal"
  "override"
- "private"
- "protected"
- "public"
- "internal"
- "partial"
- "readonly"
- "sealed"
- "static"
- "virtual"
- "volatile"
- "async"
- "await"
  "class"
  "delegate"
  "enum"
@@ -368,6 +365,31 @@
  "unchecked"
  "fixed"
 ] @keyword
+
+[
+  "async"
+  "await"
+] @keyword.coroutine
+
+[
+ "const"
+ "extern"
+ "readonly"
+ "static"
+ "volatile"
+ "required"
+] @storageclass
+
+[
+ "abstract"
+ "private"
+ "protected"
+ "internal"
+ "public"
+ "partial"
+ "sealed"
+ "virtual"
+] @type.qualifier
 
 (parameter_modifier) @operator
 
