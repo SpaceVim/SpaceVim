@@ -382,6 +382,8 @@ local function open_item(...)
   -- print(vim.inspect(line))
   if line ~= '' then
     if grepid ~= 0 then
+      -- change grepid to 0, and callback function will be skipped
+      grepid = 0
       jobstop(grepid)
     end
     mpt._clear_prompt()
