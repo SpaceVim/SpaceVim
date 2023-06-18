@@ -440,6 +440,8 @@ local function apply_to_quickfix()
   mpt._handle_fly = flygrep
   if vim.fn.getbufline(buffer_id, 1)[1] ~= '' then
     if grepid ~= 0 then
+      -- stop job, and skip callback function
+      grepid = 0
       jobstop(grepid)
     end
     mpt._quit = true
@@ -464,7 +466,8 @@ local function apply_to_quickfix()
         lines = searching_result,
       })
       mpt._clear_prompt()
-      vim.cmd('copen')
+      -- use botright to make sure quicfix windows width same as screen
+      vim.cmd('botright copen')
     end
     vim.cmd('noautocmd normal! :')
   end
