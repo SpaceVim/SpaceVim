@@ -22,7 +22,7 @@ local function show_changes(opts)
     separator = ' ',
     items = {
       { width = 20 },
-      { width = vim.api.nvim_win_get_width(0) - 60 },
+      { width = vim.o.columns - 100 },
       { remaining = true },
     },
   })
