@@ -629,6 +629,33 @@ local function page_down()
   mpt._build_prompt()
 end
 
+local function update_files(f) -- {{{
+end
+-- }}}
+
+local function flygrep_result_to_files() -- {{{
+end
+-- }}}
+
+local function start_replace()
+  mode = 'r'
+  pcall(vim.fn.matchdelete, search_hi_id)
+  if grepid ~= 0 then
+    jobstop(grepid)
+  end
+  local replace_text = current_grep_pattern
+  local rst
+  if not empty(replace_text) then
+    rst = require('spacevim.plugin.iedit').start({ expr = replace_text }, 1, vim.fn.line('$'))
+  end
+  search_hi_id = vim.fn.matchadd('FlyGrepPattern', expr_to_pattern(rst), 2)
+  update_statusline()
+  if rst ~= replace_text then
+    update_files(flygrep_result_to_files())
+    vim.cmd('checktime')
+  end
+end
+
 mpt._function_key = {
   [Key.t('<Tab>')] = next_item,
   [Key.t('<C-j>')] = next_item,
@@ -664,10 +691,17 @@ mpt._function_key = {
 }
 
 function M.mode()
-  if mode == '' then
-    return grep_mode
+  local ok, iedit_mode = pcall(vim.api.nvim_win_get_var, flygrep_win_id, 'spacevim_iedit_mode')
+  if iedit_mode == 'n' then
+    return 'iedit-normal'
+  elseif iedit_mode == 'i' then
+    return 'iedit-insert'
   else
-    return grep_mode .. '(' .. mode .. ')'
+    if mode == '' then
+      return grep_mode
+    else
+      return grep_mode .. '(' .. mode .. ')'
+    end
   end
 end
 
