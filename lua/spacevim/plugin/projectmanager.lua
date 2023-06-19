@@ -297,7 +297,7 @@ function M.list()
   elseif layer.isLoaded('leaderf') then
     sp.cmd("call SpaceVim#layers#leaderf#run_menu('Projects')")
   elseif layer.isLoaded('telescope') then
-    sp.cmd('Telescope menu menu=Projects')
+    sp.cmd('Telescope project')
   else
     logger.warn('fuzzy find layer is needed to find project!')
   end
@@ -305,7 +305,7 @@ end
 
 function M.open(project)
   local path = project_paths[project]['path']
-  local name = project_paths[project]['name']
+  -- local name = project_paths[project]['name']
   sp.cmd('tabnew')
   -- I am not sure we should set the project name here.
   -- sp.cmd('let t:_spacevim_tab_name = "[' .. name .. ']"')
@@ -448,5 +448,10 @@ function M.current_root()
   end
   return rootdir
 end
+
+function M.get_project_history() -- {{{
+  return project_paths
+end
+-- }}}
 
 return M
