@@ -126,14 +126,14 @@ local function compare_time(d1, d2)
   local proj1time = proj1['opened_time'] or 0
   local proj2 = project_paths[d2] or {}
   local proj2time = proj2['opened_time'] or 0
-  return proj2time - proj1time
+  return proj2time < proj1time
 end
 local function sort_by_opened_time()
   local paths = {}
-  for k, v in pairs(project_paths) do
+  for k, _ in pairs(project_paths) do
     table.insert(paths, k)
   end
-  -- table.sort(paths, compare_time)
+  table.sort(paths, compare_time)
   if sp_opt.projects_cache_num > 0 and #paths >= sp_opt.projects_cache_num then
     for i = sp_opt.projects_cache_num, #paths, 1 do
       project_paths[paths[sp_opt.projects_cache_num]] = nil
@@ -316,6 +316,8 @@ function M.open(project)
     sp.cmd('Startify | NERDTree')
   elseif sp_opt.filemanager == 'defx' then
     sp.cmd('Startify | Defx -new')
+  elseif sp_opt.filemanager == 'neo-tree' then
+    sp.cmd('Startify | NeoTreeFocusToggle')
   end
 end
 
