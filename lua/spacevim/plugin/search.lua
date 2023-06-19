@@ -99,7 +99,13 @@ search_tools.i.default_fopts = {}
 search_tools.i.smart_case = {}
 search_tools.i.ignore_case = {'/I'}
 
-
+--- @return string default_exe the default executable of searching tool
+--- @return table default_opt default searching option
+--- @return table default_ropt default ropt of tool
+--- @return table expr_opt expr_opt of searching tool
+--- @return table fixed_string_opt fixed string option of searching tool
+--- @return table ignore_case ignore case option
+--- @return table smart_case smart case option
 function M.default_tool()
     if search_tools.default_exe == nil then
         for _, t in ipairs(vim.g.spacevim_search_tools or {'rg', 'ag', 'pt', 'ack', 'grep'}) do
@@ -116,7 +122,7 @@ function M.default_tool()
             end
         end
         if search_tools.default_exe == nil then
-            return '', '', '', '', '', '', ''
+            return '', {}, {}, {}, {}, {}, {}
         end
     end
     return search_tools.default_exe,
