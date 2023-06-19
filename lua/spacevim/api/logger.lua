@@ -52,12 +52,15 @@ function M._build_msg(msg, l)
   -- local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[l] .. '] ' .. msg
   -- change the format to
   -- [ name ] [00:00:00:000] [level] msg
-  local clock = fn.reltimefloat(fn.reltime(M.clock))
-  local h = fn.float2nr(clock / 60 / 60)
-  local m = fn.float2nr(clock / 60)
-  local s = fn.float2nr(clock) % 60
-  local mic = string.format('%00.3f', clock - fn.float2nr(clock))
-  local c = string.format('%02d:%02d:%02d:%s', h, m, s, string.sub(mic, 3, -1))
+  -- https://github.com/neovim/neovim/issues/4433
+  -- string.format("%s:%03d", os.date("%H:%M:%S"), vim.loop.now() % 1000)
+  -- local clock = fn.reltimefloat(fn.reltime(M.clock))
+  -- local h = fn.float2nr(clock / 60 / 60)
+  -- local m = fn.float2nr(clock / 60)
+  -- local s = fn.float2nr(clock) % 60
+  -- local mic = string.format('%00.3f', clock - fn.float2nr(clock))
+  local _, mic = vim.loop.gettimeofday()
+  local c = string.format("%s:%03d", os.date("%H:%M:%S"), mic / 1000)
   local log = string.format('[ %s ] [%s] [ %s ] %s', M.name, c, M.levels[l], msg)
   return log
 end
