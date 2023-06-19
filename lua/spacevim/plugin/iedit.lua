@@ -353,7 +353,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
     end
     replace_symbol()
     -- }}}
-  elseif char == '<left>' or char == 'h' then -- {{{
+  elseif char == k.t('<left>') or char == 'h' then -- {{{
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
         cursor_stack[i].cursor_end = cursor_stack[i].cursor_begin
@@ -365,7 +365,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
       end
     end
     -- }}}
-  elseif char == '<right>' or char == 'l' then
+  elseif char == k.t('<right>') or char == 'l' then
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
         cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin
