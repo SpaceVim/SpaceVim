@@ -8,6 +8,7 @@
 
 local logger = require('spacevim.logger').derive('project')
 
+local sp_buffer = require('spacevim.api').import('vim.buffer')
 
 -- start debug mode
 logger.start_debug()
@@ -120,12 +121,19 @@ local function load_cache()
   end
 end
 
+local function compare_time(d1, d2)
+  local proj1 = project_paths[d1] or {}
+  local proj1time = proj1['opened_time'] or 0
+  local proj2 = project_paths[d2] or {}
+  local proj2time = proj2['opened_time'] or 0
+  return proj2time - proj1time
+end
 local function sort_by_opened_time()
   local paths = {}
   for k, v in pairs(project_paths) do
     table.insert(paths, k)
   end
-  table.sort(paths, compare_time)
+  -- table.sort(paths, compare_time)
   if sp_opt.projects_cache_num > 0 and #paths >= sp_opt.projects_cache_num then
     for i = sp_opt.projects_cache_num, #paths, 1 do
       project_paths[paths[sp_opt.projects_cache_num]] = nil
@@ -135,13 +143,6 @@ local function sort_by_opened_time()
   return paths
 end
 
-local function compare_time(d1, d2)
-  local proj1 = project_paths[d1] or {}
-  local proj1time = proj1['opened_time'] or 0
-  local proj2 = project_paths[d2] or {}
-  local proj2time = proj2['opened_time'] or 0
-  return proj2time - proj1time
-end
 local function change_dir(dir)
   if dir == sp_file.unify_path(fn.getcwd()) then
     return false
@@ -295,6 +296,8 @@ function M.list()
     sp.cmd('FzfMenu Projects')
   elseif layer.isLoaded('leaderf') then
     sp.cmd("call SpaceVim#layers#leaderf#run_menu('Projects')")
+  elseif layer.isLoaded('telescope') then
+    sp.cmd('Telescope menu menu=Projects')
   else
     logger.warn('fuzzy find layer is needed to find project!')
   end
