@@ -23,7 +23,6 @@ mpt._prompt.mpt = vim.g.spacevim_commandline_prompt .. ' '
 
 -- compatibility functions
 local jobstart = vim.fn.jobstart
-local jobsend = vim.fn.jobsend
 local jobstop = vim.fn.jobstop
 local function empty(expr)
   return vim.fn.empty(expr) == 1
@@ -47,6 +46,7 @@ local grepid = 0
 local mode = ''
 local buffer_id = -1
 local flygrep_win_id = -1
+--- @type string|table
 local grep_files = {}
 local grep_dir = ''
 local grep_exe = ''
@@ -61,7 +61,6 @@ local grep_mode = 'expr'
 local filename_pattern = [[[^:]*:\d\+:\d\+:]]
 local preview_able = false
 local grep_history = {}
-local previewd_bufnrs = {}
 local preview_win_id = -1
 local filter_file = ''
 
@@ -149,7 +148,7 @@ end
 
 local complete_input_history_num = { 0, 0 }
 
-local function grep_stdout(id, data, event)
+local function grep_stdout(id, data, _)
   -- ignore previous result
   if id ~= grepid then
     return
@@ -163,7 +162,7 @@ local function grep_stdout(id, data, event)
   end
 end
 
-local function grep_stderr(id, data, event)
+local function grep_stderr(_, data, _)
   for _, d in pairs(data) do
     logger.info('grep stderr:' .. d)
   end
@@ -189,7 +188,7 @@ local function close_statusline()
   sl.close_float()
 end
 
-local function grep_exit(id, data, event)
+local function grep_exit(id, data, _)
   if id ~= grepid then
     return
   end
@@ -211,7 +210,7 @@ end
 -- - expr_opt:
 
 local current_grep_pattern = ''
-local function grep_timer(...)
+local function grep_timer(_)
   if grep_mode == 'expr' then
     current_grep_pattern = vim.fn.join(vim.fn.split(grep_expr), '.*')
   else
@@ -228,7 +227,7 @@ local function grep_timer(...)
 end
 
 local function matchadd(group, pattern, p)
-  local ok, id = pcall(vim.fn.matchadd, group, pattern, p)
+  local _, id = pcall(vim.fn.matchadd, group, pattern, p)
   return id
 end
 
@@ -277,7 +276,7 @@ local function get_file_pos(line)
   return filename, linenr, colum
 end
 
-local function preview_timer(t)
+local function preview_timer(_)
   local cursor = vim.api.nvim_win_get_cursor(flygrep_win_id)
   local line = vim.api.nvim_buf_get_lines(buffer_id, cursor[1] - 1, cursor[1], false)[1]
   if line == '' then
@@ -302,7 +301,7 @@ local function preview_timer(t)
   if ft then
     vim.api.nvim_buf_set_option(preview_bufnr, 'syntax', ft)
   end
-  vim.api.nvim_win_set_cursor(preview_win_id, { liner, 1 })
+  vim.api.nvim_win_set_cursor(preview_win_id, { liner, colum })
   mpt._build_prompt()
 end
 
@@ -496,7 +495,7 @@ local function get_filter_cmd(expr)
   return cmd
 end
 
-local function filter_timer(...)
+local function filter_timer(_)
   local cmd = get_filter_cmd(vim.fn.join(vim.fn.split(grep_expr), '.*'))
   grepid = jobstart(cmd, {
     on_stdout = grep_stdout,
@@ -527,7 +526,7 @@ local function start_filter()
   mpt._clear_prompt()
   filter_file = vim.fn.tempname()
   local context = vim.api.nvim_buf_get_lines(buffer_id, 0, -1, false)
-  local ok, rst = pcall(vim.fn.writefile, context, filter_file, 'b')
+  local ok, _ = pcall(vim.fn.writefile, context, filter_file, 'b')
   if not ok then
     logger.info('Failed to write filter content to temp file')
   end
@@ -678,8 +677,8 @@ mpt._function_key = {
   [Key.t('<Down>')] = next_match_history,
   [Key.t('<PageDown>')] = page_down,
   [Key.t('<PageUp>')] = page_up,
-  [Key.t('<C-End>')] = page_end,
-  [Key.t('<C-Home>')] = page_home,
+  -- [Key.t('<C-End>')] = page_end,
+  -- [Key.t('<C-Home>')] = page_home,
   [Key.t('x80\xfdK')] = previous_item,
   [Key.t('x80\xfc \x80\xfdK')] = previous_item,
   [Key.t('x80\xfc@\x80\xfdK')] = previous_item,
@@ -691,7 +690,7 @@ mpt._function_key = {
 }
 
 function M.mode()
-  local ok, iedit_mode = pcall(vim.api.nvim_win_get_var, flygrep_win_id, 'spacevim_iedit_mode')
+  local _, iedit_mode = pcall(vim.api.nvim_win_get_var, flygrep_win_id, 'spacevim_iedit_mode')
   if iedit_mode == 'n' then
     return 'iedit-normal'
   elseif iedit_mode == 'i' then
