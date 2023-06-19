@@ -317,6 +317,7 @@ end
 
 local function close_buffer()
   if grepid > 0 then
+    grepid = 0
     jobstop(grepid)
   end
   timer_stop(grep_timer_id)
