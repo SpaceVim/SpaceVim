@@ -6,6 +6,7 @@ doc/tags-cn
 wiki/.git
 *.class
 .floo
+.meta/
 *.pyc
 .flooignore
 *.netrwhist
