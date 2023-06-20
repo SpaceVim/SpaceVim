@@ -64,6 +64,7 @@ local grep_history = {}
 local preview_win_id = -1
 local filter_file = ''
 
+--- @return table # a list of searching pattern history
 local function read_histroy()
   if
     vim.fn.filereadable(vim.fn.expand(vim.g.spacevim_data_dir .. 'SpaceVim/flygrep_history'))
@@ -75,8 +76,8 @@ local function read_histroy()
         ''
       )
     )
-    if vim.fn.type(_his) == 3 then
-      return _his
+    if type(_his) == table then
+      return _his or {}
     else
       return {}
     end
@@ -111,6 +112,8 @@ local function append(t1, t2)
   end
 end
 
+--- @param expr string # searching pattern
+--- @return table<string> # searching command
 local function get_search_cmd(expr)
   local cmd = { grep_exe }
   append(cmd, grep_opt)
