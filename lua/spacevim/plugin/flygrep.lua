@@ -618,7 +618,7 @@ end
 local function page_up()
   -- exe "noautocmd normal! \<PageUp>"
   vim.api.nvim_win_call(flygrep_win_id, function()
-    vim.api.nvim_feedkeys(Key.t('<PageUp>'), 'x', 'false')
+    vim.api.nvim_feedkeys(Key.t('<PageUp>'), 'x', false)
   end)
   if preview_able then
     preview()
@@ -631,7 +631,7 @@ end
 local function page_down()
   -- exe "noautocmd normal! \<PageUp>"
   vim.api.nvim_win_call(flygrep_win_id, function()
-    vim.api.nvim_feedkeys(Key.t('<PageDown>'), 'x', 'false')
+    vim.api.nvim_feedkeys(Key.t('<PageDown>'), 'x', false)
   end)
   if preview_able then
     preview()
