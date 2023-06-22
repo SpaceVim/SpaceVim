@@ -253,11 +253,12 @@ CONTENTS                                                   *SpaceVim-contents*
       8. undo-tree...................................|SpaceVim-usage-undotree|
       9. windows-and-tabs....................|SpaceVim-usage-windows-and-tabs|
   8. Plugins................................................|SpaceVim-plugins|
-      1. autosave..................................|SpaceVim-plugins-autosave|
-      2. iedit........................................|SpaceVim-plugins-iedit|
-      3. runner......................................|SpaceVim-plugins-runner|
-      4. tab manager.............................|SpaceVim-plugins-tabmanager|
-      5. todo manager...........................|SpaceVim-plugins-todomanager|
+      1. alternate................................|SpaceVim-plugins-alternate|
+      2. autosave..................................|SpaceVim-plugins-autosave|
+      3. iedit........................................|SpaceVim-plugins-iedit|
+      4. runner......................................|SpaceVim-plugins-runner|
+      5. tab manager.............................|SpaceVim-plugins-tabmanager|
+      6. todo manager...........................|SpaceVim-plugins-todomanager|
   9. API........................................................|SpaceVim-api|
       1. clock............................................|SpaceVim-api-clock|
       2. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
@@ -1578,7 +1579,8 @@ COMMANDS                                                   *SpaceVim-commands*
   Open specific project in |SpaceVim-options-src_root|
 
 :A[!] {type}                                                              *:A*
-  Switch to alternate file based on {type}.
+  Switch to alternate file based on {type}. for more info about alternate file
+  configuration, checkout |SpaceVim-plugins-alternate|
 
 ==============================================================================
 PUBLIC FUNCTIONS                                          *SpaceVim-functions*
@@ -6265,6 +6267,49 @@ The following key bindings can be used to manager vim windows and tabs.
 PLUGINS                                                     *SpaceVim-plugins*
 
 This is a list of builtin plugins.
+
+==============================================================================
+ALTERNATE                                         *SpaceVim-plugins-alternate*
+
+To manage the alternate file of the project, you need to create a
+`.project_alt.json` file in the root of your project. Then you can use the
+command `:A` to jump to the alternate file of current file. You can also
+specific the type of alternate file, for example `:A doc`. With a bang `:A!`,
+SpaceVim will parse the configuration file additionally. If no type is
+specified, the default type `alternate` will be used.
+
+here is an example of `.project_alt.json`:
+
+
+>
+  {
+    "autoload/SpaceVim/layers/lang/*.vim": {
+      "doc": "docs/layers/lang/{}.md",
+      "test": "test/layer/lang/{}.vader"
+    }
+  }
+<
+
+instead of using `.project_alt.json`, `b:alternate_file_config` can be used in
+bootstrap function, for example:
+
+
+>
+  augroup myspacevim
+      autocmd!
+      autocmd BufNewFile,BufEnter *.c let b:alternate_file_config = {
+            \ "src/*.c" : {
+                \ "doc" : "docs/{}.md",
+                \ "alternate" : "include/{}.h",
+                \ }
+            \ }
+      autocmd BufNewFile,BufEnter *.h let b:alternate_file_config = {
+            \ "include/*.h" : {
+                \ "alternate" : "scr/{}.c",
+                \ }
+            \ }
+  augroup END
+<
 
 ==============================================================================
 AUTOSAVE                                           *SpaceVim-plugins-autosave*
