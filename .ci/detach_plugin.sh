@@ -65,57 +65,18 @@ main () {
             _detact lua/spacevim/api/logger.lua
             _detact lua/spacevim/logger.lua
             _detact syntax/SpaceVimFlyGrep.vim
-            _default_readme "FlyGrep.vim" "Grep on the fly in Vim/Neovim"
+            _detact_bundle FlyGrep README.md
+            _checkdir plugin
+            _detact_bundle FlyGrep plugin/FlyGrep.vim
+            _detact_bundle FlyGrep addon-info.json
+            _checkdir doc/
+            _detact_bundle FlyGrep doc/FlyGrep.txt
             _detact LICENSE
             _checkdir plugin
-            cat <<EOT > plugin/FlyGrep.vim
-"=============================================================================
-" FlyGrep.vim --- Fly grep in vim
-" Copyright (c) 2016-2022 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg@outlook.com >
-" URL: https://github.com/wsdjeg/FlyGrep.vim
-" License: MIT license
-"=============================================================================
-
-""
-" @section Introduction, intro
-" @stylized FlyGrep
-" @library
-" @order intro version dicts functions exceptions layers api faq
-" Fly grep in vim, written in pure vim script for MacVim, gvim and vim version
-" 8.0+.
-"
-
-""
-" @section CONFIGURATION, config
-" FlyGrep has strong default options, but you can also change the option
-" yourself.
-
-""
-" FlyGrep will start to searching code after a delay, the default value is
-" 500ms.
-let g:FlyGrep_input_delay = get(g:, 'FlyGrep_input_delay', 500)
-
-""
-" A list of searching tools will be userd.
-let g:FlyGrep_search_tools = get(g:, 'FlyGrep_search_tools', ['ag', 'rg', 'grep', 'pt', 'ack'])
-
-let g:spacevim_data_dir = get(g:, 'spacevim_data_dir', '~/.cache')
-
-""
-" Enable FlyGrep statusline
-let g:FlyGrep_enable_statusline = get(g:, 'FlyGrep_enable_statusline', 1)
-
-""
-" Set FlyGrep default command prompt
-let g:spacevim_commandline_prompt = get(g:, 'spacevim_commandline_prompt', '➭')
-
-command! -nargs=0 FlyGrep call FlyGrep#open({})
-EOT
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
-            git commit -m "Auto Update"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
             git remote add wsdjeg_flygrep https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/FlyGrep.vim.git
             git push wsdjeg_flygrep master 
             cd -
@@ -144,7 +105,7 @@ EOT
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
-            git commit -m "Auto Update"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
             git remote add wsdjeg_dein_ui https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/dein-ui.vim.git
             git push wsdjeg_dein_ui master 
             cd -
