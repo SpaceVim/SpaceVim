@@ -172,10 +172,10 @@ function M.redraw_windows()
       width = M.notification_width,
       height = msg_real_len(M.message),
       row = M.begin_row + 1,
-      highlight = M.notification_color,
       col = vim.o.columns - M.notification_width - 1,
       focusable = false,
     })
+    vim.api.nvim_win_set_option(M.winid, 'winhighlight', 'Normal:' .. M.notification_color)
     M.border.winid = vim.api.nvim_open_win(M.border.bufnr, false, {
       relative = 'editor',
       width = M.notification_width + 2,
@@ -185,6 +185,7 @@ function M.redraw_windows()
       highlight = 'VertSplit',
       focusable = false,
     })
+    vim.api.nvim_win_set_option(M.border.winid, 'winhighlight', 'Normal:VertSplit')
     if
       M.winblend > 0
       and vim.fn.exists('&winblend') == 1
@@ -204,7 +205,7 @@ function M.redraw_windows()
   vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, false, message_body(M.message))
 end
 
-function M.increase_window() -- {{{
+function M.increase_window()
   if M.notification_width <= M.notify_max_width and M.win_is_open() then
     M.notification_width = M.notification_width
       + vim.fn.min({
@@ -222,8 +223,23 @@ function M.increase_window() -- {{{
     vim.fn.timer_start(10, M.increase_window, { ['repeat'] = 1 })
   end
 end
--- }}}
 
--- M.notify('s')
+function M.draw_border(title, width, height) -- {{{
+  local top = M.borderchars[5] ..
+        vim.fn['repeat'](M.borderchars[1], width) ..
+        M.borderchars[6]
+  local mid = M.borderchars[4] ..
+        vim.fn['repeat'](' ', width) ..
+        M.borderchars[2]
+  local bot = M.borderchars[8] ..
+        vim.fn['repeat'](M.borderchars[3], width) ..
+        M.borderchars[7]
+  -- local top = M.string_compose(top, 1, title)
+  local lines = {top} 
+  extend(lines, vim.fn['repeat']({mid}, height))
+  extend(lines, {bot})
+  return lines
+end
+-- }}}
 
 return M
