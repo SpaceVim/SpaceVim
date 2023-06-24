@@ -34,6 +34,21 @@ local function msg_real_len(msg)
   return l
 end
 
+function M.close_all() -- {{{
+  M.message = {}
+
+  if M.win_is_open then
+    vim.api.nvim_win_close(M.border.winid, true)
+    vim.api.nvim_win_close(M.winid, true)
+  end
+
+  if notifications[M.hashkey] then
+    notifications[M.hashkey] = nil
+  end
+  M.notification_width = 1
+end
+-- }}}
+
 function M.win_is_open() -- {{{
   pcall(function()
     return M.winid >= 0
