@@ -54,6 +54,14 @@ function M.open_pos(cmd, filename, line, col)
     vim.fn.cursor(line, col)
 end
 
+---@param bufnr number the buffer number
+---@param opt string option name
+---@param value any option value
+function M.set_option(bufnr, opt, value)
+  
+end
+
+
 return M
 
 
