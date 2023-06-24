@@ -6,11 +6,7 @@
 -- License: GPLv3
 --=============================================================================
 
-local cmp = require('spacevim.api').import('vim.compatible')
-local buf = require('spacevim.api.vim.buffer')
-
 local M = {}
-M.__floating = require('spacevim.api').import('neovim.floating')
 
 local empty = function(expr)
   return vim.fn.empty(expr) == 1
@@ -33,10 +29,6 @@ M.winid = -1
 ---@param opts table notify options
 ---  - title: string, the notify title
 function M.notify(msg, opts) -- {{{
-  if not M.__floating.exists() then
-    cmp.echo(msg)
-    return
-  end
   if M.is_list_of_string(msg) then
     extend(M.message, msg)
   elseif type(msg) == 'string' then
@@ -138,8 +130,50 @@ function M.redraw_windows()
       focusable = false,
       col = vim.o.columns - M.notification_width - 1,
     })
+    vim.api.nvim_win_set_config(M.border.winid, {
+      relative = 'editor',
+      width = M.notification_width + 2,
+      height = msg_real_len(M.message) + 2,
+      row = M.begin_row,
+      col = vim.o.columns - M.notification_width - 2,
+      highlight = 'VertSplit',
+      focusable = false,
+    })
   else
+    if vim.fn.bufexists(M.border.bufnr) ~= 1 then
+      M.border.bufnr = vim.api.nvim_create_buf(false, true)
+    end
+    if vim.fn.bufexists(M.bufnr) ~= 1 then
+      M.bufnr = vim.api.nvim_create_buf(false, true)
+    end
+    M.winid =  vim.api.nvim_open_win(M.bufnr, false,
+          {
+          relative = 'editor',
+          width = M.notification_width,
+          height = msg_real_len(M.message),
+          row = M.begin_row + 1,
+          highlight = M.notification_color,
+          col = vim.o.columns - M.notification_width - 1,
+          focusable = false,
+           })
+    M.border.winid =  vim.api.nvim_open_win(M.border.bufnr, false,
+          {
+          relative = 'editor',
+          width = M.notification_width + 2,
+          height = msg_real_len(M.message) + 2,
+          row = M.begin_row,
+          col = vim.o.columns - M.notification_width - 2,
+          highlight = 'VertSplit',
+          focusable = false,
+          })
+    if M.winblend > 0 and vim.fn.exists('&winblend') == 1
+          and vim.fn.exists('*nvim_win_set_option') == 1 then
+      vim.api.nvim_win_set_option(M.winid, 'winblend', M.winblend)
+      vim.api.nvim_win_set_option(M.border.winid, 'winblend', M.winblend)
+    end
   end
+  vim.api.nvim_buf_set_lines(M.border.bufnr, 0 , -1, false, M.draw_border(M.title, M.notification_width, msg_real_len(M.message)))
+  vim.api.nvim_buf_set_lines(M.bufnr, 0 , -1, false, message_body(M.message))
 end
 
 -- M.notify('s')
