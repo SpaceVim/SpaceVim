@@ -45,6 +45,17 @@ function M.win_is_open() -- {{{
 end
 -- }}}
 
+function M.is_list_of_string(t) -- {{{
+  if type(t) == 'table' then
+    for _, v in pairs(t) do
+      if type(v) ~= 'string' then return false end
+    end
+    return true
+  end
+  return false
+end
+-- }}}
+
 function M.redraw_windows()
   if empty(M.message) then
     return
