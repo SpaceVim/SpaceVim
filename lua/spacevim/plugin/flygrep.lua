@@ -30,6 +30,14 @@ end
 local function isdirectory(dir)
   return vim.fn.isdirectory(dir) == 1
 end
+
+local function noautocmd(f) -- {{{
+  local ei = vim.o.eventignore
+  vim.o.eventignore = 'all'
+  pcall(f)
+  vim.o.eventignore = ei
+end
+-- }}}
 local timer_start = vim.fn.timer_start
 local timer_stop = vim.fn.timer_stop
 
@@ -291,13 +299,15 @@ local function preview_timer(_)
   end
   local flygrep_win_height = 16
   if not window.is_float(preview_win_id) then
-    preview_win_id = vim.api.nvim_open_win(preview_bufnr, false, {
-      relative = 'editor',
-      width = vim.o.columns,
-      height = 8,
-      row = vim.o.lines - flygrep_win_height - 2 - 8,
-      col = 0,
-    })
+    noautocmd(function()
+      preview_win_id = vim.api.nvim_open_win(preview_bufnr, false, {
+        relative = 'editor',
+        width = vim.o.columns,
+        height = 8,
+        row = vim.o.lines - flygrep_win_height - 2 - 8,
+        col = 0,
+      })
+    end)
   end
   vim.api.nvim_buf_set_lines(preview_bufnr, 0, -1, false, vim.fn.readfile(filename, ''))
   local ft = vim.filetype.match({ filename = filename })
@@ -307,11 +317,13 @@ local function preview_timer(_)
     local ftdetect_autocmd = vim.api.nvim_get_autocmds({
       group = 'filetypedetect',
       event = 'BufRead',
-      pattern = '*.' .. vim.fn.fnamemodify(filename, ':e')
+      pattern = '*.' .. vim.fn.fnamemodify(filename, ':e'),
     })
     -- logger.info(vim.inspect(ftdetect_autocmd))
     if ftdetect_autocmd[1] then
-      if ftdetect_autocmd[1].command and vim.startswith(ftdetect_autocmd[1].command, 'set filetype=') then
+      if
+        ftdetect_autocmd[1].command and vim.startswith(ftdetect_autocmd[1].command, 'set filetype=')
+      then
         ft = ftdetect_autocmd[1].command:gsub('set filetype=', '')
         vim.api.nvim_buf_set_option(preview_bufnr, 'syntax', ft)
       end
@@ -740,13 +752,15 @@ function M.open(argv)
   mpt._handle_fly = flygrep
   buffer_id = vim.api.nvim_create_buf(false, true)
   local flygrep_win_height = 16
-  flygrep_win_id = vim.api.nvim_open_win(buffer_id, true, {
-    relative = 'editor',
-    width = vim.o.columns,
-    height = flygrep_win_height,
-    row = vim.o.lines - flygrep_win_height - 2,
-    col = 0,
-  })
+  noautocmd(function()
+    flygrep_win_id = vim.api.nvim_open_win(buffer_id, true, {
+      relative = 'editor',
+      width = vim.o.columns,
+      height = flygrep_win_height,
+      row = vim.o.lines - flygrep_win_height - 2,
+      col = 0,
+    })
+  end)
 
   if vim.fn.exists('&winhighlight') == 1 then
     vim.cmd('set winhighlight=Normal:Pmenu,EndOfBuffer:Pmenu,CursorLine:PmenuSel')
