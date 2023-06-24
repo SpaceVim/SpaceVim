@@ -36,6 +36,7 @@ M.winblend = 0
 M.timeout = 3000
 M.hashkey = ''
 M.config = {}
+M.notification_color = 'Normal'
 
 ---@param msg string|table<string> notification messages
 ---@param opts table notify options
@@ -50,7 +51,11 @@ function M.notify(msg, opts) -- {{{
   if M.notify_max_width == 0 then
     M.notify_max_width = vim.o.columns * 0.35
   end
-  M.notification_color = opts.color or 'Normal'
+  if type(opts) == 'string' then
+    M.notification_color = opts
+  elseif type(opts) == 'table' then
+    M.notification_color = opts.color or 'Normal'
+  end
   if empty(M.hashkey) then
     M.hashkey = M.__password.generate_simple(10)
   end
@@ -238,8 +243,11 @@ function M.close(...) -- {{{
   end
   if #M.message == 0 then
     if M.win_is_open() then
+      local ei = vim.o.eventignore
+      vim.o.eventignore = 'all'
       vim.api.nvim_win_close(M.border.winid, true)
       vim.api.nvim_win_close(M.winid, true)
+      vim.o.eventignore = ei
     end
     if notifications[M.hashkey] then
       notifications[M.hashkey] = nil

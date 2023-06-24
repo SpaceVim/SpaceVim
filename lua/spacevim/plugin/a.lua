@@ -15,6 +15,7 @@ local sp_opt = require('spacevim.opt')
 local sp_json = require('spacevim.api').import('data.json')
 local logger = require('spacevim.logger').derive('a.lua')
 local fn = vim.fn or require('spacevim').fn
+local nt = require('spacevim.api').import('notify')
 
 local alternate_conf = {}
 alternate_conf['_'] = '.project_alt.json'
@@ -62,9 +63,7 @@ function M.alt(request_parse, ...)
   if fn.exists('b:alternate_file_config') ~= 1 then
     local conf_file_path = M.getConfigPath()
     if vim.fn.filereadable(conf_file_path) ~= 1 then
-      vim.api.nvim_eval(
-        'SpaceVim#api#notify#get().notify("no alternate config file!", "WarningMsg")'
-      )
+      nt.notify('no alternate config file!', 'WarningMsg')
       return
     end
     local file = sp_file.unify_path(fn.bufname('%'), ':.')
@@ -74,9 +73,7 @@ function M.alt(request_parse, ...)
   if alt ~= nil and alt ~= '' then
     cmd('e ' .. alt)
   else
-    vim.api.nvim_eval(
-      'SpaceVim#api#notify#get().notify("failed to find alternate file!", "WarningMsg")'
-    )
+    nt.notify('failed to find alternate file!', 'WarningMsg')
   end
 end
 
