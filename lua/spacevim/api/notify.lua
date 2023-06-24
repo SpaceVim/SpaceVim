@@ -26,6 +26,16 @@ M.message = {}
 M.notification_width = 1
 M.notify_max_width = 0
 M.winid = -1
+M.bufnr = -1
+M.border = {}
+M.border.winid = -1
+M.border.bufnr = -1
+M.borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'}
+M.title = ''
+M.winblend = 0
+M.timeout = 3000
+M.hashkey = ''
+M.config = {}
 
 ---@param msg string|table<string> notification messages
 ---@param opts table notify options
