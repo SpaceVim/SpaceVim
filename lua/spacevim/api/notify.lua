@@ -6,7 +6,6 @@
 -- License: GPLv3
 --=============================================================================
 
-
 local M = {}
 
 local empty = function(expr)
@@ -24,19 +23,29 @@ M.winid = -1
 ---@param opts table notify options
 ---  - title: string, the notify title
 function M.notify(msg, opts) -- {{{
-  
 end
 ---@param msg table<string> # a string message list
 ---@return number
 local function msg_real_len(msg)
   local l = 0
   for _, m in pairs(msg) do
-    l = l + vim.fn.len(vim.fn.split(m, "\n"))
+    l = l + vim.fn.len(vim.fn.split(m, '\n'))
   end
   return l
 end
 
-function M.redraw_windows() -- {{{
+function M.win_is_open() -- {{{
+  pcall(function()
+    return M.winid >= 0
+      and M.border.winid >= 0
+      and vim.fn.has_key(vim.api.nvim_win_get_config(M.winid), 'col')
+      and vim.fn.has_key(vim.api.nvim_win_get_config(M.border.winid), 'col')
+  end)
+  return false
+end
+-- }}}
+
+function M.redraw_windows()
   if empty(M.message) then
     return
   end
@@ -56,12 +65,10 @@ function M.redraw_windows() -- {{{
       row = M.begin_row + 1,
       highlight = M.notification_color,
       focusable = false,
-      col = vim.o.columns - M.notification_width - 1
+      col = vim.o.columns - M.notification_width - 1,
     })
   else
   end
 end
--- }}}
--- }}}
 
 return M
