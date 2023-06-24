@@ -7,8 +7,10 @@
 --=============================================================================
 
 local cmp = require('spacevim.api').import('vim.compatible')
+local buf = require('spacevim.api.vim.buffer')
 
 local M = {}
+M.__floating = require('spacevim.api').import('neovim.floating')
 
 local empty = function(expr)
   return vim.fn.empty(expr) == 1
@@ -46,6 +48,23 @@ function M.notify(msg, opts) -- {{{
   M.notification_color = opts.color or 'Normal'
   if empty(M.hashkey) then
     M.hashkey = M.__password.generate_simple(10)
+  end
+  M.redraw_windows()
+  vim.fn.setbufvar(M.bufnr, '&number', 0)
+  vim.fn.setbufvar(M.bufnr, '&relativenumber', 0)
+  vim.fn.setbufvar(M.bufnr, '&cursorline', 0)
+  vim.fn.setbufvar(M.bufnr, '&bufhidden', 'wipe')
+  vim.fn.setbufvar(M.border.bufnr, '&number', 0)
+  vim.fn.setbufvar(M.border.bufnr, '&relativenumber', 0)
+  vim.fn.setbufvar(M.border.bufnr, '&cursorline', 0)
+  vim.fn.setbufvar(M.border.bufnr, '&bufhidden', 'wipe')
+  extend(notifications, { [M.hashkey] = M })
+  M.increase_window()
+  -- vim.fn.timer_start(M.timeout, M.close, {['repeat'] = type(a:msg) == type([]) ? len(a:msg) : 1})
+  if type(msg) == 'table' then
+    vim.fn.timer_start(M.timeout, M.close, { ['repeat'] = #msg })
+  else
+    vim.fn.timer_start(M.timeout, M.close, { ['repeat'] = 1 })
   end
 end
 ---@param msg table<string> # a string message list
@@ -87,7 +106,9 @@ end
 function M.is_list_of_string(t) -- {{{
   if type(t) == 'table' then
     for _, v in pairs(t) do
-      if type(v) ~= 'string' then return false end
+      if type(v) ~= 'string' then
+        return false
+      end
     end
     return true
   end
@@ -120,5 +141,8 @@ function M.redraw_windows()
   else
   end
 end
+
+-- M.notify('s')
+
 
 return M
