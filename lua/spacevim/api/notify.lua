@@ -147,7 +147,6 @@ function M.redraw_windows()
       width = M.notification_width,
       height = msg_real_len(M.message),
       row = M.begin_row + 1,
-      highlight = M.notification_color,
       focusable = false,
       col = vim.o.columns - M.notification_width - 1,
     })
@@ -157,7 +156,6 @@ function M.redraw_windows()
       height = msg_real_len(M.message) + 2,
       row = M.begin_row,
       col = vim.o.columns - M.notification_width - 2,
-      highlight = 'VertSplit',
       focusable = false,
     })
   else
@@ -182,7 +180,6 @@ function M.redraw_windows()
       height = msg_real_len(M.message) + 2,
       row = M.begin_row,
       col = vim.o.columns - M.notification_width - 2,
-      highlight = 'VertSplit',
       focusable = false,
     })
     vim.api.nvim_win_set_option(M.border.winid, 'winhighlight', 'Normal:VertSplit')
