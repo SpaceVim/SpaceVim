@@ -6,10 +6,18 @@
 -- License: GPLv3
 --=============================================================================
 
+local cmp = require('spacevim.api').import('vim.compatible')
+
 local M = {}
 
 local empty = function(expr)
   return vim.fn.empty(expr) == 1
+end
+
+local extend = function(t1, t2) -- {{{
+  for _, v in ipairs(t2) do
+    table.insert(t1, v)
+  end
 end
 
 local notifications = {}
@@ -23,6 +31,22 @@ M.winid = -1
 ---@param opts table notify options
 ---  - title: string, the notify title
 function M.notify(msg, opts) -- {{{
+  if not M.__floating.exists() then
+    cmp.echo(msg)
+    return
+  end
+  if M.is_list_of_string(msg) then
+    extend(M.message, msg)
+  elseif type(msg) == 'string' then
+    table.insert(M.message, msg)
+  end
+  if M.notify_max_width == 0 then
+    M.notify_max_width = vim.o.columns * 0.35
+  end
+  M.notification_color = opts.color or 'Normal'
+  if empty(M.hashkey) then
+    M.hashkey = M.__password.generate_simple(10)
+  end
 end
 ---@param msg table<string> # a string message list
 ---@return number
