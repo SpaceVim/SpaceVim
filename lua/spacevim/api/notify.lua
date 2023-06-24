@@ -231,4 +231,25 @@ function M.draw_border(title, width, height) -- {{{
 end
 -- }}}
 
+
+function M.close(...) -- {{{
+  if not empty(M.message) then
+    table.remove(M.message, 1)
+  end
+  if #M.message == 0 then
+    if M.win_is_open() then
+      vim.api.nvim_win_close(M.border.winid, true)
+      vim.api.nvim_win_close(M.winid, true)
+    end
+    if notifications[M.hashkey] then
+      notifications[M.hashkey] = nil
+    end
+    M.notification_width = 1
+  end
+  for hashkey, _ in pairs(notifications) do
+    notifications[hashkey].redraw_windows()
+  end
+end
+-- }}}
+
 return M
