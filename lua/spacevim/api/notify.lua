@@ -175,6 +175,7 @@ function M.redraw_windows()
       row = M.begin_row + 1,
       col = vim.o.columns - M.notification_width - 1,
       focusable = false,
+      noautocmd = true,
     })
     vim.api.nvim_win_set_option(M.winid, 'winhighlight', 'Normal:' .. M.notification_color)
     M.border.winid = vim.api.nvim_open_win(M.border.bufnr, false, {
@@ -184,6 +185,7 @@ function M.redraw_windows()
       row = M.begin_row,
       col = vim.o.columns - M.notification_width - 2,
       focusable = false,
+      noautocmd = true,
     })
     vim.api.nvim_win_set_option(M.border.winid, 'winhighlight', 'Normal:VertSplit')
     if
