@@ -356,7 +356,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
   elseif char == k.t('<left>') or char == 'h' then -- {{{
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
-        cursor_stack[i].cursor_end = cursor_stack[i].cursor_begin
+        cursor_stack[i].cursor_end = cursor_stack[i].cursor_char
           .. cursor_stack[i].cursor_end
         cursor_stack[i].cursor_char =
           vim.fn.matchstr(cursor_stack[i].cursor_begin, '.$')
