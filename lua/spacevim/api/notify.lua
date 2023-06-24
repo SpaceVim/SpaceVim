@@ -30,7 +30,7 @@ M.bufnr = -1
 M.border = {}
 M.border.winid = -1
 M.border.bufnr = -1
-M.borderchars = {'─', '│', '─', '│', '┌', '┐', '┘', '└'}
+M.borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' }
 M.title = ''
 M.winblend = 0
 M.timeout = 3000
@@ -222,19 +222,13 @@ function M.increase_window()
 end
 
 function M.draw_border(title, width, height) -- {{{
-  local top = M.borderchars[5] ..
-        vim.fn['repeat'](M.borderchars[1], width) ..
-        M.borderchars[6]
-  local mid = M.borderchars[4] ..
-        vim.fn['repeat'](' ', width) ..
-        M.borderchars[2]
-  local bot = M.borderchars[8] ..
-        vim.fn['repeat'](M.borderchars[3], width) ..
-        M.borderchars[7]
+  local top = M.borderchars[5] .. vim.fn['repeat'](M.borderchars[1], width) .. M.borderchars[6]
+  local mid = M.borderchars[4] .. vim.fn['repeat'](' ', width) .. M.borderchars[2]
+  local bot = M.borderchars[8] .. vim.fn['repeat'](M.borderchars[3], width) .. M.borderchars[7]
   -- local top = M.string_compose(top, 1, title)
-  local lines = {top} 
-  extend(lines, vim.fn['repeat']({mid}, height))
-  extend(lines, {bot})
+  local lines = { top }
+  extend(lines, vim.fn['repeat']({ mid }, height))
+  extend(lines, { bot })
   return lines
 end
 -- }}}
