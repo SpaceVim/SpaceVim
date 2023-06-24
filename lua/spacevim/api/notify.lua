@@ -8,6 +8,8 @@
 
 local M = {}
 
+M.__password = require('spacevim.api').import('password')
+
 local empty = function(expr)
   return vim.fn.empty(expr) == 1
 end
@@ -29,6 +31,7 @@ M.winid = -1
 ---@param opts table notify options
 ---  - title: string, the notify title
 function M.notify(msg, opts) -- {{{
+  opts = opts or {}
   if M.is_list_of_string(msg) then
     extend(M.message, msg)
   elseif type(msg) == 'string' then
