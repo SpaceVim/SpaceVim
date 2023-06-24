@@ -96,14 +96,12 @@ function M.close_all() -- {{{
 end
 -- }}}
 
-function M.win_is_open() -- {{{
-  pcall(function()
-    return M.winid >= 0
-      and M.border.winid >= 0
-      and vim.fn.has_key(vim.api.nvim_win_get_config(M.winid), 'col')
-      and vim.fn.has_key(vim.api.nvim_win_get_config(M.border.winid), 'col')
-  end)
-  return false
+function M.win_is_open()
+  if M.winid > 0 then
+    return vim.api.nvim_win_is_valid(M.winid)
+  else
+    return false
+  end
 end
 -- }}}
 
