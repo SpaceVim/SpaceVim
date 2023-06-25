@@ -91,6 +91,27 @@ local function open_todo() -- {{{
   vim.cmd('noautocmd normal! :')
 end
 -- }}}
+--
+local function apply_to_quickfix() -- {{{
+  local qf = {}
+  for _, v in ipairs(todos) do
+    table.insert(qf, {
+      filename = v.file,
+      lnum = v.line,
+      col = v.column,
+      text = v.title,
+      type = v.label,
+    })
+  end
+  vim.fn.setqflist({}, 'r', {
+    title = 'Todos',
+    items = qf,
+  })
+  vim.cmd('close')
+  vim.cmd(winnr .. 'wincmd w')
+  vim.cmd('botright copen')
+end
+-- }}}
 
 local function indexof(t, v) -- {{{
   for i, x in ipairs(t) do
@@ -157,7 +178,6 @@ local function on_exit(id, data, event) -- {{{
   vim.fn.setbufvar(bufnr, '&ma', ma)
 end
 -- }}}
-
 
 -- labels to command line regex
 local function get_labels_regex() -- {{{
@@ -254,6 +274,9 @@ local function open_win() -- {{{
   update_todo_content()
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Enter>', '', {
     callback = open_todo,
+  })
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-q>', '', {
+    callback = apply_to_quickfix,
   })
 end
 -- }}}
