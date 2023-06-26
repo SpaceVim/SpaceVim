@@ -1,0 +1,4 @@
+let s:path = expand('<sfile>:p:h:h')
+call execute('set rtp+=' . s:path)
+set rtp+=.
+
