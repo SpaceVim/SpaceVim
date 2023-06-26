@@ -8,7 +8,7 @@
 
 ""
 " @section Introduction, intro
-" @stylized FlyGrep
+" @stylized flygrep
 " @library
 " @order intro version dicts functions exceptions layers api faq
 " Fly grep in vim, written in pure vim script for MacVim, gvim and vim version

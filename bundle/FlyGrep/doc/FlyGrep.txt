@@ -1,5 +1,5 @@
 *FlyGrep.txt*	Fly grep in vim
-Wang Shidong                                               *FlyGrep* *FlyGrep*
+Wang Shidong                                               *flygrep* *FlyGrep*
 
 ==============================================================================
 CONTENTS                                                    *FlyGrep-contents*
