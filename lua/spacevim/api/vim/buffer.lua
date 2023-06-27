@@ -43,6 +43,11 @@ function M.set_lines(bufnr, startindex, endindex, replacement)
     end
 end
 
+function M.listed_buffers() -- {{{
+  return vim.fn.filter(vim.fn.range(1, vim.fn.bufnr('$')), 'buflisted(v:val)')
+end
+-- }}}
+
 function M.resize(size, ...)
     local arg = {...}
     local cmd = arg[1] or 'vertical'
