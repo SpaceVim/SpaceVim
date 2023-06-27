@@ -27,3 +27,9 @@ function! SpaceVim#layers#core#statuscolumn#loadable() abort
   return exists('+statuscolumn')
 endfunction
 
+function! SpaceVim#layers#core#statuscolumn#health() abort
+
+  return 1
+
+endfunction
+
