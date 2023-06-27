@@ -1,18 +1,18 @@
-FROM debian:stable
+FROM ubuntu:latest
 
 MAINTAINER Shidong Wang <wsdjeg@outlook.com>
 
-RUN apt-get update && \
-    apt-get install -y \
+RUN apt update && \
+    apt install -y \
     neovim \
     curl \
-    python3 \
-    python3-pip \
+    python3-dev \
+    python3-pynvim \
     lua5.3 \
     git \
-    exuberant-ctags \
+    universal-ctags \
     silversearcher-ag && \
-    apt-get clean
+    apt clean
 
 ENV HOME /home/spacevim
 
@@ -29,8 +29,6 @@ WORKDIR $HOME
 ENV PYTHON3_HOST_PROG "/usr/bin/python3"
 
 RUN mkdir -p $HOME/.config $HOME/.SpaceVim.d
-
-RUN pip install --user pynvim
 
 RUN curl https://raw.githubusercontent.com/SpaceVim/SpaceVim/master/docker/init.toml > $HOME/.SpaceVim.d/init.toml
 
