@@ -16,6 +16,7 @@ local Key = require('spacevim.api').import('vim.keys')
 local buffer = require('spacevim.api').import('vim.buffer')
 local window = require('spacevim.api').import('vim.window')
 local sl = require('spacevim.api').import('vim.statusline')
+local nt = require('spacevim.api').import('notify')
 
 -- set commandline mpt
 
@@ -748,7 +749,12 @@ end
 function M.open(argv)
   previous_winid = vim.fn.win_getid()
   if empty(grep_default_exe) then
-    logger.warn(' [flygrep] make sure you have one search tool in your PATH')
+    logger.warn('make sure you have one search tool in your PATH')
+    nt.notify('make sure you have one search tool in your PATH')
+    return
+  elseif type(argv.cmd) == "string" and vim.fn.empty(argv.cmd) == 0 and vim.fn.executable(argv.cmd) == 0 then
+    logger.warn(argv.cmd .. ' is not executable, make sure ' .. argv.cmd .. ' is in your PATH')
+    nt.notify(argv.cmd .. ' is not executable,\nmake sure ' .. argv.cmd .. ' is in your PATH', 'WarningMsg')
     return
   end
   mode = ''
