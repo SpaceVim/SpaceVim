@@ -1107,6 +1107,16 @@ To narrow the list down, just insert the mapping keys or descriptions of what ma
 
 Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` to execute that command.
 
+**Mapping guide theme:**
+
+The default mapping guide theme is `leaderguide`, which is same as [vim-leaderguide](https://github.com/hecal3/vim-leader-guide), there is alse another available theme called `whichkey`. To set the mapping guide theme, use following snippet:
+
+```toml
+[options]
+    # the value can be `leaderguide` or `whichkey`
+    leader_guide_theme = 'whichkey'
+```
+
 ### Editing
 
 #### Moving text
