@@ -89,6 +89,9 @@ main () {
             _detact_bundle FlyGrep doc/FlyGrep.txt
             # detach LICENSE
             _detact LICENSE
+            # detach test vimrc
+            _checkdir test
+            _detact_bundle FlyGrep test/vimrc
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
