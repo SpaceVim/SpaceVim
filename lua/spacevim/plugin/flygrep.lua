@@ -169,6 +169,7 @@ local function grep_stdout(id, data, _)
     --  let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
     if vim.fn.getbufline(buffer_id, 1)[1] == '' then
       vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, datas)
+      vim.cmd('redraw')
     else
       vim.api.nvim_buf_set_lines(buffer_id, -1, -1, false, datas)
     end
