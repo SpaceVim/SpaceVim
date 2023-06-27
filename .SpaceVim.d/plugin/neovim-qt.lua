@@ -13,5 +13,10 @@ vim.api.nvim_create_user_command('Vim', function(opt)
     table.insert(cmd, v)
   end
 
-  vim.fn.jobstart(cmd)
+  vim.fn.jobstart(cmd, {
+    env = {
+      VIM = '',
+      VIMRUNTIME = ''
+    }
+  })
 end, { nargs = '*', complete = 'file' })
