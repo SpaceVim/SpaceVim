@@ -64,6 +64,7 @@ main () {
             _checkdir lua/spacevim/api/vim
             _checkdir lua/spacevim/plugin
             _detact lua/spacevim/plugin/flygrep.lua
+            _detact lua/spacevim/plugin/search.lua
             _detact lua/spacevim.lua
             _detact lua/spacevim/logger.lua
             _detact lua/spacevim/api.lua
