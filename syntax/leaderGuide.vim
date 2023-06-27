@@ -6,8 +6,8 @@ let b:current_syntax = 'leaderguide'
 if g:spacevim_leader_guide_theme == 'whichkey'
   syn match LeaderGuideDesc /[^ ]\+/
   syn match LeaderGuideSep /->/ contained
-  syn match LeaderGuideKeys /[^ ]\+ ->/ contains=LeaderGuideSep
-  syn region LeaderGuideGroupName start=/+/ end=/[^ ]\+ ->/he=s-1
+  syn region LeaderGuideGroupName start=/+/ end=/[^ ]\+ ->/he=s-1 contains=LeaderGuideSep
+  syn match LeaderGuideKeys /[^ ]*\s->/ contains=LeaderGuideSep
 
   hi def link LeaderGuideDesc Identifier
   hi def link LeaderGuideSep Comment
