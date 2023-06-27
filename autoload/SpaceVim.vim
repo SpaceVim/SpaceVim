@@ -318,6 +318,34 @@ let g:spacevim_plugin_bundle_dir
 "   let g:spacevim_realtime_leader_guide = 0
 " <
 let g:spacevim_realtime_leader_guide   = 1
+""
+" @section leader_guide_theme, options-leader_guide_theme
+" @parentsection options
+" Enable/Disable realtime leader guide. Default is true. to disable it:
+" Set the key mapping guide theme, the default theme is `leaderguide`.
+"
+" available themes:
+"
+" - `leaderguide`: same as LeaderGuide.vim
+"
+" - `whichkey`: same as which-key.nvim
+" >
+"   leader_guide_theme = 'leaderguide'
+" <
+
+""
+" Enable/Disable realtime leader guide. Default is true. to disable it:
+" Set the key mapping guide theme, the default theme is `leaderguide`.
+"
+" available themes:
+"
+" - `leaderguide`: same as LeaderGuide.vim
+"
+" - `whichkey`: same as which-key.nvim
+" >
+"   let g:spacevim_leader_guide_theme = 'leaderguide'
+" <
+let g:spacevim_leader_guide_theme = 'leaderguide'
 
 ""
 " @section enable_key_frequency, options-enable_key_frequency
