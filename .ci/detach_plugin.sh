@@ -36,7 +36,6 @@ main () {
             _checkdir autoload/SpaceVim/api/data
             _checkdir autoload/SpaceVim/mapping
             _checkdir autoload/SpaceVim/plugins
-            _checkdir lua/spacevim/api
             _detact autoload/SpaceVim/plugins/flygrep.vim
             _detact autoload/SpaceVim/api.vim
             _detact autoload/SpaceVim/api/logger.vim
@@ -60,19 +59,36 @@ main () {
             _detact autoload/SpaceVim/api/time.vim
             _detact autoload/SpaceVim/mapping/search.vim
             _detact autoload/SpaceVim/logger.vim
+            # detach lua version flygrep
+            _checkdir lua/spacevim/api
+            _checkdir lua/spacevim/api/vim
+            _checkdir lua/spacevim/plugin
+            _detact lua/spacevim/plugin/flygrep.lua
             _detact lua/spacevim.lua
+            _detact lua/spacevim/logger.lua
             _detact lua/spacevim/api.lua
             _detact lua/spacevim/api/logger.lua
-            _detact lua/spacevim/logger.lua
+            _detact lua/spacevim/api/prompt.lua
+            _detact lua/spacevim/api/vim.lua
+            _detact lua/spacevim/api/system.lua
+            _detact lua/spacevim/api/vim/compatible.lua
+            _detact lua/spacevim/api/vim/highlight.lua
+            _detact lua/spacevim/api/vim/regex.lua
+            _detact lua/spacevim/api/vim/keys.lua
+            _detact lua/spacevim/api/vim/buffer.lua
+            _detact lua/spacevim/api/vim/window.lua
+            _detact lua/spacevim/api/vim/statusline.lua
+            # detach syntax/ftplugin etc
             _detact syntax/SpaceVimFlyGrep.vim
-            _detact_bundle FlyGrep README.md
+            # detach bundle
             _checkdir plugin
             _detact_bundle FlyGrep plugin/FlyGrep.vim
+            _detact_bundle FlyGrep README.md
             _detact_bundle FlyGrep addon-info.json
             _checkdir doc/
             _detact_bundle FlyGrep doc/FlyGrep.txt
+            # detach LICENSE
             _detact LICENSE
-            _checkdir plugin
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
