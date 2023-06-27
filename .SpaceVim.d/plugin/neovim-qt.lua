@@ -6,3 +6,12 @@ vim.api.nvim_create_user_command('Nvim', function(opt)
 
   vim.fn.jobstart(cmd)
 end, { nargs = '*', complete = 'file' })
+
+vim.api.nvim_create_user_command('Vim', function(opt)
+  local cmd = { 'gvim', }
+  for _, v in pairs(opt.fargs) do
+    table.insert(cmd, v)
+  end
+
+  vim.fn.jobstart(cmd)
+end, { nargs = '*', complete = 'file' })
