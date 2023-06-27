@@ -157,31 +157,6 @@ local function get_search_cmd(expr)
   return cmd
 end
 
-local complete_input_history_num = { 0, 0 }
-
-local function grep_stdout(id, data, _)
-  -- ignore previous result
-  if id ~= grepid then
-    return
-  end
-  noautocmd(function()
-    local datas = vim.fn.filter(data, '!empty(v:val)')
-    --  let datas = s:LIST.uniq_by_func(datas, function('s:file_line'))
-    if vim.fn.getbufline(buffer_id, 1)[1] == '' then
-      vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, datas)
-      vim.cmd('redraw')
-    else
-      vim.api.nvim_buf_set_lines(buffer_id, -1, -1, false, datas)
-    end
-  end)
-end
-
-local function grep_stderr(_, data, _)
-  for _, d in pairs(data) do
-    logger.info('grep stderr:' .. d)
-  end
-end
-
 local function update_statusline()
   if sl.support_float() and vim.fn.win_id2tabwin(flygrep_win_id)[1] == vim.fn.tabpagenr() then
     sl.open_float({
@@ -195,6 +170,31 @@ local function update_statusline()
       { ' ', 'SpaceVim_statusline_b_SpaceVim_statusline_z' },
       { vim.fn['repeat'](' ', vim.o.columns - 11), 'SpaceVim_statusline_z' },
     })
+  end
+end
+
+local complete_input_history_num = { 0, 0 }
+
+local function grep_stdout(id, data, _)
+  -- ignore previous result
+  if id ~= grepid then
+    return
+  end
+  noautocmd(function()
+    local datas = vim.fn.filter(data, '!empty(v:val)')
+    if vim.fn.getbufline(buffer_id, 1)[1] == '' then
+      vim.api.nvim_buf_set_lines(buffer_id, 0, -1, false, datas)
+    else
+      vim.api.nvim_buf_set_lines(buffer_id, -1, -1, false, datas)
+    end
+    vim.cmd('redraw')
+    update_statusline()
+  end)
+end
+
+local function grep_stderr(_, data, _)
+  for _, d in pairs(data) do
+    logger.info('grep stderr:' .. d)
   end
 end
 
