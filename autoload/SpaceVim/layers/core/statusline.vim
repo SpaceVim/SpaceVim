@@ -71,46 +71,46 @@ let [s:ilsep , s:irsep] = ['', '']
 let s:loaded_modes = []
 let s:modes = {
       \ 'center-cursor': {
-        \ 'icon' : '⊝',
-        \ 'icon_asc' : '-',
-        \ 'desc' : 'centered-cursor mode',
-        \ },
-        \ 'hi-characters-for-long-lines' :{
-        \ 'icon' : '⑧',
-        \ 'icon_asc' : '8',
-        \ 'desc' : 'toggle highlight of characters for long lines',
-        \ },
-        \ 'fill-column-indicator' :{
-        \ 'icon' : s:MESSLETTERS.circled_letter('f'),
-        \ 'icon_asc' : 'f',
-        \ 'desc' : 'fill-column-indicator mode',
-        \ },
-        \ 'syntax-checking' :{
-        \ 'icon' : s:MESSLETTERS.circled_letter('s'),
-        \ 'icon_asc' : 's',
-        \ 'desc' : 'syntax-checking mode',
-        \ },
-        \ 'spell-checking' :{
-        \ 'icon' : s:MESSLETTERS.circled_letter('S'),
-        \ 'icon_asc' : 'S',
-        \ 'desc' : 'spell-checking mode',
-        \ },
-        \ 'paste-mode' :{
-        \ 'icon' : s:MESSLETTERS.circled_letter('p'),
-        \ 'icon_asc' : 'p',
-        \ 'desc' : 'paste mode',
-        \ },
-        \ 'whitespace' :{
-        \ 'icon' : s:MESSLETTERS.circled_letter('w'),
-        \ 'icon_asc' : 'w',
-        \ 'desc' : 'whitespace mode',
-        \ },
-        \ 'wrapline' :{
-        \ 'icon' : s:MESSLETTERS.circled_letter('W'),
-        \ 'icon_asc' : 'W',
-        \ 'desc' : 'wrap line mode',
-        \ },
-        \ }
+      \ 'icon' : '⊝',
+      \ 'icon_asc' : '-',
+      \ 'desc' : 'centered-cursor mode',
+      \ },
+      \ 'hi-characters-for-long-lines' :{
+      \ 'icon' : '⑧',
+      \ 'icon_asc' : '8',
+      \ 'desc' : 'toggle highlight of characters for long lines',
+      \ },
+      \ 'fill-column-indicator' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('f'),
+      \ 'icon_asc' : 'f',
+      \ 'desc' : 'fill-column-indicator mode',
+      \ },
+      \ 'syntax-checking' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('s'),
+      \ 'icon_asc' : 's',
+      \ 'desc' : 'syntax-checking mode',
+      \ },
+      \ 'spell-checking' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('S'),
+      \ 'icon_asc' : 'S',
+      \ 'desc' : 'spell-checking mode',
+      \ },
+      \ 'paste-mode' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('p'),
+      \ 'icon_asc' : 'p',
+      \ 'desc' : 'paste mode',
+      \ },
+      \ 'whitespace' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('w'),
+      \ 'icon_asc' : 'w',
+      \ 'desc' : 'whitespace mode',
+      \ },
+      \ 'wrapline' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('W'),
+      \ 'icon_asc' : 'W',
+      \ 'desc' : 'wrap line mode',
+      \ },
+      \ }
 
 " the major_mode will be cached by default.
 
@@ -374,7 +374,9 @@ endfunction
 function! SpaceVim#layers#core#statusline#_current_tag() abort
   let tag = ''
   try
-    let tag =tagbar#currenttag('%s ', '') 
+    if execute('filetype') ==# 'detection:ON'
+      let tag = tagbar#currenttag('%s ', '') 
+    endif
   catch
   endtry
   return tag
