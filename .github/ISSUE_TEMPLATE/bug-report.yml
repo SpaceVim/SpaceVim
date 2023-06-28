@@ -1,22 +1,19 @@
 name: Bug Report
 description: File a bug report
 title: "[Bug]: "
-labels: ["bug", "triage"]
-assignees:
-  - octocat
+labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
-  - type: input
-    id: contact
+  - type: textarea
+    id: what-happened
     attributes:
-      label: Contact Details
-      description: How can we get in touch with you if we need more info?
-      placeholder: ex. email@example.com
+      label: Expected behavior.
+      description: What is the expected behavior?
     validations:
-      required: false
+      required: true
   - type: textarea
     id: what-happened
     attributes:
