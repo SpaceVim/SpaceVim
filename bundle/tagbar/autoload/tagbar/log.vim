@@ -12,7 +12,7 @@ endif
 
 let s:LOGGER = SpaceVim#logger#derive('tagbar')
 
-call s:LOGGER.stop_debug()
+" call s:LOGGER.stop_debug()
 
 function! tagbar#log#start_debug(...) abort
   call s:LOGGER.info('enable debug mode!')
