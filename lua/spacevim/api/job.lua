@@ -10,15 +10,23 @@ local uv = vim.loop
 
 local M = {}
 
--- s:self.start(argv,...)
--- s:self.stop(id)
--- s:self.send(id,data)
--- s:self.status(id)
--- s:self.list()
--- s:self.info(id)
--- s:self.chanclose(id,type)
--- s:self.debug()
+local function setup_output(output) -- {{{
+  if output == nil then
+    return uv.new_pipe(false), nil
+  end
+
+  if type(output) == 'function' then
+    return uv.new_pipe(false), output
+  end
+
+  return nil, nil
+end
+-- }}}
+
 function M.start(argv, ...) -- {{{
+  local opts = { ... }
+  local opt = opts[1] or {}
+
 end
 -- }}}
 
