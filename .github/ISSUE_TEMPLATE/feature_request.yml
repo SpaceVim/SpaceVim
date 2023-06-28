@@ -18,14 +18,12 @@ body:
     id: feature-solution
     attributes:
       label: Describe the solution you'd like.
-      description: The reproduce ways are needed to debug.
-      placeholder: A clear and concise description of what you want to happen.
-      value: "A bug happened!"
+      description: A clear and concise description of what you want to happen.
     validations:
       required: true
   - type: textarea
     id: additional-context
     attributes:
-      label: Additional context`
+      label: Additional context
       description: Add any other context or screenshots about the feature request here.
 
