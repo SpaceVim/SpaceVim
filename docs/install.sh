@@ -91,7 +91,7 @@ System="$(uname -s)"
 
 XDGSpaceDir="${XDG_CONFIG_HOME:-${HOME}/.}${XDG_CONFIG_HOME:+/}SpaceVim"
 XDGvimDir="${XDG_CONFIG_HOME:-${HOME}/.}${XDG_CONFIG_HOME:+/}vim"
-XDGnvimDir="${XDG_CONFIG_HOME:-${HOME}/.}${XDG_CONFIG_HOME:+/}nvim"
+XDGnvimDir="${XDG_CONFIG_HOME:-${HOME}/.config}${XDG_CONFIG_HOME:+/}nvim"
 
 # need_cmd {{{
 need_cmd () {
