@@ -1,0 +1,31 @@
+name: Feature Request
+description: request an new feature
+title: "[Feature]: "
+labels: ["feature request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Is your feature request related to a problem? Please describe..
+      description: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Describe the solution you'd like.
+      description: The reproduce ways are needed to debug.
+      placeholder: A clear and concise description of what you want to happen.
+      value: "A bug happened!"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Additional context`
+      description: Add any other context or screenshots about the feature request here.
+
