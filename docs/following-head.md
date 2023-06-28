@@ -1,3 +1,10 @@
+---
+title: "Following Head"
+description: "The latest changes in master branch since last release."
+---
+
+# [Home](../) >> Following Head
+
 This page documents changes in master branch since last release v2.1.0
 
 ## New features
