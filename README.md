@@ -5,7 +5,6 @@
 </h1>
 
 [Quick Start Guide](https://spacevim.org/quick-start-guide/) \|
-[Documentation](https://spacevim.org/documentation/) \|
 [Chat](https://chat.mozilla.org/#/room/#spacevim:matrix.org) \|
 [Twitter](https://twitter.com/SpaceVim)
 
@@ -15,7 +14,7 @@
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/spacevim/spacevim)](https://hub.docker.com/r/spacevim/spacevim)
 
-[SpaceVim](https://spacevim.org/) is a vim configuration inspired by [spacemacs](https://github.com/syl20bnr/spacemacs), it is compatible with [Vim](https://github.com/vim/vim) and [Neovim](https://github.com/neovim/neovim).
+SpaceVim is a vim configuration inspired by spacemacs, it is compatible with Vim and Neovim.
 
 ## Features
 
@@ -31,7 +30,7 @@
 
 ## Screenshots
 
-![welcome page](https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png)
+[![welcome page](https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png)](https://github.com/SpaceVim/SpaceVim#screenshots)
 
 ## Project Layout
 
@@ -70,7 +69,8 @@ We are thankful for any contributions from the community.
 - [10-minutes-to-SpaceVim](https://github.com/Jackiexiao/10-minutes-to-SpaceVim) by [@Jackiexiao](https://github.com/Jackiexiao)
 - [A First Look At SpaceVim](https://www.youtube.com/watch?v=iXPS_NHLj9k) by [@DistroTube](https://www.youtube.com/channel/UCVls1GmFKf6WlTraIb_IaJg)
 - [Getting Started With SpaceVim](https://www.youtube.com/watch?v=3xB501CJDB8) by [FOSS King](https://www.youtube.com/channel/UCfU_sitghekwveLh6yM_xuA)
-- [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim
+- [vimdoc](https://github.com/google/vimdoc): Vim help file generator
+- [spacemacs](https://www.spacemacs.org/): A community-driven Emacs distribution
 - Authors of all the plugins used in SpaceVim.
 
 <!-- vim:set nowrap: -->
