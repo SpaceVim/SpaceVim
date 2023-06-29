@@ -1,0 +1,7 @@
+[[repos]]
+  url = 'https://github.com/folke/trouble.nvim'
+  name = 'trouble.nvim'
+  hash = 'sssds'
+  files = [
+      'doc/trouble.nvim.txt',
+  ]
