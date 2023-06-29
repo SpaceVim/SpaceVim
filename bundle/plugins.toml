@@ -6,8 +6,7 @@
   url = 'https://github.com/'
   directory = 'trouble.nvim'
   repo = 'folke/trouble.nvim'
-  commit = 'sssds'
-  # branch = ''
+  commit = 'd99e2abd10808ef91738ce98a5c767e6a51df449'
   files = [
       'doc/trouble.nvim.txt',
   ]

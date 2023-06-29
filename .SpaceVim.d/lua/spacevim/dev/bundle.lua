@@ -27,28 +27,33 @@ end
 -- }}}
 
 local function download_exit(id, data, event) -- {{{
-  local b = jobs['job' .. id]
-  if b then
-    async(b)
+  logger.info('download job exit code:' .. data)
+  if data == 0 then
+    local b = jobs['job' .. id]
+    if b then
+      async(b)
+    end
   end
 end
 -- }}}
 
 function M.download(b) -- {{{
-  local cmd = { 'curl', '-L' }
+  -- local cmd = { 'curl', '-L', '--create-dirs' }
+  local cmd = { 'curl', '-fLo' }
   local p
   if b.branch then
     p = '/refs/heads/' .. b.branch
   elseif b.commit then
     p = '/archive/' .. b.commit
   end
-  local url = b.url .. '/' .. p .. '.zip'
-  table.insert(cmd, url)
-  table.insert(cmd, '--output')
-  local f = vim.fn.stdpath('run') .. b.repo .. p
+  local url = b.url .. b.repo .. '/' .. p .. '.zip'
+  local f = vim.fn.stdpath('run') .. b.repo .. p .. '.zip'
   table.insert(cmd, f)
+  table.insert(cmd, '--create-dirs')
+  table.insert(cmd, url)
   logger.info(vim.inspect(cmd))
   local jobid = vim.fn.jobstart(cmd, { on_exit = download_exit })
+  logger.info('job id is:' .. jobid)
   if jobid > 0 then
     jobs['job' .. jobid] = b
   end
