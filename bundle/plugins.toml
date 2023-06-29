@@ -1,7 +1,13 @@
+# the url: https://github.com/SpaceVim/SpaceVim/archive/b462646223dfb8a7b19fb3999edffd4d0dd8aea1.zip
+#          https://github.com/{username}/{repo}/archive/{hash}.zip
+
+
 [[repos]]
-  url = 'https://github.com/folke/trouble.nvim'
-  name = 'trouble.nvim'
-  hash = 'sssds'
+  url = 'https://github.com/'
+  directory = 'trouble.nvim'
+  repo = 'folke/trouble.nvim'
+  commit = 'sssds'
+  # branch = ''
   files = [
       'doc/trouble.nvim.txt',
   ]
