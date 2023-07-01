@@ -1,0 +1,82 @@
+# BASE UI
+Bold: '. . b'
+ColorColumn: '. syntax_cursor'
+Conceal: '. .'
+Cursor: '. syntax_accent'
+CursorIM: ''
+CursorColumn: '. syntax_cursor'
+CursorLine: '. syntax_cursor'
+Directory: 'hue_2 .'
+DiffAdd: '' # TODO
+DiffChange: '' # TODO
+DiffDelete: '' # TODO
+DiffText: '' # TODO
+ErrorMsg: ''
+VertSplit: ''
+Folded: ''
+FoldColumn: ''
+SignColumn: ''
+IncSearch: ''
+LineNr: ''
+MatchParen: ''
+ModeMsg: ''
+MoreMsg: ''
+NonText: ''
+Normal: 'mono_1 syntax_bg'
+PMenu: ''
+PMenuSel: ''
+PmenuSbar: ''
+PmenuThumb: ''
+Question: ''
+Search: ''
+SpecialKey: ''
+SpellBad: ''
+SpellLocal: ''
+SpellCap: ''
+SpellRare: ''
+StatusLine: ''
+StatusLineNC: ''
+TabLine: ''
+TabLineFill: ''
+TabLineSel: ''
+Title: ''
+Visual: ''
+VisualNOS: ''
+WarningMsg: ''
+WildMenu: ''
+# BASE SYNTAX
+Comment: ''
+Constant: ''
+String: '' # Constant
+Character: '' # Constant
+Boolean: '' # Constant
+Number: '' # Constant
+Float: '' # Constant
+Identifier: ''
+Function: '' # Identifier
+Statement: ''
+Conditional: '' # Statement
+Repeat: '' # Statement
+Label: '' # Statement
+Operator: '' # Statement
+Keyword: '' # Statement
+Exception: '' # Statement
+PreProc: ''
+Include: '' # PreProc
+Define: '' # PreProc
+Macro: '' # PreProc
+PreCondit: '' # PreProc
+Type: ''
+StorageClass: '' # Type
+Structure: '' # Type
+Typedef: '' # Type
+Special: ''
+SpecialChar: '' # Special
+Tag: '' # Special
+Delimiter: '' # Special
+SpecialComment: '' # Special
+Debug: '' # Special
+Underlined: ''
+Ignore: ''
+Error: ''
+Todo: ''
