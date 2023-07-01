@@ -40,7 +40,7 @@ local function rename_bundle(id, data, evet) -- {{{
         p = b.repo .. '-' .. b.commit
       end
       target = target .. '/' .. p
-      local cmd = { 'mv', 'bundle/' .. p, 'bundle/' .. b.directory }
+      local cmd = { 'mv', target, 'bundle/' .. b.directory }
       logger.info(vim.inspect(cmd))
       local jobid = vim.fn.jobstart(cmd, { on_exit = rename_exit })
       logger.info('job id is:' .. jobid)
