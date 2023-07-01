@@ -29,11 +29,17 @@ local function extract_exit(id, data, evet) -- {{{
     if b then
       local p
       if b.branch then
+        p = '/refs/heads/' .. b.branch
+      elseif b.commit then
+        p = '/archive/' .. b.commit
+      end
+      local target = vim.fn.stdpath('run') .. '/' .. b.username .. '/' .. b.repo .. p
+      if b.branch then
         p = b.repo .. '-' .. b.branch
       elseif b.commit then
         p = b.repo .. '-' .. b.commit
       end
-      local target = vim.fn.stdpath('run') .. '/' .. b.username .. '/' .. b.repo .. p
+      target = target .. '/' .. p
       local cmd = { 'mv', 'bundle/' .. p, 'bundle/' .. b.directory }
       local jobid = vim.fn.jobstart(cmd, { on_exit = rename_exit })
       logger.info('job id is:' .. jobid)
@@ -83,7 +89,7 @@ function M.download(b) -- {{{
     nt.notify('curl is not executable!')
     return
   end
-  logger.info('start to download bundle:\n' .. vim.inspect(b) )
+  logger.info('start to download bundle:\n' .. vim.inspect(b))
   -- local cmd = { 'curl', '-L', '--create-dirs' }
   local cmd = { 'curl', '-fLo' }
   local p
