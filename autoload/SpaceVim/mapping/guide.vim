@@ -316,11 +316,12 @@ function! s:create_string(layout) abort " {{{
   let col = 0
   let smap = sort(filter(keys(s:lmap), 'v:val !=# "name"'), function('s:compare_key'))
   for k in smap
+    let offset = repeat(' ', 8 - strlen(k))
     let desc = type(s:lmap[k]) == type({}) ? s:lmap[k].name : s:lmap[k][1]
     if g:spacevim_leader_guide_theme == 'whichkey'
-      let displaystring = k .' -> '.desc
+      let displaystring = offset . k .' -> '.desc
     else
-      let displaystring = '['. k .'] '.desc
+      let displaystring = offset . '['. k .'] '.desc
     endif
     let crow = get(rows, row, [])
     if empty(crow)
