@@ -22,10 +22,10 @@ local function rename_exit(id, data, event) -- {{{
 end
 -- }}}
 
-local function extract_exit(id, data, evet) -- {{{
+local function rename_bundle(id, data, evet) -- {{{
   logger.info('extract job exit code:' .. data)
   if data == 0 then
-    local b = jobs['extract_id_' .. id]
+    local b = jobs['remove_old_bundle_id_' .. id]
     if b then
       local p
       if b.branch then
@@ -52,6 +52,25 @@ local function extract_exit(id, data, evet) -- {{{
 end
 -- }}}
 
+local function remove_old_bundle(id, data, event) -- {{{
+  logger.info('extract job exit code:' .. data)
+  if data == 0 then
+    local b = jobs['extract_id_' .. id]
+    if b then
+      local old_bundle = 'bundle/' .. b.directory
+      local cmd = { 'rm', '-rf', old_bundle }
+      logger.info(vim.inspect(cmd))
+      local jobid = vim.fn.jobstart(cmd, { on_exit = rename_bundle })
+      logger.info('job id is:' .. jobid)
+      if jobid > 0 then
+        jobs['remove_old_bundle_id_' .. jobid] = b
+      end
+    end
+  end
+  
+end
+-- }}}
+
 local function extract(b) -- {{{
   if not executable('unzip') then
     nt.notify('unzip is not executable!')
@@ -67,7 +86,7 @@ local function extract(b) -- {{{
   local zipfile = vim.fn.stdpath('run') .. '/' .. b.username .. '/' .. b.repo .. p .. '.zip'
   local cmd = { 'unzip', '-d', target, zipfile }
   logger.info(vim.inspect(cmd))
-  local jobid = vim.fn.jobstart(cmd, { on_exit = extract_exit })
+  local jobid = vim.fn.jobstart(cmd, { on_exit = remove_old_bundle })
   logger.info('job id is:' .. jobid)
   if jobid > 0 then
     jobs['extract_id_' .. jobid] = b
