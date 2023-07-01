@@ -33,7 +33,7 @@ local function extract_exit(id, data, evet) -- {{{
       elseif b.commit then
         p = b.repo .. '-' .. b.commit
       end
-      local cmd = { 'rename', 'bundle/' .. p, b.directory }
+      local cmd = { 'mv', 'bundle/' .. p, 'bundle/' .. b.directory }
       local jobid = vim.fn.jobstart(cmd, { on_exit = rename_exit })
       logger.info('job id is:' .. jobid)
       if jobid > 0 then
@@ -117,7 +117,7 @@ function M.complete(a, b, c) -- {{{
   local rst = {}
   for _, v in pairs(M.__bs) do
     if vim.startswith(v.repo, a) then
-      table.insert(rst, v.repo)
+      table.insert(rst, v.username .. '/' .. v.repo)
     end
   end
   return rst

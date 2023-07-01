@@ -1,0 +1,13 @@
+# https://github.com/Koihik/LuaFormatter/blob/master/docs/Style-Config.md
+#column_limit: 100
+#indent_width: 4
+#continuation_indent_width: 4
+#use_tab: false
+#chop_down_parameter: true
+#chop_down_table: true
+#chop_down_kv_table: true
+#single_quote_to_double_quote: true
+#spaces_inside_table_braces: true
+#align_parameter: true
+#keep_simple_control_block_one_line: true
+#extra_sep_at_table_end: true
