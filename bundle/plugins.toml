@@ -8,6 +8,11 @@
   username = 'folke'
   repo = 'trouble.nvim'
   commit = 'd99e2abd10808ef91738ce98a5c767e6a51df449'
-  files = [
-      'doc/trouble.nvim.txt',
-  ]
+
+[[repos]]
+  # https://github.com/rakr/vim-one/tree/187f5c85b682c1933f8780d4d419c55d26a82e24
+  url = 'https://github.com/'
+  directory = 'vim-one'
+  username = 'rakr'
+  repo = 'vim-one'
+  commit = '187f5c85b682c1933f8780d4d419c55d26a82e24'
