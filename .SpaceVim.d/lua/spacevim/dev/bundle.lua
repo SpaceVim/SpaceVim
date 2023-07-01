@@ -41,6 +41,7 @@ local function extract_exit(id, data, evet) -- {{{
       end
       target = target .. '/' .. p
       local cmd = { 'mv', 'bundle/' .. p, 'bundle/' .. b.directory }
+      logger.info(vim.inspect(cmd))
       local jobid = vim.fn.jobstart(cmd, { on_exit = rename_exit })
       logger.info('job id is:' .. jobid)
       if jobid > 0 then
@@ -65,6 +66,7 @@ local function extract(b) -- {{{
   local target = vim.fn.stdpath('run') .. '/' .. b.username .. '/' .. b.repo .. p
   local zipfile = vim.fn.stdpath('run') .. '/' .. b.username .. '/' .. b.repo .. p .. '.zip'
   local cmd = { 'unzip', '-d', target, zipfile }
+  logger.info(vim.inspect(cmd))
   local jobid = vim.fn.jobstart(cmd, { on_exit = extract_exit })
   logger.info('job id is:' .. jobid)
   if jobid > 0 then
