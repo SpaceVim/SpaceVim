@@ -11,12 +11,34 @@ local logger = require('spacevim.logger').derive('flygrep')
 local nt = require('spacevim.api').import('notify')
 local jobs = {}
 
+local function rename_exit(id, data, event) -- {{{
+  logger.info('extract job exit code:' .. data)
+  if data == 0 then
+    local b = jobs['rename_id_' .. id]
+    if b then
+      nt.notify('update bundle files')
+    end
+  end
+end
+-- }}}
+
 local function extract_exit(id, data, evet) -- {{{
   logger.info('extract job exit code:' .. data)
   if data == 0 then
     local b = jobs['extract_id_' .. id]
     if b then
-      local cmd = {'mv', }
+      local p
+      if b.branch then
+        p = b.repo .. '-' .. b.branch
+      elseif b.commit then
+        p = b.repo .. '-' .. b.commit
+      end
+      local cmd = { 'rename', 'bundle/' .. p, b.directory }
+      local jobid = vim.fn.jobstart(cmd, { on_exit = rename_exit })
+      logger.info('job id is:' .. jobid)
+      if jobid > 0 then
+        jobs['rename_id_' .. jobid] = b
+      end
     end
   end
 end
@@ -33,8 +55,8 @@ local function extract(b) -- {{{
   elseif b.commit then
     p = '/archive/' .. b.commit
   end
-  local target = 'bundle/' .. b.directory
-  local zipfile = vim.fn.stdpath('run') .. b.repo .. p .. '.zip'
+  local target = 'bundle/'
+  local zipfile = vim.fn.stdpath('run') .. '/' .. b.username .. '/' .. b.repo .. p .. '.zip'
   local cmd = { 'unzip', '-d', target, zipfile }
   local jobid = vim.fn.jobstart(cmd, { on_exit = extract_exit })
   logger.info('job id is:' .. jobid)
@@ -68,8 +90,8 @@ function M.download(b) -- {{{
   elseif b.commit then
     p = '/archive/' .. b.commit
   end
-  local url = b.url .. b.repo .. '/' .. p .. '.zip'
-  local f = vim.fn.stdpath('run') .. b.repo .. p .. '.zip'
+  local url = b.url .. b.username .. '/' .. b.repo .. '/' .. p .. '.zip'
+  local f = vim.fn.stdpath('run') .. '/' .. b.username .. '/' .. b.repo .. p .. '.zip'
   table.insert(cmd, f)
   table.insert(cmd, '--create-dirs')
   table.insert(cmd, url)
