@@ -2,15 +2,31 @@
 
 local M = {}
 
+local function executable(exe) -- {{{
+  return vim.fn.executable(exe) == 1
+end
+-- }}}
+
 local logger = require('spacevim.logger').derive('flygrep')
+local nt = require('spacevim.api').import('notify')
 local jobs = {}
 
 local function async_exit(id, data, event) -- {{{
   logger.info('async job exit code:' .. data)
+  if data ~= 0 then
+    local b = jobs['async_id_' .. id]
+    if b then
+      nt.notify('failed to bundle ' .. b.repo)
+    end
+  end
 end
 -- }}}
 
 local function async(b) -- {{{
+  if not executable('rsync') then
+    nt.notify('rsync is not executable!')
+    return
+  end
   local p
   if b.branch then
     p = '/refs/heads/' .. b.branch
@@ -47,6 +63,10 @@ end
 -- }}}
 
 local function extract(b) -- {{{
+  if not executable('unzip') then
+    nt.notify('unzip is not executable!')
+    return
+  end
   local p
   if b.branch then
     p = '/refs/heads/' .. b.branch
@@ -76,6 +96,10 @@ end
 -- }}}
 
 function M.download(b) -- {{{
+  if not executable('curl') then
+    nt.notify('curl is not executable!')
+    return
+  end
   -- local cmd = { 'curl', '-L', '--create-dirs' }
   local cmd = { 'curl', '-fLo' }
   local p
