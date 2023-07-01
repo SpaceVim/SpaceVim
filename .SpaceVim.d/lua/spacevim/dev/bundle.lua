@@ -16,6 +16,7 @@ local function extract_exit(id, data, evet) -- {{{
   if data == 0 then
     local b = jobs['extract_id_' .. id]
     if b then
+      local cmd = {'mv', }
     end
   end
 end
@@ -32,7 +33,7 @@ local function extract(b) -- {{{
   elseif b.commit then
     p = '/archive/' .. b.commit
   end
-  local target = b.directory
+  local target = 'bundle/' .. b.directory
   local zipfile = vim.fn.stdpath('run') .. b.repo .. p .. '.zip'
   local cmd = { 'unzip', '-d', target, zipfile }
   local jobid = vim.fn.jobstart(cmd, { on_exit = extract_exit })
