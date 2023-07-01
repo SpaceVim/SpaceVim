@@ -7,7 +7,7 @@ local function executable(exe) -- {{{
 end
 -- }}}
 
-local logger = require('spacevim.logger').derive('flygrep')
+local logger = require('spacevim.logger').derive('bundle')
 local nt = require('spacevim.api').import('notify')
 local jobs = {}
 
