@@ -83,6 +83,7 @@ function M.download(b) -- {{{
     nt.notify('curl is not executable!')
     return
   end
+  logger.debug('start to download bundle:\n' .. vim.inspect(b) )
   -- local cmd = { 'curl', '-L', '--create-dirs' }
   local cmd = { 'curl', '-fLo' }
   local p
