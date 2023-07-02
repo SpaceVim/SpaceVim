@@ -40,7 +40,7 @@ function! SpaceVim#layers#chinese#plugins() abort
 endfunction
 
 function! SpaceVim#layers#chinese#config() abort
-  let g:_spacevim_mappings_space.x.g = {'name' : '+translate'}
+  " let g:_spacevim_mappings_space.x.g = {'name' : '+translate'}
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 't'], 'Translate'         , 'translate current word'  , 1)
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 'c']     , 'CheckChinese', 'Check with ChineseLinter', 1)
   let g:_spacevim_mappings_space.n.c = {'name' : '+Convert'}
