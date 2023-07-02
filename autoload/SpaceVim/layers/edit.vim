@@ -154,7 +154,7 @@ function! SpaceVim#layers#edit#config() abort
         \ 'backupdir' : s:autosave_location,
         \ 'event' : s:autosave_events,
         \ }
-  
+
   if has('nvim-0.7.0')
     lua require('spacevim.plugin.autosave').config(vim.api.nvim_eval('autosave_opt'))
   else
@@ -170,12 +170,12 @@ function! SpaceVim#layers#edit#config() abort
   let g:user_emmet_mode='a'
   let g:user_emmet_settings = {
         \ 'javascript': {
-          \ 'extends': 'jsx',
-          \ },
-          \ 'jsp' : {
-            \ 'extends': 'html',
-            \ },
-            \ }
+        \ 'extends': 'jsx',
+        \ },
+        \ 'jsp' : {
+        \ 'extends': 'html',
+        \ },
+        \ }
 
   "noremap <SPACE> <Plug>(wildfire-fuel)
   vnoremap <C-SPACE> <Plug>(wildfire-water)
@@ -353,7 +353,7 @@ function! SpaceVim#layers#edit#config() abort
         \ 'move-text-up(enter-transient-state)', 1)
 
   " transpose
-  let g:_spacevim_mappings_space.x.t = {'name' : '+transpose'}
+  let g:_spacevim_mappings_space.x.t = {'name' : '+Transpose/Translate'}
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'c'], 'call call('
         \ . string(s:_function('s:transpose_with_previous')) . ', ["character"])',
         \ 'swap-current-character-with-previous-one', 1)
@@ -405,33 +405,8 @@ function! SpaceVim#layers#edit#config() abort
 endfunction
 
 if has('nvim-0.6.0')
-" Hop
-lua << EOF
--- Like hop.jump_target.regex_by_line_start_skip_whitespace() except it also
--- marks empty or whitespace only lines
-function regexLines()
-  return {
-    oneshot = true,
-    match = function(str)
-      return vim.regex("http[s]*://"):match_str(str)
-    end
-  }
-end
-
--- Like :HopLineStart except it also jumps to empty or whitespace only lines
-function hintLines(opts)
-  -- Taken from override_opts()
-  opts = setmetatable(opts or {}, {__index = require'hop'.opts})
-
-  local gen = require'hop.jump_target'.jump_targets_by_scanning_lines
-  require'hop'.hint_with(gen(regexLines()), opts)
-end
-EOF
-
-
-  " See `:h forced-motion` for these operator-pending mappings
   function! s:jump_to_url() abort
-    lua hintLines()
+    lua require('spacevim.plugin.hop').hintLines()
   endfunction
 else
   function! s:jump_to_url() abort
@@ -559,27 +534,27 @@ function! s:text_transient_state() abort
   call state.set_title('Move Text Transient State')
   call state.defind_keys(
         \ {
-          \ 'layout' : 'vertical split',
-          \ 'left' : [
-            \ {
-              \ 'key' : 'J',
-              \ 'desc' : 'move text down',
-              \ 'func' : '',
-              \ 'cmd' : 'noautocmd silent! m .+1',
-              \ 'exit' : 0,
-              \ },
-              \ ],
-              \ 'right' : [
-                \ {
-                  \ 'key' : 'K',
-                  \ 'func' : '',
-                  \ 'desc' : 'move text up',
-                  \ 'cmd' : 'noautocmd silent! m .-2',
-                  \ 'exit' : 0,
-                  \ },
-                  \ ],
-                  \ }
-                  \ )
+        \ 'layout' : 'vertical split',
+        \ 'left' : [
+        \ {
+        \ 'key' : 'J',
+        \ 'desc' : 'move text down',
+        \ 'func' : '',
+        \ 'cmd' : 'noautocmd silent! m .+1',
+        \ 'exit' : 0,
+        \ },
+        \ ],
+        \ 'right' : [
+        \ {
+        \ 'key' : 'K',
+        \ 'func' : '',
+        \ 'desc' : 'move text up',
+        \ 'cmd' : 'noautocmd silent! m .-2',
+        \ 'exit' : 0,
+        \ },
+        \ ],
+        \ }
+        \ )
   call state.open()
 endfunction
 

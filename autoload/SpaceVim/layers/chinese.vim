@@ -40,9 +40,11 @@ function! SpaceVim#layers#chinese#plugins() abort
 endfunction
 
 function! SpaceVim#layers#chinese#config() abort
-  " let g:_spacevim_mappings_space.x.g = {'name' : '+translate'}
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 't'], 'Translate'         , 'translate current word'  , 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 'c']     , 'CheckChinese', 'Check with ChineseLinter', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 't'], 'Translate'         , 'translate-current-word'  , 1)
+  if !SpaceVim#layers#isLoaded('edit')
+    let g:_spacevim_mappings_space.x.g = {'name' : '+Grammarous'}
+  endif
+  call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 'c']     , 'CheckChinese', 'check-with-ChineseLinter', 1)
   let g:_spacevim_mappings_space.n.c = {'name' : '+Convert'}
   call SpaceVim#mapping#space#def('nmap', ['n', 'c', 'd'], '<Plug>ConvertChineseNumberToDigit', 'convert Chinese number to digit', 0, 1)
   " do not load vimcdoc plugin 
@@ -128,20 +130,20 @@ function! s:Chinese2Digit(cnDigitString)
       let x = remove(parse, -1)
       if type(x) == type("")
         if x == 'w'
-            let tmp *= 10000
-            let result += tmp
-            let tmp = 0
+          let tmp *= 10000
+          let result += tmp
+          let tmp = 0
         elseif x == 'y'
-            let tmp *= 100000000
-            let result += tmp
-            let tmp = 0
+          let tmp *= 100000000
+          let result += tmp
+          let tmp = 0
         elseif x == 'z'
-            let tmp *= 1000000000000
-            let result += tmp
-            let tmp = 0
+          let tmp *= 1000000000000
+          let result += tmp
+          let tmp = 0
         endif
       else
-          let tmp += x
+        let tmp += x
       endif
     endwhile
     let result += tmp
