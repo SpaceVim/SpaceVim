@@ -681,7 +681,7 @@ function! s:winclose() abort " {{{
 endfunction " }}}
 function! s:page_down() abort " {{{
   call feedkeys("\<c-c>", 'n')
-  call feedkeys("\<c-f>", 'x')
+  call feedkeys("\<c-d>", 'x')
   redraw!
   call s:wait_for_input()
 endfunction " }}}
@@ -697,7 +697,7 @@ function! s:page_undo() abort " {{{
 endfunction " }}}
 function! s:page_up() abort " {{{
   call feedkeys("\<c-c>", 'n')
-  call feedkeys("\<c-b>", 'x')
+  call feedkeys("\<c-u>", 'x')
   redraw!
   call s:wait_for_input()
 endfunction " }}}
