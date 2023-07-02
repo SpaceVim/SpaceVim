@@ -56,6 +56,15 @@ local function enter(f) -- {{{
 end
 -- }}}
 
+local function ctrl_p(f) -- {{{
+  if cmp.visible() then
+    cmp.select_prev_item()
+  else
+    pcall(f)
+  end
+end
+-- }}}
+
 local function ctrl_n(f) -- {{{
   if cmp.visible() then
     cmp.select_next_item()
@@ -93,7 +102,8 @@ cmp.setup({
         fallback()
       end
     end,
-    ['<C-n'] = ctrl_n,
+    ['<C-n>'] = ctrl_n,
+    ['<C-p>'] = ctrl_p,
     ['<CR>'] = enter,
   },
   sources = cmp.config.sources({
