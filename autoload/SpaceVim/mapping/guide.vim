@@ -563,7 +563,7 @@ function! s:winopen() abort " {{{
 
   if exists('&winhighlight')
     call s:VIM.setbufvar(s:bufnr, {
-          \ '&winhighlight' : 'Normal:Pmenu',
+          \ '&winhighlight' : 'Normal:Pmenu,Search:',
           \ })
   endif
 
