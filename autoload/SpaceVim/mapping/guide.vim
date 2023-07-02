@@ -262,7 +262,7 @@ function! s:calc_layout() abort " {{{
   let smap = filter(copy(s:lmap), 'v:key !=# "name"')
   let ret.n_items = len(smap)
   let length = values(map(smap,
-        \ 'strdisplaywidth("[".v:key."]".'.
+        \ 'strdisplaywidth(repeat(" ", 8 - strlen(v:key)) . "[".v:key."]".'.
         \ '(type(v:val) == type({}) ? v:val["name"] : v:val[1]))'))
   let maxlength = max(length) + g:leaderGuide_hspace
   if g:leaderGuide_vertical
