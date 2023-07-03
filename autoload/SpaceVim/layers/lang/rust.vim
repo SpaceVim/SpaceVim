@@ -110,9 +110,9 @@ endif
 function! SpaceVim#layers#lang#rust#plugins() abort
   let plugins = []
   call add(plugins, [g:_spacevim_root_dir . 'bundle/rust.vim', {'merged' : 0}])
-  if !spacevim#layers#lsp#check_filetype('rust')
-        \ && !spacevim#layers#lsp#check_server('rls')
-        \ && !spacevim#layers#lsp#check_server('rust_analyzer')
+  if !SpaceVim#layers#lsp#check_filetype('rust')
+        \ && !SpaceVim#layers#lsp#check_server('rls')
+        \ && !SpaceVim#layers#lsp#check_server('rust_analyzer')
     call add(plugins, ['racer-rust/vim-racer', {'merged' : 0}])
   endif
   return plugins
@@ -202,9 +202,9 @@ function! s:language_specified_mappings() abort
         \ . string(function('s:execCMD')) . ', ["cargo fmt"])',
         \ 'format project files', 1)
 
-  if spacevim#layers#lsp#check_filetype('rust')
-        \ || spacevim#layers#lsp#check_server('rls')
-        \ || spacevim#layers#lsp#check_server('rust_analyzer')
+  if SpaceVim#layers#lsp#check_filetype('rust')
+        \ || SpaceVim#layers#lsp#check_server('rls')
+        \ || SpaceVim#layers#lsp#check_server('rust_analyzer')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
     nnoremap <silent><buffer> gD :<C-u>call SpaceVim#lsp#go_to_typedef()<Cr>
 
