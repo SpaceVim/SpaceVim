@@ -353,7 +353,11 @@ function! SpaceVim#layers#edit#config() abort
         \ 'move-text-up(enter-transient-state)', 1)
 
   " transpose
-  let g:_spacevim_mappings_space.x.t = {'name' : '+Transpose/Translate'}
+  if has_key(g:_spacevim_mappings_space.x, 't')
+    let g:_spacevim_mappings_space.x.t.name = '+Transpose/Translate'
+  else
+    let g:_spacevim_mappings_space.x.t = {'name' : '+Transpose'}
+  endif
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 'c'], 'call call('
         \ . string(s:_function('s:transpose_with_previous')) . ', ["character"])',
         \ 'swap-current-character-with-previous-one', 1)

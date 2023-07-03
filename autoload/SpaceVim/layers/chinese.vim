@@ -40,6 +40,11 @@ function! SpaceVim#layers#chinese#plugins() abort
 endfunction
 
 function! SpaceVim#layers#chinese#config() abort
+  if has_key(g:_spacevim_mappings_space.x, 't')
+    let g:_spacevim_mappings_space.x.t.name = '+Transpose/Translate'
+  else
+    let g:_spacevim_mappings_space.x.t = {'name' : '+Translate'}
+  endif
   call SpaceVim#mapping#space#def('nnoremap', ['x', 't', 't'], 'Translate'         , 'translate-current-word'  , 1)
   if !SpaceVim#layers#isLoaded('edit')
     let g:_spacevim_mappings_space.x.g = {'name' : '+Grammarous'}
