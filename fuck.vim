@@ -24,3 +24,5 @@ function! s:download(cf) abort
         \ 'cwd' : cwd
         \ })
 endfunction
+
+call s:download(s:cf)
