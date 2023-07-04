@@ -19,7 +19,7 @@ endfunction
 function! s:download(cf) abort
   let cmd = ['curl', '-o', a:cf, 'https://user-images.githubusercontent.com/13142418/' . a:cf]
   let cwd = 'D:\wsdjeg\fuck-github-upload-img\docs'
-  call s:JOB.start(cmd, {
+  call s:Job.start(cmd, {
         \ 'on_exit' : function('s:on_exit'),
         \ 'cwd' : cwd
         \ })
