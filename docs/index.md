@@ -8,7 +8,7 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 [![Release](https://img.shields.io/badge/Release-2.1.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.1.0/)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
-![welcome page](https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png)
+![welcome page](https://img.spacevim.org/release-v2.2.0.png)
 
 SpaceVim is a community-driven distribution of Vim and Neovim.
 It's inspired by spacemacs. It manages collections of plugins in layers,

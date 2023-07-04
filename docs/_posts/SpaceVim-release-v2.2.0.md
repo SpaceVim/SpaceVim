@@ -3,7 +3,7 @@ title: SpaceVim release v2.2.0
 categories: [changelog, blog]
 description: "SpaceVim release v2.2.0 with more lua plugins and better experience."
 type: article
-image: https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png
+image: https://img.spacevim.org/release-v2.2.0.png
 commentsID: "SpaceVim release v2.2.0"
 comments: true
 ---
@@ -24,7 +24,7 @@ The last release is v2.2.0, After 9 months development.
 The v2.2.0 has been released.
 So let's take a look at what happened since last release.
 
-![welcome page](https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png)
+![welcome page](https://img.spacevim.org/release-v2.2.0.png)
 
 - [Quick start guide](../quick-start-guide/): installation, configuration, and resources of learning SpaceVim
 - [documentation](../documentation/): the primary official document of SpaceVim
