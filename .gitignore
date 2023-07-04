@@ -45,3 +45,12 @@ view/
 # ignore cache
 .cache/
 .xmake/
+
+# bundle javacomplet2
+bundle/vim-javacomplete2/libs/javavi/.classpath
+bundle/vim-javacomplete2/libs/javavi/.factorypath
+bundle/vim-javacomplete2/libs/javavi/.project
+bundle/vim-javacomplete2/libs/javavi/.settings/org.eclipse.core.resources.prefs
+bundle/vim-javacomplete2/libs/javavi/.settings/org.eclipse.jdt.apt.core.prefs
+bundle/vim-javacomplete2/libs/javavi/.settings/org.eclipse.jdt.core.prefs
+bundle/vim-javacomplete2/libs/javavi/.settings/org.eclipse.m2e.core.prefs
