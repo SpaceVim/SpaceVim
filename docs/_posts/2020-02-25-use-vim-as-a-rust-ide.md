@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Rust IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png
+image: https://img.spacevim.org/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png
 description: "A general guide for using SpaceVim as Rust IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -71,7 +71,7 @@ Add following snippet to SpaceVim config file:
 
 By default we use tagbar as default outline viewer. To use tagbar with rust, you need to install [universal-ctags](https://github.com/universal-ctags/ctags).
 
-![image](https://user-images.githubusercontent.com/13142418/164651688-88f59d3e-9bd7-46e7-bbc0-3e2657dfa8f1.png)
+![image](https://img.spacevim.org/164651688-88f59d3e-9bd7-46e7-bbc0-3e2657dfa8f1.png)
 
 ### Syntax linting
 
@@ -112,7 +112,7 @@ To run current script, you can press `SPC l r`, and a split window
 will be openen, the output of the script will be shown in this window.
 It is running asynchronously, and will not block your Vim.
 
-![rustide](https://user-images.githubusercontent.com/13142418/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png)
+![rustide](https://img.spacevim.org/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png)
 
 ### REPL support
 
@@ -120,7 +120,7 @@ Start a `evcxr` inferior REPL process with `SPC l s i`. After the REPL process b
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
-![rustrepl](https://user-images.githubusercontent.com/13142418/75877531-ef19dc00-5e52-11ea-87c9-bf8b103a690d.png)
+![rustrepl](https://img.spacevim.org/75877531-ef19dc00-5e52-11ea-87c9-bf8b103a690d.png)
 
 ### Tasks manager
 
@@ -152,8 +152,8 @@ call SpaceVim#plugins#tasks#reg_provider(funcref('s:cargo_task'))
 
 Open SpaceVim with a rust file, after pressing `SPC p t r`, you will see the following tasks menu.
 
-![image](https://user-images.githubusercontent.com/13142418/76683906-957b9380-6642-11ea-906e-42b6e6a17841.png)
+![image](https://img.spacevim.org/76683906-957b9380-6642-11ea-906e-42b6e6a17841.png)
 
 The task will run asynchronously, and the results will be shown in the runner buffer.
 
-![image](https://user-images.githubusercontent.com/13142418/76683919-b04e0800-6642-11ea-8dd8-f7fc0ae7e0cd.png)
+![image](https://img.spacevim.org/76683919-b04e0800-6642-11ea-8dd8-f7fc0ae7e0cd.png)

@@ -3,7 +3,7 @@ title: "Use Vim as a Python IDE"
 categories: [tutorials, blog]
 description: "A general guide for using SpaceVim as Python IDE, including layer configuration, requiems installation and usage."
 type: article
-image: https://user-images.githubusercontent.com/13142418/197381840-821cc059-0aad-42fd-bc39-d5fa16a824f7.png
+image: https://img.spacevim.org/197381840-821cc059-0aad-42fd-bc39-d5fa16a824f7.png
 comments: true
 commentsID: "Use Vim as a Python IDE"
 ---
@@ -13,7 +13,7 @@ commentsID: "Use Vim as a Python IDE"
 This tutorial introduces you to SpaceVim as a Python environment,
 by using the `lang#python` layer, you make SpaceVim into a great lightweight Python IDE.
 
-![python-ide](https://user-images.githubusercontent.com/13142418/197381840-821cc059-0aad-42fd-bc39-d5fa16a824f7.png)
+![python-ide](https://img.spacevim.org/197381840-821cc059-0aad-42fd-bc39-d5fa16a824f7.png)
 
 Each of the following sections will be covered:
 
@@ -69,7 +69,7 @@ Code autocompletion is provided by `autocomplete` layer, which is loaded by defa
 The language completion source is included in `lang#python` layer.
 This layer includes `deoplete-jedi` for neovim.
 
-![complete python code](https://user-images.githubusercontent.com/13142418/46339650-f5a49280-c665-11e8-86d4-20944ec23098.png)
+![complete python code](https://img.spacevim.org/46339650-f5a49280-c665-11e8-86d4-20944ec23098.png)
 
 ### Syntax linting
 
@@ -127,7 +127,7 @@ you can press `SPC l r`, and a split window will open,
 the output of the script will be shown in this window.
 It is running asynchronously, and will not block your Vim.
 
-![code runner](https://user-images.githubusercontent.com/13142418/46293837-1c5fbc00-c5c7-11e8-9f3c-c11504e2e04a.png)
+![code runner](https://img.spacevim.org/46293837-1c5fbc00-c5c7-11e8-9f3c-c11504e2e04a.png)
 
 
 ### REPL
@@ -136,4 +136,4 @@ Start a `ipython` or `python` inferior REPL process with `SPC l s i`. After the 
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
-![pythonrepl](https://user-images.githubusercontent.com/13142418/52177776-0fffa000-2801-11e9-9698-8e32f2865f5a.gif)
+![pythonrepl](https://img.spacevim.org/52177776-0fffa000-2801-11e9-9698-8e32f2865f5a.gif)

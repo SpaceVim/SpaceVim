@@ -5,7 +5,7 @@ description: "Edit org file within vim, autopreview org in the default browser, 
 
 # [Available Layers](../../) >> lang#org
 
-![org](https://user-images.githubusercontent.com/13142418/92319337-7554ec00-f049-11ea-90fb-ad663dceea12.png)
+![org](https://img.spacevim.org/92319337-7554ec00-f049-11ea-90fb-ad663dceea12.png)
 
 <!-- vim-markdown-toc GFM -->
 

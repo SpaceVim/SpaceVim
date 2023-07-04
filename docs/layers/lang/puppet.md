@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#puppet layer"
 description: "This layer adds Puppet language support to SpaceVim"
-image: https://user-images.githubusercontent.com/13142418/46022200-bb426f00-c114-11e8-84bc-d52dc83806c6.png
+image: https://img.spacevim.org/46022200-bb426f00-c114-11e8-84bc-d52dc83806c6.png
 ---
 
 # [Available Layers](../../) >> lang#puppet
@@ -18,7 +18,7 @@ image: https://user-images.githubusercontent.com/13142418/46022200-bb426f00-c114
 
 This layer adds Puppet language support to SpaceVim.
 
-![puppet ide](https://user-images.githubusercontent.com/13142418/46022200-bb426f00-c114-11e8-84bc-d52dc83806c6.png)
+![puppet ide](https://img.spacevim.org/46022200-bb426f00-c114-11e8-84bc-d52dc83806c6.png)
 
 ## Features
 

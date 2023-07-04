@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a PHP IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/57497567-c6948480-730a-11e9-95ec-e44bf6e79984.png
+image: https://img.spacevim.org/57497567-c6948480-730a-11e9-95ec-e44bf6e79984.png
 description: "A general guide for using SpaceVim as PHP IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -44,7 +44,7 @@ For more info, you can read the [lang#php](../layers/lang/php/) layer documentat
 `lang#php` layer will load the PHP plugin automatically, unless it's overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
-![phpide](https://user-images.githubusercontent.com/13142418/57497567-c6948480-730a-11e9-95ec-e44bf6e79984.png)
+![phpide](https://img.spacevim.org/57497567-c6948480-730a-11e9-95ec-e44bf6e79984.png)
 
 ### Syntax linting
 
@@ -135,7 +135,7 @@ To run current script, you can press `SPC l r`, and a split window
 will be openen, the output of the script will be shown in this window.
 It is running asynchronously, and will not block your Vim.
 
-![phpcoderunner](https://user-images.githubusercontent.com/13142418/57496602-79aeaf00-7306-11e9-8c18-32f00bd28307.gif)
+![phpcoderunner](https://img.spacevim.org/57496602-79aeaf00-7306-11e9-8c18-32f00bd28307.gif)
 
 ### Code formatting
 
@@ -153,4 +153,4 @@ Start a `php -a` inferior REPL process with `SPC l s i`. After the REPL process 
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
-![phprepl](https://user-images.githubusercontent.com/13142418/57497156-0ce8e400-7309-11e9-8628-da42d6f8432e.gif)
+![phprepl](https://img.spacevim.org/57497156-0ce8e400-7309-11e9-8628-da42d6f8432e.gif)

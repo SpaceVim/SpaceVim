@@ -2,7 +2,7 @@
 title: "Manage project alternate files"
 categories: [feature, blog]
 description: "Manage the alternate file of current project within SpaceVim."
-image: https://user-images.githubusercontent.com/13142418/80495522-9d955580-899a-11ea-9e2e-b621b1d821d8.png
+image: https://img.spacevim.org/80495522-9d955580-899a-11ea-9e2e-b621b1d821d8.png
 commentsID: "Manage project alternate files"
 comments: true
 ---
@@ -41,7 +41,7 @@ At present, this plugin built into SpaceVim basically implements the above funct
 
 SpaceVim provides a built-in alternate file manager, the command is `:A`.
 
-![a](https://user-images.githubusercontent.com/13142418/80495522-9d955580-899a-11ea-9e2e-b621b1d821d8.png)
+![a](https://img.spacevim.org/80495522-9d955580-899a-11ea-9e2e-b621b1d821d8.png)
 
 To use this feature, you can create a `.project_alt.json` file in the root of your project. for example:
 

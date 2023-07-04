@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 Go 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/57321608-4a484880-7134-11e9-8e43-5fa05085d7e5.png
+image: https://img.spacevim.org/57321608-4a484880-7134-11e9-8e43-5fa05085d7e5.png
 description: "这篇文章主要介绍如何使用 SpaceVim 搭建 Go 的开发环境，简介 lang#go 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
@@ -63,7 +63,7 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转al
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前文件的路径调用相对应的 Go 命令。因此，在执行这个快捷键之前，应当先保存一下该文件。
 
-![gorun](https://user-images.githubusercontent.com/13142418/51752665-f8cefd00-20f2-11e9-8057-d88d3509e9c3.gif)
+![gorun](https://img.spacevim.org/51752665-f8cefd00-20f2-11e9-8057-d88d3509e9c3.gif)
 
 ### 编译构建
 

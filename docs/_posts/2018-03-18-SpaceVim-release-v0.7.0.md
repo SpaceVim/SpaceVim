@@ -3,7 +3,7 @@ title: SpaceVim release v0.7.0
 categories: [changelog, blog]
 description: "Highlight symbol mode and iedit mode come out with v0.7.0"
 type: article
-image: https://user-images.githubusercontent.com/13142418/80610138-90946700-8a6b-11ea-8565-04f041e56da5.png
+image: https://img.spacevim.org/80610138-90946700-8a6b-11ea-8565-04f041e56da5.png
 commentsID: "SpaceVim release v0.7.0"
 comments: true
 ---
@@ -11,7 +11,7 @@ comments: true
 # [Changelogs](../development#changelog) > SpaceVim release v0.7.0
 
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/80610138-90946700-8a6b-11ea-8565-04f041e56da5.png)
+![welcome-page](https://img.spacevim.org/80610138-90946700-8a6b-11ea-8565-04f041e56da5.png)
 
 The last release is 3 mouths ago, so we want to bring you up-to-date in the SpaceVim world.
 
@@ -38,7 +38,7 @@ Disable `[Unite]` and `[Denite]` custom leader, use clever-f instead.
 SpaceVim supports highlighting of the current symbol on demand and adds
 a transient state to easily navigate and rename this symbol.
 
-![highlight cursor symbol](https://user-images.githubusercontent.com/13142418/36210381-e6dffde6-1163-11e8-9b35-0bf262e6f22b.gif)
+![highlight cursor symbol](https://img.spacevim.org/36210381-e6dffde6-1163-11e8-9b35-0bf262e6f22b.gif)
 
 - Iedit mode [#1258](https://github.com/SpaceVim/SpaceVim/pull/1258)
 
@@ -48,7 +48,7 @@ SpaceVim uses powerful iedit mode to quick edit multiple occurrences of a symbol
 
 The default color for iedit is `red`/`green` which is based on the current colorscheme.
 
-![iedit mode](https://user-images.githubusercontent.com/13142418/37598530-752bf6e4-2b50-11e8-9b91-4a18cd87afa0.gif)
+![iedit mode](https://img.spacevim.org/37598530-752bf6e4-2b50-11e8-9b91-4a18cd87afa0.gif)
 
 - Add project rooter [#1245](https://github.com/SpaceVim/SpaceVim/pull/1245)
 - Add package.json as project rooter in javascript layer [#1437](https://github.com/SpaceVim/SpaceVim/pull/1437)

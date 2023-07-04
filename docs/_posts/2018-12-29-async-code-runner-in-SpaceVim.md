@@ -17,7 +17,7 @@ commentsID: "VIM 异步代码执行"
 
 以下动态图展示了如何在 SpaceVim 内通过异步代码运行器来快速运行当前文件。
 
-![async code runner](https://user-images.githubusercontent.com/13142418/33722240-141ed716-db2f-11e7-9a4d-c99f05cc1d05.gif)
+![async code runner](https://img.spacevim.org/33722240-141ed716-db2f-11e7-9a4d-c99f05cc1d05.gif)
 
 在运行输出窗口最上方显示了编译、运行的实际命令，而最后一行则显示了运行结果。
 默认的快捷键为 `SPC l r`，`SPC` 指的是键盘上的空格键。

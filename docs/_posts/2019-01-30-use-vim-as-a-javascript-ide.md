@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a JavaScript IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/51976034-add03380-24be-11e9-84b5-245432e7f933.png
+image: https://img.spacevim.org/51976034-add03380-24be-11e9-84b5-245432e7f933.png
 description: "A general guide for using SpaceVim as JavaScript IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -43,7 +43,7 @@ for more info, you can read the [lang#javascript](../layers/lang/javascript/) la
 `lang#javascript` layer will load the javascript plugins automatically, unless overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
-![jside](https://user-images.githubusercontent.com/13142418/51976034-add03380-24be-11e9-84b5-245432e7f933.png)
+![jside](https://img.spacevim.org/51976034-add03380-24be-11e9-84b5-245432e7f933.png)
 
 ### Syntax linting
 
@@ -80,7 +80,7 @@ Add basic configuration that can be extended based on specific needs
 }
 ```
 
-![eslint](https://user-images.githubusercontent.com/13142418/51972203-dbfd4580-24b5-11e9-9bbd-2a88e6f656f6.png)
+![eslint](https://img.spacevim.org/51972203-dbfd4580-24b5-11e9-9bbd-2a88e6f656f6.png)
 
 ### Jump to test file
 
@@ -102,7 +102,7 @@ To run code in current buffer, you can press `SPC l r`, and a split window
 will be opened, the output will be shown in this window.
 It is running asynchronously, and will not block your vim.
 
-![jsrunner](https://user-images.githubusercontent.com/13142418/51972835-4cf12d00-24b7-11e9-9693-5e1eea9853b0.png)
+![jsrunner](https://img.spacevim.org/51972835-4cf12d00-24b7-11e9-9693-5e1eea9853b0.png)
 
 ### Code formatting
 
@@ -119,4 +119,4 @@ Start a `node -i` inferior REPL process with `SPC l s i`. After the REPL process
 send code to inferior process, all key bindings begins with `SPC l s` prefix, including sending line, sending selection or even
 send whole buffer.
 
-![jsrepl](https://user-images.githubusercontent.com/13142418/51974494-00a7ec00-24bb-11e9-8e98-c449a7a067c3.png)
+![jsrepl](https://img.spacevim.org/51974494-00a7ec00-24bb-11e9-8e98-c449a7a067c3.png)

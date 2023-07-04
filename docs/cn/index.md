@@ -9,7 +9,7 @@ lang: zh
 [![Release](https://img.shields.io/badge/Release-2.1.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.1.0/)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
-![welcome page](https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png)
+![welcome page](https://img.spacevim.org/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png)
 
 SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织管理插件以及相关配置，
 为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，

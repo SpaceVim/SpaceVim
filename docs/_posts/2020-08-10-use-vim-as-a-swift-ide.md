@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Swift IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/89797871-0d9ca580-db5e-11ea-8d43-c02cd9e49915.png
+image: https://img.spacevim.org/89797871-0d9ca580-db5e-11ea-8d43-c02cd9e49915.png
 description: "A general guide for using SpaceVim as Swift IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -38,7 +38,7 @@ for more info, you can read the [lang#swift](../layers/lang/swift/) layer docume
 The default code running key binding is `SPC l r`. It will run `swift current_file` asynchronously.
 And the stdout will be shown on a runner buffer.
 
-![swift_runner](https://user-images.githubusercontent.com/13142418/89795928-96fea880-db5b-11ea-81c4-7f3384f419e7.png)
+![swift_runner](https://img.spacevim.org/89795928-96fea880-db5b-11ea-81c4-7f3384f419e7.png)
 
 ### REPL support
 
@@ -46,5 +46,5 @@ Start a `swift` inferior REPL process with `SPC l s i`. After the REPL process b
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
-![swift_repl](https://user-images.githubusercontent.com/13142418/89796468-48054300-db5c-11ea-9ebe-4bb56e31722e.png)
+![swift_repl](https://img.spacevim.org/89796468-48054300-db5c-11ea-9ebe-4bb56e31722e.png)
 
