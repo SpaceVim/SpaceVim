@@ -14,6 +14,12 @@ if has('nvim-0.7.0')
           \ require("spacevim").eval("a:argv")
           \ )
   endfunction
+  function! SpaceVim#plugins#flygrep#lineNr() abort
+    lua require("spacevim.plugin.flygrep").lineNr()
+  endfunction
+  function! SpaceVim#plugins#flygrep#mode() abort
+    lua require("spacevim.plugin.flygrep").mode()
+  endfunction
   finish
 endif
 let s:MPT = SpaceVim#api#import('prompt')

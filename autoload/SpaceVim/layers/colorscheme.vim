@@ -50,7 +50,6 @@ function! SpaceVim#layers#colorscheme#plugins() abort
         \ ['Gabirel/molokai', { 'merged' : 0 }],
         \ ['joshdick/onedark.vim', { 'merged' : 0 }],
         \ ['nanotech/jellybeans.vim', { 'merged' : 0 }],
-        \ ['rakr/vim-one', { 'merged' : 0 }],
         \ ['arcticicestudio/nord-vim', { 'merged' : 0 }],
         \ ['icymind/NeoSolarized', { 'merged' : 0 }],
         \ ['w0ng/vim-hybrid', { 'merged' : 0 }],
@@ -59,6 +58,7 @@ function! SpaceVim#layers#colorscheme#plugins() abort
         \ [ 'drewtempelmeyer/palenight.vim', {'merged': 0 }],
         \ ]
   call add(plugins, [g:_spacevim_root_dir . 'bundle/dracula', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-one', {'merged' : 0}])
   "
   " TODO:
   " \ ['mhartington/oceanic-next', { 'merged' : 0 }],

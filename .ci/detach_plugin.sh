@@ -278,8 +278,6 @@ EOT
             _detact autoload/SpaceVim/api.vim
             _detact autoload/SpaceVim/api/job.vim
             _detact_bundle git.vim LICENSE
-            _detact_bundle git.vim LICENSE
-            _detact_bundle git.vim README.md
             _detact_bundle git.vim README.md
             _detact_bundle git.vim addon-info.json
             _checkdir autoload/git/branch
@@ -319,6 +317,8 @@ EOT
             _detact_bundle git.vim syntax/git-log.vim
             _detact_bundle git.vim syntax/git-rebase.vim
             _detact_bundle git.vim syntax/git-reflog.vim
+            _checkdir test
+            _detact_bundle git.vim test/vimrc
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"

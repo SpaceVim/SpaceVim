@@ -262,7 +262,7 @@ function! s:calc_layout() abort " {{{
   let smap = filter(copy(s:lmap), 'v:key !=# "name"')
   let ret.n_items = len(smap)
   let length = values(map(smap,
-        \ 'strdisplaywidth("[".v:key."]".'.
+        \ 'strdisplaywidth(repeat(" ", 8 - strlen(v:key)) . "[".v:key."]".'.
         \ '(type(v:val) == type({}) ? v:val["name"] : v:val[1]))'))
   let maxlength = max(length) + g:leaderGuide_hspace
   if g:leaderGuide_vertical
@@ -316,11 +316,12 @@ function! s:create_string(layout) abort " {{{
   let col = 0
   let smap = sort(filter(keys(s:lmap), 'v:val !=# "name"'), function('s:compare_key'))
   for k in smap
+    let offset = repeat(' ', 8 - strlen(k))
     let desc = type(s:lmap[k]) == type({}) ? s:lmap[k].name : s:lmap[k][1]
     if g:spacevim_leader_guide_theme == 'whichkey'
-      let displaystring = k .' -> '.desc
+      let displaystring = offset . k .' -> '.desc
     else
-      let displaystring = '['. k .'] '.desc
+      let displaystring = offset . '['. k .'] '.desc
     endif
     let crow = get(rows, row, [])
     if empty(crow)
@@ -562,7 +563,7 @@ function! s:winopen() abort " {{{
 
   if exists('&winhighlight')
     call s:VIM.setbufvar(s:bufnr, {
-          \ '&winhighlight' : 'Normal:Pmenu',
+          \ '&winhighlight' : 'Normal:Pmenu,Search:',
           \ })
   endif
 
@@ -680,7 +681,7 @@ function! s:winclose() abort " {{{
 endfunction " }}}
 function! s:page_down() abort " {{{
   call feedkeys("\<c-c>", 'n')
-  call feedkeys("\<c-f>", 'x')
+  call feedkeys("\<c-d>", 'x')
   redraw!
   call s:wait_for_input()
 endfunction " }}}
@@ -696,7 +697,7 @@ function! s:page_undo() abort " {{{
 endfunction " }}}
 function! s:page_up() abort " {{{
   call feedkeys("\<c-c>", 'n')
-  call feedkeys("\<c-b>", 'x')
+  call feedkeys("\<c-u>", 'x')
   redraw!
   call s:wait_for_input()
 endfunction " }}}
