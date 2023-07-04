@@ -10,25 +10,22 @@ local uv = vim.loop
 
 local M = {}
 
-local function setup_output(output) -- {{{
-  if output == nil then
-    return uv.new_pipe(false), nil
-  end
-
-  if type(output) == 'function' then
-    return uv.new_pipe(false), output
-  end
-
-  return nil, nil
-end
--- }}}
-
-function M.start(argv, ...) -- {{{
+function M.start(cmd, ...) -- {{{
   local opts = { ... }
   local opt = opts[1] or {}
 
 end
 -- }}}
+
+--- @param cmd string|table<string> commands
+--- @param opts table job options
+--- @return integer
+--- keys in opts:
+--- cwd: string
+--- env: table
+function M._run(cmd, opts)
+  
+end
 
 function M.stop(id) -- {{{
 end
