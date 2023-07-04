@@ -30,7 +30,7 @@ SpaceVim is a vim configuration inspired by spacemacs, it is compatible with Vim
 
 ## Screenshots
 
-[![welcome page](https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png)](https://github.com/SpaceVim/SpaceVim#screenshots)
+[![welcome page](https://img.spacevim.org/release-v2.2.0.png)](https://github.com/SpaceVim/SpaceVim#screenshots)
 
 ## Project Layout
 
