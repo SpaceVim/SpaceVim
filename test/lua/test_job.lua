@@ -15,4 +15,4 @@ local jobid = job.start({ 'cat' }, {
 
 
 job.send(jobid, 'hello world')
-job.close(jobid)
+job.stop(jobid)

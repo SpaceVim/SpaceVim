@@ -129,7 +129,7 @@ function M.chanclose(id, t)
   end
 end
 
-function M.close(id)
+function M.stop(id)
   local jobobj = _jobs['jobid_' .. id]
 
   if not jobobj then
@@ -137,7 +137,7 @@ function M.close(id)
   end
 
   local handle = jobobj.handle
-  uv.close(handle)
+  handle:kill(6)
 end
 
 return M
