@@ -30,8 +30,13 @@ function M.start(cmd, opts)
   local command = ''
   local argv = {}
   if type(cmd) == 'string' then
-    command = 'cmd.exe'
-    argv = { '/c', cmd }
+    local shell = vim.fn.split(vim.o.shell)
+    local shellcmdflag = vim.fn.split(vim.o.shellcmdflag)
+    -- :call jobstart(split(&shell) + split(&shellcmdflag) + ['{cmd}'])
+    command = shell[1]
+    argv = vim.list_slice(shell, 2)
+    for _, v in ipairs(shellcmdflag) do table.insert(argv, v) end
+    table.insert(argv, cmd)
   elseif type(cmd) == 'table' then
     command = cmd[1]
     argv = vim.list_slice(cmd, 2)
