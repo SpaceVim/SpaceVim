@@ -64,14 +64,6 @@ function M.start(cmd, opts) -- {{{
     end)
   end
 
-  -- uv.write(stdin, 'Hello World')
-
-  uv.shutdown(stdin, function()
-    -- print('stdin shutdown', stdin)
-    uv.close(handle, function()
-      -- print('process closed', handle, pid)
-    end)
-  end)
 end
 -- }}}
 
