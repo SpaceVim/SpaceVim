@@ -17,14 +17,13 @@ local buffer = require('spacevim.api').import('vim.buffer')
 local window = require('spacevim.api').import('vim.window')
 local sl = require('spacevim.api').import('vim.statusline')
 local nt = require('spacevim.api').import('notify')
+local job = require('spacevim.api.job')
 
 -- set commandline mpt
 
 mpt._prompt.mpt = vim.g.spacevim_commandline_prompt .. ' '
 
 -- compatibility functions
-local jobstart = vim.fn.jobstart
-local jobstop = vim.fn.jobstop
 local function empty(expr)
   return vim.fn.empty(expr) == 1
 end
@@ -233,7 +232,7 @@ local function grep_timer(_)
   end
   local cmd = get_search_cmd(current_grep_pattern)
   logger.info('grep cmd:' .. vim.inspect(cmd))
-  grepid = jobstart(cmd, {
+  grepid = job.start(cmd, {
     on_stdout = grep_stdout,
     on_stderr = grep_stderr,
     on_exit = grep_exit,
@@ -349,7 +348,7 @@ end
 local function close_buffer()
   if grepid > 0 then
     grepid = 0
-    jobstop(grepid)
+    job.stop(grepid)
   end
   timer_stop(grep_timer_id)
   timer_stop(preview_timer_id)
@@ -365,7 +364,7 @@ mpt._onclose = close_buffer
 
 local function close_grep_job()
   if grepid > 0 then
-    pcall(jobstop, grepid)
+    pcall(job.stop, grepid)
   end
   timer_stop(grep_timer_id)
   timer_stop(preview_timer_id)
@@ -419,7 +418,7 @@ local function open_item(...)
     if grepid ~= 0 then
       -- change grepid to 0, and callback function will be skipped
       grepid = 0
-      jobstop(grepid)
+      job.stop(grepid)
     end
     mpt._clear_prompt()
     mpt._quit = true
@@ -477,7 +476,7 @@ local function apply_to_quickfix()
     if grepid ~= 0 then
       -- stop job, and skip callback function
       grepid = 0
-      jobstop(grepid)
+      job.stop(grepid)
     end
     mpt._quit = true
     if preview_able then
@@ -529,7 +528,7 @@ end
 
 local function filter_timer(_)
   local cmd = get_filter_cmd(vim.fn.join(vim.fn.split(grep_expr), '.*'))
-  grepid = jobstart(cmd, {
+  grepid = job.start(cmd, {
     on_stdout = grep_stdout,
     on_exit = grep_exit,
   })
@@ -672,7 +671,7 @@ local function start_replace()
   mode = 'r'
   pcall(vim.fn.matchdelete, search_hi_id)
   if grepid ~= 0 then
-    jobstop(grepid)
+    job.stop(grepid)
   end
   local replace_text = current_grep_pattern
   local rst

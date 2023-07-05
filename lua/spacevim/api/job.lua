@@ -53,7 +53,9 @@ function M.start(cmd, opts)
   local exit_cb
   if opts.on_exit then
     exit_cb = function(code, singin)
-      opts.on_exit(current_id, code, singin)
+      vim.schedule(function()
+        opts.on_exit(current_id, code, singin)
+      end)
     end
   end
 
@@ -69,7 +71,9 @@ function M.start(cmd, opts)
     uv.read_start(stdout, function(err, data)
       if data then
         data = data:gsub('\r', '')
-        opts.on_stdout(current_id, vim.split(data, '\n'), 'stdout')
+        vim.schedule(function()
+          opts.on_stdout(current_id, vim.split(data, '\n'), 'stdout')
+        end)
       end
     end)
   end
@@ -78,7 +82,9 @@ function M.start(cmd, opts)
     uv.read_start(stderr, function(err, data)
       if data then
         data = data:gsub('\r', '')
-        opts.on_stderr(current_id, vim.split(data, '\n'), 'stderr')
+        vim.schedule(function()
+          opts.on_stderr(current_id, vim.split(data, '\n'), 'stderr')
+        end)
       end
     end)
   end
@@ -142,7 +148,7 @@ function M.stop(id)
   local jobobj = _jobs['jobid_' .. id]
 
   if not jobobj then
-    error('can not find job:' .. id)
+    return
   end
 
   -- close stdio
