@@ -19,7 +19,7 @@ comments: true
 
 <!-- vim-markdown-toc -->
 
-The last release is v2.2.0, After 9 months development.
+The last release is v2.2.0, After 3 months development.
 The v2.2.0 has been released.
 So let's take a look at what happened since last release.
 
@@ -69,6 +69,8 @@ This release is force on improving using experience, so only one new layer added
 - improve `projectmanager` plugin
 
   The projectmanager plugin also has been rewrited in lua. This release improve the telescope project extension. 
+
+- improve `prompt` api and fix handle key bindings
 
 ## Git Commits
 
