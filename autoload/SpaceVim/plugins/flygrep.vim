@@ -8,7 +8,7 @@
 
 " Loading SpaceVim api {{{
 scriptencoding utf-8
-if has('nvim-0.7.0')
+if has('nvim-0.7.0') && 0
   function! SpaceVim#plugins#flygrep#open(argv) abort
     lua require("spacevim.plugin.flygrep").open(
           \ require("spacevim").eval("a:argv")

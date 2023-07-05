@@ -3,7 +3,7 @@
 
 This plugin is automatically detach from [SpaceVim](https://github.com/SpaceVim/SpaceVim/). you can use it without SpaceVim.
 
-![searching project](https://user-images.githubusercontent.com/13142418/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
+![searching project](https://img.spacevim.org/35278709-7856ed62-0010-11e8-8b1e-e6cc6374b0dc.gif)
 
 ## Install
 

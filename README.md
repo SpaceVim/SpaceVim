@@ -10,7 +10,7 @@
 
 [![build](https://img.shields.io/github/actions/workflow/status/SpaceVim/SpaceVim/check.yml?branch=master)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
-[![Release](https://img.shields.io/badge/Release-2.1.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.1.0/)
+[![Release](https://img.shields.io/badge/Release-2.2.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.2.0/)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/spacevim/spacevim)](https://hub.docker.com/r/spacevim/spacevim)
 
@@ -30,7 +30,7 @@ SpaceVim is a vim configuration inspired by spacemacs, it is compatible with Vim
 
 ## Screenshots
 
-[![welcome page](https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png)](https://github.com/SpaceVim/SpaceVim#screenshots)
+[![welcome page](https://img.spacevim.org/release-v2.2.0.png)](https://github.com/SpaceVim/SpaceVim#screenshots)
 
 ## Project Layout
 

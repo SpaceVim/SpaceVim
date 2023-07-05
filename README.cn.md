@@ -10,19 +10,18 @@
 
 [![build](https://img.shields.io/github/actions/workflow/status/SpaceVim/SpaceVim/check.yml?branch=master)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
-[![Release](https://img.shields.io/badge/Release-2.0.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.0.0/)
+[![Release](https://img.shields.io/badge/Release-2.2.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.2.0/)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Docker Pulls](https://img.shields.io/docker/pulls/spacevim/spacevim)](https://hub.docker.com/r/spacevim/spacevim)
 
-![welcome page](https://user-images.githubusercontent.com/13142418/176910121-8e7ca78f-8434-4ac7-9b02-08c4d15f8ad9.png)
+![welcome page](https://img.spacevim.org/release-v2.2.0.png)
 
 [SpaceVim](https://spacevim.org/cn/) 是一个社区驱动的模块化 Vim/Neovim 配置集合，以模块的方式组织管理插件以
 及相关配置，为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，
 语法检查、格式化、调试、REPL 等特性。用户仅需载入相关语言的模块即可得到一个开箱
 即用的 Vim-IDE。
 
-当前最新的稳定版为[v2.0.0](https://spacevim.org/SpaceVim-release-v2.0.0/)，发布于2022年7月2日，[following-HEAD](https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD) 页面罗列了
-master 分支最新的更新以及变动。
+当前最新的稳定版为[v2.2.0](https://spacevim.org/SpaceVim-release-v2.2.0/)，发布于2023年7月4日。
 
 ## 支持 SpaceVim
 

@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 JavaScript 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/51976034-add03380-24be-11e9-84b5-245432e7f933.png
+image: https://img.spacevim.org/51976034-add03380-24be-11e9-84b5-245432e7f933.png
 description: "这篇文章主要介绍如何使用 SpaceVim 搭建 JavaScript 的开发环境，简介 lang#javascript 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
@@ -47,7 +47,7 @@ SpaceVim 初次安装时默认并未启用 JavaScript 相关语言模块。首�
 默认的补全引擎有：deoplete、neocomplete、ycm、asyncomplete 以及 neocomplcache。
 几种自动补全引擎当中，要数 deoplete 的体验效果最好。
 
-![jside](https://user-images.githubusercontent.com/13142418/51976034-add03380-24be-11e9-84b5-245432e7f933.png)
+![jside](https://img.spacevim.org/51976034-add03380-24be-11e9-84b5-245432e7f933.png)
 
 ### 语法检查
 
@@ -60,7 +60,7 @@ SpaceVim 初次安装时默认并未启用 JavaScript 相关语言模块。首�
 npm install -g eslint-cli
 ```
 
-![eslint](https://user-images.githubusercontent.com/13142418/51972203-dbfd4580-24b5-11e9-9bbd-2a88e6f656f6.png)
+![eslint](https://img.spacevim.org/51972203-dbfd4580-24b5-11e9-9bbd-2a88e6f656f6.png)
 
 ### 工程文件跳转
 
@@ -82,7 +82,7 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转al
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前缓存器调用相对应的 `node` 命令，无需保存文件。
 
-![jsrunner](https://user-images.githubusercontent.com/13142418/51972835-4cf12d00-24b7-11e9-9693-5e1eea9853b0.png)
+![jsrunner](https://img.spacevim.org/51972835-4cf12d00-24b7-11e9-9693-5e1eea9853b0.png)
 
 ### 代码格式化
 
@@ -103,5 +103,5 @@ npm install -g js-beautify
 
 在编辑 JavaScript 文件时，可通过快捷键 `SPC l s i` 启动 `node -i` 交互窗口，之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
-![jsrepl](https://user-images.githubusercontent.com/13142418/51974494-00a7ec00-24bb-11e9-8e98-c449a7a067c3.png)
+![jsrepl](https://img.spacevim.org/51974494-00a7ec00-24bb-11e9-8e98-c449a7a067c3.png)
 

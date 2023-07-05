@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Nim IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/102889616-f075cd00-4495-11eb-819f-1ff4721cbd69.png
+image: https://img.spacevim.org/102889616-f075cd00-4495-11eb-819f-1ff4721cbd69.png
 description: "A general guide for using SpaceVim as Nim IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -13,7 +13,7 @@ commentsID: "Use Vim as a Nim IDE"
 This is a general guide for using SpaceVim as a Nim IDE, including layer configuration and usage. 
 Each of the following sections will be covered:
 
-![nim-ide](https://user-images.githubusercontent.com/13142418/102889616-f075cd00-4495-11eb-819f-1ff4721cbd69.png)
+![nim-ide](https://img.spacevim.org/102889616-f075cd00-4495-11eb-819f-1ff4721cbd69.png)
 
 <!-- vim-markdown-toc GFM -->
 
@@ -69,7 +69,7 @@ with this configuration, you can jump between the source code and test file via 
 The key binding for running current file is `SPC l r `, it will run `nim c -r current_file` asynchronously.
 And the stdout will be shown on a runner buffer.
 
-![nim-code-runner](https://user-images.githubusercontent.com/13142418/102889265-472ed700-4495-11eb-8b43-78bf42000ca9.png)
+![nim-code-runner](https://img.spacevim.org/102889265-472ed700-4495-11eb-8b43-78bf42000ca9.png)
 
 
 ### REPL support
@@ -96,7 +96,7 @@ The default format engine is `neoformat`, it will run `nimpretty` asynchronously
 SpaceVim will detect `nimble` project tasks automatically. If there is `*.nimble` file in the root directory
 of your project. The following nimble tesks will be detected automatically.
 
-![nim-tasks](https://user-images.githubusercontent.com/13142418/102893478-9c221b80-449c-11eb-8179-0397acfb72e2.png)
+![nim-tasks](https://img.spacevim.org/102893478-9c221b80-449c-11eb-8179-0397acfb72e2.png)
 
 To select a tast to run, use key binding `SPC p t r`, you can also use `SPC p t l` to list all the tasks
 in the tasks manager window.

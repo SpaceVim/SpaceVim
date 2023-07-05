@@ -3,7 +3,7 @@ title: SpaceVim release v1.8.0
 categories: [changelog, blog]
 description: "SpaceVim release v1.8.0 with lua plugins enabled and better experience."
 type: article
-image: https://user-images.githubusercontent.com/13142418/135842225-addb0f53-7520-4a8b-bdd2-c4f7e98b3253.png
+image: https://img.spacevim.org/135842225-addb0f53-7520-4a8b-bdd2-c4f7e98b3253.png
 commentsID: "SpaceVim release v1.8.0"
 comments: true
 ---
@@ -25,7 +25,7 @@ comments: true
 The last release is v1.7.0, After three months development.
 The v1.8.0 has been released. So let's take a look at what happened since last relase.
 
-![welcome page](https://user-images.githubusercontent.com/13142418/135842225-addb0f53-7520-4a8b-bdd2-c4f7e98b3253.png)
+![welcome page](https://img.spacevim.org/135842225-addb0f53-7520-4a8b-bdd2-c4f7e98b3253.png)
 
 - [Quick start guide](../quick-start-guide/): installation, configuration, and resources of learning SpaceVim
 - [documentation](../documentation/): the primary official document of SpaceVim

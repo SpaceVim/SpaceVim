@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Perl IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png
+image: https://img.spacevim.org/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png
 description: "A general guide for using SpaceVim as Perl IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -43,7 +43,7 @@ For more info, you can read the [lang#perl](../layers/lang/perl/) layer document
 `lang#perl` layer will load the Perl plugin automatically, unless it's overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
-![perlcomplete](https://user-images.githubusercontent.com/13142418/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png)
+![perlcomplete](https://img.spacevim.org/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png)
 
 ### Syntax linting
 
@@ -56,7 +56,7 @@ Install perlcritic via cpan:
 cpanm Perl::Critic
 ```
 
-![perllint](https://user-images.githubusercontent.com/13142418/52614908-2cb96900-2ece-11e9-8c73-2881f8030c6e.png)
+![perllint](https://img.spacevim.org/52614908-2cb96900-2ece-11e9-8c73-2881f8030c6e.png)
 
 ### Jump to test file
 
@@ -77,7 +77,7 @@ To run current script, you can press `SPC l r`, and a split window
 will be openen, the output of the script will be shown in this window.
 It is running asynchronously, and will not block your Vim.
 
-![perlrunner](https://user-images.githubusercontent.com/13142418/52611211-54550500-2ebf-11e9-9baf-a6437da8fcf4.png)
+![perlrunner](https://img.spacevim.org/52611211-54550500-2ebf-11e9-9baf-a6437da8fcf4.png)
 
 ### Code formatting
 
@@ -94,5 +94,5 @@ Start a `perli` or  `perl -del` inferior REPL process with `SPC l s i`. After th
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
-![perlrepl](https://user-images.githubusercontent.com/13142418/52611210-54550500-2ebf-11e9-8ba2-b5cd3cc70885.gif)
+![perlrepl](https://img.spacevim.org/52611210-54550500-2ebf-11e9-8ba2-b5cd3cc70885.gif)
 

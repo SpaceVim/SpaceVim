@@ -3,7 +3,7 @@ title: SpaceVim release v2.0.0
 categories: [changelog, blog]
 description: "The second major release of SpaceVim adds several layers and lua plugins for a better use experience"
 type: article
-image: https://user-images.githubusercontent.com/13142418/148374827-5f7aeaaa-e69b-441e-b872-408b47f4da04.png
+image: https://img.spacevim.org/148374827-5f7aeaaa-e69b-441e-b872-408b47f4da04.png
 commentsID: "SpaceVim release v2.0.0"
 comments: true
 ---
@@ -24,7 +24,7 @@ The last release is v1.9.0, After six months development.
 The v2.0.0 has been released. This is second major release of SpaceVim.
 So let's take a look at what happened since last release.
 
-![welcome page](https://user-images.githubusercontent.com/13142418/176910121-8e7ca78f-8434-4ac7-9b02-08c4d15f8ad9.png)
+![welcome page](https://img.spacevim.org/176910121-8e7ca78f-8434-4ac7-9b02-08c4d15f8ad9.png)
 
 - [Quick start guide](../quick-start-guide/): installation, configuration, and resources of learning SpaceVim
 - [documentation](../documentation/): the primary official document of SpaceVim
@@ -52,7 +52,7 @@ Since last release, the following layers have been added:
 
 - The [chat](../layers/chat/) layer supports gitter and IRC now.
 
-![chat](https://user-images.githubusercontent.com/13142418/176914163-ec4dcfd6-65d3-45d0-beea-9faec397e6f3.png)
+![chat](https://img.spacevim.org/176914163-ec4dcfd6-65d3-45d0-beea-9faec397e6f3.png)
 
 - add `b`, `e`, `w` key bindings for iedit mode
 - implement `autosave` plugin
