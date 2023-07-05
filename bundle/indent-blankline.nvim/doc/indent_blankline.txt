@@ -2,7 +2,7 @@
 
 
 Author: Lukas Reineke <lukas.reineke@protonmail.com>
-Version: 2.17.0
+Version: 2.20.6
 
 ==============================================================================
 CONTENTS                                                    *indent-blankline*
@@ -12,15 +12,14 @@ CONTENTS                                                    *indent-blankline*
   3. Setup                                 |indent-blankline-setup|
   4. Variables                             |indent-blankline-variables|
   5. Commands                              |indent-blankline-commands|
-  6. Changelog                             |indent-blankline-changelog|
-  7. License                               |indent-blankline-license|
+  6. License                               |indent-blankline-license|
 
 ==============================================================================
  1. INTRODUCTION                               *indent-blankline-introduction*
 
 This plugin adds indentation guides to all lines (including empty lines).
 
-It uses Neovims virtual text feature and **no conceal**
+It uses Neovim's virtual text feature and **no conceal**
 
 This plugin requires Neovim 0.5 or higher. It makes use of Neovim only
 features so it will not work in Vim.
@@ -79,6 +78,18 @@ IndentBlanklineContextChar                     *hl-IndentBlanklineContextChar*
         highlight IndentBlanklineContextChar guifg=#00FF00 gui=nocombine
 
 ------------------------------------------------------------------------------
+IndentBlanklineContextSpaceChar           *hl-IndentBlanklineContextSpaceChar*
+
+    Highlight of space characters one indent level of the current context.
+    Only used when |g:indent_blankline_show_current_context| is active
+
+    Default: takes guifg color from 'Label'                             ~
+
+    Example: >
+
+        highlight IndentBlanklineContextSpaceChar guifg=#00FF00 gui=nocombine
+
+------------------------------------------------------------------------------
 IndentBlanklineContextStart                     *hl-IndentBlanklineContextStart*
 
     Highlight of the first line of the current context.
@@ -94,11 +105,13 @@ IndentBlanklineContextStart                     *hl-IndentBlanklineContextStart*
 
 ------------------------------------------------------------------------------
 
+Note: Define your highlight group after setting colorscheme or your colorscheme will clear your highlight group
+
 When defining the highlight group, it is important to set |nocombine| as a
 gui option. This is to make sure the character does not inherit gui options
 from the underlying text, like italic or bold.
 
-Highlight groups get reset on |ColorScheme| autocommand, *if* both fg and bg
+Highlight groups get reset on |ColorScheme| autocommand, if both fg and bg
 are empty.
 
 The set more than one highlight group that changes based on indentation level,
@@ -126,7 +139,7 @@ Example: >
 ==============================================================================
  4. VARIABLES                                     *indent-blankline-variables*
 
-All variables can be set gobally |g:var|, per tab |t:var|, or per buffer |b:var|
+All variables can be set globally |g:var|, per tab |t:var|, or per buffer |b:var|
 
 ------------------------------------------------------------------------------
 g:indent_blankline_char                              *g:indent_blankline_char*
@@ -190,7 +203,6 @@ g:indent_blankline_char_list_blankline *g:indent_blankline_char_list_blankline*
         let g:indent_blankline_char_list_blankline = ['|', '¦', '┆', '┊']
 
 ------------------------------------------------------------------------------
-
 g:indent_blankline_char_highlight_list *g:indent_blankline_char_highlight_list*
 
     Specifies the list of character highlights for each indentation level.
@@ -215,7 +227,6 @@ g:indent_blankline_space_char_blankline *g:indent_blankline_space_char_blankline
         let g:indent_blankline_space_char_blankline = ' '
 
 ------------------------------------------------------------------------------
-
 g:indent_blankline_space_char_highlight_list *g:indent_blankline_space_char_highlight_list*
 
     Specifies the list of space character highlights for each indentation
@@ -229,7 +240,6 @@ g:indent_blankline_space_char_highlight_list *g:indent_blankline_space_char_high
         let g:indent_blankline_space_char_highlight_list = ['Error', 'Function']
 
 ------------------------------------------------------------------------------
-
 g:indent_blankline_space_char_blankline_highlight_list *g:indent_blankline_space_char_blankline_highlight_list*
 
     Specifies the list of space character highlights for each indentation
@@ -341,7 +351,7 @@ g:indent_blankline_enabled                        *g:indent_blankline_enabled*
     Also set by |g:indentLine_enabled|
 
     Note: the buffer version of this variable overwrites all other
-          enabled/disalbed checks.
+          enabled/disabled checks.
 
     Default: v:true                                                          ~
 
@@ -409,6 +419,7 @@ g:indent_blankline_buftype_exclude        *g:indent_blankline_buftype_exclude*
         "terminal",                                                          ~
         "nofile",                                                            ~
         "quickfix",                                                          ~
+        "prompt",                                                            ~
     ]                                                                        ~
 
     Example: >
@@ -451,7 +462,9 @@ g:indent_blankline_show_current_context *g:indent_blankline_show_current_context
 
     When on, use treesitter to determine the current context. Then show the
     indent character in a different highlight.
-    Requires treesitter
+
+    Note: Requires https://github.com/nvim-treesitter/nvim-treesitter to be
+          installed
 
     Note: With this option enabled, the plugin refreshes on |CursorMoved|,
           which might be slower
@@ -468,6 +481,9 @@ g:indent_blankline_show_current_context_start *g:indent_blankline_show_current_c
     Applies the |hl-IndentBlanklineContextStart| highlight group to the first
     line of the current context.
     By default this will underline.
+
+    Note: Requires https://github.com/nvim-treesitter/nvim-treesitter to be
+          installed
 
     Note: You need to have set |gui-colors| and it depends on your terminal
           emulator if this works as expected.
@@ -563,6 +579,28 @@ g:indent_blankline_context_highlight_list *g:indent_blankline_context_highlight_
         let g:indent_blankline_context_highlight_list = ['Error', 'Warning']
 
 ------------------------------------------------------------------------------
+g:indent_blankline_char_priority            *g:indent_blankline_char_priority*
+
+    Specifies the |extmarks| priority for chars.
+
+    Default: 1                                                               ~
+
+    Example: >
+
+        let g:indent_blankline_char_priority = 50
+
+------------------------------------------------------------------------------
+g:indent_blankline_context_start_priority *g:indent_blankline_context_start_priority*
+
+    Specifies the |extmarks| priority for the context start.
+
+    Default: 10000                                                           ~
+
+    Example: >
+
+        let g:indent_blankline_context_start_priority = 50
+
+------------------------------------------------------------------------------
 g:indent_blankline_context_patterns      *g:indent_blankline_context_patterns*
 
     Specifies a list of lua patterns that are used to match against the
@@ -591,11 +629,32 @@ g:indent_blankline_context_patterns      *g:indent_blankline_context_patterns*
         "element",                                                           ~
         "table",                                                             ~
         "tuple",                                                             ~
+        "do_block",                                                          ~
+        "Block",                                                             ~
+        "InitList",                                                          ~
+        "FnCallArguments",                                                   ~
+        "IfStatement",                                                       ~
+        "ContainerDecl",                                                     ~
+        "SwitchExpr",                                                        ~
+        "IfExpr",                                                            ~
+        "ParamDeclList",                                                     ~
     ]                                                                        ~
 
     Example: >
 
         let g:indent_blankline_context_patterns = ['^if']
+
+------------------------------------------------------------------------------
+g:indent_blankline_use_treesitter_scope *g:indent_blankline_use_treesitter_scope*
+
+    Instead of using |g:indent_blankline_context_patterns|, use the current
+    scope defined by nvim-treesitter as the context.
+
+    Default: false                                                           ~
+
+    Example: >
+
+        let g:indent_blankline_use_treesitter_scope = true
 
 ------------------------------------------------------------------------------
 g:indent_blankline_context_pattern_highlight *g:indent_blankline_context_pattern_highlight*
@@ -636,17 +695,6 @@ g:indent_blankline_disable_warning_message *g:indent_blankline_disable_warning_m
 
         let g:indent_blankline_disable_warning_message = v:true
 
-------------------------------------------------------------------------------
-g:indent_blankline_debug                            *g:indent_blankline_debug*
-
-    Turns on error logging.
-
-    Default: v:false                                                         ~
-
-    Example: >
-
-        let g:indent_blankline_debug = v:true
-
 ==============================================================================
  5. COMMANDS                                       *indent-blankline-commands*
 
@@ -666,7 +714,7 @@ g:indent_blankline_debug                            *g:indent_blankline_debug*
       4. |CompleteChanged| *
       5. |BufWinEnter| *
       6. |Filetype| *
-      7. |OptionSet| shiftwidth,tabstop,expandtab
+      7. |OptionSet| list,listchars,shiftwidth,tabstop,expandtab
 
     Example: >
 
@@ -712,251 +760,12 @@ g:indent_blankline_debug                            *g:indent_blankline_debug*
     With bang (IndentBlanklineToggle!) toggles globally
 
 ==============================================================================
- 6. CHANGELOG                                     *indent-blankline-changelog*
-
-2.17.0
-  Update defaults for |g:indent_blankline_buftype_exclude|
-
-2.16.0
-  Add `man` to |g:indent_blankline_filetype_exclude|
-  Stylua update
-
-2.15.1
-  Fix for nvim 0.5.1
-
-2.15.0
- * Add |g:indent_blankline_context_char_blankline| and
-   |g:indent_blankline_context_char_list_blankline| options
-
-2.14.0
- * Add |g:indent_blankline_char_blankline| and
-   |g:indent_blankline_char_list_blankline| options
-
-2.13.0
- * Support both the concatenated string, as well as the individual |filetypes|
-   in |g:indent_blankline_filetype_exclude| when a buffer has multiple filetypes
-
-2.12.1
- * Add ext mark priority
-
-2.12.0
- * Remove old vimscript functions
- * Better default values for |g:indent_blankline_context_patterns| and
-   |g:indent_blankline_filetype_exclude|
-
-2.11.0
- * Add |g:indent_blankline_show_current_context_start_on_current_line|
-
-2.10.6
- * Update example setup in the readme and docs
-
-2.10.5
- * Run refresh without autocmds
- * Check that the window is valid before returning to it after refresh
-
-2.10.4
- * Remove `nocombine` from |hl-IndentBlanklineContextStart| again..
-
-2.10.3
- * Fix context start highlight column for files indent with tab
- * Fix context start highlight on lines with no indent
-
-2.10.2
- * Apply context start highlight after indentation
-
-2.10.1
- * Remove `nocombine` from |hl-IndentBlanklineContextStart|
-
-2.10.0
- * Add |g:indent_blankline_show_current_context_start|
- * Add |hl-IndentBlanklineContextStart|
-
-2.9.3
- * Fix indent cache for scrolling
- * Fix documentation tags
-
-2.9.2
- * Fix refresh argument types for 0.5
-
-2.9.1
- * Fix horizontal scroll update
-
-2.9.0
- * Add |g:indent_blankline_context_char|
- * Add |g:indent_blankline_context_char_list|
-
-2.8.0
- * Add |IndentBlanklineRefreshScroll|
-
-2.7.0
- * Add support for 0 width |g:indent_blankline_char|
-
-2.6.4
- * Remove memo from `find_indent`, it made the performance worse
-
-2.6.3
- * Fix issue when calling setup more than once
-
-2.6.2
- * Memoize the find indent function
- * Run init on VimEnter to initialize indents in all open windows
- * Run init on plugin load to work with lazy loading
-
-2.6.1
- * Wait until buffer is loaded before doing anything
-
-2.6.0
- * Add |g:indent_blankline_context_pattern_highlight|
-
-2.5.7
- * Update the README to not overwrite all listchars
- * Handle listchars without a tab character
-
-2.5.6
- * Fix trailing space for blanklines
-
-2.5.5
- * Fix typo in readme
- * Fix initialization of |g:indent_blankline_space_char_blankline_highlight_list|
- * Refactor `find_indent`
-
-2.5.4
- * Fix wrong indent for empty lines with only extra
-
-2.5.3
- * Remove old reference to `indent_blankline_space_char`
-
-2.5.2
- * Fix background highlight example
-
-2.5.1
- * Only load treesitter libs if needed
-
-2.5.0
- * Add |g:indent_blankline_max_indent_increase|
-
-2.4.0
- * Remove `indent_blankline_respect_list`
- * Add |g:indent_blankline_disable_with_nolist|
-
-2.3.0
- * Add |g:indent_blankline_respect_list| option
-
-2.2.2
- * Remove old vimscript code
-
-2.2.1
- * Fix first indent on a line with whitespace less than the current shift
-   width
-
-2.2.0
- * Correctly display listchars under the indent guides
-   Huge thanks to @Daxtorim
- * Remove options:
-    `indent_blankline_space_char` - listchars is used to get the correct space
-    character
-
-2.1.4
- * Fix race condition in `is_indent_blankline_enabled`
-
-2.1.3
- * Refresh on |CompleteChanged|
-
-2.1.2
- * Fix lazy loading
-
-2.1.1
- * Fix bug were setup function is not run
-
-2.1.0
- * Added setup function
- * Added buffer variables
- * Fix horizontal scroll
-
-2.0.1
- * Fix typo in docs
-
-2.0.0
- * Complete lua rewrite
- * Drop support for Neovim 0.4
- * Trigger on `TextChanged`, `TextChangedI` and `WinScrolled`
- * Removed IndentGuide dependency
- * Removed commands
-    - IndentBlanklineEnableAll
-    - IndentBlanklineDisableAll
-    - IndentBlanklineToggleAll
- * Added Bang for commands
-    - IndentBlanklineRefresh
-    - IndentBlanklineEnable
-    - IndentBlanklineDisable
-    - IndentBlanklineToggle
- * New options:
-    |g:indent_blankline_char_highlight_list|
-    |g:indent_blankline_space_char_highlight_list|
-    |g:indent_blankline_show_end_of_line|
-    |g:indent_blankline_show_foldtext|
-    |g:indent_blankline_show_current_context|
-    |g:indent_blankline_context_highlight_list|
-    |g:indent_blankline_context_patterns|
-    |g:indent_blankline_viewport_buffer|
-    |g:indent_blankline_disable_warning_message|
- * Remove options:
-    `indent_blankline_extra_indent_level`
-
-1.4.1
- * Fix windows working directory bug
-
-1.4.0
- * Don't create jumps in embedded nvim instance
- * Restore cursor and close buffer after every search
- * Only clear the namespace on disable if it exists
-
-1.3.2
- * Call indentexpr with `silent!` to not exit early on errors
-
-1.3.1
- * Moved more of init function in the try/catch block
-
-1.3.0
- * Error logs have more context
- * More error logs
- * Added `g:indent_blankline_debug` option to only display the errors logs
-   when needed
-
-1.2.2
- * Apply `indent_blankline_indent_level` after
-   `indent_blankline_extra_indent_level`
-
-1.2.1
- * Fixed out of range bug with `g:indent_blankline_extra_indent_level`
-
-1.2.0
- * Added `g:indent_blankline_extra_indent_level` option.
-
-1.1.0
- * Don't throw errors when `rpcnotify` fails. Just print the error message and
-   try again next time.
-
-1.0.3
- * Fixed wrong help tag
-
-1.0.2
-* Fixed wrong variable reference form `indentLine_bufTypeExclude`
-  to `indent_blankline_buftype_exclude`
-
-1.0.1
-  * Fixed typo in docs
-
-1.0.0
-  * First release
-
-==============================================================================
- 7. LICENSE                                         *indent-blankline-license*
+ 6. LICENSE                                         *indent-blankline-license*
 
 The MIT Licence
 http://www.opensource.org/licenses/mit-license.php
 
-Copyright (c) 2021 Lukas Reineke
+Copyright (c) 2023 Lukas Reineke
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

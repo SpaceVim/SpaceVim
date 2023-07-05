@@ -32,7 +32,7 @@ lua require("indent_blankline").init()
 
 augroup IndentBlanklineAutogroup
     autocmd!
-    autocmd OptionSet list,shiftwidth,tabstop,expandtab IndentBlanklineRefresh
+    autocmd OptionSet list,listchars,shiftwidth,tabstop,expandtab IndentBlanklineRefresh
     autocmd FileChangedShellPost,TextChanged,TextChangedI,CompleteChanged,BufWinEnter,Filetype * IndentBlanklineRefresh
     autocmd WinScrolled * IndentBlanklineRefreshScroll
     autocmd ColorScheme * lua require("indent_blankline.utils").reset_highlights()
