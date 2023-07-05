@@ -1,6 +1,6 @@
 local job = require('spacevim.api.job')
 
-job.start({ 'vim', '--version' }, {
+job.start({ 'ctags', '-R', '-o', 'C:/Users/wsdjeg/.cache/SpaceVim/tags/C__Users_wsdjeg__SpaceVim_/tags', 'C:\\Users\\wsdjeg\\.SpaceVim' }, {
   on_stdout = function(id, data, event)
     vim.print(id)
     vim.print(data)

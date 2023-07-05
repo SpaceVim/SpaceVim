@@ -103,8 +103,7 @@ endfunction
 
 function! s:on_update_exit(id, data, event) abort
   " @bug on exit function is not called when failed
-  " C:\Users\wsdjeg\.SpaceVim>C:\Users\wsdjeg\.SpaceVim\bundle\phpcomplete.vim\bin\ctags.exe -R -o C:/Users/wsdjeg/.cache/SpaceVim/tags/C__Users_wsd
-  " jeg__SpaceVim_/tags C:\Users\wsdjeg\.SpaceVim
+  " C:\Users\wsdjeg\.SpaceVim>C:\Users\wsdjeg\.SpaceVim\bundle\phpcomplete.vim\bin\ctags.exe -R -o C:/Users/wsdjeg/.cache/SpaceVim/tags/C__Users_wsdjeg__SpaceVim_/tags C:\Users\wsdjeg\.SpaceVim
   "
   " C:\Users\wsdjeg\.SpaceVim>echo %ERRORLEVEL%
   " -1073741819
