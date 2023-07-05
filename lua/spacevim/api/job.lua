@@ -52,13 +52,11 @@ function M.start(cmd, opts)
 
   local handle, pid = uv.spawn(command, opt, exit_cb)
 
-  table.insert(_jobs, {
-    ['jobid_' .. _jobid] = new_job_obj(_jobid, handle, opts, {
-      stdout = stdout,
-      stderr = stderr,
-      stdin = stdin,
-      pid = pid,
-    }),
+  _jobs['jobid_' .. _jobid] = new_job_obj(_jobid, handle, opts, {
+    stdout = stdout,
+    stderr = stderr,
+    stdin = stdin,
+    pid = pid,
   })
   if opts.on_stdout then
     uv.read_start(stdout, function(err, data)
@@ -75,6 +73,7 @@ function M.start(cmd, opts)
       end
     end)
   end
+  return current_id
 end
 
 function M.send(id, data) -- {{{
@@ -87,7 +86,7 @@ function M.send(id, data) -- {{{
   local stdin = jobobj.state.stdin
 
   if not stdin then
-    error('no stdin stream for jobid:' ..id)
+    error('no stdin stream for jobid:' .. id)
   end
 
   if type(data) == 'table' then
@@ -107,6 +106,38 @@ function M.send(id, data) -- {{{
     end)
   end
 end
--- }}}
+
+function M.chanclose(id, t)
+  local jobobj = _jobs['jobid_' .. id]
+
+  if not jobobj then
+    error('can not find job:' .. id)
+  end
+  if t == 'stdin' then
+    local stdin = jobobj.state.stdin
+    if not stdin then
+      stdin:shutdown(function()
+        if stdin then
+          stdin:close()
+        end
+      end)
+    end
+  elseif t == 'stdout' then
+  elseif t == 'stderr' then
+  else
+    error('the type only can be:stdout, stdin or stderr')
+  end
+end
+
+function M.close(id)
+  local jobobj = _jobs['jobid_' .. id]
+
+  if not jobobj then
+    error('can not find job:' .. id)
+  end
+
+  local handle = jobobj.handle
+  uv.close(handle)
+end
 
 return M

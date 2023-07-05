@@ -1,6 +1,6 @@
 local job = require('spacevim.api.job')
 
-job.start({ 'ctags', '-R', '-o', 'C:/Users/wsdjeg/.cache/SpaceVim/tags/C__Users_wsdjeg__SpaceVim_/tags', 'C:\\Users\\wsdjeg\\.SpaceVim' }, {
+local jobid = job.start({ 'cat' }, {
   on_stdout = function(id, data, event)
     vim.print(id)
     vim.print(data)
@@ -12,3 +12,7 @@ job.start({ 'ctags', '-R', '-o', 'C:/Users/wsdjeg/.cache/SpaceVim/tags/C__Users_
     vim.print('exit signal', signal)
   end,
 })
+
+
+job.send(jobid, 'hello world')
+job.close(jobid)
