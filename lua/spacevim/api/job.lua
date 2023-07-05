@@ -35,7 +35,9 @@ function M.start(cmd, opts)
     -- :call jobstart(split(&shell) + split(&shellcmdflag) + ['{cmd}'])
     command = shell[1]
     argv = vim.list_slice(shell, 2)
-    for _, v in ipairs(shellcmdflag) do table.insert(argv, v) end
+    for _, v in ipairs(shellcmdflag) do
+      table.insert(argv, v)
+    end
     table.insert(argv, cmd)
   elseif type(cmd) == 'table' then
     command = cmd[1]
@@ -66,7 +68,8 @@ function M.start(cmd, opts)
   if opts.on_stdout then
     uv.read_start(stdout, function(err, data)
       if data then
-        opts.on_stdout(current_id, data, 'stdout')
+        data = data:gsub('\r', '')
+        opts.on_stdout(current_id, vim.split(data, '\n'), 'stdout')
       end
     end)
   end
@@ -74,7 +77,8 @@ function M.start(cmd, opts)
   if opts.on_stderr then
     uv.read_start(stderr, function(err, data)
       if data then
-        opts.on_stderr(current_id, data, 'stderr')
+        data = data:gsub('\r', '')
+        opts.on_stderr(current_id, vim.split(data, '\n'), 'stderr')
       end
     end)
   end
