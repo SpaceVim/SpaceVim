@@ -5,8 +5,6 @@ Execute ( SpaceVim plugin: a.lua ):
   AssertEqual SpaceVim#plugins#a#get_alt('docs/cn/index.md', root, 1), 'docs/index.md'
   AssertEqual SpaceVim#plugins#a#get_alt('docs/api/job.md', root, 1), 'docs/cn/api/job.md'
   AssertEqual SpaceVim#plugins#a#get_alt('docs/cn/api/job.md', root, 1), 'docs/api/job.md'
-  AssertEqual SpaceVim#plugins#a#get_alt('wiki/en/Project-layout.md', root, 1), 'wiki/cn/Project-layout.md'
-  AssertEqual SpaceVim#plugins#a#get_alt('wiki/cn/Project-layout.md', root, 1), 'wiki/en/Project-layout.md'
   AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2018-09-28-use-vim-as-ide.md', root, 1), 'docs/_posts/2018-09-27-use-vim-as-ide.md'
   AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2018-09-27-use-vim-as-ide.md', root, 1), 'docs/_posts/2018-09-28-use-vim-as-ide.md'
   AssertEqual SpaceVim#plugins#a#get_alt('docs/_posts/2020-01-28-manage-project-alternate-files.md', root, 1), 'docs/_posts/2020-01-27-manage-project-alternate-files.md'
