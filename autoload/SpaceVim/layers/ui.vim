@@ -133,6 +133,10 @@ function! SpaceVim#layers#ui#config() abort
   " indent line character
   let g:indent_blankline_char = s:indentline_char
   let g:indentLine_char = s:indentline_char
+  " when ident > shiftwidth, remove extra identline.
+  " https://github.com/lukas-reineke/indent-blankline.nvim/issues/170
+  " https://github.com/lukas-reineke/indent-blankline.nvim/issues/491
+  let g:indent_blankline_max_indent_increase = 1
 
   " indent line conceal setting, only for indentLine
   let g:indentLine_concealcursor = s:concealcursor
