@@ -136,6 +136,22 @@ function M.stop(id)
     error('can not find job:' .. id)
   end
 
+  -- close stdio
+  local stdin = jobobj.state.stdin
+  if stdin and stdin:is_active() then
+    stdin:close()
+  end
+  -- close stdio
+  local stdout = jobobj.state.stout
+  if stdout and stdout:is_active() then
+    stdout:close()
+  end
+  -- close stdio
+  local stderr = jobobj.state.stderr
+  if stderr and stderr:is_active() then
+    stderr:close()
+  end
+
   local handle = jobobj.handle
   handle:kill(6)
 end
