@@ -14,7 +14,6 @@ comments: true
 
 - [What's New](#whats-new)
   - [New layers](#new-layers)
-  - [New feature](#new-feature)
   - [Improvements](#improvements)
 - [Git Commits](#git-commits)
 
@@ -32,14 +31,44 @@ So let's take a look at what happened since last release.
 
 ## What's New
 
+- The lua `notify` api.
+
+This api is just same as `notify` api in vim script, but it is written in lua.
+
+```
+local nt = require('spacevim.api').import('notify')
+
+nt.notify('Hello world!', 'WarningMsg')
+
+```
+
+- add cmp-dictionary for nvim-cmp
+- add `bundle.lua` for updating bundle plugins
+- add `neotree` support
+
 ### New layers
 
+This release is force on improving using experience, so only one new layer added.
 
-### New feature
-
+- add `core#statuscolumn` layer
 
 ### Improvements
 
+- improve lua flygrep
+
+  The `flygrep` plugin has been rewrited in lua. since last release, the following changes happened to `flygrep`:
+
+  1. use `notify` api for warning message
+  2. redraw output as soon as possible
+  3. history completion
+  4. ignore unwanted autocmds
+  5. support iedit in flygrep
+  6. improve quickfix support
+  7. improve preview windows
+
+- improve `projectmanager` plugin
+
+  The projectmanager plugin also has been rewrited in lua. This release improve the telescope project extension. 
 
 ## Git Commits
 
@@ -49,4 +78,3 @@ use following command in your terminal.
 ```
 git -C ~/.SpaceVim log v2.1.0..v2.2.0
 ```
-
