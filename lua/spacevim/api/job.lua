@@ -23,7 +23,33 @@ local function new_job_obj(id, handle, opt, state)
   return jobobj
 end
 
---- @param cmd string|table<string> Spawns {cmd} as a job. 
+local function default_dev() -- {{{
+  local env = vim.fn.environ()
+  env['NVIM'] = vim.v.servername
+  env['NVIM_LISTEN_ADDRESS'] = nil
+  env['NVIM_LOG_FILE'] = nil
+  env['VIMRUNTIME'] = nil
+  return env
+end
+-- }}}
+
+local function setup_env(env, clear_env) -- {{{
+  if clear_env then
+    return env
+  end
+  --- @type table<string,string|number>
+  env = vim.tbl_extend('force', default_dev(), env or {})
+
+  local renv = {} --- @type string[]
+  for k, v in pairs(env) do
+    renv[#renv + 1] = string.format('%s=%s', k, tostring(v))
+  end
+
+  return renv
+end
+-- }}}
+
+--- @param cmd string|table<string> Spawns {cmd} as a job.
 --- @param opts table job options
 --- @return integer # jobid if job run successfully.
 --- jobid: if job run successfully
@@ -44,7 +70,9 @@ function M.start(cmd, opts)
     table.insert(argv, cmd)
   elseif type(cmd) == 'table' then
     command = cmd[1]
-    if vim.fn.executable(command) == 0 then return -1 end
+    if vim.fn.executable(command) == 0 then
+      return -1
+    end
     argv = vim.list_slice(cmd, 2)
   else
     return 0
@@ -59,7 +87,8 @@ function M.start(cmd, opts)
     args = argv,
     cwd = opts.cwd or nil,
     hide = true,
-    detached = opts.detached or nil
+    detached = opts.detached or nil,
+    env = setup_env(opts.env, opts.clear_env),
   }
   _jobid = _jobid + 1
   local current_id = _jobid
