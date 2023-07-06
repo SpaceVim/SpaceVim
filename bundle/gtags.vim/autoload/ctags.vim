@@ -11,6 +11,13 @@ scriptencoding utf-8
 if exists('g:loaded_ctags')
   finish
 endif
+let g:loaded_ctags = 1
+if has('nvim-0.7.0') && 0
+  function! ctags#update(...) abort
+    lua require('ctags').update()
+  endfunction
+  finish
+endif
 
 
 let s:LOGGER =SpaceVim#logger#derive('ctags')
@@ -27,7 +34,6 @@ endif
 let s:JOB = SpaceVim#api#import('job')
 let s:FILE = SpaceVim#api#import('file')
 
-let g:loaded_ctags = 1
 
 let s:is_u_ctags = 0
 let s:version_checked = 0
