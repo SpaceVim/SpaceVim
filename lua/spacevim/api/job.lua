@@ -57,7 +57,9 @@ function M.start(cmd, opts)
   local opt = {
     stdio = { stdin, stdout, stderr },
     args = argv,
-    cwd = opts.cwd or nil
+    cwd = opts.cwd or nil,
+    hide = true,
+    detached = opts.detached or nil
   }
   _jobid = _jobid + 1
   local current_id = _jobid
