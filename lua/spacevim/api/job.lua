@@ -23,10 +23,13 @@ local function new_job_obj(id, handle, opt, state)
   return jobobj
 end
 
+--- @param cmd string|table<string> Spawns {cmd} as a job. 
+--- @param opts table job options
+--- @return integer # jobid if job run successfully.
+--- jobid: if job run successfully
+--- 0: if type of cmd is wrong
+--- -1: if cmd[1] is not executable
 function M.start(cmd, opts)
-  local stdin = uv.new_pipe()
-  local stdout = uv.new_pipe()
-  local stderr = uv.new_pipe()
   local command = ''
   local argv = {}
   if type(cmd) == 'string' then
@@ -41,12 +44,20 @@ function M.start(cmd, opts)
     table.insert(argv, cmd)
   elseif type(cmd) == 'table' then
     command = cmd[1]
+    if vim.fn.executable(command) == 0 then return -1 end
     argv = vim.list_slice(cmd, 2)
+  else
+    return 0
   end
+
+  local stdin = uv.new_pipe()
+  local stdout = uv.new_pipe()
+  local stderr = uv.new_pipe()
 
   local opt = {
     stdio = { stdin, stdout, stderr },
     args = argv,
+    cwd = opts.cwd or nil
   }
   _jobid = _jobid + 1
   local current_id = _jobid
