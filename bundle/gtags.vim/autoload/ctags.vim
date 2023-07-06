@@ -12,7 +12,7 @@ if exists('g:loaded_ctags')
   finish
 endif
 let g:loaded_ctags = 1
-if has('nvim-0.7.0') && 0
+if has('nvim-0.7.0')
   function! ctags#update(...) abort
     lua require('ctags').update()
   endfunction
