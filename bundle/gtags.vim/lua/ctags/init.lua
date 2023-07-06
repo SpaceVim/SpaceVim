@@ -45,12 +45,16 @@ local function on_update_exit(id, code, single) -- {{{
 end
 -- }}}
 local function on_update_stdout(id, data, event) -- {{{
-  
+  for _, d in ipairs(data) do
+    log.debug('stdout:' .. d)
+  end
 end
 -- }}}
 
 local function on_update_stderr(id, data, event) -- {{{
-  
+  for _, d in ipairs(data) do
+    log.debug('stderr:' .. d)
+  end
 end
 -- }}}
 
@@ -61,6 +65,7 @@ local function extend(t1, t2) -- {{{
 end
 -- }}}
 function M.update() -- {{{
+  gtags_ctags_bin = vim.g.gtags_ctags_bin or gtags_ctags_bin
   local project_root = vim.fn.getcwd()
   if not version_checked then
     log.info('start to check ctags version')
@@ -85,12 +90,12 @@ function M.update() -- {{{
   end
 
   if vim.fn.isdirectory(dir) == 1 then
-    extend(cmd, {'-R', '--extra=+f', '-o', dir .. '/tags', project_root})
+    extend(cmd, { '-R', '--extra=+f', '-o', dir .. '/tags', project_root })
     log.debug('ctags command:' .. vim.inspect(cmd))
     local jobid = job.start(cmd, {
       on_stdout = on_update_stdout,
       on_stderr = on_update_stderr,
-      on_exit = on_update_exit
+      on_exit = on_update_exit,
     })
     if jobid <= 0 then
       log.debug('failed to start ctags job, return jobid:' .. jobid)
