@@ -402,6 +402,15 @@ function! s:remove_cursor_highlight() abort
   endtry
 endfunction
 
+" if has('timers'),
+
+if has('timers')
+  function! s:start_buffer_timer(...) abort
+    call timer_start(200, function('s:start_buffer'), {'repeat' : 1})
+  endfunction
+endif
+
+
 " @vimlint(EVL102, 1, l:string)
 function! s:start_buffer() abort " {{{
   let s:winv = winsaveview()
@@ -444,7 +453,6 @@ function! s:start_buffer() abort " {{{
   call s:wait_for_input()
 endfunction " }}}
 " @vimlint(EVL102, 0, l:string)
-
 function! s:handle_input(input) abort " {{{
   call s:winclose()
   if type(a:input) ==? type({})
