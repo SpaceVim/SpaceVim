@@ -30,6 +30,10 @@ local runner_status = {
   exit_single = 0,
 }
 
+local selected_file = ''
+
+local start_time = 0
+
 local task_status = {}
 
 local task_stdout = {}
@@ -65,6 +69,73 @@ local function insert()
   end
   vim.cmd('normal! :')
   vim.fn.inputrestore()
+end
+
+local function extend(t1, t2)
+  for k, v in pairs(t2) do
+    t1[k] = v
+  end
+end
+local function update_statusline()
+  vim.cmd('redrawstatus!')
+end
+
+local function on_stdout(id, data, event)
+  if id ~= runner_jobid then return end
+  if vim.api.nvim_buf_is_valid(code_runner_bufnr) then
+    vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', true)
+    vim.api.nvim_buf_set_lines(code_runner_bufnr, runner_lines, runner_lines + 1, false, data)
+    vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
+    runner_lines = runner_lines + #data
+    if winid >= 0 then
+      vim.api.nvim_win_set_cursor(winid, {vim.api.nvim_buf_line_count(code_runner_bufnr), 1})
+    end
+    update_statusline()
+  end
+end
+local function on_stderr(id, data, event)
+  
+end
+local function on_exit(id, data, event)
+  
+end
+
+local function async_run(runner, ...)
+  if type(runner) == 'string' then
+    local cmd = runner
+    pcall(function()
+      local f
+      if selected_file ~= '' then
+        f = selected_file
+      else
+        f = vim.fn.bufname('%')
+      end
+      cmd = vim.fn.printf(runner, f)
+    end)
+    logger.info('   cmd:' .. cmd)
+    vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', true)
+    vim.api.nvim_buf_set_lines(code_runner_bufnr, runner_lines, -1, false, {'[Running] ' .. cmd, '', vim.fn['repeat']('-', 20)})
+    vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
+    runner_lines = runner_lines + 3
+    start_time = vim.fn.reltime()
+    local opts = select(1, ...) or {}
+    extend(opts, {
+      on_stdout = on_stdout,
+      on_stderr = on_stderr,
+      on_exit = on_exit,
+    })
+    runner_jobid = job.start(cmd, opts)
+
+  end
+
+  if runner_jobid > 0 then
+    runner_status = {
+      is_running = true,
+      has_errors = false,
+      exit_code = 0,
+      exit_single = 0,
+    }
+  end
 end
 
 local function stop_runner()
