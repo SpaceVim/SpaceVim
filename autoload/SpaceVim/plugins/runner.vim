@@ -36,6 +36,56 @@
 "   }
 " <
 
+
+if has('nvim-0.9.0')
+  function! SpaceVim#plugins#runner#get(ft) abort
+
+  endfunction
+  function! SpaceVim#plugins#runner#open(...) abort
+    lua require("spacevim.plugin.runner").open(
+          \ unpack(require("spacevim").eval("a:000"))
+          \ )
+    
+  endfunction
+
+  function! SpaceVim#plugins#runner#reg_runner(ft, runner) abort
+    
+  endfunction
+
+  function! SpaceVim#plugins#runner#status() abort
+    
+  endfunction
+
+  function! SpaceVim#plugins#runner#close() abort
+
+  endfunction
+
+  function! SpaceVim#plugins#runner#select_file() abort
+    
+  endfunction
+
+  function! SpaceVim#plugins#runner#select_language() abort
+    
+  endfunction
+
+  function! SpaceVim#plugins#runner#set_language(lang) abort
+    
+  endfunction
+
+  function! SpaceVim#plugins#runner#run_task(task) abort
+    
+  endfunction
+
+  function! SpaceVim#plugins#runner#clear_tasks() abort
+    
+  endfunction
+
+  finish
+endif
+
+
+
+
 let s:runners = {}
 
 let s:JOB = SpaceVim#api#import('job')
