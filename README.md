@@ -5,7 +5,7 @@
 </h1>
 
 [Quick Start Guide](https://spacevim.org/quick-start-guide/) \|
-[Chat](https://chat.mozilla.org/#/room/#spacevim:matrix.org) \|
+[Chat](https://app.element.io/#/room/#spacevim:matrix.org) \|
 [Twitter](https://twitter.com/SpaceVim)
 
 [![build](https://img.shields.io/github/actions/workflow/status/SpaceVim/SpaceVim/check.yml?branch=master)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)

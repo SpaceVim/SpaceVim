@@ -16,7 +16,7 @@ If you want to ask an usage question, be sure to look first into these place whe
 - [FAQ](https://spacevim.org/faq/): the frequently asked questions about SpaceVim.
 - [Documentation](spacevim.org/documentation/): the general documentation of SpaceVim.
 
-In any case, feel free to join us on the [matrix room](https://chat.mozilla.org/#/room/#spacevim:matrix.org)
+In any case, feel free to join us on the [matrix room](https://app.element.io/#/room/#spacevim:matrix.org)
 to ask questions about contributing.
 
 ## Pull Request

@@ -40,7 +40,7 @@ Each of the following sections will be covered:
 This tutorial is not intended to teach you Java itself.
 
 If you have any problems,
-feel free to join the [SpaceVim matrix room](https://chat.mozilla.org/#/room/#spacevim:matrix.org)
+feel free to join the [SpaceVim matrix room](https://app.element.io/#/room/#spacevim:matrix.org)
 for general discussion.
 
 ### Enable language layer

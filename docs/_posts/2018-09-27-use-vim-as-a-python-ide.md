@@ -33,7 +33,7 @@ Each of the following sections will be covered:
 
 This tutorial is not intended to teach you Python itself.
 
-If you have any problems, feel free to join the [chatting room](https://chat.mozilla.org/#/room/#spacevim:matrix.org) for general discussion.
+If you have any problems, feel free to join the [chatting room](https://app.element.io/#/room/#spacevim:matrix.org) for general discussion.
 
 
 ### Enable language layer

@@ -41,7 +41,7 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 
 ## 参与
 
-常规的项目讨论和问答主要是使用 [Matrix 聊天室](https://chat.mozilla.org/#/room/#spacevim-cn:matrix.org)，
+常规的项目讨论和问答主要是使用 [Matrix 聊天室](https://app.element.io/#/room/#spacevim-cn:matrix.org)，
 而提交问题和贡献代码主要是在 [Github](https://github.com/SpaceVim/SpaceVim) 上，
 同时，SpaceVim 开通了[码云仓库](https://gitee.com/spacevim/SpaceVim)，主要用于中文交流。
 
