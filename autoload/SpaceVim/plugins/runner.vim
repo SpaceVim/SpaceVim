@@ -49,6 +49,10 @@ if has('nvim-0.9.0')
   endfunction
 
   function! SpaceVim#plugins#runner#reg_runner(ft, runner) abort
+    lua require("spacevim.plugin.runner").reg_runner(
+          \ require("spacevim").eval("a:ft"),
+          \ require("spacevim").eval("a:runner")
+          \ )
     
   endfunction
 

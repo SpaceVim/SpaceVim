@@ -348,4 +348,8 @@ function M.open(...)
   end
 end
 
+function M.reg_runner(ft, runner)
+  runners[ft] = runner
+end
+
 return M
