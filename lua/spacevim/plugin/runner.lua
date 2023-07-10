@@ -32,8 +32,10 @@ local runner_status = {
 }
 
 local selected_file = ''
-local start_time = 0
-local end_time = 0
+--- @type any[]
+local start_time
+--- @type any[]
+local end_time
 
 local task_status = {}
 
