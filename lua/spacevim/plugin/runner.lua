@@ -12,6 +12,7 @@ local runners = {}
 
 local logger = require('spacevim.logger').derive('runner')
 local job = require('spacevim.api').import('job')
+local file = require('spacevim.api').import('file')
 local str = require('spacevim.api').import('data.string')
 
 local code_runner_bufnr = 0
@@ -170,6 +171,33 @@ local function async_run(runner, ...)
       on_exit = on_exit,
     })
     runner_jobid = job.start(cmd, opts)
+  elseif type(runner) == "table" and #runner == 2 then
+    target = file.unify_path(vim.fn.tempname(), ':p')
+    local dir = vim.fn.fnamemodify(target, ':h')
+    if vim.fn.isdirectory(dir) == 0 then
+      vim.fn.mkdir(dir, 'p')
+    end
+    local compile_cmd
+    if type(runner[1]) == "table" then
+      if type(runner[1].exe) == "function" then
+      elseif type(runner[1].exe) == "string" then
+      end
+    elseif type(runner[1]) == "string" then
+    end
+
+    if type(compile_cmd) == "table" then
+    else
+    end
+
+    vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', true)
+    vim.api.nvim_buf_set_lines(
+      code_runner_bufnr,
+      runner_lines,
+      -1,
+      false,
+      { '[Compile] ' .. compile_cmd_info, '[Running]' .. target, '', vim.fn['repeat']('-', 20) }
+    )
+    vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
   end
 
   if runner_jobid > 0 then
