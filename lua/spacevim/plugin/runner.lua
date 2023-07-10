@@ -38,6 +38,23 @@ local task_stderr = {}
 
 local task_problem_matcher = {}
 
+local function open_win()
+  if
+    code_runner_bufnr ~= 0
+    and vim.api.nvim_buf_is_valid(code_runner_bufnr)
+    and vim.fn.index(vim.fn.tabpagebuflist(), code_runner_bufnr) ~= -1
+  then
+    return
+  end
+  vim.cmd('botright split __runner__')
+  local lines = vim.o.lines * 30 / 100
+  vim.cmd('resize ' .. lines)
+  vim.cmd([[
+  setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
+  set filetype=SpaceVimRunner
+  ]])
+end
+
 local function insert() -- {{{
   vim.fn.inputsave()
   local input = vim.fn.input('input >')
@@ -48,5 +65,9 @@ local function insert() -- {{{
   vim.fn.inputrestore()
 end
 -- }}}
+
+function M.open(...)
+  open_win()
+end
 
 return M

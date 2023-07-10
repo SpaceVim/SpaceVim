@@ -74,7 +74,8 @@ let s:task_stderr = {}
 let s:task_problem_matcher = {}
 
 function! s:open_win() abort
-  if s:code_runner_bufnr !=# 0 && bufexists(s:code_runner_bufnr) && index(tabpagebuflist(), s:code_runner_bufnr) !=# -1
+  if s:code_runner_bufnr !=# 0 && bufexists(s:code_runner_bufnr) 
+        \ && index(tabpagebuflist(), s:code_runner_bufnr) !=# -1
     return
   endif
   botright split __runner__
