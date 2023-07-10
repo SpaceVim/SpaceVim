@@ -12,6 +12,7 @@ local runners = {}
 
 local logger = require('spacevim.logger').derive('runner')
 local job = require('spacevim.api').import('job')
+local str = require('spacevim.api').import('data.string')
 
 local code_runner_bufnr = 0
 
@@ -31,8 +32,8 @@ local runner_status = {
 }
 
 local selected_file = ''
-
 local start_time = 0
+local end_time = 0
 
 local task_status = {}
 
@@ -81,23 +82,59 @@ local function update_statusline()
 end
 
 local function on_stdout(id, data, event)
-  if id ~= runner_jobid then return end
+  if id ~= runner_jobid then
+    return
+  end
   if vim.api.nvim_buf_is_valid(code_runner_bufnr) then
     vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', true)
     vim.api.nvim_buf_set_lines(code_runner_bufnr, runner_lines, runner_lines + 1, false, data)
     vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
     runner_lines = runner_lines + #data
     if winid >= 0 then
-      vim.api.nvim_win_set_cursor(winid, {vim.api.nvim_buf_line_count(code_runner_bufnr), 1})
+      vim.api.nvim_win_set_cursor(winid, { vim.api.nvim_buf_line_count(code_runner_bufnr), 1 })
     end
     update_statusline()
   end
 end
 local function on_stderr(id, data, event)
-  
+  if id ~= runner_jobid then
+    return
+  end
+  runner_status.has_errors = true
+  if vim.api.nvim_buf_is_valid(code_runner_bufnr) then
+    vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', true)
+    vim.api.nvim_buf_set_lines(code_runner_bufnr, runner_lines, runner_lines + 1, false, data)
+    vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
+    runner_lines = runner_lines + #data
+    if winid >= 0 then
+      vim.api.nvim_win_set_cursor(winid, { vim.api.nvim_buf_line_count(code_runner_bufnr), 1 })
+    end
+    update_statusline()
+  end
 end
-local function on_exit(id, data, event)
-  
+local function on_exit(id, code, single)
+  if id ~= runner_jobid then
+    return
+  end
+  end_time = vim.fn.reltime(start_time)
+  runner_status.is_running = false
+  runner_status.exit_single = single
+  runner_status.exit_code = code
+  local done = {
+    '',
+    '[Done] exited with code=' .. code .. ', single=' .. single .. ' in ' .. str.trim(
+      vim.fn.reltimestr(end_time)
+    ) .. ' seconds',
+  }
+  if vim.api.nvim_buf_is_valid(code_runner_bufnr) then
+    vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', true)
+    vim.api.nvim_buf_set_lines(code_runner_bufnr, runner_lines, runner_lines + 1, false, done)
+    vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
+    if winid >= 0 then
+      vim.api.nvim_win_set_cursor(winid, { vim.api.nvim_buf_line_count(code_runner_bufnr), 1 })
+    end
+    update_statusline()
+  end
 end
 
 local function async_run(runner, ...)
@@ -114,7 +151,13 @@ local function async_run(runner, ...)
     end)
     logger.info('   cmd:' .. cmd)
     vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', true)
-    vim.api.nvim_buf_set_lines(code_runner_bufnr, runner_lines, -1, false, {'[Running] ' .. cmd, '', vim.fn['repeat']('-', 20)})
+    vim.api.nvim_buf_set_lines(
+      code_runner_bufnr,
+      runner_lines,
+      -1,
+      false,
+      { '[Running] ' .. cmd, '', vim.fn['repeat']('-', 20) }
+    )
     vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
     runner_lines = runner_lines + 3
     start_time = vim.fn.reltime()
@@ -125,7 +168,6 @@ local function async_run(runner, ...)
       on_exit = on_exit,
     })
     runner_jobid = job.start(cmd, opts)
-
   end
 
   if runner_jobid > 0 then
