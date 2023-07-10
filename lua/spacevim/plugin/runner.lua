@@ -38,6 +38,8 @@ local task_stderr = {}
 
 local task_problem_matcher = {}
 
+local selected_language = ''
+
 local function open_win()
   if
     code_runner_bufnr ~= 0
@@ -55,7 +57,7 @@ local function open_win()
   ]])
 end
 
-local function insert() -- {{{
+local function insert()
   vim.fn.inputsave()
   local input = vim.fn.input('input >')
   if vim.fn.empty(input) == 0 and runner_status.is_running then
@@ -64,10 +66,36 @@ local function insert() -- {{{
   vim.cmd('normal! :')
   vim.fn.inputrestore()
 end
--- }}}
+
+local function stop_runner()
+  if runner_status.is_running then
+    job.stop(runner_jobid)
+  end
+end
+
+local function update_statusline()
+  vim.cmd('redrawstatus!')
+end
 
 function M.open(...)
-  open_win()
+  stop_runner()
+  runner_jobid = 0
+  runner_lines = 0
+  runner_status = {
+    is_running = false,
+    has_errors = false,
+    exit_code = 0,
+    exit_single = 0,
+  }
+  local language = vim.o.filetype
+  local runner = select(1, ...) or runners[language] or ''
+  local opts = select(2, ...) or {}
+  if vim.fn.empty(runner) == 0 then
+    open_win()
+    async_run(runner, opts)
+    update_statusline()
+  else
+  end
 end
 
 return M
