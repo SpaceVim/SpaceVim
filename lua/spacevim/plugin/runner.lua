@@ -140,6 +140,18 @@ local function on_exit(id, code, single)
   end
 end
 
+local function merged_array(...)
+  local t = {}
+
+  for _, tb in ipairs({...}) do
+    for _, v in ipairs(tb) do
+      table.insert(t, v)
+    end
+  end
+  return t
+  
+end
+
 local function async_run(runner, ...)
   if type(runner) == 'string' then
     local cmd = runner
@@ -179,13 +191,29 @@ local function async_run(runner, ...)
     end
     local compile_cmd
     if type(runner[1]) == "table" then
+      local exe
       if type(runner[1].exe) == "function" then
+        exe = runner[1].exe()
       elseif type(runner[1].exe) == "string" then
+        exe = {runner[1].exe}
       end
+      local usestdin = runner[1].usestdin or false
+      compile_cmd = merge_list(exe, {runner[1].targetopt or ''}, {target}, runner[1].opt)
+      if not usestdin then
+        local f
+        if selected_file == '' then
+          f = vim.fn.bufname('%')
+        else
+          f = selected_file
+        end
+        compile_cmd = merge_list(compile_cmd, {f})
+      end
+
     elseif type(runner[1]) == "string" then
     end
 
     if type(compile_cmd) == "table" then
+      compile_cmd_info = tostring()
     else
     end
 
