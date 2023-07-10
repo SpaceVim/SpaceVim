@@ -143,13 +143,53 @@ end
 local function merged_array(...)
   local t = {}
 
-  for _, tb in ipairs({...}) do
+  for _, tb in ipairs({ ... }) do
     for _, v in ipairs(tb) do
       table.insert(t, v)
     end
   end
   return t
-  
+end
+
+local function on_compile_exit(id, code, single)
+  if id ~= runner_jobid then
+    return
+  end
+  if code == 0 and single == 0 then
+    runner_jobid = job.start(target, {
+      on_stdout = on_stdout,
+      on_stderr = on_stderr,
+      on_exit = on_exit,
+    })
+    if runner_jobid > 0 then
+      runner_status = {
+        is_running = true,
+        has_errors = false,
+        exit_code = 0,
+        exit_single = 0,
+      }
+    end
+  else
+    end_time = vim.fn.reltime(start_time)
+    runner_status.is_running = false
+    runner_status.exit_code = code
+    runner_status.exit_single = single
+    local done = {
+      '',
+      '[Done] exited with code=' .. code .. ', single=' .. single .. ' in ' .. str.trim(
+        vim.fn.reltimestr(end_time)
+      ) .. ' seconds',
+    }
+    if vim.api.nvim_buf_is_valid(code_runner_bufnr) then
+      vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', true)
+      vim.api.nvim_buf_set_lines(code_runner_bufnr, runner_lines, runner_lines + 1, false, done)
+      vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
+      if winid >= 0 then
+        vim.api.nvim_win_set_cursor(winid, { vim.api.nvim_buf_line_count(code_runner_bufnr), 1 })
+      end
+      update_statusline()
+    end
+  end
 end
 
 local function async_run(runner, ...)
@@ -183,22 +223,24 @@ local function async_run(runner, ...)
       on_exit = on_exit,
     })
     runner_jobid = job.start(cmd, opts)
-  elseif type(runner) == "table" and #runner == 2 then
+  elseif type(runner) == 'table' and #runner == 2 then
     target = file.unify_path(vim.fn.tempname(), ':p')
     local dir = vim.fn.fnamemodify(target, ':h')
     if vim.fn.isdirectory(dir) == 0 then
       vim.fn.mkdir(dir, 'p')
     end
     local compile_cmd
-    if type(runner[1]) == "table" then
+    local usestdin
+    local compile_cmd_info
+    if type(runner[1]) == 'table' then
       local exe
-      if type(runner[1].exe) == "function" then
+      if type(runner[1].exe) == 'function' then
         exe = runner[1].exe()
-      elseif type(runner[1].exe) == "string" then
-        exe = {runner[1].exe}
+      elseif type(runner[1].exe) == 'string' then
+        exe = { runner[1].exe }
       end
-      local usestdin = runner[1].usestdin or false
-      compile_cmd = merge_list(exe, {runner[1].targetopt or ''}, {target}, runner[1].opt)
+      usestdin = runner[1].usestdin or false
+      compile_cmd = merge_list(exe, { runner[1].targetopt or '' }, { target }, runner[1].opt)
       if not usestdin then
         local f
         if selected_file == '' then
@@ -206,15 +248,23 @@ local function async_run(runner, ...)
         else
           f = selected_file
         end
-        compile_cmd = merge_list(compile_cmd, {f})
+        compile_cmd = merge_list(compile_cmd, { f })
       end
-
-    elseif type(runner[1]) == "string" then
+    elseif type(runner[1]) == 'string' then
     end
 
-    if type(compile_cmd) == "table" then
-      compile_cmd_info = tostring()
+    if type(compile_cmd) == 'table' then
+      if usestdin then
+        compile_cmd_info = tostring(merge_list(compile_cmd, { 'STDIN' }))
+      else
+        compile_cmd_info = tostring(compile_cmd)
+      end
     else
+      if usestdin then
+        compile_cmd_info = compile_cmd .. ' STDIN'
+      else
+        compile_cmd_info = compile_cmd
+      end
     end
 
     vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', true)
@@ -226,6 +276,35 @@ local function async_run(runner, ...)
       { '[Compile] ' .. compile_cmd_info, '[Running]' .. target, '', vim.fn['repeat']('-', 20) }
     )
     vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
+
+    runner_lines = runner_lines + 4
+    start_time = vim.fn.reltime()
+    if
+      type(compile_cmd) == 'string'
+      or type(compile_cmd) == 'table' and vim.fn.executable(compile_cmd[1] or '') == 1
+    then
+      runner_jobid = job.start(compile_cmd, {
+        on_stdout = on_stdout,
+        on_stderr = on_stderr,
+        on_exit = on_compile_exit,
+      })
+      if usestdin and runner_jobid > 0 then
+        local range = runner[1].range or { 1, '$' }
+        job.send(runner_jobid, vim.fn.getline(unpack(range)))
+        job.chanclose(runner_jobid, 'stdin')
+      end
+    else
+      local exe = compile_cmd[1] or ''
+      vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', true)
+      vim.api.nvim_buf_set_lines(
+        code_runner_bufnr,
+        runner_lines,
+        -1,
+        false,
+        { exe .. ' is not executable, make sure ' .. exe .. ' is in your PATH' }
+      )
+      vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
+    end
   end
 
   if runner_jobid > 0 then
