@@ -156,6 +156,7 @@ function! SpaceVim#plugins#scrollbar#show() abort
         \  'row' : row,
         \  'col' : float2nr(col),
         \  'focusable' : 0,
+        \  'zindex' : 10,
         \ }
   if s:WIN.is_float(s:scrollbar_winid)
     if bar_size !=# s:scrollbar_size
