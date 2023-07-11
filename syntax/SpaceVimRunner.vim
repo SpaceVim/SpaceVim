@@ -8,9 +8,11 @@ syn match KeyBindings /\[Compile\]/
 syn match RunnerCmd /\(\[Running\]\ \)\@<=.*/
 syn match RunnerCmd /\(\[Compile\]\ \)\@<=.*/
 syn match DoneSucceeded /\[Done]\(\ exited\ with\ code=0, single=0\)\@=/
+syn match DoneSucceeded /\[Done]\(\ exited\ with\ code=0 in\)\@=/
 syn match DoneFailed /\[Done]\(\ exited\ with\ code=[^0]\)\@=/
+syn match DoneFailed /\[Done]\(\ exited\ with\ code=0, single=[^0]\)\@=/
 syn match ExitCode /\(\[Done\]\ exited\ with \)\@<=code=0/
-syn match ExitCodeFailed /\(\[Done\]\ exited\ with \)\@<=code=[^0]/
+syn match ExitCodeFailed /\(\[Done\]\ exited\ with \)\@<=code=[1-9]\d*/
 syn match SingleCode /single=0/
 syn match SingleCodeFailed /single=[^0]/
 
