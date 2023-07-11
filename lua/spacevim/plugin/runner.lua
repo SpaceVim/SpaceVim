@@ -63,6 +63,16 @@ local function close_win()
   
 end
 
+local function insert()
+  vim.fn.inputsave()
+  local input = vim.fn.input('input >')
+  if vim.fn.empty(input) == 0 and runner_status.is_running then
+    job.send(runner_jobid, input)
+  end
+  vim.cmd('normal! :')
+  vim.fn.inputrestore()
+end
+
 local function open_win()
   if
     code_runner_bufnr ~= 0
@@ -72,7 +82,9 @@ local function open_win()
     return
   end
   logger.debug('open code runner windows')
+  local previous_wind = vim.api.nvim_get_current_win()
   vim.cmd('botright split __runner__')
+  code_runner_bufnr = vim.fn.bufnr('%')
   local lines = vim.o.lines * 30 / 100
   vim.cmd('resize ' .. lines)
   vim.cmd([[
@@ -82,16 +94,16 @@ local function open_win()
   vim.api.nvim_buf_set_keymap(code_runner_bufnr, 'n', 'q', '', {
     callback = close_win,
   })
-end
-
-local function insert()
-  vim.fn.inputsave()
-  local input = vim.fn.input('input >')
-  if vim.fn.empty(input) == 0 and runner_status.is_running then
-    job.send(runner_jobid, input)
+  vim.api.nvim_buf_set_keymap(code_runner_bufnr, 'n', 'i', '', {
+    callback = insert,
+  })
+  vim.api.nvim_buf_set_keymap(code_runner_bufnr, 'n', '<C-c>', '', {
+    callback = stop_runner,
+  })
+  winid = vim.api.nvim_get_current_win()
+  if vim.g.spacevim_code_runner_focus == 0 then
+    vim.api.nvim_set_current_win(previous_wind)
   end
-  vim.cmd('normal! :')
-  vim.fn.inputrestore()
 end
 
 local function extend(t1, t2)
