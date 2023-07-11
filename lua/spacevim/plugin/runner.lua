@@ -100,12 +100,12 @@ local function open_win()
     callback = stop_runner,
   })
   local id = vim.api.nvim_create_augroup('spacevim_runner', {
-    clear = true
+    clear = true,
   })
   vim.api.nvim_create_autocmd({ 'BufWipeout' }, {
     group = id,
     buffer = code_runner_bufnr,
-    callback = stop_runner
+    callback = stop_runner,
   })
   winid = vim.api.nvim_get_current_win()
   if vim.g.spacevim_code_runner_focus == 0 then
@@ -436,6 +436,23 @@ end
 
 function M.reg_runner(ft, runner)
   runners[ft] = runner
+end
+
+function M.status()
+  local running_nr = 0
+  local running_done = 0
+  for _, v in ipairs(task_status) do
+    if v.is_running then
+      running_nr = running_nr + 1
+    else
+      running_done = running_done + 1
+    end
+  end
+
+  if runner_status.is_running then
+    running_nr = running_nr + 1
+  end
+  return string.format(' %s running, %s done', running_nr, running_done)
 end
 
 return M

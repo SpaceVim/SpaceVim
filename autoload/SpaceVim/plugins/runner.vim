@@ -57,7 +57,7 @@ if has('nvim-0.9.0')
   endfunction
 
   function! SpaceVim#plugins#runner#status() abort
-    
+    return luaeval('require("spacevim.plugin.runner").status()')
   endfunction
 
   function! SpaceVim#plugins#runner#close() abort
