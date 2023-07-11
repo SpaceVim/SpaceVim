@@ -60,7 +60,6 @@ local function close_win()
   if code_runner_bufnr ~= 0 and vim.api.nvim_buf_is_valid(code_runner_bufnr) then
     vim.cmd('bd ' .. code_runner_bufnr)
   end
-  
 end
 
 local function insert()
@@ -99,6 +98,14 @@ local function open_win()
   })
   vim.api.nvim_buf_set_keymap(code_runner_bufnr, 'n', '<C-c>', '', {
     callback = stop_runner,
+  })
+  local id = vim.api.nvim_create_augroup('spacevim_runner', {
+    clear = true
+  })
+  vim.api.nvim_create_autocmd({ 'BufWipeout' }, {
+    group = id,
+    buffer = code_runner_bufnr,
+    callback = stop_runner
   })
   winid = vim.api.nvim_get_current_win()
   if vim.g.spacevim_code_runner_focus == 0 then
