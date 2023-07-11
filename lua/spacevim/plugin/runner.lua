@@ -48,6 +48,21 @@ local task_problem_matcher = {}
 
 local selected_language = ''
 
+local function stop_runner()
+  if runner_status.is_running then
+    logger.debug('stop runner:' .. runner_jobid)
+    job.stop(runner_jobid)
+  end
+end
+
+local function close_win()
+  stop_runner()
+  if code_runner_bufnr ~= 0 and vim.api.nvim_buf_is_valid(code_runner_bufnr) then
+    vim.cmd('bd ' .. code_runner_bufnr)
+  end
+  
+end
+
 local function open_win()
   if
     code_runner_bufnr ~= 0
@@ -64,6 +79,9 @@ local function open_win()
   setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber winfixheight nomodifiable
   set filetype=SpaceVimRunner
   ]])
+  vim.api.nvim_buf_set_keymap(code_runner_bufnr, 'n', 'q', '', {
+    callback = close_win,
+  })
 end
 
 local function insert()
@@ -371,13 +389,6 @@ local function async_run(runner, ...)
       exit_code = 0,
       exit_single = 0,
     }
-  end
-end
-
-local function stop_runner()
-  if runner_status.is_running then
-    logger.debug('stop runner:' .. runner_jobid)
-    job.stop(runner_jobid)
   end
 end
 
