@@ -56,6 +56,7 @@ local function open_win()
   then
     return
   end
+  logger.debug('open code runner windows')
   vim.cmd('botright split __runner__')
   local lines = vim.o.lines * 30 / 100
   vim.cmd('resize ' .. lines)
@@ -80,6 +81,7 @@ local function extend(t1, t2)
     t1[k] = v
   end
 end
+
 local function update_statusline()
   vim.cmd('redrawstatus!')
 end
@@ -140,7 +142,7 @@ local function on_exit(id, code, single)
   end
 end
 
-local function merged_array(...)
+local function merge_list(...)
   local t = {}
 
   for _, tb in ipairs({ ... }) do
@@ -305,6 +307,61 @@ local function async_run(runner, ...)
       )
       vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
     end
+  elseif type(runner) == 'table' then
+    local cmd = {}
+    if type(runner.exe) == 'function' then
+      cmd = merge_list(cmd, runner.exe())
+    elseif type(runner.exe) == 'string' then
+      cmd = { runner.exe }
+    end
+    local usestdin = runner.usestdin or false
+    cmd = merge_list(cmd, runner.opt)
+    if not usestdin then
+      if selected_file == '' then
+        cmd = merge_list(cmd, vim.fn.bufname('%'))
+      else
+        cmd = merge_list(cmd, selected_file)
+      end
+    end
+    logger.info('   cmd:' .. vim.inspect(cmd))
+    local running_command = table.concat(cmd, ' ')
+    if usestdin then
+      running_command = running_command .. ' STDIN'
+    end
+    vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', true)
+    vim.api.nvim_buf_set_lines(
+      code_runner_bufnr,
+      runner_lines,
+      -1,
+      false,
+      { '[Running] ' .. running_command, '', vim.fn['repeat']('-', 20) }
+    )
+    vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
+    runner_lines = runner_lines + 3
+    start_time = vim.fn.reltime()
+    if vim.fn.empty(cmd) == 0 and vim.fn.executable(cmd[1]) == 1 then
+      runner_jobid = job.start(cmd, {
+        on_stdout = on_stdout,
+        on_stderr = on_stderr,
+        on_exit = on_exit,
+      })
+      if usestdin and runner_jobid > 0 then
+        local range = runner.range or { 1, '$' }
+        job.send(runner_jobid, vim.fn.getline(unpack(range)))
+        job.chanclose(runner_jobid, 'stdin')
+      end
+    else
+      local exe = cmd[1] or ''
+      vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', true)
+      vim.api.nvim_buf_set_lines(
+        code_runner_bufnr,
+        runner_lines,
+        -1,
+        false,
+        { exe .. ' is not executable, make sure ' .. exe .. ' is in your PATH' }
+      )
+      vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
+    end
   end
 
   if runner_jobid > 0 then
@@ -319,12 +376,9 @@ end
 
 local function stop_runner()
   if runner_status.is_running then
+    logger.debug('stop runner:' .. runner_jobid)
     job.stop(runner_jobid)
   end
-end
-
-local function update_statusline()
-  vim.cmd('redrawstatus!')
 end
 
 function M.open(...)
@@ -340,6 +394,8 @@ function M.open(...)
   local language = vim.o.filetype
   local runner = select(1, ...) or runners[language] or ''
   local opts = select(2, ...) or {}
+  logger.debug('runner is:\n' .. vim.inspect(runner))
+  logger.debug('opt is:\n' .. vim.inspect(opts))
   if vim.fn.empty(runner) == 0 then
     open_win()
     async_run(runner, opts)
