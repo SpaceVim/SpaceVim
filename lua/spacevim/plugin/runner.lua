@@ -294,9 +294,9 @@ local function async_run(runner, ...)
 
     if type(compile_cmd) == 'table' then
       if usestdin then
-        compile_cmd_info = tostring(merge_list(compile_cmd, { 'STDIN' }))
+        compile_cmd_info = vim.inspect(merge_list(compile_cmd, { 'STDIN' }))
       else
-        compile_cmd_info = tostring(compile_cmd)
+        compile_cmd_info = vim.inspect(compile_cmd)
       end
     else
       if usestdin then
@@ -312,7 +312,7 @@ local function async_run(runner, ...)
       runner_lines,
       -1,
       false,
-      { '[Compile] ' .. compile_cmd_info, '[Running]' .. target, '', vim.fn['repeat']('-', 20) }
+      { '[Compile] ' .. compile_cmd_info, '[Running] ' .. target, '', vim.fn['repeat']('-', 20) }
     )
     vim.api.nvim_buf_set_option(code_runner_bufnr, 'modifiable', false)
 

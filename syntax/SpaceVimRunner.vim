@@ -7,17 +7,21 @@ syn match KeyBindings /\[Running\]/
 syn match KeyBindings /\[Compile\]/
 syn match RunnerCmd /\(\[Running\]\ \)\@<=.*/
 syn match RunnerCmd /\(\[Compile\]\ \)\@<=.*/
-syn match DoneSucceeded /\[Done]\(\ exited\ with\ code=0\)\@=/
+syn match DoneSucceeded /\[Done]\(\ exited\ with\ code=0, single=0\)\@=/
 syn match DoneFailed /\[Done]\(\ exited\ with\ code=[^0]\)\@=/
 syn match ExitCode /\(\[Done\]\ exited\ with \)\@<=code=0/
 syn match ExitCodeFailed /\(\[Done\]\ exited\ with \)\@<=code=[^0]/
+syn match SingleCode /single=0/
+syn match SingleCodeFailed /single=[^0]/
 
 hi def link RunnerCmd Comment
 hi def link KeyBindings String
 hi def link DoneSucceeded String
 hi def link DoneFailed WarningMsg
 hi def link ExitCode MoreMsg
+hi def link SingleCode MoreMsg
 hi def link ExitCodeFailed WarningMsg
+hi def link SingleCodeFailed WarningMsg
 let s:shellcmd_colors =
       \ [
       \ '#6c6c6c', '#ff6666', '#66ff66', '#ffd30a',
