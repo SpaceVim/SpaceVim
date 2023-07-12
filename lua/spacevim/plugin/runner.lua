@@ -479,7 +479,9 @@ function M.select_file()
   }
 
   if vim.loop.os_uname().sysname == 'Windows_NT' then
-    selected_file = vim.fn.system({'powershell', "Add-Type -AssemblyName System.windows.forms|Out-Null;$f=New-Object System.Windows.Forms.OpenFileDialog;$f.Filter='Model Files All files (*.*)|*.*';$f.showHelp=$true;$f.ShowDialog()|Out-Null;$f.FileName"})
+    -- what the fuck, why need trim?
+    -- because powershell comamnd output has `\n` at the end, and filetype detection failed.
+    selected_file = str.trim(vim.fn.system({'powershell', "Add-Type -AssemblyName System.windows.forms|Out-Null;$f=New-Object System.Windows.Forms.OpenFileDialog;$f.Filter='Model Files All files (*.*)|*.*';$f.showHelp=$true;$f.ShowDialog()|Out-Null;$f.FileName"}))
   end
 
   if selected_file == '' then
