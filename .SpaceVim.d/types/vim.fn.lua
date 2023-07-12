@@ -1,0 +1,26 @@
+-- Return an item that represents a time value.  The item is a
+-- list with items that depend on the system.
+-- The item can be passed to `reltimestr()` to convert it to a
+-- string or `reltimefloat()` to convert to a Float.
+-- 
+-- Without an argument it returns the current "relative time", an
+-- implementation-defined value meaningful only when used as an
+-- argument to `reltime()`, `reltimestr()` and `reltimefloat()`.
+-- 
+-- With one argument it returns the time passed since the time
+-- specified in the argument.
+-- With two arguments it returns the time passed between {start}
+-- and {end}.
+-- 
+-- The {start} and {end} arguments must be values returned by
+-- reltime().  Returns zero on error.
+-- 
+-- Can also be used as a `method`: 
+-- ```vim
+--   GetStart()->reltime()
+-- ```
+-- Note: `localtime()` returns the current (non-relative) time.
+--- @param start? any[]
+--- @param end_? any[]
+--- @return any[]
+function vim.fn.reltime(start, end_) end

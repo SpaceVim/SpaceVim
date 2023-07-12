@@ -1,6 +1,6 @@
 local job = require('spacevim.api.job')
 
-local jobid = job.start('echo 1', {
+local jobid = job.start({'lua53', '-'}, {
   on_stdout = function(id, data, event)
     vim.print(id)
     vim.print(vim.inspect(data))
@@ -19,5 +19,9 @@ local jobid = job.start('echo 1', {
 })
 
 
--- job.send(jobid, 'hello world')
--- job.stop(jobid)
+job.send(jobid, 'print(1)\n')
+job.send(jobid, 'print(1)\n')
+job.send(jobid, 'print(1)\n')
+job.send(jobid, 'print(1)\n')
+job.chanclose(jobid, 'stdin')
+job.stop(jobid)
