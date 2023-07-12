@@ -37,7 +37,7 @@
 " <
 
 
-if has('nvim-0.9.0') && $USE_LUA_CODE_RUNEER
+if has('nvim-0.9.0') && $USE_LUA_CODE_RUNEER == 1
   function! SpaceVim#plugins#runner#get(ft) abort
     return luaeval('require("spacevim.plugin.runner").get(require("spacevim").eval("a:ft"))') 
   endfunction
