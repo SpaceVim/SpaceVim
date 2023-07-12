@@ -39,7 +39,7 @@
 
 if has('nvim-0.9.0')
   function! SpaceVim#plugins#runner#get(ft) abort
-
+    return luaeval('require("spacevim.plugin.runner").get(require("spacevim").eval("a:ft"))') 
   endfunction
   function! SpaceVim#plugins#runner#open(...) abort
     lua require("spacevim.plugin.runner").open(
@@ -62,14 +62,16 @@ if has('nvim-0.9.0')
 
   function! SpaceVim#plugins#runner#close() abort
 
+    lua require("spacevim.plugin.runner").close()
+
   endfunction
 
   function! SpaceVim#plugins#runner#select_file() abort
-    
+    lua require("spacevim.plugin.runner").select_file()
   endfunction
 
   function! SpaceVim#plugins#runner#select_language() abort
-    
+    lua require("spacevim.plugin.runner").select_language()
   endfunction
 
   function! SpaceVim#plugins#runner#set_language(lang) abort

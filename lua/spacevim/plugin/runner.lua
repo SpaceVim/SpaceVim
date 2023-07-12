@@ -457,4 +457,26 @@ function M.status()
   return string.format(' %s running, %s done', running_nr, running_done)
 end
 
+function M.close()
+  close_win()
+end
+
+function M.select_file()
+  runner_lines = 0
+  runner_status = {
+    is_running = false,
+    has_errors = false,
+    exit_code = 0,
+    exit_single = 0
+  }
+
+  selected_file = vim.fn.browse(0, 'select a file to run', vim.fn.getcwd(), '')
+  
+end
+
+
+function M.select_language()
+  
+end
+
 return M
