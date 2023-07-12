@@ -470,7 +470,24 @@ function M.select_file()
     exit_single = 0
   }
 
-  selected_file = vim.fn.browse(0, 'select a file to run', vim.fn.getcwd(), '')
+  if vim.loop.os_uname().sysname == 'Windows_NT' then
+    selected_file = vim.fn.system("powershell \"Add-Type -AssemblyName System.windows.forms|Out-Null;$f=New-Object System.Windows.Forms.OpenFileDialog;$f.Filter='Model Files (*.mod)|*.mod|All files (*.*)|*.*';$f.showHelp=$true;$f.ShowDialog()|Out-Null;$f.FileName\"")
+    logger.info('selected file:' .. selected_file)
+  end
+
+  if selected_file == '' then
+    return
+  else
+    local runner = runners[vim.o.filetype]
+    if runner then
+      open_win()
+      async_run(runner)
+      update_statusline()
+    end
+  end
+
+
+
   
 end
 
