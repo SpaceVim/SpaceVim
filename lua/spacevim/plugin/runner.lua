@@ -385,7 +385,15 @@ local function async_run(runner, ...)
       })
       if usestdin and runner_jobid > 0 then
         local range = runner.range or { 1, '$' }
-        job.send(runner_jobid, vim.fn.getline(unpack(range)))
+        -- if selected file is not empty
+        -- read the context from selected file.
+        local text
+        if selected_file == '' then
+          text = vim.fn.getline(unpack(range))
+        else
+          text = vim.fn.readfile(selected_file, '')
+        end
+        job.send(runner_jobid, text)
         job.chanclose(runner_jobid, 'stdin')
         job.stop(runner_jobid)
       end
@@ -471,14 +479,21 @@ function M.select_file()
   }
 
   if vim.loop.os_uname().sysname == 'Windows_NT' then
-    selected_file = vim.fn.system("powershell \"Add-Type -AssemblyName System.windows.forms|Out-Null;$f=New-Object System.Windows.Forms.OpenFileDialog;$f.Filter='Model Files (*.mod)|*.mod|All files (*.*)|*.*';$f.showHelp=$true;$f.ShowDialog()|Out-Null;$f.FileName\"")
-    logger.info('selected file:' .. selected_file)
+    selected_file = vim.fn.system({'powershell', "Add-Type -AssemblyName System.windows.forms|Out-Null;$f=New-Object System.Windows.Forms.OpenFileDialog;$f.Filter='Model Files All files (*.*)|*.*';$f.showHelp=$true;$f.ShowDialog()|Out-Null;$f.FileName"})
   end
 
   if selected_file == '' then
+    logger.debug('file to get selected filename!')
     return
   else
-    local runner = runners[vim.o.filetype]
+    logger.debug('selected file is:' .. selected_file)
+    local ft = vim.filetype.match({filename = selected_file})
+    if not ft then
+      logger.debug('failed to detect filetype of selected file:' .. selected_file)
+      return
+    end
+    local runner = runners[ft]
+    logger.info(vim.inspect(runner))
     if runner then
       open_win()
       async_run(runner)
