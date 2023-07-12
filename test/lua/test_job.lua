@@ -1,15 +1,13 @@
 local job = require('spacevim.api.job')
 
 local jobid = job.start({'lua53', '-'}, {
-  on_stdout = function(id, data, event)
+  on_stdout = function(id, data)
     vim.print(id)
     vim.print(vim.inspect(data))
-    vim.print(event)
   end,
-  on_stderr = function(id, data, event)
+  on_stderr = function(id, data)
     vim.print(id)
     vim.print(vim.inspect(data))
-    vim.print(event)
   end,
   on_exit = function(id, code, signal)
     vim.print(id)

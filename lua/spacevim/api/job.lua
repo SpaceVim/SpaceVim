@@ -110,25 +110,50 @@ function M.start(cmd, opts)
     pid = pid,
   })
   if opts.on_stdout then
-    uv.read_start(stdout, function(err, data)
-      if data then
-        data = data:gsub('\r', '')
-        vim.schedule(function()
-          opts.on_stdout(current_id, vim.split(data, '\n'), 'stdout')
-        end)
-      end
-    end)
+    -- define on_stdout function based on stdout's nparams
+    local nparams = debug.getinfo(opts.on_stdout).nparams
+    if nparams == 2 then
+      uv.read_start(stdout, function(err, data)
+        if data then
+          data = data:gsub('\r', '')
+          vim.schedule(function()
+            opts.on_stdout(current_id, vim.split(data, '\n'))
+          end)
+        end
+      end)
+    else
+      uv.read_start(stdout, function(err, data)
+        if data then
+          data = data:gsub('\r', '')
+          vim.schedule(function()
+            opts.on_stdout(current_id, vim.split(data, '\n'), 'stdout')
+          end)
+        end
+      end)
+    end
   end
 
   if opts.on_stderr then
-    uv.read_start(stderr, function(err, data)
-      if data then
-        data = data:gsub('\r', '')
-        vim.schedule(function()
-          opts.on_stderr(current_id, vim.split(data, '\n'), 'stderr')
-        end)
-      end
-    end)
+    local nparams = debug.getinfo(opts.on_stderr).nparams
+    if nparams == 2 then
+      uv.read_start(stderr, function(err, data)
+        if data then
+          data = data:gsub('\r', '')
+          vim.schedule(function()
+            opts.on_stderr(current_id, vim.split(data, '\n'))
+          end)
+        end
+      end)
+    else
+      uv.read_start(stderr, function(err, data)
+        if data then
+          data = data:gsub('\r', '')
+          vim.schedule(function()
+            opts.on_stderr(current_id, vim.split(data, '\n'), 'stderr')
+          end)
+        end
+      end)
+    end
   end
   return current_id
 end
