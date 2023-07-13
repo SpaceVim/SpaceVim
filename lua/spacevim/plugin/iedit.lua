@@ -74,7 +74,8 @@ local getline = vim.fn.getline
 local timer_start = vim.fn.timer_start
 
 local function echo(msg) -- {{{
-  vim.api.nvim_echo({ { msg } }, false, {})
+  vim.g._spacevim_temp_msg = msg
+  vim.api.nvim_eval('SpaceVim#api#notify#get().notify(g:_spacevim_temp_msg, "None")')
 end
 -- }}}
 
@@ -99,11 +100,8 @@ local function replace_symbol() -- {{{
   for i = 1, #cursor_stack, 1 do
     if cursor_stack[i].lnum ~= line then
       if not empty(idxs) then
-        _end = string.sub(
-          vim.fn.getline(line),
-          cursor_stack[i - 1].col + cursor_stack[i - 1].len,
-          -1
-        )
+        _end =
+          string.sub(vim.fn.getline(line), cursor_stack[i - 1].col + cursor_stack[i - 1].len, -1)
         pre = pre .. _end
       end
       fixstack(idxs)
@@ -149,9 +147,7 @@ local function replace_symbol() -- {{{
     table.insert(idxs, {
       i,
       vim.fn.len(
-        cursor_stack[i].cursor_begin
-          .. cursor_stack[i].cursor_char
-          .. cursor_stack[i].cursor_end
+        cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char .. cursor_stack[i].cursor_end
       ),
     })
   end
@@ -242,15 +238,11 @@ local function handle_normal(char) -- handle normal key bindings {{{
       if cursor_stack[i].active then
         local old_cursor_char = cursor_stack[i].cursor_char
         cursor_stack[i].cursor_char = vim.fn.matchstr(
-          cursor_stack[i].cursor_begin
-            .. cursor_stack[i].cursor_char
-            .. cursor_stack[i].cursor_end,
+          cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char .. cursor_stack[i].cursor_end,
           '^.'
         )
         cursor_stack[i].cursor_end = vim.fn.substitute(
-          cursor_stack[i].cursor_begin
-            .. old_cursor_char
-            .. cursor_stack[i].cursor_end,
+          cursor_stack[i].cursor_begin .. old_cursor_char .. cursor_stack[i].cursor_end,
           '^.',
           '',
           'g'
@@ -269,12 +261,9 @@ local function handle_normal(char) -- handle normal key bindings {{{
     vim.w.spacevim_statusline_mode = 'ii'
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
-        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin
-          .. cursor_stack[i].cursor_char
-        cursor_stack[i].cursor_char =
-          vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
-        cursor_stack[i].cursor_end =
-          vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
       end
     end
     vim.cmd('redrawstatus!')
@@ -309,8 +298,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
   elseif char == '~' then -- toggle the case of cursor char {{{
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
-        cursor_stack[i].cursor_char =
-          str.toggle_case(cursor_stack[i].cursor_char)
+        cursor_stack[i].cursor_char = str.toggle_case(cursor_stack[i].cursor_char)
       end
     end
     replace_symbol()
@@ -325,10 +313,8 @@ local function handle_normal(char) -- handle normal key bindings {{{
     vim.w.spacevim_statusline_mode = 'ii'
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
-        cursor_stack[i].cursor_char =
-          vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
-        cursor_stack[i].cursor_end =
-          vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
       end
     end
     replace_symbol()
@@ -336,10 +322,8 @@ local function handle_normal(char) -- handle normal key bindings {{{
   elseif char == 'x' then -- {{{
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
-        cursor_stack[i].cursor_char =
-          vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
-        cursor_stack[i].cursor_end =
-          vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
       end
     end
     replace_symbol()
@@ -353,27 +337,22 @@ local function handle_normal(char) -- handle normal key bindings {{{
     end
     replace_symbol()
     -- }}}
-  elseif char == '<left>' or char == 'h' then -- {{{
+  elseif char == k.t('<left>') or char == 'h' then -- {{{
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
-        cursor_stack[i].cursor_end = cursor_stack[i].cursor_begin
-          .. cursor_stack[i].cursor_end
-        cursor_stack[i].cursor_char =
-          vim.fn.matchstr(cursor_stack[i].cursor_begin, '.$')
+        cursor_stack[i].cursor_end = cursor_stack[i].cursor_char .. cursor_stack[i].cursor_end
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_begin, '.$')
         cursor_stack[i].cursor_begin =
           vim.fn.substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
       end
     end
     -- }}}
-  elseif char == '<right>' or char == 'l' then
+  elseif char == k.t('<right>') or char == 'l' then
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
       if cursor_stack[i].active then
-        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin
-          .. cursor_stack[i].cursor_char
-        cursor_stack[i].cursor_char =
-          vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
-        cursor_stack[i].cursor_end =
-          vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
       end
     end
   elseif char == 'e' then
@@ -383,8 +362,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
         cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin
           .. cursor_stack[i].cursor_char
           .. word
-        cursor_stack[i].cursor_char =
-          vim.fn.matchstr(cursor_stack[i].cursor_begin, '.$')
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_begin, '.$')
         cursor_stack[i].cursor_end =
           vim.fn.substitute(cursor_stack[i].cursor_end, [[^\s*\S*]], '', 'g')
       end
@@ -398,10 +376,8 @@ local function handle_normal(char) -- handle normal key bindings {{{
           .. cursor_stack[i].cursor_end
         cursor_stack[i].cursor_begin =
           vim.fn.substitute(cursor_stack[i].cursor_begin, [[\S*\s*$]], '', 'g')
-        cursor_stack[i].cursor_char =
-          vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
-        cursor_stack[i].cursor_end =
-          vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
       end
     end
   elseif char == 'w' then
@@ -413,10 +389,8 @@ local function handle_normal(char) -- handle normal key bindings {{{
           .. word
         cursor_stack[i].cursor_end =
           vim.fn.substitute(cursor_stack[i].cursor_end, [[^\S*\s*]], '', 'g')
-        cursor_stack[i].cursor_char =
-          vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
-        cursor_stack[i].cursor_end =
-          vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+        cursor_stack[i].cursor_char = vim.fn.matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = vim.fn.substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
       end
     end
   elseif char == '0' or char == '<home>' then
@@ -490,9 +464,7 @@ local function handle_normal(char) -- handle normal key bindings {{{
   elseif char == 'N' then
   end
   highlight_cursor()
-  return cursor_stack[1].cursor_begin
-    .. cursor_stack[1].cursor_char
-    .. cursor_stack[1].cursor_end
+  return cursor_stack[1].cursor_begin .. cursor_stack[1].cursor_char .. cursor_stack[1].cursor_end
 end
 -- }}}
 
@@ -506,9 +478,7 @@ local function handle_insert(char) -- {{{
     highlight_cursor()
     vim.cmd('redraw!')
     vim.cmd('redrawstatus!')
-    return cursor_stack[1].cursor_begin
-      .. cursor_stack[1].cursor_char
-      .. cursor_stack[1].cursor_end
+    return cursor_stack[1].cursor_begin .. cursor_stack[1].cursor_char .. cursor_stack[1].cursor_end
   elseif char == k.t('<C-w>') then
     for i = 1, #cursor_stack, 1 do
       if cursor_stack[i].active then
@@ -532,17 +502,14 @@ local function handle_insert(char) -- {{{
   elseif char == k.t('<bs>') or char == k.t('<C-h>') then
     for i = 1, #cursor_stack, 1 do
       if cursor_stack[i].active then
-        cursor_stack[i].cursor_begin =
-          substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
+        cursor_stack[i].cursor_begin = substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
       end
     end
   elseif char == k.t('<Delete>') or char == k.t('<C-?>') then
     for i = 1, #cursor_stack, 1 do
       if cursor_stack[i].active then
-        cursor_stack[i].cursor_begin =
-          matchstr(cursor_stack[i].cursor_end, '^.')
-        cursor_stack[i].cursor_end =
-          substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+        cursor_stack[i].cursor_begin = matchstr(cursor_stack[i].cursor_end, '^.')
+        cursor_stack[i].cursor_end = substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
       end
     end
   elseif char == k.t('<C-b>') or char == k.t('<Left>') then
@@ -550,12 +517,9 @@ local function handle_insert(char) -- {{{
     for i = 1, #cursor_stack, 1 do
       if cursor_stack[i].active then
         if not empty(cursor_stack[i].cursor_begin) then
-          cursor_stack[i].cursor_end = cursor_stack[i].cursor_char
-            .. cursor_stack[i].cursor_end
-          cursor_stack[i].cursor_char =
-            matchstr(cursor_stack[i].cursor_begin, '.$')
-          cursor_stack[i].cursor_begin =
-            substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
+          cursor_stack[i].cursor_end = cursor_stack[i].cursor_char .. cursor_stack[i].cursor_end
+          cursor_stack[i].cursor_char = matchstr(cursor_stack[i].cursor_begin, '.$')
+          cursor_stack[i].cursor_begin = substitute(cursor_stack[i].cursor_begin, '.$', '', 'g')
         end
       end
     end
@@ -563,11 +527,9 @@ local function handle_insert(char) -- {{{
     is_movement = true
     for i = 1, #cursor_stack, 1 do
       if cursor_stack[i].active then
-        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin
-          .. cursor_stack[i].cursor_char
+        cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin .. cursor_stack[i].cursor_char
         cursor_stack[i].cursor_char = matchstr(cursor_stack[i].cursor_end, '^.')
-        cursor_stack[i].cursor_end =
-          substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
+        cursor_stack[i].cursor_end = substitute(cursor_stack[i].cursor_end, '^.', '', 'g')
       end
     end
   elseif char == k.t('<C-r>') then
@@ -584,9 +546,7 @@ local function handle_insert(char) -- {{{
     replace_symbol()
   end
   highlight_cursor()
-  return cursor_stack[1].cursor_begin
-    .. cursor_stack[1].cursor_char
-    .. cursor_stack[1].cursor_end
+  return cursor_stack[1].cursor_begin .. cursor_stack[1].cursor_char .. cursor_stack[1].cursor_end
 end
 --- }}}
 
@@ -628,10 +588,8 @@ local function handle_f_char(char) -- {{{
   if char >= 32 and char <= 126 then
     Operator = ''
     for _, i in ipairs(vim.fn.range(1, #cursor_stack)) do
-      local matchedstr = vim.fn.matchstr(
-        cursor_stack[i].cursor_end,
-        vim.fn.printf('[^%s]', vim.fn.nr2char(char))
-      )
+      local matchedstr =
+        vim.fn.matchstr(cursor_stack[i].cursor_end, vim.fn.printf('[^%s]', vim.fn.nr2char(char)))
       cursor_stack[i].cursor_begin = cursor_stack[i].cursor_begin
         .. cursor_stack[i].cursor_char
         .. matchedstr
@@ -643,9 +601,7 @@ local function handle_f_char(char) -- {{{
     end
   end
   highlight_cursor()
-  return cursor_stack[1].cursor_begin
-    .. cursor_stack[1].cursor_char
-    .. cursor_stack[1].cursor_end
+  return cursor_stack[1].cursor_begin .. cursor_stack[1].cursor_char .. cursor_stack[1].cursor_end
 end
 -- }}}
 
@@ -662,9 +618,7 @@ local function handle_register(char) -- {{{
     replace_symbol()
     highlight_cursor()
   end
-  return cursor_stack[1].cursor_begin
-    .. cursor_stack[1].cursor_char
-    .. cursor_stack[1].cursor_end
+  return cursor_stack[1].cursor_begin .. cursor_stack[1].cursor_char .. cursor_stack[1].cursor_end
 end
 -- }}}
 
@@ -694,6 +648,7 @@ function M.start(...) -- {{{
     )
   then
     echo('no pattern found under cursor')
+    return
   end
   local save_tve = vim.o.t_ve
   local save_cl = vim.wo.cursorline

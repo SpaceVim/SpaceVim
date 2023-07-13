@@ -31,8 +31,11 @@
 
 ; Highlight xpath and pattern strings differently from plain strings
 (statement
-  (statement_keyword ["pattern" "must"])
+  (statement_keyword "must")
   (argument (string) @string.special))
+(statement
+  (statement_keyword "pattern")
+  (argument (string) @string.regex))
 
 ; Punctuation
 (plus_symbol) @operator

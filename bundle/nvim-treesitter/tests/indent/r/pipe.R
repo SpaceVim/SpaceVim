@@ -5,3 +5,6 @@ mtcars |>
   subset(
     cyl > 3
   )
+
+mtcars %>%
+  head()

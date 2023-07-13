@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 Kotlin 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/94328509-cbcc9f00-ffe5-11ea-8f0d-9ea7b5b81352.png
+image: https://img.spacevim.org/94328509-cbcc9f00-ffe5-11ea-8f0d-9ea7b5b81352.png
 description: "使用 SpaceVim 搭建 Kotlin 的开发环境，简介 lang#kotlin 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
@@ -79,7 +79,7 @@ scoop bucket add extras
 scoop install ktlint
 ```
 
-![kotlin-lint](https://user-images.githubusercontent.com/13142418/94366839-3e846a00-010d-11eb-9e6c-200931646479.png)
+![kotlin-lint](https://img.spacevim.org/94366839-3e846a00-010d-11eb-9e6c-200931646479.png)
 
 ### 工程文件跳转
 
@@ -100,7 +100,7 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 a
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前 buffer 内容调用 Kotlin 命令。因此，在执行这个快捷键之前，不一定要保存该文件。
 
-![kotlin-runner](https://user-images.githubusercontent.com/13142418/94288524-14566f00-ff8a-11ea-8440-ee9ca8ba8843.png)
+![kotlin-runner](https://img.spacevim.org/94288524-14566f00-ff8a-11ea-8440-ee9ca8ba8843.png)
 
 ### 代码格式化
 
@@ -122,7 +122,7 @@ npm install --save-dev --save-exact prettier
 在编辑 Kotlin 文件时，可通过快捷键 `SPC l s i` 启动 `kotlinc-jvm` 交互窗口，
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
-![kotlin-repl](https://user-images.githubusercontent.com/13142418/94289606-84192980-ff8b-11ea-84c8-1547741f377c.png)
+![kotlin-repl](https://img.spacevim.org/94289606-84192980-ff8b-11ea-84c8-1547741f377c.png)
 
 ### 任务管理
 

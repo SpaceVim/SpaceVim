@@ -9,7 +9,7 @@
   (where_statement)
   (derived_type_definition)
   (enum)
-] @indent
+] @indent.begin
 
 [
   (end_module_statement)
@@ -24,4 +24,4 @@
   (end_type_statement)
   (end_enum_statement)
   (end_where_statement)
-] @branch
+] @indent.branch

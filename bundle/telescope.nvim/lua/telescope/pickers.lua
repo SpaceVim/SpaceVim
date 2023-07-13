@@ -90,7 +90,7 @@ function Picker:new(opts)
     sorter = opts.sorter or require("telescope.sorters").empty(),
 
     all_previewers = opts.previewer,
-    current_previewer_index = 1,
+    current_previewer_index = opts.current_previewer_index or 1,
 
     default_selection_index = opts.default_selection_index,
 
@@ -147,8 +147,8 @@ function Picker:new(opts)
     if obj.all_previewers[1] == nil then
       obj.all_previewers = { obj.all_previewers }
     end
-    obj.previewer = obj.all_previewers[1]
-    if obj.preview_title == nil then
+    obj.previewer = obj.all_previewers[obj.current_previewer_index]
+    if obj.preview_title == nil or #obj.all_previewers > 1 then
       obj.preview_title = obj.previewer:title(nil, config.values.dynamic_preview_title)
     else
       obj.fix_preview_title = true
@@ -344,7 +344,7 @@ function Picker:find()
   self.original_win_id = a.nvim_get_current_win()
 
   -- User autocmd run it before create Telescope window
-  vim.api.nvim_exec_autocmds("User TelescopeFindPre", {})
+  vim.api.nvim_exec_autocmds("User", { pattern = "TelescopeFindPre" })
 
   -- Create three windows:
   -- 1. Prompt window
@@ -749,7 +749,9 @@ function Picker.close_windows(status)
   utils.win_delete("preview_border_win", status.preview_border_win, true, true)
 
   -- we cant use win_delete. We first need to close and then delete the buffer
-  vim.api.nvim_win_close(status.prompt_win, true)
+  if vim.api.nvim_win_is_valid(status.prompt_win) then
+    vim.api.nvim_win_close(status.prompt_win, true)
+  end
   utils.buf_delete(status.prompt_bufnr)
 
   state.clear_status(status.prompt_bufnr)
@@ -853,7 +855,7 @@ end
 function Picker:_reset_prefix_color(hl_group)
   self._current_prefix_hl_group = hl_group or nil
 
-  if self.prompt_prefix ~= "" then
+  if self.prompt_prefix ~= "" and a.nvim_buf_is_valid(self.prompt_bufnr) then
     vim.api.nvim_buf_add_highlight(
       self.prompt_bufnr,
       ns_telescope_prompt_prefix,
@@ -1327,6 +1329,11 @@ function Picker:get_result_completor(results_bufnr, find_id, prompt, status_upda
     self:clear_extra_rows(results_bufnr)
     self.sorter:_finish(prompt)
 
+    if self.wrap_results and self.sorting_strategy == "descending" then
+      local visible_result_rows = vim.api.nvim_win_get_height(self.results_win)
+      vim.api.nvim_win_set_cursor(self.results_win, { self.max_results - visible_result_rows, 1 })
+      vim.api.nvim_win_set_cursor(self.results_win, { self.max_results, 1 })
+    end
     self:_on_complete()
   end)
 end
@@ -1415,6 +1422,8 @@ pickers.new = function(opts, defaults)
   if result["previewer"] == false then
     result["previewer"] = defaults["previewer"]
     result["__hide_previewer"] = true
+  elseif result["previewer"] == true then
+    result["previewer"] = defaults["previewer"]
   elseif type(opts["preview"]) == "table" and opts["preview"]["hide_on_startup"] then
     result["__hide_previewer"] = true
   end
@@ -1485,7 +1494,6 @@ function pickers.on_close_prompt(prompt_bufnr)
     buffer = prompt_bufnr,
   }
   picker.close_windows(status)
-  mappings.clear(prompt_bufnr)
 end
 
 function pickers.on_resize_window(prompt_bufnr)

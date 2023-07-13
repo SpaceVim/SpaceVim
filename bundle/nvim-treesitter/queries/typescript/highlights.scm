@@ -1,19 +1,40 @@
 ; inherits: ecma
+
+"require" @include
+
+(import_require_clause source: (string) @text.uri)
+
 [
-"abstract"
-"declare"
-"enum"
-"export"
-"implements"
-"interface"
-"keyof"
-"namespace"
-"private"
-"protected"
-"public"
-"type"
-"readonly"
+  "declare"
+  "enum"
+  "export"
+  "implements"
+  "interface"
+  "type"
+  "namespace"
+  "override"
+  "module"
+  "asserts"
+  "infer"
+  "is"
 ] @keyword
+
+[
+  "keyof"
+  "satisfies"
+] @keyword.operator
+
+(as_expression "as" @keyword.operator)
+(export_statement "as" @keyword.operator)
+(mapped_type_clause "as" @keyword.operator)
+
+[
+  "abstract"
+  "private"
+  "protected"
+  "public"
+  "readonly"
+] @type.qualifier
 
 ; types
 
@@ -26,13 +47,22 @@
       ((import_specifier
           name: (identifier) @type)))))
 
-; punctuation
+(template_literal_type) @string
+
+(non_null_expression "!" @operator)
+
+;; punctuation
 
 (type_arguments
-  "<" @punctuation.bracket
-  ">" @punctuation.bracket)
+  ["<" ">"] @punctuation.bracket)
 
-(union_type 
+(type_parameters
+  ["<" ">"] @punctuation.bracket)
+
+(object_type
+  ["{|" "|}"] @punctuation.bracket)
+
+(union_type
   "|" @punctuation.delimiter)
 
 (intersection_type 
@@ -41,11 +71,32 @@
 (type_annotation
   ":" @punctuation.delimiter)
 
-(pair
+(type_predicate_annotation
   ":" @punctuation.delimiter)
 
+(index_signature
+  ":" @punctuation.delimiter)
+
+(omitting_type_annotation
+  "-?:" @punctuation.delimiter)
+
+(opting_type_annotation
+  "?:" @punctuation.delimiter)
+
+"?." @punctuation.delimiter
+
+(abstract_method_signature "?" @punctuation.special)
+(method_signature "?" @punctuation.special)
+(method_definition "?" @punctuation.special)
 (property_signature "?" @punctuation.special)
 (optional_parameter "?" @punctuation.special)
+(optional_type "?" @punctuation.special)
+(public_field_definition [ "?" "!" ] @punctuation.special)
+(flow_maybe_type "?" @punctuation.special)
+
+(template_type ["${" "}"] @punctuation.special)
+
+(conditional_type ["?" ":"] @conditional.ternary)
 
 ; Variables
 
@@ -78,3 +129,20 @@
 ;; a => null
 (arrow_function
   parameter: (identifier) @parameter)
+
+;; function signatures
+(ambient_declaration
+  (function_signature
+    name: (identifier) @function))
+
+;; method signatures
+(method_signature name: (_) @method)
+
+;; property signatures
+(property_signature
+  name: (property_identifier) @method
+  type: (type_annotation
+          [
+            (union_type (parenthesized_type (function_type)))
+            (function_type)
+          ]))

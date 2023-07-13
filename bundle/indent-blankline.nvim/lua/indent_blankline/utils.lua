@@ -38,12 +38,16 @@ M.memo = setmetatable({
     end,
 })
 
-M.error_handler = function(err)
-    if vim.g.indent_blankline_debug then
-        vim.cmd "echohl Error"
-        vim.cmd('echomsg "' .. err .. '"')
-        vim.cmd "echohl None"
+M.error_handler = function(err, level)
+    if err:match "Invalid buffer id.*" then
+        return
     end
+    if not pcall(require, "notify") then
+        err = string.format("indent-blankline: %s", err)
+    end
+    vim.notify_once(err, level or vim.log.levels.DEBUG, {
+        title = "indent-blankline",
+    })
 end
 
 M.is_indent_blankline_enabled = M.memo(
@@ -182,9 +186,28 @@ M.find_indent = function(whitespace, only_whitespace, shiftwidth, strict_tabs, l
     return indent + math.floor(spaces / shiftwidth), table.maxn(virtual_string) % shiftwidth ~= 0, virtual_string
 end
 
-M.get_current_context = function(type_patterns)
-    local ts_utils = require "nvim-treesitter.ts_utils"
+M.get_current_context = function(type_patterns, use_treesitter_scope)
+    local ts_utils_status, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
+    if not ts_utils_status then
+        vim.schedule_wrap(function()
+            M.error_handler("nvim-treesitter not found. Context will not work", vim.log.levels.WARN)
+        end)()
+        return false
+    end
+    local locals = require "nvim-treesitter.locals"
     local cursor_node = ts_utils.get_node_at_cursor()
+
+    if use_treesitter_scope then
+        local current_scope = locals.containing_scope(cursor_node, 0)
+        if not current_scope then
+            return false
+        end
+        local node_start, _, node_end, _ = current_scope:range()
+        if node_start == node_end then
+            return false
+        end
+        return true, node_start + 1, node_end + 1, current_scope:type()
+    end
 
     while cursor_node do
         local node_type = cursor_node:type()

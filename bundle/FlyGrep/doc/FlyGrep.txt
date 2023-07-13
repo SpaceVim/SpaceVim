@@ -1,0 +1,36 @@
+*FlyGrep.txt*	Fly grep in vim
+Wang Shidong                                               *flygrep* *FlyGrep*
+
+==============================================================================
+CONTENTS                                                    *FlyGrep-contents*
+  1. Introduction..............................................|FlyGrep-intro|
+  2. CONFIGURATION............................................|FlyGrep-config|
+
+==============================================================================
+INTRODUCTION                                                   *FlyGrep-intro*
+
+Fly grep in vim, written in pure vim script for MacVim, gvim and vim version
+8.0+.
+
+
+==============================================================================
+CONFIGURATION                                                 *FlyGrep-config*
+
+FlyGrep has strong default options, but you can also change the option
+yourself.
+
+                                                       *g:FlyGrep_input_delay*
+FlyGrep will start to searching code after a delay, the default value is
+500ms.
+
+                                                      *g:FlyGrep_search_tools*
+A list of searching tools will be userd.
+
+                                                 *g:FlyGrep_enable_statusline*
+Enable FlyGrep statusline
+
+                                               *g:spacevim_commandline_prompt*
+Set FlyGrep default command prompt
+
+
+vim:tw=78:ts=8:ft=help:norl:

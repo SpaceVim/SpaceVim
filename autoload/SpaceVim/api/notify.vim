@@ -14,9 +14,9 @@ scriptencoding utf-8
 "
 " notify({msg} [, {Color}[, {option}]])
 "
-" Use floating windows to display notification {msg}. The {msg} should a no
-" empty string. {Color} is the name of highlight ground defined in Vim. The
-" {option} is a dictionary which support following key:
+" Use floating windows to display notification {msg}. The {msg} can be a
+" string or a list of string. {Color} is the name of highlight ground defined
+" in Vim. The {option} is a dictionary which support following key:
 "
 " - `winblend`: enable transparency for the notify windows. Valid values
 "   are in the range of 0 to 100. Default is 0.
@@ -102,7 +102,7 @@ function! s:self.increase_window(...) abort
   if self.notification_width <= self.notify_max_width && self.win_is_open()
     let self.notification_width += min([float2nr((self.notify_max_width - self.notification_width) * 1 / 20), float2nr(self.notify_max_width)])
     call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
-          \ self.draw_border(self.title, self.notification_width, len(self.message)))
+          \ self.draw_border(self.title, self.notification_width, s:msg_real_len(self.message)))
     call self.redraw_windows()
     call timer_start(10, self.increase_window, {'repeat' : 1})
   endif
@@ -162,11 +162,33 @@ function! s:self.close_all() abort
   let self.notification_width = 1
 endfunction
 
+function! s:is_list_of_string(t) abort
+  if type(a:t) == type([])
+    for t in a:t
+      if type(t) !=# type('')
+        return 0
+      endif
+    endfor
+    return 1
+  endif
+endfunction
+
 function! s:self.notify(msg, ...) abort
+  " check if neovim/vim support following windows
+  if !self.__floating.exists()
+    echo a:msg
+    return
+  endif
+  " multiple line message should be signal msg
+  " if the a:msg is a list, it will be append to self.message
+  if s:is_list_of_string(a:msg)
+    call extend(self.message, a:msg)
+  elseif type(a:msg) == type('')
+    call add(self.message, a:msg)
+  endif
   if self.notify_max_width ==# 0
     let self.notify_max_width = &columns * 0.35
   endif
-  call extend(self.message, split(a:msg, "\n"))
   let self.notification_color = get(a:000, 0, 'Normal')
   let options = get(a:000, 1, {}) 
   let self.winblend = get(options, 'winblend', self.winblend)
@@ -184,7 +206,23 @@ function! s:self.notify(msg, ...) abort
   call setbufvar(self.border.bufnr, '&bufhidden', 'wipe')
   call extend(s:notifications, {self.hashkey : self})
   call self.increase_window()
-  call timer_start(self.timeout, self.close, {'repeat' : len(split(a:msg, "\n"))})
+  call timer_start(self.timeout, self.close, {'repeat' : type(a:msg) == type([]) ? len(a:msg) : 1})
+endfunction
+
+function! s:msg_real_len(msg) abort
+  let l = 0
+  for m in a:msg
+    let l += len(split(m, "\n"))
+  endfor
+  return l
+endfunction
+
+function! s:message_body(msg) abort
+  let b = []
+  for m in a:msg
+    call extend(b, split(m, "\n"))
+  endfor
+  return b
 endfunction
 
 function! s:self.redraw_windows() abort
@@ -194,7 +232,7 @@ function! s:self.redraw_windows() abort
   let self.begin_row = 2
   for hashkey in keys(s:notifications)
     if hashkey !=# self.hashkey
-      let self.begin_row += len(s:notifications[hashkey].message) + 2
+      let self.begin_row += s:msg_real_len(s:notifications[hashkey].message) + 2
     else
       break
     endif
@@ -202,24 +240,24 @@ function! s:self.redraw_windows() abort
   if self.win_is_open()
     call self.__floating.win_config(self.winid,
           \ {
-            \ 'relative': 'editor',
-            \ 'width'   : self.notification_width, 
-            \ 'height'  : len(self.message),
-            \ 'row': self.begin_row + 1,
-            \ 'highlight' : self.notification_color,
-            \ 'focusable' : v:false,
-            \ 'col': &columns - self.notification_width - 1,
-            \ })
+          \ 'relative': 'editor',
+          \ 'width'   : self.notification_width, 
+          \ 'height'  : s:msg_real_len(self.message),
+          \ 'row': self.begin_row + 1,
+          \ 'highlight' : self.notification_color,
+          \ 'focusable' : v:false,
+          \ 'col': &columns - self.notification_width - 1,
+          \ })
     call self.__floating.win_config(self.border.winid,
           \ {
-            \ 'relative': 'editor',
-            \ 'width'   : self.notification_width + 2, 
-            \ 'height'  : len(self.message) + 2,
-            \ 'row': self.begin_row,
-            \ 'col': &columns - self.notification_width - 2,
-            \ 'highlight' : 'VertSplit',
-            \ 'focusable' : v:false,
-            \ })
+          \ 'relative': 'editor',
+          \ 'width'   : self.notification_width + 2, 
+          \ 'height'  : s:msg_real_len(self.message) + 2,
+          \ 'row': self.begin_row,
+          \ 'col': &columns - self.notification_width - 2,
+          \ 'highlight' : 'VertSplit',
+          \ 'focusable' : v:false,
+          \ })
   else
     if !bufexists(self.border.bufnr)
       let self.border.bufnr = self.__buffer.create_buf(0, 1)
@@ -229,24 +267,24 @@ function! s:self.redraw_windows() abort
     endif
     noautocmd let self.winid =  self.__floating.open_win(self.bufnr, v:false,
           \ {
-            \ 'relative': 'editor',
-            \ 'width'   : self.notification_width, 
-            \ 'height'  : len(self.message),
-            \ 'row': self.begin_row + 1,
-            \ 'highlight' : self.notification_color,
-            \ 'col': &columns - self.notification_width - 1,
-            \ 'focusable' : v:false,
-            \ })
+          \ 'relative': 'editor',
+          \ 'width'   : self.notification_width, 
+          \ 'height'  : s:msg_real_len(self.message),
+          \ 'row': self.begin_row + 1,
+          \ 'highlight' : self.notification_color,
+          \ 'col': &columns - self.notification_width - 1,
+          \ 'focusable' : v:false,
+          \ })
     noautocmd let self.border.winid =  self.__floating.open_win(self.border.bufnr, v:false,
           \ {
-            \ 'relative': 'editor',
-            \ 'width'   : self.notification_width + 2, 
-            \ 'height'  : len(self.message) + 2,
-            \ 'row': self.begin_row,
-            \ 'col': &columns - self.notification_width - 2,
-            \ 'highlight' : 'VertSplit',
-            \ 'focusable' : v:false,
-            \ })
+          \ 'relative': 'editor',
+          \ 'width'   : self.notification_width + 2, 
+          \ 'height'  : s:msg_real_len(self.message) + 2,
+          \ 'row': self.begin_row,
+          \ 'col': &columns - self.notification_width - 2,
+          \ 'highlight' : 'VertSplit',
+          \ 'focusable' : v:false,
+          \ })
     if self.winblend > 0 && exists('&winblend')
           \ && exists('*nvim_win_set_option')
       call nvim_win_set_option(self.winid, 'winblend', self.winblend)
@@ -254,8 +292,8 @@ function! s:self.redraw_windows() abort
     endif
   endif
   call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
-        \ self.draw_border(self.title, self.notification_width, len(self.message)))
-  call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, self.message)
+        \ self.draw_border(self.title, self.notification_width, s:msg_real_len(self.message)))
+  call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, s:message_body(self.message))
 endfunction
 
 

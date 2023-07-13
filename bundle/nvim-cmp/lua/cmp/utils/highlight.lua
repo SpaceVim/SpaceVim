@@ -1,46 +1,31 @@
 local highlight = {}
 
 highlight.keys = {
-  'gui',
-  'guifg',
-  'guibg',
-  'cterm',
-  'ctermfg',
-  'ctermbg',
+  'fg',
+  'bg',
+  'bold',
+  'italic',
+  'reverse',
+  'standout',
+  'underline',
+  'undercurl',
+  'strikethrough',
 }
 
-highlight.inherit = function(name, source, override)
-  local cmd = ('highlight default %s'):format(name)
+highlight.inherit = function(name, source, settings)
   for _, key in ipairs(highlight.keys) do
-    if override[key] then
-      cmd = cmd .. (' %s=%s'):format(key, override[key])
-    else
-      local v = highlight.get(source, key)
-      v = v == '' and 'NONE' or v
-      cmd = cmd .. (' %s=%s'):format(key, v)
-    end
-  end
-  vim.cmd(cmd)
-end
-
-highlight.get = function(source, key)
-  if key == 'gui' or key == 'cterm' then
-    local ui = {}
-    for _, k in ipairs({ 'bold', 'italic', 'reverse', 'inverse', 'standout', 'underline', 'undercurl', 'strikethrough' }) do
-      if vim.fn.synIDattr(vim.fn.hlID(source), k, key) == 1 then
-        table.insert(ui, k)
+    if not settings[key] then
+      local v = vim.fn.synIDattr(vim.fn.hlID(source), key)
+      if key == 'fg' or key == 'bg' then
+        local n = tonumber(v, 10)
+        v = type(n) == 'number' and n or v
+      else
+        v = v == 1
       end
+      settings[key] = v == '' and 'NONE' or v
     end
-    return table.concat(ui, ',')
-  elseif key == 'guifg' then
-    return vim.fn.synIDattr(vim.fn.hlID(source), 'fg#', 'gui')
-  elseif key == 'guibg' then
-    return vim.fn.synIDattr(vim.fn.hlID(source), 'bg#', 'gui')
-  elseif key == 'ctermfg' then
-    return vim.fn.synIDattr(vim.fn.hlID(source), 'fg', 'term')
-  elseif key == 'ctermbg' then
-    return vim.fn.synIDattr(vim.fn.hlID(source), 'bg', 'term')
   end
+  vim.api.nvim_set_hl(0, name, settings)
 end
 
 return highlight

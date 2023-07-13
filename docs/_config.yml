@@ -35,4 +35,4 @@ defaults:
   - scope:
       path: ""
     values:
-      image: https://user-images.githubusercontent.com/13142418/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png
+      image: https://img.spacevim.org/release-v2.2.0.png

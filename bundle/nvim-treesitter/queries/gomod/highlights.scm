@@ -10,6 +10,7 @@
 "=>" @operator
 
 (comment) @comment
+(module_path) @text.uri
 
 [
 (version)

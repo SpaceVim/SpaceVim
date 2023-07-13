@@ -56,8 +56,14 @@ return function(opts)
       stdout = stdout,
     }
 
+    local line_num = 0
     for line in stdout:iter(true) do
-      if process_result(entry_maker(line)) then
+      line_num = line_num + 1
+      local entry = entry_maker(line)
+      if entry then
+        entry.index = line_num
+      end
+      if process_result(entry) then
         return
       end
     end

@@ -4,33 +4,32 @@
 ---
 --- Each picker has a finder made up of two parts, the results which are the
 --- data to be displayed, and the entry_maker. These entry_makers are functions
---- returned from make_entry functions. These will be referrd to as
+--- returned from make_entry functions. These will be referred to as
 --- entry_makers in the following documentation.
 ---
---- Every entry maker returns a function which accepts the data to be used for
+--- Every entry maker returns a function that accepts the data to be used for
 --- an entry. This function will return an entry table (or nil, meaning skip
---- this entry) which contains of the - following important keys:
+--- this entry) which contains the following important keys:
 --- - value any: value key can be anything but still required
---- - valid bool: is an optional key because it defaults to true but if the key
----   is set to false it will not be displayed by the picker. (optional)
---- - ordinal string: is the text that is used for filtering (required)
+--- - valid bool (optional): is an optional key because it defaults to true but if the key
+---   is set to false it will not be displayed by the picker
+--- - ordinal string: is the text that is used for filtering
 --- - display string|function: is either a string of the text that is being
 ---   displayed or a function receiving the entry at a later stage, when the entry
----   is actually being displayed. A function can be useful here if complex
----   calculation have to be done. `make_entry` can also return a second value
+---   is actually being displayed. A function can be useful here if a complex
+---   calculation has to be done. `make_entry` can also return a second value -
 ---   a highlight array which will then apply to the line. Highlight entry in
 ---   this array has the following signature `{ { start_col, end_col }, hl_group }`
----   (required).
---- - filename string: will be interpreted by the default `<cr>` action as
----   open this file (optional)
---- - bufnr number: will be interpreted by the default `<cr>` action as open
----   this buffer (optional)
---- - lnum number: lnum value which will be interpreted by the default `<cr>`
----   action as a jump to this line (optional)
---- - col number: col value which will be interpreted by the default `<cr>`
----   action as a jump to this column (optional)
+--- - filename string (optional): will be interpreted by the default `<cr>` action as
+---   open this file
+--- - bufnr number (optional): will be interpreted by the default `<cr>` action as open
+---   this buffer
+--- - lnum number (optional): lnum value which will be interpreted by the default `<cr>`
+---   action as a jump to this line
+--- - col number (optional): col value which will be interpreted by the default `<cr>`
+---   action as a jump to this column
 ---
---- More information on easier displaying, see |telescope.pickers.entry_display|
+--- For more information on easier displaying, see |telescope.pickers.entry_display|
 ---
 --- TODO: Document something we call `entry_index`
 ---@brief ]]
@@ -158,13 +157,13 @@ do
 
     mt_file_entry.cwd = cwd
     mt_file_entry.display = function(entry)
-      local hl_group
+      local hl_group, icon
       local display = utils.transform_path(opts, entry.value)
 
-      display, hl_group = utils.transform_devicons(entry.value, display, disable_devicons)
+      display, hl_group, icon = utils.transform_devicons(entry.value, display, disable_devicons)
 
       if hl_group then
-        return display, { { { 1, 3 }, hl_group } }
+        return display, { { { 0, #icon }, hl_group } }
       else
         return display
       end
@@ -244,12 +243,23 @@ do
     return { filename, lnum, nil, text }
   end
 
+  local parse_only_filename = function(t)
+    t.filename = t.value
+    t.lnum = nil
+    t.col = nil
+    t.text = ""
+
+    return { t.filename, nil, nil, "" }
+  end
+
   function make_entry.gen_from_vimgrep(opts)
     opts = opts or {}
 
     local mt_vimgrep_entry
     local parse = parse_with_col
-    if opts.__inverted == true then
+    if opts.__matches == true then
+      parse = parse_only_filename
+    elseif opts.__inverted == true then
       parse = parse_without_col
     end
 
@@ -290,7 +300,7 @@ do
       end
     end
 
-    local display_string = "%s:%s%s"
+    local display_string = "%s%s%s"
 
     mt_vimgrep_entry = {
       cwd = vim.fn.expand(opts.cwd or vim.loop.cwd()),
@@ -298,23 +308,26 @@ do
       display = function(entry)
         local display_filename = utils.transform_path(opts, entry.filename)
 
-        local coordinates = ""
+        local coordinates = ":"
         if not disable_coordinates then
-          if entry.col then
-            coordinates = string.format("%s:%s:", entry.lnum, entry.col)
-          else
-            coordinates = string.format("%s:", entry.lnum)
+          if entry.lnum then
+            if entry.col then
+              coordinates = string.format(":%s:%s:", entry.lnum, entry.col)
+            else
+              coordinates = string.format(":%s:", entry.lnum)
+            end
           end
         end
 
-        local display, hl_group = utils.transform_devicons(
+        local text = opts.file_encoding and vim.iconv(entry.text, opts.file_encoding, "utf8") or entry.text
+        local display, hl_group, icon = utils.transform_devicons(
           entry.filename,
-          string.format(display_string, display_filename, coordinates, entry.text),
+          string.format(display_string, display_filename, coordinates, text),
           disable_devicons
         )
 
         if hl_group then
-          return display, { { { 1, 3 }, hl_group } }
+          return display, { { { 0, #icon }, hl_group } }
         else
           return display
         end
@@ -611,7 +624,18 @@ function make_entry.gen_from_buffer(opts)
     local readonly = vim.api.nvim_buf_get_option(entry.bufnr, "readonly") and "=" or " "
     local changed = entry.info.changed == 1 and "+" or " "
     local indicator = entry.flag .. hidden .. readonly .. changed
-    local line_count = vim.api.nvim_buf_line_count(entry.bufnr)
+    local lnum = 1
+
+    -- account for potentially stale lnum as getbufinfo might not be updated or from resuming buffers picker
+    if entry.info.lnum ~= 0 then
+      -- but make sure the buffer is loaded, otherwise line_count is 0
+      if vim.api.nvim_buf_is_loaded(entry.bufnr) then
+        local line_count = vim.api.nvim_buf_line_count(entry.bufnr)
+        lnum = math.max(math.min(entry.info.lnum, line_count), 1)
+      else
+        lnum = entry.info.lnum
+      end
+    end
 
     return make_entry.set_default_entry_mt({
       value = bufname,
@@ -620,8 +644,7 @@ function make_entry.gen_from_buffer(opts)
 
       bufnr = entry.bufnr,
       filename = bufname,
-      -- account for potentially stale lnum as getbufinfo might not be updated or from resuming buffers picker
-      lnum = entry.info.lnum ~= 0 and math.max(math.min(entry.info.lnum, line_count), 1) or 1,
+      lnum = lnum,
       indicator = indicator,
     }, opts)
   end
@@ -667,8 +690,7 @@ function make_entry.gen_from_treesitter(opts)
 
   local get_filename = get_filename_fn()
   return function(entry)
-    local ts_utils = require "nvim-treesitter.ts_utils"
-    local start_row, start_col, end_row, _ = ts_utils.get_node_range(entry.node)
+    local start_row, start_col, end_row, _ = vim.treesitter.get_node_range(entry.node)
     local node_text = vim.treesitter.get_node_text(entry.node, bufnr)
     return make_entry.set_default_entry_mt({
       value = entry.node,
@@ -792,7 +814,7 @@ function make_entry.gen_from_registers(opts)
   end
 
   return function(entry)
-    local contents = vim.fn.getreg(entry)
+    local contents = vim.fn.getreg(entry, 1)
     return make_entry.set_default_entry_mt({
       value = entry,
       ordinal = string.format("%s %s", entry, contents),
@@ -805,7 +827,7 @@ end
 function make_entry.gen_from_keymaps(opts)
   local function get_desc(entry)
     if entry.callback and not entry.desc then
-      return require("telescope.actions.utils")._get_anon_function_name(entry.callback)
+      return require("telescope.actions.utils")._get_anon_function_name(debug.getinfo(entry.callback))
     end
     return vim.F.if_nil(entry.desc, entry.rhs)
   end
@@ -1227,7 +1249,7 @@ function make_entry.gen_from_commands(opts)
       attrs,
       entry.nargs,
       entry.complete or "",
-      entry.definition,
+      entry.definition:gsub("\n", " "),
     }
   end
 
@@ -1299,7 +1321,13 @@ function make_entry.gen_from_git_status(opts)
     if entry == "" then
       return nil
     end
-    local mod, file = string.match(entry, "(..).*%s[->%s]?(.+)")
+
+    local mod, file = entry:match "^(..) (.+)$"
+    -- Ignore entries that are the PATH in XY ORIG_PATH PATH
+    -- (renamed or copied files)
+    if not mod then
+      return nil
+    end
 
     return setmetatable({
       value = file,

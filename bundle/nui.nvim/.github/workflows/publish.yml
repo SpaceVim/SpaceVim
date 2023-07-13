@@ -1,0 +1,33 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - "[0-1].[0-9]+.[0-9]+"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to publish
+        required: false
+        type: string
+      force:
+        description: Force publish
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  publish:
+    name: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: LuaRocks Publish
+        uses: MunifTanjim/luarocks-publish-action@v1
+        with:
+          lua_version: 5.1.5
+          luarocks_version: 3.9.1
+          version: ${{ inputs.version }}
+          api_key: ${{ secrets.LUAROCKS_API_KEY }}
+          force: ${{ inputs.force }}

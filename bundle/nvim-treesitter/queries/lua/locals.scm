@@ -21,19 +21,19 @@
   (variable_list
     (dot_index_expression . (_) @definition.associated (identifier) @definition.var)))
 
-(function_declaration
+((function_declaration
   name: (identifier) @definition.function)
-  (#set! definition.function.scope "parent")
+  (#set! definition.function.scope "parent"))
 
-(function_declaration
+((function_declaration
   name: (dot_index_expression
     . (_) @definition.associated (identifier) @definition.function))
-  (#set! definition.method.scope "parent")
+  (#set! definition.method.scope "parent"))
 
-(function_declaration
+((function_declaration
   name: (method_index_expression
     . (_) @definition.associated (identifier) @definition.method))
-  (#set! definition.method.scope "parent")
+  (#set! definition.method.scope "parent"))
 
 (for_generic_clause
   (variable_list

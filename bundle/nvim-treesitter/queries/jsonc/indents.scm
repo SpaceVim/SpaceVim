@@ -1,3 +1,3 @@
 ; inherits: json
 
-(comment) @ignore
+(comment) @indent.ignore

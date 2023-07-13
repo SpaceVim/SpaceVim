@@ -6,16 +6,23 @@
   (return_statement)
   (arguments)
   (formal_parameters)
-] @indent
+  (enum_declaration_list)
+  (switch_block)
+  (match_block)
+  (case_statement)
+  "["
+] @indent.begin
 
 [
   ")"
   "}"
   "]"
-] @branch
+] @indent.branch
 
 [
   (comment)
-] @ignore
+] @indent.auto
 
-(compound_statement "}" @indent_end)
+(compound_statement "}" @indent.end)
+
+(ERROR) @indent.auto

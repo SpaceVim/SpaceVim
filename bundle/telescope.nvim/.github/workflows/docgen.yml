@@ -13,13 +13,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             url: https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: date +%F > todays-date
       - name: Restore cache for today's nightly.
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: _neovim
           key: ${{ runner.os }}-${{ matrix.url }}-${{ hashFiles('todays-date') }}
@@ -32,13 +32,14 @@ jobs:
           }
           mkdir -p ~/.local/share/nvim/site/pack/vendor/start
           git clone --depth 1 https://github.com/nvim-lua/plenary.nvim ~/.local/share/nvim/site/pack/vendor/start/plenary.nvim
-          git clone --depth 1 https://github.com/tjdevries/tree-sitter-lua ~/.local/share/nvim/site/pack/vendor/start/tree-sitter-lua
+          git clone https://github.com/tjdevries/tree-sitter-lua ~/.local/share/nvim/site/pack/vendor/start/tree-sitter-lua
           ln -s $(pwd) ~/.local/share/nvim/site/pack/vendor/start
 
       - name: Build parser
         run: |
           # We have to build the parser every single time to keep up with parser changes
           cd ~/.local/share/nvim/site/pack/vendor/start/tree-sitter-lua
+          git checkout 86f74dfb69c570f0749b241f8f5489f8f50adbea
           make dist
           cd -
 

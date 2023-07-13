@@ -6,12 +6,12 @@
  "generator"
  "model"
  "type"
+ "view"
 ] @keyword
 
-[
-  (comment)
-  (developer_comment)
-] @comment
+(comment) @comment @spell
+
+(developer_comment) @comment.documentation @spell
 
 [
   (attribute)

@@ -4,4 +4,4 @@
  (mixin_statement)
  (while_statement)
  (each_statement)
-] @indent
+] @indent.begin

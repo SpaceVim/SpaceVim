@@ -1,0 +1,10 @@
+name: 'vim-one'
+version: '1.0.0'
+license: 'MIT'
+author: 'Ramzi Akremi'
+url: ''
+description: 'Port to Vim of Atom One Dark and Light themes'
+colorschemes:
+  - name: one-dark
+    background: 'dark'
+    palette: vim-one-dark

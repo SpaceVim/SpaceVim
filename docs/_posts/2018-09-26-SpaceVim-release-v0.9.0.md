@@ -3,7 +3,7 @@ title: SpaceVim release v0.9.0
 categories: [changelog, blog]
 description: "SpaceVim release v0.9.0 with 15+ new language layers and frequency support for colorscheme layer."
 type: article
-image: https://user-images.githubusercontent.com/13142418/80614489-17980e00-8a71-11ea-89eb-78b441093b20.png
+image: https://img.spacevim.org/80614489-17980e00-8a71-11ea-89eb-78b441093b20.png
 commentsID: "SpaceVim release v0.9.0"
 comments: true
 ---
@@ -27,7 +27,7 @@ comments: true
 This project exists thanks to all the people who have contributed. The last release v0.8.0 is targeted
 on june 18, 2018, so let's take a look at what happened in the new release v0.9.0.
 
-![v0.9.0 welcome page](https://user-images.githubusercontent.com/13142418/80614489-17980e00-8a71-11ea-89eb-78b441093b20.png)
+![v0.9.0 welcome page](https://img.spacevim.org/80614489-17980e00-8a71-11ea-89eb-78b441093b20.png)
 
 
 ## New features
@@ -65,7 +65,7 @@ update the colorscheme. for example, enable random theme, and update colorscheme
 
 Completion SpaceVim options and layer options when edit SpaceVim configuration file:
 
-![complete spacevim configuration file](https://user-images.githubusercontent.com/13142418/80614627-41e9cb80-8a71-11ea-9b8e-cd69253dd1ee.png)
+![complete spacevim configuration file](https://img.spacevim.org/80614627-41e9cb80-8a71-11ea-9b8e-cd69253dd1ee.png)
 
 
 Improve builtin tab manager, support creating named tabs and rename an exist tab:
@@ -74,21 +74,21 @@ Improve builtin tab manager, support creating named tabs and rename an exist tab
 
 the name of the tab will be displayed on tabline and tabmanger.
 
-![rename](https://user-images.githubusercontent.com/13142418/42123061-26d938aa-7c11-11e8-8e98-b089fbc53f30.gif)
+![rename](https://img.spacevim.org/42123061-26d938aa-7c11-11e8-8e98-b089fbc53f30.gif)
 
 
 - Move cursor tab forward and backword, default key binding is `<C-S-Up>/<C-S-Down>`
 
-![movetab](https://user-images.githubusercontent.com/13142418/42123107-de3d10c0-7c11-11e8-8ddd-ed20b8925dee.gif)
+![movetab](https://img.spacevim.org/42123107-de3d10c0-7c11-11e8-8ddd-ed20b8925dee.gif)
 
 
 - Create new tab after the tab under the cursor, key bindings: (`n`: create named tab / `N` : create anonymous tab)
 
-![newtab](https://user-images.githubusercontent.com/13142418/42123504-d1c9e80c-7c18-11e8-8a51-a37fa55abb9b.gif)
+![newtab](https://img.spacevim.org/42123504-d1c9e80c-7c18-11e8-8a51-a37fa55abb9b.gif)
 
 - copy / paste tab, include tab layout and tab name
 
-![copytab](https://user-images.githubusercontent.com/13142418/42134628-311b9648-7d72-11e8-9277-e63bbf42502c.gif)
+![copytab](https://img.spacevim.org/42134628-311b9648-7d72-11e8-9277-e63bbf42502c.gif)
 
 
 ## Pull requests list

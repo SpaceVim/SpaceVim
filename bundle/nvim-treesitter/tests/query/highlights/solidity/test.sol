@@ -3,14 +3,14 @@
 // SPDX-License-Identifier: GPL-3.0
 // ^ comment
 pragma solidity >=0.7.0 <0.9.0;
-// ^ keyword
-//     ^ tag
+// ^ preproc
+//     ^ preproc
 
 import * as something from "anotherFile";
 // ^     ^            ^ include
 
 /// @title Voting with delegation.
-//  ^ attribute
+// <- comment
 contract Ballot {
 // ^keyword
 //       ^ type
@@ -20,7 +20,7 @@ contract Ballot {
     struct Voter {
 //         ^ type
         uint weight; // weight is accumulated by delegation
-//      ^ type
+//      ^ type.builtin
 //           ^ field
         bool voted;  // if true, that person already voted
         address delegate; // person delegated to
@@ -34,7 +34,7 @@ contract Ballot {
     }
 
     address public chairperson;
-//  ^ type
+//  ^ type.builtin
 
     // This declares a state variable that
     // stores a `Voter` struct for each possible address.

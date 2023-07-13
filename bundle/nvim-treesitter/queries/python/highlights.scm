@@ -29,47 +29,56 @@
 
 ((attribute
     attribute: (identifier) @field)
- (#match? @field "^([A-Z])@!.*$"))
+ (#lua-match? @field "^[%l_].*$"))
 
-((identifier) @type.builtin
- (#any-of? @type.builtin
-              ;; https://docs.python.org/3/library/exceptions.html
-              "BaseException" "Exception" "ArithmeticError" "BufferError" "LookupError" "AssertionError" "AttributeError"
-              "EOFError" "FloatingPointError" "GeneratorExit" "ImportError" "ModuleNotFoundError" "IndexError" "KeyError"
-              "KeyboardInterrupt" "MemoryError" "NameError" "NotImplementedError" "OSError" "OverflowError" "RecursionError"
-              "ReferenceError" "RuntimeError" "StopIteration" "StopAsyncIteration" "SyntaxError" "IndentationError" "TabError"
-              "SystemError" "SystemExit" "TypeError" "UnboundLocalError" "UnicodeError" "UnicodeEncodeError" "UnicodeDecodeError"
-              "UnicodeTranslateError" "ValueError" "ZeroDivisionError" "EnvironmentError" "IOError" "WindowsError"
-              "BlockingIOError" "ChildProcessError" "ConnectionError" "BrokenPipeError" "ConnectionAbortedError"
-              "ConnectionRefusedError" "ConnectionResetError" "FileExistsError" "FileNotFoundError" "InterruptedError"
-              "IsADirectoryError" "NotADirectoryError" "PermissionError" "ProcessLookupError" "TimeoutError" "Warning"
-              "UserWarning" "DeprecationWarning" "PendingDeprecationWarning" "SyntaxWarning" "RuntimeWarning"
-              "FutureWarning" "ImportWarning" "UnicodeWarning" "BytesWarning" "ResourceWarning"))
+((assignment
+  left: (identifier) @type.definition
+  (type (identifier) @_annotation))
+ (#eq? @_annotation "TypeAlias"))
+
+((assignment
+  left: (identifier) @type.definition
+  right: (call
+    function: (identifier) @_func))
+ (#any-of? @_func "TypeVar" "NewType"))
 
 ; Function calls
 
-(decorator) @function
-((decorator (attribute (identifier) @function))
- (#match? @function "^([A-Z])@!.*$"))
-(decorator) @function
-((decorator (identifier) @function)
- (#match? @function "^([A-Z])@!.*$"))
-
 (call
-  function: (identifier) @function)
+  function: (identifier) @function.call)
 
 (call
   function: (attribute
-              attribute: (identifier) @method))
+              attribute: (identifier) @method.call))
 
 ((call
    function: (identifier) @constructor)
- (#lua-match? @constructor "^[A-Z]"))
+ (#lua-match? @constructor "^%u"))
 
 ((call
   function: (attribute
               attribute: (identifier) @constructor))
- (#lua-match? @constructor "^[A-Z]"))
+ (#lua-match? @constructor "^%u"))
+
+;; Decorators
+
+((decorator "@" @attribute)
+ (#set! "priority" 101))
+
+(decorator
+  (identifier) @attribute)
+(decorator
+  (attribute
+    attribute: (identifier) @attribute))
+(decorator
+  (call (identifier) @attribute))
+(decorator
+  (call (attribute
+          attribute: (identifier) @attribute)))
+
+((decorator
+  (identifier) @attribute.builtin)
+ (#any-of? @attribute.builtin "classmethod" "property"))
 
 ;; Builtin functions
 
@@ -134,17 +143,33 @@
 [(true) (false)] @boolean
 ((identifier) @variable.builtin
  (#eq? @variable.builtin "self"))
+((identifier) @variable.builtin
+ (#eq? @variable.builtin "cls"))
 
 (integer) @number
 (float) @float
 
-(comment) @comment
+(comment) @comment @spell
+
+((module . (comment) @preproc)
+  (#lua-match? @preproc "^#!/"))
+
 (string) @string
-[
-  (escape_sequence)
-  "{{"
-  "}}"
-] @string.escape
+(escape_sequence) @string.escape
+
+; doc-strings
+
+(module . (expression_statement (string) @string.documentation @spell))
+
+(class_definition
+  body:
+    (block
+      . (expression_statement (string) @string.documentation @spell)))
+
+(function_definition
+  body:
+    (block
+      . (expression_statement (string) @string.documentation @spell)))
 
 ; Tokens
 
@@ -195,6 +220,8 @@
   "is"
   "not"
   "or"
+  "is not"
+  "not in"
 
   "del"
 ] @keyword.operator
@@ -206,8 +233,6 @@
 
 [
   "assert"
-  "async"
-  "await"
   "class"
   "exec"
   "global"
@@ -219,11 +244,19 @@
 ] @keyword
 
 [
+  "async"
+  "await"
+] @keyword.coroutine
+
+[
   "return"
   "yield"
 ] @keyword.return
 (yield "from" @keyword.return)
 
+(future_import_statement
+  "from" @include
+  "__future__" @constant.builtin)
 (import_from_statement "from" @include)
 "import" @include
 
@@ -236,9 +269,12 @@
 [
   "try"
   "except"
+  "except*"
   "raise"
   "finally"
 ] @exception
+
+(raise_statement "from" @exception)
 
 (try_statement
   (else_clause
@@ -249,6 +285,8 @@
 (interpolation
   "{" @punctuation.special
   "}" @punctuation.special)
+
+(type_conversion) @function.macro
 
 ["," "." ":" ";" (ellipsis)] @punctuation.delimiter
 
@@ -270,14 +308,14 @@
           (expression_statement
             (assignment
               left: (identifier) @field))))
- (#match? @field "^([A-Z])@!.*$"))
+ (#lua-match? @field "^%l.*$"))
 ((class_definition
   body: (block
           (expression_statement
             (assignment
               left: (_
                      (identifier) @field)))))
- (#match? @field "^([A-Z])@!.*$"))
+ (#lua-match? @field "^%l.*$"))
 
 ((class_definition
   (block
@@ -285,15 +323,23 @@
       name: (identifier) @constructor)))
  (#any-of? @constructor "__new__" "__init__"))
 
-; First parameter of a classmethod is cls.
-((class_definition
-  body: (block
-          (decorated_definition
-            (decorator (identifier) @_decorator)
-            definition: (function_definition
-              parameters: (parameters . (identifier) @variable.builtin)))))
- (#eq? @variable.builtin "cls")
- (#eq? @_decorator "classmethod"))
+((identifier) @type.builtin
+ (#any-of? @type.builtin
+              ;; https://docs.python.org/3/library/exceptions.html
+              "BaseException" "Exception" "ArithmeticError" "BufferError" "LookupError" "AssertionError" "AttributeError"
+              "EOFError" "FloatingPointError" "GeneratorExit" "ImportError" "ModuleNotFoundError" "IndexError" "KeyError"
+              "KeyboardInterrupt" "MemoryError" "NameError" "NotImplementedError" "OSError" "OverflowError" "RecursionError"
+              "ReferenceError" "RuntimeError" "StopIteration" "StopAsyncIteration" "SyntaxError" "IndentationError" "TabError"
+              "SystemError" "SystemExit" "TypeError" "UnboundLocalError" "UnicodeError" "UnicodeEncodeError" "UnicodeDecodeError"
+              "UnicodeTranslateError" "ValueError" "ZeroDivisionError" "EnvironmentError" "IOError" "WindowsError"
+              "BlockingIOError" "ChildProcessError" "ConnectionError" "BrokenPipeError" "ConnectionAbortedError"
+              "ConnectionRefusedError" "ConnectionResetError" "FileExistsError" "FileNotFoundError" "InterruptedError"
+              "IsADirectoryError" "NotADirectoryError" "PermissionError" "ProcessLookupError" "TimeoutError" "Warning"
+              "UserWarning" "DeprecationWarning" "PendingDeprecationWarning" "SyntaxWarning" "RuntimeWarning"
+              "FutureWarning" "ImportWarning" "UnicodeWarning" "BytesWarning" "ResourceWarning"
+              ;; https://docs.python.org/3/library/stdtypes.html
+              "bool" "int" "float" "complex" "list" "tuple" "range" "str"
+              "bytes" "bytearray" "memoryview" "set" "frozenset" "dict" "type" "object"))
 
 ;; Error
 (ERROR) @error

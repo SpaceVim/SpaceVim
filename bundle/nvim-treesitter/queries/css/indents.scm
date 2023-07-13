@@ -1,9 +1,9 @@
 [
   (block)
   (declaration)
-] @indent
+] @indent.begin
 
-(block ("}") @branch)
-("}") @dedent
+(block ("}") @indent.branch)
+("}") @indent.dedent
 
-(comment) @ignore
+(comment) @indent.ignore

@@ -3,7 +3,7 @@ local binary = {}
 ---Insert item to list to ordered index
 ---@param list any[]
 ---@param item any
----@param func fun(a: any, b: any): "1"|"-1"|"0"
+---@param func fun(a: any, b: any): 1|-1|0
 binary.insort = function(list, item, func)
   table.insert(list, binary.search(list, item, func), item)
 end
@@ -11,8 +11,8 @@ end
 ---Search suitable index from list
 ---@param list any[]
 ---@param item any
----@param func fun(a: any, b: any): "1"|"-1"|"0"
----@return number
+---@param func fun(a: any, b: any): 1|-1|0
+---@return integer
 binary.search = function(list, item, func)
   local s = 1
   local e = #list

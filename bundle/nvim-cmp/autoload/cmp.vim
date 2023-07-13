@@ -6,7 +6,16 @@ let s:sources = {}
 "
 function! cmp#register_source(name, source) abort
   let l:methods = []
-  for l:method in ['is_available', 'get_debug_name', 'get_trigger_characters', 'get_keyword_pattern', 'complete', 'execute', 'resolve']
+  for l:method in [
+  \   'is_available',
+  \   'get_debug_name',
+  \   'get_position_encoding_kind',
+  \   'get_trigger_characters',
+  \   'get_keyword_pattern',
+  \   'complete',
+  \   'execute',
+  \   'resolve'
+  \ ]
     if has_key(a:source, l:method) && type(a:source[l:method]) == v:t_func
       call add(l:methods, l:method)
     endif
@@ -39,6 +48,8 @@ function! cmp#_method(bridge_id, method, args) abort
       return l:source[a:method]()
     elseif a:method ==# 'get_debug_name'
       return l:source[a:method]()
+    elseif a:method ==# 'get_position_encoding_kind'
+      return l:source[a:method](a:args[0])
     elseif a:method ==# 'get_keyword_pattern'
       return l:source[a:method](a:args[0])
     elseif a:method ==# 'get_trigger_characters'

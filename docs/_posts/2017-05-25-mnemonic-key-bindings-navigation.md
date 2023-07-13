@@ -2,7 +2,7 @@
 title: "Mnemonic key bindings navigation"
 categories: [feature, blog]
 description: "Key bindings are organized using mnemonic prefixes like b for buffer, p for project, s for search, h for help, etc…"
-image: https://user-images.githubusercontent.com/13142418/89091735-5de96a00-d3de-11ea-85e1-b0fc64537836.gif
+image: https://img.spacevim.org/89091735-5de96a00-d3de-11ea-85e1-b0fc64537836.gif
 commentsID: "Mnemonic key bindings navigation"
 comments: true
 ---
@@ -20,11 +20,11 @@ This will be shown in floating windows if your vim/neovim support this feature.
 - vim: `8.1.1364`
 - neovim: `v0.4.2`
 
-![float_guide](https://user-images.githubusercontent.com/13142418/89091735-5de96a00-d3de-11ea-85e1-b0fc64537836.gif)
+![float_guide](https://img.spacevim.org/89091735-5de96a00-d3de-11ea-85e1-b0fc64537836.gif)
 
 Otherwise, it will be displayed in split Window.
 
-![mapping guide](https://user-images.githubusercontent.com/13142418/35568184-9a318082-058d-11e8-9d88-e0eafd1d498d.gif)
+![mapping guide](https://img.spacevim.org/35568184-9a318082-058d-11e8-9d88-e0eafd1d498d.gif)
 
 ## default key binding prefixes
 

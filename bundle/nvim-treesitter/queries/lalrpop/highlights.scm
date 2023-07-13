@@ -1,57 +1,60 @@
 [
- 	"pub"
-	"grammar"
-	"match"
-	"extern"
-	"type"
-	"enum"
+  "enum"
+  "extern"
+  "grammar"
+  "match"
+  "type"
+  "pub"
 ] @keyword
 
 [
- 	"+"
-	"*"
-	"?"
+  "match"
+  "else"
+] @conditional
+
+[
+ "+"
+ "*"
+ "?"
+ ; TODO: inaccessible node
+ ; =>
+ "=>@L"
+ "=>@R"
 ] @operator
 
 (grammar_type_params
-	"<" @punctuation.bracket
-	">" @punctuation.bracket)
+  ["<" ">"] @punctuation.bracket)
 
 (symbol
-	"<" @punctuation.bracket
-	">" @punctuation.bracket)
+  ["<" ">"] @punctuation.bracket)
 
 (binding_symbol
-	"<" @punctuation.bracket
-	">" @punctuation.bracket)
+  ["<" ">"] @punctuation.bracket)
 
 (binding_symbol
-	name: (identifier) @parameter)
+  name: (identifier) @parameter)
 
 (bare_symbol
-  (macro 
-    ((macro_id) @function)))
+  (macro
+    ((macro_id) @type.definition)))
 
 (bare_symbol
-  (identifier) @function)
+  (identifier) @type.definition)
 
 (nonterminal_name
-  (macro_id) @function)
+  (macro_id) @type.definition)
 
 (nonterminal_name
-  (identifier) @function)
+  (identifier) @type.definition)
 
 (nonterminal
-  (type_ref) @type)
+  (type_ref) @type.builtin)
 
-"(" @punctuation.bracket
-")" @punctuation.bracket
-"[" @punctuation.bracket
-"]" @punctuation.bracket
+["(" ")" "[" "]"] @punctuation.bracket
 
-";" @punctuation.delimiter
+[";" ":"] @punctuation.delimiter
 
-(lifetime (identifier) @label)
+(lifetime (identifier) @storageclass)
 
 (string_literal) @string
 (regex_literal) @string

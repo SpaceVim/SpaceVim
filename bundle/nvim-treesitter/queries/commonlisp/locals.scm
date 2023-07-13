@@ -22,14 +22,14 @@
  (sym_lit) @_deftest
  .
  (sym_lit) @definition.function
- (#match? @_deftest "^(deftest)$")) @scope
+ (#eq? @_deftest "deftest")) @scope
 
 (list_lit
  .
  (sym_lit) @_deftest
  .
  (sym_lit) @definition.function
- (#match? @_deftest "^(deftest)$")) @scope
+ (#eq? @_deftest "deftest")) @scope
 
 (for_clause . (sym_lit) @definition.var)
 (with_clause . (sym_lit) @definition.var)

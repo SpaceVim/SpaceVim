@@ -2,7 +2,7 @@ local misc = require('cmp.utils.misc')
 
 local vim_source = {}
 
----@param id number
+---@param id integer
 ---@param args any[]
 vim_source.on_callback = function(id, args)
   if vim_source.to_callback.callbacks[id] then
@@ -11,7 +11,7 @@ vim_source.on_callback = function(id, args)
 end
 
 ---@param callback function
----@return number
+---@return integer
 vim_source.to_callback = setmetatable({
   callbacks = {},
 }, {
@@ -36,7 +36,7 @@ vim_source.to_args = function(args)
   return args
 end
 
----@param bridge_id number
+---@param bridge_id integer
 ---@param methods string[]
 vim_source.new = function(bridge_id, methods)
   local self = {}

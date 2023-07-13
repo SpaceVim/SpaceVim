@@ -1,0 +1,33 @@
+name: Pre-commit autoupdate
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  auto-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: leafo/gh-actions-lua@v9
+        with:
+          luaVersion: "5.1"
+      - uses: leafo/gh-actions-luarocks@v4
+      - name: Install luacheck
+        run: luarocks install luacheck
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+      - uses: actions/setup-python@v4.5.0
+      - run: pip install pre-commit
+      - run: pre-commit autoupdate
+      - run: pre-commit run --all-files
+      - uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: update/pre-commit-hooks
+          title: "chore: update pre-commit hooks"
+          commit-message: "chore: update pre-commit hooks"
+          body: Update versions of pre-commit hooks to latest version.

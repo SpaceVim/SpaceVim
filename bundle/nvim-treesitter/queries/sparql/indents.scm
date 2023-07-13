@@ -8,10 +8,10 @@
   (data_block)
   (blank_node_property_list)
   (collection)
-] @indent
+] @indent.begin
 [
   "}"
   "]"
   ")"
   (triples_same_subject)
-] @branch
+] @indent.branch

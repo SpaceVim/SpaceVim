@@ -6,37 +6,44 @@
 (braced_expression) @none
 
 (scoped_identifier
- (qualified_identifier 
+ (qualified_identifier
    (identifier) @type))
 
-(comment) @comment
-(heredoc) @comment
+[
+  (comment)
+  (heredoc)
+] @comment @spell
+
+((comment) @comment.documentation
+  (#lua-match? @comment.documentation "^/[*][*][^*].*[*]/$"))
+
+"function" @keyword.function
 
 [
- "function"
-] @keyword.function
-
-[
- "async"
- "await"
  "type"
  "interface"
  "implements"
  "class"
- "protected"
- "private"
- "public"
  "using"
  "namespace"
  "attribute"
  "const"
- (xhp_modifier)
- (final_modifier)
  "extends"
  "insteadof"
 ] @keyword
 
-"use" @include
+[
+  "async"
+  "await"
+] @keyword.coroutine
+
+[
+ "use"
+ "include"
+ "include_once"
+ "require"
+ "require_once"
+] @include
 
 [
   "new"
@@ -47,9 +54,15 @@
   "as"
 ] @keyword.operator
 
+"return" @keyword.return
+
 [
- "return"
-] @keyword.return
+  (abstract_modifier)
+  (final_modifier)
+  (static_modifier)
+  (visibility_modifier)
+  (xhp_modifier)
+] @type.qualifier
 
 [
   "shape"
@@ -92,10 +105,10 @@
   (qualified_identifier
     (identifier) @type .))
 
-(attribute_modifier) @attribute
 [
  "@required"
  "@lateinit"
+  (attribute_modifier)
 ] @attribute
 
 [
@@ -177,14 +190,14 @@
   (variable) @parameter)
 
 (call_expression
-  function: (qualified_identifier (identifier) @function .))
+  function: (qualified_identifier (identifier) @function.call .))
 
 (call_expression
-  function: (scoped_identifier (identifier)  @function .))
+  function: (scoped_identifier (identifier)  @function.call .))
 
 (call_expression
   function: (selection_expression
-              (qualified_identifier (identifier) @method .)))
+              (qualified_identifier (identifier) @method.call .)))
 
 (qualified_identifier
   (_) @namespace .
@@ -262,9 +275,11 @@
   [ "</" ">" ] @tag.delimiter)
 
 [ "." ";" "::" ":" "," ] @punctuation.delimiter
+(qualified_identifier
+  "\\" @punctuation.delimiter)
 
 (ternary_expression
-  ["?" ":"] @conditional)
+  ["?" ":"] @conditional.ternary)
 
 [
   "if"

@@ -11,6 +11,7 @@
   (with_statement)
   (switch_statement)
   (switch_case)
+  (switch_default)
   (import_statement)
   (if_statement)
   (try_statement)

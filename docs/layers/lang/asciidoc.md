@@ -5,7 +5,7 @@ description: "Edit AsciiDoc within vim, autopreview AsciiDoc in the default brow
 
 # [Available Layers](../../) >> lang#asciidoc
 
-![asciidoc](https://user-images.githubusercontent.com/13142418/92319337-7554ec00-f049-11ea-90fb-ad663dceea12.png)
+![asciidoc](https://img.spacevim.org/92319337-7554ec00-f049-11ea-90fb-ad663dceea12.png)
 
 <!-- vim-markdown-toc GFM -->
 

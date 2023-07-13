@@ -1,1 +1,3 @@
 (comment) @comment
+
+(regex) @regex

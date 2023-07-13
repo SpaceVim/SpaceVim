@@ -82,7 +82,7 @@
 
 (strong) @text.strong
 
-(standalone_hyperlink) @text.uri
+(standalone_hyperlink) @text.uri @nospell
 
 (role) @function
 
@@ -151,13 +151,21 @@
   (footnote_reference)
   (citation_reference)
   (reference)
-] @text.reference
+] @text.reference @nospell
 
 ;; Others
 
 (title) @text.title
 
-(comment) @comment
+(comment) @comment @spell
 (comment "..") @comment
+
+(directive
+    name: (type) @_directive
+    body: (body
+        (content) @spell
+        (#not-any-of? @_directive "code" "code-block" "sourcecode")))
+
+(paragraph) @spell
 
 (ERROR) @error

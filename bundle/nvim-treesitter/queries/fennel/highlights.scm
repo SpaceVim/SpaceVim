@@ -1,4 +1,4 @@
-(comment) @comment
+(comment) @comment @spell
 
 [
   "("
@@ -23,7 +23,7 @@
 (boolean) @boolean
 (number) @number
 
-(string) @string
+(string) @string @spell
 (escape_sequence) @string.escape
 
 (symbol) @variable
@@ -40,7 +40,7 @@
 (list . (multi_symbol (symbol) @function .))
 
 ((symbol) @variable.builtin
- (#match? @variable.builtin "^[$]"))
+ (#lua-match? @variable.builtin "^[$]"))
 
 (binding) @symbol
 

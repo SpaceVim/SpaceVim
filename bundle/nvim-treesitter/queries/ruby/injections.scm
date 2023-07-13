@@ -5,3 +5,5 @@
  (heredoc_end) @language
  (#set! "language" @language)
  (#downcase! "language"))
+
+(regex (string_content) @regex)

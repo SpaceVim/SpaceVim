@@ -1,7 +1,7 @@
 ; Keywords
 
 [
-  ; block delimeters
+  ; block delimiters
   (module_keyword)
   "endmodule"
   "program"
@@ -37,9 +37,9 @@
   "default"
   "break"
   "assert"
-  (unique_priority)
   "tagged"
   "extern"
+  (unique_priority)
 ] @keyword
 
 [
@@ -75,7 +75,7 @@
   "endcase"
 ] @conditional
 
-(comment) @comment
+(comment) @comment @spell
 
 (include_compiler_directive) @constant.macro
 (package_import_declaration
@@ -112,14 +112,11 @@
   "&&"
   "||"
   ":"
-  (unary_operator)
   "{"
   "}"
   "'{"
   "<="
   "@"
-  "or"
-  "and"
   "=="
   "!="
   "==="
@@ -132,8 +129,14 @@
   ">>"
   "<<"
   "|="
+  (unary_operator)
   (inc_or_dec_operator)
 ] @operator
+
+[
+  "or"
+  "and"
+] @keyword.operator
 
 (cast
  ["'" "(" ")"] @operator)
@@ -153,7 +156,7 @@
 [
   "signed"
   "unsigned"
-] @label
+] @type.qualifier
 
 (data_type
  (simple_identifier) @type)
@@ -174,13 +177,14 @@
 [
   (double_quoted_string)
   (string_literal)
-] @string
+] @string @spell
 
 [
-  (include_compiler_directive)
   (default_nettype_compiler_directive)
   (timescale_compiler_directive)
-] @constant.macro
+] @preproc
+
+(include_compiler_directive) @include
 
 ; begin/end label
 (seq_block
@@ -262,7 +266,7 @@
   ;(parameter_identifier) @field))
 
 (type_declaration
-  (data_type ["packed"] @label))
+  (data_type ["packed"] @type.qualifier))
 
 (struct_union) @type
 

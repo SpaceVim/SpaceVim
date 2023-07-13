@@ -1,0 +1,73 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+      - v1.x
+      - v2.x
+      - v3.x
+  pull_request:
+
+jobs:
+  stylua-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Check formatting
+        uses: JohnnyMorganz/stylua-action@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: v0.16.0
+          args: --color always --check -g '!**/defaults.lua' lua/
+
+  plenary-tests:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: date +%F > todays-date
+      - name: Restore cache for today's nightly.
+        uses: actions/cache@v2
+        with:
+          path: build
+          key: ${{ runner.os }}-appimage-${{ hashFiles('todays-date') }}
+
+      - name: Prepare
+        run: |
+          test -d build || {
+            mkdir -p build
+            wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+            chmod +x nvim.appimage
+            mv nvim.appimage ./build/nvim
+          }
+
+      # - name: Get Luver Cache Key
+      #   id: luver-cache-key
+      #   env:
+      #     CI_RUNNER_OS: ${{ runner.os }}
+      #   run: |
+      #     echo "::set-output name=value::${CI_RUNNER_OS}-luver-v1-$(date -u +%Y-%m-%d)"
+      #   shell: bash
+      # - name: Setup Luver Cache
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ~/.local/share/luver
+      #     key: ${{ steps.luver-cache-key.outputs.value }}
+
+      # - name: Setup Lua
+      #   uses: MunifTanjim/luver-action@v1
+      #   with:
+      #     default: 5.1.5
+      #     lua_versions: 5.1.5
+      #     luarocks_versions: 5.1.5:3.8.0
+      # - name: Setup luacov
+      #   run: |
+      #     luarocks install luacov
+
+      - name: Run tests
+        run: |
+          export PATH="${PWD}/build/:${PATH}"
+          ./scripts/test.sh
+
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v2

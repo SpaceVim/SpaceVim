@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a CoffeeScript IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png
+image: https://img.spacevim.org/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png
 description: "A general guide for using SpaceVim as CoffeeScript IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -43,7 +43,7 @@ for more info, you can read the [lang#coffeescript](../layers/lang/coffeescript/
 `lang#coffeescript` layer will load the vim-coffeescript plugin automatically, unless overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
-![coffeeide](https://user-images.githubusercontent.com/13142418/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png)
+![coffeeide](https://img.spacevim.org/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png)
 
 ### Syntax linting
 
@@ -59,7 +59,7 @@ npm install -g coffeelint
 
 Note: if no coffeelint is installed, neomake will ues default command `coffee`.
 
-![coffeecheckers](https://user-images.githubusercontent.com/13142418/51875890-bb43cb80-23a1-11e9-93b2-037e7120f5f2.png)
+![coffeecheckers](https://img.spacevim.org/51875890-bb43cb80-23a1-11e9-93b2-037e7120f5f2.png)
 
 ### Jump to test file
 
@@ -81,7 +81,7 @@ To run current script, you can press `SPC l r`, and a split windows
 will be openen, the output of the script will be shown in this windows.
 It is running asynchronously, and will not block your vim.
 
-![coffeerunner](https://user-images.githubusercontent.com/13142418/51877740-3f00b680-23a8-11e9-91ce-18cf147dbb95.png)
+![coffeerunner](https://img.spacevim.org/51877740-3f00b680-23a8-11e9-91ce-18cf147dbb95.png)
 
 ### Code formatting
 
@@ -98,4 +98,4 @@ Start a `coffee -i` inferior REPL process with `SPC l s i` when edit CoffeeScrip
 send code to inferior process, all key bindings are begin with `SPC l s` prefix, including sending line, sending selection or even
 send whole buffer.
 
-![coffeerepl](https://user-images.githubusercontent.com/13142418/52127084-08f35900-266c-11e9-9efb-92fe8a014f08.png)
+![coffeerepl](https://img.spacevim.org/52127084-08f35900-266c-11e9-9efb-92fe8a014f08.png)

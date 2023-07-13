@@ -1,0 +1,49 @@
+let
+  var a : int := 42
+  /*    ^ punctuation.delimiter */
+  /*          ^ operator */
+in
+  (
+  /* <- punctuation.bracket */
+
+    -1 | 2 & 3 + 4 * 5;
+    /* <- operator */
+    /* ^ operator */
+    /*     ^ operator */
+    /*         ^ operator */
+    /*             ^ operator */
+    /*                ^ punctuation.delimiter */
+
+    12 >= 27;
+    /* ^ operator */
+    12 <= 27;
+    /* ^ operator */
+    12 = 27;
+    /* ^ operator */
+    12 <> 27;
+    /* ^ operator */
+    12 < 27;
+    /* ^ operator */
+    12 > 27;
+    /* ^ operator */
+
+    record.field;
+    /*    ^ punctuation.delimiter */
+
+    func(a, b);
+    /*  ^ punctuation.bracket */
+    /*       ^ punctuation.bracket */
+    /*    ^ punctuation.delimiter */
+
+    record_type { };
+    /*          ^ punctuation.bracket */
+    /*            ^ punctuation.bracket */
+
+    array[42]
+    /*   ^ punctuation.bracket */
+    /*      ^ punctuation.bracket */
+
+  )
+  /* <- punctuation.bracket */
+end
+/* vim: set ft=tiger: */

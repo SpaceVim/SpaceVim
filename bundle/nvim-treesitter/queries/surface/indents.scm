@@ -3,7 +3,7 @@
   (component)
   (tag)
   (block)
-] @indent
+] @indent.begin
 
 ; Dedent at the end of each tag, as well as a subblock
 [
@@ -11,4 +11,4 @@
   (end_component)
   (end_block)
   (subblock)
-] @branch
+] @indent.branch

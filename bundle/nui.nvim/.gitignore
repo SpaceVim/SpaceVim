@@ -1,0 +1,5 @@
+.luacheckcache
+
+luacov.*.out
+
+.testcache

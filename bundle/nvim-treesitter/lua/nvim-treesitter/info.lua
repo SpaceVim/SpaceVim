@@ -14,11 +14,13 @@ local function install_info()
 
   local parser_list = parsers.available_parsers()
   table.sort(parser_list)
-  for _, ft in pairs(parser_list) do
-    local is_installed = #api.nvim_get_runtime_file("parser/" .. ft .. ".so", false) > 0
-    api.nvim_out_write(ft .. string.rep(" ", max_len - #ft + 1))
+  for _, lang in pairs(parser_list) do
+    local is_installed = #api.nvim_get_runtime_file("parser/" .. lang .. ".so", false) > 0
+    api.nvim_out_write(lang .. string.rep(" ", max_len - #lang + 1))
     if is_installed then
       api.nvim_out_write "[✓] installed\n"
+    elseif pcall(vim.treesitter.inspect_lang, lang) then
+      api.nvim_out_write "[✗] not installed (but still loaded. Restart Neovim!)\n"
     else
       api.nvim_out_write "[✗] not installed\n"
     end
@@ -29,6 +31,8 @@ end
 -- {'mod1', 'mod2.sub1', 'mod2.sub2', 'mod3'}
 -- ->
 -- { default = {'mod1', 'mod3'}, mod2 = {'sub1', 'sub2'}}
+---@param modulelist string[]
+---@return table
 local function namespace_modules(modulelist)
   local modules = {}
   for _, module in ipairs(modulelist) do
@@ -48,6 +52,8 @@ local function namespace_modules(modulelist)
   return modules
 end
 
+---@param list string[]
+---@return integer length
 local function longest_string_length(list)
   local length = 0
   for _, value in ipairs(list) do
@@ -58,6 +64,11 @@ local function longest_string_length(list)
   return length
 end
 
+---@param curbuf integer
+---@param origbuf integer
+---@param parserlist string[]
+---@param namespace string
+---@param modulelist string[]
 local function append_module_table(curbuf, origbuf, parserlist, namespace, modulelist)
   local maxlen_parser = longest_string_length(parserlist)
   table.sort(modulelist)
@@ -102,6 +113,7 @@ local function print_info_modules(parserlist, module)
     modules = namespace_modules(configs.available_modules())
   end
 
+  ---@type string[]
   local namespaces = {}
   for k, _ in pairs(modules) do
     table.insert(namespaces, k)
@@ -115,21 +127,24 @@ local function print_info_modules(parserlist, module)
 
   api.nvim_buf_set_option(curbuf, "modified", false)
   api.nvim_buf_set_option(curbuf, "buftype", "nofile")
-  api.nvim_exec(
-    [[
-    syntax match TSModuleInfoGood      /✓/
-    syntax match TSModuleInfoBad       /✗/
-    syntax match TSModuleInfoHeader    /^>>.*$/ contains=TSModuleInfoNamespace
-    syntax match TSModuleInfoNamespace /^>> \w*/ contained
-    syntax match TSModuleInfoParser    /^[^> ]*\ze /
-    highlight default TSModuleInfoGood guifg=LightGreen gui=bold
-    highlight default TSModuleInfoBad  guifg=Crimson
-    highlight default link TSModuleInfoHeader    Type
-    highlight default link TSModuleInfoNamespace Statement
-    highlight default link TSModuleInfoParser    Identifier
-  ]],
-    false
-  )
+  vim.cmd [[
+  syntax match TSModuleInfoGood      /✓/
+  syntax match TSModuleInfoBad       /✗/
+  syntax match TSModuleInfoHeader    /^>>.*$/ contains=TSModuleInfoNamespace
+  syntax match TSModuleInfoNamespace /^>> \w*/ contained
+  syntax match TSModuleInfoParser    /^[^> ]*\ze /
+  ]]
+
+  local highlights = {
+    TSModuleInfoGood = { fg = "LightGreen", bold = true, default = true },
+    TSModuleInfoBad = { fg = "Crimson", default = true },
+    TSModuleInfoHeader = { link = "Type", default = true },
+    TSModuleInfoNamespace = { link = "Statement", default = true },
+    TSModuleInfoParser = { link = "Identifier", default = true },
+  }
+  for k, v in pairs(highlights) do
+    api.nvim_set_hl(0, k, v)
+  end
 end
 
 local function module_info(module)
@@ -145,6 +160,7 @@ local function module_info(module)
   end
 end
 
+---@return string[]
 function M.installed_parsers()
   local installed = {}
   for _, p in pairs(parsers.available_parsers()) do

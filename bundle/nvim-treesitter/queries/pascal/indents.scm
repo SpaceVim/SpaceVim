@@ -14,9 +14,9 @@
 	(recInitializer)
 	(arrInitializer)
 	(defaultValue)
-] @indent
+] @indent.begin
 
-(defProc (block) @indent)
+(defProc (block) @indent.begin)
 
 [
 	(kEnd)
@@ -29,4 +29,4 @@
 	(declSection)
 	"]"
 	")"
-] @branch
+] @indent.branch

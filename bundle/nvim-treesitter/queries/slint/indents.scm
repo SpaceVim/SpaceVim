@@ -1,13 +1,14 @@
-
 [
-(field_declaration_list_body) 
-(list_definition_body) 
-(struct_field_declaration_list_body)
-] @indent
+(comp_body) 
+(state_statement)
+(transition_statement)
+(handler_body)
+(consequence_body)
+(global_single)
+] @indent.begin
 
-"}" @indent_end
+"}" @indent.end
 
-(comment) @auto
+(comment) @indent.auto
 
-(string) @auto
-
+(string_literal) @indent.auto

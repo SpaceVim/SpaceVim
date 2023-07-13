@@ -25,6 +25,8 @@
   "in"
   "while"
   "endwhile"
+  "break"
+  "continue"
 ] @repeat
 
 [
@@ -34,11 +36,12 @@
 
 ;; Function related
 (function_declaration name: (_) @function)
-(call_expression function: (identifier) @function)
+(call_expression function: (identifier) @function.call)
+(call_expression function: (scoped_identifier (identifier) @function.call))
 (parameters (identifier) @parameter)
 (default_parameter (identifier) @parameter)
 
-[ (bang) (spread) (at) ] @punctuation.special
+[ (bang) (spread) ] @punctuation.special
 
 [ (no_option) (inv_option) (default_option) (option_name) ] @variable.builtin
 [
@@ -52,23 +55,31 @@
 [
   "let"
   "unlet"
+  "const"
   "call"
   "execute"
   "normal"
   "set"
+  "setfiletype"
   "setlocal"
   "silent"
   "echo"
+  "echon"
+  "echohl"
   "echomsg"
+  "echoerr"
   "autocmd"
   "augroup"
   "return"
   "syntax"
+  "filetype"
+  "source"
   "lua"
   "ruby"
   "perl"
   "python"
   "highlight"
+  "command"
   "delcommand"
   "comclear"
   "colorscheme"
@@ -77,9 +88,37 @@
   "global"
   "runtime"
   "wincmd"
+  "cnext"
+  "cprevious"
+  "cNext"
+  "vertical"
+  "leftabove"
+  "aboveleft"
+  "rightbelow"
+  "belowright"
+  "topleft"
+  "botright"
+  (unknown_command_name)
+  "edit"
+  "enew"
+  "find"
+  "ex"
+  "visual"
+  "view"
+  "eval"
 ] @keyword
 (map_statement cmd: _ @keyword)
 (command_name) @function.macro
+
+;; Filetype command
+
+(filetype_statement [
+  "detect"
+  "plugin"
+  "indent"
+  "on"
+  "off"
+] @keyword)
 
 ;; Syntax command
 
@@ -97,6 +136,8 @@
   "match"
   "cluster"
   "region"
+  "clear"
+  "include"
 ] @keyword)
 
 (syntax_argument name: _ @keyword)
@@ -110,11 +151,6 @@
   "<unique>"
 ] @constant.builtin
 
-(hl_attribute
-  key: _ @property
-  val: _ @constant)
-
-(hl_group) @variable
 (augroup_name) @namespace
 
 (au_event) @constant
@@ -122,11 +158,32 @@
 
 ;; Highlight command
 
+(hl_attribute
+  key: _ @property
+  val: _ @constant)
+
+(hl_group) @type
+
 (highlight_statement [
   "default"
   "link"
   "clear"
 ] @keyword)
+
+;; Command command
+
+(command) @string
+
+(command_attribute
+  name: _ @property
+  val: (behavior
+    name: _ @constant
+    val: (identifier)? @function)?)
+
+;; Edit command
+(plus_plus_opt
+  val: _? @constant) @property
+(plus_cmd "+" @property) @property
 
 ;; Runtime command
 
@@ -141,10 +198,15 @@
 (string_literal) @string
 (integer_literal) @number
 (float_literal) @float
-(comment) @comment
+(comment) @comment @spell
+(line_continuation_comment) @comment @spell
 (pattern) @string.special
 (pattern_multi) @string.regex
 (filename) @string
+(heredoc (body) @string)
+(heredoc (parameter) @keyword)
+[ (marker_definition) (endmarker) ] @label
+(literal_dictionary (literal_key) @label)
 ((scoped_identifier
   (scope) @_scope . (identifier) @boolean)
  (#eq? @_scope "v:")
@@ -179,11 +241,16 @@
   "/="
   "%="
   ".="
+  "..="
+  "<<"
+  "=<<"
+  (match_case)
 ] @operator
 
 ; Some characters have different meanings based on the context
 (unary_operation "!" @operator)
 (binary_operation "." @operator)
+
 
 ;; Punctuation
 
@@ -194,6 +261,7 @@
   "}"
   "["
   "]"
+  "#{"
 ] @punctuation.bracket
 
 (field_expression "." @punctuation.delimiter)
@@ -203,11 +271,14 @@
   ":"
 ] @punctuation.delimiter
 
-(ternary_expression ["?" ":"] @conditional)
+(ternary_expression ["?" ":"] @conditional.ternary)
 
 ; Options
 ((set_value) @number
- (#match? @number "^[0-9]+(\.[0-9]+)?$"))
+ (#lua-match? @number "^[%d]+(%.[%d]+)?$"))
+
+(inv_option "!" @operator)
+(set_item "?" @operator)
 
 ((set_item
    option: (option_name) @_option

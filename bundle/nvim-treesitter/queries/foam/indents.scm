@@ -1,11 +1,11 @@
 [
   "{"
   "}"
-] @branch
+] @indent.branch
 
-[(dict) (key_value)] @indent
+[(dict) (key_value)] @indent.begin
 
 
 [
   (comment)
-] @ignore
+] @indent.ignore

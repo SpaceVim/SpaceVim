@@ -109,7 +109,7 @@ Please see `:help defx-examples`.
 ![Custom icon4](https://user-images.githubusercontent.com/12205650/58801907-d9346d80-85d9-11e9-8a2d-de4635aa1eba.png)
 ![Custom icon5](https://user-images.githubusercontent.com/11615211/82411894-381e1b80-9aa5-11ea-9552-fd9847fe25e3.png)
 ![Defx on kitty](https://user-images.githubusercontent.com/8403993/51080184-d29e6b80-16b5-11e9-802b-7c2f56705e2e.png)
-![Defx in SpaceVim](https://user-images.githubusercontent.com/13142418/54086225-85233f80-4382-11e9-8091-7f387319b90a.png)
+![Defx in SpaceVim](https://img.spacevim.org/54086225-85233f80-4382-11e9-8091-7f387319b90a.png)
 ![Variable column](https://user-images.githubusercontent.com/19503791/56090130-58f26580-5ed0-11e9-8b66-e684cb11b0d1.png)
 ![Denite action call](https://user-images.githubusercontent.com/41671631/56280845-a6bfd580-613d-11e9-857a-d81f2633eeab.png)
 ![Defx floating window](https://user-images.githubusercontent.com/24732170/59892964-1c823f00-9416-11e9-8369-2e21910e168c.png)

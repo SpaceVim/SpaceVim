@@ -1,22 +1,23 @@
 [
+  (module)
   (dataclass)
-  (charpred)
-  (memberPredicate)
+  (classMember)
+  (classlessPredicate)
   (quantified)
-] @indent
+] @indent.begin
 
 [
-  (variable)
-  "("
   ")"
-  "{"
   "}"
-  "["
-  "]"
-] @branch
+] @indent.end
+
+[
+  ")"
+  "}"
+] @indent.branch
 
 [
   (block_comment)
   (line_comment)
   (qldoc)
-] @ignore
+] @indent.ignore

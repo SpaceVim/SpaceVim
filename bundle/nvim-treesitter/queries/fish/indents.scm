@@ -5,12 +5,12 @@
  (if_statement)
  (begin_statement)
  (switch_statement)
-] @indent
+] @indent.begin
 
 [
  (else_if_clause)
  (else_clause)
  "end"
-] @branch
+] @indent.branch
 
-(comment) @ignore
+(comment) @indent.ignore

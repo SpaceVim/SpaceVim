@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 C/C++ 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/58743787-db2bee80-846a-11e9-9b19-17202ac542c9.png
+image: https://img.spacevim.org/58743787-db2bee80-846a-11e9-9b19-17202ac542c9.png
 description: "这篇文章主要介绍如何使用 SpaceVim 搭建 C/C++ 的开发环境，简介 lang#c 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
@@ -119,7 +119,7 @@ C/C++ 代码格式化，主要依赖 `format` 模块，快捷键为 `SPC b f`，
 在编辑 C/C++ 文件时，可以快速运行当前文件，默认的快捷键是 `SPC l r` 。按下后，
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 
-![c-cpp-runner](https://user-images.githubusercontent.com/13142418/58743787-db2bee80-846a-11e9-9b19-17202ac542c9.png)
+![c-cpp-runner](https://img.spacevim.org/58743787-db2bee80-846a-11e9-9b19-17202ac542c9.png)
 
 默认的代码快速运行命令会读取模块选项 `clang_std` 和 `clang_flag`。
 例如，如果需要使用 `c11`，可以设置 `clang_std` 选项如下：
@@ -145,4 +145,4 @@ C/C++ 代码格式化，主要依赖 `format` 模块，快捷键为 `SPC b f`，
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
 
-![c_repl](https://user-images.githubusercontent.com/13142418/58744043-28aa5a80-846f-11e9-94c1-e6927696e662.png)
+![c_repl](https://img.spacevim.org/58744043-28aa5a80-846f-11e9-94c1-e6927696e662.png)

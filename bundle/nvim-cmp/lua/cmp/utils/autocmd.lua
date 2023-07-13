@@ -2,20 +2,38 @@ local debug = require('cmp.utils.debug')
 
 local autocmd = {}
 
+autocmd.group = vim.api.nvim_create_augroup('___cmp___', { clear = true })
+
 autocmd.events = {}
 
 ---Subscribe autocmd
----@param event string
+---@param events string|string[]
 ---@param callback function
 ---@return function
-autocmd.subscribe = function(event, callback)
-  autocmd.events[event] = autocmd.events[event] or {}
-  table.insert(autocmd.events[event], callback)
+autocmd.subscribe = function(events, callback)
+  events = type(events) == 'string' and { events } or events
+
+  for _, event in ipairs(events) do
+    if not autocmd.events[event] then
+      autocmd.events[event] = {}
+      vim.api.nvim_create_autocmd(event, {
+        desc = ('nvim-cmp: autocmd: %s'):format(event),
+        group = autocmd.group,
+        callback = function()
+          autocmd.emit(event)
+        end,
+      })
+    end
+    table.insert(autocmd.events[event], callback)
+  end
+
   return function()
-    for i, callback_ in ipairs(autocmd.events[event]) do
-      if callback_ == callback then
-        table.remove(autocmd.events[event], i)
-        break
+    for _, event in ipairs(events) do
+      for i, callback_ in ipairs(autocmd.events[event]) do
+        if callback_ == callback then
+          table.remove(autocmd.events[event], i)
+          break
+        end
       end
     end
   end

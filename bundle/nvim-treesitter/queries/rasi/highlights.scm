@@ -64,8 +64,8 @@
   (id_selector)
  ] @namespace
 
-(id_selector_view [ "normal" "selected" "alternate" ] @property)
-(id_selector_state [ "normal" "urgent" "active" ] @tag)
+(id_selector_view [ "normal" "selected" "alternate" ] @attribute)
+(id_selector_state [ "normal" "urgent" "active" ] @type.qualifier)
 
 (hex_color) @number
 (hex_color "#" @punctuation.special)

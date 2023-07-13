@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 Perl 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png
+image: https://img.spacevim.org/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png
 description: "这篇文章主要介绍如何使用 SpaceVim 搭建 Perl 的开发环境，简介 lang#perl 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
@@ -47,7 +47,7 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 默认的补全引擎有：deoplete、neocomplete、ycm、asyncomplete 以及 neocomplcache。
 几种自动补全引擎当中，要数 deoplete 的体验效果最好。
 
-![perlcomplete](https://user-images.githubusercontent.com/13142418/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png)
+![perlcomplete](https://img.spacevim.org/52611209-54550500-2ebf-11e9-9b9f-f697a0db52a3.png)
 
 ### 语法检查
 
@@ -60,7 +60,7 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 cpanm Perl::Critic
 ```
 
-![perllint](https://user-images.githubusercontent.com/13142418/52614908-2cb96900-2ece-11e9-8c73-2881f8030c6e.png)
+![perllint](https://img.spacevim.org/52614908-2cb96900-2ece-11e9-8c73-2881f8030c6e.png)
 
 ### 工程文件跳转
 
@@ -81,7 +81,7 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 a
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前 buffer 内容调用 Perl 命令。因此，在执行这个快捷键之前，不一定要保存该文件。
 
-![perlrunner](https://user-images.githubusercontent.com/13142418/52611211-54550500-2ebf-11e9-9baf-a6437da8fcf4.png)
+![perlrunner](https://img.spacevim.org/52611211-54550500-2ebf-11e9-9baf-a6437da8fcf4.png)
 
 ### 代码格式化
 
@@ -98,10 +98,10 @@ Perl 代码格式化，主要依赖 `format` 模块，同时需要安装相关�
 cpanm Perl::Tidy
 ```
 
-![perlformat](https://user-images.githubusercontent.com/13142418/52614978-71dd9b00-2ece-11e9-884d-a5c2328b53ae.gif)
+![perlformat](https://img.spacevim.org/52614978-71dd9b00-2ece-11e9-884d-a5c2328b53ae.gif)
 
 ### 交互式编程
 
 在编辑 Perl 文件时，可通过快捷键 `SPC l s i` 启动 `perli` 或者 `perl -del` 交互窗口，之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
-![perlrepl](https://user-images.githubusercontent.com/13142418/52611210-54550500-2ebf-11e9-8ba2-b5cd3cc70885.gif)
+![perlrepl](https://img.spacevim.org/52611210-54550500-2ebf-11e9-8ba2-b5cd3cc70885.gif)

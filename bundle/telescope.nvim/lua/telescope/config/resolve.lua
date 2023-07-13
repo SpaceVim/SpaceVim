@@ -140,23 +140,27 @@ end
 
 _resolve_map[function(val)
   return type(val) == "table" and val["max"] ~= nil and val[1] ~= nil and val[1] >= 0 and val[1] < 1
-end] =
-  function(selector, val)
-    return function(...)
-      local selected = select(selector, ...)
-      return math.min(math.floor(val[1] * selected), val["max"])
-    end
+end] = function(
+  selector,
+  val
+)
+  return function(...)
+    local selected = select(selector, ...)
+    return math.min(math.floor(val[1] * selected), val["max"])
   end
+end
 
 _resolve_map[function(val)
   return type(val) == "table" and val["min"] ~= nil and val[1] ~= nil and val[1] >= 0 and val[1] < 1
-end] =
-  function(selector, val)
-    return function(...)
-      local selected = select(selector, ...)
-      return math.max(math.floor(val[1] * selected), val["min"])
-    end
+end] = function(
+  selector,
+  val
+)
+  return function(...)
+    local selected = select(selector, ...)
+    return math.max(math.floor(val[1] * selected), val["min"])
   end
+end
 
 -- Add padding option
 _resolve_map[function(val)

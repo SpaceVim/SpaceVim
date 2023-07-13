@@ -3,14 +3,55 @@ ALE HTML Integration                                         *ale-html-options*
 
 
 ===============================================================================
+angular                                                      *ale-html-angular*
+
+ALE supports language server features for Angular. You can install it via `npm`: >
+
+  $ npm install --save-dev @angular/language-server
+<
+Angular 11 and up are supported.
+
+
+g:ale_html_angular_executable                   *g:ale_html_angular_executable*
+                                                *b:ale_html_angular_executable*
+  Type: |String|
+  Default: `'ngserver'`
+
+  See |ale-integrations-local-executables|
+
+
+g:ale_html_angular_use_global                   *g:ale_html_angular_use_global*
+                                                *b:ale_html_angular_use_global*
+  Type: |String|
+  Default: `get(g:, 'ale_use_global_executables', 0)`
+
+  See |ale-integrations-local-executables|
+
+
+===============================================================================
+cspell                                                        *ale-html-cspell*
+
+See |ale-cspell-options|
+
+===============================================================================
 fecs                                                            *ale-html-fecs*
 
-`fecs` options for HTMl is the same as the options for JavaScript,
-and both of them reads `./.fecsrc` as the default configuration file.
+`fecs` options for HTML are the same as the options for JavaScript, and both
+of them read `./.fecsrc` as the default configuration file.
+
 See: |ale-javascript-fecs|.
+
 
 ===============================================================================
 html-beautify                                               *ale-html-beautify*
+
+g:ale_html_beautify_executable                 *g:ale_html_beautify_executable*
+                                               *b:ale_html_beautify_executable*
+  Type: |String|
+  Default: `'html-beautify'`
+
+  See |ale-integrations-local-executables|
+
 
 g:ale_html_beautify_options                       *g:ale_html_beautify_options*
                                                   *b:ale_html_beautify_options*
@@ -18,6 +59,14 @@ g:ale_html_beautify_options                       *g:ale_html_beautify_options*
   Default: `''`
 
   This variable can be changed to modify flags given to html-beautify.
+
+
+g:ale_html_beautify_use_global                 *g:ale_html_beautify_use_global*
+                                               *b:ale_html_beautify_use_global*
+  Type: |String|
+  Default: `get(g:, 'ale_use_global_executables', 0)`
+
+  See |ale-integrations-local-executables|
 
 
 ===============================================================================
@@ -43,6 +92,39 @@ g:ale_html_htmlhint_use_global                 *g:ale_html_htmlhint_use_global*
                                                *b:ale_html_htmlhint_use_global*
   Type: |String|
   Default: `get(g:, 'ale_use_global_executables', 0)`
+
+  See |ale-integrations-local-executables|
+
+
+===============================================================================
+prettier                                                    *ale-html-prettier*
+
+See |ale-javascript-prettier| for information about the available options.
+
+
+===============================================================================
+stylelint                                                  *ale-html-stylelint*
+
+g:ale_html_stylelint_executable               *g:ale_html_stylelint_executable*
+                                              *b:ale_html_stylelint_executable*
+  Type: |String|
+  Default: `'stylelint'`
+
+  See |ale-integrations-local-executables|
+
+
+g:ale_html_stylelint_options                     *g:ale_html_stylelint_options*
+                                                 *b:ale_html_stylelint_options*
+  Type: |String|
+  Default: `''`
+
+  This variable can be set to pass additional options to stylelint.
+
+
+g:ale_html_stylelint_use_global               *g:ale_html_stylelint_use_global*
+                                              *b:ale_html_stylelint_use_global*
+  Type: |String|
+  Default: `0`
 
   See |ale-integrations-local-executables|
 
@@ -98,37 +180,17 @@ g:ale_html_tidy_use_global                             *g:html_tidy_use_global*
 
 
 ===============================================================================
-prettier                                                    *ale-html-prettier*
+vscodehtml                                                    *ale-html-vscode*
 
-See |ale-javascript-prettier| for information about the available options.
+Website: https://github.com/hrsh7th/vscode-langservers-extracted
 
+Installation
+-------------------------------------------------------------------------------
 
-===============================================================================
-stylelint                                                  *ale-html-stylelint*
+Install VSCode html language server either globally or locally: >
 
-g:ale_html_stylelint_executable               *g:ale_html_stylelint_executable*
-                                              *b:ale_html_stylelint_executable*
-  Type: |String|
-  Default: `'stylelint'`
-
-  See |ale-integrations-local-executables|
-
-
-g:ale_html_stylelint_options                     *g:ale_html_stylelint_options*
-                                                 *b:ale_html_stylelint_options*
-  Type: |String|
-  Default: `''`
-
-  This variable can be set to pass additional options to stylelint.
-
-
-g:ale_html_stylelint_use_global               *g:ale_html_stylelint_use_global*
-                                              *b:ale_html_stylelint_use_global*
-  Type: |String|
-  Default: `0`
-
-  See |ale-integrations-local-executables|
-
+  npm install -g vscode-langservers-extracted
+<
 
 ===============================================================================
 write-good                                                *ale-html-write-good*

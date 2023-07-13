@@ -1,0 +1,26 @@
+# the url: https://github.com/SpaceVim/SpaceVim/archive/b462646223dfb8a7b19fb3999edffd4d0dd8aea1.zip
+#          https://github.com/{username}/{repo}/archive/{hash}.zip
+
+
+[[repos]]
+  url = 'https://github.com/'
+  directory = 'trouble.nvim'
+  username = 'folke'
+  repo = 'trouble.nvim'
+  commit = 'd99e2abd10808ef91738ce98a5c767e6a51df449'
+
+[[repos]]
+  # https://github.com/rakr/vim-one/tree/187f5c85b682c1933f8780d4d419c55d26a82e24
+  url = 'https://github.com/'
+  directory = 'vim-one'
+  username = 'rakr'
+  repo = 'vim-one'
+  commit = '187f5c85b682c1933f8780d4d419c55d26a82e24'
+
+[[repos]]
+  # https://github.com/lukas-reineke/indent-blankline.nvim/tree/7075d7861f7a6bbf0de0298c83f8a13195e6ec01
+  url = 'https://github.com/'
+  directory = 'indent-blankline.nvim'
+  username = 'lukas-reineke'
+  repo = 'indent-blankline.nvim'
+  commit = '7075d7861f7a6bbf0de0298c83f8a13195e6ec01'

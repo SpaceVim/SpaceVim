@@ -30,7 +30,7 @@ function from_entry.path(entry, validate, escape)
     -- TODO(conni2461): we are not going to return the expanded path because
     --                  this would lead to cache misses in the perviewer.
     --                  Requires overall refactoring in previewer interface
-    local expanded = vim.fn.expand(path)
+    local expanded = vim.fn.expand(vim.fn.escape(path, "$?*[]"))
     if (vim.fn.filereadable(expanded) + vim.fn.isdirectory(expanded)) == 0 then
       return
     end

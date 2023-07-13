@@ -54,3 +54,10 @@ enum ReactionType {
   ANGRY
   // ^ constant
 }
+
+view ReactionView {
+// ^ keyword
+  id     Int @unique
+  postId Int
+  userId String
+}

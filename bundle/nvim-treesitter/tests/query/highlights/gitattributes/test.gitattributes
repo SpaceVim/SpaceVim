@@ -1,0 +1,37 @@
+[attr]nodiff -diff -merge
+# <- preproc
+#     ^^^^^^ property
+#            ^ operator
+#             ^^^^ variable.builtin
+#                  ^ operator
+#                   ^^^^^ variable.builtin
+
+vendor/** linguist-vendored=true
+#     ^ punctuation.delimiter
+#      ^^ character.special
+#         ^^^^^^^^^^^^^^^^^ parameter
+#                          ^ operator
+#                           ^^^^ boolean
+
+  [^._]-[[:lower:]] !something
+# ^ punctuation.bracket
+#  ^ operator
+#   ^^ string.special
+#     ^ punctuation.bracket
+#       ^ punctuation.bracket
+#        ^^^^^^^^^ constant
+#                 ^ punctuation.bracket
+#                   ^ operator
+#                    ^^^^^^^^^^ parameter
+
+"_\u4E00\t\56txt" encoding=UTF-16
+# <- punctuation.special
+# ^^^^^^ string.escape
+#       ^^ string.escape
+#         ^^^ string.escape
+#               ^ punctuation.special
+#                 ^^^^^^^^ variable.builtin
+#                         ^ operator
+#                          ^^^^^^ string
+
+# vim:ft=gitattributes:

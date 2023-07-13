@@ -16,7 +16,7 @@ onoremap <silent> <Plug>(ale_show_completion_menu) <Nop>
 let g:ale_completion_delay = get(g:, 'ale_completion_delay', 100)
 let g:ale_completion_excluded_words = get(g:, 'ale_completion_excluded_words', [])
 let g:ale_completion_max_suggestions = get(g:, 'ale_completion_max_suggestions', 50)
-let g:ale_completion_autoimport = get(g:, 'ale_completion_autoimport', 0)
+let g:ale_completion_autoimport = get(g:, 'ale_completion_autoimport', 1)
 let g:ale_completion_tsserver_remove_warnings = get(g:, 'ale_completion_tsserver_remove_warnings', 0)
 
 let s:timer_id = -1
@@ -130,14 +130,17 @@ let s:should_complete_map = {
 \   '<default>': '\v[a-zA-Z$_][a-zA-Z$_0-9]*$|\.$',
 \   'clojure': s:lisp_regex,
 \   'lisp': s:lisp_regex,
+\   'racket': '\k\+$',
 \   'typescript': '\v[a-zA-Z$_][a-zA-Z$_0-9]*$|\.$|''$|"$',
 \   'rust': '\v[a-zA-Z$_][a-zA-Z$_0-9]*$|\.$|::$',
 \   'cpp': '\v[a-zA-Z$_][a-zA-Z$_0-9]*$|\.$|::$|-\>$',
+\   'c': '\v[a-zA-Z$_][a-zA-Z$_0-9]*$|\.$|-\>$',
 \}
 
 " Regular expressions for finding the start column to replace with completion.
 let s:omni_start_map = {
 \   '<default>': '\v[a-zA-Z$_][a-zA-Z$_0-9]*$',
+\   'racket': '\k\+$',
 \}
 
 " A map of exact characters for triggering LSP completions. Do not forget to
@@ -147,6 +150,7 @@ let s:trigger_character_map = {
 \   'typescript': ['.', '''', '"'],
 \   'rust': ['.', '::'],
 \   'cpp': ['.', '::', '->'],
+\   'c': ['.', '->'],
 \}
 
 function! s:GetFiletypeValue(map, filetype) abort
@@ -269,13 +273,19 @@ function! s:ReplaceCompletionOptions(source) abort
             let b:ale_old_completeopt = &l:completeopt
         endif
 
-        if &l:completeopt =~# 'preview'
-            let &l:completeopt = 'menu,menuone,preview,noselect,noinsert'
-        elseif &l:completeopt =~# 'popup'
-            let &l:completeopt = 'menu,menuone,popup,noselect,noinsert'
-        else
-            let &l:completeopt = 'menu,menuone,noselect,noinsert'
-        endif
+        let l:opt_list = split(&l:completeopt, ',')
+        " The menu and noinsert options must be set, or automatic completion
+        " will be annoying.
+        let l:new_opt_list = ['menu', 'menuone', 'noinsert']
+
+        " Permit some other completion options, provided users have set them.
+        for l:opt in ['preview', 'popup', 'noselect']
+            if index(l:opt_list, l:opt) >= 0
+                call add(l:new_opt_list, l:opt)
+            endif
+        endfor
+
+        let &l:completeopt = join(l:new_opt_list, ',')
     endif
 endfunction
 
@@ -575,7 +585,7 @@ function! ale#completion#ParseLSPCompletions(response) abort
             continue
         endif
 
-        if get(l:item, 'insertTextFormat') is s:LSP_INSERT_TEXT_FORMAT_PLAIN
+        if get(l:item, 'insertTextFormat', s:LSP_INSERT_TEXT_FORMAT_PLAIN) is s:LSP_INSERT_TEXT_FORMAT_PLAIN
         \&& type(get(l:item, 'textEdit')) is v:t_dict
             let l:text = l:item.textEdit.newText
         elseif type(get(l:item, 'insertText')) is v:t_string
@@ -614,6 +624,8 @@ function! ale#completion#ParseLSPCompletions(response) abort
         \   'kind': ale#completion#GetCompletionSymbols(get(l:item, 'kind', '')),
         \   'icase': 1,
         \   'menu': l:detail,
+        \   'dup': get(l:info, 'additional_edits_only', 0)
+        \       ||  g:ale_completion_autoimport,
         \   'info': (type(l:doc) is v:t_string ? l:doc : ''),
         \}
         " This flag is used to tell if this completion came from ALE or not.
@@ -768,7 +780,8 @@ function! s:OnReady(linter, lsp_details) abort
 
     if a:linter.lsp is# 'tsserver'
         if get(g:, 'ale_completion_tsserver_autoimport') is 1
-            execute 'echom `g:ale_completion_tsserver_autoimport` is deprecated. Use `g:ale_completion_autoimport` instead.'''
+            " no-custom-checks
+            echom '`g:ale_completion_tsserver_autoimport` is deprecated. Use `g:ale_completion_autoimport` instead.'
         endif
 
         let l:message = ale#lsp#tsserver_message#Completions(
@@ -903,7 +916,8 @@ function! ale#completion#Import() abort
     endif
 
     let [l:line, l:column] = getpos('.')[1:2]
-    let l:column = searchpos('\V' . escape(l:word, '/\'), 'bn', l:line)[1]
+    let l:column = searchpos('\V' . escape(l:word, '/\'), 'bnc', l:line)[1]
+    let l:column = l:column + len(l:word) - 1
 
     if l:column isnot 0
         let l:started = ale#completion#GetCompletions('ale-import', {
@@ -993,12 +1007,11 @@ endfunction
 
 function! ale#completion#HandleUserData(completed_item) abort
     let l:user_data_json = get(a:completed_item, 'user_data', '')
-    let l:user_data = !empty(l:user_data_json)
-    \   ? json_decode(l:user_data_json)
-    \   : v:null
+    let l:user_data = type(l:user_data_json) is v:t_dict
+    \   ? l:user_data_json
+    \   : ale#util#FuzzyJSONDecode(l:user_data_json, {})
 
-    if type(l:user_data) isnot v:t_dict
-    \|| get(l:user_data, '_ale_completion_item', 0) isnot 1
+    if !has_key(l:user_data, '_ale_completion_item')
         return
     endif
 

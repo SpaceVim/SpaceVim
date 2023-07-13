@@ -12,42 +12,46 @@
   (return_statement)
   (statement_block)
   (switch_case)
+  (switch_default)
   (switch_statement)
   (template_substitution)
   (ternary_expression)
-] @indent
+] @indent.begin
 
-(arguments (call_expression) @indent)
-(binary_expression (call_expression) @indent)
-(expression_statement (call_expression) @indent)
+(arguments (call_expression) @indent.begin)
+(binary_expression (call_expression) @indent.begin)
+(expression_statement (call_expression) @indent.begin)
 (arrow_function
   body: (_) @_body
   (#not-has-type? @_body statement_block)
-) @indent
+) @indent.begin
 (assignment_expression
   right: (_) @_right
   (#not-has-type? @_right arrow_function function)
-) @indent
+) @indent.begin
 (variable_declarator
   value: (_) @_value
   (#not-has-type? @_value arrow_function call_expression function)
-) @indent
+) @indent.begin
 
-(arguments ")" @indent_end)
-(object "}" @indent_end)
-(statement_block "}" @indent_end)
+(arguments ")" @indent.end)
+(object "}" @indent.end)
+(statement_block "}" @indent.end)
 
 [
   (arguments (object))
   ")"
   "}"
   "]"
-] @branch
-(statement_block "{" @branch)
+] @indent.branch
+(statement_block "{" @indent.branch)
+
+(parenthesized_expression ("(" (_) ")" @indent.end))
+["}" "]"] @indent.end
+
+(template_string) @indent.ignore
 
 [
   (comment)
-  (template_string)
-] @ignore
-
-(ERROR) @auto
+  (ERROR)
+] @indent.auto

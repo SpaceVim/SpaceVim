@@ -2,7 +2,7 @@
 title: "SpaceVim MeetUp in HangZhou"
 categories: [meetup, blog]
 description: "Our first meetup in hangzhou, general discussion about features of SpaceVim."
-image: https://user-images.githubusercontent.com/13142418/80610943-8de64180-8a6c-11ea-9e0b-bdc3c9d8dbd3.jpg
+image: https://img.spacevim.org/80610943-8de64180-8a6c-11ea-9e0b-bdc3c9d8dbd3.jpg
 commentsID: "SpaceVim MeetUp in HangZhou"
 comments: true
 ---
@@ -31,13 +31,13 @@ We just make a general discussion about how to use SpaceVim, and what feature ne
 These new features have been added to tab manager in [#1887](https://github.com/SpaceVim/SpaceVim/pull/1887)
 
 - Display tab name on tabline and tab manager, you can also rename the tab via key binding `r` in tab manager buffer.
-![rename](https://user-images.githubusercontent.com/13142418/80611134-ce45bf80-8a6c-11ea-8c1a-1a50ffea3880.gif)
+![rename](https://img.spacevim.org/80611134-ce45bf80-8a6c-11ea-8c1a-1a50ffea3880.gif)
 - Move cursor tab forward and backward, default key binding is `<C-S-Up>/<C-S-Down>`
-![movetab](https://user-images.githubusercontent.com/13142418/80611339-0d741080-8a6d-11ea-890c-f8b389cee866.gif)
+![movetab](https://img.spacevim.org/80611339-0d741080-8a6d-11ea-890c-f8b389cee866.gif)
 - Create new tab after the tab under the cursor, key bindings: (`n`: create named tab / `N` : create anonymous tab)
-![newtab](https://user-images.githubusercontent.com/13142418/80611475-398f9180-8a6d-11ea-9aa5-a975d61ebab9.gif)
+![newtab](https://img.spacevim.org/80611475-398f9180-8a6d-11ea-9aa5-a975d61ebab9.gif)
 - copy / paste tab, include tab layout and tab name
-![copytab](https://user-images.githubusercontent.com/13142418/80611654-78bde280-8a6d-11ea-9cc0-ac41851882bd.gif)
+![copytab](https://img.spacevim.org/80611654-78bde280-8a6d-11ea-9cc0-ac41851882bd.gif)
 - Display windows id of each item.
 
 ### Improve flygrep

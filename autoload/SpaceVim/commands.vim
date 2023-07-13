@@ -73,7 +73,8 @@ function! SpaceVim#commands#load() abort
 
 
   ""
-  " Switch to alternate file based on {type}.
+  " Switch to alternate file based on {type}. for more info about alternate
+  " file configuration, checkout @section(plugins-alternate)
   command! -nargs=? -complete=custom,SpaceVim#plugins#a#complete -bang A :call SpaceVim#plugins#a#alt(<bang>0,<f-args>)
 endfunction
 

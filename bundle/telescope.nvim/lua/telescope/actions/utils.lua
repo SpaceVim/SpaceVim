@@ -13,7 +13,7 @@ local utils = {}
 
 --- Apply `f` to the entries of the current picker.
 --- - Notes:
----   - Mapped entries include all currently filtered results, not just the visible onces.
+---   - Mapped entries include all currently filtered results, not just the visible ones.
 ---   - Indices are 1-indexed, whereas rows are 0-indexed.
 --- - Warning: `map_entries` has no return value.
 ---   - The below example showcases how to collect results
@@ -26,7 +26,7 @@ local utils = {}
 ---     local prompt_bufnr = vim.api.nvim_get_current_buf()
 ---     local current_picker = action_state.get_current_picker(prompt_bufnr)
 ---     local results = {}
----       action_utils.map_entries(prompt_bufnr, function(entry, index, row)
+---     action_utils.map_entries(prompt_bufnr, function(entry, index, row)
 ---       results[row] = entry.value
 ---     end)
 ---     return results
@@ -50,7 +50,7 @@ end
 
 --- Apply `f` to the multi selections of the current picker and return a table of mapped selections.
 --- - Notes:
----   - Mapped selections may include results not visible in the results popup.
+---   - Mapped selections may include results not visible in the results pop up.
 ---   - Selected entries are returned in order of their selection.
 --- - Warning: `map_selections` has no return value.
 ---   - The below example showcases how to collect results
@@ -63,7 +63,7 @@ end
 ---     local prompt_bufnr = vim.api.nvim_get_current_buf()
 ---     local current_picker = action_state.get_current_picker(prompt_bufnr)
 ---     local results = {}
----       action_utils.map_selections(prompt_bufnr, function(entry, index)
+---     action_utils.map_selections(prompt_bufnr, function(entry, index)
 ---       results[index] = entry.value
 ---     end)
 ---     return results
@@ -81,25 +81,25 @@ function utils.map_selections(prompt_bufnr, f)
   end
 end
 
-local findnth = function(str, nth)
-  local array = {}
-  for i in string.gmatch(str, "%d+") do
-    table.insert(array, tonumber(i))
-  end
-  return array[nth]
-end
-
 --- Utility to collect mappings of prompt buffer in array of `{mode, keybind, name}`.
 ---@param prompt_bufnr number: The prompt bufnr
 function utils.get_registered_mappings(prompt_bufnr)
   local ret = {}
   for _, mode in ipairs { "n", "i" } do
-    local mode_mappings = vim.api.nvim_buf_get_keymap(prompt_bufnr, mode)
-    for _, mapping in ipairs(mode_mappings) do
+    for _, mapping in ipairs(vim.api.nvim_buf_get_keymap(prompt_bufnr, mode)) do
       -- ensure only telescope mappings
-      if mapping.rhs and string.find(mapping.rhs, [[require%('telescope.mappings'%).execute_keymap]]) then
-        local funcid = findnth(mapping.rhs, 2)
-        table.insert(ret, { mode = mode, keybind = mapping.lhs, func = __TelescopeKeymapStore[prompt_bufnr][funcid] })
+      if mapping.desc then
+        if mapping.desc:sub(1, 10) == "telescope|" then
+          table.insert(ret, { mode = mode, keybind = mapping.lhs, desc = mapping.desc:sub(11) })
+        elseif mapping.desc:sub(1, 11) == "telescopej|" then
+          local fname = utils._get_anon_function_name(vim.json.decode(mapping.desc:sub(12)))
+          fname = fname:lower() == mapping.lhs:lower() and "<anonymous>" or fname
+          table.insert(ret, {
+            mode = mode,
+            keybind = mapping.lhs,
+            desc = fname,
+          })
+        end
       end
     end
   end
@@ -107,9 +107,8 @@ function utils.get_registered_mappings(prompt_bufnr)
 end
 
 -- Best effort to infer function names for actions.which_key
-function utils._get_anon_function_name(func_ref)
+function utils._get_anon_function_name(info)
   local Path = require "plenary.path"
-  local info = debug.getinfo(func_ref)
   local fname
   -- if fn defined in string (ie loadstring) source is string
   -- if fn defined in file, source is file name prefixed with a `@´

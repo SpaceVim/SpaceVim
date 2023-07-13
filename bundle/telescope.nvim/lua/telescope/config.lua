@@ -194,13 +194,13 @@ append(
   "cycle_layout_list",
   { "horizontal", "vertical" },
   [[
-  Determines the layouts to cycle through when using `actions.cycle_layout_next`
-  and `actions.cycle_layout_prev`.
+  Determines the layouts to cycle through when using `actions.layout.cycle_layout_next`
+  and `actions.layout.cycle_layout_prev`.
   Should be a list of "layout setups".
   Each "layout setup" can take one of two forms:
-  1. string <br>
+  1. string
       This is interpreted as the name of a `layout_strategy`
-  2. table <br>
+  2. table
       A table with possible keys `layout_strategy`, `layout_config` and `previewer`
 
   Default: { "horizontal", "vertical" }
@@ -240,7 +240,6 @@ append(
   "> ",
   [[
   The character(s) that will be shown in front of the current selection.
-
 
   Default: '> ']]
 )
@@ -289,7 +288,7 @@ append(
   "path_display",
   {},
   [[
-  Determines how file paths are displayed
+  Determines how file paths are displayed.
 
   path_display can be set to an array with a combination of:
   - "hidden"    hide file names
@@ -302,7 +301,7 @@ append(
   - "shorten"   only display the first character of each directory in
                 the path
   - "truncate"  truncates the start of the path when the whole path will
-                not fit. To increase the the gap between the path and the edge.
+                not fit. To increase the gap between the path and the edge,
                 set truncate to number `truncate = 3`
 
   You can also specify the number of characters of each directory name
@@ -418,7 +417,7 @@ append(
   [[
   Defines the default title of the prompt window. A false value
   can be used to hide the title altogether. Most of the times builtins
-  define a prompt_title which will be prefered over this default.
+  define a prompt_title which will be preferred over this default.
 
   Default: "Prompt"]]
 )
@@ -442,6 +441,8 @@ append(
 
   Will allow you to completely remove all of telescope's default maps
   and use your own.
+
+  Default: nil
   ]]
 )
 
@@ -469,11 +470,11 @@ append(
 
   Fields:
     - path:    The path to the telescope history as string.
-               default: stdpath("data")/telescope_history
+               Default: stdpath("data")/telescope_history
     - limit:   The amount of entries that will be written in the
                history.
                Warning: If limit is set to nil it will grow unbound.
-               default: 100
+               Default: 100
     - handler: A lua function that implements the history.
                This is meant as a developer setting for extensions to
                override the history handling, e.g.,
@@ -507,7 +508,8 @@ append(
                           indices larger than `cache_picker.num_pickers` will
                           be cleared.
                           Default: 1
-      - limit_entries:    The amount of entries that will be written in the
+      - limit_entries:    The amount of entries that will be saved for each
+                          picker.
                           Default: 1000
     ]]
 )
@@ -611,7 +613,7 @@ append(
       - msg_bg_fillchar:  Character to fill background of unpreviewable buffers with
                           Default: "╱"
       - hide_on_startup:  Hide previewer when picker starts. Previewer can be toggled
-                          with actions.toggle_preview.
+                          with actions.layout.toggle_preview.
                           Default: false
     ]]
 )
@@ -677,7 +679,7 @@ append(
   [[
   A function pointer that specifies the file_sorter. This sorter will
   be used for find_files, git_files and similar.
-  Hint: If you load a native sorter, you dont need to change this value,
+  Hint: If you load a native sorter, you don't need to change this value,
   the native sorter will override it anyway.
 
   Default: require("telescope.sorters").get_fzy_sorter]]
@@ -689,7 +691,7 @@ append(
   [[
   A function pointer to the generic sorter. The sorter that should be
   used for everything that is not a file.
-  Hint: If you load a native sorter, you dont need to change this value,
+  Hint: If you load a native sorter, you don't need to change this value,
   the native sorter will override it anyway.
 
   Default: require("telescope.sorters").get_fzy_sorter]]
@@ -702,7 +704,7 @@ append(
   [[
   This points to a wrapper sorter around the generic_sorter that is able
   to do prefiltering.
-  Its usually used for lsp_*_symbols and lsp_*_diagnostics
+  It's usually used for lsp_*_symbols and lsp_*_diagnostics
 
   Default: require("telescope.sorters").prefilter]]
 )

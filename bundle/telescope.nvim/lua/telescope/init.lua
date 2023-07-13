@@ -13,10 +13,10 @@ local telescope = {}
 ---
 --- Getting started with telescope:
 ---   1. Run `:checkhealth telescope` to make sure everything is installed.
----   2. Evaluate it working with
+---   2. Evaluate it is working with
 ---      `:Telescope find_files` or
 ---      `:lua require("telescope.builtin").find_files()`
----   3. Put a `require("telescope").setup() call somewhere in your neovim config.
+---   3. Put a `require("telescope").setup()` call somewhere in your neovim config.
 ---   4. Read |telescope.setup| to check what config keys are available and what you can put inside the setup call
 ---   5. Read |telescope.builtin| to check which builtin pickers are offered and what options these implement
 ---   6. Profit
@@ -31,14 +31,14 @@ local telescope = {}
 --- │            │   ┌───│Manager│────│ Sorter │┐    └───┬───*  │
 --- │            ▼   ▼   └───────*    └────────┘│        │      │
 --- │            1────────┐                 2───┴──┐     │      │
---- │      ┌─────│ Picker │                 │Finder│◄────┘      │
+--- │      ┌─────│ Picker │                 │Finder│◀────┘      │
 --- │      ▼     └───┬────┘                 └──────*            │
 --- │ ┌────────┐     │       3────────+         ▲               │
 --- │ │Selected│     └───────│ Prompt │─────────┘               │
 --- │ │ Entry  │             └───┬────┘                         │
 --- │ └────────*             ┌───┴────┐  ┌────────┐  ┌────────┐ │
 --- │     │  ▲    4─────────┐│ Prompt │  │(Attach)│  │Actions │ │
---- │     ▼  └──► │ Results ││ Buffer │◄─┤Mappings│◄─┤User Fn │ │
+--- │     ▼  └──▶ │ Results ││ Buffer │◀─┤Mappings│◀─┤User Fn │ │
 --- │5─────────┐  └─────────┘└────────┘  └────────┘  └────────┘ │
 --- ││Previewer│                                                │
 --- │└─────────┘                   telescope.nvim architecture  │

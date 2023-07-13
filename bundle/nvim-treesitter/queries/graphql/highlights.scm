@@ -19,12 +19,6 @@
 (input_object_type_definition
   (name) @type)
 
-(directive_definition
-  (name) @type)
-
-(directive_definition
-  "@" @type)
-
 (scalar_type_extension
   (name) @type)
 
@@ -46,7 +40,14 @@
 (named_type
   (name) @type)
 
-(directive) @type
+; Directives
+;-----------
+
+(directive_definition
+  "@" @attribute
+  (name) @attribute)
+
+(directive) @attribute
 
 ; Properties
 ;-----------
@@ -110,9 +111,9 @@
 ;---------
 
 (description
-  (string_value) @comment)
+  (string_value) @string.documentation @spell)
 
-(comment) @comment
+(comment) @comment @spell
 
 (directive_location
   (executable_directive_location) @type.builtin)

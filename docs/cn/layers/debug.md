@@ -49,4 +49,4 @@ SpaceVim 默认未载入该模块，如需载入模块，可以在配置文件�
 
 Debug 的快捷键太长了？可以使用 `SPC d .` 调出 Debug 临时快捷键菜单。
 
-![Debug Transient State](https://user-images.githubusercontent.com/13142418/33996076-b03c05bc-e0a5-11e7-90fd-5f31e2703d7e.png)
+![Debug Transient State](https://img.spacevim.org/33996076-b03c05bc-e0a5-11e7-90fd-5f31e2703d7e.png)

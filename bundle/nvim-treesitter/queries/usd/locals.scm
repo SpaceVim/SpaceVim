@@ -1,0 +1,4 @@
+[
+  (block)
+  (metadata)
+] @scope

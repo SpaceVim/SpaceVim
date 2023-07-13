@@ -29,7 +29,7 @@ if exists(':Tagbar') == 0
 endif
 
 if exists(':Tagbar') == 0
-  echomsg 'Tagbar: Could not load plugin code, check your runtimepath!'
+  call tagbar#log#warn('Could not load plugin code, check your runtimepath!')
   finish
 endif
 
@@ -39,7 +39,7 @@ redir => s:ftype_out
 silent filetype
 redir END
 if s:ftype_out !~# 'detection:ON'
-  echomsg 'Tagbar: Filetype detection is turned off, skipping plugin'
+  call tagbar#log#warn('Filetype detection is turned off, skipping plugin')
   unlet s:ftype_out
   finish
 endif

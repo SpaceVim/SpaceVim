@@ -59,6 +59,7 @@ function! SpaceVim#autocmds#init() abort
     endif
     autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
     autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
+    autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('StartifyEndOfBuffer')
     autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized,one,SpaceVim call s:fix_colorschem_in_SpaceVim()
     autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
     autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')

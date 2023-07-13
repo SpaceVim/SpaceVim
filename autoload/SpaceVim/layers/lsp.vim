@@ -62,7 +62,16 @@ endfunction
 
 function! SpaceVim#layers#lsp#plugins() abort
   let plugins = []
-  if has('nvim-0.8.0')
+  if has('nvim-0.9.1')
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-lspconfig-latest', {'merged' : 0, 'loadconf' : 1}])
+    if g:spacevim_autocomplete_method ==# 'deoplete'
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete-lsp', {'merged' : 0}])
+    elseif g:spacevim_autocomplete_method ==# 'nvim-cmp'
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-nvim-lsp', {
+            \ 'merged' : 0,
+            \ }])
+    endif
+  elseif has('nvim-0.8.0')
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-lspconfig-0.1.4', {'merged' : 0, 'loadconf' : 1}])
     if g:spacevim_autocomplete_method ==# 'deoplete'
       call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete-lsp', {'merged' : 0}])

@@ -5,7 +5,7 @@
   (await_statement)
   (script_element)
   (style_element)
-] @indent
+] @indent.begin
 
 [
   (end_tag)
@@ -15,6 +15,6 @@
   (await_end_expr)
   ">"
   "/>"
-] @branch
+] @indent.branch
 
-(comment) @ignore
+(comment) @indent.ignore

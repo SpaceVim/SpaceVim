@@ -13,6 +13,10 @@
 
 ; Keywords that mark conditional statements
 [ "if" "elsif" "unless" "else" ] @conditional
+(ternary_expression
+  ["?" ":"] @conditional.ternary)
+(ternary_expression_in_hash
+  ["?" ":"] @conditional.ternary)
 
 ; Keywords that mark repeating loops
 [ "while" "until" "for" "foreach" ] @repeat
@@ -83,15 +87,19 @@
 
 ; Comments are comments
 (comments) @comment
+(comments) @spell
+
+((source_file . (comments) @preproc)
+  (#lua-match? @preproc "^#!/"))
 
 ; POD should be handled specially with its own embedded subtype but for now
 ;   we'll just have to do this.
 (pod_statement) @text
 
 (method_invocation
-  function_name: (identifier) @method)
+  function_name: (identifier) @method.call)
 (call_expression
-  function_name: (identifier) @function)
+  function_name: (identifier) @function.call)
 
 ;; ----------
 
@@ -138,8 +146,6 @@
 (to_reference)
 (type_glob)
 (hash_access_variable)
-(ternary_expression)
-(ternary_expression_in_hash)
 ] @operator
 
 [
@@ -162,7 +168,8 @@
 ] @string
 
 [
-(regex_pattern_qr) 
+(pattern_matcher)
+(regex_pattern_qr)
 (patter_matcher_m)
 (substitution_pattern_s)
 ] @string.regex

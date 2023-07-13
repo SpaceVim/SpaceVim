@@ -16,13 +16,12 @@ endfunction
 function! ale#code_action#HandleCodeAction(code_action, options) abort
     let l:current_buffer = bufnr('')
     let l:changes = a:code_action.changes
-    let l:should_save = get(a:options, 'should_save')
 
     for l:file_code_edit in l:changes
         call ale#code_action#ApplyChanges(
         \   l:file_code_edit.fileName,
         \   l:file_code_edit.textChanges,
-        \   l:should_save,
+        \   a:options,
         \)
     endfor
 endfunction
@@ -63,23 +62,28 @@ function! s:ChangeCmp(left, right) abort
     return 0
 endfunction
 
-function! ale#code_action#ApplyChanges(filename, changes, should_save) abort
-    let l:current_buffer = bufnr('')
+function! ale#code_action#ApplyChanges(filename, changes, options) abort
+    let l:should_save = get(a:options, 'should_save')
+    let l:conn_id = get(a:options, 'conn_id')
+
+    let l:orig_buffer = bufnr('')
+
     " The buffer is used to determine the fileformat, if available.
     let l:buffer = bufnr(a:filename)
-    let l:is_current_buffer = l:buffer > 0 && l:buffer == l:current_buffer
 
-    if l:buffer > 0
-        let l:lines = getbufline(l:buffer, 1, '$')
-    else
-        let l:lines = readfile(a:filename, 'b')
+    if l:buffer != l:orig_buffer
+        call ale#util#Execute('silent edit ' . a:filename)
+        let l:buffer = bufnr('')
     endif
 
-    if l:is_current_buffer
-        let l:pos = getpos('.')[1:2]
-    else
-        let l:pos = [1, 1]
+    let l:lines = getbufline(l:buffer, 1, '$')
+
+    " Add empty line if there's trailing newline, like readfile() does.
+    if getbufvar(l:buffer, '&eol')
+        let l:lines += ['']
     endif
+
+    let l:pos = getpos('.')[1:2]
 
     " Changes have to be sorted so we apply them from bottom-to-top
     for l:code_edit in reverse(sort(copy(a:changes), function('s:ChangeCmp')))
@@ -89,87 +93,86 @@ function! ale#code_action#ApplyChanges(filename, changes, should_save) abort
         let l:end_column = l:code_edit.end.offset
         let l:text = l:code_edit.newText
 
-        " Adjust the ends according to previous edits.
-        if l:end_line > len(l:lines)
-            let l:end_line_len = 0
-        else
-            let l:end_line_len = len(l:lines[l:end_line - 1])
-        endif
-
         let l:insertions = split(l:text, '\n', 1)
 
-        if l:line is 1
-            " Same logic as for column below. Vimscript's slice [:-1] will not
-            " be an empty list.
-            let l:start = []
-        else
-            let l:start = l:lines[: l:line - 2]
+        " Fix invalid columns
+        let l:column = l:column > 0 ? l:column : 1
+        let l:end_column = l:end_column > 0 ? l:end_column : 1
+
+        " Clamp start to BOF
+        if l:line < 1
+            let [l:line, l:column] = [1, 1]
         endif
 
-        " Special case when text must be added after new line
-        if l:column > len(l:lines[l:line - 1])
-            call extend(l:start, [l:lines[l:line - 1]])
-            let l:column = 1
+        " Clamp start to EOF
+        if l:line > len(l:lines) || l:line == len(l:lines) && l:column > len(l:lines[-1]) + 1
+            let [l:line, l:column] = [len(l:lines), len(l:lines[-1]) + 1]
+        " Special case when start is after EOL
+        elseif l:line < len(l:lines) && l:column > len(l:lines[l:line - 1]) + 1
+            let [l:line, l:column] = [l:line + 1, 1]
         endif
 
-        if l:column is 1
-            " We need to handle column 1 specially, because we can't slice an
-            " empty string ending on index 0.
-            let l:middle = [l:insertions[0]]
-        else
-            let l:middle = [l:lines[l:line - 1][: l:column - 2] . l:insertions[0]]
+        " Adjust end: clamp if invalid and/or adjust if we moved start
+        if l:end_line < l:line || l:end_line == l:line && l:end_column < l:column
+            let [l:end_line, l:end_column] = [l:line, l:column]
         endif
 
-        call extend(l:middle, l:insertions[1:])
-
-        if l:end_line <= len(l:lines)
-            " Only extend the last line if end_line is within the range of
-            " lines.
-            let l:middle[-1] .= l:lines[l:end_line - 1][l:end_column - 1 :]
+        " Clamp end to EOF
+        if l:end_line > len(l:lines) || l:end_line == len(l:lines) && l:end_column > len(l:lines[-1]) + 1
+            let [l:end_line, l:end_column] = [len(l:lines), len(l:lines[-1]) + 1]
+        " Special case when end is after EOL
+        elseif l:end_line < len(l:lines) && l:end_column > len(l:lines[l:end_line - 1]) + 1
+            let [l:end_line, l:end_column] = [l:end_line + 1, 1]
         endif
 
+        " Careful, [:-1] is not an empty list
+        let l:start = l:line is 1 ? [] : l:lines[: l:line - 2]
+        let l:middle = l:column is 1 ? [''] : [l:lines[l:line - 1][: l:column - 2]]
+
+        let l:middle[-1] .= l:insertions[0]
+        let l:middle     += l:insertions[1:]
+        let l:middle[-1] .= l:lines[l:end_line - 1][l:end_column - 1 :]
+
+        let l:end_line_len = len(l:lines[l:end_line - 1])
         let l:lines_before_change = len(l:lines)
         let l:lines = l:start + l:middle + l:lines[l:end_line :]
 
         let l:current_line_offset = len(l:lines) - l:lines_before_change
         let l:column_offset = len(l:middle[-1]) - l:end_line_len
 
-        let l:pos = s:UpdateCursor(l:pos,
-        \ [l:line, l:column],
-        \ [l:end_line, l:end_column],
-        \ [l:current_line_offset, l:column_offset])
+        " Keep cursor where it was (if outside of changes) or move it after
+        " the changed text (if inside), but don't touch it when the change
+        " spans the entire buffer, in which case we have no clue and it's
+        " better to not do anything.
+        if l:line isnot 1 || l:column isnot 1
+        \|| l:end_line < l:lines_before_change
+        \|| l:end_line == l:lines_before_change && l:end_column <= l:end_line_len
+            let l:pos = s:UpdateCursor(l:pos,
+            \ [l:line, l:column],
+            \ [l:end_line, l:end_column],
+            \ [l:current_line_offset, l:column_offset])
+        endif
     endfor
 
-    if l:lines[-1] is# ''
+    " Make sure to add a trailing newline if and only if it should be added.
+    if l:lines[-1] is# '' && getbufvar(l:buffer, '&eol')
         call remove(l:lines, -1)
-    endif
-
-    if a:should_save
-        call ale#util#Writefile(l:buffer, l:lines, a:filename)
     else
-        call ale#util#SetBufferContents(l:buffer, l:lines)
+        call setbufvar(l:buffer, '&eol', 0)
     endif
 
-    if l:is_current_buffer
-        if a:should_save
-            call ale#util#Execute(':e!')
-        endif
+    call ale#util#SetBufferContents(l:buffer, l:lines)
 
-        call setpos('.', [0, l:pos[0], l:pos[1], 0])
+    call ale#lsp#NotifyForChanges(l:conn_id, l:buffer)
+
+    if l:should_save
+        call ale#util#Execute('silent w!')
     endif
 
-    if a:should_save && l:buffer > 0 && !l:is_current_buffer
-        " Set up a one-time use event that will delete itself to reload the
-        " buffer next time it's entered to view the changes made to it.
-        execute 'augroup ALECodeActionReloadGroup' . l:buffer
-            autocmd!
+    call setpos('.', [0, l:pos[0], l:pos[1], 0])
 
-            execute printf(
-            \   'autocmd BufEnter <buffer=%d>'
-            \       . ' call ale#code_action#ReloadBuffer()',
-            \   l:buffer
-            \)
-        augroup END
+    if l:orig_buffer != l:buffer && bufexists(l:orig_buffer)
+        call ale#util#Execute('silent buf ' . string(l:orig_buffer))
     endif
 endfunction
 
@@ -213,7 +216,7 @@ function! s:UpdateCursor(cursor, start, end, offset) abort
             " to the end of the changes
             let l:cur_line = l:end_line + l:line_offset
             let l:cur_column = l:end_column + l:column_offset
-        " else is not necesary, it means modifications are happening
+        " else is not necessary, it means modifications are happening
         " after the cursor so no cursor updates need to be done
         endif
     endif
@@ -222,6 +225,10 @@ function! s:UpdateCursor(cursor, start, end, offset) abort
 endfunction
 
 function! ale#code_action#GetChanges(workspace_edit) abort
+    if a:workspace_edit is v:null
+        return {}
+    endif
+
     let l:changes = {}
 
     if has_key(a:workspace_edit, 'changes') && !empty(a:workspace_edit.changes)
@@ -271,7 +278,7 @@ function! ale#code_action#BuildChangesList(changes_map) abort
         endfor
 
         call add(l:changes, {
-        \   'fileName': ale#path#FromURI(l:file_name),
+        \   'fileName': ale#util#ToResource(l:file_name),
         \   'textChanges': l:text_changes,
         \})
     endfor

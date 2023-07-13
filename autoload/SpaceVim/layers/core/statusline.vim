@@ -71,46 +71,46 @@ let [s:ilsep , s:irsep] = ['', '']
 let s:loaded_modes = []
 let s:modes = {
       \ 'center-cursor': {
-        \ 'icon' : '⊝',
-        \ 'icon_asc' : '-',
-        \ 'desc' : 'centered-cursor mode',
-        \ },
-        \ 'hi-characters-for-long-lines' :{
-        \ 'icon' : '⑧',
-        \ 'icon_asc' : '8',
-        \ 'desc' : 'toggle highlight of characters for long lines',
-        \ },
-        \ 'fill-column-indicator' :{
-        \ 'icon' : s:MESSLETTERS.circled_letter('f'),
-        \ 'icon_asc' : 'f',
-        \ 'desc' : 'fill-column-indicator mode',
-        \ },
-        \ 'syntax-checking' :{
-        \ 'icon' : s:MESSLETTERS.circled_letter('s'),
-        \ 'icon_asc' : 's',
-        \ 'desc' : 'syntax-checking mode',
-        \ },
-        \ 'spell-checking' :{
-        \ 'icon' : s:MESSLETTERS.circled_letter('S'),
-        \ 'icon_asc' : 'S',
-        \ 'desc' : 'spell-checking mode',
-        \ },
-        \ 'paste-mode' :{
-        \ 'icon' : s:MESSLETTERS.circled_letter('p'),
-        \ 'icon_asc' : 'p',
-        \ 'desc' : 'paste mode',
-        \ },
-        \ 'whitespace' :{
-        \ 'icon' : s:MESSLETTERS.circled_letter('w'),
-        \ 'icon_asc' : 'w',
-        \ 'desc' : 'whitespace mode',
-        \ },
-        \ 'wrapline' :{
-        \ 'icon' : s:MESSLETTERS.circled_letter('W'),
-        \ 'icon_asc' : 'W',
-        \ 'desc' : 'wrap line mode',
-        \ },
-        \ }
+      \ 'icon' : '⊝',
+      \ 'icon_asc' : '-',
+      \ 'desc' : 'centered-cursor mode',
+      \ },
+      \ 'hi-characters-for-long-lines' :{
+      \ 'icon' : '⑧',
+      \ 'icon_asc' : '8',
+      \ 'desc' : 'toggle highlight of characters for long lines',
+      \ },
+      \ 'fill-column-indicator' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('f'),
+      \ 'icon_asc' : 'f',
+      \ 'desc' : 'fill-column-indicator mode',
+      \ },
+      \ 'syntax-checking' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('s'),
+      \ 'icon_asc' : 's',
+      \ 'desc' : 'syntax-checking mode',
+      \ },
+      \ 'spell-checking' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('S'),
+      \ 'icon_asc' : 'S',
+      \ 'desc' : 'spell-checking mode',
+      \ },
+      \ 'paste-mode' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('p'),
+      \ 'icon_asc' : 'p',
+      \ 'desc' : 'paste mode',
+      \ },
+      \ 'whitespace' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('w'),
+      \ 'icon_asc' : 'w',
+      \ 'desc' : 'whitespace mode',
+      \ },
+      \ 'wrapline' :{
+      \ 'icon' : s:MESSLETTERS.circled_letter('W'),
+      \ 'icon_asc' : 'W',
+      \ 'desc' : 'wrap line mode',
+      \ },
+      \ }
 
 " the major_mode will be cached by default.
 
@@ -138,7 +138,7 @@ function! s:winnr(...) abort
     endif
   else
     if g:spacevim_enable_statusline_mode == 1
-      return '%{SpaceVim#layers#core#statusline#mode(mode())} %{SpaceVim#layers#core#statusline#mode_text(mode())} %{ SpaceVim#layers#core#statusline#winnr(get(w:, "winid", winnr())) } '
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} %{ SpaceVim#layers#core#statusline#winnr(get(w:, "winid", winnr())) } %{SpaceVim#layers#core#statusline#mode_text(mode())} '
     elseif g:spacevim_windows_index_type == 3
       return '%{SpaceVim#layers#core#statusline#mode(mode())} %{ get(w:, "winid", winnr()) } '
     else
@@ -374,7 +374,9 @@ endfunction
 function! SpaceVim#layers#core#statusline#_current_tag() abort
   let tag = ''
   try
-    let tag =tagbar#currenttag('%s ', '') 
+    if execute('filetype') ==# 'detection:ON'
+      let tag = tagbar#currenttag('%s ', '') 
+    endif
   catch
   endtry
   return tag
@@ -450,6 +452,13 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b#'
           \ . ' NvimTree '
+          \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c#'
+          \ . s:lsep . ' '
+  elseif &filetype ==# 'neo-tree'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1)
+          \ . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b#'
+          \ . ' NeoTree '
           \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c#'
           \ . s:lsep . ' '
   elseif &filetype ==# 'Fuzzy'
@@ -953,24 +962,24 @@ function! SpaceVim#layers#core#statusline#mode_text(mode) abort
         let mode_text = 'IEDIT-INSERT'
       endif
     else
-      let mode_text = 'NORMAL'
+      let mode_text = ' NORMAL'
     endif
   elseif a:mode ==# 'i'
-    let mode_text = 'INSERT'
+    let mode_text = ' INSERT'
   elseif a:mode ==# 'R'
     let mode_text = 'REPLACE'
   elseif a:mode ==# 'v'
-    let mode_text = 'VISUAL'
+    let mode_text = ' VISUAL'
   elseif a:mode ==# 'V'
-    let mode_text = 'V-LINE'
+    let mode_text = ' V-LINE'
   elseif a:mode ==# ''
     let mode_text = 'V-BLOCK'
   elseif a:mode ==# 'c'
     let mode_text = 'COMMAND'
   elseif a:mode ==# 't'
-    let mode_text = 'TERMINAL'
+    let mode_text = '   TERM'
   elseif a:mode ==# 'v' || a:mode ==# 'V' || a:mode ==# '^V' || a:mode ==# 's' || a:mode ==# 'S' || a:mode ==# '^S'
-    let mode_text = 'VISUAL'
+    let mode_text = ' VISUAL'
   endif
   return past_mode . mode_text
 endfunction

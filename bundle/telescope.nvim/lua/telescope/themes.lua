@@ -19,9 +19,10 @@ local themes = {}
 ---
 --- Usage:
 --- <code>
----     `local builtin = require('telescope.builtin')`
----     `local themes = require('telescope.themes')`
----     `builtin.find_files(themes.get_dropdown())`
+---     local opts = {...} -- picker options
+---     local builtin = require('telescope.builtin')
+---     local themes = require('telescope.themes')
+---     builtin.find_files(themes.get_dropdown(opts))
 --- </code>
 function themes.get_dropdown(opts)
   opts = opts or {}
@@ -67,10 +68,10 @@ end
 ---
 --- Usage:
 --- <code>
----
----     `local builtin = require('telescope.builtin')`
----     `local themes = require('telescope.themes')`
----     `builtin.lsp_references(themes.get_cursor())`
+---     local opts = {...} -- picker options
+---     local builtin = require('telescope.builtin')
+---     local themes = require('telescope.themes')
+---     builtin.find_files(themes.get_cursor(opts))
 --- </code>
 function themes.get_cursor(opts)
   opts = opts or {}
@@ -99,9 +100,10 @@ end
 ---
 --- Usage:
 --- <code>
----     `local builtin = require('telescope.builtin')`
----     `local themes = require('telescope.themes')`
----     `builtin.find_files(themes.get_ivy())`
+---     local opts = {...} -- picker options
+---     local builtin = require('telescope.builtin')
+---     local themes = require('telescope.themes')
+---     builtin.find_files(themes.get_ivy(opts))
 --- </code>
 function themes.get_ivy(opts)
   opts = opts or {}

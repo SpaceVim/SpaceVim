@@ -202,6 +202,14 @@ function! ale#codefix#ApplyLSPCodeAction(data, item) abort
         \)
 
         let l:request_id = ale#lsp#Send(a:data.connection_id, l:message)
+    elseif has_key(a:item, 'command') && has_key(a:item, 'arguments')
+    \&& type(a:item.command) == v:t_string
+        let l:message = ale#lsp#message#ExecuteCommand(
+        \   a:item.command,
+        \   a:item.arguments,
+        \)
+
+        let l:request_id = ale#lsp#Send(a:data.connection_id, l:message)
     elseif has_key(a:item, 'edit') || has_key(a:item, 'arguments')
         if has_key(a:item, 'edit')
             let l:topass = a:item.edit
@@ -261,7 +269,10 @@ function! ale#codefix#HandleLSPResponse(conn_id, response) abort
 
         " Send the results to the menu callback, if set.
         if l:MenuCallback isnot v:null
-            call l:MenuCallback(map(copy(l:result), '[''lsp'', v:val]'))
+            call l:MenuCallback(
+            \   l:data,
+            \   map(copy(l:result), '[''lsp'', v:val]')
+            \)
 
             return
         endif
@@ -296,7 +307,7 @@ function! ale#codefix#HandleLSPResponse(conn_id, response) abort
     endif
 endfunction
 
-function! s:FindError(buffer, line, column, end_line, end_column) abort
+function! s:FindError(buffer, line, column, end_line, end_column, linter_name) abort
     let l:nearest_error = v:null
 
     if a:line == a:end_line
@@ -305,7 +316,9 @@ function! s:FindError(buffer, line, column, end_line, end_column) abort
         let l:nearest_error_diff = -1
 
         for l:error in get(g:ale_buffer_info[a:buffer], 'loclist', [])
-            if has_key(l:error, 'code') && l:error.lnum == a:line
+            if has_key(l:error, 'code')
+            \  && (a:linter_name is v:null || l:error.linter_name is# a:linter_name)
+            \  && l:error.lnum == a:line
                 let l:diff = abs(l:error.col - a:column)
 
                 if l:nearest_error_diff == -1 || l:diff < l:nearest_error_diff
@@ -338,7 +351,7 @@ function! s:OnReady(
 
     if a:linter.lsp is# 'tsserver'
         let l:nearest_error =
-        \   s:FindError(l:buffer, a:line, a:column, a:end_line, a:end_column)
+        \   s:FindError(l:buffer, a:line, a:column, a:end_line, a:end_column, a:linter.lsp)
 
         if l:nearest_error isnot v:null
             let l:message = ale#lsp#tsserver_message#GetCodeFixes(
@@ -365,7 +378,7 @@ function! s:OnReady(
 
         let l:diagnostics = []
         let l:nearest_error =
-        \   s:FindError(l:buffer, a:line, a:column, a:end_line, a:end_column)
+        \   s:FindError(l:buffer, a:line, a:column, a:end_line, a:end_column, v:null)
 
         if l:nearest_error isnot v:null
             let l:diagnostics = [
@@ -378,8 +391,8 @@ function! s:OnReady(
             \               'character': l:nearest_error.col - 1,
             \           },
             \           'end': {
-            \               'line': l:nearest_error.end_lnum - 1,
-            \               'character': l:nearest_error.end_col,
+            \               'line': get(l:nearest_error, 'end_lnum', 1) - 1,
+            \               'character': get(l:nearest_error, 'end_col', 0)
             \           },
             \       },
             \   },
@@ -444,7 +457,7 @@ function! s:ExecuteGetCodeFix(linter, range, MenuCallback) abort
         let [l:end_line, l:end_column] = getpos("'>")[1:2]
     endif
 
-    let l:column = min([l:column, len(getline(l:line))])
+    let l:column = max([min([l:column, len(getline(l:line))]), 1])
     let l:end_column = min([l:end_column, len(getline(l:end_line))])
 
     let l:Callback = function(
