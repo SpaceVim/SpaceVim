@@ -8,6 +8,10 @@
 
 local M = {}
 
+local skip_pattern = '\\C^\\%(\\_s\\+\\|#[^\r\n]*\\)'
+local table_name_pattern = [[\%([^ [:tab:]#.[\]=]\+\)]]
+local table_key_pattern = table_name_pattern
+
 function M.parse(text)
   local input = {
     text = text,
@@ -39,8 +43,6 @@ function M._consume(input, pattern)
   input.p = _end
   return matched
 end
-
-local skip_pattern = '\\C^\\%(\\_s\\+\\|#[^\r\n]*\\)'
 
 function M._skip(input)
   while M._match(input, [[\%(\_s\|#\)]]) do
@@ -91,6 +93,18 @@ function M._parse(input)
     M._skip(input)
   end
   return data
+end
+
+
+function M._key(input)
+  local s = M._consume(input, table_key_pattern)
+  return s
+end
+
+
+function M._equals(input)
+  M._consume(input, '=')
+  return '='
 end
 
 return M
