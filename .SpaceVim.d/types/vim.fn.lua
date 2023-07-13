@@ -24,3 +24,24 @@
 --- @param end_? any[]
 --- @return any[]
 function vim.fn.reltime(start, end_) end
+
+-- The result is a String, which is the text {string} converted
+-- from encoding {from} to encoding {to}.
+-- When the conversion completely fails an empty string is
+-- returned.  When some characters could not be converted they
+-- are replaced with "?".
+-- The encoding names are whatever the iconv() library function
+-- can accept, see ":!man 3 iconv".
+-- Note that Vim uses UTF-8 for all Unicode encodings, conversion
+-- from/to UCS-2 is automatically changed to use UTF-8.  You
+-- cannot use UCS-2 in a string anyway, because of the NUL bytes.
+-- 
+-- Can also be used as a `method`: 
+-- ```vim
+--   GetText()->iconv('latin1', 'utf-8')
+-- ```
+--- @param string string
+--- @param from string
+--- @param to string
+--- @return string
+function vim.fn.iconv(string, from, to) end

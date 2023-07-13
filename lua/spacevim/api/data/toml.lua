@@ -9,13 +9,23 @@
 
 local M = {}
 
-function M.parse(text) -- {{{
-  
+function M.parse(text)
+  local input = {
+    text = text,
+    p = 0,
+    length = vim.fn.strlen(text)
+  }
+  return M._parse(input)
 end
--- }}}
 
 function M.parse_file(filename)
-  
+  if vim.fn.filereadable(filename) == 0 then
+    error('toml API: No such file ' .. filename)
+  end
+
+  local text = table.concat(vim.fn.readfile(filename), '\n')
+
+  return M.parse(vim.fn.iconv(text, 'utf8', vim.o.encoding))
 end
 
 function M._consume(input, pattern)
