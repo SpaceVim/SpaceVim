@@ -75,7 +75,6 @@ function! SpaceVim#layers#lang#lua#plugins() abort
   let plugins = []
   " Improved Lua 5.3 syntax and indentation support for Vim
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-lua', {'on_ft' : 'lua'}])
-  call add(plugins, [g:_spacevim_root_dir . 'bundle/neodev.nvim', {'merged' : 0}])
   return plugins
 endfunction
 
