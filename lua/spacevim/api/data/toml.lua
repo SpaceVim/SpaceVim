@@ -6,14 +6,13 @@
 -- License: GPLv3
 --=============================================================================
 
-
 local M = {}
 
 function M.parse(text)
   local input = {
     text = text,
     p = 0,
-    length = vim.fn.strlen(text)
+    length = vim.fn.strlen(text),
   }
   return M._parse(input)
 end
@@ -41,7 +40,6 @@ function M._consume(input, pattern)
   return matched
 end
 
-
 local skip_pattern = '\\C^\\%(\\_s\\+\\|#[^\r\n]*\\)'
 
 function M._skip(input)
@@ -62,12 +60,37 @@ function M._error(input)
   local buf = {}
   local offset = 0
   -- @todo !=# string to lua
-  while (input.p + offset) < input.length and input.text[input.p + offset] ~= "[\r\n]" do
-    table.insert(buf,  input.text[input.p + offset])
+  while (input.p + offset) < input.length and input.text[input.p + offset] ~= '[\r\n]' do
+    table.insert(buf, input.text[input.p + offset])
     offset = offset + 1
   end
+end
 
-  
+function M._parse(input)
+  local data = {}
+  M._skip(input)
+  while M._eof(input) do
+    if M._match(input, '[^ [:tab:]#.[\\]]') then
+      local key = M._key(input)
+      M._equals(input)
+      local value = M._value(input)
+
+      M._put_dict(data, key, value)
+
+    elseif M._match(input, '\\[\\[') then
+      local key, value = M._array_of_tables(input)
+
+      M._put_array(data, key, value)
+    elseif M._match(input, '\\[') then
+      local key, value = M._table(input)
+
+      M._put_dict(data, key, value)
+    else
+      M._error(input)
+    end
+    M._skip(input)
+  end
+  return data
 end
 
 return M
