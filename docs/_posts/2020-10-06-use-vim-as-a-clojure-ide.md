@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 Clojure 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/95338841-f07a1e00-08e5-11eb-9e1b-6dbc5c4ad7de.png
+image: https://img.spacevim.org/95338841-f07a1e00-08e5-11eb-9e1b-6dbc5c4ad7de.png
 description: "使用 SpaceVim 搭建 Clojure 的开发环境，简介 lang#clojure 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
@@ -64,7 +64,7 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 a
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前 buffer 内容调用 Clojure 命令。因此，在执行这个快捷键之前，不一定要保存该文件。
 
-![clojure-runner](https://user-images.githubusercontent.com/13142418/95334765-1a7d1180-08e1-11eb-8c78-9a87d61d3d63.png)
+![clojure-runner](https://img.spacevim.org/95334765-1a7d1180-08e1-11eb-8c78-9a87d61d3d63.png)
 
 ### 代码格式化
 
@@ -75,7 +75,7 @@ Clojure 代码格式化，主要依赖 `format` 模块，同时需要安装相�
 在编辑 Clojure 文件时，可通过快捷键 `SPC l s i` 启动 `clojure` 交互窗口，
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
-![clojure-repl](https://user-images.githubusercontent.com/13142418/95341519-f1f91580-08e8-11eb-9280-04f89875dc78.png)
+![clojure-repl](https://img.spacevim.org/95341519-f1f91580-08e8-11eb-9280-04f89875dc78.png)
 
 ### 任务管理
 

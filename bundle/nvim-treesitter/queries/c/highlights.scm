@@ -1,21 +1,17 @@
-(identifier) @variable
+; Lower priority to prefer @parameter when identifier appears in parameter_declaration.
+((identifier) @variable (#set! "priority" 95))
 
 [
-  "const"
   "default"
   "enum"
-  "extern"
-  "inline"
-  "static"
   "struct"
   "typedef"
   "union"
-  "volatile"
   "goto"
-  "register"
 ] @keyword
 
 "sizeof" @keyword.operator
+
 "return" @keyword.return
 
 [
@@ -33,7 +29,6 @@
  "switch"
 ] @conditional
 
-"#define" @constant.macro
 [
   "#if"
   "#ifdef"
@@ -42,9 +37,17 @@
   "#elif"
   "#endif"
   (preproc_directive)
-] @keyword
+] @preproc
+
+"#define" @define
 
 "#include" @include
+
+[ ";" ":" "," ] @punctuation.delimiter
+
+"..." @punctuation.special
+
+[ "(" ")" "[" "]" "{" "}"] @punctuation.bracket
 
 [
   "="
@@ -63,6 +66,7 @@
   ">>"
 
   "->"
+  "."
 
   "<"
   "<="
@@ -89,19 +93,16 @@
   "++"
 ] @operator
 
+;; Make sure the comma operator is given a highlight group after the comma
+;; punctuator so the operator is highlighted properly.
+(comma_expression [ "," ] @operator)
+
 [
  (true)
  (false)
 ] @boolean
 
-[ "." ";" ":" "," ] @punctuation.delimiter
-
-"..." @punctuation.special
-
-(conditional_expression [ "?" ":" ] @conditional)
-
-
-[ "(" ")" "[" "]" "{" "}"] @punctuation.bracket
+(conditional_expression [ "?" ":" ] @conditional.ternary)
 
 (string_literal) @string
 (system_lib_string) @string
@@ -111,15 +112,14 @@
 (number_literal) @number
 (char_literal) @character
 
-[
- (preproc_arg)
- (preproc_defined)
-]  @function.macro
+((preproc_arg) @function.macro (#set! "priority" 90))
+(preproc_defined) @function.macro
 
 (((field_expression
      (field_identifier) @property)) @_parent
  (#not-has-parent? @_parent template_method function_declarator call_expression))
 
+(field_designator) @property
 (((field_identifier) @property)
  (#has-ancestor? @property field_declaration)
  (#not-has-ancestor? @property function_declarator))
@@ -128,12 +128,22 @@
 
 [
  (type_identifier)
- (primitive_type)
- (sized_type_specifier)
  (type_descriptor)
 ] @type
 
-(sizeof_expression value: (parenthesized_expression (identifier) @type))
+(storage_class_specifier) @storageclass
+
+(type_qualifier) @type.qualifier
+
+(linkage_specification
+  "extern" @storageclass)
+
+(type_definition
+  declarator: (type_identifier) @type.definition)
+
+(primitive_type) @type.builtin
+
+(sized_type_specifier _ @type.builtin type: _?)
 
 ((identifier) @constant
  (#lua-match? @constant "^[A-Z][A-Z0-9_]+$"))
@@ -141,6 +151,9 @@
   name: (identifier) @constant)
 (case_statement
   value: (identifier) @constant)
+
+((identifier) @constant.builtin
+    (#any-of? @constant.builtin "stderr" "stdin" "stdout"))
 
 ;; Preproc def / undef
 (preproc_def
@@ -151,16 +164,23 @@
   (#eq? @_u "#undef"))
 
 (call_expression
-  function: (identifier) @function)
+  function: (identifier) @function.call)
 (call_expression
   function: (field_expression
-    field: (field_identifier) @function))
+    field: (field_identifier) @function.call))
 (function_declarator
   declarator: (identifier) @function)
+(function_declarator
+  declarator: (parenthesized_declarator
+                (pointer_declarator
+                  declarator: (field_identifier) @function)))
 (preproc_function_def
   name: (identifier) @function.macro)
 
-(comment) @comment
+(comment) @comment @spell
+
+((comment) @comment.documentation
+  (#lua-match? @comment.documentation "^/[*][*][^*].*[*]/$"))
 
 ;; Parameters
 (parameter_declaration
@@ -182,6 +202,7 @@
   "_unaligned"
   "__unaligned"
   "__declspec"
+  (attribute_declaration)
 ] @attribute
 
 (ERROR) @error

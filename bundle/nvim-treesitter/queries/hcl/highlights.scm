@@ -50,7 +50,7 @@
   "in"
 ] @repeat
 
-[ 
+[
   "if"
   "else"
   "endif"
@@ -63,8 +63,8 @@
 ] @string
 
 [
-  (heredoc_identifier) ; <<END
-  (heredoc_start) ; END
+  (heredoc_identifier) ; END
+  (heredoc_start) ; << or <<-
 ] @punctuation.delimiter
 
 [
@@ -78,10 +78,11 @@
 (numeric_lit) @number
 (bool_lit) @boolean
 (null_lit) @constant
-(comment) @comment
+(comment) @comment @spell
 (identifier) @variable
 
-(block (identifier) @type)
+(body (block (identifier) @keyword))
+(body (block (body (block (identifier) @type))))
 (function_call (identifier) @function)
 (attribute (identifier) @field)
 
@@ -90,13 +91,9 @@
 ; highlight identifier keys as though they were block attributes
 (object_elem key: (expression (variable_expr (identifier) @field)))
 
-((identifier) @keyword (#any-of? @keyword "module" "root" "cwd" "resource" "variable" "data" "locals" "terraform" "provider" "output"))
-((identifier) @type.builtin (#any-of? @type.builtin "bool" "string" "number" "object" "tuple" "list" "map" "set" "any"))
-(variable_expr (identifier) @variable.builtin (#any-of? @variable.builtin "var" "local" "path"))
-(get_attr (identifier) @variable.builtin (#any-of? @variable.builtin  "root" "cwd" "module"))
-
-(object_elem val: (expression
-  (variable_expr
-    (identifier) @type.builtin (#any-of? @type.builtin "bool" "string" "number" "object" "tuple" "list" "map" "set" "any"))))
+; var.foo, data.bar
+;
+; first element in get_attr is a variable.builtin or a reference to a variable.builtin
+(expression (variable_expr (identifier) @variable.builtin) (get_attr (identifier) @field))
 
 (ERROR) @error

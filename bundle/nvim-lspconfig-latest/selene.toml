@@ -1,0 +1,6 @@
+std = "neovim"
+
+[rules]
+global_usage = "allow"
+multiple_statements = "allow"
+incorrect_standard_library_use = "allow"

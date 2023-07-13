@@ -49,7 +49,7 @@ To use this configuration layer, update your custom configuration file with:
 To run a haxe file, you can press `SPC l r` to run the current file without losing focus,
 and the result will be shown in a runner buffer.
 
-![run haxe](https://user-images.githubusercontent.com/13142418/164911958-4a6350d4-20be-4948-b3a3-70bc7e367b69.png)
+![run haxe](https://img.spacevim.org/164911958-4a6350d4-20be-4948-b3a3-70bc7e367b69.png)
 
 ### Inferior REPL process
 

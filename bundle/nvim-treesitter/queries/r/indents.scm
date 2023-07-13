@@ -10,21 +10,24 @@
   "while"
   "repeat"
   "for"
-] @indent
+] @indent.begin
+
+((binary operator: (special)) @indent.begin)
 
 [
   "}"
   ")"
-] @branch
+] @indent.branch
 
-((formal_parameters (identifier)) @aligned_indent
- (#set! "delimiter" "()"))
+((formal_parameters (identifier)) @indent.align
+ (#set! indent.open_delimiter "(")
+ (#set! indent.close_delimiter ")"))
 
 [
   ")"
   "}"
-] @indent_end
+] @indent.end
 
 [
   (comment)
-] @ignore
+] @indent.ignore

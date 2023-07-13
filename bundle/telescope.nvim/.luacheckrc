@@ -17,10 +17,17 @@ globals = {
   "TelescopeGlobalState",
   "_TelescopeConfigurationValues",
   "_TelescopeConfigurationPickers",
-  "__TelescopeKeymapStore",
 }
 
 -- Global objects defined by the C code
 read_globals = {
   "vim",
+}
+
+files = {
+  ["lua/telescope/builtin/init.lua"] = {
+    ignore = {
+      "631", -- allow line len > 120
+    }
+  },
 }

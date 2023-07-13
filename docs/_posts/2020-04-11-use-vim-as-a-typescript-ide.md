@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 TypeScript 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/79134364-2bd8db80-7de0-11ea-848e-71d3f07cb79d.png
+image: https://img.spacevim.org/79134364-2bd8db80-7de0-11ea-848e-71d3f07cb79d.png
 description: "这篇文章主要介绍如何使用 SpaceVim 搭建 TypeScript 的开发环境，简介 lang#typescript 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
@@ -47,7 +47,7 @@ SpaceVim 初次安装时默认并未启用 TypeScript 相关语言模块。首�
 默认的补全引擎有：deoplete、neocomplete、ycm、asyncomplete 以及 neocomplcache。
 几种自动补全引擎当中，要数 deoplete 的体验效果最好。
 
-![ts](https://user-images.githubusercontent.com/13142418/79134364-2bd8db80-7de0-11ea-848e-71d3f07cb79d.png)
+![ts](https://img.spacevim.org/79134364-2bd8db80-7de0-11ea-848e-71d3f07cb79d.png)
 
 ### 语法检查
 
@@ -80,7 +80,7 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 a
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前缓存器调用相对应的 `node` 命令，无需保存文件。
 
-![tsrunner](https://user-images.githubusercontent.com/13142418/79641052-b4cc8a00-81c7-11ea-8e95-35bc816b17d9.png)
+![tsrunner](https://img.spacevim.org/79641052-b4cc8a00-81c7-11ea-8e95-35bc816b17d9.png)
 
 ### 代码格式化
 

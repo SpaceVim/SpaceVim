@@ -1,10 +1,10 @@
 [
  (entry)
-] @indent
+] @indent.begin
 
 [
  "{"
  "}"
-] @branch
+] @indent.branch
 
-(comment) @ignore
+(comment) @indent.ignore

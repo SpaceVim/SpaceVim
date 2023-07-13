@@ -1,0 +1,7 @@
+test {
+  /*
+    foo
+    bar
+    baz
+  */
+}

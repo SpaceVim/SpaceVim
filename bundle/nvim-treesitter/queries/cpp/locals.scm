@@ -39,7 +39,11 @@
 
 ;; Namespaces
 (namespace_definition
-  name: (identifier) @definition.namespace
+  name: (namespace_identifier) @definition.namespace
+  body: (_) @scope)
+
+(namespace_definition
+  name: (nested_namespace_specifier) @definition.namespace
   body: (_) @scope)
 
 ((namespace_identifier) @reference

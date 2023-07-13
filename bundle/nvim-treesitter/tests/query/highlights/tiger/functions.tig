@@ -1,0 +1,9 @@
+primitive print(s: string)
+/*        ^ function */
+/*              ^ parameter */
+
+function func(a: int) : int = (print("Hello World!"); a)
+/*       ^ function */
+/*            ^ parameter */
+/*                             ^ function.builtin */
+/* vim: set ft=tiger: */

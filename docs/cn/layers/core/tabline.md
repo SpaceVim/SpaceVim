@@ -18,7 +18,7 @@ lang: zh
 
 该模块为 SpaceVim 提供了默认的标签栏，支持 `Leader + idx` 快捷键快速跳转。
 
-![tabline](https://user-images.githubusercontent.com/13142418/45297568-66113580-b538-11e8-9e10-f1b00165d870.png)
+![tabline](https://img.spacevim.org/45297568-66113580-b538-11e8-9e10-f1b00165d870.png)
 
 ## 相关选项
 

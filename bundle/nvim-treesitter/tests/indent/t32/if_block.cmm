@@ -1,0 +1,49 @@
+IF &a
+  STOP
+
+IF (TRUE())
+(
+  BREAK
+)
+
+IF (&b+CouNT())
+(
+  continue
+)
+
+IF FOUND()
+  STOP
+ELSE
+  CONTinue
+
+IF &c
+  CONTinue
+ELSE IF FALSE()
+  Break
+ELSE
+  stop
+
+IF &d
+(
+  STOP
+)
+ELSE IF &e
+; comment A
+(
+  CONTINUE
+)
+ELSE
+; comment B
+(
+  BREAK
+)
+
+IF &f
+  IF &g
+    stop
+  ELSE
+    IF &h
+  (
+    continue
+  )
+

@@ -2,12 +2,11 @@
 
 ---@brief [[
 --- |telescope.mappings| is used to configure the keybindings within
---- a telescope picker. These keybinds are only local to the picker window
+--- a telescope picker. These key binds are only local to the picker window
 --- and will be cleared once you exit the picker.
 ---
---- We provide multiple different ways of configuring, as described below,
---- to provide an easy to use experience for changing the default behavior
---- of telescope or extending for your own purposes.
+--- We provide multiple configuration options to make it easy for you to adjust
+--- telescope's default key bindings and create your own custom key binds.
 ---
 --- To see many of the builtin actions that you can use as values for this
 --- table, see |telescope.actions|
@@ -39,7 +38,6 @@
 ---     ...,
 ---   }
 --- </code>
----    Into your config.
 ---
 --- To override behavior of a key, simply set the value
 --- to be a function (either by requiring an action or by writing
@@ -53,7 +51,7 @@
 --- </code>
 ---
 ---  If the function you want is part of `telescope.actions`, then you can
----  simply give a string.
+---  simply supply the function name as a string.
 ---    For example, the previous option is equivalent to:
 --- <code>
 ---   {
@@ -112,6 +110,11 @@
 ---       map("i", "asdf", function(_prompt_bufnr)
 ---         print "You typed asdf"
 ---       end)
+---
+---       map({"i", "n"}, "<C-r>", function(_prompt_bufnr)
+---         print "You typed <C-r>"
+---       end)
+---
 ---       -- needs to return true if you want to map default_mappings and
 ---       -- false if not
 ---       return true
@@ -196,28 +199,21 @@ mappings.default_mappings = config.values.default_mappings
     },
   }
 
-__TelescopeKeymapStore = __TelescopeKeymapStore
-  or setmetatable({}, {
-    __index = function(t, k)
-      rawset(t, k, {})
-
-      return rawget(t, k)
-    end,
-  })
-local keymap_store = __TelescopeKeymapStore
-
-local _mapping_key_id = 0
-local get_next_id = function()
-  _mapping_key_id = _mapping_key_id + 1
-  return _mapping_key_id
-end
-
-local assign_function = function(prompt_bufnr, func)
-  local func_id = get_next_id()
-
-  keymap_store[prompt_bufnr][func_id] = func
-
-  return func_id
+-- normal names are prefixed with telescope|
+-- encoded objects are prefixed with telescopej|
+local get_desc_for_keyfunc = function(v)
+  if type(v) == "table" then
+    local name = ""
+    for _, action in ipairs(v) do
+      if type(action) == "string" then
+        name = name == "" and action or name .. " + " .. action
+      end
+    end
+    return "telescope|" .. name
+  elseif type(v) == "function" then
+    local info = debug.getinfo(v)
+    return "telescopej|" .. vim.json.encode { source = info.source, linedefined = info.linedefined }
+  end
 end
 
 local telescope_map = function(prompt_bufnr, mode, key_bind, key_func, opts)
@@ -237,9 +233,14 @@ local telescope_map = function(prompt_bufnr, mode, key_bind, key_func, opts)
     key_func = actions[key_func]
   elseif type(key_func) == "table" then
     if key_func.type == "command" then
-      a.nvim_buf_set_keymap(prompt_bufnr, mode, key_bind, key_func[1], opts or {
-        silent = true,
-      })
+      vim.keymap.set(
+        mode,
+        key_bind,
+        key_func[1],
+        vim.tbl_extend("force", opts or {
+          silent = true,
+        }, { buffer = prompt_bufnr })
+      )
       return
     elseif key_func.type == "action_key" then
       key_func = actions[key_func[1]]
@@ -248,27 +249,11 @@ local telescope_map = function(prompt_bufnr, mode, key_bind, key_func, opts)
     end
   end
 
-  local key_id = assign_function(prompt_bufnr, key_func)
-  local prefix
-
-  local map_string
-  if opts.expr then
-    map_string =
-      string.format([[luaeval("require('telescope.mappings').execute_keymap(%s, %s)")]], prompt_bufnr, key_id)
-  else
-    if mode == "i" and not opts.expr then
-      prefix = "<cmd>"
-    elseif mode == "n" then
-      prefix = ":<C-U>"
-    else
-      prefix = ":"
-    end
-
-    map_string =
-      string.format("%slua require('telescope.mappings').execute_keymap(%s, %s)<CR>", prefix, prompt_bufnr, key_id)
-  end
-
-  a.nvim_buf_set_keymap(prompt_bufnr, mode, key_bind, map_string, opts)
+  vim.keymap.set(mode, key_bind, function()
+    local ret = key_func(prompt_bufnr)
+    vim.api.nvim_exec_autocmds("User", { pattern = "TelescopeKeymap" })
+    return ret
+  end, vim.tbl_extend("force", opts, { buffer = prompt_bufnr, desc = get_desc_for_keyfunc(key_func) }))
 end
 
 local extract_keymap_opts = function(key_func)
@@ -284,12 +269,18 @@ end
 mappings.apply_keymap = function(prompt_bufnr, attach_mappings, buffer_keymap)
   local applied_mappings = { n = {}, i = {} }
 
-  local map = function(mode, key_bind, key_func, opts)
-    mode = string.lower(mode)
-    local key_bind_internal = a.nvim_replace_termcodes(key_bind, true, true, true)
-    applied_mappings[mode][key_bind_internal] = true
+  local map = function(modes, key_bind, key_func, opts)
+    if type(modes) == "string" then
+      modes = { modes }
+    end
 
-    telescope_map(prompt_bufnr, mode, key_bind, key_func, opts)
+    for _, mode in pairs(modes) do
+      mode = string.lower(mode)
+      local key_bind_internal = a.nvim_replace_termcodes(key_bind, true, true, true)
+      applied_mappings[mode][key_bind_internal] = true
+
+      telescope_map(prompt_bufnr, mode, key_bind, key_func, opts)
+    end
   end
 
   if attach_mappings then
@@ -331,19 +322,6 @@ mappings.apply_keymap = function(prompt_bufnr, attach_mappings, buffer_keymap)
       end
     end
   end
-end
-
-mappings.execute_keymap = function(prompt_bufnr, keymap_identifier)
-  local key_func = keymap_store[prompt_bufnr][keymap_identifier]
-
-  assert(key_func, string.format("Unsure of how we got this failure: %s %s", prompt_bufnr, keymap_identifier))
-
-  key_func(prompt_bufnr)
-  vim.api.nvim_exec_autocmds("User TelescopeKeymap", {})
-end
-
-mappings.clear = function(prompt_bufnr)
-  keymap_store[prompt_bufnr] = nil
 end
 
 return mappings

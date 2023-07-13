@@ -10,7 +10,7 @@ run() {
 
 if [[ $2 = '--summary' ]]; then
     ## really simple results summary by filtering plenary busted output
-    run tests/$1  2> /dev/null | grep -E '^\S*(Success|Fail(ed)?|Errors?)\s*:'
+    run tests/$1  2> /dev/null | grep -E '^\S*(Testing|Success|Failed|Errors)\s*:'
 else
     run tests/$1
 fi

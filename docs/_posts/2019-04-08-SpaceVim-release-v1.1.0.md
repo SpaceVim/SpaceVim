@@ -3,7 +3,7 @@ title: SpaceVim release v1.1.0
 categories: [changelog, blog]
 description: "SpaceVim v1.1.0 introduced new floating window mapping guide, and a disk management for Windows, as well as improved the fzf layer."
 type: article
-image: https://user-images.githubusercontent.com/13142418/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png
+image: https://img.spacevim.org/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png
 commentsID: "SpaceVim release v1.1.0"
 comments: true
 ---
@@ -25,7 +25,7 @@ comments: true
 The last release is v1.0.0, the first stable release of SpaceVim. After four mounths development.
 The v1.1.0 has been released. So let's take a look at what happened since last relase.
 
-![v1.1.0 welcome page](https://user-images.githubusercontent.com/13142418/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png)
+![v1.1.0 welcome page](https://img.spacevim.org/55619929-44c1b080-57cc-11e9-9c6a-8637555c2d6c.png)
 
 - [Quick start guide](../quick-start-guide/): installation, configuration, and resources of learning SpaceVim
 - [documentation](../documentation/): the primary official document of SpaceVim
@@ -35,18 +35,18 @@ The v1.1.0 has been released. So let's take a look at what happened since last r
 
 - add floating windows support for mapping guide and flygrep.
 
-![floating windows](https://user-images.githubusercontent.com/13142418/55621918-67a29380-57d1-11e9-96b8-ba440aa46324.gif)
+![floating windows](https://img.spacevim.org/55621918-67a29380-57d1-11e9-96b8-ba440aa46324.gif)
 
 - Add defx support and disk explorer for windows, the default key binding is `SPC f d`:
 
-![windisk](https://user-images.githubusercontent.com/13142418/55621479-2e1d5880-57d0-11e9-9b0e-6f7d9de9943d.png)
+![windisk](https://img.spacevim.org/55621479-2e1d5880-57d0-11e9-9b0e-6f7d9de9943d.png)
 
 - Improve the iedit mode, add iedit-normal command: `s` and `x`, add iedit-insert command `Ctrl-e` `Ctrl-a` `Ctrl-b`
 and `Ctrl-f` etc.
 
 - improve fzf layer, add fzf menu support.
 
-![float](https://user-images.githubusercontent.com/13142418/55625484-84dc5f80-57db-11e9-894d-754e47b5e88b.gif)
+![float](https://img.spacevim.org/55625484-84dc5f80-57db-11e9-894d-754e47b5e88b.gif)
 
 ## Release Notes
 

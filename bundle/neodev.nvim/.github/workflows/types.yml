@@ -1,0 +1,70 @@
+name: Types
+on:
+  workflow_dispatch:
+  schedule:
+    # Run this every hour
+    - cron: "0 * * * *"
+
+jobs:
+  build-types-nightly:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup ./data
+        run: mkdir ./data
+      - name: Install dependencies
+        run: |
+          sudo apt-get -y install doxygen luajit python3-msgpack
+      - name: Install Neovim
+        shell: bash
+        run: |
+          mkdir -p /tmp/nvim
+          wget -q https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage -O /tmp/nvim/nvim.appimage
+          cd /tmp/nvim
+          chmod a+x ./nvim.appimage
+          ./nvim.appimage --appimage-extract
+          echo "/tmp/nvim/squashfs-root/usr/bin/" >> $GITHUB_PATH
+      - name: Clone Neovim's repo and run gen_vimdoc.py
+        run: |
+          git clone --depth=1 https://github.com/neovim/neovim.git ./data/neovim
+          cd ./data/neovim
+          python3 ./scripts/gen_vimdoc.py
+      - name: Generate new docs
+        run: |
+          nvim --version
+          cp ./data/neovim/runtime/doc/*.mpack ./data/
+          nvim -u NONE -E -R --headless --cmd "set rtp^=." --cmd "packloadall" --cmd "luafile lua/neodev/build/init.lua" --cmd q
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: auto-generated types for Neovim nightly"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+  build-types-stable:
+    needs: build-types-nightly
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Pull Updates
+        run: git pull
+      - name: Install Neovim
+        shell: bash
+        run: |
+          mkdir -p /tmp/nvim
+          wget -q https://github.com/neovim/neovim/releases/download/stable/nvim.appimage -O /tmp/nvim/nvim.appimage
+          cd /tmp/nvim
+          chmod a+x ./nvim.appimage
+          ./nvim.appimage --appimage-extract
+          echo "/tmp/nvim/squashfs-root/usr/bin/" >> $GITHUB_PATH
+      - name: Generate new docs
+        run: |
+          nvim --version
+          nvim -u NONE -E -R --headless --cmd "set rtp^=." --cmd "packloadall" --cmd "luafile lua/neodev/build/init.lua" --cmd q
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: auto-generated types for Neovim stable"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"

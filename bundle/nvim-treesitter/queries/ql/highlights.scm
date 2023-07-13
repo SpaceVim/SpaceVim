@@ -1,12 +1,8 @@
 [
   "as"
-  "asc"
   "by"
   "class"
-  "desc"
   "extends"
-  "forall"
-  "forex"
   "from"
   "implies"
   "in"
@@ -43,15 +39,23 @@
   "strictsum"
 ] @function.builtin
 
-[
-  "import"
-] @include 
+"import" @include
 
 [
   "if"
   "then"
   "else"
 ] @conditional
+
+[
+  "forall"
+  "forex"
+] @repeat
+
+[
+  "asc"
+  "desc"
+] @type.qualifier
 
 [
   (true)
@@ -106,11 +110,11 @@
 (module name: (moduleName) @namespace)
 
 (dataclass name: (className) @type)
-(datatype name: (className) @type)
 (typeExpr name: (className) @type)
 
-(importModuleExpr name: (simpleId) @variable)
-(qualModuleExpr name: (simpleId) @variable)
+(datatype name: (className) @type.definition)
+
+(importModuleExpr qualName: (simpleId) @variable)
 (varName) @variable
 
 (integer) @number
@@ -126,5 +130,6 @@
 [
   (line_comment)
   (block_comment)
-  (qldoc)
-] @comment
+] @comment @spell
+
+(qldoc) @comment.documentation

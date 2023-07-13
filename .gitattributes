@@ -1,2 +1,4 @@
 bundle/** linguist-vendored
+autoload/SpaceVim/api/iconv/** linguist-vendored
+lua/spacevim/api/iconv/** linguist-vendored
 docs/** linguist-documentation

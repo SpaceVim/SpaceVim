@@ -12,11 +12,11 @@
 --- for the best performance.
 ---
 --- The create function will use the column widths passed to it in
---- configaration.items. Each item in that table is the number of characters in
+--- configuration.items. Each item in that table is the number of characters in
 --- the column. It's also possible for the final column to not have a fixed
---- width, this will be shown in the configuartion as 'remaining = true'.
+--- width, this will be shown in the configuration as 'remaining = true'.
 ---
---- An example of this configuration is shown for the buffers picker
+--- An example of this configuration is shown for the buffers picker:
 --- <code>
 --- local displayer = entry_display.create {
 ---   separator = " ",
@@ -30,10 +30,10 @@
 --- </code>
 ---
 --- This shows 4 columns, the first is defined in the opts as the width we'll
---- use when display_string the number of the buffer. The second has a fixed
---- width of 4 and the 3rd column's widht will be decided by the width of the
---- icons we use. The fourth column will use the remaining space. Finally we
---- have also defined the seperator between each column will be the space " ".
+--- use when display_string is the number of the buffer. The second has a fixed
+--- width of 4 and the third column's width will be decided by the width of the
+--- icons we use. The fourth column will use the remaining space. Finally, we
+--- have also defined the separator between each column will be the space " ".
 ---
 --- An example of how the display reference will be used is shown, again for
 --- the buffers picker:
@@ -49,12 +49,12 @@
 --- There are two types of values each column can have. Either a simple String
 --- or a table containing the String as well as the hl_group.
 ---
---- The displayer can return values, string and an optional highlights.
---- String is all the text to be displayed for this entry as a single string. If
---- parts of the string are to be highlighted they will be described in the
---- highlights table.
+--- The displayer can return values, string and an optional highlights. The string
+--- is all the text to be displayed for this entry as a single string. If parts of
+--- the string are to be highlighted they will be described in the highlights
+--- table.
 ---
---- For better understanding of how create() and displayer are used it's best to look
+--- For a better understanding of how create() and displayer are used it's best to look
 --- at the code in make_entry.lua.
 ---@brief ]]
 

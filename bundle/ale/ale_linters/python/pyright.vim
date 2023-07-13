@@ -32,10 +32,24 @@ function! ale_linters#python#pyright#GetConfig(buffer) abort
     return l:config
 endfunction
 
+" Force the cwd of the server to be the same as the project root to
+" fix issues with treating local files matching first or third party library
+" names being imported incorrectly.
+function! ale_linters#python#pyright#GetCwd(buffer) abort
+    let l:fake_linter = {
+    \   'name': 'pyright',
+    \   'project_root': function('ale#python#FindProjectRoot'),
+    \}
+    let l:root = ale#lsp_linter#FindProjectRoot(a:buffer, l:fake_linter)
+
+    return !empty(l:root) ? l:root : v:null
+endfunction
+
 call ale#linter#Define('python', {
 \   'name': 'pyright',
 \   'lsp': 'stdio',
 \   'executable': {b -> ale#Var(b, 'python_pyright_executable')},
+\   'cwd': function('ale_linters#python#pyright#GetCwd'),
 \   'command': '%e --stdio',
 \   'project_root': function('ale#python#FindProjectRoot'),
 \   'completion_filter': 'ale#completion#python#CompletionItemFilter',

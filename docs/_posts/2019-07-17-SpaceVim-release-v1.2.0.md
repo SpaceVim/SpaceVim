@@ -3,7 +3,7 @@ title: SpaceVim release v1.2.0
 categories: [changelog, blog]
 description: "SpaceVim release v1.2.0 with 12 new programming language layers and ton of bug fixs and new features."
 type: article
-image: https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png
+image: https://img.spacevim.org/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png
 commentsID: "SpaceVim release v1.2.0"
 comments: true
 ---
@@ -27,7 +27,7 @@ comments: true
 The last release is v1.1.0, After three months development.
 The v1.2.0 has been released. So let's take a look at what happened since last relase.
 
-![v1.2.0](https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
+![v1.2.0](https://img.spacevim.org/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
 
 - [Quick start guide](../quick-start-guide/): installation, configuration, and resources of learning SpaceVim
 - [documentation](../documentation/): the primary official document of SpaceVim

@@ -77,7 +77,8 @@ function! ale#fix#ApplyFixes(buffer, output) abort
             call remove(g:ale_fix_buffer_data, a:buffer)
 
             if !l:data.ignore_file_changed_errors
-                execute 'echoerr ''The file was changed before fixing finished'''
+                " no-custom-checks
+                echoerr 'The file was changed before fixing finished'
             endif
 
             return
@@ -172,6 +173,7 @@ function! s:RunJob(result, options) abort
     let l:read_temporary_file = get(a:result, 'read_temporary_file', 0)
     let l:read_buffer = get(a:result, 'read_buffer', 1)
     let l:output_stream = get(a:result, 'output_stream', 'stdout')
+    let l:cwd = get(a:result, 'cwd', v:null)
 
     if l:read_temporary_file
         let l:output_stream = 'none'
@@ -190,6 +192,7 @@ function! s:RunJob(result, options) abort
     \   'read_buffer': l:read_buffer,
     \   'input': l:input,
     \   'log_output': 0,
+    \   'cwd': l:cwd,
     \   'filename_mappings': ale#GetFilenameMappings(l:buffer, l:fixer_name),
     \})
 
@@ -356,7 +359,8 @@ function! ale#fix#Fix(buffer, fixing_flag, ...) abort
             \   'There is no fixer named `%s`. Check :ALEFixSuggest',
             \   l:function_name,
             \)
-            execute 'echom l:echo_message'
+            " no-custom-checks
+            echom l:echo_message
         endif
 
         return 0
@@ -364,7 +368,8 @@ function! ale#fix#Fix(buffer, fixing_flag, ...) abort
 
     if empty(l:callback_list)
         if a:fixing_flag is# ''
-            execute 'echom ''No fixers have been defined. Try :ALEFixSuggest'''
+            " no-custom-checks
+            echom 'No fixers have been defined. Try :ALEFixSuggest'
         endif
 
         return 0

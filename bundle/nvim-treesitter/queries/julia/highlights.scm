@@ -1,190 +1,298 @@
+;;; Identifiers
+
 (identifier) @variable
-;; In case you want type highlighting based on Julia naming conventions (this might collide with mathematical notation)
-;((identifier) @type ; exception: mark `A_foo` sort of identifiers as variables
-  ;(match? @type "^[A-Z][^_]"))
-((identifier) @constant
-  (#match? @constant "^[A-Z][A-Z_]{2}[A-Z_]*$"))
 
-[
-  (triple_string)
-  (string)
-] @string
-(command_string) @string.special
-
-(string
-  prefix: (identifier) @constant.builtin)
+; ;; If you want type highlighting based on Julia naming conventions (this might collide with mathematical notation)
+; ((identifier) @type
+;   (match? @type "^[A-Z][^_]"))  ; exception: Highlight `A_foo` sort of identifiers as variables
 
 (macro_identifier) @function.macro
-(macro_identifier (identifier) @function.macro) ; for any one using the variable highlight
+(macro_identifier
+  (identifier) @function.macro) ; for any one using the variable highlight
+
 (macro_definition
-  name: (identifier) @function.macro
-  ["macro" "end" @keyword])
+  name: (identifier) @function.macro)
+
+(quote_expression ":" [(identifier) (operator)]) @symbol
 
 (field_expression
-  (identifier)
   (identifier) @field .)
+
+
+;;; Function names
+
+;; Definitions
 
 (function_definition
   name: (identifier) @function)
+(short_function_definition
+  name: (identifier) @function)
+
+(function_definition
+  name: (field_expression (identifier) @function .))
+(short_function_definition
+  name: (field_expression (identifier) @function .))
+
+;; calls
+
 (call_expression
-  (identifier) @function)
+  (identifier) @function.call)
 (call_expression
-  (field_expression (identifier) @method .))
+  (field_expression (identifier) @function.call .))
+
 (broadcast_call_expression
-  (identifier) @function)
+  (identifier) @function.call)
 (broadcast_call_expression
-  (field_expression (identifier) @method .))
+  (field_expression (identifier) @function.call .))
+
+;; Builtins
+
+((identifier) @function.builtin
+  (#any-of? @function.builtin 
+  "_abstracttype" "_apply_iterate" "_apply_pure" "_call_in_world" "_call_in_world_total"
+  "_call_latest" "_equiv_typedef" "_expr" "_primitivetype" "_setsuper!" "_structtype"
+  "_typebody!" "_typevar" "applicable" "apply_type" "arrayref" "arrayset" "arraysize"
+  "const_arrayref" "donotdelete" "fieldtype" "get_binding_type" "getfield" "ifelse" "invoke" "isa"
+  "isdefined" "modifyfield!" "nfields" "replacefield!" "set_binding_type!" "setfield!" "sizeof"
+  "svec" "swapfield!" "throw" "tuple" "typeassert" "typeof"))
+
+
+;;; Parameters
+
 (parameter_list
   (identifier) @parameter)
-(parameter_list
-  (optional_parameter .
-    (identifier) @parameter))
+(optional_parameter .
+  (identifier) @parameter)
+(slurp_parameter
+  (identifier) @parameter)
+
 (typed_parameter
-  (identifier) @parameter
-  (identifier) @type)
+  parameter: (identifier)? @parameter
+  type: (_) @type)
+
+(function_expression
+  . (identifier) @parameter) ; Single parameter arrow functions
+
+
+;;; Types
+
+;; Definitions
+
+(abstract_definition
+  name: (identifier) @type.definition) @keyword
+(primitive_definition
+  name: (identifier) @type.definition) @keyword
+(struct_definition
+  name: (identifier) @type)
+(type_clause
+  ["<:" ">:"] @operator
+  [(identifier) @type
+    (field_expression (identifier) @type .)])
+
+;; Annotations
+
+(parametrized_type_expression
+  (_) @type
+  (curly_expression (_) @type))
+
 (type_parameter_list
   (identifier) @type)
-(typed_parameter
-  (identifier) @parameter
-  (parameterized_identifier) @type)
-(function_expression
-  . (identifier) @parameter)
-(spread_parameter) @parameter
-(spread_parameter
-  (identifier) @parameter)
-(named_argument
-    . (identifier) @parameter)
-(argument_list
-  (typed_expression
-    (identifier) @parameter
-    (identifier) @type))
-(argument_list
-  (typed_expression
-    (identifier) @parameter
-    (parameterized_identifier) @type))
-
-;; Symbol expressions (:my-wanna-be-lisp-keyword)
-(quote_expression
- (identifier)) @symbol
-
-;; Parsing error! foo (::Type) gets parsed as two quote expressions
-(argument_list
-  (quote_expression
-    (quote_expression
-      (identifier) @type)))
-
-(type_argument_list
-  (identifier) @type)
-(parameterized_identifier (_)) @type
-(argument_list
-  (typed_expression . (identifier) @parameter))
 
 (typed_expression
   (identifier) @type .)
-(typed_expression
-  (parameterized_identifier) @type .)
 
-(abstract_definition
-  name: (identifier) @type)
-(struct_definition
-  name: (identifier) @type)
+(function_definition
+  return_type: (identifier) @type)
+(short_function_definition
+  return_type: (identifier) @type)
 
-(number) @number
-(range_expression
-    (identifier) @number
-      (#eq? @number "end"))
-(range_expression
-  (_
-    (identifier) @number
-      (#eq? @number "end")))
-(coefficient_expression
-  (number)
-  (identifier) @constant.builtin)
+(where_clause
+  (identifier) @type)
+(where_clause
+  (curly_expression (_) @type))
 
-;; TODO: operators.
-;; Those are a bit difficult to implement since the respective nodes are hidden right now (_power_operator)
-;; and heavily use Unicode chars (support for those are bad in vim/lua regexes)
-;[;
-    ;(power_operator);
-    ;(times_operator);
-    ;(plus_operator);
-    ;(arrow_operator);
-    ;(comparison_operator);
-    ;(assign_operator);
-;] @operator ;
+;; Builtins
 
-"end" @keyword
+((identifier) @type.builtin
+ (#any-of? @type.builtin
+  "Type" "DataType" "Any" "Union" "UnionAll" "Tuple" "NTuple" "NamedTuple"
+  "Val" "Nothing" "Some" "Enum" "Expr" "Symbol" "Module" "Function" "ComposedFunction"
+  "Number" "Real" "AbstractFloat" "Integer" "Signed" "AbstractIrrational"
+  "Fix1" "Fix2" "Missing" "Cmd" "EnvDict" "VersionNumber" "ArgumentError"
+  "AssertionError" "BoundsError" "CompositeException" "DimensionMismatch"
+  "DivideError" "DomainError" "EOFError" "ErrorException" "InexactError"
+  "InterruptException" "KeyError" "LoadError" "MethodError" "OutOfMemoryError"
+  "ReadOnlyMemoryError" "OverflowError" "ProcessFailedException" "StackOverflowError"
+  "SystemError" "TypeError" "UndefKeywordError" "UndefRefError" "UndefVarError"
+  "StringIndexError" "InitError" "ExponentialBackOff" "Timer" "AsyncCondition"
+  "ParseError" "QuoteNode" "IteratorSize" "IteratorEltype" "AbstractRange"
+  "OrdinalRange" "AbstractUnitRange" "StepRange" "UnitRange" "LinRange" "AbstractDict"
+  "Dict" "IdDict" "WeakKeyDict" "ImmutableDict" "AbstractSet" "Set" "BitSet" "Pair"
+  "Pairs" "OneTo" " StepRangeLen" "RoundingMode" "Float16" "Float32" "Float64"
+  "BigFloat" "Bool" "Int" "Int8" "UInt8" "Int16" "UInt16" "Int32" "UInt32" "Int64"
+  "UInt64" "Int128" "UInt128" "BigInt" "Complex" "Rational" "Irrational" "AbstractChar"
+  "Char" "SubString" "Regex" "SubstitutionString" "RegexMatch" "AbstractArray"
+  "AbstractVector" "AbstractMatrix" "AbstractVecOrMat" "Array" "UndefInitializer"
+  "Vector" "Matrix" "VecOrMat" "DenseArray" "DenseVector" "DenseMatrix" "DenseVecOrMat"
+  "StridedArray" "StridedVector" "StridedMatrix" "StridedVecOrMat" "BitArray" "Dims"
+  "SubArray" "Task" "Condition" "Event" "Semaphore" "AbstractLniock" "ReentrantLock"
+  "Channel" "Atomic" "SpinLock" "RawFD" "IOStream" "IOBuffer" "AbstractDisplay" "MIME"
+  "TextDisplay" "PartialQuickSort" "Ordering" "ReverseOrdering" "By" "Lt" "Perm"
+  "Stateful" "CFunction" "Ptr" "Ref" "Cchar" "Cuchar" "Cshort" "Cstring" "Cushort"
+  "Cint" "Cuint" "Clong" "Culong" "Clonglong" "Culonglong" "Cintmax_t" "Cuintmax_t"
+  "Csize_t" "Cssize_t" "Cptrdiff_t" "Cwchar_t" "Cwstring" "Cfloat" "Cdouble" "Tmstruct"
+  "StackFrame" "StackTrace"))
 
-(if_statement
-  ["if" "end"] @conditional)
-(elseif_clause
-  ["elseif"] @conditional)
-(else_clause
-  ["else"] @conditional)
-(ternary_expression
-  ["?" ":"] @conditional)
+((identifier) @variable.builtin
+  (#any-of? @variable.builtin "begin" "end")
+  (#has-ancestor? @variable.builtin index_expression))
 
-(function_definition ["function" "end"] @keyword.function)
+((identifier) @variable.builtin
+  (#any-of? @variable.builtin "begin" "end")
+  (#has-ancestor? @variable.builtin range_expression))
+
+;;; Keywords
 
 [
-  (comment)
-  (block_comment)
-] @comment
-
-[
-  "abstract"
-  "const"
+  "global"
+  "local"
   "macro"
-  "primitive"
   "struct"
-  "type"
+  "end"
 ] @keyword
 
-"return" @keyword.return
 
-((identifier) @keyword (#any-of? @keyword "global" "local"))
-
-(compound_expression
+(compound_statement
   ["begin" "end"] @keyword)
-(try_statement
-  ["try" "end" ] @exception)
-(finally_clause
-  "finally" @exception)
-(catch_clause
-  "catch" @exception)
 (quote_statement
   ["quote" "end"] @keyword)
 (let_statement
   ["let" "end"] @keyword)
+
+(if_statement
+  ["if" "end"] @conditional)
+(elseif_clause
+  "elseif" @conditional)
+(else_clause
+  "else" @conditional)
+(if_clause
+  "if" @conditional) ; `if` clause in comprehensions
+(ternary_expression
+  ["?" ":"] @conditional.ternary)
+
+(try_statement
+  ["try" "end"] @exception)
+(finally_clause
+  "finally" @exception)
+(catch_clause
+  "catch" @exception)
+
 (for_statement
   ["for" "end"] @repeat)
 (while_statement
   ["while" "end"] @repeat)
-(break_statement) @repeat
-(continue_statement) @repeat
-(for_binding
-  "in" @repeat)
 (for_clause
   "for" @repeat)
-(do_clause
-  ["do" "end"] @keyword)
-
-(export_statement
-  ["export"] @include)
-
-(import_statement
-  ["import" "using"] @include)
+[
+  (break_statement)
+  (continue_statement)
+] @repeat
 
 (module_definition
-  ["module" "end"] @include)
+  ["module" "baremodule" "end"] @include)
+(import_statement
+  ["import" "using"] @include)
+(import_alias
+  "as" @include)
+(export_statement
+  "export" @include)
 
-((identifier) @include (#eq? @include "baremodule"))
+(macro_definition
+  ["macro" "end" @keyword])
 
-(((identifier) @constant.builtin) (#match? @constant.builtin "^(nothing|Inf|NaN)$"))
-(((identifier) @boolean) (#eq? @boolean "true"))
-(((identifier) @boolean) (#eq? @boolean "false"))
+(function_definition
+  ["function" "end"] @keyword.function)
+(do_clause
+  ["do" "end"] @keyword.function)
+(return_statement
+  "return" @keyword.return)
 
+[
+  "const"
+  "mutable"
+] @type.qualifier
+
+
+;;; Operators & Punctuation
+
+[
+  "="
+  "∈"
+  (operator)
+] @operator
+
+(adjoint_expression "'" @operator)
 (range_expression ":" @operator)
-(quote_expression ":" @symbol)
-["::" "." "," "..." "!"] @punctuation.delimiter
-["[" "]" "(" ")" "{" "}"] @punctuation.bracket
+
+((operator) @keyword.operator
+  (#any-of? @keyword.operator "in" "isa"))
+
+(for_binding "in" @keyword.operator)
+
+(where_clause "where" @keyword.operator)
+(where_expression "where" @keyword.operator)
+
+[
+  ","
+  "."
+  ";"
+  "::"
+  "->"
+] @punctuation.delimiter
+
+[
+  "..."
+] @punctuation.special
+
+["(" ")" "[" "]" "{" "}"] @punctuation.bracket
+
+
+;;; Literals
+
+(boolean_literal) @boolean
+(integer_literal) @number
+(float_literal) @float
+
+((identifier) @float
+  (#any-of? @float "NaN" "NaN16" "NaN32"
+                   "Inf" "Inf16" "Inf32"))
+
+((identifier) @constant.builtin
+  (#any-of? @constant.builtin "nothing" "missing"))
+
+(character_literal) @character
+(escape_sequence) @string.escape
+
+(string_literal) @string
+(prefixed_string_literal
+  prefix: (identifier) @function.macro) @string
+
+(command_literal) @string.special
+(prefixed_command_literal
+  prefix: (identifier) @function.macro) @string.special
+
+((string_literal) @string.documentation
+  . [
+      (module_definition)
+      (abstract_definition)
+      (struct_definition)
+      (function_definition)
+      (assignment)
+      (const_declaration)
+    ])
+
+[
+  (line_comment)
+  (block_comment)
+] @comment @spell
+

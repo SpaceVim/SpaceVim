@@ -44,9 +44,10 @@ api.get_current_line = function()
   return vim.api.nvim_get_current_line()
 end
 
+---@return { [1]: integer, [2]: integer }
 api.get_cursor = function()
   if api.is_cmdline_mode() then
-    return { vim.o.lines - (vim.api.nvim_get_option('cmdheight') or 1) + 1, vim.fn.getcmdpos() - 1 }
+    return { math.min(vim.o.lines, vim.o.lines - (vim.api.nvim_get_option('cmdheight') - 1)), vim.fn.getcmdpos() - 1 }
   end
   return vim.api.nvim_win_get_cursor(0)
 end
@@ -54,7 +55,7 @@ end
 api.get_screen_cursor = function()
   if api.is_cmdline_mode() then
     local cursor = api.get_cursor()
-    return { cursor[1], cursor[2] + 1 }
+    return { cursor[1], vim.fn.strdisplaywidth(string.sub(vim.fn.getcmdline(), 1, cursor[2] + 1)) }
   end
   local cursor = api.get_cursor()
   local pos = vim.fn.screenpos(0, cursor[1], cursor[2] + 1)

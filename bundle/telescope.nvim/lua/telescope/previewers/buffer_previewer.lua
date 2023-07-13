@@ -60,7 +60,8 @@ local function split(s, sep, plain, opts)
   opts = opts or {}
   local t = {}
   for c in vim.gsplit(s, sep, plain) do
-    table.insert(t, c)
+    local line = opts.file_encoding and vim.iconv(c, opts.file_encoding, "utf8") or c
+    table.insert(t, line)
     if opts.preview.timeout then
       local diff_time = (vim.loop.hrtime() - opts.start_time) / 1e6
       if diff_time > opts.preview.timeout then
@@ -192,8 +193,8 @@ previewers.file_maker = function(filepath, bufnr, opts)
         if opts.preview.check_mime_type == true and has_file and opts.ft == "" then
           -- avoid SIGABRT in buffer previewer happening with utils.get_os_command_output
           local output = capture(string.format([[file --mime-type -b "%s"]], filepath))
-          local mime_type = vim.split(output, "/")[1]
-          if mime_type ~= "text" and mime_type ~= "inode" then
+          local mime_type = vim.split(output, "/")
+          if mime_type[1] ~= "text" and mime_type[1] ~= "inode" and mime_type[2] ~= "json" then
             if type(opts.preview.mime_hook) == "function" then
               vim.schedule_wrap(opts.preview.mime_hook)(filepath, bufnr, opts)
             else
@@ -205,6 +206,9 @@ previewers.file_maker = function(filepath, bufnr, opts)
               )
             end
             return
+          end
+          if mime_type[2] == "json" then
+            opts.ft = "json"
           end
         end
 
@@ -433,6 +437,7 @@ previewers.cat = defaulter(function(opts)
         bufname = self.state.bufname,
         winid = self.state.winid,
         preview = opts.preview,
+        file_encoding = opts.file_encoding,
       })
     end,
   }
@@ -487,6 +492,7 @@ previewers.vimgrep = defaulter(function(opts)
           callback = function(bufnr)
             jump_to_line(self, bufnr, entry.lnum)
           end,
+          file_encoding = opts.file_encoding,
         })
       end
     end,
@@ -881,7 +887,7 @@ previewers.git_file_diff = defaulter(function(opts)
           winid = self.state.winid,
         })
       else
-        putils.job_maker({ "git", "--no-pager", "diff", entry.value }, self.state.bufnr, {
+        putils.job_maker({ "git", "--no-pager", "diff", "HEAD", "--", entry.value }, self.state.bufnr, {
           value = entry.value,
           bufname = self.state.bufname,
           cwd = opts.cwd,

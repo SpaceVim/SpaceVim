@@ -43,6 +43,11 @@ function M.set_lines(bufnr, startindex, endindex, replacement)
     end
 end
 
+function M.listed_buffers() -- {{{
+  return vim.fn.filter(vim.fn.range(1, vim.fn.bufnr('$')), 'buflisted(v:val)')
+end
+-- }}}
+
 function M.resize(size, ...)
     local arg = {...}
     local cmd = arg[1] or 'vertical'
@@ -53,6 +58,14 @@ function M.open_pos(cmd, filename, line, col)
     vim.cmd('silent ' .. cmd .. ' ' .. filename)
     vim.fn.cursor(line, col)
 end
+
+---@param bufnr number the buffer number
+---@param opt string option name
+---@param value any option value
+function M.set_option(bufnr, opt, value)
+  
+end
+
 
 return M
 

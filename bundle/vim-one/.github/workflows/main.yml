@@ -1,0 +1,30 @@
+name: Automatic merge from upstream
+
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Sync upstream changes every day
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_ACTOR: ${{ github.actor }}
+        GITHUB_REPO: ${{ github.repository }}
+      run: |
+        REMOTE_REPO="rakr/vim-one"
+        git config user.email "actions@github.com"
+        git config user.name "GitHub Merge Action"
+        git checkout master
+        git remote set-url origin "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPO"
+        git remote add upstream "https://github.com/$REMOTE_REPO"
+        git fetch upstream
+        git merge upstream/master
+        git remote rm upstream
+        git push origin HEAD:master

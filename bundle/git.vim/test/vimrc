@@ -1,0 +1,9 @@
+set nocompatible
+let s:path = expand('<sfile>:p:h:h')
+set runtimepath=$VIMRUNTIME
+call execute('set rtp+=' . s:path)
+filetype off
+filetype plugin indent on
+syntax enable
+
+

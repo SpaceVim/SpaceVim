@@ -2,7 +2,7 @@
 title: "Vim 异步实时代码检索"
 categories: [blog_cn, feature_cn]
 description: "异步执行 grep，根据输入内容实时展示搜索结果，支持全工程检索、检索当前文件、检索已打开的文件等"
-image: https://user-images.githubusercontent.com/13142418/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif
+image: https://img.spacevim.org/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif
 commentsID: "Vim 异步实时代码检索"
 comments: true
 permalink: /cn/:title/
@@ -33,20 +33,20 @@ FlyGrep 指的是 **grep on the fly**，将根据用户输入实时展示搜索�
 
 在 SpaceVim 中，可以使用快捷键 `SPC s p` 或者 `SPC s /` 进行全工程检索。
 
-![searching project](https://user-images.githubusercontent.com/13142418/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif)
+![searching project](https://img.spacevim.org/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif)
 
 - 仅搜索当前文件
 
 同时，可以使用快捷键 `SPC s s` 仅搜索当前文件中的内容，如果需要在当前文件中搜索光标下的词，可以使用快捷键 `SPC s S`。
 
-![searching current file](https://user-images.githubusercontent.com/13142418/35278847-e0032796-0010-11e8-911b-2ee8fd81aed2.gif)
+![searching current file](https://img.spacevim.org/35278847-e0032796-0010-11e8-911b-2ee8fd81aed2.gif)
 
 - 在所有已经载入的文件中搜索
 
 如果需要在所有已经打开的文件中搜索，可以使用快捷键 `SPC s b`，如果需要在所有已打开的文件中搜索光标下的词语，
 则可以使用快捷键 `SPC s B`。
 
-![searching-loaded-buffer](https://user-images.githubusercontent.com/13142418/35278996-518b8a34-0011-11e8-9a7a-613668398ee2.gif)
+![searching-loaded-buffer](https://img.spacevim.org/35278996-518b8a34-0011-11e8-9a7a-613668398ee2.gif)
 
 - 搜索指定的文件夹
 

@@ -109,6 +109,10 @@ function! s:on_exit_show_branch(id, data, event) abort
           \ 'last_update_done' : localtime(),
           \ })
   endif
+  " when the pwd is same as current directory, redraw statueline
+  if pwd == getcwd()
+    redrawstatus
+  endif
 endfunction
 ""
 " return the current branch info. this function can be used in statusline.

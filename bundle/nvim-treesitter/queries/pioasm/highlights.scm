@@ -4,21 +4,26 @@
 
 (string) @string
 
-(instruction
-  opcode: _ @keyword)
+(instruction opcode: _ @function.call)
 
-[ "pins" "x" "y" "null" "isr" "osr" "status" "pc" "exec" ] @variable.builtin
+[ "pins" "x" "y" "null" "isr" "osr" "osre" "status" "pc" "exec" ] @constant.builtin
+(wait_source [ "irq" "gpio" "pin" ] @constant.builtin)
 
-(out_target "pindirs" @variable.builtin)
-(directive "pindirs" @keyword)
+(out_target "pindirs" @constant.builtin)
+(set_target "pindirs" @constant.builtin)
+(directive "pindirs" @attribute)
 
 (condition [ "--" "!=" ] @operator)
 (expression [ "+" "-" "*" "/" "|" "&" "^" "::" ] @operator)
 (not) @operator
 
-[ "optional" "opt" "side" "sideset" "side_set" "pin" "gpio" "osre" ] @keyword
-[ "block" "noblock" "iffull" "ifempty" "rel" ] @keyword
-(irq_modifiers) @keyword
+[ (optional) (irq_modifiers) ] @type.qualifier
+
+[ "block" "noblock" "rel" ] @attribute
+
+[ "iffull" "ifempty" ] @conditional
+
+"public" @storageclass
 
 (integer) @number
 
@@ -26,5 +31,4 @@
 (directive (symbol_def (identifier) @variable))
 (value (identifier) @variable)
 
-(directive
-  directive: _ @keyword)
+(directive directive: _ @preproc)

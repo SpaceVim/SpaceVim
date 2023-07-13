@@ -50,8 +50,8 @@ M.hi = function (info)
     if vim.fn.empty(info) == 1 or vim.fn.get(info, 'name', '') == '' then
         return
     end
-    vim.cmd('hi clear ' .. info.name)
-    local cmd = 'hi! ' .. info.name
+    vim.cmd('silent! hi clear ' .. info.name)
+    local cmd = 'silent hi! ' .. info.name
     if vim.fn.empty(info.ctermbg) == 0 then
         cmd = cmd .. ' ctermbg=' .. info.ctermbg
     end

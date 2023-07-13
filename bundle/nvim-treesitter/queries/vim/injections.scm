@@ -1,8 +1,12 @@
-(lua_statement . (_) @lua)
-(ruby_statement . (_) @ruby)
-(python_statement . (_) @python)
+(lua_statement (script (body) @lua))
+(lua_statement (chunk) @lua)
+(ruby_statement (script (body) @ruby))
+(ruby_statement (chunk) @ruby)
+(python_statement (script (body) @python))
+(python_statement (chunk) @python)
 ;; If we support perl at some point...
-;; (perl_statement . (_) @perl)
+;; (perl_statement (script (body) @perl))
+;; (perl_statement (chunk) @perl)
 
 (autocmd_statement (pattern) @regex)
 

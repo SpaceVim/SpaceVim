@@ -9,7 +9,7 @@ local misc = require('cmp.utils.misc')
 local api = require('cmp.utils.api')
 
 ---@class cmp.CustomEntriesView
----@field private offset number
+---@field private offset integer
 ---@field private entries_win cmp.Window
 ---@field private active boolean
 ---@field private entries cmp.Entry[]
@@ -181,11 +181,14 @@ end
 
 wildmenu_entries_view.select_next_item = function(self, option)
   if self:visible() then
+    local cursor
     if self.selected_index == 0 or self.selected_index == #self.entries then
-      self:_select(1, option)
+      cursor = option.count
     else
-      self:_select(self.selected_index + 1, option)
+      cursor = self.selected_index + option.count
     end
+    cursor = math.max(math.min(cursor, #self.entries), 0)
+    self:_select(cursor, option)
   end
 end
 
@@ -194,7 +197,7 @@ wildmenu_entries_view.select_prev_item = function(self, option)
     if self.selected_index == 0 or self.selected_index <= 1 then
       self:_select(#self.entries, option)
     else
-      self:_select(self.selected_index - 1, option)
+      self:_select(math.max(self.selected_index - option.count, 0), option)
     end
   end
 end

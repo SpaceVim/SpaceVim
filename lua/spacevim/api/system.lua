@@ -27,7 +27,7 @@ end
 
 local M = {}
 
-if has('win16') ==1 or has('win32') == 1 or has('win64') == 1 then
+if has('win16') == 1 or has('win32') == 1 or has('win64') == 1 then
     M.isWindows = 1
 else
     M.isWindows = 0

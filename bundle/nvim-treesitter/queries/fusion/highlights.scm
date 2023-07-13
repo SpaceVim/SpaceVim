@@ -18,7 +18,7 @@
 
 (eel_object_path
   (eel_path_identifier) @variable.builtin
-  (#match? @variable.builtin "^(this|props)$")
+  (#any-of? @variable.builtin "this" "props")
 )
 
 (eel_object_path
@@ -115,3 +115,6 @@
  "."
  "?"
 ] @punctuation.delimiter
+
+(eel_ternary_expression
+  ["?" ":"] @conditional.ternary)

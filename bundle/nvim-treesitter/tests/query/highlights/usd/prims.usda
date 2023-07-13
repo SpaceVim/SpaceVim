@@ -1,0 +1,118 @@
+def Xform "cube" (
+    assetInfo = {
+    # <- keyword
+        asset[] payloadAssetDependencies = [@fizz.usd@, @buzz.usd@]
+        # <- type
+        #       ^ keyword
+        #                                   ^ text.uri
+        #                                               ^ text.uri
+    }
+)
+{
+}
+
+def "root" (
+    add references = @foo.usda@</Model> (offset = 1; scale = 2.0)
+                      # <- text.uri
+                      #        ^ string.special
+                      #                  ^ keyword
+                      #                           ^ number
+                      #                            ^ punctuation.delimiter
+                      #                              ^ keyword
+                      #                                      ^ float
+)
+{
+}
+
+def "World"
+{
+    over "points" (
+        clips = {
+        # <- keyword
+            dictionary default = {
+            # <- type
+            #          ^ variable
+                double2[] times = [(101, 101), (102, 102)]
+                # <- type
+                #         ^ keyword
+                #                   ^ number
+            }
+        }
+    )
+    {
+    }
+}
+
+def Xform "torch_2" (
+    payload = @./torch.usda@
+    kind = "model"
+)
+{
+    // Pre-published light list
+    # <- comment
+    rel lightList = [ <light> ]  # inline comment
+    #                            ^ comment
+    token lightList:cacheBehavior = "consumeAndContinue"
+
+    double3 xformOp:translate = (1, 0, 0.5)
+    uniform token[] xformOpOrder = ["xformOp:translate"]
+}
+
+def "foo" (
+  "some comment"
+  # <- comment.documentation
+)
+{
+}
+
+def "foo" (
+  # inline comment
+  "actual in-description comment"
+  # <- comment.documentation
+)
+{
+}
+
+def "foo" (
+    add references = @foo.usda@
+    # <- function.call
+    append references = @foo.usda@
+    # <- function.call
+    delete references = @foo.usda@
+    # <- function.call
+    reorder references = [@foo.usda@]
+    # <- function.call
+
+    references = [@foo.usda@]  # explicit
+)
+{
+}
+
+over "Parent" (
+    prepend references = [</InternalRef>, @./ref.usda@</RefParent>]
+    # <- function.call
+    #       ^ keyword
+    #                     ^ string.special
+    #                                     ^ text.uri
+    #                                                 ^ string.special
+)
+{
+}
+
+def "foo"
+{
+    float value.timeSamples = {
+    # <- type
+    #     ^ variable
+    #           ^ property
+      -414: 14.4
+      # <- number
+      #     ^ float
+      10: 201.0,
+      # <- number
+      #   ^ float
+      10.123: 201.0123,
+      # <- float
+      #       ^ float
+    }
+}

@@ -24,7 +24,7 @@ let s:default = {
       \    'min_size' : 3,
       \    'width' : 1,
       \    'right_offset' : 1,
-      \    'excluded_filetypes' : ['startify', 'git-commit','leaderf', 'NvimTree', 'tagbar', 'defx'],
+      \    'excluded_filetypes' : ['startify', 'git-commit','leaderf', 'NvimTree', 'tagbar', 'defx', 'neo-tree', 'qf'],
       \    'shape' : {
       \        'head' : '▲',
       \        'body' : '█',
@@ -156,6 +156,7 @@ function! SpaceVim#plugins#scrollbar#show() abort
         \  'row' : row,
         \  'col' : float2nr(col),
         \  'focusable' : 0,
+        \  'zindex' : 10,
         \ }
   if s:WIN.is_float(s:scrollbar_winid)
     if bar_size !=# s:scrollbar_size

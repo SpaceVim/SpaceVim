@@ -1,0 +1,14 @@
+class A {
+  var a := 12
+
+  method method() : int = 1
+}
+
+type B = class extends A {
+  var b := 27
+
+  method another_method() = (
+    print("called");
+    self.b + self.method()
+  )
+}

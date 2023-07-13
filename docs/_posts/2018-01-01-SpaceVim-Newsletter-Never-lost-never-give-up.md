@@ -2,7 +2,7 @@
 title: "Newsletter #2 - Never lost, Never give up"
 categories: [newsletter, blog]
 description: "We know exactly what is the purpose of SpaceVim, and we keep trying to get it, never get lost, never give up..."
-image: https://user-images.githubusercontent.com/13142418/80607642-54abd280-8a68-11ea-98ec-4998d099d797.png
+image: https://img.spacevim.org/80607642-54abd280-8a68-11ea-98ec-4998d099d797.png
 commentsID: "Never lost Never give up"
 comments: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: "SpaceVim lang#elm layer"
 description: "This layer is for Elm development, provides autocompletion, syntax checking and code formatting for Elm files."
-image: https://user-images.githubusercontent.com/13142418/44625046-7b2f7700-a931-11e8-807e-dba3f73c9e90.png
+image: https://img.spacevim.org/44625046-7b2f7700-a931-11e8-807e-dba3f73c9e90.png
 ---
 
 # [Available Layers](../../) >> lang#elm
@@ -87,7 +87,7 @@ To use this configuration layer, update your custom configuration file with:
 
 Start a `elm repl` inferior REPL process with `SPC l s i`.
 
-![elm repl](https://user-images.githubusercontent.com/13142418/44625046-7b2f7700-a931-11e8-807e-dba3f73c9e90.png)
+![elm repl](https://img.spacevim.org/44625046-7b2f7700-a931-11e8-807e-dba3f73c9e90.png)
 
 Send code to inferior process commands:
 

@@ -2,16 +2,16 @@
   (block_statement)
   (case_statement)
   (token_string)
-] @indent
+] @indent.begin
 
 [
   "(" ")"
   "{" "}"
   "[" "]"
-] @branch
+] @indent.branch
 
 [
   (line_comment)
   (block_comment)
   (nesting_block_comment)
-] @ignore
+] @indent.ignore

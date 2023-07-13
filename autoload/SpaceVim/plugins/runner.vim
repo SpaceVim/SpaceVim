@@ -36,6 +36,62 @@
 "   }
 " <
 
+
+if has('nvim-0.9.0') && $USE_LUA_CODE_RUNEER == 1
+  function! SpaceVim#plugins#runner#get(ft) abort
+    return luaeval('require("spacevim.plugin.runner").get(require("spacevim").eval("a:ft"))') 
+  endfunction
+  function! SpaceVim#plugins#runner#open(...) abort
+    lua require("spacevim.plugin.runner").open(
+          \ unpack(require("spacevim").eval("a:000"))
+          \ )
+    
+  endfunction
+
+  function! SpaceVim#plugins#runner#reg_runner(ft, runner) abort
+    lua require("spacevim.plugin.runner").reg_runner(
+          \ require("spacevim").eval("a:ft"),
+          \ require("spacevim").eval("a:runner")
+          \ )
+    
+  endfunction
+
+  function! SpaceVim#plugins#runner#status() abort
+    return luaeval('require("spacevim.plugin.runner").status()')
+  endfunction
+
+  function! SpaceVim#plugins#runner#close() abort
+
+    lua require("spacevim.plugin.runner").close()
+
+  endfunction
+
+  function! SpaceVim#plugins#runner#select_file() abort
+    lua require("spacevim.plugin.runner").select_file()
+  endfunction
+
+  function! SpaceVim#plugins#runner#select_language() abort
+    lua require("spacevim.plugin.runner").select_language()
+  endfunction
+
+  function! SpaceVim#plugins#runner#set_language(lang) abort
+    
+  endfunction
+
+  function! SpaceVim#plugins#runner#run_task(task) abort
+    
+  endfunction
+
+  function! SpaceVim#plugins#runner#clear_tasks() abort
+    
+  endfunction
+
+  finish
+endif
+
+
+
+
 let s:runners = {}
 
 let s:JOB = SpaceVim#api#import('job')
@@ -74,7 +130,8 @@ let s:task_stderr = {}
 let s:task_problem_matcher = {}
 
 function! s:open_win() abort
-  if s:code_runner_bufnr !=# 0 && bufexists(s:code_runner_bufnr) && index(tabpagebuflist(), s:code_runner_bufnr) !=# -1
+  if s:code_runner_bufnr !=# 0 && bufexists(s:code_runner_bufnr) 
+        \ && index(tabpagebuflist(), s:code_runner_bufnr) !=# -1
     return
   endif
   botright split __runner__
@@ -281,15 +338,13 @@ function! SpaceVim#plugins#runner#open(...) abort
         \ 'has_errors' : 0,
         \ 'exit_code' : 0
         \ }
-  let s:selected_language = &filetype
-  let runner = get(a:000, 0, get(s:runners, s:selected_language, ''))
+  let selected_language = &filetype
+  let runner = get(a:000, 0, get(s:runners, selected_language, ''))
   let opts = get(a:000, 1, {})
   if !empty(runner)
     call s:open_win()
     call s:async_run(runner, opts)
     call s:update_statusline()
-  else
-    let s:selected_language = get(s:, 'selected_language', '')
   endif
 endfunction
 

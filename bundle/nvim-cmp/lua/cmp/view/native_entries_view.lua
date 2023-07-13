@@ -7,10 +7,10 @@ local config = require('cmp.config')
 local api = require('cmp.utils.api')
 
 ---@class cmp.NativeEntriesView
----@field private offset number
+---@field private offset integer
 ---@field private items vim.CompletedItem
 ---@field private entries cmp.Entry[]
----@field private preselect_index number
+---@field private preselect_index integer
 ---@field public event cmp.Event
 local native_entries_view = {}
 
@@ -77,8 +77,7 @@ native_entries_view.open = function(self, offset, entries)
 end
 
 native_entries_view.close = function(self)
-  if api.is_suitable_mode() and self:visible() then
-    vim.fn.complete(1, {})
+  if api.is_insert_mode() and self:visible() then
     vim.api.nvim_select_popupmenu_item(-1, false, true, {})
   end
   self.offset = -1
@@ -101,10 +100,10 @@ native_entries_view.info = function(self)
   if self:visible() then
     local info = vim.fn.pum_getpos()
     return {
-      width = info.width + (info.scrollbar and 1 or 0),
+      width = info.width + (info.scrollbar and 1 or 0) + (info.col == 0 and 0 or 1),
       height = info.height,
       row = info.row,
-      col = info.col,
+      col = info.col == 0 and 0 or info.col - 1,
     }
   end
 end
@@ -123,9 +122,9 @@ native_entries_view.select_next_item = function(self, option)
   end
   if self:visible() then
     if (option.behavior or types.cmp.SelectBehavior.Insert) == types.cmp.SelectBehavior.Insert then
-      feedkeys.call(keymap.t('<C-n>'), 'n', callback)
+      feedkeys.call(keymap.t(string.rep('<C-n>', option.count)), 'n', callback)
     else
-      feedkeys.call(keymap.t('<Down>'), 'n', callback)
+      feedkeys.call(keymap.t(string.rep('<Down>', option.count)), 'n', callback)
     end
   end
 end
@@ -136,9 +135,9 @@ native_entries_view.select_prev_item = function(self, option)
   end
   if self:visible() then
     if (option.behavior or types.cmp.SelectBehavior.Insert) == types.cmp.SelectBehavior.Insert then
-      feedkeys.call(keymap.t('<C-p>'), 'n', callback)
+      feedkeys.call(keymap.t(string.rep('<C-p>', option.count)), 'n', callback)
     else
-      feedkeys.call(keymap.t('<Up>'), 'n', callback)
+      feedkeys.call(keymap.t(string.rep('<Up>', option.count)), 'n', callback)
     end
   end
 end

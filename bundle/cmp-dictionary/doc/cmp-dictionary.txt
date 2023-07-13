@@ -1,0 +1,276 @@
+*cmp-dictionary.txt*		 Dictionary completion source for nvim-cmp
+
+==============================================================================
+Contents					*cmp-dictionary-contents*
+
+Introduction					|cmp-dictionary-introduction|
+Commands					|cmp-dictionary-commands|
+Setting						|cmp-dictionary-setting|
+Option						|cmp-dictionary-option|
+Find dictionaries				|cmp-dictionary-find-dictionaries|
+Create dictionaries				|cmp-dictionary-create-dictionaries|
+Lazy loading					|cmp-dictionary-lazy-loading|
+
+==============================================================================
+Introduction					*cmp-dictionary-introduction*
+
+							*cmp-dictionary*
+cmp-dictionary ~
+
+A dictionary completion source for nvim-cmp.
+<https://github.com/hrsh7th/nvim-cmp>
+
+This plugins refers to the value of |'dictionary'| to load dictionaries and
+provide words in them as a completion candidates to nvim-cmp. The
+|'dictionary'| has global and buffer local values, but this plugin uses both.
+It is recommended to register basic dictionaries that you always want to use
+globally, and do dictionaries that are only used in special cases locally.
+See also |cmp-dictionary-switcher|.
+
+
+Requirements
+- neovim >= 0.7
+- nvim-cmp
+  - https://github.com/hrsh7th/nvim-cmp
+- plenary.nvim (only document feature)
+  - https://github.com/nvim-lua/plenary.nvim
+
+
+==============================================================================
+Commands					*cmp-dictionary-commands*
+
+							*CmpDictionaryUpdate*
+:CmpDictionaryUpdate ~
+	In lua, `require("cmp_dictionary").update()`
+
+	Updates the dictionary. It is basically not necessary for the user to
+	use it directly, as it is executed automatically by hooking into the
+	updating of the |'dictionary'|.
+
+
+==============================================================================
+Setting							*cmp-dictionary-setting*
+
+Example setting.
+If you use the default settings, this plugin will work without calling setup.
+
+>
+	require("cmp").setup({
+	  -- other settings
+	  sources = {
+	  -- other sources
+	    {
+	      name = "dictionary",
+	      keyword_length = 2,
+	    },
+	  }
+	})
+	
+	require("cmp_dictionary").setup({
+	  -- Default settings
+	  exact = 2,
+	  first_case_insensitive = false,
+	  document = false,
+	  document_command = "wn %s -over",
+	  async = false, 
+	  sqlite = false,
+	  max_items = 1000,
+	  capacity = 5,
+	  debug = false,
+	})
+<
+
+
+==============================================================================
+Option							*cmp-dictionary-option*
+
+						*cmp-dictionary-iskeyword*
+iskeyword ~
+
+	This plugin looks at |iskeyword| in vim. If you use a dictionary that
+	contains special characters, please configure it appropriately. For
+	example, if you want to complete the word `\word`, you would need to
+	add `set iskeyword+=\` to your configuration file.
+
+
+							*cmp-dictionary-exact*
+exact ~
+	integer (default: 2)
+
+	It decides how many characters at the beginning are used as the exact
+	match. If -1, only candidates with an exact prefix match will be
+	returns.
+	Candidate refinement by this source is only prefix match using this
+	value (Fuzzy matching is left to the nvim-cmp body).
+
+
+					*cmp-dictionary-first_case_insensitive*
+first_case_insensitive ~
+	boolean (default: false)
+
+	If true, it will ignore the case of the first character. For example,
+	if you have "Example" and "excuse" in your dictionary, typing "Ex"
+	will bring up "Example" and "Excuse" as candidates, while typing "ex"
+	will bring up "example" and "excuse".
+
+
+							*cmp-dictionary-document*
+document ~
+	boolean (default: false)
+
+	plenary.nvim (https://github.com/nvim-lua/plenary.nvim) is required.
+	If true, activate document using external command. See
+	|cmp-dictionary-document-command|
+
+
+						*cmp-dictionary-document_command*
+document_command ~
+	string or list-like table (default: 'wn %s -over')
+
+	This command is used above document feature. The '%s' will contain the
+	candidate word. The default `wn` command is wordnet.
+	<https://wordnet.princeton.edu/>
+
+	If a string, the arguments are recognized by separating it with a
+	space character. If you don’t want that, use a table.
+
+	If a table, the first element is the command and the second and
+	subsequent are the arguments. For example, the default setting would
+	be '{"wn", "%s", "-over"}'.
+
+
+							*cmp-dictionary-sqlite*
+sqlite ~
+	boolean (default: false)
+
+	If true, use sqlite3 database to manage items. Basically, false is
+	faster. If you have a huge dictionary and it takes a long time to
+	initialize, you may want to try it. You will need the following.
+
+	- kkharji/sqlite.lua (https://github.com/kkharji/sqlite.lua)
+	- sqlite (https://sqlite.org/index.html)
+
+	The database path is `stdpath('data') . '/cmp-dictionary.sqlite3'`
+
+
+                                                      *cmp-dictionary-max_items*
+max_items ~
+	integer (default: -1)
+
+	This is the maximum number of candidates that this source will return
+	to the nvim-cmp body. -1 means no limit. Using a very large dictionary
+	and returning tens of thousands of candidates, completion becomes very
+	laggy. This is an option to avoid that.
+	If you experience lag, setting this option and `exact` appropriately
+	may help.
+
+
+							*cmp-dictionary-capacity*
+capacity ~
+	integer (default: 5)
+
+	Determines the maximum number of dictionaries to be cached. This will
+	prevent duplicate reads when you switch dictionaries with the settings
+	described above.
+
+
+							*cmp-dictionary-debug*
+debug ~
+	boolean (default: false)
+
+	If true, debug messages are output.
+
+
+==============================================================================
+Utilities					*cmp-dictionary-utilities*
+
+					*cmp-dictionary-utilities-switcher*
+switcher({opts}) ~
+	{opts}: table<string, table<string, string>>
+	Automatically set locally a option |'dictionary'|, and loads
+	dictionaries.
+	- The `filetype` of {opts} has keys are compared to |'filetype'|.
+	- The `filepath` of {opts} has keys of Lua patterns, which are
+	  compared to `expand("%:p")`.
+	- The `spelllang` of {opts} has keys are compared to |'spelllang'|.
+
+	Usage example:
+>
+	local dict = require("cmp_dictionary")
+	dict.switcher({
+	  filetype = {
+	    lua = "/path/to/lua.dict",
+	    javascript = { "/path/to/js.dict", "/path/to/js2.dict" },
+	  },
+	  filepath = {
+	    [".*xmake.lua"] = { "/path/to/xmake.dict", "/path/to/lua.dict" },
+	    ["%.tmux.*%.conf"] = { "/path/to/js.dict", "/path/to/js2.dict" },
+	  },
+	  spelllang = {
+	    en = "/path/to/english.dict",
+	  },
+	})
+<
+
+==============================================================================
+Find dictionaries			*cmp-dictionary-find-dictionaries*
+
+You can download dic from aspell.net or installing by package manager, xbps
+extract to
+<https://ftp.gnu.org/gnu/aspell/dict/0index.html>
+
+>
+	$ ls /usr/share/dict/
+	american-english	british-english	words
+<
+
+After installing aspell and dictionary you want, run following command to get
+dic for this plugin (plain text).
+
+>
+	aspell -d <lang> dump master | aspell -l <lang> expand > my.dict
+<
+
+
+==============================================================================
+Create dictionaries			*cmp-dictionary-create-dictionaries*
+
+The dictionary is recognized as a list delimited by '%s'. '%s' is a space,
+','',', or '. For example, if you use the following file as a dictionary, the
+source to be added is'{"hello", "world", "!"}’.
+
+>
+	hello
+	world !
+<
+
+
+==============================================================================
+Lazy loading					*cmp-dictionary-lazy-loading*
+
+By default, reading dictionaries are fired by `BufEnter`. So if this plugin
+loading is set to `InsertEnter` or something, the dictionary will not load and
+no candidates will appear. The workaround is to fire this update yourself when
+the plugin is loaded (after setup).
+
+For example, if you use packer.nvim, you can use
+
+>
+	use({
+	  "hrsh7th/nvim-cmp",
+	  event = "InsertEnter",
+	  -- other setting
+	})
+	use({
+	  "uga-rosa/cmp-dictionary",
+	  after = "nvim-cmp",
+	  config = function()
+	    require("cmp_dictionary").update() -- THIS
+	    -- OR
+	    -- vim.cmd("CmpDictionaryUpdate")
+	  end
+	})
+<
+
+
+vim:tw=78:ts=8:noet:ft=help:norl:

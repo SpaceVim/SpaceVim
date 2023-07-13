@@ -1,8 +1,12 @@
 [
   (list)
-] @indent
+] @indent.begin
 
 [
   "["
   "]"
-] @branch
+] @indent.begin
+
+[
+  "]"
+] @indent.branch

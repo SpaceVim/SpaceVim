@@ -29,6 +29,7 @@ match command.split():
     case ["drop", *objects]: pass
     case _:
         print(f"Sorry, I couldn't understand {command!r}")
+                                                   # ^^ @function.macro
 
 match command.split():
 # ^ conditional

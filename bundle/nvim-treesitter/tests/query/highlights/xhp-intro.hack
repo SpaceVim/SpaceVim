@@ -5,8 +5,8 @@ use type Facebook\XHP\HTML\{XHPHTMLHelpers, a, form};
 
 
 final xhp class a_post extends x\element {
-// ^ keyword
-//     ^ keyword
+// ^ type.qualifier
+//     ^ type.qualifier
 //                        ^ keyword
   use XHPHTMLHelpers;
 
@@ -38,7 +38,7 @@ final xhp class a_post extends x\element {
       'document.getElementById("'.$id.'").submit(); return false;',
     );
     $anchor->setAttribute('href', '#');
-    //        ^ method
+    //        ^ method.call
 
     return $form;
   }

@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Ruby IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/53355518-20202080-3964-11e9-92f3-476060f2761e.png
+image: https://img.spacevim.org/53355518-20202080-3964-11e9-92f3-476060f2761e.png
 description: "A general guide for using SpaceVim as Ruby IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -43,7 +43,30 @@ For more info, you can read the [lang#ruby](../layers/lang/ruby/) layer document
 `lang#ruby` layer will load the Ruby plugin automatically, unless it's overriden in your `init.toml`.
 The completion menu will be opened as you type.
 
-![rubycomplete](https://user-images.githubusercontent.com/13142418/53355518-20202080-3964-11e9-92f3-476060f2761e.png)
+![rubycomplete](https://img.spacevim.org/53355518-20202080-3964-11e9-92f3-476060f2761e.png)
+
+#### Solargraph
+
+If you want to use solargraph for a more advance code completion, you can do it through [coc]("https://github.com/neoclide/coc.nvim"). For use `coc`
+like your autocompletion engine, you must set the next variable:
+
+```
+[options]
+autocomplete_method = "coc"
+```
+
+Be sure to have solargraph installed:
+
+```
+gem install solargraph
+```
+
+Then install [coc-solargraph](https://github.com/neoclide/coc-solargraph) extension for `coc` to support solargraph with the next command:
+
+```
+:CocInstall coc-solargraph
+```
+
 
 ### Syntax linting
 
@@ -56,7 +79,7 @@ Install rubocop via gem:
 gem install rubocop
 ```
 
-![rubylint](https://user-images.githubusercontent.com/13142418/53347011-32459300-3953-11e9-9ca2-3e07f832db5a.png)
+![rubylint](https://img.spacevim.org/53347011-32459300-3953-11e9-9ca2-3e07f832db5a.png)
 
 ### Jump to test file
 
@@ -69,6 +92,15 @@ SpaceVim use built-in plugin to manager the files in a project, you can add a `.
 }
 ```
 
+For a Rails project with Minitest use this:
+
+```json
+{
+  "app/*.rb": {"alternate": "test/{}_test.rb"},
+  "test/*_test.rb": {"alternate": "app/{}.rb"}
+}
+```
+
 With this configuration, you can jump between the source code and test file via command `:A`
 
 ### running code
@@ -77,7 +109,7 @@ To run current script, you can press `SPC l r`, and a split window
 will be openen, the output of the script will be shown in this window.
 It is running asynchronously, and will not block your Vim.
 
-![rubyrunner](https://user-images.githubusercontent.com/13142418/53300165-6b600380-387e-11e9-852f-f8766300ece1.gif)
+![rubyrunner](https://img.spacevim.org/53300165-6b600380-387e-11e9-852f-f8766300ece1.gif)
 
 ### Code formatting
 
@@ -88,7 +120,7 @@ Before using this feature, please install rufo:
 gem install rufo
 ```
 
-![formatruby](https://user-images.githubusercontent.com/13142418/53301042-3c02c400-3889-11e9-9918-430ad6a7f08f.gif)
+![formatruby](https://img.spacevim.org/53301042-3c02c400-3889-11e9-9918-430ad6a7f08f.gif)
 
 ### REPL support
 
@@ -96,6 +128,6 @@ Start a `irb` inferior REPL process with `SPC l s i`. After the REPL process bei
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
-![rubyrepl](https://user-images.githubusercontent.com/13142418/53347455-1098db80-3954-11e9-87c3-13a027ec88f6.gif)
+![rubyrepl](https://img.spacevim.org/53347455-1098db80-3954-11e9-87c3-13a027ec88f6.gif)
 
 

@@ -14,9 +14,9 @@
  (for_expression)
  (while_expression)
  (if_expression)
- (if_let_expression)
  (match_expression)
  (call_expression)
+ (array_expression)
 
  (macro_definition)
  (macro_invocation)

@@ -1,1 +1,0 @@
-This is the _SpaceVim_ wiki. [Wiki Home](https://github.com/SpaceVim/SpaceVim/wiki)

@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Go IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/57321608-4a484880-7134-11e9-8e43-5fa05085d7e5.png
+image: https://img.spacevim.org/57321608-4a484880-7134-11e9-8e43-5fa05085d7e5.png
 description: "A general guide for using SpaceVim as Go IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -66,7 +66,7 @@ with this configuration, you can jump between the source code and test file via 
 The default code running key binding is `SPC l r`. It will run `go run current_file` asynchronously.
 And the stdout will be shown on a runner buffer.
 
-![gorun](https://user-images.githubusercontent.com/13142418/50751761-22300200-1286-11e9-8b4f-76836438d913.png)
+![gorun](https://img.spacevim.org/50751761-22300200-1286-11e9-8b4f-76836438d913.png)
 
 
 ### project building
@@ -92,7 +92,7 @@ vim-go: [test] SUCCESS
 
 Key binding for showing the coverage of your source code is `SPC l c`, it will call `GoCoverageToggle` command from vim-go.
 
-![cov](https://user-images.githubusercontent.com/13142418/57342383-57375d00-7171-11e9-9182-281d7a792c68.gif)
+![cov](https://img.spacevim.org/57342383-57375d00-7171-11e9-9182-281d7a792c68.gif)
 
 ### code format
 

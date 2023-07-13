@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 CoffeeScript 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png
+image: https://img.spacevim.org/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png
 description: "这篇文章主要介绍如何使用 SpaceVim 搭建 CoffeeScript 的开发环境，简介 lang#coffeescript 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
@@ -47,7 +47,7 @@ SpaceVim 初次安装时默认并未启用相关语言模块。首先需要启�
 默认的补全引擎有：deoplete、neocomplete、ycm、asyncomplete 以及 neocomplcache。
 几种自动补全引擎当中，要数 deoplete 的体验效果最好。
 
-![coffeeide](https://user-images.githubusercontent.com/13142418/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png)
+![coffeeide](https://img.spacevim.org/51876268-fe526e80-23a2-11e9-8964-01fd62392a1f.png)
 
 ### 语法检查
 
@@ -63,7 +63,7 @@ npm install -g coffeelint
 值得注意的是，除了 coffeelint, CoffeeScript 本身的 coffee 命令也居于语法检查功能，在 SpaceVim 中若 coffeelint 未安装，
 则默认使用 coffee 这一命令来异步检查语法。
 
-![coffeecheckers](https://user-images.githubusercontent.com/13142418/51875890-bb43cb80-23a1-11e9-93b2-037e7120f5f2.png)
+![coffeecheckers](https://img.spacevim.org/51875890-bb43cb80-23a1-11e9-93b2-037e7120f5f2.png)
 
 ### 工程文件跳转
 
@@ -85,7 +85,7 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转al
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前文件的路径调用相对应的 `coffee` 命令。因此，在执行这个快捷键之前，应当先保存一下该文件。
 
-![coffeerunner](https://user-images.githubusercontent.com/13142418/51877740-3f00b680-23a8-11e9-91ce-18cf147dbb95.png)
+![coffeerunner](https://img.spacevim.org/51877740-3f00b680-23a8-11e9-91ce-18cf147dbb95.png)
 
 ### 代码格式化
 
@@ -107,4 +107,4 @@ npm install -g coffee-fmt
 在编辑 CoffeeScript 文件时，可通过快捷键 `SPC l s i` 启动 `coffee -i` 交互窗口，之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 可以发送光标所在行内容，也可以发送选择区域的内容，甚至是整个 buffer 内容。
 
-![coffeerepl](https://user-images.githubusercontent.com/13142418/52127084-08f35900-266c-11e9-9efb-92fe8a014f08.png)
+![coffeerepl](https://img.spacevim.org/52127084-08f35900-266c-11e9-9efb-92fe8a014f08.png)

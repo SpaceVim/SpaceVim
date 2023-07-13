@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 Rust 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png
+image: https://img.spacevim.org/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png
 description: "这篇文章主要介绍如何使用 SpaceVim 搭建 Rust 的开发环境，简介 lang#rust 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
@@ -109,14 +109,14 @@ rustup component add rustfmt
 在编辑 Rust 文件时，可以快速运行当前文件，默认的快捷键是 `SPC l r` 。按下后，
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 
-![rustide](https://user-images.githubusercontent.com/13142418/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png)
+![rustide](https://img.spacevim.org/75607213-9afbb880-5b2f-11ea-8569-5f39142f134b.png)
 
 ### 交互式编程
 
 在编辑 Rust 文件时，可通过快捷键 `SPC l s i` 启动 `evcxr` 交互窗口，
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
-![rustrepl](https://user-images.githubusercontent.com/13142418/75877531-ef19dc00-5e52-11ea-87c9-bf8b103a690d.png)
+![rustrepl](https://img.spacevim.org/75877531-ef19dc00-5e52-11ea-87c9-bf8b103a690d.png)
 
 ### 任务管理
 
@@ -148,8 +148,8 @@ call SpaceVim#plugins#tasks#reg_provider(funcref('s:cargo_task'))
 
 打开 rust 项目，按下快捷键`SPC p t r`即可看到如下任务列表。
 
-![image](https://user-images.githubusercontent.com/13142418/76683906-957b9380-6642-11ea-906e-42b6e6a17841.png)
+![image](https://img.spacevim.org/76683906-957b9380-6642-11ea-906e-42b6e6a17841.png)
 
 执行效果如下：
 
-![image](https://user-images.githubusercontent.com/13142418/76683919-b04e0800-6642-11ea-8dd8-f7fc0ae7e0cd.png)
+![image](https://img.spacevim.org/76683919-b04e0800-6642-11ea-8dd8-f7fc0ae7e0cd.png)

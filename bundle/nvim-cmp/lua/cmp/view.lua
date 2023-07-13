@@ -47,6 +47,7 @@ end
 ---Open menu
 ---@param ctx cmp.Context
 ---@param sources cmp.Source[]
+---@return boolean did_open
 view.open = function(self, ctx, sources)
   local source_group_map = {}
   for _, s in ipairs(sources) do
@@ -104,10 +105,15 @@ view.open = function(self, ctx, sources)
         end
       end
     end)
+    local max_item_count = config.get().performance.max_view_entries or 200
+    entries = vim.list_slice(entries, 1, max_item_count)
 
     -- open
     if #entries > 0 then
       self:_get_entries_view():open(offset, entries)
+      self.event:emit('menu_opened', {
+        window = self:_get_entries_view(),
+      })
       break
     end
   end
@@ -116,6 +122,7 @@ view.open = function(self, ctx, sources)
   if #entries == 0 then
     self:close()
   end
+  return #entries > 0
 end
 
 ---Close menu
@@ -128,6 +135,9 @@ view.close = function(self)
   self:_get_entries_view():close()
   self.docs_view:close()
   self.ghost_text_view:hide()
+  self.event:emit('menu_closed', {
+    window = self:_get_entries_view(),
+  })
 end
 
 ---Abort menu
@@ -135,6 +145,9 @@ view.abort = function(self)
   self:_get_entries_view():abort()
   self.docs_view:close()
   self.ghost_text_view:hide()
+  self.event:emit('menu_closed', {
+    window = self:_get_entries_view(),
+  })
 end
 
 ---Return the view is visible or not.
@@ -144,7 +157,7 @@ view.visible = function(self)
 end
 
 ---Scroll documentation window if possible.
----@param delta number
+---@param delta integer
 view.scroll_docs = function(self, delta)
   self.docs_view:scroll(delta)
 end

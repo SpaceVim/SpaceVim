@@ -6,7 +6,7 @@ permalink: /cn/:title/
 redirect_from: "/vim8-new-feature-timers-zh_cn/"
 lang: zh
 comments: true
-image: https://user-images.githubusercontent.com/13142418/80497170-abe47100-899c-11ea-9975-ef250cfbde6d.png
+image: https://img.spacevim.org/80497170-abe47100-899c-11ea-9975-ef250cfbde6d.png
 commentsID: "Vim8 最新特性: timers"
 ---
 

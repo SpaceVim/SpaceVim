@@ -15,6 +15,7 @@ endif
 
 let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
 let s:box = SpaceVim#api#import('unicode#box')
+let s:NOTI = SpaceVim#api#import('notify')
 
 if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0')
   " use neovim built-in lsp
@@ -56,7 +57,7 @@ if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0
     let workspace = luaeval('vim.lsp.buf.list_workspace_folders()')
     let bw = max(map(deepcopy(workspace), 'strwidth(v:val)')) + 5
     let box = s:box.drawing_box(workspace, 1, 1, bw, {'align' : 'left'})
-    echo join(box, "\n")
+    call s:NOTI.notify(join(box, "\n"))
   endfunction
   function! SpaceVim#lsp#add_workspace_folder() abort
     lua vim.lsp.buf.add_workspace_folder()

@@ -1,6 +1,4 @@
 local spec = require('cmp.utils.spec')
-local source = require('cmp.source')
-local async = require('cmp.utils.async')
 
 local entry = require('cmp.entry')
 
@@ -290,41 +288,6 @@ describe('entry', function()
     assert.are.equal(e:get_vim_item(e:get_offset()).word, 'string')
   end)
 
-  it('[ansiblels] 1', function()
-    local item = {
-      detail = 'ansible.builtin',
-      filterText = 'blockinfile ansible.builtin.blockinfile',
-      kind = 7,
-      label = 'blockinfile',
-      sortText = '2_blockinfile',
-      textEdit = {
-        newText = '',
-        range = {
-          ['end'] = {
-            character = 7,
-            line = 15,
-          },
-          start = {
-            character = 6,
-            line = 15,
-          },
-        },
-      },
-    }
-    local s = source.new('dummy', {
-      resolve = function(_, _, callback)
-        item.textEdit.newText = 'modified'
-        callback(item)
-      end,
-    })
-    local e = entry.new(spec.state('', 1, 1).manual(), s, item)
-    assert.are.equal(e:get_vim_item(e:get_offset()).word, 'blockinfile')
-    async.sync(function(done)
-      e:resolve(done)
-    end, 100)
-    assert.are.equal(e:get_vim_item(e:get_offset()).word, 'blockinfile')
-  end)
-
   it('[#47] word should not contain \\n character', function()
     local state = spec.state('', 1, 1)
 
@@ -338,5 +301,66 @@ describe('entry', function()
     })
     assert.are.equal(e:get_vim_item(e:get_offset()).word, '__init__(self) -> None:')
     assert.are.equal(e:get_filter_text(), '__init__')
+  end)
+
+  -- I can't understand this test case...
+  -- it('[#1533] keyword pattern that include whitespace', function()
+  --   local state = spec.state(' ', 1, 2)
+  --   local state_source = state.source()
+
+  --   state_source.get_keyword_pattern = function(_)
+  --     return '.'
+  --   end
+
+  --   state.input(' ')
+  --   local e = entry.new(state.manual(), state_source, {
+  --     filterText = "constructor() {\n     ... st = 'test';\n  ",
+  --     kind = 1,
+  --     label = "constructor() {\n     ... st = 'test';\n  }",
+  --     textEdit = {
+  --       newText = "constructor() {\n    this.test = 'test';\n  }",
+  --       range = {
+  --         ['end'] = {
+  --           character = 2,
+  --           line = 2,
+  --         },
+  --         start = {
+  --           character = 0,
+  --           line = 2,
+  --         },
+  --       },
+  --     },
+  --   })
+  --   assert.are.equal(e:get_offset(), 2)
+  --   assert.are.equal(e:get_vim_item(e:get_offset()).word, 'constructor() {')
+  -- end)
+
+  it('[#1533] clang regression test', function()
+    local state = spec.state('jsonReader', 3, 11)
+    local state_source = state.source()
+
+    state.input('.')
+    local e = entry.new(state.manual(), state_source, {
+      filterText = 'getPath()',
+      kind = 1,
+      label = 'getPath()',
+      textEdit = {
+        newText = 'getPath()',
+        range = {
+          ['end'] = {
+            character = 11,
+            col = 12,
+            line = 2,
+            row = 3,
+          },
+          start = {
+            character = 11,
+            line = 2,
+          },
+        },
+      },
+    })
+    assert.are.equal(e:get_offset(), 12)
+    assert.are.equal(e:get_vim_item(e:get_offset()).word, 'getPath()')
   end)
 end)

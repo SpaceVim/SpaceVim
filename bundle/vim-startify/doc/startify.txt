@@ -101,6 +101,7 @@ default values.
     |g:startify_bookmarks|
     |g:startify_change_to_dir|
     |g:startify_change_to_vcs_root|
+    |g:startify_change_cmd|
     |g:startify_custom_header|
     |g:startify_enable_special|
     |g:startify_list_order|
@@ -328,10 +329,7 @@ This is a list of commands to be executed before saving a session.
 
 Example:
 >
-    let g:startify_session_before_save = [
-        \ 'echo "Cleaning up before saving.."',
-        \ 'silent! NERDTreeTabsClose'
-        \ ]
+    let g:startify_session_before_save = [ 'silent! tabdo NERDTreeClose' ]
 <
 ------------------------------------------------------------------------------
                                                 *g:startify_session_persistence*
@@ -368,6 +366,11 @@ NOTE: Buffers with unsaved changes are silently ignored.
 <
 When opening a file or bookmark, change to its directory.
 
+You want to disable this, if you're using |'autochdir'| as well.
+
+NOTE: It defaults to 1, because that was already the behaviour at the time
+this option was introduced.
+
 ------------------------------------------------------------------------------
                                                  *g:startify_change_to_vcs_root*
 >
@@ -379,22 +382,42 @@ VCS (if there is one).
 At the moment only git, hg, bzr and svn are supported.
 
 ------------------------------------------------------------------------------
+                                                         *g:startify_change_cmd*
+>
+    let g:startify_change_cmd = 'lcd'
+<
+The default command for switching directories. Valid values:
+
+    'cd'  (|:cd|)
+    'lcd' (|:lcd|)
+    'tcd' (|:tcd|)
+
+Affects |g:startify_change_to_dir| and |g:startify_change_to_vcs_root|.
+
+------------------------------------------------------------------------------
                                                            *g:startify_skiplist*
 >
-    let g:startify_skiplist = [
-        \ 'COMMIT_EDITMSG',
-        \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc',
-        \ 'bundle/.*/doc',
-        \ ]
+    let g:startify_skiplist = []
 <
 A list of Vim regular expressions that is used to filter recently used files.
 See |pattern.txt| for what patterns can be used.
 
+The following patterns are filtered by default:
+
+      'runtime/doc/.*\.txt$'
+      'bundle/.*/doc/.*\.txt$'
+      'plugged/.*/doc/.*\.txt$'
+      '/.git/'
+      'fugitiveblame$'
+      escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') .'doc/.*\.txt$'
+
 NOTE: Due to the nature of patterns, you can't just use "~/mysecret" but have
 to use "$HOME .'/mysecret.txt'". The former would do something entirely
-different: |/\~|. When using backslashes as path separators, escape them.
-Otherwise using "C:\this\vim\path\is\problematic" would not match what you
-expect, since |/\v| is a pattern, too.
+different: |/\~|.
+
+NOTE: When using backslashes as path separators, escape them. Otherwise using
+"C:\this\vim\path\is\problematic" would not match what you would expect, since
+|/\v| is a pattern, too.
 
 Example:
 >

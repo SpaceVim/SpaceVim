@@ -33,8 +33,6 @@ local select_to_edit_map = {
   horizontal = "new",
   vertical = "vnew",
   tab = "tabedit",
-  drop = "drop",
-  ["tab drop"] = "tab drop",
 }
 function action_state.select_key_to_edit_key(type)
   return select_to_edit_map[type]

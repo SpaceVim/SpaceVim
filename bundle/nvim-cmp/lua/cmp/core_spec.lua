@@ -8,9 +8,19 @@ local api = require('cmp.utils.api')
 
 describe('cmp.core', function()
   describe('confirm', function()
-    local confirm = function(request, filter, completion_item)
+    ---@param request string
+    ---@param filter string
+    ---@param completion_item lsp.CompletionItem
+    ---@param option? { position_encoding_kind: lsp.PositionEncodingKind }
+    ---@return table
+    local confirm = function(request, filter, completion_item, option)
+      option = option or {}
+
       local c = core.new()
       local s = source.new('spec', {
+        get_position_encoding_kind = function()
+          return option.position_encoding_kind or types.lsp.PositionEncodingKind.UTF16
+        end,
         complete = function(_, _, callback)
           callback({ completion_item })
         end,
@@ -23,7 +33,7 @@ describe('cmp.core', function()
         end)
       end)
       feedkeys.call(filter, 'n', function()
-        c:confirm(c.sources[s.id].entries[1], {})
+        c:confirm(c.sources[s.id].entries[1], {}, function() end)
       end)
       local state = {}
       feedkeys.call('', 'x', function()
@@ -80,6 +90,29 @@ describe('cmp.core', function()
         assert.are.same(state.cursor, { 3, 3 })
       end)
 
+      it('#1552', function()
+        local state = confirm(keymap.t('ios.'), '', {
+          filterText = 'IsPermission',
+          insertTextFormat = 2,
+          label = 'IsPermission',
+          textEdit = {
+            newText = 'IsPermission($0)',
+            range = {
+              ['end'] = {
+                character = 3,
+                line = 0,
+              },
+              start = {
+                character = 3,
+                line = 0,
+              },
+            },
+          },
+        })
+        assert.are.same(state.buffer, { 'os.IsPermission()' })
+        assert.are.same(state.cursor, { 1, 16 })
+      end)
+
       it('insertText & snippet', function()
         local state = confirm('iA', 'IU', {
           label = 'AIUEO',
@@ -111,6 +144,46 @@ describe('cmp.core', function()
         assert.are.same(state.buffer, { '***foo', 'bar', 'baz***' })
         assert.are.same(state.cursor, { 2, 2 })
       end)
+
+      local char = '🗿'
+      for _, case in ipairs({
+        {
+          encoding = types.lsp.PositionEncodingKind.UTF8,
+          char_size = #char,
+        },
+        {
+          encoding = types.lsp.PositionEncodingKind.UTF16,
+          char_size = select(2, vim.str_utfindex(char)),
+        },
+        {
+          encoding = types.lsp.PositionEncodingKind.UTF32,
+          char_size = select(1, vim.str_utfindex(char)),
+        },
+      }) do
+        it('textEdit & multibyte: ' .. case.encoding, function()
+          local state = confirm(keymap.t('i%s:%s%s:%s<Left><Left><Left>'):format(char, char, char, char), char, {
+            label = char .. char .. char,
+            textEdit = {
+              range = {
+                start = {
+                  line = 0,
+                  character = case.char_size + #':',
+                },
+                ['end'] = {
+                  line = 0,
+                  character = case.char_size + #':' + case.char_size + case.char_size,
+                },
+              },
+              newText = char .. char .. char .. char .. char,
+            },
+          }, {
+            position_encoding_kind = case.encoding,
+          })
+          vim.print({ state = state, case = case })
+          assert.are.same(state.buffer, { ('%s:%s%s%s%s%s:%s'):format(char, char, char, char, char, char, char) })
+          assert.are.same(state.cursor, { 1, #('%s:%s%s%s%s%s'):format(char, char, char, char, char, char) })
+        end)
+      end
     end)
 
     describe('cmdline-mode', function()

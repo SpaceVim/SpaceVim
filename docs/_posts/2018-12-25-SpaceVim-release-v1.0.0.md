@@ -3,7 +3,7 @@ title: SpaceVim release v1.0.0
 categories: [changelog, blog]
 description: "V1.0.0 is the first stable version of SpaceVim, which is mainly about experience and user documentation."
 type: article
-image: https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png
+image: https://img.spacevim.org/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png
 commentsID: "SpaceVim release v1.0.0"
 comments: true
 ---
@@ -29,7 +29,7 @@ packages together to provide features.
 The first commit of SpaceVim is on 2016-12-26, after two years development, the first stable version
 of SpaceVim v1.0.0 has been released.
 
-![v1.0.0 welcome page](https://user-images.githubusercontent.com/13142418/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png)
+![v1.0.0 welcome page](https://img.spacevim.org/50423286-5b33a400-088e-11e9-830c-792ce1c7c126.png)
 
 - [Quick start guide](../quick-start-guide/): installation, configuration, and resources of learning SpaceVim
 - [documentation](../documentation/): the primary official document of SpaceVim

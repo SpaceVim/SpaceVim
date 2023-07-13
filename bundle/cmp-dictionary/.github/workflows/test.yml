@@ -1,0 +1,40 @@
+name: test
+
+on:
+  push:
+    branchs:
+      - main
+    paths:
+      - '**.lua'
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup neovim
+      uses: rhysd/action-setup-vim@v1
+      with:
+        version: nightly
+        neovim: true
+
+    - name: Setup lua
+      uses: leafo/gh-actions-lua@v8
+      with:
+        luaVersion: luajit-2.1.0-beta3
+
+    - name: Setup luarocks
+      uses: leafo/gh-actions-luarocks@v4
+
+    - name: Setup tools
+      shell: bash
+      run: |
+        luarocks --lua-version=5.1 install luacheck
+        luarocks --lua-version=5.1 install vusted
+
+    - name: Run test
+      shell: bash
+      run: make

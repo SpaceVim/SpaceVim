@@ -12,21 +12,19 @@ function! ale_linters#go#golangci_lint#GetCommand(buffer) abort
 
 
     if l:lint_package
-        return ale#path#BufferCdString(a:buffer)
-        \   . ale#go#EnvString(a:buffer)
+        return ale#go#EnvString(a:buffer)
         \   . '%e run '
         \   .  l:options
     endif
 
-    return ale#path#BufferCdString(a:buffer)
-    \   . ale#go#EnvString(a:buffer)
+    return ale#go#EnvString(a:buffer)
     \   . '%e run '
     \   . ale#Escape(l:filename)
     \   . ' ' . l:options
 endfunction
 
 function! ale_linters#go#golangci_lint#GetMatches(lines) abort
-    let l:pattern = '\v^([a-zA-Z]?:?[^:]+):(\d+):?(\d+)?:?:?:?\s\*?(.+)$'
+    let l:pattern = '\v^([a-zA-Z]?:?[^:]+):(\d+):?(\d+)?:?:?:?\s\*?(.+)\s+\((.+)\)$'
 
     return ale#util#GetMatches(a:lines, l:pattern)
 endfunction
@@ -36,14 +34,20 @@ function! ale_linters#go#golangci_lint#Handler(buffer, lines) abort
     let l:output = []
 
     for l:match in ale_linters#go#golangci_lint#GetMatches(a:lines)
+        if l:match[5] is# 'typecheck'
+            let l:msg_type = 'E'
+        else
+            let l:msg_type = 'W'
+        endif
+
         " l:match[1] will already be an absolute path, output from
         " golangci_lint
         call add(l:output, {
         \   'filename': ale#path#GetAbsPath(l:dir, l:match[1]),
         \   'lnum': l:match[2] + 0,
         \   'col': l:match[3] + 0,
-        \   'type': 'E',
-        \   'text': l:match[4],
+        \   'type': l:msg_type,
+        \   'text': l:match[4] . ' (' . l:match[5] . ')',
         \})
     endfor
 
@@ -53,6 +57,7 @@ endfunction
 call ale#linter#Define('go', {
 \   'name': 'golangci-lint',
 \   'executable': {b -> ale#Var(b, 'go_golangci_lint_executable')},
+\   'cwd': '%s:h',
 \   'command': function('ale_linters#go#golangci_lint#GetCommand'),
 \   'callback': 'ale_linters#go#golangci_lint#Handler',
 \   'lint_file': 1,

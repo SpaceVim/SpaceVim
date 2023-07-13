@@ -159,6 +159,9 @@ function! s:apply(config, type) abort
         if value ==# 'defx' && !has('python3')
           call SpaceVim#logger#warn('defx requires +python3!')
           continue
+        elseif value ==# 'neo-tree' && !has('nvim')
+          call SpaceVim#logger#warn('neo-tree requires neovim')
+          continue
         endif
         " keep backward compatibility
       elseif name ==# 'autocomplete_method'
@@ -171,6 +174,9 @@ function! s:apply(config, type) abort
             call SpaceVim#logger#warn('deoplete requires +python3!')
             continue
           endif
+        elseif value ==# 'nvim-cmp' && !has('nvim')
+          call SpaceVim#logger#warn('nvim-cmp requires neovim')
+          continue
         endif
       elseif name ==# 'statusline_right_sections'
         let name = 'statusline_right'

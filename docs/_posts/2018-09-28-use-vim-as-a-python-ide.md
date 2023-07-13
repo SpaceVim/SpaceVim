@@ -70,7 +70,7 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 a
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前文件的路径调用相对应的 Python 命令。因此，在执行这个快捷键之前，应当先保存一下该文件。
 
-![code runner](https://user-images.githubusercontent.com/13142418/46293837-1c5fbc00-c5c7-11e8-9f3c-c11504e2e04a.png)
+![code runner](https://img.spacevim.org/46293837-1c5fbc00-c5c7-11e8-9f3c-c11504e2e04a.png)
 
 ### 代码格式化
 
@@ -94,7 +94,7 @@ pip install --user yapf
 
 之后，可以通过 `SPC l s l` 进行逐行发送，也可以选中区域后按 `SPC l s s` 发送选中的区域：
 
-![pythonrepl](https://user-images.githubusercontent.com/13142418/52177776-0fffa000-2801-11e9-9698-8e32f2865f5a.gif)
+![pythonrepl](https://img.spacevim.org/52177776-0fffa000-2801-11e9-9698-8e32f2865f5a.gif)
 
 ### 断点调试
 

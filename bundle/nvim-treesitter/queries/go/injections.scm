@@ -1,6 +1,13 @@
-((comment) @c (#offset! @c 1 0 0 -2)
-  (import_declaration
-    (import_spec path: (interpreted_string_literal) @_import_path))
-  (#eq? @_import_path "\"C\""))
-
 (comment) @comment
+
+(call_expression
+  (selector_expression) @_function (#any-of? @_function
+                                    "regexp.Match"
+                                    "regexp.MatchReader"
+                                    "regexp.MatchString"
+                                    "regexp.Compile"
+                                    "regexp.CompilePOSIX"
+                                    "regexp.MustCompile"
+                                    "regexp.MustCompilePOSIX")
+  (argument_list
+    . [(raw_string_literal) (interpreted_string_literal)] @regex (#offset! @regex 0 1 0 -1)))

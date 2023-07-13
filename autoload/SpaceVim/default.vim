@@ -112,7 +112,7 @@ function! SpaceVim#default#options() abort
 
   set nowritebackup
   set matchtime=0
-  set ruler
+  set noruler
   set showmatch
   set showmode
   "menuone: show the pupmenu when only one match

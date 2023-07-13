@@ -9,7 +9,7 @@ cache.new = function()
 end
 
 ---Get cache value
----@param key string
+---@param key string|string[]
 ---@return any|nil
 cache.get = function(self, key)
   key = self:key(key)
@@ -20,7 +20,7 @@ cache.get = function(self, key)
 end
 
 ---Set cache value explicitly
----@param key string
+---@param key string|string[]
 ---@vararg any
 cache.set = function(self, key, value)
   key = self:key(key)
@@ -28,8 +28,10 @@ cache.set = function(self, key, value)
 end
 
 ---Ensure value by callback
----@param key string
----@param callback fun(): any
+---@generic T
+---@param key string|string[]
+---@param callback fun(): T
+---@return T
 cache.ensure = function(self, key, callback)
   local value = self:get(key)
   if value == nil then
@@ -46,7 +48,7 @@ cache.clear = function(self)
 end
 
 ---Create key
----@param key string|table
+---@param key string|string[]
 ---@return string
 cache.key = function(_, key)
   if type(key) == 'table' then

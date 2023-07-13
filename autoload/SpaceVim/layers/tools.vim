@@ -22,7 +22,7 @@ function! SpaceVim#layers#tools#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-cheat',   { 'on_cmd' : 'Cheat'}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-unstack', { 'merged' : 0}])
   call add(plugins, ['wsdjeg/Mysql.vim',                          { 'on_cmd' : 'SQLGetConnection'}])
-  call add(plugins, ['wsdjeg/SourceCounter.vim',                  { 'on_cmd' : 'SourceCounter'}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/SourceCounter.vim',                  { 'on_cmd' : 'SourceCounter'}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/calendar.vim',{ 'on_cmd' : 'Calendar'}])
   call add(plugins, ['junegunn/limelight.vim',                    { 'on_cmd' : 'Limelight'}])
   call add(plugins, ['junegunn/goyo.vim',                         { 'on_cmd' : 'Goyo', 'loadconf' : 1}])

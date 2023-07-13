@@ -6,7 +6,7 @@
   (if_statement)
   (return_statement)
   (while_statement)
-] @indent
+] @indent.begin
 
 [
   "{"
@@ -15,4 +15,4 @@
   ")"
   "end"
   "then"
-] @branch
+] @indent.branch

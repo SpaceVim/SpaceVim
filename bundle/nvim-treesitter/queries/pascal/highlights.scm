@@ -3,7 +3,6 @@
 	(kProgram)
 	(kLibrary)
 	(kUnit)
-	(kUses)
 
 	(kBegin)
 	(kEnd)
@@ -12,14 +11,12 @@
 	(kVar)
 	(kThreadvar)
 	(kConst)
-	(kResourcestring)
 	(kConstref)
+	(kResourcestring)
 	(kOut)
 	(kType)
 	(kLabel)
 	(kExports)
-
-	(kAbsolute)
 
 	(kProperty)
 	(kRead)
@@ -39,7 +36,6 @@
 	(kSet)
 	(kOf)
 	(kHelper)
-	(kPacked)
 
 	(kInherited)
 
@@ -57,14 +53,6 @@
 	(kImplementation)
 	(kInitialization)
 	(kFinalization)
-
-	(kPublished)
-	(kPublic)
-	(kProtected)
-	(kPrivate)
-	(kStrict)
-	(kRequired)
-	(kOptional)
 
 	(kTry)
 	(kExcept)
@@ -91,7 +79,25 @@
 	(kThen)
 	(kElse)
 ] @conditional
-	
+
+[
+	(kPublished)
+	(kPublic)
+	(kProtected)
+	(kPrivate)
+
+	(kStrict)
+	(kRequired)
+	(kOptional)
+] @type.qualifier
+
+[
+	(kPacked)
+
+	(kAbsolute)
+] @storageclass
+
+(kUses) @include
 
 ; -- Attributes
 
@@ -242,8 +248,37 @@
 
 ; -- Comments
 
-(comment)         @comment
-(pp)              @function.macro
+(comment) @comment @spell
+
+((comment) @comment.documentation
+  (#lua-match? @comment.documentation "^///[^/]"))
+((comment) @comment.documentation
+  (#lua-match? @comment.documentation "^///$"))
+
+((comment) @comment.documentation
+  . [(unit) (declProc)])
+
+(declTypes
+  (comment) @comment.documentation
+  . (declType))
+
+(declSection
+  (comment) @comment.documentation
+  . [(declField) (declProc)])
+
+(declEnum
+  (comment) @comment.documentation
+  . (declEnumValue))
+
+(declConsts
+  (comment) @comment.documentation
+  . (declConst))
+
+(declVars
+  (comment) @comment.documentation
+  . (declVar))
+
+(pp)              @preproc
 
 ; -- Type declaration
 
@@ -364,7 +399,7 @@
 (statement ((identifier) @repeat
  (#lua-match? @repeat "^[cC][oO][nN][tT][iI][nN][uU][eE]$")))
 
-; -- Identifier type inferrence
+; -- Identifier type inference
 
 ; VERY QUESTIONABLE: Highlighting of identifiers based on spelling
 (exprBinary ((identifier) @constant

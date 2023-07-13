@@ -3,7 +3,7 @@ title: SpaceVim release v1.4.0
 categories: [changelog, blog]
 description: "SpaceVim released V1.4.0 with eight new language layers and an asynchronous task management plugin"
 type: article
-image: https://user-images.githubusercontent.com/13142418/80494420-3925c680-8999-11ea-9652-21e1e5564148.png
+image: https://img.spacevim.org/80494420-3925c680-8999-11ea-9652-21e1e5564148.png
 commentsID: "SpaceVim release v1.4.0"
 comments: true
 ---
@@ -25,7 +25,7 @@ comments: true
 The last release is v1.3.0, After four months development.
 The v1.4.0 has been released. So let's take a look at what happened since last relase.
 
-![v1.4.0](https://user-images.githubusercontent.com/13142418/80494420-3925c680-8999-11ea-9652-21e1e5564148.png)
+![v1.4.0](https://img.spacevim.org/80494420-3925c680-8999-11ea-9652-21e1e5564148.png)
 
 - [Quick start guide](../quick-start-guide/): installation, configuration, and resources of learning SpaceVim
 - [documentation](../documentation/): the primary official document of SpaceVim

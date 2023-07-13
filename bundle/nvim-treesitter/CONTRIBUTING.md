@@ -2,14 +2,13 @@
 
 First of all, thank you very much for contributing to `nvim-treesitter`.
 
-If you haven't already, you should really come and reach out to us on our [Zulip]
-server, so we can help you with any question you might have!
-There is also a [Matrix channel] for tree-sitter support in Neovim.
+If you haven't already, you should really come and reach out to us on our
+[Matrix channel], so we can help you with any question you might have!
 
 As you know, `nvim-treesitter` is roughly split in two parts:
 
 - Parser configurations : for various things like `locals`, `highlights`
-- What we like to call *modules* : tiny lua modules that provide a given feature, based on parser configurations
+- What we like to call _modules_ : tiny lua modules that provide a given feature, based on parser configurations
 
 Depending on which part of the plugin you want to contribute to, please read the appropriate section.
 
@@ -37,15 +36,15 @@ Thus far, there is basically two types of modules:
 - Bigger modules (like `completion-treesitter`, or `nvim-tree-docs`), or modules that integrate
   with other plugins, that we call `remote modules`.
 
-In any case, you can build your own module ! To help you started in the process, we have a template
+In any case, you can build your own module! To help you started in the process, we have a template
 repository designed to build new modules [here](https://github.com/nvim-treesitter/module-template).
 Feel free to use it, and contact us over on our
-[Zulip] or on the "Neovim tree-sitter" [Matrix channel].
+on the "Neovim tree-sitter" [Matrix channel].
 
 ## Parser configurations
 
 Contributing to parser configurations is basically modifying one of the `queries/*/*.scm`.
-Each of these `scheme` files contains a *tree-sitter query* for a given purpose.
+Each of these `scheme` files contains a _tree-sitter query_ for a given purpose.
 Before going any further, we highly suggest that you [read more about tree-sitter queries](https://tree-sitter.github.io/tree-sitter/using-parsers#pattern-matching-with-queries).
 
 Each query has an appropriate name, which is then used by modules to extract data from the syntax tree.
@@ -57,12 +56,12 @@ For now these are the types of queries used by `nvim-treesitter`:
 - `folds.scm`: used to define folds.
 - `injections.scm`: used to define injections.
 
-For these types there is a *norm* you will have to follow so that features work fine.
-Here are some global advices :
+For these types there is a _norm_ you will have to follow so that features work fine.
+Here are some global advices:
 
 - If your language is listed [here](https://github.com/nvim-treesitter/nvim-treesitter#supported-languages),
   you can install the [playground plugin](https://github.com/nvim-treesitter/playground).
-- If your language is listed [here](https://tree-sitter.github.io/tree-sitter/using-parsers#pattern-matching-with-queries),
+- If your language is listed [here](https://github.com/nvim-treesitter/nvim-treesitter#supported-languages),
   you can debug and experiment with your queries there.
 - If not, you should consider installing the [tree-sitter cli](https://github.com/tree-sitter/tree-sitter/tree/master/cli),
   you should then be able to open a local playground using `tree-sitter build-wasm && tree-sitter web-ui` within the
@@ -83,157 +82,203 @@ you can mark the language as optional (by putting it between parenthesis).
 
 ### Highlights
 
-As languages differ quite a lot, here is a set of captures available to you when building a `highlights.scm` query.
-One important thing to note is that many of these capture groups are not supported by `neovim` for now, and will not have any
-effect on highlighting. We will work on improving highlighting in the near future though.
+As languages differ quite a lot, here is a set of captures available to you when building a `highlights.scm` query. Note that your colorscheme needs to define (or link) these captures as highlight groups.
 
 #### Misc
 
-```
-@comment
-@debug
-@error for error `ERROR` nodes.
-@none to disable completely the highlight
-@preproc
-@punctuation.delimiter for `;` `.` `,`
-@punctuation.bracket for `()` or `{}`
-@punctuation.special for symbols with special meaning like `{}` in string interpolation.
+```scheme
+@comment               ; line and block comments
+@comment.documentation ; comments documenting code
+@error                 ; syntax/parser errors
+@none                  ; completely disable the highlight
+@preproc               ; various preprocessor directives & shebangs
+@define                ; preprocessor definition directives
+@operator              ; symbolic operators (e.g. `+` / `*`)
 ```
 
-#### Constants
+#### Punctuation
 
+```scheme
+@punctuation.delimiter ; delimiters (e.g. `;` / `.` / `,`)
+@punctuation.bracket   ; brackets (e.g. `()` / `{}` / `[]`)
+@punctuation.special   ; special symbols (e.g. `{}` in string interpolation)
 ```
-@constant
-@constant.builtin
-@constant.macro
-@string
-@string.regex
-@string.escape
-@string.special
-@character
-@character.special
-@number
-@boolean
-@float
+
+#### Literals
+
+```scheme
+@string               ; string literals
+@string.documentation ; string documenting code (e.g. Python docstrings)
+@string.regex         ; regular expressions
+@string.escape        ; escape sequences
+@string.special       ; other special strings (e.g. dates)
+
+@character            ; character literals
+@character.special    ; special characters (e.g. wildcards)
+
+@boolean              ; boolean literals
+@number               ; numeric literals
+@float                ; floating-point number literals
 ```
 
 #### Functions
 
-```
-@function
-@function.builtin
-@function.macro
-@parameter
+```scheme
+@function         ; function definitions
+@function.builtin ; built-in functions
+@function.call    ; function calls
+@function.macro   ; preprocessor macros
 
-@method
-@field
-@property
+@method           ; method definitions
+@method.call      ; method calls
 
-@constructor
+@constructor      ; constructor calls and definitions
+@parameter        ; parameters of a function
 ```
 
 #### Keywords
 
-```
-@conditional (e.g. `if`, `else`)
-@repeat (e.g. `for`, `while`)
-@label for C/Lua-like labels
-@keyword
-@keyword.function (keyword to define a function, e.g. `func` in Go, `def` in Python)
-@keyword.operator (for operators that are English words, e.g. `and`, `or`)
-@keyword.return
-@operator (for symbolic operators, e.g. `+`, `*`)
-@exception (e.g. `throw`, `catch`)
-@include keywords for including modules (e.g. import/from in Python)
-@storageclass
+```scheme
+@keyword             ; various keywords
+@keyword.coroutine   ; keywords related to coroutines (e.g. `go` in Go, `async/await` in Python)
+@keyword.function    ; keywords that define a function (e.g. `func` in Go, `def` in Python)
+@keyword.operator    ; operators that are English words (e.g. `and` / `or`)
+@keyword.return      ; keywords like `return` and `yield`
 
-@type
-@type.builtin
-@type.definition
-@type.qualifier
-@namespace for identifiers referring to namespaces
-@symbol for identifiers referring to symbols
-@attribute for e.g. Python decorators
+@conditional         ; keywords related to conditionals (e.g. `if` / `else`)
+@conditional.ternary ; ternary operator (e.g. `?` / `:`)
+
+@repeat              ; keywords related to loops (e.g. `for` / `while`)
+@debug               ; keywords related to debugging
+@label               ; GOTO and other labels (e.g. `label:` in C)
+@include             ; keywords for including modules (e.g. `import` / `from` in Python)
+@exception           ; keywords related to exceptions (e.g. `throw` / `catch`)
 ```
 
-@conceal followed by `(#set! conceal "")` for captures that are not used for highlights but only for concealing.
+#### Types
 
-#### Variables
+```scheme
+@type            ; type or class definitions and annotations
+@type.builtin    ; built-in types
+@type.definition ; type definitions (e.g. `typedef` in C)
+@type.qualifier  ; type qualifiers (e.g. `const`)
 
+@storageclass    ; modifiers that affect storage in memory or life-time
+@attribute       ; attribute annotations (e.g. Python decorators)
+@field           ; object and struct fields
+@property        ; similar to `@field`
 ```
-@variable
-@variable.builtin
+
+#### Identifiers
+
+```scheme
+@variable         ; various variable names
+@variable.builtin ; built-in variable names (e.g. `this`)
+
+@constant         ; constant identifiers
+@constant.builtin ; built-in constant values
+@constant.macro   ; constants defined by the preprocessor
+
+@namespace        ; modules or namespaces
+@symbol           ; symbols or atoms
 ```
 
 #### Text
 
 Mainly for markup languages.
 
-```
-@text
-@text.strong
-@text.emphasis
-@text.underline
-@text.strike
-@text.title
-@text.literal
-@text.uri
-@text.math (e.g. for LaTeX math environments)
-@text.environment (e.g. for text environments of markup languages)
-@text.environment.name (e.g. for the name/the string indicating the type of text environment)
-@text.reference (for footnotes, text references, citations)
+```scheme
+@text                  ; non-structured text
+@text.strong           ; bold text
+@text.emphasis         ; text with emphasis
+@text.underline        ; underlined text
+@text.strike           ; strikethrough text
+@text.title            ; text that is part of a title
+@text.quote            ; text quotations
+@text.uri              ; URIs (e.g. hyperlinks)
+@text.math             ; math environments (e.g. `$ ... $` in LaTeX)
+@text.environment      ; text environments of markup languages
+@text.environment.name ; text indicating the type of an environment
+@text.reference        ; text references, footnotes, citations, etc.
 
-@text.note
-@text.warning
-@text.danger
+@text.literal          ; literal or verbatim text (e.g., inline code)
+@text.literal.block    ; literal or verbatim text as a stand-alone block
+                       ; (use priority 90 for blocks with injections)
 
-@todo
+@text.todo             ; todo notes
+@text.note             ; info notes
+@text.warning          ; warning notes
+@text.danger           ; danger/error notes
+
+@text.diff.add         ; added text (for diff files)
+@text.diff.delete      ; deleted text (for diff files)
 ```
 
 #### Tags
 
-Used for xml-like tags
+Used for XML-like tags.
 
-```
-@tag
-@tag.attribute
-@tag.delimiter
+```scheme
+@tag           ; XML tag names
+@tag.attribute ; XML tag attributes
+@tag.delimiter ; XML tag delimiters
 ```
 
 #### Conceal
 
-@conceal followed by `(#set! conceal "")` for captures that are not used for highlights but only for concealing.
+```scheme
+@conceal ; for captures that are only used for concealing
+```
+
+`@conceal` must be followed by `(#set! conceal "")`.
+
+#### Spell
+
+```scheme
+@spell   ; for defining regions to be spellchecked
+@nospell ; for defining regions that should NOT be spellchecked
+```
+
+#### Priority
+
+Captures can be assigned a priority to control precedence of highlights via the
+`#set! "priority" <number>` directive (see `:h treesitter-highlight-priority`).
+The default priority for treesitter highlights is `100`; queries should only
+set priorities between `90` and `120`, to avoid conflict with other sources of
+highlighting (such as diagnostics or LSP semantic tokens).
 
 ### Locals
 
+Note: pay specific attention to the captures here as they are a bit different to
+those listed in the upstream [Local Variables
+docs](https://tree-sitter.github.io/tree-sitter/syntax-highlighting#local-variables).
+Some of these docs didn't exist when `nvim-treesitter` was created and the
+upstream captures are more limiting than what we have here.
+
+```scheme
+@definition            ; various definitions
+@definition.constant   ; constants
+@definition.function   ; functions
+@definition.method     ; methods
+@definition.var        ; variables
+@definition.parameter  ; parameters
+@definition.macro      ; preprocessor macros
+@definition.type       ; types or classes
+@definition.field      ; fields or properties
+@definition.enum       ; enumerations
+@definition.namespace  ; modules or namespaces
+@definition.import     ; imported names
+@definition.associated ; the associated type of a variable
+
+@scope                 ; scope block
+@reference             ; identifier reference
 ```
-@definition for various definitions
-@definition.constant
-@definition.function
-@definition.method
-@definition.var
-@definition.parameter
-@definition.macro
-@definition.type
-@definition.field
-@definition.enum
-@definition.namespace for modules or C++ namespaces
-@definition.import for imported names
-
-@definition.associated to determine the type of a variable
-@definition.doc for documentation adjacent to a definition. E.g.
-
-@scope
-@reference
-@constructor
-```
-
 
 #### Definition Scope
 
 You can set the scope of a definition by setting the `scope` property on the definition.
 
-For example, a javascript function declaration creates a scope. The function name is captured as the definition.
+For example, a JavaScript function declaration creates a scope. The function name is captured as the definition.
 This means that the function definition would only be available WITHIN the scope of the function, which is not the case.
 The definition can be used in the scope the function was defined in.
 
@@ -259,11 +304,11 @@ Possible scope values are:
 
 You can define folds for a given language by adding a `folds.scm` query :
 
-```
-@fold
+```scheme
+@fold ; fold this node
 ```
 
-If the `fold.scm` query is not present, this will fallback to the `@scope` captures in the `locals`
+If the `folds.scm` query is not present, this will fall back to the `@scope` captures in the `locals`
 query.
 
 ### Injections
@@ -274,26 +319,25 @@ You can directly use the name of the language that you want to inject (e.g. `@ht
 If you want to dynamically detect the language (e.g. for Markdown blocks) use the `@language` to capture
 the node describing the language and `@content` to describe the injection region.
 
-```
-@{language} ; e.g. @html to describe a html region
+```scheme
+@{lang}   ; e.g. @html to describe a html region
 
-@language ; dynamic detection of the injection language (i.e. the text of the captured node describes the language).
-@content ; region for the dynamically detected language.
-@combined ; This will combine all matches of a pattern as one single block of content.
+@language ; dynamic detection of the injection language (i.e. the text of the captured node describes the language)
+@content  ; region for the dynamically detected language
+@combined ; combine all matches of a pattern as one single block of content
 ```
 
 ### Indents
 
-```
-@indent         ; Indent children when matching this node
-@indent_end     ; Marks the end of indented block
-@aligned_indent ; Behaves like python aligned/hanging indent
-@dedent         ; Dedent children when matching this node
-@branch         ; Dedent itself when matching this node
-@ignore         ; Do not indent in this node
-@auto           ; Behaves like 'autoindent' buffer option
-@zero_indent    ; Sets this node at position 0 (no indent)
+```scheme
+@indent.begin       ; indent children when matching this node
+@indent.end         ; marks the end of indented block
+@indent.align       ; behaves like python aligned/hanging indent
+@indent.dedent      ; dedent children when matching this node
+@indent.branch      ; dedent itself when matching this node
+@indent.ignore      ; do not indent in this node
+@indent.auto        ; behaves like 'autoindent' buffer option
+@indent.zero        ; sets this node at position 0 (no indent)
 ```
 
-[Zulip]: https://nvim-treesitter.zulipchat.com
 [Matrix channel]: https://matrix.to/#/#nvim-treesitter:matrix.org

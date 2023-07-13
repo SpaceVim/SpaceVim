@@ -1,0 +1,23 @@
+printA:
+(
+  PRINT "A"
+  RETURN
+)
+
+sUBROUtINE printB
+(
+  ENTRY &in
+
+  PRINT "&in"
+  RETURN
+)
+
+SUBROUTINE printC
+// comment
+(
+  PARAMETERS &a &b
+
+  PRINT "&a"+"&b"
+  ENDDO
+)
+

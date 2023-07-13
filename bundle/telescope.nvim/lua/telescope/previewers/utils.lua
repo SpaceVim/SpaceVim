@@ -126,8 +126,7 @@ end
 --- Attach regex highlighter
 utils.regex_highlighter = function(bufnr, ft)
   if has_filetype(ft) then
-    vim.api.nvim_buf_set_option(bufnr, "syntax", ft)
-    return true
+    return pcall(vim.api.nvim_buf_set_option, bufnr, "syntax", ft)
   end
   return false
 end

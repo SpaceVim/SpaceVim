@@ -1,3 +1,4 @@
 [
-  (block_node)
+  (block_mapping_pair)
+  (block_sequence_item)
 ] @fold

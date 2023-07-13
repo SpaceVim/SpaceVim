@@ -1,5 +1,4 @@
 local char = require('cmp.utils.char')
-local pattern = require('cmp.utils.pattern')
 
 local str = {}
 
@@ -73,23 +72,6 @@ str.remove_suffix = function(text, suffix)
   return string.sub(text, 1, -#suffix - 1)
 end
 
----strikethrough
----@param text string
----@return string
-str.strikethrough = function(text)
-  local r = pattern.regex('.')
-  local buffer = ''
-  while text ~= '' do
-    local s, e = r:match_str(text)
-    if not s then
-      break
-    end
-    buffer = buffer .. string.sub(text, s, e) .. '̶'
-    text = string.sub(text, e + 1)
-  end
-  return buffer
-end
-
 ---trim
 ---@param text string
 ---@return string
@@ -117,8 +99,8 @@ end
 
 ---get_word
 ---@param text string
----@param stop_char number
----@param min_length number
+---@param stop_char integer
+---@param min_length integer
 ---@return string
 str.get_word = function(text, stop_char, min_length)
   min_length = min_length or 0

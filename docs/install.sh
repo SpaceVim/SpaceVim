@@ -84,14 +84,14 @@ On_IWhite='\033[0;107m'   # White
 # }}}
 
 # version
-Version='2.2.0-dev'
+Version='2.3.0-dev'
 #System name
 System="$(uname -s)"
 # }}}
 
 XDGSpaceDir="${XDG_CONFIG_HOME:-${HOME}/.}${XDG_CONFIG_HOME:+/}SpaceVim"
 XDGvimDir="${XDG_CONFIG_HOME:-${HOME}/.}${XDG_CONFIG_HOME:+/}vim"
-XDGnvimDir="${XDG_CONFIG_HOME:-${HOME}/.}${XDG_CONFIG_HOME:+/}nvim"
+XDGnvimDir="${XDG_CONFIG_HOME:-${HOME}/.config/}${XDG_CONFIG_HOME:+/}nvim"
 
 # need_cmd {{{
 need_cmd () {

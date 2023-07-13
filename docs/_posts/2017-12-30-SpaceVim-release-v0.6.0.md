@@ -3,7 +3,7 @@ title: SpaceVim release v0.6.0
 categories: [changelog, blog]
 description: "Many new features come out with v0.6.0, including c/cpp suport and code runner"
 type: article
-image: https://user-images.githubusercontent.com/13142418/80607319-f1ba3b80-8a67-11ea-834c-344916bcb314.png
+image: https://img.spacevim.org/80607319-f1ba3b80-8a67-11ea-834c-344916bcb314.png
 commentsID: "SpaceVim release v0.6.0"
 comments: true
 ---

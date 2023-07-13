@@ -42,13 +42,13 @@ following the [quick start guide](../quick-start-guide/) to install SpaceVim,
 All of the key bindings have been included in mapping guide. If you forgot the next key,
 a mapping guide will be displayed, all the keys and description are shown in the mapping guide window.
 
-![float_guide](https://user-images.githubusercontent.com/13142418/89091735-5de96a00-d3de-11ea-85e1-b0fc64537836.gif)
+![float_guide](https://img.spacevim.org/89091735-5de96a00-d3de-11ea-85e1-b0fc64537836.gif)
 
 for more info, please checkout the article about mapping guide: [Mnemonic key bindings navigation](../mnemonic-key-bindings-navigation/)
 
 ### Default UI
 
-![default UI](https://user-images.githubusercontent.com/13142418/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
+![default UI](https://img.spacevim.org/33804722-bc241f50-dd70-11e7-8dd8-b45827c0019c.png)
 
 The welcome screen will show the recent files of current project.
 The tabline displays all opened buffers or tabs. The filetree is opened on the left,
@@ -73,7 +73,7 @@ you need to change `project_rooter_outermost` to `false`.
 If you want to list all recent opened project, you need to load a fuzzy finder layer.
 for example `telescope` layer, the the key binding `SPC p p` is available for you.
 
-![image](https://user-images.githubusercontent.com/13142418/169195419-329a1b58-850d-40a8-ba02-d0e1f9367305.png)
+![image](https://img.spacevim.org/169195419-329a1b58-850d-40a8-ba02-d0e1f9367305.png)
 
 ### Fuzzy finder
 

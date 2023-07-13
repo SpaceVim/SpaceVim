@@ -1,41 +1,41 @@
 pub fn add(x: Int, y: Int) -> Int {
-// <- keyword
-//  ^ keyword.function
-//     ^ function
+// <- type.qualifier
+//  ^^ keyword.function
+//     ^^^ function
 //        ^ punctuation.bracket
 //         ^ parameter
-//          ^ parameter
-//            ^ type
+//          ^ punctuation.delimiter
+//            ^^^ type.builtin
 //               ^ punctuation.delimiter
 //                 ^ parameter
-//                  ^ parameter
-//                    ^ type
+//                  ^ punctuation.delimiter
+//                    ^^^ type.builtin
 //                       ^ punctuation.bracket
-//                         ^ operator
-//                            ^ type
+//                         ^ punctuation.delimiter
+//                            ^^^ type.builtin
 //                                ^ punctuation.bracket
 }
 // <- punctuation.bracket
 
 pub fn twice(f: fn(t) -> t, x: t) -> t {
-// <- keyword
+// <- type.qualifier
 //  ^ keyword.function
-//     ^ function
+//     ^^^^^ function
 //          ^ punctuation.bracket
 //           ^ parameter
-//            ^ parameter
-//              ^ keyword.function
+//            ^ punctuation.delimiter
+//              ^^ keyword.function
 //                ^ punctuation.bracket
 //                 ^ type
 //                  ^ punctuation.bracket
-//                    ^ operator
+//                    ^^ punctuation.delimiter
 //                       ^ type
 //                        ^ punctuation.delimiter
 //                          ^ parameter
-//                           ^ parameter
+//                           ^ punctuation.delimiter
 //                             ^ type
 //                              ^ punctuation.bracket
-//                                ^ operator
+//                                ^^ punctuation.delimiter
 //                                   ^ type
 //                                     ^ punctuation.bracket
 }
@@ -46,11 +46,11 @@ fn list_of_two(my_value: a) -> List(a) {
 // ^ function
 //            ^ punctuation.bracket
 //             ^ parameter
-//                     ^ parameter
+//                     ^ punctuation.delimiter
 //                       ^ type
 //                        ^ punctuation.bracket
-//                          ^ operator
-//                             ^ type
+//                          ^ punctuation.delimiter
+//                             ^^^^ type.builtin
 //                                 ^ punctuation.bracket
 //                                  ^ type
 //                                   ^ punctuation.bracket
@@ -60,68 +60,68 @@ fn list_of_two(my_value: a) -> List(a) {
 
 fn replace(
 // <- keyword.function
-// ^ function
+// ^^^^^^^ function
 //        ^ punctuation.bracket
   in string: String,
-  // <- symbol
-  // ^ parameter
-  //       ^ parameter
-  //         ^ type
+  // <- label
+  // ^^^^^^ parameter
+  //       ^ punctuation.delimiter
+  //         ^^^^^^ type.builtin
   //               ^ punctuation.delimiter
   each pattern: String,
-  // <- symbol
-  //   ^ parameter
-  //          ^ parameter
-  //            ^ type
+  // <- label
+  //   ^^^^^^^ parameter
+  //          ^ punctuation.delimiter
+  //            ^^^^^^ type.builtin
   //                  ^ punctuation.delimiter
   with replacement: String,
-  // <- symbol
-  //   ^ parameter
-  //              ^ parameter
-  //                ^ type
+  // <- label
+  //   ^^^^^^^^^^^ parameter
+  //              ^ punctuation.delimiter
+  //                ^^^^^^ type.builtin
   //                      ^ punctuation.delimiter
 ) {
   replace(in: "A,B,C", each: ",", with: " ")
-  // <- function
+  // <- function.call
   //     ^ punctuation.bracket
-  //      ^ symbol
-  //        ^ symbol
-  //          ^ string
+  //      ^^ label
+  //        ^ punctuation.delimiter
+  //          ^^^^^^^ string
   //                 ^ punctuation.delimiter
-  //                   ^ symbol
-  //                       ^ symbol
-  //                         ^ string
+  //                   ^^^^ label
+  //                       ^ punctuation.delimiter
+  //                         ^^^ string
   //                            ^ punctuation.delimiter
-  //                              ^ symbol
-  //                                  ^ symbol
-  //                                    ^ string
+  //                              ^^^^ label
+  //                                  ^ punctuation.delimiter
+  //                                    ^^^ string
   //                                       ^ punctuation.bracket
 }
 // <- punctuation.bracket
 
 pub external fn random_float() -> Float = "rand" "uniform"
-// <- keyword
-//  ^ keyword
-//           ^ keyword.function
-//              ^ function
+// <- type.qualifier
+//  ^^^^^^^^ type.qualifier
+//           ^^ keyword.function
+//              ^^^^^^^^^^^^ function
 //                          ^ punctuation.bracket
 //                           ^ punctuation.bracket
-//                             ^ operator
-//                                ^ type
+//                             ^^ punctuation.delimiter
+//                                ^^^^^ type.builtin
 //                                      ^ operator
-//                                        ^ namespace
-//                                               ^ function
+//                                        ^^^^^^ namespace
+//                                               ^^^^^^^^^ function
 
 pub external fn inspect(a) -> a = "Elixir.IO" "inspect"
-// <- keyword
-//  ^ keyword
-//           ^ keyword.function
-//              ^ function
+// <- type.qualifier
+//  ^^^^^^^^ type.qualifier
+//           ^^ keyword.function
+//              ^^^^^^^ function
 //                     ^ punctuation.bracket
 //                      ^ type
 //                       ^ punctuation.bracket
-//                         ^ operator
+//                         ^^ punctuation.delimiter
 //                            ^ type
 //                              ^ operator
-//                                ^ namespace
-//                                            ^ function
+//                                ^^^^^^^^^^^ namespace
+//                                            ^^^^^^^^^ function

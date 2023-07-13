@@ -264,7 +264,7 @@ find results and call `entry_maker` for each entry. An example usage would be
 `find`.
 
 ```lua
-finder = finders.new_oneshot_job({ "find" }, opts ),
+finder = finders.new_oneshot_job { "find", opts },
 ```
 
 ### More examples

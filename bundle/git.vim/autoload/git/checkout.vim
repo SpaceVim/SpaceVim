@@ -1,4 +1,5 @@
 let s:JOB = SpaceVim#api#import('job')
+let s:NOTI = SpaceVim#api#import('notify')
 
 function! git#checkout#run(args)
 
@@ -16,10 +17,10 @@ function! s:on_exit(id, data, event) abort
     call git#logger#debug('git-checkout exit data:' . string(a:data))
     if a:data ==# 0
         silent! checktime
-        echo 'checkout done'
+        call s:NOTI.notify('checkout done.')
         call git#branch#detect()
     else
-        echo 'failed!'
+        call s:NOTI.notify('checkout failed.', 'WarningMsg')
     endif
 endfunction
 

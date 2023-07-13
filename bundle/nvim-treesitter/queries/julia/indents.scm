@@ -3,24 +3,26 @@
   (macro_definition)
   (function_definition)
 
+  (compound_statement)
   (if_statement)
   (try_statement)
   (for_statement)
   (while_statement)
   (let_statement)
   (quote_statement)
-
   (do_clause)
-  (compound_expression)
 
-  (assignment_expression)
+  (assignment)
+  (for_binding)
+
   (binary_expression)
   (call_expression)
 
-  (array_expression)
   (tuple_expression)
+  (comprehension_expression)
   (matrix_expression)
-] @indent
+  (vector_expression)
+] @indent.begin
 
 [
   "end"
@@ -32,11 +34,10 @@
   (elseif_clause)
   (catch_clause)
   (finally_clause)
-] @branch
+] @indent.branch
 
 [
-  (comment)
+  (line_comment)
   (block_comment)
-  (triple_string)
-] @ignore
+] @indent.ignore
 

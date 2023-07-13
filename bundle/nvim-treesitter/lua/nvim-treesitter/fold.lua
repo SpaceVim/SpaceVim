@@ -31,7 +31,10 @@ local folds_levels = tsutils.memoize_by_buf_tick(function(bufnr)
   end)
 
   -- start..stop is an inclusive range
+
+  ---@type table<number, number>
   local start_counts = {}
+  ---@type table<number, number>
   local stop_counts = {}
 
   local prev_start = -1
@@ -39,8 +42,13 @@ local folds_levels = tsutils.memoize_by_buf_tick(function(bufnr)
 
   local min_fold_lines = api.nvim_win_get_option(0, "foldminlines")
 
-  for _, node in ipairs(matches) do
-    local start, _, stop, stop_col = node.node:range()
+  for _, match in ipairs(matches) do
+    local start, stop, stop_col ---@type integer, integer, integer
+    if match.metadata and match.metadata.range then
+      start, _, stop, stop_col = unpack(match.metadata.range) ---@type integer, integer, integer, integer
+    else
+      start, _, stop, stop_col = match.node:range() ---@type integer, integer, integer, integer
+    end
 
     if stop_col == 0 then
       stop = stop - 1
@@ -60,6 +68,7 @@ local folds_levels = tsutils.memoize_by_buf_tick(function(bufnr)
     end
   end
 
+  ---@type string[]
   local levels = {}
   local current_level = 0
 
@@ -97,6 +106,8 @@ local folds_levels = tsutils.memoize_by_buf_tick(function(bufnr)
   return levels
 end)
 
+---@param lnum integer
+---@return string
 function M.get_fold_indic(lnum)
   if not parsers.has_parser() or not lnum then
     return "0"

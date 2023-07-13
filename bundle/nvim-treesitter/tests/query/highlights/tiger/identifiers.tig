@@ -1,0 +1,30 @@
+type int = int
+/*   ^ variable */
+/*         ^ type.builtin */
+
+type int_array = array of int
+/*                        ^ type.builtin */
+
+type record = {a: int, b: string}
+/*             ^ property */
+/*                ^ type.builtin */
+/*                     ^ property */
+/*                        ^ type.builtin */
+
+var record := record {a = 12, b = "27"}
+/*  ^ variable */
+/*            ^ type */
+/*                    ^ property */
+/*                            ^ property */
+
+var array := int_array[12] of 27;
+/*  ^ variable */
+/*           ^ type */
+
+primitive func(a: int, b: string) : array
+/*             ^ parameter */
+/*                ^ type.builtin */
+/*                     ^ parameter */
+/*                        ^ type.builtin */
+/*                                  ^ type */
+/* vim: set ft=tiger: */

@@ -36,7 +36,6 @@ main () {
             _checkdir autoload/SpaceVim/api/data
             _checkdir autoload/SpaceVim/mapping
             _checkdir autoload/SpaceVim/plugins
-            _checkdir lua/spacevim/api
             _detact autoload/SpaceVim/plugins/flygrep.vim
             _detact autoload/SpaceVim/api.vim
             _detact autoload/SpaceVim/api/logger.vim
@@ -60,62 +59,46 @@ main () {
             _detact autoload/SpaceVim/api/time.vim
             _detact autoload/SpaceVim/mapping/search.vim
             _detact autoload/SpaceVim/logger.vim
+            # detach lua version flygrep
+            _checkdir lua/spacevim/api
+            _checkdir lua/spacevim/api/vim
+            _checkdir lua/spacevim/plugin
+            _detact lua/spacevim/plugin/flygrep.lua
+            _detact lua/spacevim/plugin/search.lua
             _detact lua/spacevim.lua
+            _detact lua/spacevim/logger.lua
             _detact lua/spacevim/api.lua
             _detact lua/spacevim/api/logger.lua
-            _detact lua/spacevim/logger.lua
+            _detact lua/spacevim/api/prompt.lua
+            _detact lua/spacevim/api/notify.lua
+            _detact lua/spacevim/api/password.lua
+            _detact lua/spacevim/api/vim.lua
+            _detact lua/spacevim/api/system.lua
+            _detact lua/spacevim/api/vim/compatible.lua
+            _detact lua/spacevim/api/vim/highlight.lua
+            _detact lua/spacevim/api/vim/regex.lua
+            _detact lua/spacevim/api/vim/keys.lua
+            _detact lua/spacevim/api/vim/buffer.lua
+            _detact lua/spacevim/api/vim/window.lua
+            _detact lua/spacevim/api/vim/statusline.lua
+            # detach syntax/ftplugin etc
             _detact syntax/SpaceVimFlyGrep.vim
-            _default_readme "FlyGrep.vim" "Grep on the fly in Vim/Neovim"
-            _detact LICENSE
+            # detach bundle
             _checkdir plugin
-            cat <<EOT > plugin/FlyGrep.vim
-"=============================================================================
-" FlyGrep.vim --- Fly grep in vim
-" Copyright (c) 2016-2022 Shidong Wang & Contributors
-" Author: Shidong Wang < wsdjeg@outlook.com >
-" URL: https://github.com/wsdjeg/FlyGrep.vim
-" License: MIT license
-"=============================================================================
-
-""
-" @section Introduction, intro
-" @stylized FlyGrep
-" @library
-" @order intro version dicts functions exceptions layers api faq
-" Fly grep in vim, written in pure vim script for MacVim, gvim and vim version
-" 8.0+.
-"
-
-""
-" @section CONFIGURATION, config
-" FlyGrep has strong default options, but you can also change the option
-" yourself.
-
-""
-" FlyGrep will start to searching code after a delay, the default value is
-" 500ms.
-let g:FlyGrep_input_delay = get(g:, 'FlyGrep_input_delay', 500)
-
-""
-" A list of searching tools will be userd.
-let g:FlyGrep_search_tools = get(g:, 'FlyGrep_search_tools', ['ag', 'rg', 'grep', 'pt', 'ack'])
-
-let g:spacevim_data_dir = get(g:, 'spacevim_data_dir', '~/.cache')
-
-""
-" Enable FlyGrep statusline
-let g:FlyGrep_enable_statusline = get(g:, 'FlyGrep_enable_statusline', 1)
-
-""
-" Set FlyGrep default command prompt
-let g:spacevim_commandline_prompt = get(g:, 'spacevim_commandline_prompt', '➭')
-
-command! -nargs=0 FlyGrep call FlyGrep#open({})
-EOT
+            _detact_bundle FlyGrep plugin/FlyGrep.vim
+            _detact_bundle FlyGrep README.md
+            _detact_bundle FlyGrep addon-info.json
+            _checkdir doc/
+            _detact_bundle FlyGrep doc/FlyGrep.txt
+            # detach LICENSE
+            _detact LICENSE
+            # detach test vimrc
+            _checkdir test
+            _detact_bundle FlyGrep test/vimrc
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
-            git commit -m "Auto Update"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
             git remote add wsdjeg_flygrep https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/FlyGrep.vim.git
             git push wsdjeg_flygrep master 
             cd -
@@ -144,7 +127,7 @@ EOT
             git add .
             git config user.email "wsdjeg@qq.com"
             git config user.name  "SpaceVimBot"
-            git commit -m "Auto Update"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
             git remote add wsdjeg_dein_ui https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/dein-ui.vim.git
             git push wsdjeg_dein_ui master 
             cd -
@@ -265,6 +248,83 @@ EOT
             git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
             git remote add wsdjeg_vim_chat https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/vim-chat.git
             git push wsdjeg_vim_chat master 
+            cd -
+            rm -rf detach/$1
+            exit 0
+            ;;
+        JavaUnit.vim)
+            git clone https://github.com/wsdjeg/JavaUnit.vim.git detach/$1
+            cd detach/$1
+            # _detact LICENSE
+            # _checkdir autoload/SpaceVim/api
+            # _detact autoload/SpaceVim/api.vim
+            # _detact autoload/SpaceVim/api/job.vim
+            # _checkdir autoload/chat/
+            _detact_bundle JavaUnit.vim README.md
+            git add .
+            git config user.email "wsdjeg@qq.com"
+            git config user.name  "SpaceVimBot"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
+            git remote add wsdjeg_javaunit_vim https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/JavaUnit.vim.git
+            git push wsdjeg_javaunit_vim master 
+            cd -
+            rm -rf detach/$1
+            exit 0
+            ;;
+        git.vim)
+            git clone https://github.com/wsdjeg/git.vim.git detach/$1
+            cd detach/$1
+            _checkdir autoload/SpaceVim/api
+            _detact autoload/SpaceVim/api.vim
+            _detact autoload/SpaceVim/api/job.vim
+            _detact_bundle git.vim LICENSE
+            _detact_bundle git.vim README.md
+            _detact_bundle git.vim addon-info.json
+            _checkdir autoload/git/branch
+            _detact_bundle git.vim autoload/git.vim
+            _detact_bundle git.vim autoload/git/add.vim
+            _detact_bundle git.vim autoload/git/blame.vim
+            _detact_bundle git.vim autoload/git/branch.vim
+            _detact_bundle git.vim autoload/git/branch/manager.vim
+            _detact_bundle git.vim autoload/git/checkout.vim
+            _detact_bundle git.vim autoload/git/cherry_pick.vim
+            _detact_bundle git.vim autoload/git/clean.vim
+            _detact_bundle git.vim autoload/git/commit.vim
+            _detact_bundle git.vim autoload/git/config.vim
+            _detact_bundle git.vim autoload/git/diff.vim
+            _detact_bundle git.vim autoload/git/fetch.vim
+            _detact_bundle git.vim autoload/git/log.vim
+            _detact_bundle git.vim autoload/git/logger.vim
+            _detact_bundle git.vim autoload/git/merge.vim
+            _detact_bundle git.vim autoload/git/mv.vim
+            _detact_bundle git.vim autoload/git/pull.vim
+            _detact_bundle git.vim autoload/git/push.vim
+            _detact_bundle git.vim autoload/git/rebase.vim
+            _detact_bundle git.vim autoload/git/reflog.vim
+            _detact_bundle git.vim autoload/git/remote.vim
+            _detact_bundle git.vim autoload/git/reset.vim
+            _detact_bundle git.vim autoload/git/rm.vim
+            _detact_bundle git.vim autoload/git/stash.vim
+            _detact_bundle git.vim autoload/git/status.vim
+            _checkdir doc
+            _detact_bundle git.vim doc/git.txt
+            _checkdir plugin
+            _detact_bundle git.vim plugin/git.vim
+            _checkdir syntax
+            _detact_bundle git.vim syntax/git-blame.vim
+            _detact_bundle git.vim syntax/git-commit.vim
+            _detact_bundle git.vim syntax/git-config.vim
+            _detact_bundle git.vim syntax/git-log.vim
+            _detact_bundle git.vim syntax/git-rebase.vim
+            _detact_bundle git.vim syntax/git-reflog.vim
+            _checkdir test
+            _detact_bundle git.vim test/vimrc
+            git add .
+            git config user.email "wsdjeg@qq.com"
+            git config user.name  "SpaceVimBot"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
+            git remote add wsdjeg_git_vim https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/git.vim.git
+            git push wsdjeg_git_vim master 
             cd -
             rm -rf detach/$1
             exit 0

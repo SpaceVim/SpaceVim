@@ -11,6 +11,22 @@ endif
 " A Dictionary to track one-shot handlers for custom LSP requests
 let s:custom_handlers_map = get(s:, 'custom_handlers_map', {})
 
+" Clear LSP linter data for the linting engine.
+function! ale#lsp_linter#ClearLSPData() abort
+    let s:lsp_linter_map = {}
+    let s:custom_handlers_map = {}
+endfunction
+
+" Only for internal use.
+function! ale#lsp_linter#GetLSPLinterMap() abort
+    return s:lsp_linter_map
+endfunction
+
+" Just for tests.
+function! ale#lsp_linter#SetLSPLinterMap(replacement_map) abort
+    let s:lsp_linter_map = a:replacement_map
+endfunction
+
 " Check if diagnostics for a particular linter should be ignored.
 function! s:ShouldIgnore(buffer, linter_name) abort
     " Ignore all diagnostics if LSP integration is disabled.
@@ -33,7 +49,7 @@ endfunction
 
 function! s:HandleLSPDiagnostics(conn_id, response) abort
     let l:linter_name = s:lsp_linter_map[a:conn_id]
-    let l:filename = ale#path#FromURI(a:response.params.uri)
+    let l:filename = ale#util#ToResource(a:response.params.uri)
     let l:escaped_name = escape(
     \   fnameescape(l:filename),
     \   has('win32') ? '^' : '^,}]'
@@ -85,12 +101,18 @@ function! s:HandleTSServerDiagnostics(response, error_type) abort
         endif
 
         let l:info.syntax_loclist = l:thislist
-    else
+    elseif a:error_type is# 'semantic'
         if len(l:thislist) is 0 && len(get(l:info, 'semantic_loclist', [])) is 0
             let l:no_changes = 1
         endif
 
         let l:info.semantic_loclist = l:thislist
+    else
+        if len(l:thislist) is 0 && len(get(l:info, 'suggestion_loclist', [])) is 0
+            let l:no_changes = 1
+        endif
+
+        let l:info.suggestion_loclist = l:thislist
     endif
 
     if l:no_changes
@@ -98,6 +120,7 @@ function! s:HandleTSServerDiagnostics(response, error_type) abort
     endif
 
     let l:loclist = get(l:info, 'semantic_loclist', [])
+    \   + get(l:info, 'suggestion_loclist', [])
     \   + get(l:info, 'syntax_loclist', [])
 
     call ale#engine#HandleLoclist(l:linter_name, l:buffer, l:loclist, 0)
@@ -118,6 +141,10 @@ function! s:HandleLSPErrorMessage(linter_name, response) abort
         return
     endif
 
+    call ale#lsp_linter#AddErrorMessage(a:linter_name, l:message)
+endfunction
+
+function! ale#lsp_linter#AddErrorMessage(linter_name, message) abort
     " This global variable is set here so we don't load the debugging.vim file
     " until someone uses :ALEInfo.
     let g:ale_lsp_error_messages = get(g:, 'ale_lsp_error_messages', {})
@@ -126,7 +153,7 @@ function! s:HandleLSPErrorMessage(linter_name, response) abort
         let g:ale_lsp_error_messages[a:linter_name] = []
     endif
 
-    call add(g:ale_lsp_error_messages[a:linter_name], l:message)
+    call add(g:ale_lsp_error_messages[a:linter_name], a:message)
 endfunction
 
 function! ale#lsp_linter#HandleLSPResponse(conn_id, response) abort
@@ -150,6 +177,10 @@ function! ale#lsp_linter#HandleLSPResponse(conn_id, response) abort
     elseif get(a:response, 'type', '') is# 'event'
     \&& get(a:response, 'event', '') is# 'syntaxDiag'
         call s:HandleTSServerDiagnostics(a:response, 'syntax')
+    elseif get(a:response, 'type', '') is# 'event'
+    \&& get(a:response, 'event', '') is# 'suggestionDiag'
+    \&& get(g:, 'ale_lsp_suggestions', '1') == 1
+        call s:HandleTSServerDiagnostics(a:response, 'suggestion')
     endif
 endfunction
 
@@ -190,7 +221,11 @@ function! ale#lsp_linter#GetConfig(buffer, linter) abort
 endfunction
 
 function! ale#lsp_linter#FindProjectRoot(buffer, linter) abort
-    let l:buffer_ale_root = getbufvar(a:buffer, 'ale_lsp_root', {})
+    let l:buffer_ale_root = getbufvar(
+    \   a:buffer,
+    \   'ale_root',
+    \   getbufvar(a:buffer, 'ale_lsp_root', {})
+    \)
 
     if type(l:buffer_ale_root) is v:t_string
         return l:buffer_ale_root
@@ -207,9 +242,15 @@ function! ale#lsp_linter#FindProjectRoot(buffer, linter) abort
         endif
     endif
 
+    let l:global_root = g:ale_root
+
+    if empty(g:ale_root) && exists('g:ale_lsp_root')
+        let l:global_root = g:ale_lsp_root
+    endif
+
     " Try to get a global setting for the root
-    if has_key(g:ale_lsp_root, a:linter.name)
-        let l:Root = g:ale_lsp_root[a:linter.name]
+    if has_key(l:global_root, a:linter.name)
+        let l:Root = l:global_root[a:linter.name]
 
         if type(l:Root) is v:t_func
             return l:Root(a:buffer)
@@ -250,6 +291,30 @@ function! ale#lsp_linter#OnInit(linter, details, Callback) abort
         call ale#lsp#NotifyForChanges(l:conn_id, l:buffer)
     endif
 
+    " Tell the relevant buffer that the LSP has started via an autocmd.
+    if l:buffer > 0
+        if l:buffer == bufnr('')
+            silent doautocmd <nomodeline> User ALELSPStarted
+        else
+            execute 'augroup ALELSPStartedGroup' . l:buffer
+                autocmd!
+
+                execute printf(
+                \   'autocmd BufEnter <buffer=%d>'
+                \       . ' doautocmd <nomodeline> User ALELSPStarted',
+                \   l:buffer
+                \)
+
+                " Replicate ++once behavior for backwards compatibility.
+                execute printf(
+                \   'autocmd BufEnter <buffer=%d>'
+                \       . ' autocmd! ALELSPStartedGroup%d',
+                \   l:buffer, l:buffer
+                \)
+            augroup END
+        endif
+    endif
+
     call a:Callback(a:linter, a:details)
 endfunction
 
@@ -273,13 +338,15 @@ function! s:StartLSP(options, address, executable, command) abort
             call ale#lsp#MarkConnectionAsTsserver(l:conn_id)
         endif
 
+        let l:cwd = ale#linter#GetCwd(l:buffer, l:linter)
         let l:command = ale#command#FormatCommand(
         \   l:buffer,
         \   a:executable,
         \   a:command,
         \   0,
         \   v:false,
-        \   [],
+        \   l:cwd,
+        \   ale#GetFilenameMappings(l:buffer, l:linter.name),
         \)[1]
         let l:command = ale#job#PrepareCommand(l:buffer, l:command)
         let l:ready = ale#lsp#StartProgram(l:conn_id, a:executable, l:command)
@@ -367,6 +434,8 @@ function! ale#lsp_linter#StartLSP(buffer, linter, Callback) abort
     if empty(l:root) && a:linter.lsp isnot# 'tsserver'
         " If there's no project root, then we can't check files with LSP,
         " unless we are using tsserver, which doesn't use project roots.
+        call ale#lsp_linter#AddErrorMessage(a:linter.name, "Failed to find project root, language server won't start.")
+
         return 0
     endif
 
@@ -419,24 +488,15 @@ function! s:CheckWithLSP(linter, details) abort
     " If this was a file save event, also notify the server of that.
     if a:linter.lsp isnot# 'tsserver'
     \&& getbufvar(l:buffer, 'ale_save_event_fired', 0)
-        let l:save_message = ale#lsp#message#DidSave(l:buffer)
+    \&& ale#lsp#HasCapability(l:id, 'did_save')
+        let l:include_text = ale#lsp#HasCapability(l:id, 'includeText')
+        let l:save_message = ale#lsp#message#DidSave(l:buffer, l:include_text)
         let l:notified = ale#lsp#Send(l:id, l:save_message) != 0
     endif
 endfunction
 
 function! ale#lsp_linter#CheckWithLSP(buffer, linter) abort
     return ale#lsp_linter#StartLSP(a:buffer, a:linter, function('s:CheckWithLSP'))
-endfunction
-
-" Clear LSP linter data for the linting engine.
-function! ale#lsp_linter#ClearLSPData() abort
-    let s:lsp_linter_map = {}
-    let s:custom_handlers_map = {}
-endfunction
-
-" Just for tests.
-function! ale#lsp_linter#SetLSPLinterMap(replacement_map) abort
-    let s:lsp_linter_map = a:replacement_map
 endfunction
 
 function! s:HandleLSPResponseToCustomRequests(conn_id, response) abort

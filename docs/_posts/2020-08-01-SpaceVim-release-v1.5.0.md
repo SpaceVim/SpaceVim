@@ -3,7 +3,7 @@ title: SpaceVim release v1.5.0
 categories: [changelog, blog]
 description: "SpaceVim release v1.5.0 with four new language layers and floating window support."
 type: article
-image: https://user-images.githubusercontent.com/13142418/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png
+image: https://img.spacevim.org/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png
 commentsID: "SpaceVim release v1.5.0"
 comments: true
 ---
@@ -27,7 +27,7 @@ comments: true
 The last release is v1.4.0, After four months development.
 The v1.5.0 has been released. So let's take a look at what happened since last relase.
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png)
+![welcome-page](https://img.spacevim.org/89103568-5ad59480-d445-11ea-9745-bd53e668b956.png)
 
 - [Quick start guide](../quick-start-guide/): installation, configuration, and resources of learning SpaceVim
 - [documentation](../documentation/): the primary official document of SpaceVim

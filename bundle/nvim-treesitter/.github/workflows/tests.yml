@@ -3,11 +3,10 @@ name: Tests
 on:
   push:
     branches:
-      - 'master'
+      - "master"
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
     branches:
-      - 'master'
+      - "master"
 
 # Cancel any in-progress CI runs for a PR if it is updated
 concurrency:
@@ -20,34 +19,37 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        cc: [ gcc ]
+        cc: [gcc]
 
     name: Run tests
     runs-on: ${{ matrix.os }}
     env:
       CC: ${{ matrix.cc }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+
+      - name: Install tree-sitter CLI
+        run: npm i -g tree-sitter-cli
 
       - name: Test Dependencies
         run: |
           mkdir -p ~/.local/share/nvim/site/pack/plenary.nvim/start
           cd ~/.local/share/nvim/site/pack/plenary.nvim/start
           git clone https://github.com/nvim-lua/plenary.nvim
-          curl -L https://github.com/theHamsta/highlight-assertions/releases/download/v0.1.5/highlight-assertions_v0.1.5_x86_64-unknown-linux-gnu.tar.gz | tar -xz
+          curl -L https://github.com/theHamsta/highlight-assertions/releases/download/v0.1.6/highlight-assertions_v0.1.6_x86_64-unknown-linux-gnu.tar.gz | tar -xz
           cp highlight-assertions /usr/local/bin
 
       - name: Install and prepare Neovim
         env:
           NVIM_TAG: stable
-          TREE_SITTER_CLI_TAG: v0.20.4
+          TREE_SITTER_CLI_TAG: v0.20.8
         run: |
           bash ./scripts/ci-install-${{ matrix.os }}.sh
 
       - name: Setup Parsers Cache
         id: parsers-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ./parser/

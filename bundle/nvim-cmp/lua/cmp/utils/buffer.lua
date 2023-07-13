@@ -2,7 +2,7 @@ local buffer = {}
 
 buffer.cache = {}
 
----@return number buf
+---@return integer buf
 buffer.get = function(name)
   local buf = buffer.cache[name]
   if buf and vim.api.nvim_buf_is_valid(buf) then
@@ -12,7 +12,7 @@ buffer.get = function(name)
   end
 end
 
----@return number buf
+---@return integer buf
 ---@return boolean created_new
 buffer.ensure = function(name)
   local created_new = false
@@ -20,8 +20,6 @@ buffer.ensure = function(name)
   if not buf then
     created_new = true
     buf = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
-    vim.api.nvim_buf_set_option(buf, 'bufhidden', 'hide')
     buffer.cache[name] = buf
   end
   return buf, created_new

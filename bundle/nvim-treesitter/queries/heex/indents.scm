@@ -3,18 +3,18 @@
   (component)
   (slot)
   (tag)
-] @indent
+] @indent.begin
 
 ; Dedent at the end of each tag, component, and slot
 [
   (end_component)
   (end_slot)
   (end_tag)
-] @branch @dedent
+] @indent.branch @indent.dedent
 
 ; Self-closing tags and components should not change
 ; indentation level of sibling nodes
 [
   (self_closing_component)
   (self_closing_tag)
-] @auto
+] @indent.auto

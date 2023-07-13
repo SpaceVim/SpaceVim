@@ -71,12 +71,9 @@ git.commits = function(opts)
       sorter = conf.file_sorter(opts),
       attach_mappings = function(_, map)
         actions.select_default:replace(actions.git_checkout)
-        map("i", "<c-r>m", actions.git_reset_mixed)
-        map("n", "<c-r>m", actions.git_reset_mixed)
-        map("i", "<c-r>s", actions.git_reset_soft)
-        map("n", "<c-r>s", actions.git_reset_soft)
-        map("i", "<c-r>h", actions.git_reset_hard)
-        map("n", "<c-r>h", actions.git_reset_hard)
+        map({ "i", "n" }, "<c-r>m", actions.git_reset_mixed)
+        map({ "i", "n" }, "<c-r>s", actions.git_reset_soft)
+        map({ "i", "n" }, "<c-r>h", actions.git_reset_hard)
         return true
       end,
     })
@@ -293,23 +290,12 @@ git.branches = function(opts)
       sorter = conf.file_sorter(opts),
       attach_mappings = function(_, map)
         actions.select_default:replace(actions.git_checkout)
-        map("i", "<c-t>", actions.git_track_branch)
-        map("n", "<c-t>", actions.git_track_branch)
-
-        map("i", "<c-r>", actions.git_rebase_branch)
-        map("n", "<c-r>", actions.git_rebase_branch)
-
-        map("i", "<c-a>", actions.git_create_branch)
-        map("n", "<c-a>", actions.git_create_branch)
-
-        map("i", "<c-s>", actions.git_switch_branch)
-        map("n", "<c-s>", actions.git_switch_branch)
-
-        map("i", "<c-d>", actions.git_delete_branch)
-        map("n", "<c-d>", actions.git_delete_branch)
-
-        map("i", "<c-y>", actions.git_merge_branch)
-        map("n", "<c-y>", actions.git_merge_branch)
+        map({ "i", "n" }, "<c-t>", actions.git_track_branch)
+        map({ "i", "n" }, "<c-r>", actions.git_rebase_branch)
+        map({ "i", "n" }, "<c-a>", actions.git_create_branch)
+        map({ "i", "n" }, "<c-s>", actions.git_switch_branch)
+        map({ "i", "n" }, "<c-d>", actions.git_delete_branch)
+        map({ "i", "n" }, "<c-y>", actions.git_merge_branch)
         return true
       end,
     })
@@ -327,7 +313,7 @@ git.status = function(opts)
 
   local gen_new_finder = function()
     local expand_dir = vim.F.if_nil(opts.expand_dir, true)
-    local git_cmd = { "git", "status", "-s", "--", "." }
+    local git_cmd = { "git", "status", "-z", "--", "." }
 
     if expand_dir then
       table.insert(git_cmd, #git_cmd - 1, "-u")
@@ -345,7 +331,7 @@ git.status = function(opts)
     end
 
     return finders.new_table {
-      results = output,
+      results = vim.split(output[1], " ", { trimempty = true }),
       entry_maker = vim.F.if_nil(opts.entry_maker, make_entry.gen_from_git_status(opts)),
     }
   end
@@ -368,8 +354,7 @@ git.status = function(opts)
           end,
         }
 
-        map("i", "<tab>", actions.git_staging_toggle)
-        map("n", "<tab>", actions.git_staging_toggle)
+        map({ "i", "n" }, "<tab>", actions.git_staging_toggle)
         return true
       end,
     })
@@ -392,11 +377,7 @@ local set_opts_cwd = function(opts)
     local in_bare = utils.get_os_command_output({ "git", "rev-parse", "--is-bare-repository" }, opts.cwd)
 
     if in_worktree[1] ~= "true" and in_bare[1] ~= "true" then
-      utils.notify("builtin.git", {
-        msg = opts.cwd .. " is not a git directory",
-        level = "ERROR",
-      })
-      return false
+      error(opts.cwd .. " is not a git directory")
     elseif in_worktree[1] ~= "true" and in_bare[1] == "true" then
       opts.is_bare = true
     end
@@ -405,8 +386,6 @@ local set_opts_cwd = function(opts)
       opts.cwd = git_root[1]
     end
   end
-
-  return true
 end
 
 local function apply_checks(mod)
@@ -414,10 +393,8 @@ local function apply_checks(mod)
     mod[k] = function(opts)
       opts = vim.F.if_nil(opts, {})
 
-      local ok = set_opts_cwd(opts)
-      if ok then
-        v(opts)
-      end
+      set_opts_cwd(opts)
+      v(opts)
     end
   end
 

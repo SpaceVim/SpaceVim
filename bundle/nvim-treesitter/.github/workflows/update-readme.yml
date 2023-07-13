@@ -4,18 +4,20 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   update-readme:
     name: Update README
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Prepare
         env:
           NVIM_TAG: stable
         run: |
+          sudo apt install libfuse2
           wget https://github.com/neovim/neovim/releases/download/${NVIM_TAG}/nvim.appimage
           chmod u+x nvim.appimage
           mkdir -p ~/.local/share/nvim/site/pack/nvim-treesitter/start
@@ -31,7 +33,7 @@ jobs:
           git clean -xf
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           commit-message: Update README
           title: Update README

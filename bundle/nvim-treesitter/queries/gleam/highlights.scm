@@ -1,19 +1,16 @@
 ; Keywords
 [
   "as"
-  "const"
-  "external"
   "let"
-  "opaque"
-  "pub"
+  "panic"
   "todo"
-  "try"
+  "type"
+  "use"
 ] @keyword
 
 ; Function Keywords
 [
   "fn"
-  "type"
 ] @keyword.function
 
 ; Imports
@@ -47,6 +44,8 @@
 [
   ","
   "."
+  ":"
+  "->"
 ] @punctuation.delimiter
 
 [
@@ -63,11 +62,9 @@
   "+."
   "-"
   "-."
-  "->"
   ".."
   "/"
   "/."
-  ":"
   "<"
   "<."
   "<="
@@ -87,10 +84,13 @@
 
 ; Comments
 [
+  (comment)
+] @comment @spell
+
+[
   (module_comment)
-  (statement_comment) 
-  (comment) 
-] @comment
+  (statement_comment)
+] @comment.documentation @spell
 
 ; Unused Identifiers
 [
@@ -99,7 +99,7 @@
 ] @comment
 
 ; Modules & Imports
-(module ("/" @namespace)?) @namespace
+(module) @namespace
 (import alias: ((identifier) @namespace)?)
 (remote_type_identifier module: (identifier) @namespace)
 (unqualified_import name: (identifier) @function)
@@ -111,50 +111,59 @@
 (bit_string_segment) @string.special
 
 ; Numbers
-[
-  (integer) 
-  (float) 
-  (bit_string_segment_option_unit)
-] @number
+(integer) @number
+
+(float) @float
 
 ; Function Parameter Labels
-(function_call arguments: (arguments (argument label: (label) @symbol ":" @symbol)))
-(function_parameter label: (label)? @symbol name: (identifier) @parameter (":" @parameter)?)
+(function_call arguments: (arguments (argument label: (label) @label)))
+(function_parameter label: (label)? @label name: (identifier) @parameter)
 
 ; Records
-(record arguments: (arguments (argument label: (label) @property ":" @property)?))
-(record_pattern_argument  label: (label) @property ":" @property)
-(record_update_argument label: (label) @property ":" @property)
+(record arguments: (arguments (argument label: (label) @property)?))
+(record_pattern_argument  label: (label) @property)
+(record_update_argument label: (label) @property)
 (field_access record: (identifier) @variable field: (label) @property)
-
-; Type Constructors
-(data_constructor_argument label: (label) @property ":" @property)
-
-; Type Parameters
-(type_parameter) @parameter
+(data_constructor_argument (label) @property)
 
 ; Types
-((type_identifier) @type (#not-any-of? @type "True" "False"))
+[
+  (type_identifier)
+  (type_parameter)
+  (type_var)
+] @type
 
-; Booleans
-((type_identifier) @boolean (#any-of? @boolean "True" "False"))
+((type_identifier) @type.builtin
+  (#any-of? @type.builtin "Int" "Float" "String" "List"))
 
-; Type Variables
-(type_var) @type
+; Type Qualifiers
+[
+  "const"
+  "external"
+  (opacity_modifier)
+  (visibility_modifier)
+] @type.qualifier
 
 ; Tuples
 (tuple_access index: (integer) @operator)
 
 ; Functions
 (function name: (identifier) @function)
-(public_function name: (identifier) @function)
-(function_call function: (identifier) @function)
-(function_call function: (field_access field: (label) @function))
+(function_call function: (identifier) @function.call)
+(function_call function: (field_access field: (label) @function.call))
 
 ; External Functions
-(public_external_function name: (identifier) @function)
 (external_function name: (identifier) @function)
 (external_function_body (string) @namespace . (string) @function)
+
+; Constructors
+(constructor_name) @type @constructor
+
+([(type_identifier) (constructor_name)] @constant.builtin
+  (#any-of? @constant.builtin "Ok" "Error"))
+
+; Booleans
+((constructor_name) @boolean (#any-of? @boolean "True" "False"))
 
 ; Pipe Operator
 (binary_expression operator: "|>" right: (identifier) @function)

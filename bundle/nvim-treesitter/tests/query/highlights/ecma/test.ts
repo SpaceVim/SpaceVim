@@ -15,11 +15,18 @@ class H {
   public_method() {
     //  ^ method
     return this.#private_method();
-    //                ^ method
+    //                ^ method.call
   }
 
   ok() {
     return this.public_method();
-    //                ^ method
+    //                ^ method.call
   }
+}
+
+function doSomething(options) {
+  const {
+    enable: on,
+    //    ^ punctuation.delimiter
+  } = options
 }

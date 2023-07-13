@@ -9,6 +9,18 @@ local ghost_text_view = {}
 
 ghost_text_view.ns = vim.api.nvim_create_namespace('cmp:GHOST_TEXT')
 
+local has_inline = (function()
+  return (pcall(function()
+    local id = vim.api.nvim_buf_set_extmark(0, ghost_text_view.ns, 0, 0, {
+      virt_text = { { ' ', 'Comment' } },
+      virt_text_pos = 'inline',
+      hl_mode = 'combine',
+      ephemeral = true,
+    })
+    vim.api.nvim_buf_del_extmark(0, ghost_text_view.ns, id)
+  end))
+end)()
+
 ghost_text_view.new = function()
   local self = setmetatable({}, { __index = ghost_text_view })
   self.win = nil
@@ -17,7 +29,7 @@ ghost_text_view.new = function()
     on_win = function(_, win)
       return win == self.win
     end,
-    on_line = function(_)
+    on_line = function(_, _, _, on_row)
       local c = config.get().experimental.ghost_text
       if not c then
         return
@@ -28,17 +40,23 @@ ghost_text_view.new = function()
       end
 
       local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-      local line = vim.api.nvim_get_current_line()
-      if string.sub(line, col + 1) ~= '' then
+      if on_row ~= row - 1 then
         return
+      end
+
+      local line = vim.api.nvim_get_current_line()
+      if not has_inline then
+        if string.sub(line, col + 1) ~= '' then
+          return
+        end
       end
 
       local text = self.text_gen(self, line, col)
       if #text > 0 then
         vim.api.nvim_buf_set_extmark(0, ghost_text_view.ns, row - 1, col, {
           right_gravity = false,
-          virt_text = { { text, c.hl_group or 'Comment' } },
-          virt_text_pos = 'overlay',
+          virt_text = { { text, type(c) == 'table' and c.hl_group or 'Comment' } },
+          virt_text_pos = has_inline and 'inline' or 'overlay',
           hl_mode = 'combine',
           ephemeral = true,
         })
@@ -76,6 +94,10 @@ end
 ---@param e cmp.Entry
 ghost_text_view.show = function(self, e)
   if not api.is_insert_mode() then
+    return
+  end
+  local c = config.get().experimental.ghost_text
+  if not c then
     return
   end
   local changed = e ~= self.entry

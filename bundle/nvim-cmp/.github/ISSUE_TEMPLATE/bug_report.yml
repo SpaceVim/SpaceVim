@@ -7,23 +7,16 @@ body:
     attributes:
       label: FAQ
       options:
-        - label: I have checked the [FAQ](https://github.com/hrsh7th/nvim-cmp/blob/15f08a8faa22d52480cdcb9ef9ca698120f04363/doc/cmp.txt#L616) and it didn't resolve my problem.
+        - label: I have checked the [FAQ](https://github.com/hrsh7th/nvim-cmp/blob/main/doc/cmp.txt) and it didn't resolve my problem.
           required: true
 
   - type: checkboxes
-    id: issue-prerequisite
+    id: announcement-prerequisite
     attributes:
-      label: Issues
+      label: Announcement
       options:
-        - label: I have checked [existing issues](https://github.com/hrsh7th/nvim-cmp/issues) and there are no open or closed issues with the same problem.
+        - label: I have checked [Breaking change announcement](https://github.com/hrsh7th/nvim-cmp/issues/231).
           required: true
-
-  - type: input
-    attributes:
-      label: "Neovim Version"
-      description: "`nvim --version`:"
-    validations:
-      required: true
 
   - type: textarea
     attributes:
@@ -34,6 +27,10 @@ body:
         2. Edit `~/cmp-repro.vim` for reproducing the issue
         3. Open `nvim -u ~/cmp-repro.vim`
         4. Check reproduction step
+      value: |
+        ```vim
+        
+        ```
     validations:
       required: true
 

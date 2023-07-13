@@ -1,0 +1,21 @@
+name: "release"
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  luarocks-upload:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: LuaRocks Upload
+        uses: nvim-neorocks/luarocks-tag-release@v5
+        env:
+          LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
+        with:
+          summary: "A collection of common configurations for Neovim's built-in language server client."
+          detailed_description: |
+            This plugin allows for declaratively configuring,
+            launching, and initializing language servers you have installed on your system.
+            Language server configurations are community-maintained.
+          licence: "Apache/2.0"
