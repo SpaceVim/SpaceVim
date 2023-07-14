@@ -96,6 +96,7 @@ end
 function M.paste()
   url = ''
   local context = get_visual_selection()
+  log.debug('context is:\n' .. context)
   if context == '' then
     log.info('no selection text, skipped.')
     return

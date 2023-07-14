@@ -6,6 +6,13 @@
 " License: GPLv3
 "=============================================================================
 
+if has('nvim-0.9.0')
+  function! SpaceVim#plugins#pastebin#paste() abort
+    lua require('spacevim.plugin.pastebin').paste()
+  endfunction
+  finish
+endif
+
 
 let s:JOB = SpaceVim#api#import('job')
 let s:LOGGER =SpaceVim#logger#derive('pastebin')
