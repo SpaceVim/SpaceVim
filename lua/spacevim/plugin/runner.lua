@@ -513,4 +513,9 @@ function M.select_language()
   
 end
 
+
+function M.get(ft)
+  return runners[ft] or ''
+end
+
 return M
