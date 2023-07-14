@@ -66,19 +66,22 @@ local function get_visual_selection()
   return table.concat(lines, '\n')
 end
 
-local function on_stdout(id, data)
+local function on_stdout(_, data)
   for _, v in ipairs(data) do
     log.info(v)
+    if #v > 0 then
+      url = v
+    end
   end
 end
 
-local function on_stderr(id, data)
+local function on_stderr(_, data)
   for _, v in ipairs(data) do
     log.warn(v)
   end
 end
 
-local function on_exit(id, code, single)
+local function on_exit(_, code, single)
   job_id = -1
   if code == 0 and single == 0 and url ~= '' then
     vim.fn.setreg('+', url .. '.txt')
