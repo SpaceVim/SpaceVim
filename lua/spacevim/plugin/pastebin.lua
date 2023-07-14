@@ -40,13 +40,13 @@ local function get_visual_selection()
       1,
       column_end - eval(function()
         if vim.o.selection == 'inclusive' then
-          return 1
+          return 0
         else
-          return 2
+          return 1
         end
       end)
     )
-    lines[1] = string.sub(lines[1], column_start - 1, #lines[1])
+    lines[1] = string.sub(lines[1], column_start, #lines[1])
   else
     for i = 1, #lines, 1 do
       lines[i] = string.sub(
@@ -54,9 +54,9 @@ local function get_visual_selection()
         1,
         column_end - eval(function()
           if vim.o.selection == 'inclusive' then
-            return 1
+            return 0
           else
-            return 2
+            return 1
           end
         end)
       )
