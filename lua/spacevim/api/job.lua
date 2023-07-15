@@ -95,9 +95,24 @@ function M.start(cmd, opts)
   local exit_cb
   if opts.on_exit then
     exit_cb = function(code, singin)
+      if stdout and stdout:is_active() then
+        stdout:close()
+      end
+      if stderr and stderr:is_active() then
+        stderr:close()
+      end
       vim.schedule(function()
         opts.on_exit(current_id, code, singin)
       end)
+    end
+  else
+    exit_cb = function(code, singin)
+      if stdout and stdout:is_active() then
+        stdout:close()
+      end
+      if stderr and stderr:is_active() then
+        stderr:close()
+      end
     end
   end
 
@@ -222,16 +237,6 @@ function M.stop(id)
   local stdin = jobobj.state.stdin
   if stdin and stdin:is_active() then
     stdin:close()
-  end
-  -- close stdio
-  local stdout = jobobj.state.stout
-  if stdout and stdout:is_active() then
-    stdout:close()
-  end
-  -- close stdio
-  local stderr = jobobj.state.stderr
-  if stderr and stderr:is_active() then
-    stderr:close()
   end
 
   local handle = jobobj.handle
