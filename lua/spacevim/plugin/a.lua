@@ -69,10 +69,11 @@ function M.alt(request_parse, ...)
     local file = sp_file.unify_path(fn.bufname('%'), ':.')
     alt = M.get_alt(file, conf_file_path, request_parse, alt_type)
   end
-  logger.info('  > found alternate file: ' .. alt)
   if alt ~= nil and alt ~= '' then
+    logger.info('  > found alternate file: ' .. alt)
     cmd('e ' .. alt)
   else
+    logger.info('  > failed to find alternate file')
     nt.notify('failed to find alternate file!', 'WarningMsg')
   end
 end
