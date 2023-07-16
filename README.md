@@ -5,6 +5,7 @@
 </h1>
 
 [Quick Start Guide](https://spacevim.org/quick-start-guide/) \|
+[FAQ](https://spacevim.org/faq/) \|
 [Chat](https://app.element.io/#/room/#spacevim:matrix.org) \|
 [Twitter](https://twitter.com/SpaceVim)
 
@@ -32,32 +33,9 @@ SpaceVim is a vim configuration inspired by spacemacs, it is compatible with Vim
 
 [![welcome page](https://img.spacevim.org/release-v2.2.0.png)](https://github.com/SpaceVim/SpaceVim#screenshots)
 
-## Project Layout
-
-```txt
-├─ .ci/                           build automation
-├─ .github/                       issue/PR templates
-├─ .SpaceVim.d/                   project specific configuration
-├─ after/                         overrule or add to the distributed defaults
-├─ autoload/SpaceVim.vim          SpaceVim core file
-├─ autoload/SpaceVim/api/         Public APIs
-├─ autoload/SpaceVim/layers/      available layers
-├─ autoload/SpaceVim/plugins/     builtin plugins
-├─ autoload/SpaceVim/mapping/     mapping guide
-├─ colors/                        default colorscheme
-├─ docker/                        docker image generator
-├─ bundle/                        bundle plugins
-├─ lua/spacevim/plugin            builtin plugins(lua)
-├─ doc/                           help(cn/en)
-├─ docs/                          website(cn/en)
-├─ wiki/                          wiki(cn/en)
-├─ bin/                           executable
-└─ test/                          tests
-```
-
 ## Contribute
 
-This project wouldn't exist without all the people who [contributed](CONTRIBUTING.md),
+This project wouldn't exist without all the people who contributed,
 We are thankful for any contributions from the community.
 
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
