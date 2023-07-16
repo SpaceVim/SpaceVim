@@ -35,7 +35,7 @@ SpaceVim is a vim configuration inspired by spacemacs, it is compatible with Vim
 
 ## Contribute
 
-This project wouldn't exist without all the people who contributed,
+This project wouldn't exist without all the people who [contributed](https://spacevim.org/development/),
 We are thankful for any contributions from the community.
 
 <a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
