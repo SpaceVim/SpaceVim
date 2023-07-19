@@ -208,7 +208,7 @@ function vim.opt.errorfile:get()end
 --- @operator add: vim.opt.errorformat
 --- @operator sub: vim.opt.errorformat
 --- @operator pow: vim.opt.errorformat
-vim.opt.errorformat = "%*[^\"]\"%f\"%*\\D%l: %m,\"%f\"%*\\D%l: %m,%-G%f:%l: (Each undeclared identifier is reported only once,%-G%f:%l: for each function it appears in.),%-GIn file included from %f:%l:%c:,%-GIn file included from %f:%l:%c\\,,%-GIn file included from %f:%l:%c,%-GIn file included from %f:%l,%-G%*[ ]from %f:%l:%c,%-G%*[ ]from %f:%l:,%-G%*[ ]from %f:%l\\,,%-G%*[ ]from %f:%l,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,\"%f\"\\, line %l%*\\D%c%*[^ ] %m,%D%*\\a[%*\\d]: Entering directory %*[`']%f',%X%*\\a[%*\\d]: Leaving directory %*[`']%f',%D%*\\a: Entering directory %*[`']%f',%X%*\\a: Leaving directory %*[`']%f',%DMaking %*\\a in %f,%f|%l| %m"
+vim.opt.errorformat = "%*[^\"]\"%f\"%*\\D%l: %m,\"%f\"%*\\D%l: %m,%-Gg%\\?make[%*\\d]: *** [%f:%l:%m,%-Gg%\\?make: *** [%f:%l:%m,%-G%f:%l: (Each undeclared identifier is reported only once,%-G%f:%l: for each function it appears in.),%-GIn file included from %f:%l:%c:,%-GIn file included from %f:%l:%c\\,,%-GIn file included from %f:%l:%c,%-GIn file included from %f:%l,%-G%*[ ]from %f:%l:%c,%-G%*[ ]from %f:%l:,%-G%*[ ]from %f:%l\\,,%-G%*[ ]from %f:%l,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,\"%f\"\\, line %l%*\\D%c%*[^ ] %m,%D%*\\a[%*\\d]: Entering directory %*[`']%f',%X%*\\a[%*\\d]: Leaving directory %*[`']%f',%D%*\\a: Entering directory %*[`']%f',%X%*\\a: Leaving directory %*[`']%f',%DMaking %*\\a in %f,%f|%l| %m"
 vim.opt.efm = vim.opt.errorformat
 --- @return string[]
 function vim.opt.errorformat:get()end
@@ -492,7 +492,7 @@ function vim.opt.fileignorecase:get()end
 -- 	one dot may appear.
 -- 	This option is not copied to another buffer, independent of the `'s'`  or
 -- 	`'S'`  flag in `'cpoptions'` .
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 --- @class vim.opt.filetype: vim.Option,string
 --- @operator add: vim.opt.filetype
 --- @operator sub: vim.opt.filetype
@@ -647,7 +647,9 @@ function vim.opt.foldenable:get()end
 -- `'foldexpr'`  `'fde'` 	string (default: "0")
 -- 			local to window
 -- 	The expression used for when `'foldmethod'`  is "expr".  It is evaluated
--- 	for each line to obtain its fold level.  See |fold-expr|.
+-- 	for each line to obtain its fold level.  The context is set to the
+-- 	script where `'foldexpr'`  was set, script-local items can be accessed.
+-- 	See |fold-expr| for the usage.
 -- 
 -- 	The expression will be evaluated in the |sandbox| if set from a
 -- 	modeline, see |sandbox-option|.
@@ -793,7 +795,7 @@ function vim.opt.foldnestmax:get()end
 -- 
 -- 		item		commands ~
 -- 		all		any
--- 		block		"(", "{", "[[", "[{", etc.
+-- 		block		(, {, [[, [{, etc.
 -- 		hor		horizontal movements: "l", "w", "fx", etc.
 -- 		insert		any command in Insert mode
 -- 		jump		far jumps: "G", "gg", etc.
@@ -826,7 +828,9 @@ function vim.opt.foldopen:get()end
 -- `'foldtext'`  `'fdt'` 	string (default: "foldtext()")
 -- 			local to window
 -- 	An expression which is used to specify the text displayed for a closed
--- 	fold.  See |fold-foldtext|.
+-- 	fold.  The context is set to the script where `'foldexpr'`  was set,
+-- 	script-local items can be accessed.  See |fold-foldtext| for the
+-- 	usage.
 -- 
 -- 	The expression will be evaluated in the |sandbox| if set from a
 -- 	modeline, see |sandbox-option|.
@@ -874,7 +878,9 @@ function vim.opt.foldtext:get()end
 -- 	the script ID (|local-function|). Example: >
 -- 		set formatexpr=s:MyFormatExpr()
 -- 		set formatexpr=<SID>SomeFormatExpr()
--- <
+-- <	Otherwise, the expression is evaluated in the context of the script
+-- 	where the option was set, thus script-local items are available.
+-- 
 -- 	The expression will be evaluated in the |sandbox| when set from a
 -- 	modeline, see |sandbox-option|.  That stops the option from working,
 -- 	since changing the buffer text is not allowed.
@@ -1676,12 +1682,11 @@ vim.opt.icm = vim.opt.inccommand
 --- @return string
 function vim.opt.inccommand:get()end
 
--- `'include'`  `'inc'` 		string	(default "^\sinclude")
+-- `'include'`  `'inc'` 		string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	Pattern to be used to find an include command.  It is a search
--- 	pattern, just like for the "/" command (See |pattern|).  The default
--- 	value is for C programs.  This option is used for the commands "[i",
--- 	"]I", "[d", etc.
+-- 	pattern, just like for the "/" command (See |pattern|).  This option
+-- 	is used for the commands "[i", "]I", "[d", etc.
 -- 	Normally the `'isfname'`  option is used to recognize the file name that
 -- 	comes after the matched pattern.  But if "\zs" appears in the pattern
 -- 	then the text matched from "\zs" to the end, or until "\ze" if it
@@ -1693,7 +1698,7 @@ function vim.opt.inccommand:get()end
 --- @operator add: vim.opt.include
 --- @operator sub: vim.opt.include
 --- @operator pow: vim.opt.include
-vim.opt.include = "^\\s*#\\s*include"
+vim.opt.include = ""
 vim.opt.inc = vim.opt.include
 --- @return string
 function vim.opt.include:get()end
@@ -1715,9 +1720,11 @@ function vim.opt.include:get()end
 -- 
 -- 	If the expression starts with s: or |<SID>|, then it is replaced with
 -- 	the script ID (|local-function|). Example: >
--- 		set includeexpr=s:MyIncludeExpr(v:fname)
--- 		set includeexpr=<SID>SomeIncludeExpr(v:fname)
--- <
+-- 		setlocal includeexpr=s:MyIncludeExpr(v:fname)
+-- 		setlocal includeexpr=<SID>SomeIncludeExpr(v:fname)
+-- <	Otherwise, the expression is evaluated in the context of the script
+-- 	where the option was set, thus script-local items are available.
+-- 
 -- 	The expression will be evaluated in the |sandbox| when set from a
 -- 	modeline, see |sandbox-option|.
 -- 	This option cannot be set in a modeline when `'modelineexpr'`  is off.
@@ -1786,11 +1793,14 @@ function vim.opt.incsearch:get()end
 -- 	The expression is evaluated with |v:lnum| set to the line number for
 -- 	which the indent is to be computed.  The cursor is also in this line
 -- 	when the expression is evaluated (but it may be moved around).
+-- 
 -- 	If the expression starts with s: or |<SID>|, then it is replaced with
 -- 	the script ID (|local-function|). Example: >
 -- 		set indentexpr=s:MyIndentExpr()
 -- 		set indentexpr=<SID>SomeIndentExpr()
--- <
+-- <	Otherwise, the expression is evaluated in the context of the script
+-- 	where the option was set, thus script-local items are available.
+-- 
 -- 	The expression must return the number of spaces worth of indent.  It
 -- 	can return "-1" to keep the current indent (this means `'autoindent'`  is
 -- 	used for the indent).
@@ -1952,7 +1962,7 @@ function vim.opt.isident:get()end
 -- 	that is not white space or punctuation).
 -- 	For C programs you could use "a-z,A-Z,48-57,_,.,-,>".
 -- 	For a help file it is set to all non-blank printable characters except
--- 	`'*'` , `'"'`  and `'|'`  (so that CTRL-] on a command finds the help for that
+-- 	"*", `'"'`  and `'|'`  (so that CTRL-] on a command finds the help for that
 -- 	command).
 -- 	When the `'lisp'`  option is on the `'-'`  character is always included.
 -- 	This option also influences syntax highlighting, unless the syntax
@@ -2044,7 +2054,7 @@ function vim.opt.jumpoptions:get()end
 -- 	Setting this option to a valid keymap name has the side effect of
 -- 	setting `'iminsert'`  to one, so that the keymap becomes effective.
 -- 	`'imsearch'`  is also set to one, unless it was -1
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 --- @class vim.opt.keymap: vim.Option,string
 --- @operator add: vim.opt.keymap
 --- @operator sub: vim.opt.keymap
@@ -2064,7 +2074,6 @@ function vim.opt.keymap:get()end
 -- 	   stopsel	Using a not-shifted special key stops selection.
 -- 	Special keys in this context are the cursor keys, <End>, <Home>,
 -- 	<PageUp> and <PageDown>.
--- 	The `'keymodel'`  option is set by the |:behave| command.
 --- @class vim.opt.keymodel: vim.Option,string[]
 --- @operator add: vim.opt.keymodel
 --- @operator sub: vim.opt.keymodel
@@ -2158,7 +2167,7 @@ function vim.opt.langmap:get()end
 -- 	matter what $LANG is set to: >
 -- 		:set langmenu=nl_NL.ISO_8859-1
 -- <	When `'langmenu'`  is empty, |v:lang| is used.
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 -- 	If your $LANG is set to a non-English language but you do want to use
 -- 	the English menus: >
 -- 		:set langmenu=none
@@ -2280,7 +2289,7 @@ function vim.opt.lines:get()end
 
 -- `'linespace'`  `'lsp'` 	number	(default 0)
 -- 			global
--- 			{only in the GUI}
+-- 			only in the GUI
 -- 	Number of pixel lines inserted between characters.  Useful if the font
 -- 	uses the full character cell height, making lines touch each other.
 -- 	When non-zero there is room for underlining.
@@ -2707,9 +2716,9 @@ function vim.opt.menuitems:get()end
 -- 	per word depends very much on how similar the words are, that's why
 -- 	this tuning is complicated.
 -- 
--- 	There are three numbers, separated by commas:
+-- 	There are three numbers, separated by commas: >
 -- 		{start},{inc},{added}
--- 
+-- <
 -- 	For most languages the uncompressed word tree fits in memory.  {start}
 -- 	gives the amount of memory in Kbyte that can be used before any
 -- 	compression is done.  It should be a bit smaller than the amount of
@@ -2886,20 +2895,6 @@ function vim.opt.more:get()end
 -- 	`'mousemodel'` 	what mouse button does which action
 -- 	`'mousehide'` 	hide mouse pointer while typing text
 -- 	`'selectmode'` 	whether to start Select mode or Visual mode
--- 
--- 	The :behave command provides some "profiles" for mouse behavior.
--- 
--- 	:be[have] {model}	Set behavior for mouse and selection.  Valid
--- 				arguments are:
--- 				   mswin	MS-Windows behavior
--- 				   xterm	Xterm behavior
--- 
--- 				Using ":behave" changes these options:
--- 				option		mswin			xterm	~
--- 				`'selectmode'` 	"mouse,key"		""
--- 				`'mousemodel'` 	"popup"			"extend"
--- 				`'keymodel'` 	"startsel,stopsel"	""
--- 				`'selection'` 	"exclusive"		"inclusive"
 --- @class vim.opt.mouse: vim.Option,string[]
 --- @operator add: vim.opt.mouse
 --- @operator sub: vim.opt.mouse
@@ -2926,7 +2921,7 @@ function vim.opt.mousefocus:get()end
 
 -- `'mousehide'`  `'mh'` 	boolean	(default on)
 -- 			global
--- 			{only works in the GUI}
+-- 			only in the GUI
 -- 	When on, the mouse pointer is hidden when characters are typed.
 -- 	The mouse pointer is restored when the mouse is moved.
 --- @class vim.opt.mousehide: vim.Option,boolean
@@ -2987,8 +2982,6 @@ function vim.opt.mousehide:get()end
 -- 	the "g" key before using the mouse:
 -- 	    "g<LeftMouse>"  is "<C-LeftMouse>	(jump to tag under mouse click)
 -- 	    "g<RightMouse>" is "<C-RightMouse>	("CTRL-T")
--- 
--- 	The `'mousemodel'`  option is set by the |:behave| command.
 --- @class vim.opt.mousemodel: vim.Option,string
 --- @operator add: vim.opt.mousemodel
 --- @operator sub: vim.opt.mousemodel
@@ -3236,7 +3229,7 @@ function vim.opt.omnifunc:get()end
 
 -- `'opendevice'`  `'odev'` 	boolean	(default off)
 -- 			global
--- 			{only for Windows}
+-- 			only for Windows
 -- 	Enable reading and writing from devices.  This may get Vim stuck on a
 -- 	device that can be opened but doesn't actually do the I/O.  Therefore
 -- 	it is off by default.
@@ -3270,7 +3263,8 @@ vim.opt.opfunc = vim.opt.operatorfunc
 function vim.opt.operatorfunc:get()end
 
 -- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
--- 	Directories used to find packages.  See |packages| and |rtp-packages|.
+-- 	Directories used to find packages.
+-- 	See |packages| and |packages-runtimepath|.
 --- @class vim.opt.packpath: vim.Option,string[]
 --- @operator add: vim.opt.packpath
 --- @operator sub: vim.opt.packpath
@@ -3340,7 +3334,7 @@ function vim.opt.patchexpr:get()end
 -- 	Using `'patchmode'`  for compressed files appends the extension at the
 -- 	end (e.g., "file.gz.orig"), thus the resulting name isn't always
 -- 	recognized as a compressed file.
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 --- @class vim.opt.patchmode: vim.Option,string
 --- @operator add: vim.opt.patchmode
 --- @operator sub: vim.opt.patchmode
@@ -3350,8 +3344,7 @@ vim.opt.pm = vim.opt.patchmode
 --- @return string
 function vim.opt.patchmode:get()end
 
--- `'path'`  `'pa'` 		string	(default on Unix: ".,/usr/include,,"
--- 				   other systems: ".,,")
+-- `'path'`  `'pa'` 		string	(default: ".,,")
 -- 			global or local to buffer |global-local|
 -- 	This is a list of directories which will be searched when using the
 -- 	|gf|, [f, ]f, ^Wf, |:find|, |:sfind|, |:tabfind| and other commands,
@@ -3404,7 +3397,7 @@ function vim.opt.patchmode:get()end
 --- @operator add: vim.opt.path
 --- @operator sub: vim.opt.path
 --- @operator pow: vim.opt.path
-vim.opt.path = ".,/usr/include,,"
+vim.opt.path = ".,,"
 vim.opt.pa = vim.opt.path
 --- @return string[]
 function vim.opt.path:get()end
@@ -3949,6 +3942,9 @@ function vim.opt.scroll:get()end
 -- 	top are deleted if new lines exceed this limit.
 -- 	Minimum is 1, maximum is 100000.
 -- 	Only in |terminal| buffers.
+-- 
+-- 	Note: Lines that are not visible and kept in scrollback are not
+-- 	reflown when the terminal buffer is resized horizontally.
 --- @class vim.opt.scrollback: vim.Option,number
 --- @operator add: vim.opt.scrollback
 --- @operator sub: vim.opt.scrollback
@@ -4095,8 +4091,6 @@ function vim.opt.secure:get()end
 -- 	Note that when "exclusive" is used and selecting from the end
 -- 	backwards, you cannot include the last character of a line, when
 -- 	starting in Normal mode and `'virtualedit'`  empty.
--- 
--- 	The `'selection'`  option is set by the |:behave| command.
 --- @class vim.opt.selection: vim.Option,string
 --- @operator add: vim.opt.selection
 --- @operator sub: vim.opt.selection
@@ -4115,7 +4109,6 @@ function vim.opt.selection:get()end
 -- 	   key		when using shifted special keys
 -- 	   cmd		when using "v", "V" or CTRL-V
 -- 	See |Select-mode|.
--- 	The `'selectmode'`  option is set by the |:behave| command.
 --- @class vim.opt.selectmode: vim.Option,string[]
 --- @operator add: vim.opt.selectmode
 --- @operator sub: vim.opt.selectmode
@@ -4354,9 +4347,9 @@ function vim.opt.shadafile:get()end
 -- 
 -- 	To use PowerShell: >
 -- 		let &shell = executable(`'pwsh'` ) ? `'pwsh'`  : `'powershell'` 
--- 		let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[`''` Out-File:Encoding`''` ]=`''` utf8`''` ;'
+-- 		let &shellcmdflag = '-NoLogo -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();$PSDefaultParameterValues[`''` Out-File:Encoding`''` ]=`''` utf8`''` ;Remove-Alias -Force -ErrorAction SilentlyContinue tee;'
 -- 		let &shellredir = '2>&1 | %%{ "$_" } | Out-File %s; exit $LastExitCode'
--- 		let &shellpipe  = '2>&1 | %%{ "$_" } | Tee-Object %s; exit $LastExitCode'
+-- 		let &shellpipe  = '2>&1 | %%{ "$_" } | tee %s; exit $LastExitCode'
 -- 		set shellquote= shellxquote=
 -- 
 -- <	This option cannot be set from a |modeline| or in the |sandbox|, for
@@ -4488,7 +4481,7 @@ function vim.opt.shellredir:get()end
 
 -- `'shellslash'`  `'ssl'` 	boolean	(default off)
 -- 			global
--- 			{only for MS-Windows}
+-- 			only for MS-Windows
 -- 	When set, a forward slash is used when expanding file names.  This is
 -- 	useful when a Unix-like shell is used instead of cmd.exe.  Backward
 -- 	slashes can still be typed, but they are changed to forward slashes by
@@ -4582,7 +4575,7 @@ function vim.opt.shiftround:get()end
 -- 			local to buffer
 -- 	Number of spaces to use for each step of (auto)indent.  Used for
 -- 	|`'cindent'` |, |>>|, |<<|, etc.
--- 	When zero the `'ts'`  value will be used.  Use the |shiftwidth()|
+-- 	When zero the `'tabstop'`  value will be used.  Use the |shiftwidth()|
 -- 	function to get the effective shiftwidth value.
 --- @class vim.opt.shiftwidth: vim.Option,number
 --- @operator add: vim.opt.shiftwidth
@@ -4593,7 +4586,7 @@ vim.opt.sw = vim.opt.shiftwidth
 --- @return number
 function vim.opt.shiftwidth:get()end
 
--- `'shortmess'`  `'shm'` 	string	(default "filnxtToOF")
+-- `'shortmess'`  `'shm'` 	string	(default "filnxtToOCF")
 -- 			global
 -- 	This option helps to avoid all the |hit-enter| prompts caused by file
 -- 	messages, for example  with CTRL-G, and to avoid some other messages.
@@ -4655,7 +4648,7 @@ function vim.opt.shiftwidth:get()end
 --- @operator add: vim.opt.shortmess
 --- @operator sub: vim.opt.shortmess
 --- @operator pow: vim.opt.shortmess
-vim.opt.shortmess = "filnxtToOF"
+vim.opt.shortmess = "filnxtToOCF"
 vim.opt.shm = vim.opt.shortmess
 --- @return string[]
 function vim.opt.shortmess:get()end

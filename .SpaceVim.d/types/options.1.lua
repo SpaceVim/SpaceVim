@@ -1,30 +1,5 @@
 ---@meta
 
--- `'cursorline'`  `'cul'` 	boolean	(default off)
--- 			local to window
--- 	Highlight the text line of the cursor with CursorLine |hl-CursorLine|.
--- 	Useful to easily spot the cursor.  Will make screen redrawing slower.
--- 	When Visual mode is active the highlighting isn't used to make it
--- 	easier to see the selected text.
-vim.wo.cursorline = false
-vim.wo.cul = vim.wo.cursorline
--- `'cursorlineopt'`  `'culopt'`  string (default: "number,line")
--- 			local to window
--- 	Comma-separated list of settings for how `'cursorline'`  is displayed.
--- 	Valid values:
--- 	"line"		Highlight the text line of the cursor with
--- 			CursorLine |hl-CursorLine|.
--- 	"screenline"	Highlight only the screen line of the cursor with
--- 			CursorLine |hl-CursorLine|.
--- 	"number"	Highlight the line number of the cursor with
--- 			CursorLineNr |hl-CursorLineNr|.
--- 
--- 	Special value:
--- 	"both"		Alias for the values "line,number".
--- 
--- 	"line" and "screenline" cannot be used together.
-vim.wo.cursorlineopt = "both"
-vim.wo.culopt = vim.wo.cursorlineopt
 -- `'diff'` 			boolean	(default off)
 -- 			local to window
 -- 	Join the current window in the group of windows that shows differences
@@ -122,7 +97,9 @@ vim.wo.fen = vim.wo.foldenable
 -- `'foldexpr'`  `'fde'` 	string (default: "0")
 -- 			local to window
 -- 	The expression used for when `'foldmethod'`  is "expr".  It is evaluated
--- 	for each line to obtain its fold level.  See |fold-expr|.
+-- 	for each line to obtain its fold level.  The context is set to the
+-- 	script where `'foldexpr'`  was set, script-local items can be accessed.
+-- 	See |fold-expr| for the usage.
 -- 
 -- 	The expression will be evaluated in the |sandbox| if set from a
 -- 	modeline, see |sandbox-option|.
@@ -190,7 +167,9 @@ vim.wo.fdn = vim.wo.foldnestmax
 -- `'foldtext'`  `'fdt'` 	string (default: "foldtext()")
 -- 			local to window
 -- 	An expression which is used to specify the text displayed for a closed
--- 	fold.  See |fold-foldtext|.
+-- 	fold.  The context is set to the script where `'foldexpr'`  was set,
+-- 	script-local items can be accessed.  See |fold-foldtext| for the
+-- 	usage.
 -- 
 -- 	The expression will be evaluated in the |sandbox| if set from a
 -- 	modeline, see |sandbox-option|.
@@ -529,6 +508,18 @@ vim.wo.siso = vim.wo.sidescrolloff
 -- 	during line deletion.
 vim.wo.signcolumn = "auto"
 vim.wo.scl = vim.wo.signcolumn
+-- `'smoothscroll'`  `'sms'` 	boolean  (default off)
+-- 			local to window
+-- 	Scrolling works with screen lines.  When `'wrap'`  is set and the first
+-- 	line in the window wraps part of it may not be visible, as if it is
+-- 	above the window. "<<<" is displayed at the start of the first line,
+-- 	highlighted with |hl-NonText|.
+-- 	You may also want to add "lastline" to the `'display'`  option to show as
+-- 	much of the last line as possible.
+-- 	NOTE: only partly implemented, currently works with CTRL-E, CTRL-Y
+-- 	and scrolling with the mouse.
+vim.wo.smoothscroll = false
+vim.wo.sms = vim.wo.smoothscroll
 -- `'spell'` 			boolean	(default off)
 -- 			local to window
 -- 	When on spell checking will be done.  See |spell|.
@@ -929,9 +920,6 @@ vim.bo = {}
 -- 	line.
 -- 	When `'smartindent'`  or `'cindent'`  is on the indent is changed in
 -- 	a different way.
--- 	{small difference from Vi: After the indent is deleted when typing
--- 	<Esc> or <CR>, the cursor position when moving up or down is after the
--- 	deleted indent; Vi puts the cursor somewhere in the deleted indent}.
 vim.bo.autoindent = true
 vim.bo.ai = vim.bo.autoindent
 -- `'autoread'`  `'ar'` 		boolean	(default on)
@@ -1207,8 +1195,8 @@ vim.bo.com = vim.bo.comments
 -- `'commentstring'`  `'cms'` 	string	(default "")
 -- 			local to buffer
 -- 	A template for a comment.  The "%s" in the value is replaced with the
--- 	comment text.  Currently only used to add markers for folding, see
--- 	|fold-marker|.
+-- 	comment text.  For example, C uses "//". Currently only used to
+-- 	add markers for folding, see |fold-marker|.
 vim.bo.commentstring = ""
 vim.bo.cms = vim.bo.commentstring
 -- `'complete'`  `'cpt'` 	string	(default: ".,w,b,u,t")
@@ -1271,17 +1259,16 @@ vim.bo.cfu = vim.bo.completefunc
 -- 	See `'preserveindent'` .
 vim.bo.copyindent = false
 vim.bo.ci = vim.bo.copyindent
--- `'define'`  `'def'` 		string	(default "^\sdefine")
+-- `'define'`  `'def'` 		string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	Pattern to be used to find a macro definition.  It is a search
 -- 	pattern, just like for the "/" command.  This option is used for the
 -- 	commands like "[i" and "[d" |include-search|.  The `'isident'`  option is
--- 	used to recognize the defined name after the match:
+-- 	used to recognize the defined name after the match: >
 -- 		{match with `'define'` }{non-ID chars}{defined name}{non-ID char}
--- 	See |option-backslash| about inserting backslashes to include a space
+-- <	See |option-backslash| about inserting backslashes to include a space
 -- 	or backslash.
--- 	The default value is for C programs.  For C++ this value would be
--- 	useful, to include const type declarations: >
+-- 	For C++ this value would be useful, to include const type declarations: >
 -- 		^\(#\s\s[a-z]*\)
 -- <	You can also use "\ze" just before the name and continue the pattern
 -- 	to check what is following.  E.g. for Javascript, if a function is
@@ -1293,7 +1280,7 @@ vim.bo.ci = vim.bo.copyindent
 -- 	To avoid that use `:let` with a single quote string: >
 -- 		let &l:define = `'^\s=\s*function('` 
 -- <
-vim.bo.define = "^\\s*#\\s*define"
+vim.bo.define = ""
 vim.bo.def = vim.bo.define
 -- `'dictionary'`  `'dict'` 	string	(default "")
 -- 			global or local to buffer |global-local|
@@ -1362,7 +1349,7 @@ vim.bo.ep = vim.bo.equalprg
 -- 			global or local to buffer |global-local|
 -- 	Scanf-like description of the format for the lines in the error file
 -- 	(see |errorformat|).
-vim.bo.errorformat = "%*[^\"]\"%f\"%*\\D%l: %m,\"%f\"%*\\D%l: %m,%-G%f:%l: (Each undeclared identifier is reported only once,%-G%f:%l: for each function it appears in.),%-GIn file included from %f:%l:%c:,%-GIn file included from %f:%l:%c\\,,%-GIn file included from %f:%l:%c,%-GIn file included from %f:%l,%-G%*[ ]from %f:%l:%c,%-G%*[ ]from %f:%l:,%-G%*[ ]from %f:%l\\,,%-G%*[ ]from %f:%l,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,\"%f\"\\, line %l%*\\D%c%*[^ ] %m,%D%*\\a[%*\\d]: Entering directory %*[`']%f',%X%*\\a[%*\\d]: Leaving directory %*[`']%f',%D%*\\a: Entering directory %*[`']%f',%X%*\\a: Leaving directory %*[`']%f',%DMaking %*\\a in %f,%f|%l| %m"
+vim.bo.errorformat = "%*[^\"]\"%f\"%*\\D%l: %m,\"%f\"%*\\D%l: %m,%-Gg%\\?make[%*\\d]: *** [%f:%l:%m,%-Gg%\\?make: *** [%f:%l:%m,%-G%f:%l: (Each undeclared identifier is reported only once,%-G%f:%l: for each function it appears in.),%-GIn file included from %f:%l:%c:,%-GIn file included from %f:%l:%c\\,,%-GIn file included from %f:%l:%c,%-GIn file included from %f:%l,%-G%*[ ]from %f:%l:%c,%-G%*[ ]from %f:%l:,%-G%*[ ]from %f:%l\\,,%-G%*[ ]from %f:%l,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,\"%f\"\\, line %l%*\\D%c%*[^ ] %m,%D%*\\a[%*\\d]: Entering directory %*[`']%f',%X%*\\a[%*\\d]: Leaving directory %*[`']%f',%D%*\\a: Entering directory %*[`']%f',%X%*\\a: Leaving directory %*[`']%f',%DMaking %*\\a in %f,%f|%l| %m"
 vim.bo.efm = vim.bo.errorformat
 -- `'expandtab'`  `'et'` 	boolean	(default off)
 -- 			local to buffer
@@ -1455,7 +1442,7 @@ vim.bo.ff = vim.bo.fileformat
 -- 	one dot may appear.
 -- 	This option is not copied to another buffer, independent of the `'s'`  or
 -- 	`'S'`  flag in `'cpoptions'` .
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 vim.bo.filetype = ""
 vim.bo.ft = vim.bo.filetype
 -- `'fixendofline'`  `'fixeol'` 	boolean	(default on)
@@ -1500,7 +1487,9 @@ vim.bo.fixeol = vim.bo.fixendofline
 -- 	the script ID (|local-function|). Example: >
 -- 		set formatexpr=s:MyFormatExpr()
 -- 		set formatexpr=<SID>SomeFormatExpr()
--- <
+-- <	Otherwise, the expression is evaluated in the context of the script
+-- 	where the option was set, thus script-local items are available.
+-- 
 -- 	The expression will be evaluated in the |sandbox| when set from a
 -- 	modeline, see |sandbox-option|.  That stops the option from working,
 -- 	since changing the buffer text is not allowed.
@@ -1598,12 +1587,11 @@ vim.bo.imi = vim.bo.iminsert
 -- 	option to a valid keymap name.
 vim.bo.imsearch = -1
 vim.bo.ims = vim.bo.imsearch
--- `'include'`  `'inc'` 		string	(default "^\sinclude")
+-- `'include'`  `'inc'` 		string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	Pattern to be used to find an include command.  It is a search
--- 	pattern, just like for the "/" command (See |pattern|).  The default
--- 	value is for C programs.  This option is used for the commands "[i",
--- 	"]I", "[d", etc.
+-- 	pattern, just like for the "/" command (See |pattern|).  This option
+-- 	is used for the commands "[i", "]I", "[d", etc.
 -- 	Normally the `'isfname'`  option is used to recognize the file name that
 -- 	comes after the matched pattern.  But if "\zs" appears in the pattern
 -- 	then the text matched from "\zs" to the end, or until "\ze" if it
@@ -1611,7 +1599,7 @@ vim.bo.ims = vim.bo.imsearch
 -- 	that are not in `'isfname'` , such as a space.  You can then use
 -- 	`'includeexpr'`  to process the matched text.
 -- 	See |option-backslash| about including spaces and backslashes.
-vim.bo.include = "^\\s*#\\s*include"
+vim.bo.include = ""
 vim.bo.inc = vim.bo.include
 -- `'includeexpr'`  `'inex'` 	string	(default "")
 -- 			local to buffer
@@ -1630,9 +1618,11 @@ vim.bo.inc = vim.bo.include
 -- 
 -- 	If the expression starts with s: or |<SID>|, then it is replaced with
 -- 	the script ID (|local-function|). Example: >
--- 		set includeexpr=s:MyIncludeExpr(v:fname)
--- 		set includeexpr=<SID>SomeIncludeExpr(v:fname)
--- <
+-- 		setlocal includeexpr=s:MyIncludeExpr(v:fname)
+-- 		setlocal includeexpr=<SID>SomeIncludeExpr(v:fname)
+-- <	Otherwise, the expression is evaluated in the context of the script
+-- 	where the option was set, thus script-local items are available.
+-- 
 -- 	The expression will be evaluated in the |sandbox| when set from a
 -- 	modeline, see |sandbox-option|.
 -- 	This option cannot be set in a modeline when `'modelineexpr'`  is off.
@@ -1652,11 +1642,14 @@ vim.bo.inex = vim.bo.includeexpr
 -- 	The expression is evaluated with |v:lnum| set to the line number for
 -- 	which the indent is to be computed.  The cursor is also in this line
 -- 	when the expression is evaluated (but it may be moved around).
+-- 
 -- 	If the expression starts with s: or |<SID>|, then it is replaced with
 -- 	the script ID (|local-function|). Example: >
 -- 		set indentexpr=s:MyIndentExpr()
 -- 		set indentexpr=<SID>SomeIndentExpr()
--- <
+-- <	Otherwise, the expression is evaluated in the context of the script
+-- 	where the option was set, thus script-local items are available.
+-- 
 -- 	The expression must return the number of spaces worth of indent.  It
 -- 	can return "-1" to keep the current indent (this means `'autoindent'`  is
 -- 	used for the indent).
@@ -1708,7 +1701,7 @@ vim.bo.inf = vim.bo.infercase
 -- 	that is not white space or punctuation).
 -- 	For C programs you could use "a-z,A-Z,48-57,_,.,-,>".
 -- 	For a help file it is set to all non-blank printable characters except
--- 	`'*'` , `'"'`  and `'|'`  (so that CTRL-] on a command finds the help for that
+-- 	"*", `'"'`  and `'|'`  (so that CTRL-] on a command finds the help for that
 -- 	command).
 -- 	When the `'lisp'`  option is on the `'-'`  character is always included.
 -- 	This option also influences syntax highlighting, unless the syntax
@@ -1721,7 +1714,7 @@ vim.bo.isk = vim.bo.iskeyword
 -- 	Setting this option to a valid keymap name has the side effect of
 -- 	setting `'iminsert'`  to one, so that the keymap becomes effective.
 -- 	`'imsearch'`  is also set to one, unless it was -1
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 vim.bo.keymap = ""
 vim.bo.kmp = vim.bo.keymap
 -- `'keywordprg'`  `'kp'` 	string	(default ":Man", Windows: ":help")
@@ -1906,8 +1899,7 @@ vim.bo.nf = vim.bo.nrformats
 -- 	security reasons.
 vim.bo.omnifunc = ""
 vim.bo.ofu = vim.bo.omnifunc
--- `'path'`  `'pa'` 		string	(default on Unix: ".,/usr/include,,"
--- 				   other systems: ".,,")
+-- `'path'`  `'pa'` 		string	(default: ".,,")
 -- 			global or local to buffer |global-local|
 -- 	This is a list of directories which will be searched when using the
 -- 	|gf|, [f, ]f, ^Wf, |:find|, |:sfind|, |:tabfind| and other commands,
@@ -1956,7 +1948,7 @@ vim.bo.ofu = vim.bo.omnifunc
 -- 		:let &path = &path .. "," .. substitute($INCL, `';'` , `','` , `'g'` )
 -- <	Replace the `';'`  with a `':'`  or whatever separator is used.  Note that
 -- 	this doesn't work when $INCL contains a comma or white space.
-vim.bo.path = ".,/usr/include,,"
+vim.bo.path = ".,,"
 vim.bo.pa = vim.bo.path
 -- `'preserveindent'`  `'pi'` 	boolean	(default off)
 -- 			local to buffer
@@ -2001,13 +1993,16 @@ vim.bo.ro = vim.bo.readonly
 -- 	top are deleted if new lines exceed this limit.
 -- 	Minimum is 1, maximum is 100000.
 -- 	Only in |terminal| buffers.
+-- 
+-- 	Note: Lines that are not visible and kept in scrollback are not
+-- 	reflown when the terminal buffer is resized horizontally.
 vim.bo.scrollback = -1
 vim.bo.scbk = vim.bo.scrollback
 -- `'shiftwidth'`  `'sw'` 	number	(default 8)
 -- 			local to buffer
 -- 	Number of spaces to use for each step of (auto)indent.  Used for
 -- 	|`'cindent'` |, |>>|, |<<|, etc.
--- 	When zero the `'ts'`  value will be used.  Use the |shiftwidth()|
+-- 	When zero the `'tabstop'`  value will be used.  Use the |shiftwidth()|
 -- 	function to get the effective shiftwidth value.
 vim.bo.shiftwidth = 8
 vim.bo.sw = vim.bo.shiftwidth
@@ -2208,7 +2203,7 @@ vim.bo.smc = vim.bo.synmaxcol
 -- 	Syntax autocommand event is triggered with the value as argument.
 -- 	This option is not copied to another buffer, independent of the `'s'`  or
 -- 	`'S'`  flag in `'cpoptions'` .
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 vim.bo.syntax = ""
 vim.bo.syn = vim.bo.syntax
 -- `'tabstop'`  `'ts'` 		number	(default 8)
@@ -2225,13 +2220,25 @@ vim.bo.syn = vim.bo.syntax
 -- 	   (or 3 or whatever you prefer) and use `'noexpandtab'` .  Then Vim
 -- 	   will use a mix of tabs and spaces, but typing <Tab> and <BS> will
 -- 	   behave like a tab appears every 4 (or 3) characters.
--- 	2. Set `'tabstop'`  and `'shiftwidth'`  to whatever you prefer and use
+-- 	   This is the recommended way, the file will look the same with other
+-- 	   tools and when listing it in a terminal.
+-- 	2. Set `'softtabstop'`  and `'shiftwidth'`  to whatever you prefer and use
+-- 	   `'expandtab'` .  This way you will always insert spaces.  The
+-- 	   formatting will never be messed up when `'tabstop'`  is changed (leave
+-- 	   it at 8 just in case).  The file will be a bit larger.
+-- 	   You do need to check if no Tabs exist in the file.  You can get rid
+-- 	   of them by first setting `'expandtab'`  and using `%retab!`, making
+-- 	   sure the value of `'tabstop'`  is set correctly.
+-- 	3. Set `'tabstop'`  and `'shiftwidth'`  to whatever you prefer and use
 -- 	   `'expandtab'` .  This way you will always insert spaces.  The
 -- 	   formatting will never be messed up when `'tabstop'`  is changed.
--- 	3. Set `'tabstop'`  and `'shiftwidth'`  to whatever you prefer and use a
+-- 	   You do need to check if no Tabs exist in the file, just like in the
+-- 	   item just above.
+-- 	4. Set `'tabstop'`  and `'shiftwidth'`  to whatever you prefer and use a
 -- 	   |modeline| to set these values when editing the file again.  Only
--- 	   works when using Vim to edit the file.
--- 	4. Always set `'tabstop'`  and `'shiftwidth'`  to the same value, and
+-- 	   works when using Vim to edit the file, other tools assume a tabstop
+-- 	   is worth 8 spaces.
+-- 	5. Always set `'tabstop'`  and `'shiftwidth'`  to the same value, and
 -- 	   `'noexpandtab'` .  This should then work (for initial indents only)
 -- 	   for any tabstop setting that people use.  It might be nice to have
 -- 	   tabs after the first non-blank inserted as spaces if you do this
@@ -2544,9 +2551,6 @@ function vim.opt.autochdir:get()end
 -- 	line.
 -- 	When `'smartindent'`  or `'cindent'`  is on the indent is changed in
 -- 	a different way.
--- 	{small difference from Vi: After the indent is deleted when typing
--- 	<Esc> or <CR>, the cursor position when moving up or down is after the
--- 	deleted indent; Vi puts the cursor somewhere in the deleted indent}.
 --- @class vim.opt.autoindent: vim.Option,boolean
 --- @operator add: vim.opt.autoindent
 --- @operator sub: vim.opt.autoindent
@@ -2589,6 +2593,9 @@ function vim.opt.autoread:get()end
 -- 	`'autowriteall'`  for that.
 -- 	Some buffers will not be written, specifically when `'buftype'`  is
 -- 	"nowrite", "nofile", "terminal" or "prompt".
+-- 	USE WITH CARE: If you make temporary changes to a buffer that you
+-- 	don't want to be saved this option may cause it to be saved anyway.
+-- 	Renaming the buffer with ":file {name}" may help avoid this.
 --- @class vim.opt.autowrite: vim.Option,boolean
 --- @operator add: vim.opt.autowrite
 --- @operator sub: vim.opt.autowrite
@@ -2833,7 +2840,7 @@ function vim.opt.backupdir:get()end
 -- 	accidentally overwriting existing files with a backup file.  You might
 -- 	prefer using ".bak", but make sure that you don't have files with
 -- 	".bak" that you want to keep.
--- 	Only normal file name characters can be used; "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used; `/\*?[|<>` are illegal.
 -- 
 -- 	If you like to keep a lot of backups, you could use a BufWritePre
 -- 	autocommand to change `'backupext'`  just before writing the file to
@@ -3415,7 +3422,7 @@ function vim.opt.cinwords:get()end
 -- 			register.  When "unnamed" is also included to the
 -- 			option, yank and delete operations (but not put)
 -- 			will additionally copy the text into register
--- 			`'*'` . See |clipboard|.
+-- 			"*". See |clipboard|.
 --- @class vim.opt.clipboard: vim.Option,string[]
 --- @operator add: vim.opt.clipboard
 --- @operator sub: vim.opt.clipboard
@@ -3470,7 +3477,7 @@ function vim.opt.cmdwinheight:get()end
 -- 	The screen column can be an absolute number, or a number preceded with
 -- 	`'+'`  or `'-'` , which is added to or subtracted from `'textwidth'` . >
 -- 
--- 		:set cc=+1  " highlight column after `'textwidth'` 
+-- 		:set cc=+1	  " highlight column after `'textwidth'` 
 -- 		:set cc=+1,+2,+3  " highlight three columns after `'textwidth'` 
 -- 		:hi ColorColumn ctermbg=lightgrey guibg=lightgrey
 -- <
@@ -3526,8 +3533,8 @@ function vim.opt.comments:get()end
 -- `'commentstring'`  `'cms'` 	string	(default "")
 -- 			local to buffer
 -- 	A template for a comment.  The "%s" in the value is replaced with the
--- 	comment text.  Currently only used to add markers for folding, see
--- 	|fold-marker|.
+-- 	comment text.  For example, C uses "//". Currently only used to
+-- 	add markers for folding, see |fold-marker|.
 --- @class vim.opt.commentstring: vim.Option,string
 --- @operator add: vim.opt.commentstring
 --- @operator sub: vim.opt.commentstring
@@ -3648,7 +3655,7 @@ function vim.opt.completeopt:get()end
 
 -- `'completeslash'`  `'csl'` 	string	(default: "")
 -- 			local to buffer
--- 			{only for MS-Windows}
+-- 			only for MS-Windows
 -- 	When this option is set it overrules `'shellslash'`  for completion:
 -- 	- When this option is set to "slash", a forward slash is used for path
 -- 	  completion in insert mode. This is useful when editing HTML tag, or
@@ -4099,17 +4106,16 @@ vim.opt.debug = ""
 --- @return string
 function vim.opt.debug:get()end
 
--- `'define'`  `'def'` 		string	(default "^\sdefine")
+-- `'define'`  `'def'` 		string	(default "")
 -- 			global or local to buffer |global-local|
 -- 	Pattern to be used to find a macro definition.  It is a search
 -- 	pattern, just like for the "/" command.  This option is used for the
 -- 	commands like "[i" and "[d" |include-search|.  The `'isident'`  option is
--- 	used to recognize the defined name after the match:
+-- 	used to recognize the defined name after the match: >
 -- 		{match with `'define'` }{non-ID chars}{defined name}{non-ID char}
--- 	See |option-backslash| about inserting backslashes to include a space
+-- <	See |option-backslash| about inserting backslashes to include a space
 -- 	or backslash.
--- 	The default value is for C programs.  For C++ this value would be
--- 	useful, to include const type declarations: >
+-- 	For C++ this value would be useful, to include const type declarations: >
 -- 		^\(#\s\s[a-z]*\)
 -- <	You can also use "\ze" just before the name and continue the pattern
 -- 	to check what is following.  E.g. for Javascript, if a function is
@@ -4125,7 +4131,7 @@ function vim.opt.debug:get()end
 --- @operator add: vim.opt.define
 --- @operator sub: vim.opt.define
 --- @operator pow: vim.opt.define
-vim.opt.define = "^\\s*#\\s*define"
+vim.opt.define = ""
 vim.opt.def = vim.opt.define
 --- @return string
 function vim.opt.define:get()end
@@ -4376,17 +4382,13 @@ function vim.opt.digraph:get()end
 -- 	    :set dir=c:\\tmp,\ dir\\,with\\,commas,\\\ dir\ with\ spaces
 -- <	- For backwards compatibility with Vim version 3.0 a `'>'`  at the start
 -- 	  of the option is removed.
--- 	Using "." first in the list is recommended.  This means that editing
--- 	the same file twice will result in a warning.  Using "/tmp" on Unix is
--- 	discouraged: When the system crashes you lose the swap file.
--- 	"/var/tmp" is often not cleared when rebooting, thus is a better
--- 	choice than "/tmp".  But others on the computer may be able to see the
--- 	files, and it can contain a lot of files, your swap files get lost in
--- 	the crowd.  That is why a "tmp" directory in your home directory is
--- 	tried first.
--- 	The use of |:set+=| and |:set-=| is preferred when adding or removing
--- 	directories from the list.  This avoids problems when a future version
--- 	uses another default.
+-- 
+-- 	Editing the same file twice will result in a warning.  Using "/tmp" on
+-- 	is discouraged: if the system crashes you lose the swap file. And
+-- 	others on the computer may be able to see the files.
+-- 	Use |:set+=| and |:set-=| when adding or removing directories from the
+-- 	list, this avoids problems if the Nvim default is changed.
+-- 
 -- 	This option cannot be set from a |modeline| or in the |sandbox|, for
 -- 	security reasons.
 --- @class vim.opt.directory: vim.Option,string[]

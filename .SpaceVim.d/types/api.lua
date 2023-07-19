@@ -22,7 +22,7 @@ function vim.api.nvim__get_lib_dir() end
 -- Parameters: ~
 --   • {pat}   pattern of files to search for
 --   • {all}   whether to return all matches or only the first
---   • {opts}  is_lua: only search lua subdirs
+--   • {opts}  is_lua: only search Lua subdirs
 -- 
 -- Return: ~
 --     list of absolute paths to the found files
@@ -139,7 +139,7 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 
 -- Activates buffer-update events on a channel, or as Lua callbacks.
 -- 
--- Example (Lua): capture buffer updates in a global `events` variable (use "print(vim.inspect(events))" to see its contents): 
+-- Example (Lua): capture buffer updates in a global `events` variable (use "vim.print(events)" to see its contents): 
 -- ```lua
 --   events = {}
 --   vim.api.nvim_buf_attach(0, false, {
@@ -165,7 +165,7 @@ function vim.api.nvim_buf_add_highlight(buffer, ns_id, hl_group, line, col_start
 --                      • deleted_codepoints (if `utf_sizes` is true)
 --                      • deleted_codeunits (if `utf_sizes` is true)
 -- 
---                    • on_bytes: lua callback invoked on change. This
+--                    • on_bytes: Lua callback invoked on change. This
 --                      callback receives more granular information about the
 --                      change compared to on_lines. Return `true` to detach. Args:
 --                      • the string "bytes"
@@ -232,12 +232,12 @@ function vim.api.nvim_buf_attach(buffer, send_buffer, opts) end
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer
---   • {fun}     Function to call inside the buffer (currently lua callable
+--   • {fun}     Function to call inside the buffer (currently Lua callable
 --               only)
 -- 
 -- Return: ~
---     Return value of function. NB: will deepcopy lua values currently, use
---     upvalues to send lua references in and out.
+--     Return value of function. NB: will deepcopy Lua values currently, use
+--     upvalues to send Lua references in and out.
 --- @param buffer buffer
 --- @param fun fun()
 --- @return object
@@ -303,8 +303,8 @@ function vim.api.nvim_buf_del_keymap(buffer, mode, lhs) end
 
 -- Deletes a named mark in the buffer. See |mark-motions|.
 -- 
--- Note:
---     only deletes marks set in the buffer, if the mark is not set in the
+-- Note: ~
+--   • only deletes marks set in the buffer, if the mark is not set in the
 --     buffer it will return false.
 -- 
 -- Parameters: ~
@@ -346,7 +346,7 @@ function vim.api.nvim_buf_del_var(buffer, name) end
 -- Deletes the buffer. See |:bwipeout|
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle, or 0 for current buffer
@@ -428,7 +428,7 @@ function vim.api.nvim_buf_get_extmark_by_id(buffer, ns_id, id, opts) end
 --   local ms  = api.nvim_buf_get_extmarks(0, ns, {2,0}, {2,0}, {})
 --   -- Get all marks in this buffer + namespace.
 --   local all = api.nvim_buf_get_extmarks(0, ns, 0, -1, {})
---   print(vim.inspect(ms))
+--   vim.print(ms)
 -- ```
 -- 
 -- Parameters: ~
@@ -496,7 +496,8 @@ function vim.api.nvim_buf_get_keymap(buffer, mode) end
 --- @return string[]
 function vim.api.nvim_buf_get_lines(buffer, start, end_, strict_indexing) end
 
--- Returns a tuple (row,col) representing the position of the named mark. See
+-- Returns a `(row,col)` tuple representing the position of the named mark.
+-- "End of line" column position is returned as |v:maxcol| (big number). See
 -- |mark-motions|.
 -- 
 -- Marks are (1,0)-indexed. |api-indexing|
@@ -608,8 +609,8 @@ function vim.api.nvim_buf_is_loaded(buffer) end
 
 -- Checks if a buffer is valid.
 -- 
--- Note:
---     Even if a buffer is valid it may have been unloaded. See |api-buffer|
+-- Note: ~
+--   • Even if a buffer is valid it may have been unloaded. See |api-buffer|
 --     for more info about unloaded buffers.
 -- 
 -- Parameters: ~
@@ -666,15 +667,16 @@ function vim.api.nvim_buf_line_count(buffer) end
 --                 string or as an integer, the latter which can be obtained
 --                 using |nvim_get_hl_id_by_name()|.
 --               • virt_text_pos : position of virtual text. Possible values:
---                 • "eol": right after eol character (default)
+--                 • "eol": right after eol character (default).
 --                 • "overlay": display over the specified column, without
 --                   shifting the underlying text.
 --                 • "right_align": display right aligned in the window.
 --                 • "inline": display at the specified column, and shift the
---                   buffer text to the right as needed
+--                   buffer text to the right as needed.
 -- 
 --               • virt_text_win_col : position the virtual text at a fixed
---                 window column (starting from the first text column)
+--                 window column (starting from the first text column of the
+--                 screen line) instead of "virt_text_pos".
 --               • virt_text_hide : hide the virtual text when the background
 --                 text is selected or hidden because of scrolling with
 --                 'nowrap' or 'smoothscroll'. Currently only affects
@@ -683,9 +685,10 @@ function vim.api.nvim_buf_line_count(buffer) end
 --                 highlights of the text. Currently only affects virt_text
 --                 highlights, but might affect `hl_group` in later versions.
 --                 • "replace": only show the virt_text color. This is the
---                   default
---                 • "combine": combine with background text color
---                 • "blend": blend with background text color.
+--                   default.
+--                 • "combine": combine with background text color.
+--                 • "blend": blend with background text color. Not supported
+--                   for "inline" virt_text.
 -- 
 --               • virt_lines : virtual lines to add next to this mark This
 --                 should be an array over lines, where each line in turn is
@@ -804,8 +807,8 @@ function vim.api.nvim_buf_set_lines(buffer, start, end_, strict_indexing, replac
 -- 
 -- Marks are (1,0)-indexed. |api-indexing|
 -- 
--- Note:
---     Passing 0 as line deletes the mark
+-- Note: ~
+--   • Passing 0 as line deletes the mark
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer to set the mark on
@@ -855,6 +858,9 @@ function vim.api.nvim_buf_set_option() end
 -- Prefer |nvim_buf_set_lines()| if you are only adding or deleting entire
 -- lines.
 -- 
+-- Attributes: ~
+--     not allowed when |textlock| is active
+-- 
 -- Parameters: ~
 --   • {buffer}       Buffer handle, or 0 for current buffer
 --   • {start_row}    First line index
@@ -884,13 +890,13 @@ function vim.api.nvim_buf_set_text(buffer, start_row, start_col, end_row, end_co
 --- @param value object
 function vim.api.nvim_buf_set_var(buffer, name, value) end
 
--- Calls a VimL |Dictionary-function| with the given arguments.
+-- Calls a Vimscript |Dictionary-function| with the given arguments.
 -- 
--- On execution error: fails with VimL error, updates v:errmsg.
+-- On execution error: fails with Vimscript error, updates v:errmsg.
 -- 
 -- Parameters: ~
---   • {dict}  Dictionary, or String evaluating to a VimL |self| dict
---   • {fn}    Name of the function defined on the VimL dict
+--   • {dict}  Dictionary, or String evaluating to a Vimscript |self| dict
+--   • {fn}    Name of the function defined on the Vimscript dict
 --   • {args}  Function arguments packed in an Array
 -- 
 -- Return: ~
@@ -901,9 +907,9 @@ function vim.api.nvim_buf_set_var(buffer, name, value) end
 --- @return object
 function vim.api.nvim_call_dict_function(dict, fn, args) end
 
--- Calls a VimL function with the given arguments.
+-- Calls a Vimscript function with the given arguments.
 -- 
--- On execution error: fails with VimL error, updates v:errmsg.
+-- On execution error: fails with Vimscript error, updates v:errmsg.
 -- 
 -- Parameters: ~
 --   • {fn}    Function to call
@@ -978,7 +984,7 @@ function vim.api.nvim_clear_autocmds(opts) end
 -- example, instead of `vim.cmd.bdelete{ count = 2 }`, you may do
 -- `vim.cmd.bdelete(2)`.
 -- 
--- On execution error: fails with VimL error, updates v:errmsg.
+-- On execution error: fails with Vimscript error, updates v:errmsg.
 -- 
 -- Parameters: ~
 --   • {cmd}   Command to execute. Must be a Dictionary that can contain the
@@ -1003,7 +1009,7 @@ function vim.api.nvim_cmd(cmd, opts) end
 
 -- Executes an Ex command.
 -- 
--- On execution error: fails with VimL error, updates v:errmsg.
+-- On execution error: fails with Vimscript error, updates v:errmsg.
 -- 
 -- Prefer using |nvim_cmd()| or |nvim_exec2()| over this. To evaluate
 -- multiple lines of Vim script or an Ex command directly, use
@@ -1268,8 +1274,8 @@ function vim.api.nvim_del_keymap(mode, lhs) end
 
 -- Deletes an uppercase/file named mark. See |mark-motions|.
 -- 
--- Note:
---     fails with error if a lowercase or buffer local named mark is used.
+-- Note: ~
+--   • Lowercase name (or other buffer-local mark) is an error.
 -- 
 -- Parameters: ~
 --   • {name}  Mark name
@@ -1334,13 +1340,13 @@ function vim.api.nvim_err_write(str) end
 --- @param str string
 function vim.api.nvim_err_writeln(str) end
 
--- Evaluates a VimL |expression|. Dictionaries and Lists are recursively
+-- Evaluates a Vimscript |expression|. Dictionaries and Lists are recursively
 -- expanded.
 -- 
--- On execution error: fails with VimL error, updates v:errmsg.
+-- On execution error: fails with Vimscript error, updates v:errmsg.
 -- 
 -- Parameters: ~
---   • {expr}  VimL expression string
+--   • {expr}  Vimscript expression string
 -- 
 -- Return: ~
 --     Evaluation result or expanded object
@@ -1391,7 +1397,7 @@ function vim.api.nvim_eval_statusline(str, opts) end
 -- Unlike |nvim_command()| this function supports heredocs, script-scope
 -- (s:), etc.
 -- 
--- On execution error: fails with VimL error, updates v:errmsg.
+-- On execution error: fails with Vimscript error, updates v:errmsg.
 -- 
 -- Parameters: ~
 --   • {src}   Vimscript code
@@ -1639,6 +1645,10 @@ function vim.api.nvim_get_current_win() end
 
 -- Gets all or specific highlight groups in a namespace.
 -- 
+-- Note: ~
+--   • When the `link` attribute is defined in the highlight definition map,
+--     other attributes will not be taking effect (see |:hi-link|).
+-- 
 -- Parameters: ~
 --   • {ns_id}  Get highlight groups for namespace ns_id
 --              |nvim_get_namespaces()|. Use 0 to get global highlight groups
@@ -1653,10 +1663,6 @@ function vim.api.nvim_get_current_win() end
 --     Highlight groups as a map from group name to a highlight definition
 --     map as in |nvim_set_hl()|, or only a single highlight definition map
 --     if requested by name or id.
--- 
--- Note:
---     When the `link` attribute is defined in the highlight definition map,
---     other attributes will not be taking effect (see |:hi-link|).
 --- @param ns_id number
 --- @param opts? table<string, any>
 --- @return table<string, any>
@@ -1681,13 +1687,14 @@ function vim.api.nvim_get_hl_id_by_name(name) end
 --- @return any[]
 function vim.api.nvim_get_keymap(mode) end
 
--- Return a tuple (row, col, buffer, buffername) representing the position of
--- the uppercase/file named mark. See |mark-motions|.
+-- Returns a `(row, col, buffer, buffername)` tuple representing the position
+-- of the uppercase/file named mark. "End of line" column position is
+-- returned as |v:maxcol| (big number). See |mark-motions|.
 -- 
 -- Marks are (1,0)-indexed. |api-indexing|
 -- 
--- Note:
---     fails with error if a lowercase or buffer local named mark is used.
+-- Note: ~
+--   • Lowercase name (or other buffer-local mark) is an error.
 -- 
 -- Parameters: ~
 --   • {name}  Mark name
@@ -1858,12 +1865,10 @@ function vim.api.nvim_get_vvar(name) end
 -- 
 -- On execution error: does not fail, but updates v:errmsg.
 -- 
--- Note:
---     |keycodes| like <CR> are translated, so "<" is special. To input a
+-- Note: ~
+--   • |keycodes| like <CR> are translated, so "<" is special. To input a
 --     literal "<", send <LT>.
--- 
--- Note:
---     For mouse events use |nvim_input_mouse()|. The pseudokey form
+--   • For mouse events use |nvim_input_mouse()|. The pseudokey form
 --     "<LeftMouse><col,row>" is deprecated since |api-level| 6.
 -- 
 -- Attributes: ~
@@ -1884,8 +1889,8 @@ function vim.api.nvim_input(keys) end
 -- Non-blocking: does not wait on any result, but queues the event to be
 -- processed soon by the event loop.
 -- 
--- Note:
---     Currently this doesn't support "scripting" multiple mouse events by
+-- Note: ~
+--   • Currently this doesn't support "scripting" multiple mouse events by
 --     calling it multiple times in a loop: the intermediate mouse positions
 --     will be ignored. It should be used to implement real-time mouse input
 --     in a GUI. The deprecated pseudokey form ("<LeftMouse><col,row>") of
@@ -2003,10 +2008,13 @@ function vim.api.nvim_notify(msg, log_level, opts) end
 -- |nvim_chan_send()| can be called immediately to process sequences in a
 -- virtual terminal having the intended size.
 -- 
+-- Attributes: ~
+--     not allowed when |textlock| is active
+-- 
 -- Parameters: ~
 --   • {buffer}  the buffer to use (expected to be empty)
 --   • {opts}    Optional parameters.
---               • on_input: lua callback for input sent, i e keypresses in
+--               • on_input: Lua callback for input sent, i e keypresses in
 --                 terminal mode. Note: keypresses are sent raw as they would
 --                 be to the pty master end. For instance, a carriage return
 --                 is sent as a "\r", not as a "\n". |textlock| applies. It
@@ -2057,7 +2065,7 @@ function vim.api.nvim_open_term(buffer, opts) end
 -- ```
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer to display, or 0 for current buffer
@@ -2248,7 +2256,7 @@ function vim.api.nvim_out_write(str) end
 --- @return table<string, any>
 function vim.api.nvim_parse_cmd(str, opts) end
 
--- Parse a VimL expression.
+-- Parse a Vimscript expression.
 -- 
 -- Attributes: ~
 --     |api-fast|
@@ -2430,7 +2438,7 @@ function vim.api.nvim_select_popupmenu_item(item, insert, finish, opts) end
 -- Sets the current buffer.
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {buffer}  Buffer handle
@@ -2457,7 +2465,7 @@ function vim.api.nvim_set_current_line(line) end
 -- Sets the current tabpage.
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {tabpage}  Tabpage handle
@@ -2467,7 +2475,7 @@ function vim.api.nvim_set_current_tabpage(tabpage) end
 -- Sets the current window.
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {window}  Window handle
@@ -2476,7 +2484,7 @@ function vim.api.nvim_set_current_win(window) end
 
 -- Set or change decoration provider for a |namespace|
 -- 
--- This is a very general purpose interface for having lua callbacks being
+-- This is a very general purpose interface for having Lua callbacks being
 -- triggered during the redraw code.
 -- 
 -- The expected usage is to set |extmarks| for the currently redrawn buffer.
@@ -2525,21 +2533,17 @@ function vim.api.nvim_set_decoration_provider(ns_id, opts) end
 
 -- Sets a highlight group.
 -- 
--- Note:
---     Unlike the `:highlight` command which can update a highlight group,
---     this function completely replaces the definition. For example:
+-- Note: ~
+--   • Unlike the `:highlight` command which can update a highlight group, this
+--     function completely replaces the definition. For example:
 --     `nvim_set_hl(0, 'Visual', {})` will clear the highlight group
 --     'Visual'.
--- 
--- Note:
---     The fg and bg keys also accept the string values `"fg"` or `"bg"`
---     which act as aliases to the corresponding foreground and background
---     values of the Normal group. If the Normal group has not been defined,
---     using these values results in an error.
--- 
--- Note:
---     If `link` is used in combination with other attributes; only the
---     `link` will take effect (see |:hi-link|).
+--   • The fg and bg keys also accept the string values `"fg"` or `"bg"` which
+--     act as aliases to the corresponding foreground and background values
+--     of the Normal group. If the Normal group has not been defined, using
+--     these values results in an error.
+--   • If `link` is used in combination with other attributes; only the `link`
+--     will take effect (see |:hi-link|).
 -- 
 -- Parameters: ~
 --   • {ns_id}  Namespace id for this highlight |nvim_create_namespace()|.
@@ -2774,12 +2778,12 @@ function vim.api.nvim_tabpage_set_var(tabpage, name, value) end
 -- 
 -- Parameters: ~
 --   • {window}  Window handle, or 0 for current window
---   • {fun}     Function to call inside the window (currently lua callable
+--   • {fun}     Function to call inside the window (currently Lua callable
 --               only)
 -- 
 -- Return: ~
---     Return value of function. NB: will deepcopy lua values currently, use
---     upvalues to send lua references in and out.
+--     Return value of function. NB: will deepcopy Lua values currently, use
+--     upvalues to send Lua references in and out.
 -- 
 -- See also: ~
 --   • |win_execute()|
@@ -2933,7 +2937,7 @@ function vim.api.nvim_win_get_width(window) end
 -- or |nvim_win_close()|, which will close the buffer.
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {window}  Window handle, or 0 for current window
@@ -2954,7 +2958,7 @@ function vim.api.nvim_win_is_valid(window) end
 -- Sets the current buffer in a window, without side effects
 -- 
 -- Attributes: ~
---     not allowed when |textlock| is active
+--     not allowed when |textlock| is active or in the |cmdwin|
 -- 
 -- Parameters: ~
 --   • {window}  Window handle, or 0 for current window
@@ -3032,4 +3036,39 @@ function vim.api.nvim_win_set_var(window, name, value) end
 --- @param window window
 --- @param width number
 function vim.api.nvim_win_set_width(window, width) end
+
+-- Computes the number of screen lines occupied by a range of text in a given
+-- window. Works for off-screen text and takes folds into account.
+-- 
+-- Diff filler or virtual lines above a line are counted as a part of that
+-- line, unless the line is on "start_row" and "start_vcol" is specified.
+-- 
+-- Diff filler or virtual lines below the last buffer line are counted in the
+-- result when "end_row" is omitted.
+-- 
+-- Line indexing is similar to |nvim_buf_get_text()|.
+-- 
+-- Parameters: ~
+--   • {window}  Window handle, or 0 for current window.
+--   • {opts}    Optional parameters:
+--               • start_row: Starting line index, 0-based inclusive. When
+--                 omitted start at the very top.
+--               • end_row: Ending line index, 0-based inclusive. When
+--                 omitted end at the very bottom.
+--               • start_vcol: Starting virtual column index on "start_row",
+--                 0-based inclusive, rounded down to full screen lines. When
+--                 omitted include the whole line.
+--               • end_vcol: Ending virtual column index on "end_row",
+--                 0-based exclusive, rounded up to full screen lines. When
+--                 omitted include the whole line.
+-- 
+-- Return: ~
+--     The number of screen lines that the range of text occupy.
+-- 
+-- See also: ~
+--   • |virtcol()| for text width.
+--- @param window window
+--- @param opts? table<string, any>
+--- @return object
+function vim.api.nvim_win_text_height(window, opts) end
 

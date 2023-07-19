@@ -39,6 +39,8 @@ To use defx, please add following snippet into your configuration file.
 - `enable_filetree_filetypeicon`: enable/disable filetype icons in filetree.
 - `enable_netrw`: enable/disable netrw, disabled by default.
 
+NOTE: if the `enable_filetree_gitstatus` is enabled, `SPC f s` maybe slow. because the defx buffer [need to be redrawed](https://github.com/SpaceVim/SpaceVim/issues/4852).
+
 ```toml
 [[layers]]
     name = 'core'

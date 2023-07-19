@@ -219,7 +219,7 @@ vim.go.bdir = vim.go.backupdir
 -- 	accidentally overwriting existing files with a backup file.  You might
 -- 	prefer using ".bak", but make sure that you don't have files with
 -- 	".bak" that you want to keep.
--- 	Only normal file name characters can be used; "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used; `/\*?[|<>` are illegal.
 -- 
 -- 	If you like to keep a lot of backups, you could use a BufWritePre
 -- 	autocommand to change `'backupext'`  just before writing the file to
@@ -496,7 +496,7 @@ vim.go.completeopt = "menu,preview"
 vim.go.cot = vim.go.completeopt
 -- `'completeslash'`  `'csl'` 	string	(default: "")
 -- 			local to buffer
--- 			{only for MS-Windows}
+-- 			only for MS-Windows
 -- 	When this option is set it overrules `'shellslash'`  for completion:
 -- 	- When this option is set to "slash", a forward slash is used for path
 -- 	  completion in insert mode. This is useful when editing HTML tag, or
@@ -1202,7 +1202,7 @@ vim.go.fdls = vim.go.foldlevelstart
 -- 
 -- 		item		commands ~
 -- 		all		any
--- 		block		"(", "{", "[[", "[{", etc.
+-- 		block		(, {, [[, [{, etc.
 -- 		hor		horizontal movements: "l", "w", "fx", etc.
 -- 		insert		any command in Insert mode
 -- 		jump		far jumps: "G", "gg", etc.
@@ -1930,7 +1930,7 @@ vim.go.lmap = vim.go.langmap
 -- 	matter what $LANG is set to: >
 -- 		:set langmenu=nl_NL.ISO_8859-1
 -- <	When `'langmenu'`  is empty, |v:lang| is used.
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 -- 	If your $LANG is set to a non-English language but you do want to use
 -- 	the English menus: >
 -- 		:set langmenu=none
@@ -1990,7 +1990,7 @@ vim.go.lz = vim.go.lazyredraw
 vim.go.lines = 24
 -- `'linespace'`  `'lsp'` 	number	(default 0)
 -- 			global
--- 			{only in the GUI}
+-- 			only in the GUI
 -- 	Number of pixel lines inserted between characters.  Useful if the font
 -- 	uses the full character cell height, making lines touch each other.
 -- 	When non-zero there is room for underlining.
@@ -2094,9 +2094,9 @@ vim.go.mis = vim.go.menuitems
 -- 	per word depends very much on how similar the words are, that's why
 -- 	this tuning is complicated.
 -- 
--- 	There are three numbers, separated by commas:
+-- 	There are three numbers, separated by commas: >
 -- 		{start},{inc},{added}
--- 
+-- <
 -- 	For most languages the uncompressed word tree fits in memory.  {start}
 -- 	gives the amount of memory in Kbyte that can be used before any
 -- 	compression is done.  It should be a bit smaller than the amount of
@@ -2197,7 +2197,7 @@ vim.go.mousefocus = false
 vim.go.mousef = vim.go.mousefocus
 -- `'mousehide'`  `'mh'` 	boolean	(default on)
 -- 			global
--- 			{only works in the GUI}
+-- 			only in the GUI
 -- 	When on, the mouse pointer is hidden when characters are typed.
 -- 	The mouse pointer is restored when the mouse is moved.
 vim.go.mousehide = true
@@ -2352,7 +2352,7 @@ vim.go.mousetime = 500
 vim.go.mouset = vim.go.mousetime
 -- `'opendevice'`  `'odev'` 	boolean	(default off)
 -- 			global
--- 			{only for Windows}
+-- 			only for Windows
 -- 	Enable reading and writing from devices.  This may get Vim stuck on a
 -- 	device that can be opened but doesn't actually do the I/O.  Therefore
 -- 	it is off by default.
@@ -2372,7 +2372,8 @@ vim.go.odev = vim.go.opendevice
 vim.go.operatorfunc = ""
 vim.go.opfunc = vim.go.operatorfunc
 -- `'packpath'`  `'pp'` 		string	(default: see `'runtimepath'` )
--- 	Directories used to find packages.  See |packages| and |rtp-packages|.
+-- 	Directories used to find packages.
+-- 	See |packages| and |packages-runtimepath|.
 vim.go.packpath = "/home/runner/.config/nvim,/etc/xdg/nvim,/home/runner/.local/share/nvim/site,/usr/local/share/nvim/site,/usr/share/nvim/site,/tmp/nvim/squashfs-root/usr/share/nvim/runtime,/tmp/nvim/squashfs-root/usr/lib/nvim,/usr/share/nvim/site/after,/usr/local/share/nvim/site/after,/home/runner/.local/share/nvim/site/after,/etc/xdg/nvim/after,/home/runner/.config/nvim/after"
 vim.go.pp = vim.go.packpath
 -- `'paragraphs'`  `'para'` 	string	(default "IPLPPPQPP TPHPLIPpLpItpplpipbp")
@@ -2407,7 +2408,7 @@ vim.go.pex = vim.go.patchexpr
 -- 	Using `'patchmode'`  for compressed files appends the extension at the
 -- 	end (e.g., "file.gz.orig"), thus the resulting name isn't always
 -- 	recognized as a compressed file.
--- 	Only normal file name characters can be used, "/\*?[|<>" are illegal.
+-- 	Only normal file name characters can be used, `/\*?[|<>` are illegal.
 vim.go.patchmode = ""
 vim.go.pm = vim.go.patchmode
 -- `'previewheight'`  `'pvh'` 	number (default 12)
@@ -3064,7 +3065,7 @@ vim.go.shellredir = ">"
 vim.go.srr = vim.go.shellredir
 -- `'shellslash'`  `'ssl'` 	boolean	(default off)
 -- 			global
--- 			{only for MS-Windows}
+-- 			only for MS-Windows
 -- 	When set, a forward slash is used when expanding file names.  This is
 -- 	useful when a Unix-like shell is used instead of cmd.exe.  Backward
 -- 	slashes can still be typed, but they are changed to forward slashes by
@@ -4012,7 +4013,7 @@ vim.go.wildoptions = "pum,tagfile"
 vim.go.wop = vim.go.wildoptions
 -- `'winaltkeys'`  `'wak'` 	string	(default "menu")
 -- 			global
--- 			{only used in Win32}
+-- 			only used in Win32
 -- 	Some GUI versions allow the access to menu entries by using the ALT
 -- 	key in combination with a character that appears underlined in the
 -- 	menu.  This conflicts with the use of the ALT key for mappings and

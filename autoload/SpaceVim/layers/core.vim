@@ -48,6 +48,7 @@ let s:MESSAGE = SpaceVim#api#import('vim#message')
 let s:CMP = SpaceVim#api#import('vim#compatible')
 let s:NOTI = SpaceVim#api#import('notify')
 let s:HI = SpaceVim#api#import('vim#highlight')
+let s:CLOCK = SpaceVim#api#import('clock')
 
 
 function! SpaceVim#layers#core#plugins() abort
@@ -81,8 +82,12 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, [g:_spacevim_root_dir . 'bundle/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
   elseif g:spacevim_filemanager ==# 'defx'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/defx.nvim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-git',{'merged' : 0, 'loadconf' : 1}])
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-icons',{'merged' : 0}])
+    if g:_spacevim_enable_filetree_gitstatus
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-git',{'merged' : 0, 'loadconf' : 1}])
+    endif
+    if g:_spacevim_enable_filetree_filetypeicon
+      call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-icons',{'merged' : 0}])
+    endif
     call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-sftp',{'merged' : 0}])
   elseif g:spacevim_filemanager ==# 'nvim-tree'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-tree.lua',{'merged' : 0, 'loadconf' : 1}])
@@ -929,6 +934,7 @@ function! s:jump_transient_state() abort
 endfunction
 
 function! s:save_current_file() abort
+  call s:CLOCK.start()
   let v:errmsg = ''
   silent! write
   if v:errmsg !=# ''
@@ -937,7 +943,7 @@ function! s:save_current_file() abort
     echohl None
   else
     echohl Delimiter
-    echo  fnamemodify(bufname(), ':.:gs?[\\/]?/?') . ' written'
+    echo  fnamemodify(bufname(), ':.:gs?[\\/]?/?') . ' written ' . string(s:CLOCK.end()) . 's'
     echohl None
   endif
 endfunction
