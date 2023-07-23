@@ -75,6 +75,8 @@ endfunction
 function! s:options() abort
   return [
         \ '-u',
+        \ '--set-upstream',
+        \ '-d', '--delete'
         \ ]
 endfunction
 
