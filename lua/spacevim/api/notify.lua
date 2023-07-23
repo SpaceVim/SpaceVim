@@ -41,8 +41,8 @@ M.notification_color = 'Normal'
 ---@param msg string|table<string> notification messages
 ---@param opts table notify options
 ---  - title: string, the notify title
-function M.notify(msg, opts) -- {{{
-  opts = opts or {}
+function M.notify(msg, ...) -- {{{
+  local opts = select(1, ...) or {}
   if M.is_list_of_string(msg) then
     extend(M.message, msg)
   elseif type(msg) == 'string' then
@@ -81,7 +81,7 @@ end
 local function msg_real_len(msg)
   local l = 0
   for _, m in pairs(msg) do
-    l = l + vim.fn.len(vim.fn.split(m, '\n'))
+    l = l + #vim.split(m, '\n')
   end
   return l
 end

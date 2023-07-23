@@ -10,8 +10,30 @@ local M = {}
 
 local uv = vim.loop
 
+local logger = require('spacevim.logger').derive('job')
+
 local _jobs = {}
 local _jobid = 0
+
+local function buffered_data(eof, data)
+  data = data:gsub('\r', '')
+  local std_data = vim.split(data, '\n')
+  if #std_data > 1 and std_data[#std_data] == '' then
+    std_data[1] = eof .. std_data[1]
+    table.remove(std_data, #std_data)
+    eof = ''
+  elseif #std_data > 1 then
+    std_data[1] = eof .. std_data[1]
+    eof = std_data[#std_data]
+    table.remove(std_data, #std_data)
+  elseif #std_data == 1 and std_data[1] == '' and eof ~= '' then
+    std_data = { eof }
+    eof = ''
+  elseif #std_data == 1 and std_data[#std_data] ~= '' then
+    eof = std_data[#std_data]
+  end
+  return eof, std_data
+end
 
 local function new_job_obj(id, handle, opt, state)
   local jobobj = {
@@ -123,25 +145,32 @@ function M.start(cmd, opts)
     stderr = stderr,
     stdin = stdin,
     pid = pid,
+    stderr_eof = '',
+    stdout_eof = '',
   })
+  -- logger.debug(vim.inspect(_jobs['jobid_' .. _jobid]))
   if opts.on_stdout then
     -- define on_stdout function based on stdout's nparams
     local nparams = debug.getinfo(opts.on_stdout).nparams
     if nparams == 2 then
       uv.read_start(stdout, function(err, data)
         if data then
-          data = data:gsub('\r', '')
+          local stdout_data
+          _jobs['jobid_' .. current_id].state.stdout_eof, stdout_data =
+            buffered_data(_jobs['jobid_' .. current_id].state.stdout_eof, data)
           vim.schedule(function()
-            opts.on_stdout(current_id, vim.split(data, '\n'))
+            opts.on_stdout(current_id, stdout_data)
           end)
         end
       end)
     else
       uv.read_start(stdout, function(err, data)
         if data then
-          data = data:gsub('\r', '')
+          local stdout_data
+          _jobs['jobid_' .. current_id].state.stdout_eof, stdout_data =
+            buffered_data(_jobs['jobid_' .. current_id].state.stdout_eof, data)
           vim.schedule(function()
-            opts.on_stdout(current_id, vim.split(data, '\n'), 'stdout')
+            opts.on_stdout(current_id, stdout_data, 'stdout')
           end)
         end
       end)
@@ -153,18 +182,22 @@ function M.start(cmd, opts)
     if nparams == 2 then
       uv.read_start(stderr, function(err, data)
         if data then
-          data = data:gsub('\r', '')
+          local stderr_data
+          _jobs['jobid_' .. current_id].state.stderr_eof, stderr_data =
+            buffered_data(_jobs['jobid_' .. current_id].state.stderr_eof, data)
           vim.schedule(function()
-            opts.on_stderr(current_id, vim.split(data, '\n'))
+            opts.on_stderr(current_id, stderr_data)
           end)
         end
       end)
     else
       uv.read_start(stderr, function(err, data)
         if data then
-          data = data:gsub('\r', '')
+          local stderr_data
+          _jobs['jobid_' .. current_id].state.stderr_eof, stderr_data =
+            buffered_data(_jobs['jobid_' .. current_id].state.stderr_eof, data)
           vim.schedule(function()
-            opts.on_stderr(current_id, vim.split(data, '\n'), 'stderr')
+            opts.on_stderr(current_id, stderr_data, 'stderr')
           end)
         end
       end)
