@@ -35,6 +35,7 @@ let s:gitter_token = ''
 function! SpaceVim#layers#chat#plugins() abort
   return [
         \ [g:_spacevim_root_dir . 'bundle/vim-chat', {'merged' : 0, 'loadconf' : 1}],
+        \ [g:_spacevim_root_dir . 'bundle/telegram.vim', {'merged' : 0, 'loadconf' : 1}],
         \ ]
 endfunction
 

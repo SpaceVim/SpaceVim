@@ -1,0 +1,36 @@
+*telegram.txt*	vim/neovim plugin for telegram
+wsdjeg                                                              *telegram*
+
+==============================================================================
+CONTENTS                                                   *telegram-contents*
+  1. Introduction.............................................|telegram-intro|
+  2. Configuration...........................................|telegram-config|
+
+==============================================================================
+INTRODUCTION                                                  *telegram-intro*
+
+telegram.vim is a neovim/vim plugin for telegram
+
+==============================================================================
+CONFIGURATION                                                *telegram-config*
+
+                                                        *g:telegram_bot_token*
+set the bot token
+
+                                                       *g:telegram_http_proxy*
+set http proxy for example:
+>
+  let g:telegram_http_proxy = 'http://127.0.0.1:8787'
+<
+
+                                                      *g:telegram_https_proxy*
+set https proxy for example:
+>
+  let g:telegram_https_proxy = 'http://127.0.0.1:8787'
+<
+
+                                                   *g:telegram_default_groups*
+a list of default group ids
+
+
+vim:tw=78:ts=8:ft=help:norl:
