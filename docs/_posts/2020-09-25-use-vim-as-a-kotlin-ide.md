@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as a Kotlin IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/94328509-cbcc9f00-ffe5-11ea-8f0d-9ea7b5b81352.png
+image: https://img.spacevim.org/94328509-cbcc9f00-ffe5-11ea-8f0d-9ea7b5b81352.png
 description: "A general guide for using SpaceVim as Kotlin IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -58,7 +58,7 @@ scoop bucket add extras
 scoop install ktlint
 ```
 
-![kotlin-lint](https://user-images.githubusercontent.com/13142418/94366839-3e846a00-010d-11eb-9e6c-200931646479.png)
+![kotlin-lint](https://img.spacevim.org/94366839-3e846a00-010d-11eb-9e6c-200931646479.png)
 
 ### Jump to test file
 
@@ -82,7 +82,7 @@ To run current kotlin script, you can press `SPC l r`, and a split window
 will be openen, the output of the script will be shown in this window.
 It is running asynchronously, and will not block your Vim.
 
-![kotlin-runner](https://user-images.githubusercontent.com/13142418/94288524-14566f00-ff8a-11ea-8440-ee9ca8ba8843.png)
+![kotlin-runner](https://img.spacevim.org/94288524-14566f00-ff8a-11ea-8440-ee9ca8ba8843.png)
 
 ### Code formatting
 
@@ -100,7 +100,7 @@ Start a `kotlinc-jvm` inferior REPL process with `SPC l s i`. After the REPL pro
 send code to inferior process. All key bindings prefix with `SPC l s`, including sending line, sending selection or even
 send whole buffer.
 
-![kotlin-repl](https://user-images.githubusercontent.com/13142418/94289606-84192980-ff8b-11ea-84c8-1547741f377c.png)
+![kotlin-repl](https://img.spacevim.org/94289606-84192980-ff8b-11ea-84c8-1547741f377c.png)
 
 ### Tasks manager
 

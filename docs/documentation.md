@@ -143,7 +143,7 @@ packages tuned by power users and bugs are fixed quickly.
 
 **welcome page**
 
-![welcome-page](https://user-images.githubusercontent.com/13142418/68079142-904e4280-fe1f-11e9-993e-b834ea3d39ea.png)
+![welcome-page](https://img.spacevim.org/68079142-904e4280-fe1f-11e9-993e-b834ea3d39ea.png)
 
 **workflow**
 
@@ -168,7 +168,7 @@ transient state buffer. Additional information may as well be displayed in it.
 
 Move Text Transient State:
 
-![Move Text Transient State](https://user-images.githubusercontent.com/13142418/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
+![Move Text Transient State](https://img.spacevim.org/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
 
 ## Who can benefit from this?
 
@@ -567,7 +567,7 @@ Also note that changing this value has no effect if you are running Vim/Neovim i
 | ------------ | ------------------------- |
 | `SPC z .`    | open font transient state |
 
-![font transient state](https://user-images.githubusercontent.com/13142418/170854166-bbcd5448-47d3-4fb5-ab7a-97540140d975.png)
+![font transient state](https://img.spacevim.org/170854166-bbcd5448-47d3-4fb5-ab7a-97540140d975.png)
 
 In font transient state:
 
@@ -906,7 +906,7 @@ this feature may make filetree slow, so it is not enabled by default.
 To enable this feature, add `enable_filetree_gitstatus = true`
 to your custom configuration file. Here is a picture of this feature:
 
-![file-tree](https://user-images.githubusercontent.com/13142418/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
+![file-tree](https://img.spacevim.org/80496111-5065b380-899b-11ea-95c7-02af4d304aaf.png)
 
 There is also an option to configure show/hide the file tree, default to show. To hide the file tree by default, you can use the `enable_vimfiler_welcome` in the `[options]` section:
 
@@ -1556,7 +1556,7 @@ so you need to put the scoop binary path before `C:\WINDOWS\system32` in `PATH`.
 After pressing `SPC f /`, the find window will be opened. It is going to run `find` or `fd` command asynchronously.
 By default, `find` is the default tool, you can use `ctrl-e` to switch tools.
 
-![find](https://user-images.githubusercontent.com/13142418/97999590-79717000-1e26-11eb-91b1-458ab30d6254.gif)
+![find](https://img.spacevim.org/97999590-79717000-1e26-11eb-91b1-458ab30d6254.gif)
 
 To change the default file searching tool, you can use `file_searching_tools` in the `[options]` section.
 It is `[]` by default.
@@ -2186,11 +2186,11 @@ tasks configuration.
 
 The `SPC p t l` will open the tasks manager windows, in the tasks manager windows, you can use `Enter` to run task under the cursor.
 
-![task_manager](https://user-images.githubusercontent.com/13142418/94822603-69d0c700-0435-11eb-95a7-b0b4fef91be5.png)
+![task_manager](https://img.spacevim.org/94822603-69d0c700-0435-11eb-95a7-b0b4fef91be5.png)
 
 If the `telescope` layer is loaded, you can also use `SPC p t f` to fuzzy find specific task, and run the select task.
 
-![fuzzy-task](https://user-images.githubusercontent.com/13142418/199057483-d5cce17c-2f06-436d-bf7d-24a78d0eeb11.png)
+![fuzzy-task](https://img.spacevim.org/199057483-d5cce17c-2f06-436d-bf7d-24a78d0eeb11.png)
 
 #### Custom tasks
 
@@ -2203,7 +2203,7 @@ and print the results to the runner window.
     args = ['hello world']
 ```
 
-![task hello world](https://user-images.githubusercontent.com/13142418/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
+![task hello world](https://img.spacevim.org/74582981-74049900-4ffd-11ea-9b38-7858042225b9.png)
 
 To run the task in the background, you need to set `isBackground` to `true`:
 
@@ -2307,7 +2307,7 @@ Currently, SpaceVim can auto-detect tasks for npm.
 the tasks manager will parse the `package.json` file for npm packages.
 If you have cloned the [eslint-starter](https://github.com/spicydonuts/eslint-starter). for example, pressing `SPC p t r` shows the following list:
 
-![task-auto-detection](https://user-images.githubusercontent.com/13142418/75089003-471d2c80-558f-11ea-8aea-cbf7417191d9.png)
+![task-auto-detection](https://img.spacevim.org/75089003-471d2c80-558f-11ea-8aea-cbf7417191d9.png)
 
 #### Task provider
 
@@ -2348,7 +2348,7 @@ call SpaceVim#plugins#tasks#reg_provider(function('s:make_tasks'))
 
 With the above configuration, you will see the following tasks in the SpaceVim repo:
 
-![task-make](https://user-images.githubusercontent.com/13142418/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
+![task-make](https://img.spacevim.org/75105016-084cac80-564b-11ea-9fe6-75d86a0dbb9b.png)
 
 ### Todo manager
 
@@ -2364,7 +2364,7 @@ Example:
    todo_prefix = '@'
 ```
 
-![todo manager](https://user-images.githubusercontent.com/13142418/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
+![todo manager](https://img.spacevim.org/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
 
 
 **Known bug:**
@@ -2587,4 +2587,4 @@ export PATH=$PATH:$HOME/.SpaceVim/bin
 
 Use `svc` to open a file in the existing Vim server, or use `nsvc` to open a file in the existing Neovim server.
 
-![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
+![server-and-client](https://img.spacevim.org/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)

@@ -3,7 +3,7 @@ title: SpaceVim release v0.8.0
 categories: [changelog, blog]
 description: "Use toml as default configuration file for SpaceVim"
 type: article
-image: https://user-images.githubusercontent.com/13142418/80610442-f41e9480-8a6b-11ea-8e0e-16ef35460253.png
+image: https://img.spacevim.org/80610442-f41e9480-8a6b-11ea-8e0e-16ef35460253.png
 commentsID: "SpaceVim release v0.8.0"
 comments: true
 ---
@@ -14,7 +14,7 @@ comments: true
 This project exists thanks to all the people who have contributed. The last release v0.7.0 is targeted
 on March 18, 2018, so let's take a look at what happened in the new release v0.8.0.
 
-![v0.8.0 welcome page](https://user-images.githubusercontent.com/13142418/80610442-f41e9480-8a6b-11ea-8e0e-16ef35460253.png)
+![v0.8.0 welcome page](https://img.spacevim.org/80610442-f41e9480-8a6b-11ea-8e0e-16ef35460253.png)
 
 
 <!-- vim-markdown-toc GFM -->
@@ -39,14 +39,14 @@ please check our [faq](../faq/#why-use-toml-file-as-default-configuration-file) 
 
 when edit commit message, complete the PR and ISSUE list from GitHub asynchronously.
 
-![complete in git commit](https://user-images.githubusercontent.com/13142418/41519892-6ee2d3fc-7290-11e8-8b48-20e24d3046bc.jpg)
+![complete in git commit](https://img.spacevim.org/41519892-6ee2d3fc-7290-11e8-8b48-20e24d3046bc.jpg)
 
 - Split dein UI as plugin [#1682](https://github.com/SpaceVim/SpaceVim/pull/1682)
 
 Dein is a awesome plugin manager for neovim and vim8, but it does not provide a
 UI, If you need vim-plug like install UI, you can use [dein-ui.vim](https://github.com/wsdjeg/dein-ui.vim).
 
-![UI for dein](https://user-images.githubusercontent.com/13142418/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif)
+![UI for dein](https://img.spacevim.org/34907332-903ae968-f842-11e7-8ac9-07fcc9940a53.gif)
 
 - Add buffer directory searching [#1632](https://github.com/SpaceVim/SpaceVim/pull/1632)
 - Add asyncomplete-clang [#1671](https://github.com/SpaceVim/SpaceVim/pull/1671)

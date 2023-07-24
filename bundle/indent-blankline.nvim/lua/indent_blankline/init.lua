@@ -5,6 +5,7 @@ local char_highlight = "IndentBlanklineChar"
 local space_char_highlight = "IndentBlanklineSpaceChar"
 local space_char_blankline_highlight = "IndentBlanklineSpaceCharBlankline"
 local context_highlight = "IndentBlanklineContextChar"
+local context_space_char_highlight = "IndentBlanklineContextSpaceChar"
 
 M.init = function()
     if not vim.g.indent_blankline_namespace then
@@ -25,43 +26,26 @@ M.setup = function(options)
 
     vim.g.indent_blankline_char = o(options.char, vim.g.indent_blankline_char, vim.g.indentLine_char, "│")
     vim.g.indent_blankline_char_blankline = o(options.char_blankline, vim.g.indent_blankline_char_blankline)
-    vim.g.indent_blankline_char_list = o(
-        options.char_list,
-        vim.g.indent_blankline_char_list,
-        vim.g.indentLine_char_list
-    )
-    vim.g.indent_blankline_char_list_blankline = o(
-        options.char_list_blankline,
-        vim.g.indent_blankline_char_list_blankline
-    )
-    vim.g.indent_blankline_context_char = o(
-        options.context_char,
-        vim.g.indent_blankline_context_char,
-        vim.g.indent_blankline_char
-    )
+    vim.g.indent_blankline_char_list =
+        o(options.char_list, vim.g.indent_blankline_char_list, vim.g.indentLine_char_list)
+    vim.g.indent_blankline_char_list_blankline =
+        o(options.char_list_blankline, vim.g.indent_blankline_char_list_blankline)
+    vim.g.indent_blankline_context_char =
+        o(options.context_char, vim.g.indent_blankline_context_char, vim.g.indent_blankline_char)
     vim.g.indent_blankline_context_char_blankline = o(
         options.context_char_blankline,
         vim.g.indent_blankline_context_char_blankline,
         vim.g.indent_blankline_char_blankline
     )
     vim.g.indent_blankline_context_char_list = o(options.context_char_list, vim.g.indent_blankline_context_char_list)
-    vim.g.indent_blankline_context_char_list_blankline = o(
-        options.context_char_list_blankline,
-        vim.g.indent_blankline_context_char_list
-    )
-    vim.g.indent_blankline_char_highlight_list = o(
-        options.char_highlight_list,
-        vim.g.indent_blankline_char_highlight_list
-    )
-    vim.g.indent_blankline_space_char_highlight_list = o(
-        options.space_char_highlight_list,
-        vim.g.indent_blankline_space_char_highlight_list
-    )
-    vim.g.indent_blankline_space_char_blankline = o(
-        options.space_char_blankline,
-        vim.g.indent_blankline_space_char_blankline,
-        " "
-    )
+    vim.g.indent_blankline_context_char_list_blankline =
+        o(options.context_char_list_blankline, vim.g.indent_blankline_context_char_list)
+    vim.g.indent_blankline_char_highlight_list =
+        o(options.char_highlight_list, vim.g.indent_blankline_char_highlight_list)
+    vim.g.indent_blankline_space_char_highlight_list =
+        o(options.space_char_highlight_list, vim.g.indent_blankline_space_char_highlight_list)
+    vim.g.indent_blankline_space_char_blankline =
+        o(options.space_char_blankline, vim.g.indent_blankline_space_char_blankline, " ")
     vim.g.indent_blankline_space_char_blankline_highlight_list = o(
         options.space_char_blankline_highlight_list,
         vim.g.indent_blankline_space_char_blankline_highlight_list,
@@ -70,11 +54,8 @@ M.setup = function(options)
     )
     vim.g.indent_blankline_indent_level = o(options.indent_level, vim.g.indent_blankline_indent_level, 20)
     vim.g.indent_blankline_enabled = o(options.enabled, vim.g.indent_blankline_enabled, true)
-    vim.g.indent_blankline_disable_with_nolist = o(
-        options.disable_with_nolist,
-        vim.g.indent_blankline_disable_with_nolist,
-        false
-    )
+    vim.g.indent_blankline_disable_with_nolist =
+        o(options.disable_with_nolist, vim.g.indent_blankline_disable_with_nolist, false)
     vim.g.indent_blankline_filetype = o(options.filetype, vim.g.indent_blankline_filetype, vim.g.indentLine_fileType)
     vim.g.indent_blankline_filetype_exclude = o(
         options.filetype_exclude,
@@ -82,16 +63,13 @@ M.setup = function(options)
         vim.g.indentLine_fileTypeExclude,
         { "lspinfo", "packer", "checkhealth", "help", "man", "" }
     )
-    vim.g.indent_blankline_bufname_exclude = o(
-        options.bufname_exclude,
-        vim.g.indent_blankline_bufname_exclude,
-        vim.g.indentLine_bufNameExclude
-    )
+    vim.g.indent_blankline_bufname_exclude =
+        o(options.bufname_exclude, vim.g.indent_blankline_bufname_exclude, vim.g.indentLine_bufNameExclude)
     vim.g.indent_blankline_buftype_exclude = o(
         options.buftype_exclude,
         vim.g.indent_blankline_buftype_exclude,
         vim.g.indentLine_bufTypeExclude,
-        { "terminal", "nofile", "quickfix" }
+        { "terminal", "nofile", "quickfix", "prompt" }
     )
     vim.g.indent_blankline_viewport_buffer = o(options.viewport_buffer, vim.g.indent_blankline_viewport_buffer, 10)
     vim.g.indent_blankline_use_treesitter = o(options.use_treesitter, vim.g.indent_blankline_use_treesitter, false)
@@ -101,41 +79,26 @@ M.setup = function(options)
         options.indent_level,
         vim.g.indent_blankline_indent_level
     )
-    vim.g.indent_blankline_show_first_indent_level = o(
-        options.show_first_indent_level,
-        vim.g.indent_blankline_show_first_indent_level,
-        true
-    )
-    vim.g.indent_blankline_show_trailing_blankline_indent = o(
-        options.show_trailing_blankline_indent,
-        vim.g.indent_blankline_show_trailing_blankline_indent,
-        true
-    )
-    vim.g.indent_blankline_show_end_of_line = o(
-        options.show_end_of_line,
-        vim.g.indent_blankline_show_end_of_line,
-        false
-    )
+    vim.g.indent_blankline_show_first_indent_level =
+        o(options.show_first_indent_level, vim.g.indent_blankline_show_first_indent_level, true)
+    vim.g.indent_blankline_show_trailing_blankline_indent =
+        o(options.show_trailing_blankline_indent, vim.g.indent_blankline_show_trailing_blankline_indent, true)
+    vim.g.indent_blankline_show_end_of_line =
+        o(options.show_end_of_line, vim.g.indent_blankline_show_end_of_line, false)
     vim.g.indent_blankline_show_foldtext = o(options.show_foldtext, vim.g.indent_blankline_show_foldtext, true)
-    vim.g.indent_blankline_show_current_context = o(
-        options.show_current_context,
-        vim.g.indent_blankline_show_current_context,
-        false
-    )
-    vim.g.indent_blankline_show_current_context_start = o(
-        options.show_current_context_start,
-        vim.g.indent_blankline_show_current_context_start,
-        false
-    )
+    vim.g.indent_blankline_show_current_context =
+        o(options.show_current_context, vim.g.indent_blankline_show_current_context, false)
+    vim.g.indent_blankline_show_current_context_start =
+        o(options.show_current_context_start, vim.g.indent_blankline_show_current_context_start, false)
+    vim.g.indent_blankline_use_treesitter_scope =
+        o(options.use_treesitter_scope, vim.g.indent_blankline_use_treesitter_scope, false)
     vim.g.indent_blankline_show_current_context_start_on_current_line = o(
         options.show_current_context_start_on_current_line,
         vim.g.indent_blankline_show_current_context_start_on_current_line,
         true
     )
-    vim.g.indent_blankline_context_highlight_list = o(
-        options.context_highlight_list,
-        vim.g.indent_blankline_context_highlight_list
-    )
+    vim.g.indent_blankline_context_highlight_list =
+        o(options.context_highlight_list, vim.g.indent_blankline_context_highlight_list)
     vim.g.indent_blankline_context_patterns = o(options.context_patterns, vim.g.indent_blankline_context_patterns, {
         "class",
         "^func",
@@ -146,6 +109,7 @@ M.setup = function(options)
         "with",
         "try",
         "except",
+        "match",
         "arguments",
         "argument_list",
         "object",
@@ -153,25 +117,31 @@ M.setup = function(options)
         "element",
         "table",
         "tuple",
+        "do_block",
+		"Block",
+		"InitList",
+		"FnCallArguments",
+		"IfStatement",
+		"ContainerDecl",
+		"SwitchExpr",
+		"IfExpr",
+		"ParamDeclList",
     })
-    vim.g.indent_blankline_context_pattern_highlight = o(
-        options.context_pattern_highlight,
-        vim.g.indent_blankline_context_pattern_highlight
-    )
+    vim.g.indent_blankline_context_pattern_highlight =
+        o(options.context_pattern_highlight, vim.g.indent_blankline_context_pattern_highlight)
     vim.g.indent_blankline_strict_tabs = o(options.strict_tabs, vim.g.indent_blankline_strict_tabs, false)
 
-    vim.g.indent_blankline_disable_warning_message = o(
-        options.disable_warning_message,
-        vim.g.indent_blankline_disable_warning_message,
-        false
-    )
-    vim.g.indent_blankline_debug = o(options.debug, vim.g.indent_blankline_debug, false)
+    vim.g.indent_blankline_disable_warning_message =
+        o(options.disable_warning_message, vim.g.indent_blankline_disable_warning_message, false)
+    vim.g.indent_blankline_char_priority = o(options.char_priority, vim.g.indent_blankline_char_priority, 1)
+    vim.g.indent_blankline_context_start_priority =
+        o(options.context_start_priority, vim.g.indent_blankline_context_start_priority, 10000)
 
     if vim.g.indent_blankline_show_current_context then
         vim.cmd [[
             augroup IndentBlanklineContextAutogroup
                 autocmd!
-                autocmd CursorMoved * IndentBlanklineRefresh
+                autocmd CursorMoved,CursorMovedI * IndentBlanklineRefresh
             augroup END
         ]]
     end
@@ -277,6 +247,8 @@ local refresh = function(scroll)
     local space_char_highlight_list = v "indent_blankline_space_char_highlight_list" or {}
     local space_char_blankline_highlight_list = v "indent_blankline_space_char_blankline_highlight_list" or {}
     local space_char_blankline = v "indent_blankline_space_char_blankline"
+    local char_priority = v "indent_blankline_char_priority"
+    local context_start_priority = v "indent_blankline_context_start_priority"
 
     local list_chars
     local no_tab_character = false
@@ -321,6 +293,11 @@ local refresh = function(scroll)
     local ts_indent
     if v "indent_blankline_use_treesitter" then
         local ts_query_status, ts_query = pcall(require, "nvim-treesitter.query")
+        if not ts_query_status then
+            vim.schedule_wrap(function()
+                utils.error_handler("nvim-treesitter not found. Treesitter indent will not work", vim.log.levels.WARN)
+            end)()
+        end
         local ts_indent_status
         ts_indent_status, ts_indent = pcall(require, "nvim-treesitter.indent")
         use_ts_indent = ts_query_status and ts_indent_status and ts_query.has_indents(vim.bo.filetype)
@@ -340,9 +317,8 @@ local refresh = function(scroll)
     local show_current_context_start = v "indent_blankline_show_current_context_start"
     local show_current_context_start_on_current_line = v "indent_blankline_show_current_context_start_on_current_line"
     if v "indent_blankline_show_current_context" then
-        context_status, context_start, context_end, context_pattern = utils.get_current_context(
-            v "indent_blankline_context_patterns"
-        )
+        context_status, context_start, context_end, context_pattern =
+            utils.get_current_context(v "indent_blankline_context_patterns", v "indent_blankline_use_treesitter_scope")
     end
 
     local get_virtual_text =
@@ -351,11 +327,8 @@ local refresh = function(scroll)
             local current_left_offset = left_offset
             local local_max_indent_level = math.min(max_indent_level, prev_indent + max_indent_increase)
             local indent_char = utils._if(blankline and char_blankline, char_blankline, char)
-            local context_indent_char = utils._if(
-                blankline and context_char_blankline,
-                context_char_blankline,
-                context_char
-            )
+            local context_indent_char =
+                utils._if(blankline and context_char_blankline, context_char_blankline, context_char)
             local indent_char_list = utils._if(blankline and #char_list_blankline > 0, char_list_blankline, char_list)
             local context_indent_char_list = utils._if(
                 blankline and #context_char_list_blankline > 0,
@@ -432,7 +405,11 @@ local refresh = function(scroll)
                         utils._if(
                             blankline,
                             utils.get_from_list(space_char_blankline_highlight_list, i, space_char_blankline_highlight),
-                            utils.get_from_list(space_char_highlight_list, i, space_char_highlight)
+                            utils.get_from_list(
+                                space_char_highlight_list,
+                                i,
+                                utils._if(context, context_space_char_highlight, space_char_highlight)
+                            )
                         ),
                     })
                 end
@@ -503,6 +480,12 @@ local refresh = function(scroll)
                             and show_current_context_start
                             and (show_current_context_start_on_current_line or lnum ~= context_start)
                         then
+                            if
+                                not vim.api.nvim_buf_is_loaded(bufnr)
+                                or not vim.api.nvim_buf_get_var(bufnr, "__indent_blankline_active")
+                            then
+                                return
+                            end
                             xpcall(
                                 vim.api.nvim_buf_set_extmark,
                                 utils.error_handler,
@@ -513,7 +496,7 @@ local refresh = function(scroll)
                                 {
                                     end_col = #lines[i],
                                     hl_group = "IndentBlanklineContextStart",
-                                    priority = 10000,
+                                    priority = context_start_priority,
                                 }
                             )
                         end
@@ -536,6 +519,12 @@ local refresh = function(scroll)
                             max_indent_level,
                             {}
                         )
+                        if
+                            not vim.api.nvim_buf_is_loaded(bufnr)
+                            or not vim.api.nvim_buf_get_var(bufnr, "__indent_blankline_active")
+                        then
+                            return
+                        end
                         xpcall(
                             vim.api.nvim_buf_set_extmark,
                             utils.error_handler,
@@ -543,7 +532,12 @@ local refresh = function(scroll)
                             vim.g.indent_blankline_namespace,
                             i - 1 + offset,
                             0,
-                            { virt_text = virtual_text, virt_text_pos = "overlay", hl_mode = "combine", priority = 1 }
+                            {
+                                virt_text = virtual_text,
+                                virt_text_pos = "overlay",
+                                hl_mode = "combine",
+                                priority = char_priority,
+                            }
                         )
                     end)()
                     return async:close()
@@ -552,13 +546,8 @@ local refresh = function(scroll)
                 local indent, extra
                 local virtual_string = {}
                 if not blankline then
-                    indent, extra, virtual_string = utils.find_indent(
-                        whitespace,
-                        only_whitespace,
-                        shiftwidth,
-                        strict_tabs,
-                        list_chars
-                    )
+                    indent, extra, virtual_string =
+                        utils.find_indent(whitespace, only_whitespace, shiftwidth, strict_tabs, list_chars)
                 elseif empty_line_counter > 0 then
                     empty_line_counter = empty_line_counter - 1
                     indent = next_indent
@@ -575,13 +564,8 @@ local refresh = function(scroll)
                         end
                         local j_whitespace = string.match(lines[j], "^%s+")
                         local j_only_whitespace = j_whitespace == lines[j]
-                        indent, extra, _ = utils.find_indent(
-                            j_whitespace,
-                            j_only_whitespace,
-                            shiftwidth,
-                            strict_tabs,
-                            list_chars
-                        )
+                        indent, extra, _ =
+                            utils.find_indent(j_whitespace, j_only_whitespace, shiftwidth, strict_tabs, list_chars)
                     end
                     next_indent = indent
                     next_extra = extra
@@ -598,6 +582,12 @@ local refresh = function(scroll)
                     and (show_current_context_start_on_current_line or lnum ~= context_start)
                 then
                     vim.schedule_wrap(function()
+                        if
+                            not vim.api.nvim_buf_is_loaded(bufnr)
+                            or not vim.api.nvim_buf_get_var(bufnr, "__indent_blankline_active")
+                        then
+                            return
+                        end
                         xpcall(
                             vim.api.nvim_buf_set_extmark,
                             utils.error_handler,
@@ -608,7 +598,7 @@ local refresh = function(scroll)
                             {
                                 end_col = #lines[i],
                                 hl_group = "IndentBlanklineContextStart",
-                                priority = 10000,
+                                priority = context_start_priority,
                             }
                         )
                     end)()
@@ -633,6 +623,12 @@ local refresh = function(scroll)
                     virtual_string
                 )
                 vim.schedule_wrap(function()
+                    if
+                        not vim.api.nvim_buf_is_loaded(bufnr)
+                        or not vim.api.nvim_buf_get_var(bufnr, "__indent_blankline_active")
+                    then
+                        return
+                    end
                     xpcall(
                         vim.api.nvim_buf_set_extmark,
                         utils.error_handler,
@@ -640,7 +636,12 @@ local refresh = function(scroll)
                         vim.g.indent_blankline_namespace,
                         i - 1 + offset,
                         0,
-                        { virt_text = virtual_text, virt_text_pos = "overlay", hl_mode = "combine", priority = 1 }
+                        {
+                            virt_text = virtual_text,
+                            virt_text_pos = "overlay",
+                            hl_mode = "combine",
+                            priority = char_priority,
+                        }
                     )
                 end)()
                 return async:close()

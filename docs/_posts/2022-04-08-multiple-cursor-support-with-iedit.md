@@ -2,7 +2,7 @@
 title: "Multiple cursor support for Vim"
 categories: [blog, feature]
 description: ""
-image: https://user-images.githubusercontent.com/13142418/162548036-2598a705-4834-4332-9b55-fc49eae80f99.gif
+image: https://img.spacevim.org/162548036-2598a705-4834-4332-9b55-fc49eae80f99.gif
 commentsID: "Multiple cursor support for Vim"
 comments: true
 ---

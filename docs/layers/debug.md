@@ -61,7 +61,7 @@ Vimspector can be used as the debugger by setting the configuration.
 
 key bindings are too long? use `SPC d .` to open the debug transient state:
 
-![Debug Transient State](https://user-images.githubusercontent.com/13142418/33996076-b03c05bc-e0a5-11e7-90fd-5f31e2703d7e.png)
+![Debug Transient State](https://img.spacevim.org/33996076-b03c05bc-e0a5-11e7-90fd-5f31e2703d7e.png)
 
 ### Using vimspector
 

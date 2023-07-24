@@ -1,7 +1,7 @@
 ---
 title: "Use Vim as Elixir IDE"
 categories: [tutorials, blog]
-image: https://user-images.githubusercontent.com/13142418/90253911-80669300-de74-11ea-9786-4b97a4091bc6.png
+image: https://img.spacevim.org/90253911-80669300-de74-11ea-9786-4b97a4091bc6.png
 description: "A general guide for using SpaceVim as Elixir IDE, including layer configuration, requiems installation and usage."
 type: article
 comments: true
@@ -13,7 +13,7 @@ commentsID: "Use Vim as a Elixir IDE"
 This is a general guide for using SpaceVim as a Elixir IDE, including layer configuration and usage. 
 Each of the following sections will be covered:
 
-![elixir-ide](https://user-images.githubusercontent.com/13142418/90253911-80669300-de74-11ea-9786-4b97a4091bc6.png)
+![elixir-ide](https://img.spacevim.org/90253911-80669300-de74-11ea-9786-4b97a4091bc6.png)
 
 <!-- vim-markdown-toc GFM -->
 
@@ -65,7 +65,7 @@ after saving current file. This layer is enabled by default.
 The default code running key binding is `SPC l r`. It will run `elixir current_file` asynchronously.
 And the stdout will be shown on a runner buffer.
 
-![elixir-code-runner](https://user-images.githubusercontent.com/13142418/90252211-accce000-de71-11ea-8a93-3f07e9cc2b69.png)
+![elixir-code-runner](https://img.spacevim.org/90252211-accce000-de71-11ea-8a93-3f07e9cc2b69.png)
 
 ### REPL support
 
@@ -74,7 +74,7 @@ send code to inferior process. All key bindings prefix with `SPC l s`, including
 send whole buffer.
 
 
-![elixir-repl](https://user-images.githubusercontent.com/13142418/90252532-409eac00-de72-11ea-992e-8f0b678bdc51.png)
+![elixir-repl](https://img.spacevim.org/90252532-409eac00-de72-11ea-992e-8f0b678bdc51.png)
 
 
 ### Jump to test file

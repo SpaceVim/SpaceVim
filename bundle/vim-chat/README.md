@@ -2,7 +2,7 @@
 
 The chatting client for vim and neovim. This plugin is based on [SpaceVim](https://spacevim.org)'s API, and it is detached automatically.
 
-![vim-chat](https://user-images.githubusercontent.com/13142418/166140007-d11d5e92-b32d-414f-b56b-64e28d03fd0e.png)
+![vim-chat](https://img.spacevim.org/166140007-d11d5e92-b32d-414f-b56b-64e28d03fd0e.png)
 
 <!-- vim-markdown-toc GFM -->
 

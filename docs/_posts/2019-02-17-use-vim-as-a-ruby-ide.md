@@ -1,7 +1,7 @@
 ---
 title: "使用 Vim 搭建 Ruby 开发环境"
 categories: [tutorials_cn, blog_cn]
-image: https://user-images.githubusercontent.com/13142418/53355518-20202080-3964-11e9-92f3-476060f2761e.png
+image: https://img.spacevim.org/53355518-20202080-3964-11e9-92f3-476060f2761e.png
 description: "这篇文章主要介绍如何使用 SpaceVim 搭建 Ruby 的开发环境，简介 lang#ruby 模块所支持的功能特性以及使用技巧"
 permalink: /cn/:title/
 lang: zh
@@ -78,7 +78,7 @@ gem install solargraph
 gem install rubocop
 ```
 
-![rubylint](https://user-images.githubusercontent.com/13142418/53347011-32459300-3953-11e9-9ca2-3e07f832db5a.png)
+![rubylint](https://img.spacevim.org/53347011-32459300-3953-11e9-9ca2-3e07f832db5a.png)
 
 ### 工程文件跳转
 
@@ -99,7 +99,7 @@ SpaceVim 自带工程管理插件，可以识别项目根目录，自动跳转 a
 会在屏幕下方打开一个插件窗口，运行的结果会被展示在窗口内。于此同时，光标并不会跳到该插件窗口，避免影响编辑。在这里需要说明下，
 这一功能是根据当前 buffer 内容调用 Ruby 命令。因此，在执行这个快捷键之前，不一定要保存该文件。
 
-![rubyrunner](https://user-images.githubusercontent.com/13142418/53300165-6b600380-387e-11e9-852f-f8766300ece1.gif)
+![rubyrunner](https://img.spacevim.org/53300165-6b600380-387e-11e9-852f-f8766300ece1.gif)
 
 ### 代码格式化
 
@@ -116,13 +116,13 @@ Ruby 代码格式化，主要依赖 `format` 模块，同时需要安装相关�
 gem install rufo
 ```
 
-![formatruby](https://user-images.githubusercontent.com/13142418/53301042-3c02c400-3889-11e9-9918-430ad6a7f08f.gif)
+![formatruby](https://img.spacevim.org/53301042-3c02c400-3889-11e9-9918-430ad6a7f08f.gif)
 
 ### 交互式编程
 
 在编辑 Ruby 文件时，可通过快捷键 `SPC l s i` 启动 `irb` 交互窗口，
 之后使用快捷键将代码发送至解释器。默认快捷键都以 `SPC l s` 为前缀。
 
-![rubyrepl](https://user-images.githubusercontent.com/13142418/53347455-1098db80-3954-11e9-87c3-13a027ec88f6.gif)
+![rubyrepl](https://img.spacevim.org/53347455-1098db80-3954-11e9-87c3-13a027ec88f6.gif)
 
 

@@ -138,7 +138,7 @@ function! s:winnr(...) abort
     endif
   else
     if g:spacevim_enable_statusline_mode == 1
-      return '%{SpaceVim#layers#core#statusline#mode(mode())} %{SpaceVim#layers#core#statusline#mode_text(mode())} %{ SpaceVim#layers#core#statusline#winnr(get(w:, "winid", winnr())) } '
+      return '%{SpaceVim#layers#core#statusline#mode(mode())} %{ SpaceVim#layers#core#statusline#winnr(get(w:, "winid", winnr())) } %{SpaceVim#layers#core#statusline#mode_text(mode())} '
     elseif g:spacevim_windows_index_type == 3
       return '%{SpaceVim#layers#core#statusline#mode(mode())} %{ get(w:, "winid", winnr()) } '
     else
@@ -962,24 +962,24 @@ function! SpaceVim#layers#core#statusline#mode_text(mode) abort
         let mode_text = 'IEDIT-INSERT'
       endif
     else
-      let mode_text = 'NORMAL'
+      let mode_text = ' NORMAL'
     endif
   elseif a:mode ==# 'i'
-    let mode_text = 'INSERT'
+    let mode_text = ' INSERT'
   elseif a:mode ==# 'R'
     let mode_text = 'REPLACE'
   elseif a:mode ==# 'v'
-    let mode_text = 'VISUAL'
+    let mode_text = ' VISUAL'
   elseif a:mode ==# 'V'
-    let mode_text = 'V-LINE'
+    let mode_text = ' V-LINE'
   elseif a:mode ==# ''
     let mode_text = 'V-BLOCK'
   elseif a:mode ==# 'c'
     let mode_text = 'COMMAND'
   elseif a:mode ==# 't'
-    let mode_text = 'TERMINAL'
+    let mode_text = '   TERM'
   elseif a:mode ==# 'v' || a:mode ==# 'V' || a:mode ==# '^V' || a:mode ==# 's' || a:mode ==# 'S' || a:mode ==# '^S'
-    let mode_text = 'VISUAL'
+    let mode_text = ' VISUAL'
   endif
   return past_mode . mode_text
 endfunction

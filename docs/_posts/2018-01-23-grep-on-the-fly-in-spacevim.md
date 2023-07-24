@@ -2,7 +2,7 @@
 title: "Grep on the fly in SpaceVim"
 categories: [feature, blog]
 description: "Grep and replace asynchronously, display searching results on the fly based on user input"
-image: https://user-images.githubusercontent.com/13142418/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif
+image: https://img.spacevim.org/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif
 commentsID: "Grep on the fly"
 comments: true
 ---
@@ -31,19 +31,19 @@ In linux os, flygrep use grep by default, if you want a more fast tool, you can 
 
 In SpaceVim, you can use `SPC s p` or `SPC s /` to search in the current project.
 
-![searching project](https://user-images.githubusercontent.com/13142418/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif)
+![searching project](https://img.spacevim.org/80607963-b704d300-8a68-11ea-99c4-5b5bd653cb24.gif)
 
 - **Search in current file**
 
 You can use `SPC s s` to search in the current file. To search word under the cursor, you can press `SPC s S`.
 
-![searching current file](https://user-images.githubusercontent.com/13142418/35278847-e0032796-0010-11e8-911b-2ee8fd81aed2.gif)
+![searching current file](https://img.spacevim.org/35278847-e0032796-0010-11e8-911b-2ee8fd81aed2.gif)
 
 - **Search in all loaded buffers**
 
 To searching in all loaded buffers, you need to press `SPC s b`, and you can also use `SPC s B` to search word under the point.
 
-![searching-loaded-buffer](https://user-images.githubusercontent.com/13142418/35278996-518b8a34-0011-11e8-9a7a-613668398ee2.gif)
+![searching-loaded-buffer](https://img.spacevim.org/35278996-518b8a34-0011-11e8-9a7a-613668398ee2.gif)
 
 - **Search in an arbitrary directory**
 
