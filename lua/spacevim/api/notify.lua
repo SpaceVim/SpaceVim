@@ -21,7 +21,6 @@ local extend = function(t1, t2) -- {{{
 end
 
 local notifications = {}
-
 M.message = {}
 M.notification_width = 1
 M.notify_max_width = 0
@@ -30,7 +29,8 @@ M.bufnr = -1
 M.border = {}
 M.border.winid = -1
 M.border.bufnr = -1
-M.borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' }
+-- M.borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' }
+M.borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' }
 M.title = ''
 M.winblend = 0
 M.timeout = 3000
