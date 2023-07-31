@@ -6,7 +6,6 @@
 " License: GPLv3
 "=============================================================================
 
-
 let s:preview_bufnr = -1
 let s:toml_bufnr = -1
 
@@ -30,4 +29,6 @@ function! toml#preview() abort
   silent Neoformat! json
   setlocal nomodifiable
   set syntax=json
+
+
 endfunction

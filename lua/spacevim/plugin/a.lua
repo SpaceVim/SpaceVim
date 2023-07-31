@@ -13,6 +13,7 @@ local cmd = require('spacevim').cmd
 local sp_file = require('spacevim.api').import('file')
 local sp_opt = require('spacevim.opt')
 local sp_json = require('spacevim.api').import('data.json')
+local toml = require('spacevim.api.data.toml')
 local logger = require('spacevim.logger').derive('a.lua')
 local fn = vim.fn or require('spacevim').fn
 local nt = require('spacevim.api').import('notify')
@@ -79,8 +80,13 @@ function M.alt(request_parse, ...)
 end
 
 local function get_project_config(conf_file)
-  local context = fn.join(fn.readfile(conf_file), '\n')
-  local conf = sp_json.json_decode(context)
+  local conf
+  if conf_file:sub(-4) == 'toml' then
+    conf = toml.parse_file(conf_file)
+  else
+    conf = sp_json.json_decode(fn.join(fn.readfile(conf_file), '\n'))
+  end
+  logger.debug(vim.inspect(conf))
   if type(conf) ~= 'table' then
     conf = {}
   end
