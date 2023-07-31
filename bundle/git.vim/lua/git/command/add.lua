@@ -21,6 +21,9 @@ local function on_exit(id, code, single)
   log.debug('git-add exit code:' .. code .. ' single:' .. single)
 
   if code == 0 and single == 0 then
+    if vim.fn.exists(':GitGutter') == 2 then
+      vim.cmd('GitGutter')
+    end
     nt.notify('stage files done!')
   else
     nt.notify('stage files failed!')
