@@ -1,0 +1,151 @@
+["autoload/SpaceVim/api/*.vim"]
+alternate = "test/api/{}.vader"
+doc = "docs/api/{}.md"
+
+["autoload/SpaceVim/plugins/*.vim"]
+alternate = "test/plugin/{}.vader"
+lua = "lua/spacevim/plugin/{}.lua"
+
+["lua/spacevim/plugin/*.lua"]
+alternate = "test/lua/plugin/{}.vader"
+vim = "autoload/SpaceVim/plugins/{}.vim"
+
+["test/plugin/*.vader"]
+alternate = "autoload/SpaceVim/plugins/{}.vim"
+
+["test/lua/plugin/*.vader"]
+alternate = "lua/spacevim/plugin/{}.lua"
+
+["autoload/SpaceVim/layers/lang/*.vim"]
+doc = "docs/layers/lang/{}.md"
+
+["autoload/SpaceVim/layers/*.vim"]
+doc = "docs/layers/{}.md"
+
+["test/api/*.vader"]
+alternate = "autoload/SpaceVim/api/{}.vim"
+
+["docs/layers/*.md"]
+alternate = "docs/cn/layers/{}.md"
+code = "autoload/SpaceVim/layers/{}.vim"
+
+["docs/cn/layers/*.md"]
+alternate = "docs/layers/{}.md"
+code = "autoload/SpaceVim/layers/{}.vim"
+
+["docs/*.md"]
+alternate = "docs/cn/{}.md"
+
+["docs/cn/*.md"]
+alternate = "docs/{}.md"
+
+["doc/*.txt"]
+alternate = "doc/{}.cnx"
+
+["doc/*.cnx"]
+alternate = "doc/{}.txt"
+
+["docs/*.cmd"]
+alternate = "docs/cn/{}.cmd"
+
+["docs/cn/*.cmd"]
+alternate = "docs/{}.cmd"
+
+["wiki/en/Project-layout.md"]
+alternate = "wiki/cn/Project-layout.md"
+
+["wiki/cn/Project-layout.md"]
+alternate = "wiki/en/Project-layout.md"
+
+["wiki/en/Following-HEAD.md"]
+alternate = "wiki/cn/Following-HEAD.md"
+
+["wiki/cn/Following-HEAD.md"]
+alternate = "wiki/en/Following-HEAD.md"
+
+["autoload/SpaceVim/layers/lsp.vim"]
+doc = "docs/layers/language-server-protocol.md"
+
+["docs/_posts/2017-02-11-use-vim-as-a-java-ide.md"]
+alternate = "docs/_posts/2018-09-19-use-vim-as-a-java-ide.md"
+
+["docs/_posts/2018-09-19-use-vim-as-a-java-ide.md"]
+alternate = "docs/_posts/2017-02-11-use-vim-as-a-java-ide.md"
+
+["docs/_posts/2019-01-08-use-vim-as-a-go-ide.md"]
+alternate = "docs/_posts/2019-01-07-use-vim-as-a-go-ide.md"
+
+["docs/_posts/2019-01-07-use-vim-as-a-go-ide.md"]
+alternate = "docs/_posts/2019-01-08-use-vim-as-a-go-ide.md"
+
+["docs/_posts/2019-01-28-use-vim-as-a-coffeescript-ide.md"]
+alternate = "docs/_posts/2019-01-29-use-vim-as-a-coffeescript-ide.md"
+
+["docs/_posts/2019-01-29-use-vim-as-a-coffeescript-ide.md"]
+alternate = "docs/_posts/2019-01-28-use-vim-as-a-coffeescript-ide.md"
+
+["docs/_posts/2018-09-27-use-vim-as-a-python-ide.md"]
+alternate = "docs/_posts/2018-09-28-use-vim-as-a-python-ide.md"
+
+["docs/_posts/2018-09-28-use-vim-as-a-python-ide.md"]
+alternate = "docs/_posts/2018-09-27-use-vim-as-a-python-ide.md"
+
+["docs/_posts/2019-02-11-use-vim-as-a-perl-ide.md"]
+alternate = "docs/_posts/2019-02-12-use-vim-as-a-perl-ide.md"
+
+["docs/_posts/2019-02-12-use-vim-as-a-perl-ide.md"]
+alternate = "docs/_posts/2019-02-11-use-vim-as-a-perl-ide.md"
+
+["docs/_posts/2019-02-17-use-vim-as-a-ruby-ide.md"]
+alternate = "docs/_posts/2019-02-18-use-vim-as-a-ruby-ide.md"
+
+["docs/_posts/2019-02-18-use-vim-as-a-ruby-ide.md"]
+alternate = "docs/_posts/2019-02-17-use-vim-as-a-ruby-ide.md"
+
+["docs/_posts/2019-05-08-use-vim-as-a-php-ide.md"]
+alternate = "docs/_posts/2019-05-09-use-vim-as-a-php-ide.md"
+
+["docs/_posts/2019-05-09-use-vim-as-a-php-ide.md"]
+alternate = "docs/_posts/2019-05-08-use-vim-as-a-php-ide.md"
+
+["docs/_posts/2019-05-10-use-vim-as-a-c-cpp-ide.md"]
+alternate = "docs/_posts/2019-05-11-use-vim-as-a-c-cpp-ide.md"
+
+["docs/_posts/2019-05-11-use-vim-as-a-c-cpp-ide.md"]
+alternate = "docs/_posts/2019-05-10-use-vim-as-a-c-cpp-ide.md"
+
+["docs/_posts/2018-09-27-use-vim-as-ide.md"]
+alternate = "docs/_posts/2018-09-28-use-vim-as-ide.md"
+
+["docs/_posts/2018-01-23-grep-on-the-fly-in-spacevim.md"]
+alternate = "docs/_posts/2018-01-31-grep-on-the-fly-in-spacevim.md"
+
+["docs/_posts/2018-01-31-grep-on-the-fly-in-spacevim.md"]
+alternate = "docs/_posts/2018-01-23-grep-on-the-fly-in-spacevim.md"
+
+["docs/_posts/2018-09-28-use-vim-as-ide.md"]
+alternate = "docs/_posts/2018-09-27-use-vim-as-ide.md"
+
+["docs/_posts/2020-01-27-manage-project-alternate-files.md"]
+alternate = "docs/_posts/2020-01-28-manage-project-alternate-files.md"
+
+["docs/_posts/2020-01-28-manage-project-alternate-files.md"]
+alternate = "docs/_posts/2020-01-27-manage-project-alternate-files.md"
+
+["docs/_posts/2019-07-17-Asynchronous-todo-manager.md"]
+alternate = "docs/_posts/2019-07-16-Asynchronous-todo-manager.md"
+
+["docs/_posts/2019-07-16-Asynchronous-todo-manager.md"]
+alternate = "docs/_posts/2019-07-17-Asynchronous-todo-manager.md"
+
+["docs/_posts/2020-09-25-use-vim-as-a-kotlin-ide.md"]
+alternate = "docs/_posts/2020-09-24-use-vim-as-a-kotlin-ide.md"
+
+["docs/_posts/2020-09-24-use-vim-as-a-kotlin-ide.md"]
+alternate = "docs/_posts/2020-09-25-use-vim-as-a-kotlin-ide.md"
+
+["README.md"]
+alternate = "README.cn.md"
+
+["README.cn.md"]
+alternate = "README.md"

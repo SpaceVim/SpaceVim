@@ -8,9 +8,6 @@
 
 local M = {}
 
-local skip_pattern = '\\C^\\%(\\_s\\+\\|#[^\r\n]*\\)'
-local table_name_pattern = [[\%([^ [:tab:]#.[\]=]\+\)]]
-local table_key_pattern = table_name_pattern
 function M.parse(text)
   local input = {
     text = text,
@@ -30,8 +27,11 @@ function M.parse_file(filename)
   return M.parse(vim.fn.iconv(text, 'utf8', vim.o.encoding))
 end
 
+local skip_pattern = [[\C^\%(\%(\s\|\r\?\n\)\+\|#[^\r\n]*\)]]
+local bare_key_pattern = [[\%([A-Za-z0-9_-]\+\)]]
+
 function M._skip(input)
-  while M._match(input, [[\%(\_s\|#\)]]) do
+  while M._match(input, [[\%(\s\|\r\?\n\|#\)]]) do
     input.p = vim.fn.matchend(input.text, skip_pattern, input.p)
   end
 end
@@ -64,13 +64,10 @@ function M._eof(input)
 end
 
 function M._error(input)
-  local buf = {}
-  local offset = 0
-  -- @todo !=# string to lua
-  while (input.p + offset) < input.length and input.text[input.p + offset] ~= '[\r\n]' do
-    table.insert(buf, input.text[input.p + offset])
-    offset = offset + 1
-  end
+  local s = vim.fn.matchstr(input.text, regex_prefix .. [[.\{-}\ze\%(\r\?\n\|$\)]], input.p)
+  s = vim.fn.substitute(s, '\\r', '\\\\r', 'g')
+
+  error('toml API: Illegal TOML format at ' .. s)
 end
 
 function M._parse(input)
@@ -78,19 +75,19 @@ function M._parse(input)
   M._skip(input)
   while not M._eof(input) do
     if M._match(input, '[^ [:tab:]#.[\\]]') then
-      local key = M._key(input)
+      local keys = M._keys(input, '=')
       M._equals(input)
       local value = M._value(input)
 
-      M._put_dict(data, key, value)
+      M._put_dict(data, keys, value)
     elseif M._match(input, '\\[\\[') then
-      local key, value = M._array_of_tables(input)
+      local keys, value = M._array_of_tables(input)
 
-      M._put_array(data, key, value)
+      M._put_array(data, keys, value)
     elseif M._match(input, '\\[') then
-      local key, value = M._table(input)
+      local keys, value = M._table(input)
 
-      M._put_dict(data, key, value)
+      M._put_dict(data, keys, value)
     else
       M._error(input)
     end
@@ -99,9 +96,30 @@ function M._parse(input)
   return data
 end
 
-function M._key(input)
-  local s = M._consume(input, table_key_pattern)
-  return s
+function M._keys(input, e)
+  local keys = {}
+
+  while not M._eof(input) and not M._match(input, e) do
+    M._skip(input)
+    local key
+    if M._match(input, '"') then
+      key = M._basic_string(input)
+    elseif M._match(input, "'") then
+      key = M._literal(input)
+    else
+      key = M._consume(input, bare_key_pattern)
+    end
+    if key then
+      table.insert(keys, key)
+    end
+    M._consume(input, '\\.\\?')
+  end
+
+  if #keys == 0 then
+    M._error(input)
+  end
+  
+  return keys
 end
 
 function M._equals(input)
@@ -121,12 +139,18 @@ function M._value(input)
     return M._literal(input)
   elseif M._match(input, '\\[') then
     return M._array(input)
+  elseif M._match(input, '{') then
+    return M._inline_table(input)
   elseif M._match(input, '\\%(true\\|false\\)') then
     return M._boolean(input)
   elseif M._match(input, '\\d\\{4}-') then
     return M._datetime(input)
-  elseif M._match(input, '[+-]\\?\\%(\\d\\+\\.\\d\\|\\d\\+\\%(\\.\\d\\+\\)\\?[eE]\\)') then
+  elseif M._match(input, '\\d\\{2}:') then
+    return M._local_time(input)
+  elseif M._match(input, [[[+-]\?\d\+\%(_\d\+\)*\%(\.\d\+\%(_\d\+\)*\|\%(\.\d\+\%(_\d\+\)*\)\?[eE]\)]]) then
     return M._float(input)
+  elseif M._match(input, [[[+-]\?\%(inf\|nan\)]]) then
+    return M._special_float(input)
   else
     return M._integer(input)
   end
@@ -139,10 +163,10 @@ function M._basic_string(input)
 end
 
 function M._multiline_basic_string(input)
-  local s = M._consume(input, '"\\{3}\\_.\\{-}"\\{3}')
+  local s = M._consume(input, [["\{3}\%(\\.\|\_.\)\{-}"\{,2}"\{3}]])
   s = string.sub(s, 4, #s - 3)
-  s = vim.fn.substitute(s, '^\n', '', '')
-  s = vim.fn.substitute(s, '\\\\' .. '\n' .. '\\_s*', '', 'g')
+  s = vim.fn.substitute(s, [[^\r\?\n]], '', '')
+  s = vim.fn.substitute(s, [[\\\%(\s\|\r\?\n\)*]], '', 'g')
   return M._unescape(s)
 end
 
@@ -152,50 +176,59 @@ function M._literal(input)
 end
 
 function M._multiline_literal(input)
-  local s = M._consume(input, [['\{3}.\{-}'\{3}]])
+  local s = M._consume(input, [['\{3}.\{-}'\{,2}'\{3}]])
   s = string.sub(s, 4, #s - 3)
-  s = vim.fn.substitute(s, '^\n', '', '')
+  s = vim.fn.substitute(s, [[^\r\?\n]], '', '')
   return s
 end
 
 function M._integer(input)
-  local s = M._consume(input, '[+-]\\?\\d\\+')
-  return vim.fn.str2nr(s)
+  local s, base
+  if M._match(input, '0b') then
+    s = M._consume(input, [[0b[01]\+\%(_[01]\+\)*]])
+    base = 2
+  elseif M._match(input, '0o') then
+    s = M._consume(input, [[0o[0-7]\+\%(_[0-7]\+\)*]])
+    s = string.sub(s, 3)
+    base = 8
+  elseif M._match(input, '0x') then
+    s = M._consume(input, [['0x[A-Fa-f0-9]\+\%(_[A-Fa-f0-9]\+\)*]])
+    base = 16
+  else
+    s = M._consume(input, [[[+-]\?\d\+\%(_\d\+\)*]])
+    base = 10
+  end
+  s = vim.fn.substitute(s, '_', '', 'g')
+  return vim.fn.str2nr(s, base)
 end
 
 function M._float(input)
-  if M._match(input, [[[+-]\?[0-9.]\+[eE][+-]\?\d\+]]) then
-    return M._exponent(input)
-  else
-    return M._fractional(input)
-  end
-end
-
-function M._fractional(input)
-  local s = M._consume(input, [[[+-]\?[0-9.]\+]])
+  local s = M._consume(input, [[[+-]\?[0-9._]\+\%([eE][+-]\?\d\+\%(_\d\+\)*\)\?]])
+  s = vim.fn.substitute(s, '_', '', 'g')
   return vim.fn.str2float(s)
 end
 
-function M._exponent(input)
-  local s = M._consume(input, [[[+-]\?[0-9.]\+[eE][+-]\?\d\+]])
+function M._special_float(input)
+  local s = M._consume(input, [[[+-]\?\%(inf\|nan\)]])
+  s = vim.fn.substitute(s, '_', '', 'g')
   return vim.fn.str2float(s)
 end
 
 function M._boolean(input)
   local s = M._consume(input, [[\%(true\|false\)]])
-  if s == 'true' then
-    return true
-  else
-    return false
-  end
+  return s == 'true'
 end
 
 function M._datetime(input)
   local s = M._consume(
     input,
-    [[\d\{4}-\d\{2}-\d\{2}T\d\{2}:\d\{2}:\d\{2}\%(Z\|-\?\d\{2}:\d\{2}\|\.\d\+-\d\{2}:\d\{2}\)]]
+    [[\d\{4}-\d\{2}-\d\{2}\%([T ]\d\{2}:\d\{2}:\d\{2}\%(\.\d\+\)\?\%(Z\|[+-]\d\{2}:\d\{2}\)\?\)\?]]
   )
   return s
+end
+
+function M._local_time(input)
+  return M._consume(input, [[\d\{2}:\d\{2}:\d\{2}\%(\.\d\+\)\?]])
 end
 
 function M._array(input)
@@ -213,41 +246,45 @@ end
 
 function M._table(input)
   local tbl = {}
-  local name = M._consume(
-    input,
-    '\\[\\s*' .. table_name_pattern .. '\\%(\\s*\\.\\s*' .. table_name_pattern .. '\\)*\\s*\\]'
-  )
-  name = string.sub(name, 2, #name - 1)
+  M._consume(input, '\\[')
+  local name = M._keys(input, '\\]')
+  M._consume(input, '\\]')
   M._skip(input)
   while not M._eof(input) and not M._match(input, '\\[') do
-    local key = M._key(input)
+    local keys = M._keys(input, '=')
     M._equals(input)
     local value = M._value(input)
-
-    tbl[key] = value
+    M._put_dict(tbl, keys, value)
     M._skip(input)
   end
   return name, tbl
 end
 
-function M._array_of_tables(input)
+function M._inline_table(input)
   local tbl = {}
-  local name = M._consume(
-    input,
-    '\\[\\[\\s*'
-      .. table_name_pattern
-      .. '\\%(\\s*\\.\\s*'
-      .. table_name_pattern
-      .. '\\)*\\s*\\]\\]'
-  )
-  name = string.sub(name, 3, #name - 2)
-  M._skip(input)
-  while not M._eof(input) and not M._match(input, '\\[') do
-    local key = M._key(input)
+  M._consume(input, '{')
+  while not M._eof(input) and not M._match(input, '}') do
+    local keys = M._keys(input, '=')
     M._equals(input)
     local value = M._value(input)
+    M._put_dict(tbl, keys, value)
+    M._skip(input)
+  end
+  M._consume(input, '}')
+  return tbl
+end
 
-    tbl[key] = value
+function M._array_of_tables(input)
+  local tbl = {}
+  M._consume(input, '\\[\\[')
+  local name = M._keys(input, '\\]\\]')
+  M._consume(input, '\\]\\]')
+  M._skip(input)
+  while not M._eof(input) and not M._match(input, '\\[') do
+    local keys = M._keys(input, '=')
+    M._equals(input)
+    local value = M._value(input)
+    M._put_dict(tbl, keys, value)
     M._skip(input)
   end
   return name, tbl
@@ -287,8 +324,7 @@ local function has_key(t, k)
   end
 end
 
-function M._put_dict(dict, key_name, value)
-  local keys = vim.split(key_name, '%.')
+function M._put_dict(dict, keys, value)
 
   local ref = dict
   local i = 1
@@ -307,12 +343,17 @@ function M._put_dict(dict, key_name, value)
     i = i + 1
   end
 
-  ref[keys[#keys]] = value
+  if is_table(ref) and vim.fn.has_key(ref, keys[#keys])
+    and is_table(ref[keys[#keys]])
+    and is_table(value) then
+    vim.fn.extend(ref[keys[#keys]], value)
+  else
+    ref[keys[#keys]] = value
+  end
+
 end
 
-function M._put_array(dict, key_name, value)
-  local keys = vim.split(key_name, '%.')
-
+function M._put_array(dict, keys, value)
   local ref = dict
   local i = 1
   for _, key in ipairs(keys) do
