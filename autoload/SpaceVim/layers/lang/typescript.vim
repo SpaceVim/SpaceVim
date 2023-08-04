@@ -114,9 +114,8 @@ function! SpaceVim#layers#lang#typescript#set_variable(var) abort
 endfunction
 
 function! s:on_typescript_ft() abort
-  if SpaceVim#layers#lsp#check_filetype('typescript') || SpaceVim#layers#lsp#check_server('tsserver')
+  if SpaceVim#layers#lsp#check_server('tsserver') || SpaceVim#layers#lsp#check_filetype('typescript')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
-
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
           \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'],
@@ -129,31 +128,35 @@ function! s:on_typescript_ft() abort
       nnoremap <silent><buffer> K :<C-u>TSDoc<Cr>
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'], 'TSRename',
             \ 'rename-symbol', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f'], 'TSGetCodeFix',
-            \ 'code fix', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i'], 'TSImport',
-            \ 'import', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'p'], 'TSDefPreview',
-            \ 'preview definition', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'], 'TSType',
-            \ 'view type', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'R'], 'TSRefs',
-            \ 'show reference', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'D'], 'TSGetDiagnostics',
-            \ 'show errors', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'o'], 'TSOrganizeImports',
-            \ 'organizes imports', 1)            
     else
       nnoremap <silent><buffer> gD :<C-u>TsuTypeDefinition<Cr>
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'], 'TsuquyomiSignatureHelp',
             \ 'show document', 1)
       call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'e'], 'TsuquyomiRenameSymbol',
             \ 'rename symbol', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i'], 'TsuImport',
-            \ 'import', 1)
-      call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'm'], 'TsuImplementation',
-            \ 'interface implementations', 1)
     endif
+  endif
+
+  if has('nvim')
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'f'], 'TSGetCodeFix',
+          \ 'code fix', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i'], 'TSImport',
+          \ 'import', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'p'], 'TSDefPreview',
+          \ 'preview definition', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 't'], 'TSType',
+          \ 'view type', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'R'], 'TSRefs',
+          \ 'show reference', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'D'], 'TSGetDiagnostics',
+          \ 'show errors', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'o'], 'TSOrganizeImports',
+          \ 'organizes imports', 1)
+  else
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'i'], 'TsuImport',
+          \ 'import', 1)
+    call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'm'], 'TsuImplementation',
+          \ 'interface implementations', 1)
   endif
 
   " code runner
