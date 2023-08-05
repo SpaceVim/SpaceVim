@@ -405,7 +405,7 @@ function M.current_root()
     or vim.fn.empty(bufname) == 1
     or bufname:match('^neo%-tree') -- this is for neo-tree.nvim
   then
-    return
+    return fn.getcwd()
   end
   if
     table.concat(sp_opt.project_rooter_patterns, ':')

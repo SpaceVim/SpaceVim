@@ -5,6 +5,31 @@
 " URL: https://spacevim.org
 " License: GPLv3
 "=============================================================================
+if has('nvim-0.9.0')
+  function! SpaceVim#plugins#tasks#get() abort
+    return luaeval('require("spacevim.plugin.tasks").get()')
+  endfunction
+  function! SpaceVim#plugins#tasks#list() abort
+    lua require("spacevim.plugin.tasks").list()
+  endfunction
+  function! SpaceVim#plugins#tasks#edit(...) abort
+    lua require("spacevim.plugin.tasks").edit(
+          \ unpack(require("spacevim").eval("a:000"))
+          \ )
+  endfunction
+  function! SpaceVim#plugins#tasks#get_tasks() abort
+    return luaeval('require("spacevim.plugin.tasks").get_tasks()')
+  endfunction
+
+  function! SpaceVim#plugins#tasks#complete(...) abort
+  endfunction
+  function! SpaceVim#plugins#tasks#reg_provider(provider) abort
+    lua require("spacevim.plugin.tasks").reg_provider(
+          \ require("spacevim").eval("a:provider")
+          \ )
+  endfunction
+  finish
+endif
 
 if exists('s:is_loaded')
   finish
