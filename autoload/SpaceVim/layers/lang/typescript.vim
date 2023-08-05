@@ -114,7 +114,8 @@ function! SpaceVim#layers#lang#typescript#set_variable(var) abort
 endfunction
 
 function! s:on_typescript_ft() abort
-  if SpaceVim#layers#lsp#check_server('tsserver') || SpaceVim#layers#lsp#check_filetype('typescript')
+  if SpaceVim#layers#lsp#check_filetype('typescript')
+        \ || SpaceVim#layers#lsp#check_server('tsserver')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],
           \ 'call SpaceVim#lsp#show_doc()', 'show-document', 1)
