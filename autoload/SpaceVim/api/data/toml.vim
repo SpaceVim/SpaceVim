@@ -348,9 +348,9 @@ endfunction
 function! s:_put_dict(dict, keys, value) abort
   let ref = a:dict
   for key in a:keys[: -2]
-    if has_key(ref, key) && type(ref[key]) == v:t_dict
+    if has_key(ref, key) && type(ref[key]) == 4
       let ref = ref[key]
-    elseif has_key(ref, key) && type(ref[key]) == v:t_list
+    elseif has_key(ref, key) && type(ref[key]) == 3
       let ref = ref[key][-1]
     else
       let ref[key] = {}
@@ -358,7 +358,7 @@ function! s:_put_dict(dict, keys, value) abort
     endif
   endfor
 
-  if has_key(ref, a:keys[-1]) && type(a:value) == v:t_dict
+  if has_key(ref, a:keys[-1]) && type(a:value) == 4
     call extend(ref[a:keys[-1]], a:value)
   else
     let ref[a:keys[-1]] = a:value
@@ -369,7 +369,7 @@ function! s:_put_array(dict, keys, value) abort
   let ref = a:dict
   for key in a:keys[: -2]
     let ref[key] = get(ref, key, {})
-    if type(ref[key]) == v:t_list
+    if type(ref[key]) == 3
       let ref = ref[key][-1]
     else
       let ref = ref[key]
