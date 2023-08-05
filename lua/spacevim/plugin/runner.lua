@@ -14,6 +14,7 @@ local logger = require('spacevim.logger').derive('runner')
 local job = require('spacevim.api').import('job')
 local file = require('spacevim.api').import('file')
 local str = require('spacevim.api').import('data.string')
+local nt = require('spacevim.api.notify')
 
 local code_runner_bufnr = 0
 
@@ -53,6 +54,12 @@ local function stop_runner()
     logger.debug('stop runner:' .. runner_jobid)
     job.stop(runner_jobid)
   end
+end
+
+-- tbl_extend should provide default behavior
+
+local function tbl_extend(t1, t2)
+  return vim.tbl_extend('force', t1, t2)
 end
 
 local function close_win()
@@ -475,13 +482,16 @@ function M.select_file()
     is_running = false,
     has_errors = false,
     exit_code = 0,
-    exit_single = 0
+    exit_single = 0,
   }
 
   if vim.loop.os_uname().sysname == 'Windows_NT' then
     -- what the fuck, why need trim?
     -- because powershell comamnd output has `\n` at the end, and filetype detection failed.
-    selected_file = str.trim(vim.fn.system({'powershell', "Add-Type -AssemblyName System.windows.forms|Out-Null;$f=New-Object System.Windows.Forms.OpenFileDialog;$f.Filter='Model Files All files (*.*)|*.*';$f.showHelp=$true;$f.ShowDialog()|Out-Null;$f.FileName"}))
+    selected_file = str.trim(vim.fn.system({
+      'powershell',
+      "Add-Type -AssemblyName System.windows.forms|Out-Null;$f=New-Object System.Windows.Forms.OpenFileDialog;$f.Filter='Model Files All files (*.*)|*.*';$f.showHelp=$true;$f.ShowDialog()|Out-Null;$f.FileName",
+    }))
   end
 
   if selected_file == '' then
@@ -489,7 +499,7 @@ function M.select_file()
     return
   else
     logger.debug('selected file is:' .. selected_file)
-    local ft = vim.filetype.match({filename = selected_file})
+    local ft = vim.filetype.match({ filename = selected_file })
     if not ft then
       logger.debug('failed to detect filetype of selected file:' .. selected_file)
       return
@@ -502,20 +512,169 @@ function M.select_file()
       update_statusline()
     end
   end
-
-
-
-  
 end
 
-
-function M.select_language()
-  
-end
-
+function M.select_language() end
 
 function M.get(ft)
   return runners[ft] or ''
+end
+
+local function match_problems(output, matcher)
+  if matcher.pattern then
+    local pattern = matcher.pattern
+    local items = {}
+    for _, line in ipairs(output) do
+      local rst = vim.fn.matchlist(line, pattern.regexp)
+      local f_idx = 2
+      if pattern.file then
+        f_idx = pattern.file + 1
+      end
+      local f = rst[f_idx] or ''
+      local l_idx = 3
+      if pattern.line then
+        l_idx = pattern.line + 1
+      end
+      local l = rst[l_idx] or 1
+      local c_idx = 4
+      if pattern.column then
+        c_idx = pattern.column + 1
+      end
+      local column = rst[c_idx] or 1
+      local m_idx = 5
+      if pattern.message then
+        m_idx = pattern.message + 1
+      end
+      local message = rst[m_idx] or ''
+      if #f > 0 then
+        table.insert(items, {
+          filename = f,
+          lnum = l,
+          col = column,
+          text = message,
+        })
+      end
+    end
+    vim.fn.setqflist({}, 'r', { title = ' task output', items = items })
+    vim.cmd('copen')
+  else
+    local olderrformat = vim.o.errorformat
+    pcall(function()
+      vim.o.errorformat = matcher.errorformat
+      vim.g._spacevim_task_output = output
+      vim.cmd('noautocmd cexpr g:_spacevim_task_output')
+      vim.fn.setqflist({}, 'a', { title = ' task output' })
+      vim.cmd('copen')
+      vim.g._spacevim_task_output = nil
+    end)
+    vim.o.errorformat = olderrformat
+  end
+end
+
+local function on_backgroud_stdout(id, data, event)
+  local d = task_stdout['task' .. id] or {}
+
+  for _, v in ipairs(data) do
+    table.insert(d, v)
+  end
+
+  task_stdout['task' .. id] = d
+end
+
+local function on_backgroud_stderr(id, data, event)
+  local d = task_stderr['task' .. id] or {}
+
+  for _, v in ipairs(data) do
+    table.insert(d, v)
+  end
+
+  task_stderr['task' .. id] = d
+end
+
+local function on_backgroud_exit(id, code, single)
+  local status = task_status['task' .. id]
+    or {
+      is_running = false,
+      has_errors = false,
+      start_time = 0,
+      exit_code = 0,
+    }
+  local end_time = vim.fn.reltime(status.start_time)
+  local problem_matcher = task_problem_matcher['task' .. id] or {}
+  local output
+  if problem_matcher.useStdout then
+    output = task_stdout['task' .. id] or {}
+  else
+    output = task_stderr['task' .. id] or {}
+  end
+  if not vim.tbl_isempty(problem_matcher) and not vim.tbl_isempty(output) then
+    match_problems(output, problem_matcher)
+  end
+  nt.notify(
+    'task finished with code='
+      .. code
+      .. ' in '
+      .. str.trim(vim.fn.reltimestr(end_time))
+      .. ' seconds'
+  )
+end
+
+local function run_backgroud(cmd, ...)
+  local running_nr = 0
+  local running_done = 0
+  for _, v in pairs(task_status) do
+    if v.is_running then
+      running_nr = running_nr + 1
+    else
+      running_done = running_done + 1
+    end
+  end
+  nt.notify(string.format('tasks: %s running, %s done', running_nr, running_done))
+  local opts = select(1, ...) or {}
+  start_time = vim.fn.reltime()
+  local problemMatcher = select(2, ...) or {}
+  if not problemMatcher.errorformat and not problemMatcher.regexp then
+    problemMatcher = tbl_extend(problemMatcher, { errorformat = vim.o.errorformat })
+  end
+  opts.on_stdout = on_backgroud_stdout
+  opts.on_stderr = on_backgroud_stderr
+  opts.on_exit = on_backgroud_exit
+  local task_id = job.start(cmd, opts)
+  task_problem_matcher = tbl_extend(task_problem_matcher, { ['task' .. task_id] = problemMatcher })
+  logger.debug('task_problem_matcher is:\n' .. vim.inspect(task_problem_matcher))
+  task_status = tbl_extend(task_status, {
+    ['task' .. task_id] = {
+      is_running = true,
+      has_errors = false,
+      start_time = start_time,
+      exit_code = 0,
+    },
+  })
+end
+
+function M.run_task(task)
+  local isBackground = task.isBackground or false
+  if not vim.tbl_isempty(task) then
+    local cmd = task.command or ''
+    local args = task.args or {}
+    local opts = task.options or {}
+    if #args > 0 and #cmd > 0 then
+      cmd = cmd .. ' ' .. table.concat(args, ' ')
+    end
+    local opt = {}
+    if opts.cwd then
+      opt.cwd = opts.cwd
+    end
+    if opts.env then
+      opt = tbl_extend(opt, { env = opts.env })
+    end
+    local problemMatcher = task.problemMatcher or {}
+    if isBackground then
+      run_backgroud(cmd, opt, problemMatcher)
+    else
+      M.open(cmd, opt, problemMatcher)
+    end
+  end
 end
 
 return M
