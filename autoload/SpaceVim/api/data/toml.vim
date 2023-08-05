@@ -103,6 +103,7 @@ function! s:_parse(input) abort
       call s:_error(a:input)
     endif
     call s:_skip(a:input)
+    unlet keys value
   endwhile
 
   return data
@@ -283,6 +284,7 @@ function! s:_table(input) abort
     let value = s:_value(a:input)
     call s:_put_dict(tbl, keys, value)
     call s:_skip(a:input)
+    unlet keys value
   endwhile
   return [name, tbl]
 endfunction
