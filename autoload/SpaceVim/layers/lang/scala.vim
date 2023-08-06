@@ -147,7 +147,7 @@ function! SpaceVim#layers#lang#scala#plugins() abort
   let plugins = []
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-scala', {'merged' : 0}])
   if has('python3') || has('python')
-    call add(plugins, ['ensime/ensime-vim', {'on_ft': 'scala'}])
+    call add(plugins, ['wsdjeg/ensime-vim', {'on_ft': 'scala'}])
   endif
   return plugins
 endfunction
