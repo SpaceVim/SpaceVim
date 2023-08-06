@@ -1,19 +1,17 @@
 local M = {}
+local Key = require('spacevim.api').import('vim.keys')
+M.__vim = require('spacevim.api').import('vim')
 
-local function parse_input(char)
-  if char == 27 then
-    return ''
-  else
-    return char
-  end
+local function echo(str)
+  vim.api.nvim_echo({{str, 'Normal'}}, false, {})
 end
 
 local function next_item(list, item)
   local id = vim.fn.index(list, item)
-  if id == #list then
+  if id == #list - 1 then
     return list[1]
   else
-    return list[id]
+    return list[id + 2]
   end
 end
 
@@ -28,12 +26,18 @@ end
 
 local function parse_items(items)
   local is = {}
-  for _, item in pairs(items) do
-    local id = vim.fn.index(items, item) + 1
+  local id = 1
+  for _, item in ipairs(items) do
     is[id] = item
     is[id][1] = '(' .. id .. ')' .. item[1]
+    id = id + 1
   end
   return is
+end
+
+local function list_keys(l)
+  if #l == 0 then return {} end
+  return vim.fn.range(1, #l)
 end
 
 function M.menu(items)
@@ -44,48 +48,47 @@ function M.menu(items)
   items = parse_items(items)
   vim.o.cmdheight = #items + 1
   vim.cmd('redrawstatus!')
-  local selected = '1'
+  local selected = 1
   local exit = false
   local indent = string.rep(' ', 7, '')
   while not exit do
     local menu = 'Cmdline menu: Use j/k/enter and the shortcuts indicated\n'
-    for id, _ in pairs(items) do
-      local m = items[id]
-      if type(m) == 'table' then
-        m = m[1]
-      end
+    local id = 1
+    for _, _ in pairs(items) do
       if id == selected then
         menu = menu .. indent .. '>' .. items[id][1] .. '\n'
       else
         menu = menu .. indent .. ' ' .. items[id][1] .. '\n'
       end
+      id = id + 1
     end
 
     vim.cmd('redraw!')
-    vim.api.nvim_echo({ { string.sub(menu, 1, #menu - 2), 'Nornal' } }, false, {})
-    local nr = vim.fn.getchar()
-    if parse_input(nr) == #'' or nr == 3 then
-      exit = false
+    echo(string.sub(menu, 1, #menu - 1))
+    local char = M.__vim.getchar()
+    if char == Key.t('<Esc>') or char == Key.t('<C-c>') then
+      exit = true
       cancelled = true
       vim.cmd('normal! :')
-    elseif vim.fn.index(vim.fn.keys(items), vim.fn.nr2char(nr)) ~= -1 or nr == 13 then
-      if nr ~= 13 then
-        selected = vim.fn.nr2char(nr)
+    elseif vim.fn.index(list_keys(items), tonumber(char)) ~= -1 or char == Key.t('<Cr>') then
+      if char ~= Key.t('<Cr>') then
+        selected = tonumber(char, 10)
       end
-      local value = items[selected][1]
+      local value = items[selected][2]
       vim.cmd('normal! :')
-      if vim.fn.type(value) == 2 then
-        local args = vim.fn.get(items[selected], 2, {})
-        pcall(value, unpack(args))
+      if type(value) == "function" then
+        local args = items[selected][3] or {}
+        local ok, err = pcall(value, unpack(args))
+        if not ok then print(err) end
       elseif type(value) == 'string' then
         vim.cmd(value)
       end
       exit = true
-    elseif vim.fn.nr2char(nr) == 'j' or nr == 9 then
-      selected = next_item(vim.fn.keys(items), selected)
+    elseif char == 'j' or char == Key.t('<Tab>') then
+      selected = next_item(list_keys(items), selected)
       vim.cmd('normal! :')
-    elseif vim.fn.nr2char(nr) == 'k' then -- or nr == "\<S-Tab>"
-      selected = previous_item(vim.fn.keys(items), selected)
+    elseif char == 'k' or char == Key.t('<S-Tab>') then
+      selected = previous_item(list_keys(items), selected)
       vim.cmd('normal! :')
     else
       vim.cmd('normal! :')
@@ -95,7 +98,7 @@ function M.menu(items)
   vim.o.cmdheight = saved_cmdheight
   vim.cmd('redraw!')
   if cancelled then
-    vim.api.nvim_echo({ { 'cancelled!', 'Normal' } }, false, {})
+    echo('cancelled!')
   end
 end
 
