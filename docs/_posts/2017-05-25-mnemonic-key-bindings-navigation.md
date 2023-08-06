@@ -38,7 +38,7 @@ By default the guide buffer will be displayed 1000ms after the key has been pres
 
 for example, after pressing `<Space>` in normal mode, you will see :
 
-![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+![mapping-guide](https://img.spacevim.org/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
 
 this guide show you all the available key bindings begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc.
 

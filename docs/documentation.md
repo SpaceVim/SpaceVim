@@ -147,7 +147,7 @@ packages tuned by power users and bugs are fixed quickly.
 
 **workflow**
 
-![work-flow](https://cloud.githubusercontent.com/assets/296716/25455341/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
+![work-flow](https://img.spacevim.org/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
 
 Neovim on iTerm2 using the SpaceVim color scheme _base16-solarized-dark_
 
@@ -687,7 +687,7 @@ Search index shows the number of occurrences when performing a search via `/` or
 SpaceVim integrates the search status nicely by displaying it temporarily when `n` or `N` are being pressed.
 See the 20/22 segment in the screenshot below.
 
-![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
+![search status](https://img.spacevim.org/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
 Search index is provided by `incsearch` layer, to enable this layer:
 
@@ -723,11 +723,11 @@ Here is an exhaustive set of screenshots for all the available separators:
 
 | Separator | Screenshot                                                                                                                |
 | --------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `arrow`   | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png) |
-| `curve`   | ![separator-curve](https://cloud.githubusercontent.com/assets/13142418/26248272/42bbf6e8-3cd4-11e7-8792-665447040f49.png) |
-| `slant`   | ![separator-slant](https://cloud.githubusercontent.com/assets/13142418/26248515/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png) |
-| `nil`     | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)   |
-| `fire`    | ![separator-fire](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)  |
+| `arrow`   | ![separator-arrow](https://img.spacevim.org/b28bdc04-3c98-11e7-937e-641c9d85c493.png) |
+| `curve`   | ![separator-curve](https://img.spacevim.org/42bbf6e8-3cd4-11e7-8792-665447040f49.png) |
+| `slant`   | ![separator-slant](https://img.spacevim.org/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png) |
+| `nil`     | ![separator-nil](https://img.spacevim.org/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)   |
+| `fire`    | ![separator-fire](https://img.spacevim.org/434cdd10-3d75-11e7-811b-e44cebfdca58.png)  |
 
 **major modes:**
 
@@ -1073,7 +1073,7 @@ You can change the delay by adding vim option `'timeoutlen'` to your bootstrap f
 
 For example, after pressing `<Space>` in normal mode, you will see:
 
-![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+![mapping-guide](https://img.spacevim.org/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
 
 This guide shows you all the available key bindings that begin with `[SPC]`, you can type `b` for all the buffer mappings, `p` for project mappings, etc.
 
@@ -1103,7 +1103,7 @@ It is possible to search for specific key bindings by pressing `?` in the root o
 
 To narrow the list down, just insert the mapping keys or descriptions of what mappings you want, Unite/Denite will fuzzy find the mappings, to find buffer related mappings:
 
-![unite-mapping](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
+![unite-mapping](https://img.spacevim.org/2f370b0a-3345-11e7-977c-a2377d23286e.png)
 
 Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping, press `<Enter>` to execute that command.
 

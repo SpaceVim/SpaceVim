@@ -48,7 +48,7 @@ commentsID: "快捷键助记导航"
 
 例如，在 Normal 模式下，按下空格键，将可以看到：
 
-![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+![mapping-guide](https://img.spacevim.org/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
 
 这一导航中，所有快捷键均已`[SPC]`为前缀，可以按下按键`b`查看 buffer 相关的快捷键，或者`p`查看 project 相关的快捷键。
 

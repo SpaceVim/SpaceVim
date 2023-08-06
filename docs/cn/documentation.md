@@ -146,7 +146,7 @@ lang: zh
 
 **工作界面**
 
-![work-flow](https://cloud.githubusercontent.com/assets/296716/25455341/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
+![work-flow](https://img.spacevim.org/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
 
 Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-dark_
 
@@ -642,7 +642,7 @@ SpaceVim 默认使用 `nerd fonts`，可参阅其安装指南进行安装。
 
 当使用 `/` 或 `?` 进行搜索时，或当按下 `n` 或 `N` 后，搜索结果序号将被展示在状态栏中，使用类似于 `20/22` 这样的分数显示搜索结果的当前序号以及结果总数。具体的效果图如下：
 
-![search status](https://cloud.githubusercontent.com/assets/13142418/26313080/578cc68c-3f3c-11e7-9259-a27419d49572.png)
+![search status](https://img.spacevim.org/578cc68c-3f3c-11e7-9259-a27419d49572.png)
 
 搜索结果展示由`incsearch`模块提供，可以在配置中启用该模块：
 
@@ -677,11 +677,11 @@ SpaceVim 所支持的分割符以及截图如下：
 
 | 分割符  | 截图                                                                                                                      |
 | ------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `arrow` | ![separator-arrow](https://cloud.githubusercontent.com/assets/13142418/26234639/b28bdc04-3c98-11e7-937e-641c9d85c493.png) |
-| `curve` | ![separator-curve](https://cloud.githubusercontent.com/assets/13142418/26248272/42bbf6e8-3cd4-11e7-8792-665447040f49.png) |
-| `slant` | ![separator-slant](https://cloud.githubusercontent.com/assets/13142418/26248515/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png) |
-| `nil`   | ![separator-nil](https://cloud.githubusercontent.com/assets/13142418/26249776/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)   |
-| `fire`  | ![separator-fire](https://cloud.githubusercontent.com/assets/13142418/26274142/434cdd10-3d75-11e7-811b-e44cebfdca58.png)  |
+| `arrow` | ![separator-arrow](https://img.spacevim.org/b28bdc04-3c98-11e7-937e-641c9d85c493.png) |
+| `curve` | ![separator-curve](https://img.spacevim.org/42bbf6e8-3cd4-11e7-8792-665447040f49.png) |
+| `slant` | ![separator-slant](https://img.spacevim.org/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png) |
+| `nil`   | ![separator-nil](https://img.spacevim.org/645a5a96-3cda-11e7-9655-0aa1f76714f4.png)   |
+| `fire`  | ![separator-fire](https://img.spacevim.org/434cdd10-3d75-11e7-811b-e44cebfdca58.png)  |
 
 **SpaceVim 功能模块：**
 
@@ -1000,7 +1000,7 @@ endfunction
 
 例如，Normal 模式下按下空格键，你将会看到：
 
-![mapping-guide](https://cloud.githubusercontent.com/assets/13142418/25778673/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
+![mapping-guide](https://img.spacevim.org/ae8c3168-3337-11e7-8536-ee78d59e5a9c.png)
 
 这一导航窗口将提示所有以空格键为前缀的快捷键，并且根据功能将这些快捷键进行了分组，例如 buffer 相关的快捷键都是 `b`，工程相关的快捷键都是 `p`。在代码导航窗口内，按下 `Ctrl-h` 键，可以获取一些帮助信息，这些信息将被显示在状态栏上，提示的是一些翻页和撤销按键的快捷键。
 
@@ -1024,7 +1024,7 @@ call SpaceVim#custom#SPC('nnoremap', ['f', 't'], 'echom "hello world"', 'test cu
 
 可以通过 `SPC ?` 将当前快捷键罗列出来。然后可以输入快捷键按键字母或者描述，可以模糊匹配并展示结果。
 
-![unite-mapping](https://cloud.githubusercontent.com/assets/13142418/25779196/2f370b0a-3345-11e7-977c-a2377d23286e.png)
+![unite-mapping](https://img.spacevim.org/2f370b0a-3345-11e7-977c-a2377d23286e.png)
 
 使用 `<Tab>` 键或者上下方向键选择你需要的快捷键，回车将执行这一快捷键。
 
