@@ -8,10 +8,10 @@ end
 
 local function next_item(list, item)
   local id = vim.fn.index(list, item)
-  if id == #list then
+  if id == #list - 1 then
     return list[1]
   else
-    return list[id]
+    return list[id + 2]
   end
 end
 
