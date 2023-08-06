@@ -74,11 +74,12 @@ function M.menu(items)
       if char ~= Key.t('<Cr>') then
         selected = tonumber(char, 10)
       end
-      local value = items[selected][1]
+      local value = items[selected][2]
       vim.cmd('normal! :')
-      if vim.fn.type(value) == 2 then
-        local args = items[selected][2] or {}
-        pcall(value, unpack(args))
+      if type(value) == "function" then
+        local args = items[selected][3] or {}
+        local ok, err = pcall(value, unpack(args))
+        if not ok then print(err) end
       elseif type(value) == 'string' then
         vim.cmd(value)
       end

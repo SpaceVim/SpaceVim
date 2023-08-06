@@ -79,6 +79,9 @@ if has('nvim-0.9.0')
   endfunction
 
   function! SpaceVim#plugins#runner#run_task(task) abort
+    lua require("spacevim.plugin.runner").run_task(
+          \ require("spacevim").eval("a:task")
+          \ )
     
   endfunction
 
