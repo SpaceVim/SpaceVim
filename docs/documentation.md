@@ -2116,7 +2116,17 @@ here is an example of `.project_alt.json`:
 }
 ```
 
-instead of using `.project_alt.json`, `b:alternate_file_config`
+Instead of using json file, the alternate file manager also support toml file, for example:
+
+```toml
+["autoload/SpaceVim/layers/lang/*.vim"]
+    # You can use comments in toml file.
+    doc = "docs/layers/lang/{}.md"
+    test = "test/layer/lang/{}.vader"
+```
+
+If you do not want to use configuration file,
+or want to override the default configuration in alternate config file, `b:alternate_file_config`
 can be used in bootstrap function, for example:
 
 ```vim
