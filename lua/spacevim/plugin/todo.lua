@@ -202,8 +202,6 @@ local function get_labels_regex() -- {{{
 end
 -- }}}
 
--- labels to vim searching partten
--- [     todo ] [00:00:03:498] [ Info  ]    labels_partten: \v\@bug>|\@question>|\@fixme>|\@todo>
 local function get_labels_partten() -- {{{
   local sep = '|'
   local rst = [[\v]]
