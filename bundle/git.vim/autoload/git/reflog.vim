@@ -1,6 +1,6 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
-
+" @todo rewrite Git reflog in lua
 function! git#reflog#run(args)
     let cmd = ['git', 'reflog'] + a:args
     let s:bufnr = s:openRefLogBuffer()
