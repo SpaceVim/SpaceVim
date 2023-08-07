@@ -8,13 +8,16 @@ lang: zh
 
 SpaceVim 的设计蓝图和[里程碑](https://github.com/SpaceVim/SpaceVim/milestones)决定了该项目的开发方向以及所有特性实现的优先顺序。
 
+- [todo](https://github.com/SpaceVim/SpaceVim/milestone/4)：已列入代办事项，但并未确定具体达成的里程碑。
+- [unplanned](https://github.com/SpaceVim/SpaceVim/milestone/5)：低优先级、缺乏可行性方案的待办事项。
+
 <!-- vim-markdown-toc GFM -->
 
 - [下一个版本](#下一个版本)
-  - [v2.2.0](#v220)
-- [版本说明](#版本说明)
+  - [v2.3.0](#v230)
 - [已完成](#已完成)
   - [v1.5.0](#v150)
+  - [v2.0.0](#v200)
   - [v0.1.0](#v010)
   - [v0.2.0](#v020)
   - [v0.3.0](#v030)
@@ -34,34 +37,29 @@ SpaceVim 的设计蓝图和[里程碑](https://github.com/SpaceVim/SpaceVim/mile
   - [v1.7.0](#v170)
   - [v1.8.0](#v180)
   - [v1.9.0](#v190)
-  - [v2.0.0](#v200)
   - [v2.1.0](#v210)
+  - [v2.2.0](#v220)
 
 <!-- vim-markdown-toc -->
 
 ## 下一个版本
 
-### [v2.2.0](https://github.com/SpaceVim/SpaceVim/milestone/25)
-
-## 版本说明
-
-There are release milestones and meta milestones ("buckets").
-
-- Version-number milestones (0.1, 0.2, 0.3, …) assign issues to production releases.
-  - The nearest upcoming version is assigned a target date.
-  - Low-risk fixes in the current branch are first committed to the stable branch, then merged to master. For example, if the current stable release is `0.1.1` and a bug-fix is assigned to the `0.2` milestone, it does not mean users need to wait until 0.2 to get the fix. The patch will be committed to the stable branch and released in `0.1.2`.
-- [todo](https://github.com/SpaceVim/SpaceVim/milestone/4) is a bucket for triaged tickets which should be on the roadmap but cannot yet be assigned to a concrete milestone.
-- [unplanned](https://github.com/SpaceVim/SpaceVim/milestone/5) is a bucket for low-priority items or items lacking a feasible path to completion.
+### [v2.3.0](https://github.com/SpaceVim/SpaceVim/milestone/26)
 
 <!-- call SpaceVim#dev#roadmap#updateCompletedItems('cn') -->
 
 <!-- SpaceVim roadmap completed items start -->
-
 ## 已完成
 
 ### [v1.5.0](https://github.com/SpaceVim/SpaceVim/milestone/18)
 
 release note: [v1.5.0](http://spacevim.org/SpaceVim-release-v1.5.0/)
+
+### [v2.0.0](https://github.com/SpaceVim/SpaceVim/milestone/23)
+
+Rewrite SpaceVim in lua
+
+release note: [v2.0.0](http://spacevim.org/SpaceVim-release-v2.0.0/)
 
 ### [v0.1.0](https://github.com/SpaceVim/SpaceVim/milestone/1)
 
@@ -75,16 +73,16 @@ the first public release of SpaceVim, and following feature will be implemented:
 - Unite centric work-flow
 - Awesome ui
 - Language specific mode, code completion, syntax check, etc.
-  - c family
-  - java
-  - js
-  - rust
-  - php
-  - go
-  - php
-  - lua
-  - perl
-  - python
+    - c family
+    - java
+    - js
+    - rust
+    - php
+    - go
+    - php
+    - lua
+    - perl
+    - python
 - Extensive Neocomplete setup
 - Central location for tags
 - Lightweight simple status/tabline
@@ -127,7 +125,7 @@ release note: [v0.6.0](http://spacevim.org/SpaceVim-release-v0.6.0/)
 
 ### [v0.7.0](https://github.com/SpaceVim/SpaceVim/milestone/10)
 
-- Improve all the lang#\* layers
+- Improve all the `lang#*` layers
 
 release note: [v0.7.0](http://spacevim.org/SpaceVim-release-v0.7.0/)
 
@@ -177,14 +175,16 @@ release note: [v1.8.0](http://spacevim.org/SpaceVim-release-v1.8.0/)
 
 ### [v1.9.0](https://github.com/SpaceVim/SpaceVim/milestone/22)
 
+Rewrite SpaceVim in lua
+
 release note: [v1.9.0](http://spacevim.org/SpaceVim-release-v1.9.0/)
-
-### [v2.0.0](https://github.com/SpaceVim/SpaceVim/milestone/23)
-
-release note: [v2.0.0](http://spacevim.org/SpaceVim-release-v2.0.0/)
 
 ### [v2.1.0](https://github.com/SpaceVim/SpaceVim/milestone/24)
 
 release note: [v2.1.0](http://spacevim.org/SpaceVim-release-v2.1.0/)
+
+### [v2.2.0](https://github.com/SpaceVim/SpaceVim/milestone/25)
+
+release note: [v2.2.0](http://spacevim.org/SpaceVim-release-v2.2.0/)
 
 <!-- SpaceVim roadmap completed items end -->

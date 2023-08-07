@@ -12,7 +12,7 @@ let s:BUFFER = SpaceVim#api#import('vim#buffer')
 
 
 let s:stash_show_bufnr = -1
-
+" @todo rewrite Git stash in lua
 function! git#stash#run(args) abort
 
     let cmd = ['git', 'stash'] + a:args

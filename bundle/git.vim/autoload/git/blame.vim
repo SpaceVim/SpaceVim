@@ -4,6 +4,7 @@ let s:STRING = SpaceVim#api#import('data#string')
 
 let s:blame_buffer_nr = -1
 let s:blame_show_buffer_nr = -1
+" @todo rewrite Git blame in lua
 function! git#blame#run(...)
     if len(a:1) == 0
         let cmd = ['git', 'blame', '--line-porcelain', expand('%')] 
