@@ -7,11 +7,6 @@ description: "The roadmap and milestones define the project direction and priori
 
 The roadmap and [milestones](https://github.com/SpaceVim/SpaceVim/milestones) define the project direction and priorities.
 
-There are release milestones and meta milestones ("buckets").
-
-- Version-number milestones (0.1, 0.2, 0.3, …) assign issues to production releases.
-  - The nearest upcoming version is assigned a target date.
-  - Low-risk fixes in the current branch are first committed to the stable branch, then merged to master. For example, if the current stable release is `0.1.1` and a bug-fix is assigned to the `0.2` milestone, it does not mean users need to wait until 0.2 to get the fix. The patch will be committed to the stable branch and released in `0.1.2`.
 - [todo](https://github.com/SpaceVim/SpaceVim/milestone/4) is a bucket for triaged tickets which should be on the roadmap but cannot yet be assigned to a concrete milestone.
 - [unplanned](https://github.com/SpaceVim/SpaceVim/milestone/5) is a bucket for low-priority items or items lacking a feasible path to completion.
 
