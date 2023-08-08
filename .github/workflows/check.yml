@@ -194,10 +194,4 @@ jobs:
           $Env:PATH = $Env:DEPS + '\vim\vim82\;' + $Env:PATH
           $Env:VIM = $Env:DEPS + '\vim'
         }
-        $VIM_BIN --version
-        pip3 install --upgrade "pip < 21.0"
-        pip3 install 'click<8.0.0'
-        pip3 install covimerage virtualenv codecov
-        make test_coverage
-        covimerage -vv xml --omit 'build/*' --omit 'bundle/*'
-        codecov -X search gcov pycov -f coverage.xml
+        make test

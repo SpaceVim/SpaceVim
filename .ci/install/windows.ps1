@@ -38,6 +38,7 @@ function install_nvim($ver)
     $Env:VIM_BIN = $Env:DEPS + '\nvim-win64\bin\nvim.exe'
 
   }
+  echo "VIM_BIN is: $Env:VIM_BIN"
 }
 
 function download_lua()
@@ -52,11 +53,11 @@ function download_lua()
 if ($Env:VIM_BIN.StartsWith("nvim"))
 {
   mkdir $Env:DEPS
-    install_nvim $Env:VIM_TAG
+  install_nvim $Env:VIM_TAG
 }
 elseif ($Env:VIM_BIN.StartsWith("vim"))
 {
   mkdir $Env:DEPS
-    install_vim $Env:VIM_TAG
-    download_lua
+  install_vim $Env:VIM_TAG
+  download_lua
 }
