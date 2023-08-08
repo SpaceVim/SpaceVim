@@ -181,7 +181,7 @@ jobs:
       run: |
         if ($Env:VIM_BIN.StartsWith("nvim"))
         {
-          if (Test-Path '$DEPS\Neovim\bin\nvim.exe') {
+          if (Test-Path $env:DEPS\Neovim\bin ) {
             $Env:PATH = $Env:DEPS + '\Neovim\bin\;' + $Env:PATH
             $Env:VIM = $Env:DEPS + '\Neovim\share\nvim'
           }else{
