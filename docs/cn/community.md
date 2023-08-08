@@ -36,7 +36,6 @@ lang: zh
 也可以在网页右下角点击加入聊天，进群后，请不要发布无意义的内容。
 
 - <i class="fab fa-rocketchat"></i> [`#spacevim-cn:matrix.org` Matrix 聊天室](https://app.element.io/#/room/#spacevim-cn:matrix.org)
-- <i class="fas fa-comments"></i> [`#spacevim-cn` IRC 聊天室](https://web.libera.chat/#spacevim-cn)
 - <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim_cn` telegram 聊天室](https://t.me/joinchat/1TvSIDrsaq0zMjZl)
 - <i class="fab fa-slack-hash"></i> [`#spacevim` slack 聊天室](https://join.slack.com/t/spacevim/shared_invite/zt-74w64lg5-bT~~2~zEhtIy1zow53tHJg)
 - <i class="fab fa-discord"></i> [`#spacevim` discord 聊天室](https://discord.gg/g3MGdNB)
