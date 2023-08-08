@@ -181,8 +181,13 @@ jobs:
       run: |
         if ($Env:VIM_BIN.StartsWith("nvim"))
         {
-          $Env:PATH = $Env:DEPS + '\Neovim\bin\;' + $Env:PATH
-          $Env:VIM = $Env:DEPS + '\Neovim\share\nvim'
+          if (Test-Path '$DEPS\Neovim\bin\nvim.exe') {
+            $Env:PATH = $Env:DEPS + '\Neovim\bin\;' + $Env:PATH
+            $Env:VIM = $Env:DEPS + '\Neovim\share\nvim'
+          }else{
+            $Env:PATH = $Env:DEPS + '\nvim-win64\bin\;' + $Env:PATH
+            $Env:VIM = $Env:DEPS + '\nvim-win64\share\nvim'
+          }
         }
         elseif ($Env:VIM_BIN.StartsWith("vim"))
         {
