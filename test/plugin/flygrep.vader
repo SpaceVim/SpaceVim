@@ -7,11 +7,12 @@ Execute ( SpaceVim plugin: flygrep ):
         \ . ')'
   let g:_spacevim_input_timeout = 0
   let lnr = 0
+  let current_line = line('.')
   for line in readfile('Makefile')
     let lnr += 1
     if line =~# 'COVIMERAGE'
       break
     endif
   endfor
-  AssertEqual lnr, 4
-  unlet lnr line
+  AssertEqual lnr, current_line
+  unlet lnr line current_line
