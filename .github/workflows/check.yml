@@ -194,4 +194,6 @@ jobs:
           $Env:PATH = $Env:DEPS + '\vim\vim82\;' + $Env:PATH
           $Env:VIM = $Env:DEPS + '\vim'
         }
+        echo $Env:PATH
+        echo $Env:VIM
         make test
