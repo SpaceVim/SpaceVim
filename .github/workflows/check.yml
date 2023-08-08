@@ -188,6 +188,7 @@ jobs:
             $Env:PATH = $Env:DEPS + '\nvim-win64\bin\;' + $Env:PATH
             $Env:VIM = $Env:DEPS + '\nvim-win64\share\nvim'
           }
+          $Env:VIM_Es = '--headless'
         }
         elseif ($Env:VIM_BIN.StartsWith("vim"))
         {
