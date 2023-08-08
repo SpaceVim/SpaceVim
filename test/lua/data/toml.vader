@@ -1,0 +1,9 @@
+Execute ( SpaceVim lua api: data#toml ):
+  if !has('nvim-0.5.0')
+    finish
+  endif
+  let cmp = SpaceVim#api#import('vim#compatible')
+  lua sp_toml = require('spacevim.api').import('data.toml')
+  AssertEqual cmp.luaeval("sp_toml.parse_file('mode/basic.toml').options.colorscheme"), 'gruvbox'
+
+
