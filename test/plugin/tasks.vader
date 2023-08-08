@@ -1,4 +1,4 @@
-Execute ( SpaceVim plugin: code runner ):
+Execute ( SpaceVim plugin: task manager ):
   call SpaceVim#plugins#tasks#list()
   exe "normal! /regexp\<cr>"
   exe "normal \<cr>"

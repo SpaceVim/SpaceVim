@@ -42,7 +42,7 @@ local function load()
     local_conf = toml.parse_file(vim.fn.expand('.SpaceVim.d/tasks.toml'))
     log.debug('found local conf:\n' .. vim.inspect(local_conf))
   end
-  task_config = vim.fn.extend(global_conf, local_conf)
+  task_config = vim.tbl_extend('force', global_conf, local_conf)
 end
 
 local function init_variables()
