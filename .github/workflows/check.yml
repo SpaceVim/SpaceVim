@@ -92,14 +92,15 @@ jobs:
         if [ "$VIM_BIN" = "nvim" ]; then
             export PATH="${DEPS}/_neovim/${VIM_TAG}/bin:${PATH}"
             export VIM="${DEPS}/_neovim/${VIM_TAG}/share/nvim/runtime"
+            export VIM_Es="--headless"
         else
             export PATH="${DEPS}/_vim/${VIM_TAG}/bin:${PATH}"
             export VIM="${DEPS}/_vim/${VIM_TAG}/share/vim"
-        fi
-        if [ "$DISABLE_ES" = "true" ]; then
-            export VIM_Es=""
-        else
-            export VIM_Es="-Es"
+            if [ "$DISABLE_ES" = "true" ]; then
+                export VIM_Es=""
+            else
+                export VIM_Es="-Es"
+            fi
         fi
         export PATH="/home/runner/.local/bin:${PATH}"
         echo "\$PATH: \"${PATH}\""
