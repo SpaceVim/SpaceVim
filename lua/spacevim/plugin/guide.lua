@@ -113,6 +113,14 @@ local function create_target_dict(key)
 
 end
 
+local function format_displaystring(map)
+    for _, f in ipairs(map) do
+        pcall(f)
+    end
+
+    return vim.g['leaderGuide#displayname'] or ''
+
+end
 
 local function start_parser(key, dict)
     if key == '[KEYs]' then
@@ -154,14 +162,6 @@ local function add_map_to_dict(map, level, dict)
 
 end
 
-local function format_displaystring(map)
-    for _, f in ipairs(map) do
-        pcall(f)
-    end
-
-    return vim.g['leaderGuide#displayname'] or ''
-
-end
 
 local function flattenmap(dict, str)
 
