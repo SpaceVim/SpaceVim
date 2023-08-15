@@ -15,6 +15,8 @@ local buffer = require('spacevim.api').import('vim.buffer')
 local VIM = require('spacevim.api').import('vim')
 local SL = require('spacevim.api').import('vim.statusline')
 
+-- all local values should be listed here:
+
 local desc_lookup = {}
 
 local cached_dicts = {}
@@ -28,6 +30,18 @@ local prefix_key_inp = {}
 local lmap = {}
 
 local undo_history = {}
+
+-- the flag for guide help mode, the default is false
+local guide_help_mode = false
+
+
+-- local function without callout
+
+local function create_cache()
+    desc_lookup = {}
+
+    cached_dicts = {}
+end
 
 function M.has_configuration()
     return desc_lookup ~= nil
@@ -48,40 +62,6 @@ function M.register_prefix_descriptions(key, dictname)
             desc_lookup[key] = dictname
         end
     end
-end
-
-
--- the flag for guide help mode, the default is false
-local guide_help_mode = false
-
-local function create_cache()
-    desc_lookup = {}
-
-    cached_dicts = {}
-end
-
-local function create_target_dict(key)
-    local toplevel = {}
-    local tardict = {}
-    local mapdict = {}
-    if desc_lookup['top'] ~= nil then
-        toplevel = cmp.fn.deepcopy({desc_lookup['top']})
-        if toplevel then
-            tardict = toplevel
-        else
-            tardict = toplevel[key] or {}
-        end
-        mapdict = cached_dicts[key]
-        merge(tardict, mapdict)
-    elseif desc_lookup[key] ~= nil then
-        tardict = cmp.fn.deepcopy({desc_lookup[key]})
-        mapdict = cached_dicts[key]
-    else
-        tardict = cached_dicts[key]
-    end
-    return tardict
-
-
 end
 
 local function merge(dict_t, dict_o)
@@ -108,15 +88,31 @@ local function merge(dict_t, dict_o)
     vim.fn.extend(target, other, 'keep')
 end
 
-function M.populate_dictionary(key, dictname)
-    start_parser(key, cached_dicts[key])
+
+local function create_target_dict(key)
+    local toplevel = {}
+    local tardict = {}
+    local mapdict = {}
+    if desc_lookup['top'] ~= nil then
+        toplevel = cmp.fn.deepcopy({desc_lookup['top']})
+        if toplevel then
+            tardict = toplevel
+        else
+            tardict = toplevel[key] or {}
+        end
+        mapdict = cached_dicts[key]
+        merge(tardict, mapdict)
+    elseif desc_lookup[key] ~= nil then
+        tardict = cmp.fn.deepcopy({desc_lookup[key]})
+        mapdict = cached_dicts[key]
+    else
+        tardict = cached_dicts[key]
+    end
+    return tardict
+
+
 end
 
-function M.parse_mappings()
-    for k, v in ipairs(cached_dicts) do
-        start_parser(k, v)
-    end
-end
 
 local function start_parser(key, dict)
     if key == '[KEYs]' then
@@ -681,5 +677,16 @@ end
 function M.register_displayname(lhs, name)
 
 end
+
+function M.populate_dictionary(key, dictname)
+    start_parser(key, cached_dicts[key])
+end
+
+function M.parse_mappings()
+    for k, v in ipairs(cached_dicts) do
+        start_parser(k, v)
+    end
+end
+
 
 return M
