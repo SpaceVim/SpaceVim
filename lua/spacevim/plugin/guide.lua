@@ -235,25 +235,20 @@ local function escape_keys(inp)
   return cmp.fn.substitute(ret, '|', '<Bar>', '')
 end
 
-local function tbl_map(t, f)
-  local rst = {}
-  for _, v in ipairs(t) do
-    table.insert(rst, f(v))
-  end
-  return rst
-end
-
 local function calc_layout()
   local ret = {}
 
   local smap = vim.fn.filter(vim.fn.copy(lmap), 'v:key !=# "name"')
   ret.n_items = vim.fn.len(smap)
-  local length = vim.fn.values(
-    vim.fn.map(
-      smap,
-      'strdisplaywidth("[".v:key."]".(type(v:val) == type({}) ? v:val["name"] : v:val[1]))'
-    )
-  )
+  local length = {}
+  for _, v in pairs(smap) do
+    if v.name then
+      table.insert(length, vim.fn.strdisplaywidth("[" .. v .. "]" .. v.name))
+    else
+      table.insert(length, vim.fn.strdisplaywidth("[" .. v .. "]" .. v[2]))
+    end
+
+  end
   local maxlength = vim.fn.max(length) + vim.g.leaderGuide_hspace
 
   if vim.g.leaderGuide_vertical == 1 then
