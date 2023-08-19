@@ -36,6 +36,8 @@ local undo_history = {}
 local guide_help_mode = false
 
 
+local vis = ''
+
 -- local function without callout
 
 local function create_cache()
@@ -669,7 +671,7 @@ function M.start(_vis, _dict)
     if _vis == 'gv' then
         vis = 'gv'
     else
-        vis = 0
+        vis = ''
     end
     lmap = _dict
     start_buffer()
