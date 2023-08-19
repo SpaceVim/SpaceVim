@@ -382,7 +382,7 @@ local function create_string(layout)
       end
     end
   end
-  local r = {}
+  local r = {''}
   local mlen = 0
   for _, ro in ipairs(rows) do
     local line = vim.fn.join(ro, '')
@@ -391,8 +391,8 @@ local function create_string(layout)
       mlen = vim.fn.strdisplaywidth(line)
     end
   end
-  local output = vim.fn.join(r, '\n')
-  return output
+  table.insert(r, '')
+  return r
 end
 
 local function highlight_cursor() end
@@ -432,15 +432,18 @@ local function start_buffer()
     layout.win_dim = cmp.fn.min({ vim.g.leaderGuide_max_size, layout.win_dim })
   end
   cmp.fn.setbufvar(bufnr, '&modifiable', 1)
-  if floating.exists() then
-  else
-    if vim.g.leaderGuide_vertical then
-    else
-    end
-  end
-  if floating.exists() then
-  else
-  end
+  -- always in neovim >= 0.9.0
+  vim.api.nvim_win_set_config(winid, {
+    relative = 'editor',
+    width = vim.o.columns,
+    heigth = layout.win_dim + 2,
+    row = vim.o.lines - layout.win_dim - 4,
+    col = 0
+  })
+
+
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, text)
+
   cmp.fn.setbufvar(bufnr, '&modifiable', 0)
 
   -- radraw!
