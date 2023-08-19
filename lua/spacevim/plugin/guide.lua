@@ -603,7 +603,7 @@ end
 
 local function mapmaparg(maparg)
     local map = ''
-    local buffer = ''
+    local buf = ''
     local silent = ''
     local nowait = ''
 
@@ -614,12 +614,12 @@ local function mapmaparg(maparg)
     end
 
     if maparg.buffer == 1 then
-        buffer = '<buffer>'
+        buf = '<buffer>'
     end
 
     if maparg.silent == 1 then silent = '<silent>' end
     if maparg.nowait == 1 then nowait = '<nowait>' end
-    local st = maparg.mode .. '' .. map .. ' ' .. nowait .. silent .. buffer .. '' .. maparg.lhs .. ' ' .. maparg.rhs
+    local st = maparg.mode .. '' .. map .. ' ' .. nowait .. silent .. buf .. '' .. maparg.lhs .. ' ' .. maparg.rhs
     vim.execute(st)
 end
 
