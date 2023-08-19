@@ -45,6 +45,7 @@ if 1
           \ require("spacevim").eval("a:dictname")
           \ )
   endfunction "}}}
+  finish
 endif
 
 
