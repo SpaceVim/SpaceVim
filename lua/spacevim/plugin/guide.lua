@@ -40,6 +40,8 @@ local vis = ''
 
 -- local function without callout
 
+local wait_for_input
+
 local function create_cache()
     desc_lookup = {}
 
@@ -528,7 +530,7 @@ local function build_mpt(mpt)
 
 end
 
-local function wait_for_input()
+wait_for_input = function()
     local t = Key.t
     local inp = VIM.getchar()
     if inp == t('<Esc') then
