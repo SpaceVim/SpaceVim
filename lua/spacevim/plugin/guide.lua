@@ -641,12 +641,14 @@ local function get_register()
 end
 
 function M.start_by_prefix(_vis, _key)
+    log.debug('start by prefix:' .. _key .. ' vis:' .. _vis)
 
     if _key == ' ' and vim.fn.exists('b:spacevim_lang_specified_mappings') == 1 then
         vim.g._spacevim_mappings_space.l = vim.b.spacevim_lang_specified_mappings
     end
     guide_help_mode = false
-    if _vis then
+    -- _vis is 0 or 1
+    if _vis == 1 then
         vis = 'gv'
     else
         vis = ''
