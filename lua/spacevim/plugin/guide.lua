@@ -392,12 +392,16 @@ local function highlight_cursor() end
 
 local function remove_cursor_highlight() end
 
+local function updateStatusline()
+
+end
+
 local function winopen()
   highlight_cursor()
   if not vim.api.nvim_buf_is_valid(bufnr) then
     bufnr = buffer.create_buf(false, true)
   end
-  winid = floating.open_win(bufnr, true, {
+  winid = vim.api.nvim_open_win(bufnr, true, {
     relative = 'editor',
     width = vim.o.columns,
     height = 12,
@@ -484,13 +488,6 @@ local function winclose()
   remove_cursor_highlight()
 end
 
-local updateStatusline
-
-if SL.support_float() then
-  updateStatusline = function() end
-else
-  updateStatusline = function() end
-end
 local function page_down() end
 
 local function page_undo()
