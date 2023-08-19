@@ -392,7 +392,23 @@ local function highlight_cursor() end
 
 local function remove_cursor_highlight() end
 
-local function winopen() end
+local function winopen()
+  highlight_cursor()
+  if not vim.api.nvim_buf_is_valid(bufnr) then
+    bufnr = buffer.create_buf(false, true)
+  end
+  winid = floating.open_win(bufnr, true, {
+    relative = 'editor',
+    width = vim.o.columns,
+    height = 12,
+    row = vim.o.lines - 14,
+    col = 0,
+  })
+  guide_help_mode = false
+  updateStatusline()
+  toggle_hide_cursor()
+  return winid, bufnr
+end
 local function start_buffer()
   local winv = cmp.fn.winsaveview()
   local winnr = cmp.fn.winnr()
@@ -567,7 +583,6 @@ wait_for_input = function()
     end
   end
 end
-
 
 local function guide_help_msg(escape)
   local msg = ''
