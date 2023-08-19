@@ -446,7 +446,7 @@ local function start_buffer()
 
   cmp.fn.setbufvar(bufnr, '&modifiable', 0)
 
-  -- radraw!
+  vim.cmd('redraw!')
 
   wait_for_input()
 end
@@ -460,6 +460,7 @@ local function winclose()
 end
 
 local function handle_input(input)
+  log.debug('handle_input:' .. vim.inspect(input))
   winclose()
   if type(input) == 'table' then
     lmap = input
