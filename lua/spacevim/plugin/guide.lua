@@ -451,6 +451,13 @@ local function start_buffer()
   wait_for_input()
 end
 
+local function winclose()
+  toggle_hide_cursor()
+  vim.api.nvim_win_close(winid, true)
+  close_float_statusline()
+  remove_cursor_highlight()
+end
+
 local function handle_input(input)
   winclose()
   if type(input) == 'table' then
@@ -470,13 +477,6 @@ local function handle_input(input)
 end
 local function toggle_hide_cursor() end
 local function close_float_statusline() end
-
-local function winclose()
-  toggle_hide_cursor()
-  vim.api.nvim_win_close(winid, true)
-  close_float_statusline()
-  remove_cursor_highlight()
-end
 
 local function page_down() end
 
@@ -547,7 +547,7 @@ wait_for_input = function()
     if inp == ' ' then
       inp = '[SPC]'
     else
-      inp = KEY.char2name(inp)
+      inp = Key.char2name(inp)
     end
     local fsel = vim.fn.get(lmap, inp)
     if vim.fn.empty(fsel) == 1 then
