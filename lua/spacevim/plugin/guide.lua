@@ -235,6 +235,14 @@ local function escape_keys(inp)
   return cmp.fn.substitute(ret, '|', '<Bar>', '')
 end
 
+local function tbl_map(t, f)
+  local rst = {}
+  for _, v in ipairs(t) do
+    table.insert(rst, f(v))
+  end
+  return rst
+end
+
 local function calc_layout()
   local ret = {}
 
