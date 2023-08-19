@@ -392,9 +392,7 @@ local function highlight_cursor() end
 
 local function remove_cursor_highlight() end
 
-local function updateStatusline()
-
-end
+local function updateStatusline() end
 
 local function winopen()
   highlight_cursor()
@@ -464,27 +462,8 @@ local function close_float_statusline() end
 
 local function winclose()
   toggle_hide_cursor()
-  if FLOATING.exists() then
-    FLOATING.win_close(winid, 1)
-    if SL.support_float() then
-      close_float_statusline()
-    end
-  else
-    vim.cmd('noautocmd execute ' .. winid .. 'wincmd w')
-    if winid == vim.fn.winnr() then
-      vim.cmd('noautocmd close')
-      -- redraw!
-
-      vim.execute(winres)
-
-      winid = -1
-      vim.cmd('noautocmd execute ' .. winnr .. 'wincmd w')
-      vim.fn.winrestview(winv)
-      if vim.fn.exists('*nvim_open_win') then
-        vim.cmd('doautocmd WinEnter')
-      end
-    end
-  end
+  vim.api.nvim_win_close(winid, true)
+  close_float_statusline()
   remove_cursor_highlight()
 end
 
