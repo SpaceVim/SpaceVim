@@ -392,6 +392,7 @@ local function highlight_cursor() end
 
 local function remove_cursor_highlight() end
 
+local function winopen() end
 local function start_buffer()
   local winv = cmp.fn.winsaveview()
   local winnr = cmp.fn.winnr()
@@ -567,7 +568,6 @@ wait_for_input = function()
   end
 end
 
-local function winopen() end
 
 local function guide_help_msg(escape)
   local msg = ''
