@@ -8,7 +8,8 @@
 
 local M = {}
 
--- load apis
+local log = require('spacevim.logger').derive('guide')
+local Key = require('spacevim.api').import('vim.keys')
 
 local cmp = require('spacevim.api').import('vim.compatible')
 local buffer = require('spacevim.api').import('vim.buffer')
@@ -421,9 +422,93 @@ local function handle_input(input)
 
 
 end
+local function toggle_hide_cursor()
+
+end
+
+local function winclose()
+    toggle_hide_cursor()
+    if FLOATING.exists() then
+        FLOATING.win_close(winid, 1)
+        if SL.support_float() then
+            close_float_statusline()
+        end
+    else
+        vim.cmd('noautocmd execute ' .. winid ..'wincmd w')
+        if winid == vim.fn.winnr() then
+            vim.cmd('noautocmd close')
+            -- redraw!
+
+            vim.execute(winres)
+
+            winid = -1
+            vim.cmd('noautocmd execute ' .. winnr .. 'wincmd w')
+            vim.fn.winrestview(winv)
+            if vim.fn.exists('*nvim_open_win') then
+                vim.cmd('doautocmd WinEnter')
+            end
+        end
+    end
+    remove_cursor_highlight()
+
+end
+
+
+local updateStatusline
+
+
+if SL.support_float() then
+    updateStatusline = function()
+    end
+else
+    updateStatusline = function()
+    end
+end
+local function page_down()
+end
+
+local function page_undo()
+
+    winclose()
+    if vim.fn.len(prefix_key_inp) > 0 then
+        vim.fn.remove(prefix_key_inp, -1)
+    end
+    if vim.fn.len(undo_history) > 0 then
+        lmap = vim.fn.remove(undo_history, -1)
+    end
+    start_buffer()
+end
+
+local function page_up()
+
+end
+
+
+local function handle_submode_mapping(cmd)
+
+    guide_help_mode = false
+
+    updateStatusline()
+
+    if cmd == 'n' then
+        page_down()
+    elseif cmd == 'p' then
+        page_up()
+    elseif cmd == 'u' then
+        page_undo()
+    else
+        winclose()
+    end
+
+end
+
+
+local function submode_mappings(key)
+    handle_submode_mapping(key)
+end
 
 local function wait_for_input()
-    local t = vim.api.nvim_replace_termcodes
+    local t = Key.t
     local inp = VIM.getchar()
     if inp == t('<Esc') then
         prefix_key_inp = {}
@@ -489,18 +574,6 @@ local function winopen()
 
 end
 
-
-local updateStatusline
-
-
-if SL.support_float() then
-    updateStatusline = function()
-    end
-else
-    updateStatusline = function()
-    end
-end
-
 local function close_float_statusline()
 
 end
@@ -520,81 +593,9 @@ local function guide_help_msg(escape)
 
 end
 
-local function toggle_hide_cursor()
-
-end
-
-local function winclose()
-    toggle_hide_cursor()
-    if FLOATING.exists() then
-        FLOATING.win_close(winid, 1)
-        if SL.support_float() then
-            close_float_statusline()
-        end
-    else
-        vim.cmd('noautocmd execute ' .. winid ..'wincmd w')
-        if winid == vim.fn.winnr() then
-            vim.cmd('noautocmd close')
-            -- redraw!
-
-            vim.execute(winres)
-
-            winid = -1
-            vim.cmd('noautocmd execute ' .. winnr .. 'wincmd w')
-            vim.fn.winrestview(winv)
-            if vim.fn.exists('*nvim_open_win') then
-                vim.cmd('doautocmd WinEnter')
-            end
-        end
-    end
-    remove_cursor_highlight()
-
-end
-
-
-local function page_down()
-end
-
-local function page_undo()
-
-    winclose()
-    if vim.fn.len(prefix_key_inp) > 0 then
-        vim.fn.remove(prefix_key_inp, -1)
-    end
-    if vim.fn.len(undo_history) > 0 then
-        lmap = vim.fn.remove(undo_history, -1)
-    end
-    start_buffer()
-end
-
-local function page_up()
-
-end
 
 
 
-local function handle_submode_mapping(cmd)
-
-    guide_help_mode = false
-
-    updateStatusline()
-
-    if cmd == 'n' then
-        page_down()
-    elseif cmd == 'p' then
-        page_up()
-    elseif cmd == 'u' then
-        page_undo()
-    else
-        winclose()
-    end
-
-end
-
-
-local function submode_mappings(key)
-    handle_submode_mapping(key)
-end
 
 local function mapmaparg(maparg)
     local map = ''
