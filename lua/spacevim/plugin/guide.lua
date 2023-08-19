@@ -21,8 +21,14 @@ local SL = require('spacevim.api').import('vim.statusline')
 local desc_lookup = {}
 
 local cached_dicts = {}
+local reg = ''
 
 local winid = -1
+
+local count = ''
+local toplevel = false
+local prefix_key
+local guide_group = {}
 
 local bufnr = -1
 
@@ -661,6 +667,18 @@ function M.start_by_prefix(_vis, _key)
     else
         reg = ''
     end
+
+    if not cached_dicts[_key] or vim.g.leaderGuide_run_map_on_popup then
+      cached_dicts[_key] = {}
+
+      start_parser(_key, cached_dicts[_key])
+    end
+    if desc_lookup[_key] or desc_lookup['top'] then
+      lmap = create_target_dict(_key)
+    else
+      lmap = cached_dicts[_key]
+    end
+    start_buffer()
 
 
 
