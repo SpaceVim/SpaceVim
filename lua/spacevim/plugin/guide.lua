@@ -507,6 +507,21 @@ local function submode_mappings(key)
     handle_submode_mapping(key)
 end
 
+local function build_mpt(mpt)
+
+    vim.fn.execute('normal! :')
+
+    vim.fn.execute('echohl Comment')
+
+    if type(mpt) == 'string' then
+        print(mpt)
+    else
+    end
+
+    vim.fn.execute('echohl NONE')
+
+end
+
 local function wait_for_input()
     local t = Key.t
     local inp = VIM.getchar()
@@ -554,21 +569,6 @@ local function wait_for_input()
 
 end
 
-
-local function build_mpt(mpt)
-
-    vim.fn.execute('normal! :')
-
-    vim.fn.execute('echohl Comment')
-
-    if type(mpt) == 'string' then
-        print(mpt)
-    else
-    end
-
-    vim.fn.execute('echohl NONE')
-
-end
 
 local function winopen()
 
