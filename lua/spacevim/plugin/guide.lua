@@ -451,6 +451,7 @@ local function start_buffer()
   wait_for_input()
 end
 
+local function close_float_statusline() end
 local function winclose()
   toggle_hide_cursor()
   vim.api.nvim_win_close(winid, true)
@@ -476,7 +477,6 @@ local function handle_input(input)
   end
 end
 local function toggle_hide_cursor() end
-local function close_float_statusline() end
 
 local function page_down() end
 
