@@ -243,11 +243,10 @@ local function calc_layout()
   local length = {}
   for _, v in pairs(smap) do
     if v.name then
-      table.insert(length, vim.fn.strdisplaywidth("[" .. v .. "]" .. v.name))
+      table.insert(length, vim.fn.strdisplaywidth('[' .. v .. ']' .. v.name))
     else
-      table.insert(length, vim.fn.strdisplaywidth("[" .. v .. "]" .. v[2]))
+      table.insert(length, vim.fn.strdisplaywidth('[' .. v .. ']' .. v[2]))
     end
-
   end
   local maxlength = vim.fn.max(length) + vim.g.leaderGuide_hspace
 
@@ -339,8 +338,13 @@ local function create_string(layout)
 
   local col = 0
 
-  local smap
-  vim.fn.sort(vim.fn.filter(vim.fn.keys(lmap), 'v:val !=# "name"'), compare_key)
+  local smap = {}
+  for k, v in pairs(lmap) do
+    if v ~= 'name' then
+      table.insert(smap, v)
+    end
+  end
+  table.sort(smap, compare_key)
 
   for k, _ in ipairs(smap) do
     local desc = ''
