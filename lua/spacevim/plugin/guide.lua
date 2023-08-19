@@ -394,6 +394,7 @@ local function remove_cursor_highlight() end
 
 local function updateStatusline() end
 
+local function toggle_hide_cursor() end
 local function winopen()
   highlight_cursor()
   if not vim.api.nvim_buf_is_valid(bufnr) then
