@@ -427,6 +427,10 @@ end
 local function toggle_hide_cursor()
 
 end
+local function close_float_statusline()
+
+end
+
 
 local function winclose()
     toggle_hide_cursor()
@@ -573,10 +577,6 @@ end
 
 
 local function winopen()
-
-end
-
-local function close_float_statusline()
 
 end
 
