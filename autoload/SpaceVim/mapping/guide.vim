@@ -6,11 +6,15 @@
 " License: GPLv3
 "=============================================================================
 scriptencoding utf-8
+if exists('s:save_cpo')
+  finish
+endif
+
 let s:save_cpo = &cpo
 set cpo&vim
 
 
-if 1
+if has('nvim-0.9.0')
 
   function! SpaceVim#mapping#guide#parse_mappings() abort " {{{
     lua require("spacevim.plugin.guide").parse_mappings()
@@ -50,10 +54,6 @@ if 1
   endfunction "}}}
 else
 
-
-  if exists('s:save_cpo')
-    finish
-  endif
 
   " Load SpaceVim API
   let s:CMP = SpaceVim#api#import('vim#compatible')
