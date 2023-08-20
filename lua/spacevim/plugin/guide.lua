@@ -270,6 +270,7 @@ local function calc_layout()
     end
     ret.win_dim = ret.n_rows
   end
+  log.debug('layout is:' .. vim.inspect(ret))
   return ret
 end
 

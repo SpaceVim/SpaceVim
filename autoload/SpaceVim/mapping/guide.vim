@@ -320,6 +320,7 @@ else
       let ret.n_rows = ret.n_items / ret.n_cols + (fmod(ret.n_items,ret.n_cols) > 0 ? 1 : 0)
       let ret.win_dim = ret.n_rows
     endif
+    call s:LOG.debug('layout is:' . string(ret))
     return ret
   endfunction " }}}
 
