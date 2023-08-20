@@ -402,6 +402,11 @@ local function remove_cursor_highlight() end
 local function updateStatusline() end
 
 local function toggle_hide_cursor() end
+local function setbufopt(buf, opt)
+  for o, value in pairs(opt) do
+    vim.api.nvim_buf_set_option(buf, o, value)
+  end
+end
 local function winopen()
   highlight_cursor()
   if not vim.api.nvim_buf_is_valid(bufnr) then
@@ -415,6 +420,24 @@ local function winopen()
     col = 0,
   })
   guide_help_mode = false
+  setbufopt(bufnr, {
+    winhighlight = 'Normal:Pmenu,Search:',
+    filetype = 'leaderGuide',
+    number = false,
+    relativenumber = false,
+    list = false,
+    modeline = false,
+    wrap = false,
+    buflisted = false,
+    buftype = 'nofile',
+    bufhidden = 'unload',
+    swapfile = false,
+    cursorline = false,
+    cursorcolumn = false,
+    colorcolumn = '',
+    winfixwidth = true,
+    winfixheight = true,
+  })
   updateStatusline()
   toggle_hide_cursor()
   return winid, bufnr
