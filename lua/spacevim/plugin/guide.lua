@@ -288,24 +288,24 @@ local function compare_key(i1, i2)
   local a = get_key_number(i1)
   local b = get_key_number(i2)
   if a - b == 32 and a >= 97 and a <= 122 then
-    return false
-  elseif b - a == 32 and b >= 97 and b <= 122 then
     return true
+  elseif b - a == 32 and b >= 97 and b <= 122 then
+    return false
   elseif a >= 97 and a <= 122 and b >= 97 and b <= 122 then
     if a == b then
-      return true
-    elseif a > b then
-      return true
-    else
       return false
+    elseif a > b then
+      return false
+    else
+      return true
     end
   elseif a >= 65 and a <= 90 and b >= 65 and b <= 90 then
     if a == b then
-      return true
-    elseif a > b then
-      return true
-    else
       return false
+    elseif a > b then
+      return false
+    else
+      return true
     end
   elseif a >= 97 and a <= 122 and b >= 65 and b <= 90 then
     return compare_key(cmp.fn.nr2char(a), cmp.fn.nr2char(b + 32))
@@ -313,11 +313,11 @@ local function compare_key(i1, i2)
     return compare_key(cmp.fn.nr2char(a), cmp.fn.nr2char(b - 32))
   end
   if a == b then
-    return true
-  elseif a > b then
-    return true
-  else
     return false
+  elseif a > b then
+    return false
+  else
+    return true
   end
 end
 
@@ -398,6 +398,8 @@ local function create_string(layout)
       mlen = vim.fn.strdisplaywidth(line)
     end
   end
+  table.insert(r, '')
+  -- @fixme the extra line should be removed
   table.insert(r, '')
   return r
 end
@@ -520,7 +522,11 @@ local function start_buffer()
   wait_for_input()
 end
 
-local function close_float_statusline() end
+local function close_float_statusline()
+
+      SL.close_float()
+
+end
 local function winclose()
   toggle_hide_cursor()
   vim.api.nvim_win_close(winid, true)
