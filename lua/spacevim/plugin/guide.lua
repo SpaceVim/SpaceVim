@@ -66,12 +66,10 @@ function M.register_prefix_descriptions(key, dictname)
   end
   if #key == 0 then
     desc_lookup['top'] = dictname
-    return
-  end
-
-  if desc_lookup[key] == nil then
+  elseif desc_lookup[key] == nil then
     desc_lookup[key] = dictname
   end
+  log.debug('desc_lookup is:' .. vim.inspect(desc_lookup))
 end
 
 local function merge(dict_t, dict_o)

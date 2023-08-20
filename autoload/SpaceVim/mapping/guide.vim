@@ -13,7 +13,7 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:fuck = 0
+let s:fuck = 1
 
 
 if has('nvim-0.9.0') && s:fuck
@@ -90,11 +90,10 @@ else
     endif
     if strlen(key) == 0
       let s:desc_lookup['top'] = a:dictname
-      return
-    endif
-    if !has_key(s:desc_lookup, key)
+    elseif !has_key(s:desc_lookup, key)
       let s:desc_lookup[key] = a:dictname
     endif
+    call s:LOG.debug('desc_lookup is:' . string(s:desc_lookup))
   endfunction "}}}
   function! s:create_cache() abort " {{{
     let s:desc_lookup = {}
