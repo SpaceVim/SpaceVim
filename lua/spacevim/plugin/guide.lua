@@ -338,14 +338,14 @@ local function create_string(layout)
   local col = 0
   log.debug('lmap is:' .. vim.inspect(lmap))
   local smap = {}
-  for k, v in pairs(lmap) do
-    if v ~= 'name' then
-      table.insert(smap, v)
+  for k, _ in pairs(lmap) do
+    if k ~= 'name' then
+      table.insert(smap, k)
     end
   end
   table.sort(smap, compare_key)
 
-  for k, _ in ipairs(smap) do
+  for _, k in ipairs(smap) do
     local desc = ''
     if lmap[k].name then
       desc = lmap[k].name
@@ -353,7 +353,7 @@ local function create_string(layout)
       desc = lmap[k][2] or ''
     end
     local displaystring = '[' .. k .. ']' .. desc
-    local crow = vim.fn.get(rows, row, {})
+    local crow = rows[row] or {}
 
     if vim.fn.empty(crow) == 1 then
       vim.fn.add(rows, crow)
