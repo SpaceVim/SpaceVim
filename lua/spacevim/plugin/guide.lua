@@ -338,7 +338,7 @@ local function create_string(layout)
   local row = 0
 
   local col = 0
-
+  log.debug('lmap is:' .. vim.inspect(lmap))
   local smap = {}
   for k, v in pairs(lmap) do
     if v ~= 'name' then

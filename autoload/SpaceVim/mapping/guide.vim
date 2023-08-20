@@ -67,6 +67,7 @@ else
     let s:FLOATING = SpaceVim#api#import('vim#floating')
   endif
   let s:SL = SpaceVim#api#import('vim#statusline')
+  let s:LOG =SpaceVim#logger#derive('guide')
 
   " guide specific var
   let s:winid = -1
@@ -808,6 +809,7 @@ else
       let rundict = s:cached_dicts[a:key]
     endif
     let s:lmap = rundict
+    call s:LOG.debug('lmap is:' .. string(s:lmap))
     call s:start_buffer()
   endfunction " }}}
   function! SpaceVim#mapping#guide#start(vis, dict) abort " {{{
