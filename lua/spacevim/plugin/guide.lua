@@ -101,7 +101,7 @@ local function create_target_dict(key)
   local tardict = {}
   local mapdict = {}
   if desc_lookup['top'] ~= nil then
-    topdict = cmp.fn.deepcopy({ desc_lookup['top'] })
+    topdict = cmp.fn.deepcopy(vim.api.nvim_eval(desc_lookup['top']))
     if toplevel then
       tardict = topdict
     else
@@ -110,7 +110,7 @@ local function create_target_dict(key)
     mapdict = cached_dicts[key]
     merge(tardict, mapdict)
   elseif desc_lookup[key] ~= nil then
-    tardict = cmp.fn.deepcopy({ desc_lookup[key] })
+    tardict = cmp.fn.deepcopy(vim.api.nvim_eval(desc_lookup[key]))
     mapdict = cached_dicts[key]
   else
     tardict = cached_dicts[key]
