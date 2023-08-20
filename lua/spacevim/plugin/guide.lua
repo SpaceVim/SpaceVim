@@ -64,12 +64,13 @@ function M.register_prefix_descriptions(key, dictname)
   if desc_lookup == nil then
     create_cache()
   end
-  if cmp.fn.strlen(key) == 0 then
+  if #key == 0 then
     desc_lookup['top'] = dictname
-  else
-    if desc_lookup[key] == nil then
-      desc_lookup[key] = dictname
-    end
+    return
+  end
+
+  if desc_lookup[key] == nil then
+    desc_lookup[key] = dictname
   end
 end
 
@@ -382,7 +383,7 @@ local function create_string(layout)
       end
     end
   end
-  local r = {''}
+  local r = { '' }
   local mlen = 0
   for _, ro in ipairs(rows) do
     local line = vim.fn.join(ro, '')
@@ -438,9 +439,8 @@ local function start_buffer()
     width = vim.o.columns,
     height = layout.win_dim + 2,
     row = vim.o.lines - layout.win_dim - 4,
-    col = 0
+    col = 0,
   })
-
 
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, text)
 
