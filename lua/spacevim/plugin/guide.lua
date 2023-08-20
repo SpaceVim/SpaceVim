@@ -334,9 +334,9 @@ local function create_string(layout)
 
   local rows = {}
 
-  local row = 0
+  local row = 1
 
-  local col = 0
+  local col = 1
   log.debug('lmap is:' .. vim.inspect(lmap))
   local smap = {}
   for k, _ in pairs(lmap) do
@@ -367,16 +367,16 @@ local function create_string(layout)
           overh = overh - 1
           row = row + 1
         else
-          row = 0
+          row = 1
           col = col + 1
         end
       else
         row = row + 1
       end
     else
-      if col == l.n_cols - 1 then
+      if col == l.n_cols then
         row = row + 1
-        col = 0
+        col = 1
       else
         col = col + 1
       end
