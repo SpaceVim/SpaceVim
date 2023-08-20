@@ -406,7 +406,40 @@ local function highlight_cursor() end
 
 local function remove_cursor_highlight() end
 
-local function updateStatusline() end
+local function guide_help_msg(escape)
+  local msg
+  if guide_help_mode then
+    msg = ' n -> next-page, p -> previous-page, u -> undo-key'
+  else
+    msg = ' [C-h paging/help]'
+  end
+  if escape then
+    return vim.fn.substitute(msg, ' ', '\\\\ ', 'g')
+  else
+    return msg
+  end
+end
+
+local function updateStatusline()
+  vim.fn['SpaceVim#mapping#guide#theme#hi']()
+  local gname = guide_group.name or ''
+  if #gname > 0 then
+    gname = ' - ' .. string.sub(gname, 2)
+  end
+  local keys = prefix_key_inp
+
+  local winid = SL.open_float({
+    { 'Guide: ', 'LeaderGuiderPrompt' },
+    { ' ', 'LeaderGuiderSep1' },
+    {
+      vim.fn['SpaceVim#mapping#leader#getName'](prefix_key) .. table.concat(keys, '') .. gname,
+      'LeaderGuiderName',
+    },
+    { ' ', 'LeaderGuiderSep2' },
+    { guide_help_msg(false), 'LeaderGuiderFill' },
+    { string.rep(' ', 999), 'LeaderGuiderFill' },
+  })
+end
 
 local function toggle_hide_cursor() end
 local function setlocalopt(buf, win, opts)
