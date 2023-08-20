@@ -404,10 +404,16 @@ local function updateStatusline() end
 local function toggle_hide_cursor() end
 local function setlocalopt(buf, win, opts)
   for o, value in pairs(opts) do
-    vim.api.nvim_set_option_value(o, value, {
-      win = win,
-      buf = buf
-    })
+    local info = vim.api.nvim_get_option_info2(o, {})
+    if info.scope == 'win' then
+      vim.api.nvim_set_option_value(o, value, {
+        win = win,
+      })
+    elseif info.scope == 'buf' then
+      vim.api.nvim_set_option_value(o, value, {
+        buf = buf,
+      })
+    end
   end
 end
 local function winopen()
