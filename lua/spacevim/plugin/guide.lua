@@ -99,15 +99,15 @@ local function merge(dict_t, dict_o)
 end
 
 local function create_target_dict(key)
-  local toplevel = {}
+  local topdict = {}
   local tardict = {}
   local mapdict = {}
   if desc_lookup['top'] ~= nil then
-    toplevel = cmp.fn.deepcopy({ desc_lookup['top'] })
+    topdict = cmp.fn.deepcopy({ desc_lookup['top'] })
     if toplevel then
-      tardict = toplevel
+      tardict = topdict
     else
-      tardict = toplevel[key] or {}
+      tardict = topdict[key] or {}
     end
     mapdict = cached_dicts[key]
     merge(tardict, mapdict)
