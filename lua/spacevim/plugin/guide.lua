@@ -348,10 +348,10 @@ local function create_string(layout)
 
   for k, _ in ipairs(smap) do
     local desc = ''
-    if vim.fn.type(lmap[k]) == 4 then
+    if lmap[k].name then
       desc = lmap[k].name
     else
-      desc = lmap[k][2]
+      desc = lmap[k][2] or ''
     end
     local displaystring = '[' .. k .. ']' .. desc
     local crow = vim.fn.get(rows, row, {})
@@ -700,6 +700,10 @@ function M.parse_mappings()
   for k, v in ipairs(cached_dicts) do
     start_parser(k, v)
   end
+end
+
+function M.getName(p)
+  return vim.fn['SpaceVim#mapping#leader#getName'](p)
 end
 
 return M
