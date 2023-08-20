@@ -345,6 +345,7 @@ local function create_string(layout)
     end
   end
   table.sort(smap, compare_key)
+  log.debug('smap is:' .. vim.inspect(smap))
 
   for _, k in ipairs(smap) do
     local desc = ''
@@ -353,7 +354,13 @@ local function create_string(layout)
     else
       desc = lmap[k][2] or ''
     end
-    local displaystring = '[' .. k .. ']' .. desc
+    local offset = string.rep(' ', 8 - #k)
+    local displaystring
+    if vim.g.spacevim_leader_guide_theme == 'whichkey' then
+      displaystring = offset .. k .. ' -> ' .. desc
+    else
+      displaystring = offset .. '[' .. k .. '] ' .. desc
+    end
     local crow = rows[row] or {}
 
     if #crow == 0 then
