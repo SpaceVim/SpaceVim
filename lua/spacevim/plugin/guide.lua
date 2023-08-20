@@ -648,19 +648,6 @@ wait_for_input = function()
   end
 end
 
-local function guide_help_msg(escape)
-  local msg = ''
-  if guide_help_mode then
-    msg = ' n -> next-page, p -> previous-page, u -> undo-key'
-  else
-    msg = ' [C-h paging/help]'
-  end
-  if escape then
-    return vim.fn.substitute(msg, ' ', '\\ ', 'g')
-  else
-    return msg
-  end
-end
 
 local function mapmaparg(maparg)
   local map = ''
