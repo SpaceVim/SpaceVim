@@ -337,7 +337,7 @@ local function create_string(layout)
   local row = 0
 
   local col = 0
-  -- log.debug('lmap is:' .. vim.inspect(lmap))
+  log.debug('lmap is:' .. vim.inspect(lmap))
   local smap = {}
   for k, _ in pairs(lmap) do
     if k ~= 'name' then
@@ -356,11 +356,11 @@ local function create_string(layout)
     local displaystring = '[' .. k .. ']' .. desc
     local crow = rows[row] or {}
 
-    if vim.fn.empty(crow) == 1 then
-      vim.fn.add(rows, crow)
+    if #crow == 0 then
+      table.insert(rows, crow)
     end
-    vim.fn.add(crow, displaystring)
-    vim.fn.add(crow, vim.fn['repeat'](' ', l.col_width - vim.fn.strdisplaywidth(displaystring)))
+    table.insert(crow, displaystring)
+    table.insert(crow, vim.fn['repeat'](' ', l.col_width - vim.fn.strdisplaywidth(displaystring)))
     if vim.g.leaderGuide_sort_horizontal == 0 then
       if overh >= n_rows - 1 then
         if overh > 0 and row < n_rows then
@@ -385,8 +385,8 @@ local function create_string(layout)
   local r = { '' }
   local mlen = 0
   for _, ro in ipairs(rows) do
-    local line = vim.fn.join(ro, '')
-    vim.fn.add(r, line)
+    local line = table.concat(ro, '')
+    table.insert(r, line)
     if vim.fn.strdisplaywidth(line) > mlen then
       mlen = vim.fn.strdisplaywidth(line)
     end
