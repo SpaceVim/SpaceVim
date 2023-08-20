@@ -388,6 +388,8 @@ local function create_string(layout)
         col = col + 1
       end
     end
+    log.debug('fuck row:' .. row)
+    log.debug('fuck col:' .. col)
   end
   local r = { '' }
   local mlen = 0
