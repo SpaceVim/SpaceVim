@@ -23,6 +23,10 @@ function M.getchar(...)
   end
 end
 
+function M.setbufvar(buf, opts)
+  
+end
+
 function M.getchar2nr(...)
   local status, ret = pcall(vim.fn.getchar, ...)
   if not status then

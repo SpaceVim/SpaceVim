@@ -402,9 +402,12 @@ local function remove_cursor_highlight() end
 local function updateStatusline() end
 
 local function toggle_hide_cursor() end
-local function setbufopt(buf, opt)
-  for o, value in pairs(opt) do
-    vim.api.nvim_buf_set_option(buf, o, value)
+local function setlocalopt(buf, win, opts)
+  for o, value in pairs(opts) do
+    vim.api.nvim_set_option_value(o, value, {
+      win = win,
+      buf = buf
+    })
   end
 end
 local function winopen()
@@ -420,7 +423,7 @@ local function winopen()
     col = 0,
   })
   guide_help_mode = false
-  setbufopt(bufnr, {
+  setlocalopt(bufnr, winid, {
     winhighlight = 'Normal:Pmenu,Search:',
     filetype = 'leaderGuide',
     number = false,
