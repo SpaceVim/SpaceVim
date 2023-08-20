@@ -244,6 +244,7 @@ local function calc_layout()
     if v.name then
       table.insert(length, vim.fn.strdisplaywidth('[' .. k .. ']' .. v.name))
     else
+      log.debug('v is:' .. vim.inspect(v))
       table.insert(length, vim.fn.strdisplaywidth('[' .. k .. ']' .. v[2]))
     end
   end
