@@ -203,9 +203,9 @@ local function string_to_keys(input)
     while si < vim.fn.len(input) do
       if go then
         if input[si] == ' ' then
-          vim.fn.add(retlist, '[SPC]')
+          table.insert(retlist, '[SPC]')
         else
-          vim.fn.add(retlist, input[si])
+          table.insert(retlist, input[si])
         end
       else
         retlist[-1] = retlist[-1] .. input[si]
@@ -220,9 +220,9 @@ local function string_to_keys(input)
   else
     for _, it in ipairs(vim.fn.split(input, [[\zs]])) do
       if it == ' ' then
-        vim.fn.add(retlist, '[SPC]')
+        table.insert(retlist, '[SPC]')
       else
-        vim.fn.add(retlist, it)
+        table.insert(retlist, it)
       end
     end
   end
@@ -628,8 +628,8 @@ wait_for_input = function()
     log.debug('inp:' .. inp)
     local fsel = lmap[inp] or ''
     if vim.fn.empty(fsel) == 0 then
-      vim.fn.add(prefix_key_inp, inp)
-      vim.fn.add(undo_history, lmap)
+      table.insert(prefix_key_inp, inp)
+      table.insert(undo_history, lmap)
       handle_input(fsel)
     else
       winclose()
