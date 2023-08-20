@@ -251,7 +251,7 @@ local function calc_layout()
 
   if vim.g.leaderGuide_vertical == 1 then
     ret.n_rows = vim.fn.winheight(0) - 2
-    ret.n_cols = ret.n_items / ret.n_rows
+    ret.n_cols = math.floor(ret.n_items / ret.n_rows)
     if ret.n_items ~= ret.n_rows then
       ret.n_cols = ret.n_cols + 1
     end
@@ -259,12 +259,12 @@ local function calc_layout()
     ret.win_dim = ret.n_cols * ret.col_width
   else
     if vim.fn.winwidth(winid) >= maxlength then
-      ret.n_cols = vim.fn.winwidth(winid) / maxlength
+      ret.n_cols = math.floor(vim.fn.winwidth(winid) / maxlength)
     else
       ret.n_cols = 1
     end
-    ret.col_width = vim.fn.winwidth(winid) / ret.n_cols
-    ret.n_rows = ret.n_items / ret.n_cols
+    ret.col_width = math.floor(vim.fn.winwidth(winid) / ret.n_cols)
+    ret.n_rows = math.floor(ret.n_items / ret.n_cols)
     if vim.fn.fmod(ret.n_items, ret.n_cols) > 0 then
       ret.n_rows = ret.n_rows + 1
     end
