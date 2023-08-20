@@ -244,7 +244,6 @@ local function calc_layout()
     if v.name then
       table.insert(length, vim.fn.strdisplaywidth('[' .. k .. ']' .. v.name))
     else
-      log.debug('v is:' .. vim.inspect(v))
       table.insert(length, vim.fn.strdisplaywidth('[' .. k .. ']' .. v[2]))
     end
   end
@@ -460,7 +459,7 @@ end
 local function handle_input(input)
   log.debug('handle_input:' .. vim.inspect(input))
   winclose()
-  if type(input) == 'table' then
+  if not vim.tbl_islist(input) then
     lmap = input
     start_buffer()
   else
