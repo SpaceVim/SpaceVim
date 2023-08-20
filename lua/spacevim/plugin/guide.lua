@@ -240,11 +240,11 @@ local function calc_layout()
   local smap = vim.fn.filter(vim.fn.copy(lmap), 'v:key !=# "name"')
   ret.n_items = vim.fn.len(smap)
   local length = {}
-  for _, v in pairs(smap) do
+  for k, v in pairs(smap) do
     if v.name then
-      table.insert(length, vim.fn.strdisplaywidth('[' .. v .. ']' .. v.name))
+      table.insert(length, vim.fn.strdisplaywidth('[' .. k .. ']' .. v.name))
     else
-      table.insert(length, vim.fn.strdisplaywidth('[' .. v .. ']' .. v[2]))
+      table.insert(length, vim.fn.strdisplaywidth('[' .. k .. ']' .. v[2]))
     end
   end
   local maxlength = vim.fn.max(length) + vim.g.leaderGuide_hspace
