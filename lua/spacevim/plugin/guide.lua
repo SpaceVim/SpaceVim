@@ -551,8 +551,8 @@ wait_for_input = function()
       inp = Key.char2name(inp)
     end
     log.debug('inp:' .. inp)
-    local fsel = vim.fn.get(lmap, inp)
-    if vim.fn.empty(fsel) == 1 then
+    local fsel = lmap[inp] or ''
+    if vim.fn.empty(fsel) == 0 then
       vim.fn.add(prefix_key_inp, inp)
       vim.fn.add(undo_history, lmap)
       handle_input(fsel)
