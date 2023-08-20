@@ -13,8 +13,10 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
+let s:fuck = 0
 
-if has('nvim-0.9.0')
+
+if has('nvim-0.9.0') && s:fuck
 
   function! SpaceVim#mapping#guide#parse_mappings() abort " {{{
     lua require("spacevim.plugin.guide").parse_mappings()
