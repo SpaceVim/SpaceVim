@@ -100,23 +100,18 @@ else
     let s:cached_dicts = {}
   endfunction " }}}
   function! s:create_target_dict(key) abort " {{{
-    call s:LOG.debug('desc_lookup is:' .. string(s:desc_lookup))
     if has_key(s:desc_lookup, 'top')
+      " use {expr} to eval viml value
       let toplevel = deepcopy({s:desc_lookup['top']})
-      call s:LOG.debug('toplevel is:' .. string(toplevel))
       let tardict = s:toplevel ? toplevel : get(toplevel, a:key, {})
       let mapdict = s:cached_dicts[a:key]
       call s:merge(tardict, mapdict)
-      call s:LOG.debug('tardict1 is:' .. string(tardict))
     elseif has_key(s:desc_lookup, a:key)
-      call s:LOG.debug('fuck:' .. s:desc_lookup[a:key])
       let tardict = deepcopy({s:desc_lookup[a:key]})
       let mapdict = s:cached_dicts[a:key]
       call s:merge(tardict, mapdict)
-      call s:LOG.debug('tardict2 is:' .. string(tardict))
     else
       let tardict = s:cached_dicts[a:key]
-      call s:LOG.debug('tardict3 is:' .. string(tardict))
     endif
     return tardict
   endfunction " }}}
