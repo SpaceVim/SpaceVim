@@ -816,7 +816,7 @@ else
       let rundict = s:cached_dicts[a:key]
     endif
     let s:lmap = rundict
-    call s:LOG.debug('lmap is:' .. string(s:lmap))
+    call s:LOG.debug('lmap is:' . string(s:lmap))
     call s:start_buffer()
   endfunction " }}}
   function! SpaceVim#mapping#guide#start(vis, dict) abort " {{{
