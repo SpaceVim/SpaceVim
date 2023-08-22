@@ -508,8 +508,8 @@ local function start_buffer()
   vim.api.nvim_win_set_config(winid, {
     relative = 'editor',
     width = vim.o.columns,
-    height = layout.win_dim + 2,
-    row = vim.o.lines - layout.win_dim - 4,
+    height = layout.win_dim + 1,
+    row = vim.o.lines - layout.win_dim - 3,
     col = 0,
   })
 
