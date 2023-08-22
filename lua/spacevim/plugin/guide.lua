@@ -418,6 +418,7 @@ local function highlight_cursor()
     ctermfg = vim.fn.synIDattr(synIDtrans, 'ctermfg'),
   }
   vim.cmd('hi! def link SpaceVimGuideCursor Cursor')
+  log.debug('highlight_cursor info:' .. vim.inspect(info))
   VIMH.hi(info)
   if vis == 'gv' then
     local _begin = vim.fn.getpos("'<")
