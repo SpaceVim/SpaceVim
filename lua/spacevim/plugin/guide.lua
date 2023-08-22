@@ -444,7 +444,6 @@ local function updateStatusline()
   })
 end
 
-local function toggle_hide_cursor() end
 local function setlocalopt(buf, win, opts)
   for o, value in pairs(opts) do
     local info = vim.api.nvim_get_option_info2(o, {})
@@ -491,7 +490,6 @@ local function winopen()
     winfixheight = true,
   })
   updateStatusline()
-  toggle_hide_cursor()
   return winid, bufnr
 end
 local function start_buffer()
@@ -529,7 +527,6 @@ local function close_float_statusline()
 
 end
 local function winclose()
-  toggle_hide_cursor()
   vim.api.nvim_win_close(winid, true)
   close_float_statusline()
   remove_cursor_highlight()
@@ -553,7 +550,6 @@ local function handle_input(input)
     end
   end
 end
-local function toggle_hide_cursor() end
 
 local function page_down()
   log.debug('page down')
