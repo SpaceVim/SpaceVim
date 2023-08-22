@@ -409,17 +409,8 @@ local function create_string(layout)
 end
 
 local function highlight_cursor()
-  local synIDtrans = vim.fn.synIDtrans(vim.fn.synID(vim.fn.line('.'), vim.fn.col('.'), 1))
-  local info = {
-    name = 'SpaceVimGuideCursor',
-    guifg = vim.fn.synIDattr(synIDtrans, 'guifg'),
-    guibg = vim.fn.synIDattr(synIDtrans, 'guibg'),
-    ctermbg = vim.fn.synIDattr(synIDtrans, 'ctermbg'),
-    ctermfg = vim.fn.synIDattr(synIDtrans, 'ctermfg'),
-  }
+  log.debug('highlight cursor: line ' .. vim.fn.line('.') .. ' col ' .. vim.fn.col('.'))
   vim.cmd('hi! def link SpaceVimGuideCursor Cursor')
-  log.debug('highlight_cursor info:' .. vim.inspect(info))
-  VIMH.hi(info)
   if vis == 'gv' then
     local _begin = vim.fn.getpos("'<")
     local _end = vim.fn.getpos("'>")
