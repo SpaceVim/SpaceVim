@@ -14,6 +14,7 @@ local Key = require('spacevim.api').import('vim.keys')
 local cmp = require('spacevim.api').import('vim.compatible')
 local buffer = require('spacevim.api').import('vim.buffer')
 local VIM = require('spacevim.api').import('vim')
+local VIMH = require('spacevim.api').import('vim.highlight')
 local SL = require('spacevim.api').import('vim.statusline')
 
 -- all local values should be listed here:
@@ -47,6 +48,8 @@ local vis = ''
 -- local function without callout
 
 local wait_for_input
+
+local cursor_hilight_id = -1
 
 local function create_cache()
   desc_lookup = {}
@@ -405,9 +408,41 @@ local function create_string(layout)
   return r
 end
 
-local function highlight_cursor() end
+local function highlight_cursor()
+  local synIDtrans = vim.fn.synIDtrans(vim.fn.synID(vim.fn.line('.'), vim.fn.col('.'), 1))
+  local info = {
+    name = 'SpaceVimGuideCursor',
+    guifg = vim.fn.synIDattr(synIDtrans, 'guifg'),
+    guibg = vim.fn.synIDattr(synIDtrans, 'guibg'),
+    ctermbg = vim.fn.synIDattr(synIDtrans, 'ctermbg'),
+    ctermfg = vim.fn.synIDattr(synIDtrans, 'ctermfg'),
+  }
+  vim.cmd('hi! def link SpaceVimGuideCursor Cursor')
+  VIMH.hi(info)
+  if vis == 'gv' then
+    local _begin = vim.fn.getpos("'<")
+    local _end = vim.fn.getpos("'>")
+    if _begin[2] == _end[2] then
+      cursor_hilight_id = vim.fn.matchaddpos(
+        'SpaceVimGuideCursor',
+        { { _begin[2], math.min(_begin[3], _end[3]), math.abs(_begin[3] - _end[3]) + 1 } }
+      )
+    else
+      local pos = {{_begin[2], _begin[3], vim.fn.len(vim.fn.getline(_begin[2])) - _begin[3] + 1}, {_end[2], 1, _end[3]}}
+      for _, lnum in ipairs(vim.fn.range(_begin[2] + 1, _end[2] - 1)) do
+        table.insert(pos, {lnum, 1, vim.fn.len(vim.fn.getline(lnum))})
+      end
+      cursor_hilight_id = vim.fn.matchaddpos('SpaceVimGuideCursor', pso)
+    end
+  else
+    cursor_hilight_id =
+      vim.fn.matchaddpos('SpaceVimGuideCursor', { { vim.fn.line('.'), vim.fn.col('.'), 1 } })
+  end
+end
 
-local function remove_cursor_highlight() end
+local function remove_cursor_highlight()
+  pcall(vim.fn.matchdelete, cursor_hilight_id)
+end
 
 local function guide_help_msg(escape)
   local msg
@@ -522,9 +557,7 @@ local function start_buffer()
 end
 
 local function close_float_statusline()
-
-      SL.close_float()
-
+  SL.close_float()
 end
 local function winclose()
   vim.api.nvim_win_close(winid, true)
@@ -559,7 +592,6 @@ local function page_down()
   wait_for_input()
 end
 
-
 local function page_undo()
   winclose()
   if #prefix_key_inp then
@@ -573,12 +605,11 @@ end
 
 local function page_up()
   log.debug('page up')
-  
+
   -- vim.api.nvim_feedkeys(Key.t('<C-c>'), 'n', false)
   vim.api.nvim_feedkeys(Key.t('<C-u>'), 'x', false)
   vim.cmd('redraw!')
   wait_for_input()
-
 end
 
 local function handle_submode_mapping(cmd)
@@ -655,7 +686,6 @@ wait_for_input = function()
     end
   end
 end
-
 
 local function mapmaparg(maparg)
   local map = ''
@@ -761,9 +791,7 @@ function M.start(_vis, _dict)
 end
 
 function M.register_displayname(lhs, name)
-
   registered_name[lhs] = name
-
 end
 
 function M.displayfunc()
