@@ -604,17 +604,12 @@ local function submode_mappings(key)
   handle_submode_mapping(key)
 end
 
-local function build_mpt(mpt)
-  vim.fn.execute('normal! :')
-
-  vim.fn.execute('echohl Comment')
-
-  if type(mpt) == 'string' then
-    print(mpt)
-  else
-  end
-
-  vim.fn.execute('echohl NONE')
+local function warn_not_defined(mpt)
+  vim.cmd('redraw')
+  vim.api.nvim_echo({
+    { mpt[1], 'Comment' },
+    { mpt[2], 'Wildmenu' },
+  }, false, {})
 end
 
 wait_for_input = function()
@@ -654,9 +649,9 @@ wait_for_input = function()
       local name = M.getName(prefix_key)
       local _keys = vim.fn.join(keys, '-')
       if vim.fn.empty(_keys) == 1 then
-        build_mpt({ 'Key bindings is not defined: ', name .. '-' .. inp })
+        warn_not_defined({ 'Key bindings is not defined: ', name .. '-' .. inp })
       else
-        build_mpt({ 'key bindings is not defined: ', name .. '-' .. _keys .. '-' .. inp })
+        warn_not_defined({ 'key bindings is not defined: ', name .. '-' .. _keys .. '-' .. inp })
       end
       prefix_key_inp = {}
       guide_help_mode = false
