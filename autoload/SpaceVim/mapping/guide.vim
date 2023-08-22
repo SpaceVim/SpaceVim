@@ -54,6 +54,9 @@ if has('nvim-0.9.0') && s:fuck
           \ require("spacevim").eval("a:dictname")
           \ )
   endfunction "}}}
+  function! SpaceVim#mapping#guide#displayfunc() abort
+    lua require("spacevim.plugin.guide").displayfunc()
+  endfunction
 else
 
 
@@ -78,6 +81,7 @@ else
   let s:lmap = {}
   " this should be the history of s:lmap and s:guide_group
   let s:undo_history = []
+  let s:registered_name = {}
 
   function! SpaceVim#mapping#guide#has_configuration() abort "{{{
     return exists('s:desc_lookup')
@@ -820,22 +824,21 @@ else
     let s:lmap = a:dict
     call s:start_buffer()
   endfunction " }}}
-endif
-
-if !exists('g:leaderGuide_displayfunc')
-  function! s:leaderGuide_display() abort
+  function! SpaceVim#mapping#guide#register_displayname(lhs, name) abort
+    call extend(s:registered_name, {a:lhs : a:name})
+  endfunction
+  function! SpaceVim#mapping#guide#displayfunc() abort
     if has_key(s:registered_name, g:leaderGuide#displayname)
       return s:registered_name[g:leaderGuide#displayname]
     endif
     let g:leaderGuide#displayname = substitute(g:leaderGuide#displayname, '\c<cr>$', '', '')
   endfunction
-  let g:leaderGuide_displayfunc = [function('s:leaderGuide_display')]
 endif
 
-let s:registered_name = {}
-function! SpaceVim#mapping#guide#register_displayname(lhs, name) abort
-  call extend(s:registered_name, {a:lhs : a:name})
-endfunction
+if !exists('g:leaderGuide_displayfunc')
+  let g:leaderGuide_displayfunc = [function('SpaceVim#mapping#guide#displayfunc')]
+endif
+
 
 if get(g:, 'mapleader', '\') ==# ' '
   call SpaceVim#mapping#guide#register_prefix_descriptions(' ',

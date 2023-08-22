@@ -37,6 +37,7 @@ local prefix_key_inp = {}
 local lmap = {}
 
 local undo_history = {}
+local registered_name = {}
 
 -- the flag for guide help mode, the default is false
 local guide_help_mode = false
@@ -763,7 +764,17 @@ function M.start(_vis, _dict)
   start_buffer()
 end
 
-function M.register_displayname(lhs, name) end
+function M.register_displayname(lhs, name)
+
+  registered_name[lhs] = name
+
+end
+
+function M.displayfunc()
+  if registered_name[vim.g['leaderGuide#displayname']] then
+    vim.g['leaderGuide#displayname'] = registered_name[vim.g['leaderGuide#displayname']]
+  end
+end
 
 function M.populate_dictionary(key, dictname)
   start_parser(key, cached_dicts[key])
