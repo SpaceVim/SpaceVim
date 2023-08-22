@@ -457,7 +457,7 @@ local function updateStatusline()
   end
   local keys = prefix_key_inp
 
-  local winid = SL.open_float({
+  SL.open_float({
     { 'Guide: ', 'LeaderGuiderPrompt' },
     { ' ', 'LeaderGuiderSep1' },
     {
