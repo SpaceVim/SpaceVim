@@ -565,11 +565,11 @@ end
 
 local function page_undo()
   winclose()
-  if vim.fn.len(prefix_key_inp) > 0 then
-    vim.fn.remove(prefix_key_inp, -1)
+  if #prefix_key_inp then
+    table.remove(prefix_key_inp)
   end
-  if vim.fn.len(undo_history) > 0 then
-    lmap = vim.fn.remove(undo_history, -1)
+  if #undo_history > 0 then
+    lmap = table.remove(undo_history)
   end
   start_buffer()
 end
