@@ -432,7 +432,7 @@ local function highlight_cursor()
       for _, lnum in ipairs(vim.fn.range(_begin[2] + 1, _end[2] - 1)) do
         table.insert(pos, {lnum, 1, vim.fn.len(vim.fn.getline(lnum))})
       end
-      cursor_hilight_id = vim.fn.matchaddpos('SpaceVimGuideCursor', pso)
+      cursor_hilight_id = vim.fn.matchaddpos('SpaceVimGuideCursor', pos)
     end
   else
     cursor_hilight_id =

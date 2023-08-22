@@ -5655,7 +5655,7 @@ function vim.fn.matchadd(group, pattern, priority, id, dict) end
 -- ```vim
 --   GetGroup()->matchaddpos([23, 11])
 -- ```
---- @param pos number
+--- @param pos number|table
 --- @param priority? any
 --- @param id? any
 --- @param dict? table<string, any>
