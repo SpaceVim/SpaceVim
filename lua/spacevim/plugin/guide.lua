@@ -617,7 +617,7 @@ wait_for_input = function()
   local t = Key.t
   local inp = VIM.getchar()
   log.debug('inp is:' .. inp)
-  if inp == t('<Esc') then
+  if inp == t('<Esc>') then
     prefix_key_inp = {}
     undo_history = {}
     guide_help_mode = false
