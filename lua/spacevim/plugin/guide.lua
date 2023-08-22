@@ -554,7 +554,14 @@ local function handle_input(input)
 end
 local function toggle_hide_cursor() end
 
-local function page_down() end
+local function page_down()
+  log.debug('page down')
+  -- vim.api.nvim_feedkeys(Key.t('<C-c>'), 'n', false)
+  vim.api.nvim_feedkeys(Key.t('<C-d>'), 'x', false)
+  vim.cmd('redraw!')
+  wait_for_input()
+end
+
 
 local function page_undo()
   winclose()
@@ -567,7 +574,15 @@ local function page_undo()
   start_buffer()
 end
 
-local function page_up() end
+local function page_up()
+  log.debug('page up')
+  
+  -- vim.api.nvim_feedkeys(Key.t('<C-c>'), 'n', false)
+  vim.api.nvim_feedkeys(Key.t('<C-u>'), 'x', false)
+  vim.cmd('redraw!')
+  wait_for_input()
+
+end
 
 local function handle_submode_mapping(cmd)
   guide_help_mode = false
@@ -603,8 +618,10 @@ local function build_mpt(mpt)
 end
 
 wait_for_input = function()
+  log.debug('wait for input:')
   local t = Key.t
   local inp = VIM.getchar()
+  log.debug('inp is:' .. inp)
   if inp == t('<Esc') then
     prefix_key_inp = {}
     undo_history = {}
@@ -617,7 +634,7 @@ wait_for_input = function()
   elseif inp == t('<C-h>') then
     guide_help_mode = true
     updateStatusline()
-    -- redraw!
+    vim.cmd('redraw!')
     wait_for_input()
   else
     if inp == ' ' then
@@ -625,7 +642,6 @@ wait_for_input = function()
     else
       inp = Key.char2name(inp)
     end
-    log.debug('inp:' .. inp)
     local fsel = lmap[inp] or ''
     if vim.fn.empty(fsel) == 0 then
       table.insert(prefix_key_inp, inp)
