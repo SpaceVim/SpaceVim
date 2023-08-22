@@ -409,23 +409,22 @@ local function create_string(layout)
 end
 
 local function highlight_cursor()
-  log.debug('highlight cursor: line ' .. vim.fn.line('.') .. ' col ' .. vim.fn.col('.'))
+  log.debug('highlight cursor: line ' .. vim.fn.line('.') .. ' col ' .. vim.fn.col('.') .. ' vis ' .. vis)
   vim.cmd('hi! def link SpaceVimGuideCursor Cursor')
   if vis == 'gv' then
     local _begin = vim.fn.getpos("'<")
     local _end = vim.fn.getpos("'>")
+    local pos = {}
     if _begin[2] == _end[2] then
-      cursor_hilight_id = vim.fn.matchaddpos(
-        'SpaceVimGuideCursor',
-        { { _begin[2], math.min(_begin[3], _end[3]), math.abs(_begin[3] - _end[3]) + 1 } }
-      )
+      pos = { { _begin[2], math.min(_begin[3], _end[3]), math.abs(_begin[3] - _end[3]) + 1 } }
     else
-      local pos = {{_begin[2], _begin[3], vim.fn.len(vim.fn.getline(_begin[2])) - _begin[3] + 1}, {_end[2], 1, _end[3]}}
+      pos = {{_begin[2], _begin[3], vim.fn.len(vim.fn.getline(_begin[2])) - _begin[3] + 1}, {_end[2], 1, _end[3]}}
       for _, lnum in ipairs(vim.fn.range(_begin[2] + 1, _end[2] - 1)) do
         table.insert(pos, {lnum, 1, vim.fn.len(vim.fn.getline(lnum))})
       end
-      cursor_hilight_id = vim.fn.matchaddpos('SpaceVimGuideCursor', pos)
     end
+    log.debug('pos:' .. vim.inspect(pos))
+    cursor_hilight_id = vim.fn.matchaddpos('SpaceVimGuideCursor', pos)
   else
     cursor_hilight_id =
       vim.fn.matchaddpos('SpaceVimGuideCursor', { { vim.fn.line('.'), vim.fn.col('.'), 1 } })
@@ -733,11 +732,13 @@ function M.start_by_prefix(_vis, _key)
   end
   guide_help_mode = false
   -- _vis is 0 or 1
-  if _vis == 1 then
+  if _vis == '1' then
     vis = 'gv'
   else
     vis = ''
   end
+
+  log.debug('vis is:' ..vis)
 
   if vim.v.count ~= 0 then
     count = vim.v.count
