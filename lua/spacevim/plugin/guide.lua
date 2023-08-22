@@ -519,9 +519,6 @@ local function winopen()
   return winid, bufnr
 end
 local function start_buffer()
-  local winv = cmp.fn.winsaveview()
-  local winnr = cmp.fn.winnr()
-  local winres = cmp.fn.winrestcmd()
   winid, bufnr = winopen()
   local layout = calc_layout()
   local text = create_string(layout)
