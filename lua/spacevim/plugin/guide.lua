@@ -199,6 +199,7 @@ local function add_map_to_dict(map, level, dict)
 end
 
 local function string_to_keys(input)
+  log.debug('string_to_keys input:' .. input)
   local retlist = {}
 
   if vim.fn.match(input, [[<.\+>]]) ~= -1 then
@@ -230,6 +231,7 @@ local function string_to_keys(input)
       end
     end
   end
+  log.debug('string_to_keys output:' .. vim.inspect(retlist))
   return retlist
 end
 
