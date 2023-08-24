@@ -582,6 +582,8 @@ local function start_buffer()
     col = 0,
   })
 
+  log.debug('text is:\n' .. vim.inspect(text))
+
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, text)
 
   cmp.fn.setbufvar(bufnr, '&modifiable', 0)
