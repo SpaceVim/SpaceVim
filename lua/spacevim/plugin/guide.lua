@@ -14,7 +14,6 @@ local Key = require('spacevim.api').import('vim.keys')
 local cmp = require('spacevim.api').import('vim.compatible')
 local buffer = require('spacevim.api').import('vim.buffer')
 local VIM = require('spacevim.api').import('vim')
-local VIMH = require('spacevim.api').import('vim.highlight')
 local SL = require('spacevim.api').import('vim.statusline')
 
 -- all local values should be listed here:
@@ -174,7 +173,6 @@ local function add_map_to_dict(map, level, dict)
         dict[curkey] = { cmd, map.display }
       end
     elseif vim.tbl_islist(dict[curkey]) and vim.g.leaderGuide_flatten == 0 then
-      local cmd = escape_mappings(map)
       curkey = curkey .. 'm'
       if not dict[curkey] then
         dict[curkey] = { name = vim.g.leaderGuide_default_group_name }
@@ -189,7 +187,7 @@ local function add_map_to_dict(map, level, dict)
       dict[map.lhs[level + 1]] = { cmd, map.display }
     elseif not vim.tbl_islist(dict[map.lhs[level + 1]]) and vim.g.leaderGuide_flatten == 1 then
       local childmap = flattenmap(dict[map.lhs[level + 1]], map.lhs[level + 1])
-      for id, _ in pairs(childmap) do
+      for it, _ in pairs(childmap) do
         dict[it] = childmap[it]
       end
 
@@ -231,11 +229,6 @@ local function string_to_keys(input)
     end
   end
   return retlist
-end
-
-local function escape_keys(inp)
-  local ret = cmp.fn.substitute(inp, '<', '<lt>', '')
-  return cmp.fn.substitute(ret, '|', '<Bar>', '')
 end
 
 local function start_parser(key, dict)
@@ -619,7 +612,7 @@ local function handle_input(input)
 
     --- redraw!
 
-    local ok, errors = pcall(vim.fn.execute, input[1])
+    local ok, _ = pcall(vim.fn.execute, input[1])
     if not ok then
       print(vim.v.exception)
     end
@@ -729,41 +722,6 @@ wait_for_input = function()
   end
 end
 
-local function mapmaparg(maparg)
-  local map = ''
-  local buf = ''
-  local silent = ''
-  local nowait = ''
-
-  if maparg.noremap == 1 then
-    map = 'noremap'
-  else
-    map = 'map'
-  end
-
-  if maparg.buffer == 1 then
-    buf = '<buffer>'
-  end
-
-  if maparg.silent == 1 then
-    silent = '<silent>'
-  end
-  if maparg.nowait == 1 then
-    nowait = '<nowait>'
-  end
-  local st = maparg.mode
-    .. ''
-    .. map
-    .. ' '
-    .. nowait
-    .. silent
-    .. buf
-    .. ''
-    .. maparg.lhs
-    .. ' '
-    .. maparg.rhs
-  vim.execute(st)
-end
 
 local function get_register()
   if vim.fn.match(vim.o.clipboard, 'unnamedplus') >= 0 then
@@ -779,7 +737,7 @@ function M.start_by_prefix(_vis, _key)
   log.debug('start by prefix:' .. _key .. ' vis:' .. _vis)
 
   if _key == ' ' and vim.fn.exists('b:spacevim_lang_specified_mappings') == 1 then
-    vim.g._spacevim_mappings_space.l = vim.b.spacevim_lang_specified_mappings
+    vim.g._spacevim_mappings_space.l = vim.b['spacevim_lang_specified_mappings']
   end
   guide_help_mode = false
   -- _vis is 0 or 1
@@ -844,7 +802,7 @@ function M.displayfunc()
   end
 end
 
-function M.populate_dictionary(key, dictname)
+function M.populate_dictionary(key, _)
   start_parser(key, cached_dicts[key])
 end
 
