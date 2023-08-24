@@ -79,7 +79,7 @@ end
 local function merge(dict_t, dict_o)
   local target = dict_t
   local other = dict_o
-  for k, v in ipairs(target) do
+  for k, _ in ipairs(target) do
     if vim.fn.type(target[k]) == 4 and vim.fn.has_key(other, k) then
       if vim.fn.type(other[k]) == 4 then
         if vim.fn.has_key(target[k], 'name') then
