@@ -160,15 +160,14 @@ local function flattenmap(dict, str)
 end
 
 local function add_map_to_dict(map, level, dict)
-  log.debug('add_map_to_dict:\n map is' .. vim.inspect(map) ..'\n level is:' .. level .. 'dict is:\n' .. vim.inspect(dict))
-  if #map.lhs > level + 1 then
+  if #map.lhs > level then
     local curkey = map.lhs[level + 1]
     local nlevel = level + 1
     if not dict[curkey] then
       dict[curkey] = { name = vim.g.leaderGuide_default_group_name }
     elseif vim.tbl_islist(dict[curkey]) and vim.g.leaderGuide_flatten == 1 then
       local cmd = escape_mappings(map)
-      curkey = table.concat(map.lhs, '', level + 1)
+      curkey = table.concat(map.lhs, '', level)
       nlevel = level
       if not dict[curkey] then
         dict[curkey] = { cmd, map.display }
@@ -184,15 +183,17 @@ local function add_map_to_dict(map, level, dict)
     end
   else
     local cmd = escape_mappings(map)
-    if not dict[map.lhs[level + 1]] then
-      dict[map.lhs[level + 1]] = { cmd, map.display }
-    elseif not vim.tbl_islist(dict[map.lhs[level + 1]]) and vim.g.leaderGuide_flatten == 1 then
-      local childmap = flattenmap(dict[map.lhs[level + 1]], map.lhs[level + 1])
+    log.debug(vim.inspect(map))
+    log.debug(level)
+    if not dict[map.lhs[level]] then
+      dict[map.lhs[level]] = { cmd, map.display }
+    elseif not vim.tbl_islist(dict[map.lhs[level]]) and vim.g.leaderGuide_flatten == 1 then
+      local childmap = flattenmap(dict[map.lhs[level]], map.lhs[level])
       for it, _ in pairs(childmap) do
         dict[it] = childmap[it]
       end
 
-      dict[map.lhs[level + 1]] = { cmd, map.display }
+      dict[map.lhs[level]] = { cmd, map.display }
     end
   end
 end
@@ -252,7 +253,9 @@ local function start_parser(key, dict)
   for _, line in ipairs(cmp.fn.split(readmap, '\n')) do
     local name = vim.fn.split(string.sub(line, 4, #line))[1]
     log.debug('name is:' .. name)
+    log.debug('line is:' .. line)
     local mapd = cmp.fn.maparg(name, string.sub(line, 1, 1), 0, 1)
+    log.debug('mapd is:' .. vim.inspect(mapd))
     if mapd.lhs == '\\' then
       mapd.feedkeyargs = ''
     elseif mapd.noremap == 1 then
@@ -269,12 +272,14 @@ local function start_parser(key, dict)
     mapd.lhs = cmp.fn.substitute(mapd.lhs, '<Tab>', '<C-I>', 'g')
     mapd.rhs = cmp.fn.substitute(mapd.rhs, '<SID>', '<SNR>' .. mapd['sid'] .. '_', 'g')
     if mapd.lhs ~= '' and mapd.display ~= 'LeaderGuide.*' then
+      log.debug('mapd is:' .. vim.inspect(mapd))
       mapd.lhs = string_to_keys(mapd.lhs)
+      log.debug('mapd is:' .. vim.inspect(mapd))
       if
         (visual and vim.fn.match(mapd.mode, '[vx ]') >= 0)
         or (not visual and vim.fn.match(mapd.mode, '[vx ]') == -1)
       then
-        add_map_to_dict(mapd, 0, dict)
+        add_map_to_dict(mapd, 1, dict)
       end
     end
     ::continue::
@@ -724,7 +729,6 @@ wait_for_input = function()
     end
   end
 end
-
 
 local function get_register()
   if vim.fn.match(vim.o.clipboard, 'unnamedplus') >= 0 then
