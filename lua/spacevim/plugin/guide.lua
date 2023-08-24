@@ -421,8 +421,13 @@ local function create_string(layout)
     if #crow == 0 then
       table.insert(rows, crow)
     end
-    table.insert(crow, displaystring)
-    table.insert(crow, vim.fn['repeat'](' ', l.col_width - vim.fn.strdisplaywidth(displaystring)))
+    -- if the displaystring is too long
+    if #displaystring > l.col_width then
+      table.insert(crow, string.sub(displaystring, 1, l.col_width -5) .. '...  ')
+    else
+      table.insert(crow, displaystring)
+      table.insert(crow, vim.fn['repeat'](' ', l.col_width - vim.fn.strdisplaywidth(displaystring)))
+    end
     if vim.g.leaderGuide_sort_horizontal == 0 then
       if row >= n_rows - 1 then
         if overh > 0 and row < n_rows then
