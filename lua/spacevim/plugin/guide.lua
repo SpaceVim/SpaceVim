@@ -136,43 +136,13 @@ local function format_displaystring(map)
   return display
 end
 
-local function start_parser(key, dict)
-  if key == '[KEYs]' then
-    return ''
-  end
-
-  if key == ' ' then
-    key = '<Space>'
-  end
-
-  local readmap = cmp.execute('map ' .. key, 'silent')
-
-  for _, line in ipairs(cmp.fn.split(readmap, '\n')) do
-    local name = vim.fn.split(string.sub(line, 4, #line))[1]
-    log.debug('name is:' .. name)
-    local mapd = cmp.fn.maparg(name, string.sub(line, 1, 1), 0, 1)
-    if mapd.lhs == '\\' then
-      mapd.feedkeyargs = ''
-    elseif mapd.noremap == 1 then
-      mapd.feedkeyargs = 'nt'
-    else
-      mapd.feedkeyargs = 'mt'
-    end
-    if mapd.lhs == '<Plug>.*' or mapd.lhs == '<SNR>.*' then
-      goto continue
-    end
-    mapd.display = format_displaystring(mapd.rhs)
-    mapd.lhs = cmp.fn.substitute(mapd.lhs, key, '', '')
-    mapd.lhs = cmp.fn.substitute(mapd.lhs, '<Space>', ' ', 'g')
-    mapd.lhs = cmp.fn.substitute(mapd.lhs, '<Tab>', '<C-I>', 'g')
-    mapd.rhs = cmp.fn.substitute(mapd.rhs, '<SID>', '<SNR>' .. mapd['sid'] .. '_', 'g')
-    if mapd.lhs ~= '' and mapd.display ~= 'LeaderGuide.*' then
-    end
-    ::continue::
-  end
+local function escape_mappings(mapping)
+  local rstring = vim.fn.substitute(mapping.rhs, [[\]], [[\\\\]], 'g')
+  rstring = vim.fn.substitute(rstring, [[<\([^<>]*\)>]], '\\\\<\\1>', 'g')
+  rstring = vim.fn.substitute(rstring, '"', '\\\\"', 'g')
+  rstring = 'call feedkeys("' .. rstring .. '", "' .. mapping.feedkeyargs .. '")'
+  return rstring
 end
-
-local function add_map_to_dict(map, level, dict) end
 
 local function flattenmap(dict, str)
   local ret = {}
@@ -190,12 +160,42 @@ local function flattenmap(dict, str)
   return ret
 end
 
-local function escape_mappings(mapping)
-  local rstring = vim.fn.substitute(mapping.rhs, [[\]], [[\\\\]], 'g')
-  rstring = vim.fn.substitute(rstring, [[<\([^<>]*\)>]], '\\\\<\\1>', 'g')
-  rstring = vim.fn.substitute(rstring, '"', '\\\\"', 'g')
-  rstring = 'call feedkeys("' .. rstring .. '", "' .. mapping.feedkeyargs .. '")'
-  return rstring
+local function add_map_to_dict(map, level, dict)
+  if #map.lhs > level + 1 then
+    local curkey = map.lhs[level]
+    local nlevel = level + 1
+    if not dict[curkey] then
+      dict[curkey] = { name = vim.g.leaderGuide_default_group_name }
+    elseif vim.tbl_islist(dict[curkey]) and vim.g.leaderGuide_flatten == 1 then
+      local cmd = escape_mappings(map)
+      curkey = table.concat(map.lhs, '', level, #map.lhs)
+      nlevel = level
+      if not dict[curkey] then
+        dict[curkey] = { cmd, map.display }
+      end
+    elseif vim.tbl_islist(dict[curkey]) and vim.g.leaderGuide_flatten == 0 then
+      local cmd = escape_mappings(map)
+      curkey = curkey .. 'm'
+      if not dict[curkey] then
+        dict[curkey] = { name = vim.g.leaderGuide_default_group_name }
+      end
+    end
+    if not vim.tbl_islist(dict[curkey]) then
+      add_map_to_dict(map, nlevel, dict[curkey])
+    end
+  else
+    local cmd = escape_mappings(map)
+    if not dict[map.lhs[level]] then
+      dict[map.lhs[level]] = { cmd, map.display }
+    elseif not vim.tbl_islist(dict[map.lhs[level]]) and vim.g.leaderGuide_flatten == 1 then
+      local childmap = flattenmap(dict[map.lhs[level]], map.lhs[level])
+      for id, _ in pairs(childmap) do
+        dict[it] = childmap[it]
+      end
+
+      dict[map.lhs[level]] = { cmd, map.display }
+    end
+  end
 end
 
 local function string_to_keys(input)
@@ -236,6 +236,55 @@ end
 local function escape_keys(inp)
   local ret = cmp.fn.substitute(inp, '<', '<lt>', '')
   return cmp.fn.substitute(ret, '|', '<Bar>', '')
+end
+
+local function start_parser(key, dict)
+  if key == '[KEYs]' then
+    return ''
+  end
+
+  if key == ' ' then
+    key = '<Space>'
+  end
+
+  local readmap = cmp.execute('map ' .. key, 'silent')
+  local visual = false
+  if vis == 'gv' then
+    visual = true
+  else
+    visual = false
+  end
+
+  for _, line in ipairs(cmp.fn.split(readmap, '\n')) do
+    local name = vim.fn.split(string.sub(line, 4, #line))[1]
+    log.debug('name is:' .. name)
+    local mapd = cmp.fn.maparg(name, string.sub(line, 1, 1), 0, 1)
+    if mapd.lhs == '\\' then
+      mapd.feedkeyargs = ''
+    elseif mapd.noremap == 1 then
+      mapd.feedkeyargs = 'nt'
+    else
+      mapd.feedkeyargs = 'mt'
+    end
+    if mapd.lhs == '<Plug>.*' or mapd.lhs == '<SNR>.*' then
+      goto continue
+    end
+    mapd.display = format_displaystring(mapd.rhs)
+    mapd.lhs = cmp.fn.substitute(mapd.lhs, key, '', '')
+    mapd.lhs = cmp.fn.substitute(mapd.lhs, '<Space>', ' ', 'g')
+    mapd.lhs = cmp.fn.substitute(mapd.lhs, '<Tab>', '<C-I>', 'g')
+    mapd.rhs = cmp.fn.substitute(mapd.rhs, '<SID>', '<SNR>' .. mapd['sid'] .. '_', 'g')
+    if mapd.lhs ~= '' and mapd.display ~= 'LeaderGuide.*' then
+      mapd.lhs = string_to_keys(mapd.lhs)
+      if
+        (visual and vim.fn.match(mapd.mode, '[vx ]') >= 0)
+        or (not visual and vim.fn.match(mapd.mode, '[vx ]') == -1)
+      then
+        add_map_to_dict(mapd, 0, dict)
+      end
+    end
+    ::continue::
+  end
 end
 
 local function calc_layout()
@@ -409,7 +458,9 @@ local function create_string(layout)
 end
 
 local function highlight_cursor()
-  log.debug('highlight cursor: line ' .. vim.fn.line('.') .. ' col ' .. vim.fn.col('.') .. ' vis ' .. vis)
+  log.debug(
+    'highlight cursor: line ' .. vim.fn.line('.') .. ' col ' .. vim.fn.col('.') .. ' vis ' .. vis
+  )
   vim.cmd('hi! def link SpaceVimGuideCursor Cursor')
   if vis == 'gv' then
     local _begin = vim.fn.getpos("'<")
@@ -418,9 +469,12 @@ local function highlight_cursor()
     if _begin[2] == _end[2] then
       pos = { { _begin[2], math.min(_begin[3], _end[3]), math.abs(_begin[3] - _end[3]) + 1 } }
     else
-      pos = {{_begin[2], _begin[3], vim.fn.len(vim.fn.getline(_begin[2])) - _begin[3] + 1}, {_end[2], 1, _end[3]}}
+      pos = {
+        { _begin[2], _begin[3], vim.fn.len(vim.fn.getline(_begin[2])) - _begin[3] + 1 },
+        { _end[2], 1, _end[3] },
+      }
       for _, lnum in ipairs(vim.fn.range(_begin[2] + 1, _end[2] - 1)) do
-        table.insert(pos, {lnum, 1, vim.fn.len(vim.fn.getline(lnum))})
+        table.insert(pos, { lnum, 1, vim.fn.len(vim.fn.getline(lnum)) })
       end
     end
     log.debug('pos:' .. vim.inspect(pos))
@@ -735,7 +789,7 @@ function M.start_by_prefix(_vis, _key)
     vis = ''
   end
 
-  log.debug('vis is:' ..vis)
+  log.debug('vis is:' .. vis)
 
   if vim.v.count ~= 0 then
     count = vim.v.count
