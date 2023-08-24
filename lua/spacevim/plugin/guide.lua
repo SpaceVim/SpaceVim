@@ -160,6 +160,7 @@ local function flattenmap(dict, str)
 end
 
 local function add_map_to_dict(map, level, dict)
+  log.debug('add_map_to_dict:\n map is' .. vim.inspect(map) ..'\n level is:' .. level .. 'dict is:\n' .. vim.inspect(dict))
   if #map.lhs > level + 1 then
     local curkey = map.lhs[level + 1]
     local nlevel = level + 1
