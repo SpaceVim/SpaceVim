@@ -313,6 +313,7 @@ else
           \ 'strdisplaywidth(repeat(" ", 8 - strlen(v:key)) . "[".v:key."]".'.
           \ '(type(v:val) == type({}) ? v:val["name"] : v:val[1]))'))
     let maxlength = max(length) + g:leaderGuide_hspace
+    call s:LOG.debug('maxlength is:' . maxlength)
     if g:leaderGuide_vertical
       let ret.n_rows = winheight(0) - 2
       let ret.n_cols = ret.n_items / ret.n_rows + (ret.n_items != ret.n_rows)

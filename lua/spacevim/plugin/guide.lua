@@ -302,6 +302,7 @@ local function calc_layout()
     end
   end
   local maxlength = vim.fn.max(length) + vim.g.leaderGuide_hspace
+  log.debug('maxlength is:' .. maxlength)
 
   if vim.g.leaderGuide_vertical == 1 then
     ret.n_rows = vim.fn.winheight(0) - 2
