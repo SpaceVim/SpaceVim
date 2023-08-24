@@ -162,13 +162,13 @@ end
 
 local function add_map_to_dict(map, level, dict)
   if #map.lhs > level + 1 then
-    local curkey = map.lhs[level]
+    local curkey = map.lhs[level + 1]
     local nlevel = level + 1
     if not dict[curkey] then
       dict[curkey] = { name = vim.g.leaderGuide_default_group_name }
     elseif vim.tbl_islist(dict[curkey]) and vim.g.leaderGuide_flatten == 1 then
       local cmd = escape_mappings(map)
-      curkey = table.concat(map.lhs, '', level, #map.lhs)
+      curkey = table.concat(map.lhs, '', level + 1)
       nlevel = level
       if not dict[curkey] then
         dict[curkey] = { cmd, map.display }
@@ -185,15 +185,15 @@ local function add_map_to_dict(map, level, dict)
     end
   else
     local cmd = escape_mappings(map)
-    if not dict[map.lhs[level]] then
-      dict[map.lhs[level]] = { cmd, map.display }
-    elseif not vim.tbl_islist(dict[map.lhs[level]]) and vim.g.leaderGuide_flatten == 1 then
-      local childmap = flattenmap(dict[map.lhs[level]], map.lhs[level])
+    if not dict[map.lhs[level + 1]] then
+      dict[map.lhs[level + 1]] = { cmd, map.display }
+    elseif not vim.tbl_islist(dict[map.lhs[level + 1]]) and vim.g.leaderGuide_flatten == 1 then
+      local childmap = flattenmap(dict[map.lhs[level + 1]], map.lhs[level + 1])
       for id, _ in pairs(childmap) do
         dict[it] = childmap[it]
       end
 
-      dict[map.lhs[level]] = { cmd, map.display }
+      dict[map.lhs[level + 1]] = { cmd, map.display }
     end
   end
 end
