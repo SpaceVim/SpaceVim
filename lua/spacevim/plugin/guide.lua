@@ -203,21 +203,21 @@ local function string_to_keys(input)
   local retlist = {}
 
   if vim.fn.match(input, [[<.\+>]]) ~= -1 then
-    local si = 0
+    local si = 1
     local go = true
-    while si < vim.fn.len(input) do
+    while si <= #input do
       if go then
-        if input[si] == ' ' then
+        if string.sub(input, si, si) == ' ' then
           table.insert(retlist, '[SPC]')
         else
-          table.insert(retlist, input[si])
+          table.insert(retlist, string.sub(input, si, si))
         end
       else
-        retlist[-1] = retlist[-1] .. input[si]
+        retlist[#retlist] = retlist[#retlist] .. string.sub(input, si, si)
       end
-      if input[si] == '<' then
+      if string.sub(input, si, si) == '<' then
         go = false
-      else
+      elseif string.sub(input, si, si) == '>' then
         go = true
       end
       si = si + 1
