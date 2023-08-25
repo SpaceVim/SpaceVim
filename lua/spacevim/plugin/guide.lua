@@ -385,7 +385,7 @@ end
 
 local function create_string(layout)
   log.debug('create string:')
-  log.debug('layout is:' .. layout)
+  log.debug('layout is:' .. vim.inspect(layout))
   local l = layout
 
   l.capacity = l.n_rows * l.n_cols
