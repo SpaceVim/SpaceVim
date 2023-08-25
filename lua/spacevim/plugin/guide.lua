@@ -384,6 +384,7 @@ local function compare_key(i1, i2)
 end
 
 local function create_string(layout)
+  log.debug('create string:')
   local l = layout
 
   l.capacity = l.n_rows * l.n_cols
