@@ -385,6 +385,7 @@ end
 
 local function create_string(layout)
   log.debug('create string:')
+  log.debug('layout is:' .. layout)
   local l = layout
 
   l.capacity = l.n_rows * l.n_cols
@@ -397,9 +398,9 @@ local function create_string(layout)
 
   local rows = {}
 
-  local row = 0
+  local row = 1
 
-  local col = 0
+  local col = 1
   log.debug('lmap is:' .. vim.inspect(lmap))
   local smap = {}
   for k, _ in pairs(lmap) do
@@ -424,7 +425,8 @@ local function create_string(layout)
     else
       displaystring = offset .. '[' .. k .. '] ' .. desc
     end
-    local crow = rows[row + 1] or {}
+    local crow = rows[row] or {}
+    log.debug('crow is:' .. vim.inspect(crow))
 
     if #crow == 0 then
       table.insert(rows, crow)
