@@ -409,7 +409,7 @@ local function create_string(layout)
     end
   end
   table.sort(smap, compare_key)
-  log.debug('smap is:' .. vim.inspect(smap))
+  -- log.debug('smap is:' .. vim.inspect(smap))
 
   for _, k in ipairs(smap) do
     local desc = ''
@@ -426,7 +426,7 @@ local function create_string(layout)
       displaystring = offset .. '[' .. k .. '] ' .. desc
     end
     local crow = rows[row] or {}
-    log.debug('crow is:' .. vim.inspect(crow))
+    -- log.debug('crow is:' .. vim.inspect(crow))
 
     if #crow == 0 then
       table.insert(rows, crow)
@@ -471,6 +471,7 @@ local function create_string(layout)
   table.insert(r, '')
   -- @fixme the extra line should be removed
   table.insert(r, '')
+  log.debug('string is:\n' .. table.concat(r, '\n'))
   return r
 end
 
