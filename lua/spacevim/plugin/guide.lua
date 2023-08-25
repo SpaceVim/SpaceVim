@@ -394,7 +394,7 @@ local function create_string(layout)
 
   local overh = l.n_cols - overcap
 
-  local n_rows = l.n_rows
+  local n_rows = l.n_rows - 1
 
   local rows = {}
 
@@ -441,8 +441,8 @@ local function create_string(layout)
       table.insert(crow, vim.fn['repeat'](' ', l.col_width - vim.fn.strdisplaywidth(displaystring)))
     end
     if vim.g.leaderGuide_sort_horizontal == 0 then
-      if row >= l.n_rows then
-        if overh > 0 and row < l.n_rows then
+      if row > n_rows then
+        if overh > 0 and row < n_rows then
           overh = overh - 1
           row = row + 1
         else
@@ -470,8 +470,6 @@ local function create_string(layout)
       mlen = vim.fn.strdisplaywidth(line)
     end
   end
-  table.insert(r, '')
-  -- @fixme the extra line should be removed
   table.insert(r, '')
   log.debug('string is:\n' .. table.concat(r, '\n'))
   return r
