@@ -8,6 +8,10 @@
 
 local M = {}
 
+function M.create_buf(listed, scratch)
+  return vim.api.nvim_create_buf(listed, scratch)
+end
+
 function M.set_lines(bufnr, startindex, endindex, replacement)
     if startindex < 0 then
         startindex = #vim.buffer(bufnr) + 1 + startindex
