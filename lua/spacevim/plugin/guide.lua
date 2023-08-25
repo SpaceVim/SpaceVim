@@ -441,12 +441,13 @@ local function create_string(layout)
       table.insert(crow, vim.fn['repeat'](' ', l.col_width - vim.fn.strdisplaywidth(displaystring)))
     end
     if vim.g.leaderGuide_sort_horizontal == 0 then
+      log.debug('row is:' .. row)
       if row > n_rows then
         if overh > 0 and row < n_rows then
           overh = overh - 1
           row = row + 1
         else
-          row = 0
+          row = 1
           col = col + 1
         end
       else
