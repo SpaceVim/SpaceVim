@@ -291,8 +291,14 @@ end
 local function calc_layout()
   local ret = {}
 
+  log.debug('calc_layout:')
+  log.debug('lmap is:\n' .. vim.inspect(lmap))
+
   local smap = vim.fn.filter(vim.fn.copy(lmap), 'v:key !=# "name"')
+  log.debug('smap is:\n' .. vim.inspect(smap))
+  log.debug('#smap is:' .. #smap)
   ret.n_items = vim.fn.len(smap)
+  log.debug('n_items is:' .. ret.n_items)
   local length = {}
   for k, v in pairs(smap) do
     if v.name then
@@ -301,6 +307,7 @@ local function calc_layout()
       table.insert(length, vim.fn.strdisplaywidth('[' .. k .. ']' .. v[2]))
     end
   end
+  log.debug('length is:' .. vim.inspect(length))
   local maxlength = vim.fn.max(length) + vim.g.leaderGuide_hspace
   log.debug('maxlength is:' .. maxlength)
 
