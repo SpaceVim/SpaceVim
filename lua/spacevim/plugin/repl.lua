@@ -24,6 +24,9 @@ local function open_windows()
   vim.cmd('botright split __REPL__')
   local l = math.floor(vim.o.lines * 30 / 100)
   vim.cmd('resize ' .. l)
+  vim.api.nvim_set_option_value('buftype', false, {
+    buf = bufnr
+  })
 end
 
 local function start(exe)
