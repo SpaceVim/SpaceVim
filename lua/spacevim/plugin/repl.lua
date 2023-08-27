@@ -16,19 +16,35 @@ local bufnr = -1
 local winid = -1
 local status = {}
 local start_time
+local job_id = 0
 
 local M = {}
 
 local function close()
-  
+  if job_id > 0 then
+    job.stop(job_id)
+    job_id = 0
+  end
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    vim.cmd('bd ' .. bufnr)
+  end
 end
 
 local function insert()
-  
+  vim.fn.inputsave()
+  local input = vim.fn.input('input >')
+  if vim.fn.empty(input) == 0 and status.is_running then
+    job.send(job_id, input)
+  end
+  vim.api.nvim_echo({}, false, {})
+  vim.fn.inputrestore()
 end
 
 local function close_repl()
-  
+  if job_id > 0 then
+    job.stop(job_id)
+    job_id = 0
+  end
 end
 
 local function open_windows()
