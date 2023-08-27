@@ -9,6 +9,7 @@
 local job = require('spacevim.api.job')
 local nt = require('spacevim.api.notify')
 local vopt = require('spacevim.api.vim.option')
+local str = require('spacevim.api.data.string')
 
 local log = require('spacevim.logger').derive('repl')
 
@@ -17,6 +18,7 @@ local bufnr = -1
 local winid = -1
 local status = {}
 local start_time
+local end_time
 local job_id = 0
 local exes = {}
 
@@ -107,7 +109,18 @@ local function on_stderr(_, data)
   on_stdout(_, data)
 end
 
-local function on_exit(id, code, single) end
+local function on_exit(id, code, single)
+  end_time = vim.fn.reltime(start_time)
+  status.is_exit = true
+  status.exit_code = code
+  local done = {'', '[Done] exited with code=' .. code .. ' in ' .. str.trim(vim.fn.reltimestr(end_time)) .. ' seconds'}
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    vim.api.nvim_buf_set_option(bufnr, 'modifiable', true)
+    vim.api.nvim_buf_set_lines(bufnr, lines, lines + 1, false, done)
+    vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
+  end
+  job_id = 0
+end
 
 local function start(exe)
   lines = 0
@@ -165,6 +178,14 @@ end
 
 function M.reg(ft, execute)
   exes[ft] = execute
+end
+
+function M.status()
+  if status.is_running then
+    return 'running'
+  elseif status.is_exit then
+    return 'exit code:' .. status.exit_code .. '   time:' .. str.trim(vim.fn.reltimestr(end_time))
+  end
 end
 
 return M

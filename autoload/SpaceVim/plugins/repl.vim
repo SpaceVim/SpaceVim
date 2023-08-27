@@ -15,6 +15,7 @@ if has('nvim-0.9.0')
           \ )
   endfunction
   function! SpaceVim#plugins#repl#status() abort
+    return luaeval('require("spacevim.plugin.repl").status()')
   endfunction
   function! SpaceVim#plugins#repl#reg(ft, execute) abort
     lua require("spacevim.plugin.repl").reg(
