@@ -97,10 +97,6 @@ function! s:start(exe) abort
   call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[REPL executable] ' . string(a:exe), '', repeat('-', 20)])
   call s:WINDOW.set_cursor(s:winid, [s:BUFFER.line_count(s:bufnr), 0])
   let s:lines += 3
-  let s:_out_data = ['']
-  let s:_current_line = ''
-  " this only for has('nvim') && exists('*chanclose')
-  let s:_out_data = ['']
   let s:job_id =  s:JOB.start(a:exe,{
         \ 'on_stdout' : function('s:on_stdout'),
         \ 'on_stderr' : function('s:on_stderr'),

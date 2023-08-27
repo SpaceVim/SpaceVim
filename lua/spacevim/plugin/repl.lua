@@ -69,7 +69,7 @@ local function open_windows()
     relativenumber = false,
     winfixheight = true,
     modifiable = false,
-    filetype = 'SpaceVimREPL'
+    filetype = 'SpaceVimREPL',
   })
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'q', '', {
     callback = close,
@@ -85,7 +85,23 @@ local function open_windows()
     buffer = bufnr,
     callback = close_repl,
   })
+end
 
+local function on_stdout(_, data)
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    vim.api.nvim_buf_set_lines(bufnr, lines, lines + 1, false, data)
+    lines = lines + #data
+    local cursor = vim.api.nvim_win_get_cursor(winid)
+    if cursor[1] == vim.api.nvim_buf_line_count(bufnr) - #data then
+      vim.api.nvim_win_set_cursor(winid, { vim.api.nvim_buf_line_count(bufnr), 0 })
+    end
+  end
+end
+
+
+local function on_stderr(_, data)
+  status.has_errors = true
+  on_stdout(_, data)
 end
 
 local function start(exe)
@@ -94,17 +110,27 @@ local function start(exe)
     is_running = true,
     is_exit = false,
     has_errors = false,
-    exit_code = 0
+    exit_code = 0,
   }
 
   start_time = vim.fn.reltime()
   open_windows()
-  vim.api.nvim_buf_set_lines(bufnr, lines, lines + 3, false, {'[REPL executable] ' .. vim.fn.string(exe), '', string.rep('-', 20)})
+  vim.api.nvim_buf_set_lines(
+    bufnr,
+    lines,
+    lines + 3,
+    false,
+    { '[REPL executable] ' .. vim.fn.string(exe), '', string.rep('-', 20) }
+  )
+  vim.api.nvim_win_set_cursor(winid, { vim.api.nvim_buf_line_count(bufnr), 0 })
+  lines = lines + 3
+  job_id = job.start(exe, {
+    on_stdout = on_stdout,
+    on_stderr = on_stderr,
+    on_exit = on_exit,
+  })
 end
 
-
-function M.start(ft)
-  
-end
+function M.start(ft) end
 
 return M
