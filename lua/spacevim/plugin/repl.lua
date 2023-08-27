@@ -7,6 +7,7 @@
 --=============================================================================
 
 local job = require('spacevim.api.job')
+local nt = require('spacevim.api.notify')
 local vopt = require('spacevim.api.vim.option')
 
 local log = require('spacevim.logger').derive('repl')
@@ -146,6 +147,21 @@ function M.start(ft)
     vim.api.nvim_echo({{'no REPL executable for ' .. ft, 'WarningMsg'}}, false, {})
   end
 
+end
+
+function M.send(t, ...)
+  if job_id == 0 then
+    nt.notify('please restart the REPL', 'WarningMsg')
+  else
+    if t == 'line' then
+      job.send(job_id, {vim.api.nvim_get_current_line(), ''})
+    elseif t == 'buffer' then
+      local data = vim.fn.getline(1, '$')
+      table.insert(data, '')
+      job.send(job_id, data)
+    end
+  end
+  
 end
   
 
