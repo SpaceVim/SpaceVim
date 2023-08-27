@@ -17,6 +17,7 @@ local winid = -1
 local status = {}
 local start_time
 local job_id = 0
+local exes = {}
 
 local M = {}
 
@@ -104,6 +105,10 @@ local function on_stderr(_, data)
   on_stdout(_, data)
 end
 
+local function on_exit(id, code, single)
+  
+end
+
 local function start(exe)
   lines = 0
   status = {
@@ -131,6 +136,17 @@ local function start(exe)
   })
 end
 
-function M.start(ft) end
+function M.start(ft)
+  log.info('start repl for filetype:' .. ft)
+  local exe = exes[ft] or ''
+  log.debug('get the command:' .. exe)
+  if exe ~= '' then
+    start(exe)
+  else
+    vim.api.nvim_echo({{'no REPL executable for ' .. ft, 'WarningMsg'}}, false, {})
+  end
+
+end
+  
 
 return M
