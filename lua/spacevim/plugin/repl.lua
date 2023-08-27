@@ -37,8 +37,12 @@ end
 local function insert()
   vim.fn.inputsave()
   local input = vim.fn.input('input >')
-  if vim.fn.empty(input) == 0 and status.is_running then
-    job.send(job_id, input)
+  if vim.fn.empty(input) == 0 then
+    if job_id == 0 then
+      nt.notify('please restart the REPL', 'WarningMsg')
+    else
+      job.send(job_id, input)
+    end
   end
   vim.api.nvim_echo({}, false, {})
   vim.fn.inputrestore()
