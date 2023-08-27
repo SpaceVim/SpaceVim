@@ -6,6 +6,20 @@
 " License: GPLv3
 "=============================================================================
 
+if has('nvim-0.9.0')
+  function! SpaceVim#plugins#repl#send(type, ...) abort
+  endfunction
+  function! SpaceVim#plugins#repl#start(ft) abort
+  endfunction
+  function! SpaceVim#plugins#repl#status() abort
+  endfunction
+  function! SpaceVim#plugins#repl#reg(ft, execute) abort
+  endfunction
+  finish
+endif
+
+
+
 ""
 " @section repl, usage-repl
 " @parentsection usage
@@ -119,7 +133,7 @@ function! s:on_stdout(job_id, data, event) abort
     let s:lines += len(a:data)
     if s:WINDOW.get_cursor(s:winid)[0] == s:BUFFER.line_count(s:bufnr) - len(a:data)
       call s:WINDOW.set_cursor(s:winid, [s:BUFFER.line_count(s:bufnr), 0])
-    endi
+    endif
     call s:update_statusline()
   endif
 endfunction
