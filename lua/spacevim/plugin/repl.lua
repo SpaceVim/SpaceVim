@@ -91,7 +91,9 @@ end
 
 local function on_stdout(_, data)
   if vim.api.nvim_buf_is_valid(bufnr) then
+    vim.api.nvim_buf_set_option(bufnr, 'modifiable', true)
     vim.api.nvim_buf_set_lines(bufnr, lines, lines + 1, false, data)
+    vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
     lines = lines + #data
     local cursor = vim.api.nvim_win_get_cursor(winid)
     if cursor[1] == vim.api.nvim_buf_line_count(bufnr) - #data then
@@ -100,15 +102,12 @@ local function on_stdout(_, data)
   end
 end
 
-
 local function on_stderr(_, data)
   status.has_errors = true
   on_stdout(_, data)
 end
 
-local function on_exit(id, code, single)
-  
-end
+local function on_exit(id, code, single) end
 
 local function start(exe)
   lines = 0
@@ -121,6 +120,7 @@ local function start(exe)
 
   start_time = vim.fn.reltime()
   open_windows()
+  vim.api.nvim_buf_set_option(bufnr, 'modifiable', true)
   vim.api.nvim_buf_set_lines(
     bufnr,
     lines,
@@ -128,6 +128,7 @@ local function start(exe)
     false,
     { '[REPL executable] ' .. vim.fn.string(exe), '', string.rep('-', 20) }
   )
+  vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
   vim.api.nvim_win_set_cursor(winid, { vim.api.nvim_buf_line_count(bufnr), 0 })
   lines = lines + 3
   job_id = job.start(exe, {
@@ -140,13 +141,12 @@ end
 function M.start(ft)
   log.info('start repl for filetype:' .. ft)
   local exe = exes[ft] or ''
-  log.debug('get the command:' .. exe)
+  log.debug('get the command:' .. vim.inspect(exe))
   if exe ~= '' then
     start(exe)
   else
-    vim.api.nvim_echo({{'no REPL executable for ' .. ft, 'WarningMsg'}}, false, {})
+    vim.api.nvim_echo({ { 'no REPL executable for ' .. ft, 'WarningMsg' } }, false, {})
   end
-
 end
 
 function M.send(t, ...)
@@ -154,15 +154,17 @@ function M.send(t, ...)
     nt.notify('please restart the REPL', 'WarningMsg')
   else
     if t == 'line' then
-      job.send(job_id, {vim.api.nvim_get_current_line(), ''})
+      job.send(job_id, { vim.api.nvim_get_current_line(), '' })
     elseif t == 'buffer' then
       local data = vim.fn.getline(1, '$')
       table.insert(data, '')
       job.send(job_id, data)
     end
   end
-  
 end
-  
+
+function M.reg(ft, execute)
+  exes[ft] = execute
+end
 
 return M
