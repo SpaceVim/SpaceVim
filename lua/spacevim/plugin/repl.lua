@@ -7,26 +7,69 @@
 --=============================================================================
 
 local job = require('spacevim.api.job')
+local vopt = require('spacevim.api.vim.option')
 
 local log = require('spacevim.logger').derive('repl')
 
 local lines = 0
 local bufnr = -1
+local winid = -1
 local status = {}
 local start_time
 
 local M = {}
+
+local function close()
+  
+end
+
+local function insert()
+  
+end
+
+local function close_repl()
+  
+end
 
 local function open_windows()
   if vim.api.nvim_buf_is_valid(bufnr) then
     vim.cmd('bd ' .. bufnr)
   end
   vim.cmd('botright split __REPL__')
+  bufnr = vim.api.nvim_get_current_buf()
+  winid = vim.api.nvim_get_current_win()
   local l = math.floor(vim.o.lines * 30 / 100)
   vim.cmd('resize ' .. l)
-  vim.api.nvim_set_option_value('buftype', false, {
-    buf = bufnr
+  vopt.setlocalopt(bufnr, winid, {
+    buftype = 'nofile',
+    bufhidden = 'wipe',
+    buflisted = false,
+    list = false,
+    swapfile = false,
+    wrap = false,
+    cursorline = true,
+    spell = false,
+    number = false,
+    relativenumber = false,
+    winfixheight = true,
+    modifiable = false,
+    filetype = 'SpaceVimREPL'
   })
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'q', '', {
+    callback = close,
+  })
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'i', '', {
+    callback = insert,
+  })
+  local id = vim.api.nvim_create_augroup('spacevim_repl', {
+    clear = true,
+  })
+  vim.api.nvim_create_autocmd({ 'BufWipeout' }, {
+    group = id,
+    buffer = bufnr,
+    callback = close_repl,
+  })
+
 end
 
 local function start(exe)
