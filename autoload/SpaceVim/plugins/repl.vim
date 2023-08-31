@@ -8,6 +8,16 @@
 
 if has('nvim-0.9.0')
   function! SpaceVim#plugins#repl#send(type, ...) abort
+    if a:type == 'raw'
+      lua require('spacevim.plugin.repl').send(
+            \ require('spacevim').eval('a:type'),
+            \ require('spacevim').eval("get(a:000, 0, '')"),
+            \ )
+    else
+      lua require('spacevim.plugin.repl').send(
+            \ require('spacevim').eval('a:type')
+            \ )
+    endif
   endfunction
   function! SpaceVim#plugins#repl#start(ft) abort
     lua require("spacevim.plugin.repl").start(

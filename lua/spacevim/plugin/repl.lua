@@ -178,6 +178,21 @@ function M.send(t, ...)
       local data = vim.fn.getline(1, '$')
       table.insert(data, '')
       job.send(job_id, data)
+    elseif t == 'raw' then
+      local context = select(1, ...)
+      if type(context) == "string" then
+        job.send(job_id, context)
+      end
+    elseif t == 'selection' then
+      local b = vim.fn.getpos("'<")
+      local e = vim.fn.getpos("'>")
+      if b[2] ~= 0 and e[2] ~= 0 then
+        local data = vim.fn.getline(b[2], e[2])
+        table.insert(data, '')
+        job.send(job_id, data)
+      else
+        nt.notify('no selection text', 'WarningMsg')
+      end
     end
   end
 end
