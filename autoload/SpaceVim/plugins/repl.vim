@@ -11,7 +11,7 @@ if has('nvim-0.9.0')
     if a:type == 'raw'
       lua require('spacevim.plugin.repl').send(
             \ require('spacevim').eval('a:type'),
-            \ require('spacevim').eval("get(a:000, 0, '')"),
+            \ require('spacevim').eval("get(a:000, 0, '')")
             \ )
     else
       lua require('spacevim.plugin.repl').send(
