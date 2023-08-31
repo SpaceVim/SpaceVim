@@ -59,11 +59,13 @@ local function open_windows()
   if vim.api.nvim_buf_is_valid(bufnr) then
     vim.cmd('bd ' .. bufnr)
   end
+  local previous_win = vim.api.nvim_get_current_win()
   vim.cmd('botright split __REPL__')
   bufnr = vim.api.nvim_get_current_buf()
   winid = vim.api.nvim_get_current_win()
   local l = math.floor(vim.o.lines * 30 / 100)
   vim.cmd('resize ' .. l)
+  vim.api.nvim_set_current_win(previous_win)
   vopt.setlocalopt(bufnr, winid, {
     buftype = 'nofile',
     bufhidden = 'wipe',
