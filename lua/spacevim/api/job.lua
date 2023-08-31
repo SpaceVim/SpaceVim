@@ -226,6 +226,7 @@ function M.send(id, data) -- {{{
     end
   elseif type(data) == 'string' then
     stdin:write(data)
+    stdin:write('\n')
   elseif data == nil then
     stdin:write('', function()
       stdin:shutdown(function()

@@ -6,6 +6,38 @@
 " License: GPLv3
 "=============================================================================
 
+if has('nvim-0.9.0')
+  function! SpaceVim#plugins#repl#send(type, ...) abort
+    if a:type == 'raw'
+      lua require('spacevim.plugin.repl').send(
+            \ require('spacevim').eval('a:type'),
+            \ require('spacevim').eval("get(a:000, 0, '')")
+            \ )
+    else
+      lua require('spacevim.plugin.repl').send(
+            \ require('spacevim').eval('a:type')
+            \ )
+    endif
+  endfunction
+  function! SpaceVim#plugins#repl#start(ft) abort
+    lua require("spacevim.plugin.repl").start(
+          \ require("spacevim").eval("a:ft")
+          \ )
+  endfunction
+  function! SpaceVim#plugins#repl#status() abort
+    return luaeval('require("spacevim.plugin.repl").status()')
+  endfunction
+  function! SpaceVim#plugins#repl#reg(ft, execute) abort
+    lua require("spacevim.plugin.repl").reg(
+          \ require("spacevim").eval("a:ft"),
+          \ require("spacevim").eval("a:execute")
+          \ )
+  endfunction
+  finish
+endif
+
+
+
 ""
 " @section repl, usage-repl
 " @parentsection usage
@@ -97,10 +129,6 @@ function! s:start(exe) abort
   call s:BUFFER.buf_set_lines(s:bufnr, s:lines , s:lines + 3, 0, ['[REPL executable] ' . string(a:exe), '', repeat('-', 20)])
   call s:WINDOW.set_cursor(s:winid, [s:BUFFER.line_count(s:bufnr), 0])
   let s:lines += 3
-  let s:_out_data = ['']
-  let s:_current_line = ''
-  " this only for has('nvim') && exists('*chanclose')
-  let s:_out_data = ['']
   let s:job_id =  s:JOB.start(a:exe,{
         \ 'on_stdout' : function('s:on_stdout'),
         \ 'on_stderr' : function('s:on_stderr'),
@@ -123,7 +151,7 @@ function! s:on_stdout(job_id, data, event) abort
     let s:lines += len(a:data)
     if s:WINDOW.get_cursor(s:winid)[0] == s:BUFFER.line_count(s:bufnr) - len(a:data)
       call s:WINDOW.set_cursor(s:winid, [s:BUFFER.line_count(s:bufnr), 0])
-    endi
+    endif
     call s:update_statusline()
   endif
 endfunction
