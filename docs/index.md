@@ -40,12 +40,6 @@ More posts are available on the [blog](blog/) of SpaceVim.
 
 Follow our twitter: [@SpaceVim](https://twitter.com/SpaceVim)
 
-## Participating
-
-Discuss the project at [#spacevim:matrix.org](https://app.element.io/#/room/#spacevim:matrix.org) or [/r/SpaceVim](https://www.reddit.com/r/SpaceVim/)
-
-Contribute code, report bugs and request features on [GitHub](https://github.com/SpaceVim/SpaceVim).
-
 ## FAQ
 
 - What is the project's status?
