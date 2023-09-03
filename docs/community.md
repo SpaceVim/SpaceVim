@@ -9,10 +9,7 @@ description: "A list of SpaceVim's public channels, All messages are bridged bet
 
 - [News](#news)
 - [Asking for help](#asking-for-help)
-- [Reporting bugs](#reporting-bugs)
-- [Requesting new feature](#requesting-new-feature)
-- [Chat](#chat)
-- [Others](#others)
+- [Feedback](#feedback)
 
 <!-- vim-markdown-toc -->
 
@@ -30,30 +27,10 @@ check out the following context first, which may contain the answers:
 - [FAQ](../faq/): Some of the most frequently asked questions are answered there.
 - [Documentation](../documentation/): It is the general documentation of SpaceVim.
 
-## Reporting bugs
+## Feedback
 
-If you run into a bug, please follow the guidelines below to give feedback.
+If you run into a bug, or want a new feature, please use the mail list:
 
-- Update the SpaceVim to the latest version. And make sure the can be reproduced in latest version of spacevim.
-- [Open new issue on github](https://github.com/SpaceVim/SpaceVim/issues/new?assignees=&labels=&template=bug_report.md&title=), and follow the `bug reporting` template.
+send email to [spacevim@googlegroups.com](mailto:spacevim@googlegroups.com)
 
-## Requesting new feature
-
-If you want a new feature or have an idea to improve spacevim,
-feel free to [open new issue](https://github.com/SpaceVim/SpaceVim/issues/new?assignees=&labels=feature+request&template=feature_request.md&title=) for feature requesting.
-
-
-## Chat
-
-All messages in these channels are bridged together.
-Join on one of them to chat with us:
-
-- <i class="fab fa-rocketchat"></i> [`#spacevim:matrix.org` on Matrix](https://app.element.io/#/room/#spacevim:matrix.org)
-- <i class="fab fa-telegram-plane"></i> [`t.me/SpaceVim` on telegram](https://t.me/joinchat/CN0HPvvrVKg4MzY9)
-- <i class="fab fa-slack-hash"></i> [`#spacevim` on slack](https://join.slack.com/t/spacevim/shared_invite/zt-74w64lg5-bT~~2~zEhtIy1zow53tHJg)
-- <i class="fab fa-discord"></i> [`#spacevim` on discord](https://discord.gg/xcRQnF8)
-
-## Others
-
-- [Reddit](https://www.reddit.com/r/SpaceVim/)
-- [Facebook](https://www.facebook.com/SpaceVim/)
+To subscribe the maillist, send anything to：[spacevim+subscribe@googlegroups.com](mailto:spacevim+subscribe@googlegroups.com)
