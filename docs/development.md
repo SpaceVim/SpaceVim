@@ -40,7 +40,6 @@ You can only think about reading the part that is relevant to what you are going
 ## Contributing code
 
 Code and documentation contributions of any kind are welcome. 
-In any case, feel free to [chat with us](../community/#chat) to ask questions about contributing!
 
 ### License
 

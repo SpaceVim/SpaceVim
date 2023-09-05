@@ -5,7 +5,7 @@
 </h1>
 
 [Quick Start Guide](https://spacevim.org/quick-start-guide/) \|
-[FAQ](https://spacevim.org/faq/) \|
+[FAQ](https://spacevim.org/faq/)
 
 [![build](https://img.shields.io/github/actions/workflow/status/SpaceVim/SpaceVim/check.yml?branch=master)](https://github.com/SpaceVim/SpaceVim/actions/workflows/check.yml?query=branch%3Amaster)
 [![Codecov coverage](https://img.shields.io/codecov/c/github/SpaceVim/SpaceVim.svg)](https://codecov.io/gh/SpaceVim/SpaceVim)
