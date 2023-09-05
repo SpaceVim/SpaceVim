@@ -10,6 +10,7 @@ local job = require('spacevim.api.job')
 local nt = require('spacevim.api.notify')
 local vopt = require('spacevim.api.vim.option')
 local str = require('spacevim.api.data.string')
+local spi = require('spacevim.api.unicode.spinners')
 
 local log = require('spacevim.logger').derive('repl')
 
@@ -21,6 +22,7 @@ local start_time
 local end_time
 local job_id = 0
 local exes = {}
+local repl_spinners = ''
 
 local M = {}
 
@@ -119,13 +121,21 @@ local function on_exit(id, code, single)
   end_time = vim.fn.reltime(start_time)
   status.is_exit = true
   status.exit_code = code
-  local done = {'', '[Done] exited with code=' .. code .. ' in ' .. str.trim(vim.fn.reltimestr(end_time)) .. ' seconds'}
+  local done = {
+    '',
+    '[Done] exited with code='
+      .. code
+      .. ' in '
+      .. str.trim(vim.fn.reltimestr(end_time))
+      .. ' seconds',
+  }
   if vim.api.nvim_buf_is_valid(bufnr) then
     vim.api.nvim_buf_set_option(bufnr, 'modifiable', true)
     vim.api.nvim_buf_set_lines(bufnr, lines, lines + 1, false, done)
     vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
   end
   job_id = 0
+  spi.stop()
 end
 
 local function start(exe)
@@ -155,6 +165,14 @@ local function start(exe)
     on_stderr = on_stderr,
     on_exit = on_exit,
   })
+  if job_id > 0 then
+    spi.apply('dot1', function(v)
+      repl_spinners = v
+      if vim.api.nvim_win_is_valid(winid) then
+        vim.fn.win_execute(winid, 'redrawstatus')
+      end
+    end)
+  end
 end
 
 function M.start(ft)
@@ -180,7 +198,7 @@ function M.send(t, ...)
       job.send(job_id, data)
     elseif t == 'raw' then
       local context = select(1, ...)
-      if type(context) == "string" then
+      if type(context) == 'string' then
         job.send(job_id, context)
       end
     elseif t == 'selection' then
@@ -203,7 +221,7 @@ end
 
 function M.status()
   if status.is_running then
-    return 'running'
+    return 'running ' .. repl_spinners
   elseif status.is_exit then
     return 'exit code:' .. status.exit_code .. '   time:' .. str.trim(vim.fn.reltimestr(end_time))
   end
