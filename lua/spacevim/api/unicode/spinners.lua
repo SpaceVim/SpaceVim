@@ -8,6 +8,8 @@
 
 local M = {}
 
+local log = require('spacevim.logger').derive('spinners')
+
 M._data = {
   dot1 = {
     frames = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
@@ -24,7 +26,13 @@ function M.Onframe(...)
   else
     M.index = 1
   end
-  M.func(M.spinners[M.index])
+  if type(M.func) == 'function' then
+    local ok, err = pcall(M.func, M.spinners[M.index])
+    if not ok then
+      log.debug('failed to call spinners functions:\n')
+      log.debug(err)
+    end
+  end
 end
 
 function M.stop()
