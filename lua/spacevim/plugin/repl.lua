@@ -120,6 +120,7 @@ end
 local function on_exit(id, code, single)
   end_time = vim.fn.reltime(start_time)
   status.is_exit = true
+  status.is_running = false
   status.exit_code = code
   local done = {
     '',
