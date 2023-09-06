@@ -20,7 +20,7 @@ SpaceVim is a vim configuration inspired by spacemacs, it is compatible with Vim
 - **Modularization:** plugins and functions are organized in [layers](https://spacevim.org/layers/).
 - **Compatible api:** a series of [compatible APIs](https://spacevim.org/api/) for Vim/Neovim.
 - **Great documentation:** online [documentation](https://spacevim.org/documentation/) and `:h SpaceVim`.
-- **Better experience:** rewrite core plugins using lua
+- **Better experience:** Use lua to implement core plugins
 - **Beautiful UI:** you'll love the awesome UI and its useful features.
 - **Mnemonic key bindings:** key binding guide will be displayed automatically
 - **Fast boot time:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
