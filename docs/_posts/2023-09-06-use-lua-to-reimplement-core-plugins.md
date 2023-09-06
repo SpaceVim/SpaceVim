@@ -122,11 +122,13 @@ Then the runtime log via `SPC h L`, and you should be able to see:
 
 **APIs:**
 
-- [x] file: #4391
-- [x] system: #4392
-- [x] logger #4395 
-- [x] job
-- [x] `data#toml`
+- [file](../api/file/)
+- [system](../api/system/)
+- [logger](../api/logger/) 
+- [job](../api/job/)
+- [data#toml](../api/data/toml/)
+- [notify](../api/notify/)
+- [prompt](../api/prompt/)
 
 **Built-in Plugins:**
 
