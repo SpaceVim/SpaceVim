@@ -128,7 +128,6 @@ Then the runtime log via `SPC h L`, and you should be able to see:
 - [job](../api/job/)
 - [data#toml](../api/data/toml/)
 - [notify](../api/notify/)
-- [prompt](../api/prompt/)
 
 **Built-in Plugins:**
 
