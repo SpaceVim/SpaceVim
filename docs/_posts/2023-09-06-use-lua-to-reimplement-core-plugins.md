@@ -1,7 +1,7 @@
 ---
 title: "Use lua to reimplement core plugins"
 categories: [blog]
-description: "The core plugins of spacevim has been rewritten with lua."
+description: "The core plugins of spacevim have been reimplemented with lua."
 type: article
 ---
 
