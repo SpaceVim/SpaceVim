@@ -36,12 +36,20 @@ function M.Onframe(...)
 end
 
 function M.stop()
-  vim.fn.timer_stop(M.timer_id)
+  if M.timer_id then
+    vim.fn.timer_stop(M.timer_id)
+    M.timer_id = nil
+  end
 end
 
 -- if var is a function, then the function will be called with one argv
 function M.apply(name, var)
-  local data = M._data[name] or {}
+  local data = M._data[name]
+
+  if not data then
+    log.debug('faile to apply spinners, no data named ' .. name)
+    return
+  end
   local time = data.timeout or 80
   M.index = 1
   M.spinners = M._data[name].frames
