@@ -1,0 +1,49 @@
+local M = {}
+
+local job = require('spacevim.api.job')
+local nt = require('spacevim.api.notify')
+local log = require('git.log')
+
+local blame_buffer_nr = -1
+local blame_show_buffer_nr = -1
+
+local lines = {}
+
+local function on_stdout(id, data)
+  for _, v in ipairs(data) do
+    log.debug('git-blame stdout:' .. v)
+    table.insert(lines, v)
+  end
+end
+
+local function on_stderr(id, data)
+  for _, v in ipairs(data) do
+    log.debug('git-blame stderr:' .. v)
+  end
+end
+
+local function on_exit(id, code, single)
+  log.debug('git-blame exit code:' .. code .. ' single:' .. single)
+  
+end
+
+function M.run(argv)
+  local cmd = {'git', 'blame', '--line-porcelain'}
+  if #argv == 0 then
+    table.insert(cmd, vim.fn.expand('%'))
+  else
+    for _, v in ipairs(argv) do
+      table.insert(cmd, v)
+    end
+  end
+  log.debug('git-blame cmd:' .. vim.inspect(cmd))
+  lines = {}
+  job.start(cmd, {
+    on_stdout = on_stdout,
+    on_stderr = on_stderr,
+    on_exit = on_exit,
+  })
+end
+
+return M
+
