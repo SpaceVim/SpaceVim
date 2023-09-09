@@ -23,19 +23,20 @@ local function on_stderr(id, data)
 end
 
 local function parser(l)
+  log.debug(vim.inspect(l))
   local rst = {}
   local obj = {}
   for _, line in ipairs(l) do
+    log.debug(line)
     if vim.regex('^[a-zA-Z0-9]\\{40}'):match_str(line) then
-      obj.revision = string.sub(line, 1, 40)
-    elseif vim.startswith(line, 'summary') then
-    elseif vim.startswith(line, 'filename') then
-    elseif vim.startswith(line, '\t') then
-      obj.line = string.sub(line, 2)
       if obj.summary and obj.line then
         table.insert(rst, obj)
       end
       obj = {}
+      obj.revision = string.sub(line, 1, 40)
+    elseif vim.startswith(line, 'summary') then
+      obj.summary = string.sub(line, 8)
+    elseif vim.startswith(line, 'filename') then
     end
   end
   return rst
