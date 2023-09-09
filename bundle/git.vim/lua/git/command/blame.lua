@@ -44,6 +44,7 @@ end
 local function on_exit(id, code, single)
   log.debug('git-blame exit code:' .. code .. ' single:' .. single)
   local rst = parser(lines)
+  log.debug(vim.inspect(rst))
   if #rst > 0 then
   end
   
