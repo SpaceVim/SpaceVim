@@ -22,8 +22,18 @@ local function on_stderr(id, data)
   end
 end
 
+local function parser(l)
+  local rst = {}
+  local obj = {}
+  for _, line in ipairs(l) do
+  end
+end
+
 local function on_exit(id, code, single)
   log.debug('git-blame exit code:' .. code .. ' single:' .. single)
+  local rst = parser(lines)
+  if #rst > 0 then
+  end
   
 end
 
