@@ -23,11 +23,9 @@ local function on_stderr(id, data)
 end
 
 local function parser(l)
-  log.debug(vim.inspect(l))
   local rst = {}
   local obj = {}
   for _, line in ipairs(l) do
-    log.debug(line)
     if vim.regex('^[a-zA-Z0-9]\\{40}'):match_str(line) then
       if obj.summary and obj.line then
         table.insert(rst, obj)
