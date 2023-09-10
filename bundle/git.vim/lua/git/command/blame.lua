@@ -36,7 +36,7 @@ local function parser(l)
       obj.summary = string.sub(line, 8)
     elseif vim.startswith(line, 'filename') then
     elseif vim.startswith(line, '\t') then
-      obj.line = string.sub(line, 1)
+      obj.line = string.sub(line, 2)
     end
   end
   return rst
