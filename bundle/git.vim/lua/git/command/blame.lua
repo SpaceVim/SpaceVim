@@ -33,8 +33,13 @@ local function parser(l)
       obj = {}
       obj.revision = string.sub(line, 1, 40)
     elseif vim.startswith(line, 'summary') then
-      obj.summary = string.sub(line, 8)
+      obj.summary = string.sub(line, 9)
     elseif vim.startswith(line, 'filename') then
+      obj.filename = string.sub(line, 10)
+    elseif vim.startswith(line, 'previous') then
+      obj.previous = string.sub(line, 10, 49)
+    elseif vim.startswith(line, 'committer-time') then
+      obj.time = tonumber(string.sub(line, 15))
     elseif vim.startswith(line, '\t') then
       obj.line = string.sub(line, 2)
     end
