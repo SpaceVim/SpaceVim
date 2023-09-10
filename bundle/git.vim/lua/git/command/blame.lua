@@ -47,11 +47,36 @@ local function parser(l)
   return rst
 end
 
+local function open_blame_win()
+  vim.cmd([[
+    tabedit git://blame
+    normal! "_dd
+    setl nobuflisted
+    setl nomodifiable
+    setl nonumber norelativenumber
+    setl buftype=nofile
+    setl scrollbind
+    setf git-blame
+    setlocal bufhidden=wipe
+  ]])
+  return vim.api.nvim_get_current_buf()
+end
+
+local function generate_context(ls)
+  
+end
+
 local function on_exit(id, code, single)
   log.debug('git-blame exit code:' .. code .. ' single:' .. single)
   local rst = parser(lines)
   log.debug(vim.inspect(rst))
   if #rst > 0 then
+    if not vim.api.nvim_buf_is_valid(blame_buffer_nr) then
+      blame_buffer_nr = open_blame_win()
+    end
+    vim.fn.setbufvar(blame_buffer_nr, 'git_blame_info', rst)
+    local context = generate_context(lines)
+    vim.api.nvim_buf_set_lines(blame_buffer_nr, 0, -1, false, context)
   end
   
 end
