@@ -9,6 +9,7 @@ local blame_buffer_nr = -1
 local blame_show_buffer_nr = -1
 
 local lines = {}
+local blame_history = {}
 
 local function update_buf_context(buf, context)
   vim.api.nvim_buf_set_option(buf, 'modifiable', true)
@@ -55,6 +56,22 @@ local function parser(l)
   return rst
 end
 
+local function open_previous()
+  local rst = vim.fn.getbufvar(blame_buffer_nr, 'git_blame_info')
+  if vim.fn.empty(rst) == 1 then
+    return
+  end
+
+  local blame_info = rst[vim.fn.line('.')]
+  if blame_info.previous then
+    table.insert(blame_history, {blame_info.revision, blame_info.filename})
+    vim.cmd('Git blame ' .. blame_info.previous .. ' ' .. blame_info.filename)
+  else
+    nt.notify('No related parent commit')
+  end
+  
+end
+
 local function open_blame_win()
   vim.cmd([[
     tabedit git://blame
@@ -67,7 +84,10 @@ local function open_blame_win()
     setf git-blame
     setlocal bufhidden=wipe
   ]])
-  return vim.api.nvim_get_current_buf()
+  blame_buffer_nr = vim.api.nvim_get_current_buf()
+  vim.api.nvim_buf_set_keymap(blame_buffer_nr, 'n', '<Cr>', '', {
+    callback = open_previous,
+  })
 end
 
 local function generate_context(ls)
@@ -104,7 +124,7 @@ local function on_exit(id, code, single)
     -- log.debug(vim.inspect(rst))
     if #rst > 0 then
       if not vim.api.nvim_buf_is_valid(blame_buffer_nr) then
-        blame_buffer_nr = open_blame_win()
+        open_blame_win()
       end
       vim.fn.setbufvar(blame_buffer_nr, 'git_blame_info', rst)
       update_buf_context(blame_buffer_nr, generate_context(rst))
