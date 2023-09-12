@@ -68,9 +68,27 @@ local function generate_context(ls)
 
   for _, v in ipairs(ls) do
     log.debug(vim.inspect(v))
-    table.insert(rst, str.fill(v.summary, 40) .. string.rep(' ', 4) .. vim.fn.strftime('%Y %b %d %X', v.time))
+    table.insert(
+      rst,
+      str.fill(v.summary, 40) .. string.rep(' ', 4) .. vim.fn.strftime('%Y %b %d %X', v.time)
+    )
   end
   return rst
+end
+
+
+local function open_blame_show_win(fname)
+  vim.cmd('rightbelow vsplit git://blame:show/' .. fname)
+  vim.cmd([[
+  normal! "_dd
+  setl nobuflisted
+  setl nomodifiable
+  setl scrollbind
+  setl buftype=nofile
+  setlocal bufhidden=wipe
+  nnoremap <buffer><silent> q :bd!<CR>
+  ]])
+  return vim.api.nvim_get_current_buf()
 end
 
 local function on_exit(id, code, single)
@@ -86,12 +104,22 @@ local function on_exit(id, code, single)
     vim.api.nvim_buf_set_option(blame_buffer_nr, 'modifiable', true)
     vim.api.nvim_buf_set_lines(blame_buffer_nr, 0, -1, false, context)
     vim.api.nvim_buf_set_option(blame_buffer_nr, 'modifiable', false)
+    local fnmae = rst[1].filename
+    if not vim.api.nvim_buf_is_valid(blame_show_buffer_nr) then
+      blame_show_buffer_nr = open_blame_show_win(fname)
+    end
+    vim.api.nvim_buf_set_option(blame_show_buffer_nr, 'modifiable', true)
+      local ls = {}
+      for _, v in ipairs(rst) do
+        table.insert(ls, v.line)
+      end
+    vim.api.nvim_buf_set_lines(blame_show_buffer_nr, 0, -1, false, ls)
+    vim.api.nvim_buf_set_option(blame_show_buffer_nr, 'modifiable', false)
   end
-  
 end
 
 function M.run(argv)
-  local cmd = {'git', 'blame', '--line-porcelain'}
+  local cmd = { 'git', 'blame', '--line-porcelain' }
   if #argv == 0 then
     table.insert(cmd, vim.fn.expand('%'))
   else
@@ -109,4 +137,3 @@ function M.run(argv)
 end
 
 return M
-
