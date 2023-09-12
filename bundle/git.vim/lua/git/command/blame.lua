@@ -3,6 +3,7 @@ local M = {}
 local job = require('spacevim.api.job')
 local nt = require('spacevim.api.notify')
 local log = require('git.log')
+local str = require('spacevim.api.data.string')
 
 local blame_buffer_nr = -1
 local blame_show_buffer_nr = -1
@@ -63,7 +64,12 @@ local function open_blame_win()
 end
 
 local function generate_context(ls)
-  
+  local rst = {}
+
+  for _, v in ipairs(ls) do
+    table.insert(rst, str.fill(v.summary, 40) .. string.rep(' ', 4) .. vim.fn.strftime('%Y %b %d %X', v.time))
+  end
+  return rst
 end
 
 local function on_exit(id, code, single)
@@ -76,7 +82,9 @@ local function on_exit(id, code, single)
     end
     vim.fn.setbufvar(blame_buffer_nr, 'git_blame_info', rst)
     local context = generate_context(lines)
+    vim.api.nvim_buf_set_option(blame_buffer_nr, 'modifiable', true)
     vim.api.nvim_buf_set_lines(blame_buffer_nr, 0, -1, false, context)
+    vim.api.nvim_buf_set_option(blame_buffer_nr, 'modifiable', false)
   end
   
 end
