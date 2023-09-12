@@ -26,6 +26,7 @@ end
 local function on_stderr(id, data)
   for _, v in ipairs(data) do
     log.debug('git-blame stderr:' .. v)
+    nt.notify(v, 'WarningMsg')
   end
 end
 
