@@ -10,9 +10,9 @@ local blame_show_buffer_nr = -1
 
 local lines = {}
 
-local function update_buf_context(buf, lines)
+local function update_buf_context(buf, context)
   vim.api.nvim_buf_set_option(buf, 'modifiable', true)
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, context)
   vim.api.nvim_buf_set_option(buf, 'modifiable', false)
 end
 
