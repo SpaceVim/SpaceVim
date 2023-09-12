@@ -79,7 +79,7 @@ local function go_back()
     return
   end
   local info = table.remove(blame_history)
-  vim.cmd('Git blame ' .. info.rev .. ' ' .. info.filename)
+  vim.cmd('Git blame ' .. info[1] .. ' ' .. info[2])
 end
 
 local function close_blame_show_win()
