@@ -99,25 +99,29 @@ end
 
 local function on_exit(id, code, single)
   log.debug('git-blame exit code:' .. code .. ' single:' .. single)
-  local rst = parser(lines)
-  -- log.debug(vim.inspect(rst))
-  if #rst > 0 then
-    if not vim.api.nvim_buf_is_valid(blame_buffer_nr) then
-      blame_buffer_nr = open_blame_win()
+  if code == 0 and single == 0 then
+    local rst = parser(lines)
+    -- log.debug(vim.inspect(rst))
+    if #rst > 0 then
+      if not vim.api.nvim_buf_is_valid(blame_buffer_nr) then
+        blame_buffer_nr = open_blame_win()
+      end
+      vim.fn.setbufvar(blame_buffer_nr, 'git_blame_info', rst)
+      update_buf_context(blame_buffer_nr, generate_context(rst))
+      local fname = rst[1].filename
+      if not vim.api.nvim_buf_is_valid(blame_show_buffer_nr) then
+        blame_show_buffer_nr = open_blame_show_win(fname)
+      end
+      vim.api.nvim_buf_set_option(blame_show_buffer_nr, 'modifiable', true)
+      local ls = {}
+      for _, v in ipairs(rst) do
+        table.insert(ls, v.line)
+      end
+      vim.api.nvim_buf_set_lines(blame_show_buffer_nr, 0, -1, false, ls)
+      vim.api.nvim_buf_set_option(blame_show_buffer_nr, 'modifiable', false)
     end
-    vim.fn.setbufvar(blame_buffer_nr, 'git_blame_info', rst)
-    update_buf_context(blame_buffer_nr, generate_context(rst))
-    local fname = rst[1].filename
-    if not vim.api.nvim_buf_is_valid(blame_show_buffer_nr) then
-      blame_show_buffer_nr = open_blame_show_win(fname)
-    end
-    vim.api.nvim_buf_set_option(blame_show_buffer_nr, 'modifiable', true)
-    local ls = {}
-    for _, v in ipairs(rst) do
-      table.insert(ls, v.line)
-    end
-    vim.api.nvim_buf_set_lines(blame_show_buffer_nr, 0, -1, false, ls)
-    vim.api.nvim_buf_set_option(blame_show_buffer_nr, 'modifiable', false)
+  else
+    nt.notify(lines)
   end
 end
 
