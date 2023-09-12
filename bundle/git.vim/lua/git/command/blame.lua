@@ -121,7 +121,10 @@ local function on_exit(id, code, single)
       vim.api.nvim_buf_set_option(blame_show_buffer_nr, 'modifiable', false)
     end
   else
-    nt.notify(lines)
+    -- local max_w = nt.notify_max_width
+    -- nt.notify_max_width = math.floor(vim.o.columns / 2)
+    nt.notify(table.concat(lines, '\n'))
+    -- nt.notify_max_width = max_w
   end
 end
 
