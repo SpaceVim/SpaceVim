@@ -82,6 +82,19 @@ local function go_back()
   vim.cmd('Git blame ' .. info.rev .. ' ' .. info.filename)
 end
 
+local function close_blame_show_win()
+  if vim.api.nvim_buf_is_valid(blame_show_buffer_nr) then
+    vim.cmd('bd ' .. blame_show_buffer_nr)
+  end
+end
+
+local function close_blame()
+  blame_history = {}
+  close_blame_show_win()
+  vim.cmd('q')
+  
+end
+
 local function open_blame_win()
   vim.cmd([[
     tabedit git://blame
@@ -100,6 +113,9 @@ local function open_blame_win()
   })
   vim.api.nvim_buf_set_keymap(blame_buffer_nr, 'n', '<BS>', '', {
     callback = go_back,
+  })
+  vim.api.nvim_buf_set_keymap(blame_buffer_nr, 'n', 'q', '', {
+    callback = close_blame,
   })
 end
 
