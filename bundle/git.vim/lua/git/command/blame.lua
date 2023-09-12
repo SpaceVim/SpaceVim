@@ -72,6 +72,16 @@ local function open_previous()
   
 end
 
+
+local function go_back()
+  if #blame_history == 0 then
+    nt.notify('No navigational history')
+    return
+  end
+  local info = table.remove(blame_history)
+  vim.cmd('Git blame ' .. info.rev .. ' ' .. info.filename)
+end
+
 local function open_blame_win()
   vim.cmd([[
     tabedit git://blame
@@ -87,6 +97,9 @@ local function open_blame_win()
   blame_buffer_nr = vim.api.nvim_get_current_buf()
   vim.api.nvim_buf_set_keymap(blame_buffer_nr, 'n', '<Cr>', '', {
     callback = open_previous,
+  })
+  vim.api.nvim_buf_set_keymap(blame_buffer_nr, 'n', '<BS>', '', {
+    callback = go_back,
   })
 end
 
