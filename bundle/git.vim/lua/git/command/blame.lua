@@ -10,6 +10,12 @@ local blame_show_buffer_nr = -1
 
 local lines = {}
 
+local function update_buf_context(buf, lines)
+  vim.api.nvim_buf_set_option(buf, 'modifiable', true)
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.api.nvim_buf_set_option(buf, 'modifiable', false)
+end
+
 local function on_stdout(id, data)
   for _, v in ipairs(data) do
     log.debug('git-blame stdout:' .. v)
@@ -76,7 +82,6 @@ local function generate_context(ls)
   return rst
 end
 
-
 local function open_blame_show_win(fname)
   vim.cmd('rightbelow vsplit git://blame:show/' .. fname)
   vim.cmd([[
@@ -100,19 +105,16 @@ local function on_exit(id, code, single)
       blame_buffer_nr = open_blame_win()
     end
     vim.fn.setbufvar(blame_buffer_nr, 'git_blame_info', rst)
-    local context = generate_context(rst)
-    vim.api.nvim_buf_set_option(blame_buffer_nr, 'modifiable', true)
-    vim.api.nvim_buf_set_lines(blame_buffer_nr, 0, -1, false, context)
-    vim.api.nvim_buf_set_option(blame_buffer_nr, 'modifiable', false)
-    local fnmae = rst[1].filename
+    update_buf_context(blame_buffer_nr, generate_context(rst))
+    local fname = rst[1].filename
     if not vim.api.nvim_buf_is_valid(blame_show_buffer_nr) then
       blame_show_buffer_nr = open_blame_show_win(fname)
     end
     vim.api.nvim_buf_set_option(blame_show_buffer_nr, 'modifiable', true)
-      local ls = {}
-      for _, v in ipairs(rst) do
-        table.insert(ls, v.line)
-      end
+    local ls = {}
+    for _, v in ipairs(rst) do
+      table.insert(ls, v.line)
+    end
     vim.api.nvim_buf_set_lines(blame_show_buffer_nr, 0, -1, false, ls)
     vim.api.nvim_buf_set_option(blame_show_buffer_nr, 'modifiable', false)
   end
