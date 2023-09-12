@@ -67,6 +67,7 @@ local function generate_context(ls)
   local rst = {}
 
   for _, v in ipairs(ls) do
+    log.debug(vim.inspect(v))
     table.insert(rst, str.fill(v.summary, 40) .. string.rep(' ', 4) .. vim.fn.strftime('%Y %b %d %X', v.time))
   end
   return rst
@@ -75,13 +76,13 @@ end
 local function on_exit(id, code, single)
   log.debug('git-blame exit code:' .. code .. ' single:' .. single)
   local rst = parser(lines)
-  log.debug(vim.inspect(rst))
+  -- log.debug(vim.inspect(rst))
   if #rst > 0 then
     if not vim.api.nvim_buf_is_valid(blame_buffer_nr) then
       blame_buffer_nr = open_blame_win()
     end
     vim.fn.setbufvar(blame_buffer_nr, 'git_blame_info', rst)
-    local context = generate_context(lines)
+    local context = generate_context(rst)
     vim.api.nvim_buf_set_option(blame_buffer_nr, 'modifiable', true)
     vim.api.nvim_buf_set_lines(blame_buffer_nr, 0, -1, false, context)
     vim.api.nvim_buf_set_option(blame_buffer_nr, 'modifiable', false)
