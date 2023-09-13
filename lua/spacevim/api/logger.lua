@@ -55,22 +55,18 @@ end
 
 function M._build_msg(msg, l)
   msg = msg or ''
-  -- local time = fn.strftime('%H:%M:%S')
-  -- error(string.format("Tried to call API function with vim.fn: use vim.api.%s instead", key))
-  -- local log = '[ ' ..  M.name .. ' ] [' .. time .. '] [ ' .. M.levels[l] .. '] ' .. msg
-  -- change the format to
-  -- [ name ] [00:00:00:000] [level] msg
-  -- https://github.com/neovim/neovim/issues/4433
-  -- string.format("%s:%03d", os.date("%H:%M:%S"), vim.loop.now() % 1000)
-  -- local clock = fn.reltimefloat(fn.reltime(M.clock))
-  -- local h = fn.float2nr(clock / 60 / 60)
-  -- local m = fn.float2nr(clock / 60)
-  -- local s = fn.float2nr(clock) % 60
-  -- local mic = string.format('%00.3f', clock - fn.float2nr(clock))
   local _, mic = vim.loop.gettimeofday()
   local c = string.format("%s:%03d", os.date("%H:%M:%S"), mic / 1000)
-  local log = string.format('[ %s ] [%s] [ %s ] %s', M.name, c, M.levels[l], msg)
-  return log
+  -- local log = string.format('[ %s ] [%s] [ %s ] %s', M.name, c, M.levels[l], msg)
+
+  return  {
+    name = M.name,
+    time = c,
+    msg = msg,
+    level = l
+  }
+
+  
 end
 
 function M.debug(msg)
