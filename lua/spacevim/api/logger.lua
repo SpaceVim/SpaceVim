@@ -10,6 +10,14 @@ local fn = vim.fn or require('spacevim').fn
 
 local cmd = require('spacevim').cmd
 
+-- a log object:
+-- {
+-- name:
+-- time:
+-- info:
+-- level:
+-- }
+
 local M = {
   ['name'] = '',
   ['silent'] = 1,
@@ -85,8 +93,12 @@ function M.error(msg)
   M.write(log)
 end
 
-function M.write(msg)
-  table.insert(M.temp, msg)
+local function log_to_string(log)
+  return ''
+end
+
+function M.write(log)
+  table.insert(M.temp, log)
   if M.file ~= '' then
     if fn.isdirectory(fn.fnamemodify(M.file, ':p:h')) == 0 then
       fn.mkdir(fn.expand(fn.fnamemodify(M.file, ':p:h')), 'p')
@@ -95,7 +107,7 @@ function M.write(msg)
     if fn.filereadable(M.file) == 1 then
       flags = 'a'
     end
-    fn.writefile({ msg }, M.file, flags)
+    fn.writefile({ log_to_string(log) }, M.file, flags)
   end
 end
 
