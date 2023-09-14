@@ -9,6 +9,7 @@
 local fn = vim.fn or require('spacevim').fn
 
 local cmd = require('spacevim').cmd
+local nt = require('spacevim.api.notify')
 
 -- a log object:
 -- {
@@ -73,7 +74,7 @@ function M.debug(msg)
   if M.level <= 0 then
     local log = M._build_msg(msg, 4)
     if M.silent == 0 and M.verbose >= 4 then
-      cmd('echom "' .. log .. '"')
+      nt.notify(msg)
     end
     M.write(log)
   end
@@ -82,9 +83,7 @@ end
 function M.error(msg)
   local log = M._build_msg(msg, 3)
   if M.silent == 0 and M.verbose >= 1 then
-    cmd('echohl Error')
-    cmd('echom "' .. log .. '"')
-    cmd('echohl None')
+    nt.notify(msg, 'Error')
   end
   M.write(log)
 end
@@ -111,9 +110,7 @@ function M.warn(msg, ...)
   if M.level <= 2 then
     local log = M._build_msg(msg, 2)
     if (M.silent == 0 and M.verbose >= 2) or select(1, ...) == 0 then
-      cmd('echohl WarningMsg')
-      cmd('echom "' .. log .. '"')
-      cmd('echohl None')
+      nt.notify(msg, 'WarningMsg')
     end
     M.write(log)
   end
