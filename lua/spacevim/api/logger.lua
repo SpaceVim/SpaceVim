@@ -10,6 +10,8 @@ local fn = vim.fn or require('spacevim').fn
 
 local nt = require('spacevim.api.notify')
 
+local rtplog = {}
+
 -- a log object:
 -- {
 -- name:
@@ -95,6 +97,7 @@ end
 
 function M.write(log)
   table.insert(M.temp, log)
+  table.insert(rtplog, log_to_string(log))
   if M.file ~= '' then
     if fn.isdirectory(fn.fnamemodify(M.file, ':p:h')) == 0 then
       fn.mkdir(fn.expand(fn.fnamemodify(M.file, ':p:h')), 'p')
@@ -138,9 +141,7 @@ function M.view_all()
     .. M.file
     .. ' does not exists, only log for current process will be shown!'
     .. '\n'
-  for _, log in ipairs(M.temp) do
-      info = info .. log_to_string(log) .. '\n'
-  end
+    .. table.concat(rtplog, '\n')
   return info
 end
 
