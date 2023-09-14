@@ -127,8 +127,21 @@ function M.info(msg)
   end
 end
 
-local function read_log_from_file(f)
-  
+local function read_log_from_file(f) end
+
+function M.view_all()
+  local info = ''
+  info = info
+    .. '[ '
+    .. M.name
+    .. ' ] : logger file '
+    .. M.file
+    .. ' does not exists, only log for current process will be shown!'
+    .. '\n'
+  for _, log in ipairs(M.temp) do
+      info = info .. log_to_string(log) .. '\n'
+  end
+  return info
 end
 
 function M.view(l)
