@@ -8,7 +8,6 @@
 
 local fn = vim.fn or require('spacevim').fn
 
-local cmd = require('spacevim').cmd
 local nt = require('spacevim.api.notify')
 
 -- a log object:
@@ -20,12 +19,12 @@ local nt = require('spacevim.api.notify')
 -- }
 
 local M = {
-  ['name'] = '',
-  ['silent'] = 1,
-  ['level'] = 1,
-  ['verbose'] = 1,
-  ['file'] = '',
-  ['temp'] = {},
+  name = '',
+  silent = true,
+  level = 1,
+  verbose = true,
+  file = '',
+  temp = {},
 }
 
 -- 0 : log debug, info, warn, error messages
@@ -36,11 +35,15 @@ M.levels = { 'Info ', 'Warn ', 'Error', 'Debug' }
 M.clock = fn.reltime()
 
 function M.set_silent(sl)
-  M.silent = sl
+  if type(sl) == 'boolean' then
+    M.silent = sl
+  end
 end
 
 function M.set_verbose(vb)
-  M.verbose = vb
+  if type(vb) == 'boolean' then
+    M.verbose = vb
+  end
 end
 
 function M.set_level(l)
@@ -57,17 +60,15 @@ end
 function M._build_msg(msg, l)
   msg = msg or ''
   local _, mic = vim.loop.gettimeofday()
-  local c = string.format("%s:%03d", os.date("%H:%M:%S"), mic / 1000)
+  local c = string.format('%s:%03d', os.date('%H:%M:%S'), mic / 1000)
   -- local log = string.format('[ %s ] [%s] [ %s ] %s', M.name, c, M.levels[l], msg)
 
-  return  {
+  return {
     name = M.name,
     time = c,
     msg = msg,
-    level = l
+    level = l,
   }
-
-  
 end
 
 function M.debug(msg)
@@ -120,7 +121,7 @@ function M.info(msg)
   if M.level <= 1 then
     local log = M._build_msg(msg, 1)
     if M.silent == 0 and M.verbose >= 3 then
-      cmd('echom "' .. log .. '"')
+      nt.notify(msg)
     end
     M.write(log)
   end
@@ -147,25 +148,6 @@ function M.view(l)
     end
   end
   return info
-end
-
-function M._comp(msg, l)
-  -- if a:msg =~# '\[ ' . self.name . ' \] \[\d\d\:\d\d\:\d\d\] \[ '
-  if string.find(msg, M.levels[2]) ~= nil then
-    return 1
-  elseif string.find(msg, M.levels[1]) ~= nil then
-    if l > 2 then
-      return 0
-    else
-      return 1
-    end
-  else
-    if l > 1 then
-      return 0
-    else
-      return 1
-    end
-  end
 end
 
 function M.set_name(name)
