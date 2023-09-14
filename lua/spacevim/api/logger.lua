@@ -90,7 +90,7 @@ function M.error(msg)
 end
 
 local function log_to_string(log)
-  return ''
+  return string.format('[ %s ] [%s] [ %s ] %s', log.name, log.time, M.levels[log.level], log.msg)
 end
 
 function M.write(log)
