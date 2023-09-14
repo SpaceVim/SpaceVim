@@ -12,14 +12,6 @@ local nt = require('spacevim.api.notify')
 
 local rtplog = {}
 
--- a log object:
--- {
--- name:
--- time:
--- info:
--- level:
--- }
-
 local M = {
   name = '',
   silent = true,
@@ -98,16 +90,6 @@ end
 function M.write(log)
   table.insert(M.temp, log)
   table.insert(rtplog, log_to_string(log))
-  if M.file ~= '' then
-    if fn.isdirectory(fn.fnamemodify(M.file, ':p:h')) == 0 then
-      fn.mkdir(fn.expand(fn.fnamemodify(M.file, ':p:h')), 'p')
-    end
-    local flags = ''
-    if fn.filereadable(M.file) == 1 then
-      flags = 'a'
-    end
-    fn.writefile({ log_to_string(log) }, M.file, flags)
-  end
 end
 
 function M.warn(msg, ...)
@@ -130,39 +112,16 @@ function M.info(msg)
   end
 end
 
-local function read_log_from_file(f) end
-
 function M.view_all()
-  local info = ''
-  info = info
-    .. '[ '
-    .. M.name
-    .. ' ] : logger file '
-    .. M.file
-    .. ' does not exists, only log for current process will be shown!'
-    .. '\n'
-    .. table.concat(rtplog, '\n')
+  local info = table.concat(rtplog, '\n')
   return info
 end
 
 function M.view(l)
   local info = ''
-  local logs = ''
-  if fn.filereadable(M.file) == 1 then
-    logs = fn.readfile(M.file, '')
-    info = info .. fn.join(fn.filter(logs, 'self._comp(v:val, a:l)'), '\n')
-  else
-    info = info
-      .. '[ '
-      .. M.name
-      .. ' ] : logger file '
-      .. M.file
-      .. ' does not exists, only log for current process will be shown!'
-      .. '\n'
-    for _, log in ipairs(M.temp) do
-      if log.level >= l then
-        info = info .. log_to_string(log) .. '\n'
-      end
+  for _, log in ipairs(M.temp) do
+    if log.level >= l then
+      info = info .. log_to_string(log) .. '\n'
     end
   end
   return info
@@ -174,10 +133,6 @@ end
 
 function M.get_name()
   return M.name
-end
-
-function M.set_file(file)
-  M.file = file
 end
 
 return M
