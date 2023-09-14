@@ -140,9 +140,9 @@ function M.view(l)
       .. M.file
       .. ' does not exists, only log for current process will be shown!'
       .. '\n'
-    for key, value in pairs(M.temp) do
-      if M._comp(value, l) == 1 then
-        info = info .. value .. '\n'
+    for _, log in ipairs(M.temp) do
+      if log.level >= l then
+        info = info .. log_to_string(log) .. '\n'
       end
     end
   end
