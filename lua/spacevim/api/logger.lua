@@ -21,10 +21,6 @@ local M = {
   temp = {},
 }
 
--- 0 : log debug, info, warn, error messages
--- 1 : log info, warn, error messages
--- 2 : log warn, error messages
--- 3 : log error messages
 M.levels = { 'Info ', 'Warn ', 'Error', 'Debug' }
 M.clock = fn.reltime()
 
