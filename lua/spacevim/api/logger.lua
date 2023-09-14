@@ -14,9 +14,9 @@ local rtplog = {}
 
 local M = {
   name = '',
-  silent = true,
+  silent = 1,
   level = 1,
-  verbose = true,
+  verbose = 1,
   file = '',
   temp = {},
 }
@@ -25,15 +25,11 @@ M.levels = { 'Info ', 'Warn ', 'Error', 'Debug' }
 M.clock = fn.reltime()
 
 function M.set_silent(sl)
-  if type(sl) == 'boolean' then
     M.silent = sl
-  end
 end
 
 function M.set_verbose(vb)
-  if type(vb) == 'boolean' then
     M.verbose = vb
-  end
 end
 
 function M.set_level(l)
