@@ -127,6 +127,10 @@ function M.info(msg)
   end
 end
 
+local function read_log_from_file(f)
+  
+end
+
 function M.view(l)
   local info = ''
   local logs = ''
