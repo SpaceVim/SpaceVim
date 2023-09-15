@@ -42,10 +42,9 @@ function M.set_verbose(vb)
   -- message type: log debug, info, warn, error
   -- info and debug should not be print to screen.
   -- the default verbose is 1
-  -- 1: notify 
-  -- 2: notify 
-  -- 3: notify 
-  -- 4: notify 
+  -- 1: notify nothing
+  -- 2: notify only error
+  -- 3: notify warn and error
     M.verbose = vb
 end
 
