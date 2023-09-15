@@ -25,9 +25,9 @@ M.levels = { 'Info ', 'Warn ', 'Error', 'Debug' }
 M.clock = fn.reltime()
 
 function M.set_silent(sl)
-  if type(sl) == "boolean" then
+  if type(sl) == 'boolean' then
     M.silent = sl
-  elseif type(sl) == "number" then
+  elseif type(sl) == 'number' then
     -- this is for backward compatibility.
     if sl == 1 then
       M.silent = true
@@ -45,7 +45,7 @@ function M.set_verbose(vb)
   -- 1: notify nothing
   -- 2: notify only error
   -- 3: notify warn and error
-    M.verbose = vb
+  M.verbose = vb
 end
 
 function M.set_level(l)
@@ -70,16 +70,18 @@ function M._build_msg(msg, l)
     time = c,
     msg = msg,
     level = l,
-    str = string.format('[ %s ] [%s] [ %s ] %s', M.name, c, M.levels[l], msg)
+    str = string.format('[ %s ] [%s] [ %s ] %s', M.name, c, M.levels[l], msg),
   }
+end
+
+function M.write(log)
+  table.insert(M.temp, log)
+  table.insert(rtplog, log.str)
 end
 
 function M.debug(msg)
   if M.level <= 0 then
     local log = M._build_msg(msg, 4)
-    if M.silent == 0 and M.verbose >= 4 then
-      nt.notify(msg)
-    end
     M.write(log)
   end
 end
@@ -92,16 +94,17 @@ function M.error(msg)
   M.write(log)
 end
 
-function M.write(log)
-  table.insert(M.temp, log)
-  table.insert(rtplog, log.str)
-end
-
 function M.warn(msg, ...)
   if M.level <= 2 then
     local log = M._build_msg(msg, 2)
-    if (M.silent == 0 and M.verbose >= 2) or select(1, ...) == 0 then
-      nt.notify(msg, 'WarningMsg')
+    local force = select(1, ...)
+    if type(force) ~= "boolean" then force = false end
+    if force then
+        nt.notify(msg, 'WarningMsg')
+    else
+      if not M.silent and M.verbose >= 2 then
+        nt.notify(msg, 'WarningMsg')
+      end
     end
     M.write(log)
   end
@@ -110,9 +113,6 @@ end
 function M.info(msg)
   if M.level <= 1 then
     local log = M._build_msg(msg, 1)
-    if M.silent == 0 and M.verbose >= 3 then
-      nt.notify(msg)
-    end
     M.write(log)
   end
 end
@@ -133,7 +133,7 @@ function M.view(l)
 end
 
 function M.set_name(name)
-  if type(name) == "string" then
+  if type(name) == 'string' then
     M.name = name
   end
 end
