@@ -40,6 +40,8 @@ end
 function M.set_verbose(vb)
   -- verbose should be 1 - 4
   -- message type: log debug, info, warn, error
+  -- info and debug should not be print to screen.
+  -- the default verbose is 1
   -- 1: notify 
   -- 2: notify 
   -- 3: notify 
