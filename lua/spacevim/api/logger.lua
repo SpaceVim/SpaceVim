@@ -97,17 +97,17 @@ end
 function M.warn(msg, ...)
   if M.level <= 2 then
     local log = M._build_msg(msg, 2)
-    local force = select(1, ...)
-    if type(force) == 'number' then
-      if force == 1 then
-        force = true
+    local issilent = select(1, ...)
+    if type(issilent) == 'number' then
+      if issilent == 1 then
+        issilent = true
       else
-        force = false
+        issilent = false
       end
-    elseif type(force) ~= 'boolean' then
-      force = false
+    elseif type(issilent) ~= 'boolean' then
+      issilent = false
     end
-    if force then
+    if not issilent then
       nt.notify(msg, 'WarningMsg')
     else
       if not M.silent and M.verbose >= 2 then
