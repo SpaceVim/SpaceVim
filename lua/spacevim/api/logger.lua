@@ -54,6 +54,7 @@ function M._build_msg(msg, l)
     time = c,
     msg = msg,
     level = l,
+    str = string.format('[ %s ] [%s] [ %s ] %s', M.name, c, M.levels[l], msg)
   }
 end
 
@@ -75,13 +76,9 @@ function M.error(msg)
   M.write(log)
 end
 
-local function log_to_string(log)
-  return string.format('[ %s ] [%s] [ %s ] %s', log.name, log.time, M.levels[log.level], log.msg)
-end
-
 function M.write(log)
   table.insert(M.temp, log)
-  table.insert(rtplog, log_to_string(log))
+  table.insert(rtplog, log.str)
 end
 
 function M.warn(msg, ...)
@@ -113,7 +110,7 @@ function M.view(l)
   local info = ''
   for _, log in ipairs(M.temp) do
     if log.level >= l then
-      info = info .. log_to_string(log) .. '\n'
+      info = info .. log.str .. '\n'
     end
   end
   return info
