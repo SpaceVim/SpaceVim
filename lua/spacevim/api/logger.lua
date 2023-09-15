@@ -25,10 +25,25 @@ M.levels = { 'Info ', 'Warn ', 'Error', 'Debug' }
 M.clock = fn.reltime()
 
 function M.set_silent(sl)
+  if type(sl) == "boolean" then
     M.silent = sl
+  elseif type(sl) == "number" then
+    -- this is for backward compatibility.
+    if sl == 1 then
+      M.silent = true
+    elseif sl == 0 then
+      M.silent = false
+    end
+  end
 end
 
 function M.set_verbose(vb)
+  -- verbose should be 1 - 4
+  -- message type: log debug, info, warn, error
+  -- 1: notify 
+  -- 2: notify 
+  -- 3: notify 
+  -- 4: notify 
     M.verbose = vb
 end
 
@@ -117,7 +132,9 @@ function M.view(l)
 end
 
 function M.set_name(name)
-  M.name = name
+  if type(name) == "string" then
+    M.name = name
+  end
 end
 
 function M.get_name()
