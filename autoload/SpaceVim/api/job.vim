@@ -24,6 +24,43 @@
 "   on_exit: exit event handler (function name or Funcref)
 "
 "   cwd: working directory of the job; defaults to current directory
+"
+" stop(id)
+"
+"   stop job via job id.
+"
+" send(id, data)
+"
+"   send {data} to specific job.
+"
+" status(id)
+"
+"   return the job status of a specific job.
+"
+"
+" This api also can be use in lua:
+"
+" Example: >
+"   local job = require('spacevim.api.job')
+"
+"   local function on_stdout(id, data)
+"
+"   end
+"
+"   local function on_stderr(id, data)
+"   
+"   end
+"
+"   local function on_exit(id, code, single)
+"
+"   end
+"
+"   job.start({'vim', '--version'},
+"     on_stdout = on_stdout,
+"     on_stderr = on_stderr,
+"     on_exit = on_exit
+"   )
+" <
 
 
 
