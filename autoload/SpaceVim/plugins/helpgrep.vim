@@ -20,8 +20,3 @@ function! SpaceVim#plugins#helpgrep#help(...) abort
           \ 'files' : s:help_files(),
           \ })
 endfunction
-
-command! GrepRtp call SpaceVim#plugins#flygrep#open({
-          \ 'input' : '',
-          \ 'dir' : s:generate(),
-          \ })
