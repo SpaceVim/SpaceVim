@@ -89,10 +89,18 @@ if has('nvim-0.5.0')
   " 6. stop_debug(): stop debug mode of derived logger.
   " 7. debug_enabled(): return true or false.
   "
-  " Example: >
+  " This function can be used in vim script and lua.
+  "
+  " Vim script Example: >
   "   let s:LOGGER = SpaceVim#logger#derive('myplug')
   "
   "   call s:LOGGER.info('hello world')
+  " <
+  "
+  " Lua Example: >
+  "   local log = require('spacevim.logger').derive('myplug')
+  "
+  "   log.info('hello world')
   " <
   "
   " The this info message will be write to SpaceVim's runtime log:
