@@ -15,10 +15,11 @@ if has('nvim-0.5.0')
           \ )
   endfunction
   ""
-  " write warning message to spacevim runtime log.
-  " by default, the warning message will not be printed in cmdline, if
-  " `silent` is set, and is `0`, the warning message will be printed to
-  " cmdline.
+  " write warning {msg} to spacevim runtime log.
+  " The `msg` must be string. the second argument is optional, It can a
+  " boolean or `0/1`. By default, the warning message will not be printed,
+  " if the second argument is given, and is `0` or false, the warning msg
+  " will be printed to screen.
   function! SpaceVim#logger#warn(msg, ...) abort
     let issilent = get(a:000, 0, 1)
     lua require("spacevim.logger").warn(

@@ -22,7 +22,7 @@ description: "logger API provides some basic functions for log message when crea
 | name                  | description                       |
 | --------------------- | --------------------------------- |
 | `set_name(string)`    | set the name of current logger    |
-| `set_silent(0 or 1)`  | enable/disable silent mode        |
+| `set_silent(silent)`  | enable/disable silent mode, `silent` should be boolean or 0/1       |
 | `set_verbose(number)` | set the verbose level             |
 | `set_level(number)`   | set the logger level              |
 | `error(string)`       | log error message                 |
