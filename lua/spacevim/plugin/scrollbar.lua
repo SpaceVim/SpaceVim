@@ -41,10 +41,33 @@ local scrollbar_bufnr = -1
 local scrollbar_winid = -1
 local scrollbar_size = -1
 
+local function add_highlight(bufnr, size)
+  
+end
+
 local function get(opt) end
 
 local function fix_size(size)
   return vim.fn.float2nr(vim.fn.max({ get('min_size'), vim.fn.min({ get('max_size'), size }) }))
+end
+
+local function gen_bar_lines(size)
+  local shape = get('shape')
+  local lines = {shape.head}
+  for _ = 2, size - 1 do
+    table.insert(lines, shape.body)
+  end
+  table.insert(lines, shape.tail)
+  return lines
+end
+
+local function create_scrollbar_buffer(size, lines)
+  if not vim.api.nvim_buf_is_valid(scrollbar_bufnr) then
+    scrollbar_bufnr = vim.api.nvim_create_buf(false, true)
+  end
+  vim.api.nvim_buf_set_lines(scrollbar_bufnr, 0, -1, false, lines)
+  add_highlight(scrollbar_bufnr, size)
+  return scrollbar_bufnr
 end
 
 function M.show()
