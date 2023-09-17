@@ -96,9 +96,18 @@ function M.show()
 
   if win.is_float(scrollbar_winid) then
     if bar_size ~= scrollbar_size then
+      scrollbar_size = bar_size
+      local bar_lines = gen_bar_lines(bar_size)
+      vim.api.nvim_buf_set_lines(scrollbar_bufnr, 0, -1, false, bar_lines)
+      add_highlight(scrollbar_bufnr, bar_size)
     end
     vim.api.nvim_win_set_config(scrollbar_winid, opts)
   else
+    scrollbar_size = bar_size
+    local bar_lines = gen_bar_lines(bar_size)
+    scrollbar_bufnr = create_scrollbar_buffer(bar_size, bar_lines)
+    scrollbar_winid = vim.api.nvim_open_win(scrollbar_bufnr, false, opts)
+    vim.fn.setwinvar(vim.fn.win_id2win(scrollbar_winid), '&winhighlight', 'Normal:ScrollbarWinHighlight')
   end
   vim.o.eventignore = saved_ei
 end
