@@ -72,6 +72,35 @@ function M.show()
   local bar_size = fix_size(height * height / total)
   local width = vim.fn.winwidth(winnr)
   local col = width - get('width') - get('right_offset')
+  local precision = height - bar_size
+  local each_line = (total - height) * 1.0 / precision
+  local visble_line = vim.fn.min({curr_line, total - height + 1})
+  local row
+  if each_line >= 1 then
+    row = vim.fn.float2nr(visble_line / each_line)
+  else
+    row = vim.fn.float2nr(visble_line / each_line - 1 / each_line)
+  end
+
+  local opts = {
+    style = 'minimal',
+    relative = 'win',
+    win = winid,
+    width = get('width'),
+    height = bar_size,
+    row = row,
+    col = vim.fn.float2nr(col),
+    focusable = false,
+    zindex = 10
+  }
+
+  if win.is_float(scrollbar_winid) then
+    if bar_size ~= scrollbar_size then
+    end
+    vim.api.nvim_win_set_config(scrollbar_winid, opts)
+  else
+  end
+  vim.o.eventignore = saved_ei
 end
 
 return M
