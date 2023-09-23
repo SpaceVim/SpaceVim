@@ -150,4 +150,8 @@ function M.clear()
   end
 end
 
+function M.usable()
+  return true
+end
+
 return M
