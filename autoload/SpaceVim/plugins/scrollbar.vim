@@ -6,6 +6,18 @@
 " License: GPLv3
 "=============================================================================
 
+if has('nvim-0.9.0')
+  function! SpaceVim#plugins#scrollbar#usable() abort
+  endfunction
+  function! SpaceVim#plugins#scrollbar#show() abort
+  endfunction
+  function! SpaceVim#plugins#scrollbar#clear(...) abort
+  endfunction
+  finish
+endif
+
+
+
 let s:VIM = SpaceVim#api#import('vim')
 let s:BUF = SpaceVim#api#import('vim#buffer')
 let s:WIN = SpaceVim#api#import('vim#window')

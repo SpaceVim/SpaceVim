@@ -36,16 +36,21 @@ local default_conf = {
     tail = 'Normal',
   },
 }
+local function get(opt) end
 
 local scrollbar_bufnr = -1
 local scrollbar_winid = -1
 local scrollbar_size = -1
+local ns_id = vim.api.nvim_create_namespace('scrollbar')
 
 local function add_highlight(bufnr, size)
-  
+  local highlight = get('highlight')
+  vim.api.nvim_buf_add_highlight(bufnr, ns_id, highlight.head, 0, 0, -1)
+  for i = 1, size - 2 do
+    vim.api.nvim_buf_add_highlight(bufnr, ns_id, highlight.body, i, 0, -1)
+  end
+  vim.api.nvim_buf_add_highlight(bufnr, ns_id, highlight.tail, size - 1, 0, -1)
 end
-
-local function get(opt) end
 
 local function fix_size(size)
   return vim.fn.float2nr(vim.fn.max({ get('min_size'), vim.fn.min({ get('max_size'), size }) }))
@@ -53,7 +58,7 @@ end
 
 local function gen_bar_lines(size)
   local shape = get('shape')
-  local lines = {shape.head}
+  local lines = { shape.head }
   for _ = 2, size - 1 do
     table.insert(lines, shape.body)
   end
@@ -97,7 +102,7 @@ function M.show()
   local col = width - get('width') - get('right_offset')
   local precision = height - bar_size
   local each_line = (total - height) * 1.0 / precision
-  local visble_line = vim.fn.min({curr_line, total - height + 1})
+  local visble_line = vim.fn.min({ curr_line, total - height + 1 })
   local row
   if each_line >= 1 then
     row = vim.fn.float2nr(visble_line / each_line)
@@ -114,7 +119,7 @@ function M.show()
     row = row,
     col = vim.fn.float2nr(col),
     focusable = false,
-    zindex = 10
+    zindex = 10,
   }
 
   if win.is_float(scrollbar_winid) then
@@ -130,9 +135,19 @@ function M.show()
     local bar_lines = gen_bar_lines(bar_size)
     scrollbar_bufnr = create_scrollbar_buffer(bar_size, bar_lines)
     scrollbar_winid = vim.api.nvim_open_win(scrollbar_bufnr, false, opts)
-    vim.fn.setwinvar(vim.fn.win_id2win(scrollbar_winid), '&winhighlight', 'Normal:ScrollbarWinHighlight')
+    vim.fn.setwinvar(
+      vim.fn.win_id2win(scrollbar_winid),
+      '&winhighlight',
+      'Normal:ScrollbarWinHighlight'
+    )
   end
   vim.o.eventignore = saved_ei
+end
+
+function M.clear()
+  if win.is_float(scrollbar_winid) then
+    win.win_close(scrollbar_winid, true)
+  end
 end
 
 return M
