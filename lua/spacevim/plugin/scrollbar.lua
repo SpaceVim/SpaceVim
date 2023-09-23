@@ -149,8 +149,8 @@ function M.show()
 end
 
 function M.clear()
-  if win.is_float(scrollbar_winid) then
-    win.win_close(scrollbar_winid, true)
+  if vim.api.nvim_win_is_valid(scrollbar_winid) then
+    vim.api.nvim_win_close(scrollbar_winid, true)
   end
 end
 
