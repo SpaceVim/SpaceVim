@@ -36,7 +36,11 @@ local default_conf = {
     tail = 'Normal',
   },
 }
-local function get(opt) end
+local function get(opt)
+
+  return default_conf[opt]
+
+end
 
 local scrollbar_bufnr = -1
 local scrollbar_winid = -1
@@ -53,7 +57,7 @@ local function add_highlight(bufnr, size)
 end
 
 local function fix_size(size)
-  return vim.fn.float2nr(vim.fn.max({ get('min_size'), vim.fn.min({ get('max_size'), size }) }))
+  return math.max(get('min_size'), math.min(get('max_size'), math.floor(size + 0.5)))
 end
 
 local function gen_bar_lines(size)
