@@ -6,6 +6,21 @@
 " License: GPLv3
 "=============================================================================
 
+if has('nvim-0.9.0')
+  function! SpaceVim#plugins#scrollbar#usable() abort
+    return luaeval('require("spacevim.plugin.scrollbar").usable()')
+  endfunction
+  function! SpaceVim#plugins#scrollbar#show() abort
+    lua require('spacevim.plugin.scrollbar').show()
+  endfunction
+  function! SpaceVim#plugins#scrollbar#clear(...) abort
+    lua require('spacevim.plugin.scrollbar').clear()
+  endfunction
+  finish
+endif
+
+
+
 let s:VIM = SpaceVim#api#import('vim')
 let s:BUF = SpaceVim#api#import('vim#buffer')
 let s:WIN = SpaceVim#api#import('vim#window')
