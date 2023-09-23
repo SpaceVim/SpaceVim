@@ -8,10 +8,13 @@
 
 if has('nvim-0.9.0')
   function! SpaceVim#plugins#scrollbar#usable() abort
+    return luaeval('require("spacevim.plugin.scrollbar").usable()')
   endfunction
   function! SpaceVim#plugins#scrollbar#show() abort
+    lua require('spacevim.plugin.scrollbar').show()
   endfunction
   function! SpaceVim#plugins#scrollbar#clear(...) abort
+    lua require('spacevim.plugin.scrollbar').clear()
   endfunction
   finish
 endif
