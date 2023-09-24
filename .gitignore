@@ -32,6 +32,7 @@ cscope.out
 cscope.in.out
 cscope.po.out
 build/
+public/
 .coverage.covimerage
 *.swp
 .gtm/
