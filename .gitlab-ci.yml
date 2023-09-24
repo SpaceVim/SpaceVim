@@ -1,0 +1,10 @@
+image: ruby:2.7
+
+pages:
+  script:
+    - gem install bundler
+    - bundle install
+    - bundle exec jekyll build -d public
+  artifacts:
+    paths:
+      - public
