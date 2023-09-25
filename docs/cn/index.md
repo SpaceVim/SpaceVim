@@ -5,7 +5,7 @@ lang: zh
 ---
 
 [![Release](https://img.shields.io/badge/Release-2.2.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.2.0/)
-[![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](cn/development/#证书)
+[![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](development/#证书)
 
 ![welcome page](https://img.spacevim.org/228742293-1ca7c173-84a6-461a-9fb5-656d23953e12.png)
 
