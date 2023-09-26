@@ -4,6 +4,7 @@
     isBackground = false
 [vader-test.options.env]
     VIM_BIN = 'nvim'
+    VIM_Es = "--headless"
 [generate-vim-doc]
     command = "python"
     args = ['-m', 'vimdoc', '.']
