@@ -14,10 +14,10 @@ what packages to install.
 - [Documentation](https://spacevim.org/documentation/): the primary official documentation of SpaceVim
 - [Available layers](https://spacevim.org/layers/): a list of available layers which can be used in SpaceVim
 
-## Feedback
+## Community
 
-- english: [spacevim@googlegroups.com](mailto:spacevim@googlegroups.com)
-- chinese: [spacevim-cn@googlegroups.com](mailto:spacevim-cn@googlegroups.com)
+- English: [https://spacevim.org/community/](https://spacevim.org/community/)
+- Chinese: [https://spacevim.org/cn/community/](https://spacevim.org/cn/community/)
 
 
 <!-- vim:set nowrap: -->
