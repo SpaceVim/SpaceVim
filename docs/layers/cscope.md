@@ -26,8 +26,16 @@ For more info about the differences between Cscope and other similar tools, plea
 
 ### cscope
 
+For Archlinux
+
 ```shell
 sudo pacman -S cscope
+```
+
+For Ubuntu
+
+```shell
+sudo apt install cscope
 ```
 
 In windows, you can use scoop to install cscope:
