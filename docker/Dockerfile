@@ -30,7 +30,7 @@ ENV PYTHON3_HOST_PROG "/usr/bin/python3"
 
 RUN mkdir -p $HOME/.config $HOME/.SpaceVim.d
 
-RUN curl https://raw.githubusercontent.com/SpaceVim/SpaceVim/master/docker/init.toml > $HOME/.SpaceVim.d/init.toml
+RUN curl https://gitlab.com/SpaceVim/SpaceVim/-/raw/master/docker/init.toml > $HOME/.SpaceVim.d/init.toml
 
 RUN curl -sLf https://spacevim.org/install.sh | bash
 
