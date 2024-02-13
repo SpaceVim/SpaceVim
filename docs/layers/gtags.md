@@ -156,10 +156,11 @@ the following additional languages will have tags created for them:
 
 ## Key bindings
 
-| Key Binding | Description                    |
-| ----------- | ------------------------------ |
-| `SPC m g c` | create a tag database          |
-| `SPC m g u` | manually update tag database   |
-| `SPC m g f` | jump to a file in tag database |
-| `SPC m g d` | find definitions               |
-| `SPC m g r` | find references                |
+| Key Binding | Description                         |
+| ----------- | ----------------------------------- |
+| `SPC m g c` | create a tag database               |
+| `SPC m g u` | manually update tag database        |
+| `SPC m g f` | jump to a file in tag database      |
+| `SPC m g d` | find definitions                    |
+| `SPC m g r` | find references                     |
+| `SPC m g j` | input a symbol and find definitions |
