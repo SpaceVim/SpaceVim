@@ -1,6 +1,6 @@
 "=============================================================================
 " chinese.vim --- SpaceVim chinese layer
-" Copyright (c) 2016-2023 Wang Shidong & Contributors
+" Copyright (c) 2016-2024 Wang Shidong & Contributors
 " Author: Wang Shidong < wsdjeg@outlook.com >
 " URL: https://spacevim.org
 " License: GPLv3
@@ -30,6 +30,7 @@
 function! SpaceVim#layers#chinese#plugins() abort
   let plugins = [
         \ ['yianwillis/vimcdoc'          , {'merged' : 0}],
+        \ ['NamelessUzer/Vim-Natural-Language-Number-Translator'          , {'merged' : 0}],
         \ ['voldikss/vim-translator' , {'merged' : 0, 'on_cmd' : ['Translate', 'TranslateW', 'TranslateR', 'TranslateX']}],
         \ ['wsdjeg/ChineseLinter.vim'    , {'merged' : 0, 'on_cmd' : 'CheckChinese', 'on_ft' : ['markdown', 'text']}],
         \ ]
@@ -52,6 +53,8 @@ function! SpaceVim#layers#chinese#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['x', 'g', 'c']     , 'CheckChinese', 'check-with-ChineseLinter', 1)
   let g:_spacevim_mappings_space.n.c = {'name' : '+Convert'}
   call SpaceVim#mapping#space#def('nmap', ['n', 'c', 'd'], '<Plug>ConvertChineseNumberToDigit', 'convert Chinese number to digit', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['n', 'c', 'z'], '<Plug>ConvertDigitToChineseNumberLower', 'convert digit to Lower Chinese number', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['n', 'c', 'Z'], '<Plug>ConvertDigitToChineseNumberUpper', 'convert digit to Upper Chinese number', 0, 1)
   " do not load vimcdoc plugin 
   let g:loaded_vimcdoc = 1
 endfunction
@@ -70,96 +73,42 @@ function! s:ConvertChineseNumberToDigit() range
   let ChineseNumberPattern = '[〇一二三四五六七八九十百千万亿兆零壹贰叁肆伍陆柒捌玖拾佰仟萬億两点]\+'
   if mode() ==? 'n' && a:firstline == a:lastline
     let cword = expand('<cword>')
-    let cword = substitute(cword, ChineseNumberPattern, '\=s:Chinese2Digit(submatch(0))', "g")
+    let cword = substitute(cword, ChineseNumberPattern, '\=Zh2Num#Translator(submatch(0))', "g")
     let save_register_k = getreg("k")
     call setreg("k", cword)
     normal! viw"kp
     call setreg("k", save_register_k)
   else
-    silent execute a:firstline . "," . a:lastline . 'substitute/' . ChineseNumberPattern . '/\=s:Chinese2Digit(submatch(0))/g'
+    silent execute a:firstline . "," . a:lastline . 'substitute/' . ChineseNumberPattern . '/\=Zh2Num#Translator(submatch(0))/g'
   endif
   call setpos('.', save_cursor)
 endfunction
 
-function! s:Chinese2Digit(cnDigitString)
-  let CN_NUM = {
-        \ '〇': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '七': 7, '八': 8, '九': 9,
-        \ '零': 0, '壹': 1, '贰': 2, '叁': 3, '肆': 4, '伍': 5, '陆': 6, '柒': 7, '捌': 8, '玖': 9,
-        \ '貮': 2, '两': 2, '点': '.'
-        \ }
-  let CN_UNIT = {
-        \ '十': 10, '拾': 10, '百': 100, '佰': 100, '千': 1000, '仟': 1000, '万': 10000, '萬': 10000,
-        \ '亿': 100000000, '億': 100000000, '兆': 1000000000000
-        \ }
+command! -nargs=0 -range ConvertDigitToChineseNumberLower :<line1>,<line2>call s:ConvertDigitToChineseNumber("lower")
+nnoremap <silent> <Plug>ConvertDigitToChineseNumberLower  :ConvertDigitToChineseNumberLower<cr>
+vnoremap <silent> <Plug>ConvertDigitToChineseNumberLower  :ConvertDigitToChineseNumberLower<cr>
 
-  if a:cnDigitString =~ '^[点两貮〇一二三四五六七八九零壹贰叁肆伍陆柒捌玖]\+$'
-    let result = substitute(a:cnDigitString, ".", {m -> CN_NUM[m[0]]}, 'g')
+command! -nargs=0 -range ConvertDigitToChineseNumberUpper :<line1>,<line2>call s:ConvertDigitToChineseNumber("upper")
+nnoremap <silent> <Plug>ConvertDigitToChineseNumberUpper  :ConvertDigitToChineseNumberUpper<cr>
+vnoremap <silent> <Plug>ConvertDigitToChineseNumberUpper  :ConvertDigitToChineseNumberUpper<cr>
+
+function! s:ConvertDigitToChineseNumber(style) range
+  let save_cursor = getcurpos()
+  let NumberPattern = '\v\d+(\.\d+)?'
+  if mode() ==? 'n' && a:firstline == a:lastline
+    let cword = expand('<cword>')
+    " 在这里使用双引号和 . 连接符来正确地引用 a:style
+    let cword = substitute(cword, NumberPattern, '\=Num2Zh#Translator(submatch(0), "'.a:style.'")', "g")
+    let save_register_k = getreg("k")
+    call setreg("k", cword)
+    normal! viw"kp
+    call setreg("k", save_register_k)
   else
-    let cnList = split(a:cnDigitString, "点")
-    let integer = map(str2list(cnList[0]), 'nr2char(v:val)')  " 整数部分
-    let decimal = len(cnList) == 2 ? cnList[1] : [] " 小数部分
-    let unit = 0  " 当前单位
-    let parse = []  " 解析数组
-    while !empty(integer)
-      let x = remove(integer, -1)
-      if has_key(CN_UNIT, x)
-        " 当前字符是单位
-        let unit = CN_UNIT[x]
-        if unit == 10000 " 万位
-          call add(parse, "w")
-          let unit = 1
-        elseif unit == 100000000 " 亿位
-          call add(parse, "y")
-          let unit = 1
-        elseif unit == 1000000000000  " 兆位
-          call add (parse, "z")
-          let unit = 1
-        endif
-        continue
-      else
-        " 当前字符是数字
-        let dig = CN_NUM[x]
-        if unit
-          let dig *= unit
-          let unit = 0
-        endif
-        call add(parse, dig)
-      endif
-    endwhile
-    if unit == 10  " 处理10-19的数字
-      call add(parse, 10)
-    endif
-    let result = 0
-    let tmp = 0
-    while !empty(parse)
-      let x = remove(parse, -1)
-      if type(x) == type("")
-        if x == 'w'
-          let tmp *= 10000
-          let result += tmp
-          let tmp = 0
-        elseif x == 'y'
-          let tmp *= 100000000
-          let result += tmp
-          let tmp = 0
-        elseif x == 'z'
-          let tmp *= 1000000000000
-          let result += tmp
-          let tmp = 0
-        endif
-      else
-        let tmp += x
-      endif
-    endwhile
-    let result += tmp
-    if !empty(decimal)
-      let decimal = substitute(decimal, ".", {m -> CN_NUM[m[0]]}, 'g')
-      let result .= "." . decimal
-    endif
+    " 在执行替换的字符串中正确使用 a:style 参数
+    silent execute a:firstline . "," . a:lastline . 'substitute/' . NumberPattern . '/\=Num2Zh#Translator(submatch(0), "'.a:style.'")/g'
   endif
-  return result
+  call setpos('.', save_cursor)
 endfunction
-
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
   function! s:_function(fstr) abort
