@@ -58,6 +58,7 @@ function! SpaceVim#layers#gtags#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'r'], 'exe "Gtags -r " . expand("<cword>")', 'find-references', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 's'], 'exe "Gtags -s " . expand("<cword>")', 'find-cursor-symbol', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'g'], 'exe "Gtags -g " . expand("<cword>")', 'find-cursor-string', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'j'], 'exe "Gtags -d " . input("Jump to the symbol: ")', 'Input a symbol and find the definitions', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'g', 'f'], 'Gtags -f %', 'list of objects', 1)
   let g:gtags_gtagslabel = s:gtagslabel
   call SpaceVim#plugins#projectmanager#reg_callback(function('s:update_ctags_option'))

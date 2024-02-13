@@ -189,3 +189,4 @@ pygments 后，可以通过 gtags 查询函数和变量的定义以及引用处�
 | `SPC m g f` | 列出数据库中所涉及到的文件 |
 | `SPC m g d` | 查找 definitions           |
 | `SPC m g r` | 查找 references            |
+| `SPC m g j` | 输入符号并查找其定义       |
