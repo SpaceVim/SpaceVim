@@ -33,6 +33,12 @@ ArchLinux 下安装 cscope 非常简单，可执行以下命令进行安装
 sudo pacman -S cscope
 ```
 
+Ubuntu 下安装 cscope 可执行以下命令
+
+```shell
+sudo apt install cscope
+```
+
 Windows 系统下，推荐使用 scoop 来安装 cscope：
 
 ```
