@@ -35,8 +35,6 @@ SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块的方式组织
 
 更多精彩内容会定期在 SpaceVim [博客](blog/)上发布。
 
-或者可以关注我们的推特：[@SpaceVim](https://twitter.com/SpaceVim)。
-
 ## 常见问题
 
 - 目前 SpaceVim 的开发状态如何？

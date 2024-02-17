@@ -10,16 +10,10 @@ lang: zh
 
 <!-- vim-markdown-toc GFM -->
 
-- [资讯订阅](#资讯订阅)
 - [问题反馈](#问题反馈)
 
 <!-- vim-markdown-toc -->
 
-## 资讯订阅
-
-最新的版本发布、新功能增加会通过 Twitter 进行推送，欢迎订阅：
-
-- <i class="fab fa-twitter"></i> [twitter](https://twitter.com/SpaceVim)
 
 ## 问题反馈
 

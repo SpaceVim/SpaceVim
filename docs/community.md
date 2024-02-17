@@ -7,17 +7,10 @@ description: "A list of SpaceVim's public channels, All messages are bridged bet
 
 <!-- vim-markdown-toc GFM -->
 
-- [News](#news)
 - [Asking for help](#asking-for-help)
 - [Feedback](#feedback)
 
 <!-- vim-markdown-toc -->
-
-## News
-
-The news about spacevim will be post on twitter, feel free to follow them:
-
-- <i class="fab fa-twitter"></i> [Twitter](https://twitter.com/SpaceVim)
 
 ## Asking for help
 

@@ -26,10 +26,7 @@ sass:
 social:
   name: SpaceVim
   links:
-      - https://twitter.com/SpaceVim
-      - https://github.com/SpaceVim/SpaceVim
-      - https://www.reddit.com/r/SpaceVim/
-      - https://www.facebook.com/SpaceVim
+      - https://gitlab.com/SpaceVim/SpaceVim
 
 defaults:
   - scope:

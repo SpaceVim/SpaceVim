@@ -36,8 +36,6 @@ The latest release [v2.2.0](https://spacevim.org/SpaceVim-release-v2.2.0/) was r
 
 More posts are available on the [blog](blog/) of SpaceVim.
 
-Follow our twitter: [@SpaceVim](https://twitter.com/SpaceVim)
-
 ## FAQ
 
 - What is the project's status?
