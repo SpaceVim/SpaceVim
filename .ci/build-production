@@ -1,6 +1,0 @@
-#!/bin/sh
-# usage: script/build-production
-#
-# Run the jekyll build
-
-cd docs && bundle exec jekyll build
