@@ -13,7 +13,7 @@ description: "The companies or individuals contributing a monthly amount to help
 <!-- vim-markdown-toc -->
 
 SpaceVim is an open source project.
-Currently, this project is maintained by [@wsdjeg](https://github.com/wsdjeg),
+Currently, this project is maintained by [Eric Wong](https://wsdjeg.net),
 If you use SpaceVim in your daily work and feel that it has made your life easier,
 please consider supporting SpaceVim by:
 
