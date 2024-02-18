@@ -68,7 +68,8 @@
             <b><a href="{{ site.url }}/cn/documentation/">使用文档</a></b> |
             <b><a href="{{ site.url }}/cn/development/">开发指南</a></b> |
             <b><a href="{{ site.url }}/cn/community/">用户社区</a></b> |
-            <b><a href="{{ site.url }}/cn/sponsors/">赞助</a></b>
+            <b><a href="{{ site.url }}/cn/sponsors/">赞助</a></b> |
+            <b><a href="{{ site.url }}{{ page.url | remove_first: "/cn" }}">English</a></b>
           </p>
           <hr />
         </div>
@@ -79,15 +80,12 @@
           <p align="center">
             <b><a href="{{ site.url }}">Home</a></b> |
             <b><a href="{{ site.url }}/about/">About</a></b> |
-            <b
-              ><a href="{{ site.url }}/quick-start-guide/"
-                >Quick start guide</a
-              ></b
-            >
-            | <b><a href="{{ site.url }}/documentation/">Documentation</a></b> |
+            <b><a href="{{ site.url }}/quick-start-guide/">Quick start guide</a></b> |
+            <b><a href="{{ site.url }}/documentation/">Documentation</a></b> |
             <b><a href="{{ site.url }}/development/">Development</a></b> |
             <b><a href="{{ site.url }}/community/">Community</a></b> |
-            <b><a href="{{ site.url }}/sponsors/">Sponsors</a></b>
+            <b><a href="{{ site.url }}/sponsors/">Sponsors</a></b> |
+            <b><a href="{{ site.url }}/cn{{ page.url }}">中文</a></b>
           </p>
           <hr />
         </div>
@@ -133,11 +131,7 @@
     {% if page.lang == "zh" %}
     <p align="center">
       <span class="credits right"
-        >由Jekyll强力驱动,
-        <a
-            href="{{ site.url }}{{ page.url | remove_first: "/cn"}}"
-          >切换至英文</a
-        >
+        >由Jekyll强力驱动
       </span>
       <br />
       <input
@@ -150,11 +144,7 @@
     {% else %}
     <p align="center">
       <span class="credits right"
-        >Powered by Jekyll,
-        <a
-            href="{{ site.url }}/cn{{ page.url }}"
-          >switch to chinese</a
-        >
+        >Powered by Jekyll
       </span>
       <br />
       <input
