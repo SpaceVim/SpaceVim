@@ -15,8 +15,7 @@ lang: zh
   - [证书](#证书)
   - [公约](#公约)
   - [拉取请求](#拉取请求)
-    - [标题前缀](#标题前缀)
-    - [新建拉取请求步骤](#新建拉取请求步骤)
+    - [拉取请求步骤](#拉取请求步骤)
     - [抽象化的简单 PRs（绝大多数 PRs 都是这样的）：](#抽象化的简单-prs绝大多数-prs-都是这样的)
     - [复杂的 PRs (大的重构，等)：](#复杂的-prs-大的重构等)
   - [贡献一个模块](#贡献一个模块)
@@ -42,14 +41,11 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 ## 寻求帮助
 
-在你建立 issue 之前，先确认你已经浏览过下面的 FAQ 以及 SpaceVim 文档。
-
-- <kbd>:h SpaceVim-faq</kbd>: 一些常见问题及解决方法
-- [SpaceVim documentation](https://spacevim.org/cn/documentation): SpaceVim 的官方文档
+当遇到问题时，建议先查阅[FAQ](../faq/)以及[使用文档](../documentation/)
 
 ## 反馈问题
 
-请先阅读下面内容，再通过 [issues tracker](https://github.com/SpaceVim/SpaceVim/issues)进行反馈：
+请先阅读下面内容，再通过邮件进行反馈：
 
 - 检查错误追踪中是否存在重复的问题，你可以通过在错误追踪中搜索关键词来确认错误追踪中是否存在重复的问题
 
@@ -61,7 +57,7 @@ SpaceVim 是每个志愿者的努力的结晶，我们鼓励你参与进来，Sp
 
 ## 贡献代码
 
-我们非常期待您的贡献。在此之前，请您认真阅读下面的内容。在任何情况下，都可以轻松的加入我们[gitter chat](https://gitter.im/SpaceVim/cn)进行提问和贡献代码。
+我们非常期待您的贡献。在此之前，请您认真阅读下面的内容。
 
 ### 项目代码结构
 
@@ -99,43 +95,68 @@ SpaceVim 所有部分采用 GPLv3 许可。
 
 ### 拉取请求
 
-#### 标题前缀
+这里介绍了使用邮件新建拉去请求的具体步骤
 
-新开拉取请求时，应当通过标题前缀来标记该拉取请求的性质：
+#### 拉取请求步骤
 
-- `Add:` 添加新的特性
-- `Change:` 修改已有特性的行为
-- `Fix:` 修复某些问题
-- `Remove:` 移除原先支持的某些特性
-- `Doc:` 更新帮助文档
-- `Website:` 更新网站内容
-- `Type:` 更新错别字
+- 在github、gitlab或者其他任意代码平台新建空白仓库
+- 克隆你自己的空白仓库
 
-示例如下：
-
-`Website: update the lang#c layer page.`
-
-#### 新建拉取请求步骤
-
-- fork SpaceVim 仓库
-- 克隆你自己的仓库
-
-```sh
-git clone ${YOUR_OWN_REPOSITORY_URL}
-```
+  ```sh
+  git clone ${YOUR_OWN_REPOSITORY_URL}
+  ```
 
 - 添加上游远程仓库地址
 
-```sh
-git remote add upstream https://github.com/SpaceVim/SpaceVim.git
-```
+  ```sh
+  git remote add upstream https://gitlab.com/SpaceVim/SpaceVim.git
+  ```
 
-- 在上游的主分支中取回并且重新定位上游
+- 基于`upstream/master`新建分支
 
-```sh
-git fetch upstream
-git rebase upstream/master
-```
+  ```sh
+  git fetch upstream
+  git checkout -b new_branch upstream/master
+  ```
+
+- 修改并commit后，推送至自己的仓库
+
+  ```
+  git push -u origin
+  ```
+
+- 发送拉取请求邮件至邮件组
+
+  - 邮箱地址：[spacevim-cn@googlegroups.com](mailto:spacevim-cn@googlegroups.com)
+  - 邮件标题:
+
+    新开拉取请求时，应当通过标题前缀来标记该拉取请求的性质：
+
+    - `Add:` 添加新的特性
+    - `Change:` 修改已有特性的行为
+    - `Fix:` 修复某些问题
+    - `Remove:` 移除原先支持的某些特性
+    - `Doc:` 更新帮助文档
+    - `Website:` 更新网站内容
+    - `Type:` 更新错别字
+
+    示例如下：
+
+    `Fix: 修复 scrollbar 高亮`
+
+  - 邮件内容：
+    
+    邮件内容主要要包括你的仓库地址及分支名称，最好增加一些分支变更的具体描述内容，比如：
+
+    ```
+    repo url: https://gitlab.com/wsdjeg/hello.git
+    branch: fix_scrollbar
+
+    scrollbar 在窗口切换时，高亮颜色错误。具体重现步骤如下：
+
+    。。。。
+    ```
+
 #### 抽象化的简单 PRs（绝大多数 PRs 都是这样的）：
 
 - `master`中的分支

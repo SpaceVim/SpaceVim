@@ -3,7 +3,7 @@
 ![Release](https://img.shields.io/badge/Release-2.2.0-8700FF.svg)
 ![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)
 
-SpaceVim is a community-driven distribution of Vim and Neovim.
+SpaceVim is a modular configuration of Vim and Neovim.
 It's inspired by spacemacs. It manages collections of plugins in layers,
 which help to collect related packages together to provide features.
 This approach helps keep the configuration organized and reduces
@@ -18,6 +18,12 @@ what packages to install.
 
 - English: [https://spacevim.org/community/](https://spacevim.org/community/)
 - Chinese: [https://spacevim.org/cn/community/](https://spacevim.org/cn/community/)
+
+## Development
+
+- English: [https://spacevim.org/development/](https://spacevim.org/development/)
+- Chinese: [https://spacevim.org/cn/development/](https://spacevim.org/cn/development/)
+
 
 
 <!-- vim:set nowrap: -->
