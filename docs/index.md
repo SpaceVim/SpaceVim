@@ -1,6 +1,6 @@
 ---
 title: "Home"
-description: "SpaceVim is a community-driven vim distribution that seeks to provide layer feature."
+description: "SpaceVim is a modular Vim/Neovim configuration that seeks to provide layer feature."
 ---
 
 [![Release](https://img.shields.io/badge/Release-2.2.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.2.0/)
@@ -8,7 +8,7 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 
 ![welcome page](https://img.spacevim.org/release-v2.2.0.png)
 
-SpaceVim is a community-driven distribution of Vim and Neovim.
+SpaceVim is a modular configuration of Vim and Neovim.
 It's inspired by spacemacs. It manages collections of plugins in layers,
 which help to collect related packages together to provide features.
 This approach helps keep the configuration organized and reduces

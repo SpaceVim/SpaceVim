@@ -1,6 +1,6 @@
 theme: jekyll-theme-midnight
 title: SpaceVim
-description: A community-driven vim distribution
+description: A modular Vim/Neovim configuration
 show_downloads: false
 google_analytics: UA-89745542-1
 gitment_client_id: 8f0cd1f544d1e4219798
