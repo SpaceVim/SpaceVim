@@ -135,8 +135,8 @@
       <span class="credits right"
         >由Jekyll强力驱动,
         <a
-          href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}"
-          >帮助改进本页面</a
+            href="{{ site.url }}{{ page.url | remove_first: "/cn/"}}"
+          >切换至英文</a
         >
       </span>
       <br />
@@ -152,8 +152,8 @@
       <span class="credits right"
         >Powered by Jekyll,
         <a
-          href="https://github.com/SpaceVim/SpaceVim/edit/master/docs/{{ page.path }}"
-          >Help improve this page</a
+            href="{{ site.url }}/cn/{{ page.url }}"
+          >switch to chinese</a
         >
       </span>
       <br />
