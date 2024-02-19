@@ -81,7 +81,7 @@ function M.run(argv)
     table.insert(plog_cmd, v)
   end
   log.debug('git-shortlog plog cmd:' .. vim.inspect(plog_cmd))
-  job.start(plog_cmd, {
+  plog_jobid = job.start(plog_cmd, {
     on_stdout = on_pretty_stdout,
     on_stderr = on_pretty_stderr,
     on_exit = on_pretty_exit
