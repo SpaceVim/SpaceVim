@@ -18,9 +18,8 @@ You can only think about reading the part that is relevant to what you are going
   - [License](#license)
   - [Conventions](#conventions)
   - [Commit style guide](#commit-style-guide)
-  - [Pull Request](#pull-request)
-    - [Prefix of title](#prefix-of-title)
-    - [Workflow](#workflow)
+  - [Merge request](#merge-request)
+    - [Steps](#steps)
     - [Simple PRs](#simple-prs)
     - [Complex PRs](#complex-prs)
   - [Contributing a layer](#contributing-a-layer)
@@ -126,44 +125,70 @@ BREAKING CHANGE: `~/Music` is standard on macOS and
 also on FreeDesktop's XDG.
 ```
 
-### Pull Request
+### Merge request
 
-#### Prefix of title
+#### Steps
 
-The title of a pull request should contain one of the following prefixes::
+The following steps describe how to create a new merge request using mail.
 
-- `Add:` Adding new features.
-- `Change:` Change default behaviors or the existing features.
-- `Fix:` Fix some bugs.
-- `Remove:` Remove some existing features.
-- `Doc:` Update the help files.
-- `Website:` Update the content of website.
+- create new empty repository on github，gitlab or any other platform.
+- clone your repository
 
-Here is an example:
+  ```sh
+  git clone ${YOUR_OWN_REPOSITORY_URL}
+  ```
 
-`Website: Update the lang#c layer page.`
+- add upstream remote
 
-#### Workflow
+  ```sh
+  git remote add upstream https://spacevim.org/git/repos/SpaceVim/
+  ```
 
-- Fork SpaceVim repository
-- Clone your repository
+- create new branch based on `upstream/master`
 
-```sh
-git clone ${YOUR_OWN_REPOSITORY_URL}
-```
+  ```sh
+  git fetch upstream
+  git checkout -b new_branch upstream/master
+  ```
 
-- Add upstream remote
+- edit, commit and push to your own repository
 
-```sh
-git remote add upstream https://spacevim.org/git/repos/SpaceVim/
-```
+  ```
+  git push -u origin
+  ```
 
-- Fetch upstream and rebase on top of upstream master
+- send merge request to mail list.
 
-```sh
-git fetch upstream
-git rebase upstream/master
-```
+  - email address: [spacevim@googlegroups.com](mailto:spacevim@googlegroups.com)
+  - email title:
+
+    The title of the email should contain one of the following prefixes::
+
+    - `Add:` Adding new features.
+    - `Change:` Change default behaviors or the existing features.
+    - `Fix:` Fix some bugs.
+    - `Remove:` Remove some existing features.
+    - `Doc:` Update the help files.
+    - `Website:` Update the content of website.
+
+    Here is an example:
+
+    `Website: Update the lang#c layer page.`
+
+  - email context
+
+    The context of this email should contain the url of repository and the branch name.
+    It is better to add some description about the changes. For example:
+
+    ```
+    repo url: https://gitlab.com/wsdjeg/hello.git
+    branch: fix_scrollbar
+
+    when switch windows, the highlight of scrollbar is wrong.
+    here is the reproduce steps:
+
+    。。。。
+    ```
 
 #### Simple PRs
 
