@@ -9,6 +9,7 @@ This page documents changes in master branch since last release v2.2.0
 
 <!-- vim-markdown-toc GFM -->
 
+- [Next release](#next-release)
 - [New features](#new-features)
 - [Bugfixs](#bugfixs)
 - [Docs](#docs)
@@ -17,6 +18,10 @@ This page documents changes in master branch since last release v2.2.0
 - [Latest Release](#latest-release)
 
 <!-- vim-markdown-toc -->
+
+## Next release
+
+The next release is `v0.2.3`
 
 ## New features
 
