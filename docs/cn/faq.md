@@ -28,7 +28,7 @@ lang: zh
 首先，需要将 SpaceVim 仓库克隆至：`~/.SpaceVim`.
 
 ```
-git clone https://gitlab.com/SpaceVim/SpaceVim.git ~/.SpaceVim
+git clone https://spacevim.org/git/repos/SpaceVim/ ~/.SpaceVim
 ```
 
 备份原来的 Vim/Neovim 配置文件：

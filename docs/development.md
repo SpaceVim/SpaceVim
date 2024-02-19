@@ -155,7 +155,7 @@ git clone ${YOUR_OWN_REPOSITORY_URL}
 - Add upstream remote
 
 ```sh
-git remote add upstream https://gitlab.com/SpaceVim/SpaceVim.git
+git remote add upstream https://spacevim.org/git/repos/SpaceVim/
 ```
 
 - Fetch upstream and rebase on top of upstream master

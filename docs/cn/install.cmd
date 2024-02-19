@@ -16,7 +16,7 @@ echo "                    °æ±¾: 2.3.0-dev    ÖÐÎÄ¹ÙÍø: https://spacevim.org/cn/ 
 Push-Location ~
 
 $app_name    = "SpaceVim"
-$repo_url    = "https://gitlab.com/SpaceVim/SpaceVim.git"
+$repo_url    = "https://spacevim.org/git/repos/SpaceVim/"
 $repo_name   = "SpaceVim"
 $repo_path   = "$HOME\.SpaceVim"
 
