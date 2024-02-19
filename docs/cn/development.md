@@ -109,7 +109,7 @@ SpaceVim 所有部分采用 GPLv3 许可。
 - 添加上游远程仓库地址
 
   ```sh
-  git remote add upstream https://gitlab.com/SpaceVim/SpaceVim.git
+  git remote add upstream https://spacevim.org/git/repos/SpaceVim/
   ```
 
 - 基于`upstream/master`新建分支
