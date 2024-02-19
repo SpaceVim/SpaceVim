@@ -12,6 +12,7 @@ local nt = require('spacevim.api.notify')
 local log = require('git.log')
 
 local jobid = -1
+local plog_jobid = -1
 nt.notify_max_width = vim.o.columns * 0.5
 nt.timeout = 5000
 
@@ -37,6 +38,31 @@ local function on_exit(id, code, single)
   log.debug('git-shortlog exit code:' .. code .. ' single:' .. single)
 end
 
+local pretty_log = {}
+
+local function on_pretty_stdout(id, data)
+  if id ~= plog_jobid then
+    return
+  end
+  for _, v in ipairs(data) do
+    table.insert(pretty_log, v)
+  end
+end
+
+local function on_pretty_stderr(id, data)
+  
+end
+
+local function on_pretty_exit(id, code, single)
+  if id ~= plog_jobid then
+    return
+  end
+  log.debug('git-shortlog plog exit code:' .. code .. ' single:' .. single)
+  job.send(jobid, pretty_log)
+  job.chanclose(jobid, 'stdin')
+  job.stop(jobid)
+end
+
 function M.run(argv)
   local cmd = { 'git', 'shortlog' }
   for _, v in ipairs(argv) do
@@ -48,6 +74,19 @@ function M.run(argv)
     on_stderr = on_stderr,
     on_exit = on_exit,
   })
+  pretty_log = {}
+
+  local plog_cmd = { 'git', 'log', '--pretty=short' }
+  for _, v in ipairs(argv) do
+    table.insert(plog_cmd, v)
+  end
+  log.debug('git-shortlog plog cmd:' .. vim.inspect(plog_cmd))
+  job.start(plog_cmd, {
+    on_stdout = on_pretty_stdout,
+    on_stderr = on_pretty_stderr,
+    on_exit = on_pretty_exit
+  })
+
 end
 
 return M
