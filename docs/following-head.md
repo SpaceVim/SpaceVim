@@ -25,6 +25,7 @@ The next release is `v0.2.3`
 
 ## New features
 
+- feat(git.vim): add `:Git shortlog` command
 - feat(alternate): make `:A` command support toml
 - feat(api): add lua job api
 - feat(ctags): implement ctags#update in lua

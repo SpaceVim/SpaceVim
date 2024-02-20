@@ -26,6 +26,7 @@ lang: zh
 
 ## 新特性
 
+- feat(git.vim): add `:Git shortlog` command
 - feat(alternate): make `:A` command support toml
 - feat(api): add lua job api
 - feat(ctags): implement ctags#update in lua
