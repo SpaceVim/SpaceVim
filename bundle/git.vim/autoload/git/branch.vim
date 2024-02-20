@@ -13,6 +13,7 @@
 " >
 "   :Git branch
 " <
+
 if has('nvim-0.9.0')
   function! git#branch#current(...) abort
     let prefix = get(a:000, 0, '')
@@ -141,8 +142,6 @@ else
       return ''
     endif
   endfunction
-  ""
-  " update the branch info manually.
   function! git#branch#detect() abort
     call s:update_branch_name(getcwd(), 1)
   endfunction
