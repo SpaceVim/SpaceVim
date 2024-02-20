@@ -80,7 +80,7 @@ function! git#complete(ArgLead, CmdLine, CursorPos) abort
         return join(['add', 'push', 'status', 'commit', 'diff',
                     \ 'merge', 'rebase', 'branch', 'checkout',
                     \ 'fetch', 'reset', 'log', 'config', 'reflog',
-                    \ 'blame', 'pull', 'stash', 'cherry-pick', 'rm', 'mv', 'remote', 'clean'
+                    \ 'blame', 'pull', 'stash', 'cherry-pick', 'rm', 'mv', 'remote', 'clean', 'shortlog'
                     \ ],
                     \ "\n")
     elseif str =~# '^Git\s\+add\s\+.*$'
