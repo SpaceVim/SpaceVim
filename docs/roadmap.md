@@ -40,7 +40,4 @@ The roadmap defines the project direction and priorities.
 
 ## Completed
 
-- `v2.2.0`
-  - [x] rewrite scrollbar with lua
-  
-  release notes: [v2.2.0](../SpaceVim-release-v2.2.0/)
+All completed releases can be viewed in [changelog](../development/#Changelog)

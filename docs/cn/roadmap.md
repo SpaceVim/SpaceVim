@@ -41,7 +41,4 @@ lang: zh
 
 ## 已完成版本
 
-- `v2.2.0`
-  - [x] rewrite scrollbar with lua
-  
-  release notes: [v2.2.0](../SpaceVim-release-v2.2.0/)
+所有已完成的版本可以在[更新日志](../development/#更新日志)查看
