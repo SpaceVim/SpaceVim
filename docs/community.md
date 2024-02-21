@@ -10,6 +10,7 @@ description: "A list of SpaceVim's public channels, All messages are bridged bet
 - [News](#news)
 - [Asking for help](#asking-for-help)
 - [Feedback](#feedback)
+- [Others](#others)
 
 <!-- vim-markdown-toc -->
 
@@ -34,3 +35,9 @@ If you run into a bug, or want a new feature, please use the mail list:
 send email to [spacevim@googlegroups.com](mailto:spacevim@googlegroups.com)
 
 To subscribe the maillist, send anything to：[spacevim+subscribe@googlegroups.com](mailto:spacevim+subscribe@googlegroups.com)
+
+## Others
+
+- Matrix room: [`#spacevim:matrix.org`](https://app.element.io/#/room/#spacevim:matrix.org)
+- Telegram group: [`t.me/SpaceVim`](https://t.me/SpaceVim)
+- Reddit: [`/r/SpaceVim/`](https://www.reddit.com/r/SpaceVim/)
