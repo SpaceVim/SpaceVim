@@ -26,6 +26,7 @@ lang: zh
 
 ## 新特性
 
+- feat(git): add git remote manager
 - feat(git.vim): add `:Git shortlog` command
 - feat(alternate): make `:A` command support toml
 - feat(api): add lua job api
@@ -73,6 +74,7 @@ lang: zh
 
 ## 问题修复
 
+- fix(git): rename cherry_pick to cherry-pick
 - fix(cmdlinemenu): fix cmdlinemenu lua api
 - fix(docker): update init.toml url
 - fix(flygrep): fix version checking
@@ -93,6 +95,10 @@ lang: zh
 
 ## 文档更新
 
+- docs(community): update community en page
+- docs(community): add link to x account
+- docs(website): update index page
+- docs(roadmap): update roadmap page
 - docs(job): update `:h spacevim-api-job`
 - docs(alternate): update doc for toml configuration file
 - docs(chat): remove IRC rooms from community page

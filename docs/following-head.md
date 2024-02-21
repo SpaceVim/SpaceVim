@@ -25,6 +25,7 @@ The next release is `v0.2.3`
 
 ## New features
 
+- feat(git): add git remote manager
 - feat(git.vim): add `:Git shortlog` command
 - feat(alternate): make `:A` command support toml
 - feat(api): add lua job api
@@ -72,6 +73,7 @@ The next release is `v0.2.3`
 
 ## Bugfixs
 
+- fix(git): rename cherry_pick to cherry-pick
 - fix(cmdlinemenu): fix cmdlinemenu lua api
 - fix(docker): update init.toml url
 - fix(flygrep): fix version checking
@@ -92,6 +94,10 @@ The next release is `v0.2.3`
 
 ## Docs
 
+- docs(community): update community en page
+- docs(community): add link to x account
+- docs(website): update index page
+- docs(roadmap): update roadmap page
 - docs(job): update `:h spacevim-api-job`
 - docs(alternate): update doc for toml configuration file
 - docs(chat): remove IRC rooms from community page

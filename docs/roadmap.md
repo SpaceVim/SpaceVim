@@ -15,6 +15,7 @@ The roadmap defines the project direction and priorities.
 - `v2.3.0`
   - [x] new `job` api based on neovim luv.
   - [x] implement flygrep with lua.
+    - [x] use new `job` api
   - [ ] rewrite git.vim with lua.
     - [x] `:Git add`
     - [x] `:Git clean`
@@ -23,6 +24,9 @@ The roadmap defines the project direction and priorities.
     - [x] `:Git reset`
     - [x] `:Git rm`
     - [x] `:Git mv`
+    - [x] `:Git blame`
+    - [x] `:Git cherry-pick`
+    - [x] `:Git shortlog`
     - [x] plugin log manager derived from SPC runtime logger
   - [x] rewrite code runner with lua
   - [x] rewrite task manager with lua
@@ -31,6 +35,8 @@ The roadmap defines the project direction and priorities.
   - [x] rewrite leader guide with lua
   - [x] implement pastebin plugin with lua
   - [x] make `:A` command support toml configuration file
+  - [x] add git remote manager
+  - [x] implement `ctags#update` in lua
 
 ## Completed
 
