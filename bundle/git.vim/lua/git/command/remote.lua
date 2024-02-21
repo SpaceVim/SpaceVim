@@ -38,6 +38,10 @@ local function on_exit(id, code, single)
 end
 
 function M.run(argv)
+  if #argv == 0 then
+    require('git.ui.remote').open()
+    return
+  end
   local cmd = { 'git', 'remote' }
   for _, v in ipairs(argv) do
     table.insert(cmd, v)

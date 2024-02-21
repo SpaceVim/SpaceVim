@@ -50,6 +50,7 @@ lang: zh
 | `SPC g c`   | 打开 git commit 窗口 |
 | `SPC g p`   | 执行 git push        |
 | `SPC g m`   | git 分支管理         |
+| `SPC g r`   | git remote 管理      |
 | `SPC g d`   | 打开 git diff 窗口   |
 | `SPC g A`   | git add 所有文件     |
 | `SPC g b`   | 打开 git blame 窗口  |

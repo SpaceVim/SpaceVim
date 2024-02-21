@@ -49,6 +49,7 @@ if you want to use `fugitive` instead:
 | `SPC g c`   | edit git commit        |
 | `SPC g p`   | git push               |
 | `SPC g m`   | git branch manager     |
+| `SPC g r`   | git remote manager     |
 | `SPC g d`   | view git diff          |
 | `SPC g A`   | stage all files        |
 | `SPC g b`   | open git blame windows |
