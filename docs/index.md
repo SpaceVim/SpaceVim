@@ -3,8 +3,8 @@ title: "Home"
 description: "SpaceVim is a modular Vim/Neovim configuration that seeks to provide layer feature."
 ---
 
-[![Release](https://img.shields.io/badge/Release-2.2.0-8700FF.svg)](https://spacevim.org/SpaceVim-release-v2.2.0/)
-[![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](development/#License)
+[![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#license)
+[![matrix](https://img.spacevim.org/spacevim-matrix.svg)](https://app.element.io/#/room/#spacevim:matrix.org)
 
 ![welcome page](https://img.spacevim.org/release-v2.2.0.png)
 
