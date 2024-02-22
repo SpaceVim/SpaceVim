@@ -4,8 +4,11 @@ description: "SpaceVim 是一个社区驱动的模块化的 Vim IDE，以模块�
 lang: zh
 ---
 
-[![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#证书)
+[![twitter](https://img.spacevim.org/twitter.svg)](https://twitter.com/SpaceVim)
 [![matrix](https://img.spacevim.org/spacevim-cn-matrix.svg)](https://app.element.io/#/room/#spacevim-cn:matrix.org)
+[![Telegram](https://img.spacevim.org/telegram-spacevim-cn.svg)](https://t.me/SpaceVim_CN/)
+[![reddit](https://img.spacevim.org/reddit.svg)](https://www.reddit.com/r/SpaceVim/)
+[![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#证书)
 
 ![welcome page](https://img.spacevim.org/release-v2.2.0.png)
 
