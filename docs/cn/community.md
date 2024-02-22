@@ -10,10 +10,26 @@ lang: zh
 
 <!-- vim-markdown-toc GFM -->
 
+- [资讯](#资讯)
+- [寻求帮助](#寻求帮助)
 - [问题反馈](#问题反馈)
+- [其他](#其他)
 
 <!-- vim-markdown-toc -->
 
+
+## 资讯
+
+关于 SpaceVim 最新资讯将在 Twitter 上进行更新，欢迎订阅：
+
+- <i class="fab fa-twitter"></i> [Twitter](https://twitter.com/SpaceVim)
+
+## 寻求帮助
+
+如果您对使用 SpaceVim 有任何疑问，首先查看以下内容，其中可能包含答案：
+
+- [FAQ](../faq/): 常见问题及相应的解答。
+- [使用文档](../documentation/): 完整的 SpaceVim 使用文档。
 
 ## 问题反馈
 
@@ -22,3 +38,9 @@ lang: zh
 发送邮件至 [spacevim-cn@googlegroups.com](mailto:spacevim-cn@googlegroups.com)
 
 如需订阅该邮件组，可以发送任意邮件至：[spacevim-cn+subscribe@googlegroups.com](mailto:spacevim-cn+subscribe@googlegroups.com)
+
+## 其他
+
+- Matrix room: [`#spacevim-cn:matrix.org`](https://app.element.io/#/room/#spacevim-cn:matrix.org)
+- Telegram group: [`t.me/SpaceVim_CN`](https://t.me/SpaceVim_CN)
+- Reddit: [`/r/SpaceVim/`](https://www.reddit.com/r/SpaceVim/)
