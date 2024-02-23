@@ -146,7 +146,7 @@ local function view_git_log()
   local cursor_info = get_cursor_info()
   if cursor_info.branch then
     log.debug('run command:' .. 'tabnew | Git log ' .. cursor_info.branch)
-    vim.api.nvim_command('Git log ' .. cursor_info.branch)
+    vim.api.nvim_command('tabnew | Git log ' .. cursor_info.branch)
   end
 end
 
