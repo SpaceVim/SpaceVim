@@ -1363,7 +1363,8 @@ let g:spacevim_smartcloseignoreft      = [
       \ 'HelpDescribe',
       \ 'VebuggerShell',
       \ 'VebuggerTerminal',
-      \ 'SpaceVimTabsManager'
+      \ 'SpaceVimTabsManager',
+      \ 'SpaceVimGitRemoteManager'
       \ ]
 let g:_spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:spacevim_enable_javacomplete2_py = 0
